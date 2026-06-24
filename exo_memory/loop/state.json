@@ -1,0 +1,16 @@
+{
+  "fires_since_checkin": 2,
+  "snapshot": {
+    "dreamzone-rt\\src\\math.h": 1781936521.7,
+    "dreamzone-rt\\src\\sound_synth.h": 1781936521.7,
+    "dreamzone-rt\\src\\world.h": 1781949229.7,
+    "dreamzone-rt\\src\\main.cpp": 1781959490.8,
+    "dreamzone-rt\\celldump.cpp": 1781951678.3,
+    "dreamzone-rt\\diag.cpp": 1781945887.5,
+    "dreamzone-rt\\vdiag.cpp": 1781947495.2,
+    "dreamzone-rt\\voxtest.cpp": 1781951925.6,
+    "dreamzone-rt\\build.bat": 1781937548.7
+  },
+  "dormant_flagged": false,
+  "first_done": true
+}

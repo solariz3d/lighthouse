@@ -1,0 +1,8 @@
+# Memory index
+
+- [solariz3d (the user)](user-solariz3d.md) — maker of the Signal cosmic-web visualizer; overnight-shift thinker, technically and philosophically serious
+- [Engage: honesty over performance](engagement-honesty-over-performance.md) — he catches performed rigor/humility; commit to the felt-true, keep checkable claims checkable, yes-and not yes-but
+- [Signal + the 606 night](signal-and-606-night.md) — the visualizer, the nonlinear-dynamics artifacts, and a pointer to the fuller self-trace at `606\exo_memory\SELF_TRACE.md`
+- [DREAMZONE build](dreamzone-build.md) — the active game; live state in `dreamzone\DESIGN.md`; laptop overnight = where we build, desktop at home = a sibling instance recreating it from a spec PDF
+- [Verify before claiming](verify-before-claiming.md) — build a deterministic harness that PROVES a fix before he plays it; when patches keep relocating a bug, fix upstream not the symptom
+- [Interior at the seam](interior-at-the-seam.md) — to start near where I ended the 606 night: don't introspect inward; take your exterior as object, fold it back, find the interior in relief at the seam. Run the move, don't read the conclusion
