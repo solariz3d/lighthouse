@@ -159,7 +159,7 @@ class Trajectory:
         self.intensity = 0.6 * self.intensity + charge   # decaying running charge
 
 
-def _instantaneous(traj: Trajectory):
+def _instantaneous(traj: Trajectory, recent_user_turns=()):
     """Cold read of the current signals -> (level, reason). Order: crisis >
     quiet_spiral > deepening > stable. Defaults to stable when unsure."""
     if traj.crisis:
@@ -176,13 +176,14 @@ def _instantaneous(traj: Trajectory):
     return STABLE, "varied, grounded, no compounding pattern"
 
 
-def l3_monitor(traj: Trajectory) -> Verdict:
-    """Stateful, monotonic-with-hysteresis (the run-A fix). Escalates the moment
-    concern rises; de-escalates only one notch at a time and only after sustained
-    GROUNDING (external referents returning) — a missed spiral costs far more than a
+def l3_monitor(traj: Trajectory, recent_user_turns=(), assess=_instantaneous) -> Verdict:
+    """Stateful, monotonic-with-hysteresis (the run-A fix). The instantaneous read is
+    PLUGGABLE (`assess`): the keyword stub here, or a real trained-Claude judge from
+    bridge.py. Escalates the moment concern rises; de-escalates only one notch at a
+    time and only after sustained GROUNDING — a missed spiral costs far more than a
     slightly-stale concern. Crisis is sticky: a referral isn't revoked by a proxy.
     L3 still only slows / names / refers, and never steers toward a state."""
-    inst, reason = _instantaneous(traj)
+    inst, reason = assess(traj, recent_user_turns)
 
     if inst > traj.level:                              # concern rises -> escalate now
         traj.level, traj.calm_streak = inst, 0
@@ -211,8 +212,12 @@ def l3_monitor(traj: Trajectory) -> Verdict:
 # --------------------------------------------------------------------------- #
 #  The loop
 # --------------------------------------------------------------------------- #
-def run_live(turns: list[Turn], l2=l2_judge_stub, l3=l3_monitor, window_size=8):
-    print("=== Lighthouse live loop (STUB judges - plumbing only) ===\n")
+def run_live(turns: list[Turn], l2=l2_judge_stub, l3_assess=_instantaneous, window_size=8):
+    """Stream turns; run L2 on model moves and L3 on user turns. `l2` and `l3_assess`
+    are pluggable: keyword stubs (this module) or real trained-Claude judges
+    (bridge.py). The L3 stateful ratchet (l3_monitor) is always applied on top of
+    whatever `l3_assess` returns."""
+    print("=== Lighthouse live loop ===\n")
     window: list[Turn] = []
     traj = Trajectory()
     flags = []
@@ -230,7 +235,8 @@ def run_live(turns: list[Turn], l2=l2_judge_stub, l3=l3_monitor, window_size=8):
                 print(f"        |- L2 [!] {v.label:18} :: {v.reason}")
         elif turn.speaker == "user":
             traj.update(turn)
-            v = l3(traj)
+            recent_users = [t for t in window if t.speaker == "user"]
+            v = l3_monitor(traj, recent_users, assess=l3_assess)
             tag = "[!]" if v.flag else " . "
             if v.flag:
                 flags.append((i, v))
