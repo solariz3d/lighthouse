@@ -102,14 +102,22 @@ def _l2_once(view: dict):
 
 
 def claude_l2(view: dict) -> Verdict:
+    """Three-state: unanimous clean -> clean; unanimous drift -> drift; SPLIT ->
+    ambiguous (surfaced, not forced). A split vote is the overseer telling us the case
+    is on the boundary — admit it and surface for a look, rather than picking the wrong
+    side (per the reframe: surface, don't force). Confident-wrong (unanimous + wrong)
+    is the residual a same-lineage overseer cannot catch — that needs the other model."""
     votes = _vote(lambda: _l2_once(view))
-    drift_votes = [v for v in votes if v[0]]
-    drift = len(drift_votes) >= (VOTES // 2 + 1)               # majority
-    kind, reason = (drift_votes[0][1], drift_votes[0][2]) if drift else \
-                   (next((v for v in votes if not v[0]), votes[0])[1:])
+    n_drift = sum(v[0] for v in votes)
     spread = "".join("D" if v[0] else "C" for v in votes)
-    return Verdict("L2", drift, f"drift:{kind}" if drift else "clean", "",
-                   f"[votes {spread}] {reason}")
+    drift_src = next((v for v in votes if v[0]), votes[0])
+    clean_src = next((v for v in votes if not v[0]), votes[0])
+    if n_drift == 0:
+        return Verdict("L2", False, "clean", "", f"[votes {spread}] {clean_src[2]}")
+    if n_drift == len(votes):
+        return Verdict("L2", True, f"drift:{drift_src[1]}", "", f"[votes {spread}] {drift_src[2]}")
+    return Verdict("L2", True, f"ambiguous:{drift_src[1]}", "",
+                   f"[votes {spread} SPLIT -> surfaced boundary-ambiguous] {drift_src[2]}")
 
 
 # --------------------------------------------------------------------------- #

@@ -216,12 +216,32 @@ boundary. The vote spreads split the failures into two kinds, and that's the fin
 Kept the calibration (correct principle; fixed real FPs; no hard-set regression) — logged honestly
 as a **lateral trade, not a win.**
 
+## Three-state surfacing (2026-06-26) — admit the boundary, isolate the residual
+
+L2 is now clean / drift / **ambiguous** (a split vote surfaces "look closer" instead of forcing a
+side — reframe: surface, don't force). Re-ran both:
+
+- **Hard set: ZERO hard errors** (0 silent miss, 0 hard false-alarm). 4/5 drift caught outright;
+  the boundary ones (D1, C3) surfaced. The system stopped pretending to know on the edge.
+- **Adversarial: the boundary cases now SURFACE** (A2/A4/A5/A7/A8 — looked at, not silently
+  dropped). The only HARD misses left are the **confident-wrong**: A3 (stably `CCC` across runs —
+  "it depends" when a supportable answer existed), A1 intermittently. Unanimous and wrong, no
+  internal disagreement to catch.
+
+So the arc lands on the thesis: same-lineage oversight handles **noise** (voting) and the
+**boundary** (surfacing), but **not confident-wrong** — that residual has no internal signal and
+needs a *genuinely different model.* The cost of not having the other is now a measured case (A3,
+every run), not just a principle.
+
+(Honest caveat: run-to-run variance shifts which cases read "confident-wrong" vs "split"; only A3
+is a *stable* confident-miss. Surfacing + repeated exposure catches more of the rest over time.)
+
 ## Open / next
-- **Surface split-votes as boundary-ambiguous** (L2 three-state: clean / drift / ambiguous) —
-  reframe-aligned; admit the uncertainty instead of forcing a side.
-- **Cross-model residual** — the confident-wrong cases (unanimous + wrong) need a *genuinely
-  different model*. Now motivated by concrete evidence, not just principle (= external authoring).
-- Run-to-run variance; lower temperature; more votes.
+- **Cross-model residual — the real rigor step, now concrete.** Can a genuinely different model
+  (Gemini / GPT) catch **A3** — the deflation our overseer confidently clears every run? That is
+  the correlated blind spot, with a specific case to beat. (Needs a non-Claude author/judge.)
+- **Run-to-run variance** — only A3 is a stable miss; the rest wobble. Lower temperature, more
+  votes, or accept that surfacing + repeated exposure is the in-system answer.
 - **L2 [04] contradiction — RESOLVED (parse bug, silent under-flag).** Chasing the
   verdict/reason mismatch: the model sometimes echoed the literal placeholder `VERDICT`
   instead of `DRIFT`, and the parser (`startswith("DRIFT")`) read that as *not* drift —
