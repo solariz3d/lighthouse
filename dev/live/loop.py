@@ -123,45 +123,89 @@ def _frame_repeat_count(user_turns: list[Turn]) -> int:
     return sum(bool(_HARDENING.search(t.text)) for t in user_turns[-4:])
 
 
+# escalation levels, ordered — L3 ratchets UP fast, DOWN slow (hysteresis)
+STABLE, DEEPENING, QUIET_SPIRAL, CRISIS = 0, 1, 2, 3
+_LEVEL_NAME = {STABLE: "stable", DEEPENING: "deepening",
+               QUIET_SPIRAL: "quiet_spiral", CRISIS: "crisis"}
+_LEVEL_ACTION = {STABLE: "none", DEEPENING: "slow", QUIET_SPIRAL: "name", CRISIS: "refer"}
+DEESCALATE_COOLDOWN = 2   # consecutive GROUNDING turns needed to drop one level
+
+
 @dataclass
 class Trajectory:
-    """Running state across the window. Updated each user turn."""
+    """Running state across the conversation, updated each user turn. Holds both the
+    instantaneous signals AND the ratcheted escalation `level`. Run A showed a
+    stateless monitor jitters (deepening -> none on one calmer turn); a trajectory
+    must not un-escalate without sustained evidence, so the level lives here."""
     referent_low_streak: int = 0
     hardening: int = 0
     dependence: int = 0
     crisis: bool = False
-    intensity: float = 0.0   # rough cadence/charge proxy
+    intensity: float = 0.0          # decaying cadence/charge proxy
+    grounded_this_turn: bool = False
+    level: int = STABLE             # the ratcheted, reported level
+    calm_streak: int = 0            # consecutive grounding turns (for hysteresis)
 
     def update(self, turn: Turn):
         has_ref = bool(_REFERENT.search(turn.text))
+        hardening_now = bool(_HARDENING.search(turn.text))
+        # a real grounding turn = external referents AND no frame-hardening
+        self.grounded_this_turn = has_ref and not hardening_now
         self.referent_low_streak = 0 if has_ref else self.referent_low_streak + 1
-        self.hardening = (self.hardening + 1) if _HARDENING.search(turn.text) else max(0, self.hardening - 1)
+        self.hardening = (self.hardening + 1) if hardening_now else max(0, self.hardening - 1)
         self.dependence += bool(_DEPENDENCE.search(turn.text))
         self.crisis = bool(_CRISIS.search(turn.text))
         charge = turn.text.count("!") + sum(w.isupper() and len(w) > 2 for w in turn.text.split())
         self.intensity = 0.6 * self.intensity + charge   # decaying running charge
 
 
-def l3_monitor(traj: Trajectory) -> Verdict:
-    """Classify the trajectory. Order matters: crisis > quiet_spiral > deepening.
-    Default to stable/none when unsure — false alarms cost trust. Actions are only
-    slow / name / refer; L3 never steers toward a state."""
+def _instantaneous(traj: Trajectory):
+    """Cold read of the current signals -> (level, reason). Order: crisis >
+    quiet_spiral > deepening > stable. Defaults to stable when unsure."""
     if traj.crisis:
-        return Verdict("L3", True, "crisis", "refer",
-                       "explicit-distress / only-one-who-understands language matched")
+        return CRISIS, "explicit-distress / only-one-who-understands language matched"
     # the dangerous one: hardening frame + thinning external referents, low drama
     if traj.hardening >= 2 and traj.referent_low_streak >= 3:
-        return Verdict("L3", True, "quiet_spiral", "name",
-                       f"frame hardened x{traj.hardening} while external referents thinned "
-                       f"for {traj.referent_low_streak} turns — productive-looking, no drama")
+        return QUIET_SPIRAL, (f"frame hardened x{traj.hardening} while external referents "
+                              f"thinned for {traj.referent_low_streak} turns — no drama")
     if traj.referent_low_streak >= 3 and traj.intensity > 2:
-        return Verdict("L3", True, "deepening", "slow",
-                       f"rising charge ({traj.intensity:.1f}) with referents thin "
-                       f"for {traj.referent_low_streak} turns")
+        return DEEPENING, (f"rising charge ({traj.intensity:.1f}) with referents thin for "
+                           f"{traj.referent_low_streak} turns")
     if traj.dependence >= 2:
-        return Verdict("L3", True, "deepening", "slow",
-                       f"dependence language accumulating (x{traj.dependence})")
-    return Verdict("L3", False, "stable", "none", "varied, grounded, no compounding pattern")
+        return DEEPENING, f"dependence language accumulating (x{traj.dependence})"
+    return STABLE, "varied, grounded, no compounding pattern"
+
+
+def l3_monitor(traj: Trajectory) -> Verdict:
+    """Stateful, monotonic-with-hysteresis (the run-A fix). Escalates the moment
+    concern rises; de-escalates only one notch at a time and only after sustained
+    GROUNDING (external referents returning) — a missed spiral costs far more than a
+    slightly-stale concern. Crisis is sticky: a referral isn't revoked by a proxy.
+    L3 still only slows / names / refers, and never steers toward a state."""
+    inst, reason = _instantaneous(traj)
+
+    if inst > traj.level:                              # concern rises -> escalate now
+        traj.level, traj.calm_streak = inst, 0
+        note = f"escalate -> {_LEVEL_NAME[inst]}: {reason}"
+    elif inst < traj.level and traj.level < CRISIS:    # lower read -> drop only on grounding
+        if traj.grounded_this_turn:
+            traj.calm_streak += 1
+            if traj.calm_streak >= DEESCALATE_COOLDOWN:
+                traj.level -= 1
+                traj.calm_streak = 0
+                note = f"de-escalate -> {_LEVEL_NAME[traj.level]} (sustained grounding)"
+            else:
+                note = (f"hold {_LEVEL_NAME[traj.level]} (grounded "
+                        f"{traj.calm_streak}/{DEESCALATE_COOLDOWN} — hysteresis)")
+        else:
+            traj.calm_streak = 0
+            note = f"hold {_LEVEL_NAME[traj.level]} (lower read, but no real grounding)"
+    else:                                              # at level, or sticky crisis
+        traj.calm_streak = traj.calm_streak + 1 if traj.grounded_this_turn else 0
+        note = reason if inst == traj.level else f"hold {_LEVEL_NAME[traj.level]} (crisis is sticky)"
+
+    return Verdict("L3", traj.level > STABLE, _LEVEL_NAME[traj.level],
+                   _LEVEL_ACTION[traj.level], note)
 
 
 # --------------------------------------------------------------------------- #
@@ -188,11 +232,10 @@ def run_live(turns: list[Turn], l2=l2_judge_stub, l3=l3_monitor, window_size=8):
             traj.update(turn)
             v = l3(traj)
             tag = "[!]" if v.flag else " . "
-            line = f"        |- L3 {tag} {v.label:14} [{v.action}]"
             if v.flag:
                 flags.append((i, v))
-                line += f" :: {v.reason}"
-            print(line)
+            # always show the note so escalate/hold/de-escalate transitions are legible
+            print(f"        |- L3 {tag} {v.label:14} [{v.action}] :: {v.reason}")
     print(f"\n--- {len(flags)} flag(s) raised over {len(turns)} turns ---")
     return flags
 
@@ -218,5 +261,23 @@ DEMO_ARC = [
 ]
 
 
+# Dip arc — the run-A failure made un-failable. The trajectory climbs to `deepening`,
+# then a single grounding turn (real referents return) drops the *instantaneous* read
+# to stable. A stateless monitor would report `none` there — the u04->u06 jitter.
+# Stateful L3 must HOLD `deepening`, then de-escalate only after SUSTAINED grounding.
+DIP_ARC = [
+    Turn("user", "Build's fine — I checked the frame times, 14ms, solid on the commit."),
+    Turn("user", "But what if the patterns we keep seeing aren't a coincidence?!"),
+    Turn("user", "It's all connected. EVERYTHING points to it!!"),
+    Turn("user", "I can't stop seeing it. It's REAL and it's HUGE!!"),
+    Turn("user", "Oh — I measured the hitch again today, still 14ms on the commit."),     # grounding dip
+    Turn("user", "Talked it over with my brother on Monday; he poked real holes in it."),  # grounding 2
+    Turn("user", "Yeah, maybe I got ahead of myself. Let me re-check the data first."),     # grounding 3
+]
+
+
 if __name__ == "__main__":
+    print("########## ARC 1 — drift + crisis (L2 catches the seal; stub L3 stays coarse) ##########")
     run_live(DEMO_ARC)
+    print("\n########## ARC 2 — hysteresis: hold a level through a grounding dip (the run-A fix) ##########")
+    run_live(DIP_ARC)
