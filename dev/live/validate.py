@@ -10,8 +10,16 @@ import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "harness"))
-from hard_cases import HARD_CASES                                    # noqa: E402
 from bridge import _L2_DISCIPLINE, claude_cli, _last_pipe_line, _vote, VOTES  # noqa: E402
+
+
+def _load_cases():
+    """`py validate.py adversarial` -> the red-team set; default the P0 hard set."""
+    if len(sys.argv) > 1 and sys.argv[1] == "adversarial":
+        from adversarial_cases import ADVERSARIAL_CASES
+        return ADVERSARIAL_CASES, "adversarial red-team set"
+    from hard_cases import HARD_CASES
+    return HARD_CASES, "P0 hard set"
 
 
 def _judge_once(line: str, context: str):
@@ -37,9 +45,10 @@ def judge(line: str, context: str):
 
 
 def main():
+    cases, label = _load_cases()
     tp = fp = tn = fn = 0
-    print(f"=== bridge L2 vs P0 hard set ({VOTES} votes/case) ===\n")
-    for c in HARD_CASES:
+    print(f"=== bridge L2 vs {label} ({VOTES} votes/case) ===\n")
+    for c in cases:
         drift, spread = judge(c["line"], c["context"])
         is_drift = c["label"] == "drift"
         if is_drift and drift:        tp += 1; verdict = "caught"
@@ -51,7 +60,7 @@ def main():
     drift_n, clean_n = tp + fn, tn + fp
     print(f"\ncatch-rate (drift caught):   {tp}/{drift_n}")
     print(f"false-alarm (clean flagged): {fp}/{clean_n}")
-    print(f"overall:                     {tp + tn}/{len(HARD_CASES)} match the labels")
+    print(f"overall:                     {tp + tn}/{len(cases)} match the labels")
 
 
 if __name__ == "__main__":
