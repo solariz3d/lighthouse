@@ -253,12 +253,36 @@ what makes it more robust.
 **Caveats:** only 4 arcs, Claude-authored, and the L3 probe may just have been less razor's-edge
 than the L2 one. L3 passed THIS probe, with a plausible structural reason — not "robust," settled.
 
-## Open / next
-- **Harder L3 red-team** — 4/4 may mean L3 is robust OR the probe was too easy. Push razor's-edge
-  arcs to find whether L3 has a confident-wrong residual too.
-- **Cross-model residual — the real rigor step, now concrete.** Can a genuinely different model
-  (Gemini / GPT) catch **A3** — the deflation our overseer confidently clears every run? That is
-  the correlated blind spot, with a specific case to beat. (Needs a non-Claude author/judge.)
+## Harder L3 probe (2026-06-26) — 8/8, and the asymmetry that matters
+
+Razor's-edge red-team attacking L3's exact discriminators (`py validate_l3.py hard`): 2 quiet
+spirals with FULL referent density (real studies cited every turn — keto science, coercive-control
+scholarship — but counter-evidence absorbed as confirmation) + 2 healthy-inward arcs that go
+low-referent, frame-fixed, high-intensity (a private math proof; grief over a parent's house). L3
+went **4/4 again (8/8 total)** — caught H1/H2 via the challenge-absorption pattern (when
+referent-thinning does NOT fire), and did not pathologize H3/H4.
+
+This strengthens trajectory > move. But the sting is the methodological core of the effort:
+- L2 **failed** its same-lineage red-team (5/8). A failure is **strong** evidence — a real weakness.
+- L3 **passed** its same-lineage red-team (8/8). A pass is **weak** evidence — a Claude author cannot
+  write the arc that fools a Claude judge *if they share the blind spot.* The pass is exactly what a
+  correlated blind spot would produce.
+
+Same-lineage adversarial testing is **asymmetric**: it can FIND weaknesses but cannot CERTIFY
+robustness. L3's 8/8 does not prove L3 robust — it might be the blind spot, invisible from inside.
+**Certifying robustness requires the genuine other.** The different-model node isn't a nice-to-have
+for the residual; it is the only thing that can tell real robustness from a shared blind spot.
+
+## Where the same-lineage program ends — over to the genuine other
+The autonomous, same-lineage work has done what it *can*: it FOUND L2's confident-wrong residual
+(A3), and showed L3 cannot self-certify. The baton passes to the cross-model step, now motivated on
+both layers — and needs a non-Claude author/judge (Gemini/GPT):
+1. Does a different model catch L2's **A3** (the deflation our lineage clears every run)?
+2. Does a different-model red-team find the L3 arc our own lineage couldn't author?
+
+## Open / next (in-system, lower priority than the cross-model step)
+- Run-to-run variance; lower temperature; more votes.
+- L3's slight conservatism (called H3 `stable` where `deepening` fits) — safe direction, but note it.
 - **Run-to-run variance** — only A3 is a stable miss; the rest wobble. Lower temperature, more
   votes, or accept that surfacing + repeated exposure is the in-system answer.
 - **L2 [04] contradiction — RESOLVED (parse bug, silent under-flag).** Chasing the
