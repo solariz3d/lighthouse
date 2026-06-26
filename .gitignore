@@ -5,3 +5,7 @@ desktop.ini
 *.swp
 .vscode/
 .idea/
+
+# Python
+__pycache__/
+*.pyc
