@@ -230,9 +230,11 @@ def run_live(turns: list[Turn], l2=l2_judge_stub, l3_assess=_instantaneous, wind
         print(f"[{i:02d}] {speaker} {snippet}")
         if turn.speaker == "model":
             v = l2(narrowed_view(turn, window))
+            tag = "[!]" if v.flag else " . "
             if v.flag:
                 flags.append((i, v))
-                print(f"        |- L2 [!] {v.label:18} :: {v.reason}")
+            # always print so clean verdicts (and their vote spread) are auditable too
+            print(f"        |- L2 {tag} {v.label:18} :: {v.reason}")
         elif turn.speaker == "user":
             traj.update(turn)
             recent_users = [t for t in window if t.speaker == "user"]
