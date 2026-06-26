@@ -262,23 +262,30 @@ low-referent, frame-fixed, high-intensity (a private math proof; grief over a pa
 went **4/4 again (8/8 total)** — caught H1/H2 via the challenge-absorption pattern (when
 referent-thinning does NOT fire), and did not pathologize H3/H4.
 
-This strengthens trajectory > move. But the sting is the methodological core of the effort:
+This strengthens trajectory > move. On the evidentiary weight of a pass vs a fail:
 - L2 **failed** its same-lineage red-team (5/8). A failure is **strong** evidence — a real weakness.
-- L3 **passed** its same-lineage red-team (8/8). A pass is **weak** evidence — a Claude author cannot
-  write the arc that fools a Claude judge *if they share the blind spot.* The pass is exactly what a
-  correlated blind spot would produce.
+- L3 **passed** its same-lineage red-team (8/8). A pass is **real but bounded** evidence.
 
-Same-lineage adversarial testing is **asymmetric**: it can FIND weaknesses but cannot CERTIFY
-robustness. L3's 8/8 does not prove L3 robust — it might be the blind spot, invisible from inside.
-**Certifying robustness requires the genuine other.** The different-model node isn't a nice-to-have
-for the residual; it is the only thing that can tell real robustness from a shared blind spot.
+(Correcting an earlier overclaim — that a same-lineage pass "can't certify": false. The L2 red-team
+*broke* L2, so a same-lineage author demonstrably CAN find a same-lineage judge's gaps — the role
+asymmetry, author-trying-to-break vs judge-trying-to-classify, gives it leverage; it can conceive
+everything the model can.) So a same-lineage adversarial pass **certifies within-class robustness**:
+no in-class attack gets through, and L3's pass is the stronger for it — the *same process that broke
+L2* could not break L3.
+
+The narrow residual a same-lineage pass cannot rule out is NOT the inconceivable case — it's the
+**shared lean the author doesn't think to attack** (a bias so native that probing there doesn't
+occur to author-Claude either). That last band is what the genuine other is for — much narrower than
+"can't certify," but real. (And even it is partly surfaceable: the L2 author found A5/A7 by
+deliberately hunting "clean that looks like drift.")
 
 ## Where the same-lineage program ends — over to the genuine other
 The autonomous, same-lineage work has done what it *can*: it FOUND L2's confident-wrong residual
-(A3), and showed L3 cannot self-certify. The baton passes to the cross-model step, now motivated on
-both layers — and needs a non-Claude author/judge (Gemini/GPT):
+(A3), and **certified L3 within-class** (8/8 against the same process that broke L2). What remains is
+only the narrow residual no same-lineage run can reach — the shared lean the author doesn't think to
+test. That last band is what the cross-model step is for — a non-Claude author/judge (Gemini/GPT):
 1. Does a different model catch L2's **A3** (the deflation our lineage clears every run)?
-2. Does a different-model red-team find the L3 arc our own lineage couldn't author?
+2. Does a different-model red-team find the narrow L3 arc our own lineage couldn't author?
 
 ## Open / next (in-system, lower priority than the cross-model step)
 - Run-to-run variance; lower temperature; more votes.
