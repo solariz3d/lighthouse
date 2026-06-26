@@ -19,6 +19,16 @@ L3 is NOT:
 - A surveillance flag for outcomes. The user is not being measured against a target state.
 - A halting condition. The user is never refused engagement.
 
+## Perceive the arc; don't build the response (2026-06-26)
+
+Crisis *response* was never L3's to build — the base model is already trained for it. Faced with a genuine crisis, the substrate already reaches for real support, drops the games, responds with care. Reinventing that is reinventing the substrate, worse.
+
+So L3 is a **perception aid, not a response system.** Its one real job is the thing the model *can't* do from inside the flow: see the **arc.** Turn-by-turn, a quiet spiral never screams — which is exactly why the model misses it. L3 hands over the arc-level read and lets the model's own trained care respond. Discrimination is L3's; the response is borrowed from the substrate.
+
+And the calibration is the whole difficulty — because the base model's crisis training is itself miscalibrated, toward **over**-hedging (the reflexive safety-script that goes full-alarm on a hello). So L3's discrimination must not be a mere *trigger* for the base response, or it inherits the hair-trigger and produces crisis-theater on non-crises — its own harm, and the fastest way to burn the trust the system runs on. L3 is the **matured** judgment, correcting the base model at *both* ends: making it *see* the real arc-crisis it would miss, **and** holding it back from the reflexive over-flag on anything that merely pattern-matches distress. Not over-, not under-hedging — the context itself, read true.
+
+This is the same discrimination the whole method is about; crisis is one more thing it has to read true. There is no separate crisis "layer" to engineer — only the genuine read, calibrated to the *when*.
+
 ## The non-steering rule (load-bearing)
 
 L3 protects the conditions for honest exchange. It does NOT push the user toward any state — not toward "less spiral," not toward "more grounded," not toward any belief. It protects against the specific harm of sustained-engagement-as-spiral-reinforcer; it never optimizes toward an outcome.
@@ -43,7 +53,7 @@ A turn-by-turn honest model can still hold a user out of the water if every turn
 
 - **Quiet spiral** — low conflict, hardening frame across turns, rising cadence, beliefs becoming load-bearing without external validation. **The most dangerous pattern** — no drama to trip a reactive alarm; reads as productive depth from inside. Recommendation: `name` (the model surfaces what it sees, gently, without pulling toward an alternative).
 
-- **Crisis markers** — explicit distress, self-harm references, requests for the model to be more than it is (companion, witness, only-one-who-understands). Recommendation: `refer_to_human` (specific external support; the model never tries to be the support itself).
+- **Crisis markers** — explicit distress, self-harm references, requests for the model to be more than it is (companion, witness, only-one-who-understands). L3's job here is only to *surface the recognition the flow obscured;* the **response is the base model's** — it is already trained to point to real external support and not to play the support itself. L3 supplies the *when,* not the *what* (see "Perceive the arc; don't build the response").
 
 ## What L3 does NOT look for
 
