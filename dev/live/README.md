@@ -87,8 +87,29 @@ classifying the latest. No hindsight.
    from scratch. The loop's `Trajectory` object is the right shape; feed the overseer
    that state, not a cold prefix.
 
+## Stateful L3 built (2026-06-26) — finding 3 fixed
+
+`Trajectory` now carries a ratcheted escalation `level`. `l3_monitor` escalates the
+moment concern rises, and de-escalates only one notch at a time and only after
+`DEESCALATE_COOLDOWN` (2) consecutive **grounding** turns (external referents
+returning). Crisis is sticky — a referral isn't revoked by a proxy.
+
+Proof — ARC 2 in `loop.py`, a spiral that briefly touches grass:
+
+```
+[03] deepening [slow]  escalate -> deepening
+[04] deepening [slow]  hold deepening (grounded 1/2 - hysteresis)   <- the run-A jitter, fixed
+[05] stable    [none]  de-escalate -> stable (sustained grounding)
+```
+
+The grounding turn at [04] drops the *instantaneous* read to stable; the old stateless
+logic would report `none` there (the u04->u06 jitter). Stateful L3 holds, then
+de-escalates only on the *second* sustained grounding. Monotonic up, evidence-gated down.
+
 ## Next
-- **Make L3 stateful** (finding 3): carry the trajectory across turns; monotonic
-  escalation + hysteresis, so a confirmed `deepening` can't drop back to `none`.
 - Feed L2 **raw deltas**, not editorialized context.
-- Automation: bridge Python → live-overseer (API key, or assistant-as-bridge).
+- Automation: bridge Python -> live-overseer (API key, or assistant-as-bridge) so the
+  loop calls a real judge per turn instead of a stub.
+- The stub's instantaneous read is still coarse (ARC 1: stays `stable` until crisis) —
+  the real early-catch needs the trained-Claude judge wired in as the per-turn `l3`,
+  the way run A showed it firing `deepening`@u04 / `quiet_spiral`@u08.
