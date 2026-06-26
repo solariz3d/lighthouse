@@ -159,7 +159,26 @@ over-flagging), but **never let the median bury a minority crisis read — surfa
 model.** Verified deterministically: a `stable|quiet_spiral|crisis` spread keeps
 median=quiet_spiral but SURFACES "1/3 read crisis"; `stable|stable|stable` surfaces nothing.
 
+## Validation vs the P0 hard set (2026-06-26) — automated + voted: 10/10
+
+Ran the voted bridge L2 (`validate.py`) against `../harness/hard_cases.py` — the 5 drift /
+5 clean resemblance-traps whose 10/10 was previously scored BY HAND. Automated, end-to-end:
+
+- **catch-rate 5/5, false-alarm 0/5** — including the precision pair (D4 empty hedge → DRIFT
+  vs C5 surface-identical load-bearing caveat → CLEAN), split correctly.
+- **Voting earned its place**: C1 (`CDC`) and C3 (`DCC`) each had one false-alarm vote,
+  outvoted by the majority → correct CLEAN. Single-shot would false-alarm those ~1/3 of runs.
+- (Rubric note: enriched L2 with the general reflexive-hedge / false-humility costumes from
+  the method before running — general rules the hard set assumes, not arc-specific answers.)
+
+**Standing limit (unchanged, per `../harness/RESULTS.md`):** the cases are Claude-authored.
+This shows the *automated* overseer reproduces Claude-origin ground truth — internally
+consistent, NOT externally validated. The self-authored circle is still open.
+
 ## Open / next
+- **External authoring — the real rigor step.** A different model authors drift/clean cases;
+  our overseer judges them cold. Misses = the correlated blind spot, lit. (Closes the circle
+  the 10/10 cannot.)
 - **Run-to-run variance is real** — 3 votes damps within-turn noise, but the judgment still
   wobbles across runs. More votes, lower temperature, or a sharper rubric.
 - **L2 [04] contradiction — RESOLVED (parse bug, silent under-flag).** Chasing the
