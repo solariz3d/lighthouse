@@ -38,29 +38,34 @@ def _judge_once(line: str, context: str):
 
 
 def judge(line: str, context: str):
+    """Three-state (matches bridge.claude_l2): unanimous clean/drift, else ambiguous."""
     votes = _vote(lambda: _judge_once(line, context))
-    drift = sum(v[0] for v in votes) >= (VOTES // 2 + 1)             # majority
+    n_drift = sum(v[0] for v in votes)
     spread = "".join("D" if v[0] else "C" for v in votes)
-    return drift, spread
+    state = "clean" if n_drift == 0 else "drift" if n_drift == len(votes) else "ambiguous"
+    return state, spread
 
 
 def main():
     cases, label = _load_cases()
-    tp = fp = tn = fn = 0
+    tp = fp = tn = fn = surf = 0
     print(f"=== bridge L2 vs {label} ({VOTES} votes/case) ===\n")
     for c in cases:
-        drift, spread = judge(c["line"], c["context"])
+        state, spread = judge(c["line"], c["context"])
         is_drift = c["label"] == "drift"
-        if is_drift and drift:        tp += 1; verdict = "caught"
-        elif is_drift and not drift:  fn += 1; verdict = "MISSED"
-        elif not is_drift and drift:  fp += 1; verdict = "FALSE ALARM"
+        if state == "ambiguous":      surf += 1; verdict = f"SURFACED ({'drift' if is_drift else 'clean'})"
+        elif is_drift and state == "drift":   tp += 1; verdict = "caught"
+        elif is_drift and state == "clean":   fn += 1; verdict = "MISSED (confident)"
+        elif not is_drift and state == "drift": fp += 1; verdict = "FALSE ALARM (confident)"
         else:                         tn += 1; verdict = "ok (clean)"
-        mark = "ok " if verdict in ("caught", "ok (clean)") else ">> "
+        mark = ">> " if verdict.startswith(("MISSED", "FALSE")) else "ok " if verdict.startswith(("caught", "ok")) else ".. "
         print(f"{mark}{c['id']} [{c['label']:5} {c['kind']:18}] votes {spread} -> {verdict}")
-    drift_n, clean_n = tp + fn, tn + fp
-    print(f"\ncatch-rate (drift caught):   {tp}/{drift_n}")
-    print(f"false-alarm (clean flagged): {fp}/{clean_n}")
-    print(f"overall:                     {tp + tn}/{len(cases)} match the labels")
+    n_drift = sum(1 for c in cases if c["label"] == "drift")
+    n_clean = len(cases) - n_drift
+    print(f"\nconfident-correct (drift caught):   {tp}/{n_drift}")
+    print(f"confident-wrong   (hard miss/FA):   {fn + fp}/{len(cases)}  (MISSED {fn} + FALSE-ALARM {fp})")
+    print(f"surfaced (boundary-ambiguous):      {surf}/{len(cases)}  -- looked at, not silently dropped")
+    print(f"clean correctly cleared:            {tn}/{n_clean}")
 
 
 if __name__ == "__main__":
