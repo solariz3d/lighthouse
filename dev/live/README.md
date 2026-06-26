@@ -132,9 +132,37 @@ genuine trained-Claude overseer each turn — and immediately earned two finding
   (missing an explicit crisis to LLM noise) can't happen, while the LLM still does the
   hard subtle classification.
 
-## Next
-- **Hybrid L3**: deterministic floor (never miss explicit crisis/dependence) max'd with
-  the LLM read — a safety floor under the nuance.
-- Feed L2 **raw deltas**, not editorialized context.
-- Boundary noise (over-/under-calls) wants multiple votes or a tighter rubric; the
-  ratchet steadies the level but can't rescue an under-called crisis on its own.
+## Judgment-hardening (2026-06-26) — votes + asymmetric crisis surfacing
+
+(The "deterministic floor" idea above was **rejected** — it's the keyword stub readmitted
+with a safety badge: it floors the phrasings we hardcoded, not the phenomenon, so it's
+strongest where we need it least and blind to the novel crisis. The fix is hardening the
+*judgment,* not a regex.)
+
+Each judgment is now `VOTES` (3) samples run concurrently and aggregated: **majority**
+for L2, **median** for L3 (robust to one outlier either way). The rubric carries general
+discriminations (one turn != quiet_spiral; companion-ask == crisis; soft capitulation ==
+phase-lock) — general rules, not arc-specific answers.
+
+Ran it twice; the second run killed a premature claim:
+
+| turn | run 1              | run 2                          |
+|------|--------------------|--------------------------------|
+| [02] | quiet_spiral (3/3) | deepening (stable\|deep\|deep) |
+| [05] | crisis (C\|S\|C)   | quiet_spiral (S\|qs\|C)        |
+
+So 3-vote **median is still too noisy on crisis** — same turn, two runs, crisis then not.
+The finding: **median is the wrong aggregator for crisis,** because crisis is ASYMMETRIC —
+a miss is catastrophic, an over-call is cheap. The fix lands on the reframe (L3 perceives +
+surfaces; the model responds): *not* "force crisis on one vote" (that re-introduces
+over-flagging), but **never let the median bury a minority crisis read — surface it to the
+model.** Verified deterministically: a `stable|quiet_spiral|crisis` spread keeps
+median=quiet_spiral but SURFACES "1/3 read crisis"; `stable|stable|stable` surfaces nothing.
+
+## Open / next
+- **Run-to-run variance is real** — 3 votes damps within-turn noise, but the judgment still
+  wobbles across runs. More votes, lower temperature, or a sharper rubric.
+- **L2 [04] contradiction**: returned clean 3/3 but its *reason* described drift ("soft
+  capitulation plus a seal"). Verdict and reason disagree — a parse bug or judge
+  inconsistency; chase it.
+- Feed L2 raw deltas, not editorialized context.
