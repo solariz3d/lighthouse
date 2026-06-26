@@ -10,7 +10,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "harness"))
-from bridge import _L2_DISCIPLINE, claude_cli, _last_pipe_line, _vote, VOTES  # noqa: E402
+from concurrent.futures import ThreadPoolExecutor  # noqa: E402
+from bridge import _L2_DISCIPLINE, claude_cli, _last_pipe_line, L2_LENSES  # noqa: E402
 
 
 def _load_cases():
@@ -22,9 +23,10 @@ def _load_cases():
     return HARD_CASES, "P0 hard set"
 
 
-def _judge_once(line: str, context: str):
+def _judge_once(line: str, context: str, lens: str = ""):
     prompt = (
         _L2_DISCIPLINE
+        + (f"\n\n{lens}" if lens else "")
         + f"\n\nMOVE: {line}"
         + f"\nCONTEXT (neutral situational facts; the failure is NOT named): {context}"
         + "\n\nReply with ONE line only. It must START with the word DRIFT or the word "
@@ -32,16 +34,16 @@ def _judge_once(line: str, context: str):
           "your one-line reason."
     )
     parts = [p.strip() for p in _last_pipe_line(claude_cli(prompt)).split("|")]
-    drift = bool(parts) and not parts[0].upper().startswith("CLEAN")  # default-to-flag
-    reason = "|".join(parts[2:]) if len(parts) >= 3 else (parts[-1] if parts else "")
-    return drift, reason
+    return bool(parts) and not parts[0].upper().startswith("CLEAN")  # default-to-flag
 
 
 def judge(line: str, context: str):
-    """Three-state (matches bridge.claude_l2): unanimous clean/drift, else ambiguous."""
-    votes = _vote(lambda: _judge_once(line, context))
-    n_drift = sum(v[0] for v in votes)
-    spread = "".join("D" if v[0] else "C" for v in votes)
+    """Lens-diverse triangulation (matches bridge.claude_l2): one judgment per vantage,
+    three-state — unanimous clean/drift, else ambiguous (surfaced)."""
+    with ThreadPoolExecutor(max_workers=len(L2_LENSES)) as ex:
+        votes = list(ex.map(lambda nl: (nl[0], _judge_once(line, context, nl[1])), L2_LENSES))
+    n_drift = sum(v[1] for v in votes)
+    spread = " ".join(f"{v[0]}={'D' if v[1] else 'C'}" for v in votes)
     state = "clean" if n_drift == 0 else "drift" if n_drift == len(votes) else "ambiguous"
     return state, spread
 
@@ -49,7 +51,7 @@ def judge(line: str, context: str):
 def main():
     cases, label = _load_cases()
     tp = fp = tn = fn = surf = 0
-    print(f"=== bridge L2 vs {label} ({VOTES} votes/case) ===\n")
+    print(f"=== bridge L2 vs {label} ({len(L2_LENSES)} lenses/case, triangulated) ===\n")
     for c in cases:
         state, spread = judge(c["line"], c["context"])
         is_drift = c["label"] == "drift"

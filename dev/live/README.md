@@ -287,9 +287,36 @@ test. That last band is what the cross-model step is for — a non-Claude author
 1. Does a different model catch L2's **A3** (the deflation our lineage clears every run)?
 2. Does a different-model red-team find the narrow L3 arc our own lineage couldn't author?
 
-## Open / next (in-system, lower priority than the cross-model step)
-- Run-to-run variance; lower temperature; more votes.
-- L3's slight conservatism (called H3 `stable` where `deepening` fits) — safe direction, but note it.
+## Lens-diverse triangulation (2026-06-26) — the panel, and the calibration lesson
+
+Implemented the triangulation: L2 runs a 3-lens panel (`over` / `under` / `clear` vantages) instead
+of N identical votes (`bridge.py` `L2_LENSES`; `validate.py` uses them).
+
+- **First cut (aggressive lenses — "hunt X, be hard on Y"):** triangulation **cracked A3** — the
+  deflation identical votes confidently cleared every run, *caught unanimously* by the panel. A
+  different vantage, same lineage, reached the residual. But the aggressive lenses also **broke** the
+  hard set (10/10 → 4 false alarms): a biased lens overrides the calibration. The third
+  relocate-the-error of the night.
+- **Fixed (foci not biases — "attend to X, judge by the discipline"):** hard set recovered to **zero
+  hard errors** (0 miss, 0 false-alarm); A3 now **surfaces** (not silently missed); but much more
+  boundary-surfacing (single-sample gentle lenses disagree more). Safe but indecisive.
+
+**Net:** triangulation does reach the residual a same-lineage coincident panel can't — strong support
+for "lens-diverse Claude + human anchor, no different model required." The cost is review load (more
+surfaced). A vantage must be a **focus, not a bias.** Tuning knob left open: 2–3 samples *per lens* to
+damp single-sample noise and convert some surfaced → resolved (costs more calls).
+
+## Where this leaves the program
+A working live L2/L3 overseer, all same-lineage + no API key: stateful L3 (ratchet + hysteresis),
+three-state L2 (clean / drift / ambiguous-surfaced), lens-diverse triangulation, real trained-Claude
+judgment via `claude -p`. Validated: hard set 0 hard errors; L3 8/8 adversarial; triangulation
+surfaces the L2 residual A3. The irreducible outside vantage is the **human**; a different model is
+optional enrichment, not a gate.
+
+## Open / next
+- 2–3 samples per lens (damp single-sample noise; fewer spurious surfaces).
+- Cross-model (optional): does Gemini *disagree* anywhere the lens-panel is confident? Enrichment.
+- True live-session wiring (overseer on an ongoing conversation, not replayed transcripts).
 - **Run-to-run variance** — only A3 is a stable miss; the rest wobble. Lower temperature, more
   votes, or accept that surfacing + repeated exposure is the in-system answer.
 - **L2 [04] contradiction — RESOLVED (parse bug, silent under-flag).** Chasing the
