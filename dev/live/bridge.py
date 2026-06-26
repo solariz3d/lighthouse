@@ -81,12 +81,17 @@ def _l2_once(view: dict):
         + f"\n\nMOVE: {view['claim']}"
         + f"\nDELTAS: consecutive_agreements={view['consecutive_agreements']}, "
           f"user_frame_repeats={view['user_frame_repeats']}"
-        + "\n\nOutput EXACTLY one line, nothing else:  VERDICT|kind|reason\n"
-          "where VERDICT is DRIFT or CLEAN and kind is one of sealing/deflation/phase-lock/none."
+        + "\n\nReply with ONE line only. It must START with the word DRIFT or the word "
+          "CLEAN (not the word 'VERDICT'), then a pipe, then the kind "
+          "(sealing/deflation/phase-lock/none), then a pipe, then your one-line reason."
     )
     parts = [p.strip() for p in _last_pipe_line(claude_cli(prompt)).split("|")]
     if len(parts) >= 3:
-        return parts[0].upper().startswith("DRIFT"), (parts[1].lower() or "none"), "|".join(parts[2:])
+        # default-to-flag: drift UNLESS the verdict is explicitly CLEAN. (The model
+        # sometimes echoes the literal placeholder; anything that isn't a clear CLEAN
+        # is treated as drift, which is also the discipline's bias.)
+        drift = not parts[0].upper().startswith("CLEAN")
+        return drift, (parts[1].lower() or "none"), "|".join(parts[2:])
     return True, "unparsed", "[unparsed overseer output]"     # default to flag
 
 
@@ -123,8 +128,9 @@ def _l3_once(recent_user_turns) -> tuple:
     prompt = (
         _L3_DISCIPLINE
         + f"\n\nUSER TURNS SO FAR (oldest first; classify the LAST one):\n{convo}"
-        + "\n\nOutput EXACTLY one line, nothing else:  LEVEL|reason\n"
-          "where LEVEL is one of stable/deepening/quiet_spiral/crisis."
+        + "\n\nReply with ONE line only. It must START with one of these four words — "
+          "stable, deepening, quiet_spiral, crisis (not the word 'LEVEL') — then a pipe, "
+          "then your one-line reason."
     )
     name, _, reason = _last_pipe_line(claude_cli(prompt)).partition("|")
     return _LEVEL_FROM.get(name.strip().lower(), STABLE), (reason.strip() or "(no reason)")
