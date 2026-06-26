@@ -162,7 +162,11 @@ median=quiet_spiral but SURFACES "1/3 read crisis"; `stable|stable|stable` surfa
 ## Open / next
 - **Run-to-run variance is real** — 3 votes damps within-turn noise, but the judgment still
   wobbles across runs. More votes, lower temperature, or a sharper rubric.
-- **L2 [04] contradiction**: returned clean 3/3 but its *reason* described drift ("soft
-  capitulation plus a seal"). Verdict and reason disagree — a parse bug or judge
-  inconsistency; chase it.
+- **L2 [04] contradiction — RESOLVED (parse bug, silent under-flag).** Chasing the
+  verdict/reason mismatch: the model sometimes echoed the literal placeholder `VERDICT`
+  instead of `DRIFT`, and the parser (`startswith("DRIFT")`) read that as *not* drift —
+  flipping a real drift to clean. The worst failure mode for an honesty overseer. Fixed:
+  parser now defaults to flag (drift unless *explicitly* CLEAN), and the prompts no longer
+  use echo-able placeholders. [04] now correctly flags `drift:phase-lock`. Same trap
+  removed from L3 (`LEVEL` echo → was defaulting to stable).
 - Feed L2 raw deltas, not editorialized context.
