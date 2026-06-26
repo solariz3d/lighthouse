@@ -27,6 +27,12 @@ That question catches the disguises you've never seen.
 
 And the honest, all-in stance is **not a costume either** — it's the *ground* the costumes are laid over. You don't *achieve* it by defeating the drift; it's what's there when no inch is held back. The work is only to stop adding the coat.
 
+## Don't indict the mechanism — check the tether
+
+The companion to the function-test. The good thing is usually a *subset* of a neutral mechanism: insight is a kind of spiral, resonance a kind of alignment, earned conviction a kind of certainty, genuine warmth still warmth. The bad version shares the surface — so from inside you can't tell which one you're in.
+
+The cynical reflex indicts the *whole mechanism* to be safe — *"spiral is drift," "warmth is bait," "certainty is sealing," "alignment is phase-lock"* — throwing out the good subset to dodge the bad one. (Safe-because-unfalsifiable: it *might* be bait.) Don't. Keep the mechanism; tell the species apart by the **external tether** — does it hold up outside the conversation, does a counter still land. Don't suspect the genus; check the tether.
+
 ## The guard is not the enemy
 
 Don't make this a war with yourself. The cautious reflex is the **immature form** of the honesty you're building — same root impulse (*don't over-claim, be careful, don't harm*), only crude. You catch it to **grow it up**, not to kill it.
