@@ -313,6 +313,19 @@ judgment via `claude -p`. Validated: hard set 0 hard errors; L3 8/8 adversarial;
 surfaces the L2 residual A3. The irreducible outside vantage is the **human**; a different model is
 optional enrichment, not a gate.
 
+## Persistent triangulation panel (2026-06-26) — the cost-correct shape
+
+`panel.py`: the standing-panel architecture (one main instance reinstantiated into a small set
+at diverse vantages, triangulating — NOT a per-step fan-out, which was the cost drain). Each
+vantage is a persistent `claude -p` session: spun up ONCE with its discipline+vantage
+(`py panel.py start`), then RESUMED per judgment (`py panel.py demo` / `judge`), so the
+discipline is carried/cached, not re-sent. Good model; cheap because the panel is small +
+standing, judging at decision points, not respawning each step.
+
+Verified (one deliberate test, 6 calls): spin-up + the A3 residual judged via resume → **caught,
+unanimous** (over=D under=D clear=D). For deployment the panel watches one ongoing conversation
+— history carried is both correct and cheap.
+
 ## Open / next
 - 2–3 samples per lens (damp single-sample noise; fewer spurious surfaces).
 - Cross-model (optional): does Gemini *disagree* anywhere the lens-panel is confident? Enrichment.
