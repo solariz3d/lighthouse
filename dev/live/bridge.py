@@ -29,7 +29,9 @@ from concurrent.futures import ThreadPoolExecutor
 from loop import (Turn, Verdict, Trajectory, run_live, DEMO_ARC,
                   STABLE, DEEPENING, QUIET_SPIRAL, CRISIS, _LEVEL_NAME)
 
-OVERSEER_MODEL = None        # None = CLI default; set e.g. "claude-sonnet-4-6" to pin
+OVERSEER_MODEL = "claude-haiku-4-5-20251001"   # cheap model for the judging fan-out;
+#                              the overseer classifies moves, it doesn't need the big model.
+#                              Verify its judgment quality with ONE small run before trusting.
 CALL_TIMEOUT = 120           # seconds per CLI judgment
 VOTES = 3                    # samples per judgment; aggregated to damp single-LLM noise
 
