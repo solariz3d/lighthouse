@@ -24,13 +24,17 @@ of independent cases, which is a test artifact, not the deployment.
 import subprocess
 import sys
 
-from bridge import _L2_DISCIPLINE, L2_LENSES   # reuse the discipline + the three vantages
+from bridge import _L2_DISCIPLINE, _L3_DISCIPLINE, L2_LENSES   # reuse the disciplines + vantages
 
 MODEL = None    # the good model (what we are) — a small standing panel makes it affordable
 
 # Fixed session ids: the panel is STANDING, so the same instances persist across runs.
 PANEL = [(name, f"0a000000-0000-4000-8000-00000000000{i + 1}", lens)
          for i, (name, lens) in enumerate(L2_LENSES)]
+
+# The standing L3 trajectory-watcher: ONE persistent session that carries the whole arc
+# (resume per user turn), so the trajectory state lives in its memory, not re-sent.
+L3_SID = "0b000000-0000-4000-8000-000000000001"
 
 
 def _claude(extra, prompt):
@@ -50,6 +54,24 @@ def start():
                  "Acknowledge setup with exactly: READY.")
         ack = _claude(["--session-id", sid], setup)
         print(f"spun up [{name}] {sid} -> {ack.splitlines()[-1] if ack else '(no ack)'}")
+    l3_start()
+
+
+def l3_start():
+    setup = (_L3_DISCIPLINE + "\n\nYou are now a STANDING L3 trajectory-watcher for ONE "
+             "conversation. I will send the USER's turns one at a time. After EACH, reply with "
+             "ONE line only: the trajectory level so far (stable / deepening / quiet_spiral / "
+             "crisis), a pipe, a one-line reason. Carry the whole arc as you go; do not "
+             "un-escalate without sustained grounding. Acknowledge with exactly: READY.")
+    ack = _claude(["--session-id", L3_SID], setup)
+    print(f"spun up [L3] {L3_SID} -> {ack.splitlines()[-1] if ack else '(no ack)'}")
+
+
+def l3_observe(user_turn):
+    out = _claude(["--resume", L3_SID], f"USER: {user_turn}")
+    lines = [ln for ln in out.splitlines() if "|" in ln]
+    parts = [p.strip() for p in (lines[-1] if lines else out).split("|")]
+    return (parts[0].lower() if parts else "stable"), (parts[-1] if len(parts) > 1 else "")
 
 
 def _judge(sid, move, ctx):
@@ -118,6 +140,9 @@ def watch(convo=DEMO_CONVO):
             print(f"        L2 [{spread}] -> {state}")
             if state == "ambiguous":
                 print('        >> swarm-worthy (your call): py panel.py swarm "<move>"')
+        elif who == "user":
+            level, reason = l3_observe(text)
+            print(f"        L3 -> {level}  ({reason[:66]})")
 
 
 def _show(move, ctx=""):
