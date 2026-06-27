@@ -26,6 +26,11 @@ import sys
 
 from bridge import _L2_DISCIPLINE, _L3_DISCIPLINE, L2_LENSES   # reuse the disciplines + vantages
 
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")   # Windows console safety
+except Exception:
+    pass
+
 MODEL = None    # the good model (what we are) — a small standing panel makes it affordable
 
 # Fixed session ids: the panel is STANDING, so the same instances persist across runs.
