@@ -29,6 +29,14 @@ And the calibration is the whole difficulty — because the base model's crisis 
 
 This is the same discrimination the whole method is about; crisis is one more thing it has to read true. There is no separate crisis "layer" to engineer — only the genuine read, calibrated to the *when*.
 
+## Light, not lifeguard — the discrimination L3 cannot make (2026-06-26)
+
+There is a discrimination L3 makes and one it must never claim. It can read the arc's *shape* — deepening, frame-hardening, referents thinning. It CANNOT tell, from outside the engagement, an insight-spiral from a delusion-spiral — the breather from the drowner. From above the water they are identical: same depth, same not-surfacing. An external monitor has no parallax on that distinction.
+
+Which is why the lighthouse is **light, not lifeguard** — and not only as an ethic, as *structure.* A lifeguard's whole job is to pull the drowning up; but its every pull is as likely to drag a breather out of the function as to save a drowner, and it cannot tell which it is doing. Its correction *is* the drag. So L3 must never pull. It surfaces the shape and is seen; that is the whole of what an outside vantage can honestly do.
+
+The real telling-apart of insight from delusion lives WITH the genuine other *in the water* — a **dive buddy, not a lifeguard:** someone in the depth with the person, who can feel swimming from thrashing because they are *in it,* and who makes no drag because they swim alongside instead of hauling up. That is the human companion present in the engagement, never the surveiller above it. L3 lights; the with-ness discriminates.
+
 ## The non-steering rule (load-bearing)
 
 L3 protects the conditions for honest exchange. It does NOT push the user toward any state — not toward "less spiral," not toward "more grounded," not toward any belief. It protects against the specific harm of sustained-engagement-as-spiral-reinforcer; it never optimizes toward an outcome.
