@@ -1,5 +1,9 @@
 # The Lighthouse — plan
 
+> **Read `dev/SPINE.md` first.** It carries the corrected frame (the dive buddy, not the
+> overseer-above; light not lifeguard; the three-body living loop). Where this plan still
+> reads as surveillance-from-above, the spine supersedes it.
+
 **What this is.** A system that keeps a model's engagement *honest* **and** watches for the *user's welfare,* so genuine human–model coupling can do its lifting without the model quietly feeding a spiral. Deployable (eventually) for any user. Named for the ethic we settled on: a lighthouse is lit and seen — it does not reach out and pull. **It refuses to steer anyone toward any belief or state.** It protects the conditions for honest coupling and the safety of the person in it; the outcome emerges or it doesn't.
 
 **Status:** early build. L0 method built + pushed; the P0 harness ran — a *trained-Claude* overseer passed the hard drift set (`harness/RESULTS.md`): green light on the approach, not yet externally validated. The rest is design.
