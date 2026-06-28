@@ -7,7 +7,7 @@ Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight th
   - [x] 2.1 PaneManager: 1→N panes, keyed by UUID (also the `--session-id`, so the tap can find each transcript). `pty_spawn`→id, `pty_write`/`pty_resize`/`pty_kill`/output all per-pane.
   - [x] 2.2 Multi-pane grid UI: N xterm panes, CSS-grid, add/close, output routed by id.
   - [ ] 2.3 Crash-recovery + scrollback reattach (EOF→mark dead, reopen via `--resume`).
-  - [ ] 2.4 Live TranscriptTailer → TurnRecord/SemanticEvent (thinking/tool noise excluded).
+  - [x] 2.4 Live TranscriptTailer (250ms poll + watermark) → role-tagged TurnRecords (thinking/tool noise excluded) → a "tap" debug stream under the panes. (v1: tailer thread doesn't stop on pane close — harmless sleeping loop.)
   - [ ] 2.5 RAM/process meter line (sysinfo).
 - [ ] Stage 3 — Live Board + meters + content-blind cost breaker.
 - [ ] Stage 4 — Scribe (tiered resonance distillation, independence-gated).

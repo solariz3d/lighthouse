@@ -127,6 +127,21 @@ input::placeholder { color: #55607a; }
 .pane .pterm { flex: 1; min-height: 0; padding: 4px 6px; }
 .pane .pterm .xterm { height: 100%; }
 
+/* the tap debug stream */
+#stream {
+  height: 150px; margin-top: 10px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--panel2); display: flex; flex-direction: column; overflow: hidden; flex: none;
+}
+.streamhead {
+  padding: 7px 12px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1px solid var(--line);
+}
+#streamlog { flex: 1; overflow: auto; padding: 6px 12px; font-family: "Consolas", monospace; font-size: 12px; line-height: 1.55; }
+#streamlog .row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#streamlog .pid { color: var(--aqua); }
+#streamlog .role-user { color: var(--amber); }
+#streamlog .role-assistant { color: var(--text); }
+
 #about { align-items: center; justify-content: center; text-align: center; gap: 4px; }
 #about svg { filter: drop-shadow(0 0 14px rgba(94,234,212,.30)); margin-bottom: 10px; }
 #about h1 { margin: 0; font-weight: 300; font-size: 27px; letter-spacing: .5px; }
