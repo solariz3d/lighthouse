@@ -7,7 +7,7 @@ use std::process::{Command, Stdio};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use std::collections::HashMap;
 use std::io::{Read, Seek, SeekFrom, Write};
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 use portable_pty::{native_pty_system, CommandBuilder, MasterPty, PtySize};
 use tauri::{AppHandle, Emitter, State};
 use uuid::Uuid;
@@ -199,6 +199,43 @@ struct TurnRecord {
     text: String,
 }
 
+// ---- cost: aggregate real per-turn `usage` from the transcripts, priced per model ----
+#[derive(Default, Clone, Serialize)]
+struct CostTotals {
+    input: u64,
+    output: u64,
+    cache_read: u64,
+    cache_write: u64,
+    usd: f64,
+}
+struct Cost(Arc<Mutex<CostTotals>>);
+
+// $/1M tokens (date-stamped table from PLAN.md §9, cached 2026-06): (input, output, cache_read, cache_write)
+fn turn_cost_usd(model: &str, inp: u64, out: u64, cr: u64, cw: u64) -> f64 {
+    let (pin, pout, pcr, pcw) = if model.contains("haiku") {
+        (1.0, 5.0, 0.1, 1.25)
+    } else if model.contains("sonnet") {
+        (3.0, 15.0, 0.3, 3.75)
+    } else {
+        (5.0, 25.0, 0.5, 6.25) // opus 4.8 default
+    };
+    (inp as f64 * pin + out as f64 * pout + cr as f64 * pcr + cw as f64 * pcw) / 1_000_000.0
+}
+
+fn extract_usage(v: &serde_json::Value) -> Option<(u64, u64, u64, u64, String)> {
+    let msg = v.get("message")?;
+    let u = msg.get("usage")?;
+    let model = msg.get("model").and_then(|x| x.as_str()).unwrap_or("").to_string();
+    let g = |k: &str| u.get(k).and_then(|x| x.as_u64()).unwrap_or(0);
+    Some((
+        g("input_tokens"),
+        g("output_tokens"),
+        g("cache_read_input_tokens"),
+        g("cache_creation_input_tokens"),
+        model,
+    ))
+}
+
 // claude's project-dir scheme: drive-colon and every path separator become '-'
 fn encode_cwd(cwd: &str) -> String {
     cwd.chars()
@@ -233,7 +270,7 @@ fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
 // poll the transcript (250ms + a size watermark) and emit each new complete turn.
 // v1 simplification: the tailer thread runs until the file is gone for ~3 min; it does
 // not yet stop on pane close (a sleeping loop, negligible for a handful of panes).
-fn start_tailer(app: AppHandle, pane_id: String, cwd: String) {
+fn start_tailer(app: AppHandle, pane_id: String, cwd: String, cost: Arc<Mutex<CostTotals>>) {
     let path = PathBuf::from(home())
         .join(".claude")
         .join("projects")
@@ -280,6 +317,18 @@ fn start_tailer(app: AppHandle, pane_id: String, cwd: String) {
                         if let Some((role, text)) = extract_turn(&v) {
                             let _ = app.emit("turn", TurnRecord { pane: pane_id.clone(), role, text });
                         }
+                        if let Some((inp, out, cr, cw, model)) = extract_usage(&v) {
+                            let snapshot = {
+                                let mut c = cost.lock().unwrap();
+                                c.input += inp;
+                                c.output += out;
+                                c.cache_read += cr;
+                                c.cache_write += cw;
+                                c.usd += turn_cost_usd(&model, inp, out, cr, cw);
+                                c.clone()
+                            };
+                            let _ = app.emit("cost", snapshot);
+                        }
                     }
                 }
             }
@@ -288,11 +337,11 @@ fn start_tailer(app: AppHandle, pane_id: String, cwd: String) {
 }
 
 #[tauri::command]
-fn pty_spawn(app: AppHandle, panes: State<Panes>, cwd: String) -> Result<String, String> {
+fn pty_spawn(app: AppHandle, panes: State<Panes>, cost: State<Cost>, cwd: String) -> Result<String, String> {
     let pane_id = Uuid::new_v4().to_string();
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), resolved_cwd.clone(), false)?;
-    start_tailer(app, pane_id.clone(), resolved_cwd);
+    start_tailer(app, pane_id.clone(), resolved_cwd, cost.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
     Ok(pane_id)
 }
@@ -340,6 +389,7 @@ struct SysMeter {
 fn main() {
     tauri::Builder::default()
         .manage(Panes(Mutex::new(HashMap::new())))
+        .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .setup(|app| {
             let handle = app.handle().clone();
             std::thread::spawn(move || {

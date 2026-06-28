@@ -41,6 +41,13 @@ function ensureListeners() {
       '  ·  claude ' + m.claude_procs + ' · ' + m.claude_mb + 'MB' +
       '  ·  <span class="' + (frac > 0.9 ? 'warn' : '') + '">RAM ' + usedG + '/' + totG + 'GB</span>';
   });
+  listen('cost', (e) => {
+    const c = e.payload;
+    const el = document.getElementById('cost');
+    if (!el) return;
+    const outk = (c.output / 1000).toFixed(1);
+    el.innerHTML = 'out ' + outk + 'k tok · <span class="usd">$' + c.usd.toFixed(3) + '</span>';
+  });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
     const log = document.getElementById('streamlog');
