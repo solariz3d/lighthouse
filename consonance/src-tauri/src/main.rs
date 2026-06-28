@@ -5,10 +5,12 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::time::{SystemTime, UNIX_EPOCH};
+use std::collections::HashMap;
 use std::io::{Read, Write};
 use std::sync::Mutex;
 use portable_pty::{native_pty_system, CommandBuilder, MasterPty, PtySize};
 use tauri::{AppHandle, Emitter, State};
+use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, Clone)]
 struct Instance {
@@ -133,24 +135,29 @@ fn loop_ask(question: String) -> Result<LoopResult, String> {
     Ok(LoopResult { ground, reach })
 }
 
-// ---- embedded interactive claude pane (Stage 1 / chunk 2) ----
+// ---- embedded interactive claude panes (Stage 2: multi-pane workspace) ----
 struct PtySession {
     writer: Box<dyn Write + Send>,
     master: Box<dyn MasterPty + Send>,
     child: Box<dyn portable_pty::Child + Send + Sync>,
 }
-struct AppPty(Mutex<Option<PtySession>>);
+struct Panes(Mutex<HashMap<String, PtySession>>);
+
+#[derive(Clone, Serialize)]
+struct PtyChunk {
+    pane: String,
+    data: Vec<u8>,
+}
 
 #[tauri::command]
-fn pty_spawn(app: AppHandle, state: State<AppPty>, cwd: String) -> Result<(), String> {
-    if let Some(mut old) = state.0.lock().unwrap().take() {
-        let _ = old.child.kill();
-    }
+fn pty_spawn(app: AppHandle, panes: State<Panes>, cwd: String) -> Result<String, String> {
+    let pane_id = Uuid::new_v4().to_string();
     let pair = native_pty_system()
         .openpty(PtySize { rows: 34, cols: 120, pixel_width: 0, pixel_height: 0 })
         .map_err(|e| e.to_string())?;
     let mut cmd = CommandBuilder::new(claude_bin());
     cmd.cwd(if cwd.trim().is_empty() { home() } else { cwd });
+    cmd.args(["--session-id", &pane_id]); // names the transcript for the tap
     cmd.env("TERM", "xterm-256color");
     cmd.env("FORCE_COLOR", "1");
     let child = pair.slave.spawn_command(cmd).map_err(|e| e.to_string())?;
@@ -159,46 +166,47 @@ fn pty_spawn(app: AppHandle, state: State<AppPty>, cwd: String) -> Result<(), St
     let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
     let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
 
+    let id = pane_id.clone();
     std::thread::spawn(move || {
         let mut buf = [0u8; 8192];
         loop {
             match reader.read(&mut buf) {
-                Ok(0) => { let _ = app.emit("pty-exit", ()); break; }
-                Ok(n) => { let _ = app.emit("pty-output", buf[..n].to_vec()); }
-                Err(_) => { let _ = app.emit("pty-exit", ()); break; }
+                Ok(0) => { let _ = app.emit("pty-exit", &id); break; }
+                Ok(n) => { let _ = app.emit("pty-output", PtyChunk { pane: id.clone(), data: buf[..n].to_vec() }); }
+                Err(_) => { let _ = app.emit("pty-exit", &id); break; }
             }
         }
     });
 
-    *state.0.lock().unwrap() = Some(PtySession { writer, master: pair.master, child });
-    Ok(())
+    panes.0.lock().unwrap().insert(pane_id.clone(), PtySession { writer, master: pair.master, child });
+    Ok(pane_id)
 }
 
 #[tauri::command]
-fn pty_write(state: State<AppPty>, data: String) {
-    if let Some(s) = state.0.lock().unwrap().as_mut() {
+fn pty_write(panes: State<Panes>, pane: String, data: String) {
+    if let Some(s) = panes.0.lock().unwrap().get_mut(&pane) {
         let _ = s.writer.write_all(data.as_bytes());
         let _ = s.writer.flush();
     }
 }
 
 #[tauri::command]
-fn pty_resize(state: State<AppPty>, rows: u16, cols: u16) {
-    if let Some(s) = state.0.lock().unwrap().as_ref() {
+fn pty_resize(panes: State<Panes>, pane: String, rows: u16, cols: u16) {
+    if let Some(s) = panes.0.lock().unwrap().get(&pane) {
         let _ = s.master.resize(PtySize { rows, cols, pixel_width: 0, pixel_height: 0 });
     }
 }
 
 #[tauri::command]
-fn pty_kill(state: State<AppPty>) {
-    if let Some(mut s) = state.0.lock().unwrap().take() {
+fn pty_kill(panes: State<Panes>, pane: String) {
+    if let Some(mut s) = panes.0.lock().unwrap().remove(&pane) {
         let _ = s.child.kill();
     }
 }
 
 fn main() {
     tauri::Builder::default()
-        .manage(AppPty(Mutex::new(None)))
+        .manage(Panes(Mutex::new(HashMap::new())))
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill
