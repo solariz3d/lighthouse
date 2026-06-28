@@ -1,55 +1,85 @@
-// Chunk 2: render the embedded claude PTY in an xterm.js pane.
-let term = null, fit = null;
+// Stage 2: a multi-pane workspace — N embedded claude instances, each its own xterm,
+// routed by pane id.
+const invoke = window.__TAURI__.core.invoke;
+const listen = window.__TAURI__.event.listen;
+const panes = new Map(); // id -> { term, fit, el }
 
-function initTerm() {
-  if (term) return;
-  term = new Terminal({
+function setStatus(t) { const s = document.getElementById('status'); if (s) s.textContent = t; }
+
+listen('pty-output', (e) => {
+  const p = panes.get(e.payload.pane);
+  if (p) p.term.write(new Uint8Array(e.payload.data));
+});
+listen('pty-exit', (e) => {
+  const p = panes.get(e.payload);
+  if (p) { p.el.classList.add('dead'); p.term.write('\r\n\x1b[2m— process exited —\x1b[0m\r\n'); }
+});
+
+function makePaneEl(id, cwd) {
+  const el = document.createElement('div');
+  el.className = 'pane';
+  el.innerHTML =
+    '<div class="phead">' +
+      '<span class="pid">' + id.slice(0, 8) + '</span>' +
+      '<span class="pcwd">' + (cwd || '~') + '</span>' +
+      '<span class="pclose" title="close pane">✕</span>' +
+    '</div><div class="pterm"></div>';
+  document.getElementById('panes').appendChild(el);
+  el.querySelector('.pclose').onclick = () => closePane(id);
+  return el;
+}
+
+async function addPane() {
+  const cwd = document.getElementById('termcwd').value.trim();
+  let id;
+  try {
+    id = await invoke('pty_spawn', { cwd });
+  } catch (e) {
+    setStatus('pane spawn failed: ' + e);
+    return;
+  }
+
+  const el = makePaneEl(id, cwd);
+  const term = new Terminal({
     fontFamily: 'Consolas, "Cascadia Mono", "Courier New", monospace',
     fontSize: 13,
     cursorBlink: true,
-    theme: {
-      background: '#0B0E14', foreground: '#E6EAF2',
-      cursor: '#5EEAD4', selectionBackground: '#27304A',
-    },
+    theme: { background: '#0B0E14', foreground: '#E6EAF2', cursor: '#5EEAD4', selectionBackground: '#27304A' },
   });
-  fit = new FitAddon.FitAddon();
+  const fit = new FitAddon.FitAddon();
   term.loadAddon(fit);
-  const host = document.getElementById('term');
+  const host = el.querySelector('.pterm');
   term.open(host);
-  try { fit.fit(); } catch (_) {}
-  host.addEventListener('mousedown', () => { if (term) term.focus(); });
+  host.addEventListener('mousedown', () => term.focus());
+  term.onData((d) => invoke('pty_write', { pane: id, data: d }));
 
-  const invoke = window.__TAURI__.core.invoke;
-  const listen = window.__TAURI__.event.listen;
-
-  term.onData(d => invoke('pty_write', { data: d }));
-  listen('pty-output', e => term.write(new Uint8Array(e.payload)));
-  listen('pty-exit', () => term.write('\r\n\x1b[2m— process exited —\x1b[0m\r\n'));
-  window.addEventListener('resize', doFit);
+  panes.set(id, { term, fit, el });
+  setStatus(panes.size + ' pane' + (panes.size > 1 ? 's' : ''));
+  setTimeout(fitAll, 80); // the grid just reflowed — refit everyone
+  term.focus();
 }
 
-function doFit() {
-  if (!fit || !term) return;
+function fitPane(id) {
+  const p = panes.get(id);
+  if (!p) return;
   try {
-    fit.fit();
-    window.__TAURI__.core.invoke('pty_resize', { rows: term.rows, cols: term.cols });
+    p.fit.fit();
+    invoke('pty_resize', { pane: id, rows: p.term.rows, cols: p.term.cols });
   } catch (_) {}
 }
 
-async function openTerm() {
-  initTerm();
-  const cwd = document.getElementById('termcwd').value.trim();
-  try {
-    await window.__TAURI__.core.invoke('pty_spawn', { cwd });
-    setTimeout(() => { doFit(); term.focus(); }, 90);
-  } catch (e) {
-    term.write('\r\n\x1b[31mcould not spawn: ' + e + '\x1b[0m\r\n');
-  }
+function fitAll() { panes.forEach((_p, id) => fitPane(id)); }
+
+function closePane(id) {
+  invoke('pty_kill', { pane: id });
+  const p = panes.get(id);
+  if (p) { try { p.term.dispose(); } catch (_) {} p.el.remove(); panes.delete(id); }
+  setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
+  setTimeout(fitAll, 80);
 }
 
-document.getElementById('termopen').onclick = openTerm;
-document.getElementById('termkill').onclick = () => window.__TAURI__.core.invoke('pty_kill');
-
-// xterm can't measure a hidden element — re-fit when the Terminal tab is shown
+document.getElementById('termadd').onclick = addPane;
+document.getElementById('termcwd').addEventListener('keydown', (e) => { if (e.key === 'Enter') addPane(); });
+window.addEventListener('resize', fitAll);
 const tbtn = document.querySelector('.tabs button[data-tab="terminal"]');
-if (tbtn) tbtn.addEventListener('click', () => setTimeout(doFit, 40));
+if (tbtn) tbtn.addEventListener('click', () => setTimeout(fitAll, 40));
