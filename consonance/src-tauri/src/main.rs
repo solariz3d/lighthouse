@@ -418,6 +418,14 @@ fn get_board(board: State<Board>) -> Vec<BoardEntry> {
     board.0.lock().unwrap().iter().cloned().collect()
 }
 
+// read the OS clipboard through Rust (the WebView2 swallows JS clipboard access)
+#[tauri::command]
+fn clipboard_read() -> String {
+    arboard::Clipboard::new()
+        .and_then(|mut c| c.get_text())
+        .unwrap_or_default()
+}
+
 // ---- the Scribe: distill the board into resonance (good model, gated by the user) ----
 const SCRIBE_PROMPT: &str = r#"You are the SCRIBE — an auto-curator. You distill a multi-instance conversation board into its RESONANCE: the few things genuinely worth carrying into a future instance, so it wakes already inside the conversation instead of as a stranger.
 
@@ -616,7 +624,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
-            scribe_distill, set_auto_distill
+            scribe_distill, set_auto_distill, clipboard_read
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
