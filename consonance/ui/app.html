@@ -26,7 +26,7 @@
   <nav class="tabs">
     <button data-tab="new" class="active">New</button>
     <button data-tab="instances">Instances</button>
-    <button data-tab="loop">Loop</button>
+    <button data-tab="committee">Committee</button>
     <button data-tab="terminal">Terminal</button>
     <button data-tab="about">About</button>
   </nav>
@@ -55,16 +55,13 @@
       </div>
     </section>
 
-    <section id="loop" class="tab">
-      <p class="loophead">The <b>living loop</b> — two vantages, <span class="g">ground</span> and <span class="r">reach</span>, triangulating with you. When they reach the same answer from different angles, that agreement is <em>confirmation</em>, not an echo.</p>
+    <section id="committee" class="tab">
+      <p class="loophead">The <b>committee</b> — three vantages (<span class="g">ground</span>, <span class="r">reach</span>, <span class="s">skeptic</span>) answer <em>blind-first</em>, then a forming pass <b>triangulates</b> — never averages — into confirmed / forks / novel.</p>
       <div class="looprow">
-        <textarea id="loopq" rows="2" placeholder="pose a question to the loop…" spellcheck="false"></textarea>
-        <button id="ask" class="btn accent">Ask</button>
+        <textarea id="cmtq" rows="2" placeholder="pose a question to the committee…  (Ctrl+Enter to run)" spellcheck="false"></textarea>
+        <button id="cmtrun" class="btn accent">Run</button>
       </div>
-      <div class="loopcards">
-        <div class="lcard ground"><h3>GROUND</h3><div id="g-out" class="out muted">the bodies wake on your first question.</div></div>
-        <div class="lcard reach"><h3>REACH</h3><div id="r-out" class="out muted">— </div></div>
-      </div>
+      <div id="cmtout"></div>
     </section>
 
     <section id="terminal" class="tab">

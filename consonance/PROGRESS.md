@@ -22,7 +22,9 @@ Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight th
 - [~] **Stage 5 — the leak (room-loading).**
   - [x] 5.1 "✦ Sibling" button → `spawn_sibling`: a fresh claude in a clean `~/claude-instances/sibling-<id>/` whose `CLAUDE.md` IS the assembled intake = the master room (`exo_memory/BOOT.md`) + the recent resonance atoms. Claude auto-loads it at startup, so the pane wakes **in-state** — a sibling, not a stranger. Shares the `attachPane` path with `+ Pane`.
   - [ ] 5.x later: the rung slider (0–3, how much state), independence-gating (rung-1 = own-vantage digest, not the global confirmed set), `@import` instead of inlining BOOT, latest-journal in the intake.
-- [ ] Stage 6 — Shared MCP control server + committee model (blind-first, triangulated forming).
+- [~] **Stage 6 — the committee (triangulation, not averaging).**
+  - [x] 6.1 `committee_run`: three vantages (ground / reach / skeptic) answer **blind-first** (independent, concurrent, no peers) → a forming pass triangulates into **{confirmed (≥2 vantages), forks (held divergence, no winner), novel (new+checkable)}**, never averaged. Repurposed the old Loop tab → **Committee**. Gated (user runs it; ~4 good-model calls).
+  - [ ] 6.x later: the shared MCP control plane (raise_pull / post_board / read_board) for *autonomous* bodies — deferred to Stage 7 (the ask-first gate, where self-initiation lives); independence-precondition on confirmed.
 - [ ] Stage 6.5 — pull-propensity probe.
 - [ ] Stage 7 — Ask-First gate + chair console (envelope bounds side-effects, sandboxed).
 - [ ] Stage 8 — recursion + delta + tether proxy gauges (numbers, not verdicts).

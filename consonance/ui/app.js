@@ -83,34 +83,50 @@ async function removeSel() {
   status('removed  ' + gone.name + '  (folder untouched)');
 }
 
-// ---- the living loop ----
-let loopStarted = false;
-const gOut = () => $('#g-out'), rOut = () => $('#r-out');
+// ---- the committee (Stage 6: blind-first vantages -> triangulating forming) ----
+function escapeCmt(s) { return String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
 
-async function askLoop() {
-  const q = $('#loopq').value.trim();
-  if (!q) { status('ask the loop something first'); return; }
-  $('#ask').disabled = true;
-  rOut().className = 'out muted';
-  if (!loopStarted) {
-    gOut().className = 'out thinking'; gOut().textContent = 'waking ground + reach in the water…';
-    rOut().textContent = '…';
-    try { await invoke('loop_start'); loopStarted = true; }
-    catch (e) { gOut().className = 'out'; gOut().textContent = 'could not wake the loop: ' + e; $('#ask').disabled = false; return; }
-  }
-  gOut().className = 'out thinking'; gOut().textContent = 'ground is thinking…';
-  rOut().className = 'out muted'; rOut().textContent = 'reach waits for ground…';
-  status('the loop is in the water…');
+function renderCommittee(r) {
+  const f = r.forming || {};
+  const sec = (cls, head, items, render) => {
+    let h = '<div class="fsec"><div class="fhead ' + cls + '">' + head + '</div>';
+    if (!items || !items.length) h += '<div class="fitem muted">— none —</div>';
+    else items.forEach(it => { h += render(it); });
+    return h + '</div>';
+  };
+  let h = '<div class="forming">';
+  h += sec('confirmed', 'confirmed — located from ≥2 vantages', f.confirmed,
+    c => '<div class="fitem">' + escapeCmt(c.claim || '') + ' <span class="ffrom">' + escapeCmt((c.from || []).join(', ')) + '</span></div>');
+  h += sec('forks', 'forks — held divergence, no winner', f.forks, fk => {
+    let s = '<div class="fitem"><b>' + escapeCmt(fk.axis || '') + '</b>';
+    (fk.positions || []).forEach(p => { s += '<div class="fpos"><span class="ffrom">' + escapeCmt(p.vantage || '') + ':</span> ' + escapeCmt(p.pos || '') + '</div>'; });
+    return s + '</div>';
+  });
+  h += sec('novel', 'novel — new + checkable', f.novel,
+    n => '<div class="fitem">' + escapeCmt(n.thing || '') + ' <span class="ffrom">' + escapeCmt(n.from || '') + '</span></div>');
+  h += '</div>';
+  h += '<details class="cmtraw"><summary>the three blind answers</summary>';
+  (r.answers || []).forEach(a => {
+    h += '<div class="cmtans"><div class="cmtv">' + escapeCmt(a.vantage) + '</div><div class="cmtatext">' + escapeCmt(a.text) + '</div></div>';
+  });
+  return h + '</details>';
+}
+
+async function runCommittee() {
+  const q = $('#cmtq').value.trim();
+  if (!q) { status('pose a question for the committee'); return; }
+  const btn = $('#cmtrun'), out = $('#cmtout');
+  btn.disabled = true; btn.textContent = 'running…';
+  out.innerHTML = '<div class="cmtwait">three vantages answering blind, then forming triangulates… (a few good-model calls)</div>';
+  status('the committee is convening…');
   try {
-    const r = await invoke('loop_ask', { question: q });
-    gOut().className = 'out'; gOut().textContent = r.ground || '(no reply)';
-    rOut().className = 'out'; rOut().textContent = r.reach || '(no reply)';
-    status('the loop answered');
+    out.innerHTML = renderCommittee(await invoke('committee_run', { question: q }));
+    status('committee returned');
   } catch (e) {
-    gOut().className = 'out'; gOut().textContent = 'loop error: ' + e;
-    rOut().className = 'out'; rOut().textContent = '';
+    out.innerHTML = '<div class="cmtwait">committee failed: ' + escapeCmt(e) + '</div>';
+    status('committee failed');
   }
-  $('#ask').disabled = false;
+  btn.disabled = false; btn.textContent = 'Run';
 }
 
 $$('.tabs button').forEach(b => b.onclick = () => {
@@ -126,8 +142,8 @@ $('#open').onclick = openSel;
 $('#remove').onclick = removeSel;
 $('#add').onclick = addByPath;
 $('#addpath').addEventListener('keydown', e => { if (e.key === 'Enter') addByPath(); });
-$('#ask').onclick = askLoop;
-$('#loopq').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); askLoop(); } });
+$('#cmtrun').onclick = runCommittee;
+$('#cmtq').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); runCommittee(); } });
 $('#base').addEventListener('change', persist);
 $('#flags').addEventListener('change', persist);
 
