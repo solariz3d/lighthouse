@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Instances, in concert."
 authors = ["solariz3d"]
 edition = "2021"
+default-run = "consonance"
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }

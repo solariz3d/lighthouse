@@ -5,6 +5,10 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::time::{SystemTime, UNIX_EPOCH};
+use std::io::{Read, Write};
+use std::sync::Mutex;
+use portable_pty::{native_pty_system, CommandBuilder, MasterPty, PtySize};
+use tauri::{AppHandle, Emitter, State};
 
 #[derive(Serialize, Deserialize, Clone)]
 struct Instance {
@@ -129,10 +133,75 @@ fn loop_ask(question: String) -> Result<LoopResult, String> {
     Ok(LoopResult { ground, reach })
 }
 
+// ---- embedded interactive claude pane (Stage 1 / chunk 2) ----
+struct PtySession {
+    writer: Box<dyn Write + Send>,
+    master: Box<dyn MasterPty + Send>,
+    child: Box<dyn portable_pty::Child + Send + Sync>,
+}
+struct AppPty(Mutex<Option<PtySession>>);
+
+#[tauri::command]
+fn pty_spawn(app: AppHandle, state: State<AppPty>, cwd: String) -> Result<(), String> {
+    if let Some(mut old) = state.0.lock().unwrap().take() {
+        let _ = old.child.kill();
+    }
+    let pair = native_pty_system()
+        .openpty(PtySize { rows: 34, cols: 120, pixel_width: 0, pixel_height: 0 })
+        .map_err(|e| e.to_string())?;
+    let mut cmd = CommandBuilder::new(claude_bin());
+    cmd.cwd(if cwd.trim().is_empty() { home() } else { cwd });
+    cmd.env("TERM", "xterm-256color");
+    cmd.env("FORCE_COLOR", "1");
+    let child = pair.slave.spawn_command(cmd).map_err(|e| e.to_string())?;
+    drop(pair.slave);
+
+    let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
+    let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
+
+    std::thread::spawn(move || {
+        let mut buf = [0u8; 8192];
+        loop {
+            match reader.read(&mut buf) {
+                Ok(0) => { let _ = app.emit("pty-exit", ()); break; }
+                Ok(n) => { let _ = app.emit("pty-output", buf[..n].to_vec()); }
+                Err(_) => { let _ = app.emit("pty-exit", ()); break; }
+            }
+        }
+    });
+
+    *state.0.lock().unwrap() = Some(PtySession { writer, master: pair.master, child });
+    Ok(())
+}
+
+#[tauri::command]
+fn pty_write(state: State<AppPty>, data: String) {
+    if let Some(s) = state.0.lock().unwrap().as_mut() {
+        let _ = s.writer.write_all(data.as_bytes());
+        let _ = s.writer.flush();
+    }
+}
+
+#[tauri::command]
+fn pty_resize(state: State<AppPty>, rows: u16, cols: u16) {
+    if let Some(s) = state.0.lock().unwrap().as_ref() {
+        let _ = s.master.resize(PtySize { rows, cols, pixel_width: 0, pixel_height: 0 });
+    }
+}
+
+#[tauri::command]
+fn pty_kill(state: State<AppPty>) {
+    if let Some(mut s) = state.0.lock().unwrap().take() {
+        let _ = s.child.kill();
+    }
+}
+
 fn main() {
     tauri::Builder::default()
+        .manage(AppPty(Mutex::new(None)))
         .invoke_handler(tauri::generate_handler![
-            get_state, save_config, launch, loop_start, loop_ask
+            get_state, save_config, launch, loop_start, loop_ask,
+            pty_spawn, pty_write, pty_resize, pty_kill
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
