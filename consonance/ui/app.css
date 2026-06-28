@@ -124,6 +124,8 @@ input::placeholder { color: #55607a; }
 .pane .phead .pcwd { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pane .phead .pclose { cursor: pointer; padding: 0 4px; }
 .pane .phead .pclose:hover { color: var(--amber); }
+.pane .phead .preopen { cursor: pointer; padding: 0 4px; color: var(--aqua); }
+.pane .phead .preopen:hover { color: var(--text); }
 .pane .pterm { flex: 1; min-height: 0; padding: 4px 6px; }
 .pane .pterm .xterm { height: 100%; }
 
@@ -147,4 +149,6 @@ input::placeholder { color: #55607a; }
 #about h1 { margin: 0; font-weight: 300; font-size: 27px; letter-spacing: .5px; }
 #about p { color: var(--muted); max-width: 400px; line-height: 1.65; margin: 8px 0 0; }
 
-footer { color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); padding-top: 12px; letter-spacing: .3px; }
+footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); padding-top: 12px; letter-spacing: .3px; }
+#hud { font-family: "Consolas", monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
+#hud .warn { color: var(--amber); }

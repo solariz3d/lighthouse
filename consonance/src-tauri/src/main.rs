@@ -304,12 +304,81 @@ fn pty_kill(panes: State<Panes>, pane: String) {
     }
 }
 
+// crash-recovery: relaunch a dead pane against the SAME session via --resume (same
+// transcript continues, so the still-running tailer keeps catching turns).
+#[tauri::command]
+fn pty_reopen(app: AppHandle, panes: State<Panes>, pane: String, cwd: String) -> Result<(), String> {
+    let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
+    let pair = native_pty_system()
+        .openpty(PtySize { rows: 34, cols: 120, pixel_width: 0, pixel_height: 0 })
+        .map_err(|e| e.to_string())?;
+    let mut cmd = CommandBuilder::new(claude_bin());
+    cmd.cwd(&resolved_cwd);
+    cmd.args(["--resume", &pane]);
+    cmd.env("TERM", "xterm-256color");
+    cmd.env("FORCE_COLOR", "1");
+    let child = pair.slave.spawn_command(cmd).map_err(|e| e.to_string())?;
+    drop(pair.slave);
+
+    let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
+    let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
+
+    let id = pane.clone();
+    std::thread::spawn(move || {
+        let mut buf = [0u8; 8192];
+        loop {
+            match reader.read(&mut buf) {
+                Ok(0) => { let _ = app.emit("pty-exit", &id); break; }
+                Ok(n) => { let _ = app.emit("pty-output", PtyChunk { pane: id.clone(), data: buf[..n].to_vec() }); }
+                Err(_) => { let _ = app.emit("pty-exit", &id); break; }
+            }
+        }
+    });
+
+    panes.0.lock().unwrap().insert(pane.clone(), PtySession { writer, master: pair.master, child });
+    Ok(())
+}
+
+#[derive(Clone, Serialize)]
+struct SysMeter {
+    claude_procs: u32,
+    claude_mb: u64,
+    ram_used_mb: u64,
+    ram_total_mb: u64,
+}
+
 fn main() {
     tauri::Builder::default()
         .manage(Panes(Mutex::new(HashMap::new())))
+        .setup(|app| {
+            let handle = app.handle().clone();
+            std::thread::spawn(move || {
+                let mut sys = sysinfo::System::new();
+                loop {
+                    sys.refresh_memory();
+                    sys.refresh_processes();
+                    let mut claude_procs = 0u32;
+                    let mut claude_mb = 0u64;
+                    for proc in sys.processes().values() {
+                        if proc.name().to_lowercase().contains("claude") {
+                            claude_procs += 1;
+                            claude_mb += proc.memory() / 1_048_576;
+                        }
+                    }
+                    let _ = handle.emit("sysmeter", SysMeter {
+                        claude_procs,
+                        claude_mb,
+                        ram_used_mb: sys.used_memory() / 1_048_576,
+                        ram_total_mb: sys.total_memory() / 1_048_576,
+                    });
+                    std::thread::sleep(Duration::from_millis(2000));
+                }
+            });
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, launch, loop_start, loop_ask,
-            pty_spawn, pty_write, pty_resize, pty_kill
+            pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
