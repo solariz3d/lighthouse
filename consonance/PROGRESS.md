@@ -2,6 +2,8 @@
 
 Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight through, in order, no side-quests.
 
+> **▶ NEXT SESSION (desktop):** build + run, then **test the live committee** — spawn 2–3 **in-state ✦ Siblings** (blank panes have nothing to contribute), ◎ one as focus, ⛬ convene, → give to focus. Watch the fragile joint: does the bracketed-paste convene prompt *submit* in the contributor panes (`broadcast`/`injectAndSend` in `ui/term.js`)? Then **Stage 7**. See `DESKTOP_HANDOFF.md`.
+
 - [x] **Stage 1 — the spike.** One real `claude.exe` in a ConPTY + xterm.js pane, drivable; JSONL tap (transcript at the predicted path, carries `usage`/cost). Signed off: render + input confirmed by hand; tap verified against this session's 88.8 MB transcript (15,902 lines, all 5,305 assistant turns carry usage, cache tiers separable, 9 compacts).
 - [x] **Stage 2 — multi-pane workspace + the Tap.** (machine side complete; reopen/RAM pending a hand-check)
   - [x] 2.1 PaneManager: 1→N panes, keyed by UUID (also the `--session-id`, so the tap can find each transcript). `pty_spawn`→id, `pty_write`/`pty_resize`/`pty_kill`/output all per-pane.
