@@ -46,7 +46,7 @@ function ensureListeners() {
     const el = document.getElementById('cost');
     if (!el) return;
     const outk = (c.output / 1000).toFixed(1);
-    el.innerHTML = 'out ' + outk + 'k tok · <span class="usd">$' + c.usd.toFixed(3) + '</span>';
+    el.textContent = 'session generated: ' + outk + 'k out tok';
   });
   listen('context', (e) => {
     const { pane, ctx, limit } = e.payload;
@@ -55,7 +55,7 @@ function ensureListeners() {
     const el = p.el.querySelector('.pctx');
     if (!el) return;
     const pct = limit ? Math.round((ctx / limit) * 100) : 0;
-    el.textContent = pct + '% · ' + (ctx / 1000).toFixed(0) + 'k';
+    el.textContent = 'ctx ' + pct + '% · ' + (ctx / 1000).toFixed(0) + 'k';
     el.className = 'pctx' + (pct >= 80 ? ' warn' : '');
   });
   listen('turn', (e) => {
