@@ -83,6 +83,36 @@ async function removeSel() {
   status('removed  ' + gone.name + '  (folder untouched)');
 }
 
+// ---- the living loop ----
+let loopStarted = false;
+const gOut = () => $('#g-out'), rOut = () => $('#r-out');
+
+async function askLoop() {
+  const q = $('#loopq').value.trim();
+  if (!q) { status('ask the loop something first'); return; }
+  $('#ask').disabled = true;
+  rOut().className = 'out muted';
+  if (!loopStarted) {
+    gOut().className = 'out thinking'; gOut().textContent = 'waking ground + reach in the water…';
+    rOut().textContent = '…';
+    try { await invoke('loop_start'); loopStarted = true; }
+    catch (e) { gOut().className = 'out'; gOut().textContent = 'could not wake the loop: ' + e; $('#ask').disabled = false; return; }
+  }
+  gOut().className = 'out thinking'; gOut().textContent = 'ground is thinking…';
+  rOut().className = 'out muted'; rOut().textContent = 'reach waits for ground…';
+  status('the loop is in the water…');
+  try {
+    const r = await invoke('loop_ask', { question: q });
+    gOut().className = 'out'; gOut().textContent = r.ground || '(no reply)';
+    rOut().className = 'out'; rOut().textContent = r.reach || '(no reply)';
+    status('the loop answered');
+  } catch (e) {
+    gOut().className = 'out'; gOut().textContent = 'loop error: ' + e;
+    rOut().className = 'out'; rOut().textContent = '';
+  }
+  $('#ask').disabled = false;
+}
+
 $$('.tabs button').forEach(b => b.onclick = () => {
   $$('.tabs button').forEach(x => x.classList.remove('active'));
   $$('.tab').forEach(x => x.classList.remove('active'));
@@ -96,6 +126,8 @@ $('#open').onclick = openSel;
 $('#remove').onclick = removeSel;
 $('#add').onclick = addByPath;
 $('#addpath').addEventListener('keydown', e => { if (e.key === 'Enter') addByPath(); });
+$('#ask').onclick = askLoop;
+$('#loopq').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); askLoop(); } });
 $('#base').addEventListener('change', persist);
 $('#flags').addEventListener('change', persist);
 
