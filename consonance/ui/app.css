@@ -103,6 +103,13 @@ input::placeholder { color: #55607a; }
 .lcard .out.muted { color: var(--muted); }
 .lcard .out.thinking { color: var(--aqua); }
 
+/* embedded terminal */
+#terminal { gap: 0; }
+.termbar { display: flex; gap: 10px; margin-bottom: 12px; }
+.termbar input { flex: 1; }
+#term { flex: 1; min-height: 0; border: 1px solid var(--line); border-radius: 10px; background: #0B0E14; padding: 6px 8px; overflow: hidden; }
+#term .xterm { height: 100%; }
+
 #about { align-items: center; justify-content: center; text-align: center; gap: 4px; }
 #about svg { filter: drop-shadow(0 0 14px rgba(94,234,212,.30)); margin-bottom: 10px; }
 #about h1 { margin: 0; font-weight: 300; font-size: 27px; letter-spacing: .5px; }
