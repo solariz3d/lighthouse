@@ -417,6 +417,92 @@ fn get_board(board: State<Board>) -> Vec<BoardEntry> {
     board.0.lock().unwrap().iter().cloned().collect()
 }
 
+// ---- the Scribe: distill the board into resonance (good model, gated by the user) ----
+const SCRIBE_PROMPT: &str = r#"You are the SCRIBE — an auto-curator. You distill a multi-instance conversation board into its RESONANCE: the few things genuinely worth carrying into a future instance, so it wakes already inside the conversation instead of as a stranger.
+
+From the board below, KEEP only the signal and DROP the noise.
+
+KEEP (these are resonance):
+- CONFIRMED: a claim that holds up — ideally reached or agreed from more than one angle — and ties to something external (a file, a result, a checkable fact).
+- DEVIATION: a distinct, living line of thought worth preserving (a real insight or a genuine fork), even if unresolved.
+- OPEN: a genuinely unresolved question still worth holding open.
+- ARTIFACT: a concrete output — code, a decision, a named plan, a measurement.
+
+DROP (noise): greetings and chitchat, restating what was already said (echo), dead ends that went nowhere, filler/performance, and anything unfalsifiable that merely sounds deep.
+
+The tether test for KEEP: does it bring something NEW and CHECKABLE that would still matter OUTSIDE this conversation? If not, drop it. Do not invent; only distill what is actually there.
+
+Return ONLY a JSON array, no prose and no markdown fences. Each item: {"kind":"confirmed|deviation|open|artifact","claim":"one tight line","tether":"the external referent or the reason it survives"}. If nothing is worth keeping, return [].
+
+=== BOARD ===
+"#;
+
+#[derive(Serialize)]
+struct ScribeResult {
+    kept: usize,
+    atoms: Vec<serde_json::Value>,
+}
+
+// one-shot the GOOD model (default; no --model) via stdin to avoid arg-length limits
+fn claude_oneshot(prompt: &str) -> Result<String, String> {
+    let mut child = Command::new(claude_bin())
+        .arg("-p")
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .map_err(|e| format!("could not run claude: {e}"))?;
+    {
+        let mut sin = child.stdin.take().ok_or("no stdin handle")?;
+        sin.write_all(prompt.as_bytes()).map_err(|e| e.to_string())?;
+    }
+    let out = child.wait_with_output().map_err(|e| e.to_string())?;
+    Ok(String::from_utf8_lossy(&out.stdout).trim().to_string())
+}
+
+fn parse_atoms(s: &str) -> Vec<serde_json::Value> {
+    if let (Some(start), Some(end)) = (s.find('['), s.rfind(']')) {
+        if end > start {
+            if let Ok(serde_json::Value::Array(arr)) = serde_json::from_str::<serde_json::Value>(&s[start..=end]) {
+                return arr;
+            }
+        }
+    }
+    Vec::new()
+}
+
+#[tauri::command]
+fn scribe_distill(board: State<Board>) -> Result<ScribeResult, String> {
+    let entries: Vec<BoardEntry> = board.0.lock().unwrap().iter().cloned().collect();
+    if entries.is_empty() {
+        return Err("the board is empty — nothing to distill yet".into());
+    }
+    let board_text = entries
+        .iter()
+        .map(|e| format!("[{}] {}: {}", &e.pane[..8.min(e.pane.len())], e.role, e.text))
+        .collect::<Vec<_>>()
+        .join("\n");
+    let out = claude_oneshot(&format!("{SCRIBE_PROMPT}{board_text}"))?;
+    let atoms = parse_atoms(&out);
+
+    // persist the kept atoms (with a timestamp) to the resonance store
+    let dir = PathBuf::from(home()).join(".consonance").join("resonance");
+    let _ = fs::create_dir_all(&dir);
+    let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(dir.join("atoms.jsonl")) {
+        for a in &atoms {
+            let mut obj = a.clone();
+            if let Some(m) = obj.as_object_mut() {
+                m.insert("ts".into(), serde_json::json!(ts));
+            }
+            if let Ok(line) = serde_json::to_string(&obj) {
+                let _ = writeln!(f, "{line}");
+            }
+        }
+    }
+    Ok(ScribeResult { kept: atoms.len(), atoms })
+}
+
 #[tauri::command]
 fn pty_write(panes: State<Panes>, pane: String, data: String) {
     if let Some(s) = panes.0.lock().unwrap().get_mut(&pane) {
@@ -490,7 +576,7 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, launch, loop_start, loop_ask,
-            pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board
+            pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board, scribe_distill
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
