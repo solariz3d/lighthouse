@@ -139,9 +139,51 @@ fn loop_ask(question: String) -> Result<LoopResult, String> {
 struct PtySession {
     writer: Box<dyn Write + Send>,
     master: Box<dyn MasterPty + Send>,
-    child: Box<dyn portable_pty::Child + Send + Sync>,
+    killer: Box<dyn portable_pty::ChildKiller + Send + Sync>,
 }
 struct Panes(Mutex<HashMap<String, PtySession>>);
+
+// spawn claude in a fresh ConPTY: stream output, and detect exit by WAITING on the child
+// process (the PTY master often doesn't EOF on conhost). resume=true reattaches a session.
+fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool) -> Result<PtySession, String> {
+    let pair = native_pty_system()
+        .openpty(PtySize { rows: 34, cols: 120, pixel_width: 0, pixel_height: 0 })
+        .map_err(|e| e.to_string())?;
+    let mut cmd = CommandBuilder::new(claude_bin());
+    cmd.cwd(&cwd);
+    if resume {
+        cmd.args(["--resume", &pane_id]);
+    } else {
+        cmd.args(["--session-id", &pane_id]); // names the transcript for the tap
+    }
+    cmd.env("TERM", "xterm-256color");
+    cmd.env("FORCE_COLOR", "1");
+    let mut child = pair.slave.spawn_command(cmd).map_err(|e| e.to_string())?;
+    drop(pair.slave);
+
+    let killer = child.clone_killer();
+    let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
+    let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
+
+    let app_r = app.clone();
+    let id_r = pane_id.clone();
+    std::thread::spawn(move || {
+        let mut buf = [0u8; 8192];
+        loop {
+            match reader.read(&mut buf) {
+                Ok(0) | Err(_) => break,
+                Ok(n) => { let _ = app_r.emit("pty-output", PtyChunk { pane: id_r.clone(), data: buf[..n].to_vec() }); }
+            }
+        }
+    });
+
+    std::thread::spawn(move || {
+        let _ = child.wait();
+        let _ = app.emit("pty-exit", &pane_id);
+    });
+
+    Ok(PtySession { writer, master: pair.master, killer })
+}
 
 #[derive(Clone, Serialize)]
 struct PtyChunk {
@@ -249,36 +291,9 @@ fn start_tailer(app: AppHandle, pane_id: String, cwd: String) {
 fn pty_spawn(app: AppHandle, panes: State<Panes>, cwd: String) -> Result<String, String> {
     let pane_id = Uuid::new_v4().to_string();
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
-    let pair = native_pty_system()
-        .openpty(PtySize { rows: 34, cols: 120, pixel_width: 0, pixel_height: 0 })
-        .map_err(|e| e.to_string())?;
-    let mut cmd = CommandBuilder::new(claude_bin());
-    cmd.cwd(&resolved_cwd);
-    cmd.args(["--session-id", &pane_id]); // names the transcript for the tap
-    cmd.env("TERM", "xterm-256color");
-    cmd.env("FORCE_COLOR", "1");
-    let child = pair.slave.spawn_command(cmd).map_err(|e| e.to_string())?;
-    drop(pair.slave);
-
-    let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
-    let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
-
-    let app_r = app.clone();
-    let id = pane_id.clone();
-    std::thread::spawn(move || {
-        let mut buf = [0u8; 8192];
-        loop {
-            match reader.read(&mut buf) {
-                Ok(0) => { let _ = app_r.emit("pty-exit", &id); break; }
-                Ok(n) => { let _ = app_r.emit("pty-output", PtyChunk { pane: id.clone(), data: buf[..n].to_vec() }); }
-                Err(_) => { let _ = app_r.emit("pty-exit", &id); break; }
-            }
-        }
-    });
-
+    let session = spawn_claude_pane(app.clone(), pane_id.clone(), resolved_cwd.clone(), false)?;
     start_tailer(app, pane_id.clone(), resolved_cwd);
-
-    panes.0.lock().unwrap().insert(pane_id.clone(), PtySession { writer, master: pair.master, child });
+    panes.0.lock().unwrap().insert(pane_id.clone(), session);
     Ok(pane_id)
 }
 
@@ -300,7 +315,7 @@ fn pty_resize(panes: State<Panes>, pane: String, rows: u16, cols: u16) {
 #[tauri::command]
 fn pty_kill(panes: State<Panes>, pane: String) {
     if let Some(mut s) = panes.0.lock().unwrap().remove(&pane) {
-        let _ = s.child.kill();
+        let _ = s.killer.kill();
     }
 }
 
@@ -309,33 +324,8 @@ fn pty_kill(panes: State<Panes>, pane: String) {
 #[tauri::command]
 fn pty_reopen(app: AppHandle, panes: State<Panes>, pane: String, cwd: String) -> Result<(), String> {
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
-    let pair = native_pty_system()
-        .openpty(PtySize { rows: 34, cols: 120, pixel_width: 0, pixel_height: 0 })
-        .map_err(|e| e.to_string())?;
-    let mut cmd = CommandBuilder::new(claude_bin());
-    cmd.cwd(&resolved_cwd);
-    cmd.args(["--resume", &pane]);
-    cmd.env("TERM", "xterm-256color");
-    cmd.env("FORCE_COLOR", "1");
-    let child = pair.slave.spawn_command(cmd).map_err(|e| e.to_string())?;
-    drop(pair.slave);
-
-    let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
-    let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
-
-    let id = pane.clone();
-    std::thread::spawn(move || {
-        let mut buf = [0u8; 8192];
-        loop {
-            match reader.read(&mut buf) {
-                Ok(0) => { let _ = app.emit("pty-exit", &id); break; }
-                Ok(n) => { let _ = app.emit("pty-output", PtyChunk { pane: id.clone(), data: buf[..n].to_vec() }); }
-                Err(_) => { let _ = app.emit("pty-exit", &id); break; }
-            }
-        }
-    });
-
-    panes.0.lock().unwrap().insert(pane.clone(), PtySession { writer, master: pair.master, child });
+    let session = spawn_claude_pane(app, pane.clone(), resolved_cwd, true)?;
+    panes.0.lock().unwrap().insert(pane, session);
     Ok(())
 }
 
