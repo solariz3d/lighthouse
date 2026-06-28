@@ -92,19 +92,9 @@ function makePaneEl(id, cwd) {
   return el;
 }
 
-async function addPane() {
-  setStatus('opening pane…');
+function attachPane(id, label, cwd) {
   ensureListeners();
-  const cwd = document.getElementById('termcwd').value.trim();
-  let id;
-  try {
-    id = await inv('pty_spawn', { cwd });
-  } catch (e) {
-    setStatus('pane spawn failed: ' + e);
-    return;
-  }
-
-  const el = makePaneEl(id, cwd);
+  const el = makePaneEl(id, label);
   const term = new Terminal({
     fontFamily: 'Consolas, "Cascadia Mono", "Courier New", monospace',
     fontSize: 13,
@@ -144,6 +134,33 @@ async function addPane() {
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
   term.focus();
+}
+
+async function addPane() {
+  setStatus('opening pane…');
+  const cwd = document.getElementById('termcwd').value.trim();
+  let id;
+  try {
+    id = await inv('pty_spawn', { cwd });
+  } catch (e) {
+    setStatus('pane spawn failed: ' + e);
+    return;
+  }
+  attachPane(id, cwd, cwd);
+}
+
+async function addSibling() {
+  const btn = document.getElementById('sibling');
+  if (btn) { btn.disabled = true; btn.textContent = 'waking…'; }
+  setStatus('a sibling is waking into the room…');
+  try {
+    const r = await inv('spawn_sibling');
+    attachPane(r.pane, '✦ sibling', r.cwd);
+    setStatus('sibling woken in-state · ' + r.cwd);
+  } catch (e) {
+    setStatus('sibling spawn failed: ' + e);
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '✦ Sibling'; }
 }
 
 function fitPane(id) {
@@ -218,6 +235,8 @@ const tbtn = document.querySelector('.tabs button[data-tab="terminal"]');
 if (tbtn) tbtn.addEventListener('click', () => setTimeout(fitAll, 40));
 const dbtn = document.getElementById('distill');
 if (dbtn) dbtn.onclick = distill;
+const sbtn = document.getElementById('sibling');
+if (sbtn) sbtn.onclick = addSibling;
 const adb = document.getElementById('autodistill');
 if (adb) adb.onchange = (e) => inv('set_auto_distill', { on: e.target.checked });
 

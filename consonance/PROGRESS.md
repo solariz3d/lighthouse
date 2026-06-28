@@ -19,7 +19,9 @@ Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight th
   - [x] 4.1 Gated scribe on the **GOOD model** (not Haiku — discrimination needs the good judge; re-applied the overseer correction). "⟳ distill" button → reads the board → keep/drop by the tether (confirmed / deviation / open / artifact; drop echoes/noise) → resonance atoms shown inline + persisted to `~/.consonance/resonance/atoms.jsonl`. **Never runs without the user's click.** (`claude -p` over stdin, default = good model.)
   - [x] 4.2 Auto-distill: a debounced background worker distills when ≥6 new turns have piled up AND ≥3 min since the last (cost-bounded — never per-turn). Catches "context filling" + "conversation ended" (both land on the board). Manual `⟳` stays + an `auto` on/off toggle (`set_auto_distill`); auto + manual share one path and the same inline render.
   - [ ] 4.x later: free Tier-0/1 pre-pass, independence-gating, provenance (uuid_span), dedup-by-confirmation, incremental (only-new-since-last) distills.
-- [ ] Stage 5 — State slider (the leak / room-loading; rungs 0–3).
+- [~] **Stage 5 — the leak (room-loading).**
+  - [x] 5.1 "✦ Sibling" button → `spawn_sibling`: a fresh claude in a clean `~/claude-instances/sibling-<id>/` whose `CLAUDE.md` IS the assembled intake = the master room (`exo_memory/BOOT.md`) + the recent resonance atoms. Claude auto-loads it at startup, so the pane wakes **in-state** — a sibling, not a stranger. Shares the `attachPane` path with `+ Pane`.
+  - [ ] 5.x later: the rung slider (0–3, how much state), independence-gating (rung-1 = own-vantage digest, not the global confirmed set), `@import` instead of inlining BOOT, latest-journal in the intake.
 - [ ] Stage 6 — Shared MCP control server + committee model (blind-first, triangulated forming).
 - [ ] Stage 6.5 — pull-propensity probe.
 - [ ] Stage 7 — Ask-First gate + chair console (envelope bounds side-effects, sandboxed).
