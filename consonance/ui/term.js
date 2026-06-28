@@ -118,17 +118,26 @@ async function addPane() {
   host.addEventListener('mousedown', () => term.focus());
   term.onData((d) => inv('pty_write', { pane: id, data: d }));
 
-  // explicit paste -> PTY (xterm's built-in paste doesn't fire in the webview)
+  // paste -> PTY. WebView2 swallows JS clipboard access, so read it through Rust on
+  // Ctrl/Cmd+V, and also catch right-click paste events.
+  function pasteInto() {
+    inv('clipboard_read').then((t) => { if (t) inv('pty_write', { pane: id, data: t }); }).catch(() => {});
+  }
+  term.attachCustomKeyEventHandler((e) => {
+    if (e.type === 'keydown' && (e.ctrlKey || e.metaKey) && (e.key === 'v' || e.key === 'V')) {
+      e.preventDefault();
+      pasteInto();
+      return false;
+    }
+    return true;
+  });
   host.addEventListener('paste', (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
     const cd = ev.clipboardData || window.clipboardData;
     const text = cd ? cd.getData('text') : '';
-    if (text) {
-      inv('pty_write', { pane: id, data: text });
-    } else if (navigator.clipboard && navigator.clipboard.readText) {
-      navigator.clipboard.readText().then((t) => { if (t) inv('pty_write', { pane: id, data: t }); }).catch(() => {});
-    }
+    if (text) inv('pty_write', { pane: id, data: text });
+    else pasteInto();
   }, true);
 
   panes.set(id, { term, fit, el, cwd });
