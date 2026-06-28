@@ -210,6 +210,14 @@ struct CostTotals {
 }
 struct Cost(Arc<Mutex<CostTotals>>);
 
+// per-instance live context-window fill (input + cache + output of the latest turn vs model window)
+#[derive(Clone, Serialize)]
+struct ContextInfo {
+    pane: String,
+    ctx: u64,
+    limit: u64,
+}
+
 // $/1M tokens (date-stamped table from PLAN.md §9, cached 2026-06): (input, output, cache_read, cache_write)
 fn turn_cost_usd(model: &str, inp: u64, out: u64, cr: u64, cw: u64) -> f64 {
     let (pin, pout, pcr, pcw) = if model.contains("haiku") {
@@ -328,6 +336,9 @@ fn start_tailer(app: AppHandle, pane_id: String, cwd: String, cost: Arc<Mutex<Co
                                 c.clone()
                             };
                             let _ = app.emit("cost", snapshot);
+                            let ctx = inp + cr + cw + out;
+                            let limit = if model.contains("haiku") { 200_000 } else { 1_000_000 };
+                            let _ = app.emit("context", ContextInfo { pane: pane_id.clone(), ctx, limit });
                         }
                     }
                 }

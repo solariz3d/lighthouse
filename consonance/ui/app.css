@@ -122,6 +122,8 @@ input::placeholder { color: #55607a; }
 }
 .pane .phead .pid { color: var(--aqua); font-family: monospace; }
 .pane .phead .pcwd { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pane .phead .pctx { font-family: "Consolas", monospace; font-size: 10px; color: var(--aqua); }
+.pane .phead .pctx.warn { color: var(--amber); }
 .pane .phead .pclose { cursor: pointer; padding: 0 4px; }
 .pane .phead .pclose:hover { color: var(--amber); }
 .pane .phead .preopen { cursor: pointer; padding: 0 4px; color: var(--aqua); }
