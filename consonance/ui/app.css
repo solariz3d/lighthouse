@@ -106,6 +106,28 @@ input::placeholder { color: #55607a; }
 .lcard .out.muted { color: var(--muted); }
 .lcard .out.thinking { color: var(--aqua); }
 
+/* committee (Stage 6) */
+#committee { gap: 0; }
+.loophead .s { color: var(--amber); }
+#cmtout { flex: 1; min-height: 0; overflow: auto; }
+.cmtwait { color: var(--muted); padding: 16px 4px; font-style: italic; }
+.forming { display: flex; flex-direction: column; gap: 12px; }
+.fsec { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.fhead { padding: 7px 12px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; border-bottom: 1px solid var(--line); }
+.fhead.confirmed { color: var(--aqua); }
+.fhead.forks { color: var(--amber); }
+.fhead.novel { color: var(--text); }
+.fitem { padding: 8px 12px; line-height: 1.5; border-bottom: 1px solid rgba(39,48,74,.4); }
+.fitem:last-child { border-bottom: none; }
+.fitem.muted { color: var(--muted); }
+.ffrom { color: var(--muted); font-size: 11px; font-family: "Consolas", monospace; }
+.fpos { padding: 3px 0 0 12px; color: var(--text); }
+.cmtraw { margin-top: 12px; }
+.cmtraw summary { color: var(--muted); cursor: pointer; font-size: 12px; padding: 6px 0; }
+.cmtans { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
+.cmtv { color: var(--aqua); font-family: "Consolas", monospace; font-size: 11px; min-width: 64px; text-transform: uppercase; }
+.cmtatext { flex: 1; white-space: pre-wrap; line-height: 1.5; font-size: 13px; color: var(--muted); }
+
 /* embedded terminal workspace (multi-pane) */
 #terminal { gap: 0; }
 .termbar { display: flex; gap: 10px; margin-bottom: 12px; }
