@@ -1,19 +1,38 @@
 // Stage 2: a multi-pane workspace — N embedded claude instances, each its own xterm,
-// routed by pane id.
-const invoke = window.__TAURI__.core.invoke;
-const listen = window.__TAURI__.event.listen;
+// routed by pane id. Nothing touches window.__TAURI__ until a user action fires, so a
+// not-yet-ready global can't break handler attachment at load.
 const panes = new Map(); // id -> { term, fit, el }
+let listenersReady = false;
 
+function inv(cmd, args) { return window.__TAURI__.core.invoke(cmd, args); }
 function setStatus(t) { const s = document.getElementById('status'); if (s) s.textContent = t; }
+function escapeHtml(s) { return String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
 
-listen('pty-output', (e) => {
-  const p = panes.get(e.payload.pane);
-  if (p) p.term.write(new Uint8Array(e.payload.data));
-});
-listen('pty-exit', (e) => {
-  const p = panes.get(e.payload);
-  if (p) { p.el.classList.add('dead'); p.term.write('\r\n\x1b[2m— process exited —\x1b[0m\r\n'); }
-});
+function ensureListeners() {
+  if (listenersReady) return;
+  listenersReady = true;
+  const listen = window.__TAURI__.event.listen;
+  listen('pty-output', (e) => {
+    const p = panes.get(e.payload.pane);
+    if (p) p.term.write(new Uint8Array(e.payload.data));
+  });
+  listen('pty-exit', (e) => {
+    const p = panes.get(e.payload);
+    if (p) { p.el.classList.add('dead'); p.term.write('\r\n\x1b[2m— process exited —\x1b[0m\r\n'); }
+  });
+  listen('turn', (e) => {
+    const { pane, role, text } = e.payload;
+    const log = document.getElementById('streamlog');
+    if (!log) return;
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = '<span class="pid">' + pane.slice(0, 8) + '</span> ' +
+      '<span class="role-' + role + '">' + role + '</span>  ' + escapeHtml(text);
+    log.appendChild(row);
+    while (log.childNodes.length > 100) log.removeChild(log.firstChild);
+    log.scrollTop = log.scrollHeight;
+  });
+}
 
 function makePaneEl(id, cwd) {
   const el = document.createElement('div');
@@ -30,10 +49,12 @@ function makePaneEl(id, cwd) {
 }
 
 async function addPane() {
+  setStatus('opening pane…');
+  ensureListeners();
   const cwd = document.getElementById('termcwd').value.trim();
   let id;
   try {
-    id = await invoke('pty_spawn', { cwd });
+    id = await inv('pty_spawn', { cwd });
   } catch (e) {
     setStatus('pane spawn failed: ' + e);
     return;
@@ -51,11 +72,11 @@ async function addPane() {
   const host = el.querySelector('.pterm');
   term.open(host);
   host.addEventListener('mousedown', () => term.focus());
-  term.onData((d) => invoke('pty_write', { pane: id, data: d }));
+  term.onData((d) => inv('pty_write', { pane: id, data: d }));
 
   panes.set(id, { term, fit, el });
-  setStatus(panes.size + ' pane' + (panes.size > 1 ? 's' : ''));
-  setTimeout(fitAll, 80); // the grid just reflowed — refit everyone
+  setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
+  setTimeout(fitAll, 80);
   term.focus();
 }
 
@@ -64,14 +85,14 @@ function fitPane(id) {
   if (!p) return;
   try {
     p.fit.fit();
-    invoke('pty_resize', { pane: id, rows: p.term.rows, cols: p.term.cols });
+    inv('pty_resize', { pane: id, rows: p.term.rows, cols: p.term.cols });
   } catch (_) {}
 }
 
 function fitAll() { panes.forEach((_p, id) => fitPane(id)); }
 
 function closePane(id) {
-  invoke('pty_kill', { pane: id });
+  inv('pty_kill', { pane: id });
   const p = panes.get(id);
   if (p) { try { p.term.dispose(); } catch (_) {} p.el.remove(); panes.delete(id); }
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));

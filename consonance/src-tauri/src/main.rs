@@ -4,9 +4,9 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use std::collections::HashMap;
-use std::io::{Read, Write};
+use std::io::{Read, Seek, SeekFrom, Write};
 use std::sync::Mutex;
 use portable_pty::{native_pty_system, CommandBuilder, MasterPty, PtySize};
 use tauri::{AppHandle, Emitter, State};
@@ -149,14 +149,111 @@ struct PtyChunk {
     data: Vec<u8>,
 }
 
+// ---- the Tap: tail each pane's JSONL transcript into clean role-tagged TurnRecords ----
+#[derive(Clone, Serialize)]
+struct TurnRecord {
+    pane: String,
+    role: String,
+    text: String,
+}
+
+// claude's project-dir scheme: drive-colon and every path separator become '-'
+fn encode_cwd(cwd: &str) -> String {
+    cwd.chars()
+        .map(|c| if c == ':' || c == '\\' || c == '/' { '-' } else { c })
+        .collect()
+}
+
+// pull the publishable text out of a transcript line; thinking/tool_use noise excluded
+fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
+    let t = v.get("type")?.as_str()?;
+    if t != "user" && t != "assistant" {
+        return None;
+    }
+    let content = v.get("message")?.get("content")?;
+    let text = match content {
+        serde_json::Value::String(s) => s.clone(),
+        serde_json::Value::Array(arr) => arr
+            .iter()
+            .filter(|b| b.get("type").and_then(|x| x.as_str()) == Some("text"))
+            .filter_map(|b| b.get("text").and_then(|x| x.as_str()))
+            .collect::<Vec<_>>()
+            .join(" "),
+        _ => return None,
+    };
+    let text = text.trim().to_string();
+    if text.is_empty() {
+        return None;
+    }
+    Some((t.to_string(), text.chars().take(600).collect()))
+}
+
+// poll the transcript (250ms + a size watermark) and emit each new complete turn.
+// v1 simplification: the tailer thread runs until the file is gone for ~3 min; it does
+// not yet stop on pane close (a sleeping loop, negligible for a handful of panes).
+fn start_tailer(app: AppHandle, pane_id: String, cwd: String) {
+    let path = PathBuf::from(home())
+        .join(".claude")
+        .join("projects")
+        .join(encode_cwd(&cwd))
+        .join(format!("{pane_id}.jsonl"));
+    std::thread::spawn(move || {
+        let mut offset: u64 = 0;
+        let mut misses = 0u32;
+        loop {
+            std::thread::sleep(Duration::from_millis(250));
+            let len = match fs::metadata(&path) {
+                Ok(m) => m.len(),
+                Err(_) => {
+                    misses += 1;
+                    if misses > 720 { break; }
+                    continue;
+                }
+            };
+            misses = 0;
+            if len < offset {
+                offset = 0; // file rotated/truncated
+            }
+            if len <= offset {
+                continue;
+            }
+            let mut f = match fs::File::open(&path) {
+                Ok(f) => f,
+                Err(_) => continue,
+            };
+            if f.seek(SeekFrom::Start(offset)).is_err() {
+                continue;
+            }
+            let mut data = Vec::new();
+            if f.read_to_end(&mut data).is_err() {
+                continue;
+            }
+            if let Some(pos) = data.iter().rposition(|&b| b == b'\n') {
+                offset += (pos + 1) as u64;
+                for line in data[..=pos].split(|&b| b == b'\n') {
+                    if line.is_empty() {
+                        continue;
+                    }
+                    if let Ok(v) = serde_json::from_slice::<serde_json::Value>(line) {
+                        if let Some((role, text)) = extract_turn(&v) {
+                            let _ = app.emit("turn", TurnRecord { pane: pane_id.clone(), role, text });
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
 #[tauri::command]
 fn pty_spawn(app: AppHandle, panes: State<Panes>, cwd: String) -> Result<String, String> {
     let pane_id = Uuid::new_v4().to_string();
+    let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
     let pair = native_pty_system()
         .openpty(PtySize { rows: 34, cols: 120, pixel_width: 0, pixel_height: 0 })
         .map_err(|e| e.to_string())?;
     let mut cmd = CommandBuilder::new(claude_bin());
-    cmd.cwd(if cwd.trim().is_empty() { home() } else { cwd });
+    cmd.cwd(&resolved_cwd);
     cmd.args(["--session-id", &pane_id]); // names the transcript for the tap
     cmd.env("TERM", "xterm-256color");
     cmd.env("FORCE_COLOR", "1");
@@ -166,17 +263,20 @@ fn pty_spawn(app: AppHandle, panes: State<Panes>, cwd: String) -> Result<String,
     let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
     let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
 
+    let app_r = app.clone();
     let id = pane_id.clone();
     std::thread::spawn(move || {
         let mut buf = [0u8; 8192];
         loop {
             match reader.read(&mut buf) {
-                Ok(0) => { let _ = app.emit("pty-exit", &id); break; }
-                Ok(n) => { let _ = app.emit("pty-output", PtyChunk { pane: id.clone(), data: buf[..n].to_vec() }); }
-                Err(_) => { let _ = app.emit("pty-exit", &id); break; }
+                Ok(0) => { let _ = app_r.emit("pty-exit", &id); break; }
+                Ok(n) => { let _ = app_r.emit("pty-output", PtyChunk { pane: id.clone(), data: buf[..n].to_vec() }); }
+                Err(_) => { let _ = app_r.emit("pty-exit", &id); break; }
             }
         }
     });
+
+    start_tailer(app, pane_id.clone(), resolved_cwd);
 
     panes.0.lock().unwrap().insert(pane_id.clone(), PtySession { writer, master: pair.master, child });
     Ok(pane_id)
