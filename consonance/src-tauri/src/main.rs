@@ -476,31 +476,23 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     Ok(SiblingInfo { pane: pane_id, cwd })
 }
 
-// ---- Stage 6: the committee — blind-first vantages, then triangulating forming ----
-const SKEPTIC_V: &str = "Your vantage: SKEPTIC — hunt the flaw, the hidden assumption, the place this breaks. Steelman the strongest objection. Do not be agreeable.";
-
-const FORMING_PROMPT: &str = r#"You are the FORMING instance of a committee. Below are independent answers to one question, each from a DISTINCT vantage, written WITHOUT seeing each other (blind-first). TRIANGULATE them — never average or blend them into mush.
+// ---- Stage 6: the live committee — pick a focus pane, the rest convene to feed its work ----
+const COMMITTEE_FORM_PROMPT: &str = r#"You are the FORMING voice of a committee. One live instance (the FOCUS) is doing the piece of work shown below. The other live instances each added input from their own vantage and current context. TRIANGULATE their input into guidance FOR the focus — never average or blend it into mush.
 
 Produce three things:
-- CONFIRMED: a claim two or more vantages reached *independently* (the located truth — convergence from different angles is the strongest signal). Attribute which vantages.
-- FORKS: where the vantages genuinely diverge. Keep BOTH positions, attributed, no winner declared — divergence is signal, not a problem to resolve.
-- NOVEL: anything genuinely new and checkable that surfaced — something tied to the world outside this conversation.
+- CONFIRMED: where two or more contributors independently converge — the high-confidence input the focus should trust (convergence from different live contexts is the strongest signal, not echo). Attribute who.
+- FORKS: where contributors genuinely diverge — keep BOTH positions, attributed, no winner; the focus decides.
+- NOVEL: a genuinely new angle or check that surfaced — something the focus likely hasn't considered, tied to something real.
 
 Return ONLY JSON, no prose, no fences:
-{"confirmed":[{"claim":"...","from":["ground","reach"]}],"forks":[{"axis":"...","positions":[{"vantage":"ground","pos":"..."}]}],"novel":[{"thing":"...","from":"reach"}]}
+{"confirmed":[{"claim":"...","from":["a1b2","c3d4"]}],"forks":[{"axis":"...","positions":[{"who":"a1b2","pos":"..."}]}],"novel":[{"thing":"...","from":"c3d4"}]}
 
-=== THE ANSWERS ===
 "#;
 
-#[derive(Serialize)]
-struct BodyAnswer {
-    vantage: String,
+#[derive(Deserialize)]
+struct Contribution {
+    who: String,
     text: String,
-}
-#[derive(Serialize)]
-struct CommitteeResult {
-    answers: Vec<BodyAnswer>,
-    forming: serde_json::Value,
 }
 
 fn parse_json_object(s: &str) -> serde_json::Value {
@@ -514,35 +506,21 @@ fn parse_json_object(s: &str) -> serde_json::Value {
     serde_json::json!({ "confirmed": [], "forks": [], "novel": [] })
 }
 
+// the focus's current thread + the live contributors' input -> triangulated guidance for the focus
 #[tauri::command]
-fn committee_run(question: String) -> Result<CommitteeResult, String> {
-    if question.trim().is_empty() {
-        return Err("pose a question for the committee".into());
+fn committee_form(question: String, contributions: Vec<Contribution>) -> Result<serde_json::Value, String> {
+    if contributions.is_empty() {
+        return Err("no contributions to form".into());
     }
-    let vantages: [(&str, &str); 3] = [("ground", GROUND_V), ("reach", REACH_V), ("skeptic", SKEPTIC_V)];
-
-    // blind-first: each body answers independently and concurrently (no peers, no board)
-    let handles: Vec<_> = vantages
+    let bodies = contributions
         .iter()
-        .map(|(name, v)| {
-            let name = name.to_string();
-            let prompt = format!(
-                "{v}\n\nAnswer the question below from your vantage — independently, concretely, tied to something checkable. You are NOT seeing anyone else's answer.\n\nQUESTION: {question}"
-            );
-            std::thread::spawn(move || BodyAnswer { vantage: name, text: claude_oneshot(&prompt).unwrap_or_default() })
-        })
-        .collect();
-    let answers: Vec<BodyAnswer> = handles.into_iter().filter_map(|h| h.join().ok()).collect();
-
-    // forming: triangulate, never average
-    let bodies_text = answers
-        .iter()
-        .map(|b| format!("### vantage: {}\n{}", b.vantage, b.text))
+        .map(|c| format!("### contributor {}\n{}", c.who, c.text))
         .collect::<Vec<_>>()
         .join("\n\n");
-    let forming = parse_json_object(&claude_oneshot(&format!("{FORMING_PROMPT}{bodies_text}"))?);
-
-    Ok(CommitteeResult { answers, forming })
+    let prompt = format!(
+        "{COMMITTEE_FORM_PROMPT}=== THE FOCUS'S CURRENT THREAD ===\n{question}\n\n=== THE CONTRIBUTIONS ===\n{bodies}"
+    );
+    Ok(parse_json_object(&claude_oneshot(&prompt)?))
 }
 
 #[tauri::command]
@@ -757,7 +735,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
-            scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_run
+            scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");

@@ -3,6 +3,10 @@
 // not-yet-ready global can't break handler attachment at load.
 const panes = new Map(); // id -> { term, fit, el }
 let listenersReady = false;
+let focusPaneId = null;       // the committee's focus pane
+const lastTurn = new Map();   // pane -> { role, text } — most recent completed turn
+let convene = null;           // active convene: { question, expecting:Set, got:Map }
+let lastForming = null;       // last committee synthesis (for "give to focus")
 
 function inv(cmd, args) { return window.__TAURI__.core.invoke(cmd, args); }
 function setStatus(t) { const s = document.getElementById('status'); if (s) s.textContent = t; }
@@ -64,6 +68,15 @@ function ensureListeners() {
   });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
+    lastTurn.set(pane, { role, text });
+    // committee: capture a conscripted contributor's first assistant turn after broadcast
+    if (convene && role === 'assistant' && convene.expecting.has(pane) && !convene.got.has(pane)) {
+      convene.got.set(pane, text);
+      const p = panes.get(pane);
+      if (p) p.el.classList.remove('convening');
+      setStatus('convening… ' + convene.got.size + '/' + convene.expecting.size + ' contributed');
+      if (convene.got.size >= convene.expecting.size) finishConvene();
+    }
     const log = document.getElementById('streamlog');
     if (!log) return;
     const row = document.createElement('div');
@@ -82,6 +95,7 @@ function makePaneEl(id, cwd) {
   el.className = 'pane';
   el.innerHTML =
     '<div class="phead">' +
+      '<span class="pfocus" title="make this the committee focus">◎</span>' +
       '<span class="pid">' + id.slice(0, 8) + '</span>' +
       '<span class="pcwd">' + (cwd || '~') + '</span>' +
       '<span class="pctx" title="context window used"></span>' +
@@ -89,6 +103,7 @@ function makePaneEl(id, cwd) {
     '</div><div class="pterm"></div>';
   document.getElementById('panes').appendChild(el);
   el.querySelector('.pclose').onclick = () => closePane(id);
+  el.querySelector('.pfocus').onclick = () => setFocus(id);
   return el;
 }
 
@@ -131,6 +146,7 @@ function attachPane(id, label, cwd) {
   }, true);
 
   panes.set(id, { term, fit, el, cwd });
+  updateConveneBtn();
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
   term.focus();
@@ -163,6 +179,126 @@ async function addSibling() {
   if (btn) { btn.disabled = false; btn.textContent = '✦ Sibling'; }
 }
 
+// ---- Stage 6: the live committee — pick a focus pane, the rest convene to feed it ----
+function setFocus(id) {
+  focusPaneId = (focusPaneId === id) ? null : id;
+  panes.forEach((p, pid) => {
+    const on = pid === focusPaneId;
+    p.el.classList.toggle('focus', on);
+    const f = p.el.querySelector('.pfocus');
+    if (f) f.textContent = on ? '◉' : '◎';
+  });
+  updateConveneBtn();
+  setStatus(focusPaneId ? ('focus: ' + focusPaneId.slice(0, 8) + ' — ⛬ convene to gather the others') : 'focus cleared');
+}
+
+function updateConveneBtn() {
+  const b = document.getElementById('convene');
+  if (b) b.disabled = !(focusPaneId && panes.size >= 2);
+}
+
+// inject text as a bracketed paste (preserves newlines) then submit — robust for live panes
+function injectAndSend(pane, text) {
+  inv('pty_write', { pane, data: '\x1b[200~' + text + '\x1b[201~' });
+  setTimeout(() => inv('pty_write', { pane, data: '\r' }), 70);
+}
+
+function openConvene() {
+  if (!focusPaneId) { setStatus('◎ a pane first to set the committee focus'); return; }
+  if (panes.size < 2) { setStatus('need at least one other pane to convene'); return; }
+  const lt = lastTurn.get(focusPaneId);
+  document.getElementById('convtext').value = lt ? lt.text : '';
+  document.getElementById('convbar').classList.add('show');
+  document.getElementById('convtext').focus();
+}
+
+function cancelConvene() { document.getElementById('convbar').classList.remove('show'); }
+
+function broadcast() {
+  const question = document.getElementById('convtext').value.trim();
+  if (!question) { setStatus('nothing to convene around'); return; }
+  document.getElementById('convbar').classList.remove('show');
+  const msg = '[Consonance committee — the focus instance is working on the thread below. Add your input from your own vantage and current context, briefly and concretely. Do not restate it; contribute or push back.]\n\nFOCUS THREAD:\n' + question.slice(0, 1600);
+  const expecting = new Set();
+  panes.forEach((p, pid) => {
+    if (pid === focusPaneId) return;
+    const lt = lastTurn.get(pid);
+    if (lt && lt.role === 'user') return;          // busy: awaiting its own reply — skip
+    injectAndSend(pid, msg);
+    expecting.add(pid);
+    p.el.classList.add('convening');
+  });
+  if (!expecting.size) { setStatus('all other panes are busy — try again shortly'); return; }
+  convene = { question, expecting, got: new Map() };
+  setStatus('convening… 0/' + expecting.size + ' (the panes are answering live)');
+}
+
+async function finishConvene() {
+  const c = convene;
+  convene = null;
+  const contributions = [...c.got.entries()].map(([pid, text]) => ({ who: pid.slice(0, 8), text }));
+  setStatus('forming — triangulating ' + contributions.length + ' contribution' + (contributions.length === 1 ? '' : 's') + '…');
+  try {
+    lastForming = await inv('committee_form', { question: c.question, contributions });
+    document.getElementById('cmtbody').innerHTML = renderForming(lastForming);
+    document.getElementById('cmtpanel').classList.add('show');
+    setStatus('committee formed — review, then → give to focus');
+  } catch (e) {
+    setStatus('forming failed: ' + e);
+  }
+}
+
+function renderForming(f) {
+  f = f || {};
+  const sec = (cls, head, items, render) => {
+    let h = '<div class="fsec"><div class="fhead ' + cls + '">' + head + '</div>';
+    if (!items || !items.length) h += '<div class="fitem muted">— none —</div>';
+    else items.forEach((it) => { h += render(it); });
+    return h + '</div>';
+  };
+  let h = '<div class="forming">';
+  h += sec('confirmed', 'confirmed — ≥2 contributors converged', f.confirmed,
+    (c) => '<div class="fitem">' + escapeHtml(c.claim || '') + ' <span class="ffrom">' + escapeHtml((c.from || []).join(', ')) + '</span></div>');
+  h += sec('forks', 'forks — held divergence, the focus decides', f.forks, (fk) => {
+    let s = '<div class="fitem"><b>' + escapeHtml(fk.axis || '') + '</b>';
+    (fk.positions || []).forEach((p) => { s += '<div class="fpos"><span class="ffrom">' + escapeHtml(p.who || p.vantage || '') + ':</span> ' + escapeHtml(p.pos || '') + '</div>'; });
+    return s + '</div>';
+  });
+  h += sec('novel', 'novel — a new angle to consider', f.novel,
+    (n) => '<div class="fitem">' + escapeHtml(n.thing || '') + ' <span class="ffrom">' + escapeHtml(n.from || '') + '</span></div>');
+  return h + '</div>';
+}
+
+function formingToText(f) {
+  f = f || {};
+  let s = '[Committee input on your current thread]\n';
+  if ((f.confirmed || []).length) {
+    s += '\nCONFIRMED (≥2 of us converged — trust):\n';
+    f.confirmed.forEach((c) => { s += '- ' + (c.claim || '') + '\n'; });
+  }
+  if ((f.forks || []).length) {
+    s += '\nFORKS (we diverge — your call):\n';
+    f.forks.forEach((fk) => {
+      s += '- ' + (fk.axis || '') + '\n';
+      (fk.positions || []).forEach((p) => { s += '    · ' + (p.who || p.vantage || '') + ': ' + (p.pos || '') + '\n'; });
+    });
+  }
+  if ((f.novel || []).length) {
+    s += '\nNOVEL (consider):\n';
+    f.novel.forEach((n) => { s += '- ' + (n.thing || '') + '\n'; });
+  }
+  return s;
+}
+
+function giveToFocus() {
+  if (!lastForming || !focusPaneId) { setStatus('no focus pane to give to'); return; }
+  injectAndSend(focusPaneId, formingToText(lastForming));
+  document.getElementById('cmtpanel').classList.remove('show');
+  setStatus('committee input given to focus ' + focusPaneId.slice(0, 8));
+}
+
+function dismissCommittee() { document.getElementById('cmtpanel').classList.remove('show'); }
+
 function fitPane(id) {
   const p = panes.get(id);
   if (!p) return;
@@ -178,6 +314,9 @@ function closePane(id) {
   inv('pty_kill', { pane: id });
   const p = panes.get(id);
   if (p) { try { p.term.dispose(); } catch (_) {} p.el.remove(); panes.delete(id); }
+  if (id === focusPaneId) focusPaneId = null;
+  lastTurn.delete(id);
+  updateConveneBtn();
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
 }
@@ -239,6 +378,12 @@ const sbtn = document.getElementById('sibling');
 if (sbtn) sbtn.onclick = addSibling;
 const adb = document.getElementById('autodistill');
 if (adb) adb.onchange = (e) => inv('set_auto_distill', { on: e.target.checked });
+const cvb = document.getElementById('convene'); if (cvb) cvb.onclick = openConvene;
+const cvs = document.getElementById('convsend'); if (cvs) cvs.onclick = broadcast;
+const cvc = document.getElementById('convcancel'); if (cvc) cvc.onclick = cancelConvene;
+const gfb = document.getElementById('givefocus'); if (gfb) gfb.onclick = giveToFocus;
+const cmx = document.getElementById('cmtclose'); if (cmx) cmx.onclick = dismissCommittee;
+updateConveneBtn();
 
 // register listeners at load too, so the RAM/process HUD updates before any pane exists
 try { ensureListeners(); } catch (_) {}

@@ -26,7 +26,6 @@
   <nav class="tabs">
     <button data-tab="new" class="active">New</button>
     <button data-tab="instances">Instances</button>
-    <button data-tab="committee">Committee</button>
     <button data-tab="terminal">Terminal</button>
     <button data-tab="about">About</button>
   </nav>
@@ -55,22 +54,31 @@
       </div>
     </section>
 
-    <section id="committee" class="tab">
-      <p class="loophead">The <b>committee</b> — three vantages (<span class="g">ground</span>, <span class="r">reach</span>, <span class="s">skeptic</span>) answer <em>blind-first</em>, then a forming pass <b>triangulates</b> — never averages — into confirmed / forks / novel.</p>
-      <div class="looprow">
-        <textarea id="cmtq" rows="2" placeholder="pose a question to the committee…  (Ctrl+Enter to run)" spellcheck="false"></textarea>
-        <button id="cmtrun" class="btn accent">Run</button>
-      </div>
-      <div id="cmtout"></div>
-    </section>
-
     <section id="terminal" class="tab">
       <div class="termbar">
         <input id="termcwd" placeholder="folder for the new pane (blank = home)" spellcheck="false" />
         <button id="termadd" class="btn accent">+ Pane</button>
         <button id="sibling" class="btn sibling" title="spawn a sibling: a fresh claude woken on the master room + the distilled resonance">✦ Sibling</button>
+        <button id="convene" class="btn convene" title="convene the committee — the other live panes feed input to the focused pane (◎ a pane to focus it)" disabled>⛬ Convene</button>
+      </div>
+      <div id="convbar">
+        <textarea id="convtext" rows="2" placeholder="what the committee convenes around — the focus pane's current thread (editable)…" spellcheck="false"></textarea>
+        <div class="convbtns">
+          <button id="convsend" class="btn accent">Broadcast</button>
+          <button id="convcancel" class="btn">Cancel</button>
+        </div>
       </div>
       <div id="panes"></div>
+      <div id="cmtpanel">
+        <div class="cmthead">
+          <span>committee — triangulated input for the <b>focus</b></span>
+          <span class="cmthctl">
+            <button id="givefocus" class="distillbtn" title="send this into the focus pane (chair-gated)">→ give to focus</button>
+            <span id="cmtclose" class="cmtx" title="dismiss">✕</span>
+          </span>
+        </div>
+        <div id="cmtbody"></div>
+      </div>
       <div id="stream">
         <div class="streamhead">
           <span>tap — completed turns across panes</span>
