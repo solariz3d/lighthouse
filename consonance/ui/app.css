@@ -139,7 +139,20 @@ input::placeholder { color: #55607a; }
 .streamhead {
   padding: 7px 12px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
   color: var(--muted); border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
 }
+.distillbtn {
+  background: var(--panel); border: 1px solid var(--line); color: var(--aqua);
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px;
+  border-radius: 6px; cursor: pointer;
+}
+.distillbtn:hover { border-color: var(--aqua-d); }
+.distillbtn:disabled { color: var(--muted); cursor: default; }
+#streamlog .resonance { margin: 6px 0; padding: 6px 0; border-top: 1px dashed var(--line); }
+#streamlog .rdiv { color: var(--aqua); font-size: 11px; letter-spacing: 1px; margin: 2px 0 6px; }
+#streamlog .ratom { white-space: normal; margin: 3px 0; padding-left: 8px; }
+#streamlog .rkind { color: var(--amber); text-transform: uppercase; font-size: 10px; }
+#streamlog .rtether { color: var(--muted); }
 #streamlog { flex: 1; overflow: auto; padding: 6px 12px; font-family: "Consolas", monospace; font-size: 12px; line-height: 1.55; }
 #streamlog .row { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #streamlog .pid { color: var(--aqua); }

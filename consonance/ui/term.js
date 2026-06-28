@@ -156,11 +156,38 @@ async function reopenPane(id) {
   p.term.focus();
 }
 
+async function distill() {
+  const btn = document.getElementById('distill');
+  const log = document.getElementById('streamlog');
+  if (btn) { btn.disabled = true; btn.textContent = 'distilling…'; }
+  setStatus('the scribe is distilling the board (good model)…');
+  try {
+    const r = await inv('scribe_distill');
+    const div = document.createElement('div');
+    div.className = 'resonance';
+    let html = '<div class="rdiv">── resonance · ' + r.kept + ' kept ──</div>';
+    (r.atoms || []).forEach((a) => {
+      html += '<div class="ratom"><span class="rkind">' + escapeHtml(a.kind || '?') + '</span> ' +
+        escapeHtml(a.claim || '') +
+        (a.tether ? ' <span class="rtether">— ' + escapeHtml(a.tether) + '</span>' : '') + '</div>';
+    });
+    div.innerHTML = html;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+    setStatus('scribe kept ' + r.kept + ' atom' + (r.kept === 1 ? '' : 's') + ' (→ ~/.consonance/resonance/)');
+  } catch (e) {
+    setStatus('distill failed: ' + e);
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '⟳ distill'; }
+}
+
 document.getElementById('termadd').onclick = addPane;
 document.getElementById('termcwd').addEventListener('keydown', (e) => { if (e.key === 'Enter') addPane(); });
 window.addEventListener('resize', fitAll);
 const tbtn = document.querySelector('.tabs button[data-tab="terminal"]');
 if (tbtn) tbtn.addEventListener('click', () => setTimeout(fitAll, 40));
+const dbtn = document.getElementById('distill');
+if (dbtn) dbtn.onclick = distill;
 
 // register listeners at load too, so the RAM/process HUD updates before any pane exists
 try { ensureListeners(); } catch (_) {}

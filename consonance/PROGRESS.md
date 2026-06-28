@@ -15,7 +15,9 @@ Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight th
   - [-] 3.4 5-hour usage gauge — **DEFERRED (user's call).** Local data has only `rateLimitTier`, not live usage; the live number is only at Anthropic, fetchable via the OAuth token + an undocumented endpoint (fragile/gray). Revisit if wanted.
   - [x] 3.2 Live Board: each turn persisted to `~/.consonance/board.jsonl` (append-only canonical log) + a bounded in-memory ring (300 entries / ~12k-token budget, evict oldest); `get_board` command; the stream loads board history on startup (survives restarts). This is the scribe's (Stage 4) input.
   - [-] 3.3 Cost breaker — **DEFERRED to Stage 7.** A content-blind ceiling only bites when instances can run away; with manual panes nothing does. Build it with the autonomy envelope where it's load-bearing.
-- [ ] Stage 4 — Scribe (tiered resonance distillation, independence-gated).
+- [~] **Stage 4 — the Scribe (resonance distillation).**
+  - [x] 4.1 Gated scribe on the **GOOD model** (not Haiku — discrimination needs the good judge; re-applied the overseer correction). "⟳ distill" button → reads the board → keep/drop by the tether (confirmed / deviation / open / artifact; drop echoes/noise) → resonance atoms shown inline + persisted to `~/.consonance/resonance/atoms.jsonl`. **Never runs without the user's click.** (`claude -p` over stdin, default = good model.)
+  - [ ] 4.x later: free Tier-0/1 pre-pass, independence-gating, provenance (uuid_span), dedup-by-confirmation, auto-trigger options.
 - [ ] Stage 5 — State slider (the leak / room-loading; rungs 0–3).
 - [ ] Stage 6 — Shared MCP control server + committee model (blind-first, triangulated forming).
 - [ ] Stage 6.5 — pull-propensity probe.
