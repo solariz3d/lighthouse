@@ -17,7 +17,8 @@ Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight th
   - [-] 3.3 Cost breaker — **DEFERRED to Stage 7.** A content-blind ceiling only bites when instances can run away; with manual panes nothing does. Build it with the autonomy envelope where it's load-bearing.
 - [~] **Stage 4 — the Scribe (resonance distillation).**
   - [x] 4.1 Gated scribe on the **GOOD model** (not Haiku — discrimination needs the good judge; re-applied the overseer correction). "⟳ distill" button → reads the board → keep/drop by the tether (confirmed / deviation / open / artifact; drop echoes/noise) → resonance atoms shown inline + persisted to `~/.consonance/resonance/atoms.jsonl`. **Never runs without the user's click.** (`claude -p` over stdin, default = good model.)
-  - [ ] 4.x later: free Tier-0/1 pre-pass, independence-gating, provenance (uuid_span), dedup-by-confirmation, auto-trigger options.
+  - [x] 4.2 Auto-distill: a debounced background worker distills when ≥6 new turns have piled up AND ≥3 min since the last (cost-bounded — never per-turn). Catches "context filling" + "conversation ended" (both land on the board). Manual `⟳` stays + an `auto` on/off toggle (`set_auto_distill`); auto + manual share one path and the same inline render.
+  - [ ] 4.x later: free Tier-0/1 pre-pass, independence-gating, provenance (uuid_span), dedup-by-confirmation, incremental (only-new-since-last) distills.
 - [ ] Stage 5 — State slider (the leak / room-loading; rungs 0–3).
 - [ ] Stage 6 — Shared MCP control server + committee model (blind-first, triangulated forming).
 - [ ] Stage 6.5 — pull-propensity probe.

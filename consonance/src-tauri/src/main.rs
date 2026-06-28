@@ -7,9 +7,10 @@ use std::process::{Command, Stdio};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use std::collections::{HashMap, VecDeque};
 use std::io::{Read, Seek, SeekFrom, Write};
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use portable_pty::{native_pty_system, CommandBuilder, MasterPty, PtySize};
-use tauri::{AppHandle, Emitter, State};
+use tauri::{AppHandle, Emitter, Manager, State};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -437,8 +438,11 @@ Return ONLY a JSON array, no prose and no markdown fences. Each item: {"kind":"c
 === BOARD ===
 "#;
 
-#[derive(Serialize)]
-struct ScribeResult {
+static AUTO_DISTILL: AtomicBool = AtomicBool::new(true);
+
+#[derive(Clone, Serialize)]
+struct DistillEvent {
+    auto: bool,
     kept: usize,
     atoms: Vec<serde_json::Value>,
 }
@@ -471,9 +475,9 @@ fn parse_atoms(s: &str) -> Vec<serde_json::Value> {
     Vec::new()
 }
 
-#[tauri::command]
-fn scribe_distill(board: State<Board>) -> Result<ScribeResult, String> {
-    let entries: Vec<BoardEntry> = board.0.lock().unwrap().iter().cloned().collect();
+// shared distill path: manual button and the auto-worker both call this.
+fn run_distill(board: &Arc<Mutex<VecDeque<BoardEntry>>>, app: &AppHandle, auto: bool) -> Result<usize, String> {
+    let entries: Vec<BoardEntry> = board.lock().unwrap().iter().cloned().collect();
     if entries.is_empty() {
         return Err("the board is empty — nothing to distill yet".into());
     }
@@ -485,7 +489,6 @@ fn scribe_distill(board: State<Board>) -> Result<ScribeResult, String> {
     let out = claude_oneshot(&format!("{SCRIBE_PROMPT}{board_text}"))?;
     let atoms = parse_atoms(&out);
 
-    // persist the kept atoms (with a timestamp) to the resonance store
     let dir = PathBuf::from(home()).join(".consonance").join("resonance");
     let _ = fs::create_dir_all(&dir);
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
@@ -500,7 +503,19 @@ fn scribe_distill(board: State<Board>) -> Result<ScribeResult, String> {
             }
         }
     }
-    Ok(ScribeResult { kept: atoms.len(), atoms })
+    let kept = atoms.len();
+    let _ = app.emit("distilled", DistillEvent { auto, kept, atoms });
+    Ok(kept)
+}
+
+#[tauri::command]
+fn scribe_distill(app: AppHandle, board: State<Board>) -> Result<usize, String> {
+    run_distill(&board.0, &app, false)
+}
+
+#[tauri::command]
+fn set_auto_distill(on: bool) {
+    AUTO_DISTILL.store(on, Ordering::Relaxed);
 }
 
 #[tauri::command]
@@ -572,11 +587,36 @@ fn main() {
                     std::thread::sleep(Duration::from_millis(2000));
                 }
             });
+
+            // auto-scribe: distill the board as turns accumulate, debounced (cost-bounded).
+            // catches both "context filling" and "conversation ended" — that content is on the board.
+            let dhandle = app.handle().clone();
+            let dboard = app.state::<Board>().0.clone();
+            std::thread::spawn(move || {
+                let mut last_len = 0usize;
+                let mut last_ms = 0u64;
+                loop {
+                    std::thread::sleep(Duration::from_secs(20));
+                    if !AUTO_DISTILL.load(Ordering::Relaxed) {
+                        continue;
+                    }
+                    let len = dboard.lock().unwrap().len();
+                    let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+                    // fire only when >= 6 new turns piled up AND >= 3 min since the last distill
+                    if len >= last_len + 6 && now.saturating_sub(last_ms) >= 180_000 {
+                        if run_distill(&dboard, &dhandle, true).is_ok() {
+                            last_len = len;
+                            last_ms = now;
+                        }
+                    }
+                }
+            });
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, launch, loop_start, loop_ask,
-            pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board, scribe_distill
+            pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
+            scribe_distill, set_auto_distill
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
