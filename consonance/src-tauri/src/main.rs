@@ -5,7 +5,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use std::io::{Read, Seek, SeekFrom, Write};
 use std::sync::{Arc, Mutex};
 use portable_pty::{native_pty_system, CommandBuilder, MasterPty, PtySize};
@@ -218,6 +218,44 @@ struct ContextInfo {
     limit: u64,
 }
 
+// ---- the Live Board: the canonical, bounded, persisted cross-pane shared log ----
+#[derive(Clone, Serialize)]
+struct BoardEntry {
+    pane: String,
+    role: String,
+    text: String,
+    ts: u64,
+}
+struct Board(Arc<Mutex<VecDeque<BoardEntry>>>);
+
+const BOARD_MAX: usize = 300; // hard count cap
+const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the live ring
+
+fn board_path() -> PathBuf {
+    let dir = PathBuf::from(home()).join(".consonance");
+    let _ = fs::create_dir_all(&dir);
+    dir.join("board.jsonl")
+}
+
+fn board_push(ring: &Arc<Mutex<VecDeque<BoardEntry>>>, entry: BoardEntry) {
+    if let Ok(line) = serde_json::to_string(&entry) {
+        if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(board_path()) {
+            let _ = writeln!(f, "{}", line);
+        }
+    }
+    let mut q = ring.lock().unwrap();
+    q.push_back(entry);
+    while q.len() > BOARD_MAX {
+        q.pop_front();
+    }
+    let mut approx: usize = q.iter().map(|e| e.text.len() / 4 + 8).sum();
+    while approx > BOARD_TOKEN_BUDGET && q.len() > 1 {
+        if let Some(e) = q.pop_front() {
+            approx -= e.text.len() / 4 + 8;
+        }
+    }
+}
+
 // $/1M tokens (date-stamped table from PLAN.md §9, cached 2026-06): (input, output, cache_read, cache_write)
 fn turn_cost_usd(model: &str, inp: u64, out: u64, cr: u64, cw: u64) -> f64 {
     let (pin, pout, pcr, pcw) = if model.contains("haiku") {
@@ -278,7 +316,13 @@ fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
 // poll the transcript (250ms + a size watermark) and emit each new complete turn.
 // v1 simplification: the tailer thread runs until the file is gone for ~3 min; it does
 // not yet stop on pane close (a sleeping loop, negligible for a handful of panes).
-fn start_tailer(app: AppHandle, pane_id: String, cwd: String, cost: Arc<Mutex<CostTotals>>) {
+fn start_tailer(
+    app: AppHandle,
+    pane_id: String,
+    cwd: String,
+    cost: Arc<Mutex<CostTotals>>,
+    board: Arc<Mutex<VecDeque<BoardEntry>>>,
+) {
     let path = PathBuf::from(home())
         .join(".claude")
         .join("projects")
@@ -323,6 +367,11 @@ fn start_tailer(app: AppHandle, pane_id: String, cwd: String, cost: Arc<Mutex<Co
                     }
                     if let Ok(v) = serde_json::from_slice::<serde_json::Value>(line) {
                         if let Some((role, text)) = extract_turn(&v) {
+                            let ts = SystemTime::now()
+                                .duration_since(UNIX_EPOCH)
+                                .map(|d| d.as_millis() as u64)
+                                .unwrap_or(0);
+                            board_push(&board, BoardEntry { pane: pane_id.clone(), role: role.clone(), text: text.clone(), ts });
                             let _ = app.emit("turn", TurnRecord { pane: pane_id.clone(), role, text });
                         }
                         if let Some((inp, out, cr, cw, model)) = extract_usage(&v) {
@@ -348,13 +397,24 @@ fn start_tailer(app: AppHandle, pane_id: String, cwd: String, cost: Arc<Mutex<Co
 }
 
 #[tauri::command]
-fn pty_spawn(app: AppHandle, panes: State<Panes>, cost: State<Cost>, cwd: String) -> Result<String, String> {
+fn pty_spawn(
+    app: AppHandle,
+    panes: State<Panes>,
+    cost: State<Cost>,
+    board: State<Board>,
+    cwd: String,
+) -> Result<String, String> {
     let pane_id = Uuid::new_v4().to_string();
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), resolved_cwd.clone(), false)?;
-    start_tailer(app, pane_id.clone(), resolved_cwd, cost.0.clone());
+    start_tailer(app, pane_id.clone(), resolved_cwd, cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
     Ok(pane_id)
+}
+
+#[tauri::command]
+fn get_board(board: State<Board>) -> Vec<BoardEntry> {
+    board.0.lock().unwrap().iter().cloned().collect()
 }
 
 #[tauri::command]
@@ -401,6 +461,7 @@ fn main() {
     tauri::Builder::default()
         .manage(Panes(Mutex::new(HashMap::new())))
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
+        .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .setup(|app| {
             let handle = app.handle().clone();
             std::thread::spawn(move || {
@@ -429,7 +490,7 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, launch, loop_start, loop_ask,
-            pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen
+            pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
