@@ -118,6 +118,19 @@ async function addPane() {
   host.addEventListener('mousedown', () => term.focus());
   term.onData((d) => inv('pty_write', { pane: id, data: d }));
 
+  // explicit paste -> PTY (xterm's built-in paste doesn't fire in the webview)
+  host.addEventListener('paste', (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const cd = ev.clipboardData || window.clipboardData;
+    const text = cd ? cd.getData('text') : '';
+    if (text) {
+      inv('pty_write', { pane: id, data: text });
+    } else if (navigator.clipboard && navigator.clipboard.readText) {
+      navigator.clipboard.readText().then((t) => { if (t) inv('pty_write', { pane: id, data: t }); }).catch(() => {});
+    }
+  }, true);
+
   panes.set(id, { term, fit, el, cwd });
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
