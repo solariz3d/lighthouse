@@ -76,7 +76,10 @@
       <div id="stream">
         <div class="streamhead">
           <span>tap — completed turns across panes</span>
-          <button id="distill" class="distillbtn" title="distill the board into resonance — good model, spends one turn">⟳ distill</button>
+          <span class="streamctl">
+            <label class="autolbl" title="auto-distill as turns accumulate (debounced)"><input type="checkbox" id="autodistill" checked /> auto</label>
+            <button id="distill" class="distillbtn" title="distill the board into resonance now — good model, spends one turn">⟳ distill</button>
+          </span>
         </div>
         <div id="streamlog"></div>
       </div>

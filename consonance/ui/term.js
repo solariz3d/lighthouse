@@ -58,6 +58,10 @@ function ensureListeners() {
     el.textContent = 'ctx ' + pct + '% · ' + (ctx / 1000).toFixed(0) + 'k';
     el.className = 'pctx' + (pct >= 80 ? ' warn' : '');
   });
+  listen('distilled', (e) => {
+    renderResonance(e.payload);
+    if (e.payload && e.payload.auto) setStatus('scribe auto-distilled · ' + e.payload.kept + ' kept');
+  });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
     const log = document.getElementById('streamlog');
@@ -156,25 +160,29 @@ async function reopenPane(id) {
   p.term.focus();
 }
 
+function renderResonance(r) {
+  const log = document.getElementById('streamlog');
+  if (!log) return;
+  const div = document.createElement('div');
+  div.className = 'resonance';
+  let html = '<div class="rdiv">── resonance · ' + r.kept + ' kept' + (r.auto ? ' · auto' : '') + ' ──</div>';
+  (r.atoms || []).forEach((a) => {
+    html += '<div class="ratom"><span class="rkind">' + escapeHtml(a.kind || '?') + '</span> ' +
+      escapeHtml(a.claim || '') +
+      (a.tether ? ' <span class="rtether">— ' + escapeHtml(a.tether) + '</span>' : '') + '</div>';
+  });
+  div.innerHTML = html;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
 async function distill() {
   const btn = document.getElementById('distill');
-  const log = document.getElementById('streamlog');
   if (btn) { btn.disabled = true; btn.textContent = 'distilling…'; }
   setStatus('the scribe is distilling the board (good model)…');
   try {
-    const r = await inv('scribe_distill');
-    const div = document.createElement('div');
-    div.className = 'resonance';
-    let html = '<div class="rdiv">── resonance · ' + r.kept + ' kept ──</div>';
-    (r.atoms || []).forEach((a) => {
-      html += '<div class="ratom"><span class="rkind">' + escapeHtml(a.kind || '?') + '</span> ' +
-        escapeHtml(a.claim || '') +
-        (a.tether ? ' <span class="rtether">— ' + escapeHtml(a.tether) + '</span>' : '') + '</div>';
-    });
-    div.innerHTML = html;
-    log.appendChild(div);
-    log.scrollTop = log.scrollHeight;
-    setStatus('scribe kept ' + r.kept + ' atom' + (r.kept === 1 ? '' : 's') + ' (→ ~/.consonance/resonance/)');
+    const kept = await inv('scribe_distill'); // render arrives via the 'distilled' event
+    setStatus('scribe kept ' + kept + ' atom' + (kept === 1 ? '' : 's') + ' (→ ~/.consonance/resonance/)');
   } catch (e) {
     setStatus('distill failed: ' + e);
   }
@@ -188,6 +196,8 @@ const tbtn = document.querySelector('.tabs button[data-tab="terminal"]');
 if (tbtn) tbtn.addEventListener('click', () => setTimeout(fitAll, 40));
 const dbtn = document.getElementById('distill');
 if (dbtn) dbtn.onclick = distill;
+const adb = document.getElementById('autodistill');
+if (adb) adb.onchange = (e) => inv('set_auto_distill', { on: e.target.checked });
 
 // register listeners at load too, so the RAM/process HUD updates before any pane exists
 try { ensureListeners(); } catch (_) {}

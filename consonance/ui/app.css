@@ -148,6 +148,9 @@ input::placeholder { color: #55607a; }
 }
 .distillbtn:hover { border-color: var(--aqua-d); }
 .distillbtn:disabled { color: var(--muted); cursor: default; }
+.streamctl { display: flex; align-items: center; gap: 12px; }
+.autolbl { display: flex; align-items: center; gap: 5px; cursor: pointer; text-transform: none; letter-spacing: 0; }
+.autolbl input { accent-color: var(--aqua); cursor: pointer; margin: 0; }
 #streamlog .resonance { margin: 6px 0; padding: 6px 0; border-top: 1px dashed var(--line); }
 #streamlog .rdiv { color: var(--aqua); font-size: 11px; letter-spacing: 1px; margin: 2px 0 6px; }
 #streamlog .ratom { white-space: normal; margin: 3px 0; padding-left: 8px; }
