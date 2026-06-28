@@ -3,8 +3,12 @@
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::os::windows::process::CommandExt;
 use std::process::{Command, Stdio};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
+
+// Windows: spawn child processes with no console window (CREATE_NO_WINDOW)
+const NO_WINDOW: u32 = 0x0800_0000;
 use std::collections::{HashMap, VecDeque};
 use std::io::{Read, Seek, SeekFrom, Write};
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -115,6 +119,7 @@ fn claude_call(session_flag: &str, sid: &str, prompt: &str) -> Result<String, St
         .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::null())
+        .creation_flags(NO_WINDOW)
         .output()
         .map_err(|e| format!("could not run claude: {e}"))?;
     Ok(String::from_utf8_lossy(&out.stdout).trim().to_string())
@@ -462,6 +467,7 @@ fn claude_oneshot(prompt: &str) -> Result<String, String> {
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::null())
+        .creation_flags(NO_WINDOW)
         .spawn()
         .map_err(|e| format!("could not run claude: {e}"))?;
     {
