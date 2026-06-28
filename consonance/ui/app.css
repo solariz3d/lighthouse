@@ -70,6 +70,39 @@ input::placeholder { color: #55607a; }
 .addrow { display: flex; gap: 10px; margin-top: 12px; }
 .addrow input { flex: 1; }
 
+/* living loop */
+#loop { gap: 0; }
+.loophead { color: var(--muted); line-height: 1.6; margin: 0 0 14px; font-size: 13px; }
+.loophead b { color: var(--text); font-weight: 600; }
+.loophead .g { color: var(--aqua); }
+.loophead .r { color: var(--amber); }
+.loophead em { color: var(--text); font-style: normal; }
+.looprow { display: flex; gap: 12px; align-items: stretch; margin-bottom: 14px; }
+.looprow textarea {
+  flex: 1; background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+  padding: 11px 13px; border-radius: 9px; font: inherit; resize: none; outline: none;
+}
+.looprow textarea:focus { border-color: var(--aqua-d); }
+.looprow .btn { align-self: stretch; }
+.loopcards { display: flex; gap: 12px; flex: 1; min-height: 0; }
+.lcard {
+  flex: 1; display: flex; flex-direction: column; min-width: 0;
+  background: var(--panel2); border: 1px solid var(--line); border-radius: 11px; overflow: hidden;
+}
+.lcard.ground { border-top: 2px solid var(--aqua); }
+.lcard.reach { border-top: 2px solid var(--amber); }
+.lcard h3 {
+  margin: 0; padding: 11px 14px; font-size: 11px; letter-spacing: 2px; color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+.lcard.ground h3 { color: var(--aqua); }
+.lcard.reach h3 { color: var(--amber); }
+.lcard .out {
+  padding: 13px 14px; overflow: auto; white-space: pre-wrap; line-height: 1.55; font-size: 13px;
+}
+.lcard .out.muted { color: var(--muted); }
+.lcard .out.thinking { color: var(--aqua); }
+
 #about { align-items: center; justify-content: center; text-align: center; gap: 4px; }
 #about svg { filter: drop-shadow(0 0 14px rgba(94,234,212,.30)); margin-bottom: 10px; }
 #about h1 { margin: 0; font-weight: 300; font-size: 27px; letter-spacing: .5px; }

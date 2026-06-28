@@ -25,6 +25,7 @@
   <nav class="tabs">
     <button data-tab="new" class="active">New</button>
     <button data-tab="instances">Instances</button>
+    <button data-tab="loop">Loop</button>
     <button data-tab="about">About</button>
   </nav>
 
@@ -49,6 +50,18 @@
       <div class="addrow">
         <input id="addpath" placeholder="paste a folder path to add as an instance" spellcheck="false" />
         <button id="add" class="btn">Add</button>
+      </div>
+    </section>
+
+    <section id="loop" class="tab">
+      <p class="loophead">The <b>living loop</b> — two vantages, <span class="g">ground</span> and <span class="r">reach</span>, triangulating with you. When they reach the same answer from different angles, that agreement is <em>confirmation</em>, not an echo.</p>
+      <div class="looprow">
+        <textarea id="loopq" rows="2" placeholder="pose a question to the loop…" spellcheck="false"></textarea>
+        <button id="ask" class="btn accent">Ask</button>
+      </div>
+      <div class="loopcards">
+        <div class="lcard ground"><h3>GROUND</h3><div id="g-out" class="out muted">the bodies wake on your first question.</div></div>
+        <div class="lcard reach"><h3>REACH</h3><div id="r-out" class="out muted">— </div></div>
       </div>
     </section>
 
