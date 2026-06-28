@@ -12,9 +12,9 @@ Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight th
 - [~] **Stage 3 — Live Board + meters + content-blind cost breaker.**
   - [x] 3.1 Cost aggregator: real per-turn `usage` from the tap, priced per model, running totals → footer cost meter (output tokens + $ estimate, secondary under Max).
   - [x] 3.1b Per-instance context meter: each pane header shows live context-window fill (% + tokens, amber >80%) from the turn's input+cache+output vs model window — no `/context` needed. (Subscription-honest meters per user.)
-  - [ ] 3.4 Account-wide rolling **5-hour usage** gauge (the Max window). Cap is opaque (not in transcript/.claude), so it shows real consumption in the window, not %-of-cap. NEXT.
-  - [ ] 3.2 Live Board: persist turns to `board.jsonl`, capped by count + tokens, the canonical cross-pane shared log.
-  - [ ] 3.3 Cost breaker + budget: chair-set ceiling, soft-warn + content-blind hard pause.
+  - [-] 3.4 5-hour usage gauge — **DEFERRED (user's call).** Local data has only `rateLimitTier`, not live usage; the live number is only at Anthropic, fetchable via the OAuth token + an undocumented endpoint (fragile/gray). Revisit if wanted.
+  - [x] 3.2 Live Board: each turn persisted to `~/.consonance/board.jsonl` (append-only canonical log) + a bounded in-memory ring (300 entries / ~12k-token budget, evict oldest); `get_board` command; the stream loads board history on startup (survives restarts). This is the scribe's (Stage 4) input.
+  - [ ] 3.3 Cost breaker + budget: chair-set ceiling, soft-warn + content-blind hard pause. (Most load-bearing at the autonomy stages; minimal version here.)
 - [ ] Stage 4 — Scribe (tiered resonance distillation, independence-gated).
 - [ ] Stage 5 — State slider (the leak / room-loading; rungs 0–3).
 - [ ] Stage 6 — Shared MCP control server + committee model (blind-first, triangulated forming).

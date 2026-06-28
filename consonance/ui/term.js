@@ -164,3 +164,19 @@ if (tbtn) tbtn.addEventListener('click', () => setTimeout(fitAll, 40));
 
 // register listeners at load too, so the RAM/process HUD updates before any pane exists
 try { ensureListeners(); } catch (_) {}
+
+// load the persisted board history into the stream (survives app restarts)
+try {
+  inv('get_board').then((entries) => {
+    const log = document.getElementById('streamlog');
+    if (!log || !entries) return;
+    entries.slice(-100).forEach((e) => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = '<span class="pid">' + (e.pane || '').slice(0, 8) + '</span> ' +
+        '<span class="role-' + e.role + '">' + e.role + '</span>  ' + escapeHtml(e.text);
+      log.appendChild(row);
+    });
+    log.scrollTop = log.scrollHeight;
+  }).catch(() => {});
+} catch (_) {}
