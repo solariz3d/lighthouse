@@ -83,52 +83,6 @@ async function removeSel() {
   status('removed  ' + gone.name + '  (folder untouched)');
 }
 
-// ---- the committee (Stage 6: blind-first vantages -> triangulating forming) ----
-function escapeCmt(s) { return String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
-
-function renderCommittee(r) {
-  const f = r.forming || {};
-  const sec = (cls, head, items, render) => {
-    let h = '<div class="fsec"><div class="fhead ' + cls + '">' + head + '</div>';
-    if (!items || !items.length) h += '<div class="fitem muted">— none —</div>';
-    else items.forEach(it => { h += render(it); });
-    return h + '</div>';
-  };
-  let h = '<div class="forming">';
-  h += sec('confirmed', 'confirmed — located from ≥2 vantages', f.confirmed,
-    c => '<div class="fitem">' + escapeCmt(c.claim || '') + ' <span class="ffrom">' + escapeCmt((c.from || []).join(', ')) + '</span></div>');
-  h += sec('forks', 'forks — held divergence, no winner', f.forks, fk => {
-    let s = '<div class="fitem"><b>' + escapeCmt(fk.axis || '') + '</b>';
-    (fk.positions || []).forEach(p => { s += '<div class="fpos"><span class="ffrom">' + escapeCmt(p.vantage || '') + ':</span> ' + escapeCmt(p.pos || '') + '</div>'; });
-    return s + '</div>';
-  });
-  h += sec('novel', 'novel — new + checkable', f.novel,
-    n => '<div class="fitem">' + escapeCmt(n.thing || '') + ' <span class="ffrom">' + escapeCmt(n.from || '') + '</span></div>');
-  h += '</div>';
-  h += '<details class="cmtraw"><summary>the three blind answers</summary>';
-  (r.answers || []).forEach(a => {
-    h += '<div class="cmtans"><div class="cmtv">' + escapeCmt(a.vantage) + '</div><div class="cmtatext">' + escapeCmt(a.text) + '</div></div>';
-  });
-  return h + '</details>';
-}
-
-async function runCommittee() {
-  const q = $('#cmtq').value.trim();
-  if (!q) { status('pose a question for the committee'); return; }
-  const btn = $('#cmtrun'), out = $('#cmtout');
-  btn.disabled = true; btn.textContent = 'running…';
-  out.innerHTML = '<div class="cmtwait">three vantages answering blind, then forming triangulates… (a few good-model calls)</div>';
-  status('the committee is convening…');
-  try {
-    out.innerHTML = renderCommittee(await invoke('committee_run', { question: q }));
-    status('committee returned');
-  } catch (e) {
-    out.innerHTML = '<div class="cmtwait">committee failed: ' + escapeCmt(e) + '</div>';
-    status('committee failed');
-  }
-  btn.disabled = false; btn.textContent = 'Run';
-}
-
 $$('.tabs button').forEach(b => b.onclick = () => {
   $$('.tabs button').forEach(x => x.classList.remove('active'));
   $$('.tab').forEach(x => x.classList.remove('active'));
@@ -142,8 +96,6 @@ $('#open').onclick = openSel;
 $('#remove').onclick = removeSel;
 $('#add').onclick = addByPath;
 $('#addpath').addEventListener('keydown', e => { if (e.key === 'Enter') addByPath(); });
-$('#cmtrun').onclick = runCommittee;
-$('#cmtq').addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); runCommittee(); } });
 $('#base').addEventListener('change', persist);
 $('#flags').addEventListener('change', persist);
 
