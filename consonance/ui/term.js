@@ -10,7 +10,6 @@ function escapeHtml(s) { return String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp
 
 function ensureListeners() {
   if (listenersReady) return;
-  listenersReady = true;
   const listen = window.__TAURI__.event.listen;
   listen('pty-output', (e) => {
     const p = panes.get(e.payload.pane);
@@ -18,7 +17,29 @@ function ensureListeners() {
   });
   listen('pty-exit', (e) => {
     const p = panes.get(e.payload);
-    if (p) { p.el.classList.add('dead'); p.term.write('\r\n\x1b[2m— process exited —\x1b[0m\r\n'); }
+    if (!p) return;
+    p.el.classList.add('dead');
+    p.term.write('\r\n\x1b[2m— process exited —\x1b[0m\r\n');
+    const head = p.el.querySelector('.phead');
+    if (head && !head.querySelector('.preopen')) {
+      const b = document.createElement('span');
+      b.className = 'preopen';
+      b.title = 'reopen (resume session)';
+      b.textContent = '↻';
+      b.onclick = () => reopenPane(e.payload);
+      head.insertBefore(b, head.querySelector('.pclose'));
+    }
+  });
+  listen('sysmeter', (e) => {
+    const m = e.payload;
+    const hud = document.getElementById('hud');
+    if (!hud) return;
+    const usedG = (m.ram_used_mb / 1024).toFixed(1);
+    const totG = (m.ram_total_mb / 1024).toFixed(1);
+    const frac = m.ram_total_mb ? m.ram_used_mb / m.ram_total_mb : 0;
+    hud.innerHTML = panes.size + ' pane' + (panes.size === 1 ? '' : 's') +
+      '  ·  claude ' + m.claude_procs + ' · ' + m.claude_mb + 'MB' +
+      '  ·  <span class="' + (frac > 0.9 ? 'warn' : '') + '">RAM ' + usedG + '/' + totG + 'GB</span>';
   });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
@@ -32,6 +53,7 @@ function ensureListeners() {
     while (log.childNodes.length > 100) log.removeChild(log.firstChild);
     log.scrollTop = log.scrollHeight;
   });
+  listenersReady = true;
 }
 
 function makePaneEl(id, cwd) {
@@ -74,7 +96,7 @@ async function addPane() {
   host.addEventListener('mousedown', () => term.focus());
   term.onData((d) => inv('pty_write', { pane: id, data: d }));
 
-  panes.set(id, { term, fit, el });
+  panes.set(id, { term, fit, el, cwd });
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
   term.focus();
@@ -99,8 +121,28 @@ function closePane(id) {
   setTimeout(fitAll, 80);
 }
 
+async function reopenPane(id) {
+  const p = panes.get(id);
+  if (!p) return;
+  p.el.classList.remove('dead');
+  const btn = p.el.querySelector('.preopen');
+  if (btn) btn.remove();
+  try {
+    await inv('pty_reopen', { pane: id, cwd: p.cwd || '' });
+  } catch (e) {
+    setStatus('reopen failed: ' + e);
+    p.el.classList.add('dead');
+    return;
+  }
+  setTimeout(() => fitPane(id), 80);
+  p.term.focus();
+}
+
 document.getElementById('termadd').onclick = addPane;
 document.getElementById('termcwd').addEventListener('keydown', (e) => { if (e.key === 'Enter') addPane(); });
 window.addEventListener('resize', fitAll);
 const tbtn = document.querySelector('.tabs button[data-tab="terminal"]');
 if (tbtn) tbtn.addEventListener('click', () => setTimeout(fitAll, 40));
+
+// register listeners at load too, so the RAM/process HUD updates before any pane exists
+try { ensureListeners(); } catch (_) {}

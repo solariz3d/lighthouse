@@ -3,12 +3,12 @@
 Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight through, in order, no side-quests.
 
 - [x] **Stage 1 — the spike.** One real `claude.exe` in a ConPTY + xterm.js pane, drivable; JSONL tap (transcript at the predicted path, carries `usage`/cost). Signed off: render + input confirmed by hand; tap verified against this session's 88.8 MB transcript (15,902 lines, all 5,305 assistant turns carry usage, cache tiers separable, 9 compacts).
-- [~] **Stage 2 — multi-pane workspace + the Tap.**
+- [x] **Stage 2 — multi-pane workspace + the Tap.** (machine side complete; reopen/RAM pending a hand-check)
   - [x] 2.1 PaneManager: 1→N panes, keyed by UUID (also the `--session-id`, so the tap can find each transcript). `pty_spawn`→id, `pty_write`/`pty_resize`/`pty_kill`/output all per-pane.
   - [x] 2.2 Multi-pane grid UI: N xterm panes, CSS-grid, add/close, output routed by id.
-  - [ ] 2.3 Crash-recovery + scrollback reattach (EOF→mark dead, reopen via `--resume`).
+  - [x] 2.3 Crash-recovery: pane EOF → marked dead + scrollback preserved + a ↻ reopen button that resumes the same session (`--resume <uuid>`, same transcript, tailer keeps catching).
   - [x] 2.4 Live TranscriptTailer (250ms poll + watermark) → role-tagged TurnRecords (thinking/tool noise excluded) → a "tap" debug stream under the panes. (v1: tailer thread doesn't stop on pane close — harmless sleeping loop.)
-  - [ ] 2.5 RAM/process meter line (sysinfo).
+  - [x] 2.5 RAM/process meter (sysinfo, 2s sample) → always-visible HUD: panes · claude procs + MB · system RAM used/total (amber >90%).
 - [ ] Stage 3 — Live Board + meters + content-blind cost breaker.
 - [ ] Stage 4 — Scribe (tiered resonance distillation, independence-gated).
 - [ ] Stage 5 — State slider (the leak / room-loading; rungs 0–3).
