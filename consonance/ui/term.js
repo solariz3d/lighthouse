@@ -48,6 +48,16 @@ function ensureListeners() {
     const outk = (c.output / 1000).toFixed(1);
     el.innerHTML = 'out ' + outk + 'k tok · <span class="usd">$' + c.usd.toFixed(3) + '</span>';
   });
+  listen('context', (e) => {
+    const { pane, ctx, limit } = e.payload;
+    const p = panes.get(pane);
+    if (!p) return;
+    const el = p.el.querySelector('.pctx');
+    if (!el) return;
+    const pct = limit ? Math.round((ctx / limit) * 100) : 0;
+    el.textContent = pct + '% · ' + (ctx / 1000).toFixed(0) + 'k';
+    el.className = 'pctx' + (pct >= 80 ? ' warn' : '');
+  });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
     const log = document.getElementById('streamlog');
@@ -70,6 +80,7 @@ function makePaneEl(id, cwd) {
     '<div class="phead">' +
       '<span class="pid">' + id.slice(0, 8) + '</span>' +
       '<span class="pcwd">' + (cwd || '~') + '</span>' +
+      '<span class="pctx" title="context window used"></span>' +
       '<span class="pclose" title="close pane">✕</span>' +
     '</div><div class="pterm"></div>';
   document.getElementById('panes').appendChild(el);
