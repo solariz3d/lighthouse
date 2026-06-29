@@ -17,6 +17,10 @@ portable-pty = "0.8"
 uuid = { version = "1", features = ["v4"] }
 sysinfo = "0.30"
 arboard = "3"
+rmcp = { version = "1.8", features = ["server", "macros", "transport-streamable-http-server"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "net"] }
+axum = "0.8"
+schemars = "1"
 
 [profile.dev]
 incremental = true

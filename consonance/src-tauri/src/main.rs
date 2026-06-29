@@ -11,11 +11,16 @@ use std::time::{Duration, SystemTime, UNIX_EPOCH};
 const NO_WINDOW: u32 = 0x0800_0000;
 use std::collections::{HashMap, VecDeque};
 use std::io::{Read, Seek, SeekFrom, Write};
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU16, Ordering};
 use std::sync::{Arc, Mutex};
 use portable_pty::{native_pty_system, CommandBuilder, MasterPty, PtySize};
 use tauri::{AppHandle, Emitter, Manager, State};
 use uuid::Uuid;
+
+mod mcp;
+
+// the shared MCP control-plane port (0 = not started); read when launching panes
+static MCP_PORT: AtomicU16 = AtomicU16::new(0);
 
 #[derive(Serialize, Deserialize, Clone)]
 struct Instance {
@@ -161,6 +166,13 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool)
         cmd.args(["--resume", &pane_id]);
     } else {
         cmd.args(["--session-id", &pane_id]); // names the transcript for the tap
+    }
+    // join the shared MCP control plane (loopback) if it is up
+    if MCP_PORT.load(Ordering::Relaxed) != 0 {
+        let cfg = mcp::config_path();
+        if let Some(p) = cfg.to_str() {
+            cmd.args(["--mcp-config", p, "--strict-mcp-config"]);
+        }
     }
     cmd.env("TERM", "xterm-256color");
     cmd.env("FORCE_COLOR", "1");
@@ -686,6 +698,10 @@ fn main() {
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .setup(|app| {
+            // Stage 7a: bring up the one shared MCP control plane, then panes can join it
+            let mboard = app.state::<Board>().0.clone();
+            MCP_PORT.store(mcp::start(mboard), Ordering::Relaxed);
+
             let handle = app.handle().clone();
             std::thread::spawn(move || {
                 let mut sys = sysinfo::System::new();
