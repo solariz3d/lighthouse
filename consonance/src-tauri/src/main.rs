@@ -19,6 +19,7 @@ use uuid::Uuid;
 
 mod mcp;
 mod gate;
+mod tether;
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -218,6 +219,14 @@ struct TurnRecord {
     text: String,
 }
 
+// Stage 8: a tether-strength reading for a turn — surfaced numbers, never a verdict.
+#[derive(Clone, Serialize)]
+struct TetherInfo {
+    pane: String,
+    referents: u32,
+    novelty: f64,
+}
+
 // ---- cost: aggregate real per-turn `usage` from the transcripts, priced per model ----
 #[derive(Default, Clone, Serialize)]
 struct CostTotals {
@@ -406,6 +415,13 @@ fn start_tailer(
                                 .duration_since(UNIX_EPOCH)
                                 .map(|d| d.as_millis() as u64)
                                 .unwrap_or(0);
+                            // tether proxy (zero-token, lexical) vs the recent board window — numbers, not a verdict
+                            let recent: Vec<String> = {
+                                let q = board.lock().unwrap();
+                                q.iter().rev().take(20).map(|e| e.text.clone()).collect()
+                            };
+                            let tr = tether::read(&text, &recent);
+                            let _ = app.emit("tether", TetherInfo { pane: pane_id.clone(), referents: tr.referents, novelty: tr.novelty });
                             board_push(&board, BoardEntry { pane: pane_id.clone(), role: role.clone(), text: text.clone(), ts });
                             let _ = app.emit("turn", TurnRecord { pane: pane_id.clone(), role, text });
                         }

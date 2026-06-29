@@ -97,6 +97,12 @@ function ensureListeners() {
     const el = document.getElementById('gatemode');
     if (el) el.textContent = e.payload;
   });
+  listen('tether', (e) => {
+    const p = panes.get(e.payload.pane);
+    if (!p) return;
+    const el = p.el.querySelector('.ptether');
+    if (el) el.textContent = 'ref ' + e.payload.referents + ' · nov ' + e.payload.novelty.toFixed(2);
+  });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
     lastTurn.set(pane, { role, text });
@@ -140,6 +146,7 @@ function makePaneEl(id, name, cwd) {
       '<span class="pid">' + id.slice(0, 8) + '</span>' +
       '<span class="pcwd">' + (cwd || '~') + '</span>' +
       '<span class="prole" title="role — click to toggle; only committee panes can receive a gated inject">human</span>' +
+      '<span class="ptether" title="tether proxy: external referents · novelty vs the board — numbers, not a verdict"></span>' +
       '<span class="pctx" title="context window used"></span>' +
       '<span class="pclose" title="close pane">✕</span>' +
     '</div><div class="pterm"></div>';
