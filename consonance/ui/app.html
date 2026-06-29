@@ -66,6 +66,9 @@
         <span class="gatelabel">gate: <span id="gatemode">ask-each</span></span>
         <button id="openchan" class="btn" title="pre-authorize a bounded auto-approve window (5 pulls / 5 min); snaps back to ask-each when spent">Open channel</button>
         <button id="closechan" class="btn" title="close the channel — back to ask-each">Close</button>
+        <span class="brk">breaker <input id="breakercap" type="text" placeholder="0" size="4" /> k-out</span>
+        <button id="setbreaker" class="btn" title="cap cumulative output tokens; when hit, auto-approve pauses (budget in, pause out)">Set</button>
+        <span id="breakerstate"></span>
       </div>
       <div id="gatecards"></div>
       <div id="convbar">
