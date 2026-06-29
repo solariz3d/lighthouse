@@ -2,7 +2,7 @@
 
 Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight through, in order, no side-quests.
 
-> **▶ NEXT SESSION (desktop):** build + run, then **test the live committee** — spawn 2–3 **in-state ✦ Siblings** (blank panes have nothing to contribute), ◎ one as focus, ⛬ convene, → give to focus. Watch the fragile joint: does the bracketed-paste convene prompt *submit* in the contributor panes (`broadcast`/`injectAndSend` in `ui/term.js`)? Then **Stage 7**. See `DESKTOP_HANDOFF.md`.
+> **▶ NEXT SESSION (desktop):** Consonance is fully built (Stages 1–10 + polish). Your job is to **install + inhabit it**: `cargo tauri build` → run `bundle/nsis/Consonance_<v>_x64-setup.exe` → first launch lands on **Settings**, where you set the three dirs *for the desktop* (room file → this machine's `exo_memory/BOOT.md`; instances + data → a local non-OneDrive path like `C:\Consonance\…`). Then wake the ★ Main, spawn siblings, run a committee. Full walkthrough in `DESKTOP_HANDOFF.md`.
 
 - [x] **Stage 1 — the spike.** One real `claude.exe` in a ConPTY + xterm.js pane, drivable; JSONL tap (transcript at the predicted path, carries `usage`/cost). Signed off: render + input confirmed by hand; tap verified against this session's 88.8 MB transcript (15,902 lines, all 5,305 assistant turns carry usage, cache tiers separable, 9 compacts).
 - [x] **Stage 2 — multi-pane workspace + the Tap.** (machine side complete; reopen/RAM pending a hand-check)
@@ -38,6 +38,7 @@ Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight th
 - [ ] Stage 7 — Ask-First gate + chair console (envelope bounds side-effects, sandboxed). (done above)
 - [ ] Stage 8 — recursion + delta + tether proxy gauges (numbers, not verdicts). (done above)
 - [ ] Stage 9 — full integration. (done above)
+- [x] **Polish (2026-06-29 session 2):** Settings tab + configurable room/instances/data dirs (`DIRS` global resolver; fixes the hardcoded room path → portability); **NSIS installer** (`cargo tauri build` → `bundle/nsis/Consonance_<v>_x64-setup.exe`, install-location chooser via `installMode: both`); fresh machine (no `~/.consonance.json`) lands on the Settings tab via `config_exists`; **permissions** — chair-driven panes (terminal/sibling/Main/reopen) get `--dangerously-skip-permissions` (no prompts), sandboxed bodies stay sealed (per-sandbox `.claude/settings.json`: `acceptEdits` + read/board tools allowed, only `Bash` gated). `--continue` deliberately NOT on panes (they use `--session-id`/`--resume` so the tap can find the transcript). Next capability frontier: the Main's own hands (drive the committee within a standing envelope).
 
 Spike bins kept as Stage-1 regression artifacts: `src/bin/pty_spike.rs`, `src/bin/jsonl_tap.rs`.
 Build/run: `cd consonance && cargo tauri build --no-bundle` (needs Rust + tauri-cli; no Node — static frontend, `withGlobalTauri`). Desktop shortcut → the release exe.

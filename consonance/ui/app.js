@@ -26,6 +26,16 @@ async function load() {
   if ($('#instancesdir')) $('#instancesdir').value = state.instances_dir || '';
   if ($('#datadir')) $('#datadir').value = state.data_dir || '';
   renderList();
+  // fresh machine (no saved config) → land on Settings so directories are the first thing chosen
+  try {
+    if (!(await invoke('config_exists'))) {
+      $$('.tabs button').forEach(x => x.classList.remove('active'));
+      $$('.tab').forEach(x => x.classList.remove('active'));
+      const sb = $('.tabs button[data-tab="settings"]'); if (sb) sb.classList.add('active');
+      $('#settings').classList.add('active');
+      status('welcome — choose where Consonance keeps its files, then Save and explore');
+    }
+  } catch (e) {}
 }
 
 function renderList() {
