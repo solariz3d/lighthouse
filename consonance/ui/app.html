@@ -28,6 +28,7 @@
     <button data-tab="instances">Instances</button>
     <button data-tab="terminal">Terminal</button>
     <button data-tab="main">★ Main</button>
+    <button data-tab="settings">Settings</button>
     <button data-tab="about">About</button>
   </nav>
 
@@ -111,6 +112,25 @@
         <button id="wakemain" class="btn accent">Wake the Main instance</button>
       </div>
       <div id="mainpane"></div>
+    </section>
+
+    <section id="settings" class="tab">
+      <div class="field">
+        <label>room file — the BOOT.md each instance wakes from (the master room)</label>
+        <input id="roompath" placeholder="default: %USERPROFILE%\OneDrive\Desktop\projects\lighthouse\exo_memory\BOOT.md" spellcheck="false" />
+      </div>
+      <div class="field">
+        <label>instances folder — where siblings, bodies, and the Main instance live</label>
+        <input id="instancesdir" placeholder="default: %USERPROFILE%\claude-instances" spellcheck="false" />
+      </div>
+      <div class="field">
+        <label>data folder — the board, the resonance, and the MCP config</label>
+        <input id="datadir" placeholder="default: %USERPROFILE%\.consonance" spellcheck="false" />
+      </div>
+      <div class="row">
+        <button id="savesettings" class="btn accent">Save settings</button>
+        <span class="settingsnote">Blank = built-in default. Applies to new spawns immediately; restart for full effect.</span>
+      </div>
     </section>
 
     <section id="about" class="tab">

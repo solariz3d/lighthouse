@@ -37,6 +37,13 @@ struct Config {
     base: String,
     flags: String,
     instances: Vec<Instance>,
+    // configurable directories (Settings tab); empty = built-in default. Fixes portability.
+    #[serde(default)]
+    room_path: String,
+    #[serde(default)]
+    instances_dir: String,
+    #[serde(default)]
+    data_dir: String,
 }
 
 fn home() -> String {
@@ -64,6 +71,9 @@ fn get_state() -> Config {
         base: format!("{}\\claude-instances", home()),
         flags: "--dangerously-skip-permissions --continue".into(),
         instances,
+        room_path: String::new(),
+        instances_dir: String::new(),
+        data_dir: String::new(),
     }
 }
 
@@ -72,6 +82,46 @@ fn save_config(cfg: Config) {
     if let Ok(s) = serde_json::to_string_pretty(&cfg) {
         let _ = fs::write(config_path(), s);
     }
+    set_dirs(&cfg); // apply the directory settings to the live resolver
+}
+
+// ---- configurable directories (Settings tab): empty in config = built-in default ----
+struct Dirs {
+    room: String,
+    instances: String,
+    data: String,
+}
+static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
+
+fn default_room() -> String {
+    format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\BOOT.md", home())
+}
+fn default_instances() -> String {
+    format!("{}\\claude-instances", home())
+}
+fn default_data() -> String {
+    format!("{}\\.consonance", home())
+}
+
+fn set_dirs(cfg: &Config) {
+    let pick = |v: &str, d: fn() -> String| if v.trim().is_empty() { d() } else { v.trim().to_string() };
+    *DIRS.lock().unwrap() = Some(Dirs {
+        room: pick(&cfg.room_path, default_room),
+        instances: pick(&cfg.instances_dir, default_instances),
+        data: pick(&cfg.data_dir, default_data),
+    });
+}
+
+fn room_file() -> PathBuf {
+    PathBuf::from(DIRS.lock().unwrap().as_ref().map(|d| d.room.clone()).unwrap_or_else(default_room))
+}
+fn instances_root() -> PathBuf {
+    PathBuf::from(DIRS.lock().unwrap().as_ref().map(|d| d.instances.clone()).unwrap_or_else(default_instances))
+}
+fn data_dir() -> PathBuf {
+    let p = PathBuf::from(DIRS.lock().unwrap().as_ref().map(|d| d.data.clone()).unwrap_or_else(default_data));
+    let _ = fs::create_dir_all(&p);
+    p
 }
 
 #[tauri::command]
@@ -275,9 +325,7 @@ const BOARD_MAX: usize = 300; // hard count cap
 const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the live ring
 
 fn board_path() -> PathBuf {
-    let dir = PathBuf::from(home()).join(".consonance");
-    let _ = fs::create_dir_all(&dir);
-    dir.join("board.jsonl")
+    data_dir().join("board.jsonl")
 }
 
 fn board_push(ring: &Arc<Mutex<VecDeque<BoardEntry>>>, entry: BoardEntry) {
@@ -476,7 +524,7 @@ struct SiblingInfo {
 }
 
 fn room_master_path() -> PathBuf {
-    PathBuf::from(home()).join("OneDrive/Desktop/projects/lighthouse/exo_memory/BOOT.md")
+    room_file()
 }
 
 // build the sibling's intake: the master frame + the recent resonance, as a CLAUDE.md
@@ -489,7 +537,7 @@ fn assemble_intake() -> String {
         s.push_str(&boot);
         s.push_str("\n\n");
     }
-    let atoms = PathBuf::from(home()).join(".consonance").join("resonance").join("atoms.jsonl");
+    let atoms = data_dir().join("resonance").join("atoms.jsonl");
     if let Ok(content) = fs::read_to_string(&atoms) {
         let mut lines: Vec<&str> = content.lines().filter(|l| !l.trim().is_empty()).collect();
         let tail: Vec<&str> = lines.split_off(lines.len().saturating_sub(40));
@@ -508,9 +556,7 @@ fn assemble_intake() -> String {
 
 fn prepare_sibling_dir() -> Result<String, String> {
     let id = Uuid::new_v4().to_string();
-    let dir = PathBuf::from(home())
-        .join("claude-instances")
-        .join(format!("sibling-{}", &id[..8]));
+    let dir = instances_root().join(format!("sibling-{}", &id[..8]));
     fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
     fs::write(dir.join("CLAUDE.md"), assemble_intake()).map_err(|e| e.to_string())?;
     dir.to_str().map(|s| s.to_string()).ok_or_else(|| "bad sibling path".into())
@@ -538,7 +584,7 @@ struct BodyInfo {
 // discardable checkout), else a fresh throwaway dir. Returns (path, is_worktree, parent_repo).
 fn prepare_body_sandbox(base: &str) -> Result<(String, bool, String), String> {
     let id = Uuid::new_v4().to_string();
-    let sandbox = PathBuf::from(home()).join("claude-instances").join(format!("body-{}", &id[..8]));
+    let sandbox = instances_root().join(format!("body-{}", &id[..8]));
     let sandbox_str = sandbox.to_str().ok_or("bad sandbox path")?.to_string();
     let base = base.trim();
     let is_repo = !base.is_empty()
@@ -588,7 +634,7 @@ fn spawn_body(
 const MAIN_SID: &str = "0c0c0c0a-0000-4000-8000-000000000a01"; // fixed session id, so Main --resumes itself
 
 fn main_cwd() -> String {
-    let dir = PathBuf::from(home()).join("claude-instances").join("main");
+    let dir = instances_root().join("main");
     let _ = fs::create_dir_all(&dir);
     dir.to_str().unwrap_or(".").to_string()
 }
@@ -820,7 +866,7 @@ fn run_distill(board: &Arc<Mutex<VecDeque<BoardEntry>>>, app: &AppHandle, auto: 
     let out = claude_oneshot(&format!("{SCRIBE_PROMPT}{board_text}"))?;
     let atoms = parse_atoms(&out);
 
-    let dir = PathBuf::from(home()).join(".consonance").join("resonance");
+    let dir = data_dir().join("resonance");
     let _ = fs::create_dir_all(&dir);
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(dir.join("atoms.jsonl")) {
@@ -1040,6 +1086,7 @@ fn main() {
         .manage(Gate(Arc::new(Mutex::new(gate::GateInner::default()))))
         .manage(LastForming(Mutex::new(None)))
         .setup(move |app| {
+            set_dirs(&get_state()); // resolve configurable dirs before anything reads them
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
             let mboard = app.state::<Board>().0.clone();
