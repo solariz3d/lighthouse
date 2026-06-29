@@ -159,6 +159,25 @@ input::placeholder { color: #55607a; }
 .cmtx:hover { color: var(--amber); }
 #cmtbody { overflow: auto; padding: 10px 12px; }
 
+/* gate cards (Stage 7) — the chair Approves/Denies a surfaced pull */
+#gatecards { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+#gatecards:empty { display: none; }
+.gatecard {
+  display: flex; align-items: center; gap: 12px; justify-content: space-between;
+  background: var(--panel2); border: 1px solid var(--amber); border-left: 3px solid var(--amber);
+  border-radius: 9px; padding: 9px 12px;
+}
+.gcbody { flex: 1; min-width: 0; font-size: 13px; }
+.gckind { color: var(--amber); text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+.gcint { color: var(--muted); font-family: "Consolas", monospace; font-size: 11px; }
+.gcwhy { color: var(--text); margin-top: 3px; line-height: 1.45; }
+.gcbtns { display: flex; gap: 8px; flex: none; }
+.gcapprove, .gcdeny { border: none; border-radius: 7px; padding: 7px 14px; cursor: pointer; font-size: 12px; font-family: inherit; }
+.gcapprove { background: var(--aqua); color: #07120F; font-weight: 600; }
+.gcapprove:hover { background: var(--aqua-d); }
+.gcdeny { background: var(--panel); color: var(--muted); border: 1px solid var(--line); }
+.gcdeny:hover { color: var(--amber); border-color: var(--amber); }
+
 /* embedded terminal workspace (multi-pane) */
 #terminal { gap: 0; }
 .termbar { display: flex; gap: 10px; margin-bottom: 12px; }
