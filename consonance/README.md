@@ -44,10 +44,8 @@ Throughout, the design principle is **light, not lifeguard**: the program *surfa
 
 | Tab | What it's for |
 |---|---|
-| **New** | Launch a new top-level Claude instance in its own folder. |
-| **Instances** | The list of instances you've launched or added; open or remove them. |
 | **Terminal** | The committee workspace — spawn panes / siblings / bodies, focus one, convene the rest, watch the board tap, the gate cards, and the gauges. |
-| **★ Main** | Wake and talk to the housed Main instance — persistent across restarts. |
+| **★ Mainstay** | Wake and talk to the **mainstay** — the housed primary instance, fixed-session, persistent across restarts. |
 | **Settings** | Where Consonance keeps its files: the room file, the instances folder, the data folder. (A fresh machine lands here first.) |
 | **About** | What it is, in one breath. |
 

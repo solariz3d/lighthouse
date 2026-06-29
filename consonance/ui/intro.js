@@ -1,6 +1,9 @@
 // The signal intro: three dissonant waves (distinct vantages) resolving into one
 // consonant signal (confirmation, not a mirror). Canvas 2D, DPI-aware, ~60fps.
+// Lives as an overlay on the app (#intro-overlay) so the AudioContext belongs to
+// the app's page and survives the visual fade — the audio breathes out past it.
 const cv = document.getElementById('c');
+if (!cv) { /* no intro on this page */ } else {
 const ctx = cv.getContext('2d');
 let W, H, DPR;
 
@@ -23,12 +26,165 @@ const amps = [1.0, 0.7, 0.5];
 let t0 = null, finished = false;
 const smooth = x => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
 
+// Audio: same dissonance→consonance the waves do, in tones — but textured.
+// Three voices at the visual's frequency ratios (starts at 220, 220×3.7/2,
+// 220×5.3/2 Hz; glide to 220, 440, 660 — the 1:2:3 harmonic the waves resolve
+// to). Each voice is a detuned stack of 3 oscillators (chorus/fatness), panned
+// across the stereo field, behind a lowpass filter that opens as the
+// dissonance resolves (muffled→clear), with slow attack envelopes so they
+// swell in rather than punch. A sub at 110Hz for weight, a high shimmer at
+// E5 for air, and a synthetic convolver reverb for space.
+let audio = null;
+
+// Tiny synthetic IR: white noise with exponential decay — basic plate-like reverb.
+function makeReverbIR(ac, seconds, decay) {
+  const rate = ac.sampleRate;
+  const len = Math.floor(rate * seconds);
+  const buf = ac.createBuffer(2, len, rate);
+  for (let ch = 0; ch < 2; ch++) {
+    const data = buf.getChannelData(ch);
+    for (let i = 0; i < len; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+  }
+  return buf;
+}
+
+function startAudio() {
+  if (audio) return;
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    const ac = new AC();
+    if (ac.resume) ac.resume().catch(() => {});
+    const now = ac.currentTime;
+    const dur = DUR / 1000, hold = HOLD / 1000, fade = FADE / 1000;
+
+    // Master bus — dry path
+    const master = ac.createGain();
+    master.gain.value = 0.075;
+    master.connect(ac.destination);
+
+    // Parallel reverb bus
+    const reverb = ac.createConvolver();
+    reverb.buffer = makeReverbIR(ac, 1.5, 2.2);
+    const revGain = ac.createGain();
+    revGain.gain.value = 0.40;
+    reverb.connect(revGain).connect(ac.destination);
+
+    const allOscs = [];
+
+    // Sub at 110Hz — quiet, slow swell, adds weight without muddying the fundamental.
+    // No scheduled fade-out: sustains at peak so stopAudio's graceful breath has signal
+    // to fade from (the visual is an overlay now, audio outlasts it).
+    const sub = ac.createOscillator();
+    sub.type = 'sine';
+    sub.frequency.value = 110;
+    const subG = ac.createGain();
+    subG.gain.setValueAtTime(0, now);
+    subG.gain.linearRampToValueAtTime(0.45, now + 0.9);
+    sub.connect(subG).connect(master);
+    sub.start(now);
+    // stop scheduled far out — stopAudio will stop earlier when it fades
+    sub.stop(now + dur + hold + fade + 5.0);
+    allOscs.push(sub);
+
+    // Three voices, each a 3-osc detuned stack, lowpass-filtered, panned.
+    const fStart = [220, 220 * 3.7 / 2.0, 220 * 5.3 / 2.0];
+    const fEnd   = [220, 440, 660];
+    const peak   = [0.55, 0.35, 0.28];
+    const pan    = [0, -0.32, 0.32];
+    const detune = [-8, 0, 8]; // cents — chorus width per voice
+
+    fStart.forEach((f0, i) => {
+      const filter = ac.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.Q.value = 0.65;
+      filter.frequency.setValueAtTime(700, now);
+      filter.frequency.linearRampToValueAtTime(2800, now + dur);
+
+      const env = ac.createGain();
+      env.gain.setValueAtTime(0, now);
+      env.gain.linearRampToValueAtTime(peak[i], now + 1.0);
+
+      const panner = ac.createStereoPanner();
+      panner.pan.value = pan[i];
+
+      detune.forEach((cents) => {
+        const osc = ac.createOscillator();
+        osc.type = i === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(f0, now);
+        osc.frequency.linearRampToValueAtTime(fEnd[i], now + dur);
+        osc.detune.value = cents;
+        osc.connect(filter);
+        osc.start(now);
+        osc.stop(now + dur + hold + fade + 5.0); // stopAudio will end earlier
+        allOscs.push(osc);
+      });
+
+      filter.connect(env).connect(panner);
+      panner.connect(master);
+      panner.connect(reverb);
+    });
+
+    // Shimmer — fifth harmonic of A4 ish (E5), very slow fade-in, sits high.
+    // No scheduled fade-out; stopAudio drives the breath.
+    const shimmer = ac.createOscillator();
+    shimmer.type = 'sine';
+    shimmer.frequency.value = 660; // E5, matches voice-3's target — reinforces the resolution
+    const shimG = ac.createGain();
+    shimG.gain.setValueAtTime(0, now);
+    shimG.gain.linearRampToValueAtTime(0.06, now + 1.6);
+    shimmer.connect(shimG).connect(master);
+    shimG.connect(reverb);
+    shimmer.start(now);
+    shimmer.stop(now + dur + hold + fade + 5.0);
+    allOscs.push(shimmer);
+
+    // No scheduled master/revGain fade — stopAudio handles the breath-out so the
+    // audio outlasts the overlay's visual fade and decays gracefully as the app appears.
+
+    audio = { ac, oscs: allOscs, master, revGain };
+  } catch (e) { /* silent fallback — audio is decoration, not required */ }
+}
+
+// Graceful breath-out: master gain rolls down over ~1.5s while the reverb tail
+// decays for another ~0.5s past that. Overlapping the overlay's 800ms CSS fade
+// so the audio is still going when the app becomes visible underneath.
+function stopAudio() {
+  if (!audio) return;
+  try {
+    const { ac, oscs, master, revGain } = audio;
+    const now = ac.currentTime;
+    master.gain.cancelScheduledValues(now);
+    master.gain.setValueAtTime(master.gain.value, now);
+    master.gain.linearRampToValueAtTime(0, now + 1.5);
+    if (revGain) {
+      revGain.gain.cancelScheduledValues(now);
+      revGain.gain.setValueAtTime(revGain.gain.value, now);
+      revGain.gain.linearRampToValueAtTime(0, now + 2.0);
+    }
+    oscs.forEach(o => { try { o.stop(now + 2.1); } catch (e) {} });
+    setTimeout(() => { try { ac.close(); } catch (e) {} }, 2300);
+  } catch (e) {}
+  audio = null;
+}
+
+// Fades the overlay out via CSS (revealing the app underneath) AND begins the
+// long audio breath-out. Audio context persists in this page — the reverb tail
+// keeps decaying as the user starts using the app.
 function finish() {
   if (finished) return;
   finished = true;
-  window.location.href = 'app.html';
+  const overlay = document.getElementById('intro-overlay');
+  if (overlay) {
+    overlay.classList.add('fading');
+    // remove from DOM after the CSS transition completes
+    setTimeout(() => { try { overlay.remove(); } catch (e) {} }, 900);
+  }
+  stopAudio();
 }
-window.addEventListener('click', finish);
+cv.addEventListener('click', finish);
 
 function spaced(text, cx, y, sp) {
   const widths = [...text].map(c => ctx.measureText(c).width + sp);
@@ -39,7 +195,7 @@ function spaced(text, cx, y, sp) {
 }
 
 function frame(ts) {
-  if (t0 === null) t0 = ts;
+  if (t0 === null) { t0 = ts; startAudio(); }
   const el = ts - t0;
   const p = smooth(el / DUR);
   const fade = el > DUR + HOLD ? 1 - Math.min(1, (el - DUR - HOLD) / FADE) : 1;
@@ -128,3 +284,4 @@ function frame(ts) {
   else if (!finished) requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
+}  // end of: if (cv) — no intro on pages without #c canvas
