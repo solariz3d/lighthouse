@@ -247,6 +247,8 @@ struct BoardEntry {
 struct Board(Arc<Mutex<VecDeque<BoardEntry>>>);
 // Stage 7a: pane role model (absent = HumanDriven). Governs committee inject-assertion + the Main role.
 struct PaneRoles(Mutex<HashMap<String, String>>);
+// Stage 7b: a sender onto the pull queue, for the forming step to raise the hand itself.
+struct PullSender(tokio::sync::mpsc::UnboundedSender<mcp::PullRequest>);
 
 const BOARD_MAX: usize = 300; // hard count cap
 const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the live ring
@@ -525,7 +527,7 @@ fn parse_json_object(s: &str) -> serde_json::Value {
 
 // the focus's current thread + the live contributors' input -> triangulated guidance for the focus
 #[tauri::command]
-fn committee_form(question: String, contributions: Vec<Contribution>) -> Result<serde_json::Value, String> {
+fn committee_form(question: String, contributions: Vec<Contribution>, pulls: State<PullSender>) -> Result<serde_json::Value, String> {
     if contributions.is_empty() {
         return Err("no contributions to form".into());
     }
@@ -537,7 +539,31 @@ fn committee_form(question: String, contributions: Vec<Contribution>) -> Result<
     let prompt = format!(
         "{COMMITTEE_FORM_PROMPT}=== THE FOCUS'S CURRENT THREAD ===\n{question}\n\n=== THE CONTRIBUTIONS ===\n{bodies}"
     );
-    Ok(parse_json_object(&claude_oneshot(&prompt)?))
+    let forming = parse_json_object(&claude_oneshot(&prompt)?);
+    raise_from_forming(&forming, &pulls.0); // 7b: forming is the puller the bodies rarely are
+    Ok(forming)
+}
+
+// Stage 7b fallback: bodies seldom call raise_pull unprompted, so the forming step raises the
+// hand itself when it surfaces something high-salience — a new angle, or a held (unresolved) fork.
+fn raise_from_forming(forming: &serde_json::Value, pulls: &tokio::sync::mpsc::UnboundedSender<mcp::PullRequest>) {
+    let nonempty = |k: &str| forming.get(k).and_then(|x| x.as_array()).filter(|a| !a.is_empty()).cloned();
+    let (kind, why) = if let Some(n) = nonempty("novel") {
+        let thing = n[0].get("thing").and_then(|x| x.as_str()).unwrap_or("(unstated)");
+        ("novel", format!("forming surfaced a new angle: {thing}"))
+    } else if let Some(fk) = nonempty("forks") {
+        let axis = fk[0].get("axis").and_then(|x| x.as_str()).unwrap_or("(unstated)");
+        ("interesting", format!("forming kept an unresolved fork: {axis}"))
+    } else {
+        return; // nothing salient — no hand to raise
+    };
+    let _ = pulls.send(mcp::PullRequest {
+        from: "forming".to_string(),
+        target: String::new(),
+        kind: kind.to_string(),
+        intensity: 0.7,
+        why,
+    });
 }
 
 #[tauri::command]
@@ -700,20 +726,25 @@ fn set_pane_role(roles: State<PaneRoles>, pane: String, role: String) {
 }
 
 fn main() {
+    // Stage 7a/7b: the pull queue. pull_tx → the MCP control plane (bodies' raise_pull);
+    // form_pull → the forming step (the 7b fallback puller). The consumer surfaces both.
+    let (pull_tx, pull_rx) = tokio::sync::mpsc::unbounded_channel::<mcp::PullRequest>();
+    let form_pull = pull_tx.clone();
     tauri::Builder::default()
         .manage(Panes(Mutex::new(HashMap::new())))
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
-        .setup(|app| {
+        .manage(PullSender(form_pull))
+        .setup(move |app| {
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
-            let (pull_tx, mut pull_rx) = tokio::sync::mpsc::unbounded_channel::<mcp::PullRequest>();
             let mboard = app.state::<Board>().0.clone();
             MCP_PORT.store(mcp::start(mboard, pull_tx), Ordering::Relaxed);
             let phandle = app.handle().clone();
             let pboard = app.state::<Board>().0.clone();
             std::thread::spawn(move || {
+                let mut pull_rx = pull_rx;
                 while let Some(pr) = pull_rx.blocking_recv() {
                     board_push(&pboard, BoardEntry {
                         pane: "pull".to_string(),
