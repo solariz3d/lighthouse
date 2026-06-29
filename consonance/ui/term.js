@@ -145,8 +145,9 @@ function makePaneEl(id, name, cwd) {
   return el;
 }
 
-function attachPane(id, label, cwd) {
+function attachPane(id, label, cwd, role) {
   ensureListeners();
+  role = role || 'human';
   const name = nextPaneName();
   const el = makePaneEl(id, name, label);
   const term = new Terminal({
@@ -184,8 +185,12 @@ function attachPane(id, label, cwd) {
     else pasteInto();
   }, true);
 
-  panes.set(id, { term, fit, el, cwd, role: 'human', name });
+  panes.set(id, { term, fit, el, cwd, role, name });
   inv('set_pane_name', { pane: id, name }).catch(() => {});
+  if (role !== 'human') {
+    const rb = el.querySelector('.prole');
+    if (rb) { rb.textContent = role; rb.classList.toggle('committee', role === 'committee'); }
+  }
   updateConveneBtn();
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
@@ -217,6 +222,21 @@ async function addSibling() {
     setStatus('sibling spawn failed: ' + e);
   }
   if (btn) { btn.disabled = false; btn.textContent = '✦ Sibling'; }
+}
+
+async function addBody() {
+  const btn = document.getElementById('body');
+  if (btn) { btn.disabled = true; btn.textContent = 'spawning…'; }
+  const cwd = document.getElementById('termcwd').value.trim();
+  setStatus('spawning a sandboxed committee body…');
+  try {
+    const r = await inv('spawn_body', { cwd });
+    attachPane(r.pane, r.worktree ? '✦ body · worktree' : '✦ body · sandbox', r.cwd, 'committee');
+    setStatus('sandboxed committee body in ' + r.cwd + (r.worktree ? ' (git worktree)' : ''));
+  } catch (e) {
+    setStatus('body spawn failed: ' + e);
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '✦ Body'; }
 }
 
 // ---- Stage 6: the live committee — pick a focus pane, the rest convene to feed it ----
@@ -426,6 +446,8 @@ const dbtn = document.getElementById('distill');
 if (dbtn) dbtn.onclick = distill;
 const sbtn = document.getElementById('sibling');
 if (sbtn) sbtn.onclick = addSibling;
+const bbtn = document.getElementById('body');
+if (bbtn) bbtn.onclick = addBody;
 const adb = document.getElementById('autodistill');
 if (adb) adb.onchange = (e) => inv('set_auto_distill', { on: e.target.checked });
 const cvb = document.getElementById('convene'); if (cvb) cvb.onclick = openConvene;
