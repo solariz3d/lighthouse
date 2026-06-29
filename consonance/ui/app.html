@@ -61,6 +61,11 @@
         <button id="sibling" class="btn sibling" title="spawn a sibling: a fresh claude woken on the master room + the distilled resonance">✦ Sibling</button>
         <button id="convene" class="btn convene" title="convene the committee — the other live panes feed input to the focused pane (◎ a pane to focus it)" disabled>⛬ Convene</button>
       </div>
+      <div id="gatebar">
+        <span class="gatelabel">gate: <span id="gatemode">ask-each</span></span>
+        <button id="openchan" class="btn" title="pre-authorize a bounded auto-approve window (5 pulls / 5 min); snaps back to ask-each when spent">Open channel</button>
+        <button id="closechan" class="btn" title="close the channel — back to ask-each">Close</button>
+      </div>
       <div id="gatecards"></div>
       <div id="convbar">
         <textarea id="convtext" rows="2" placeholder="what the committee convenes around — the focus pane's current thread (editable)…" spellcheck="false"></textarea>

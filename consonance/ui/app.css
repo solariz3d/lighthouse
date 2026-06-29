@@ -177,6 +177,10 @@ input::placeholder { color: #55607a; }
 .gcapprove:hover { background: var(--aqua-d); }
 .gcdeny { background: var(--panel); color: var(--muted); border: 1px solid var(--line); }
 .gcdeny:hover { color: var(--amber); border-color: var(--amber); }
+#gatebar { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; color: var(--muted); }
+#gatebar .gatelabel { margin-right: auto; }
+#gatebar #gatemode { color: var(--aqua); font-family: "Consolas", monospace; }
+#gatebar .btn { padding: 5px 12px; font-size: 12px; }
 
 /* embedded terminal workspace (multi-pane) */
 #terminal { gap: 0; }
