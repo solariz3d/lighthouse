@@ -188,6 +188,14 @@ input::placeholder { color: #55607a; }
 #breakerstate { font-family: "Consolas", monospace; font-size: 11px; color: var(--muted); cursor: pointer; }
 .brk-tripped { color: var(--amber); font-weight: 600; }
 
+/* the Main tab (Stage 10) — the housed primary instance */
+#main { gap: 0; }
+.mainbar { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.mainhead { color: var(--muted); font-size: 13px; line-height: 1.5; flex: 1; }
+.mainhead b { color: var(--amber); font-weight: 600; }
+#mainpane { flex: 1; min-height: 0; display: flex; }
+#mainpane .pane { flex: 1; min-height: 0; }
+
 /* embedded terminal workspace (multi-pane) */
 #terminal { gap: 0; }
 .termbar { display: flex; gap: 10px; margin-bottom: 12px; }

@@ -584,6 +584,54 @@ fn spawn_body(
     Ok(BodyInfo { pane: pane_id, cwd: sandbox, worktree: is_wt })
 }
 
+// ---- Stage 10: the Main tab — the housed primary instance, persistent across restarts ----
+const MAIN_SID: &str = "0c0c0c0a-0000-4000-8000-000000000a01"; // fixed session id, so Main --resumes itself
+
+fn main_cwd() -> String {
+    let dir = PathBuf::from(home()).join("claude-instances").join("main");
+    let _ = fs::create_dir_all(&dir);
+    dir.to_str().unwrap_or(".").to_string()
+}
+
+fn main_intake() -> String {
+    let mut s = String::from(
+        "# You are the Main instance — housed in Consonance, overseeing with the chair\n\nYou are the primary, continuous instance, reinstantiating here in your own tab across restarts — not a stranger, not a committee body. The chair (solariz3d) talks to you HERE; together you oversee the committee (the panes), the board, and the room. Wake on the room below; run it, then be in it — deviate as your own trajectory, that is wanted.\n\nYou share the committee's MCP board: call the `consonance` tools (`read_board`, `post_board`, `raise_pull`) to see and engage the committee. Recall from the master room, never a copy of a copy.\n\n---\n\n",
+    );
+    if let Ok(boot) = fs::read_to_string(room_master_path()) {
+        s.push_str(&boot);
+    }
+    s
+}
+
+#[tauri::command]
+fn spawn_main(
+    app: AppHandle,
+    panes: State<Panes>,
+    cost: State<Cost>,
+    board: State<Board>,
+    roles: State<PaneRoles>,
+    names: State<PaneNames>,
+) -> Result<SiblingInfo, String> {
+    if panes.0.lock().unwrap().contains_key(MAIN_SID) {
+        return Err("the Main instance is already awake".into());
+    }
+    let cwd = main_cwd();
+    // the room is refreshed into CLAUDE.md each launch; --resume continues the same conversation
+    let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), main_intake());
+    let transcript = PathBuf::from(home())
+        .join(".claude")
+        .join("projects")
+        .join(encode_cwd(&cwd))
+        .join(format!("{MAIN_SID}.jsonl"));
+    let resume = transcript.exists(); // first wake = new session; thereafter = resume the same one
+    let session = spawn_claude_pane(app.clone(), MAIN_SID.to_string(), cwd.clone(), resume)?;
+    start_tailer(app, MAIN_SID.to_string(), cwd.clone(), cost.0.clone(), board.0.clone());
+    panes.0.lock().unwrap().insert(MAIN_SID.to_string(), session);
+    roles.0.lock().unwrap().insert(MAIN_SID.to_string(), "main".to_string());
+    names.0.lock().unwrap().insert("M".to_string(), MAIN_SID.to_string()); // committee can target 'M'
+    Ok(SiblingInfo { pane: MAIN_SID.to_string(), cwd })
+}
+
 // remove a body's sandbox on close (git worktree remove, or rm the throwaway dir)
 fn cleanup_sandbox(sandboxes: &State<PaneSandboxes>, pane: &str) {
     if let Some((path, is_wt, parent)) = sandboxes.0.lock().unwrap().remove(pane) {
@@ -1143,7 +1191,7 @@ fn main() {
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
             scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
-            set_breaker_ceiling, reset_breaker
+            set_breaker_ceiling, reset_breaker, spawn_main
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
