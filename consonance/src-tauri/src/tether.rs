@@ -124,10 +124,47 @@ pub fn delta(prev: &serde_json::Value, curr: &serde_json::Value) -> Delta {
     }
 }
 
+/// Vantage-spread proxy: average pairwise lexical distance (1 - token Jaccard) across the bodies'
+/// contributions this lap. High = genuinely distinct vantages; low = the bodies are converging /
+/// echoing each other (a collapse signal). A lagging indicator — a number, never a verdict.
+pub fn vantage_spread(texts: &[String]) -> f64 {
+    if texts.len() < 2 {
+        return 1.0;
+    }
+    let sets: Vec<HashSet<String>> = texts.iter().map(|t| tokens(t)).collect();
+    let mut total = 0.0;
+    let mut pairs = 0u32;
+    for i in 0..sets.len() {
+        for j in (i + 1)..sets.len() {
+            let (a, b) = (&sets[i], &sets[j]);
+            let union = a.union(b).count();
+            let inter = a.iter().filter(|w| b.contains(*w)).count();
+            let jaccard = if union == 0 { 0.0 } else { inter as f64 / union as f64 };
+            total += 1.0 - jaccard;
+            pairs += 1;
+        }
+    }
+    if pairs == 0 { 1.0 } else { total / pairs as f64 }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn spread_high_for_distinct_low_for_echo() {
+        let distinct = vec![
+            "gearing ratios and clutch engagement temperature".to_string(),
+            "lunar tides and the orbital mechanics of satellites".to_string(),
+        ];
+        let echo = vec![
+            "gearing ratios and clutch engagement matter".to_string(),
+            "clutch engagement and gearing ratios matter".to_string(),
+        ];
+        assert!(vantage_spread(&distinct) > vantage_spread(&echo));
+        assert!(vantage_spread(&echo) < 0.4);
+    }
 
     #[test]
     fn referents_track_ground() {

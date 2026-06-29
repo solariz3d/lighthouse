@@ -109,6 +109,10 @@ function ensureListeners() {
     if (!el) return;
     el.textContent = 'Δ +' + d.new_confirmed + ' conf · +' + d.new_forks + ' fork · -' + d.resolved_forks + ' resolved · refs ' + d.new_refs + ' · echo ' + d.echo_ratio.toFixed(2) + ' · nov ' + d.novelty.toFixed(2);
   });
+  listen('spread', (e) => {
+    const el = document.getElementById('spreadline');
+    if (el) el.textContent = 'spread ' + Number(e.payload).toFixed(2);
+  });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
     lastTurn.set(pane, { role, text });
