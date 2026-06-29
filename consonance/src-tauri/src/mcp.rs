@@ -13,7 +13,7 @@ use rmcp::{
     ErrorData as McpError, ServerHandler,
 };
 
-use crate::{board_push, home, BoardEntry};
+use crate::{board_push, data_dir, BoardEntry};
 
 fn now_ms() -> u64 {
     std::time::SystemTime::now()
@@ -135,7 +135,7 @@ impl ServerHandler for ConsonanceMcp {
 
 /// Absolute path to the shared MCP config every pane is launched with.
 pub fn config_path() -> std::path::PathBuf {
-    std::path::PathBuf::from(home()).join(".consonance").join("mcp.consonance.json")
+    data_dir().join("mcp.consonance.json")
 }
 
 /// Start the one shared MCP server on a loopback ephemeral port (own tokio runtime

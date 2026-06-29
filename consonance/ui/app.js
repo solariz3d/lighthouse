@@ -22,6 +22,9 @@ async function load() {
   state = await invoke('get_state');
   $('#base').value = state.base || '';
   $('#flags').value = state.flags || '';
+  if ($('#roompath')) $('#roompath').value = state.room_path || '';
+  if ($('#instancesdir')) $('#instancesdir').value = state.instances_dir || '';
+  if ($('#datadir')) $('#datadir').value = state.data_dir || '';
   renderList();
 }
 
@@ -49,6 +52,9 @@ function renderList() {
 async function persist() {
   state.base = $('#base').value;
   state.flags = $('#flags').value;
+  if ($('#roompath')) state.room_path = $('#roompath').value.trim();
+  if ($('#instancesdir')) state.instances_dir = $('#instancesdir').value.trim();
+  if ($('#datadir')) state.data_dir = $('#datadir').value.trim();
   await invoke('save_config', { cfg: state });
 }
 
@@ -109,5 +115,7 @@ $('#add').onclick = addByPath;
 $('#addpath').addEventListener('keydown', e => { if (e.key === 'Enter') addByPath(); });
 $('#base').addEventListener('change', persist);
 $('#flags').addEventListener('change', persist);
+['#roompath', '#instancesdir', '#datadir'].forEach(s => { const el = $(s); if (el) el.addEventListener('change', persist); });
+const ssb = $('#savesettings'); if (ssb) ssb.onclick = () => persist().then(() => status('settings saved — applies to new spawns; restart for full effect')).catch(() => {});
 
 load();
