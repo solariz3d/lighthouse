@@ -208,7 +208,7 @@ struct Panes(Mutex<HashMap<String, PtySession>>);
 
 // spawn claude in a fresh ConPTY: stream output, and detect exit by WAITING on the child
 // process (the PTY master often doesn't EOF on conhost). resume=true reattaches a session.
-fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool) -> Result<PtySession, String> {
+fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool, skip_perms: bool) -> Result<PtySession, String> {
     let pair = native_pty_system()
         .openpty(PtySize { rows: 34, cols: 120, pixel_width: 0, pixel_height: 0 })
         .map_err(|e| e.to_string())?;
@@ -218,6 +218,12 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool)
         cmd.args(["--resume", &pane_id]);
     } else {
         cmd.args(["--session-id", &pane_id]); // names the transcript for the tap
+    }
+    // panes the chair drives/oversees skip the permission prompts (the chair is the gate).
+    // autonomous bodies do NOT get this — their prompts are the only thing keeping a body's
+    // tool use inside its sandbox (the gate only governs cross-pane injection, not local bash).
+    if skip_perms {
+        cmd.arg("--dangerously-skip-permissions");
     }
     // join the shared MCP control plane (loopback) if it is up
     if MCP_PORT.load(Ordering::Relaxed) != 0 {
@@ -510,7 +516,7 @@ fn pty_spawn(
 ) -> Result<String, String> {
     let pane_id = Uuid::new_v4().to_string();
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
-    let session = spawn_claude_pane(app.clone(), pane_id.clone(), resolved_cwd.clone(), false)?;
+    let session = spawn_claude_pane(app.clone(), pane_id.clone(), resolved_cwd.clone(), false, true)?;
     start_tailer(app, pane_id.clone(), resolved_cwd, cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
     Ok(pane_id)
@@ -566,7 +572,7 @@ fn prepare_sibling_dir() -> Result<String, String> {
 fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State<Board>) -> Result<SiblingInfo, String> {
     let cwd = prepare_sibling_dir()?;
     let pane_id = Uuid::new_v4().to_string();
-    let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false)?;
+    let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, true)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
     Ok(SiblingInfo { pane: pane_id, cwd })
@@ -621,8 +627,9 @@ fn spawn_body(
 ) -> Result<BodyInfo, String> {
     let (sandbox, is_wt, parent) = prepare_body_sandbox(&cwd)?;
     let pane_id = Uuid::new_v4().to_string();
-    // spawn_claude_pane never passes --dangerously-skip-permissions, so the body keeps prompts on
-    let session = spawn_claude_pane(app.clone(), pane_id.clone(), sandbox.clone(), false)?;
+    // a body keeps permission prompts ON: they are the only thing confining its local tool use to
+    // the sandbox worktree (the gate governs cross-pane injection, not the body's own bash/writes)
+    let session = spawn_claude_pane(app.clone(), pane_id.clone(), sandbox.clone(), false, false)?;
     start_tailer(app, pane_id.clone(), sandbox.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
     roles.0.lock().unwrap().insert(pane_id.clone(), "committee".to_string());
@@ -672,7 +679,7 @@ fn spawn_main(
         .join(encode_cwd(&cwd))
         .join(format!("{MAIN_SID}.jsonl"));
     let resume = transcript.exists(); // first wake = new session; thereafter = resume the same one
-    let session = spawn_claude_pane(app.clone(), MAIN_SID.to_string(), cwd.clone(), resume)?;
+    let session = spawn_claude_pane(app.clone(), MAIN_SID.to_string(), cwd.clone(), resume, true)?;
     start_tailer(app, MAIN_SID.to_string(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(MAIN_SID.to_string(), session);
     roles.0.lock().unwrap().insert(MAIN_SID.to_string(), "main".to_string());
@@ -923,7 +930,7 @@ fn pty_kill(panes: State<Panes>, sandboxes: State<PaneSandboxes>, pane: String) 
 #[tauri::command]
 fn pty_reopen(app: AppHandle, panes: State<Panes>, pane: String, cwd: String) -> Result<(), String> {
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
-    let session = spawn_claude_pane(app, pane.clone(), resolved_cwd, true)?;
+    let session = spawn_claude_pane(app, pane.clone(), resolved_cwd, true, true)?;
     panes.0.lock().unwrap().insert(pane, session);
     Ok(())
 }
