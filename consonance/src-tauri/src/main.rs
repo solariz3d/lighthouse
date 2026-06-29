@@ -85,6 +85,12 @@ fn save_config(cfg: Config) {
     set_dirs(&cfg); // apply the directory settings to the live resolver
 }
 
+// true once the chair has a saved config; false on a fresh machine (→ land on Settings first)
+#[tauri::command]
+fn config_exists() -> bool {
+    config_path().exists()
+}
+
 // ---- configurable directories (Settings tab): empty in config = built-in default ----
 struct Dirs {
     room: String,
@@ -1262,7 +1268,7 @@ fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            get_state, save_config, launch, loop_start, loop_ask,
+            get_state, save_config, config_exists, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
             scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
