@@ -248,6 +248,8 @@ struct BoardEntry {
 struct Board(Arc<Mutex<VecDeque<BoardEntry>>>);
 // Stage 7a: pane role model (absent = HumanDriven). Governs committee inject-assertion + the Main role.
 struct PaneRoles(Mutex<HashMap<String, String>>);
+// Stage 7: friendly pane names (A, B, C … Z) -> pane id, so pulls target a letter, never a uuid.
+struct PaneNames(Mutex<HashMap<String, String>>);
 // Stage 7b: a sender onto the pull queue, for the forming step to raise the hand itself.
 struct PullSender(tokio::sync::mpsc::UnboundedSender<mcp::PullRequest>);
 // Stage 7: the ask-first gate state (ask_each: pulls become chair GateCards).
@@ -728,14 +730,27 @@ fn set_pane_role(roles: State<PaneRoles>, pane: String, role: String) {
     roles.0.lock().unwrap().insert(pane, role);
 }
 
+#[tauri::command]
+fn set_pane_name(names: State<PaneNames>, pane: String, name: String) {
+    names.0.lock().unwrap().insert(name.to_uppercase(), pane);
+}
+
 // Actuator plane (main.rs legitimately holds the writer; gate.rs never does): the only path that
 // writes to a pane's PTY, reached only after a human-passed gate decision.
-fn resolve_pane(panes: &State<Panes>, target: &str) -> Option<String> {
-    let map = panes.0.lock().unwrap();
-    if map.contains_key(target) {
-        return Some(target.to_string());
+fn resolve_pane(panes: &State<Panes>, names: &State<PaneNames>, target: &str) -> Option<String> {
+    let t = target.trim();
+    // by friendly name (A, B, C …), case-insensitive — the normal path
+    if let Some(id) = names.0.lock().unwrap().get(&t.to_uppercase()) {
+        if panes.0.lock().unwrap().contains_key(id) {
+            return Some(id.clone());
+        }
     }
-    map.keys().find(|k| k.starts_with(target)).cloned() // bodies cite the short (8-char) id
+    // fallback: raw id or id-prefix
+    let map = panes.0.lock().unwrap();
+    if map.contains_key(t) {
+        return Some(t.to_string());
+    }
+    map.keys().find(|k| k.starts_with(t)).cloned()
 }
 
 fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(), String> {
@@ -757,7 +772,8 @@ fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
         return "no target to deliver to".to_string();
     }
     let panes = app.state::<Panes>();
-    let tid = match resolve_pane(&panes, target) {
+    let names = app.state::<PaneNames>();
+    let tid = match resolve_pane(&panes, &names, target) {
         Some(t) => t,
         None => return format!("no live pane matches '{target}'"),
     };
@@ -829,6 +845,7 @@ fn main() {
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
+        .manage(PaneNames(Mutex::new(HashMap::new())))
         .manage(PullSender(form_pull))
         .manage(Gate(Arc::new(Mutex::new(gate::GateInner::default()))))
         .setup(move |app| {
@@ -963,7 +980,7 @@ fn main() {
             get_state, save_config, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
             scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form,
-            set_pane_role, gate_decide, open_channel, close_channel
+            set_pane_role, set_pane_name, gate_decide, open_channel, close_channel
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");

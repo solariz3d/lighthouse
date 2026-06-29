@@ -116,11 +116,21 @@ function ensureListeners() {
   listenersReady = true;
 }
 
-function makePaneEl(id, cwd) {
+function nextPaneName() {
+  const used = new Set([...panes.values()].map((p) => p.name));
+  for (let i = 0; i < 26; i++) {
+    const n = String.fromCharCode(65 + i); // A..Z
+    if (!used.has(n)) return n;
+  }
+  return '#'; // more than 26 panes
+}
+
+function makePaneEl(id, name, cwd) {
   const el = document.createElement('div');
   el.className = 'pane';
   el.innerHTML =
     '<div class="phead">' +
+      '<span class="pname" title="pane name — raise_pull targets this letter">' + (name || '?') + '</span>' +
       '<span class="pfocus" title="make this the committee focus">◎</span>' +
       '<span class="pid">' + id.slice(0, 8) + '</span>' +
       '<span class="pcwd">' + (cwd || '~') + '</span>' +
@@ -137,7 +147,8 @@ function makePaneEl(id, cwd) {
 
 function attachPane(id, label, cwd) {
   ensureListeners();
-  const el = makePaneEl(id, label);
+  const name = nextPaneName();
+  const el = makePaneEl(id, name, label);
   const term = new Terminal({
     fontFamily: 'Consolas, "Cascadia Mono", "Courier New", monospace',
     fontSize: 13,
@@ -173,7 +184,8 @@ function attachPane(id, label, cwd) {
     else pasteInto();
   }, true);
 
-  panes.set(id, { term, fit, el, cwd, role: 'human' });
+  panes.set(id, { term, fit, el, cwd, role: 'human', name });
+  inv('set_pane_name', { pane: id, name }).catch(() => {});
   updateConveneBtn();
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
