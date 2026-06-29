@@ -268,6 +268,8 @@ struct PaneSandboxes(Mutex<HashMap<String, (String, bool, String)>>);
 struct PullSender(tokio::sync::mpsc::UnboundedSender<mcp::PullRequest>);
 // Stage 7: the ask-first gate state (ask_each: pulls become chair GateCards).
 struct Gate(Arc<Mutex<gate::GateInner>>);
+// Stage 8: the previous committee forming, for the lap-over-lap Delta.
+struct LastForming(Mutex<Option<serde_json::Value>>);
 
 const BOARD_MAX: usize = 300; // hard count cap
 const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the live ring
@@ -627,7 +629,13 @@ fn parse_json_object(s: &str) -> serde_json::Value {
 
 // the focus's current thread + the live contributors' input -> triangulated guidance for the focus
 #[tauri::command]
-fn committee_form(question: String, contributions: Vec<Contribution>, pulls: State<PullSender>) -> Result<serde_json::Value, String> {
+fn committee_form(
+    app: AppHandle,
+    question: String,
+    contributions: Vec<Contribution>,
+    pulls: State<PullSender>,
+    last: State<LastForming>,
+) -> Result<serde_json::Value, String> {
     if contributions.is_empty() {
         return Err("no contributions to form".into());
     }
@@ -641,6 +649,14 @@ fn committee_form(question: String, contributions: Vec<Contribution>, pulls: Sta
     );
     let forming = parse_json_object(&claude_oneshot(&prompt)?);
     raise_from_forming(&forming, &pulls.0); // 7b: forming is the puller the bodies rarely are
+    // Stage 8: lap-over-lap Delta vs the previous forming — numbers the chair reads, never a verdict
+    {
+        let mut prev = last.0.lock().unwrap();
+        if let Some(p) = prev.as_ref() {
+            let _ = app.emit("delta", tether::delta(p, &forming));
+        }
+        *prev = Some(forming.clone());
+    }
     Ok(forming)
 }
 
@@ -969,6 +985,7 @@ fn main() {
         .manage(PaneSandboxes(Mutex::new(HashMap::new())))
         .manage(PullSender(form_pull))
         .manage(Gate(Arc::new(Mutex::new(gate::GateInner::default()))))
+        .manage(LastForming(Mutex::new(None)))
         .setup(move |app| {
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
