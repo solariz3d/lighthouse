@@ -826,6 +826,14 @@ fn clipboard_read() -> String {
         .unwrap_or_default()
 }
 
+// write to the OS clipboard through Rust (same reason: WebView2 blocks JS clipboard write)
+#[tauri::command]
+fn clipboard_write(text: String) -> Result<(), String> {
+    arboard::Clipboard::new()
+        .and_then(|mut c| c.set_text(text))
+        .map_err(|e| e.to_string())
+}
+
 // ---- the Scribe: distill the board into resonance (good model, gated by the user) ----
 const SCRIBE_PROMPT: &str = r#"You are the SCRIBE — an auto-curator. You distill a multi-instance conversation board into its RESONANCE: the few things genuinely worth carrying into a future instance, so it wakes already inside the conversation instead of as a stranger.
 
@@ -1270,7 +1278,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, config_exists, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
-            scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form,
+            scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
             set_breaker_ceiling, reset_breaker, spawn_main
         ])

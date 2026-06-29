@@ -200,6 +200,16 @@ function attachPane(id, label, cwd, role, container) {
       pasteInto();
       return false;
     }
+    // Ctrl/Cmd+C with a selection -> copy (write through Rust; WebView2 blocks JS clipboard).
+    // Without a selection, fall through so the raw SIGINT reaches the PTY (terminal-standard).
+    if (e.type === 'keydown' && (e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C')) {
+      const sel = term.getSelection();
+      if (sel) {
+        e.preventDefault();
+        inv('clipboard_write', { text: sel }).catch(() => {});
+        return false;
+      }
+    }
     return true;
   });
   host.addEventListener('paste', (ev) => {
