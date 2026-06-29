@@ -181,6 +181,10 @@ input::placeholder { color: #55607a; }
 #gatebar .gatelabel { margin-right: auto; }
 #gatebar #gatemode { color: var(--aqua); font-family: "Consolas", monospace; }
 #gatebar .btn { padding: 5px 12px; font-size: 12px; }
+#gatebar .brk { color: var(--muted); }
+#gatebar #breakercap { width: 44px; background: var(--panel2); border: 1px solid var(--line); color: var(--text); border-radius: 5px; padding: 3px 6px; font: inherit; font-size: 12px; outline: none; }
+#breakerstate { font-family: "Consolas", monospace; font-size: 11px; color: var(--muted); cursor: pointer; }
+.brk-tripped { color: var(--amber); font-weight: 600; }
 
 /* embedded terminal workspace (multi-pane) */
 #terminal { gap: 0; }

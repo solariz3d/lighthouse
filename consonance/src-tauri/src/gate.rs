@@ -3,7 +3,13 @@
 // otherwise it becomes a GateCard the human Approves or Denies. Delivering an approved pull (the
 // inject into the target pane) is the Actuator's job and lives in main.rs, never here.
 use serde::Serialize;
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
+
+// Global auto-approval rate cap (across ALL bodies — the committee's "global per-round bound", so a
+// colluding pair can't each stay under a per-body limit while the sum runs away). Our envelope's
+// exchange counter is already global; this adds burst protection for large envelopes.
+pub const RATE_CAP: u32 = 6;
+pub const RATE_WINDOW_MS: u64 = 15_000;
 
 #[derive(Clone, Copy, PartialEq)]
 pub enum GateMode {
@@ -36,6 +42,7 @@ pub struct GateInner {
     pub pending: HashMap<String, crate::mcp::PullRequest>,
     pub suppressed: u64,
     pub envelope: Option<Envelope>,
+    pub auto_window: VecDeque<u64>, // timestamps of recent auto-approvals (rate cap)
 }
 
 impl Default for GateInner {
@@ -46,6 +53,7 @@ impl Default for GateInner {
             pending: HashMap::new(),
             suppressed: 0,
             envelope: None,
+            auto_window: VecDeque::new(),
         }
     }
 }

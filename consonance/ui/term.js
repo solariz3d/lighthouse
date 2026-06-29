@@ -47,10 +47,15 @@ function ensureListeners() {
   });
   listen('cost', (e) => {
     const c = e.payload;
-    const el = document.getElementById('cost');
-    if (!el) return;
     const outk = (c.output / 1000).toFixed(1);
-    el.textContent = 'session generated: ' + outk + 'k out tok';
+    const el = document.getElementById('cost');
+    if (el) el.textContent = 'session generated: ' + outk + 'k out tok';
+    const bs = document.getElementById('breakerstate');
+    if (bs) {
+      if (c.tripped) bs.innerHTML = '<span class="brk-tripped">⛔ breaker tripped — autonomy paused (click to reset)</span>';
+      else if (c.ceiling_out > 0) bs.textContent = 'cap ' + (c.ceiling_out / 1000).toFixed(0) + 'k · at ' + outk + 'k';
+      else bs.textContent = '';
+    }
   });
   listen('context', (e) => {
     const { pane, ctx, limit } = e.payload;
@@ -460,6 +465,13 @@ const ocb = document.getElementById('openchan');
 if (ocb) ocb.onclick = () => inv('open_channel', { exchanges: 5, ttl: 300 }).then((l) => { setGateMode(l); setStatus('open-channel: 5 pulls auto-approve / 5 min, then snaps back'); }).catch(() => {});
 const ccb = document.getElementById('closechan');
 if (ccb) ccb.onclick = () => inv('close_channel').then((l) => { setGateMode(l); setStatus('gate: ask-each'); }).catch(() => {});
+const sbk = document.getElementById('setbreaker');
+if (sbk) sbk.onclick = () => {
+  const k = parseFloat(document.getElementById('breakercap').value) || 0;
+  inv('set_breaker_ceiling', { out: Math.round(k * 1000) }).then(() => setStatus(k > 0 ? ('breaker cap set: ' + k + 'k output tokens') : 'breaker cap cleared')).catch(() => {});
+};
+const bks = document.getElementById('breakerstate');
+if (bks) bks.onclick = () => inv('reset_breaker').then(() => setStatus('breaker reset — autonomy may resume')).catch(() => {});
 updateConveneBtn();
 
 // register listeners at load too, so the RAM/process HUD updates before any pane exists

@@ -226,6 +226,8 @@ struct CostTotals {
     cache_read: u64,
     cache_write: u64,
     usd: f64,
+    ceiling_out: u64, // breaker: cap on cumulative output tokens (0 = no cap)
+    tripped: bool,    // breaker tripped — content-blind, just the number
 }
 struct Cost(Arc<Mutex<CostTotals>>);
 
@@ -415,6 +417,9 @@ fn start_tailer(
                                 c.cache_read += cr;
                                 c.cache_write += cw;
                                 c.usd += turn_cost_usd(&model, inp, out, cr, cw);
+                                if c.ceiling_out > 0 && c.output >= c.ceiling_out {
+                                    c.tripped = true; // breaker: budget in, pause out
+                                }
                                 c.clone()
                             };
                             let _ = app.emit("cost", snapshot);
@@ -910,6 +915,30 @@ fn close_channel(app: AppHandle, gate: State<Gate>) -> String {
     label
 }
 
+// Cost breaker (content-blind): a cap on cumulative OUTPUT tokens. When tripped, the gate stops
+// auto-approving (snaps to ask-each) — budget in, pause out. Reads only the number.
+#[tauri::command]
+fn set_breaker_ceiling(app: AppHandle, cost: State<Cost>, out: u64) {
+    let snap = {
+        let mut c = cost.0.lock().unwrap();
+        c.ceiling_out = out;
+        c.tripped = out > 0 && c.output >= out;
+        c.clone()
+    };
+    let _ = app.emit("cost", snap); // refresh the indicator immediately
+}
+
+#[tauri::command]
+fn reset_breaker(app: AppHandle, cost: State<Cost>) {
+    let snap = {
+        let mut c = cost.0.lock().unwrap();
+        c.ceiling_out = 0;
+        c.tripped = false;
+        c.clone()
+    };
+    let _ = app.emit("cost", snap);
+}
+
 fn main() {
     // Stage 7a/7b: the pull queue. pull_tx → the MCP control plane (bodies' raise_pull);
     // form_pull → the forming step (the 7b fallback puller). The consumer surfaces both.
@@ -932,6 +961,7 @@ fn main() {
             let phandle = app.handle().clone();
             let pboard = app.state::<Board>().0.clone();
             let pgate = app.state::<Gate>().0.clone();
+            let ccost = app.state::<Cost>().0.clone();
             std::thread::spawn(move || {
                 let mut pull_rx = pull_rx;
                 while let Some(pr) = pull_rx.blocking_recv() {
@@ -950,13 +980,25 @@ fn main() {
                         });
                         continue;
                     }
-                    // open-channel: auto-approve within the envelope; else snap back to ask-each
+                    // open-channel: auto-approve within the envelope + content-blind guards
+                    // (cost breaker, global rate cap); else snap back to ask-each.
                     let mut auto = false;
                     let mut changed = false;
+                    let mut snap_reason = "";
                     if g.mode == gate::GateMode::OpenChannel {
-                        let live = g.envelope.as_ref().map_or(false, |e| e.remaining_exchanges > 0 && ts < e.deadline_ms);
-                        if live {
+                        let tripped = ccost.lock().unwrap().tripped;
+                        while let Some(&t) = g.auto_window.front() {
+                            if ts.saturating_sub(t) > gate::RATE_WINDOW_MS { g.auto_window.pop_front(); } else { break; }
+                        }
+                        let rate_ok = (g.auto_window.len() as u32) < gate::RATE_CAP;
+                        let env_ok = g.envelope.as_ref().map_or(false, |e| e.remaining_exchanges > 0 && ts < e.deadline_ms);
+                        snap_reason = if tripped { "cost breaker tripped" }
+                            else if !rate_ok { "rate cap" }
+                            else if !env_ok { "envelope spent" }
+                            else { "" };
+                        if snap_reason.is_empty() {
                             if let Some(e) = g.envelope.as_mut() { e.remaining_exchanges -= 1; }
+                            g.auto_window.push_back(ts);
                             auto = true;
                             changed = true;
                         } else {
@@ -977,6 +1019,14 @@ fn main() {
                             ts,
                         });
                         continue;
+                    }
+                    if !snap_reason.is_empty() {
+                        board_push(&pboard, BoardEntry {
+                            pane: "gate".to_string(),
+                            role: "committee".to_string(),
+                            text: format!("open-channel closed ({snap_reason}) — back to ask-each"),
+                            ts,
+                        });
                     }
                     // ask-each (default, or just snapped back): surface a GateCard for the chair
                     let id = Uuid::new_v4().to_string();
@@ -1056,7 +1106,8 @@ fn main() {
             get_state, save_config, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
             scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form,
-            set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body
+            set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
+            set_breaker_ceiling, reset_breaker
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
