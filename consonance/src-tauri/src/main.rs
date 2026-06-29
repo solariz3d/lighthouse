@@ -245,6 +245,8 @@ struct BoardEntry {
     ts: u64,
 }
 struct Board(Arc<Mutex<VecDeque<BoardEntry>>>);
+// Stage 7a: pane role model (absent = HumanDriven). Governs committee inject-assertion + the Main role.
+struct PaneRoles(Mutex<HashMap<String, String>>);
 
 const BOARD_MAX: usize = 300; // hard count cap
 const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the live ring
@@ -692,15 +694,36 @@ struct SysMeter {
     ram_total_mb: u64,
 }
 
+#[tauri::command]
+fn set_pane_role(roles: State<PaneRoles>, pane: String, role: String) {
+    roles.0.lock().unwrap().insert(pane, role);
+}
+
 fn main() {
     tauri::Builder::default()
         .manage(Panes(Mutex::new(HashMap::new())))
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
+        .manage(PaneRoles(Mutex::new(HashMap::new())))
         .setup(|app| {
-            // Stage 7a: bring up the one shared MCP control plane, then panes can join it
+            // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
+            // consume this; for now a placeholder consumer surfaces every raised pull.
+            let (pull_tx, mut pull_rx) = tokio::sync::mpsc::unbounded_channel::<mcp::PullRequest>();
             let mboard = app.state::<Board>().0.clone();
-            MCP_PORT.store(mcp::start(mboard), Ordering::Relaxed);
+            MCP_PORT.store(mcp::start(mboard, pull_tx), Ordering::Relaxed);
+            let phandle = app.handle().clone();
+            let pboard = app.state::<Board>().0.clone();
+            std::thread::spawn(move || {
+                while let Some(pr) = pull_rx.blocking_recv() {
+                    board_push(&pboard, BoardEntry {
+                        pane: "pull".to_string(),
+                        role: "committee".to_string(),
+                        text: format!("raise_pull from {} -> {} [{} {:.2}] {}", pr.from, pr.target, pr.kind, pr.intensity, pr.why),
+                        ts: SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0),
+                    });
+                    let _ = phandle.emit("pull", pr);
+                }
+            });
 
             let handle = app.handle().clone();
             std::thread::spawn(move || {
@@ -754,7 +777,8 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
-            scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form
+            scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form,
+            set_pane_role
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");

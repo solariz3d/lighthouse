@@ -22,9 +22,20 @@ fn now_ms() -> u64 {
         .unwrap_or(0)
 }
 
+/// A committee member raising its hand. Routed to the chair's gate (Stage 7); never acts.
+#[derive(Clone, serde::Serialize)]
+pub struct PullRequest {
+    pub from: String,
+    pub target: String,
+    pub kind: String,
+    pub intensity: f64,
+    pub why: String,
+}
+
 #[derive(Clone)]
 pub struct ConsonanceMcp {
     board: Arc<Mutex<VecDeque<BoardEntry>>>,
+    pulls: tokio::sync::mpsc::UnboundedSender<PullRequest>,
     tool_router: ToolRouter<ConsonanceMcp>,
 }
 
@@ -42,10 +53,40 @@ pub struct ReadBoardArgs {
     limit: Option<usize>,
 }
 
+#[derive(serde::Deserialize, schemars::JsonSchema)]
+pub struct RaisePullArgs {
+    /// who you want to engage, if any (a pane id or name)
+    target: Option<String>,
+    /// the kind of pull: "novel" | "wrong" | "interesting"
+    kind: Option<String>,
+    /// how strongly you feel the pull, 0.0–1.0
+    intensity: Option<f64>,
+    /// why — the reason you are raising your hand
+    why: String,
+    /// your own id/name (the calling instance), if known
+    from: Option<String>,
+}
+
 #[tool_router]
 impl ConsonanceMcp {
-    fn new(board: Arc<Mutex<VecDeque<BoardEntry>>>) -> Self {
-        Self { board, tool_router: Self::tool_router() }
+    fn new(board: Arc<Mutex<VecDeque<BoardEntry>>>, pulls: tokio::sync::mpsc::UnboundedSender<PullRequest>) -> Self {
+        Self { board, pulls, tool_router: Self::tool_router() }
+    }
+
+    #[tool(description = "Raise your hand to the committee chair: signal that another instance's thread is novel / wrong / interesting and you want to engage. This NEVER acts — it only enqueues a request the human chair decides on.")]
+    async fn raise_pull(
+        &self,
+        Parameters(RaisePullArgs { target, kind, intensity, why, from }): Parameters<RaisePullArgs>,
+    ) -> Result<CallToolResult, McpError> {
+        let pr = PullRequest {
+            from: from.unwrap_or_else(|| "unknown".to_string()),
+            target: target.unwrap_or_default(),
+            kind: kind.unwrap_or_else(|| "interesting".to_string()),
+            intensity: intensity.unwrap_or(0.5),
+            why,
+        };
+        let _ = self.pulls.send(pr);
+        Ok(CallToolResult::success(vec![Content::text("hand raised — queued for the chair (this did not act)")]))
     }
 
     #[tool(description = "Post a message to the shared committee board that every Consonance instance can read.")]
@@ -100,7 +141,10 @@ pub fn config_path() -> std::path::PathBuf {
 /// Start the one shared MCP server on a loopback ephemeral port (own tokio runtime
 /// thread; the std-thread PTY pump is untouched). Writes the shared `--mcp-config`
 /// file and returns the bound port (0 on failure).
-pub fn start(board: Arc<Mutex<VecDeque<BoardEntry>>>) -> u16 {
+pub fn start(
+    board: Arc<Mutex<VecDeque<BoardEntry>>>,
+    pulls: tokio::sync::mpsc::UnboundedSender<PullRequest>,
+) -> u16 {
     let (tx, rx) = std::sync::mpsc::channel::<u16>();
     std::thread::spawn(move || {
         let rt = match tokio::runtime::Runtime::new() {
@@ -129,7 +173,7 @@ pub fn start(board: Arc<Mutex<VecDeque<BoardEntry>>>) -> u16 {
             let _ = tx.send(port);
 
             let service = StreamableHttpService::new(
-                move || Ok(ConsonanceMcp::new(board.clone())),
+                move || Ok(ConsonanceMcp::new(board.clone(), pulls.clone())),
                 LocalSessionManager::default().into(),
                 Default::default(),
             );
