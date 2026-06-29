@@ -7,6 +7,17 @@ const status = t => { $('#status').textContent = t; };
 const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 const has = p => state.instances.some(i => i.path.toLowerCase() === p.toLowerCase());
 
+// This is a single-page app — there is nowhere to navigate. Trap history back/forward
+// (keyboard or programmatic) and swallow the mouse X-buttons (3 = back, 4 = forward)
+// before WebView2 navigates and wipes the live panes.
+history.pushState(null, '', location.href);
+window.addEventListener('popstate', () => history.pushState(null, '', location.href));
+for (const type of ['mousedown', 'mouseup', 'auxclick']) {
+  window.addEventListener(type, (e) => {
+    if (e.button === 3 || e.button === 4) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
+}
+
 async function load() {
   state = await invoke('get_state');
   $('#base').value = state.base || '';
