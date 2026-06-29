@@ -197,6 +197,12 @@ input::placeholder { color: #55607a; }
 }
 .pane .phead .pid { color: var(--aqua); font-family: monospace; }
 .pane .phead .pcwd { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pane .phead .prole {
+  cursor: pointer; font-size: 9px; letter-spacing: .5px; text-transform: uppercase;
+  padding: 1px 6px; border-radius: 5px; border: 1px solid var(--line); color: var(--muted); flex: none;
+}
+.pane .phead .prole:hover { border-color: var(--amber); }
+.pane .phead .prole.committee { color: var(--amber); border-color: var(--amber); }
 .pane .phead .pctx { font-family: "Consolas", monospace; font-size: 10px; color: var(--aqua); }
 .pane .phead .pctx.warn { color: var(--amber); }
 .pane .phead .pclose { cursor: pointer; padding: 0 4px; }

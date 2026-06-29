@@ -120,12 +120,14 @@ function makePaneEl(id, cwd) {
       '<span class="pfocus" title="make this the committee focus">◎</span>' +
       '<span class="pid">' + id.slice(0, 8) + '</span>' +
       '<span class="pcwd">' + (cwd || '~') + '</span>' +
+      '<span class="prole" title="role — click to toggle; only committee panes can receive a gated inject">human</span>' +
       '<span class="pctx" title="context window used"></span>' +
       '<span class="pclose" title="close pane">✕</span>' +
     '</div><div class="pterm"></div>';
   document.getElementById('panes').appendChild(el);
   el.querySelector('.pclose').onclick = () => closePane(id);
   el.querySelector('.pfocus').onclick = () => setFocus(id);
+  el.querySelector('.prole').onclick = () => toggleRole(id);
   return el;
 }
 
@@ -167,7 +169,7 @@ function attachPane(id, label, cwd) {
     else pasteInto();
   }, true);
 
-  panes.set(id, { term, fit, el, cwd });
+  panes.set(id, { term, fit, el, cwd, role: 'human' });
   updateConveneBtn();
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
@@ -217,6 +219,16 @@ function setFocus(id) {
 function updateConveneBtn() {
   const b = document.getElementById('convene');
   if (b) b.disabled = !(focusPaneId && panes.size >= 2);
+}
+
+function toggleRole(id) {
+  const p = panes.get(id);
+  if (!p) return;
+  p.role = p.role === 'committee' ? 'human' : 'committee';
+  inv('set_pane_role', { pane: id, role: p.role }).catch(() => {});
+  const el = p.el.querySelector('.prole');
+  if (el) { el.textContent = p.role; el.classList.toggle('committee', p.role === 'committee'); }
+  setStatus('pane ' + id.slice(0, 8) + ' → ' + p.role);
 }
 
 // inject text as a bracketed paste (preserves newlines) then submit — robust for live panes
