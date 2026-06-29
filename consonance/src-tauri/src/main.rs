@@ -728,22 +728,85 @@ fn set_pane_role(roles: State<PaneRoles>, pane: String, role: String) {
     roles.0.lock().unwrap().insert(pane, role);
 }
 
-// The chair decides a surfaced pull. Slice 1 records the verdict; delivering an approved pull
-// into the target pane (the inject) is the next micro-slice. Removing it from `pending` is what
-// keeps a pull from ever reaching the Actuator without an explicit human decision.
+// Actuator plane (main.rs legitimately holds the writer; gate.rs never does): the only path that
+// writes to a pane's PTY, reached only after a human-passed gate decision.
+fn resolve_pane(panes: &State<Panes>, target: &str) -> Option<String> {
+    let map = panes.0.lock().unwrap();
+    if map.contains_key(target) {
+        return Some(target.to_string());
+    }
+    map.keys().find(|k| k.starts_with(target)).cloned() // bodies cite the short (8-char) id
+}
+
+fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(), String> {
+    let mut map = panes.0.lock().unwrap();
+    let sess = map.get_mut(pane_id).ok_or_else(|| "pane not found".to_string())?;
+    // bracketed paste keeps the message one input (newlines and all), then a submit
+    let payload = format!("\x1b[200~{}\x1b[201~\r", text);
+    sess.writer.write_all(payload.as_bytes()).map_err(|e| e.to_string())?;
+    sess.writer.flush().map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+// The chair decides a surfaced pull. Removing it from `pending` is what keeps a pull from ever
+// reaching the Actuator without an explicit human decision. On approve we compose the directed
+// message FROM the pull (never from the raiser's PTY) and inject it — but only into a
+// COMMITTEE/MAIN pane; a HUMAN-DRIVEN target is refused (the invariant: never inject into a person).
 #[tauri::command]
-fn gate_decide(gate: State<Gate>, board: State<Board>, id: String, approve: bool) -> Result<String, String> {
+fn gate_decide(
+    gate: State<Gate>,
+    board: State<Board>,
+    panes: State<Panes>,
+    roles: State<PaneRoles>,
+    id: String,
+    approve: bool,
+) -> Result<String, String> {
     let pull = gate.0.lock().unwrap().pending.remove(&id);
     let pull = pull.ok_or("no such pending pull (already decided?)")?;
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
-    let verdict = if approve { "approved" } else { "denied" };
+
+    if !approve {
+        board_push(&board.0, BoardEntry {
+            pane: "gate".to_string(),
+            role: "committee".to_string(),
+            text: format!("chair denied pull from {} -> {} : {}", pull.from, pull.target, pull.why),
+            ts,
+        });
+        return Ok("denied".to_string());
+    }
+
+    let target = pull.target.trim();
+    let outcome = if target.is_empty() {
+        "approved (no target to deliver to)".to_string()
+    } else {
+        match resolve_pane(&panes, target) {
+            None => format!("approved (no live pane matches '{target}')"),
+            Some(tid) => {
+                let role = roles.0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| "human".to_string());
+                let short = &tid[..8.min(tid.len())];
+                if role != "committee" && role != "main" {
+                    format!("approved but NOT delivered — pane {short} is HUMAN-DRIVEN (the committee never injects into a person)")
+                } else {
+                    let msg = format!(
+                        "[committee] {} raised re: your thread — {}: \"{}\". Respond on the board (consonance/post_board) if you engage; you may decline.",
+                        pull.from, pull.kind, pull.why
+                    );
+                    match inject_to_pane(&panes, &tid, &msg) {
+                        Ok(_) => format!("approved + delivered to {short}"),
+                        Err(e) => format!("approved but delivery failed: {e}"),
+                    }
+                }
+            }
+        }
+    };
+
     board_push(&board.0, BoardEntry {
         pane: "gate".to_string(),
         role: "committee".to_string(),
-        text: format!("chair {} pull from {} -> {} : {}", verdict, pull.from, pull.target, pull.why),
+        text: format!("chair {} (from {} -> {})", outcome, pull.from, pull.target),
         ts,
     });
-    Ok(verdict.to_string())
+    Ok(outcome)
 }
 
 fn main() {
