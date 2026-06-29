@@ -110,8 +110,12 @@ function ensureListeners() {
     el.textContent = 'Δ +' + d.new_confirmed + ' conf · +' + d.new_forks + ' fork · -' + d.resolved_forks + ' resolved · refs ' + d.new_refs + ' · echo ' + d.echo_ratio.toFixed(2) + ' · nov ' + d.novelty.toFixed(2);
   });
   listen('spread', (e) => {
+    const s = Number(e.payload);
     const el = document.getElementById('spreadline');
-    if (el) el.textContent = 'spread ' + Number(e.payload).toFixed(2);
+    if (el) el.textContent = 'spread ' + s.toFixed(2) + (s < 0.35 ? ' — converging' : '');
+    // Stage 9: offer (never force) a skeptic when the bodies collapse toward each other
+    const sb = document.getElementById('skepticbtn');
+    if (sb) sb.style.display = s < 0.35 ? '' : 'none';
   });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
@@ -476,6 +480,13 @@ const cvb = document.getElementById('convene'); if (cvb) cvb.onclick = openConve
 const cvs = document.getElementById('convsend'); if (cvs) cvs.onclick = broadcast;
 const cvc = document.getElementById('convcancel'); if (cvc) cvc.onclick = cancelConvene;
 const gfb = document.getElementById('givefocus'); if (gfb) gfb.onclick = giveToFocus;
+const skb = document.getElementById('skepticbtn');
+if (skb) skb.onclick = () => {
+  if (!focusPaneId) { setStatus('◎ a focus pane first to offer it a skeptic'); return; }
+  injectAndSend(focusPaneId, "[committee] the room is converging (low vantage-spread). Take the skeptic's vantage on the current thread: find the flaw, the hidden assumption, the place this breaks. Push back — do not just agree.");
+  skb.style.display = 'none';
+  setStatus('skeptic vantage offered to focus ' + focusPaneId.slice(0, 8));
+};
 const cmx = document.getElementById('cmtclose'); if (cmx) cmx.onclick = dismissCommittee;
 const setGateMode = (l) => { const el = document.getElementById('gatemode'); if (el) el.textContent = l; };
 const ocb = document.getElementById('openchan');
