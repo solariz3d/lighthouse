@@ -1,2 +1,19 @@
-html, body { margin: 0; height: 100%; overflow: hidden; background: #0B0E14; cursor: pointer; }
-#c { display: block; width: 100vw; height: 100vh; }
+/* Intro overlay: covers the app while playing, fades out via CSS transition. */
+#intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0B0E14;
+  cursor: pointer;
+  transition: opacity 800ms ease-out;
+  pointer-events: auto;
+}
+#intro-overlay.fading {
+  opacity: 0;
+  pointer-events: none;
+}
+#intro-overlay #c {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
