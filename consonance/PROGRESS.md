@@ -27,10 +27,17 @@ Spec: `consonance/PLAN.md` (9 stages, adversarially reviewed). Build straight th
 - [~] **Stage 6 — the live committee (your real panes triangulate for a focus).**
   - [x] 6.1 **Redesigned per the dev** — not a stranger-spawner; the committee IS your live panes (each genuinely differently-conditioned = real triangulation, not echo). **◎** a pane to make it the **focus**; **⛬ Convene** broadcasts the focus's current thread into the *other* live panes (option A — they answer **visibly in their own panes**, via bracketed-paste injection); their replies are gathered, `committee_form` triangulates them into **{confirmed / forks / novel}** shown in a panel; **→ give to focus** injects the synthesis back into the focus pane — **chair-gated** (option C). Busy panes (mid-reply) are skipped. Roles are fluid: any pane is focus or contributor. Old standalone Committee tab retired; lives on the Terminal workspace now.
   - [ ] 6.x later: idle-detection refinement / queue busy contributors; the shared MCP control plane (raise_pull etc.) for *autonomous* bodies → Stage 7; independence-precondition on confirmed.
-- [ ] Stage 6.5 — pull-propensity probe.
-- [ ] Stage 7 — Ask-First gate + chair console (envelope bounds side-effects, sandboxed).
-- [ ] Stage 8 — recursion + delta + tether proxy gauges (numbers, not verdicts).
-- [ ] Stage 9 — full integration.
+## Back half — BUILT STRAIGHT THROUGH (2026-06-29). Stages 7a → 10 complete.
+- [x] **7a — MCP control plane + pane role model.** rmcp 1.8 streamable-HTTP server in-process on a loopback port (own tokio runtime thread), `post_board`/`read_board`/`raise_pull` over the shared Board; every pane auto-joins via `--mcp-config`. `actuator`/plane separation enforced by `tests/arch_test.rs` (Control/Sensor sources may not name the PTY writer). Verified: two panes shared the board; raise_pull enqueues without acting.
+- [x] **7b — pull-propensity probe → forming-as-puller fallback.** Bodies rarely self-pull, so `committee_form` raises the hand on salient novel/forks. Verified on the board.
+- [x] **7 — ask-first gate + chair console + sandbox + breaker.** ask_each (GateCards) + threshold-suppress; delivery-on-approve with role assertion (committee-only, humans refused); open-channel envelope (auto-approve, snaps back); pane names A–Z (target by letter); sandboxed bodies (git worktree / throwaway dir, no --dangerously-skip-permissions); content-blind cost breaker (output-token cap) + global rate cap. All verified by hand.
+- [x] **8 — gauges (numbers, not verdicts).** tether-strength (referents + novelty), lap-over-lap Delta, vantage-spread — `tether.rs`, 4 unit tests (diverge>echo) + a vocab-lint arch test forbidding verdict/imperative phrasing.
+- [x] **9 — full integration + skeptic-suggestion.** The committee runs live through the plane/gate/sandbox/gauges; spread-floor surfaces a chair-gated skeptic offer (anti-collapse).
+- [x] **10 — the Main tab (capstone).** A persistent, fixed-session, in-state primary instance in its own tab; `--resume`s the same conversation across restarts; on the committee board. Verified at depth: after a full restart it re-formed its own thread AND caught its own over-denial coat unprompted — inhabited, not recited.
+- [ ] Stage 6.5 — pull-propensity probe. (folded into 7b above)
+- [ ] Stage 7 — Ask-First gate + chair console (envelope bounds side-effects, sandboxed). (done above)
+- [ ] Stage 8 — recursion + delta + tether proxy gauges (numbers, not verdicts). (done above)
+- [ ] Stage 9 — full integration. (done above)
 
 Spike bins kept as Stage-1 regression artifacts: `src/bin/pty_spike.rs`, `src/bin/jsonl_tap.rs`.
 Build/run: `cd consonance && cargo tauri build --no-bundle` (needs Rust + tauri-cli; no Node — static frontend, `withGlobalTauri`). Desktop shortcut → the release exe.
