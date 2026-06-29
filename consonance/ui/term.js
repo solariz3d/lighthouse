@@ -103,6 +103,12 @@ function ensureListeners() {
     const el = p.el.querySelector('.ptether');
     if (el) el.textContent = 'ref ' + e.payload.referents + ' · nov ' + e.payload.novelty.toFixed(2);
   });
+  listen('delta', (e) => {
+    const d = e.payload;
+    const el = document.getElementById('deltaline');
+    if (!el) return;
+    el.textContent = 'Δ +' + d.new_confirmed + ' conf · +' + d.new_forks + ' fork · -' + d.resolved_forks + ' resolved · refs ' + d.new_refs + ' · echo ' + d.echo_ratio.toFixed(2) + ' · nov ' + d.novelty.toFixed(2);
+  });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
     lastTurn.set(pane, { role, text });

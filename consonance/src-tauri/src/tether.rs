@@ -5,6 +5,7 @@
 // not insight. The discrimination stays with the human; this only makes a proxy legible.
 //
 // Sensor plane: holds no actuator capability (arch_test enforces it).
+use serde::Serialize;
 use std::collections::HashSet;
 
 pub struct TetherReading {
@@ -64,4 +65,97 @@ pub fn novelty(text: &str, recent: &[String]) -> f64 {
 
 pub fn read(text: &str, recent: &[String]) -> TetherReading {
     TetherReading { referents: count_referents(text), novelty: novelty(text, recent) }
+}
+
+// ---- the Delta: lap-over-lap on two committee forming results (numbers, never a verdict) ----
+#[derive(Serialize, Clone, Default)]
+pub struct Delta {
+    pub new_confirmed: u32,
+    pub new_forks: u32,
+    pub resolved_forks: u32,
+    pub new_refs: u32,
+    pub echo_ratio: f64, // 0..1 — how much this lap re-says the last
+    pub novelty: f64,    // 1 - echo_ratio
+}
+
+/// Pull the keyed text of each item in a forming section, lowercased.
+fn section_texts(v: &serde_json::Value, key: &str, field: &str) -> Vec<String> {
+    v.get(key)
+        .and_then(|x| x.as_array())
+        .map(|a| {
+            a.iter()
+                .filter_map(|it| it.get(field).and_then(|x| x.as_str()).map(|s| s.to_lowercase()))
+                .collect()
+        })
+        .unwrap_or_default()
+}
+
+/// Is `item` absent from `prior` (no prior item shares >50% of its significant tokens)?
+fn is_new(item: &str, prior: &[String]) -> bool {
+    let it = tokens(item);
+    if it.is_empty() {
+        return false;
+    }
+    !prior.iter().any(|p| {
+        let pt = tokens(p);
+        let shared = it.iter().filter(|w| pt.contains(*w)).count();
+        (shared as f64 / it.len() as f64) > 0.5
+    })
+}
+
+pub fn delta(prev: &serde_json::Value, curr: &serde_json::Value) -> Delta {
+    let pc = section_texts(prev, "confirmed", "claim");
+    let cc = section_texts(curr, "confirmed", "claim");
+    let pf = section_texts(prev, "forks", "axis");
+    let cf = section_texts(curr, "forks", "axis");
+    let new_confirmed = cc.iter().filter(|c| is_new(c, &pc)).count() as u32;
+    let new_forks = cf.iter().filter(|f| is_new(f, &pf)).count() as u32;
+    let resolved_forks = pf.iter().filter(|f| is_new(f, &cf)).count() as u32; // prev fork gone this lap
+    let curr_text = [cc.join(" "), cf.join(" "), section_texts(curr, "novel", "thing").join(" ")].join(" ");
+    let prev_text = [pc.join(" "), pf.join(" "), section_texts(prev, "novel", "thing").join(" ")].join(" ");
+    let nov = novelty(&curr_text, &[prev_text]);
+    Delta {
+        new_confirmed,
+        new_forks,
+        resolved_forks,
+        new_refs: count_referents(&curr_text),
+        echo_ratio: 1.0 - nov,
+        novelty: nov,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn referents_track_ground() {
+        assert!(count_referents("the all-out method just feels more committed") <= 1);
+        assert!(count_referents("3.42 final drive, 2.66 first gear, see ratios.md and http://x.io") >= 3);
+    }
+
+    #[test]
+    fn novelty_high_when_new_low_when_echo() {
+        let prior = vec!["gearing is a chain of multipliers between engine and wheel".to_string()];
+        assert!(novelty("ocean tides come from the differential lunar gravitational pull", &prior) > 0.6);
+        assert!(novelty("gearing is a chain of multipliers between engine and wheel", &prior) < 0.2);
+    }
+
+    // The plan's Stage-8 check: the Delta must CORRELATE with a human diverge/echo label.
+    #[test]
+    fn delta_reads_diverge_as_more_novel_than_echo() {
+        let lap1 = json!({"confirmed":[{"claim":"the gate must default to act"}],"forks":[{"axis":"speed vs control"}],"novel":[]});
+        let echo = lap1.clone();
+        let diverge = json!({
+            "confirmed":[{"claim":"aggregate coercion needs a global rate bound"}],
+            "forks":[{"axis":"human-routed edge classification"}],
+            "novel":[{"thing":"the forged-triangulation vector"}]
+        });
+        let d_echo = delta(&lap1, &echo);
+        let d_div = delta(&lap1, &diverge);
+        assert!(d_div.novelty > d_echo.novelty, "diverge lap should read more novel than an echo lap");
+        assert!(d_div.new_confirmed >= d_echo.new_confirmed);
+        assert!(d_echo.echo_ratio > d_div.echo_ratio);
+    }
 }

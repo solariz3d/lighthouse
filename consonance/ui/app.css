@@ -154,6 +154,7 @@ input::placeholder { color: #55607a; }
   border-bottom: 1px solid var(--line); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber);
 }
 .cmthead b { color: var(--text); }
+#deltaline { font-family: "Consolas", monospace; font-size: 10px; color: var(--amber); text-transform: none; letter-spacing: 0; margin-right: auto; padding-left: 14px; }
 .cmthctl { display: flex; align-items: center; gap: 10px; }
 .cmtx { cursor: pointer; color: var(--muted); }
 .cmtx:hover { color: var(--amber); }
