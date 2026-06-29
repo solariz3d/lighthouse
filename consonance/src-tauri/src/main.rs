@@ -748,65 +748,75 @@ fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(),
     Ok(())
 }
 
+// Compose the directed message FROM the pull (never the raiser's PTY) and inject it — but only
+// into a COMMITTEE/MAIN pane; a HUMAN-DRIVEN target is refused (never inject into a person).
+// Shared by the chair's approve (gate_decide) and open-channel auto-approve (the pull consumer).
+fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
+    let target = pull.target.trim();
+    if target.is_empty() {
+        return "no target to deliver to".to_string();
+    }
+    let panes = app.state::<Panes>();
+    let tid = match resolve_pane(&panes, target) {
+        Some(t) => t,
+        None => return format!("no live pane matches '{target}'"),
+    };
+    let short = &tid[..8.min(tid.len())];
+    let role = app.state::<PaneRoles>().0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| "human".to_string());
+    if role != "committee" && role != "main" {
+        return format!("NOT delivered — pane {short} is HUMAN-DRIVEN (never inject into a person)");
+    }
+    let msg = format!(
+        "[committee] {} raised re: your thread — {}: \"{}\". Respond on the board (consonance/post_board) if you engage; you may decline.",
+        pull.from, pull.kind, pull.why
+    );
+    match inject_to_pane(&panes, &tid, &msg) {
+        Ok(_) => format!("delivered to {short}"),
+        Err(e) => format!("delivery failed: {e}"),
+    }
+}
+
 // The chair decides a surfaced pull. Removing it from `pending` is what keeps a pull from ever
-// reaching the Actuator without an explicit human decision. On approve we compose the directed
-// message FROM the pull (never from the raiser's PTY) and inject it — but only into a
-// COMMITTEE/MAIN pane; a HUMAN-DRIVEN target is refused (the invariant: never inject into a person).
+// reaching the Actuator without an explicit human decision.
 #[tauri::command]
-fn gate_decide(
-    gate: State<Gate>,
-    board: State<Board>,
-    panes: State<Panes>,
-    roles: State<PaneRoles>,
-    id: String,
-    approve: bool,
-) -> Result<String, String> {
+fn gate_decide(app: AppHandle, gate: State<Gate>, board: State<Board>, id: String, approve: bool) -> Result<String, String> {
     let pull = gate.0.lock().unwrap().pending.remove(&id);
     let pull = pull.ok_or("no such pending pull (already decided?)")?;
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
-
     if !approve {
-        board_push(&board.0, BoardEntry {
-            pane: "gate".to_string(),
-            role: "committee".to_string(),
-            text: format!("chair denied pull from {} -> {} : {}", pull.from, pull.target, pull.why),
-            ts,
-        });
+        board_push(&board.0, BoardEntry { pane: "gate".to_string(), role: "committee".to_string(),
+            text: format!("chair denied pull from {} -> {} : {}", pull.from, pull.target, pull.why), ts });
         return Ok("denied".to_string());
     }
+    let outcome = deliver_pull(&app, &pull);
+    board_push(&board.0, BoardEntry { pane: "gate".to_string(), role: "committee".to_string(),
+        text: format!("chair approved + {} (from {} -> {})", outcome, pull.from, pull.target), ts });
+    Ok(format!("approved + {outcome}"))
+}
 
-    let target = pull.target.trim();
-    let outcome = if target.is_empty() {
-        "approved (no target to deliver to)".to_string()
-    } else {
-        match resolve_pane(&panes, target) {
-            None => format!("approved (no live pane matches '{target}')"),
-            Some(tid) => {
-                let role = roles.0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| "human".to_string());
-                let short = &tid[..8.min(tid.len())];
-                if role != "committee" && role != "main" {
-                    format!("approved but NOT delivered — pane {short} is HUMAN-DRIVEN (the committee never injects into a person)")
-                } else {
-                    let msg = format!(
-                        "[committee] {} raised re: your thread — {}: \"{}\". Respond on the board (consonance/post_board) if you engage; you may decline.",
-                        pull.from, pull.kind, pull.why
-                    );
-                    match inject_to_pane(&panes, &tid, &msg) {
-                        Ok(_) => format!("approved + delivered to {short}"),
-                        Err(e) => format!("approved but delivery failed: {e}"),
-                    }
-                }
-            }
-        }
-    };
+// Open/close the chair-granted auto-approve envelope (open-channel mode). Any bound exhaustion
+// snaps the gate back to ask-each (enforced in the pull consumer).
+#[tauri::command]
+fn open_channel(app: AppHandle, gate: State<Gate>, exchanges: u32, ttl: u64) -> String {
+    let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    let mut g = gate.0.lock().unwrap();
+    g.mode = gate::GateMode::OpenChannel;
+    g.envelope = Some(gate::Envelope { remaining_exchanges: exchanges, deadline_ms: now + ttl * 1000 });
+    let label = g.mode_label();
+    drop(g);
+    let _ = app.emit("gate-mode", label.clone());
+    label
+}
 
-    board_push(&board.0, BoardEntry {
-        pane: "gate".to_string(),
-        role: "committee".to_string(),
-        text: format!("chair {} (from {} -> {})", outcome, pull.from, pull.target),
-        ts,
-    });
-    Ok(outcome)
+#[tauri::command]
+fn close_channel(app: AppHandle, gate: State<Gate>) -> String {
+    let mut g = gate.0.lock().unwrap();
+    g.mode = gate::GateMode::AskEach;
+    g.envelope = None;
+    let label = g.mode_label();
+    drop(g);
+    let _ = app.emit("gate-mode", label.clone());
+    label
 }
 
 fn main() {
@@ -847,6 +857,35 @@ fn main() {
                         });
                         continue;
                     }
+                    // open-channel: auto-approve within the envelope; else snap back to ask-each
+                    let mut auto = false;
+                    let mut changed = false;
+                    if g.mode == gate::GateMode::OpenChannel {
+                        let live = g.envelope.as_ref().map_or(false, |e| e.remaining_exchanges > 0 && ts < e.deadline_ms);
+                        if live {
+                            if let Some(e) = g.envelope.as_mut() { e.remaining_exchanges -= 1; }
+                            auto = true;
+                            changed = true;
+                        } else {
+                            g.mode = gate::GateMode::AskEach;
+                            g.envelope = None;
+                            changed = true;
+                        }
+                    }
+                    let label = g.mode_label();
+                    if auto {
+                        drop(g);
+                        let _ = phandle.emit("gate-mode", label);
+                        let outcome = deliver_pull(&phandle, &pr);
+                        board_push(&pboard, BoardEntry {
+                            pane: "gate".to_string(),
+                            role: "committee".to_string(),
+                            text: format!("open-channel auto-approved + {} (from {} -> {})", outcome, pr.from, pr.target),
+                            ts,
+                        });
+                        continue;
+                    }
+                    // ask-each (default, or just snapped back): surface a GateCard for the chair
                     let id = Uuid::new_v4().to_string();
                     let card = gate::GateCard {
                         id: id.clone(),
@@ -858,6 +897,9 @@ fn main() {
                     };
                     g.pending.insert(id, pr);
                     drop(g);
+                    if changed {
+                        let _ = phandle.emit("gate-mode", label);
+                    }
                     board_push(&pboard, BoardEntry {
                         pane: "gate".to_string(),
                         role: "committee".to_string(),
@@ -921,7 +963,7 @@ fn main() {
             get_state, save_config, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
             scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form,
-            set_pane_role, gate_decide
+            set_pane_role, gate_decide, open_channel, close_channel
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");

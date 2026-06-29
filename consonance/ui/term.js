@@ -88,6 +88,10 @@ function ensureListeners() {
     card.querySelector('.gcdeny').onclick = () => decide(false);
     wrap.appendChild(card);
   });
+  listen('gate-mode', (e) => {
+    const el = document.getElementById('gatemode');
+    if (el) el.textContent = e.payload;
+  });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
     lastTurn.set(pane, { role, text });
@@ -417,6 +421,11 @@ const cvs = document.getElementById('convsend'); if (cvs) cvs.onclick = broadcas
 const cvc = document.getElementById('convcancel'); if (cvc) cvc.onclick = cancelConvene;
 const gfb = document.getElementById('givefocus'); if (gfb) gfb.onclick = giveToFocus;
 const cmx = document.getElementById('cmtclose'); if (cmx) cmx.onclick = dismissCommittee;
+const setGateMode = (l) => { const el = document.getElementById('gatemode'); if (el) el.textContent = l; };
+const ocb = document.getElementById('openchan');
+if (ocb) ocb.onclick = () => inv('open_channel', { exchanges: 5, ttl: 300 }).then((l) => { setGateMode(l); setStatus('open-channel: 5 pulls auto-approve / 5 min, then snaps back'); }).catch(() => {});
+const ccb = document.getElementById('closechan');
+if (ccb) ccb.onclick = () => inv('close_channel').then((l) => { setGateMode(l); setStatus('gate: ask-each'); }).catch(() => {});
 updateConveneBtn();
 
 // register listeners at load too, so the RAM/process HUD updates before any pane exists
