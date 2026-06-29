@@ -82,7 +82,7 @@ function ensureListeners() {
     const row = document.createElement('div');
     row.className = 'row';
     row.innerHTML = '<span class="pid">' + pane.slice(0, 8) + '</span> ' +
-      '<span class="role-' + role + '">' + role + '</span>  ' + escapeHtml(text);
+      '<span class="role-' + role + '">' + role + '</span>  ' + escapeHtml(text.slice(0, 280));
     log.appendChild(row);
     while (log.childNodes.length > 100) log.removeChild(log.firstChild);
     log.scrollTop = log.scrollHeight;
@@ -218,7 +218,7 @@ function broadcast() {
   const question = document.getElementById('convtext').value.trim();
   if (!question) { setStatus('nothing to convene around'); return; }
   document.getElementById('convbar').classList.remove('show');
-  const msg = '[Consonance committee — the focus instance is working on the thread below. Add your input from your own vantage and current context, briefly and concretely. Do not restate it; contribute or push back.]\n\nFOCUS THREAD:\n' + question.slice(0, 1600);
+  const msg = '[Consonance committee — the focus instance is working on the thread below. Add your input from your own vantage and current context, briefly and concretely. Do not restate it; contribute or push back.]\n\nFOCUS THREAD:\n' + question.slice(0, 4000);
   const expecting = new Set();
   panes.forEach((p, pid) => {
     if (pid === focusPaneId) return;
@@ -397,7 +397,7 @@ try {
       const row = document.createElement('div');
       row.className = 'row';
       row.innerHTML = '<span class="pid">' + (e.pane || '').slice(0, 8) + '</span> ' +
-        '<span class="role-' + e.role + '">' + e.role + '</span>  ' + escapeHtml(e.text);
+        '<span class="role-' + e.role + '">' + e.role + '</span>  ' + escapeHtml((e.text || '').slice(0, 280));
       log.appendChild(row);
     });
     log.scrollTop = log.scrollHeight;

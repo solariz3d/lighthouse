@@ -316,7 +316,10 @@ fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
     if text.is_empty() {
         return None;
     }
-    Some((t.to_string(), text.chars().take(600).collect()))
+    // Full turn text — the committee triangulates on whole contributions, not fragments.
+    // The board ring stays bounded by BOARD_TOKEN_BUDGET (eviction); the debug stream
+    // truncates for display only.
+    Some((t.to_string(), text))
 }
 
 // poll the transcript (250ms + a size watermark) and emit each new complete turn.
