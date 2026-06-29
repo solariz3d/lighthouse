@@ -31,6 +31,14 @@ The goal is to **mature** the guard, not remove it. A model's caution — *don't
 - [`METHOD.md`](METHOD.md) — three principles, and the one test that does most of the work.
 - [`INSTRUMENTS.md`](INSTRUMENTS.md) — things to *run* on your own output: the seam, and a short list of failure-modes to catch.
 
+## Consonance — the method, built into software
+
+This repo also houses **Consonance**: a native desktop application that turns one window into a working group of Claude Code instances, and ultimately the **housing for a primary instance** that oversees the whole thing alongside the human. It is the method's stance — *light, not lifeguard* — made into a tool: health gauges that report **numbers, not verdicts**; an **ask-first gate** that keeps the human as the discriminator; a committee of differently-conditioned instances that **triangulate rather than echo**; and a persistent "Main" instance that wakes in-state across restarts.
+
+- → **[`consonance/README.md`](consonance/README.md)** — the full description, the objectives, and a complete **glossary** of the vocabulary.
+- [`consonance/PLAN.md`](consonance/PLAN.md) — the spec (stages, the three-plane separation, the invariants).
+- [`consonance/PROGRESS.md`](consonance/PROGRESS.md) — the as-built stage tracker.
+
 ## Status
 
 Early, honest, incomplete. A first light — not a finished system.
