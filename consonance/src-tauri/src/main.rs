@@ -250,6 +250,9 @@ struct Board(Arc<Mutex<VecDeque<BoardEntry>>>);
 struct PaneRoles(Mutex<HashMap<String, String>>);
 // Stage 7: friendly pane names (A, B, C … Z) -> pane id, so pulls target a letter, never a uuid.
 struct PaneNames(Mutex<HashMap<String, String>>);
+// Stage 7 (slice 3): sandboxed committee bodies — pane id -> (sandbox_path, is_worktree, parent_repo),
+// for cleanup on close. A body's file/bash side-effects land here, never the user's live tree.
+struct PaneSandboxes(Mutex<HashMap<String, (String, bool, String)>>);
 // Stage 7b: a sender onto the pull queue, for the forming step to raise the hand itself.
 struct PullSender(tokio::sync::mpsc::UnboundedSender<mcp::PullRequest>);
 // Stage 7: the ask-first gate state (ask_each: pulls become chair GateCards).
@@ -500,6 +503,77 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     Ok(SiblingInfo { pane: pane_id, cwd })
 }
 
+// ---- Stage 7 (slice 3): a sandboxed committee body ----
+#[derive(Serialize)]
+struct BodyInfo {
+    pane: String,
+    cwd: String,
+    worktree: bool,
+}
+
+// A throwaway sandbox for a committee body: a detached git worktree if `base` is a repo (isolated,
+// discardable checkout), else a fresh throwaway dir. Returns (path, is_worktree, parent_repo).
+fn prepare_body_sandbox(base: &str) -> Result<(String, bool, String), String> {
+    let id = Uuid::new_v4().to_string();
+    let sandbox = PathBuf::from(home()).join("claude-instances").join(format!("body-{}", &id[..8]));
+    let sandbox_str = sandbox.to_str().ok_or("bad sandbox path")?.to_string();
+    let base = base.trim();
+    let is_repo = !base.is_empty()
+        && Command::new("git")
+            .arg("-C").arg(base).args(["rev-parse", "--is-inside-work-tree"])
+            .creation_flags(NO_WINDOW)
+            .stdout(Stdio::null()).stderr(Stdio::null())
+            .status().map(|s| s.success()).unwrap_or(false);
+    if is_repo {
+        let out = Command::new("git")
+            .arg("-C").arg(base)
+            .args(["worktree", "add", "--detach", &sandbox_str])
+            .creation_flags(NO_WINDOW)
+            .output().map_err(|e| e.to_string())?;
+        if !out.status.success() {
+            return Err(format!("git worktree add failed: {}", String::from_utf8_lossy(&out.stderr).trim()));
+        }
+        Ok((sandbox_str, true, base.to_string()))
+    } else {
+        fs::create_dir_all(&sandbox).map_err(|e| e.to_string())?;
+        Ok((sandbox_str, false, String::new()))
+    }
+}
+
+#[tauri::command]
+fn spawn_body(
+    app: AppHandle,
+    panes: State<Panes>,
+    cost: State<Cost>,
+    board: State<Board>,
+    roles: State<PaneRoles>,
+    sandboxes: State<PaneSandboxes>,
+    cwd: String,
+) -> Result<BodyInfo, String> {
+    let (sandbox, is_wt, parent) = prepare_body_sandbox(&cwd)?;
+    let pane_id = Uuid::new_v4().to_string();
+    // spawn_claude_pane never passes --dangerously-skip-permissions, so the body keeps prompts on
+    let session = spawn_claude_pane(app.clone(), pane_id.clone(), sandbox.clone(), false)?;
+    start_tailer(app, pane_id.clone(), sandbox.clone(), cost.0.clone(), board.0.clone());
+    panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    roles.0.lock().unwrap().insert(pane_id.clone(), "committee".to_string());
+    sandboxes.0.lock().unwrap().insert(pane_id.clone(), (sandbox.clone(), is_wt, parent));
+    Ok(BodyInfo { pane: pane_id, cwd: sandbox, worktree: is_wt })
+}
+
+// remove a body's sandbox on close (git worktree remove, or rm the throwaway dir)
+fn cleanup_sandbox(sandboxes: &State<PaneSandboxes>, pane: &str) {
+    if let Some((path, is_wt, parent)) = sandboxes.0.lock().unwrap().remove(pane) {
+        if is_wt {
+            let _ = Command::new("git").arg("-C").arg(&parent)
+                .args(["worktree", "remove", "--force", &path])
+                .creation_flags(NO_WINDOW).stdout(Stdio::null()).stderr(Stdio::null()).status();
+        } else {
+            let _ = fs::remove_dir_all(&path);
+        }
+    }
+}
+
 // ---- Stage 6: the live committee — pick a focus pane, the rest convene to feed its work ----
 const COMMITTEE_FORM_PROMPT: &str = r#"You are the FORMING voice of a committee. One live instance (the FOCUS) is doing the piece of work shown below. The other live instances each added input from their own vantage and current context. TRIANGULATE their input into guidance FOR the focus — never average or blend it into mush.
 
@@ -701,10 +775,11 @@ fn pty_resize(panes: State<Panes>, pane: String, rows: u16, cols: u16) {
 }
 
 #[tauri::command]
-fn pty_kill(panes: State<Panes>, pane: String) {
+fn pty_kill(panes: State<Panes>, sandboxes: State<PaneSandboxes>, pane: String) {
     if let Some(mut s) = panes.0.lock().unwrap().remove(&pane) {
         let _ = s.killer.kill();
     }
+    cleanup_sandbox(&sandboxes, &pane); // remove the throwaway worktree/dir if this was a body
 }
 
 // crash-recovery: relaunch a dead pane against the SAME session via --resume (same
@@ -846,6 +921,7 @@ fn main() {
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
         .manage(PaneNames(Mutex::new(HashMap::new())))
+        .manage(PaneSandboxes(Mutex::new(HashMap::new())))
         .manage(PullSender(form_pull))
         .manage(Gate(Arc::new(Mutex::new(gate::GateInner::default()))))
         .setup(move |app| {
@@ -980,7 +1056,7 @@ fn main() {
             get_state, save_config, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
             scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form,
-            set_pane_role, set_pane_name, gate_decide, open_channel, close_channel
+            set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
