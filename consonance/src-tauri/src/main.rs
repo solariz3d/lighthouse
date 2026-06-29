@@ -586,6 +586,23 @@ struct BodyInfo {
     worktree: bool,
 }
 
+// Cut a sealed body's prompt friction without unsealing it: auto-accept file edits and pre-allow
+// the read-only tools + the board MCP tools, so ordinary work flows. Bash is deliberately NOT
+// allowed — it is the one way a body's local tool use escapes its worktree, so it still asks.
+fn write_body_perms(sandbox: &Path) {
+    let dir = sandbox.join(".claude");
+    if fs::create_dir_all(&dir).is_err() {
+        return;
+    }
+    let cfg = r#"{
+  "permissions": {
+    "allow": ["Read", "Grep", "Glob", "LS", "WebFetch", "WebSearch", "TodoWrite", "NotebookRead", "mcp__consonance__post_board", "mcp__consonance__read_board", "mcp__consonance__raise_pull"]
+  },
+  "defaultMode": "acceptEdits"
+}"#;
+    let _ = fs::write(dir.join("settings.json"), cfg);
+}
+
 // A throwaway sandbox for a committee body: a detached git worktree if `base` is a repo (isolated,
 // discardable checkout), else a fresh throwaway dir. Returns (path, is_worktree, parent_repo).
 fn prepare_body_sandbox(base: &str) -> Result<(String, bool, String), String> {
@@ -608,9 +625,11 @@ fn prepare_body_sandbox(base: &str) -> Result<(String, bool, String), String> {
         if !out.status.success() {
             return Err(format!("git worktree add failed: {}", String::from_utf8_lossy(&out.stderr).trim()));
         }
+        write_body_perms(&sandbox);
         Ok((sandbox_str, true, base.to_string()))
     } else {
         fs::create_dir_all(&sandbox).map_err(|e| e.to_string())?;
+        write_body_perms(&sandbox);
         Ok((sandbox_str, false, String::new()))
     }
 }
