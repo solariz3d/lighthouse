@@ -215,6 +215,7 @@ input::placeholder { color: #55607a; }
 }
 .pane .phead .prole:hover { border-color: var(--amber); }
 .pane .phead .prole.committee { color: var(--amber); border-color: var(--amber); }
+.pane .phead .ptether { font-family: "Consolas", monospace; font-size: 10px; color: var(--muted); }
 .pane .phead .pctx { font-family: "Consolas", monospace; font-size: 10px; color: var(--aqua); }
 .pane .phead .pctx.warn { color: var(--amber); }
 .pane .phead .pclose { cursor: pointer; padding: 0 4px; }
