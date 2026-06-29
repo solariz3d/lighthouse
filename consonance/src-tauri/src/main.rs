@@ -649,6 +649,9 @@ fn committee_form(
     );
     let forming = parse_json_object(&claude_oneshot(&prompt)?);
     raise_from_forming(&forming, &pulls.0); // 7b: forming is the puller the bodies rarely are
+    // Stage 8: vantage-spread across this lap's contributions (low = bodies collapsing toward echo)
+    let spread = tether::vantage_spread(&contributions.iter().map(|c| c.text.clone()).collect::<Vec<_>>());
+    let _ = app.emit("spread", spread);
     // Stage 8: lap-over-lap Delta vs the previous forming — numbers the chair reads, never a verdict
     {
         let mut prev = last.0.lock().unwrap();
