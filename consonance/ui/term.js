@@ -66,6 +66,28 @@ function ensureListeners() {
     renderResonance(e.payload);
     if (e.payload && e.payload.auto) setStatus('scribe auto-distilled · ' + e.payload.kept + ' kept');
   });
+  listen('gate-card', (e) => {
+    const c = e.payload;
+    const wrap = document.getElementById('gatecards');
+    if (!wrap) return;
+    const card = document.createElement('div');
+    card.className = 'gatecard';
+    const tgt = c.target ? ' &rarr; <b>' + escapeHtml(c.target) + '</b>' : '';
+    card.innerHTML =
+      '<div class="gcbody"><span class="gckind">' + escapeHtml(c.kind) + '</span> ' +
+      '<b>' + escapeHtml(c.from) + '</b>' + tgt +
+      ' <span class="gcint">' + Math.round((c.intensity || 0) * 100) + '%</span>' +
+      '<div class="gcwhy">' + escapeHtml(c.why) + '</div></div>' +
+      '<div class="gcbtns"><button class="gcapprove">Approve</button><button class="gcdeny">Deny</button></div>';
+    const decide = (approve) => {
+      inv('gate_decide', { id: c.id, approve }).catch(() => {});
+      card.remove();
+      setStatus((approve ? 'approved' : 'denied') + ' pull from ' + c.from);
+    };
+    card.querySelector('.gcapprove').onclick = () => decide(true);
+    card.querySelector('.gcdeny').onclick = () => decide(false);
+    wrap.appendChild(card);
+  });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
     lastTurn.set(pane, { role, text });

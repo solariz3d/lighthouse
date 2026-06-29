@@ -5,7 +5,7 @@
 use std::fs;
 
 /// Source files that live in the Control or Sensor planes and must hold no actuator handle.
-const CONTROL_SENSOR_SOURCES: &[&str] = &["src/mcp.rs"];
+const CONTROL_SENSOR_SOURCES: &[&str] = &["src/mcp.rs", "src/gate.rs"];
 
 /// Names that imply an Actuator capability (writing to a pane's PTY).
 const ACTUATOR_NAMES: &[&str] = &["portable_pty", "PtySession", "take_writer", "MasterPty", "clone_killer"];

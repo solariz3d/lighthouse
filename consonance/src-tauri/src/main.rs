@@ -18,6 +18,7 @@ use tauri::{AppHandle, Emitter, Manager, State};
 use uuid::Uuid;
 
 mod mcp;
+mod gate;
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -249,6 +250,8 @@ struct Board(Arc<Mutex<VecDeque<BoardEntry>>>);
 struct PaneRoles(Mutex<HashMap<String, String>>);
 // Stage 7b: a sender onto the pull queue, for the forming step to raise the hand itself.
 struct PullSender(tokio::sync::mpsc::UnboundedSender<mcp::PullRequest>);
+// Stage 7: the ask-first gate state (ask_each: pulls become chair GateCards).
+struct Gate(Arc<Mutex<gate::GateInner>>);
 
 const BOARD_MAX: usize = 300; // hard count cap
 const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the live ring
@@ -725,6 +728,24 @@ fn set_pane_role(roles: State<PaneRoles>, pane: String, role: String) {
     roles.0.lock().unwrap().insert(pane, role);
 }
 
+// The chair decides a surfaced pull. Slice 1 records the verdict; delivering an approved pull
+// into the target pane (the inject) is the next micro-slice. Removing it from `pending` is what
+// keeps a pull from ever reaching the Actuator without an explicit human decision.
+#[tauri::command]
+fn gate_decide(gate: State<Gate>, board: State<Board>, id: String, approve: bool) -> Result<String, String> {
+    let pull = gate.0.lock().unwrap().pending.remove(&id);
+    let pull = pull.ok_or("no such pending pull (already decided?)")?;
+    let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    let verdict = if approve { "approved" } else { "denied" };
+    board_push(&board.0, BoardEntry {
+        pane: "gate".to_string(),
+        role: "committee".to_string(),
+        text: format!("chair {} pull from {} -> {} : {}", verdict, pull.from, pull.target, pull.why),
+        ts,
+    });
+    Ok(verdict.to_string())
+}
+
 fn main() {
     // Stage 7a/7b: the pull queue. pull_tx → the MCP control plane (bodies' raise_pull);
     // form_pull → the forming step (the 7b fallback puller). The consumer surfaces both.
@@ -736,6 +757,7 @@ fn main() {
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
         .manage(PullSender(form_pull))
+        .manage(Gate(Arc::new(Mutex::new(gate::GateInner::default()))))
         .setup(move |app| {
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
@@ -743,16 +765,43 @@ fn main() {
             MCP_PORT.store(mcp::start(mboard, pull_tx), Ordering::Relaxed);
             let phandle = app.handle().clone();
             let pboard = app.state::<Board>().0.clone();
+            let pgate = app.state::<Gate>().0.clone();
             std::thread::spawn(move || {
                 let mut pull_rx = pull_rx;
                 while let Some(pr) = pull_rx.blocking_recv() {
+                    let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+                    let mut g = pgate.lock().unwrap();
+                    // ask_each: below threshold the pull drops (counted); else it becomes a GateCard
+                    if pr.intensity < g.pull_threshold {
+                        g.suppressed += 1;
+                        let n = g.suppressed;
+                        drop(g);
+                        board_push(&pboard, BoardEntry {
+                            pane: "gate".to_string(),
+                            role: "committee".to_string(),
+                            text: format!("suppressed pull from {} (intensity {:.2} < threshold) — {} suppressed total", pr.from, pr.intensity, n),
+                            ts,
+                        });
+                        continue;
+                    }
+                    let id = Uuid::new_v4().to_string();
+                    let card = gate::GateCard {
+                        id: id.clone(),
+                        from: pr.from.clone(),
+                        target: pr.target.clone(),
+                        kind: pr.kind.clone(),
+                        intensity: pr.intensity,
+                        why: pr.why.clone(),
+                    };
+                    g.pending.insert(id, pr);
+                    drop(g);
                     board_push(&pboard, BoardEntry {
-                        pane: "pull".to_string(),
+                        pane: "gate".to_string(),
                         role: "committee".to_string(),
-                        text: format!("raise_pull from {} -> {} [{} {:.2}] {}", pr.from, pr.target, pr.kind, pr.intensity, pr.why),
-                        ts: SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0),
+                        text: format!("gate-card [{}] from {} -> {} [{}] {}", &card.id[..8], card.from, card.target, card.kind, card.why),
+                        ts,
                     });
-                    let _ = phandle.emit("pull", pr);
+                    let _ = phandle.emit("gate-card", card);
                 }
             });
 
@@ -809,7 +858,7 @@ fn main() {
             get_state, save_config, launch, loop_start, loop_ask,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
             scribe_distill, set_auto_distill, clipboard_read, spawn_sibling, committee_form,
-            set_pane_role
+            set_pane_role, gate_decide
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
