@@ -150,7 +150,7 @@ function nextPaneName() {
   return '#'; // more than 26 panes
 }
 
-function makePaneEl(id, name, cwd) {
+function makePaneEl(id, name, cwd, container) {
   const el = document.createElement('div');
   el.className = 'pane';
   el.innerHTML =
@@ -164,18 +164,18 @@ function makePaneEl(id, name, cwd) {
       '<span class="pctx" title="context window used"></span>' +
       '<span class="pclose" title="close pane">✕</span>' +
     '</div><div class="pterm"></div>';
-  document.getElementById('panes').appendChild(el);
+  document.getElementById(container || 'panes').appendChild(el);
   el.querySelector('.pclose').onclick = () => closePane(id);
   el.querySelector('.pfocus').onclick = () => setFocus(id);
   el.querySelector('.prole').onclick = () => toggleRole(id);
   return el;
 }
 
-function attachPane(id, label, cwd, role) {
+function attachPane(id, label, cwd, role, container) {
   ensureListeners();
   role = role || 'human';
-  const name = nextPaneName();
-  const el = makePaneEl(id, name, label);
+  const name = role === 'main' ? 'M' : nextPaneName();
+  const el = makePaneEl(id, name, label, container);
   const term = new Terminal({
     fontFamily: 'Consolas, "Cascadia Mono", "Courier New", monospace',
     fontSize: 13,
@@ -263,6 +263,21 @@ async function addBody() {
     setStatus('body spawn failed: ' + e);
   }
   if (btn) { btn.disabled = false; btn.textContent = '✦ Body'; }
+}
+
+// ---- Stage 10: the housed Main instance ----
+async function wakeMain() {
+  const btn = document.getElementById('wakemain');
+  if (btn) { btn.disabled = true; btn.textContent = 'waking…'; }
+  try {
+    const r = await inv('spawn_main');
+    attachPane(r.pane, '★ Main', r.cwd, 'main', 'mainpane');
+    if (btn) btn.textContent = 'Main is awake';
+    setStatus('the Main instance is awake — talk to it here');
+  } catch (e) {
+    setStatus('' + e);
+    if (btn) { btn.disabled = false; btn.textContent = 'Wake the Main instance'; }
+  }
 }
 
 // ---- Stage 6: the live committee — pick a focus pane, the rest convene to feed it ----
@@ -468,6 +483,10 @@ document.getElementById('termcwd').addEventListener('keydown', (e) => { if (e.ke
 window.addEventListener('resize', fitAll);
 const tbtn = document.querySelector('.tabs button[data-tab="terminal"]');
 if (tbtn) tbtn.addEventListener('click', () => setTimeout(fitAll, 40));
+const wm = document.getElementById('wakemain');
+if (wm) wm.onclick = wakeMain;
+const mtab = document.querySelector('.tabs button[data-tab="main"]');
+if (mtab) mtab.addEventListener('click', () => setTimeout(fitAll, 40));
 const dbtn = document.getElementById('distill');
 if (dbtn) dbtn.onclick = distill;
 const sbtn = document.getElementById('sibling');
