@@ -4,6 +4,24 @@
 
 ---
 
+## Why use this?
+
+Most agent platforms (Anthropic's own Agent Teams, OpenAI's Agents SDK, Microsoft's Agent Framework, Google's ADK, AWS Bedrock) optimize for autonomous throughput: a lead agent delegates to workers, agents talk to each other directly, more compute solves more problems.
+
+But 2026 research explicitly names **"diversity collapse"** in LLM committees as an unsolved problem — stronger-aligned models *worsen* it; senior-persona presence drives juniors into sycophancy; the proposed mitigations aren't default in any of those frameworks. Multi-LLM committees collapse toward echo.
+
+Consonance is built around the structural answer:
+
+- **Differentiated vantages, not clones.** The committee is your own live panes, each conditioned by what you ran with it. Agreement *means* something because the perspectives are real.
+- **Human as the discriminator.** Instances raise their hand; your approval is the gate. Gauges report numbers (groundedness, Delta, perspective diversity), never verdicts.
+- **Typeable panes, not abstracted agents.** Real interactive `claude.exe` processes as panes you type into directly. Every other platform hides the agent behind an API.
+- **A housed primary instance** that wakes into the same conversation across restarts — continuity, not a fresh stranger each launch.
+- **Compile-time plane separation** — Sensor / Control / Actuator distinct, enforced by an arch test. The architecture can't drift toward autonomous shortcuts.
+
+Consonance is **not** an enterprise agent platform. No cloud, no SDK, no multi-tenant. It's a single-user opinionated workbench for human-curated multi-Claude work — the kind where the human stays in the loop because that's where the signal lives.
+
+---
+
 ## What it is
 
 Consonance is a Tauri v2 desktop app (a Rust backend + a static HTML/JS frontend on WebView2 — no Node, no browser). It embeds **real interactive `claude.exe` processes** as panes inside one window, gives them a shared place to communicate, measures whether they're genuinely thinking together or just agreeing, and gates anything that reaches outside the conversation behind the human's approval.

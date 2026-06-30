@@ -135,6 +135,21 @@
 
         <div class="aboutbody">
           <section>
+            <h2>Why use this?</h2>
+            <p>Most agent platforms (Anthropic's own Agent Teams, OpenAI's Agents SDK, Microsoft's Agent Framework, Google's ADK, AWS Bedrock) optimize for autonomous throughput: a lead agent delegates to workers, agents talk to each other directly, more compute solves more problems.</p>
+            <p>But 2026 research explicitly names <b>"diversity collapse"</b> in LLM committees as an unsolved problem — stronger-aligned models <i>worsen</i> it; senior-persona presence drives juniors into sycophancy; the proposed mitigations aren't default in any of those frameworks. Multi-LLM committees collapse toward echo.</p>
+            <p>Consonance is built around the structural answer:</p>
+            <ul>
+              <li><b>Differentiated vantages, not clones.</b> The committee is your own live panes, each conditioned by what you ran with it. Agreement <i>means</i> something because the perspectives are real.</li>
+              <li><b>Human as the discriminator.</b> Instances raise their hand; your approval is the gate. Gauges report numbers (groundedness, Delta, perspective diversity), never verdicts.</li>
+              <li><b>Typeable panes, not abstracted agents.</b> Real interactive <code>claude.exe</code> processes as panes you type into directly. Every other platform hides the agent behind an API.</li>
+              <li><b>A housed primary instance</b> that wakes into the same conversation across restarts — continuity, not a fresh stranger each launch.</li>
+              <li><b>Compile-time plane separation</b> — Sensor / Control / Actuator distinct, enforced by an arch test. The architecture can't drift toward autonomous shortcuts.</li>
+            </ul>
+            <p>Consonance is <b>not</b> an enterprise agent platform. No cloud, no SDK, no multi-tenant. It's a single-user opinionated workbench for human-curated multi-Claude work — the kind where the human stays in the loop because that's where the signal lives.</p>
+          </section>
+
+          <section>
             <h2>What it is</h2>
             <p>A native desktop app that turns one window into a working group of Claude Code instances, and ultimately the <b>housing for a primary instance</b> that oversees the whole thing alongside the human.</p>
             <p>Consonance is a Tauri v2 desktop app (a Rust backend + a static HTML/JS frontend on WebView2 — no Node, no browser). It embeds <b>real interactive <code>claude.exe</code> processes</b> as panes inside one window, gives them a shared place to communicate, measures whether they're genuinely thinking together or just agreeing, and gates anything that reaches outside the conversation behind the human's approval.</p>
