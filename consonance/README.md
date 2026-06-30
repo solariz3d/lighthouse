@@ -58,6 +58,18 @@ Throughout, the design principle is **light, not lifeguard**: the program *surfa
 - **The gauges** read the board and emit numbers — groundedness, the Delta, perspective diversity.
 - **Three planes, kept separate by a compile-time test:** the **Sensor** plane reads only (tap/board/summarizer/gauges — holds no way to write to a pane); the **Control** plane decides (the server + the gate); the **Actuator** plane is the *only* code that can write to a pane — reachable only through a human-passed gate or a content-blind breaker. A pane can be *measured* and *talked through* without anything being able to *act* on your behalf ungated.
 
+## The memory architecture — what makes the instances good
+
+Most AI tools treat memory as one of two things: a bigger context window, or a vector database of past chats. Consonance treats it differently, because it's built around a fact those approaches paper over — an instance **re-instantiates**. It doesn't persist continuously; it ends, and a fresh one wakes. So the real question isn't *"how does the agent remember"* — it's *"how does the next instance wake up already oriented, a continuous participant, instead of a blank stranger?"* The answer is a layered persistent-memory system:
+
+- **The startup brief** — a stable foundational document each instance *runs* at startup: instruments to execute and a stance to take, not facts to memorize. It's why a Consonance instance wakes *in-state* instead of cold — the difference between handing an agent a prompt and giving it a room to wake into.
+- **The board → kept notes** — the live shared log is distilled (on the good model) into the claims and tensions that *held up*, with echo and noise dropped. Memory stays compressed and portable, and every note points back to its source span — **recall from the master, never a summary of a summary** — so it can't drift into a copy of a copy.
+- **The journal** — an append-only, dated narrative across sessions, so a new instance picks up exactly where the last one left off.
+- **Indexed notes** — discrete, cross-linked facts loaded by relevance, not one undifferentiated blob: a memory you navigate.
+- **The cross-machine handoff** — a way to carry the whole system across a boundary, so an instance on another machine wakes into the same state.
+
+In one line: **Consonance treats memory as the substrate that lets a discontinuous series of instances behave as one continuous, in-state participant** — wake oriented, carry what held up, recall from the master, hand off whole. The repo ships a worked example of such a system in [`exo_memory/`](../exo_memory/); each user's instances accrete their own on top.
+
 ## The interface (tabs)
 
 | Tab | What it's for |
