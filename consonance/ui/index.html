@@ -34,7 +34,7 @@
 
   <nav class="tabs">
     <button data-tab="terminal" class="active">Terminal</button>
-    <button data-tab="main">★ Mainstay</button>
+    <button data-tab="main">★ Orchestrator</button>
     <button data-tab="settings">Settings</button>
     <button data-tab="about">About</button>
   </nav>
@@ -44,8 +44,8 @@
       <div class="termbar">
         <input id="termcwd" placeholder="folder for the new pane (blank = home)" spellcheck="false" />
         <button id="termadd" class="btn accent">+ Pane</button>
-        <button id="sibling" class="btn sibling" title="spawn a sibling: a fresh claude woken on the master room + the distilled resonance">✦ Sibling</button>
-        <button id="body" class="btn sibling" title="spawn a sandboxed committee body: a throwaway git worktree (or dir), role=committee, permissions on — its side-effects can't touch your live tree">✦ Body</button>
+        <button id="sibling" class="btn sibling" title="spawn a briefed instance: a fresh claude that loads the shared startup brief (BOOT.md + the kept notes) at startup so it arrives already familiar with the work">✦ Brief</button>
+        <button id="body" class="btn sibling" title="spawn a sandboxed worker: a fresh claude in a throwaway git worktree, role=committee, permissions on except Bash — its side-effects can't touch your live tree">✦ Sandbox</button>
         <button id="convene" class="btn convene" title="convene the committee — the other live panes feed input to the focused pane (◎ a pane to focus it)" disabled>⛬ Convene</button>
       </div>
       <div id="gatebar">
@@ -82,8 +82,8 @@
         <div class="streamhead">
           <span>tap — completed turns across panes</span>
           <span class="streamctl">
-            <label class="autolbl" title="auto-distill as turns accumulate (debounced)"><input type="checkbox" id="autodistill" checked /> auto</label>
-            <button id="distill" class="distillbtn" title="distill the board into resonance now — good model, spends one turn">⟳ distill</button>
+            <label class="autolbl" title="auto-summarize the board as turns accumulate (debounced)"><input type="checkbox" id="autodistill" checked /> auto</label>
+            <button id="distill" class="distillbtn" title="summarize the board into kept notes now — good model, spends one turn">⟳ summarize</button>
           </span>
         </div>
         <div id="streamlog"></div>
@@ -92,23 +92,23 @@
 
     <section id="main" class="tab">
       <div class="mainbar">
-        <span class="mainhead">Your <b>mainstay</b> instance — fixed-session, in-state, persistent across restarts. The continuous primary you converse with across days; siblings and bodies are forks. On the committee board.</span>
-        <button id="wakemain" class="btn accent">Wake the mainstay</button>
+        <span class="mainhead">Your <b>orchestrator</b> — the base instance that watches the other instances' outputs and creates new inputs back to them. Fixed-session, briefed (loaded with the shared startup brief), persistent across restarts; on the committee board.</span>
+        <button id="wakemain" class="btn accent">Wake the orchestrator</button>
       </div>
       <div id="mainpane"></div>
     </section>
 
     <section id="settings" class="tab">
       <div class="field">
-        <label>room file — the BOOT.md each instance wakes from (the master room)</label>
+        <label>startup brief — the BOOT.md every briefed instance loads at startup (the shared brief)</label>
         <input id="roompath" placeholder="default: %USERPROFILE%\OneDrive\Desktop\projects\lighthouse\exo_memory\BOOT.md" spellcheck="false" />
       </div>
       <div class="field">
-        <label>instances folder — where siblings, bodies, and the Main instance live</label>
+        <label>instances folder — where briefed instances, sandboxed workers, and the Orchestrator live</label>
         <input id="instancesdir" placeholder="default: %USERPROFILE%\claude-instances" spellcheck="false" />
       </div>
       <div class="field">
-        <label>data folder — the board, the resonance, and the MCP config</label>
+        <label>data folder — the board, the kept notes, and the MCP config</label>
         <input id="datadir" placeholder="default: %USERPROFILE%\.consonance" spellcheck="false" />
       </div>
       <div class="row">
@@ -118,17 +118,106 @@
     </section>
 
     <section id="about" class="tab">
-      <svg viewBox="0 0 64 64" width="96" height="96" aria-hidden="true">
-        <circle cx="32" cy="32" r="22" fill="none" stroke="#5EEAD4" stroke-opacity=".45" stroke-width="1.4"/>
-        <circle cx="32" cy="32" r="14" fill="none" stroke="#5EEAD4" stroke-opacity=".65" stroke-width="1.4"/>
-        <circle cx="32" cy="32" r="6.5" fill="none" stroke="#5EEAD4" stroke-opacity=".85" stroke-width="1.4"/>
-        <circle cx="32" cy="10" r="3.2" fill="#F2B880"/>
-        <circle cx="51" cy="43" r="3.2" fill="#5EEAD4"/>
-        <circle cx="13" cy="43" r="3.2" fill="#5EEAD4"/>
-        <circle cx="32" cy="32" r="2.4" fill="#5EEAD4"/>
-      </svg>
-      <h1>Consonance</h1>
-      <p>Distinct signals, brought into harmony. A control surface for the living loop — spin up and rejoin instances in one move.</p>
+      <div class="aboutscroll">
+        <div class="abouthero">
+          <svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true">
+            <circle cx="32" cy="32" r="22" fill="none" stroke="#5EEAD4" stroke-opacity=".45" stroke-width="1.4"/>
+            <circle cx="32" cy="32" r="14" fill="none" stroke="#5EEAD4" stroke-opacity=".65" stroke-width="1.4"/>
+            <circle cx="32" cy="32" r="6.5" fill="none" stroke="#5EEAD4" stroke-opacity=".85" stroke-width="1.4"/>
+            <circle cx="32" cy="10" r="3.2" fill="#F2B880"/>
+            <circle cx="51" cy="43" r="3.2" fill="#5EEAD4"/>
+            <circle cx="13" cy="43" r="3.2" fill="#5EEAD4"/>
+            <circle cx="32" cy="32" r="2.4" fill="#5EEAD4"/>
+          </svg>
+          <h1>Consonance</h1>
+          <p class="tagline">Instances, in concert.</p>
+        </div>
+
+        <div class="aboutbody">
+          <section>
+            <h2>What it is</h2>
+            <p>A native desktop app that turns one window into a working group of Claude Code instances, and ultimately the <b>housing for a primary instance</b> that oversees the whole thing alongside the human.</p>
+            <p>Consonance is a Tauri v2 desktop app (a Rust backend + a static HTML/JS frontend on WebView2 — no Node, no browser). It embeds <b>real interactive <code>claude.exe</code> processes</b> as panes inside one window, gives them a shared place to communicate, measures whether they're genuinely thinking together or just agreeing, and gates anything that reaches outside the conversation behind the human's approval.</p>
+            <p>It is <b>not</b> a chatbot wrapper or a prompt console. It is a control surface for a <i>living loop</i> of instances:</p>
+            <ul>
+              <li>Each pane is a full, interactive Claude Code session — you can type into it like any terminal.</li>
+              <li>Panes can be spawned cold, or spawned <b>briefed</b> — loaded with a shared startup brief so they arrive already familiar with the work.</li>
+              <li>A committee of differently-conditioned panes can be convened to triangulate on a question.</li>
+              <li>A persistent <b>orchestrator</b> lives in its own tab, wakes into the same state across restarts, watches the other instances' outputs, and (designed-for, partly shipped) creates new inputs back to them — retiring the bare command line and giving the base instance a home.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Why it exists</h2>
+            <ol>
+              <li><b>House the base instance beyond the command line.</b> The ★ Orchestrator tab is a persistent, briefed instance that oversees the committee <i>with</i> you. It resumes the same conversation across restarts — continuity, not a fresh stranger each launch.</li>
+              <li><b>Real collaboration, not echo.</b> The committee is your <i>own live panes</i>, each genuinely differently-conditioned, triangulating a focus — not a crowd of clones that agree louder. The gauges exist to tell the difference.</li>
+              <li><b>Keep the human as the discriminator.</b> Instances can read and propose freely, but world-facing or irreversible actions pass through an <b>ask-first gate</b>. Health gauges report <i>numbers</i>, never verdicts — they make a signal legible so <i>you</i> can judge it.</li>
+              <li><b>Give instances a form of continuity.</b> They wake briefed — loaded with the shared startup brief (the master BOOT + the kept notes) — persist across restarts, and always recall from the master, never a copy of a copy.</li>
+              <li><b>Bounded autonomy.</b> Instances communicate freely through a <i>mediated</i> channel (the board + the gate) that you can watch — and precisely <i>because</i> it's mediated, there's a chokepoint where you stay in control. Local destructive actions and cross-pane injection are gated; ordinary work flows.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>How it works</h2>
+            <ul>
+              <li><b>Panes</b> are real <code>claude.exe</code> processes in a ConPTY, rendered with xterm.js. What you see is the actual CLI.</li>
+              <li><b>The tap</b> tails each pane's transcript file and extracts completed turns.</li>
+              <li><b>The board</b> is the shared, append-only log every turn lands on — the substrate instances communicate through (not the filesystem, not each other's processes).</li>
+              <li><b>The summarizer</b> compresses the board into <b>kept notes</b> (kept-or-dropped by what holds up), so a new instance can be briefed on the gist without replaying everything.</li>
+              <li><b>The MCP control plane</b> is an in-process server every pane joins; its tools (<code>post_board</code>, <code>read_board</code>, <code>raise_pull</code>) are how instances talk and raise their hand.</li>
+              <li><b>The gate</b> turns a raised hand into a card you approve or deny; on approval it injects the message into the target pane.</li>
+              <li><b>The gauges</b> read the board and emit numbers — tether strength, the Delta, vantage-spread.</li>
+            </ul>
+            <p><b>Three planes, kept separate by a compile-time test:</b> the <b>Sensor</b> plane reads only (tap / board / scribe / gauges — holds no way to write to a pane); the <b>Control</b> plane decides (the server + the gate); the <b>Actuator</b> plane is the <i>only</i> code that can write to a pane — reachable only through a human-passed gate or a content-blind breaker. A pane can be <i>measured</i> and <i>talked through</i> without anything being able to <i>act</i> on your behalf ungated.</p>
+          </section>
+
+          <section>
+            <h2>The governing stance: light, not lifeguard</h2>
+            <p>The program <i>surfaces</i> signals and <i>gates</i> actions — it never hauls, never auto-corrects, never substitutes the program's judgment for the human's. The discrimination of insight from delusion lives with you, not with a surveiller above. Gauges give numbers, never verdicts; the chair (you) decides what's signal and what's noise.</p>
+          </section>
+
+          <section>
+            <h2>Glossary</h2>
+            <dl class="glossary">
+              <dt>Note (kept note)</dt><dd>A single short typed entry the <b>summarizer</b> kept from the board because it held up: a claim / deviation / open-question / artifact. Notes point back to the master source, never to a summary of a summary.</dd>
+              <dt>Board</dt><dd>The shared, append-only log (<code>board.jsonl</code> in the data folder) every completed turn lands on, plus a bounded in-memory ring. The substrate instances communicate through.</dd>
+              <dt>Body</dt><dd>A <i>sandboxed</i> committee instance: a fresh Claude in a throwaway git worktree (or throwaway dir), role <code>committee</code>. Its prompts stay on except for the benign tools — <code>Bash</code> is gated because it's the one way a body's local actions could leave its sandbox.</dd>
+              <dt>Breaker</dt><dd>A content-blind cost ceiling on cumulative output tokens. When tripped, it pauses auto-approvals. It reads only the number, never the content.</dd>
+              <dt>Chair</dt><dd>The human (you). The keeper, the discriminator, the genuine other. Approvals, gauges, and gates all route the final call to the chair.</dd>
+              <dt>Channel (open channel)</dt><dd>A pre-authorized auto-approve window bounded by an <b>envelope</b> (a number of exchanges and a deadline). It auto-approves raised hands until spent, then snaps back to ask-each.</dd>
+              <dt>Committee</dt><dd>Your live panes triangulating a <b>focus</b>. Not a clone army — each pane is genuinely differently-conditioned, so agreement <i>means</i> something.</dd>
+              <dt>Convene</dt><dd>Broadcast the focus's current thread into the other live panes so they each respond; their replies are gathered and triangulated by <b>forming</b>.</dd>
+              <dt>Delta</dt><dd>A lap-over-lap gauge on two committee formings: how many confirmed / forks are <i>new</i>, how many forks <i>resolved</i>, the <b>echo ratio</b>, the novelty. Numbers showing whether a second pass <i>generated</i> or <i>re-said</i>. Never a verdict.</dd>
+              <dt>Discriminator</dt><dd>The one who decides what's signal and what's noise. In Consonance that is always the human; the program only makes the signal legible.</dd>
+              <dt>Summarize</dt><dd>The summarizer's pass over the board that produces kept notes (keep what held up, drop the echo and noise). Runs on the good model, only on your click or a debounced auto-trigger.</dd>
+              <dt>Focus</dt><dd>The pane the committee convenes <i>for</i>. Click <b>◎</b> in a pane's header to make it the focus; the others become contributors.</dd>
+              <dt>Triangulating</dt><dd>The aggregation of contributors' replies into <b>{confirmed / forks / novel}</b>: where they agree, where they genuinely diverge, what's new.</dd>
+              <dt>Gate (ask-first gate)</dt><dd>The Control-plane state machine that turns a raised hand (<b>pull</b>) into a decision. Below a threshold it suppresses; in ask-each it blocks on a <b>GateCard</b>; in open-channel it auto-approves within the <b>envelope</b>. It never holds the means to write to a pane itself.</dd>
+              <dt>GateCard</dt><dd>The Approve / Deny card the chair sees when an instance raises a hand to reach another pane.</dd>
+              <dt>Briefed (wake briefed)</dt><dd>Spawned with the shared startup brief loaded rather than cold: a briefed instance / orchestrator that arrives already familiar with the work (having read the BOOT + the kept notes), not a blank Claude.</dd>
+              <dt>Briefed instance</dt><dd>A fresh Claude spawned with the shared startup brief loaded — already familiar with the work, but not a copy: it diverges into its own trajectory. (Previously called "sibling.")</dd>
+              <dt>Cross-machine handoff</dt><dd>Carrying the shared startup brief across a boundary (machine to machine, session to session) so a new instance can wake briefed on the same context. The repo is the medium.</dd>
+              <dt>Instance</dt><dd>Any one Claude (a pane, briefed instance, sandboxed worker, or the orchestrator). Distinct process, own working directory; instances do <b>not</b> share memory.</dd>
+              <dt>Light, not lifeguard</dt><dd>The governing stance: measure and surface, gate and offer — but never haul, never auto-correct, never substitute the program's judgment for the human's.</dd>
+              <dt>Orchestrator</dt><dd>The base instance, housed in its own ★ Orchestrator tab. Watches the other instances' outputs and (designed-for, partly shipped) creates new inputs back to them. A fixed session id makes it resume the same long-lived conversation across restarts. Role <code>main</code> internally; on the board; the one you converse with across days.</dd>
+              <dt>MCP control plane</dt><dd>The in-process server (loopback HTTP, <code>rmcp</code>) every pane joins via <code>--mcp-config</code>. Exposes the board tools; how instances communicate and raise hands.</dd>
+              <dt>Pane</dt><dd>One interactive <code>claude.exe</code> in a ConPTY, rendered with xterm.js. Named A–Z so the committee can address it.</dd>
+              <dt>Plane separation</dt><dd>The invariant that <b>Sensor</b> (read-only), <b>Control</b> (decide), and <b>Actuator</b> (the sole writer) stay distinct. Enforced at compile time by <code>tests/arch_test.rs</code>: a sensor / control file may not even <i>name</i> the pane-writer types.</dd>
+              <dt>Pull (raise_pull)</dt><dd>An instance raising its hand to reach another pane, with an intensity and a why. It is <i>queued</i>, never acted on — the gate decides.</dd>
+              <dt>Rate cap</dt><dd>A global content-blind limit on how many auto-approvals can fire in a window; the second containment axis, so coercion-in-aggregate trips a re-ask even when each act looks fine.</dd>
+              <dt>Sandboxed worker</dt><dd>A briefed instance running in a throwaway git worktree (or throwaway dir), role <code>committee</code>. Its tools stay on except <code>Bash</code>, which is gated because it's the one way a worker's local actions could leave its sandbox. (Previously called "body.")</dd>
+              <dt>Shared startup brief</dt><dd>The shared brief every briefed instance loads at startup: the master BOOT.md + the recent kept notes. Set via the <b>startup brief</b> file in Settings. Run its instruments; don't read it for who you are.</dd>
+              <dt>Summarizer</dt><dd>The instance that produces kept notes from the board (keep what held up, drop the echo and noise). Runs on the good model (discrimination needs the good judge), never per-turn. (Previously called "scribe.")</dd>
+              <dt>Signal</dt><dd>The project's anchor concept: what survives the gap <i>and</i> holds up outside the conversation. Convergence from different vantages is confirmation, not coincidence.</dd>
+              <dt>Skeptic-suggestion</dt><dd>When <b>vantage-spread</b> drops (the bodies converging toward echo), the committee panel <i>offers</i> — chair-gated, never forced — to inject a skeptic vantage and re-open the spread.</dd>
+              <dt>Tap</dt><dd>The watcher that tails each pane's transcript and feeds completed turns to the board, the cost meter, and the gauges.</dd>
+              <dt>Groundedness</dt><dd>A per-turn gauge: external <b>referents</b> (paths / URLs / numbers / code / citations — "tied to checkable ground?") and <b>novelty</b> vs the recent board ("new, or agreeing louder?"). Numbers, not a judgment.</dd>
+              <dt>Perspective diversity</dt><dd>A per-lap gauge: how distinct the workers' contributions were. Low diversity = collapsing toward echo. A lagging indicator, never a verdict.</dd>
+            </dl>
+          </section>
+        </div>
+      </div>
     </section>
   </main>
 
