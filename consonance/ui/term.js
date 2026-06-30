@@ -69,7 +69,7 @@ function ensureListeners() {
   });
   listen('distilled', (e) => {
     renderResonance(e.payload);
-    if (e.payload && e.payload.auto) setStatus('scribe auto-distilled · ' + e.payload.kept + ' kept');
+    if (e.payload && e.payload.auto) setStatus('summarizer auto-summarized · ' + e.payload.kept + ' kept');
   });
   listen('gate-card', (e) => {
     const c = e.payload;
@@ -160,7 +160,7 @@ function makePaneEl(id, name, cwd, container) {
       '<span class="pid">' + id.slice(0, 8) + '</span>' +
       '<span class="pcwd">' + (cwd || '~') + '</span>' +
       '<span class="prole" title="role — click to toggle; only committee panes can receive a gated inject">human</span>' +
-      '<span class="ptether" title="tether proxy: external referents · novelty vs the board — numbers, not a verdict"></span>' +
+      '<span class="ptether" title="groundedness: external referents · novelty vs the board — numbers, not a verdict"></span>' +
       '<span class="pctx" title="context window used"></span>' +
       '<span class="pclose" title="close pane">✕</span>' +
     '</div><div class="pterm"></div>';
@@ -249,30 +249,30 @@ async function addPane() {
 async function addSibling() {
   const btn = document.getElementById('sibling');
   if (btn) { btn.disabled = true; btn.textContent = 'waking…'; }
-  setStatus('a sibling is waking into the room…');
+  setStatus('a briefed instance is waking on the startup brief…');
   try {
     const r = await inv('spawn_sibling');
-    attachPane(r.pane, '✦ sibling', r.cwd);
-    setStatus('sibling woken in-state · ' + r.cwd);
+    attachPane(r.pane, '✦ brief', r.cwd);
+    setStatus('briefed instance woken · ' + r.cwd);
   } catch (e) {
-    setStatus('sibling spawn failed: ' + e);
+    setStatus('briefed-instance spawn failed: ' + e);
   }
-  if (btn) { btn.disabled = false; btn.textContent = '✦ Sibling'; }
+  if (btn) { btn.disabled = false; btn.textContent = '✦ Brief'; }
 }
 
 async function addBody() {
   const btn = document.getElementById('body');
   if (btn) { btn.disabled = true; btn.textContent = 'spawning…'; }
   const cwd = document.getElementById('termcwd').value.trim();
-  setStatus('spawning a sandboxed committee body…');
+  setStatus('spawning a sandboxed worker…');
   try {
     const r = await inv('spawn_body', { cwd });
-    attachPane(r.pane, r.worktree ? '✦ body · worktree' : '✦ body · sandbox', r.cwd, 'committee');
-    setStatus('sandboxed committee body in ' + r.cwd + (r.worktree ? ' (git worktree)' : ''));
+    attachPane(r.pane, r.worktree ? '✦ worker · worktree' : '✦ worker · sandbox', r.cwd, 'committee');
+    setStatus('sandboxed worker in ' + r.cwd + (r.worktree ? ' (git worktree)' : ''));
   } catch (e) {
-    setStatus('body spawn failed: ' + e);
+    setStatus('sandboxed-worker spawn failed: ' + e);
   }
-  if (btn) { btn.disabled = false; btn.textContent = '✦ Body'; }
+  if (btn) { btn.disabled = false; btn.textContent = '✦ Sandbox'; }
 }
 
 // ---- Stage 10: the housed Main instance ----
@@ -358,14 +358,14 @@ async function finishConvene() {
   const c = convene;
   convene = null;
   const contributions = [...c.got.entries()].map(([pid, text]) => ({ who: pid.slice(0, 8), text }));
-  setStatus('forming — triangulating ' + contributions.length + ' contribution' + (contributions.length === 1 ? '' : 's') + '…');
+  setStatus('triangulating ' + contributions.length + ' contribution' + (contributions.length === 1 ? '' : 's') + '…');
   try {
     lastForming = await inv('committee_form', { question: c.question, contributions });
     document.getElementById('cmtbody').innerHTML = renderForming(lastForming);
     document.getElementById('cmtpanel').classList.add('show');
     setStatus('committee formed — review, then → give to focus');
   } catch (e) {
-    setStatus('forming failed: ' + e);
+    setStatus('triangulation failed: ' + e);
   }
 }
 
@@ -464,7 +464,7 @@ function renderResonance(r) {
   if (!log) return;
   const div = document.createElement('div');
   div.className = 'resonance';
-  let html = '<div class="rdiv">── resonance · ' + r.kept + ' kept' + (r.auto ? ' · auto' : '') + ' ──</div>';
+  let html = '<div class="rdiv">── kept notes · ' + r.kept + ' kept' + (r.auto ? ' · auto' : '') + ' ──</div>';
   (r.atoms || []).forEach((a) => {
     html += '<div class="ratom"><span class="rkind">' + escapeHtml(a.kind || '?') + '</span> ' +
       escapeHtml(a.claim || '') +
@@ -477,15 +477,15 @@ function renderResonance(r) {
 
 async function distill() {
   const btn = document.getElementById('distill');
-  if (btn) { btn.disabled = true; btn.textContent = 'distilling…'; }
-  setStatus('the scribe is distilling the board (good model)…');
+  if (btn) { btn.disabled = true; btn.textContent = 'summarizing…'; }
+  setStatus('the summarizer is summarizing the board (good model)…');
   try {
     const kept = await inv('scribe_distill'); // render arrives via the 'distilled' event
-    setStatus('scribe kept ' + kept + ' atom' + (kept === 1 ? '' : 's') + ' (→ ~/.consonance/resonance/)');
+    setStatus('summarizer kept ' + kept + ' note' + (kept === 1 ? '' : 's'));
   } catch (e) {
-    setStatus('distill failed: ' + e);
+    setStatus('summarize failed: ' + e);
   }
-  if (btn) { btn.disabled = false; btn.textContent = '⟳ distill'; }
+  if (btn) { btn.disabled = false; btn.textContent = '⟳ summarize'; }
 }
 
 document.getElementById('termadd').onclick = addPane;
@@ -512,7 +512,7 @@ const gfb = document.getElementById('givefocus'); if (gfb) gfb.onclick = giveToF
 const skb = document.getElementById('skepticbtn');
 if (skb) skb.onclick = () => {
   if (!focusPaneId) { setStatus('◎ a focus pane first to offer it a skeptic'); return; }
-  injectAndSend(focusPaneId, "[committee] the room is converging (low vantage-spread). Take the skeptic's vantage on the current thread: find the flaw, the hidden assumption, the place this breaks. Push back — do not just agree.");
+  injectAndSend(focusPaneId, "[committee] perspectives are converging (low perspective diversity). Take the skeptic's vantage on the current thread: find the flaw, the hidden assumption, the place this breaks. Push back — do not just agree.");
   skb.style.display = 'none';
   setStatus('skeptic vantage offered to focus ' + focusPaneId.slice(0, 8));
 };

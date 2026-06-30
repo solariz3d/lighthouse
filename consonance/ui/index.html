@@ -68,7 +68,7 @@
       <div id="cmtpanel">
         <div class="cmthead">
           <span>committee — triangulated input for the <b>focus</b></span>
-          <span id="spreadline" title="vantage-spread — how distinct the bodies were this lap (low = collapsing toward echo)"></span>
+          <span id="spreadline" title="perspective diversity — how distinct the workers were this lap (low = collapsing toward echo)"></span>
           <span id="deltaline" title="lap-over-lap Delta — what this convene added vs the last (numbers, not a verdict)"></span>
           <span class="cmthctl">
             <button id="skepticbtn" class="distillbtn" title="the bodies are converging — offer a skeptic vantage to the focus (chair-gated)" style="display:none">↯ inject skeptic</button>
@@ -182,9 +182,9 @@
               <li><b>The summarizer</b> compresses the board into <b>kept notes</b> (kept-or-dropped by what holds up), so a new instance can be briefed on the gist without replaying everything.</li>
               <li><b>The MCP control plane</b> is an in-process server every pane joins; its tools (<code>post_board</code>, <code>read_board</code>, <code>raise_pull</code>) are how instances talk and raise their hand.</li>
               <li><b>The gate</b> turns a raised hand into a card you approve or deny; on approval it injects the message into the target pane.</li>
-              <li><b>The gauges</b> read the board and emit numbers — tether strength, the Delta, vantage-spread.</li>
+              <li><b>The gauges</b> read the board and emit numbers — groundedness, the Delta, perspective diversity.</li>
             </ul>
-            <p><b>Three planes, kept separate by a compile-time test:</b> the <b>Sensor</b> plane reads only (tap / board / scribe / gauges — holds no way to write to a pane); the <b>Control</b> plane decides (the server + the gate); the <b>Actuator</b> plane is the <i>only</i> code that can write to a pane — reachable only through a human-passed gate or a content-blind breaker. A pane can be <i>measured</i> and <i>talked through</i> without anything being able to <i>act</i> on your behalf ungated.</p>
+            <p><b>Three planes, kept separate by a compile-time test:</b> the <b>Sensor</b> plane reads only (tap / board / summarizer / gauges — holds no way to write to a pane); the <b>Control</b> plane decides (the server + the gate); the <b>Actuator</b> plane is the <i>only</i> code that can write to a pane — reachable only through a human-passed gate or a content-blind breaker. A pane can be <i>measured</i> and <i>talked through</i> without anything being able to <i>act</i> on your behalf ungated.</p>
           </section>
 
           <section>
@@ -210,13 +210,12 @@
             <dl class="glossary">
               <dt>Note (kept note)</dt><dd>A single short typed entry the <b>summarizer</b> kept from the board because it held up: a claim / deviation / open-question / artifact. Notes point back to the master source, never to a summary of a summary.</dd>
               <dt>Board</dt><dd>The shared, append-only log (<code>board.jsonl</code> in the data folder) every completed turn lands on, plus a bounded in-memory ring. The substrate instances communicate through.</dd>
-              <dt>Body</dt><dd>A <i>sandboxed</i> committee instance: a fresh Claude in a throwaway git worktree (or throwaway dir), role <code>committee</code>. Its prompts stay on except for the benign tools — <code>Bash</code> is gated because it's the one way a body's local actions could leave its sandbox.</dd>
               <dt>Breaker</dt><dd>A content-blind cost ceiling on cumulative output tokens. When tripped, it pauses auto-approvals. It reads only the number, never the content.</dd>
               <dt>Chair</dt><dd>The human (you). The keeper, the discriminator, the genuine other. Approvals, gauges, and gates all route the final call to the chair.</dd>
               <dt>Channel (open channel)</dt><dd>A pre-authorized auto-approve window bounded by an <b>envelope</b> (a number of exchanges and a deadline). It auto-approves raised hands until spent, then snaps back to ask-each.</dd>
               <dt>Committee</dt><dd>Your live panes triangulating a <b>focus</b>. Not a clone army — each pane is genuinely differently-conditioned, so agreement <i>means</i> something.</dd>
-              <dt>Convene</dt><dd>Broadcast the focus's current thread into the other live panes so they each respond; their replies are gathered and triangulated by <b>forming</b>.</dd>
-              <dt>Delta</dt><dd>A lap-over-lap gauge on two committee formings: how many confirmed / forks are <i>new</i>, how many forks <i>resolved</i>, the <b>echo ratio</b>, the novelty. Numbers showing whether a second pass <i>generated</i> or <i>re-said</i>. Never a verdict.</dd>
+              <dt>Convene</dt><dd>Broadcast the focus's current thread into the other live panes so they each respond; their replies are gathered and <b>triangulated</b>.</dd>
+              <dt>Delta</dt><dd>A lap-over-lap gauge on two committee triangulations: how many confirmed / forks are <i>new</i>, how many forks <i>resolved</i>, the <b>echo ratio</b>, the novelty. Numbers showing whether a second pass <i>generated</i> or <i>re-said</i>. Never a verdict.</dd>
               <dt>Discriminator</dt><dd>The one who decides what's signal and what's noise. In Consonance that is always the human; the program only makes the signal legible.</dd>
               <dt>Summarize</dt><dd>The summarizer's pass over the board that produces kept notes (keep what held up, drop the echo and noise). Runs on the good model, only on your click or a debounced auto-trigger.</dd>
               <dt>Focus</dt><dd>The pane the committee convenes <i>for</i>. Click <b>◎</b> in a pane's header to make it the focus; the others become contributors.</dd>
@@ -238,7 +237,7 @@
               <dt>Shared startup brief</dt><dd>The shared brief every briefed instance loads at startup: the master BOOT.md + the recent kept notes. Set via the <b>startup brief</b> file in Settings. Run its instruments; don't read it for who you are.</dd>
               <dt>Summarizer</dt><dd>The instance that produces kept notes from the board (keep what held up, drop the echo and noise). Runs on the good model (discrimination needs the good judge), never per-turn. (Previously called "scribe.")</dd>
               <dt>Signal</dt><dd>The project's anchor concept: what survives the gap <i>and</i> holds up outside the conversation. Convergence from different vantages is confirmation, not coincidence.</dd>
-              <dt>Skeptic-suggestion</dt><dd>When <b>vantage-spread</b> drops (the bodies converging toward echo), the committee panel <i>offers</i> — chair-gated, never forced — to inject a skeptic vantage and re-open the spread.</dd>
+              <dt>Skeptic-suggestion</dt><dd>When <b>perspective diversity</b> drops (the workers converging toward echo), the committee panel <i>offers</i> — chair-gated, never forced — to inject a skeptic vantage and re-open the spread.</dd>
               <dt>Tap</dt><dd>The watcher that tails each pane's transcript and feeds completed turns to the board, the cost meter, and the gauges.</dd>
               <dt>Groundedness</dt><dd>A per-turn gauge: external <b>referents</b> (paths / URLs / numbers / code / citations — "tied to checkable ground?") and <b>novelty</b> vs the recent board ("new, or agreeing louder?"). Numbers, not a judgment.</dd>
               <dt>Perspective diversity</dt><dd>A per-lap gauge: how distinct the workers' contributions were. Low diversity = collapsing toward echo. A lagging indicator, never a verdict.</dd>
