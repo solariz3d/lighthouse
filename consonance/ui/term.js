@@ -191,8 +191,14 @@ function attachPane(id, label, cwd, role, container) {
 
   // paste -> PTY. WebView2 swallows JS clipboard access, so read it through Rust on
   // Ctrl/Cmd+V, and also catch right-click paste events.
+  // bracketed paste (\x1b[200~ … \x1b[201~) so a multi-line paste lands as ONE block — without it,
+  // every newline in the clipboard is read as Enter and submits the chunk early. No \r, so it
+  // doesn't auto-send: the text lands in the input, the chair reviews and hits Enter.
+  function writePaste(t) {
+    if (t) inv('pty_write', { pane: id, data: '\x1b[200~' + t + '\x1b[201~' });
+  }
   function pasteInto() {
-    inv('clipboard_read').then((t) => { if (t) inv('pty_write', { pane: id, data: t }); }).catch(() => {});
+    inv('clipboard_read').then(writePaste).catch(() => {});
   }
   term.attachCustomKeyEventHandler((e) => {
     if (e.type === 'keydown' && (e.ctrlKey || e.metaKey) && (e.key === 'v' || e.key === 'V')) {
@@ -217,7 +223,7 @@ function attachPane(id, label, cwd, role, container) {
     ev.stopPropagation();
     const cd = ev.clipboardData || window.clipboardData;
     const text = cd ? cd.getData('text') : '';
-    if (text) inv('pty_write', { pane: id, data: text });
+    if (text) writePaste(text);
     else pasteInto();
   }, true);
 
