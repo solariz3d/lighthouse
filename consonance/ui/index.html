@@ -56,6 +56,15 @@
         <button id="setbreaker" class="btn" title="cap cumulative output tokens; when hit, auto-approve pauses (budget in, pause out)">Set</button>
         <span id="breakerstate"></span>
       </div>
+      <div id="dyadbar">
+        <span class="gatelabel">dyad</span>
+        <input id="dyadtrust" type="text" placeholder="trust" size="3" title="pane letter for the TRUST-forward fork — lands what survives" />
+        <input id="dyaddoubt" type="text" placeholder="doubt" size="3" title="pane letter for the DOUBT-forward fork — dissolves the false" />
+        <button id="dyadpair" class="btn" title="pair two panes at opposite lenses (the mutual-spot dyad)">Pair</button>
+        <input id="dyadspot" type="text" placeholder="spot" size="3" title="pane letter whose last board turn its partner should spot" />
+        <button id="dyadspotbtn" class="btn" title="chair-triggered: the partner spots this pane's last board turn for its characteristic failure (doubt→SEAL, trust→BRACE)">Spot &#9656;</button>
+        <span id="dyadstate"></span>
+      </div>
       <div id="gatecards"></div>
       <div id="convbar">
         <textarea id="convtext" rows="2" placeholder="what the committee convenes around — the focus pane's current thread (editable)…" spellcheck="false"></textarea>

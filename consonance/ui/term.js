@@ -535,6 +535,21 @@ if (sbk) sbk.onclick = () => {
 };
 const bks = document.getElementById('breakerstate');
 if (bks) bks.onclick = () => inv('reset_breaker').then(() => setStatus('breaker reset — autonomy may resume')).catch(() => {});
+// the dyad: pair two panes at opposite lenses, then chair-trigger a mutual-spot
+const dyadState = (t) => { const el = document.getElementById('dyadstate'); if (el) el.textContent = t; };
+const dpb = document.getElementById('dyadpair');
+if (dpb) dpb.onclick = () => {
+  const trust = (document.getElementById('dyadtrust').value || '').trim();
+  const doubt = (document.getElementById('dyaddoubt').value || '').trim();
+  if (!trust || !doubt) { dyadState('give a trust pane and a doubt pane'); return; }
+  inv('set_spot_pair', { trust, doubt }).then((r) => { dyadState(r); setStatus(r); }).catch((e) => dyadState('' + e));
+};
+const dsb = document.getElementById('dyadspotbtn');
+if (dsb) dsb.onclick = () => {
+  const target = (document.getElementById('dyadspot').value || '').trim();
+  if (!target) { dyadState('give a pane letter to spot'); return; }
+  inv('dyad_spot', { target }).then((r) => { dyadState(r); setStatus(r); }).catch((e) => dyadState('' + e));
+};
 updateConveneBtn();
 
 // register listeners at load too, so the RAM/process HUD updates before any pane exists
