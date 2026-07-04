@@ -691,9 +691,13 @@ fn committee_form(
     );
     let forming = parse_json_object(&claude_oneshot(&prompt)?);
     raise_from_forming(&forming, &pulls.0); // 7b: forming is the puller the bodies rarely are
-    // Stage 8: vantage-spread across this lap's contributions (low = bodies collapsing toward echo)
-    let spread = tether::vantage_spread(&contributions.iter().map(|c| c.text.clone()).collect::<Vec<_>>());
-    let _ = app.emit("spread", spread);
+    // vantage-spread + groundedness across this lap. Seal/land correction (RECONCEPTION.md): low
+    // spread is convergence, NOT collapse by itself — grounded convergence is a landing. Emit both so
+    // the UI flags only UNGROUNDED convergence (echo), never a genuine landing.
+    let lap_texts: Vec<String> = contributions.iter().map(|c| c.text.clone()).collect();
+    let spread = tether::vantage_spread(&lap_texts);
+    let grounded = tether::lap_referents(&lap_texts);
+    let _ = app.emit("spread", serde_json::json!({ "spread": spread, "grounded": grounded }));
     // Stage 8: lap-over-lap Delta vs the previous forming — numbers the chair reads, never a verdict
     {
         let mut prev = last.0.lock().unwrap();
