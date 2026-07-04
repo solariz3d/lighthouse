@@ -125,8 +125,10 @@ pub fn delta(prev: &serde_json::Value, curr: &serde_json::Value) -> Delta {
 }
 
 /// Vantage-spread proxy: average pairwise lexical distance (1 - token Jaccard) across the bodies'
-/// contributions this lap. High = genuinely distinct vantages; low = the bodies are converging /
-/// echoing each other (a collapse signal). A lagging indicator — a number, never a verdict.
+/// contributions this lap. High = genuinely distinct vantages; low = converging. Low is NOT collapse
+/// by itself (RECONCEPTION.md "Sealing and landing"): *grounded* convergence is a landing — the bodies
+/// agree because they found the real thing. Only UNGROUNDED convergence (low spread + few referents,
+/// see `lap_referents`) is the echo worth a skeptic. A lagging indicator — a number, never a verdict.
 pub fn vantage_spread(texts: &[String]) -> f64 {
     if texts.len() < 2 {
         return 1.0;
@@ -145,6 +147,14 @@ pub fn vantage_spread(texts: &[String]) -> f64 {
         }
     }
     if pairs == 0 { 1.0 } else { total / pairs as f64 }
+}
+
+/// Groundedness of a lap: total external referents across its contributions. Pairs with
+/// `vantage_spread` to tell a landing (low spread + grounded) from a collapse (low spread + few
+/// referents). This is the "survival-under-scrutiny" read the seal/land correction asks for — a
+/// number the chair reads, never a verdict.
+pub fn lap_referents(texts: &[String]) -> u32 {
+    texts.iter().map(|t| count_referents(t)).sum()
 }
 
 #[cfg(test)]
@@ -170,6 +180,16 @@ mod tests {
     fn referents_track_ground() {
         assert!(count_referents("the all-out method just feels more committed") <= 1);
         assert!(count_referents("3.42 final drive, 2.66 first gear, see ratios.md and http://x.io") >= 3);
+    }
+
+    // seal/land: a lap can converge (low spread) two opposite ways — grounded (landing) vs echo.
+    // lap_referents is the discriminator; grounded convergence must out-score bare agreement.
+    #[test]
+    fn lap_referents_separates_landing_from_echo() {
+        let grounded = vec!["3.42 final drive, see ratios.md".to_string(), "http://x.io and 12 tests".to_string()];
+        let echo = vec!["it just feels right to me".to_string(), "yeah, it feels right".to_string()];
+        assert!(lap_referents(&grounded) > lap_referents(&echo));
+        assert_eq!(lap_referents(&echo), 0);
     }
 
     #[test]

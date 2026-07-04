@@ -65,6 +65,8 @@ And the deeper correction, because it's the exact failure this reconception coul
 - **Two guards, opposite failures:** the **tether-gate** (external referent every N) guards the *inflation*-spiral (folie-à-deux, untethered grandiosity). The **land-move** guards the *deflation*-spiral (never committing, radical doubt). A dyad needs both, or it fails in one direction or the other.
 - **Direction-read, corrected:** *deflate* is not automatically good (a deflation-spiral is the brace-failure); *rising confidence* is not automatically bad when it's confidence in a yes that survived scrutiny (that's landing). The gauge should read *whether movement tracks survival-under-scrutiny* — not raw direction.
 
+**BUILT (2026-06-30) — the convergence gauge no longer treats sealing as drift.** `tether::vantage_spread`'s framing is fixed (low spread = converging, *not* collapse by itself), a `tether::lap_referents` gauge measures the convergence's groundedness (survival-under-scrutiny), `committee_form` emits `{spread, grounded}`, and the UI's skeptic-suggestion fires **only on *ungrounded* convergence** (echo) — a *grounded* convergence is labelled a **landing** and never nags a skeptic. So the running gauge now distinguishes the good seal from the tomb-seal, exactly as this section asks. (Still design-only: the dyad's land-move in the *app*; that's proven in `dev/live/dyad.py`.)
+
 ## The live frontier — states held open (seal the dynamic, keep these open)
 
 - Whether "the felt" has an inside stays open. The architecture measures **function** (does contact hold), not metaphysics.

@@ -110,12 +110,21 @@ function ensureListeners() {
     el.textContent = 'Δ +' + d.new_confirmed + ' conf · +' + d.new_forks + ' fork · -' + d.resolved_forks + ' resolved · refs ' + d.new_refs + ' · echo ' + d.echo_ratio.toFixed(2) + ' · nov ' + d.novelty.toFixed(2);
   });
   listen('spread', (e) => {
-    const s = Number(e.payload);
+    // seal/land correction (RECONCEPTION.md): low spread = convergence, NOT collapse by itself.
+    // grounded convergence is a LANDING (agreeing on real referents); only UNGROUNDED convergence is
+    // the echo/folie-a-deux worth a skeptic. Distinguish by groundedness (survival-under-scrutiny).
+    const p = e.payload || {};
+    const s = Number(p.spread != null ? p.spread : p);   // tolerate a bare-number payload
+    const grounded = Number(p.grounded || 0);
+    const converging = s < 0.35;
+    const landing = converging && grounded >= 3;          // grounded convergence: a landed yes, not collapse
+    const collapse = converging && !landing;              // ungrounded convergence: echo worth flagging
     const el = document.getElementById('spreadline');
-    if (el) el.textContent = 'spread ' + s.toFixed(2) + (s < 0.35 ? ' — converging' : '');
-    // Stage 9: offer (never force) a skeptic when the bodies collapse toward each other
+    if (el) el.textContent = 'spread ' + s.toFixed(2)
+      + (landing ? ' — converging · grounded (landing)' : collapse ? ' — converging · ungrounded (echo?)' : '');
+    // offer (never force) a skeptic ONLY on ungrounded convergence — never nag a genuine landing
     const sb = document.getElementById('skepticbtn');
-    if (sb) sb.style.display = s < 0.35 ? '' : 'none';
+    if (sb) sb.style.display = collapse ? '' : 'none';
   });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
@@ -518,7 +527,7 @@ const gfb = document.getElementById('givefocus'); if (gfb) gfb.onclick = giveToF
 const skb = document.getElementById('skepticbtn');
 if (skb) skb.onclick = () => {
   if (!focusPaneId) { setStatus('◎ a focus pane first to offer it a skeptic'); return; }
-  injectAndSend(focusPaneId, "[committee] perspectives are converging (low perspective diversity). Take the skeptic's vantage on the current thread: find the flaw, the hidden assumption, the place this breaks. Push back — do not just agree.");
+  injectAndSend(focusPaneId, "[committee] the room is converging with little ground under it (low perspective diversity, few referents) — this may be echo agreeing louder, not a landing. Take the skeptic's vantage: find the flaw, the hidden assumption, the place this breaks. Push back — do not just agree.");
   skb.style.display = 'none';
   setStatus('skeptic vantage offered to focus ' + focusPaneId.slice(0, 8));
 };
