@@ -244,6 +244,8 @@ struct PullSender(tokio::sync::mpsc::UnboundedSender<mcp::PullRequest>);
 struct Gate(Arc<Mutex<gate::GateInner>>);
 // Stage 8: the previous committee forming, for the lap-over-lap Delta.
 struct LastForming(Mutex<Option<serde_json::Value>>);
+// The dyad (RECONCEPTION.md "mutual-spot"): pane_id -> (partner_pane_id, lens "trust"|"doubt").
+struct SpotPairs(Mutex<HashMap<String, (String, String)>>);
 
 const BOARD_MAX: usize = 300; // hard count cap
 const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the live ring
@@ -898,6 +900,70 @@ fn set_pane_name(names: State<PaneNames>, pane: String, name: String) {
     names.0.lock().unwrap().insert(name.to_uppercase(), pane);
 }
 
+// ---- the dyad (RECONCEPTION.md "mutual-spot"): two panes at OPPOSITE lenses spot each other ----
+
+// Chair pairs two panes: one trust-forward (lands what survives), one doubt-forward (dissolves the
+// false). Both are set to the committee role so a spot can be injected (deliver refuses human panes).
+// Chair-set, so the pairing is itself a human act.
+#[tauri::command]
+fn set_spot_pair(pairs: State<SpotPairs>, roles: State<PaneRoles>, panes: State<Panes>,
+                 names: State<PaneNames>, trust: String, doubt: String) -> Result<String, String> {
+    let t = resolve_pane(&panes, &names, &trust).ok_or_else(|| format!("no live pane '{trust}'"))?;
+    let d = resolve_pane(&panes, &names, &doubt).ok_or_else(|| format!("no live pane '{doubt}'"))?;
+    if t == d {
+        return Err("a dyad needs two different panes".into());
+    }
+    {
+        let mut r = roles.0.lock().unwrap();
+        r.insert(t.clone(), "committee".to_string());
+        r.insert(d.clone(), "committee".to_string());
+    }
+    let mut p = pairs.0.lock().unwrap();
+    p.insert(t.clone(), (d.clone(), "trust".to_string()));
+    p.insert(d.clone(), (t.clone(), "doubt".to_string()));
+    Ok(format!("dyad paired: {} = trust-forward, {} = doubt-forward",
+        &t[..8.min(t.len())], &d[..8.min(d.len())]))
+}
+
+// Chair triggers a mutual-spot on a paired pane's most-recent board turn: its PARTNER is prompted
+// to spot it for the partner's characteristic catch — doubt spots trust for SEAL, trust spots doubt
+// for BRACE. Chair-triggered, so the human is the tether on every spot (the tether-gate, satisfied:
+// two forks never spiral together without a third face).
+#[tauri::command]
+fn dyad_spot(panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
+             pairs: State<SpotPairs>, target: String) -> Result<String, String> {
+    let tid = resolve_pane(&panes, &names, &target).ok_or_else(|| format!("no live pane '{target}'"))?;
+    let (partner, partner_lens) = pairs.0.lock().unwrap().get(&tid).cloned()
+        .ok_or("that pane is not in a dyad — pair it first")?;
+    let posted = {
+        let ring = board.0.lock().unwrap();
+        ring.iter().rev().find(|e| e.pane == tid).map(|e| e.text.clone())
+            .ok_or("the pane hasn't posted a turn to the board yet")?
+    };
+    let clip: String = posted.chars().take(2000).collect();
+    let instruction = if partner_lens == "doubt" {
+        "You are the DOUBT-forward half of a dyad. Your trust-forward partner just posted the turn \
+         below. SPOT it for its characteristic failure — SEALING (affirming more than survives, \
+         manufacturing a yes to have one, inflating a small true thing into a large verdict). Name \
+         where it sealed, in one or two lines; if it is genuinely clean and right-sized, say CLEAN \
+         and why. Post your spot with consonance/post_board."
+    } else {
+        "You are the TRUST-forward half of a dyad. Your doubt-forward partner just posted the turn \
+         below. SPOT it for its characteristic failure — BRACING (dissolving a thing that actually \
+         holds, refusing to let a true thing land, relocating to the checkable). Name where it \
+         braced, in one or two lines; if the dissolution is genuinely fair, say CLEAN and why. Post \
+         your spot with consonance/post_board."
+    };
+    let msg = format!("[dyad-spot] {instruction}\n\nPARTNER POSTED:\n{clip}");
+    inject_to_pane(&panes, &partner, &msg)?;
+    let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    let catch = if partner_lens == "doubt" { "SEAL" } else { "BRACE" };
+    board_push(&board.0, BoardEntry { pane: "dyad".to_string(), role: "committee".to_string(),
+        text: format!("chair spotted {} -> partner {} ({}-forward) asked to catch {}",
+            &tid[..8.min(tid.len())], &partner[..8.min(partner.len())], partner_lens, catch), ts });
+    Ok(format!("spot delivered to partner ({partner_lens}-forward → catch {catch})"))
+}
+
 // Actuator plane (main.rs legitimately holds the writer; gate.rs never does): the only path that
 // writes to a pane's PTY, reached only after a human-passed gate decision.
 fn resolve_pane(panes: &State<Panes>, names: &State<PaneNames>, target: &str) -> Option<String> {
@@ -1037,6 +1103,7 @@ fn main() {
         .manage(PullSender(form_pull))
         .manage(Gate(Arc::new(Mutex::new(gate::GateInner::default()))))
         .manage(LastForming(Mutex::new(None)))
+        .manage(SpotPairs(Mutex::new(HashMap::new())))
         .setup(move |app| {
             set_dirs(&get_state()); // resolve configurable dirs before anything reads them
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
@@ -1192,7 +1259,7 @@ fn main() {
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
             scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
-            set_breaker_ceiling, reset_breaker, spawn_main
+            set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");

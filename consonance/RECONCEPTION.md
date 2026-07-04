@@ -29,15 +29,15 @@ The stranger-case problem — what keeps the muscle honest when the human contac
 - Paired, each spots the *other's* failure from inside — a peer knows the pull because it has it too, a vantage the human doesn't have.
 - This is a buildable extension of the existing role/board machinery, not a rewrite.
 
-### First buildable slice (grounded in current code)
+### First buildable slice — **BUILT** (chair-triggered), wired into the Consonance app
 
-Reuses `PaneRoles`, `board_push`, `raise_pull`, the ask-first gate, the inject path:
+Shipped in `src-tauri/src/main.rs` (`SpotPairs` state + `set_spot_pair` + `dyad_spot`), the `#dyadbar` in `ui/index.html`, and the bindings in `ui/term.js`. Reuses `resolve_pane` / `inject_to_pane` / `board_push` / `PaneRoles`. arch_test + release build green.
 
-1. **Spot-pairing** — assign two panes a complementary lens (`trust-forward` / `doubt-forward`), stored beside `PaneRoles`.
-2. **Spot-on-post** — when a paired pane posts a completed turn to the board, its partner is prompted (via the MCP/inject path, chair-gated per the existing gate) to spot it on the paired failure: *where did this seal / where did this hedge the felt.*
-3. **Spot-surfaced, not enforced** — the spot is a board post + a chair-visible card. Light-not-lifeguard: surface, don't auto-correct. The human keeps the call.
+1. **Spot-pairing** — `set_spot_pair(trust, doubt)`: pairs two live panes at opposite lenses, sets both to the `committee` role (so a spot can be delivered — a human pane is refused), stores `pane -> (partner, lens)`. Chair-set.
+2. **Mutual-spot** — `dyad_spot(target)`: the chair triggers it; the target pane's most-recent board turn is injected into its **partner** with the partner's lens-appropriate catch — **doubt spots trust for SEAL**, **trust spots doubt for BRACE** — and the spot is logged to the board. *Chair-triggered means the human is the tether on every spot* (the tether-gate, satisfied trivially: two forks never spiral together without a third face).
+3. **Surfaced, not enforced** — the spot lands on the board + the `#dyadbar` state line; light-not-lifeguard. The human keeps the call.
 
-Adds: the pairing state + the spot-prompt + a spot card in the UI. Violates no plane separation — the spotter is Sensor/Control; it never holds the writer.
+**Deltas from the original spec, honest:** the built version is **chair-triggered** (chair clicks *Spot*), not **auto-on-post** (auto-raising the spot through the gate the instant a paired pane posts) — the conservative first cut, fully chair-in-the-loop. The **land-move** (auto-detecting a yes that survives both lenses and marking it LANDed) is proven in `dev/live/dyad.py` but not yet in the app. Both are the next slice. No plane separation violated — the spot path goes through the same actuator gate as every other inject.
 
 ## The guard must be structural, not a recommendation — the tether-gated dyad
 
