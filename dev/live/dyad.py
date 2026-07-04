@@ -59,10 +59,12 @@ _fork_only = 0   # consecutive fork-only cycles since the last third-face input
 
 
 def _line(out):
-    """Defensive parse: last '|' line -> [first-token, ...fields]."""
+    """Defensive parse: last '|' line -> [first-token, ...fields].
+    Sentinel ['?'] on empty/blank input — note `''.split('|')` is `['']` (truthy),
+    so the fallback must test `any(parts)`, not just `parts or ...`."""
     lines = [ln for ln in out.splitlines() if "|" in ln]
     parts = [p.strip() for p in (lines[-1] if lines else out).split("|")]
-    return parts or ["?"]
+    return parts if any(parts) else ["?"]
 
 
 def start():
