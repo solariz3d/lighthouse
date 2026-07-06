@@ -1,6 +1,6 @@
 # Consonance
 
-> *Instances, in concert.* — A native desktop application that turns one window into a working group of Claude Code instances, and ultimately the **housing for a base instance** that oversees the whole thing alongside the human.
+> A native desktop app that runs several Claude Code instances in one window — where they check each other's work and their own, so the AI works with you honestly instead of just agreeing, and you stay in control of everything that leaves the conversation. A persistent lead instance oversees the rest alongside you.
 
 ---
 
