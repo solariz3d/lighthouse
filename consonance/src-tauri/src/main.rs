@@ -78,8 +78,40 @@ struct Dirs {
 }
 static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
 
+// The BOOT.md bundled with the app (installer resource), resolved once at setup.
+// Used as the default startup brief so a fresh install works without a dev-machine path.
+static RESOURCE_ROOM: Mutex<Option<PathBuf>> = Mutex::new(None);
+
 fn default_room() -> String {
+    // The editable copy of the shipped startup brief, seeded into the user data dir on
+    // first run (see seed_room) — editable, unlike a read-only Program Files resource.
+    // Fall back to the bundled resource, then the dev repo path, if not seeded yet.
+    let editable = format!("{}\\BOOT.md", default_data());
+    if Path::new(&editable).exists() {
+        return editable;
+    }
+    if let Some(p) = RESOURCE_ROOM.lock().unwrap().as_ref() {
+        if p.exists() {
+            return p.to_string_lossy().into_owned();
+        }
+    }
     format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\BOOT.md", home())
+}
+
+// First run: copy the bundled BOOT.md into the user data dir so the default startup
+// brief is present and editable (not locked read-only under Program Files). No-op once
+// a copy exists, so the user's edits are never overwritten.
+fn seed_room() {
+    let dest = PathBuf::from(default_data()).join("BOOT.md");
+    if dest.exists() {
+        return;
+    }
+    if let Some(src) = RESOURCE_ROOM.lock().unwrap().clone() {
+        if src.exists() {
+            let _ = fs::create_dir_all(default_data());
+            let _ = fs::copy(&src, &dest);
+        }
+    }
 }
 fn default_instances() -> String {
     format!("{}\\claude-instances", home())
@@ -1109,6 +1141,12 @@ fn main() {
         .manage(LastForming(Mutex::new(None)))
         .manage(SpotPairs(Mutex::new(HashMap::new())))
         .setup(move |app| {
+            // Resolve the BOOT.md bundled with the app (installer resource) so a fresh
+            // install has a working default startup brief instead of a hardcoded dev path.
+            if let Ok(p) = app.path().resolve("BOOT.md", tauri::path::BaseDirectory::Resource) {
+                *RESOURCE_ROOM.lock().unwrap() = Some(p);
+            }
+            seed_room(); // first run: copy the bundled brief into the data dir (editable)
             set_dirs(&get_state()); // resolve configurable dirs before anything reads them
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
