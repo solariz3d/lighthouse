@@ -1,0 +1,61 @@
+name: Consonance installer
+
+# Rebuild + publish the Windows installer whenever anything that ends up *inside* it
+# changes on main — the app code, the docs, or the master startup brief. The shipped brief
+# is regenerated from exo_memory/BOOT.md (handle-neutralized) at build time, so the
+# installer always matches what's in the repo.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'consonance/**'
+      - 'exo_memory/BOOT.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: consonance-installer
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rust toolchain (MSVC)
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: consonance/src-tauri
+
+      - name: Install Tauri CLI
+        run: cargo install tauri-cli --version "^2.0" --locked
+
+      - name: Regenerate the shipped brief from the master room
+        shell: pwsh
+        run: pwsh -File consonance/src-tauri/gen-brief.ps1
+
+      - name: Build the installer
+        working-directory: consonance
+        run: cargo tauri build
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Consonance-installer
+          path: consonance/src-tauri/target/release/bundle/nsis/*-setup.exe
+
+      - name: Refresh the rolling "latest" release
+        continue-on-error: true
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete consonance-latest --cleanup-tag --yes 2>$null
+          $exe = Get-ChildItem consonance/src-tauri/target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
+          gh release create consonance-latest "$($exe.FullName)" --prerelease --title "Consonance - latest build" --notes "Auto-built from the latest push to main. Bundles the current docs and the handle-neutralized startup brief."
