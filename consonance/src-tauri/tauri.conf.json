@@ -29,7 +29,7 @@
     "active": true,
     "targets": ["nsis"],
     "resources": {
-      "../../exo_memory/BOOT.md": "BOOT.md",
+      "brief/BOOT.md": "BOOT.md",
       "../README.md": "README.md",
       "../GUIDE.md": "GUIDE.md"
     },
