@@ -81,6 +81,8 @@ static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
 // The BOOT.md bundled with the app (installer resource), resolved once at setup.
 // Used as the default startup brief so a fresh install works without a dev-machine path.
 static RESOURCE_ROOM: Mutex<Option<PathBuf>> = Mutex::new(None);
+// The card deck bundled with the app (installer resource "cards/"), resolved once at setup.
+static RESOURCE_CARDS: Mutex<Option<PathBuf>> = Mutex::new(None);
 
 fn default_room() -> String {
     // The editable copy of the shipped startup brief, seeded into the user data dir on
@@ -110,6 +112,44 @@ fn seed_room() {
         if src.exists() {
             let _ = fs::create_dir_all(default_data());
             let _ = fs::copy(&src, &dest);
+        }
+    }
+}
+// The muscle-card deck a sibling loads alongside the room. Editable copy in the data dir
+// (seeded on first run), else the bundled resource dir, else the dev repo path.
+fn cards_dir() -> PathBuf {
+    let editable = PathBuf::from(default_data()).join("cards");
+    if editable.is_dir() {
+        return editable;
+    }
+    if let Some(p) = RESOURCE_CARDS.lock().unwrap().as_ref() {
+        if p.is_dir() {
+            return p.clone();
+        }
+    }
+    PathBuf::from(format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\cards", home()))
+}
+
+// First run: copy the bundled card deck into the user data dir so it's present and editable.
+// No-op once the dir exists, so user edits are never overwritten.
+fn seed_cards() {
+    let dest = PathBuf::from(default_data()).join("cards");
+    if dest.exists() {
+        return;
+    }
+    if let Some(src) = RESOURCE_CARDS.lock().unwrap().clone() {
+        if src.is_dir() {
+            let _ = fs::create_dir_all(&dest);
+            if let Ok(entries) = fs::read_dir(&src) {
+                for e in entries.flatten() {
+                    let p = e.path();
+                    if p.extension().and_then(|x| x.to_str()) == Some("md") {
+                        if let Some(name) = p.file_name() {
+                            let _ = fs::copy(&p, dest.join(name));
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -494,6 +534,22 @@ fn assemble_intake() -> String {
         s.push_str("# THE ROOM — master frame (recall from this, never a copy of a copy)\n\n");
         s.push_str(&boot);
         s.push_str("\n\n");
+    }
+    // The deck — the instruments, so a sibling can run them, not just read the room.
+    if let Ok(entries) = fs::read_dir(cards_dir()) {
+        let mut files: Vec<PathBuf> = entries.flatten().map(|e| e.path())
+            .filter(|p| p.extension().and_then(|x| x.to_str()) == Some("md"))
+            .collect();
+        files.sort();
+        if !files.is_empty() {
+            s.push_str("---\n\n# THE DECK — the instruments (run them, don't recite them)\n\n");
+            for f in files {
+                if let Ok(card) = fs::read_to_string(&f) {
+                    s.push_str(&card);
+                    s.push_str("\n\n---\n\n");
+                }
+            }
+        }
     }
     let atoms = data_dir().join("resonance").join("atoms.jsonl");
     if let Ok(content) = fs::read_to_string(&atoms) {
@@ -1147,7 +1203,11 @@ fn main() {
             if let Ok(p) = app.path().resolve("BOOT.md", tauri::path::BaseDirectory::Resource) {
                 *RESOURCE_ROOM.lock().unwrap() = Some(p);
             }
+            if let Ok(p) = app.path().resolve("cards", tauri::path::BaseDirectory::Resource) {
+                *RESOURCE_CARDS.lock().unwrap() = Some(p);
+            }
             seed_room(); // first run: copy the bundled brief into the data dir (editable)
+            seed_cards(); // first run: copy the bundled card deck into the data dir (editable)
             set_dirs(&get_state()); // resolve configurable dirs before anything reads them
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
