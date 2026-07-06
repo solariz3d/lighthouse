@@ -110,15 +110,24 @@
     <section id="settings" class="tab">
       <div class="field">
         <label>startup brief — the BOOT.md every briefed instance loads at startup (the shared brief)</label>
-        <input id="roompath" placeholder="default: %USERPROFILE%\OneDrive\Desktop\projects\lighthouse\exo_memory\BOOT.md" spellcheck="false" />
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <input id="roompath" style="flex:1 1 auto; width:auto;" placeholder="default: %USERPROFILE%\.consonance\BOOT.md (shipped, editable)" spellcheck="false" />
+          <button id="browseroom" class="btn" style="flex:0 0 auto; white-space:nowrap;" title="pick a BOOT.md file">Browse…</button>
+        </div>
       </div>
       <div class="field">
         <label>instances folder — where briefed instances, sandboxed workers, and the Orchestrator live</label>
-        <input id="instancesdir" placeholder="default: %USERPROFILE%\claude-instances" spellcheck="false" />
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <input id="instancesdir" style="flex:1 1 auto; width:auto;" placeholder="default: %USERPROFILE%\claude-instances" spellcheck="false" />
+          <button id="browseinstances" class="btn" style="flex:0 0 auto; white-space:nowrap;" title="pick a folder">Browse…</button>
+        </div>
       </div>
       <div class="field">
         <label>data folder — the board, the kept notes, and the MCP config</label>
-        <input id="datadir" placeholder="default: %USERPROFILE%\.consonance" spellcheck="false" />
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <input id="datadir" style="flex:1 1 auto; width:auto;" placeholder="default: %USERPROFILE%\.consonance" spellcheck="false" />
+          <button id="browsedata" class="btn" style="flex:0 0 auto; white-space:nowrap;" title="pick a folder">Browse…</button>
+        </div>
       </div>
       <div class="row">
         <button id="savesettings" class="btn accent">Save settings</button>

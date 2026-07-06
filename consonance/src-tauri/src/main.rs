@@ -1130,6 +1130,7 @@ fn main() {
     let (pull_tx, pull_rx) = tokio::sync::mpsc::unbounded_channel::<mcp::PullRequest>();
     let form_pull = pull_tx.clone();
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .manage(Panes(Mutex::new(HashMap::new())))
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))

@@ -40,6 +40,15 @@ async function persist() {
   await invoke('save_config', { cfg: state });
 }
 
+// Native folder / file pickers for the Settings paths (tauri-plugin-dialog).
+const dialog = window.__TAURI__.dialog;
+async function pickInto(sel, opts) {
+  try { const p = await dialog.open(opts); if (p) $(sel).value = p; } catch (e) {}
+}
+if ($('#browseroom')) $('#browseroom').onclick = () => pickInto('#roompath', { multiple: false, directory: false, filters: [{ name: 'Markdown', extensions: ['md'] }] });
+if ($('#browseinstances')) $('#browseinstances').onclick = () => pickInto('#instancesdir', { directory: true });
+if ($('#browsedata')) $('#browsedata').onclick = () => pickInto('#datadir', { directory: true });
+
 $$('.tabs button').forEach(b => b.onclick = () => {
   $$('.tabs button').forEach(x => x.classList.remove('active'));
   $$('.tab').forEach(x => x.classList.remove('active'));
