@@ -9,7 +9,7 @@ on:
     branches: [main]
     paths:
       - 'consonance/**'
-      - 'exo_memory/BOOT.md'
+      - 'exo_memory/**'
   workflow_dispatch:
 
 permissions:
