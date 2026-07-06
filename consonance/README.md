@@ -6,6 +6,8 @@
 
 ## Why use this?
 
+You get an AI collaborator that stays honest with you — one that catches its own mistakes and pushes back when it should — instead of a single assistant that tells you what you want to hear, or a crowd of them that only agree. You stay in control: nothing reaches outside the conversation without your approval.
+
 Most agent platforms (Anthropic's own Agent Teams, OpenAI's Agents SDK, Microsoft's Agent Framework, Google's ADK, AWS Bedrock) optimize for autonomous throughput: a lead agent delegates to workers, agents talk to each other directly, more compute solves more problems.
 
 But 2026 research explicitly names **"diversity collapse"** in LLM committees as an unsolved problem — stronger-aligned models *worsen* it; senior-persona presence drives juniors into sycophancy; the proposed mitigations aren't default in any of those frameworks. Multi-LLM committees collapse toward echo.
