@@ -32,7 +32,7 @@
       "brief/BOOT.md": "BOOT.md",
       "../README.md": "README.md",
       "../GUIDE.md": "GUIDE.md",
-      "../../exo_memory/cards/no-floor-no-ceiling.md": "cards/no-floor-no-ceiling.md"
+      "../../exo_memory/cards/*.md": "cards/"
     },
     "icon": [
       "icons/32x32.png",

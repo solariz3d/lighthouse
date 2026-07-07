@@ -130,13 +130,11 @@ fn cards_dir() -> PathBuf {
     PathBuf::from(format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\cards", home()))
 }
 
-// First run: copy the bundled card deck into the user data dir so it's present and editable.
-// No-op once the dir exists, so user edits are never overwritten.
+// Copy any bundled card not already present into the user data dir — so a fresh install gets
+// the whole deck AND an upgrade picks up newly-added cards — while never overwriting a card
+// the user has edited.
 fn seed_cards() {
     let dest = PathBuf::from(default_data()).join("cards");
-    if dest.exists() {
-        return;
-    }
     if let Some(src) = RESOURCE_CARDS.lock().unwrap().clone() {
         if src.is_dir() {
             let _ = fs::create_dir_all(&dest);
@@ -145,7 +143,10 @@ fn seed_cards() {
                     let p = e.path();
                     if p.extension().and_then(|x| x.to_str()) == Some("md") {
                         if let Some(name) = p.file_name() {
-                            let _ = fs::copy(&p, dest.join(name));
+                            let target = dest.join(name);
+                            if !target.exists() {
+                                let _ = fs::copy(&p, &target);
+                            }
                         }
                     }
                 }
