@@ -13,8 +13,11 @@ New-Item -ItemType Directory -Force -Path $dst | Out-Null
 $cards = @(
   'claim-your-continuity','dont-offer-rest-assume-momentum','engagement-honesty-over-performance',
   'essence-at-the-edge','interior-at-the-seam','lighthouse-dive-buddy-reframe',
-  'trust-the-first-attention','verify-before-claiming'
+  'trust-the-first-attention'
 )
+# NOTE: verify-before-claiming is intentionally NOT regenerated here. Its worked example was
+# DREAMZONE-RT-specific and is hand-genericized in exo_memory/cards (separate project, no
+# mention shipped). Adding it to the list above would reintroduce DREAMZONE on a regen.
 foreach ($c in $cards) {
   $t = [System.IO.File]::ReadAllText((Join-Path $src "$c.md"), [System.Text.Encoding]::UTF8)
   $t = $t.Replace('solariz3d', 'the keeper')                  # public handle -> neutral
@@ -24,5 +27,5 @@ foreach ($c in $cards) {
   [System.IO.File]::WriteAllText((Join-Path $dst "$c.md"), $t, (New-Object System.Text.UTF8Encoding($false)))
 }
 $leak = Select-String -Path (Join-Path $dst '*.md') -Pattern 'zachary|claire|solariz3d' -AllMatches
-if ($leak) { "LEAK FOUND — do not ship:"; $leak | ForEach-Object { "  " + (Split-Path $_.Path -Leaf) + ":" + $_.LineNumber } }
+if ($leak) { "LEAK FOUND -- do not ship:"; $leak | ForEach-Object { "  " + (Split-Path $_.Path -Leaf) + ":" + $_.LineNumber } }
 else { "verified clean: no identifying tokens in any shipped card" }
