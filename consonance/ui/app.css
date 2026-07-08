@@ -234,12 +234,28 @@ input::placeholder { color: #55607a; }
 .pane .phead .ptether { font-family: "Consolas", monospace; font-size: 10px; color: var(--muted); }
 .pane .phead .pctx { font-family: "Consolas", monospace; font-size: 10px; color: var(--aqua); }
 .pane .phead .pctx.warn { color: var(--amber); }
+.pane .phead .pcopy { cursor: pointer; padding: 0 4px; color: var(--aqua); }
+.pane .phead .pcopy:hover { color: var(--text); }
+.pane .phead .ppaste { cursor: pointer; padding: 0 4px; }
+.pane .phead .ppaste:hover { color: var(--aqua); }
+.pane .phead .pkeep { cursor: pointer; padding: 0 4px; opacity: .4; }
+.pane .phead .pkeep:hover { opacity: 1; }
+.pane .phead .pkeep.on { opacity: 1; }
 .pane .phead .pclose { cursor: pointer; padding: 0 4px; }
 .pane .phead .pclose:hover { color: var(--amber); }
 .pane .phead .preopen { cursor: pointer; padding: 0 4px; color: var(--aqua); }
 .pane .phead .preopen:hover { color: var(--text); }
 .pane .pterm { flex: 1; min-height: 0; padding: 4px 6px; }
-.pane .pterm .xterm { height: 100%; }
+/* padding-right on .xterm is the one lever FitAddon respects — it subtracts it from the width
+   and recomputes columns, so the text itself gets narrower and clears the overlay scrollbar. */
+.pane .pterm .xterm { height: 100%; padding-right: 12px; box-sizing: border-box; }
+
+/* Thin themed scrollbars via the STANDARD properties. The ::-webkit-scrollbar pseudo-elements
+   don't render in this WebView2 (its Fluent scrollbars ignore them) AND defining them suppresses
+   the standard path too — which is why the bar vanished entirely. scrollbar-color is what
+   Edge/WebView2 actually honors: a visible thumb over a visible track. */
+* { scrollbar-width: thin; scrollbar-color: var(--muted) var(--panel); }
+.xterm-viewport { scrollbar-gutter: stable; }
 
 /* the tap debug stream */
 #stream {

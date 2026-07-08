@@ -171,16 +171,84 @@ function makePaneEl(id, name, cwd, container) {
       '<span class="prole" title="role — click to toggle; only committee panes can receive a gated inject">human</span>' +
       '<span class="ptether" title="groundedness: external referents · novelty vs the board — numbers, not a verdict"></span>' +
       '<span class="pctx" title="context window used"></span>' +
+      '<span class="pkeep" title="keep this instance — survives restart and resumes on next launch">📌</span>' +
+      '<span class="ppaste" title="paste the clipboard into this pane&#39;s input">📋</span>' +
+      '<span class="pcopy" title="copy the latest response to the clipboard">⧉</span>' +
       '<span class="pclose" title="close pane">✕</span>' +
     '</div><div class="pterm"></div>';
   document.getElementById(container || 'panes').appendChild(el);
   el.querySelector('.pclose').onclick = () => closePane(id);
   el.querySelector('.pfocus').onclick = () => setFocus(id);
   el.querySelector('.prole').onclick = () => toggleRole(id);
+  el.querySelector('.pcopy').onclick = () => copyPaneOutput(id);
+  el.querySelector('.ppaste').onclick = () => pastePaneInput(id);
+  el.querySelector('.pkeep').onclick = () => togglePaneKept(id);
   return el;
 }
 
-function attachPane(id, label, cwd, role, container) {
+// Copy a pane's output straight from the xterm buffer to the OS clipboard, through the Rust
+// path we proved works. Sidesteps text selection entirely — no highlight, no mouse-mode, no
+// streaming-redraw race. Uses a live selection if there is one, else the whole scrollback.
+// Paste the OS clipboard into a pane's input via the proven Rust read path, as one
+// bracketed-paste block (newlines preserved, no auto-submit) — a reliable click instead of
+// Ctrl+V. The text lands in the input; the chair reviews and hits Enter.
+function pastePaneInput(id) {
+  inv('clipboard_read').then((t) => {
+    if (t) inv('pty_write', { pane: id, data: '\x1b[200~' + t + '\x1b[201~' });
+  }).catch(() => {});
+}
+
+function copyPaneOutput(id) {
+  const p = panes.get(id);
+  if (!p || !p.term) return;
+  const term = p.term;
+  let text = (term.getSelection && term.getSelection()) || '';
+  if (!text) {
+    const buf = term.buffer.active;
+    const lines = [];
+    for (let i = 0; i < buf.length; i++) {
+      const line = buf.getLine(i);
+      lines.push(line ? line.translateToString(true) : '');
+    }
+    text = latestTurn(lines);
+  }
+  inv('clipboard_write', { text }).then(() => flashCopied(id, text.length)).catch(() => {});
+}
+
+// Pull just the instance's LATEST response out of the rendered TUI: everything after the
+// last real user prompt (a "❯ …" line with text typed), minus the bottom input-box chrome
+// (separator rules, the empty ❯ box, the ⏵⏵ footer, a trailing ✻ status line). Degrades to
+// the whole buffer if those markers aren't present.
+function latestTurn(lines) {
+  let promptIdx = -1;
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (/^\s*❯\s+\S/.test(lines[i])) { promptIdx = i; break; }
+  }
+  const slice = lines.slice(promptIdx + 1);
+  const isChrome = (s) =>
+    s.trim() === '' ||
+    /^\s*⏵/.test(s) ||                 // ⏵⏵ bypass-permissions footer
+    /^[\s─–—-]+$/.test(s) ||           // separator rules
+    /^\s*❯\s*$/.test(s) ||             // empty input box
+    /^\s*✻/.test(s);                   // ✻ status / "Cooked for Ns"
+  let end = slice.length;
+  while (end > 0 && isChrome(slice[end - 1])) end--;
+  let begin = 0;
+  while (begin < end && slice[begin].trim() === '') begin++;
+  const out = slice.slice(begin, end).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+  return out || lines.join('\n').trim();
+}
+
+function flashCopied(id, n) {
+  const p = panes.get(id);
+  const btn = p && p.el && p.el.querySelector('.pcopy');
+  if (!btn) return;
+  const orig = btn.textContent;
+  btn.textContent = '✓' + n;
+  setTimeout(() => { if (btn.textContent === '✓' + n) btn.textContent = orig; }, 1400);
+}
+
+function attachPane(id, label, cwd, role, container, kept) {
   ensureListeners();
   role = role || 'human';
   const name = role === 'main' ? 'M' : nextPaneName();
@@ -197,6 +265,16 @@ function attachPane(id, label, cwd, role, container) {
   term.open(host);
   host.addEventListener('mousedown', () => term.focus());
   term.onData((d) => inv('pty_write', { pane: id, data: d }));
+
+  // Copy-on-select: write the selection to the NATIVE clipboard the instant it's made,
+  // before a streaming redraw can clear it. (Ctrl+C-with-selection was flaky for exactly
+  // that reason — the render ate the selection between highlight and keypress.) Never write
+  // an empty selection, so a later clear can't wipe what you just copied. This is the
+  // reliable path; the Ctrl+C handler below stays as a manual fallback.
+  term.onSelectionChange(() => {
+    const sel = term.getSelection();
+    if (sel) inv('clipboard_write', { text: sel }).catch(() => {});
+  });
 
   // paste -> PTY. WebView2 swallows JS clipboard access, so read it through Rust on
   // Ctrl/Cmd+V, and also catch right-click paste events.
@@ -236,11 +314,16 @@ function attachPane(id, label, cwd, role, container) {
     else pasteInto();
   }, true);
 
-  panes.set(id, { term, fit, el, cwd, role, name });
+  panes.set(id, { term, fit, el, cwd, role, name, label: label || '', kept: !!kept });
   inv('set_pane_name', { pane: id, name }).catch(() => {});
   if (role !== 'human') {
     const rb = el.querySelector('.prole');
     if (rb) { rb.textContent = role; rb.classList.toggle('committee', role === 'committee'); }
+    const kb = el.querySelector('.pkeep'); // Main persists inherently; bodies are throwaway — no keep toggle
+    if (kb) kb.remove();
+  } else if (kept) {
+    const kb = el.querySelector('.pkeep');
+    if (kb) kb.classList.add('on');
   }
   updateConveneBtn();
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
@@ -446,9 +529,20 @@ function fitPane(id) {
 
 function fitAll() { panes.forEach((_p, id) => fitPane(id)); }
 
+function togglePaneKept(id) {
+  const p = panes.get(id);
+  if (!p) return;
+  p.kept = !p.kept;
+  const btn = p.el && p.el.querySelector('.pkeep');
+  if (btn) btn.classList.toggle('on', p.kept);
+  inv('set_pane_kept', { pane: id, cwd: p.cwd || '', label: p.label || '', kept: p.kept }).catch(() => {});
+  setStatus(p.kept ? 'kept — this instance resumes on next launch' : 'no longer kept — closes for good on exit');
+}
+
 function closePane(id) {
   inv('pty_kill', { pane: id });
   const p = panes.get(id);
+  if (p && p.kept) inv('set_pane_kept', { pane: id, cwd: p.cwd || '', label: '', kept: false }).catch(() => {});
   if (p) { try { p.term.dispose(); } catch (_) {} p.el.remove(); panes.delete(id); }
   if (id === focusPaneId) focusPaneId = null;
   lastTurn.delete(id);
@@ -522,6 +616,20 @@ const adb = document.getElementById('autodistill');
 if (adb) adb.onchange = (e) => inv('set_auto_distill', { on: e.target.checked });
 const cvb = document.getElementById('convene'); if (cvb) cvb.onclick = openConvene;
 const cvs = document.getElementById('convsend'); if (cvs) cvs.onclick = broadcast;
+
+// Restore kept instances on launch — they survive app close/crash and resume their own session.
+async function restoreKeptPanes() {
+  let kept;
+  try { kept = await inv('list_kept_panes'); } catch (e) { return; }
+  for (const k of (kept || [])) {
+    try {
+      const r = await inv('resume_pane', { pane: k.pane, cwd: k.cwd });
+      attachPane(r.pane, k.label || '✦ kept', r.cwd, 'human', 'panes', true);
+    } catch (e) { /* already running, or resume failed — skip */ }
+  }
+  if (kept && kept.length) setStatus(kept.length + ' kept instance' + (kept.length === 1 ? '' : 's') + ' resumed');
+}
+restoreKeptPanes();
 const cvc = document.getElementById('convcancel'); if (cvc) cvc.onclick = cancelConvene;
 const gfb = document.getElementById('givefocus'); if (gfb) gfb.onclick = giveToFocus;
 const skb = document.getElementById('skepticbtn');

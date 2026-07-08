@@ -11,7 +11,7 @@ use std::time::{Duration, SystemTime, UNIX_EPOCH};
 const NO_WINDOW: u32 = 0x0800_0000;
 use std::collections::{HashMap, VecDeque};
 use std::io::{Read, Seek, SeekFrom, Write};
-use std::sync::atomic::{AtomicBool, AtomicU16, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU16, AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
 use portable_pty::{native_pty_system, CommandBuilder, MasterPty, PtySize};
 use tauri::{AppHandle, Emitter, Manager, State};
@@ -323,6 +323,12 @@ struct SpotPairs(Mutex<HashMap<String, (String, String)>>);
 const BOARD_MAX: usize = 300; // hard count cap
 const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the live ring
 
+// distill watermark: total turns ever pushed vs total already distilled. Counts, not ring
+// indices — the ring evicts from the front, so an index would drift; a pushed-total doesn't.
+// In-memory only, like the ring itself (board.jsonl is a write-only mirror, never reloaded).
+static BOARD_PUSHED: AtomicU64 = AtomicU64::new(0);
+static DISTILLED_MARK: AtomicU64 = AtomicU64::new(0);
+
 fn board_path() -> PathBuf {
     data_dir().join("board.jsonl")
 }
@@ -334,6 +340,7 @@ fn board_push(ring: &Arc<Mutex<VecDeque<BoardEntry>>>, entry: BoardEntry) {
         }
     }
     let mut q = ring.lock().unwrap();
+    BOARD_PUSHED.fetch_add(1, Ordering::Relaxed); // inside the lock, so distill snapshots stay consistent
     q.push_back(entry);
     while q.len() > BOARD_MAX {
         q.pop_front();
@@ -587,6 +594,76 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     Ok(SiblingInfo { pane: pane_id, cwd })
 }
 
+// ---- pane persistence: a "kept" sibling survives app close / crash / power-loss and resumes on
+// next launch. The pane_id IS the claude session id, so persistence is just remembering the
+// (pane_id, cwd) pair and replaying the spawn with --resume — Main's trick, generalized. ----
+#[derive(serde::Serialize, serde::Deserialize, Clone)]
+struct KeptPane {
+    pane: String,
+    cwd: String,
+    #[serde(default)]
+    label: String,
+}
+
+fn kept_path() -> PathBuf {
+    data_dir().join("panes.json")
+}
+
+fn read_kept() -> Vec<KeptPane> {
+    fs::read_to_string(kept_path())
+        .ok()
+        .and_then(|s| serde_json::from_str(&s).ok())
+        .unwrap_or_default()
+}
+
+fn write_kept(v: &[KeptPane]) {
+    if let Ok(s) = serde_json::to_string_pretty(v) {
+        let _ = fs::write(kept_path(), s);
+    }
+}
+
+// mark/unmark a pane kept — written eagerly, so a power-loss before a graceful close is survived.
+#[tauri::command]
+fn set_pane_kept(pane: String, cwd: String, label: String, kept: bool) {
+    let mut v = read_kept();
+    v.retain(|k| k.pane != pane);
+    if kept {
+        v.push(KeptPane { pane, cwd, label });
+    }
+    write_kept(&v);
+}
+
+#[tauri::command]
+fn list_kept_panes() -> Vec<KeptPane> {
+    read_kept()
+}
+
+// resume a kept pane against its own long-lived session (--resume if the transcript exists, else a
+// fresh start — the same guard Main uses). The frontend calls this on load per kept pane, then attaches.
+#[tauri::command]
+fn resume_pane(
+    app: AppHandle,
+    panes: State<Panes>,
+    cost: State<Cost>,
+    board: State<Board>,
+    pane: String,
+    cwd: String,
+) -> Result<SiblingInfo, String> {
+    if panes.0.lock().unwrap().contains_key(&pane) {
+        return Err("pane already running".into());
+    }
+    let transcript = PathBuf::from(home())
+        .join(".claude")
+        .join("projects")
+        .join(encode_cwd(&cwd))
+        .join(format!("{pane}.jsonl"));
+    let resume = transcript.exists();
+    let session = spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), resume, true)?;
+    start_tailer(app, pane.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
+    panes.0.lock().unwrap().insert(pane.clone(), session);
+    Ok(SiblingInfo { pane, cwd })
+}
+
 // ---- Stage 7 (slice 3): a sandboxed committee body ----
 #[derive(Serialize)]
 struct BodyInfo {
@@ -828,17 +905,23 @@ fn get_board(board: State<Board>) -> Vec<BoardEntry> {
 // read the OS clipboard through Rust (the WebView2 swallows JS clipboard access)
 #[tauri::command]
 fn clipboard_read() -> String {
-    arboard::Clipboard::new()
-        .and_then(|mut c| c.get_text())
-        .unwrap_or_default()
+    use clipboard_win::{formats, Clipboard, Getter};
+    if Clipboard::new_attempts(10).is_err() {
+        return String::new();
+    }
+    let mut out = String::new();
+    let _ = formats::Unicode.read_clipboard(&mut out);
+    out
 }
 
 // write to the OS clipboard through Rust (same reason: WebView2 blocks JS clipboard write)
 #[tauri::command]
 fn clipboard_write(text: String) -> Result<(), String> {
-    arboard::Clipboard::new()
-        .and_then(|mut c| c.set_text(text))
-        .map_err(|e| e.to_string())
+    use clipboard_win::{formats, Clipboard, Setter};
+    // arboard failed silently — no retry when the clipboard is briefly locked by another app.
+    // clipboard-win's new_attempts retries the open; that's the real fix.
+    let _clip = Clipboard::new_attempts(10).map_err(|e| format!("open clipboard failed: {e:?}"))?;
+    formats::Unicode.write_clipboard(&text).map_err(|e| format!("{e:?}"))
 }
 
 // ---- the Scribe: distill the board into resonance (good model, gated by the user) ----
@@ -899,11 +982,26 @@ fn parse_atoms(s: &str) -> Vec<serde_json::Value> {
     Vec::new()
 }
 
-// shared distill path: manual button and the auto-worker both call this.
+// how many ring entries are new since the last distill: pushed-total minus distilled-total,
+// clamped to what the ring still holds (front-evicted turns are gone either way).
+fn undistilled_len(pushed: u64, marked: u64, ring_len: usize) -> usize {
+    (pushed.saturating_sub(marked) as usize).min(ring_len)
+}
+
+// shared distill path: manual button and the auto-worker both call this. Each pass distills
+// only the turns that arrived since the last pass — re-feeding the whole board made the scribe
+// re-keep its greatest hits every time, flooding atoms.jsonl with duplicates that then crowded
+// the 40-atom intake tail (the curate-below-capacity law, violated mechanically).
 fn run_distill(board: &Arc<Mutex<VecDeque<BoardEntry>>>, app: &AppHandle, auto: bool) -> Result<usize, String> {
-    let entries: Vec<BoardEntry> = board.lock().unwrap().iter().cloned().collect();
+    let (entries, pushed_snapshot) = {
+        let q = board.lock().unwrap();
+        let pushed = BOARD_PUSHED.load(Ordering::Relaxed);
+        let new = undistilled_len(pushed, DISTILLED_MARK.load(Ordering::Relaxed), q.len());
+        let entries: Vec<BoardEntry> = q.iter().skip(q.len() - new).cloned().collect();
+        (entries, pushed)
+    };
     if entries.is_empty() {
-        return Err("the board is empty — nothing to distill yet".into());
+        return Err("nothing new on the board since the last distill".into());
     }
     let board_text = entries
         .iter()
@@ -912,6 +1010,11 @@ fn run_distill(board: &Arc<Mutex<VecDeque<BoardEntry>>>, app: &AppHandle, auto: 
         .join("\n");
     let out = claude_oneshot(&format!("{SCRIBE_PROMPT}{board_text}"))?;
     let atoms = parse_atoms(&out);
+    if atoms.is_empty() && !out.contains('[') {
+        // scribe returned no JSON array at all (not an empty keep): don't advance the mark,
+        // so these turns are retried on the next pass instead of silently dropped.
+        return Err("scribe returned no JSON array — will retry these turns next pass".into());
+    }
 
     let dir = data_dir().join("resonance");
     let _ = fs::create_dir_all(&dir);
@@ -928,6 +1031,7 @@ fn run_distill(board: &Arc<Mutex<VecDeque<BoardEntry>>>, app: &AppHandle, auto: 
         }
     }
     let kept = atoms.len();
+    DISTILLED_MARK.store(pushed_snapshot, Ordering::Relaxed); // these turns are now spoken for
     let _ = app.emit("distilled", DistillEvent { auto, kept, atoms });
     Ok(kept)
 }
@@ -1338,19 +1442,22 @@ fn main() {
             let dhandle = app.handle().clone();
             let dboard = app.state::<Board>().0.clone();
             std::thread::spawn(move || {
-                let mut last_len = 0usize;
                 let mut last_ms = 0u64;
                 loop {
                     std::thread::sleep(Duration::from_secs(20));
                     if !AUTO_DISTILL.load(Ordering::Relaxed) {
                         continue;
                     }
-                    let len = dboard.lock().unwrap().len();
+                    // shared watermark, not a private counter — a manual ⟳ advances it too,
+                    // so the worker never re-fires on turns the button already distilled.
+                    let new = {
+                        let q = dboard.lock().unwrap();
+                        undistilled_len(BOARD_PUSHED.load(Ordering::Relaxed), DISTILLED_MARK.load(Ordering::Relaxed), q.len())
+                    };
                     let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
                     // fire only when >= 6 new turns piled up AND >= 3 min since the last distill
-                    if len >= last_len + 6 && now.saturating_sub(last_ms) >= 180_000 {
+                    if new >= 6 && now.saturating_sub(last_ms) >= 180_000 {
                         if run_distill(&dboard, &dhandle, true).is_ok() {
-                            last_len = len;
                             last_ms = now;
                         }
                     }
@@ -1363,8 +1470,60 @@ fn main() {
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
             scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
-            set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot
+            set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
+            set_pane_kept, list_kept_panes, resume_pane
         ])
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
+}
+
+#[cfg(test)]
+mod distill_watermark_tests {
+    use super::undistilled_len;
+
+    #[test]
+    fn first_pass_takes_whole_ring() {
+        assert_eq!(undistilled_len(10, 0, 10), 10);
+    }
+
+    #[test]
+    fn nothing_new_after_a_pass_takes_zero() {
+        assert_eq!(undistilled_len(10, 10, 10), 0);
+    }
+
+    #[test]
+    fn second_pass_takes_only_the_new_tail() {
+        assert_eq!(undistilled_len(16, 10, 16), 6);
+    }
+
+    #[test]
+    fn front_eviction_clamps_to_ring_len() {
+        // 400 pushed, 100 distilled, but the ring evicted down to 300: take all 300, no panic
+        assert_eq!(undistilled_len(400, 100, 300), 300);
+    }
+
+    #[test]
+    fn stale_mark_ahead_of_pushed_saturates_to_zero() {
+        assert_eq!(undistilled_len(5, 10, 5), 0);
+    }
+
+    // the regression this fix exists for: repeated passes over a growing board must
+    // distill each turn exactly once, never re-feed the whole board.
+    #[test]
+    fn repeated_passes_never_redistill() {
+        let mut pushed: u64 = 0;
+        let mut marked: u64 = 0;
+        let mut ring_len: usize = 0;
+        let mut total_distilled: usize = 0;
+        for batch in [7usize, 6, 9, 6, 12] {
+            pushed += batch as u64;
+            ring_len = (ring_len + batch).min(300);
+            let new = undistilled_len(pushed, marked, ring_len);
+            total_distilled += new;
+            marked = pushed; // what run_distill does on success
+        }
+        // pre-fix each pass re-fed everything (7 + 13 + 22 + 28 + 40 = 110 turn-feeds);
+        // post-fix every turn is fed exactly once.
+        assert_eq!(total_distilled, 40);
+    }
 }
