@@ -380,10 +380,31 @@ fn extract_usage(v: &serde_json::Value) -> Option<(u64, u64, u64, u64, String)> 
 }
 
 // claude's project-dir scheme: drive-colon and every path separator become '-'
+// Claude Code names its transcript dir ~/.claude/projects/<encoded-cwd>/ by
+// replacing EVERY non-alphanumeric char with '-' — not just : \ /. The old
+// version left spaces/dots/underscores intact, so a kept pane on such a cwd
+// mispredicted the path -> transcript.exists() = false -> it resumed FRESH
+// (a blank pane, "nothing written in it"). Verified against the real project
+// dirs on disk (C:\Consonance\instances\main -> C--Consonance-instances-main;
+// C:\Users\nname\Desktop\brain rot -> C--Users-nname-Desktop-brain-rot).
 fn encode_cwd(cwd: &str) -> String {
     cwd.chars()
-        .map(|c| if c == ':' || c == '\\' || c == '/' { '-' } else { c })
+        .map(|c| if c.is_ascii_alphanumeric() { c } else { '-' })
         .collect()
+}
+
+#[cfg(test)]
+mod encode_cwd_tests {
+    use super::encode_cwd;
+    #[test]
+    fn matches_claude_real_project_dirs() {
+        // pinned against actual ~/.claude/projects dir names seen on disk
+        assert_eq!(encode_cwd("C:\\Consonance\\instances\\main"), "C--Consonance-instances-main");
+        // the regression that broke pane resume: a SPACE must become '-'
+        assert_eq!(encode_cwd("C:\\Users\\nname\\Desktop\\brain rot"), "C--Users-nname-Desktop-brain-rot");
+        // dots and underscores collapse the same way
+        assert_eq!(encode_cwd("C:\\a b.c_d"), "C--a-b-c-d");
+    }
 }
 
 // pull the publishable text out of a transcript line; thinking/tool_use noise excluded
