@@ -5,7 +5,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::os::windows::process::CommandExt;
 use std::process::{Command, Stdio};
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 // Windows: spawn child processes with no console window (CREATE_NO_WINDOW)
 const NO_WINDOW: u32 = 0x0800_0000;
@@ -20,6 +20,7 @@ use uuid::Uuid;
 mod mcp;
 mod gate;
 mod tether;
+mod capture;
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -182,6 +183,55 @@ fn data_dir() -> PathBuf {
     p
 }
 
+// ---- own-capture (layer 1): Consonance keeps its OWN durable transcript of every pane, raw PTY
+// bytes appended to captures/<pane_id>.log. This exists because claude 2.1.204+ flushes its own
+// per-project jsonl lazily (only on a clean exit), so a hard-killed pane loses its conversation —
+// our log doesn't, because we write each chunk with a plain File (no BufWriter) as it arrives.
+// The log accumulates ACROSS sessions (append + a per-spawn seam), so even when claude restarts
+// fresh and forgets, WE hold the whole history — the source for the scroll-up band (layer 3) and
+// the board-feed (layer 4). A per-user, per-machine path (under the configurable data dir), so it
+// stays directory-agnostic.
+fn capture_dir() -> PathBuf {
+    let p = data_dir().join("captures");
+    let _ = fs::create_dir_all(&p);
+    p
+}
+fn capture_path(pane: &str) -> PathBuf {
+    capture_dir().join(format!("{pane}.log"))
+}
+// the clean transcript the extractor builds turn-by-turn — the source warm_resume_brief feeds back
+// into a resumed sibling so it wakes remembering (the invisible engine). Beside the raw .log.
+fn capture_text_path(pane: &str) -> PathBuf {
+    capture_dir().join(format!("{pane}.txt"))
+}
+// a distinctive seam written at each (re)spawn; the extractor treats a line carrying it as chrome,
+// the history band renders it as a divider. Matches the restore band's "─── … ───" divider style.
+const CAPTURE_SEAM: &str = "─── consonance ·";
+fn clear_capture(pane: &str) {
+    // best-effort; a live open handle blocks removal on Windows (GC catches it next launch)
+    let _ = fs::remove_file(capture_path(pane));
+    let _ = fs::remove_file(capture_text_path(pane));
+}
+// startup sweep: drop capture logs for panes that are no longer kept (and aren't Main), so ephemeral
+// panes don't leave logs behind. read_kept() is the source of truth for what survives.
+fn gc_captures() {
+    let mut keep: std::collections::HashSet<String> = read_kept().into_iter().map(|k| k.pane).collect();
+    keep.insert(MAIN_SID.to_string());
+    if let Ok(rd) = fs::read_dir(capture_dir()) {
+        for e in rd.flatten() {
+            let p = e.path();
+            let ext = p.extension().and_then(|s| s.to_str());
+            if ext == Some("log") || ext == Some("txt") {
+                if let Some(stem) = p.file_stem().and_then(|s| s.to_str()) {
+                    if !keep.contains(stem) {
+                        let _ = fs::remove_file(&p);
+                    }
+                }
+            }
+        }
+    }
+}
+
 // Resolve the claude CLI binary path: prefer the per-user install, fall back to PATH.
 // Used by every place we shell out to claude (pty spawn, scribe, sibling intake, etc.).
 fn claude_bin() -> String {
@@ -197,11 +247,22 @@ struct PtySession {
 }
 struct Panes(Mutex<HashMap<String, PtySession>>);
 
+// layer 2: a headless vt100 emulator per pane, fed the same PTY bytes as the terminal. A watcher
+// thread renders it and harvests settled turns. Held in a map so pty_resize can keep the emulator's
+// dimensions matched to the real PTY (a size mismatch would misrender the extraction).
+const EMU_ROWS: u16 = 34; // must match the openpty size below so claude's cursor moves render right
+const EMU_COLS: u16 = 120;
+struct EmuState {
+    parser: vt100::Parser,
+    last_byte: Instant,
+}
+struct PaneEmus(Mutex<HashMap<String, Arc<Mutex<EmuState>>>>);
+
 // spawn claude in a fresh ConPTY: stream output, and detect exit by WAITING on the child
 // process (the PTY master often doesn't EOF on conhost). resume=true reattaches a session.
 fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool, skip_perms: bool) -> Result<PtySession, String> {
     let pair = native_pty_system()
-        .openpty(PtySize { rows: 34, cols: 120, pixel_width: 0, pixel_height: 0 })
+        .openpty(PtySize { rows: EMU_ROWS, cols: EMU_COLS, pixel_width: 0, pixel_height: 0 })
         .map_err(|e| e.to_string())?;
     let mut cmd = CommandBuilder::new(claude_bin());
     cmd.cwd(&cwd);
@@ -234,18 +295,101 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
 
     let app_r = app.clone();
     let id_r = pane_id.clone();
+    // layer 2: a per-pane headless emulator, fed the same bytes as the terminal, registered so
+    // pty_resize can keep its size matched. The watcher thread reads it to harvest settled turns.
+    let emu = Arc::new(Mutex::new(EmuState {
+        parser: vt100::Parser::new(EMU_ROWS, EMU_COLS, 0),
+        last_byte: Instant::now(),
+    }));
+    if let Some(map) = app.try_state::<PaneEmus>() {
+        map.0.lock().unwrap().insert(pane_id.clone(), emu.clone());
+    }
+    // alive gates the watcher: flipped false when the reader ends, so the watcher stops instead of
+    // spinning on a frozen emulator forever (the old tailer's leaked-loop, avoided).
+    let alive = Arc::new(AtomicBool::new(true));
+    // own-capture: append raw PTY bytes to our durable log. Plain File (NOT BufWriter) so each
+    // write reaches the OS immediately and survives an abrupt kill — the whole point vs claude's
+    // lazy flush. A per-spawn seam marks the session boundary for the band + extractor.
+    let mut cap = fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(capture_path(&pane_id))
+        .ok();
+    if let Some(f) = cap.as_mut() {
+        let _ = f.write_all(
+            format!("\r\n\x1b[0m{CAPTURE_SEAM} {} ───\r\n", if resume { "resumed" } else { "session start" }).as_bytes(),
+        );
+    }
+    let emu_r = emu.clone();
+    let alive_r = alive.clone();
     std::thread::spawn(move || {
+        let mut cap = cap;
         let mut buf = [0u8; 8192];
         loop {
             match reader.read(&mut buf) {
                 Ok(0) | Err(_) => break,
-                Ok(n) => { let _ = app_r.emit("pty-output", PtyChunk { pane: id_r.clone(), data: buf[..n].to_vec() }); }
+                Ok(n) => {
+                    if let Some(f) = cap.as_mut() { let _ = f.write_all(&buf[..n]); }
+                    if let Ok(mut e) = emu_r.lock() {
+                        e.parser.process(&buf[..n]);
+                        e.last_byte = Instant::now();
+                    }
+                    let _ = app_r.emit("pty-output", PtyChunk { pane: id_r.clone(), data: buf[..n].to_vec() });
+                }
+            }
+        }
+        alive_r.store(false, Ordering::Relaxed);
+    });
+
+    // the watcher: on quiescence (~500ms quiet) + a ready screen, harvest the settled turn and,
+    // if it is new, append it to the clean transcript. Dedup by (prompt, response) so re-polls of
+    // the same on-screen turn don't duplicate. v1 reads the visible screen only (scrollback 0):
+    // turns up to EMU_ROWS tall are captured whole, taller turns keep their tail — the raw .log
+    // still holds everything for a future full-fidelity render.
+    let text_path = capture_text_path(&pane_id);
+    let emu_w = emu.clone();
+    let alive_w = alive.clone();
+    std::thread::spawn(move || {
+        let mut last: Option<(String, String)> = None;
+        while alive_w.load(Ordering::Relaxed) {
+            std::thread::sleep(Duration::from_millis(250));
+            let lines: Vec<String> = {
+                let e = match emu_w.lock() {
+                    Ok(e) => e,
+                    Err(_) => break,
+                };
+                if e.last_byte.elapsed() < Duration::from_millis(500) {
+                    continue; // still streaming — wait for the turn to settle
+                }
+                e.parser.screen().rows(0, EMU_COLS).collect()
+            };
+            if !capture::screen_ready(&lines) {
+                continue;
+            }
+            let prompt = capture::latest_prompt(&lines);
+            if prompt.is_empty() {
+                continue; // no visible user prompt (welcome banner, or the prompt scrolled off) — skip noise
+            }
+            let resp = capture::latest_turn(&lines);
+            if resp.trim().is_empty() {
+                continue;
+            }
+            let key = (prompt.clone(), resp.clone());
+            if last.as_ref() == Some(&key) {
+                continue; // same settled turn still on screen — already recorded
+            }
+            last = Some(key);
+            if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(&text_path) {
+                let _ = write!(f, "❯ {prompt}\n\n{resp}\n\n");
             }
         }
     });
 
     std::thread::spawn(move || {
         let _ = child.wait();
+        if let Some(map) = app.try_state::<PaneEmus>() {
+            map.0.lock().unwrap().remove(&pane_id);
+        }
         let _ = app.emit("pty-exit", &pane_id);
     });
 
@@ -612,6 +756,12 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, true)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    // siblings persist by default — born kept, like the Orchestrator. No opt-in pin: persistence is
+    // the default, and removing a pane is the explicit act. The chair drops the ones they don't want.
+    let mut kept = read_kept();
+    kept.retain(|k| k.pane != pane_id);
+    kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "✦ brief".into() });
+    write_kept(&kept);
     Ok(SiblingInfo { pane: pane_id, cwd })
 }
 
@@ -650,6 +800,8 @@ fn set_pane_kept(pane: String, cwd: String, label: String, kept: bool) {
     v.retain(|k| k.pane != pane);
     if kept {
         v.push(KeptPane { pane, cwd, label });
+    } else {
+        clear_capture(&pane); // un-kept → don't persist its history (best-effort; GC is the reliable path)
     }
     write_kept(&v);
 }
@@ -659,8 +811,42 @@ fn list_kept_panes() -> Vec<KeptPane> {
     read_kept()
 }
 
-// resume a kept pane against its own long-lived session (--resume if the transcript exists, else a
-// fresh start — the same guard Main uses). The frontend calls this on load per kept pane, then attaches.
+// is this cwd a Consonance-managed instance dir? Only then is it ours to (re)write a CLAUDE.md into
+// — a kept pane pointed at a user's own project must never have its files touched.
+fn is_managed_cwd(cwd: &str) -> bool {
+    PathBuf::from(cwd).starts_with(instances_root())
+}
+
+// warm-resume: when claude can't --resume a kept pane (2.1.207 never flushed its jsonl), bake the
+// pane's OWN captured transcript into the sibling's CLAUDE.md so the fresh instance wakes genuinely
+// remembering the whole conversation and continues the thread. Managed dirs only. Returns whether
+// it wrote the brief. This is "reinvoke the same transcript" — from our capture, not claude's.
+fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
+    if !is_managed_cwd(cwd) {
+        return false;
+    }
+    let transcript = match fs::read_to_string(capture_text_path(pane)) {
+        Ok(t) if !t.trim().is_empty() => t,
+        _ => return false,
+    };
+    let mut brief = assemble_intake();
+    brief.push_str("\n---\n\n# PRIOR CONVERSATION — you have been here before\n\n");
+    brief.push_str(
+        "Consonance restored this pane from its own capture (the underlying session could not be \
+         resumed). The exchange below IS your conversation so far — you lived it. Read it as your \
+         own memory, not a transcript handed to a stranger, then continue the thread when the user \
+         next speaks. Do not re-greet, summarize, or announce that you were restored.\n\n",
+    );
+    brief.push_str("```\n");
+    brief.push_str(&transcript);
+    brief.push_str("\n```\n");
+    fs::write(PathBuf::from(cwd).join("CLAUDE.md"), brief).is_ok()
+}
+
+// resume a kept pane. Prefer claude's real --resume when its jsonl exists (best fidelity — desktop /
+// older claude). When it doesn't (2.1.207's lazy flush lost it), spawn fresh but WARM-resume from
+// our own captured transcript, so the sibling still wakes remembering. The frontend calls this on
+// load per kept pane, then attaches.
 #[tauri::command]
 fn resume_pane(
     app: AppHandle,
@@ -673,12 +859,24 @@ fn resume_pane(
     if panes.0.lock().unwrap().contains_key(&pane) {
         return Err("pane already running".into());
     }
-    let transcript = PathBuf::from(home())
-        .join(".claude")
-        .join("projects")
-        .join(encode_cwd(&cwd))
-        .join(format!("{pane}.jsonl"));
-    let resume = transcript.exists();
+    // --resume only if claude actually wrote the per-project <id>.jsonl; resuming a session it can't
+    // locate errors "no conversation found" and kills the pane, so the guard must stay.
+    // Prefer OUR complete capture over claude's lazily-flushed jsonl. claude saves its transcript in
+    // lazy batches that lag minutes behind, so --resume would wake the sibling with an amnesiac tail
+    // (missing everything since the last save). Our capture holds every settled turn up to close, so
+    // warm-resuming from it wakes the sibling remembering the WHOLE conversation. Fall back to
+    // claude's --resume only when there is no capture (a pane predating capture) but a jsonl exists.
+    let warmed = warm_resume_brief(&pane, &cwd);
+    let resume = if warmed {
+        false // spawn fresh; the complete transcript is baked into CLAUDE.md
+    } else {
+        PathBuf::from(home())
+            .join(".claude")
+            .join("projects")
+            .join(encode_cwd(&cwd))
+            .join(format!("{pane}.jsonl"))
+            .exists()
+    };
     let session = spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), resume, true)?;
     start_tailer(app, pane.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane.clone(), session);
@@ -1076,9 +1274,13 @@ fn pty_write(panes: State<Panes>, pane: String, data: String) {
 }
 
 #[tauri::command]
-fn pty_resize(panes: State<Panes>, pane: String, rows: u16, cols: u16) {
+fn pty_resize(panes: State<Panes>, emus: State<PaneEmus>, pane: String, rows: u16, cols: u16) {
     if let Some(s) = panes.0.lock().unwrap().get(&pane) {
         let _ = s.master.resize(PtySize { rows, cols, pixel_width: 0, pixel_height: 0 });
+    }
+    // keep the emulator's grid matched to the PTY, else extraction misrenders after a resize
+    if let Some(emu) = emus.0.lock().unwrap().get(&pane) {
+        emu.lock().unwrap().parser.set_size(rows, cols);
     }
 }
 
@@ -1088,6 +1290,10 @@ fn pty_kill(panes: State<Panes>, sandboxes: State<PaneSandboxes>, pane: String) 
         let _ = s.killer.kill();
     }
     cleanup_sandbox(&sandboxes, &pane); // remove the throwaway worktree/dir if this was a body
+    // drop the own-capture log unless this pane is kept (persistence needs its history) or is Main
+    if pane != MAIN_SID && !read_kept().iter().any(|k| k.pane == pane) {
+        clear_capture(&pane);
+    }
 }
 
 // crash-recovery: relaunch a dead pane against the SAME session via --resume (same
@@ -1314,6 +1520,7 @@ fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .manage(Panes(Mutex::new(HashMap::new())))
+        .manage(PaneEmus(Mutex::new(HashMap::new())))
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
@@ -1335,6 +1542,7 @@ fn main() {
             seed_room(); // first run: copy the bundled brief into the data dir (editable)
             seed_cards(); // first run: copy the bundled card deck into the data dir (editable)
             set_dirs(&get_state()); // resolve configurable dirs before anything reads them
+            gc_captures(); // drop own-capture logs for panes that are no longer kept
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
             let mboard = app.state::<Board>().0.clone();
@@ -1494,6 +1702,9 @@ fn main() {
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
             set_pane_kept, list_kept_panes, resume_pane
         ])
+        // No graceful-shutdown delay on close: `/exit` doesn't reliably flush an interactive claude
+        // (proven), the own-capture log persists every chunk as it arrives, and real `--resume` works
+        // off claude's own periodic flush — so the window closes instantly, no hitch.
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
 }

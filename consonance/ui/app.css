@@ -238,9 +238,6 @@ input::placeholder { color: #55607a; }
 .pane .phead .pcopy:hover { color: var(--text); }
 .pane .phead .ppaste { cursor: pointer; padding: 0 4px; }
 .pane .phead .ppaste:hover { color: var(--aqua); }
-.pane .phead .pkeep { cursor: pointer; padding: 0 4px; opacity: .4; }
-.pane .phead .pkeep:hover { opacity: 1; }
-.pane .phead .pkeep.on { opacity: 1; }
 .pane .phead .pclose { cursor: pointer; padding: 0 4px; }
 .pane .phead .pclose:hover { color: var(--amber); }
 .pane .phead .preopen { cursor: pointer; padding: 0 4px; color: var(--aqua); }

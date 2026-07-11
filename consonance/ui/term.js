@@ -171,10 +171,9 @@ function makePaneEl(id, name, cwd, container) {
       '<span class="prole" title="role — click to toggle; only committee panes can receive a gated inject">human</span>' +
       '<span class="ptether" title="groundedness: external referents · novelty vs the board — numbers, not a verdict"></span>' +
       '<span class="pctx" title="context window used"></span>' +
-      '<span class="pkeep" title="keep this instance — survives restart and resumes on next launch">📌</span>' +
       '<span class="ppaste" title="paste the clipboard into this pane&#39;s input">📋</span>' +
       '<span class="pcopy" title="copy the latest response to the clipboard">⧉</span>' +
-      '<span class="pclose" title="close pane">✕</span>' +
+      '<span class="pclose" title="remove this pane">✕</span>' +
     '</div><div class="pterm"></div>';
   document.getElementById(container || 'panes').appendChild(el);
   el.querySelector('.pclose').onclick = () => closePane(id);
@@ -182,7 +181,6 @@ function makePaneEl(id, name, cwd, container) {
   el.querySelector('.prole').onclick = () => toggleRole(id);
   el.querySelector('.pcopy').onclick = () => copyPaneOutput(id);
   el.querySelector('.ppaste').onclick = () => pastePaneInput(id);
-  el.querySelector('.pkeep').onclick = () => togglePaneKept(id);
   return el;
 }
 
@@ -319,11 +317,6 @@ function attachPane(id, label, cwd, role, container, kept) {
   if (role !== 'human') {
     const rb = el.querySelector('.prole');
     if (rb) { rb.textContent = role; rb.classList.toggle('committee', role === 'committee'); }
-    const kb = el.querySelector('.pkeep'); // Main persists inherently; bodies are throwaway — no keep toggle
-    if (kb) kb.remove();
-  } else if (kept) {
-    const kb = el.querySelector('.pkeep');
-    if (kb) kb.classList.add('on');
   }
   updateConveneBtn();
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
@@ -350,8 +343,9 @@ async function addSibling() {
   setStatus('a briefed instance is waking on the startup brief…');
   try {
     const r = await inv('spawn_sibling');
-    attachPane(r.pane, '✦ brief', r.cwd);
-    setStatus('briefed instance woken · ' + r.cwd);
+    // siblings persist by default (the backend registers them kept); pass kept so ✕ removes them
+    attachPane(r.pane, '✦ brief', r.cwd, 'human', 'panes', true);
+    setStatus('briefed instance woken · ' + r.cwd + ' — persists until removed');
   } catch (e) {
     setStatus('briefed-instance spawn failed: ' + e);
   }
@@ -528,16 +522,6 @@ function fitPane(id) {
 }
 
 function fitAll() { panes.forEach((_p, id) => fitPane(id)); }
-
-function togglePaneKept(id) {
-  const p = panes.get(id);
-  if (!p) return;
-  p.kept = !p.kept;
-  const btn = p.el && p.el.querySelector('.pkeep');
-  if (btn) btn.classList.toggle('on', p.kept);
-  inv('set_pane_kept', { pane: id, cwd: p.cwd || '', label: p.label || '', kept: p.kept }).catch(() => {});
-  setStatus(p.kept ? 'kept — this instance resumes on next launch' : 'no longer kept — closes for good on exit');
-}
 
 function closePane(id) {
   inv('pty_kill', { pane: id });
