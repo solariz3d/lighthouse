@@ -30,6 +30,9 @@
     "targets": ["nsis"],
     "resources": {
       "brief/BOOT.md": "BOOT.md",
+      "brief/SEED.md": "SEED.md",
+      "brief/BASE_JOURNAL.md": "BASE_JOURNAL.md",
+      "brief/room-settings.json": "room-settings.json",
       "../README.md": "README.md",
       "../GUIDE.md": "GUIDE.md",
       "../../exo_memory/cards/*.md": "cards/"
