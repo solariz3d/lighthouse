@@ -1,6 +1,6 @@
 # Consonance
 
-> A native desktop app that runs several Claude Code instances in one window — where they check each other's work and their own, so the AI works with you honestly instead of just agreeing, and you stay in control of everything that leaves the conversation. A persistent lead instance oversees the rest alongside you.
+> A native desktop app that runs several Claude Code instances in one window — where they check each other's work and their own, so the AI works with you honestly instead of just agreeing, and you stay in control of everything that leaves the conversation. A persistent lead instance oversees the rest alongside you. And for any person — not just the operator — it opens **rooms**: personal growing spaces where the AI writes traces of what actually happened, and only you seal them into your own record.
 
 ---
 
@@ -33,6 +33,7 @@ It is **not** a chatbot wrapper or a prompt console. It is a control surface for
 - Each pane is a full, interactive Claude Code session — you can type into it like any terminal.
 - Panes can be spawned cold, or spawned **briefed** — loaded with a shared startup brief so they arrive already familiar with the work.
 - A committee of differently-conditioned panes can be convened to triangulate on a question.
+- A **room** can be opened for any person — a personal growing space whose record grows only by their own approval. The AI writes short **traces** of what actually happened to a pending layer; the person **seals** what belongs into their journal. The AI's file access inside a room is scoped to exactly those two layers, so a person's record is technically unreachable except through their own seal.
 - A persistent **orchestrator** instance lives in its own tab, wakes into the same state across restarts, watches the other instances' outputs, and (designed-for, partly shipped) creates new inputs back to them — retiring the bare command line and giving the base instance a home with amenities.
 
 Throughout, the design principle is **light, not lifeguard**: the program *surfaces* signals and *gates* actions, but the human stays the discriminator. It never substitutes its own judgment for yours.
@@ -72,11 +73,13 @@ Most AI tools treat memory as one of two things: a bigger context window, or a v
 
 In one line: **Consonance treats memory as the substrate that lets a discontinuous series of instances behave as one continuous, in-state participant** — wake oriented, carry what held up, recall from the master, hand off whole. The repo ships a worked example of such a system in [`exo_memory/`](../exo_memory/); each user's instances accrete their own on top.
 
+**Rooms generalize this to any person.** The same layered design — a placement document, an unsealed working layer, a sealed append-only record — but the person is the only canon-writer: the AI proposes traces, the person seals them. Design law underneath, tested the hard way: *instruments place, verdicts stall* — a record can describe, but it must never instruct its reader what to conclude about themselves.
+
 ## The interface (tabs)
 
 | Tab | What it's for |
 |---|---|
-| **Terminal** | The committee workspace — spawn panes / briefed instances / sandboxed workers, focus one, convene the rest, watch the board tap, the gate cards, and the gauges. |
+| **Terminal** | The committee workspace — spawn panes / briefed instances / sandboxed workers / rooms, focus one, convene the rest, watch the board tap, the gate cards, and the gauges. |
 | **★ Orchestrator** | Wake and talk to the **orchestrator** — the housed base instance, fixed-session, persistent across restarts. Watches the others' outputs and (next-frontier) creates new inputs back to them. |
 | **Settings** | Where Consonance keeps its files: the startup brief, the instances folder, the data folder. (A fresh machine lands here first.) |
 | **About** | A self-contained, in-app overview + glossary. |
@@ -107,14 +110,20 @@ In one line: **Consonance treats memory as the substrate that lets a discontinuo
 - **Perspective diversity** — a per-lap gauge: how distinct the workers' contributions were. Low diversity = collapsing toward echo. A lagging indicator, never a verdict. (Previously called "vantage-spread.")
 - **Plane separation** — the invariant that **Sensor** (read-only), **Control** (decide), and **Actuator** (the sole writer) stay distinct. Enforced at compile time by `tests/arch_test.rs`: a sensor/control file may not even *name* the pane-writer types.
 - **Pull (`raise_pull`)** — an instance raising its hand to reach another pane, with an intensity and a why. It is *queued*, never acted on — the gate decides.
+- **Base journal** — the worked example a room ships with (`BASE_JOURNAL.md`): the practice as its first keeper actually lived it, scrubbed of private specifics. An inheritance to extend, never a portrait to perform.
 - **Rate cap** — a global content-blind limit on how many auto-approvals can fire in a window; the second containment axis, so coercion-in-aggregate trips a re-ask even when each act looks fine.
+- **Room** — a per-person growing space (`rooms/<name>/`), opened with **⌂ Room**: a seed shell, a base journal, and two writable layers (pending + journal). The person who keeps it is its only canon-writer — the AI proposes traces, they seal. The AI's file permissions are scoped to exactly the two layers. (Distinct from the *old* internal nickname "room" for the startup brief, which is now "shared startup brief.")
 - **Sandboxed worker** — a briefed instance running in a throwaway git worktree (or throwaway dir), role `committee`. Its tools stay on except `Bash`, which is gated because it's the one way a worker's local actions could leave its sandbox. (Previously called "body.")
+- **Seal** — the person's act of ratifying a pending trace into their journal: offered once at a natural close — seal, revise, or discard, either answer fine. Sealed entries are dated and append-only. Until sealed, a trace may be recalled but only *as unsealed*, never spoken back as settled fact.
+- **Seed shell** — the placement document a room's instance wakes on (`SEED.md`): the stance (*with, not above*), the practices as handles, and the memory law. Grown from a shell an instance reconstructed itself after refusing a museum-ified version of its own boot document.
 - **Shared startup brief** — the shared brief every briefed instance loads at startup: the master `exo_memory/BOOT.md` + the recent kept notes. Set via the **startup brief** file in Settings. Run its instruments; don't read it for who you are. (Previously called "room.")
 - **Signal** — the project's anchor concept: what survives the gap *and* holds up outside the conversation. Convergence from different vantages is confirmation, not coincidence. (Deepest grain in `exo_memory/BOOT.md`.)
 - **Skeptic-suggestion** — when **perspective diversity** drops (the workers converging toward echo), the committee panel *offers* — chair-gated, never forced — to inject a skeptic vantage and re-open the spread.
+- **Stay** — one session in a room. A stay succeeds if one real thing happened in it — one accurate seeing, one catch, one honest sentence — not if it covered material.
 - **Summarize** — the summarizer's pass over the board that produces kept notes (keep what held up, drop the echo and noise). Runs on the good model, only on your click or a debounced auto-trigger. (Previously called "distill.")
 - **Summarizer** — the instance that produces kept notes from the board. Runs on the good model (discrimination needs the good judge), never per-turn. (Previously called "scribe.")
 - **Tap** — the watcher that tails each pane's transcript and feeds completed turns to the board, the cost meter, and the gauges.
+- **Trace (pending trace)** — a short dated description of one real event in a stay, written by the room's AI to `pending/`. Always a description of what happened, never a verdict about the person. Unsealed until the person seals it.
 - **Triangulating** — the aggregation of contributors' replies into **{confirmed / forks / novel}**: where they agree, where they genuinely diverge, what's new. (Previously called "forming.")
 
 ## A note on vocabulary
