@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Write(pending/**)",
+      "Write(journal/**)",
+      "Edit(pending/**)",
+      "Edit(journal/**)"
+    ]
+  }
+}
