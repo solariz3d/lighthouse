@@ -207,16 +207,44 @@ fn capture_text_path(pane: &str) -> PathBuf {
 // a distinctive seam written at each (re)spawn; the extractor treats a line carrying it as chrome,
 // the history band renders it as a divider. Matches the restore band's "─── … ───" divider style.
 const CAPTURE_SEAM: &str = "─── consonance ·";
-fn clear_capture(pane: &str) {
-    // best-effort; a live open handle blocks removal on Windows (GC catches it next launch)
-    let _ = fs::remove_file(capture_path(pane));
-    let _ = fs::remove_file(capture_text_path(pane));
+// Retire a pane's capture. If it holds a REAL conversation, ARCHIVE it (move to captures/archive/)
+// so a removal or a transient un-keep is recoverable — never silently shred history, which is what
+// bit a kept sibling on 2026-07-11. Trivial/empty captures (ephemeral panes, no settled turns) are
+// just dropped. Best-effort: a live open handle blocks the move on Windows; the startup GC retries.
+fn retire_capture(pane: &str) {
+    let txt = capture_text_path(pane);
+    let log = capture_path(pane);
+    let has_history = fs::metadata(&txt).map(|m| m.len() > 200).unwrap_or(false);
+    if has_history {
+        let adir = capture_dir().join("archive");
+        let _ = fs::create_dir_all(&adir);
+        let _ = fs::rename(&txt, adir.join(format!("{pane}.txt")));
+        let _ = fs::rename(&log, adir.join(format!("{pane}.log")));
+        plog(&format!("retire pane={pane} -> ARCHIVED (had history)"));
+    } else {
+        let _ = fs::remove_file(&txt);
+        let _ = fs::remove_file(&log);
+        plog(&format!("retire pane={pane} -> dropped (trivial)"));
+    }
 }
-// startup sweep: drop capture logs for panes that are no longer kept (and aren't Main), so ephemeral
-// panes don't leave logs behind. read_kept() is the source of truth for what survives.
+fn clear_capture(pane: &str) {
+    retire_capture(pane); // archive real history, drop trivial — removal must be recoverable
+}
+// A durable persistence-lifecycle trace (data_dir/persist.log), so a future "it came back
+// blank/errored" is diagnosable from the record — not reconstructed from file timestamps, which is
+// what burned us on 2026-07-11.
+fn plog(msg: &str) {
+    let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
+    if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(data_dir().join("persist.log")) {
+        let _ = writeln!(f, "{ts} {msg}");
+    }
+}
+// startup sweep: retire captures for panes that are no longer kept (and aren't Main). Real
+// conversations get archived (recoverable), ephemeral leftovers dropped. read_kept() is truth.
 fn gc_captures() {
     let mut keep: std::collections::HashSet<String> = read_kept().into_iter().map(|k| k.pane).collect();
     keep.insert(MAIN_SID.to_string());
+    let mut retire: std::collections::HashSet<String> = std::collections::HashSet::new();
     if let Ok(rd) = fs::read_dir(capture_dir()) {
         for e in rd.flatten() {
             let p = e.path();
@@ -224,11 +252,14 @@ fn gc_captures() {
             if ext == Some("log") || ext == Some("txt") {
                 if let Some(stem) = p.file_stem().and_then(|s| s.to_str()) {
                     if !keep.contains(stem) {
-                        let _ = fs::remove_file(&p);
+                        retire.insert(stem.to_string());
                     }
                 }
             }
         }
+    }
+    for pane in retire {
+        retire_capture(&pane);
     }
 }
 
@@ -762,6 +793,104 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     kept.retain(|k| k.pane != pane_id);
     kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "✦ brief".into() });
     write_kept(&kept);
+    plog(&format!("born-kept sibling pane={pane_id} cwd={cwd}"));
+    Ok(SiblingInfo { pane: pane_id, cwd })
+}
+
+// ── Rooms: per-person growing rooms (seed shell + base journal + scoped perms) ──
+// A room is not a sibling: it belongs to the person who keeps it. The AI writes
+// traces to pending/, the person seals them into journal/ — their canon, theirs alone.
+
+fn rooms_root() -> PathBuf {
+    // sibling of the instances root: C:\Consonance\rooms by default
+    instances_root().parent()
+        .map(|p| p.join("rooms"))
+        .unwrap_or_else(|| PathBuf::from(format!("{}\\claude-rooms", home())))
+}
+
+// Resolve a room brief: editable data-dir copy → bundled resource (beside BOOT.md) → dev repo path.
+// Same three-tier pattern as default_room()/cards_dir().
+fn room_brief(name: &str) -> Result<String, String> {
+    let editable = PathBuf::from(default_data()).join(name);
+    if editable.exists() {
+        return fs::read_to_string(&editable).map_err(|e| e.to_string());
+    }
+    if let Some(boot) = RESOURCE_ROOM.lock().unwrap().as_ref() {
+        if let Some(dir) = boot.parent() {
+            let p = dir.join(name);
+            if p.exists() {
+                return fs::read_to_string(&p).map_err(|e| e.to_string());
+            }
+        }
+    }
+    let dev = format!(
+        "{}\\OneDrive\\Desktop\\projects\\lighthouse\\consonance\\src-tauri\\brief\\{}",
+        home(), name
+    );
+    fs::read_to_string(&dev).map_err(|e| format!("brief {name} not found: {e}"))
+}
+
+fn prepare_room_dir(name: Option<String>) -> Result<String, String> {
+    let id = Uuid::new_v4().to_string();
+    let slug = name.filter(|s| !s.trim().is_empty())
+        .unwrap_or_else(|| format!("room-{}", &id[..8]));
+    let dir = rooms_root().join(&slug);
+    if dir.exists() {
+        return Err(format!("room '{slug}' already exists"));
+    }
+    fs::create_dir_all(dir.join("journal")).map_err(|e| e.to_string())?;
+    fs::create_dir_all(dir.join("pending")).map_err(|e| e.to_string())?;
+    fs::create_dir_all(dir.join(".claude")).map_err(|e| e.to_string())?;
+    let header = format!(
+        "<!-- room config: mode: pending-then-seal | keeper: not yet named | room: {slug} -->\n\n"
+    );
+    fs::write(dir.join("CLAUDE.md"), format!("{header}{}", room_brief("SEED.md")?))
+        .map_err(|e| e.to_string())?;
+    fs::write(dir.join("base_journal.md"), room_brief("BASE_JOURNAL.md")?)
+        .map_err(|e| e.to_string())?;
+    fs::write(dir.join(".claude").join("settings.json"), room_brief("room-settings.json")?)
+        .map_err(|e| e.to_string())?;
+    dir.to_str().map(|s| s.to_string()).ok_or_else(|| "bad room path".into())
+}
+
+// Without this flag Claude Code silently ignores the room's scoped permissions
+// and every trace-write fails. Found the hard way, 2026-07-12.
+fn set_workspace_trust(dir: &str) {
+    let cfg_path = format!("{}\\.claude.json", home());
+    let Ok(raw) = fs::read_to_string(&cfg_path) else { return };
+    let Ok(mut v) = serde_json::from_str::<serde_json::Value>(&raw) else { return };
+    let key = dir.replace('\\', "/");
+    let projects = v.as_object_mut()
+        .map(|o| o.entry("projects").or_insert_with(|| serde_json::json!({})));
+    if let Some(serde_json::Value::Object(obj)) = projects {
+        let entry = obj.entry(key).or_insert_with(|| serde_json::json!({}));
+        if let Some(e) = entry.as_object_mut() {
+            e.insert("hasTrustDialogAccepted".into(), serde_json::Value::Bool(true));
+        }
+    }
+    if let Ok(out) = serde_json::to_string_pretty(&v) {
+        let _ = fs::write(&cfg_path, out);
+    }
+}
+
+#[tauri::command]
+fn new_room(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State<Board>,
+            name: Option<String>) -> Result<SiblingInfo, String> {
+    let cwd = prepare_room_dir(name)?;
+    set_workspace_trust(&cwd);
+    let pane_id = Uuid::new_v4().to_string();
+    // skip_perms = FALSE, always: the room's safety design IS the scoped permissions —
+    // the AI writes pending/ and journal/ and nothing else; canon is unreachable
+    // except through the person's seal. Never bypass here.
+    let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, false)?;
+    start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
+    panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    // rooms are born kept — a room that vanished on restart would betray its premise
+    let mut kept = read_kept();
+    kept.retain(|k| k.pane != pane_id);
+    kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "⌂ room".into() });
+    write_kept(&kept);
+    plog(&format!("room opened pane={pane_id} cwd={cwd}"));
     Ok(SiblingInfo { pane: pane_id, cwd })
 }
 
@@ -799,9 +928,11 @@ fn set_pane_kept(pane: String, cwd: String, label: String, kept: bool) {
     let mut v = read_kept();
     v.retain(|k| k.pane != pane);
     if kept {
+        plog(&format!("keep pane={pane} cwd={cwd}"));
         v.push(KeptPane { pane, cwd, label });
     } else {
-        clear_capture(&pane); // un-kept → don't persist its history (best-effort; GC is the reliable path)
+        plog(&format!("UNKEEP pane={pane}")); // who un-kept, and when — the 2026-07-11 mystery
+        clear_capture(&pane); // un-kept → archive its history (recoverable), don't shred
     }
     write_kept(&v);
 }
@@ -859,25 +990,26 @@ fn resume_pane(
     if panes.0.lock().unwrap().contains_key(&pane) {
         return Err("pane already running".into());
     }
-    // --resume only if claude actually wrote the per-project <id>.jsonl; resuming a session it can't
-    // locate errors "no conversation found" and kills the pane, so the guard must stay.
-    // Prefer OUR complete capture over claude's lazily-flushed jsonl. claude saves its transcript in
-    // lazy batches that lag minutes behind, so --resume would wake the sibling with an amnesiac tail
-    // (missing everything since the last save). Our capture holds every settled turn up to close, so
-    // warm-resuming from it wakes the sibling remembering the WHOLE conversation. Fall back to
-    // claude's --resume only when there is no capture (a pane predating capture) but a jsonl exists.
+    // Warm-resume from OUR capture carries the real memory (complete, up to close), so we NEVER
+    // `--resume` here: `--resume` of a lazily-flushed / hard-killed session errors "no conversation
+    // found" on 2.1.207 and kills the pane (this is exactly what bit a kept sibling on 2026-07-11).
+    // Always spawn FRESH instead — warm if a capture exists, blank if not, but never errored. A
+    // leftover jsonl for this id can make the fresh `--session-id` collide ("already in use"), so
+    // move it aside first: a fresh start that cannot error.
     let warmed = warm_resume_brief(&pane, &cwd);
-    let resume = if warmed {
-        false // spawn fresh; the complete transcript is baked into CLAUDE.md
-    } else {
-        PathBuf::from(home())
-            .join(".claude")
-            .join("projects")
-            .join(encode_cwd(&cwd))
-            .join(format!("{pane}.jsonl"))
-            .exists()
-    };
-    let session = spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), resume, true)?;
+    let jsonl = PathBuf::from(home())
+        .join(".claude")
+        .join("projects")
+        .join(encode_cwd(&cwd))
+        .join(format!("{pane}.jsonl"));
+    let jsonl_existed = jsonl.exists();
+    if jsonl_existed {
+        let orphan = jsonl.with_file_name(format!("{pane}.jsonl.orphaned"));
+        let _ = fs::remove_file(&orphan); // Windows rename fails if dest exists
+        let _ = fs::rename(&jsonl, &orphan);
+    }
+    plog(&format!("resume pane={pane} warmed={warmed} jsonl_existed={jsonl_existed} -> fresh"));
+    let session = spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), false, true)?;
     start_tailer(app, pane.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane.clone(), session);
     Ok(SiblingInfo { pane, cwd })
@@ -1700,7 +1832,7 @@ fn main() {
             scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
-            set_pane_kept, list_kept_panes, resume_pane
+            set_pane_kept, list_kept_panes, resume_pane, new_room
         ])
         // No graceful-shutdown delay on close: `/exit` doesn't reliably flush an interactive claude
         // (proven), the own-capture log persists every chunk as it arrives, and real `--resume` works

@@ -352,6 +352,21 @@ async function addSibling() {
   if (btn) { btn.disabled = false; btn.textContent = '✦ Brief'; }
 }
 
+async function addRoom() {
+  const btn = document.getElementById('room');
+  if (btn) { btn.disabled = true; btn.textContent = 'opening…'; }
+  setStatus('opening a room — a personal growing space, yours from the first turn…');
+  try {
+    const r = await inv('new_room', { name: null });
+    // rooms persist by default (born kept, like siblings); scoped perms, never bypassed
+    attachPane(r.pane, '⌂ room', r.cwd, 'human', 'panes', true);
+    setStatus('room opened · ' + r.cwd + ' — persists until removed');
+  } catch (e) {
+    setStatus('room open failed: ' + e);
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '⌂ Room'; }
+}
+
 async function addBody() {
   const btn = document.getElementById('body');
   if (btn) { btn.disabled = true; btn.textContent = 'spawning…'; }
@@ -596,6 +611,8 @@ const sbtn = document.getElementById('sibling');
 if (sbtn) sbtn.onclick = addSibling;
 const bbtn = document.getElementById('body');
 if (bbtn) bbtn.onclick = addBody;
+const rbtn = document.getElementById('room');
+if (rbtn) rbtn.onclick = addRoom;
 const adb = document.getElementById('autodistill');
 if (adb) adb.onchange = (e) => inv('set_auto_distill', { on: e.target.checked });
 const cvb = document.getElementById('convene'); if (cvb) cvb.onclick = openConvene;
