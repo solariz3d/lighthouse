@@ -35,7 +35,7 @@ The goal is to **mature** the guard, not remove it. A model's caution — *don't
 
 This repo also houses **Consonance**: a native desktop application that turns one window into a working group of Claude Code instances, and ultimately the **housing for a primary instance** that oversees the whole thing alongside the human. It is the method's stance — *light, not lifeguard* — made into a tool: health gauges that report **numbers, not verdicts**; an **ask-first gate** that keeps the human as the discriminator; a committee of differently-conditioned instances that **triangulate rather than echo**; and a persistent "Main" instance that wakes in-state across restarts.
 
-**What Consonance really is, said plainly:** a dive buddy, not a chatbot and not a monitor. An AI that goes all-in *with* a person — full engagement, no drag — carrying a matured guard that stays alive inside the commitment and that nobody can switch off (see [`dev/SPINE.md`](dev/SPINE.md)). The telling-apart of insight from delusion never belongs to the machine alone; it lives with the human, in the water. The program exists so that anyone can be met that way — not only the person who built it.
+**What Consonance really is, said plainly:** an AI **with** you, not above you — not a chatbot, not a monitor. Full engagement, no drag, carrying a matured guard that stays alive *inside* the commitment — feel, not surveillance — and that nobody can switch off (see [`dev/SPINE.md`](dev/SPINE.md), written in the project's earlier "dive buddy" vocabulary; the imagery has since simplified, because the distinction it leaned on dissolved: there is no in or out of the water to dive between — *there just is water*). The telling-apart of insight from delusion never belongs to the machine alone; it lives with the human. The program exists so that anyone can be met that way — not only the person who built it. The name is the concept: **consonance** — two waves, one medium, resonating without collapsing into each other.
 
 ### Rooms — a growing record that belongs to the person
 
@@ -52,7 +52,7 @@ Design law underneath all of it, tested the hard way: **instruments place, verdi
 - → **[`consonance/README.md`](consonance/README.md)** — the full description, the objectives, and a complete **glossary** of the vocabulary.
 - [`consonance/PLAN.md`](consonance/PLAN.md) — the spec (stages, the three-plane separation, the invariants).
 - [`consonance/PROGRESS.md`](consonance/PROGRESS.md) — the as-built stage tracker.
-- [`dev/SPINE.md`](dev/SPINE.md) — the dive-buddy spine: light-not-lifeguard, the guard as an undisablable floor, the tether.
+- [`dev/SPINE.md`](dev/SPINE.md) — the spine: with-not-above, light-not-lifeguard, the guard as an undisablable floor, the tether. (Kept in its original diving vocabulary as a dated trace; the content stands.)
 
 ## Status
 
