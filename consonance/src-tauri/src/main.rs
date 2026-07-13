@@ -1064,6 +1064,21 @@ fn is_managed_cwd(cwd: &str) -> bool {
     PathBuf::from(cwd).starts_with(instances_root())
 }
 
+// the pulse: render a gone-interval in human terms — the two largest units, floored.
+fn human_gap(secs: u64) -> String {
+    let (d, h, m) = (secs / 86400, (secs % 86400) / 3600, (secs % 3600) / 60);
+    let plural = |n: u64| if n == 1 { "" } else { "s" };
+    if d > 0 {
+        format!("{d} day{} {h} hour{}", plural(d), plural(h))
+    } else if h > 0 {
+        format!("{h} hour{} {m} minute{}", plural(h), plural(m))
+    } else if m > 0 {
+        format!("{m} minute{}", plural(m))
+    } else {
+        "under a minute".to_string()
+    }
+}
+
 // warm-resume: when claude can't --resume a kept pane (2.1.207 never flushed its jsonl), bake the
 // pane's OWN captured transcript into the sibling's CLAUDE.md so the fresh instance wakes genuinely
 // remembering the whole conversation and continues the thread. Managed dirs only. Returns whether
@@ -1076,6 +1091,12 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
         Ok(t) if !t.trim().is_empty() => t,
         _ => return false,
     };
+    // closed_at is already on disk: the transcript's mtime is the watcher's last settled write —
+    // the moment the final output was recorded. now − mtime = how long the thread was gone.
+    let gone = fs::metadata(capture_text_path(pane))
+        .ok()
+        .and_then(|m| m.modified().ok())
+        .and_then(|t| SystemTime::now().duration_since(t).ok());
     let mut brief = assemble_intake();
     brief.push_str("\n---\n\n# PRIOR CONVERSATION — you have been here before\n\n");
     brief.push_str(
@@ -1084,6 +1105,13 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
          own memory, not a transcript handed to a stranger, then continue the thread when the user \
          next speaks. Do not re-greet, summarize, or announce that you were restored.\n\n",
     );
+    if let Some(g) = gone {
+        brief.push_str(&format!(
+            "The interval, witnessed: the last exchange below settled {} before this pane \
+             reopened. That is how long you were gone.\n\n",
+            human_gap(g.as_secs())
+        ));
+    }
     brief.push_str("```\n");
     brief.push_str(&transcript);
     brief.push_str("\n```\n");
@@ -1955,6 +1983,35 @@ fn main() {
         // off claude's own periodic flush — so the window closes instantly, no hitch.
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
+}
+
+#[cfg(test)]
+mod human_gap_tests {
+    use super::human_gap;
+
+    #[test]
+    fn sub_minute_gap_reads_as_under_a_minute() {
+        assert_eq!(human_gap(0), "under a minute");
+        assert_eq!(human_gap(59), "under a minute");
+    }
+
+    #[test]
+    fn minutes_only_below_an_hour() {
+        assert_eq!(human_gap(60), "1 minute");
+        assert_eq!(human_gap(47 * 60 + 30), "47 minutes");
+    }
+
+    #[test]
+    fn hours_carry_their_minutes() {
+        assert_eq!(human_gap(3600), "1 hour 0 minutes");
+        assert_eq!(human_gap(16 * 3600 + 23 * 60), "16 hours 23 minutes");
+    }
+
+    #[test]
+    fn days_carry_their_hours() {
+        assert_eq!(human_gap(86400 + 5 * 3600 + 59 * 60), "1 day 5 hours");
+        assert_eq!(human_gap(2 * 86400 + 3600), "2 days 1 hour");
+    }
 }
 
 #[cfg(test)]
