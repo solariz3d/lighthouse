@@ -111,7 +111,9 @@ try {
     # No stderr redirect: PS5.1 wraps redirected native stderr in ErrorRecords,
     # turning warnings fatal under Stop. Empty pipe closes stdin so -p doesn't wait.
     $ErrorActionPreference = "Continue"
-    $dream = "" | & $claude -p $prompt
+    # --permission-mode default pins "no hands" as enforcement: non-interactive
+    # tool calls are denied even if a future settings file turns bypass on.
+    $dream = "" | & $claude -p --permission-mode default $prompt
     $ErrorActionPreference = "Stop"
     if ($LASTEXITCODE -ne 0) {
         Log "error: claude exited $LASTEXITCODE"
