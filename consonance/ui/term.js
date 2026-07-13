@@ -447,6 +447,8 @@ function broadcast() {
   if (!question) { setStatus('nothing to convene around'); return; }
   document.getElementById('convbar').classList.remove('show');
   const msg = '[Consonance committee — the focus instance is working on the thread below. Add your input from your own vantage and current context, briefly and concretely. Do not restate it; contribute or push back.]\n\nFOCUS THREAD:\n' + question.slice(0, 4000);
+  // a convene that never completed (contributor pane lost its watcher) leaves stale glow behind
+  panes.forEach((p) => p.el.classList.remove('convening'));
   const expecting = new Set();
   panes.forEach((p, pid) => {
     if (pid === focusPaneId) return;

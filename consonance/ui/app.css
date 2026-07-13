@@ -135,9 +135,10 @@ input::placeholder { color: #55607a; }
 .btn.convene:disabled { color: var(--muted); border-color: var(--line); cursor: default; }
 .pane .phead .pfocus { cursor: pointer; color: var(--muted); padding: 0 2px; }
 .pane .phead .pfocus:hover { color: var(--aqua); }
+.pane.convening { border-color: var(--aqua-d); box-shadow: 0 0 14px rgba(94,234,212,.18); }
+/* focus declared after convening: the amber outline must win when both classes are present */
 .pane.focus { border-color: var(--amber); box-shadow: 0 0 0 1px var(--amber), 0 0 16px rgba(242,184,128,.18); }
 .pane.focus .phead .pfocus { color: var(--amber); }
-.pane.convening { border-color: var(--aqua-d); box-shadow: 0 0 14px rgba(94,234,212,.18); }
 #convbar { display: none; gap: 10px; align-items: stretch; margin-bottom: 12px; }
 #convbar.show { display: flex; }
 #convbar textarea {

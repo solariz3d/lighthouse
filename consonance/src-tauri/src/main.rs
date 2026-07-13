@@ -728,6 +728,9 @@ fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
 // poll the transcript (250ms + a size watermark) and emit each new complete turn.
 // v1 simplification: the tailer thread runs until the file is gone for ~3 min; it does
 // not yet stop on pane close (a sleeping loop, negligible for a handful of panes).
+// The 3-min reaper only arms AFTER the file has existed once: a fresh spawn writes its
+// transcript on the first exchange, which can come minutes after launch — a tailer that
+// died waiting for the birth left the pane invisible to the board/committee (2026-07-13).
 fn start_tailer(
     app: AppHandle,
     pane_id: String,
@@ -743,16 +746,18 @@ fn start_tailer(
     std::thread::spawn(move || {
         let mut offset: u64 = 0;
         let mut misses = 0u32;
+        let mut seen = false; // has the transcript ever existed?
         loop {
             std::thread::sleep(Duration::from_millis(250));
             let len = match fs::metadata(&path) {
                 Ok(m) => m.len(),
                 Err(_) => {
                     misses += 1;
-                    if misses > 720 { break; }
+                    if seen && misses > 720 { break; }
                     continue;
                 }
             };
+            seen = true;
             misses = 0;
             if len < offset {
                 offset = 0; // file rotated/truncated
