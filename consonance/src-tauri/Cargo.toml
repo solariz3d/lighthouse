@@ -24,6 +24,7 @@ tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "net"]
 axum = "0.8"
 schemars = "1"
 vt100 = "0.15" # headless terminal emulator: render raw PTY bytes → clean lines for turn extraction
+chrono = { version = "0.4", default-features = false, features = ["clock"] } # the pulse: local civil time for the witnessed interval
 
 [profile.dev]
 incremental = true

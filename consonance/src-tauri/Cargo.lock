@@ -452,6 +452,7 @@ version = "0.1.0"
 dependencies = [
  "arboard",
  "axum",
+ "chrono",
  "clipboard-win",
  "portable-pty",
  "rmcp",

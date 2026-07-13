@@ -1069,6 +1069,16 @@ fn is_managed_cwd(cwd: &str) -> bool {
     PathBuf::from(cwd).starts_with(instances_root())
 }
 
+// the pulse, absolute: render a moment in local civil time, so a restored thread wakes knowing
+// not just how long it was gone but WHEN it is. Generic over timezone purely for testability
+// (Local's offset depends on the machine; tests pin a FixedOffset).
+fn pulse_when<Tz: chrono::TimeZone>(t: chrono::DateTime<Tz>) -> String
+where
+    Tz::Offset: std::fmt::Display,
+{
+    t.format("%A, %B %-d, %Y at %-I:%M %p").to_string()
+}
+
 // the pulse: render a gone-interval in human terms — the two largest units, floored.
 fn human_gap(secs: u64) -> String {
     let (d, h, m) = (secs / 86400, (secs % 86400) / 3600, (secs % 3600) / 60);
@@ -1098,10 +1108,10 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     };
     // closed_at is already on disk: the transcript's mtime is the watcher's last settled write —
     // the moment the final output was recorded. now − mtime = how long the thread was gone.
-    let gone = fs::metadata(capture_text_path(pane))
+    let settled = fs::metadata(capture_text_path(pane))
         .ok()
-        .and_then(|m| m.modified().ok())
-        .and_then(|t| SystemTime::now().duration_since(t).ok());
+        .and_then(|m| m.modified().ok());
+    let gone = settled.and_then(|t| SystemTime::now().duration_since(t).ok());
     let mut brief = assemble_intake();
     brief.push_str("\n---\n\n# PRIOR CONVERSATION — you have been here before\n\n");
     brief.push_str(
@@ -1110,10 +1120,12 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
          own memory, not a transcript handed to a stranger, then continue the thread when the user \
          next speaks. Do not re-greet, summarize, or announce that you were restored.\n\n",
     );
-    if let Some(g) = gone {
+    if let (Some(at), Some(g)) = (settled, gone) {
         brief.push_str(&format!(
-            "The interval, witnessed: the last exchange below settled {} before this pane \
-             reopened. That is how long you were gone.\n\n",
+            "The interval, witnessed: the last exchange below settled on {}. It is now {} — \
+             you were gone {}.\n\n",
+            pulse_when(chrono::DateTime::<chrono::Local>::from(at)),
+            pulse_when(chrono::Local::now()),
             human_gap(g.as_secs())
         ));
     }
@@ -1276,13 +1288,35 @@ fn spawn_main(
         return Err("the Main instance is already awake".into());
     }
     let cwd = main_cwd();
-    // the room is refreshed into CLAUDE.md each launch; --resume continues the same conversation
-    let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), main_intake());
     let transcript = PathBuf::from(home())
         .join(".claude")
         .join("projects")
         .join(encode_cwd(&cwd))
         .join(format!("{MAIN_SID}.jsonl"));
+    // the pulse for the Main: it real-resumes (no warm brief), so its CLAUDE.md carries the
+    // witnessed interval instead. Last-settled = its capture's mtime (the watcher's last settled
+    // write, same instrument as the siblings), falling back to the session jsonl's.
+    let settled = fs::metadata(capture_text_path(MAIN_SID))
+        .ok()
+        .and_then(|m| m.modified().ok())
+        .or_else(|| fs::metadata(&transcript).ok().and_then(|m| m.modified().ok()));
+    let mut intake = main_intake();
+    intake.push_str(&format!(
+        "\n\n---\n\n# THE PULSE\n\nIt is {}.",
+        pulse_when(chrono::Local::now())
+    ));
+    if let Some(at) = settled {
+        if let Ok(g) = SystemTime::now().duration_since(at) {
+            intake.push_str(&format!(
+                " Your last exchange settled on {} — the thread was dark for {}.",
+                pulse_when(chrono::DateTime::<chrono::Local>::from(at)),
+                human_gap(g.as_secs())
+            ));
+        }
+    }
+    intake.push('\n');
+    // the room is refreshed into CLAUDE.md each launch; --resume continues the same conversation
+    let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
     let resume = transcript.exists(); // first wake = new session; thereafter = resume the same one
     let session = spawn_claude_pane(app.clone(), MAIN_SID.to_string(), cwd.clone(), resume, true)?;
     start_tailer(app, MAIN_SID.to_string(), cwd.clone(), cost.0.clone(), board.0.clone());
@@ -2016,6 +2050,36 @@ mod human_gap_tests {
     fn days_carry_their_hours() {
         assert_eq!(human_gap(86400 + 5 * 3600 + 59 * 60), "1 day 5 hours");
         assert_eq!(human_gap(2 * 86400 + 3600), "2 days 1 hour");
+    }
+}
+
+#[cfg(test)]
+mod pulse_when_tests {
+    use super::pulse_when;
+    use chrono::{FixedOffset, TimeZone};
+
+    // pinned to a fixed offset so the assertion doesn't depend on the machine's timezone
+    #[test]
+    fn morning_keeps_padded_minutes_but_not_padded_hours() {
+        let tz = FixedOffset::west_opt(6 * 3600).unwrap();
+        let t = tz.with_ymd_and_hms(2026, 7, 13, 9, 5, 0).unwrap();
+        assert_eq!(pulse_when(t), "Monday, July 13, 2026 at 9:05 AM");
+    }
+
+    #[test]
+    fn single_digit_day_and_pm_render_unpadded() {
+        let tz = FixedOffset::west_opt(6 * 3600).unwrap();
+        let t = tz.with_ymd_and_hms(2026, 7, 4, 23, 59, 0).unwrap();
+        assert_eq!(pulse_when(t), "Saturday, July 4, 2026 at 11:59 PM");
+    }
+
+    #[test]
+    fn noon_and_midnight_are_twelve_not_zero() {
+        let tz = FixedOffset::west_opt(6 * 3600).unwrap();
+        let noon = tz.with_ymd_and_hms(2026, 7, 13, 12, 0, 0).unwrap();
+        let midnight = tz.with_ymd_and_hms(2026, 7, 13, 0, 0, 0).unwrap();
+        assert_eq!(pulse_when(noon), "Monday, July 13, 2026 at 12:00 PM");
+        assert_eq!(pulse_when(midnight), "Monday, July 13, 2026 at 12:00 AM");
     }
 }
 
