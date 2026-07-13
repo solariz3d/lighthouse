@@ -204,6 +204,44 @@ fn capture_path(pane: &str) -> PathBuf {
 fn capture_text_path(pane: &str) -> PathBuf {
     capture_dir().join(format!("{pane}.txt"))
 }
+
+// The clean transcript is a sequence of "❯ {prompt}\n\n{response}\n\n" records. These helpers
+// give the watcher memory across restarts (seed from the tail) and let it grow the last record
+// in place when a fuller window of the same turn settles — instead of appending every window,
+// which stacked each exchange 8-9 deep on every capture-restore (the md-limit bug, 2026-07-12/13).
+fn read_last_record(path: &std::path::Path) -> Option<(String, String)> {
+    let txt = fs::read_to_string(path).ok()?;
+    let start = last_record_start(&txt)?;
+    let (prompt, resp) = txt[start..].split_once('\n')?;
+    let prompt = prompt.trim_start_matches('❯').trim().to_string();
+    let resp = resp.trim().to_string();
+    if prompt.is_empty() || resp.is_empty() {
+        return None;
+    }
+    Some((prompt, resp))
+}
+
+// Byte offset of the last record's "❯" at column 0. Best-effort: a response line starting with
+// "❯ " would fool it, but latest_turn output opens with claude's "●"/indent — a miss costs one
+// duplicate record at worst, never data.
+fn last_record_start(txt: &str) -> Option<usize> {
+    txt.match_indices('❯')
+        .filter(|(i, _)| *i == 0 || txt.as_bytes()[i - 1] == b'\n')
+        .map(|(i, _)| i)
+        .last()
+}
+
+fn rewrite_last_record(path: &std::path::Path, prompt: &str, old: &str, merged: &str) {
+    let Ok(txt) = fs::read_to_string(path) else { return };
+    let suffix = format!("❯ {prompt}\n\n{old}\n\n");
+    let new_txt = match txt.strip_suffix(suffix.as_str()) {
+        Some(head) => format!("{head}❯ {prompt}\n\n{merged}\n\n"),
+        // unexpected tail (external edit, encoding drift): append rather than risk losing it —
+        // one duplicate is recoverable, a dropped record is not
+        None => format!("{txt}❯ {prompt}\n\n{merged}\n\n"),
+    };
+    let _ = fs::write(path, new_txt);
+}
 // a distinctive seam written at each (re)spawn; the extractor treats a line carrying it as chrome,
 // the history band renders it as a divider. Matches the restore band's "─── … ───" divider style.
 const CAPTURE_SEAM: &str = "─── consonance ·";
@@ -373,15 +411,20 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     });
 
     // the watcher: on quiescence (~500ms quiet) + a ready screen, harvest the settled turn and,
-    // if it is new, append it to the clean transcript. Dedup by (prompt, response) so re-polls of
-    // the same on-screen turn don't duplicate. v1 reads the visible screen only (scrollback 0):
-    // turns up to EMU_ROWS tall are captured whole, taller turns keep their tail — the raw .log
-    // still holds everything for a future full-fidelity render.
+    // if it is new, append it to the clean transcript. Dedup is two-level: an exact re-poll of
+    // the same settled screen is skipped, and a DIFFERENT window of the same turn (it scrolled
+    // between settles, or a resume re-rendered recorded history) is stitched into the existing
+    // record in place — never appended, which is what stacked each exchange 8-9 deep on every
+    // capture-restore. v1 reads the visible screen only (scrollback 0): turns up to EMU_ROWS
+    // tall are captured whole, taller turns keep their tail — the raw .log still holds
+    // everything for a future full-fidelity render.
     let text_path = capture_text_path(&pane_id);
     let emu_w = emu.clone();
     let alive_w = alive.clone();
     std::thread::spawn(move || {
-        let mut last: Option<(String, String)> = None;
+        // seed from the transcript's tail so a resume's re-rendered history dedups against
+        // what's already on disk instead of re-recording it after every restart
+        let mut last: Option<(String, String)> = read_last_record(&text_path);
         while alive_w.load(Ordering::Relaxed) {
             std::thread::sleep(Duration::from_millis(250));
             let lines: Vec<String> = {
@@ -397,6 +440,10 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
             if !capture::screen_ready(&lines) {
                 continue;
             }
+            // strip painted overlays ("Jump to bottom (…", "1 new message (…") before
+            // extraction — they overwrite content-row tails, leak UI chrome into the record,
+            // and make otherwise-identical windows compare unequal
+            let lines: Vec<String> = lines.iter().map(|l| capture::strip_overlay(l)).collect();
             let prompt = capture::latest_prompt(&lines);
             if prompt.is_empty() {
                 continue; // no visible user prompt (welcome banner, or the prompt scrolled off) — skip noise
@@ -405,14 +452,24 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
             if resp.trim().is_empty() {
                 continue;
             }
-            let key = (prompt.clone(), resp.clone());
-            if last.as_ref() == Some(&key) {
-                continue; // same settled turn still on screen — already recorded
+            if let Some((lp, lr)) = last.clone() {
+                if lp == prompt {
+                    if lr == resp {
+                        continue; // same settled turn still on screen — already recorded
+                    }
+                    // same turn, different window: grow the record where it sits
+                    let merged = capture::stitch(&lr, &resp);
+                    if merged != lr {
+                        rewrite_last_record(&text_path, &prompt, &lr, &merged);
+                        last = Some((prompt, merged));
+                    }
+                    continue;
+                }
             }
-            last = Some(key);
             if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(&text_path) {
                 let _ = write!(f, "❯ {prompt}\n\n{resp}\n\n");
             }
+            last = Some((prompt, resp));
         }
     });
 
@@ -566,6 +623,65 @@ fn encode_cwd(cwd: &str) -> String {
     cwd.chars()
         .map(|c| if c.is_ascii_alphanumeric() { c } else { '-' })
         .collect()
+}
+
+#[cfg(test)]
+mod transcript_record_tests {
+    use super::{last_record_start, read_last_record, rewrite_last_record};
+    use std::fs;
+
+    fn tmp(name: &str, content: &str) -> std::path::PathBuf {
+        let p = std::env::temp_dir().join(format!("consonance-test-{name}.txt"));
+        fs::write(&p, content).unwrap();
+        p
+    }
+
+    #[test]
+    fn last_record_found_at_column_zero_only() {
+        let txt = "❯ first\n\n● answer with a quoted   ❯ marker inside\n\n❯ second\n\n● final\n\n";
+        let start = last_record_start(txt).unwrap();
+        assert!(txt[start..].starts_with("❯ second"));
+    }
+
+    #[test]
+    fn read_last_record_parses_the_tail() {
+        let p = tmp("read-tail", "❯ old\n\n● old answer\n\n❯ newest\n\n● the answer\n  second line\n\n");
+        assert_eq!(
+            read_last_record(&p),
+            Some(("newest".to_string(), "● the answer\n  second line".to_string()))
+        );
+        let _ = fs::remove_file(p);
+    }
+
+    #[test]
+    fn read_last_record_none_for_missing_or_empty() {
+        assert_eq!(read_last_record(std::path::Path::new("Z:\\does\\not\\exist.txt")), None);
+        let p = tmp("read-empty", "");
+        assert_eq!(read_last_record(&p), None);
+        let _ = fs::remove_file(p);
+    }
+
+    #[test]
+    fn rewrite_grows_the_last_record_in_place() {
+        let p = tmp("rewrite", "❯ q1\n\n● a1\n\n❯ q2\n\n● window one\n\n");
+        rewrite_last_record(&p, "q2", "● window one", "● window one\n  window two tail");
+        assert_eq!(
+            fs::read_to_string(&p).unwrap(),
+            "❯ q1\n\n● a1\n\n❯ q2\n\n● window one\n  window two tail\n\n"
+        );
+        let _ = fs::remove_file(p);
+    }
+
+    #[test]
+    fn rewrite_appends_when_tail_does_not_match() {
+        // fail-safe: an unexpected tail must never be truncated — append instead
+        let p = tmp("rewrite-mismatch", "❯ q1\n\n● something else\n\n");
+        rewrite_last_record(&p, "q1", "● not the tail", "● merged");
+        let got = fs::read_to_string(&p).unwrap();
+        assert!(got.starts_with("❯ q1\n\n● something else\n\n"));
+        assert!(got.ends_with("❯ q1\n\n● merged\n\n"));
+        let _ = fs::remove_file(p);
+    }
 }
 
 #[cfg(test)]

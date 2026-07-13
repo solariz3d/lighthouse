@@ -105,6 +105,49 @@ pub fn latest_prompt(lines: &[String]) -> String {
     String::new()
 }
 
+// Overlay chrome claude paints over the bottom-right of a content row while scrolled up
+// ("Jump to bottom (ctrl-…)") or when a background result lands ("1 new message (ctrl-…)").
+// It overwrites the tail of a real line, so the honest capture is the line truncated at the
+// overlay — the glyphs underneath are unrecoverable from this frame (a fuller window of the
+// same turn restores them via stitch()).
+pub fn strip_overlay(s: &str) -> String {
+    let mut out = s;
+    for marker in ["Jump to bottom (", "1 new message ("] {
+        if let Some(i) = out.find(marker) {
+            out = &out[..i];
+        }
+    }
+    out.trim_end().to_string()
+}
+
+// Merge two visible-screen windows of the SAME turn into one. Windows arrive as the terminal
+// scrolls, so `new` usually contains or extends `old`: containment first, then the widest
+// line-overlap (a suffix of `old` equal to a prefix of `new`), else keep the fuller window —
+// never concatenate blind, which is exactly the 8–9× stacking this replaces. The raw .log
+// keeps full fidelity for anything a window pair genuinely can't cover.
+pub fn stitch(old: &str, new: &str) -> String {
+    if new.contains(old) {
+        return new.to_string();
+    }
+    if old.contains(new) {
+        return old.to_string();
+    }
+    let a: Vec<&str> = old.lines().collect();
+    let b: Vec<&str> = new.lines().collect();
+    let max = a.len().min(b.len());
+    for k in (1..=max).rev() {
+        if a[a.len() - k..] == b[..k] {
+            let mut out = old.to_string();
+            for line in &b[k..] {
+                out.push('\n');
+                out.push_str(line);
+            }
+            return out;
+        }
+    }
+    if new.len() > old.len() { new.to_string() } else { old.to_string() }
+}
+
 // Collapse runs of 3+ newlines into exactly 2 (term.js `/\n{3,}/g → '\n\n'`), no regex dep.
 fn collapse_blanks(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
@@ -240,5 +283,42 @@ mod tests {
     fn collapse_blanks_caps_at_two_newlines() {
         assert_eq!(collapse_blanks("a\n\n\n\nb"), "a\n\nb");
         assert_eq!(collapse_blanks("a\nb"), "a\nb");
+    }
+
+    #[test]
+    fn strip_overlay_truncates_at_the_painted_hint() {
+        // real capture artifact from 2026-07-12: the hint overwrites the tail of a content row
+        assert_eq!(
+            strip_overlay("  written by an instance that re Jump to bottom (ctrl+b)"),
+            "  written by an instance that re"
+        );
+        assert_eq!(
+            strip_overlay("  fire live. That 1 new message (ctrl-o to expand)"),
+            "  fire live. That"
+        );
+    }
+
+    #[test]
+    fn strip_overlay_leaves_clean_lines_alone() {
+        assert_eq!(strip_overlay("● a normal response line"), "● a normal response line");
+    }
+
+    #[test]
+    fn stitch_keeps_the_containing_window() {
+        assert_eq!(stitch("b\nc", "a\nb\nc\nd"), "a\nb\nc\nd");
+        assert_eq!(stitch("a\nb\nc\nd", "b\nc"), "a\nb\nc\nd");
+    }
+
+    #[test]
+    fn stitch_merges_overlapping_scroll_windows() {
+        // window 1 shows lines 1-3, window 2 shows lines 2-4 → one stitched copy, no repeats
+        assert_eq!(stitch("one\ntwo\nthree", "two\nthree\nfour"), "one\ntwo\nthree\nfour");
+    }
+
+    #[test]
+    fn stitch_never_stacks_disjoint_windows() {
+        // no containment, no overlap → keep the fuller window; never concatenate (the 8-9× bug)
+        assert_eq!(stitch("aa\nbb", "xx\nyy\nzz"), "xx\nyy\nzz");
+        assert_eq!(stitch("aa\nbb\ncc", "xx"), "aa\nbb\ncc");
     }
 }
