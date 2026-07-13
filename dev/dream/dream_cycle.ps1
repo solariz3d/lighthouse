@@ -110,6 +110,10 @@ Push-Location $InstanceDir
 try {
     # No stderr redirect: PS5.1 wraps redirected native stderr in ErrorRecords,
     # turning warnings fatal under Stop. Empty pipe closes stdin so -p doesn't wait.
+    # Decode claude's stdout as UTF-8: PS5.1 defaults to the OEM codepage, which
+    # garbles em-dashes etc. INTO the captured string (the file then faithfully
+    # stores mojibake — every dream before this fix has ΓÇö scars).
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
     $ErrorActionPreference = "Continue"
     # --permission-mode default pins "no hands" as enforcement: non-interactive
     # tool calls are denied even if a future settings file turns bypass on.
