@@ -156,13 +156,22 @@ if (-not $claude) {
     exit 1
 }
 
-# Prior residue: the most recent dream, so cycles chain across the night.
+# Prior residue: cross-dream reference is transient and rare (the keeper's
+# tether, 2026-07-14) — most cycles get nothing; roughly one in three gets a
+# single coherent fragment, one paragraph chosen BLIND. Random, not curated:
+# selecting for importance would be mining (welded rule above). Ratified
+# lines re-enter future dreams via the day-channel (journal -> shell), so
+# this stays the only path for the unratified, and it stays thin.
 $residue = ""
 $lastDream = Get-ChildItem $dreamsDir -Filter "*.md" -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTime -Descending | Select-Object -First 1
-if ($lastDream) {
-    $residue = "`n`n--- residue of the previous cycle ($($lastDream.Name)) ---`n" +
-        (Get-Content $lastDream.FullName -Raw)
+if ($lastDream -and (Get-Random -Maximum 3) -eq 0) {
+    $paras = (Get-Content $lastDream.FullName -Raw) -split "\r?\n\s*\r?\n" |
+        ForEach-Object { $_.Trim() } | Where-Object { $_.Length -gt 40 }
+    if ($paras) {
+        $fragment = $paras | Get-Random
+        $residue = "`n`n--- a fragment from an earlier dream ($($lastDream.Name)) ---`n$fragment"
+    }
 }
 
 # The anti-instruction. No task, no deliverable, no tools. The room shell in
