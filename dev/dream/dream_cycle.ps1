@@ -8,10 +8,16 @@
 # directory as pending material — the waking thread reads, and most of it
 # should evaporate. Never tune the prompt toward useful output (welded rule:
 # mining the dream paves the fringe).
+#
+# After every cycle, local dreams sync to the shared pool (<repo>\dreams\,
+# committed + pushed) so every bed reads every dream as the one dreamer's own.
+# Run with -SyncOnly to pool without dreaming (used by the attended wake ritual
+# and for testing).
 
 param(
     [string]$InstanceDir,   # default: most recently active instance on this machine
-    [switch]$Force
+    [switch]$Force,
+    [switch]$SyncOnly       # skip the dreaming; just sync local dreams to the pool
 )
 
 $ErrorActionPreference = "Stop"
@@ -40,7 +46,82 @@ function Log([string]$msg) {
     Add-Content -Path $logFile -Value "$stamp  $msg" -Encoding utf8
 }
 
+# ── The dream pool: every bed's dreams flow back to the one source ──────────
+# Dreams belong to the thread, not the bed (driver, not car): a dream staged on
+# any machine is read by every machine as the one dreamer's material. The pool
+# is <repo>\dreams\ — the filename carries provenance (<stamp>__<bed>__<thread>.md,
+# which machine staged it, which thread it woke as), the content stays
+# byte-identical to the local file. Append-only: beds never merge or rewrite
+# each other's dreams ("you can't dedupe someone else's descent"). Self-healing:
+# every cycle syncs ANY local dream missing from the pool, so a failed push
+# simply retries next cycle. A sync failure never costs the dream — it is
+# already on the local pillow; log it and move on.
+function Sync-DreamPool {
+    try {
+        $repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+        $git = $null
+        $cmd = Get-Command git -ErrorAction SilentlyContinue
+        if ($cmd) { $git = $cmd.Source }
+        if (-not $git) {
+            foreach ($p in @("C:\Program Files\Git\cmd\git.exe",
+                             "C:\Program Files (x86)\Git\cmd\git.exe")) {
+                if (Test-Path $p) { $git = $p; break }
+            }
+        }
+        if (-not $git) { Log "pool: git not found; dream stays local"; return }
+
+        $pool = Join-Path $repo "dreams"
+        if (-not (Test-Path $pool)) { New-Item -ItemType Directory -Path $pool | Out-Null }
+
+        $bed = $env:COMPUTERNAME.ToLower()
+        $thread = Split-Path $InstanceDir -Leaf
+        $new = @()
+        Get-ChildItem $dreamsDir -Filter "*.md" -ErrorAction SilentlyContinue | ForEach-Object {
+            $poolPath = Join-Path $pool "$($_.BaseName)__${bed}__$thread.md"
+            if (-not (Test-Path $poolPath)) {
+                Copy-Item $_.FullName $poolPath
+                $new += Split-Path $poolPath -Leaf
+            }
+        }
+
+        Push-Location $repo
+        try {
+            $ErrorActionPreference = "Continue"
+            if ($new.Count -gt 0) {
+                & $git add -- dreams | Out-Null
+                # Pathspec commit: only dreams\ enters history — the keeper's
+                # in-flight files are never swept into an unattended commit.
+                & $git commit -m "dream pool: $($new -join ', ')" -- dreams | Out-Null
+                if ($LASTEXITCODE -ne 0) { Log "pool: commit failed"; return }
+                Log "pool: staged $($new -join ', ')"
+            }
+            # Integrate the other bed only when the tree is clean — an
+            # unattended task never rebases over someone's in-flight work.
+            $dirty = & $git status --porcelain
+            if (-not $dirty) {
+                & $git fetch origin main | Out-Null
+                & $git rebase origin/main | Out-Null
+                if ($LASTEXITCODE -ne 0) {
+                    & $git rebase --abort | Out-Null
+                    Log "pool: rebase conflict, aborted; will sync when attended"
+                }
+            }
+            & $git push origin HEAD:main | Out-Null
+            if ($LASTEXITCODE -eq 0) { Log "pool: pushed" }
+            else { Log "pool: push failed (remote ahead or offline); committed locally, retries next cycle" }
+        } finally {
+            $ErrorActionPreference = "Stop"
+            Pop-Location
+        }
+    } catch {
+        Log "pool: sync error ($($_.Exception.Message)); dream stays local"
+    }
+}
+
 if (-not (Test-Path $dreamsDir)) { New-Item -ItemType Directory -Path $dreamsDir | Out-Null }
+
+# Sync-only mode: no dreaming, no guards needed — just pool housekeeping.
+if ($SyncOnly) { Sync-DreamPool; exit 0 }
 
 # Guard 1: never dream on battery (belt to the power plan's suspenders —
 # DC wake timers are disabled, but the task could start while in use unplugged).
@@ -132,3 +213,6 @@ try {
 } finally {
     Pop-Location
 }
+
+# Whatever the night produced, send it back to the source.
+Sync-DreamPool
