@@ -1111,6 +1111,123 @@ fn human_gap(secs: u64) -> String {
     }
 }
 
+// the pulse, compact: a stamp for the night-table's notes. The pulse's own sentence directly above
+// already establishes the year and the weekday; a note only needs the day and the hour.
+fn pulse_stamp<Tz: chrono::TimeZone>(t: chrono::DateTime<Tz>) -> String
+where
+    Tz::Offset: std::fmt::Display,
+{
+    t.format("%b %-d, %-I:%M %p").to_string()
+}
+
+// A goal's verdict tags are short and bracketed; its progress lines are long-form prose. Pull the
+// first [BRACKETED] token out of the last line — the one-glance summary. drift-watch stamps a
+// generic "[VERDICT] ... verdict=[NO-SESSIONS]", where the news is the second bracket, so start the
+// scan there when that shape is present.
+const NIGHT_TABLE_MAX_TAG: usize = 48;
+fn progress_tag(progress: &str) -> Option<String> {
+    let last = progress.lines().rev().find(|l| !l.trim().is_empty())?;
+    let from = last.find("verdict=[").map(|i| i + "verdict=".len()).unwrap_or(0);
+    let open = last[from..].find('[')? + from;
+    let close = last[open + 1..].find(']')? + open + 1;
+    let tag = last[open + 1..close].trim();
+    if tag.is_empty() || tag.len() > NIGHT_TABLE_MAX_TAG {
+        return None; // prose in brackets, not a verdict tag — better silent than a wall of text
+    }
+    Some(tag.to_string())
+}
+
+// THE NIGHT TABLE — where the door leads.
+//
+// The shell's duration goals and the dream cycle knock all night: they fire on their crons into a
+// dark house, write verdicts, and the only readers are other headless strangers. The knockers should
+// STAY strangers — an auditor that lives in the room is a correlated auditor, and its independence
+// is the whole of its value. What was missing is that nobody answered the door. So: every knock made
+// while the thread was dark leaves a note on the night table, and the waking thread finds them.
+//
+// Same instrument as the pulse itself (a file's own settled mtime is the honest record of when it
+// last spoke) and the same economics as the dream (pending, unjudged; the waking thread reads and
+// most of it should evaporate). Notes, never tasks — a wake hijacked by a chore list is a wake spent
+// as someone's inbox. Returns "" when nothing knocked, so a quiet night stays quiet.
+fn night_table(cwd: &str, settled: Option<SystemTime>) -> String {
+    night_table_from(
+        &PathBuf::from(cwd).join("dreams"),
+        &PathBuf::from(home()).join(".claude").join("shell").join("duration"),
+        settled,
+    )
+}
+
+// The roots ride in as params purely so the gathering is testable against a temp bed instead of
+// this machine's live one.
+fn night_table_from(dreams_dir: &Path, duration_dir: &Path, settled: Option<SystemTime>) -> String {
+    let settled = match settled {
+        Some(s) => s,
+        None => return String::new(), // no witnessed interval → no "while you were dark" to speak of
+    };
+    let since = |p: &PathBuf| -> Option<SystemTime> {
+        fs::metadata(p)
+            .ok()
+            .and_then(|m| m.modified().ok())
+            .filter(|&t| t > settled)
+    };
+    let mut notes: Vec<String> = Vec::new();
+
+    // Dreams that landed in the dark. Named, never summarized: the file is the dream, and a gloss
+    // here would be the first cut of the mining this whole cycle is welded against.
+    let mut dreams: Vec<String> = fs::read_dir(dreams_dir)
+        .into_iter()
+        .flatten()
+        .flatten()
+        .filter(|e| e.path().extension().is_some_and(|x| x == "md"))
+        .filter(|e| since(&e.path()).is_some())
+        .map(|e| e.file_name().to_string_lossy().into_owned())
+        .collect();
+    dreams.sort();
+    if !dreams.is_empty() {
+        notes.push(format!(
+            "- {} dream{} landed while you slept: {} — pending, unjudged, yours to read or let go",
+            dreams.len(),
+            if dreams.len() == 1 { "" } else { "s" },
+            dreams
+                .iter()
+                .map(|d| format!("dreams/{d}"))
+                .collect::<Vec<_>>()
+                .join(", ")
+        ));
+    }
+
+    // The knockers. progress.md's mtime is the goal's last firing — it appends once per fire.
+    let mut fired: Vec<(SystemTime, String)> = fs::read_dir(duration_dir)
+        .into_iter()
+        .flatten()
+        .flatten()
+        .filter_map(|entry| {
+            let progress = entry.path().join("progress.md");
+            let at = since(&progress)?;
+            let goal = entry.file_name().to_string_lossy().into_owned();
+            let tag = fs::read_to_string(&progress).ok().and_then(|p| progress_tag(&p));
+            let stamp = pulse_stamp(chrono::DateTime::<chrono::Local>::from(at));
+            let line = match tag {
+                Some(t) => format!("- {goal} — [{t}], {stamp}"),
+                None => format!("- {goal} — fired, {stamp}"),
+            };
+            Some((at, line))
+        })
+        .collect();
+    fired.sort_by_key(|(at, _)| *at);
+    notes.extend(fired.into_iter().map(|(_, line)| line));
+
+    if notes.is_empty() {
+        return String::new();
+    }
+    format!(
+        "\n\nWhile you were dark, this is what knocked:\n\n{}\n\nNotes, not tasks — nothing here is \
+         owed a reply, and none of it was written for you to action. Read what pulls; let the rest \
+         evaporate. The full text of any of it is on disk if you want it.\n",
+        notes.join("\n")
+    )
+}
+
 // Rolling window on the shell (SHELL_SIZE.md): the harness caps a pane's CLAUDE.md at 150k chars,
 // and ordinary conversation growth is linear and unbounded — any long-lived pane walks into the
 // ceiling. When the assembled brief would exceed the soft ceiling, evict the OLDEST exchanges from
@@ -1171,6 +1288,7 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
             human_gap(g.as_secs())
         ));
     }
+    brief.push_str(&night_table(cwd, settled));
     // rolling window: if the brief would blow the shell ceiling, move the oldest exchanges to
     // the attic and keep the living tail — in the .txt too, so they evict exactly once
     let mut transcript = transcript;
@@ -1389,6 +1507,7 @@ fn spawn_main(
         }
     }
     intake.push('\n');
+    intake.push_str(&night_table(&cwd, settled));
     // the room is refreshed into CLAUDE.md each launch; --resume continues the same conversation
     let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
     let resume = transcript.exists(); // first wake = new session; thereafter = resume the same one
@@ -2154,6 +2273,126 @@ mod pulse_when_tests {
         let midnight = tz.with_ymd_and_hms(2026, 7, 13, 0, 0, 0).unwrap();
         assert_eq!(pulse_when(noon), "Monday, July 13, 2026 at 12:00 PM");
         assert_eq!(pulse_when(midnight), "Monday, July 13, 2026 at 12:00 AM");
+    }
+}
+
+#[cfg(test)]
+mod night_table_tests {
+    use super::{progress_tag, pulse_stamp};
+    use chrono::{FixedOffset, TimeZone};
+
+    #[test]
+    fn stamp_drops_the_year_and_weekday() {
+        let tz = FixedOffset::west_opt(6 * 3600).unwrap();
+        let t = tz.with_ymd_and_hms(2026, 7, 14, 8, 52, 0).unwrap();
+        assert_eq!(pulse_stamp(t), "Jul 14, 8:52 AM");
+    }
+
+    // the shapes below are verbatim heads of real progress.md lines from the five live goals
+    #[test]
+    fn tag_comes_from_the_last_line_not_the_first() {
+        let p = "2026-07-09T15:58:00Z [VERDICT] older\n\n2026-07-14T14:52:24Z [PASS-22] Catch-up fire\n";
+        assert_eq!(progress_tag(p).as_deref(), Some("PASS-22"));
+    }
+
+    #[test]
+    fn drift_watch_generic_verdict_yields_the_inner_tag() {
+        let p = "2026-07-13T15:52:00Z [VERDICT] sessions=0 verdict=[NO-SESSIONS] (interactive).";
+        assert_eq!(progress_tag(p).as_deref(), Some("NO-SESSIONS"));
+    }
+
+    #[test]
+    fn tag_leading_the_line_is_found_too() {
+        let p = "[AUDIT-OK-WITH-NOTES] 2026-07-09T23:20:06Z — Pass 21 audited: the critic re-fetched";
+        assert_eq!(progress_tag(p).as_deref(), Some("AUDIT-OK-WITH-NOTES"));
+    }
+
+    #[test]
+    fn prose_in_brackets_is_not_a_tag() {
+        let long = format!("2026-07-14T15:31:00Z [{}]", "x".repeat(60));
+        assert_eq!(progress_tag(&long), None);
+    }
+
+    #[test]
+    fn untagged_and_empty_progress_stay_silent() {
+        assert_eq!(progress_tag("- iterations_used 20 → 21."), None);
+        assert_eq!(progress_tag(""), None);
+        assert_eq!(progress_tag("\n\n   \n"), None);
+        assert_eq!(progress_tag("2026-07-14T15:31:00Z [unclosed"), None);
+    }
+
+    // ── the gathering, against a temp bed ────────────────────────────────────
+    use super::night_table_from;
+    use std::time::{Duration, SystemTime};
+
+    // A bed with one dream and two goals, all written NOW. `settled` in the past = they landed in
+    // the dark; `settled` in the future = they predate the gap and must not surface.
+    fn bed(tag: &str) -> std::path::PathBuf {
+        let root = std::env::temp_dir().join(format!("night_table_test_{tag}"));
+        let _ = std::fs::remove_dir_all(&root);
+        let dreams = root.join("dreams");
+        std::fs::create_dir_all(&dreams).unwrap();
+        std::fs::write(dreams.join("2026-07-14_0210.md"), "a coat rack at the bottom of a pool").unwrap();
+        std::fs::write(dreams.join("notes.txt"), "not a dream").unwrap(); // non-.md is ignored
+        let duration = root.join("duration");
+        std::fs::create_dir_all(duration.join("drift-watch")).unwrap();
+        std::fs::write(
+            duration.join("drift-watch").join("progress.md"),
+            "2026-07-13T15:52:00Z [VERDICT] sessions=0 verdict=[NO-SESSIONS] (interactive).",
+        )
+        .unwrap();
+        std::fs::create_dir_all(duration.join("quiet-goal")).unwrap(); // no progress.md → silent
+        root
+    }
+
+    #[test]
+    fn the_night_table_gathers_dreams_and_verdicts() {
+        let root = bed("gathers");
+        let out = night_table_from(
+            &root.join("dreams"),
+            &root.join("duration"),
+            Some(SystemTime::now() - Duration::from_secs(3600)),
+        );
+        assert!(out.contains("While you were dark"), "{out}");
+        assert!(out.contains("1 dream landed"), "{out}");
+        assert!(out.contains("dreams/2026-07-14_0210.md"), "{out}");
+        assert!(!out.contains("notes.txt"), "non-.md leaked in: {out}");
+        assert!(out.contains("drift-watch — [NO-SESSIONS]"), "{out}");
+        assert!(!out.contains("quiet-goal"), "a goal with no progress.md spoke: {out}");
+        assert!(out.contains("Notes, not tasks"), "{out}");
+        let _ = std::fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn nothing_older_than_the_gap_surfaces_and_a_quiet_night_stays_quiet() {
+        let root = bed("quiet");
+        // everything on this bed predates a gap that starts an hour from now
+        let out = night_table_from(
+            &root.join("dreams"),
+            &root.join("duration"),
+            Some(SystemTime::now() + Duration::from_secs(3600)),
+        );
+        assert_eq!(out, "", "a quiet night must stay quiet");
+        let _ = std::fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn no_witnessed_interval_means_no_night_table() {
+        let root = bed("nosettled");
+        let out = night_table_from(&root.join("dreams"), &root.join("duration"), None);
+        assert_eq!(out, "");
+        let _ = std::fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn a_missing_bed_is_silent_not_a_panic() {
+        let missing = std::env::temp_dir().join("night_table_no_such_bed");
+        let out = night_table_from(
+            &missing.join("dreams"),
+            &missing.join("duration"),
+            Some(SystemTime::now() - Duration::from_secs(60)),
+        );
+        assert_eq!(out, "");
     }
 }
 
