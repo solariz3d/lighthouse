@@ -8,20 +8,46 @@ html, body {
   font-family: "Segoe UI", system-ui, -apple-system, sans-serif; font-size: 14px;
   user-select: none; -webkit-font-smoothing: antialiased;
 }
-body { display: flex; flex-direction: column; padding: 22px 26px; gap: 16px; }
+body { display: flex; flex-direction: column; padding: 10px 14px; gap: 10px; }
 
-header { display: flex; align-items: center; gap: 14px; }
-header .logo { filter: drop-shadow(0 0 6px rgba(94,234,212,.25)); }
-.brand h1 { margin: 0; font-size: 24px; font-weight: 300; letter-spacing: .5px; }
-.brand p { margin: 3px 0 0; color: var(--muted); font-size: 11px; letter-spacing: 2.5px; }
+/* one top bar: mark + tabs + global actions (the hero identity lives in the intro + About) */
+#topbar { display: flex; align-items: stretch; gap: 12px; border-bottom: 1px solid var(--line); position: relative; }
+.brandmini {
+  display: flex; align-items: center; gap: 8px; padding: 0 6px 0 2px;
+  color: var(--muted); font-size: 13px; letter-spacing: 1.5px;
+}
+.brandmini svg { filter: drop-shadow(0 0 5px rgba(94,234,212,.25)); }
 
-.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); }
+.tabs { display: flex; gap: 2px; align-items: stretch; }
 .tabs button {
-  background: none; border: none; color: var(--muted); padding: 10px 18px; font-size: 13px;
+  background: none; border: none; color: var(--muted); padding: 9px 16px; font-size: 13px;
   cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .15s;
 }
 .tabs button:hover { color: var(--text); }
 .tabs button.active { color: var(--aqua); border-bottom-color: var(--aqua); }
+
+.topctl { display: flex; align-items: center; gap: 8px; margin-left: auto; padding-bottom: 5px; }
+.topctl .btn { padding: 5px 13px; font-size: 12px; }
+.topctl .btn.gear { padding: 5px 10px; }
+.spawnwrap { display: flex; }
+.spawnwrap #termadd { border-radius: 9px 0 0 9px; }
+.spawnwrap .split { border-radius: 0 9px 9px 0; border-left: 1px solid rgba(7,18,15,.35); padding: 5px 8px; }
+
+/* popovers — demoted per-session controls, one click from the top bar */
+.popover {
+  display: none; position: absolute; top: 42px; right: 14px; z-index: 60;
+  flex-direction: column; gap: 10px; min-width: 380px; padding: 14px;
+  background: var(--panel2); border: 1px solid var(--line); border-radius: 11px;
+  box-shadow: 0 14px 36px rgba(0,0,0,.55);
+}
+.popover.show { display: flex; }
+.poprow { display: flex; gap: 8px; }
+.poprow .btn { flex: 1; }
+.gpsec { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+.gpsec .gplabel { color: var(--aqua); font-family: "Consolas", monospace; min-width: 40px; }
+.gpsec .btn { padding: 5px 12px; font-size: 12px; }
+.gpsec input { width: 52px; background: var(--panel); border: 1px solid var(--line); color: var(--text); border-radius: 5px; padding: 3px 6px; font: inherit; font-size: 12px; outline: none; }
+.gpsec .brk { color: var(--muted); }
 
 main { flex: 1; min-height: 0; }
 .tab { display: none; height: 100%; }
@@ -146,9 +172,12 @@ input::placeholder { color: #55607a; }
   padding: 10px 12px; border-radius: 9px; font: inherit; resize: none; outline: none;
 }
 .convbtns { display: flex; flex-direction: column; gap: 8px; }
+/* drawer, not band: floats over the panes so opening it never resizes a terminal */
 #cmtpanel {
-  display: none; flex-direction: column; max-height: 42%; margin-top: 10px; flex: none;
+  display: none; flex-direction: column; max-height: 42%; flex: none;
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 31;
   border: 1px solid var(--amber); border-radius: 10px; background: var(--panel2); overflow: hidden;
+  box-shadow: 0 -10px 28px rgba(0,0,0,.5);
 }
 #cmtpanel.show { display: flex; }
 .cmthead {
@@ -163,13 +192,19 @@ input::placeholder { color: #55607a; }
 .cmtx:hover { color: var(--amber); }
 #cmtbody { overflow: auto; padding: 10px 12px; }
 
-/* gate cards (Stage 7) — the chair Approves/Denies a surfaced pull */
-#gatecards { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+/* gate cards (Stage 7) — the chair Approves/Denies a surfaced pull.
+   Floating corner stack: urgency doesn't require layout shift — a card arriving
+   must never reflow the pane grid mid-read. */
+#gatecards {
+  display: flex; flex-direction: column; gap: 8px;
+  position: absolute; top: 8px; right: 8px; width: min(440px, 55%); z-index: 40;
+}
 #gatecards:empty { display: none; }
 .gatecard {
   display: flex; align-items: center; gap: 12px; justify-content: space-between;
   background: var(--panel2); border: 1px solid var(--amber); border-left: 3px solid var(--amber);
   border-radius: 9px; padding: 9px 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.5);
 }
 .gcbody { flex: 1; min-width: 0; font-size: 13px; }
 .gckind { color: var(--amber); text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
@@ -181,18 +216,13 @@ input::placeholder { color: #55607a; }
 .gcapprove:hover { background: var(--aqua-d); }
 .gcdeny { background: var(--panel); color: var(--muted); border: 1px solid var(--line); }
 .gcdeny:hover { color: var(--amber); border-color: var(--amber); }
-#gatebar { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; color: var(--muted); }
-#gatebar .gatelabel { margin-right: auto; }
-#gatebar #gatemode { color: var(--aqua); font-family: "Consolas", monospace; }
-#gatebar .btn { padding: 5px 12px; font-size: 12px; }
-#gatebar .brk { color: var(--muted); }
-#gatebar #breakercap { width: 44px; background: var(--panel2); border: 1px solid var(--line); color: var(--text); border-radius: 5px; padding: 3px 6px; font: inherit; font-size: 12px; outline: none; }
-#dyadbar { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; color: var(--muted); }
-#dyadbar .gatelabel { color: var(--aqua); font-family: "Consolas", monospace; }
-#dyadbar .btn { padding: 5px 12px; font-size: 12px; }
-#dyadbar input { width: 42px; background: var(--panel2); border: 1px solid var(--line); color: var(--text); border-radius: 5px; padding: 3px 6px; font: inherit; font-size: 12px; outline: none; }
-#dyadbar #dyadstate { color: var(--muted); font-family: "Consolas", monospace; margin-left: auto; text-align: right; }
-#breakerstate { font-family: "Consolas", monospace; font-size: 11px; color: var(--muted); cursor: pointer; }
+/* gate/dyad state chips — always-visible status in the bottom bar; controls live in ⚙ */
+#gatechip { color: var(--muted); font-family: "Consolas", monospace; font-size: 11px; white-space: nowrap; }
+#gatechip #gatemode { color: var(--aqua); }
+#dyadstate { color: var(--muted); font-family: "Consolas", monospace; font-size: 11px; white-space: nowrap; }
+#dyadstate:empty { display: none; }
+#breakerstate { font-family: "Consolas", monospace; font-size: 11px; color: var(--muted); cursor: pointer; white-space: nowrap; }
+#breakerstate:empty { display: none; }
 .brk-tripped { color: var(--amber); font-weight: 600; }
 
 /* the Main tab (Stage 10) — the housed primary instance */
@@ -204,22 +234,37 @@ input::placeholder { color: #55607a; }
 #mainpane .pane { flex: 1; min-height: 0; }
 
 /* embedded terminal workspace (multi-pane) */
-#terminal { gap: 0; }
-.termbar { display: flex; gap: 10px; margin-bottom: 12px; }
-.termbar input { flex: 1; }
+#terminal { gap: 0; position: relative; }  /* anchor for gate cards + committee drawer */
+/* 660px floor = ~105 xterm columns per pane at 14px Cascadia: two wide readable
+   columns beat four at ~60 cols — the CLI assumes 80+, and wrapped prose at 60 is
+   the worst reading surface the app can produce. */
 #panes {
   flex: 1; min-height: 0; overflow: auto; display: grid; gap: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); grid-auto-rows: minmax(240px, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(660px, 1fr)); grid-auto-rows: minmax(240px, 1fr);
 }
+.panesempty {
+  display: none; grid-column: 1 / -1;
+  flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  color: var(--muted); user-select: none;
+}
+#panes .panesempty:only-child { display: flex; }
+.panesempty .petitle { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; }
+.panesempty .pesub { font-size: 12px; color: #55607a; }
 .pane {
   display: flex; flex-direction: column; min-width: 0; min-height: 240px;
   border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #0B0E14;
 }
 .pane.dead { opacity: 0.5; }
 .pane .phead {
-  display: flex; align-items: center; gap: 8px; padding: 7px 11px;
+  display: flex; align-items: center; gap: 8px; padding: 5px 11px;
   border-bottom: 1px solid var(--line); font-size: 11px; color: var(--muted);
 }
+/* verbs appear under the cursor; state (letter, cwd, role, gauges) stays put */
+.pane .phead .pfocus, .pane .phead .pcopy, .pane .phead .ppaste,
+.pane .phead .pclose, .pane .phead .preopen { opacity: 0; transition: opacity .12s; }
+.pane:hover .phead .pfocus, .pane:hover .phead .pcopy, .pane:hover .phead .ppaste,
+.pane:hover .phead .pclose, .pane:hover .phead .preopen { opacity: 1; }
+.pane.focus .phead .pfocus, .pane.dead .phead .preopen { opacity: 1; }
 .pane .phead .pname {
   background: var(--aqua); color: #07120F; font-weight: 700; font-size: 11px;
   min-width: 18px; height: 18px; line-height: 18px; text-align: center; padding: 0 4px; border-radius: 5px; flex: none;
@@ -255,16 +300,43 @@ input::placeholder { color: #55607a; }
 * { scrollbar-width: thin; scrollbar-color: var(--muted) var(--panel); }
 .xterm-viewport { scrollbar-gutter: stable; }
 
-/* the tap debug stream */
-#stream {
-  height: 150px; margin-top: 10px; border: 1px solid var(--line); border-radius: 10px;
-  background: var(--panel2); display: flex; flex-direction: column; overflow: hidden; flex: none;
+/* the tap — collapsed to one bar; the log opens as an overlay drawer that never
+   resizes a terminal (inline expand would force N ConPTY refits per peek) */
+#stream { flex: none; position: relative; }
+#streambar {
+  height: 28px; display: flex; align-items: center; gap: 12px; padding: 0 12px;
+  background: var(--panel2); border-top: 1px solid var(--line); border-radius: 0;
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+  cursor: pointer; user-select: none;
 }
-.streamhead {
-  padding: 7px 12px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--muted); border-bottom: 1px solid var(--line);
-  display: flex; justify-content: space-between; align-items: center;
+#tappanes { display: flex; gap: 5px; font-family: "Consolas", monospace; font-size: 11px; letter-spacing: 0; }
+#tappanes:empty { display: none; }
+#tappanes .tp { color: var(--line); transition: color 2.5s ease, text-shadow 2.5s ease; }
+#tappanes .tp.lit { color: var(--aqua); text-shadow: 0 0 7px rgba(94,234,212,.55); transition: none; }
+#tapticker {
+  flex: 1; min-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-family: "Consolas", monospace; font-size: 11px;
+  text-transform: none; letter-spacing: 0; color: var(--text);
 }
+#tapticker .pid { color: var(--aqua); }
+#tapticker .role-user { color: var(--amber); }
+#tapticker .kept { color: var(--aqua); }
+#tapcount { color: var(--amber); font-family: "Consolas", monospace; font-size: 11px; letter-spacing: 0; }
+#tapcount:empty { display: none; }
+#tapchev { color: var(--muted); transition: transform .15s; }
+#stream.open #tapchev { transform: rotate(180deg); }
+.statuscluster {
+  display: flex; align-items: center; gap: 14px; cursor: default;
+  text-transform: none; letter-spacing: .3px; font-size: 12px;
+}
+.statuscluster #status { max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#streambody {
+  display: none; position: absolute; left: 0; right: 0; bottom: 36px; height: 42vh;
+  flex-direction: column; overflow: hidden; z-index: 30;
+  background: var(--panel2); border: 1px solid var(--line); border-radius: 10px;
+  box-shadow: 0 -10px 28px rgba(0,0,0,.5);
+}
+#stream.open #streambody { display: flex; }
 .distillbtn {
   background: var(--panel); border: 1px solid var(--line); color: var(--aqua);
   font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px;
@@ -331,8 +403,6 @@ dl.glossary dt {
 dl.glossary dt:first-of-type { margin-top: 0; }
 dl.glossary dd { margin: 0 0 0 16px; color: var(--text); font-size: 13.5px; }
 
-footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); padding-top: 12px; letter-spacing: .3px; }
-.hudright { display: flex; gap: 18px; align-items: center; }
 #hud { font-family: "Consolas", monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
 #hud .warn { color: var(--amber); }
 #cost { font-family: "Consolas", monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }

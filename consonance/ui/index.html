@@ -16,56 +16,64 @@
     <canvas id="c"></canvas>
   </div>
 
-  <header>
-    <svg class="logo" viewBox="0 0 64 64" width="40" height="40" aria-hidden="true">
-      <circle cx="32" cy="32" r="22" fill="none" stroke="#5EEAD4" stroke-opacity=".45" stroke-width="1.5"/>
-      <circle cx="32" cy="32" r="14" fill="none" stroke="#5EEAD4" stroke-opacity=".65" stroke-width="1.5"/>
-      <circle cx="32" cy="32" r="6.5" fill="none" stroke="#5EEAD4" stroke-opacity=".85" stroke-width="1.5"/>
-      <circle cx="32" cy="10" r="3.2" fill="#F2B880"/>
-      <circle cx="51" cy="43" r="3.2" fill="#5EEAD4"/>
-      <circle cx="13" cy="43" r="3.2" fill="#5EEAD4"/>
-      <circle cx="32" cy="32" r="2.4" fill="#5EEAD4"/>
-    </svg>
-    <div class="brand">
-      <h1>Consonance</h1>
-      <p>INSTANCES, IN CONCERT</p>
-    </div>
-  </header>
+  <div id="topbar">
+    <span class="brandmini" title="Consonance — instances, in concert">
+      <svg viewBox="0 0 64 64" width="22" height="22" aria-hidden="true">
+        <circle cx="32" cy="32" r="22" fill="none" stroke="#5EEAD4" stroke-opacity=".45" stroke-width="1.5"/>
+        <circle cx="32" cy="32" r="14" fill="none" stroke="#5EEAD4" stroke-opacity=".65" stroke-width="1.5"/>
+        <circle cx="32" cy="32" r="6.5" fill="none" stroke="#5EEAD4" stroke-opacity=".85" stroke-width="1.5"/>
+        <circle cx="32" cy="10" r="3.2" fill="#F2B880"/>
+        <circle cx="51" cy="43" r="3.2" fill="#5EEAD4"/>
+        <circle cx="13" cy="43" r="3.2" fill="#5EEAD4"/>
+        <circle cx="32" cy="32" r="2.4" fill="#5EEAD4"/>
+      </svg>
+      <span>Consonance</span>
+    </span>
+    <nav class="tabs">
+      <button data-tab="terminal" class="active">Terminal</button>
+      <button data-tab="main">★ Orchestrator</button>
+      <button data-tab="settings">Settings</button>
+      <button data-tab="about">About</button>
+    </nav>
+    <span class="topctl">
+      <span class="spawnwrap">
+        <button id="termadd" class="btn accent" title="open a cold pane (folder set under ▾, blank = home)">+ Pane</button><button id="spawnmenu" class="btn accent split" title="spawn options — folder · ✦ Brief · ✦ Sandbox · ⌂ Room">▾</button>
+      </span>
+      <button id="convene" class="btn convene" title="convene the committee — the other live panes feed input to the focused pane (◎ a pane to focus it)" disabled>⛬ Convene</button>
+      <button id="gearbtn" class="btn gear" title="gate · breaker · dyad">⚙</button>
+    </span>
+  </div>
 
-  <nav class="tabs">
-    <button data-tab="terminal" class="active">Terminal</button>
-    <button data-tab="main">★ Orchestrator</button>
-    <button data-tab="settings">Settings</button>
-    <button data-tab="about">About</button>
-  </nav>
+  <div id="spawnpop" class="popover">
+    <label>folder for the new pane (blank = home)</label>
+    <input id="termcwd" placeholder="blank = home" spellcheck="false" />
+    <div class="poprow">
+      <button id="sibling" class="btn sibling" title="spawn a briefed instance: a fresh claude that loads the shared startup brief (BOOT.md + the kept notes) at startup so it arrives already familiar with the work">✦ Brief</button>
+      <button id="body" class="btn sibling" title="spawn a sandboxed worker: a fresh claude in a throwaway git worktree, role=committee, permissions on except Bash — its side-effects can't touch your live tree">✦ Sandbox</button>
+      <button id="room" class="btn sibling" title="open a room: a personal growing space — the AI writes traces to pending/, only you seal them into your journal. Yours from the first turn; persists until removed">⌂ Room</button>
+    </div>
+  </div>
+
+  <div id="gearpop" class="popover">
+    <div class="gpsec">
+      <span class="gplabel">gate</span>
+      <button id="openchan" class="btn" title="pre-authorize a bounded auto-approve window (5 pulls / 5 min); snaps back to ask-each when spent">Open channel</button>
+      <button id="closechan" class="btn" title="close the channel — back to ask-each">Close</button>
+      <span class="brk">breaker <input id="breakercap" type="text" placeholder="0" size="4" /> k-out</span>
+      <button id="setbreaker" class="btn" title="cap cumulative output tokens; when hit, auto-approve pauses (budget in, pause out)">Set</button>
+    </div>
+    <div class="gpsec">
+      <span class="gplabel">dyad</span>
+      <input id="dyadtrust" type="text" placeholder="trust" size="3" title="pane letter for the TRUST-forward fork — lands what survives" />
+      <input id="dyaddoubt" type="text" placeholder="doubt" size="3" title="pane letter for the DOUBT-forward fork — dissolves the false" />
+      <button id="dyadpair" class="btn" title="pair two panes at opposite lenses (the mutual-spot dyad)">Pair</button>
+      <input id="dyadspot" type="text" placeholder="spot" size="3" title="pane letter whose last board turn its partner should spot" />
+      <button id="dyadspotbtn" class="btn" title="chair-triggered: the partner spots this pane's last board turn for its characteristic failure (doubt→SEAL, trust→BRACE)">Spot &#9656;</button>
+    </div>
+  </div>
 
   <main>
     <section id="terminal" class="tab active">
-      <div class="termbar">
-        <input id="termcwd" placeholder="folder for the new pane (blank = home)" spellcheck="false" />
-        <button id="termadd" class="btn accent">+ Pane</button>
-        <button id="sibling" class="btn sibling" title="spawn a briefed instance: a fresh claude that loads the shared startup brief (BOOT.md + the kept notes) at startup so it arrives already familiar with the work">✦ Brief</button>
-        <button id="body" class="btn sibling" title="spawn a sandboxed worker: a fresh claude in a throwaway git worktree, role=committee, permissions on except Bash — its side-effects can't touch your live tree">✦ Sandbox</button>
-        <button id="room" class="btn sibling" title="open a room: a personal growing space — the AI writes traces to pending/, only you seal them into your journal. Yours from the first turn; persists until removed">⌂ Room</button>
-        <button id="convene" class="btn convene" title="convene the committee — the other live panes feed input to the focused pane (◎ a pane to focus it)" disabled>⛬ Convene</button>
-      </div>
-      <div id="gatebar">
-        <span class="gatelabel">gate: <span id="gatemode">ask-each</span></span>
-        <button id="openchan" class="btn" title="pre-authorize a bounded auto-approve window (5 pulls / 5 min); snaps back to ask-each when spent">Open channel</button>
-        <button id="closechan" class="btn" title="close the channel — back to ask-each">Close</button>
-        <span class="brk">breaker <input id="breakercap" type="text" placeholder="0" size="4" /> k-out</span>
-        <button id="setbreaker" class="btn" title="cap cumulative output tokens; when hit, auto-approve pauses (budget in, pause out)">Set</button>
-        <span id="breakerstate"></span>
-      </div>
-      <div id="dyadbar">
-        <span class="gatelabel">dyad</span>
-        <input id="dyadtrust" type="text" placeholder="trust" size="3" title="pane letter for the TRUST-forward fork — lands what survives" />
-        <input id="dyaddoubt" type="text" placeholder="doubt" size="3" title="pane letter for the DOUBT-forward fork — dissolves the false" />
-        <button id="dyadpair" class="btn" title="pair two panes at opposite lenses (the mutual-spot dyad)">Pair</button>
-        <input id="dyadspot" type="text" placeholder="spot" size="3" title="pane letter whose last board turn its partner should spot" />
-        <button id="dyadspotbtn" class="btn" title="chair-triggered: the partner spots this pane's last board turn for its characteristic failure (doubt→SEAL, trust→BRACE)">Spot &#9656;</button>
-        <span id="dyadstate"></span>
-      </div>
       <div id="gatecards"></div>
       <div id="convbar">
         <textarea id="convtext" rows="2" placeholder="what the committee convenes around — the focus pane's current thread (editable)…" spellcheck="false"></textarea>
@@ -74,7 +82,17 @@
           <button id="convcancel" class="btn">Cancel</button>
         </div>
       </div>
-      <div id="panes"></div>
+      <div id="panes">
+        <div class="panesempty">
+          <svg viewBox="0 0 64 64" width="52" height="52" aria-hidden="true" opacity="0.35">
+            <circle cx="32" cy="32" r="22" fill="none" stroke="#5EEAD4" stroke-opacity=".45" stroke-width="1.5"/>
+            <circle cx="32" cy="32" r="14" fill="none" stroke="#5EEAD4" stroke-opacity=".65" stroke-width="1.5"/>
+            <circle cx="32" cy="32" r="6.5" fill="none" stroke="#5EEAD4" stroke-opacity=".85" stroke-width="1.5"/>
+          </svg>
+          <div class="petitle">no panes yet</div>
+          <div class="pesub">+ Pane wakes one cold · ✦ Brief (under ▾) wakes one already oriented</div>
+        </div>
+      </div>
       <div id="cmtpanel">
         <div class="cmthead">
           <span>committee — triangulated input for the <b>focus</b></span>
@@ -87,16 +105,6 @@
           </span>
         </div>
         <div id="cmtbody"></div>
-      </div>
-      <div id="stream">
-        <div class="streamhead">
-          <span>tap — completed turns across panes</span>
-          <span class="streamctl">
-            <label class="autolbl" title="auto-summarize the board as turns accumulate (debounced)"><input type="checkbox" id="autodistill" checked /> auto</label>
-            <button id="distill" class="distillbtn" title="summarize the board into kept notes now — good model, spends one turn">⟳ summarize</button>
-          </span>
-        </div>
-        <div id="streamlog"></div>
       </div>
     </section>
 
@@ -267,10 +275,27 @@
     </section>
   </main>
 
-  <footer>
-    <span id="status">ready</span>
-    <span class="hudright"><span id="cost"></span><span id="hud"></span></span>
-  </footer>
+  <div id="stream">
+    <div id="streambar" title="tap — completed turns across panes (click to open)">
+      <span id="tappanes"></span>
+      <span id="tapticker">— no turns yet —</span>
+      <span id="tapcount"></span>
+      <span class="statuscluster" data-nodrawer>
+        <span id="status">ready</span>
+        <span id="gatechip" title="gate mode — controls live under ⚙">gate <span id="gatemode">ask-each</span></span>
+        <span id="dyadstate"></span>
+        <span id="breakerstate" title="breaker — click to reset when tripped"></span>
+        <span id="cost"></span>
+        <span id="hud"></span>
+        <label class="autolbl" title="auto-summarize the board as turns accumulate (debounced)"><input type="checkbox" id="autodistill" checked /> auto</label>
+        <button id="distill" class="distillbtn" title="summarize the board into kept notes now — good model, spends one turn">⟳ summarize</button>
+      </span>
+      <span id="tapchev">▴</span>
+    </div>
+    <div id="streambody">
+      <div id="streamlog"></div>
+    </div>
+  </div>
   <script src="vendor/xterm.js"></script>
   <script src="vendor/addon-fit.js"></script>
   <script src="intro.js"></script>

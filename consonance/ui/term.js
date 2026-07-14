@@ -143,11 +143,59 @@ function ensureListeners() {
     row.className = 'row';
     row.innerHTML = '<span class="pid">' + pane.slice(0, 8) + '</span> ' +
       '<span class="role-' + role + '">' + role + '</span>  ' + escapeHtml(text.slice(0, 280));
+    // pin-aware follow: scrolling up to read implicitly pauses the auto-scroll
+    const pinned = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
     log.appendChild(row);
     while (log.childNodes.length > 100) log.removeChild(log.firstChild);
-    log.scrollTop = log.scrollHeight;
+    if (pinned) log.scrollTop = log.scrollHeight;
+    tapNotify(pane, role, text);
   });
   listenersReady = true;
+}
+
+// ---- the tap bar: who / what / how many, at a glance, in 28px ----
+let tapUnread = 0;
+
+function renderTapPanes() {
+  const el = document.getElementById('tappanes');
+  if (!el) return;
+  el.innerHTML = [...panes.values()]
+    .sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+    .map((p) => '<span class="tp" data-pane-letter="' + p.name + '">' + p.name + '</span>').join('');
+}
+
+function tapNotify(pane, role, text) {
+  const p = panes.get(pane);
+  const letter = p ? p.name : String(pane).slice(0, 4);
+  const t = document.getElementById('tapticker');
+  if (t) t.innerHTML = '<span class="pid">' + escapeHtml(letter) + '</span> ' +
+    '<span class="role-' + role + '">' + role + '</span>  ' + escapeHtml(String(text || '').slice(0, 140));
+  if (p && role === 'assistant') {
+    const lt = document.querySelector('#tappanes .tp[data-pane-letter="' + p.name + '"]');
+    if (lt) { lt.classList.add('lit'); setTimeout(() => lt.classList.remove('lit'), 200); }
+  }
+  const s = document.getElementById('stream');
+  if (s && !s.classList.contains('open')) {
+    tapUnread++;
+    const c = document.getElementById('tapcount');
+    if (c) c.textContent = '+' + tapUnread;
+  }
+}
+
+function toggleTap(open) {
+  const s = document.getElementById('stream');
+  if (!s) return;
+  const to = open != null ? open : !s.classList.contains('open');
+  s.classList.toggle('open', to);
+  if (to) {
+    tapUnread = 0;
+    const c = document.getElementById('tapcount');
+    if (c) c.textContent = '';
+    const log = document.getElementById('streamlog');
+    if (log) log.scrollTop = log.scrollHeight;
+    const cp = document.getElementById('cmtpanel');            // one drawer at a time —
+    if (cp) cp.classList.remove('show');                       // the actionable one wins
+  }
 }
 
 function nextPaneName() {
@@ -162,16 +210,18 @@ function nextPaneName() {
 function makePaneEl(id, name, cwd, container) {
   const el = document.createElement('div');
   el.className = 'pane';
+  // header shows state (letter, place, role, gauges); the pid rides in the letter's
+  // tooltip and the full path in the short cwd's — verbs reveal on hover (CSS).
+  const shortCwd = String(cwd || '~').split(/[\\/]/).filter(Boolean).pop() || '~';
   el.innerHTML =
     '<div class="phead">' +
-      '<span class="pname" title="pane name — raise_pull targets this letter">' + (name || '?') + '</span>' +
+      '<span class="pname" title="pane name — raise_pull targets this letter · ' + id.slice(0, 8) + '">' + (name || '?') + '</span>' +
       '<span class="pfocus" title="make this the committee focus">◎</span>' +
-      '<span class="pid">' + id.slice(0, 8) + '</span>' +
-      '<span class="pcwd">' + (cwd || '~') + '</span>' +
+      '<span class="pcwd" title="' + escapeHtml(cwd || '~') + '">' + escapeHtml(shortCwd) + '</span>' +
       '<span class="prole" title="role — click to toggle; only committee panes can receive a gated inject">human</span>' +
       '<span class="ptether" title="groundedness: external referents · novelty vs the board — numbers, not a verdict"></span>' +
       '<span class="pctx" title="context window used"></span>' +
-      '<span class="ppaste" title="paste the clipboard into this pane&#39;s input">📋</span>' +
+      '<span class="ppaste" title="paste the clipboard into this pane&#39;s input">⎘</span>' +
       '<span class="pcopy" title="copy the latest response to the clipboard">⧉</span>' +
       '<span class="pclose" title="remove this pane">✕</span>' +
     '</div><div class="pterm"></div>';
@@ -251,11 +301,19 @@ function attachPane(id, label, cwd, role, container, kept) {
   role = role || 'human';
   const name = role === 'main' ? 'M' : nextPaneName();
   const el = makePaneEl(id, name, label, container);
+  // Reading-first type: Cascadia Mono (ships with Win11, built for long terminal reading,
+  // better Il1/O0) at 14/1.25; no blink (N panes pulsing in peripheral vision is noise) —
+  // a steady bar marks input, unfocused panes ghost to an outline. Deep scrollback because
+  // reading back through a long turn is a constant activity here.
   const term = new Terminal({
-    fontFamily: 'Consolas, "Cascadia Mono", "Courier New", monospace',
-    fontSize: 13,
-    cursorBlink: true,
-    theme: { background: '#0B0E14', foreground: '#E6EAF2', cursor: '#5EEAD4', selectionBackground: '#27304A' },
+    fontFamily: '"Cascadia Mono", Consolas, "Courier New", monospace',
+    fontSize: 14,
+    lineHeight: 1.25,
+    cursorBlink: false,
+    cursorStyle: 'bar',
+    cursorInactiveStyle: 'outline',
+    scrollback: 8000,
+    theme: { background: '#0B0E14', foreground: '#E6EAF2', cursor: '#5EEAD4', cursorAccent: '#0B0E14', selectionBackground: '#2E3A5C' },
   });
   const fit = new FitAddon.FitAddon();
   term.loadAddon(fit);
@@ -319,6 +377,7 @@ function attachPane(id, label, cwd, role, container, kept) {
     if (rb) { rb.textContent = role; rb.classList.toggle('committee', role === 'committee'); }
   }
   updateConveneBtn();
+  renderTapPanes();
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
   term.focus();
@@ -334,6 +393,8 @@ async function addPane() {
     setStatus('pane spawn failed: ' + e);
     return;
   }
+  const sp = document.getElementById('spawnpop');
+  if (sp) sp.classList.remove('show');
   attachPane(id, cwd, cwd);
 }
 
@@ -471,6 +532,7 @@ async function finishConvene() {
   try {
     lastForming = await inv('committee_form', { question: c.question, contributions });
     document.getElementById('cmtbody').innerHTML = renderForming(lastForming);
+    toggleTap(false);                                   // one drawer at a time
     document.getElementById('cmtpanel').classList.add('show');
     setStatus('committee formed — review, then → give to focus');
   } catch (e) {
@@ -548,6 +610,7 @@ function closePane(id) {
   if (id === focusPaneId) focusPaneId = null;
   lastTurn.delete(id);
   updateConveneBtn();
+  renderTapPanes();
   setStatus(panes.size + ' pane' + (panes.size === 1 ? '' : 's'));
   setTimeout(fitAll, 80);
 }
@@ -581,8 +644,11 @@ function renderResonance(r) {
       (a.tether ? ' <span class="rtether">— ' + escapeHtml(a.tether) + '</span>' : '') + '</div>';
   });
   div.innerHTML = html;
+  const pinned = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
   log.appendChild(div);
-  log.scrollTop = log.scrollHeight;
+  if (pinned) log.scrollTop = log.scrollHeight;
+  const t = document.getElementById('tapticker');
+  if (t) t.innerHTML = '<span class="kept">── kept notes · ' + r.kept + ' kept ──</span>';
 }
 
 async function distill() {
@@ -670,6 +736,55 @@ if (dsb) dsb.onclick = () => {
   if (!target) { dyadState('give a pane letter to spot'); return; }
   inv('dyad_spot', { target }).then((r) => { dyadState(r); setStatus(r); }).catch((e) => dyadState('' + e));
 };
+
+// ---- streamlined chrome: tap drawer, popovers, self-healing refits ----
+const sbar = document.getElementById('streambar');
+if (sbar) sbar.onclick = (e) => {
+  if (e.target.closest('[data-nodrawer]')) return;   // the status/controls cluster doesn't toggle
+  toggleTap();
+};
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (e.target && e.target.closest && e.target.closest('.pane')) return;  // Esc belongs to the TUI there
+  const pops = document.querySelectorAll('.popover.show');
+  if (pops.length) { pops.forEach((p) => p.classList.remove('show')); return; }
+  const s = document.getElementById('stream');
+  if (s && s.classList.contains('open')) { toggleTap(false); return; }
+  const cp = document.getElementById('cmtpanel');
+  if (cp) cp.classList.remove('show');
+});
+
+// popovers: ⚙ (gate · breaker · dyad) and ▾ (spawn options); click-outside closes
+function togglePop(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const to = !el.classList.contains('show');
+  document.querySelectorAll('.popover.show').forEach((p) => p.classList.remove('show'));
+  el.classList.toggle('show', to);
+}
+const gearb = document.getElementById('gearbtn');
+if (gearb) gearb.onclick = (e) => { e.stopPropagation(); togglePop('gearpop'); };
+const spm = document.getElementById('spawnmenu');
+if (spm) spm.onclick = (e) => { e.stopPropagation(); togglePop('spawnpop'); };
+document.addEventListener('mousedown', (e) => {
+  if (!e.target || !e.target.closest) return;
+  if (e.target.closest('.popover') || e.target.closest('#gearbtn') || e.target.closest('#spawnmenu')) return;
+  document.querySelectorAll('.popover.show').forEach((p) => p.classList.remove('show'));
+});
+// spawning from the ▾ closes it — the pane arriving is the feedback
+['sibling', 'body', 'room'].forEach((bid) => {
+  const b = document.getElementById(bid);
+  if (b) b.addEventListener('click', () => { const sp = document.getElementById('spawnpop'); if (sp) sp.classList.remove('show'); });
+});
+
+// self-healing refits: anything that changes #panes' box (convbar showing, future
+// chrome) re-fits every terminal — no more chasing individual call sites
+const panesEl = document.getElementById('panes');
+if (panesEl && window.ResizeObserver) {
+  let roT;
+  new ResizeObserver(() => { clearTimeout(roT); roT = setTimeout(fitAll, 60); }).observe(panesEl);
+}
+
 updateConveneBtn();
 
 // register listeners at load too, so the RAM/process HUD updates before any pane exists
@@ -688,5 +803,13 @@ try {
       log.appendChild(row);
     });
     log.scrollTop = log.scrollHeight;
+    // seed the ticker from the last entry so the bar isn't blank on launch — restored
+    // history is not unread, so no count
+    const last = entries[entries.length - 1];
+    if (last) {
+      const t = document.getElementById('tapticker');
+      if (t) t.innerHTML = '<span class="pid">' + escapeHtml((last.pane || '').slice(0, 4)) + '</span> ' +
+        '<span class="role-' + last.role + '">' + last.role + '</span>  ' + escapeHtml((last.text || '').slice(0, 140));
+    }
   }).catch(() => {});
 } catch (_) {}
