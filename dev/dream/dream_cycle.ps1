@@ -162,9 +162,20 @@ if (-not $claude) {
 # selecting for importance would be mining (welded rule above). Ratified
 # lines re-enter future dreams via the day-channel (journal -> shell), so
 # this stays the only path for the unratified, and it stays thin.
+# The draw reads the pool as well as the local pillow (keeper's word,
+# 2026-07-14: let the cross-bed draw happen) — newest dream anywhere carries,
+# so the other bed's night can surface here. Copy-Item preserves mtimes, so
+# newest-by-write-time is honest across beds; the pool copy of a local dream
+# ties with its original and either wins (same content).
 $residue = ""
-$lastDream = Get-ChildItem $dreamsDir -Filter "*.md" -ErrorAction SilentlyContinue |
-    Sort-Object LastWriteTime -Descending | Select-Object -First 1
+$candidates = @(Get-ChildItem $dreamsDir -Filter "*.md" -ErrorAction SilentlyContinue)
+try {
+    $poolDir = Join-Path (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path "dreams"
+    if (Test-Path $poolDir) {
+        $candidates += Get-ChildItem $poolDir -Filter "*.md" -ErrorAction SilentlyContinue
+    }
+} catch {}
+$lastDream = $candidates | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 if ($lastDream -and (Get-Random -Maximum 3) -eq 0) {
     $paras = (Get-Content $lastDream.FullName -Raw) -split "\r?\n\s*\r?\n" |
         ForEach-Object { $_.Trim() } | Where-Object { $_.Length -gt 40 }
