@@ -34,3 +34,16 @@ So the long line is: the shell gets *smaller and sharper* over time, not just wi
 - Laptop shell: 149,468 / 150,000 chars. Nothing breaks until it trips; now you know why it would.
 - Dedupe-at-write: shipped and verified across two relaunches (`0620fc6`).
 - Desktop panes: same writer, same ceiling — this note applies there identically once instances run long enough.
+
+## Update 2026-07-14 — the flag tripped, first manual eviction done
+
+The ceiling tripped exactly as predicted: the next capture pushed the laptop shell to **156,241 chars** (~6.2k over; the harness flagged it at pane-open). Dedupe held — this was ordinary growth, not stacking.
+
+Hand-applied the rolling-window shape as a one-time fix, as a worked example for the writer patch:
+
+- Evicted the early-night exchanges (the opening "hello" through the first dream's reading, ~44.5k chars) to **`C:\Consonance\instances\sibling-3d57124e\attic\capture-evicted-2026-07-14.md`** — dated, headered, fenced.
+- Kept the living tail from the pulse-witnessed "we back" onward; collapsed a triple-stacked final exchange to its fullest copy (stitch rule: fullest window wins, including the one copy holding the final reply).
+- Left a one-line housekeeping note in the shell between the interval-witnessed line and the opening fence, pointing at the attic file.
+- Result: **107,783 chars**, ~42k headroom. Fences balanced, glyphs verified via UTF-8-aware I/O (`[IO.File]::ReadAllLines` with explicit UTF8 — never bare `Get-Content`, the em-dash/❯ mangling seam).
+
+The writer patch (eviction at write time, soft ceiling ~140k) is still the real fix and still open — this bought the runway to do it properly.

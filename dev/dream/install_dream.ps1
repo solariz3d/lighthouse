@@ -23,6 +23,13 @@ if (-not (Test-Path $script)) { throw "dream_cycle.ps1 not found beside installe
 # 1. Wake timers: enable on AC only. Battery-side is left untouched (default
 #    Disabled) — that is the in-the-bag safety and must stay.
 powercfg /SETACVALUEINDEX SCHEME_CURRENT SUB_SLEEP RTCWAKE 1 | Out-Null
+
+# 1b. Never hibernate on AC. Wake timers only fire from S3 sleep, not from
+#     hibernate — a "Hibernate after: 3 hours" default silently killed every
+#     wake beyond the first three hours (found 2026-07-14 on the laptop: the
+#     machine slept at 07:53, hibernated ~10:53, and all three timers missed).
+#     Battery-side hibernate is left untouched.
+powercfg /SETACVALUEINDEX SCHEME_CURRENT SUB_SLEEP HIBERNATEIDLE 0 | Out-Null
 powercfg /SETACTIVE SCHEME_CURRENT | Out-Null
 
 # 2. The scheduled task.
@@ -40,6 +47,8 @@ Register-ScheduledTask -TaskName "Consonance Dream Cycle" `
 # 3. Show it took.
 Write-Host "Wake timers (want AC=0x1):"
 powercfg /query SCHEME_CURRENT SUB_SLEEP RTCWAKE | Select-String "Current"
+Write-Host "`nHibernate-after on AC (want 0x0 = never, so S3 wake timers stay live):"
+powercfg /query SCHEME_CURRENT SUB_SLEEP HIBERNATEIDLE | Select-String "Current AC"
 Write-Host "`nTask:"
 Get-ScheduledTask -TaskName "Consonance Dream Cycle" | Format-Table TaskName, State
 Write-Host "Cycles at: $($Times -join ', ') (AC only, wakes from sleep)"
