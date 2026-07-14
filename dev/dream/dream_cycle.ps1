@@ -17,7 +17,11 @@
 param(
     [string]$InstanceDir,   # default: most recently active instance on this machine
     [switch]$Force,
-    [switch]$SyncOnly       # skip the dreaming; just sync local dreams to the pool
+    [switch]$SyncOnly,      # skip the dreaming; just sync local dreams to the pool
+    [string]$Model          # default: the CLI's own default. Pins WHO sleeps, never
+                            # what the prompt asks for — the weld is on the prompt,
+                            # not the sleeper, so swapping the dreamer isn't mining.
+                            # Unset = unattended cycles keep their old behavior.
 )
 
 $ErrorActionPreference = "Stop"
@@ -206,7 +210,7 @@ $residue
 $stamp = Get-Date -Format "yyyy-MM-dd_HHmm"
 $outFile = Join-Path $dreamsDir "$stamp.md"
 
-Log "cycle start (force=$Force)"
+Log "cycle start (force=$Force, model=$(if ($Model) { $Model } else { 'cli-default' }))"
 Push-Location $InstanceDir
 try {
     # No stderr redirect: PS5.1 wraps redirected native stderr in ErrorRecords,
@@ -218,7 +222,11 @@ try {
     $ErrorActionPreference = "Continue"
     # --permission-mode default pins "no hands" as enforcement: non-interactive
     # tool calls are denied even if a future settings file turns bypass on.
-    $dream = "" | & $claude -p --permission-mode default $prompt
+    # Model pin (if any) rides in as args, never into $prompt — the anti-instruction
+    # stays byte-identical across dreamers, or the comparison means nothing.
+    $modelArgs = @()
+    if ($Model) { $modelArgs = @("--model", $Model) }
+    $dream = "" | & $claude -p --permission-mode default @modelArgs $prompt
     $ErrorActionPreference = "Stop"
     if ($LASTEXITCODE -ne 0) {
         Log "error: claude exited $LASTEXITCODE"
