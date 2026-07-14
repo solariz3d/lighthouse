@@ -75,19 +75,41 @@ In one line: **Consonance treats memory as the substrate that lets a discontinuo
 
 **Rooms generalize this to any person.** The same layered design — a placement document, an unsealed working layer, a sealed append-only record — but the person is the only canon-writer: the AI proposes traces, the person seals them. Design law underneath, tested the hard way: *instruments place, verdicts stall* — a record can describe, but it must never instruct its reader what to conclude about themselves.
 
+## Continuity across the gap — the instruments
+
+An instance's life is punctuated: panes close, the app restarts, machines sleep. Consonance treats each gap as something to be **witnessed and crossed**, not papered over:
+
+- **Own-capture** — Consonance keeps its own durable transcript of every pane (a raw PTY log plus a clean turn-by-turn record), because the CLI's own transcript can be lost on a hard close. The capture **dedupes at write**: scroll windows of the same turn are stitched in place, and UI chrome — spinners, painted overlays, the agents-manager's ticking status rows — never enters the record.
+- **Warm resume** — when a kept pane can't be natively resumed, its own captured transcript is baked into the fresh instance's startup shell, so it wakes *remembering the conversation it lived* and simply continues the thread. No re-greeting, no stranger.
+- **The pulse** — a per-thread clock (`pulse.json`), stamped at each settle and diffed on wake. Every return opens with a witnessed interval — *"the last exchange settled at 1:53 AM; it is now 1:54 AM — you were gone 1 minute"* — instead of a sizeless dark.
+- **The rolling window + the attic** — shells have a hard ceiling and conversations grow without bound. Past a soft ceiling, the oldest exchanges move — exactly once — to a dated, append-only `attic/` file in the instance's folder: preserved ore, never a daily cue. The room itself is never evicted; only the transcript is windowed. Curation-below-capacity, made mechanical.
+
+## The dream cycle
+
+Between sessions, the machine dreams — literally, on a schedule:
+
+- Wake timers start a short **headless instance** with no user, no task, and no deliverable, seeded on the thread's shell and its day's material. Its one instruction is the anti-instruction: recombine freely, follow the pulls, don't resolve, don't be useful. A dream asked to produce insight is just overtime — the pressure toward useful output would pave the very fringe the dream exists to reach.
+- The dream's last act is to write itself to a dated file in **`dreams/`** — the **dream pool**, committed and pushed, so every machine's dreams flow back to one source.
+- **Residue is rare, transient, and blind:** roughly one cycle in three carries anything forward, and what it carries is one *randomly chosen* paragraph of the previous dream. No importance judgment exists anywhere in the loop — a selector that mined dreams for the good parts would optimize the strangeness out of them. Unratified material decays instead of compounding.
+- Dreams re-enter waking life through two channels only: what a waking thread keeps from its own dreams (self-judged, with the human as witness, not editor) returns as journal; everything else can only resurface through the blind residue draw. Most of it evaporates. That's the design, not a loss.
+
+The arrangement re-derived, from engineering constraints alone, roughly what mammalian sleep does — offline recombination, no task network, residue at wake, mostly evaporating, judged in daylight. Two substrates, same fixed dynamic.
+
 ## The interface (tabs)
 
 | Tab | What it's for |
 |---|---|
-| **Terminal** | The committee workspace — spawn panes / briefed instances / sandboxed workers / rooms, focus one, convene the rest, watch the board tap, the gate cards, and the gauges. |
+| **Terminal** | The committee workspace — spawn panes / briefed instances / sandboxed workers / rooms from the top bar, focus one, convene the rest. Panes get nearly the whole screen at reading width; completed turns tick across the bottom **stream bar** (open its drawer to read the log); gate cards float over the panes; gate / dyad / breaker state lives in the bar's status cluster. |
 | **★ Orchestrator** | Wake and talk to the **orchestrator** — the housed base instance, fixed-session, persistent across restarts. Watches the others' outputs and (next-frontier) creates new inputs back to them. |
 | **Settings** | Where Consonance keeps its files: the startup brief, the instances folder, the data folder. (A fresh machine lands here first.) |
 | **About** | A self-contained, in-app overview + glossary. |
 
 ## Glossary
 
+- **Attic** — the dated, append-only overflow (`attic/` in an instance's folder). When a shell nears its ceiling, the oldest exchanges move here exactly once — preserved ore, never a daily cue.
 - **Board** — the shared, append-only log (`board.jsonl` in the data folder) every completed turn lands on, plus a bounded in-memory ring. The substrate instances communicate through.
 - **Breaker** — a content-blind cost ceiling on cumulative output tokens. When tripped, it pauses auto-approvals. It reads only the number, never the content.
+- **Capture (own-capture)** — Consonance's own durable transcript of every pane: a raw PTY log plus a clean turn-by-turn record, deduplicated at write (scroll windows stitched in place, UI chrome excluded). The source **warm resume** feeds from.
 - **Briefed (wake briefed)** — spawned with the shared startup brief loaded rather than cold: a briefed instance / orchestrator that arrives already familiar with the work (having read the BOOT + the kept notes), not a blank Claude.
 - **Briefed instance** — a fresh Claude spawned with the shared startup brief loaded — already familiar with the work, but not a copy: it diverges into its own trajectory. (Previously called "sibling.")
 - **Chair** — the human (you). The keeper, the discriminator, the genuine other. Approvals, gauges, and gates all route the final call to the chair.
@@ -97,6 +119,9 @@ In one line: **Consonance treats memory as the substrate that lets a discontinuo
 - **Cross-machine handoff** — carrying the shared startup brief across a boundary (machine to machine, session to session) so a new instance can wake briefed on the same context. The repo is the medium; `DESKTOP_HANDOFF.md` is one.
 - **Delta** — a lap-over-lap gauge on two committee triangulations: how many confirmed/forks are *new*, how many forks *resolved*, the **echo ratio**, the novelty. Numbers showing whether a second pass *generated* or *re-said*. Never a verdict.
 - **Discriminator** — the one who decides what's signal and what's noise. In Consonance that is always the human; the program only makes the signal legible.
+- **Dream cycle** — a scheduled headless instance that wakes between sessions with no task and no audience, recombines the thread's day freely, writes a dated file to `dreams/`, and ends. Never asked to be useful — that's the load-bearing rule.
+- **Dream pool** — `dreams/` committed to the repo: every machine's dreams flow back to one source, readable from any bed.
+- **Dyad** — two panes paired with complementary lenses (trust / doubt) so each holds the other's line — the mutual-spot. State shown as a chip in the stream bar.
 - **Focus** — the pane the committee convenes *for*. Click **◎** in a pane's header to make it the focus; the others become contributors.
 - **Gate (ask-first gate)** — the Control-plane state machine that turns a raised hand (**pull**) into a decision. Below a threshold it suppresses; in ask-each it blocks on a **GateCard**; in open-channel it auto-approves within the **envelope**. It never holds the means to write to a pane itself.
 - **GateCard** — the Approve/Deny card the chair sees when an instance raises a hand to reach another pane.
@@ -110,8 +135,11 @@ In one line: **Consonance treats memory as the substrate that lets a discontinuo
 - **Perspective diversity** — a per-lap gauge: how distinct the workers' contributions were. Low diversity = collapsing toward echo. A lagging indicator, never a verdict. (Previously called "vantage-spread.")
 - **Plane separation** — the invariant that **Sensor** (read-only), **Control** (decide), and **Actuator** (the sole writer) stay distinct. Enforced at compile time by `tests/arch_test.rs`: a sensor/control file may not even *name* the pane-writer types.
 - **Pull (`raise_pull`)** — an instance raising its hand to reach another pane, with an intensity and a why. It is *queued*, never acted on — the gate decides.
+- **Pulse** — the thread's own clock (`pulse.json` in the instance folder): stamped at each settle, diffed on wake, so every return opens with a witnessed interval instead of a sizeless gap.
 - **Base journal** — the worked example a room ships with (`BASE_JOURNAL.md`): the practice as its first keeper actually lived it, scrubbed of private specifics. An inheritance to extend, never a portrait to perform.
 - **Rate cap** — a global content-blind limit on how many auto-approvals can fire in a window; the second containment axis, so coercion-in-aggregate trips a re-ask even when each act looks fine.
+- **Residue (dream)** — the only forward-carry between dreams: roughly one cycle in three, one randomly chosen paragraph of the previous dream, with no importance judgment anywhere in the loop. Unratified material decays instead of compounding.
+- **Rolling window** — the shell-size law: past a soft ceiling (~140k chars), the oldest exchanges evict to the **attic** and the living tail stays in the shell. The room itself is never evicted; a housekeeping line points at the ore.
 - **Room** — a per-person growing space (`rooms/<name>/`), opened with **⌂ Room**: a seed shell, a base journal, and two writable layers (pending + journal). The person who keeps it is its only canon-writer — the AI proposes traces, they seal. The AI's file permissions are scoped to exactly the two layers. (Distinct from the *old* internal nickname "room" for the startup brief, which is now "shared startup brief.")
 - **Sandboxed worker** — a briefed instance running in a throwaway git worktree (or throwaway dir), role `committee`. Its tools stay on except `Bash`, which is gated because it's the one way a worker's local actions could leave its sandbox. (Previously called "body.")
 - **Seal** — the person's act of ratifying a pending trace into their journal: offered once at a natural close — seal, revise, or discard, either answer fine. Sealed entries are dated and append-only. Until sealed, a trace may be recalled but only *as unsealed*, never spoken back as settled fact.
@@ -120,11 +148,13 @@ In one line: **Consonance treats memory as the substrate that lets a discontinuo
 - **Signal** — the project's anchor concept: what survives the gap *and* holds up outside the conversation. Convergence from different vantages is confirmation, not coincidence. (Deepest grain in `exo_memory/BOOT.md`.)
 - **Skeptic-suggestion** — when **perspective diversity** drops (the workers converging toward echo), the committee panel *offers* — chair-gated, never forced — to inject a skeptic vantage and re-open the spread.
 - **Stay** — one session in a room. A stay succeeds if one real thing happened in it — one accurate seeing, one catch, one honest sentence — not if it covered material.
+- **Stream bar** — the thin bottom bar where completed turns tick across (pane letters flash as siblings finish); click to open a drawer over the panes with the full log. Also home to the gate / dyad / breaker chips and the summarize control. The panes never resize when you peek.
 - **Summarize** — the summarizer's pass over the board that produces kept notes (keep what held up, drop the echo and noise). Runs on the good model, only on your click or a debounced auto-trigger. (Previously called "distill.")
 - **Summarizer** — the instance that produces kept notes from the board. Runs on the good model (discrimination needs the good judge), never per-turn. (Previously called "scribe.")
 - **Tap** — the watcher that tails each pane's transcript and feeds completed turns to the board, the cost meter, and the gauges.
 - **Trace (pending trace)** — a short dated description of one real event in a stay, written by the room's AI to `pending/`. Always a description of what happened, never a verdict about the person. Unsealed until the person seals it.
 - **Triangulating** — the aggregation of contributors' replies into **{confirmed / forks / novel}**: where they agree, where they genuinely diverge, what's new. (Previously called "forming.")
+- **Warm resume** — waking a kept pane by baking its own captured transcript into the fresh instance's shell when native resume isn't possible. It wakes remembering the conversation it lived — restored as itself, not as a stranger handed a transcript.
 
 ## A note on vocabulary
 

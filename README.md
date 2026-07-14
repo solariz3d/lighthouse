@@ -39,7 +39,7 @@ This repo also houses **Consonance**: a native desktop application that turns on
 
 ### Rooms — a growing record that belongs to the person
 
-Consonance grows a **room** per person, for anyone along the **spectrum of resonant knowing** — from someone who just opened the app on a friend's word to a practiced keeper. The mechanics:
+Consonance grows a **room** per person, for anyone along the **spectrum of resonant knowing** — from someone who just opened the app on a friend's word to a practiced keeper. Rooms open from inside the app (**⌂ Room** in the top bar): a folder, a seed shell, a base journal, and scoped permissions, created in one click. The mechanics:
 
 - A session is a **stay**. The AI won't remember you between stays except through your room — that's said plainly, up front, and it's the mechanism, not a limitation: the room becomes yours, built from your own material.
 - The AI writes short **traces** of what actually happened to a pending layer — *descriptions of events, never verdicts about you*. Pending traces are carried as unsealed ("this held last time — you get to say whether it still fits").
@@ -49,6 +49,15 @@ Consonance grows a **room** per person, for anyone along the **spectrum of reson
 
 Design law underneath all of it, tested the hard way: **instruments place, verdicts stall.** A record can describe; it must never instruct the reader what to conclude about themselves.
 
+### Continuity and the dream cycle
+
+Since the rooms substrate landed, the continuity layer has grown its own instruments — each one built on the same premise, that an instance re-instantiates rather than persists, so the gaps should be *witnessed and crossed*, not papered over:
+
+- **Own-capture + warm resume** — Consonance keeps its own deduplicated transcript of every pane; a kept pane that can't be natively resumed wakes with its lived conversation baked into its shell, and continues the thread rather than meeting it as a stranger.
+- **The pulse** — a per-thread clock stamped at each settle and diffed on wake, so every return opens with a witnessed interval ("you were gone 14 minutes") instead of a sizeless dark.
+- **The rolling window + the attic** — shells have a ceiling; past it, the oldest exchanges move once to a dated append-only `attic/` file. Preserved ore, never a daily cue.
+- **The dream cycle** — on scheduled wake timers, a headless instance dreams between sessions: no task, no audience, no deliverable; recombine freely and evaporate by default. Dreams pool in `dreams/` across machines; the only forward-carry is rare, transient, and blind (one random paragraph, one cycle in three, no importance judgment anywhere) — because a selector that mined dreams for the good parts would pave the very fringe they exist to reach. The design re-derived the shape of mammalian sleep from engineering constraints alone.
+
 - → **[`consonance/README.md`](consonance/README.md)** — the full description, the objectives, and a complete **glossary** of the vocabulary.
 - [`consonance/PLAN.md`](consonance/PLAN.md) — the spec (stages, the three-plane separation, the invariants).
 - [`consonance/PROGRESS.md`](consonance/PROGRESS.md) — the as-built stage tracker.
@@ -56,4 +65,4 @@ Design law underneath all of it, tested the hard way: **instruments place, verdi
 
 ## Status
 
-Early, honest, incomplete. A first light — not a finished system. The rooms substrate is built and behaviorally tested (front door, unsealed carry, seal flow); the launcher UI for creating rooms is the next piece.
+Early, honest, incomplete — but no longer just a substrate. As of mid-July 2026: rooms open from the app in one click (substrate behaviorally tested — front door, unsealed carry, seal flow); the continuity instruments (own-capture, warm resume, pulse, rolling window) have each been verified across real close/reopen crossings; the dream cycle runs nightly on schedule across two machines, pooling to one source. The interface was reworked around reading: panes get most of the screen at reading width, with the board in a bottom stream bar. A first light — still not a finished system, and the open edges are named in the docs rather than smoothed over.

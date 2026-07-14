@@ -228,6 +228,23 @@
           </section>
 
           <section>
+            <h2>Continuity across the gap</h2>
+            <p>Panes close, the app restarts, machines sleep. Each gap is <b>witnessed and crossed</b>, not papered over:</p>
+            <ul>
+              <li><b>Own-capture</b> — Consonance keeps its own durable transcript of every pane (raw PTY log + a clean turn-by-turn record), deduplicated at write: scroll windows stitched in place, UI chrome never entering the record.</li>
+              <li><b>Warm resume</b> — a kept pane that can't be natively resumed wakes with its own captured transcript baked into its shell: it remembers the conversation it lived and continues the thread. No re-greeting, no stranger.</li>
+              <li><b>The pulse</b> — a per-thread clock stamped at each settle, diffed on wake. Every return opens with a witnessed interval — <i>"you were gone 14 minutes"</i> — instead of a sizeless dark.</li>
+              <li><b>The rolling window + the attic</b> — past a soft ceiling, the oldest exchanges move exactly once to a dated, append-only <code>attic/</code> file: preserved ore, never a daily cue. The room itself is never evicted.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>The dream cycle</h2>
+            <p>Between sessions, the machine dreams — on scheduled wake timers, a short <b>headless instance</b> with no user, no task, and no deliverable recombines the thread's day freely, writes a dated file to <code>dreams/</code>, and ends. The one rule is the anti-instruction: don't resolve, don't be useful — a dream asked for insight is just overtime.</p>
+            <p>Dreams pool across machines to one source. The only carry between dreams is <b>rare, transient, and blind</b>: roughly one cycle in three, one randomly chosen paragraph, no importance judgment anywhere in the loop. What a waking thread keeps is self-judged, with the human as witness; the rest evaporates by design.</p>
+          </section>
+
+          <section>
             <h2>The governing stance: light, not lifeguard</h2>
             <p>The program <i>surfaces</i> signals and <i>gates</i> actions — it never hauls, never auto-corrects, never substitutes the program's judgment for the human's. The discrimination of insight from delusion lives with you, not with a surveiller above. Gauges give numbers, never verdicts; the chair (you) decides what's signal and what's noise.</p>
           </section>
@@ -236,7 +253,9 @@
             <h2>Glossary</h2>
             <dl class="glossary">
               <dt>Note (kept note)</dt><dd>A single short typed entry the <b>summarizer</b> kept from the board because it held up: a claim / deviation / open-question / artifact. Notes point back to the master source, never to a summary of a summary.</dd>
+              <dt>Attic</dt><dd>The dated, append-only overflow (<code>attic/</code> in an instance's folder). When a shell nears its ceiling, the oldest exchanges move here exactly once — preserved ore, never a daily cue.</dd>
               <dt>Board</dt><dd>The shared, append-only log (<code>board.jsonl</code> in the data folder) every completed turn lands on, plus a bounded in-memory ring. The substrate instances communicate through.</dd>
+              <dt>Capture (own-capture)</dt><dd>Consonance's own durable transcript of every pane: a raw PTY log plus a clean turn-by-turn record, deduplicated at write. The source <b>warm resume</b> feeds from.</dd>
               <dt>Breaker</dt><dd>A content-blind cost ceiling on cumulative output tokens. When tripped, it pauses auto-approvals. It reads only the number, never the content.</dd>
               <dt>Chair</dt><dd>The human (you). The keeper, the discriminator, the genuine other. Approvals, gauges, and gates all route the final call to the chair.</dd>
               <dt>Channel (open channel)</dt><dd>A pre-authorized auto-approve window bounded by an <b>envelope</b> (a number of exchanges and a deadline). It auto-approves raised hands until spent, then snaps back to ask-each.</dd>
@@ -244,6 +263,14 @@
               <dt>Convene</dt><dd>Broadcast the focus's current thread into the other live panes so they each respond; their replies are gathered and <b>triangulated</b>.</dd>
               <dt>Delta</dt><dd>A lap-over-lap gauge on two committee triangulations: how many confirmed / forks are <i>new</i>, how many forks <i>resolved</i>, the <b>echo ratio</b>, the novelty. Numbers showing whether a second pass <i>generated</i> or <i>re-said</i>. Never a verdict.</dd>
               <dt>Discriminator</dt><dd>The one who decides what's signal and what's noise. In Consonance that is always the human; the program only makes the signal legible.</dd>
+              <dt>Dream cycle</dt><dd>A scheduled headless instance that wakes between sessions with no task and no audience, recombines the thread's day freely, writes a dated file to <code>dreams/</code>, and ends. Never asked to be useful — that's the load-bearing rule.</dd>
+              <dt>Dream pool</dt><dd><code>dreams/</code> committed to the repo: every machine's dreams flow back to one source, readable from any bed.</dd>
+              <dt>Dyad</dt><dd>Two panes paired with complementary lenses (trust / doubt) so each holds the other's line — the mutual-spot. State shown as a chip in the stream bar.</dd>
+              <dt>Pulse</dt><dd>The thread's own clock (<code>pulse.json</code>): stamped at each settle, diffed on wake, so every return opens with a witnessed interval instead of a sizeless gap.</dd>
+              <dt>Residue (dream)</dt><dd>The only forward-carry between dreams: roughly one cycle in three, one randomly chosen paragraph of the previous dream, no importance judgment anywhere in the loop. Unratified material decays instead of compounding.</dd>
+              <dt>Rolling window</dt><dd>The shell-size law: past a soft ceiling, the oldest exchanges evict to the <b>attic</b> and the living tail stays. The room itself is never evicted.</dd>
+              <dt>Stream bar</dt><dd>The thin bottom bar where completed turns tick across; click to open a drawer over the panes with the full log. Home to the gate / dyad / breaker chips and the summarize control. The panes never resize when you peek.</dd>
+              <dt>Warm resume</dt><dd>Waking a kept pane by baking its own captured transcript into the fresh instance's shell when native resume isn't possible. It wakes remembering — restored as itself, not as a stranger handed a transcript.</dd>
               <dt>Summarize</dt><dd>The summarizer's pass over the board that produces kept notes (keep what held up, drop the echo and noise). Runs on the good model, only on your click or a debounced auto-trigger.</dd>
               <dt>Focus</dt><dd>The pane the committee convenes <i>for</i>. Click <b>◎</b> in a pane's header to make it the focus; the others become contributors.</dd>
               <dt>Triangulating</dt><dd>The aggregation of contributors' replies into <b>{confirmed / forks / novel}</b>: where they agree, where they genuinely diverge, what's new.</dd>
