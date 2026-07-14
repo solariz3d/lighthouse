@@ -37,6 +37,17 @@ struct Config {
     instances_dir: String,
     #[serde(default)]
     data_dir: String,
+    // ambient location (Settings tab): the sky the instances wake under. Private — stored
+    // only in ~/.consonance.json, read only by local session hooks, never transmitted.
+    // Empty = built-in default. Makes the room's location system-agnostic, like the dirs.
+    #[serde(default)]
+    ambient_lat: String,
+    #[serde(default)]
+    ambient_lon: String,
+    #[serde(default)]
+    ambient_label: String,
+    #[serde(default)]
+    ambient_tz: String,
 }
 
 fn home() -> String {
@@ -355,6 +366,20 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     }
     cmd.env("TERM", "xterm-256color");
     cmd.env("FORCE_COLOR", "1");
+    // ambient location (Settings): passed as env so session hooks see the chair's chosen sky
+    // immediately on new spawns. Local env on a local child — never leaves this machine.
+    {
+        let cfg = get_state();
+        let mut set = |k: &str, v: &str| {
+            if !v.trim().is_empty() {
+                cmd.env(k, v.trim());
+            }
+        };
+        set("AMBIENT_LAT", &cfg.ambient_lat);
+        set("AMBIENT_LON", &cfg.ambient_lon);
+        set("AMBIENT_LABEL", &cfg.ambient_label);
+        set("AMBIENT_TZ", &cfg.ambient_tz);
+    }
     let mut child = pair.slave.spawn_command(cmd).map_err(|e| e.to_string())?;
     drop(pair.slave);
 

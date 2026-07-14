@@ -130,6 +130,16 @@
           <button id="browsedata" class="btn" style="flex:0 0 auto; white-space:nowrap;" title="pick a folder">Browse…</button>
         </div>
       </div>
+      <div class="field">
+        <label>ambient location — the sky your instances wake under (sun, moon, local time)</label>
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <input id="ambientlabel" style="flex:2 1 auto; width:auto;" placeholder="place name, e.g. Tokyo, Japan" spellcheck="false" />
+          <input id="ambientlat" style="flex:1 1 auto; width:auto;" placeholder="latitude, e.g. 35.6762" spellcheck="false" />
+          <input id="ambientlon" style="flex:1 1 auto; width:auto;" placeholder="longitude, e.g. 139.6503" spellcheck="false" />
+          <input id="ambienttz" style="flex:1 1 auto; width:auto;" placeholder="timezone, e.g. Asia/Tokyo" spellcheck="false" />
+        </div>
+        <span class="settingsnote">Private: stored only on this machine, visible only to you and your own instances — never sent anywhere. Blank = default (Regina, SK).</span>
+      </div>
       <div class="row">
         <button id="savesettings" class="btn accent">Save settings</button>
         <span class="settingsnote">Blank = built-in default. Applies to new spawns immediately; restart for full effect.</span>
