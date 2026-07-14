@@ -226,10 +226,22 @@ try {
     # stays byte-identical across dreamers, or the comparison means nothing.
     $modelArgs = @()
     if ($Model) { $modelArgs = @("--model", $Model) }
-    $dream = "" | & $claude -p --permission-mode default @modelArgs $prompt
+    # Stderr goes to a file, not the void: two dead cycles (07-13, 07-14) left nothing behind but
+    # "exited 1" and three seconds, so the night was undiagnosable. $ErrorActionPreference is
+    # Continue for this call, so PS5.1's ErrorRecord-wrapping of native stderr can't turn fatal —
+    # which is what the old no-redirect rule was guarding against. Overwritten each cycle: it is a
+    # diagnostic for the LAST failure, never a record (the dream is the only record here).
+    $errFile = Join-Path $dreamsDir "last-stderr.txt"
+    $dream = "" | & $claude -p --permission-mode default @modelArgs $prompt 2>$errFile
     $ErrorActionPreference = "Stop"
     if ($LASTEXITCODE -ne 0) {
-        Log "error: claude exited $LASTEXITCODE"
+        $why = ""
+        if (Test-Path $errFile) {
+            $why = ((Get-Content $errFile -Raw -ErrorAction SilentlyContinue) -replace '\s+', ' ').Trim()
+            if ($why.Length -gt 400) { $why = $why.Substring(0, 400) + "..." }
+        }
+        if (-not $why) { $why = "(no stderr captured)" }
+        Log "error: claude exited $LASTEXITCODE - $why"
         exit 1
     }
     if ($dream -and ($dream -join "`n").Trim().Length -gt 0) {
