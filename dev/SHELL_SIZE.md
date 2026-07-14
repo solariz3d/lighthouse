@@ -47,3 +47,25 @@ Hand-applied the rolling-window shape as a one-time fix, as a worked example for
 - Result: **107,783 chars**, ~42k headroom. Fences balanced, glyphs verified via UTF-8-aware I/O (`[IO.File]::ReadAllLines` with explicit UTF8 — never bare `Get-Content`, the em-dash/❯ mangling seam).
 
 The writer patch (eviction at write time, soft ceiling ~140k) is still the real fix and still open — this bought the runway to do it properly.
+
+## Update 2026-07-14, later — the writer patch shipped, plus the recurrence's real cause
+
+The ceiling tripped again the same night (302k), but not from growth — a **new capture bug**: the
+agents-manager list renders its selected row as `❯ ◯ <agent> … 2m 25s · ↓ 100.5k tokens`, which
+passed `is_prompt`; the ticking timer made every settle look like a brand-new prompt, so the watcher
+appended a whole-screen record per second during a background-agent stretch (100 fake records, 43
+copies of one status block). Fixed in `capture.rs`: `is_agent_row` — keyed on the status glyph plus
+the `· … tokens` suffix, never on `❯`/`●` alone — rejected in `is_prompt`, stripped as chrome, with
+regression tests including a two-ticks-same-turn extraction test.
+
+And the rolling window is now mechanical, in `warm_resume_brief` (the "next fix" above, built as
+specified with one correction learned the hard way): eviction rewrites **the .txt capture master
+itself**, not just the pasted brief — the morning's hand-eviction trimmed only CLAUDE.md, so the
+next restore re-pasted everything back from the untrimmed .txt. Soft ceiling 140k; oldest whole
+records move to `attic/capture-evicted-<date>.md` (append-only, fenced, dated) exactly once; a
+housekeeping line in the shell points at the attic file; a single giant record is never shredded
+mid-turn. Verify on any long pane: close/reopen, `wc -c CLAUDE.md` stays ≤ ~140k, ore in attic/,
+tail intact.
+
+The real direction (compress toward the signal, verified by waking on the distillate) remains open
+— this makes the ceiling self-maintaining, not sharper.

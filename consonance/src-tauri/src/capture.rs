@@ -7,8 +7,14 @@
 // against fixed claude-TUI screen fixtures; the emulator wiring lives in main.rs.
 
 // A real user prompt: after optional leading space, a "❯", then whitespace, then content.
-// (The empty input box "❯ " is NOT a prompt — it has no content after the marker.)
+// (The empty input box "❯ " is NOT a prompt — it has no content after the marker.
+// The agents-manager's selected row "❯ ◯ agent … 2m 3s · ↓ 74.3k tokens" is NOT a prompt
+// either — its ticking timer made every settle look like a brand-new prompt, appending a
+// whole-screen record each second: the 2026-07-14 md-limit recurrence, 43 copies deep.)
 pub fn is_prompt(s: &str) -> bool {
+    if is_agent_row(s) {
+        return false;
+    }
     let t = s.trim_start();
     let mut c = t.chars();
     if c.next() != Some('❯') {
@@ -17,6 +23,20 @@ pub fn is_prompt(s: &str) -> bool {
     let rest = c.as_str();
     let trimmed = rest.trim_start();
     rest.len() != trimmed.len() && !trimmed.is_empty()
+}
+
+// A row of the agents manager (↓ to manage) painted below the input box: "● main",
+// "◯ <agent>  <label>  2m 3s · ↓ 74.3k tokens", or the selected variant prefixed "❯ ".
+// Keyed on the status glyph PLUS the "· … tokens" suffix (or the bare "● main" header) —
+// never on "●"/"❯" alone, which open real response and prompt lines. The agent-finished
+// notice ("● Agent \"…\" finished · 2m 3s") stays content: no "tokens" suffix.
+pub fn is_agent_row(s: &str) -> bool {
+    let t = s.trim();
+    let t = t.strip_prefix('❯').map(str::trim_start).unwrap_or(t);
+    if t == "● main" {
+        return true;
+    }
+    (t.starts_with('◯') || t.starts_with('●')) && t.contains(" · ") && t.ends_with("tokens")
 }
 
 // The empty input box: a "❯" with only whitespace after it.
@@ -37,17 +57,18 @@ pub fn is_working(lines: &[String]) -> bool {
 }
 
 // Bottom input-box chrome to strip: blank lines, the ⏵⏵ bypass footer, separator rules, the empty
-// input box, and the ✻ status line. Mirrors term.js `isChrome`.
+// input box, the spinner/status line (any of claude's cycling star glyphs), and agents-manager
+// rows. Mirrors term.js `isChrome`.
 pub fn is_chrome(s: &str) -> bool {
     let t = s.trim();
     if t.is_empty() {
         return true;
     }
     let ts = s.trim_start();
-    if ts.starts_with('⏵') || ts.starts_with('✻') {
+    if ts.starts_with('⏵') || matches!(ts.chars().next(), Some('✻' | '✶' | '✽' | '✢' | '✳' | '✵' | '✴')) {
         return true;
     }
-    if is_empty_box(s) {
+    if is_empty_box(s) || is_agent_row(s) {
         return true;
     }
     // a separator rule: only whitespace and dash-like glyphs
@@ -313,6 +334,55 @@ mod tests {
     fn stitch_merges_overlapping_scroll_windows() {
         // window 1 shows lines 1-3, window 2 shows lines 2-4 → one stitched copy, no repeats
         assert_eq!(stitch("one\ntwo\nthree", "two\nthree\nfour"), "one\ntwo\nthree\nfour");
+    }
+
+    #[test]
+    fn agent_manager_rows_are_chrome_never_prompts() {
+        // the 2026-07-14 md-limit recurrence: the agents manager renders its selected row
+        // with a "❯", and its timer ticks — every settle looked like a fresh prompt
+        let selected = "❯ ◯ general-purpose  Streamline UI, readability audit    2m 25s · ↓ 100.5k tokens";
+        let unselected = "  ◯ general-purpose  Audit vertical space, propose layout    2m 3s · ↓ 110.8k tokens";
+        assert!(!is_prompt(selected), "selected agent row is not a prompt");
+        assert!(is_agent_row(selected));
+        assert!(is_chrome(selected));
+        assert!(is_agent_row(unselected));
+        assert!(is_chrome(unselected));
+        assert!(is_agent_row("  ● main"));
+        assert!(is_chrome("  ● main"));
+        // real content stays content
+        assert!(!is_agent_row("● The space auditor is back with the hard numbers"));
+        assert!(!is_chrome("● The space auditor is back with the hard numbers"));
+        assert!(!is_agent_row("● Agent \"Audit vertical space\" finished · 2m 3s"));
+        assert!(is_prompt("❯ a real question"));
+    }
+
+    #[test]
+    fn agents_screen_extracts_a_stable_turn_across_timer_ticks() {
+        // two settles of the same screen, one second apart: only the manager timers differ.
+        // extraction must yield the identical (prompt, turn) both times so dedupe holds.
+        let screen = |t1: &str, t2: &str| {
+            v(&[
+                "❯ streamline the ui",
+                "",
+                "● Three agents are auditing the layout now.",
+                "✻ Waiting for 2 background agents to finish",
+                "───────────────",
+                "❯ ",
+                "───────────────",
+                "  ⏵⏵ bypass permissions on (shift+tab to cycle) · ↓ to manage",
+                "",
+                "  ● main",
+                &format!("  ◯ general-purpose  Audit vertical space    {t1} · ↓ 110.8k tokens"),
+                &format!("❯ ◯ general-purpose  Streamline UI    {t2} · ↓ 100.5k tokens"),
+            ])
+        };
+        let a = screen("2m 3s", "1m 53s");
+        let b = screen("2m 4s", "1m 54s");
+        assert!(screen_ready(&a));
+        assert_eq!(latest_prompt(&a), "streamline the ui");
+        assert_eq!(latest_turn(&a), "● Three agents are auditing the layout now.");
+        assert_eq!(latest_prompt(&a), latest_prompt(&b));
+        assert_eq!(latest_turn(&a), latest_turn(&b));
     }
 
     #[test]

@@ -627,8 +627,25 @@ fn encode_cwd(cwd: &str) -> String {
 
 #[cfg(test)]
 mod transcript_record_tests {
-    use super::{last_record_start, read_last_record, rewrite_last_record};
+    use super::{last_record_start, read_last_record, rewrite_last_record, split_off_oldest_records};
     use std::fs;
+
+    #[test]
+    fn split_evicts_whole_records_at_or_past_the_excess() {
+        let t = "❯ one\n\nanswer one\n\n❯ two\n\nanswer two\n\n❯ three\n\nanswer three\n\n";
+        // excess lands mid-record-one → cut at record two's boundary
+        let (evicted, kept) = split_off_oldest_records(t, 5).unwrap();
+        assert_eq!(evicted, "❯ one\n\nanswer one\n\n");
+        assert!(kept.starts_with("❯ two\n"));
+        assert_eq!(format!("{evicted}{kept}"), t, "nothing lost at the seam");
+    }
+
+    #[test]
+    fn split_never_shreds_a_single_giant_record() {
+        let t = "❯ only\n\na very long answer with a ❯ mid-line that is not a boundary\n\n";
+        assert!(split_off_oldest_records(t, t.len() + 10).is_none());
+        assert!(split_off_oldest_records(t, 3).is_none(), "cut at 0 is not an eviction");
+    }
 
     fn tmp(name: &str, content: &str) -> std::path::PathBuf {
         let p = std::env::temp_dir().join(format!("consonance-test-{name}.txt"));
@@ -1094,6 +1111,31 @@ fn human_gap(secs: u64) -> String {
     }
 }
 
+// Rolling window on the shell (SHELL_SIZE.md): the harness caps a pane's CLAUDE.md at 150k chars,
+// and ordinary conversation growth is linear and unbounded — any long-lived pane walks into the
+// ceiling. When the assembled brief would exceed the soft ceiling, evict the OLDEST exchanges from
+// the clean transcript into the instance's attic/ (dated, append-only — maintenance law #3 made
+// mechanical) and keep the living tail. The room (intake) is never evicted; the raw .log keeps
+// full fidelity regardless. Eviction rewrites the .txt itself so each record moves to the attic
+// exactly once — evicting only from the pasted brief would re-paste (and re-evict) the same
+// exchanges on every restore, the treadmill this replaces.
+const SHELL_SOFT_CEILING: usize = 140_000;
+
+// Split the transcript at the first record boundary (a column-0 "❯") at or beyond `excess` bytes:
+// (evicted head, kept tail). None if no boundary past the excess point (single giant record —
+// better to run over the soft ceiling than to shred a record mid-turn).
+fn split_off_oldest_records(transcript: &str, excess: usize) -> Option<(String, String)> {
+    let cut = transcript
+        .match_indices('❯')
+        .filter(|(i, _)| *i == 0 || transcript.as_bytes()[i - 1] == b'\n')
+        .map(|(i, _)| i)
+        .find(|&i| i >= excess)?;
+    if cut == 0 {
+        return None;
+    }
+    Some((transcript[..cut].to_string(), transcript[cut..].to_string()))
+}
+
 // warm-resume: when claude can't --resume a kept pane (2.1.207 never flushed its jsonl), bake the
 // pane's OWN captured transcript into the sibling's CLAUDE.md so the fresh instance wakes genuinely
 // remembering the whole conversation and continues the thread. Managed dirs only. Returns whether
@@ -1128,6 +1170,38 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
             pulse_when(chrono::Local::now()),
             human_gap(g.as_secs())
         ));
+    }
+    // rolling window: if the brief would blow the shell ceiling, move the oldest exchanges to
+    // the attic and keep the living tail — in the .txt too, so they evict exactly once
+    let mut transcript = transcript;
+    let fence_overhead = "```\n\n```\n".len() + 256; // fences + housekeeping-note headroom
+    let budget = SHELL_SOFT_CEILING.saturating_sub(brief.len() + fence_overhead);
+    if transcript.len() > budget {
+        let excess = transcript.len() - budget;
+        if let Some((evicted, kept)) = split_off_oldest_records(&transcript, excess) {
+            let attic = PathBuf::from(cwd).join("attic");
+            let _ = fs::create_dir_all(&attic);
+            let stamp = chrono::Local::now().format("%Y-%m-%d");
+            let attic_name = format!("capture-evicted-{stamp}.md");
+            if let Ok(mut f) =
+                fs::OpenOptions::new().create(true).append(true).open(attic.join(&attic_name))
+            {
+                let _ = write!(
+                    f,
+                    "\n## evicted {} — oldest exchanges windowed out of the shell (ore, not a daily cue)\n\n```\n{}\n```\n",
+                    chrono::Local::now().format("%Y-%m-%d %H:%M"),
+                    evicted.trim_end()
+                );
+                // shrink the capture master only once the ore is safely in the attic
+                let _ = fs::write(capture_text_path(pane), &kept);
+                brief.push_str(&format!(
+                    "Housekeeping: the earliest exchanges of this thread were moved to \
+                     attic/{attic_name} to stay under the shell ceiling — preserved ore, \
+                     not lost. The room above and the living tail below are intact.\n\n"
+                ));
+                transcript = kept;
+            }
+        }
     }
     brief.push_str("```\n");
     brief.push_str(&transcript);
