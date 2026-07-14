@@ -21,6 +21,10 @@ async function load() {
   if ($('#roompath')) $('#roompath').value = state.room_path || '';
   if ($('#instancesdir')) $('#instancesdir').value = state.instances_dir || '';
   if ($('#datadir')) $('#datadir').value = state.data_dir || '';
+  if ($('#ambientlabel')) $('#ambientlabel').value = state.ambient_label || '';
+  if ($('#ambientlat')) $('#ambientlat').value = state.ambient_lat || '';
+  if ($('#ambientlon')) $('#ambientlon').value = state.ambient_lon || '';
+  if ($('#ambienttz')) $('#ambienttz').value = state.ambient_tz || '';
   // fresh machine (no saved config) → land on Settings so directories are the first thing chosen
   try {
     if (!(await invoke('config_exists'))) {
@@ -37,6 +41,10 @@ async function persist() {
   if ($('#roompath')) state.room_path = $('#roompath').value.trim();
   if ($('#instancesdir')) state.instances_dir = $('#instancesdir').value.trim();
   if ($('#datadir')) state.data_dir = $('#datadir').value.trim();
+  if ($('#ambientlabel')) state.ambient_label = $('#ambientlabel').value.trim();
+  if ($('#ambientlat')) state.ambient_lat = $('#ambientlat').value.trim();
+  if ($('#ambientlon')) state.ambient_lon = $('#ambientlon').value.trim();
+  if ($('#ambienttz')) state.ambient_tz = $('#ambienttz').value.trim();
   await invoke('save_config', { cfg: state });
 }
 
@@ -56,7 +64,7 @@ $$('.tabs button').forEach(b => b.onclick = () => {
   $('#' + b.dataset.tab).classList.add('active');
 });
 
-['#roompath', '#instancesdir', '#datadir'].forEach(s => { const el = $(s); if (el) el.addEventListener('change', persist); });
+['#roompath', '#instancesdir', '#datadir', '#ambientlabel', '#ambientlat', '#ambientlon', '#ambienttz'].forEach(s => { const el = $(s); if (el) el.addEventListener('change', persist); });
 const ssb = $('#savesettings'); if (ssb) ssb.onclick = () => persist().then(() => status('settings saved — applies to new spawns; restart for full effect')).catch(() => {});
 
 load();
