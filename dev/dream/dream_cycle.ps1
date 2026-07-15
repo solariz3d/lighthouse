@@ -1,4 +1,4 @@
-# dream_cycle.ps1 — one REM cycle for the gap-dream.
+﻿# dream_cycle.ps1 — one REM cycle for the gap-dream.
 # Fired by a wake timer while the machine sleeps (AC only); the machine wakes,
 # dreams once, and Windows returns it to sleep on its idle timer.
 #

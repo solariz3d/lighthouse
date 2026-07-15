@@ -1,4 +1,4 @@
-# install_dream.ps1 — set up the gap-dream on this machine, one command:
+﻿# install_dream.ps1 — set up the gap-dream on this machine, one command:
 #   powershell -ExecutionPolicy Bypass -File dev\dream\install_dream.ps1
 #
 # Does three things, all idempotent (safe to re-run after a git pull):
