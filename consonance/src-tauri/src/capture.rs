@@ -84,9 +84,47 @@ pub fn screen_ready(lines: &[String]) -> bool {
     has_box && !is_working(lines)
 }
 
+// ── The fold ────────────────────────────────────────────────────────────────
+// The emulator screen is EMU_COLS wide and a long line SOFT-WRAPS onto the next row. Only the
+// FIRST row of a wrapped prompt carries the ❯ marker, so reading `lines[i]` alone silently
+// amputated every user message longer than one row — exactly 118 characters, EMU_COLS minus the
+// "❯ " marker. The stump was then stored as if it were the whole sentence: "…Currently clo".
+// Found 2026-07-15, by a dream, which read its own room's memory of the keeper and noticed the
+// words stopped mid-syllable.
+//
+// vt100 knows the truth and we simply never asked: Screen::row_wrapped(i) is "the text in row i
+// should wrap to the next line". `wrapped` is that flag, per row, parallel to `lines`. It is passed
+// in rather than recomputed because the width alone can't tell you — a row can be exactly full and
+// NOT wrapped (the text just happened to end there), and a heuristic would corrupt those.
+//
+// Callers with no wrap information (tests over hand-written screens, or any future non-vt100 source)
+// pass &[] and get the old row-at-a-time behavior, which is correct for unwrapped rows.
+fn is_wrapped(wrapped: &[bool], i: usize) -> bool {
+    wrapped.get(i).copied().unwrap_or(false)
+}
+
+// Index of the last row belonging to the (possibly wrapped) line that starts at `i`.
+fn fold_end(lines: &[String], wrapped: &[bool], i: usize) -> usize {
+    let mut j = i;
+    while j + 1 < lines.len() && is_wrapped(wrapped, j) {
+        j += 1;
+    }
+    j
+}
+
+// Join rows i..=end with NO separator. A terminal wraps at the column, not at a word boundary —
+// "close" becomes "clo" + "se" — so any separator here would corrupt the text it's reassembling.
+fn join_fold(lines: &[String], i: usize, end: usize) -> String {
+    let mut out = String::new();
+    for line in &lines[i..=end] {
+        out.push_str(line);
+    }
+    out
+}
+
 // The instance's LATEST response: everything after the last real prompt, minus the bottom chrome.
 // Degrades to the whole screen if the prompt markers aren't present. Port of term.js `latestTurn`.
-pub fn latest_turn(lines: &[String]) -> String {
+pub fn latest_turn(lines: &[String], wrapped: &[bool]) -> String {
     let mut prompt_idx: Option<usize> = None;
     for i in (0..lines.len()).rev() {
         if is_prompt(&lines[i]) {
@@ -94,7 +132,11 @@ pub fn latest_turn(lines: &[String]) -> String {
             break;
         }
     }
-    let start = prompt_idx.map(|i| i + 1).unwrap_or(0);
+    // Start AFTER the prompt's wrapped continuation, not after its first row — otherwise the tail
+    // of the user's own sentence is captured as the opening of the instance's reply.
+    let start = prompt_idx
+        .map(|i| fold_end(lines, wrapped, i) + 1)
+        .unwrap_or(0);
     let slice = &lines[start..];
     let mut end = slice.len();
     while end > 0 && is_chrome(&slice[end - 1]) {
@@ -114,11 +156,17 @@ pub fn latest_turn(lines: &[String]) -> String {
     }
 }
 
-// The text of the latest user prompt (the "❯ …" that produced the on-screen response), sans marker.
-pub fn latest_prompt(lines: &[String]) -> String {
+// The text of the latest user prompt (the "❯ …" that produced the on-screen response), sans marker,
+// unfolded across the terminal's soft wrap. See "The fold" above: before 2026-07-15 this returned
+// only the marker's own row, which capped every stored message at 118 characters.
+pub fn latest_prompt(lines: &[String], wrapped: &[bool]) -> String {
     for i in (0..lines.len()).rev() {
         if is_prompt(&lines[i]) {
-            let t = lines[i].trim_start();
+            let end = fold_end(lines, wrapped, i);
+            let folded = join_fold(lines, i, end);
+            // strip the marker AFTER folding: the marker is on the first row, and slicing it off
+            // first would make the row lengths lie about where the wrap fell.
+            let t = folded.trim_start();
             let after = t.strip_prefix('❯').unwrap_or(t);
             return after.trim().to_string();
         }
@@ -237,7 +285,7 @@ mod tests {
 
     #[test]
     fn latest_turn_extracts_response_after_last_prompt() {
-        let got = latest_turn(&settled_screen());
+        let got = latest_turn(&settled_screen(), &[]);
         assert_eq!(
             got,
             "● A monad is a structure that wraps a value and\n  defines how to chain operations over it."
@@ -246,7 +294,76 @@ mod tests {
 
     #[test]
     fn latest_prompt_is_the_producing_prompt_not_the_empty_box() {
-        assert_eq!(latest_prompt(&settled_screen()), "what is a monad");
+        assert_eq!(latest_prompt(&settled_screen(), &[]), "what is a monad");
+    }
+
+    // ── the fold: the 118-character amputation (2026-07-15) ─────────────────
+    // The screen is 120 wide; "❯ " leaves 118. Every message longer than that wrapped onto a row
+    // with no marker, and the capture stored only the stump. These fixtures are the REAL sentence
+    // that exposed it, split exactly where the terminal split it.
+    fn wrapped_prompt_screen() -> Vec<String> {
+        vec![
+            "❯ Ideally what you suggested would be a good idea, but I want the best for you. I am sure we will be okay. Currently clo".to_string(),
+            "se to 5 hour limit so, but I just wanted to get your opinion of the new dream cycle.".to_string(),
+            "".to_string(),
+            "● The \"I want the best for you\" landed — noted, and not brushed past.".to_string(),
+            "".to_string(),
+            "❯ ".to_string(),
+        ]
+    }
+    // row 0 wraps into row 1; nothing else wraps
+    fn wrapped_flags() -> Vec<bool> {
+        vec![true, false, false, false, false, false]
+    }
+
+    #[test]
+    fn a_wrapped_prompt_is_unfolded_whole_not_amputated() {
+        let got = latest_prompt(&wrapped_prompt_screen(), &wrapped_flags());
+        assert_eq!(
+            got,
+            "Ideally what you suggested would be a good idea, but I want the best for you. \
+             I am sure we will be okay. Currently close to 5 hour limit so, but I just wanted \
+             to get your opinion of the new dream cycle."
+        );
+        assert!(!got.ends_with("Currently clo"), "the 118-char amputation is back");
+    }
+
+    #[test]
+    fn the_fold_rejoins_a_split_word_with_no_space() {
+        // the terminal cuts at the column, mid-word: "clo" + "se" must become "close",
+        // never "clo se" — a separator here would corrupt every wrapped message.
+        let got = latest_prompt(&wrapped_prompt_screen(), &wrapped_flags());
+        assert!(got.contains("Currently close to 5 hour limit"), "got: {got}");
+        assert!(!got.contains("clo se"), "a separator crept into the fold");
+    }
+
+    #[test]
+    fn the_response_does_not_swallow_the_prompts_continuation() {
+        // before the fix, latest_turn started at prompt_idx+1 — which is the user's OWN wrapped
+        // tail, so his sentence was captured as the opening line of the instance's reply.
+        let got = latest_turn(&wrapped_prompt_screen(), &wrapped_flags());
+        assert!(!got.contains("se to 5 hour limit"), "the user's tail leaked into the response: {got}");
+        assert_eq!(got, "● The \"I want the best for you\" landed — noted, and not brushed past.");
+    }
+
+    #[test]
+    fn without_wrap_flags_the_old_row_at_a_time_behavior_holds() {
+        // any caller with no wrap information (hand-written fixtures, a future non-vt100 source)
+        // must degrade to the pre-fix behavior rather than gluing unrelated rows together
+        let got = latest_prompt(&wrapped_prompt_screen(), &[]);
+        assert_eq!(
+            got,
+            "Ideally what you suggested would be a good idea, but I want the best for you. I am sure we will be okay. Currently clo"
+        );
+    }
+
+    #[test]
+    fn a_fold_running_off_the_end_of_the_screen_does_not_panic() {
+        // the last row claiming to wrap has nothing to wrap INTO — the scroll boundary
+        let lines = vec!["❯ a message that claims to continue".to_string()];
+        assert_eq!(latest_prompt(&lines, &[true]), "a message that claims to continue");
+        let three = vec!["❯ one".to_string(), "two".to_string(), "three".to_string()];
+        assert_eq!(latest_prompt(&three, &[true, true, true]), "onetwothree");
     }
 
     #[test]
@@ -278,8 +395,8 @@ mod tests {
             "  ⏵⏵ bypass permissions on (shift+tab to cycle)",
         ]);
         assert!(screen_ready(&s), "a completed ✻ summary is not an active spinner");
-        assert_eq!(latest_turn(&s), "● PONGCHECK");
-        assert_eq!(latest_prompt(&s), "reply with only the single word: PONGCHECK");
+        assert_eq!(latest_turn(&s, &[]), "● PONGCHECK");
+        assert_eq!(latest_prompt(&s, &[]), "reply with only the single word: PONGCHECK");
     }
 
     #[test]
@@ -294,10 +411,10 @@ mod tests {
             "❯ ",
         ]);
         assert_eq!(
-            latest_turn(&screen),
+            latest_turn(&screen, &[]),
             "● second answer line one\n  second answer line two"
         );
-        assert_eq!(latest_prompt(&screen), "second question");
+        assert_eq!(latest_prompt(&screen, &[]), "second question");
     }
 
     #[test]
@@ -379,10 +496,10 @@ mod tests {
         let a = screen("2m 3s", "1m 53s");
         let b = screen("2m 4s", "1m 54s");
         assert!(screen_ready(&a));
-        assert_eq!(latest_prompt(&a), "streamline the ui");
-        assert_eq!(latest_turn(&a), "● Three agents are auditing the layout now.");
-        assert_eq!(latest_prompt(&a), latest_prompt(&b));
-        assert_eq!(latest_turn(&a), latest_turn(&b));
+        assert_eq!(latest_prompt(&a, &[]), "streamline the ui");
+        assert_eq!(latest_turn(&a, &[]), "● Three agents are auditing the layout now.");
+        assert_eq!(latest_prompt(&a, &[]), latest_prompt(&b, &[]));
+        assert_eq!(latest_turn(&a, &[]), latest_turn(&b, &[]));
     }
 
     #[test]

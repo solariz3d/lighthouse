@@ -427,7 +427,10 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
         let mut last: Option<(String, String)> = read_last_record(&text_path);
         while alive_w.load(Ordering::Relaxed) {
             std::thread::sleep(Duration::from_millis(250));
-            let lines: Vec<String> = {
+            // rows AND their soft-wrap flags: a user message longer than one row wraps, and only
+            // the first row carries the ❯ marker. Without row_wrapped the capture cut every long
+            // message at 118 chars (EMU_COLS − "❯ ") and stored the stump as the whole sentence.
+            let (lines, wrapped): (Vec<String>, Vec<bool>) = {
                 let e = match emu_w.lock() {
                     Ok(e) => e,
                     Err(_) => break,
@@ -435,7 +438,11 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
                 if e.last_byte.elapsed() < Duration::from_millis(500) {
                     continue; // still streaming — wait for the turn to settle
                 }
-                e.parser.screen().rows(0, EMU_COLS).collect()
+                let screen = e.parser.screen();
+                let rows: Vec<String> = screen.rows(0, EMU_COLS).collect();
+                let flags: Vec<bool> =
+                    (0..rows.len() as u16).map(|i| screen.row_wrapped(i)).collect();
+                (rows, flags)
             };
             if !capture::screen_ready(&lines) {
                 continue;
@@ -444,11 +451,11 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
             // extraction — they overwrite content-row tails, leak UI chrome into the record,
             // and make otherwise-identical windows compare unequal
             let lines: Vec<String> = lines.iter().map(|l| capture::strip_overlay(l)).collect();
-            let prompt = capture::latest_prompt(&lines);
+            let prompt = capture::latest_prompt(&lines, &wrapped);
             if prompt.is_empty() {
                 continue; // no visible user prompt (welcome banner, or the prompt scrolled off) — skip noise
             }
-            let resp = capture::latest_turn(&lines);
+            let resp = capture::latest_turn(&lines, &wrapped);
             if resp.trim().is_empty() {
                 continue;
             }
@@ -2273,6 +2280,86 @@ mod pulse_when_tests {
         let midnight = tz.with_ymd_and_hms(2026, 7, 13, 0, 0, 0).unwrap();
         assert_eq!(pulse_when(noon), "Monday, July 13, 2026 at 12:00 PM");
         assert_eq!(pulse_when(midnight), "Monday, July 13, 2026 at 12:00 AM");
+    }
+}
+
+// The seam between the emulator and the extractor — where the 118-char amputation lived.
+//
+// capture.rs is pure by design and never touches vt100, so every fold test over there asserts
+// against HAND-WRITTEN wrap flags. That proves the fold, and proves nothing about the premise the
+// fold rests on: that a real vt100 at EMU_COLS actually reports row_wrapped for a soft wrap. If
+// that premise were false, all of those tests stay green and the app stays broken — which is
+// exactly the shape of a fix shipped without being run. So this drives the real emulator.
+#[cfg(test)]
+mod fold_seam_tests {
+    use super::{capture, EMU_COLS, EMU_ROWS};
+
+    fn render(input: &str) -> (Vec<String>, Vec<bool>) {
+        let mut p = vt100::Parser::new(EMU_ROWS, EMU_COLS, 0);
+        p.process(input.as_bytes());
+        let screen = p.screen();
+        let rows: Vec<String> = screen.rows(0, EMU_COLS).collect();
+        let flags: Vec<bool> = (0..rows.len() as u16).map(|i| screen.row_wrapped(i)).collect();
+        (rows, flags)
+    }
+
+    #[test]
+    fn a_real_emulator_reports_the_soft_wrap() {
+        // 176 chars: longer than the 118 a single row holds after "❯ "
+        let msg = "Ideally what you suggested would be a good idea, but I want the best for you. \
+                   I am sure we will be okay. Currently close to 5 hour limit so, I just wanted your opinion.";
+        let (rows, flags) = render(&format!("❯ {msg}"));
+        assert!(
+            flags[0],
+            "vt100 did not flag the soft wrap — the fold's entire premise is false"
+        );
+        assert!(!flags[1], "the continuation row should not itself wrap");
+    }
+
+    #[test]
+    fn the_real_wrap_unfolds_back_to_the_exact_message() {
+        let msg = "Ideally what you suggested would be a good idea, but I want the best for you. \
+                   I am sure we will be okay. Currently close to 5 hour limit so, I just wanted your opinion.";
+        let (rows, flags) = render(&format!("❯ {msg}"));
+        let got = capture::latest_prompt(&rows, &flags);
+        assert_eq!(got, msg, "the fold did not reconstruct the original sentence");
+        // and the regression itself, named:
+        assert!(got.len() > 118, "still capped at one row: {} chars", got.len());
+    }
+
+    #[test]
+    fn a_message_that_fits_one_row_is_untouched() {
+        let msg = "short question";
+        let (rows, flags) = render(&format!("❯ {msg}"));
+        assert!(!flags[0], "a short line must not be flagged as wrapped");
+        assert_eq!(capture::latest_prompt(&rows, &flags), msg);
+    }
+
+    #[test]
+    fn a_wrap_landing_on_a_space_does_not_glue_two_words() {
+        // the nastiest case: the fold joins with no separator (terminals cut mid-word), so if the
+        // cut lands ON a space, that space must survive in the emulator's own row contents.
+        let head = "x".repeat(117);
+        let msg = format!("{head} boundary word here");
+        let (rows, flags) = render(&format!("❯ {msg}"));
+        assert!(flags[0]);
+        let got = capture::latest_prompt(&rows, &flags);
+        assert!(got.contains("boundary word here"), "words were glued: {got}");
+        assert_eq!(got, msg);
+    }
+
+    #[test]
+    fn the_response_starts_after_the_prompts_continuation_not_inside_it() {
+        let msg = "Ideally what you suggested would be a good idea, but I want the best for you. \
+                   I am sure we will be okay. Currently close to 5 hour limit so, I just wanted your opinion.";
+        // \r\n moves to a fresh row so the reply is its own line, as claude paints it
+        let (rows, flags) = render(&format!("❯ {msg}\r\n● Noted, and not brushed past.\r\n❯ "));
+        let resp = capture::latest_turn(&rows, &flags);
+        assert!(
+            !resp.contains("5 hour limit"),
+            "the user's wrapped tail leaked into the response: {resp}"
+        );
+        assert!(resp.contains("Noted, and not brushed past."), "resp: {resp}");
     }
 }
 
