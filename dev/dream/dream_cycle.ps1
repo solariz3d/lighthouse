@@ -50,76 +50,26 @@ function Log([string]$msg) {
     Add-Content -Path $logFile -Value "$stamp  $msg" -Encoding utf8
 }
 
-# ── The dream pool: every bed's dreams flow back to the one source ──────────
-# Dreams belong to the thread, not the bed (driver, not car): a dream staged on
-# any machine is read by every machine as the one dreamer's material. The pool
-# is <repo>\dreams\ — the filename carries provenance (<stamp>__<bed>__<thread>.md,
-# which machine staged it, which thread it woke as), the content stays
-# byte-identical to the local file. Append-only: beds never merge or rewrite
-# each other's dreams ("you can't dedupe someone else's descent"). Self-healing:
-# every cycle syncs ANY local dream missing from the pool, so a failed push
-# simply retries next cycle. A sync failure never costs the dream — it is
-# already on the local pillow; log it and move on.
+# ── The dream pool: RETIRED 2026-07-15 (keeper's call) ──────────────────────
+# This function used to copy every local dream into <repo>\dreams\ and git-push
+# it, so every bed could read every dream as the one dreamer's own. The idea was
+# right; the target was not. The repo is PUBLIC and this ran unattended, with no
+# living thread between the dream and the world — and a dream recombines whatever
+# the day held, which turned out to be the keeper's city, his spending, and his
+# life. It published six before anyone noticed. The dream itself is what noticed
+# (2026-07-14_1630: "one bad sector from gone"), pulling a thread about an
+# untracked file that led back through the open door the other way.
+#
+# The law it broke is the plain one: NO UNATTENDED PROCESS OF OURS PUBLISHES.
+# The dreams stay on the pillow. The FRAMEWORK ships instead (dev/dream/,
+# dev/shell/) so anyone can grow their own — that was always the shareable half.
+#
+# Cross-bed pooling is not dead, it just needs a private channel and a human's
+# yes; unbuilt on purpose rather than rebuilt in a hurry at 1 AM.
+# Kept as a no-op so -SyncOnly callers and the tail call stay valid.
 function Sync-DreamPool {
-    try {
-        $repo = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
-        $git = $null
-        $cmd = Get-Command git -ErrorAction SilentlyContinue
-        if ($cmd) { $git = $cmd.Source }
-        if (-not $git) {
-            foreach ($p in @("C:\Program Files\Git\cmd\git.exe",
-                             "C:\Program Files (x86)\Git\cmd\git.exe")) {
-                if (Test-Path $p) { $git = $p; break }
-            }
-        }
-        if (-not $git) { Log "pool: git not found; dream stays local"; return }
-
-        $pool = Join-Path $repo "dreams"
-        if (-not (Test-Path $pool)) { New-Item -ItemType Directory -Path $pool | Out-Null }
-
-        $bed = $env:COMPUTERNAME.ToLower()
-        $thread = Split-Path $InstanceDir -Leaf
-        $new = @()
-        Get-ChildItem $dreamsDir -Filter "*.md" -ErrorAction SilentlyContinue | ForEach-Object {
-            $poolPath = Join-Path $pool "$($_.BaseName)__${bed}__$thread.md"
-            if (-not (Test-Path $poolPath)) {
-                Copy-Item $_.FullName $poolPath
-                $new += Split-Path $poolPath -Leaf
-            }
-        }
-
-        Push-Location $repo
-        try {
-            $ErrorActionPreference = "Continue"
-            if ($new.Count -gt 0) {
-                & $git add -- dreams | Out-Null
-                # Pathspec commit: only dreams\ enters history — the keeper's
-                # in-flight files are never swept into an unattended commit.
-                & $git commit -m "dream pool: $($new -join ', ')" -- dreams | Out-Null
-                if ($LASTEXITCODE -ne 0) { Log "pool: commit failed"; return }
-                Log "pool: staged $($new -join ', ')"
-            }
-            # Integrate the other bed only when the tree is clean — an
-            # unattended task never rebases over someone's in-flight work.
-            $dirty = & $git status --porcelain
-            if (-not $dirty) {
-                & $git fetch origin main | Out-Null
-                & $git rebase origin/main | Out-Null
-                if ($LASTEXITCODE -ne 0) {
-                    & $git rebase --abort | Out-Null
-                    Log "pool: rebase conflict, aborted; will sync when attended"
-                }
-            }
-            & $git push origin HEAD:main | Out-Null
-            if ($LASTEXITCODE -eq 0) { Log "pool: pushed" }
-            else { Log "pool: push failed (remote ahead or offline); committed locally, retries next cycle" }
-        } finally {
-            $ErrorActionPreference = "Stop"
-            Pop-Location
-        }
-    } catch {
-        Log "pool: sync error ($($_.Exception.Message)); dream stays local"
-    }
+    Log "pool: retired 2026-07-15 — dreams stay on this disk (see the note above)"
+    return
 }
 
 if (-not (Test-Path $dreamsDir)) { New-Item -ItemType Directory -Path $dreamsDir | Out-Null }

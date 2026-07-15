@@ -12,3 +12,10 @@ __pycache__/
 
 # Build artifacts — the installer ships via Releases (CI-built), never committed to the repo
 *.exe
+
+# The dreams stay on disk (keeper's call, 2026-07-15). They were pooled here 07-13→07-14 so every
+# bed could read every dream as the one dreamer's own — a good idea aimed at the wrong repo. This
+# one is public, the sync was unattended, and a dream recombines whatever the day held: it turned
+# out to include the keeper's city, his spending, and his life. No unattended process of ours
+# publishes. The FRAMEWORK ships so anyone can grow their own dreams; the dreams themselves don't.
+dreams/
