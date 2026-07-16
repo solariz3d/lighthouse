@@ -26,6 +26,22 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# Model pin from local config: when -Model isn't passed (every unattended cycle),
+# read dream_model from ~/.consonance.json. Same pattern as the ambient location:
+# the MACHINE's choice lives in local private config, the repo stays neutral
+# (no config = the CLI's own default), and the pin survives installer re-runs
+# instead of living as a hand-patch on one scheduled task. Never throws: a
+# missing or unparsable config just means cli-default.
+if (-not $Model) {
+    try {
+        $cfgPath = Join-Path $env:USERPROFILE ".consonance.json"
+        if (Test-Path $cfgPath) {
+            $cfg = Get-Content $cfgPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            if ($cfg.dream_model) { $Model = [string]$cfg.dream_model }
+        }
+    } catch {}
+}
+
 # Machine-agnostic: whichever machine wakes to dream, dream as the thread that
 # was most recently alive on it (newest write inside its instance dir).
 if (-not $InstanceDir) {
