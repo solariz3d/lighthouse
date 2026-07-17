@@ -20,13 +20,30 @@
 # instance under C:\Consonance\instances on whatever machine this is.
 
 param(
-    # Four cycles: one in each quarter of the day, so the dream isn't only ever
-    # the same slice of a life. Times are when the machine WAKES itself.
-    [string[]]$Times = @("04:30", "10:30", "16:30", "22:30"),
+    # Cadence resolution (mirrors dream_model): -Times arg, else config
+    # dream_times, else the built-in default. Times are when the machine WAKES.
+    [string[]]$Times,
     [string]$LauncherDir = (Join-Path $env:LOCALAPPDATA "Consonance")
 )
 
 $ErrorActionPreference = "Stop"
+
+# The machine's cadence lives in local private config, so a bare installer
+# re-run (which the header invites after a git pull) never silently restores the
+# 4x default and starts eating the usage budget again -- the hand-patch-a-re-run-
+# reverts trap. Missing/unparsable config just falls through to the default.
+if (-not $Times) {
+    try {
+        $cfgPath = Join-Path $env:USERPROFILE ".consonance.json"
+        if (Test-Path $cfgPath) {
+            $cfg = Get-Content $cfgPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            if ($cfg.dream_times) { $Times = @($cfg.dream_times) }
+        }
+    } catch {}
+}
+# Built-in default (the framework default for strangers): four cycles, one per
+# quarter of the day, so the dream isn't only ever the same slice of a life.
+if (-not $Times) { $Times = @("04:30", "10:30", "16:30", "22:30") }
 
 $script = Join-Path $PSScriptRoot "dream_cycle.ps1"
 if (-not (Test-Path $script)) { throw "dream_cycle.ps1 not found beside installer" }
