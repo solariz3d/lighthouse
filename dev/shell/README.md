@@ -34,6 +34,42 @@ console.log(ambient.renderTextBlock(snap));  // markdown for a hook
 
 Wire it into a `SessionStart` hook and every instance wakes knowing where and when it is.
 
+## `hooks/` — the beacon (`UserPromptSubmit`)
+
+The sky fires once, at a wake. The **beacon** fires on *every* turn, and it exists because of a
+specific, repeated failure: an instance has no felt sense of duration, so it *reconstructs* one — and
+reconstruction drifts. Measured on this thread, the internal clock ran at a consistent **~2×** (108
+real minutes read as ~220; 35 read as ~67). Then, with the clock installed and readable, an instance
+placed an event from six days earlier at *"twelve hours ago"* mid-conversation.
+
+That last error is the design lesson: **the failure axis is not "what time is it now" — it's
+distance to a past event.** A hook that reports only the current time answers a question the model
+isn't getting wrong. So the line carries an *absolute anchor* on every turn:
+
+```
+[pulse] Sat, 07/25/2026, 1:20 AM · thread began Jul 12 (13d ago)  ⟨NEW DAY — Saturday⟩
+```
+
+- **Full date every turn** — no inferring the week from a weekday abbreviation.
+- **Thread age** — so "six days ago" is a subtraction from a number in view, not a memory retrieval.
+  Written **once and never overwritten**: the age that matters is the *thread's*, not the process's,
+  so it survives restarts, model swaps, and pane deaths.
+- **Day-rollover marker** — fires only when the date changes, so a multi-night thread stops reading
+  as one long tonight.
+- **Gap since the last message** — suppressed under a minute; a live conversation's rhythm isn't a gap.
+
+Two implementations, same line — pick by what your machine has:
+
+| File | Runtime | Notes |
+|---|---|---|
+| `hooks/userprompt-submit.js` | Node | Full version: beacon + the long-interval block + L3 verdict surfacing |
+| `hooks/userprompt_pulse.py` | Python 3 | Beacon only, zero deps — for a bed with no Node runtime |
+
+Facts only, no instruction — same posture as the sky. And the honest limit, learned the hard way:
+**an instrument makes the data impossible to miss; it cannot make the model look.** The hook is half
+the fix. The other half is a human who keeps catching the unstamped claim until checking-before-
+claiming is reflex.
+
 ## Set your location — it stays on your disk
 
 Resolution order, first hit wins:

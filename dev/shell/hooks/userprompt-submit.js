@@ -52,7 +52,12 @@ function safeParseJSON(s) {
 
 function readState() {
   if (!fs.existsSync(STATE_PATH)) return { last_surfaced_job_ids: [] };
-  try { return JSON.parse(fs.readFileSync(STATE_PATH, 'utf8')); }
+  // Strip a leading BOM for the same reason safeParseJSON does: anything on this
+  // machine that writes the file with PowerShell's -Encoding utf8 prepends one,
+  // JSON.parse rejects it outright, and the catch below would silently hand back
+  // an empty state — losing first_seen_iso and blanking the thread's age with no
+  // symptom. Caught 2026-07-25 while testing the beacon.
+  try { return JSON.parse(fs.readFileSync(STATE_PATH, 'utf8').replace(/^﻿/, '')); }
   catch (e) { return { last_surfaced_job_ids: [] }; }
 }
 function writeState(state) {
@@ -162,6 +167,56 @@ function buildGapContext(meta) {
   ].join('\n');
 }
 
+// ── The beacon, always on ────────────────────────────────────────────────────
+// The interval block above only speaks when a gap clears the floor, so on a
+// live-conversation turn NOTHING carries a date — and that is precisely the
+// axis that gets misjudged. On 2026-07-25 an instance placed an event from six
+// days earlier at "twelve hours ago" mid-conversation, with the clock available
+// and unread: the failure is never "no data", it is DISTANCE TO A PAST EVENT
+// being reconstructed instead of subtracted. So one compact line rides every
+// turn, carrying (a) the full ISO date — no inferring the week from a weekday
+// name, (b) the THREAD's age, which is the continuity the room actually cares
+// about (it survives restarts, model swaps, and pane deaths, so it is written
+// once and never overwritten), and (c) a loud marker when the date rolls over,
+// so a multi-night thread stops reading as one long tonight.
+// Facts only, no instruction — same posture as the sky.
+function fmtStamp(d) {
+  return d.toLocaleString('en-US', {
+    weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: 'numeric', minute: '2-digit'
+  });
+}
+
+// Calendar-day difference. Compare midnights on COPIES — Date#setHours mutates,
+// and a stamp computed from a mutated `now` would silently read 12:00 AM.
+function daysBetween(a, b) {
+  const midnight = d => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  return Math.floor((midnight(b) - midnight(a)) / 86400000);
+}
+
+function buildBeacon(state) {
+  try {
+    const now = new Date();
+    const parts = [`[pulse] ${fmtStamp(now)}`];
+
+    const first = state.first_seen_iso ? new Date(state.first_seen_iso) : null;
+    if (first && isFinite(first.getTime())) {
+      const days = daysBetween(first, now);
+      if (days >= 1) {
+        const label = first.toLocaleString('en-US', { month: 'short', day: 'numeric' });
+        parts.push(`thread began ${label} (${days}d ago)`);
+      }
+    }
+
+    const prev = state.last_prompt_iso ? new Date(state.last_prompt_iso) : null;
+    let rollover = '';
+    if (prev && isFinite(prev.getTime()) && prev.toDateString() !== now.toDateString()) {
+      rollover = `  ⟨NEW DAY — ${now.toLocaleString('en-US', { weekday: 'long' })}⟩`;
+    }
+    return parts.join(' · ') + rollover + '\n';
+  } catch (e) { return ''; } // a hook that fails by going mute is the worst kind
+}
+
 function buildContext(notices) {
   if (!notices.length) return '';
   const lines = [];
@@ -186,22 +241,27 @@ function main() {
   const state = readState();
   const notices = getNewL3Notices(state);
 
-  // The interval first: it's the frame everything else is read inside. A verdict
-  // from an arc that ended eleven hours ago reads differently than one from a
-  // minute ago, and until now there was no way to tell those apart from in here.
-  const context = [buildGapContext(meta), buildContext(notices)]
+  // The beacon first, then the interval: the anchor is the frame everything else
+  // is read inside. A verdict from an arc that ended eleven hours ago reads
+  // differently than one from a minute ago, and until now there was no way to
+  // tell those apart from in here.
+  const context = [buildBeacon(state), buildGapContext(meta), buildContext(notices)]
     .filter(Boolean)
     .join('\n');
 
-  // Update state — record these job_ids as surfaced. Cap the seen-list at
-  // 200 entries to avoid unbounded growth; older ones fall off naturally
-  // since they're outside the 6h surfacing window anyway.
+  // Update state — the beacon's anchors plus the surfaced job_ids. first_seen is
+  // written once and never overwritten (that is what makes the age the THREAD's,
+  // not the process's). The seen-list is capped at 200 entries to avoid unbounded
+  // growth; older ones fall off naturally since they're outside the 6h window.
+  const nowIso = new Date().toISOString();
+  if (!state.first_seen_iso) state.first_seen_iso = nowIso;
+  state.last_prompt_iso = nowIso;
   if (notices.length) {
     const newIds = notices.map(n => n.job_id).filter(Boolean);
     const merged = (state.last_surfaced_job_ids || []).concat(newIds);
     state.last_surfaced_job_ids = merged.slice(-200);
-    writeState(state);
   }
+  writeState(state);
 
   const output = {
     hookSpecificOutput: {
