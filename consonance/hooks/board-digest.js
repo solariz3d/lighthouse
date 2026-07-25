@@ -57,14 +57,31 @@ const FILES_SHOWN = 3;
 const FILES_ACTIVE_MS = 30 * 60 * 1000;
 const FILES_MAX_PANES = 4; // the standing roster; a bound so cost cannot run away
 
-// ALPHA is deliberately unused: it reads as "the lead" and would compete with
-// MAIN, the Orchestrator's own callsign. Siblings start at BRAVO.
+// A→ALPHA, B→BRAVO, … The callsign is not a separate identity: it is how the
+// pane's LETTER is said out loud.
+//
+// ALPHA was originally skipped, on the reasoning that it reads as "the lead" and
+// competes with MAIN. It doesn't — MAIN is called MAIN and never draws from the
+// letter pool, so ALPHA collides with nothing. What skipping it did cause was a
+// permanent off-by-one: the UI hands the first sibling the letter A (term.js), a
+// pull targets that letter (main.rs: "pulls target a letter, never a uuid"), and
+// the digest would have called the same pane BRAVO. Being told about BRAVO and
+// having to type A is worse than the collision that was being avoided.
 const NATO = [
-  'BRAVO', 'CHARLIE', 'DELTA', 'ECHO', 'FOXTROT', 'GOLF', 'HOTEL', 'INDIA',
-  'JULIETT', 'KILO', 'LIMA', 'MIKE', 'NOVEMBER', 'OSCAR', 'PAPA', 'QUEBEC',
-  'ROMEO', 'SIERRA', 'TANGO', 'UNIFORM', 'VICTOR', 'WHISKEY', 'XRAY', 'YANKEE',
-  'ZULU',
+  'ALPHA', 'BRAVO', 'CHARLIE', 'DELTA', 'ECHO', 'FOXTROT', 'GOLF', 'HOTEL',
+  'INDIA', 'JULIETT', 'KILO', 'LIMA', 'MIKE', 'NOVEMBER', 'OSCAR', 'PAPA',
+  'QUEBEC', 'ROMEO', 'SIERRA', 'TANGO', 'UNIFORM', 'VICTOR', 'WHISKEY', 'XRAY',
+  'YANKEE', 'ZULU',
 ];
+
+/** "A" → ALPHA, "C" → CHARLIE, "A2" → ALPHA-2. Anything unrecognised is left alone. */
+function callsign(letter) {
+  const m = /^([A-Z])(\d*)$/.exec(String(letter || '').toUpperCase());
+  if (!m) return null;
+  const word = NATO[m[1].charCodeAt(0) - 65];
+  if (!word) return null;
+  return m[2] ? `${word}-${m[2]}` : word;
+}
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -336,10 +353,15 @@ function main(input) {
 
   if (panes.size === 0) emit(null);
 
-  // Assign callsigns permanently, in order of first sighting. Never recycled:
-  // a name that came free would make BRAVO-at-2AM a different instance from
-  // BRAVO-now, and the board is append-only — that would poison it for good.
+  // The callsign comes from the pane's LETTER, which the backend assigns once at
+  // birth and never releases (data_dir/letters.json). Deriving a name here from
+  // arrival order instead was the bug: the digest's ordering had nothing to do
+  // with the letter on the tab, so the pane the chair sees as A could be named
+  // anything, and the name he was told was not the name he addresses it by.
+  const letters = readJson(path.join(dataDir, 'letters.json'), {});
   const taken = new Set(Object.values(names));
+  // Fallback for a pane with no registered letter (an older build, or one created
+  // before letters shipped). Still never recycled.
   const nextName = () => {
     for (const n of NATO) if (!taken.has(n)) return n;
     for (let gen = 2; gen < 99; gen++) {
@@ -352,6 +374,10 @@ function main(input) {
   };
   for (const pane of [...panes.keys()].sort((a, b) => panes.get(a).last - panes.get(b).last)) {
     if (pane === MAIN_SID) { names[pane] = 'MAIN'; continue; }
+    const fromLetter = callsign(letters[pane]);
+    // A letter is authoritative even over a name already stored: if the two ever
+    // disagree, the surface the chair types into wins.
+    if (fromLetter) { names[pane] = fromLetter; taken.add(fromLetter); continue; }
     if (!names[pane]) { names[pane] = nextName(); taken.add(names[pane]); }
   }
 

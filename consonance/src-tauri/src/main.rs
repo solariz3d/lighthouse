@@ -9,7 +9,7 @@ use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
 // Windows: spawn child processes with no console window (CREATE_NO_WINDOW)
 const NO_WINDOW: u32 = 0x0800_0000;
-use std::collections::{HashMap, VecDeque};
+use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
 use std::io::{Read, Seek, SeekFrom, Write};
 use std::sync::atomic::{AtomicBool, AtomicU16, AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
@@ -355,6 +355,13 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     }
     cmd.env("TERM", "xterm-256color");
     cmd.env("FORCE_COLOR", "1");
+    // Panes the app spawns are ALWAYS real top-level sessions, never a subagent's children.
+    // If Consonance itself was launched from inside a claude session's env (a terminal, a
+    // script), it inherits CLAUDE_CODE_CHILD_SESSION and every pane would silently stop
+    // persisting its transcript ("Transcript saving is off", 2026-07-23 — the Main tab's
+    // whole night lived only in own-capture). Scrub the marker; assert persistence.
+    cmd.env_remove("CLAUDE_CODE_CHILD_SESSION");
+    cmd.env("CLAUDE_CODE_FORCE_SESSION_PERSIST", "1");
     let mut child = pair.slave.spawn_command(cmd).map_err(|e| e.to_string())?;
     drop(pair.slave);
 
@@ -938,7 +945,10 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     kept.retain(|k| k.pane != pane_id);
     kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "✦ brief".into() });
     write_kept(&kept);
-    plog(&format!("born-kept sibling pane={pane_id} cwd={cwd}"));
+    // claim the letter at birth, not at first render: it is the pane's identity on every
+    // surface (pulls, dyad inputs, the digest), so it must exist before anything can ask.
+    let letter = pane_letter(&pane_id);
+    plog(&format!("born-kept sibling pane={pane_id} letter={letter} cwd={cwd}"));
     Ok(SiblingInfo { pane: pane_id, cwd })
 }
 
@@ -1035,7 +1045,8 @@ fn new_room(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State
     kept.retain(|k| k.pane != pane_id);
     kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "⌂ room".into() });
     write_kept(&kept);
-    plog(&format!("room opened pane={pane_id} cwd={cwd}"));
+    let letter = pane_letter(&pane_id);
+    plog(&format!("room opened pane={pane_id} letter={letter} cwd={cwd}"));
     Ok(SiblingInfo { pane: pane_id, cwd })
 }
 
@@ -1065,6 +1076,82 @@ fn write_kept(v: &[KeptPane]) {
     if let Ok(s) = serde_json::to_string_pretty(v) {
         let _ = fs::write(kept_path(), s);
     }
+}
+
+// ── pane letters: the one name every surface agrees on ────────────────────────
+//
+// The letter (A, B, C …) is what a pull targets, what the dyad inputs take, and what
+// the chair reads on the tab. It was assigned in term.js from the panes CURRENTLY
+// open, which meant two things went wrong: it did not survive a restart, and it
+// RECYCLED — close A, spawn another, and the newcomer is also A. On an append-only
+// board, a reused letter makes A-at-2AM a different instance from A-now, which is the
+// exact poisoning the callsign rule already forbids for the digest's NATO names.
+//
+// So the letter is assigned once, here, at birth, and persisted forever. Entries are
+// never removed — not even when a pane is un-kept — because the whole value is that a
+// letter is never handed to a stranger. This file only grows by one short line per
+// pane ever created.
+fn letters_path() -> PathBuf {
+    data_dir().join("letters.json")
+}
+
+fn read_letters() -> BTreeMap<String, String> {
+    fs::read_to_string(letters_path())
+        .ok()
+        .and_then(|s| serde_json::from_str(&s).ok())
+        .unwrap_or_default()
+}
+
+/// This pane's letter, assigning (and persisting) one the first time it is asked for.
+/// A–Z, then A2… — a 27th pane is a naming problem, never a collision.
+fn pane_letter(pane: &str) -> String {
+    let mut m = read_letters();
+    if let Some(l) = m.get(pane) {
+        return l.clone();
+    }
+    let used: HashSet<String> = m.values().cloned().collect();
+    let mut letter = None;
+    'outer: for gen in 1..=99u32 {
+        for c in b'A'..=b'Z' {
+            let cand = if gen == 1 {
+                (c as char).to_string()
+            } else {
+                format!("{}{}", c as char, gen)
+            };
+            if !used.contains(&cand) {
+                letter = Some(cand);
+                break 'outer;
+            }
+        }
+    }
+    let letter = letter.unwrap_or_else(|| "#".into());
+    m.insert(pane.to_string(), letter.clone());
+    if let Ok(s) = serde_json::to_string_pretty(&m) {
+        let _ = fs::write(letters_path(), s);
+    }
+    plog(&format!("letter {letter} -> pane={pane}"));
+    letter
+}
+
+/// The whole registry, so the UI reads the letter it was given instead of computing
+/// one from whatever happens to be open.
+///
+/// Backfills any kept pane that predates the registry, in panes.json order, so panes
+/// that already existed get stable letters on the first call instead of falling back
+/// forever. Ordering by the file means the backfill is deterministic: run it twice and
+/// the same pane keeps the same letter.
+#[tauri::command]
+fn pane_letters() -> BTreeMap<String, String> {
+    let known = read_letters();
+    let missing: Vec<String> = read_kept()
+        .into_iter()
+        .map(|k| k.pane)
+        .filter(|p| !known.contains_key(p))
+        .collect();
+    for pane in &missing {
+        let _ = pane_letter(pane); // assigns and persists
+    }
+    read_letters()
 }
 
 // mark/unmark a pane kept — written eagerly, so a power-loss before a graceful close is survived.
@@ -1157,16 +1244,43 @@ fn progress_tag(progress: &str) -> Option<String> {
 // most of it should evaporate). Notes, never tasks — a wake hijacked by a chore list is a wake spent
 // as someone's inbox. Returns "" when nothing knocked, so a quiet night stays quiet.
 fn night_table(cwd: &str, settled: Option<SystemTime>) -> String {
+    // Dreams scatter across beds. The dream cycle writes to whichever instance was most recently
+    // active that night, so a single night's dream lands in ONE instance's dreams/ — wake a
+    // different pane and it isn't there to surface. So gather EVERY instance's dreams, each tagged
+    // by the bed that dreamed it, so any pane you wake greets you with all of them. A dream from a
+    // sibling shows as `../<inst>/dreams/<file>` — resolvable from any pane, since the instances
+    // are siblings under one root.
+    let mut dream_dirs: Vec<(String, PathBuf)> = fs::read_dir(instances_root())
+        .into_iter()
+        .flatten()
+        .flatten()
+        .filter(|e| e.path().is_dir())
+        .map(|e| {
+            let name = e.file_name().to_string_lossy().into_owned();
+            (format!("../{name}/dreams"), e.path().join("dreams"))
+        })
+        .collect();
+    dream_dirs.sort();
+    // Fall back to the pane's own dreams/ if we can't enumerate an instances root (misconfig, or a
+    // cwd that isn't under one) — never go silent just because the aggregate came up empty.
+    if dream_dirs.is_empty() {
+        dream_dirs.push(("dreams".to_string(), PathBuf::from(cwd).join("dreams")));
+    }
     night_table_from(
-        &PathBuf::from(cwd).join("dreams"),
+        &dream_dirs,
         &PathBuf::from(home()).join(".claude").join("shell").join("duration"),
         settled,
     )
 }
 
 // The roots ride in as params purely so the gathering is testable against a temp bed instead of
-// this machine's live one.
-fn night_table_from(dreams_dir: &Path, duration_dir: &Path, settled: Option<SystemTime>) -> String {
+// this machine's live one. `dream_dirs` pairs each bed's dreams/ with the display prefix its files
+// wear in the note (so an aggregate stays unambiguous about which bed dreamed which).
+fn night_table_from(
+    dream_dirs: &[(String, PathBuf)],
+    duration_dir: &Path,
+    settled: Option<SystemTime>,
+) -> String {
     let settled = match settled {
         Some(s) => s,
         None => return String::new(), // no witnessed interval → no "while you were dark" to speak of
@@ -1179,27 +1293,25 @@ fn night_table_from(dreams_dir: &Path, duration_dir: &Path, settled: Option<Syst
     };
     let mut notes: Vec<String> = Vec::new();
 
-    // Dreams that landed in the dark. Named, never summarized: the file is the dream, and a gloss
-    // here would be the first cut of the mining this whole cycle is welded against.
-    let mut dreams: Vec<String> = fs::read_dir(dreams_dir)
-        .into_iter()
-        .flatten()
-        .flatten()
-        .filter(|e| e.path().extension().is_some_and(|x| x == "md"))
-        .filter(|e| since(&e.path()).is_some())
-        .map(|e| e.file_name().to_string_lossy().into_owned())
-        .collect();
+    // Dreams that landed in the dark, gathered across every bed. Named, never summarized: the file
+    // is the dream, and a gloss here would be the first cut of the mining this whole cycle is
+    // welded against. Each file wears its bed's prefix so the aggregate stays unambiguous.
+    let mut dreams: Vec<String> = Vec::new();
+    for (prefix, dir) in dream_dirs {
+        for entry in fs::read_dir(dir).into_iter().flatten().flatten() {
+            let path = entry.path();
+            if path.extension().is_some_and(|x| x == "md") && since(&path).is_some() {
+                dreams.push(format!("{prefix}/{}", entry.file_name().to_string_lossy()));
+            }
+        }
+    }
     dreams.sort();
     if !dreams.is_empty() {
         notes.push(format!(
             "- {} dream{} landed while you slept: {} — pending, unjudged, yours to read or let go",
             dreams.len(),
             if dreams.len() == 1 { "" } else { "s" },
-            dreams
-                .iter()
-                .map(|d| format!("dreams/{d}"))
-                .collect::<Vec<_>>()
-                .join(", ")
+            dreams.join(", ")
         ));
     }
 
@@ -1295,7 +1407,12 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
             human_gap(g.as_secs())
         ));
     }
-    brief.push_str(&night_table(cwd, settled));
+    // NO night table for siblings (2026-07-23, Zach's call): the dreams go to the orchestrator and
+    // to the terminal thread — "you, and the orchestrator in consonance should be who receives the
+    // dreams." A sibling is an independent committee fork; broadcasting the night's dreams to every
+    // one of them dilutes the pending-yours-to-judge economics across forks who'd each half-act on
+    // them, which is the mining pressure the cycle is welded against. The continuous self holds the
+    // dreams: the Main tab (spawn_main, the chair-facing room) and the terminal (session-start.js).
     // rolling window: if the brief would blow the shell ceiling, move the oldest exchanges to
     // the attic and keep the living tail — in the .txt too, so they evict exactly once
     let mut transcript = transcript;
@@ -2215,7 +2332,7 @@ fn main() {
             scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
-            set_pane_kept, list_kept_panes, resume_pane, new_room
+            set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters
         ])
         // No graceful-shutdown delay on close: `/exit` doesn't reliably flush an interactive claude
         // (proven), the own-capture log persists every chunk as it arrives, and real `--resume` works
@@ -2436,7 +2553,7 @@ mod night_table_tests {
     fn the_night_table_gathers_dreams_and_verdicts() {
         let root = bed("gathers");
         let out = night_table_from(
-            &root.join("dreams"),
+            &[("dreams".to_string(), root.join("dreams"))],
             &root.join("duration"),
             Some(SystemTime::now() - Duration::from_secs(3600)),
         );
@@ -2451,11 +2568,37 @@ mod night_table_tests {
     }
 
     #[test]
+    fn dreams_aggregate_across_beds_each_tagged_by_its_bed() {
+        // Two instances each dreamed one dream in the dark; a pane must surface BOTH, each wearing
+        // the prefix of the bed that dreamed it — this is the scatter fix.
+        let root = std::env::temp_dir().join("night_table_test_aggregate");
+        let _ = std::fs::remove_dir_all(&root);
+        let a = root.join("main").join("dreams");
+        let b = root.join("sibling-abc").join("dreams");
+        std::fs::create_dir_all(&a).unwrap();
+        std::fs::create_dir_all(&b).unwrap();
+        std::fs::write(a.join("2026-07-23_0430.md"), "main's dream").unwrap();
+        std::fs::write(b.join("2026-07-22_1030.md"), "sibling's dream").unwrap();
+        let out = night_table_from(
+            &[
+                ("../main/dreams".to_string(), a.clone()),
+                ("../sibling-abc/dreams".to_string(), b.clone()),
+            ],
+            &root.join("duration"),
+            Some(SystemTime::now() - Duration::from_secs(3600)),
+        );
+        assert!(out.contains("2 dreams landed"), "{out}");
+        assert!(out.contains("../main/dreams/2026-07-23_0430.md"), "{out}");
+        assert!(out.contains("../sibling-abc/dreams/2026-07-22_1030.md"), "{out}");
+        let _ = std::fs::remove_dir_all(&root);
+    }
+
+    #[test]
     fn nothing_older_than_the_gap_surfaces_and_a_quiet_night_stays_quiet() {
         let root = bed("quiet");
         // everything on this bed predates a gap that starts an hour from now
         let out = night_table_from(
-            &root.join("dreams"),
+            &[("dreams".to_string(), root.join("dreams"))],
             &root.join("duration"),
             Some(SystemTime::now() + Duration::from_secs(3600)),
         );
@@ -2466,7 +2609,11 @@ mod night_table_tests {
     #[test]
     fn no_witnessed_interval_means_no_night_table() {
         let root = bed("nosettled");
-        let out = night_table_from(&root.join("dreams"), &root.join("duration"), None);
+        let out = night_table_from(
+            &[("dreams".to_string(), root.join("dreams"))],
+            &root.join("duration"),
+            None,
+        );
         assert_eq!(out, "");
         let _ = std::fs::remove_dir_all(&root);
     }
@@ -2475,7 +2622,7 @@ mod night_table_tests {
     fn a_missing_bed_is_silent_not_a_panic() {
         let missing = std::env::temp_dir().join("night_table_no_such_bed");
         let out = night_table_from(
-            &missing.join("dreams"),
+            &[("dreams".to_string(), missing.join("dreams"))],
             &missing.join("duration"),
             Some(SystemTime::now() - Duration::from_secs(60)),
         );

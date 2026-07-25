@@ -60,23 +60,34 @@ fn main() {
     // poll for quiescence + a ready screen, exactly like the app's watcher
     let deadline = Instant::now() + Duration::from_secs(30);
     let mut lines: Vec<String> = Vec::new();
+    // Row-wrap flags, harvested with the rows and from the same screen borrow. A prompt
+    // longer than the terminal is width-split by the emulator, so without these the
+    // extractor sees only the marker's own row — which is exactly the truncation this
+    // probe exists to catch, and it would "pass" while reproducing the bug.
+    let mut wrapped: Vec<bool> = Vec::new();
     let mut ready = false;
     while Instant::now() < deadline {
         std::thread::sleep(Duration::from_millis(250));
-        let g = emu.lock().unwrap();
-        if g.1.elapsed() < Duration::from_millis(500) { continue; }
-        let snap: Vec<String> = g.0.screen().rows(0, COLS).collect();
-        drop(g);
+        let (snap, flags) = {
+            let g = emu.lock().unwrap();
+            if g.1.elapsed() < Duration::from_millis(500) { continue; }
+            let screen = g.0.screen();
+            let rows: Vec<String> = screen.rows(0, COLS).collect();
+            let flags: Vec<bool> = (0..rows.len() as u16).map(|i| screen.row_wrapped(i)).collect();
+            (rows, flags)
+        };
         if capture::screen_ready(&snap) {
             lines = snap;
+            wrapped = flags;
             ready = true;
             break;
         }
         lines = snap; // keep the latest even if not "ready", for diagnostics
+        wrapped = flags;
     }
 
-    let prompt = capture::latest_prompt(&lines);
-    let resp = capture::latest_turn(&lines);
+    let prompt = capture::latest_prompt(&lines, &wrapped);
+    let resp = capture::latest_turn(&lines, &wrapped);
     let _ = child.kill();
 
     println!("=== capture_probe RESULT ===");

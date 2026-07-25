@@ -198,13 +198,32 @@ function toggleTap(open) {
   }
 }
 
-function nextPaneName() {
-  const used = new Set([...panes.values()].map((p) => p.name));
-  for (let i = 0; i < 26; i++) {
-    const n = String.fromCharCode(65 + i); // A..Z
-    if (!used.has(n)) return n;
+// The letter registry, mirrored from the backend (data_dir/letters.json). The letter is
+// assigned once at pane birth and never released, so it is READ here rather than derived
+// from whatever is currently open — deriving it meant a letter did not survive a restart
+// and, worse, recycled: close A, spawn another, and the newcomer was also A. On an
+// append-only board a reused letter makes A-at-2AM a different instance from A-now.
+let paneLetters = {};
+async function refreshPaneLetters() {
+  try { paneLetters = (await inv('pane_letters')) || {}; } catch (_) { /* keep what we have */ }
+}
+
+function letterFor(id) {
+  if (paneLetters[id]) return paneLetters[id];
+  // Fallback only: a pane the backend has no record of (an older build, or a pane created
+  // before this shipped). Skip every letter already spoken for, live or retired, so the
+  // stopgap still cannot hand out a name that belonged to someone else.
+  const used = new Set([
+    ...[...panes.values()].map((p) => p.name),
+    ...Object.values(paneLetters),
+  ]);
+  for (let gen = 1; gen < 99; gen++) {
+    for (let i = 0; i < 26; i++) {
+      const n = String.fromCharCode(65 + i) + (gen === 1 ? '' : String(gen));
+      if (!used.has(n)) { paneLetters[id] = n; return n; }
+    }
   }
-  return '#'; // more than 26 panes
+  return '#';
 }
 
 function makePaneEl(id, name, cwd, container) {
@@ -299,7 +318,7 @@ function flashCopied(id, n) {
 function attachPane(id, label, cwd, role, container, kept) {
   ensureListeners();
   role = role || 'human';
-  const name = role === 'main' ? 'M' : nextPaneName();
+  const name = role === 'main' ? 'M' : letterFor(id);
   const el = makePaneEl(id, name, label, container);
   // Reading-first type: Cascadia Mono (ships with Win11, built for long terminal reading,
   // better Il1/O0) at 14/1.25; no blink (N panes pulsing in peripheral vision is noise) —
@@ -689,6 +708,9 @@ const cvs = document.getElementById('convsend'); if (cvs) cvs.onclick = broadcas
 // Restore kept instances on launch — they survive app close/crash and resume their own session.
 async function restoreKeptPanes() {
   let kept;
+  // Letters first: a restored pane must come back wearing the letter it was born with,
+  // not whatever position it happens to take in the restore loop.
+  await refreshPaneLetters();
   try { kept = await inv('list_kept_panes'); } catch (e) { return; }
   for (const k of (kept || [])) {
     try {

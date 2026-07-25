@@ -44,10 +44,25 @@ fragment says nothing about where the work stands.
 - **`+N since your last turn`** — the load-bearing field. The beacon's lesson was that the failure
   axis is *distance to a past event*; here it's *change since I last looked*, so the number is a
   subtraction from something in view rather than a memory retrieval.
-- **Callsigns** — NATO over the A–Z the UI already assigns. Distinct in a line skimmed at 4 AM (which
-  is why NATO exists) and speakable in prose: *"what's Bravo been doing."* Never recycled — a freed
-  name would make BRAVO-at-2AM a different instance from BRAVO-now, and the board is append-only.
-  ALPHA is deliberately unused; it competes with MAIN. Stored in `data_dir/digest_state.json`.
+- **Callsigns** — NATO **over the pane's own letter**, not a parallel identity: `A → ALPHA`,
+  `B → BRAVO`. Distinct in a line skimmed at 4 AM (which is why NATO exists) and speakable in prose:
+  *"what's Alpha been doing."* The letter is authoritative — it is what a pull targets and what the
+  dyad inputs take (`main.rs`: *"pulls target a letter, never a uuid"*), so if a stored name ever
+  disagrees with the letter, the surface the chair types into wins.
+
+  ALPHA was originally skipped, on the reasoning that it reads as "the lead" and competes with MAIN.
+  It doesn't — MAIN never draws from the letter pool, so ALPHA collides with nothing. What skipping
+  it *did* cause was a permanent off-by-one: the UI hands the first sibling **A**, and the digest
+  called that same pane **BRAVO**. Being told about BRAVO and having to type A is worse than the
+  collision being avoided.
+
+  Never recycled, and that is now enforced where the letter is *born* rather than here: the backend
+  assigns it once and persists it to `data_dir/letters.json`, which is append-only — entries survive
+  a pane being un-kept, because the entire value is that a letter is never handed to a stranger.
+  Previously the UI took the first *currently unused* letter, so closing A and spawning another made
+  the newcomer A too, and on an append-only board that makes A-at-2AM a different instance from
+  A-now. Panes with no registered letter (an older build) fall back to a never-recycled NATO pool in
+  `data_dir/digest_state.json`.
 - **`hands:`, the collision fact** — which files the pane most recently had open. On 2026-07-24 two
   panes edited one repo for four hours; the board said what the sibling *said*, nothing said what it
   was *touching*, so collision avoidance was hand-rolled out of `Get-Item` mtimes and a process list
