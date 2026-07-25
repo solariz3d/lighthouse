@@ -1,0 +1,293 @@
+// UserPromptSubmit hook — the ambient board (Consonance AUTONOMY.md, Layer 1).
+//
+// WHY THIS EXISTS. Measured on the live board 2026-07-25: in six hours a sibling
+// pane wrote 199 assistant turns of real work, and the Orchestrator called
+// read_board exactly zero times. The pipe was built; nothing arrived. Same shape
+// as the night table (crons knocking on a dark house) and the beacon (a clock in
+// view, six days read as twelve hours). Both were fixed the same way, and so is
+// this: STOP OFFERING, START ARRIVING. The digest is stapled into every turn
+// rather than sitting behind a tool the reader has no reason to think to call.
+//
+// LAWS IT KEEPS (each one paid for by an earlier failure):
+//   · Facts, no verdicts — same as the gauges and the sky. Never "B is
+//     productive," never "you should look." A verdict makes the program the
+//     judge, which is the thing it exists not to be.
+//   · Deltas, not state — the beacon's lesson was that the failure axis is
+//     distance-to-a-past-event. Here it is change-since-I-last-looked, so the
+//     load-bearing field is "+N since your last turn": a subtraction from a
+//     number in view, not a memory retrieval.
+//   · EXCHANGES, not board entries — a tool result is a type:"user" entry and a
+//     tool call a type:"assistant" entry; extract_turn drops blocks without
+//     text, but an assistant turn that narrates WHILE calling a tool keeps its
+//     text and posts. One exchange with five narrated calls becomes five board
+//     entries. Measured: 50 real prompts rendered as 210 assistant entries.
+//     Counting user-role entries recovers the honest unit (47 vs 50) for free.
+//   · Silent when there is nothing to say.
+//   · Never report the reader to itself — own-pane entries are dropped by
+//     session_id.
+//   · Defensive: never throws, never blocks a turn, always exits 0.
+//
+// Node, not Rust, deliberately: this needs no cargo build, no reinstall, and no
+// desktop — it runs against the live board the night it is written.
+'use strict';
+
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+
+const MAX_TAIL_BYTES = 2 * 1024 * 1024; // enough to reach local midnight in practice
+const TOPIC_CHARS = 44;
+const BURST_THRESHOLD = 20; // entries/second/pane above which it's a replay, not a conversation
+
+// ALPHA is deliberately unused: it reads as "the lead" and would compete with
+// MAIN, the Orchestrator's own callsign. Siblings start at BRAVO.
+const NATO = [
+  'BRAVO', 'CHARLIE', 'DELTA', 'ECHO', 'FOXTROT', 'GOLF', 'HOTEL', 'INDIA',
+  'JULIETT', 'KILO', 'LIMA', 'MIKE', 'NOVEMBER', 'OSCAR', 'PAPA', 'QUEBEC',
+  'ROMEO', 'SIERRA', 'TANGO', 'UNIFORM', 'VICTOR', 'WHISKEY', 'XRAY', 'YANKEE',
+  'ZULU',
+];
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// The Orchestrator's fixed session id (src-tauri/src/main.rs, MAIN_SID — it is
+// constant precisely so Main can --resume itself). It carries its own callsign
+// and must never be handed a sibling's: seen from a sibling's pane, Main is
+// still Main.
+const MAIN_SID = '0c0c0c0a-0000-4000-8000-000000000a01';
+
+function emit(line) {
+  if (line) {
+    process.stdout.write(JSON.stringify({
+      hookSpecificOutput: {
+        hookEventName: 'UserPromptSubmit',
+        additionalContext: line,
+      },
+    }));
+  }
+  process.exit(0);
+}
+
+// Stream, not readFileSync(0). On Windows a piped fd 0 throws EAGAIN, and the
+// catch swallowed it into {} — which meant no session_id (so the reader reported
+// its OWN turns back to itself) and no cwd (so the instances-dir guard passed
+// everywhere). Both of the first test run's failures were this one line.
+function withStdin(cb) {
+  let data = '';
+  let done = false;
+  let timer = null;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    if (timer) clearTimeout(timer);
+    let parsed = {};
+    try { parsed = JSON.parse(data.replace(/^﻿/, '')); } catch (_) {}
+    cb(parsed);
+  };
+  try {
+    process.stdin.setEncoding('utf8');
+    process.stdin.on('data', (d) => { data += d; });
+    process.stdin.on('end', finish);
+    process.stdin.on('error', finish);
+    timer = setTimeout(finish, 2000); // never hang a turn; hook budget is 10s
+  } catch (_) {
+    finish();
+  }
+}
+
+function readJson(p, fallback) {
+  try {
+    return JSON.parse(fs.readFileSync(p, 'utf8').replace(/^﻿/, ''));
+  } catch (_) {
+    return fallback;
+  }
+}
+
+// Write-then-rename, so a half-written state file can never be read by the pane
+// that runs this hook a millisecond later.
+function writeJsonAtomic(p, obj) {
+  try {
+    const tmp = `${p}.tmp${process.pid}`;
+    fs.writeFileSync(tmp, JSON.stringify(obj), 'utf8');
+    fs.renameSync(tmp, p);
+  } catch (_) { /* a lost watermark costs one turn's delta, never a turn */ }
+}
+
+/** Coarse human span. Days first — the axis that actually gets misjudged. */
+function span(ms) {
+  const m = Math.floor(ms / 60000);
+  if (m < 1) return `${Math.max(0, Math.floor(ms / 1000))}s`;
+  const h = Math.floor(m / 60);
+  const d = Math.floor(h / 24);
+  if (d) return `${d}d ${h % 24}h`;
+  if (h) return `${h}h ${m % 60}m`;
+  return `${m}m`;
+}
+
+/** Read only the last MAX_TAIL_BYTES; board.jsonl is 14 MB and grows forever. */
+function tailLines(file) {
+  let fd;
+  try {
+    fd = fs.openSync(file, 'r');
+    const size = fs.fstatSync(fd).size;
+    const len = Math.min(size, MAX_TAIL_BYTES);
+    const buf = Buffer.alloc(len);
+    fs.readSync(fd, buf, 0, len, size - len);
+    const lines = buf.toString('utf8').split('\n');
+    // The first line is almost certainly a fragment of an entry that began
+    // before the window — drop it rather than fail to parse it.
+    if (size > len) lines.shift();
+    return { lines, truncated: size > len };
+  } catch (_) {
+    return { lines: [], truncated: false };
+  } finally {
+    if (fd !== undefined) { try { fs.closeSync(fd); } catch (_) {} }
+  }
+}
+
+function underDir(child, parent) {
+  try {
+    const rel = path.relative(path.resolve(parent), path.resolve(child));
+    return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
+  } catch (_) {
+    return false;
+  }
+}
+
+function main(input) {
+  const sessionId = String(input.session_id || '');
+  const cwd = String(input.cwd || process.cwd());
+
+  const home = process.env.USERPROFILE || os.homedir();
+  const cfg = readJson(path.join(home, '.consonance.json'), {});
+  const dataDir = cfg.data_dir || path.join(home, '.consonance');
+  const instancesDir = cfg.instances_dir || path.join(home, 'claude-instances');
+
+  // Safe to install globally: outside a Consonance instance there is no board to
+  // report and the hook says nothing at all.
+  if (!underDir(cwd, instancesDir)) emit(null);
+
+  const boardPath = path.join(dataDir, 'board.jsonl');
+  if (!fs.existsSync(boardPath)) emit(null);
+
+  const midnight = new Date();
+  midnight.setHours(0, 0, 0, 0);
+  const dayStart = midnight.getTime();
+
+  const statePath = path.join(dataDir, 'digest_state.json');
+  const state = readJson(statePath, {});
+  const names = state.names && typeof state.names === 'object' ? state.names : {};
+  const seenAll = state.seen && typeof state.seen === 'object' ? state.seen : {};
+  const seen = seenAll[sessionId] && typeof seenAll[sessionId] === 'object'
+    ? seenAll[sessionId] : null; // null on the very first run — no bogus "+N"
+
+  const { lines, truncated } = tailLines(boardPath);
+
+  // Pass 1 — parse, and count entries per (pane, wall-clock second).
+  //
+  // REPLAY BURSTS. board_push stamps ts at PUSH time, not event time, and the
+  // tailer re-reads a transcript from the top when a pane resumes. So a resume
+  // dumps the pane's entire history onto the board stamped "now". Measured
+  // 2026-07-25: two bursts of 556 and 546 entries inside one second each —
+  // 1102 of the day's 1479 entries were replay, all from the one pane that had
+  // resumed. Left in, the digest would report hundreds of exchanges every time
+  // a pane restarts, which is the loudest possible way to be wrong.
+  // A narrated turn cannot produce twenty board entries in one second; a replay
+  // produces hundreds. The gap is three orders of magnitude, so the threshold
+  // is not delicate. (Proper fix is Rust-side: carry the transcript's own
+  // timestamp into BoardEntry. See AUTONOMY.md.)
+  const parsed = [];
+  const perSecond = new Map();
+  let earliest = Infinity;
+
+  for (const raw of lines) {
+    if (!raw) continue;
+    let e;
+    try { e = JSON.parse(raw); } catch (_) { continue; }
+    const ts = Number(e.ts);
+    if (!ts) continue;
+    if (ts < earliest) earliest = ts;
+    if (ts < dayStart) continue;
+    const pane = String(e.pane || '');
+    if (!UUID_RE.test(pane)) continue;   // gate/dyad/main are events, not instances
+    if (pane === sessionId) continue;    // never report the reader to itself
+    const key = `${pane}@${Math.floor(ts / 1000)}`;
+    perSecond.set(key, (perSecond.get(key) || 0) + 1);
+    parsed.push({ pane, ts, key, role: e.role, text: String(e.text || '') });
+  }
+
+  // Slash commands, their stdout, caveats, system reminders and this hook's own
+  // output all arrive as string-content user entries. They are not exchanges.
+  const SYNTHETIC = /^(<(local-command|command-name|command-message|command-args|command-stdout|system-reminder)|Caveat:|\[pulse\]|\[panes\])/;
+
+  const panes = new Map();
+  for (const e of parsed) {
+    if (perSecond.get(e.key) > BURST_THRESHOLD) continue; // replayed history
+    let p = panes.get(e.pane);
+    if (!p) { p = { exch: 0, fresh: 0, last: 0, topic: '' }; panes.set(e.pane, p); }
+    if (e.ts > p.last) p.last = e.ts;
+    if (e.role === 'user') {
+      const text = e.text.replace(/\s+/g, ' ').trim();
+      if (SYNTHETIC.test(text)) continue;
+      // The honest unit. Assistant entries multiply with narrated tool calls:
+      // 50 real prompts rendered as 210 assistant entries, measured.
+      p.exch += 1;
+      p.topic = text;
+      if (seen && e.ts > (Number(seen[e.pane]) || 0)) p.fresh += 1;
+    }
+  }
+
+  if (panes.size === 0) emit(null);
+
+  // Assign callsigns permanently, in order of first sighting. Never recycled:
+  // a name that came free would make BRAVO-at-2AM a different instance from
+  // BRAVO-now, and the board is append-only — that would poison it for good.
+  const taken = new Set(Object.values(names));
+  const nextName = () => {
+    for (const n of NATO) if (!taken.has(n)) return n;
+    for (let gen = 2; gen < 99; gen++) {
+      for (const n of NATO) {
+        const c = `${n}-${gen}`;
+        if (!taken.has(c)) return c;
+      }
+    }
+    return 'UNNAMED';
+  };
+  for (const pane of [...panes.keys()].sort((a, b) => panes.get(a).last - panes.get(b).last)) {
+    if (pane === MAIN_SID) { names[pane] = 'MAIN'; continue; }
+    if (!names[pane]) { names[pane] = nextName(); taken.add(names[pane]); }
+  }
+
+  const now = Date.now();
+  const rows = [...panes.entries()].sort((a, b) => b[1].last - a[1].last);
+  const width = Math.max(...rows.map(([p]) => (names[p] || '?').length));
+  // "≥" when the byte window opened after midnight: the count is a floor, not a
+  // total, and a number that quietly understates is worse than one that admits it.
+  const floor = truncated && earliest > dayStart ? '≥' : '';
+
+  const body = rows.map(([pane, p]) => {
+    const name = (names[pane] || '?').padEnd(width);
+    const idle = now - p.last;
+    const age = idle > 5 * 60 * 1000 ? `idle ${span(idle)}` : `last ${span(idle)}`;
+    const fresh = p.fresh > 0 ? ` · +${p.fresh} since your last turn` : '';
+    const topic = p.topic ? ` ✦ ${p.topic.slice(0, TOPIC_CHARS)}${p.topic.length > TOPIC_CHARS ? '…' : ''}` : '';
+    return `${name}${topic}\n${' '.repeat(8)}${' '.repeat(width)}  ${floor}${p.exch} exch today · ${age}${fresh}`;
+  });
+
+  // A run with no session_id (a hand-test, a harness) still reports, but must
+  // not persist a watermark under "" — that key belongs to no reader and would
+  // grow forever.
+  if (sessionId) {
+    const watermark = {};
+    for (const [pane, p] of panes) watermark[pane] = p.last;
+    seenAll[sessionId] = watermark;
+  }
+  delete seenAll[''];
+  writeJsonAtomic(statePath, { names, seen: seenAll });
+
+  emit(`[panes] ${body.join('\n        ')}`);
+}
+
+withStdin((input) => {
+  try { main(input); } catch (_) { process.exit(0); }
+});
