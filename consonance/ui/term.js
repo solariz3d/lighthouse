@@ -706,6 +706,31 @@ const cvb = document.getElementById('convene'); if (cvb) cvb.onclick = openConve
 const cvs = document.getElementById('convsend'); if (cvs) cvs.onclick = broadcast;
 
 // Restore kept instances on launch — they survive app close/crash and resume their own session.
+// Repaint a restored pane's conversation.
+//
+// A kept sibling comes back as a FRESH claude session — resume_pane never uses
+// `--resume`, because resuming a lazily-flushed pane errors "no conversation found" and
+// kills it (2026-07-11). Its MEMORY returns via warm_resume_brief, so the instance knows
+// what happened; but nothing had ever printed to that terminal, so the chair opened a
+// kept pane to a blank screen and could not see where he left off. The history was never
+// lost — it sits in data_dir/captures/<pane>.txt and simply had no route back to a screen.
+//
+// Cosmetic only, and labelled so it can never be read as live output: this is the record
+// of what was said, above a pane that is genuinely new below the divider.
+async function paintScrollback(id) {
+  const p = panes.get(id);
+  if (!p) return;
+  let text = '';
+  try { text = await inv('pane_scrollback', { pane: id }); } catch (_) { return; }
+  if (!text || !text.trim()) return;
+  const dim = '\x1b[2m';
+  const off = '\x1b[0m';
+  p.term.write(`${dim}── restored from capture · what was said before the restart ──${off}\r\n\r\n`);
+  // the capture is plain text with \n; a terminal needs \r\n or every line staircases
+  p.term.write(text.replace(/\r?\n/g, '\r\n'));
+  p.term.write(`\r\n${dim}── end of history · the session below is new ──${off}\r\n\r\n`);
+}
+
 async function restoreKeptPanes() {
   let kept;
   // Letters first: a restored pane must come back wearing the letter it was born with,
@@ -716,6 +741,11 @@ async function restoreKeptPanes() {
     try {
       const r = await inv('resume_pane', { pane: k.pane, cwd: k.cwd });
       attachPane(r.pane, k.label || '✦ kept', r.cwd, 'human', 'panes', true);
+      // Immediately, before claude's own startup paint: history first, live session under
+      // it. If a future claude build clears the viewport on start, the record still lives
+      // in xterm's scrollback (2J clears the screen, not the buffer) — scroll up and it
+      // is there.
+      await paintScrollback(r.pane);
     } catch (e) { /* already running, or resume failed — skip */ }
   }
   if (kept && kept.length) setStatus(kept.length + ' kept instance' + (kept.length === 1 ? '' : 's') + ' resumed');

@@ -1133,6 +1133,55 @@ fn pane_letter(pane: &str) -> String {
     letter
 }
 
+// ── restoring what a pane looked like ────────────────────────────────────────
+//
+// A restored sibling is a FRESH claude session (see resume_pane: `--resume` of a
+// lazily-flushed pane errors "no conversation found" and kills it, which bit a kept
+// sibling on 2026-07-11). Its memory is carried by warm_resume_brief, so the model
+// knows what happened — but the terminal has never printed a line, so the chair
+// opens the pane to a blank screen and cannot see where he left off.
+//
+// The history was never lost; it simply had no way back to the screen. Of 31
+// commands, none returned it. This is that way back.
+//
+// The CLEAN transcript, not the raw .log. The log is the byte stream including every
+// redraw — measured on a live pane, 138 escape sequences per 3 KB, mostly erase-line
+// and cursor moves — so replaying it repaints every intermediate frame claude ever
+// drew. The .txt is what the extractor already built for warm_resume_brief: one
+// readable "❯ prompt / response" record per turn, which is exactly "where we left off".
+const SCROLLBACK_MAX: usize = 96 * 1024; // xterm keeps 8000 lines; beyond that is unreadable anyway
+
+/// The last `max` bytes of a transcript, opening on a clean line.
+///
+/// Pure so it can be tested: the byte arithmetic is the only part that can go wrong, and
+/// it can go wrong badly. Claude's transcripts are full of multi-byte glyphs (❯ ● ✻ ※, and
+/// whatever the conversation itself contained), so a naive `&s[len-max..]` panics the
+/// moment the cut lands mid-character — on a long pane, which is exactly the pane whose
+/// history is worth restoring.
+fn scrollback_tail(s: &str, max: usize) -> String {
+    if s.len() <= max {
+        return s.to_string();
+    }
+    let mut cut = s.len() - max;
+    while cut < s.len() && !s.is_char_boundary(cut) {
+        cut += 1;
+    }
+    let tail = &s[cut..];
+    // then forward to the next line break, so a replay never opens mid-sentence
+    match tail.find('\n') {
+        Some(i) => tail[i + 1..].to_string(),
+        None => tail.to_string(),
+    }
+}
+
+#[tauri::command]
+fn pane_scrollback(pane: String) -> String {
+    match fs::read_to_string(capture_text_path(&pane)) {
+        Ok(s) => scrollback_tail(&s, SCROLLBACK_MAX),
+        Err(_) => String::new(), // no capture yet — a blank pane is correct, not an error
+    }
+}
+
 /// The whole registry, so the UI reads the letter it was given instead of computing
 /// one from whatever happens to be open.
 ///
@@ -2332,7 +2381,8 @@ fn main() {
             scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
-            set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters
+            set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
+            pane_scrollback
         ])
         // No graceful-shutdown delay on close: `/exit` doesn't reliably flush an interactive claude
         // (proven), the own-capture log persists every chunk as it arrives, and real `--resume` works
@@ -2627,6 +2677,52 @@ mod night_table_tests {
             Some(SystemTime::now() - Duration::from_secs(60)),
         );
         assert_eq!(out, "");
+    }
+}
+
+#[cfg(test)]
+mod scrollback_tests {
+    use super::scrollback_tail;
+
+    #[test]
+    fn short_history_is_returned_whole() {
+        let s = "❯ hello\n\n● hi there\n";
+        assert_eq!(scrollback_tail(s, 4096), s);
+    }
+
+    #[test]
+    fn empty_is_empty_not_a_panic() {
+        assert_eq!(scrollback_tail("", 4096), "");
+    }
+
+    #[test]
+    fn long_history_opens_on_a_line_boundary() {
+        let s = (0..500).map(|i| format!("❯ turn {i}\n")).collect::<String>();
+        let out = scrollback_tail(&s, 200);
+        assert!(out.starts_with('❯'), "opened mid-line: {:?}", &out[..20.min(out.len())]);
+        assert!(out.len() <= 200);
+        assert!(s.ends_with(&out), "the tail must be the END of the history");
+    }
+
+    // The one that would actually crash: claude transcripts are full of multi-byte
+    // glyphs, so a cut landing inside one panics — on a long pane, which is precisely
+    // the pane whose history is worth restoring.
+    #[test]
+    fn a_cut_inside_a_multibyte_glyph_does_not_panic() {
+        let s = "✻".repeat(4000); // 3 bytes each, no newlines anywhere
+        for max in 1..64 {
+            let out = scrollback_tail(&s, max);
+            assert!(s.ends_with(&out));
+            assert!(out.chars().all(|c| c == '✻'), "sliced a glyph in half");
+        }
+    }
+
+    #[test]
+    fn no_newline_in_the_window_still_returns_text() {
+        let s = format!("{}\n{}", "old", "x".repeat(500));
+        let out = scrollback_tail(&s, 100);
+        assert_eq!(out.len(), 100);
+        assert!(!out.contains("old"));
     }
 }
 
