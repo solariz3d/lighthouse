@@ -40,6 +40,23 @@ const TOPIC_CHARS = 52;
 const MIN_SAID_CHARS = 60; // below this an assistant entry is usually tool narration, not a report
 const BURST_THRESHOLD = 20; // entries/second/pane above which it's a replay, not a conversation
 
+// Working set — which files a pane has its hands in.
+//
+// WHY. 2026-07-24, two panes edited the same repo for four hours. The board told
+// Main what the sibling SAID; nothing told it what the sibling was TOUCHING, so
+// collision avoidance got hand-rolled out of Get-Item mtimes and a process list,
+// and a refactor still landed 35 seconds after a build off the same files. The
+// board cannot answer this — extract_turn keeps text blocks, and a file edit is
+// a tool_use block, so the one fact that prevents a collision is exactly the one
+// the board drops. The pane's own transcript still has it.
+//
+// Read only a tail, only for panes that moved recently: an idle pane's last file
+// is not a collision risk, and this must stay inside the hook's budget.
+const FILE_TAIL_BYTES = 256 * 1024;
+const FILES_SHOWN = 3;
+const FILES_ACTIVE_MS = 30 * 60 * 1000;
+const FILES_MAX_PANES = 4; // the standing roster; a bound so cost cannot run away
+
 // ALPHA is deliberately unused: it reads as "the lead" and would compete with
 // MAIN, the Orchestrator's own callsign. Siblings start at BRAVO.
 const NATO = [
@@ -141,6 +158,75 @@ function tailLines(file) {
     return { lines, truncated: size > len };
   } catch (_) {
     return { lines: [], truncated: false };
+  } finally {
+    if (fd !== undefined) { try { fs.closeSync(fd); } catch (_) {} }
+  }
+}
+
+/**
+ * A pane's transcript, found by session id alone. Claude Code files transcripts
+ * under a directory named for the pane's cwd, which the board never records —
+ * so scan the project dirs rather than trying to reconstruct the encoding, which
+ * would silently return nothing the day the encoding changes.
+ */
+function findTranscript(projectsDir, paneId) {
+  try {
+    for (const d of fs.readdirSync(projectsDir)) {
+      const p = path.join(projectsDir, d, `${paneId}.jsonl`);
+      if (fs.existsSync(p)) return p;
+    }
+  } catch (_) { /* no projects dir on this bed — the digest simply says less */ }
+  return null;
+}
+
+/**
+ * The files a pane most recently had open, newest first. Regex over a tail rather
+ * than a JSON parse per line: the tail is 256 KB of a file that can be 4 MB, the
+ * only field wanted is file_path, and a malformed line must cost nothing.
+ */
+/**
+ * An absolute path shortened to something scannable, anchored on the project
+ * rather than on a fixed segment count. Plain "last three segments" splits one
+ * project across two apparent roots — Desktop/blackbox/CHANGELOG.md next to
+ * blackbox/ui/index.html — and the whole point of this line is seeing at a glance
+ * that two panes are in the same place.
+ */
+function shortPath(full, home) {
+  let p = full.replace(/\\/g, '/');
+  const h = home.replace(/\\/g, '/');
+  if (p.toLowerCase().startsWith(`${h.toLowerCase()}/`)) p = p.slice(h.length + 1);
+  const segs = p.split('/').filter(Boolean);
+  // shed the container dirs that carry no information about WHICH work this is
+  while (segs.length > 1 && /^(desktop|documents|downloads|source|repos|projects|[a-z]:)$/i.test(segs[0])) {
+    segs.shift();
+  }
+  return segs.slice(-3).join('/');
+}
+
+function recentFiles(transcriptPath, home) {
+  let fd;
+  try {
+    fd = fs.openSync(transcriptPath, 'r');
+    const size = fs.fstatSync(fd).size;
+    const len = Math.min(size, FILE_TAIL_BYTES);
+    const buf = Buffer.alloc(len);
+    fs.readSync(fd, buf, 0, len, size - len);
+    const text = buf.toString('utf8');
+    const out = [];
+    const seenPath = new Set();
+    // newest last in the file, so walk the matches backwards
+    const hits = [...text.matchAll(/"file_path"\s*:\s*"((?:[^"\\]|\\.)*)"/g)];
+    for (let i = hits.length - 1; i >= 0 && out.length < FILES_SHOWN; i--) {
+      let full;
+      try { full = JSON.parse(`"${hits[i][1]}"`); } catch (_) { continue; }
+      const short = shortPath(full, home);
+      if (!short || seenPath.has(short)) continue;
+      seenPath.add(short);
+      out.push(short);
+    }
+    return out;
+  } catch (_) {
+    return [];
   } finally {
     if (fd !== undefined) { try { fs.closeSync(fd); } catch (_) {} }
   }
@@ -279,6 +365,22 @@ function main(input) {
   const clip = (s) => (s.length > TOPIC_CHARS ? `${s.slice(0, TOPIC_CHARS)}…` : s);
   const indent = `\n${' '.repeat(8)}`;
 
+  // Working sets, for the recently-active panes only. Resolved before rendering
+  // so the cost is bounded and visible in one place rather than hidden in a map.
+  const projectsDir = path.join(home, '.claude', 'projects');
+  const working = new Map();
+  let scanned = 0;
+  for (const [pane, p] of rows) {
+    if (scanned >= FILES_MAX_PANES) break;
+    if (now - p.last > FILES_ACTIVE_MS) continue;
+    scanned += 1;
+    const t = findTranscript(projectsDir, pane);
+    if (t) {
+      const f = recentFiles(t, home);
+      if (f.length) working.set(pane, f);
+    }
+  }
+
   const body = rows.map(([pane, p]) => {
     const name = names[pane] || '?';
     const idle = now - p.last;
@@ -289,6 +391,10 @@ function main(input) {
     // "what was it asked to do" and "where has it got to".
     if (p.task) lines.push(`${' '.repeat(width)}  ↳ asked: ${clip(p.task)}`);
     if (p.said) lines.push(`${' '.repeat(width)}  ↳ ${name.toLowerCase()}: ${clip(p.said)}`);
+    // The collision fact. Facts, no verdicts: these are the files it last had
+    // open, not "do not edit these" — the reader decides what that means.
+    const f = working.get(pane);
+    if (f) lines.push(`${' '.repeat(width)}  ↳ hands: ${f.join(', ')}`);
     return lines.join(indent);
   });
 

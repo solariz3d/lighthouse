@@ -27,9 +27,10 @@ twelve hours). Both were fixed the same way, and so is this: **stop offering, st
 [panes] BRAVO  ≥54 exch today · last 1m · +3 since your last turn
                ↳ asked: fix the camera clipping through the floor when…
                ↳ bravo: Built — clamped the near plane and re-ran the co…
+               ↳ hands: blackbox/ui/carrender.js, blackbox/ui/index.html
 ```
 
-~50 tokens. 84 ms. Silent when there is nothing to report.
+~60 tokens. 52 ms. Silent when there is nothing to report.
 
 **Both halves, labelled by speaker**, because they answer different questions: *what was it asked to
 do*, and *where has it got to*. The first version showed only the chair's prompt — which mirrors his
@@ -47,6 +48,15 @@ fragment says nothing about where the work stands.
   is why NATO exists) and speakable in prose: *"what's Bravo been doing."* Never recycled — a freed
   name would make BRAVO-at-2AM a different instance from BRAVO-now, and the board is append-only.
   ALPHA is deliberately unused; it competes with MAIN. Stored in `data_dir/digest_state.json`.
+- **`hands:`, the collision fact** — which files the pane most recently had open. On 2026-07-24 two
+  panes edited one repo for four hours; the board said what the sibling *said*, nothing said what it
+  was *touching*, so collision avoidance was hand-rolled out of `Get-Item` mtimes and a process list
+  — and a refactor still landed 35 seconds after a build off the same files. The board structurally
+  cannot answer this: `extract_turn` keeps text blocks, a file edit is a `tool_use` block, so the one
+  fact that prevents a collision is precisely the one the board drops. Read instead from the pane's
+  own transcript (`~/.claude/projects/*/<pane>.jsonl`) — a 256 KB tail, regex for `file_path`, newest
+  three unique, and only for panes that moved in the last 30 minutes, since an idle pane's last file
+  is not a collision risk. Still facts, no verdicts: these are files it had open, not "do not touch."
 - **Never reports the reader to itself** — own-pane entries dropped by `session_id`.
 
 ## Three counting defects it has to correct
