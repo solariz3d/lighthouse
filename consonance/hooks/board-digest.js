@@ -36,7 +36,8 @@ const os = require('os');
 const path = require('path');
 
 const MAX_TAIL_BYTES = 2 * 1024 * 1024; // enough to reach local midnight in practice
-const TOPIC_CHARS = 44;
+const TOPIC_CHARS = 52;
+const MIN_SAID_CHARS = 60; // below this an assistant entry is usually tool narration, not a report
 const BURST_THRESHOLD = 20; // entries/second/pane above which it's a replay, not a conversation
 
 // ALPHA is deliberately unused: it reads as "the lead" and would compete with
@@ -224,16 +225,26 @@ function main(input) {
   for (const e of parsed) {
     if (perSecond.get(e.key) > BURST_THRESHOLD) continue; // replayed history
     let p = panes.get(e.pane);
-    if (!p) { p = { exch: 0, fresh: 0, last: 0, topic: '' }; panes.set(e.pane, p); }
+    if (!p) { p = { exch: 0, fresh: 0, last: 0, task: '', said: '' }; panes.set(e.pane, p); }
     if (e.ts > p.last) p.last = e.ts;
+    const text = e.text.replace(/\s+/g, ' ').trim();
     if (e.role === 'user') {
-      const text = e.text.replace(/\s+/g, ' ').trim();
       if (SYNTHETIC.test(text)) continue;
       // The honest unit. Assistant entries multiply with narrated tool calls:
       // 50 real prompts rendered as 210 assistant entries, measured.
       p.exch += 1;
-      p.topic = text;
+      p.task = text;
       if (seen && e.ts > (Number(seen[e.pane]) || 0)) p.fresh += 1;
+    } else if (e.role === 'assistant') {
+      // The pane's own latest word — the half that was actually invisible. The
+      // chair's prompt he already knows; the 199 assistant turns nobody read are
+      // the reason this hook exists.
+      //
+      // Prefer a substantive line: narrated tool calls leave fragments ("Now let
+      // me check the bounds") as the most recent entry, which says nothing about
+      // where the work stands. Take the newest reply of real length, and fall
+      // back to the newest of any length rather than showing nothing.
+      if (text.length >= MIN_SAID_CHARS || !p.said) p.said = text;
     }
   }
 
@@ -265,13 +276,20 @@ function main(input) {
   // total, and a number that quietly understates is worse than one that admits it.
   const floor = truncated && earliest > dayStart ? '≥' : '';
 
+  const clip = (s) => (s.length > TOPIC_CHARS ? `${s.slice(0, TOPIC_CHARS)}…` : s);
+  const indent = `\n${' '.repeat(8)}`;
+
   const body = rows.map(([pane, p]) => {
-    const name = (names[pane] || '?').padEnd(width);
+    const name = names[pane] || '?';
     const idle = now - p.last;
     const age = idle > 5 * 60 * 1000 ? `idle ${span(idle)}` : `last ${span(idle)}`;
     const fresh = p.fresh > 0 ? ` · +${p.fresh} since your last turn` : '';
-    const topic = p.topic ? ` ✦ ${p.topic.slice(0, TOPIC_CHARS)}${p.topic.length > TOPIC_CHARS ? '…' : ''}` : '';
-    return `${name}${topic}\n${' '.repeat(8)}${' '.repeat(width)}  ${floor}${p.exch} exch today · ${age}${fresh}`;
+    const lines = [`${name.padEnd(width)}  ${floor}${p.exch} exch today · ${age}${fresh}`];
+    // Labelled by speaker, because the two halves answer different questions:
+    // "what was it asked to do" and "where has it got to".
+    if (p.task) lines.push(`${' '.repeat(width)}  ↳ asked: ${clip(p.task)}`);
+    if (p.said) lines.push(`${' '.repeat(width)}  ↳ ${name.toLowerCase()}: ${clip(p.said)}`);
+    return lines.join(indent);
   });
 
   // A run with no session_id (a hand-test, a harness) still reports, but must

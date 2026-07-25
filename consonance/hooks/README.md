@@ -24,11 +24,19 @@ twelve hours). Both were fixed the same way, and so is this: **stop offering, st
 ## What it emits
 
 ```
-[panes] BRAVO ✦ fix the camera clipping through the floor on…
-               ≥54 exch today · last 29s · +3 since your last turn
+[panes] BRAVO  ≥54 exch today · last 1m · +3 since your last turn
+               ↳ asked: fix the camera clipping through the floor when…
+               ↳ bravo: Built — clamped the near plane and re-ran the co…
 ```
 
-26 tokens. 84 ms. Silent when there is nothing to report.
+~50 tokens. 84 ms. Silent when there is nothing to report.
+
+**Both halves, labelled by speaker**, because they answer different questions: *what was it asked to
+do*, and *where has it got to*. The first version showed only the chair's prompt — which mirrors his
+own typing back at him and omits the 199 assistant turns that are the entire reason this hook exists.
+The pane's own latest word is the half that was invisible. It prefers a reply of real length, since
+narrated tool calls leave fragments ("Now let me check the bounds") as the newest entry, and a
+fragment says nothing about where the work stands.
 
 - **Facts, no verdicts** — same law as the gauges. Never "BRAVO is productive," never "you should
   look." A verdict makes the program the judge, which is the thing it exists not to be.
