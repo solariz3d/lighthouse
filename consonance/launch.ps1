@@ -1,65 +1,38 @@
-# launch.ps1 - the Desktop shortcut runs this, so a click ALWAYS gets the current source.
-#   - If the build is already up to date (nothing changed): opens INSTANTLY, no build screen.
-#   - If you changed code: compiles the latest first - clearly, so the window never looks
-#     "stuck" - then launches on its own the moment it finishes.
-#   - Always ends up opening the app, and never locks you out: a failed relink (usually because
-#     Consonance is already open and Windows locks the exe) falls back to the last good build.
+# launch.ps1 - the Desktop shortcut runs this. It opens Consonance INSTANTLY off the built exe.
+#
+# It does NOT compile on click. That was the "doesn't auto open": Consonance lives in a synced
+# repo, so a sync tool bumping a source file's mtime (with no real code change) made the old
+# launcher recompile - up to ~24s of "building" screen - before the window would ever show.
+#
+# The exe is kept current by building after code changes (like BLACKBOX's launcher). If the exe
+# is missing entirely (first run), it builds once and then launches.
 
 $ErrorActionPreference = 'SilentlyContinue'
 $root     = Split-Path -Parent $MyInvocation.MyCommand.Path
-$manifest = Join-Path $root 'src-tauri\Cargo.toml'
 $exe      = Join-Path $root 'src-tauri\target\release\consonance.exe'
 $cargo    = Join-Path $env:USERPROFILE '.cargo\bin\cargo.exe'
+$manifest = Join-Path $root 'src-tauri\Cargo.toml'
 
-# --- Is the built exe already newer than every source file? -----------------------------------
-$sources = @(
-  (Join-Path $root 'src-tauri\src'),
-  (Join-Path $root 'ui'),
-  (Join-Path $root 'src-tauri\Cargo.toml'),
-  (Join-Path $root 'src-tauri\Cargo.lock'),
-  (Join-Path $root 'src-tauri\tauri.conf.json')
-)
-$newestSrc = [datetime]::MinValue
-foreach ($s in $sources) {
-  Get-ChildItem -Path $s -Recurse -File -Force -ErrorAction SilentlyContinue | ForEach-Object {
-    if ($_.LastWriteTime -gt $newestSrc) { $newestSrc = $_.LastWriteTime }
-  }
-}
-$exeExists = Test-Path $exe
-$exeTime   = if ($exeExists) { (Get-Item $exe).LastWriteTime } else { [datetime]::MinValue }
-
-if ($exeExists -and $exeTime -ge $newestSrc) {
-  # Up to date - open immediately, no compile, no build screen.
+if (Test-Path $exe) {
+  # Normal path: open immediately. No build, no wait, no "building" screen.
   Start-Process $exe
   exit 0
 }
 
-# --- Source changed (or first run) - compile the latest, clearly, then launch. ----------------
+# No exe yet (first run only) - build once, clearly, then launch.
 if (Test-Path $cargo) {
-  $host.UI.RawUI.WindowTitle = 'Consonance - compiling latest'
+  $host.UI.RawUI.WindowTitle = 'Consonance - first build'
   Write-Host ''
-  Write-Host '  Your code changed - compiling the latest Consonance build.' -ForegroundColor Cyan
-  Write-Host '  This can take 30s-2min. Leave this window open; it launches automatically' -ForegroundColor DarkGray
-  Write-Host '  the moment the build finishes.' -ForegroundColor DarkGray
+  Write-Host '  No build yet - compiling Consonance once (can take a couple of minutes).' -ForegroundColor Cyan
+  Write-Host '  Leave this window open; it launches automatically the moment it finishes.' -ForegroundColor DarkGray
   Write-Host ''
   & $cargo build --release --manifest-path $manifest
-  if ($LASTEXITCODE -ne 0) {
-    Write-Host ''
-    Write-Host '  Build failed - opening the last good build instead.' -ForegroundColor Yellow
-    Write-Host '  (If Consonance is already open, that is the cause: a running exe cannot be relinked.)' -ForegroundColor DarkGray
-    Start-Sleep -Seconds 3
-  } else {
-    Write-Host '  Build ready - launching.' -ForegroundColor Green
-  }
-} else {
-  Write-Host "cargo not found at $cargo - opening the existing build." -ForegroundColor Yellow
-  Start-Sleep -Seconds 2
 }
 
 if (Test-Path $exe) {
   Start-Process $exe
 } else {
   $host.UI.RawUI.WindowTitle = 'Consonance - no build'
-  Write-Host "No consonance.exe at $exe and the build did not produce one - nothing to start." -ForegroundColor Red
+  Write-Host "No consonance.exe and it could not be built - nothing to start." -ForegroundColor Red
   Start-Sleep -Seconds 8
 }
