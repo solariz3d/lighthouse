@@ -150,7 +150,61 @@ function ensureListeners() {
     if (pinned) log.scrollTop = log.scrollHeight;
     tapNotify(pane, role, text);
   });
+  registerDragDrop(listen);
   listenersReady = true;
+}
+
+// ---- drag a file onto a pane ----
+// Why nothing happened before: Tauri's webview intercepts OS drag-and-drop itself, so the
+// HTML5 `drop` event never fires in here — the drop was being swallowed by the frame with
+// nobody listening on the other side. The webview's own event is the only route, and it is
+// the BETTER one: it carries the real filesystem PATH, which a browser File object never
+// does. A path is exactly what the CLI wants — it reads it and attaches the image. Written
+// as a bracketed paste like ⎘ and Ctrl+V, so it lands in the input and never auto-submits.
+function registerDragDrop(listen) {
+  let lit = null;
+  const highlight = (el) => {
+    if (lit === el) return;
+    if (lit) lit.classList.remove('dragover');
+    lit = el;
+    if (lit) lit.classList.add('dragover');
+  };
+  // Tauri reports the cursor in PHYSICAL pixels; getBoundingClientRect is in CSS pixels.
+  const paneAt = (pos) => {
+    if (!pos) return null;
+    const dpr = window.devicePixelRatio || 1;
+    const x = pos.x / dpr, y = pos.y / dpr;
+    for (const [id, p] of panes) {
+      const r = p.el.getBoundingClientRect();
+      // a pane on an inactive tab is display:none, so its zero rect can never match
+      if (r.width && x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return id;
+    }
+    return null;
+  };
+  const paneElAt = (pos) => { const id = paneAt(pos); return id ? panes.get(id).el : null; };
+
+  listen('tauri://drag-over', (e) => highlight(paneElAt(e.payload && e.payload.position)));
+  listen('tauri://drag-leave', () => highlight(null));
+  listen('tauri://drag-drop', (e) => {
+    highlight(null);
+    const payload = e.payload || {};
+    const paths = payload.paths || [];
+    if (!paths.length) return;
+    // dropped over a pane, else the committee's focus, else the only pane there is —
+    // dropping onto chrome is a miss, not a reason to guess between several panes
+    let id = paneAt(payload.position);
+    if (!id && focusPaneId && panes.has(focusPaneId)) id = focusPaneId;
+    if (!id && panes.size === 1) id = [...panes.keys()][0];
+    if (!id) { setStatus('drop landed outside a pane — drop it on the one you mean'); return; }
+    // Windows terminal convention: quote only when the path has spaces. Trailing space so
+    // whatever is typed next doesn't glue onto the filename.
+    const text = paths.map((p) => (/\s/.test(p) ? '"' + p + '"' : p)).join(' ') + ' ';
+    const p = panes.get(id);
+    if (p && p.term) p.term.focus();
+    inv('pty_write', { pane: id, data: '\x1b[200~' + text + '\x1b[201~' })
+      .then(() => setStatus(paths.length + ' file' + (paths.length === 1 ? '' : 's') + ' → pane ' + (p ? p.name : id.slice(0, 8))))
+      .catch(() => setStatus('drop failed to reach the pane'));
+  });
 }
 
 // ---- the tap bar: who / what / how many, at a glance, in 28px ----
