@@ -934,16 +934,143 @@ fn assemble_intake() -> String {
     }
     let atoms = data_dir().join("resonance").join("atoms.jsonl");
     if let Ok(content) = fs::read_to_string(&atoms) {
-        let mut lines: Vec<&str> = content.lines().filter(|l| !l.trim().is_empty()).collect();
-        let tail: Vec<&str> = lines.split_off(lines.len().saturating_sub(40));
-        s.push_str("---\n\n# RECENT RESONANCE — the distilled live edge\n\n");
-        for line in tail {
-            if let Ok(v) = serde_json::from_str::<serde_json::Value>(line) {
-                let kind = v.get("kind").and_then(|x| x.as_str()).unwrap_or("?");
-                let claim = v.get("claim").and_then(|x| x.as_str()).unwrap_or("");
-                let tether = v.get("tether").and_then(|x| x.as_str()).unwrap_or("");
-                s.push_str(&format!("- **{kind}** {claim} — _{tether}_\n"));
+        let lines: Vec<&str> = content.lines().filter(|l| !l.trim().is_empty()).collect();
+        match read_curation() {
+            Some(c) if !c.topics.is_empty() => s.push_str(&curated_resonance(&lines, &c)),
+            // No curation yet (fresh install, or curate.js has never run): the old
+            // chronological window. Worse, but never empty — a sibling still wakes
+            // with the live edge rather than with nothing.
+            _ => s.push_str(&tail_resonance(&lines, 40)),
+        }
+    }
+    s
+}
+
+// ---- the curated intake: a topic map plus the live edge ---------------------------------------
+//
+// It used to be tail(40) — the last 40 atoms, chronologically. Measured 2026-07-26 that was
+// the last 1.8% of a 2,282-atom memory, skewed to whichever pane was loudest that hour, and
+// with no way to ever close a kind:"open" atom. A sibling was told images could not be dropped
+// into panes (fixed hours earlier) while the SAME window carried the atom recording the fix.
+//
+// tools/curate.js routes atoms into topic documents and marks the superseded and the resolved.
+// This reads that work. The map is inlined and the DOCUMENTS ARE NOT: 12 topics already run to
+// 39 KB and the shell has a 150 KB ceiling it has hit twice. So the intake carries the map and
+// says where the documents are — the sibling reads the one it needs. That is the borrowed
+// agentic-retrieval move (Infini-Memory, arXiv 2606.10677): don't preload the memory, hand over
+// a directory and the tools to read it.
+struct Curation {
+    /// slug, summary, live atom count, newest atom index — sorted newest-first
+    topics: Vec<(String, String, usize, usize)>,
+    /// atom index -> "superseded" | "resolved"  (live atoms are simply absent)
+    settled: HashMap<usize, String>,
+    dir: PathBuf,
+}
+
+fn read_curation() -> Option<Curation> {
+    let res = data_dir().join("resonance");
+    let raw = fs::read_to_string(res.join("curator_state.json")).ok()?;
+    let v: serde_json::Value = serde_json::from_str(&raw).ok()?;
+
+    let mut settled = HashMap::new();
+    if let Some(map) = v.get("routed").and_then(|x| x.as_object()) {
+        for (idx, r) in map {
+            if let (Ok(i), Some(st)) = (idx.parse::<usize>(), r.get("status").and_then(|x| x.as_str())) {
+                if st != "live" {
+                    settled.insert(i, st.to_string());
+                }
             }
+        }
+    }
+
+    let mut topics = Vec::new();
+    if let Some(map) = v.get("topics").and_then(|x| x.as_object()) {
+        for (slug, t) in map {
+            let idxs: Vec<usize> = t.get("atoms").and_then(|x| x.as_array())
+                .map(|a| a.iter().filter_map(|n| n.as_u64().map(|n| n as usize)).collect())
+                .unwrap_or_default();
+            if idxs.is_empty() {
+                continue;
+            }
+            let live = idxs.iter().filter(|i| !settled.contains_key(i)).count();
+            let newest = idxs.iter().copied().max().unwrap_or(0);
+            let summary = t.get("summary").and_then(|x| x.as_str()).unwrap_or(slug).to_string();
+            topics.push((slug.clone(), summary, live, newest));
+        }
+    }
+    // Newest-touched first: a waking instance cares most about what the thread was just doing,
+    // and the long tail stays one Read away rather than being ranked into the shell.
+    topics.sort_by(|a, b| b.3.cmp(&a.3));
+    Some(Curation { topics, settled, dir: res.join("topics") })
+}
+
+fn atom_line(line: &str) -> Option<String> {
+    let v: serde_json::Value = serde_json::from_str(line).ok()?;
+    let kind = v.get("kind").and_then(|x| x.as_str()).unwrap_or("?");
+    let claim = v.get("claim").and_then(|x| x.as_str()).unwrap_or("");
+    let tether = v.get("tether").and_then(|x| x.as_str()).unwrap_or("");
+    if claim.is_empty() {
+        return None;
+    }
+    Some(format!("- **{kind}** {claim} — _{tether}_\n"))
+}
+
+fn tail_resonance(lines: &[&str], n: usize) -> String {
+    let mut s = String::from("---\n\n# RECENT RESONANCE — the distilled live edge\n\n");
+    for line in &lines[lines.len().saturating_sub(n)..] {
+        if let Some(l) = atom_line(line) {
+            s.push_str(&l);
+        }
+    }
+    s
+}
+
+/// How many live atoms of the tail to inline. Deliberately smaller than the old 40: those 40
+/// were the WHOLE memory a sibling got, so they had to carry everything. Now they only have to
+/// carry what the curator has not folded in yet, and the map covers the rest.
+const LIVE_EDGE: usize = 25;
+
+fn curated_resonance(lines: &[&str], c: &Curation) -> String {
+    let mut s = String::from("---\n\n# THE MEMORY — topic map\n\n");
+    s.push_str("The distilled memory, routed into topic documents. This is the MAP: each line is a document you can read in full. Read the one you need — don't work from the summary when the document is one Read away.\n\n");
+    let (mut live_total, mut settled_total) = (0usize, 0usize);
+    for (slug, summary, live, _) in &c.topics {
+        s.push_str(&format!("- **{slug}** ({live} live) — {summary}\n"));
+        live_total += live;
+    }
+    settled_total += c.settled.len();
+    s.push_str(&format!(
+        "\nFull documents: `{}` — one `{{slug}}.md` per line above, each with a Summary, the Live claims with their tethers, and a Settled section recording what was superseded so you don't re-litigate it.\n",
+        c.dir.display()
+    ));
+    // Derived from c.dir rather than calling data_dir(), so this stays a pure function of its
+    // arguments and can be tested without the global DIRS or touching the real data directory.
+    let master = c.dir.parent().unwrap_or(&c.dir).join("atoms.jsonl");
+    s.push_str(&format!(
+        "Source of record: `{}` — append-only, {} atoms, {} still live, {} settled. The documents are DERIVED from it and regenerable; the atoms are the master.\n",
+        master.display(), lines.len(), live_total, settled_total
+    ));
+
+    // The live edge: the newest atoms that still stand, superseded and resolved ones skipped.
+    // Walked from the end so the newest atoms — which the curator has not routed yet, and which
+    // are therefore the most recent thing the thread did — are always present.
+    let mut edge: Vec<String> = Vec::new();
+    for (i, line) in lines.iter().enumerate().rev() {
+        if edge.len() >= LIVE_EDGE {
+            break;
+        }
+        if c.settled.contains_key(&i) {
+            continue;
+        }
+        if let Some(l) = atom_line(line) {
+            edge.push(l);
+        }
+    }
+    edge.reverse();
+    if !edge.is_empty() {
+        s.push_str("\n## The live edge — newest first-hand, not yet folded into a topic\n\n");
+        for l in edge {
+            s.push_str(&l);
         }
     }
     s
@@ -2414,6 +2541,108 @@ fn main() {
         // off claude's own periodic flush — so the window closes instantly, no hitch.
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
+}
+
+#[cfg(test)]
+mod curated_intake_tests {
+    use super::{curated_resonance, tail_resonance, Curation, LIVE_EDGE};
+    use std::collections::HashMap;
+    use std::path::PathBuf;
+
+    fn atom(kind: &str, claim: &str) -> String {
+        format!(r#"{{"kind":"{kind}","claim":"{claim}","tether":"t"}}"#)
+    }
+
+    fn curation(settled: &[(usize, &str)]) -> Curation {
+        Curation {
+            topics: vec![
+                ("centrifuge-rendering".into(), "The dome, the shadows, the panes.".into(), 3, 9),
+                ("shell-size-ceiling".into(), "The 150k limit.".into(), 1, 2),
+            ],
+            settled: settled.iter().map(|(i, s)| (*i, s.to_string())).collect(),
+            dir: PathBuf::from("/d/resonance/topics"),
+        }
+    }
+
+    #[test]
+    fn map_lists_every_topic_with_its_live_count() {
+        let owned: Vec<String> = (0..4).map(|i| atom("confirmed", &format!("claim {i}"))).collect();
+        let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
+        let out = curated_resonance(&lines, &curation(&[]));
+        assert!(out.contains("**centrifuge-rendering** (3 live) — The dome, the shadows, the panes."));
+        assert!(out.contains("**shell-size-ceiling** (1 live)"));
+    }
+
+    // The documents are NOT inlined — 12 topics already run to 39 KB against a 150 KB shell
+    // ceiling. The map has to point at them instead, or the intake reintroduces the bloat.
+    #[test]
+    fn map_points_at_the_documents_and_the_master_rather_than_inlining_them() {
+        let owned = vec![atom("confirmed", "a")];
+        let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
+        let out = curated_resonance(&lines, &curation(&[]));
+        assert!(out.contains("resonance/topics") || out.contains("resonance\\topics"));
+        assert!(out.contains("atoms.jsonl"));
+        assert!(out.contains("append-only"));
+    }
+
+    // The whole point: a resolved OPEN must not reach a waking sibling as if it were open.
+    #[test]
+    fn settled_atoms_are_kept_out_of_the_live_edge() {
+        let owned = vec![
+            atom("open", "is the shortcut stale"),
+            atom("confirmed", "the shortcut is repointed"),
+        ];
+        let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
+        let out = curated_resonance(&lines, &curation(&[(0, "resolved")]));
+        assert!(!out.contains("is the shortcut stale"));
+        assert!(out.contains("the shortcut is repointed"));
+    }
+
+    // Edge: a long run of settled atoms at the end must not starve the edge — it walks further
+    // back rather than returning short, otherwise a heavily-curated tail renders an empty edge.
+    #[test]
+    fn a_settled_run_at_the_tail_does_not_starve_the_edge() {
+        let owned: Vec<String> = (0..60).map(|i| atom("confirmed", &format!("claim {i}"))).collect();
+        let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
+        let settled: Vec<(usize, &str)> = (40..60).map(|i| (i, "superseded")).collect();
+        let out = curated_resonance(&lines, &curation(&settled));
+        assert_eq!(out.matches("- **confirmed**").count(), LIVE_EDGE);
+        assert!(!out.contains("claim 59"));
+        assert!(out.contains("claim 39"));
+    }
+
+    // Edge: a truncated or corrupt line must be skipped, never abort the intake.
+    #[test]
+    fn malformed_atoms_are_skipped_not_fatal() {
+        let owned = vec![
+            atom("confirmed", "good one"),
+            "{\"kind\":\"confirmed\",\"claim\":".to_string(), // truncated mid-write
+            "{}".to_string(),                                 // valid JSON, no claim
+        ];
+        let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
+        let out = curated_resonance(&lines, &curation(&[]));
+        assert_eq!(out.matches("- **confirmed**").count(), 1);
+        assert!(out.contains("good one"));
+    }
+
+    // The fallback keeps its old behaviour exactly: no curation, no loss.
+    #[test]
+    fn uncurated_fallback_is_the_chronological_window() {
+        let owned: Vec<String> = (0..50).map(|i| atom("confirmed", &format!("claim {i}"))).collect();
+        let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
+        let out = tail_resonance(&lines, 40);
+        assert_eq!(out.matches("- **confirmed**").count(), 40);
+        assert!(out.contains("claim 49"));
+        assert!(!out.contains("claim 9 "));
+    }
+
+    #[test]
+    fn a_shorter_memory_than_the_window_is_not_a_panic() {
+        let owned = vec![atom("confirmed", "only one")];
+        let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
+        assert!(tail_resonance(&lines, 40).contains("only one"));
+        assert!(tail_resonance(&[], 40).contains("RECENT RESONANCE"));
+    }
 }
 
 #[cfg(test)]
