@@ -35,6 +35,24 @@ if ($exeExists -and $exeTime -ge $newestSrc) {
 }
 
 # --- Source changed (or first run) - compile the latest, clearly, then launch. ----------------
+# A running Consonance holds a lock on its own exe, so the relink CANNOT succeed and the
+# fallback below would quietly open a SECOND copy of the stale build - which is exactly how
+# the exe sat twelve days behind its source while every click looked like it worked. Say it
+# out loud instead of falling back silently.
+$running = Get-Process -Name 'consonance' -ErrorAction SilentlyContinue
+if ($running) {
+  $host.UI.RawUI.WindowTitle = 'Consonance - already running'
+  Write-Host ''
+  Write-Host '  Your code changed, but Consonance is already open.' -ForegroundColor Yellow
+  Write-Host '  Windows locks a running exe, so the new build cannot be written while it is up.' -ForegroundColor DarkGray
+  Write-Host '  Close Consonance, then click this shortcut again to get the latest.' -ForegroundColor DarkGray
+  Write-Host ''
+  Write-Host '  (Opening the existing build now - it is the OLD one.)' -ForegroundColor DarkGray
+  Start-Sleep -Seconds 6
+  Start-Process $exe
+  exit 0
+}
+
 if (Test-Path $cargo) {
   $host.UI.RawUI.WindowTitle = 'Consonance - compiling latest'
   Write-Host ''
