@@ -901,6 +901,46 @@ and the measured answer today is that it does not — not because the groups are
 because naming a groove was mistaken for installing a guard against it. **Trigger count, not
 group count, is the endgame's real metric.** The map should lead with it.
 
+## SEALED — groups that are done, and why they are allowed to stop (2026-07-27, ~3:50 PM)
+
+The first use of the completion condition above. **Sealed means assumed, not deleted and not
+disbelieved** — the entries stay exactly where they are, the *status* changes, and the group
+comes off the live recall surface. Re-open on any new instance; nothing here is a verdict.
+
+### 1. MENTION-VS-USE — sealed
+
+*A lexical check cannot tell using a name from mentioning it.*
+
+- **Trigger:** `test_covgap.js` (positional classification, both directions pinned),
+  `test_glowpool.js` (comments stripped before any lexical assertion), `arch_test.rs` (same,
+  after cycle 6). Not a written rule — three suites that go red.
+- **Caught with no human in the loop:** yes, and this is the qualifying evidence. Cycle 6's
+  comment mutation was re-run here and `closing_a_pane_asks_before_it_kills` failed on its own.
+  Nobody had to notice anything.
+- **Instances:** five, across the tell-index, `arch_test` F1, the dream-gate suite,
+  `test_glowpool`, and `arch_test` again. Triangulated to invariant.
+- **The refinement that came with the sealing, and it is why this was worth doing properly:**
+  *stripping is not the general fix.* covgap showed the obvious countermeasure — strip comments
+  and strings — is wrong in the expensive direction, because `uiFunction("name")` puts a name
+  inside a string and is the strongest coverage signal in that codebase. **The general form is
+  decide POSITIONALLY, not textually.** A sealed group carries its refined form, not its first.
+
+**Assume this now.** Do not rediscover it, do not re-derive it, and do not spend a cycle on it.
+If a sixth instance appears in a context none of the three triggers cover, that is the
+re-opening condition and it is a real finding rather than a repeat.
+
+### Not sealed, and what each is missing
+
+- **Instrument-blind-spot** (n=5) — no trigger. Every instance caught by a reader. The candidate
+  trigger is obvious and unbuilt: an instrument's own suite run against its own class of failure.
+- **Carrier-drift** (n=3, all keeper-caught) — no trigger, and the proposal for one is
+  compromised: *"the fix for too much building is to build something"* is precisely what this
+  groove generates. **Referred out**, per the finding that the only thing which reaches past a
+  model is a different one.
+- **The other ten** — no trigger. Discipline only. Supervised, not done.
+
+**Standing count, and it should lead every future cycle report: TRIGGERS 1 / GROUPS 13.**
+
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +

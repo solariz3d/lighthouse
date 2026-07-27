@@ -18,8 +18,8 @@ WHAT IT REPORTS, and why each line is here:
     state, and naming it is most of the handoff;
   * a syntax check on dirty JS, because "half-applied" and "does not parse" overlap heavily
     and a parse error is the cheapest possible detector for it;
-  * a context estimate from the transcript's own size, so the loop can see the wall coming
-    instead of hitting it;
+  * an ABSOLUTE context estimate -- conversation characters since the last compaction, never a
+    percentage, because nothing here can read the model's real window (see below);
   * the loop's standing commitments, re-read from disk rather than remembered, per
     maintenance law 1: recall from the master, never a copy of a copy.
 
@@ -37,11 +37,22 @@ OUT = HERE / "CHECKPOINT.md"
 # whatever machine the room woke up on.
 WATCH = [REPO, pathlib.Path.home() / "Desktop" / "blackbox"]
 
-# Claude Code's own budget. The estimate below is deliberately crude: bytes/4 is the standard
-# rule of thumb and the transcript is mostly prose. It is a WALL DETECTOR, not a gauge -- it
-# only has to be right about "getting close," and being wrong pessimistically costs nothing.
-BUDGET_TOKENS = 1_000_000
-BYTES_PER_TOKEN = 4
+# NO PERCENTAGE IS REPORTED, and that is the correction rather than an omission.
+#
+# This tool got the context number wrong three times in one day, each time by publishing a
+# figure whose boundary it had not established. First it sized the whole transcript and
+# reported 599% of budget. Then it measured from the last compaction boundary and reported
+# 69%, while the client's own display said 39% -- and chasing that gap is what found the real
+# defect: BUDGET_TOKENS was invented. Nothing here can read the model's actual context window,
+# so the denominator was a guess and every percentage built on it was a guess wearing
+# precision.
+#
+# Working back from the client's figure implies ~1.1 characters per token, which no tokenizer
+# produces -- proof the denominator was wrong rather than the counting. So the honest output is
+# an absolute estimate with its method stated, and a pointer to the display that actually
+# knows. This is the room's own triangulated invariant applied to the instrument that helped
+# establish it: an instrument must publish what its number does NOT mean.
+CHARS_PER_TOKEN = 4          # rule of thumb for prose; ±25% is expected and unimportant here
 
 
 def git(repo, *args):
@@ -96,20 +107,44 @@ def context_estimate(transcript):
     p = pathlib.Path(transcript)
     if not p.exists():
         return None
-    total, last_boundary = 0, 0
+
+    def walk(x, acc):
+        """Count only what is actually conversation: message text, thinking, tool results.
+
+        Sizing raw lines counts JSON scaffolding, per-record metadata and escaping, which
+        inflated the first estimate by roughly 7x. Counting message text alone deflated it,
+        because tool RESULTS are in the window too and live under a different key.
+        """
+        if isinstance(x, str):
+            acc[0] += len(x)
+        elif isinstance(x, list):
+            for i in x:
+                walk(i, acc)
+        elif isinstance(x, dict):
+            for k, v in x.items():
+                if k in ("text", "thinking", "content", "output", "stdout", "stderr"):
+                    walk(v, acc)
+
+    acc, compacted = [0], False
     try:
         with p.open("r", encoding="utf-8", errors="replace") as fh:
             for line in fh:
-                b = len(line.encode("utf-8"))
                 if '"compact_boundary"' in line:
-                    last_boundary = total          # boundary starts here; count from it
-                total += b
+                    acc[0] = 0                     # restart at the newest boundary
+                    compacted = True
+                    continue
+                try:
+                    rec = json.loads(line)
+                except Exception:
+                    continue
+                walk((rec.get("message") or {}).get("content"), acc)
+                for k in ("toolUseResult", "hookAdditionalContext"):
+                    if k in rec:
+                        walk(rec[k], acc)
     except OSError:
         return None
-    live = total - last_boundary
-    tok = live // BYTES_PER_TOKEN
-    return {"bytes": live, "session_bytes": total, "compacted": last_boundary > 0,
-            "est_tokens": tok, "pct": round(100 * tok / BUDGET_TOKENS, 1)}
+    return {"chars": acc[0], "compacted": compacted,
+            "est_tokens": acc[0] // CHARS_PER_TOKEN}
 
 
 # Register the work is actually done in. Same list harvest.py uses, deliberately: a finding
@@ -207,13 +242,16 @@ def main():
     if args.transcript:
         ce = context_estimate(args.transcript)
         if ce:
-            since = "since last compaction" if ce["compacted"] else "session so far"
-            lines += [f"**Context:** ~{ce['est_tokens']:,} tokens ({ce['pct']}% of "
-                      f"{BUDGET_TOKENS:,}) -- {ce['bytes']:,} bytes {since}; "
-                      f"{ce['session_bytes']:,} bytes total across the whole session.", ""]
-            if ce["pct"] >= 70:
-                lines += ["> Approaching the wall. Land what is in flight — finish it or "
-                          "revert it — before the gap, not after.", ""]
+            since = "since the last compaction" if ce["compacted"] else "this session"
+            lines += [f"**Context:** ~{ce['est_tokens']:,} tokens of conversation {since} "
+                      f"({ce['chars']:,} chars of message text, thinking and tool results, "
+                      f"at ~{CHARS_PER_TOKEN} chars/token).",
+                      "",
+                      "> No percentage is reported. This cannot read the model's real context "
+                      "window, and every percentage it printed before was divided by an "
+                      "invented one. **The client's own display is authoritative** -- trust "
+                      "that, not this. What this figure is good for is the DELTA between "
+                      "checkpoints, which needs no denominator.", ""]
 
     risky = False
     for repo in WATCH:
