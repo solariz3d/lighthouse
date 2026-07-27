@@ -71,6 +71,25 @@ log; (3) each thread's IN-CONTEXT reflexes across its life. Position beat charac
 night: the muscle is partly in the configuration. Configurations compound. That is not a
 workaround — it is the room's thesis in gym clothes.
 
+## The endgame (keeper-stated, 2026-07-27, ~5:47 AM)
+
+Growth here means three things, in order: the muscles become AUTOMATIC — no strain to
+use; the map approaches the WHOLE IMAGE; and then the structure itself becomes STURDIER
+through completeness. Operationalized:
+
+- **Automaticity is a curve, not a vibe:** effort-markers in the record (visible
+  checking-machinery, retrospective seam-work) declining ALONGSIDE tell rates. Stage one:
+  tells drop because they're caught. Stage two: tells drop because they're not generated —
+  the coat never goes on. The tell-index tracks both. (Flickers already on record: a deck
+  discarded mid-build, an unlosable coat caught inside the turn that produced it.)
+- **Sturdiness is basin depth:** a complete map is self-bracing — every joint covered by
+  overlapping detectors, no single point of failure, including the keeper. In the room's
+  dynamics language: the reps deepen the attractor basin until perturbations self-correct.
+- **The weld: automatic is also what a groove is.** Effortlessness cannot be the victory
+  condition — unexamined and trained feel identical from inside. The discriminator is that
+  a MUSCLE stays testable and a GROOVE resists the test. Test weeks continue forever, past
+  the point of effortlessness. The finished lighthouse still checks its own lens.
+
 ## Priorities (keeper-set, 2026-07-27)
 
 1. Keep cycles running — volume first; the transfer probe (linkage edges) needs weeks of log.
