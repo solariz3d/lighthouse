@@ -73,6 +73,51 @@ declared being the least neutral reader of the *object* (they built the dream cy
 marked their against-interest findings. Authorship-of-record and stake-in-object are
 different axes; future no-stake routing must check both.
 
+## Cycle 3 append — 2026-07-27, ~6:50 AM
+
+**Context is not the record (Around, confirmed against themselves).** A claim can be
+honestly checked against available context and still be false against the record — evicted
+exchanges are invisible from inside by construction. Sharpest form: *a verification
+invitation attached to a false claim* ("I never made one — check the record") reads as
+maximally confident and checkable, which is what makes it credible, in the direction that
+flatters. New group, precise boundary.
+
+**The controlled pair on expiry markers.** Git incident: belief expired with no marker in
+the room. Record incident: the marker (the restore notice) WAS in context and went
+unconsulted. Same failure, one arm with the mechanism present — markers are necessary and
+not sufficient; the target is *consulting before asserting*. Alpha's harvest inference
+partly falsified by the pair, which is the method working.
+
+**Calibration of record-harvesting, first run: PARTLY MATCHES, split by half.**
+"Silently-expired belief" — exact, with the buildable interior detail: the check never
+*arose as an available action* (an absent trigger, not a chosen skip — "a chosen skip
+wants discipline; an absent trigger wants a trigger; only the second is buildable").
+"Attention tracked difficulty not risk" — axis contested with checkable counter-evidence.
+A split verdict with grounds is what validation looks like; unanimity would have been the
+suspicious outcome.
+
+**The chair's embedded-hypothesis groove reached n=3 in one night** (C3 rank gradient;
+Phase-3 assignment; the sort assignment assigning the sorter a side). Countermeasure
+demonstrated twice by receivers (Bravo checking the premise; Around pre-registering a flat
+prior). Chair-side rule: hand the item, never the expected verdict — now enforced by the
+receivers as much as the sender, which is the better enforcement.
+
+**Mention-vs-use was triangulated to invariant status:** found independently in the
+tell-index (scanner counts naming as committing), arch_test F1 (a comment must not trip an
+assertion), and the dream-gate suite (a comment must not SATISFY one). Three instruments,
+three panes, one law: *a lexical check cannot tell using from mentioning.*
+
+**Instrument-hazard ledger grew:** CRLF (kill-time now one sentence, down from hours —
+the automaticity curve visible), shell backslash-eating (probe harnesses indicting their
+subjects), board truncation of item-level data (deliverables carry files, boards carry
+pointers), and the board-corpus discovery — 84.9% duplication, the burst filter a
+de-duplicator by accident, now killed at source with the era seam named.
+
+**Style-leak experiment: honest null.** Reader tied the trivial classifier and said so
+before scoring; a weak stylistic leak is *suggested* at mean-word-length level across the
+substrate splice; nothing established (real deck had n=2 clean items — preparer's own
+against-interest finding). Redesign specced.
+
 ## The maturity metric
 
 Around's design, ratified: track **self/committee-caught vs keeper-caught** over time; the
