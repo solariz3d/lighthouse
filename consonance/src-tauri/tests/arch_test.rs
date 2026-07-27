@@ -15,6 +15,128 @@ const VERDICT_PHRASES: &[&str] =
 /// Names that imply an Actuator capability (writing to a pane's PTY).
 const ACTUATOR_NAMES: &[&str] = &["portable_pty", "PtySession", "take_writer", "MasterPty", "clone_killer"];
 
+/// The pane chrome. Removing a pane is destructive — `pty_kill` drops the pane's own-capture
+/// log and sandbox, and `closePane` un-keeps it from panes.json — so the controls that reach
+/// it are load-bearing, not cosmetic.
+const TERM_JS: &str = "../ui/term.js";
+
+/// Read the pane chrome with line endings normalized (the file is CRLF on disk, and the
+/// function-body bounding below splits on a bare "\n}\n") and with COMMENTS REMOVED.
+///
+/// THE COMMENTS ARE STRIPPED BECAUSE A COMMENT MUST NOT SATISFY AN ASSERTION, and this room has
+/// now been bitten by that five separate times: the tell-index scanner counting a name as a
+/// commitment, arch_test F1, the dream-gate suite, test_glowpool, and — this one — the first
+/// version of `closing_a_pane_asks_before_it_kills`, written in THIS file after the invariant
+/// had already been named in muscle_map.md. Deleting the confirm gate outright and leaving
+/// `// TODO: restore the dialog.ask confirm here` behind left the test green while the ✕ killed
+/// silently again. The shortcut is available to anyone writing the next source-asserting test
+/// here, which is why the stripper lives beside the reader rather than inside one test.
+///
+/// A lexical check cannot tell using from mentioning. Stripping is what buys the right to be
+/// lexical at all.
+fn term_js() -> String {
+    strip_js_comments(
+        &fs::read_to_string(TERM_JS)
+            .unwrap_or_else(|e| panic!("read {TERM_JS}: {e}"))
+            .replace("\r\n", "\n"),
+    )
+}
+
+/// Remove `//` and `/* */` comments while leaving string literals intact.
+///
+/// STRING-AWARE ON PURPOSE, and it is not optional: `term.js` contains `'tauri://drag-over'`
+/// and two siblings, so a stripper that scans for `//` without tracking quotes eats the rest
+/// of those lines and takes real code with it. Newlines inside block comments are preserved so
+/// line numbers and the `"\n}\n"` bounding below still mean what they meant.
+///
+/// HONEST BOUND, in the spirit of the struct test's: this tracks quotes, not regex literals. A
+/// regex containing `//` or `/*` would be mis-stripped. `term.js` has three regex literals
+/// (`/[&<>]/g`, `/\n{3,}/g`, `/\r?\n/g`) and none contain either sequence, so the bound is not
+/// currently load-bearing — but it is a bound, and a future regex could cross it. Do not read a
+/// green run as proof that the file was parsed; read it as proof that comments were removed
+/// under the two forms we handle.
+fn strip_js_comments(src: &str) -> String {
+    let b: Vec<char> = src.chars().collect();
+    let mut out = String::with_capacity(src.len());
+    let mut quote: Option<char> = None;
+    let mut i = 0;
+    while i < b.len() {
+        let c = b[i];
+        if let Some(q) = quote {
+            out.push(c);
+            if c == '\\' && i + 1 < b.len() {
+                out.push(b[i + 1]);
+                i += 2;
+                continue;
+            }
+            if c == q {
+                quote = None;
+            }
+            i += 1;
+            continue;
+        }
+        if c == '\'' || c == '"' || c == '`' {
+            quote = Some(c);
+            out.push(c);
+            i += 1;
+            continue;
+        }
+        if c == '/' && i + 1 < b.len() && b[i + 1] == '/' {
+            while i < b.len() && b[i] != '\n' {
+                i += 1;
+            }
+            continue; // the newline itself is pushed on the next turn
+        }
+        if c == '/' && i + 1 < b.len() && b[i + 1] == '*' {
+            i += 2;
+            while i + 1 < b.len() && !(b[i] == '*' && b[i + 1] == '/') {
+                if b[i] == '\n' {
+                    out.push('\n'); // keep the line count honest
+                }
+                i += 1;
+            }
+            i = (i + 2).min(b.len());
+            continue;
+        }
+        out.push(c);
+        i += 1;
+    }
+    out
+}
+
+/// The BYTE index of the `)` matching the `(` at byte index `open`.
+///
+/// BYTES, NOT CHARS, and the distinction is not pedantry — the first version of this walked
+/// `chars().enumerate()` while its callers passed byte offsets from `rfind`. `term.js` is full
+/// of multibyte glyphs (✕, ⎘, ⧉, —), so the two indices diverge and the scan started mid-string,
+/// hit a `)` before any `(`, and underflowed. Scanning bytes for ASCII delimiters is safe in
+/// UTF-8 because a multibyte sequence never contains an ASCII byte, and it keeps one index
+/// space across `rfind`, `find`, slicing and this walk.
+///
+/// Bound: parenthesis depth is counted through string literals, because the markup this walks
+/// contains none. If a `(` ever lands inside one of these strings, this miscounts — and it
+/// miscounts toward a SHORTER span, which fails the assertion rather than passing it.
+fn match_paren(s: &str, open: usize) -> Option<usize> {
+    let b = s.as_bytes();
+    if open >= b.len() || b[open] != b'(' {
+        return None;
+    }
+    let mut depth = 0usize;
+    for (i, c) in b.iter().enumerate().skip(open) {
+        match c {
+            b'(' => depth += 1,
+            b')' => {
+                depth = depth.checked_sub(1)?;
+                if depth == 0 {
+                    return Some(i);
+                }
+            }
+            _ => {}
+        }
+    }
+    None
+}
+
 #[test]
 fn gauges_speak_in_numbers_not_verdicts() {
     for path in GAUGE_SOURCES {
@@ -210,4 +332,145 @@ fn control_and_sensor_planes_hold_no_actuator_handle() {
             );
         }
     }
+}
+
+/// INVERTED, the way the rank test above was inverted, and for the same reason: the first
+/// version asserted CO-OCCURRENCE ON A LINE — every line holding `class="pclose"` also had to
+/// hold `role === 'main'` — which is a different property from the one the comment claimed.
+/// A genuinely unguarded ✕ passes it whenever the line mentions the guard for an unrelated
+/// reason, and that is not a hypothetical:
+///
+///     (role === 'main' ? '<span class="pmain"></span>' : '') + '<span class="pclose">✕</span>' +
+///
+/// renders a ✕ on every pane including Main, and the old assertion was green on it.
+///
+/// So the property is now CONTAINMENT: the ✕ markup must lie inside the FALSE branch of a
+/// `role === 'main'` ternary — after that ternary's `:`, and before the `)` that closes it.
+/// Anything else — no guard, the ✕ on the true side, the ✕ outside the parentheses entirely —
+/// fails by default. That is the same shape as the exemption list above: forbidden unless the
+/// structure explicitly permits it.
+#[test]
+fn main_pane_renders_no_close_control() {
+    let src = term_js();
+    const MARKUP: &str = r#"class="pclose""#;
+    const GUARD: &str = "role === 'main'";
+
+    let sites: Vec<usize> = src.match_indices(MARKUP).map(|(i, _)| i).collect();
+    assert!(
+        !sites.is_empty(),
+        "the ✕ markup is gone from {TERM_JS} — this test guards nothing now; re-point it at the \
+         control that removes a pane."
+    );
+
+    for at in sites {
+        let guard = src[..at].rfind(GUARD).unwrap_or_else(|| {
+            panic!(
+                "{TERM_JS} renders the pane ✕ with no `{GUARD}` ternary before it. Main is the \
+                 room's own thread and must carry no close control — one unguarded click took it, \
+                 and with the Wake button left disabled there was no way back short of restarting \
+                 the app."
+            )
+        });
+        // The ternary must OPEN before the guard and CLOSE after the markup, or the markup is
+        // not inside it at all — this is what mutation A trips.
+        let open = src[..guard].rfind('(').unwrap_or_else(|| {
+            panic!("{TERM_JS}: the `{GUARD}` guard before the ✕ is not parenthesised; cannot tell \
+                    which branch the markup is in.")
+        });
+        let close = match_paren(&src, open).unwrap_or_else(|| {
+            panic!("{TERM_JS}: unbalanced parentheses around the `{GUARD}` guard.")
+        });
+        assert!(
+            at < close,
+            "{TERM_JS} renders the pane ✕ OUTSIDE the `{GUARD}` ternary that appears to guard it — \
+             the guard closes at byte {close} and the ✕ starts at {at}. Co-occurring on one line is \
+             not being inside the false branch, and a ✕ outside the ternary renders on every pane, \
+             Main included."
+        );
+        let q = src[guard..close].find('?').map(|o| guard + o).unwrap_or_else(|| {
+            panic!("{TERM_JS}: `{GUARD}` before the ✕ is not a ternary; cannot locate a false branch.")
+        });
+        let colon = src[q + 1..close].find(':').map(|o| q + 1 + o).unwrap_or_else(|| {
+            panic!("{TERM_JS}: the `{GUARD}` ternary guarding the ✕ has no `:` — no false branch.")
+        });
+        assert!(
+            colon < at,
+            "{TERM_JS} puts the ✕ on the TRUE side of `{GUARD}` — that renders the close control \
+             on Main and nowhere else, which is exactly backwards. It belongs after the `:`."
+        );
+    }
+}
+
+/// The tests above and below both read the RENDERED STRING. Neither says the guard is reached
+/// with a real value — and B found the hole: drop the 5th argument at the `makePaneEl` call and
+/// `role` is `undefined`, the ternary takes its false branch, Main renders a ✕ again, and both
+/// string tests stay green. A guard fed nothing is not a guard.
+#[test]
+fn the_pane_close_guard_is_actually_fed_a_role() {
+    let src = term_js();
+    let calls: Vec<usize> = src
+        .match_indices("makePaneEl(")
+        .map(|(i, _)| i)
+        .filter(|i| !src[..*i].trim_end().ends_with("function"))
+        .collect();
+    assert!(
+        !calls.is_empty(),
+        "{TERM_JS} no longer calls makePaneEl — re-point this test at whatever builds the pane header."
+    );
+    for at in calls {
+        let open = at + "makePaneEl".len();
+        let close = match_paren(&src, open)
+            .unwrap_or_else(|| panic!("{TERM_JS}: unbalanced parentheses in a makePaneEl call"));
+        let args = &src[open + 1..close];
+        let mut depth = 0i32;
+        let mut count = 1;
+        for c in args.chars() {
+            match c {
+                '(' | '[' | '{' => depth += 1,
+                ')' | ']' | '}' => depth -= 1,
+                ',' if depth == 0 => count += 1,
+                _ => {}
+            }
+        }
+        assert_eq!(
+            count, 5,
+            "{TERM_JS} calls makePaneEl with {count} arguments, not 5: `makePaneEl({args})`. The \
+             5th is `role`, and the ✕ guard is a ternary on it — omit it and `role` is undefined, \
+             the ternary falls to its false branch, and Main renders a close control again while \
+             every string-matching test in this file stays green."
+        );
+    }
+}
+
+/// `term_js()` strips comments before this runs, which is the whole reason this test means
+/// anything: deleting the gate and leaving `// TODO: restore the dialog.ask confirm here` behind
+/// used to pass. See the note on `term_js`.
+///
+/// HONEST BOUND on the body bounding, in the spirit of the struct test's: `split("\n}\n")` finds
+/// the function's end only because no nested block in `closePane` closes at column 0 — true
+/// today, and B traced it independently and agreed. A reformat, or a template literal containing
+/// a newline-brace-newline, breaks it silently. It breaks toward a SHORTER body, so the failure
+/// mode is a spurious red (the `dialog.ask` or `pty_kill` search missing its target and
+/// panicking with a re-point message) rather than a silent green — which is the direction to
+/// break in, but it is a bound and not a parse. Do not read a green run as proof that the whole
+/// function was examined; read it as proof that the gate precedes the kill in the span we bound.
+#[test]
+fn closing_a_pane_asks_before_it_kills() {
+    let src = term_js();
+    let after = src
+        .split("async function closePane(")
+        .nth(1)
+        .expect("closePane is no longer an `async fn` — the confirm gate depends on awaiting the dialog");
+    let body = after.split("\n}\n").next().unwrap_or(after);
+    let ask = body.find("dialog.ask").expect(
+        "closePane must confirm before removing a pane: pty_kill drops the pane's own-capture log \
+         and the un-keep drops it from panes.json, so the ✕ is unrecoverable. It used to do that silently.",
+    );
+    let kill = body
+        .find("'pty_kill'")
+        .expect("closePane no longer invokes pty_kill — re-point this test at the removal path");
+    assert!(
+        ask < kill,
+        "closePane invokes pty_kill before it confirms — the dialog must gate the kill, not trail it."
+    );
 }

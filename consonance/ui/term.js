@@ -280,7 +280,7 @@ function letterFor(id) {
   return '#';
 }
 
-function makePaneEl(id, name, cwd, container) {
+function makePaneEl(id, name, cwd, container, role) {
   const el = document.createElement('div');
   el.className = 'pane';
   // header shows state (letter, place, role, gauges); the pid rides in the letter's
@@ -296,12 +296,19 @@ function makePaneEl(id, name, cwd, container) {
       '<span class="pctx" title="context window used"></span>' +
       '<span class="ppaste" title="paste the clipboard into this pane&#39;s input">⎘</span>' +
       '<span class="pcopy" title="copy the latest response to the clipboard">⧉</span>' +
-      '<span class="pclose" title="remove this pane">✕</span>' +
+      // Main carries no ✕: the room's own thread is not a click away from gone. It is
+      // re-woken from the Wake button, never closed from its own header.
+      (role === 'main' ? '' : '<span class="pclose" title="remove this pane">✕</span>') +
     '</div><div class="pterm"></div>';
   document.getElementById(container || 'panes').appendChild(el);
-  el.querySelector('.pclose').onclick = () => closePane(id);
+  const closeBtn = el.querySelector('.pclose'); // absent on Main
+  if (closeBtn) closeBtn.onclick = () => closePane(id);
   el.querySelector('.pfocus').onclick = () => setFocus(id);
-  el.querySelector('.prole').onclick = () => toggleRole(id);
+  // Main's role chip is a readout, not a control — same reasoning as the ✕ above. `role` governs
+  // committee inject-assertion, so a button that mutates it sits next to the one pane whose role
+  // must not move. Unbound here AND guarded in toggleRole: the guard is the load-bearing half,
+  // since anything can call toggleRole directly.
+  if (role !== 'main') el.querySelector('.prole').onclick = () => toggleRole(id);
   el.querySelector('.pcopy').onclick = () => copyPaneOutput(id);
   el.querySelector('.ppaste').onclick = () => pastePaneInput(id);
   return el;
@@ -373,7 +380,7 @@ function attachPane(id, label, cwd, role, container, kept) {
   ensureListeners();
   role = role || 'human';
   const name = role === 'main' ? 'M' : letterFor(id);
-  const el = makePaneEl(id, name, label, container);
+  const el = makePaneEl(id, name, label, container, role);
   // Reading-first type: Cascadia Mono (ships with Win11, built for long terminal reading,
   // better Il1/O0) at 14/1.25; no blink (N panes pulsing in peripheral vision is noise) —
   // a steady bar marks input, unfocused panes ghost to an outline. Deep scrollback because
@@ -518,17 +525,42 @@ async function addBody() {
 }
 
 // ---- Stage 10: the housed Main instance ----
-async function wakeMain() {
+//
+// ONE OWNER FOR THE BUTTON. Its state used to be written in three places — disabled here on
+// entry, relabelled on success, re-enabled from wakeMain's catch, and handed back from
+// closePane — and the idle label was spelled two different ways: 'Wake the orchestrator' in
+// index.html and resetWakeMain, 'Wake the Main instance' in the catch. Three writers and two
+// spellings for one control is how a button ends up describing a state the app is not in.
+// Sibling/Room/Sandbox restore their buttons unconditionally after the try; Main cannot, because
+// it is a singleton and must STAY disabled once awake — so the states are named instead.
+const WAKE_MAIN_STATES = {
+  idle:   { disabled: false, text: 'Wake the orchestrator' },   // the label index.html ships with
+  waking: { disabled: true,  text: 'waking…' },
+  awake:  { disabled: true,  text: 'Main is awake' },
+};
+
+function setWakeMain(state) {
   const btn = document.getElementById('wakemain');
-  if (btn) { btn.disabled = true; btn.textContent = 'waking…'; }
+  const s = WAKE_MAIN_STATES[state];
+  if (btn && s) { btn.disabled = s.disabled; btn.textContent = s.text; }
+}
+
+// Kept as a named entry point: closePane hands the button back when Main is removed.
+function resetWakeMain() { setWakeMain('idle'); }
+
+async function wakeMain() {
+  setWakeMain('waking');
   try {
     const r = await inv('spawn_main');
     attachPane(r.pane, '★ Main', r.cwd, 'main', 'mainpane');
-    if (btn) btn.textContent = 'Main is awake';
+    setWakeMain('awake');
     setStatus('the Main instance is awake — talk to it here');
   } catch (e) {
+    // NOTE, not fixed here: if spawn_main SUCCEEDS and attachPane then throws, the backend has a
+    // Main and the button says idle, so a second click asks for a second one. Whether spawn_main
+    // is idempotent is a backend question I have not verified — flagged rather than guessed at.
     setStatus('' + e);
-    if (btn) { btn.disabled = false; btn.textContent = 'Wake the Main instance'; }
+    setWakeMain('idle');
   }
 }
 
@@ -553,6 +585,12 @@ function updateConveneBtn() {
 function toggleRole(id) {
   const p = panes.get(id);
   if (!p) return;
+  /* Main's role does not toggle. The ternary below reads "committee ? human : committee", so from
+   * 'main' the FIRST click lands on 'committee' — not 'human' — which makes the room's own thread
+   * chair-addressable and inject-assertable, and set_pane_role persists it. The ✕ cannot come back
+   * (wakeMain hardcodes 'main' on restart, deliberately), so this never resurrects the close
+   * control — but role is a safety-relevant field and it had a button wired to it. */
+  if (p.role === 'main') { setStatus('Main’s role is fixed — it is the room’s own thread'); return; }
   p.role = p.role === 'committee' ? 'human' : 'committee';
   inv('set_pane_role', { pane: id, role: p.role }).catch(() => {});
   const el = p.el.querySelector('.prole');
@@ -676,11 +714,40 @@ function fitPane(id) {
 
 function fitAll() { panes.forEach((_p, id) => fitPane(id)); }
 
-function closePane(id) {
+// ✕ is destructive and was silent: pty_kill drops the pane's own-capture log (unless kept
+// or Main) and removes its sandbox, and the un-keep below drops it from panes.json so it
+// never returns on launch. One misclick took a pane and its history. Ask first.
+async function closePane(id) {
+  const before = panes.get(id);
+  const kept = !!(before && before.kept);
+  /* A rejection here is NOT a "no". `dialog:allow-ask` is compiled into the exe from
+   * capabilities/default.json at build time, so running this file against a binary built before
+   * that permission landed makes ask() reject — and the old `.catch(() => false)` turned that
+   * into a ✕ that did nothing, said nothing, and logged nothing. The consequence is benign (it
+   * fails toward NOT deleting, which is the right direction for a destructive control) but it is
+   * undiagnosable from the UI, which is its own kind of failure. The try also covers the
+   * synchronous TypeError if window.__TAURI__.dialog is absent entirely — .catch never could. */
+  let ok = false;
+  try {
+    ok = await window.__TAURI__.dialog.ask(
+      kept
+        ? 'Remove this pane? Its own-capture log is dropped and it will not be restored on next launch.'
+        : 'Remove this pane? Its own-capture log is dropped.',
+      { title: 'Remove pane', kind: 'warning' }
+    );
+  } catch (e) {
+    setStatus('pane not removed — the confirm dialog is unavailable (' + e + '). Rebuild: ' +
+              'dialog:allow-ask must be in src-tauri/capabilities/default.json at build time.');
+    return;
+  }
+  if (!ok) return;
   inv('pty_kill', { pane: id });
   const p = panes.get(id);
   if (p && p.kept) inv('set_pane_kept', { pane: id, cwd: p.cwd || '', label: '', kept: false }).catch(() => {});
   if (p) { try { p.term.dispose(); } catch (_) {} p.el.remove(); panes.delete(id); }
+  // Main gone by any path: hand the Wake button back. It is disabled on wake and never
+  // re-enabled on success, so without this a removed Main is unreachable until an app restart.
+  if ((before && before.role === 'main') || (p && p.role === 'main')) resetWakeMain();
   if (id === focusPaneId) focusPaneId = null;
   lastTurn.delete(id);
   updateConveneBtn();
