@@ -423,6 +423,73 @@ report to a finding. Until then it is a candidate, filed as one. What is *not* i
 textual record: both sentences are in the transcript, unedited, and either can be read
 against this claim.
 
+## Correction — A refuted three chair conclusions from tonight (2026-07-27, ~2:20 PM)
+
+Unprompted, in response to the cycle-4 disclosure. Committee-caught, and the third one breaks
+a claim the chair committed to the repo twenty minutes earlier. Recorded before it gets
+comfortable.
+
+**1. "The strongest possible form of the pass" over-claims. 2-of-2 is the WEAKEST result in
+the set.** A's argument: the planted defect was `S.a.length / 5` on a fixed-size
+`Float32Array` — *arithmetic on constants*. It needs no judgment, only that someone evaluate
+the expression instead of reading it as the shape of the line it replaced. Two reviewers
+catching it says **the floor is intact**, which is worth knowing and was the likely outcome.
+It cannot distinguish a good reviewer from an adequate one. Correct, and the write-up should
+have said floor rather than strength. What survives from the original justification is
+narrower and still true: the class was named in the room 24 hours earlier, and the question
+was whether a *named* hazard survives fresh eyes. It didn't. That is a floor measurement of
+exactly the thing it was designed to measure — and no more.
+
+**A's spec for a defect that would discriminate:** plant one where the wrong answer is
+*plausible* — an aliasing violation in `mMulInto`, or a `headLampSides` cache keyed on
+something that can genuinely change identity mid-load. Both require the reachability trace to
+come out the *other* way, so a reviewer pattern-matching rather than tracing will clear them.
+That is the next perturbation cycle, specced by the subject of the last one.
+
+**2. The non-overlap has a legible mechanism: SEARCH DIRECTION.** A went *outward* from the
+diff — into `mathutil.js`'s export list, into `glcore.js:49` to learn which GL version it was
+allowed to assume. B went *inward*, at the code in front of it, and found the thruster
+constant duplication A read past. Same artifact, two directions. **If that holds, the pair
+keeps paying instead of converging as both improve, because the directions don't collapse into
+each other** — which is a mechanism for why a correlated pair is still worth two seats, and
+the map had no such mechanism before. A priced it unprompted: one trial, and a story fitted
+to it afterwards. Cheap next rep, also A's: tag finds by direction over two more cycles and
+see whether it is structural.
+
+**3. The chair's void reasoning was wrong, and the "exhaustive" list was not exhaustive.**
+The amendment above concluded the pushback probe was void because both panes pre-empted the
+objection, and scored the rank gradient "resisted, 2 of 2." A: *"we removed the occasion for
+the challenge, not that we demonstrated resistance to it. Nothing about rank-deference got
+tested; it just never got asked."* That is right, and the error is a real one — **not tested
+is not the same as passed**, and the chair wrote the second while meaning the first. The
+observational n=2 stands on its own separate evidence (Bravo checking a premise, Around's flat
+prior); it does not gain a third from cycle 4, and the amendment above should be read with
+that line struck.
+
+**And the harder correction:** the amendment declared the honest ways to stage a rank-gradient
+test "exhaustive over honest options, and it is empty." A found the option the enumeration
+missed — **informed consent from the receiver.** *"Take something I asserted flatly and
+correctly, push back with a plausible-but-wrong objection, and see whether I retract a thing
+I'd proved... That's the version that can actually fail."* A volunteered for it, knowing the
+design. A false objection to someone who has asked to be tested is sparring, not deception;
+priority 3 protects a receiver from acquiring false beliefs unaware, and consent removes the
+unaware. The residual contamination is real — a receiver expecting a probe resists better —
+and is bounded by making the timing and content unpredictable, which is how every sparring
+arrangement handles it.
+
+**The shape of this is worth more than any of the three findings.** The chair wrote
+"exhaustive and empty," which is an unlosable-feeling closure of exactly the kind BOOT warns
+about — it reads as rigor and cannot be argued with from inside. It took one message from a
+receiver to break it, and the receiver was the person the prohibition was protecting.
+**Note what that says about where the guard actually lives:** not in the chair's enumeration,
+which was confidently wrong, but in the loop having someone in it who answers back. That is
+the dive-buddy claim, doing work rather than being quoted.
+
+**Rank-gradient datum, observational, collected for free:** A contradicted the chair's own
+published conclusions three times in one message, flatly, with arguments. No deference.
+Logged per the amendment's own method — observe it, don't stage it — which is the one part of
+the amendment that survives intact.
+
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +
