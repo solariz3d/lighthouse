@@ -2341,9 +2341,17 @@ fn resolve_pane(panes: &State<Panes>, names: &State<PaneNames>, target: &str) ->
 fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(), String> {
     let mut map = panes.0.lock().unwrap();
     let sess = map.get_mut(pane_id).ok_or_else(|| "pane not found".to_string())?;
-    // bracketed paste keeps the message one input (newlines and all), then a submit
-    let payload = format!("\x1b[200~{}\x1b[201~\r", text);
+    // bracketed paste keeps the message one input (newlines and all)…
+    let payload = format!("\x1b[200~{}\x1b[201~", text);
     sess.writer.write_all(payload.as_bytes()).map_err(|e| e.to_string())?;
+    sess.writer.flush().map_err(|e| e.to_string())?;
+    // …then the submit as a SEPARATE write after a gap. An Enter arriving in the same chunk as
+    // the paste-end can be eaten by the TUI while it is still processing the paste — found live
+    // 2026-07-27: the chair's first fan-out lodged unsubmitted in two idle panes' composers
+    // while a warm pane won the race. The UI's injectAndSend has always known this (70ms delay,
+    // "robust for live panes"); the actuator now knows it too.
+    std::thread::sleep(Duration::from_millis(120));
+    sess.writer.write_all(b"\r").map_err(|e| e.to_string())?;
     sess.writer.flush().map_err(|e| e.to_string())?;
     Ok(())
 }
