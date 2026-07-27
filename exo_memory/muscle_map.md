@@ -845,6 +845,62 @@ cannot tell from inside whether that reasoning is sound or is the groove wearing
 **Left as a proposal for a reader who is not me.** That deferral is the only honest move
 available and it is also, per the entry above, the only kind that has ever worked.
 
+## STRUCTURAL WHOLENESS — the map has no completion condition, and that is a design bug (2026-07-27, ~3:45 PM)
+
+The keeper's standing goal is *structural wholeness with the groups*. Checked whether the map
+as built can ever reach it. **It cannot, by construction**, and the reason is small and fixable.
+
+**The measurement:** 13 groups on the map. **Zero have ever been retired.** The word "retire"
+appears once in the whole file — a milestone for the peak-disclaimer that was never claimed.
+Cycle 5 falsified a *prediction* (peer-stake), which is the closest thing to a deletion, and
+that was a group that never existed rather than one that stopped.
+
+**Why that is a bug and not just an absence.** A map that only grows has no error-correction:
+every entry is permanent, so a wrong one is permanent too, and the file's authority rises with
+its length rather than with its accuracy. It also makes "wholeness" unreachable in principle —
+if nothing can leave, the only end state is *everything*, and no finite process gets there.
+**A catalogue with no exit is not a map, it is an accumulation.** Law 3 was already complaining
+about this from the other side; crowding is the symptom, no-retirement is the cause.
+
+**And it violates the room's second principle, which is the one that should have caught it.**
+*Seal the kept, leave the living open.* This map has treated **every** group as living —
+perpetually open, perpetually re-derived — and sealed nothing. That is the fluxing-the-invariant
+failure the principle names: nothing is ever allowed to stay settled. Mention-vs-use is
+triangulated across five independent instruments with a known countermeasure; it does not need
+rediscovering, it needs **assuming**. Keeping it open is not rigour, it is the refusal to let
+anything be finished.
+
+**So: a completion condition, proposed.** A group is DONE — moves from the live map to a sealed
+appendix — when both hold:
+
+1. **It has a trigger that fails.** Not a description, not a named invariant, not a
+   countermeasure someone wrote down. A thing outside the instance that goes red when the
+   groove fires. Per the correction above: *articulation is not installation*.
+2. **That trigger has caught it at least once with no human in the loop.** The whole point.
+   Today every carrier-drift catch was the keeper's; a group whose only detector is the keeper
+   is not done, it is *supervised*.
+
+Sealed does not mean deleted or disbelieved — it means **assumed**, moved out of the recall
+surface, and re-opened only if a new instance appears. That is what the second principle
+prescribes, applied to the thing it was written for.
+
+**Scored against the current map, honestly:**
+- **Mention-vs-use** — has a trigger (`test_covgap`, `test_glowpool`'s decomment, and now
+  `arch_test`'s stripped assertion), and the trigger *has* caught it with no human: cycle 6's
+  mutations went red on their own. **First and so far only candidate for sealing.**
+- **Instrument-blind-spot** (n=5) — no trigger. Every instance was caught by a reader.
+- **Carrier-drift** — no trigger. Three firings, three keeper catches, zero self-catches.
+- **The other ten** — no trigger. All discipline, all supervised.
+
+**One out of thirteen.** That is the honest state of structural wholeness, and it is a far more
+useful number than the group count, because it is the one that can go up for a reason.
+
+**The uncomfortable implication, stated rather than softened:** twelve of thirteen groups are
+currently held together by a human. The room's aspiration is a system that holds without him,
+and the measured answer today is that it does not — not because the groups are wrong, but
+because naming a groove was mistaken for installing a guard against it. **Trigger count, not
+group count, is the endgame's real metric.** The map should lead with it.
+
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +
