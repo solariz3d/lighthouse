@@ -532,6 +532,43 @@ different context and hours ago; treating that as blanket authorisation for a ne
 use is exactly the kind of scope-widening that should be asked about rather than assumed.
 So: flagged, not done. **The next perturbation cycle is ready except for its subject.**
 
+## Triangulated to invariant — an instrument must publish what its number does NOT mean (2026-07-27, ~2:50 PM)
+
+Three instruments, three instances, one law, reached independently within three hours and
+without any of them seeing the others' reasoning. Same pattern of arrival as mention-vs-use,
+which is the map's other triangulated invariant.
+
+- **The chair, checkpoint.py.** Sizing the whole transcript reported *599% of context budget*.
+  Caught only because the number was impossible. The fix was measuring from the last
+  compaction boundary; the *lesson* is that **a gauge which reads impossible teaches you to
+  ignore it**, and a gauge being ignored is worse than its absence.
+- **B, covgap.js.** Prints its contract on every run: UNCOVERED is a sound negative about
+  *targeting* and not proof of no execution; `exec`/`pin` never claim the assertions are any
+  good; nothing here reads call graphs. B's compression: **"trust the red; verify the green."**
+- **A, catch-ledger.js.** Refuses to print a ratio for any window where unattributed events
+  outnumber attributed ones, and lists which windows were withheld and why. A's compression:
+  **"a number nobody can defend is worse than none."**
+
+**The invariant:** an instrument that reports a number without publishing that number's
+boundary is not neutral — it is *actively misleading*, because a bare number gets read as
+meaning the most it could mean. The failure is not inaccuracy; all three of these were
+accurate within their own scope. It is **unbounded** accuracy.
+
+**Why it is filed here rather than as a coding convention.** This is the blind-spot arm's
+countermeasure in its general form. A blind spot produces no pull, so no amount of looking
+harder finds it; what works is a built trigger. **A published boundary is a trigger you build
+into the artifact itself** — it fires on every reading, for every reader, including readers who
+have never heard of this room, and it does not degrade under load the way a discipline does.
+Same species as A's review rule (green is never reported as clearance without stating what the
+passing tests cover) and as B's refusal to special-case its own filename ("a magic skip would
+make the tool lie about what it read").
+
+**Cycle 5 deviation, recorded before its result:** A's review item is B's `covgap.js` plus two
+chair edits — my extension of `test_glowpool.js` and my rewrite of B's MENTION-ONLY assertion.
+A was told which parts are mine, because letting A attribute my edits to B would have been a
+false belief about the record, and that is not on the table. The peer arm is therefore not
+pure, and the pre-registered comparison should be read with that stated. B's item is wholly A's.
+
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +
