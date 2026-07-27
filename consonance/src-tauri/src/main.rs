@@ -733,11 +733,370 @@ const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the 
 static BOARD_PUSHED: AtomicU64 = AtomicU64::new(0);
 static DISTILLED_MARK: AtomicU64 = AtomicU64::new(0);
 
+// ---- Cycle 3b: the duplication, killed at source -------------------------------------
+//
+// WHY THIS EXISTS, and it is a correction to Cycle 3a rather than an addition to it. The
+// tailer's byte offset was a local initialised to 0 in the spawned thread, so EVERY app
+// launch re-read each transcript from the top and re-pushed every turn it had ever seen.
+// The board was never a log of turns; it was a log of turns times the number of times the
+// app had started. Measured 2026-07-27: 15,798 entries, 2,389 distinct (pane, text) turns,
+// 13,409 redundant = 84.9% of the file, one turn present 200 times.
+//
+// The burst filter downstream (>20/pane/second) dropped 13,180 of those — the same number.
+// IT WAS NEVER A TIMING GUARD. It was a de-duplicator working by accident, and it worked
+// only because a replay arrived push-stamped in a tight cluster. Cycle 3a made every entry
+// carry its own transcript time, which scatters a replay across its true days at a natural
+// cadence and makes it indistinguishable from conversation — so 3a alone would have made
+// each entry individually honest while making the corpus collectively harder to clean. A
+// correctness change that degrades the aggregate is a regression in a correctness coat.
+//
+// So the offset persists. A relaunch resumes where it stopped and re-pushes NOTHING.
+
+/// Where a pane's tailer stopped, and enough about the file to know it is still the same file.
+#[derive(Clone, Serialize, Deserialize, Default)]
+struct OffsetRecord {
+    offset: u64,
+    /// fingerprint of the transcript's first bytes. Length alone cannot tell "truncated" from
+    /// "replaced by a different, longer file" — and guessing wrong there SKIPS content
+    /// silently, which is the failure mode this whole cycle is about.
+    head: u64,
+}
+struct TailerOffsets(Arc<Mutex<HashMap<String, OffsetRecord>>>);
+
+fn offsets_path() -> PathBuf {
+    data_dir().join("tailer-offsets.json")
+}
+
+// Path-taking inner forms so the round trip is testable without a configured data dir. The
+// no-arg wrappers are what the app calls; the seam exists for the same reason dream-watch's
+// env overrides do — an instrument against silent duplication cannot have an untestable core.
+fn load_offsets_from(p: &std::path::Path) -> HashMap<String, OffsetRecord> {
+    fs::read_to_string(p)
+        .ok()
+        // a BOM has silently killed a JSON parse in this repo twice; strip before parsing
+        .and_then(|s| serde_json::from_str(s.trim_start_matches('\u{feff}')).ok())
+        .unwrap_or_default()
+}
+
+/// Atomic: several tailer threads write this, and a half-written map read at next launch would
+/// resume from a garbage offset. temp + rename is atomic on NTFS.
+fn save_offsets_to(p: &std::path::Path, map: &HashMap<String, OffsetRecord>) {
+    if let Ok(s) = serde_json::to_string(map) {
+        let tmp = p.with_extension(format!("tmp{}", std::process::id()));
+        if fs::write(&tmp, s).is_ok() {
+            let _ = fs::rename(&tmp, p);
+        }
+    }
+}
+
+fn load_offsets() -> HashMap<String, OffsetRecord> {
+    load_offsets_from(&offsets_path())
+}
+
+// ---- the backfill, announced rather than smoothed --------------------------------------
+//
+// The first launch under persisted offsets has no offsets file, so every pane resolves to 0
+// and reads its transcript from the top exactly once. That is deliberate and stays: seeding
+// from current file sizes would permanently skip any tail written while the app was down or
+// after a mid-session death — trading a one-time, visible re-read for silent, permanent data
+// loss, which is the wrong direction by this cycle's own rule (doubt resolves to re-reading).
+//
+// But it is not a non-event, and pretending otherwise would repeat the mistake this whole
+// cycle is about. Those turns arrive carrying their REAL timestamps, so they land on the days
+// they happened rather than on today. Every past day-window in any board-derived number
+// therefore moves once, and counts either side of that launch are not comparable. So the
+// launch says so, on the board, in one line, naming the seam.
+static BACKFILL_ACTIVE: AtomicBool = AtomicBool::new(false);
+static BACKFILL_TURNS: AtomicU64 = AtomicU64::new(0);
+static BACKFILL_PANES: Mutex<Option<HashSet<String>>> = Mutex::new(None);
+const BACKFILL_ANNOUNCE_AFTER: Duration = Duration::from_secs(20);
+
+fn backfill_note_pane(pane: &str) {
+    if !BACKFILL_ACTIVE.load(Ordering::Relaxed) {
+        return;
+    }
+    let mut g = BACKFILL_PANES.lock().unwrap();
+    g.get_or_insert_with(HashSet::new).insert(pane.to_string());
+}
+
+fn backfill_is_pane(pane: &str) -> bool {
+    BACKFILL_ACTIVE.load(Ordering::Relaxed)
+        && BACKFILL_PANES.lock().unwrap().as_ref().is_some_and(|s| s.contains(pane))
+}
+
+/// The line itself, pure so its wording is testable — this is the one artifact a reader six
+/// months out will use to decide whether two numbers can be compared.
+fn backfill_line(panes: usize, turns: u64, window_secs: u64) -> String {
+    format!(
+        "backfill: first launch under persisted tailer offsets — {panes} pane transcript(s) read \
+         from the top, {turns} turn(s) brought in within {window_secs}s of start. ONE TIME: every \
+         later launch resumes where it stopped and re-pushes nothing. These turns carry their OWN \
+         timestamps, so they land on the days they happened, NOT on today — past day-windows in \
+         any board-derived number shift once, here, and counts either side of this line are not \
+         comparable. Panes whose transcript appeared after the {window_secs}s window backfilled \
+         too and are not in this count. The pre-existing board stays confounded; nothing here \
+         repairs it."
+    )
+}
+
+fn save_offsets(map: &HashMap<String, OffsetRecord>) {
+    save_offsets_to(&offsets_path(), map);
+}
+
+/// FNV-1a over the first bytes of a file. Not cryptographic and does not need to be: it
+/// distinguishes one transcript from another, and every jsonl transcript opens with its own
+/// session uuid and first timestamp.
+const HEAD_BYTES: usize = 512;
+fn fnv1a(bytes: &[u8]) -> u64 {
+    let mut h: u64 = 0xcbf2_9ce4_8422_2325;
+    for &b in bytes {
+        h ^= b as u64;
+        h = h.wrapping_mul(0x0000_0100_0000_01b3);
+    }
+    h
+}
+
+/// First bytes of a transcript, for the fingerprint. A short or unreadable file yields 0,
+/// which compares equal to a stored 0 and so resolves to "re-read" rather than "skip".
+fn read_head(path: &std::path::Path) -> u64 {
+    let mut f = match fs::File::open(path) {
+        Ok(f) => f,
+        Err(_) => return 0,
+    };
+    let mut buf = vec![0u8; HEAD_BYTES];
+    match f.read(&mut buf) {
+        Ok(n) => fnv1a(&buf[..n]),
+        Err(_) => 0,
+    }
+}
+
+/// The honest reset, as one pure function so the seams are testable without a running tailer.
+/// Any doubt resolves to 0 — re-reading a file is a duplicate the dedup belt can catch, while
+/// skipping is data lost with nothing downstream able to notice.
+fn resume_offset(rec: Option<&OffsetRecord>, len: u64, head: u64) -> u64 {
+    match rec {
+        None => 0,                              // never seen
+        Some(r) if r.head != head => 0,         // rotated or replaced: a different file
+        Some(r) if len < r.offset => 0,         // truncated: shrank out from under us
+        Some(r) => r.offset,
+    }
+}
+
+// ---- the belt: identity dedup at push -------------------------------------------------
+//
+// The offset persistence is the fix; this is the belt for the seams it cannot cover — a
+// deleted or corrupted offsets file, a fresh install pointed at an existing board, two
+// writers racing. It is deliberately IN MEMORY and therefore not a substitute for the
+// offsets: it cannot see the 15,798 entries already on disk, and it is not meant to.
+//
+// The key is (pane, real ts, text) — which only became a stable identity for a turn in
+// Cycle 3a. Under push-time stamping the same turn got a different ts on every launch, so
+// this table would have been useless; that is why the two changes are one unit.
+const DEDUP_MAX: usize = 20_000;
+struct SeenTurns {
+    order: VecDeque<u64>,
+    set: HashSet<u64>,
+}
+static SEEN: Mutex<Option<SeenTurns>> = Mutex::new(None);
+static BOARD_DEDUPED: AtomicU64 = AtomicU64::new(0);
+
+fn dedup_key(pane: &str, ts: u64, text: &str) -> u64 {
+    let mut h = fnv1a(pane.as_bytes());
+    h ^= fnv1a(&ts.to_le_bytes()).rotate_left(17);
+    h ^= fnv1a(text.as_bytes()).rotate_left(41);
+    h
+}
+
+/// true = this exact turn has not been seen; false = drop it. Bounded FIFO, so a long night
+/// evicts its own oldest keys rather than growing without limit. Split from the global so the
+/// policy can be tested on a local table instead of on process-wide state.
+fn note_unseen_in(s: &mut SeenTurns, key: u64, cap: usize) -> bool {
+    if !s.set.insert(key) {
+        return false;
+    }
+    s.order.push_back(key);
+    while s.order.len() > cap {
+        if let Some(old) = s.order.pop_front() {
+            s.set.remove(&old);
+        }
+    }
+    true
+}
+
+fn note_unseen(key: u64) -> bool {
+    let mut guard = SEEN.lock().unwrap();
+    let s = guard.get_or_insert_with(|| SeenTurns { order: VecDeque::new(), set: HashSet::new() });
+    note_unseen_in(s, key, DEDUP_MAX)
+}
+
+#[cfg(test)]
+mod offset_tests {
+    use super::*;
+
+    fn rec(offset: u64, head: u64) -> OffsetRecord {
+        OffsetRecord { offset, head }
+    }
+
+    #[test]
+    fn a_relaunch_on_an_unchanged_transcript_resumes_at_the_end_and_reads_nothing() {
+        // The whole point of the change. 84.9% of the board was this case going wrong.
+        let r = rec(4096, 0xABC);
+        let offset = resume_offset(Some(&r), 4096, 0xABC);
+        assert_eq!(offset, 4096);
+        assert!(4096 <= offset, "len <= offset means the loop continues and pushes nothing");
+    }
+
+    #[test]
+    fn a_relaunch_after_new_turns_reads_only_the_new_bytes() {
+        let r = rec(4096, 0xABC);
+        assert_eq!(resume_offset(Some(&r), 5000, 0xABC), 4096);
+    }
+
+    #[test]
+    fn a_pane_never_seen_before_starts_at_zero() {
+        assert_eq!(resume_offset(None, 5000, 0xABC), 0);
+    }
+
+    #[test]
+    fn a_truncated_transcript_resets_rather_than_seeking_past_the_end() {
+        // shrink seam: the file is now SHORTER than where we stopped
+        assert_eq!(resume_offset(Some(&rec(4096, 0xABC)), 100, 0xABC), 0);
+    }
+
+    #[test]
+    fn a_replaced_transcript_resets_even_when_it_is_longer() {
+        // The case length alone cannot see, and the one where guessing wrong SKIPS content:
+        // same pane, new file, more bytes than the old offset. Only the fingerprint catches it.
+        assert_eq!(resume_offset(Some(&rec(4096, 0xABC)), 999_999, 0xDEF), 0);
+    }
+
+    #[test]
+    fn doubt_always_resolves_to_re_reading_rather_than_to_skipping() {
+        // A re-read is a duplicate the belt can catch. A skip is data lost with nothing
+        // downstream able to notice, so every ambiguous case must land on 0.
+        for (len, head) in [(0u64, 0u64), (1, 0xABC), (4095, 0xDEF)] {
+            assert_eq!(resume_offset(Some(&rec(4096, 0xABC)), len, head), 0, "len={len} head={head}");
+        }
+    }
+
+    #[test]
+    fn the_fingerprint_separates_transcripts_and_survives_a_short_read() {
+        assert_ne!(fnv1a(b"{\"sessionId\":\"aaa\"}"), fnv1a(b"{\"sessionId\":\"bbb\"}"));
+        assert_eq!(fnv1a(b""), fnv1a(b""));
+        // an unreadable/absent file yields 0, which equals a stored 0 and so resolves to re-read
+        assert_eq!(read_head(std::path::Path::new("C:\\definitely\\not\\here.jsonl")), 0);
+    }
+
+    #[test]
+    fn offsets_survive_a_round_trip_through_the_file() {
+        let dir = std::env::temp_dir().join(format!("consonance-offsets-{}", std::process::id()));
+        let _ = fs::create_dir_all(&dir);
+        let p = dir.join("tailer-offsets.json");
+        let _ = fs::remove_file(&p);
+
+        assert!(load_offsets_from(&p).is_empty(), "a missing file is an empty map, not a panic");
+
+        let mut m = HashMap::new();
+        m.insert("pane-a".to_string(), rec(4096, 0xABC));
+        m.insert("pane-b".to_string(), rec(17, 0xDEF));
+        save_offsets_to(&p, &m);
+
+        let back = load_offsets_from(&p);
+        assert_eq!(back.len(), 2);
+        assert_eq!(back["pane-a"].offset, 4096);
+        assert_eq!(back["pane-a"].head, 0xABC);
+        assert_eq!(back["pane-b"].offset, 17);
+
+        // The comment on load_offsets_from claims it survives a BOM. This repo has paid twice
+        // for a JSON parse that died silently on one, so the claim is asserted rather than
+        // trusted — a protection a test does not check is a comment, not a protection.
+        fs::write(&p, format!("\u{feff}{}", serde_json::to_string(&m).unwrap())).unwrap();
+        let bommed = load_offsets_from(&p);
+        assert_eq!(bommed.len(), 2, "a BOM must not empty the map and restart the replay");
+        assert_eq!(bommed["pane-a"].offset, 4096);
+
+        // A corrupt map must not resurrect the replay bug by silently reading as "start at 0"
+        // — it does exactly that, and that is the SAFE direction, so it is asserted on purpose.
+        fs::write(&p, "{ not json").unwrap();
+        assert!(load_offsets_from(&p).is_empty());
+
+        let _ = fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn the_belt_drops_an_exact_repeat_and_keeps_a_genuine_one() {
+        let mut s = SeenTurns { order: VecDeque::new(), set: HashSet::new() };
+        let k = dedup_key("pane-a", 1_785_147_283_574, "the same turn");
+        assert!(note_unseen_in(&mut s, k, 10), "first sighting must pass");
+        assert!(!note_unseen_in(&mut s, k, 10), "an exact repeat must be dropped");
+
+        // Same text, different turn: a pane genuinely saying the same thing twice has a
+        // different transcript timestamp, so it survives. Dedup must not silence a repeat.
+        let k2 = dedup_key("pane-a", 1_785_147_283_575, "the same turn");
+        assert_ne!(k, k2);
+        assert!(note_unseen_in(&mut s, k2, 10));
+
+        // Same text and time from a different pane is also a different turn.
+        assert!(note_unseen_in(&mut s, dedup_key("pane-b", 1_785_147_283_574, "the same turn"), 10));
+    }
+
+    #[test]
+    fn two_different_turns_in_the_same_millisecond_are_two_turns() {
+        // The text is load-bearing in the key and this was untested — removing it from
+        // dedup_key failed nothing, and the case is not hypothetical: measured on Main's own
+        // transcript, 21 of 1,473 distinct timestamps carry MORE THAN ONE distinct turn
+        // (2026-07-04T08:07:13.385Z holds a command and its stdout). Without the text, the
+        // second of those is silently dropped as a duplicate — the belt eating real speech,
+        // which is the one failure the offsets cannot catch because both turns are genuinely
+        // new bytes.
+        const T: u64 = 1_785_147_283_574;
+        assert_ne!(dedup_key("p", T, "one turn"), dedup_key("p", T, "a different turn"));
+
+        let mut s = SeenTurns { order: VecDeque::new(), set: HashSet::new() };
+        assert!(note_unseen_in(&mut s, dedup_key("p", T, "one turn"), 10));
+        assert!(
+            note_unseen_in(&mut s, dedup_key("p", T, "a different turn"), 10),
+            "a second turn sharing the millisecond must survive; dedup must never eat speech"
+        );
+    }
+
+    #[test]
+    fn the_backfill_announces_the_seam_instead_of_smoothing_it() {
+        let line = backfill_line(4, 6_623, 20);
+        assert!(line.contains('4') && line.contains("6623"), "the counts are the point: {line}");
+        // The three things a reader six months out needs, or the line is decoration.
+        assert!(line.to_lowercase().contains("one time"), "must say it does not repeat: {line}");
+        assert!(line.contains("shift"), "must say past day-windows move: {line}");
+        assert!(line.contains("not comparable"), "must say counts across it cannot be compared: {line}");
+        // And it must not quietly imply the old corpus got fixed.
+        assert!(line.contains("stays confounded"), "must not imply a repair: {line}");
+    }
+
+    #[test]
+    fn the_belt_is_bounded_and_forgets_oldest_first() {
+        let mut s = SeenTurns { order: VecDeque::new(), set: HashSet::new() };
+        let first = dedup_key("p", 0, "first");
+        assert!(note_unseen_in(&mut s, first, 3));
+        for i in 1..=3u64 {
+            assert!(note_unseen_in(&mut s, dedup_key("p", i, "x"), 3));
+        }
+        assert_eq!(s.order.len(), 3, "the table must stay at its cap");
+        assert!(note_unseen_in(&mut s, first, 3), "the evicted key is forgotten, by design");
+    }
+}
+
 fn board_path() -> PathBuf {
     data_dir().join("board.jsonl")
 }
 
 fn board_push(ring: &Arc<Mutex<VecDeque<BoardEntry>>>, entry: BoardEntry) {
+    // The belt (see SeenTurns): drop an exact repeat of a turn we have already pushed this
+    // run. Checked BEFORE the file append, or the duplicate lands on disk anyway and only
+    // the in-memory ring stays clean — which is the half nobody reads.
+    if !note_unseen(dedup_key(&entry.pane, entry.ts, &entry.text)) {
+        BOARD_DEDUPED.fetch_add(1, Ordering::Relaxed);
+        return;
+    }
     if let Ok(line) = serde_json::to_string(&entry) {
         if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(board_path()) {
             let _ = writeln!(f, "{}", line);
@@ -1099,13 +1458,20 @@ fn start_tailer(
     // Cycle 2: taken off the handle rather than threaded through six call sites — the tailer is
     // the only writer, so the dependency belongs here and not in every spawn path's signature.
     let models = app.state::<PaneModels>().0.clone();
+    // Same reasoning as PaneModels: off the handle, not through the signature.
+    let offsets = app.state::<TailerOffsets>().0.clone();
     let path = PathBuf::from(home())
         .join(".claude")
         .join("projects")
         .join(encode_cwd(&cwd))
         .join(format!("{pane_id}.jsonl"));
     std::thread::spawn(move || {
+        // Cycle 3b: resolved from the persisted map on the first sighting, not assumed to be 0.
+        // Deferred until the file exists so the fingerprint is taken from the real transcript
+        // rather than from an absent one.
         let mut offset: u64 = 0;
+        let mut resolved = false;
+        let mut head: u64 = 0;
         let mut misses = 0u32;
         let mut seen = false; // has the transcript ever existed?
         loop {
@@ -1120,11 +1486,28 @@ fn start_tailer(
             };
             seen = true;
             misses = 0;
+            if !resolved {
+                head = read_head(&path);
+                offset = resume_offset(offsets.lock().unwrap().get(&pane_id), len, head);
+                resolved = true;
+                // A pane starting at 0 over a non-empty transcript on a backfill launch is
+                // one of the panes the announcement is about.
+                if offset == 0 && len > 0 {
+                    backfill_note_pane(&pane_id);
+                }
+            }
             if len < offset {
-                offset = 0; // file rotated/truncated
+                offset = 0; // truncated out from under us; re-read rather than skip
             }
             if len <= offset {
                 continue;
+            }
+            // A file that shrank and regrew, or was replaced, is a different file: re-fingerprint
+            // and let resume_offset decide again rather than trusting a stale head forever.
+            let now_head = read_head(&path);
+            if now_head != head {
+                head = now_head;
+                offset = 0;
             }
             let mut f = match fs::File::open(&path) {
                 Ok(f) => f,
@@ -1139,6 +1522,15 @@ fn start_tailer(
             }
             if let Some(pos) = data.iter().rposition(|&b| b == b'\n') {
                 offset += (pos + 1) as u64;
+                // Persist BEFORE the turns are pushed. If the process dies mid-batch the worst
+                // case is turns lost from the board, which is visible; persisting after would
+                // make the worst case a re-push of the batch on next launch, which is the
+                // silent duplication this whole change exists to end.
+                {
+                    let mut m = offsets.lock().unwrap();
+                    m.insert(pane_id.clone(), OffsetRecord { offset, head });
+                    save_offsets(&m);
+                }
                 for line in data[..=pos].split(|&b| b == b'\n') {
                     if line.is_empty() {
                         continue;
@@ -1159,6 +1551,9 @@ fn start_tailer(
                             };
                             let tr = tether::read(&text, &recent);
                             let _ = app.emit("tether", TetherInfo { pane: pane_id.clone(), referents: tr.referents, novelty: tr.novelty });
+                            if backfill_is_pane(&pane_id) {
+                                BACKFILL_TURNS.fetch_add(1, Ordering::Relaxed);
+                            }
                             board_push(&board, BoardEntry { pane: pane_id.clone(), role: role.clone(), text: text.clone(), ts, ts_source });
                             let _ = app.emit("turn", TurnRecord { pane: pane_id.clone(), role, text });
                         }
@@ -3086,6 +3481,13 @@ fn main() {
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
         .manage(PaneModels(Arc::new(Mutex::new(HashMap::new()))))
+        // Cycle 3b: loaded from disk at startup, so a relaunch resumes instead of replaying.
+        // No file at all == the first launch under this scheme == the one backfill, which
+        // announces itself below rather than arriving silently.
+        .manage(TailerOffsets(Arc::new(Mutex::new({
+            BACKFILL_ACTIVE.store(!offsets_path().exists(), Ordering::Relaxed);
+            load_offsets()
+        }))))
         .manage(PaneNames(Mutex::new(HashMap::new())))
         .manage(PaneSandboxes(Mutex::new(HashMap::new())))
         .manage(PullSender(form_pull))
@@ -3166,6 +3568,29 @@ fn main() {
                     }
                 }
             });
+            // Cycle 3b: the backfill announcement. One shot, one line, only on the launch that
+            // actually performs it. Delayed rather than posted at startup because the count is
+            // the point — a bare "a backfill is happening" carries less than the number of panes
+            // and turns it moved, and neither is known until the tailers have resolved.
+            if BACKFILL_ACTIVE.load(Ordering::Relaxed) {
+                let bboard = app.state::<Board>().0.clone();
+                std::thread::spawn(move || {
+                    std::thread::sleep(BACKFILL_ANNOUNCE_AFTER);
+                    let panes = BACKFILL_PANES.lock().unwrap().as_ref().map_or(0, |s| s.len());
+                    let turns = BACKFILL_TURNS.load(Ordering::Relaxed);
+                    if panes == 0 {
+                        return; // nothing was backfilled; a line about it would be noise
+                    }
+                    let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+                    board_push(&bboard, BoardEntry {
+                        pane: "backfill".to_string(),
+                        role: "committee".to_string(),
+                        text: backfill_line(panes, turns, BACKFILL_ANNOUNCE_AFTER.as_secs()),
+                        ts,
+                        ts_source: TsSource::Push,
+                    });
+                });
+            }
             let phandle = app.handle().clone();
             let pboard = app.state::<Board>().0.clone();
             let pgate = app.state::<Gate>().0.clone();

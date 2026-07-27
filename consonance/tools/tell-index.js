@@ -215,6 +215,10 @@ function parseBoard(text) {
       role: String(e.role == null ? '' : e.role),
       text: String(e.text == null ? '' : e.text),
       ts,
+      // Carried, not dropped: markReplay decides by ERA, and an entry stripped of its era here
+      // would silently fall into the pre-fix branch. Absent on every entry written before
+      // 2026-07-27, which is exactly the signal.
+      ts_source: typeof e.ts_source === 'string' ? e.ts_source : null,
     });
   }
   return out;
@@ -225,11 +229,21 @@ function parseBoard(text) {
 function markReplay(entries, threshold = BURST_THRESHOLD) {
   const perSecond = new Map();
   for (const e of entries) {
+    // ts_source present == written by a build that dedups at source. Never burst-filtered:
+    // its timestamps are real, so a cluster is a real cluster and dropping it loses speech.
+    if (e.ts_source) {
+      e.replay = false;
+      e.postFix = true;
+      continue;
+    }
     const key = `${e.pane}@${Math.floor(e.ts / 1000)}`;
     e.burstKey = key;
     perSecond.set(key, (perSecond.get(key) || 0) + 1);
   }
-  for (const e of entries) e.replay = perSecond.get(e.burstKey) > threshold;
+  for (const e of entries) {
+    if (e.postFix) continue;
+    e.replay = perSecond.get(e.burstKey) > threshold;
+  }
   return entries;
 }
 

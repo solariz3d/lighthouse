@@ -89,6 +89,41 @@ test('markReplay does not flag two panes that each spoke once in the same second
   assert.strictEqual(markReplay(same).filter((e) => e.replay).length, 0);
 });
 
+// Cycle 3b (Bravo, in Alpha's file — flagged on the board): the burst filter retires by ERA,
+// not outright. Pre-fix entries still need it; post-fix entries are deduplicated at source and
+// must never be burst-filtered, because their timestamps are real and a cluster is real speech.
+test('markReplay still filters the pre-fix corpus, which is the only thing protecting it', () => {
+  const burst = [];
+  for (let i = 0; i < 30; i++) burst.push({ pane: 'p1', role: 'assistant', text: `old${i}`, ts: 5_000_000, ts_source: null });
+  assert.strictEqual(markReplay(burst).filter((e) => e.replay).length, 30);
+});
+
+test('markReplay never drops a post-fix burst — real timestamps mean a cluster is real speech', () => {
+  const fast = [];
+  for (let i = 0; i < 30; i++) fast.push({ pane: 'p1', role: 'assistant', text: `new${i}`, ts: 5_000_000, ts_source: 'transcript' });
+  assert.strictEqual(
+    markReplay(fast).filter((e) => e.replay).length,
+    0,
+    'burst-filtering era-stamped entries would delete conversation the source dedup already cleaned'
+  );
+});
+
+test('the two eras are judged separately in one pass', () => {
+  const mixed = [];
+  for (let i = 0; i < 30; i++) mixed.push({ pane: 'old-pane', role: 'assistant', text: `o${i}`, ts: 5_000_000, ts_source: null });
+  for (let i = 0; i < 30; i++) mixed.push({ pane: 'new-pane', role: 'assistant', text: `n${i}`, ts: 5_000_000, ts_source: 'push' });
+  const out = markReplay(mixed);
+  assert.strictEqual(out.filter((e) => e.replay).length, 30, 'only the pre-fix half is filtered');
+  assert.strictEqual(out.filter((e) => e.ts_source && e.replay).length, 0);
+});
+
+test('parseBoard carries the era through — dropping it would silently re-filter the new corpus', () => {
+  const line = JSON.stringify({ pane: 'p', role: 'assistant', text: 'hi', ts: 5_000_000, ts_source: 'transcript' });
+  assert.strictEqual(parseBoard(line)[0].ts_source, 'transcript');
+  const old = JSON.stringify({ pane: 'p', role: 'assistant', text: 'hi', ts: 5_000_000 });
+  assert.strictEqual(parseBoard(old)[0].ts_source, null, 'a pre-fix entry has no era and must read as null');
+});
+
 test('isSynthetic catches hook output and slash-command plumbing, not ordinary speech', () => {
   assert.ok(isSynthetic('[panes] MAIN  ≥4 exch today'));
   assert.ok(isSynthetic('[pulse] Mon 2026-07-27 4:45 AM'));
