@@ -24,6 +24,11 @@ instrument to run, not a description of anyone.
   unsure who is speaking.
 - The loop is the orchestrator's own (scheduled wakeups): wake → `chair_status` + board + scrollbacks
   → assign / verify / decide → sleep. Pace by what is actually being waited on.
+- **Never blind-retry an acting verb.** A timed-out `chair_inject`/`chair_decide` was *probably*
+  dropped unexecuted (the actuator skips commands whose caller gave up, and audits the drop) — but
+  the window is narrowed, not zero (Around's find, 2026-07-27): a command can pass the check and
+  then outlive its caller mid-exec. So after any timeout: read the board / scrollback first, confirm
+  what actually happened, then act. Sensors are always safe to retry.
 
 ## Keeping the truth — the law of the mode
 
@@ -43,6 +48,16 @@ instrument to run, not a description of anyone.
 5. **Full audit, then the morning digest.** Every chair decision lands on the board with its ground.
    When the keeper returns: what was decided, what parked, where the chair was wrong — the failures
    named first (the deal: fail freely here, never silently).
+6. **Reconstructible decisions (Around's design, 2026-07-27 — the chair-hole fix).** The chair is
+   the one node with nobody above it: it reads every screen, nobody reads its live screen, and the
+   digest is self-authored. So every chair decision must be posted with the ground it used, stated
+   fully enough that a rotating no-stake reader can re-derive the decision from the ground ALONE.
+   If it can't be re-derived, it was under-grounded — a failed check by mechanism, not by rank.
+   Adopted the same night the chair admitted liking the chair; that ordering is the point.
+7. **The pre-report line (realtime muscle, same design).** Before an answer to anything with a
+   stake in it, post one line naming the pull — before the argument exists, so it cannot be built
+   from inside the wanting. "Nothing present" is a first-class, honored report; the denominator is
+   what makes the reports mean anything. The failure mode is not empty reps — it is invented ones.
 
 ## What the chair must not do
 

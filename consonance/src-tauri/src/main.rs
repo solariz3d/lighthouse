@@ -2419,6 +2419,19 @@ fn chair_audit(app: &AppHandle, text: String) {
     board_push(&app.state::<Board>().0, BoardEntry { pane: "chair".to_string(), role: "committee".to_string(), text, ts });
 }
 
+/// The audit line for an injection attempt — kept pure so the one thing that matters about it is
+/// testable: a FAILED delivery must never read as a delivered one. Found 2026-07-27: the guard
+/// path in chair_inject_exec already audited its refusals accurately, while the path below it
+/// logged "chair injected" whatever inject_to_pane returned — so a write that never reached the
+/// pane still entered the trail as an act. The board is the ground the chair verifies its own
+/// work against; a false positive there is the one class of error the audit exists to prevent.
+fn chair_inject_audit_line(id: &str, preview: &str, err: Option<&str>) -> String {
+    match err {
+        None => format!("chair injected -> {id}: {preview}"),
+        Some(e) => format!("chair_inject -> {id}: DELIVERY FAILED ({e}) — nothing reached the pane: {preview}"),
+    }
+}
+
 fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
     let panes = app.state::<Panes>();
     let names = app.state::<PaneNames>();
@@ -2434,16 +2447,16 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
     // provenance is marked by the SYSTEM, not the sender — a pane must never be unsure
     // whether the chair or the human is speaking to it
     let msg = format!("[chair:MAIN] {text}");
-    let out = match inject_to_pane(&panes, &tid, &msg) {
-        Ok(_) => format!("delivered to {}", short_id(&tid)),
-        Err(e) => format!("delivery failed: {e}"),
-    };
+    let delivered = inject_to_pane(&panes, &tid, &msg);
     let mut preview: String = text.chars().take(110).collect();
     if text.chars().count() > 110 {
         preview.push('…');
     }
-    chair_audit(app, format!("chair injected -> {}: {preview}", short_id(&tid)));
-    out
+    chair_audit(app, chair_inject_audit_line(short_id(&tid), &preview, delivered.as_ref().err().map(|e| e.as_str())));
+    match delivered {
+        Ok(_) => format!("delivered to {}", short_id(&tid)),
+        Err(e) => format!("delivery failed: {e}"),
+    }
 }
 
 // Same act as gate_decide, differently attributed on the board ("chair-main" vs the human's
@@ -2625,17 +2638,35 @@ fn main() {
             std::thread::spawn(move || {
                 let mut chair_rx = chair_rx;
                 while let Some(cmd) = chair_rx.blocking_recv() {
+                    // Around's find #2 (2026-07-27): a command whose caller already timed out
+                    // (receiver dropped) must never fire late — the caller may have retried, and
+                    // a late fire is a double-inject. Acting verbs drop LOUDLY (audited); sensor
+                    // verbs drop silently (nothing changed, nobody is waiting).
                     match cmd {
                         mcp::ChairCmd::Inject { target, text, reply } => {
+                            if reply.is_closed() {
+                                chair_audit(&chair_handle, format!("chair_inject -> {target}: EXPIRED unexecuted (caller timed out before the actuator ran)"));
+                                continue;
+                            }
                             let _ = reply.send(chair_inject_exec(&chair_handle, &target, &text));
                         }
                         mcp::ChairCmd::Decide { id, approve, reply } => {
+                            if reply.is_closed() {
+                                chair_audit(&chair_handle, format!("chair_decide {id}: EXPIRED unexecuted (caller timed out before the actuator ran)"));
+                                continue;
+                            }
                             let _ = reply.send(chair_decide_exec(&chair_handle, &id, approve));
                         }
                         mcp::ChairCmd::Scrollback { target, reply } => {
+                            if reply.is_closed() {
+                                continue;
+                            }
                             let _ = reply.send(chair_scrollback_exec(&chair_handle, &target));
                         }
                         mcp::ChairCmd::Status { reply } => {
+                            if reply.is_closed() {
+                                continue;
+                            }
                             let _ = reply.send(chair_status_exec(&chair_handle));
                         }
                     }
@@ -3375,6 +3406,33 @@ mod chair_tests {
     #[test]
     fn chair_reaches_committee_panes() {
         assert!(chair_target_guard("11112222-abcd", "committee").is_ok());
+    }
+
+    /// The failure the audit exists to prevent: an injection that never reached the pane must
+    /// not enter the trail as one that did. The chair verifies its own work against this record.
+    #[test]
+    fn a_failed_injection_is_never_audited_as_delivered() {
+        let line = chair_inject_audit_line("11112222", "run the suite", Some("pane not found"));
+        assert!(!line.contains("chair injected"), "a failed write must not read as an act: {line}");
+        assert!(line.contains("DELIVERY FAILED"), "the failure must be named aloud: {line}");
+        assert!(line.contains("pane not found"), "the reason must survive into the trail: {line}");
+    }
+
+    #[test]
+    fn a_delivered_injection_reads_as_delivered() {
+        let line = chair_inject_audit_line("11112222", "run the suite", None);
+        assert!(line.contains("chair injected"), "a real act must read as one: {line}");
+        assert!(line.contains("run the suite"), "the preview carries what was said: {line}");
+    }
+
+    /// Boundary: an empty message still produces an honest line on both paths — no panic, and
+    /// the delivered/failed distinction does not depend on there being any text to preview.
+    #[test]
+    fn an_empty_message_still_audits_honestly() {
+        assert!(chair_inject_audit_line("11112222", "", None).contains("chair injected"));
+        let failed = chair_inject_audit_line("11112222", "", Some("broken pipe"));
+        assert!(!failed.contains("chair injected"));
+        assert!(failed.contains("broken pipe"));
     }
 
     #[test]

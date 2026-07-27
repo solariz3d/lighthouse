@@ -1,7 +1,7 @@
 // Stage 7a (minimal): the one shared MCP control plane, over loopback HTTP.
 // Proves a spawned claude pane connects to a single in-process server and shares the
 // Board. No auth yet (loopback-only); per-pane bearer tokens come in the full 7a build.
-use std::collections::VecDeque;
+use std::collections::{HashMap, VecDeque};
 use std::sync::{Arc, Mutex};
 
 use rmcp::{
@@ -20,6 +20,27 @@ fn now_ms() -> u64 {
         .duration_since(std::time::UNIX_EPOCH)
         .map(|d| d.as_millis() as u64)
         .unwrap_or(0)
+}
+
+// per-verb refusal throttle state: verb -> (last posted ms, refusals absorbed since)
+static REFUSALS: Mutex<Option<HashMap<String, (u64, u32)>>> = Mutex::new(None);
+const REFUSAL_WINDOW_MS: u64 = 60_000;
+
+/// Decide whether a refused chair attempt posts to the board: Some(absorbed_count) to post
+/// (carrying how many repeats were absorbed since the last posted line), None to stay quiet
+/// and count. First refusal for a verb always posts.
+fn refusal_should_post(verb: &str, now: u64) -> Option<u32> {
+    let mut guard = REFUSALS.lock().unwrap();
+    let map = guard.get_or_insert_with(HashMap::new);
+    let e = map.entry(verb.to_string()).or_insert((0, 0));
+    if now.saturating_sub(e.0) >= REFUSAL_WINDOW_MS {
+        let absorbed = e.1;
+        *e = (now, 0);
+        Some(absorbed)
+    } else {
+        e.1 += 1;
+        None
+    }
 }
 
 /// A committee member raising its hand. Routed to the chair's gate (Stage 7); never acts.
@@ -138,12 +159,27 @@ impl ConsonanceMcp {
     fn auth_chair(&self, token: &str, verb: &str) -> bool {
         let ok = !self.chair_token.is_empty() && token == self.chair_token;
         if !ok {
-            board_push(&self.board, BoardEntry {
-                pane: "chair".to_string(),
-                role: "committee".to_string(),
-                text: format!("{verb} REFUSED — bad or missing chair token"),
-                ts: now_ms(),
-            });
+            // Around's find #3 (2026-07-27): refusal spam must not evict real acts from the
+            // bounded live ring — board.jsonl keeps every posted line, but the ring is what gets
+            // READ. Throttle to one refusal line per verb per minute, carrying the count of
+            // repeats it absorbed, so the information survives without the eviction pressure.
+            // Deliberate trade (named by Around's re-review): the absorbed lines never reach
+            // board.jsonl either — the flood's SIZE is kept, its individual timestamps are not.
+            // "There was a flood" is the actionable fact; per-attempt times were judged not worth
+            // letting an attacker write unbounded lines into the durable trail.
+            if let Some(absorbed) = refusal_should_post(verb, now_ms()) {
+                let text = if absorbed > 0 {
+                    format!("{verb} REFUSED — bad or missing chair token (+{absorbed} more refusals absorbed this past minute)")
+                } else {
+                    format!("{verb} REFUSED — bad or missing chair token")
+                };
+                board_push(&self.board, BoardEntry {
+                    pane: "chair".to_string(),
+                    role: "committee".to_string(),
+                    text,
+                    ts: now_ms(),
+                });
+            }
         }
         ok
     }
@@ -278,6 +314,36 @@ impl ServerHandler for ConsonanceMcp {
 /// Absolute path to the shared MCP config every pane is launched with.
 pub fn config_path() -> std::path::PathBuf {
     data_dir().join("mcp.consonance.json")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // NOTE: REFUSALS is a process-global — each test uses its own verb name for isolation.
+
+    #[test]
+    fn first_refusal_posts_immediately() {
+        assert_eq!(refusal_should_post("test_verb_first", 1_000_000), Some(0));
+    }
+
+    #[test]
+    fn repeats_inside_the_window_are_absorbed_then_reported() {
+        let t = 2_000_000;
+        assert_eq!(refusal_should_post("test_verb_burst", t), Some(0));
+        assert_eq!(refusal_should_post("test_verb_burst", t + 1_000), None);
+        assert_eq!(refusal_should_post("test_verb_burst", t + 2_000), None);
+        // window rolls over: posts again, carrying the two absorbed repeats
+        assert_eq!(refusal_should_post("test_verb_burst", t + REFUSAL_WINDOW_MS), Some(2));
+    }
+
+    #[test]
+    fn verbs_throttle_independently() {
+        let t = 3_000_000;
+        assert_eq!(refusal_should_post("test_verb_a", t), Some(0));
+        // a different verb inside verb_a's window still posts its own first line
+        assert_eq!(refusal_should_post("test_verb_b", t + 1_000), Some(0));
+    }
 }
 
 /// Start the one shared MCP server on a loopback ephemeral port (own tokio runtime
