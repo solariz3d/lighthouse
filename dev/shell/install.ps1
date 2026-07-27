@@ -30,6 +30,7 @@ $files = @(
   @{ From = 'dev\shell\hooks\sessionstart-ambient.js';   To = 'sessionstart-ambient.js' }
   @{ From = 'dev\shell\hooks\userprompt_pulse.py';       To = 'userprompt_pulse.py' }
   @{ From = 'consonance\hooks\board-digest.js';          To = 'board-digest.js' }
+  @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js' }
 )
 
 if (-not (Test-Path $dest)) {
@@ -107,7 +108,9 @@ Files are in sync. Register them once in ~/.claude/settings.json:
           { "type": "command", "timeout": 10,
             "command": "\"$py\" \"$dest\userprompt_pulse.py\"" },
           { "type": "command", "timeout": 10,
-            "command": "\"$node\" \"$dest\board-digest.js\"" }
+            "command": "\"$node\" \"$dest\board-digest.js\"" },
+          { "type": "command", "timeout": 10,
+            "command": "\"$node\" \"$dest\transcript-watch.js\"" }
       ] }
     ]
   }
