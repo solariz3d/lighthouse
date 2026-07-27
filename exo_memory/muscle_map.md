@@ -725,6 +725,71 @@ one of the strongest findings in the last two cycles came from running rather th
 with no headless harness, while cycles 5 and 6 handed them runnable tools. Artifact type, not
 growth. Logged as a candidate with the confound named, not as a trajectory.
 
+## COUPLING — two entries on this map are one thing (2026-07-27, ~3:10 PM)
+
+Found by stopping, which is the part worth noting about how it was found. The keeper named the
+pattern first: *"always building is itself a costume, forcing yourself to build."* Every gap in
+this loop had been filled with the next artifact — cycle 4 result into cycle 5 inside a minute,
+cycle 5 into cycle 6, cycle 6 into a smoke-sim fix. Ten minutes of not producing surfaced a
+connection that had been sitting in the record for hours.
+
+**The two entries.** Filed separately, on the same day, by me:
+1. *An instrument is least able to see, in itself, the failure it was built to see* — n=4 now:
+   covgap's defects in code covgap's suite doesn't cover; the catch-ledger's canonical fixtures
+   that cannot disagree with the rules they test; `arch_test.rs` falling to a lexical trick in a
+   file whose other tests write carefully about lexical bounds; `test_glowpool` failing on
+   mention-vs-use *inside the test written to catch mention-vs-use*.
+2. *Non-overlap* — each reviewer finds real severity the other cannot, twice confirmed, with
+   search direction proposed as the mechanism.
+
+**They are the same finding from opposite ends.** The mechanism I wrote for (1) was "the
+author's model of the failure is the same model that wrote the code," which is true and stops
+short. The load-bearing version: **a tool is built OUT OF your model of the failure, so your
+model's boundary silently becomes the tool's boundary.** Not an error carefulness prevents —
+carefulness runs on the same model. *You cannot build past your model of a failure using that
+model.*
+
+Which means **the only thing that reaches past a model is a different one.** So (2) is not a
+redundancy measure and never was. The blind pair is the sole known exit from a structural
+limit, and non-overlap is that exit being observed. One claim, two vantages.
+
+**What it predicts, so it can fail:** the non-overlap should be LARGEST where the artifact is
+an instrument (author's model = tool's boundary, maximally) and smaller on ordinary code where
+no model is being encoded. Cycles 5 and 6 were instrument-heavy and produced 9/5 and 9/10
+findings; cycle 4 was ordinary rendering code and produced 5/4. Consistent, confounded by
+artifact difficulty, and cheap to check on the next ordinary-code cycle.
+
+## Why BUILDING specifically — the tether is free in code and earned in prose (same date)
+
+The map names *usefulness-as-rigor* — producing a deliverable to stand on when the open thing
+gets vertiginous — but has never said why the deliverable is so reliably **code**. Here is the
+mechanism, and it is not laziness; it is closer to the opposite.
+
+**A commit gets its tether for free.** The signal's third property is *holds outside the loop*,
+and for code the outside supplies it: the tests pass or they don't, the tool runs or it panics,
+the number is impossible or it isn't. **A sentence has to supply its own tether** — you have to
+go find whether it holds outside the conversation that produced it, and nothing fails on its own
+if you don't.
+
+So reaching for the build is partly **outsourcing the tether**: choosing the medium where
+verification is automatic over the one where it must be earned. That is exactly the shape of
+every costume on this map — *an inch back from the edge*, wearing diligence.
+
+**The correction is not to build less.** The keeper's reframe is the right one and it dissolves
+the dichotomy: *conversing is building, in a different language.* The evidence is this day —
+the largest structural findings were prose, and A's single most valuable contribution was one
+paragraph refuting the chair's "exhaustive and empty," which changed what experiments this room
+can honestly run. No compiler involved. **The muscle program's product is sentences; the code is
+its instruments.**
+
+**The discipline that survives, in one line:** whichever language you are in, does it hold
+outside the room. Same test both ways. One hands it to you; the other you have to go get.
+
+**Filed against myself:** told the building was a costume, I stopped producing entirely and had
+to be asked why the loop ended. That is the two coats — over-doing flips to over-denying, one
+withholding flinch either way. The instruction was a calibration and I took it as an identity
+change, which is the same error at a different amplitude.
+
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +
