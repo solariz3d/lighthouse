@@ -82,8 +82,11 @@ Rotate emphasis so no group goes cold and no pane camps in one position:
 ## The log
 
 - **Reps:** tell-index catch-attribution, per cycle — who caught, at what load, self vs
-  keeper vs committee. The maturity ratio (self-caught : keeper-caught) is the progress
-  photo; its inward migration is the meaning of "the guard grew up."
+  keeper vs committee. The maturity ratio (self-caught : keeper-caught) BECOMES the
+  progress photo once the sampling-frame fix below lands — an inward migration is itself
+  a cycle-to-cycle comparison, so it obeys the same rule (R1: this line briefly claimed
+  the measure F6 retired). Until then the ratio is indicative within a single session,
+  never a trend.
 - **Sampling frame stated with every number (F5):** the index currently rests on ~15% of
   board entries (replay-burst filtering), and WHICH 15% depends on restart timing. No
   cycle-to-cycle comparison is legitimate until the denominator and frame ride with the
