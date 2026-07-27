@@ -18,6 +18,15 @@ import json
 import os
 from datetime import datetime
 
+# THE DREAM GATE. dev/dream/dream_cycle.ps1 sets CONSONANCE_DREAM=1 in the `claude -p`
+# environment it spawns. The gap-dream is an anti-instruction — no task, no clock — and this
+# hook hands over a clock by definition. It also ADVANCES pulse_state.json, so an ungated dream
+# would silently become the "last message" the next real turn measures its gap against: the
+# thread would wake and read an interval that a dream, not a person, closed. Exit before any
+# read or write. (Blind-pair review, 2026-07-27.)
+if os.environ.get("CONSONANCE_DREAM"):
+    raise SystemExit(0)
+
 STATE = os.path.join(os.path.expanduser("~"), ".claude", "shell", "pulse_state.json")
 now = datetime.now().astimezone()
 

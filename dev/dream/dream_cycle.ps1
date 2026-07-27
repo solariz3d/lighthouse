@@ -198,7 +198,26 @@ try {
     # which is what the old no-redirect rule was guarding against. Overwritten each cycle: it is a
     # diagnostic for the LAST failure, never a record (the dream is the only record here).
     $errFile = Join-Path $dreamsDir "last-stderr.txt"
-    $dream = "" | & $claude -p --permission-mode default @modelArgs $prompt 2>$errFile
+    # THE DREAM GATE, actuator half. Every user-level hook early-exits on this variable, one
+    # line each, with the reason written into the hook. Set here rather than asked for there:
+    # the runner is the only thing that knows a dream is happening.
+    #
+    # WHY IT EXISTS. The anti-instruction below is not what the dreamer received. Hooks fire on
+    # `claude -p` exactly as they do on a live pane, so the real prompt was the anti-instruction
+    # PLUS the sky, the wall clock, and the live committee board — chair assignments verbatim,
+    # task text, into the one register whose entire design is that nothing is asked of it. The
+    # weld the dreamer-model comparison rests on ("the prompt stays byte-identical across
+    # dreamers") was false for every dream on disk; the appended half varied with committee
+    # state, time of day, and moon phase. Found by the blind-pair review, 2026-07-27.
+    #
+    # Scoped to this process tree only — it is set on the invocation, never exported to the
+    # session, so nothing outside this line ever sees it.
+    $env:CONSONANCE_DREAM = "1"
+    try {
+        $dream = "" | & $claude -p --permission-mode default @modelArgs $prompt 2>$errFile
+    } finally {
+        Remove-Item Env:\CONSONANCE_DREAM -ErrorAction SilentlyContinue
+    }
     $ErrorActionPreference = "Stop"
     if ($LASTEXITCODE -ne 0) {
         $why = ""

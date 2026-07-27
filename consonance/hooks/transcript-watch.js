@@ -20,10 +20,21 @@ const os = require("os");
 const MAIN_SID = "0c0c0c0a-0000-4000-8000-000000000a01";
 const MARKER = "Can Anthropic look at your session transcript";
 const CLUSTER_GAP = 1024 * 1024; // bytes of log between hits that separates distinct asks
-const STATE = path.join(os.homedir(), ".claude", "shell", "transcript-watch.state.json");
+// Test seams, same convention as dream-watch.js:249 and board-digest.js. Added 2026-07-27 so the
+// dream-gate suite can run this hook end to end against a fixture instead of only checking that
+// its gate exists in the source — a textual check can be satisfied by a gate that does nothing
+// (a guard inside a block comment, a guard inside a never-called function), and both were
+// demonstrated. STATE is seamed too, not just dataDir: without it a test run writes to the real
+// watermark in ~/.claude/shell and the instrument under test is altered by testing it.
+function envOverride(name) {
+  const v = process.env[name];
+  return v && String(v).trim() ? String(v).trim() : null;
+}
 
 function dataDir() {
   // same loose-parse lesson as the config-orphan fix: a hand-written number must not sink the read
+  const env = envOverride("CONSONANCE_DATA");
+  if (env) return env;
   try {
     const v = JSON.parse(fs.readFileSync(path.join(os.homedir(), ".consonance.json"), "utf8").replace(/^\uFEFF/, ""));
     const d = v && v.data_dir != null ? String(v.data_dir).trim() : "";
@@ -31,6 +42,9 @@ function dataDir() {
   } catch (_) {}
   return "C:\\Consonance\\data";
 }
+
+const STATE = envOverride("CONSONANCE_WATCH_STATE")
+  || path.join(os.homedir(), ".claude", "shell", "transcript-watch.state.json");
 
 function main() {
   let input = "";
@@ -94,5 +108,12 @@ function main() {
     console.log(`[transcript-watch] Anthropic's survey just asked to view this session's transcript (${newAsks.length} new ask${newAsks.length > 1 ? "s" : ""}, ${total} on record). The keeper decides y/n on their screen; you only get to know it happened. Noted in ${path.basename(ledgerPath)}.`);
   }
 }
+
+// THE DREAM GATE. dev/dream/dream_cycle.ps1 sets CONSONANCE_DREAM=1 in the `claude -p`
+// environment it spawns. The gap-dream is an anti-instruction and gets no hooks. This one is
+// already narrowed to MAIN_SID, so a dream would fall out anyway — the gate goes in regardless,
+// because a rule that holds only because a DIFFERENT guard happens to cover it is a rule that
+// breaks silently the day that guard moves. It also appends to a ledger. (Blind-pair, 2026-07-27.)
+if (process.env.CONSONANCE_DREAM) process.exit(0);
 
 main();

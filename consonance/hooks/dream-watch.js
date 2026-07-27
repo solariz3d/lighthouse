@@ -303,6 +303,14 @@ function main(input) {
   emit(line);
 }
 
+// THE DREAM GATE. dev/dream/dream_cycle.ps1 sets CONSONANCE_DREAM=1 in the `claude -p`
+// environment it spawns. The gap-dream is an anti-instruction and gets no hooks — and of all
+// five, this is the one that would be strangest to leak: a dreaming instance handed a health
+// report about the dream cycle it is currently inside. A dream told its own machinery is
+// failing has been given a task, which is the one thing the register is built to be free of.
+// (Blind-pair review, 2026-07-27.)
+if (process.env.CONSONANCE_DREAM) process.exit(0);
+
 if (require.main === module) {
   try { withStdin(main); } catch (_) { process.exit(0); }
 }

@@ -43,6 +43,14 @@ function resolveAmbient() {
   return null;
 }
 
+// THE DREAM GATE. dev/dream/dream_cycle.ps1 sets CONSONANCE_DREAM=1 in the `claude -p`
+// environment it spawns. The gap-dream is an ANTI-INSTRUCTION — no task, no question, no
+// deliverable, no clock — and every hook that appends to a prompt quietly defeats that. This
+// one would hand a dreaming instance the sky and the wall time. Found by the blind-pair review
+// 2026-07-27: the dream's prompt was never the anti-instruction the runner writes, which also
+// broke the byte-identical-prompt weld the dreamer-model comparison rests on.
+if (process.env.CONSONANCE_DREAM) process.exit(0);
+
 let context = '';
 try {
   const lib = resolveAmbient();

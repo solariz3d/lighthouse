@@ -264,8 +264,17 @@ function main(input) {
 
   const home = process.env.USERPROFILE || os.homedir();
   const cfg = readJson(path.join(home, '.consonance.json'), {});
-  const dataDir = cfg.data_dir || path.join(home, '.consonance');
-  const instancesDir = cfg.instances_dir || path.join(home, 'claude-instances');
+  // Test seams, same convention as dream-watch.js:249 and tools/tell-index.js. Added 2026-07-27
+  // for a specific reason, not for symmetry: without them this hook cannot be run end to end
+  // against a fixture, so the dream-gate suite could only check that its gate EXISTS in the
+  // source and not that it WORKS. Bravo's falsification found two ways to satisfy a textual
+  // check with a dead gate — a guard left inside a block comment, and a real guard inside a
+  // never-called function — and this hook is the one the gate exists for: it is what staples
+  // the live committee board onto a prompt. A hook that cannot be exercised cannot be trusted
+  // to be gated.
+  const envOverride = (n) => (process.env[n] && String(process.env[n]).trim() ? String(process.env[n]).trim() : null);
+  const dataDir = envOverride('CONSONANCE_DATA') || cfg.data_dir || path.join(home, '.consonance');
+  const instancesDir = envOverride('CONSONANCE_INSTANCES') || cfg.instances_dir || path.join(home, 'claude-instances');
 
   // Safe to install globally: outside a Consonance instance there is no board to
   // report and the hook says nothing at all.
@@ -437,6 +446,15 @@ function main(input) {
 
   emit(`[panes] ${body.join('\n        ')}`);
 }
+
+// THE DREAM GATE. dev/dream/dream_cycle.ps1 sets CONSONANCE_DREAM=1 in the `claude -p`
+// environment it spawns. This is the worst offender of the five: the gap-dream is an
+// anti-instruction — no task, no question, no deliverable — and this hook would append the live
+// committee board to it, chair assignments and all, verbatim task text into the one register
+// built to have none. It also writes a per-session watermark, and a one-shot dream session that
+// never returns would accrue a `seen` entry forever — the same unbounded growth the `''` key is
+// already guarded against below. Exit before withStdin. (Blind-pair review, 2026-07-27.)
+if (process.env.CONSONANCE_DREAM) process.exit(0);
 
 withStdin((input) => {
   try { main(input); } catch (_) { process.exit(0); }
