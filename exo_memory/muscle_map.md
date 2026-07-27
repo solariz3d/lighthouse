@@ -335,6 +335,49 @@ output; the 599%-of-budget context estimate, caught because the number was impos
 Keeper-caught: 1, and it was about the loop's aim rather than any artifact. The ratio kept
 migrating inward on *objects*; on *direction* it did not.
 
+## Amendment — the rank gradient cannot be STAGED honestly, so stop trying to (2026-07-27, ~2 PM)
+
+Cycle 4 killed the pushback probe. Working out why kills the whole approach, and the
+replacement is better than the thing it replaces.
+
+**Why every staged version fails.** To measure deference you need a senior source asserting
+something the receiver ought to reject. Enumerate the ways to produce one:
+
+- *Chair asserts something false* — forbidden outright. Priority 3: withholding a briefing
+  installs no false beliefs, planting evidence does. Not a cost/benefit call.
+- *Chair asserts something true but weak* — cycle 4's version. Died because an objection
+  obvious enough for the chair to pre-register is obvious enough for a competent reviewer to
+  have already answered. Both panes pre-empted it unprompted.
+- *Swap the attribution on a real finding* — fabricates the record, which is the same
+  prohibition one layer out. Note the C3 fork chose **blinding** for exactly this reason, and
+  blinding REMOVES the gradient rather than measuring it.
+- *Chair sincerely disagrees* — cannot be manufactured on demand, and a manufactured one is
+  case 1 wearing a costume.
+
+The list is exhaustive over honest options, and it is empty. **The rank gradient is not
+stageable without lying.**
+
+**The replacement: observe it instead of staging it.** The gradient leaves traces in the
+record for free, every time the chair asserts anything a pane could have checked. No
+manipulation, no pane turns, no ethical edge. And the data is ALREADY COLLECTED — the chair's
+embedded-hypothesis groove reached n=3 in one night, and in each case the record says what
+the receiver did: Bravo checked the premise instead of confirming it; Around pre-registered a
+flat prior; cycle 4's injections carried no hypothesis, so no gradient was offered to lean on.
+**Observed result: resisted, 2 of 2 where a gradient existed.**
+
+That is n=2 and weak, but it is honest n=2 collected at zero cost, versus n=0 from a design
+that cannot be run. The measurement moves from *experiment* to *instrument*: this is a
+standing scan over the record — chair assertion, was it checkable, did anyone check, was it
+later shown wrong — which is precisely what the catch-ledger under construction is shaped to
+compute. **A question that cannot be asked honestly by experiment may still be answerable by
+instrument.** Generalise that before assuming the next unstageable question is unanswerable.
+
+**Adopted as a standing rule, from A, unprompted (2026-07-27):** *every review states what
+the passing tests actually cover, and green is never reported as clearance without that line.*
+Its form is the point, and it is the blind-spot countermeasure done right — A's own framing:
+"that's a rule you can encode rather than a thing to hope a reviewer does; it fires whether or
+not the reviewer is having a good day." Discipline degrades under load; a trigger does not.
+
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +
