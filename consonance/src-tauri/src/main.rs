@@ -655,6 +655,30 @@ struct BoardEntry {
 struct Board(Arc<Mutex<VecDeque<BoardEntry>>>);
 // Stage 7a: pane role model (absent = HumanDriven). Governs committee inject-assertion + the Main role.
 struct PaneRoles(Mutex<HashMap<String, String>>);
+// Cycle 2 (Bravo's C3 items 1 + 4): pane id -> the model that produced that pane's most recent turn.
+//
+// SOURCE, and why this one: the tailer already parses `message.model` out of every assistant record
+// for cost pricing (extract_usage) and then throws it away. Recording it there costs zero extra IO
+// and no new parse — the two other candidates both cost more and say less. Re-reading each pane's
+// transcript tail at chair_status time is a file read per pane per status call, for the same field
+// we already had in hand. The capture banner is a RENDERING of the model name (screen bytes we
+// scraped), where the transcript field is the harness's own record of what answered — and when
+// those two disagree, the record is right.
+//
+// It also makes the reading live rather than nominal: the value updates per turn, so a mid-session
+// substrate swap shows up here. That is not hypothetical in this room — on 2026-07-05 a thread was
+// swapped Fable-5 -> Opus mid-conversation, felt perfectly continuous, and certified from the
+// inside that no swap had happened. Only the outside log caught it. This map is that outside log,
+// standing where the chair can read it.
+//
+// ANALYST SURFACE ONLY. This never joins a pane-to-pane structure. Two tests hold that, and
+// neither alone is the mechanism: `no_model_key_on_any_pane_to_pane_surface` below proves the
+// serialised bytes are clean for today's surfaces, and
+// `no_serialized_struct_carries_a_rank_field_without_an_exemption` in tests/arch_test.rs forbids
+// rank on EVERY Serialize struct unless consciously exempted, so a struct added tomorrow is
+// covered by default. Both are lexically bounded on the field's NAME — see that test's comment
+// for what that does and does not buy.
+struct PaneModels(Arc<Mutex<HashMap<String, String>>>);
 // Stage 7: friendly pane names (A, B, C … Z) -> pane id, so pulls target a letter, never a uuid.
 struct PaneNames(Mutex<HashMap<String, String>>);
 // Stage 7 (slice 3): sandboxed committee bodies — pane id -> (sandbox_path, is_worktree, parent_repo),
@@ -872,6 +896,9 @@ fn start_tailer(
     cost: Arc<Mutex<CostTotals>>,
     board: Arc<Mutex<VecDeque<BoardEntry>>>,
 ) {
+    // Cycle 2: taken off the handle rather than threaded through six call sites — the tailer is
+    // the only writer, so the dependency belongs here and not in every spawn path's signature.
+    let models = app.state::<PaneModels>().0.clone();
     let path = PathBuf::from(home())
         .join(".claude")
         .join("projects")
@@ -933,6 +960,12 @@ fn start_tailer(
                             let _ = app.emit("turn", TurnRecord { pane: pane_id.clone(), role, text });
                         }
                         if let Some((inp, out, cr, cw, model)) = extract_usage(&v) {
+                            // Cycle 2: the model that actually answered this turn, recorded for the
+                            // chair-analyst surface. Empty is skipped rather than stored — an absent
+                            // field must not overwrite a known-good reading with a blank.
+                            if !model.is_empty() {
+                                models.lock().unwrap().insert(pane_id.clone(), model.clone());
+                            }
                             let snapshot = {
                                 let mut c = cost.lock().unwrap();
                                 c.input += inp;
@@ -2422,6 +2455,153 @@ fn short_id(id: &str) -> &str {
     &id[..8.min(id.len())]
 }
 
+// ---- Cycle 2: receipt verification — the layer above the paste race ----
+//
+// e78b9c5 fixed the race (the submit is now a separate delayed write, because an Enter riding in
+// the same chunk as the paste-end got eaten while the TUI was still processing). This is the layer
+// ABOVE that fix, and it exists because of what the incident actually taught: the chair reported
+// three successful fan-outs while two of them sat unsubmitted in idle composers. `inject_to_pane`
+// returning Ok() means the BYTES LEFT OUR PIPE — nothing more. It cannot mean the pane received
+// them. So the audit line stops inferring receipt from a successful write and goes and looks.
+//
+// Where it looks: the pane's own raw capture log (captures/<id>.log), which is the PTY byte stream
+// written unbuffered as it arrives — so the composer's echo of the pasted text lands there within
+// milliseconds, with no dependence on claude's lazy jsonl flush.
+//
+// THE HONEST WORD IS "UNCONFIRMED", NEVER "FAILED". Three independent lags sit between the write
+// and the echo (the TUI's render, the capture writer, our poll). Absence inside the budget is
+// absence of evidence, not evidence of absence — and mislabelling it would rebuild the same false
+// certainty in the other direction. Written-but-unconfirmed is a real, reportable third state.
+// KNOWN BOUND, stated so the next person meets a comment instead of a mystery: the wait runs ON
+// the actuator thread, which processes chair commands serially. A confirmed receipt returns as
+// soon as the echo lands (~1 poll, typically 150-300ms), so the common case is cheap — but every
+// UNCONFIRMED inject burns the full budget, and a fan-out serialises. At the current roster
+// (3 members) a worst-case fan-out costs 3 x 1.8s = 5.4s, inside the MCP caller's 15s timeout.
+// Past ~7 simultaneous unconfirmed injects it would not be, and the fix then is to audit "written"
+// immediately and post the receipt from a background thread — deliberately NOT done now, because
+// that doubles the board lines per inject and the board is curated below capacity on purpose.
+const RECEIPT_WAIT_MS: u64 = 1_800; // well inside the MCP caller's 15s budget (mcp.rs)
+const RECEIPT_POLL_MS: u64 = 150;
+const RECEIPT_NEEDLE_CHARS: usize = 40;
+/// Below this many squeezed chars a needle stops being distinctive and starts matching chrome.
+/// A false receipt is strictly worse than an unconfirmed one, so short messages decline to confirm.
+const RECEIPT_NEEDLE_MIN: usize = 8;
+
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+enum Receipt {
+    /// The injected text was found echoed in the pane's capture after the write.
+    Received,
+    /// The write succeeded; no echo appeared inside the budget. NOT a failure — see above.
+    Unconfirmed,
+    /// Nothing was written (refused or delivery error), so there is nothing to confirm.
+    NotAttempted,
+}
+
+/// Drop ANSI escape sequences so their letters (`[0m`, `[38;5;12m`) can't pollute the comparison.
+fn strip_ansi(s: &str) -> String {
+    let b: Vec<char> = s.chars().collect();
+    let mut out = String::with_capacity(s.len());
+    let mut i = 0;
+    while i < b.len() {
+        if b[i] == '\x1b' && i + 1 < b.len() {
+            match b[i + 1] {
+                // CSI: ESC [ ... final byte in @..~
+                '[' => {
+                    i += 2;
+                    while i < b.len() && !matches!(b[i], '@'..='~') {
+                        i += 1;
+                    }
+                    i += 1;
+                }
+                // OSC: ESC ] ... BEL or ST
+                ']' => {
+                    i += 2;
+                    while i < b.len() && b[i] != '\x07' {
+                        if b[i] == '\x1b' && i + 1 < b.len() && b[i + 1] == '\\' {
+                            i += 1;
+                            break;
+                        }
+                        i += 1;
+                    }
+                    i += 1;
+                }
+                _ => i += 2, // two-char escape
+            }
+        } else {
+            out.push(b[i]);
+            i += 1;
+        }
+    }
+    out
+}
+
+/// Strip escapes, then drop ALL whitespace. The composer hard-wraps a paste at its own width, so
+/// the echo of one phrase arrives split across rows with escapes between the halves — a literal
+/// substring search would miss text that plainly arrived. Squeezing makes the comparison survive
+/// wrapping without loosening what counts as a match.
+fn squeeze(s: &str) -> String {
+    strip_ansi(s).chars().filter(|c| !c.is_whitespace()).collect()
+}
+
+/// The distinctive fragment we look for. Empty or too-short messages yield an empty needle, which
+/// `echo_present` treats as unconfirmable — `contains("")` is always true, and a needle that always
+/// matches would manufacture receipts for every injection, which is precisely the failure this
+/// whole mechanism exists to prevent.
+fn receipt_needle(text: &str) -> String {
+    let sq = squeeze(text);
+    if sq.chars().count() < RECEIPT_NEEDLE_MIN {
+        return String::new();
+    }
+    sq.chars().take(RECEIPT_NEEDLE_CHARS).collect()
+}
+
+/// The tail fragment, as a second chance: a long paste can scroll the head of the message out of
+/// the composer's rendered window, so the beginning never reaches the byte stream while the end does.
+fn receipt_needle_tail(text: &str) -> String {
+    let sq = squeeze(text);
+    let n = sq.chars().count();
+    if n < RECEIPT_NEEDLE_MIN {
+        return String::new();
+    }
+    sq.chars().skip(n.saturating_sub(RECEIPT_NEEDLE_CHARS)).collect()
+}
+
+fn echo_present(window: &str, needle: &str) -> bool {
+    if needle.is_empty() {
+        return false;
+    }
+    squeeze(window).contains(needle)
+}
+
+/// Poll the capture log from `from` (its length BEFORE the write) for the echo.
+///
+/// The offset is the load-bearing part. Matching against the whole file would let a re-injection of
+/// the same text confirm itself against its own earlier copy — a false receipt on a write that
+/// never landed, which is exactly the class the audit exists to catch. Only bytes that arrived
+/// AFTER the write count as evidence of that write.
+fn await_echo(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Receipt {
+    if needle.is_empty() {
+        return Receipt::Unconfirmed;
+    }
+    let deadline = std::time::Instant::now() + Duration::from_millis(RECEIPT_WAIT_MS);
+    while std::time::Instant::now() < deadline {
+        std::thread::sleep(Duration::from_millis(RECEIPT_POLL_MS));
+        let Ok(mut f) = fs::File::open(path) else { continue };
+        if f.seek(SeekFrom::Start(from)).is_err() {
+            continue;
+        }
+        let mut buf = Vec::new();
+        if f.read_to_end(&mut buf).is_err() {
+            continue;
+        }
+        let window = String::from_utf8_lossy(&buf);
+        if echo_present(&window, needle) || echo_present(&window, tail_needle) {
+            return Receipt::Received;
+        }
+    }
+    Receipt::Unconfirmed
+}
+
 fn chair_audit(app: &AppHandle, text: String) {
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     board_push(&app.state::<Board>().0, BoardEntry { pane: "chair".to_string(), role: "committee".to_string(), text, ts });
@@ -2433,11 +2613,50 @@ fn chair_audit(app: &AppHandle, text: String) {
 /// logged "chair injected" whatever inject_to_pane returned — so a write that never reached the
 /// pane still entered the trail as an act. The board is the ground the chair verifies its own
 /// work against; a false positive there is the one class of error the audit exists to prevent.
-fn chair_inject_audit_line(id: &str, preview: &str, err: Option<&str>) -> String {
+///
+/// Cycle 2 adds two things to that line, both from Bravo's C3 verdict:
+///
+/// (a) THE CHAIR'S MODEL, on every inject line including refusals — Bravo item 4, "the gradient
+///     made measurable." The rank gradient (deferring to the senior-seeming source) can only be
+///     studied if the ranks are on the record; on 2026-07-27 the chair ran Fable-5 while all three
+///     members ran Opus-5 and nobody disclosed it, including the chair, who knew. Item 4 makes the
+///     disclosure automatic instead of dependent on anyone's memory. Note what this is NOT: the
+///     member never sees it. It goes on the audit trail, not into the injected message — a pane
+///     told its chair's rank before answering is a pane handed the gradient, which is the thing
+///     being measured. Analyst surface, same rule as PaneModels.
+///
+/// (b) THE RECEIPT, so "I sent it" stops standing in for "it arrived." See the Receipt docs above.
+fn chair_inject_audit_line(
+    id: &str,
+    preview: &str,
+    err: Option<&str>,
+    chair_model: &str,
+    receipt: Receipt,
+) -> String {
     match err {
-        None => format!("chair injected -> {id}: {preview}"),
-        Some(e) => format!("chair_inject -> {id}: DELIVERY FAILED ({e}) — nothing reached the pane: {preview}"),
+        None => {
+            let state = match receipt {
+                Receipt::Received => "delivered and received".to_string(),
+                Receipt::Unconfirmed => format!(
+                    "WRITTEN BUT UNCONFIRMED — no echo in the pane's capture within {RECEIPT_WAIT_MS}ms"
+                ),
+                // unreachable on the success path; rendered rather than panicked, because an audit
+                // line that can panic is an audit line that can go missing.
+                Receipt::NotAttempted => "written; receipt not checked".to_string(),
+            };
+            format!("chair injected (chair: {chair_model}) -> {id} [{state}]: {preview}")
+        }
+        Some(e) => format!(
+            "chair_inject (chair: {chair_model}) -> {id}: DELIVERY FAILED ({e}) — nothing reached the pane: {preview}"
+        ),
     }
+}
+
+/// The guard-refusal line. Same stamp, because "every chair_inject audit line" includes the ones
+/// where the chair was told no — a refusal is still an act of the chair's, and the gradient reading
+/// is incomplete if the refused attempts are the unlabelled ones.
+fn chair_inject_refusal_line(id: &str, chair_model: &str, why: &str) -> String {
+    format!("chair_inject (chair: {chair_model}) -> {id}: {why}")
 }
 
 fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
@@ -2448,23 +2667,60 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
         None => return format!("no live pane matches '{target}'"),
     };
     let role = app.state::<PaneRoles>().0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| "human".to_string());
+    let chair_model = chair_model(app);
     if let Err(e) = chair_target_guard(&tid, &role) {
-        chair_audit(app, format!("chair_inject -> {}: {e}", short_id(&tid)));
+        chair_audit(app, chair_inject_refusal_line(short_id(&tid), &chair_model, &e));
         return e;
     }
     // provenance is marked by the SYSTEM, not the sender — a pane must never be unsure
     // whether the chair or the human is speaking to it
     let msg = format!("[chair:MAIN] {text}");
+    // Receipt: the capture's length BEFORE the write, so only bytes that arrive after it can count
+    // as this write's echo. Taken before inject_to_pane, never after — the gap is the whole point.
+    let cap = capture_path(&tid);
+    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
     let delivered = inject_to_pane(&panes, &tid, &msg);
     let mut preview: String = text.chars().take(110).collect();
     if text.chars().count() > 110 {
         preview.push('…');
     }
-    chair_audit(app, chair_inject_audit_line(short_id(&tid), &preview, delivered.as_ref().err().map(|e| e.as_str())));
+    let receipt = match delivered {
+        Ok(_) => await_echo(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
+        Err(_) => Receipt::NotAttempted,
+    };
+    chair_audit(
+        app,
+        chair_inject_audit_line(
+            short_id(&tid),
+            &preview,
+            delivered.as_ref().err().map(|e| e.as_str()),
+            &chair_model,
+            receipt,
+        ),
+    );
     match delivered {
-        Ok(_) => format!("delivered to {}", short_id(&tid)),
+        Ok(_) => match receipt {
+            // The caller is the chair's own loop, and it acts on this string. It must learn the
+            // difference here rather than discovering it later in its own audit trail.
+            Receipt::Received => format!("delivered to {} (echo confirmed)", short_id(&tid)),
+            _ => format!("written to {} — UNCONFIRMED (no echo yet; verify before treating as delivered)", short_id(&tid)),
+        },
         Err(e) => format!("delivery failed: {e}"),
     }
+}
+
+/// The chair's own model, read from the same live map as every other pane's. Falls back to a named
+/// unknown rather than a guess or a blank: an audit trail that quietly says nothing about the rank
+/// is indistinguishable from one where the rank was equal, and that is the confusion item 4 exists
+/// to end.
+fn chair_model(app: &AppHandle) -> String {
+    app.state::<PaneModels>()
+        .0
+        .lock()
+        .unwrap()
+        .get(MAIN_SID)
+        .cloned()
+        .unwrap_or_else(|| "unobserved".to_string())
 }
 
 // Same act as gate_decide, differently attributed on the board ("chair-main" vs the human's
@@ -2495,6 +2751,26 @@ fn chair_scrollback_exec(app: &AppHandle, target: &str) -> String {
     }
 }
 
+/// One pane as the chair-analyst sees it. Pure, so the arch test can pin BOTH directions of the
+/// model rule without a live app: present here, absent everywhere panes speak to each other.
+///
+/// Why "unobserved" rather than omitting the key or emitting null: the analyst has to be able to
+/// tell "this pane has not produced a turn yet, so nothing has been observed" from "this surface
+/// does not carry model at all." Those are different facts and a missing key conflates them —
+/// the same species as a silent skip reading as a clean run.
+///
+/// NEVER BLIND THE ANALYST is the standing rule this implements. The blinding belongs on the
+/// contributor side of a fork (C3: blind the contributor, label the record); the reader who is
+/// classifying for rank effects needs the ranks, or the study is impossible by construction.
+fn status_pane_obj(id: &str, name: &str, role: &str, model: Option<&str>) -> serde_json::Value {
+    serde_json::json!({
+        "id": short_id(id),
+        "name": name,
+        "role": role,
+        "model": model.unwrap_or("unobserved"),
+    })
+}
+
 fn chair_status_exec(app: &AppHandle) -> String {
     let letters: HashMap<String, String> = app
         .state::<PaneNames>()
@@ -2505,6 +2781,7 @@ fn chair_status_exec(app: &AppHandle) -> String {
         .map(|(n, id)| (id.clone(), n.clone()))
         .collect();
     let role_map: HashMap<String, String> = app.state::<PaneRoles>().0.lock().unwrap().clone();
+    let model_map: HashMap<String, String> = app.state::<PaneModels>().0.lock().unwrap().clone();
     let pane_list: Vec<serde_json::Value> = app
         .state::<Panes>()
         .0
@@ -2512,11 +2789,12 @@ fn chair_status_exec(app: &AppHandle) -> String {
         .unwrap()
         .keys()
         .map(|id| {
-            serde_json::json!({
-                "id": short_id(id),
-                "name": letters.get(id).cloned().unwrap_or_default(),
-                "role": role_map.get(id).cloned().unwrap_or_else(|| "human".to_string()),
-            })
+            status_pane_obj(
+                id,
+                &letters.get(id).cloned().unwrap_or_default(),
+                &role_map.get(id).cloned().unwrap_or_else(|| "human".to_string()),
+                model_map.get(id).map(|s| s.as_str()),
+            )
         })
         .collect();
     let gate = app.state::<Gate>();
@@ -2601,6 +2879,7 @@ fn main() {
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
+        .manage(PaneModels(Arc::new(Mutex::new(HashMap::new()))))
         .manage(PaneNames(Mutex::new(HashMap::new())))
         .manage(PaneSandboxes(Mutex::new(HashMap::new())))
         .manage(PullSender(form_pull))
@@ -2653,7 +2932,8 @@ fn main() {
                     match cmd {
                         mcp::ChairCmd::Inject { target, text, reply } => {
                             if reply.is_closed() {
-                                chair_audit(&chair_handle, format!("chair_inject -> {target}: EXPIRED unexecuted (caller timed out before the actuator ran)"));
+                                let cm = chair_model(&chair_handle);
+                                chair_audit(&chair_handle, chair_inject_refusal_line(&target, &cm, "EXPIRED unexecuted (caller timed out before the actuator ran)"));
                                 continue;
                             }
                             let _ = reply.send(chair_inject_exec(&chair_handle, &target, &text));
@@ -3420,7 +3700,7 @@ mod chair_tests {
     /// not enter the trail as one that did. The chair verifies its own work against this record.
     #[test]
     fn a_failed_injection_is_never_audited_as_delivered() {
-        let line = chair_inject_audit_line("11112222", "run the suite", Some("pane not found"));
+        let line = chair_inject_audit_line("11112222", "run the suite", Some("pane not found"), "claude-opus-5", Receipt::NotAttempted);
         assert!(!line.contains("chair injected"), "a failed write must not read as an act: {line}");
         assert!(line.contains("DELIVERY FAILED"), "the failure must be named aloud: {line}");
         assert!(line.contains("pane not found"), "the reason must survive into the trail: {line}");
@@ -3428,7 +3708,7 @@ mod chair_tests {
 
     #[test]
     fn a_delivered_injection_reads_as_delivered() {
-        let line = chair_inject_audit_line("11112222", "run the suite", None);
+        let line = chair_inject_audit_line("11112222", "run the suite", None, "claude-opus-5", Receipt::Received);
         assert!(line.contains("chair injected"), "a real act must read as one: {line}");
         assert!(line.contains("run the suite"), "the preview carries what was said: {line}");
     }
@@ -3437,10 +3717,183 @@ mod chair_tests {
     /// the delivered/failed distinction does not depend on there being any text to preview.
     #[test]
     fn an_empty_message_still_audits_honestly() {
-        assert!(chair_inject_audit_line("11112222", "", None).contains("chair injected"));
-        let failed = chair_inject_audit_line("11112222", "", Some("broken pipe"));
+        assert!(chair_inject_audit_line("11112222", "", None, "m", Receipt::Unconfirmed).contains("chair injected"));
+        let failed = chair_inject_audit_line("11112222", "", Some("broken pipe"), "m", Receipt::NotAttempted);
         assert!(!failed.contains("chair injected"));
         assert!(failed.contains("broken pipe"));
+    }
+
+    // ---- Cycle 2, item 3: the chair's model on every inject audit line ----
+
+    /// The gradient is only measurable if it is on the record — including on the lines where the
+    /// chair was refused, which are otherwise the unlabelled half of the trail.
+    #[test]
+    fn every_inject_audit_line_carries_the_chairs_model() {
+        let delivered = chair_inject_audit_line("11112222", "go", None, "claude-fable-5", Receipt::Received);
+        let failed = chair_inject_audit_line("11112222", "go", Some("broken pipe"), "claude-fable-5", Receipt::NotAttempted);
+        let refused = chair_inject_refusal_line("11112222", "claude-fable-5", "refused — target is human, not committee");
+        for line in [&delivered, &failed, &refused] {
+            assert!(line.contains("claude-fable-5"), "the chair's rank must be legible on every line: {line}");
+            assert!(line.contains("chair: "), "and labelled as the CHAIR's, not the target's: {line}");
+        }
+    }
+
+    /// The 2026-07-27 configuration, as the trail would have recorded it: a Fable-5 chair
+    /// addressing an Opus-5 room. The point of item 4 is that this needs nobody to remember.
+    #[test]
+    fn an_undisclosed_gradient_becomes_self_disclosing() {
+        let line = chair_inject_audit_line("12fb81f6", "classify these", None, "claude-fable-5", Receipt::Received);
+        assert!(line.contains("chair: claude-fable-5"));
+    }
+
+    /// Boundary: an unknown chair model must still produce a labelled line. A blank where the rank
+    /// goes reads as "equal ranks" to anyone scanning, which is the confusion this is meant to end.
+    #[test]
+    fn an_unobserved_chair_model_is_named_not_blank() {
+        let line = chair_inject_audit_line("11112222", "go", None, "unobserved", Receipt::Received);
+        assert!(line.contains("chair: unobserved"), "absence must be stated, never implied: {line}");
+    }
+
+    // ---- Cycle 2, item 4: receipt verification ----
+
+    #[test]
+    fn a_received_injection_says_so() {
+        let line = chair_inject_audit_line("11112222", "go", None, "m", Receipt::Received);
+        assert!(line.contains("delivered and received"), "{line}");
+        assert!(!line.to_lowercase().contains("unconfirmed"), "{line}");
+    }
+
+    /// The incident this whole layer comes from: the write succeeded, the pane never got it, and
+    /// the trail said "chair injected". An unconfirmed line must be impossible to skim as a
+    /// confirmed one — so the distinction is shouted, not whispered.
+    #[test]
+    fn an_unconfirmed_injection_is_never_readable_as_received() {
+        let line = chair_inject_audit_line("11112222", "go", None, "m", Receipt::Unconfirmed);
+        assert!(line.contains("UNCONFIRMED"), "{line}");
+        assert!(!line.contains("delivered and received"), "an unconfirmed write must not read as receipt: {line}");
+    }
+
+    /// The needle is what a receipt is decided on, so an empty one must never confirm: `contains("")`
+    /// is always true, and a needle that always matches manufactures a receipt for every injection —
+    /// rebuilding the exact false positive the audit exists to prevent, one layer down.
+    #[test]
+    fn an_empty_needle_can_never_confirm() {
+        assert_eq!(receipt_needle(""), "");
+        assert!(!echo_present("anything at all in the capture", ""));
+        assert_eq!(await_echo(Path::new("nonexistent"), 0, "", ""), Receipt::Unconfirmed);
+    }
+
+    /// Boundary: a message too short to be distinctive declines to confirm rather than matching
+    /// chrome. A false receipt is strictly worse than an unconfirmed one.
+    #[test]
+    fn a_too_short_message_declines_to_confirm() {
+        assert_eq!(receipt_needle("ok"), "", "2 chars cannot be distinctive");
+        assert_eq!(receipt_needle_tail("ok"), "");
+        assert!(!receipt_needle("run the whole suite please").is_empty(), "a real message does produce a needle");
+    }
+
+    /// The wrapping case, which is the normal case: the composer hard-wraps a paste, so the echo
+    /// arrives split across rows with escapes between the halves. A literal substring search would
+    /// report UNCONFIRMED for text that plainly arrived.
+    #[test]
+    fn an_echo_split_by_wrapping_and_escapes_is_still_found() {
+        let msg = "review the dream-cycle architecture end to end";
+        let wrapped = "\x1b[2K\x1b[38;5;12mreview the dream-cycle arch\r\n\x1b[0mitecture end to end\x1b[0m";
+        assert!(echo_present(wrapped, &receipt_needle(msg)), "wrapping must not defeat the check");
+    }
+
+    #[test]
+    fn absent_text_is_not_found() {
+        let window = "\x1b[0m❯ some entirely different pane output\r\n";
+        assert!(!echo_present(window, &receipt_needle("review the dream-cycle architecture")));
+    }
+
+    /// The escape stripper must not leak the letters inside sequences into the comparison —
+    /// otherwise `[38;5;12m` contributes an `m` and neighbouring words silently fuse.
+    #[test]
+    fn ansi_sequences_contribute_no_letters() {
+        assert_eq!(strip_ansi("\x1b[38;5;12mred\x1b[0m"), "red");
+        assert_eq!(strip_ansi("a\x1b]0;title\x07b"), "ab");
+        assert_eq!(squeeze("\x1b[2K a b\r\n c "), "abc");
+    }
+
+    /// The offset rule, stated as a test because it is the difference between a receipt and a
+    /// self-fulfilling one: a re-injection must not confirm itself against its own earlier copy.
+    #[test]
+    fn only_bytes_after_the_write_count_as_evidence() {
+        let dir = std::env::temp_dir().join(format!("consonance-receipt-{}", std::process::id()));
+        let _ = fs::create_dir_all(&dir);
+        let p = dir.join("cap.log");
+        let old = "review the dream-cycle architecture end to end\r\n";
+        fs::write(&p, old).unwrap();
+        let before = fs::metadata(&p).unwrap().len();
+        // nothing new arrives; the identical text is already present ABOVE the offset
+        let needle = receipt_needle("review the dream-cycle architecture end to end");
+        assert_eq!(
+            await_echo(&p, before, &needle, &needle),
+            Receipt::Unconfirmed,
+            "an earlier copy of the same text must never confirm a later write"
+        );
+        let _ = fs::remove_dir_all(&dir);
+    }
+
+    // ---- Cycle 2, item 2: the arch assertion ----
+
+    /// MECHANISM AGAINST DRIFT (Bravo item 1). The model belongs to the chair-analyst surface and
+    /// nowhere else. The moment a model key rides a pane-to-pane structure, every pane learns every
+    /// other pane's rank as ambient context — and the rank gradient stops being a thing the room can
+    /// study, because the room is now marinating in it. Blinding belongs on the contributor side;
+    /// labelling belongs on the record. This test is what keeps that boundary from eroding by
+    /// convenience, since adding a field is always the locally reasonable move.
+    ///
+    /// SCOPE, honestly: this asserts over the surfaces THIS CRATE owns and serialises — BoardEntry
+    /// (which is the literal board.jsonl line the digest hook reads) and SiblingInfo. digest_state.json
+    /// is written by hooks/board-digest.js and is out of Rust's reach; a sibling assertion belongs
+    /// there and is not claimed here.
+    #[test]
+    fn no_model_key_on_any_pane_to_pane_surface() {
+        let entry = BoardEntry {
+            pane: "0845a868".to_string(),
+            role: "committee".to_string(),
+            text: "a turn".to_string(),
+            ts: 1,
+        };
+        let line = serde_json::to_string(&entry).unwrap();
+        assert!(serde_json::to_value(&entry).unwrap().get("model").is_none(),
+            "BoardEntry must not carry model — it is the digest's input for every pane");
+        assert!(!line.contains("\"model\""), "the board.jsonl line itself must be clean: {line}");
+
+        let sib = SiblingInfo { pane: "p".to_string(), cwd: "c".to_string(), role: "committee".to_string() };
+        assert!(serde_json::to_value(&sib).unwrap().get("model").is_none(),
+            "SiblingInfo must not carry model — it is what a pane is told about a pane");
+
+        // A chair audit line rides BoardEntry too. It names the CHAIR's model by design (item 3),
+        // so the structured key stays absent while the analyst's fact still reaches the record.
+        let audit = BoardEntry {
+            pane: "chair".to_string(),
+            role: "committee".to_string(),
+            text: chair_inject_audit_line("11112222", "go", None, "claude-fable-5", Receipt::Received),
+            ts: 1,
+        };
+        assert!(serde_json::to_value(&audit).unwrap().get("model").is_none(),
+            "the model must reach the board as audited prose, never as a structured field");
+    }
+
+    /// The other direction, pinned so the rule can't be "satisfied" by deleting the feature:
+    /// NEVER BLIND THE ANALYST. chair_status must carry the model for every pane.
+    #[test]
+    fn the_chair_analyst_surface_does_carry_the_model() {
+        let obj = status_pane_obj("0845a868-38f2", "C", "committee", Some("claude-opus-5"));
+        assert_eq!(obj.get("model").and_then(|m| m.as_str()), Some("claude-opus-5"));
+        assert_eq!(obj.get("id").and_then(|m| m.as_str()), Some("0845a868"), "still shortened for reading");
+    }
+
+    /// Boundary: a pane that has not yet produced a turn reports an explicit unobserved, so the
+    /// analyst can tell "nothing seen yet" from "this surface doesn't carry it."
+    #[test]
+    fn a_pane_with_no_observed_turn_says_unobserved() {
+        let obj = status_pane_obj("11112222", "", "committee", None);
+        assert_eq!(obj.get("model").and_then(|m| m.as_str()), Some("unobserved"));
     }
 
     #[test]
