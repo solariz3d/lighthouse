@@ -58,14 +58,92 @@ fn config_path() -> PathBuf {
     PathBuf::from(home()).join(".consonance.json")
 }
 
-#[tauri::command]
-fn get_state() -> Config {
-    if let Ok(s) = fs::read_to_string(config_path()) {
-        if let Ok(cfg) = serde_json::from_str::<Config>(&s) {
-            return cfg;
+/// Read one config field as text, accepting whatever JSON type it was actually written as.
+/// A coordinate hand-written as `50.4452` is as valid as `"50.4452"` — the Settings tab writes
+/// strings, but a human or a script editing the file by hand naturally writes a bare number.
+fn stringish(v: &serde_json::Value, key: &str) -> String {
+    match v.get(key) {
+        Some(serde_json::Value::String(s)) => s.trim().to_string(),
+        Some(serde_json::Value::Number(n)) => n.to_string(),
+        Some(serde_json::Value::Bool(b)) => b.to_string(),
+        _ => String::new(),
+    }
+}
+
+const CONFIG_FIELDS: &[&str] = &[
+    "room_path", "instances_dir", "data_dir",
+    "ambient_lat", "ambient_lon", "ambient_label", "ambient_tz",
+];
+
+/// Parse ~/.consonance.json FIELD BY FIELD, so one malformed value can never discard the rest.
+///
+/// Why this exists rather than a plain `serde_json::from_str::<Config>`: `#[serde(default)]` fills
+/// a MISSING field, never a wrong-TYPED one. On 2026-07-18 the ambient coordinates were written as
+/// JSON numbers into `ambient_lat: String`; every build after that got `Err` for the whole file and
+/// fell back to `Config::default()`, silently relocating `instances_dir` and `data_dir` to their
+/// built-in defaults. The Main instance then woke in an empty `%USERPROFILE%\claude-instances\main`
+/// while its 61 MB transcript sat untouched in the configured directory. One bad coordinate
+/// orphaned a thread for nine days. Partial parse means a single bad field costs only itself.
+///
+/// Returns (config, complaints); `complaints` names anything present but unusable.
+fn parse_config(s: &str) -> (Config, Vec<String>) {
+    let mut bad = Vec::new();
+    let v: serde_json::Value = match serde_json::from_str(s) {
+        Ok(v) => v,
+        Err(e) => {
+            bad.push(format!("not valid JSON ({e})"));
+            return (Config::default(), bad);
+        }
+    };
+    if !v.is_object() {
+        bad.push("top level is not a JSON object".into());
+        return (Config::default(), bad);
+    }
+    // A field present as an array/object has no sane text reading — name it rather than swallow it.
+    for k in CONFIG_FIELDS {
+        if matches!(v.get(*k), Some(serde_json::Value::Array(_)) | Some(serde_json::Value::Object(_))) {
+            bad.push((*k).to_string());
         }
     }
-    Config::default()
+    let cfg = Config {
+        room_path: stringish(&v, "room_path"),
+        instances_dir: stringish(&v, "instances_dir"),
+        data_dir: stringish(&v, "data_dir"),
+        ambient_lat: stringish(&v, "ambient_lat"),
+        ambient_lon: stringish(&v, "ambient_lon"),
+        ambient_label: stringish(&v, "ambient_label"),
+        ambient_tz: stringish(&v, "ambient_tz"),
+    };
+    (cfg, bad)
+}
+
+/// A config problem must never be silent: it moves where every instance lives. Goes to stderr (dev)
+/// AND to a file beside the config, because a release build has no console to print to.
+fn complain(path: &Path, bad: &[String]) {
+    let msg = format!(
+        "[consonance] CONFIG PROBLEM in {}: {} — those settings fall back to built-in defaults, \
+         which CHANGES WHERE YOUR INSTANCES LIVE. Fix the file or re-save from the Settings tab.",
+        path.display(),
+        bad.join(", ")
+    );
+    eprintln!("{msg}");
+    if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(PathBuf::from(home()).join(".consonance.log")) {
+        let _ = writeln!(f, "{msg}");
+    }
+}
+
+#[tauri::command]
+fn get_state() -> Config {
+    let path = config_path();
+    // No file at all is a fresh machine, not a failure — defaults are correct and stay quiet.
+    let Ok(s) = fs::read_to_string(&path) else {
+        return Config::default();
+    };
+    let (cfg, bad) = parse_config(&s);
+    if !bad.is_empty() {
+        complain(&path, &bad);
+    }
+    cfg
 }
 
 #[tauri::command]
@@ -3028,5 +3106,69 @@ mod distill_watermark_tests {
         // pre-fix each pass re-fed everything (7 + 13 + 22 + 28 + 40 = 110 turn-feeds);
         // post-fix every turn is fed exactly once.
         assert_eq!(total_distilled, 40);
+    }
+}
+
+#[cfg(test)]
+mod config_parse_tests {
+    use super::{parse_config, Config};
+
+    /// The exact file that orphaned a Main thread: coordinates written as JSON numbers.
+    /// Strict serde returns Err for the WHOLE file, so every directory reverted to a default
+    /// and the instance woke in the wrong folder. The directories must survive it.
+    #[test]
+    fn numeric_coordinates_do_not_discard_the_directories() {
+        let json = r#"{
+            "room_path": "C:\\room\\BOOT.md",
+            "instances_dir": "C:\\Consonance\\instances",
+            "data_dir": "C:\\Consonance\\data",
+            "ambient_lat": 50.4452,
+            "ambient_lon": -104.6189,
+            "ambient_label": "Regina, Saskatchewan",
+            "ambient_tz": "America/Regina"
+        }"#;
+        // Pin the cause, so nobody "fixes" this by loosening the struct and losing the lesson.
+        assert!(
+            serde_json::from_str::<Config>(json).is_err(),
+            "strict parse still rejects a numeric coordinate — that is precisely why parse_config exists"
+        );
+        let (cfg, bad) = parse_config(json);
+        assert!(bad.is_empty(), "a number is readable, not a complaint: {bad:?}");
+        assert_eq!(cfg.instances_dir, r"C:\Consonance\instances");
+        assert_eq!(cfg.data_dir, r"C:\Consonance\data");
+        assert_eq!(cfg.room_path, r"C:\room\BOOT.md");
+        assert_eq!(cfg.ambient_lat, "50.4452");
+        assert_eq!(cfg.ambient_lon, "-104.6189");
+    }
+
+    /// The general lesson, not just today's field: one unusable value costs only itself.
+    #[test]
+    fn one_bad_field_does_not_cost_the_others() {
+        let json = r#"{"instances_dir":"C:\\keep\\me","ambient_lat":{"nested":"nonsense"}}"#;
+        let (cfg, bad) = parse_config(json);
+        assert_eq!(cfg.instances_dir, r"C:\keep\me", "a good field survives a bad neighbour");
+        assert!(
+            bad.contains(&"ambient_lat".to_string()),
+            "an unusable field must be named aloud, never swallowed: {bad:?}"
+        );
+    }
+
+    /// Boundaries: empty object, invalid JSON, wrong top-level type.
+    #[test]
+    fn empty_is_quiet_but_malformed_always_complains() {
+        let (cfg, bad) = parse_config("{}");
+        assert!(bad.is_empty(), "an empty object is legitimate — every field simply defaults");
+        assert_eq!(cfg.instances_dir, "", "empty means the caller applies its built-in default");
+
+        assert!(!parse_config("not json at all").1.is_empty(), "invalid JSON must complain");
+        assert!(!parse_config("[1,2,3]").1.is_empty(), "a non-object top level must complain");
+    }
+
+    /// Whitespace around a hand-edited path must not become part of the path.
+    #[test]
+    fn paths_are_trimmed() {
+        let (cfg, bad) = parse_config(r#"{"data_dir":"  C:\\Consonance\\data  "}"#);
+        assert!(bad.is_empty());
+        assert_eq!(cfg.data_dir, r"C:\Consonance\data");
     }
 }
