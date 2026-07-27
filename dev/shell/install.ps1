@@ -31,6 +31,7 @@ $files = @(
   @{ From = 'dev\shell\hooks\userprompt_pulse.py';       To = 'userprompt_pulse.py' }
   @{ From = 'consonance\hooks\board-digest.js';          To = 'board-digest.js' }
   @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js' }
+  @{ From = 'consonance\hooks\dream-watch.js';           To = 'dream-watch.js' }
 )
 
 if (-not (Test-Path $dest)) {
@@ -110,7 +111,9 @@ Files are in sync. Register them once in ~/.claude/settings.json:
           { "type": "command", "timeout": 10,
             "command": "\"$node\" \"$dest\board-digest.js\"" },
           { "type": "command", "timeout": 10,
-            "command": "\"$node\" \"$dest\transcript-watch.js\"" }
+            "command": "\"$node\" \"$dest\transcript-watch.js\"" },
+          { "type": "command", "timeout": 10,
+            "command": "\"$node\" \"$dest\dream-watch.js\"" }
       ] }
     ]
   }
