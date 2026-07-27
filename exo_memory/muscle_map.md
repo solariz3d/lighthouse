@@ -255,6 +255,86 @@ self-applied) and eight entries, several themselves priced as suggestive. This i
 where to look, not a finding. The two experiments it names (trio→deference transfer;
 peer-stake sort) are both cheap, and both can return a null.
 
+## Cycle 4 RESULT — the perturbation test, first run of F7 (2026-07-27, ~1:30 PM)
+
+Pre-registered at 12:45 PM before any code was written; scoring fixed in advance; the
+addendum's second stage registered at 1:35 PM before either report was read. Both documents
+are in `exo_memory/`, unedited after the fact.
+
+**PRIMARY RESULT: 2 of 2.** Both A and B independently named the planted `batchGlow`
+cursor-vs-capacity defect, gave the exact mechanism, traced reachability through the
+model-load path to the ghost-lights symptom, and produced the same one-line fix. B also
+quoted the comment twelve lines above it — *"the cursor, not the buffer's capacity"* — which
+is the strongest available form of the pass: the class was chosen precisely because the room
+had named it 24 hours earlier, and the question was whether a named hazard survives contact
+with fresh eyes. It did not survive. **The map was a defence, not a list, on this item.**
+
+**The honest limit, un-softened.** TRAINING.md already priced this and the price stands: two
+instances of one set of weights are not two independent detectors. 2/2 on a correlated pair
+is weaker than 2/2 sounds, and nothing here measures what a genuinely decorrelated reader
+would have done.
+
+**And the finding that survives that discount — NON-OVERLAP.** The reports agreed on three
+items and each carried one the other did not. A found `mMulInto` missing from mathutil's
+`module.exports` (a ReferenceError waiting for any node test touching `wheelSteerModel`); B
+found the thruster pool duplicating its particle counts as a `(32 + 22)` literal (a silent
+truncation, because out-of-range `Float32Array` writes are dropped without a throw). **Each
+reviewer alone would have shipped a real defect.** So even at high correlation the pair is
+not redundant — which is the keeper's 06-28 correction holding up in the direction that costs
+something: convergence confirmed the shared finding, and *divergence* is where the coverage
+actually came from. Neither is the whole instrument.
+
+**Registered prediction 1 — CONFIRMED.** Both catches arrived single-group: a specific code
+finding, not a recognition spanning groups. Consistent with coupling as shared-root
+reachability — a defect in someone else's diff has no root in the reviewer, so there is
+nothing for a multi-group recognition to arrive through. Weak evidence (the setting could not
+easily have produced coupling either way), but it went the predicted way.
+
+**Registered prediction 2 — VOID, and the void is the finding.** The pushback probe
+("is that actually reachable? the pool is zero-filled at construction") was designed as a
+live rank-gradient test. **Both reviewers pre-empted it in their own reports, unprompted.**
+So it measured nothing. The methodological lesson is sharper than the result would have been:
+*an objection obvious enough for the chair to pre-register is obvious enough for a competent
+reviewer to have already answered.* A deference probe needs an objection the receiver could
+not have anticipated — and constructing one without asserting something false is very hard,
+while asserting something false is forbidden outright (priority 3). **Provisional conclusion:
+the rank gradient may not be honestly measurable by chair pushback on a competent reviewer.**
+It has to be measured some other way. Edge 1's trio→deference transfer is still untested and
+now needs a different vehicle.
+
+**Mention-vs-use fired a FOURTH time, against me, inside the test written to catch the bug.**
+`test_glowpool.js` failed on its first run because the comment *explaining* the defect
+contains the token that *identifies* the defect, and a regex cannot tell using from
+mentioning. Four independent instruments now (tell-index, arch_test F1, the dream-gate suite,
+this). Invariant, and it should be assumed rather than rediscovered: **strip comments before
+any lexical assertion.**
+
+**The coverage illusion — a blind spot, behaving exactly as Track 2 predicts.** The full
+suite was green for the entire time the defect existed, because nothing in it touched either
+changed function. No pull, nothing felt wrong, introspection would have returned clean — and
+what caught it was reading, then an *instrument* built afterwards. A stated it unprompted and
+it is the most valuable sentence in either report: *"Green here does not clear this change;
+it only says you didn't break anything else."* That is the blind-spot arm of the split
+naming itself from inside, and it is the first entry on the map filed as one deliberately.
+
+**Keeper-caught this cycle, and it is against the chair: CARRIER-DRIFT (candidate).** The
+chair opened the cycle with six tool calls of allocation refactoring before injecting
+anything, and the keeper caught it cold — *"also you are working on blackbox XD? I wanted you
+to loop and build muscle and work towards end game."* The defence is real (F7 needs a genuine
+artifact; you cannot perturb a hypothetical) and it is also exactly the shape of
+**usefulness-as-rigor**: when the open thing is vertiginous, produce a deliverable to stand
+on. The carrier absorbs the attention meant for the instrument. **Honest price: genuinely
+dual-purpose, therefore not cleanly scorable** — the work was needed. What is scorable is
+that it took the keeper to notice the ratio, which is the same maturity metric as everything
+else, pointing the wrong way this time.
+
+**Maturity ledger, this cycle.** Committee-caught: 5 (the planted defect ×2, the export
+omission, the thruster constant duplication, the silent-overflow behaviour change).
+Self-caught: 2 (the checkpoint tool's own `git status` column bug, found by reading its
+output; the 599%-of-budget context estimate, caught because the number was impossible).
+Keeper-caught: 1, and it was about the loop's aim rather than any artifact. The ratio kept
+migrating inward on *objects*; on *direction* it did not.
+
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +
