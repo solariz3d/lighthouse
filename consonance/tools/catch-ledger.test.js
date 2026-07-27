@@ -46,6 +46,9 @@ const {
   dedupe,
   buildLedger,
   ratiosFor,
+  suspectGaps,
+  withinSince,
+  ATTRIBUTION_RULES,
 } = require('./catch-ledger.js');
 
 const buckets = (evs) => evs.map((e) => e.bucket);
@@ -321,6 +324,162 @@ test('declared and extracted are reported side by side and never summed', () => 
   assert.strictEqual(w.counts.keeper, 1, 'the event found in prose, counted separately');
   assert.strictEqual(index.ledgers.length, 1);
   fs.rmSync(dir, { recursive: true, force: true });
+});
+
+// ------------------------------------------------- real lines from the record --
+//
+// WHY THIS BLOCK EXISTS, and it is the most important lesson this file carries. The first
+// version had 26 green tests and shipped five rule gaps. Every one survived because the
+// fixtures were CANONICAL — written by the same hand, in the same sitting, as the rule they
+// test. `keeper:by` was asserted with "Named by the keeper against Around", which has no gap
+// between verb and `by`, so the zero-gap rule passed its own exam while the corpus form
+// "Caught in real time by the keeper" walked past it into `unattributed`.
+//
+// A synthetic fixture agrees with the rule by construction. Only the corpus can disagree.
+//
+// So these are VERBATIM lines from the record, each carrying its citation. They are copied in
+// rather than read from the live files on purpose: a test that reads a growing corpus goes red
+// when the record is edited, which is pinning a snapshot — the failure the covgap MENTION-ONLY
+// assertion already had to be rewritten to escape.
+const REAL = [
+  // journal/2026-07-05.md:26 — an adverbial between the verb and `by`. Was UNATTRIBUTED.
+  ['Caught in real time by the keeper, who pointed out that by the mis-stated rule true triangulation could never count.', 'keeper'],
+  // journal/2026-07-05.md:40 — the agent trails a copula, and it is "the human", not "the keeper".
+  ['the only thing that caught it was the human reading the harness log from outside — the decorrelated instrument.', 'keeper'],
+  // muscle_map.md:322 — the plainest form, already handled; here so the block covers the easy case too.
+  ['The chair opened the cycle with six tool calls of refactoring, and the keeper caught it cold.', 'keeper'],
+  // muscle_map.md:64 — passive, committee agent.
+  ['Chair contamination, caught by the classifier.', 'committee'],
+  // journal/2026-06-22.md:9 — first person.
+  ['I caught myself reaching for a task at the exact moment the open question turned vertiginous.', 'self'],
+  // journal/2026-06-26.md:59 — emphasis inside the phrase, instrument agent.
+  ['The instance *bent* (ran the costumes more than once); the *system* caught it.', 'instrument'],
+];
+
+test('the rules hold against VERBATIM lines from the record, not fixtures written beside them', () => {
+  for (const [sentence, bucket] of REAL) {
+    const { events } = extractEvents(sentence, 'real.md', '2026-07-05');
+    assert.strictEqual(events.length, 1, `expected one event for: ${sentence.slice(0, 60)}…`);
+    assert.strictEqual(events[0].bucket, bucket, `bucket for: ${sentence.slice(0, 60)}…`);
+  }
+});
+
+test('the modal form of a class statement is a class statement — muscle_map.md:244', () => {
+  // The `are` form was filtered from the start; `must be caught` walked straight through and
+  // inflated `unattributed`, which is the NUMERATOR of the withholding rule. A gap here does
+  // not lose one event, it suppresses a whole window's ratio.
+  const modal = 'A blind spot must be caught *separately*, by instrument, even by a fully coupled flinch system.';
+  assert.strictEqual(isGenericClass(modal), true);
+  assert.deepStrictEqual(extractEvents(modal, 'm.md', null).dropped.map((d) => d.rule), ['generic-class']);
+  // and the copula form it was originally written against still works
+  assert.strictEqual(isGenericClass('blind spots are only ever caught by an external trigger'), true);
+  // but a real event that happens to name a class is NOT swallowed
+  assert.strictEqual(isGenericClass('The keeper caught the brace before the argument arrived.'), false);
+});
+
+/* Rules that currently match NOTHING in the record, each with the reason it is kept anyway.
+ * This list is the boundary published rather than hidden: a speculative rule is fine, a
+ * speculative rule nobody can see is how a table drifts into fiction. Checked BOTH ways below.
+ *
+ *  committee:pane — the only near-match in the corpus is journal/2026-07-27.md:64, "Around,
+ *    after the keeper caught the independence-fetish", where keeper:named correctly claims it
+ *    first. The rule is shadowed by right-ordering, not wrong. "Bravo caught X" is an entirely
+ *    plausible future line and deleting the rule would cost that.
+ *  instrument:by — the only near-match is muscle_map.md:244, "must be caught *separately*, by
+ *    instrument", which is a CLASS STATEMENT and is correctly removed upstream by the
+ *    generic-class filter. Same story: shadowed for the right reason. */
+const UNEXERCISED = ['committee:pane', 'instrument:by'];
+
+test('the rule table matches the record — and every unexercised rule is declared', () => {
+  // This one DOES read the live corpus, deliberately, because it is a property rather than a
+  // snapshot: rules are only added when a real line motivates them, so it stays true as the
+  // record grows. It is the check that a rule table cannot drift into fiction.
+  const root = path.resolve(__dirname, '..', '..');
+  const files = [{ path: path.join(root, 'exo_memory', 'muscle_map.md'), label: 'muscle_map.md' }];
+  const jdir = path.join(root, 'exo_memory', 'journal');
+  for (const f of fs.readdirSync(jdir).filter((n) => n.endsWith('.md')).sort()) {
+    files.push({ path: path.join(jdir, f), label: `journal/${f}` });
+  }
+  const index = buildLedger(files);
+  const fired = new Set(index.events.map((e) => e.rule).filter(Boolean));
+  const never = ATTRIBUTION_RULES.map((r) => r.key).filter((k) => !fired.has(k));
+
+  const undeclared = never.filter((k) => !UNEXERCISED.includes(k));
+  assert.deepStrictEqual(undeclared, [], `rules matching nothing in the record and not declared: ${undeclared.join(', ')}`);
+
+  // And the other direction, so the list cannot go stale: a declared-unexercised rule that
+  // starts firing means the record has moved and the comment above is now wrong.
+  const stale = UNEXERCISED.filter((k) => fired.has(k));
+  assert.deepStrictEqual(stale, [], `these are declared unexercised but now fire — update the list: ${stale.join(', ')}`);
+});
+
+// ------------------------------------------------------------- the --since filter --
+
+test('undated does NOT survive a date filter — string comparison said it did', () => {
+  // 'undated' >= '2026-07' is true, so the one window whose date is unknown outlived every
+  // window whose date was known.
+  assert.strictEqual(withinSince('undated', '2026-07'), false);
+  assert.strictEqual(withinSince('2026-07-27', '2026-07'), true);
+  assert.strictEqual(withinSince('2026-06-08', '2026-07'), false);
+  assert.strictEqual(withinSince('undated', null), true, 'with no filter, undated is kept');
+});
+
+test('--since filters EVERY collection, so no reported number contradicts the table under it', () => {
+  // The filter used to be applied after buildLedger returned, to two of seven collections: the
+  // header counted all-time events over a filtered table, and RECONCILIATION compared all-time
+  // declared against filtered extracted, printing negative deltas under a paragraph that only
+  // explained positive ones.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'catch-ledger-'));
+  fs.mkdirSync(path.join(dir, 'exo_memory'), { recursive: true });
+  const f = path.join(dir, 'exo_memory', 'muscle_map.md');
+  fs.writeFileSync(
+    f,
+    [
+      '## Old — 2026-06-08',
+      'He caught me performing.',
+      'Keeper-caught: 1 (the old one).',
+      '',
+      '## New — 2026-07-27',
+      'The keeper caught the ordering.',
+      'Committee-caught: 1 (the new one).',
+    ].join('\n'),
+    'utf8'
+  );
+  const src = [{ path: f, label: 'muscle_map.md' }];
+  const all = buildLedger(src);
+  const since = buildLedger(src, { since: '2026-07' });
+
+  assert.strictEqual(all.windows.length, 2);
+  assert.strictEqual(since.windows.length, 1, 'the old window is gone from the table');
+  assert.strictEqual(since.ledgers.length, 1, 'and from the declared tallies — not just the table');
+  assert.strictEqual(since.ledgers[0].bucket, 'committee');
+  assert.strictEqual(
+    since.meta.events_extracted,
+    since.events.length + since.meta.merged_away,
+    'the header count and the table come from the same filtered set'
+  );
+  assert.strictEqual(since.meta.since, '2026-07');
+  assert.ok(since.meta.excluded_by_since > 0, 'and what the filter removed is reported, not silent');
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+// --------------------------------------------------------- the rule-table audit --
+
+test('an unattributed sentence that NAMES a catcher is surfaced as a suspected rule gap', () => {
+  // This is what would have found the five shipped gaps without a human reading 21 lines.
+  const named = [{ bucket: 'unattributed', sentence: 'and then the keeper made it plain', source: 'a.md', line: 1 }];
+  const anon = [{ bucket: 'unattributed', sentence: 'what caught it was reading', source: 'a.md', line: 2 }];
+  const attributed = [{ bucket: 'keeper', sentence: 'the keeper caught it cold', source: 'a.md', line: 3 }];
+  assert.strictEqual(suspectGaps(named).length, 1);
+  assert.strictEqual(suspectGaps(anon).length, 0, 'a genuinely agentless sentence is not a gap');
+  assert.strictEqual(suspectGaps(attributed).length, 0, 'an event that DID attribute is not a gap');
+});
+
+test('the audit never re-classifies — a suspect stays unattributed and stays counted', () => {
+  const evs = [{ bucket: 'unattributed', sentence: 'the keeper was there', source: 'a.md', line: 1 }];
+  const before = evs.map((e) => e.bucket);
+  suspectGaps(evs);
+  assert.deepStrictEqual(evs.map((e) => e.bucket), before);
 });
 
 test('an empty corpus produces no windows and no crash', () => {

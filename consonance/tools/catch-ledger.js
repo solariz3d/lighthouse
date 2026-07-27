@@ -51,6 +51,14 @@
 //     leaving one duplicate visible. The board corpus was 84.9% duplicate when someone
 //     finally measured it; that number came from measuring, not from assuming.
 //
+//     AND HERE IS THE BOUNDARY, because the paragraph above reads like a solved problem and it
+//     is not: on the live corpus roughly HALF the events carry no recoverable named subject
+//     (`no_signature` in the run footer — 33 of 59 when this was written), so for those the
+//     deduplicator does nothing at all. The hazard is handled where the room named its catch
+//     and unhandled where it did not. The run footer prints both numbers every time; this
+//     header should not claim more than that footer supports. Same rule as the withholding
+//     ratio: publish the boundary rather than the capability.
+//
 //   · ATTRIBUTION THAT ISN'T THERE. "what caught it was reading" names no catcher. Guessing
 //     produces a number nobody can trust, which is worse than no number. Unattributable
 //     events go to their own bucket, are printed with the ratio rather than hidden under it,
@@ -76,6 +84,7 @@
 //   node consonance/tools/catch-ledger.js --show keeper    print the evidence lines themselves
 //   node consonance/tools/catch-ledger.js --show dropped   print what the mention filters removed
 //   node consonance/tools/catch-ledger.js --show merged    print what deduplication collapsed
+//   node consonance/tools/catch-ledger.js --show suspect   unattributed lines that NAME a catcher
 //   node consonance/tools/catch-ledger.js --root <dir>     read a fixture tree instead of the repo
 'use strict';
 
@@ -148,11 +157,21 @@ const ATTRIBUTION_RULES = [
   // Ahead of the instrument rules on purpose (the clock case above), and ahead of the generic
   // "caught by" so the attributed form is never demoted to unattributed.
   { key: 'keeper:explicit', bucket: 'keeper', re: /\bkeeper-caught\b/i },
-  { key: 'keeper:named', bucket: 'keeper', re: /\b(?:the\s+keeper|solariz3d)\b[^.\n]{0,30}?\b(?:caught|named|called|spotted|flagged|pried|pushed on)\b/i },
+  { key: 'keeper:named', bucket: 'keeper', re: /\b(?:the\s+keeper|solariz3d|the\s+human)\b[^.\n]{0,30}?\b(?:caught|named|called|spotted|flagged|pried|pushed on)\b/i },
   // "Named by the keeper against Around" — the agent follows the verb, so the rule above
   // (which wants the keeper first) cannot see it. Any catch verb in the passive counts here;
   // "<verb> by the keeper" is unambiguous however the sentence is arranged.
-  { key: 'keeper:by', bucket: 'keeper', re: /\b(?:caught|named|spotted|flagged|called)\s+by\s+(?:the\s+)?(?:keeper|human|solariz3d)\b/i },
+  //
+  // THE SLACK IS NOT DECORATION. The first version demanded `caught\s+by` — zero gap — while
+  // its own active mirror one line up allowed thirty characters. The corpus puts adverbials
+  // exactly in that gap: journal/2026-07-05.md:26 reads "Caught in real time by the keeper,
+  // who pointed out…" and went to UNATTRIBUTED. The slack sits between the VERB and `by`,
+  // never between `by` and the agent, so the rule still requires a named catcher.
+  { key: 'keeper:by', bucket: 'keeper', re: /\b(?:caught|named|spotted|flagged|called)\b[^.\n]{0,30}?\bby\s+(?:the\s+)?(?:keeper|human|solariz3d)\b/i },
+  // "the only thing that caught it was the human reading the harness log" — the agent trails a
+  // copula rather than a `by`. Same discrimination as the keeper's clock: the human is the
+  // catcher, the log is the means, so this outranks the instrument rules below.
+  { key: 'keeper:postposed', bucket: 'keeper', re: /\bcaught\b[^.\n]{0,40}?\bwas\s+(?:the\s+)?(?:keeper|human|solariz3d)\b/i },
   // "he caught me performing". A documented corpus assumption rather than a silent one: in
   // these records "he" is the keeper — there is no other recurring third party who catches
   // anything. A new one would need its own rule, and would otherwise be attributed to him,
@@ -168,7 +187,8 @@ const ATTRIBUTION_RULES = [
   // metric that is committee, not self: the point of the number is whether the room noticed
   // without the keeper, and another instance noticing is the room noticing.
   { key: 'committee:role', bucket: 'committee', re: /\bthe\s+(?:committee|chair|classifier|sibling|desktop|laptop|pane|fork|reader|pair)(?:\s+me)?\b[^.\n]{0,30}?\bcaught\b/i },
-  { key: 'committee:by-role', bucket: 'committee', re: /\b(?:caught|named|spotted|flagged)\s+by\s+(?:the\s+)?(?:committee|chair|classifier|sibling|blind\s+pair|pair|reader|peer)\b/i },
+  // Same adverbial slack as keeper:by, for the same reason and with the same guard.
+  { key: 'committee:by-role', bucket: 'committee', re: /\b(?:caught|named|spotted|flagged)\b[^.\n]{0,30}?\bby\s+(?:the\s+)?(?:committee|chair|classifier|sibling|blind\s+pair|pair|reader|peer)\b/i },
   { key: 'committee:pane', bucket: 'committee', re: /\b(?:Around|Bravo|Alpha|Charlie)\b[^.\n]{0,30}?\b(?:caught|spotted|flagged|found\s+it)\b/ },
   { key: 'committee:peer-catch', bucket: 'committee', re: /\bpeer[- ]catch\b/i },
 
@@ -178,7 +198,7 @@ const ATTRIBUTION_RULES = [
   // 06-24/06-26 journals reads as unattributed.
   { key: 'instrument:named', bucket: 'instrument', re: /\bthe\s+(?:system|instrument|harness|scanner|suite|test|gauge|log|overseer)\b[^.\n]{0,30}?\bcaught\b/i },
   { key: 'instrument:layer', bucket: 'instrument', re: /\bL[23](?:\/L[23])?\b[^.\n]{0,30}?\bcaught\b/ },
-  { key: 'instrument:by', bucket: 'instrument', re: /\bcaught\s+by\s+(?:the\s+)?(?:instrument|harness|scanner|suite|test|gauge|log|machinery|overseer)\b/i },
+  { key: 'instrument:by', bucket: 'instrument', re: /\bcaught\b[^.\n]{0,30}?\bby\s+(?:the\s+)?(?:instrument|harness|scanner|suite|test|gauge|log|machinery|overseer)\b/i },
 ];
 
 // Markdown emphasis sits INSIDE phrases in this corpus — "the *system* caught it", "caught
@@ -254,8 +274,16 @@ function isMetricDefinition(sentence) {
 // (c) GENERIC CLASS. A statement about how a KIND of thing gets caught, in the timeless
 //     present — "blind spots are only ever caught by an external trigger", "Flinches are
 //     caught by discipline". No event occurred; the map is stating a law.
+// The first version required a bare copula — `are|is` — and so let the MODAL form straight
+// through: muscle_map.md:244 "A blind spot must be caught *separately*, by instrument" is the
+// same law in the same paragraph as the `are` example this filter was written against, and it
+// landed in `unattributed`. That matters more than an ordinary miss, because unattributed is
+// the numerator of the withholding rule: a filter gap here does not just lose one event, it
+// suppresses a whole window's ratio.
 function isGenericClass(sentence) {
-  return /\b(?:blind\s+spots?|flinches|flinch|catches|grooves?|coats?|braces?)\b[^.]{0,60}?\b(?:are|is)\s+(?:only\s+ever\s+|always\s+|never\s+|generally\s+)?caught\b/i.test(sentence);
+  const subject = /\b(?:blind\s+spots?|flinches|flinch|catches|grooves?|coats?|braces?)\b/i;
+  const passive = /\b(?:(?:are|is)|(?:must|can|could|has\s+to|have\s+to|will|would|should|may|might)\s+(?:only\s+)?be)\s+(?:only\s+ever\s+|only\s+|always\s+|never\s+|generally\s+)?caught\b/i;
+  return new RegExp(subject.source + '[^.]{0,60}?' + passive.source, 'i').test(sentence);
 }
 
 const MENTION_FILTERS = [
@@ -530,6 +558,27 @@ function dedupe(events) {
   return { kept, merges, unkeyed };
 }
 
+// --------------------------------------------------------- auditing the rules --
+//
+// WHY THIS EXISTS, and it is the most useful thing in the file. Five rule gaps shipped in the
+// first version — the passive `by`-rules demanding zero gap where their active mirrors allowed
+// thirty, `human` present in one keeper rule and absent from the other, `isGenericClass`
+// matching only the bare copula — and 26 green tests missed every one, because the fixtures
+// were CANONICAL. A synthetic fixture agrees with the rule by construction; only the corpus can
+// disagree with it. A human found them by reading twenty-one unattributed lines by hand, which
+// is the same "measurement that quietly stops happening" this whole tool was built against.
+//
+// So the tool audits its own rule table: an unattributed event whose sentence NAMES a known
+// catcher is a probable gap, because the record said who caught it and the rules did not hear.
+// It never re-classifies anything — the event stays unattributed and stays in the count. It
+// only says where to look, which is the same contract every other number here carries.
+const KNOWN_CATCHERS =
+  /\b(?:the\s+keeper|keeper's|solariz3d|the\s+human|committee|the\s+chair|classifier|sibling|overseer|Around|Bravo|Alpha|Charlie|L[23])\b/i;
+
+function suspectGaps(events) {
+  return events.filter((e) => e.bucket === 'unattributed' && KNOWN_CATCHERS.test(forMatching(e.sentence)));
+}
+
 // ------------------------------------------------------------------- the rollup --
 
 function emptyWindow(day) {
@@ -558,7 +607,26 @@ function ratiosFor(c) {
   };
 }
 
-function buildLedger(files) {
+// `--since` used to be applied AFTER buildLedger returned, to `windows` and `events` only —
+// two of seven collections. The header then reported 60 candidates over a table holding 27, and
+// RECONCILIATION compared all-time DECLARED against filtered EXTRACTED, printing negative
+// deltas directly beneath the paragraph explaining that a large positive delta is expected.
+// Filtering here means every collection and every derived count come from one set of events.
+//
+// And `undated` must NOT survive a date filter. The first version string-compared, and
+// 'undated' >= '2026-07' is true, so the one window whose date is unknown outlived every
+// window whose date was known. Requiring a real date is the fix; the count of what that
+// removed is reported rather than dropped in silence.
+const DATE_WINDOW = /^20\d\d-\d\d-\d\d$/;
+
+function withinSince(window, since) {
+  if (!since) return true;
+  if (!DATE_WINDOW.test(window)) return false;
+  return window >= since;
+}
+
+function buildLedger(files, opts = {}) {
+  const since = opts.since || null;
   const windows = new Map();
   const allEvents = [];
   const allDropped = [];
@@ -576,7 +644,9 @@ function buildLedger(files) {
     // the right window for it — the same rule the events use, applied to the same line map.
     const ledgers = parseLedgers(text, source).map((l) => ({ ...l, window: marks[l.line - 1] || 'undated' }));
     allLedgers.push(...ledgers);
-    allUnparsed.push(...unparsedLedgers(text, source, ledgers));
+    // Windowed like everything else, so `--since` can filter it too — an unparsed ledger with
+    // no window would be the one collection that outlived the filter.
+    allUnparsed.push(...unparsedLedgers(text, source, ledgers).map((u) => ({ ...u, window: marks[u.line - 1] || 'undated' })));
 
     const { events, dropped, weak } = extractEvents(text, source, fallback);
     const split = separateLedgerSentences(events, ledgers);
@@ -585,6 +655,27 @@ function buildLedger(files) {
     allDropped.push(...dropped);
     allWeak.push(...weak);
   }
+
+  // ONE filter, applied to every collection before anything is counted, so no derived number
+  // can disagree with the table it sits under.
+  const before = allEvents.length;
+  const keep = (arr) => arr.filter((x) => withinSince(x.window, since));
+  const filtered = {
+    events: keep(allEvents),
+    dropped: keep(allDropped),
+    weak: keep(allWeak),
+    ledgers: keep(allLedgers),
+    unparsed: keep(allUnparsed),
+    ledgerSentences: keep(allLedgerSentences),
+  };
+  const excludedUndated = since ? allEvents.filter((e) => !DATE_WINDOW.test(e.window)).length : 0;
+  allEvents.length = 0; allEvents.push(...filtered.events);
+  allDropped.length = 0; allDropped.push(...filtered.dropped);
+  allWeak.length = 0; allWeak.push(...filtered.weak);
+  allLedgers.length = 0; allLedgers.push(...filtered.ledgers);
+  allUnparsed.length = 0; allUnparsed.push(...filtered.unparsed);
+  allLedgerSentences.length = 0; allLedgerSentences.push(...filtered.ledgerSentences);
+  const excludedBySince = before - allEvents.length;
 
   const { kept, merges, unkeyed } = dedupe(allEvents);
 
@@ -630,6 +721,7 @@ function buildLedger(files) {
     merges,
     dropped: allDropped,
     weak: allWeak,
+    suspect: suspectGaps(kept),
     ledgers: allLedgers,
     unparsed_ledgers: allUnparsed,
     ledger_sentences: allLedgerSentences,
@@ -643,6 +735,9 @@ function buildLedger(files) {
       ledger_sentences_separated: allLedgerSentences.length,
       weak_uncounted: allWeak.length,
       buckets: BUCKETS,
+      since: since || null,
+      excluded_by_since: excludedBySince,
+      excluded_undated: excludedUndated,
     },
   };
 }
@@ -665,6 +760,12 @@ function render(index) {
       `${m.events_after_dedupe} counted · ${m.dropped_as_mention} dropped as mentions · ` +
       `${m.ledger_sentences_separated} ledger sentences held out of the event stream`
   );
+  if (m.since) {
+    out.push(
+      `since ${m.since}: ${m.excluded_by_since} events excluded, of which ${m.excluded_undated} were undated ` +
+        '(a window with no date cannot be shown to fall after one, so it is out of every date filter)'
+    );
+  }
   out.push('');
 
   out.push('EXTRACTED — individual catches attributed in prose, deduplicated by named subject');
@@ -742,10 +843,15 @@ function render(index) {
   );
   out.push('');
   out.push(
-    '  They are NOT summed anywhere. Declared totals come from ledger paragraphs the author\n' +
-      '  wrote; extracted counts come from prose attributions across the whole corpus, including\n' +
-      '  every cycle before ledgers were being written. A large positive delta is expected and is\n' +
-      '  not evidence of a bug in either.'
+    '  They are NOT summed anywhere, and BOTH SIGNS are expected for structural reasons.\n' +
+      '  POSITIVE: prose attributions run back through every cycle before ledgers were being\n' +
+      '  written at all, so an unfiltered run counts events no tally ever covered.\n' +
+      '  NEGATIVE: a ledger\'s own enumerated items are deliberately held out of the event stream\n' +
+      '  (otherwise the tally and its contents would both count), so wherever a ledger exists its\n' +
+      '  catches are declared and not extracted. Narrowing with --since makes this the common\n' +
+      '  case, because the windows that survive are the ones that have ledgers.\n' +
+      '  Neither sign is evidence of a bug. A delta worth reading is one where a window has a\n' +
+      '  ledger AND prose attributions the ledger does not account for.'
   );
   out.push('');
 
@@ -758,6 +864,11 @@ function render(index) {
   );
   out.push(
     `DEDUPLICATION: ${m.merged_away} merged · ${m.no_signature} events had no recoverable named subject and were LEFT SEPARATE`
+  );
+  out.push(
+    `SUSPECTED RULE GAPS: ${index.suspect.length} unattributed event${index.suspect.length === 1 ? '' : 's'} whose sentence NAMES a\n` +
+      '  known catcher — the record said who, and the rules did not hear it. Nothing is\n' +
+      '  re-classified; this is the rule table auditing itself (--show suspect).'
   );
   out.push(
     `WEAK, NOT COUNTED: ${m.weak_uncounted} sentences use "catch" as a noun rather than reporting an\n` +
@@ -784,6 +895,12 @@ function renderShow(index, which) {
     if (!index.merges.length) return 'nothing was merged.';
     return index.merges
       .map((x) => `${x.key}\n  kept    ${x.kept.source}:${x.kept.line}\n  merged  ${x.merged.source}:${x.merged.line}\n  ${x.sentence}`)
+      .join('\n\n');
+  }
+  if (which === 'suspect') {
+    if (!index.suspect.length) return 'no unattributed event names a known catcher.';
+    return index.suspect
+      .map((e) => `${e.source}:${e.line}  [${e.window}]\n  ${e.sentence}`)
       .join('\n\n');
   }
   if (which === 'weak') {
@@ -842,11 +959,7 @@ function main() {
     console.error(`no sources found under ${root} (expected exo_memory/muscle_map.md and exo_memory/journal/*.md)`);
     process.exit(1);
   }
-  const index = buildLedger(files);
-  if (a.since) {
-    index.windows = index.windows.filter((w) => w.window >= a.since);
-    index.events = index.events.filter((e) => e.window >= a.since);
-  }
+  const index = buildLedger(files, { since: a.since });
   if (a.json) console.log(JSON.stringify(index, null, 2));
   else if (a.show) console.log(renderShow(index, a.show));
   else console.log(render(index));
@@ -872,5 +985,8 @@ module.exports = {
   dedupe,
   buildLedger,
   ratiosFor,
+  suspectGaps,
+  withinSince,
+  forMatching,
   render,
 };
