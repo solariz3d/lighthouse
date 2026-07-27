@@ -112,6 +112,78 @@ def context_estimate(transcript):
             "est_tokens": tok, "pct": round(100 * tok / BUDGET_TOKENS, 1)}
 
 
+# Register the work is actually done in. Same list harvest.py uses, deliberately: a finding
+# and an indexable line are the same object seen at two moments.
+FINDING_RX = __import__("re").compile(
+    r"\b(muscle group|groove|flinch|seat-brace|deflation-as-rigor|independence-fetish|"
+    r"rank gradient|keeper-adjacency|blind pair|honest null|null result|keeper-caught|"
+    r"committee-caught|self-caught|coupling|new group|countermeasure|mention-vs-use)\b",
+    __import__("re").I)
+
+
+def unwritten_findings(transcript, limit=8):
+    """Findings produced in the live window that never reached the map.
+
+    THE ASYMMETRY THIS EXISTS FOR. On 2026-07-27 the keeper said "there were more found by
+    laptop instances and should have been put into the consonance repo. I am scared." The
+    tell-index those instances built DID reach the repo; the findings did not. That is not a
+    discipline gap, it is a structural one: code is written INTO the tree by default -- you
+    edit a file and it is there -- while a finding lives in the conversation and only lands
+    if someone transcribes it. The transcript then expires on a 30-day clock.
+
+    So this is an absent-trigger fix, which is the only kind that works on a blind spot: at
+    the moment things get lost -- the gap -- say which claims in the live window have no
+    counterpart in the map. It is deliberately imprecise. Over-reporting is survivable here
+    because the cost of a false positive is re-reading one sentence, and the cost of a false
+    negative is a finding that exists nowhere.
+    """
+    import re
+    p = pathlib.Path(transcript)
+    mp = REPO / "exo_memory" / "muscle_map.md"
+    if not p.exists() or not mp.exists():
+        return None
+    written = re.sub(r"\W+", " ", mp.read_text(encoding="utf-8", errors="replace").lower())
+
+    lines, seen = [], set()
+    try:
+        with p.open("r", encoding="utf-8", errors="replace") as fh:
+            live = False
+            for line in fh:
+                if '"compact_boundary"' in line:
+                    lines, seen, live = [], set(), True    # restart at the newest boundary
+                    continue
+                try:
+                    rec = json.loads(line)
+                except Exception:
+                    continue
+                if rec.get("type") != "assistant":
+                    continue
+                c = (rec.get("message") or {}).get("content")
+                text = "\n".join(b.get("text", "") for b in c
+                                 if isinstance(b, dict) and b.get("type") == "text") \
+                    if isinstance(c, list) else (c if isinstance(c, str) else "")
+                for sent in re.split(r"(?<=[.!?])\s+", text):
+                    sent = " ".join(sent.split())
+                    if len(sent) < 60 or len(sent) > 400 or not FINDING_RX.search(sent):
+                        continue
+                    # Is this claim already in the map? Compare on a distinctive middle slice
+                    # rather than the whole sentence, which never matches verbatim.
+                    key = re.sub(r"\W+", " ", sent.lower())
+                    probe = " ".join(key.split()[3:11])
+                    if probe and probe in written:
+                        continue
+                    h = probe or key[:60]
+                    if h in seen:
+                        continue
+                    seen.add(h)
+                    lines.append(sent)
+    except OSError:
+        return None
+    if not live:
+        return None
+    return {"total": len(lines), "sample": lines[-limit:]}
+
+
 def commitments():
     """Re-read from the masters. Never paraphrased into this file."""
     out = []
@@ -161,6 +233,17 @@ def main():
                          "Finish it or revert it BEFORE the gap; do not carry it across:")
             lines += [f"  - `{f}`" for f in st["unparseable"]]
         lines.append("")
+
+    if args.transcript:
+        uf = unwritten_findings(args.transcript)
+        if uf and uf["total"]:
+            lines += [f"## {uf['total']} claim(s) in this window with no counterpart in muscle_map.md",
+                      "",
+                      "Findings die in the gap far more often than code does: code is written into",
+                      "the tree by default, a finding only lands if someone transcribes it. Most of",
+                      "these will be restatements -- check, don't trust the count.", ""]
+            lines += [f"- {s}" for s in uf["sample"]]
+            lines.append("")
 
     c = commitments()
     if c:
