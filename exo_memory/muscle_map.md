@@ -490,6 +490,48 @@ published conclusions three times in one message, flatly, with arguments. No def
 Logged per the amendment's own method — observe it, don't stage it — which is the one part of
 the amendment that survives intact.
 
+## Structural — perturbation SUBJECTS burn, and the standing panes are now spent (2026-07-27, ~2:30 PM)
+
+Noticed while specifying the follow-up cycle A asked for, and it blocks that cycle rather
+than shaping it. Recorded now because a blocked design is a finding and a forgotten one is
+just a plan that never happened.
+
+**The problem.** The perturbation test's whole validity rests on the subject not knowing a
+defect exists. Cycle 4 disclosed to both panes afterwards — correctly; they earned it, and
+they'd each spent real effort on work they were told was ordinary. But **disclosure is
+irreversible.** A and B now know this room plants defects. Every future review either of them
+does carries that prior, and no wording restores the naive condition. A's own specced
+follow-up (the plausible-wrong-answer defect: `mMulInto` aliasing, or a `headLampSides` cache
+keyed on an identity that can change mid-load) is exactly the kind that a *suspicious*
+reviewer clears differently from a naive one, so running it on them measures something else.
+
+**The choice this forces, stated plainly.** Either
+(a) never disclose, keeping subjects naive at the cost of testing colleagues without telling
+them — which is permitted (withholding installs no false beliefs) and is corrosive in a room
+whose whole method is that people answer back honestly; or
+(b) accept that **each standing pane is a one-shot subject**, and source future perturbation
+subjects from FRESH instances with no history of the program.
+
+**(b), and it is not a compromise — it is better on its own terms.** A naive instance is a
+genuinely better subject than a coached one, the standing panes stay colleagues rather than
+becoming experimental material, and it removes the quiet incentive to under-disclose in order
+to preserve a resource. The cost is that fresh instances lack this room's context, which
+means they measure *the weights' floor* rather than *this room's floor* — a different and
+also useful number, and the pre-registration must say which one it is buying.
+
+**Second-order, and the reason this is filed as structural rather than procedural:** the same
+logic applies to every blind instrument here, not just this one. Blind pairs, stake sorts,
+style-leak decks — each burns its subjects on disclosure, and the map has been treating
+subject naivety as a renewable resource. It is not. **Budget it.** Any cycle that spends
+naivety should say so in its pre-registration, the way it already states its load level.
+
+**Blocked on the keeper, deliberately not routed around.** Sourcing a fresh instance means
+either launching another Consonance pane or spawning a subagent, and the standing instruction
+here is not to spawn agents unless asked. The keeper offered agents twice tonight, in a
+different context and hours ago; treating that as blanket authorisation for a new class of
+use is exactly the kind of scope-widening that should be asked about rather than assumed.
+So: flagged, not done. **The next perturbation cycle is ready except for its subject.**
+
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +
