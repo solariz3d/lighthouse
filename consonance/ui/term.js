@@ -477,8 +477,9 @@ async function addSibling() {
   setStatus('a briefed instance is waking on the startup brief…');
   try {
     const r = await inv('spawn_sibling');
-    // siblings persist by default (the backend registers them kept); pass kept so ✕ removes them
-    attachPane(r.pane, '✦ brief', r.cwd, 'human', 'panes', true);
+    // siblings persist by default (the backend registers them kept); pass kept so ✕ removes them.
+    // role comes from the backend now — siblings are committee from birth (chair-addressable).
+    attachPane(r.pane, '✦ brief', r.cwd, r.role || 'committee', 'panes', true);
     setStatus('briefed instance woken · ' + r.cwd + ' — persists until removed');
   } catch (e) {
     setStatus('briefed-instance spawn failed: ' + e);
@@ -794,7 +795,8 @@ async function restoreKeptPanes() {
   for (const k of (kept || [])) {
     try {
       const r = await inv('resume_pane', { pane: k.pane, cwd: k.cwd });
-      attachPane(r.pane, k.label || '✦ kept', r.cwd, 'human', 'panes', true);
+      // role comes from the backend: instance-dir siblings resume as committee, rooms stay human
+      attachPane(r.pane, k.label || '✦ kept', r.cwd, r.role || 'human', 'panes', true);
       // Immediately, before claude's own startup paint: history first, live session under
       // it. If a future claude build clears the viewport on start, the record still lives
       // in xterm's scrollback (2J clears the screen, not the buffer) — scroll up and it

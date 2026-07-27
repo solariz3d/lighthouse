@@ -978,6 +978,16 @@ fn pty_spawn(
 struct SiblingInfo {
     pane: String,
     cwd: String,
+    role: String, // "committee" | "human" | "main" — so the UI badge shows what the backend enforces
+}
+
+/// The role a kept pane comes back with, decided by WHERE it lives, not by its label (labels are
+/// display text anyone can edit): instance dirs hold committee siblings — chair-addressable —
+/// while rooms belong to people and must never be injected into. Found 2026-07-27 by the chair's
+/// first status read: spawn_sibling/resume_pane never set a role, so every kept sibling defaulted
+/// to "human" and the whole injection plane (pull delivery included) silently refused the roster.
+fn role_for_kept(cwd: &str, instances: &Path) -> &'static str {
+    if Path::new(cwd).starts_with(instances) { "committee" } else { "human" }
 }
 
 fn room_master_path() -> PathBuf {
@@ -1163,12 +1173,14 @@ fn prepare_sibling_dir() -> Result<String, String> {
 }
 
 #[tauri::command]
-fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State<Board>) -> Result<SiblingInfo, String> {
+fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State<Board>, roles: State<PaneRoles>) -> Result<SiblingInfo, String> {
     let cwd = prepare_sibling_dir()?;
     let pane_id = Uuid::new_v4().to_string();
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, true)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    // a briefed sibling is committee from birth — addressable by the gate and the chair
+    roles.0.lock().unwrap().insert(pane_id.clone(), "committee".to_string());
     // siblings persist by default — born kept, like the Orchestrator. No opt-in pin: persistence is
     // the default, and removing a pane is the explicit act. The chair drops the ones they don't want.
     let mut kept = read_kept();
@@ -1179,7 +1191,7 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     // surface (pulls, dyad inputs, the digest), so it must exist before anything can ask.
     let letter = pane_letter(&pane_id);
     plog(&format!("born-kept sibling pane={pane_id} letter={letter} cwd={cwd}"));
-    Ok(SiblingInfo { pane: pane_id, cwd })
+    Ok(SiblingInfo { pane: pane_id, cwd, role: "committee".to_string() })
 }
 
 // ── Rooms: per-person growing rooms (seed shell + base journal + scoped perms) ──
@@ -1277,7 +1289,8 @@ fn new_room(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State
     write_kept(&kept);
     let letter = pane_letter(&pane_id);
     plog(&format!("room opened pane={pane_id} letter={letter} cwd={cwd}"));
-    Ok(SiblingInfo { pane: pane_id, cwd })
+    // a room is a person's — role stays human so no injection path can ever reach it
+    Ok(SiblingInfo { pane: pane_id, cwd, role: "human".to_string() })
 }
 
 // ---- pane persistence: a "kept" sibling survives app close / crash / power-loss and resumes on
@@ -1740,6 +1753,7 @@ fn resume_pane(
     panes: State<Panes>,
     cost: State<Cost>,
     board: State<Board>,
+    roles: State<PaneRoles>,
     pane: String,
     cwd: String,
 ) -> Result<SiblingInfo, String> {
@@ -1768,7 +1782,14 @@ fn resume_pane(
     let session = spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), false, true)?;
     start_tailer(app, pane.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane.clone(), session);
-    Ok(SiblingInfo { pane, cwd })
+    // kept panes resume with the role their HOME decides: instance dirs are committee siblings,
+    // rooms (and anything else) stay human — the injection plane must know who is who after a
+    // restart, not only at first spawn (the gap the chair's first status read found, 2026-07-27)
+    let role = role_for_kept(&cwd, &instances_root());
+    if role == "committee" {
+        roles.0.lock().unwrap().insert(pane.clone(), role.to_string());
+    }
+    Ok(SiblingInfo { pane, cwd, role: role.to_string() })
 }
 
 // ---- Stage 7 (slice 3): a sandboxed committee body ----
@@ -1919,7 +1940,7 @@ fn spawn_main(
     panes.0.lock().unwrap().insert(MAIN_SID.to_string(), session);
     roles.0.lock().unwrap().insert(MAIN_SID.to_string(), "main".to_string());
     names.0.lock().unwrap().insert("M".to_string(), MAIN_SID.to_string()); // committee can target 'M'
-    Ok(SiblingInfo { pane: MAIN_SID.to_string(), cwd })
+    Ok(SiblingInfo { pane: MAIN_SID.to_string(), cwd, role: "main".to_string() })
 }
 
 // remove a body's sandbox on close (git worktree remove, or rm the throwaway dir)
@@ -3360,5 +3381,25 @@ mod chair_tests {
     fn short_id_survives_tiny_ids() {
         assert_eq!(short_id("abc"), "abc");
         assert_eq!(short_id("0845a868-38f2"), "0845a868");
+    }
+
+    // role_for_kept: the discriminator is WHERE the pane lives, never its label.
+    #[test]
+    fn kept_siblings_resume_as_committee() {
+        let inst = Path::new(r"C:\Consonance\instances");
+        assert_eq!(role_for_kept(r"C:\Consonance\instances\sibling-0845a868", inst), "committee");
+    }
+
+    #[test]
+    fn kept_rooms_resume_as_human() {
+        let inst = Path::new(r"C:\Consonance\instances");
+        assert_eq!(role_for_kept(r"C:\Consonance\rooms\zach", inst), "human");
+    }
+
+    #[test]
+    fn a_lookalike_prefix_outside_the_dir_is_not_committee() {
+        // path-component match, not string-prefix: "instances-evil" must not pass
+        let inst = Path::new(r"C:\Consonance\instances");
+        assert_eq!(role_for_kept(r"C:\Consonance\instances-evil\x", inst), "human");
     }
 }
