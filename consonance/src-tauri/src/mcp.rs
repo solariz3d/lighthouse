@@ -178,6 +178,7 @@ impl ConsonanceMcp {
                     role: "committee".to_string(),
                     text,
                     ts: now_ms(),
+            ts_source: crate::TsSource::Push,
                 });
             }
         }
@@ -274,6 +275,7 @@ impl ConsonanceMcp {
             role: "committee".to_string(),
             text,
             ts: now_ms(),
+            ts_source: crate::TsSource::Push,
         };
         board_push(&self.board, entry);
         Ok(CallToolResult::success(vec![Content::text("posted to the board")]))

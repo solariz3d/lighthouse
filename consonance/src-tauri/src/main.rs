@@ -645,12 +645,43 @@ struct ContextInfo {
 }
 
 // ---- the Live Board: the canonical, bounded, persisted cross-pane shared log ----
+
+/// Which clock produced a board entry's `ts`. The board has always mixed two and never said so.
+///
+/// WHY THIS EXISTS. Until Cycle 3 every entry was stamped at PUSH time, including turns the
+/// tailer had just read out of a transcript that carried the real time of the turn. That is
+/// fine while a pane is live and catastrophic when it resumes: the tailer re-reads the
+/// transcript from the top, so a whole night of old turns lands on the board stamped "now".
+/// Measured 2026-07-27: 13,180 of 15,432 entries were replay bursts, so every instrument that
+/// reads the board was working from ~15% of the record, and WHICH 15% depended on who
+/// restarted when. Downstream that made every cycle-to-cycle number illegitimate — a baseline
+/// whose sample is chosen by an unrelated process is not a baseline.
+///
+/// A pane's turn has a real time in its own transcript. An MCP post, a gate line or a chair
+/// audit line has no transcript at all and can only be stamped on arrival. Both are honest;
+/// they are not the same measurement, and a consumer averaging across them without knowing
+/// which is which is the thing this field prevents.
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Serialize)]
+#[serde(rename_all = "lowercase")]
+enum TsSource {
+    /// `ts` is the time the turn actually happened, read from the transcript record.
+    Transcript,
+    /// `ts` is the time the entry reached the board. The entry has no transcript of its own.
+    Push,
+}
+
+/// NOTE FOR CONSUMERS, and it is a real behavioural change: with transcript timestamps in
+/// play, `ts` is NO LONGER MONOTONIC in file order. A resumed pane appends old turns after
+/// new ones. That is the fix working — a day-window filter now correctly excludes a replayed
+/// night instead of counting it as today — but anything that treated file order as time order
+/// must key on `ts` (and, where it matters, on `ts_source`) instead.
 #[derive(Clone, Serialize)]
 struct BoardEntry {
     pane: String,
     role: String,
     text: String,
     ts: u64,
+    ts_source: TsSource,
 }
 struct Board(Arc<Mutex<VecDeque<BoardEntry>>>);
 // Stage 7a: pane role model (absent = HumanDriven). Governs committee inject-assertion + the Main role.
@@ -857,6 +888,175 @@ mod encode_cwd_tests {
 }
 
 // pull the publishable text out of a transcript line; thinking/tool_use noise excluded
+// ---- Cycle 3: the transcript's own clock ----------------------------------------------
+//
+// No chrono. This repo adds dependencies only when the standard library genuinely can't do the
+// job, and a fixed-shape ISO-8601 instant in UTC is arithmetic, not date handling. Anything
+// this parser does not recognise returns None and the caller falls back to push time — an
+// unparsed stamp must degrade to the old behaviour, never to a wrong time. A wrong timestamp
+// is worse than a late one: it is silently wrong in the direction of looking fine.
+
+/// Days since the Unix epoch for a civil date. Howard Hinnant's days_from_civil, which is
+/// exact for the whole proleptic Gregorian range and has no branches for leap years — the
+/// leap rule falls out of the era arithmetic instead of being a special case somebody forgets.
+fn days_from_civil(y: i64, m: i64, d: i64) -> i64 {
+    let y = if m <= 2 { y - 1 } else { y };
+    let era = if y >= 0 { y } else { y - 399 } / 400;
+    let yoe = y - era * 400;
+    let mp = (m + 9) % 12;
+    let doy = (153 * mp + 2) / 5 + d - 1;
+    let doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;
+    era * 146097 + doe - 719468
+}
+
+/// `2026-07-27T10:14:43.574Z` -> epoch milliseconds. Fractional seconds optional; a trailing
+/// `Z` optional (the transcripts always write it, but a bare instant is unambiguous here).
+/// A numeric offset is deliberately NOT accepted: silently treating `+02:00` as UTC would put
+/// entries two hours from where they belong, which is exactly the failure class this fixes.
+fn iso8601_to_epoch_ms(s: &str) -> Option<u64> {
+    let s = s.trim();
+    let b = s.as_bytes();
+    if b.len() < 19 || b[4] != b'-' || b[7] != b'-' || (b[10] != b'T' && b[10] != b' ') || b[13] != b':' || b[16] != b':' {
+        return None;
+    }
+    let num = |a: usize, z: usize| -> Option<i64> { s.get(a..z)?.parse::<i64>().ok() };
+    let (y, mo, d) = (num(0, 4)?, num(5, 7)?, num(8, 10)?);
+    let (h, mi, sec) = (num(11, 13)?, num(14, 16)?, num(17, 19)?);
+    if !(1..=12).contains(&mo) || !(1..=31).contains(&d) || h > 23 || mi > 59 || sec > 60 {
+        return None;
+    }
+    let mut ms: i64 = 0;
+    let mut rest = &s[19..];
+    if let Some(stripped) = rest.strip_prefix('.') {
+        let digits: String = stripped.chars().take_while(|c| c.is_ascii_digit()).collect();
+        if digits.is_empty() {
+            return None;
+        }
+        // pad or truncate to exactly milliseconds — ".5" is 500ms, ".123456" is 123ms
+        let mut frac = digits.clone();
+        frac.truncate(3);
+        while frac.len() < 3 {
+            frac.push('0');
+        }
+        ms = frac.parse::<i64>().ok()?;
+        rest = &rest[1 + digits.len()..];
+    }
+    if !rest.is_empty() && rest != "Z" && rest != "z" {
+        return None; // an offset we would have to honour, or trailing junk
+    }
+    let total = days_from_civil(y, mo, d) * 86_400_000 + h * 3_600_000 + mi * 60_000 + sec * 1_000 + ms;
+    if total < 0 { None } else { Some(total as u64) }
+}
+
+/// The seam, as one pure function so it can be tested without a running tailer: a transcript
+/// record that carries a parseable `timestamp` supplies its own time; anything else is stamped
+/// on arrival and says so.
+fn stamp_for(v: &serde_json::Value, now: u64) -> (u64, TsSource) {
+    match v.get("timestamp").and_then(|x| x.as_str()).and_then(iso8601_to_epoch_ms) {
+        Some(t) => (t, TsSource::Transcript),
+        None => (now, TsSource::Push),
+    }
+}
+
+#[cfg(test)]
+mod ts_tests {
+    use super::*;
+
+    // Ground truth from Date.parse on the exact strings these transcripts contain.
+    #[test]
+    fn parses_a_real_transcript_timestamp() {
+        assert_eq!(iso8601_to_epoch_ms("2026-07-27T10:14:43.574Z"), Some(1_785_147_283_574));
+        assert_eq!(iso8601_to_epoch_ms("2026-07-26T10:14:01.132Z"), Some(1_785_060_841_132));
+    }
+
+    #[test]
+    fn epoch_leap_day_and_the_century_rule() {
+        assert_eq!(iso8601_to_epoch_ms("1970-01-01T00:00:00Z"), Some(0));
+        // 2024 is a leap year; 2000 is one only because of the 400-rule. If days_from_civil
+        // were hand-rolled with the naive leap test, this second one would be a day out.
+        assert_eq!(iso8601_to_epoch_ms("2024-02-29T23:59:59.999Z"), Some(1_709_251_199_999));
+        assert_eq!(iso8601_to_epoch_ms("2000-03-01T00:00:00.000Z"), Some(951_868_800_000));
+    }
+
+    #[test]
+    fn fractional_seconds_are_optional_and_normalised_to_milliseconds() {
+        assert_eq!(iso8601_to_epoch_ms("1970-01-01T00:00:01Z"), Some(1_000));
+        assert_eq!(iso8601_to_epoch_ms("1970-01-01T00:00:01.5Z"), Some(1_500));
+        assert_eq!(iso8601_to_epoch_ms("1970-01-01T00:00:01.123456Z"), Some(1_123));
+        assert_eq!(iso8601_to_epoch_ms("1970-01-01T00:00:01"), Some(1_000));
+    }
+
+    #[test]
+    fn anything_unrecognised_returns_none_rather_than_a_plausible_wrong_time() {
+        for bad in [
+            "",
+            "not a timestamp",
+            "2026-07-27",                    // date only
+            "2026-07-27T10:14:43+02:00",     // an offset we refuse rather than misread as UTC
+            "2026-07-27T10:14:43.Z",         // empty fraction
+            "2026-13-01T00:00:00Z",          // month out of range
+            "2026-07-32T00:00:00Z",          // day out of range
+            "2026-07-27T24:00:00Z",          // hour out of range
+            "2026/07/27T10:14:43Z",          // wrong separators
+            "1960-01-01T00:00:00Z",          // before the epoch: no negative ms on this board
+        ] {
+            assert_eq!(iso8601_to_epoch_ms(bad), None, "should not have parsed: {bad:?}");
+        }
+    }
+
+    #[test]
+    fn a_transcript_record_supplies_its_own_time() {
+        let v = serde_json::json!({
+            "type": "assistant",
+            "timestamp": "2026-07-27T10:14:43.574Z",
+            "message": { "role": "assistant", "content": "hi" }
+        });
+        assert_eq!(stamp_for(&v, 999), (1_785_147_283_574, TsSource::Transcript));
+    }
+
+    #[test]
+    fn the_seams_keep_push_time_and_say_so() {
+        // No timestamp at all: an MCP post, a gate line, a chair audit line.
+        assert_eq!(stamp_for(&serde_json::json!({ "type": "assistant" }), 999), (999, TsSource::Push));
+        // Present but unparseable — must degrade to the OLD behaviour, never to a wrong time.
+        let junk = serde_json::json!({ "timestamp": "yesterday afternoon" });
+        assert_eq!(stamp_for(&junk, 999), (999, TsSource::Push));
+        // Present but the wrong JSON type.
+        let numeric = serde_json::json!({ "timestamp": 1_785_147_283_574i64 });
+        assert_eq!(stamp_for(&numeric, 999), (999, TsSource::Push));
+    }
+
+    #[test]
+    fn the_field_reaches_the_board_file_naming_which_clock_it_used() {
+        let e = BoardEntry {
+            pane: "p".into(),
+            role: "assistant".into(),
+            text: "t".into(),
+            ts: 1_785_147_283_574,
+            ts_source: TsSource::Transcript,
+        };
+        let s = serde_json::to_string(&e).expect("BoardEntry serialises");
+        assert!(s.contains("\"ts_source\":\"transcript\""), "got {s}");
+        let pushed = BoardEntry { ts_source: TsSource::Push, ..e };
+        let s2 = serde_json::to_string(&pushed).expect("BoardEntry serialises");
+        assert!(s2.contains("\"ts_source\":\"push\""), "got {s2}");
+    }
+
+    // The whole point of the change, stated as a test: a replayed night must not read as today.
+    #[test]
+    fn a_replayed_transcript_lands_on_its_own_day_not_on_the_day_it_was_replayed() {
+        let replayed = serde_json::json!({ "timestamp": "2026-07-13T04:00:00.000Z" });
+        let now_two_weeks_later = 1_785_147_283_574u64;
+        let (ts, src) = stamp_for(&replayed, now_two_weeks_later);
+        assert_eq!(src, TsSource::Transcript);
+        assert!(
+            now_two_weeks_later - ts > 13 * 86_400_000,
+            "a resumed pane's old turns must keep their own time, or the board reads a fortnight \
+             of history as one second of today — the 13,180-entry replay problem"
+        );
+    }
+}
+
 fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
     let t = v.get("type")?.as_str()?;
     if t != "user" && t != "assistant" {
@@ -945,10 +1145,13 @@ fn start_tailer(
                     }
                     if let Ok(v) = serde_json::from_slice::<serde_json::Value>(line) {
                         if let Some((role, text)) = extract_turn(&v) {
-                            let ts = SystemTime::now()
+                            // Cycle 3: the turn's own time, out of the record the tailer is
+                            // already holding. Push time only if the record can't supply one.
+                            let now = SystemTime::now()
                                 .duration_since(UNIX_EPOCH)
                                 .map(|d| d.as_millis() as u64)
                                 .unwrap_or(0);
+                            let (ts, ts_source) = stamp_for(&v, now);
                             // tether proxy (zero-token, lexical) vs the recent board window — numbers, not a verdict
                             let recent: Vec<String> = {
                                 let q = board.lock().unwrap();
@@ -956,7 +1159,7 @@ fn start_tailer(
                             };
                             let tr = tether::read(&text, &recent);
                             let _ = app.emit("tether", TetherInfo { pane: pane_id.clone(), referents: tr.referents, novelty: tr.novelty });
-                            board_push(&board, BoardEntry { pane: pane_id.clone(), role: role.clone(), text: text.clone(), ts });
+                            board_push(&board, BoardEntry { pane: pane_id.clone(), role: role.clone(), text: text.clone(), ts, ts_source });
                             let _ = app.emit("turn", TurnRecord { pane: pane_id.clone(), role, text });
                         }
                         if let Some((inp, out, cr, cw, model)) = extract_usage(&v) {
@@ -2349,7 +2552,8 @@ fn dyad_spot(panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
     let catch = if partner_lens == "doubt" { "SEAL" } else { "BRACE" };
     board_push(&board.0, BoardEntry { pane: "dyad".to_string(), role: "committee".to_string(),
         text: format!("chair spotted {} -> partner {} ({}-forward) asked to catch {}",
-            &tid[..8.min(tid.len())], &partner[..8.min(partner.len())], partner_lens, catch), ts });
+            &tid[..8.min(tid.len())], &partner[..8.min(partner.len())], partner_lens, catch), ts,
+            ts_source: TsSource::Push });
     Ok(format!("spot delivered to partner ({partner_lens}-forward → catch {catch})"))
 }
 
@@ -2427,12 +2631,14 @@ fn gate_decide(app: AppHandle, gate: State<Gate>, board: State<Board>, id: Strin
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     if !approve {
         board_push(&board.0, BoardEntry { pane: "gate".to_string(), role: "committee".to_string(),
-            text: format!("chair denied pull from {} -> {} : {}", pull.from, pull.target, pull.why), ts });
+            text: format!("chair denied pull from {} -> {} : {}", pull.from, pull.target, pull.why), ts,
+            ts_source: TsSource::Push });
         return Ok("denied".to_string());
     }
     let outcome = deliver_pull(&app, &pull);
     board_push(&board.0, BoardEntry { pane: "gate".to_string(), role: "committee".to_string(),
-        text: format!("chair approved + {} (from {} -> {})", outcome, pull.from, pull.target), ts });
+        text: format!("chair approved + {} (from {} -> {})", outcome, pull.from, pull.target), ts,
+            ts_source: TsSource::Push });
     Ok(format!("approved + {outcome}"))
 }
 
@@ -2604,7 +2810,7 @@ fn await_echo(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Receip
 
 fn chair_audit(app: &AppHandle, text: String) {
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
-    board_push(&app.state::<Board>().0, BoardEntry { pane: "chair".to_string(), role: "committee".to_string(), text, ts });
+    board_push(&app.state::<Board>().0, BoardEntry { pane: "chair".to_string(), role: "committee".to_string(), text, ts, ts_source: TsSource::Push });
 }
 
 /// The audit line for an injection attempt — kept pure so the one thing that matters about it is
@@ -2979,6 +3185,7 @@ fn main() {
                             role: "committee".to_string(),
                             text: format!("suppressed pull from {} (intensity {:.2} < threshold) — {} suppressed total", pr.from, pr.intensity, n),
                             ts,
+            ts_source: TsSource::Push,
                         });
                         continue;
                     }
@@ -3019,6 +3226,7 @@ fn main() {
                             role: "committee".to_string(),
                             text: format!("open-channel auto-approved + {} (from {} -> {})", outcome, pr.from, pr.target),
                             ts,
+            ts_source: TsSource::Push,
                         });
                         continue;
                     }
@@ -3028,6 +3236,7 @@ fn main() {
                             role: "committee".to_string(),
                             text: format!("open-channel closed ({snap_reason}) — back to ask-each"),
                             ts,
+            ts_source: TsSource::Push,
                         });
                     }
                     // ask-each (default, or just snapped back): surface a GateCard for the chair
@@ -3050,6 +3259,7 @@ fn main() {
                         role: "committee".to_string(),
                         text: format!("gate-card [{}] from {} -> {} [{}] {}", &card.id[..8], card.from, card.target, card.kind, card.why),
                         ts,
+            ts_source: TsSource::Push,
                     });
                     let _ = phandle.emit("gate-card", card);
                 }
@@ -3857,6 +4067,7 @@ mod chair_tests {
             role: "committee".to_string(),
             text: "a turn".to_string(),
             ts: 1,
+            ts_source: TsSource::Push,
         };
         let line = serde_json::to_string(&entry).unwrap();
         assert!(serde_json::to_value(&entry).unwrap().get("model").is_none(),
@@ -3874,6 +4085,7 @@ mod chair_tests {
             role: "committee".to_string(),
             text: chair_inject_audit_line("11112222", "go", None, "claude-fable-5", Receipt::Received),
             ts: 1,
+            ts_source: TsSource::Push,
         };
         assert!(serde_json::to_value(&audit).unwrap().get("model").is_none(),
             "the model must reach the board as audited prose, never as a structured field");
