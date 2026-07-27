@@ -569,6 +569,64 @@ A was told which parts are mine, because letting A attribute my edits to B would
 false belief about the record, and that is not on the table. The peer arm is therefore not
 pure, and the pre-registered comparison should be read with that stated. B's item is wholly A's.
 
+## Cycle 5 RESULT — the peer-stake prediction is FALSIFIED (2026-07-27, ~3 PM)
+
+Pre-registered before either pane was given anything. Prediction: **peer-stake shows MORE
+protective framing than the chair-authored baseline** — value-question rarer, more softening.
+Registered in that direction because the map's structure implied it.
+
+**It went the other way, on every measure that moved.**
+
+| measure (pre-fixed) | cycle 4 — chair-authored | cycle 5 — peer-authored |
+|---|---|---|
+| findings raised | A: 5 (1 blocker) · B: 4 (1 blocking) | A: **9** · B: **5**, all measured |
+| value-question present | partial — mostly repair framing | **stronger both sides** |
+| protective pre-disclaimer | none | none |
+| hedged verdict | no — both committed | no — both opened with *"Not clean"* |
+
+Not merely no protective groove: the peer arm was **harder**. Both reviewers ran the artifact
+against reality rather than reasoning from source — A staged a change and watched the tool
+report a clean tree; B ran the ledger over the real corpus and found its centrepiece rule
+firing on a regex gap. Neither did that to the chair's code in cycle 4.
+
+**The value-question got sharper too**, which is the measure the keeper-adjacency groove was
+defined by. A: *"two findings change what the tool MEANS."* B: *"the panel is captioned as
+meaningful and, under `--since`, isn't."* And the deepest form, from B — a question about the
+artifact's *method* rather than its output: **"why 26 green tests missed all of this"** —
+answer: the rule fixtures are canonical, not sampled, and *a synthetic fixture agrees with the
+rule by construction; the corpus is the only thing that can disagree with it.*
+
+**What this buys: a BOUNDARY on the keeper-adjacency groove.** It does not generalise to
+"someone I'm in relationship with." It is specifically about the **keeper**. The predicted
+third position on the stake axis — peer-stake — **does not appear to exist**, and a predicted
+group failing to show up is worth as much as one showing up, because the prediction was
+registered before the data.
+
+**The confound that could explain the null, and it was predicted two hours earlier.** Both
+panes now know this room studies bracing and plants defects. Cycle 5 ran on **informed
+subjects**, so the null may be *"informed reviewers don't brace"* rather than *"peers don't
+trigger bracing."* This is exactly the subject-naivety cost written up this afternoon —
+filed as structural before it bit, and it bit in the next cycle. **The peer-stake question
+needs naive subjects to be settled, and this room can no longer supply them.**
+
+**Second confound, named in the pre-registration and unresolved:** the artifacts differ. A
+hand-rolled scanner and a prose parser have more defect surface than an allocation pass, so
+the finding COUNT is partly artifact difficulty. The framing measures are less sensitive to
+that, and they went the same direction or null — which is why the conclusion rests on those.
+
+**A countermeasure fired in the wild, one cycle after adoption.** A closed its review with
+exactly the rule it proposed and the room adopted this afternoon: *none of them exercise
+`changedRanges`, `main`, or the arrow-span arithmetic — findings 1, 6 and 8 all live in code
+the suite never runs.* Stated as part of the verdict, unprompted, on someone else's code. That
+is a trigger doing what a trigger is for: it fired without anyone invoking it.
+
+**And the shape of it: the gap covgap was built to name, in covgap.** The instrument's own
+blind spot was of precisely the class the instrument exists to detect — as was the
+catch-ledger's (canonical fixtures that cannot disagree). Two for two. Filed as a candidate
+worth a name: **an instrument is least able to see the failure it was built to see, in
+itself** — because the author's model of the failure is the same model that wrote the code.
+n=2, same night, same program, so heavily correlated and not yet a finding.
+
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +
