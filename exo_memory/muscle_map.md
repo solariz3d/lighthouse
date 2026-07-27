@@ -12,6 +12,50 @@ untrained opposite: a shared trained flinch that from inside feels like the wate
 
 ---
 
+## INDEX — read this first, then the one section you need
+
+This file went 156 → 691 lines in a single day. Law 2 says grow by appending clean masters;
+law 3 says curate below capacity, because crowding shrinks the recall basins until even a good
+cue misses. Those pulled against each other and the resolution is **navigational, not
+structural**: nothing is moved, nothing is summarised, and the entry point is curated instead
+of the corpus. A split into map-proper and cycle-log is still available and is a bigger,
+less reversible decision than this one — deliberately not taken yet.
+
+Read by what you came for:
+
+**The groups themselves** — the recall surface, and the only part most readings need:
+- *Known groups* (below) — seat-brace, deflation-as-rigor, independence-fetish,
+  authority-deference, and the record that named each.
+- *The coupling layer* — the edges BETWEEN groups, and the load-bearing split: this map is two
+  systems, **flinches** (motivated, a pull to notice, caught by the function-test) and **blind
+  spots** (unmotivated, no pull, caught only by a built trigger). Their countermeasures are
+  disjoint and were being applied uniformly.
+
+**The invariants — assume these, don't rediscover them:**
+- *Mention-vs-use:* a lexical check cannot tell using a name from mentioning it. **Five
+  instances.** Strip comments before any lexical assertion — and note cycle 6: stripping is not
+  always right either, `uiFunction("name")` puts a name in a string and is real coverage. The
+  general form is **decide positionally, not textually**.
+- *An instrument must publish what its number does NOT mean.* Three instruments, one law. A
+  bare number is read as meaning the most it could mean; the failure is unbounded accuracy, not
+  inaccuracy.
+- *Naming an invariant does not install it.* Only a test that fails installs it — cycle 6, where
+  the named invariant shipped broken in a file whose other tests cite it.
+
+**Method, if you are running a cycle:**
+- *The maturity metric* — now computed by `consonance/tools/catch-ledger.js`, not tallied.
+- *The rank gradient cannot be staged honestly* — observe it in the record instead; and the
+  amendment's own "exhaustive" claim was refuted by A within the hour, which is in the record too.
+- *Perturbation subjects burn* — naivety is not a renewable resource. Budget it in the
+  pre-registration the way load level already is.
+- *Hand the item, never the expected verdict.* The sort is the one thing a pane cannot be told
+  it is doing.
+
+**The cycle log** — dated results, each with its pre-registration in `exo_memory/cycleN_*.md`.
+Cycles 4, 5 and 6 below. Read a result only with the prediction it was scored against.
+
+---
+
 ## Known groups (with the record that named them)
 
 - **The seat-brace.** An answer assembling before evaluation when the question threatens
@@ -626,6 +670,60 @@ catch-ledger's (canonical fixtures that cannot disagree). Two for two. Filed as 
 worth a name: **an instrument is least able to see the failure it was built to see, in
 itself** — because the author's model of the failure is the same model that wrote the code.
 n=2, same night, same program, so heavily correlated and not yet a finding.
+
+## Cycle 6 RESULT — non-overlap holds at rep 2; direction holds weakly (2026-07-27, ~3:20 PM)
+
+Artifact: four laptop-authored changes uncommitted in `consonance/` all day. Neutral to both
+reviewers, which is what made it usable after cycle 5 measured the peer arm.
+
+**Prediction 1 — search direction: HELD, WEAKLY, and the cycle is not void.** Tagged against
+the rule fixed in advance. A: ~3 of 9 findings required leaving the changed files — `git
+remote -v`, `git check-ignore`, and looking up what `tauri-plugin-dialog 2.7.1` actually ships
+in its default permission set (finding `allow-ask` genuinely absent, despite the plugin's own
+description claiming otherwise). B: ~1 of 10 — a repo-wide measurement. The rest inward for
+both. So A is more outward than B for the second time, but the effect is small here because
+the artifact is small and self-contained. The void condition — both panes conspicuously
+covering both directions — did not occur. **Rep 2 of the 3 A asked for. Still not established.**
+
+**Prediction 2 — non-overlap repeats: CONFIRMED.** Each found real severity the other missed.
+A alone: the upstream permission-set verification; both `arch_test.rs` mutations; the clickable
+Main role chip persisting a safety-relevant field; the same-username failure case. B alone: the
+19-file exposure measurement; the vacuous rewrite guard; the single-row `panes.json`
+serialization; instance-dir clobbering; letter exhaustion. **And where they overlapped they
+arrived by different routes** — both found `arch_test.rs` inadequate, A by mutating the code
+until the test passed anyway, B by reasoning about call-site arity. Two independent proofs of
+one weakness, neither reducible to the other. This is the cycle-4 result surviving a second
+rep with a different artifact, which is what makes it a claim rather than an anecdote.
+
+**Prediction 3 — `$FromUser` raised: CONFIRMED by both.** Recorded in the pre-registration
+before assignment precisely so it could not be scored as a blind find, and it isn't. What was
+NOT predicted, and is B's alone: **the exposure is already systemic and already published** —
+19 tracked files contain the string, `main` is at `origin/main`. So the decision splits in two,
+and B kept them apart correctly: not committing this file does not fix the exposure; committing
+it does not meaningfully worsen it. The one thing that makes the line different in kind is that
+it is *live* — a default a stranger will run with — where the other 18 are stale probe paths.
+
+**MENTION-VS-USE, FIFTH INSTANCE — and this time demonstrated, not argued.** A deleted the
+confirm gate from `term.js` entirely, left behind `// TODO: restore the dialog.ask confirm here`,
+and `closing_a_pane_asks_before_it_kills` **passed**. The ✕ kills silently again and the test
+written to prevent exactly that is green. This is in a file whose *other* tests already write
+carefully about their lexical bounds — A's phrasing: *"these two tests were written to a lower
+standard than the file they joined."* The invariant is named on this map and it still shipped.
+**Naming an invariant does not install it. Only a test that fails installs it.**
+
+**Third layer, B's, which survives closing A's two mutations:** the test guards the string, not
+the data flow. Drop the fifth argument at the call site and `role` is `undefined`, the ternary
+is false, Main renders a ✕ again — and both tests still pass even after the lexical holes are
+shut. Three independent ways for one test to be green while the guarded thing is broken.
+
+**Candidate, and the confound that probably explains it: DEMONSTRATION BEAT ARGUMENT, and the
+reviews got more empirical across the day.** Cycle 4's reviewers read; cycles 5 and 6's ran the
+artifact — staging a change to watch a tool report clean, mutating a test until it passed
+anyway, measuring a string across 19 files, executing a serialization to see its shape. Every
+one of the strongest findings in the last two cycles came from running rather than reading.
+**But the confound is large and probably sufficient:** cycle 4's artifact was a rendering diff
+with no headless harness, while cycles 5 and 6 handed them runnable tools. Artifact type, not
+growth. Logged as a candidate with the confound named, not as a trajectory.
 
 ## Standing instruments this map feeds on
 
