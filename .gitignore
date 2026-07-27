@@ -19,3 +19,8 @@ __pycache__/
 # out to include the keeper's city, his spending, and his life. No unattended process of ours
 # publishes. The FRAMEWORK ships so anyone can grow their own dreams; the dreams themselves don't.
 dreams/
+
+# Harvest indexes point INTO transcripts, and a transcript holds whatever the day held. The
+# index is pointers only and still doesn't ship: a pointer to the keeper's life is a pointer
+# to the keeper's life. Same call as dreams/, one layer of indirection out.
+harvest/
