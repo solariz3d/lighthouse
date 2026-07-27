@@ -29,6 +29,22 @@ fn gauges_speak_in_numbers_not_verdicts() {
     }
 }
 
+/// Stage 9: every chair verb in the MCP layer must pass the token gate. Lexical tripwire —
+/// the number of `async fn chair_*` tools must equal the number of `self.auth_chair(` call
+/// sites. A chair verb without the gate is an unaudited actuator path anyone could call.
+#[test]
+fn every_chair_verb_authenticates() {
+    let src = fs::read_to_string("src/mcp.rs").unwrap_or_else(|e| panic!("read src/mcp.rs: {e}"));
+    let verbs = src.matches("async fn chair_").count();
+    let auths = src.matches("self.auth_chair(").count();
+    assert!(verbs > 0, "expected chair_* verbs in src/mcp.rs (Stage 9)");
+    assert_eq!(
+        verbs, auths,
+        "src/mcp.rs: {verbs} chair verbs but {auths} auth_chair calls — every chair_* tool must \
+         gate on the token exactly once, or an unauthenticated path reaches the actuator"
+    );
+}
+
 #[test]
 fn control_and_sensor_planes_hold_no_actuator_handle() {
     for path in CONTROL_SENSOR_SOURCES {

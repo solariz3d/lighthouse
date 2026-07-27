@@ -20,7 +20,7 @@ sysinfo = "0.30"
 arboard = "3"
 clipboard-win = "5"
 rmcp = { version = "1.8", features = ["server", "macros", "transport-streamable-http-server"] }
-tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "net"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "net", "time"] } # time: chair-verb reply timeout
 axum = "0.8"
 schemars = "1"
 vt100 = "0.15" # headless terminal emulator: render raw PTY bytes → clean lines for turn extraction

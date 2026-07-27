@@ -32,10 +32,28 @@ pub struct PullRequest {
     pub why: String,
 }
 
+/// Stage 9: a chair verb crossing from the Control plane to the Actuator (main.rs). This
+/// module only composes commands and awaits replies over a oneshot — it never holds the PTY
+/// writer itself (arch_test enforces that, same as the pull queue). Dual mode by construction:
+/// these verbs are ADDITIVE — the human chair's UI (gate cards, Approve/Deny, typing into
+/// panes) is untouched and keeps working alongside them.
+pub enum ChairCmd {
+    /// deliver a chair-composed prompt into a committee pane (acting — audited)
+    Inject { target: String, text: String, reply: tokio::sync::oneshot::Sender<String> },
+    /// decide a pending gate card, the same act as the UI's Approve/Deny (acting — audited)
+    Decide { id: String, approve: bool, reply: tokio::sync::oneshot::Sender<String> },
+    /// read a pane's captured screen (sensor — no side effect, not audited)
+    Scrollback { target: String, reply: tokio::sync::oneshot::Sender<String> },
+    /// panes, gate mode, pending cards, cost — one structured snapshot (sensor)
+    Status { reply: tokio::sync::oneshot::Sender<String> },
+}
+
 #[derive(Clone)]
 pub struct ConsonanceMcp {
     board: Arc<Mutex<VecDeque<BoardEntry>>>,
     pulls: tokio::sync::mpsc::UnboundedSender<PullRequest>,
+    chair: tokio::sync::mpsc::UnboundedSender<ChairCmd>,
+    chair_token: String,
     tool_router: ToolRouter<ConsonanceMcp>,
 }
 
@@ -54,6 +72,40 @@ pub struct ReadBoardArgs {
 }
 
 #[derive(serde::Deserialize, schemars::JsonSchema)]
+pub struct ChairInjectArgs {
+    /// the chair token (read from .chair-token in the Main instance directory)
+    token: String,
+    /// the pane to address: a letter name (A, B, …) or a pane id / id prefix
+    target: String,
+    /// the prompt to deliver (the system prefixes provenance: "[chair:MAIN] …")
+    text: String,
+}
+
+#[derive(serde::Deserialize, schemars::JsonSchema)]
+pub struct ChairDecideArgs {
+    /// the chair token (read from .chair-token in the Main instance directory)
+    token: String,
+    /// the pending gate-card id (from chair_status or the board's gate-card lines)
+    id: String,
+    /// true = approve and deliver the pull; false = deny it
+    approve: bool,
+}
+
+#[derive(serde::Deserialize, schemars::JsonSchema)]
+pub struct ChairScrollbackArgs {
+    /// the chair token (read from .chair-token in the Main instance directory)
+    token: String,
+    /// the pane to read: a letter name (A, B, …) or a pane id / id prefix
+    target: String,
+}
+
+#[derive(serde::Deserialize, schemars::JsonSchema)]
+pub struct ChairStatusArgs {
+    /// the chair token (read from .chair-token in the Main instance directory)
+    token: String,
+}
+
+#[derive(serde::Deserialize, schemars::JsonSchema)]
 pub struct RaisePullArgs {
     /// who you want to engage, if any (a pane id or name)
     target: Option<String>,
@@ -69,8 +121,95 @@ pub struct RaisePullArgs {
 
 #[tool_router]
 impl ConsonanceMcp {
-    fn new(board: Arc<Mutex<VecDeque<BoardEntry>>>, pulls: tokio::sync::mpsc::UnboundedSender<PullRequest>) -> Self {
-        Self { board, pulls, tool_router: Self::tool_router() }
+    fn new(
+        board: Arc<Mutex<VecDeque<BoardEntry>>>,
+        pulls: tokio::sync::mpsc::UnboundedSender<PullRequest>,
+        chair: tokio::sync::mpsc::UnboundedSender<ChairCmd>,
+        chair_token: String,
+    ) -> Self {
+        Self { board, pulls, chair, chair_token, tool_router: Self::tool_router() }
+    }
+
+    /// Gate a chair verb. The token is written only into the Main instance's directory, so in
+    /// practice only the Main thread presents it. Honest limit: this is a DISCIPLINE boundary,
+    /// not a security one — any local process with file access could read that file. What
+    /// actually enforces the methodology is the AUDIT: every acting verb and every refused
+    /// attempt lands on the board, where the whole committee and the human read it.
+    fn auth_chair(&self, token: &str, verb: &str) -> bool {
+        let ok = !self.chair_token.is_empty() && token == self.chair_token;
+        if !ok {
+            board_push(&self.board, BoardEntry {
+                pane: "chair".to_string(),
+                role: "committee".to_string(),
+                text: format!("{verb} REFUSED — bad or missing chair token"),
+                ts: now_ms(),
+            });
+        }
+        ok
+    }
+
+    /// Send a chair command to the actuator and await its reply. The timeout keeps a dead
+    /// consumer thread from hanging a chair tool call forever.
+    async fn send_chair(&self, cmd: ChairCmd, rx: tokio::sync::oneshot::Receiver<String>) -> String {
+        if self.chair.send(cmd).is_err() {
+            return "chair actuator channel is down".to_string();
+        }
+        match tokio::time::timeout(std::time::Duration::from_secs(15), rx).await {
+            Ok(Ok(s)) => s,
+            _ => "chair actuator did not reply within 15s".to_string(),
+        }
+    }
+
+    #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): deliver a prompt into a COMMITTEE pane. Refuses human-driven panes and the chair's own pane; every use and every refusal is audited to the board. Committee members: this is not your tool — use raise_pull.")]
+    async fn chair_inject(
+        &self,
+        Parameters(ChairInjectArgs { token, target, text }): Parameters<ChairInjectArgs>,
+    ) -> Result<CallToolResult, McpError> {
+        if !self.auth_chair(&token, "chair_inject") {
+            return Ok(CallToolResult::success(vec![Content::text("refused: bad chair token (the attempt was posted to the board)")]));
+        }
+        let (tx, rx) = tokio::sync::oneshot::channel();
+        let out = self.send_chair(ChairCmd::Inject { target, text, reply: tx }, rx).await;
+        Ok(CallToolResult::success(vec![Content::text(out)]))
+    }
+
+    #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): decide a pending gate card — the same act as the UI's Approve/Deny, audited to the board. Dual mode: the human chair can still decide the same card; whoever is second gets 'already decided'.")]
+    async fn chair_decide(
+        &self,
+        Parameters(ChairDecideArgs { token, id, approve }): Parameters<ChairDecideArgs>,
+    ) -> Result<CallToolResult, McpError> {
+        if !self.auth_chair(&token, "chair_decide") {
+            return Ok(CallToolResult::success(vec![Content::text("refused: bad chair token (the attempt was posted to the board)")]));
+        }
+        let (tx, rx) = tokio::sync::oneshot::channel();
+        let out = self.send_chair(ChairCmd::Decide { id, approve, reply: tx }, rx).await;
+        Ok(CallToolResult::success(vec![Content::text(out)]))
+    }
+
+    #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): read a pane's captured screen — what that instance's terminal currently shows. Sensor only: no side effect, not audited (reads don't crowd the board).")]
+    async fn chair_scrollback(
+        &self,
+        Parameters(ChairScrollbackArgs { token, target }): Parameters<ChairScrollbackArgs>,
+    ) -> Result<CallToolResult, McpError> {
+        if !self.auth_chair(&token, "chair_scrollback") {
+            return Ok(CallToolResult::success(vec![Content::text("refused: bad chair token (the attempt was posted to the board)")]));
+        }
+        let (tx, rx) = tokio::sync::oneshot::channel();
+        let out = self.send_chair(ChairCmd::Scrollback { target, reply: tx }, rx).await;
+        Ok(CallToolResult::success(vec![Content::text(out)]))
+    }
+
+    #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): one JSON snapshot of the room — live panes (name/role), gate mode, pending gate cards, cost totals and breaker state. Sensor only: no side effect.")]
+    async fn chair_status(
+        &self,
+        Parameters(ChairStatusArgs { token }): Parameters<ChairStatusArgs>,
+    ) -> Result<CallToolResult, McpError> {
+        if !self.auth_chair(&token, "chair_status") {
+            return Ok(CallToolResult::success(vec![Content::text("refused: bad chair token (the attempt was posted to the board)")]));
+        }
+        let (tx, rx) = tokio::sync::oneshot::channel();
+        let out = self.send_chair(ChairCmd::Status { reply: tx }, rx).await;
+        Ok(CallToolResult::success(vec![Content::text(out)]))
     }
 
     #[tool(description = "Raise your hand to the committee chair: signal that another instance's thread is novel / wrong / interesting and you want to engage. This NEVER acts — it only enqueues a request the human chair decides on.")]
@@ -127,7 +266,10 @@ impl ServerHandler for ConsonanceMcp {
         let mut info = ServerInfo::default();
         info.capabilities = ServerCapabilities::builder().enable_tools().build();
         info.instructions = Some(
-            "Consonance committee control plane: post_board / read_board over one shared board across instances.".to_string(),
+            "Consonance committee control plane: post_board / read_board over one shared board across instances. \
+             The chair_* verbs are token-gated to the Main orchestrator and audited to the board — committee \
+             members use raise_pull, never chair verbs."
+                .to_string(),
         );
         info
     }
@@ -144,6 +286,8 @@ pub fn config_path() -> std::path::PathBuf {
 pub fn start(
     board: Arc<Mutex<VecDeque<BoardEntry>>>,
     pulls: tokio::sync::mpsc::UnboundedSender<PullRequest>,
+    chair: tokio::sync::mpsc::UnboundedSender<ChairCmd>,
+    chair_token: String,
 ) -> u16 {
     let (tx, rx) = std::sync::mpsc::channel::<u16>();
     std::thread::spawn(move || {
@@ -173,7 +317,7 @@ pub fn start(
             let _ = tx.send(port);
 
             let service = StreamableHttpService::new(
-                move || Ok(ConsonanceMcp::new(board.clone(), pulls.clone())),
+                move || Ok(ConsonanceMcp::new(board.clone(), pulls.clone(), chair.clone(), chair_token.clone())),
                 LocalSessionManager::default().into(),
                 Default::default(),
             );

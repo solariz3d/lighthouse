@@ -2374,6 +2374,130 @@ fn gate_decide(app: AppHandle, gate: State<Gate>, board: State<Board>, id: Strin
     Ok(format!("approved + {outcome}"))
 }
 
+// ---- Stage 9: the autonomous chair's verbs (actuator side) ----
+// The Main orchestrator acting as chair, through the token-gated MCP verbs. The guard is pure
+// and tested: the chair addresses only COMMITTEE panes — never itself, never a human-driven
+// pane. Everything else in these fns is plumbing around that rule.
+
+fn chair_target_guard(tid: &str, role: &str) -> Result<(), String> {
+    if tid == MAIN_SID {
+        return Err("refused — the chair does not inject into its own pane".to_string());
+    }
+    if role != "committee" {
+        return Err(format!("refused — target is {role}, not committee (never inject into a person)"));
+    }
+    Ok(())
+}
+
+fn short_id(id: &str) -> &str {
+    &id[..8.min(id.len())]
+}
+
+fn chair_audit(app: &AppHandle, text: String) {
+    let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    board_push(&app.state::<Board>().0, BoardEntry { pane: "chair".to_string(), role: "committee".to_string(), text, ts });
+}
+
+fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
+    let panes = app.state::<Panes>();
+    let names = app.state::<PaneNames>();
+    let tid = match resolve_pane(&panes, &names, target) {
+        Some(t) => t,
+        None => return format!("no live pane matches '{target}'"),
+    };
+    let role = app.state::<PaneRoles>().0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| "human".to_string());
+    if let Err(e) = chair_target_guard(&tid, &role) {
+        chair_audit(app, format!("chair_inject -> {}: {e}", short_id(&tid)));
+        return e;
+    }
+    // provenance is marked by the SYSTEM, not the sender — a pane must never be unsure
+    // whether the chair or the human is speaking to it
+    let msg = format!("[chair:MAIN] {text}");
+    let out = match inject_to_pane(&panes, &tid, &msg) {
+        Ok(_) => format!("delivered to {}", short_id(&tid)),
+        Err(e) => format!("delivery failed: {e}"),
+    };
+    let mut preview: String = text.chars().take(110).collect();
+    if text.chars().count() > 110 {
+        preview.push('…');
+    }
+    chair_audit(app, format!("chair injected -> {}: {preview}", short_id(&tid)));
+    out
+}
+
+// Same act as gate_decide, differently attributed on the board ("chair-main" vs the human's
+// "chair") so the audit trail always says which chair decided. Racing the human on the same
+// card is safe: pending.remove is the arbiter, second decider gets "already decided".
+fn chair_decide_exec(app: &AppHandle, id: &str, approve: bool) -> String {
+    let gate = app.state::<Gate>();
+    let pull = gate.0.lock().unwrap().pending.remove(id);
+    let pull = match pull {
+        Some(p) => p,
+        None => return "no such pending pull (already decided?)".to_string(),
+    };
+    if !approve {
+        chair_audit(app, format!("chair-main denied pull from {} -> {} : {}", pull.from, pull.target, pull.why));
+        return "denied".to_string();
+    }
+    let outcome = deliver_pull(app, &pull);
+    chair_audit(app, format!("chair-main approved + {} (from {} -> {})", outcome, pull.from, pull.target));
+    format!("approved + {outcome}")
+}
+
+fn chair_scrollback_exec(app: &AppHandle, target: &str) -> String {
+    let panes = app.state::<Panes>();
+    let names = app.state::<PaneNames>();
+    match resolve_pane(&panes, &names, target) {
+        Some(tid) => pane_scrollback(tid),
+        None => format!("no live pane matches '{target}'"),
+    }
+}
+
+fn chair_status_exec(app: &AppHandle) -> String {
+    let letters: HashMap<String, String> = app
+        .state::<PaneNames>()
+        .0
+        .lock()
+        .unwrap()
+        .iter()
+        .map(|(n, id)| (id.clone(), n.clone()))
+        .collect();
+    let role_map: HashMap<String, String> = app.state::<PaneRoles>().0.lock().unwrap().clone();
+    let pane_list: Vec<serde_json::Value> = app
+        .state::<Panes>()
+        .0
+        .lock()
+        .unwrap()
+        .keys()
+        .map(|id| {
+            serde_json::json!({
+                "id": short_id(id),
+                "name": letters.get(id).cloned().unwrap_or_default(),
+                "role": role_map.get(id).cloned().unwrap_or_else(|| "human".to_string()),
+            })
+        })
+        .collect();
+    let gate = app.state::<Gate>();
+    let (mode, pending) = {
+        let g = gate.0.lock().unwrap();
+        let pending: Vec<serde_json::Value> = g
+            .pending
+            .iter()
+            .map(|(id, p)| serde_json::json!({ "id": id, "from": p.from, "target": p.target, "kind": p.kind, "why": p.why }))
+            .collect();
+        (g.mode_label(), pending)
+    };
+    let cost = app.state::<Cost>();
+    let c = cost.0.lock().unwrap().clone();
+    serde_json::json!({
+        "panes": pane_list,
+        "gate": mode,
+        "pending": pending,
+        "cost": { "output_tokens": c.output, "ceiling": c.ceiling_out, "tripped": c.tripped },
+    })
+    .to_string()
+}
+
 // Open/close the chair-granted auto-approve envelope (open-channel mode). Any bound exhaustion
 // snaps the gate back to ask-each (enforced in the pull consumer).
 #[tauri::command]
@@ -2456,8 +2580,46 @@ fn main() {
             gc_captures(); // drop own-capture logs for panes that are no longer kept
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
+            //
+            // Stage 9: the autonomous chair rides the same server. A fresh token per launch is
+            // written ONLY into the Main instance's directory; the chair_* MCP verbs require it.
+            // Discipline boundary, not security (see mcp.rs::auth_chair) — the audit is the
+            // enforcement. Dual mode: nothing the human chair had is removed by any of this.
+            let (chair_tx, chair_rx) = tokio::sync::mpsc::unbounded_channel::<mcp::ChairCmd>();
+            let chair_token = Uuid::new_v4().to_string();
+            let token_path = PathBuf::from(main_cwd()).join(".chair-token");
+            if let Err(e) = fs::write(&token_path, &chair_token) {
+                // an unusable chair must never be silent (the config-orphan lesson)
+                if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(PathBuf::from(home()).join(".consonance.log")) {
+                    let _ = writeln!(f, "[consonance] chair token write failed at {}: {e} — chair verbs will refuse all calls", token_path.display());
+                }
+            }
             let mboard = app.state::<Board>().0.clone();
-            MCP_PORT.store(mcp::start(mboard, pull_tx), Ordering::Relaxed);
+            MCP_PORT.store(mcp::start(mboard, pull_tx, chair_tx, chair_token), Ordering::Relaxed);
+            // Stage 9 actuator: execute chair verbs on the main side, same pattern as the pull
+            // consumer. Acting verbs (inject/decide) audit to the board; sensor verbs
+            // (status/scrollback) reply silently — audit what changes the world, not what looks
+            // at it, or loop-tick reads would crowd the board past curation capacity.
+            let chair_handle = app.handle().clone();
+            std::thread::spawn(move || {
+                let mut chair_rx = chair_rx;
+                while let Some(cmd) = chair_rx.blocking_recv() {
+                    match cmd {
+                        mcp::ChairCmd::Inject { target, text, reply } => {
+                            let _ = reply.send(chair_inject_exec(&chair_handle, &target, &text));
+                        }
+                        mcp::ChairCmd::Decide { id, approve, reply } => {
+                            let _ = reply.send(chair_decide_exec(&chair_handle, &id, approve));
+                        }
+                        mcp::ChairCmd::Scrollback { target, reply } => {
+                            let _ = reply.send(chair_scrollback_exec(&chair_handle, &target));
+                        }
+                        mcp::ChairCmd::Status { reply } => {
+                            let _ = reply.send(chair_status_exec(&chair_handle));
+                        }
+                    }
+                }
+            });
             let phandle = app.handle().clone();
             let pboard = app.state::<Board>().0.clone();
             let pgate = app.state::<Gate>().0.clone();
@@ -3170,5 +3332,33 @@ mod config_parse_tests {
         let (cfg, bad) = parse_config(r#"{"data_dir":"  C:\\Consonance\\data  "}"#);
         assert!(bad.is_empty());
         assert_eq!(cfg.data_dir, r"C:\Consonance\data");
+    }
+}
+
+// Stage 9: the chair's target guard is the one rule that makes autonomous injection safe to
+// have at all — it must hold as pure logic, independent of any live pane state.
+#[cfg(test)]
+mod chair_tests {
+    use super::*;
+
+    #[test]
+    fn chair_never_injects_into_itself() {
+        assert!(chair_target_guard(MAIN_SID, "main").is_err(), "self-injection would loop the chair into its own input");
+    }
+
+    #[test]
+    fn chair_never_injects_into_a_person() {
+        assert!(chair_target_guard("11112222-abcd", "human").is_err(), "a human-driven pane must never receive injected text");
+    }
+
+    #[test]
+    fn chair_reaches_committee_panes() {
+        assert!(chair_target_guard("11112222-abcd", "committee").is_ok());
+    }
+
+    #[test]
+    fn short_id_survives_tiny_ids() {
+        assert_eq!(short_id("abc"), "abc");
+        assert_eq!(short_id("0845a868-38f2"), "0845a868");
     }
 }
