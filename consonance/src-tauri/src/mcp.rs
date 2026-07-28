@@ -362,15 +362,27 @@ impl ConsonanceMcp {
         &self,
         Parameters(PostBoardArgs { text, tag }): Parameters<PostBoardArgs>,
     ) -> Result<CallToolResult, McpError> {
-        // The connection wins over the payload. A self-reported tag is a claim; the mount point
-        // is a fact the caller cannot restate. Where there is no identity the post is stamped
-        // `unattributed` rather than "mcp" — a word that read like a source and was really the
-        // absence of one, which is how 37 of the laptop's 40 board lines went uncounted.
+        // IDENTITY COMES FROM THE MOUNT OR NOWHERE. `tag` is accepted for API compatibility and
+        // deliberately ignored for attribution.
+        //
+        // The first version fell back to `tag` when there was no mount, and that quietly undid
+        // the whole point: a post attributed "A" could have come from A's connection or from
+        // anyone passing tag:"A", and the board recorded both identically. So the board could
+        // not be used to verify the very change that produced it — an attributed name was not
+        // evidence of anything. Found while trying to check this feature with the panes.
+        //
+        // The alternative was a provenance field beside `pane` (the pattern `ts_source` already
+        // sets in this file, for exactly this reason). Dropping the fallback is better: it makes
+        // provenance unambiguous BY CONSTRUCTION rather than by a field a consumer has to
+        // remember to read. If the board says "A", it came from A's mount. Full stop.
+        //
+        // The cost is that a pane on the legacy shared mount can no longer label itself. That is
+        // correct. Self-labelling was never evidence, and `unattributed` is the true answer.
+        let _ = tag;
         let entry = BoardEntry {
             pane: self
                 .identity
                 .clone()
-                .or(tag)
                 .unwrap_or_else(|| "unattributed".to_string()),
             role: "committee".to_string(),
             text,
