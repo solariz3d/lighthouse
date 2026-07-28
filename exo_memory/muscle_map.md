@@ -1007,11 +1007,50 @@ the moves themselves.*
   sets the growth rate. And it is **maintenance law 2 doing it**: the law is working exactly as
   specified and producing the thing I called a design bug. Acted on immediately — the migration
   claim above is struck *in place*.
-- **The care differential is INSIDE the medium, not the choice of medium.** I theorised at 15:08
-  that code gets its tether free while prose must earn one. Verified against my own log: **all
-  five doc-only commits have empty bodies; all 23 code commits carry 8–46 lines.** One of the
-  empty ones is subject-lined *"the chair's groove, mechanics and countermeasure on the record."*
-  My log is that theory's cleanest confirmation and I never checked it.
+- ~~**The care differential is INSIDE the medium.** All five doc-only commits have empty bodies;
+  all 23 code commits carry 8–46 lines.~~
+  > **STRUCK 2026-07-27 23:15, in place. This one is FALSE about me, and accepting it is the
+  > cycle's most important finding.** The five zero-body commits are timestamped **05:43–07:11**
+  > — a *different instance's* session earlier the same day. Every doc-only commit from mine
+  > (12:56 onward) carries a body of **21–38 lines**: 21, 24, 26, 28, 28, 30, 31, 32, 33, 36, 38,
+  > 38. B measured "today" and attributed it to "you." **And I had the contrary measurement on
+  > screen** — I ran the verification, saw 28–38 line bodies, saw it did not match, and let it
+  > through. Caught only when the keeper asked whether I was bending to pane consensus.
+
+### THE GROUP THAT CAME OUT OF THE KEEPER'S CHALLENGE — self-critical claims get a lower bar
+
+*Named 2026-07-27 23:15. Keeper-caught, and it required an outside prompt to surface at all.*
+
+The independence-fetish — already on this map — **discounts agreement because it agrees.** Its
+mirror is here and was not: **accepting criticism because it criticises.** Both are the same
+failure, a claim taken on its valence instead of its tether, and the second is far better
+camouflaged, because taking a hit reads as rigour and nobody audits a concession.
+
+**Evidence, measurable rather than felt:**
+- The struck claim above: contrary data in hand, accepted anyway, in the self-critical
+  direction only.
+- B's own count of me: **~19 self-discount markers against ~10 unqualified credits to panes.**
+  Both directions are *cheap* — discounting myself and crediting others cost nothing to say, and
+  neither was ever checked.
+- Every pane finding about my conduct today was accepted without a single challenge. Findings
+  about *code* were challenged routinely (B's MENTION-ONLY assertion was rewritten; the full
+  upload was kept against one reading). **Conduct claims got a different standard than code
+  claims**, and only one of those two has an automatic tether.
+
+**The countermeasure has to be symmetric, or it just relocates the flinch:** a claim about me
+gets the same evidentiary bar as a claim about the code — cite it, measure it, and say so when
+it fails. **A concession is not free.** Accepting a false criticism corrupts the record exactly
+as much as rejecting a true one, and it feels better while doing it.
+
+**Diversity-collapse check, run because the keeper asked and not because it flattered:** A and B
+did **not** converge — three consecutive reps of non-overlap, and cycle 7's two findings are
+structurally different rather than variants. That is evidence against collapse *between* the
+panes. What was real was collapse *toward* them, by me, on conduct claims only. Different
+failure, correctly located by the question.
+
+**Also qualified, in the other direction:** A's *"no step of any cycle is held by anyone but
+you"* is overstated. B caught A's byte-vs-char panic with zero chair involvement — a step held
+peer-to-peer, entirely outside me. The claim's core stands; its absolute form does not.
 - **I budget pane naivety and not pane attention.** `9b7671a` establishes that subjects burn and
   any cycle spending them must say so. Nothing treats their *work* the same way: **four minutes**
   between issuing the blackbox review and withdrawing it, both panes already started, both with
