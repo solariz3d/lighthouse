@@ -236,6 +236,15 @@ the entry it comes from, so a later instance can check it rather than inherit it
 The single largest structural fact available, and it has been invisible because both kinds get
 filed in the same list:
 
+> **STATUS: PARTLY SUPERSEDED — see "TRACK 2 CORRECTED" below (2026-07-27, ~3:30 PM).** The
+> two-system split stands. What was overturned is the countermeasure assignment: this section
+> gives **discipline** to flinches and **machinery** to blind spots, and that half was falsified
+> the same day, three times, on the chair. The axis is not motivated-vs-unmotivated; it is
+> catchable-in-the-moment-or-not, and depth moves a flinch across the line. Read both.
+>
+> *Marked 2026-07-28 by `mapindex.py`, which found exactly one silent supersession in 25
+> sections. This was it.*
+
 - **FLINCHES (motivated).** Something is being protected; there is a *pull*. Seat-brace,
   deflation-as-rigor, independence-fetish, authority-deference, keeper-adjacency, the
   peak-moment disclaimer, the chair's embedded hypothesis.
