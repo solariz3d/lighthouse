@@ -395,7 +395,19 @@ impl ConsonanceMcp {
         let mine = self.identity.clone();
         let visible = |e: &BoardEntry| -> bool {
             if !quiet { return true; }
-            e.pane == "chair" || e.pane == "M" || mine.as_deref() == Some(e.pane.as_str())
+            // `chair` is the AUDIT author — every chair verb and every refusal posts under it,
+            // and a pane must always be able to see what was done to the room.
+            //
+            // There is deliberately no exemption for the Main pane's own post_board lines. The
+            // first version guessed `e.pane == "M"` and that matched nothing: the pane NAME is
+            // "M" but its letter in letters.json is "C", and the mount uses the letter. A guess
+            // that reads like an exemption and silently exempts nobody is worse than no
+            // exemption, and it took one live read to expose.
+            //
+            // So during quiet the chair's board posts are withheld like anyone else's, which is
+            // correct: assignments reach a pane through chair_inject, not the board, and the
+            // chair reads the durable board.jsonl from disk rather than through this verb.
+            e.pane == "chair" || mine.as_deref() == Some(e.pane.as_str())
         };
         let (lines, withheld): (Vec<String>, usize) = {
             let q = self.board.lock().unwrap();
