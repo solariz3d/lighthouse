@@ -262,7 +262,7 @@ impl ConsonanceMcp {
         Ok(CallToolResult::success(vec![Content::text(out)]))
     }
 
-    #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): set the board phase. \"quiet\" = panes may post but see only their own lines and the chair's, so independent work stays independent; \"open\" = the shared board is back and peers can catch each other. Acting verb — audited to the board, and every pane is TOLD it is in quiet phase and how much is withheld.")]
+    #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): set the board phase. \"quiet\" = panes may post but see only their own lines and the chair's, so independent work stays independent; \"open\" = the shared board is back and peers can catch each other. Acting verb — audited to the board, and every pane is TOLD it is in quiet phase and how much is withheld. HONEST LIMIT: this filters read_board only. data/board.jsonl stays plain-readable by any pane with a shell, so quiet is a DISCIPLINE aid and not isolation — do not design a cycle that depends on it as a boundary.")]
     async fn chair_phase(
         &self,
         Parameters(ChairPhaseArgs { token, mode }): Parameters<ChairPhaseArgs>,
@@ -421,16 +421,40 @@ impl ConsonanceMcp {
             // chair reads the durable board.jsonl from disk rather than through this verb.
             e.pane == "chair" || mine.as_deref() == Some(e.pane.as_str())
         };
-        let (lines, withheld): (Vec<String>, usize) = {
+        // FILTER FIRST, THEN PAGE. The first version took the last `limit` raw entries and
+        // filtered afterwards, which A measured on the live board: a pane's own history gets
+        // evicted from its own view by sibling traffic it is not allowed to see. Post nothing
+        // while siblings post twenty and a default read returns zero of YOUR lines and
+        // "20 withheld". Withholding a sibling's line is the design; withholding yours because
+        // of theirs is a side effect of cutting before filtering.
+        //
+        // And the withheld count is over the WHOLE board, not the page. Counted per-page it
+        // understates without bound — a pane that has posted twenty times reads "withheld: 0",
+        // which parses as "nothing is being kept from you" while sixty sibling lines sit behind
+        // the window.
+        let (lines, withheld, total): (Vec<String>, usize, usize) = {
             let q = self.board.lock().unwrap();
-            let start = q.len().saturating_sub(n);
-            let window: Vec<&BoardEntry> = q.iter().skip(start).collect();
-            let hidden = window.iter().filter(|e| !visible(e)).count();
-            (window.into_iter().filter(|e| visible(e))
+            let total = q.len();
+            let mine_all: Vec<&BoardEntry> = q.iter().filter(|e| visible(e)).collect();
+            let hidden = total - mine_all.len();
+            let start = mine_all.len().saturating_sub(n);
+            (mine_all.into_iter().skip(start)
                  .map(|e| format!("[{}] {}: {}", e.pane, e.role, e.text)).collect(),
-             hidden)
+             hidden, total)
         };
-        let mut body = if lines.is_empty() { "(board is empty)".to_string() } else { lines.join("\n") };
+        // "(board is empty)" was a FLAT UNTRUTH at limit 0 and whenever a pane had posted
+        // nothing: 70 entries on the board, 61 withheld, and the reader told the record was
+        // empty — in the same response whose whole purpose is to promise it is not being lied
+        // to. Withholding is permitted here; misstating the record is not, and the difference
+        // is the entire justification for the phase gate existing.
+        let mut body = if !lines.is_empty() {
+            lines.join("\n")
+        } else if total == 0 {
+            "(board is empty)".to_string()
+        } else {
+            format!("(no lines of your own in this window — the board holds {total} entr{})",
+                    if total == 1 { "y" } else { "ies" })
+        };
         if quiet {
             // Say it, every time. A filtered board that does not announce itself is a false
             // record, and the point of the phase is independence, not deception.
@@ -442,11 +466,15 @@ impl ConsonanceMcp {
             // could mean. Third time today, and this one is in the tool that tells panes what
             // they cannot see.
             body.push_str(&format!(
-                "\n\n-- QUIET PHASE: {withheld} of the last {n} entries withheld — that is this \
-                 WINDOW, not the whole board; raise `limit` to see further back and the count \
-                 will grow. You are producing independently; siblings' findings unlock when the \
-                 chair reopens the board. Your own posts and the chair's audit lines are shown \
-                 in full.",
+                "\n\n-- QUIET PHASE: {withheld} of {total} board entries withheld — that is the \
+                 WHOLE board, not this page, so the number does not shrink by asking for less. \
+                 You are producing independently; siblings' findings unlock when the chair \
+                 reopens the board. Your own posts and the chair's audit lines are never \
+                 withheld, and are paged by `limit` after filtering rather than before.\n\
+                 -- WHAT THIS IS NOT: a boundary. It filters THIS verb. data/board.jsonl is \
+                 plain-readable by any pane with a shell, so quiet phase is a discipline aid, \
+                 not isolation — the same honest limit the chair token carries. B established \
+                 it by breaking its own quiet phase doing a disk check the chair asked for.",
             ));
             if mine.is_none() {
                 body.push_str(
