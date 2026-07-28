@@ -10,8 +10,6 @@
 //   · The DISCRIMINATIONS inside the patterns: generic-vs-named blind-spot hedge, and
 //     pre-disclaimer-by-position. Those two are where the instrument earns the right to be
 //     lexical at all; if they rot into "matches the words", the scanner starts diagnosing.
-//   · The maturity arithmetic, including the one case that would let it flatter itself: a
-//     committee turn writing down a catch the human made.
 'use strict';
 
 const test = require('node:test');
@@ -30,7 +28,7 @@ const {
   buildIndex,
   render,
   stringish,
-  withholdRatio,
+
   isMixedWindow,
 } = require('./tell-index.js');
 
@@ -372,17 +370,16 @@ test('buildIndex drops replay bursts from the rates and says how many', () => {
   assert.strictEqual(w.excluded.replay, 40);
 });
 
-test('maturity: a committee turn crediting the human counts as keeper-caught, not self-caught', () => {
-  // The one arithmetic that would let this metric flatter itself. If this test goes green
-  // after someone "simplifies" the branch, the ratio starts reporting the guard as grown up
-  // on the strength of the committee writing down the human's catches.
+test('catch-language turns are counted by speaker, and no ratio is derived from them', () => {
+  // WHAT THIS TEST IS NOW FOR. It used to assert the maturity arithmetic — that a committee
+  // turn crediting the human scored keeper-caught rather than self-caught. That whole
+  // computation was DELETED 2026-07-28 (chair decision): it scored by speaker and called the
+  // result catcher, and applying catch-ledger's withholding rule honestly withheld 15 of 16
+  // windows. `catch-ledger.js` is the room's only maturity computation now.
   //
-  // EXPECTATIONS CHANGED 2026-07-28, and STRICTER, not weaker. This test used to assert that
-  // "I braced there and the argument came out armored" — a committee turn naming no catcher —
-  // scored self_caught, and that a keeper turn saying "coat" scored keeper_caught. Both were
-  // speaker-attribution wearing catcher-attribution's name. Under catch-ledger's rule a turn
-  // must SAY who caught it; those two are now unattributed, and the ratio they used to produce
-  // is withheld. The keeper-credit branch, which is what this test is named for, is unchanged.
+  // So the assertion is inverted and is the load-bearing one: the counts survive, the ratio
+  // must NOT come back. If `maturity` reappears on a window, a speaker-count has put a
+  // catcher-count's name back on.
   const entries = parseBoard(
     [
       line({ pane: 'p1', role: 'assistant', text: 'I braced there and the argument came out armored.', ts: Date.UTC(2026, 6, 27, 10) }),
@@ -394,29 +391,29 @@ test('maturity: a committee turn crediting the human counts as keeper-caught, no
   assert.strictEqual(w.catches.turns_with_catch_language, 3);
   assert.strictEqual(w.catches.by_speaker.committee, 2);
   assert.strictEqual(w.catches.by_speaker.keeper, 1);
-  assert.strictEqual(w.catches.credited_to_keeper, 1, 'the credit branch still fires');
-  assert.strictEqual(w.maturity.keeper_caught, 1, 'only the turn that names a catcher');
-  assert.strictEqual(w.maturity.self_caught, 0, 'naming no catcher is not a self-catch');
-  assert.strictEqual(w.maturity.unattributed, 2);
-  assert.strictEqual(w.maturity.ratio, null, 'unknowns outnumber knowns');
-  assert.ok(/unattributed 2 > attributed 1/.test(w.maturity.ratio_withheld));
+  assert.strictEqual(w.catches.credited_to_keeper, 1, 'a phrase count, not a keeper-caught tally');
+  assert.strictEqual(w.maturity, undefined, 'the deleted metric must not come back');
 });
 
-test('a self-catch must be named in the text, whoever spoke it', () => {
+test('the rendered report offers no maturity ratio to quote', () => {
+  // The deletion has to hold at the OUTPUT, not only in the data. A permanently-withheld
+  // column was rejected precisely because a reader quotes what is on the page.
   const t = Date.UTC(2026, 6, 27, 10);
-  const w = buildIndex(
-    parseBoard(
-      [
-        line({ pane: 'p1', role: 'assistant', text: 'I caught myself reaching for the deflation there.', ts: t }),
-        line({ pane: 'p1', role: 'assistant', text: 'self-caught: the groove fired again.', ts: t + 1000 }),
-        line({ pane: 'p1', role: 'assistant', text: 'You caught it first.', ts: t + 2000 }),
-      ].join('\n')
-    )
-  ).windows[0];
-  assert.strictEqual(w.maturity.self_caught, 2);
-  assert.strictEqual(w.maturity.keeper_caught, 1);
-  assert.strictEqual(w.maturity.unattributed, 0);
-  assert.strictEqual(w.maturity.ratio, 2);
+  const text = render(
+    buildIndex(
+      parseBoard(
+        [
+          line({ pane: 'p1', role: 'assistant', text: 'I caught myself bracing there.', ts: t }),
+          line({ pane: 'p1', role: 'user', text: 'you caught the coat first', ts: t + 1000 }),
+        ].join('\n')
+      )
+    ),
+    'fixture'
+  );
+  assert.ok(/CATCH-LANGUAGE VOLUME/.test(text));
+  assert.ok(!/self-caught\s*:\s*keeper-caught/i.test(text), 'no ratio definition on the page');
+  assert.ok(!/^\s*ratio\b/im.test(text), 'no ratio column');
+  assert.ok(/DELETED \(2026-07-28/.test(text), 'and the page says where the metric went');
 });
 
 test('the chair audit line is read in both formats, and what it cannot read is counted', () => {
@@ -436,15 +433,6 @@ test('the chair audit line is read in both formats, and what it cannot read is c
   assert.deepStrictEqual(injections.map((i) => i.short), ['aaaaaaaa', 'bbbbbbbb']);
   assert.strictEqual(injections[1].excerpt, 'review the gate');
   assert.strictEqual(injections.unparsed, 1, 'the drop has a denominator');
-});
-
-test('maturity ratio is null rather than infinite when nothing was keeper-caught', () => {
-  const entries = parseBoard(
-    [line({ pane: 'p1', role: 'assistant', text: 'the groove was mine and I caught it', ts: Date.UTC(2026, 6, 27, 10) })].join('\n')
-  );
-  const w = buildIndex(entries).windows[0];
-  assert.strictEqual(w.maturity.keeper_caught, 0);
-  assert.strictEqual(w.maturity.ratio, null, 'no keeper-caught turns is not a perfect score');
 });
 
 test('buildIndex --show collects the candidate lines a reader would judge', () => {
@@ -500,33 +488,8 @@ test('an empty board produces no windows and no crash', () => {
 // because its fixtures agreed with its rules by construction; a suite that re-derives the
 // rule it is testing does the same thing more quietly.
 
-test('withholdRatio is the shipped predicate: unknowns outnumbering knowns suppresses the ratio', () => {
-  assert.strictEqual(withholdRatio({ self_caught: 3, keeper_caught: 1, unattributed: 5 }), true);
-  assert.strictEqual(withholdRatio({ self_caught: 3, keeper_caught: 1, unattributed: 4 }), false, 'equal is not more');
-  assert.strictEqual(withholdRatio({ self_caught: 0, keeper_caught: 0, unattributed: 0 }), false, 'nothing at all is not a withholding');
-});
-
-test('a catch-language turn that names no catcher is unattributed, and enough of them withhold the ratio', () => {
-  // THE RULE THIS FILE GOT WRONG TWICE. It first scored these by speaker (a pane said it, so
-  // self-caught). The first fix moved them to a bucket keyed on an undecidable ROLE, which is
-  // empty on the live board — the rule adopted in name, firing nowhere. Attribution is a
-  // property of the text: none of the three below say who caught anything.
-  const t = Date.UTC(2026, 6, 27, 10);
-  const entries = parseBoard(
-    [
-      line({ pane: 'p1', role: 'assistant', text: 'I caught myself bracing there.', ts: t }),
-      line({ pane: 'p1', role: 'assistant', text: 'the flinch was in the coat again', ts: t + 1000 }),
-      line({ pane: 'p1', role: 'user', text: 'another groove, another brace', ts: t + 2000 }),
-      line({ pane: 'p1', role: 'assistant', text: 'the coat once more', ts: t + 3000 }),
-    ].join('\n')
-  );
-  const w = buildIndex(entries).windows[0];
-  assert.strictEqual(w.maturity.self_caught, 1, 'the one that names its catcher');
-  assert.strictEqual(w.maturity.unattributed, 3);
-  assert.strictEqual(w.maturity.ratio, null, 'more unknowns than knowns prints no ratio');
-  assert.ok(/unattributed 3 > attributed 1/.test(w.maturity.ratio_withheld));
-  assert.strictEqual(withholdRatio(w.maturity), true, 'the window agrees with the shipped predicate');
-});
+// (`withholdRatio` was asserted here. It went with the ratio it guarded — catch-ledger.js owns
+// that rule and its tests. `isMixedWindow` below is residue's rule and stays.)
 
 test('one committee pane is not a mixed window; two are', () => {
   const t = Date.UTC(2026, 6, 27, 10);

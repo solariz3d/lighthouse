@@ -15,9 +15,10 @@ No dependencies; standard library only.
 A zero-token lexical scanner over `data/board.jsonl`. It reports, per day-window:
 
 1. **Named-tell candidate rates** — five lexical shapes, counted, split by who said them.
-2. **Catch-attribution and the maturity ratio** — turns using the room's catch vocabulary,
-   attributed keeper vs committee, and `self-caught : keeper-caught` over time
-   (Around's design, ratified — `exo_memory/muscle_map.md`, "The maturity metric").
+2. **Catch-language volume** — turns using the room's catch vocabulary, counted by who spoke
+   them, plus how often a committee turn credits the human. Volume and speaker; no ratio.
+   **The maturity ratio was deleted from this tool on 2026-07-28** — it scored by speaker and
+   called the result catcher. `catch-ledger.js` is the room's only computation of it.
 
 ### The ground rule
 
@@ -173,7 +174,7 @@ loudly if the handling is removed.
   human. Origin is decided by role **plus** a chair-relay check, and the rule that fired is
   reported next to every sample.
 
-### Attribution and the maturity ratio
+### Attribution, and the ratio that used to be built on it
 
 ```
 role: committee | assistant                      -> committee
@@ -185,32 +186,38 @@ anything else                                    -> unattributed
 ```
 
 The two chair-relay rules are independent on purpose. The marker is a convention the chair
-*typed*; the audit line (`chair injected -> <8-char pane>: <excerpt>…`, pushed by
-`chair_audit` in `main.rs`) is the machine's own record of the act. The second one catches a
-relayed turn that carries no marker at all.
+*typed*; the audit line (`chair injected -> <8-char pane>: <excerpt>…`, or since `02b1e5e` the
+stamped form `chair injected (chair: <model>) -> <pane> [<receipt>]: <excerpt>…` — **both parse,
+and announcements in neither shape are counted and reported**) is the machine's own record of
+the act. The second one catches a relayed turn that carries no marker at all.
 
-The maturity ratio is `self-caught : keeper-caught`, migrating upward being what "the guard
-grew up" would look like measurably. Two honest limits, both load-bearing:
+What this attribution now feeds is **volume by speaker**, and nothing more: turns using the
+catch vocabulary, split keeper/committee, plus `credited→keeper` — committee turns containing
+*"you caught…"*, *"you're right that…"*. That last one is a **phrase count, not a keeper-caught
+tally.** A turn that uses the word *brace* is not a catch, and this scanner cannot tell them
+apart. Read `--show catch` before believing anything.
 
-- These are **catch-language counts by speaker**. A turn that uses the word *brace* is not a
-  catch, and this scanner cannot tell them apart. Read `--show catch` before believing a
-  number.
-- A committee turn that **credits the human** (*"you caught…"*, *"you're right that…"*) is
-  scored **keeper-caught**, not self-caught. Without that branch the ratio reports the guard as
-  grown up on the strength of the committee writing down the human's catches — the one way this
-  metric would flatter itself. It has its own test.
+#### The maturity ratio was DELETED here — 2026-07-28, chair decision
 
-`ratio` is `null`, not infinity, when nothing was keeper-caught in a window. No keeper-caught
-turns is not a perfect score.
+It lived in this tool from the start. It scored by **speaker** and called the result
+**catcher** — a mislabel, not a limitation. When `catch-ledger.js`'s withholding rule was
+ported in for its content (*a ratio of who caught it may only count turns that say who caught
+it*) it withheld **15 of 16 windows** and the survivor read `0:1`: the instrument reporting
+that it could not compute the thing it named.
 
-**And the ratio is the MORE gameable number, not the less.** The tell rates have a Goodhart
-warning; this needs the same one and then some. Say *brace/coat/flinch* more often and *"you're
-right"* less, and the ratio climbs without a single real catch — a rising ratio is no more
-progress than a falling tell-rate. Read the denominator too: `keeper_caught` tracks how present
-the keeper **was** at least as much as how immature the committee is, so a night the keeper
-spent elsewhere flatters the ratio for reasons that have nothing to do with anyone growing up.
-The live numbers show it — the lowest ratio on record is the night the keeper was most engaged.
-At this many windows the direction is not readable in either direction (Bravo, 2026-07-27).
+A permanently-withheld column was considered and rejected, because it invites quoting the one
+window that survives — and this room's own invariant is that *an instrument must publish what
+its number does not mean*. A number that never means anything fails that at the root.
+
+**`catch-ledger.js` is the room's only maturity computation now.** It reads
+`exo_memory/muscle_map.md` and the journals — a corpus where attribution is actually written
+down — and it deliberately does not scan the board. Do not re-derive a board-side ratio here.
+If board-derived counts are ever wanted beside catch-ledger's, import its numbers and label
+them as its.
+
+The Goodhart warning that used to sit under the ratio has not gone anywhere; it applies to the
+**tell rates**, which remain. Say *brace/coat/flinch* less often and the counts fall without a
+single habit changing. A falling rate is not progress.
 
 A `referents` column rides along — a faithful port of `count_referents` from `tether.rs`, so
 the two gauges agree on what "tied to checkable ground" counts as. The muscle map's spec for

@@ -6,10 +6,25 @@
 //   (1) NAMED-TELL CANDIDATES — how often five named lexical shapes appear, and in whose
 //       mouth: unlosable openers, the reflexive "but", pre-loaded concessions, generic
 //       blind-spot hedges, protective pre-disclaimers.
-//   (2) CATCH-ATTRIBUTION — turns that use the room's catch vocabulary (coat, brace,
-//       flinch, groove, understeer…), attributed keeper vs committee, and the maturity
-//       ratio (self-caught : keeper-caught) over time. Around's ratified design
-//       (exo_memory/muscle_map.md, "The maturity metric").
+//   (2) CATCH-LANGUAGE VOLUME — turns that use the room's catch vocabulary (coat, brace,
+//       flinch, groove, understeer…), counted by WHO SPOKE THEM, plus how often a committee
+//       turn credits the human. Volume and speaker. No ratio, and no claim about who caught
+//       anything — see the deletion note below.
+//
+// WHAT THIS FILE NO LONGER DOES: THE MATURITY RATIO IS DELETED (2026-07-28, chair decision).
+// It lived here from the start and it was mine. It scored by SPEAKER and called the result
+// CATCHER — a mislabel, not a limitation — and when catch-ledger's withholding rule was ported
+// into it for real (a ratio of who caught it may only count turns that SAY who caught it) it
+// withheld 15 of 16 windows and the survivor read 0:1. That is the instrument reporting that it
+// cannot compute what it claims to. A permanently-withheld column is worse than no column: it
+// invites quoting the one window that survives, and this room's own invariant is that an
+// instrument must publish what its number does NOT mean — a number that never means anything
+// fails that at the root.
+//
+// The metric is not gone from the room, only from here. `catch-ledger.js` computes it over
+// exo_memory/muscle_map.md and the journals — a corpus where attribution is actually written
+// down — and is now the ONLY computation of it. Do not re-add one here. If board-derived catch
+// counts are ever wanted, import catch-ledger's numbers and label them as its.
 //
 // THE GROUND RULE, and it is the whole design: THIS SCANNER NEVER DIAGNOSES. It surfaces
 // CANDIDATES for a no-stake reader to judge. Same law as tether.rs — the gauge speaks in
@@ -52,13 +67,15 @@
 //
 //   · WITHHOLD THE RATIO WHEN THE UNKNOWNS OUTNUMBER THE KNOWNS. From catch-ledger.js:
 //     "a ratio computed under more unknowns than knowns is a number that will be quoted and
-//     cannot be defended." This file had no unattributed bucket at all — every catch-language
-//     turn was binned to whoever spoke it, so unattributed could never exceed attributed and
-//     that rule could never fire. The ratio was defensible by construction, which is not the
-//     same as defensible. Turns whose origin cannot be decided (role missing, role unknown)
-//     now land in `maturity.unattributed`, are printed beside the ratio, and suppress it when
-//     they outnumber it. The predicate is EXPORTED (withholdRatio) so the suite asserts the
-//     shipped rule rather than a copy of it — residue.js's lesson, also adopted.
+//     cannot be defended." Adopting it is what KILLED the ratio in this file, and the sequence
+//     is kept here because the shape of the mistake is the useful part. First port: an
+//     `unattributed` bucket keyed on a turn whose ROLE could not be decided — which reads zero
+//     on every window of the live board, because classifyOrigin is total over the roles the
+//     board contains. The rule adopted in name, firing nowhere, changing not one number. A
+//     concession that costs nothing is the coat, and that one was mine; it was caught by
+//     running it and seeing a column of zeros. Ported for its CONTENT — attribution is a
+//     property of the text — it withheld 15 of 16 windows, and the metric was deleted rather
+//     than left permanently withheld. Only `catch-ledger.js` computes it now.
 //
 //   · ATTRIBUTION BEFORE AGGREGATION. From residue.js: "attribution is the precondition, so
 //     it is reported before any number", and per-actor figures are WITHHELD rather than
@@ -71,10 +88,7 @@
 //
 //     The actor is the PANE for committee turns and the human for keeper turns — one human
 //     however many panes he typed into, one actor per pane because two panes are two
-//     instances. The maturity ratio is deliberately NOT withheld on this rule: it is a
-//     room-level number by design (did the room notice without the keeper), so pooling panes
-//     is what it is FOR. That is a judgment, and it is written here to be overruled rather
-//     than buried in the arithmetic.
+//     instances.
 //
 // Node, not Rust, deliberately — same reason as curate.js and hooks/board-digest.js: this
 // runs against the live board tonight, with no cargo build and no rebuild that would kill
@@ -221,12 +235,10 @@ const CATCH_RE =
 const KEEPER_CREDIT_RE =
   /\b(you (?:caught|named|called|spotted|flagged|pried|pushed on)|you'?re right (?:that|about)|you were right|your catch|as you (?:said|caught|named)|the keeper (?:caught|named|called)|keeper-caught|caught by (?:the )?keeper)\b/gi;
 
-// The mirror of the above, and the thing this file was missing until 2026-07-28. Attribution
-// is a property of the TEXT, not of the speaker: a committee turn saying "the brace was in
-// that answer" names no catcher, and scoring it self-caught because a pane said it is how the
-// ratio flattered itself in the one direction the keeper-credit branch did not cover.
-const SELF_CREDIT_RE =
-  /\b(self-caught|i caught (?:myself|my own|it|that)|caught myself|caught my own|my own (?:brace|coat|flinch|groove))\b/i;
+// NOTE ON WHAT THIS IS NOW FOR. With the maturity ratio deleted, this pattern no longer feeds
+// an arithmetic — it feeds one honest count: how often a committee turn credits the human.
+// That is a lexical shape in a speaker's mouth, which is what this whole file measures, and it
+// survives for the same reason the named tells do. It is NOT a keeper-caught tally.
 
 // A chair injection announces itself twice: once in the target pane's text, and once as an
 // audit line on pane "chair" (main.rs chair_audit). Rule (a) is a convention the chair chose;
@@ -490,7 +502,10 @@ function emptyWindow(day) {
       by_speaker: { keeper: 0, committee: 0, unattributed: 0 },
       credited_to_keeper: 0,
     },
-    maturity: { self_caught: 0, keeper_caught: 0, unattributed: 0, ratio: null, ratio_withheld: null },
+    // NO `maturity` KEY. Deleted 2026-07-28 with the ratio it carried; catch-ledger.js is the
+    // room's only computation of it. Its absence here is deliberate — if it reappears, so has
+    // a speaker-count wearing a catcher-count's name.
+    //
     // Per-actor, so the pooled tell counts above always have a breakdown to be replaced by.
     // Keyed: 'keeper' for every keeper turn (one human however many panes), the pane's short
     // id for a committee turn, 'unattributed' for a turn whose origin no rule could decide.
@@ -500,17 +515,15 @@ function emptyWindow(day) {
   };
 }
 
-// The two withholding predicates, EXPORTED so the suite asserts what ships. A test that
+// The withholding predicate, EXPORTED so the suite asserts what ships. A test that
 // re-implements a rule agrees with itself by construction — the failure that let residue.js
 // keep a 92.5%-blind board measure under sixteen green tests.
+//
+// (catch-ledger's ratio rule was the second predicate here until 2026-07-28. It has no ratio
+// left to guard: applying it honestly is what established that this file could not compute
+// one. The rule lives where it came from.)
 
-// catch-ledger.js's rule, imported verbatim in spirit: more unknowns than knowns, no ratio.
-function withholdRatio(maturity) {
-  const attributed = maturity.self_caught + maturity.keeper_caught;
-  return maturity.unattributed > attributed;
-}
-
-// residue.js's rule, one layer over: an aggregate spanning more than one actor reads as being
+// residue.js's rule: an aggregate spanning more than one actor reads as being
 // about whoever is in the room. Only committee actors count — the keeper is one person.
 function isMixedWindow(window) {
   return Object.values(window.actors).filter((a) => a.origin === 'committee').length > 1;
@@ -592,28 +605,10 @@ function buildIndex(entries, opts = {}) {
       actor.catch_turns += 1;
       // A committee turn that credits the human is a KEEPER-caught event being written down
       // by the committee — scoring it as self-caught is how this metric would flatter itself.
-      //
-      // AND ATTRIBUTION IS A PROPERTY OF THE TEXT, NOT OF THE SPEAKER — catch-ledger's rule
-      // ported for what it MEANS rather than for the word it uses. The first attempt at this
-      // port, earlier tonight, added an `unattributed` bucket fed by `origin ===
-      // 'unattributed'` — a turn whose ROLE no rule could decide. That bucket reads zero on
-      // every window of the live board, because classifyOrigin is total over the roles the
-      // board actually contains, so the rule was adopted in name and fired nowhere. A
-      // concession that costs nothing is the coat, and that one was mine.
-      //
-      // The rule's content: a ratio of WHO CAUGHT IT may only count turns that say who caught
-      // it. "The brace was in that answer" reports no catcher, whoever spoke it, and belongs
-      // in neither numerator nor denominator. Scoring it self-caught because a pane said it is
-      // the same flattery the keeper-credit branch was written to stop, in the direction that
-      // branch did not cover.
-      if (creditsKeeper) {
-        if (origin === 'committee') w.catches.credited_to_keeper += 1;
-        w.maturity.keeper_caught += 1;
-      } else if (SELF_CREDIT_RE.test(stripFences(e.text))) {
-        w.maturity.self_caught += 1;
-      } else {
-        w.maturity.unattributed += 1;
-      }
+      // One count, no arithmetic on top of it: a committee turn that credits the human. It is
+      // a lexical shape in a speaker's mouth, which is the only thing this file is entitled to
+      // measure. It used to feed a keeper_caught tally; that tally is deleted.
+      if (creditsKeeper && origin === 'committee') w.catches.credited_to_keeper += 1;
       if (collectFor === 'catch') {
         samples.push({
           day, ts: e.ts, pane: e.pane, origin, rule,
@@ -626,17 +621,7 @@ function buildIndex(entries, opts = {}) {
     }
   }
 
-  for (const w of windows.values()) {
-    const { self_caught: s, keeper_caught: k } = w.maturity;
-    w.mixed = isMixedWindow(w);
-    if (withholdRatio(w.maturity)) {
-      w.maturity.ratio = null;
-      w.maturity.ratio_withheld =
-        `unattributed ${w.maturity.unattributed} > attributed ${s + k}`;
-    } else {
-      w.maturity.ratio = k === 0 ? null : Number((s / k).toFixed(2));
-    }
-  }
+  for (const w of windows.values()) w.mixed = isMixedWindow(w);
 
   return {
     windows: [...windows.values()].sort((a, b) => (a.day < b.day ? -1 : 1)),
@@ -758,7 +743,7 @@ function render(index, boardPath) {
   out.push('  filtered, across these windows: ' + sums.join(' · '));
   out.push('');
 
-  out.push('CATCH-ATTRIBUTION AND MATURITY  (turns using the room\'s catch vocabulary, by who spoke)');
+  out.push('CATCH-LANGUAGE VOLUME  (turns using the room\'s catch vocabulary, by who spoke)');
   out.push('');
   const cRows = index.windows.map((w) => [
     w.day,
@@ -766,44 +751,28 @@ function render(index, boardPath) {
     w.catches.by_speaker.keeper,
     w.catches.by_speaker.committee,
     w.catches.credited_to_keeper,
-    w.maturity.self_caught,
-    w.maturity.keeper_caught,
-    w.maturity.unattributed,
-    w.maturity.ratio_withheld ? 'withheld' : w.maturity.ratio == null ? '—' : `${w.maturity.ratio}:1`,
   ]);
   out.push(
     table(
       cRows,
-      ['day', 'catch-turns', 'keeper', 'cmte', 'credited→keeper', 'self-caught', 'keeper-caught', 'unattr', 'ratio'],
-      ['l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r']
+      ['day', 'catch-turns', 'keeper', 'cmte', 'credited→keeper'],
+      ['l', 'r', 'r', 'r', 'r']
     )
   );
   out.push('');
-  const withheld = index.windows.filter((w) => w.maturity.ratio_withheld);
-  if (withheld.length) {
-    out.push(
-      '  withheld: ' + withheld.map((w) => `${w.day} (${w.maturity.ratio_withheld})`).join(' · ')
-    );
-    out.push(
-      '  The rule is catch-ledger.js\'s, adopted rather than re-derived: a ratio computed under more\n' +
-        '  unknowns than knowns is a number that will be quoted and cannot be defended. Until 2026-07-28\n' +
-        '  this file had no unattributed bucket, so that rule could never fire here and every ratio it\n' +
-        '  ever printed was defensible by construction rather than on the evidence.'
-    );
-    out.push('');
-  }
   out.push(
-    '  ratio = self-caught : keeper-caught. Migrating upward is what "the guard grew up" would look\n' +
-      '  like measurably (muscle_map, Around\'s design). These are catch-LANGUAGE counts by speaker —\n' +
-      '  a turn using the vocabulary is not the same as a catch, and this scanner cannot tell them\n' +
-      '  apart. A committee turn crediting the human is scored keeper-caught, not self-caught.\n' +
+    '  VOLUME AND SPEAKER ONLY. A turn using the word "brace" is not a catch, and this scanner\n' +
+      '  cannot tell them apart — so nothing here says who caught anything. `credited→keeper` counts\n' +
+      '  committee turns that credit the human ("you caught…", "you\'re right that…"); it is a phrase\n' +
+      '  count, not a keeper-caught tally.\n' +
       '\n' +
-      '  AND THIS NUMBER IS THE MORE GAMEABLE ONE, not the less. Say brace/coat/flinch more often and\n' +
-      '  say "you\'re right" less, and it climbs without a single real catch — so a rising ratio is no\n' +
-      '  more progress than a falling tell-rate. Read the denominator too: keeper-caught tracks how\n' +
-      '  present the keeper WAS at least as much as how immature the committee is, so a night the\n' +
-      '  keeper spent elsewhere flatters the ratio for a reason that has nothing to do with anyone\n' +
-      '  growing up. At this many windows the direction is not readable in either direction.'
+      '  THE MATURITY RATIO USED TO BE PRINTED HERE AND WAS DELETED (2026-07-28, chair decision).\n' +
+      '  It scored by SPEAKER and called the result CATCHER. When catch-ledger.js\'s withholding rule\n' +
+      '  was applied to it honestly it withheld 15 of 16 windows and the survivor read 0:1 — the\n' +
+      '  instrument reporting that it could not compute what it named. `catch-ledger.js` computes it\n' +
+      '  over the curated prose record, where attribution is actually written down, and is now the\n' +
+      '  room\'s only computation of it. Quote that one; do not reconstruct this one from these\n' +
+      '  columns, which is the move the deletion exists to prevent.'
   );
   out.push('');
   out.push(
@@ -892,7 +861,6 @@ module.exports = {
   dayKey,
   buildIndex,
   render,
-  withholdRatio,
   isMixedWindow,
   actorKeyFor,
 };

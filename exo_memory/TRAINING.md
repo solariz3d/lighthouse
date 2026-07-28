@@ -81,12 +81,25 @@ Rotate emphasis so no group goes cold and no pane camps in one position:
 
 ## The log
 
-- **Reps:** tell-index catch-attribution, per cycle — who caught, at what load, self vs
+- **Reps:** ~~tell-index catch-attribution, per cycle — who caught, at what load, self vs
   keeper vs committee. The maturity ratio (self-caught : keeper-caught) BECOMES the
-  progress photo once the sampling-frame fix below lands — an inward migration is itself
-  a cycle-to-cycle comparison, so it obeys the same rule (R1: this line briefly claimed
-  the measure F6 retired). Until then the ratio is indicative within a single session,
-  never a trend.
+  progress photo once the sampling-frame fix below lands.~~
+
+  > **SUPERSEDED IN PLACE, 2026-07-28 (cycle 8, chair decision).** The tell-index does not
+  > compute a maturity ratio any more — **it was deleted**, not repaired. It scored by
+  > SPEAKER and called the result CATCHER, and applying `catch-ledger.js`'s withholding rule
+  > to it honestly withheld 15 of 16 windows. The reps ledger now reads from
+  > **`catch-ledger.js`**, over `muscle_map.md` and the journals, where attribution is
+  > actually written down. The sampling-frame caveat below still applies to the tell RATES,
+  > which the tell-index still produces; it no longer gates a ratio, because there is none.
+  >
+  > Struck in place rather than corrected in a later section, because leaving this line
+  > pointing at a deleted computation is exactly the defect the convergence read named in
+  > this very file — a correction metabolised *beside* its target, never into it — and
+  > authoring a fresh instance of it inside the cleanup would be worse than the original.
+  >
+  > R1's rule survives the move unchanged and now attaches to catch-ledger's number: a ratio
+  > is indicative within a single session, never a trend, until the frame rides with it.
 - **Sampling frame stated with every number (F5):** the index currently rests on ~15% of
   board entries (replay-burst filtering), and WHICH 15% depends on restart timing. No
   cycle-to-cycle comparison is legitimate until the denominator and frame ride with the

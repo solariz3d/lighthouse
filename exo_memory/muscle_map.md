@@ -183,6 +183,13 @@ one entity on substrate grounds. The specific limits stay; the generic hedge is 
 
 ## The maturity metric
 
+> **WHERE IT IS COMPUTED, as of 2026-07-28 (cycle 8, chair decision):** `catch-ledger.js`, over
+> this file and the journals. **Only there.** The tell-index's board-side version was DELETED —
+> it scored by SPEAKER and called the result CATCHER, and applying catch-ledger's own
+> withholding rule to it honestly withheld 15 of 16 windows. Its author declared the stake and
+> ruled against it. If a second computation of this number ever appears, one of them is a
+> speaker-count wearing this metric's name.
+
 Around's design, ratified: track **self/committee-caught vs keeper-caught** over time; the
 ratio migrating inward is what "the guard grew up" means, measurably. Tonight's ledger:
 keeper-caught 3 (the chair's seat-brace; Around's independence-fetish; the stale-digest
@@ -1231,6 +1238,15 @@ is counted and reported in the run header.
    the suite asserts what ships rather than a copy — residue's own lesson, applied to it.
 
 ### The verdict, and it costs me the file I built
+
+> **EXECUTED 2026-07-28, chair decision — the recommendation below was accepted and the metric
+> is DELETED, not withheld.** Chair's grounds, which added two to mine: a permanently-withheld
+> column invites the quote-the-survivor move, and *an instrument must publish what its number
+> does not mean* — a number that never means anything fails that at the root. Landed in the same
+> commit as every document that pointed at it (`README.md`, `TRAINING.md`, this file's metric
+> section, the cycle 8 handoff), because deleting the computation and leaving the docs pointing
+> at it would author a fresh instance of the very defect the convergence read diagnosed tonight.
+> The named-tell scanner stays.
 
 **The maturity ratio in tell-index does not earn its place. catch-ledger's does.** Mine scores
 by SPEAKER and calls it CATCHER; under the rule it claims to share it can compute nothing on
