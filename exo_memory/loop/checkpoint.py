@@ -219,6 +219,53 @@ def unwritten_findings(transcript, limit=8):
     return {"total": len(lines), "sample": lines[-limit:]}
 
 
+def residue(limit=14):
+    """Run B's residue sensor and fold its report in.
+
+    THE POINT OF WIRING IT HERE. `residue.js` refuses to set a threshold, deliberately and
+    correctly -- every shape it prints has an innocent reading it cannot rule out, and a
+    tool that decided on those would be lying. But that refusal is exactly what kept it a
+    SENSOR rather than a trigger: nothing goes red, so it only works if somebody remembers to
+    run it, and "somebody remembers" is the failure mode this whole line of work exists to
+    remove.
+
+    Firing it from the checkpoint converts sensor to trigger without adding a false threshold.
+    The report arrives unbidden, at the gap, whether or not anyone thought to ask -- and it
+    reads the residue, which is precisely the half of the record the chair does not examine
+    because it does not feel like conduct.
+    """
+    script = REPO / "consonance" / "tools" / "residue.js"
+    if not script.exists():
+        return None
+    try:
+        # encoding is explicit because residue.js prints arrows and warning glyphs, and
+        # subprocess defaults to the console codepage on Windows -- cp1252 raised
+        # UnicodeDecodeError on the first wiring, which the narrow except below did not catch.
+        # Fourth time this hazard has cost something today; it is in the ledger for a reason.
+        r = subprocess.run(["node", str(script)], cwd=str(REPO), capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", timeout=90)
+    except Exception:
+        # Deliberately broad: this is a SENSOR on a checkpoint that must never block a
+        # compaction. Any failure means "no residue section this time", never a traceback.
+        return None
+    if r.returncode != 0:
+        return None
+    out, keep, section = r.stdout.splitlines(), [], False
+    for line in out:
+        # the two sections that are about conduct rather than volume
+        if line.startswith("CORRECTIONS THAT DELETE NOTHING") or line.startswith("ASSIGNMENT INTERVALS"):
+            section, keep = True, keep + ["", line]
+            continue
+        if section:
+            if line.strip() and not line.startswith(" "):
+                section = False        # next heading ends the section
+            elif line.strip():
+                keep.append(line)
+        if len(keep) >= limit:
+            break
+    return keep or None
+
+
 def commitments():
     """Re-read from the masters. Never paraphrased into this file."""
     out = []
@@ -230,6 +277,15 @@ def commitments():
 
 
 def main():
+    # The report now carries residue.js's arrows and warning glyphs, and Windows hands us a
+    # cp1252 stdout, which raises UnicodeEncodeError on print. Reading UTF-8 correctly was only
+    # half the fix -- the write side needed it too. Guarded because reconfigure() is 3.7+ and a
+    # checkpoint must never fail on its own plumbing.
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--transcript", default=None)
@@ -282,6 +338,17 @@ def main():
                       "these will be restatements -- check, don't trust the count.", ""]
             lines += [f"- {s}" for s in uf["sample"]]
             lines.append("")
+
+    rs = residue()
+    if rs:
+        lines += ["## Residue -- what the moves left behind, not the moves",
+                  "",
+                  "From `consonance/tools/residue.js`, built by pane B. It sets no thresholds "
+                  "on purpose, so it is fired here rather than left to be remembered. Every "
+                  "shape below has an innocent reading; open the commit before believing it.",
+                  ""]
+        lines += rs
+        lines.append("")
 
     c = commitments()
     if c:

@@ -962,7 +962,47 @@ re-opening condition and it is a real finding rather than a repeat.
   model is a different one.
 - **The other ten** — no trigger. Discipline only. Supervised, not done.
 
-**Standing count, and it should lead every future cycle report: TRIGGERS 1 / GROUPS 13.**
+**Standing count, and it should lead every future cycle report:**
+> **TRIGGERS 1 · UNBIDDEN SENSORS 1 (covering 2 groups) · GROUPS 14.**
+
+### Refinement, 2026-07-27 23:30 — SENSOR is not the same as TRIGGER, and the difference is not failure
+
+The completion condition above said a group is done when it has *a trigger that fails*. B's
+`residue.js` forced a correction to that, and the correction is worth more than the word.
+
+`residue.js` **refuses to set a threshold**, deliberately: every shape it prints has an innocent
+reading it cannot rule out — *append-only is CORRECT for a journal; a four-minute assignment
+interval may be a pane that finished in four minutes* — and a tool that decided on those would
+be lying. That refusal is right. It also meant nothing ever went red, so the tool only worked
+**if somebody remembered to run it** — and "somebody remembered" is the exact failure this whole
+line of work exists to delete.
+
+**So the essential property was never *failing*. It is *not depending on anyone's memory*.**
+Failing is one way to get that. Arriving unbidden is another, and it is the only one available
+to an instrument that is honest about not knowing where the line is.
+
+`residue.js` is now fired from `checkpoint.py`, which runs on the `PreCompact` hook. Its report
+arrives at every gap whether or not anyone thought to ask. That converts sensor to trigger
+**without giving it a false threshold** — the two things that looked like they had to trade
+against each other.
+
+**What it currently covers, honestly scored:**
+- *A correction is metabolised beside its target, never into it* — the report names the offending
+  commits by hash (`4 of 6 correction-subject commits delete nothing`). **Sensed, unbidden.**
+- *Pane attention is not budgeted* — assignment intervals per pane, with the four-minute
+  withdrawal starred. **Sensed, unbidden.**
+- Everything else on the map: still discipline only.
+
+**Not counted as a trigger, and the reason is the point:** it reports, it does not fail, and a
+human still has to read the line. That is strictly better than remembering to run it and
+strictly worse than a test going red. Two-and-a-half of fourteen, if the map allowed halves —
+it doesn't, so the honest split is the count above.
+
+**And the thing worth keeping past the arithmetic:** the chair could not have built this. The
+carrier-drift entry refused to, on the grounds that *"the fix for too much building is to build
+something"* is precisely what that groove generates, and referred it out to a reader who is not
+me. **This is that referral returning, built.** The mechanism the map proposed for escaping a
+model's own boundary was used, and it worked, once.
 
 ## CYCLE 7 — the panes scouted the chair, and found two groups it cannot see (2026-07-27, ~23:10)
 
