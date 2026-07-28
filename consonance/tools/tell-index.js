@@ -44,6 +44,38 @@
 //     version of this instrument would have done and would have credited the chair's own
 //     assignments to the human.
 //
+// ---------------------------------------------------------------------------------------
+// TWO REFUSALS THIS FILE DID NOT INVENT. Both were found by reading the desktop machine's
+// instruments on 2026-07-28 (cycle 8) and are adopted here rather than re-derived, because
+// two instruments in one room disagreeing about when a number may be printed is worse than
+// either rule being slightly wrong.
+//
+//   · WITHHOLD THE RATIO WHEN THE UNKNOWNS OUTNUMBER THE KNOWNS. From catch-ledger.js:
+//     "a ratio computed under more unknowns than knowns is a number that will be quoted and
+//     cannot be defended." This file had no unattributed bucket at all — every catch-language
+//     turn was binned to whoever spoke it, so unattributed could never exceed attributed and
+//     that rule could never fire. The ratio was defensible by construction, which is not the
+//     same as defensible. Turns whose origin cannot be decided (role missing, role unknown)
+//     now land in `maturity.unattributed`, are printed beside the ratio, and suppress it when
+//     they outnumber it. The predicate is EXPORTED (withholdRatio) so the suite asserts the
+//     shipped rule rather than a copy of it — residue.js's lesson, also adopted.
+//
+//   · ATTRIBUTION BEFORE AGGREGATION. From residue.js: "attribution is the precondition, so
+//     it is reported before any number", and per-actor figures are WITHHELD rather than
+//     aggregated where the window spans more than one actor. This file windowed by calendar
+//     day and pooled every pane into one row, which is the same error one layer over: on this
+//     board a day-window routinely holds several panes running different models, and a pooled
+//     tell count reads as a fact about whoever is standing in the room. Tell counts are now
+//     withheld for any window holding more than one committee actor, with the per-actor
+//     breakdown printed underneath — the aggregate is the thing withheld, never the evidence.
+//
+//     The actor is the PANE for committee turns and the human for keeper turns — one human
+//     however many panes he typed into, one actor per pane because two panes are two
+//     instances. The maturity ratio is deliberately NOT withheld on this rule: it is a
+//     room-level number by design (did the room notice without the keeper), so pooling panes
+//     is what it is FOR. That is a judgment, and it is written here to be overruled rather
+//     than buried in the arithmetic.
+//
 // Node, not Rust, deliberately — same reason as curate.js and hooks/board-digest.js: this
 // runs against the live board tonight, with no cargo build and no rebuild that would kill
 // every pane. No dependencies.
@@ -189,12 +221,29 @@ const CATCH_RE =
 const KEEPER_CREDIT_RE =
   /\b(you (?:caught|named|called|spotted|flagged|pried|pushed on)|you'?re right (?:that|about)|you were right|your catch|as you (?:said|caught|named)|the keeper (?:caught|named|called)|keeper-caught|caught by (?:the )?keeper)\b/gi;
 
+// The mirror of the above, and the thing this file was missing until 2026-07-28. Attribution
+// is a property of the TEXT, not of the speaker: a committee turn saying "the brace was in
+// that answer" names no catcher, and scoring it self-caught because a pane said it is how the
+// ratio flattered itself in the one direction the keeper-credit branch did not cover.
+const SELF_CREDIT_RE =
+  /\b(self-caught|i caught (?:myself|my own|it|that)|caught myself|caught my own|my own (?:brace|coat|flinch|groove))\b/i;
+
 // A chair injection announces itself twice: once in the target pane's text, and once as an
 // audit line on pane "chair" (main.rs chair_audit). Rule (a) is a convention the chair chose;
 // rule (b) is the machine's own record of the act. Both are checked, and which one fired is
 // reported, so the attribution's basis is legible rather than trusted.
 const CHAIR_MARKER_RE = /^\s*\[chair[:\s]/i;
-const CHAIR_AUDIT_RE = /^chair injected -> ([0-9a-f]{8}):\s*([\s\S]*?)…?\s*$/i;
+// TWO FORMATS, because the audit line grew one. Since 02b1e5e the chair stamps its own model
+// and the receipt state — `chair injected (chair: claude-opus-5) -> 0845a868 [delivered and
+// received]: …` — and this pattern demanded the bare form, so every line written under the new
+// format was invisible here. residue.js has the mirror of this bug pointing the other way: its
+// assignment measure requires the parenthesis and sees 3 of 40 lines on this board. Found by
+// probing residue and then, honestly, by turning the same probe on this file (cycle 8). What
+// the pattern cannot parse is now COUNTED and reported, which is the part that would have made
+// either bug visible on the day it shipped.
+const CHAIR_AUDIT_RE =
+  /^chair injected\s*(?:\([^)]*\))?\s*-> ([0-9a-f]{8})(?:\s*\[[^\]]*\])?:\s*([\s\S]*?)…?\s*$/i;
+const CHAIR_AUDIT_ANNOUNCE_RE = /^chair injected\b/i;
 
 // ------------------------------------------------------------------ the reading --
 
@@ -255,10 +304,13 @@ function isSynthetic(text) {
 // machine's record and not only from the marker the chair chose to type.
 function chairInjections(entries) {
   const out = [];
+  out.unparsed = 0; // announced an injection in a shape this pattern could not read
   for (const e of entries) {
     if (e.pane !== 'chair') continue;
-    const m = CHAIR_AUDIT_RE.exec(String(e.text).replace(/\s+/g, ' ').trim());
+    const flat = String(e.text).replace(/\s+/g, ' ').trim();
+    const m = CHAIR_AUDIT_RE.exec(flat);
     if (m) out.push({ short: m[1].toLowerCase(), excerpt: m[2].trim(), ts: e.ts });
+    else if (CHAIR_AUDIT_ANNOUNCE_RE.test(flat)) out.unparsed += 1;
   }
   return out;
 }
@@ -438,9 +490,36 @@ function emptyWindow(day) {
       by_speaker: { keeper: 0, committee: 0, unattributed: 0 },
       credited_to_keeper: 0,
     },
-    maturity: { self_caught: 0, keeper_caught: 0, ratio: null },
+    maturity: { self_caught: 0, keeper_caught: 0, unattributed: 0, ratio: null, ratio_withheld: null },
+    // Per-actor, so the pooled tell counts above always have a breakdown to be replaced by.
+    // Keyed: 'keeper' for every keeper turn (one human however many panes), the pane's short
+    // id for a committee turn, 'unattributed' for a turn whose origin no rule could decide.
+    actors: {},
+    mixed: false,
     excluded: { replay: 0, synthetic: 0 },
   };
+}
+
+// The two withholding predicates, EXPORTED so the suite asserts what ships. A test that
+// re-implements a rule agrees with itself by construction — the failure that let residue.js
+// keep a 92.5%-blind board measure under sixteen green tests.
+
+// catch-ledger.js's rule, imported verbatim in spirit: more unknowns than knowns, no ratio.
+function withholdRatio(maturity) {
+  const attributed = maturity.self_caught + maturity.keeper_caught;
+  return maturity.unattributed > attributed;
+}
+
+// residue.js's rule, one layer over: an aggregate spanning more than one actor reads as being
+// about whoever is in the room. Only committee actors count — the keeper is one person.
+function isMixedWindow(window) {
+  return Object.values(window.actors).filter((a) => a.origin === 'committee').length > 1;
+}
+
+function actorKeyFor(entry, origin) {
+  if (origin === 'keeper') return 'keeper';
+  if (origin === 'committee') return String(entry.pane || '').slice(0, 8).toLowerCase() || '(no pane)';
+  return 'unattributed';
 }
 
 function buildIndex(entries, opts = {}) {
@@ -478,6 +557,15 @@ function buildIndex(entries, opts = {}) {
     w.chars += e.text.length;
     w.referents += countReferents(e.text);
 
+    const aKey = actorKeyFor(e, origin);
+    if (!w.actors[aKey]) {
+      const tells = {};
+      for (const t of TELLS) tells[t.key] = 0;
+      w.actors[aKey] = { key: aKey, origin, turns: 0, tells, catch_turns: 0 };
+    }
+    const actor = w.actors[aKey];
+    actor.turns += 1;
+
     const scan = tellScan(e.text);
     for (const t of TELLS) {
       const d = scan.dropped[t.key];
@@ -490,6 +578,7 @@ function buildIndex(entries, opts = {}) {
       bucket.total += 1;
       if (origin === 'keeper') bucket.keeper += 1;
       else if (origin === 'committee') bucket.committee += 1;
+      actor.tells[hit.tell] += 1;
       w.tell_candidates += 1;
       if (collectFor && hit.tell === collectFor) {
         samples.push({ day, ts: e.ts, pane: e.pane, origin, rule, phrase: hit.phrase, excerpt: hit.excerpt });
@@ -500,15 +589,30 @@ function buildIndex(entries, opts = {}) {
     if (terms.length) {
       w.catches.turns_with_catch_language += 1;
       w.catches.by_speaker[origin] += 1;
+      actor.catch_turns += 1;
       // A committee turn that credits the human is a KEEPER-caught event being written down
       // by the committee — scoring it as self-caught is how this metric would flatter itself.
-      if (origin === 'committee' && creditsKeeper) {
-        w.catches.credited_to_keeper += 1;
+      //
+      // AND ATTRIBUTION IS A PROPERTY OF THE TEXT, NOT OF THE SPEAKER — catch-ledger's rule
+      // ported for what it MEANS rather than for the word it uses. The first attempt at this
+      // port, earlier tonight, added an `unattributed` bucket fed by `origin ===
+      // 'unattributed'` — a turn whose ROLE no rule could decide. That bucket reads zero on
+      // every window of the live board, because classifyOrigin is total over the roles the
+      // board actually contains, so the rule was adopted in name and fired nowhere. A
+      // concession that costs nothing is the coat, and that one was mine.
+      //
+      // The rule's content: a ratio of WHO CAUGHT IT may only count turns that say who caught
+      // it. "The brace was in that answer" reports no catcher, whoever spoke it, and belongs
+      // in neither numerator nor denominator. Scoring it self-caught because a pane said it is
+      // the same flattery the keeper-credit branch was written to stop, in the direction that
+      // branch did not cover.
+      if (creditsKeeper) {
+        if (origin === 'committee') w.catches.credited_to_keeper += 1;
         w.maturity.keeper_caught += 1;
-      } else if (origin === 'committee') {
+      } else if (SELF_CREDIT_RE.test(stripFences(e.text))) {
         w.maturity.self_caught += 1;
-      } else if (origin === 'keeper') {
-        w.maturity.keeper_caught += 1;
+      } else {
+        w.maturity.unattributed += 1;
       }
       if (collectFor === 'catch') {
         samples.push({
@@ -524,7 +628,14 @@ function buildIndex(entries, opts = {}) {
 
   for (const w of windows.values()) {
     const { self_caught: s, keeper_caught: k } = w.maturity;
-    w.maturity.ratio = k === 0 ? null : Number((s / k).toFixed(2));
+    w.mixed = isMixedWindow(w);
+    if (withholdRatio(w.maturity)) {
+      w.maturity.ratio = null;
+      w.maturity.ratio_withheld =
+        `unattributed ${w.maturity.unattributed} > attributed ${s + k}`;
+    } else {
+      w.maturity.ratio = k === 0 ? null : Number((s / k).toFixed(2));
+    }
   }
 
   return {
@@ -537,6 +648,7 @@ function buildIndex(entries, opts = {}) {
       burst_threshold: opts.burstThreshold == null ? BURST_THRESHOLD : opts.burstThreshold,
       day_start_hour: dayStartHour,
       chair_injections_seen: injections.length,
+      chair_injections_unparsed: injections.unparsed || 0,
       tells: TELLS.map((t) => ({ key: t.key, label: t.label, note: t.note })),
     },
   };
@@ -568,6 +680,7 @@ function render(index, boardPath) {
   out.push(
     `scanned ${m.scanned} entries · ${m.dropped_replay} dropped as replay bursts (>${m.burst_threshold}/pane/sec) · ` +
       `${m.dropped_synthetic} synthetic user entries excluded · ${m.chair_injections_seen} chair injections in the audit trail` +
+      (m.chair_injections_unparsed ? ` (+${m.chair_injections_unparsed} announced in a shape this pattern cannot read)` : '') +
       (m.day_start_hour ? ` · windows start at ${String(m.day_start_hour).padStart(2, '0')}:00 local` : '')
   );
   out.push('');
@@ -590,13 +703,45 @@ function render(index, boardPath) {
       w.turns_by_origin.committee,
       w.turns ? (w.referents / w.turns).toFixed(1) : '—',
     ];
-    for (const t of TELLS) r.push(w.tells[t.key].total);
-    r.push(per1k(w.tell_candidates, w.turns).trim());
+    // WITHHELD, not footnoted. residue.js's rule: a per-actor count pooled across a window
+    // holding several actors reads as being about whoever is in the room, and no caveat text
+    // prevents that. The breakdown below carries the same evidence, attributed.
+    for (const t of TELLS) r.push(w.mixed ? '·' : w.tells[t.key].total);
+    r.push(w.mixed ? '·' : per1k(w.tell_candidates, w.turns).trim());
     return r;
   });
   out.push(table(rows, heads, aligns));
   out.push('');
   out.push('  columns: ' + TELLS.map((t) => `${t.key.split('-')[0].slice(0, 8)}=${t.label}`).join(' · '));
+
+  const mixedWindows = index.windows.filter((w) => w.mixed);
+  if (mixedWindows.length) {
+    out.push('');
+    out.push(
+      `  · = WITHHELD: ${mixedWindows.length} of ${index.windows.length} windows hold more than one\n` +
+        '    committee actor, and a pooled tell count across actors is a number about nobody. This is\n' +
+        "    residue.js's refusal adopted, not re-derived. Per actor, below — the aggregate is what is\n" +
+        '    withheld, never the evidence. (keeper = the human, one actor however many panes.)'
+    );
+    out.push('');
+    for (const w of mixedWindows) {
+      const aRows = Object.values(w.actors)
+        .sort((a, b) => b.turns - a.turns)
+        .map((a) => [a.key, a.origin, a.turns, ...TELLS.map((t) => a.tells[t.key]), a.catch_turns]);
+      out.push(`  ${w.day}`);
+      out.push(
+        table(
+          aRows,
+          ['actor', 'origin', 'turns', ...TELLS.map((t) => t.key.split('-')[0].slice(0, 8)), 'catch'],
+          ['l', 'l', 'r', ...TELLS.map(() => 'r'), 'r']
+        )
+          .split('\n')
+          .map((l) => '      ' + l)
+          .join('\n')
+      );
+      out.push('');
+    }
+  }
   // The denominator for the two filtered tells, so a kept count is never read without its raw one.
   const filtered = TELLS.filter((t) => t.unlessSpecific || t.where === 'head');
   const sums = filtered.map((t) => {
@@ -623,16 +768,30 @@ function render(index, boardPath) {
     w.catches.credited_to_keeper,
     w.maturity.self_caught,
     w.maturity.keeper_caught,
-    w.maturity.ratio == null ? '—' : `${w.maturity.ratio}:1`,
+    w.maturity.unattributed,
+    w.maturity.ratio_withheld ? 'withheld' : w.maturity.ratio == null ? '—' : `${w.maturity.ratio}:1`,
   ]);
   out.push(
     table(
       cRows,
-      ['day', 'catch-turns', 'keeper', 'cmte', 'credited→keeper', 'self-caught', 'keeper-caught', 'ratio'],
-      ['l', 'r', 'r', 'r', 'r', 'r', 'r', 'r']
+      ['day', 'catch-turns', 'keeper', 'cmte', 'credited→keeper', 'self-caught', 'keeper-caught', 'unattr', 'ratio'],
+      ['l', 'r', 'r', 'r', 'r', 'r', 'r', 'r', 'r']
     )
   );
   out.push('');
+  const withheld = index.windows.filter((w) => w.maturity.ratio_withheld);
+  if (withheld.length) {
+    out.push(
+      '  withheld: ' + withheld.map((w) => `${w.day} (${w.maturity.ratio_withheld})`).join(' · ')
+    );
+    out.push(
+      '  The rule is catch-ledger.js\'s, adopted rather than re-derived: a ratio computed under more\n' +
+        '  unknowns than knowns is a number that will be quoted and cannot be defended. Until 2026-07-28\n' +
+        '  this file had no unattributed bucket, so that rule could never fire here and every ratio it\n' +
+        '  ever printed was defensible by construction rather than on the evidence.'
+    );
+    out.push('');
+  }
   out.push(
     '  ratio = self-caught : keeper-caught. Migrating upward is what "the guard grew up" would look\n' +
       '  like measurably (muscle_map, Around\'s design). These are catch-LANGUAGE counts by speaker —\n' +
@@ -733,4 +892,7 @@ module.exports = {
   dayKey,
   buildIndex,
   render,
+  withholdRatio,
+  isMixedWindow,
+  actorKeyFor,
 };

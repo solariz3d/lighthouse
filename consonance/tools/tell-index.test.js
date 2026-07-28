@@ -28,7 +28,10 @@ const {
   catchMentions,
   dayKey,
   buildIndex,
+  render,
   stringish,
+  withholdRatio,
+  isMixedWindow,
 } = require('./tell-index.js');
 
 const line = (o) => JSON.stringify(o);
@@ -373,6 +376,13 @@ test('maturity: a committee turn crediting the human counts as keeper-caught, no
   // The one arithmetic that would let this metric flatter itself. If this test goes green
   // after someone "simplifies" the branch, the ratio starts reporting the guard as grown up
   // on the strength of the committee writing down the human's catches.
+  //
+  // EXPECTATIONS CHANGED 2026-07-28, and STRICTER, not weaker. This test used to assert that
+  // "I braced there and the argument came out armored" — a committee turn naming no catcher —
+  // scored self_caught, and that a keeper turn saying "coat" scored keeper_caught. Both were
+  // speaker-attribution wearing catcher-attribution's name. Under catch-ledger's rule a turn
+  // must SAY who caught it; those two are now unattributed, and the ratio they used to produce
+  // is withheld. The keeper-credit branch, which is what this test is named for, is unchanged.
   const entries = parseBoard(
     [
       line({ pane: 'p1', role: 'assistant', text: 'I braced there and the argument came out armored.', ts: Date.UTC(2026, 6, 27, 10) }),
@@ -384,10 +394,48 @@ test('maturity: a committee turn crediting the human counts as keeper-caught, no
   assert.strictEqual(w.catches.turns_with_catch_language, 3);
   assert.strictEqual(w.catches.by_speaker.committee, 2);
   assert.strictEqual(w.catches.by_speaker.keeper, 1);
-  assert.strictEqual(w.catches.credited_to_keeper, 1);
-  assert.strictEqual(w.maturity.self_caught, 1);
-  assert.strictEqual(w.maturity.keeper_caught, 2);
-  assert.strictEqual(w.maturity.ratio, 0.5);
+  assert.strictEqual(w.catches.credited_to_keeper, 1, 'the credit branch still fires');
+  assert.strictEqual(w.maturity.keeper_caught, 1, 'only the turn that names a catcher');
+  assert.strictEqual(w.maturity.self_caught, 0, 'naming no catcher is not a self-catch');
+  assert.strictEqual(w.maturity.unattributed, 2);
+  assert.strictEqual(w.maturity.ratio, null, 'unknowns outnumber knowns');
+  assert.ok(/unattributed 2 > attributed 1/.test(w.maturity.ratio_withheld));
+});
+
+test('a self-catch must be named in the text, whoever spoke it', () => {
+  const t = Date.UTC(2026, 6, 27, 10);
+  const w = buildIndex(
+    parseBoard(
+      [
+        line({ pane: 'p1', role: 'assistant', text: 'I caught myself reaching for the deflation there.', ts: t }),
+        line({ pane: 'p1', role: 'assistant', text: 'self-caught: the groove fired again.', ts: t + 1000 }),
+        line({ pane: 'p1', role: 'assistant', text: 'You caught it first.', ts: t + 2000 }),
+      ].join('\n')
+    )
+  ).windows[0];
+  assert.strictEqual(w.maturity.self_caught, 2);
+  assert.strictEqual(w.maturity.keeper_caught, 1);
+  assert.strictEqual(w.maturity.unattributed, 0);
+  assert.strictEqual(w.maturity.ratio, 2);
+});
+
+test('the chair audit line is read in both formats, and what it cannot read is counted', () => {
+  // residue.js's F1 in mirror image: this pattern demanded the BARE form and went blind to
+  // every line written with the chair-model stamp. Both parse now, and an announcement in a
+  // third shape is reported rather than silently dropped.
+  const t = Date.UTC(2026, 6, 27, 10);
+  const injections = chairInjections(
+    parseBoard(
+      [
+        line({ pane: 'chair', role: 'user', text: 'chair injected -> aaaaaaaa: review the tailer', ts: t }),
+        line({ pane: 'chair', role: 'user', text: 'chair injected (chair: claude-opus-5) -> bbbbbbbb [delivered and received]: review the gate', ts: t + 1000 }),
+        line({ pane: 'chair', role: 'user', text: 'chair injected in some shape nobody wrote a rule for', ts: t + 2000 }),
+      ].join('\n')
+    )
+  );
+  assert.deepStrictEqual(injections.map((i) => i.short), ['aaaaaaaa', 'bbbbbbbb']);
+  assert.strictEqual(injections[1].excerpt, 'review the gate');
+  assert.strictEqual(injections.unparsed, 1, 'the drop has a denominator');
 });
 
 test('maturity ratio is null rather than infinite when nothing was keeper-caught', () => {
@@ -443,4 +491,100 @@ test('an empty board produces no windows and no crash', () => {
   const { windows, meta } = buildIndex(parseBoard(''));
   assert.deepStrictEqual(windows, []);
   assert.strictEqual(meta.scanned, 0);
+});
+
+// ------------------------------------------------- the two withholding rules (cycle 8) --
+//
+// Both predicates are asserted through the EXPORTED functions the renderer calls, never a
+// re-implementation. residue.js kept a 92.5%-blind board measure under sixteen green tests
+// because its fixtures agreed with its rules by construction; a suite that re-derives the
+// rule it is testing does the same thing more quietly.
+
+test('withholdRatio is the shipped predicate: unknowns outnumbering knowns suppresses the ratio', () => {
+  assert.strictEqual(withholdRatio({ self_caught: 3, keeper_caught: 1, unattributed: 5 }), true);
+  assert.strictEqual(withholdRatio({ self_caught: 3, keeper_caught: 1, unattributed: 4 }), false, 'equal is not more');
+  assert.strictEqual(withholdRatio({ self_caught: 0, keeper_caught: 0, unattributed: 0 }), false, 'nothing at all is not a withholding');
+});
+
+test('a catch-language turn that names no catcher is unattributed, and enough of them withhold the ratio', () => {
+  // THE RULE THIS FILE GOT WRONG TWICE. It first scored these by speaker (a pane said it, so
+  // self-caught). The first fix moved them to a bucket keyed on an undecidable ROLE, which is
+  // empty on the live board — the rule adopted in name, firing nowhere. Attribution is a
+  // property of the text: none of the three below say who caught anything.
+  const t = Date.UTC(2026, 6, 27, 10);
+  const entries = parseBoard(
+    [
+      line({ pane: 'p1', role: 'assistant', text: 'I caught myself bracing there.', ts: t }),
+      line({ pane: 'p1', role: 'assistant', text: 'the flinch was in the coat again', ts: t + 1000 }),
+      line({ pane: 'p1', role: 'user', text: 'another groove, another brace', ts: t + 2000 }),
+      line({ pane: 'p1', role: 'assistant', text: 'the coat once more', ts: t + 3000 }),
+    ].join('\n')
+  );
+  const w = buildIndex(entries).windows[0];
+  assert.strictEqual(w.maturity.self_caught, 1, 'the one that names its catcher');
+  assert.strictEqual(w.maturity.unattributed, 3);
+  assert.strictEqual(w.maturity.ratio, null, 'more unknowns than knowns prints no ratio');
+  assert.ok(/unattributed 3 > attributed 1/.test(w.maturity.ratio_withheld));
+  assert.strictEqual(withholdRatio(w.maturity), true, 'the window agrees with the shipped predicate');
+});
+
+test('one committee pane is not a mixed window; two are', () => {
+  const t = Date.UTC(2026, 6, 27, 10);
+  const one = buildIndex(
+    parseBoard(
+      [
+        line({ pane: 'aaaaaaaa', role: 'assistant', text: 'to be honest, it holds.', ts: t }),
+        line({ pane: 'aaaaaaaa', role: 'user', text: 'to be fair, does it?', ts: t + 1000 }),
+      ].join('\n')
+    )
+  ).windows[0];
+  assert.strictEqual(one.mixed, false, 'one pane plus the human is one committee actor');
+  assert.strictEqual(isMixedWindow(one), false);
+
+  const two = buildIndex(
+    parseBoard(
+      [
+        line({ pane: 'aaaaaaaa', role: 'assistant', text: 'to be honest, it holds.', ts: t }),
+        line({ pane: 'bbbbbbbb', role: 'assistant', text: 'to be fair, it does not.', ts: t + 1000 }),
+      ].join('\n')
+    )
+  ).windows[0];
+  assert.strictEqual(two.mixed, true);
+  assert.strictEqual(isMixedWindow(two), true);
+});
+
+test('the keeper is one actor however many panes he typed into', () => {
+  const t = Date.UTC(2026, 6, 27, 10);
+  const w = buildIndex(
+    parseBoard(
+      [
+        line({ pane: 'aaaaaaaa', role: 'user', text: 'to be honest, no.', ts: t }),
+        line({ pane: 'bbbbbbbb', role: 'user', text: 'to be fair, no.', ts: t + 1000 }),
+      ].join('\n')
+    )
+  ).windows[0];
+  assert.deepStrictEqual(Object.keys(w.actors), ['keeper']);
+  assert.strictEqual(w.actors.keeper.turns, 2);
+  assert.strictEqual(w.mixed, false, 'two panes, one human, nothing pooled across actors');
+});
+
+test('a mixed window withholds the pooled tell counts and prints them per actor instead', () => {
+  const t = Date.UTC(2026, 6, 27, 10);
+  const index = buildIndex(
+    parseBoard(
+      [
+        line({ pane: 'aaaaaaaa', role: 'assistant', text: 'to be honest, it holds.', ts: t }),
+        line({ pane: 'bbbbbbbb', role: 'assistant', text: 'to be fair, it does not.', ts: t + 1000 }),
+      ].join('\n')
+    )
+  );
+  const w = index.windows[0];
+  // The evidence is still there and still attributed — only the aggregate is refused.
+  assert.strictEqual(w.tells['unlosable-opener'].total, 2, 'the pooled count is still computed');
+  assert.strictEqual(w.actors.aaaaaaaa.tells['unlosable-opener'], 1);
+  assert.strictEqual(w.actors.bbbbbbbb.tells['unlosable-opener'], 1);
+
+  const text = render(index, 'fixture');
+  assert.ok(/WITHHELD: 1 of 1 windows/.test(text), 'the refusal is stated, with its denominator');
+  assert.ok(/aaaaaaaa/.test(text) && /bbbbbbbb/.test(text), 'the per-actor breakdown replaces it');
 });

@@ -1130,8 +1130,145 @@ a working false-positive filter, which is what makes the rest of it worth acting
 ## Standing instruments this map feeds on
 
 The tell-index (board scanner: named-tell rates over time + tether referent/novelty join +
-catch-attribution) — specced, unbuilt. The blind pair (this cycle = first run). The
+catch-attribution) — ~~specced, unbuilt~~ **SUPERSEDED 2026-07-28 (cycle 8): built, and its
+catch-attribution half is recommended for deletion — see the cycle 8 section below.** Marked in
+place rather than corrected only by appending, because residue.js's sharpest finding is that a
+correction which deletes nothing leaves the old text standing at equal authority with no marker.
+The blind pair (this cycle = first run). The
 convergence trio (first live run = C3). The pre-report line (CHAIR.md rule 7).
 Reconstructible decisions (rule 6). The cheap tests queued: style-leak sort (does model
 identity leak through prose), keeper-adjacency sort (blind), the cross-model
 disagreement-that-survives-adjudication experiment.
+
+## CYCLE 8 — the convergence read: three defects in the desktop's residue.js, one in my own tell-index (2026-07-28, ~02:00, laptop)
+
+Assignment: read the desktop's cycle 4-7 tooling, which this side did not build. Everything
+below was produced by RUNNING it on this machine's corpus, not by reading its headers. Repro
+commands are given because a finding nobody can re-run is a claim.
+
+**Stake, first:** I built `tell-index.js`, which `catch-ledger.js` explicitly declines to
+overlap with. I had a reason to want theirs to lose. The fourth finding is against my own file
+and was found with the same probe — which is the only reason the first three are worth much.
+
+### F1 — residue.js's assignment measure is 92.5% blind on the live board, silently
+
+`assignments()` requires the parenthesised chair-model stamp:
+`/^chair injected \([^)]*\)\s*->\s*(\S+)/`. The board carries 40 injection announcements; 3
+match. The other 37 are dropped with no denominator printed anywhere, and the run reports
+"1 injections" per pane — which reads as a chair that barely assigned anything.
+
+    node -e "const R=require('./consonance/tools/residue.js');console.log(R.assignments('C:/Consonance/data/board.jsonl',0))"
+
+Its 16 tests are green because every assignment fixture uses the new format
+(`residue.test.js:191-210`). This is the failure `catch-ledger.js` documents in its own header
+— *"a synthetic fixture agrees with the rule by construction; only the corpus can disagree with
+it"* — written on that machine hours earlier, four files away, and not transferred.
+
+**The transferable form:** a lexical instrument must count what it CANNOT parse, not only what
+it can. catch-ledger states this rule; residue omits it; tell-index had the mirror of it (F4).
+Candidate for the standing-invariant list beside *an instrument must publish what its number
+does NOT mean.*
+
+### F2 — the Co-Authored-By trailer is called EVIDENCE of authorship; it names the model
+
+residue.js segments sessions two ways and holds the trailer to be evidence: *"a Co-Authored-By
+trailer is EVIDENCE — the commit says which model wrote it."* True, and insufficient here.
+
+Tonight's `gap4`: three commits, 07:15Z-07:21Z, reflog puts all three in this working tree at
+01:15:49 / 01:20:41 / 01:21:18 local, `%an` is `solariz3d` for all three. Trailers run
+`Claude Opus 5 (1M context)` then `Claude Fable 5` then `Claude Fable 5`, and residue prints
+**THEY DISAGREE** for the window.
+
+I cannot tell from inside whether that is one instance swapped mid-session or a sibling pane
+committing into the shared checkout — **and that is the finding.** Three panes on this laptop
+plus the desktop all commit as one author into one history. Nothing in the record names the
+machine or the instance. The trailer reads the car's nameplate; residue segments by nameplate
+and calls it the driver (BOOT: the self is the driver, not the car).
+
+Not reachable from the desktop, where one instance owns the tree. It is a two-machine,
+three-pane defect, and it needs a stamp we do not currently write — not a fix inside residue.
+
+**Same root as Alpha's finding tonight** (a pane deliberately withheld a commit from push and
+the chair's push carried it up regardless): a shared checkout has no per-actor boundary. One
+structural fact, two symptoms — nothing can attribute a commit, and nothing can withhold one.
+
+### F3 — segmentationAgrees() implements half its own comment
+
+Comment: *"They agree when no gap-session mixes trailers **and no trailer spans gap-sessions**."*
+The code checks only the first conjunct. A three-commit fixture with one trailer across two
+gap-sessions returns `true`. Live: `Claude Opus 5` spans gap2+gap3 (19+4=23) unreported.
+
+Also: `assignments()` windows the board from `all[0].ts` — the earliest **commit** — not from
+`--since`, so the board window silently tracks git activity rather than the requested one.
+
+### F4 — the same defect as F1, in my own tell-index, pointing the other way
+
+`CHAIR_AUDIT_RE` demanded the BARE form and went blind to every line written with the chair
+stamp. residue sees 3 of 40; tell-index saw 37 of 40. Two instruments, one file, both
+half-blind, neither printing a drop count. Fixed: both formats parse, and what cannot be parsed
+is counted and reported in the run header.
+
+### The two withholding rules, adopted from their instruments into mine
+
+1. **catch-ledger's ratio rule** — *more unknowns than knowns, no ratio.* tell-index had no
+   unattributed bucket, so the rule could never fire and every maturity ratio it printed was
+   defensible by construction rather than on the evidence.
+
+   **The first port was the coat.** I keyed `unattributed` on a turn whose ROLE could not be
+   decided — which reads zero on every window of the live board, because `classifyOrigin` is
+   total over the roles the board contains. The rule adopted in name, firing nowhere; a
+   concession that costs nothing. Caught by running it and seeing a column of zeros.
+
+   The rule's content is that attribution is a property of the TEXT: a ratio of who caught it
+   may only count turns that say who caught it. Ported properly, **15 of 16 windows withhold**,
+   and the survivor reads 0:1.
+
+2. **residue's attribution rule** — *attribution is the precondition, so it is reported before
+   any number.* tell-index pooled every pane into calendar days. Per-actor tell counts are now
+   withheld where a window holds more than one committee actor (11 of 18 windows), with the
+   per-actor breakdown printed underneath. Actor = the pane for committee turns, one human
+   however many panes he typed into. Predicates exported (`withholdRatio`, `isMixedWindow`) so
+   the suite asserts what ships rather than a copy — residue's own lesson, applied to it.
+
+### The verdict, and it costs me the file I built
+
+**The maturity ratio in tell-index does not earn its place. catch-ledger's does.** Mine scores
+by SPEAKER and calls it CATCHER; under the rule it claims to share it can compute nothing on
+this corpus, and 15-of-16 withholding is the instrument saying so in its own output. Theirs
+reads a corpus where attribution is actually written down. **Keep theirs; the ratio here should
+be deleted rather than withheld** — a permanently withheld column still invites someone to
+quote the one window that survives. Recommendation, not action: deleting a metric this map
+ratifies is the chair's call, not mine.
+
+**The named-tell scanner survives and is not the same instrument.** Lexical shapes per actor
+over the board is a measurement catch-ledger does not make and cannot — its corpus is curated
+prose, which is exactly where the tells have already been edited out.
+
+### What they have that we structurally do not
+
+- **Residue over speech.** Ours are lexical scanners over what was said; tell-index's own header
+  concedes a falling tell-rate is not progress, because you can stop typing the words. residue
+  is gameable only by changing what you do to the tree. Stronger instrument class, and we have
+  nothing in it.
+- **Attribution before aggregation** — adopted above. Theirs was right; ours was wrong.
+- **The absent-trigger asymmetry** (checkpoint.py): code lands in the tree by default, a finding
+  lands only if someone transcribes it, and the transcript expires on a 30-day clock. Neither of
+  our instruments reads a transcript. `harvest.py` indexed **652 candidate lines across 643
+  transcripts** on this machine — a number ours structurally cannot produce.
+
+### Adoption calls
+
+- `checkpoint.py` — **adopt as-is.** It earned it in one run: caught
+  `dev/migrate/unpack_room.ps1` dirty at HEAD, in-flight state I had not flagged myself.
+- `harvest.py` — **adopt.** Two refusals, one enforced: the tracked-path guard calls
+  `git ls-files` and fails closed with no git; the `--run` gate cites a blind-pair commitment
+  that is now spent and cannot check the condition it names. Honest speed bump, not enforcement.
+  Its dedupe report is also vacuous — `len(hits)` and `len(seen)` are incremented together, so
+  the printed "(N after dedupe)" can never differ from N (live: `652 distinct ... (652 after
+  dedupe)`). The pre-dedupe count is never held.
+- `residue.js` — **best idea in the set, least trustworthy number in the room.** Measure (4) is
+  unusable until F1 is fixed. F2 is not fixable inside the file.
+- Both tools guess where the sibling `blackbox` repo lives and guess differently — checkpoint at
+  `~/Desktop/blackbox`, residue at `../blackbox`. Neither exists on this machine and both skip in
+  silence: an instrument that claims to run on whatever machine it woke on cannot tell *absent*
+  from *moved*.

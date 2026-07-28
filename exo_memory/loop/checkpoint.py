@@ -267,9 +267,17 @@ def residue(limit=14):
 
 
 def commitments():
-    """Re-read from the masters. Never paraphrased into this file."""
+    """Re-read from the masters. Never paraphrased into this file.
+
+    cycle8_handoff.md is added by the LAPTOP side (2026-07-28). The desktop was not running
+    when its findings were written, so a live handoff was impossible and a board entry would
+    not have been read. This function is the surest trigger either machine has -- it fires at
+    every gap whether or not anyone remembers -- so the pointer is placed where it fires. That
+    is this file's own absent-trigger doctrine used for the thing it was built for, and the
+    list is the right place for it precisely because it is not a list anyone has to check.
+    """
     out = []
-    for name in ("cycle4_handoff.md", "cycle4_preregistration.md"):
+    for name in ("cycle4_handoff.md", "cycle4_preregistration.md", "cycle8_handoff.md"):
         p = REPO / "exo_memory" / name
         if p.exists():
             out.append(f"{name} (modified {datetime.datetime.fromtimestamp(p.stat().st_mtime):%Y-%m-%d %H:%M})")
