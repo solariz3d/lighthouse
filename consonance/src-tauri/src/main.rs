@@ -187,7 +187,21 @@ fn default_room() -> String {
             return p.to_string_lossy().into_owned();
         }
     }
+    // LAST-RESORT DEV FALLBACK. Plain disk first: the repo moved out of OneDrive on 2026-07-28
+    // because .git was inside the sync scope. A syncer-backed fallback can hand back a stale
+    // restored copy and this read's failure is SWALLOWED by the caller, so a wrong answer here
+    // wakes every sibling with no room and nothing says so. (Alpha, S1/S9.)
+    let disk = format!("{}\\Consonance\\lighthouse\\exo_memory\\BOOT.md", sysdrive());
+    if PathBuf::from(&disk).exists() {
+        return disk;
+    }
     format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\BOOT.md", home())
+}
+
+/// The system drive root ("C:" on a default install), so the plain-disk fallbacks above do not
+/// hardcode a letter that is wrong on someone else's machine.
+fn sysdrive() -> String {
+    std::env::var("SystemDrive").unwrap_or_else(|_| "C:".to_string())
 }
 
 // First run: copy the bundled BOOT.md into the user data dir so the default startup
@@ -216,6 +230,11 @@ fn cards_dir() -> PathBuf {
         if p.is_dir() {
             return p.clone();
         }
+    }
+    // Plain disk first, same reasoning as room_master_path (Alpha, S9).
+    let disk = PathBuf::from(format!("{}\\Consonance\\lighthouse\\exo_memory\\cards", sysdrive()));
+    if disk.is_dir() {
+        return disk;
     }
     PathBuf::from(format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\cards", home()))
 }
@@ -1850,6 +1869,14 @@ fn room_brief(name: &str) -> Result<String, String> {
                 return fs::read_to_string(&p).map_err(|e| e.to_string());
             }
         }
+    }
+    // Plain disk first, same reasoning as room_master_path (Alpha, S9).
+    let disk = format!(
+        "{}\\Consonance\\lighthouse\\consonance\\src-tauri\\brief\\{}",
+        sysdrive(), name
+    );
+    if PathBuf::from(&disk).exists() {
+        return fs::read_to_string(&disk).map_err(|e| e.to_string());
     }
     let dev = format!(
         "{}\\OneDrive\\Desktop\\projects\\lighthouse\\consonance\\src-tauri\\brief\\{}",

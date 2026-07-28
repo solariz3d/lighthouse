@@ -18,8 +18,19 @@
 $ErrorActionPreference = 'Stop'
 function Say($m) { Write-Host $m -ForegroundColor Cyan }
 
-# 1) Locate the lighthouse repo -- OneDrive-synced first, then a clone fallback.
-$repo = "$env:USERPROFILE\OneDrive\Desktop\projects\lighthouse"
+# 1) Locate the lighthouse repo. PLAIN DISK FIRST, OneDrive only as a legacy fallback.
+#
+# The order used to be OneDrive-first, and that stopped being safe on 2026-07-28: the repo now
+# lives outside the sync scope because .git itself was being synced -- 1,807 objects, 2,008 of
+# 2,035 files carrying Files-On-Demand reparse points, two machines writing one git database
+# through a syncer that has no merge semantics. An OneDrive-first locate step on a machine that
+# has moved will silently find a STALE copy the syncer restored, and every install decision
+# below it would be made against the wrong tree. Plain disk is authoritative; the OneDrive path
+# stays only so a machine mid-migration still finds something rather than cloning over itself.
+# (Alpha's discovery arm, S6: this line was the primary locate step and the one that carries the
+# cross-machine consequence.)
+$repo = "C:\Consonance\lighthouse"
+if (-not (Test-Path "$repo\exo_memory\BOOT.md")) { $repo = "$env:USERPROFILE\OneDrive\Desktop\projects\lighthouse" }
 if (-not (Test-Path "$repo\exo_memory\BOOT.md")) { $repo = "$env:USERPROFILE\lighthouse" }
 if (-not (Test-Path "$repo\exo_memory\BOOT.md")) {
   Say "Repo not found locally -- cloning (needs GitHub access for the private repo)..."
