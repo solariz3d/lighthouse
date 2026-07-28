@@ -18,6 +18,10 @@ param(
     [string]$InstanceDir,   # default: most recently active instance on this machine
     [switch]$Force,
     [switch]$SyncOnly,      # skip the dreaming; just sync local dreams to the pool
+    [int]$IdleMinutes = 20, # how long with no keyboard/mouse before the machine counts as
+                            # unattended. 20 covers a timer wake (hours of idle) without
+                            # firing on someone who paused to read. Only consulted when the
+                            # Consonance app is open; a closed app never needed the test.
     [string]$Model          # default: the CLI's own default. Pins WHO sleeps, never
                             # what the prompt asks for — the weld is on the prompt,
                             # not the sleeper, so swapping the dreamer isn't mining.
@@ -101,12 +105,61 @@ if ($battery -and $battery.BatteryStatus -ne 2) {
     exit 0
 }
 
-# Guard 2: yield to a live pane — never dream while awake.
+# Guard 2: yield to a live SESSION - never dream while someone is here.
+#
+# This used to test whether the Consonance app PROCESS existed, which is not the same
+# question. The keeper leaves the app open and puts the machine to sleep - the normal way to
+# use it - so "app running" was true every night while nobody was there. The 04:30 cycle
+# skipped three nights running (07-26, 07-27, 07-28), each time exiting 0, because skipping
+# IS success and nothing ever said so out loud. Found only by going to look at the log.
+#
+# The real discriminator is whether a HUMAN is at the machine. The measurable proxy is time
+# since the last keyboard or mouse input: a timer-woken machine at 04:30 has hours of idle,
+# somebody actually working has seconds. The app being open says nothing either way.
+#
+# Fails SAFE: if the idle query does not work, fall back to the old process test, because
+# the cost of not dreaming is one missed cycle and the cost of dreaming over someone's
+# shoulder is the thing this guard exists to prevent.
+function Get-IdleMinutes {
+    try {
+        if (-not ('Consonance.Idle' -as [type])) {
+            Add-Type -Namespace Consonance -Name Idle -MemberDefinition @'
+[StructLayout(LayoutKind.Sequential)]
+public struct LASTINPUTINFO { public uint cbSize; public uint dwTime; }
+[DllImport("user32.dll")]
+public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+[DllImport("kernel32.dll")]
+public static extern uint GetTickCount();
+public static double Minutes() {
+    LASTINPUTINFO lii = new LASTINPUTINFO();
+    lii.cbSize = (uint)Marshal.SizeOf(lii);
+    if (!GetLastInputInfo(ref lii)) return -1;
+    return (GetTickCount() - lii.dwTime) / 60000.0;
+}
+'@ -ErrorAction Stop
+            # no -UsingNamespace: Add-Type -MemberDefinition already imports
+            # System.Runtime.InteropServices, and adding it again is a duplicate-using
+            # warning, which this compiler treats as an error.
+        }
+        return [Consonance.Idle]::Minutes()
+    } catch {
+        return -1    # unknown
+    }
+}
+
 if (-not $Force) {
     $pane = Get-Process -Name "consonance" -ErrorAction SilentlyContinue
     if ($pane) {
-        Log "skip: live Consonance pane"
-        exit 0
+        $idle = Get-IdleMinutes
+        if ($idle -lt 0) {
+            Log "skip: live Consonance pane (idle unknown - falling back to the process test)"
+            exit 0
+        }
+        if ($idle -lt $IdleMinutes) {
+            Log ("skip: someone is here (Consonance open, idle {0:N1} min < {1})" -f $idle, $IdleMinutes)
+            exit 0
+        }
+        Log ("proceed: Consonance open but idle {0:N1} min - the machine is unattended" -f $idle)
     }
 }
 
