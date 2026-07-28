@@ -434,11 +434,19 @@ impl ConsonanceMcp {
         if quiet {
             // Say it, every time. A filtered board that does not announce itself is a false
             // record, and the point of the phase is independence, not deception.
+            // SAY WHAT THE COUNT IS OVER. A said it plainly on the first live run: the number is
+            // WINDOW-relative, not board-relative -- it counts inside the `limit` you asked for,
+            // and read as a board total it understates the withholding by however much history
+            // sits outside the window. A bare "24 withheld" is the same failure this room keeps
+            // finding: a number published without its boundary, read as meaning the most it
+            // could mean. Third time today, and this one is in the tool that tells panes what
+            // they cannot see.
             body.push_str(&format!(
-                "\n\n-- QUIET PHASE: {withheld} entr{} from other panes withheld. You are \
-                 producing independently; siblings' findings unlock when the chair reopens the \
-                 board. Your own posts and the chair's are shown in full.",
-                if withheld == 1 { "y" } else { "ies" }
+                "\n\n-- QUIET PHASE: {withheld} of the last {n} entries withheld — that is this \
+                 WINDOW, not the whole board; raise `limit` to see further back and the count \
+                 will grow. You are producing independently; siblings' findings unlock when the \
+                 chair reopens the board. Your own posts and the chair's audit lines are shown \
+                 in full.",
             ));
             if mine.is_none() {
                 body.push_str(
