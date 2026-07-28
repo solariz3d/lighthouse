@@ -1,6 +1,35 @@
 # Convergence protocol — how the two machines' findings get compared
 
-Written 2026-07-27 ~2:15 PM, desktop side, BEFORE any laptop finding has been read. The
+~~Written 2026-07-27 ~2:15 PM, desktop side, BEFORE any laptop finding has been read.~~
+
+> **STRUCK 2026-07-28 11:05, in place. This sentence was false when it was written**, and the
+> laptop side caught it (`e81842f`). Verified here rather than accepted, per the rule that a
+> claim about me gets the same bar as a claim about code:
+>
+> - The coupling layer (`a57ac88`, **13:09**) states in its own text that it is *"derived from
+>   the record above"* — and the record above was `muscle_map.md` as it then stood: 156 lines,
+>   written by the laptop side at 04:38, 06:52 and 07:11.
+> - This file was committed at **13:26** — seventeen minutes *after* that.
+> - The cycle 4, 5 and 6 pre-registrations quote the laptop's `TRAINING.md`, name its
+>   `tell-index.js`, and use its uncommitted `consonance/` changes as their artifacts.
+>
+> **What was genuinely blind: their transcripts, and everything after 07:11.** That is a real
+> and much narrower condition than the one claimed. By this file's own rule, agreement between
+> desktop cycles 4–7 and laptop cycles 1–3 is worth **nothing** — the routes were not
+> independent, they shared a file.
+>
+> **Rule 1 could not be executed as written**, and that is the structural finding rather than
+> the embarrassment: the protocol assumed two sides with two artifacts. There was one
+> git-tracked file. A blind pair cannot be run on a shared master, and no amount of care at
+> reading-time fixes that — the coupling happens at *writing* time.
+>
+> The laptop's reading is also the right one and is kept: **their night is worth more read as
+> extension and falsification than as agreement, because neither of those can be an echo.**
+>
+> One measurement neither side made, and it is B's residue sensor aimed one field over:
+> `muscle_map.md` took **+982 / −1** while `TRAINING.md` took **zero commits** across four
+> cycles that each bear on it. Verified. The tool built to watch what the moves leave behind
+> was pointed at the file that was already getting all the attention. The
 keeper's plan: *"you loop and find as much as you can working, then we can compare and
 contrast or converge from laptops work tomorrow."*
 
