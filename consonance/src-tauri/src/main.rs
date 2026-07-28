@@ -615,6 +615,24 @@ struct TurnRecord {
     text: String,
 }
 
+// Cycle 8 follow-through (F2, 2026-07-28). The room established that nothing in the record names
+// WHICH instance produced a given artifact: the Co-Authored-By trailer names the model rather than
+// the author, `%an` is one identity for every pane, and on a shared checkout no position can be
+// attributed after the fact. Provenance has to ride with the turn at the moment the value is still
+// in hand, or it is not recoverable later at any price.
+//
+// ON THE BLINDING RULE, since this names a model and that is the thing we agreed not to spread:
+// the rule is that a pane must never be told a PEER's model as ambient context. This is a
+// provenance record keyed to the pane that produced the turn — the analyst's material, emitted
+// alongside the turn rather than folded into it, so nothing in the ordinary pane loop reads a
+// model off it. The chair-status surface already carries the same fact for the same reason.
+#[derive(Clone, Serialize)]
+struct TurnProvenance {
+    pane: String,
+    ts: u64,
+    model: String,
+}
+
 // Stage 8: a tether-strength reading for a turn — surfaced numbers, never a verdict.
 #[derive(Clone, Serialize)]
 struct TetherInfo {
@@ -1554,7 +1572,22 @@ fn start_tailer(
                             if backfill_is_pane(&pane_id) {
                                 BACKFILL_TURNS.fetch_add(1, Ordering::Relaxed);
                             }
-                            board_push(&board, BoardEntry { pane: pane_id.clone(), role: role.clone(), text: text.clone(), ts, ts_source });
+                            // Same F2 follow-through, on the record side. A board line that cannot
+                            // be traced to the substrate that produced it is a line nobody can
+                            // audit later, and this is the only point where the value is still in
+                            // hand — the tailer already parsed it for pricing and then dropped it.
+                            let last_model = models.lock().unwrap().get(&pane_id).cloned().unwrap_or_default();
+                            let stamped = if last_model.is_empty() {
+                                text.clone()
+                            } else {
+                                format!("[{last_model}] {text}")
+                            };
+                            let _ = app.emit("turn_provenance", TurnProvenance {
+                                pane: pane_id.clone(),
+                                ts,
+                                model: last_model,
+                            });
+                            board_push(&board, BoardEntry { pane: pane_id.clone(), role: role.clone(), text: stamped, ts, ts_source });
                             let _ = app.emit("turn", TurnRecord { pane: pane_id.clone(), role, text });
                         }
                         if let Some((inp, out, cr, cw, model)) = extract_usage(&v) {
