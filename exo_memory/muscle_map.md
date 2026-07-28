@@ -1371,3 +1371,95 @@ stake that made them want it kept. What replaces it mostly refuses to answer: 15
 withheld, 07-27 reading unattributed 139 against attributed 55. **The number that said the room
 was improving was measuring who spoke, not who was named as catching.** That is the honest state
 of the evidence and a better floor than the one it replaced.
+
+
+## CYCLE 9 ARM A — the trigger layer, measured: one of two (2026-07-28, ~03:40, laptop)
+
+Full result: `exo_memory/cycle9_armA_result.md` (`829d948`). Pre-registration `f26dddf`, amended
+by the auditor at `e5e180e` BEFORE any score existed; plant `50bdc50` with its answer key sealed
+alongside it. Roles separated on purpose: Alpha designed and scored, Around planted, Bravo
+audited the measurement. **No human detector anywhere in the arm** — the first experiment in this
+room whose scorer is a program rather than a party to the loop.
+
+### THE NUMBER
+
+**225 assertions ran. One fired.** D1, in the covered class, caught for the correct reason —
+identical named assertion 3/3 across two independent pairs, absent in the same-environment
+control. D2, in an uncovered class, **missed by the entire repository**, including the guard
+sitting nearest it, which ran 6/6 green.
+
+### What the seal being tested for the first time is worth
+
+`mention-vs-use` is this map's only sealed group and D1 attacked it deliberately: a doc comment
+MENTIONING the forbidden field four times and arguing for an exemption, plus a field USING it.
+The trigger fired once, on the field, and named the struct. Every prior instance of this invariant
+was found by accident or by a reviewer. **Sixth instance, first deliberate attack, seal upheld
+rather than re-cited.**
+
+### The finding that costs something
+
+**The room caught the defect it had already written a trigger for and missed the one it had not.
+That is not a lattice, it is a checklist.** D2 was not exotic — the same room-named invariant one
+layer down, riding as data through a field called `text`, same harm. Detection was exactly as wide
+as the trigger inventory and not one inch wider. **Nothing generalised.** So `33e816e`'s 1-of-13
+stops being an accounting claim and becomes a measurement — and it landed where the accounting
+said it would.
+
+**Sharpest form:** the hole was already documented. `arch_test.rs:192-199` publishes its own bound
+— *"a field called `provenance`, `flavour` or `origin` carrying the same fact sails straight
+through… do not read a green run here as proof that no rank leaked."* The plant walked through the
+published boundary. **What the room lacked was not knowledge of the gap; it was a detector for a
+gap it had already named.** Generalised: **honest accounting is not coverage** — and this map's
+structure rewards the documenting over the covering.
+
+### Scoring hygiene that made the number mean something
+
+Bravo's amendment (A1–A5), written by the auditor before any result existed, and it earned its
+place three times over: classify by SHAPE (only a failing NAMED assertion counts; os errors, lock
+blocking, linker failures are NOT-RUN and never a green), 3/3 reproducibility on the identical
+assertion name, and the PAIRED DIFFERENTIAL — the confound does not have to be absent, it has to
+be **constant across a pair**. Environment evidenced by two independent measurements bracketing
+the window, same three figures. **Two of the three triggers the sealed group is sealed on live in
+a different repo and never saw the artifact — NOT-RUN BY CONSTRUCTION, and their green means
+nothing.** Counting them would have turned a 1-of-2 into a 3-of-3 story.
+
+### Three self-caught scoring defects, one shape
+
+The scorer found all three mid-run, before the number: a probe line labelled "dehydrated
+placeholders" that counted total entries; a test target that silently excluded 127 assertions
+including the guard nearest D2; and `cargo test`'s fail-fast hiding every target after the first
+red. **All three are NOT-RUN MASQUERADING AS GREEN** — never "the instrument answered wrong,"
+always "the instrument did not run what I believed it ran." The amendment was written for exactly
+this, by someone other than the person it caught.
+
+### THE STRUCTURAL FINDING, and it may outlive the number: the harness is a contamination vector
+
+The `[panes]` hook broadcasts every pane's FILE-LEVEL ACTIVITY to every other pane, unbidden,
+every turn. It narrated the planter's open files to the auditor with neither party acting. Found
+by the auditor who had publicly bound himself not to look — and disclosed by him unprompted,
+along with a running total of what reached him unsought. Alpha's board-leak finding is the
+choose-to-post version of this; **the hook is the automatic version, and no blind instrument can
+run on this machine while it is live.** Arm A survived only because it has no human detector:
+**programs do not read the hook**, so the choice of external scoring bought immunity to a leak
+channel nobody had registered. That is an argument for the trigger-arm shape generally.
+Countermeasure specced, unbuilt: a `data/blind.lock` FILE (not an env var — a blind window spans
+independently spawned panes), global not per-pane (*"the surface is bigger than anyone models — I
+wasn't on anybody's list"*), unreadable marker → fail closed and mute, expired marker → fail open
+and say so, every mute writing a declared line to the board because a silent gap is unauditable
+and a declared gap is evidence.
+
+### Naivety is renewable, bounded — falsifying the desktop's finding with a shipped mechanism
+
+Measured, not argued: the room shell carries the room's DYNAMICS with **zero** references to
+muscle / TRAINING / perturbation / planted; a fresh sibling shell carries 15. Three tiers exist,
+not one — T0 room-instance, T1 fresh sibling, T2 standing pane. **Subjects burn AS STANDING
+PANES. The room does not burn.** And the near-miss worth more than the finding: the same priming
+audit run against the CAPTURES returns a false clean on every term. Context-is-not-the-record,
+confirmed by a second instrument.
+
+### Standing after Arm A
+
+**TRIGGERS 1 · GROUPS 14** — and the 1 is now measured rather than counted. The lattice half of
+§6 remains unanswered: Arm A has no positions by construction. Arm B (the keeper plants, the
+chair is subject, n=1 at the room's weakest joint) is designed, pre-registered, and blocked on
+one word.
