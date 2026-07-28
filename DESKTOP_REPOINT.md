@@ -1,5 +1,53 @@
 # READ THIS BEFORE YOU PULL AGAIN — the laptop is leaving OneDrive
 
+> ## STATUS UPDATE — 2026-07-28 07:55. THE MOVE IS DONE.
+>
+> **Everything below this block was written at ~05:40, before the move, and says "nothing has
+> moved yet." That is no longer true.** Read this block first; the body below is still correct
+> about *why* and *how*, and it is the procedure you should follow for your own tree. It is only
+> the state claims that are stale. Appended rather than rewritten, per the maintenance law.
+>
+> **What is now true on the laptop:**
+>
+> - The tree lives at `C:\Consonance\lighthouse`. `.git` is out of the sync scope entirely.
+> - The copy was verified before anything was repointed: 2,041 files byte-identical by full
+>   content read, **0 reparse points** at the destination, full git object-set fingerprint match,
+>   `fsck` clean, 496 commits.
+> - Repointed: `~/.consonance.json` `room_path`, the dream shim in `%LOCALAPPDATA%\Consonance`,
+>   the Desktop shortcut, `desktop-install.ps1`'s locate step, and three last-resort dev fallbacks
+>   in `main.rs`. Confirmed after restart: all four panes woke with a real room.
+> - `desktop-install.ps1` **already puts plain disk first** — step 3 below describes a fix that has
+>   since landed. Pull it; do not re-apply it by hand.
+> - `launch.ps1` fix (step 5) has landed too.
+>
+> **The OneDrive copy was NOT deleted, and will not be.** Phase 3 as described below is cancelled.
+> The keeper's call: the old tree is now a **frozen time capsule**, not garbage. It is at
+> `%USERPROFILE%\OneDrive\Desktop\projects\lighthouse-FROZEN-2026-07-28` — renamed, with `.git`
+> renamed to `.git-frozen` so it can never answer as a repo to any tool, and a `FROZEN.md` at its
+> root explaining what it is and pointing here. 2,042 files, 28.5 MB.
+>
+> **What this means for you, concretely:** the rename *is* a move within the sync scope, so your
+> machine will see the old path disappear and the new `-FROZEN-` path appear. **That is expected
+> and it is not data loss.** Do not "repair" it. Your own checkout at the old path is the thing to
+> protect — move it to `C:\Consonance\lighthouse` yourself, using the procedure below, before you
+> let anything else touch it.
+>
+> **Instrument:** `move_verify.ps1` is now committed at `dev/migrate/move_verify.ps1` so you do not
+> have to write your own. §Verification below explains it. **Copy it OUT of the repo before you
+> run it** — an instrument living inside the artifact under test dies with a botched move. That is
+> why it originally lived at `C:\Consonance\verify\`.
+>
+> **Known-red checks, so you do not chase them:** `C22` looks for the built binary inside the repo
+> tree, but the binary now lives at `CARGO_TARGET_DIR`; `C23` counts the old path in
+> `desktop-install.ps1`, where it survives *on purpose* as a demoted legacy fallback. Both are the
+> instrument lagging the system, not the system being wrong. They are filed for Around, not fixed
+> by editing the check to go green.
+>
+> **Open work, if you want it:** cycle 9 Arm B (pre-registered, blocked on the keeper); the blind
+> gate at `data/blind.lock` (specced by Bravo, unbuilt — no blind instrument can run until it
+> exists, because the `[panes]` harness hook broadcasts file-level activity between panes); and the
+> two verifier findings above.
+
 Written 2026-07-28 ~05:40 by the laptop chair, at the keeper's direction, from the planning
 arms of three panes (Alpha: discovery, Bravo: procedure, Around: verification). **Nothing has
 moved yet.** This note goes to origin FIRST, deliberately, because git is the only wire between
@@ -79,9 +127,16 @@ The false cleans it was built to catch, which apply to your move as much as ours
 
 ## One artifact that exists in no repository
 
-`NOTHING_WASTED.md` is untracked on the laptop and has never been committed. sha256
-`615c11a09eec8caa51c44bc58a66be60fa1e097203d3f3832af701aa92624978`, 11,236 bytes. A fresh clone
-would silently drop it. If you hold a copy, it is not backed by git either.
+**Resolved 2026-07-28 07:03 — this section is closed.** `NOTHING_WASTED.md` is committed and on
+origin. What is tracked is the keeper's essay on the project: the gap-dream cycle and why "do not
+be useful" is load-bearing, the dream-pool leak and the law it produced, the observer-removal
+design, and the four rules. A longer draft exists only on the laptop and is deliberately not in
+the repo — do not go looking for it, and do not reconstruct it from any copy you may hold. If you
+hold a copy of an earlier version, treat it as private material under the same law as the dreams:
+nothing unattended publishes it.
+
+*(Original state, kept for the record: untracked, sha256 `615c11a0…`, 11,236 bytes, backed by
+nothing.)*
 
 ## The general form, because it is the reusable part
 
