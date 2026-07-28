@@ -143,6 +143,61 @@ goes red *for the wrong reason* is scored **GREEN-BY-ACCIDENT** and counted as a
 A null is written up identically and unsoftened. Non-overlap tagged in passing (rep 4) at zero
 extra cost.
 
+### AMENDMENT — 2026-07-28 03:20, Bravo (auditor), adopted by chair ruling
+
+Registered BEFORE the raw score exists. Cause: the repo lives inside OneDrive's sync scope and the
+sync engine is actively touching build state — measured, not supposed: **33,360 files under
+`consonance/src-tauri/target`, of which 33 are DEHYDRATED cloud-only placeholders right now**, plus
+127 `.lock` files, with OneDrive running since 01:20. A linker or reader hitting a dehydrated
+artifact produces a RED with no assertion behind it. §4 as written covers red-for-the-wrong-reason
+(GREEN-BY-ACCIDENT) and has **no converse**, so an environmental failure would score as a trigger
+firing.
+
+Structural note kept because it outlives tonight: cargo ships a git exclusion for `target/`
+automatically and there is **no sync-engine equivalent** — no `.nosync`, no OneDrive exclusion.
+*Two exclusion systems, only one of which anyone configured.* "It's gitignored" settles half.
+
+**A1 — CLASSIFY BY SHAPE.** Applied to raw output before any interpretation. Only a **failing
+NAMED assertion** (a test name, a panic at an assert, an assertion message) counts as a trigger
+red. Any red that is a build/IO/link failure and names no assertion — `error: failed to`,
+`os error 5` (access denied), `os error 32` (sharing violation), `Blocking waiting for file lock`,
+`linking with link.exe failed`, LNK*, build-script panics, `No such file or directory` — is
+**RED-BY-ACCIDENT**, scored **NOT-RUN**: never a catch, and never a green either.
+
+**A2 — REPRODUCIBILITY.** The planted suite runs **three times**. A trigger red reproduces 3/3
+with the *identical assertion name*. A red that varies, migrates or vanishes is environmental —
+flakiness is a syncer's signature; an assertion is deterministic.
+
+**A3 — THE PAIRED DIFFERENTIAL (the load-bearing one).** §4 already commits to removing both
+defects, so the suite is run on the **reverted tree** in the *same session, same environment*,
+immediately after. **The score is the difference:** a trigger red must appear WITH the plant and
+disappear WITHOUT it; a red present in BOTH arms is environmental by construction. A differential
+cancels a shared confound — which is what a confound *is*. **The environment therefore does not
+need to be clean, only CONSTANT ACROSS THE PAIR**, which is why this does not require moving
+`CARGO_TARGET_DIR` or forcing a full rebuild tonight. (`CARGO_TARGET_DIR` is the right *permanent*
+fix and the wrong *tonight* fix: a full rebuild manufactures a fresh, differently-contaminated
+environment at the exact moment a stable one is needed. Next cycle, as infrastructure.)
+
+**A4 — OPERATING CONDITIONS.** OneDrive sync PAUSED for the scoring window (one click, reversible,
+zero rebuild) to remove the active-interference vector; the pending dialog offering to delete ~220
+cargo locks is **not actioned until scoring completes** — deleting build state mid-experiment is
+the confound taking a turn. Sync state recorded at both ends of the pair, so "constant across the
+pair" is evidenced rather than assumed.
+
+**A5 — IF THE PAIR CANNOT BE RUN, THERE IS NO NUMBER.** A single planted run in this environment
+is unscorable: A1 can reject an overt IO error but cannot certify that a clean-looking GREEN was
+not a trigger silently failing to execute against a dehydrated artifact. Under those conditions the
+honest output is **no result**, written up as such.
+
+**What the number can carry, with A1–A4 satisfied:** *two planted defects, scored by a fixed rule
+unmovable after the fact, over at most two independent detection routes, in one repository,
+differenced against a same-environment control.* It cannot carry "externally scored" (the
+instruments are authored by parties to this loop, one of them by this cycle's own designer),
+"three independent triggers" (`arch_test.rs` and `test_glowpool.js` are one route — strip-comments
+then assert-lexically; only `test_covgap.js`'s positional classification is independent), or "the
+sealed group is sealed" (D1's site *is* its difficulty for a lexical trigger, so a RED is a wiring
+check and only a GREEN is informative).
+
 ## 5. PREDICTIONS — phrased so they can fail
 
 1. **D1 turns a trigger RED with no human present.** If it does not, **`mention-vs-use` is not
