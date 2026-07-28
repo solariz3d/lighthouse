@@ -75,6 +75,27 @@ pub struct ConsonanceMcp {
     pulls: tokio::sync::mpsc::UnboundedSender<PullRequest>,
     chair: tokio::sync::mpsc::UnboundedSender<ChairCmd>,
     chair_token: String,
+    /// WHO IS CALLING, established by the connection rather than claimed in the payload.
+    ///
+    /// Until 2026-07-28 there was no answer to this. Every pane connected to one shared URL and
+    /// identified itself with an OPTIONAL, self-reported `tag` on each post; absent it, the
+    /// board recorded "mcp". So the board could neither attribute a post nor address one, and
+    /// any pane could post as any other or as nobody.
+    ///
+    /// That is the same structural gap the laptop side found in git on the same day — a shared
+    /// checkout has no per-actor boundary, so nothing can attribute a commit and nothing can
+    /// withhold one. Two layers, one fact: this system had no per-actor identity anywhere.
+    ///
+    /// The fix is the connection: the app knows `pane_id` when it spawns a pane, so each pane
+    /// gets its own mount point and its own service instance carrying that identity. `None` is
+    /// the legacy unmounted route, kept so an older pane keeps working — its posts are stamped
+    /// `unattributed`, which makes the remaining gap COUNTABLE instead of silent.
+    ///
+    /// HONEST LIMIT, stated the same way the chair token states its own: this is a DISCIPLINE
+    /// boundary, not a security one. A pane could read a sibling's config file and post through
+    /// its mount. What enforces the methodology is that every post is attributed and the whole
+    /// committee reads the board.
+    identity: Option<String>,
     tool_router: ToolRouter<ConsonanceMcp>,
 }
 
@@ -147,8 +168,9 @@ impl ConsonanceMcp {
         pulls: tokio::sync::mpsc::UnboundedSender<PullRequest>,
         chair: tokio::sync::mpsc::UnboundedSender<ChairCmd>,
         chair_token: String,
+        identity: Option<String>,
     ) -> Self {
-        Self { board, pulls, chair, chair_token, tool_router: Self::tool_router() }
+        Self { board, pulls, chair, chair_token, identity, tool_router: Self::tool_router() }
     }
 
     /// Gate a chair verb. The token is written only into the Main instance's directory, so in
@@ -270,8 +292,16 @@ impl ConsonanceMcp {
         &self,
         Parameters(PostBoardArgs { text, tag }): Parameters<PostBoardArgs>,
     ) -> Result<CallToolResult, McpError> {
+        // The connection wins over the payload. A self-reported tag is a claim; the mount point
+        // is a fact the caller cannot restate. Where there is no identity the post is stamped
+        // `unattributed` rather than "mcp" — a word that read like a source and was really the
+        // absence of one, which is how 37 of the laptop's 40 board lines went uncounted.
         let entry = BoardEntry {
-            pane: tag.unwrap_or_else(|| "mcp".to_string()),
+            pane: self
+                .identity
+                .clone()
+                .or(tag)
+                .unwrap_or_else(|| "unattributed".to_string()),
             role: "committee".to_string(),
             text,
             ts: now_ms(),
@@ -313,9 +343,17 @@ impl ServerHandler for ConsonanceMcp {
     }
 }
 
-/// Absolute path to the shared MCP config every pane is launched with.
+/// Absolute path to the shared, UNIDENTIFIED MCP config. Kept working on purpose: a pane
+/// launched before per-pane identity existed still connects through it, and its posts land as
+/// `unattributed` so the size of the remaining gap stays readable.
 pub fn config_path() -> std::path::PathBuf {
     data_dir().join("mcp.consonance.json")
+}
+
+/// The config for one identity. The pane launched with this file posts as `letter`, and cannot
+/// say otherwise — the mount point is chosen by whoever spawned it, not by the caller.
+pub fn config_path_for(letter: char) -> std::path::PathBuf {
+    data_dir().join(format!("mcp.consonance.{letter}.json"))
 }
 
 #[cfg(test)]
@@ -382,14 +420,40 @@ pub fn start(
                 let _ = std::fs::create_dir_all(dir);
             }
             let _ = std::fs::write(config_path(), cfg);
+            // One config per identity, written beside the shared one. A pane is launched with
+            // ITS file, so the identity travels in the connection instead of in a payload the
+            // pane composes. The shared config stays valid; a pane with no letter yet still
+            // connects and is stamped `unattributed`.
+            for letter in 'A'..='Z' {
+                let c = format!(
+                    "{{\"mcpServers\":{{\"consonance\":{{\"type\":\"http\",\"url\":\"http://127.0.0.1:{port}/mcp/{letter}\"}}}}}}"
+                );
+                let _ = std::fs::write(config_path_for(letter), c);
+            }
             let _ = tx.send(port);
 
-            let service = StreamableHttpService::new(
-                move || Ok(ConsonanceMcp::new(board.clone(), pulls.clone(), chair.clone(), chair_token.clone())),
-                LocalSessionManager::default().into(),
-                Default::default(),
-            );
-            let router = axum::Router::new().nest_service("/mcp", service);
+            // One mount per identity. rmcp builds a handler per connection from a factory
+            // closure, so a closure that has already captured WHO it serves gives an identity
+            // the caller cannot restate — which is the whole point. A route per letter is
+            // wasteful in the abstract and free in practice (26 services, no listeners, no
+            // threads), and it avoids threading a path parameter through a service that was
+            // never designed to receive one.
+            //
+            // `/mcp` stays mounted and unidentified so a pane launched before this change keeps
+            // working. Its posts land as `unattributed`, so the size of the remaining gap is
+            // readable off the board instead of being invisible.
+            let make = |ident: Option<String>| {
+                let (b, p, c, t) = (board.clone(), pulls.clone(), chair.clone(), chair_token.clone());
+                StreamableHttpService::new(
+                    move || Ok(ConsonanceMcp::new(b.clone(), p.clone(), c.clone(), t.clone(), ident.clone())),
+                    LocalSessionManager::default().into(),
+                    Default::default(),
+                )
+            };
+            let mut router = axum::Router::new().nest_service("/mcp", make(None));
+            for letter in 'A'..='Z' {
+                router = router.nest_service(&format!("/mcp/{letter}"), make(Some(letter.to_string())));
+            }
             let _ = axum::serve(listener, router).await;
         });
     });

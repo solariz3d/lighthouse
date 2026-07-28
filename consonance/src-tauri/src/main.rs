@@ -454,9 +454,23 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     if skip_perms {
         cmd.arg("--dangerously-skip-permissions");
     }
-    // join the shared MCP control plane (loopback) if it is up
+    // Join the MCP control plane (loopback) if it is up, THROUGH THIS PANE'S OWN MOUNT.
+    //
+    // Identity has to travel in the connection, not in the payload. Before 2026-07-28 every
+    // pane was launched with one shared config and identified itself with an optional
+    // self-reported tag, so the board could neither attribute a post nor address one. The app
+    // has always known which pane it is spawning; it simply never told the control plane.
+    //
+    // Single letters only: pane_letter falls back to multi-character labels once A-Z is
+    // exhausted, and the router mounts A-Z. Anything else takes the shared config and posts as
+    // `unattributed`, which is the honest outcome rather than a wrong attribution.
     if MCP_PORT.load(Ordering::Relaxed) != 0 {
-        let cfg = mcp::config_path();
+        let letter = pane_letter(&pane_id);
+        let mut chars = letter.chars();
+        let cfg = match (chars.next(), chars.next()) {
+            (Some(c), None) if c.is_ascii_uppercase() => mcp::config_path_for(c),
+            _ => mcp::config_path(),
+        };
         if let Some(p) = cfg.to_str() {
             cmd.args(["--mcp-config", p, "--strict-mcp-config"]);
         }

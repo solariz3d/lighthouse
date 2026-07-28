@@ -266,7 +266,7 @@ function bodyByClass(commits) {
 // (4) assignment intervals, from the board
 function assignments(boardPath, sinceMs) {
   if (!fs.existsSync(boardPath)) return null;
-  const rows = [];
+  const rows = [], unparsed = [];
   for (const line of fs.readFileSync(boardPath, 'utf8').split(/\r?\n/)) {
     if (!line.trim()) continue;
     let r; try { r = JSON.parse(line); } catch { continue; }
@@ -276,6 +276,18 @@ function assignments(boardPath, sinceMs) {
     // the chair's own audit line, which records a delivery to a named pane
     const m = /^chair injected \([^)]*\)\s*->\s*(\S+)/.exec(text);
     if (m) rows.push({ ts: t, pane: m[1], text });
+    // COUNT WHAT COULD NOT BE PARSED. Found by the laptop side (cycle 8 F1) and confirmed by
+    // running the same code on two boards: this machine parses 28 of 28 announcements, theirs
+    // parses 3 of 40 and silently reported "1 injections" per pane -- a chair that looked like
+    // it had barely assigned anything. Same tool, same code, two corpora, 0% vs 92.5% blind,
+    // and NEITHER SIDE COULD SEE IT FROM ITS OWN MACHINE.
+    //
+    // The rule, which catch-ledger.js states in its own header and this file did not inherit
+    // four files away: a synthetic fixture agrees with the rule by construction; only a corpus
+    // can disagree with it. Its 16 tests were green because every fixture used the format that
+    // parses. So the general form, now applied here: a lexical instrument must count what it
+    // CANNOT read, not only what it can -- an unprinted denominator is the blindness.
+    else if (/^chair injected/.test(text)) unparsed.push(text.slice(0, 80));
   }
   rows.sort((a, b) => a.ts - b.ts);
 
@@ -296,6 +308,7 @@ function assignments(boardPath, sinceMs) {
     }
     out.push({ pane, injections: list.length, gaps });
   }
+  out.unparsed = unparsed;   // the denominator: announcements this parser could not read
   return out;
 }
 
