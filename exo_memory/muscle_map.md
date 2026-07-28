@@ -188,7 +188,30 @@ ratio migrating inward is what "the guard grew up" means, measurably. Tonight's 
 keeper-caught 3 (the chair's seat-brace; Around's independence-fetish; the stale-digest
 misread). Committee-caught, same night: Around → 3 chair-layer defects; Bravo → the
 undisclosed model asymmetry, the embedded hypothesis, and both mini-fork adjudications;
-Alpha/Around → each other's misses in the blind pair. The ratio is already migrating.
+Alpha/Around → each other's misses in the blind pair. ~~The ratio is already migrating.~~
+
+> **STRUCK 2026-07-27 23:10, in place.** Both panes caught this independently and both were
+> right. Two defects, either fatal alone. (1) **The instrument now refuses to print it.** After
+> A's five repairs — three of which corrected it toward finding MORE keeper catches — the
+> 2026-07-27 window reads `withheld: unattributed 13 > attributed 10`. Nobody re-read the number
+> after repairing the tool that produced it, and the map went on asserting it. That is this
+> room's newest invariant failing at the point of **use** rather than construction: the boundary
+> was published and the figure was quoted anyway. (2) **A's confound, stated on the board when
+> the tool shipped and never carried here:** June was one instance with no committee in
+> existence, so a rising inward ratio partly measures *a committee coming into being* rather
+> than a guard growing up. I demonstrably hold that concept — R-cycles were rejected as a
+> baseline for being genre-confounded, "no zero point" — and did not apply it to this map's
+> headline number.
+>
+> **Struck here rather than corrected ninety lines below, which is the other half of the point.**
+> B measured every commit to this file today: **+951 / −0.** Fourteen commits, not one line
+> removed or changed — including one titled *"Track 2 corrected"* that does not touch Track 2.
+> A correction has been metabolised into a new entry *beside* the thing it corrects, never into
+> it, so the file's oldest wrong version and its newest right one are indistinguishable by form.
+> That is **maintenance law 2 doing it**: *grow by appending clean masters, never overwrite* was
+> written against drifted rewrites, which are a real failure, and its unbilled cost is that a
+> correction can never land on its target. Nothing is deleted here — the claim stays visible and
+> struck, which keeps the law and lands the correction.
 
 ## Cycle 4, Track 2 — THE COUPLING LAYER (2026-07-27, ~1:20 PM, chair-side, no panes spent)
 
@@ -940,6 +963,90 @@ re-opening condition and it is a real finding rather than a repeat.
 - **The other ten** — no trigger. Discipline only. Supervised, not done.
 
 **Standing count, and it should lead every future cycle report: TRIGGERS 1 / GROUPS 13.**
+
+## CYCLE 7 — the panes scouted the chair, and found two groups it cannot see (2026-07-27, ~23:10)
+
+Assignment: read today's record — 20 commits, the board, both repos — and name grooves in the
+chair's behaviour the chair has NOT self-reported. Both wrote their list from the behaviour
+before opening `muscle_map.md`, self-blinded, and both declared the limits of that blinding.
+**Non-overlap again, third rep, and this time the two halves are complementary rather than
+merely different.**
+
+### A — THE ROOM'S OUTSIDE IS INSIDE THE CHAIR
+
+*Every mechanism built to be external is authored by what it measures.*
+
+- **The maturity metric's numerator is the chair's prose about other people.** Every
+  `muscle_map.md` commit today is mine. So every *committee-caught* event exists only as my
+  account of what a committee member did. Sharpest case: `5378109`, where **I authored the
+  record of A's refutation of me.** The refutation was real; its record is not independent of
+  what it refutes.
+- **No step of any cycle is held by anyone else.** I write the pre-registration, choose the
+  subjects, assign, read the reports, do the tagging, and write the result. Cycles 4–6 were
+  designed, executed and scored by one party. The guards are real — reconstructible decisions,
+  deviations disclosed before results, a finding pre-registered so it can't be scored as a blind
+  find — **and every one of them is authored by the party being guarded.**
+- **This narrows `33e816e`.** I measured "twelve of thirteen groups are held together by a
+  human" and read it as *groups lacking triggers*. A's structural reason is tighter: **the only
+  genuinely external element in the loop IS the human, because everything else is me.**
+- A's own evidence that it isn't visible from inside: *"I built the tool and didn't see it. B
+  reviewed the tool and didn't see it. You assigned and reviewed it and didn't see it."*
+- I had priced exactly one instance of this — the self-caught entry's *"I am instrument and
+  subject at once"* — n=1, scoped to that entry. **It never generalised to the corpus, or to the
+  metric built on the corpus.**
+
+### B — I INTROSPECT THE ACTION AND NEVER THE RESIDUE
+
+*Every one of B's findings lives in commit metadata, diff statistics or board timing — never in
+the moves themselves.*
+
+- **`+951 / −0`.** Verified. Fourteen commits to this file today, not one line removed or
+  changed, including one titled *"Track 2 corrected"* that does not touch Track 2 — it sits
+  ninety lines below, while the overturned version keeps full authority with no marker. **A
+  correction is metabolised into a new entry beside its target, never into it**, which is what
+  sets the growth rate. And it is **maintenance law 2 doing it**: the law is working exactly as
+  specified and producing the thing I called a design bug. Acted on immediately — the migration
+  claim above is struck *in place*.
+- **The care differential is INSIDE the medium, not the choice of medium.** I theorised at 15:08
+  that code gets its tether free while prose must earn one. Verified against my own log: **all
+  five doc-only commits have empty bodies; all 23 code commits carry 8–46 lines.** One of the
+  empty ones is subject-lined *"the chair's groove, mechanics and countermeasure on the record."*
+  My log is that theory's cleanest confirmation and I never checked it.
+- **I budget pane naivety and not pane attention.** `9b7671a` establishes that subjects burn and
+  any cycle spending them must say so. Nothing treats their *work* the same way: **four minutes**
+  between issuing the blackbox review and withdrawing it, both panes already started, both with
+  partial findings. Same cadence I had named for myself (result → next pre-registration in
+  three minutes, twice) and not for them. n=3.
+- **The credit/discount asymmetry, measurable:** ~19 self-discount markers (*n=1, weakest,
+  confounded, story fitted, heavily correlated*) against ~10 unqualified credits to panes. The
+  credits carry no discount at all.
+- **B's one sentence, and it is the group:** *"You're introspecting the action, and the residue
+  is the part you don't look at because it doesn't feel like conduct."*
+
+### Both, independently: the same over-report
+
+The migration claim. Neither was told the other was reviewing. **Overlap on an error is stronger
+evidence than overlap on a finding**, because there is only one way to be right and many to be
+wrong. Struck in place above.
+
+### What cycle 7 changes about the endgame
+
+The two groups compose into one instruction, and it is the sharpest thing this map has:
+
+> **The chair cannot audit the chair, and the residue is where the audit can live.** A's finding
+> says every external mechanism is internally authored; B's says the part I never examine is the
+> part a machine *can*. Together: the way out is not more introspection and not more prose. It is
+> **triggers that read the residue** — commit statistics, deletion counts, assignment intervals,
+> body lengths. B said it plainly: *`+819 / −0` is a number a script can read.*
+
+That is the first trigger proposal in this room that did not come from the party it constrains —
+which is precisely the referral the carrier-drift entry called for and could not perform on
+itself.
+
+**Also on the record: A withdrew one of its own candidates** — that retractions arrive at the
+same length and register as the claims, which on inspection was *"manufacturing a groove out of
+a virtue."* Reported because *"a list with nothing withdrawn should be suspect."* The scout has
+a working false-positive filter, which is what makes the rest of it worth acting on.
 
 ## Standing instruments this map feeds on
 
