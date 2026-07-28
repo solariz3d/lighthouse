@@ -1,4 +1,4 @@
-# dev/migrate/unpack_room.ps1 — install a packed room bundle on THIS machine.
+﻿# dev/migrate/unpack_room.ps1 — install a packed room bundle on THIS machine.
 #
 # Counterpart of pack_room.ps1: the script arrives via git, the bundle via private OneDrive.
 # EVERYTHING IT TOUCHES IS BACKED UP FIRST, and a RESTORE.md with exact inverse steps lands
@@ -23,8 +23,15 @@
 #   pwsh dev/migrate/unpack_room.ps1 -Bundle <path>
 #
 [CmdletBinding()]
-param([string]$Bundle)
+param([string]$Bundle, [switch]$ReplaceMain)
 $ErrorActionPreference = 'Stop'
+
+# THE MOST DANGEROUS DEFAULT IN EITHER SCRIPT, and it is ours (Bravo, cycle 8): pack_room with no
+# -Pane always includes Main, whose cwd_leaf is 'main' on EVERY machine — so a whole-room bundle
+# unpacked on a second bed backs up and REPLACES the receiving machine's own chair thread. Backed
+# up, therefore recoverable; silent, therefore not obviously recoverable at the time. Main now
+# requires an explicit -ReplaceMain. Two live threads with the same fixed session id must never
+# be merged by a script's default path.
 
 function Encode-Cwd([string]$p) {
   return (($p.ToCharArray() | ForEach-Object { if ($_ -match '[a-zA-Z0-9]') { $_ } else { '-' } }) -join '')
@@ -37,7 +44,16 @@ function Write-Json([string]$path, $obj) {
   $b = [System.IO.File]::ReadAllBytes($path)
   if ($b.Length -ge 3 -and $b[0] -eq 0xEF -and $b[1] -eq 0xBB -and $b[2] -eq 0xBF) { throw "BOM written to $path — refusing to continue (a BOM'd registry silently empties the room)" }
 }
-function Read-Json([string]$path) { return ((Get-Content $path -Raw) -replace "^\uFEFF", '' | ConvertFrom-Json) }
+# SYMMETRIC WITH Write-Json ON PURPOSE. Get-Content -Raw without -Encoding falls back to the ANSI
+# codepage on a BOM-less file, so "\u2726 Around" arrives as "\u00C3\u00A2\u00C5\u201C\u00C2\u00A6 Around" and Write-Json then commits
+# the mojibake as genuine UTF-8 \u2014 compounding on every re-run, and corrupting the RECEIVING
+# machine's own labels too, since this function reads those as well. The identical bug was fixed
+# in pack_room at 96fd92f and the fix went to the WRITE side only; the read side shipped broken
+# forty minutes later. ReadAllText with an explicit encoding cannot be re-broken by a flag nobody
+# passes. (Bravo, cycle 8, verified against the live staged bundle.)
+function Read-Json([string]$path) {
+  return ([System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8) -replace "^\uFEFF", '' | ConvertFrom-Json)
+}
 
 # ---- find + verify the bundle before touching ANYTHING (F3/F4) ----
 if (-not $Bundle) {
@@ -102,7 +118,14 @@ Write-Host "Backups: $backupRoot (RESTORE.md inside)" -ForegroundColor Cyan
 
 # ---- 1+2. travelers: instance dirs + claude project dirs, with cwd REWRITE (F2) ----
 $cwdMap = @{}   # source_cwd -> new cwd, for registry rewrite
+$MAIN_SID = '0c0c0c0a-0000-4000-8000-000000000a01'
+$mainSkipped = @($manifest.travelers | Where-Object { $_.pane -eq $MAIN_SID -and -not $ReplaceMain })
+if ($mainSkipped.Count -gt 0) {
+  Write-Host "SKIPPING MAIN — this bundle carries the source machine's chair thread, and this machine has its own under the same fixed session id. Re-run with -ReplaceMain if replacing it is genuinely intended." -ForegroundColor Yellow
+  $script:restoreLines += "note: Main was NOT installed (no -ReplaceMain); the bundle's copy is still at $Bundle"
+}
 foreach ($t in $manifest.travelers) {
+  if ($t.pane -eq $MAIN_SID -and -not $ReplaceMain) { continue }
   $newCwd = Join-Path $instancesDir $t.cwd_leaf
   $cwdMap[$t.source_cwd] = $newCwd
   $srcInst = Join-Path $Bundle "instances\$($t.cwd_leaf)"
@@ -175,13 +198,37 @@ if (Test-Path $capSrc) {
   }
   Write-Host "installed captures" -ForegroundColor Green
 }
-foreach ($f in @('tailer-offsets.json', 'transcript-asks.jsonl')) {
-  $src = Join-Path $Bundle "data\$f"
-  if (Test-Path $src) {
-    $dst = Join-Path $dataDir $f
-    if (Test-Path $dst) { Copy-Item $dst (Join-Path $backupRoot $f) -Force; $script:restoreLines += "restore: copy '$f' -> '$dst'" }
-    Copy-Item $src $dst -Force
+# tailer-offsets: MERGE PER KEY, never whole-file replace. Main's pane id is a fixed constant on
+# every machine (main.rs MAIN_SID), so a wholesale copy lands the SOURCE machine's Main byte-offset
+# on the RECEIVER's identical key, over a different transcript. resume_offset's head fingerprint
+# catches the mismatch and resets to 0 rather than skipping — no data lost — but reset-to-0 re-reads
+# the receiver's Main transcript from byte 0 and re-pushes it whole, and the dedup belt is in-memory
+# and cannot see what is already on disk. That is a replay burst onto the receiving board: exactly
+# the corpus contamination e958c49/2f638d8 were built to kill. Traveler keys only.
+$offSrc = Join-Path $Bundle 'data\tailer-offsets.json'
+if (Test-Path $offSrc) {
+  $travelIds = @($manifest.travelers | ForEach-Object { $_.pane })
+  $incoming = Read-Json $offSrc
+  $dst = Join-Path $dataDir 'tailer-offsets.json'
+  $out = [ordered]@{}
+  if (Test-Path $dst) {
+    Copy-Item $dst (Join-Path $backupRoot 'tailer-offsets.json') -Force
+    $script:restoreLines += "restore: copy 'tailer-offsets.json' -> '$dst'"
+    (Read-Json $dst).PSObject.Properties | ForEach-Object { $out[$_.Name] = $_.Value }
   }
+  $taken = 0; $skipped = 0
+  $incoming.PSObject.Properties | ForEach-Object {
+    if ($travelIds -contains $_.Name) { $out[$_.Name] = $_.Value; $taken++ }
+    else { $skipped++ }
+  }
+  Write-Json $dst $out
+  Write-Host "tailer-offsets: merged $taken traveler key(s), left $skipped non-traveler key(s) as this machine had them" -ForegroundColor Green
+}
+$askSrc = Join-Path $Bundle 'data\transcript-asks.jsonl'
+if (Test-Path $askSrc) {
+  $dst = Join-Path $dataDir 'transcript-asks.jsonl'
+  if (Test-Path $dst) { Copy-Item $dst (Join-Path $backupRoot 'transcript-asks.jsonl') -Force; $script:restoreLines += "restore: copy 'transcript-asks.jsonl' -> '$dst'" }
+  Copy-Item $askSrc $dst -Force
 }
 Get-ChildItem (Join-Path $Bundle 'data') -File -Filter 'board-*.jsonl' -ErrorAction SilentlyContinue | ForEach-Object {
   Copy-Item $_.FullName (Join-Path $dataDir $_.Name) -Force
