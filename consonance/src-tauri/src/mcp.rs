@@ -96,6 +96,27 @@ pub struct ConsonanceMcp {
     /// its mount. What enforces the methodology is that every post is attributed and the whole
     /// committee reads the board.
     identity: Option<String>,
+    /// QUIET PHASE — panes may post, but may not read each other.
+    ///
+    /// The contamination this addresses is real and was measured: cycle 7 asked two panes to
+    /// write their findings before reading the map, and half-worked, because asking someone to
+    /// blind themselves is not blinding. The failure is at WRITING time — a pane that has
+    /// already read a sibling's finding cannot un-read it, and no instruction at reading time
+    /// recovers independence.
+    ///
+    /// Phase, not topology. Severing pane-to-pane permanently would delete the only correction
+    /// this room has produced without the chair in the middle (B finding A's byte-vs-char panic
+    /// and posting it to A). So the wire stays and is gated by WHEN: quiet while producing,
+    /// open while reviewing. Independence and peer-catching, instead of one at the cost of the
+    /// other.
+    ///
+    /// It could not have been built before per-pane identity, because "show a pane only its own
+    /// posts" is unanswerable when anyone can claim to be anyone.
+    ///
+    /// NOTHING IS HIDDEN SILENTLY. A pane in quiet phase is told it is in quiet phase and told
+    /// how many entries are withheld. Withholding is a boundary; withholding invisibly would
+    /// install a false belief about the record, which this room forbids outright.
+    quiet: Arc<std::sync::atomic::AtomicBool>,
     tool_router: ToolRouter<ConsonanceMcp>,
 }
 
@@ -142,6 +163,14 @@ pub struct ChairScrollbackArgs {
 }
 
 #[derive(serde::Deserialize, schemars::JsonSchema)]
+pub struct ChairPhaseArgs {
+    /// the chair token (read from .chair-token in the Main instance directory)
+    token: String,
+    /// "quiet" — panes post but cannot read each other; "open" — the board is shared again
+    mode: String,
+}
+
+#[derive(serde::Deserialize, schemars::JsonSchema)]
 pub struct ChairStatusArgs {
     /// the chair token (read from .chair-token in the Main instance directory)
     token: String,
@@ -169,8 +198,9 @@ impl ConsonanceMcp {
         chair: tokio::sync::mpsc::UnboundedSender<ChairCmd>,
         chair_token: String,
         identity: Option<String>,
+        quiet: Arc<std::sync::atomic::AtomicBool>,
     ) -> Self {
-        Self { board, pulls, chair, chair_token, identity, tool_router: Self::tool_router() }
+        Self { board, pulls, chair, chair_token, identity, quiet, tool_router: Self::tool_router() }
     }
 
     /// Gate a chair verb. The token is written only into the Main instance's directory, so in
@@ -230,6 +260,46 @@ impl ConsonanceMcp {
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::Inject { target, text, reply: tx }, rx).await;
         Ok(CallToolResult::success(vec![Content::text(out)]))
+    }
+
+    #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): set the board phase. \"quiet\" = panes may post but see only their own lines and the chair's, so independent work stays independent; \"open\" = the shared board is back and peers can catch each other. Acting verb — audited to the board, and every pane is TOLD it is in quiet phase and how much is withheld.")]
+    async fn chair_phase(
+        &self,
+        Parameters(ChairPhaseArgs { token, mode }): Parameters<ChairPhaseArgs>,
+    ) -> Result<CallToolResult, McpError> {
+        if !self.auth_chair(&token, "chair_phase") {
+            return Ok(CallToolResult::success(vec![Content::text("refused: bad chair token (the attempt was posted to the board)")]));
+        }
+        let quiet = match mode.trim().to_ascii_lowercase().as_str() {
+            "quiet" | "blind" | "closed" => true,
+            "open" | "shared" => false,
+            other => {
+                return Ok(CallToolResult::success(vec![Content::text(format!(
+                    "refused: unknown phase {other:?} — use \"quiet\" or \"open\""
+                ))]));
+            }
+        };
+        self.quiet.store(quiet, std::sync::atomic::Ordering::Relaxed);
+        // Audited like every other acting verb. A phase change alters what every pane can see,
+        // so it is exactly the kind of act that must not happen quietly.
+        board_push(&self.board, BoardEntry {
+            pane: "chair".to_string(),
+            role: "committee".to_string(),
+            text: if quiet {
+                "board phase -> QUIET: panes post but read only their own lines and the chair's. \
+                 Independent production; siblings' findings are withheld and each pane is told so."
+                    .to_string()
+            } else {
+                "board phase -> OPEN: the shared board is back. Peers can read and catch each other."
+                    .to_string()
+            },
+            ts: now_ms(),
+            ts_source: crate::TsSource::Push,
+        });
+        Ok(CallToolResult::success(vec![Content::text(format!(
+            "board phase is now {}",
+            if quiet { "QUIET" } else { "OPEN" }
+        ))]))
     }
 
     #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): decide a pending gate card — the same act as the UI's Approve/Deny, audited to the board. Dual mode: the human chair can still decide the same card; whoever is second gets 'already decided'.")]
@@ -317,12 +387,41 @@ impl ConsonanceMcp {
         Parameters(ReadBoardArgs { limit }): Parameters<ReadBoardArgs>,
     ) -> Result<CallToolResult, McpError> {
         let n = limit.unwrap_or(20);
-        let lines: Vec<String> = {
+        let quiet = self.quiet.load(std::sync::atomic::Ordering::Relaxed);
+        // In quiet phase a pane sees its OWN posts and the chair's, never a sibling's. Chair
+        // lines carry the assignment, so a pane is never cut off from its own work; what it
+        // cannot see is what another pane concluded, which is the only thing that costs it
+        // independence.
+        let mine = self.identity.clone();
+        let visible = |e: &BoardEntry| -> bool {
+            if !quiet { return true; }
+            e.pane == "chair" || e.pane == "M" || mine.as_deref() == Some(e.pane.as_str())
+        };
+        let (lines, withheld): (Vec<String>, usize) = {
             let q = self.board.lock().unwrap();
             let start = q.len().saturating_sub(n);
-            q.iter().skip(start).map(|e| format!("[{}] {}: {}", e.pane, e.role, e.text)).collect()
+            let window: Vec<&BoardEntry> = q.iter().skip(start).collect();
+            let hidden = window.iter().filter(|e| !visible(e)).count();
+            (window.into_iter().filter(|e| visible(e))
+                 .map(|e| format!("[{}] {}: {}", e.pane, e.role, e.text)).collect(),
+             hidden)
         };
-        let body = if lines.is_empty() { "(board is empty)".to_string() } else { lines.join("\n") };
+        let mut body = if lines.is_empty() { "(board is empty)".to_string() } else { lines.join("\n") };
+        if quiet {
+            // Say it, every time. A filtered board that does not announce itself is a false
+            // record, and the point of the phase is independence, not deception.
+            body.push_str(&format!(
+                "\n\n-- QUIET PHASE: {withheld} entr{} from other panes withheld. You are \
+                 producing independently; siblings' findings unlock when the chair reopens the \
+                 board. Your own posts and the chair's are shown in full.",
+                if withheld == 1 { "y" } else { "ies" }
+            ));
+            if mine.is_none() {
+                body.push_str(
+                    "\n-- Your connection carries no identity, so nothing could be shown as \
+                     yours. Relaunch through this pane's own MCP config to be attributable.");
+            }
+        }
         Ok(CallToolResult::success(vec![Content::text(body)]))
     }
 }
@@ -334,7 +433,11 @@ impl ServerHandler for ConsonanceMcp {
         let mut info = ServerInfo::default();
         info.capabilities = ServerCapabilities::builder().enable_tools().build();
         info.instructions = Some(
-            "Consonance committee control plane: post_board / read_board over one shared board across instances. \
+            "Consonance committee control plane: post_board / read_board over one board shared across instances. \
+             Your posts are attributed by your CONNECTION, not by what you claim — the tag argument is a \
+             courtesy, the mount is the fact. The board has a PHASE: in QUIET you may post but you see only \
+             your own lines and the chair's, so independent work stays independent; the withheld count is \
+             always shown, never hidden. In OPEN the full board is readable and panes can catch each other. \
              The chair_* verbs are token-gated to the Main orchestrator and audited to the board — committee \
              members use raise_pull, never chair verbs."
                 .to_string(),
@@ -442,10 +545,14 @@ pub fn start(
             // `/mcp` stays mounted and unidentified so a pane launched before this change keeps
             // working. Its posts land as `unattributed`, so the size of the remaining gap is
             // readable off the board instead of being invisible.
+            // One phase flag shared by every mount: the board is one board, so quiet is a
+            // property of the room and not of a connection.
+            let quiet = Arc::new(std::sync::atomic::AtomicBool::new(false));
             let make = |ident: Option<String>| {
                 let (b, p, c, t) = (board.clone(), pulls.clone(), chair.clone(), chair_token.clone());
+                let q = quiet.clone();
                 StreamableHttpService::new(
-                    move || Ok(ConsonanceMcp::new(b.clone(), p.clone(), c.clone(), t.clone(), ident.clone())),
+                    move || Ok(ConsonanceMcp::new(b.clone(), p.clone(), c.clone(), t.clone(), ident.clone(), q.clone())),
                     LocalSessionManager::default().into(),
                     Default::default(),
                 )
