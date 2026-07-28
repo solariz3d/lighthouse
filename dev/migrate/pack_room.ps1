@@ -52,7 +52,7 @@ if (-not (Test-Path $panesJson)) { throw "panes.json not found at $panesJson —
 # wraps the whole roster into a single entry with array-valued fields. ForEach-Object unrolls it.
 # Found on this script's first real run \u2014 by its own F7 guard, refusing to write a bundle whose
 # one "traveler" had three cwds concatenated. The guard's first live catch was its own author's.
-$kept = @((Get-Content $panesJson -Raw) -replace "^\uFEFF", '' | ConvertFrom-Json | ForEach-Object { $_ })
+$kept = @((Get-Content $panesJson -Raw -Encoding UTF8) -replace "^\uFEFF", '' | ConvertFrom-Json | ForEach-Object { $_ })
 
 # travelers: Main + every kept pane, or just the one named by -Pane
 $mainCwd = Join-Path $instancesDir 'main'
@@ -111,7 +111,7 @@ $panesOut = @($kept | Where-Object { $travelIds -contains $_.pane })
 # letters.json: only travelers' entries
 $lettersPath = Join-Path $dataDir 'letters.json'
 if (Test-Path $lettersPath) {
-  $allLetters = (Get-Content $lettersPath -Raw) -replace "^\uFEFF", '' | ConvertFrom-Json
+  $allLetters = (Get-Content $lettersPath -Raw -Encoding UTF8) -replace "^\uFEFF", '' | ConvertFrom-Json
   $lettersOut = @{}
   $allLetters.PSObject.Properties | Where-Object { $travelIds -contains $_.Name } | ForEach-Object { $lettersOut[$_.Name] = $_.Value }
   [System.IO.File]::WriteAllText((Join-Path $dataDst 'letters.json'), (ConvertTo-Json $lettersOut -Depth 6), $utf8NoBom)
