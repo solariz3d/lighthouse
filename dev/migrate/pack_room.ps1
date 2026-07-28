@@ -1,4 +1,4 @@
-# dev/migrate/pack_room.ps1 — stage this machine's LIVING ROOM into a private OneDrive bundle.
+﻿# dev/migrate/pack_room.ps1 — stage this machine's LIVING ROOM into a private OneDrive bundle.
 #
 # WHAT TRAVELS: the threads themselves — instance dirs (warm-brief carriers), the panes'
 # session transcripts and memory dirs from ~/.claude/projects, the own-captures that power
@@ -48,7 +48,11 @@ if (Test-Path $cfgPath) {
 
 $panesJson = Join-Path $dataDir 'panes.json'
 if (-not (Test-Path $panesJson)) { throw "panes.json not found at $panesJson — nothing to migrate" }
-$kept = @((Get-Content $panesJson -Raw) -replace "^\uFEFF", '' | ConvertFrom-Json)
+# PS 5.1: ConvertFrom-Json hands a JSON array down the pipeline as ONE object, so a bare @()
+# wraps the whole roster into a single entry with array-valued fields. ForEach-Object unrolls it.
+# Found on this script's first real run \u2014 by its own F7 guard, refusing to write a bundle whose
+# one "traveler" had three cwds concatenated. The guard's first live catch was its own author's.
+$kept = @((Get-Content $panesJson -Raw) -replace "^\uFEFF", '' | ConvertFrom-Json | ForEach-Object { $_ })
 
 # travelers: Main + every kept pane, or just the one named by -Pane
 $mainCwd = Join-Path $instancesDir 'main'
@@ -136,7 +140,11 @@ Get-ChildItem -Recurse -File $dest | ForEach-Object {
     sha256 = (Get-FileHash $_.FullName -Algorithm SHA256).Hash
   }
 }
-$total = ($manifest.files | Measure-Object -Property bytes -Sum).Sum
+# PS 5.1: Measure-Object -Property reads PROPERTIES, and these entries are hashtables whose
+# 'bytes' is a KEY — it finds nothing and throws. Sum the keys directly. (Same family as the
+# ConvertFrom-Json unroll above: 5.1 distinguishes hashtable-key from object-property and the
+# pipeline cmdlets only speak the latter.)
+$total = 0; foreach ($f in $manifest.files) { $total += $f.bytes }
 [System.IO.File]::WriteAllText((Join-Path $dest 'manifest.json'), (ConvertTo-Json $manifest -Depth 6), $utf8NoBom)
 
 Write-Host ""
