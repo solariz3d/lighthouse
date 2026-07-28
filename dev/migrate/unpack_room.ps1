@@ -117,6 +117,15 @@ Flush-Restore
 Write-Host "Backups: $backupRoot (RESTORE.md inside)" -ForegroundColor Cyan
 
 # ---- 1+2. travelers: instance dirs + claude project dirs, with cwd REWRITE (F2) ----
+# THE ONE FILTERED LIST, computed once and used by every consumer downstream. The first version of
+# the Main guard filtered only the install loop, and three consumers went on reading the raw
+# traveler list (Bravo, cycle 8): offsets took Main's key anyway — WORSE than no guard, because the
+# receiver then keeps its own transcript while wearing a foreign offset, which guarantees the head
+# mismatch, the reset-to-0 and the replay burst the guard existed to prevent — and the capture loop
+# installed Main's capture, handing the receiver a chimera: its own thread wearing another machine's
+# warm-resume shell, which is harder to notice than an outright replacement because a capture is
+# only read when a session fails to resume. A guard that filters one branch and not its consumers
+# is not a guard; it is a comment with a `continue` in it.
 $cwdMap = @{}   # source_cwd -> new cwd, for registry rewrite
 $MAIN_SID = '0c0c0c0a-0000-4000-8000-000000000a01'
 $mainSkipped = @($manifest.travelers | Where-Object { $_.pane -eq $MAIN_SID -and -not $ReplaceMain })
@@ -124,8 +133,9 @@ if ($mainSkipped.Count -gt 0) {
   Write-Host "SKIPPING MAIN — this bundle carries the source machine's chair thread, and this machine has its own under the same fixed session id. Re-run with -ReplaceMain if replacing it is genuinely intended." -ForegroundColor Yellow
   $script:restoreLines += "note: Main was NOT installed (no -ReplaceMain); the bundle's copy is still at $Bundle"
 }
-foreach ($t in $manifest.travelers) {
-  if ($t.pane -eq $MAIN_SID -and -not $ReplaceMain) { continue }
+$installedTravelers = @($manifest.travelers | Where-Object { $ReplaceMain -or $_.pane -ne $MAIN_SID })
+$installedIds = @($installedTravelers | ForEach-Object { $_.pane })
+foreach ($t in $installedTravelers) {
   $newCwd = Join-Path $instancesDir $t.cwd_leaf
   $cwdMap[$t.source_cwd] = $newCwd
   $srcInst = Join-Path $Bundle "instances\$($t.cwd_leaf)"
@@ -191,12 +201,18 @@ Flush-Restore
 New-Item -ItemType Directory -Force -Path (Join-Path $dataDir 'captures') | Out-Null
 $capSrc = Join-Path $Bundle 'data\captures'
 if (Test-Path $capSrc) {
+  # filtered by INSTALLED travelers: a capture is the warm-resume shell, so a skipped Main taking
+  # the source machine's capture yields a thread wearing someone else's memory — and a capture is
+  # only read when a session fails to resume, which is the worst possible moment to discover it
+  $capSkipped = 0
   foreach ($f in Get-ChildItem $capSrc -File) {
+    $capPane = ($f.Name -replace '\.(log|txt)$', '')
+    if ($installedIds -notcontains $capPane) { $capSkipped++; continue }
     $dst = Join-Path $dataDir "captures\$($f.Name)"
     if (Test-Path $dst) { Backup-Item $dst "captures\$($f.Name)" }
     Copy-Item $f.FullName $dst
   }
-  Write-Host "installed captures" -ForegroundColor Green
+  Write-Host "installed captures for $($installedIds.Count) traveler(s)$(if ($capSkipped) { " — skipped $capSkipped belonging to travelers not installed" })" -ForegroundColor Green
 }
 # tailer-offsets: MERGE PER KEY, never whole-file replace. Main's pane id is a fixed constant on
 # every machine (main.rs MAIN_SID), so a wholesale copy lands the SOURCE machine's Main byte-offset
@@ -207,7 +223,7 @@ if (Test-Path $capSrc) {
 # the corpus contamination e958c49/2f638d8 were built to kill. Traveler keys only.
 $offSrc = Join-Path $Bundle 'data\tailer-offsets.json'
 if (Test-Path $offSrc) {
-  $travelIds = @($manifest.travelers | ForEach-Object { $_.pane })
+  $travelIds = $installedIds   # INSTALLED, not shipped — a skipped Main must not take its offset
   $incoming = Read-Json $offSrc
   $dst = Join-Path $dataDir 'tailer-offsets.json'
   $out = [ordered]@{}
