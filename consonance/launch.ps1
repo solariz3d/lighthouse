@@ -8,8 +8,27 @@
 $ErrorActionPreference = 'SilentlyContinue'
 $root     = Split-Path -Parent $MyInvocation.MyCommand.Path
 $manifest = Join-Path $root 'src-tauri\Cargo.toml'
-$exe      = Join-Path $root 'src-tauri\target\release\consonance.exe'
 $cargo    = Join-Path $env:USERPROFILE '.cargo\bin\cargo.exe'
+
+# WHERE THE EXE ACTUALLY IS — ASKED, NOT ASSUMED.
+# This line used to be `Join-Path $root 'src-tauri\target\release\consonance.exe'`. On
+# 2026-07-28 CARGO_TARGET_DIR was set to C:\build\lighthouse-target to get 19.5 GB of build
+# output out of OneDrive's sync scope, and this script broke SILENTLY AND IMMEDIATELY: cargo
+# emitted to the new location, $exe still pointed at the old one, the stale exe was still on
+# disk so Test-Path stayed true, and every click rebuilt successfully, printed "Build ready -
+# launching" in green, and then started a BINARY THAT WAS NEVER UPDATED AGAIN. That is the
+# same class this file's own header documents (twelve days behind source, every click looking
+# like it worked) reintroduced by the person who read that header the same night.
+# `cargo metadata` is the only source of truth for target_directory, because it honours
+# CARGO_TARGET_DIR, .cargo/config.toml, and whatever the next person changes. Reconstructing
+# the path from $root is what made this rot in the first place. (Bravo, repo-move procedure arm.)
+$targetDir = $null
+if (Test-Path $cargo) {
+  $meta = & $cargo metadata --format-version 1 --no-deps --manifest-path $manifest 2>$null | ConvertFrom-Json
+  if ($meta -and $meta.target_directory) { $targetDir = $meta.target_directory }
+}
+if (-not $targetDir) { $targetDir = Join-Path $root 'src-tauri\target' }   # last resort only
+$exe = Join-Path $targetDir 'release\consonance.exe'
 
 # --- Is the built exe already newer than every source file? -----------------------------------
 $sources = @(
@@ -60,6 +79,7 @@ if (Test-Path $cargo) {
   Write-Host '  This can take 30s-2min. Leave this window open; it launches automatically' -ForegroundColor DarkGray
   Write-Host '  the moment the build finishes.' -ForegroundColor DarkGray
   Write-Host ''
+  $buildStart = Get-Date
   & $cargo build --release --manifest-path $manifest
   if ($LASTEXITCODE -ne 0) {
     Write-Host ''
@@ -67,7 +87,24 @@ if (Test-Path $cargo) {
     Write-Host '  (If Consonance is already open, that is the cause: a running exe cannot be relinked.)' -ForegroundColor DarkGray
     Start-Sleep -Seconds 3
   } else {
-    Write-Host '  Build ready - launching.' -ForegroundColor Green
+    # A SUCCESSFUL BUILD IS NOT EVIDENCE THE EXE WE ARE ABOUT TO LAUNCH IS THE ONE IT WROTE.
+    # That was exactly the failure above: cargo succeeded, and the file at $exe was untouched.
+    # Refuse to print the green line unless the binary is genuinely newer than the build we
+    # just ran. Delivery is not receipt, applied to a build. (Bravo, repo-move procedure arm.)
+    $fresh = (Test-Path $exe) -and ((Get-Item $exe).LastWriteTime -ge $buildStart.AddSeconds(-2))
+    if ($fresh) {
+      Write-Host '  Build ready - launching.' -ForegroundColor Green
+    } else {
+      Write-Host ''
+      Write-Host '  BUILD SUCCEEDED BUT THE EXE DID NOT CHANGE - refusing to launch a stale binary.' -ForegroundColor Red
+      Write-Host "  cargo says its target directory is: $targetDir" -ForegroundColor DarkGray
+      Write-Host "  expected the binary at:             $exe" -ForegroundColor DarkGray
+      Write-Host '  That means cargo wrote somewhere else, or the exe is locked by a running copy.' -ForegroundColor DarkGray
+      Write-Host '  Close Consonance and click again; if it repeats, the target path is wrong.' -ForegroundColor DarkGray
+      Write-Host ''
+      Start-Sleep -Seconds 10
+      exit 1
+    }
   }
 } else {
   Write-Host "cargo not found at $cargo - opening the existing build." -ForegroundColor Yellow
