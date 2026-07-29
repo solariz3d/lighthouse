@@ -55,6 +55,11 @@ pub struct Snapshot {
     pub intervals: Vec<String>,
     pub restless: bool,
     pub at: String,
+    /// What is playing and where we are in it. In the SNAPSHOT rather than the ledger because a
+    /// position changes every second: it is live state, not a record. This is also what lets a
+    /// reader know it is four minutes into a seven-minute piece instead of guessing — which is
+    /// exactly what "should be close to the end" was, twice.
+    pub now: Option<crate::nowplaying::NowPlaying>,
 }
 
 #[derive(Default)]
@@ -143,6 +148,7 @@ where
             // Back-dated so the first frame reports the track rather than waiting two seconds.
             let mut last_np_check = Instant::now() - std::time::Duration::from_secs(9);
             let mut last_np = String::new();
+            let mut now_playing: Option<crate::nowplaying::NowPlaying> = None;
 
             while !stop_a.load(Ordering::Relaxed) {
                 let chunk = match rx.recv_timeout(std::time::Duration::from_millis(500)) {
@@ -185,9 +191,13 @@ where
                 // Every two seconds is far more often than tracks change and far cheaper than the
                 // FFT already running beside it. Emitting on change rather than on a clock is the
                 // same rule as everything else here: a held thing costs one line.
-                if last_np_check.elapsed().as_secs() >= 2 {
+                // Once a second, not per frame: a WinRT round trip twelve times a second to move a
+                // clock that ticks once is waste, and the position is extrapolated between polls
+                // anyway. The TITLE is still emitted only on change — a held thing costs one line.
+                if last_np_check.elapsed().as_millis() >= 1000 {
                     last_np_check = Instant::now();
-                    if let Some(np) = crate::nowplaying::read(&source_label) {
+                    now_playing = crate::nowplaying::read(&source_label);
+                    if let Some(np) = &now_playing {
                         let line = np.line();
                         if !line.is_empty() && line != last_np {
                             last_np = line.clone();
@@ -207,6 +217,7 @@ where
                     intervals: m.intervals.iter().map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
                     restless: m.restless,
                     at: chrono::Local::now().format("%H:%M:%S").to_string(),
+                    now: now_playing.clone(),
                 });
                 for ev in tracker.feed(m, t, 4.0) {
                     if let Some(h) = describe(&ev) { on_event(h); }

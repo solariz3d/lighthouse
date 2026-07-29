@@ -137,6 +137,19 @@
         </div>
       </div>
       <div class="field">
+        <label>now playing — read from Windows' media session, not guessed</label>
+        <div id="listennow" style="display:flex; gap:10px; align-items:baseline; flex-wrap:wrap;
+             font-family:ui-monospace,Consolas,monospace; font-size:13px; padding:8px 10px;
+             border:1px solid var(--line,#2a2f3a); border-radius:8px; background:rgba(0,0,0,.18);">
+          <span class="hint">nothing playing</span>
+        </div>
+        <div id="listenbar" style="height:3px; margin-top:4px; border-radius:2px;
+             background:rgba(255,255,255,.08); overflow:hidden;">
+          <div id="listenbarfill" style="height:100%; width:0; background:#c98bdb;
+               transition:width .9s linear;"></div>
+        </div>
+      </div>
+      <div class="field">
         <label>the field — each bar a band, log-spaced the way hearing is. Markers are the
           partials found; colour groups them by the note they were assigned to.</label>
         <canvas id="listeneq" style="width:100%; height:180px; display:block;

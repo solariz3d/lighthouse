@@ -201,6 +201,38 @@ load();
   // So the fast reading is drawn here, dim, straight off the analysis frame — and it is NOT
   // written to the ledger and never reaches the orchestrator. The voted `heard` lines stay bright
   // on top of it, so the meaningful events are still legible against the movement.
+  // ---- now playing -------------------------------------------------------------------------
+  // Title, position and length, so neither of us has to guess how far into a piece we are. The
+  // clock is formatted here rather than in Rust because the same numbers also go to field.json,
+  // where a reader wants seconds, not a pre-rendered "3:42".
+  const nowBox = $('#listennow'), barFill = $('#listenbarfill');
+  const clock = (s) => {
+    if (!(isFinite(s) && s >= 0)) return '--:--';
+    const t = Math.round(s);
+    const mm = Math.floor(t / 60), ss = String(t % 60).padStart(2, '0');
+    return mm >= 60 ? `${Math.floor(mm / 60)}:${String(mm % 60).padStart(2, '0')}:${ss}` : `${mm}:${ss}`;
+  };
+  function renderNow(np) {
+    if (!nowBox) return;
+    if (!np || !np.title) {
+      nowBox.innerHTML = '<span class="hint">nothing playing</span>';
+      if (barFill) barFill.style.width = '0';
+      return;
+    }
+    const who = np.artist ? `<span style="opacity:.7">${np.artist}</span> — ` : '';
+    // An unknown length must not render as a full bar or a 0:00 that looks like a real position.
+    const known = np.duration > 0;
+    const time = known ? `${clock(np.position)} <span style="opacity:.45">/ ${clock(np.duration)}</span>`
+                       : clock(np.position);
+    const warn = np.matched ? ''
+      : ' <span style="color:#e8b04b" title="this is the OS\'s current session and may belong to a different app than the one being captured">⚠ system session</span>';
+    nowBox.innerHTML =
+      `<span style="color:#c98bdb">♪</span> ${who}<strong>${np.title}</strong>` +
+      `<span style="margin-left:auto; font-variant-numeric:tabular-nums">${time}</span>` +
+      `${np.playing ? '' : ' <span class="hint">(paused)</span>'}${warn}`;
+    if (barFill) barFill.style.width = known ? `${Math.min(100, 100 * np.position / np.duration)}%` : '0';
+  }
+
   let lastFast = '';
   function addFast(text, restless) {
     if (!text || text === lastFast) return;
@@ -222,6 +254,7 @@ load();
     marks = s.peaks || [];
     vs = s.voices || [];
     if (s.intervals && s.intervals.length) addFast(s.intervals.join(' · '), s.restless);
+    renderNow(s.now);
     if (!vsOut) return;
     vsOut.innerHTML = vs.length === 0
       ? 'silent'
