@@ -219,6 +219,39 @@ def unwritten_findings(transcript, limit=8):
     return {"total": len(lines), "sample": lines[-limit:]}
 
 
+def instrument(script, args=(), keep=10, label=None):
+    """Run one node instrument and fold its answer in, unbidden.
+
+    WHY THESE ARE HERE AT ALL. residue.js was wired to the PreCompact hook because a tool that
+    only works when somebody remembers to run it has the failure this whole line of work exists
+    to delete. Then three more instruments got built -- corrections-gate, whats-live, sourced --
+    and none of them inherited that lesson. All three sat waiting to be invoked, which IS their
+    default failure: an instrument whose output is never read contributes nothing and still
+    counts on the trigger tally.
+
+    So the tally was an upper bound pretending to be a count. Wiring them here makes the number
+    honest rather than aspirational.
+
+    HONEST LIMIT, stated because it is the whole reason this is not a solution: arriving
+    unbidden fixes output-never-read. It does nothing for output-read-and-ignored. The gap-dream
+    arrived unbidden on 2026-07-29, was read, was quoted back approvingly, and changed nothing
+    for seven hours. No checkpoint line can force an act.
+    """
+    p = REPO / script
+    if not p.exists():
+        return None
+    try:
+        r = subprocess.run(["node", str(p), *args], cwd=str(REPO), capture_output=True,
+                           text=True, encoding="utf-8", errors="replace", timeout=120)
+    except Exception:
+        return None          # a sensor that fails must never block a compaction
+    out = [l for l in (r.stdout or "").splitlines() if l.strip()]
+    if not out:
+        return None
+    head = [f"### {label or p.name}" + (f"  (exit {r.returncode})" if r.returncode else "")]
+    return head + out[:keep]
+
+
 def residue(limit=14):
     """Run B's residue sensor and fold its report in.
 
@@ -357,6 +390,40 @@ def main():
                   ""]
         lines += rs
         lines.append("")
+
+    # THE OTHER THREE. Each was built as a trigger and left sitting until invoked, which made
+    # the trigger count an upper bound rather than a count. They arrive here whether or not
+    # anyone remembers, and they sit next to each other on purpose: a drift shows up in the
+    # comparison between them long before any single number crosses a line.
+    #
+    # Order is deliberate — the one that invalidates reasoning comes first. A stale binary makes
+    # every other number on this page a claim about the wrong artifact.
+    probes = [
+        ("consonance/tools/whats-live.js", (), 12,
+         "IS WHAT IS RUNNING WHAT IS COMMITTED — read this before trusting anything below"),
+        ("consonance/tools/corrections-gate.js", ("--since", "24 hours ago"), 8,
+         "DID CORRECTIONS LAND ON THEIR TARGET (exit 1 = filed beside it)"),
+        ("consonance/tools/sourced.js", (), 10,
+         "UNSOURCED VALUE-CLAIMS — a rate, not a grade; compare to the last checkpoint"),
+    ]
+    # `argv` not `args`: the loop variable shadowed argparse's namespace on the first version
+    # and every later reference to args.write blew up with 'tuple has no attribute write'. The
+    # checkpoint crashed before writing, and the PreCompact hook silently got a partial report —
+    # which is this week's recurring shape, an instrument that reports and does nothing.
+    fired = []
+    for script, argv, keep, label in probes:
+        out = instrument(script, argv, keep, label)
+        if out:
+            fired.append(out)
+    if fired:
+        lines += ["## Instruments — fired unbidden, not on request", ""]
+        for block in fired:
+            lines += block
+            lines.append("")
+        lines += ["> Arriving unbidden fixes output-never-read. It does NOT fix "
+                  "output-read-and-ignored — the gap-dream arrived unbidden, was quoted "
+                  "approvingly, and changed nothing for seven hours. Reading these is still an "
+                  "act nobody can automate.", ""]
 
     c = commitments()
     if c:

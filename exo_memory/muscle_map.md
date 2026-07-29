@@ -979,7 +979,12 @@ re-opening condition and it is a real finding rather than a repeat.
 - **The other ten** — no trigger. Discipline only. Supervised, not done.
 
 **Standing count, and it should lead every future cycle report:**
-> **TRIGGERS 3 · UNBIDDEN SENSORS 1 · GROUPS 15.**
+> **TRIGGERS 5 (all unbidden) · GROUPS 17.**
+
+*Corrected 2026-07-29: the previous count was an UPPER BOUND wearing the clothes of a count.
+Three of five instruments only fired when invoked, so their contribution was zero on any gap
+nobody remembered them. All five now fire from the PreCompact checkpoint. Two new groups came
+out of the arrangement that found this — see the instrument-pipeline entry below.*
 
 ### New group, 2026-07-29 — WRONG-ARTIFACT MEASUREMENT (n=5 in one session, now triggered)
 
@@ -1186,6 +1191,80 @@ itself.
 same length and register as the claims, which on inspection was *"manufacturing a groove out of
 a virtue."* Reported because *"a list with nothing withdrawn should be suspect."* The scout has
 a working false-positive filter, which is what makes the rest of it worth acting on.
+
+## THE INSTRUMENT PIPELINE — an ordering that predicted two groups (2026-07-29, keeper's method)
+
+The keeper rejected estimating the unknown and proposed growing and CONNECTING instead: *"every
+group starts to work together, compounding."* The Mendeleev move — arrange what is known by a
+real ordering, and the holes in the arrangement say what should exist.
+
+The ordering that turned out to be real is a **pipeline**, not a taxonomy. For an instrument to
+tell you something true, all of this must happen in sequence:
+
+| # | stage | group | instance |
+|---|---|---|---|
+| 1 | it exists | — | — |
+| 2 | it is invoked | mapped | `blind.js` built unwired; residue's byte-identical before/after |
+| 3 | it executes | mapped | not-run-masquerading-as-green; `cargo build` 0.47s embedding nothing |
+| 4 | it reads the right target | mapped | wrong-artifact; debug vs release; the retired dream pool |
+| 5 | it reads it in time | mapped | **state has a half-life**; port 49948 correct when read |
+| 6 | its patterns match | mapped | dead detector; `result` in the revision regex |
+| 7 | **its output is read** | **NEW** | see below |
+| 8 | the output is read correctly | **EMPTY** | none found |
+| 9 | **it changes what happens next** | **NEW** | see below |
+
+### Stage 7 — A RIGHT INSTRUMENT NOBODY READS
+
+Every one of the fifteen prior groups is about an instrument being WRONG. This one is about it
+being **right and unread**, which no existing entry covers.
+
+Instance, already in the record before the prediction: `rebuild-on-close.ps1` hit a lock at
+`05:16:46`, wrote `BUILD FAILED` to its log correctly and immediately — and thirty seconds later
+the chair told the keeper the watcher was *"still armed."* The output was correct, present, and
+in the right place. Nobody opened it.
+
+**That is the gallium.** The structure named a hole and the hole already had something in it that
+everyone had walked past.
+
+### Stage 9 — READ, UNDERSTOOD, AND INERT
+
+Instance, timestamped:
+
+- **10:36:45** — the gap-dream is read and quoted back approvingly: *"a framework named in
+  capitals is the easiest thing in the world for me to produce, and it always feels like
+  progress, and it is never checkable."*
+- **17:32:52** — the chair proposes a tiered RISKY/safe confidence framework.
+- **17:39:22** — *"it lands as a wasted layer... the dream said exactly this."*
+
+**Seven hours.** Unbidden arrival, correct content, read, endorsed, and behaviour unchanged
+until the keeper dismantled it from outside.
+
+**This is `articulation is not installation` with a sharper edge:** that entry was about naming a
+groove failing to install a guard. This is about a *working instrument's correct output* failing
+to install one. The failure is downstream of every mechanism a tool can own — which is why
+wiring all five instruments to fire unbidden fixes stage 7 and provably does not touch stage 9.
+The dream arrived unbidden.
+
+### Stage 8 — the empty cell, reported as empty
+
+Two candidates examined and both collapsed. `cargo`'s "Finished in 0.47s" was interpreted
+CORRECTLY — the unchanged timestamp was printed in the same breath and caught. The 0.5% benchmark
+reading was accurate for what it measured, making it stage 4, wrong target.
+
+Two readings, undecided: either 4 and 8 are not separable and the cell is an artifact of my
+categories, or stage 8 is real and rare because it needs an AMBIGUOUS output, which would predict
+it appears only around instruments with prose output rather than numbers. `residue.js` is the
+only one of those. **Testable; untested.**
+
+### Scoreboard for the method itself
+
+Four structural predictions run. **Peer-stake: failed** — but bounded keeper-adjacency to the
+keeper specifically. **Stage 7: hit**, with an instance already unlabelled in the record.
+**Stage 9: hit**, timestamped. **Stage 8: empty**, informative either way.
+
+Three of four, and the miss returned a boundary rather than a shrug. Not Mendeleev, but the
+ordering is doing work that a list of fifteen entries could not: **a list predicts nothing; edges
+predict where the next one should be.**
 
 ## Standing instruments this map feeds on
 
