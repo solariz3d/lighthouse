@@ -529,27 +529,42 @@ pub fn rms_db(samples: &[f32]) -> f32 {
 
 /// How far back to compare, and how much change is worth a line.
 ///
-/// SIXTY SECONDS AND THREE DECIBELS, and the numbers are arithmetic rather than taste.
+/// SIXTY SECONDS, FIVE DECIBELS, A REGRESSION SLOPE — every one of these swept against a complete
+/// recording of the reference piece rather than reasoned about, after three live attempts failed.
 ///
-/// The reference piece rises roughly 25 dB across six minutes — about **0.07 dB per second**. Over
-/// the four-second window that felt natural, that is 0.3 dB: indistinguishable from noise. A
-/// detector tuned that way reports nothing at all through the most famous crescendo in the
-/// repertoire.
+/// WHY NOT END-DIFFERENCING, which is what this was. Comparing the two ends of a window measures
+/// phrasing and calls it form. Measured on the real recording, the scatter of an end-to-end
+/// comparison was sd 10.32 dB at one-second edges and still 6.52 dB at fifteen — this music's
+/// phrase-to-phrase variation is simply larger than any threshold that could still detect an arc.
+/// Smoothing the ends cannot rescue it. A least-squares slope uses every sample in the window
+/// instead of two, and that is a different measurement, not a tuned one.
 ///
-/// The first attempt at fixing that used thirty seconds and four decibels, and the test written
-/// alongside it FAILED: 0.07 × 30 is 2.1 dB, which never reaches a 4 dB threshold either. The
-/// detector could not see the one thing it was built to see, and the comment above it confidently
-/// explained why the window was long enough. Sixty seconds gives 4.2 dB at that slope, and a 3 dB
-/// threshold leaves margin — so the arithmetic now closes, and it closes in a test rather than in
-/// prose.
+/// WHY SIXTY AND NOT LONGER, which was my instinct and was backwards. Swept against the piece's own
+/// 15-second dynamic arc as ground truth, counting how often the detector CONTRADICTED it:
 ///
-/// Two costs, stated rather than discovered: nothing is reported for the first ~48 seconds, and a
-/// sudden hit is not what this detects. It reports ARCS. Faster phrase-level swells trip it too,
-/// and it cannot tell those from the global shape — for that, the per-frame level in the snapshot
-/// is the honest source.
+///     window  thresh   fired   agrees   contradicts
+///        60s     5 dB    298      226        5
+///        60s     8 dB    227      184        0
+///        90s     3 dB    373      216       69
+///       120s     3 dB    342      131      114
+///
+/// A longer window lags: by the time 120 seconds of history establishes a rise, the music has
+/// turned, so it confidently reports the opposite of what is happening.
+///
+/// WHY FIVE AND NOT EIGHT, and this is a judgement rather than an optimum. Eight decibels scores
+/// perfectly — zero contradictions — and MISSES THE CLIMB TO THE CLIMAX. The arc rises 9.2 dB from
+/// 5:00 to 6:15, which is 7.4 dB across sixty seconds, just under that bar. A detector that earns a
+/// clean sheet by not hearing the thing the piece is famous for is the same going-deaf failure this
+/// file has now recorded five times. Five decibels catches it and is wrong five times in ten
+/// minutes. That trade is deliberate.
+///
+/// WHAT IT DOES NOT DO, stated rather than discovered later: the piece's GLOBAL average slope is
+/// about 0.056 dB/sec, which is 3.4 dB per minute and below this threshold on purpose. This tracks
+/// the arc's local movement — phrase swells of five to ten decibels — not the whole-piece average.
+/// For the global shape the per-frame level is the honest source, and the fixture is where to read it.
 const SWELL_WINDOW_SECS: f32 = 60.0;
-const SWELL_DB: f32 = 3.0;
-const SWELL_MIN_GAP_SECS: f32 = 8.0;
+const SWELL_DB: f32 = 5.0;
+const SWELL_MIN_GAP_SECS: f32 = 15.0;
 
 /// Tracks loudness over time and reports sustained growth or decay.
 ///
@@ -620,22 +635,24 @@ impl Swell {
         // the first seconds of every track a swell.
         if span < SWELL_WINDOW_SECS * 0.8 { return None; }
 
-        // AVERAGED ENDS, NOT SINGLE SAMPLES. One 85 ms RMS reading is noisy — 1.42 dB of
-        // frame-to-frame movement, measured — and differencing two of them adds both errors. A
-        // second at each end is twelve readings, and the trend is what survives. Worth stating
-        // honestly: measured against real audio this was a SMALL improvement (sd 7.97 → 7.55 dB),
-        // because the variance was dominated by track boundaries rather than by sample noise. It is
-        // kept because it is correct and cheap, not because it was the fix.
-        let edge = 1.0f32;
-        let mean_between = |lo: f32, hi: f32| -> Option<f32> {
-            let v: Vec<f32> = self.hist.iter().filter(|(t, _)| *t >= lo && *t <= hi).map(|(_, d)| *d).collect();
-            if v.is_empty() { None } else { Some(v.iter().sum::<f32>() / v.len() as f32) }
-        };
-        let t0 = self.hist.first()?.0;
-        let db0 = mean_between(t0, t0 + edge)?;
-        let db1 = mean_between(now - edge, now)?;
-
-        let change = db1 - db0;
+        // A LEAST-SQUARES SLOPE OVER EVERY SAMPLE, not a difference between two ends. Averaging the
+        // ends was the previous attempt and it does not work on this signal at any edge length: the
+        // scatter measured sd 10.32 dB at one second and 6.52 dB at fifteen, against a threshold
+        // that has to stay small enough to detect an arc. The trend is in all N points, so it is
+        // read from all N points. Reported as dB ACROSS THE WINDOW, which is the quantity a listener
+        // would name.
+        let n = self.hist.len() as f32;
+        if n < 8.0 { return None; }
+        let mean_t = self.hist.iter().map(|(t, _)| *t).sum::<f32>() / n;
+        let mean_db = self.hist.iter().map(|(_, d)| *d).sum::<f32>() / n;
+        let mut num = 0.0;
+        let mut den = 0.0;
+        for (t, d) in &self.hist {
+            num += (t - mean_t) * (d - mean_db);
+            den += (t - mean_t) * (t - mean_t);
+        }
+        if den <= 0.0 { return None; }
+        let change = num / den * span;
         let dir: i8 = if change >= SWELL_DB { 1 } else if change <= -SWELL_DB { -1 } else { 0 };
         if dir == 0 { return None; }
         // NOTE what this deliberately does NOT do: reset `reported_dir`. The first version cleared
@@ -1301,16 +1318,19 @@ mod tests {
     }
 
     #[test]
-    fn a_crescendo_as_slow_as_the_adagios_is_actually_detected() {
-        // THE CONSTRAINT THAT SET THE WINDOW. The reference piece rises ~25 dB over six minutes,
-        // about 0.07 dB/sec. A four-second comparison window sees 0.3 dB of that — noise — and a
-        // detector tuned that way reports nothing through the most famous crescendo in the
-        // repertoire. This feeds that exact slope and demands a report.
+    fn the_climb_to_the_climax_is_actually_detected() {
+        // MEASURED FROM THE REAL PIECE, not chosen. Its 15-second dynamic arc rises from -23.4 dB at
+        // 5:00 to -14.2 dB at 6:15 — 9.2 dB over 75 seconds, about 0.12 dB/sec — and that climb is
+        // what the piece is famous for. An 8 dB threshold scores zero contradictions against the arc
+        // and misses this by 0.6 dB, which is a clean sheet earned by going deaf. Five catches it.
+        //
+        // Note what is NOT tested here, because it is deliberately out of reach: the piece's GLOBAL
+        // average slope is 0.056 dB/sec, or 3.4 dB per minute, and is below the threshold on purpose.
         let mut s = Swell::default();
         let mut got = None;
         for i in 0..900 {                       // 75 seconds at 12 frames/sec
             let t = i as f32 / 12.0;
-            if let Some(e) = s.feed(-40.0 + 0.07 * t, t) {
+            if let Some(e) = s.feed(-23.4 + 0.12 * t, t) {
                 if got.is_none() { got = Some(e); }
             }
         }
@@ -1444,10 +1464,14 @@ mod tests {
         let mut n = 0;
         for i in 0..3600 {                      // five minutes
             let t = i as f32 / 12.0;
-            if s.feed(-50.0 + 0.08 * t, t).is_some() { n += 1; }
+            // 0.12 dB/sec — the real climb to the climax, measured off the arc. The earlier version
+            // used 0.08, which is now deliberately below the threshold, so the test was asserting
+            // that an undetectable slope gets detected.
+            if s.feed(-50.0 + 0.12 * t, t).is_some() { n += 1; }
         }
         assert!(n >= 1, "five minutes of crescendo said nothing");
-        assert!(n <= 40, "five minutes of crescendo produced {n} lines");
+        // 300s at one report per 15s is at most 20 even if it never stops trending.
+        assert!(n <= 20, "five minutes of crescendo produced {n} lines");
     }
 
     #[test]
