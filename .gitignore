@@ -44,3 +44,8 @@ field.json
 consonance/**/frames.jsonl
 frames.jsonl
 consonance/**/RECORD
+
+# Lyrics fetched from LRCLIB and cached per track. Third-party text plus a record of what was
+# playing — no reason to vendor either. The lookup is free and repeatable.
+lyrics-cache.json
+consonance/**/lyrics-cache.json

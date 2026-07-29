@@ -83,6 +83,12 @@ fn main() {
                 Event::Swelling { rising, db, over } =>
                     println!("{at:7.2}  {:9}{:+.1} dB over {:.0}s",
                              if *rising { "growing" } else { "fading" }, db, over),
+                // Never fires in a replay: fixtures store one peak set per 4096-sample frame, and
+                // vibrato needs the fine sub-window track that is computed live and not recorded.
+                // Said here rather than left as a silent absence, since "no vibrato in this music"
+                // and "this format cannot carry vibrato" look identical from the outside.
+                Event::Vibrato(v) =>
+                    println!("{at:7.2}  voice    {:.0} Hz ±{:.0}¢ at {:.1} Hz", v.hz, v.depth_cents, v.rate_hz),
                 Event::Speech { talking, evidence } =>
                     println!("{at:7.2}  {:9}syllabic {:.2}  gaps {:.1} dB",
                              if *talking { "SPEECH" } else { "music" },
@@ -104,6 +110,7 @@ fn main() {
     let mut named_chords = 0;
     let mut swells = 0;
     let mut speech_calls = 0;
+    let mut voices_heard = 0;
     for (_, e) in &events {
         match e {
             Event::Onset { .. } => onsets += 1,
@@ -117,6 +124,10 @@ fn main() {
             Event::Swelling { .. } => swells += 1,
             // Counted separately and reported even when zero: on a music fixture this MUST be zero,
             // and a zero I can see is a passing negative control rather than an absent feature.
+            // Cannot fire in a replay — fixtures do not carry the fine pitch track. Counted anyway so
+            // the summary reports 0 rather than omitting the row, because an absent row and a real
+            // zero look identical.
+            Event::Vibrato(_) => voices_heard += 1,
             Event::Speech { talking, .. } => { if *talking { speech_calls += 1; } }
             Event::Silence => {}
         }
@@ -129,6 +140,7 @@ fn main() {
     let swell_col = if has_level { format!("swells {swells}") } else { "swells —(no level data in this fixture; re-record to measure dynamics)".to_string() };
     println!("  chords {chords}  onsets {onsets}  holds {holds}  resolutions {}  {swell_col}", res.len());
     println!("  called SPEECH: {speech_calls}   (a music fixture must read 0 — this is the negative control)");
+    println!("  vibrato voices: {voices_heard}   (always 0 in a replay: the fine pitch track is live-only, not recorded)");
     if has_level {
         let dbs: Vec<f32> = frames.iter().filter_map(|f| f.db).filter(|d| *d > -60.0).collect();
         if !dbs.is_empty() {

@@ -25,7 +25,9 @@ use serde::Serialize;
 use sysinfo::System;
 
 use crate::capture_audio::{self, SAMPLE_RATE, WINDOW};
-use crate::cochlea::{bands, moment, peaks, rms_db, spectrum, Event, SpeechSense, Swell, Tracker};
+use crate::cochlea::{
+    bands, moment, peaks, pitch_track, rms_db, spectrum, Event, SpeechSense, Swell, Tracker, Vibrato,
+};
 use crate::listen::anticheat_present;
 
 /// One line of what the room is doing. Shaped for reading, not for parsing — the whole point is
@@ -100,6 +102,12 @@ fn describe(e: &Event) -> Option<Heard> {
                 if *restless { "  — wants to move" } else { "" },
             ),
         ),
+        Event::Vibrato(v) => {
+            // The note name, because "880 Hz wobbling" is the same unread number the onsets used to
+            // be. A singer thinks in notes.
+            let (name, _) = crate::cochlea::note_name(v.hz);
+            ("voice", format!("a voice · {name} wobbling ±{:.0}¢ at {:.1} Hz", v.depth_cents, v.rate_hz))
+        }
         Event::Speech { talking, evidence } => (
             if *talking { "speech" } else { "music" },
             if *talking {
@@ -170,6 +178,7 @@ where
             let mut tracker = Tracker::default();
             let mut swell = Swell::default();
             let mut speech = SpeechSense::default();
+            let mut vibrato = Vibrato::default();
             let mut sys = System::new();
             let mut last_ac_check = Instant::now();
             // Re-checked once a second rather than per frame, and rather than once at start: arming
@@ -271,6 +280,14 @@ where
                     if let Some(h) = describe(&ev) { on_event(h); }
                 }
                 if let Some(ev) = speech.feed(level_db, t) {
+                    if let Some(h) = describe(&ev) { on_event(h); }
+                }
+                // The fine pitch track: four overlapping sub-windows per chunk, ~47 Hz, which is the
+                // only rate at which vibrato is visible at all. Separate from the main path so the
+                // tracker timing and every fixture stay exactly as they were.
+                let fine = pitch_track(&chunk, SAMPLE_RATE as f32);
+                let fine_rate = SAMPLE_RATE as f32 / 1024.0;
+                if let Some(ev) = vibrato.feed(&fine, t, fine_rate) {
                     if let Some(h) = describe(&ev) { on_event(h); }
                 }
 

@@ -667,6 +667,145 @@ impl Swell {
     }
 }
 
+/// Pitch of the strongest partial, sampled several times WITHIN one analysis chunk.
+///
+/// WHY A SECOND, FINER PASS. The main path transforms 4096 samples with no overlap, so pitch is
+/// sampled at 11.7 Hz and nothing above 5.9 Hz is visible. Vibrato is 4–7 Hz, so half the range
+/// would alias. Raising the main hop would fix that and invalidate every fixture's frame rate and
+/// the tracker's timing along with it — so the fine track is computed separately and the main path
+/// is untouched. Four overlapping 2048-point windows per chunk give pitch at ~47 Hz, which covers
+/// vibrato with room to spare, and cost four small transforms per 85 ms.
+///
+/// WHY THE STRONGEST PARTIAL AND NOT THE FUNDAMENTAL. Frequency modulation is constant in CENTS
+/// across a note's partials, but bin resolution is constant in HERTZ — so the same wobble is worth
+/// four times as many bins on the fourth harmonic as on the first. Measuring high buys resolution
+/// for free. A 2048-point window is 23 Hz per bin, which at a 250 Hz fundamental is 160 cents and
+/// hopeless; on a partial near 1 kHz the same bin is 40 cents, and parabolic interpolation takes it
+/// well under the 30-cent depth that matters.
+pub fn pitch_track(samples: &[f32], sample_rate: f32) -> Vec<Option<f32>> {
+    const SUB: usize = 2048;
+    const HOP: usize = 1024;
+    let mut out = Vec::new();
+    let mut start = 0;
+    while start + SUB <= samples.len() {
+        let spec = spectrum(&samples[start..start + SUB]);
+        // One peak only: this is a pitch tracker, not a chord reader. A high floor keeps it on the
+        // loudest thing rather than wandering between partials frame to frame, which would read as
+        // enormous fake vibrato.
+        let p = peaks(&spec, sample_rate, 1, 0.5);
+        out.push(p.first().map(|x| x.hz));
+        start += HOP;
+    }
+    out
+}
+
+/// A note whose pitch is oscillating — the signature of a sung voice, and of little else in a mix.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct VibratoReading {
+    /// Centre pitch of the oscillating partial.
+    pub hz: f32,
+    /// Peak deviation in cents. Singers run 30–100; a synth pad runs ~0.
+    pub depth_cents: f32,
+    /// Oscillations per second. Singers run 4–7.
+    pub rate_hz: f32,
+}
+
+/// Detects pitch oscillation in the fine track.
+///
+/// WHAT THIS IS FOR. `SpeechSense` reads the loudness envelope and is therefore blind to singing in a
+/// mix — drums and bass own the envelope and fill the gaps a talker would leave. But a sung note
+/// WOBBLES IN PITCH at 4–7 Hz by 30 to 100 cents, and almost nothing else in a pop mix does: a synth
+/// pad is dead steady, a guitar bends without oscillating, a piano cannot. Strings and some leads do,
+/// which is the honest confound.
+///
+/// And it gets at the thing no metadata carries. Lyrics are published; how a line was SUNG is not.
+#[derive(Default)]
+pub struct Vibrato {
+    /// (time, cents relative to the first sample) — a relative scale, so a glide does not read as
+    /// depth and the measurement is of the wobble alone.
+    hist: Vec<(f32, f32)>,
+    ref_hz: f32,
+    last_report: f32,
+    reported: bool,
+}
+
+/// Vibrato is 4–7 Hz; below that is a swell in pitch and above it is a trill or a tremolo.
+const VIB_LO_HZ: f32 = 4.0;
+const VIB_HI_HZ: f32 = 7.5;
+/// How much deviation counts. Below ~25 cents is a steady tone with noise on the estimate.
+const VIB_DEPTH_CENTS: f32 = 25.0;
+/// Enough cycles to be an oscillation rather than a bend: 1.5 s holds six at 4 Hz.
+const VIB_WINDOW_SECS: f32 = 1.5;
+const VIB_MIN_GAP_SECS: f32 = 3.0;
+
+impl Vibrato {
+    /// `pitches` is one chunk's worth of fine track; `t` is the chunk's start time, `rate` its
+    /// sampling rate in Hz.
+    pub fn feed(&mut self, pitches: &[Option<f32>], t: f32, rate: f32) -> Option<Event> {
+        for (i, p) in pitches.iter().enumerate() {
+            let at = t + i as f32 / rate;
+            match p {
+                Some(hz) if *hz > 60.0 => {
+                    if self.ref_hz <= 0.0 { self.ref_hz = *hz; }
+                    // A jump of more than a fifth is the tracker changing partials, not a voice
+                    // moving. Rebase rather than record an impossible excursion.
+                    let c = cents(hz / self.ref_hz);
+                    if c.abs() > 700.0 {
+                        self.ref_hz = *hz;
+                        self.hist.clear();
+                    } else {
+                        self.hist.push((at, c));
+                    }
+                }
+                // Silence or no clear peak breaks the note; a wobble measured across a gap is not one.
+                _ => { self.hist.clear(); }
+            }
+        }
+        let now = t + pitches.len() as f32 / rate;
+        let cutoff = now - VIB_WINDOW_SECS;
+        self.hist.retain(|&(ts, _)| ts >= cutoff);
+        if self.hist.len() < 32 { return None; }
+        let span = now - self.hist.first()?.0;
+        if span < VIB_WINDOW_SECS * 0.8 { return None; }
+
+        // Detrend first: a singer sliding up while wobbling should report the wobble, not the slide.
+        let n = self.hist.len() as f32;
+        let mt = self.hist.iter().map(|(x, _)| *x).sum::<f32>() / n;
+        let mc = self.hist.iter().map(|(_, c)| *c).sum::<f32>() / n;
+        let mut num = 0.0;
+        let mut den = 0.0;
+        for (x, c) in &self.hist { num += (x - mt) * (c - mc); den += (x - mt) * (x - mt); }
+        let slope = if den > 0.0 { num / den } else { 0.0 };
+        let flat: Vec<f32> = self.hist.iter().map(|(x, c)| c - (mc + slope * (x - mt))).collect();
+
+        // Strongest frequency in the vibrato band, and the depth at it.
+        let series_rate = n / span.max(1e-6);
+        let mut best = (0.0f32, 0.0f32);          // (power, freq)
+        let steps = 12;
+        for k in 0..steps {
+            let f = VIB_LO_HZ + (VIB_HI_HZ - VIB_LO_HZ) * (k as f32 + 0.5) / steps as f32;
+            let w = 2.0 * std::f32::consts::PI * f / series_rate;
+            let (mut re, mut im) = (0.0f32, 0.0f32);
+            for (i, v) in flat.iter().enumerate() {
+                let ph = w * i as f32;
+                re += v * ph.cos();
+                im -= v * ph.sin();
+            }
+            let p = (re * re + im * im).sqrt() * 2.0 / n;
+            if p > best.0 { best = (p, f); }
+        }
+        let (depth, rate_hz) = best;
+        let present = depth >= VIB_DEPTH_CENTS;
+        if present == self.reported { return None; }
+        if present && now - self.last_report < VIB_MIN_GAP_SECS { return None; }
+        self.last_report = now;
+        self.reported = present;
+        if !present { return None; }         // stopping is not worth a line; starting is
+        let centre = self.ref_hz * 2f32.powf(mc / 1200.0);
+        Some(Event::Vibrato(VibratoReading { hz: centre, depth_cents: depth, rate_hz }))
+    }
+}
+
 /// Energy in one band of the LEVEL's own modulation spectrum, ignoring DC.
 ///
 /// Not the audio spectrum — the spectrum of how the loudness itself wobbles. A held violin note has
@@ -820,6 +959,8 @@ pub enum Event {
     Intervals { names: Vec<String>, restless: bool, chord: Option<String> },
     /// Sustained growth or decay in loudness, over a span long enough to mean something.
     Swelling { rising: bool, db: f32, over: f32 },
+    /// A pitch is oscillating — a voice, almost certainly, since little else in a mix wobbles.
+    Vibrato(VibratoReading),
     /// This is speech, not music — or has stopped being. Carries its own evidence so a reader can
     /// see WHY rather than take the verdict on faith, which matters while the threshold is still
     /// calibrated on one side only.
@@ -1559,6 +1700,105 @@ mod tests {
             let db = if in_gap { -48.0 } else { -22.0 + 6.0 * syl };
             (t, db)
         }).collect()
+    }
+
+    /// A fine pitch track: a note at `hz` wobbling `depth` cents at `rate` Hz, sampled at 46.9 Hz
+    /// exactly as `pitch_track` produces.
+    fn wobbling(hz: f32, depth: f32, rate: f32, secs: f32) -> (Vec<Option<f32>>, f32) {
+        let sr = 46.875;
+        let n = (secs * sr) as usize;
+        let v = (0..n).map(|i| {
+            let t = i as f32 / sr;
+            let c = depth * (2.0 * std::f32::consts::PI * rate * t).sin();
+            Some(hz * 2f32.powf(c / 1200.0))
+        }).collect();
+        (v, sr)
+    }
+
+    #[test]
+    fn a_wobbling_pitch_is_reported_with_its_depth_and_rate() {
+        // SpeechSense is blind to singing in a mix — drums own the loudness envelope and fill the
+        // gaps a talker would leave. But a sung note oscillates in PITCH, and almost nothing else in
+        // a mix does. This is the reading that gets at how a line was sung, which no metadata carries.
+        let (track, rate) = wobbling(880.0, 55.0, 5.2, 4.0);
+        let mut v = Vibrato::default();
+        let mut got = None;
+        for (i, chunk) in track.chunks(4).enumerate() {
+            let t = i as f32 * 4.0 / rate;
+            if let Some(Event::Vibrato(r)) = v.feed(chunk, t, rate) {
+                if got.is_none() { got = Some(r); }
+            }
+        }
+        match got {
+            Some(r) => {
+                assert!((r.depth_cents - 55.0).abs() < 20.0, "depth read {:.0}, expected ~55", r.depth_cents);
+                assert!((r.rate_hz - 5.2).abs() < 0.8, "rate read {:.1} Hz, expected ~5.2", r.rate_hz);
+                assert!((r.hz - 880.0).abs() < 40.0, "centre read {:.0} Hz", r.hz);
+            }
+            None => panic!("a 55-cent 5.2 Hz wobble went unreported"),
+        }
+    }
+
+    #[test]
+    fn a_dead_steady_pitch_reports_nothing() {
+        // The wall that matters: a synth pad, an organ, anything sequenced. Calling those a voice
+        // would make the feature worthless.
+        let (track, rate) = wobbling(880.0, 0.0, 5.0, 6.0);
+        let mut v = Vibrato::default();
+        let mut n = 0;
+        for (i, chunk) in track.chunks(4).enumerate() {
+            if let Some(Event::Vibrato(_)) = v.feed(chunk, i as f32 * 4.0 / rate, rate) { n += 1; }
+        }
+        assert_eq!(n, 0, "a steady tone reported vibrato {n} times");
+    }
+
+    #[test]
+    fn a_slow_bend_is_not_vibrato() {
+        // A guitar bend or a portamento moves a long way in pitch without oscillating. Detrending is
+        // what separates them: the slide is removed and only the wobble is measured.
+        let sr = 46.875;
+        let n = (6.0 * sr) as usize;
+        let track: Vec<Option<f32>> = (0..n).map(|i| {
+            let t = i as f32 / sr;
+            Some(440.0 * 2f32.powf(300.0 * t / 6.0 / 1200.0))     // three semitones over six seconds
+        }).collect();
+        let mut v = Vibrato::default();
+        let mut reports = 0;
+        for (i, chunk) in track.chunks(4).enumerate() {
+            if let Some(Event::Vibrato(_)) = v.feed(chunk, i as f32 * 4.0 / sr, sr) { reports += 1; }
+        }
+        assert_eq!(reports, 0, "a monotonic bend was called vibrato {reports} times");
+    }
+
+    #[test]
+    fn a_broken_note_does_not_wobble_across_the_gap() {
+        // Two different notes with silence between them are not one note vibrating. Measuring across
+        // the gap would invent an enormous excursion out of a melody.
+        let sr = 46.875;
+        let mut track: Vec<Option<f32>> = Vec::new();
+        for _ in 0..70 { track.push(Some(440.0)); }
+        for _ in 0..20 { track.push(None); }
+        for _ in 0..70 { track.push(Some(587.0)); }
+        let mut v = Vibrato::default();
+        let mut n = 0;
+        for (i, chunk) in track.chunks(4).enumerate() {
+            if let Some(Event::Vibrato(_)) = v.feed(chunk, i as f32 * 4.0 / sr, sr) { n += 1; }
+        }
+        assert_eq!(n, 0, "a note change across silence read as vibrato {n} times");
+    }
+
+    #[test]
+    fn the_fine_pitch_track_finds_a_tone_at_the_right_place_and_rate() {
+        // The tracker itself, separately from the wobble logic, so a failure says which layer broke.
+        let tone = tone(&[(880.0, 1.0)]);
+        let t = pitch_track(&tone, SR);
+        // 4096 samples, 2048-point windows, 1024 hop -> 3 full windows
+        assert!(t.len() >= 3, "expected several sub-windows, got {}", t.len());
+        let found: Vec<f32> = t.iter().flatten().cloned().collect();
+        assert!(!found.is_empty(), "no pitch found in a pure tone");
+        for f in &found {
+            assert!((f - 880.0).abs() < 15.0, "sub-window found {f:.0} Hz, expected 880");
+        }
     }
 
     #[test]
