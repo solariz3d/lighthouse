@@ -109,6 +109,9 @@ load();
     const row = document.createElement('div');
     const tone = { restless: '#e8b04b', resolved: '#6fd08c', stopped: '#e05c5c',
                    silence: '#6b7280', onset: '#7aa2f7' }[h.kind] || 'inherit';
+    // Bright and full-size: these are the voted lines, the ones that also reach the ledger. They
+    // have to stay legible against the fast dim stream they now sit among.
+    row.style.fontWeight = '600';
     row.innerHTML = `<span style="opacity:.5">${h.at}</span>  <span style="color:${tone}">${h.text}</span>`;
     log.appendChild(row);
     // A listening window should follow the sound rather than make you chase it.
@@ -188,11 +191,37 @@ load();
 
   refresh.onclick = loadSources;
   window.__TAURI__.event.listen('heard', e => add(e.payload));
+  // TWO READERS, TWO RATES — the same split the spectrum already has, applied to the list.
+  //
+  // The settle-and-vote rules exist because the orchestrator pays per line, and they were applied
+  // to this display too, which was wrong: the keeper watching a song go by WANTS the fine grain.
+  // "Not updating as fast as it could for the intricacies of the song." Density is information to
+  // an eye and a bill to a reader, and one channel cannot serve both.
+  //
+  // So the fast reading is drawn here, dim, straight off the analysis frame — and it is NOT
+  // written to the ledger and never reaches the orchestrator. The voted `heard` lines stay bright
+  // on top of it, so the meaningful events are still legible against the movement.
+  let lastFast = '';
+  function addFast(text, restless) {
+    if (!text || text === lastFast) return;
+    lastFast = text;
+    if (lines === 0) log.innerHTML = '';
+    const row = document.createElement('div');
+    row.style.opacity = '.42';
+    row.style.fontSize = '11px';
+    row.innerHTML = `<span style="opacity:.6">·</span> <span style="color:${
+      restless ? '#e8b04b' : '#8b93a3'}">${text}</span>`;
+    log.appendChild(row);
+    log.scrollTop = log.scrollHeight;
+    if (++lines > 500) { log.removeChild(log.firstChild); lines--; }
+  }
+
   window.__TAURI__.event.listen('spectrum', e => {
     const s = e.payload;
     if (s.bands && s.bands.length) bands = s.bands;
     marks = s.peaks || [];
     vs = s.voices || [];
+    if (s.intervals && s.intervals.length) addFast(s.intervals.join(' · '), s.restless);
     if (!vsOut) return;
     vsOut.innerHTML = vs.length === 0
       ? 'silent'

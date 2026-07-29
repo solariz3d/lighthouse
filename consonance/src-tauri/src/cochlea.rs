@@ -157,6 +157,12 @@ const JUST: &[(u32, u32, &str, bool)] = &[
 
 pub fn cents(ratio: f32) -> f32 { 1200.0 * ratio.log2() }
 
+/// Position of a ratio in JUST, for canonical ordering. Unknown ratios sort last rather than
+/// panicking — an ordering helper is not the place to take the process down.
+fn just_rank(num: u32, den: u32) -> usize {
+    JUST.iter().position(|&(n, d, _, _)| n == num && d == den).unwrap_or(usize::MAX)
+}
+
 /// Identify the interval between two frequencies, folded into one octave.
 ///
 /// Folding is what makes this hear like an ear: a fifth is a fifth whether it spans one octave
@@ -433,8 +439,18 @@ pub const MIN_TENSION_SECS: f32 = 0.5;
 pub struct Tracker {
     /// The last few readings, oldest first. Only the interval set and silence matter for voting.
     recent: Vec<(Vec<Interval>, bool)>,
-    /// The stable set as last reported.
-    confirmed: Option<(Vec<Interval>, bool)>,
+    /// The stable set as last reported, held as NAMES rather than measurements.
+    ///
+    /// `Interval` carries `cents_off` — how far the measured pair sits from exact just intonation —
+    /// and that number moves every window, because real tuning wobbles. Comparing whole structs
+    /// therefore called the same chord a new chord and printed it again, byte-identical, live:
+    ///
+    ///     14:10:02  9:8 major second · 5:4 major third  — wants to move
+    ///     14:10:02  9:8 major second · 5:4 major third  — wants to move
+    ///
+    /// The question being asked is "is this the same chord", not "is it tuned identically". So the
+    /// belief keeps ratios only.
+    confirmed: Option<(Vec<(u32, u32)>, bool)>,
     restless_since: Option<f32>,
     last_nag: f32,
 }
@@ -453,8 +469,7 @@ impl Tracker {
 
         let need = VOTE_WINDOWS / 2 + 1;      // strict majority
         let silent = self.recent.iter().filter(|(_, s)| *s).count() >= need;
-        // An interval survives if a majority of the recent readings contain it. Order follows
-        // JUST's own ordering via first appearance, so the same chord always prints the same way.
+        // An interval survives if a majority of the recent readings contain it.
         let mut stable: Vec<Interval> = Vec::new();
         for (ivs, _) in &self.recent {
             for iv in ivs {
@@ -465,6 +480,18 @@ impl Tracker {
                 if votes >= need { stable.push(*iv); }
             }
         }
+        // CANONICAL ORDER, because first-appearance order is not stable. The vote walks a SLIDING
+        // window, so which reading is seen first changes every frame and the same chord comes out
+        // permuted — then a vector comparison calls it a new chord. Live, from one second:
+        //
+        //     2:1 octave · 4:3 fourth
+        //     4:3 fourth · 2:1 octave
+        //     2:1 octave · 4:3 fourth
+        //
+        // A previous comment here asserted the order was stable via first appearance. It was not,
+        // and asserting it is what stopped it being checked. Sorting by JUST's own order also
+        // means a chord always reads the same way to a human, simplest ratio first.
+        stable.sort_by_key(|i| just_rank(i.num, i.den));
         let restless = stable.iter().any(|i| i.restless);
 
         // SOUND PRESENCE IS DECIDED SEPARATELY FROM READABILITY, and getting that wrong once left
@@ -504,7 +531,8 @@ impl Tracker {
             return out;
         }
 
-        let differs = self.confirmed.as_ref().map(|(c, _)| *c != stable).unwrap_or(true);
+        let names: Vec<(u32, u32)> = stable.iter().map(|i| (i.num, i.den)).collect();
+        let differs = self.confirmed.as_ref().map(|(c, _)| *c != names).unwrap_or(true);
         if differs {
             out.push(Event::Intervals {
                 names: stable.iter()
@@ -526,7 +554,7 @@ impl Tracker {
                 }
                 _ => {}
             }
-            self.confirmed = Some((stable, silent));
+            self.confirmed = Some((names, silent));
         }
 
         // Tension runs on the clock, not on change: an unresolved chord that nobody touches is
@@ -644,6 +672,61 @@ mod tests {
         // was "no chord". That is what is asserted now.
         assert_eq!(chords, 0, "alternating readings named {chords} chords; a flicker is not music");
         assert_eq!(all, 1, "and the one event is the onset, nothing else: {all}");
+    }
+
+    #[test]
+    fn the_same_chord_is_the_same_chord_however_it_is_tuned_or_ordered() {
+        // Two live defects in one test, both of which printed the same chord again as though it
+        // were new. Ordering: the vote walks a sliding window, so first-appearance order permutes
+        // every frame. Tuning: Interval carries cents_off, which moves every window because real
+        // tuning wobbles, and comparing whole structs made a hair of drift into a chord change.
+        let a = Moment {
+            fundamental: Some(220.0),
+            intervals: vec![interval(220.0, 293.3, 30.0).unwrap(),      // fourth
+                            interval(220.0, 440.0, 30.0).unwrap()],     // octave
+            restless: false, silent: false, voices: vec![],
+        };
+        // same two intervals, reversed, and each a few cents off — a different Vec<Interval>
+        // entirely, and the same chord to any listener
+        let b = Moment {
+            fundamental: Some(220.0),
+            intervals: vec![interval(220.0, 440.6, 30.0).unwrap(),
+                            interval(220.0, 293.0, 30.0).unwrap()],
+            restless: false, silent: false, voices: vec![],
+        };
+        assert_ne!(a.intervals, b.intervals, "the inputs must genuinely differ as structs");
+
+        let mut t = Tracker::default();
+        let mut named = 0;
+        for i in 0..24 {
+            let m = if i % 2 == 0 { a.clone() } else { b.clone() };
+            for e in t.feed(m, i as f32 * 0.085, 0.0) {
+                if matches!(e, Event::Intervals { .. }) { named += 1; }
+            }
+        }
+        assert_eq!(named, 1, "one chord, reordered and re-tuned, was announced {named} times");
+    }
+
+    #[test]
+    fn a_chord_prints_simplest_ratio_first() {
+        // Canonical order is also readable order: a human should not have to re-parse a chord
+        // because the octave moved to the end.
+        let m = Moment {
+            fundamental: Some(220.0),
+            intervals: vec![interval(220.0, 293.3, 30.0).unwrap(),      // fourth
+                            interval(220.0, 440.0, 30.0).unwrap(),      // octave
+                            interval(220.0, 330.0, 30.0).unwrap()],     // fifth
+            restless: false, silent: false, voices: vec![],
+        };
+        let mut t = Tracker::default();
+        let mut got: Vec<String> = vec![];
+        for i in 0..8 {
+            for e in t.feed(m.clone(), i as f32 * 0.085, 0.0) {
+                if let Event::Intervals { names, .. } = e { got = names; }
+            }
+        }
+        assert_eq!(got, vec!["2:1 octave", "3:2 fifth", "4:3 fourth"],
+                   "JUST's own order, simplest first: {got:?}");
     }
 
     #[test]
