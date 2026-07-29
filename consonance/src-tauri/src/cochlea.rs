@@ -420,6 +420,15 @@ pub enum Event {
 /// same alternation would let the first reading win — the deaf failure's mirror image.
 pub const VOTE_WINDOWS: usize = 4;
 
+/// How long tension must last before its release is worth a line.
+///
+/// Half a second, and the reason is the same one that set the vote window: a thing that lasted
+/// one analysis window did not happen musically. Measured live before this existed: 33 lines of
+/// "resolved after 0.1s" in 62 seconds, each announcing the release of a tension that never had
+/// time to be felt. The clock still clears on every settling — only the REPORT is withheld, so
+/// nothing is left dangling.
+pub const MIN_TENSION_SECS: f32 = 0.5;
+
 #[derive(Default)]
 pub struct Tracker {
     /// The last few readings, oldest first. Only the interval set and silence matter for voting.
@@ -458,34 +467,64 @@ impl Tracker {
         }
         let restless = stable.iter().any(|i| i.restless);
 
-        let differs = self.confirmed.as_ref()
-            .map(|(c, s)| *s != silent || *c != stable)
-            .unwrap_or(true);
-
-        if differs {
-            let was_silent = self.confirmed.as_ref().map(|(_, s)| *s).unwrap_or(true);
+        // SOUND PRESENCE IS DECIDED SEPARATELY FROM READABILITY, and getting that wrong once left
+        // the tab entirely mute: when the interval logic swallowed unreadable moments it swallowed
+        // the onset with them, so a percussion-only passage — sound obviously playing — produced
+        // not one line. You hear a drum start. That the harmony is unreadable is a different fact.
+        let was_silent = self.confirmed.as_ref().map(|(_, s)| *s).unwrap_or(true);
+        if silent != was_silent {
             if silent {
-                if !was_silent { out.push(Event::Silence); }
+                out.push(Event::Silence);
                 self.restless_since = None;
-            } else {
-                if was_silent {
-                    if let Some(hz) = m.fundamental { out.push(Event::Onset { hz }); }
+            } else if let Some(hz) = m.fundamental {
+                out.push(Event::Onset { hz });
+            }
+            // Silence wipes the chord belief as well: after a gap, the next chord is genuinely new.
+            self.confirmed = Some((Vec::new(), silent));
+        }
+        if silent { return out; }
+
+        // AN UNREADABLE MOMENT IS NOT A REPORT THAT THE MUSIC CHANGED. Sound is present but no
+        // interval won a majority — a transient, a percussion hit, a passing tone. Emitting
+        // nothing was already right; the bug was updating the belief anyway, so the same chord
+        // returning a moment later was announced a second time as though it were new. Live:
+        //
+        //     14:01:48  restless  16:9 minor seventh  — wants to move
+        //     14:01:48  restless  16:9 minor seventh  — wants to move
+        //
+        // So this leaves the chord belief alone. The tension clock still runs, because tension
+        // that outlives a moment of noise has not resolved.
+        if stable.is_empty() {
+            if let Some(t0) = self.restless_since {
+                if nag_after > 0.0 && now - self.last_nag >= nag_after {
+                    out.push(Event::StillUnresolved { secs: now - t0 });
+                    self.last_nag = now;
                 }
-                if !stable.is_empty() {
-                    out.push(Event::Intervals {
-                        names: stable.iter()
-                            .map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
-                        restless,
-                    });
-                }
-                match (self.restless_since, restless) {
-                    (None, true) => { self.restless_since = Some(now); self.last_nag = now; }
-                    (Some(t0), false) => {
+            }
+            return out;
+        }
+
+        let differs = self.confirmed.as_ref().map(|(c, _)| *c != stable).unwrap_or(true);
+        if differs {
+            out.push(Event::Intervals {
+                names: stable.iter()
+                    .map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
+                restless,
+            });
+            match (self.restless_since, restless) {
+                (None, true) => { self.restless_since = Some(now); self.last_nag = now; }
+                (Some(t0), false) => {
+                    // A release is only news if there was something to release. 33 lines of
+                    // "resolved after 0.1s" in a minute, live — tension that lasted a single
+                    // window was never tension, and announcing its resolution is the same
+                    // window-is-a-moment error one layer up. The clock always clears; only the
+                    // REPORT is withheld.
+                    if now - t0 >= MIN_TENSION_SECS {
                         out.push(Event::Resolved { after_secs: now - t0 });
-                        self.restless_since = None;
                     }
-                    _ => {}
+                    self.restless_since = None;
                 }
+                _ => {}
             }
             self.confirmed = Some((stable, silent));
         }
@@ -605,6 +644,61 @@ mod tests {
         // was "no chord". That is what is asserted now.
         assert_eq!(chords, 0, "alternating readings named {chords} chords; a flicker is not music");
         assert_eq!(all, 1, "and the one event is the onset, nothing else: {all}");
+    }
+
+    #[test]
+    fn a_chord_returning_after_an_unreadable_moment_is_not_announced_twice() {
+        // Straight from the live ledger: the same line, back to back, same second. Sound present,
+        // no interval winning a majority, so nothing is emitted — but the belief was being
+        // overwritten anyway, and the chord's return read as a new chord.
+        let held = Moment {
+            fundamental: Some(440.0), intervals: vec![interval(440.0, 660.0, 25.0).unwrap()],
+            restless: false, silent: false, voices: vec![],
+        };
+        let unreadable = Moment {
+            fundamental: Some(440.0), intervals: vec![], restless: false, silent: false, voices: vec![],
+        };
+        let mut t = Tracker::default();
+        let mut named = 0;
+        // held long enough to be reported, then noise, then the same chord back
+        for i in 0..8 { for e in t.feed(held.clone(), i as f32 * 0.085, 0.0) {
+            if matches!(e, Event::Intervals { .. }) { named += 1; } } }
+        for i in 8..14 { t.feed(unreadable.clone(), i as f32 * 0.085, 0.0); }
+        for i in 14..24 { for e in t.feed(held.clone(), i as f32 * 0.085, 0.0) {
+            if matches!(e, Event::Intervals { .. }) { named += 1; } } }
+        assert_eq!(named, 1, "the same chord was announced {named} times across a gap of noise");
+    }
+
+    #[test]
+    fn a_tension_too_brief_to_feel_does_not_report_its_release() {
+        // 33 "resolved after 0.1s" lines in 62 seconds, live. A release is only news if there was
+        // something to release.
+        let tense = Moment {
+            fundamental: Some(440.0),
+            intervals: vec![interval(440.0, 622.3, 25.0).unwrap()],   // tritone
+            restless: true, silent: false, voices: vec![],
+        };
+        let calm = Moment {
+            fundamental: Some(440.0), intervals: vec![interval(440.0, 660.0, 25.0).unwrap()],
+            restless: false, silent: false, voices: vec![],
+        };
+        // brief: tension confirmed, then gone well inside MIN_TENSION_SECS
+        let mut t = Tracker::default();
+        let mut res = 0;
+        for i in 0..5 { for e in t.feed(tense.clone(), i as f32 * 0.085, 0.0) {
+            if matches!(e, Event::Resolved { .. }) { res += 1; } } }
+        for i in 5..12 { for e in t.feed(calm.clone(), i as f32 * 0.085, 0.0) {
+            if matches!(e, Event::Resolved { .. }) { res += 1; } } }
+        assert_eq!(res, 0, "a {:.2}s tension reported its release", 7.0 * 0.085);
+
+        // and the other wall: real tension, held, must still report the release
+        let mut t2 = Tracker::default();
+        let mut res2 = 0;
+        for i in 0..30 { for e in t2.feed(tense.clone(), i as f32 * 0.085, 0.0) {
+            if matches!(e, Event::Resolved { .. }) { res2 += 1; } } }
+        for i in 30..40 { for e in t2.feed(calm.clone(), i as f32 * 0.085, 0.0) {
+            if matches!(e, Event::Resolved { .. }) { res2 += 1; } } }
+        assert_eq!(res2, 1, "tension held 2.5s must report its release exactly once");
     }
 
     #[test]
