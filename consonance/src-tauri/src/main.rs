@@ -21,6 +21,8 @@ mod mcp;
 mod gate;
 mod tether;
 mod capture;
+mod cochlea;   // audio as relationships: ratios, not frequencies. Pure maths, no unsafe.
+mod listen;    // choosing what to listen to: per-process, so a call is never delivered
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
