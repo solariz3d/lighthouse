@@ -667,6 +667,182 @@ impl Swell {
     }
 }
 
+/// A pulse: how fast, how strongly, and how mechanically.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct PulseReading {
+    pub bpm: f32,
+    /// How much the level series actually repeats at that period, 0..1. Below ~0.15 there is no
+    /// pulse worth naming and the number would be a lag picked out of noise.
+    pub strength: f32,
+    /// How mechanical it is, 0..1. A drum machine sits near 1; an orchestra with rubato sits low.
+    /// This is the part no metadata carries — a BPM is published, a feel is not.
+    pub steady: f32,
+}
+
+/// Tempo from the loudness series, by autocorrelation.
+///
+/// WHY THIS CAN BE TRUSTED BEFORE IT SHIPS, unlike the last feature. Beat rates live at 1–3 Hz — 120
+/// bpm is 2 Hz — and the level series already samples at 11.7 Hz, so the existing fixtures contain
+/// everything this needs. The Adagio and Fratres are negative controls available today: neither has a
+/// drum kit, so a strong pulse claim on either would be the detector fooling itself. Vibrato had no
+/// such control and shipped silent because of it.
+///
+/// AUTOCORRELATION AND NOT AN FFT of the envelope, because the question is "does this repeat at some
+/// period" rather than "what frequencies are present". A rhythm with a strong backbeat has energy at
+/// the half-beat too, and a spectrum splits its evidence across harmonics while a correlation adds it.
+///
+/// WHAT IT CANNOT DO, stated rather than found later: 11.7 Hz sampling means periods shorter than
+/// ~170 ms are invisible, so anything above roughly 350 bpm folds. And it finds a PERIOD, not a
+/// downbeat — it knows the pulse rate and not where the bar starts.
+#[derive(Default)]
+pub struct Pulse {
+    hist: Vec<(f32, f32)>,
+    /// Recent tempo estimates, so steadiness is measured over time rather than guessed from one.
+    recent_bpm: Vec<f32>,
+    last_report: f32,
+    reported: Option<f32>,
+}
+
+const PULSE_WINDOW_SECS: f32 = 8.0;
+const PULSE_MIN_BPM: f32 = 50.0;
+const PULSE_MAX_BPM: f32 = 210.0;
+/// Below this the series does not really repeat and any lag is noise.
+// Raised from 0.15 after the fixtures showed a correlation peak exists at SOME lag in any signal
+// with transients. Necessary but nowhere near sufficient on its own.
+const PULSE_MIN_STRENGTH: f32 = 0.25;
+/// What fraction of recent estimates must land within 6% of their median before a tempo is claimed.
+/// This is the gate that the two orchestral fixtures forced into existence.
+const PULSE_MIN_AGREEMENT: f32 = 0.7;
+/// A tempo must differ by more than this to be a new tempo rather than jitter on the same one.
+const PULSE_CHANGE_BPM: f32 = 6.0;
+const PULSE_MIN_GAP_SECS: f32 = 20.0;
+
+/// OFF, and this is a refusal rather than an oversight.
+///
+/// Built, tested, and it FAILS ITS OWN NEGATIVE CONTROL. Run against two orchestral recordings with
+/// no drum kit it produced 17 and 21 confident tempos spanning 51–237 bpm — the entire allowed range
+/// — because a correlation peak exists at SOME lag in any signal with transients, and bow changes are
+/// transients.
+///
+/// Worse, the confidence was manufactured. `steady` read 0.96–0.99 on readings that jumped from 237
+/// to 55 bpm, because it filtered the estimates to those near the median and then measured how
+/// tightly THAT SUBSET clustered. Selecting for agreement and then reporting agreement is circular —
+/// the number could not have come out low.
+///
+/// Two real defects rather than thresholds: no strength value separates beat from no-beat (0.26–0.40
+/// on beatless music, against 0.15 then 0.25 tried), and the steadiness measure is self-fulfilling.
+/// A tempo detector that invents confident numbers for music with no tempo is worse than none, so it
+/// stays dark until redesigned — probably around a real onset detector on the fine pitch track rather
+/// than the 11.7 Hz level series.
+///
+/// The code and its five tests stay. The synthetic side works, the NEGATIVE CONTROL IS THE VALUE, and
+/// deleting it would mean rediscovering all of this from scratch.
+///
+/// The gate is checked BY THE CALLERS rather than inside `feed`, and that placement is deliberate:
+/// the maths is sound on synthetic input and its tests must keep exercising it. What is being
+/// withheld is the DECISION TO BELIEVE IT, which belongs where the event would be emitted.
+pub const PULSE_ENABLED: bool = false;
+
+impl Pulse {
+    pub fn feed(&mut self, db: f32, now: f32) -> Option<Event> {
+        if db <= -60.0 {
+            self.hist.clear();
+            self.recent_bpm.clear();
+            return None;
+        }
+        // Linear amplitude: a beat is an energy event, and dB compresses exactly the peaks that
+        // carry the rhythm.
+        self.hist.push((now, 10f32.powf(db / 20.0)));
+        let cutoff = now - PULSE_WINDOW_SECS;
+        self.hist.retain(|&(t, _)| t >= cutoff);
+        let span = now - self.hist.first()?.0;
+        if span < PULSE_WINDOW_SECS * 0.9 || self.hist.len() < 64 { return None; }
+
+        let rate = self.hist.len() as f32 / span;
+
+        // ONSET FUNCTION, NOT THE LEVEL ITSELF, and skipping this is what the negative control caught.
+        // Autocorrelation of a SMOOTH signal is high at every short lag — because smooth means
+        // consecutive samples resemble each other — so a gentle crescendo correlates strongly at
+        // 0.3–1.2 s and gets called a tempo. Rhythm is in the CHANGES: a beat is a sudden rise, and a
+        // swell is not. Half-wave rectified, because a note starting is an event and a note ending is
+        // much less of one.
+        let flux: Vec<f32> = self.hist.windows(2)
+            .map(|w| (w[1].1 - w[0].1).max(0.0))
+            .collect();
+        if flux.len() < 32 { return None; }
+
+        // And an absolute gate on top of the shape: without transients there is no rhythm, however
+        // well the correlation happens to normalise. Measured in the linear domain the top decile of
+        // a beat's flux dwarfs a swell's.
+        let mut sorted = flux.clone();
+        sorted.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
+        let top = &sorted[sorted.len() * 9 / 10..];
+        let transient = top.iter().sum::<f32>() / top.len().max(1) as f32;
+        let level = self.hist.iter().map(|(_, v)| *v).sum::<f32>() / self.hist.len() as f32;
+        if level <= 1e-9 || transient / level < 0.25 { self.recent_bpm.clear(); return None; }
+
+        let mean = flux.iter().sum::<f32>() / flux.len() as f32;
+        let x: Vec<f32> = flux.iter().map(|v| v - mean).collect();
+        let energy: f32 = x.iter().map(|v| v * v).sum();
+        if energy <= 1e-12 { return None; }
+
+        // Correlate at every lag in the tempo range and keep the best.
+        let mut best = (0.0f32, 0.0f32);       // (normalised correlation, bpm)
+        let lag_lo = (60.0 / PULSE_MAX_BPM * rate).round().max(2.0) as usize;
+        let lag_hi = (60.0 / PULSE_MIN_BPM * rate).round() as usize;
+        for lag in lag_lo..=lag_hi.min(x.len() / 2) {
+            let mut c = 0.0;
+            for i in 0..x.len() - lag { c += x[i] * x[i + lag]; }
+            // Normalising by the OVERLAP rather than the full length, or long lags are penalised
+            // for having less data and slow music always loses to fast.
+            let n = (x.len() - lag) as f32;
+            let norm = c / (energy * n / x.len() as f32).max(1e-12);
+            if norm > best.0 { best = (norm, 60.0 * rate / lag as f32); }
+        }
+        let (strength, bpm) = best;
+        if strength < PULSE_MIN_STRENGTH {
+            self.recent_bpm.clear();
+            return None;
+        }
+
+        self.recent_bpm.push(bpm);
+        if self.recent_bpm.len() > 12 { self.recent_bpm.remove(0); }
+        if self.recent_bpm.len() < 6 { return None; }
+
+        // AGREEMENT IS THE GATE, NOT AN ATTRIBUTE, and this is what the fixtures caught. Run against
+        // real orchestral recordings the detector produced 24 and 27 "tempos" spanning 51–237 bpm —
+        // the entire allowed range — because a correlation peak exists at SOME lag in any signal with
+        // transients, and bow changes are transients. The scatter was the evidence all along, and it
+        // was being computed and then reported rather than used to decide.
+        //
+        // A tempo that cannot be found twice is not a tempo. So: most recent estimates must land near
+        // the same value before anything is claimed. Same rule as every other layer here — a reading
+        // that does not survive repetition was never a reading.
+        let mut sorted = self.recent_bpm.clone();
+        sorted.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
+        let median = sorted[sorted.len() / 2];
+        let near = self.recent_bpm.iter().filter(|b| (*b - median).abs() / median <= 0.06).count();
+        let agreement = near as f32 / self.recent_bpm.len() as f32;
+        if agreement < PULSE_MIN_AGREEMENT { return None; }
+
+        // Steadiness now means the FEEL — how tightly the agreeing estimates cluster — rather than
+        // whether a pulse exists at all. A machine lands on one number; a drummer breathes around it.
+        let agreeing: Vec<f32> = self.recent_bpm.iter().cloned()
+            .filter(|b| (b - median).abs() / median <= 0.06).collect();
+        let m = agreeing.iter().sum::<f32>() / agreeing.len() as f32;
+        let sd = (agreeing.iter().map(|b| (b - m) * (b - m)).sum::<f32>() / agreeing.len() as f32).sqrt();
+        let steady = (1.0 - sd / 4.0).clamp(0.0, 1.0);
+        // Report the median rather than this window's guess: it is the estimate the evidence supports.
+        let bpm = median;
+
+        let changed = self.reported.map_or(true, |r| (r - bpm).abs() > PULSE_CHANGE_BPM);
+        if !changed || now - self.last_report < PULSE_MIN_GAP_SECS { return None; }
+        self.last_report = now;
+        self.reported = Some(bpm);
+        Some(Event::Pulse(PulseReading { bpm, strength, steady }))
+    }
+}
+
 /// Pitch of the strongest partial, sampled several times WITHIN one analysis chunk.
 ///
 /// WHY A SECOND, FINER PASS. The main path transforms 4096 samples with no overlap, so pitch is
@@ -961,6 +1137,8 @@ pub enum Event {
     Swelling { rising: bool, db: f32, over: f32 },
     /// A pitch is oscillating — a voice, almost certainly, since little else in a mix wobbles.
     Vibrato(VibratoReading),
+    /// The music has a pulse, at this rate and this mechanically.
+    Pulse(PulseReading),
     /// This is speech, not music — or has stopped being. Carries its own evidence so a reader can
     /// see WHY rather than take the verdict on faith, which matters while the threshold is still
     /// calibrated on one side only.
@@ -1225,6 +1403,7 @@ pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Eve
     let mut t = Tracker::default();
     let mut swell = Swell::default();
     let mut speech = SpeechSense::default();
+    let mut pulse = Pulse::default();
     let mut out = Vec::new();
     for f in frames {
         for e in t.feed(moment(&f.peaks, tol_cents), f.at, nag_after) {
@@ -1239,6 +1418,12 @@ pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Eve
             // calibrated on synthetic envelopes only; these three recordings are the evidence it does
             // not fire on real music, which is the error that would actually matter.
             if let Some(e) = speech.feed(db, f.at) { out.push((f.at, e)); }
+            // Fed in replay too — this is the feature that CAN be validated offline, because beat
+            // rates are inside what the level series already samples. The Adagio and Fratres are
+            // negative controls that exist today, which vibrato never had.
+            // Gated: see PULSE_ENABLED. The maths still runs so its tests stay honest; the CLAIM is
+            // withheld, because it fails its negative control on both orchestral fixtures.
+            if let Some(e) = pulse.feed(db, f.at) { if PULSE_ENABLED { out.push((f.at, e)); } }
         }
     }
     out
@@ -1713,6 +1898,100 @@ mod tests {
             Some(hz * 2f32.powf(c / 1200.0))
         }).collect();
         (v, sr)
+    }
+
+    /// A level series with a beat: a pulse every `bpm` with `jitter` seconds of human wander.
+    fn pulsing(bpm: f32, secs: f32, jitter: f32) -> Vec<(f32, f32)> {
+        let fps = 11.7;
+        let period = 60.0 / bpm;
+        let n = (secs * fps) as usize;
+        let mut seed: u32 = 0x1234_5678;
+        // Beat times first, so jitter moves the HITS rather than adding noise to the level.
+        let mut beats = Vec::new();
+        let mut t = 0.0;
+        while t < secs {
+            seed = seed.wrapping_mul(1664525).wrapping_add(1013904223);
+            let r = (seed >> 8) as f32 / 8_388_608.0 - 1.0;
+            beats.push(t + r * jitter);
+            t += period;
+        }
+        (0..n).map(|i| {
+            let ts = i as f32 / fps;
+            // each beat is a short decaying thump
+            let mut amp = 0.02f32;
+            for b in &beats {
+                let d = ts - b;
+                if d >= 0.0 && d < 0.35 { amp += 0.9 * (-d * 9.0).exp(); }
+            }
+            (ts, 20.0 * amp.max(1e-4).log10())
+        }).collect()
+    }
+
+    #[test]
+    fn a_steady_beat_is_found_at_the_right_tempo() {
+        for want in [72.0f32, 100.0, 128.0, 174.0] {
+            let mut p = Pulse::default();
+            let mut got = None;
+            for (t, db) in pulsing(want, 30.0, 0.0) {
+                if let Some(Event::Pulse(r)) = p.feed(db, t) { if got.is_none() { got = Some(r); } }
+            }
+            match got {
+                Some(r) => {
+                    // Half and double time are the same pulse heard differently, and a detector
+                    // that finds one is not wrong. What would be wrong is an unrelated number.
+                    let ratios = [1.0, 0.5, 2.0, 1.0 / 3.0, 3.0];
+                    let ok = ratios.iter().any(|k| (r.bpm - want * k).abs() < want * 0.06);
+                    assert!(ok, "wanted ~{want} bpm, got {:.1}", r.bpm);
+                    assert!(r.strength >= PULSE_MIN_STRENGTH);
+                }
+                None => panic!("a metronomic {want} bpm beat was not detected"),
+            }
+        }
+    }
+
+    #[test]
+    fn music_with_no_beat_reports_no_pulse() {
+        // THE NEGATIVE CONTROL, and the reason this feature could be trusted before shipping where
+        // vibrato could not. A sustained chord that swells has no pulse, and claiming one would be
+        // the detector picking a lag out of noise.
+        let mut p = Pulse::default();
+        let mut n = 0;
+        for i in 0..600 {
+            let t = i as f32 / 11.7;
+            let db = -24.0 + 2.0 * (2.0 * std::f32::consts::PI * 0.08 * t).sin();
+            if let Some(Event::Pulse(_)) = p.feed(db, t) { n += 1; }
+        }
+        assert_eq!(n, 0, "a beatless swell reported a pulse {n} times");
+    }
+
+    #[test]
+    fn a_machine_reads_steadier_than_a_human() {
+        // The reading that is not in any metadata: a BPM is published, a FEEL is not. A drum machine
+        // gives the same answer every window; a drummer pushes and pulls.
+        let measure = |jitter: f32| {
+            let mut p = Pulse::default();
+            let mut last = None;
+            for (t, db) in pulsing(120.0, 90.0, jitter) {
+                if let Some(Event::Pulse(r)) = p.feed(db, t) { last = Some(r); }
+            }
+            last
+        };
+        let machine = measure(0.0).expect("a metronomic beat must be found");
+        let human = measure(0.045).expect("a human beat must still be found");
+        assert!(machine.steady > human.steady,
+                "machine {:.2} should read steadier than human {:.2}", machine.steady, human.steady);
+    }
+
+    #[test]
+    fn silence_clears_the_pulse_rather_than_holding_it() {
+        let mut p = Pulse::default();
+        for (t, db) in pulsing(120.0, 30.0, 0.0) { p.feed(db, t); }
+        let mut n = 0;
+        for i in 0..200 {
+            let t = 30.0 + i as f32 / 11.7;
+            if p.feed(-100.0, t).is_some() { n += 1; }
+        }
+        assert_eq!(n, 0, "silence produced {n} pulse reports");
     }
 
     #[test]

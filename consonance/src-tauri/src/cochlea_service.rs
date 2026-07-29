@@ -26,7 +26,7 @@ use sysinfo::System;
 
 use crate::capture_audio::{self, SAMPLE_RATE, WINDOW};
 use crate::cochlea::{
-    bands, moment, peaks, pitch_track, rms_db, spectrum, Event, SpeechSense, Swell, Tracker, Vibrato,
+    bands, moment, peaks, pitch_track, rms_db, spectrum, Event, Pulse, SpeechSense, Swell, Tracker, Vibrato,
 };
 use crate::listen::anticheat_present;
 
@@ -102,6 +102,15 @@ fn describe(e: &Event) -> Option<Heard> {
                 if *restless { "  — wants to move" } else { "" },
             ),
         ),
+        Event::Pulse(p) => {
+            // Steadiness in words rather than a number: a reader wants to know whether it is a
+            // machine or a person, and 0.31 does not say that.
+            let feel = if p.steady > 0.8 { "machine-steady" }
+                       else if p.steady > 0.5 { "steady" }
+                       else if p.steady > 0.25 { "breathing" }
+                       else { "elastic" };
+            ("pulse", format!("pulse · {:.0} bpm · {feel}", p.bpm))
+        }
         Event::Vibrato(v) => {
             // The note name, because "880 Hz wobbling" is the same unread number the onsets used to
             // be. A singer thinks in notes.
@@ -179,6 +188,7 @@ where
             let mut swell = Swell::default();
             let mut speech = SpeechSense::default();
             let mut vibrato = Vibrato::default();
+            let mut pulse = Pulse::default();
             let mut sys = System::new();
             let mut last_ac_check = Instant::now();
             // Re-checked once a second rather than per frame, and rather than once at start: arming
@@ -281,6 +291,13 @@ where
                 }
                 if let Some(ev) = speech.feed(level_db, t) {
                     if let Some(h) = describe(&ev) { on_event(h); }
+                }
+                // Gated: see cochlea::PULSE_ENABLED. Fails its negative control on real orchestral
+                // recordings, inventing confident tempos for music with no beat.
+                if let Some(ev) = pulse.feed(level_db, t) {
+                    if crate::cochlea::PULSE_ENABLED {
+                        if let Some(h) = describe(&ev) { on_event(h); }
+                    }
                 }
                 // The fine pitch track: four overlapping sub-windows per chunk, ~47 Hz, which is the
                 // only rate at which vibrato is visible at all. Separate from the main path so the

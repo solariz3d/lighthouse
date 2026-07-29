@@ -87,6 +87,8 @@ fn main() {
                 // vibrato needs the fine sub-window track that is computed live and not recorded.
                 // Said here rather than left as a silent absence, since "no vibrato in this music"
                 // and "this format cannot carry vibrato" look identical from the outside.
+                Event::Pulse(p) =>
+                    println!("{at:7.2}  pulse    {:.1} bpm  strength {:.2}  steady {:.2}", p.bpm, p.strength, p.steady),
                 Event::Vibrato(v) =>
                     println!("{at:7.2}  voice    {:.0} Hz ±{:.0}¢ at {:.1} Hz", v.hz, v.depth_cents, v.rate_hz),
                 Event::Speech { talking, evidence } =>
@@ -111,6 +113,7 @@ fn main() {
     let mut swells = 0;
     let mut speech_calls = 0;
     let mut voices_heard = 0;
+    let mut pulses: Vec<f32> = Vec::new();
     for (_, e) in &events {
         match e {
             Event::Onset { .. } => onsets += 1,
@@ -127,6 +130,7 @@ fn main() {
             // Cannot fire in a replay — fixtures do not carry the fine pitch track. Counted anyway so
             // the summary reports 0 rather than omitting the row, because an absent row and a real
             // zero look identical.
+            Event::Pulse(p) => { pulses.push(p.bpm); }
             Event::Vibrato(_) => voices_heard += 1,
             Event::Speech { talking, .. } => { if *talking { speech_calls += 1; } }
             Event::Silence => {}
@@ -141,6 +145,15 @@ fn main() {
     println!("  chords {chords}  onsets {onsets}  holds {holds}  resolutions {}  {swell_col}", res.len());
     println!("  called SPEECH: {speech_calls}   (a music fixture must read 0 — this is the negative control)");
     println!("  vibrato voices: {voices_heard}   (always 0 in a replay: the fine pitch track is live-only, not recorded)");
+    if pulses.is_empty() {
+        println!("  pulse: none found   (correct for music with no beat — the negative control)");
+    } else {
+        let m = pulses.iter().sum::<f32>() / pulses.len() as f32;
+        println!("  pulse: {} reading(s), mean {:.0} bpm, range {:.0}-{:.0}",
+                 pulses.len(), m,
+                 pulses.iter().cloned().fold(f32::INFINITY, f32::min),
+                 pulses.iter().cloned().fold(0.0f32, f32::max));
+    }
     if has_level {
         let dbs: Vec<f32> = frames.iter().filter_map(|f| f.db).filter(|d| *d > -60.0).collect();
         if !dbs.is_empty() {
