@@ -172,6 +172,9 @@ struct Dirs {
 }
 static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
 
+/// Last time the field latch was written. Throttles disk against a ~12 fps analysis loop.
+static FIELD_WRITE: Mutex<Option<std::time::Instant>> = Mutex::new(None);
+
 // The BOOT.md bundled with the app (installer resource), resolved once at setup.
 // Used as the default startup brief so a fresh install works without a dev-machine path.
 static RESOURCE_ROOM: Mutex<Option<PathBuf>> = Mutex::new(None);
@@ -2164,6 +2167,7 @@ fn audio_start(
     let app_fr = app.clone();
     let dir = data_dir();
     let dir_ev = dir.clone();
+    let dir_fr = dir.clone();
     // The frame latch: last-write-wins into shared state, and a push to the tab. Deliberately
     // NOT written to disk — the spectrum is the living thing that evaporates, the way hearing
     // does. Only what survived it (onsets, tension, resolution) reaches the ledger.
@@ -2178,6 +2182,15 @@ fn audio_start(
             if let Some(svc) = app_fr.try_state::<cochlea_service::Service>() {
                 *svc.1.lock().unwrap() = s.clone();
             }
+            // Twice a second to disk, every frame to the tab. A reader who samples does not need
+            // twelve rewrites a second, and the canvas does need every one.
+            let now = std::time::Instant::now();
+            let mut last = FIELD_WRITE.lock().unwrap();
+            if last.map_or(true, |t: std::time::Instant| now.duration_since(t).as_millis() >= 500) {
+                *last = Some(now);
+                cochlea_service::write_field(&dir_fr, &s);
+            }
+            drop(last);
             let _ = app_fr.emit("spectrum", &s);
         },
     )?;

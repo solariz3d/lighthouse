@@ -491,6 +491,52 @@ mod tests {
         );
     }
 
+    /// A deterministic noise source. No rand dependency, and a fixed seed so a failure here is
+    /// reproducible rather than a thing that happens sometimes.
+    fn noisy(freqs: &[(f32, f32)], amount: f32) -> Vec<f32> {
+        let mut s: u32 = 0x9E3779B9;
+        tone(freqs).into_iter().map(|x| {
+            s = s.wrapping_mul(1664525).wrapping_add(1013904223);
+            let r = (s >> 8) as f32 / 8_388_608.0 - 1.0;   // roughly -1..1
+            x + r * amount
+        }).collect()
+    }
+
+    #[test]
+    fn one_note_survives_noise_and_is_still_one_note() {
+        // A HYPOTHESIS THAT WAS WRONG, kept because the guard is worth having and because the
+        // record should show what was tried. Fusion shipped and real music showed 13.19
+        // events/sec against 12.67 before, and 4.24 intervals per report against 4.23 — correct
+        // on synthesised tones and never engaging on a mix. The keeper, watching the display,
+        // reported every marker a different colour with two colours adjacent, and the guess was
+        // that noise throws extra local maxima onto the shoulder of a real peak, inside the Hann
+        // main lobe, which the grouping then makes into separate notes.
+        //
+        // This test passed the moment it was written, with no change to the code. At realistic
+        // noise levels the 12% floor already rejects shoulder maxima. So that is NOT the cause,
+        // and the real one is still unknown — the peaks in a live mix are apparently genuine and
+        // genuinely unrelated. Diagnosing it needs the actual frames, not more guessing.
+        let v = voices(&peaks(&spectrum(&noisy(&[(220.0, 1.0), (440.0, 0.5), (660.0, 0.33)], 0.02)),
+                              SR, 10, 0.12), 30.0);
+        assert!(v.len() <= 2, "one noisy note split into {} voices: {:?}", v.len(),
+                v.iter().map(|x| x.hz).collect::<Vec<_>>());
+    }
+
+    #[test]
+    fn two_maxima_inside_one_main_lobe_are_one_peak() {
+        // The mechanism, isolated from the grouping so a failure says which layer broke.
+        let spec = spectrum(&noisy(&[(1000.0, 1.0)], 0.03));
+        let p = peaks(&spec, SR, 10, 0.05);
+        let bin = SR / (spec.len() as f32 * 2.0);
+        for (i, a) in p.iter().enumerate() {
+            for b in p.iter().skip(i + 1) {
+                assert!((a.hz - b.hz).abs() >= 3.0 * bin,
+                        "peaks at {:.1} and {:.1} Hz are inside one main lobe ({:.1} Hz wide)",
+                        a.hz, b.hz, 4.0 * bin);
+            }
+        }
+    }
+
     #[test]
     fn silence_draws_an_empty_display_rather_than_a_normalised_one() {
         // The per-frame-normalisation trap, pinned: dividing by the frame's own maximum makes

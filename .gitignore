@@ -32,3 +32,5 @@ exo_memory/loop/CHECKPOINT.md
 # dreams/ — the framework ships, the contents do not.
 consonance/**/heard.jsonl
 heard.jsonl
+consonance/**/field.json
+field.json

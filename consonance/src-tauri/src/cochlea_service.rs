@@ -191,6 +191,28 @@ where
     Ok(stop)
 }
 
+/// Write the current frame to a single file, overwritten every time.
+///
+/// WHY THIS EXISTS, and it is a correction. `audio_snapshot` was built as the orchestrator's pull
+/// channel and the orchestrator cannot call it — it is a Tauri command, reachable from the tab
+/// and from nothing else. So a pull channel was designed with no way to pull, and the immediate
+/// consequence was an hour of hypothesising about live behaviour from a ledger that does not
+/// carry it, then testing a guess that turned out to be wrong.
+///
+/// A file is the one interface every reader here already has. It is a LATCH, not a log: the same
+/// path, truncated and rewritten, so it can never grow and there is never a backlog to drain.
+/// Whoever reads it gets the present moment and nothing else — which is the same contract
+/// `audio_snapshot` has, finally reachable.
+///
+/// Throttled well below frame rate. The display needs every frame; a reader who samples does not,
+/// and rewriting a file twelve times a second to be read once a minute is churn for nobody.
+pub fn write_field(data_dir: &PathBuf, s: &Snapshot) {
+    let _ = std::fs::create_dir_all(data_dir);
+    if let Ok(line) = serde_json::to_string(s) {
+        let _ = std::fs::write(data_dir.join("field.json"), line);
+    }
+}
+
 /// Append one line to the ledger. Best-effort: a listening feature must never take the app down
 /// because a disk was busy.
 pub fn append(data_dir: &PathBuf, h: &Heard) {
