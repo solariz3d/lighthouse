@@ -34,3 +34,10 @@ consonance/**/heard.jsonl
 heard.jsonl
 consonance/**/field.json
 field.json
+
+# Recorded analysis frames and the flag that arms them. A frame list is what the keeper was
+# listening to at 12 readings a second — same call as dreams/ and heard.jsonl. The RECORD flag is
+# machine state, not a record.
+consonance/**/frames.jsonl
+frames.jsonl
+consonance/**/RECORD

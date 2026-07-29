@@ -108,7 +108,7 @@ load();
     if (lines === 0) log.innerHTML = '';
     const row = document.createElement('div');
     const tone = { restless: '#e8b04b', resolved: '#6fd08c', stopped: '#e05c5c',
-                   silence: '#6b7280', onset: '#7aa2f7' }[h.kind] || 'inherit';
+                   silence: '#6b7280', onset: '#7aa2f7', track: '#c98bdb' }[h.kind] || 'inherit';
     // Bright and full-size: these are the voted lines, the ones that also reach the ledger. They
     // have to stay legible against the fast dim stream they now sit among.
     row.style.fontWeight = '600';

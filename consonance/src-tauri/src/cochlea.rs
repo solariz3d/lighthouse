@@ -157,6 +157,31 @@ const JUST: &[(u32, u32, &str, bool)] = &[
 
 pub fn cents(ratio: f32) -> f32 { 1200.0 * ratio.log2() }
 
+/// FLATS, NOT SHARPS, and it is a real choice rather than a coin toss. The same black key is A♯ or
+/// B♭ depending on where the music is going, and nothing here knows the key — there is no harmonic
+/// context to infer it from, only pitches. So one spelling has to be picked and stated. Flats,
+/// because minor keys and most orchestral writing live on the flat side, and the reference piece
+/// this was built against is in B♭ minor: `A#4` would have been technically defensible and would
+/// have read as wrong to anyone who knows the piece.
+const NOTES: [&str; 12] = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
+
+/// A frequency as a note name plus how far it sits from that note, in cents.
+///
+/// The cents matter as much as the name. 467 Hz is B♭4 — but so is 462 Hz, and so is 471, and one
+/// of those is an orchestra tuning sharp while another is a cheap sample. Reporting the name alone
+/// would quietly discard the only evidence about which.
+pub fn note_name(hz: f32) -> (String, f32) {
+    if hz <= 0.0 { return ("—".into(), 0.0); }
+    let midi = 69.0 + 12.0 * (hz / 440.0).log2();
+    let nearest = midi.round();
+    let cents_off = (midi - nearest) * 100.0;
+    // MIDI 0 is C-1, so the octave is floor(n/12) - 1. Guard the negative case rather than let a
+    // subsonic reading produce a nonsense index.
+    let n = nearest.max(0.0) as i32;
+    let name = format!("{}{}", NOTES[(n % 12) as usize], n / 12 - 1);
+    (name, cents_off)
+}
+
 /// Position of a ratio in JUST, for canonical ordering. Unknown ratios sort last rather than
 /// panicking — an ordering helper is not the place to take the process down.
 fn just_rank(num: u32, den: u32) -> usize {
@@ -569,6 +594,30 @@ impl Tracker {
     }
 }
 
+/// Run recorded frames through the whole analysis chain and return what the tracker said.
+///
+/// WHY THIS EXISTS. Every tracker change today was validated by asking the keeper to close the app,
+/// wait ninety seconds, reopen it, play something, and describe what he saw. Six times. And each
+/// comparison was against DIFFERENT music, which is what made one measurement — restless share
+/// moving 28.4% → 45.3% — permanently uninterpretable: the build changed and the song changed and
+/// nothing separates them.
+///
+/// The analysis is deterministic. Same peaks in, same events out. So one recorded pass becomes a
+/// fixed reference, and any future change is a real A/B against real music with nobody pressing
+/// play. Recording peaks rather than audio is the right granularity: it exercises fusion,
+/// corroboration, naming, voting and the tracker — every layer that has broken — while staying
+/// small enough to keep.
+pub fn replay(frames: &[(f32, Vec<Peak>)], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
+    let mut t = Tracker::default();
+    let mut out = Vec::new();
+    for (at, pk) in frames {
+        for e in t.feed(moment(pk, tol_cents), *at, nag_after) {
+            out.push((*at, e));
+        }
+    }
+    out
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -898,6 +947,38 @@ mod tests {
                         "peaks at {:.1} and {:.1} Hz are inside one main lobe ({:.1} Hz wide)",
                         a.hz, b.hz, 4.0 * bin);
             }
+        }
+    }
+
+    #[test]
+    fn a_frequency_names_the_note_it_actually_is() {
+        // 467 Hz was reported as "~467 Hz" all afternoon while the piece was in B♭ minor, and the
+        // keeper and I both had to convert it in our heads every time.
+        assert_eq!(note_name(440.0).0, "A4");
+        assert_eq!(note_name(466.16).0, "B♭4");     // the Adagio's tonic
+        assert_eq!(note_name(261.63).0, "C4");
+        assert_eq!(note_name(27.5).0, "A0");        // bottom of a piano
+        assert_eq!(note_name(4186.0).0, "C8");      // top of one
+        assert!(note_name(440.0).1.abs() < 1.0, "A4 is exactly A4");
+    }
+
+    #[test]
+    fn tuning_drift_is_reported_rather_than_rounded_away() {
+        // A name alone discards the only evidence about WHICH B♭ this is: an orchestra tuning sharp
+        // and a flat sample both land on the same letter.
+        let (name, cents) = note_name(466.16 * 2f32.powf(30.0 / 1200.0));   // 30 cents sharp
+        assert_eq!(name, "B♭4");
+        assert!((cents - 30.0).abs() < 2.0, "expected ~+30 cents, got {cents:.1}");
+        let (_, flat) = note_name(466.16 * 2f32.powf(-25.0 / 1200.0));
+        assert!(flat < -20.0, "a flat reading must report a negative drift, got {flat:.1}");
+    }
+
+    #[test]
+    fn a_subsonic_reading_does_not_panic_or_index_out_of_bounds() {
+        // The capture reports peaks below hearing routinely — 10 Hz and 22 Hz both appeared live.
+        for hz in [0.0, -1.0, 1.0, 8.0, 22.0] {
+            let (n, _) = note_name(hz);
+            assert!(!n.is_empty(), "{hz} Hz produced no name");
         }
     }
 

@@ -33,6 +33,11 @@ windows = { version = "0.61", features = [
   "Win32_System_Com_StructuredStorage",  # PROPVARIANT: the activation params travel as VT_BLOB
   "Win32_System_Threading",
   "Win32_Media_Audio",
+  # WinRT, not Win32: GlobalSystemMediaTransportControlsSessionManager, the same session API the OS
+  # uses to draw its own volume-key overlay. A feature flag on a crate already in the tree via
+  # Tauri, so no new dependency and nothing to download.
+  "Media_Control",
+  "Foundation",
   "Win32_Media_KernelStreaming",
 ] }
 # The #[implement] macro expands to windows_core:: paths, so the crate must be nameable.

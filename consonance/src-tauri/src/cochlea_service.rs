@@ -71,7 +71,12 @@ fn ledger_path(data_dir: &PathBuf) -> PathBuf { data_dir.join("heard.jsonl") }
 fn describe(e: &Event) -> Option<Heard> {
     let now = chrono::Local::now().format("%H:%M:%S").to_string();
     let (kind, text) = match e {
-        Event::Onset { hz } => ("onset", format!("sound begins · fundamental ~{:.0} Hz", hz)),
+        Event::Onset { hz } => {
+            // The name first, the frequency second. An afternoon was spent reading "~467 Hz" and
+            // converting it by hand every time, which is the instrument leaving its work undone.
+            let (name, cents) = crate::cochlea::note_name(*hz);
+            ("onset", format!("sound begins · {name} ({:+.0}¢, {:.0} Hz)", cents, hz))
+        }
         Event::Silence => ("silence", "silence".to_string()),
         Event::Intervals { names, restless } => (
             if *restless { "restless" } else { "settled" },
@@ -88,6 +93,7 @@ fn describe(e: &Event) -> Option<Heard> {
 pub fn start<F, S>(
     pid: u32,
     data_dir: PathBuf,
+    source_label: String,
     on_event: F,
     on_frame: S,
 ) -> Result<Arc<AtomicBool>, String>
@@ -130,6 +136,13 @@ where
             let mut tracker = Tracker::default();
             let mut sys = System::new();
             let mut last_ac_check = Instant::now();
+            // Re-checked once a second rather than per frame, and rather than once at start: arming
+            // a recording should not require restarting the capture.
+            let mut recording = false;
+            let mut last_rec_check = Instant::now() - std::time::Duration::from_secs(9);
+            // Back-dated so the first frame reports the track rather than waiting two seconds.
+            let mut last_np_check = Instant::now() - std::time::Duration::from_secs(9);
+            let mut last_np = String::new();
 
             while !stop_a.load(Ordering::Relaxed) {
                 let chunk = match rx.recv_timeout(std::time::Duration::from_millis(500)) {
@@ -162,6 +175,31 @@ where
                 let m = moment(&pk, 30.0);
                 let t = started.elapsed().as_secs_f32();
 
+                if last_rec_check.elapsed().as_secs() >= 1 {
+                    last_rec_check = Instant::now();
+                    recording = data_dir.join("RECORD").exists();
+                }
+                if recording { record_frame(&data_dir, t, &pk); }
+
+                // What is playing, polled rather than pushed, and emitted only when it CHANGES.
+                // Every two seconds is far more often than tracks change and far cheaper than the
+                // FFT already running beside it. Emitting on change rather than on a clock is the
+                // same rule as everything else here: a held thing costs one line.
+                if last_np_check.elapsed().as_secs() >= 2 {
+                    last_np_check = Instant::now();
+                    if let Some(np) = crate::nowplaying::read(&source_label) {
+                        let line = np.line();
+                        if !line.is_empty() && line != last_np {
+                            last_np = line.clone();
+                            on_event(Heard {
+                                at: chrono::Local::now().format("%H:%M:%S").to_string(),
+                                kind: "track".into(),
+                                text: format!("♪ {line}"),
+                            });
+                        }
+                    }
+                }
+
                 on_frame(Snapshot {
                     bands: bands(&spec, SAMPLE_RATE as f32, 64),
                     voices: m.voices.iter().map(|v| (v.hz, v.mag, v.partials, v.inferred)).collect(),
@@ -185,10 +223,29 @@ where
                     }
                 }
             }
-            let _ = data_dir;
         });
     }
     Ok(stop)
+}
+
+/// Append one frame of peaks to the fixture recording, if recording is armed.
+///
+/// ARMED BY A FILE, `data/RECORD`, deliberately. An env var cannot be set on an app the keeper
+/// launches from a desktop shortcut, and a UI toggle is a feature nobody asked for. A file can be
+/// created from a shell in one line and its absence costs a `try_exists` per second.
+///
+/// PEAKS, NOT AUDIO. 4096 floats per frame at twelve frames a second is 196 KB/s and unkeepable.
+/// Peaks are ~10 pairs, and they are what `moment()` consumes — so a recording exercises fusion,
+/// corroboration, naming, voting and the tracker, which is every layer that has broken today.
+pub fn record_frame(data_dir: &PathBuf, at: f32, peaks: &[crate::cochlea::Peak]) {
+    let line = format!(
+        "{{\"t\":{:.3},\"peaks\":[{}]}}",
+        at,
+        peaks.iter().map(|p| format!("[{:.2},{:.6}]", p.hz, p.mag)).collect::<Vec<_>>().join(","),
+    );
+    if let Ok(mut f) = OpenOptions::new().create(true).append(true).open(data_dir.join("frames.jsonl")) {
+        let _ = writeln!(f, "{line}");
+    }
 }
 
 /// Write the current frame to a single file, overwritten every time.

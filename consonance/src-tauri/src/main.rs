@@ -25,6 +25,7 @@ mod cochlea;   // audio as relationships: ratios, not frequencies. Pure maths, n
 mod listen;
 mod capture_audio;
 mod cochlea_service;  // threads, the ledger, and the refusal to run near an anti-cheat  // WASAPI process loopback: the untestable half, isolated on purpose    // choosing what to listen to: per-process, so a call is never delivered
+mod nowplaying;  // what is actually playing, from Windows' own media session — so the title is read, not inferred
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -2174,6 +2175,7 @@ fn audio_start(
     let stop = cochlea_service::start(
         pid,
         dir,
+        label.clone(),
         move |h| {
             cochlea_service::append(&dir_ev, &h);
             let _ = app_ev.emit("heard", &h);
