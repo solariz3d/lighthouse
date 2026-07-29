@@ -396,29 +396,36 @@ pub enum Event {
     Resolved { after_secs: f32 },
 }
 
-/// How long a reading must hold before it is believed.
+/// How many consecutive readings vote, and how many must agree.
 ///
-/// A WINDOW IS NOT A MOMENT, and conflating them is what kept the stream at 8.58 events/sec even
-/// after the naming was fixed. One analysis window is 85 ms — far shorter than any musical event.
-/// Two consecutive windows over the same held chord give slightly different peak sets, so the
-/// interval list flickers, and a tracker that fires on every difference reports a chord change
-/// that never happened. Measured before this: 590 "resolved" events in a single minute, most of
-/// them resolving tension that had existed for 0.1 s.
+/// A WINDOW IS NOT A MOMENT. One analysis window is 85 ms, far shorter than any musical event,
+/// and two consecutive windows over ONE held chord give slightly different peak sets. A tracker
+/// that fires on every difference reports a chord change that never happened: 8.58 events/sec
+/// and 590 "resolved" lines in a minute, most releasing tension that had lasted 0.1 s.
 ///
-/// 180 ms is not a tuning knob picked to make a number look better. It is roughly the window over
-/// which hearing integrates before harmony is perceived at all — below it a human does not hear a
-/// chord either, only a transient. So the rule is: a reading that cannot survive a fifth of a
-/// second was never a chord, and saying nothing about it is not a loss of information.
-pub const SETTLE_SECS: f32 = 0.18;
+/// The first attempt at this required the reading to be IDENTICAL for 180 ms, and it went deaf —
+/// two onsets and zero intervals across three minutes of music. Real audio never hands you the
+/// same reading twice; the set shifts by a member every window even while the chord is held, so
+/// nothing ever settled. The test that was supposed to catch this alternated between exactly TWO
+/// readings, which is a flicker no real spectrum produces. It tested the wall being aimed at
+/// instead of the one behind.
+///
+/// So persistence is measured by VOTE rather than by repetition, which is nearer what hearing
+/// does anyway: integrate over a couple hundred milliseconds and keep what survives. An interval
+/// is reported when it appears in a strict majority of the last few readings. Flickering members
+/// drop out, the stable core survives, and the reported set changes only when the music does.
+///
+/// FOUR, not three, and the difference is load-bearing: a strict majority of four is three, so an
+/// alternating pair scores two each and neither survives. A majority of three is two, and the
+/// same alternation would let the first reading win — the deaf failure's mirror image.
+pub const VOTE_WINDOWS: usize = 4;
 
 #[derive(Default)]
 pub struct Tracker {
-    /// What has actually been reported.
-    confirmed: Option<Moment>,
-    /// A reading that differs from `confirmed`, and when it first appeared. Restarted from
-    /// scratch every time the reading changes, so a flicker between two readings settles on
-    /// neither and is correctly reported as nothing.
-    candidate: Option<(Moment, f32)>,
+    /// The last few readings, oldest first. Only the interval set and silence matter for voting.
+    recent: Vec<(Vec<Interval>, bool)>,
+    /// The stable set as last reported.
+    confirmed: Option<(Vec<Interval>, bool)>,
     restless_since: Option<f32>,
     last_nag: f32,
 }
@@ -429,35 +436,49 @@ impl Tracker {
     pub fn feed(&mut self, m: Moment, now: f32, nag_after: f32) -> Vec<Event> {
         let mut out = Vec::new();
 
-        let same_candidate = self.candidate.as_ref()
-            .map(|(c, _)| c.silent == m.silent && c.intervals == m.intervals)
-            .unwrap_or(false);
-        if !same_candidate {
-            self.candidate = Some((m, now));
+        self.recent.push((m.intervals.clone(), m.silent));
+        if self.recent.len() > VOTE_WINDOWS { self.recent.remove(0); }
+        if self.recent.len() < VOTE_WINDOWS {
+            return out;                       // not enough evidence to call anything yet
         }
-        let (cand, since) = self.candidate.as_ref().expect("just set");
+
+        let need = VOTE_WINDOWS / 2 + 1;      // strict majority
+        let silent = self.recent.iter().filter(|(_, s)| *s).count() >= need;
+        // An interval survives if a majority of the recent readings contain it. Order follows
+        // JUST's own ordering via first appearance, so the same chord always prints the same way.
+        let mut stable: Vec<Interval> = Vec::new();
+        for (ivs, _) in &self.recent {
+            for iv in ivs {
+                if stable.iter().any(|e: &Interval| e.num == iv.num && e.den == iv.den) { continue; }
+                let votes = self.recent.iter()
+                    .filter(|(s, _)| s.iter().any(|e| e.num == iv.num && e.den == iv.den))
+                    .count();
+                if votes >= need { stable.push(*iv); }
+            }
+        }
+        let restless = stable.iter().any(|i| i.restless);
+
         let differs = self.confirmed.as_ref()
-            .map(|c| c.silent != cand.silent || c.intervals != cand.intervals)
+            .map(|(c, s)| *s != silent || *c != stable)
             .unwrap_or(true);
 
-        if differs && now - since >= SETTLE_SECS {
-            let cand = cand.clone();
-            let was_silent = self.confirmed.as_ref().map(|c| c.silent).unwrap_or(true);
-            if cand.silent {
+        if differs {
+            let was_silent = self.confirmed.as_ref().map(|(_, s)| *s).unwrap_or(true);
+            if silent {
                 if !was_silent { out.push(Event::Silence); }
                 self.restless_since = None;
             } else {
                 if was_silent {
-                    if let Some(hz) = cand.fundamental { out.push(Event::Onset { hz }); }
+                    if let Some(hz) = m.fundamental { out.push(Event::Onset { hz }); }
                 }
-                if !cand.intervals.is_empty() {
+                if !stable.is_empty() {
                     out.push(Event::Intervals {
-                        names: cand.intervals.iter()
+                        names: stable.iter()
                             .map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
-                        restless: cand.restless,
+                        restless,
                     });
                 }
-                match (self.restless_since, cand.restless) {
+                match (self.restless_since, restless) {
                     (None, true) => { self.restless_since = Some(now); self.last_nag = now; }
                     (Some(t0), false) => {
                         out.push(Event::Resolved { after_secs: now - t0 });
@@ -466,7 +487,7 @@ impl Tracker {
                     _ => {}
                 }
             }
-            self.confirmed = Some(cand);
+            self.confirmed = Some((stable, silent));
         }
 
         // Tension runs on the clock, not on change: an unresolved chord that nobody touches is
@@ -569,12 +590,60 @@ mod tests {
         assert_ne!(a.intervals, b.intervals, "the two readings must actually differ");
 
         let mut t = Tracker::default();
-        let mut n = 0;
+        let mut chords = 0;
+        let mut all = 0;
         for i in 0..40 {
             let m = if i % 2 == 0 { a.clone() } else { b.clone() };
-            n += t.feed(m, i as f32 * 0.085, 0.0).len();     // real window cadence
+            for e in t.feed(m, i as f32 * 0.085, 0.0) {      // real window cadence
+                all += 1;
+                if matches!(e, Event::Intervals { .. }) { chords += 1; }
+            }
         }
-        assert_eq!(n, 0, "alternating readings settled on {n} events; a flicker is not music");
+        // Counting ALL events was a proxy for this claim and it stopped being one. Under voting,
+        // sound presence is decided separately from the interval set, so an unreadable harmony
+        // still correctly produces an Onset — there IS sound. The claim was never "silence"; it
+        // was "no chord". That is what is asserted now.
+        assert_eq!(chords, 0, "alternating readings named {chords} chords; a flicker is not music");
+        assert_eq!(all, 1, "and the one event is the onset, nothing else: {all}");
+    }
+
+    #[test]
+    fn a_stable_core_survives_a_shifting_edge() {
+        // THE TEST THAT SHOULD HAVE EXISTED, and whose absence shipped a deaf build. The previous
+        // rule demanded the reading be IDENTICAL for 180 ms. Real audio never repeats: the
+        // interval set shifts by a member every window even while the chord is held. So nothing
+        // ever settled and three minutes of music produced two onsets and zero intervals.
+        //
+        // The flicker test that was supposed to guard this alternated between exactly two fixed
+        // readings — a pattern no real spectrum produces. This is what real input looks like: a
+        // stable core with a different stray riding along each window.
+        let fifth = interval(440.0, 660.0, 25.0).unwrap();
+        let strays = [
+            interval(440.0, 622.3, 25.0).unwrap(),      // tritone
+            interval(440.0, 466.2, 25.0).unwrap(),      // minor second
+            interval(440.0, 783.9, 25.0).unwrap(),      // major sixth
+            interval(440.0, 493.9, 25.0).unwrap(),      // major second
+        ];
+        let mut t = Tracker::default();
+        let mut named: Vec<Vec<String>> = Vec::new();
+        for i in 0..16 {
+            let m = Moment {
+                fundamental: Some(440.0),
+                intervals: vec![fifth, strays[i % strays.len()]],
+                restless: true,
+                silent: false,
+                voices: vec![],
+            };
+            for e in t.feed(m, i as f32 * 0.085, 0.0) {
+                if let Event::Intervals { names, .. } = e { named.push(names); }
+            }
+        }
+        assert!(!named.is_empty(), "a held fifth under a shifting edge must be heard at all");
+        for n in &named {
+            assert!(n.iter().any(|s| s.contains("fifth")), "the stable core is missing: {n:?}");
+            assert_eq!(n.len(), 1, "a stray that appears in one window of four got reported: {n:?}");
+        }
+        assert_eq!(named.len(), 1, "the core is unchanging, so it costs one line: {named:?}");
     }
 
     #[test]
