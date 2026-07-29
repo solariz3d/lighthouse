@@ -104,6 +104,8 @@
 //   node tools/tell-index.js --board <path>           scan a fixture instead of the live board
 'use strict';
 
+const { canonical } = require('./actors.js');
+
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -321,7 +323,13 @@ function chairInjections(entries) {
     if (e.pane !== 'chair') continue;
     const flat = String(e.text).replace(/\s+/g, ' ').trim();
     const m = CHAIR_AUDIT_RE.exec(flat);
-    if (m) out.push({ short: m[1].toLowerCase(), excerpt: m[2].trim(), ts: e.ts });
+    // Store the CANONICAL actor, not an 8-char prefix. The prefix match below worked while
+    // every writer used UUIDs; per-pane MCP mounts made panes post under their letter, so
+    // 'B'.slice(0,8) is 'b' and never equals '18916fe2'. Chair-relay detection silently
+    // stopped firing for any pane on a new mount -- a regression introduced by the identity
+    // change and invisible from inside this file, since a relay that is never detected looks
+    // exactly like a pane that never relayed.
+    if (m) out.push({ short: m[1].toLowerCase(), actor: canonical(m[1]).actor, excerpt: m[2].trim(), ts: e.ts });
     else if (CHAIR_AUDIT_ANNOUNCE_RE.test(flat)) out.unparsed += 1;
   }
   return out;
@@ -343,8 +351,15 @@ function classifyOrigin(entry, injections = []) {
     }
     const flat = String(entry.text).replace(/\s+/g, ' ').trim();
     const short = entry.pane.slice(0, 8).toLowerCase();
+    const mine = canonical(entry.pane);
     for (const inj of injections) {
-      if (inj.short !== short) continue;
+      // Match on canonical actor when BOTH sides resolve, and fall back to the original
+      // 8-char prefix otherwise. Replacing the prefix outright broke every pane not in
+      // letters.json -- the existing fixtures caught it immediately, which is what they are
+      // for. Additive: the letter/UUID case now matches where it silently could not, and
+      // nothing that matched before stops matching.
+      const bothKnown = mine.via !== 'unresolved' && inj.actor && canonical(inj.short).via !== 'unresolved';
+      if (bothKnown ? inj.actor !== mine.actor : inj.short !== short) continue;
       if (!inj.excerpt) continue;
       if (flat.startsWith(inj.excerpt.slice(0, Math.min(40, inj.excerpt.length)))) {
         return { origin: 'committee', rule: 'chair-relay:audit', relay: true };
