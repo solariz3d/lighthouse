@@ -584,6 +584,25 @@ impl Swell {
         self.reported_dir = 0;
     }
 
+    /// The music just started. Nothing before this instant is the music.
+    ///
+    /// MEASURED, from the level trace of a real pass rather than reasoned about:
+    ///
+    ///     50s  mean -100.0          silence, capture running, nothing playing
+    ///     60s  mean  -92.2  (-100 to -52)   the music beginning
+    ///     80s  mean  -24.6          the music
+    ///
+    /// The silence guard clears history below -60 dB, and the fade-in passes straight through
+    /// underneath it at -52. Those transitional frames became the window's early end, so the
+    /// opening of every track read as a 30 dB crescendo — reported live at +29.7 and +33.3 dB,
+    /// which I nearly accepted because the Adagio really does begin near-inaudible. "Plausible and
+    /// large" was the shape of the last two things I got wrong, so this time the trace got read
+    /// first.
+    pub fn sound_began(&mut self) {
+        self.hist.clear();
+        self.reported_dir = 0;
+    }
+
     pub fn feed(&mut self, db: f32, now: f32) -> Option<Event> {
         // Silence is not a diminuendo. It is handled as silence, and letting it in here would make
         // every gap between movements a dramatic fade.
@@ -1353,6 +1372,23 @@ mod tests {
         let after: Vec<_> = (600..660).flat_map(|i| t.feed(unreadable.clone(), i as f32 / 12.0, 4.0)).collect();
         assert!(!after.iter().any(|e| matches!(e, Event::Resolved { .. })),
                 "abandoned tension must not be reported as resolved: {after:?}");
+    }
+
+    #[test]
+    fn a_fade_in_from_silence_is_not_a_crescendo() {
+        // Straight from the level trace of a real pass: silence at -100, a transition through -52,
+        // then the music at -24. The silence guard clears below -60 and the fade-in slips under it,
+        // so the transitional frames became the window's early end and the opening of every track
+        // read as a 30 dB swell. Reported live at +29.7 and +33.3 dB.
+        let mut s = Swell::default();
+        for i in 0..240 { s.feed(-100.0, i as f32 / 12.0); }                 // 20s of silence
+        for i in 240..300 { s.feed(-52.0 + (i - 240) as f32 * 0.4, i as f32 / 12.0); }  // fade-in
+        s.sound_began();
+        let mut n = 0;
+        for i in 300..1200 {                                                 // 75s of steady music
+            if s.feed(-24.0, i as f32 / 12.0).is_some() { n += 1; }
+        }
+        assert_eq!(n, 0, "a fade-in from silence produced {n} crescendo reports");
     }
 
     #[test]

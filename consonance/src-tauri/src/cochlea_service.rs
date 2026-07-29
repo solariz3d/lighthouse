@@ -249,6 +249,9 @@ where
                     level_db,
                 });
                 for ev in tracker.feed(m, t, 4.0) {
+                    // An onset means the music just started, so the dynamics window must not reach
+                    // back across it into the fade-in or the silence before it.
+                    if matches!(ev, Event::Onset { .. }) { swell.sound_began(); }
                     if let Some(h) = describe(&ev) { on_event(h); }
                 }
                 if let Some(ev) = swell.feed(level_db, t) {
