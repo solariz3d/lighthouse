@@ -134,7 +134,11 @@ where
                 debug_assert_eq!(chunk.len(), WINDOW);
 
                 let spec = spectrum(&chunk);
-                let pk = peaks(&spec, SAMPLE_RATE as f32, 5, 0.15);
+                // Ten, not five. Before fusion, five peaks meant five things to pair up and that
+                // was already too many. Now peaks are raw material for grouping and a single note
+                // consumes three or four of them, so five could not represent two notes at once —
+                // a dyad would arrive with one voice's partials truncated and read as silence.
+                let pk = peaks(&spec, SAMPLE_RATE as f32, 10, 0.12);
                 let m = moment(&pk, 30.0);
                 let t = started.elapsed().as_secs_f32();
                 for ev in tracker.feed(m, t, 4.0) {

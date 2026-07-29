@@ -184,6 +184,111 @@ pub fn interval(lo: f32, hi: f32, tol_cents: f32) -> Option<Interval> {
     None
 }
 
+/// One sounding note: a fundamental, and the partials the grouping assigned to it.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Voice {
+    /// The fundamental. NOT necessarily a peak — it can be inferred from the spacing of the
+    /// partials when the fundamental itself is absent from the spectrum.
+    pub hz: f32,
+    /// Summed magnitude of its partials. A voice built from four strong partials outranks a
+    /// voice that is one weak stray, and ordering by this puts the loudest note first.
+    pub mag: f32,
+    pub partials: usize,
+    /// True when `hz` was inferred rather than observed — a residue pitch. Carried so a caller
+    /// can distrust it, because this is the one inference here that can be confidently wrong.
+    pub inferred: bool,
+}
+
+/// How far a partial may sit from an exact harmonic and still be grouped. Wider than the interval
+/// tolerance on purpose: real instruments are inharmonic. A piano's upper partials run measurably
+/// sharp because a real string has stiffness and is not the ideal string of the textbook, so a
+/// grouping tight enough for the maths would split every piano note into a chord of itself.
+const HARMONIC_TOL_CENTS: f32 = 40.0;
+/// Partials above this are not looked for. Harmonics crowd together as n rises — the gap from
+/// H20 to H21 is 84 cents, already near the tolerance — so past here the test stops discriminating
+/// and starts accepting anything.
+const MAX_PARTIAL: u32 = 16;
+
+/// Does `hz` sit on a harmonic of `f0`? Returns which one.
+fn harmonic_of(hz: f32, f0: f32) -> Option<u32> {
+    if f0 <= 0.0 || hz <= 0.0 { return None; }
+    let n = (hz / f0).round();
+    if n < 1.0 || n > MAX_PARTIAL as f32 { return None; }
+    if cents(hz / (n * f0)).abs() <= HARMONIC_TOL_CENTS { Some(n as u32) } else { None }
+}
+
+/// Group spectral peaks into the notes that produced them.
+///
+/// THIS IS THE STEP THAT MAKES IT HEARING RATHER THAN A SPECTRUM READOUT, and leaving it out was
+/// the defect the first live capture exposed. Every note carries a harmonic series, and that
+/// series' own adjacent ratios ARE the consonant intervals: H3:H2 is a fifth, H4:H3 a fourth,
+/// H5:H4 a major third. So reading every pair of peaks as an interval reports a rich consonant
+/// chord for one plucked string, and reports it forever, because the overtones never leave. The
+/// live ledger did exactly that: 2,784 lines in four minutes, 98% of them novel, describing a
+/// harmony that was never played.
+///
+/// An ear does not have this problem because it fuses partials into a source before any harmony
+/// is perceived. This is that step, and it is why the output can now be mostly silence.
+///
+/// The method: claim the strongest unassigned peak, work out what fundamental best explains it
+/// together with the other unassigned peaks, take everything harmonically related to it, repeat.
+pub fn voices(peaks: &[Peak], _tol_cents: f32) -> Vec<Voice> {
+    let mut left: Vec<Peak> = peaks.to_vec();
+    left.sort_by(|a, b| b.mag.partial_cmp(&a.mag).unwrap_or(std::cmp::Ordering::Equal));
+    let mut out: Vec<Voice> = Vec::new();
+
+    while let Some(seed) = left.first().copied() {
+        // The seed may itself be an upper partial of an absent fundamental — peaks at 440, 660
+        // and 880 with no 220 present are one note, not three, and an ear hears the missing 220.
+        // So try subharmonics of the seed. But explanatory power ALONE is the trap that made the
+        // first attempt worse than no fusion at all: a perfect fifth's two spectra are a SUBSET
+        // of the series two octaves below — that is precisely why a fifth sounds consonant — so
+        // "explains more peaks" swallowed A+E into a phantom 110 Hz and reported no chord at all.
+        //
+        // The discriminator is completeness, not coverage. A real note's low harmonics are all
+        // there and strong. A phantom fundamental fits a GAPPY series: A+E under 110 Hz gives
+        // H2,H3,H4,H6,H9 — five of nine, with H1, H5, H7 and H8 simply absent. Nothing sounds
+        // like that. So an inferred fundamental must show a low partial and a mostly unbroken
+        // series, and failing either it stays what it was observed to be.
+        let series = |f0: f32| -> Vec<u32> {
+            let mut ns: Vec<u32> = left.iter().filter_map(|p| harmonic_of(p.hz, f0)).collect();
+            ns.sort_unstable();
+            ns.dedup();
+            ns
+        };
+        let credible = |ns: &[u32]| -> bool {
+            match ns.iter().max() {
+                Some(&hi) => ns.len() >= 3
+                    && ns.iter().any(|&n| n <= 2)              // the note's own bottom is audible
+                    && ns.len() as f32 / hi as f32 >= 0.7,     // and the series is not full of holes
+                None => false,
+            }
+        };
+        let base = series(seed.hz).len();
+        let mut best = (seed.hz, 1u32, base);
+        for k in 2..=6u32 {
+            let f0 = seed.hz / k as f32;
+            let ns = series(f0);
+            // A lower fundamental can only ever explain MORE peaks, never fewer, so it must earn
+            // its place with a strict improvement AND with a series that looks like a real note.
+            if ns.len() > best.2 && credible(&ns) { best = (f0, k, ns.len()); }
+        }
+        let (f0, k, _) = best;
+
+        let mut mag = 0.0;
+        let mut partials = 0;
+        left.retain(|p| match harmonic_of(p.hz, f0) {
+            Some(_) => { mag += p.mag; partials += 1; false }
+            None => true,
+        });
+        if partials == 0 { left.retain(|p| p.hz != seed.hz); continue; }
+        out.push(Voice { hz: f0, mag, partials, inferred: k > 1 });
+    }
+
+    out.sort_by(|a, b| b.mag.partial_cmp(&a.mag).unwrap_or(std::cmp::Ordering::Equal));
+    out
+}
+
 /// What the room is doing right now: the intervals present, and whether any of them is leaning.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Moment {
@@ -191,17 +296,24 @@ pub struct Moment {
     pub intervals: Vec<Interval>,
     pub restless: bool,
     pub silent: bool,
+    /// The notes the peaks were grouped into. Exposed so the display can colour each partial by
+    /// the note it belongs to, which is the only way to see the grouping succeed or fail on real
+    /// music rather than on synthesised tones.
+    pub voices: Vec<Voice>,
 }
 
 pub fn moment(peaks: &[Peak], tol_cents: f32) -> Moment {
     if peaks.is_empty() {
         return Moment { silent: true, ..Default::default() };
     }
-    let fundamental = peaks.iter().map(|p| p.hz).fold(f32::INFINITY, f32::min);
+    let voices = voices(peaks, tol_cents);
+    let fundamental = voices.iter().map(|v| v.hz).fold(f32::INFINITY, f32::min);
+
+    // Intervals BETWEEN NOTES, never between partials of the same note.
     let mut intervals = Vec::new();
-    for i in 0..peaks.len() {
-        for j in i + 1..peaks.len() {
-            if let Some(iv) = interval(peaks[i].hz, peaks[j].hz, tol_cents) {
+    for i in 0..voices.len() {
+        for j in i + 1..voices.len() {
+            if let Some(iv) = interval(voices[i].hz, voices[j].hz, tol_cents) {
                 if !intervals.iter().any(|e: &Interval| e.num == iv.num && e.den == iv.den) {
                     intervals.push(iv);
                 }
@@ -209,7 +321,10 @@ pub fn moment(peaks: &[Peak], tol_cents: f32) -> Moment {
         }
     }
     let restless = intervals.iter().any(|i| i.restless);
-    Moment { fundamental: Some(fundamental), intervals, restless, silent: false }
+    Moment {
+        fundamental: if fundamental.is_finite() { Some(fundamental) } else { None },
+        intervals, restless, silent: false, voices,
+    }
 }
 
 /// Emits on CHANGE, never on a clock. This is the whole cost model: a quiet room is free, a
@@ -313,6 +428,79 @@ mod tests {
 
         let tempered_fifth = 440.0 * 2f32.powf(7.0 / 12.0);
         assert_eq!(interval(440.0, tempered_fifth, 25.0).unwrap().name, "fifth");
+    }
+
+    #[test]
+    fn one_note_alone_is_not_a_chord() {
+        // THE DEFECT THIS PINS, found by reading the first live capture rather than by thinking:
+        // the ledger reported "2:1 octave · 4:3 fourth · 3:2 fifth" as a SETTLED chord, over and
+        // over. Those are H2:H1, H4:H3 and H3:H2 — they are not harmony, they are what a single
+        // sound IS. Any note from any instrument carries a harmonic series, and the consonant
+        // intervals are the series' own adjacent ratios. So a classifier that reads every pair of
+        // spectral peaks as an interval will report a rich consonant chord for one plucked string,
+        // and will report it CONSTANTLY, because the overtones never leave.
+        //
+        // That is why the live output looked so musical and meant so little.
+        let a220 = tone(&[(220.0, 1.0), (440.0, 0.5), (660.0, 0.33), (880.0, 0.25), (1100.0, 0.2)]);
+        let p = peaks(&spectrum(&a220), SR, 5, 0.15);
+        let m = moment(&p, 30.0);
+        assert!(
+            m.intervals.is_empty(),
+            "one note reported as a chord: {:?}",
+            m.intervals.iter().map(|i| i.name).collect::<Vec<_>>()
+        );
+    }
+
+    #[test]
+    fn a_fifth_is_two_notes_and_not_one_phantom_two_octaves_down() {
+        // REGRESSION. The first fusion attempt scored candidate fundamentals purely on how many
+        // peaks they explained, and 110 Hz explains every partial of both A220 and E330 — because
+        // a fifth's combined spectrum genuinely IS a subset of the series two octaves below.
+        // That is the physics of why a fifth sounds consonant, and taken as evidence it deletes
+        // the chord: the whole dyad fused into one invented note and the tab reported nothing.
+        //
+        // A test that only asserted "one note is not a chord" would have PASSED that version.
+        // Silence passes every over-reporting test. This is the other wall.
+        let fifth = tone(&[
+            (220.0, 1.0), (440.0, 0.5), (660.0, 0.33),
+            (330.0, 0.9), (660.0, 0.45), (990.0, 0.3),
+        ]);
+        let v = voices(&peaks(&spectrum(&fifth), SR, 8, 0.12), 30.0);
+        assert!(v.len() >= 2, "a fifth is two notes, got {v:?}");
+        assert!(v.iter().all(|x| x.hz > 150.0),
+                "no phantom fundamental below either note: {:?}",
+                v.iter().map(|x| x.hz).collect::<Vec<_>>());
+    }
+
+    #[test]
+    fn an_absent_fundamental_is_still_heard_the_way_an_ear_hears_it() {
+        // The opposite error, and the reason the subharmonic search exists at all. Partials at
+        // 440/660/880 with no 220 present are ONE note whose fundamental was filtered out — a
+        // small speaker does this constantly and a human still hears the low note. Reading them
+        // as three separate voices would invent an octave and a fifth that nobody played.
+        let residue = tone(&[(440.0, 1.0), (660.0, 0.8), (880.0, 0.6), (1100.0, 0.4)]);
+        let v = voices(&peaks(&spectrum(&residue), SR, 6, 0.12), 30.0);
+        assert_eq!(v.len(), 1, "one note with its fundamental missing, got {v:?}");
+        assert!((v[0].hz - 220.0).abs() < 12.0, "residue pitch should be ~220, got {}", v[0].hz);
+        assert!(v[0].inferred, "an inferred fundamental must be flagged as inferred");
+    }
+
+    #[test]
+    fn a_real_chord_still_reads_as_one() {
+        // The other half, or the fix above is just a mute button: two DIFFERENT notes, each with
+        // its own overtones, must still be heard. A guard that achieves silence by refusing to
+        // report anything passes the test above and is worthless.
+        let both = tone(&[
+            (220.0, 1.0), (440.0, 0.5), (660.0, 0.33),          // A3 and its series
+            (277.2, 0.9), (554.4, 0.45), (831.6, 0.3),          // C#4 — a major third above
+        ]);
+        let p = peaks(&spectrum(&both), SR, 6, 0.15);
+        let m = moment(&p, 30.0);
+        assert!(
+            m.intervals.iter().any(|i| i.name == "major third"),
+            "two notes a third apart must report a third, got {:?}",
+            m.intervals.iter().map(|i| i.name).collect::<Vec<_>>()
+        );
     }
 
     #[test]
