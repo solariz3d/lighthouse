@@ -667,6 +667,150 @@ impl Swell {
     }
 }
 
+/// Energy in one band of the LEVEL's own modulation spectrum, ignoring DC.
+///
+/// Not the audio spectrum — the spectrum of how the loudness itself wobbles. A held violin note has
+/// a spectrum full of partials and an almost flat envelope; a person talking has a busy envelope
+/// whatever the pitch is doing. This measures the second thing.
+///
+/// Evaluated directly at a handful of frequencies rather than by FFT: the series is a few hundred
+/// samples and only two narrow bands matter, so a transform would compute mostly what is thrown away.
+fn modulation_energy(env: &[f32], rate: f32, lo_hz: f32, hi_hz: f32) -> f32 {
+    if env.len() < 16 || rate <= 0.0 { return 0.0; }
+    let mean = env.iter().sum::<f32>() / env.len() as f32;
+    let n = env.len() as f32;
+    let steps = 8;
+    let mut total = 0.0;
+    for k in 0..steps {
+        let f = lo_hz + (hi_hz - lo_hz) * (k as f32 + 0.5) / steps as f32;
+        let w = 2.0 * std::f32::consts::PI * f / rate;
+        let (mut re, mut im) = (0.0f32, 0.0f32);
+        for (i, v) in env.iter().enumerate() {
+            let p = w * i as f32;
+            re += (v - mean) * p.cos();
+            im -= (v - mean) * p.sin();
+        }
+        total += (re * re + im * im) / (n * n);
+    }
+    total / steps as f32
+}
+
+/// What the loudness envelope says about whether this is speech.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct SpeechEvidence {
+    /// Modulation energy in the syllable band (2.5–5.5 Hz) over the slow band (0.2–2 Hz). Speech
+    /// carries a pronounced syllabic peak; sustained music puts its envelope energy lower down.
+    pub syllabic: f32,
+    /// How far the quiet tenth of the window sits below its mean, in dB. Speech is full of gaps
+    /// between words and phrases; a bowed chord is not.
+    pub gaps_db: f32,
+    /// True when both point the same way. Deliberately conservative — see `SpeechSense`.
+    pub talking: bool,
+}
+
+/// Speech or music, from the shape of the loudness over a few seconds.
+///
+/// WHY THIS EXISTS. The cochlea reads harmony from ANYTHING — a podcast, a video, a person talking
+/// — because vowel formants are peaks and peaks become intervals. It has no idea speech is not music
+/// and produces confident nonsense from it. Knowing the difference lets it say "someone is talking"
+/// instead, which makes it more honest rather than more capable.
+///
+/// THE FRAME RATE IS THE LIMIT, and it is worth stating rather than discovering. One analysis window
+/// is 85 ms, so the level series samples at 11.7 Hz and cannot see modulation above 5.9 Hz. Normal
+/// speech peaks at 3–5 Hz, which fits — but only just, and fast speech will alias. The upside of
+/// using this series rather than a finer envelope is that every recorded fixture already contains it,
+/// so the detector is testable against real music the moment it is written.
+///
+/// TWO FEATURES, BOTH REQUIRED, and the second is there because the first has a real confound:
+/// music at 180–240 bpm puts beat energy straight into the syllable band. Gappiness separates them —
+/// a drummer keeps the envelope up between hits, a talker does not. Requiring both agree costs
+/// sensitivity on whispered or heavily-compressed speech and buys not calling a fast song a
+/// conversation, which is the error that matters here.
+#[derive(Default)]
+pub struct SpeechSense {
+    hist: Vec<(f32, f32)>,
+    /// When the current disagreeing verdict first appeared, so a change must persist in TIME rather
+    /// than across frames that share their data.
+    pending_since: Option<(bool, f32)>,
+    reported: Option<bool>,
+}
+
+/// How long a window the verdict is drawn from. Long enough for a couple of syllables per hertz of
+/// resolution; short enough to notice a podcast starting.
+const SPEECH_WINDOW_SECS: f32 = 4.0;
+/// Syllabic-over-slow ratio above which the envelope looks like talking.
+const SPEECH_SYLLABIC: f32 = 0.45;
+/// How far the quiet tenth must sit below the mean, in dB.
+const SPEECH_GAPS_DB: f32 = 7.0;
+/// How long a new verdict must hold, in seconds, before it is reported.
+///
+/// SECONDS AND NOT FRAMES, and the difference is the whole guard. The first version required three
+/// agreeing windows, which at 11.7 frames a second spans 0.26 s — and consecutive windows overlap by
+/// 97%, so they are the same four seconds of audio counted three times. Three frames agreeing is one
+/// observation wearing three hats.
+///
+/// It cost a false positive on a real recording: one Fratres window read syllabic 0.46 against a 0.45
+/// threshold, held for a third of a second, and was reported as speech. Requiring the verdict to
+/// survive two seconds means a marginal crossing cannot promote itself, while genuine speech — which
+/// goes on for many seconds — sails through.
+const SPEECH_HOLD_SECS: f32 = 2.0;
+
+impl SpeechSense {
+    pub fn feed(&mut self, db: f32, now: f32) -> Option<Event> {
+        if db <= -60.0 {
+            self.hist.clear();
+            self.pending_since = None;
+            return None;
+        }
+        self.hist.push((now, db));
+        let cutoff = now - SPEECH_WINDOW_SECS;
+        self.hist.retain(|&(t, _)| t >= cutoff);
+        let span = now - self.hist.first()?.0;
+        if span < SPEECH_WINDOW_SECS * 0.9 || self.hist.len() < 32 { return None; }
+
+        let rate = self.hist.len() as f32 / span;
+        // Linear amplitude, not dB: modulation depth is a ratio, and dB already being logarithmic
+        // compresses exactly the deep gaps that distinguish speech.
+        let lin: Vec<f32> = self.hist.iter().map(|(_, d)| 10f32.powf(d / 20.0)).collect();
+        let syl = modulation_energy(&lin, rate, 2.5, 5.5);
+        let slow = modulation_energy(&lin, rate, 0.2, 2.0);
+        let syllabic = if slow > 1e-12 { syl / slow } else { 0.0 };
+
+        let mut dbs: Vec<f32> = self.hist.iter().map(|(_, d)| *d).collect();
+        dbs.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
+        let mean = dbs.iter().sum::<f32>() / dbs.len() as f32;
+        // THE MEAN OF THE QUIETEST SIXTH, not a single percentile. The first version indexed one
+        // order statistic and was brittle for exactly the case it exists to catch: a four-second
+        // window holds only one phrase gap, the gap is a handful of frames, and `len()/10` landed one
+        // index past the end of it — reporting 3.9 dB of gappiness on an envelope that drops 26.
+        // Averaging the tail cannot fall off it.
+        let tail = (dbs.len() / 6).max(2);
+        let quietest = dbs[..tail].iter().sum::<f32>() / tail as f32;
+        let gaps_db = mean - quietest;
+
+        let talking = syllabic >= SPEECH_SYLLABIC && gaps_db >= SPEECH_GAPS_DB;
+        // Hysteresis in TIME on the verdict. Flipping "someone is talking" on and off would be worse
+        // than either answer held steadily, and a threshold crossing that lasts a third of a second
+        // is not evidence of anything — see SPEECH_HOLD_SECS.
+        if Some(talking) == self.reported {
+            self.pending_since = None;
+            return None;
+        }
+        match self.pending_since {
+            Some((v, since)) if v == talking => {
+                if now - since < SPEECH_HOLD_SECS { return None; }
+            }
+            _ => {
+                self.pending_since = Some((talking, now));
+                return None;
+            }
+        }
+        self.pending_since = None;
+        self.reported = Some(talking);
+        Some(Event::Speech { talking, evidence: SpeechEvidence { syllabic, gaps_db, talking } })
+    }
+}
+
 /// Emits on CHANGE, never on a clock. This is the whole cost model: a quiet room is free, a
 /// held chord costs one line, and the stream is proportional to musical change rather than time.
 #[derive(Debug, Clone, PartialEq)]
@@ -676,6 +820,10 @@ pub enum Event {
     Intervals { names: Vec<String>, restless: bool, chord: Option<String> },
     /// Sustained growth or decay in loudness, over a span long enough to mean something.
     Swelling { rising: bool, db: f32, over: f32 },
+    /// This is speech, not music — or has stopped being. Carries its own evidence so a reader can
+    /// see WHY rather than take the verdict on faith, which matters while the threshold is still
+    /// calibrated on one side only.
+    Speech { talking: bool, evidence: SpeechEvidence },
     /// Tension that has not gone anywhere yet, on a BACKOFF: the wait doubles after each report, so
     /// a chord that hangs for a minute costs four lines rather than fifteen.
     ///
@@ -935,6 +1083,7 @@ impl Tracker {
 pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
     let mut t = Tracker::default();
     let mut swell = Swell::default();
+    let mut speech = SpeechSense::default();
     let mut out = Vec::new();
     for f in frames {
         for e in t.feed(moment(&f.peaks, tol_cents), f.at, nag_after) {
@@ -945,6 +1094,10 @@ pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Eve
         // a missing measurement wearing the shape of a real one.
         if let Some(db) = f.db {
             if let Some(e) = swell.feed(db, f.at) { out.push((f.at, e)); }
+            // Fed here too so every music fixture is a negative control for it. The positive side is
+            // calibrated on synthetic envelopes only; these three recordings are the evidence it does
+            // not fire on real music, which is the error that would actually matter.
+            if let Some(e) = speech.feed(db, f.at) { out.push((f.at, e)); }
         }
     }
     out
@@ -1392,6 +1545,104 @@ mod tests {
         let after: Vec<_> = (600..660).flat_map(|i| t.feed(unreadable.clone(), i as f32 / 12.0, 4.0)).collect();
         assert!(!after.iter().any(|e| matches!(e, Event::Resolved { .. })),
                 "abandoned tension must not be reported as resolved: {after:?}");
+    }
+
+    /// A level series shaped like speech: syllables at ~4 Hz with real gaps between phrases.
+    fn speech_like(secs: f32) -> Vec<(f32, f32)> {
+        let fps = 11.7;
+        let n = (secs * fps) as usize;
+        (0..n).map(|i| {
+            let t = i as f32 / fps;
+            // 4 Hz syllabic modulation, and a phrase gap every ~2.2 s
+            let syl = (2.0 * std::f32::consts::PI * 4.0 * t).sin();
+            let in_gap = (t % 2.2) > 1.85;
+            let db = if in_gap { -48.0 } else { -22.0 + 6.0 * syl };
+            (t, db)
+        }).collect()
+    }
+
+    #[test]
+    fn a_talking_envelope_is_recognised_as_talking() {
+        // The cochlea reads harmony from anything, including vowel formants, and produces confident
+        // nonsense from speech. This is the feature that lets it say so instead.
+        let mut s = SpeechSense::default();
+        let mut got = None;
+        for (t, db) in speech_like(20.0) {
+            // The FIRST verdict is legitimately "not speech" — the detector starts with no opinion
+            // and the earliest window may hold no phrase gap at all. What is asserted is that a
+            // talking verdict is reached, not that it is reached instantly.
+            if let Some(Event::Speech { talking: true, evidence }) = s.feed(db, t) {
+                if got.is_none() { got = Some((true, evidence)); }
+            }
+        }
+        match got {
+            Some((true, ev)) => {
+                assert!(ev.syllabic >= SPEECH_SYLLABIC, "syllabic {:.2} under threshold", ev.syllabic);
+                assert!(ev.gaps_db >= SPEECH_GAPS_DB, "gaps {:.1} dB under threshold", ev.gaps_db);
+            }
+            other => panic!("a 4 Hz gapped envelope was not called speech: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn a_sustained_chord_is_never_called_speech() {
+        // The error that matters: calling music a conversation. A bowed chord holds its level.
+        let mut s = SpeechSense::default();
+        let mut wrong = 0;
+        for i in 0..400 {
+            let t = i as f32 / 11.7;
+            // gentle vibrato and a slow swell, as strings actually behave
+            let db = -24.0 + 1.2 * (2.0 * std::f32::consts::PI * 5.5 * t).sin() + 0.05 * t;
+            if let Some(Event::Speech { talking: true, .. }) = s.feed(db, t) { wrong += 1; }
+        }
+        assert_eq!(wrong, 0, "a sustained chord was called speech {wrong} times");
+    }
+
+    #[test]
+    fn a_fast_beat_alone_is_not_enough_to_be_speech() {
+        // THE CONFOUND THE SECOND FEATURE EXISTS FOR. Music at 240 bpm puts beat energy straight into
+        // the syllable band. Without gappiness this would read as talking.
+        let mut s = SpeechSense::default();
+        let mut wrong = 0;
+        for i in 0..400 {
+            let t = i as f32 / 11.7;
+            // 4 Hz pulse, but the level never drops away between hits
+            let db = -20.0 + 3.0 * (2.0 * std::f32::consts::PI * 4.0 * t).sin();
+            if let Some(Event::Speech { talking: true, .. }) = s.feed(db, t) { wrong += 1; }
+        }
+        assert_eq!(wrong, 0, "a 4 Hz beat with no gaps was called speech {wrong} times");
+    }
+
+    #[test]
+    fn one_odd_window_does_not_flip_the_verdict() {
+        // Flipping "someone is talking" on and off would be worse than either answer held steadily.
+        let mut s = SpeechSense::default();
+        let mut flips = 0;
+        for i in 0..600 {
+            let t = i as f32 / 11.7;
+            let mut db = -24.0 + 1.0 * (2.0 * std::f32::consts::PI * 5.5 * t).sin();
+            if (250..262).contains(&i) { db = -45.0; }      // one brief dropout
+            if s.feed(db, t).is_some() { flips += 1; }
+        }
+        assert!(flips <= 1, "a single dropout produced {flips} verdict changes");
+    }
+
+    #[test]
+    fn a_verdict_lasting_a_third_of_a_second_is_not_reported() {
+        // THE REAL FALSE POSITIVE, from a real recording. One Fratres window read syllabic 0.46
+        // against a 0.45 threshold, held 0.34 s, and was reported as speech — because the guard
+        // counted three agreeing FRAMES, and at 11.7 fps three frames overlap by 97%. They were one
+        // observation wearing three hats.
+        let mut s = SpeechSense::default();
+        let mut calls = 0;
+        for i in 0..600 {
+            let t = i as f32 / 11.7;
+            // steady music, with four frames that would cross into speech-like territory
+            let speechy = (300..304).contains(&i);
+            let db = if speechy { -45.0 } else { -24.0 + (2.0 * std::f32::consts::PI * 5.5 * t).sin() };
+            if let Some(Event::Speech { talking: true, .. }) = s.feed(db, t) { calls += 1; }
+        }
+        assert_eq!(calls, 0, "a sub-second crossing was reported as speech {calls} times");
     }
 
     #[test]

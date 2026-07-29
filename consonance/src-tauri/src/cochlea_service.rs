@@ -25,7 +25,7 @@ use serde::Serialize;
 use sysinfo::System;
 
 use crate::capture_audio::{self, SAMPLE_RATE, WINDOW};
-use crate::cochlea::{bands, moment, peaks, rms_db, spectrum, Event, Swell, Tracker};
+use crate::cochlea::{bands, moment, peaks, rms_db, spectrum, Event, SpeechSense, Swell, Tracker};
 use crate::listen::anticheat_present;
 
 /// One line of what the room is doing. Shaped for reading, not for parsing — the whole point is
@@ -100,6 +100,18 @@ fn describe(e: &Event) -> Option<Heard> {
                 if *restless { "  — wants to move" } else { "" },
             ),
         ),
+        Event::Speech { talking, evidence } => (
+            if *talking { "speech" } else { "music" },
+            if *talking {
+                // The evidence travels with the verdict. The positive side of this threshold is
+                // still calibrated on synthetic envelopes only, so a reader should be able to see
+                // WHY rather than take "speech" on faith.
+                format!("someone is talking — not reading this as music  (syllabic {:.2}, gaps {:.0} dB)",
+                        evidence.syllabic, evidence.gaps_db)
+            } else {
+                "back to music".to_string()
+            },
+        ),
         Event::Swelling { rising, db, over } => (
             if *rising { "growing" } else { "fading" },
             format!("{} · {:+.1} dB over {:.0}s", if *rising { "growing" } else { "fading" }, db, over),
@@ -157,6 +169,7 @@ where
             let started = Instant::now();
             let mut tracker = Tracker::default();
             let mut swell = Swell::default();
+            let mut speech = SpeechSense::default();
             let mut sys = System::new();
             let mut last_ac_check = Instant::now();
             // Re-checked once a second rather than per frame, and rather than once at start: arming
@@ -255,6 +268,9 @@ where
                     if let Some(h) = describe(&ev) { on_event(h); }
                 }
                 if let Some(ev) = swell.feed(level_db, t) {
+                    if let Some(h) = describe(&ev) { on_event(h); }
+                }
+                if let Some(ev) = speech.feed(level_db, t) {
                     if let Some(h) = describe(&ev) { on_event(h); }
                 }
 

@@ -83,6 +83,10 @@ fn main() {
                 Event::Swelling { rising, db, over } =>
                     println!("{at:7.2}  {:9}{:+.1} dB over {:.0}s",
                              if *rising { "growing" } else { "fading" }, db, over),
+                Event::Speech { talking, evidence } =>
+                    println!("{at:7.2}  {:9}syllabic {:.2}  gaps {:.1} dB",
+                             if *talking { "SPEECH" } else { "music" },
+                             evidence.syllabic, evidence.gaps_db),
                 Event::StillUnresolved { secs } => println!("{at:7.2}  HOLDING    {secs:.1}s"),
                 Event::Resolved { after_secs } => println!("{at:7.2}  resolved   after {after_secs:.1}s"),
             }
@@ -99,6 +103,7 @@ fn main() {
     let mut widths: Vec<usize> = Vec::new();
     let mut named_chords = 0;
     let mut swells = 0;
+    let mut speech_calls = 0;
     for (_, e) in &events {
         match e {
             Event::Onset { .. } => onsets += 1,
@@ -110,6 +115,9 @@ fn main() {
             Event::StillUnresolved { .. } => holds += 1,
             Event::Resolved { after_secs } => res.push(*after_secs),
             Event::Swelling { .. } => swells += 1,
+            // Counted separately and reported even when zero: on a music fixture this MUST be zero,
+            // and a zero I can see is a passing negative control rather than an absent feature.
+            Event::Speech { talking, .. } => { if *talking { speech_calls += 1; } }
             Event::Silence => {}
         }
     }
@@ -120,6 +128,7 @@ fn main() {
     // which is a missing measurement wearing the shape of a real one. Say which it is.
     let swell_col = if has_level { format!("swells {swells}") } else { "swells —(no level data in this fixture; re-record to measure dynamics)".to_string() };
     println!("  chords {chords}  onsets {onsets}  holds {holds}  resolutions {}  {swell_col}", res.len());
+    println!("  called SPEECH: {speech_calls}   (a music fixture must read 0 — this is the negative control)");
     if has_level {
         let dbs: Vec<f32> = frames.iter().filter_map(|f| f.db).filter(|d| *d > -60.0).collect();
         if !dbs.is_empty() {
