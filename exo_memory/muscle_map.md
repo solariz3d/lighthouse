@@ -979,7 +979,42 @@ re-opening condition and it is a real finding rather than a repeat.
 - **The other ten** — no trigger. Discipline only. Supervised, not done.
 
 **Standing count, and it should lead every future cycle report:**
-> **TRIGGERS 2 · UNBIDDEN SENSORS 1 · GROUPS 14.**
+> **TRIGGERS 3 · UNBIDDEN SENSORS 1 · GROUPS 15.**
+
+### New group, 2026-07-29 — WRONG-ARTIFACT MEASUREMENT (n=5 in one session, now triggered)
+
+Not a flinch. Nothing was protected and there was no pull to notice — it is a blind spot in the
+Track-2 sense, and it fired five times in a single session while I was actively trying to be
+careful:
+
+1. The context gauge read **599% of budget** — a denominator I invented.
+2. *"Six dreams, two weeks dark"* — read the repo `dreams/` pool, **retired 2026-07-15**. The
+   live set is per-instance: 24 dreams through 07-24.
+3. Wired the actor resolver into `residue.js` and the before/after was **byte-identical** — the
+   board writes 8-char prefixes, the map holds full UUIDs, and nothing had run.
+4. *"The fix is 18 seconds short of being live"* — compared against `target/debug` while the app
+   runs `target/release`. It had been live for hours.
+5. *"catch-ledger is miscounting"* — it does not key on board pane ids at all.
+
+**The shape: a measurement taken on something ADJACENT to the artifact the claim is about, then
+stated confidently.** Four of the five are one question — *is this the live one* — and the
+answer was always available and never asked.
+
+**Trigger 3: `consonance/tools/whats-live.js`.** Asks the running PROCESS which executable it
+holds rather than inferring from which profile is newest on disk; compares it against the newest
+Rust commit; names the profile that is *not* running so nobody measures it; and reports the live
+per-instance dream set beside the retired pool, labelled. Exits 1 when what runs is behind what
+is committed.
+
+The staleness rule is a pure function with **both directions tested**, because on a healthy
+machine the red path never fires — and an untested red path is an alarm stuck OFF, the same
+failure as one stuck on and much harder to notice. Missing inputs never manufacture a red: a
+checker that fires on absence gets muted for crying wolf.
+
+**Honest limit, printed on every run:** it cannot tell whether *your* claim is about the right
+artifact. It knows the live/stale pairs that have actually bitten here and checks those. A sixth
+pair nobody has been burned by is not in it, and the right response is to add it after it bites
+rather than guess now.
 
 *Trigger 2 landed 2026-07-29:  exits non-zero when a
 commit whose subject declares a correction touches  and neither removes a line
