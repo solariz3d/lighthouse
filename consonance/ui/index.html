@@ -137,6 +137,14 @@
         </div>
       </div>
       <div class="field">
+        <label>the field — each bar a band, log-spaced the way hearing is. Markers are the
+          partials found; colour groups them by the note they were assigned to.</label>
+        <canvas id="listeneq" style="width:100%; height:180px; display:block;
+             border:1px solid var(--line,#2a2f3a); border-radius:8px; background:rgba(0,0,0,.28);"></canvas>
+        <div id="listenvoices" class="hint" style="margin-top:6px; font-family:ui-monospace,Consolas,monospace;">
+          silent</div>
+      </div>
+      <div class="field">
         <label>heard — one line per change. A quiet room says nothing at all.</label>
         <div id="listenlog" style="font-family:ui-monospace,Consolas,monospace; font-size:12px;
              line-height:1.7; max-height:52vh; overflow:auto; padding:10px 12px;

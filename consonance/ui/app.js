@@ -133,8 +133,76 @@ load();
     }
   };
 
+  // ---- the field ----------------------------------------------------------------------
+  // Analysis produces ~12 frames a second. Drawing only on arrival would look like a strobe,
+  // so the canvas runs its own rAF loop and each bar falls toward the newest value instead of
+  // jumping to it. That is a DISPLAY smoothing and nothing else: the numbers underneath are
+  // untouched, and silence still empties the display within a few frames rather than decaying
+  // prettily forever.
+  const eq = $('#listeneq'), vsOut = $('#listenvoices');
+  const eqx = eq && eq.getContext('2d');
+  let bands = new Float32Array(64), shown = new Float32Array(64), marks = [], vs = [];
+  // Colours are assigned per note, so one sound lights one hue across all of its partials. If
+  // a single note ever shows four colours, the fusion has failed and you can see it happen.
+  const HUES = ['#7aa2f7', '#e8b04b', '#6fd08c', '#c98bdb', '#e05c5c', '#4fd0c0'];
+
+  function drawEq() {
+    if (!eqx) return;
+    const w = eq.clientWidth, h = eq.clientHeight, dpr = window.devicePixelRatio || 1;
+    if (eq.width !== w * dpr || eq.height !== h * dpr) { eq.width = w * dpr; eq.height = h * dpr; }
+    eqx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    eqx.clearRect(0, 0, w, h);
+
+    const n = bands.length, bw = w / n;
+    for (let i = 0; i < n; i++) {
+      // fall fast enough that a stopped source empties the display, rise instantly
+      shown[i] = bands[i] > shown[i] ? bands[i] : shown[i] * 0.82 + bands[i] * 0.18;
+      const bh = Math.max(0, shown[i]) * (h - 2);
+      if (bh < 0.5) continue;
+      const g = eqx.createLinearGradient(0, h, 0, h - bh);
+      g.addColorStop(0, 'rgba(122,162,247,.32)');
+      g.addColorStop(1, 'rgba(122,162,247,.95)');
+      eqx.fillStyle = g;
+      eqx.fillRect(i * bw + 0.5, h - bh, bw - 1, bh);
+    }
+
+    // partial markers, coloured by which note claimed them
+    const LO = 30, HI = 16000, span = Math.log(HI / LO);
+    const xOf = hz => (Math.log(Math.max(LO, Math.min(HI, hz)) / LO) / span) * w;
+    marks.forEach(hz => {
+      // which voice owns this partial: the one it is closest to an exact harmonic of
+      let owner = -1, best = 1e9;
+      vs.forEach((v, i) => {
+        const k = Math.round(hz / v[0]);
+        if (k < 1) return;
+        const off = Math.abs(1200 * Math.log2(hz / (k * v[0])));
+        if (off < best && off <= 40) { best = off; owner = i; }
+      });
+      eqx.fillStyle = owner < 0 ? 'rgba(150,150,150,.55)' : HUES[owner % HUES.length];
+      const x = xOf(hz);
+      eqx.fillRect(x - 1, 0, 2, 7);
+    });
+    requestAnimationFrame(drawEq);
+  }
+  if (eqx) requestAnimationFrame(drawEq);
+
   refresh.onclick = loadSources;
   window.__TAURI__.event.listen('heard', e => add(e.payload));
+  window.__TAURI__.event.listen('spectrum', e => {
+    const s = e.payload;
+    if (s.bands && s.bands.length) bands = s.bands;
+    marks = s.peaks || [];
+    vs = s.voices || [];
+    if (!vsOut) return;
+    vsOut.innerHTML = vs.length === 0
+      ? 'silent'
+      : vs.map((v, i) => `<span style="color:${HUES[i % HUES.length]}">${v[0].toFixed(1)} Hz` +
+          `<span style="opacity:.55"> · ${v[2]} partial${v[2] === 1 ? '' : 's'}` +
+          `${v[3] ? ' · inferred' : ''}</span></span>`).join('   ') +
+        (s.intervals && s.intervals.length
+          ? `<span style="opacity:.75">   —   ${s.intervals.join(' · ')}` +
+            `${s.restless ? ' (wants to move)' : ''}</span>` : '');
+  });
   // Re-scan when the tab is opened: what is running changes between visits.
   const tabBtn = $('.tabs button[data-tab="listen"]');
   if (tabBtn) tabBtn.addEventListener('click', loadSources);

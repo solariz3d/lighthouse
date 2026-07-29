@@ -184,6 +184,46 @@ pub fn interval(lo: f32, hi: f32, tol_cents: f32) -> Option<Interval> {
     None
 }
 
+/// The visible frequency field: log-spaced bands, in dB, for a display.
+///
+/// LOG SPACING IS NOT DECORATION. Linear bins put every note anyone plays inside the left 5% of
+/// the width — a 4096-point FFT at 48 kHz spends 2000 bins above 12 kHz, where there is almost
+/// nothing, and forty bins across the entire bass register, where the music is. Every EQ display
+/// ever built is log-frequency for the same reason: it is the axis hearing actually uses.
+///
+/// FIXED REFERENCE, NOT PER-FRAME NORMALISATION. Scaling each frame to its own maximum is the
+/// obvious move and it lies: a near-silent passage fills the display exactly like a loud one, so
+/// dynamics — the thing you would most want to SEE — become invisible. The reference here is
+/// absolute, so quiet reads as quiet and silence reads as empty.
+///
+/// Bands take the MAX of the bins they span rather than the mean. A single strong partial should
+/// stay a spike; averaging it against its empty neighbours is how a real peak becomes a bump.
+pub fn bands(spec: &[f32], sample_rate: f32, n: usize) -> Vec<f32> {
+    const F_LO: f32 = 30.0;        // below this is rumble and DC drift
+    const F_HI: f32 = 16_000.0;    // above this there is nothing musical to see
+    const FLOOR_DB: f32 = -80.0;
+    if spec.is_empty() || n == 0 { return vec![0.0; n]; }
+    let bin_hz = sample_rate / (spec.len() as f32 * 2.0);
+    // Hann coherent gain is 0.5, and a one-sided spectrum doubles what remains: a full-scale
+    // sine lands at N/4. Dividing by it puts 0 dB at full scale rather than at some number that
+    // happens to depend on the transform size.
+    let full_scale = (spec.len() * 2) as f32 / 4.0;
+
+    (0..n).map(|i| {
+        let lo = F_LO * (F_HI / F_LO).powf(i as f32 / n as f32);
+        let hi = F_LO * (F_HI / F_LO).powf((i + 1) as f32 / n as f32);
+        let (b0, b1) = ((lo / bin_hz) as usize, (hi / bin_hz).ceil() as usize);
+        // At the bottom, a band is narrower than one bin. Reading the nearest bin is honest about
+        // the resolution; returning zero would draw a hole in the bass that is not there.
+        let b1 = b1.max(b0 + 1).min(spec.len());
+        if b0 >= spec.len() { return 0.0; }
+        let mag = spec[b0..b1].iter().cloned().fold(0.0f32, f32::max) / full_scale;
+        if mag <= 0.0 { return 0.0; }
+        let db = 20.0 * mag.log10();
+        ((db - FLOOR_DB) / -FLOOR_DB).clamp(0.0, 1.0)
+    }).collect()
+}
+
 /// One sounding note: a fundamental, and the partials the grouping assigned to it.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Voice {
@@ -449,6 +489,41 @@ mod tests {
             "one note reported as a chord: {:?}",
             m.intervals.iter().map(|i| i.name).collect::<Vec<_>>()
         );
+    }
+
+    #[test]
+    fn silence_draws_an_empty_display_rather_than_a_normalised_one() {
+        // The per-frame-normalisation trap, pinned: dividing by the frame's own maximum makes
+        // silence look identical to a full mix. The display would never be empty and dynamics
+        // would be invisible.
+        let b = bands(&spectrum(&vec![0.0f32; N]), SR, 64);
+        assert_eq!(b.len(), 64);
+        assert!(b.iter().all(|&x| x <= 0.001), "silence must read as empty, got max {:?}",
+                b.iter().cloned().fold(0.0f32, f32::max));
+    }
+
+    #[test]
+    fn a_quiet_tone_reads_quieter_than_a_loud_one_at_the_same_pitch() {
+        // The other half of a fixed reference: amplitude must survive to the display.
+        let loud = bands(&spectrum(&tone(&[(440.0, 1.0)])), SR, 64);
+        let soft = bands(&spectrum(&tone(&[(440.0, 0.05)])), SR, 64);
+        let peak = |v: &Vec<f32>| v.iter().cloned().fold(0.0f32, f32::max);
+        assert!(peak(&loud) > peak(&soft) + 0.1,
+                "loud {:.3} vs quiet {:.3} -- the display is auto-gaining", peak(&loud), peak(&soft));
+    }
+
+    #[test]
+    fn a_tone_lights_the_band_it_actually_belongs_to() {
+        // Log spacing is easy to get subtly wrong in a way that still looks plausible: an
+        // off-by-one in the band edges shifts everything a semitone or two and nothing complains.
+        let b = bands(&spectrum(&tone(&[(440.0, 1.0)])), SR, 64);
+        let hottest = b.iter().enumerate()
+            .max_by(|a, c| a.1.partial_cmp(c.1).unwrap()).map(|(i, _)| i).unwrap();
+        // invert the band mapping and check 440 lands inside the winning band
+        let lo = 30.0 * (16_000.0f32 / 30.0).powf(hottest as f32 / 64.0);
+        let hi = 30.0 * (16_000.0f32 / 30.0).powf((hottest + 1) as f32 / 64.0);
+        assert!(440.0 >= lo && 440.0 <= hi,
+                "440 Hz lit band {hottest} which spans {lo:.0}-{hi:.0} Hz");
     }
 
     #[test]

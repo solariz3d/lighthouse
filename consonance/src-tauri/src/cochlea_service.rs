@@ -25,7 +25,7 @@ use serde::Serialize;
 use sysinfo::System;
 
 use crate::capture_audio::{self, SAMPLE_RATE, WINDOW};
-use crate::cochlea::{moment, peaks, spectrum, Event, Tracker};
+use crate::cochlea::{bands, moment, peaks, spectrum, Event, Tracker};
 use crate::listen::anticheat_present;
 
 /// One line of what the room is doing. Shaped for reading, not for parsing — the whole point is
@@ -37,16 +37,34 @@ pub struct Heard {
     pub text: String,
 }
 
+/// The frequency field as it stands right now, plus what the grouping made of it.
+///
+/// TWO READERS, TWO RATES, and that asymmetry is the design rather than a shortcut. The tab can
+/// take a stream — a canvas redraws for free. The orchestrator cannot: at ~12 frames a second,
+/// pushing bands into a conversation would spend a context window in minutes, which is exactly
+/// how the first ledger drowned. So this is a LATCH, not a queue. The UI is pushed to; anything
+/// else pulls, gets whatever is current, and never accumulates a backlog it has to drain.
+#[derive(Clone, Debug, Default, Serialize)]
+pub struct Snapshot {
+    pub bands: Vec<f32>,
+    /// Fundamental / magnitude / partial-count / was-it-inferred, per grouped note. This is what
+    /// lets the display colour each partial by the note it was assigned to — the only way to see
+    /// the fusion succeed or fail on real music instead of on synthesised tones.
+    pub voices: Vec<(f32, f32, usize, bool)>,
+    pub peaks: Vec<f32>,
+    pub intervals: Vec<String>,
+    pub restless: bool,
+    pub at: String,
+}
+
 #[derive(Default)]
 pub struct Listening {
     pub stop: Option<Arc<AtomicBool>>,
     pub source: Option<String>,
 }
 
-pub struct Service(pub Mutex<Listening>);
-impl Default for Service {
-    fn default() -> Self { Service(Mutex::new(Listening::default())) }
-}
+#[derive(Default)]
+pub struct Service(pub Mutex<Listening>, pub Mutex<Snapshot>);
 
 fn ledger_path(data_dir: &PathBuf) -> PathBuf { data_dir.join("heard.jsonl") }
 
@@ -67,13 +85,15 @@ fn describe(e: &Event) -> Option<Heard> {
 
 /// Start listening to one process tree. `on_event` receives every line; the caller decides
 /// whether that means the UI, the ledger, or both.
-pub fn start<F>(
+pub fn start<F, S>(
     pid: u32,
     data_dir: PathBuf,
     on_event: F,
+    on_frame: S,
 ) -> Result<Arc<AtomicBool>, String>
 where
     F: Fn(Heard) + Send + 'static,
+    S: Fn(Snapshot) + Send + 'static,
 {
     // Checked here rather than only in the UI: a command can be invoked without the tab, and a
     // guard that lives in the view is not a guard.
@@ -141,6 +161,15 @@ where
                 let pk = peaks(&spec, SAMPLE_RATE as f32, 10, 0.12);
                 let m = moment(&pk, 30.0);
                 let t = started.elapsed().as_secs_f32();
+
+                on_frame(Snapshot {
+                    bands: bands(&spec, SAMPLE_RATE as f32, 64),
+                    voices: m.voices.iter().map(|v| (v.hz, v.mag, v.partials, v.inferred)).collect(),
+                    peaks: pk.iter().map(|p| p.hz).collect(),
+                    intervals: m.intervals.iter().map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
+                    restless: m.restless,
+                    at: chrono::Local::now().format("%H:%M:%S").to_string(),
+                });
                 for ev in tracker.feed(m, t, 4.0) {
                     if let Some(h) = describe(&ev) { on_event(h); }
                 }

@@ -2161,16 +2161,44 @@ fn audio_start(
         if g.stop.is_some() { return Err("already listening — stop first".into()); }
     }
     let app_ev = app.clone();
+    let app_fr = app.clone();
     let dir = data_dir();
     let dir_ev = dir.clone();
-    let stop = cochlea_service::start(pid, dir, move |h| {
-        cochlea_service::append(&dir_ev, &h);
-        let _ = app_ev.emit("heard", &h);
-    })?;
+    // The frame latch: last-write-wins into shared state, and a push to the tab. Deliberately
+    // NOT written to disk — the spectrum is the living thing that evaporates, the way hearing
+    // does. Only what survived it (onsets, tension, resolution) reaches the ledger.
+    let stop = cochlea_service::start(
+        pid,
+        dir,
+        move |h| {
+            cochlea_service::append(&dir_ev, &h);
+            let _ = app_ev.emit("heard", &h);
+        },
+        move |s| {
+            if let Some(svc) = app_fr.try_state::<cochlea_service::Service>() {
+                *svc.1.lock().unwrap() = s.clone();
+            }
+            let _ = app_fr.emit("spectrum", &s);
+        },
+    )?;
     let mut g = svc.0.lock().unwrap();
     g.stop = Some(stop);
     g.source = Some(label.clone());
     Ok(label)
+}
+
+/// The orchestrator's window onto the sound field — PULL, never push.
+///
+/// The tab gets a stream because a canvas can take one. This cannot: at ~12 frames a second a
+/// pushed spectrum would spend a context window in minutes, which is precisely how the first
+/// ledger drowned. So this returns whatever is current at the moment it is asked and keeps no
+/// backlog. The cost is real and worth naming: a snapshot carries no duration. A chord that has
+/// been unresolved for eleven seconds looks identical to one struck an instant ago — which is
+/// why the tension EVENTS matter more here than the picture does. They are the part with time
+/// in them.
+#[tauri::command]
+fn audio_snapshot(svc: State<cochlea_service::Service>) -> cochlea_service::Snapshot {
+    svc.1.lock().unwrap().clone()
 }
 
 #[tauri::command]
@@ -3859,7 +3887,7 @@ fn main() {
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
             set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
             pane_scrollback,
-            audio_sources, audio_start, audio_stop, audio_status
+            audio_sources, audio_start, audio_stop, audio_status, audio_snapshot
         ])
         // No graceful-shutdown delay on close: `/exit` doesn't reliably flush an interactive claude
         // (proven), the own-capture log persists every chunk as it arrives, and real `--resume` works
