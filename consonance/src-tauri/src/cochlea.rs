@@ -396,9 +396,29 @@ pub enum Event {
     Resolved { after_secs: f32 },
 }
 
+/// How long a reading must hold before it is believed.
+///
+/// A WINDOW IS NOT A MOMENT, and conflating them is what kept the stream at 8.58 events/sec even
+/// after the naming was fixed. One analysis window is 85 ms — far shorter than any musical event.
+/// Two consecutive windows over the same held chord give slightly different peak sets, so the
+/// interval list flickers, and a tracker that fires on every difference reports a chord change
+/// that never happened. Measured before this: 590 "resolved" events in a single minute, most of
+/// them resolving tension that had existed for 0.1 s.
+///
+/// 180 ms is not a tuning knob picked to make a number look better. It is roughly the window over
+/// which hearing integrates before harmony is perceived at all — below it a human does not hear a
+/// chord either, only a transient. So the rule is: a reading that cannot survive a fifth of a
+/// second was never a chord, and saying nothing about it is not a loss of information.
+pub const SETTLE_SECS: f32 = 0.18;
+
 #[derive(Default)]
 pub struct Tracker {
-    last: Option<Moment>,
+    /// What has actually been reported.
+    confirmed: Option<Moment>,
+    /// A reading that differs from `confirmed`, and when it first appeared. Restarted from
+    /// scratch every time the reading changes, so a flicker between two readings settles on
+    /// neither and is correctly reported as nothing.
+    candidate: Option<(Moment, f32)>,
     restless_since: Option<f32>,
     last_nag: f32,
 }
@@ -408,36 +428,55 @@ impl Tracker {
     /// a line; 0 disables it.
     pub fn feed(&mut self, m: Moment, now: f32, nag_after: f32) -> Vec<Event> {
         let mut out = Vec::new();
-        let was_silent = self.last.as_ref().map(|l| l.silent).unwrap_or(true);
 
-        if m.silent {
-            if !was_silent { out.push(Event::Silence); }
-            self.restless_since = None;
-            self.last = Some(m);
-            return out;
+        let same_candidate = self.candidate.as_ref()
+            .map(|(c, _)| c.silent == m.silent && c.intervals == m.intervals)
+            .unwrap_or(false);
+        if !same_candidate {
+            self.candidate = Some((m, now));
         }
-        if was_silent {
-            if let Some(hz) = m.fundamental { out.push(Event::Onset { hz }); }
+        let (cand, since) = self.candidate.as_ref().expect("just set");
+        let differs = self.confirmed.as_ref()
+            .map(|c| c.silent != cand.silent || c.intervals != cand.intervals)
+            .unwrap_or(true);
+
+        if differs && now - since >= SETTLE_SECS {
+            let cand = cand.clone();
+            let was_silent = self.confirmed.as_ref().map(|c| c.silent).unwrap_or(true);
+            if cand.silent {
+                if !was_silent { out.push(Event::Silence); }
+                self.restless_since = None;
+            } else {
+                if was_silent {
+                    if let Some(hz) = cand.fundamental { out.push(Event::Onset { hz }); }
+                }
+                if !cand.intervals.is_empty() {
+                    out.push(Event::Intervals {
+                        names: cand.intervals.iter()
+                            .map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
+                        restless: cand.restless,
+                    });
+                }
+                match (self.restless_since, cand.restless) {
+                    (None, true) => { self.restless_since = Some(now); self.last_nag = now; }
+                    (Some(t0), false) => {
+                        out.push(Event::Resolved { after_secs: now - t0 });
+                        self.restless_since = None;
+                    }
+                    _ => {}
+                }
+            }
+            self.confirmed = Some(cand);
         }
 
-        let changed = self.last.as_ref().map(|l| l.intervals != m.intervals).unwrap_or(true);
-        if changed && !m.intervals.is_empty() {
-            out.push(Event::Intervals {
-                names: m.intervals.iter().map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
-                restless: m.restless,
-            });
-        }
-
-        match (self.restless_since, m.restless) {
-            (None, true) => { self.restless_since = Some(now); self.last_nag = now; }
-            (Some(t0), false) => { out.push(Event::Resolved { after_secs: now - t0 }); self.restless_since = None; }
-            (Some(t0), true) if nag_after > 0.0 && now - self.last_nag >= nag_after => {
+        // Tension runs on the clock, not on change: an unresolved chord that nobody touches is
+        // exactly the case worth reporting, and it produces no differences to trigger on.
+        if let Some(t0) = self.restless_since {
+            if nag_after > 0.0 && now - self.last_nag >= nag_after {
                 out.push(Event::StillUnresolved { secs: now - t0 });
                 self.last_nag = now;
             }
-            _ => {}
         }
-        self.last = Some(m);
         out
     }
 }
@@ -516,6 +555,39 @@ mod tests {
             let r = (s >> 8) as f32 / 8_388_608.0 - 1.0;   // roughly -1..1
             x + r * amount
         }).collect()
+    }
+
+    #[test]
+    fn a_flicker_between_two_readings_reports_neither() {
+        // The defect this closes, measured live: 8.58 events/sec and 590 "resolved" lines in one
+        // minute, most releasing tension that had lasted 0.1 s. Two consecutive 85 ms windows over
+        // ONE held chord give slightly different peaks, so the interval list alternates, and a
+        // tracker firing on every difference invents a chord change per window.
+        let a = moment(&[Peak { hz: 440.0, mag: 1.0 }, Peak { hz: 660.0, mag: 0.9 }], 25.0);
+        let b = moment(&[Peak { hz: 440.0, mag: 1.0 },
+                         Peak { hz: 440.0 * 2f32.powf(6.0 / 12.0), mag: 0.9 }], 30.0);
+        assert_ne!(a.intervals, b.intervals, "the two readings must actually differ");
+
+        let mut t = Tracker::default();
+        let mut n = 0;
+        for i in 0..40 {
+            let m = if i % 2 == 0 { a.clone() } else { b.clone() };
+            n += t.feed(m, i as f32 * 0.085, 0.0).len();     // real window cadence
+        }
+        assert_eq!(n, 0, "alternating readings settled on {n} events; a flicker is not music");
+    }
+
+    #[test]
+    fn a_change_that_actually_holds_is_still_reported() {
+        // The other wall. A settle rule that reports nothing scores perfectly above.
+        let a = moment(&[Peak { hz: 440.0, mag: 1.0 }, Peak { hz: 660.0, mag: 0.9 }], 25.0);
+        let b = moment(&[Peak { hz: 440.0, mag: 1.0 }, Peak { hz: 550.0, mag: 0.9 }], 25.0);
+        let mut t = Tracker::default();
+        let mut evs = Vec::new();
+        for i in 0..12 { evs.extend(t.feed(a.clone(), i as f32 * 0.085, 0.0)); }
+        for i in 12..24 { evs.extend(t.feed(b.clone(), i as f32 * 0.085, 0.0)); }
+        let named: Vec<_> = evs.iter().filter(|e| matches!(e, Event::Intervals { .. })).collect();
+        assert_eq!(named.len(), 2, "two chords held one second each are two lines, got {evs:?}");
     }
 
     #[test]
@@ -755,7 +827,12 @@ mod tests {
         assert!(nags >= 1, "held tension should say so at least once");
         assert!(nags <= 2, "but must not turn into a stream of complaints: {} nags", nags);
 
-        let out = t.feed(calm, 4.5, 2.0);
+        // Frames arrive continuously at ~12/sec, so the release is fed as the stream would feed
+        // it rather than as a single frame. The assertion is unchanged: the release is the event
+        // worth having. Only the timing model moved — a reading must now hold SETTLE_SECS before
+        // it is believed, and one isolated frame is exactly the flicker that rule exists to drop.
+        let mut out = Vec::new();
+        for i in 0..5 { out.extend(t.feed(calm.clone(), 4.5 + i as f32 * 0.1, 2.0)); }
         assert!(out.iter().any(|e| matches!(e, Event::Resolved { .. })),
                 "the release is the event worth having: {:?}", out);
     }
