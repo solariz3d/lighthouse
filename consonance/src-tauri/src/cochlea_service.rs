@@ -223,6 +223,11 @@ where
                         let line = np.line();
                         if !line.is_empty() && line != last_np {
                             last_np = line.clone();
+                            // Everything before this instant is a different piece of music. Without
+                            // this the dynamics window compares one recording's loudness to
+                            // another's and calls the difference a crescendo — measured at +41 dB
+                            // while the keeper skipped tracks.
+                            swell.track_changed();
                             on_event(Heard {
                                 at: chrono::Local::now().format("%H:%M:%S").to_string(),
                                 kind: "track".into(),

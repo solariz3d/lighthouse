@@ -565,6 +565,25 @@ pub struct Swell {
 }
 
 impl Swell {
+    /// The track changed, so everything before this instant is a different piece of music.
+    ///
+    /// THE BUG THIS EXISTS FOR, and it was invisible while the wrong assumption held. A sixty-second
+    /// window with a different song at each end compares one recording's loudness to another's and
+    /// calls the difference a crescendo. Measured live while the keeper skipped tracks: reports of
+    /// +41 dB, and reversals of 8 dB inside one second, which is physically impossible for a
+    /// sixty-second trend.
+    ///
+    /// Worth recording how it was found. Two causes were diagnosed from the numbers — threshold
+    /// dithering and single-sample noise — and the second was measured and came back nearly
+    /// irrelevant (sd 7.97 → 7.55 dB when averaged). The dominant term was this one, and it was
+    /// unreachable because the monitor had been LABELLED "Adagio" by me and I reasoned from the
+    /// label instead of reading the track events the feature was built to provide. The keeper asked
+    /// whether I had read the title. I had not.
+    pub fn track_changed(&mut self) {
+        self.hist.clear();
+        self.reported_dir = 0;
+    }
+
     pub fn feed(&mut self, db: f32, now: f32) -> Option<Event> {
         // Silence is not a diminuendo. It is handled as silence, and letting it in here would make
         // every gap between movements a dramatic fade.
@@ -577,18 +596,35 @@ impl Swell {
         let cutoff = now - SWELL_WINDOW_SECS;
         self.hist.retain(|&(t, _)| t >= cutoff);
 
-        let (t0, db0) = *self.hist.first()?;
-        let span = now - t0;
+        let span = now - self.hist.first()?.0;
         // Needs the full window before it can claim a trend. Reporting from two samples would make
         // the first seconds of every track a swell.
         if span < SWELL_WINDOW_SECS * 0.8 { return None; }
 
-        let change = db - db0;
+        // AVERAGED ENDS, NOT SINGLE SAMPLES. One 85 ms RMS reading is noisy — 1.42 dB of
+        // frame-to-frame movement, measured — and differencing two of them adds both errors. A
+        // second at each end is twelve readings, and the trend is what survives. Worth stating
+        // honestly: measured against real audio this was a SMALL improvement (sd 7.97 → 7.55 dB),
+        // because the variance was dominated by track boundaries rather than by sample noise. It is
+        // kept because it is correct and cheap, not because it was the fix.
+        let edge = 1.0f32;
+        let mean_between = |lo: f32, hi: f32| -> Option<f32> {
+            let v: Vec<f32> = self.hist.iter().filter(|(t, _)| *t >= lo && *t <= hi).map(|(_, d)| *d).collect();
+            if v.is_empty() { None } else { Some(v.iter().sum::<f32>() / v.len() as f32) }
+        };
+        let t0 = self.hist.first()?.0;
+        let db0 = mean_between(t0, t0 + edge)?;
+        let db1 = mean_between(now - edge, now)?;
+
+        let change = db1 - db0;
         let dir: i8 = if change >= SWELL_DB { 1 } else if change <= -SWELL_DB { -1 } else { 0 };
-        if dir == 0 { self.reported_dir = 0; return None; }
-        // Report a change of direction immediately; report a continuing one only occasionally, or a
-        // long crescendo becomes a stream of identical lines saying it is still happening.
-        if dir == self.reported_dir && now - self.last_report < SWELL_MIN_GAP_SECS { return None; }
+        if dir == 0 { return None; }
+        // NOTE what this deliberately does NOT do: reset `reported_dir`. The first version cleared
+        // it on every sub-threshold reading, so a level dithering across the threshold produced a
+        // report every single frame — the gap only applied when the direction was unchanged, and a
+        // reset made every crossing look like a new direction. Live, that was nine reports in five
+        // seconds.
+        if now - self.last_report < SWELL_MIN_GAP_SECS { return None; }
         self.last_report = now;
         self.reported_dir = dir;
         Some(Event::Swelling { rising: dir > 0, db: change, over: span })
@@ -1229,6 +1265,39 @@ mod tests {
             }
             other => panic!("the Adagio's own crescendo went unreported: {other:?}"),
         }
+    }
+
+    #[test]
+    fn a_track_change_does_not_read_as_a_crescendo() {
+        // Live, while the keeper skipped through three songs in six seconds: reports of +41 dB and
+        // reversals of 8 dB inside one second. A sixty-second window with a different song at each
+        // end compares one recording's loudness to another's. Here: a quiet track, then a loud one.
+        let mut s = Swell::default();
+        for i in 0..900 { s.feed(-40.0, i as f32 / 12.0); }        // 75s of quiet
+        s.track_changed();
+        let mut n = 0;
+        for i in 900..1500 {                                       // 50s of loud, same level
+            if s.feed(-15.0, i as f32 / 12.0).is_some() { n += 1; }
+        }
+        assert_eq!(n, 0, "a track change produced {n} swell reports; 25 dB of it is the SONG changing");
+    }
+
+    #[test]
+    fn a_level_dithering_across_the_threshold_does_not_report_every_frame() {
+        // Nine reports in five seconds, live. The gap only applied when the direction was unchanged,
+        // and a sub-threshold reading RESET the remembered direction — so every crossing looked like
+        // a new direction and bypassed the debounce entirely.
+        let mut s = Swell::default();
+        let mut n = 0;
+        for i in 0..1800 {                                         // 150 seconds
+            let t = i as f32 / 12.0;
+            // A slope that sits right on the threshold and wobbles across it, which is what real
+            // audio does and what no noiseless test slope can produce.
+            let jitter = if i % 2 == 0 { 0.9 } else { -0.9 };
+            if s.feed(-30.0 + 0.05 * t + jitter, t).is_some() { n += 1; }
+        }
+        // 150s at one report per 8s is at most ~19 even if it never stops trending.
+        assert!(n <= 19, "dithering across the threshold produced {n} reports in 150s");
     }
 
     #[test]
