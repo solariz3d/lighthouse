@@ -68,3 +68,75 @@ $$('.tabs button').forEach(b => b.onclick = () => {
 const ssb = $('#savesettings'); if (ssb) ssb.onclick = () => persist().then(() => status('settings saved — applies to new spawns; restart for full effect')).catch(() => {});
 
 load();
+
+/* ── THE COCHLEA ──────────────────────────────────────────────────────────────────────────
+ * Off until a source is picked. Capture is bound to one process tree, so choosing Spotify
+ * does not filter Discord out — Discord's audio is never delivered to the client at all.
+ * The events are RATIOS, not frequencies: 3:2 reads as home, 45:32 wants to move.
+ */
+(() => {
+  const sel = $('#listensrc'), log = $('#listenlog'), warn = $('#listenwarn');
+  const toggle = $('#listentoggle'), refresh = $('#listenrefresh');
+  if (!sel || !toggle) return;                 // tab not present in this build
+  let listening = false, lines = 0;
+
+  async function loadSources() {
+    try {
+      const r = await invoke('audio_sources');
+      sel.innerHTML = '';
+      for (const s of r.sources) {
+        const o = document.createElement('option');
+        o.value = JSON.stringify({ pid: s.pid, label: s.label });
+        // The desktop option is marked in the LABEL as well as the data, because it is the one
+        // with a different privacy posture and a reader should never have to infer that.
+        o.textContent = s.whole_desktop ? `⚠ ${s.label}` : `${s.label}  ·  ${s.procs} processes`;
+        sel.appendChild(o);
+      }
+      const blocked = r.blocked_by || [];
+      if (blocked.length) {
+        warn.style.display = 'block';
+        warn.textContent = `⛔ ${blocked.join(', ')} is running — capture is refused while a kernel anti-cheat is loaded.`;
+        toggle.disabled = true;
+      } else {
+        warn.style.display = 'none';
+        toggle.disabled = false;
+      }
+    } catch (e) { warn.style.display = 'block'; warn.textContent = String(e); }
+  }
+
+  function add(h) {
+    if (lines === 0) log.innerHTML = '';
+    const row = document.createElement('div');
+    const tone = { restless: '#e8b04b', resolved: '#6fd08c', stopped: '#e05c5c',
+                   silence: '#6b7280', onset: '#7aa2f7' }[h.kind] || 'inherit';
+    row.innerHTML = `<span style="opacity:.5">${h.at}</span>  <span style="color:${tone}">${h.text}</span>`;
+    log.appendChild(row);
+    // A listening window should follow the sound rather than make you chase it.
+    log.scrollTop = log.scrollHeight;
+    if (++lines > 500) { log.removeChild(log.firstChild); lines--; }
+  }
+
+  toggle.onclick = async () => {
+    if (listening) {
+      await invoke('audio_stop');
+      listening = false; toggle.textContent = 'Listen'; toggle.classList.add('accent');
+      add({ at: new Date().toTimeString().slice(0, 8), kind: 'stopped', text: 'stopped listening' });
+      return;
+    }
+    try {
+      const { pid, label } = JSON.parse(sel.value || '{}');
+      await invoke('audio_start', { pid, label });
+      listening = true; toggle.textContent = 'Stop'; toggle.classList.remove('accent');
+      add({ at: new Date().toTimeString().slice(0, 8), kind: 'onset', text: `listening to ${label}` });
+    } catch (e) {
+      warn.style.display = 'block'; warn.textContent = String(e);
+    }
+  };
+
+  refresh.onclick = loadSources;
+  window.__TAURI__.event.listen('heard', e => add(e.payload));
+  // Re-scan when the tab is opened: what is running changes between visits.
+  const tabBtn = $('.tabs button[data-tab="listen"]');
+  if (tabBtn) tabBtn.addEventListener('click', loadSources);
+  loadSources();
+})();

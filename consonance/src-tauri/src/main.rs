@@ -23,7 +23,8 @@ mod tether;
 mod capture;
 mod cochlea;   // audio as relationships: ratios, not frequencies. Pure maths, no unsafe.
 mod listen;
-mod capture_audio;  // WASAPI process loopback: the untestable half, isolated on purpose    // choosing what to listen to: per-process, so a call is never delivered
+mod capture_audio;
+mod cochlea_service;  // threads, the ledger, and the refusal to run near an anti-cheat  // WASAPI process loopback: the untestable half, isolated on purpose    // choosing what to listen to: per-process, so a call is never delivered
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -2121,6 +2122,69 @@ fn pane_letters() -> BTreeMap<String, String> {
     read_letters()
 }
 
+/* ---------------------------------------------------------------------------------------- *
+ * THE COCHLEA — listening to one application, as ratios rather than as a spectrum.
+ *
+ * Optional and off. Nothing is captured until a source is picked, and the only option that can
+ * hear a voice call is flagged as such and offered last. Per-process loopback means choosing
+ * Spotify does not filter Discord out — Discord's audio is never delivered.
+ * ---------------------------------------------------------------------------------------- */
+
+/// What is running that could be listened to, plus whether an anti-cheat currently forbids it.
+#[tauri::command]
+fn audio_sources() -> serde_json::Value {
+    let mut sys = sysinfo::System::new();
+    sys.refresh_processes();
+    serde_json::json!({
+        "sources": listen::sources(&sys),
+        "blocked_by": listen::anticheat_present(&sys),
+    })
+}
+
+#[tauri::command]
+fn audio_status(svc: State<cochlea_service::Service>) -> serde_json::Value {
+    let g = svc.0.lock().unwrap();
+    serde_json::json!({ "listening": g.stop.is_some(), "source": g.source })
+}
+
+#[tauri::command]
+fn audio_start(
+    app: AppHandle,
+    svc: State<cochlea_service::Service>,
+    pid: u32,
+    label: String,
+) -> Result<String, String> {
+    {
+        // Idempotent rather than stacking: a second start would open a second tap on the same
+        // tree and every event would arrive twice, which reads as the music being frantic.
+        let g = svc.0.lock().unwrap();
+        if g.stop.is_some() { return Err("already listening — stop first".into()); }
+    }
+    let app_ev = app.clone();
+    let dir = data_dir();
+    let dir_ev = dir.clone();
+    let stop = cochlea_service::start(pid, dir, move |h| {
+        cochlea_service::append(&dir_ev, &h);
+        let _ = app_ev.emit("heard", &h);
+    })?;
+    let mut g = svc.0.lock().unwrap();
+    g.stop = Some(stop);
+    g.source = Some(label.clone());
+    Ok(label)
+}
+
+#[tauri::command]
+fn audio_stop(svc: State<cochlea_service::Service>) -> bool {
+    let mut g = svc.0.lock().unwrap();
+    if let Some(s) = g.stop.take() {
+        s.store(true, std::sync::atomic::Ordering::Relaxed);
+        g.source = None;
+        true
+    } else {
+        false
+    }
+}
+
 // mark/unmark a pane kept — written eagerly, so a power-loss before a graceful close is survived.
 #[tauri::command]
 fn set_pane_kept(pane: String, cwd: String, label: String, kept: bool) {
@@ -3519,6 +3583,7 @@ fn main() {
     let form_pull = pull_tx.clone();
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
+        .manage(cochlea_service::Service::default())   // the listening tab: off until a source is picked
         .manage(Panes(Mutex::new(HashMap::new())))
         .manage(PaneEmus(Mutex::new(HashMap::new())))
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
@@ -3793,7 +3858,8 @@ fn main() {
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
             set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
-            pane_scrollback
+            pane_scrollback,
+            audio_sources, audio_start, audio_stop, audio_status
         ])
         // No graceful-shutdown delay on close: `/exit` doesn't reliably flush an interactive claude
         // (proven), the own-capture log persists every chunk as it arrives, and real `--resume` works

@@ -32,6 +32,7 @@
     <nav class="tabs">
       <button data-tab="terminal" class="active">Terminal</button>
       <button data-tab="main">★ Orchestrator</button>
+      <button data-tab="listen" title="hear one application as intervals — off until you pick a source">◍ Listen</button>
       <button data-tab="settings">Settings</button>
       <button data-tab="about">About</button>
     </nav>
@@ -114,6 +115,35 @@
         <button id="wakemain" class="btn accent">Wake the orchestrator</button>
       </div>
       <div id="mainpane"></div>
+    </section>
+
+    <!-- THE COCHLEA. Everything arriving at an eardrum is one number — air pressure, wiggling.
+         A snail of bone unmixes it back into voices. This does that job and reports the layer
+         above it: not frequencies, RATIOS. 3:2 sounds like home in a nervous system that never
+         heard Western music. Somewhere in the wiring, arithmetic became longing. -->
+    <section id="listen" class="tab">
+      <div class="field">
+        <label>source — capture is bound to one process tree, so nothing else is ever delivered</label>
+        <div style="display:flex; gap:8px; align-items:stretch;">
+          <select id="listensrc" style="flex:1 1 auto;"></select>
+          <button id="listenrefresh" class="btn" style="flex:0 0 auto;" title="re-scan running applications">↻</button>
+          <button id="listentoggle" class="btn accent" style="flex:0 0 auto;">Listen</button>
+        </div>
+        <div id="listenwarn" class="hint" style="display:none; margin-top:6px;"></div>
+        <div class="hint" style="margin-top:6px;">
+          Picking an application does not filter the others out — their audio is never captured.
+          “Entire desktop” is the only option that can hear a voice call, and it says so.
+          Capture refuses to start while a kernel anti-cheat is running.
+        </div>
+      </div>
+      <div class="field">
+        <label>heard — one line per change. A quiet room says nothing at all.</label>
+        <div id="listenlog" style="font-family:ui-monospace,Consolas,monospace; font-size:12px;
+             line-height:1.7; max-height:52vh; overflow:auto; padding:10px 12px;
+             border:1px solid var(--line,#2a2f3a); border-radius:8px; background:rgba(0,0,0,.18);">
+          <div class="hint">nothing yet — pick a source and press Listen.</div>
+        </div>
+      </div>
     </section>
 
     <section id="settings" class="tab">
