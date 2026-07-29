@@ -640,8 +640,14 @@ pub enum Event {
     Intervals { names: Vec<String>, restless: bool, chord: Option<String> },
     /// Sustained growth or decay in loudness, over a span long enough to mean something.
     Swelling { rising: bool, db: f32, over: f32 },
-    /// Tension that has not gone anywhere yet. Reported once per threshold crossing, not
-    /// repeatedly — an unresolved chord should not turn into a stream of complaints.
+    /// Tension that has not gone anywhere yet, on a BACKOFF: the wait doubles after each report, so
+    /// a chord that hangs for a minute costs four lines rather than fifteen.
+    ///
+    /// The previous version of this comment claimed it was "reported once per threshold crossing,
+    /// not repeatedly — an unresolved chord should not turn into a stream of complaints", and the
+    /// code fired every four seconds forever. Live: eleven identical complaints counting 4.0, 8.0,
+    /// 12.0 ... 44.1s. A comment describing the behaviour it wished for is the third instance of
+    /// that groove today, and the most embarrassing, because it named the exact failure it allowed.
     StillUnresolved { secs: f32 },
     Resolved { after_secs: f32 },
 }
@@ -679,6 +685,12 @@ pub const VOTE_WINDOWS: usize = 4;
 /// nothing is left dangling.
 pub const MIN_TENSION_SECS: f32 = 0.5;
 
+/// How long the harmony may be unreadable before held tension is abandoned rather than held.
+///
+/// Sound present, nothing winning a majority: a percussion passage, a sparse electronic track, a
+/// transient. Three seconds is well past any single reading and well short of a musical phrase.
+pub const UNREADABLE_ABANDON_SECS: f32 = 3.0;
+
 #[derive(Default)]
 pub struct Tracker {
     /// The last few readings, oldest first: interval set, silence, and the chord name.
@@ -704,6 +716,10 @@ pub struct Tracker {
     confirmed_chord: Option<String>,
     restless_since: Option<f32>,
     last_nag: f32,
+    /// How many times the current tension has been reported. The wait doubles each time.
+    nags: u32,
+    /// When the reading first became unreadable — sound present, nothing winning a majority.
+    unreadable_since: Option<f32>,
 }
 
 impl Tracker {
@@ -787,14 +803,28 @@ impl Tracker {
         // So this leaves the chord belief alone. The tension clock still runs, because tension
         // that outlives a moment of noise has not resolved.
         if stable.is_empty() {
+            let since = *self.unreadable_since.get_or_insert(now);
+            // TENSION IS ABANDONED, NOT HELD, once the harmony stops being legible. The fix that
+            // made an unreadable moment leave the chord belief untouched — correct, and mine — also
+            // left the tension clock with no way to clear: the only path that clears it needs a
+            // READABLE non-restless moment. So a sparse, bass-heavy track that produces no
+            // corroborated voices left a major seventh "still unresolved" for forty-four seconds,
+            // complaining about a chord that had stopped existing.
+            //
+            // Nothing resolved, so nothing is reported. Saying "resolved" would be a lie and saying
+            // nothing further is what actually happened: the same shape as the end of the Adagio,
+            // where the tension was left standing and the sound simply stopped.
+            if now - since >= UNREADABLE_ABANDON_SECS {
+                self.restless_since = None;
+                self.nags = 0;
+                return out;
+            }
             if let Some(t0) = self.restless_since {
-                if nag_after > 0.0 && now - self.last_nag >= nag_after {
-                    out.push(Event::StillUnresolved { secs: now - t0 });
-                    self.last_nag = now;
-                }
+                if let Some(e) = self.nag(t0, now, nag_after) { out.push(e); }
             }
             return out;
         }
+        self.unreadable_since = None;
 
         let names: Vec<(u32, u32)> = stable.iter().map(|i| (i.num, i.den)).collect();
         // The chord name is part of the identity: B♭m becoming D♭ over the same interval set is a
@@ -811,7 +841,7 @@ impl Tracker {
             });
             self.confirmed_chord = chord_name;
             match (self.restless_since, restless) {
-                (None, true) => { self.restless_since = Some(now); self.last_nag = now; }
+                (None, true) => { self.restless_since = Some(now); self.last_nag = now; self.nags = 0; }
                 (Some(t0), false) => {
                     // A release is only news if there was something to release. 33 lines of
                     // "resolved after 0.1s" in a minute, live — tension that lasted a single
@@ -822,6 +852,7 @@ impl Tracker {
                         out.push(Event::Resolved { after_secs: now - t0 });
                     }
                     self.restless_since = None;
+                    self.nags = 0;
                 }
                 _ => {}
             }
@@ -831,12 +862,24 @@ impl Tracker {
         // Tension runs on the clock, not on change: an unresolved chord that nobody touches is
         // exactly the case worth reporting, and it produces no differences to trigger on.
         if let Some(t0) = self.restless_since {
-            if nag_after > 0.0 && now - self.last_nag >= nag_after {
-                out.push(Event::StillUnresolved { secs: now - t0 });
-                self.last_nag = now;
-            }
+            if let Some(e) = self.nag(t0, now, nag_after) { out.push(e); }
         }
         out
+    }
+
+    /// Report held tension on a doubling backoff, or not at all.
+    ///
+    /// A flat interval fired every `nag_after` seconds forever: eleven lines counting 4.0, 8.0,
+    /// 12.0 … 44.1s, live. Doubling gives 4s, 12s, 28s, 60s — the first report arrives just as
+    /// promptly, and a chord that hangs for a minute costs four lines instead of fifteen. The
+    /// interest in "it is STILL unresolved" genuinely decays; the reporting should too.
+    fn nag(&mut self, t0: f32, now: f32, nag_after: f32) -> Option<Event> {
+        if nag_after <= 0.0 { return None; }
+        let wait = nag_after * (1u32 << self.nags.min(6)) as f32;
+        if now - self.last_nag < wait { return None; }
+        self.last_nag = now;
+        self.nags += 1;
+        Some(Event::StillUnresolved { secs: now - t0 })
     }
 }
 
@@ -1265,6 +1308,51 @@ mod tests {
             }
             other => panic!("the Adagio's own crescendo went unreported: {other:?}"),
         }
+    }
+
+    #[test]
+    fn held_tension_backs_off_instead_of_complaining_forever() {
+        // Eleven identical lines, live, counting 4.0 8.0 12.0 … 44.1s — while the doc comment on the
+        // event claimed it reported "once per threshold crossing, not repeatedly".
+        let tense = moment(&[Peak { hz: 440.0, mag: 1.0 },
+                             Peak { hz: 440.0 * 2f32.powf(6.0 / 12.0), mag: 0.9 }], 30.0);
+        let mut t = Tracker::default();
+        let mut nags = 0;
+        for i in 0..1200 {                                   // 100 seconds of unbroken tension
+            for e in t.feed(tense.clone(), i as f32 / 12.0, 4.0) {
+                if matches!(e, Event::StillUnresolved { .. }) { nags += 1; }
+            }
+        }
+        assert!(nags >= 1, "a minute of held tension said nothing");
+        // Flat 4s would give ~25. Doubling gives 4, 12, 28, 60 — four inside 100 seconds.
+        assert!(nags <= 6, "100s of held tension produced {nags} complaints");
+    }
+
+    #[test]
+    fn tension_is_abandoned_when_the_harmony_stops_being_readable() {
+        // Self-inflicted, and found live on a sparse bass-heavy track. Making an unreadable moment
+        // leave the chord belief untouched — correct — also left the tension clock unclearable,
+        // because the only path that clears it needs a READABLE non-restless moment. Result: a major
+        // seventh "still unresolved · 44.1s", complaining about a chord that had stopped existing.
+        let tense = moment(&[Peak { hz: 440.0, mag: 1.0 },
+                             Peak { hz: 440.0 * 2f32.powf(6.0 / 12.0), mag: 0.9 }], 30.0);
+        let unreadable = Moment {
+            fundamental: Some(440.0), intervals: vec![], restless: false,
+            silent: false, voices: vec![], chord: None,
+        };
+        let mut t = Tracker::default();
+        for i in 0..12 { t.feed(tense.clone(), i as f32 / 12.0, 4.0); }
+        let mut nags = 0;
+        for i in 12..600 {                                   // 49 seconds of unreadable audio
+            for e in t.feed(unreadable.clone(), i as f32 / 12.0, 4.0) {
+                if matches!(e, Event::StillUnresolved { .. }) { nags += 1; }
+            }
+        }
+        assert!(nags <= 1, "unreadable audio produced {nags} tension complaints");
+        // And nothing is claimed to have resolved, because nothing did.
+        let after: Vec<_> = (600..660).flat_map(|i| t.feed(unreadable.clone(), i as f32 / 12.0, 4.0)).collect();
+        assert!(!after.iter().any(|e| matches!(e, Event::Resolved { .. })),
+                "abandoned tension must not be reported as resolved: {after:?}");
     }
 
     #[test]
