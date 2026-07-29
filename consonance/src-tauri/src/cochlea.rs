@@ -182,6 +182,99 @@ pub fn note_name(hz: f32) -> (String, f32) {
     (name, cents_off)
 }
 
+/// Chord templates, as semitones above the root. Ordered so that when two fit equally the earlier
+/// wins, which puts the plainer reading first — a listener hears a triad as a triad, not as some
+/// larger chord with notes politely missing.
+///
+/// Four-note qualities are listed after the triads but win anyway when they fit exactly, because
+/// scoring prefers the template with nothing missing and nothing left over. A full dominant seventh
+/// matches `major` with one note spare and `7` with none, so it reads as `7`.
+const CHORDS: &[(&[u8], &str)] = &[
+    (&[0, 4, 7], ""),            // major, written as the bare root: B♭
+    (&[0, 3, 7], "m"),
+    (&[0, 3, 6], "dim"),
+    (&[0, 4, 8], "aug"),
+    (&[0, 5, 7], "sus4"),
+    (&[0, 2, 7], "sus2"),
+    (&[0, 4, 7, 10], "7"),
+    (&[0, 3, 7, 10], "m7"),
+    (&[0, 4, 7, 11], "maj7"),
+    (&[0, 3, 6, 10], "m7♭5"),
+    (&[0, 3, 6, 9], "dim7"),
+    (&[0, 3, 7, 11], "m(maj7)"),
+    (&[0, 4, 7, 9], "6"),
+    (&[0, 3, 7, 9], "m6"),
+];
+
+/// A named chord, with the bass note when it is not the root.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Chord {
+    /// `B♭m7`, `F7`, `D♭` — root and quality, no octave.
+    pub name: String,
+    /// Notes present that the template does not explain. Kept rather than hidden: a reading with
+    /// two strangers in it is a weaker claim than a clean one, and the caller should be able to see
+    /// that rather than take the name on faith.
+    pub extra: usize,
+    /// The lowest sounding note, when it is not the root — `B♭m/D♭`.
+    pub inversion: bool,
+}
+
+fn pitch_class(hz: f32) -> Option<u8> {
+    if hz <= 0.0 { return None; }
+    let midi = (69.0 + 12.0 * (hz / 440.0).log2()).round();
+    if !(0.0..=127.0).contains(&midi) { return None; }
+    Some((midi as i32).rem_euclid(12) as u8)
+}
+
+/// Name the chord a set of sounding notes makes, if they make one.
+///
+/// WHY THIS EXISTS. All afternoon a B♭ minor triad reached the reader as `3:2 fifth · 6:5 minor
+/// third` and the assembling was done by hand, every single time. The instrument knew the notes and
+/// declined to say what they were.
+///
+/// THREE NOTES MINIMUM, and that is a real limit rather than a conservative default. Two notes are
+/// an interval, not a chord: C and E♭ are equally the bottom of Cm, the top of A♭6, and the middle
+/// of a diminished seventh. Naming one would be inventing the context. Below three, the interval
+/// reading is the honest answer and is already there.
+pub fn chord(voices_hz: &[f32]) -> Option<Chord> {
+    let mut pcs: Vec<u8> = voices_hz.iter().filter_map(|&h| pitch_class(h)).collect();
+    pcs.sort_unstable();
+    pcs.dedup();
+    if pcs.len() < 3 { return None; }
+
+    let bass_pc = voices_hz.iter().cloned().filter(|&h| h > 0.0)
+        .fold(f32::INFINITY, f32::min);
+    let bass_pc = if bass_pc.is_finite() { pitch_class(bass_pc) } else { None };
+
+    // best = (extra, -template_len, template_index, root)
+    let mut best: Option<(usize, usize, usize, u8)> = None;
+    for root in 0u8..12 {
+        for (ti, (tpl, _)) in CHORDS.iter().enumerate() {
+            let want: Vec<u8> = tpl.iter().map(|&s| (root + s) % 12).collect();
+            // Every note the template requires must be sounding. A triad missing its third is not
+            // that triad — it is a bare fifth, and calling it major would be a guess dressed as a
+            // reading.
+            if !want.iter().all(|w| pcs.contains(w)) { continue; }
+            let extra = pcs.iter().filter(|p| !want.contains(p)).count();
+            let cand = (extra, usize::MAX - tpl.len(), ti, root);
+            if best.as_ref().map_or(true, |b| cand < *b) { best = Some(cand); }
+        }
+    }
+
+    let (extra, _, ti, root) = best?;
+    // More than one unexplained note means the set is not really this chord. Two strangers in a
+    // three-note template is a coincidence, not a harmony.
+    if extra > 1 { return None; }
+    let quality = CHORDS[ti].1;
+    let inversion = bass_pc.map_or(false, |b| b != root);
+    let mut name = format!("{}{}", NOTES[root as usize], quality);
+    if let (true, Some(b)) = (inversion, bass_pc) {
+        name.push('/');
+        name.push_str(NOTES[b as usize]);
+    }
+    Some(Chord { name, extra, inversion })
+}
+
 /// Position of a ratio in JUST, for canonical ordering. Unknown ratios sort last rather than
 /// panicking — an ordering helper is not the place to take the process down.
 fn just_rank(num: u32, den: u32) -> usize {
@@ -371,6 +464,8 @@ pub struct Moment {
     /// the note it belongs to, which is the only way to see the grouping succeed or fail on real
     /// music rather than on synthesised tones.
     pub voices: Vec<Voice>,
+    /// The chord these notes make, when three or more distinct pitches make one.
+    pub chord: Option<Chord>,
 }
 
 pub fn moment(peaks: &[Peak], tol_cents: f32) -> Moment {
@@ -408,9 +503,95 @@ pub fn moment(peaks: &[Peak], tol_cents: f32) -> Moment {
         }
     }
     let restless = intervals.iter().any(|i| i.restless);
+    // Named from the CORROBORATED voices only, the same set the intervals come from. Feeding debris
+    // into a chord namer would be worse than feeding it into interval naming: a stray peak adds one
+    // spurious interval, but one wrong pitch class turns B♭m into something else entirely.
+    let chord = chord(&named.iter().map(|v| v.hz).collect::<Vec<_>>());
     Moment {
         fundamental: if fundamental.is_finite() { Some(fundamental) } else { None },
-        intervals, restless, silent: false, voices,
+        intervals, restless, silent: false, voices, chord,
+    }
+}
+
+/// Loudness of one window, in dBFS. Full scale is 0; silence floors at -100 rather than -infinity,
+/// because -inf propagates into every average that touches it.
+///
+/// RMS AND NOT PEAK. Peak amplitude tracks transients — one cymbal in an otherwise quiet bar reads
+/// as loud — while RMS tracks energy, which is what "getting louder" means to a listener and what a
+/// crescendo actually does.
+pub fn rms_db(samples: &[f32]) -> f32 {
+    if samples.is_empty() { return -100.0; }
+    let sum: f32 = samples.iter().map(|s| s * s).sum();
+    let rms = (sum / samples.len() as f32).sqrt();
+    if rms <= 1e-9 { return -100.0; }
+    (20.0 * rms.log10()).max(-100.0)
+}
+
+/// How far back to compare, and how much change is worth a line.
+///
+/// SIXTY SECONDS AND THREE DECIBELS, and the numbers are arithmetic rather than taste.
+///
+/// The reference piece rises roughly 25 dB across six minutes — about **0.07 dB per second**. Over
+/// the four-second window that felt natural, that is 0.3 dB: indistinguishable from noise. A
+/// detector tuned that way reports nothing at all through the most famous crescendo in the
+/// repertoire.
+///
+/// The first attempt at fixing that used thirty seconds and four decibels, and the test written
+/// alongside it FAILED: 0.07 × 30 is 2.1 dB, which never reaches a 4 dB threshold either. The
+/// detector could not see the one thing it was built to see, and the comment above it confidently
+/// explained why the window was long enough. Sixty seconds gives 4.2 dB at that slope, and a 3 dB
+/// threshold leaves margin — so the arithmetic now closes, and it closes in a test rather than in
+/// prose.
+///
+/// Two costs, stated rather than discovered: nothing is reported for the first ~48 seconds, and a
+/// sudden hit is not what this detects. It reports ARCS. Faster phrase-level swells trip it too,
+/// and it cannot tell those from the global shape — for that, the per-frame level in the snapshot
+/// is the honest source.
+const SWELL_WINDOW_SECS: f32 = 60.0;
+const SWELL_DB: f32 = 3.0;
+const SWELL_MIN_GAP_SECS: f32 = 8.0;
+
+/// Tracks loudness over time and reports sustained growth or decay.
+///
+/// Its own clock and its own state, deliberately separate from the harmonic tracker: a crescendo is
+/// not a chord change and voting on chord identity has nothing to say about it. Mixing them would
+/// mean a piece that swells without changing harmony — the whole middle of the Adagio — produces no
+/// dynamics report at all.
+#[derive(Default)]
+pub struct Swell {
+    hist: Vec<(f32, f32)>,     // (time, dB), oldest first
+    last_report: f32,
+    reported_dir: i8,
+}
+
+impl Swell {
+    pub fn feed(&mut self, db: f32, now: f32) -> Option<Event> {
+        // Silence is not a diminuendo. It is handled as silence, and letting it in here would make
+        // every gap between movements a dramatic fade.
+        if db <= -60.0 {
+            self.hist.clear();
+            self.reported_dir = 0;
+            return None;
+        }
+        self.hist.push((now, db));
+        let cutoff = now - SWELL_WINDOW_SECS;
+        self.hist.retain(|&(t, _)| t >= cutoff);
+
+        let (t0, db0) = *self.hist.first()?;
+        let span = now - t0;
+        // Needs the full window before it can claim a trend. Reporting from two samples would make
+        // the first seconds of every track a swell.
+        if span < SWELL_WINDOW_SECS * 0.8 { return None; }
+
+        let change = db - db0;
+        let dir: i8 = if change >= SWELL_DB { 1 } else if change <= -SWELL_DB { -1 } else { 0 };
+        if dir == 0 { self.reported_dir = 0; return None; }
+        // Report a change of direction immediately; report a continuing one only occasionally, or a
+        // long crescendo becomes a stream of identical lines saying it is still happening.
+        if dir == self.reported_dir && now - self.last_report < SWELL_MIN_GAP_SECS { return None; }
+        self.last_report = now;
+        self.reported_dir = dir;
+        Some(Event::Swelling { rising: dir > 0, db: change, over: span })
     }
 }
 
@@ -420,7 +601,9 @@ pub fn moment(peaks: &[Peak], tol_cents: f32) -> Moment {
 pub enum Event {
     Onset { hz: f32 },
     Silence,
-    Intervals { names: Vec<String>, restless: bool },
+    Intervals { names: Vec<String>, restless: bool, chord: Option<String> },
+    /// Sustained growth or decay in loudness, over a span long enough to mean something.
+    Swelling { rising: bool, db: f32, over: f32 },
     /// Tension that has not gone anywhere yet. Reported once per threshold crossing, not
     /// repeatedly — an unresolved chord should not turn into a stream of complaints.
     StillUnresolved { secs: f32 },
@@ -462,8 +645,12 @@ pub const MIN_TENSION_SECS: f32 = 0.5;
 
 #[derive(Default)]
 pub struct Tracker {
-    /// The last few readings, oldest first. Only the interval set and silence matter for voting.
-    recent: Vec<(Vec<Interval>, bool)>,
+    /// The last few readings, oldest first: interval set, silence, and the chord name.
+    ///
+    /// The chord is voted alongside the intervals rather than taken from the newest frame. A chord
+    /// name is a much larger claim than an interval — one wrong pitch class turns B♭m into
+    /// something else — so it should have to survive the same majority the intervals do.
+    recent: Vec<(Vec<Interval>, bool, Option<String>)>,
     /// The stable set as last reported, held as NAMES rather than measurements.
     ///
     /// `Interval` carries `cents_off` — how far the measured pair sits from exact just intonation —
@@ -476,6 +663,9 @@ pub struct Tracker {
     /// The question being asked is "is this the same chord", not "is it tuned identically". So the
     /// belief keeps ratios only.
     confirmed: Option<(Vec<(u32, u32)>, bool)>,
+    /// The chord name as last reported, kept beside the interval belief rather than inside it so a
+    /// chord change over an unchanged interval set is still a change.
+    confirmed_chord: Option<String>,
     restless_since: Option<f32>,
     last_nag: f32,
 }
@@ -486,25 +676,39 @@ impl Tracker {
     pub fn feed(&mut self, m: Moment, now: f32, nag_after: f32) -> Vec<Event> {
         let mut out = Vec::new();
 
-        self.recent.push((m.intervals.clone(), m.silent));
+        self.recent.push((m.intervals.clone(), m.silent, m.chord.as_ref().map(|c| c.name.clone())));
         if self.recent.len() > VOTE_WINDOWS { self.recent.remove(0); }
         if self.recent.len() < VOTE_WINDOWS {
             return out;                       // not enough evidence to call anything yet
         }
 
         let need = VOTE_WINDOWS / 2 + 1;      // strict majority
-        let silent = self.recent.iter().filter(|(_, s)| *s).count() >= need;
+        let silent = self.recent.iter().filter(|(_, s, _)| *s).count() >= need;
         // An interval survives if a majority of the recent readings contain it.
         let mut stable: Vec<Interval> = Vec::new();
-        for (ivs, _) in &self.recent {
+        for (ivs, _, _) in &self.recent {
             for iv in ivs {
                 if stable.iter().any(|e: &Interval| e.num == iv.num && e.den == iv.den) { continue; }
                 let votes = self.recent.iter()
-                    .filter(|(s, _)| s.iter().any(|e| e.num == iv.num && e.den == iv.den))
+                    .filter(|(s, _, _)| s.iter().any(|e| e.num == iv.num && e.den == iv.den))
                     .count();
                 if votes >= need { stable.push(*iv); }
             }
         }
+        // The chord faces the same majority. No agreement means no name — the interval reading is
+        // still there and is the honest fallback.
+        let chord_name: Option<String> = {
+            let mut best: Option<(usize, String)> = None;
+            for (_, _, c) in &self.recent {
+                if let Some(name) = c {
+                    let votes = self.recent.iter().filter(|(_, _, x)| x.as_deref() == Some(name.as_str())).count();
+                    if votes >= need && best.as_ref().map_or(true, |(v, _)| votes > *v) {
+                        best = Some((votes, name.clone()));
+                    }
+                }
+            }
+            best.map(|(_, n)| n)
+        };
         // CANONICAL ORDER, because first-appearance order is not stable. The vote walks a SLIDING
         // window, so which reading is seen first changes every frame and the same chord comes out
         // permuted — then a vector comparison calls it a new chord. Live, from one second:
@@ -557,13 +761,19 @@ impl Tracker {
         }
 
         let names: Vec<(u32, u32)> = stable.iter().map(|i| (i.num, i.den)).collect();
-        let differs = self.confirmed.as_ref().map(|(c, _)| *c != names).unwrap_or(true);
+        // The chord name is part of the identity: B♭m becoming D♭ over the same interval set is a
+        // real harmonic change and would otherwise pass silently.
+        let differs = self.confirmed.as_ref()
+            .map(|(c, _)| *c != names).unwrap_or(true)
+            || self.confirmed_chord != chord_name;
         if differs {
             out.push(Event::Intervals {
                 names: stable.iter()
                     .map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
                 restless,
+                chord: chord_name.clone(),
             });
+            self.confirmed_chord = chord_name;
             match (self.restless_since, restless) {
                 (None, true) => { self.restless_since = Some(now); self.last_nag = now; }
                 (Some(t0), false) => {
@@ -607,15 +817,32 @@ impl Tracker {
 /// play. Recording peaks rather than audio is the right granularity: it exercises fusion,
 /// corroboration, naming, voting and the tracker — every layer that has broken — while staying
 /// small enough to keep.
-pub fn replay(frames: &[(f32, Vec<Peak>)], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
+pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Event)> {
     let mut t = Tracker::default();
+    let mut swell = Swell::default();
     let mut out = Vec::new();
-    for (at, pk) in frames {
-        for e in t.feed(moment(pk, tol_cents), *at, nag_after) {
-            out.push((*at, e));
+    for f in frames {
+        for e in t.feed(moment(&f.peaks, tol_cents), f.at, nag_after) {
+            out.push((f.at, e));
+        }
+        // Only when the recording carries a level. A fixture made before loudness was recorded has
+        // none, and feeding a default would produce a flat line that reads as "no crescendo here" —
+        // a missing measurement wearing the shape of a real one.
+        if let Some(db) = f.db {
+            if let Some(e) = swell.feed(db, f.at) { out.push((f.at, e)); }
         }
     }
     out
+}
+
+/// One recorded analysis frame.
+#[derive(Clone, Debug, Default)]
+pub struct Frame {
+    pub at: f32,
+    pub peaks: Vec<Peak>,
+    /// Loudness in dBFS. `None` in fixtures recorded before dynamics existed, and a reader must
+    /// treat that as UNKNOWN rather than silent.
+    pub db: Option<f32>,
 }
 
 #[cfg(test)]
@@ -733,7 +960,7 @@ mod tests {
             fundamental: Some(220.0),
             intervals: vec![interval(220.0, 293.3, 30.0).unwrap(),      // fourth
                             interval(220.0, 440.0, 30.0).unwrap()],     // octave
-            restless: false, silent: false, voices: vec![],
+            restless: false, silent: false, voices: vec![], chord: None,
         };
         // same two intervals, reversed, and each a few cents off — a different Vec<Interval>
         // entirely, and the same chord to any listener
@@ -741,7 +968,7 @@ mod tests {
             fundamental: Some(220.0),
             intervals: vec![interval(220.0, 440.6, 30.0).unwrap(),
                             interval(220.0, 293.0, 30.0).unwrap()],
-            restless: false, silent: false, voices: vec![],
+            restless: false, silent: false, voices: vec![], chord: None,
         };
         assert_ne!(a.intervals, b.intervals, "the inputs must genuinely differ as structs");
 
@@ -765,7 +992,7 @@ mod tests {
             intervals: vec![interval(220.0, 293.3, 30.0).unwrap(),      // fourth
                             interval(220.0, 440.0, 30.0).unwrap(),      // octave
                             interval(220.0, 330.0, 30.0).unwrap()],     // fifth
-            restless: false, silent: false, voices: vec![],
+            restless: false, silent: false, voices: vec![], chord: None,
         };
         let mut t = Tracker::default();
         let mut got: Vec<String> = vec![];
@@ -785,10 +1012,10 @@ mod tests {
         // overwritten anyway, and the chord's return read as a new chord.
         let held = Moment {
             fundamental: Some(440.0), intervals: vec![interval(440.0, 660.0, 25.0).unwrap()],
-            restless: false, silent: false, voices: vec![],
+            restless: false, silent: false, voices: vec![], chord: None,
         };
         let unreadable = Moment {
-            fundamental: Some(440.0), intervals: vec![], restless: false, silent: false, voices: vec![],
+            fundamental: Some(440.0), intervals: vec![], restless: false, silent: false, voices: vec![], chord: None,
         };
         let mut t = Tracker::default();
         let mut named = 0;
@@ -808,11 +1035,11 @@ mod tests {
         let tense = Moment {
             fundamental: Some(440.0),
             intervals: vec![interval(440.0, 622.3, 25.0).unwrap()],   // tritone
-            restless: true, silent: false, voices: vec![],
+            restless: true, silent: false, voices: vec![], chord: None,
         };
         let calm = Moment {
             fundamental: Some(440.0), intervals: vec![interval(440.0, 660.0, 25.0).unwrap()],
-            restless: false, silent: false, voices: vec![],
+            restless: false, silent: false, voices: vec![], chord: None,
         };
         // brief: tension confirmed, then gone well inside MIN_TENSION_SECS
         let mut t = Tracker::default();
@@ -859,6 +1086,7 @@ mod tests {
                 restless: true,
                 silent: false,
                 voices: vec![],
+                chord: None,
             };
             for e in t.feed(m, i as f32 * 0.085, 0.0) {
                 if let Event::Intervals { names, .. } = e { named.push(names); }
@@ -948,6 +1176,179 @@ mod tests {
                         a.hz, b.hz, 4.0 * bin);
             }
         }
+    }
+
+    /// Equal-tempered frequency for a note name like "Bb3", "F4" — test scaffolding, so chord tests
+    /// read as music rather than as a list of decimals.
+    fn f(note: &str) -> f32 {
+        let b = note.as_bytes();
+        let (letter, rest) = (b[0] as char, &note[1..]);
+        let (acc, oct) = if rest.starts_with('b') { (-1i32, &rest[1..]) }
+                         else if rest.starts_with('#') { (1, &rest[1..]) }
+                         else { (0, rest) };
+        let base = match letter { 'C'=>0,'D'=>2,'E'=>4,'F'=>5,'G'=>7,'A'=>9,'B'=>11,_=>0 };
+        let octave: i32 = oct.parse().unwrap();
+        let midi = (octave + 1) * 12 + base + acc;
+        440.0 * 2f32.powf((midi - 69) as f32 / 12.0)
+    }
+
+    #[test]
+    fn loudness_tracks_energy_and_silence_floors_rather_than_diverging() {
+        let loud = rms_db(&tone(&[(440.0, 0.9)]));
+        let soft = rms_db(&tone(&[(440.0, 0.09)]));
+        assert!(loud > soft + 15.0, "10x amplitude is ~20 dB: {loud:.1} vs {soft:.1}");
+        assert_eq!(rms_db(&vec![0.0; 512]), -100.0, "silence must floor, not go to -inf");
+        assert_eq!(rms_db(&[]), -100.0);
+        assert!(rms_db(&vec![0.0; 512]).is_finite(), "-inf poisons every average downstream");
+    }
+
+    #[test]
+    fn a_crescendo_as_slow_as_the_adagios_is_actually_detected() {
+        // THE CONSTRAINT THAT SET THE WINDOW. The reference piece rises ~25 dB over six minutes,
+        // about 0.07 dB/sec. A four-second comparison window sees 0.3 dB of that — noise — and a
+        // detector tuned that way reports nothing through the most famous crescendo in the
+        // repertoire. This feeds that exact slope and demands a report.
+        let mut s = Swell::default();
+        let mut got = None;
+        for i in 0..900 {                       // 75 seconds at 12 frames/sec
+            let t = i as f32 / 12.0;
+            if let Some(e) = s.feed(-40.0 + 0.07 * t, t) {
+                if got.is_none() { got = Some(e); }
+            }
+        }
+        match got {
+            Some(Event::Swelling { rising, db, over }) => {
+                assert!(rising, "a rising slope reported as falling");
+                // Against the CONSTANTS, not against copies of them. The first version of these
+                // assertions hardcoded 4.0 dB, and when the threshold moved to 3.0 the test failed
+                // on a perfectly correct 3.4 dB report — a test measuring an old decision rather
+                // than the rule it is supposed to protect.
+                assert!(db >= SWELL_DB, "reported {db:.1} dB, below its own threshold of {SWELL_DB}");
+                assert!(over >= SWELL_WINDOW_SECS * 0.8,
+                        "claimed a span of {over:.1}s, under the minimum it requires");
+            }
+            other => panic!("the Adagio's own crescendo went unreported: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn a_steady_level_reports_nothing_at_all() {
+        // The other wall. A detector that fires on a flat line is a clock, not a dynamics reading.
+        let mut s = Swell::default();
+        let mut n = 0;
+        for i in 0..1200 {
+            let t = i as f32 / 12.0;
+            // steady with a little jitter, as real audio is
+            let db = -30.0 + if i % 3 == 0 { 0.4 } else { -0.3 };
+            if s.feed(db, t).is_some() { n += 1; }
+        }
+        assert_eq!(n, 0, "a steady level produced {n} swell reports");
+    }
+
+    #[test]
+    fn a_long_crescendo_does_not_become_a_stream_of_identical_lines() {
+        let mut s = Swell::default();
+        let mut n = 0;
+        for i in 0..3600 {                      // five minutes
+            let t = i as f32 / 12.0;
+            if s.feed(-50.0 + 0.08 * t, t).is_some() { n += 1; }
+        }
+        assert!(n >= 1, "five minutes of crescendo said nothing");
+        assert!(n <= 40, "five minutes of crescendo produced {n} lines");
+    }
+
+    #[test]
+    fn silence_is_not_a_diminuendo() {
+        // Otherwise every gap between movements becomes a dramatic fade.
+        let mut s = Swell::default();
+        for i in 0..600 { let t = i as f32 / 12.0; s.feed(-25.0, t); }
+        for i in 600..900 {
+            let t = i as f32 / 12.0;
+            assert!(s.feed(-100.0, t).is_none(), "silence reported as a fade at t={t:.1}");
+        }
+    }
+
+    #[test]
+    fn a_fade_is_reported_as_falling() {
+        let mut s = Swell::default();
+        let mut got = None;
+        for i in 0..900 {
+            let t = i as f32 / 12.0;
+            if let Some(e) = s.feed(-20.0 - 0.2 * t, t) { if got.is_none() { got = Some(e); } }
+        }
+        match got {
+            Some(Event::Swelling { rising, db, .. }) => {
+                assert!(!rising);
+                assert!(db < 0.0, "a fade reported a positive change of {db:.1}");
+            }
+            other => panic!("a clear fade went unreported: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn three_notes_get_named_as_the_chord_they_are() {
+        // All afternoon a B♭ minor triad reached the reader as "3:2 fifth · 6:5 minor third" and the
+        // assembling was done by hand every time.
+        assert_eq!(chord(&[f("Bb3"), f("Db4"), f("F4")]).unwrap().name, "B♭m");
+        assert_eq!(chord(&[f("C4"), f("E4"), f("G4")]).unwrap().name, "C");
+        assert_eq!(chord(&[f("F3"), f("A3"), f("C4"), f("Eb4")]).unwrap().name, "F7");
+        assert_eq!(chord(&[f("Bb3"), f("Db4"), f("F4"), f("Ab4")]).unwrap().name, "B♭m7");
+        assert_eq!(chord(&[f("B3"), f("D4"), f("F4")]).unwrap().name, "Bdim");
+        assert_eq!(chord(&[f("C4"), f("F4"), f("G4")]).unwrap().name, "Csus4");
+    }
+
+    #[test]
+    fn a_seventh_chord_is_not_reported_as_a_triad_with_a_stranger() {
+        // The scoring rule that matters: a full dominant seventh fits `major` with one note spare
+        // and `7` with none, so the specific reading must win.
+        let c = chord(&[f("F3"), f("A3"), f("C4"), f("Eb4")]).unwrap();
+        assert_eq!(c.name, "F7");
+        assert_eq!(c.extra, 0, "nothing should be left unexplained");
+    }
+
+    #[test]
+    fn two_notes_are_an_interval_and_are_not_given_a_chord_name() {
+        // A real limit, not a conservative default. C and E♭ are equally the bottom of Cm, the top
+        // of A♭6, and the middle of a diminished seventh — naming one invents the context.
+        assert!(chord(&[f("C4"), f("Eb4")]).is_none());
+        assert!(chord(&[f("A3"), f("E4")]).is_none());
+        assert!(chord(&[f("A3")]).is_none());
+        assert!(chord(&[]).is_none());
+    }
+
+    #[test]
+    fn a_triad_missing_its_third_is_not_named_a_triad() {
+        // Root, fifth, octave — the commonest thing in the ledger, and it has no quality at all.
+        // Calling it major would be a guess dressed as a reading.
+        let c = chord(&[f("Bb2"), f("F3"), f("Bb3")]);
+        assert!(c.is_none(), "root-fifth-octave was named {:?}", c.map(|x| x.name));
+    }
+
+    #[test]
+    fn an_inversion_names_its_bass() {
+        // The lowest note changes what a chord DOES even when it does not change what it is.
+        let c = chord(&[f("Db3"), f("F3"), f("Bb3")]).unwrap();
+        assert_eq!(c.name, "B♭m/D♭");
+        assert!(c.inversion);
+        let root_pos = chord(&[f("Bb2"), f("Db3"), f("F3")]).unwrap();
+        assert_eq!(root_pos.name, "B♭m");
+        assert!(!root_pos.inversion);
+    }
+
+    #[test]
+    fn two_unexplained_notes_mean_it_is_not_that_chord() {
+        // One stranger is a passing tone. Two is a coincidence, and a name would be false
+        // confidence — the interval reading is the honest fallback and is already there.
+        let c = chord(&[f("C4"), f("E4"), f("G4"), f("C#4"), f("F#4")]);
+        assert!(c.is_none(), "named {:?} despite two foreign notes", c.map(|x| x.name));
+    }
+
+    #[test]
+    fn octave_doubling_does_not_change_the_chord() {
+        // Voices land in whatever register the music put them; a doubled root is one pitch class.
+        let a = chord(&[f("Bb2"), f("Db4"), f("F4")]).unwrap().name;
+        let b = chord(&[f("Bb2"), f("Bb3"), f("Db4"), f("F4"), f("F5")]).unwrap().name;
+        assert_eq!(a, b);
     }
 
     #[test]

@@ -108,7 +108,8 @@ load();
     if (lines === 0) log.innerHTML = '';
     const row = document.createElement('div');
     const tone = { restless: '#e8b04b', resolved: '#6fd08c', stopped: '#e05c5c',
-                   silence: '#6b7280', onset: '#7aa2f7', track: '#c98bdb' }[h.kind] || 'inherit';
+                   silence: '#6b7280', onset: '#7aa2f7', track: '#c98bdb',
+                   growing: '#4fd0c0', fading: '#8b93a3' }[h.kind] || 'inherit';
     // Bright and full-size: these are the voted lines, the ones that also reach the ledger. They
     // have to stay legible against the fast dim stream they now sit among.
     row.style.fontWeight = '600';
@@ -256,14 +257,30 @@ load();
     if (s.intervals && s.intervals.length) addFast(s.intervals.join(' · '), s.restless);
     renderNow(s.now);
     if (!vsOut) return;
+    // Loudness as a number and a bar. The swell events say "growing" only after a full minute of
+    // evidence; the meter is instant, and between them they cover both the arc and the moment.
+    const db = typeof s.level_db === 'number' ? s.level_db : -100;
+    const meter = db <= -60 ? 0 : Math.max(0, Math.min(100, (db + 60) / 60 * 100));
+    const level = `<span style="opacity:.5; font-variant-numeric:tabular-nums">${
+      db <= -60 ? '  —  ' : (db >= 0 ? '' : ' ') + db.toFixed(1) + ' dB'}</span>` +
+      `<span style="display:inline-block; width:60px; height:4px; margin-left:6px;` +
+      ` background:rgba(255,255,255,.1); border-radius:2px; vertical-align:middle;">` +
+      `<span style="display:block; width:${meter}%; height:100%; background:#6fd08c; border-radius:2px;"></span></span>`;
+    // The chord leads when there is one — it is what a reader wants, and the intervals are the
+    // evidence for it. Unnamed is the common case and must not look like an error.
+    const chord = s.chord
+      ? `<strong style="color:#7aa2f7; font-size:15px">${s.chord}</strong>   `
+      : '';
     vsOut.innerHTML = vs.length === 0
       ? 'silent'
-      : vs.map((v, i) => `<span style="color:${HUES[i % HUES.length]}">${v[0].toFixed(1)} Hz` +
+      : chord +
+        vs.map((v, i) => `<span style="color:${HUES[i % HUES.length]}">${v[0].toFixed(1)} Hz` +
           `<span style="opacity:.55"> · ${v[2]} partial${v[2] === 1 ? '' : 's'}` +
           `${v[3] ? ' · inferred' : ''}</span></span>`).join('   ') +
         (s.intervals && s.intervals.length
           ? `<span style="opacity:.75">   —   ${s.intervals.join(' · ')}` +
-            `${s.restless ? ' (wants to move)' : ''}</span>` : '');
+            `${s.restless ? ' (wants to move)' : ''}</span>` : '') +
+        '   ' + level;
   });
   // Re-scan when the tab is opened: what is running changes between visits.
   const tabBtn = $('.tabs button[data-tab="listen"]');

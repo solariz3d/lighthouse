@@ -25,7 +25,7 @@ use serde::Serialize;
 use sysinfo::System;
 
 use crate::capture_audio::{self, SAMPLE_RATE, WINDOW};
-use crate::cochlea::{bands, moment, peaks, spectrum, Event, Tracker};
+use crate::cochlea::{bands, moment, peaks, rms_db, spectrum, Event, Swell, Tracker};
 use crate::listen::anticheat_present;
 
 /// One line of what the room is doing. Shaped for reading, not for parsing — the whole point is
@@ -60,6 +60,12 @@ pub struct Snapshot {
     /// reader know it is four minutes into a seven-minute piece instead of guessing — which is
     /// exactly what "should be close to the end" was, twice.
     pub now: Option<crate::nowplaying::NowPlaying>,
+    /// The chord, unvoted — this is the raw per-frame reading for the display. The ledger gets the
+    /// voted one; the tab can afford to flicker and the reader cannot.
+    pub chord: Option<String>,
+    /// Loudness of this window in dBFS, so the tab can show a meter and a sampling reader can see
+    /// the dynamic arc without waiting for a swell event to fire.
+    pub level_db: f32,
 }
 
 #[derive(Default)]
@@ -83,9 +89,20 @@ fn describe(e: &Event) -> Option<Heard> {
             ("onset", format!("sound begins · {name} ({:+.0}¢, {:.0} Hz)", cents, hz))
         }
         Event::Silence => ("silence", "silence".to_string()),
-        Event::Intervals { names, restless } => (
+        Event::Intervals { names, restless, chord } => (
             if *restless { "restless" } else { "settled" },
-            format!("{}{}", names.join(" · "), if *restless { "  — wants to move" } else { "" }),
+            format!(
+                "{}{}{}",
+                // The chord first when there is one: it is the thing a reader wants, and the
+                // intervals behind it are the evidence for it.
+                chord.as_ref().map(|c| format!("{c}   ")).unwrap_or_default(),
+                names.join(" · "),
+                if *restless { "  — wants to move" } else { "" },
+            ),
+        ),
+        Event::Swelling { rising, db, over } => (
+            if *rising { "growing" } else { "fading" },
+            format!("{} · {:+.1} dB over {:.0}s", if *rising { "growing" } else { "fading" }, db, over),
         ),
         Event::StillUnresolved { secs } => ("held", format!("still unresolved · {:.1}s", secs)),
         Event::Resolved { after_secs } => ("resolved", format!("resolved after {:.1}s", after_secs)),
@@ -139,6 +156,7 @@ where
         std::thread::spawn(move || {
             let started = Instant::now();
             let mut tracker = Tracker::default();
+            let mut swell = Swell::default();
             let mut sys = System::new();
             let mut last_ac_check = Instant::now();
             // Re-checked once a second rather than per frame, and rather than once at start: arming
@@ -172,6 +190,10 @@ where
                 };
                 debug_assert_eq!(chunk.len(), WINDOW);
 
+                // Loudness from the raw window, before any transform: RMS is energy, which is what
+                // a crescendo actually is. Its own tracker with its own clock — a swell that changes
+                // no harmony must still be reported, and that is most of this piece.
+                let level_db = rms_db(&chunk);
                 let spec = spectrum(&chunk);
                 // Ten, not five. Before fusion, five peaks meant five things to pair up and that
                 // was already too many. Now peaks are raw material for grouping and a single note
@@ -185,7 +207,7 @@ where
                     last_rec_check = Instant::now();
                     recording = data_dir.join("RECORD").exists();
                 }
-                if recording { record_frame(&data_dir, t, &pk); }
+                if recording { record_frame(&data_dir, t, &pk, level_db); }
 
                 // What is playing, polled rather than pushed, and emitted only when it CHANGES.
                 // Every two seconds is far more often than tracks change and far cheaper than the
@@ -218,8 +240,13 @@ where
                     restless: m.restless,
                     at: chrono::Local::now().format("%H:%M:%S").to_string(),
                     now: now_playing.clone(),
+                    chord: m.chord.as_ref().map(|c| c.name.clone()),
+                    level_db,
                 });
                 for ev in tracker.feed(m, t, 4.0) {
+                    if let Some(h) = describe(&ev) { on_event(h); }
+                }
+                if let Some(ev) = swell.feed(level_db, t) {
                     if let Some(h) = describe(&ev) { on_event(h); }
                 }
 
@@ -248,10 +275,11 @@ where
 /// PEAKS, NOT AUDIO. 4096 floats per frame at twelve frames a second is 196 KB/s and unkeepable.
 /// Peaks are ~10 pairs, and they are what `moment()` consumes — so a recording exercises fusion,
 /// corroboration, naming, voting and the tracker, which is every layer that has broken today.
-pub fn record_frame(data_dir: &PathBuf, at: f32, peaks: &[crate::cochlea::Peak]) {
+pub fn record_frame(data_dir: &PathBuf, at: f32, peaks: &[crate::cochlea::Peak], db: f32) {
     let line = format!(
-        "{{\"t\":{:.3},\"peaks\":[{}]}}",
+        "{{\"t\":{:.3},\"db\":{:.2},\"peaks\":[{}]}}",
         at,
+        db,
         peaks.iter().map(|p| format!("[{:.2},{:.6}]", p.hz, p.mag)).collect::<Vec<_>>().join(","),
     );
     if let Ok(mut f) = OpenOptions::new().create(true).append(true).open(data_dir.join("frames.jsonl")) {
@@ -302,7 +330,7 @@ mod tests {
         let evs = vec![
             Event::Onset { hz: 110.0 },
             Event::Silence,
-            Event::Intervals { names: vec!["3:2 fifth".into()], restless: false },
+            Event::Intervals { names: vec!["3:2 fifth".into()], restless: false, chord: None },
             Event::StillUnresolved { secs: 4.1 },
             Event::Resolved { after_secs: 5.2 },
         ];
@@ -316,8 +344,8 @@ mod tests {
     fn restlessness_is_visible_in_the_kind_not_only_the_text() {
         // A UI that has to grep prose to colour a row will break the first time the wording
         // changes. The distinction that matters is a field.
-        let calm = describe(&Event::Intervals { names: vec!["3:2 fifth".into()], restless: false }).unwrap();
-        let tense = describe(&Event::Intervals { names: vec!["45:32 tritone".into()], restless: true }).unwrap();
+        let calm = describe(&Event::Intervals { names: vec!["3:2 fifth".into()], restless: false, chord: None }).unwrap();
+        let tense = describe(&Event::Intervals { names: vec!["45:32 tritone".into()], restless: true, chord: None }).unwrap();
         assert_eq!(calm.kind, "settled");
         assert_eq!(tense.kind, "restless");
     }
