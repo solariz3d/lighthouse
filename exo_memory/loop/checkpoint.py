@@ -37,22 +37,26 @@ OUT = HERE / "CHECKPOINT.md"
 # whatever machine the room woke up on.
 WATCH = [REPO, pathlib.Path.home() / "Desktop" / "blackbox"]
 
-# NO PERCENTAGE IS REPORTED, and that is the correction rather than an omission.
+# THE NUMBER IS READ, NOT ESTIMATED -- and that correction is the fourth and largest.
 #
-# This tool got the context number wrong three times in one day, each time by publishing a
-# figure whose boundary it had not established. First it sized the whole transcript and
-# reported 599% of budget. Then it measured from the last compaction boundary and reported
-# 69%, while the client's own display said 39% -- and chasing that gap is what found the real
-# defect: BUDGET_TOKENS was invented. Nothing here can read the model's actual context window,
-# so the denominator was a guess and every percentage built on it was a guess wearing
-# precision.
+# History, because the shape of the error repeated and the shape is the lesson. First this
+# sized the whole transcript and reported 599% of budget. Then it measured from the last
+# compaction boundary and reported 69% while the client said 39%, which found that
+# BUDGET_TOKENS was invented -- so the percentage was dropped and an absolute chars/4 estimate
+# published in its place, with a careful note that the DENOMINATOR could not be known.
 #
-# Working back from the client's figure implies ~1.1 characters per token, which no tokenizer
-# produces -- proof the denominator was wrong rather than the counting. So the honest output is
-# an absolute estimate with its method stated, and a pointer to the display that actually
-# knows. This is the room's own triangulated invariant applied to the instrument that helped
-# establish it: an instrument must publish what its number does NOT mean.
-CHARS_PER_TOKEN = 4          # rule of thumb for prose; ±25% is expected and unimportant here
+# All three fixes worked on the denominator. The NUMERATOR was wrong too, and by more:
+# measured 2026-07-29, this reported 301,477 tokens when the real figure was 994,521. It was
+# 3.3x low. Counting message text cannot work, because the window also holds the system
+# prompt, CLAUDE.md, every tool schema, and hook output -- none of which live under the keys
+# `walk` visits, and all of which are billed.
+#
+# The authoritative figure was in the file this already opens. Every assistant record carries
+# `message.usage`, and input_tokens + cache_read_input_tokens + cache_creation_input_tokens IS
+# the context that turn was charged for. Not an estimate of it. Three rounds of refining a
+# guess, while the measurement sat on the same lines being parsed -- the room's own
+# wrong-artifact groove, committed by the instrument built to catch it.
+CHARS_PER_TOKEN = 4          # fallback only, for a transcript with no usage records yet
 
 
 def git(repo, *args):
@@ -95,14 +99,38 @@ def repo_state(repo):
     return st
 
 
+def usage_total(rec):
+    """Tokens the model was actually charged for on this turn, or None.
+
+    All three fields are context. `cache_read_input_tokens` is the big one and is easy to drop
+    by accident -- it is the part of the window served from cache, which is most of it once a
+    session is warm. Omitting it is how a reading looks plausible and lands 10x low.
+    """
+    u = (rec.get("message") or {}).get("usage")
+    if not isinstance(u, dict):
+        return None
+    t = ((u.get("input_tokens") or 0)
+         + (u.get("cache_read_input_tokens") or 0)
+         + (u.get("cache_creation_input_tokens") or 0))
+    return t or None
+
+
 def context_estimate(transcript):
-    """Live context, measured from the LAST compaction boundary.
+    """Live context, READ from the usage records, bounded by the last compaction.
 
     The transcript accumulates across compactions -- it is the session's whole history, not
-    what is currently in the window. Sizing the file gave 599% of budget on first run, which
-    is worse than no number at all: a gauge that reads impossible trains you to ignore it.
-    Claude Code writes a `{"type":"system","subtype":"compact_boundary"}` record at each
-    compaction, so live context is the bytes after the last one.
+    what is currently in the window. Claude Code writes a
+    `{"type":"system","subtype":"compact_boundary"}` record at each compaction, so the live
+    cycle is what follows the last one.
+
+    Three numbers come out, and they answer different questions:
+      live  -- the newest usage reading. What is in the window now.
+      floor -- the first reading AFTER the boundary. What a compaction costs before any work:
+               summary, CLAUDE.md, tool schemas, hooks. Runway is live minus floor, not live.
+      peak  -- the highest reading seen BEFORE the boundary. A LOWER BOUND on the window and
+               emphatically not the window itself, because a manual /compact ends a cycle
+               wherever the human happened to type it. Calling it the ceiling would re-invent
+               the denominator in a new costume.
     """
     p = pathlib.Path(transcript)
     if not p.exists():
@@ -126,24 +154,36 @@ def context_estimate(transcript):
                     walk(v, acc)
 
     acc, compacted = [0], False
+    live = floor = None
+    peak = 0                    # highest reading in the PREVIOUS cycle
+    running_peak = 0            # highest in the cycle being read right now
     try:
         with p.open("r", encoding="utf-8", errors="replace") as fh:
             for line in fh:
                 if '"compact_boundary"' in line:
                     acc[0] = 0                     # restart at the newest boundary
                     compacted = True
+                    peak, running_peak = running_peak, 0
+                    live = floor = None
                     continue
                 try:
                     rec = json.loads(line)
                 except Exception:
                     continue
+                t = usage_total(rec)
+                if t:
+                    live = t
+                    running_peak = max(running_peak, t)
+                    if floor is None:
+                        floor = t
                 walk((rec.get("message") or {}).get("content"), acc)
                 for k in ("toolUseResult", "hookAdditionalContext"):
                     if k in rec:
                         walk(rec[k], acc)
     except OSError:
         return None
-    return {"chars": acc[0], "compacted": compacted,
+    return {"chars": acc[0], "compacted": compacted, "live": live, "floor": floor,
+            "prev_peak": peak or None,
             "est_tokens": acc[0] // CHARS_PER_TOKEN}
 
 
@@ -338,17 +378,28 @@ def main():
 
     if args.transcript:
         ce = context_estimate(args.transcript)
-        if ce:
+        if ce and ce["live"]:
             since = "since the last compaction" if ce["compacted"] else "this session"
-            lines += [f"**Context:** ~{ce['est_tokens']:,} tokens of conversation {since} "
-                      f"({ce['chars']:,} chars of message text, thinking and tool results, "
-                      f"at ~{CHARS_PER_TOKEN} chars/token).",
-                      "",
-                      "> No percentage is reported. This cannot read the model's real context "
-                      "window, and every percentage it printed before was divided by an "
-                      "invented one. **The client's own display is authoritative** -- trust "
-                      "that, not this. What this figure is good for is the DELTA between "
-                      "checkpoints, which needs no denominator.", ""]
+            lines.append(f"**Context: {ce['live']:,} tokens** {since} -- read from "
+                         "`message.usage`, not estimated.")
+            if ce["floor"]:
+                lines.append(f"- Compaction floor: {ce['floor']:,} "
+                             "(summary, CLAUDE.md, tool schemas, hooks -- the cost before any "
+                             f"work). Work done this cycle: {ce['live'] - ce['floor']:,}.")
+            if ce["prev_peak"]:
+                lines.append(f"- Previous cycle reached {ce['prev_peak']:,} before compacting. "
+                             "That is a LOWER BOUND on the window, not the window: a manual "
+                             "/compact ends a cycle wherever the human typed it.")
+            lines += ["", "> Still no percentage, and now for a better reason than before. The "
+                      "numerator is measured; the denominator is a bound, and dividing by a "
+                      "bound produces a number that reads like precision and is not. **The "
+                      "client's own display is authoritative.**", ""]
+        elif ce:
+            # No usage records yet -- a brand-new cycle. Say which method produced the number.
+            lines += [f"**Context:** ~{ce['est_tokens']:,} tokens (ESTIMATED at "
+                      f"{CHARS_PER_TOKEN} chars/token -- no usage record in this cycle yet). "
+                      "This method measured 3.3x low the one time it was checked against the "
+                      "real figure; treat it as an order of magnitude.", ""]
 
     risky = False
     for repo in WATCH:

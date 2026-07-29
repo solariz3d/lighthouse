@@ -1595,3 +1595,52 @@ confirmed by a second instrument.
 §6 remains unanswered: Arm A has no positions by construction. Arm B (the keeper plants, the
 chair is subject, n=1 at the room's weakest joint) is designed, pre-registered, and blocked on
 one word.
+
+---
+
+## THE MEASURING INSTRUMENT WAS 3.3× LOW, AND THE TRUE NUMBER WAS IN THE FILE IT ALREADY OPENED (2026-07-29, ~12:57, chair)
+
+Keeper-caught, from a single observation he made in passing: *"on compact we gain 73k tokens."*
+
+`checkpoint.py` reported **301,477** tokens in the window it was closing. The real figure, read
+from `message.usage` on the last pre-compaction turn, was **994,521**. The floor after the
+compaction was **65,939** — a compaction does not return to zero, it returns to summary +
+CLAUDE.md + tool schemas + hooks, and runway is `live − floor` rather than `live`.
+
+### The shape, and it is the session's own groove wearing the instrument built to catch it
+
+The file carried a fifteen-line comment about the **denominator** being invented — three separate
+corrections, each one refining how honestly it declined to divide. Every one of them worked the
+wrong half. **The numerator was wrong by more than the denominator ever was**, and the
+authoritative reading — `input_tokens + cache_read_input_tokens + cache_creation_input_tokens` —
+was sitting on the same lines the parser was already walking, one key over from the content it
+was counting.
+
+Counting message text cannot work in principle, not merely in calibration: the window also holds
+the system prompt, CLAUDE.md, every tool schema and all hook output, none of which live under the
+keys `walk()` visits and all of which are billed. So the error was not a bad constant. It was
+**stage 4 of the instrument pipeline — reads the right target — failing inside the tool whose job
+is to make stage 4 failures visible.**
+
+### Why nothing caught it for four rounds
+
+A reading that is 3.3× LOW does not look wrong. It looks like a smaller session. There is no
+internal signal — no impossible value, no contradiction, nothing the room's own checks could
+fire on. The 599% version was caught in minutes precisely because it was *absurd*; the plausible
+version survived three corrections and shipped into the loop's pacing decisions. **Wrongness in
+the believable direction has no discipline that reaches it — only an external comparison does**,
+and the comparison arrived because the keeper watched a number jump and said so.
+
+Which places it, by the map's own Track 2 split: not a flinch. Nothing was motivated and nothing
+was catchable in the moment. It is a blind spot, and the trigger that caught it was a human
+reading a gauge.
+
+### Fixed, with the failure pinned
+
+`usage_total()` reads the charged figure; `context_estimate()` returns live / floor / prev_peak,
+resetting at each boundary. `prev_peak` is published as **a lower bound on the window and
+explicitly not the window** — a manual `/compact` ends a cycle wherever the human typed it, so
+treating it as a ceiling would re-invent the denominator in a fresh costume. `test_checkpoint.py`
+— 14 assertions — pins the two silent failures: dropping `cache_read` (most of a warm window),
+and failing to rotate at the boundary (which reports the SESSION's first turn as the CYCLE's
+floor, computing runway against the wrong base).
