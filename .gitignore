@@ -49,3 +49,7 @@ consonance/**/RECORD
 # playing — no reason to vendor either. The lookup is free and repeatable.
 lyrics-cache.json
 consonance/**/lyrics-cache.json
+
+# The rebuild watcher's own log. Machine state, not a record — it says what happened to one build
+# on one machine.
+dev/rebuild-on-close.log
