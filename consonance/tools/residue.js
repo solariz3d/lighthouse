@@ -95,6 +95,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const { canonical } = require('./actors.js');
 
 // A gap longer than this starts a new inferred session. Chosen to sit well above a normal
 // pause between commits in one sitting and well below an overnight break; it is a knob on an
@@ -275,7 +276,12 @@ function assignments(boardPath, sinceMs) {
     const text = String(r.text || '');
     // the chair's own audit line, which records a delivery to a named pane
     const m = /^chair injected \([^)]*\)\s*->\s*(\S+)/.exec(text);
-    if (m) rows.push({ ts: t, pane: m[1], text });
+    // Canonicalise the target. The board names one actor several ways -- a pane's letter
+    // from the MCP mount, its UUID from the transcript tailer, older tooling names -- and
+    // 12 identifiers covered at most 4 actors when this was measured. Grouping on the raw
+    // string split one pane's assignments across several rows and understated every interval
+    // between them.
+    if (m) rows.push({ ts: t, pane: canonical(m[1]).actor, text });
     // COUNT WHAT COULD NOT BE PARSED. Found by the laptop side (cycle 8 F1) and confirmed by
     // running the same code on two boards: this machine parses 28 of 28 announcements, theirs
     // parses 3 of 40 and silently reported "1 injections" per pane -- a chair that looked like
