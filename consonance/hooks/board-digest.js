@@ -448,10 +448,13 @@ function main(input) {
   writeJsonAtomic(statePath, { names, seen: seenAll });
 
   // THE BLIND GATE. This broadcast carries every pane's ASSIGNMENT, last utterance and open
-  // files to every other pane, unbidden, every turn — the channel that invalidated the
-  // desktop's cycle 4–7 blind pairs. Asking a pane to blind itself cannot work against a
-  // delivery that lands in its context before it reads the request. Specced by the laptop side
-  // in cycle 9 Arm A, built here.
+  // files to every other pane, unbidden, every turn. Asking a pane to blind itself cannot work
+  // against a delivery that lands in its context before it reads the request. Specced by the
+  // laptop side in cycle 9 Arm A, built here.
+  //
+  // Scope, measured rather than assumed: this hook was live on the desktop on 2026-07-25 and
+  // NOT during cycles 4–7 — zero `[panes]` blocks in either pane's transcript, ever. It is
+  // still live on the laptop. The gate exists because closure by accident is not closure.
   //
   // A muted broadcast still SAYS it was muted. A silent gap is indistinguishable from a hook
   // that crashed; a declared gap is evidence.

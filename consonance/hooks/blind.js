@@ -7,9 +7,25 @@
 //   `asked:` (the chair's assignment to it), `<name>:` (what it last said) and `hands:` (the
 //   files it has open). Unbidden. Nobody has to choose to look.
 //
-// So every blind pair the desktop ran — cycles 4 through 7 — assumed an isolation the harness
-// was breaking. Asking a pane to blind itself, which is what cycle 7 did, cannot work against a
-// channel that delivers a sibling's assignment into its context before it reads the request.
+// CORRECTED 2026-07-29, an hour after this file was written. The first version of this comment
+// said every desktop blind pair — cycles 4 through 7 — ran under that leak. **That is false on
+// this machine and I asserted it without measuring.** The transcripts settle it: `[panes]`
+// blocks appear in the Main transcript on 2026-07-25 only (11 of them, genuine broadcasts), and
+// **zero times in pane A's or pane B's transcripts, ever.** The hook was live here on the 25th,
+// gone by the 27th when cycles 4–7 ran, and is registered in neither settings.json nor
+// ~/.claude/shell today.
+//
+// Adopting the other machine's finding without checking whether the mechanism applied to mine is
+// the same wrong-artifact groove that has fired all week — this time with "which machine's
+// harness" as the artifact. It is on the record in commit a1def8e, which cannot be edited, so it
+// is corrected here where a reader will actually hit it.
+//
+// WHAT SURVIVES, and why this file still earns its place: the channel is REAL, it ran here for
+// at least one day, nothing prevents its re-registration, and it remains live on the laptop.
+// A gate against a leak that is currently closed is worth having precisely because closure by
+// accident is not closure. Asking a pane to blind itself — what cycle 7 did — cannot work
+// against a channel that delivers a sibling's assignment into its context before it reads the
+// request, whether or not that channel happened to be on.
 // Arm A survived only because it had no human detector: PROGRAMS DO NOT READ THE HOOK. Choosing
 // a program scorer bought immunity to a leak channel nobody had registered.
 //
