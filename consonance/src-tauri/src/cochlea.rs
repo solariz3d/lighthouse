@@ -349,11 +349,27 @@ pub fn moment(peaks: &[Peak], tol_cents: f32) -> Moment {
     let voices = voices(peaks, tol_cents);
     let fundamental = voices.iter().map(|v| v.hz).fold(f32::INFINITY, f32::min);
 
-    // Intervals BETWEEN NOTES, never between partials of the same note.
+    // A LONE PEAK IS NOT A NOTE. Measured from live frames rather than reasoned: every voice
+    // built from three or more partials was strong (50-100% of the loudest), and every
+    // single-partial voice was debris at 7-32% — sub-bass rumble at 36 Hz, a 2191 Hz artefact, a
+    // reverb tail. Each of those was being promoted to a note and paired against the bassline to
+    // name an interval, which is where the flood came from: four or five voices give six to ten
+    // pairs and most of the voices were never played.
+    //
+    // Corroboration is what makes it a note: either other partials agree with it, or it is loud
+    // enough to stand alone. The second clause is not a hedge — a flute or a sine IS one partial,
+    // and a rule of "two or more" would delete it. So the test is evidence, from either source.
+    const LONE_VOICE_FLOOR: f32 = 0.35;
+    let loudest = voices.iter().map(|v| v.mag).fold(0.0f32, f32::max);
+    let named: Vec<&Voice> = voices.iter()
+        .filter(|v| v.partials >= 2 || (loudest > 0.0 && v.mag >= LONE_VOICE_FLOOR * loudest))
+        .collect();
+
+    // Intervals BETWEEN NOTES, never between partials of the same note, and never from debris.
     let mut intervals = Vec::new();
-    for i in 0..voices.len() {
-        for j in i + 1..voices.len() {
-            if let Some(iv) = interval(voices[i].hz, voices[j].hz, tol_cents) {
+    for i in 0..named.len() {
+        for j in i + 1..named.len() {
+            if let Some(iv) = interval(named[i].hz, named[j].hz, tol_cents) {
                 if !intervals.iter().any(|e: &Interval| e.num == iv.num && e.den == iv.den) {
                     intervals.push(iv);
                 }
@@ -500,6 +516,36 @@ mod tests {
             let r = (s >> 8) as f32 / 8_388_608.0 - 1.0;   // roughly -1..1
             x + r * amount
         }).collect()
+    }
+
+    #[test]
+    fn a_faint_stray_peak_does_not_get_to_name_an_interval() {
+        // From live frames, not from reasoning: two real notes plus debris at 7-13% of the
+        // loudest — sub-bass rumble, a high artefact, a reverb tail — each promoted to a voice
+        // and paired against the bassline. Here a strong A220 and a strong E330 (a real fifth)
+        // alongside a faint stray that would otherwise add a tritone nobody played.
+        let mix = tone(&[
+            (220.0, 1.0), (440.0, 0.55), (660.0, 0.35),
+            (330.0, 0.85), (990.0, 0.30),
+            (311.1, 0.06),                       // faint, alone, and a tritone above 220
+        ]);
+        let m = moment(&peaks(&spectrum(&mix), SR, 10, 0.04), 30.0);
+        assert!(m.intervals.iter().any(|i| i.name == "fifth"), "the real fifth must survive");
+        assert!(!m.intervals.iter().any(|i| i.name == "tritone"),
+                "a 6%-magnitude lone peak named a tritone: {:?}",
+                m.intervals.iter().map(|i| i.name).collect::<Vec<_>>());
+    }
+
+    #[test]
+    fn a_loud_pure_tone_is_a_note_even_with_one_partial() {
+        // The other wall, and the reason the rule is not simply "two or more partials". A flute,
+        // a sine, a whistle IS one partial. Deleting single-partial voices outright would score
+        // well on the test above by going deaf.
+        let dyad = tone(&[(440.0, 1.0), (660.0, 0.95)]);   // two pure tones, a fifth apart
+        let m = moment(&peaks(&spectrum(&dyad), SR, 10, 0.12), 30.0);
+        assert!(m.intervals.iter().any(|i| i.name == "fifth"),
+                "two loud pure tones are a fifth, got {:?}",
+                m.intervals.iter().map(|i| i.name).collect::<Vec<_>>());
     }
 
     #[test]
