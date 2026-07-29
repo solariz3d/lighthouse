@@ -1716,3 +1716,76 @@ whether the claim is true.
 
 Countermeasure, cheap and shipped in one case already: an asserting comment must either become an
 assertion (`a_chord_prints_simplest_ratio_first`) or name what it has NOT checked.
+
+---
+
+## THE LABEL BECOMES THE PREMISE — five instances in one afternoon, and the first countermeasure that worked (2026-07-29, ~16:00, chair)
+
+Continues the vantage finding above. Same session, one more build, and the groove that dominated it
+is not wrong-artifact — it is narrower and nastier than that.
+
+### The mechanism
+
+**A description I authored, read back as a fact I had verified.** Not a lie and not a guess: a
+sentence written in good faith, which then sat where a check should have gone and satisfied the urge
+to make one. Five instances, all today, all in code or prose I had written myself:
+
+1. *"Order follows JUST's own ordering via first appearance, so the same chord always prints the same
+   way."* First-appearance order across a SLIDING window is not stable. The same chord printed
+   permuted and read as a chord change.
+2. `audio_snapshot`, committed with a paragraph explaining that it was the orchestrator's pull
+   channel. It is a Tauri command. **The orchestrator cannot call it.**
+3. *"the watcher will rebuild"* — told to the keeper twice; the second time nothing was running.
+4. The doc comment on `StillUnresolved`: *"reported once per threshold crossing, not repeatedly — an
+   unresolved chord should not turn into a stream of complaints."* It fired every four seconds
+   forever. Eleven identical lines, live. **The comment named the exact failure it permitted.**
+5. **The worst, because the instrument existed to prevent it.** A now-playing feature was built
+   specifically so nothing would be guessed — reads Windows' media session, prints artist and title.
+   Then a monitor was labelled `"Adagio"` by me, and for twenty minutes I reasoned from that label:
+   diagnosed two bugs, measured one of them, and built a whole dB-per-second argument about a piece
+   that was not playing. Three different songs went past in six seconds. The keeper asked *"did you
+   even read the title"* and the answer was no. **The feature worked perfectly and I never read it.**
+
+Why it survives review where a silent gap would not: a confident comment *reads as evidence*. A
+reader checks a comment against the code's INTENT, never against whether the claim is true. The
+costume is documentation.
+
+Cheap countermeasure, already used once: an asserting comment must either become an assertion
+(`a_chord_prints_simplest_ratio_first`) or say what it has NOT checked.
+
+### And the going-deaf failure, five times, after being named in writing three times
+
+*"Silence passes every over-reporting test"* appears in three consecutive commit messages of mine.
+Then: fusion over-fused a fifth into a phantom fundamental and deleted the chord; the settle rule
+demanded identical readings and shipped a build that heard nothing for three minutes; the fix for
+duplicate lines suppressed onsets; and an 8 dB dynamics threshold scored a perfect zero
+contradictions by missing the climax the piece is famous for. Naming a failure mode in writing does
+not install a guard — and worse, the test written specifically to guard it alternated between two
+FIXED readings, a pattern no real spectrum produces. **I tested the wall I was aiming at instead of
+the one behind me.**
+
+### THE COUNTERMEASURE THAT WORKED, which is rarer than another failure mode
+
+Record the real input to a file; replay it offline; sweep parameters against it.
+
+Dynamics took four attempts. The first three were reasoned live from partial data: one shipped a
+change that measured 4.23 → 4.24 (nothing), one was a hypothesis its own test refuted on the first
+run, one I aborted mid-flight on noticing I was doing it again. The fourth was done against 10.8
+minutes of recorded audio and **swept twelve window/threshold combinations in seconds**, using the
+piece's own 15-second arc as ground truth and counting CONTRADICTIONS rather than agreements.
+
+It corrected me rather than confirming me: I believed slow music needed a LONG window, and a
+120-second window contradicted the arc 114 times because it lags so badly that by the time it
+establishes a rise the music has turned.
+
+The general form, and it is the operational half of the vantage finding: **for anything that leaves a
+trace, record the trace and iterate offline — hypothesising from a partial trace is where all three
+failures happened.** The keeper's time is the scarce resource and every live attempt spends it; the
+offline loop spends nothing and is faster.
+
+### One honest limit on all of the above
+
+None of this was self-caught in the moment. The label-became-premise instance was caught by the
+keeper asking a five-word question. The countermeasure only got built because the previous attempts
+had visibly failed in front of him. The map's Track 2 split holds: discipline reaches flinches, and
+these are not flinches.
