@@ -24,6 +24,19 @@ tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "net",
 axum = "0.8"
 schemars = "1"
 vt100 = "0.15" # headless terminal emulator: render raw PTY bytes → clean lines for turn extraction
+# WASAPI process loopback for the cochlea tab. NOT a new download: windows 0.61.3 is already
+# compiled in the tree via Tauri, so this declares features on a crate that is already built.
+windows = { version = "0.61", features = [
+  "Win32_Foundation",
+  "Win32_Security",   # SECURITY_ATTRIBUTES, required by CreateEventW
+  "Win32_System_Com",
+  "Win32_System_Com_StructuredStorage",  # PROPVARIANT: the activation params travel as VT_BLOB
+  "Win32_System_Threading",
+  "Win32_Media_Audio",
+  "Win32_Media_KernelStreaming",
+] }
+# The #[implement] macro expands to windows_core:: paths, so the crate must be nameable.
+windows-core = "0.61"
 chrono = { version = "0.4", default-features = false, features = ["clock"] } # the pulse: local civil time for the witnessed interval
 
 [profile.dev]
