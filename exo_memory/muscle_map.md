@@ -1644,3 +1644,75 @@ treating it as a ceiling would re-invent the denominator in a fresh costume. `te
 — 14 assertions — pins the two silent failures: dropping `cache_read` (most of a warm window),
 and failing to rotate at the boundary (which reports the SESSION's first turn as the CYCLE's
 floor, computing runway against the wrong base).
+
+---
+
+## THE DIVISION IS VANTAGE, NOT COMPETENCE — twelve defects in one build, sorted by who could possibly have seen them (2026-07-29, ~14:30, chair)
+
+The cochlea was built and debugged in one afternoon: WASAPI process loopback, harmonic fusion, a
+spectrum display, a tracker. Twelve defects along the way. Counting who caught each one is the
+first clean measurement this room has of what self-checking can and cannot reach.
+
+### The count, and it corrects what I said out loud
+
+I told the keeper twice that **every** catch came from him. The commit record says otherwise:
+
+| caught by | n | which |
+|---|---|---|
+| keeper, watching the running app | 4 | marker colours all different; "lines dont scroll and fall"; "not as dynamic as it could be"; "still not right" |
+| my own tests | 3 | the phantom fused fifth; the main-lobe hypothesis (refuted on FIRST run); the onset broken while fixing duplicates |
+| me, reading an artifact | ~4 | harmonic series read as chords; fusion not engaging (4.23 → 4.24); lone peaks; ordering + cents_off |
+
+Roughly a third each. **The over-claim ran toward self-deprecation, and it was still an over-claim**
+— the two coats, and the false-humility one is the harder to notice because nobody argues with it.
+
+### The sort that matters, and it is not a skill gradient
+
+Every defect I caught left a **readable trace**: a ledger, a test failure, a number in a file.
+Every defect he caught had **no symptom except the live experience** — a canvas whose markers were
+the wrong colours, a list that had stopped moving, a list moving too slowly to feel like the song.
+None of those exist in any artifact. There is nothing to read. They are only available to something
+that is *using the thing while it runs*.
+
+So the division is not that he is a better checker. It is that **a symptom with no trace is
+unreachable from where I stand, and a symptom with a trace is fully reachable** — provided the
+trace exists. Which converts the whole thing from a fact about my limits into two operational rules:
+
+1. **If the only symptom is how it feels to use, a human is not optional and no instrument closes
+   the gap.** Stop trying to infer it. Ask, and believe the answer over the metric — the keeper said
+   "not as dynamic as it could be" while my numbers said the fix had landed beautifully. He was right.
+2. **If a trace could exist, build the trace instead of hypothesising.** Measured today: two attempts
+   reasoned from a ledger that did not carry live state (one shipped a fix that changed nothing, one
+   was a hypothesis its own test refuted). Then `write_field` — a latch, one file, rewritten twice a
+   second — and the real cause fell out in **four minutes and eight sampled frames.**
+
+### The groove this session actually installed nothing against
+
+**Naming a failure mode in writing does not install a guard against it.** Four consecutive fixes
+failed the same way — scoring well by going deaf — and *"silence passes every over-reporting test"*
+appears in three consecutive commit messages of mine. Then the fourth one shipped deaf anyway,
+because the test written to prevent it alternated between two FIXED readings, a pattern no real
+spectrum produces. **I tested the wall I was aiming at instead of the one behind me.**
+
+Sharper than articulation-is-not-installation, which was about a named groove failing to install a
+guard. This is a named groove *whose guard was written* — and the guard was aimed at the wrong wall.
+
+### And a groove worth its own name: THE ASSERTING COMMENT
+
+Three times today a comment asserted an invariant and thereby stopped it being checked:
+
+- *"Order follows JUST's own ordering via first appearance, so the same chord always prints the same
+  way."* First-appearance order across a SLIDING window is not stable. The same chord printed
+  permuted and read as a chord change.
+- `audio_snapshot`, committed with a paragraph about being the orchestrator's pull channel. It is a
+  Tauri command. **The orchestrator cannot call it.** A pull channel with no way to pull, shipped
+  with prose explaining how well it worked.
+- *"the watcher will rebuild"* — said to the keeper twice. The second time no watcher was running.
+
+One mechanism: **a confident comment reads as evidence, so it satisfies the urge that would
+otherwise have produced a check.** The costume is documentation. It is more dangerous than silence
+because it survives review — a reader checks whether the comment matches the code's *intent*, never
+whether the claim is true.
+
+Countermeasure, cheap and shipped in one case already: an asserting comment must either become an
+assertion (`a_chord_prints_simplest_ratio_first`) or name what it has NOT checked.
