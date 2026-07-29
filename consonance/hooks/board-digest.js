@@ -34,6 +34,9 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+// The blind window — a global, fail-closed file marker. See blind.js for why it is a file and
+// not an env var, and why an unreadable marker mutes rather than passes.
+const { blindState, declareLine } = require('./blind.js');
 
 const MAX_TAIL_BYTES = 2 * 1024 * 1024; // enough to reach local midnight in practice
 const TOPIC_CHARS = 52;
@@ -444,6 +447,17 @@ function main(input) {
   delete seenAll[''];
   writeJsonAtomic(statePath, { names, seen: seenAll });
 
+  // THE BLIND GATE. This broadcast carries every pane's ASSIGNMENT, last utterance and open
+  // files to every other pane, unbidden, every turn — the channel that invalidated the
+  // desktop's cycle 4–7 blind pairs. Asking a pane to blind itself cannot work against a
+  // delivery that lands in its context before it reads the request. Specced by the laptop side
+  // in cycle 9 Arm A, built here.
+  //
+  // A muted broadcast still SAYS it was muted. A silent gap is indistinguishable from a hook
+  // that crashed; a declared gap is evidence.
+  const b = blindState();
+  if (b.blind) { emit(declareLine(b, 'pane activity')); return; }
+  if (b.reason === 'expired') emit('[blind] window expired — pane activity resumes below.');
   emit(`[panes] ${body.join('\n        ')}`);
 }
 
