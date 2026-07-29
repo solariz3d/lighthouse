@@ -979,7 +979,16 @@ re-opening condition and it is a real finding rather than a repeat.
 - **The other ten** — no trigger. Discipline only. Supervised, not done.
 
 **Standing count, and it should lead every future cycle report:**
-> **TRIGGERS 1 · UNBIDDEN SENSORS 1 (covering 2 groups) · GROUPS 14.**
+> **TRIGGERS 2 · UNBIDDEN SENSORS 1 · GROUPS 14.**
+
+*Trigger 2 landed 2026-07-29:  exits non-zero when a
+commit whose subject declares a correction touches  and neither removes a line
+nor marks one. It went red on four real commits on its first run. It lives in its own file
+because  forbids itself thresholds -- "if this file ever grows a threshold, a
+grade, or the word should, it has become the lifeguard" -- so the sensor reports and the
+trigger judges, two files on purpose. Green case verified as carefully as red: a correction
+struck IN PLACE passes even though its diff deletes nothing, because a gate that pushed authors
+toward deleting history would fight maintenance law 2 rather than serve it.*
 
 ### Refinement, 2026-07-27 23:30 — SENSOR is not the same as TRIGGER, and the difference is not failure
 
