@@ -472,7 +472,11 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // Single letters only: pane_letter falls back to multi-character labels once A-Z is
     // exhausted, and the router mounts A-Z. Anything else takes the shared config and posts as
     // `unattributed`, which is the honest outcome rather than a wrong attribution.
-    if MCP_PORT.load(Ordering::Relaxed) != 0 {
+    //
+    // Fresh panes get NO mount at all: the MCP server's instructions describe the committee, the
+    // board, and the chair — a fresh mind that reads them isn't fresh anymore. Gated here rather
+    // than at the call sites so a fresh pane stays unmounted on every path, resume included.
+    if MCP_PORT.load(Ordering::Relaxed) != 0 && !is_fresh_cwd(&cwd) {
         let letter = pane_letter(&pane_id);
         let mut chars = letter.chars();
         let cfg = match (chars.next(), chars.next()) {
@@ -1866,6 +1870,42 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     Ok(SiblingInfo { pane: pane_id, cwd, role: "committee".to_string() })
 }
 
+// ── the second spawn type, from the original design: a genuinely fresh pane ──
+// A sibling wakes into the room; a fresh pane wakes into NOTHING — an empty managed dir, the
+// user's own global shell, stock permissions, no board mount. A vanilla claude, exactly what a
+// stranger's spawn on this machine would be, but still committee: the chair can inject into it
+// and the tailer reads it. What makes it fresh is everything this function does NOT do.
+
+fn prepare_fresh_dir() -> Result<String, String> {
+    let id = Uuid::new_v4().to_string();
+    let dir = instances_root().join(format!("fresh-{}", &id[..8]));
+    fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
+    // NO CLAUDE.md, deliberately — the absence is the feature. The fresh- name prefix is what
+    // keeps it absent for life: warm_resume_brief and the MCP mount both key on it.
+    dir.to_str().map(|s| s.to_string()).ok_or_else(|| "bad fresh path".into())
+}
+
+#[tauri::command]
+fn spawn_fresh(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State<Board>, roles: State<PaneRoles>) -> Result<SiblingInfo, String> {
+    let cwd = prepare_fresh_dir()?;
+    let pane_id = Uuid::new_v4().to_string();
+    // skip_perms=false: a legit fresh spawn asks permission like anyone's claude. The chair
+    // answers its prompts in the pane — same hands that click approve everywhere else.
+    let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, false)?;
+    start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
+    panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    // committee, like siblings: addressable by the gate and the chair. What it lacks is the room
+    // and the board — a vanilla mind on committee plumbing.
+    roles.0.lock().unwrap().insert(pane_id.clone(), "committee".to_string());
+    let mut kept = read_kept();
+    kept.retain(|k| k.pane != pane_id);
+    kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "○ fresh".into() });
+    write_kept(&kept);
+    let letter = pane_letter(&pane_id);
+    plog(&format!("born-kept fresh pane={pane_id} letter={letter} cwd={cwd}"));
+    Ok(SiblingInfo { pane: pane_id, cwd, role: "committee".to_string() })
+}
+
 // ── Rooms: per-person growing rooms (seed shell + base journal + scoped perms) ──
 // A room is not a sibling: it belongs to the person who keeps it. The AI writes
 // traces to pending/, the person seals them into journal/ — their canon, theirs alone.
@@ -2254,6 +2294,22 @@ fn is_managed_cwd(cwd: &str) -> bool {
     PathBuf::from(cwd).starts_with(instances_root())
 }
 
+// A fresh-type instance dir: managed (committee, kept, chair-addressable) but UNBRIEFED — the room
+// is never written into it, at birth or on any resume, and it gets no board mount. The dir NAME is
+// the marker, deliberately: it survives app restarts, a lost kept.json, and every code path that
+// only has a cwd in hand. Split so the name check is testable without a live instances root.
+fn is_fresh_dir_name(cwd: &str) -> bool {
+    PathBuf::from(cwd)
+        .file_name()
+        .and_then(|n| n.to_str())
+        .map(|n| n.starts_with("fresh-"))
+        .unwrap_or(false)
+}
+
+fn is_fresh_cwd(cwd: &str) -> bool {
+    is_managed_cwd(cwd) && is_fresh_dir_name(cwd)
+}
+
 // the pulse, absolute: render a moment in local civil time, so a restored thread wakes knowing
 // not just how long it was gone but WHEN it is. Generic over timezone purely for testability
 // (Local's offset depends on the machine; tests pin a FixedOffset).
@@ -2464,7 +2520,10 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
         .ok()
         .and_then(|m| m.modified().ok());
     let gone = settled.and_then(|t| SystemTime::now().duration_since(t).ok());
-    let mut brief = assemble_intake();
+    // A fresh pane resumes the way stock claude persists: its own conversation, nothing else.
+    // Unbriefed is a property the dir keeps for life, not just at birth — the room must not
+    // leak in through the restore path.
+    let mut brief = if is_fresh_cwd(cwd) { String::new() } else { assemble_intake() };
     brief.push_str("\n---\n\n# PRIOR CONVERSATION — you have been here before\n\n");
     brief.push_str(
         "Consonance restored this pane from its own capture (the underlying session could not be \
@@ -2561,7 +2620,9 @@ fn resume_pane(
         let _ = fs::rename(&jsonl, &orphan);
     }
     plog(&format!("resume pane={pane} warmed={warmed} jsonl_existed={jsonl_existed} -> fresh"));
-    let session = spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), false, true)?;
+    // a fresh pane keeps stock permissions across restarts too — resuming must not quietly
+    // grant it the bypass its birth deliberately withheld
+    let session = spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), false, !is_fresh_cwd(&cwd))?;
     start_tailer(app, pane.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane.clone(), session);
     // kept panes resume with the role their HOME decides: instance dirs are committee siblings,
@@ -3897,7 +3958,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, config_exists,
             pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
-            scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, committee_form,
+            scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, spawn_fresh, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
             set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
@@ -4710,5 +4771,24 @@ mod chair_tests {
         // path-component match, not string-prefix: "instances-evil" must not pass
         let inst = Path::new(r"C:\Consonance\instances");
         assert_eq!(role_for_kept(r"C:\Consonance\instances-evil\x", inst), "human");
+    }
+
+    // is_fresh_dir_name: the marker for the unbriefed spawn type lives in the dir NAME, and both
+    // leak points (the room on resume, the MCP mount) key on it — so the name check itself has to
+    // be exact. Component match on the last segment, never a substring of the path.
+    #[test]
+    fn a_fresh_dir_is_recognised_by_its_name() {
+        assert!(is_fresh_dir_name(r"C:\Consonance\instances\fresh-0845a868"));
+    }
+
+    #[test]
+    fn a_sibling_dir_is_not_fresh() {
+        assert!(!is_fresh_dir_name(r"C:\Consonance\instances\sibling-0845a868"));
+    }
+
+    #[test]
+    fn fresh_elsewhere_in_the_path_does_not_mark_the_pane_fresh() {
+        // only the pane's own dir name counts — a parent named fresh-x must not unbrief a sibling
+        assert!(!is_fresh_dir_name(r"C:\Consonance\instances\fresh-x\sibling-a"));
     }
 }

@@ -494,6 +494,22 @@ async function addSibling() {
   if (btn) { btn.disabled = false; btn.textContent = '✦ Brief'; }
 }
 
+async function addFresh() {
+  const btn = document.getElementById('fresh');
+  if (btn) { btn.disabled = true; btn.textContent = 'waking…'; }
+  setStatus('a fresh instance is waking — no brief, stock claude…');
+  try {
+    const r = await inv('spawn_fresh');
+    // fresh panes persist by default too (born kept); a vanilla mind on committee plumbing —
+    // the chair can inject and read, but it wakes with no room, no board, stock permissions.
+    attachPane(r.pane, '○ fresh', r.cwd, r.role || 'committee', 'panes', true);
+    setStatus('fresh instance woken · ' + r.cwd + ' — unbriefed; persists until removed');
+  } catch (e) {
+    setStatus('fresh-instance spawn failed: ' + e);
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '○ Fresh'; }
+}
+
 async function addRoom() {
   const btn = document.getElementById('room');
   if (btn) { btn.disabled = true; btn.textContent = 'opening…'; }
@@ -818,6 +834,8 @@ const dbtn = document.getElementById('distill');
 if (dbtn) dbtn.onclick = distill;
 const sbtn = document.getElementById('sibling');
 if (sbtn) sbtn.onclick = addSibling;
+const fshb = document.getElementById('fresh');
+if (fshb) fshb.onclick = addFresh;
 const bbtn = document.getElementById('body');
 if (bbtn) bbtn.onclick = addBody;
 const rbtn = document.getElementById('room');
@@ -947,7 +965,7 @@ document.addEventListener('mousedown', (e) => {
   document.querySelectorAll('.popover.show').forEach((p) => p.classList.remove('show'));
 });
 // spawning from the ▾ closes it — the pane arriving is the feedback
-['sibling', 'body', 'room'].forEach((bid) => {
+['sibling', 'fresh', 'body', 'room'].forEach((bid) => {
   const b = document.getElementById(bid);
   if (b) b.addEventListener('click', () => { const sp = document.getElementById('spawnpop'); if (sp) sp.classList.remove('show'); });
 });
