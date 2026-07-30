@@ -671,169 +671,317 @@ impl Swell {
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct PulseReading {
     pub bpm: f32,
-    /// How much the level series actually repeats at that period, 0..1. Below ~0.15 there is no
-    /// pulse worth naming and the number would be a lag picked out of noise.
+    /// PHASE-LOCK, 0..1: does a grid at this period keep its phase across the recording?
+    ///
+    /// Redefined, and the redefinition is the whole repair. This used to be the height of an
+    /// autocorrelation peak, which measures nothing about whether a pulse exists — it read 0.26–0.40
+    /// on beatless orchestral music, and with a better onset function it read 0.77 there, higher than
+    /// on a real beat. This is instead the concentration of the phase STEP between consecutive
+    /// non-overlapping windows of two periods each. A real grid keeps a constant step; a coincidental
+    /// periodicity random-walks. Chance level is 1/sqrt(n). Below `PULSE_MIN_STRENGTH` nothing is
+    /// claimed.
     pub strength: f32,
     /// How mechanical it is, 0..1. A drum machine sits near 1; an orchestra with rubato sits low.
     /// This is the part no metadata carries — a BPM is published, a feel is not.
+    ///
+    /// Now measured over EVERY retained tempo estimate rather than the ones near the median. The old
+    /// version filtered to the agreeing subset and then reported how tightly that subset clustered, so
+    /// it read 0.96–0.99 on readings that jumped 237 → 55 bpm. Selecting for agreement and then
+    /// reporting agreement is a number that cannot come out low.
     pub steady: f32,
 }
 
-/// Tempo from the loudness series, by autocorrelation.
+/// Tempo from the loudness series, by phase rather than by correlation height.
 ///
-/// WHY THIS CAN BE TRUSTED BEFORE IT SHIPS, unlike the last feature. Beat rates live at 1–3 Hz — 120
-/// bpm is 2 Hz — and the level series already samples at 11.7 Hz, so the existing fixtures contain
-/// everything this needs. The Adagio and Fratres are negative controls available today: neither has a
-/// drum kit, so a strong pulse claim on either would be the detector fooling itself. Vibrato had no
-/// such control and shipped silent because of it.
+/// THE REDESIGN, and what forced it. The first version autocorrelated a rectified level difference and
+/// reported the peak height as confidence. Against two orchestral recordings with no drum kit it
+/// produced 17 and 21 confident tempos spanning 51–237 bpm. Four defects, each measured:
 ///
-/// AUTOCORRELATION AND NOT AN FFT of the envelope, because the question is "does this repeat at some
-/// period" rather than "what frequencies are present". A rhythm with a strong backbeat has energy at
-/// the half-beat too, and a spectrum splits its evidence across harmonics while a correlation adds it.
+/// 1. AUTOCORRELATION HEIGHT MEASURES NOTHING about whether a pulse exists. On the fixtures it read
+///    0.26–0.40, and with a better onset function it read 0.77 on the Adagio — HIGHER than on a real
+///    beat. No threshold can separate what does not separate.
+/// 2. THE CONFIDENCE WAS CIRCULAR. `steady` filtered the estimates to those near the median and then
+///    measured how tightly that subset clustered, so it could not come out low.
+/// 3. THE AGREEMENT WINDOW WAS ONE SECOND LONG. Twelve estimates at 11.7 Hz from 8-second windows span
+///    1.03 s of new audio, and overlapping windows agree with themselves. This is why the 51–237
+///    scatter never tripped the gate that existed to catch it.
+/// 4. INTRODUCED WHILE FIXING THE OTHERS, kept here because anyone reaching for the obvious fix will
+///    re-introduce it: searching FRACTIONAL lags in an autocorrelation requires interpolating the
+///    series, interpolation low-passes it, and integer lags therefore win. Measured: 74% of chosen lags
+///    on the Adagio landed within 0.1 of an integer where uniform would be 20%. Disjoint windows then
+///    "agreed on a tempo" because they were agreeing with the SAMPLING GRID — and that fake agreement
+///    looked exactly like a stable 78.6 bpm pulse in the Pärt, six times over, to one decimal place.
 ///
-/// WHAT IT CANNOT DO, stated rather than found later: 11.7 Hz sampling means periods shorter than
-/// ~170 ms are invisible, so anything above roughly 350 bpm folds. And it finds a PERIOD, not a
-/// downbeat — it knows the pulse rate and not where the bar starts.
+/// WHAT IT DOES INSTEAD. A Fourier tempogram evaluated at the frames' ACTUAL timestamps:
+///
+///     X(T) = sum_i o_i * exp(-2*pi*i*t_i/T)        R(T) = |X(T)| / sum_i o_i
+///
+/// R is a weighted circular resultant — 1 when the onset energy lands at one phase of T, ~0 when it is
+/// spread around the cycle. Using the real timestamps means there is no lag grid to agree with; the
+/// frame interval jitters, which here is the point. And unlike a correlation it keeps PHASE, which is
+/// the statistic that actually separates a beat from a coincidence: a real grid holds its phase across
+/// the recording, a coincidental periodicity random-walks. See `PulseReading::strength`.
+///
+/// WHY NOT PER-BAND SPECTRAL FLUX, which is the textbook answer and was tried: the recorded frames
+/// carry the top ten spectral peaks above a RELATIVE floor, not a magnitude spectrum, and in a
+/// bass-heavy mix that list collapses to one or two entries. Measured on a real beat, banded flux
+/// scored 0.11 against 0.45 for plain level flux. Ten peaks are not a spectrogram.
+///
+/// WHAT IT CANNOT DO, stated rather than found later. It reports a PERIOD, not a downbeat. The 85 ms
+/// frame is larger than the ±70 ms tolerance the field uses for beat LOCATION, so this can say how
+/// fast and never exactly when — and a finer onset function cannot be validated offline at all, since
+/// the fixtures record peaks rather than audio.
+///
+/// Measured on real material it is honest but conservative. Four recordings captured off a live
+/// session: it locks onto ONE (a programmed electronic remix, at its real tempo), stays silent on two,
+/// and the fourth held only 68 s of audio — too short to fill a memory that needs 45 s, so untested
+/// rather than missed, which leaves hip-hop with a programmed beat a class with no coverage. Silence
+/// rather than confident nonsense is the designed direction, but one confirmed positive is a claim
+/// about one song.
 #[derive(Default)]
 pub struct Pulse {
+    /// (time, onset) — the rectified log-domain flux, over `PULSE_MEMORY_SECS`.
     hist: Vec<(f32, f32)>,
-    /// Recent tempo estimates, so steadiness is measured over time rather than guessed from one.
-    recent_bpm: Vec<f32>,
+    /// (time, folded bpm) — one per analysis window. EVERY one is kept and counted; the old code's
+    /// fatal move was filtering these before measuring how much they agreed.
+    est: Vec<(f32, f32)>,
+    prev_db: Option<f32>,
+    win_start: f32,
     last_report: f32,
     reported: Option<f32>,
 }
 
-const PULSE_WINDOW_SECS: f32 = 8.0;
+/// Seconds per period estimate. Shorter and slow tempi have too few cycles to measure: the 72 bpm
+/// synthetic case fails outright at 3 s.
+const PULSE_WINDOW_SECS: f32 = 5.0;
+/// How much history the confidence is measured over. This is the number that was effectively 1.03 s.
+///
+/// THE MEMORY LENGTH IS THE CONFIDENCE, which is why this is not a tuning knob. A detector that will
+/// not speak until it has 40 seconds of evidence is the price of the negative control holding, and the
+/// latency is therefore a property rather than a defect to be optimised away later — see
+/// `a_pulse_needs_forty_seconds_of_evidence_before_it_will_speak`, which exists to make that cost
+/// visible. Shortening this trades silence on beatless music for speed; the sweep in
+/// `PULSE_MIN_STRENGTH` is what that trade costs.
+const PULSE_MEMORY_SECS: f32 = 40.0;
 const PULSE_MIN_BPM: f32 = 50.0;
 const PULSE_MAX_BPM: f32 = 210.0;
-/// Below this the series does not really repeat and any lag is noise.
-// Raised from 0.15 after the fixtures showed a correlation peak exists at SOME lag in any signal
-// with transients. Necessary but nowhere near sufficient on its own.
-const PULSE_MIN_STRENGTH: f32 = 0.25;
-/// What fraction of recent estimates must land within 6% of their median before a tempo is claimed.
-/// This is the gate that the two orchestral fixtures forced into existence.
+/// Tempogram resolution. 0.5 bpm is finer than the 6% the tests ask for at every tempo in range.
+const PULSE_BPM_STEP: f32 = 0.5;
+/// Minimum phase-lock before a tempo is claimed, set from the CHANCE LEVEL rather than from the
+/// fixtures — a threshold tuned until two recordings go quiet is fitted to those two recordings.
+///
+/// The statistic is a circular resultant over n phase steps, so under a null of no grid it sits at
+/// ~1/sqrt(n). This memory yields n ≈ 24 at 75 bpm and n ≈ 42 at 128 bpm, i.e. chance 0.20 down to
+/// 0.15, and 0.6 is three to four times chance across the range.
+///
+/// WHY THE THRESHOLD IS NOT WHERE THE WORK WENT, and the finding worth carrying out of this file:
+/// A TYPICAL VALUE AND AN EXTREME ONE ARE DIFFERENT QUANTITIES. At a 25 s memory these same three
+/// beatless recordings put 45 readings through this gate with locks running p50 0.299 — comfortably
+/// under any threshold — and a MAXIMUM of 0.843, which is above every threshold that still detects a
+/// real beat. An eleven-minute negative gets ~45 independent tries and the maximum of 45 samples is
+/// not the median, so a constant calibrated against a typical value and evaluated against an extremum
+/// leaks by construction. Raising the threshold cannot fix that; only reducing the number of tries, or
+/// making each one stronger, can. Lengthening the memory does both. Measured
+/// (negatives leaked / real beat found / synthetic four-tempo test):
+///
+///     memory 25 s -> 2 leaked / found / passes on a 30 s fixture
+///     memory 40 s -> 0 leaked / found / passes on a 60 s fixture
+///     memory 50 s -> 0 leaked / found / needs a longer fixture still
+///     memory 75 s -> 0 leaked / found / needs a longer fixture still
+///
+/// So if this ever leaks, LENGTHEN THE MEMORY and the synthetic fixture with it. Never raise this
+/// constant — that is fitting it to whichever recordings happen to be in tests/.
+const PULSE_MIN_STRENGTH: f32 = 0.6;
+/// How many of the retained tempo estimates must fall within `PULSE_AGREE_TOL` of a common centre.
+/// Necessary and NOT sufficient: the Pärt reaches 100% here, and only phase-lock catches it.
 const PULSE_MIN_AGREEMENT: f32 = 0.7;
+const PULSE_AGREE_TOL: f32 = 0.06;
+/// Without transients there is no rhythm, however well anything else normalises. The p90 per-frame
+/// rise: a beatless 2 dB swell peaks at 0.09 dB, the Adagio at 1.6, real beat-carrying music at 3.
+const PULSE_TRANSIENT_DB: f32 = 0.3;
+/// Fewer phase samples than this and the lock statistic is indistinguishable from chance.
+const PULSE_MIN_PHASE_SAMPLES: usize = 10;
+/// Tempo octave the report is folded into: 174 bpm and 87 bpm are the same pulse counted differently.
+const PULSE_FOLD_LO: f32 = 70.0;
 /// A tempo must differ by more than this to be a new tempo rather than jitter on the same one.
 const PULSE_CHANGE_BPM: f32 = 6.0;
 const PULSE_MIN_GAP_SECS: f32 = 20.0;
 
-/// OFF, and this is a refusal rather than an oversight.
+/// Still OFF, and the reason has changed — which is why this is rewritten rather than deleted.
 ///
-/// Built, tested, and it FAILS ITS OWN NEGATIVE CONTROL. Run against two orchestral recordings with
-/// no drum kit it produced 17 and 21 confident tempos spanning 51–237 bpm — the entire allowed range
-/// — because a correlation peak exists at SOME lag in any signal with transients, and bow changes are
-/// transients.
+/// The original refusal stands as history: the autocorrelation version produced 17 and 21 confident
+/// tempos on two beatless orchestral recordings, with a confidence that could not come out low.
+/// `Pulse` has since been redesigned around phase rather than correlation height (see its doc
+/// comment), and at a 40 s memory it clears both walls — the orchestral recordings produce nothing and
+/// the five synthetic tests still pass.
 ///
-/// Worse, the confidence was manufactured. `steady` read 0.96–0.99 on readings that jumped from 237
-/// to 55 bpm, because it filtered the estimates to those near the median and then measured how
-/// tightly THAT SUBSET clustered. Selecting for agreement and then reporting agreement is circular —
-/// the number could not have come out low.
+/// It stays dark on ONE remaining ground, and it is not a threshold: THE POSITIVE SIDE RESTS ON ONE
+/// RECORDING. Four real captures exist — it locks onto one at its true tempo, stays silent on two, and
+/// the fourth was too short to fill the memory and so proves nothing either way. Everything about the
+/// negative side is now measured across ~28 minutes of real beatless music and holds. The positive
+/// side is a claim about one song, and a channel that is right when it speaks but silent on most of
+/// what plays is a judgement about what to ship rather than a number to tune.
 ///
-/// Two real defects rather than thresholds: no strength value separates beat from no-beat (0.26–0.40
-/// on beatless music, against 0.15 then 0.25 tried), and the steadiness measure is self-fulfilling.
-/// A tempo detector that invents confident numbers for music with no tempo is worse than none, so it
-/// stays dark until redesigned — probably around a real onset detector on the fine pitch track rather
-/// than the 11.7 Hz level series.
+/// WHAT WOULD FLIP THIS TO TRUE: three or four more real positive fixtures across different material —
+/// a rock kit, hip-hop, something with a human drummer rather than a sequencer — with the detector
+/// finding the right tempo on most of them. Arm `data/RECORD`, play a few minutes, cut the segments by
+/// the track changes in `heard.jsonl`. It costs listening time and nothing else.
 ///
-/// The code and its five tests stay. The synthetic side works, the NEGATIVE CONTROL IS THE VALUE, and
-/// deleting it would mean rediscovering all of this from scratch.
+/// AND WHAT WOULD TURN IT BACK OFF: any reading on `the_orchestral_recordings_report_no_pulse`, or a
+/// live report whose tempo the keeper hears as wrong. The first is asserted on every run. The second
+/// is not, and cannot be — which is the honest reason this gate exists at all.
 ///
-/// The gate is checked BY THE CALLERS rather than inside `feed`, and that placement is deliberate:
-/// the maths is sound on synthetic input and its tests must keep exercising it. What is being
-/// withheld is the DECISION TO BELIEVE IT, which belongs where the event would be emitted.
+/// The gate is checked BY THE CALLERS rather than inside `feed`, and that placement is deliberate: the
+/// maths is exercised by its tests either way. What is withheld is the DECISION TO BELIEVE IT, which
+/// belongs where the event would be emitted.
 pub const PULSE_ENABLED: bool = false;
+
+/// Weighted circular resultant of the onsets against a grid of period `period`, keeping the phase.
+///
+/// The magnitude is how tightly the onset energy sits at one phase of the cycle; the argument is WHERE
+/// in the cycle it sits. Evaluated at the frames' real timestamps, so there is no resampling and no lag
+/// grid — which is the reason this replaced the autocorrelation.
+fn pulse_phasor(hist: &[(f32, f32)], period: f32) -> Option<(f32, f32)> {
+    if !(period > 0.0) { return None; }
+    let (mut re, mut im, mut w) = (0.0f32, 0.0f32, 0.0f32);
+    for &(t, o) in hist {
+        if o <= 0.0 { continue; }
+        let ph = std::f32::consts::TAU * t / period;
+        re += o * ph.cos();
+        im += o * ph.sin();
+        w += o;
+    }
+    if w <= 1e-12 { return None; }
+    Some(((re * re + im * im).sqrt() / w, im.atan2(re)))
+}
+
+/// The tempo whose grid best explains these onsets, by a comb over the tempogram.
+///
+/// A periodic onset train has energy not only at its period but at every subdivision T/k, and summing
+/// those is what lets the BEAT be told from the bar — a period twice the beat puts consecutive onsets
+/// half a cycle apart, where they cancel.
+fn pulse_period(hist: &[(f32, f32)]) -> Option<f32> {
+    let mut best: Option<(f32, f32)> = None;
+    let mut bpm = PULSE_MIN_BPM;
+    while bpm <= PULSE_MAX_BPM {
+        let period = 60.0 / bpm;
+        let mut score = pulse_phasor(hist, period)?.0;
+        let mut weight = 1.0;
+        for k in [2.0f32, 3.0] {
+            if let Some((m, _)) = pulse_phasor(hist, period / k) {
+                score += m / k;
+                weight += 1.0 / k;
+            }
+        }
+        let v = score / weight;
+        if best.map_or(true, |(b, _)| v > b) { best = Some((v, period)); }
+        bpm += PULSE_BPM_STEP;
+    }
+    best.map(|(_, p)| p)
+}
+
+/// 174 bpm and 87 bpm are the same pulse counted differently, so estimates are compared in one octave.
+fn pulse_fold(bpm: f32) -> f32 {
+    let mut b = bpm;
+    while b < PULSE_FOLD_LO { b *= 2.0; }
+    while b >= PULSE_FOLD_LO * 2.0 { b /= 2.0; }
+    b
+}
 
 impl Pulse {
     pub fn feed(&mut self, db: f32, now: f32) -> Option<Event> {
         if db <= -60.0 {
             self.hist.clear();
-            self.recent_bpm.clear();
+            self.est.clear();
+            self.prev_db = None;
+            self.win_start = now;
             return None;
         }
-        // Linear amplitude: a beat is an energy event, and dB compresses exactly the peaks that
-        // carry the rhythm.
-        self.hist.push((now, 10f32.powf(db / 20.0)));
-        let cutoff = now - PULSE_WINDOW_SECS;
+        // ONSET FUNCTION: the rectified rise in dB, so relative change counts equally in a quiet
+        // passage and a loud one. Rhythm is in the CHANGES — a beat is a sudden rise, a swell is not —
+        // and half-wave rectified because a note starting is an event and a note ending much less of one.
+        let o = match self.prev_db { Some(p) => (db - p).max(0.0), None => 0.0 };
+        self.prev_db = Some(db);
+        if self.hist.is_empty() { self.win_start = now; }
+        self.hist.push((now, o));
+        let cutoff = now - PULSE_MEMORY_SECS;
         self.hist.retain(|&(t, _)| t >= cutoff);
-        let span = now - self.hist.first()?.0;
-        if span < PULSE_WINDOW_SECS * 0.9 || self.hist.len() < 64 { return None; }
+        self.est.retain(|&(t, _)| t >= cutoff);
 
-        let rate = self.hist.len() as f32 / span;
+        // One period estimate per window, and the windows DO NOT OVERLAP. Agreement between
+        // overlapping windows is agreement with itself: the version this replaces compared twelve
+        // estimates from 8-second windows sampled 85 ms apart, spanning 1.03 s of new audio.
+        if now - self.win_start < PULSE_WINDOW_SECS { return None; }
+        let win: Vec<(f32, f32)> = self.hist.iter().cloned().filter(|&(t, _)| t >= self.win_start).collect();
+        self.win_start = now;
+        if win.len() < 32 { return None; }
 
-        // ONSET FUNCTION, NOT THE LEVEL ITSELF, and skipping this is what the negative control caught.
-        // Autocorrelation of a SMOOTH signal is high at every short lag — because smooth means
-        // consecutive samples resemble each other — so a gentle crescendo correlates strongly at
-        // 0.3–1.2 s and gets called a tempo. Rhythm is in the CHANGES: a beat is a sudden rise, and a
-        // swell is not. Half-wave rectified, because a note starting is an event and a note ending is
-        // much less of one.
-        let flux: Vec<f32> = self.hist.windows(2)
-            .map(|w| (w[1].1 - w[0].1).max(0.0))
-            .collect();
-        if flux.len() < 32 { return None; }
+        // Without transients there is no rhythm, however well anything else normalises.
+        let mut rises: Vec<f32> = win.iter().map(|&(_, v)| v).collect();
+        rises.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
+        if rises[rises.len() * 9 / 10] < PULSE_TRANSIENT_DB { self.est.clear(); return None; }
 
-        // And an absolute gate on top of the shape: without transients there is no rhythm, however
-        // well the correlation happens to normalise. Measured in the linear domain the top decile of
-        // a beat's flux dwarfs a swell's.
-        let mut sorted = flux.clone();
-        sorted.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
-        let top = &sorted[sorted.len() * 9 / 10..];
-        let transient = top.iter().sum::<f32>() / top.len().max(1) as f32;
-        let level = self.hist.iter().map(|(_, v)| *v).sum::<f32>() / self.hist.len() as f32;
-        if level <= 1e-9 || transient / level < 0.25 { self.recent_bpm.clear(); return None; }
+        let period = pulse_period(&win)?;
+        self.est.push((now, pulse_fold(60.0 / period)));
+        if self.est.len() < (PULSE_MEMORY_SECS / PULSE_WINDOW_SECS) as usize { return None; }
 
-        let mean = flux.iter().sum::<f32>() / flux.len() as f32;
-        let x: Vec<f32> = flux.iter().map(|v| v - mean).collect();
-        let energy: f32 = x.iter().map(|v| v * v).sum();
-        if energy <= 1e-12 { return None; }
-
-        // Correlate at every lag in the tempo range and keep the best.
-        let mut best = (0.0f32, 0.0f32);       // (normalised correlation, bpm)
-        let lag_lo = (60.0 / PULSE_MAX_BPM * rate).round().max(2.0) as usize;
-        let lag_hi = (60.0 / PULSE_MIN_BPM * rate).round() as usize;
-        for lag in lag_lo..=lag_hi.min(x.len() / 2) {
-            let mut c = 0.0;
-            for i in 0..x.len() - lag { c += x[i] * x[i + lag]; }
-            // Normalising by the OVERLAP rather than the full length, or long lags are penalised
-            // for having less data and slow music always loses to fast.
-            let n = (x.len() - lag) as f32;
-            let norm = c / (energy * n / x.len() as f32).max(1e-12);
-            if norm > best.0 { best = (norm, 60.0 * rate / lag as f32); }
+        // CONCENTRATION of the unfiltered estimates: the largest share of them lying within
+        // PULSE_AGREE_TOL of a common centre. Nothing is dropped before it is counted — that filtering
+        // is what made the old confidence unable to come out low. Necessary and NOT sufficient: the
+        // Pärt reaches 100% here.
+        let bpms: Vec<f32> = self.est.iter().map(|&(_, b)| b).collect();
+        let mut centre = bpms[0];
+        let mut near = 0usize;
+        for &c in &bpms {
+            let n = bpms.iter().filter(|b| (*b - c).abs() / c <= PULSE_AGREE_TOL).count();
+            if n > near { near = n; centre = c; }
         }
-        let (strength, bpm) = best;
-        if strength < PULSE_MIN_STRENGTH {
-            self.recent_bpm.clear();
-            return None;
-        }
-
-        self.recent_bpm.push(bpm);
-        if self.recent_bpm.len() > 12 { self.recent_bpm.remove(0); }
-        if self.recent_bpm.len() < 6 { return None; }
-
-        // AGREEMENT IS THE GATE, NOT AN ATTRIBUTE, and this is what the fixtures caught. Run against
-        // real orchestral recordings the detector produced 24 and 27 "tempos" spanning 51–237 bpm —
-        // the entire allowed range — because a correlation peak exists at SOME lag in any signal with
-        // transients, and bow changes are transients. The scatter was the evidence all along, and it
-        // was being computed and then reported rather than used to decide.
-        //
-        // A tempo that cannot be found twice is not a tempo. So: most recent estimates must land near
-        // the same value before anything is claimed. Same rule as every other layer here — a reading
-        // that does not survive repetition was never a reading.
-        let mut sorted = self.recent_bpm.clone();
-        sorted.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
-        let median = sorted[sorted.len() / 2];
-        let near = self.recent_bpm.iter().filter(|b| (*b - median).abs() / median <= 0.06).count();
-        let agreement = near as f32 / self.recent_bpm.len() as f32;
+        let agreement = near as f32 / bpms.len() as f32;
         if agreement < PULSE_MIN_AGREEMENT { return None; }
 
-        // Steadiness now means the FEEL — how tightly the agreeing estimates cluster — rather than
-        // whether a pulse exists at all. A machine lands on one number; a drummer breathes around it.
-        let agreeing: Vec<f32> = self.recent_bpm.iter().cloned()
-            .filter(|b| (b - median).abs() / median <= 0.06).collect();
-        let m = agreeing.iter().sum::<f32>() / agreeing.len() as f32;
-        let sd = (agreeing.iter().map(|b| (b - m) * (b - m)).sum::<f32>() / agreeing.len() as f32).sqrt();
-        let steady = (1.0 - sd / 4.0).clamp(0.0, 1.0);
-        // Report the median rather than this window's guess: it is the estimate the evidence supports.
-        let bpm = median;
+        // PHASE-LOCK: the confidence, and the statistic the old design had no way to compute. Phase of
+        // the onsets against a grid at `centre`, over NON-OVERLAPPING windows of two periods each, then
+        // the concentration of the step between consecutive phases. A real grid holds a constant step
+        // even when the tempo estimate is slightly off; a coincidental periodicity random-walks. The
+        // Pärt scores 0.107 here against a chance level of 0.24 while agreeing with itself perfectly on
+        // tempo, which is the whole reason this exists.
+        let grid = 60.0 / centre;
+        let span = 2.0 * grid;
+        let (mut re, mut im, mut n) = (0.0f32, 0.0f32, 0usize);
+        let mut prev: Option<f32> = None;
+        let mut start = self.hist.first()?.0;
+        let end = self.hist.last()?.0;
+        while start + span <= end {
+            let seg: Vec<(f32, f32)> = self.hist.iter().cloned()
+                .filter(|&(t, _)| t >= start && t < start + span).collect();
+            if seg.len() >= 5 {
+                if let Some((_, arg)) = pulse_phasor(&seg, grid) {
+                    if let Some(p) = prev {
+                        let d = arg - p;
+                        re += d.cos();
+                        im += d.sin();
+                        n += 1;
+                    }
+                    prev = Some(arg);
+                }
+            }
+            start += span;
+        }
+        if n < PULSE_MIN_PHASE_SAMPLES { return None; }
+        let strength = (re * re + im * im).sqrt() / n as f32;
+        // How the separation gets re-measured without editing anything: this prints every reading that
+        // reaches the gate, passing or not, which is the distribution the thresholds are argued from.
+        if std::env::var("PULSE_MEASURE").is_ok() {
+            eprintln!("CAND t={now:7.1} bpm={centre:6.1} agree={agreement:.2} lock={strength:.3} n={n}");
+        }
+        if strength < PULSE_MIN_STRENGTH { return None; }
+
+        // STEADINESS is the feel — how much the tempo itself wanders — over EVERY retained estimate.
+        // A machine lands on one number; a drummer pushes and pulls around it.
+        let mean = bpms.iter().sum::<f32>() / bpms.len() as f32;
+        let sd = (bpms.iter().map(|b| (b - mean) * (b - mean)).sum::<f32>() / bpms.len() as f32).sqrt();
+        let steady = (1.0 - sd / 2.0).clamp(0.0, 1.0);
+        let bpm = centre;
 
         let changed = self.reported.map_or(true, |r| (r - bpm).abs() > PULSE_CHANGE_BPM);
         if !changed || now - self.last_report < PULSE_MIN_GAP_SECS { return None; }
@@ -1932,7 +2080,12 @@ mod tests {
         for want in [72.0f32, 100.0, 128.0, 174.0] {
             let mut p = Pulse::default();
             let mut got = None;
-            for (t, db) in pulsing(want, 30.0, 0.0) {
+            // 60 s and not 30, changed when the memory went to 40 s. Every assertion below is
+            // untouched; only the input lengthens, which makes this STRICTER rather than looser —
+            // more disjoint windows have to agree before anything is claimed. The 40 s floor this
+            // implies is not hidden by the change: see
+            // `a_pulse_needs_forty_seconds_of_evidence_before_it_will_speak`.
+            for (t, db) in pulsing(want, 60.0, 0.0) {
                 if let Some(Event::Pulse(r)) = p.feed(db, t) { if got.is_none() { got = Some(r); } }
             }
             match got {
@@ -1947,6 +2100,128 @@ mod tests {
                 None => panic!("a metronomic {want} bpm beat was not detected"),
             }
         }
+    }
+
+    /// Every pulse reading a recorded pass would produce, with the gate bypassed.
+    ///
+    /// Bypassing `PULSE_ENABLED` on purpose: the point of these tests is to measure what the maths
+    /// claims, and reading them through the gate would make them pass by reporting nothing.
+    fn pulse_on_fixture(path: &str) -> Vec<PulseReading> {
+        let text = std::fs::read_to_string(path).unwrap_or_else(|e| panic!("{path}: {e}"));
+        let mut p = Pulse::default();
+        let mut out = Vec::new();
+        for line in text.lines().filter(|l| l.trim().starts_with('{')) {
+            let v: serde_json::Value = match serde_json::from_str(line) { Ok(v) => v, Err(_) => continue };
+            let at = v.get("t").and_then(|x| x.as_f64()).unwrap_or(0.0) as f32;
+            let db = match v.get("db").and_then(|x| x.as_f64()) { Some(d) => d as f32, None => continue };
+            if let Some(Event::Pulse(r)) = p.feed(db, at) { out.push(r); }
+        }
+        out
+    }
+
+    #[test]
+    fn the_orchestral_recordings_report_no_pulse() {
+        // THE NEGATIVE CONTROL AS A TEST rather than as something someone remembers to run. These are
+        // recordings of real music with no drum kit, and the first version of this detector produced
+        // 17 and 21 confident tempos across two of them spanning the entire allowed range.
+        //
+        // Every fixture is measured before anything is asserted. Asserting inside the loop hides the
+        // leaks in the later fixtures behind the first — which it did, and it cost a wrong number in a
+        // source comment: a distribution quoted as covering three recordings had only measured one.
+        let mut leaks = Vec::new();
+        for f in ["tests/fixture-adagio-op11-956.jsonl", "tests/fixture-partt-fratres.jsonl",
+                  "tests/fixture-heldout-pemberton.jsonl"] {
+            for r in pulse_on_fixture(f) {
+                leaks.push(format!("{f}: {:.1} bpm lock {:.3}", r.bpm, r.strength));
+            }
+        }
+        assert!(leaks.is_empty(), "beatless recordings reported {} tempos:\n  {}",
+                leaks.len(), leaks.join("\n  "));
+    }
+
+    #[test]
+    fn a_recorded_electronic_beat_is_found_at_its_real_tempo() {
+        // THE POSITIVE CONTROL, which the first version never had — and which immediately caught a
+        // redesign that silenced the orchestral fixtures by detecting nothing at all. A programmed
+        // four-to-the-floor remix; the tempo is not in doubt.
+        //
+        // Honest scope: two further recordings made the same evening (`fixture-heldout-sol`,
+        // `fixture-heldout-trxy`) are NOT asserted here, because this detector stays silent on them.
+        // They are kept so the miss stays visible and re-measurable rather than absent.
+        let got = pulse_on_fixture("tests/fixture-beat-nero-reaching-out.jsonl");
+        assert!(!got.is_empty(), "a recorded electronic beat was not detected at all");
+        for r in &got {
+            assert!((120.0..=136.0).contains(&r.bpm), "expected ~128 bpm, got {:.1}", r.bpm);
+            assert!(r.strength >= PULSE_MIN_STRENGTH);
+        }
+    }
+
+    #[test]
+    fn a_pulse_needs_forty_seconds_of_evidence_before_it_will_speak() {
+        // WHAT THE CONFIDENCE COSTS, asserted so it cannot go quiet. A perfect metronome — the easiest
+        // input this detector will ever see — reports NOTHING in 35 seconds, because the memory the
+        // confidence is measured over has not filled.
+        //
+        // This test exists because the fixture in `a_steady_beat_is_found_at_the_right_tempo` was
+        // lengthened from 30 s to 60 s to accommodate that memory, and that change would otherwise have
+        // removed the only place this limit was visible. The latency is not a defect queued for later:
+        // THE MEMORY LENGTH IS THE CONFIDENCE. At 25 s two beatless orchestral recordings get readings
+        // through the gate; at 40 s neither does. Anyone shortening `PULSE_MEMORY_SECS` to make this
+        // faster is buying speed with the negative control, and should fail here first and know it.
+        let mut p = Pulse::default();
+        let mut n = 0;
+        for (t, db) in pulsing(120.0, 35.0, 0.0) {
+            if let Some(Event::Pulse(r)) = p.feed(db, t) {
+                n += 1;
+                eprintln!("spoke too early at {t:.1}s: {:.1} bpm lock {:.2}", r.bpm, r.strength);
+            }
+        }
+        assert_eq!(n, 0, "reported a pulse on {n} occasions inside 35 s, which is less evidence than \
+                          the confidence is defined over");
+
+        // And the other half of the claim, so this documents a THRESHOLD rather than just a silence:
+        // the same beat, given enough evidence, is found.
+        let mut p = Pulse::default();
+        let found = pulsing(120.0, 60.0, 0.0).into_iter()
+            .filter_map(|(t, db)| p.feed(db, t))
+            .any(|e| matches!(e, Event::Pulse(_)));
+        assert!(found, "the same metronome must be found once 60 s of it exists");
+    }
+
+    #[test]
+    fn a_periodicity_with_no_consistent_phase_is_not_a_pulse() {
+        // The case PHASE-LOCK exists to catch, and the one no amount of tempo agreement can: events
+        // whose AVERAGE spacing is a constant 120 bpm but whose phase random-walks, because each gap is
+        // drawn independently. Every window agrees on the tempo and there is still no pulse, because
+        // nothing is keeping time. The Pärt does exactly this for real — 100% tempo agreement, 0.107
+        // phase-lock — which is why tempo agreement alone could never have been the gate.
+        //
+        // The first version of this test re-offset the grid every three seconds instead, and that was a
+        // BAD TEST: with phase windows of two periods, a piecewise-constant offset leaves two of every
+        // three phase steps perfect, so it scored 0.63 and was right to. A drifting phase must drift.
+        let fps = 11.7f32;
+        let period = 0.5f32;                     // 120 bpm mean
+        let mut seed: u32 = 0x9E37_79B9;
+        let mut beats: Vec<f32> = Vec::new();
+        let mut t = 0.0f32;
+        while t < 130.0 {
+            beats.push(t);
+            seed = seed.wrapping_mul(1664525).wrapping_add(1013904223);
+            let r = (seed >> 8) as f32 / 8_388_608.0 - 1.0;      // -1..1
+            t += period * (1.0 + 0.45 * r);
+        }
+        let mut p = Pulse::default();
+        let mut n = 0;
+        for i in 0..(120.0 * fps) as usize {
+            let ts = i as f32 / fps;
+            let on = beats.iter().any(|b| ts - b >= 0.0 && ts - b < 0.10);
+            let db = -30.0 + if on { 14.0 } else { 0.0 };
+            if let Some(Event::Pulse(r)) = p.feed(db, ts) {
+                n += 1;
+                eprintln!("phase-drifting periodicity reported {:.1} bpm lock {:.2}", r.bpm, r.strength);
+            }
+        }
+        assert_eq!(n, 0, "a periodicity with no consistent phase reported a pulse {n} times");
     }
 
     #[test]
