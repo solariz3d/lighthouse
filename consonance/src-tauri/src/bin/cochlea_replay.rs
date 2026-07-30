@@ -146,7 +146,16 @@ fn main() {
     println!("  called SPEECH: {speech_calls}   (a music fixture must read 0 — this is the negative control)");
     println!("  vibrato voices: {voices_heard}   (always 0 in a replay: the fine pitch track is live-only, not recorded)");
     if pulses.is_empty() {
-        println!("  pulse: none found   (correct for music with no beat — the negative control)");
+        // NEVER claim "correct for music with no beat" here. When PULSE_ENABLED is false nothing can
+        // reach this branch, so the label asserted a conclusion the gate made unfalsifiable — and it
+        // said "no beat" about a 130 bpm track. Same defect as the old "swells 0" line, in a line I
+        // wrote while fixing that one.
+        if cochlea::PULSE_ENABLED {
+            println!("  pulse: none found   (the detector looked and found nothing)");
+        } else {
+            println!("  pulse: NOT MEASURED — PULSE_ENABLED is false, so no reading can reach here.");
+            println!("         Run with PULSE_MEASURE=1 to see the candidate readings and their locks.");
+        }
     } else {
         let m = pulses.iter().sum::<f32>() / pulses.len() as f32;
         println!("  pulse: {} reading(s), mean {:.0} bpm, range {:.0}-{:.0}",
