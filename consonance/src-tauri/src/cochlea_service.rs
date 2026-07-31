@@ -265,13 +265,20 @@ where
                 let m = moment(&pk, 30.0);
                 let t = started.elapsed().as_secs_f32();
 
+                // Computed HERE, before recording, so a fixture can carry it. Vibrato reads the
+                // fine sub-window track and nothing else; while recordings stored only peaks,
+                // every vibrato case was synthetic and A's guard (829ad53) could not be checked
+                // against a single real voice event. ~4 values per frame against 10 peak pairs.
+                let fine = pitch_track(&chunk, SAMPLE_RATE as f32);
+
                 if last_rec_check.elapsed().as_secs() >= 1 {
                     last_rec_check = Instant::now();
                     recording = data_dir.join("RECORD").exists();
                 }
                 if recording {
                     record_frame(&data_dir, t, &pk, level_db,
-                                 if last_np.is_empty() { None } else { Some(&last_np) });
+                                 if last_np.is_empty() { None } else { Some(&last_np) },
+                                 &fine);
                 }
 
                 // What is playing, polled rather than pushed, and emitted only when it CHANGES.
@@ -333,10 +340,9 @@ where
                         if let Some(h) = describe(&ev) { on_event(h); }
                     }
                 }
-                // The fine pitch track: four overlapping sub-windows per chunk, ~47 Hz, which is the
-                // only rate at which vibrato is visible at all. Separate from the main path so the
-                // tracker timing and every fixture stay exactly as they were.
-                let fine = pitch_track(&chunk, SAMPLE_RATE as f32);
+                // The fine pitch track: four overlapping sub-windows per chunk, ~47 Hz, which is
+                // the only rate at which vibrato is visible at all. Computed above so the recorder
+                // sees it too; consumed here at the rate vibrato needs.
                 let fine_rate = SAMPLE_RATE as f32 / 1024.0;
                 if let Some(ev) = vibrato.feed(&fine, t, fine_rate) {
                     if let Some(h) = describe(&ev) { on_event(h); }
@@ -367,7 +373,8 @@ where
 /// PEAKS, NOT AUDIO. 4096 floats per frame at twelve frames a second is 196 KB/s and unkeepable.
 /// Peaks are ~10 pairs, and they are what `moment()` consumes — so a recording exercises fusion,
 /// corroboration, naming, voting and the tracker, which is every layer that has broken today.
-pub fn record_frame(data_dir: &PathBuf, at: f32, peaks: &[crate::cochlea::Peak], db: f32, track: Option<&str>) {
+pub fn record_frame(data_dir: &PathBuf, at: f32, peaks: &[crate::cochlea::Peak], db: f32, track: Option<&str>,
+                    fine: &[Option<f32>]) {
     // The track title, on EVERY frame while known. Replay treats a change in this field as the
     // track boundary (Frame::track), and until the recorder wrote it no fixture could validate the
     // boundary fix at all — a fixture spanning a title change would replay the pre-f8807f1 bug and
@@ -377,11 +384,20 @@ pub fn record_frame(data_dir: &PathBuf, at: f32, peaks: &[crate::cochlea::Peak],
         .filter(|s| !s.is_empty())
         .map(|s| format!(",\"track\":\"{}\"", s.replace('\\', "\\\\").replace('"', "\\\"")))
         .unwrap_or_default();
+    // The fine pitch track, A's proposal from 829ad53: without it no fixture can exercise the
+    // vibrato path and every guard on it stays synthetic-only. null = sub-window unvoiced —
+    // absence of pitch is a measurement here, not a hole.
+    let fine_json = if fine.is_empty() { String::new() } else {
+        format!(",\"fine\":[{}]",
+            fine.iter().map(|v| v.map(|h| format!("{h:.1}")).unwrap_or_else(|| "null".into()))
+                .collect::<Vec<_>>().join(","))
+    };
     let line = format!(
-        "{{\"t\":{:.3},\"db\":{:.2}{}{}",
+        "{{\"t\":{:.3},\"db\":{:.2}{}{}{}",
         at,
         db,
         track_json,
+        fine_json,
         format!(",\"peaks\":[{}]}}",
             peaks.iter().map(|p| format!("[{:.2},{:.6}]", p.hz, p.mag)).collect::<Vec<_>>().join(",")),
     );
@@ -490,8 +506,8 @@ mod tests {
         let dir = std::env::temp_dir().join(format!("cochlea-frames-test-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).unwrap();
-        record_frame(&dir, 1.0, &[], -30.0, Some(r#"Prince — "1999""#));
-        record_frame(&dir, 2.0, &[], -30.0, None);
+        record_frame(&dir, 1.0, &[], -30.0, Some(r#"Prince — "1999""#), &[]);
+        record_frame(&dir, 2.0, &[], -30.0, None, &[]);
         let text = std::fs::read_to_string(dir.join("frames.jsonl")).unwrap();
         let mut lines = text.lines();
         let first: serde_json::Value = serde_json::from_str(lines.next().unwrap())
@@ -499,6 +515,25 @@ mod tests {
         assert_eq!(first.get("track").and_then(|v| v.as_str()), Some(r#"Prince — "1999""#));
         let second: serde_json::Value = serde_json::from_str(lines.next().unwrap()).unwrap();
         assert!(second.get("track").is_none(), "no title known → no field, not an empty string");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn recorded_frames_carry_the_fine_track_and_unvoiced_stays_null() {
+        // A's proposal from 829ad53: vibrato reads the fine track and nothing else, so until the
+        // recorder writes it, every vibrato guard is checkable only against synthetic cases. The
+        // null matters as much as the numbers — an unvoiced sub-window is a measurement, and
+        // collapsing it to 0.0 or dropping it would shift every later reading's timeline.
+        let dir = std::env::temp_dir().join(format!("cochlea-fine-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        record_frame(&dir, 1.0, &[], -30.0, None, &[Some(77.9), None, Some(78.1), Some(78.0)]);
+        let text = std::fs::read_to_string(dir.join("frames.jsonl")).unwrap();
+        let v: serde_json::Value = serde_json::from_str(text.lines().next().unwrap()).unwrap();
+        let fine = v.get("fine").and_then(|f| f.as_array()).expect("fine field present");
+        assert_eq!(fine.len(), 4);
+        assert!((fine[0].as_f64().unwrap() - 77.9).abs() < 0.01);
+        assert!(fine[1].is_null(), "unvoiced must stay null, not 0.0 and not dropped");
         let _ = std::fs::remove_dir_all(&dir);
     }
 }
