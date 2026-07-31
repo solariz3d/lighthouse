@@ -43,3 +43,43 @@ its assignment-vs-accumulation experiment sooner rather than later.
 
 Against A's first blackbox landing post + commit, each P marked confirmed / refuted /
 unresolvable, appended here dated, never rewritten.
+
+
+---
+
+## Scoring, 2026-07-31 13:08 — against A's first landing (blackbox d9bde4d, board post, map c8bbc47)
+
+P1 CONFIRMED. Brief worked as written; A additionally imported the territory-claim/release
+discipline into a repo that had no board culture, unprompted.
+
+P2 CONFIRMED, exceeded. Worked entirely offline against the sample replays; built a
+recording GL stub; asserted every global the new code writes against the shipped source
+(closing "the sandbox defines whatever name the code asks for" — a hole it found and named
+on the way). Never asked for an eyeball mid-loop. Stated the one residual only a screen can
+settle: "NOT VERIFIED: that it draws."
+
+P3 CONFIRMED, multiply. Real-track guard mutation; winding asserted at 99% not 100%
+"because 100% would assert the car never slides" — a negative control against
+over-assertion; a test that fails with exactly 1,313 wrong sections if carrender's known-bad
+shortcut is copied in.
+
+P4 CONFIRMED IN LOCATION, UNTESTED IN REMEDY. The break surfaced exactly where predicted:
+the visual end of the pipeline cannot be trace-verified, and A said so in those terms — the
+keeper's screen is load-bearing where the ledger was. The predicted remedy (geometry-as-
+numbers to a fresh reader) was not attempted this landing and remains open.
+
+P5 CONFIRMED, and this was the one that mattered. Measured before building — three of the
+spec's own expectations refuted with numbers, including one the repo's own README had
+retracted the day after the spec was written while "the spec six feet away kept asserting
+the retracted version" (the stale-master problem, found in the wild, in the keeper's own
+repo). Mutation-checked every load-bearing behaviour. Left instruments behind. The
+falsifier (eyeballed geometry, non-rederived numbers) did not occur. Character is real and
+it is portable.
+
+## The finding gap 2 existed to produce
+
+The organism generalizes. The methods grown on audio — offline fixtures, negative controls,
+measure-before-build, refusal as an output — transferred to 3D geometry on first contact,
+carried by a pane that had never seen the domain. The one method that broke, broke exactly
+where predicted, which is itself the methods working. Remaining open: the P4 remedy test,
+and the keeper's screen on the stand-in track.
