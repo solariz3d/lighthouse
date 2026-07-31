@@ -1141,6 +1141,24 @@ const VIB_DEPTH_CENTS: f32 = 25.0;
 /// Enough cycles to be an oscillation rather than a bend: 1.5 s holds six at 4 Hz.
 const VIB_WINDOW_SECS: f32 = 1.5;
 const VIB_MIN_GAP_SECS: f32 = 3.0;
+/// SHAPE, not size — how far the in-band peak must stand above the two things a SOURCE HOP has and a
+/// vibrato does not. Measured on square alternations between two partials: both probes come out at
+/// 0.13–3.24 for every hop tried, and identically for 100¢, 300¢ and 600¢ separations, because this
+/// is a property of the waveform and not of its amplitude. Real vibrato with pitch noise up to ±50¢
+/// stays at 3.99 and above. 3.5 splits them. See `Vibrato::feed` for the derivation of the 3.
+const VIB_SHAPE_MIN: f32 = 3.5;
+/// A bound on the CLAIM, not a source-hop guard — and it catches nothing the shape probes miss.
+///
+/// Said plainly because the motivating artifact makes it look load-bearing and it is not: removing
+/// it changes no result on any hop that has been constructed, at any separation from 100 to 600
+/// cents and any flip rate from 5 to 20 Hz. The shape probes already have all of them.
+///
+/// What it does defend is the word "voice". Strings and voice run ±20–100¢, extreme operatic
+/// technique reaches ~±150; a synth LFO at ±300¢ is a genuine, smooth pitch oscillation that would
+/// pass both probes honestly and still not be a singer. Keeping this means the event's own claim
+/// stays inside human technique. If that reasoning does not hold, this constant is the thing to
+/// delete — it is doing nothing else.
+const VIB_MAX_DEPTH_CENTS: f32 = 150.0;
 
 impl Vibrato {
     /// `pitches` is one chunk's worth of fine track; `t` is the chunk's start time, `rate` its
@@ -1182,12 +1200,9 @@ impl Vibrato {
         let slope = if den > 0.0 { num / den } else { 0.0 };
         let flat: Vec<f32> = self.hist.iter().map(|(x, c)| c - (mc + slope * (x - mt))).collect();
 
-        // Strongest frequency in the vibrato band, and the depth at it.
+        // Amplitude of the pitch series at one modulation frequency.
         let series_rate = n / span.max(1e-6);
-        let mut best = (0.0f32, 0.0f32);          // (power, freq)
-        let steps = 12;
-        for k in 0..steps {
-            let f = VIB_LO_HZ + (VIB_HI_HZ - VIB_LO_HZ) * (k as f32 + 0.5) / steps as f32;
+        let power = |f: f32| -> f32 {
             let w = 2.0 * std::f32::consts::PI * f / series_rate;
             let (mut re, mut im) = (0.0f32, 0.0f32);
             for (i, v) in flat.iter().enumerate() {
@@ -1195,11 +1210,65 @@ impl Vibrato {
                 re += v * ph.cos();
                 im -= v * ph.sin();
             }
-            let p = (re * re + im * im).sqrt() * 2.0 / n;
+            (re * re + im * im).sqrt() * 2.0 / n
+        };
+
+        // Strongest frequency in the vibrato band, and the depth at it.
+        let mut best = (0.0f32, 0.0f32);          // (power, freq)
+        let steps = 12;
+        for k in 0..steps {
+            let f = VIB_LO_HZ + (VIB_HI_HZ - VIB_LO_HZ) * (k as f32 + 0.5) / steps as f32;
+            let p = power(f);
             if p > best.0 { best = (p, f); }
         }
         let (depth, rate_hz) = best;
-        let present = depth >= VIB_DEPTH_CENTS;
+
+        // IS THIS A WOBBLE OR A TRACKER CHANGING ITS MIND? The 700-cent rebase above catches a jump
+        // of more than a fifth. Everything smaller was recorded as real excursion, and the worst
+        // reading on record — ±224¢ at 7.4 Hz on an E♭2 — is what that costs: no human technique
+        // produces it, and the fine track was alternating between two sources. The pitch tracker's
+        // own docstring names this failure and the magnitude floor it uses against it; the floor is
+        // not sufficient.
+        //
+        // MEASURED FIRST, because the obvious guard is wrong. A depth cap catches only the loud half:
+        // the reported depth is NOT the distance between the two sources. A hop flipping faster than
+        // the band ALIASES into it — 600 cents apart flipping at 20 Hz reports 83.5¢ at 6.2 Hz, which
+        // is indistinguishable from a real singer by depth and rate alone. So the guard has to read
+        // the SHAPE of the oscillation rather than its size.
+        //
+        // A vibrato is smooth; a source hop is a square alternation, and a square is not a sinusoid
+        // in two checkable ways:
+        //   * its fundamental may sit ABOVE the band, leaving only an alias inside — so compare the
+        //     in-band peak against the strongest thing between 9 Hz and Nyquist. Hops: 0.13–0.33.
+        //   * a square carries a THIRD HARMONIC at exactly 1/3 its fundamental amplitude, so an
+        //     in-band hop scores 3.0 here by construction. A sinusoid has none. Hops: 0.96–3.24.
+        // Both probes are amplitude-independent — identical for 100¢, 300¢ and 600¢ separations —
+        // which is the point: they read the waveform, not the excursion.
+        //
+        // The above-band probe deliberately takes a max over many bins, which for broadband noise
+        // measures an extremum rather than a typical value. That is the error this file recorded in
+        // the pulse work, tolerated here on purpose because it errs toward SILENCE: an inflated
+        // out-of-band reading suppresses a report, and a suppressed voice line costs less than a
+        // fabricated one. The third-harmonic probe reads a single frequency and does not have it.
+        //
+        // BOTH ARE LOAD-BEARING, which is not what the first measurement suggested. The above-band
+        // probe alone appeared sufficient — it catches an in-band square's third harmonic for free,
+        // since 3f lands inside 9–22 Hz for most of the band — so the second probe looked redundant
+        // and was nearly deleted. It is not: at a flip rate of 7 Hz the third harmonic sits at 21–22
+        // and slides past the ceiling, and with the square probe removed two hops leak through
+        // reporting 7.4 Hz — the exact rate of the artifact that started this. Redundancy that stops
+        // being redundant at one corner of the range is the corner that gets found in production.
+        let mut above = 0.0f32;
+        let mut f = 9.0;
+        let ceiling = (series_rate / 2.0 - 1.0).min(22.0);
+        while f <= ceiling { above = above.max(power(f)); f += 0.25; }
+        let alias_ok = depth / above.max(1e-6) >= VIB_SHAPE_MIN;
+        let square_ok = depth / power(3.0 * rate_hz).max(1e-6) >= VIB_SHAPE_MIN;
+
+        let present = depth >= VIB_DEPTH_CENTS
+            && depth <= VIB_MAX_DEPTH_CENTS
+            && alias_ok
+            && square_ok;
         if present == self.reported { return None; }
         if present && now - self.last_report < VIB_MIN_GAP_SECS { return None; }
         self.last_report = now;
@@ -2518,6 +2587,133 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
+    fn explore_source_hop_signature() {
+        let sr = 46.875;
+        // A source hop: the fine track alternating between two partials `apart` cents apart at
+        // `flip` Hz. Not a wobble — a square alternation, which is what a tracker changing its mind
+        // between two sources actually produces.
+        let hop = |apart: f32, flip: f32| -> Vec<Option<f32>> {
+            let n = (6.0 * sr) as usize;
+            (0..n).map(|i| {
+                let t = i as f32 / sr;
+                let hi = ((t * flip * 2.0) as i32) % 2 == 1;
+                Some(77.78 * if hi { 2f32.powf(apart / 1200.0) } else { 1.0 })
+            }).collect()
+        };
+        let run = |track: &[Option<f32>]| -> Option<VibratoReading> {
+            let mut v = Vibrato::default();
+            let mut got = None;
+            for (i, chunk) in track.chunks(4).enumerate() {
+                if let Some(Event::Vibrato(r)) = v.feed(chunk, i as f32 * 4.0 / sr, sr) {
+                    if got.is_none() { got = Some(r); }
+                }
+            }
+            got
+        };
+        eprintln!("--- SOURCE HOPS (square alternation between two partials) ---");
+        for apart in [100.0, 200.0, 300.0, 450.0, 600.0] {
+            for flip in [2.0, 5.0, 9.0, 14.0, 20.0] {
+                match run(&hop(apart, flip)) {
+                    Some(r) => eprintln!("apart={apart:5.0}¢ flip={flip:4.1}Hz -> depth {:6.1}¢  rate {:.1} Hz",
+                                         r.depth_cents, r.rate_hz),
+                    None => eprintln!("apart={apart:5.0}¢ flip={flip:4.1}Hz -> (nothing)"),
+                }
+            }
+        }
+        eprintln!("--- REAL VIBRATO (the negative control this must not silence) ---");
+        for (d, f) in [(20.0, 4.5), (55.0, 5.2), (100.0, 6.0), (100.0, 7.0), (150.0, 5.0)] {
+            let (track, rate) = wobbling(220.0, d, f, 6.0);
+            assert!((rate - sr).abs() < 1.0);
+            match run(&track) {
+                Some(r) => eprintln!("d={d:5.0}¢ f={f:4.1}Hz -> depth {:6.1}¢  rate {:.1} Hz",
+                                     r.depth_cents, r.rate_hz),
+                None => eprintln!("d={d:5.0}¢ f={f:4.1}Hz -> (nothing)"),
+            }
+        }
+
+        // SQUARENESS. A vibrato is a smooth oscillation; a source hop is a square alternation, and a
+        // square carries energy at odd multiples of its flip rate. So the question is whether the
+        // modulation energy ABOVE the vibrato band separates them — and whether it survives the
+        // pitch-estimation noise a real fine track carries, which is the part that decides whether
+        // this is shippable or just elegant.
+        let power_at = |series: &[f32], f: f32, srate: f32| -> f32 {
+            let n = series.len() as f32;
+            let w = 2.0 * std::f32::consts::PI * f / srate;
+            let (mut re, mut im) = (0.0f32, 0.0f32);
+            for (i, v) in series.iter().enumerate() {
+                re += v * (w * i as f32).cos();
+                im -= v * (w * i as f32).sin();
+            }
+            (re * re + im * im).sqrt() * 2.0 / n
+        };
+        // Cents series over the last 1.5 s, detrended, exactly as the detector sees it.
+        let cents_series = |track: &[Option<f32>]| -> Vec<f32> {
+            let keep: Vec<f32> = track.iter().filter_map(|p| *p).collect();
+            let tail = &keep[keep.len().saturating_sub((1.5 * sr) as usize)..];
+            let r0 = tail[0];
+            let raw: Vec<f32> = tail.iter().map(|h| cents(h / r0)).collect();
+            let n = raw.len() as f32;
+            let mean = raw.iter().sum::<f32>() / n;
+            raw.iter().map(|c| c - mean).collect()
+        };
+        let ratio = |track: &[Option<f32>]| -> (f32, f32) {
+            let s = cents_series(track);
+            let mut inb = 0.0f32;
+            let mut out = 0.0f32;
+            let mut f = 4.0;
+            while f <= 7.5 { inb = inb.max(power_at(&s, f, sr)); f += 0.25; }
+            let mut f = 9.0;
+            while f <= 22.0 { out = out.max(power_at(&s, f, sr)); f += 0.25; }
+            (inb, out)
+        };
+        // Deterministic pitch-estimation noise, since a real fine track is not a clean sinusoid.
+        let noisy = |track: &[Option<f32>], cents_rms: f32| -> Vec<Option<f32>> {
+            let mut seed = 0x2545F491u32;
+            track.iter().map(|p| p.map(|hz| {
+                seed = seed.wrapping_mul(1664525).wrapping_add(1013904223);
+                let u = (seed >> 8) as f32 / 16_777_216.0 - 0.5;
+                hz * 2f32.powf(u * 2.0 * cents_rms / 1200.0)
+            })).collect()
+        };
+        // Probing the THIRD HARMONIC of the detected rate, not the max above the band. Taking a max
+        // over fifty bins measures an extremum of the noise, not its typical size — the exact error
+        // the pulse redesign recorded ("a typical value and an extreme one are different
+        // quantities"), and it is what made the noisy sinusoid look close to a square below.
+        let third = |track: &[Option<f32>]| -> (f32, f32, f32) {
+            let s = cents_series(track);
+            let mut inb = (0.0f32, 0.0f32);        // (power, freq)
+            let mut f = 4.0;
+            while f <= 7.5 {
+                let p = power_at(&s, f, sr);
+                if p > inb.0 { inb = (p, f); }
+                f += 0.25;
+            }
+            let h3 = power_at(&s, 3.0 * inb.1, sr);
+            let mut out = 0.0f32;
+            let mut f = 9.0;
+            while f <= 22.0 { out = out.max(power_at(&s, f, sr)); f += 0.25; }
+            (inb.0, h3, out)
+        };
+        eprintln!("--- TWO PROBES: alias (in/above) and squareness (in/3rd-harmonic) ---");
+        for (d, f) in [(55.0, 5.2), (100.0, 6.0), (150.0, 5.0)] {
+            let (track, _) = wobbling(220.0, d, f, 6.0);
+            for nz in [0.0, 25.0, 50.0, 80.0] {
+                let (i, h, o) = third(&noisy(&track, nz));
+                eprintln!("vibrato d={d:5.0} f={f:3.1} noise±{nz:4.0}¢ -> alias {:6.2}   square {:6.2}",
+                          i / o.max(1e-6), i / h.max(1e-6));
+            }
+        }
+        for apart in [100.0, 300.0, 600.0] {
+            for flip in [5.0, 6.5, 9.0, 14.0, 20.0] {
+                let (i, h, o) = third(&hop(apart, flip));
+                eprintln!("hop apart={apart:5.0} flip={flip:4.1}        -> alias {:6.2}   square {:6.2}",
+                          i / o.max(1e-6), i / h.max(1e-6));
+            }
+        }
+    }
+
+    #[test]
     fn a_dead_steady_pitch_reports_nothing() {
         // The wall that matters: a synth pad, an organ, anything sequenced. Calling those a voice
         // would make the feature worthless.
@@ -2546,6 +2742,104 @@ mod tests {
             if let Some(Event::Vibrato(_)) = v.feed(chunk, i as f32 * 4.0 / sr, sr) { reports += 1; }
         }
         assert_eq!(reports, 0, "a monotonic bend was called vibrato {reports} times");
+    }
+
+    /// A source hop is a square alternation between two partials. This is the artifact class behind
+    /// the worst reading on record — ±224¢ at 7.4 Hz on an E♭2 — and it comes in two shapes, one of
+    /// which no depth cap can see.
+    ///
+    /// HONEST LIMIT, stated because it is the same gap that let this detector ship silent once
+    /// already: NO FIXTURE CAN EXERCISE ANY OF THIS. Recordings store the top ten spectral peaks per
+    /// 4096-sample frame, and vibrato needs the fine sub-window track, which is computed live and
+    /// never written. So every case below is synthetic, and the four voice events the Adagio produced
+    /// live — the real-world negative control this rule should be held against — CANNOT BE REPLAYED
+    /// to check that they survive it. What that costs is stated on the board with a proposal to
+    /// record the fine track, which is the only thing that would close it.
+    #[test]
+    fn a_tracker_hopping_between_two_sources_is_not_called_a_voice() {
+        let sr = 46.875;
+        let hop = |apart: f32, flip: f32| -> Vec<Option<f32>> {
+            let n = (6.0 * sr) as usize;
+            (0..n).map(|i| {
+                let t = i as f32 / sr;
+                let hi = ((t * flip * 2.0) as i32) % 2 == 1;
+                // 77.78 Hz is E♭2 — the pitch the worst recorded artifact was reported on, where one
+                // 2048-point bin spans 454 cents and a "wobble" is the estimate changing bins.
+                Some(77.78 * if hi { 2f32.powf(apart / 1200.0) } else { 1.0 })
+            }).collect()
+        };
+        let mut claimed = Vec::new();
+        for apart in [100.0, 200.0, 300.0, 450.0, 600.0] {
+            // 5 Hz sits INSIDE the vibrato band — the hop that reports an impossible depth. 9, 14 and
+            // 20 Hz sit above it and ALIAS in, reporting depths a singer could plausibly produce:
+            // measured at 27.8¢ to 149.6¢, every one of them inside the human range. A depth cap sees
+            // the first kind and is blind to the second, which is why the guard reads shape.
+            // 7.4 Hz is the rate the worst recorded artifact was reported at, and it is the awkward
+            // one: three times it is 22.2 Hz, which sits just outside the above-band probe's ceiling.
+            for flip in [5.0, 7.0, 7.4, 9.0, 14.0, 20.0] {
+                let track = hop(apart, flip);
+                let mut v = Vibrato::default();
+                for (i, chunk) in track.chunks(4).enumerate() {
+                    if let Some(Event::Vibrato(r)) = v.feed(chunk, i as f32 * 4.0 / sr, sr) {
+                        claimed.push(format!("{apart:.0}¢ apart flipping at {flip:.0} Hz -> \
+                                              a voice wobbling ±{:.0}¢ at {:.1} Hz",
+                                             r.depth_cents, r.rate_hz));
+                    }
+                }
+            }
+        }
+        assert!(claimed.is_empty(), "a tracker alternating between two partials was called singing:\n  {}",
+                claimed.join("\n  "));
+    }
+
+    /// THE NEGATIVE CONTROL FOR THE GUARD ABOVE, and the wall that matters more than the guard does.
+    ///
+    /// Strings and voice run roughly ±20–100¢ at 4–8 Hz; extreme operatic technique reaches ±150.
+    /// A rule that silenced those would trade one artifact for the whole feature. Run with pitch
+    /// noise as well as clean, because a real fine track is not a clean sinusoid.
+    ///
+    /// WHAT THE GUARD COSTS, found by this test and reported rather than tuned away. At ±50¢ of pitch
+    /// noise a ±30¢ wobble is DECLINED, and the guard is the cause: with `VIB_SHAPE_MIN` set to 0 the
+    /// same input reports. That is the rule working as written rather than a bug — the noise is 1.7
+    /// times the signal, and the shape probes cannot tell a wobble from a hop at that ratio. It errs
+    /// toward silence, which is the trade this detector is supposed to make: a fabricated voice line
+    /// costs more than a missed one. It is left UNASSERTED on purpose, so that a later improvement in
+    /// low-SNR handling does not turn a test red for getting better.
+    ///
+    /// The asserted band is everything at ±25¢ noise and everything from ±55¢ up at ±50¢ noise, which
+    /// covers the stated range of real technique with margin.
+    #[test]
+    fn real_vibrato_survives_the_source_hop_guard() {
+        let sr = 46.875;
+        let noisy = |track: &[Option<f32>], cents_rms: f32| -> Vec<Option<f32>> {
+            let mut seed = 0x2545F491u32;
+            track.iter().map(|p| p.map(|hz| {
+                seed = seed.wrapping_mul(1664525).wrapping_add(1013904223);
+                let u = (seed >> 8) as f32 / 16_777_216.0 - 0.5;
+                hz * 2f32.powf(u * 2.0 * cents_rms / 1200.0)
+            })).collect()
+        };
+        let reports = |d: f32, f: f32, nz: f32| -> bool {
+            let (clean, rate) = wobbling(220.0, d, f, 6.0);
+            let track = noisy(&clean, nz);
+            let mut v = Vibrato::default();
+            let mut got = false;
+            for (i, chunk) in track.chunks(4).enumerate() {
+                if let Some(Event::Vibrato(_)) = v.feed(chunk, i as f32 * 4.0 / rate, rate) { got = true; }
+            }
+            got
+        };
+        let mut silenced = Vec::new();
+        for (d, f) in [(30.0, 4.5), (55.0, 5.2), (80.0, 6.5), (100.0, 6.0), (100.0, 7.0), (140.0, 5.0)] {
+            for nz in [0.0, 25.0] {
+                if !reports(d, f, nz) { silenced.push(format!("±{d:.0}¢ at {f:.1} Hz, noise ±{nz:.0}¢")); }
+            }
+            // The shallowest wobble is excluded at this noise level, and only there. See above.
+            if d >= 55.0 && !reports(d, f, 50.0) {
+                silenced.push(format!("±{d:.0}¢ at {f:.1} Hz, noise ±50¢"));
+            }
+        }
+        assert!(silenced.is_empty(), "the guard silenced real vibrato:\n  {}", silenced.join("\n  "));
     }
 
     #[test]
