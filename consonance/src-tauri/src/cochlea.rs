@@ -588,7 +588,7 @@ const SWELL_MIN_GAP_SECS: f32 = 15.0;
 /// windows change the SIGN of their refit somewhere across those four trims — including the first
 /// artifact, which does not reverse at all at 3 s. So the trim ships ON THE EVENT rather than being
 /// left implicit, and the refit ships as a number rather than as a verdict. n here is five.
-const SWELL_REFIT_TRIM_SECS: f32 = 6.0;
+pub const SWELL_REFIT_TRIM_SECS: f32 = 6.0;
 
 /// Least-squares slope of (time, dB), in dB per second.
 ///

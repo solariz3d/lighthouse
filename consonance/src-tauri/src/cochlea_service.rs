@@ -30,16 +30,39 @@ use crate::cochlea::{
 };
 use crate::listen::anticheat_present;
 
-/// One line of what the room is doing. Shaped for reading, not for parsing — the whole point is
-/// that a person or an instance can look at it and hear something.
+/// One line of what the room is doing — the era-4 envelope. Field DECLARATION ORDER is JSON
+/// order: measurements first, `text` last as a rendered convenience, because for two eras the
+/// prose was the only surface and every consumer had to parse English with `·` separators.
+///
+/// The policy (stated in the header line, enforced here): `conf` appears ONLY where its chance
+/// level is known — pulse, whose `chance` travels per reading. Everything else ships raw
+/// evidence in `ev`, in native units, or nothing beyond `dbfs`. Absence of `conf` is a refusal,
+/// not certainty; `Option` fields that are `None` are ABSENT from the JSON, never null — an
+/// absent measurement must not be readable as a present one.
 #[derive(Clone, Debug, Serialize)]
 pub struct Heard {
     pub at: String,
+    /// Seconds into the current track, from the media session's extrapolated position. Absent
+    /// when no timeline is known. The second clock both cold readers asked for: wall time alone
+    /// forces a stranger to subtract stamps against an onset they must guess is the track start.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub pos: Option<f64>,
     pub kind: String,
     /// Which subsystem spoke. A context-free reader of the ledger correctly inferred four
     /// detectors from 22 lines and then could not tell the player's metadata from the audio
-    /// analysis — the split exists and the stream hid it. Additive: old consumers ignore it.
+    /// analysis — the split exists and the stream hid it.
     pub det: &'static str,
+    /// Level of the analysis window this event came from, dBFS re the tap's full scale. On every
+    /// audio event because "the −55 dBFS pitch guess and the −38 dBFS chord recognition are
+    /// typographically identical" was the cold read's sharpest complaint, and this one field
+    /// separates them on sight.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub dbfs: Option<f32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub conf: Option<f32>,
+    /// Kind-specific evidence, native units, shapes fixed by ERA4-CONF-DESIGN.md.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub ev: Option<serde_json::Value>,
     pub text: String,
 }
 
@@ -61,7 +84,45 @@ fn det_for(kind: &str) -> &'static str {
         "voice" => "vibrato",
         "track" => "player",
         "stopped" => "capture",
+        "header" => "service",
         _ => "unknown",
+    }
+}
+
+/// The header line, first thing on every listening session — G's item 1, "the whole ballgame":
+/// both cold readers built wrong worlds out of undeclared conventions (a mic that was a tap, a
+/// dB with no reference, a tension word with no stated rule). Everything here is checkable
+/// against the code it describes.
+///
+/// The restless rule is stated as what it IS — a hand-labelled column in the JUST table — and
+/// NOT as `num+den > 16`, which G reverse-engineered and which reproduces the partition on
+/// everything the corpus happened to contain but is FALSE on the table itself: 7:4 harmonic
+/// seventh is restless at complexity 11. Shipping the tidy guess in the header would have been
+/// the exact crime this era exists to stop.
+fn header(source: &str) -> Heard {
+    Heard {
+        at: stamp(),
+        pos: None,
+        kind: "header".into(),
+        det: det_for("header"),
+        dbfs: None,
+        conf: None,
+        ev: Some(serde_json::json!({
+            "schema": 4,
+            "tap": "system-audio, per-process loopback — no microphone, no room",
+            "source": source,
+            "date": chrono::Local::now().format("%Y-%m-%d").to_string(),
+            "tz": chrono::Local::now().format("%:z").to_string(),
+            "sr": SAMPLE_RATE,
+            "detectors": ["player", "tracker", "swell", "speech", "pulse", "vibrato", "capture"],
+            "conf_policy": "conf appears only where its chance level travels with it: pulse.conf, with per-reading chance = 1/sqrt(n). Every other kind ships raw evidence in ev, in native units. Absence of conf is a refusal, not certainty.",
+            "derived": {
+                "restless": "hand-labelled per ratio in the just-intonation table (seconds, sevenths, tritone, harmonic seventh restless; unison through sixths settled). complexity = num+den travels per interval so the correlation is checkable — it is NOT the rule: 7:4 is restless at complexity 11."
+            },
+            "units": { "levels": "dBFS re the tap's full scale" },
+            "swell": { "trim_s": crate::cochlea::SWELL_REFIT_TRIM_SECS, "note": "refit_db is a second measurement over the same window past its head, not a verdict" }
+        })),
+        text: "listen stream, schema 4 — this header states every convention; a reader should never have to guess the tap, the units, or the rules".into(),
     }
 }
 
@@ -107,18 +168,23 @@ pub struct Service(pub Mutex<Listening>, pub Mutex<Snapshot>);
 
 fn ledger_path(data_dir: &PathBuf) -> PathBuf { data_dir.join("heard.jsonl") }
 
-fn describe(e: &Event) -> Option<Heard> {
+/// `dbfs` is the level of the window the event came from; `pos` the track position when known.
+/// Every audio event leaves here carrying at least `dbfs` — no line ships bare, because absence
+/// of evidence reads as authority, which is the failure this whole era exists to remove.
+fn describe(e: &Event, dbfs: f32, pos: Option<f64>) -> Option<Heard> {
     let now = stamp();
-    let (kind, text) = match e {
-        Event::Onset { hz, .. } => {
+    let (kind, text, conf, ev) = match e {
+        Event::Onset { hz, partials, inferred } => {
             // The name first, the frequency second. An afternoon was spent reading "~467 Hz" and
             // converting it by hand every time, which is the instrument leaving its work undone.
-            // `partials` and `inferred` ride the event for the structured fields; the rendered line
-            // stays the sentence a human reads.
+            // Evidence as two fields and never one score: the corpus's only two rich onsets are
+            // its only two inferred ones, so any weighting reverses on the cases it must separate.
             let (name, cents) = crate::cochlea::note_name(*hz);
-            ("onset", format!("sound begins · {name} ({:+.0}¢, {:.0} Hz)", cents, hz))
+            ("onset", format!("sound begins · {name} ({:+.0}¢, {:.0} Hz)", cents, hz),
+             None,
+             Some(serde_json::json!({ "hz": hz, "partials": partials, "inferred": inferred })))
         }
-        Event::Silence => ("silence", "silence".to_string()),
+        Event::Silence => ("silence", "silence".to_string(), None, None),
         // "WANTS TO MOVE" IS GONE FROM THE TEXT, and its removal is the whole of era 4's item 13.
         // It asserted functional harmony — a leading tone, a seventh under a dominant — which needs a
         // key, a chord function and voice leading, none of which exist here. What is actually
@@ -140,6 +206,27 @@ fn describe(e: &Event) -> Option<Heard> {
                     .map(|i| format!("{}:{} {}", i.num, i.den, i.name))
                     .collect::<Vec<_>>().join(" · "),
             ),
+            None,
+            Some(serde_json::json!({
+                // cents_off and votes per interval: the difference between an analysis and a
+                // Rorschach test, per the first cold read. restless per interval so a reader
+                // sees WHICH one carries the tension label; complexity so the header's stated
+                // correlation is checkable line by line.
+                "intervals": intervals.iter().map(|i| serde_json::json!({
+                    "ratio": format!("{}:{}", i.num, i.den),
+                    "name": i.name,
+                    "cents_off": (i.cents_off * 10.0).round() / 10.0,
+                    "votes": i.votes,
+                    "restless": i.restless,
+                    "complexity": i.complexity(),
+                })).collect::<Vec<_>>(),
+                "chord": chord.as_ref().map(|c| serde_json::json!({
+                    "name": c.name,
+                    "extra": c.extra,
+                    "inversion": c.inversion,
+                    "votes": c.votes,
+                })),
+            })),
         ),
         Event::Pulse(p) => {
             // Steadiness in words rather than a number: a reader wants to know whether it is a
@@ -148,13 +235,20 @@ fn describe(e: &Event) -> Option<Heard> {
                        else if p.steady > 0.5 { "steady" }
                        else if p.steady > 0.25 { "breathing" }
                        else { "elastic" };
-            ("pulse", format!("pulse · {:.0} bpm · {feel}", p.bpm))
+            // The one kind allowed a `conf`, BECAUSE its chance level travels beside it —
+            // "0.6 against a chance of 0.17" means everything, 0.6 alone means nothing.
+            ("pulse", format!("pulse · {:.0} bpm · {feel}", p.bpm),
+             Some(p.strength),
+             Some(serde_json::json!({ "bpm": p.bpm, "chance": p.chance, "steady": p.steady })))
         }
         Event::Vibrato(v) => {
             // The note name, because "880 Hz wobbling" is the same unread number the onsets used to
-            // be. A singer thinks in notes.
+            // be. A singer thinks in notes. No conf, measured refusal: no fixture carries the fine
+            // track yet, so no vibrato number has ever been sweepable against real material.
             let (name, _) = crate::cochlea::note_name(v.hz);
-            ("voice", format!("a voice · {name} wobbling ±{:.0}¢ at {:.1} Hz", v.depth_cents, v.rate_hz))
+            ("voice", format!("a voice · {name} wobbling ±{:.0}¢ at {:.1} Hz", v.depth_cents, v.rate_hz),
+             None,
+             Some(serde_json::json!({ "hz": v.hz, "depth_cents": v.depth_cents, "rate_hz": v.rate_hz })))
         }
         Event::Speech { talking, evidence } => (
             if *talking { "speech" } else { "music" },
@@ -167,6 +261,11 @@ fn describe(e: &Event) -> Option<Heard> {
             } else {
                 "back to music".to_string()
             },
+            // No conf, the strongest refusal in the design: the detector failed its negative
+            // control on 2 of 8 real fixtures, and a margin-based conf would have scored the
+            // false positive at 2.7× threshold — a number vouching for a wrong verdict.
+            None,
+            Some(serde_json::json!({ "syllabic": evidence.syllabic, "gaps_db": evidence.gaps_db })),
         ),
         // `from` is on the line because without it the dB figure is unreadable: the same +30 dB is a
         // playback ramp off the noise floor or real music getting louder, and 10 of 16 eligible track
@@ -179,11 +278,18 @@ fn describe(e: &Event) -> Option<Heard> {
             if *rising { "growing" } else { "fading" },
             format!("{} · {:+.1} dB over {:.0}s (from {:.1} dB, {:+.1} past the first {:.0}s)",
                     if *rising { "growing" } else { "fading" }, db, over, from, refit_db, trim_s),
+            None,
+            Some(serde_json::json!({
+                "from_dbfs": from, "delta_db": db, "window_s": over,
+                "refit_db": refit_db, "trim_s": trim_s,
+            })),
         ),
-        Event::StillUnresolved { secs } => ("held", format!("still unresolved · {:.1}s", secs)),
-        Event::Resolved { after_secs } => ("resolved", format!("resolved after {:.1}s", after_secs)),
+        Event::StillUnresolved { secs } => ("held", format!("still unresolved · {:.1}s", secs),
+            None, Some(serde_json::json!({ "secs": secs }))),
+        Event::Resolved { after_secs } => ("resolved", format!("resolved after {:.1}s", after_secs),
+            None, Some(serde_json::json!({ "after_s": after_secs }))),
     };
-    Some(Heard { at: now, kind: kind.into(), det: det_for(kind), text })
+    Some(Heard { at: now, pos, kind: kind.into(), det: det_for(kind), dbfs: Some(dbfs), conf, ev, text })
 }
 
 /// Start listening to one process tree. `on_event` receives every line; the caller decides
@@ -231,6 +337,10 @@ where
         let stop_a = stop.clone();
         std::thread::spawn(move || {
             let started = Instant::now();
+            // First line of every session: the header, so no reader ever meets an undeclared
+            // convention. Before any audio, deliberately — a stream that can begin with an
+            // onset is a stream whose conventions arrived after the first claim.
+            on_event(header(&source_label));
             let mut tracker = Tracker::default();
             let mut swell = Swell::default();
             let mut speech = SpeechSense::default();
@@ -257,8 +367,9 @@ where
                             last_ac_check = Instant::now();
                             sys.refresh_processes();
                             if !anticheat_present(&sys).is_empty() {
-                                on_event(Heard { at: stamp(),
+                                on_event(Heard { at: stamp(), pos: None,
                                                  kind: "stopped".into(), det: det_for("stopped"),
+                                                 dbfs: None, conf: None, ev: None,
                                                  text: "anti-cheat detected — capture stopped".into() });
                                 stop_a.store(true, Ordering::Relaxed);
                             }
@@ -319,8 +430,15 @@ where
                             swell.track_changed();
                             on_event(Heard {
                                 at: stamp(),
+                                // pos at a track line is the player's own claim about where the
+                                // new track starts — usually ~0, and a non-zero says mid-track
+                                // attach or seek, which G's item 3 asked to be distinguishable.
+                                pos: if np.duration > 0.0 { Some(np.position) } else { None },
                                 kind: "track".into(),
                                 det: det_for("track"),
+                                dbfs: Some(level_db),
+                                conf: None,
+                                ev: None,
                                 text: format!("♪ {line}"),
                             });
                         }
@@ -338,23 +456,31 @@ where
                     chord: m.chord.as_ref().map(|c| c.name.clone()),
                     level_db,
                 });
+                // The second clock. Position moves on the 1 s now-playing poll, so between polls
+                // it lags by up to a second — a known coarseness, not a hidden one; the header's
+                // reader has wall-clock milliseconds beside it. `duration > 0` is the "a timeline
+                // exists" test — position 0 with no duration means unknown, and unknown must not
+                // ship as 0.0 (the recorder's track rule, applied to the clock).
+                let pos = now_playing.as_ref()
+                    .filter(|np| np.duration > 0.0)
+                    .map(|np| np.position);
                 for ev in tracker.feed(m, t, 4.0) {
                     // An onset means the music just started, so the dynamics window must not reach
                     // back across it into the fade-in or the silence before it.
                     if matches!(ev, Event::Onset { .. }) { swell.sound_began(); }
-                    if let Some(h) = describe(&ev) { on_event(h); }
+                    if let Some(h) = describe(&ev, level_db, pos) { on_event(h); }
                 }
                 if let Some(ev) = swell.feed(level_db, t) {
-                    if let Some(h) = describe(&ev) { on_event(h); }
+                    if let Some(h) = describe(&ev, level_db, pos) { on_event(h); }
                 }
                 if let Some(ev) = speech.feed(level_db, t) {
-                    if let Some(h) = describe(&ev) { on_event(h); }
+                    if let Some(h) = describe(&ev, level_db, pos) { on_event(h); }
                 }
                 // Gated: see cochlea::PULSE_ENABLED. Fails its negative control on real orchestral
                 // recordings, inventing confident tempos for music with no beat.
                 if let Some(ev) = pulse.feed(level_db, t) {
                     if crate::cochlea::PULSE_ENABLED {
-                        if let Some(h) = describe(&ev) { on_event(h); }
+                        if let Some(h) = describe(&ev, level_db, pos) { on_event(h); }
                     }
                 }
                 // The fine pitch track: four overlapping sub-windows per chunk, ~47 Hz, which is
@@ -362,15 +488,16 @@ where
                 // sees it too; consumed here at the rate vibrato needs.
                 let fine_rate = SAMPLE_RATE as f32 / 1024.0;
                 if let Some(ev) = vibrato.feed(&fine, t, fine_rate) {
-                    if let Some(h) = describe(&ev) { on_event(h); }
+                    if let Some(h) = describe(&ev, level_db, pos) { on_event(h); }
                 }
 
                 if last_ac_check.elapsed().as_secs() >= 5 {
                     last_ac_check = Instant::now();
                     sys.refresh_processes();
                     if !anticheat_present(&sys).is_empty() {
-                        on_event(Heard { at: stamp(),
+                        on_event(Heard { at: stamp(), pos: None,
                                          kind: "stopped".into(), det: det_for("stopped"),
+                                         dbfs: None, conf: None, ev: None,
                                          text: "anti-cheat detected — capture stopped".into() });
                         stop_a.store(true, Ordering::Relaxed);
                     }
@@ -477,7 +604,7 @@ mod tests {
             Event::Resolved { after_secs: 5.2 },
         ];
         for e in evs {
-            let h = describe(&e).expect("every event must describe itself");
+            let h = describe(&e, -30.0, None).expect("every event must describe itself");
             assert!(!h.kind.is_empty() && !h.text.is_empty(), "{e:?} produced an empty line");
         }
     }
@@ -491,9 +618,9 @@ mod tests {
         // it asserted functional harmony the analyser cannot see, so the kind is now the ONLY place
         // the distinction lives. What was belt-and-braces is the belt.
         let calm = describe(&Event::Intervals {
-            intervals: vec![reading(3, 2, "fifth", false)], restless: false, chord: None }).unwrap();
+            intervals: vec![reading(3, 2, "fifth", false)], restless: false, chord: None }, -30.0, None).unwrap();
         let tense = describe(&Event::Intervals {
-            intervals: vec![reading(45, 32, "tritone", true)], restless: true, chord: None }).unwrap();
+            intervals: vec![reading(45, 32, "tritone", true)], restless: true, chord: None }, -30.0, None).unwrap();
         assert_eq!(calm.kind, "settled");
         assert_eq!(tense.kind, "restless");
         assert!(!tense.text.contains("wants to move"),
@@ -504,9 +631,82 @@ mod tests {
     fn the_ledger_writes_and_survives_a_missing_directory() {
         let dir = std::env::temp_dir().join(format!("cochlea-test-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
-        append(&dir, &Heard { at: "00:00:00".into(), kind: "onset".into(), det: "tracker", text: "x".into() });
+        append(&dir, &Heard { at: "00:00:00".into(), pos: None, kind: "onset".into(), det: "tracker",
+                              dbfs: Some(-30.0), conf: None, ev: None, text: "x".into() });
         assert!(ledger_path(&dir).exists(), "append must create the directory it needs");
         let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn absent_fields_are_absent_not_null_and_text_is_last() {
+        // Two envelope guarantees a schema reader depends on. Absent-not-null: an absent
+        // measurement must not be readable as a present one (G's format critique, A's design
+        // rule). Text-last: the prose is a rendered convenience, and its position says so.
+        let h = describe(&Event::Silence, -41.5, None).unwrap();
+        let s = serde_json::to_string(&h).unwrap();
+        assert!(!s.contains("\"pos\""), "unknown pos must be absent, not null: {s}");
+        assert!(!s.contains("\"conf\""), "silence carries no conf and must not pretend to: {s}");
+        assert!(s.contains("\"dbfs\":-41.5"), "the level is silence's evidence: {s}");
+        let text_at = s.rfind("\"text\"").unwrap();
+        for key in ["\"at\"", "\"kind\"", "\"det\"", "\"dbfs\""] {
+            assert!(s.find(key).unwrap() < text_at, "{key} must precede text: {s}");
+        }
+    }
+
+    #[test]
+    fn only_pulse_may_carry_conf_and_its_chance_travels_with_it() {
+        // The design's one rule, enforced at the printer: conf exists only where its null is
+        // known. Every other kind refusing is the point — a conf nothing measures is worse
+        // than none (A's design; the speech false positive would have shipped at 2.7×).
+        let evs: Vec<Event> = vec![
+            Event::Onset { hz: 110.0, partials: 1, inferred: false },
+            Event::Intervals { intervals: vec![reading(3, 2, "fifth", false)], restless: false, chord: None },
+            Event::Swelling { rising: true, db: 8.0, over: 48.0, from: -60.0, refit_db: 6.0, trim_s: 6.0 },
+            Event::Speech { talking: true, evidence: crate::cochlea::SpeechEvidence { syllabic: 1.2, gaps_db: 8.0, talking: true } },
+        ];
+        for e in evs {
+            let h = describe(&e, -30.0, None).unwrap();
+            assert!(h.conf.is_none(), "{} must refuse a conf", h.kind);
+            assert!(h.ev.is_some(), "{} refused conf, so its evidence block is mandatory", h.kind);
+        }
+        let p = describe(&Event::Pulse(crate::cochlea::PulseReading {
+            bpm: 130.0, strength: 0.63, steady: 0.8, chance: 0.17 }), -20.0, Some(30.0)).unwrap();
+        assert_eq!(p.conf, Some(0.63));
+        let ev = p.ev.unwrap();
+        assert!((ev["chance"].as_f64().unwrap() - 0.17).abs() < 1e-6,
+                "a conf without its chance beside it is a rank dressed as a probability");
+    }
+
+    #[test]
+    fn the_header_declares_the_tap_the_units_and_the_real_restless_rule() {
+        // G: "declare the tap — this is the whole ballgame." And the rule stated must be the
+        // table's truth, not the reverse-engineered num+den>16, which 7:4 falsifies at
+        // complexity 11 — shipping the tidy guess would be the label-becomes-premise crime
+        // in the one line built to prevent it.
+        let h = header("spotify.exe");
+        assert_eq!(h.kind, "header");
+        assert_eq!(h.det, "service");
+        let ev = h.ev.expect("the header's whole content is its ev block");
+        assert!(ev["tap"].as_str().unwrap().contains("no microphone"));
+        assert!(ev["units"]["levels"].as_str().unwrap().contains("dBFS"));
+        let rule = ev["derived"]["restless"].as_str().unwrap();
+        assert!(rule.contains("hand-labelled"), "the rule must be stated as what it is");
+        assert!(rule.contains("NOT the rule") || rule.contains("7:4"),
+                "the header must disown the tidy guess explicitly: {rule}");
+        assert!(ev["conf_policy"].as_str().unwrap().contains("refusal"));
+    }
+
+    #[test]
+    fn interval_evidence_carries_cents_votes_and_per_interval_restlessness() {
+        let h = describe(&Event::Intervals {
+            intervals: vec![reading(45, 32, "tritone", true)], restless: true, chord: None,
+        }, -25.0, Some(12.5)).unwrap();
+        assert_eq!(h.pos, Some(12.5));
+        let iv = &h.ev.unwrap()["intervals"][0];
+        assert_eq!(iv["ratio"].as_str().unwrap(), "45:32");
+        assert!(iv["restless"].as_bool().unwrap());
+        assert_eq!(iv["complexity"].as_u64().unwrap(), 77);
+        assert!(iv.get("cents_off").is_some() && iv.get("votes").is_some());
     }
 
     #[test]
