@@ -62,7 +62,10 @@ const ALIASES = {
  * plane itself — every chair verb and every refusal — so it is a real distinct author, not an
  * alias for whoever happens to hold the chair token. Tooling writers are likewise their own
  * thing: collapsing them into a pane would attribute a script's output to a person. */
-const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering']);
+// 'gate' joined 2026-07-31: the pull gate writes its own cards and decisions to the board
+// ("gate-card [c276f2f9] from 1582ff09 -> chair [interesting] DECISION NEEDED...") — control
+// plane, not a pane, same standing as 'chair'.
+const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering', 'gate']);
 
 let _letters = null;
 function letters() {
