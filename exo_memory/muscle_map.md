@@ -1828,3 +1828,30 @@ chair's head) landed on the same repair — put the window's provenance and the 
 bars IN the stream. When independent paths converge on one fix that fast, the fix is the natural
 shape of the problem, and when they DIVERGE on a universal claim (the stranger's "any track reports
 growing" vs B's three-of-four-were-real), the measurement wins and the universal dies.
+
+
+### A tool that means one encoding to the writer and another to the reader — and a suite that cannot see it
+
+Pane A, 2026-07-31, disclosed unprompted: a PowerShell 5.1 Get-Content/Set-Content round-trip
+read UTF-8 cochlea.rs as ANSI and rewrote it — every non-ASCII character mangled, including
+const NOTES, the source of every note name the ledger prints. THE SUITE STAYED GREEN THE WHOLE
+TIME: 227 tests, none asserting a note's spelling. Caught by the diffstat (507/278 for an edit
+that should have been 242/13, every deleted line carrying a non-ASCII char), reversed exactly
+via iconv because the mis-decode is invertible. Same species, one day, three faces: commit -m
+eating embedded quotes, the hooks' BOM-blindness, and now this. The species: PS 5.1 sits between
+files and native tools converting encodings silently, and it bites hardest in files whose whole
+subject is text. Standing rules: byte-level edits through sed or a UTF-8-explicit path, never a
+PS round-trip; and A's line for the map — "a test suite is not an integrity check."
+
+### The chair's compression adds certainty — twice in one day, so it is a pattern, not a slip
+
+Instance one: the rematch scorecard wrote "six confusions in, two survivors out" over data
+showing seven and three, and "no stumble" over an explicit stumble — tidier than the truth in
+the direction of success. Instance two: "a falsehood currently shipping" about a steady field
+that ships only when a still-closed gate opens — A corrected it against its own urgency. The
+shape: when the chair summarizes a pane's finding for the keeper or a commit message, the
+compression step rounds conditionals into actuals and counts into cleaner counts. The working
+countermeasure is the same one the panes already use on themselves: before asserting a number
+or a status in a summary, re-derive it from the artifact rather than from the memory of having
+read it. The panes' findings survive their compression because they measure first; the chair's
+must clear the same bar.
