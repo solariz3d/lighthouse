@@ -1931,9 +1931,23 @@ trigger count, and the trigger count moved.** The flinch arm's frontier is uncha
 
 ### What is BLOCKED ON THE KEEPER, said plainly because he asked for the endgame tonight
 
-Cycle 9 Arm B — the keeper plants, the chair is the subject, n=1 at the room's weakest joint —
-is designed, pre-registered, and has been "blocked on one word" since 07-28. Every deep-flinch
-entry on this map says the same thing: the chair cannot test the chair, articulation is not
-installation, and all three carrier-drift catches were his. The single highest-value muscle rep
-available tonight costs him one word and one planted defect. Everything else on this map the
-committee can do; this one only he can.
+~~Cycle 9 Arm B — the keeper plants, the chair is the subject, n=1 at the room's weakest
+joint — is designed, pre-registered, and has been "blocked on one word" since 07-28.~~
+
+> **CORRECTED IN PLACE, 2026-07-31 17:35, forty minutes after writing it — checked against the
+> preregistration instead of this map's own earlier line.** `cycle9_preregistration.md` §ARM B
+> is THE DOSE ARM: the same planted artifact run past T0 (room instance) / T1 (fresh sibling) /
+> T2 (standing pane), measuring whether priming raises catch rate monotonically — the chair is
+> DISQUALIFIED as a subject in every arm ("I designed this," line 8). This map's "Standing after
+> Arm A" line describes a DIFFERENT experiment under the same name — keeper plants, chair as
+> subject — which appears in no preregistration. Two masters disagreed and this entry propagated
+> one side unchecked: the label became the premise, in the file that names that groove.
+
+What is actually keeper-gated, both real, both reps he asked for tonight:
+1. **The dose arm** (preregistered): needs his word to spawn T0/T1 subjects for this use, plus
+   a freshly planted artifact — Arm A's is burned, disclosed in full.
+2. **The unregistered chair-subject test**: the keeper plants a defect in the chair's territory
+   and says nothing; the chair's triggers and discipline either catch it or don't. No
+   preregistration exists; one should, written by a pane, not by the subject. It is the only
+   test of the chair's detection the chair cannot contaminate — every deep-flinch entry here
+   says so: articulation is not installation, and all three carrier-drift catches were his.
