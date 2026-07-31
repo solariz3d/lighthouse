@@ -595,8 +595,23 @@ impl Swell {
     /// label instead of reading the track events the feature was built to provide. The keeper asked
     /// whether I had read the title. I had not.
     pub fn track_changed(&mut self) {
+        self.forget();
+    }
+
+    /// Everything this detector remembers, dropped in one place.
+    ///
+    /// There are three reasons to forget — a track change, an onset, and silence — and before this
+    /// existed each cleared its own subset. `last_report` was cleared by none of them, which is not
+    /// cosmetic the way it looks: it is a timestamp from a DIFFERENT PIECE OF MUSIC gating the first
+    /// report about the next one, so the first post-boundary report landed at 48 s sometimes and 56 s
+    /// other times depending on where the previous track's last report happened to fall. Two of the
+    /// three fields were being cleared and the third was not, which is the kind of asymmetry that is
+    /// invisible until someone plots a histogram of the spans and finds it bimodal. One method now,
+    /// so a fourth reason to forget cannot reintroduce the gap.
+    fn forget(&mut self) {
         self.hist.clear();
         self.reported_dir = 0;
+        self.last_report = 0.0;
     }
 
     /// The music just started. Nothing before this instant is the music.
@@ -614,16 +629,14 @@ impl Swell {
     /// large" was the shape of the last two things I got wrong, so this time the trace got read
     /// first.
     pub fn sound_began(&mut self) {
-        self.hist.clear();
-        self.reported_dir = 0;
+        self.forget();
     }
 
     pub fn feed(&mut self, db: f32, now: f32) -> Option<Event> {
         // Silence is not a diminuendo. It is handled as silence, and letting it in here would make
         // every gap between movements a dramatic fade.
         if db <= -60.0 {
-            self.hist.clear();
-            self.reported_dir = 0;
+            self.forget();
             return None;
         }
         self.hist.push((now, db));
@@ -652,7 +665,44 @@ impl Swell {
             den += (t - mean_t) * (t - mean_t);
         }
         if den <= 0.0 { return None; }
-        let change = num / den * span;
+        let slope = num / den;
+        let change = slope * span;
+        // WHERE THE WINDOW STARTED, carried on the event because the number above cannot be read
+        // without it. `+30.9 dB over 48s` from -57 dB and the same figure from -25 dB are different
+        // claims: the first is a window whose head sits at the noise floor — a playback ramp, a
+        // track's first seconds — and the second is music getting louder. B measured 10 of 16
+        // eligible track starts producing a report pinned to the boundary, and could not tell the
+        // artifacts from the real openings retroactively BECAUSE THE STREAM DROPS THIS FIELD; three
+        // of the four it could check by refitting were real music. An independent cold read of the
+        // stream reached the same gap from the other side (COLDREAD-2026-07-31.md, item 8) and asked
+        // for a `clipped_by:"track_start"` flag. The head level subsumes that: truncation is the
+        // symptom, and a flag would not say how far down.
+        //
+        // NECESSARY, NOT SUFFICIENT — said here because it is easy to oversell and B's own numbers
+        // refute the stronger version. A floor head does not make a report an artifact: measured on
+        // this corpus, the Adagio's opening (an artifact, its 43 seconds of named music are FALLING)
+        // and Fratres' opening (real music, which genuinely begins near -59 dB and climbs) both
+        // report floor heads. What separates those two is refitting the window with its leading
+        // seconds removed, which needs per-frame levels the stream does not carry and probably never
+        // should. So this field makes the candidates greppable; it does not adjudicate them. A gauge,
+        // not a verdict.
+        //
+        // THE RAW FIRST SAMPLE, and I built the fitted intercept first for what looked like the
+        // better reason. This signal's single-sample scatter is sd 10.32 dB — the reason the slope
+        // is least-squares rather than an end difference — so the fit seemed the obviously more
+        // robust estimator, and it makes `from + db` the fitted level at the window's end, which is
+        // checkable arithmetic. Then I measured it against the corpus and it fails the one case the
+        // field exists for: the Adagio's opening report covers a 6-second entrance out of digital
+        // silence followed by 42 seconds of music, and a least-squares line through that is
+        // dominated by the bulk — FITTED HEAD -35.3 dB for a window whose first sample is -59.4.
+        // It reported no floor where there plainly was one. Worse, it ranked that artifact ABOVE
+        // Fratres' genuine floor-level opening (fitted -48.6), which is backwards.
+        //
+        // So: the raw head, which answers the question actually being asked — where does this
+        // window BEGIN — rather than a better estimate of a different quantity. The noise argument
+        // was real and turned out not to matter here: the distinction being drawn is 25 to 40 dB,
+        // an order of magnitude above the scatter.
+        let from = self.hist.first()?.1;
         let dir: i8 = if change >= SWELL_DB { 1 } else if change <= -SWELL_DB { -1 } else { 0 };
         if dir == 0 { return None; }
         // NOTE what this deliberately does NOT do: reset `reported_dir`. The first version cleared
@@ -663,7 +713,7 @@ impl Swell {
         if now - self.last_report < SWELL_MIN_GAP_SECS { return None; }
         self.last_report = now;
         self.reported_dir = dir;
-        Some(Event::Swelling { rising: dir > 0, db: change, over: span })
+        Some(Event::Swelling { rising: dir > 0, db: change, over: span, from })
     }
 }
 
@@ -1312,7 +1362,10 @@ pub enum Event {
     Silence,
     Intervals { names: Vec<String>, restless: bool, chord: Option<String> },
     /// Sustained growth or decay in loudness, over a span long enough to mean something.
-    Swelling { rising: bool, db: f32, over: f32 },
+    /// `from` is the FITTED level at the window's head — see `Swell::feed`. Without it `db` cannot
+    /// be read: the same +30 dB means a playback ramp from the noise floor or real music getting
+    /// louder, and nothing else in the event separates them.
+    Swelling { rising: bool, db: f32, over: f32, from: f32 },
     /// A pitch is oscillating — a voice, almost certainly, since little else in a mix wobbles.
     Vibrato(VibratoReading),
     /// The music has a pulse, at this rate and this mechanically.
@@ -1583,8 +1636,26 @@ pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Eve
     let mut speech = SpeechSense::default();
     let mut pulse = Pulse::default();
     let mut out = Vec::new();
+    let mut track: Option<&str> = None;
     for f in frames {
+        // THE TWO GUARDS THE LIVE PATH CALLS AND THIS ONE DID NOT, found by B measuring the ledger.
+        // `cochlea_service` calls `sound_began()` on every Onset and `track_changed()` when the
+        // now-playing title changes; replay called neither, so every fixture exercised a DIFFERENT
+        // `Swell` than production and no replay could validate the track-boundary fix — a fixture
+        // spanning a title change would have replayed the pre-`f8807f1` bug and passed.
+        //
+        // Honest state of the repair, because half of it is not reachable from here: the onset half
+        // is real and live now. The track half is wired but INERT — `Frame::track` is `None` in
+        // every fixture on disk, since `record_frame` does not write it. Until the recorder emits a
+        // title, this branch is exercised only by the synthetic test beside it, and no RECORDED
+        // fixture validates the track-boundary fix. That is a smaller claim than "parity restored"
+        // and it is the true one.
+        if f.track.is_some() && f.track.as_deref() != track {
+            track = f.track.as_deref();
+            swell.track_changed();
+        }
         for e in t.feed(moment(&f.peaks, tol_cents), f.at, nag_after) {
+            if matches!(e, Event::Onset { .. }) { swell.sound_began(); }
             out.push((f.at, e));
         }
         // Only when the recording carries a level. A fixture made before loudness was recorded has
@@ -1615,6 +1686,11 @@ pub struct Frame {
     /// Loudness in dBFS. `None` in fixtures recorded before dynamics existed, and a reader must
     /// treat that as UNKNOWN rather than silent.
     pub db: Option<f32>,
+    /// What was playing, when the recorder knew. `None` in every fixture on disk today — the
+    /// recorder does not write it yet — and a reader must treat that as UNKNOWN, not as "one
+    /// continuous track". `replay` uses a CHANGE in this value as the track boundary, so a fixture
+    /// that carries it can finally exercise the guard the live path has and replay lacked.
+    pub track: Option<String>,
 }
 
 #[cfg(test)]
@@ -1992,7 +2068,7 @@ mod tests {
             }
         }
         match got {
-            Some(Event::Swelling { rising, db, over }) => {
+            Some(Event::Swelling { rising, db, over, from }) => {
                 assert!(rising, "a rising slope reported as falling");
                 // Against the CONSTANTS, not against copies of them. The first version of these
                 // assertions hardcoded 4.0 dB, and when the threshold moved to 3.0 the test failed
@@ -2001,6 +2077,22 @@ mod tests {
                 assert!(db >= SWELL_DB, "reported {db:.1} dB, below its own threshold of {SWELL_DB}");
                 assert!(over >= SWELL_WINDOW_SECS * 0.8,
                         "claimed a span of {over:.1}s, under the minimum it requires");
+                // THE HEAD OF A REAL CRESCENDO IS A MUSICAL LEVEL, and this is the direction that
+                // matters: an artifact reports a head near the floor, so if a legitimate swell ever
+                // reported one too the field would separate nothing. Checked against the input's own
+                // arithmetic rather than a copied number. This is the FIRST report, so its window
+                // starts where the input does, at -23.4 dB.
+                assert!((from + 23.4).abs() < 0.5,
+                        "window head fitted at {from:.1} dB; the ramp starts at -23.4");
+                assert!(from > -60.0, "a real crescendo reported a head of {from:.1} dB, at the floor");
+                // `from + db` lands on the level at the window's end. Exact here because the input is
+                // a noiseless ramp; on real audio the head is one sample of a scattered signal and
+                // this is an approximation, which is why the assertion has a tolerance and why the
+                // claim is not made on the event itself.
+                let tail = -23.4 + 0.12 * over;
+                assert!((from + db - tail).abs() < 0.5,
+                        "from {from:.1} + {db:.1} = {:.1}, but the ramp reaches {tail:.1} at {over:.0}s",
+                        from + db);
             }
             other => panic!("the Adagio's own crescendo went unreported: {other:?}"),
         }
@@ -2198,8 +2290,9 @@ mod tests {
     ///
     /// `fixture-beat-phyllzx-skinshine` reports steadily, then says nothing from t=79 to t=124. Two
     /// explanations were open: the drums drop out (a sensitivity limit worth stating), or the passage
-    /// is genuinely ambiguous and declining is correct (a point in the design's favour). It is the
-    /// second. Every number below re-measures with `PULSE_MEASURE=1`, which now prints each window's
+    /// is genuinely ambiguous and declining is correct (a point in the design's favour). The ear
+    /// settled it as BOTH — see the note at the end, and note that the either/or was mine and was
+    /// wrong. Every number below re-measures with `PULSE_MEASURE=1`, which now prints each window's
     /// p90 transient and its OWN estimate alongside the reported centre — the three quantities this
     /// paragraph turns on. It did not print the first two when this was first written, and three of
     /// the figures in that first draft were wrong; that is why it prints them now.
@@ -2228,6 +2321,25 @@ mod tests {
     /// slower grouping heard against the same grid would produce. With folding and a 6% tolerance,
     /// numbers land near SOME simple ratio easily enough that this is a suggestion and not a finding.
     /// An ear on that passage settles it in ten seconds and no amount of arithmetic here does.
+    ///
+    /// THE EAR, 2026-07-31. The keeper played 1:14-1:34 and listened. Verbatim: *"its like a break
+    /// with humming then it comes back to the beat."* A breakdown — the drums drop to a break, the
+    /// sustained material carries the section, the beat returns.
+    ///
+    /// That merges the two candidate readings instead of choosing between them, and the dichotomy
+    /// they were posed under — "the drums drop out" OR "the passage is ambiguous" — was false. Both
+    /// are true at once, and holding them together says something neither said alone: THE BEAT LEFT
+    /// WHILE THE SIGNAL STAYED. The transient measurement is not contradicted — the p90 rise never
+    /// approaches its gate, bottoming at five times it — because the transient gate measures whether
+    /// the audio is still changing sharply, and in a break it is: the humming has onsets. What it
+    /// cannot see is that those onsets stopped being a beat. So the gate is not a beat detector and
+    /// was never load-bearing for this passage; the concentration of the tempo estimates is what
+    /// actually caught it, and it caught it correctly. A dropout of the beat is not a dropout of the
+    /// signal, and only the second one is visible to a level series.
+    ///
+    /// The ratio suggestion above stays a suggestion. A break's sparse remnants are consistent with
+    /// sub-multiples of the true tempo, which is a point in its favour and not a confirmation — the
+    /// ear reported a break, not a half-time count, and nobody has checked that part.
     ///
     /// WHAT THIS ASSERTS, and what mutation testing said about it — including the part that came out
     /// against my own prediction.
@@ -2581,6 +2693,113 @@ mod tests {
             if s.feed(-15.0, i as f32 / 12.0).is_some() { n += 1; }
         }
         assert_eq!(n, 0, "a track change produced {n} swell reports; 25 dB of it is the SONG changing");
+    }
+
+    /// TWO REPORTS THE OLD LINE RENDERED IDENTICALLY, and the field that separates them.
+    ///
+    /// B measured 10 of 16 eligible track starts producing a `growing` report pinned to the boundary,
+    /// and could not tell the artifacts from the real openings retroactively: `+35.0 dB over 60s` is
+    /// what the stream said for both, and the discriminator — where the window STARTED — existed only
+    /// where `data/RECORD` happened to be armed. Three of the four it could check by refitting were
+    /// real music, so a rule that indicted every pinned report would have been wrong three times in
+    /// four. The fix is not a rule. It is printing the number that lets a reader decide.
+    #[test]
+    fn two_swells_of_equal_size_are_told_apart_by_where_they_started() {
+        // Same climb, same duration, same everything the old line carried. One starts at the noise
+        // floor — the shape of a playback ramp — and one starts at a level music is actually played at.
+        let run = |head: f32| {
+            let mut s = Swell::default();
+            let mut got = None;
+            for i in 0..900 {
+                let t = i as f32 / 12.0;
+                if let Some(e) = s.feed(head + 0.5 * t, t) {
+                    if got.is_none() { got = Some(e); }
+                }
+            }
+            match got {
+                Some(Event::Swelling { db, from, .. }) => (db, from),
+                other => panic!("a 0.5 dB/sec climb from {head} went unreported: {other:?}"),
+            }
+        };
+        let (floor_db, floor_from) = run(-59.0);
+        let (music_db, music_from) = run(-35.0);
+        assert!((floor_db - music_db).abs() < 1.0,
+                "the two climbs must be indistinguishable on the OLD fields for this test to mean \
+                 anything: {floor_db:.1} vs {music_db:.1} dB");
+        assert!(music_from - floor_from > 20.0,
+                "the head is the discriminator and it separated them by only {:.1} dB",
+                music_from - floor_from);
+        assert!(floor_from < -55.0, "a window starting at the floor fitted its head at {floor_from:.1}");
+    }
+
+    /// REPLAY MUST EXERCISE THE SAME `Swell` AS PRODUCTION — the onset half.
+    ///
+    /// Found by B, from the ledger rather than from the code: `cochlea_service` calls `sound_began()`
+    /// on every Onset and `track_changed()` on a title change, and `replay()` called neither. So every
+    /// fixture ran a DIFFERENT detector than the live path, and the guard that was written to fix the
+    /// fade-in bug was, in replay, simply absent — validated by nothing.
+    ///
+    /// The level here stays ABOVE -60 dB throughout, deliberately: below it the `feed` silence guard
+    /// clears the history by itself and the test would pass without the routing existing. This is the
+    /// band where only the onset can save it — quiet room tone, then music.
+    #[test]
+    fn a_replay_clears_the_dynamics_window_at_an_onset_the_way_the_live_path_does() {
+        let mut frames = Vec::new();
+        for i in 0..240 {                                  // 20s of quiet room tone, no pitch
+            frames.push(Frame { at: i as f32 / 12.0, peaks: vec![], db: Some(-55.0), track: None });
+        }
+        for i in 240..1200 {                               // 80s of steady music, 25 dB louder
+            frames.push(Frame {
+                at: i as f32 / 12.0,
+                peaks: vec![Peak { hz: 440.0, mag: 1.0 }, Peak { hz: 880.0, mag: 0.6 }],
+                db: Some(-30.0),
+                track: None,
+            });
+        }
+        let events = replay(&frames, 30.0, 4.0);
+        // Not a vacuous pass: if no onset fires at all there is nothing for the routing to do, and
+        // the absence of swells below would prove nothing.
+        assert!(events.iter().any(|(_, e)| matches!(e, Event::Onset { .. })),
+                "no onset fired, so this test cannot be measuring the guard");
+        let swells: Vec<_> = events.iter()
+            .filter_map(|(at, e)| match e {
+                Event::Swelling { db, from, .. } => Some(format!("{db:+.1} dB from {from:.1} at t={at:.0}")),
+                _ => None,
+            })
+            .collect();
+        assert!(swells.is_empty(),
+                "the window reached back across the onset into the room tone: {}", swells.join(", "));
+    }
+
+    /// REPLAY MUST EXERCISE THE SAME `Swell` AS PRODUCTION — the track half.
+    ///
+    /// HONEST SCOPE, and it is the reason this test is synthetic rather than a fixture: no recording
+    /// on disk carries `Frame::track`, because the recorder does not write it. So this proves the
+    /// replay path handles a boundary when one is present; it does NOT prove any fixture validates
+    /// the track-boundary fix, and none does. Wiring the recorder is a change to `cochlea_service`
+    /// and belongs to whoever owns that file. Until then this is a capability with no data, said
+    /// plainly here so nobody reads the green tick as coverage it isn't.
+    #[test]
+    fn a_replay_clears_the_dynamics_window_when_the_track_changes() {
+        let voice = || vec![Peak { hz: 440.0, mag: 1.0 }, Peak { hz: 880.0, mag: 0.6 }];
+        let mut frames = Vec::new();
+        for i in 0..900 {                                  // 75s of a quiet track
+            frames.push(Frame { at: i as f32 / 12.0, peaks: voice(), db: Some(-45.0),
+                                track: Some("quiet song".into()) });
+        }
+        for i in 900..1500 {                               // 50s of a loud one, no gap, no silence
+            frames.push(Frame { at: i as f32 / 12.0, peaks: voice(), db: Some(-20.0),
+                                track: Some("loud song".into()) });
+        }
+        let swells: Vec<_> = replay(&frames, 30.0, 4.0).into_iter()
+            .filter_map(|(at, e)| match e {
+                Event::Swelling { db, from, .. } => Some(format!("{db:+.1} dB from {from:.1} at t={at:.0}")),
+                _ => None,
+            })
+            .collect();
+        assert!(swells.is_empty(),
+                "a window spanning two songs called the 25 dB between them a crescendo: {}",
+                swells.join(", "));
     }
 
     #[test]

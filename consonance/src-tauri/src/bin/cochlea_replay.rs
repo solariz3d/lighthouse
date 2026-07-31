@@ -59,7 +59,11 @@ fn main() {
                 })
             }).collect::<Vec<_>>()
         }).unwrap_or_default();
-        frames.push(Frame { at, peaks, db });
+        // Absent in every fixture on disk — the recorder does not write it yet. Read here so that a
+        // recording which DOES carry it drives `replay`'s track-boundary guard without a second
+        // change, and so the absence stays UNKNOWN rather than becoming "one continuous track".
+        let track = v.get("track").and_then(|x| x.as_str()).map(|s| s.to_string());
+        frames.push(Frame { at, peaks, db, track });
     }
 
     if frames.is_empty() {
@@ -80,8 +84,8 @@ fn main() {
                     println!("{at:7.2}  {:9}{}{}", if *restless { "restless" } else { "settled" },
                              chord.as_ref().map(|c| format!("{c:10}")).unwrap_or_default(),
                              names.join(" · ")),
-                Event::Swelling { rising, db, over } =>
-                    println!("{at:7.2}  {:9}{:+.1} dB over {:.0}s",
+                Event::Swelling { rising, db, over, from } =>
+                    println!("{at:7.2}  {:9}{:+.1} dB over {:.0}s (from {from:.1} dB)",
                              if *rising { "growing" } else { "fading" }, db, over),
                 // Never fires in a replay: fixtures store one peak set per 4096-sample frame, and
                 // vibrato needs the fine sub-window track that is computed live and not recorded.

@@ -129,9 +129,13 @@ fn describe(e: &Event) -> Option<Heard> {
                 "back to music".to_string()
             },
         ),
-        Event::Swelling { rising, db, over } => (
+        // `from` is on the line because without it the dB figure is unreadable: the same +30 dB is a
+        // playback ramp off the noise floor or real music getting louder, and 10 of 16 eligible track
+        // starts in the ledger produced a report pinned to the boundary with no way to tell which.
+        Event::Swelling { rising, db, over, from } => (
             if *rising { "growing" } else { "fading" },
-            format!("{} · {:+.1} dB over {:.0}s", if *rising { "growing" } else { "fading" }, db, over),
+            format!("{} · {:+.1} dB over {:.0}s (from {:.1} dB)",
+                    if *rising { "growing" } else { "fading" }, db, over, from),
         ),
         Event::StillUnresolved { secs } => ("held", format!("still unresolved · {:.1}s", secs)),
         Event::Resolved { after_secs } => ("resolved", format!("resolved after {:.1}s", after_secs)),
