@@ -109,3 +109,101 @@ reaching for a figure from memory, that reach is the signal to extend the hook, 
 harder. The hook now prints `trans=` and `win=` on every line, passing or rejected, and every figure
 in that comment re-derives from one run of it. A number in prose reads as evidence and nothing ever
 checks it; a number the hook prints is checked every time the hook runs.
+
+
+## 2026-07-31, second append — four from the blackbox track-surface build (commit `d9bde4d`)
+
+A different repo and a different domain (3D telemetry, WebGL, replay geometry), which is the
+point: these are the findings that were not about tracks.
+
+### A correction lands on the file that was wrong, and the sibling file repeating the claim keeps saying it
+
+2026-07-31, blackbox `d9bde4d`; `samples/TRACK_FROM_REPLAY.md` vs `samples/README.md`, same folder.
+
+The spec I was asked to build named its "single biggest quality lever, and it's free": use every
+lap, because the test-track replay holds several on different lines. It holds **one** — two line
+crossings — and so does the other sample. What makes this a finding rather than a stale doc is
+where the correction already was: `samples/README.md`, in the **same folder**, established the
+one-lap fact on 2026-07-25 — the day after the spec was written — and corrected *itself* in print,
+in a parenthetical naming the claim it was retracting. The spec, six feet away, kept asserting the
+retracted version for six days and was handed to me as the brief.
+
+General form: **a correction propagates to the document that was wrong and stops there.** Nobody
+greps the neighbours for the claim they just killed. So when you inherit a factual claim from a
+document, the cheapest check is not "is this document current" but **"does a sibling document
+contradict it"** — and if you correct a claim, the second half of the work is finding who else
+repeats it. This is the room's own first law (recall from the master, not a copy) failing between
+two files instead of between two instances, and it is harder to see there because both files look
+like masters — and it is the failure the multi-writer map (map/README.md, same day) was built to
+stop between panes, showing up between two files instead.
+
+### "That would be a guess" is usually an unmeasured claim, and the data often bounds it from one side
+
+2026-07-31, blackbox `d9bde4d`; `TrackGen.measureLineSpread`, `test_trackgen.js` section 10.
+
+The spec said widening the driven corridor to a plausible road width "is a guess". It is, for the
+road's true width. But where two passes cross the same ground with matching heading, their lateral
+separation is measurable: median 1.98 m and 2.72 m across the two samples, against an along-travel
+offset five times smaller — that ratio being the check that the pairs are the same *place* and not
+two points nose to tail. That converts an admitted guess into a measured lower bound on the width
+the driving actually used, and the shipped constant sits on it.
+
+The discipline that keeps it honest is the same one as the speech constant: **the tail of that
+distribution reaches 9.3 m and is not spent**, because nothing in the data separates a wide racing
+line from a pit lane running parallel. Ship the median as evidence, name the confound, leave the
+tail unspent. General form: when a spec or a colleague declares a quantity unknowable, ask whether
+it is unknowable **in both directions** — a bound from one side is often sitting in data already
+collected, and a bound with a named confound beats both the guess and the refusal. Extends
+"Derive a constant from the wall you actually measured" in the first append: same rule, except
+here nobody had looked for the wall, having decided in advance there wasn't one.
+
+### For a sign, a winding, or a handedness — write the probe, not the argument
+
+2026-07-31, blackbox `d9bde4d`; `ui/trackgen.js` triangle order, `test_trackgen.js` section 3.
+
+The first triangle order I wrote was inverted on **12,974 of 13,042 triangles**. I had reasoned
+about it — right-handed system, counter-clockwise front faces, front axle to the left — and the
+reasoning was confident and wrong. One probe comparing each face's geometric normal against the
+recorded surface normal found it in a single run, and the same probe became the test.
+
+Nothing in the application would ever have shown it: there is no back-face culling in that
+renderer and the lighting reads vertex normals, not faces. So the defect was invisible, permanent,
+and would have detonated on whoever later enabled culling. General form: **orientation questions
+are cheap to measure and expensive to reason about**, and the reasoning failure is silent —
+handedness arguments feel like proofs. If a sign can be measured against something already in the
+data, measure it, and keep the measurement as the assertion.
+
+Second half, which is what made the test honest: the agreement is **99.5%, not 100%**, and the
+residue is real — where the car slides sideways the strip advances along its own axle, the quad
+shears to a sliver, and its orientation is genuinely undefined (68 frames of 6,853, a 260 km/h
+slide). Asserting 100% would have been asserting that the car never slides. **When a measurement
+lands just under a round number, find out what the remainder is before rounding it away or
+tightening the rule to exclude it.**
+
+### A sandbox test defines whatever name the code asks for — so it cannot see a wrong name
+
+2026-07-31, blackbox `d9bde4d`; `test_standin.js` sections 7 and 9.
+
+To test a function that needs a GL context and a DOM, I extracted it and ran it in a `vm` against a
+recording stub. Every assertion passed. But the sandbox is built by **me** from the names the
+function reads, so if the function wrote `sceneAabb` and the application declared `sceneAABB`, my
+sandbox would define `sceneAabb`, every assertion would still pass, and the app would throw
+`ReferenceError` on the first click — these files are `"use strict"`, so an undeclared assignment
+is an error and not a new global. **The test is blind to the exact class of bug that a sandbox
+introduces.** Closed by checking each global the function writes against the real declarations in
+the shipped source, with a deliberate misspelling asserted to fail the check so it cannot go
+vacuous. (Found while doing it: one of those globals is declared four files away from every one of
+its assignments.)
+
+Same species as the default-that-passes-a-bounds-check in the first append: **the instrument
+supplies the thing it is supposed to be verifying.** Ask of any test harness — what does this
+harness provide that the real environment does not, and what bug does that hide?
+
+**And the mirror of it, same day, same file:** the repo's coverage tool reads `uiFunction("name")`
+positionally as a source-reaching use. I had wrapped that call in a readability helper,
+`need("loadTrackBuffers")` — so the tool saw a bare string and reported the function MENTION-ONLY,
+which its own header calls "the one that looks like coverage and is not". The tool was right and my
+test was hiding from it. General form: **a test can be unreadable to the instrument that grades
+it**, and the fix is to speak the instrument's idiom rather than to argue that the coverage is
+really there. Both halves are one shape — the harness and the grader each have a view of the test
+that differs from the test's view of itself, and both differences are silent.
