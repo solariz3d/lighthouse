@@ -36,7 +36,33 @@ use crate::listen::anticheat_present;
 pub struct Heard {
     pub at: String,
     pub kind: String,
+    /// Which subsystem spoke. A context-free reader of the ledger correctly inferred four
+    /// detectors from 22 lines and then could not tell the player's metadata from the audio
+    /// analysis — the split exists and the stream hid it. Additive: old consumers ignore it.
+    pub det: &'static str,
     pub text: String,
+}
+
+/// Millisecond wall-clock stamp. Whole-second stamps put two contradictory-looking events in the
+/// same second (a restless full sonority and its settled subset at "00:52:12") and made
+/// "resolved after 0.7s" unverifiable against the ledger's own timeline.
+fn stamp() -> String {
+    chrono::Local::now().format("%H:%M:%S%.3f").to_string()
+}
+
+/// kind → detector, one source of truth. Kinds are already disjoint across subsystems; this makes
+/// the mapping a field instead of tribal knowledge.
+fn det_for(kind: &str) -> &'static str {
+    match kind {
+        "onset" | "silence" | "restless" | "settled" | "held" | "resolved" => "tracker",
+        "growing" | "fading" => "swell",
+        "speech" | "music" => "speech",
+        "pulse" => "pulse",
+        "voice" => "vibrato",
+        "track" => "player",
+        "stopped" => "capture",
+        _ => "unknown",
+    }
 }
 
 /// The frequency field as it stands right now, plus what the grouping made of it.
@@ -82,7 +108,7 @@ pub struct Service(pub Mutex<Listening>, pub Mutex<Snapshot>);
 fn ledger_path(data_dir: &PathBuf) -> PathBuf { data_dir.join("heard.jsonl") }
 
 fn describe(e: &Event) -> Option<Heard> {
-    let now = chrono::Local::now().format("%H:%M:%S").to_string();
+    let now = stamp();
     let (kind, text) = match e {
         Event::Onset { hz } => {
             // The name first, the frequency second. An afternoon was spent reading "~467 Hz" and
@@ -140,7 +166,7 @@ fn describe(e: &Event) -> Option<Heard> {
         Event::StillUnresolved { secs } => ("held", format!("still unresolved · {:.1}s", secs)),
         Event::Resolved { after_secs } => ("resolved", format!("resolved after {:.1}s", after_secs)),
     };
-    Some(Heard { at: now, kind: kind.into(), text })
+    Some(Heard { at: now, kind: kind.into(), det: det_for(kind), text })
 }
 
 /// Start listening to one process tree. `on_event` receives every line; the caller decides
@@ -214,8 +240,8 @@ where
                             last_ac_check = Instant::now();
                             sys.refresh_processes();
                             if !anticheat_present(&sys).is_empty() {
-                                on_event(Heard { at: chrono::Local::now().format("%H:%M:%S").to_string(),
-                                                 kind: "stopped".into(),
+                                on_event(Heard { at: stamp(),
+                                                 kind: "stopped".into(), det: det_for("stopped"),
                                                  text: "anti-cheat detected — capture stopped".into() });
                                 stop_a.store(true, Ordering::Relaxed);
                             }
@@ -243,7 +269,10 @@ where
                     last_rec_check = Instant::now();
                     recording = data_dir.join("RECORD").exists();
                 }
-                if recording { record_frame(&data_dir, t, &pk, level_db); }
+                if recording {
+                    record_frame(&data_dir, t, &pk, level_db,
+                                 if last_np.is_empty() { None } else { Some(&last_np) });
+                }
 
                 // What is playing, polled rather than pushed, and emitted only when it CHANGES.
                 // Every two seconds is far more often than tracks change and far cheaper than the
@@ -265,8 +294,9 @@ where
                             // while the keeper skipped tracks.
                             swell.track_changed();
                             on_event(Heard {
-                                at: chrono::Local::now().format("%H:%M:%S").to_string(),
+                                at: stamp(),
                                 kind: "track".into(),
+                                det: det_for("track"),
                                 text: format!("♪ {line}"),
                             });
                         }
@@ -279,7 +309,7 @@ where
                     peaks: pk.iter().map(|p| p.hz).collect(),
                     intervals: m.intervals.iter().map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
                     restless: m.restless,
-                    at: chrono::Local::now().format("%H:%M:%S").to_string(),
+                    at: stamp(),
                     now: now_playing.clone(),
                     chord: m.chord.as_ref().map(|c| c.name.clone()),
                     level_db,
@@ -316,8 +346,8 @@ where
                     last_ac_check = Instant::now();
                     sys.refresh_processes();
                     if !anticheat_present(&sys).is_empty() {
-                        on_event(Heard { at: chrono::Local::now().format("%H:%M:%S").to_string(),
-                                         kind: "stopped".into(),
+                        on_event(Heard { at: stamp(),
+                                         kind: "stopped".into(), det: det_for("stopped"),
                                          text: "anti-cheat detected — capture stopped".into() });
                         stop_a.store(true, Ordering::Relaxed);
                     }
@@ -337,12 +367,23 @@ where
 /// PEAKS, NOT AUDIO. 4096 floats per frame at twelve frames a second is 196 KB/s and unkeepable.
 /// Peaks are ~10 pairs, and they are what `moment()` consumes — so a recording exercises fusion,
 /// corroboration, naming, voting and the tracker, which is every layer that has broken today.
-pub fn record_frame(data_dir: &PathBuf, at: f32, peaks: &[crate::cochlea::Peak], db: f32) {
+pub fn record_frame(data_dir: &PathBuf, at: f32, peaks: &[crate::cochlea::Peak], db: f32, track: Option<&str>) {
+    // The track title, on EVERY frame while known. Replay treats a change in this field as the
+    // track boundary (Frame::track), and until the recorder wrote it no fixture could validate the
+    // boundary fix at all — a fixture spanning a title change would replay the pre-f8807f1 bug and
+    // pass. Written per-frame rather than on change so a fixture truncated at any line still knows
+    // what was playing; ~40 bytes/frame is nothing against the peaks.
+    let track_json = track
+        .filter(|s| !s.is_empty())
+        .map(|s| format!(",\"track\":\"{}\"", s.replace('\\', "\\\\").replace('"', "\\\"")))
+        .unwrap_or_default();
     let line = format!(
-        "{{\"t\":{:.3},\"db\":{:.2},\"peaks\":[{}]}}",
+        "{{\"t\":{:.3},\"db\":{:.2}{}{}",
         at,
         db,
-        peaks.iter().map(|p| format!("[{:.2},{:.6}]", p.hz, p.mag)).collect::<Vec<_>>().join(","),
+        track_json,
+        format!(",\"peaks\":[{}]}}",
+            peaks.iter().map(|p| format!("[{:.2},{:.6}]", p.hz, p.mag)).collect::<Vec<_>>().join(",")),
     );
     if let Ok(mut f) = OpenOptions::new().create(true).append(true).open(data_dir.join("frames.jsonl")) {
         let _ = writeln!(f, "{line}");
@@ -416,8 +457,48 @@ mod tests {
     fn the_ledger_writes_and_survives_a_missing_directory() {
         let dir = std::env::temp_dir().join(format!("cochlea-test-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
-        append(&dir, &Heard { at: "00:00:00".into(), kind: "onset".into(), text: "x".into() });
+        append(&dir, &Heard { at: "00:00:00".into(), kind: "onset".into(), det: "tracker", text: "x".into() });
         assert!(ledger_path(&dir).exists(), "append must create the directory it needs");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn stamps_carry_milliseconds() {
+        // Whole-second stamps made two same-second events read as a contradiction and left
+        // "resolved after 0.7s" unverifiable against the ledger's own timeline.
+        let s = stamp();
+        assert!(s.len() == 12 && s.as_bytes()[8] == b'.',
+                "expected HH:MM:SS.mmm, got {s:?}");
+    }
+
+    #[test]
+    fn every_kind_names_its_detector() {
+        // The mapping is a negative control too: an unknown kind must say so loudly rather than
+        // inherit a plausible detector.
+        for (k, d) in [("restless", "tracker"), ("growing", "swell"), ("voice", "vibrato"),
+                       ("track", "player"), ("stopped", "capture"), ("speech", "speech")] {
+            assert_eq!(det_for(k), d);
+        }
+        assert_eq!(det_for("some-future-kind"), "unknown");
+    }
+
+    #[test]
+    fn recorded_frames_carry_the_track_and_escape_its_quotes() {
+        // Until the recorder wrote the title, no fixture could validate the track-boundary fix:
+        // replay's Frame::track had nothing to read. The title is hostile input — real tags
+        // carry quotes — so the escaping is the part that needs a test.
+        let dir = std::env::temp_dir().join(format!("cochlea-frames-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        record_frame(&dir, 1.0, &[], -30.0, Some(r#"Prince — "1999""#));
+        record_frame(&dir, 2.0, &[], -30.0, None);
+        let text = std::fs::read_to_string(dir.join("frames.jsonl")).unwrap();
+        let mut lines = text.lines();
+        let first: serde_json::Value = serde_json::from_str(lines.next().unwrap())
+            .expect("a recorded frame with a quoted title must still be valid JSON");
+        assert_eq!(first.get("track").and_then(|v| v.as_str()), Some(r#"Prince — "1999""#));
+        let second: serde_json::Value = serde_json::from_str(lines.next().unwrap()).unwrap();
+        assert!(second.get("track").is_none(), "no title known → no field, not an empty string");
         let _ = std::fs::remove_dir_all(&dir);
     }
 }
