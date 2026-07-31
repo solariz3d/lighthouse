@@ -315,3 +315,42 @@ value is known a priori, and therefore the only available calibration standard f
 interval channel — currently cannot be used as one. A candidate guard (suppress or mark a 2:1 whose
 lower voice has fewer partials than its upper) needs its own test and its own negative control.
 Filed, not fixed.
+
+---
+
+*Correction, appended 2026-07-31 — the `steady` diagnosis above is wrong in its mechanism.*
+
+The note says `Pulse::steady` reads 0.000 on both real positives "because sd is compared against an
+absolute 2 bpm while its sibling agreement is relative at 6%", and recommends a relative sd as the
+fix. **The symptom is real and the cause is not.** Making it relative changes nothing: both tracks
+still read 0.000. Measured properly afterwards (`measure_pulse_steadiness`, now in the file):
+
+    nero — reaching out    memory [96.0, 125.5, 125.5, 126.5, 126.5, 128.0, 128.0, 131.5]
+    phyllzx — skinshine    memory [73.0, 129.0, 130.0, 130.0, 130.0, 131.0, 131.5, 133.0]
+
+**One stray window in eight destroys the standard deviation.** Seven estimates inside three bpm, one
+forty bpm away — precisely the case the concentration gate is built to tolerate (7 of 8 clears its
+0.7) and precisely the case `sd` is not. The gate that *admits* the reading is robust; the number
+that *describes* it is not. Absolute-vs-relative was a real defect sitting on top of that one, and
+fixing it did not move the reported value at all.
+
+I wrote the original claim from the sweep's output — steady 0.000 on both — plus a reading of the
+formula, without opening the memory that fed it. The scale was visible in the source and the outlier
+was not, so I described what I could see and presented it as the cause.
+
+The relative scale is kept anyway (an absolute bpm threshold is tempo-dependent and indefensible on
+its own terms) and the doc comment now carries the true diagnosis. **The fix is not in era 4**, per
+the chair's own condition — the obvious robust estimator is not clean: MAD recovers both real tracks
+(0.80, 0.87) and collapses the synthetic machine/human pair to identical values, because both land
+on 0.5 bpm, one `PULSE_BPM_STEP`, so it goes blind at the tempogram's own quantum exactly where the
+feature's only discrimination lives. Trading a falsehood about real music for a blindness on the
+discrimination is a different wrong number, not an improvement.
+
+Two things the real fix needs, both filed: a dispersion that survives one stray estimate without
+landing on the quantum (a trimmed sd is measurable today), and **the negative control this field has
+never had** — nothing anywhere asserts that a genuinely wandering tempo reads low, and the only
+steadiness test compares two synthetic beats differing by 0.36 bpm.
+
+One accuracy note on the framing this correction arrived under: the falsehood is not currently
+shipping. `PULSE_ENABLED` is false, so no `steady` value reaches the ledger today. It would ship the
+moment that gate opens, which is the decision still pending on three or four more positive fixtures.

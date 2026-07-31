@@ -930,6 +930,53 @@ fn pulse_period(hist: &[(f32, f32)]) -> Option<f32> {
     best.map(|(_, p)| p)
 }
 
+/// STEADINESS is the feel — how much the tempo itself wanders — over EVERY retained estimate.
+/// A machine lands on one number; a drummer pushes and pulls around it.
+///
+/// RELATIVE, AND IT USED TO BE ABSOLUTE. The old form was `1 - sd/2.0` with `sd` in bpm, so a spread
+/// of two beats per minute drove it to zero at any tempo — while its sibling statistic, the
+/// concentration gate above, accepts a spread of `PULSE_AGREE_TOL` = 6% as unanimous. At 130 bpm
+/// those are 2 bpm and ±7.8 bpm: a reading could pass the agreement gate at full marks and report
+/// zero steadiness. The scale here is taken from `PULSE_AGREE_TOL` rather than invented — a tempo
+/// scattering by the full agreement tolerance is at the edge of being one tempo at all, so that is
+/// where the feel reads zero — and it moves whenever that constant does.
+///
+/// THIS IS NOT YET THE FIX, AND SAYING SO IS THE POINT. The field reads 0.000 on both real positives
+/// and the printer renders 0.000 as `elastic`, so the reading describes two sequenced electronic
+/// tracks as having a human drummer's push and pull. I diagnosed that as the absolute scale and was
+/// wrong; it survives the correction. Measured (`measure_pulse_steadiness`):
+///
+///     nero — reaching out    memory [96.0, 125.5, 125.5, 126.5, 126.5, 128.0, 128.0, 131.5]
+///                            sd 10.53 bpm (cv 0.085)   MAD 1.50 bpm (cv 0.012)
+///     phyllzx — skinshine    memory [73.0, 129.0, 130.0, 130.0, 130.0, 131.0, 131.5, 133.0]
+///                            sd 19.10 bpm (cv 0.155)   MAD 1.00 bpm (cv 0.008)
+///
+/// ONE STRAY WINDOW IN EIGHT DESTROYS THE STANDARD DEVIATION. Seven estimates sit inside three bpm
+/// and the eighth is forty bpm away, which is exactly the case the concentration gate is built to
+/// tolerate (7 of 8 clears its 0.7) and exactly the case `sd` is not. The gate that ADMITS the
+/// reading is robust and the number that DESCRIBES it is not.
+///
+/// AND THE OBVIOUS ROBUST FIX IS NOT CLEAN, which is why it is not here. Median absolute deviation
+/// recovers the real tracks (0.80 and 0.87) and collapses the synthetic pair to *identical* values —
+/// machine and human both land on MAD 0.5 bpm, which is one `PULSE_BPM_STEP`, so the estimator hits
+/// the tempogram's own quantum and goes blind exactly where `a_machine_reads_steadier_than_a_human`
+/// asks it to see. Trading a falsehood about real music for a blindness on the feature's only
+/// discrimination is not an improvement, it is a different wrong number.
+///
+/// WHAT THE REAL FIX NEEDS, filed rather than guessed: a dispersion that survives one stray estimate
+/// without landing on the quantum — a trimmed sd is the obvious candidate and is measurable today —
+/// AND the negative control this field has never had. Nothing anywhere asserts that a genuinely
+/// wandering tempo reads LOW; the only steadiness test compares two synthetic beats that differ by
+/// 0.36 bpm. Until a wandering-tempo control exists, any new constant here would be fitted to two
+/// recordings and one synthetic pair, which is the error this file has now recorded four times.
+fn steadiness(bpms: &[f32]) -> f32 {
+    if bpms.len() < 2 { return 0.0; }
+    let mean = bpms.iter().sum::<f32>() / bpms.len() as f32;
+    if mean <= 0.0 { return 0.0; }
+    let var = bpms.iter().map(|b| (b - mean) * (b - mean)).sum::<f32>() / bpms.len() as f32;
+    (1.0 - (var.sqrt() / mean) / PULSE_AGREE_TOL).clamp(0.0, 1.0)
+}
+
 /// 174 bpm and 87 bpm are the same pulse counted differently, so estimates are compared in one octave.
 fn pulse_fold(bpm: f32) -> f32 {
     let mut b = bpm;
@@ -1056,11 +1103,7 @@ impl Pulse {
         }
         if strength < PULSE_MIN_STRENGTH { return None; }
 
-        // STEADINESS is the feel — how much the tempo itself wanders — over EVERY retained estimate.
-        // A machine lands on one number; a drummer pushes and pulls around it.
-        let mean = bpms.iter().sum::<f32>() / bpms.len() as f32;
-        let sd = (bpms.iter().map(|b| (b - mean) * (b - mean)).sum::<f32>() / bpms.len() as f32).sqrt();
-        let steady = (1.0 - sd / 2.0).clamp(0.0, 1.0);
+        let steady = steadiness(&bpms);
         let bpm = centre;
 
         let changed = self.reported.map_or(true, |r| (r - bpm).abs() > PULSE_CHANGE_BPM);
@@ -1363,20 +1406,65 @@ const SPEECH_GAPS_DB: f32 = 7.0;
 ///
 /// It cost a false positive on a real recording: one Fratres window read syllabic 0.46 against a 0.45
 /// threshold, held for a third of a second, and was reported as speech. Requiring the verdict to
-/// survive two seconds means a marginal crossing cannot promote itself, while genuine speech — which
-/// goes on for many seconds — sails through.
-const SPEECH_HOLD_SECS: f32 = 2.0;
+/// survive means a marginal crossing cannot promote itself, while genuine speech — which goes on for
+/// many seconds — sails through.
+///
+/// EIGHT, RAISED FROM TWO, and the two seconds were never measured against real music. When the
+/// negative control was finally written as a run rather than claimed in a summary line
+/// (`no_recorded_music_is_called_speech`), two of eight recordings called music speech: a dubstep
+/// breakdown at syllabic 1.23, and one more at 0.81.
+///
+/// THE THRESHOLDS ARE NOT WHERE THE FIX IS, and the measurement says so plainly. Across the corpus,
+/// every frame (`measure_speech_features`):
+///
+///     fixture                            syl p50   p99   max      gap p50   p99   max
+///     heldout-trxy                          0.47  3.79  5.03          2.2  12.2  12.4
+///     partt-fratres                         0.10  1.69  3.90          5.9  12.0  23.5
+///     beat-nero-reaching-out                0.52  2.34  3.35          4.0   7.5   7.8
+///     speech_like (SYNTHETIC, the only
+///       positive that exists)               1.07  2.47  2.80         21.6  22.2  22.3
+///
+/// Four music recordings exceed the synthetic talker's own MAXIMUM syllabic ratio. There is no
+/// syllabic threshold that admits speech and excludes this corpus — the feature separates typical
+/// values and this detector is evaluated at extremes, which is the finding `PULSE_MIN_STRENGTH`
+/// already records: a typical value and an extreme one are different quantities.
+///
+/// WHAT DOES SEPARATE IS DURATION, by a factor of six with nothing in the gap. Consecutive seconds
+/// the talking verdict holds:
+///
+///     the whole 44-minute music corpus   longest run 4.5 s   (then 2.2, 1.2, 0.3, 0.1 …)
+///     speech_like(30 s)                  longest run 26.2 s
+///
+/// So this follows the rule `PULSE_MIN_STRENGTH` states in as many words — when a detector leaks,
+/// do not raise the threshold, because that fits it to whichever recordings happen to be in tests/;
+/// lengthen the evidence instead. Eight seconds is 1.8x the worst run in the corpus.
+///
+/// DERIVED FROM THE NEGATIVE SIDE ON PURPOSE, and not from the midpoint of the two walls, which was
+/// my first instinct and leans on the wrong one. The 4.5 s wall is measured on 44 minutes of real
+/// music; the 26.2 s wall is a synthetic envelope that talks without ever stopping, which real
+/// speech does not — a podcast pauses, laughs, and drops under a music bed. So the constant sits as
+/// low as the measured wall permits, leaving the headroom on the side that could not be measured.
+///
+/// THE COST, stated rather than discovered: someone talking is not reported for eight seconds, and
+/// the cochlea produces confident harmonic nonsense from their voice for that whole time. That is
+/// the price of the negative control holding, the same trade `PULSE_MEMORY_SECS` makes, and
+/// `speech_is_not_called_until_the_verdict_has_held` exists to keep it visible.
+///
+/// AND WHAT WOULD MOVE IT: a longer run appearing in the corpus raises it. Real speech turning out
+/// to pause more often than every eight seconds LOWERS it — and lowering it needs a real positive
+/// recording, which this detector has never had. Two minutes of a podcast with `data/RECORD` armed
+/// would settle in one evening what no amount of reasoning here can.
+const SPEECH_HOLD_SECS: f32 = 8.0;
 
 impl SpeechSense {
-    pub fn feed(&mut self, db: f32, now: f32) -> Option<Event> {
-        if db <= -60.0 {
-            self.hist.clear();
-            self.pending_since = None;
-            return None;
-        }
-        self.hist.push((now, db));
-        let cutoff = now - SPEECH_WINDOW_SECS;
-        self.hist.retain(|&(t, _)| t >= cutoff);
+    /// The two features and the verdict they make, read off the current window.
+    ///
+    /// EXTRACTED SO A MEASUREMENT CAN READ WHAT `feed` READS. The verdict only reaches a caller when
+    /// it CHANGES, so the evidence behind every frame that did not change anything is invisible —
+    /// and that is most of them, including every near miss. Recomputing these six lines beside the
+    /// detector to see them would be a mirror, which is the failure this repo has now paid for
+    /// twice; so there is one copy and both the detector and the instrument call it.
+    fn features(&self, now: f32) -> Option<SpeechEvidence> {
         let span = now - self.hist.first()?.0;
         if span < SPEECH_WINDOW_SECS * 0.9 || self.hist.len() < 32 { return None; }
 
@@ -1401,6 +1489,20 @@ impl SpeechSense {
         let gaps_db = mean - quietest;
 
         let talking = syllabic >= SPEECH_SYLLABIC && gaps_db >= SPEECH_GAPS_DB;
+        Some(SpeechEvidence { syllabic, gaps_db, talking })
+    }
+
+    pub fn feed(&mut self, db: f32, now: f32) -> Option<Event> {
+        if db <= -60.0 {
+            self.hist.clear();
+            self.pending_since = None;
+            return None;
+        }
+        self.hist.push((now, db));
+        let cutoff = now - SPEECH_WINDOW_SECS;
+        self.hist.retain(|&(t, _)| t >= cutoff);
+        let evidence = self.features(now)?;
+        let talking = evidence.talking;
         // Hysteresis in TIME on the verdict. Flipping "someone is talking" on and off would be worse
         // than either answer held steadily, and a threshold crossing that lasts a third of a second
         // is not evidence of anything — see SPEECH_HOLD_SECS.
@@ -1419,7 +1521,7 @@ impl SpeechSense {
         }
         self.pending_since = None;
         self.reported = Some(talking);
-        Some(Event::Speech { talking, evidence: SpeechEvidence { syllabic, gaps_db, talking } })
+        Some(Event::Speech { talking, evidence })
     }
 }
 
@@ -2532,6 +2634,62 @@ mod tests {
         assert_eq!(n, 0, "a beatless swell reported a pulse {n} times");
     }
 
+    /// What the steadiness field is actually reading, on the only real positives that exist.
+    ///
+    /// Reaches into `Pulse::est` — the retained tempo memory at the moment a reading is emitted —
+    /// because the event carries only the finished number and the question here is what went into
+    /// it. Run with `--ignored --nocapture` when the scale is under discussion.
+    #[test]
+    #[ignore]
+    fn measure_pulse_steadiness() {
+        let report = |label: &str, bpms: &[f32]| {
+            let mean = bpms.iter().sum::<f32>() / bpms.len() as f32;
+            let sd = (bpms.iter().map(|b| (b - mean) * (b - mean)).sum::<f32>() / bpms.len() as f32).sqrt();
+            // MAD, the robust twin of sd: half the memory would have to move to shift it, so two
+            // stray windows cannot destroy it — and nothing is discarded before it is computed,
+            // which is what separates this from the circular version that filtered first.
+            let mut s: Vec<f32> = bpms.to_vec();
+            s.sort_by(|a, b| a.partial_cmp(b).unwrap());
+            let med = s[s.len() / 2];
+            let mut dev: Vec<f32> = s.iter().map(|b| (b - med).abs()).collect();
+            dev.sort_by(|a, b| a.partial_cmp(b).unwrap());
+            let mad = dev[dev.len() / 2];
+            eprintln!("{label:<34} n={:<3} mean {mean:6.1}  sd {sd:5.2}  cv {:.4}  |  med {med:6.1} \
+                       MAD {mad:5.2}  cv_mad {:.4}  |  old {:.3}  rel(sd) {:.3}  rel(MAD) {:.3}",
+                      bpms.len(), sd / mean, mad / med,
+                      (1.0 - sd / 2.0).clamp(0.0, 1.0), steadiness(bpms),
+                      (1.0 - (mad / med) / PULSE_AGREE_TOL).clamp(0.0, 1.0));
+            eprintln!("{:<34}   memory {:?}", "", s.iter().map(|b| (b * 10.0).round() / 10.0).collect::<Vec<_>>());
+        };
+        eprintln!("--- REAL POSITIVES (both sequenced; a drum machine should not read elastic) ---");
+        for f in ["tests/fixture-beat-nero-reaching-out.jsonl",
+                  "tests/fixture-beat-phyllzx-skinshine.jsonl"] {
+            let text = std::fs::read_to_string(f).unwrap_or_else(|e| panic!("{f}: {e}"));
+            let mut p = Pulse::default();
+            for line in text.lines().filter(|l| l.trim().starts_with('{')) {
+                let v: serde_json::Value = match serde_json::from_str(line) { Ok(v) => v, Err(_) => continue };
+                let at = v.get("t").and_then(|x| x.as_f64()).unwrap_or(0.0) as f32;
+                let db = match v.get("db").and_then(|x| x.as_f64()) { Some(d) => d as f32, None => continue };
+                if let Some(Event::Pulse(r)) = p.feed(db, at) {
+                    let bpms: Vec<f32> = p.est.iter().map(|&(_, b)| b).collect();
+                    report(f.rsplit('/').next().unwrap_or(f), &bpms);
+                    eprintln!("{:<34} reported bpm {:.1}  lock {:.3}  steady {:.3}", "", r.bpm, r.strength, r.steady);
+                }
+            }
+        }
+        eprintln!("--- SYNTHETIC, which is the material the old scale passed on ---");
+        for (label, jitter) in [("machine (jitter 0.0)", 0.0f32), ("human (jitter 0.045)", 0.045)] {
+            let mut p = Pulse::default();
+            for (t, db) in pulsing(120.0, 90.0, jitter) {
+                if let Some(Event::Pulse(_)) = p.feed(db, t) {
+                    let bpms: Vec<f32> = p.est.iter().map(|&(_, b)| b).collect();
+                    report(label, &bpms);
+                }
+            }
+        }
+        eprintln!("scale: cv is divided by PULSE_AGREE_TOL = {PULSE_AGREE_TOL}");
+    }
+
     #[test]
     fn a_machine_reads_steadier_than_a_human() {
         // The reading that is not in any metadata: a BPM is published, a FEEL is not. A drum machine
@@ -2894,6 +3052,174 @@ mod tests {
             }
             other => panic!("a 4 Hz gapped envelope was not called speech: {other:?}"),
         }
+    }
+
+    /// Every fixture in the corpus, and the fine-grained evidence behind every frame of it.
+    ///
+    /// Returns (verdict events, per-frame features). The first is what the ledger would show; the
+    /// second is what the threshold is actually sitting in, which the events cannot show because a
+    /// verdict only reaches a caller when it changes.
+    fn speech_on_fixture(path: &str) -> (Vec<(f32, SpeechEvidence)>, Vec<SpeechEvidence>) {
+        let text = std::fs::read_to_string(path).unwrap_or_else(|e| panic!("{path}: {e}"));
+        let mut s = SpeechSense::default();
+        let (mut events, mut frames) = (Vec::new(), Vec::new());
+        for line in text.lines().filter(|l| l.trim().starts_with('{')) {
+            let v: serde_json::Value = match serde_json::from_str(line) { Ok(v) => v, Err(_) => continue };
+            let at = v.get("t").and_then(|x| x.as_f64()).unwrap_or(0.0) as f32;
+            let db = match v.get("db").and_then(|x| x.as_f64()) { Some(d) => d as f32, None => continue };
+            if let Some(Event::Speech { evidence, .. }) = s.feed(db, at) { events.push((at, evidence)); }
+            if let Some(f) = s.features(at) { frames.push(f); }
+        }
+        (events, frames)
+    }
+
+    /// The eight recordings the corpus is made of. Every one is music.
+    const MUSIC_FIXTURES: [&str; 8] = [
+        "tests/fixture-adagio-op11-956.jsonl", "tests/fixture-partt-fratres.jsonl",
+        "tests/fixture-heldout-pemberton.jsonl", "tests/fixture-heldout-sol.jsonl",
+        "tests/fixture-heldout-trxy.jsonl", "tests/fixture-beat-nero-reaching-out.jsonl",
+        "tests/fixture-beat-phyllzx-skinshine.jsonl", "tests/fixtures-adagio-op11.jsonl",
+    ];
+
+    #[test]
+    fn no_recorded_music_is_called_speech() {
+        // THE NEGATIVE CONTROL THAT WAS ONLY EVER CLAIMED. `cochlea_replay`'s summary has printed
+        // "a music fixture must read 0 — this is the negative control" since the detector shipped,
+        // and nothing asserted it: all three speech tests are synthetic envelopes, which agree with
+        // the rule by construction. The corpus is the only thing that can disagree with it, and when
+        // it was finally asked, it did — on two of eight.
+        //
+        // Same shape as the JS swell mirror and the vibrato gap: a control that exists as a sentence
+        // rather than as a run. Measured across every fixture before anything is asserted, so a leak
+        // in a later recording cannot hide behind the first.
+        let mut leaks = Vec::new();
+        for f in MUSIC_FIXTURES {
+            for (at, e) in speech_on_fixture(f).0 {
+                if e.talking {
+                    leaks.push(format!("{f}: t={at:.1} syllabic {:.2} (thresh {SPEECH_SYLLABIC}) \
+                                        gaps {:.1} dB (thresh {SPEECH_GAPS_DB})", e.syllabic, e.gaps_db));
+                }
+            }
+        }
+        assert!(leaks.is_empty(), "recorded music was called speech {} times:\n  {}",
+                leaks.len(), leaks.join("\n  "));
+    }
+
+    /// What the two thresholds are actually sitting in, on real music and on the only positive we
+    /// have. Run with `--ignored --nocapture` when either constant is under discussion.
+    ///
+    /// The question this exists to answer is not "how far off are the leaks" but whether ANY pair of
+    /// constants separates the corpus from a talker — and it cannot be answered honestly yet, because
+    /// the positive side is one synthetic envelope. Its numbers are printed beside the music so the
+    /// gap between "passes the synthetic" and "beats the corpus" is a measurement rather than a
+    /// worry.
+    #[test]
+    #[ignore]
+    fn measure_speech_features() {
+        let pct = |v: &mut Vec<f32>, p: f32| -> f32 {
+            v.sort_by(|a, b| a.partial_cmp(b).unwrap());
+            v[((v.len() - 1) as f32 * p).round() as usize]
+        };
+        eprintln!("--- REAL MUSIC (every frame; the whole distribution the threshold sits in) ---");
+        eprintln!("{:<42} {:>7} {:>7} {:>7}   {:>7} {:>7} {:>7}",
+                  "fixture", "syl p50", "p99", "max", "gap p50", "p99", "max");
+        for f in MUSIC_FIXTURES {
+            let (_, frames) = speech_on_fixture(f);
+            if frames.is_empty() { eprintln!("{f:<42}  (no level data)"); continue; }
+            let mut syl: Vec<f32> = frames.iter().map(|e| e.syllabic).collect();
+            let mut gap: Vec<f32> = frames.iter().map(|e| e.gaps_db).collect();
+            let name = f.rsplit('/').next().unwrap_or(f);
+            eprintln!("{name:<42} {:7.2} {:7.2} {:7.2}   {:7.1} {:7.1} {:7.1}",
+                      pct(&mut syl, 0.50), pct(&mut syl, 0.99), pct(&mut syl, 1.0),
+                      pct(&mut gap, 0.50), pct(&mut gap, 0.99), pct(&mut gap, 1.0));
+        }
+        eprintln!("--- THE ONLY POSITIVE WE HAVE, and it is synthetic ---");
+        let mut s = SpeechSense::default();
+        let (mut syl, mut gap) = (Vec::new(), Vec::new());
+        for (t, db) in speech_like(20.0) {
+            s.feed(db, t);
+            if let Some(e) = s.features(t) { syl.push(e.syllabic); gap.push(e.gaps_db); }
+        }
+        eprintln!("{:<42} {:7.2} {:7.2} {:7.2}   {:7.1} {:7.1} {:7.1}", "speech_like(20s)",
+                  pct(&mut syl, 0.50), pct(&mut syl, 0.99), pct(&mut syl, 1.0),
+                  pct(&mut gap, 0.50), pct(&mut gap, 0.99), pct(&mut gap, 1.0));
+        eprintln!("thresholds now: syllabic {SPEECH_SYLLABIC}, gaps {SPEECH_GAPS_DB} dB, both required");
+
+        // HOW LONG THE VERDICT SURVIVES, which is the constant this file's own doctrine says to move.
+        // `PULSE_MIN_STRENGTH` records the rule in as many words: when a detector leaks, do not raise
+        // the threshold — that fits it to whichever recordings happen to be in tests/ — lengthen the
+        // evidence instead. `SPEECH_HOLD_SECS` is this detector's memory, so what matters is not how
+        // far the leaks exceed the threshold but how LONG they manage to.
+        eprintln!("--- RUN LENGTHS: consecutive seconds the talking verdict holds ---");
+        let runs = |frames: &[(f32, bool)]| -> Vec<f32> {
+            let (mut out, mut start): (Vec<f32>, Option<f32>) = (vec![], None);
+            for (t, talking) in frames {
+                match (*talking, start) {
+                    (true, None) => start = Some(*t),
+                    (false, Some(s)) => { out.push(t - s); start = None; }
+                    _ => {}
+                }
+            }
+            if let (Some(s), Some((last, _))) = (start, frames.last()) { out.push(last - s); }
+            out
+        };
+        for f in MUSIC_FIXTURES {
+            let text = match std::fs::read_to_string(f) { Ok(t) => t, Err(_) => continue };
+            let mut s = SpeechSense::default();
+            let mut frames = vec![];
+            for line in text.lines().filter(|l| l.trim().starts_with('{')) {
+                let v: serde_json::Value = match serde_json::from_str(line) { Ok(v) => v, Err(_) => continue };
+                let at = v.get("t").and_then(|x| x.as_f64()).unwrap_or(0.0) as f32;
+                let db = match v.get("db").and_then(|x| x.as_f64()) { Some(d) => d as f32, None => continue };
+                s.feed(db, at);
+                if let Some(e) = s.features(at) { frames.push((at, e.talking)); }
+            }
+            let r = runs(&frames);
+            let name = f.rsplit('/').next().unwrap_or(f);
+            eprintln!("{name:<42} {} run(s), longest {:.1}s   {:?}", r.len(),
+                      r.iter().cloned().fold(0.0f32, f32::max),
+                      r.iter().map(|x| (x * 10.0).round() / 10.0).collect::<Vec<_>>());
+        }
+        let mut s = SpeechSense::default();
+        let mut frames = vec![];
+        for (t, db) in speech_like(30.0) {
+            s.feed(db, t);
+            if let Some(e) = s.features(t) { frames.push((t, e.talking)); }
+        }
+        let r = runs(&frames);
+        eprintln!("{:<42} {} run(s), longest {:.1}s   (a talker keeps talking; music does not)",
+                  "speech_like(30s)", r.len(), r.iter().cloned().fold(0.0f32, f32::max));
+    }
+
+    #[test]
+    fn speech_is_not_called_until_the_verdict_has_held() {
+        // THE COST OF THE NEGATIVE CONTROL, as a test rather than as a sentence in a doc comment.
+        // Eight seconds of held evidence is what stops a dubstep breakdown being called a
+        // conversation, and it means a real talker is not reported for eight seconds either — during
+        // which the cochlea reads harmony off their vowels and says so. That is a property of the
+        // design, not a defect queued for later, and the assertion exists so nobody optimises the
+        // latency away without also moving the wall it is buying.
+        let mut s = SpeechSense::default();
+        let mut first: Option<f32> = None;
+        for (t, db) in speech_like(30.0) {
+            if let Some(Event::Speech { talking: true, .. }) = s.feed(db, t) {
+                if first.is_none() { first = Some(t); }
+            }
+        }
+        let at = first.expect("a continuous talking envelope was never reported");
+        // THE FLOOR IS 0.9 OF THE WINDOW PLUS THE HOLD, and the 0.9 is not a fudge — `features`
+        // opens the gate at `SPEECH_WINDOW_SECS * 0.9`, so the first verdict exists at 3.6 s and the
+        // earliest possible report is 11.6. Written as the full window first, this assertion failed
+        // at 11.7 s against a floor of 12.0: it was asserting a bound the detector never claimed,
+        // which is a wrong test rather than a late report.
+        let floor = SPEECH_WINDOW_SECS * 0.9 + SPEECH_HOLD_SECS;
+        assert!(at >= floor,
+                "reported at {at:.1}s, before the window ({:.1}s) and the hold ({:.1}s) could have elapsed",
+                SPEECH_WINDOW_SECS * 0.9, SPEECH_HOLD_SECS);
+        // And a band, not a floor: much later than this means the detector needs more than an
+        // uninterrupted talker to commit, which would be a different defect and an invisible one.
+        assert!(at < floor + 4.0,
+                "reported at {at:.1}s — a talker who never stops should commit promptly after the hold");
     }
 
     #[test]
@@ -3460,3 +3786,5 @@ mod tests {
         assert!(interval(440.0, 440.0 * 1.117, 5.0).is_none(), "a tight tolerance must be able to fail");
     }
 }
+
+
