@@ -19,7 +19,7 @@
 #[path = "../cochlea.rs"]
 mod cochlea;
 
-use cochlea::{replay, Event, Frame, Peak};
+use cochlea::{replay, Event, Frame, Peak, VOTE_WINDOWS};
 
 fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
@@ -78,14 +78,22 @@ fn main() {
     if !summary {
         for (at, e) in &events {
             match e {
-                Event::Onset { hz } => println!("{at:7.2}  onset      ~{hz:.0} Hz"),
+                // The evidence is printed here, not only carried: this tool exists so a change can be
+                // A/B'd against real music without anyone pressing play, and "11 of 13 onsets rest
+                // on one uncorroborated partial" is invisible if the replay prints only the pitch.
+                Event::Onset { hz, partials, inferred } =>
+                    println!("{at:7.2}  onset      ~{hz:.0} Hz   partials {partials}{}",
+                             if *inferred { "  INFERRED (residue pitch)" } else { "" }),
                 Event::Silence => println!("{at:7.2}  silence"),
-                Event::Intervals { names, restless, chord } =>
+                Event::Intervals { intervals, restless, chord } =>
                     println!("{at:7.2}  {:9}{}{}", if *restless { "restless" } else { "settled" },
-                             chord.as_ref().map(|c| format!("{c:10}")).unwrap_or_default(),
-                             names.join(" · ")),
-                Event::Swelling { rising, db, over, from } =>
-                    println!("{at:7.2}  {:9}{:+.1} dB over {:.0}s (from {from:.1} dB)",
+                             chord.as_ref().map(|c| format!("{:10}", c.name)).unwrap_or_default(),
+                             intervals.iter()
+                                 .map(|i| format!("{}:{} {} ({:+.0}¢ {}/{})",
+                                                  i.num, i.den, i.name, i.cents_off, i.votes, VOTE_WINDOWS))
+                                 .collect::<Vec<_>>().join(" · ")),
+                Event::Swelling { rising, db, over, from, refit_db, trim_s } =>
+                    println!("{at:7.2}  {:9}{:+.1} dB over {:.0}s (from {from:.1} dB, {refit_db:+.1} past {trim_s:.0}s)",
                              if *rising { "growing" } else { "fading" }, db, over),
                 // Never fires in a replay: fixtures store one peak set per 4096-sample frame, and
                 // vibrato needs the fine sub-window track that is computed live and not recorded.
@@ -118,12 +126,20 @@ fn main() {
     let mut speech_calls = 0;
     let mut voices_heard = 0;
     let mut pulses: Vec<f32> = Vec::new();
+    // The two numbers era 4 added to every interval, summarised so a build-to-build A/B can see them
+    // move. Tuning is the one that says whether the just table is matching real structure or snapping
+    // noise to the nearest familiar name.
+    let (mut unanimous, mut voted) = (0usize, 0usize);
+    let mut tuning: Vec<f32> = Vec::new();
     for (_, e) in &events {
         match e {
             Event::Onset { .. } => onsets += 1,
-            Event::Intervals { names, chord, .. } => {
+            Event::Intervals { intervals, chord, .. } => {
                 chords += 1;
-                widths.push(names.len());
+                widths.push(intervals.len());
+                unanimous += intervals.iter().filter(|i| i.votes >= VOTE_WINDOWS).count();
+                voted += intervals.len();
+                tuning.extend(intervals.iter().map(|i| i.cents_off.abs()));
                 if chord.is_some() { named_chords += 1; }
             }
             Event::StillUnresolved { .. } => holds += 1,
@@ -182,6 +198,12 @@ fn main() {
     // without re-listening to the same piece by hand.
     println!("  named as a chord: {named_chords} of {chords} ({:.0}%)",
              if chords > 0 { 100.0 * named_chords as f32 / chords as f32 } else { 0.0 });
+    if voted > 0 {
+        tuning.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
+        println!("  interval votes: {unanimous} of {voted} unanimous ({:.0}%)   |cents_off| median {:.1}¢  p90 {:.1}¢  (tolerance 30¢)",
+                 100.0 * unanimous as f32 / voted as f32,
+                 tuning[tuning.len() / 2], tuning[tuning.len() * 9 / 10]);
+    }
     println!("  intervals per chord  mean {:.2}  max {}",
              mean(&widths.iter().map(|&w| w as f32).collect::<Vec<_>>()),
              widths.iter().max().copied().unwrap_or(0));

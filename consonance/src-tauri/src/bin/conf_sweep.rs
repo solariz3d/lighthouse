@@ -154,6 +154,8 @@ fn main() {
     let mut c_iv_by_ratio: Vec<(u32, u32, f32)> = vec![];
     let mut c_onsets: Vec<(String, f32, f32, f32, usize, bool)> = vec![];
     let mut c_oct_pairs: Vec<(f32, usize, bool, f32, usize, bool)> = vec![];
+    let mut c_ch_unknown = 0usize;
+    let mut refit_mismatches: Vec<String> = vec![];
     let mut c_swells: Vec<(String, SwellFit)> = vec![];
     let mut c_pulse: Vec<(String, f32, f32, f32)> = vec![];
     let mut c_speech: Vec<(String, f32, bool, f32, f32)> = vec![];
@@ -199,6 +201,7 @@ fn main() {
         let mut f_iv_votes = (0usize, 0usize);
         let mut f_ch_votes = (0usize, 0usize);
         let mut f_ch_extra = (0usize, 0usize);
+        let mut f_ch_unknown = 0usize;
         let mut f_swells: Vec<SwellFit> = vec![];
 
         for f in &frames {
@@ -210,7 +213,7 @@ fn main() {
 
             for e in tracker.feed(m.clone(), f.at, 4.0) {
                 match &e {
-                    Event::Onset { hz } => {
+                    Event::Onset { hz, .. } => {
                         swell.sound_began();
                         // The voice that produced the reported fundamental.
                         if let Some(v) = m.voices.iter().find(|v| (v.hz - hz).abs() < 0.01) {
@@ -241,35 +244,33 @@ fn main() {
                             if v.inferred { f_onset_inferred.0 += 1; } else { f_onset_inferred.1 += 1; }
                         }
                     }
-                    Event::Intervals { names, chord, .. } => {
-                        // MIRROR: the corroborated-voice filter, copied from `moment` (partials >= 2
-                        // OR mag >= 0.35 * loudest). Reported as an approximation of the shipped
-                        // rule; if the rule moves, this number is stale and says nothing.
+                    Event::Intervals { intervals, chord, .. } => {
+                        // THE TWO MIRRORS ARE GONE. This block used to re-derive the vote count and
+                        // parse ratios back out of the rendered strings, because the event carried
+                        // names and nothing else; both are now fields on the reading itself, so the
+                        // sweep reads what shipped instead of an approximation of it. What remains
+                        // marked MIRROR below is the corroborated-voice filter, which the event still
+                        // does not carry.
                         let loudest = m.voices.iter().map(|v| v.mag).fold(0.0f32, f32::max);
                         let total: f32 = m.voices.iter().map(|v| v.mag).sum();
+                        // MIRROR: copied from `moment` (partials >= 2 OR mag >= 0.35 * loudest).
+                        // Reported as an approximation of the shipped rule; if the rule moves, this
+                        // number is stale and says nothing.
                         let named: Vec<&Voice> = m.voices.iter()
                             .filter(|v| v.partials >= 2 || (loudest > 0.0 && v.mag >= 0.35 * loudest)).collect();
-                        for nm in names {
-                            let ratio: Vec<u32> = nm.split(' ').next().unwrap_or("")
-                                .split(':').filter_map(|x| x.parse().ok()).collect();
-                            if ratio.len() != 2 { continue; }
-                            let (num, den) = (ratio[0], ratio[1]);
-                            // MIRROR: vote count over the same window the tracker used.
-                            let votes = ring.iter()
-                                .filter(|r| r.intervals.iter().any(|i| i.num == num && i.den == den)).count();
+                        for iv in intervals {
+                            let (num, den, votes) = (iv.num, iv.den, iv.votes);
                             if votes >= VOTE_WINDOWS { f_iv_votes.1 += 1; } else { f_iv_votes.0 += 1; }
-                            if let Some(iv) = m.intervals.iter().find(|i| i.num == num && i.den == den) {
-                                f_iv_cents.push(iv.cents_off.abs());
-                                if let Some(e) = et_offset(num, den) {
-                                    c_iv_et.push((iv.cents_off - e).abs());
-                                }
-                                // Does the vote agree with the tuning? Two candidate confidences
-                                // measuring the same claim from different sides either converge or
-                                // one of them is measuring nothing.
-                                if votes >= VOTE_WINDOWS { c_iv_cents_unan.push(iv.cents_off.abs()); }
-                                else { c_iv_cents_split.push(iv.cents_off.abs()); }
-                                c_iv_by_ratio.push((num, den, iv.cents_off));
+                            f_iv_cents.push(iv.cents_off.abs());
+                            if let Some(e) = et_offset(num, den) {
+                                c_iv_et.push((iv.cents_off - e).abs());
                             }
+                            // Does the vote agree with the tuning? Two candidate confidences
+                            // measuring the same claim from different sides either converge or
+                            // one of them is measuring nothing.
+                            if votes >= VOTE_WINDOWS { c_iv_cents_unan.push(iv.cents_off.abs()); }
+                            else { c_iv_cents_split.push(iv.cents_off.abs()); }
+                            c_iv_by_ratio.push((num, den, iv.cents_off));
                             // The weaker of the two voices making this interval.
                             let mut best: Option<(f32, f32)> = None;
                             for i in 0..named.len() {
@@ -299,12 +300,15 @@ fn main() {
                             }
                             if db_here.is_finite() { c_iv_db.push(db_here); }
                         }
-                        if let Some(cn) = chord {
-                            let votes = ring.iter()
-                                .filter(|r| r.chord.as_ref().map(|c| &c.name) == Some(cn)).count();
-                            if votes >= VOTE_WINDOWS { f_ch_votes.1 += 1; } else { f_ch_votes.0 += 1; }
-                            if let Some(c) = &m.chord {
-                                if c.extra == 0 { f_ch_extra.1 += 1; } else { f_ch_extra.0 += 1; }
+                        if let Some(c) = chord {
+                            if c.votes >= VOTE_WINDOWS { f_ch_votes.1 += 1; } else { f_ch_votes.0 += 1; }
+                            // `extra` is now None when the voted name outlived every frame that
+                            // produced it — counted separately rather than folded into "0 strangers",
+                            // which is the distinction the old code could not make.
+                            match c.extra {
+                                Some(0) => f_ch_extra.1 += 1,
+                                Some(_) => f_ch_extra.0 += 1,
+                                None => f_ch_unknown += 1,
                             }
                         }
                     }
@@ -313,7 +317,8 @@ fn main() {
             }
 
             if let Some(db) = f.db {
-                if let Some(Event::Swelling { rising, db: change, over, from }) = swell.feed(db, f.at) {
+                if let Some(Event::Swelling { rising, db: change, over, from,
+                                             refit_db: shipped_refit, trim_s }) = swell.feed(db, f.at) {
                     // Rebuild the window from the event's OWN bounds and check the rebuild against
                     // the event before believing any statistic drawn from it.
                     let lo = f.at - over;
@@ -329,6 +334,18 @@ fn main() {
                         fit(&tr).0 * (over - trim).max(1.0)
                     };
                     let refit_db = refit_at(6.0);
+                    // THE IN-DETECTOR REFIT AGAINST THE OFFLINE ONE. Era 4 moved this computation
+                    // inside `Swell`, where it can use the per-frame levels the stream does not
+                    // carry; this reconstruction is the one that was validated against 83 of 83
+                    // window heads. Two independent computations of the same quantity, so a
+                    // disagreement means one of them is wrong and neither should be believed until
+                    // it is found. Compared at the trim the event itself names, not at a guess.
+                    let mine = refit_at(trim_s);
+                    if (mine - shipped_refit).abs() > 0.15 {
+                        refit_mismatches.push(format!(
+                            "{name} t={:.1}: event says {shipped_refit:+.2}, rebuild says {mine:+.2} (trim {trim_s:.0}s)",
+                            f.at));
+                    }
                     // THE TRIM IS A CONSTANT FROM ONE CASE — six seconds is the measured length of
                     // the Adagio's entrance out of digital silence. A discriminator that only works
                     // at the length of the case that motivated it is fitted to that case, so every
@@ -379,7 +396,7 @@ fn main() {
         c_iv_cents.extend(f_iv_cents); c_iv_minpart.extend(f_iv_minpart); c_iv_minshare.extend(f_iv_minshare);
         c_iv_votes.0 += f_iv_votes.0; c_iv_votes.1 += f_iv_votes.1;
         c_ch_votes.0 += f_ch_votes.0; c_ch_votes.1 += f_ch_votes.1;
-        c_ch_extra.0 += f_ch_extra.0; c_ch_extra.1 += f_ch_extra.1;
+        c_ch_extra.0 += f_ch_extra.0; c_ch_extra.1 += f_ch_extra.1; c_ch_unknown += f_ch_unknown;
         for s in f_swells { c_swells.push((name.clone(), s)); }
     }
 
@@ -415,8 +432,9 @@ fn main() {
         println!("      {a:8.1} Hz (p{ap}{}) x {b:8.1} Hz (p{bp}{})   ratio {:.4}",
                  if *ai { ",inferred" } else { "" }, if *bi { ",inferred" } else { "" }, b / a);
     }
-    println!("  CHORD   votes {} at 3/4 · {} at 4/4    extra 1: {}  extra 0: {}",
-             c_ch_votes.0, c_ch_votes.1, c_ch_extra.0, c_ch_extra.1);
+    println!("  CHORD   votes {} at 3/4 · {} at 4/4    extra 1: {}  extra 0: {}  extra unknown: {} \
+              (the voted name outlived every frame that produced it)",
+             c_ch_votes.0, c_ch_votes.1, c_ch_extra.0, c_ch_extra.1, c_ch_unknown);
     println!("  ONSET events, every one in the corpus:");
     for (n, at, hz, db, part, inf) in &c_onsets {
         let (nm, ct) = note_name(*hz);
@@ -447,6 +465,9 @@ fn main() {
              c_swells.iter().filter(|(_, s)| s.refit_db * s.db < 0.0).count(), c_swells.len());
     let bad = c_swells.iter().filter(|(_, s)| !s.head_ok || !s.db_ok).count();
     println!("    rebuild check: {} of {} windows disagree with the event they came from", bad, c_swells.len());
+    println!("    in-detector refit vs offline rebuild: {} disagreement(s){}", refit_mismatches.len(),
+             if refit_mismatches.is_empty() { "  — two independent computations agree".to_string() }
+             else { format!("\n      {}", refit_mismatches.join("\n      ")) });
     // The question the R² number exists to answer: does a good fit separate a real crescendo from
     // a fade-in? Print the floor-headed windows against the rest.
     let floor: Vec<&(String, SwellFit)> = c_swells.iter().filter(|(_, s)| s.from < -50.0).collect();

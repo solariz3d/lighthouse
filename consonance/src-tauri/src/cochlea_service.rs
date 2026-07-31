@@ -110,22 +110,35 @@ fn ledger_path(data_dir: &PathBuf) -> PathBuf { data_dir.join("heard.jsonl") }
 fn describe(e: &Event) -> Option<Heard> {
     let now = stamp();
     let (kind, text) = match e {
-        Event::Onset { hz } => {
+        Event::Onset { hz, .. } => {
             // The name first, the frequency second. An afternoon was spent reading "~467 Hz" and
             // converting it by hand every time, which is the instrument leaving its work undone.
+            // `partials` and `inferred` ride the event for the structured fields; the rendered line
+            // stays the sentence a human reads.
             let (name, cents) = crate::cochlea::note_name(*hz);
             ("onset", format!("sound begins · {name} ({:+.0}¢, {:.0} Hz)", cents, hz))
         }
         Event::Silence => ("silence", "silence".to_string()),
-        Event::Intervals { names, restless, chord } => (
+        // "WANTS TO MOVE" IS GONE FROM THE TEXT, and its removal is the whole of era 4's item 13.
+        // It asserted functional harmony — a leading tone, a seventh under a dominant — which needs a
+        // key, a chord function and voice leading, none of which exist here. What is actually
+        // measured is ratio complexity in a fixed table, and on crossfading ambient the claim is
+        // simply false: a 9:8 appears because a voice is mid-transit and vanishes when the crossfade
+        // completes. Two cold readers repeated the phrase back as a fact about the music.
+        //
+        // `restless` survives as the KIND, where it is a label rather than a claim, with its rule on
+        // the header line so a reader can disagree with the threshold instead of reverse-engineering
+        // it — which both readers did unaided, which is the argument for shipping the rule.
+        Event::Intervals { intervals, restless, chord } => (
             if *restless { "restless" } else { "settled" },
             format!(
-                "{}{}{}",
+                "{}{}",
                 // The chord first when there is one: it is the thing a reader wants, and the
                 // intervals behind it are the evidence for it.
-                chord.as_ref().map(|c| format!("{c}   ")).unwrap_or_default(),
-                names.join(" · "),
-                if *restless { "  — wants to move" } else { "" },
+                chord.as_ref().map(|c| format!("{}   ", c.name)).unwrap_or_default(),
+                intervals.iter()
+                    .map(|i| format!("{}:{} {}", i.num, i.den, i.name))
+                    .collect::<Vec<_>>().join(" · "),
             ),
         ),
         Event::Pulse(p) => {
@@ -158,10 +171,14 @@ fn describe(e: &Event) -> Option<Heard> {
         // `from` is on the line because without it the dB figure is unreadable: the same +30 dB is a
         // playback ramp off the noise floor or real music getting louder, and 10 of 16 eligible track
         // starts in the ledger produced a report pinned to the boundary with no way to tell which.
-        Event::Swelling { rising, db, over, from } => (
+        // The refit rides beside the figure it qualifies rather than only in the structured fields:
+        // a window measured from a track's first samples can report a large rise that is entirely
+        // the fade-in, and the refit past the head is the only measurement that separates those from
+        // real openings. Rendered as a number, never as a verdict — see SWELL_REFIT_TRIM_SECS.
+        Event::Swelling { rising, db, over, from, refit_db, trim_s } => (
             if *rising { "growing" } else { "fading" },
-            format!("{} · {:+.1} dB over {:.0}s (from {:.1} dB)",
-                    if *rising { "growing" } else { "fading" }, db, over, from),
+            format!("{} · {:+.1} dB over {:.0}s (from {:.1} dB, {:+.1} past the first {:.0}s)",
+                    if *rising { "growing" } else { "fading" }, db, over, from, refit_db, trim_s),
         ),
         Event::StillUnresolved { secs } => ("held", format!("still unresolved · {:.1}s", secs)),
         Event::Resolved { after_secs } => ("resolved", format!("resolved after {:.1}s", after_secs)),
@@ -443,13 +460,19 @@ pub fn append(data_dir: &PathBuf, h: &Heard) {
 mod tests {
     use super::*;
 
+    /// One reported interval, for the shapes below. The evidence fields are era 4's; a test that
+    /// built them by hand in three places would drift from the detector the first time one moved.
+    fn reading(num: u32, den: u32, name: &'static str, restless: bool) -> crate::cochlea::IntervalReading {
+        crate::cochlea::IntervalReading { num, den, name, cents_off: 0.0, votes: 4, restless }
+    }
+
     #[test]
     fn every_event_kind_produces_a_line() {
         // A silent event kind would be a hole in the ledger that looks like quiet.
         let evs = vec![
-            Event::Onset { hz: 110.0 },
+            Event::Onset { hz: 110.0, partials: 3, inferred: false },
             Event::Silence,
-            Event::Intervals { names: vec!["3:2 fifth".into()], restless: false, chord: None },
+            Event::Intervals { intervals: vec![reading(3, 2, "fifth", false)], restless: false, chord: None },
             Event::StillUnresolved { secs: 4.1 },
             Event::Resolved { after_secs: 5.2 },
         ];
@@ -463,10 +486,18 @@ mod tests {
     fn restlessness_is_visible_in_the_kind_not_only_the_text() {
         // A UI that has to grep prose to colour a row will break the first time the wording
         // changes. The distinction that matters is a field.
-        let calm = describe(&Event::Intervals { names: vec!["3:2 fifth".into()], restless: false, chord: None }).unwrap();
-        let tense = describe(&Event::Intervals { names: vec!["45:32 tritone".into()], restless: true, chord: None }).unwrap();
+        //
+        // AND THIS TEST GOT LOAD-BEARING IN ERA 4. "— wants to move" left the rendered text, because
+        // it asserted functional harmony the analyser cannot see, so the kind is now the ONLY place
+        // the distinction lives. What was belt-and-braces is the belt.
+        let calm = describe(&Event::Intervals {
+            intervals: vec![reading(3, 2, "fifth", false)], restless: false, chord: None }).unwrap();
+        let tense = describe(&Event::Intervals {
+            intervals: vec![reading(45, 32, "tritone", true)], restless: true, chord: None }).unwrap();
         assert_eq!(calm.kind, "settled");
         assert_eq!(tense.kind, "restless");
+        assert!(!tense.text.contains("wants to move"),
+                "the text must not make a claim about where the music is going: {:?}", tense.text);
     }
 
     #[test]

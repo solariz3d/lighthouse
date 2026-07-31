@@ -566,6 +566,50 @@ const SWELL_WINDOW_SECS: f32 = 60.0;
 const SWELL_DB: f32 = 5.0;
 const SWELL_MIN_GAP_SECS: f32 = 15.0;
 
+/// How much of the window's head the refit drops before fitting again.
+///
+/// WHAT THE REFIT IS FOR. `from` says where the window opened; it does not say whether the trend is
+/// the music. Measured across the corpus, a floor-level head is NECESSARY AND NOT SUFFICIENT — the
+/// Adagio's opening (an artifact) and Fratres' opening (real music that genuinely begins near the
+/// noise floor) open 0.03 dB apart and reach opposite verdicts. Fitting the window again with its
+/// entrance removed is the only measurement that has separated them: the two artifacts collapse to
+/// −0.44 and 0.10 of the reported figure, the three real openings hold 0.79 to 1.11.
+///
+/// SIX SECONDS, AND THE NUMBER IS THE WEAK PART. It is the measured length of the Adagio's entrance
+/// out of digital silence — i.e. it comes from one of the cases it adjudicates, which is the shape
+/// of constant this file has been wrong about before. Swept rather than assumed (`conf_sweep`):
+///
+///     trim      3 s     6 s    10 s    15 s
+///     Adagio t=116.8 (artifact)   +1.9   −4.8   −6.6   −6.6      reported +11.0
+///     Adagio t=536.6 (artifact)   +0.7   +0.7   +1.9   +2.7      reported  +7.0
+///     Fratres t=1349.1 (real)    +27.2  +23.9  +20.2  +14.3      reported +30.3
+///
+/// At 6 s the separation is clean; at 15 s it narrows to 0.39 against 0.47, and 9 of 83 corpus
+/// windows change the SIGN of their refit somewhere across those four trims — including the first
+/// artifact, which does not reverse at all at 3 s. So the trim ships ON THE EVENT rather than being
+/// left implicit, and the refit ships as a number rather than as a verdict. n here is five.
+const SWELL_REFIT_TRIM_SECS: f32 = 6.0;
+
+/// Least-squares slope of (time, dB), in dB per second.
+///
+/// One copy, called twice: once for the window and once for the refit past its head. Two copies of a
+/// regression differing only in their input is the mirror this repo has already paid for, and the
+/// refit exists precisely to be compared against the first number — which it cannot honestly be if
+/// the two are computed by different code.
+fn trend(hist: &[(f32, f32)]) -> Option<f32> {
+    let n = hist.len() as f32;
+    if n < 2.0 { return None; }
+    let mean_t = hist.iter().map(|(t, _)| *t).sum::<f32>() / n;
+    let mean_db = hist.iter().map(|(_, d)| *d).sum::<f32>() / n;
+    let (mut num, mut den) = (0.0, 0.0);
+    for (t, d) in hist {
+        num += (t - mean_t) * (d - mean_db);
+        den += (t - mean_t) * (t - mean_t);
+    }
+    if den <= 0.0 { return None; }
+    Some(num / den)
+}
+
 /// Tracks loudness over time and reports sustained growth or decay.
 ///
 /// Its own clock and its own state, deliberately separate from the harmonic tracker: a crescendo is
@@ -654,18 +698,8 @@ impl Swell {
         // that has to stay small enough to detect an arc. The trend is in all N points, so it is
         // read from all N points. Reported as dB ACROSS THE WINDOW, which is the quantity a listener
         // would name.
-        let n = self.hist.len() as f32;
-        if n < 8.0 { return None; }
-        let mean_t = self.hist.iter().map(|(t, _)| *t).sum::<f32>() / n;
-        let mean_db = self.hist.iter().map(|(_, d)| *d).sum::<f32>() / n;
-        let mut num = 0.0;
-        let mut den = 0.0;
-        for (t, d) in &self.hist {
-            num += (t - mean_t) * (d - mean_db);
-            den += (t - mean_t) * (t - mean_t);
-        }
-        if den <= 0.0 { return None; }
-        let slope = num / den;
+        if self.hist.len() < 8 { return None; }
+        let slope = trend(&self.hist)?;
         let change = slope * span;
         // WHERE THE WINDOW STARTED, carried on the event because the number above cannot be read
         // without it. `+30.9 dB over 48s` from -57 dB and the same figure from -25 dB are different
@@ -713,7 +747,15 @@ impl Swell {
         if now - self.last_report < SWELL_MIN_GAP_SECS { return None; }
         self.last_report = now;
         self.reported_dir = dir;
-        Some(Event::Swelling { rising: dir > 0, db: change, over: span, from })
+        // The same window without its head, fitted again — see SWELL_REFIT_TRIM_SECS. Computed here
+        // rather than left to a reader with a fixture, because the per-frame levels this needs are
+        // in memory now and are not in the stream; B's whole analysis of which openings were real
+        // had to reconstruct them offline, and only the three checkable ones could be settled.
+        let head_cut = self.hist.first()?.0 + SWELL_REFIT_TRIM_SECS;
+        let tail: Vec<(f32, f32)> = self.hist.iter().cloned().filter(|(t, _)| *t >= head_cut).collect();
+        let refit_db = trend(&tail).map(|s| s * (span - SWELL_REFIT_TRIM_SECS).max(1.0)).unwrap_or(change);
+        Some(Event::Swelling { rising: dir > 0, db: change, over: span, from,
+                               refit_db, trim_s: SWELL_REFIT_TRIM_SECS })
     }
 }
 
@@ -739,6 +781,15 @@ pub struct PulseReading {
     /// it read 0.96–0.99 on readings that jumped 237 → 55 bpm. Selecting for agreement and then
     /// reporting agreement is a number that cannot come out low.
     pub steady: f32,
+    /// What `strength` would read if there were no pulse at all: 1/sqrt(n) over the n phase steps
+    /// this reading was measured from.
+    ///
+    /// THIS IS WHY `strength` MAY BE CALLED A CONFIDENCE AND NOTHING ELSE IN THIS FILE MAY. A 0..1
+    /// number is a rank dressed as a probability unless something says what it reads when the thing
+    /// is absent — and 0.6 means nothing while "0.6 against a chance of 0.17" means everything. The
+    /// null is not a constant: n varies with tempo and memory, so it travels per reading rather than
+    /// being stated once and quietly going stale.
+    pub chance: f32,
 }
 
 /// Tempo from the loudness series, by phase rather than by correlation height.
@@ -1110,7 +1161,7 @@ impl Pulse {
         if !changed || now - self.last_report < PULSE_MIN_GAP_SECS { return None; }
         self.last_report = now;
         self.reported = Some(bpm);
-        Some(Event::Pulse(PulseReading { bpm, strength, steady }))
+        Some(Event::Pulse(PulseReading { bpm, strength, steady, chance: 1.0 / (n as f32).sqrt() }))
     }
 }
 
@@ -1525,18 +1576,94 @@ impl SpeechSense {
     }
 }
 
+/// One interval as reported, with the evidence for it rather than only its name.
+///
+/// WHY BOTH NUMBERS TRAVEL, and why neither is compressed into a single confidence. `cents_off` is
+/// how far the measured pair sits from the exact just ratio; `votes` is how many of the last
+/// `VOTE_WINDOWS` readings contained it. They measure different things and the corpus says so
+/// plainly: intervals winning 4 of 4 votes average 12.5¢ off just, those winning 3 of 4 average
+/// 12.9¢. Persistence does not predict tuning. An average of the two would be a number that moves
+/// like neither and that nobody can act on.
+///
+/// The tolerance is 30 cents, so `cents_off` is readable as a fraction of the width of the door the
+/// match came through: across 6,415 readings it runs p10 2.2, p50 12.0, p90 25.1. A reader who sees
+/// 27 is looking at a name the table barely earned, and the bare string `5:4 major third` hides
+/// exactly that.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct IntervalReading {
+    pub num: u32,
+    pub den: u32,
+    pub name: &'static str,
+    /// Cents from the exact just ratio, signed. Equal temperament is not just intonation and the
+    /// drift says which one is playing.
+    pub cents_off: f32,
+    /// How many of the last `VOTE_WINDOWS` readings contained this ratio. Never below the strict
+    /// majority — anything less never reaches a report.
+    pub votes: usize,
+    /// The derived tension flag, kept per interval so a reader can see WHICH one carries it.
+    pub restless: bool,
+}
+
+impl IntervalReading {
+    /// The measured quantity `restless` is derived FROM, so a reader can disagree with the rule
+    /// rather than reverse-engineer it. Two cold readers worked it out from the log unaided; that
+    /// it was reverse-engineerable at all is the argument for simply shipping it.
+    pub fn complexity(&self) -> u32 { self.num + self.den }
+}
+
+/// A chord as reported, with the evidence the name rests on.
+#[derive(Clone, Debug, PartialEq)]
+pub struct ChordReading {
+    pub name: String,
+    /// Sounding notes the template does not explain. Never more than one — above that `chord()`
+    /// declines to name anything.
+    ///
+    /// `None` when no frame still in the vote window produced this name, so there is no frame to
+    /// read the evidence off. **Measured: that never happens — 0 of 445 chord reports across the
+    /// corpus.** It cannot happen while the vote is counted over the same buffer this searches: a
+    /// name needs three of four frames to win, so at least three producing frames are always
+    /// present. Kept as an `Option` anyway, because the day the vote counts over a longer history
+    /// than the buffer holds, this field should say *unknown* rather than invent a `0`.
+    ///
+    /// The number that motivated this — 44 of 445 — measures something else, and I cited it here
+    /// for a moment as though it measured this. It is how often the NEWEST frame disagrees with the
+    /// voted name, which is the vote doing its job and is exactly why the evidence is read from a
+    /// frame that produced the name rather than from whichever frame happened to arrive last.
+    pub extra: Option<usize>,
+    pub inversion: bool,
+    pub votes: usize,
+}
+
 /// Emits on CHANGE, never on a clock. This is the whole cost model: a quiet room is free, a
 /// held chord costs one line, and the stream is proportional to musical change rather than time.
 #[derive(Debug, Clone, PartialEq)]
 pub enum Event {
-    Onset { hz: f32 },
+    /// `partials` and `inferred` are the corroboration behind the pitch, and they travel because a
+    /// pitch claim is the weakest thing in this stream and currently the most authoritative-looking.
+    /// Measured across the whole corpus: 11 of 13 onsets rest on a voice with ONE partial — no
+    /// corroboration at all — and the only two with three or more are the only two that are
+    /// INFERRED, i.e. residue pitches that were never observed. Richest evidence and most fragile
+    /// inference are the same two events, which is why these ship as two fields and not as one score.
+    Onset { hz: f32, partials: usize, inferred: bool },
     Silence,
-    Intervals { names: Vec<String>, restless: bool, chord: Option<String> },
+    Intervals { intervals: Vec<IntervalReading>, restless: bool, chord: Option<ChordReading> },
     /// Sustained growth or decay in loudness, over a span long enough to mean something.
     /// `from` is the FITTED level at the window's head — see `Swell::feed`. Without it `db` cannot
     /// be read: the same +30 dB means a playback ramp from the noise floor or real music getting
     /// louder, and nothing else in the event separates them.
-    Swelling { rising: bool, db: f32, over: f32, from: f32 },
+    /// `refit_db` is the same window fitted again with its first `trim_s` seconds dropped, and it
+    /// is a SECOND MEASUREMENT rather than a verdict. What the fit statistics cannot see is whether
+    /// the window is one piece of music: at n≈704 every swell is overwhelmingly significant (the
+    /// corpus minimum t-statistic is 5.25) and R² does not separate — the known Adagio fade-in
+    /// artifact scores 0.123 while genuine music scores 0.038. Refitting past the head does
+    /// separate, on the five floor-headed windows the corpus has: the two artifacts collapse to
+    /// −0.44 and 0.10 of the reported figure, the three real openings hold 0.79 to 1.11.
+    ///
+    /// Shipped as a number with its trim named, and NOT as a flag, because the discrimination is
+    /// measured on five windows and moves with the constant — 9 of 83 corpus windows change the
+    /// SIGN of their refit somewhere across trims of 3, 6, 10 and 15 seconds. A reader weighs it
+    /// against the first figure; nothing here decides for them.
+    Swelling { rising: bool, db: f32, over: f32, from: f32, refit_db: f32, trim_s: f32 },
     /// A pitch is oscillating — a voice, almost certainly, since little else in a mix wobbles.
     Vibrato(VibratoReading),
     /// The music has a pulse, at this rate and this mechanically.
@@ -1598,12 +1725,18 @@ pub const UNREADABLE_ABANDON_SECS: f32 = 3.0;
 
 #[derive(Default)]
 pub struct Tracker {
-    /// The last few readings, oldest first: interval set, silence, and the chord name.
+    /// The last few readings, oldest first: interval set, silence, and the chord.
     ///
     /// The chord is voted alongside the intervals rather than taken from the newest frame. A chord
     /// name is a much larger claim than an interval — one wrong pitch class turns B♭m into
     /// something else — so it should have to survive the same majority the intervals do.
-    recent: Vec<(Vec<Interval>, bool, Option<String>)>,
+    ///
+    /// The whole `Chord` is kept rather than its name alone, because the name that WINS the vote may
+    /// not be the name the newest frame reads — 44 of 445 chord reports across the corpus name a
+    /// chord no current frame produces. Keeping the struct means the evidence shipped with a name
+    /// comes from a frame that actually produced that name, instead of from whichever frame happened
+    /// to be last.
+    recent: Vec<(Vec<Interval>, bool, Option<Chord>)>,
     /// The stable set as last reported, held as NAMES rather than measurements.
     ///
     /// `Interval` carries `cents_off` — how far the measured pair sits from exact just intonation —
@@ -1633,7 +1766,7 @@ impl Tracker {
     pub fn feed(&mut self, m: Moment, now: f32, nag_after: f32) -> Vec<Event> {
         let mut out = Vec::new();
 
-        self.recent.push((m.intervals.clone(), m.silent, m.chord.as_ref().map(|c| c.name.clone())));
+        self.recent.push((m.intervals.clone(), m.silent, m.chord.clone()));
         if self.recent.len() > VOTE_WINDOWS { self.recent.remove(0); }
         if self.recent.len() < VOTE_WINDOWS {
             return out;                       // not enough evidence to call anything yet
@@ -1641,31 +1774,37 @@ impl Tracker {
 
         let need = VOTE_WINDOWS / 2 + 1;      // strict majority
         let silent = self.recent.iter().filter(|(_, s, _)| *s).count() >= need;
-        // An interval survives if a majority of the recent readings contain it.
-        let mut stable: Vec<Interval> = Vec::new();
+        // An interval survives if a majority of the recent readings contain it. THE COUNT TRAVELS
+        // rather than being thrown away once it has passed the gate: a 3-of-4 and a 4-of-4 are the
+        // difference between the display's flicker and the ledger's conviction, and the reader could
+        // not previously tell them apart.
+        let mut stable: Vec<(Interval, usize)> = Vec::new();
         for (ivs, _, _) in &self.recent {
             for iv in ivs {
-                if stable.iter().any(|e: &Interval| e.num == iv.num && e.den == iv.den) { continue; }
+                if stable.iter().any(|(e, _)| e.num == iv.num && e.den == iv.den) { continue; }
                 let votes = self.recent.iter()
                     .filter(|(s, _, _)| s.iter().any(|e| e.num == iv.num && e.den == iv.den))
                     .count();
-                if votes >= need { stable.push(*iv); }
+                if votes >= need { stable.push((*iv, votes)); }
             }
         }
         // The chord faces the same majority. No agreement means no name — the interval reading is
-        // still there and is the honest fallback.
-        let chord_name: Option<String> = {
-            let mut best: Option<(usize, String)> = None;
+        // still there and is the honest fallback. The winning name carries its own vote count and
+        // the evidence from a frame that actually produced it.
+        let voted_chord: Option<(Chord, usize)> = {
+            let mut best: Option<(usize, Chord)> = None;
             for (_, _, c) in &self.recent {
-                if let Some(name) = c {
-                    let votes = self.recent.iter().filter(|(_, _, x)| x.as_deref() == Some(name.as_str())).count();
+                if let Some(chord) = c {
+                    let votes = self.recent.iter()
+                        .filter(|(_, _, x)| x.as_ref().map(|y| &y.name) == Some(&chord.name)).count();
                     if votes >= need && best.as_ref().map_or(true, |(v, _)| votes > *v) {
-                        best = Some((votes, name.clone()));
+                        best = Some((votes, chord.clone()));
                     }
                 }
             }
-            best.map(|(_, n)| n)
+            best.map(|(v, c)| (c, v))
         };
+        let chord_name: Option<String> = voted_chord.as_ref().map(|(c, _)| c.name.clone());
         // CANONICAL ORDER, because first-appearance order is not stable. The vote walks a SLIDING
         // window, so which reading is seen first changes every frame and the same chord comes out
         // permuted — then a vector comparison calls it a new chord. Live, from one second:
@@ -1677,8 +1816,8 @@ impl Tracker {
         // A previous comment here asserted the order was stable via first appearance. It was not,
         // and asserting it is what stopped it being checked. Sorting by JUST's own order also
         // means a chord always reads the same way to a human, simplest ratio first.
-        stable.sort_by_key(|i| just_rank(i.num, i.den));
-        let restless = stable.iter().any(|i| i.restless);
+        stable.sort_by_key(|(i, _)| just_rank(i.num, i.den));
+        let restless = stable.iter().any(|(i, _)| i.restless);
 
         // SOUND PRESENCE IS DECIDED SEPARATELY FROM READABILITY, and getting that wrong once left
         // the tab entirely mute: when the interval logic swallowed unreadable moments it swallowed
@@ -1690,7 +1829,15 @@ impl Tracker {
                 out.push(Event::Silence);
                 self.restless_since = None;
             } else if let Some(hz) = m.fundamental {
-                out.push(Event::Onset { hz });
+                // The corroboration behind the pitch, from the voice that produced it. `fundamental`
+                // is the LOWEST voice, so the lookup is by frequency rather than by rank — and when
+                // no voice matches, the fields say so instead of defaulting to a confident 1.
+                let v = m.voices.iter().find(|v| (v.hz - hz).abs() < 0.01);
+                out.push(Event::Onset {
+                    hz,
+                    partials: v.map(|v| v.partials).unwrap_or(0),
+                    inferred: v.map(|v| v.inferred).unwrap_or(false),
+                });
             }
             // Silence wipes the chord belief as well: after a gap, the next chord is genuinely new.
             self.confirmed = Some((Vec::new(), silent));
@@ -1731,7 +1878,7 @@ impl Tracker {
         }
         self.unreadable_since = None;
 
-        let names: Vec<(u32, u32)> = stable.iter().map(|i| (i.num, i.den)).collect();
+        let names: Vec<(u32, u32)> = stable.iter().map(|(i, _)| (i.num, i.den)).collect();
         // The chord name is part of the identity: B♭m becoming D♭ over the same interval set is a
         // real harmonic change and would otherwise pass silently.
         let differs = self.confirmed.as_ref()
@@ -1739,10 +1886,21 @@ impl Tracker {
             || self.confirmed_chord != chord_name;
         if differs {
             out.push(Event::Intervals {
-                names: stable.iter()
-                    .map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect(),
+                intervals: stable.iter().map(|(i, votes)| IntervalReading {
+                    num: i.num, den: i.den, name: i.name,
+                    cents_off: i.cents_off, votes: *votes, restless: i.restless,
+                }).collect(),
                 restless,
-                chord: chord_name.clone(),
+                chord: voted_chord.as_ref().map(|(c, votes)| ChordReading {
+                    name: c.name.clone(),
+                    // From the frame that produced this name, not from the newest frame — those are
+                    // not always the same frame, and 44 of 445 corpus reports are the case where
+                    // they differ.
+                    extra: self.recent.iter().rev()
+                        .find_map(|(_, _, x)| x.as_ref().filter(|y| y.name == c.name).map(|y| y.extra)),
+                    inversion: c.inversion,
+                    votes: *votes,
+                }),
             });
             self.confirmed_chord = chord_name;
             match (self.restless_since, restless) {
@@ -2017,7 +2175,9 @@ mod tests {
         let mut got: Vec<String> = vec![];
         for i in 0..8 {
             for e in t.feed(m.clone(), i as f32 * 0.085, 0.0) {
-                if let Event::Intervals { names, .. } = e { got = names; }
+                if let Event::Intervals { intervals, .. } = e {
+                    got = intervals.iter().map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect();
+                }
             }
         }
         assert_eq!(got, vec!["2:1 octave", "3:2 fifth", "4:3 fourth"],
@@ -2108,7 +2268,10 @@ mod tests {
                 chord: None,
             };
             for e in t.feed(m, i as f32 * 0.085, 0.0) {
-                if let Event::Intervals { names, .. } = e { named.push(names); }
+                if let Event::Intervals { intervals, .. } = e {
+                    named.push(intervals.iter()
+                        .map(|i| format!("{}:{} {}", i.num, i.den, i.name)).collect::<Vec<_>>());
+                }
             }
         }
         assert!(!named.is_empty(), "a held fifth under a shifting edge must be heard at all");
@@ -2239,7 +2402,7 @@ mod tests {
             }
         }
         match got {
-            Some(Event::Swelling { rising, db, over, from }) => {
+            Some(Event::Swelling { rising, db, over, from, .. }) => {
                 assert!(rising, "a rising slope reported as falling");
                 // Against the CONSTANTS, not against copies of them. The first version of these
                 // assertions hardcoded 4.0 dB, and when the threshold moved to 3.0 the test failed
@@ -3080,6 +3243,96 @@ mod tests {
         "tests/fixture-heldout-trxy.jsonl", "tests/fixture-beat-nero-reaching-out.jsonl",
         "tests/fixture-beat-phyllzx-skinshine.jsonl", "tests/fixtures-adagio-op11.jsonl",
     ];
+
+    #[test]
+    fn every_reported_reading_carries_real_evidence() {
+        // THE FAILURE THIS EXISTS FOR is not a wrong number, it is a DEFAULT one. Era 4 added
+        // evidence fields to three event kinds, and the way that goes wrong is silently: a field
+        // wired to `0`, or to `Default::default()`, or read from the wrong frame, produces a stream
+        // that looks exactly as authoritative as the real thing and is worse than the bare names it
+        // replaced — because now there is a number vouching for it.
+        //
+        // So every reading the corpus produces is checked against the bounds the detector's own
+        // rules imply. These are not tuned thresholds; they are restatements of the gates upstream,
+        // and if one fails it means a field is not carrying what its name says.
+        let need = VOTE_WINDOWS / 2 + 1;
+        let mut checked = 0;
+        let mut tuning: Vec<f32> = Vec::new();
+        for f in MUSIC_FIXTURES {
+            let text = std::fs::read_to_string(f).unwrap_or_else(|e| panic!("{f}: {e}"));
+            let mut frames = Vec::new();
+            for line in text.lines().filter(|l| l.trim().starts_with('{')) {
+                let v: serde_json::Value = match serde_json::from_str(line) { Ok(v) => v, Err(_) => continue };
+                let at = v.get("t").and_then(|x| x.as_f64()).unwrap_or(0.0) as f32;
+                let db = v.get("db").and_then(|x| x.as_f64()).map(|d| d as f32);
+                let peaks = v.get("peaks").and_then(|x| x.as_array()).map(|a| {
+                    a.iter().filter_map(|p| { let q = p.as_array()?;
+                        Some(Peak { hz: q.first()?.as_f64()? as f32, mag: q.get(1)?.as_f64()? as f32 }) })
+                     .collect::<Vec<_>>()
+                }).unwrap_or_default();
+                frames.push(Frame { at, peaks, db, track: None });
+            }
+            for (at, e) in replay(&frames, 30.0, 4.0) {
+                match e {
+                    Event::Intervals { intervals, restless, chord } => {
+                        assert!(!intervals.is_empty(), "{f} t={at:.1}: an interval event with no intervals");
+                        for i in &intervals {
+                            assert!(i.votes >= need && i.votes <= VOTE_WINDOWS,
+                                    "{f} t={at:.1}: {}:{} reports {} votes, outside [{need}, {VOTE_WINDOWS}]",
+                                    i.num, i.den, i.votes);
+                            // The match came through a 30-cent door, so nothing beyond it can be a
+                            // reported interval. A field defaulted to 0.0 would pass this; a field
+                            // read from the wrong interval would not.
+                            assert!(i.cents_off.abs() <= 30.0,
+                                    "{f} t={at:.1}: {}:{} reports {:.1}¢ off, outside the tolerance it matched within",
+                                    i.num, i.den, i.cents_off);
+                            assert_eq!(i.complexity(), i.num + i.den);
+                            tuning.push(i.cents_off.abs());
+                        }
+                        // The event-level flag must be the disjunction of the per-interval ones, or
+                        // a reader colouring a row and a reader reading the ratios disagree.
+                        assert_eq!(restless, intervals.iter().any(|i| i.restless),
+                                   "{f} t={at:.1}: event restless={restless} contradicts its own intervals");
+                        if let Some(c) = &chord {
+                            assert!(c.votes >= need && c.votes <= VOTE_WINDOWS,
+                                    "{f} t={at:.1}: chord {} reports {} votes", c.name, c.votes);
+                            assert!(c.extra.map_or(true, |x| x <= 1),
+                                    "{f} t={at:.1}: chord {} keeps {:?} unexplained notes; above one, chord() declines to name anything",
+                                    c.name, c.extra);
+                        }
+                        checked += 1;
+                    }
+                    // A voice with zero partials explains no peaks and cannot have produced a pitch.
+                    Event::Onset { partials, .. } =>
+                        assert!(partials >= 1, "{f} t={at:.1}: an onset from a voice with no partials"),
+                    // The refit is a second fit of a strict subset of the same window. It may differ
+                    // freely in size — that is the whole point — but a window shorter than its own
+                    // trim would make it meaningless, and `over` is always at least 48s.
+                    Event::Swelling { over, trim_s, .. } =>
+                        assert!(over > trim_s, "{f} t={at:.1}: a {over:.0}s window refitted past {trim_s:.0}s"),
+                    _ => {}
+                }
+            }
+        }
+        assert!(checked > 1000, "only {checked} interval events across the corpus — did the corpus shrink?");
+
+        // A BOUNDS CHECK CANNOT CATCH A ZERO, and this line exists because the bounds check above
+        // did not. Mutating `cents_off` to a constant 0.0 left every assertion green: zero sits
+        // comfortably inside a 30-cent tolerance, so the field could carry nothing at all and still
+        // read as a measurement. The default that survives a range test is the dangerous one.
+        //
+        // The distribution is what gives it away. Real tuning wobbles; measured across the corpus
+        // the median is 12.0 cents and the tenth percentile is 2.2. A corpus of commercial
+        // recordings whose intervals all land dead on just intonation is not a plausible reading,
+        // it is a field that is not connected. The bar is set an order of magnitude under the
+        // measured median so ordinary drift in the analysis chain cannot redden it.
+        tuning.sort_by(|a, b| a.partial_cmp(b).unwrap());
+        let median = tuning[tuning.len() / 2];
+        assert!(median > 2.0,
+                "median |cents_off| is {median:.2}¢ across {} readings — real tuning does not land \
+                 that exactly on just intonation, so this field is reporting a default, not a measurement",
+                tuning.len());
+    }
 
     #[test]
     fn no_recorded_music_is_called_speech() {
