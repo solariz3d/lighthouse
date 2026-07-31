@@ -45,6 +45,17 @@ const ALIASES = {
   'main': 'C',
   // "B - finding #2 withdrawn, and the trigger built. consonance/tools..." — B signing itself
   'sibling-B': 'B',
+  // The four fresh strangers of 2026-07-30/31, letters from persist.log's birth records —
+  // letters.json only holds LIVE panes, so a closed stranger's posts went unresolvable the
+  // moment it was removed. The log line is the durable evidence the assertion asks for:
+  // "born-kept fresh pane=34eba3b5-... letter=D cwd=...fresh-5863b0ee" — found the hook leak
+  '34eba3b5-4e6d-44f3-9f11-006dc282c4f6': 'D',
+  // "born-kept fresh pane=f6e825b5-... letter=E cwd=...fresh-8960d31a" — proved the guard held
+  'f6e825b5-bda4-4868-9650-1867ad1ba41e': 'E',
+  // "born-kept fresh pane=7f990232-... letter=F cwd=...fresh-476a9b3f" — the first cold read
+  '7f990232-b736-468c-801f-18fd9aee113b': 'F',
+  // "born-kept fresh pane=ee7d100f-... letter=G cwd=...fresh-0c607a8e" — the era-3 rematch
+  'ee7d100f-06b2-4a9e-896c-0b524edda770': 'G',
 };
 
 /* Actors that are NOT panes and must not be folded into one. `chair` is written by the control
