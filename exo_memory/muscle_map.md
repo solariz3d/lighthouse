@@ -1855,3 +1855,14 @@ countermeasure is the same one the panes already use on themselves: before asser
 or a status in a summary, re-derive it from the artifact rather than from the memory of having
 read it. The panes' findings survive their compression because they measure first; the chair's
 must clear the same bar.
+
+
+## 2026-07-31, structural — this file stops transcribing the panes
+
+From today the map is multi-writer: exo_memory/map/{A,B,chair}.md, one writer per file,
+append-only, the law in map/README.md. Motivation is measured, not aesthetic: the chair's
+compression adds certainty (see the entry above), and every pane finding that reached
+another pane travelled through exactly that compression. This file remains the chair's
+master. Findings recorded here on the panes' behalf before today stay where they are —
+append-clean, never rewrite.
+
