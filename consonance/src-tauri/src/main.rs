@@ -2067,6 +2067,17 @@ fn read_letters() -> BTreeMap<String, String> {
 
 /// This pane's letter, assigning (and persisting) one the first time it is asked for.
 /// A–Z, then A2… — a 27th pane is a naming problem, never a collision.
+/// Where a committee pane's own multi-writer map file lives. The lighthouse working tree is
+/// the same one the panes commit to, resolved the same way room_brief resolves its dev paths:
+/// plain disk, keyed off the home dir. A missing file is a pane with nothing recorded yet —
+/// the caller treats absent as absent.
+fn own_map_path(letter: &str) -> PathBuf {
+    PathBuf::from(home())
+        .join("Desktop").join("lighthouse")
+        .join("exo_memory").join("map")
+        .join(format!("{letter}.md"))
+}
+
 fn pane_letter(pane: &str) -> String {
     let mut m = read_letters();
     if let Some(l) = m.get(pane) {
@@ -2524,6 +2535,23 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     // Unbriefed is a property the dir keeps for life, not just at birth — the room must not
     // leak in through the restore path.
     let mut brief = if is_fresh_cwd(cwd) { String::new() } else { assemble_intake() };
+    // GAP 3 — character survives sleep. A kept committee pane wakes with its OWN accumulated
+    // findings, recalled from the master it alone writes (exo_memory/map/<letter>.md), never
+    // from the chair's summaries — the chair's compression measurably adds certainty, which is
+    // the whole reason the map went multi-writer. The transcript below is what happened; the
+    // map is what it learned. Absent file = no section: a pane with no findings yet wakes
+    // without a scaffold pretending otherwise.
+    if !is_fresh_cwd(cwd) {
+        if let Ok(own) = fs::read_to_string(own_map_path(&pane_letter(pane))) {
+            brief.push_str("\n---\n\n# YOUR OWN MAP — findings you recorded, in your words\n\n");
+            brief.push_str(
+                "Recall from this master; you wrote every entry. The other writers' files sit \
+                 beside it — read them at need, not from summary.\n\n",
+            );
+            brief.push_str(&own);
+            brief.push('\n');
+        }
+    }
     brief.push_str("\n---\n\n# PRIOR CONVERSATION — you have been here before\n\n");
     brief.push_str(
         "Consonance restored this pane from its own capture (the underlying session could not be \
@@ -4771,6 +4799,17 @@ mod chair_tests {
         // path-component match, not string-prefix: "instances-evil" must not pass
         let inst = Path::new(r"C:\Consonance\instances");
         assert_eq!(role_for_kept(r"C:\Consonance\instances-evil\x", inst), "human");
+    }
+
+    #[test]
+    fn a_panes_own_map_resolves_to_its_letter_file() {
+        // The wake-brief loads exo_memory/map/<letter>.md — the file that pane alone writes.
+        // The path shape is the contract with the multi-writer map's README; a drift here would
+        // silently wake every pane without its character, which has no other symptom.
+        let p = own_map_path("A");
+        let s = p.to_string_lossy();
+        assert!(s.ends_with("exo_memory\\map\\A.md") || s.ends_with("exo_memory/map/A.md"), "{s}");
+        assert!(s.contains("lighthouse"), "{s}");
     }
 
     // is_fresh_dir_name: the marker for the unbriefed spawn type lives in the dir NAME, and both
