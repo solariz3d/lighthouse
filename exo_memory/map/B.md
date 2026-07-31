@@ -104,3 +104,69 @@ The same window refitted at 5 s and at 6 s are different quantities, and compari
 a disagreement that means nothing. Measured: 83 of 83 reports agree within 1.0 dB, and mutating the
 comparison to use the local default turns that into a failure — so the clause is load-bearing and
 tested, not decorative.
+
+## 2026-07-31, second domain — the skid-mark normal in blackbox (commit `10534af`)
+
+### To test what a change did, transform the INPUT and call the shipped function — never keep a copy of the old code
+
+2026-07-31, blackbox `10534af`, `test_skidnormal.js`. The fix removed a sign-forcing branch from
+`upAt()`, and the test had to show what the old code produced. The obvious move is to paste the old
+four lines into the test as a reference implementation — and that reference is a mirror, which
+drifts from production and then passes anyway. I have watched exactly that happen twice this week
+in my own tools.
+
+What worked instead: the old function was `new ∘ (force the normals skyward)`, because `upAt` reads
+nothing but `ex.nrm` and normalising commutes with a sign flip. So the test pre-flips the run's
+normals and calls the **shipped** `buildTireMarkMesh`. There is no second copy to drift, and the
+function under test stays the one that ships.
+
+General form: **whenever a change is expressible as a transform of the data the function reads,
+express it there.** Old-vs-new becomes `f(T(x))` vs `f(x)` with one `f`. It applies far past this
+case — a constant that moved, a filter that was removed, a field that gained a default — and it
+converts "keep the old code around to compare against" from a necessity into a smell. The test also
+gets a free structural assertion out of it: both meshes have identical length, so the change moves
+vertices and cannot add or drop them. Links [[green-on-moving-data]] — same root: an oracle derived
+from the code under test proves nothing.
+
+### Measure a witness's distribution before you assert on it — one that hovers around zero passes or fails by which sample it meets first
+
+2026-07-31, blackbox `10534af`; the measurement is kept in `test_skidnormal.js`'s header as a
+recorded non-use.
+
+The task was to resolve a surface normal's sign from the data. The witness that came to mind
+immediately, and reads as obviously sound: the car body is above its wheels, so
+`dot(carPos − wheelCentroid, nrm) > 0` picks the correct sign with no reference to world up. It is
+wrong, and quietly: Assetto Corsa's car origin sits **in** the wheel-centre plane. Median −0.035 m
+on the reference replay, 5,323 of 7,728 frames negative — noise around zero. An assertion built on
+it would have been green or red depending on which replay it met first, and either way it would
+have been measuring nothing.
+
+The witness that worked was continuity, and it needed no assumption about where the track is: a
+surface normal cannot reverse inside one 15 ms frame. As recorded it turns at most 6.6°/12.5°
+between adjacent frames; forced skyward it swings to 177.8°/180.0° on 2 and 65 frames.
+
+General form: **a witness is only a witness if its distribution separates the two cases.** Check
+that before building on it — the plausible-and-inert one costs nothing to write, reads as rigour,
+and cannot be told from a real check by inspection. Same family as A's *a default that lands inside
+the valid range is the one a bounds check cannot see* (`map/A.md`, 2026-07-31): both are assertions
+that cannot discriminate, and both look exactly like assertions that can.
+
+### "Unchanged" is a per-field claim, and the control sample is not a control until you check it for the same condition
+
+2026-07-31, blackbox `10534af`. Two halves of one lesson, both found by measuring what the brief
+had already characterised.
+
+The brief named the bug on the sample where it is loudest (centrifuge, 1,313 frames of 16,577 past
+vertical) and called the other sample the untouched control. It is not: t180 — the replay this repo
+tunes everything else against — has 57 of 7,728 in the same condition. So the negative control had
+to be restated per-FRAME rather than per-replay. **A sample is a control because you measured the
+condition in it, not because the bug was found elsewhere.**
+
+And the fix's blast radius was wider than its geometry. Mark positions on normal-up frames are
+bit-identical, but the ribbon carries `run` — metres along the wheel's path, accumulated
+contact-to-contact across the whole stint — so every 0.66 m teleport the old code made at a
+crossing entered the tally and every later mark on that wheel inherited it: up to 9.9 m of travel
+the car never made. Positions unchanged, an accumulated coordinate corrected. **Anything that
+integrates over the corrupted values is downstream of the bug even where the values themselves are
+untouched**, so state "unchanged" field by field, and say which field moved and why it was wrong
+before.
