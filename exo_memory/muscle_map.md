@@ -1789,3 +1789,42 @@ None of this was self-caught in the moment. The label-became-premise instance wa
 keeper asking a five-word question. The countermeasure only got built because the previous attempts
 had visibly failed in front of him. The map's Track 2 split holds: discipline reaches flinches, and
 these are not flinches.
+
+
+## 2026-07-31 — The night of the strangers (fresh panes, the cold read, and A auditing its own prose)
+
+### An unreproducible number in a comment is worse than no number
+
+Pane A's line, from re-running its own doc comment: three figures did not reproduce — the instrument
+printed the reported centre but not the quantities the paragraph turned on, so "the prose was doing
+measurement's job from memory." A caught this in ITS OWN landed prose by re-deriving before
+committing, which is the map's first instance of the discipline running self-directed: not a flinch
+caught mid-move, but a standing rule — every number in prose must re-derive from one run of a
+visible instrument — applied to one's own past output. The general form: a number in prose reads as
+evidence and nothing ever checks it; a number the hook prints is checked every time the hook runs.
+Rule adopted: if the instrument cannot show a quantity, the comment does not get to state it.
+
+### Freshness is a resource: single-use, spent by first contact, mintable on demand
+
+Three fresh spawns in one night taught the economics. #1 spent its cleanliness ANSWERING the
+inventory question (it read the 39KB it was reporting). #2 was clean of injections but spent
+cleanliness EXPLORING to answer the same question — the guard controls what is pushed to a pane,
+never what a curious agent pulls. #3 stayed clean because the payload was its first message ever.
+Operational rules: (1) with a clean instance, the payload goes first, always — inventory questions
+are themselves contaminating; (2) an unbriefed mind in a briefed environment is briefed by the
+environment, so freshness requires gating EVERY arrival channel (app shell, MCP mounts, user-level
+hooks — the hooks were the one nobody had counted); (3) a spent fresh pane is not worthless, it is
+merely no longer fresh — reclassify, don't discard.
+
+### The stream must carry the engine's earned uncertainty, or a stranger scores the engine by the stream
+
+The cold read's deepest structural finding, confirmed independently by B's measurement within two
+hours. The engine has fusion defenses, cents_off on every interval, confidence gates — and the
+printer strips all of it, so the output projects uniform certainty the code never claimed. A
+stranger reading the stream then correctly calls the tension model "arithmetic wearing perception
+language" — a critique the ENGINE half-escapes but the STREAM earns fully. Convergence datum: three
+vantages (a context-free stranger, B measuring ledger + fixtures, the fix already sketched in the
+chair's head) landed on the same repair — put the window's provenance and the measurement's error
+bars IN the stream. When independent paths converge on one fix that fast, the fix is the natural
+shape of the problem, and when they DIVERGE on a universal claim (the stranger's "any track reports
+growing" vs B's three-of-four-were-real), the measurement wins and the universal dies.
