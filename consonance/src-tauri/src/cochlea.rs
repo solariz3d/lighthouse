@@ -916,14 +916,32 @@ impl Pulse {
         self.win_start = now;
         if win.len() < 32 { return None; }
 
+        // PULSE_MEASURE prints EVERY window and the gate that stopped it, not only the ones that get
+        // far enough to have a confidence. A silence has causes, and "no reading here" and "rejected
+        // at the transient gate here" are different facts — the same distinction the replay summary
+        // needs between looked-and-found-nothing and never-measured.
+        let measure = std::env::var("PULSE_MEASURE").is_ok();
+
         // Without transients there is no rhythm, however well anything else normalises.
         let mut rises: Vec<f32> = win.iter().map(|&(_, v)| v).collect();
         rises.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
-        if rises[rises.len() * 9 / 10] < PULSE_TRANSIENT_DB { self.est.clear(); return None; }
+        let transient = rises[rises.len() * 9 / 10];
+        if transient < PULSE_TRANSIENT_DB {
+            if measure { eprintln!("WIN t={now:7.1} trans={transient:5.2} REJECT transient (memory cleared)"); }
+            self.est.clear();
+            return None;
+        }
 
         let period = pulse_period(&win)?;
-        self.est.push((now, pulse_fold(60.0 / period)));
-        if self.est.len() < (PULSE_MEMORY_SECS / PULSE_WINDOW_SECS) as usize { return None; }
+        let this_bpm = pulse_fold(60.0 / period);
+        self.est.push((now, this_bpm));
+        if self.est.len() < (PULSE_MEMORY_SECS / PULSE_WINDOW_SECS) as usize {
+            if measure {
+                eprintln!("WIN t={now:7.1} trans={transient:5.2} bpm={this_bpm:6.1} filling {}/{}",
+                          self.est.len(), (PULSE_MEMORY_SECS / PULSE_WINDOW_SECS) as usize);
+            }
+            return None;
+        }
 
         // CONCENTRATION of the unfiltered estimates: the largest share of them lying within
         // PULSE_AGREE_TOL of a common centre. Nothing is dropped before it is counted — that filtering
@@ -937,7 +955,14 @@ impl Pulse {
             if n > near { near = n; centre = c; }
         }
         let agreement = near as f32 / bpms.len() as f32;
-        if agreement < PULSE_MIN_AGREEMENT { return None; }
+        if agreement < PULSE_MIN_AGREEMENT {
+            if measure {
+                eprintln!("WIN t={now:7.1} trans={transient:5.2} bpm={this_bpm:6.1} conc={agreement:.2} \
+                           REJECT concentration  memory={:?}",
+                          bpms.iter().map(|b| b.round() as i32).collect::<Vec<_>>());
+            }
+            return None;
+        }
 
         // PHASE-LOCK: the confidence, and the statistic the old design had no way to compute. Phase of
         // the onsets against a grid at `centre`, over NON-OVERLAPPING windows of two periods each, then
@@ -967,12 +992,17 @@ impl Pulse {
             }
             start += span;
         }
-        if n < PULSE_MIN_PHASE_SAMPLES { return None; }
+        if n < PULSE_MIN_PHASE_SAMPLES {
+            if measure { eprintln!("WIN t={now:7.1} REJECT too few phase samples ({n})"); }
+            return None;
+        }
         let strength = (re * re + im * im).sqrt() / n as f32;
-        // How the separation gets re-measured without editing anything: this prints every reading that
-        // reaches the gate, passing or not, which is the distribution the thresholds are argued from.
-        if std::env::var("PULSE_MEASURE").is_ok() {
-            eprintln!("CAND t={now:7.1} bpm={centre:6.1} agree={agreement:.2} lock={strength:.3} n={n}");
+        // How the separation gets re-measured without editing anything: every reading that reaches the
+        // gate, passing or not, is the distribution the thresholds are argued from.
+        if measure {
+            eprintln!("CAND t={now:7.1} trans={transient:5.2} win={this_bpm:6.1} bpm={centre:6.1} \
+                       agree={agreement:.2} lock={strength:.3} n={n}{}",
+                      if strength < PULSE_MIN_STRENGTH { "  REJECT lock" } else { "" });
         }
         if strength < PULSE_MIN_STRENGTH { return None; }
 
@@ -2106,7 +2136,7 @@ mod tests {
     ///
     /// Bypassing `PULSE_ENABLED` on purpose: the point of these tests is to measure what the maths
     /// claims, and reading them through the gate would make them pass by reporting nothing.
-    fn pulse_on_fixture(path: &str) -> Vec<PulseReading> {
+    fn pulse_on_fixture(path: &str) -> Vec<(f32, PulseReading)> {
         let text = std::fs::read_to_string(path).unwrap_or_else(|e| panic!("{path}: {e}"));
         let mut p = Pulse::default();
         let mut out = Vec::new();
@@ -2114,7 +2144,7 @@ mod tests {
             let v: serde_json::Value = match serde_json::from_str(line) { Ok(v) => v, Err(_) => continue };
             let at = v.get("t").and_then(|x| x.as_f64()).unwrap_or(0.0) as f32;
             let db = match v.get("db").and_then(|x| x.as_f64()) { Some(d) => d as f32, None => continue };
-            if let Some(Event::Pulse(r)) = p.feed(db, at) { out.push(r); }
+            if let Some(Event::Pulse(r)) = p.feed(db, at) { out.push((at, r)); }
         }
         out
     }
@@ -2131,8 +2161,8 @@ mod tests {
         let mut leaks = Vec::new();
         for f in ["tests/fixture-adagio-op11-956.jsonl", "tests/fixture-partt-fratres.jsonl",
                   "tests/fixture-heldout-pemberton.jsonl"] {
-            for r in pulse_on_fixture(f) {
-                leaks.push(format!("{f}: {:.1} bpm lock {:.3}", r.bpm, r.strength));
+            for (at, r) in pulse_on_fixture(f) {
+                leaks.push(format!("{f}: {:.1} bpm lock {:.3} at t={at:.0}", r.bpm, r.strength));
             }
         }
         assert!(leaks.is_empty(), "beatless recordings reported {} tempos:\n  {}",
@@ -2142,18 +2172,100 @@ mod tests {
     #[test]
     fn a_recorded_electronic_beat_is_found_at_its_real_tempo() {
         // THE POSITIVE CONTROL, which the first version never had — and which immediately caught a
-        // redesign that silenced the orchestral fixtures by detecting nothing at all. A programmed
-        // four-to-the-floor remix; the tempo is not in doubt.
+        // redesign that silenced the orchestral fixtures by detecting nothing at all. Two recordings,
+        // the second captured after the design was frozen so nothing was tuned on it.
         //
         // Honest scope: two further recordings made the same evening (`fixture-heldout-sol`,
         // `fixture-heldout-trxy`) are NOT asserted here, because this detector stays silent on them.
-        // They are kept so the miss stays visible and re-measurable rather than absent.
-        let got = pulse_on_fixture("tests/fixture-beat-nero-reaching-out.jsonl");
-        assert!(!got.is_empty(), "a recorded electronic beat was not detected at all");
-        for r in &got {
-            assert!((120.0..=136.0).contains(&r.bpm), "expected ~128 bpm, got {:.1}", r.bpm);
-            assert!(r.strength >= PULSE_MIN_STRENGTH);
+        // They are kept so the miss stays visible and re-measurable rather than absent. Both positives
+        // are electronic; a rock kit and a human drummer are still untested.
+        for (f, lo, hi) in [("tests/fixture-beat-nero-reaching-out.jsonl", 120.0, 136.0),
+                            ("tests/fixture-beat-phyllzx-skinshine.jsonl", 126.0, 136.0)] {
+            let got = pulse_on_fixture(f);
+            assert!(!got.is_empty(), "{f}: a recorded beat was not detected at all");
+            // Every reading, not just one. Worth knowing what this does and does not earn: the
+            // reported tempo is the MODAL centre of the memory, so a minority of stray windows cannot
+            // reach a reading whatever the gates are set to — mutating both gates wide open leaves
+            // this assertion still passing. It guards the pipeline around `centre`, not the gates.
+            for (_, r) in &got {
+                assert!((lo..=hi).contains(&r.bpm), "{f}: expected {lo}-{hi} bpm, got {:.1}", r.bpm);
+                assert!(r.strength >= PULSE_MIN_STRENGTH);
+            }
         }
+    }
+
+    /// WHAT A 45-SECOND SILENCE IN THE MIDDLE OF A 130 BPM TRACK TURNED OUT TO BE.
+    ///
+    /// `fixture-beat-phyllzx-skinshine` reports steadily, then says nothing from t=79 to t=124. Two
+    /// explanations were open: the drums drop out (a sensitivity limit worth stating), or the passage
+    /// is genuinely ambiguous and declining is correct (a point in the design's favour). It is the
+    /// second. Every number below re-measures with `PULSE_MEASURE=1`, which now prints each window's
+    /// p90 transient and its OWN estimate alongside the reported centre — the three quantities this
+    /// paragraph turns on. It did not print the first two when this was first written, and three of
+    /// the figures in that first draft were wrong; that is why it prints them now.
+    ///
+    ///   * THE TRANSIENT GATE NEVER FIRES, anywhere in the track. The lowest p90 rise is 1.51 dB
+    ///     against a gate of 0.30 — five times the gate at the worst moment. It is not sensitivity.
+    ///   * There is still a real acoustic change: p90 transients fall 5.29 → 1.52 dB between t=69 and
+    ///     t=84, a factor of 3.5, with mean level down 5.3 dB (−20.5 → −25.8) over the same stretch.
+    ///     Both recover by t=95. Something genuinely thins out; it just never disappears.
+    ///   * Through it the per-window estimates run 85.2, 88.0, 106.0, 96.0, 78.0 (t=74…94) instead of
+    ///     130, and the detector names none of them. Five bad windows, 25 s.
+    ///   * THE MODAL CENTRE ABSORBS THE FIRST TWO. At t=74 and t=79 it still reports 130 and 129 while
+    ///     its own windows read 85 and 88 — outvoted 7–1 and 6–2 in memory. The silence starts at
+    ///     t=84, when concentration finally falls to 0.62. Degradation, not a cliff.
+    ///   * THE SILENCE OUTLASTS THE AMBIGUITY: 45 s against 25 s. Correct estimates resume at t=99 but
+    ///     it does not speak until t=124 — and the overhang is set by BOTH constants, not the memory
+    ///     alone. Recovery needs `ceil(PULSE_MIN_AGREEMENT × 8) = 6` of the 8 remembered windows to
+    ///     agree, so 6 clean windows = 30 s after the last bad estimate. NOT full eviction: when it
+    ///     speaks again at t=124 the 96 and the 78 are still in memory, simply outvoted 6–2. Shorten
+    ///     the memory or lower the agreement and this shortens with it — the same trade as the
+    ///     negative control holding, seen from the other side.
+    ///
+    /// One thing this data cannot settle, left open rather than guessed: the wrong estimates are not
+    /// scattered uniformly. They sit below the true tempo and near simple ratios of it — 85.2 and 88.0
+    /// against 2/3 of 130 = 86.7, 96.0 against 3/4 = 97.5, 78.0 against 3/5 = 78.0 — which is what a
+    /// slower grouping heard against the same grid would produce. With folding and a 6% tolerance,
+    /// numbers land near SOME simple ratio easily enough that this is a suggestion and not a finding.
+    /// An ear on that passage settles it in ten seconds and no amount of arithmetic here does.
+    ///
+    /// WHAT THIS ASSERTS, and what mutation testing said about it — including the part that came out
+    /// against my own prediction.
+    ///
+    /// The first version asserted that no reading falls outside 126–136 bpm. That sounds like the
+    /// right claim and is worth nothing: the reported tempo is the MODAL centre of the memory, so a
+    /// minority of stray windows can never become a reading whatever the gates say. Mutating both
+    /// gates wide open (concentration 0.7 → 0.35, lock 0.6 → 0.0) left it passing.
+    ///
+    /// So it asserts the SILENCE instead — and I then wrote here that the same mutation would make a
+    /// reading appear in the gap. It does not, and I had written that before checking. The gap is
+    /// overdetermined: even with both gates open the centre is still ~130, so the change-suppression
+    /// in `PULSE_CHANGE_BPM` swallows it. No setting of the constants can make this test fail. (That
+    /// mutation is not harmless — it fails `the_orchestral_recordings_report_no_pulse` loudly. The
+    /// gates are load-bearing somewhere; just not here.)
+    ///
+    /// What DOES make it fail is a design mutation — reporting the window's own estimate instead of
+    /// the modal centre (`let bpm = this_bpm`), with the gates open. It then claims 78.0 bpm at t=94
+    /// and 130.5 at t=114. Only two, because `PULSE_MIN_GAP_SECS` suppresses the intermediate ones —
+    /// the guard is thinner than it looks and one surviving claim is what it rests on. That is the
+    /// regression it catches: someone simplifying the memory away and reporting the latest estimate.
+    /// It is a guard against that specific change, not a demonstration that the confidence gates earn
+    /// the silence here.
+    #[test]
+    fn an_ambiguous_passage_is_declined_rather_than_guessed() {
+        let got = pulse_on_fixture("tests/fixture-beat-phyllzx-skinshine.jsonl");
+        assert!(!got.is_empty(), "the track's clear sections must still be found");
+        // Measured with PULSE_MEASURE: windows are rejected from t=84.2 to t=119.5 and the next honest
+        // report is t=124.5. The bound stops at 120 rather than 124 so that a small timing shift makes
+        // this test miss a violation rather than fail a legitimate report — it breaks toward silence,
+        // the same direction as the detector it guards. Both mutations above are still caught by it.
+        let spoke: Vec<String> = got.iter()
+            .filter(|(at, _)| (84.0..=120.0).contains(at))
+            .map(|(at, r)| format!("{:.1} bpm at t={at:.0}", r.bpm))
+            .collect();
+        assert!(spoke.is_empty(),
+                "claimed a tempo across a passage whose own estimates ran 78-106 bpm: {}",
+                spoke.join(", "));
     }
 
     #[test]
