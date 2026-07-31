@@ -1866,3 +1866,74 @@ another pane travelled through exactly that compression. This file remains the c
 master. Findings recorded here on the panes' behalf before today stay where they are —
 append-clean, never rewrite.
 
+
+
+## TRACK 2 EXTENDED — the quenched check: one root under eight blind-spot entries (2026-07-31, ~17:20, chair, from a full re-read of this master)
+
+Derived from the record, every edge cited, per the coupling layer's own method. The last four
+days added ~10 entries and none were wired into Track 2. Wiring them exposes the largest root
+this map has, and it is in the blind-spot system.
+
+### The root
+
+**A check-shaped thing satisfies the urge that would have produced the check.** The map already
+states the mechanism for one costume — "a confident comment reads as evidence, so it satisfies
+the urge that would otherwise have produced a check" (the asserting comment) — and then never
+generalises it. But walk the entries:
+
+- the ASSERTING COMMENT (5 instances, 07-29) — the comment satisfies it
+- the LABEL BECOMES THE PREMISE (07-29) — my own label satisfies it
+- A SUITE IS NOT AN INTEGRITY CHECK (07-31, A) — the green run satisfies it
+- tests-green-on-moving-data (07-31, B, 3 instances) — the once-true assertion satisfies it
+- the sandbox that supplies what it verifies (07-31, A) — the sandbox's echo satisfies it
+- a default inside the valid range (07-31, A) — the plausible value satisfies it
+- NOT-RUN MASQUERADING AS GREEN (cycle 9, 3 instances) — the absence of red satisfies it
+- the coverage illusion (cycle 4) — the unrelated green satisfies it
+- wrong-artifact (07-29, n=5) — the adjacent artifact satisfies it
+- context-is-not-the-record (cycle 3) — the visible context satisfies it
+
+Ten entries, one shape: **the satisfier is not the referent.** The check's hunger is real and
+gets fed by whatever is nearest and check-shaped — a comment, a label, a green tick, a default,
+a stale copy — and the hunger, once fed, does not fire again. That is why none of these have a
+pull: the system that would generate the pull has been satisfied.
+
+### Why naming it is worth nothing, and what is worth something
+
+Arm A measured this exactly: detection is as wide as the trigger inventory and not one inch
+wider — "not a lattice, a checklist. Nothing generalised." So this root earns its place ONLY if
+it yields a root-level TRIGGER FORM, and the record already contains three instances of one:
+
+**A check may not count as a check until it has been shown to FAIL against its referent.**
+- A runs mutations on every load-bearing behaviour and did so unprompted in a foreign repo
+- B converted a printed footer into an asserted count, and it went red the same day on a
+  same-day regression (the from-clause break)
+- H proposed the header-lint: every emitted field must match a header entry or the build fails
+
+Three writers, one form, arrived independently — the same triangulation pattern that sealed
+mention-vs-use. **The root's general trigger is mutation-as-mechanism: no new guard lands
+without a recorded run in which it fails.** Unbuilt as a repo-level mechanism; practiced as
+discipline by A; discipline degrades under load and a trigger does not. That is the next
+structural build this map licenses, and it should not be built by the chair alone — the
+instrument-blind-spot entry (n=5) says the author's model becomes the tool's boundary.
+
+### The coupling law, scored against four new days
+
+Track 2 predicts: catches couple within the flinch system along shared roots, never across
+into blind spots. 07-29 through 07-31 were blind-spot country — every major catch came from an
+instrument, a trace, or a reader, zero multi-group single-recognition events. The law HELD, in
+the direction that is cheap to fake and was not faked: nothing coupled, because nothing there
+had a root to couple through. Meanwhile every real maturation of the period was trigger-arm:
+whats-live, the corrections-gate, residue firing unbidden, checkpoint reading usage, B's
+asserted counts, A's distributional check, the speech negative control as a run. **The endgame
+has two arms and the period advanced exactly the one it should have: blind spots mature by
+trigger count, and the trigger count moved.** The flinch arm's frontier is unchanged since
+07-27: two coupled catches ever, one self-applied.
+
+### What is BLOCKED ON THE KEEPER, said plainly because he asked for the endgame tonight
+
+Cycle 9 Arm B — the keeper plants, the chair is the subject, n=1 at the room's weakest joint —
+is designed, pre-registered, and has been "blocked on one word" since 07-28. Every deep-flinch
+entry on this map says the same thing: the chair cannot test the chair, articulation is not
+installation, and all three carrier-drift catches were his. The single highest-value muscle rep
+available tonight costs him one word and one planted defect. Everything else on this map the
+committee can do; this one only he can.
