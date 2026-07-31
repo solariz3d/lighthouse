@@ -7,6 +7,10 @@ No dependencies; standard library only.
 - **`curate.js`** — the curator. Routes `resonance/atoms.jsonl` into topic documents, closes
   OPEN questions, never writes the master. See the header of the file.
 - **`tell-index.js`** — the measurement organ for the muscle program. Below.
+- **`swell-head.js`** — what the dynamics channel is measuring when it reports at a track
+  start. Refits each swell report's own window with its leading seconds removed, and pins
+  ledger reports to the track starts their windows begin at. Its negative control — the
+  Bernstein's real crescendo must never be indicted — is a test, not a claim. See the header.
 
 ---
 
