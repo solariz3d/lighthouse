@@ -68,6 +68,24 @@
 // level the four floor-opening reports run artifact, real, artifact, real — which is the evidence
 // that the head level A added is necessary and NOT sufficient.
 //
+// ---------------------------------------------------------------------------------------
+// CORRECTION, 2026-07-31, appended rather than written over the paragraphs above.
+//
+// I wrote that the refit "needs per-frame levels the stream does not carry and probably never
+// should," and used that to argue this tool had to hold the measurement. c032a27 shipped it: every
+// Swelling event now carries `refit_db` with its `trim_s` beside it, and the ledger line reads
+// `(from -59.4 dB, -4.8 past the first 6s)`. The prediction was wrong and shipping it was right —
+// the number that separates an artifact opening from a real one belongs on the event that needs it.
+//
+// Two consequences, both live in the code below. First, the parser: the added clause sits INSIDE
+// the parenthesis this file was matching, so the pattern stopped matching, `from` went null for
+// every report, and the window fell back to being inferred from a span rounded to the second. Two
+// tests went red — the tool did not print a wrong number quietly, which is the whole reason the
+// head check is asserted and not merely displayed. Second, this file's own refit is now a SECOND
+// copy of a shipped quantity, the exact defect it was rebuilt to stop committing. It is kept only
+// as a cross-check and compared at the detector's own trim (`refitAgreement`); 83 of 83 reports
+// across the fixture corpus agree.
+
 // AND THE FAMILY IS WIDER THAN TRACK STARTS, which only became visible after f04dd42. The second
 // flag is the Adagio at 8:56 — its grand pause fires silence, then an onset, and the onset routing
 // (correctly) starts a fresh window on the re-entry. Same arithmetic, no track boundary within
@@ -172,11 +190,53 @@ function headCarried(report, trim = 5) {
   };
 }
 
+/**
+ * This file's refit against the detector's own, at the detector's own trim.
+ *
+ * WHAT CHANGED AND WHY THIS EXISTS. When this tool was written the refit lived only here, because
+ * the stream did not carry one — and I wrote in the header that it needs per-frame levels the
+ * stream "probably never should" carry. c032a27 shipped it anyway, as `refit_db` with its `trim_s`
+ * beside it, and shipping it was right: the number that separates an artifact opening from a real
+ * one now rides the event that needs it.
+ *
+ * That turns this file's copy from the measurement into a SECOND copy of a shipped quantity, which
+ * is the exact defect this tool reported in `replay()` and then committed in its own mirror. The
+ * copy is kept for one reason only — two independent computations of one number is a check neither
+ * can perform alone — and it is compared AT THE DETECTOR'S TRIM, never at this file's own default,
+ * because the same window refitted at 5 s and at 6 s are different quantities and comparing them
+ * would manufacture a disagreement that means nothing.
+ *
+ * Null when the binary prints no refit (any build before c032a27) or when too little window
+ * survives the trim to fit — an absent check must not read as a passing one.
+ */
+function refitAgreement(report) {
+  if (report.refit === null || report.refit === undefined || report.trim === null) return null;
+  const ours = refitWithoutHead(report, report.trim);
+  if (ours === null) return null;
+  const delta = Math.abs(ours - report.refit);
+  // The tolerance is the reconstruction's, not the arithmetic's: the window is rebuilt from a span
+  // printed to the second, so an end sample can differ. A whole decibel apart is drift, not rounding.
+  return { ours, theirs: report.refit, trim: report.trim, delta, agrees: delta <= 1.0 };
+}
+
 /* ---------------- the detector, run rather than reimplemented ---------------- */
 
 const SRC_TAURI = path.join(__dirname, '..', 'src-tauri');
-const REPLAY_LINE =
-  /^\s*([\d.]+)\s+(growing|fading)\s+([+-][\d.]+) dB over ([\d.]+)s(?:\s*\(from\s*([+-][\d.]+) dB\))?/;
+
+/*
+ * THE HEAD CLAUSE, written once and read by both parsers.
+ *
+ * Two printers emit it and they do not agree on wording — `cochlea_replay` prints
+ * `(from -59.4 dB, -4.8 past 6s)` and the service prints `(from -59.4 dB, -4.8 past the first 6s)`
+ * — so `the first` is optional here rather than duplicated into two regexes that can drift apart.
+ * The refit clause is optional in turn because era-3 lines carry a head and no refit.
+ */
+const HEAD_CLAUSE =
+  String.raw`\(from\s*([+-]?[\d.]+) dB(?:,\s*([+-][\d.]+) past (?:the first )?([\d.]+)s)?\)`;
+const HEAD_RE = new RegExp(HEAD_CLAUSE);
+const REPLAY_LINE = new RegExp(
+  String.raw`^\s*([\d.]+)\s+(growing|fading)\s+([+-][\d.]+) dB over ([\d.]+)s(?:\s*` +
+  HEAD_CLAUSE + `)?`);
 
 /**
  * Find `cochlea_replay`, and refuse a stale one.
@@ -224,6 +284,10 @@ function parseReplay(stdout) {
       db: parseFloat(m[3]),
       over: parseFloat(m[4]),
       from: m[5] === undefined ? null : parseFloat(m[5]),
+      // The detector's own refit, since c032a27. Read, never recomputed over the top of: this
+      // file's `refitWithoutHead` now exists to AGREE with this number, not to replace it.
+      refit: m[6] === undefined ? null : parseFloat(m[6]),
+      trim: m[7] === undefined ? null : parseFloat(m[7]),
     });
   }
   return out;
@@ -283,7 +347,9 @@ function reportsFor(fixturePath) {
   for (const r of parsed) {
     const { window, verified, why } = reconstructWindow(frames, r);
     if (!window) { skipped.push({ ...r, why }); continue; }
-    out.push({ ...r, window, verified });
+    const rep = { ...r, window, verified };
+    rep.refitAgrees = refitAgreement(rep);
+    out.push(rep);
   }
   return { reports: out, skipped, frames, binary: bin.path };
 }
@@ -324,8 +390,22 @@ function readLedger(text) {
       e.db = parseFloat(sw[1]);
       e.over = parseFloat(sw[2]);
       e.windowStart = e.abs - e.over;
-      const head = /\(from\s*([+-][\d.]+) dB\)/.exec(e.text);
+      const head = HEAD_RE.exec(e.text);
       e.from = head ? parseFloat(head[1]) : null;
+      e.refit = head && head[2] !== undefined ? parseFloat(head[2]) : null;
+      e.trim = head && head[3] !== undefined ? parseFloat(head[3]) : null;
+      // ERA 4 SHIPS THE NUMBERS AS FIELDS, and a field beats a sentence about a field. The prose
+      // above stays because the ledger's older eras have nothing else, but where `ev` exists it
+      // wins — parsing a rendered string when the value is right there is the same defect as
+      // mirroring a detector that can be run.
+      const ev = o.ev && typeof o.ev === 'object' ? o.ev : null;
+      if (ev) {
+        if (typeof ev.from_dbfs === 'number') e.from = ev.from_dbfs;
+        if (typeof ev.refit_db === 'number') e.refit = ev.refit_db;
+        if (typeof ev.trim_s === 'number') e.trim = ev.trim_s;
+        if (typeof ev.delta_db === 'number') e.db = ev.delta_db;
+        if (typeof ev.window_s === 'number') { e.over = ev.window_s; e.windowStart = e.abs - e.over; }
+      }
     }
     out.push(e);
   }
@@ -431,18 +511,26 @@ function reportFrames(p, trim) {
     for (const s of r.skipped) console.log(`  SKIPPED ${s.at.toFixed(1)}: ${s.why}`);
   }
   if (!r.reports.length) return;
-  console.log(`      at        report        span   head dB   without first ${trim}s`);
+  console.log(`      at        report        span   head dB   without first ${trim}s   detector refit`);
   for (const rep of r.reports) {
     const h = headCarried(rep, trim);
     const refit = h.refit === null ? '—' : `${h.refit >= 0 ? '+' : ''}${h.refit.toFixed(1)} dB`;
+    const a = rep.refitAgrees;
+    const theirs = a === null
+      ? '—'
+      : `${a.theirs >= 0 ? '+' : ''}${a.theirs.toFixed(1)} past ${a.trim.toFixed(0)}s${a.agrees ? '' : ' DISAGREES'}`;
     console.log(
       `  ${rep.at.toFixed(1).padStart(7)}  ${rep.rising ? 'growing' : 'fading '} ` +
       `${(rep.db >= 0 ? '+' : '') + rep.db.toFixed(1)} dB`.padStart(12) +
-      `  ${rep.over.toFixed(0).padStart(3)}s  ${rep.window[0][1].toFixed(1).padStart(7)}   ${refit.padStart(9)}` +
+      `  ${rep.over.toFixed(0).padStart(3)}s  ${rep.window[0][1].toFixed(1).padStart(7)}   ${refit.padStart(9)}   ${theirs.padStart(14)}` +
       (h.flagged ? '   HEAD-CARRIED' : ''));
   }
+  // Three counts, and the last two are the ones that go quietly to zero when a printer changes
+  // wording. A run that verifies nothing is not a clean run, and it must not look like one.
+  const checked = r.reports.filter(x => x.refitAgrees !== null);
   console.log(`  head-carried: ${r.reports.filter(x => headCarried(x, trim).flagged).length} of ${r.reports.length}` +
-              `  (windows verified against the reported head: ${r.reports.filter(x => x.verified).length})`);
+              `  (windows verified against the reported head: ${r.reports.filter(x => x.verified).length}` +
+              `; refits agreeing with the detector's: ${checked.filter(x => x.refitAgrees.agrees).length} of ${checked.length})`);
 }
 
 function reportLedger(p) {

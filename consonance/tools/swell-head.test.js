@@ -224,15 +224,45 @@ test('a stale or missing binary is refused, not worked around', () => {
     'the binary in the tree is older than cochlea.rs — rebuild before trusting any number here');
 });
 
-test('replay output is parsed with and without a head level', () => {
+test('replay output is parsed across all three eras of the swell line', () => {
+  // THIS TEST IS WHY THE SUITE WENT RED RATHER THAN QUIET. c032a27 added `, -4.8 past 6s` inside
+  // the parenthesis and the old pattern stopped matching the whole clause — so `from` became null,
+  // the window fell back to being inferred from a span rounded to the second, and every head this
+  // tool printed was subtly wrong. Nothing about that is visible in the output. What made it
+  // visible is that the verification is asserted, not merely printed: two tests failed the moment
+  // the printer's wording moved.
   const got = S.parseReplay([
-    ' 116.75  growing  +11.0 dB over 48s (from -59.4 dB)',
-    ' 137.66  fading   -5.1 dB over 60s',
+    ' 116.75  growing  +11.0 dB over 48s (from -59.4 dB, -4.8 past 6s)',   // c032a27 and after
+    ' 536.61  growing   +7.0 dB over 48s (from -54.7 dB)',                 // f04dd42 .. c032a27
+    ' 137.66  fading   -5.1 dB over 60s',                                  // before f04dd42
     '  68.62  onset      ~925 Hz',
   ].join('\n'));
-  assert.equal(got.length, 2);
-  assert.deepEqual(got[0], { at: 116.75, rising: true, db: 11.0, over: 48, from: -59.4 });
-  assert.equal(got[1].from, null, 'an absent head stays absent rather than becoming zero');
+  assert.equal(got.length, 3);
+  assert.deepEqual(got[0],
+    { at: 116.75, rising: true, db: 11.0, over: 48, from: -59.4, refit: -4.8, trim: 6 });
+  assert.equal(got[1].from, -54.7);
+  assert.equal(got[1].refit, null, 'a build with a head and no refit is read as exactly that');
+  assert.equal(got[2].from, null, 'an absent head stays absent rather than becoming zero');
+  assert.equal(got[2].refit, null);
+});
+
+test("this file's refit agrees with the detector's own, at the detector's trim", () => {
+  if (!needBinary()) return;
+  // The mirror is gone, but a second computation of a shipped number is still a second copy, and
+  // this is the only thing that keeps it honest. Compared at `trim_s` off the event — a 5 s refit
+  // and a 6 s refit of one window are different quantities, and comparing them would produce a
+  // disagreement that means nothing.
+  let checked = 0;
+  for (const name of fs.readdirSync(FIX).filter(f => f.endsWith('.jsonl'))) {
+    for (const r of S.reportsFor(fx(name)).reports) {
+      const a = r.refitAgrees;
+      assert.ok(a, `${name} @ ${r.at}: the binary printed no refit — rebuild after c032a27`);
+      assert.equal(a.trim, 6);
+      assert.ok(a.agrees, `${name} @ ${r.at}: ours ${a.ours.toFixed(1)} vs theirs ${a.theirs}`);
+      checked += 1;
+    }
+  }
+  assert.equal(checked, 83);
 });
 
 test('a refit with too little window left is null, not zero', () => {
@@ -270,6 +300,34 @@ test('millisecond stamps and the det field are read, and mark the format era', (
   assert.equal(b.length, 1);
   assert.equal(b[0].kind, 'format');
   assert.equal(S.eras(ev).length, 2);
+});
+
+test('the service wording and the replay wording are read by one grammar', () => {
+  // The two printers do not agree: cochlea_replay prints `past 6s`, cochlea_service prints
+  // `past the first 6s`. One regex reads both, because two would drift and the tool would go
+  // half-blind on whichever ledger it was not last fixed against.
+  const ev = S.readLedger([
+    line('11:00:00.100', 'growing', 'growing · +11.0 dB over 48s (from -59.4 dB, -4.8 past the first 6s)', { det: 'swell' }),
+  ].join('\n'));
+  assert.equal(ev[0].from, -59.4);
+  assert.equal(ev[0].refit, -4.8);
+  assert.equal(ev[0].trim, 6);
+});
+
+test('the ev block wins over the sentence that describes it', () => {
+  // Era 4 ships the numbers as fields. Parsing the rendered string when the value is right there
+  // is the same defect as mirroring a detector that can be run — so where they disagree, and they
+  // will as soon as a printer is reworded, the field is the fact.
+  const ev = S.readLedger([
+    line('11:00:00.100', 'growing', 'growing · +9.9 dB over 48s (from -59.4 dB, -4.8 past the first 6s)',
+         { det: 'swell', ev: { from_dbfs: -59.42, delta_db: 9.94, window_s: 48.2, refit_db: -4.81, trim_s: 6.0 } }),
+  ].join('\n'));
+  assert.equal(ev[0].from, -59.42);
+  assert.equal(ev[0].db, 9.94);
+  assert.equal(ev[0].over, 48.2);
+  assert.equal(ev[0].refit, -4.81);
+  assert.ok(Math.abs(ev[0].windowStart - (11 * 3600 + 0.1 - 48.2)) < 1e-6,
+    'the window start follows the field, not the rounded span in the prose');
 });
 
 test('the detector boundary is found from arithmetic the current code cannot produce', () => {
