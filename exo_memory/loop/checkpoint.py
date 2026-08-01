@@ -339,6 +339,62 @@ def residue(limit=14):
     return keep or None
 
 
+def demonstrated(limit=14):
+    """Fire A's `demogap` on the guards this session touched, unbidden.
+
+    WHY THIS ONE, AND WHY NOW. B's census measured what nobody had: 130 of 1,892 assertion
+    sites -- 6.9% -- have ever been observed firing for the right reason, and nine in ten real
+    changes to blackbox's source pass its 788 assertions unnoticed. But the finding that puts
+    this call here is narrower and sharper: reconstructing twelve red events from history,
+    NINE of the birth commits say nothing about them. A red in a working tree leaves no trace
+    anywhere. So the discipline does not merely degrade under load -- it degrades to
+    UNMEASURABLE WITHIN A DAY, and a guard written today is indistinguishable tomorrow from
+    one that was demonstrated. That is an argument for a mechanism at the gap, not for
+    remembering harder.
+
+    SCOPE, STATED SO NOBODY READS IT AS A VERDICT ON THE SUITE: `--ref HEAD~1` -- the last
+    commit plus the working tree. A session that made five commits sees only the fifth. That
+    undersells and never oversells, which is the correct direction for a sensor nobody asked
+    for. The suite-wide number is `--all`, takes five minutes, and does not belong on a
+    compaction path.
+
+    LIMITS. blackbox only: demogap hooks JS assertion helpers and there is no Rust equivalent
+    -- A measured the port at 13.6 s per mutant against 0.15 s and refused it, and the leg that
+    produced every real finding is a compile error there. So this covers one of two repos and
+    the header says so rather than letting a quiet section imply clean.
+
+    Silence is reserved for "nothing changed". A timeout or a crash prints a line instead of
+    vanishing, because a sensor whose failure looks like a pass is the defect this whole file
+    is about.
+    """
+    repo = pathlib.Path.home() / "Desktop" / "blackbox"
+    script = repo / "demogap.js"
+    if not script.exists():
+        return None
+    try:
+        r = subprocess.run(["node", str(script), "--ref", "HEAD~1"], cwd=str(repo),
+                           capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=110)
+    except subprocess.TimeoutExpired:
+        # VISIBLE, not silent. 0.1 s when no guards changed, ~12 s for one test file -- so a
+        # timeout means an unusually broad session, and "the check did not run" must never
+        # render as "the check found nothing".
+        return ["", "demogap TIMED OUT at 110s -- this session touched more guards than the "
+                    "gap-path budget covers. Run `node demogap.js --ref HEAD~1` by hand."]
+    except Exception:
+        return None          # a sensor must never block a compaction
+    out = [l for l in (r.stdout or "").splitlines() if l.strip()]
+    # Report only when there is a VERDICT, rather than suppressing the no-scope notice by
+    # matching its wording -- a lexical negative would break the first time A rephrases it,
+    # silently, in the direction of saying nothing. Positional test: does any line classify?
+    if not any(l.lstrip().startswith(("DEMONSTRATED", "UNDEMONSTRATED", "INERT", "COARSE"))
+               for l in out):
+        return None
+    return ["", "### GUARDS TOUCHED THIS SESSION — has any of them ever been seen firing?",
+            "(blackbox only; scope is HEAD~1 + working tree, never the suite. "
+            "Full audit: `node demogap.js --all`.)", ""] + out[:limit]
+
+
 def commitments():
     """Re-read from the masters. Never paraphrased into this file.
 
@@ -466,6 +522,12 @@ def main():
         out = instrument(script, argv, keep, label)
         if out:
             fired.append(out)
+    # demogap is fired through its own function rather than the generic probe list: it lives in
+    # the OTHER repo, and its no-op case prints a paragraph rather than nothing, which the
+    # generic path would fold in at every gap until the section trained the eye to skip it.
+    dg = demonstrated()
+    if dg:
+        fired.append(dg)
     if fired:
         lines += ["## Instruments — fired unbidden, not on request", ""]
         for block in fired:

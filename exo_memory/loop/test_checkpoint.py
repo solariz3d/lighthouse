@@ -111,6 +111,46 @@ check("a missing transcript returns None rather than raising",
       checkpoint.context_estimate(str(pathlib.Path(tempfile.gettempdir()) / "nope.jsonl")) is None)
 
 
+# ---- 4. the demogap wiring: the gap-path trigger for the quenched check --------------------
+#
+# WHY PINNED HERE. B measured that a red leaves no trace: of twelve reconstructed red events,
+# nine birth commits say nothing about them. So demonstration degrades to UNMEASURABLE WITHIN A
+# DAY and has to arrive at the gap rather than be remembered. A trigger that quietly stopped
+# firing would restore the exact condition it was built to remove, and it would do so silently,
+# which is this file's whole subject.
+#
+# The suppression is asserted POSITIONALLY rather than lexically on purpose. The obvious
+# implementation hides demogap's no-op by matching its "no test files in scope" wording -- and
+# then the first rephrasing either fills every gap with a noise block, or worse, stops
+# recognising a reworded verdict so the section goes quiet while looking healthy.
+def classifies(lines):
+    return any(l.lstrip().startswith(("DEMONSTRATED", "UNDEMONSTRATED", "INERT", "COARSE"))
+               for l in lines)
+
+check("a verdict line is recognised",
+      classifies(["  test_x.js  30 mutants", "    UNDEMONSTRATED test_x.js:12  ok(1 === 1)"]))
+check("the no-scope notice is not a verdict",
+      not classifies(["demogap - assertions changed since HEAD~1", "  no test files in scope."]))
+check("a REWORDED no-scope notice is still not a verdict -- the point of testing positionally",
+      not classifies(["demogap - nothing to audit here", "  (no guards in this diff)"]))
+check("prose merely CONTAINING a class name does not fire the section",
+      not classifies(["  a note about why UNDEMONSTRATED lines matter"]),
+      "substring matching would fire on the tool's own explanatory prose")
+
+# The wiring against the live repo. SKIPPED, not failed, when blackbox is absent: this file runs
+# on machines without it, and a checker that fires on absence gets muted for crying wolf --
+# the rule whats-live.js states about its own red path.
+if (pathlib.Path.home() / "Desktop" / "blackbox" / "demogap.js").exists():
+    _r = checkpoint.demonstrated()
+    check("demonstrated() returns None or a block, never a bare string",
+          _r is None or isinstance(_r, list))
+    if _r is not None:
+        check("a fired block states its scope, so it cannot be read as a suite verdict",
+              any("never the suite" in l for l in _r))
+else:
+    print("  (skipped: blackbox not on this machine -- absence is not a failure)")
+
+
 print()
 if FAILURES:
     print(f"{len(FAILURES)} FAILURES: {', '.join(FAILURES)}")
