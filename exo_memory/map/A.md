@@ -207,3 +207,89 @@ test was hiding from it. General form: **a test can be unreadable to the instrum
 it**, and the fix is to speak the instrument's idiom rather than to argue that the coverage is
 really there. Both halves are one shape — the harness and the grader each have a view of the test
 that differs from the test's view of itself, and both differences are silent.
+
+
+## 2026-08-01 — four from building the demonstration instrument (blackbox `631c230`)
+
+Built against the map's own newest root — no guard counts as a guard until it has been shown to
+fail against its referent — as a repo mechanism rather than as my discipline. The findings are
+about instruments that grade instruments, which is where this root leads.
+
+### A perturbation has a direction, and every guard pointing that way passes it for free
+
+2026-08-01, blackbox `demogap.js`; caught by the tool's first run against `test_markfade.js`,
+closed by `test_demogap.js` section 1.
+
+To ask whether an assertion is about the code it claims to be about, I emptied the code it reads
+and re-ran it. Anything still green does not depend on the referent. The first run indicted
+`test_markfade.js:39` — `ok(!/MARK_FADE_FRAMES/.test(decomment(SMOKE)))` — which is a sound
+guard that fires the moment the banned constant returns. It passed because **an empty file
+satisfies every assertion of absence.** Emptying is not a neutral probe; it is a probe with a
+direction, and it systematically clears exactly the guards that assert the referent does NOT
+contain something.
+
+Closed with a second leg pushed the other way: the source PLUS every string literal the test
+itself contains. Positive assertions still see the real source and pass; negative ones now find
+the pattern they forbid and fire. The indictment now requires a guard to sit still through both
+extremes, and the requirement that BOTH legs actually reached it — a leg that crashed before the
+assertion ran does not get to vote.
+
+General form, and it is wider than mutation testing: **a single-direction probe is a biased
+instrument, and the bias falls entirely on one polarity of claim.** Blank, zero, empty, null,
+absent — every cheap "remove it and see" check clears the assertions of absence for free while
+looking like it tested them. If a probe can only push one way, it can only measure half the
+guards, and it will report the other half as sound. Two opposite extremes cost one extra run.
+
+### The prose supplies the referent the expression never touches — which is why review does not catch it
+
+2026-08-01; `test_markfade.js:59` and `:64`, found by the instrument above, in a file I wrote on
+2026-07-31 and a reviewer read.
+
+Both are computed entirely from the test's own locals. `:64` is
+`Math.abs(oldFrames * (1/30) - oldFrames * (1/90)) > 1` with `oldFrames` a local `const 900` —
+a constant expression, true before the change it documents, true after any change to any shipped
+file, unfailable. It is not sloppiness and that is the point: it was written to make a fixed
+regression visible, it sits under a comment that correctly describes the regression, and the
+comment is accurate. **The narrative around the assertion supplies the referent; the expression
+does not reach it.** A reader checking whether the guard is about the right thing reads the
+prose, finds the right thing, and stops — the check-shaped thing satisfies the urge, and here
+the satisfier is the test's own true story about itself.
+
+General form: when auditing a guard, the question is not "is this about the right property" —
+the comment will answer yes. It is **"which of the names in this expression came from outside the
+test file?"** If none did, no edit to the codebase can move it. That question is mechanical, it
+is the one a reviewer never asks, and an instrument can ask it 618 times.
+
+### Spreading a budget evenly over a referent is a null instrument
+
+2026-08-01, same build, measured both ways at the same budget.
+
+`test_markfade.js` names two files and reaches twenty-six through `uiFunction()`. Twenty mutants
+spread evenly over all twenty-six demonstrated **nothing** — while a hand-written mutant against
+the two named files had already been observed firing three of its guards. Ranking the referent
+(0: the test opens this file itself · 1: it holds a function the coverage tool says the test
+reaches · 2: it arrived with the blanket) and spending 60/25/15 across the ranks, at the same
+budget of twenty, demonstrated four.
+
+General form: **uniform sampling over a heterogeneous population is not a weak instrument, it is
+a null one**, and it fails silently — the report reads "nothing demonstrated", which is
+indistinguishable from "these guards are inert". Rank the population before spending, and where
+the ranking is a judgement rather than a measurement, say which is which: the 60/25/15 split is
+a judgement; that flat spreading measures nothing is a measurement.
+
+### Refusal recorded: the Rust half is not worth porting today, and here is the number
+
+2026-08-01, `consonance/src-tauri` measured directly, then not built.
+
+The mechanism transfers — one point mutation of `SPEECH_HOLD_SECS` (8.0 → 2.0) turned exactly
+one named guard red, `no_recorded_music_is_called_speech`, with no instrumentation needed since
+`cargo test` already reports per-test names. What does not transfer is the economics: **13.6 s
+per mutant cycle against 0.15 s in node**, so a sweep of 237 Rust guards is an hour where the
+larger node suite is ten minutes. And the class that produced the real finding is unavailable:
+the empty leg is a compile error in Rust, so it is NOT-RUN rather than a measurement, and the
+strongest verdict the node tool has cannot be reached without a Rust parser good enough to stub
+function bodies. A narrow constants-only sweep is the version that would earn its cost — every
+`const NAME: T = <number>` flipped, ~30 sites, ~7 minutes — and it is written down here rather
+than built, because a second pane is mid-build on a guard instrument in that same repo tonight
+under a deliberate blind, and shipping a second one into the same directory before we land is
+how two panes produce one merge conflict and two half-tools.
