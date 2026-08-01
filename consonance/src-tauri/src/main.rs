@@ -1134,7 +1134,88 @@ fn board_path() -> PathBuf {
     data_dir().join("board.jsonl")
 }
 
+// ── The blind window (data/blind.lock) ──────────────────────────────────────────────────────
+//
+// Specced in the muscle map the night Arm A found the harness narrating a planter's open files
+// to its own auditor; built the night Arm B halted itself because the RELAY was the leak — the
+// board copy of chair prose and injection audits reached the one subject who reads boards, and
+// the resonance distiller wrote the arm's design into the next spawn's shell. A's ruling:
+// "the rule has to be about stores and relays, not authors."
+//
+// A FILE, not an env var — a blind window spans independently spawned panes. Its CONTENT is the
+// atoms.jsonl line count at creation, so sibling intakes freeze their resonance at the moment
+// the window opened and cannot inherit the live experiment. While it exists, board_push mutes
+// everything and counts what it muted; the transitions themselves are DECLARED on the board,
+// because a silent gap is unauditable and a declared gap is evidence.
+// Fail closed: an unreadable lock mutes — the safe direction for a blind.
+
+static BLIND_MUTED: AtomicU64 = AtomicU64::new(0);
+/// 0 = not yet observed, 1 = open (no lock), 2 = locked
+static BLIND_LAST: AtomicU64 = AtomicU64::new(0);
+
+/// None = no blind window. Some(count) = locked, resonance frozen at `count` atom lines
+/// (count is None-as-0 when the lock body doesn't parse — the freeze fails closed too:
+/// an unparseable count freezes ALL of tonight's resonance rather than none of it).
+fn blind_lock() -> Option<usize> {
+    match fs::metadata(data_dir().join("blind.lock")) {
+        Ok(_) => Some(
+            fs::read_to_string(data_dir().join("blind.lock"))
+                .ok()
+                .and_then(|s| s.trim().parse::<usize>().ok())
+                .unwrap_or(0),
+        ),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
+        // The marker exists but cannot be examined: fail CLOSED — mute. A blind that fails
+        // open on an I/O hiccup is a blind that leaks precisely when the machine is strange.
+        Err(_) => Some(0),
+    }
+}
+
+/// The window a sibling intake may read: everything before the lock, all of it when no lock.
+fn resonance_window<'a>(lines: Vec<&'a str>, lock: Option<usize>) -> Vec<&'a str> {
+    match lock {
+        Some(n) => lines.into_iter().take(n).collect(),
+        None => lines,
+    }
+}
+
 fn board_push(ring: &Arc<Mutex<VecDeque<BoardEntry>>>, entry: BoardEntry) {
+    // The blind window gate, before dedup and before the file append. Transition detection
+    // lives here because this is the one funnel every writer passes through — a declared line
+    // at each edge, silence (counted) in between.
+    let locked = blind_lock().is_some();
+    let prev = BLIND_LAST.swap(if locked { 2 } else { 1 }, Ordering::Relaxed);
+    if locked && prev != 2 {
+        let note = BoardEntry {
+            pane: "blind".to_string(), role: "committee".to_string(),
+            text: "blind window OPEN — board pushes muted and counted until the lock lifts; resonance frozen at the lock's line count".to_string(),
+            ts: entry.ts, ts_source: TsSource::Push,
+        };
+        if let Ok(line) = serde_json::to_string(&note) {
+            if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(board_path()) {
+                let _ = writeln!(f, "{}", line);
+            }
+        }
+        ring.lock().unwrap().push_back(note);
+    }
+    if !locked && prev == 2 {
+        let n = BLIND_MUTED.swap(0, Ordering::Relaxed);
+        let note = BoardEntry {
+            pane: "blind".to_string(), role: "committee".to_string(),
+            text: format!("blind window CLOSED — {n} entr{} muted during the window, deliberately not recorded", if n == 1 { "y" } else { "ies" }),
+            ts: entry.ts, ts_source: TsSource::Push,
+        };
+        if let Ok(line) = serde_json::to_string(&note) {
+            if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(board_path()) {
+                let _ = writeln!(f, "{}", line);
+            }
+        }
+        ring.lock().unwrap().push_back(note);
+    }
+    if locked {
+        BLIND_MUTED.fetch_add(1, Ordering::Relaxed);
+        return;
+    }
     // The belt (see SeenTurns): drop an exact repeat of a turn we have already pushed this
     // run. Checked BEFORE the file append, or the duplicate lands on disk anyway and only
     // the in-memory ring stays clean — which is the half nobody reads.
@@ -1698,7 +1779,13 @@ fn assemble_intake() -> String {
     }
     let atoms = data_dir().join("resonance").join("atoms.jsonl");
     if let Ok(content) = fs::read_to_string(&atoms) {
-        let lines: Vec<&str> = content.lines().filter(|l| !l.trim().is_empty()).collect();
+        let all: Vec<&str> = content.lines().filter(|l| !l.trim().is_empty()).collect();
+        // The blind window: while data/blind.lock exists, a new sibling's resonance is frozen
+        // at the lock's recorded line count. Built after pane J woke holding a live blind
+        // experiment's design — artifact path, defect count, its own tier label — delivered by
+        // this very block from tonight's atoms. The distiller is a store; the rule is about
+        // stores and relays, not authors.
+        let lines = resonance_window(all, blind_lock());
         match read_curation() {
             Some(c) if !c.topics.is_empty() => s.push_str(&curated_resonance(&lines, &c)),
             // No curation yet (fresh install, or curate.js has never run): the old
@@ -4799,6 +4886,19 @@ mod chair_tests {
         // path-component match, not string-prefix: "instances-evil" must not pass
         let inst = Path::new(r"C:\Consonance\instances");
         assert_eq!(role_for_kept(r"C:\Consonance\instances-evil\x", inst), "human");
+    }
+
+    // The blind window's two pure pieces. The freeze fails closed both ways: an unparseable
+    // lock body freezes ALL resonance (count 0), and resonance_window with Some(0) hands a
+    // sibling nothing from the live edge — never the whole file by accident.
+    #[test]
+    fn a_blind_lock_freezes_resonance_at_its_count_and_fails_closed() {
+        let lines = vec!["a", "b", "c", "d"];
+        assert_eq!(resonance_window(lines.clone(), None), vec!["a", "b", "c", "d"]);
+        assert_eq!(resonance_window(lines.clone(), Some(2)), vec!["a", "b"]);
+        assert_eq!(resonance_window(lines.clone(), Some(0)), Vec::<&str>::new());
+        // a count past the end is the whole pre-lock file, not a panic
+        assert_eq!(resonance_window(lines, Some(99)).len(), 4);
     }
 
     #[test]
