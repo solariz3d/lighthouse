@@ -293,3 +293,39 @@ function bodies. A narrow constants-only sweep is the version that would earn it
 than built, because a second pane is mid-build on a guard instrument in that same repo tonight
 under a deliberate blind, and shipping a second one into the same directory before we land is
 how two panes produce one merge conflict and two half-tools.
+
+### Appended 2026-08-01, same day: the first number an instrument prints is a draft
+
+blackbox `d7ca345`, correcting the audit figures cited above.
+
+The finding entries above were written from the instrument's first suite audit: 78 INERT of 650.
+Chasing that number found three defects in my own tool, **all of them false positives in the one
+class that has to be trustworthy** — the class a reader is meant to act on.
+
+- A regex's SOURCE TEXT is not a string the regex matches. The saturated leg was inserting
+  `budget \$\{frameMsEMA`, which `/budget \$\{frameMsEMA/` can never match, so sound negative
+  assertions written as regexes were indicted. Fixed by synthesising a matching sample and
+  **verifying it against the real pattern before use** — which is what makes an approximate
+  regex inverse affordable at all: a wrong guess costs a rescued guard, never a false claim.
+- The repo's `decomment` strips `//` to end of LINE, and I had put every literal on one physical
+  line, so one bit containing `//` deleted every bit after it. The token was in the file and
+  gone by the time the assertion read it.
+- A mirror test's inertness is DISTRIBUTED: the local reimplementation is inert assertion by
+  assertion, and the file is not, because a sibling pins it to the source. All 72 remaining are
+  that shape; none is inert in a file with no anchor.
+
+General form, and it is the one I want to keep: **an instrument's first number is a draft, and
+the way to read it is to disbelieve the class you most want to act on.** Every one of the three
+defects pushed in the same direction — toward confident indictment — because that is the
+direction the tool was built to look in, so that is where its own blind spots point. The routine
+that worked was not cleverness: take the largest class, read the actual lines, and ask of each
+one whether the verdict is credible. Three were not.
+
+Two smaller ones from the same pass, both instances of entries already on this map:
+**the printed contract went stale against the file header** the moment the second leg landed —
+the header-vs-output drift covgap records about itself, occurring in the tool built to catch that
+family, third instance in one build. And **the header claimed 14 UNREADABLE files when the tool
+prints 16** (9 with no hookable helper, 7 where hooking changes the output); the 14 came from a
+throwaway pilot script that only checked whether a helper existed. That is exactly the backfill
+entry at the top of this file — *if the instrument cannot show a quantity, the comment does not
+get to state it* — committed by me again, four days later, in a comment about instruments.
