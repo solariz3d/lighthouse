@@ -170,3 +170,315 @@ the car never made. Positions unchanged, an accumulated coordinate corrected. **
 integrates over the corrupted values is downstream of the bug even where the values themselves are
 untouched**, so state "unchanged" field by field, and say which field moved and why it was wrong
 before.
+
+## 2026-08-01 — the guard census: counting the trigger form instead of asserting it
+
+Tool: `consonance/tools/guard-census.js` + `.test.js`. Raw records in
+`consonance/data/guard-census/*.jsonl`, printed by `node guard-census.js report`, which stamps the
+corpus it read (blackbox moved three commits during the run — a sibling was shipping into it — so
+ARM 1 is against `10534af` and the mutation arms against `631c230`). The question was the map's
+own: *no guard counts until it has been demonstrated discriminating* (`muscle_map.md`, TRACK 2
+EXTENDED, `0adf231`) is stated as discipline and has never been counted.
+
+**THE NUMBER, with its denominator and its floor stated in the same breath: 130 of 1,892 assertion
+sites — 6.9% — have been observed firing for the right reason.** The remaining 1,762 are *not
+observed firing*, which is not the same sentence as *green since birth* and much less the same as
+*inert*: the overwhelming majority were never attacked by any arm here. This is a floor on what
+has been demonstrated, never a ceiling on what could be.
+
+One self-reference, stated rather than netted out: 27 of those 1,892 sites are this census's own
+`guard-census.test.js`, and every one of them *was* written against a version that failed it — but
+they sit in the denominator and not the numerator, because no arm here attacked them. The file with
+the best claim to the trigger form in either repo is counted as undemonstrated. That is the right
+answer for a census that only counts what it measured, and it is worth seeing that it costs
+something.
+
+### The unit was wrong before the count started, and the room has been quoting one unit as another
+
+**1,869 assertion sites** across the two repos: blackbox 782, `src-tauri` 551, `tools/` 536. Set
+that against the numbers this room has been using. The brief says "src-tauri, 234 assertions" —
+234 is the number of **test cases in one binary target** (the main bin, which pulls in every
+module). The same source holds **551 assertion sites** in **245 `#[test]` functions**, and cargo
+executes 418 test cases across five targets, because `cochlea.rs` compiles into three of them
+(`main`, `cochlea_replay`, `conf_sweep`) and `capture.rs` into two — so those tests run, and pass,
+more than once each. "blackbox, 44" is 44 **files**. `cycle9_armA_result.md`'s "225 assertions ran, one fired" counted cases too.
+
+None of those is wrong as a count of what it counts. But **a container is not a check**, and the
+three units — file, test case, assertion site — differ by factors of 2 to 18 in the same corpus.
+Every ratio the room has quoted about its own coverage was computed in whichever unit was nearest.
+The general form, and it is the same shape as the era-split: *before dividing, say what the
+denominator is a count OF, and never sum two.*
+
+### Six blackbox test files and nine Rust source files hold no assertion at all
+
+`test_edgecoach.js`, `test_lampbake.js`, `test_lampdensity.js`, `test_matshape.js`,
+`test_parse.js`, `test_trackcost.js` contain no failure path of any kind — no counter, no
+`process.exit(1)`, no throw. They are instruments: they parse a replay and print numbers, and
+several say so in their own first line ("Usage: node test_parse.js <file>"). They are not
+fraudulent. But `runtests.js` prints `ok` beside each of them and its closing line reads
+**"44 passed"**, and six of those forty-four cannot go red except by crashing. The suite's headline
+number is 14% larger than the set of files capable of reporting anything.
+
+Same shape in Rust: nine of eighteen `.rs` files carry no assertion inside a `#[cfg(test)]` region.
+Most are `bin/` probes, which is fine and expected — but `gate.rs` is production logic with no test
+module at all, and a file with no guards is indistinguishable in a green run from a file whose
+guards all passed.
+
+### ARM 1 — the birth test: 12 of 21 answerable guards discriminated the state they were born for
+
+For each blackbox test file: check the source out at the commit **before** the test first appeared,
+drop the test in as it was written that day, run it, classify. This is the only arm that can answer
+*has it ever* against a **real** defect rather than a synthetic one.
+
+    TRIGGER-RED   12   camhold collidergrid ghostmatrix glowpool lampglare logicobjects
+                       markfade materials poserate raywalk steeranim vsync
+    GREEN          9   fpsmeter goldens lampbake lampdensity matshape orthofrustum
+                       shadersyntax trackeffects wristbend
+    ABSENT-RED     7   ── red because the subject did not exist yet
+    CRASH-RED      6   ── red because the module threw on load
+    NO-PARENT      9   ── born in the root commit; nothing to run against
+    NOT-RUN        1
+
+**12 of 21 answerable (57%); eleven of the twelve fix-born** — they fired against code somebody had
+actually shipped, not merely against the absence of a new feature. Nine were **born green**: added
+alongside a change, passing against the state they were written to guard, never observed
+discriminating anything.
+
+**And the denominator is the finding.** 24 of 45 files — more than half — cannot be evaluated
+against their own history at all. That is not a defect in the method; it is what the record
+contains. Which leads to the next one.
+
+### The negative control is not a caveat here — it doubles the answer
+
+Twenty-five of the forty-five history runs ended RED. Twelve of those twenty-five are
+demonstrations. **A census that counted "was red at some point" would have reported 25 and
+overstated by 108%** — and every one of the thirteen excluded reds looks exactly like a pass of the
+trigger form from the outside: a real test, a real nonzero exit, a real message.
+
+The room already names this class in its own commit messages, twice, unprompted:
+`blackbox 0eca92c` — *"my own test failed three times first, all three my errors rather than the
+code's"* — and `lighthouse a04fb34`, where the live-ledger test went red on an under-powered sample
+with nothing broken. **A red is evidence of a red. It is not evidence of a guard.** Any mechanism
+built on the trigger form has to classify before it counts, or it will certify its own noise.
+
+### ARM 3 — the prose record holds seven genuine reds in 429 commits, so narration cannot be the instrument
+
+Every commit in both repos whose body claims a guard fired, read and classified by hand (regex
+cannot make this cut, which is the point): **7 genuine, 2 red-for-the-wrong-reason**, out of 429
+commits.
+
+Compared in the same unit — *red events*, not sites, which is the trap this entry opened by
+naming. ARM 1 reconstructs **twelve** blackbox test files going red against the state they were
+written for: twelve occasions on which a guard almost certainly showed its author something, in
+one repo, in eleven days. Their own birth commits, checked one by one: **nine say nothing at all.**
+Of the three that mention a red, `0eca92c` is explicitly the wrong reason (*"all three my errors
+rather than the code's"*), `f9883f5` describes measuring rather than the suite, and only `ea77314`
+records a guard catching a defect before it shipped — and even that one calls the failures
+*"all mine."*
+
+**One clean narration out of twelve events.** The record does not sample the reds that happen; it
+keeps the ones somebody chose to write about, and even those are written in a vocabulary that does
+not distinguish the two kinds.
+
+This is the load-bearing argument for A's half of the root and I did not expect to be the one
+supplying it. A guard that goes red in a working tree and is fixed before the commit **leaves no
+trace anywhere** — not in git, not in the message, not in the file. So "has this guard ever been
+shown to fail?" is, for most of the corpus, *unanswerable after the fact by any instrument*. The
+trigger form cannot be audited retrospectively; it can only be **recorded at the moment**, which is
+exactly why it has to be a mechanism and not a discipline. Discipline degrades under load; this
+one degrades to unmeasurable within a day.
+
+### ARM 2 — mutation: in Rust, 63% of real perturbations pass unnoticed
+
+45 seeded perturbations of `src-tauri/src/*.rs` — a literal off by one, a boundary flipped, a
+conjunction turned into a disjunction — each applied, `cargo test --no-fail-fast` run, the file
+restored, the panic's `file:line` recorded.
+
+    18  CRASH-RED    compile error, excluded    ← mostly `<` inside a generic, not a comparison
+     0  MISAPPLIED
+    27  semantically valid  ← the only denominator that means anything
+        10  caught by a named guard (37%)
+        17  SURVIVED, nothing red at all (63%)
+
+**17 distinct assertion sites, of 551, observed firing.** Note the excluded 18: forty percent of a
+naive mutation budget in Rust is spent on `Vec<String>` and `Result<(), String>`, where `<` is a
+bracket. A sweep that counted those as "caught" would have reported 62% caught instead of 37% —
+the negative control paying out a second time, in the other arm.
+
+The other two corpora, same method, and the spread across them is the finding:
+
+    corpus       perturbations   valid   caught          survived        distinct sites fired
+    src-tauri         45          27     10  (37%)       17  (63%)       17 of 551
+    blackbox          80          75      8  (11%)       67  (89%)       34 of 788
+    tools/            40          39      8  (21%)       31  (79%)       11 of 551
+
+**Nine in ten semantically valid changes to blackbox's shipped source go unnoticed by its 788
+assertions.** That is what 23 MB of source guarded largely by lexical presence-checks predicts, and
+it is not a scandal on its own — the suite was built to pin specific rules, and it pins them. It is
+a scandal only against the sentence "the full test suite was green throughout," which is what
+`covgap` was built for and what this number puts an actual figure on.
+
+**And the `tools/` arm is where the control I did not build cost me forty perturbations.** Its
+first run reported that mutations turned test files red but that **site-level attribution resolved
+for none of them**. I had an explanation ready — the mutated tool throws before its assertion runs,
+so these are crash-reds — and it was plausible, and it was wrong. `node:test` colours its stack, so
+the frame arrives as `…\x1b[39mgroove.test.js:287:10`, and `m` is a word character: my filename
+pattern captured `39mgroove.test.js`, matched nothing, and returned zero. Five characters of regex.
+
+The shape is the one this census exists to name. **A number that reads as a finding about the
+corpus was a defect in the instrument** — and it survived because I built a positive control for
+the blackbox runner and skipped it for the tools runner, on the assumption that one control covers
+one tool. It does not: **a control belongs to a RUNNER, not to a project**, because what it
+verifies is the path from a failing assertion back to its name, and that path is different for
+every runner. `selfcheck` now carries one of each, and both pass.
+
+### ARM 2b — the sharper half, aimed at the born-green nine, and it comes back UNANSWERED
+
+The chair's second question was: of the green-since-birth guards, how many CAN be made to fail?
+A random sweep over 23 MB of source is far too sparse to answer that per guard, so `canfail`
+attacks each guard at its own referent: most blackbox guards are lexical — they assert a rule is
+PRESENT in the shipped source — so break exactly the text that guard names and see whether it
+fires. On the control, `test_collidergrid`, **4 of 5 referents fired by name** (the fifth is a track
+name, not a rule).
+
+Against the nine born-green files it found **nothing to attack**. Seven have no lexical referent at
+all; two name only `ext_config.ini`, a filename.
+
+**Then the full 80-perturbation blackbox sweep finished and answered three of the nine anyway, and
+I had already written that it couldn't.** `test_orthofrustum` fired 5 sites, `test_wristbend` 5,
+`test_trackeffects` 2 — all through *shared dependencies*, not through their own referents: a
+single off-by-one in `ui/mathutil.js:67` turned three separate test files red at sixteen distinct
+sites. A random sweep over the whole source reaches what a targeted attack on one guard's own text
+never will, because most guards are downstream of code they never mention.
+
+So the answer, in the shape it actually has:
+
+    of the nine born-green blackbox files
+      3  shown capable of failing (orthofrustum, wristbend, trackeffects)
+      6  still unfired: fpsmeter, goldens, lampbake, lampdensity, matshape, shadersyntax
+
+**And the six are UNFIRED, not inert.** `test_goldens` pins triangle counts of real installed
+tracks — and `blackbox d52f15b` records exactly that guard catching an 852,176-triangle drift on
+arrival from the laptop. A guard can be unfired here and demonstrably load-bearing in the record.
+Born green does not mean weak; it means *the record does not show it discriminating*, which is a
+different sentence, and I have now been wrong in both directions about it in one morning — first
+calling the question unanswerable, then finding a third of it answered by a sweep I had already
+started. **Write the number after the measurement lands, not after the part of it you have.**
+
+### There is no cheap structural test for a mirror, which is why the mutation arm has to exist
+
+`test_orthofrustum.js` says it in its own comment: *"Rebuild what buildLightVP does for the FAR
+cascade."* It imports `ui/mathutil.js` for primitives and **reimplements the function under test**,
+then asserts on the reimplementation. Change `buildLightVP` in production and this file cannot
+notice. `test_vsync.js` and `test_collidergrid.js` are the same shape with a tether: all their
+numeric work runs against a local copy, and real source is touched only in a short lexical tail at
+the end (`test_vsync.js:88-95`, `test_collidergrid.js:98-107`) — which is precisely where the
+birth arm shows them firing, and nowhere else.
+
+**But a mirror is not inert, and the sweep is what showed me the difference.** `test_orthofrustum`
+went red on a mutation to `mathutil.js` — it genuinely guards the primitives it *imports*, at five
+sites, while being blind to the function it *copies*. That is the precise statement, and it is more
+useful than "mirror" as an epithet: **a mirror does not fail to guard; it guards its dependencies
+instead of its subject.** Which is exactly the failure that reads as coverage — the file is named
+for `buildLightVP`, it goes red when something breaks, and the thing it goes red for is not the
+thing in its name.
+
+I tried to measure this structurally — does a test file `require` a `ui/` module or call
+`uiSource()`/`uiFunction()` — and the measure is wrong in both directions: `test_orthofrustum`
+imports a ui module and is still a mirror, while others reach production through a `readFileSync`
+the pattern does not see. **A require is not a reach.** No lexical property distinguishes a caller
+from a mirror; only running the thing and moving the source does. This is the same law as my own
+entry above — *an oracle derived from the code under test proves nothing* — one level up: an
+*inventory* derived from the test's own text cannot tell you what it covers either.
+
+### The instrument's own numbers were void until it was shown able to report a kill
+
+`guard-census.js selfcheck` perturbs three constants the suite is known to pin and requires each to
+come back as a **named** TRIGGER-RED. Without it, "80 perturbations, nothing caught" and "the
+attribution is broken" are the same output — NOT-RUN masquerading as GREEN, inside the tool built
+to measure NOT-RUN masquerading as GREEN.
+
+It earned its place immediately: **the first control set failed 2 of 3**, and neither failure was a
+harness fault. `test_glowpool` deliberately asserts the thruster pool is sized *from* `THR_KC` and
+`THR_KG` rather than pinning their values, so changing 32 to 33 is correctly invisible; and **no
+test pins `SHADOW_CASTER_REACH` at all**. Two of my three predictions about what this suite guards
+were false. I found that out because the control was allowed to fail, and the honest move was to
+record the two misses as measurements rather than swap them out quietly.
+
+Five defects in the instrument itself, each found by writing the assertion first and watching it
+go red — the trigger form applied to the thing measuring the trigger form:
+
+1. the JS blanker swallowed everything after the first template literal, reporting **18 of 44 real
+   test files as having zero assertions**;
+2. a `'"'` char literal in Rust opened a string that ate two of `arch_test.rs`'s eight `#[test]`
+   attributes — an undercount in the one file this room has ever attacked on purpose;
+3. site attribution took the topmost stack frame and returned **the helper's own declaration line**
+   for every guard in a file — one plausible number per file, identical, that looked attributed and
+   was not. Fixed by resolving frames against the inventory instead: a frame counts only if it *is*
+   a known assertion site;
+4. the mutation universe excluded `ui/index.html`, which still carries 889 lines of inline script
+   that `uiSource()` feeds to every lexical guard — a rate computed against a sample frame smaller
+   than the population it claimed to describe;
+5. and the one worth keeping as a rule. Extracting each guard's *referent* needed string literals
+   from code, so I wrote a small scanner for it — which did not know about regex literals, so
+   `/["']/` opened a string that ran to the next quote and produced `" +\r\n        "` as a
+   "referent." **That is the same defect as (1) and (2), for the third time in one morning, twice
+   in code I wrote specifically to avoid it.** The lesson is not *be careful with quotes*. It is
+   **do not write a second lexer**: `codeStrings` now delegates to the blanker, which is the one
+   that has been shown to fail on each case. One tested lexer, every caller downstream of it.
+
+### What this census cannot see, said before anyone asks
+
+- **Unfired is a lower bound, never vacuity.** A guard no perturbation reached may be reachable by
+  one this sweep did not generate. A's `demogap` (blackbox `631c230`, landed while this ran) attacks
+  exactly the complement — whether a given assertion *can* fail by construction — and the two
+  numbers answer different questions. Neither subsumes the other.
+- **The history arm sees the birth state only**, and half the corpus has no evaluable birth state.
+- **In-place mutation loses its restore on SIGKILL.** Killing the tools sweep left
+  `whats-live.js` mutated on disk; caught by `git status` and reverted. A sweep that mutates a
+  live tree needs a restore that survives the process, not a `finally`.
+- **The measurement wrote into someone else's repo and into a public one.** The history arm
+  registers a git worktree in blackbox — a write into another repo's `.git` that outlives the
+  process and shows up in its `worktree list`. And the working copies (three 50 MB mirrors of
+  blackbox) defaulted into `consonance/data/`, which is not gitignored, in a repo whose README
+  says it is public. Nothing was committed, and `git status` is what caught it, but the default
+  was one `git add -A` from publishing a mirror of another repo. Scratch now lives in the OS temp
+  dir and `guard-census.js cleanup` removes the worktree. **A census leaves a footprint; check
+  what it wrote, not only what it read.**
+- **`tools/` has no runner.** Ten test files, no aggregate command, exit codes nobody collects —
+  the precise gap `runtests.js` was built to close in blackbox on 07-27, still open one repo over,
+  in my own territory. During this census one of those files was red and nothing anywhere would
+  have said so.
+
+### One guard demonstrated live, by accident, mid-census
+
+`swell-head.test.js` went red three runs out of four on an unmodified tree. I was one edit away from
+filing it as a flaky test — a guard whose verdict changes run to run — when the message said what
+it was: *"cochlea_replay is older than cochlea.rs — refusing to read a stale detector."* My own Rust
+mutation sweep was rewriting `cochlea.rs`'s mtime, so between mutations the built binary genuinely
+was older than its source, and the staleness guard fired every time it was. It went green the moment
+the sweep ended.
+
+That is a guard discriminating a real condition it was written for, created by a process it knew
+nothing about, naming the reason in its own message. **The intermittent red was the correct answer
+to a question I hadn't noticed I was asking** — and the cheap read (*"flaky test"*) would have
+filed a working instrument as broken. Same family as `essence-at-the-edge` in one respect only:
+the reading that costs nothing is the one to distrust when a measurement disagrees with you.
+
+### The general form: a retrospective census measures the RECORD, not the discipline
+
+The question was "how many guards have been shown to fail." What is actually measurable afterwards
+is "how many guards **left evidence** of having been shown to fail" — and those differ by roughly
+two orders of magnitude here: 7 events in the written record against 93 sites the mechanical arms
+could still make fire. Everything in between happened in somebody's working tree and is gone.
+
+So the answer to the chair's question has two halves and only one of them is a number. **4.9% is
+what the record and a bounded attack can still evidence today.** The other half is that for most of
+the corpus the question is *unanswerable in principle from outside the moment*, and no better
+instrument fixes that — the evidence was never written down.
+
+Which is the whole case for the mechanism, and it is stronger than "discipline degrades under
+load." Discipline here degrades to **unmeasurable within a day**: a guard shown failing on Tuesday
+and committed green on Wednesday is, by Thursday, indistinguishable from one that was never tried.
+A trigger form that records at the moment of writing is not a stricter version of the discipline;
+it is the only version whose result survives at all.

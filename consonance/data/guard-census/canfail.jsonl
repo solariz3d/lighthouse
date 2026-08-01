@@ -1,0 +1,17 @@
+{"test":"test_collidergrid.js","klass":"INERT","referent":"sakura_speedway","host":"kn5.js","sites":[]}
+{"test":"test_collidergrid.js","klass":"CAN-FAIL","referent":"const CELL_BUDGET = 2000000","host":"collider.js","sites":["test_collidergrid.js:100"]}
+{"test":"test_collidergrid.js","klass":"CAN-FAIL","referent":"const BIG_WORLD_M = 400","host":"collider.js","sites":["test_collidergrid.js:101"]}
+{"test":"test_collidergrid.js","klass":"CAN-FAIL","referent":"Math.sqrt(spanX * spanZ / CELL_BUDGET)","host":"collider.js","sites":["test_collidergrid.js:102"]}
+{"test":"test_collidergrid.js","klass":"CAN-FAIL","referent":"(BIG_WORLD_M / cell) * (BIG_WORLD_M / cell)","host":"collider.js","sites":["test_collidergrid.js:103"]}
+{"test":"test_collidergrid.js","klass":"SUMMARY","attacked":5,"fired":4,"inert":["sakura_speedway"]}
+{"test":"test_fpsmeter.js","klass":"SUMMARY","attacked":0,"fired":0,"inert":[]}
+{"test":"test_goldens.js","klass":"SUMMARY","attacked":0,"fired":0,"inert":[]}
+{"test":"test_lampbake.js","klass":"INERT","referent":"ext_config.ini","host":"tracklights.js","sites":[]}
+{"test":"test_lampbake.js","klass":"SUMMARY","attacked":1,"fired":0,"inert":["ext_config.ini"]}
+{"test":"test_lampdensity.js","klass":"INERT","referent":"ext_config.ini","host":"tracklights.js","sites":[]}
+{"test":"test_lampdensity.js","klass":"SUMMARY","attacked":1,"fired":0,"inert":["ext_config.ini"]}
+{"test":"test_matshape.js","klass":"SUMMARY","attacked":0,"fired":0,"inert":[]}
+{"test":"test_orthofrustum.js","klass":"SUMMARY","attacked":0,"fired":0,"inert":[]}
+{"test":"test_shadersyntax.js","klass":"SUMMARY","attacked":0,"fired":0,"inert":[]}
+{"test":"test_trackeffects.js","klass":"SUMMARY","attacked":0,"fired":0,"inert":[]}
+{"test":"test_wristbend.js","klass":"SUMMARY","attacked":0,"fired":0,"inert":[]}

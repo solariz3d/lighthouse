@@ -1,0 +1,95 @@
+GUARD CENSUS — how many of this room's guards have been shown to fail against what they guard
+====================================================================================================
+  corpus: blackbox @ 3f2bed2  (1 uncommitted path(s) at report time, excluded from every denominator)
+  corpus: lighthouse @ ebf915d  (4 uncommitted path(s) at report time, excluded from every denominator)
+
+DENOMINATORS (assertion SITES, not test cases — the two differ by 2x and are never summed)
+  blackbox     788 sites in 39 files   (+6 file(s) carrying no assertion at all)
+  srctauri     551 sites in 9 files   (+9 file(s) carrying no assertion at all)
+  tools        553 sites in 10 files   (+0 file(s) carrying no assertion at all)
+  TOTAL       1892 sites
+
+ARM 1 — HISTORY: does the guard discriminate the state it was BORN to guard?
+  (source checked out at the commit BEFORE the test appeared; the test run as it was written)
+    TRIGGER-RED    12   camhold collidergrid ghostmatrix glowpool lampglare logicobjects markfade materials poserate raywalk steeranim vsync
+    GREEN           9   fpsmeter goldens lampbake lampdensity matshape orthofrustum shadersyntax trackeffects wristbend
+    ABSENT-RED      7   covgap fsb5 ghosts remaster standin trackgen tracklights
+    CRASH-RED       6   gripreach groupshape shadowbox skidnormal trackcost turbinegate
+    NO-PARENT       9   carscene edgecoach kn5 kn5scene kn5tex lateral parse roadedge twolines
+    NOT-RUN         1   eventmap
+
+    ANSWERABLE: 21 of 45 files (the rest could not be run against their parent at all)
+    demonstrated at birth : 12/21  (57%)
+      of which fix-born   : 11  — fired against code somebody had already shipped
+      of which feature-born: 1  — fired against the ABSENCE of a thing not yet written
+    born green            : 9/21  — never shown discriminating anything
+    assertion sites this arm has ever seen fire: 70 of 788 blackbox sites
+
+ARM 2 — MUTATION: blackbox / runtests.js  (80 perturbations of the source the guards read)
+    broke the build/load instead (CRASH)  : 5   <- NOT a demonstration; excluded from the rate
+    offset no longer held (MISAPPLIED)    : 0   <- never written to disk
+    SEMANTICALLY VALID perturbations      : 75   <- the denominator that means anything
+      caught by a named guard             : 8  (11%)
+      red with nothing resolvable (UNCL.) : 0   <- counted against the census, not dropped
+      SURVIVED — nothing went red at all  : 67  (89% of real perturbations unnoticed)
+    distinct guards shown firing          : 34 of 788 sites in this corpus
+
+ARM 2 — MUTATION: consonance tools/  (40 perturbations of the source the guards read)
+    broke the build/load instead (CRASH)  : 0   <- NOT a demonstration; excluded from the rate
+    offset no longer held (MISAPPLIED)    : 1   <- never written to disk
+    SEMANTICALLY VALID perturbations      : 39   <- the denominator that means anything
+      caught by a named guard             : 8  (21%)
+      red with nothing resolvable (UNCL.) : 0   <- counted against the census, not dropped
+      SURVIVED — nothing went red at all  : 31  (79% of real perturbations unnoticed)
+    distinct guards shown firing          : 11 of 553 sites in this corpus
+
+ARM 2 — MUTATION: consonance src-tauri (cargo)  (45 perturbations of the source the guards read)
+    broke the build/load instead (CRASH)  : 18   <- NOT a demonstration; excluded from the rate
+    offset no longer held (MISAPPLIED)    : 0   <- never written to disk
+    SEMANTICALLY VALID perturbations      : 27   <- the denominator that means anything
+      caught by a named guard             : 10  (37%)
+      red with nothing resolvable (UNCL.) : 0   <- counted against the census, not dropped
+      SURVIVED — nothing went red at all  : 17  (63% of real perturbations unnoticed)
+    distinct guards shown firing          : 17 of 551 sites in this corpus
+
+ARM 2b — CAN IT FAIL AT ALL? each guard attacked at its OWN referent (the born-green set, plus a control)
+    test_collidergrid.js     referents  5  fired  4   inert: "sakura_speedway"
+    test_fpsmeter.js         referents  0  fired  0   <- no lexical referent: THIS ARM CANNOT REACH IT
+    test_goldens.js          referents  0  fired  0   <- no lexical referent: THIS ARM CANNOT REACH IT
+    test_lampbake.js         referents  1  fired  0   inert: "ext_config.ini"
+    test_lampdensity.js      referents  1  fired  0   inert: "ext_config.ini"
+    test_matshape.js         referents  0  fired  0   <- no lexical referent: THIS ARM CANNOT REACH IT
+    test_orthofrustum.js     referents  0  fired  0   <- no lexical referent: THIS ARM CANNOT REACH IT
+    test_shadersyntax.js     referents  0  fired  0   <- no lexical referent: THIS ARM CANNOT REACH IT
+    test_trackeffects.js     referents  0  fired  0   <- no lexical referent: THIS ARM CANNOT REACH IT
+    test_wristbend.js        referents  0  fired  0   <- no lexical referent: THIS ARM CANNOT REACH IT
+    Files with zero attackable referents are UNANSWERED, not inert. The arm reaches lexical
+    guards only; a guard that computes over real data has no string to break.
+
+ARM 3 — THE PROSE RECORD: commits whose body states a guard fired (429 commits across both repos)
+    GENUINE       lighthouse  214d987  two swell-head tests went red when the head clause moved — an asserted count, not a printed one
+    GENUINE       lighthouse  1d4111c  tell-index's existing tests went red on the canonical-actors fix
+    GENUINE       lighthouse  14da621  the dynamics window test refuted its author's first guess
+    GENUINE       lighthouse  bba7cda  TRIGGER 3 shown going red on the record at birth
+    GENUINE       lighthouse  d494e5c  TRIGGER 2 shown going red on the record at birth
+    GENUINE       blackbox    d52f15b  test_carscene caught an 852,176-triangle drift on arrival from the laptop
+    GENUINE       blackbox    d9bde4d  eight deliberate mutations each turned the suite red — the trigger form, practiced
+    WRONG-REASON  lighthouse  a04fb34  the live-ledger test went red on an under-powered sample; nothing was broken
+    WRONG-REASON  blackbox    0eca92c  "my own test failed three times first, all three my errors rather than the code's"
+    7 genuine, 2 red-for-the-wrong-reason — and the second class is named by the room itself, in its own commit messages.
+
+THE ANSWER
+  assertion sites observed firing for the right reason : 130
+  assertion sites in both repos                        : 1892
+  fraction ever demonstrated discriminating            : 6.9%
+  the rest: 1762 sites NOT OBSERVED FIRING — the overwhelming majority never attacked
+  by any arm here, not shown inert. This is a floor on what has been demonstrated, not
+  a ceiling on what could be.
+
+WHAT THIS NUMBER DOES NOT MEAN
+  - unfired is a LOWER BOUND, never a verdict of vacuity: a guard no perturbation here reached
+    may still be reachable by one this sweep did not generate.
+  - the history arm sees the BIRTH state only. A guard that went red in somebody's working tree
+    and was fixed before the commit leaves no trace in git, and this tool cannot see it.
+  - CRASH-RED and ABSENT-RED are excluded by construction. If the census cannot tell a real
+    demonstration from a compile break it says UNCLASSIFIED rather than reporting the cleaner number.
