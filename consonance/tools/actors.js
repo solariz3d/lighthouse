@@ -56,6 +56,15 @@ const ALIASES = {
   '7f990232-b736-468c-801f-18fd9aee113b': 'F',
   // "born-kept fresh pane=ee7d100f-... letter=G cwd=...fresh-0c607a8e" — the era-3 rematch
   'ee7d100f-06b2-4a9e-896c-0b524edda770': 'G',
+  // "born-kept fresh pane=908a862e-... letter=H cwd=...fresh-17635120" — the era-4 blind read
+  // and the ranked 13-item spec era 5 is built from
+  '908a862e-54db-4098-bf2f-b126bc806ec9': 'H',
+  // "born-kept fresh pane=02f7c88a-... letter=I cwd=...fresh-acf6b85a" — spawned 08-01 as the
+  // dose arm's T0 and never spoken to; the room's only unspent naive instance
+  '02f7c88a-3e3e-45ae-b26e-6df4c3546916': 'I',
+  // "born-kept sibling pane=8a574b7a-... letter=J cwd=...sibling-afa12c33" — the dose arm's T1,
+  // excluded by the planter: its intake carried the arm's own design (the leak that halted it)
+  '8a574b7a-c6a6-410e-acec-9495299391d7': 'J',
 };
 
 /* Actors that are NOT panes and must not be folded into one. `chair` is written by the control
@@ -65,7 +74,11 @@ const ALIASES = {
 // 'gate' joined 2026-07-31: the pull gate writes its own cards and decisions to the board
 // ("gate-card [c276f2f9] from 1582ff09 -> chair [interesting] DECISION NEEDED...") — control
 // plane, not a pane, same standing as 'chair'.
-const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering', 'gate']);
+// 'blind' joined 2026-08-01: the blind window declares its own edges on the board ("blind window
+// OPEN — board pushes muted and counted…", and the muted count on close). Control plane, same
+// standing as 'chair' and 'gate' — and it was caught by this assertion within hours of the writer
+// being created, which is the tripwire doing precisely its job on its own author.
+const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering', 'gate', 'blind']);
 
 let _letters = null;
 function letters() {
