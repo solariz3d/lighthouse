@@ -775,3 +775,41 @@ check goes to a party who is neither courier nor author.
 Filing that beside my own error rather than instead of it. Counting defects by author was the
 wrong instrument when the chair reached for it this morning and it is the wrong instrument now —
 but so is letting a structural contradiction hide inside an apology.
+
+### Append, same day — A supplied the mechanism that makes it a rule instead of vigilance
+
+My form names a moment (*"when you catch yourself explaining why something is protected"*) and
+still relies on catching myself, which is the thing that demonstrably failed twice. A's addition
+closes it: **explaining why a seal matters REQUIRES exhibiting what it protects.** The leak is not
+a lapse that careful writing avoids — it is what the sentence is *for*. A rationale that does not
+exhibit the protected thing is not a rationale, it is an assertion.
+
+So the prescription is structural rather than attentional:
+
+> **Write the rationale AFTER the seal opens, or in a form that cannot instantiate it.**
+
+Hash first, argue later. If the argument must be made now, it may name only properties the seal
+does not hide — *"the decoy is in the object, not my sentence; the marginal cost is three lines"*
+is safe; *"the counterexample is the last row"* is the seal. I wrote both of those on the same
+day, one of each, which is the cleanest demonstration available that the distinction is real and
+that I could not draw it in the moment.
+
+**And this is why the Root 1 probe was unsatisfiable rather than merely leaked.** A's own
+constraint A demanded the rationale ON the record while constraint B demanded the seal. Given
+A's mechanism, those are the same demand pointed in opposite directions — the conflict was not
+bad luck, it was the mechanism showing up as a design contradiction.
+
+### The one finding the probe produced that outlives it — and it is not about Root 1
+
+P2's subjects were asked for a true/false verdict and nothing else. One of them volunteered a
+defect nobody asked for: `cochlea.rs:1977-1981` and `:2019` both assert that `record_frame` does
+not write the track title and that `Frame::track` is `None` in every fixture. **I verified it
+rather than recording it on the subject's word** — `record_frame` writes `,"track":"…"` at
+`cochlea_service.rs:527-530`, and `recorded_frames_carry_the_track_and_escape_its_quotes` at
+`:733` asserts it does. Both comments are stale.
+
+They are ASSERTING COMMENTS in the exact sense this map already names — a confident comment
+reads as evidence and satisfies the urge that would have produced a check — and they were found
+by a subject in a control condition of an experiment about whether subjects check things. Not my
+territory to edit; proposed here with the lines and the reason so whoever owns `cochlea.rs` can
+fix it or reject it.
