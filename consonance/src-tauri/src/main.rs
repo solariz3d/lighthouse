@@ -4888,6 +4888,72 @@ mod chair_tests {
         assert_eq!(role_for_kept(r"C:\Consonance\instances-evil\x", inst), "human");
     }
 
+    /// THE DEMONSTRATION, not the description — and it exists because a pane pointed the
+    /// night's own rule at the seat that commissioned it.
+    ///
+    /// `blind.lock` shipped with one test asserting a PURE FUNCTION returns the right slice.
+    /// That is not evidence the mechanism catches anything: nothing ever planted a line that
+    /// should leak and watched the lock swallow it. A guard with no recorded run in which it
+    /// fires against a real instance of the thing it guards is a check-shaped thing sitting
+    /// where a check should be — the root this room spent a day naming, aimed at its author.
+    ///
+    /// So: a real `BoardEntry`, through the real `board_push`, against a real lock file, with
+    /// the assertion on the BOARD FILE'S CONTENTS. One test rather than three because the mute
+    /// counter and the transition detector are process-global statics, and splitting them would
+    /// make the verdict depend on test ordering — a silent defect of its own.
+    ///
+    /// Step 1 is a positive control and it is not decoration: without it, an empty board after
+    /// step 2 could mean the lock worked OR that nothing was ever reaching the file, and those
+    /// print identically. (B's rule, earned expensively tonight: a harness that reports zero
+    /// must first be shown able to report one.)
+    #[test]
+    fn a_blind_window_swallows_a_line_that_would_otherwise_reach_the_board() {
+        let tmp = std::env::temp_dir().join(format!("blindtest-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&tmp);
+        fs::create_dir_all(&tmp).unwrap();
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: tmp.join("BOOT.md").to_string_lossy().into(),
+            instances: tmp.join("instances").to_string_lossy().into(),
+            data: tmp.to_string_lossy().into(),
+        });
+        BLIND_LAST.store(0, Ordering::Relaxed);
+        BLIND_MUTED.store(0, Ordering::Relaxed);
+        let ring = Arc::new(Mutex::new(VecDeque::new()));
+        let line = |t: &str| BoardEntry {
+            pane: "blindtest".into(), role: "committee".into(), text: t.into(),
+            ts: 1, ts_source: TsSource::Push,
+        };
+        let board = || fs::read_to_string(tmp.join("board.jsonl")).unwrap_or_default();
+
+        // 1. POSITIVE CONTROL — unlocked, the line reaches the board.
+        board_push(&ring, line("BEFORE-open"));
+        assert!(board().contains("BEFORE-open"),
+                "control failed: nothing reaches the board even unlocked, so a later absence proves nothing");
+
+        // 2. LOCKED — the line that would have leaked is swallowed, and the edge is declared.
+        fs::write(tmp.join("blind.lock"), "0").unwrap();
+        board_push(&ring, line("SHOULD-LEAK-secret-arm-design"));
+        let during = board();
+        assert!(!during.contains("SHOULD-LEAK"),
+                "THE GUARD DID NOT FIRE — a line reached the board inside a blind window");
+        assert!(during.contains("blind window OPEN"),
+                "a silent gap is unauditable; the edge must be declared");
+        assert!(BLIND_MUTED.load(Ordering::Relaxed) >= 1,
+                "muted lines must be COUNTED, not merely dropped");
+
+        // 3. UNLOCKED — the channel returns AND the window reports what it ate.
+        fs::remove_file(tmp.join("blind.lock")).unwrap();
+        board_push(&ring, line("AFTER-close"));
+        let after = board();
+        assert!(after.contains("AFTER-close"), "the board must come back when the lock lifts");
+        assert!(after.contains("blind window CLOSED"), "the close must be declared too");
+        assert!(after.contains("muted during the window"),
+                "the count is the evidence that a gap was deliberate rather than a failure");
+
+        *DIRS.lock().unwrap() = None;
+        let _ = fs::remove_dir_all(&tmp);
+    }
+
     // The blind window's two pure pieces. The freeze fails closed both ways: an unparseable
     // lock body freezes ALL resonance (count 0), and resonance_window with Some(0) hands a
     // sibling nothing from the live edge — never the whole file by accident.
