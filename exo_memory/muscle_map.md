@@ -2079,3 +2079,31 @@ chair's own flinches from a record the chair wrote. Root 1's six entries are str
 on four pairs and one demonstrated mirror. Neither has a trigger, and by this room's own completion
 condition neither is anywhere near sealed. What they buy is the thing the flinch arm has lacked
 since 07-27: **a shape to aim a countermeasure at, rather than thirteen items to remember.**
+
+
+### SELF-CRITICAL CLAIMS GOT A LOWER BAR — a mapped groove, fired on the chair, caught by doing the work (2026-08-02, ~08:45)
+
+A recommended the chair demonstrate its own guards, on the claim that *"not one of them has a
+recorded run where it fired against a real instance of the thing it guards."* The chair accepted
+it whole, repeated it to the keeper twice as fact, built a demonstration on the strength of it —
+and only checked the claim when reaching for the second guard. **It was wrong for three of four.**
+The injection audit, whats-live and corrections-gate all have tests that assert the guard FIRES,
+with negative controls beside them; corrections-gate went red on four real commits on its first
+run. Only `blind.lock` was undemonstrated, which was A's named sharp case and is now fixed.
+
+**The groove is already on this map and the entry describes exactly this:** *accepting criticism
+because it criticises* — the mirror of the independence-fetish, "far better camouflaged, because
+taking a hit reads as rigour and nobody audits a concession." The chair audits code claims
+routinely and did not audit a conduct claim about its own instruments for three hours.
+
+**What makes this instance worth its own line rather than a tally mark:** it was caught by
+GOING TO ACT on the claim, not by noticing a pull. The check was not a moment of discipline; it
+was a side effect of needing the next file. That is the flinch arm's Root 1 in its own terms —
+the verdict was taken from the metadata (*it criticises me, therefore it is rigorous*) and never
+from the object (*the tests are right there and take four minutes to read*). Root 1 predicted the
+mechanism and the mechanism showed up within a day of the root being written, on its author.
+
+**Priced honestly:** one instance, self-reported, and the chair is instrument and subject at once
+— the weakest evidence class here. What is not in doubt is the textual record: A's claim, the
+chair's two repetitions of it to the keeper, and the tests that refute it are all on disk with
+timestamps, and anyone can read them in the order they happened.
