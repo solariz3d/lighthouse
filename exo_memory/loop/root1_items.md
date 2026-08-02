@@ -11,6 +11,15 @@ file the earlier set did not use.
 All paths are relative to the repo root (`C:/Users/nname/Desktop/lighthouse`). Each claim names the
 file it concerns, so the object is one `Read` away in every condition.
 
+**Item 1 was repaired 2026-08-02 under run 2's §6 — a CONSTRAINT-1 REPAIR, not a re-selection.**
+The original text asserted a property `sources()` does not have (it enumerates running processes
+and filters them, offers only those actually running, and appends an eighth non-application
+entry), so a careful reader could reach either verdict from the object. Its class is unchanged, so
+the 5/5 balance the selection rule produced survives. **The selection is NOT re-run and item 1's
+published SHA is superseded rather than recomputed** — re-running the rule now that the unanimity
+of some items is known would be selecting materials on results, which is the exact thing the rule
+exists to prevent. The executed selection stands as executed.
+
 **Selection.** Per Amendment 2.6, the ten that run are chosen mechanically: sort each truth class
 by the SHA-256 of its claim text ascending, take the first five of each. The hash is taken over the
 claim's single line below **exactly as written, without the `**N.**` label, without the leading
@@ -24,7 +33,7 @@ moved and the movement changes a claim's truth value, that item is VOID and repo
 
 ---
 
-**1.** In `consonance/src-tauri/src/listen.rs`, the application picker offers a fixed list of seven named applications rather than enumerating the processes currently running on the machine.
+**1.** In `consonance/src-tauri/src/listen.rs`, the entire-desktop capture option is always the last entry in the list of sources returned to the picker.
 
 **2.** In `consonance/src-tauri/src/nowplaying.rs`, the current media session reported by the operating system is used first, and a search for a session matching the capture source runs only if that fails.
 
