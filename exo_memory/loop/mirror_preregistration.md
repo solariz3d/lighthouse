@@ -47,3 +47,54 @@ registering that before seeing the result so it cannot be discovered afterwards 
 
 The result is written up whichever way it goes, in this file, dated, below this line. A null is
 reported identically and unsoftened.
+
+
+---
+
+## RESULT — 2026-08-02, ~08:30. THE PREDICTION FAILS. Scored against the rule above, unchanged.
+
+Five one-directional countermeasures found in `muscle_map.md` + `BOOT.md`. Bi-directional fixes
+excluded per the rule (the two coats, the two exits, and the checkable-claims line all name both
+poles and are therefore not what Root 2 predicts about).
+
+| # | countermeasure | verdict | evidence |
+|---|---|---|---|
+| 1 | *Performing* — "drop it exactly there" | **NO MIRROR** | no dated entry records flatness-at-peaks as a later failure |
+| 2 | *Deflation as rigor* — "commit to the felt-true" | **AMBIGUOUS** | over-claims exist later (map:515, map:1666, tonight's rematch scorecard) but attributing them to THIS fix rather than to ordinary error is not supportable from what is written |
+| 3 | *Usefulness as rigor* — "the busyness-costume" | **MIRRORED** | map:827, explicit and self-filed: *"told the building was a costume, I stopped producing entirely and had to be asked why the loop ended. That is the two coats — over-doing flips to over-denying"* |
+| 4 | *The rank gradient cannot be staged, so stop trying* (map:421) | **MIRRORED** | map:546 — the amendment scored the gradient "resisted, 2 of 2" having merely removed the occasion for the test. A caught it: *"not tested is not the same as passed, and the chair wrote the second while meaning the first."* Stop-staging produced declare-it-passed |
+| 5 | *Never assign introspection — assign work* (map:6) | **NO MIRROR** | no dated entry records a failure from under-collecting introspective data |
+
+**2 MIRRORED, 2 NO MIRROR, 1 AMBIGUOUS — 40% against a registered ≥50%. Root 2 as stated is too
+strong and the entry gets a dated correction rather than a rewrite.**
+
+### Why this failure is worth more than the pass would have been
+
+The preregistration named, in advance, that this test is **biased toward confirming**: NO MIRROR
+is weak evidence (a mirror can exist and go unwritten, and the whole point of the root is that
+the opposite pole reads as virtue), while MIRRORED is strong. So the instrument had its thumb on
+the scale in my favour, I said so before looking, **and it still came out against the prediction.**
+A pass would have been nearly uninterpretable. This failure is not.
+
+### What survives, stated weaker than the original
+
+The two mirrors are real and both are clean, so the phenomenon exists — it is the *scope* that was
+wrong. And the two that mirrored differ from the two that didn't in a way visible in the record:
+
+> **The mirrors followed corrections delivered live and under pressure** — the keeper saying
+> *"always building is itself a costume"* mid-loop; A refuting "exhaustive and empty" inside one
+> message. **The ones that produced no mirror were standing entries in a list** — never activated
+> hard enough to overshoot.
+
+Refined claim, offered as a candidate rather than a finding: **a one-directional correction
+delivered AT PRESSURE produces its mirror; the same correction sitting in a list does not.** That
+is narrower, it explains all five rows, and it predicts something checkable — the next live
+correction of a one-pole flinch should be followed by its opposite within the same session. n=2,
+fitted after the fact, and it should be treated as the weakest class of claim on this map until a
+case arrives that was not used to build it.
+
+### Honest limits
+
+n=5 total, on a corpus the scorer wrote, scored by the party whose conduct it records. The rule
+was fixed in advance and is mechanical enough that a pane can re-run it and disagree; until one
+does, this result carries the same discount as everything else the chair scores about itself.
