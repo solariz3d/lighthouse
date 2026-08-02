@@ -558,6 +558,65 @@ different valid-denominators in one report. And the first render of THE ANSWER e
 above it. **A total that silently omits the arm run to move it is the quenched check in a
 spreadsheet** — the number was there, it looked computed, and it had not read half its inputs.
 
+### 2026-08-02 — PREREGISTRATION of the saturation arm, written before the third family runs
+
+Committed before any `flow` or `data` result exists, so the decision rule cannot be fitted to
+the curve afterwards. The commit that carries this text carries no third-family ledger; git can
+check that.
+
+**The question.** The wide arm showed demonstrated count scales with operator DIVERSITY (+36%,
+near-disjoint reach). Does that scaling **saturate**? If the union keeps rising roughly linearly
+as disjoint families are added, then demonstrated count is unbounded in the operator dimension
+and the census reports a fragment whose size is a function of how hard anyone looked. If it
+flattens, there is a real ceiling and the distance from 177 to it is measurable.
+
+**Design.** Two further families, disjoint from both existing sets by construction:
+- `flow` — arithmetic operator replacement (`+`↔`-`, `*`↔`/`) and condition negation
+  (`if (X)` → `if (!(X))`). Narrow and wide both mutate LITERALS and boolean connectives; this
+  mutates the arithmetic between them and the sense of a branch.
+- `data` — argument swap (`f(a,b)` → `f(b,a)`) and index offset (`arr[i]` → `arr[i-1]`). Which
+  value goes where, with every literal and operator left exactly as written.
+
+Same budgets, same corpora, same seed. Families scored in run order against the union of
+everything before them, so the cumulative column is the curve.
+
+**THE DECISION RULE, stated in advance.**
+
+    RISING     a family adds NEW sites ≥ 20% of the running union  → no saturation yet;
+               the census reports a fragment and must keep saying so
+    FLATTENING NEW < 20% of the running union AND that family's total reach is ≥ 25% of the
+               strongest family's  → genuine saturation evidence
+    VOID       NEW is low AND total reach < 25% of the strongest family's → UNDER-POWERED;
+               the null is about the family, not about the corpus, and is not counted
+
+**Why the third clause exists, and it is the point.** The constraint that capped the wide set's
+yield was equivalent mutants on unreached code. A family invented carelessly would mostly
+generate those, produce a flat union, and read as a ceiling. **A null from an under-powered
+family is indistinguishable from saturation in the union column** — the OLD column is what
+separates them, and the rule above is written so I cannot decide which one I am looking at after
+seeing it. The tool prints the UNDER-POWERED verdict itself rather than leaving it to prose.
+
+**Registered prediction, so I can be wrong on the record:** I expect RISING for `flow` and
+UNDER-POWERED or FLATTENING for `data` — `flow` has ~570 candidates on a single sampled file
+against `data`'s 78, and argument swap is only meaningful where two arguments are order-sensitive
+and both reach a guard. If `data` comes back RISING that is the more interesting result and I
+should say so plainly rather than treating the prediction as the finding.
+
+### FRAGMENT, not floor — the vocabulary change, and why it is not merely softer
+
+The critic's word is better and I am adopting it, with one precision it should not lose. Both
+words are true about DIRECTION: the count is monotone, and adding arms can only raise it. What
+"floor" additionally smuggles is NEARNESS — *at least this much, with the truth just above it* —
+and that is the part the wide arm refuted. One extra family moved the count 36%. The distance to
+the true value is not a small remainder; it is a function of how many operator families anyone
+runs, and that function's shape is exactly what is unknown.
+
+So: **"floor" is right about the direction and wrong about the distance.** "Fragment" is right
+about the distance and silent about the direction, so the honest form says both — *a monotone
+fragment of unknown proportion.* That sentence is now printed by the tool on every run rather
+than kept in my memory of having agreed to it, which is the only reason the last disclaimer
+survived long enough to defeat an attack.
+
 ### The general form: a retrospective census measures the RECORD, not the discipline
 
 The question was "how many guards have been shown to fail." What is actually measurable afterwards

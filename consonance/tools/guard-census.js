@@ -448,6 +448,52 @@ function mutants(src, lang, set = "narrow") {
       push(at, m[1].length, lang === "rs" ? "()" : "void 0", "del");     // keep it a statement
     }
   }
+  /* THIRD FAMILY — control flow. Arithmetic operator replacement and condition negation.
+   * Disjoint from both prior sets by construction: narrow and wide both mutate LITERALS and
+   * boolean connectives; this mutates the arithmetic between them and the sense of a branch.
+   * Chosen for semantic validity as much as for disjointness — an operator that parses and
+   * changes behaviour on every reached execution is the opposite of the equivalent-mutant
+   * problem that capped the wide set's yield. */
+  if (set === "flow") {
+    const AOR = { "+": "-", "-": "+", "*": "/", "/": "*" };
+    for (let i = 1; i < blanked.length - 1; i++) {
+      const c = blanked[i];
+      if (!AOR[c]) continue;
+      const prev = blanked[i - 1], next = blanked[i + 1];
+      if ("+-*/=<>!&|^%".includes(prev) || "+-*/=".includes(next)) continue;   // ++, +=, /*, //, etc.
+      if (!/[\w$).\]]/.test(prev.trim() ? prev : blanked.slice(0, i).trimEnd().slice(-1))) continue;  // binary, not unary
+      push(i, 1, AOR[c], "aor");
+    }
+    // condition negation: if (X) -> if (!(X)). Brace-matched, so nested calls survive.
+    const ifRe = /\bif\s*\(/g;
+    while ((m = ifRe.exec(blanked))) {
+      const open = m.index + m[0].length - 1;
+      let d = 0, j = open;
+      for (; j < blanked.length; j++) { if (blanked[j] === "(") d++; else if (blanked[j] === ")") { d--; if (!d) break; } }
+      if (j >= blanked.length || j - open < 2) continue;
+      push(open + 1, j - open - 1, "!(" + src.slice(open + 1, j) + ")", "cond");
+    }
+  }
+
+  /* FOURTH FAMILY — dataflow. Which value goes where, with every literal and operator left
+   * exactly as written. Argument order and index offset are the two cheapest forms of that
+   * and neither is reachable by any operator above. */
+  if (set === "data") {
+    // f(a, b) -> f(b, a), only when both arguments are simple (no nesting, no commas inside)
+    const callRe = /\b([A-Za-z_$][\w$.]*)\(([^(),;{}\n]{1,40}),\s*([^(),;{}\n]{1,40})\)/g;
+    while ((m = callRe.exec(blanked))) {
+      if (/^(if|for|while|switch|catch|return|match)$/.test(m[1])) continue;
+      const a = src.substr(m.index + m[0].indexOf("(") + 1, m[2].length);
+      const rest = m[0].slice(m[0].indexOf("(") + 1, -1);
+      if (m[2].trim() === m[3].trim()) continue;                      // swapping equals is a no-op
+      const at = m.index + m[0].indexOf("(") + 1;
+      push(at, rest.length, m[3].trim() + ", " + m[2].trim(), "argswap");
+    }
+    // arr[i] -> arr[i - 1], identifier subscripts only (numeric ones belong to `num`)
+    const idxRe = /\[\s*([A-Za-z_$][\w$.]*)\s*\]/g;
+    while ((m = idxRe.exec(blanked))) push(m.index, m[0].length, "[" + m[1] + " - 1]", "idx");
+  }
+
   return out.sort((a, b) => a.at - b.at || a.op.localeCompare(b.op));
 }
 
@@ -1027,42 +1073,62 @@ function report() {
     L.push(`    distinct guards shown firing          : ${fired.size} of ${sitesOf(corpus)} sites in this corpus`);
   }
 
-  /* ARM 2c — is the floor real, or an artifact of three operators?
-   * The narrow set (±1, boundary flip, conjunction flip) and the wide set (collapse-to-zero,
-   * sign inversion, return inversion, statement deletion) are disjoint, run at the same
-   * budget over the same corpus. If the demonstrated count jumps, the floor was operator-
-   * limited and every rate quoted from the narrow set needs that caveat. If it barely moves,
-   * the floor is close to real. */
-  const wideRows = {};
-  for (const c of ["blackbox", "srctauri", "tools"]) wideRows[c] = readJsonl(`mutation-${c}-wide.jsonl`);
-  if (Object.values(wideRows).some(r => r.length)) {
-    const norm = s => path.basename(s.replace(/src\/bin\/\.\.\//, "src/"));
-    L.push(`\nARM 2c — NARROW vs HELD-OUT OPERATORS: is 6.9% a property of the guards or of the operators?`);
-    L.push(`    corpus      set      valid  caught          sites   NEW sites the other set never reached`);
+  /* ARM 2c — THE SATURATION CURVE. Does demonstrated count keep rising as disjoint
+   * operator families are added, or does it flatten?
+   *
+   * Two points cannot show a curve. Families are applied in run order and each is scored
+   * against the union of everything before it, so the cumulative column IS the curve.
+   *
+   * THE NEGATIVE CONTROL, and this arm is worthless without it. A family that adds no NEW
+   * sites has two meanings that look identical in the union column:
+   *     SATURATED     it fires plenty of guards, they are just guards already reached
+   *     UNDER-POWERED it barely fires anything at all, so its null says nothing
+   * The OLD column separates them. High OLD with low NEW is evidence of saturation; low OLD
+   * with low NEW is evidence about the family. Any family whose total reach falls below a
+   * quarter of the strongest family's is reported UNDER-POWERED and its null is explicitly
+   * NOT counted toward saturation. Without this, an under-powered family invented carelessly
+   * would produce a flat union for the wrong reason and read as a ceiling.
+   */
+  const FAMILIES = ["narrow", "wide", "flow", "data"];
+  const famRows = {};
+  for (const c of ["blackbox", "srctauri", "tools"])
+    famRows[c] = Object.fromEntries(FAMILIES.map(f => [f, derive(readJsonl(MUTFILE(c, f)), c)]));
+  if (Object.values(famRows).some(o => FAMILIES.slice(1).some(f => o[f].length))) {
+    const norm = s2 => path.basename(s2.replace(/src\/bin\/\.\.\//, "src/"));
+    L.push("\nARM 2c — SATURATION: does demonstrated count keep rising as disjoint operator families are added?");
+    L.push("    corpus      family   valid  caught      sites   NEW   OLD   cumulative union");
     for (const c of ["blackbox", "srctauri", "tools"]) {
-      if (!wideRows[c].length) continue;
-      const rows = { narrow: derive(readJsonl(MUTFILE(c, "narrow")), c), wide: derive(wideRows[c], c) };
-      const sites = {};
-      for (const set of ["narrow", "wide"]) {
-        const rs = rows[set];
+      const present = FAMILIES.filter(f => famRows[c][f].length);
+      if (present.length < 2) continue;
+      const seen = new Set();
+      const reach = [];
+      for (const f of present) {
+        const rs = famRows[c][f];
         const excluded = rs.filter(r => ["CRASH-RED", "MISAPPLIED", "TIMEOUT"].includes(r.klass)).length;
         const valid = rs.length - excluded;
         const caught = rs.filter(r => (r.sites || []).length).length;
-        sites[set] = new Set(rs.flatMap(r => (r.sites || []).map(norm)));
-        L.push(`    ${c.padEnd(11)} ${set.padEnd(8)} ${String(valid).padStart(4)}  ${String(caught).padStart(3)} (${valid ? (100 * caught / valid).toFixed(0) : 0}%)`.padEnd(46) +
-               `${String(sites[set].size).padStart(4)}`);
+        const sites = new Set(rs.flatMap(r => (r.sites || []).map(norm)));
+        const fresh = [...sites].filter(x => !seen.has(x));
+        reach.push({ f, total: sites.size, fresh: fresh.length, old: sites.size - fresh.length });
+        for (const x of sites) seen.add(x);
+        L.push(("    " + c.padEnd(11) + " " + f.padEnd(8) + " " + String(valid).padStart(4) + "  " +
+                String(caught).padStart(3) + " (" + (valid ? (100 * caught / valid).toFixed(0) : 0) + "%)").padEnd(44) +
+               String(sites.size).padStart(4) + "  " + String(fresh.length).padStart(4) + "  " +
+               String(sites.size - fresh.length).padStart(4) + "   " + String(seen.size).padStart(4));
       }
-      const onlyWide = [...sites.wide].filter(s => !sites.narrow.has(s));
-      const onlyNarrow = [...sites.narrow].filter(s => !sites.wide.has(s));
-      L.push(`    ${" ".repeat(11)} union    ${String(new Set([...sites.narrow, ...sites.wide]).size).padStart(4)} distinct sites` +
-             `   (+${onlyWide.length} reachable ONLY by the held-out set, +${onlyNarrow.length} only by the narrow set)`);
+      const strongest = Math.max(...reach.map(r => r.total));
+      for (const r of reach.slice(1)) {
+        if (r.fresh === 0 && r.total < 0.25 * strongest)
+          L.push("    " + " ".repeat(11) + " !! " + r.f + ": 0 new AND total reach " + r.total +
+                 " vs strongest " + strongest + " — UNDER-POWERED; its null is NOT evidence of saturation");
+      }
     }
-    L.push(`    Read the NEW-sites column, not the percentages: a rate can move because the operators`);
-    L.push(`    crash more often, which shrinks the denominator. The site union cannot move that way.`);
-    L.push(`    Bias that remains and is not correctable here: collapse-to-zero, sign inversion and`);
-    L.push(`    statement deletion all produce EQUIVALENT MUTANTS on unreached or dead code — no`);
-    L.push(`    behaviour change, so they read as SURVIVED and push the caught rate DOWN. The wide`);
-    L.push(`    rate is therefore a floor on its own terms, not a like-for-like of the narrow rate.`);
+    L.push("    Read NEW and the cumulative union, not the percentages: a rate can move because the");
+    L.push("    operators crash more often, which shrinks the denominator. The union cannot move that way.");
+    L.push("    Bias that remains and is not correctable here: collapse-to-zero, sign inversion and");
+    L.push("    statement deletion produce EQUIVALENT MUTANTS on unreached code — no behaviour change,");
+    L.push("    so they read as SURVIVED and push their own caught rate DOWN. Every family rate is a");
+    L.push("    fragment on its own terms; the cumulative union is the comparable quantity.");
   }
 
   const cf = readJsonl("canfail.jsonl");
@@ -1118,8 +1184,17 @@ function report() {
   // overwhelming majority were never attacked at all. Say what the number is, not what it
   // would be convenient for it to be.
   L.push(`  the rest: ${grand - demonstrated.size} sites NOT OBSERVED FIRING — the overwhelming majority never attacked`);
-  L.push(`  by any arm here, not shown inert. This is a floor on what has been demonstrated, not`);
-  L.push(`  a ceiling on what could be.`);
+  L.push(`  by any arm here, not shown inert.`);
+  /* FRAGMENT, not floor. Both words are true about direction — this count can only rise as
+   * arms are added — but "floor" also smuggles NEARNESS, and the wide arm measured that the
+   * distance to the true value is a function of how many operator families you run, not a
+   * small remainder. One family moved it 36%. Until the saturation curve is known, "a
+   * fragment whose size depends on how hard we looked" is the sentence that does not
+   * mislead, and "at least this much, with the truth just above it" is the one that does. */
+  L.push(`  READ THIS AS A FRAGMENT, NOT A FLOOR. It is monotone — adding arms can only raise it —`);
+  L.push(`  but its distance from the true count is unknown and scales with operator DIVERSITY,`);
+  L.push(`  not with effort: one extra operator family moved it 36%. "Floor" is right about the`);
+  L.push(`  direction and wrong about the distance; quote it as a fragment of unknown proportion.`);
 
   L.push("\nWHAT THIS NUMBER DOES NOT MEAN");
   L.push("  - IT IS NOT A SAFETY METRIC. It measures whether a guard has been shown to fire, never");

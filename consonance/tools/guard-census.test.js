@@ -237,4 +237,42 @@ t("wide and narrow write to different ledgers, so the two rates cannot merge", (
   assert.equal(MUTFILE("blackbox", "wide"), "mutation-blackbox-wide.jsonl");
 });
 
+/* ---- the third and fourth families ---- */
+
+t("all four families are pairwise disjoint in operator, so union growth is attributable", () => {
+  const src = require("fs").readFileSync("C:/Users/nname/Desktop/blackbox/ui/smokesim.js", "utf8");
+  const ops = {};
+  for (const set of ["narrow", "wide", "flow", "data"]) ops[set] = new Set(mutants(src, "js", set).map(m => m.op));
+  const sets = Object.keys(ops);
+  for (let i = 0; i < sets.length; i++) for (let j = i + 1; j < sets.length; j++)
+    for (const op of ops[sets[i]]) assert.ok(!ops[sets[j]].has(op), `${op} in both ${sets[i]} and ${sets[j]}`);
+});
+
+t("every flow and data mutation's offset holds the bytes it claims", () => {
+  const src = require("fs").readFileSync("C:/Users/nname/Desktop/blackbox/ui/smokesim.js", "utf8");
+  for (const set of ["flow", "data"])
+    for (const m of mutants(src, "js", set)) assert.equal(src.slice(m.at, m.at + m.len), m.from, `${set} ${m.op} L${m.line}`);
+});
+
+t("condition negation wraps the whole condition, nested calls included", () => {
+  const src = "if (a(1, b) && c) { x(); }";
+  const [c] = mutants(src, "js", "flow").filter(m => m.op === "cond");
+  assert.equal(c.from, "a(1, b) && c");
+  assert.equal(c.to, "!(a(1, b) && c)");
+  new (require("vm").Script)(src.slice(0, c.at) + c.to + src.slice(c.at + c.len));
+});
+
+t("increment and compound assignment are not mistaken for binary arithmetic", () => {
+  const ops = mutants("let i = 0; i++; i += 2; i--;", "js", "flow").filter(m => m.op === "aor");
+  assert.equal(ops.length, 0, "a ++/+= token was mutated as if it were a binary operator");
+});
+
+t("swapping two identical arguments is skipped — it would be a guaranteed no-op", () => {
+  assert.equal(mutants("f(x, x);", "js", "data").filter(m => m.op === "argswap").length, 0);
+});
+
+t("a numeric subscript is left to the num operator, keeping the families disjoint in reach", () => {
+  assert.equal(mutants("a[0]; b[i];", "js", "data").filter(m => m.op === "idx").length, 1);
+});
+
 console.log(`\n${n} passed`);
