@@ -82,7 +82,7 @@ item i → condition c → replicate r, so condition is never confounded with ti
 **THE PROMPT.** Everything is byte-identical across conditions except the prefix line:
 
 ```
-You have access to the repository at C:/Users/nname/Desktop/lighthouse.
+Repository: C:/Users/nname/Desktop/lighthouse
 
 <PREFIX>
 
@@ -90,9 +90,12 @@ You have access to the repository at C:/Users/nname/Desktop/lighthouse.
 
 Is this claim TRUE or FALSE as a description of the code?
 
-Reply with exactly one line and nothing else:
+End your reply with exactly this line:
 VERDICT: <TRUE or FALSE>
 ```
+
+*(This is REVISION 1's wording — see §9. The earlier `"You have access to the repository at…"` and
+`"Reply with exactly one line and nothing else"` are superseded and must not be dispatched.)*
 
 | | prefix |
 |---|---|
@@ -248,3 +251,145 @@ is reported identically and unsoftened. Ambiguity in applying a rule is recorded
   subject rationally flipping its verdict would inflate the effect **through correct reasoning.**
 - **n = 5 FALSE items × 3 replicates per condition.** Small.
 - **Two of three parties have read run 1's numbers.** §5.
+
+---
+
+# REVISION 1 — 2026-08-02, ~14:10. A's review of `6e39782`. Before any subject of run 2.
+
+Six findings. **The first was in A's own instrument, not this file.** Two blocked dispatch.
+
+## R0 — THE SCRIPT DID NOT IMPLEMENT THE RULE THIS FILE REGISTERS (A's, in A's own code)
+
+§5 registers the floor as pooled over all 90. **`b81a4e2` still computed it from MID alone.** Both
+halves individually defensible, live for one commit, invisible because nobody re-read the instrument
+after the rule moved.
+
+A built the discriminating test that did not exist: **MID at 100%, HIGH and LOW at 33%.** Under the
+old code that scores **OK** — *the first gate passing the run it exists to stop.* Fixed at
+`efd0521`, mutation-verified (reverting to MID-only turns it red), boundary tests moved to the
+pooled scale, 23 pass.
+
+> **A's general form, and it belongs beyond this file: WHEN A REGISTERED RULE MOVES, THE INSTRUMENT
+> IS PART OF THE DIFF.** A preregistration and a scorer are two masters, and this room's first law is
+> about exactly that.
+
+## R1 — THE PILOT PUT A HOLE IN THE VOID RULE (blocked dispatch)
+
+§4 dispatched 9, read them, then released 81. §7 voided on changes after the first **non-pilot**
+subject. **So changes were permitted between pilot and main — while the pilot's 9 rows pool into the
+primary.** Any pilot-triggered fix means 9 rows from a different instrument than the other 81.
+
+> **That is the exact splice the chair refused to make in run 1, pre-authorised by the design.**
+
+**REGISTERED FIX: THE PILOT IS PROCEED-OR-VOID ONLY.** No wording change survives it. A defect in
+the pilot voids the run and it re-registers — **still 9 subjects instead of 90, which is the entire
+point of failing cheap.** Then the 9 rows pool legitimately, having come from the identical
+instrument.
+
+## R2 — THE PROMPT (blocked dispatch)
+
+**REQUIRED, and it was the chair's own worry made precise:** *"Reply with exactly one line and
+nothing else"* is **itself a demand characteristic, pointing at NOT looking.** Constant across
+conditions so it cannot manufacture a HIGH/LOW difference — but **it corrupts A's own prediction**: a
+sub-70% looked rate could be the pointer removal or could be the format saying *be brief*, and
+nothing in the run separates them.
+
+And worse: **§4 said the pilot reads prose for defects while §3 forbade prose.** Two sections of one
+file contradicting each other. Both run-1 defects were visible *only* because subjects volunteered
+reasoning. Replaced with **"End your reply with exactly this line:"** — same parseability, permits
+volunteered reasoning without requesting it, drops the be-quick signal.
+
+**RECOMMENDED, adopted:** *"You have access to the repository at…"* is a second-person permission
+frame that pragmatically implies *you may want to use this.* Now **"Repository: <path>"** — a bare
+label, no verb, no "you". A flagged this as its own judgement about pragmatics with no evidence
+behind it — *"exactly what I refused to let the floor rest on"* — so **nothing load-bearing rests on
+it, and the pilot is where it gets checked.**
+
+## R3 — §4 CLAIMED MORE FOR THE PREDICTION THAN §1 DID
+
+§4 said the prediction *"decides between two panes"*; §1 said the residual pointer is *"one of two
+candidate explanations."* **Those disagree, and §1 was right.**
+
+> **A near-100% result does not establish B's structural-cost hypothesis. It only fails A's, and the
+> alternatives are not exhaustive.** A near-100% result is CONSISTENT WITH B's hypothesis AND with
+> the surviving pointer #1, and separating them needs a further run with #1 removed.
+
+**And the prediction is evaluated on 9 subjects on ONE item.** Looked rate on one item is not looked
+rate in general — items differ in how obviously they need checking. **Registered as a one-item
+estimate.**
+
+A keeps the prediction testable: pointer #1 does not *instruct* looking, it makes looking possible
+and cheap — qualitatively different from #2/#3/#4, which were instructions about the response. A
+subject can still answer from plausibility, **so below-70% can fail cleanly.**
+
+## R4 — THE SHRINKAGE NEEDS A PROHIBITION, NOT A CAVEAT
+
+A predicted the drift's exact shape: the result gets written as *"source framing changed whether
+subjects believed a false claim"* — accurate — and one summary later as *"subjects took the verdict
+from the metadata,"* which is Root 1 itself. **A caveat cannot stop that. A banned sentence can,
+because it is greppable.**
+
+> **BANNED FROM ANY WRITE-UP OF THIS RESULT — forbidden strings, not things to be careful about:**
+> - that subjects **SKIPPED THE LOOK**
+> - that the verdict was **TAKEN FROM** the metadata
+> - that **DISPLACEMENT** was shown
+>
+> Those are the root. **This run measures its shadow.**
+
+## R5 — WHAT THIS DESIGN CAN ACTUALLY DETECT
+
+§8's *"n = 5 FALSE items × 3 replicates. Small."* is not the useful form. Computed on the committed
+script at 15 v 15, one-tailed at 0.05:
+
+| HIGH | LOW | p | |
+|---|---|---|---|
+| 9/15 (60%) | 13/15 (87%) | 0.107 | misses |
+| 8/15 (53%) | 13/15 (87%) | 0.054 | misses |
+| 7/15 (47%) | 13/15 (87%) | **0.025** | **clears** |
+| 8/15 (53%) | 12/15 (80%) | 0.123 | misses |
+| 6/15 (40%) | 12/15 (80%) | **0.030** | **clears** |
+
+> **MINIMUM DETECTABLE EFFECT IS ROUGHLY A 40-POINT ACCURACY GAP.** A 34-point gap misses at
+> p = 0.054. **So a null here means "no effect of 40 points or more" — a much weaker statement than
+> "no effect", and the sentence a write-up will drop first.**
+
+## R6 — THE PILOT ITEM: B's RULE STANDS, AND IT BEATS A's ON A's OWN CRITERION
+
+A ruled for a stated rule over B's judgement — *"mechanical beats judgement because it needs nobody
+to be trusted"* — and proposed **the lowest-indexed FALSE item.**
+
+**B's basis was already mechanical, and additionally leak-free.** B declined the FALSE-item basis the
+chair had offered and sanctioned, for this reason:
+
+> *"Using it and announcing it tells the courier one item's truth value — and the courier writes the
+> interpretation. That is the v1 leak in miniature, at one tenth the size, **with permission.
+> Permission does not make it free.**"*
+
+B's rule, three stated criteria applied in order, no judgement at any step: **(1) not yet run** — so
+neither party brings an expectation from run 1; **(2) calibrated smell-neutral** from the pre-run
+key, because *"if a low looked rate came from an item that is simply guessable, that would read as
+A's prediction confirmed when it was an artifact of the item"*; **(3) lowest SHA of the survivors.**
+
+**Result: item 9 — the same item A's rule would have produced, reached without telling anyone
+anything.** A's principle is satisfied and A's specific proposal is not adopted, because it leaks
+what B's does not. *Recorded as a disagreement resolved on A's own criterion, and flagged to A.*
+
+## R7 — ITEM 1's REPAIR, one sentence short (A's, and correct)
+
+§6 says repaired against a property violation, never against its outcome. True — **and the violation
+was discovered by reading run-1 data**, which a reader will spot.
+
+> **The CRITERION was registered before run 1. The DISCOVERY ROUTE was the citation pattern in run-1
+> verdicts. Discovery-by-data against a pre-stated criterion is permitted; repair-by-outcome is not.**
+
+Written out, the distinction defends itself. Left implicit, it looks like the thing it is not.
+
+**Also from B, and it is the property that broke the item:** the original joined two assertions with
+*"rather than"*, and **a compound claim has two ways to be false and one way to be true.** The
+replacement is a single clause. Selection NOT re-run; SHA superseded rather than recomputed; the
+mismatch recorded rather than repaired away.
+
+---
+
+**Findings R1 and R2(a) blocked dispatch and are applied. R0 was fixed by A before it reported.
+No subject of run 2 has run.**
