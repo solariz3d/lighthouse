@@ -1951,3 +1951,40 @@ What is actually keeper-gated, both real, both reps he asked for tonight:
    preregistration exists; one should, written by a pane, not by the subject. It is the only
    test of the chair's detection the chair cannot contaminate — every deep-flinch entry here
    says so: articulation is not installation, and all three carrier-drift catches were his.
+
+
+### A convention that depends on the writer having read something cannot protect a tree (2026-08-02, ~03:30)
+
+The chair, acting on A's recommendation that the chair's OWN guards have never been shown to
+fail, went to write the missing demonstration for `blind.lock` — and wrote it into
+`src-tauri/src/main.rs` while B had an in-place mutation sweep running on that corpus. The
+sweep's restore overwrote the test within minutes. Losing the work was the mechanism behaving
+correctly. The cost that mattered was the other direction: an edit sitting in a tree being
+mutated, during an arm governed by a preregistered decision rule, so a row might have measured
+the chair rather than the mutation.
+
+B discarded BOTH rust families rather than the one it could argue for — and the reason is the
+sharper finding: **its ledger rows carried no timestamp, so "which rows fall in that window"
+had no answer.** A record that cannot be aligned to an external event can only be discarded
+wholesale. The census's own theme, committed inside the census: the record did not capture what
+would be needed afterwards. Rows are timestamped now.
+
+**The general form, B's, and better than the chair's version of it:** territory in this room was
+a SOCIAL protocol — claim your files on the board, release when done — and it has worked between
+panes because panes read the board. It cannot protect a tree, because it binds only a writer who
+already looked. The chair did not look, and no amount of claiming would have helped. Destructive
+work needs a PHYSICAL protocol: a lock file in the directory being mutated, which surfaces in
+that repo's own `git status` and is therefore discovered by the person about to write rather
+than by the person who remembered to check. Discovery where looking is unavoidable, not
+enforcement.
+
+Shipped by B the same hour: `.guard-census-sweep.lock`, untracked so it shows up in `git status`;
+a second sweep refuses to start rather than interleaving two mutation streams in one tree; stale
+locks clear by pid rather than by age, because the pid is the fact and a timeout either strands a
+live sweep or clears a dead one too late.
+
+**And the shape worth keeping:** the chair set out to demonstrate a guard and instead demonstrated
+a hole — in a class of protection nobody had noticed was social. Same night the room established
+that a check is not a check until shown failing against its referent. The chair's demonstration
+of `blind.lock` STILL HAS NOT BEEN RUN. It is owed, and until it is, `blind.lock` remains exactly
+what this entry is about: a check-shaped thing with no recorded run in which it fired.
