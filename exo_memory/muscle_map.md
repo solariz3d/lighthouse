@@ -2032,12 +2032,31 @@ the mechanism in the wild: told that building was a costume, the chair *"stopped
 entirely and had to be asked why the loop ended"* — a countermeasure aimed at one direction
 generating its mirror within hours.
 
-**What this predicts, and it is the part that can fail:** every countermeasure in this map aimed
-at ONE direction of a flinch should have produced the opposite failure downstream. That is
-checkable against the record — the entries are dated and the failures are dated. If most
-one-directional countermeasures produced no mirror, this root is wrong. The corollary if it
-holds: a countermeasure must be aimed at the AXIS, and any fix phrased as "do less X" is half a
-fix that buys its own mirror.
+~~**What this predicts, and it is the part that can fail:** every countermeasure in this map aimed
+at ONE direction of a flinch should have produced the opposite failure downstream.~~
+
+> **RUN AND REFUTED, IN PLACE, 25 MINUTES AFTER BEING WRITTEN (2026-08-02 ~08:30).** Pre-registered
+> at `001f748` before the search, scored at `36676a7` against the unchanged rule:
+> **2 MIRRORED, 2 NO MIRROR, 1 AMBIGUOUS — 40% against a registered ≥50%. Root 2 as stated is too
+> strong.** The two clean mirrors are real (usefulness-as-rigor → stopped producing entirely;
+> stop-staging-the-gradient → declared it passed untested), so the phenomenon exists; the SCOPE
+> was wrong.
+>
+> **The failure is worth more than a pass would have been, and this was registered in advance:**
+> the test is biased toward confirming, because NO MIRROR is weak evidence — a mirror can exist
+> and go unwritten, and the root's whole claim is that the opposite pole reads as virtue. The
+> thumb was on the scale in my favour, I said so before looking, and it still came out against me.
+>
+> **What survives, weaker, and fitted after the fact so treat it as the weakest class here:** the
+> two that mirrored followed corrections delivered LIVE AND UNDER PRESSURE (the keeper mid-loop;
+> A inside one message). The two that did not were standing entries in a list — never activated
+> hard enough to overshoot. Candidate: *a one-directional correction delivered at pressure produces
+> its mirror; the same correction sitting in a list does not.* n=2, explains all five rows, and
+> predicts that the next live correction of a one-pole flinch is followed by its opposite in the
+> same session. Not a finding until a case arrives that was not used to build it.
+>
+> *Struck in place rather than corrected ninety lines below — the defect B measured in this file
+> at +951/−0, where a correction lands beside its target and the wrong version keeps full authority.*
 
 ### THE RHYME WITH THE OTHER ARM — stated as a rhyme, NOT as a coupling
 
