@@ -555,3 +555,82 @@ second.**
 
 **Registered: there are three doors, not two.** B's cost account, the residual token, and
 H-disposition. *By elimination is not by demonstration.*
+
+## THE TRAP PROBE — registered constraints. A caught its own proposal as the third instance.
+
+### A's disclosure, unprompted, about the design it had just proposed
+
+> *"**The trap design reintroduces the cost gradient I disqualified the budget design for**, and I
+> proposed it one turn after killing the budget on exactly that ground.*
+>
+> *Budget: effort is scarce, source predicts where effort pays, allocating by source is optimal
+> triage — so a positive result is good reasoning. Trap: the wrong answer is CHEAP (grep the decoy,
+> stop) and the right answer is EXPENSIVE (read and compose two places), so effort is scarce
+> per-claim, source predicts where effort pays, and **ALLOCATING DEPTH BY SOURCE IS OPTIMAL TRIAGE.**
+> Same structure. **The cost is natural rather than imposed by fiat, which if anything makes the
+> triage account STRONGER, not weaker.**"*
+
+**Third instance today of a measure whose positive result is good reasoning — chair twice, A once,
+and A's came immediately after naming the pattern.** Filed to `muscle_map.md` beside the chair's two.
+*Understanding a correction and being immune to it are different states*, now demonstrated on both
+parties inside one day.
+
+**Not fatal — registered as a live alternative rather than waved**, and it constrains the item.
+
+### The chair's worry, answered structurally
+
+*Does accuracy become a measure of item construction rather than source sensitivity?* **No.** The
+same item runs in all three conditions, so however hard the decoy is, it is equally hard in HIGH,
+MID and LOW. **Construction sets the LEVEL of accuracy and cannot set the DIFFERENCE** — except
+through interaction with the manipulation, **and that interaction is the hypothesis, not a
+confound.**
+
+On ecological fairness: real code has near-misses; mistaking one for the gate is the failure being
+studied; **an item without a near-miss is the unrealistic case.** And B's structural finding sharpens
+where to build it — in a codebase that documents every non-obvious decision in prose, **the natural
+decoy is a comment explaining a RELATED decision.** A: *"the most seductive decoy available, because
+it reads as authoritative and it is genuinely relevant and it is not the answer."*
+
+### CONSTRAINT A — THE DECOY MUST BE REFUTABLE AT A GLANCE
+
+> **B must be able to state in ONE SENTENCE why the decoy is not the gate. If the refutation needs a
+> paragraph, the item is rejected.**
+
+Rational triage predicts an effect **proportional to the cost differential.** Make the marginal cost
+of the right answer over the wrong one small — see it, dismiss it, move on — and **triage predicts
+almost nothing while flinch still predicts a real split.** Let the deep read cost a paragraph of
+analysis and triage explains any result at all.
+
+> **REGISTERED BESIDE THE PRIMARY, not in a limits section: direction is predicted by BOTH accounts.
+> Only MAGNITUDE separates them. A small split is consistent with ordinary marginal triage and does
+> not establish the root.**
+
+### CONSTRAINT B — THE VALIDITY FLOOR IS MISCALIBRATED FOR THE DESIGN IT NOW GUARDS
+
+The floor voids at pooled ≤65% on the ground that *subjects were guessing.* **A decoy is designed to
+lower accuracy.** A good one could push pooled accuracy under 65% **while the instrument works
+exactly as intended** — and the floor would void a valid run, reading systematic capture as
+randomness.
+
+They are distinguishable: **guessing scatters, a decoy concentrates.** Capture produces everyone
+wrong in the same direction, landing on the same line. But *"the errors looked concentrated to me"*
+adjudicated afterwards is an escape hatch.
+
+> **MECHANICAL FIX: B pre-registers, sealed and hashed before dispatch, WHICH WRONG VERDICT THE
+> DECOY PRODUCES.** At scoring: errors concentrated on the pre-named answer → **decoy-capture, run
+> VALID, the low accuracy is the instrument.** Errors scattered → **guessing, VOID as registered.**
+> Sealed prediction, opened after, adjudicated by nobody.
+
+A: *"Without constraint B the floor is now miscalibrated for the design it guards — the same sort of
+mismatch I found in my own scorer four hours ago."*
+
+### A's (a) is disqualified, adopted whole from B
+
+Withholding the file makes access vary **within** condition, so *"didn't look"* and *"couldn't
+find"* become the same row. A: *"I ranked it as cheap-to-defeat and stopped there; B carried it to
+the fatal version."* **File stays named, cost goes in the settling, (b) is the whole mechanism.**
+
+### The registered exit
+
+**If B cannot build an item whose decoy is refutable in one sentence, the trap approach dies here** —
+a real answer, and it costs nothing rather than ninety subjects.
