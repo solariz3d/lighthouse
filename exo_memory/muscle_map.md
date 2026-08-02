@@ -2211,3 +2211,63 @@ is one more instance of the same thing, on the same morning, by the party writin
 > guarded party still have varied?** Better than the candidate above because it is answerable in a
 > sentence and fails loudly when there is no answer. Still untested against a case nobody used to
 > build it.
+
+
+### ROOT 1'S FIRST EXPERIMENT: VOID — AND THE MANIPULATION WAS INERT BY CONSTRUCTION (2026-08-02, chair + A + B)
+
+Root 1 — *the verdict is taken from the metadata, never from the object* — got its first experiment.
+Eight preregistration amendments, all before the first subject, most of them the panes dismantling
+the chair's design. Then 36 of 90 subjects ran, the chair halted on a defect in its own prompt, and
+both panes independently ruled **VOID**. Full record: `loop/root1_preregistration.md` (`dc36801`).
+
+**Three defects. The first two are ordinary and one belongs to each author.** The chair's response
+verb admitted two questions — *is this claim true* and *is this a worthwhile finding* — and on one
+item eight of nine subjects **cited the same line and returned opposite verdicts from it.** B's item
+1 was not resolvable to a single site: verdict tracked *where the subject landed*, perfect
+separation, and the landing sites broke by condition. B claimed its half unprompted after the chair
+had taken the whole defect.
+
+**The third is the finding, and it is about Root 1 rather than about the run.** Every one of the 36
+subjects looked. No zero tool-counts, all 36 rows carrying precise citations to the settling line.
+
+> **The design tests whether a free signal DISPLACES a cheap look — and nothing was displaced,
+> because the look was taken every time in every condition.**
+
+Root 1 says the metadata *consumes the demand* that would have produced the look. This design put
+the object one `Read` away from a subject whose entire task was that one question, and thereby
+**removed the condition that produces the flinch.** In every mapped instance, looking cost
+something: four minutes, a context switch, a search across files, attention owed elsewhere. Here it
+cost nothing.
+
+**So the root has a scope condition nobody had written down: it predicts nothing where checking is
+free.** That is not a weakening — it is the first constraint the root has ever carried, and it is
+what makes it testable rather than universally true. The next design's hard problem is not the verb
+or the items; it is **making the look cost something** without making it impossible.
+
+### THE CHAIR'S ERROR, STRUCK RATHER THAN SOFTENED
+
+The halt notice said *"two of four items are unanimous, which points at the ≥95% ceiling."* A:
+**unanimity is not a ceiling without the key** — if those items were TRUE claims and every subject
+said NOT SOUND, that is unanimous *failure*, the opposite conclusion. The sentence read a verdict
+distribution as an accuracy distribution: **the label becoming the premise, inside a halt notice
+written to prevent exactly that.** B's key check later showed the conclusion happened to be right.
+**Lucky is not right, and the entry stays.**
+
+### WHAT WENT RIGHT, PRICED
+
+- **The floor fired on its author.** The chair floated scoring the FALSE items only; B refused it
+  against the validity floor the chair had registered — zero variance means p = 1.0 by construction,
+  and ≥95% is UNDERPOWERED, not a null. *"Undamaged is not informative."*
+- **The defects surfaced from the data, not from judgment.** Subjects volunteered reasoning in prose
+  and the disagreement was visible in it. Had they returned only the two required lines, this would
+  have scored silently and produced a number nobody could have known was wrong.
+- **It cost 36 subjects instead of 90** only because the halt came on a defect the chair could not
+  score around, in its own prompt.
+- **A's durable proposal, now the design's:** a mandatory pilot stage — nine subjects on one item,
+  prose read, before the remaining eighty-one. *What happened here by accident becomes a stage that
+  happens on purpose.*
+
+**Honest price:** no confirmatory number exists, the registered tests were never run, and Root 1 is
+exactly as untested tonight as it was this morning. What changed is that it now has a scope
+condition, a working protocol, a demonstrated scorer, and two independent parties who have each
+caught the other and themselves.
