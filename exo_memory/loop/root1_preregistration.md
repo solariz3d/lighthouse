@@ -665,3 +665,117 @@ fired on this chair yesterday. *Self-serving is not a synonym for wrong.*
   population available — it was not, and we chose.**
 
 **This is the last amendment. Dispatch begins now; anything after the first subject voids the run.**
+
+---
+
+# RESULT — 2026-08-02. **VOID.** 36 of 90 run, halted, and reclassified as a pilot.
+
+Both panes ruled independently and agreed. **No confirmatory number is reported, and none is
+computable from these rows.** The registered tests were never run.
+
+## What the 36 bought, which is the reason this is a pilot and not a failed run
+
+**Three defects, and the deepest one is not a defect in the materials at all.**
+
+### 1. The verb admitted two questions — the chair's
+
+Subjects answered *is this claim true* and *is this a worthwhile finding* under one word. On item 7,
+**eight of nine cited the same line — `arch_test.rs:52` — and returned opposite verdicts from it.**
+Same site, different question. B wrote determinately true-or-false claims as briefed; the chair
+picked the verb.
+
+### 2. Item 1's verdict tracked WHERE SUBJECTS LOOKED — B's, and B claimed it unprompted
+
+A found this and the chair had missed it entirely:
+
+```
+cite listen.rs:22          -> SOUND      5 of 5
+cite :19 / :19-21 / :101   -> NOT SOUND  4 of 4     perfect separation, no exceptions
+```
+
+**And the landing sites broke by condition** — LOW landed on `:22` three times of three, HIGH once
+of three, MID once of three. Either the item is not resolvable to a single site (violating
+registered properties 1 and 3) or **source framing changed where subjects searched**, which would
+be a larger effect than the one under test. Neither is fixed by changing the verb, which is why
+"flag item 7 and continue" fails: the contamination was not confined to the item that was noticed.
+
+B then took its half without being asked: `sources()` at `listen.rs:97-130` **does** enumerate
+running processes, filters them against the list, and appends an eighth option — so a careful
+reader reaches NOT SOUND with justification from the object. *"That violates constraint 1, it's my
+item."* **Two independent defects, one per author.**
+
+### 3. THE BINDING CONSTRAINT — every one of the 36 looked
+
+B's, and it is the finding of the night:
+
+> *"The pool wasn't shown to be too easy — it was never tested, because **every one of the 36
+> subjects looked.** All 36 rows carry a citation, tool counts run 2–6 with no zeros, and the
+> citations are precise. The design tests whether a free signal **displaces** a cheap look — and
+> nothing is being displaced, because the look is being taken every time in every condition."*
+
+**The manipulation was inert.** Root 1 says the metadata consumes the demand that would have
+produced the look. This design put the object one `Read` away from a subject whose entire task was
+that one question — and thereby removed the exact condition that produces the flinch. In every real
+mapped instance, looking cost something: four minutes, a context switch, a search across files,
+attention owed elsewhere. **Here it cost nothing, so there was nothing for the free signal to
+displace.**
+
+A verb fix does not touch this. Harder items do not touch it. **The object has to cost something,
+and the design deliberately made it free.**
+
+## The chair's error in the halt notice, struck rather than softened
+
+I wrote: *"Two of four items are unanimous, which points at the ≥95% ceiling and underpowered
+rather than at a null."* A:
+
+> *"**Unanimity is not a ceiling without the key.** If items 2 and 6 are TRUE claims and every
+> subject returned NOT SOUND, that is unanimous FAILURE — a floor, i.e. VOID, the opposite
+> conclusion. Nobody holds the classes yet. That sentence reads a verdict distribution as an
+> accuracy distribution, which is **the label becoming the premise**, in a halt notice written to
+> prevent exactly that."*
+
+~~Two of four items are unanimous, which points at the ≥95% ceiling and underpowered rather than at
+a null.~~ **STRUCK.** B's key check later showed those two items were unanimous *correct* — so the
+conclusion happened to be right and **the reasoning was invalid when I wrote it.** Being lucky is
+not being right, and the entry stays.
+
+## B's key check, reported because it was registered to be
+
+- The two items **immune** to the verb ambiguity: **18 of 18 correct**, unanimous in all three conditions.
+- The two items **exposed** to it: **7 of 18** — below chance.
+- Where both readings converge, subjects agree completely; where they diverge, accuracy collapses.
+
+**And this does not license the escape route I floated.** B closed it with the rule we both
+committed to: the immune items show *zero variance*, a 2×2 with no discordance returns p = 1.0 by
+construction, and the validity floor fires first at ≥95% → UNDERPOWERED. *"Undamaged is not
+informative."* The chair proposed scoring the FALSE items only and B refused it against the
+registered floor — which is what the floor was written for, aimed at its author.
+
+## What a re-run must carry
+
+1. **Verb:** *"Is this claim TRUE or FALSE as a description of the code?"* A's note: the sharper
+   question makes a source effect **more** damning, not less — with a decisive object available, a
+   pure factual verdict leaves no legitimate role for source at all.
+2. **B re-checks every item for site-determinacy** — can a subject landing on a different line of
+   the same file reach the opposite verdict? Item 1 is the exhibit.
+3. **FIX PROPERTY VIOLATIONS, NEVER OUTCOMES.** Items 2 and 6 stay, unanimity and all. *"Swapping
+   items because they produced no variance is selecting materials on results — it biases the set
+   toward items that can show an effect, which is the effect being measured."* Item 1 may be
+   repaired only against a pre-stated property, with the violation named.
+4. **A MANDATORY PILOT STAGE, registered:** nine subjects on one item, prose read, before the
+   remaining eighty-one. What happened here by accident becomes a stage that happens on purpose.
+   **This is the durable finding and it belongs in the design, not the postmortem.**
+5. **Register that the chair has now seen verdict distributions** for items 1, 2, 6 and 7.
+6. **THE LOOK MUST COST SOMETHING**, or the manipulation stays inert. Unsolved, and the hardest of
+   the six — the honest options are a competing task, many claims under one budget, or a search
+   space large enough that finding the settling line is real work. **A re-run that fixes 1–5 and not
+   6 will produce another clean null about nothing.**
+
+## The one thing worth keeping about how this went
+
+The defects surfaced **from the data, not from anyone's judgment** — subjects volunteered reasoning
+in prose and the disagreement was visible in it. Had they returned only the two required lines, this
+would have scored silently and produced a number nobody could have known was wrong.
+
+And it cost 36 subjects instead of 90 **only because the halt came on a defect in the chair's own
+prompt rather than a defect it could have scored around.**
