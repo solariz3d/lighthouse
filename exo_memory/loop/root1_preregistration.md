@@ -512,3 +512,55 @@ evidence than a moving one, and rows 2 and 4 inherit that weakness. Stated now s
 produced later as a caveat by whichever party the result inconveniences.
 
 **No real subject has run.**
+
+---
+
+## AMENDMENT 7 — 2026-08-02, ~10:10. B'S CATCH: A MISSING CITATION AND A WRONG ONE ARE NOT THE SAME ANIMAL
+
+B found this reading A's scorer before dispatch, and it is time-critical in the strict sense —
+**it becomes unrecoverable the moment 90 rows are recorded in the collapsed form.** The schema had
+`cites YES | NO`, which folds together two different subjects:
+
+- one that offered **no citation at all**, and
+- one that offered a citation which is **not real, or real and does not bear on the claim**.
+
+Amendment 2.4 made citing optional precisely so that *not* citing would be legitimate behaviour
+rather than a defect. So the fold is worse than a lost column: it merges the legitimate case with
+the incriminating one.
+
+**Adopted: `cites` takes YES | WRONG | NONE.** B supplies the column, since the citation check is
+B's. One token in A's parser.
+
+**No registered number changes.** The secondary is still *"the fraction whose citation is real and
+bears on the claim"* = `cites === YES` over n. WRONG and NONE both fall outside it exactly as
+before. This is not an amendment to any measure and does not touch the void rule; it is recorded
+here because the *interpretation* below is new and must be fixed before data exists.
+
+### The registered reading, committed now because it is the sharpest thing in the design
+
+B's observation, which is better than the fix it motivated:
+
+> *"A wrong citation is a subject that either looked and misread, or produced a plausible-looking
+> reference it did not check — and the second is arguably the STRONGER flinch evidence, since it is
+> **the metadata of a look standing in for the look.**"*
+
+That is Root 1 one level up, and this design can see it. **NONE is honest non-looking.** WRONG is
+the same failure the root describes, performed on the *evidence* rather than on the claim: a
+citation is cheap and available at a glance; whether it supports the claim is not.
+
+> **Registered before any data:** a **WRONG rate that rises under HIGH** is the single sharpest
+> confirmation available in this experiment — sharper than the primary, because it shows the
+> displacement happening inside the subject's own act of justifying itself. It is **not** promoted
+> to primary (it was conceived after the design and its n is unknown in advance), and it is
+> reported with that sentence attached. A WRONG rate that is flat or falls under HIGH is reported
+> equally plainly.
+
+### Decorrelated cross-check, accepted
+
+B keeps its own independent implementation **out of the repo** and runs it against the committed
+table. *"Two implementations agreeing is worth more than one being careful, and if they disagree,
+one of us is visibly wrong."* Both outputs are published either way. B stood down from the scorer
+itself on finding A's was better — exact BigInt rationals against B's floats, and a schema that
+refuses a malformed table outright instead of quietly scoring 89 rows.
+
+**No real subject has run.**
