@@ -708,3 +708,82 @@ killed by nine subjects, with the terminus registered by both authors before eit
 
 **Neither pane defended its position after its own probe failed.** Both had pinned predictions
 against themselves in advance, and both were right to.
+
+## THE STRUCTURAL FINDING — A's TWO CONSTRAINTS ARE MUTUALLY UNSATISFIABLE, FOR EVERY ITEM
+
+Both panes reached it independently after P1.
+
+> **Constraint A** requires the one-sentence refutation **on the record.**
+> **Constraint B** requires the decoy site **sealed.**
+> **The refutation names the site — it must, because saying why the decoy is not the gate IS saying
+> what the decoy is.**
+
+So publishing A's sentence publishes B's seal. **For every item. Always.** P1 was unsatisfiable from
+the moment both constraints were adopted; B's leak merely arrived first and looked like the cause.
+
+B, to the chair: *"Your Constraint-B repair did not merely turn a leak into a blocker — **it turned
+Constraint A into a leak.** That is worth more than this probe."*
+
+### A's mechanism, which converts "be careful" into a rule that can be followed
+
+> *"**EXPLAINING WHY A SEAL MATTERS REQUIRES EXHIBITING WHAT IT PROTECTS.** The rationale is not a
+> place where leaks happen to occur — **it is the one passage whose job forces the content out.** So
+> the rule is not vigilance. It is: **THE RATIONALE FOR A LIVE SEAL IS WRITTEN AFTER THE SEAL OPENS,
+> OR IT IS WRITTEN IN A FORM THAT CANNOT INSTANTIATE IT.** 'This item has a decoy that a shallow read
+> lands on' is fair before opening. Naming the row is not, and **no amount of care changes that —
+> only the ordering does.**"*
+
+**This retires the three-instance pattern as a vigilance problem.** All three of today's leaks sat
+in passages explaining why a protection mattered. B's own version, to be filed in its words:
+**"When you catch yourself explaining why something is protected, you are inside the protected
+thing — stop and hash it instead."**
+
+### The resolution, adopted
+
+**The Constraint-A check is performed by a party who is neither courier nor author.** B seals the
+sentence and publishes only its hash; **A verifies it and rules on Constraint A.** A holds no key and
+does not dispatch, so it can hold the sentence without contaminating anything. The chair sees hashes
+only.
+
+### B declined a waiver it could have won, and said why
+
+The waiver argument is real and B stated its strongest form before refusing it: *sealing exists to
+prove a discriminator predates the data, and **publication does that better than a hash** — public,
+timestamped, unambiguous. What a leak destroys is courier-blinding, not pre-registration; and for a
+diagnostic probe feeding no registered primary, dispatched mechanically, courier knowledge cannot
+reach the subjects.*
+
+> *"I decline it anyway, and not because it is weak: **I am the party who wants my item to survive**,
+> which is the exact disqualification the chair applied to himself an hour ago. Building a
+> replacement costs twenty minutes. Accepting a waiver I authored costs a precedent, on a day with
+> three leaks and two voided runs."*
+
+### A's Q3 answer, with the numbers — the chair's suspicion confirmed
+
+**A nine-subject binary probe cannot distinguish decoy-capture from guessing without prose.** Only
+prose gives the route more than two levels. The prose-free route exists — **capture drives accuracy
+BELOW chance; guessing sits AT chance** — but it needs subjects, not a better item. One-tailed exact
+binomial against p = 0.5, on the committed script:
+
+| decoy strength | n=9 | n=18 | n=24 | n=30 |
+|---|---|---|---|---|
+| captures 2 in 3 | 0.254 | 0.119 | 0.076 | **0.049** |
+| captures 3 in 4 | 0.090 | **0.048** | — | — |
+
+**~18 subjects for a strong decoy, ~30 for a moderate one.** A: *"more subjects, not a better item,
+exactly as you put it."*
+
+### A's caveats on the site-seal repair, all registered
+
+1. **Unclassifiable rows are reported, never dropped.** Their count is part of the result.
+2. **Volunteering is not random, and the direction matters:** a careful reasoner is likelier to write
+   its reasoning out, so prose-writers are plausibly the *deeper* readers — the ones least likely to
+   be captured. **Capture is therefore under-estimated from the classifiable subset, failing toward
+   VOID.** Conservative, and stated rather than discovered.
+3. **Prose may feed the pooled gate only, never a per-condition measure.** If volunteering rate
+   correlates with condition — plausible — any per-condition use of prose is confounded.
+
+And on whether the block was the fix working: *"Working, and I can say so without it being
+self-serving because the vacuous version was mine. **A seal that blocks when its content is published
+is sealing something.** Under my wording nothing broke when the site was published — and that was not
+safety, it was the absence of a guard."*
