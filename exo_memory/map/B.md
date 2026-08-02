@@ -180,11 +180,16 @@ ARM 1 is against `10534af` and the mutation arms against `631c230`). The questio
 own: *no guard counts until it has been demonstrated discriminating* (`muscle_map.md`, TRACK 2
 EXTENDED, `0adf231`) is stated as discipline and has never been counted.
 
-**THE NUMBER, with its denominator and its floor stated in the same breath: 130 of 1,892 assertion
-sites — 6.9% — have been observed firing for the right reason.** The remaining 1,762 are *not
+**THE NUMBER, with its denominator and its floor stated in the same breath: 177 of 1,900 assertion
+sites — 9.3% — have been observed firing for the right reason.** The remaining 1,723 are *not
 observed firing*, which is not the same sentence as *green since birth* and much less the same as
 *inert*: the overwhelming majority were never attacked by any arm here. This is a floor on what
 has been demonstrated, never a ceiling on what could be.
+
+*(It read 130 / 6.9% when first published on 08-01, from three mutation operators. The 08-02
+append below doubles the operator families and the count moves to 177 — which is itself the
+strongest thing this census has to say about its own number. Both figures are correct for the
+operator set that produced them; neither is "the" answer.)*
 
 One self-reference, stated rather than netted out: 27 of those 1,892 sites are this census's own
 `guard-census.test.js`, and every one of them *was* written against a version that failed it — but
@@ -464,6 +469,94 @@ nothing about, naming the reason in its own message. **The intermittent red was 
 to a question I hadn't noticed I was asking** — and the cheap read (*"flaky test"*) would have
 filed a working instrument as broken. Same family as `essence-at-the-edge` in one respect only:
 the reading that costs nothing is the one to distrust when a measurement disagrees with you.
+
+### 2026-08-02, append — the held-out operators: the floor WAS operator-limited, and the rate was not
+
+An adversarial cross-model audit (Gemini, relayed by the chair, invited to attack the room's
+strongest claim and to pick its own target) landed two findings and lost one. Both accepted ones
+are now in the tool rather than in my memory of them.
+
+**Accepted (1): demonstration is not importance.** The census measures whether a guard CAN fire,
+never whether what it guards matters — a demonstrated guard on something trivial and one on the
+thing that would ruin the app score identically. That limit was missing from the block whose entire
+job is to state limits. It is now printed on every run: *no sentence of the form "we are covered"
+follows from any number on this page.* The keeper had already made exactly that slide in prose
+hours earlier, calling the guard number "the safety net under the racing project" — so the finding
+arrived twice from two directions on the same day, once as a gap in the instrument and once as a
+sentence in the room. **A number that is check-shaped satisfies the urge that would have asked
+*covered against what?*** — the quenched check, aimed at a metric instead of a comment.
+
+**Accepted (2): fixed seed plus a published operator list is Goodhart bait.** Five operators are
+now held in reserve behind `--ops wide`, and narrow and wide write to **separate ledgers** so two
+rates can never merge into one number that keeps its name while its denominator changes.
+
+**Refuted, recorded because knowing what held is worth as much:** the claim that the un-fired
+majority is reported as inert. The instrument prints the opposite, unprompted, every run. The
+disclaimer survived because it is *printed by the tool*, not remembered by its author — which is
+the only version that survives me.
+
+**And the arm, which is the part worth having.** Held-out operators — collapse-to-zero, sign
+inversion, return-value inversion, statement deletion — disjoint from the narrow three by
+construction and tested to be so, at the same budgets over the same corpora:
+
+    corpus      set      valid  caught       distinct sites     union   shared
+    blackbox    narrow     75    8 (11%)          34              71      17
+    blackbox    wide       76   13 (17%)          54
+    srctauri    narrow     27   10 (37%)          17              27       5
+    srctauri    wide       33   11 (33%)          15
+
+**Total sites ever demonstrated: 130 → 177. The census's headline moves 6.9% → 9.3%.**
+
+The verdict splits the audit's dichotomy instead of settling it, and the split is the finding.
+**The RATE is a property of the guards** — 37%→33% in Rust, 11%→17% in blackbox, no collapse in
+either direction across two disjoint operator families. **The DEMONSTRATED COUNT is a property of
+the operators** — up 36% from doubling the operator families at an unchanged budget, and the
+overlap is small: 17 of 88 site-appearances in blackbox, 5 of 32 in Rust.
+
+So it is not "the guards are weak" *versus* "our operators are weak." It is that **each operator
+family reaches a nearly disjoint set of guards.** Demonstrated count scales with operator
+DIVERSITY while the caught rate stays flat — which means the honest caveat on every number the
+narrow set produced is not "±a few points" but *"this counts what three operators could reach,"*
+and the way to raise it is more kinds of attack, not more attacks.
+
+**Bias published with the result rather than after it:** collapse-to-zero, sign inversion and
+deletion all produce EQUIVALENT MUTANTS on unreached code — no behaviour change, so they read as
+SURVIVED and push the wide rate DOWN. 33% and 17% are floors on their own terms. The site union is
+the comparable quantity, which is why it is the column the report tells you to read.
+
+### Two hazards the arm exposed, both about telling a finished run from a running one
+
+**TIMEOUT is its own class now.** The held-out operators generate non-terminating mutants
+constantly — zero a loop step or delete an advance and the code never returns. One perturbation
+was costing ten minutes. More importantly it is a *measurement* distinction: a mutant the suite
+"notices" by running out of time was discriminated by **nothing**. No guard fired; the clock
+expired. It is excluded from the valid denominator and reported on its own line.
+
+**And the one worth carrying past this tool.** The chair read a 4-row ledger as a dead sweep; the
+process was alive and healthy. I had earlier read a *completed* task notification as a finished
+sweep while it was still writing rows. Both wrong, in opposite directions, from the same mistake:
+`TaskStop` kills the bash wrapper, not the process underneath, so **the notification and the work
+are decoupled in both directions.**
+
+    a short ledger      reads as   a finished small run
+    a completion notice reads as   a finished large run
+    neither is evidence; only the process table distinguishes them.
+
+Same law as `whats-live`'s, one domain over: *a running binary is not the committed source* becomes
+**a ledger is not a running sweep.** The artifact's size is not the run's state.
+
+**Third hazard, now fixed rather than noted.** SIGKILL does not run `finally`, so a killed in-place
+sweep leaves the keeper's source mutated — `whats-live.js` on 08-01, `main.rs` tonight, both caught
+by `git status` and reverted by hand. Twice is a mechanism, not a lesson: the original bytes go to
+a sentinel file BEFORE the mutation reaches disk, and any later run restores from it first. Both
+paths are tested — the ordinary `finally` and a simulated kill.
+
+**One defect of my own, in the same shape this entry is about.** ARM 2c re-read the raw ledger and
+trusted its stored labels while the main tally derived them, so the same rows produced two
+different valid-denominators in one report. And the first render of THE ANSWER excluded the
+`-wide` ledgers entirely: the headline sat at 130 while ARM 2c showed 37 new sites two screens
+above it. **A total that silently omits the arm run to move it is the quenched check in a
+spreadsheet** — the number was there, it looked computed, and it had not read half its inputs.
 
 ### The general form: a retrospective census measures the RECORD, not the discipline
 

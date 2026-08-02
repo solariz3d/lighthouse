@@ -202,4 +202,39 @@ t("a coloured frame at a line that is NOT a site is still not attributed", () =>
   assert.deepEqual(toolFrames(out, new Set(["groove.test.js:287"])), []);
 });
 
+/* ---- the held-out operator set ---- */
+
+t("wide and narrow share no operator, so the delta between them is attributable", () => {
+  const src = "function f(a){ if (a > 1 && a < 9) { g(a); } return true; }";
+  const nar = new Set(mutants(src, "js", "narrow").map(m => m.op));
+  const wid = new Set(mutants(src, "js", "wide").map(m => m.op));
+  assert.ok(nar.size && wid.size);
+  for (const op of wid) assert.ok(!nar.has(op), `operator ${op} appears in both sets`);
+});
+
+t("every wide mutation's offset still holds the bytes it claims", () => {
+  const src = require("fs").readFileSync(__filename, "utf8");
+  for (const m of mutants(src, "js", "wide")) assert.equal(src.slice(m.at, m.at + m.len), m.from);
+});
+
+t("statement deletion picks a whole call statement and leaves the file parsable", () => {
+  const src = 'function f(){\n  setup(1, 2);\n  const x = 3;\n  return x;\n}\n';
+  const del = mutants(src, "js", "wide").filter(m => m.op === "del");
+  assert.equal(del.length, 1, "expected exactly one deletable statement");
+  assert.equal(del[0].from, "setup(1, 2)");
+  const after = src.slice(0, del[0].at) + del[0].to + src.slice(del[0].at + del[0].len);
+  new (require("vm").Script)(after);           // throws if the deletion broke the parse
+});
+
+t("a declaration is never chosen for deletion — that would be a compile break, not a defect", () => {
+  const del = mutants('function f(){\n  const x = g(1);\n  return x;\n}\n', "js", "wide").filter(m => m.op === "del");
+  assert.equal(del.length, 0);
+});
+
+t("wide and narrow write to different ledgers, so the two rates cannot merge", () => {
+  const { MUTFILE } = require("./guard-census.js");
+  assert.equal(MUTFILE("blackbox", "narrow"), "mutation-blackbox.jsonl");
+  assert.equal(MUTFILE("blackbox", "wide"), "mutation-blackbox-wide.jsonl");
+});
+
 console.log(`\n${n} passed`);

@@ -1,13 +1,13 @@
 GUARD CENSUS — how many of this room's guards have been shown to fail against what they guard
 ====================================================================================================
   corpus: blackbox @ 3f2bed2  (1 uncommitted path(s) at report time, excluded from every denominator)
-  corpus: lighthouse @ ebf915d  (4 uncommitted path(s) at report time, excluded from every denominator)
+  corpus: lighthouse @ b71e534  (5 uncommitted path(s) at report time, excluded from every denominator)
 
 DENOMINATORS (assertion SITES, not test cases — the two differ by 2x and are never summed)
   blackbox     788 sites in 39 files   (+6 file(s) carrying no assertion at all)
   srctauri     551 sites in 9 files   (+9 file(s) carrying no assertion at all)
-  tools        553 sites in 10 files   (+0 file(s) carrying no assertion at all)
-  TOTAL       1892 sites
+  tools        561 sites in 10 files   (+0 file(s) carrying no assertion at all)
+  TOTAL       1900 sites
 
 ARM 1 — HISTORY: does the guard discriminate the state it was BORN to guard?
   (source checked out at the commit BEFORE the test appeared; the test run as it was written)
@@ -28,6 +28,7 @@ ARM 1 — HISTORY: does the guard discriminate the state it was BORN to guard?
 ARM 2 — MUTATION: blackbox / runtests.js  (80 perturbations of the source the guards read)
     broke the build/load instead (CRASH)  : 5   <- NOT a demonstration; excluded from the rate
     offset no longer held (MISAPPLIED)    : 0   <- never written to disk
+    never terminated (TIMEOUT)            : 0   <- the clock ran out; nothing discriminated
     SEMANTICALLY VALID perturbations      : 75   <- the denominator that means anything
       caught by a named guard             : 8  (11%)
       red with nothing resolvable (UNCL.) : 0   <- counted against the census, not dropped
@@ -37,20 +38,37 @@ ARM 2 — MUTATION: blackbox / runtests.js  (80 perturbations of the source the 
 ARM 2 — MUTATION: consonance tools/  (40 perturbations of the source the guards read)
     broke the build/load instead (CRASH)  : 0   <- NOT a demonstration; excluded from the rate
     offset no longer held (MISAPPLIED)    : 1   <- never written to disk
+    never terminated (TIMEOUT)            : 0   <- the clock ran out; nothing discriminated
     SEMANTICALLY VALID perturbations      : 39   <- the denominator that means anything
       caught by a named guard             : 8  (21%)
       red with nothing resolvable (UNCL.) : 0   <- counted against the census, not dropped
       SURVIVED — nothing went red at all  : 31  (79% of real perturbations unnoticed)
-    distinct guards shown firing          : 11 of 553 sites in this corpus
+    distinct guards shown firing          : 11 of 561 sites in this corpus
 
 ARM 2 — MUTATION: consonance src-tauri (cargo)  (45 perturbations of the source the guards read)
     broke the build/load instead (CRASH)  : 18   <- NOT a demonstration; excluded from the rate
     offset no longer held (MISAPPLIED)    : 0   <- never written to disk
+    never terminated (TIMEOUT)            : 0   <- the clock ran out; nothing discriminated
     SEMANTICALLY VALID perturbations      : 27   <- the denominator that means anything
       caught by a named guard             : 10  (37%)
       red with nothing resolvable (UNCL.) : 0   <- counted against the census, not dropped
       SURVIVED — nothing went red at all  : 17  (63% of real perturbations unnoticed)
     distinct guards shown firing          : 17 of 551 sites in this corpus
+
+ARM 2c — NARROW vs HELD-OUT OPERATORS: is 6.9% a property of the guards or of the operators?
+    corpus      set      valid  caught          sites   NEW sites the other set never reached
+    blackbox    narrow     75    8 (11%)        34
+    blackbox    wide       76   13 (17%)        54
+                union      71 distinct sites   (+37 reachable ONLY by the held-out set, +17 only by the narrow set)
+    srctauri    narrow     27   10 (37%)        17
+    srctauri    wide       33   11 (33%)        15
+                union      27 distinct sites   (+10 reachable ONLY by the held-out set, +12 only by the narrow set)
+    Read the NEW-sites column, not the percentages: a rate can move because the operators
+    crash more often, which shrinks the denominator. The site union cannot move that way.
+    Bias that remains and is not correctable here: collapse-to-zero, sign inversion and
+    statement deletion all produce EQUIVALENT MUTANTS on unreached or dead code — no
+    behaviour change, so they read as SURVIVED and push the caught rate DOWN. The wide
+    rate is therefore a floor on its own terms, not a like-for-like of the narrow rate.
 
 ARM 2b — CAN IT FAIL AT ALL? each guard attacked at its OWN referent (the born-green set, plus a control)
     test_collidergrid.js     referents  5  fired  4   inert: "sakura_speedway"
@@ -79,14 +97,21 @@ ARM 3 — THE PROSE RECORD: commits whose body states a guard fired (429 commits
     7 genuine, 2 red-for-the-wrong-reason — and the second class is named by the room itself, in its own commit messages.
 
 THE ANSWER
-  assertion sites observed firing for the right reason : 130
-  assertion sites in both repos                        : 1892
-  fraction ever demonstrated discriminating            : 6.9%
-  the rest: 1762 sites NOT OBSERVED FIRING — the overwhelming majority never attacked
+  assertion sites observed firing for the right reason : 177
+  assertion sites in both repos                        : 1900
+  fraction ever demonstrated discriminating            : 9.3%
+  the rest: 1723 sites NOT OBSERVED FIRING — the overwhelming majority never attacked
   by any arm here, not shown inert. This is a floor on what has been demonstrated, not
   a ceiling on what could be.
 
 WHAT THIS NUMBER DOES NOT MEAN
+  - IT IS NOT A SAFETY METRIC. It measures whether a guard has been shown to fire, never
+    whether what it guards matters. A demonstrated guard on something trivial and one on
+    the thing that would ruin the app score identically here. No sentence of the form
+    "we are covered" follows from any number on this page.
+  - THE RATE IS OPERATOR-RELATIVE. Change the operator set and the rate changes; see the
+    narrow-vs-wide comparison above if present. A fixed seed and a published operator list
+    can be optimised against, so five operators are held in reserve (`--ops wide`).
   - unfired is a LOWER BOUND, never a verdict of vacuity: a guard no perturbation here reached
     may still be reachable by one this sweep did not generate.
   - the history arm sees the BIRTH state only. A guard that went red in somebody's working tree

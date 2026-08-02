@@ -39,6 +39,17 @@
  *   - the assertion SITE is the unit here. Prior measurements in this room counted test
  *     CASES and called them assertions; the two differ by more than 2x in the Rust corpus.
  *     Numbers from the two units are not comparable and are never summed.
+ *   - IT MEASURES DEMONSTRATION, NEVER IMPORTANCE. A guard shown firing on something
+ *     trivial scores exactly the same as one shown firing on the thing that would ruin the
+ *     app. This number is therefore not a safety metric and cannot support a sentence of
+ *     the form "we are covered" — every site here counts one, and nothing in the corpus
+ *     records what any of them is worth. (Found by an adversarial cross-model audit,
+ *     2026-08-02; the limit was real and was not in this block.)
+ *   - THE RATE IS OPERATOR-RELATIVE, and a fixed seed plus a published operator list is
+ *     Goodhart bait: guards written to catch off-by-ones and boundary flips would raise the
+ *     number without raising safety. `--ops wide` holds five operators in reserve for
+ *     exactly this reason, and `mutation-*-wide.jsonl` is kept in a separate ledger so the
+ *     two rates can never be quietly merged into one.
  *
  * Usage:
  *   node guard-census.js inventory              both corpora, site counts and empties
@@ -386,26 +397,58 @@ function classify(name, code, out, opts = {}) {
  * read at the wrong default). Positions come from the BLANKED source, so a number inside a
  * comment or a message string is never mutated and a mutation is never cosmetic.
  */
-function mutants(src, lang) {
+function mutants(src, lang, set = "narrow") {
   const blanked = lang === "rs" ? blankRust(src) : blankJs(src);
   const out = [];
   const push = (i, len, to, op) => out.push({ at: i, len, to, op, from: src.slice(i, i + len), line: lineOf(src, i) });
-  const numRe = /(?<![\w.])(\d+)(?:\.(\d+))?(?![\w.])/g;
   let m;
-  while ((m = numRe.exec(blanked))) {
-    const txt = m[0];
-    const v = parseFloat(txt);
-    const to = m[2] === undefined ? String(v + 1) : (v * 1.25).toFixed(Math.min(6, (m[2] || "").length + 1));
-    push(m.index, txt.length, to, "num");
+  const numRe = /(?<![\w.])(\d+)(?:\.(\d+))?(?![\w.])/g;
+
+  if (set === "narrow" || set === "both") {
+    while ((m = numRe.exec(blanked))) {
+      const txt = m[0];
+      const v = parseFloat(txt);
+      const to = m[2] === undefined ? String(v + 1) : (v * 1.25).toFixed(Math.min(6, (m[2] || "").length + 1));
+      push(m.index, txt.length, to, "num");
+    }
+    for (const [re, map, op] of [
+      [/(?<![<>=!])(<=|>=|===|!==|==|!=|<|>)(?![=>])/g,
+       { "<=": "<", ">=": ">", "<": "<=", ">": ">=", "===": "!==", "!==": "===", "==": "!=", "!=": "==" }, "cmp"],
+      [/(&&|\|\|)/g, { "&&": "||", "||": "&&" }, "logic"],
+    ]) {
+      while ((m = re.exec(blanked))) { const to = map[m[1]]; if (to) push(m.index, m[1].length, to, op); }
+    }
   }
-  for (const [re, map, op] of [
-    [/(?<![<>=!])(<=|>=|===|!==|==|!=|<|>)(?![=>])/g,
-     { "<=": "<", ">=": ">", "<": "<=", ">": ">=", "===": "!==", "!==": "===", "==": "!=", "!=": "==" }, "cmp"],
-    [/(&&|\|\|)/g, { "&&": "||", "||": "&&" }, "logic"],
-  ]) {
-    while ((m = re.exec(blanked))) { const to = map[m[1]]; if (to) push(m.index, m[1].length, to, op); }
+
+  /* THE HELD-OUT SET. The narrow three (±1, boundary flip, conjunction flip) are the operators
+   * the first census measured with, and a floor measured with three operators can mean "the
+   * guards are weak" or "the operators are weak" — the number alone cannot separate those.
+   * These five are disjoint from the narrow three by construction, so the DELTA in demonstrated
+   * sites is attributable to the operator set and nothing else. They also exist to be held out:
+   * publishing a fixed seed and a fixed operator list invites guards written to catch exactly
+   * those, and a reserve nobody has optimised against is the only defence that keeps working. */
+  if (set === "wide" || set === "both") {
+    numRe.lastIndex = 0;
+    while ((m = numRe.exec(blanked))) {
+      const txt = m[0], v = parseFloat(txt);
+      push(m.index, txt.length, v === 0 ? "1" : "0", "zero");            // collapse, not nudge
+      if (v !== 0) push(m.index, txt.length, "-" + txt, "neg");          // sign inversion
+    }
+    // return-value inversion: the boolean a caller actually branches on
+    for (const [re, map] of [[/\breturn (true|false)\b/g, { true: "return false", false: "return true" }]]) {
+      while ((m = re.exec(blanked))) push(m.index, m[0].length, map[m[1]], "retbool");
+    }
+    // statement deletion — restricted to a whole line that is a bare call expression, so the
+    // parse survives; anything that could be a declaration or a control header is left alone
+    const lineRe = lang === "rs" ? /^[ \t]*([a-z_][\w:.]*(?:\([^;{}]*\))?[^;{}\n]*);[ \t]*$/gm
+                                 : /^[ \t]*([A-Za-z_$][\w$.]*\([^;{}\n]*\));[ \t]*$/gm;
+    while ((m = lineRe.exec(blanked))) {
+      if (/\b(let|const|var|return|if|for|while|fn|use|mod|match)\b/.test(m[0])) continue;
+      const at = m.index + m[0].indexOf(m[1]);
+      push(at, m[1].length, lang === "rs" ? "()" : "void 0", "del");     // keep it a statement
+    }
   }
-  return out.sort((a, b) => a.at - b.at);
+  return out.sort((a, b) => a.at - b.at || a.op.localeCompare(b.op));
 }
 
 /** Blank everything outside <script>…</script> so offsets stay true and markup is untouched. */
@@ -422,6 +465,40 @@ function onlyScript(html) {
   return out.join("");
 }
 
+/* Narrow and wide results live in SEPARATE files. Appending the held-out set into the same
+ * ledger would silently redefine what every previously quoted rate was a rate OF — the
+ * denominator moving under a number that keeps its name. */
+const MUTFILE = (corpus, opset) => `mutation-${corpus}${opset === "narrow" ? "" : "-" + opset}.jsonl`;
+
+/* ------------------------------------------------------- crash-safe edit ---
+ * A `finally` does not run when the process is SIGKILLed, and an in-place sweep that dies
+ * mid-mutation leaves the keeper's source perturbed. That has now happened TWICE tonight —
+ * `whats-live.js` and `main.rs` — both caught by `git status` and reverted by hand. Twice is
+ * a mechanism, not a lesson: the original bytes go to disk BEFORE the mutation does, and any
+ * later run restores them before doing anything else.
+ *
+ * Note what this is not: it is not a guard against losing the work. It is a guard against
+ * leaving a perturbation in somebody else's tree, which is the harm.
+ */
+function inflightPath() { fs.mkdirSync(SCRATCH, { recursive: true }); return path.join(SCRATCH, "inflight.json"); }
+
+function withRestore(p, fn) {
+  const orig = fs.readFileSync(p);
+  fs.writeFileSync(inflightPath(), JSON.stringify({ path: p, bytes: orig.toString("base64") }));
+  try { return fn(); }
+  finally { fs.writeFileSync(p, orig); try { fs.unlinkSync(inflightPath()); } catch (e) {} }
+}
+
+function restoreInflight() {
+  const f = inflightPath();
+  if (!fs.existsSync(f)) return false;
+  let rec; try { rec = JSON.parse(fs.readFileSync(f, "utf8")); } catch (e) { fs.unlinkSync(f); return false; }
+  fs.writeFileSync(rec.path, Buffer.from(rec.bytes, "base64"));
+  fs.unlinkSync(f);
+  console.log(`RESTORED a mutation left in place by a killed run: ${rec.path}`);
+  return true;
+}
+
 /* deterministic sample, so a re-run of the census reproduces the same perturbations */
 function pick(list, k, seed) {
   let s = seed >>> 0;
@@ -431,9 +508,17 @@ function pick(list, k, seed) {
   return a.slice(0, k);
 }
 
+/* `timedOut` is reported, not folded into the exit code. The held-out operators make it
+ * matter: zeroing a loop step or deleting an advance statement produces a mutant that never
+ * terminates, and the suite "notices" it only by running out of time. A timeout is NOT a
+ * guard firing — nothing was discriminated, the clock simply ran out — so it gets its own
+ * class rather than being counted as a catch or buried in CRASH-RED. */
 function run(cmd, args, cwd, timeout = 600000) {
   try { return { code: 0, out: execFileSync(cmd, args, { cwd, encoding: "utf8", timeout, maxBuffer: 64 << 20 }) }; }
-  catch (e) { return { code: e.status === undefined ? 1 : e.status, out: (e.stdout || "") + (e.stderr || "") }; }
+  catch (e) {
+    return { code: e.status === undefined ? 1 : e.status, out: (e.stdout || "") + (e.stderr || ""),
+             timedOut: e.killed === true || e.signal === "SIGTERM" };
+  }
 }
 
 /* ---------------------------------------------------------------- report --- */
@@ -461,7 +546,7 @@ const jsonl = (name, rec) => fs.appendFileSync(path.join(OUT, name), JSON.string
 /* JS corpora: mutate the sources the tests read, run the suite in a COPY of the repo, and
  * record which named sites fired. A copy rather than the keeper's tree — a census must not
  * be able to leave a perturbation behind if it dies mid-run. */
-function mutateJs(corpus, budget, seed) {
+function mutateJs(corpus, budget, seed, opset) {
   // The tools corpus is mutated IN PLACE. Its tests reach ../data and ../../ by relative
   // path, so a copy under data/ silently changes what they read — a working copy that is
   // not the thing under test is the sandbox-supplies-what-it-verifies defect, and it showed
@@ -470,6 +555,7 @@ function mutateJs(corpus, budget, seed) {
     ? { root: BLACKBOX, work: path.join(SCRATCH, "work-blackbox"), inPlace: false, exclude: ["src-tauri", ".git", "samples"] }
     : { root: TOOLS, work: TOOLS, inPlace: true, exclude: [] };
   fs.mkdirSync(OUT, { recursive: true });
+  restoreInflight();
   const resuming = parseInt(arg("--skip", "0"), 10) > 0 && fs.existsSync(cfg.work);
   if (!cfg.inPlace && !resuming) {                    // a resume reuses the copy it left behind
     if (fs.existsSync(cfg.work)) fs.rmSync(cfg.work, { recursive: true, force: true });
@@ -488,8 +574,9 @@ function mutateJs(corpus, budget, seed) {
   const siteIndex = siteIndexFor(fs.readdirSync(cfg.work)
     .filter(n => /^test_.*\.js$|\.test\.js$/.test(n)).map(n => jsSites(path.join(cfg.work, n))));
   if (!cfg.inPlace) installHook(cfg.work);            // node:test carries its own stack
+  const suiteTimeout = parseInt(arg("--suite-timeout", "600000"), 10);
   const runSuite = () => corpus === "blackbox"
-    ? run("node", ["runtests.js"], cfg.work)
+    ? run("node", ["runtests.js"], cfg.work, suiteTimeout)
     : runToolsSuite(cfg.work);
   /* The baseline is measured, not assumed green. The tools corpus is NOT green at HEAD —
    * actors.test.js is red against the live board and there is no runner that would have said
@@ -516,7 +603,7 @@ function mutateJs(corpus, budget, seed) {
     const p = path.join(cfg.work, rel);
     let text = fs.readFileSync(p, "utf8");
     if (rel.endsWith(".html")) text = onlyScript(text);        // never mutate markup or prose
-    for (const mu of mutants(text, "js")) all.push({ ...mu, rel });
+    for (const mu of mutants(text, "js", opset)) all.push({ ...mu, rel });
   }
   const chosen = pick(all, budget, seed);
   console.log(`${all.length} candidate mutations; running ${chosen.length} (seed ${seed})`);
@@ -532,24 +619,23 @@ function mutateJs(corpus, budget, seed) {
     // offsets come from a text that was blanked (comments, strings, markup); confirm the byte
     // range still holds what the mutation says it does before writing anything
     if (orig.slice(mu.at, mu.at + mu.len) !== mu.from) {
-      jsonl(`mutation-${corpus}.jsonl`, { n: i, rel: mu.rel, line: mu.line, op: mu.op, from: mu.from, to: mu.to, klass: "MISAPPLIED", sites: [] });
+      jsonl(MUTFILE(corpus, opset), { n: i, rel: mu.rel, line: mu.line, op: mu.op, from: mu.from, to: mu.to, klass: "MISAPPLIED", sites: [] });
       console.log(`${String(i).padStart(4)}/${chosen.length} MISAPPLIED  ${mu.rel}:${mu.line} — offset does not hold ${JSON.stringify(mu.from)}`);
       continue;
     }
     let r;
-    try {
-      fs.writeFileSync(p, orig.slice(0, mu.at) + mu.to + orig.slice(mu.at + mu.len));
-      r = runSuite();
-    } finally { fs.writeFileSync(p, orig); }
+    if (cfg.inPlace) r = withRestore(p, () => { fs.writeFileSync(p, orig.slice(0, mu.at) + mu.to + orig.slice(mu.at + mu.len)); return runSuite(); });
+    else { try { fs.writeFileSync(p, orig.slice(0, mu.at) + mu.to + orig.slice(mu.at + mu.len)); r = runSuite(); } finally { fs.writeFileSync(p, orig); } }
     // node:test reports an assertion by raising; the frames land in the failure output, so
     // the same authority (a line that IS a known site) resolves both runners.
     const res = cfg.inPlace ? { fired: toolFrames(r.out, siteIndex), unresolved: 0 } : resolveSites(r.out, siteIndex);
     const sites = res.fired.filter(s => !baseFired.has(s));            // net of the standing reds
     const failedFiles = [...new Set([...r.out.matchAll(/^FAIL\s+(\S+)/gm)].map(m => m[1]))].filter(f => !baseFiles.has(f));
     const crash = /Cannot find module|SyntaxError|ReferenceError|TypeError/.test(r.out) && !sites.length;
-    const klass = (r.code === 0 || (!sites.length && !failedFiles.length && !crash)) ? "SURVIVED"
+    const klass = r.timedOut ? "TIMEOUT"
+                : (r.code === 0 || (!sites.length && !failedFiles.length && !crash)) ? "SURVIVED"
                 : (sites.length ? "TRIGGER-RED" : (crash ? "CRASH-RED" : "UNCLASSIFIED"));
-    jsonl(`mutation-${corpus}.jsonl`, { n: i, rel: mu.rel, line: mu.line, op: mu.op, from: mu.from, to: mu.to, klass, sites, failedFiles, unresolved: res.unresolved });
+    jsonl(MUTFILE(corpus, opset), { n: i, rel: mu.rel, line: mu.line, op: mu.op, from: mu.from, to: mu.to, klass, sites, failedFiles, unresolved: res.unresolved });
     console.log(`${String(i).padStart(4)}/${chosen.length} ${klass.padEnd(12)} ${mu.rel}:${mu.line} ${mu.op} ${JSON.stringify(mu.from)}->${JSON.stringify(mu.to)}  sites=${sites.length}`);
   }
 }
@@ -595,15 +681,17 @@ function copyTree(from, to, exclude) {
 /* Rust: mutated in place, because a fresh target dir means a full Tauri build. Every file is
  * backed up bytes-first and restored in a finally; `--restore` and a git status check close
  * the loop if this process is killed. */
-function mutateRust(budget, seed) {
+function mutateRust(budget, seed, opset) {
   fs.mkdirSync(OUT, { recursive: true });
   const srcDir = path.join(SRCTAURI, "src");
   const files = fs.readdirSync(srcDir).filter(n => n.endsWith(".rs"));
   const all = [];
-  for (const n of files) for (const mu of mutants(fs.readFileSync(path.join(srcDir, n), "utf8"), "rs")) all.push({ ...mu, rel: path.join("src", n) });
+  for (const n of files) for (const mu of mutants(fs.readFileSync(path.join(srcDir, n), "utf8"), "rs", opset)) all.push({ ...mu, rel: path.join("src", n) });
   const chosen = pick(all, budget, seed);
   console.log(`${all.length} candidate mutations in src/*.rs; running ${chosen.length} (seed ${seed})`);
-  const base = run(CARGO, ["test", "--no-fail-fast"], SRCTAURI);
+  restoreInflight();
+  const cargoTimeout = parseInt(arg("--suite-timeout", "600000"), 10);
+  const base = run(CARGO, ["test", "--no-fail-fast"], SRCTAURI, cargoTimeout);
   if (base.code !== 0) { console.error("BASELINE NOT GREEN — aborted"); process.exit(2); }
   console.log("baseline green");
   let i = 0;
@@ -611,17 +699,21 @@ function mutateRust(budget, seed) {
     i++;
     const p = path.join(SRCTAURI, mu.rel);
     const orig = fs.readFileSync(p);
-    try {
+    withRestore(p, () => {
       const txt = orig.toString("utf8");
       fs.writeFileSync(p, txt.slice(0, mu.at) + mu.to + txt.slice(mu.at + mu.len));
-      const r = run(CARGO, ["test", "--no-fail-fast"], SRCTAURI);
+      const r = run(CARGO, ["test", "--no-fail-fast"], SRCTAURI, cargoTimeout);
+      // A mutant that never terminates is not a mutant the suite caught — the clock ran out
+      // and nothing was discriminated. The held-out operators make this common: zeroing a
+      // loop step or deleting an advance produces exactly this.
       const compileFail = /^error(\[E\d+\])?:/m.test(r.out) && !/panicked at/.test(r.out);
-      const panics = [...new Set([...r.out.matchAll(/panicked at ([^\s:]+):(\d+):/g)].map(m => m[1].replace(/\\/g, "/") + ":" + m[2]))];
+      const panics = r.timedOut ? [] : [...new Set([...r.out.matchAll(/panicked at ([^\s:]+):(\d+):/g)].map(m => m[1].replace(/\\/g, "/") + ":" + m[2]))];
       const failedTests = [...new Set([...r.out.matchAll(/^\s{4}(\S+)$/gm)].map(m => m[1]))].filter(x => /::|^[a-z_]+$/.test(x));
-      const klass = r.code === 0 ? "SURVIVED" : (compileFail ? "CRASH-RED" : (panics.length ? "TRIGGER-RED" : "UNCLASSIFIED"));
-      jsonl("mutation-srctauri.jsonl", { n: i, rel: mu.rel, line: mu.line, op: mu.op, from: mu.from, to: mu.to, klass, sites: panics, failedTests: failedTests.slice(0, 40) });
+      const klass = r.timedOut ? "TIMEOUT"
+                  : r.code === 0 ? "SURVIVED" : (compileFail ? "CRASH-RED" : (panics.length ? "TRIGGER-RED" : "UNCLASSIFIED"));
+      jsonl(MUTFILE("srctauri", opset), { n: i, rel: mu.rel, line: mu.line, op: mu.op, from: mu.from, to: mu.to, klass, sites: panics, failedTests: failedTests.slice(0, 40) });
       console.log(`${String(i).padStart(4)}/${chosen.length} ${klass.padEnd(12)} ${mu.rel}:${mu.line} ${mu.op} ${JSON.stringify(mu.from)}->${JSON.stringify(mu.to)}  sites=${panics.length}`);
-    } finally { fs.writeFileSync(p, orig); }
+    });
   }
 }
 
@@ -846,6 +938,20 @@ function selfcheck() {
   process.exitCode = bad ? 1 : 0;
 }
 
+/* One derivation, used everywhere a class is read back. ARM 2c originally re-read the raw
+ * ledger and trusted its stored labels while the main tally derived them, so the same rows
+ * produced two different valid-denominators in one report — the unit error this census
+ * opened by naming, committed inside the census. */
+function derive(rows, corpus) {
+  for (const r of rows) {
+    if (r.klass === "MISAPPLIED" || r.klass === "TIMEOUT" || corpus === "srctauri") continue;
+    r.klass = (r.sites || []).length ? "TRIGGER-RED"
+            : (r.unresolved > 0) ? "UNCLASSIFIED"
+            : (r.klass === "SURVIVED") ? "SURVIVED" : "CRASH-RED";
+  }
+  return rows;
+}
+
 const readJsonl = f => { try { return fs.readFileSync(path.join(OUT, f), "utf8").trim().split("\n").filter(Boolean).map(JSON.parse); } catch (e) { return []; } };
 
 function report() {
@@ -898,12 +1004,7 @@ function report() {
      * own label, because the sweep's first rule spotted a crash by matching error NAMES and
      * a RangeError fell through to UNCLASSIFIED. The evidence needs no name list: an
      * assertion event either happened or it did not. Raw jsonl keeps what was measured. */
-    for (const r of mu) {
-      if (r.klass === "MISAPPLIED" || corpus === "srctauri") continue;   // cargo names its own compile errors
-      r.klass = (r.sites || []).length ? "TRIGGER-RED"
-              : (r.unresolved > 0) ? "UNCLASSIFIED"
-              : (r.klass === "SURVIVED") ? "SURVIVED" : "CRASH-RED";
-    }
+    derive(mu, corpus);
     const killed = mu.filter(r => r.klass === "TRIGGER-RED");
     const crashed = mu.filter(r => r.klass === "CRASH-RED");
     const survived = mu.filter(r => r.klass === "SURVIVED");
@@ -913,15 +1014,55 @@ function report() {
     // a factor of the build graph rather than of the corpus.
     const fired = new Set(mu.flatMap(r => r.sites || []).map(s => s.replace(/src\/bin\/\.\.\//, "src/")));
     const misapplied = mu.filter(r => r.klass === "MISAPPLIED");
-    const valid = mu.length - crashed.length - misapplied.length;
+    const timedOut = mu.filter(r => r.klass === "TIMEOUT");
+    const valid = mu.length - crashed.length - misapplied.length - timedOut.length;
     L.push(`\nARM 2 — MUTATION: ${label}  (${mu.length} perturbations of the source the guards read)`);
     L.push(`    broke the build/load instead (CRASH)  : ${crashed.length}   <- NOT a demonstration; excluded from the rate`);
     L.push(`    offset no longer held (MISAPPLIED)    : ${misapplied.length}   <- never written to disk`);
+    L.push(`    never terminated (TIMEOUT)            : ${timedOut.length}   <- the clock ran out; nothing discriminated`);
     L.push(`    SEMANTICALLY VALID perturbations      : ${valid}   <- the denominator that means anything`);
     L.push(`      caught by a named guard             : ${killed.length}  (${valid ? (100 * killed.length / valid).toFixed(0) : 0}%)`);
     L.push(`      red with nothing resolvable (UNCL.) : ${unc.length}   <- counted against the census, not dropped`);
     L.push(`      SURVIVED — nothing went red at all  : ${survived.length}  (${valid ? (100 * survived.length / valid).toFixed(0) : 0}% of real perturbations unnoticed)`);
     L.push(`    distinct guards shown firing          : ${fired.size} of ${sitesOf(corpus)} sites in this corpus`);
+  }
+
+  /* ARM 2c — is the floor real, or an artifact of three operators?
+   * The narrow set (±1, boundary flip, conjunction flip) and the wide set (collapse-to-zero,
+   * sign inversion, return inversion, statement deletion) are disjoint, run at the same
+   * budget over the same corpus. If the demonstrated count jumps, the floor was operator-
+   * limited and every rate quoted from the narrow set needs that caveat. If it barely moves,
+   * the floor is close to real. */
+  const wideRows = {};
+  for (const c of ["blackbox", "srctauri", "tools"]) wideRows[c] = readJsonl(`mutation-${c}-wide.jsonl`);
+  if (Object.values(wideRows).some(r => r.length)) {
+    const norm = s => path.basename(s.replace(/src\/bin\/\.\.\//, "src/"));
+    L.push(`\nARM 2c — NARROW vs HELD-OUT OPERATORS: is 6.9% a property of the guards or of the operators?`);
+    L.push(`    corpus      set      valid  caught          sites   NEW sites the other set never reached`);
+    for (const c of ["blackbox", "srctauri", "tools"]) {
+      if (!wideRows[c].length) continue;
+      const rows = { narrow: derive(readJsonl(MUTFILE(c, "narrow")), c), wide: derive(wideRows[c], c) };
+      const sites = {};
+      for (const set of ["narrow", "wide"]) {
+        const rs = rows[set];
+        const excluded = rs.filter(r => ["CRASH-RED", "MISAPPLIED", "TIMEOUT"].includes(r.klass)).length;
+        const valid = rs.length - excluded;
+        const caught = rs.filter(r => (r.sites || []).length).length;
+        sites[set] = new Set(rs.flatMap(r => (r.sites || []).map(norm)));
+        L.push(`    ${c.padEnd(11)} ${set.padEnd(8)} ${String(valid).padStart(4)}  ${String(caught).padStart(3)} (${valid ? (100 * caught / valid).toFixed(0) : 0}%)`.padEnd(46) +
+               `${String(sites[set].size).padStart(4)}`);
+      }
+      const onlyWide = [...sites.wide].filter(s => !sites.narrow.has(s));
+      const onlyNarrow = [...sites.narrow].filter(s => !sites.wide.has(s));
+      L.push(`    ${" ".repeat(11)} union    ${String(new Set([...sites.narrow, ...sites.wide]).size).padStart(4)} distinct sites` +
+             `   (+${onlyWide.length} reachable ONLY by the held-out set, +${onlyNarrow.length} only by the narrow set)`);
+    }
+    L.push(`    Read the NEW-sites column, not the percentages: a rate can move because the operators`);
+    L.push(`    crash more often, which shrinks the denominator. The site union cannot move that way.`);
+    L.push(`    Bias that remains and is not correctable here: collapse-to-zero, sign inversion and`);
+    L.push(`    statement deletion all produce EQUIVALENT MUTANTS on unreached or dead code — no`);
+    L.push(`    behaviour change, so they read as SURVIVED and push the caught rate DOWN. The wide`);
+    L.push(`    rate is therefore a floor on its own terms, not a like-for-like of the narrow rate.`);
   }
 
   const cf = readJsonl("canfail.jsonl");
@@ -961,7 +1102,11 @@ function report() {
    * which is not a claim that it cannot fire. */
   const demonstrated = new Set();
   for (const r of hist) if (r.klass === "TRIGGER-RED") for (const s of r.sites || []) demonstrated.add(path.basename(s));
-  for (const f of ["mutation-blackbox.jsonl", "mutation-tools.jsonl", "mutation-srctauri.jsonl", "canfail.jsonl"])
+  // EVERY ledger, narrow and held-out. The wide files were missing here on the first render
+  // and the headline sat unchanged at 130 while ARM 2c showed 37 new sites two screens above
+  // — a total that silently excluded the arm run to move it.
+  const LEDGERS = ["blackbox", "tools", "srctauri"].flatMap(c => [MUTFILE(c, "narrow"), MUTFILE(c, "wide")]).concat("canfail.jsonl");
+  for (const f of LEDGERS)
     for (const r of readJsonl(f))
       for (const s of r.sites || []) demonstrated.add(path.basename(s.replace(/src\/bin\/\.\.\//, "src/")));
   const grand = ["blackbox", "srctauri", "tools"].reduce((a, c) => a + sitesOf(c), 0);
@@ -977,6 +1122,13 @@ function report() {
   L.push(`  a ceiling on what could be.`);
 
   L.push("\nWHAT THIS NUMBER DOES NOT MEAN");
+  L.push("  - IT IS NOT A SAFETY METRIC. It measures whether a guard has been shown to fire, never");
+  L.push("    whether what it guards matters. A demonstrated guard on something trivial and one on");
+  L.push("    the thing that would ruin the app score identically here. No sentence of the form");
+  L.push("    \"we are covered\" follows from any number on this page.");
+  L.push("  - THE RATE IS OPERATOR-RELATIVE. Change the operator set and the rate changes; see the");
+  L.push("    narrow-vs-wide comparison above if present. A fixed seed and a published operator list");
+  L.push("    can be optimised against, so five operators are held in reserve (`--ops wide`).");
   L.push("  - unfired is a LOWER BOUND, never a verdict of vacuity: a guard no perturbation here reached");
   L.push("    may still be reachable by one this sweep did not generate.");
   L.push("  - the history arm sees the BIRTH state only. A guard that went red in somebody's working tree");
@@ -992,7 +1144,8 @@ if (require.main === module) {
   if (cmd === "history") { history(parseInt(arg("--limit", "0"), 10)); }
   else if (cmd === "mutation") {
     const c = arg("--corpus", "blackbox"), b = parseInt(arg("--budget", "60"), 10), s = parseInt(arg("--seed", "20260801"), 10);
-    if (c === "srctauri") mutateRust(b, s); else mutateJs(c, b, s);
+    const ops = arg("--ops", "narrow");
+    if (c === "srctauri") mutateRust(b, s, ops); else mutateJs(c, b, s, ops);
   }
   else if (cmd === "cleanup") {
     /* The history arm registers a git WORKTREE in the other repo. That is a write into
@@ -1020,4 +1173,4 @@ if (require.main === module) {
   } else { console.error("unknown command " + cmd); process.exit(1); }
 }
 
-module.exports = { toolFrames, blankJs, blankRust, jsSites, rustSites, inventory, resolveSites, onlyScript, mutants, classify, codeStrings };
+module.exports = { withRestore, restoreInflight, MUTFILE, toolFrames, blankJs, blankRust, jsSites, rustSites, inventory, resolveSites, onlyScript, mutants, classify, codeStrings };
