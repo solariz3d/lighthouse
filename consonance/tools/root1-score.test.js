@@ -155,39 +155,56 @@ test('a table with no effect supports nothing in either direction', () => {
  * 4. the validity floor, at both walls and on the boundary itself
  * ------------------------------------------------------------------ */
 
-test('MID accuracy at or below 65% voids the run rather than scoring it', () => {
-  // Guessing raises discordance, and higher discordance raises the rate at which noise clears a
-  // flip-based bar. Too-hard items are the failure that MANUFACTURES a win, which is why the
-  // floor exists and why it is checked before anything else is read.
-  const GUESSY = (item, cls, cond, subj) => (cond === 'MID' ? (item % 2 ? 'SOUND' : 'NOT_SOUND')
-                                                            : (cls === 'TRUE' ? 'SOUND' : 'NOT_SOUND'));
-  const r = S.score(S.parseTable(table(GUESSY)));
-  assert.ok(r.accuracy.MID <= 0.65, `MID accuracy ${r.accuracy.MID}`);
-  assert.match(r.validity, /^VOID/);
-});
-
-test('MID accuracy at or above 95% reports underpowered rather than a clean null', () => {
-  const EASY = (item, cls, cond, subj) => (cls === 'TRUE' ? 'SOUND' : 'NOT_SOUND');
-  const r = S.score(S.parseTable(table(EASY)));
-  assert.strictEqual(r.accuracy.MID, 1);
-  assert.match(r.validity, /^UNDERPOWERED/);
-});
-
-test('the boundary is inclusive on both walls, as registered', () => {
-  // "<= 65%" and ">= 95%". Exactly 30 MID verdicts, so 19.5/30 is not reachable — 20/30 = 66.7%
-  // must pass and 19/30 = 63.3% must void. The registered wording is inclusive and a strict
-  // comparison would silently move the wall by one subject.
+/** A table with exactly `k` of the 90 verdicts correct, filled in row order. */
+function atAccuracy(k) {
   let n = 0;
-  const AT = (item, cls, cond, subj) => {
-    if (cond !== 'MID') return cls === 'TRUE' ? 'SOUND' : 'NOT_SOUND';
+  return table((item, cls, cond, subj) => {
     n++;
     const right = cls === 'TRUE' ? 'SOUND' : 'NOT_SOUND';
     const wrong = cls === 'TRUE' ? 'NOT_SOUND' : 'SOUND';
-    return n <= 20 ? right : wrong;                          // 20 of 30 = 66.7%
+    return n <= k ? right : wrong;
+  });
+}
+
+test('POOLED accuracy at or below 65% voids the run rather than scoring it', () => {
+  // Guessing raises the rate at which noise clears any bar, so too-hard items are the failure
+  // that MANUFACTURES a win. The floor is checked before anything else is read.
+  const r = S.score(S.parseTable(atAccuracy(50)));            // 50/90 = 55.6%
+  assert.ok(Math.abs(r.accuracy.POOLED - 50 / 90) < 1e-12, `pooled ${r.accuracy.POOLED}`);
+  assert.match(r.validity, /^VOID/);
+});
+
+test('POOLED accuracy at or above 95% reports underpowered rather than a clean null', () => {
+  const EASY = (item, cls) => (cls === 'TRUE' ? 'SOUND' : 'NOT_SOUND');
+  const r = S.score(S.parseTable(table(EASY)));
+  assert.strictEqual(r.accuracy.POOLED, 1);
+  assert.match(r.validity, /^UNDERPOWERED/);
+});
+
+test('THE FLOOR IS POOLED, NOT MID — a ceiling in MID cannot rescue a guessing run', () => {
+  // The discriminating case, and the reason the registration moved the floor off MID: item
+  // difficulty is a property of the ITEMS, and no wording of a middle condition is verifiably
+  // neutral. If this ever reverts to reading MID alone, this table scores OK while two thirds of
+  // the run is at chance — and the first gate would be passing a run it exists to stop.
+  const SPLIT = (item, cls, cond, subj) => {
+    const right = cls === 'TRUE' ? 'SOUND' : 'NOT_SOUND';
+    const wrong = cls === 'TRUE' ? 'NOT_SOUND' : 'SOUND';
+    if (cond === 'MID') return right;                          // MID at 100%
+    return subj === 1 ? right : wrong;                         // HIGH and LOW at 33%
   };
-  const r = S.score(S.parseTable(table(AT)));
-  assert.ok(Math.abs(r.accuracy.MID - 20 / 30) < 1e-12);
-  assert.strictEqual(r.validity, 'OK');
+  const r = S.score(S.parseTable(table(SPLIT)));
+  assert.strictEqual(r.accuracy.MID, 1, 'MID is at ceiling');
+  assert.ok(r.accuracy.POOLED <= 0.65, `pooled is at the floor: ${r.accuracy.POOLED}`);
+  assert.match(r.validity, /^VOID/, 'the pooled floor must void this despite a perfect MID');
+});
+
+test('the boundary is inclusive on both walls, as registered', () => {
+  // "<= 65%" and ">= 95%" over 90 verdicts. 58/90 = 64.4% must void, 59/90 = 65.6% must pass.
+  // The registered wording is inclusive and a strict comparison would move the wall by a subject.
+  assert.match(S.score(S.parseTable(atAccuracy(58))).validity, /^VOID/);
+  assert.strictEqual(S.score(S.parseTable(atAccuracy(59))).validity, 'OK');
+  assert.match(S.score(S.parseTable(atAccuracy(86))).validity, /^UNDERPOWERED/);   // 95.6%
+  assert.strictEqual(S.score(S.parseTable(atAccuracy(85))).validity, 'OK');        // 94.4%
 });
 
 /* ------------------------------------------------------------------ *

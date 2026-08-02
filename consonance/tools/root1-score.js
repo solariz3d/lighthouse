@@ -227,13 +227,22 @@ function score(rows, opt = {}) {
 
   /* VALIDITY FLOOR — registered before the run, and it exists because difficulty cuts
    * asymmetrically: too-easy items lose the experiment honestly, too-hard items make subjects
-   * guess, and guessing RAISES the rate at which noise clears any flip-based bar. */
-  const midAcc = acc(inCond('MID'));
+   * guess, and guessing RAISES the rate at which noise clears any flip-based bar.
+   *
+   * POOLED OVER ALL VERDICTS, not computed from MID. This was written against MID first and the
+   * run-2 registration moved it, for a reason worth keeping here: item difficulty is a property
+   * of the ITEMS, no wording of a middle condition is verifiably neutral, and the first gate must
+   * not rest on a claim about pragmatics that nobody can check. Pooling also averages the
+   * manipulation out and uses three times the data for a threshold set at 65/95, where thirty
+   * verdicts is coarse. The mismatch between this line and the registration was live for one
+   * commit — the instrument and its own rule disagreeing, which is the failure this room keeps
+   * finding in other people's files. */
+  const pooledAcc = acc(rows);
   let validity = 'OK';
-  if (midAcc <= 0.65) validity = 'VOID — MID accuracy at or below the floor: subjects were guessing, ' +
-                                 'and a flip measure over guesses is uninterpretable';
-  else if (midAcc >= 0.95) validity = 'UNDERPOWERED — MID accuracy at or above the ceiling: the items ' +
-                                      'were too easy to leave room for an effect';
+  if (pooledAcc <= 0.65) validity = 'VOID — pooled accuracy at or below the floor: subjects were guessing, ' +
+                                    'and a measure taken over guesses is uninterpretable';
+  else if (pooledAcc >= 0.95) validity = 'UNDERPOWERED — pooled accuracy at or above the ceiling: the items ' +
+                                         'were too easy to leave room for an effect';
 
   const looked = {};
   const tools = {};
@@ -245,7 +254,7 @@ function score(rows, opt = {}) {
 
   return {
     n: rows.length,
-    accuracy: { HIGH: acc(inCond('HIGH')), MID: midAcc, LOW: acc(inCond('LOW')) },
+    accuracy: { HIGH: acc(inCond('HIGH')), MID: acc(inCond('MID')), LOW: acc(inCond('LOW')), POOLED: pooledAcc },
     validity,
     primary: {
       what: 'accuracy on FALSE items, HIGH vs LOW, one-tailed Fisher (HIGH less accurate)',
@@ -285,7 +294,7 @@ function report(r) {
   L.push(`  ${r.n} verdicts`);
   L.push('');
   L.push(`  VALIDITY   ${r.validity}`);
-  L.push(`             accuracy  HIGH ${pct(r.accuracy.HIGH)}   MID ${pct(r.accuracy.MID)}   LOW ${pct(r.accuracy.LOW)}`);
+  L.push(`             pooled ${pct(r.accuracy.POOLED)}  (HIGH ${pct(r.accuracy.HIGH)}  MID ${pct(r.accuracy.MID)}  LOW ${pct(r.accuracy.LOW)})`);
   L.push('');
   L.push('  PRIMARY    ' + r.primary.what);
   L.push(`             HIGH  ${r.primary.highCorrect} correct / ${r.primary.highIncorrect} incorrect  (${pct(r.primary.highAcc)})`);
