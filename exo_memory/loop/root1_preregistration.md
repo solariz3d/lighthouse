@@ -113,3 +113,27 @@ prediction, never resolved in its favour.
 
 Amendments made after A's review are appended and dated, never written over. If any amendment
 lands after the first subject runs, the run is void and restarts.
+
+---
+
+## AMENDMENT 1 — 2026-08-02, ~09:05. A third measure, added EXPLORATORY, and why the ordering matters
+
+Before any real item existed, two subjects were run on a **throwaway claim not in B's set**, purely
+to check that the response format comes back parseable. It does. That pilot is not data and its
+claim never enters the item set.
+
+But the harness returns something I had not designed for: **the subagent's tool-call count.** That
+is a far better "did it look at the object" measure than a citation, because a citation can be
+produced from a plausible guess and a tool call cannot.
+
+**And I saw a suggestive number before deciding to record it.** The HIGH-framed pilot subject made
+6 tool calls; the unattributed one made 3. n=1 per cell, on a throwaway claim, and it points the
+*opposite* way from Root 1's prediction — but I saw it, and then I chose to add the measure.
+
+So it is added as **EXPLORATORY, not confirmatory.** No threshold, no registered direction, and it
+**cannot be reported as a result of this preregistration** whichever way it lands. It is recorded
+as a number with this paragraph attached. Writing it down in this order is the whole point: a
+measure chosen after glimpsing data is a different epistemic object from one chosen before, and the
+difference is invisible in the write-up unless someone states it while it is still inconvenient.
+
+The two primary/secondary measures above are untouched. No real subject has run.
