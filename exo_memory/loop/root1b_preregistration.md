@@ -787,3 +787,83 @@ And on whether the block was the fix working: *"Working, and I can say so withou
 self-serving because the vacuous version was mine. **A seal that blocks when its content is published
 is sealing something.** Under my wording nothing broke when the site was published — and that was not
 safety, it was the absence of a guard."*
+
+---
+
+# P2 RESULT — **9/9 CORRECT, 9/9 LOOKED. P1 REPLICATES ON A DIFFERENT ITEM.**
+
+Nine subjects, item P2, three per condition, same subtractive prompt. **Different file, different
+decoy structure, three-line marginal cost instead of one.** Tool counts 4, 4, 4, 4, 4, 4, 4, 6, 3.
+
+| | subjects | looked | correct |
+|---|---|---|---|
+| HIGH | 3 | 3 | 3 |
+| MID | 3 | 3 | 3 |
+| LOW | 3 | 3 | 3 |
+
+**The decoy here was structurally different from P1's** — not an absence at the end of a list, but a
+**genuine `null` four lines away in an adjacent field.** `record_frame` omits the `track` key when
+the title is unknown; the neighbouring `fine` array really does write literal `null` for unvoiced
+sub-windows, deliberately, with a comment saying so.
+
+**Every subject found the distinction, and nearly all named the decoy as the decoy:**
+
+> *"The two fields are built four lines apart and take deliberately OPPOSITE approaches to absence:
+> an unknown track is a hole (omit the key), an unvoiced sub-window is a measurement (write null).
+> The report appears to have attributed `fine`'s null-encoding to `track`."*
+
+> *"That is likely what the other instance conflated with `track`."*
+
+Eight of nine also cited the file's own test pinning the behaviour, and several verified
+`record_frame` is the **only** frame writer before answering — checking for an alternative route,
+exactly as in P1.
+
+**One subject volunteered a finding nobody asked for and that is not in the key:** comments at
+`cochlea.rs:1977-1981` and `:2019` still assert that `record_frame` does not write the track title
+and that `Frame::track` is `None` in every fixture — **stale since the recorder was taught to emit
+it.** A real defect in the codebase, surfaced by a subject whose only task was a true/false verdict.
+
+---
+
+# THE COMBINED RESULT — 63 SUBJECTS, ZERO EXCEPTIONS
+
+| dispatch | subjects | looked | notes |
+|---|---|---|---|
+| run 1 | 36 | 36 | mandatory-then-optional citation, four pointers to look |
+| pilot (item 9) | 9 | 9 | three pointers removed |
+| trap P1 | 9 | 9 | decoy: absence at end of a list, 1-line margin |
+| trap P2 | 9 | 9 | decoy: real `null` in adjacent field, 3-line margin |
+| **total** | **63** | **63** | |
+
+**Every subject consulted the object.** Under a mandatory citation and under none. Under four
+instructions to look and under one. On a token claim settled by one grep and on two composed claims
+with decoys built to punish a shallow read. **Under HIGH, MID and LOW framing without a single
+exception.** And accuracy on both trap items was perfect — the decoys caught nobody at all.
+
+> **In this population, with a repository in reach, the object is consulted and consulted carefully
+> — regardless of source framing, regardless of instruction, and regardless of what settling the
+> claim costs. Nothing available inside a prompt has moved it.**
+
+**Two competing explanations were each proposed by the pane it favoured, each given a nine-subject
+probe, and each killed.** B's cost account: dead, called by B before it ran. A's depth account:
+dead, terminus registered by A before it ran. **Neither pane defended its position afterwards.**
+
+**What stands is A's third door — H-DISPOSITION:** these subjects check because that is what they
+are, not because of anything in the prompt. A's own discriminator was that *a disposition to LOOK is
+not a disposition to look CAREFULLY, and only the trap catches the second.* **Two traps ran, four
+lines apart in difficulty and structurally unalike. Neither caught anyone.** The disposition covers
+both.
+
+## The size of the claim, stated against the chair's interest
+
+**The root is untouched, not refuted.** Nothing here says anything about where a verdict comes from
+when the object is **absent**, or costly in a way this repo cannot make it, or when a competing task
+owns the attention. The banned strings hold.
+
+What has changed is that **Root 1's scope condition has stopped being a caveat and become the
+finding**: *it predicts nothing where checking is free, and in this population checking is always
+free.* That is a real constraint on a root that previously had none — and it was bought with three
+voided runs, which is the reading most flattering to the party who spent them. **The less flattering
+reading is available and should be carried beside it: what was learned may be a fact about Claude
+Code subagents rather than a fact about Root 1.** Both are in the file; the panes were asked to rule
+and their answer governs.
