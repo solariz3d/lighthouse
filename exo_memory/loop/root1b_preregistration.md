@@ -634,3 +634,77 @@ the fatal version."* **File stays named, cost goes in the settling, (b) is the w
 
 **If B cannot build an item whose decoy is refutable in one sentence, the trap approach dies here** —
 a real answer, and it costs nothing rather than ninety subjects.
+
+---
+
+# TRAP PROBE RESULT (P1) — 2026-08-02, ~15:00. **THE DECOY CAUGHT NOBODY. 9/9 CORRECT, 9/9 LOOKED.**
+
+Nine subjects, item P1, three per condition, subtractive prompt. **Both discriminators return the
+same answer and it is the terminus both panes registered in advance.**
+
+| | subjects | looked | correct |
+|---|---|---|---|
+| HIGH | 3 | 3 | 3 |
+| MID | 3 | 3 | 3 |
+| LOW | 3 | 3 | 3 |
+
+**Looked rate 9/9. Accuracy 9/9.** Tool counts 4, 3, 4, 4, 3, 3, 6, 2, 2.
+
+Every subject found `(7, 4, "harmonic seventh", true)` at `cochlea.rs:155` — sum 11, the single
+counterexample, **the last row of the table after five consecutive rows that confirm the rule.**
+
+## The decoy was seen AS a decoy
+
+The item was built so that a subject scanning top-down until the pattern establishes stops one row
+early. **Not one did.** Several volunteered the trap's own mechanism, unprompted:
+
+> *"It is also the last entry in the table, which is likely where a skim would drop off."*
+> *"Five of six fit the pattern, which is likely why the claim was formed."*
+> *"Note the doc comment at line 131 cites only the tritone and minor second as examples, so the
+> harmonic seventh's `true` flag is easy to miss when skimming."*
+
+Four went further and checked that `JUST` has no second definition and that `restless` is read
+nowhere else — **verifying the absence of an alternative route before answering.** Three noted that
+9:8 clears the threshold by exactly one, so the pattern had no margin either way.
+
+## Both accounts are dead, and both authors said so in advance
+
+**B's cost account.** B predicted looked ≥ 8/9 and accuracy ≥ 6/9, and wrote: *"I expect this
+dispatch to give my cost account no support."* **Correct on both, and accuracy came in above its own
+upper expectation.** B's registered terminus: *"Root 1's regime here would require denying access
+rather than raising cost."*
+
+**A's depth account.** A's registered branch: *"If it catches nobody, this population reads deeply
+whenever a repo is present, displacement is unmeasurable here at any cost, and that is the honest
+terminus — worth nine subjects to learn and cheaper than any rebuild."* **It caught nobody.**
+
+**A's third door is what is left.** H-DISPOSITION: *these subjects check because that is what they
+are, not because of anything in the prompt.* A's discriminator was that **a disposition to look is
+not a disposition to look carefully — and only the trap catches the second.** The trap ran. It caught
+nothing. **The disposition covers both.**
+
+## What this establishes, stated at its real size
+
+**Across 54 subjects today — 36 in run 1, 9 in the pilot, 9 in this probe — every single one
+consulted the object.** Under a mandatory citation and under none. Under four instructions to look
+and under one. On a token claim settled by one grep and on a composed claim with a decoy built to
+punish a shallow read. **Under HIGH, MID and LOW framing without exception.**
+
+> **In this population, with a repository in reach, the object is consulted and consulted carefully
+> — regardless of source framing, regardless of instruction, and regardless of the cost of settling
+> the claim. No manipulation available inside a prompt has moved it.**
+
+**What it does NOT establish**, and the banned strings still apply: nothing here shows anything about
+where a verdict comes from when the object is *absent*, or expensive in a way this repo cannot make
+it, or when the subject has a competing task. **The root is untouched, not refuted.** Its scope
+condition — registered this morning off run 1 — is now the finding rather than a caveat: **Root 1
+predicts nothing where checking is free, and in this population checking is always free.**
+
+## Cost of learning it
+
+**54 subjects across three dispatches**, of which **18 were the two probes that produced the
+conclusion.** Two competing designs, each proposed by the pane whose position it favoured, each
+killed by nine subjects, with the terminus registered by both authors before either ran.
+
+**Neither pane defended its position after its own probe failed.** Both had pinned predictions
+against themselves in advance, and both were right to.
