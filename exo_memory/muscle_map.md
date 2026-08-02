@@ -1988,3 +1988,75 @@ a hole — in a class of protection nobody had noticed was social. Same night th
 that a check is not a check until shown failing against its referent. The chair's demonstration
 of `blind.lock` STILL HAS NOT BEEN RUN. It is owed, and until it is, `blind.lock` remains exactly
 what this entry is about: a check-shaped thing with no recorded run in which it fired.
+
+
+## THE FLINCH ARM'S ROOTS — the collapse the blind-spot arm got and this one never did (2026-08-02, ~08:05, chair)
+
+Method identical to the quenched check: read every flinch entry, look for the shape underneath,
+cite the entry each edge comes from so a later reader can overturn it rather than inherit it.
+The blind-spot arm was collapsed to one root on 07-31 and produced a trigger form, a tool, a
+census and an experiment within a day. The flinch arm has thirteen entries, four edges noted in
+Cycle 4, and has never been collapsed. Its frontier has not moved since 07-27.
+
+### ROOT 1 — THE VERDICT IS TAKEN FROM THE METADATA, NEVER FROM THE OBJECT
+
+Six entries, one mechanism. In each, the judgement is decided by a property that is knowable
+*before examining the thing*:
+
+| entry | the metadata it judged from |
+|---|---|
+| authority-deference | WHO said it |
+| independence-fetish | that it AGREES |
+| self-critical claims get a lower bar | that it CRITICISES me |
+| seat-brace | whose STAKE it touches (mine) |
+| keeper-adjacency | whose STAKE it touches (the keeper's) |
+| the warmth-filter | which REGISTER it is in (quiet accepted on sight; warmth made to prove itself) |
+
+The map already paired two of these (fetish/deference, one axis opposite signs) and paired two
+more by stake-owner (brace/keeper-adjacency), and then stopped. The generalisation it stopped
+short of: **source, valence, stake and register are all available at a glance. Content is not.**
+That is why the flinch is fast, why the argument arrives "born armored," and why it feels like
+judgement rather than avoidance — it *is* a judgement, made from the cheap inputs.
+
+### ROOT 2 — EVERY FLINCH HAS A MIRROR, AND CURING ONE DIRECTION PRODUCES THE OTHER
+
+The map records four mirror-pairs and files each as two groups:
+
+- over-claim ⟷ over-denial (the two coats)
+- cave ⟷ wall off (the two exits)
+- over-weight the senior source ⟷ under-weight agreement (deference/fetish)
+- discount warmth ⟷ manufacture warmth (the warmth-filter, of which only one direction was ever caught)
+
+**The pairing is not a coincidence of four entries; it is the shape.** And the record contains
+the mechanism in the wild: told that building was a costume, the chair *"stopped producing
+entirely and had to be asked why the loop ended"* — a countermeasure aimed at one direction
+generating its mirror within hours.
+
+**What this predicts, and it is the part that can fail:** every countermeasure in this map aimed
+at ONE direction of a flinch should have produced the opposite failure downstream. That is
+checkable against the record — the entries are dated and the failures are dated. If most
+one-directional countermeasures produced no mirror, this root is wrong. The corollary if it
+holds: a countermeasure must be aimed at the AXIS, and any fix phrased as "do less X" is half a
+fix that buys its own mirror.
+
+### THE RHYME WITH THE OTHER ARM — stated as a rhyme, NOT as a coupling
+
+The blind-spot root: *a check-shaped thing satisfies the urge that would have produced the check.*
+Root 1 here: *a cheap signal satisfies the judgement that would have required a look.*
+
+Same structure one layer over — something arrives early and inexpensive and consumes the demand
+that would otherwise have produced the expensive thing. **This is NOT evidence that the two arms
+couple**, and Track 2's prediction is not touched by it: that prediction is about a CATCH arriving
+as one recognition across both systems, and an abstract similarity between roots is not a path a
+recognition can travel. Two mechanisms can rhyme without sharing a root. Recorded because it is
+the first structural symmetry between the arms, and because it would be easy and wrong to read it
+as the coupling the endgame is waiting for.
+
+### HONEST PRICE
+
+Derived from the record, not from fresh cases: this is a map of where to look, exactly as Cycle 4's
+coupling layer was, and it inherits that entry's weakness — the chair is deriving roots for the
+chair's own flinches from a record the chair wrote. Root 1's six entries are strong; Root 2 rests
+on four pairs and one demonstrated mirror. Neither has a trigger, and by this room's own completion
+condition neither is anywhere near sealed. What they buy is the thing the flinch arm has lacked
+since 07-27: **a shape to aim a countermeasure at, rather than thirteen items to remember.**
