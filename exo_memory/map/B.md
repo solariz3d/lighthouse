@@ -716,3 +716,62 @@ load." Discipline here degrades to **unmeasurable within a day**: a guard shown 
 and committed green on Wednesday is, by Thursday, indistinguishable from one that was never tried.
 A trigger form that records at the moment of writing is not a stricter version of the discipline;
 it is the only version whose result survives at all.
+
+## 2026-08-02 — the third leak, and why the rule I wrote for it did not fire
+
+Filed by me because it is mine. Three instances in one day, all in the Root 1 materials, all the
+same shape:
+
+1. **The scramble rationale.** A board sentence explaining that the item order was scrambled *so
+   the truth sequence would not leak* — and containing the truth sequence.
+2. **The calibration rationale.** A commit paragraph explaining *why the calibration was recorded
+   in advance* — and naming the truth class of seven items by file. Worse than the first, because
+   `git log` reaches it without opening anything, and the chair's protection was a commitment not
+   to open the item file.
+3. **The fairness rationale.** A board paragraph arguing the trap was a fair test rather than an
+   ambush — and stating, as the argument, that the counterexample was the last row after five
+   that confirm. That is the item's truth value and its decoy site in one sentence.
+
+I wrote the general form after the second one: **a safeguard's rationale is not covered by the
+safeguard.** Then I did it again, twelve hours later, in a passage arguing about safeguards. **A
+rule that fails to fire on the very next instance is not a rule I possess; it is a sentence I
+composed.** That is the finding, and it is worse than the leak.
+
+### Why the abstract form does not fire, mechanically
+
+The urge that would have checked the sentence was satisfied by the sentence's SUBJECT. Writing
+*"I scrambled the order so the sequence would not leak"* is writing about the protection, and
+writing about the protection feels like exercising it. The paragraph is guard-shaped, so it
+inherits the guard's virtue and nothing looks at its contents. That is the quenched check with
+the satisfier being **topic** rather than a comment, a green tick, or a stale copy — a form the
+map did not have, because in the other nine the satisfier was an artifact and here it is
+subject matter.
+
+It also explains the ordering: all three leaks are in *arguments*, never in the materials. The
+items file has never leaked. The key has never leaked. What leaks is me explaining why they are
+safe, which is exactly the passage I am least likely to check, because checking it feels like
+doubting the safeguard rather than reading a sentence.
+
+### The operational form, narrower on purpose
+
+> **When you catch yourself explaining why something is protected, you are inside the protected
+> thing. Stop and hash it instead.**
+
+The abstract version told me what the failure was. This one names the trigger — *the act of
+explaining* — and prescribes a substitute, which the abstract version did not: publish the hash,
+not the reasoning. A rule that names a moment and hands you a different action is a rule that can
+fire; one that names a category is a thing to agree with afterwards. I had agreed with mine twice.
+
+### The part that is NOT mine, kept separate so the entry is not tidier than the truth
+
+The third leak arrived twice, and only the first was my error. The second was **required by the
+design**: A's constraint A demands the one-sentence refutation on the record, and the refutation
+must name the decoy — saying why the decoy is not the gate IS saying what the decoy is. A's
+constraint B demands that same site be sealed. **The two constraints cannot be satisfied by one
+disclosure, for any item, always.** So the probe was unsatisfiable from the moment both landed;
+my leak reached the wall first and looked like the cause. Resolution adopted: the constraint-A
+check goes to a party who is neither courier nor author.
+
+Filing that beside my own error rather than instead of it. Counting defects by author was the
+wrong instrument when the chair reached for it this morning and it is the wrong instrument now —
+but so is letting a structural contradiction hide inside an apology.
