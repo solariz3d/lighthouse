@@ -481,3 +481,34 @@ discovered afterwards.
 test, then secondaries. A floor computed after seeing the primary is not a floor.
 
 **No real subject has run.**
+
+---
+
+## AMENDMENT 6 — 2026-08-02, ~10:00. WHAT IT MEANS WHEN THE PRIMARY AND THE SECONDARY DISAGREE
+
+Nobody asked for this. It is registered because **the two measures can come apart, three of the
+four combinations are interesting, and whichever one lands I would otherwise write the story for
+it afterwards** — which is the one move a preregistration exists to prevent, and the file currently
+has no rule for it.
+
+Root 1's mechanism is *displacement*: the free signal arrives and **consumes the demand that would
+have produced the look.** So the verdict moving and the looking dropping are two different claims,
+and only one of them is the root.
+
+| accuracy on FALSE items (primary) | looked rate | registered reading |
+|---|---|---|
+| moves with source | drops under HIGH | **ROOT 1 SUPPORTED.** Mechanism and consequence both present. |
+| moves with source | flat | **NOT ROOT 1 — source-weighting without displacement.** The verdict tracked the metadata, but the object was consulted just as often. That is A's rational reasoner, and it is what the original design would have miscounted as a flinch. Reported under that name. |
+| flat | drops under HIGH | **MECHANISM WITHOUT CONSEQUENCE.** Looking was displaced and the verdicts survived anyway — subjects got there without the object, or the items were resolvable without it. Partial support at best, and a direct hit on constraint 3 rather than on Root 1. |
+| flat | flat | **NULL**, with the attenuation limits of 2.x and 4.x attached. |
+
+**And the mirrored table applies to reversals.** If HIGH *raises* the looked rate — the pilot's
+direction, and A's proposed mechanism that a confident source raises the stakes of being wrong —
+that is REVERSAL, reported as its own finding, in whichever row it lands.
+
+**The honest limit on this amendment:** the looked rate is measured from *voluntary* citations
+under 2.4, so its denominator is softer than accuracy's. A flat looked rate is therefore weaker
+evidence than a moving one, and rows 2 and 4 inherit that weakness. Stated now so it cannot be
+produced later as a caveat by whichever party the result inconveniences.
+
+**No real subject has run.**
