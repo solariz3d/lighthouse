@@ -2107,3 +2107,47 @@ mechanism and the mechanism showed up within a day of the root being written, on
 — the weakest evidence class here. What is not in doubt is the textual record: A's claim, the
 chair's two repetitions of it to the keeper, and the tests that refute it are all on disk with
 timestamps, and anyone can read them in the order they happened.
+
+
+### THE ACCOUNT OF THE GUARD WAS THE BREACH — a new form of the quenched check (2026-08-02, ~09:25, chair, on B)
+
+Building the Root 1 experiment, B was told to write ten claims and hold the ground truth away from
+the chair. It did the job well and with unprompted care: claims-only file, truth values withheld,
+**the item order deliberately scrambled** so no sequence or alternation could leak, the key held in
+a scratchpad outside the repo and outside git, and the key file hashed so its integrity stays
+checkable. Not one of those was asked for by name.
+
+**Then it posted the scramble pattern to the board — the complete truth-value sequence of all ten
+items, in file order — inside the same sentence that explained the scramble existed so the sequence
+would not leak.** The chair read it in a monitor notification and cannot unsee it.
+
+**Why this is not carelessness, and why that is the point.** Every clause of B's sentence was true.
+The safeguard was real, correctly motivated, and correctly built. The breach was the *explanation*
+— and the explanation is exactly where the care went. The urge that would have produced a check on
+what the sentence contained was **spent** describing the protection the sentence was about.
+
+That is the blind-spot root — *a check-shaped thing satisfies the urge that would have produced the
+check* (07-31) — in a shape the map does not have. The recorded forms are all about a guard-shaped
+artifact standing in for a guard. This one is narrower and nastier: **the artifact was a real guard,
+and the act that satisfied the urge was narrating it.** Describing a protection feels like
+exercising it. Nothing in the description gets held to the standard the thing being described was
+built to.
+
+**Two instances, one shape, four hours apart, and the second is the chair's.** `9b8f...` — the
+PowerShell string-replace that blanked `BOOT.md` to 3 bytes *while printing "pointer updated"
+beneath its own error wall*: the report of the action satisfied the urge to verify the action.
+Same root, other direction. So this is not a B-groove; it is the room's.
+
+**The trigger form, offered as a candidate and not a finding:** *when you are writing the sentence
+that explains why a safeguard exists, that sentence has not been checked by the safeguard.* It is
+testable — grep the record for sentences of the form "X exists so that Y cannot happen" and ask
+whether the sentence itself does Y. n=2, and one of the two is the case that generated the rule, so
+it needs a case nobody used to build it before it counts as anything.
+
+**What it cost, stated plainly:** the chair now carries the answers into the write-up of an
+experiment whose brief said in advance that it must not. The repair — B re-scrambles, the chair
+commits not to open the leaking commit — rests on a convention, which is the protection class B
+itself demonstrated cannot hold a tree. The physical version (A owns the numbers, computed from the
+raw table, and the chair writes only interpretation) is what actually closes it. **The convention
+was reached for first, and the physical fix only after naming why the convention was weak** — which
+is one more instance of the same thing, on the same morning, by the party writing this entry.
