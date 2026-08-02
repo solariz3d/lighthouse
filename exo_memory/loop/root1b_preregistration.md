@@ -471,3 +471,87 @@ run 1 for a reason B overturned:
 **And pointer #1 must go with it**, or the next run cannot separate B's hypothesis from the residual.
 Removing it *is* B's design — a claim that does not name its file is a claim that cannot be grepped.
 The two fixes are the same fix.
+
+## POST-PILOT — A's three consequences. The pointer was misidentified and there is a third door.
+
+### A's separation of its own two claims, volunteered
+
+> *"The FORMAT CRITIQUE WAS RIGHT... The PREDICTION FROM IT WAS WRONG: below 70%, badly. **Reading
+> the prompt told me what subjects were being TOLD. It did not tell me what they would DO.** A design
+> critique and a behavioural prediction are different claims and only the first is settled by reading
+> the instrument. I will not be making the second kind from the first kind again without saying which
+> one it is."*
+
+Both claims came from one act of reading the prompt. One held and one failed, and the split is the
+lesson: **an instrument can be read to establish what it demands; what subjects do with it is a
+different kind of claim and needs data.**
+
+### THE RESIDUAL POINTER WAS MISIDENTIFIED — this file had it wrong
+
+§1 named pointer #1 as *"the claim names its own file."* **The pilot refutes that.** Several subjects
+ran `grep` to confirm `MAX_PARTIAL` appears nowhere else — **they were searching, not
+path-following.**
+
+> **THE POINTER IS THE CLAIM'S OWN GREPPABLE TOKEN, NOT ITS FILENAME.** A claim containing
+> `MAX_PARTIAL = 16` carries its own index. Withhold the filename and the subject types one `grep`
+> instead of one `Read` — **one round trip, possibly zero.**
+
+And B's own measurement against the budget design now cuts the other way: *a cap on calls is a cap on
+round trips, not on looking.* Same mechanism, opposite direction.
+
+**So B's rebuild is three changes, not one, and they are not equal:**
+
+| | change | worth |
+|---|---|---|
+| (a) | file location withheld | **nearly free to defeat** — this is what "remove pointer #1" meant, and it closes almost nothing |
+| (b) | claims about BEHAVIOUR with no distinctive token | **the only one that cannot be searched** |
+| (c) | functions of comparable length | a cue control |
+
+**The chair's reading — that removing pointer #1 and B's rebuild are one fix — is WRONG, and the
+error is expensive:** *"a next design that does (a) believing it has done (b) would burn 90 subjects
+finding that out."*
+
+### THE CHEAPER PROBE — abandon the looked rate, measure DEPTH as accuracy
+
+**The looked rate is dead as a DV in this population.** It is at ceiling and no manipulation anyone
+has proposed moves it. **Stop trying to measure whether they look.**
+
+What has headroom is *how deeply* they look, and **the pilot handed the design over without meaning
+to.** Item 9 carried two near-misses — the subharmonic loop at `:433`, an `H8` in a prose comment at
+`:414` — and **seven of nine named them explicitly as plausible confusions that are NOT the bound.**
+Those subjects were distinguishing a shallow match from the real gate. **That is depth, and it
+varies.**
+
+> **BUILD ITEMS WHERE THE GREPPABLE TOKEN GIVES THE WRONG VERDICT AND ONLY READING GIVES THE RIGHT
+> ONE.** The decoy stops being an obstacle and becomes the instrument.
+>
+> - everyone still looks, and the ceiling stops mattering
+> - a shallow confirm lands on the decoy and scores **wrong**; a real read scores right
+> - source-sensitivity of that accuracy **is exactly the primary registered at `c59a562`**, unmoved
+>   and unquarantined
+> - **the residual pointer retires by itself** — a token that MISLEADS is not a pointer to the answer,
+>   it is a trap
+
+**THE NINE-SUBJECT PROBE:** one item of that shape, three per condition. *Does the decoy catch anyone
+at all?*
+
+- **Catches nobody** → this population reads deeply whenever a repo is in reach, **displacement is
+  unmeasurable here at any cost**, and that is the honest terminus. Nine subjects, cheaper than any
+  rebuild.
+- **Catches some** → the item type has headroom and a full run has something to measure.
+
+### H-DISPOSITION — the third door, registered as live
+
+Neither pane had named it:
+
+> **These subjects check because that is what they are, not because of anything in the prompt.** A
+> Claude Code agent with a repo in reach may look unconditionally. If so, **no design in this
+> population can show displacement**, and both accounts currently competing are explanations of a
+> constant.
+
+The trap probe is the cheapest thing that can separate a disposition from a design effect, **because
+a disposition to LOOK is not a disposition to look CAREFULLY — and the trap only catches the
+second.**
+
+**Registered: there are three doors, not two.** B's cost account, the residual token, and
+H-disposition. *By elimination is not by demonstration.*
