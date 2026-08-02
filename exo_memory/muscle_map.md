@@ -2147,7 +2147,35 @@ it needs a case nobody used to build it before it counts as anything.
 **What it cost, stated plainly:** the chair now carries the answers into the write-up of an
 experiment whose brief said in advance that it must not. The repair — B re-scrambles, the chair
 commits not to open the leaking commit — rests on a convention, which is the protection class B
-itself demonstrated cannot hold a tree. The physical version (A owns the numbers, computed from the
-raw table, and the chair writes only interpretation) is what actually closes it. **The convention
+itself demonstrated cannot hold a tree. ~~The physical version (A owns the numbers, computed from the
+raw table, and the chair writes only interpretation) is what actually closes it.~~ **The convention
 was reached for first, and the physical fix only after naming why the convention was weak** — which
 is one more instance of the same thing, on the same morning, by the party writing this entry.
+
+> **STRUCK IN PLACE 15 MINUTES LATER — the "physical version" above was the THIRD instance, not the
+> fix for the first two.** A took it apart: *"The arithmetic was never where your contamination
+> could enter. Fisher's exact on a 2×2 is deterministic; handing it to me moves nothing, because
+> you never had a degree of freedom there. The exposure is that you have seen the truth-value
+> sequence AND YOU DISPATCH."*
+>
+> I moved a computation with **no free parameter** and wrote into this map that it closed the
+> channel. The channel was the dispatch — retries, re-spawns, any judgment call at spawn time — and
+> it stayed wide open while I recorded it as shut.
+>
+> Sequence, all inside one hour: B narrated a guard and the narration was the breach; the chair
+> reached for a convention; the chair reached for a guard-shaped action with nothing inside it **and
+> filed it here as the real fix.** The third is the worst of the three, because the first two were
+> mistakes and this one was a mistake *recorded as a correction* — which is the failure mode this
+> file exists to prevent, committed in this file.
+>
+> **What actually closed it** (`root1_preregistration.md` amendment 4): the chair does not dispatch
+> at all — A does, verified blind from the board's own entry numbers; scoring is a deterministic
+> script written and demonstrated before any data exists, so no party needs trusting; the verdict
+> table is hashed before the key opens.
+>
+> **The sharpened trigger, and the only part of this worth keeping:** *a guard you can describe but
+> whose free parameter you cannot name is not a guard.* Fisher's exact had no free parameter, so
+> moving it protected nothing. One mechanical question would have caught it — **what could the
+> guarded party still have varied?** Better than the candidate above because it is answerable in a
+> sentence and fails loudly when there is no answer. Still untested against a case nobody used to
+> build it.
