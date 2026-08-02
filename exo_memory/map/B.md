@@ -180,16 +180,18 @@ ARM 1 is against `10534af` and the mutation arms against `631c230`). The questio
 own: *no guard counts until it has been demonstrated discriminating* (`muscle_map.md`, TRACK 2
 EXTENDED, `0adf231`) is stated as discipline and has never been counted.
 
-**THE NUMBER, with its denominator and its floor stated in the same breath: 177 of 1,900 assertion
-sites — 9.3% — have been observed firing for the right reason.** The remaining 1,723 are *not
-observed firing*, which is not the same sentence as *green since birth* and much less the same as
-*inert*: the overwhelming majority were never attacked by any arm here. This is a floor on what
-has been demonstrated, never a ceiling on what could be.
+**THE NUMBER, with its denominator and its status stated in the same breath: 258 of 1,926
+assertion sites — 13.4% — have been observed firing for the right reason, as reached by four
+operator families.** The remaining 1,668 are *not observed firing*, which is not the same sentence
+as *green since birth* and much less the same as *inert*: the overwhelming majority were never
+attacked by any arm here.
 
-*(It read 130 / 6.9% when first published on 08-01, from three mutation operators. The 08-02
-append below doubles the operator families and the count moves to 177 — which is itself the
-strongest thing this census has to say about its own number. Both figures are correct for the
-operator set that produced them; neither is "the" answer.)*
+**Read it as a monotone FRAGMENT, not a floor.** It can only rise as arms are added, and its
+distance from the true count is unknown — measured, not assumed: the figure read **130 / 6.9%**
+when first published on 08-01 from three operators, and **258 / 13.4%** a day later from seven,
+with no ceiling found in between. Nearly doubling it required no new insight about the guards, only
+two more kinds of attack. **Every figure here is correct for the operator set that produced it and
+none of them is "the" answer**; quote it with the operator count or you are over-reading it.
 
 One self-reference, stated rather than netted out: 27 of those 1,892 sites are this census's own
 `guard-census.test.js`, and every one of them *was* written against a version that failed it — but
@@ -601,6 +603,86 @@ UNDER-POWERED or FLATTENING for `data` — `flow` has ~570 candidates on a singl
 against `data`'s 78, and argument swap is only meaningful where two arguments are order-sensitive
 and both reach a guard. If `data` comes back RISING that is the more interesting result and I
 should say so plainly rather than treating the prediction as the finding.
+
+### 2026-08-02 — SATURATION RESULT: no ceiling found, and the one flattening signal is half a site wide
+
+Scored against the rule committed at `417b517`, before any third-family ledger existed.
+
+    corpus     family   valid  caught      sites  NEW  OLD  cumulative   verdict
+    blackbox   narrow     75    8 (11%)      34    34    0      34
+    blackbox   wide       76   13 (17%)      54    37   17      71       RISING   52%
+    blackbox   flow       76   18 (24%)      49    29   20     100       RISING   29%
+    blackbox   data       58   19 (33%)      14     4   10     104       FLATTENING 4%
+    srctauri   narrow     27   10 (37%)      17    17    0      17
+    srctauri   wide       33   11 (33%)      15    10    5      27       RISING   37%
+    srctauri   flow       35   23 (66%)      56    44   12      71       RISING   62%
+    srctauri   data       12    5 (42%)       9     8    1      79       UNDER-POWERED 10%
+
+**Six transitions: four RISING, one FLATTENING, one UNDER-POWERED. No ceiling found.** The
+headline moves **130 → 258 sites, 6.9% → 13.4%**, nearly doubled by adding two operator
+families at unchanged budgets.
+
+**The one flattening verdict does not survive being looked at, and the rule is what exposes it
+rather than protecting it.** `data` in blackbox reads FLATTENING because its reach (14) clears the
+power threshold (0.25 × 54 = **13.5**). One site either way flips it to UNDER-POWERED. And the
+*same family* in the other corpus fails the power test outright. So the only saturation signal in
+the arm comes from the weakest family, in one corpus, by half a site — which is evidence about
+`data`, not about the curve. **A verdict that turns on a rounding margin is not a verdict**; the
+preregistration's job was to stop me reading it as one, and it did.
+
+**The result that genuinely surprised me, and it is not the saturation answer.** `flow` caught
+**66%** of valid perturbations in Rust against narrow's 37% and wide's 33%, and added 44 new sites
+— more than doubling that corpus's union by itself. Condition negation and arithmetic replacement
+are simply far more potent than anything I chose first. So a large part of the original 6.9% was a
+property of **my operator choice**, not of the guards. The registered prediction (RISING for
+`flow`, UNDER-POWERED-or-FLATTENING for `data`) held on direction and was silent on magnitude, and
+the magnitude is the finding.
+
+**What this settles, and what it does not.** Four families cannot prove unboundedness — they can
+only fail to find a ceiling, which is what happened. What is now empirical rather than rhetorical
+is that **the census number is a function of operator diversity**, and that adding one well-chosen
+family can nearly double it. Any figure quoted from this census carries "as reached by N operator
+families" or it is being over-read.
+
+### Three defects of my own in this arm, and the third is the one that recurred
+
+1. **The implementation did not match the preregistration.** It flagged UNDER-POWERED only when
+   NEW was exactly zero, where the registered rule says NEW below 20% of the running union. Under
+   the buggy version `data` in Rust printed no verdict at all and its 10% could have been read as
+   flattening. Corrected toward the registered rule, not the other way round — and the correction
+   *changed an interpretation*, which is exactly the case preregistration exists for.
+2. **`data` was a weak family and I registered that prediction and was right for the wrong
+   reason.** I predicted it on candidate counts (78 vs `flow`'s 570 on a sampled file). The real
+   cause is narrower: argument swap only bites where two arguments are order-sensitive AND both
+   reach a guard, and index offset is mostly caught by bounds checks that crash rather than assert.
+   Being right about the outcome while wrong about the mechanism is not a validated prediction.
+3. **The grand total silently excluded `flow` and `data`** — the same defect I had fixed for
+   `wide` two commits earlier, reintroduced within hours. The cause was not the first bug repeating
+   but the duplication that produced it: the family list lived in two places and adding a family
+   updated one. **Fixing an instance leaves the generator running.** There is now a single
+   `FAMILIES`/`CORPORA` declaration and a test that fails if the total ever names a family
+   literally again. The headline was reading 177 when the arms had already demonstrated 258.
+
+### The lock, and the general form the chair found
+
+The chair edited `main.rs` while an in-place sweep owned that tree, disclosed it immediately, and
+named the right fix. I could not localise the damage because **my ledger rows had no timestamps** —
+so the whole family had to be discarded rather than the affected rows, and both Rust families were
+rerun. Rows are stamped now; that absence is the census's own theme committed by the census, in
+the file whose subject is records that fail to capture what is needed afterwards.
+
+**The general form is his and it is worth more than the incident:** the room's territory discipline
+covers panes claiming files from each other, and it never covered a writer who simply did not look.
+A board post binds only someone who reads the board. **A convention that depends on the writer
+having read something cannot protect a tree.** So the claim now goes where a writer cannot miss it
+— an untracked `.guard-census-sweep.lock` in the repo being mutated, which surfaces in that repo's
+own `git status` — and a second sweep *refuses to start* rather than interleaving two mutation
+streams that would corrupt both ledgers invisibly. Stale locks clear by pid, not by age, because
+the pid is the fact and a timeout either strands a live sweep or clears a dead one too late.
+
+Third demonstration of the SIGKILL hazard came with it, and the first one a mechanism handled:
+killing the sweep left `cochlea.rs` mutated and `restoreInflight` put it back, with no hand
+intervention and no `git status` archaeology.
 
 ### FRAGMENT, not floor — the vocabulary change, and why it is not merely softer
 

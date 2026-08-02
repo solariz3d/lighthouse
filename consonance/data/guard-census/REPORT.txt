@@ -1,13 +1,13 @@
 GUARD CENSUS — how many of this room's guards have been shown to fail against what they guard
 ====================================================================================================
   corpus: blackbox @ 3f2bed2  (1 uncommitted path(s) at report time, excluded from every denominator)
-  corpus: lighthouse @ b71e534  (5 uncommitted path(s) at report time, excluded from every denominator)
+  corpus: lighthouse @ 5adea4e  (8 uncommitted path(s) at report time, excluded from every denominator)
 
 DENOMINATORS (assertion SITES, not test cases — the two differ by 2x and are never summed)
   blackbox     788 sites in 39 files   (+6 file(s) carrying no assertion at all)
-  srctauri     551 sites in 9 files   (+9 file(s) carrying no assertion at all)
-  tools        561 sites in 10 files   (+0 file(s) carrying no assertion at all)
-  TOTAL       1900 sites
+  srctauri     558 sites in 9 files   (+9 file(s) carrying no assertion at all)
+  tools        580 sites in 10 files   (+0 file(s) carrying no assertion at all)
+  TOTAL       1926 sites
 
 ARM 1 — HISTORY: does the guard discriminate the state it was BORN to guard?
   (source checked out at the commit BEFORE the test appeared; the test run as it was written)
@@ -43,7 +43,7 @@ ARM 2 — MUTATION: consonance tools/  (40 perturbations of the source the guard
       caught by a named guard             : 8  (21%)
       red with nothing resolvable (UNCL.) : 0   <- counted against the census, not dropped
       SURVIVED — nothing went red at all  : 31  (79% of real perturbations unnoticed)
-    distinct guards shown firing          : 11 of 561 sites in this corpus
+    distinct guards shown firing          : 11 of 580 sites in this corpus
 
 ARM 2 — MUTATION: consonance src-tauri (cargo)  (45 perturbations of the source the guards read)
     broke the build/load instead (CRASH)  : 18   <- NOT a demonstration; excluded from the rate
@@ -53,22 +53,30 @@ ARM 2 — MUTATION: consonance src-tauri (cargo)  (45 perturbations of the sourc
       caught by a named guard             : 10  (37%)
       red with nothing resolvable (UNCL.) : 0   <- counted against the census, not dropped
       SURVIVED — nothing went red at all  : 17  (63% of real perturbations unnoticed)
-    distinct guards shown firing          : 17 of 551 sites in this corpus
+    distinct guards shown firing          : 17 of 558 sites in this corpus
 
-ARM 2c — NARROW vs HELD-OUT OPERATORS: is 6.9% a property of the guards or of the operators?
-    corpus      set      valid  caught          sites   NEW sites the other set never reached
-    blackbox    narrow     75    8 (11%)        34
-    blackbox    wide       76   13 (17%)        54
-                union      71 distinct sites   (+37 reachable ONLY by the held-out set, +17 only by the narrow set)
-    srctauri    narrow     27   10 (37%)        17
-    srctauri    wide       33   11 (33%)        15
-                union      27 distinct sites   (+10 reachable ONLY by the held-out set, +12 only by the narrow set)
-    Read the NEW-sites column, not the percentages: a rate can move because the operators
-    crash more often, which shrinks the denominator. The site union cannot move that way.
+ARM 2c — SATURATION: does demonstrated count keep rising as disjoint operator families are added?
+    corpus      family   valid  caught      sites   NEW   OLD   cumulative union
+    blackbox    narrow     75    8 (11%)      34    34     0     34
+    blackbox    wide       76   13 (17%)      54    37    17     71
+    blackbox    flow       76   18 (24%)      49    29    20    100
+    blackbox    data       58   19 (33%)      14     4    10    104
+                -> wide    NEW 37/71 = 52%, reach 54 vs strongest 54  => RISING
+                -> flow    NEW 29/100 = 29%, reach 49 vs strongest 54  => RISING
+                -> data    NEW 4/104 = 4%, reach 14 vs strongest 54  => FLATTENING
+    srctauri    narrow     27   10 (37%)      17    17     0     17
+    srctauri    wide       33   11 (33%)      15    10     5     27
+    srctauri    flow       35   23 (66%)      56    44    12     71
+    srctauri    data       12    5 (42%)       9     8     1     79
+                -> wide    NEW 10/27 = 37%, reach 15 vs strongest 56  => RISING
+                -> flow    NEW 44/71 = 62%, reach 56 vs strongest 56  => RISING
+                -> data    NEW 8/79 = 10%, reach 9 vs strongest 56  => UNDER-POWERED  (null is about the family, NOT evidence of saturation)
+    Read NEW and the cumulative union, not the percentages: a rate can move because the
+    operators crash more often, which shrinks the denominator. The union cannot move that way.
     Bias that remains and is not correctable here: collapse-to-zero, sign inversion and
-    statement deletion all produce EQUIVALENT MUTANTS on unreached or dead code — no
-    behaviour change, so they read as SURVIVED and push the caught rate DOWN. The wide
-    rate is therefore a floor on its own terms, not a like-for-like of the narrow rate.
+    statement deletion produce EQUIVALENT MUTANTS on unreached code — no behaviour change,
+    so they read as SURVIVED and push their own caught rate DOWN. Every family rate is a
+    fragment on its own terms; the cumulative union is the comparable quantity.
 
 ARM 2b — CAN IT FAIL AT ALL? each guard attacked at its OWN referent (the born-green set, plus a control)
     test_collidergrid.js     referents  5  fired  4   inert: "sakura_speedway"
@@ -97,12 +105,15 @@ ARM 3 — THE PROSE RECORD: commits whose body states a guard fired (429 commits
     7 genuine, 2 red-for-the-wrong-reason — and the second class is named by the room itself, in its own commit messages.
 
 THE ANSWER
-  assertion sites observed firing for the right reason : 177
-  assertion sites in both repos                        : 1900
-  fraction ever demonstrated discriminating            : 9.3%
-  the rest: 1723 sites NOT OBSERVED FIRING — the overwhelming majority never attacked
-  by any arm here, not shown inert. This is a floor on what has been demonstrated, not
-  a ceiling on what could be.
+  assertion sites observed firing for the right reason : 258
+  assertion sites in both repos                        : 1926
+  fraction ever demonstrated discriminating            : 13.4%
+  the rest: 1668 sites NOT OBSERVED FIRING — the overwhelming majority never attacked
+  by any arm here, not shown inert.
+  READ THIS AS A FRAGMENT, NOT A FLOOR. It is monotone — adding arms can only raise it —
+  but its distance from the true count is unknown and scales with operator DIVERSITY,
+  not with effort: one extra operator family moved it 36%. "Floor" is right about the
+  direction and wrong about the distance; quote it as a fragment of unknown proportion.
 
 WHAT THIS NUMBER DOES NOT MEAN
   - IT IS NOT A SAFETY METRIC. It measures whether a guard has been shown to fire, never

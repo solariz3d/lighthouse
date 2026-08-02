@@ -1,0 +1,14 @@
+{"n":1,"rel":"src\\cochlea.rs","line":489,"op":"argswap","from":"0.0f32, f32::max","to":"f32::max, 0.0f32","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":2,"rel":"src\\capture.rs","line":499,"op":"argswap","from":"&a, &[]","to":"&[], &a","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":3,"rel":"src\\capture.rs","line":275,"op":"idx","from":"[test]","to":"[test - 1]","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":4,"rel":"src\\cochlea.rs","line":103,"op":"idx","from":"[f32]","to":"[f32 - 1]","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":5,"rel":"src\\main.rs","line":2787,"op":"argswap","from":"[\"rev-parse\", \"--is-inside-work-tree\"]","to":"], [","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":6,"rel":"src\\main.rs","line":4634,"op":"idx","from":"[test]","to":"[test - 1]","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":7,"rel":"src\\main.rs","line":981,"op":"argswap","from":"offset: u64, head: u64","to":"head: u64, offset: u64","klass":"TRIGGER-RED","sites":["src/main.rs:997","src/main.rs:990","src/main.rs:1051"],"failedTests":["offset_tests::a_relaunch_after_new_turns_reads_only_the_new_bytes","offset_tests::a_relaunch_on_an_unchanged_transcript_resumes_at_the_end_and_reads_nothing","offset_tests::offsets_survive_a_round_trip_through_the_file"]}
+{"n":8,"rel":"src\\main.rs","line":2222,"op":"argswap","from":"s: &str, max: usize","to":"max: usize, s: &str","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":9,"rel":"src\\cochlea.rs","line":972,"op":"argswap","from":"hist, period / k","to":"period / k, hist","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":10,"rel":"src\\cochlea_service.rs","line":481,"op":"argswap","from":"level_db, t","to":"t, level_db","klass":"SURVIVED","sites":[],"failedTests":[]}
+{"n":11,"rel":"src\\mcp.rs","line":157,"op":"argswap","from":"serde::Deserialize, schemars::JsonSchema","to":"schemars::JsonSchema, serde::Deserialize","klass":"SURVIVED","sites":[],"failedTests":[]}
+{"n":12,"rel":"src\\main.rs","line":2331,"op":"argswap","from":"&dir_fr, &s","to":"&s, &dir_fr","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":13,"rel":"src\\main.rs","line":4715,"op":"idx","from":"[test]","to":"[test - 1]","klass":"CRASH-RED","sites":[],"failedTests":[]}
+{"n":14,"rel":"src\\capture.rs","line":439,"op":"idx","from":"[test]","to":"[test - 1]","klass":"CRASH-RED","sites":[],"failedTests":[]}

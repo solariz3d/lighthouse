@@ -514,6 +514,15 @@ function onlyScript(html) {
 /* Narrow and wide results live in SEPARATE files. Appending the held-out set into the same
  * ledger would silently redefine what every previously quoted rate was a rate OF — the
  * denominator moving under a number that keeps its name. */
+/* THE ONE LIST. Adding an operator family means adding it HERE and nowhere else. The total
+ * silently excluded the `wide` ledgers on 08-02 and I fixed that instance; hours later the
+ * same total silently excluded `flow` and `data`, because the fix was to the instance and
+ * not to the duplication that caused it — a family list in two places, and adding a family
+ * updated one. A number that omits the very arm run to move it is the quenched check in a
+ * spreadsheet, and it recurs until the duplication is what gets fixed. */
+const FAMILIES = ["narrow", "wide", "flow", "data"];
+const CORPORA = ["blackbox", "srctauri", "tools"];
+
 const MUTFILE = (corpus, opset) => `mutation-${corpus}${opset === "narrow" ? "" : "-" + opset}.jsonl`;
 
 /* ------------------------------------------------------- crash-safe edit ---
@@ -527,6 +536,45 @@ const MUTFILE = (corpus, opset) => `mutation-${corpus}${opset === "narrow" ? "" 
  * leaving a perturbation in somebody else's tree, which is the harm.
  */
 function inflightPath() { fs.mkdirSync(SCRATCH, { recursive: true }); return path.join(SCRATCH, "inflight.json"); }
+
+/* ------------------------------------------------------------- the lock ---
+ * A sweep that mutates a tree IN PLACE owns that tree for its duration, and until tonight
+ * nothing said so. The room's territory discipline covers panes claiming files from each
+ * other; it never covered a writer who simply did not look, and a board post does not help
+ * someone who did not read the board. So the claim goes where a writer cannot miss it: an
+ * untracked lock file in the repo being mutated, which shows up in that repo's own
+ * `git status` as `?? .guard-census-sweep.lock`.
+ *
+ * Two properties on purpose. It is VISIBLE — the point is discovery by someone about to
+ * edit, not enforcement. And it is CHECKED — a second sweep refuses to start rather than
+ * interleaving two mutation streams in one tree, which would corrupt both ledgers and be
+ * invisible in each.
+ *
+ * Stale locks from killed runs are detected by pid rather than by age: a timeout would
+ * either strand a live sweep or clear a dead one too late, and the pid is the fact.
+ */
+const LOCKNAME = ".guard-census-sweep.lock";
+
+function takeLock(root, what) {
+  const f = path.join(root, LOCKNAME);
+  if (fs.existsSync(f)) {
+    let rec = {}; try { rec = JSON.parse(fs.readFileSync(f, "utf8")); } catch (e) {}
+    let alive = false;
+    try { process.kill(rec.pid, 0); alive = true; } catch (e) { alive = false; }
+    if (alive) {
+      console.error(`REFUSING TO START: a guard-census sweep (pid ${rec.pid}, ${rec.what}) already owns ${root}\n` +
+                    `Two in-place mutation streams in one tree corrupt both ledgers and neither one shows it.`);
+      process.exit(3);
+    }
+    console.log(`clearing a stale lock from dead pid ${rec.pid} (${rec.what})`);
+  }
+  fs.writeFileSync(f, JSON.stringify({ pid: process.pid, what, started: new Date().toISOString(),
+    note: "A guard-census sweep is mutating this tree in place. Edits here will be overwritten by its restore. Wait for it or stop it." }, null, 1));
+  const drop = () => { try { fs.unlinkSync(f); } catch (e) {} };
+  process.on("exit", drop);
+  for (const sig of ["SIGINT", "SIGTERM", "SIGHUP"]) process.on(sig, () => { drop(); process.exit(1); });
+  return drop;
+}
 
 function withRestore(p, fn) {
   const orig = fs.readFileSync(p);
@@ -587,7 +635,13 @@ function fmtInventory(inv) {
 /* ------------------------------------------------------------- drivers --- */
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
-const jsonl = (name, rec) => fs.appendFileSync(path.join(OUT, name), JSON.stringify(rec) + "\n");
+/* Every row is stamped. Without this a ledger cannot be audited against anything that
+ * happened outside it: when the chair disclosed an edit to a tree a sweep was mutating, the
+ * question "which rows fall in that window" had no answer, and the whole family had to be
+ * discarded rather than the affected rows. The census's own theme, committed by the census —
+ * the record did not capture what would be needed afterwards. */
+const jsonl = (name, rec) => fs.appendFileSync(path.join(OUT, name),
+  JSON.stringify({ ts: new Date().toISOString(), ...rec }) + "\n");
 
 /* JS corpora: mutate the sources the tests read, run the suite in a COPY of the repo, and
  * record which named sites fired. A copy rather than the keeper's tree — a census must not
@@ -602,6 +656,7 @@ function mutateJs(corpus, budget, seed, opset) {
     : { root: TOOLS, work: TOOLS, inPlace: true, exclude: [] };
   fs.mkdirSync(OUT, { recursive: true });
   restoreInflight();
+  if (cfg.inPlace) takeLock(cfg.root, `${corpus} --ops ${opset}`);
   const resuming = parseInt(arg("--skip", "0"), 10) > 0 && fs.existsSync(cfg.work);
   if (!cfg.inPlace && !resuming) {                    // a resume reuses the copy it left behind
     if (fs.existsSync(cfg.work)) fs.rmSync(cfg.work, { recursive: true, force: true });
@@ -736,6 +791,7 @@ function mutateRust(budget, seed, opset) {
   const chosen = pick(all, budget, seed);
   console.log(`${all.length} candidate mutations in src/*.rs; running ${chosen.length} (seed ${seed})`);
   restoreInflight();
+  takeLock(SRCTAURI, `srctauri --ops ${opset}`);
   const cargoTimeout = parseInt(arg("--suite-timeout", "600000"), 10);
   const base = run(CARGO, ["test", "--no-fail-fast"], SRCTAURI, cargoTimeout);
   if (base.code !== 0) { console.error("BASELINE NOT GREEN — aborted"); process.exit(2); }
@@ -1089,9 +1145,8 @@ function report() {
    * NOT counted toward saturation. Without this, an under-powered family invented carelessly
    * would produce a flat union for the wrong reason and read as a ceiling.
    */
-  const FAMILIES = ["narrow", "wide", "flow", "data"];
   const famRows = {};
-  for (const c of ["blackbox", "srctauri", "tools"])
+  for (const c of CORPORA)
     famRows[c] = Object.fromEntries(FAMILIES.map(f => [f, derive(readJsonl(MUTFILE(c, f)), c)]));
   if (Object.values(famRows).some(o => FAMILIES.slice(1).some(f => o[f].length))) {
     const norm = s2 => path.basename(s2.replace(/src\/bin\/\.\.\//, "src/"));
@@ -1116,11 +1171,25 @@ function report() {
                String(sites.size).padStart(4) + "  " + String(fresh.length).padStart(4) + "  " +
                String(sites.size - fresh.length).padStart(4) + "   " + String(seen.size).padStart(4));
       }
+      /* The registered rule, applied by the tool rather than by prose. It is written out here
+       * because the first implementation did NOT match the preregistration: it only flagged a
+       * family whose NEW count was exactly zero, where the rule says NEW below 20% of the
+       * running union. Under the buggy version `data` printed no verdict at all and a reader
+       * could have taken its 10% as flattening. Corrected toward the registered rule, not the
+       * other way round — and the correction changes an interpretation, which is exactly why
+       * the rule was committed before the run. */
       const strongest = Math.max(...reach.map(r => r.total));
-      for (const r of reach.slice(1)) {
-        if (r.fresh === 0 && r.total < 0.25 * strongest)
-          L.push("    " + " ".repeat(11) + " !! " + r.f + ": 0 new AND total reach " + r.total +
-                 " vs strongest " + strongest + " — UNDER-POWERED; its null is NOT evidence of saturation");
+      let running = 0;
+      for (const r of reach) {
+        running += r.fresh;
+        if (r === reach[0]) continue;                          // the first family defines the union
+        const share = r.fresh / running;
+        const verdict = share >= 0.20 ? "RISING"
+                      : r.total >= 0.25 * strongest ? "FLATTENING" : "UNDER-POWERED";
+        L.push("    " + " ".repeat(11) + " -> " + r.f.padEnd(7) + " NEW " + r.fresh + "/" + running +
+               " = " + (100 * share).toFixed(0) + "%, reach " + r.total + " vs strongest " + strongest +
+               "  => " + verdict +
+               (verdict === "UNDER-POWERED" ? "  (null is about the family, NOT evidence of saturation)" : ""));
       }
     }
     L.push("    Read NEW and the cumulative union, not the percentages: a rate can move because the");
@@ -1171,7 +1240,7 @@ function report() {
   // EVERY ledger, narrow and held-out. The wide files were missing here on the first render
   // and the headline sat unchanged at 130 while ARM 2c showed 37 new sites two screens above
   // — a total that silently excluded the arm run to move it.
-  const LEDGERS = ["blackbox", "tools", "srctauri"].flatMap(c => [MUTFILE(c, "narrow"), MUTFILE(c, "wide")]).concat("canfail.jsonl");
+  const LEDGERS = CORPORA.flatMap(c => FAMILIES.map(f => MUTFILE(c, f))).concat("canfail.jsonl");
   for (const f of LEDGERS)
     for (const r of readJsonl(f))
       for (const s of r.sites || []) demonstrated.add(path.basename(s.replace(/src\/bin\/\.\.\//, "src/")));
@@ -1248,4 +1317,4 @@ if (require.main === module) {
   } else { console.error("unknown command " + cmd); process.exit(1); }
 }
 
-module.exports = { withRestore, restoreInflight, MUTFILE, toolFrames, blankJs, blankRust, jsSites, rustSites, inventory, resolveSites, onlyScript, mutants, classify, codeStrings };
+module.exports = { FAMILIES, CORPORA, takeLock, LOCKNAME, withRestore, restoreInflight, MUTFILE, toolFrames, blankJs, blankRust, jsSites, rustSites, inventory, resolveSites, onlyScript, mutants, classify, codeStrings };

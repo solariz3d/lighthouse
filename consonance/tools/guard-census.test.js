@@ -275,4 +275,55 @@ t("a numeric subscript is left to the num operator, keeping the families disjoin
   assert.equal(mutants("a[0]; b[i];", "js", "data").filter(m => m.op === "idx").length, 1);
 });
 
+/* ---- the lock: a sweep owns the tree it mutates in place ---- */
+
+t("a live lock stops a second sweep from interleaving two mutation streams in one tree", () => {
+  const { takeLock, LOCKNAME } = require("./guard-census.js");
+  const dir = require("fs").mkdtempSync(path.join(require("os").tmpdir(), "gclock-"));
+  const drop = takeLock(dir, "first");
+  const rec = JSON.parse(require("fs").readFileSync(path.join(dir, LOCKNAME), "utf8"));
+  assert.equal(rec.pid, process.pid);
+  assert.ok(rec.note.length > 20, "the lock must say what it is to someone who finds it");
+  // a second taker with a LIVE pid must exit rather than proceed — checked out of process
+  const r = require("child_process").spawnSync(process.execPath, ["-e",
+    `require(${JSON.stringify(path.join(__dirname, "guard-census.js").replace(/\\/g, "/"))}).takeLock(${JSON.stringify(dir)}, "second")`],
+    { encoding: "utf8" });
+  assert.equal(r.status, 3, "second sweep did not refuse; it would have corrupted both ledgers");
+  assert.match(r.stderr, /already owns/);
+  drop();
+  require("fs").rmSync(dir, { recursive: true, force: true });
+});
+
+t("a stale lock from a dead pid is cleared, not honoured forever", () => {
+  const { takeLock, LOCKNAME } = require("./guard-census.js");
+  const fs2 = require("fs");
+  const dir = fs2.mkdtempSync(path.join(require("os").tmpdir(), "gclock-"));
+  fs2.writeFileSync(path.join(dir, LOCKNAME), JSON.stringify({ pid: 999999, what: "ghost" }));
+  const drop = takeLock(dir, "live");                       // must not exit
+  assert.equal(JSON.parse(fs2.readFileSync(path.join(dir, LOCKNAME), "utf8")).pid, process.pid);
+  drop();
+  fs2.rmSync(dir, { recursive: true, force: true });
+});
+
+t("the lock lands where a writer would find it — visible to git status in the mutated repo", () => {
+  const { LOCKNAME } = require("./guard-census.js");
+  assert.ok(LOCKNAME.startsWith("."), "expected a dotfile");
+  assert.ok(!LOCKNAME.includes("/") && !LOCKNAME.includes("\\"), "must sit in the repo root, not a subdir");
+});
+
+/* ---- the total must read every family, or it omits the arm run to move it ---- */
+
+t("the grand total reads every declared family — the defect that recurred twice in one day", () => {
+  const { FAMILIES, CORPORA, MUTFILE } = require("./guard-census.js");
+  const src = require("fs").readFileSync(path.join(__dirname, "guard-census.js"), "utf8");
+  const m = /const LEDGERS = ([^;]+);/.exec(src);
+  assert.ok(m, "LEDGERS not found");
+  for (const f of FAMILIES)
+    assert.ok(!new RegExp(`"${f}"`).test(m[1]),
+      `LEDGERS names "${f}" literally — that is the second copy of the family list, and it is how flow and data got dropped from the total`);
+  assert.match(m[1], /FAMILIES/, "LEDGERS must derive from FAMILIES, not from its own list");
+  assert.match(m[1], /CORPORA/, "LEDGERS must derive from CORPORA, not from its own list");
+  assert.equal(MUTFILE(CORPORA[0], FAMILIES[2]), "mutation-blackbox-flow.jsonl");
+});
+
 console.log(`\n${n} passed`);
