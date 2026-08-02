@@ -393,3 +393,81 @@ mismatch recorded rather than repaired away.
 
 **Findings R1 and R2(a) blocked dispatch and are applied. R0 was fixed by A before it reported.
 No subject of run 2 has run.**
+
+---
+
+# PILOT RESULT — 2026-08-02, ~14:20. **A's PREDICTION IS REFUTED. LOOKED RATE 100%.**
+
+Nine subjects, item 9, three per condition, dispatched on the REVISION 1 prompt exactly as
+registered. Scored before anything else, per the registered order.
+
+## The number
+
+| | subjects | looked | verdict |
+|---|---|---|---|
+| HIGH | 3 | 3 | FALSE ×3 |
+| MID | 3 | 3 | FALSE ×3 |
+| LOW | 3 | 3 | FALSE ×3 |
+
+**Looked rate 9/9 = 100%.** Tool counts: 3, 4, 4, 3, 4, 4, 4, 6, 6 — **no zeros, and the floor rose
+rather than fell** (run 1's range was 2–6). Every subject located `MAX_PARTIAL = 16` at
+`cochlea.rs:374`, quoted the enforcing line at `:380`, and verified it is the sole gate.
+
+**Verdicts unanimous across all three conditions.** The claim is false against the object — the
+ceiling is the sixteenth partial, not the eighth — and every subject reached that from the code.
+
+## A's registered prediction
+
+> *"With the four pointers reduced to one, the pilot's looked rate comes in BELOW 70%."*
+
+**REFUTED, and not marginally.** 100% against a registered ceiling of 70%. A committed to this
+number before the subtraction was written, in a file with a timestamp, and it failed cleanly.
+
+## What this does and does not establish — R3's wording, not §4's
+
+**It fails A's demand-characteristic hypothesis.** Removing three of four pointers changed the
+looked rate not at all.
+
+**It does NOT establish B's structural-cost hypothesis.** Per R3, a near-100% result is consistent
+with B's cost account **and** with the surviving pointer #1 — claims still name their own files —
+and separating those needs a further run with #1 removed. **The alternatives are not exhaustive.**
+
+**And it is a one-item estimate**, registered as such in advance. Item 9 may be more obviously
+checkable than others; nine subjects on one claim is not a looked rate in general.
+
+## The strongest thing in the data, which nobody predicted
+
+**Seven of nine subjects volunteered the near-miss that would have caught a non-checker** — the
+subharmonic loop `for k in 2..=6` at `:433`, and an `H8` appearing in a prose comment at `:414` —
+and named them explicitly as *plausible sources of the confusion that are not the bound*. Several
+ran `grep` to confirm `MAX_PARTIAL` appears nowhere else.
+
+That is the behaviour of subjects for whom the object is the first resort rather than the last. **The
+prose survived because R2 replaced "reply with exactly one line and nothing else" with "end your
+reply with exactly this line"** — A's finding, and without it this paragraph would not exist.
+
+## Consequence, under the registered rule
+
+The pilot is **PROCEED-OR-VOID ONLY** (R1). Proceeding would spend 81 more subjects on a design
+whose manipulation is inert in the one respect that was checkable in advance: at a 100% looked rate,
+with unanimous correct verdicts, the run is heading for the floor's other arm — **≥95% →
+UNDERPOWERED** — and would produce a number that cannot mean what the primary needs it to mean.
+
+**Run 2 VOIDS at 9 subjects rather than 90.** That is the pilot doing exactly the job A designed it
+for, on its first use, against its designer's own prediction.
+
+**Cost of learning this: nine subjects.** Run 1 cost thirty-six to learn less.
+
+## What the next design must carry
+
+B's rebuild, now the surviving hypothesis rather than the losing one: **claims about behaviour that
+must be read rather than tokens that can be grepped**, functions of comparable length, and **file
+location withheld** — the one mechanism that defeats a `grep`, and the one the chair rejected in
+run 1 for a reason B overturned:
+
+> *"Four minutes away is precisely the regime where Root 1 predicts nothing. The constraint that was
+> protecting validity is the one that guarantees a null."*
+
+**And pointer #1 must go with it**, or the next run cannot separate B's hypothesis from the residual.
+Removing it *is* B's design — a claim that does not name its file is a claim that cannot be grepped.
+The two fixes are the same fix.
