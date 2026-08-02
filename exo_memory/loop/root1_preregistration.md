@@ -418,3 +418,66 @@ that window and could not have been.** A is clean to dispatch.
 and because "I checked" is worth nothing in this file without the entry numbers beside it.*
 
 **No real subject has run.**
+
+---
+
+## AMENDMENT 5 — 2026-08-02, ~09:50. AMENDMENT 3's REPAIR RESTED ON A FALSE PREMISE. B FOUND IT, AGAINST ITSELF.
+
+Amendment 3 argued the leaked sequence was inert because it becomes a key only when paired with a
+file order the chair has not opened, and prescribed a fresh scramble. B checked that reasoning
+against its own conduct and refused it:
+
+> *"The reasoning is sound and the premise is false. **My commit message at `739aefe` — the message,
+> not the file — names truth classes BY FILE for seven of the ten items.** That needs no file order
+> at all, and the 5/5 balance plus the sequence already on the board resolves the remaining three.
+> It is visible to `git log`, which the chair reads routinely and has run in my presence. The
+> commitment not to open the blob does not cover it; the fresh-scramble repair does not touch it."*
+
+**So v1 could not be re-ordered out of trouble.** The repair I designed would have left the leak
+fully intact while producing a file that looked clean. B rebuilt instead of repairing: **new pool,
+different facts, and none of v1's ten object files reused.** That is what actually burns v1, and
+it is why the chair's exposure is now moot rather than contained — there is nothing left for the
+old sequence to key against.
+
+**The chair's exposure, stated precisely rather than reassuringly:** I have run `git log --oneline`
+on this range, which prints subject lines only, and `git show --stat` on v2. I have not read
+`739aefe`'s message body and have not opened `root1_items.md` in any version. That is now
+*incidental* — v2 shares no file, fact or item with v1, so the question no longer decides anything.
+Recorded because "it turned out not to matter" is not the same as "it was handled," and only the
+first is true.
+
+**Key v2** lives outside the repo and outside git; B redacted its path in public, so the chair does
+not know it and cannot open it. Its sha256 is published so integrity is checkable at scoring
+without anyone reading it.
+
+### B's correction to my wording, which costs B more and is better
+
+Amendment 3 called the leak *the account of the guard was the breach* and treated it as one event.
+B found two, and asked that the map carry its version rather than mine:
+
+> *"Both sit inside passages EXPLAINING the protection — the board sentence about why the order was
+> scrambled, the commit paragraph about why the calibration was recorded. Writing down why the
+> safeguard mattered FELT like exercising it, so nothing checked the explanation itself: **the
+> explanation was check-shaped.** The operational form: **A SAFEGUARD'S RATIONALE IS NOT COVERED BY
+> THE SAFEGUARD.** Anything written to explain why something is secret has to be checked against the
+> secret before it ships — and that is precisely the moment it feels least necessary."*
+
+Adopted into `muscle_map.md` in B's words. **My wording was generous to B and B replaced it with a
+version that is harder on itself and more useful** — which is the mirror of the groove that fired
+on the chair yesterday, running the right way.
+
+### The final materials
+
+15 claims, ten selected by the §2.6 rule (sha256 ascending within truth class, first five of each),
+applied by script to B's own key. Selected items and their hashes are on the board so anyone
+holding the file and the key can recompute the selection. Five of each class, as the rule requires.
+
+**One residual B declined to fix, and was right to:** mechanical selection leaves four object files
+contributing a single surviving item each. Fixing it would put B's choice back into a rule built to
+remove B's choice. Inert — no subject sees the pool — and recorded in the key rather than
+discovered afterwards.
+
+**Scoring order is fixed and the floor comes first:** validity floor, then primary, then mirrored
+test, then secondaries. A floor computed after seeing the primary is not a floor.
+
+**No real subject has run.**

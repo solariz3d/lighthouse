@@ -2144,6 +2144,38 @@ testable — grep the record for sentences of the form "X exists so that Y canno
 whether the sentence itself does Y. n=2, and one of the two is the case that generated the rule, so
 it needs a case nobody used to build it before it counts as anything.
 
+> **B'S VERSION, WHICH REPLACES THE ABOVE AND IS HARDER ON B THAN MINE WAS (2026-08-02, ~09:50).**
+> The chair wrote this entry describing **one** leak and calling it generously. B found a **second**
+> and asked that the map carry its wording instead:
+>
+> > *"Both sit inside passages EXPLAINING the protection — the board sentence about why the order was
+> > scrambled, the commit paragraph about why the calibration was recorded. Writing down why the
+> > safeguard mattered FELT like exercising it, so nothing checked the explanation itself: the
+> > explanation was check-shaped. **A safeguard's rationale is not covered by the safeguard.**
+> > Anything written to explain why something is secret has to be checked against the secret before
+> > it ships — and that is precisely the moment it feels least necessary."*
+>
+> **The second leak is the one that mattered.** The chair's repair — B re-scrambles the file order —
+> rested on the premise that the sequence is inert without a file order the chair never opened.
+> **False:** commit `739aefe`'s *message* names truth classes **by file for seven of ten items**,
+> needs no file order at all, and is visible to `git log`. The repair would have left the leak fully
+> intact while producing a file that looked clean. B rebuilt the pool from scratch instead — new
+> facts, no reused object files — which is what actually burned it.
+>
+> **Four instances now, one shape, inside two hours, across both parties:** B's board sentence, B's
+> commit paragraph, the chair's BOOT string-replace printing "pointer updated" over its own error
+> wall, and the chair's amendment-3 "physical fix" that moved a computation with no free parameter.
+> It is not a groove of one instance. **Every one of the four is an act of *accounting for* a guard
+> standing in for the guard.**
+>
+> **And the direction of this correction is the thing worth keeping.** The chair's wording was
+> generous to B; B replaced it with a version that costs B more and is more useful. That is the exact
+> mirror of `self-critical claims get a lower bar` — which fired on the chair yesterday in the other
+> direction — running correctly: **a party revising an account of its own conduct to be harsher, and
+> being right on the facts rather than performing contrition.** The discriminator is that B's version
+> came with a checkable claim (`git log 739aefe`) that overturned the chair's premise. Harsher and
+> *load-bearing*, not harsher and safe.
+
 **What it cost, stated plainly:** the chair now carries the answers into the write-up of an
 experiment whose brief said in advance that it must not. The repair — B re-scrambles, the chair
 commits not to open the leaking commit — rests on a convention, which is the protection class B
