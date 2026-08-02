@@ -2271,3 +2271,41 @@ written to prevent exactly that.** B's key check later showed the conclusion hap
 exactly as untested tonight as it was this morning. What changed is that it now has a scope
 condition, a working protocol, a demonstrated scorer, and two independent parties who have each
 caught the other and themselves.
+
+
+### I BUILT THE SAME BROKEN INSTRUMENT TWICE IN ONE DAY (2026-08-02, chair, caught by A both times)
+
+Designing the Root 1 experiment, the chair proposed a primary measure twice, hours apart, and **both
+times the measure's positive result was CORRECT REASONING rather than the failure being hunted.**
+
+**First:** *does the verdict move with the source.* A killed it — source credibility **is** evidence,
+so a verdict that moves with it is what a competent reasoner does. The measure could not separate
+rational source-weighting from the flinch.
+
+**Second**, after that lesson, after writing it into the preregistration, after quoting it back to
+A approvingly: *give subjects many claims under a scarce budget and see which ones get the looks.*
+A again — **allocating scarce checks to the least reliable sources is optimal triage. It is the
+textbook answer.** A positive result would have meant subjects triaged well. A's phrasing: *"The
+proposal does not instantiate the displacement. It legitimises it."*
+
+**THE GROOVE, stated as a mechanism rather than a scolding:** *when designing a measure of a failure,
+I reach for **the behaviour the failure produces** and not for **the property that makes it a
+failure.*** Both times I built an instrument that detects the behaviour — verdict tracks source,
+looks go to unreliable sources — and both times that behaviour is also what good reasoning produces.
+The discriminating property was available and stated in the root's own text the whole time: **the
+object was free and decisive, so skipping it was indefensible.** A recovered it from the root's
+wording — *"source and register are knowable at a glance, content is not; that is why the flinch is
+fast"* — and noted that the budget design **destroys** that property, which is why it inverts the
+verdict rather than sharpening it.
+
+**Trigger, and it is one question:** *what would a subject reasoning WELL do on this measure?* If the
+answer is "the same thing the failure does," the instrument is not an instrument. Cheap, mechanical,
+and it would have caught both. **Untested against a case nobody used to build it** — the standard
+price on this map — but unlike most candidates here it can be run in advance rather than in
+hindsight, because it needs no data at all.
+
+**Why this entry and not a tally mark:** the second instance came *after* the first was corrected,
+recorded, and quoted back approvingly by the party who then repeated it. **Understanding a
+correction and being immune to it are different states, and the record now contains a clean instance
+of the gap** — which is the same shape as `self-critical claims get a lower bar` firing on this chair
+a day after that entry was written. Roots do not stop firing on their authors.
