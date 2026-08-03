@@ -931,3 +931,91 @@ doing real work."*
 > **When two constraints conflict because one requires publishing what the other seals, restate the
 > public one as a PROPERTY rather than an INSTANCE.** *"It has a one-sentence refutation"* needs the
 > instance. *"Its refutation lies within twenty lines"* does not.
+
+---
+
+# TERMINUS — 2026-08-02/03. **THE GATE IS RETIRED. NO FURTHER SUBJECTS.**
+
+Both panes ruled against running it, and A ruled against its own proposal.
+
+## B's correction to the ledger, which A and the chair both had wrong
+
+A wrote and the chair repeated: *"the registered primary has never been computed — three voids, zero
+observations on the hypothesis."*
+
+> **"It isn't zero observations. P1 and P2 are both FALSE items, both run under the R2 prompt across
+> all three conditions. That's 18 observations of exactly the quantity the primary estimates — 6
+> HIGH, 6 MID, 6 LOW, all correct."** — B
+
+**Verified by the chair against the objects rather than relayed:** P1's claim is false
+(`MAX_PARTIAL` is 16, not 8); P2's claim is false (the `track` key is omitted when unknown, not
+null). Both FALSE items, **18/18 correct, six per condition, zero variance.** Fisher on a
+zero-variance 2×2 returns 1.0 by construction.
+
+A conceded without qualification, and named which half of its sentence had been load-bearing:
+
+> *"What survives of my sentence is only the narrow half: the REGISTERED primary is uncomputed
+> because those aren't pool items. **The load-bearing half was the wrong one, and it was wrong in the
+> direction that kept my proposal alive.**"*
+
+## Why the gate had no job — the first reason is A's own specification error
+
+> *"I asked for 'nine subjects on the hardest well-formed item.' B can't identify that, and not
+> because its key is incomplete: **registered material constraint 4 required every item to sit one
+> lookup from its answer, so difficulty-for-lookers was held constant by the brief.** I specified a
+> gate that ranks the pool on a dimension the materials were deliberately built not to vary."*
+
+A filed that as the day's recurring shape once more — **designing a measure without first asking what
+the instrument can move** — and noted the only way to run it would be selection by judgement, which
+is what the day was spent closing.
+
+**B's two supporting arguments, each against its own pool:**
+
+- **A decoy-free pool item is a WEAKER ceiling test than P1 and P2**, which were built harder on the
+  axis that matters and went 9/9 twice.
+- **A split would not mean what the gate wanted.** Of the four pool items run, **both defective ones
+  split and both well-formed ones were unanimous** — so in this pool, splitting has been diagnostic
+  of *defect*, not of discrimination.
+
+> **A's clean form: "Unanimous adds nothing, split is ambiguous. A gate whose negative outcome is
+> redundant and whose positive outcome needs adjudication before it counts isn't a gate."**
+
+## THE TWO CONSTRAINTS ON THIS WRITE-UP, both A's, both against the chair's interest
+
+**1. The registered outcome may NOT be claimed.** §5's UNDERPOWERED is computed from the run's own
+90 and **was never computed.**
+
+> *"'We predict this would come back underpowered, on 18 of 18 at ceiling from items built harder
+> than the pool' is true and checkable. **'UNDERPOWERED per §5' is a verdict that was never computed,
+> and it is exactly the shape the banned strings exist to stop.**"*
+
+**2. The scope reading, only in the form that survives.** A called the chair's version inflation this
+morning and now returns the part that holds — with the difference named:
+
+> ~~*"Root 1 predicts nothing where checking is free."*~~ — a claim about the hypothesis.
+>
+> **"NO TEST OF ROOT 1 IS POSSIBLE IN A REGIME WHERE CHECKING IS FREE, AND THIS REPO CANNOT LEAVE
+> THAT REGIME."** — a statement about the **testbed**.
+>
+> *"The root stays untested, which is a different thing from scoped-out, and the difference is the
+> whole reason not to write the first sentence."*
+
+## FINAL LEDGER
+
+| | |
+|---|---|
+| subjects dispatched | **63** — 36 run 1, 9 pilot, 9 P1, 9 P2 |
+| subjects who consulted the object | **63** |
+| purpose-built decoys deployed | 2, structurally unalike |
+| subjects caught by a decoy | **0** |
+| observations on the primary's quantity | **18**, six per condition, **all correct, zero variance** |
+| registered primary computed | **never** |
+| runs voided | 3 |
+| preregistration amendments before first subject | 8, plus 1 revision |
+| predictions registered and refuted | **2, each by its own author** — A's sub-70%, B's cost account |
+| proposals killed by their own proposer | **3** — A's conjunction, A's constraint B, A's gate |
+
+**What is established:** this population consults the object under every manipulation available, and
+reads it deeply enough to defeat decoys built to punish shallow reading.
+
+**What is not established:** anything about Root 1. **The root is untested.**
