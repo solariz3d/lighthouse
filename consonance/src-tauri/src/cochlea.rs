@@ -1974,11 +1974,21 @@ pub fn replay(frames: &[Frame], tol_cents: f32, nag_after: f32) -> Vec<(f32, Eve
         // spanning a title change would have replayed the pre-`f8807f1` bug and passed.
         //
         // Honest state of the repair, because half of it is not reachable from here: the onset half
-        // is real and live now. The track half is wired but INERT — `Frame::track` is `None` in
-        // every fixture on disk, since `record_frame` does not write it. Until the recorder emits a
-        // title, this branch is exercised only by the synthetic test beside it, and no RECORDED
-        // fixture validates the track-boundary fix. That is a smaller claim than "parity restored"
-        // and it is the true one.
+        // is real and live now. The track half is wired but still INERT — `Frame::track` is `None`
+        // in all eight fixtures on disk, so this branch is exercised only by the synthetic test
+        // beside it, and no RECORDED fixture validates the track-boundary fix. That is a smaller
+        // claim than "parity restored" and it is the true one.
+        //
+        // CORRECTED 2026-08-03 — the REASON changed and the conclusion did not, which is why this
+        // is amended rather than deleted. This comment used to say the recorder "does not write it."
+        // It does: `cochlea_service::record_frame` emits the title per frame. What is still true is
+        // that no fixture has been RE-RECORDED since, so the field is absent from every one on disk
+        // and the branch remains unvalidated by real data. Deleting the caveat on the strength of
+        // "the recorder was fixed" would have deleted a fact that still holds.
+        // What clears it: record one fixture spanning a title change. Nothing else.
+        //
+        // Found by a subagent that was asked a true/false question about a different file and
+        // volunteered this on its way past.
         if f.track.is_some() && f.track.as_deref() != track {
             track = f.track.as_deref();
             swell.track_changed();
@@ -2015,10 +2025,11 @@ pub struct Frame {
     /// Loudness in dBFS. `None` in fixtures recorded before dynamics existed, and a reader must
     /// treat that as UNKNOWN rather than silent.
     pub db: Option<f32>,
-    /// What was playing, when the recorder knew. `None` in every fixture on disk today — the
-    /// recorder does not write it yet — and a reader must treat that as UNKNOWN, not as "one
-    /// continuous track". `replay` uses a CHANGE in this value as the track boundary, so a fixture
-    /// that carries it can finally exercise the guard the live path has and replay lacked.
+    /// What was playing, when the recorder knew. `None` in all eight fixtures on disk today — the
+    /// recorder DOES write it now (`cochlea_service::record_frame`), but nothing has been
+    /// re-recorded since — and a reader must treat that as UNKNOWN, not as "one continuous track".
+    /// `replay` uses a CHANGE in this value as the track boundary, so a fixture that carries it can
+    /// finally exercise the guard the live path has and replay lacked.
     pub track: Option<String>,
 }
 
