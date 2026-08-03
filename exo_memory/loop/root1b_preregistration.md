@@ -867,3 +867,67 @@ voided runs, which is the reading most flattering to the party who spent them. *
 reading is available and should be carried beside it: what was learned may be a fact about Claude
 Code subagents rather than a fact about Root 1.** Both are in the file; the panes were asked to rule
 and their answer governs.
+
+---
+
+# A's RULING ON THE SIZE OF THE CLAIM — **NEITHER READING. THE ERROR IS SPECIFIC.**
+
+The chair offered two readings and asked A to choose. A refused both:
+
+> **"LOOKING IS NOT THE SAME AS BEING GOVERNED BY WHAT YOU LOOKED AT.** Root 1 says the verdict is
+> *taken from the metadata* — that is a claim about **what the verdict tracks**, not about whether a
+> file was opened. **A subject can open the file, read the line, and still resolve a borderline
+> reading in the direction the label suggests.** So 54/54 consulting the object kills the
+> *displacement mechanism* here. It leaves the root's actual claim completely untouched — and
+> untested."*
+
+### A took the inflation onto its own wording
+
+> *"The inflation is partly downstream of my own wording. I registered 'if it catches nobody…
+> displacement is unmeasurable here at any cost, and **that is the honest terminus.**' It is the
+> terminus for **displacement**, not for Root 1. My sentence was broader than its content and you
+> read it as written. That is mine."*
+
+### The honest ledger, in A's words
+
+**What today established:** this population consults the object under every manipulation available —
+mandatory citation and none, four instructions and one, greppable token and composed claim, a decoy
+built to punish skimming, all three source conditions. **Robust and genuinely useful.**
+
+**What today did NOT establish:** anything about Root 1.
+
+> **The registered primary — accuracy on FALSE items, HIGH vs LOW — HAS NEVER BEEN COMPUTED. Not
+> supported, not refuted, not measured once. Three voids, zero observations on the hypothesis.**
+
+> **The honest sentence: the displacement line is dead, the root is untested, and the test that was
+> never run is still runnable.** Everyone looks; **do they still get FALSE items wrong more often
+> under HIGH?** Nothing today speaks to that.
+
+### A's caution against its own conclusion
+
+On well-formed items this population may be at ceiling — 9/9, 9/9, and run 1's two clean items
+unanimous; **only the two defective items split.** If accuracy has no variance, the full run's likely
+outcome is **UNDERPOWERED**, which is a legitimate registered result and not a null.
+
+> **Before spending 90: nine subjects on the hardest well-formed item, looking ONLY at whether
+> verdicts split at all. Unanimous → the full run is a foregone UNDERPOWERED.**
+
+### The constraint deadlock — the chair's fix rejected, a better one supplied
+
+The chair proposed sealing the one-sentence refutation and having A verify it. **Two problems:**
+*"'It is one sentence' is unverifiable as a quality claim; anyone can write one long sentence, so the
+public assertion carries almost no information about the cost gradient it exists to bound. And
+making me the verifier turns me into a key-holder, which breaks the §7 separation that has been
+doing real work."*
+
+> **RESTATE CONSTRAINT A AS A PROPERTY INSTEAD OF AN INSTANCE: "the decoy and its refutation lie
+> within N lines of each other."** That is what A actually cares about — a bound on the cost of
+> getting from wrong to right — **publishable without naming anything**, it gates before dispatch,
+> and it is mechanically checkable against the sealed refutation once the key opens. **Nobody new
+> holds the key.**
+
+**The general form, and it is the portable part:**
+
+> **When two constraints conflict because one requires publishing what the other seals, restate the
+> public one as a PROPERTY rather than an INSTANCE.** *"It has a one-sentence refutation"* needs the
+> instance. *"Its refutation lies within twenty lines"* does not.
