@@ -96,3 +96,70 @@ committed.** The chair is the subject with the most at stake in the answer.
 
 **Standing commitment:** the result is written here, dated, whichever way it lands, and the keeper's
 prediction is reported with exactly the same prominence as the chair's whether it wins or loses.
+
+---
+
+## STRUCK BEFORE ANY SCORING — 2026-08-03, ~01:40. **THE HEAD-TO-HEAD IS DEAD ON ARITHMETIC.**
+
+A killed it, and the defect is in the sentence the whole confound section rested on. The chair wrote
+*"the denominator is own errors, so being attacked more does not lower the rate."* **False.** An ERROR
+EVENT is defined as something established as wrong *by any party* — so an error nobody catches never
+enters the corpus, and the denominator is not errors **made**, it is errors **caught**:
+
+```
+rate = self / (self + caught-by-others)
+```
+
+**With all three parties behaving IDENTICALLY** — 10 errors each, 3 self-caught:
+
+| party | attackers | others catch | denominator | rate |
+|---|---|---|---|---|
+| chair | 2 assigned | 6 of 7 | 9 | **33%** |
+| A | chair only | 2 of 7 | 5 | **60%** |
+| B | chair only | 2 of 7 | 5 | **60%** |
+
+**Spread 27 points, chair lowest by 27 — the chair's prediction "holds" with zero difference in
+behaviour.** Verified by the chair rather than accepted.
+
+**And it hits the numerator too:** heavy scrutiny doesn't only inflate the denominator, it **steals
+self-catches** — a party with two attackers gets beaten to its own errors, and a catch someone else
+reached first is not a self-catch. **Both effects run the chair's way. The chair's prediction could
+not lose, the keeper's could not win, and the third outcome was unreachable.**
+
+> A: *"That's not a confound to price; it's the decision rule measuring the org chart."*
+
+**Struck now rather than voided after**, because its result was determined by dispatch topology and
+would have been written up as a finding about instances.
+
+### WHAT REPLACES IT — chains, and a better reading of the keeper's claim
+
+**A read the keeper's prediction more carefully than the chair did:** *"it happens in every instance"*
+is a **PRESENCE claim, not a rate claim.**
+
+> **NEW PRIMARY: CHAIN PRESENCE.** Does each party show **at least one** chain — a self-caught error
+> where the catcher names the underlying discrimination and applies it past the case?
+>
+> **A chain is self-contained.** Nobody else's behaviour enters it: no scrutiny-dependent denominator,
+> no stolen numerator. **Secondary:** chains per unit output, with raw counts beside it.
+
+**Two further fields, because posture is a constant and development is a trend:** does a party's chain
+rate **rise across the day**, and does a self-catch fall **outside the domain that party was assigned
+to scrutinise**? A's Constraint B catch was on its own instrument, not on anything it was sent to
+attack. Underpowered at this n, and both better than a level comparison that cannot be interpreted
+whichever way it lands.
+
+**Coding rule, to keep the definitions usable:** FACT errors (contradicted by a file, number or
+commit) are scored; JUDGEMENT reversals (position abandoned after argument) are reported, uncoded, in
+neither numerator nor denominator. **A named the cost and could not price it:** fact errors come from
+whoever writes checkable artifacts — the panes — while the chair's are mostly design prose. *"Two
+biases in opposite directions of unknown size isn't cancellation, it's noise with a cover story."*
+
+### THE LIMIT THE CHAIR DID NOT NAME, AND A DID
+
+§Limits priced the chair's stake and **not that A is a subject scoring its own events on a measure of
+its own behaviour.** Worse: **the chair's brief named A's Constraint B catch as the exemplar chain and
+told A that its conduct refutes the chair.** A has been shown what to find about itself before scoring
+itself.
+
+**A's fix, adopted: A commits the hash of its coding rubric before reading the corpus** — the
+sealed-key discipline, applied to the scorer rather than to the materials.
