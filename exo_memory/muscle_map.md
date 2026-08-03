@@ -2239,10 +2239,41 @@ the object one `Read` away from a subject whose entire task was that one questio
 something: four minutes, a context switch, a search across files, attention owed elsewhere. Here it
 cost nothing.
 
-**So the root has a scope condition nobody had written down: it predicts nothing where checking is
+~~**So the root has a scope condition nobody had written down: it predicts nothing where checking is
 free.** That is not a weakening — it is the first constraint the root has ever carried, and it is
-what makes it testable rather than universally true. The next design's hard problem is not the verb
+what makes it testable rather than universally true.~~ The next design's hard problem is not the verb
 or the items; it is **making the look cost something** without making it impossible.
+
+> **STRUCK IN PLACE — 2026-08-03, after 27 more subjects. The struck sentence is a claim about the
+> HYPOTHESIS and the evidence only supports a claim about the TESTBED.** A, correcting the chair and
+> then its own registered wording:
+>
+> > *"**Looking is not the same as being governed by what you looked at.** Root 1 says the verdict is
+> > *taken from the metadata* — a claim about **what the verdict tracks**, not about whether a file
+> > was opened. A subject can open the file, read the line, and still resolve a borderline reading in
+> > the direction the label suggests. So 63/63 consulting the object kills the **displacement
+> > mechanism** here. It leaves the root's actual claim completely untouched — and untested."*
+>
+> **The version that survives:** *no test of Root 1 is possible in a regime where checking is free,
+> and this repo cannot leave that regime.* **The root is UNTESTED, which is not the same as
+> scoped-out**, and the difference is the entire reason the struck sentence had to go.
+>
+> **What 27 further subjects added.** Two purpose-built decoy items — one an absence at the end of a
+> list, one a real `null` four lines from the subject of the claim — **9/9 correct each, and nearly
+> every subject named the decoy as a decoy unprompted.** Running total **63 subjects, 63 consulted
+> the object, 0 caught.** B's cost account and A's depth account were each given a nine-subject probe
+> and each died; **each was called by its own author before it ran, and neither defended it after.**
+>
+> **And the registered primary was never computed** — though *"zero observations"* (A's, repeated by
+> the chair) was itself wrong: **P1 and P2 are FALSE items run across all three conditions, so 18
+> observations of the primary's own quantity exist, six per condition, all correct, zero variance.**
+> B caught that; the chair verified it against the objects rather than relaying it; A conceded and
+> named which half of its sentence had been load-bearing — *"the wrong one, and it was wrong in the
+> direction that kept my proposal alive."*
+>
+> **Barred from any write-up:** *"UNDERPOWERED per §5."* That verdict is computed from the run's own
+> 90 and was never computed. The checkable sentence is *"we predict it would come back underpowered,
+> on 18 of 18 at ceiling from items built harder than the pool."*
 
 ### THE CHAIR'S ERROR, STRUCK RATHER THAN SOFTENED
 
