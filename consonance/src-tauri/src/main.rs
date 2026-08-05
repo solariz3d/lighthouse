@@ -2408,6 +2408,112 @@ fn is_fresh_cwd(cwd: &str) -> bool {
     is_managed_cwd(cwd) && is_fresh_dir_name(cwd)
 }
 
+#[cfg(test)]
+mod managed_cwd_tests {
+    use super::*;
+
+    /// `DIRS` is process-global and these tests rewrite it, so they must not run beside each
+    /// other or beside anything that resolves a directory. Poison is recovered from rather
+    /// than propagated: a panic in one case must not disable the others.
+    static SERIAL: Mutex<()> = Mutex::new(());
+
+    fn scratch(name: &str) -> PathBuf {
+        let p = std::env::temp_dir().join(format!("consonance_{name}_{}", std::process::id()));
+        let _ = fs::remove_dir_all(&p);
+        fs::create_dir_all(&p).expect("scratch dir");
+        p
+    }
+
+    /// THE INVARIANT THE WHOLE PROJECT RESTS ON WHEN SOMEONE ELSE INSTALLS IT: a pane pointed
+    /// at a user's own repository must never have its `CLAUDE.md` rewritten. Before this test
+    /// `is_managed_cwd` appeared exactly once in the codebase — its own definition — with 411
+    /// other tests passing around it. This repo has already shipped a guard that "was computed
+    /// and never wired in" (see the blackbox CHANGELOG), so the predicate existing is not
+    /// evidence that the write path consults it.
+    ///
+    /// Written to FAIL IF THE GUARD IS DELETED, which took some care: `warm_resume_brief` has a
+    /// second early return on a missing capture, so the naive version of this test — call it
+    /// with an unmanaged cwd, assert no file appeared — passes with the guard removed, because
+    /// the capture read bails first and nothing is written either way. The capture below exists
+    /// specifically so that early return cannot mask the one under test.
+    #[test]
+    fn a_users_own_project_never_has_its_claude_md_touched() {
+        let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let root = scratch("guard");
+        let instances = root.join("instances");
+        let data = root.join("data");
+        fs::create_dir_all(&instances).unwrap();
+        fs::create_dir_all(&data).unwrap();
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: root.join("BOOT.md").display().to_string(),
+            instances: instances.display().to_string(),
+            data: data.display().to_string(),
+        });
+
+        // The capture must exist, or the guard is not the thing being measured.
+        let cap = capture_text_path("PANE");
+        fs::create_dir_all(cap.parent().unwrap()).unwrap();
+        fs::write(&cap, "\u{276f} hello\n\nworld\n\n").unwrap();
+
+        // A user's own repository, with their own memory file already in it.
+        const THEIRS: &str = "# my project\n\nAlways use tabs. Never write comments.\n";
+        let their_repo = root.join("their-project");
+        fs::create_dir_all(&their_repo).unwrap();
+        let their_md = their_repo.join("CLAUDE.md");
+        fs::write(&their_md, THEIRS).unwrap();
+
+        let wrote = warm_resume_brief("PANE", &their_repo.display().to_string());
+        assert!(!wrote, "an unmanaged cwd must be refused before anything is written");
+        assert_eq!(
+            fs::read_to_string(&their_md).unwrap(),
+            THEIRS,
+            "their CLAUDE.md was modified — this is the one failure that loses a user's work"
+        );
+
+        // POSITIVE CONTROL. Without it the assertions above are satisfied by a function that
+        // never writes anywhere, and the test would keep passing while the feature rotted.
+        let managed = instances.join("PANE");
+        fs::create_dir_all(&managed).unwrap();
+        let wrote_managed = warm_resume_brief("PANE", &managed.display().to_string());
+        assert!(
+            wrote_managed,
+            "a managed dir MUST be written, or the refusal above proves nothing"
+        );
+        assert!(
+            managed.join("CLAUDE.md").exists(),
+            "managed dirs are where the brief belongs"
+        );
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// The predicate itself, on the shapes that actually turn up: a sibling directory whose
+    /// name merely starts with the same characters as the instances root must not count as
+    /// inside it. `starts_with` on `Path` compares components, not bytes — this pins that,
+    /// because the string-prefix version of this function would pass every other test here.
+    #[test]
+    fn a_sibling_directory_with_a_shared_prefix_is_not_inside() {
+        let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let root = scratch("prefix");
+        let instances = root.join("instances");
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: String::new(),
+            instances: instances.display().to_string(),
+            data: root.join("data").display().to_string(),
+        });
+
+        assert!(is_managed_cwd(&instances.join("A").display().to_string()));
+        assert!(is_managed_cwd(&instances.display().to_string()), "the root itself is managed");
+        assert!(
+            !is_managed_cwd(&root.join("instances-backup").join("A").display().to_string()),
+            "instances-backup/ shares a string prefix with instances/ and is a different place"
+        );
+        assert!(!is_managed_cwd(&root.join("their-project").display().to_string()));
+
+        let _ = fs::remove_dir_all(&root);
+    }
+}
+
 // the pulse, absolute: render a moment in local civil time, so a restored thread wakes knowing
 // not just how long it was gone but WHEN it is. Generic over timezone purely for testability
 // (Local's offset depends on the machine; tests pin a FixedOffset).
