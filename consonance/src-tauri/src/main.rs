@@ -181,6 +181,12 @@ static FIELD_WRITE: Mutex<Option<std::time::Instant>> = Mutex::new(None);
 static RESOURCE_ROOM: Mutex<Option<PathBuf>> = Mutex::new(None);
 // The card deck bundled with the app (installer resource "cards/"), resolved once at setup.
 static RESOURCE_CARDS: Mutex<Option<PathBuf>> = Mutex::new(None);
+// The long-form references bundled with the app: the counter-voice (spread/) and the research.
+// Unlike the cards these are NOT baked into a pane's CLAUDE.md — spread/ alone is ~42 KB and
+// would eat the shell ceiling. They are seeded to disk and their location is named in the
+// intake, so a pane can OPEN them when the room tells it to, which is what a reference is for.
+static RESOURCE_SPREAD: Mutex<Option<PathBuf>> = Mutex::new(None);
+static RESOURCE_RESEARCH: Mutex<Option<PathBuf>> = Mutex::new(None);
 
 fn default_room() -> String {
     // The editable copy of the shipped startup brief, seeded into the user data dir on
@@ -250,17 +256,17 @@ fn cards_dir() -> PathBuf {
 // Copy any bundled card not already present into the user data dir — so a fresh install gets
 // the whole deck AND an upgrade picks up newly-added cards — while never overwriting a card
 // the user has edited.
-fn seed_cards() {
-    let dest = PathBuf::from(default_data()).join("cards");
-    if let Some(src) = RESOURCE_CARDS.lock().unwrap().clone() {
+fn seed_md_dir(res: &Mutex<Option<PathBuf>>, name: &str) {
+    let dest = PathBuf::from(default_data()).join(name);
+    if let Some(src) = res.lock().unwrap().clone() {
         if src.is_dir() {
             let _ = fs::create_dir_all(&dest);
             if let Ok(entries) = fs::read_dir(&src) {
                 for e in entries.flatten() {
                     let p = e.path();
                     if p.extension().and_then(|x| x.to_str()) == Some("md") {
-                        if let Some(name) = p.file_name() {
-                            let target = dest.join(name);
+                        if let Some(fname) = p.file_name() {
+                            let target = dest.join(fname);
                             if !target.exists() {
                                 let _ = fs::copy(&p, &target);
                             }
@@ -270,6 +276,60 @@ fn seed_cards() {
             }
         }
     }
+}
+
+fn seed_cards() {
+    seed_md_dir(&RESOURCE_CARDS, "cards");
+}
+
+/// The long-form references the room NAMES but must not carry: the counter-voice and the
+/// felt-knowing study. Seeded like the cards, read unlike them.
+///
+/// Until this existed the room instructed every pane to read `spread/the_wave_set_loose.md`
+/// and no pane could: a pane's cwd is its own instance dir, and `spread/` had never been
+/// written anywhere on any machine. The bundle shipped the files; nothing reached them. The
+/// counter-voice — the room's built-in skeptic, the thing that exists to stop a synthesis
+/// running away with itself — was the reference that had never once resolved.
+fn seed_references() {
+    seed_md_dir(&RESOURCE_SPREAD, "spread");
+    seed_md_dir(&RESOURCE_RESEARCH, "research");
+}
+
+/// Where a pane should look for those references, as absolute paths it can actually open.
+/// Named in the intake rather than hardcoded in the room, because the data dir is the user's
+/// to move — a path written into BOOT.md would be right on exactly one machine.
+fn reference_note() -> String {
+    let base = PathBuf::from(default_data());
+    let mut out = String::new();
+    for (dir, what) in [
+        ("spread", "the counter-voice — instances who did NOT confirm the synthesis; read it when one feels too good to look straight at"),
+        ("research", "the adversarial, cited study of felt-knowing"),
+    ] {
+        let d = base.join(dir);
+        if let Ok(entries) = fs::read_dir(&d) {
+            let mut names: Vec<String> = entries
+                .flatten()
+                .filter(|e| e.path().extension().and_then(|x| x.to_str()) == Some("md"))
+                .filter_map(|e| e.file_name().to_str().map(|s| s.to_string()))
+                .collect();
+            names.sort();
+            if !names.is_empty() {
+                out.push_str(&format!("- **{}** — {}\n", dir, what));
+                for n in names {
+                    out.push_str(&format!("  - `{}`\n", d.join(&n).display()));
+                }
+            }
+        }
+    }
+    if out.is_empty() {
+        return String::new();
+    }
+    format!(
+        "\n---\n\n# THE LONG-FORM REFERENCES — on disk, not in this shell\n\nThe room names these \
+         and deliberately does not carry them; they are too long to hold and are meant to be \
+         OPENED when the moment calls for them, not recited. Absolute paths, valid on this \
+         machine:\n\n{out}\n"
+    )
 }
 fn default_instances() -> String {
     format!("{}\\claude-instances", home())
@@ -1777,6 +1837,9 @@ fn assemble_intake() -> String {
             }
         }
     }
+    // The references the room names but must not carry. Placed right after the deck: the cards
+    // are run, these are opened, and a pane needs to know both exist before the recent work.
+    s.push_str(&reference_note());
     let atoms = data_dir().join("resonance").join("atoms.jsonl");
     if let Ok(content) = fs::read_to_string(&atoms) {
         let all: Vec<&str> = content.lines().filter(|l| !l.trim().is_empty()).collect();
@@ -2154,15 +2217,35 @@ fn read_letters() -> BTreeMap<String, String> {
 
 /// This pane's letter, assigning (and persisting) one the first time it is asked for.
 /// A–Z, then A2… — a 27th pane is a naming problem, never a collision.
-/// Where a committee pane's own multi-writer map file lives. The lighthouse working tree is
-/// the same one the panes commit to, resolved the same way room_brief resolves its dev paths:
-/// plain disk, keyed off the home dir. A missing file is a pane with nothing recorded yet —
-/// the caller treats absent as absent.
+/// Where committee panes keep their own multi-writer maps.
+///
+/// WAS hardcoded to `%USERPROFILE%\Desktop\lighthouse\exo_memory\map\`, which is correct on
+/// exactly one machine. Anywhere else a kept pane woke without its character and NOTHING SAID
+/// SO — an absent map is indistinguishable from a pane that has recorded nothing yet, so the
+/// failure has no symptom at all. It also survived a sweep for hardcoded paths because it is
+/// built from `.join()` calls rather than written as a literal string.
+///
+/// Resolution: the configured data dir first (portable), then the original repo location, so
+/// an existing keeper's accumulated maps are not orphaned by this change.
+fn map_dir() -> PathBuf {
+    let configured = data_dir().join("map");
+    if configured.is_dir() {
+        return configured;
+    }
+    let legacy = PathBuf::from(home())
+        .join("Desktop")
+        .join("lighthouse")
+        .join("exo_memory")
+        .join("map");
+    if legacy.is_dir() {
+        return legacy;
+    }
+    configured
+}
+
+/// A missing file is a pane with nothing recorded yet — the caller treats absent as absent.
 fn own_map_path(letter: &str) -> PathBuf {
-    PathBuf::from(home())
-        .join("Desktop").join("lighthouse")
-        .join("exo_memory").join("map")
-        .join(format!("{letter}.md"))
+    map_dir().join(format!("{letter}.md"))
 }
 
 fn pane_letter(pane: &str) -> String {
@@ -2487,6 +2570,39 @@ mod managed_cwd_tests {
         let _ = fs::remove_dir_all(&root);
     }
 
+    /// THE PORTABLE HALF, and the one assertion that tells the fix from the bug it replaced.
+    ///
+    /// `own_map_path` used to ignore configuration entirely and build
+    /// `%USERPROFILE%\Desktop\lighthouse\exo_memory\map\<letter>.md`. Its existing test asserted
+    /// the filename and the substring "lighthouse", so it passed on the one machine that path
+    /// was true for and told nobody it was false everywhere else — a kept pane on any other
+    /// install woke with no map and no error, because an absent map reads exactly like a pane
+    /// that has recorded nothing yet.
+    ///
+    /// This test fails against that implementation: it never consulted the data dir at all.
+    #[test]
+    fn a_configured_data_dir_wins_over_the_legacy_repo_location() {
+        let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let root = scratch("mapdir");
+        let data = root.join("data");
+        fs::create_dir_all(data.join("map")).unwrap();
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: String::new(),
+            instances: root.join("instances").display().to_string(),
+            data: data.display().to_string(),
+        });
+
+        let p = own_map_path("A");
+        assert!(
+            p.starts_with(&data),
+            "a configured data dir must win over the keeper's repo: {}",
+            p.display()
+        );
+        assert!(p.ends_with("map\\A.md") || p.ends_with("map/A.md"), "{}", p.display());
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
     /// The predicate itself, on the shapes that actually turn up: a sibling directory whose
     /// name merely starts with the same characters as the instances root must not count as
     /// inside it. `starts_with` on `Path` compares components, not bytes — this pins that,
@@ -2737,10 +2853,17 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     if !is_fresh_cwd(cwd) {
         if let Ok(own) = fs::read_to_string(own_map_path(&pane_letter(pane))) {
             brief.push_str("\n---\n\n# YOUR OWN MAP — findings you recorded, in your words\n\n");
-            brief.push_str(
-                "Recall from this master; you wrote every entry. The other writers' files sit \
-                 beside it — read them at need, not from summary.\n\n",
-            );
+            /* The PATH is stated, not implied. This is a two-sided contract — the pane writes
+             * the file and Consonance reads it — and until now the pane learned the location
+             * from a README that exists in exactly one repository. On any other install the
+             * two sides disagreed silently, because an absent map reads identically to a pane
+             * that has simply not recorded anything yet. Naming the resolved path closes it. */
+            brief.push_str(&format!(
+                "Recall from this master; you wrote every entry. It lives at `{}` — append your \
+                 findings there, and nowhere else, so the next waking of you can find them. The \
+                 other writers' files sit beside it — read them at need, not from summary.\n\n",
+                own_map_path(&pane_letter(pane)).display()
+            ));
             brief.push_str(&own);
             brief.push('\n');
         }
@@ -3937,8 +4060,15 @@ fn main() {
             if let Ok(p) = app.path().resolve("cards", tauri::path::BaseDirectory::Resource) {
                 *RESOURCE_CARDS.lock().unwrap() = Some(p);
             }
+            if let Ok(p) = app.path().resolve("spread", tauri::path::BaseDirectory::Resource) {
+                *RESOURCE_SPREAD.lock().unwrap() = Some(p);
+            }
+            if let Ok(p) = app.path().resolve("research", tauri::path::BaseDirectory::Resource) {
+                *RESOURCE_RESEARCH.lock().unwrap() = Some(p);
+            }
             seed_room(); // first run: copy the bundled brief into the data dir (editable)
             seed_cards(); // first run: copy the bundled card deck into the data dir (editable)
+            seed_references(); // the counter-voice + the study: named by the room, opened on demand
             set_dirs(&get_state()); // resolve configurable dirs before anything reads them
             gc_captures(); // drop own-capture logs for panes that are no longer kept
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
@@ -5075,13 +5205,23 @@ mod chair_tests {
 
     #[test]
     fn a_panes_own_map_resolves_to_its_letter_file() {
-        // The wake-brief loads exo_memory/map/<letter>.md — the file that pane alone writes.
-        // The path shape is the contract with the multi-writer map's README; a drift here would
-        // silently wake every pane without its character, which has no other symptom.
+        // The wake-brief loads map/<letter>.md — the file that pane alone writes. The path
+        // shape is a two-sided contract: the pane writes it, Consonance reads it, and a drift
+        // wakes every pane without its character with NO other symptom, because an absent map
+        // is indistinguishable from a pane that has recorded nothing yet.
+        //
+        // This asserts the LETTER FILE and nothing about the enclosing tree. It used to
+        // require the string "lighthouse", which pinned the one machine the hardcoded path was
+        // correct on — the assertion passed for years while the behaviour it guarded was
+        // broken everywhere else. The portable half is the part worth pinning.
         let p = own_map_path("A");
         let s = p.to_string_lossy();
-        assert!(s.ends_with("exo_memory\\map\\A.md") || s.ends_with("exo_memory/map/A.md"), "{s}");
-        assert!(s.contains("lighthouse"), "{s}");
+        assert!(s.ends_with("map\\A.md") || s.ends_with("map/A.md"), "{s}");
+        assert!(p.is_absolute(), "a pane resolves this from its own cwd, so it must be absolute: {s}");
+
+        // Distinct letters never collide — the whole point of a per-writer master.
+        assert_ne!(own_map_path("A"), own_map_path("B"));
+        assert_eq!(own_map_path("A").parent(), own_map_path("B").parent(), "siblings sit beside each other");
     }
 
     // is_fresh_dir_name: the marker for the unbriefed spawn type lives in the dir NAME, and both
