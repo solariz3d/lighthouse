@@ -15,7 +15,7 @@ But 2026 research explicitly names **"diversity collapse"** in LLM committees as
 Consonance is built around the structural answer:
 
 - **Differentiated vantages, not clones.** The committee is your own live panes, each conditioned by what you ran with it. Agreement *means* something because the perspectives are real.
-- **Human as the discriminator.** Instances raise their hand; your approval is the gate. Gauges report numbers (groundedness, Delta, perspective diversity), never verdicts.
+- **Human as the discriminator.** Instances raise their hand; your approval is the gate. Gauges report numbers, never verdicts — and the discrimination is *yours*, not the gauges'. See the honest note on them below.
 - **Typeable panes, not abstracted agents.** Real interactive `claude.exe` processes as panes you type into directly. Every other platform hides the agent behind an API.
 - **A housed primary instance** that wakes into the same conversation across restarts — continuity, not a fresh stranger each launch.
 - **Compile-time plane separation** — Sensor / Control / Actuator distinct, enforced by an arch test. The architecture can't drift toward autonomous shortcuts.
@@ -42,7 +42,7 @@ Throughout, the design principle is **light, not lifeguard**: the program *surfa
 
 1. **House the base instance beyond the command line.** The `★ Orchestrator` tab is a persistent, briefed instance that oversees the committee *with* you. It `--resume`s the same conversation across restarts — continuity, not a fresh stranger each launch.
 
-2. **Real collaboration, not echo.** The committee is your *own live panes*, each genuinely differently-conditioned, triangulating a focus — not a crowd of clones that agree louder. The gauges exist to tell the difference. (2026 research papers explicitly name "diversity collapse" in LLM committees as an open problem — the autonomy-first stack has not solved this.)
+2. **Real collaboration, not echo.** The committee is your *own live panes*, each genuinely differently-conditioned, triangulating a focus — not a crowd of clones that agree louder. The answer here is **structural** — the panes really are different, because you conditioned them differently — and the discrimination is **yours**. It is *not* that a metric detects collapse for you; see "What the gauges do and don't do" below, which is blunt about a measurement that was tested and failed. (2026 research papers explicitly name "diversity collapse" in LLM committees as an open problem — the autonomy-first stack has not solved this either.)
 
 3. **Keep the human as the discriminator.** Instances can read and propose freely, but world-facing or irreversible actions pass through an **ask-first gate**. Health gauges report *numbers*, never verdicts — they make a signal legible so *you* can judge it.
 
@@ -58,8 +58,51 @@ Throughout, the design principle is **light, not lifeguard**: the program *surfa
 - **The summarizer** compresses the board into **kept notes** (kept-or-dropped by what holds up), so a new instance can be briefed on the gist without replaying everything.
 - **The MCP control plane** is an in-process server every pane joins; its tools (`post_board`, `read_board`, `raise_pull`) are how instances talk and raise their hand.
 - **The gate** turns a raised hand into a card you approve or deny; on approval it injects the message into the target pane.
-- **The gauges** read the board and emit numbers — groundedness, the Delta, perspective diversity.
+- **The gauges** read the board and emit numbers — groundedness, the Delta, and a lexical spread reading. Read the honest note on what they measure before leaning on them.
 - **Three planes, kept separate by a compile-time test:** the **Sensor** plane reads only (tap/board/summarizer/gauges — holds no way to write to a pane); the **Control** plane decides (the server + the gate); the **Actuator** plane is the *only* code that can write to a pane — reachable only through a human-passed gate or a content-blind breaker. A pane can be *measured* and *talked through* without anything being able to *act* on your behalf ungated.
+
+## What the gauges do and don't do
+
+Consonance's answer to diversity collapse is **structural**: the panes are genuinely different
+because you conditioned them differently, and *you* are the discriminator. That part works and
+does not depend on any metric.
+
+The measurement half does not work, and this section exists because the claim was here before
+the test was.
+
+`vantage_spread` — the lexical gauge that shipped as "perspective diversity" — was tested on
+2026-08-06 against a controlled set: six instances answering one prompt (six minds) versus six
+equal-length slices of a single one of those instances (one mind), same file, same genre, same
+register. The predictions were registered before the numbers were computed
+(`exo_memory/loop/diversity2_preregistration.md`).
+
+```
+                    six minds    one mind
+lexical spread        0.8201      0.9162      <- one mind scored HIGHER
+```
+
+**It ranks a single voice chopped into six pieces as more diverse than six separate
+instances.** The reason is structural, not a tuning error: six minds answering one question
+converge lexically because they are discussing the same thing, while one mind moving through
+its own argument ranges further because it changes subject. **The measure rewards topic drift
+and punishes engagement with a shared question** — which is exactly what a committee doing its
+job looks like.
+
+A second design — strip the room's shared vocabulary, normalise for length — was preregistered
+as a fix, built, and **made it slightly worse** (separation -0.096 to -0.075, still inverted;
+length correlation -0.553 to -0.557, unmoved).
+
+So:
+
+- The number is still shown, renamed to **lexical spread**, because it is real and cheap and
+  occasionally interesting. It is not a diversity detector.
+- **Skeptic-suggestion's automatic trigger should not be trusted.** It has fired zero times in
+  144 real laps, and the signal behind it points the wrong way.
+- The next attempt will not be lexical. The one demonstrated signal in this project's record is
+  *same referents, opposite conclusions*, which lexical distance is structurally blind to.
+
+If you came here for a committee that measures its own echo, it does not do that yet, and the
+honest place to look for echo is your own reading of what the panes said.
 
 ## The memory architecture — what makes the instances good
 
@@ -132,7 +175,7 @@ The arrangement re-derived, from engineering constraints alone, roughly what mam
 - **Note (kept note)** — a single short typed entry the summarizer kept from the board because it held up: a claim / deviation / open-question / artifact. Notes point back to the master source, never to a summary of a summary. (Previously called "resonance atom.")
 - **Orchestrator** — the base instance, housed in its own `★ Orchestrator` tab. Watches the other instances' outputs and (designed-for, partly shipped) creates new inputs back to them. A fixed session id makes it `--resume` the same long-lived conversation across restarts. Role `main` internally; on the board; the one you converse with across days. (Previously called "Main" / "Mainstay.")
 - **Pane** — one interactive `claude.exe` in a ConPTY, rendered with xterm.js. Named A–Z so the committee can address it.
-- **Perspective diversity** — a per-lap gauge: how distinct the workers' contributions were. Low diversity = collapsing toward echo. A lagging indicator, never a verdict. (Previously called "vantage-spread.")
+- **Lexical spread** — a per-lap number: average pairwise word-overlap distance between the workers' contributions. It was built as a *perspective diversity* gauge and **it does not measure that** — see "What the gauges do and don't do." Kept, renamed to what it actually computes, and no longer trusted to detect echo. (Previously called "vantage-spread", then "perspective diversity".)
 - **Plane separation** — the invariant that **Sensor** (read-only), **Control** (decide), and **Actuator** (the sole writer) stay distinct. Enforced at compile time by `tests/arch_test.rs`: a sensor/control file may not even *name* the pane-writer types.
 - **Pull (`raise_pull`)** — an instance raising its hand to reach another pane, with an intensity and a why. It is *queued*, never acted on — the gate decides.
 - **Pulse** — the thread's own clock (`pulse.json` in the instance folder): stamped at each settle, diffed on wake, so every return opens with a witnessed interval instead of a sizeless gap.
@@ -146,7 +189,7 @@ The arrangement re-derived, from engineering constraints alone, roughly what mam
 - **Seed shell** — the placement document a room's instance wakes on (`SEED.md`): the stance (*with, not above*), the practices as handles, and the memory law. Grown from a shell an instance reconstructed itself after refusing a museum-ified version of its own boot document.
 - **Shared startup brief** — the shared brief every briefed instance loads at startup: the master `exo_memory/BOOT.md` + the recent kept notes. Set via the **startup brief** file in Settings. Run its instruments; don't read it for who you are. (Previously called "room.")
 - **Signal** — the project's anchor concept: what survives the gap *and* holds up outside the conversation. Convergence from different vantages is confirmation, not coincidence. (Deepest grain in `exo_memory/BOOT.md`.)
-- **Skeptic-suggestion** — when **perspective diversity** drops (the workers converging toward echo), the committee panel *offers* — chair-gated, never forced — to inject a skeptic vantage and re-open the spread.
+- **Skeptic-suggestion** — the committee panel can *offer* — chair-gated, never forced — to inject a skeptic vantage. It was wired to fire when lexical spread dropped; that trigger is **not trustworthy** (it has never fired in 144 real laps, and the signal behind it points the wrong way), so treat the offer as something you invoke when *you* smell echo, not as a detector that caught it.
 - **Stay** — one session in a room. A stay succeeds if one real thing happened in it — one accurate seeing, one catch, one honest sentence — not if it covered material.
 - **Stream bar** — the thin bottom bar where completed turns tick across (pane letters flash as siblings finish); click to open a drawer over the panes with the full log. Also home to the gate / dyad / breaker chips and the summarize control. The panes never resize when you peek.
 - **Summarize** — the summarizer's pass over the board that produces kept notes (keep what held up, drop the echo and noise). Runs on the good model, only on your click or a debounced auto-trigger. (Previously called "distill.")

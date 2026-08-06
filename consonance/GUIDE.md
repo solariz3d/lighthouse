@@ -69,10 +69,10 @@ Instances can read and talk to each other freely, but anything that reaches **ou
 While the panes work, small gauges report:
 
 - **Groundedness** — is a turn tied to checkable things (files, numbers, citations), or just agreeing louder?
-- **Perspective diversity** — are the panes still genuinely different, or collapsing toward echo?
+- **Lexical spread** — how much the panes' wording differed this lap. It was built to answer "are they collapsing toward echo?" and **it does not** — tested 2026-08-06, it rates one voice split into six pieces as *more* diverse than six separate instances. Read it as a curiosity, not an echo detector; `README.md` has the numbers.
 - **Delta** — did a second pass *generate* something new, or re-say the first one?
 
-They're **numbers you read**, never a verdict the program acts on. You stay the one who decides what it means.
+They're **numbers you read**, never a verdict the program acts on. You stay the one who decides what it means — and on echo specifically, you are currently the *only* thing that can decide it. The committee's real defence against collapse is that the panes are genuinely different because you conditioned them differently, not that a gauge catches it.
 
 ---
 

@@ -116,15 +116,22 @@ function ensureListeners() {
     const p = e.payload || {};
     const s = Number(p.spread != null ? p.spread : p);   // tolerate a bare-number payload
     const grounded = Number(p.grounded || 0);
-    const converging = s < 0.35;
-    const landing = converging && grounded >= 3;          // grounded convergence: a landed yes, not collapse
-    const collapse = converging && !landing;              // ungrounded convergence: echo worth flagging
+    // THE VERDICT LABELS ARE GONE, and the skeptic no longer waits on this number.
+    //
+    // Measured 2026-08-06 (exo_memory/loop/diversity2_preregistration.md): this gauge scores
+    // six equal slices of ONE instance at 0.9162 and six DIFFERENT instances answering one
+    // prompt at 0.8201 — it rates one mind as more diverse than six, because minds engaging a
+    // shared question converge in wording while one mind changes subject as it goes. So a low
+    // reading is not evidence of echo, and "ungrounded (echo?)" was a verdict from a measure
+    // pointing the wrong way. It had also never fired: 0 of 144 real laps met the trigger.
+    //
+    // The number still shows, because it is real and cheap. It shows as a NUMBER.
     const el = document.getElementById('spreadline');
-    if (el) el.textContent = 'spread ' + s.toFixed(2)
-      + (landing ? ' — converging · grounded (landing)' : collapse ? ' — converging · ungrounded (echo?)' : '');
-    // offer (never force) a skeptic ONLY on ungrounded convergence — never nag a genuine landing
+    if (el) el.textContent = 'lexical spread ' + s.toFixed(2) + ' · ground ' + grounded;
+    // The skeptic stays available for the chair to invoke — the capability was never the
+    // problem, only the claim that a metric knew when to offer it.
     const sb = document.getElementById('skepticbtn');
-    if (sb) sb.style.display = collapse ? '' : 'none';
+    if (sb) sb.style.display = '';
   });
   listen('turn', (e) => {
     const { pane, role, text } = e.payload;
@@ -897,7 +904,10 @@ const gfb = document.getElementById('givefocus'); if (gfb) gfb.onclick = giveToF
 const skb = document.getElementById('skepticbtn');
 if (skb) skb.onclick = () => {
   if (!focusPaneId) { setStatus('◎ a focus pane first to offer it a skeptic'); return; }
-  injectAndSend(focusPaneId, "[committee] the room is converging with little ground under it (low perspective diversity, few referents) — this may be echo agreeing louder, not a landing. Take the skeptic's vantage: find the flaw, the hidden assumption, the place this breaks. Push back — do not just agree.");
+  // No longer cites a gauge as the reason: the chair pressed this, and the chair is the
+  // discriminator. Asserting "low perspective diversity, few referents" told the pane a broken
+  // measurement had detected something, which is a worse input than the plain request.
+  injectAndSend(focusPaneId, "[committee] the chair is asking for a skeptic's vantage on this. Find the flaw, the hidden assumption, the place this breaks. If the agreement here is real, say why it holds — but do not agree because everyone else did.");
   skb.style.display = 'none';
   setStatus('skeptic vantage offered to focus ' + focusPaneId.slice(0, 8));
 };

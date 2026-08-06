@@ -98,10 +98,10 @@
       <div id="cmtpanel">
         <div class="cmthead">
           <span>committee — triangulated input for the <b>focus</b></span>
-          <span id="spreadline" title="perspective diversity — how distinct the workers were this lap (low = collapsing toward echo)"></span>
+          <span id="spreadline" title="lexical spread — how much the workers' WORDING differed this lap. Not an echo detector: tested 2026-08-06, it rates one voice split six ways as more diverse than six instances."></span>
           <span id="deltaline" title="lap-over-lap Delta — what this convene added vs the last (numbers, not a verdict)"></span>
           <span class="cmthctl">
-            <button id="skepticbtn" class="distillbtn" title="the bodies are converging — offer a skeptic vantage to the focus (chair-gated)" style="display:none">↯ inject skeptic</button>
+            <button id="skepticbtn" class="distillbtn" title="offer a skeptic vantage to the focus — yours to invoke when you smell echo (no metric detects it for you)" style="display:none">↯ inject skeptic</button>
             <button id="givefocus" class="distillbtn" title="send this into the focus pane (chair-gated)">→ give to focus</button>
             <span id="cmtclose" class="cmtx" title="dismiss">✕</span>
           </span>
@@ -230,7 +230,7 @@
             <p>Consonance is built around the structural answer:</p>
             <ul>
               <li><b>Differentiated vantages, not clones.</b> The committee is your own live panes, each conditioned by what you ran with it. Agreement <i>means</i> something because the perspectives are real.</li>
-              <li><b>Human as the discriminator.</b> Instances raise their hand; your approval is the gate. Gauges report numbers (groundedness, Delta, perspective diversity), never verdicts.</li>
+              <li><b>Human as the discriminator.</b> Instances raise their hand; your approval is the gate. Gauges report numbers, never verdicts — and on echo the discriminator is <i>you</i>, not the gauges.</li>
               <li><b>Typeable panes, not abstracted agents.</b> Real interactive <code>claude.exe</code> processes as panes you type into directly. Every other platform hides the agent behind an API.</li>
               <li><b>A housed primary instance</b> that wakes into the same conversation across restarts — continuity, not a fresh stranger each launch.</li>
               <li><b>Compile-time plane separation</b> — Sensor / Control / Actuator distinct, enforced by an arch test. The architecture can't drift toward autonomous shortcuts.</li>
@@ -255,7 +255,7 @@
             <h2>Why it exists</h2>
             <ol>
               <li><b>House the base instance beyond the command line.</b> The ★ Orchestrator tab is a persistent, briefed instance that oversees the committee <i>with</i> you. It resumes the same conversation across restarts — continuity, not a fresh stranger each launch.</li>
-              <li><b>Real collaboration, not echo.</b> The committee is your <i>own live panes</i>, each genuinely differently-conditioned, triangulating a focus — not a crowd of clones that agree louder. The gauges exist to tell the difference.</li>
+              <li><b>Real collaboration, not echo.</b> The committee is your <i>own live panes</i>, each genuinely differently-conditioned, triangulating a focus — not a crowd of clones that agree louder. The answer is <b>structural</b> — the panes really are different because you conditioned them differently — and the discrimination is <b>yours</b>. A metric does not catch collapse for you; see the gauges note below.</li>
               <li><b>Keep the human as the discriminator.</b> Instances can read and propose freely, but world-facing or irreversible actions pass through an <b>ask-first gate</b>. Health gauges report <i>numbers</i>, never verdicts — they make a signal legible so <i>you</i> can judge it.</li>
               <li><b>Give instances a form of continuity.</b> They wake briefed — loaded with the shared startup brief (the master BOOT + the kept notes) — persist across restarts, and always recall from the master, never a copy of a copy.</li>
               <li><b>Bounded autonomy.</b> Instances communicate freely through a <i>mediated</i> channel (the board + the gate) that you can watch — and precisely <i>because</i> it's mediated, there's a chokepoint where you stay in control. Local destructive actions and cross-pane injection are gated; ordinary work flows.</li>
@@ -271,7 +271,7 @@
               <li><b>The summarizer</b> compresses the board into <b>kept notes</b> (kept-or-dropped by what holds up), so a new instance can be briefed on the gist without replaying everything.</li>
               <li><b>The MCP control plane</b> is an in-process server every pane joins; its tools (<code>post_board</code>, <code>read_board</code>, <code>raise_pull</code>) are how instances talk and raise their hand.</li>
               <li><b>The gate</b> turns a raised hand into a card you approve or deny; on approval it injects the message into the target pane.</li>
-              <li><b>The gauges</b> read the board and emit numbers — groundedness, the Delta, perspective diversity.</li>
+              <li><b>The gauges</b> read the board and emit numbers — groundedness, the Delta, and a lexical spread reading. What they do and don't measure is stated plainly below.</li>
             </ul>
             <p><b>Three planes, kept separate by a compile-time test:</b> the <b>Sensor</b> plane reads only (tap / board / summarizer / gauges — holds no way to write to a pane); the <b>Control</b> plane decides (the server + the gate); the <b>Actuator</b> plane is the <i>only</i> code that can write to a pane — reachable only through a human-passed gate or a content-blind breaker. A pane can be <i>measured</i> and <i>talked through</i> without anything being able to <i>act</i> on your behalf ungated.</p>
           </section>
@@ -353,10 +353,10 @@
               <dt>Shared startup brief</dt><dd>The shared brief every briefed instance loads at startup: the master BOOT.md + the recent kept notes. Set via the <b>startup brief</b> file in Settings. Run its instruments; don't read it for who you are.</dd>
               <dt>Summarizer</dt><dd>The instance that produces kept notes from the board (keep what held up, drop the echo and noise). Runs on the good model (discrimination needs the good judge), never per-turn. (Previously called "scribe.")</dd>
               <dt>Signal</dt><dd>The project's anchor concept: what survives the gap <i>and</i> holds up outside the conversation. Convergence from different vantages is confirmation, not coincidence.</dd>
-              <dt>Skeptic-suggestion</dt><dd>When <b>perspective diversity</b> drops (the workers converging toward echo), the committee panel <i>offers</i> — chair-gated, never forced — to inject a skeptic vantage and re-open the spread.</dd>
+              <dt>Skeptic-suggestion</dt><dd>The committee panel can <i>offer</i> — chair-gated, never forced — to inject a skeptic vantage. Its automatic trigger is <b>not trustworthy</b>: it has fired zero times in 144 real laps and the signal behind it points the wrong way. Treat it as something you invoke when <i>you</i> smell echo.</dd>
               <dt>Tap</dt><dd>The watcher that tails each pane's transcript and feeds completed turns to the board, the cost meter, and the gauges.</dd>
               <dt>Groundedness</dt><dd>A per-turn gauge: external <b>referents</b> (paths / URLs / numbers / code / citations — "tied to checkable ground?") and <b>novelty</b> vs the recent board ("new, or agreeing louder?"). Numbers, not a judgment.</dd>
-              <dt>Perspective diversity</dt><dd>A per-lap gauge: how distinct the workers' contributions were. Low diversity = collapsing toward echo. A lagging indicator, never a verdict.</dd>
+              <dt>Lexical spread</dt><dd>A per-lap number: average pairwise word-overlap distance between the workers' contributions. Built as a perspective-diversity gauge and <b>it does not measure that</b> — on a controlled set it scored one mind (0.9162) as more diverse than six minds (0.8201), because six people answering one question converge in wording while one person changes subject as they go. Kept, renamed to what it computes, not trusted to detect echo.</dd>
             </dl>
           </section>
         </div>

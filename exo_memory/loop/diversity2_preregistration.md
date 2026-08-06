@@ -101,3 +101,70 @@ would.**
 
 Each P marked confirmed / refuted / unresolvable against harness output, appended below,
 dated, never rewritten.
+
+
+---
+
+## Scoring, 2026-08-06 — harness `diversity2.js`, 685-word room stop set, 700-char slices
+
+**3 confirmed, 2 refuted. The two refuted are the fix.**
+
+```
+                    six minds    one mind    separation
+shipped gauge         0.8201      0.9162       -0.0961
+proposed fix          0.8731      0.9481       -0.0751
+```
+
+P1 CONFIRMED. Separation |-0.0961| < 0.10. The shipped gauge cannot tell six minds from one.
+
+P2 CONFIRMED. Both scores above 0.70 (0.820, 0.916) — long real text saturates it.
+
+P3 CONFIRMED, and this is the finding. **The one-mind set scored HIGHER than the six-mind set.**
+   Predicted at better-than-even odds and it happened: the gauge ranks a single voice chopped
+   into six pieces as MORE diverse than six separate instances answering the same prompt.
+
+P4 **REFUTED.** The fix made it worse, not better: separation -0.0751, still inverted, nowhere
+   near the +0.15 predicted. Stripping 685 room words and capping vocabulary raised both scores
+   and preserved the wrong ordering. The bias I diagnosed was real and was not what was driving
+   the number.
+
+P5 **REFUTED.** Spearman against length went -0.553 -> **-0.557** across 144 real laps.
+   Essentially unmoved. Length still drives the measure after both corrections.
+
+## What this actually establishes, and it is bigger than a miscalibration
+
+Six voices answering ONE prompt converge lexically, because they are all discussing the same
+thing. One voice moving through its own argument ranges further, because it changes subject as
+it goes. So the measure rewards **topic drift** and punishes **engagement with a shared
+question** — and a committee doing its job is six minds on one question.
+
+**Lexical distance does not measure perspective diversity. It measures subject spread, and the
+two are close to opposed in exactly the situation the gauge exists for.** That is a property of
+the approach, not of this implementation, which is why the second lexical design failed the
+same way as the first.
+
+## The consequence, per the terms committed above
+
+The preregistration said: *"If P4 fails, the answer is not a third lexical attempt… Two failed
+lexical designs is enough to stop paying for a third."* Scoring my own fix as refuted, that
+clause now binds:
+
+1. **The README sentence must change today.** *"The gauges exist to tell the difference"* is
+   not supported and, on this evidence, is anti-supported — the gauge would call a collapsing
+   committee healthy and a focused one collapsing. Nobody should install this with that claim
+   in front of them.
+2. **`skeptic-suggestion` should not fire on `vantage_spread`.** Zero firings in 144 laps has
+   been reading as "no collapse detected"; it is better read as an inert trigger, and one wired
+   to a signal that points the wrong way would have offered a skeptic precisely when the panes
+   were most engaged.
+3. **The next attempt is not lexical.** The record's one demonstrated diversity signal is
+   *same referents, opposite conclusions* — eight of nine subjects citing the same line and
+   returning opposite verdicts. This validation set cannot test it (4 referents in 30,456
+   chars) and the root1 subject data can.
+
+## What it cost me to find out
+
+I proposed the stop-set-and-normalise fix in conversation with confidence, from a correct
+diagnosis of a real bias, and it moved the number the wrong way by 0.02. Had I built it into
+`tether.rs` before writing this file, it would have shipped as an improvement and nothing would
+ever have contradicted it — the gauge has no user-visible behaviour to notice.

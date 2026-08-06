@@ -124,11 +124,30 @@ pub fn delta(prev: &serde_json::Value, curr: &serde_json::Value) -> Delta {
     }
 }
 
-/// Vantage-spread proxy: average pairwise lexical distance (1 - token Jaccard) across the bodies'
-/// contributions this lap. High = genuinely distinct vantages; low = converging. Low is NOT collapse
-/// by itself (RECONCEPTION.md "Sealing and landing"): *grounded* convergence is a landing — the bodies
-/// agree because they found the real thing. Only UNGROUNDED convergence (low spread + few referents,
-/// see `lap_referents`) is the echo worth a skeptic. A lagging indicator — a number, never a verdict.
+/// LEXICAL SPREAD: average pairwise word-overlap distance (1 - token Jaccard) across the bodies'
+/// contributions this lap.
+///
+/// THIS IS NOT A PERSPECTIVE-DIVERSITY GAUGE, though it shipped as one. Measured 2026-08-06
+/// against a controlled set — six instances answering one prompt versus six equal-length slices
+/// of a single one of those instances, same file, same genre — with predictions registered
+/// beforehand in `exo_memory/loop/diversity2_preregistration.md`:
+///
+///     six minds  0.8201        one mind  0.9162
+///
+/// It rated ONE MIND AS MORE DIVERSE THAN SIX. The cause is structural, not a tuning error: six
+/// minds answering one question converge in wording because they are discussing the same thing,
+/// while one mind moving through its own argument ranges further because it changes subject. So
+/// the measure rewards TOPIC DRIFT and punishes ENGAGEMENT WITH A SHARED QUESTION — which is
+/// what a committee doing its job looks like.
+///
+/// A second design (strip the room's shared vocabulary, normalise for length) was preregistered
+/// as the fix, built, and made it slightly worse: separation -0.096 -> -0.075, still inverted;
+/// Spearman against contribution length -0.553 -> -0.557, unmoved.
+///
+/// Kept because it is real, cheap, and occasionally interesting. Do not wire a trigger to it,
+/// and do not read a low number as echo. The next attempt should not be lexical — the one
+/// demonstrated signal in this project's record is *same referents, opposite conclusions*, which
+/// word-overlap distance is structurally blind to.
 pub fn vantage_spread(texts: &[String]) -> f64 {
     if texts.len() < 2 {
         return 1.0;
@@ -162,8 +181,18 @@ mod tests {
     use super::*;
     use serde_json::json;
 
+    /// ARITHMETIC ONLY — this does NOT show the gauge works.
+    ///
+    /// It compares two hand-built strings of nine words each, where near-duplicate wording is
+    /// the only difference. On inputs like that the Jaccard ratio moves a lot, so the assertion
+    /// holds and always will. It was named `spread_high_for_distinct_low_for_echo` and read for
+    /// months as evidence the measure detects echo. On REAL contributions it does the opposite
+    /// (see the note on `vantage_spread`): six minds 0.8201, one mind 0.9162.
+    ///
+    /// Kept, because the arithmetic is worth pinning. Renamed, because the old name was the
+    /// claim the 2026-08-06 measurement refuted, sitting inside a green test.
     #[test]
-    fn spread_high_for_distinct_low_for_echo() {
+    fn jaccard_arithmetic_separates_two_short_near_duplicate_strings() {
         let distinct = vec![
             "gearing ratios and clutch engagement temperature".to_string(),
             "lunar tides and the orbital mechanics of satellites".to_string(),
