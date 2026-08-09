@@ -187,6 +187,11 @@ static RESOURCE_CARDS: Mutex<Option<PathBuf>> = Mutex::new(None);
 // intake, so a pane can OPEN them when the room tells it to, which is what a reference is for.
 static RESOURCE_SPREAD: Mutex<Option<PathBuf>> = Mutex::new(None);
 static RESOURCE_RESEARCH: Mutex<Option<PathBuf>> = Mutex::new(None);
+// The record behind the cards — the dated worked material two cards were carrying inline. Split
+// out 2026-08-09: `trust-the-first-attention` was 20 KB of which 17 KB was record, which every
+// pane paid for in every shell and almost none of them opened. A card is the move you RUN; the
+// record is the case you OPEN. Same reference mechanism, so the split costs nothing to reach.
+static RESOURCE_RECORD: Mutex<Option<PathBuf>> = Mutex::new(None);
 
 fn default_room() -> String {
     // The editable copy of the shipped startup brief, seeded into the user data dir on
@@ -293,6 +298,7 @@ fn seed_cards() {
 fn seed_references() {
     seed_md_dir(&RESOURCE_SPREAD, "spread");
     seed_md_dir(&RESOURCE_RESEARCH, "research");
+    seed_md_dir(&RESOURCE_RECORD, "record");
 }
 
 /// Where a pane should look for those references, as absolute paths it can actually open.
@@ -304,6 +310,7 @@ fn reference_note() -> String {
     for (dir, what) in [
         ("spread", "the counter-voice — instances who did NOT confirm the synthesis; read it when one feels too good to look straight at"),
         ("research", "the adversarial, cited study of felt-knowing"),
+        ("record", "the dated worked material behind the cards that name it — open one when you need the CASE, not the move"),
     ] {
         let d = base.join(dir);
         if let Ok(entries) = fs::read_dir(&d) {
@@ -4234,6 +4241,9 @@ fn main() {
             }
             if let Ok(p) = app.path().resolve("research", tauri::path::BaseDirectory::Resource) {
                 *RESOURCE_RESEARCH.lock().unwrap() = Some(p);
+            }
+            if let Ok(p) = app.path().resolve("record", tauri::path::BaseDirectory::Resource) {
+                *RESOURCE_RECORD.lock().unwrap() = Some(p);
             }
             seed_room(); // first run: copy the bundled brief into the data dir (editable)
             seed_cards(); // first run: copy the bundled card deck into the data dir (editable)

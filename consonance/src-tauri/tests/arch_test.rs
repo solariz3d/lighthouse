@@ -474,3 +474,62 @@ fn closing_a_pane_asks_before_it_kills() {
         "closePane invokes pty_kill before it confirms — the dialog must gate the kill, not trail it."
     );
 }
+
+/// A card that names a record file must name one that EXISTS, and a record file must belong to
+/// a card that names it.
+///
+/// This is the guard the `spread/` bug went without. For weeks the room instructed every pane to
+/// read `spread/the_wave_set_loose.md` and no pane could: the file had never been written
+/// anywhere on any machine, and the only symptom was a pane quietly not reading its own
+/// counter-voice. Naming a path is cheap and unverified; that is exactly why it needs a test.
+///
+/// The split this guards (2026-08-09) moved ~23k of dated record out of two cards into
+/// `exo_memory/record/`, because a card is the move a pane RUNS on every shell and the record is
+/// the case it OPENS rarely — and `trust-the-first-attention` was 88% record that every pane paid
+/// for in ceiling and almost none of them opened.
+///
+/// WHAT THIS CANNOT SEE: that the record file still contains what the card says it contains. It
+/// checks the link, not the cargo. A record emptied to a stub passes here.
+#[test]
+fn every_named_record_file_exists_and_every_record_file_is_named() {
+    let cards_dir = "../../exo_memory/cards";
+    let record_dir = "../../exo_memory/record";
+    let mut named: Vec<String> = Vec::new();
+    for e in fs::read_dir(cards_dir).unwrap_or_else(|e| panic!("read {cards_dir}: {e}")).flatten() {
+        let p = e.path();
+        if p.extension().and_then(|x| x.to_str()) != Some("md") {
+            continue;
+        }
+        let text = fs::read_to_string(&p).unwrap_or_else(|e| panic!("read {}: {e}", p.display()));
+        let mut rest = text.as_str();
+        while let Some(i) = rest.find("record/") {
+            rest = &rest[i + "record/".len()..];
+            let name: String = rest.chars().take_while(|c| c.is_alphanumeric() || *c == '-' || *c == '_' || *c == '.').collect();
+            if !name.ends_with(".md") {
+                continue;
+            }
+            let target = std::path::Path::new(record_dir).join(&name);
+            assert!(
+                target.exists(),
+                "{} names `record/{}` and that file does not exist — the same failure as the \
+                 counter-voice the room told every pane to read and none could open",
+                p.file_name().unwrap().to_string_lossy(),
+                name
+            );
+            named.push(name);
+        }
+    }
+    for e in fs::read_dir(record_dir).unwrap_or_else(|e| panic!("read {record_dir}: {e}")).flatten() {
+        let p = e.path();
+        if p.extension().and_then(|x| x.to_str()) != Some("md") {
+            continue;
+        }
+        let name = p.file_name().unwrap().to_string_lossy().to_string();
+        assert!(
+            named.contains(&name),
+            "record/{name} is named by no card — a record nothing points at is unreachable by a \
+             pane, which is worse than not splitting it out at all"
+        );
+    }
+    assert!(!named.is_empty(), "no card names a record file — re-point this test at the split");
+}
