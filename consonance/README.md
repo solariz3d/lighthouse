@@ -92,14 +92,42 @@ A second design — strip the room's shared vocabulary, normalise for length —
 as a fix, built, and **made it slightly worse** (separation -0.096 to -0.075, still inverted;
 length correlation -0.553 to -0.557, unmoved).
 
+A third design, on 2026-08-09, was **not lexical** and failed too. It measured whether
+contributions touch the same *evidence* — file paths, urls, code spans, citations — on the
+theory that a gauge blind to what people cite cannot tell a conversation from parallel
+monologues (`exo_memory/loop/diversity3_preregistration.md`, registered before the run;
+`consonance/tools/agreement-spread.js`, reproduce with `node consonance/tools/agreement-spread.js`).
+
+```
+                      many minds    one mind    separation
+referent overlap        0.0481      0.1510      -0.1029   <- inverted again
+```
+
+**One instance chopped in two shares three times more of its referents with itself than two
+real panes in the same lap share with each other** — because one mind working one task cites
+the same files over and over. Third design, third inversion.
+
 So:
 
 - The number is still shown, renamed to **lexical spread**, because it is real and cheap and
   occasionally interesting. It is not a diversity detector.
 - **Skeptic-suggestion's automatic trigger should not be trusted.** It has fired zero times in
   144 real laps, and the signal behind it points the wrong way.
-- The next attempt will not be lexical. The one demonstrated signal in this project's record is
-  *same referents, opposite conclusions*, which lexical distance is structurally blind to.
+- **The honest conclusion is now broader than "not lexical."** Any measure that scores
+  contributions against each other *without reading what they claim* ends up measuring
+  something adjacent — subject spread, or topic persistence — and the adjacent thing keeps
+  coming out with the wrong sign. Diversity is a property of conclusions, and conclusions have
+  to be read. The one demonstrated signal in this project's record remains *same referents,
+  opposite conclusions*, and reaching it needs a judge, not an arithmetic.
+- One piece survived and is worth naming: referent identity is **free of the length bias** that
+  drove both lexical designs (correlation 0.04, against -0.553 and -0.557). Whatever gets built
+  next should keep that property.
+- Two disclosures a reader is owed. On real board laps the *old* lexical gauge did come out in
+  the right direction (+0.12) — probably for the same defective reason, since panes in one lap
+  differ in topic, but the prediction that it would invert again was simply wrong. And the
+  positives' referent overlap is very low in absolute terms, which is either genuine parallel
+  monologue or the same topic-persistence artifact; this design cannot tell those apart, and the
+  question is left open rather than banked.
 
 If you came here for a committee that measures its own echo, it does not do that yet, and the
 honest place to look for echo is your own reading of what the panes said.

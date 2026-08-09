@@ -132,3 +132,96 @@ Per BOOT's rule that a programme must name in advance what marks it as degenerat
 
 Each P marked confirmed / refuted / unresolvable against harness output, appended below, dated,
 never rewritten.
+
+
+---
+
+## Scoring, 2026-08-09 — `consonance/tools/agreement-spread.js`, board.jsonl, 15-min laps
+
+Reproduce with: `node consonance/tools/agreement-spread.js --laps`
+
+```
+scoreable: 17 positives (1 below floor), 36 negatives (21 below floor, 5 too few records)
+
+                      many minds    one mind    separation
+referent_overlap        0.0481      0.1510      -0.1029
+vantage_spread (old)    0.8132      0.6915      +0.1217
+
+spearman(overlap, vantage_spread) = -0.3507
+spearman(overlap, mean length)    = -0.0424
+```
+
+**2 refuted, 2 confirmed. The two refuted are the design.**
+
+**P1 — REFUTED.** Predicted the old lexical gauge would invert again in the real domain. It did
+not: positives 0.8132, negatives 0.6915, **separation +0.1217 in the correct direction.** On real
+board laps `vantage_spread` gets the ordering right.
+
+  Post-hoc, and flagged as post-hoc so it cannot be read as rescuing the prediction: this most
+  likely happens for the same defective reason the 08-06 set exposed. diversity2's positives were
+  six minds answering ONE prompt; these positives are panes in one time window who may be on
+  entirely different work. My positives therefore carry more topic spread, which is the thing that
+  gauge actually measures. **Right answer, same wrong mechanism** — but that reading is an
+  inference, and the registered prediction was simply wrong.
+
+**P2 — REFUTED, and inverted.** Predicted at least +0.10 separation with positives higher.
+Measured **-0.1029**: one mind chopped in two shares *three times more* of its referents with
+itself (0.151) than two panes in the same lap share with each other (0.048).
+
+  It failed in exactly the way named in advance under "the failure mode I expect": one mind
+  sustained on one task cites the same files over and over. Naming it beforehand does not make it
+  a smaller failure — it makes it a cheaper one to interpret.
+
+  **Artifact checked, because two negatives looked like literal duplicated content** rather than
+  one mind citing consistently (2026-07-08T12:07 and 2026-07-25T06:23: overlap ~1.0 with lexical
+  spread ~0.0, the signature of two token-identical halves). Removing them — a non-registered,
+  clearly-labelled secondary analysis — moves the negative mean 0.1510 -> 0.1020 and the
+  separation **-0.1029 -> -0.0540. Still inverted, still nowhere near +0.10.** The verdict does
+  not depend on the defect, which is the only reason the check was worth running.
+
+**P3 — CONFIRMED.** |rho| = 0.3507 < 0.5. The two measures are not redundant. Small comfort: a
+measure can be independent of a broken one and still be broken.
+
+**P4 — CONFIRMED, and this is the one durable piece.** |rho| with mean contribution length =
+**0.0424**, against -0.553 for the shipped gauge and -0.557 after its fix. Length drove both
+lexical designs and does not drive this one. Referent identity is genuinely length-free. That
+property is worth keeping even though the measure built on it failed.
+
+## What this establishes
+
+**Three designs, three failures, and the third was not lexical.** The 08-06 conclusion — "lexical
+distance cannot measure perspective diversity" — was true but too narrow. The failure is one level
+up: *any* measure that scores contributions against each other without reading what they CLAIM is
+measuring something adjacent — subject spread, or topic persistence — and the adjacent thing keeps
+coming out with the wrong sign. The vertical axis of the 2x2 is not separable from the horizontal
+one by counting. **Diversity is a property of conclusions, and conclusions have to be read.**
+
+## The ambiguity I cannot resolve with this design, stated rather than resolved
+
+The positives' overlap is very low in absolute terms — two panes in one lap share about 5% of
+their referents, and four laps show near-zero sharing across hundreds of records. That is either
+(a) genuine parallel monologue, the committee not actually convening on shared evidence, or (b)
+the topic-persistence artifact making the negatives' floor artificially high. **This design cannot
+tell them apart**, and converting a refuted measure into a claim about the room would be exactly
+the move the room forbids. It is left open and named, not banked.
+
+## The stop rule, honored
+
+Registered above: *"if P2 fails, there is no patch attempt in this run."* P2 failed. No patch. The
+second clause — the README claim comes out — was already satisfied on 2026-08-06; what it gets
+today is the third result and a correction, since it currently frames the failure as lexical and
+that framing is now too generous.
+
+The next attempt, if there is one, needs what the degenerating condition demands: **a labeled set
+the designer has not read.** Root1's table is not it, because I read it before writing a line of
+this. That constraint is now the binding one on this whole line of work.
+
+## What it cost me
+
+I proposed the referent-overlap design in conversation as the honest next step, from a correct
+diagnosis of a real defect in the shipped gauge, and it came out inverted. Had I built it into
+`tether.rs` and wired a trigger to it before writing this file, it would have shipped as the fix
+to the thing it repeats — a gauge that calls one mind talking to itself more collaborative than
+two panes working together — and nothing in the product would ever have contradicted it. Second
+time in four days that a confident fix from a correct diagnosis moved the number the wrong way.
+The diagnosis being right is not the part that was ever in doubt.

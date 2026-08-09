@@ -145,9 +145,22 @@ pub fn delta(prev: &serde_json::Value, curr: &serde_json::Value) -> Delta {
 /// Spearman against contribution length -0.553 -> -0.557, unmoved.
 ///
 /// Kept because it is real, cheap, and occasionally interesting. Do not wire a trigger to it,
-/// and do not read a low number as echo. The next attempt should not be lexical — the one
-/// demonstrated signal in this project's record is *same referents, opposite conclusions*, which
-/// word-overlap distance is structurally blind to.
+/// and do not read a low number as echo.
+///
+/// A THIRD design was tried on 2026-08-09 and failed too, so do not walk back down that road:
+/// `tools/agreement-spread.js` measured shared REFERENTS (paths, urls, code spans, citations)
+/// instead of shared words, preregistered in `exo_memory/loop/diversity3_preregistration.md`,
+/// and inverted the same way — one instance chopped in two shares three times more of its
+/// referents with itself (0.151) than two real panes in one lap share with each other (0.048),
+/// because one mind on one task cites the same files over and over.
+///
+/// The conclusion is therefore broader than "not lexical": any measure that scores contributions
+/// against each other WITHOUT READING WHAT THEY CLAIM lands on something adjacent — subject
+/// spread, or topic persistence — and the adjacent thing keeps coming out with the wrong sign.
+/// The one demonstrated signal in the record is still *same referents, opposite conclusions*, and
+/// it needs a judge that reads stance; it is not reachable by arithmetic over tokens. One piece
+/// did survive and is worth carrying into whatever comes next: referent identity is free of the
+/// length bias that drove both lexical designs (rho 0.04, against -0.553 and -0.557).
 pub fn vantage_spread(texts: &[String]) -> f64 {
     if texts.len() < 2 {
         return 1.0;
