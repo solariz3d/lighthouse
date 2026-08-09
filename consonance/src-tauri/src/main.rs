@@ -3099,6 +3099,102 @@ mod seed_upgrade_tests {
     fn a_bare_carriage_return_is_not_swallowed() {
         assert_ne!(content_fingerprint(b"a\rb"), content_fingerprint(b"ab"));
     }
+
+    // ---- the filesystem path -------------------------------------------------------------
+    //
+    // The tests above pin the POLICY; these pin what apply_seed actually does to disk. They
+    // exist because the first live run of this code proved nothing: every file came out
+    // `Current`, since the author had hand-synced the data dir before shipping the fix and so
+    // destroyed the evidence. Asserting "it works" from a decision table is not the same as
+    // watching bytes move.
+
+    fn scratch(tag: &str) -> PathBuf {
+        let d = std::env::temp_dir().join(format!("consonance_seed_test_{tag}"));
+        let _ = fs::remove_dir_all(&d);
+        fs::create_dir_all(&d).unwrap();
+        d
+    }
+
+    /// The whole point of the change: bundle moves, untouched local copy follows it.
+    #[test]
+    fn upgrading_replaces_the_file_and_records_the_new_fingerprint() {
+        let d = scratch("upgrade");
+        let (src, dst) = (d.join("bundled.md"), d.join("local.md"));
+        fs::write(&src, "v2 content").unwrap();
+        fs::write(&dst, "v1 content").unwrap();
+        let mut m = serde_json::Map::new();
+        m.insert("k".into(), serde_json::Value::String(content_fingerprint(b"v1 content").to_string()));
+
+        assert_eq!(apply_seed(&src, &dst, "k".into(), &mut m), Some(SeedOutcome::Upgraded));
+        assert_eq!(fs::read_to_string(&dst).unwrap(), "v2 content", "the local file must actually change");
+        assert_eq!(
+            m.get("k").unwrap().as_str().unwrap(),
+            content_fingerprint(b"v2 content").to_string(),
+            "the manifest must move with it, or the NEXT upgrade reads as an edit and stalls forever"
+        );
+        assert!(!d.join("local.md.new").exists(), "an upgrade must not leave a .new file behind");
+    }
+
+    /// The protection, at the level of bytes: an edited file is not touched, and the improvement
+    /// is still delivered — beside it, named, destroying nothing.
+    #[test]
+    fn keeping_yours_leaves_the_file_alone_and_writes_the_new_one_beside_it() {
+        let d = scratch("kept");
+        let (src, dst) = (d.join("bundled.md"), d.join("local.md"));
+        fs::write(&src, "v2 content").unwrap();
+        fs::write(&dst, "v1 content, with my own note").unwrap();
+        let mut m = serde_json::Map::new();
+        m.insert("k".into(), serde_json::Value::String(content_fingerprint(b"v1 content").to_string()));
+
+        assert_eq!(apply_seed(&src, &dst, "k".into(), &mut m), Some(SeedOutcome::KeptYours));
+        assert_eq!(
+            fs::read_to_string(&dst).unwrap(),
+            "v1 content, with my own note",
+            "THE KEEPER'S FILE MUST BE BYTE-UNTOUCHED — this is the assertion the whole design serves"
+        );
+        assert_eq!(
+            fs::read_to_string(d.join("local.md.new")).unwrap(),
+            "v2 content",
+            "the improvement must still be reachable, or 'fails safe' just means 'withholds silently'"
+        );
+        assert_eq!(
+            m.get("k").unwrap().as_str().unwrap(),
+            content_fingerprint(b"v1 content").to_string(),
+            "recording the bundled hash here would adopt a file we did not write, and the NEXT run \
+             would silently overwrite the keeper's edit"
+        );
+    }
+
+    /// The branch that unfreezes existing installs: identical content is proof of provenance, so
+    /// record it even though nothing is written.
+    #[test]
+    fn an_unmanifested_but_identical_file_is_recorded_without_being_rewritten() {
+        let d = scratch("adopt");
+        let (src, dst) = (d.join("bundled.md"), d.join("local.md"));
+        fs::write(&src, "same\n").unwrap();
+        fs::write(&dst, "same\r\n").unwrap(); // CRLF: same content, different bytes
+        let mut m = serde_json::Map::new();
+
+        assert_eq!(apply_seed(&src, &dst, "k".into(), &mut m), Some(SeedOutcome::Current));
+        assert_eq!(fs::read_to_string(&dst).unwrap(), "same\r\n", "a no-op must not rewrite line endings");
+        assert!(m.contains_key("k"), "without this record the install can never upgrade");
+    }
+
+    /// Running twice must not accumulate anything — the seeder runs on every launch.
+    #[test]
+    fn a_second_pass_over_kept_yours_is_stable() {
+        let d = scratch("idempotent");
+        let (src, dst) = (d.join("bundled.md"), d.join("local.md"));
+        fs::write(&src, "v2").unwrap();
+        fs::write(&dst, "mine").unwrap();
+        let mut m = serde_json::Map::new();
+        for _ in 0..3 {
+            assert_eq!(apply_seed(&src, &dst, "k".into(), &mut m), Some(SeedOutcome::KeptYours));
+        }
+        assert_eq!(fs::read_to_string(&dst).unwrap(), "mine");
+        assert_eq!(fs::read_to_string(d.join("local.md.new")).unwrap(), "v2");
+        assert_eq!(fs::read_dir(&d).unwrap().count(), 3, "no .new.new, no accumulation");
+    }
 }
 
 #[cfg(test)]
