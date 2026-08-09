@@ -223,18 +223,35 @@ fn sysdrive() -> String {
     std::env::var("SystemDrive").unwrap_or_else(|_| "C:".to_string())
 }
 
-// First run: copy the bundled BOOT.md into the user data dir so the default startup
-// brief is present and editable (not locked read-only under Program Files). No-op once
-// a copy exists, so the user's edits are never overwritten.
+// Copy the bundled BOOT.md into the user data dir so the default startup brief is present and
+// editable (not locked read-only under Program Files) — and keep it CURRENT, which the first
+// version of this function did not.
+//
+// It returned early whenever a copy existed, which is why the author's own live room was dated
+// 2026-07-07 while the bundle was 2026-08-05: a month of amendments, including the passage about
+// what a room should and should not ship, sat in the installer and reached nobody. Now it goes
+// through the same diff-before-overwrite policy as the deck — an untouched copy moves forward, an
+// edited one stands and gets BOOT.md.new written beside it.
 fn seed_room() {
-    let dest = PathBuf::from(default_data()).join("BOOT.md");
-    if dest.exists() {
+    let Some(src) = RESOURCE_ROOM.lock().unwrap().clone() else { return };
+    if !src.exists() {
         return;
     }
-    if let Some(src) = RESOURCE_ROOM.lock().unwrap().clone() {
-        if src.exists() {
-            let _ = fs::create_dir_all(default_data());
-            let _ = fs::copy(&src, &dest);
+    let _ = fs::create_dir_all(default_data());
+    let dest = PathBuf::from(default_data()).join("BOOT.md");
+    let mut manifest = read_seed_manifest();
+    if let Some(outcome) = apply_seed(&src, &dest, "BOOT.md".to_string(), &mut manifest) {
+        match outcome {
+            SeedOutcome::Upgraded => plog("seed BOOT.md: upgraded (your copy was unmodified)"),
+            SeedOutcome::KeptYours => plog(&format!(
+                "seed BOOT.md: KEPT YOURS — it differs from the bundled room, so nothing was \
+                 overwritten. The new version is beside it at {}.new",
+                dest.display()
+            )),
+            SeedOutcome::Installed | SeedOutcome::Current => {}
+        }
+        if let Ok(s) = serde_json::to_string_pretty(&serde_json::Value::Object(manifest)) {
+            let _ = fs::write(seed_manifest_path(), s);
         }
     }
 }
@@ -258,28 +275,180 @@ fn cards_dir() -> PathBuf {
     PathBuf::from(format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\cards", home()))
 }
 
-// Copy any bundled card not already present into the user data dir — so a fresh install gets
-// the whole deck AND an upgrade picks up newly-added cards — while never overwriting a card
-// the user has edited.
-fn seed_md_dir(res: &Mutex<Option<PathBuf>>, name: &str) {
-    let dest = PathBuf::from(default_data()).join(name);
-    if let Some(src) = res.lock().unwrap().clone() {
-        if src.is_dir() {
-            let _ = fs::create_dir_all(&dest);
-            if let Ok(entries) = fs::read_dir(&src) {
-                for e in entries.flatten() {
-                    let p = e.path();
-                    if p.extension().and_then(|x| x.to_str()) == Some("md") {
-                        if let Some(fname) = p.file_name() {
-                            let target = dest.join(fname);
-                            if !target.exists() {
-                                let _ = fs::copy(&p, &target);
-                            }
-                        }
-                    }
-                }
+/// A stable 64-bit content fingerprint (FNV-1a), used only to answer "is this file still exactly
+/// what we wrote there?".
+///
+/// Hand-rolled rather than `DefaultHasher` on purpose: std explicitly does NOT guarantee
+/// DefaultHasher's output across Rust releases, so a toolchain upgrade would silently invalidate
+/// every recorded fingerprint at once — every file would read as edited, every file would stop
+/// upgrading, and nothing would say so. A silent, total, invisible failure is exactly the class
+/// of bug this whole function exists to end, so the hash has to be one we own.
+///
+/// Not a security primitive and not used as one: it detects accidental divergence, never an
+/// adversary. Line endings are normalized first — git rewrites CRLF on this tree, and a file that
+/// differs only in newlines was not edited by anyone.
+fn content_fingerprint(bytes: &[u8]) -> u64 {
+    let mut h: u64 = 0xcbf2_9ce4_8422_2325;
+    let mut prev = 0u8;
+    for &b in bytes {
+        if b == b'\r' {
+            prev = b;
+            continue;
+        }
+        // A lone \r (old-Mac line ending) still counts as a byte; only \r\n collapses.
+        if prev == b'\r' && b != b'\n' {
+            h ^= b'\r' as u64;
+            h = h.wrapping_mul(0x0000_0100_0000_01b3);
+        }
+        h ^= b as u64;
+        h = h.wrapping_mul(0x0000_0100_0000_01b3);
+        prev = b;
+    }
+    h
+}
+
+/// Where the seeder records what it wrote, so a later version can tell its own past output from
+/// the keeper's edits. One JSON object, `"cards/foo.md" -> fingerprint`.
+fn seed_manifest_path() -> PathBuf {
+    PathBuf::from(default_data()).join(".seeded.json")
+}
+
+fn read_seed_manifest() -> serde_json::Map<String, serde_json::Value> {
+    fs::read_to_string(seed_manifest_path())
+        .ok()
+        .and_then(|s| serde_json::from_str::<serde_json::Value>(&s).ok())
+        .and_then(|v| v.as_object().cloned())
+        .unwrap_or_default()
+}
+
+/// The outcome of seeding one file. Returned so it can be counted and logged rather than
+/// happening invisibly, which is how the old behaviour hid for a month.
+#[derive(Debug, PartialEq, Eq)]
+enum SeedOutcome {
+    /// No local copy — a fresh install, or a file added to the bundle since.
+    Installed,
+    /// Local copy already byte-identical to the bundled one. Nothing to do.
+    Current,
+    /// Local copy was exactly what we last wrote, so it is ours to replace. THE UPGRADE PATH.
+    Upgraded,
+    /// Local copy differs and we cannot prove we wrote it. Left alone; the new version is
+    /// written beside it as `<name>.new` so the improvement is reachable without destroying
+    /// anything. This is the only branch that needs a human.
+    KeptYours,
+}
+
+/// Apply one file's seed decision: write what should be written, record what should be recorded,
+/// and return what happened. Shared by the deck/reference directories and by the room, because
+/// the room had the identical bug and it mattered more there than anywhere else — the live
+/// `BOOT.md` on the author's own machine was a month stale, so a section written on 2026-08-05
+/// about what a room should and should not ship had never once been read by a pane.
+fn apply_seed(
+    src: &std::path::Path,
+    target: &std::path::Path,
+    key: String,
+    manifest: &mut serde_json::Map<String, serde_json::Value>,
+) -> Option<SeedOutcome> {
+    let bundled = content_fingerprint(&fs::read(src).ok()?);
+    let local = fs::read(target).ok().map(|b| content_fingerprint(&b));
+    let recorded = manifest.get(&key).and_then(|v| v.as_str()).and_then(|s| s.parse::<u64>().ok());
+    let outcome = seed_decision(bundled, local, recorded);
+    match outcome {
+        SeedOutcome::Installed | SeedOutcome::Upgraded => {
+            fs::copy(src, target).ok()?;
+            manifest.insert(key, serde_json::Value::String(bundled.to_string()));
+        }
+        SeedOutcome::Current => {
+            // Record it even though nothing was written: this is what lets an install that
+            // predates the manifest start upgrading instead of being stuck as KeptYours
+            // forever. Identical content is proof enough of provenance.
+            manifest.insert(key, serde_json::Value::String(bundled.to_string()));
+        }
+        SeedOutcome::KeptYours => {
+            // Their file is untouched. The new one lands beside it, named, so the keeper can
+            // diff two real files rather than be told about a difference. `.new` is not `.md`,
+            // so nothing that loads the deck or the references will ever pick it up.
+            let mut beside = target.as_os_str().to_os_string();
+            beside.push(".new");
+            let beside = PathBuf::from(beside);
+            if fs::read(&beside).ok().map(|b| content_fingerprint(&b)) != Some(bundled) {
+                let _ = fs::copy(src, &beside);
             }
         }
+    }
+    Some(outcome)
+}
+
+/// Decide what to do with one bundled file, given what is on disk and what we last wrote.
+///
+/// Split out from the I/O so the policy can be tested directly — the branch that matters most
+/// (KeptYours) is the one that is hardest to reach by driving the filesystem.
+fn seed_decision(bundled: u64, local: Option<u64>, recorded: Option<u64>) -> SeedOutcome {
+    match local {
+        None => SeedOutcome::Installed,
+        Some(l) if l == bundled => SeedOutcome::Current,
+        // We wrote it and nobody has touched it since — safe to move it forward.
+        Some(l) if recorded == Some(l) => SeedOutcome::Upgraded,
+        // Either the keeper edited it, or it predates the manifest and we cannot tell those
+        // apart. Both resolve the same way: their copy stands.
+        Some(_) => SeedOutcome::KeptYours,
+    }
+}
+
+/// Copy bundled `.md` files into the user data dir, keeping an installed room able to LEARN.
+///
+/// The old version copied only when the target was absent. That protected a keeper's edits
+/// perfectly and froze their deck at install day: every card improved afterwards was a card they
+/// would never see. It bit its author on 2026-08-09 — two cards were trimmed in the repo, the
+/// seeder declined to deliver them, and they had to be hand-copied into the data dir. An
+/// installed room that cannot receive a correction is a museum, which is the one thing this
+/// project is built not to ship.
+///
+/// So the rule is now diff-before-overwrite, which is what that hand-fix actually was:
+/// unmodified copies move forward, edited copies stand and get the new version written beside
+/// them as `<name>.new`. Nothing is ever clobbered and nothing is silently withheld.
+fn seed_md_dir(res: &Mutex<Option<PathBuf>>, name: &str) {
+    let dest = PathBuf::from(default_data()).join(name);
+    let Some(src) = res.lock().unwrap().clone() else { return };
+    if !src.is_dir() {
+        return;
+    }
+    let _ = fs::create_dir_all(&dest);
+    let mut manifest = read_seed_manifest();
+    let mut kept: Vec<String> = Vec::new();
+    let mut upgraded: Vec<String> = Vec::new();
+    let mut installed = 0usize;
+    let Ok(entries) = fs::read_dir(&src) else { return };
+    for e in entries.flatten() {
+        let p = e.path();
+        if p.extension().and_then(|x| x.to_str()) != Some("md") {
+            continue;
+        }
+        let Some(fname) = p.file_name().and_then(|f| f.to_str()).map(|s| s.to_string()) else {
+            continue;
+        };
+        let target = dest.join(&fname);
+        match apply_seed(&p, &target, format!("{name}/{fname}"), &mut manifest) {
+            Some(SeedOutcome::Installed) => installed += 1,
+            Some(SeedOutcome::Upgraded) => upgraded.push(fname),
+            Some(SeedOutcome::KeptYours) => kept.push(fname),
+            Some(SeedOutcome::Current) | None => {}
+        }
+    }
+    if installed > 0 || !upgraded.is_empty() || !kept.is_empty() {
+        plog(&format!(
+            "seed {name}: {installed} installed, {} upgraded{}, {} yours{}",
+            upgraded.len(),
+            if upgraded.is_empty() { String::new() } else { format!(" [{}]", upgraded.join(", ")) },
+            kept.len(),
+            if kept.is_empty() {
+                String::new()
+            } else {
+                format!(" [{}] — new versions written beside them as *.new in {}", kept.join(", "), dest.display())
+            }
+        ));
+    }
+    if let Ok(s) = serde_json::to_string_pretty(&serde_json::Value::Object(manifest)) {
+        let _ = fs::write(seed_manifest_path(), s);
     }
 }
 
@@ -2865,6 +3034,70 @@ fn map_carry(map: &str, budget: usize) -> (usize, String) {
     match cut {
         Some(i) => (i, map[i..].to_string()),
         None => (map.len(), String::new()),
+    }
+}
+
+#[cfg(test)]
+mod seed_upgrade_tests {
+    use super::*;
+
+    /// The bug this replaced, stated as a test: an installed copy that we wrote and nobody
+    /// touched must move forward when the bundle changes. The old seeder returned early on
+    /// `target.exists()` and so could never produce this outcome for any input.
+    #[test]
+    fn an_untouched_copy_upgrades_when_the_bundle_changes() {
+        let ours = content_fingerprint(b"card v1");
+        let newer = content_fingerprint(b"card v2");
+        assert_eq!(seed_decision(newer, Some(ours), Some(ours)), SeedOutcome::Upgraded);
+    }
+
+    /// The protection that must survive the fix: a copy the keeper edited is never overwritten,
+    /// however out of date it is. Their file is the master of itself.
+    #[test]
+    fn an_edited_copy_is_kept_even_when_the_bundle_is_newer() {
+        let shipped = content_fingerprint(b"card v1");
+        let edited = content_fingerprint(b"card v1, with my note");
+        let newer = content_fingerprint(b"card v2");
+        assert_eq!(seed_decision(newer, Some(edited), Some(shipped)), SeedOutcome::KeptYours);
+    }
+
+    /// An install predating the manifest has no record of provenance. It must fail SAFE — keep
+    /// the local file — rather than assume the file is ours and clobber a year of edits.
+    #[test]
+    fn a_differing_copy_with_no_recorded_provenance_is_kept_not_clobbered() {
+        let local = content_fingerprint(b"who knows where this came from");
+        let bundled = content_fingerprint(b"card v2");
+        assert_eq!(seed_decision(bundled, Some(local), None), SeedOutcome::KeptYours);
+    }
+
+    /// ...but an unmanifested install whose file still matches the bundle is provably ours, and
+    /// recording it is what lets that install ever start upgrading. Without this branch every
+    /// pre-manifest install would be frozen exactly as before, with a manifest to show for it.
+    #[test]
+    fn an_unmanifested_copy_identical_to_the_bundle_is_adopted_not_stranded() {
+        let same = content_fingerprint(b"card v1");
+        assert_eq!(seed_decision(same, Some(same), None), SeedOutcome::Current);
+    }
+
+    #[test]
+    fn a_missing_copy_installs() {
+        assert_eq!(seed_decision(content_fingerprint(b"x"), None, None), SeedOutcome::Installed);
+    }
+
+    /// Git rewrites line endings on this tree, so a CRLF/LF difference is not an edit and must
+    /// not strand a file in KeptYours forever. This bit the hand-fix on 2026-08-09: the live
+    /// cards were byte-different from HEAD and identical in content.
+    #[test]
+    fn line_endings_alone_are_not_an_edit() {
+        assert_eq!(content_fingerprint(b"a\r\nb\r\n"), content_fingerprint(b"a\nb\n"));
+        assert_ne!(content_fingerprint(b"a\nb\n"), content_fingerprint(b"a\nc\n"));
+    }
+
+    /// A lone carriage return is still content — only the CRLF pair collapses. Guards the
+    /// normalizer against quietly deleting bytes it was not asked to touch.
+    #[test]
+    fn a_bare_carriage_return_is_not_swallowed() {
+        assert_ne!(content_fingerprint(b"a\rb"), content_fingerprint(b"ab"));
     }
 }
 
