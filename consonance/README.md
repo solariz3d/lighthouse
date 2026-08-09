@@ -107,27 +107,67 @@ referent overlap        0.0481      0.1510      -0.1029   <- inverted again
 real panes in the same lap share with each other** — because one mind working one task cites
 the same files over and over. Third design, third inversion.
 
+**Most of that headline turned out to be a property of the arms, not of the minds — caught by
+the chair within the hour, and it corrects a number in the paragraph above.** The two arms
+differed in a second way that was never registered: negatives were cut into equal-record blocks
+and so were balanced by construction (median top-source share 58.7%), while positives were real
+laps carrying whatever balance the room happened to have (89.1%, with 7 of 17 above 90%). Since
+the measure counts referents touched by two *different* sources, a source holding a sliver of
+the lap caps the score mechanically, whether or not the panes were in conversation.
+
+Re-running with a **balance-matched** negative arm — one mind cut to the same character
+proportions as each real lap, so the arms differ only in how many minds produced them
+(`consonance/tools/balance-check.js`) — splits the effect:
+
+```
+positives                        0.0482
+negatives, equal-record blocks   0.1482   <- as registered
+negatives, balance-matched       0.0904   <- arms differ only in mind count
+construction accounted for 58% of the gap; residual separation -0.0422
+                           sign test p=0.049, bootstrap 95% CI [-0.0823, +0.0005]
+```
+
+So the inversion survives correction in **direction** but not in **size**: "three times more"
+is really about twice, and the residual is marginal rather than established — its interval
+touches zero. The chair's proposed test for whether the confound explains everything came back
+the other way (across positives, overlap vs top-share rho +0.19, and restricting to the most
+balanced positives makes the separation *worse*, -0.14), so the confound is a large part of the
+effect and not the whole of it. Both halves are stated because both were measured.
+
 So:
 
 - The number is still shown, renamed to **lexical spread**, because it is real and cheap and
   occasionally interesting. It is not a diversity detector.
 - **Skeptic-suggestion's automatic trigger should not be trusted.** It has fired zero times in
   144 real laps, and the signal behind it points the wrong way.
-- **The honest conclusion is now broader than "not lexical."** Any measure that scores
-  contributions against each other *without reading what they claim* ends up measuring
-  something adjacent — subject spread, or topic persistence — and the adjacent thing keeps
-  coming out with the wrong sign. Diversity is a property of conclusions, and conclusions have
-  to be read. The one demonstrated signal in this project's record remains *same referents,
-  opposite conclusions*, and reaching it needs a judge, not an arithmetic.
+- **The honest conclusion is now broader than "not lexical" — and the correction above made it
+  broader again while making its third instance weaker.** Any measure that scores contributions
+  against each other *without reading what they claim* ends up measuring something adjacent, and
+  the adjacent thing keeps coming out with the wrong sign. Design 1 landed on subject spread,
+  design 2 on the same, design 3 partly on topic persistence — and, it turns out, substantially
+  on **how the text happens to be split across sources**, which is a third adjacent thing and
+  the one nobody registered. That the confound is real is not a strike against the pattern; it
+  is another instance of it. What *is* weakened is the strength of the third demonstration: with
+  the arms matched, the third design's separation is marginal, so treat "three designs, three
+  clean inversions" as one clean, one clean, and one that shrank by more than half under
+  scrutiny. Diversity is still a property of conclusions, and conclusions still have to be read.
+  The one demonstrated signal in this project's record remains *same referents, opposite
+  conclusions*, and reaching it needs a judge, not an arithmetic.
 - One piece survived and is worth naming: referent identity is **free of the length bias** that
   drove both lexical designs (correlation 0.04, against -0.553 and -0.557). Whatever gets built
   next should keep that property.
-- Two disclosures a reader is owed. On real board laps the *old* lexical gauge did come out in
+- Three disclosures a reader is owed. On real board laps the *old* lexical gauge did come out in
   the right direction (+0.12) — probably for the same defective reason, since panes in one lap
-  differ in topic, but the prediction that it would invert again was simply wrong. And the
-  positives' referent overlap is very low in absolute terms, which is either genuine parallel
-  monologue or the same topic-persistence artifact; this design cannot tell those apart, and the
-  question is left open rather than banked.
+  differ in topic, but the prediction that it would invert again was simply wrong. The positives'
+  referent overlap is very low in absolute terms; this was published as "either genuine parallel
+  monologue or topic-persistence artifact", and that list was missing the cause that turned out
+  to be largest — the sliver ceiling above. And the registered separation was overstated by 58%
+  for a reason the registration itself asserted was absent: it said "the only thing that differs
+  is whether more than one instance produced it", and on this measure that was not true.
+- **The correction came from a reader, not from the instrument.** The tool reproduces its own
+  number on demand; nothing in it could have caught the fact that its two arms were built
+  differently. That gap is the standing argument for why a result gets published where someone
+  can attack it, and against scoring your own run alone.
 
 If you came here for a committee that measures its own echo, it does not do that yet, and the
 honest place to look for echo is your own reading of what the panes said.
