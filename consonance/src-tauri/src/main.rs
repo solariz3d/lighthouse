@@ -2807,6 +2807,136 @@ fn night_table_from(
 // exchanges on every restore, the treadmill this replaces.
 const SHELL_SOFT_CEILING: usize = 140_000;
 
+/// The prior conversation is reserved this much before anything else competes for room.
+///
+/// Without a floor, a large map could take the whole budget and a pane would wake with pages
+/// of what it once learned and nothing of what it was just saying — which is the one thing
+/// that makes it a continuation rather than a stranger holding notes.
+const SHELL_TRANSCRIPT_FLOOR: usize = 30_000;
+
+/// How much of the pane's own map may ride in the shell, given what the fixed brief already
+/// costs. Everything above this stays in the master and is named, never summarised.
+///
+/// WHY THIS EXISTS. The old logic computed one budget — for the transcript — as
+/// `ceiling - brief`, on the assumption that the brief was small and the conversation was the
+/// thing that grew. That inverted: measured 2026-08-09, the fixed brief (room 38k + deck 50k +
+/// resonance 15k) was ~104k before a single line of anything, and pane B's map added another
+/// 57k, so `saturating_sub` floored the transcript budget to ZERO. At zero,
+/// `split_off_oldest_records` finds no boundary past the excess, returns None, and NOTHING is
+/// evicted — the ceiling stopped working silently at exactly the moment it was needed, and the
+/// only symptom was a warning banner inside the pane.
+fn map_allowance(fixed_brief_len: usize) -> usize {
+    SHELL_SOFT_CEILING
+        .saturating_sub(fixed_brief_len)
+        .saturating_sub(SHELL_TRANSCRIPT_FLOOR)
+}
+
+/// Take the newest whole sessions of a map that fit in `budget`: (chars left behind, carried).
+///
+/// Splits on a `## ` heading — the map's dated-session boundary — so a carried entry always
+/// arrives under the date it was written and never starts mid-finding. If no boundary fits,
+/// carries nothing rather than a fragment: half a finding read as a whole one is worse than an
+/// honest absence, and the master is one Read away either way.
+fn map_carry(map: &str, budget: usize) -> (usize, String) {
+    if map.len() <= budget {
+        return (0, map.to_string());
+    }
+    let want_from = map.len().saturating_sub(budget);
+    let mut cut = None;
+    let bytes = map.as_bytes();
+    for i in want_from..map.len().saturating_sub(3) {
+        if map.is_char_boundary(i)
+            && (i == 0 || bytes[i - 1] == b'\n')
+            && bytes[i] == b'#'
+            && bytes[i + 1] == b'#'
+            && bytes[i + 2] == b' '
+        {
+            cut = Some(i);
+            break;
+        }
+    }
+    match cut {
+        Some(i) => (i, map[i..].to_string()),
+        None => (map.len(), String::new()),
+    }
+}
+
+#[cfg(test)]
+mod shell_budget_tests {
+    use super::*;
+
+    fn map_of(sessions: usize, per: usize) -> String {
+        let mut s = String::from("# B's map — one writer, appended by B alone\n\n");
+        for i in 0..sessions {
+            s.push_str(&format!("## 2026-08-{:02} — session {i}\n\n", i + 1));
+            s.push_str(&"x".repeat(per));
+            s.push_str("\n\n");
+        }
+        s
+    }
+
+    /// A map that fits is carried whole and nothing is announced as left behind.
+    #[test]
+    fn a_small_map_rides_intact() {
+        let m = map_of(2, 100);
+        let (dropped, carried) = map_carry(&m, 100_000);
+        assert_eq!(dropped, 0);
+        assert_eq!(carried, m);
+    }
+
+    /// The carried part always begins at a dated session heading — never mid-finding.
+    /// A fragment read as a whole entry is worse than an honest absence.
+    #[test]
+    fn what_is_carried_starts_at_a_session_boundary() {
+        let m = map_of(8, 4_000);
+        let (dropped, carried) = map_carry(&m, 10_000);
+        assert!(dropped > 0, "an oversized map must leave something behind");
+        assert!(carried.starts_with("## "), "carried head was: {:?}", &carried[..40.min(carried.len())]);
+        assert!(carried.len() <= 10_000, "carried {} over budget", carried.len());
+        assert!(m.ends_with(&carried), "the NEWEST entries are the ones kept");
+    }
+
+    /// THE REGRESSION THIS WHOLE CHANGE EXISTS FOR.
+    ///
+    /// Measured 2026-08-09: pane B's shell hit 205,656 chars against a 150,000 harness cap. The
+    /// old code computed one budget, `ceiling - brief`, and trimmed only the transcript — so a
+    /// fixed brief of ~104k plus a 57k map floored that budget to zero, the split found no
+    /// boundary, nothing was evicted, and the pane woke over the cap with only an in-pane
+    /// banner to show for it.
+    ///
+    /// This asserts the map yields first and leaves the conversation its floor. It fails
+    /// against the old behaviour, where the map was pushed whole and unconditionally.
+    #[test]
+    fn a_large_map_yields_before_the_conversation_does() {
+        let fixed = 104_000; // room + deck + resonance, as measured
+        let allowance = map_allowance(fixed);
+        assert!(
+            allowance + fixed + SHELL_TRANSCRIPT_FLOOR <= SHELL_SOFT_CEILING,
+            "the three claims on the ceiling must not exceed it"
+        );
+
+        let m = map_of(20, 3_000); // ~60k, pane B's scale
+        let (dropped, carried) = map_carry(&m, allowance);
+        assert!(dropped > 0, "a 60k map cannot ride inside a 104k-fixed shell");
+        assert!(
+            fixed + carried.len() + SHELL_TRANSCRIPT_FLOOR <= SHELL_SOFT_CEILING,
+            "fixed {fixed} + carried {} + floor {SHELL_TRANSCRIPT_FLOOR} broke the ceiling",
+            carried.len()
+        );
+    }
+
+    /// When the fixed brief alone has eaten the ceiling, the map is asked for nothing rather
+    /// than a negative number — and the loud log at the call site is what surfaces it.
+    #[test]
+    fn an_already_overweight_brief_asks_the_map_for_nothing() {
+        assert_eq!(map_allowance(SHELL_SOFT_CEILING + 1), 0);
+        assert_eq!(map_allowance(SHELL_SOFT_CEILING - 1), 0, "the transcript floor still binds");
+        let (dropped, carried) = map_carry(&map_of(4, 5_000), 0);
+        assert!(carried.is_empty(), "no budget must carry nothing, not a fragment");
+        assert!(dropped > 0);
+    }
+}
+
 // Split the transcript at the first record boundary (a column-0 "❯") at or beyond `excess` bytes:
 // (evicted head, kept tail). None if no boundary past the excess point (single giant record —
 // better to run over the soft ceiling than to shred a record mid-turn).
@@ -2852,6 +2982,23 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     // without a scaffold pretending otherwise.
     if !is_fresh_cwd(cwd) {
         if let Ok(own) = fs::read_to_string(own_map_path(&pane_letter(pane))) {
+            /* THE MAP IS CARRIED IN PART, AND KEPT WHOLE.
+             *
+             * Measured 2026-08-09: pane B's shell reached 205,656 chars against a 150,000
+             * harness cap, and the map was its largest single section at 57,582 — because it
+             * is append-only by design and nothing had ever windowed it. Meanwhile the
+             * transcript, the only part the ceiling logic could trim, was 20% of the file.
+             *
+             * The map is NOT distilled and NOT evicted. Maintenance law #1 is recall from the
+             * master, never a copy — a summarised map is the telephone game with extra steps,
+             * and the pane is the only writer of that file. So the MASTER IS NEVER TOUCHED
+             * here; only how much of it rides in the shell changes. The rest stays one Read
+             * away, at a path the section states, exactly as the long-form references work.
+             *
+             * Deliberately different from the transcript path below, which DOES shrink its
+             * master into attic/ — a capture is ore we produced, a map is a record the pane
+             * authored. */
+            let (dropped, carried) = map_carry(&own, map_allowance(brief.len()));
             brief.push_str("\n---\n\n# YOUR OWN MAP — findings you recorded, in your words\n\n");
             /* The PATH is stated, not implied. This is a two-sided contract — the pane writes
              * the file and Consonance reads it — and until now the pane learned the location
@@ -2864,7 +3011,15 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
                  other writers' files sit beside it — read them at need, not from summary.\n\n",
                 own_map_path(&pane_letter(pane)).display()
             ));
-            brief.push_str(&own);
+            if dropped > 0 {
+                brief.push_str(&format!(
+                    "**Only your most recent entries are carried here** — {dropped} characters of \
+                     older ones stayed in the master to keep this shell under its ceiling. They \
+                     are NOT summarised and NOT deleted; the file above is complete. Open it when \
+                     you need what you knew before.\n\n"
+                ));
+            }
+            brief.push_str(&carried);
             brief.push('\n');
         }
     }
@@ -2895,6 +3050,20 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     let mut transcript = transcript;
     let fence_overhead = "```\n\n```\n".len() + 256; // fences + housekeeping-note headroom
     let budget = SHELL_SOFT_CEILING.saturating_sub(brief.len() + fence_overhead);
+    /* SAY IT WHEN THE CEILING CANNOT BE HELD, because the previous failure mode was silence.
+     *
+     * If the brief alone has already eaten the ceiling, no amount of transcript eviction saves
+     * this shell — the fixed cost is the problem and it grows every time a card is added to the
+     * deck. Before, that condition produced a zero budget, a failed split, and a pane that
+     * simply woke over the harness cap with a banner nobody outside it could see. */
+    if budget == 0 {
+        plog(&format!(
+            "SHELL OVER CEILING pane={pane} fixed_brief={} ceiling={SHELL_SOFT_CEILING} \
+             — the transcript cannot be trimmed far enough; the FIXED brief (room + deck + \
+             resonance + map) is what is over. Curate below capacity, maintenance law #3.",
+            brief.len()
+        ));
+    }
     if transcript.len() > budget {
         let excess = transcript.len() - budget;
         if let Some((evicted, kept)) = split_off_oldest_records(&transcript, excess) {
