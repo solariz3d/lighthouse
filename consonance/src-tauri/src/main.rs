@@ -782,6 +782,12 @@ struct PaneEmus(Mutex<HashMap<String, Arc<Mutex<EmuState>>>>);
 
 // spawn claude in a fresh ConPTY: stream output, and detect exit by WAITING on the child
 // process (the PTY master often doesn't EOF on conhost). resume=true reattaches a session.
+/// The verbs a fresh pane may use without asking. Every one of these READS: none writes a file,
+/// edits a file, or executes a command. Adding anything to this list that can write or run is the
+/// mistake this constant exists to make visible — `every_tool_a_fresh_pane_may_use_is_read_only`
+/// fails if it happens.
+const FRESH_READONLY_TOOLS: &str = "Read,Glob,Grep,WebSearch,WebFetch,TodoWrite";
+
 fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool, skip_perms: bool) -> Result<PtySession, String> {
     let pair = native_pty_system()
         .openpty(PtySize { rows: EMU_ROWS, cols: EMU_COLS, pixel_width: 0, pixel_height: 0 })
@@ -798,6 +804,21 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // tool use inside its sandbox (the gate only governs cross-pane injection, not local bash).
     if skip_perms {
         cmd.arg("--dangerously-skip-permissions");
+    } else if is_fresh_cwd(&cwd) {
+        // A fresh pane asks permission for everything, which is what makes it vanilla — and on a
+        // six-pane research fan-out it turns the chair into a dialog box. Measured 2026-08-10:
+        // three fresh instances doing web research, and every WebSearch, WebFetch and Read cost a
+        // click. The keeper's words were "like playing a whack a mole mini game."
+        //
+        // So the READ-ONLY verbs are pre-allowed and nothing else is. The line is drawn where it
+        // actually falls: THERE IS NO SAFE BASH SUBSET. `Bash(node *)` reads as scoped and is not
+        // — `node -e '...'` is arbitrary code execution — so any Bash allowance is full machine
+        // access, and a fresh pane's cwd is not a jail. Bash, Write and Edit still prompt, which
+        // is the prompt that was ever worth answering.
+        //
+        // Deliberately NOT applied to rooms (their whole safety design is scoped permissions) or
+        // to sandbox bodies (their prompts keep side-effects inside the worktree). Only fresh.
+        cmd.args(["--allowedTools", FRESH_READONLY_TOOLS]);
     }
     // Join the MCP control plane (loopback) if it is up, THROUGH THIS PANE'S OWN MOUNT.
     //
@@ -3135,6 +3156,64 @@ fn map_carry(map: &str, budget: usize) -> (usize, String) {
     match cut {
         Some(i) => (i, map[i..].to_string()),
         None => (map.len(), String::new()),
+    }
+}
+
+#[cfg(test)]
+mod fresh_permission_tests {
+    use super::*;
+
+    /// The allowlist is one comma-separated string, and widening it is a one-word edit that looks
+    /// harmless in a diff. This is the thing that would make that edit loud.
+    ///
+    /// Everything a fresh pane may use without asking must READ ONLY. The moment `Bash`, `Write`,
+    /// `Edit` or `NotebookEdit` appears here, an unattended instance in a folder that is not a
+    /// jail can do anything to the machine — and the reason this list exists at all is convenience,
+    /// which is the worst possible reason to be holding that door.
+    #[test]
+    fn every_tool_a_fresh_pane_may_use_is_read_only() {
+        const CAN_WRITE_OR_EXECUTE: &[&str] =
+            &["Bash", "Write", "Edit", "NotebookEdit", "Task", "Agent", "KillShell", "BashOutput"];
+        for tool in FRESH_READONLY_TOOLS.split(',').map(|t| t.trim()) {
+            assert!(!tool.is_empty(), "empty entry in FRESH_READONLY_TOOLS");
+            assert!(
+                !CAN_WRITE_OR_EXECUTE.iter().any(|w| tool.eq_ignore_ascii_case(w)),
+                "`{tool}` can write or execute and must not be pre-allowed for a fresh pane. A \
+                 fresh pane's cwd is NOT a sandbox — its prompts are the only thing standing \
+                 between an unattended instance and the whole machine."
+            );
+        }
+    }
+
+    /// There is no safe Bash subset, so there must be no scoped Bash entry either. `Bash(node *)`
+    /// reads as narrow and is not: `node -e '...'` is arbitrary code execution.
+    #[test]
+    fn no_scoped_bash_entry_sneaks_in() {
+        assert!(
+            !FRESH_READONLY_TOOLS.to_lowercase().contains("bash"),
+            "a scoped Bash pattern is not a containment — any Bash allowance is full machine access"
+        );
+    }
+
+    /// The elevated path and the allowlist path are mutually exclusive by construction: a pane that
+    /// skips permissions never reaches the allowlist branch. Pins that the two are not both applied,
+    /// which would silently make the allowlist decorative.
+    #[test]
+    fn elevated_panes_do_not_also_get_the_allowlist() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let spawn = src
+            .split("fn spawn_claude_pane(")
+            .nth(1)
+            .expect("spawn_claude_pane moved — re-point this test");
+        let body = spawn.split("\n}\n").next().unwrap_or(spawn);
+        let skip = body.find("--dangerously-skip-permissions").expect("elevation arg gone");
+        let allow = body.find("FRESH_READONLY_TOOLS").expect("allowlist arg gone");
+        let between = &body[skip..allow];
+        assert!(
+            between.contains("else if"),
+            "the allowlist must be an ELSE branch of the elevation check; if both can apply, a \
+             fresh pane could be elevated and the allowlist would read as a limit while being none"
+        );
     }
 }
 
