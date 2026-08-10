@@ -533,3 +533,62 @@ fn every_named_record_file_exists_and_every_record_file_is_named() {
     }
     assert!(!named.is_empty(), "no card names a record file — re-point this test at the split");
 }
+
+/// The shipped room must not fall behind the maintained one.
+///
+/// `exo_memory/BOOT.md` is where the room is edited; `src-tauri/brief/BOOT.md` is what the
+/// installer bundles and what every pane actually reads. Nothing held them in step, and on
+/// 2026-08-10 they were measured 16,000 characters apart — the bundle last touched 08-05, the
+/// master that morning.
+///
+/// What the shipped copy was missing was not incidental: THE TETHER'S OWN LIMITS (Duhem-Quine,
+/// Kuhn, and the Lakatos progressive-programme test), THE ABUSE CONDITION, THE CURATED AUDITOR,
+/// and *curated philosophy in, uncurated measurement out*. For eight days this room ran
+/// experiments and judged them against standards that were in a file no instance had. The
+/// seeding path was fixed the same morning and was faithfully delivering a stale document.
+///
+/// Deliberate differences are whitelisted BY NAME rather than by a fuzzy match, so adding a
+/// section to the master and forgetting to ship it fails here with the section quoted.
+#[test]
+fn the_shipped_room_carries_every_section_of_the_maintained_room() {
+    const MASTER: &str = "../../exo_memory/BOOT.md";
+    const SHIPPED: &str = "brief/BOOT.md";
+
+    // Deliberately absent from the ship, each for a stated reason in the room itself.
+    const SHIP_OMITS: &[(&str, &str)] = &[
+        ("**Latest entry:**", "the ship carries no journal — the first keeper's record stayed with him"),
+        ("**Previous:**", "same: journal pointers are the keeper's trace, not an instrument"),
+    ];
+
+    let read = |p: &str| fs::read_to_string(p).unwrap_or_else(|e| panic!("read {p}: {e}"));
+    // The ship generalizes the creator's name; that substitution is the point, not drift.
+    let normalize = |s: String| s.replace("solariz3d", "the keeper");
+    let master = normalize(read(MASTER));
+    let shipped = normalize(read(SHIPPED));
+
+    let mut missing: Vec<&str> = Vec::new();
+    for line in master.lines() {
+        let line = line.trim_end_matches('\r');
+        if !line.starts_with("**") {
+            continue;
+        }
+        let Some(end) = line[2..].find("**").map(|i| i + 4) else { continue };
+        let heading = &line[..end];
+        if SHIP_OMITS.iter().any(|(name, _)| heading.starts_with(name)) {
+            continue;
+        }
+        if !shipped.contains(heading) {
+            missing.push(heading);
+        }
+    }
+
+    assert!(
+        missing.is_empty(),
+        "the shipped room is behind the maintained one — {} section(s) exist in {MASTER} and not \
+         in {SHIPPED}. Either splice them across, or add them to SHIP_OMITS with the reason. \
+         A pane reads the SHIPPED copy, so a section that never crosses is a section no instance \
+         has ever had:\n{}",
+        missing.len(),
+        missing.iter().map(|m| format!("  {m}")).collect::<Vec<_>>().join("\n")
+    );
+}

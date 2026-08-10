@@ -238,25 +238,39 @@ static DIRS_SERIAL: Mutex<()> = Mutex::new(());
 ///
 /// It restores the PREVIOUS value rather than `None`, because `None` is an assumption about what
 /// the process looked like before, and this type is used from more than one module.
+/// Parameterized on its lock and slot so the guard's own tests can exercise the REAL `Drop` —
+/// including under unwind — against a test-local pair. Asserting on the process-global `DIRS`
+/// from outside the critical section is itself a race, and the first version of these tests did
+/// exactly that: green alone, red in the suite, which is the defect this type exists to prevent
+/// showing up in the type's own tests.
 #[cfg(test)]
-struct DirsGuard {
-    _lock: std::sync::MutexGuard<'static, ()>,
+struct DirsGuard<'a> {
+    _lock: std::sync::MutexGuard<'a, ()>,
+    slot: &'a Mutex<Option<Dirs>>,
     prev: Option<Dirs>,
 }
 
 #[cfg(test)]
-impl DirsGuard {
+impl DirsGuard<'static> {
+    /// What every writer uses: the real lock, the real global.
     fn take() -> Self {
-        let _lock = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
-        let prev = DIRS.lock().unwrap_or_else(|e| e.into_inner()).take();
-        DirsGuard { _lock, prev }
+        Self::on(&DIRS_SERIAL, &DIRS)
     }
 }
 
 #[cfg(test)]
-impl Drop for DirsGuard {
+impl<'a> DirsGuard<'a> {
+    fn on(lock: &'a Mutex<()>, slot: &'a Mutex<Option<Dirs>>) -> Self {
+        let _lock = lock.lock().unwrap_or_else(|e| e.into_inner());
+        let prev = slot.lock().unwrap_or_else(|e| e.into_inner()).take();
+        DirsGuard { _lock, slot, prev }
+    }
+}
+
+#[cfg(test)]
+impl Drop for DirsGuard<'_> {
     fn drop(&mut self) {
-        *DIRS.lock().unwrap_or_else(|e| e.into_inner()) = self.prev.take();
+        *self.slot.lock().unwrap_or_else(|e| e.into_inner()) = self.prev.take();
     }
 }
 
@@ -2758,12 +2772,10 @@ fn is_fresh_cwd(cwd: &str) -> bool {
 mod managed_cwd_tests {
     use super::*;
 
-    /// `DIRS` is process-global and these tests rewrite it, so they must not run beside each
-    /// other or beside anything that resolves a directory. That second clause is why the lock
-    /// now lives at crate level as `DIRS_SERIAL` (see its comment beside `DIRS`): declared here,
-    /// it could only ever be taken by this module, which is strictly narrower than the hazard
-    /// it names. Alias kept so the cases below read unchanged.
-    use super::DIRS_SERIAL as SERIAL;
+    // `DIRS` is process-global and these cases rewrite it, so they must not run beside each
+    // other or beside anything that RESOLVES a directory. Both halves are handled by
+    // `DirsGuard::take()` (see its comment beside `DIRS`), which serializes on entry and puts
+    // the global back on drop — including when an assertion fails and the body never finishes.
 
     fn scratch(name: &str) -> PathBuf {
         let p = std::env::temp_dir().join(format!("consonance_{name}_{}", std::process::id()));
@@ -3130,50 +3142,72 @@ fn map_carry(map: &str, budget: usize) -> (usize, String) {
 mod dirs_guard_tests {
     use super::*;
 
-    fn dirs_is_set() -> bool {
-        DIRS.lock().unwrap_or_else(|e| e.into_inner()).is_some()
+    // A test-local lock/slot pair. The guard is exercised against THESE rather than the process
+    // globals so the assertions can sit outside the critical section without racing the suite's
+    // real writers — which the first version of these tests did, and which made them pass alone
+    // and fail in the suite.
+    static TEST_LOCK: Mutex<()> = Mutex::new(());
+    static TEST_SLOT: Mutex<Option<Dirs>> = Mutex::new(None);
+
+    fn slot_is_set() -> bool {
+        TEST_SLOT.lock().unwrap_or_else(|e| e.into_inner()).is_some()
     }
 
-    /// The plain case: a writer leaves the global as it found it.
+    fn a_dirs() -> Dirs {
+        Dirs { room: "r".into(), instances: "i".into(), data: "d".into() }
+    }
+
+    /// The plain case: a writer leaves the slot as it found it.
     #[test]
     fn a_writer_puts_dirs_back_when_it_finishes() {
-        assert!(!dirs_is_set(), "a run that starts dirty invalidates this test");
         {
-            let _g = DirsGuard::take();
-            *DIRS.lock().unwrap() = Some(Dirs {
-                room: "r".into(),
-                instances: "i".into(),
-                data: "d".into(),
-            });
-            assert!(dirs_is_set());
+            let _g = DirsGuard::on(&TEST_LOCK, &TEST_SLOT);
+            *TEST_SLOT.lock().unwrap() = Some(a_dirs());
+            assert!(slot_is_set());
         }
-        assert!(!dirs_is_set(), "the guard must restore on the normal path");
+        assert!(!slot_is_set(), "the guard must restore on the normal path");
     }
 
     /// THE CASE THE OLD CODE COULD NOT PASS. A manual reset at the end of a test body is skipped
-    /// by a failing assertion, so the runs that leave `DIRS` pointing at a deleted scratch dir are
-    /// exactly the runs where something already went wrong. Drop runs during unwind; a line does
-    /// not. Written with `catch_unwind` because the failure is the panic path itself.
+    /// by a failing assertion, so the runs that leave the global pointing at a deleted scratch dir
+    /// are exactly the runs where something already went wrong. Drop runs during unwind; a line
+    /// does not. Written with `catch_unwind` because the failure IS the panic path.
     #[test]
     fn a_panicking_writer_still_puts_dirs_back() {
-        assert!(!dirs_is_set(), "a run that starts dirty invalidates this test");
-        let prev = std::panic::take_hook();
+        let hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {})); // the panic below is the fixture, not a failure
         let out = std::panic::catch_unwind(|| {
-            let _g = DirsGuard::take();
-            *DIRS.lock().unwrap() = Some(Dirs {
-                room: "r".into(),
-                instances: "i".into(),
-                data: "d".into(),
-            });
+            let _g = DirsGuard::on(&TEST_LOCK, &TEST_SLOT);
+            *TEST_SLOT.lock().unwrap() = Some(a_dirs());
             panic!("a failing assertion, which is how real tests leave early");
         });
-        std::panic::set_hook(prev);
+        std::panic::set_hook(hook);
         assert!(out.is_err(), "the fixture must actually panic or this proves nothing");
         assert!(
-            !dirs_is_set(),
-            "a panicking writer left DIRS pointing at its scratch dir — the next test to resolve a \
-             directory gets a path that was deleted, and data_dir() silently recreates it"
+            !slot_is_set(),
+            "a panicking writer left the slot set — against the real DIRS that means the next test \
+             to resolve a directory gets a path that was deleted, and data_dir() silently \
+             recreates it"
+        );
+    }
+
+    /// The guard is only worth anything if the writers actually take it. `take()` is the binding
+    /// between the tested contract above and the real global; this pins that every test which
+    /// writes `DIRS` goes through it rather than locking by hand.
+    #[test]
+    fn every_dirs_writer_goes_through_the_guard() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let writes: Vec<&str> = src
+            .lines()
+            .filter(|l| l.contains("*DIRS.lock()") && !l.trim_start().starts_with("//"))
+            .collect();
+        assert!(!writes.is_empty(), "no DIRS writes found — re-point this test");
+        let guarded = src.matches("DirsGuard::take()").count();
+        assert!(
+            guarded >= 4,
+            "only {guarded} call sites take DirsGuard, but {} lines write DIRS. A writer that \
+             locks by hand serializes and never restores, which is the bug this replaced.",
+            writes.len()
         );
     }
 }
