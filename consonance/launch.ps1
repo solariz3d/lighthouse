@@ -26,8 +26,32 @@ $cargo    = Join-Path $env:USERPROFILE '.cargo\bin\cargo.exe'
 # Notify writes to the console AND raises a dialog for anything the user must actually see.
 # WScript.Shell.Popup because launch.vbs already uses exactly that for its own missing-file
 # case - existing pattern, no new dependency, works with no console attached.
+#
+# DPI: the dialog is drawn IN THIS PROCESS, and powershell.exe declares no DPI awareness, so on a
+# scaled display Windows renders it at 96 DPI and bitmap-stretches the result. It is not low
+# resolution - it is a small dialog blown up, which is why the text looks soft. Declaring
+# per-monitor awareness (V2, -4) before the first window exists makes Windows hand us real pixels.
+# Done LAZILY on the first Notify rather than at script start: the common path is "already up to
+# date, open instantly", and Add-Type invokes the C# compiler, which is not a cost worth paying
+# on a launch that shows no dialog at all.
+$script:dpiReady = $false
+function Use-RealPixels {
+  if ($script:dpiReady) { return }
+  $script:dpiReady = $true
+  try {
+    Add-Type -Namespace Consonance -Name Dpi -MemberDefinition @'
+[DllImport("user32.dll")] public static extern bool SetProcessDpiAwarenessContext(int c);
+[DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
+'@ -ErrorAction Stop
+    # -4 = PER_MONITOR_AWARE_V2 (Win10 1703+). Falls back to the process-wide system-DPI call on
+    # anything older, which is still sharp on a single-monitor setup.
+    if (-not [Consonance.Dpi]::SetProcessDpiAwarenessContext(-4)) { [Consonance.Dpi]::SetProcessDPIAware() | Out-Null }
+  } catch { }
+}
+
 function Notify($message, $title, $seconds, $colour) {
   Write-Host $message -ForegroundColor $colour
+  Use-RealPixels
   try { (New-Object -ComObject WScript.Shell).Popup($message, $seconds, "Consonance - $title", 48) | Out-Null } catch { }
 }
 
