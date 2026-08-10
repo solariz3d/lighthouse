@@ -113,6 +113,11 @@ const ENTRY = {
   'board-digest.js': 'withStdin((input)',
   'transcript-watch.js': '\nmain();',
   'dream-watch.js': 'if (require.main === module)',
+  // Unique to the CALL SITE, not the definition: ferry-watch defines `function main()` above the
+  // guard and calls it at the bottom, so matching the bare name would compare the guard against
+  // the definition and report a correctly-placed guard as misplaced - the exact trap the comment
+  // above this table records.
+  'ferry-watch.js': 'try { main(); }',
 };
 
 // A FRESH DATA DIR PER RUN, for two reasons found the hard way. dream-watch is stateful — it has

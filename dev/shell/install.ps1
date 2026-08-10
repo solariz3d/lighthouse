@@ -32,6 +32,7 @@ $files = @(
   @{ From = 'consonance\hooks\board-digest.js';          To = 'board-digest.js' }
   @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js' }
   @{ From = 'consonance\hooks\dream-watch.js';           To = 'dream-watch.js' }
+  @{ From = 'consonance\hooks\ferry-watch.js';           To = 'ferry-watch.js' }
 )
 
 if (-not (Test-Path $dest)) {
