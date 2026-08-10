@@ -672,6 +672,18 @@ impl Swell {
     /// which I nearly accepted because the Adagio really does begin near-inaudible. "Plausible and
     /// large" was the shape of the last two things I got wrong, so this time the trace got read
     /// first.
+    ///
+    /// THOSE TWO FIGURES ARE HISTORY, NOT PREDICTIONS — added 2026-08-10 because the comment did
+    /// not say so and a reader who checked was right to call it false. `+29.7` and `+33.3` came
+    /// from the END-DIFFERENCE estimator, which `87d37a7` replaced ("a fade-in is not a crescendo
+    /// — and the end-difference method itself is wrong for this signal"). Swell now fits a
+    /// least-squares slope, and the same two Adagio artifact windows report **+11.0** and **+7.0**
+    /// — see the trim sweep at `SWELL_REFIT_TRIM_SECS`, rows `t=116.8` and `t=536.6`.
+    ///
+    /// So: replaying this trace against today's code will NOT reproduce 29.7. That is the fix
+    /// working, not the comment lying. A fresh instance asked to check this claim replayed the
+    /// trace, got +11.0, and returned NOT SOUND — a correct measurement and an over-strong
+    /// verdict, produced entirely by a historical number wearing no date.
     pub fn sound_began(&mut self) {
         self.forget();
     }
@@ -3552,7 +3564,11 @@ mod tests {
         // Straight from the level trace of a real pass: silence at -100, a transition through -52,
         // then the music at -24. The silence guard clears below -60 and the fade-in slips under it,
         // so the transitional frames became the window's early end and the opening of every track
-        // read as a 30 dB swell. Reported live at +29.7 and +33.3 dB.
+        // read as a 30 dB swell. Reported live at +29.7 and +33.3 dB — BY THE END-DIFFERENCE
+        // ESTIMATOR, which 87d37a7 replaced. Today's least-squares refit reports +11.0 and +7.0 for
+        // those same windows, so this trace will not reproduce 29.7 against current code and is not
+        // meant to; the assertion below is on the report COUNT, which is the thing that must stay
+        // zero. See sound_began's comment for why the date matters.
         let mut s = Swell::default();
         for i in 0..240 { s.feed(-100.0, i as f32 / 12.0); }                 // 20s of silence
         for i in 240..300 { s.feed(-52.0 + (i - 240) as f32 * 0.4, i as f32 / 12.0); }  // fade-in
