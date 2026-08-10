@@ -52,7 +52,7 @@ When you want other instances to weigh in on a question:
 
 1. **Pick a focus** — click **◎** in a pane's header. That pane becomes the focus; the others become contributors.
 2. **Convene** — this sends the focus's current thread to the other panes so each responds on its own.
-3. Their replies come back sorted into **where they agree**, **where they genuinely disagree**, and **what's new**. Because the panes are differently conditioned — not clones — their agreement actually means something.
+3. Their replies come back sorted into **where they agree**, **where they genuinely disagree**, and **what's new**. Read the *disagreements* first. This line used to say that agreement means something because the panes are differently conditioned; that was the project's original bet about diversity and its own measurements did not support it. Agreement between panes is not evidence on its own. Two panes reaching **different conclusions from the same referent** is the thing worth having, and you are the one who judges it.
 
 You read the result and decide. Consonance surfaces the signal; you're the judge.
 

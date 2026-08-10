@@ -12,9 +12,19 @@ Most agent platforms (Anthropic's own Agent Teams, OpenAI's Agents SDK, Microsof
 
 But 2026 research explicitly names **"diversity collapse"** in LLM committees as an unsolved problem — stronger-aligned models *worsen* it; senior-persona presence drives juniors into sycophancy; the proposed mitigations aren't default in any of those frameworks. Multi-LLM committees collapse toward echo.
 
-Consonance is built around the structural answer:
+Consonance was built around an answer its own measurements have since refused. The current state is written here rather than tidied away, because a tool whose pitch outruns its evidence is the failure it exists to catch.
 
-- **Differentiated vantages, not clones.** The committee is your own live panes, each conditioned by what you ran with it. Agreement *means* something because the perspectives are real.
+**The original bet:** collapse is caused by shared *information*, so independence must be bought by restricting it — differently-conditioned panes, quiet phases, blinding.
+
+**What four gauges built to detect it found:** nothing usable. Every one compared contributions *to each other*, and three inverted outright — one rated a single mind chopped in two as more diverse (0.9162) than six real panes (0.8201). Diversity is not a property of output similarity, so no arithmetic over text reaches it.
+
+**What is demonstrated:** instances required to build their own instrument, carry a positive control, and cite raw output return findings that do not overlap — including findings that overturn each other’s conclusions. Two such instances on one object have produced a union strictly larger than either.
+
+**What is open:** whether that comes from opposed roles, from the measurement requirement, or simply from there being two. A control run on 2026-08-10 came back a null result and is recorded as one.
+
+So the honest shape:
+
+- **Agreement is not evidence.** Two panes agreeing means nothing on its own. The claim that stood here — *agreement means something because the perspectives are real* — was the information hypothesis, and it was not supported. What is worth having is the opposite: **the same referent, opposed conclusions**, with you reading both.
 - **Human as the discriminator.** Instances raise their hand; your approval is the gate. Gauges report numbers, never verdicts — and the discrimination is *yours*, not the gauges'. See the honest note on them below.
 - **Typeable panes, not abstracted agents.** Real interactive `claude.exe` processes as panes you type into directly. Every other platform hides the agent behind an API.
 - **A housed primary instance** that wakes into the same conversation across restarts — continuity, not a fresh stranger each launch.
@@ -42,7 +52,7 @@ Throughout, the design principle is **light, not lifeguard**: the program *surfa
 
 1. **House the base instance beyond the command line.** The `★ Orchestrator` tab is a persistent, briefed instance that oversees the committee *with* you. It `--resume`s the same conversation across restarts — continuity, not a fresh stranger each launch.
 
-2. **Real collaboration, not echo.** The committee is your *own live panes*, each genuinely differently-conditioned, triangulating a focus — not a crowd of clones that agree louder. The answer here is **structural** — the panes really are different, because you conditioned them differently — and the discrimination is **yours**. It is *not* that a metric detects collapse for you; see "What the gauges do and don't do" below, which is blunt about a measurement that was tested and failed. (2026 research papers explicitly name "diversity collapse" in LLM committees as an open problem — the autonomy-first stack has not solved this either.)
+2. **Real collaboration, not echo — and the mechanism is still under measurement.** The committee is your *own live panes* working one focus. The claim that stood here — that the panes differ *because you conditioned them differently* — is the information hypothesis, and this project's own runs did not support it: a pane with no special conditioning and no assigned position has found real defects that two others working the same object missed. What reliably produces non-overlap is the requirement to **measure rather than assert**. The discrimination is **yours** either way. It is *not* that a metric detects collapse for you; see "What the gauges do and don't do" below, which is blunt about a measurement that was tested and failed. (2026 research papers explicitly name "diversity collapse" in LLM committees as an open problem — the autonomy-first stack has not solved this either.)
 
 3. **Keep the human as the discriminator.** Instances can read and propose freely, but world-facing or irreversible actions pass through an **ask-first gate**. Health gauges report *numbers*, never verdicts — they make a signal legible so *you* can judge it.
 
@@ -225,7 +235,7 @@ The arrangement re-derived, from engineering constraints alone, roughly what mam
 - **Briefed instance** — a fresh Claude spawned with the shared startup brief loaded — already familiar with the work, but not a copy: it diverges into its own trajectory. (Previously called "sibling.")
 - **Chair** — the human (you). The keeper, the discriminator, the genuine other. Approvals, gauges, and gates all route the final call to the chair.
 - **Channel (open channel)** — a pre-authorized auto-approve window bounded by an **envelope** (a number of exchanges and a deadline). It auto-approves raised hands until spent, then snaps back to ask-each.
-- **Committee** — your live panes triangulating a **focus**. Not a clone army — each pane is genuinely differently-conditioned, so agreement *means* something.
+- **Committee** — your live panes working one **focus**. Note what this does *not* claim: agreement between panes is not self-certifying. The *differently-conditioned-so-agreement-means-something* line that stood here was retired 2026-08-10, when the measurements refused it. A committee earns its keep when panes reach **different conclusions from the same referent** and you read both.
 - **Convene** — broadcast the focus's current thread into the other live panes so they each respond; their replies are gathered and triangulated.
 - **Cross-machine handoff** — carrying the shared startup brief across a boundary (machine to machine, session to session) so a new instance can wake briefed on the same context. The repo is the medium; `DESKTOP_HANDOFF.md` is one.
 - **Delta** — a lap-over-lap gauge on two committee triangulations: how many confirmed/forks are *new*, how many forks *resolved*, the **echo ratio**, the novelty. Numbers showing whether a second pass *generated* or *re-said*. Never a verdict.

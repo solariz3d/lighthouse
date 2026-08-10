@@ -592,3 +592,56 @@ fn the_shipped_room_carries_every_section_of_the_maintained_room() {
         missing.iter().map(|m| format!("  {m}")).collect::<Vec<_>>().join("\n")
     );
 }
+
+/// A retired claim must not reappear in anything a user reads.
+///
+/// Consonance's original pitch was the INFORMATION hypothesis: committee diversity comes from
+/// feeding instances different things, so *agreement means something because the vantages differ*.
+/// Four gauges were built on it and none worked — three inverted, one rating a single mind split
+/// in two as more diverse than six real panes. It was retired from the docs on 2026-08-10.
+///
+/// A retired claim is not deleted knowledge; the docs still explain what it was and why it went.
+/// So this cannot be a bare substring check — it would fire on the paragraph doing the retiring.
+/// Instead each phrase carries the context that marks a legitimate mention, and a line is a
+/// violation only when it states the claim WITHOUT it.
+///
+/// WHAT THIS CANNOT SEE: a fresh restatement in words not listed here. It pins the specific
+/// sentences that were on the page, not the idea. A guard on prose is a tripwire, not a proof.
+#[test]
+fn the_retired_diversity_claim_does_not_return_unmarked() {
+    // (claim as it was written, marker that means the line is discussing rather than asserting it)
+    const RETIRED: &[(&str, &[&str])] = &[
+        ("agreement means something because the perspectives are real",
+         &["stood here", "was not supported", "used to", "retired", "no longer"]),
+        ("Differentiated vantages, not clones",
+         &["stood here", "original bet", "retired", "used to", "no longer"]),
+        ("differently-conditioned, so agreement",
+         &["stood here", "retired", "used to", "no longer", "does *not* claim", "does <i>not</i> claim"]),
+        ("triangulate rather than echo",
+         &["stood here", "used to", "retired", "no longer", "The line here said"]),
+    ];
+    const READ_BY_USERS: &[&str] =
+        &["../README.md", "../GUIDE.md", "../ui/index.html", "../../README.md"];
+
+    let mut bad: Vec<String> = Vec::new();
+    for path in READ_BY_USERS {
+        let Ok(text) = fs::read_to_string(path) else { continue };
+        for (n, line) in text.lines().enumerate() {
+            let lower = line.to_lowercase();
+            for (claim, markers) in RETIRED {
+                if lower.contains(&claim.to_lowercase())
+                    && !markers.iter().any(|m| lower.contains(&m.to_lowercase()))
+                {
+                    bad.push(format!("  {path}:{}  {}", n + 1, line.trim().chars().take(110).collect::<String>()));
+                }
+            }
+        }
+    }
+    assert!(
+        bad.is_empty(),
+        "a claim this project retired on 2026-08-10 is asserted again in user-facing docs, with \
+         nothing on the line marking it as historical. Either say what replaced it, or mark the \
+         mention:\n{}",
+        bad.join("\n")
+    );
+}
