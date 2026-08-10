@@ -28,7 +28,23 @@ const fs = require("fs");
 // only because a DIFFERENT guard happens to cover it breaks silently the day that guard moves.
 if (process.env.CONSONANCE_DREAM) process.exit(0);
 
-const REPO = "C:\\Consonance\\lighthouse";
+// THE CHAIR GATE. install.ps1 drops this into ~/.claude/shell and it is registered in the
+// USER-GLOBAL settings, so every instance on the machine runs it - including the committee panes.
+// A pane received this on its first deployment and reported the obvious: it is the DESTINATION,
+// not the router. It holds no chair_inject. Telling it to route the chair's artifacts is an
+// unactionable nag on the receiving side, which is precisely the failure this file's own comment
+// was written to avoid, reproduced on the very first run.
+//
+// Gated on the same fact chair_* already uses: the chair token exists only in the Main instance's
+// directory. Deterministic, not a convention.
+if (!require("fs").existsSync(require("path").join(process.cwd(), ".chair-token"))) process.exit(0);
+
+// FERRY_REPO honoured, and it is a correction rather than a nicety. The comment further down
+// justifies inlining the prefix rule because "a hook that dies when a repo moves goes silently
+// missing" - and the first version then hardcoded the repo path and swallowed the throw, so a
+// moved repo made this return silently anyway. The duplication bought nothing against the threat
+// it named. ferry.js already had this escape; the hook did not.
+const REPO = process.env.FERRY_REPO || "C:\\Consonance\\lighthouse";
 const LEDGER = "C:\\Consonance\\data\\ferry.jsonl";
 const ARTIFACT_DIRS = ["exo_memory/loop/", "exo_memory/map/", "exo_memory/journal/"];
 
@@ -79,12 +95,29 @@ function main() {
   const names = due.slice(0, 3).map(c => `${c.sha.slice(0, 7)} ${c.subject.slice(0, 58)}`);
   const more = due.length > 3 ? ` (+${due.length - 3} more)` : "";
 
+  // BACKLOG APPENDED ONLY WHEN ALREADY SPEAKING. Silence here is ambiguous - it means either
+  // "everything fresh was ferried" or "everything went stale unferried", and past the window this
+  // goes quiet forever either way. --report resolves it, but nothing prompts anyone to run
+  // --report, so the instrument measuring the routing habit was itself reachable only by
+  // remembering, which is the failure the tool exists because of. Carrying the count on a line
+  // that was going to print anyway costs no new noise and stops silence meaning two things.
+  let backlog = "";
+  try {
+    const older = execSync(
+      `git log --until="${FRESH_HOURS} hours ago" --format=%H -- ${ARTIFACT_DIRS.join(" ")}`,
+      { cwd: REPO, encoding: "utf8", timeout: 5000, maxBuffer: 8 * 1024 * 1024 }
+    ).split(/\r?\n/).filter(Boolean);
+    const stale = older.filter(sha => !ferried(sha)).length;
+    if (stale) backlog = `\nBacklog beyond the window: ${stale} never ferried (node consonance/tools/ferry.js --report).`;
+  } catch (_) {}
+
   console.log(
     `[ferry] ${due.length} claim-bearing artifact(s) committed and not yet put in front of another pane, oldest ${age}:\n` +
     names.map(n => `  ${n}`).join("\n") + more +
     `\nRoute the OBJECT, not a description of it, then record it: ` +
     `node consonance/tools/ferry.js --record <sha> <pane>. ` +
-    `Merit-check what comes back before amending - a correction is a claim (authority-deference, 2026-08-10).`
+    `Merit-check what comes back before amending - a correction is a claim (authority-deference, 2026-08-10).` +
+    backlog
   );
 }
 
