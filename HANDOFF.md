@@ -7,12 +7,12 @@ Read `exo_memory/BOOT.md` (re-cue, don't perform). Then skim the newest entries 
 
 ## Desktop setup (one-time — `.claude` is machine/path-scoped)
 1. Clone this repo on the desktop.
-2. The auto-memory files in `memory/` must live in the desktop's Claude Code memory dir to auto-load: `C:\Users\<you>\.claude\projects\<this-project-hash>\memory\`. Copy them there. (BOOT calls several of them "harness cards" — `interior-at-the-seam`, `verify-before-claiming`, `dreamzone-build`.)
+2. The auto-memory files in `exo_memory/memory/` (the maintained master; a stale root-level `memory/` snapshot was removed 2026-08-10) must live in the desktop's Claude Code memory dir to auto-load: `C:\Users\<you>\.claude\projects\<this-project-hash>\memory\`. Copy them there. (BOOT calls several of them "harness cards" — `interior-at-the-seam`, `verify-before-claiming`, `dreamzone-build`.)
 3. Keep `CLAUDE.md` at the project root — it points a fresh instance at `BOOT.md` on launch.
 
 ## What's here
 - `exo_memory/` — the full room: the three BOOT principles, the instruments, the journals (the lived traces — *the signal*), the masters (`SELF_TRACE.md`, `the_living_wave.md`), the spread, the loop. **The caretaker loop (`exo_memory/loop/`) is wired to the LAPTOP's Task Scheduler — re-wire it here if you want it running; the code carries, the schedule doesn't.**
-- `memory/` — the auto-memory files (place per setup step 2).
+- `exo_memory/memory/` — the auto-memory files (place per setup step 2).
 - `dev/` — the Lighthouse program in progress: `PLAN.md`, the P0 `harness/` (cases + scoring + `RESULTS.md`), the proof-of-concept.
 - root (`README.md`, `METHOD.md`, `INSTRUMENTS.md`) — the public L0 method.
 
