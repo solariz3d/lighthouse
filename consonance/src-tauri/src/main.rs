@@ -173,6 +173,29 @@ struct Dirs {
 }
 static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
 
+/// The lock every test that rewrites `DIRS` must hold. Crate-level ON PURPOSE, beside `DIRS`
+/// itself, because the scope of the hazard is the scope of the global — not the scope of one
+/// test module.
+///
+/// It lived inside `managed_cwd_tests` until 2026-08-10, and its comment there already said the
+/// right thing: these tests "must not run beside each other OR BESIDE ANYTHING THAT RESOLVES A
+/// DIRECTORY". Being module-private, it could not be taken by anything outside that module, so
+/// `chair_tests::a_blind_window_swallows_a_line_that_would_otherwise_reach_the_board` — which
+/// rewrites `DIRS` and then calls `board_push`, resolving two directories — had no way to hold it.
+/// The comment named the correct scope and the implementation could not reach it.
+///
+/// How that surfaced, and why the loud version was the lucky one: the race was intermittent for as
+/// long as nobody looked (1 failure in 13 runs on 2026-08-09), then became DETERMINISTIC — 6 of 6 —
+/// when ~15 unrelated tests were added on 2026-08-10 and changed the scheduling. Nobody touched
+/// `DIRS`, `board_push`, or the blind test. The failing direction is the survivable one: when the
+/// interleaving goes the other way, the pushed line lands in another test's `board.jsonl`, the
+/// blind assertions pass because their own file is empty, and the guard test reports GREEN having
+/// never engaged the lock it exists to prove.
+///
+/// Poison is recovered from rather than propagated: a panic in one case must not disable the rest.
+#[cfg(test)]
+static DIRS_SERIAL: Mutex<()> = Mutex::new(());
+
 /// Last time the field latch was written. Throttles disk against a ~12 fps analysis loop.
 static FIELD_WRITE: Mutex<Option<std::time::Instant>> = Mutex::new(None);
 
@@ -2672,9 +2695,11 @@ mod managed_cwd_tests {
     use super::*;
 
     /// `DIRS` is process-global and these tests rewrite it, so they must not run beside each
-    /// other or beside anything that resolves a directory. Poison is recovered from rather
-    /// than propagated: a panic in one case must not disable the others.
-    static SERIAL: Mutex<()> = Mutex::new(());
+    /// other or beside anything that resolves a directory. That second clause is why the lock
+    /// now lives at crate level as `DIRS_SERIAL` (see its comment beside `DIRS`): declared here,
+    /// it could only ever be taken by this module, which is strictly narrower than the hazard
+    /// it names. Alias kept so the cases below read unchanged.
+    use super::DIRS_SERIAL as SERIAL;
 
     fn scratch(name: &str) -> PathBuf {
         let p = std::env::temp_dir().join(format!("consonance_{name}_{}", std::process::id()));
@@ -5652,6 +5677,12 @@ mod chair_tests {
     /// must first be shown able to report one.)
     #[test]
     fn a_blind_window_swallows_a_line_that_would_otherwise_reach_the_board() {
+        // This case rewrites the process-global `DIRS` and then calls `board_push`, which
+        // resolves the lock path and the board path from it. Without this lock a concurrent
+        // test's `DIRS` write sends the push to ANOTHER directory, and the failure is silent:
+        // "SHOULD-LEAK is absent" then passes because the line went elsewhere, not because the
+        // blind window swallowed it. Held for the whole case, not just the writes.
+        let _serial = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let tmp = std::env::temp_dir().join(format!("blindtest-{}", std::process::id()));
         let _ = fs::remove_dir_all(&tmp);
         fs::create_dir_all(&tmp).unwrap();
