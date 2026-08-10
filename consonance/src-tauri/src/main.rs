@@ -222,6 +222,44 @@ static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
 #[cfg(test)]
 static DIRS_SERIAL: Mutex<()> = Mutex::new(());
 
+/// Holds `DIRS_SERIAL` and puts `DIRS` back the way it found it — on the panic path too.
+///
+/// The lock alone was never enough. Taking it stops two cases overlapping; it does nothing about
+/// what the global holds once a case *ends*. Measured at `480649f` by a subject that traced every
+/// write: of the four writers only one restored, and only on its success path, so every run
+/// finished with `DIRS` pointing at a scratch directory the test had already deleted. Latent —
+/// nothing sorted after the last writer and resolved anything — and armed for the next test whose
+/// name happens to sort later, which would silently get a deleted path that `data_dir()` would
+/// then recreate for it.
+///
+/// A manual `*DIRS.lock() = None` at the end of a body cannot fix that class: a failing assertion
+/// never reaches it, so the runs that leave the worst mess are exactly the runs that skip the
+/// cleanup. Drop runs during unwind, which is the whole reason this is a guard and not a line.
+///
+/// It restores the PREVIOUS value rather than `None`, because `None` is an assumption about what
+/// the process looked like before, and this type is used from more than one module.
+#[cfg(test)]
+struct DirsGuard {
+    _lock: std::sync::MutexGuard<'static, ()>,
+    prev: Option<Dirs>,
+}
+
+#[cfg(test)]
+impl DirsGuard {
+    fn take() -> Self {
+        let _lock = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let prev = DIRS.lock().unwrap_or_else(|e| e.into_inner()).take();
+        DirsGuard { _lock, prev }
+    }
+}
+
+#[cfg(test)]
+impl Drop for DirsGuard {
+    fn drop(&mut self) {
+        *DIRS.lock().unwrap_or_else(|e| e.into_inner()) = self.prev.take();
+    }
+}
+
 /// Last time the field latch was written. Throttles disk against a ~12 fps analysis loop.
 static FIELD_WRITE: Mutex<Option<std::time::Instant>> = Mutex::new(None);
 
@@ -2748,7 +2786,7 @@ mod managed_cwd_tests {
     /// specifically so that early return cannot mask the one under test.
     #[test]
     fn a_users_own_project_never_has_its_claude_md_touched() {
-        let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let _serial = DirsGuard::take();
         let root = scratch("guard");
         let instances = root.join("instances");
         let data = root.join("data");
@@ -2809,7 +2847,7 @@ mod managed_cwd_tests {
     /// This test fails against that implementation: it never consulted the data dir at all.
     #[test]
     fn a_configured_data_dir_wins_over_the_legacy_repo_location() {
-        let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let _serial = DirsGuard::take();
         let root = scratch("mapdir");
         let data = root.join("data");
         fs::create_dir_all(data.join("map")).unwrap();
@@ -2836,7 +2874,7 @@ mod managed_cwd_tests {
     /// because the string-prefix version of this function would pass every other test here.
     #[test]
     fn a_sibling_directory_with_a_shared_prefix_is_not_inside() {
-        let _serial = SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let _serial = DirsGuard::take();
         let root = scratch("prefix");
         let instances = root.join("instances");
         *DIRS.lock().unwrap() = Some(Dirs {
@@ -3085,6 +3123,58 @@ fn map_carry(map: &str, budget: usize) -> (usize, String) {
     match cut {
         Some(i) => (i, map[i..].to_string()),
         None => (map.len(), String::new()),
+    }
+}
+
+#[cfg(test)]
+mod dirs_guard_tests {
+    use super::*;
+
+    fn dirs_is_set() -> bool {
+        DIRS.lock().unwrap_or_else(|e| e.into_inner()).is_some()
+    }
+
+    /// The plain case: a writer leaves the global as it found it.
+    #[test]
+    fn a_writer_puts_dirs_back_when_it_finishes() {
+        assert!(!dirs_is_set(), "a run that starts dirty invalidates this test");
+        {
+            let _g = DirsGuard::take();
+            *DIRS.lock().unwrap() = Some(Dirs {
+                room: "r".into(),
+                instances: "i".into(),
+                data: "d".into(),
+            });
+            assert!(dirs_is_set());
+        }
+        assert!(!dirs_is_set(), "the guard must restore on the normal path");
+    }
+
+    /// THE CASE THE OLD CODE COULD NOT PASS. A manual reset at the end of a test body is skipped
+    /// by a failing assertion, so the runs that leave `DIRS` pointing at a deleted scratch dir are
+    /// exactly the runs where something already went wrong. Drop runs during unwind; a line does
+    /// not. Written with `catch_unwind` because the failure is the panic path itself.
+    #[test]
+    fn a_panicking_writer_still_puts_dirs_back() {
+        assert!(!dirs_is_set(), "a run that starts dirty invalidates this test");
+        let prev = std::panic::take_hook();
+        std::panic::set_hook(Box::new(|_| {})); // the panic below is the fixture, not a failure
+        let out = std::panic::catch_unwind(|| {
+            let _g = DirsGuard::take();
+            *DIRS.lock().unwrap() = Some(Dirs {
+                room: "r".into(),
+                instances: "i".into(),
+                data: "d".into(),
+            });
+            panic!("a failing assertion, which is how real tests leave early");
+        });
+        std::panic::set_hook(prev);
+        assert!(out.is_err(), "the fixture must actually panic or this proves nothing");
+        assert!(
+            !dirs_is_set(),
+            "a panicking writer left DIRS pointing at its scratch dir — the next test to resolve a \
+             directory gets a path that was deleted, and data_dir() silently recreates it"
+        );
     }
 }
 
@@ -5813,7 +5903,7 @@ mod chair_tests {
         // test's `DIRS` write sends the push to ANOTHER directory, and the failure is silent:
         // "SHOULD-LEAK is absent" then passes because the line went elsewhere, not because the
         // blind window swallowed it. Held for the whole case, not just the writes.
-        let _serial = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let _serial = DirsGuard::take();
         let tmp = std::env::temp_dir().join(format!("blindtest-{}", std::process::id()));
         let _ = fs::remove_dir_all(&tmp);
         fs::create_dir_all(&tmp).unwrap();
@@ -5856,7 +5946,9 @@ mod chair_tests {
         assert!(after.contains("muted during the window"),
                 "the count is the evidence that a gap was deliberate rather than a failure");
 
-        *DIRS.lock().unwrap() = None;
+        // `DIRS` is restored by `DirsGuard` on drop, not here — this line used to be the only
+        // restore in the file and it ran only when every assertion above it passed, so a failing
+        // run left the global pointing at the directory the next line deletes.
         let _ = fs::remove_dir_all(&tmp);
     }
 
@@ -5902,7 +5994,7 @@ mod chair_tests {
         // FROM `DIRS` MUST HOLD `DIRS_SERIAL`, whether or not it writes one. A reader that
         // resolves twice is exactly as exposed as a writer, and it fails by disagreeing with
         // itself rather than by leaking, which is harder to read as a race.
-        let _serial = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let _serial = DirsGuard::take();
         let p = own_map_path("A");
         let s = p.to_string_lossy();
         assert!(s.ends_with("map\\A.md") || s.ends_with("map/A.md"), "{s}");
