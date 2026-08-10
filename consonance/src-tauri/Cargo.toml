@@ -32,6 +32,11 @@ windows = { version = "0.61", features = [
   "Win32_System_Com",
   "Win32_System_Com_StructuredStorage",  # PROPVARIANT: the activation params travel as VT_BLOB
   "Win32_System_Threading",
+  # CreateMutexW for the single-instance guard, and MessageBoxW so a refused second launch SAYS
+  # so instead of just not appearing. Same reasoning as the block above: features on a crate
+  # already compiled in the tree, nothing new to download. An app that silently declines to
+  # start would be the very failure class this guard exists to close.
+  "Win32_UI_WindowsAndMessaging",
   "Win32_Media_Audio",
   # WinRT, not Win32: GlobalSystemMediaTransportControlsSessionManager, the same session API the OS
   # uses to draw its own volume-key overlay. A feature flag on a crate already in the tree via

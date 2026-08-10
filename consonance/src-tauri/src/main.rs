@@ -3596,6 +3596,104 @@ fn main_cwd() -> String {
     dir.to_str().unwrap_or(".").to_string()
 }
 
+/// Claim a named OS mutex. Returns true if THIS process is the first holder, false if someone
+/// else already holds it. The handle is deliberately never closed: the OS releases it when the
+/// process ends, including on a crash, so there is no stale-lock-file problem to clean up.
+///
+/// `Local\` rather than `Global\` on purpose — the scope of the hazard is one logged-in user's
+/// session, because that is the scope of the data dir the two instances would fight over.
+fn claim_named_singleton(name: &str) -> bool {
+    use windows::core::PCWSTR;
+    use windows::Win32::Foundation::{GetLastError, ERROR_ALREADY_EXISTS};
+    use windows::Win32::System::Threading::CreateMutexW;
+    let wide: Vec<u16> = name.encode_utf16().chain(std::iter::once(0)).collect();
+    unsafe {
+        match CreateMutexW(None, true, PCWSTR(wide.as_ptr())) {
+            // A handle comes back either way; ERROR_ALREADY_EXISTS is how Windows says
+            // "you opened someone else's". Never CloseHandle: this is held for the run.
+            Ok(_held_for_process_lifetime) => GetLastError() != ERROR_ALREADY_EXISTS,
+            // Cannot tell. Fail OPEN rather than closed: a launcher bug must never be able to
+            // make the app permanently unstartable, and the cost of a second instance is
+            // recoverable while the cost of no instance is not.
+            Err(_) => true,
+        }
+    }
+}
+
+/// The whole reason the above exists.
+///
+/// Consonance writes two files that the rest of the system uses to FIND it: `.chair-token` in
+/// Main's directory, and the MCP port config. Both are written by whichever instance wrote last,
+/// with no check that the writer is the one still serving. So a second instance — even one that
+/// starts, writes, and immediately dies — leaves both files describing a process that is gone.
+///
+/// Observed 2026-07-28 and again 2026-08-09: two instances, the second wrote the port config and
+/// the token and exited, and every chair verb refused for an hour against a token the live server
+/// had never heard of, with no error anywhere naming the cause. `launch.ps1` now refuses to open a
+/// second copy, which removes the usual route in; this closes the route that bypasses the
+/// launcher entirely by running the exe directly.
+fn claim_single_instance() -> bool {
+    claim_named_singleton("Local\\ConsonanceSingleInstance")
+}
+
+#[cfg(test)]
+mod singleton_tests {
+    use super::*;
+
+    /// The guard itself. Names are made unique per process so a leftover mutex from a concurrent
+    /// test binary — or from the real app, which holds `Local\ConsonanceSingleInstance` whenever
+    /// it is open — cannot decide the verdict.
+    #[test]
+    fn a_second_claim_on_the_same_name_is_refused() {
+        let name = format!("Local\\consonance-test-same-{}", std::process::id());
+        assert!(claim_named_singleton(&name), "the first claim must succeed");
+        assert!(
+            !claim_named_singleton(&name),
+            "a second claim on a name already held must be refused - this is the whole guard"
+        );
+    }
+
+    /// POSITIVE CONTROL, and it is not decoration: without it, the assertion above is satisfied
+    /// by a function that refuses everything after its first call, or that always returns false.
+    /// This pins that the refusal is about the NAME being taken and nothing else.
+    #[test]
+    fn an_unrelated_name_is_not_blocked_by_a_held_one() {
+        let held = format!("Local\\consonance-test-held-{}", std::process::id());
+        let other = format!("Local\\consonance-test-other-{}", std::process::id());
+        assert!(claim_named_singleton(&held), "precondition: the first name is claimed");
+        assert!(
+            claim_named_singleton(&other),
+            "an unrelated name must still be claimable - otherwise the guard is refusing blindly"
+        );
+    }
+}
+
+/// Refusing to start must never look like failing to start. `launch.ps1` learned this the hard
+/// way — its warnings went to a console `launch.vbs` hides, so a click that was correctly
+/// declined was indistinguishable from a click that did nothing, and the keeper clicked again.
+/// This path has no console at all, so the dialog is the only channel there is.
+fn warn_second_instance() {
+    use windows::core::PCWSTR;
+    use windows::Win32::UI::WindowsAndMessaging::{MessageBoxW, MB_ICONWARNING, MB_OK};
+    let body: Vec<u16> = "Consonance is already running.\n\n\
+        This second copy has stopped rather than starting, because two instances mean two MCP \
+        servers. The second one overwrites the chair token and the port config and then the two \
+        disagree about which server is live - that is what silently broke the chair verbs on \
+        2026-07-28 and again on 2026-08-09.\n\n\
+        Use the window you already have. To pick up new code, close it completely first, then \
+        launch once."
+        .encode_utf16()
+        .chain(std::iter::once(0))
+        .collect();
+    let title: Vec<u16> = "Consonance - already running"
+        .encode_utf16()
+        .chain(std::iter::once(0))
+        .collect();
+    unsafe {
+        MessageBoxW(None, PCWSTR(body.as_ptr()), PCWSTR(title.as_ptr()), MB_OK | MB_ICONWARNING);
+    }
+}
+
 fn main_intake() -> String {
     // Hand the SITUATION as trace, not an identity assertion (per the desktop instance's catch:
     // a line that tells you who you are is museum-drift; hand a tool/trace, leave the rest to be run).
@@ -4555,6 +4653,13 @@ fn reset_breaker(app: AppHandle, cost: State<Cost>) {
 }
 
 fn main() {
+    // BEFORE ANYTHING ELSE, and specifically before any file that tells the rest of the system
+    // where to find this process gets written. See claim_single_instance for what those files
+    // are and what happens when a dead instance owns them.
+    if !claim_single_instance() {
+        warn_second_instance();
+        return;
+    }
     // Stage 7a/7b: the pull queue. pull_tx → the MCP control plane (bodies' raise_pull);
     // form_pull → the forming step (the 7b fallback puller). The consumer surfaces both.
     let (pull_tx, pull_rx) = tokio::sync::mpsc::unbounded_channel::<mcp::PullRequest>();
