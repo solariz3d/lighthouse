@@ -645,3 +645,59 @@ fn the_retired_diversity_claim_does_not_return_unmarked() {
         bad.join("\n")
     );
 }
+
+/// Every relative link in a user-facing doc must resolve IN A FRESH CLONE.
+///
+/// Existing on the author's disk is not the test. `dreams/` sat in `.gitignore` with zero tracked
+/// files while the README's second paragraph opened *"There is a folder in this repository called
+/// `dreams/`"* and linked to it — the project's flagship illustration, the first concrete thing a
+/// stranger is shown, and a 404 for every one of them. It existed locally the whole time, which is
+/// exactly why nobody noticed.
+///
+/// So the check is `git ls-files`, not `Path::exists`. Anything gitignored, untracked, or simply
+/// misspelled fails here with the file and line.
+#[test]
+fn every_relative_link_in_the_docs_exists_in_a_fresh_clone() {
+    const DOCS: &[&str] = &["../../README.md", "../README.md", "../GUIDE.md"];
+    let repo = std::path::Path::new("../..");
+    let mut dead: Vec<String> = Vec::new();
+
+    for doc in DOCS {
+        let Ok(text) = fs::read_to_string(doc) else { continue };
+        let doc_dir = std::path::Path::new(doc).parent().unwrap_or(repo);
+        for (n, line) in text.lines().enumerate() {
+            let mut rest = line;
+            while let Some(i) = rest.find("](") {
+                rest = &rest[i + 2..];
+                let Some(end) = rest.find(')') else { break };
+                let target = &rest[..end];
+                rest = &rest[end..];
+                // External, anchors, and mailto are somebody else's problem.
+                if target.starts_with("http") || target.starts_with('#') || target.contains(':') {
+                    continue;
+                }
+                let target = target.split('#').next().unwrap_or(target);
+                if target.is_empty() {
+                    continue;
+                }
+                let full = doc_dir.join(target);
+                let out = std::process::Command::new("git")
+                    .arg("ls-files")
+                    .arg("--")
+                    .arg(&full)
+                    .output();
+                let tracked = out.map(|o| !o.stdout.is_empty()).unwrap_or(true); // git missing → don't fail the suite
+                if !tracked {
+                    dead.push(format!("  {doc}:{}  ]({target})", n + 1));
+                }
+            }
+        }
+    }
+
+    assert!(
+        dead.is_empty(),
+        "a user-facing doc links to something no fresh clone has — gitignored, untracked, or \
+         misspelled. It may exist on this machine, which is why it went unnoticed:\n{}",
+        dead.join("\n")
+    );
+}
