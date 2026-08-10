@@ -167,16 +167,72 @@ if (Test-Path $cargo) {
   Notify "cargo was not found at`n  $cargo`n`nOpening the existing build without compiling, so what you get may be older than your source." 'cargo not found' 10 'Yellow'
 }
 
+$app = $null
 try {
   if (Test-Path $exe) {
-    Start-Process $exe
+    $app = Start-Process $exe -PassThru
   } else {
     $host.UI.RawUI.WindowTitle = 'Consonance - no build'
     Notify "No consonance.exe at`n  $exe`n`nand the build did not produce one. Nothing has been started." 'nothing to start' 15 'Red'
   }
 } finally {
   # Released here rather than left to process exit, so a click immediately after this one is not
-  # rejected by a mutex whose owner has already finished its work.
+  # rejected by a mutex whose owner has already finished its work. It MUST come before the wait
+  # below: this script now outlives the launch, and holding the mutex for a whole session would
+  # make every later click report "already starting" forever.
   $launchMutex.ReleaseMutex()
   $launchMutex.Dispose()
 }
+
+# --- DREAM AT CLOSE ---------------------------------------------------------------------------
+# Why this exists, measured 2026-08-10: the dream had not run in 27 days on this machine, and the
+# reason was structural rather than a bug. The cycle fires on four daily wake timers and yields
+# when a human is present, which is correct for an always-on desktop. This is a LAPTOP: it is
+# powered off and in a bag whenever the keeper is not using it, so "the machine is awake" and
+# "the keeper is here" are very nearly the same event, and the idle guard can essentially never
+# be satisfied. Four triggers at 04:30 / 10:30 / 16:30 / 22:30 against a machine that is only on
+# during a shift is a schedule that cannot be kept.
+#
+# Closing the app is a BETTER unattended-signal than inferred idle time, because it is a decision
+# rather than an inference. It is also the moment the day's material is complete.
+#
+# Nothing about the dream's own guards changes. The runner's live-session test only applies when
+# a consonance process EXISTS - by the time this fires, it does not, so the same code path that
+# refused for 27 nights now passes on its own terms. The battery guard still applies and is
+# deliberately left alone.
+function Invoke-DreamAtClose($proc) {
+  try {
+    if (-not $proc) { return }
+
+    # Off switch in local config rather than in this file, matching how dream_model is already
+    # pinned: the MACHINE's choice lives in private config, the repo stays neutral. The desktop
+    # is always on and already dreams on its timers; it can set this false without a code edit.
+    try {
+      $cfgPath = Join-Path $env:USERPROFILE '.consonance.json'
+      if (Test-Path $cfgPath) {
+        $cfg = Get-Content $cfgPath -Raw -Encoding UTF8 | ConvertFrom-Json
+        if ($null -ne $cfg.dream_on_close -and -not $cfg.dream_on_close) { return }
+      }
+    } catch { }
+
+    $started = Get-Date
+    $proc.WaitForExit()
+    # A relaunch during the same session would leave another instance running; dreaming while one
+    # is up would trip the runner's own live-session guard anyway, so just stand down.
+    if (@(Get-Process -Name 'consonance' -ErrorAction SilentlyContinue).Count -gt 0) { return }
+
+    # A session too short to have a day in it has nothing to recombine. 20 minutes is a floor, not
+    # a tuned number, and it is here so that opening the app to check one thing and closing it does
+    # not produce a dream about nothing.
+    $upMinutes = ((Get-Date) - $started).TotalMinutes
+    if ($upMinutes -lt 20) { return }
+
+    # The SAME entry point the scheduled task uses - same shim, same log, same guards - so the
+    # close path and the timer path cannot drift apart. Absent shim means the dream is not
+    # installed on this machine, which is not an error.
+    $shim = Join-Path $env:LOCALAPPDATA 'Consonance\dream_launch.vbs'
+    if (-not (Test-Path $shim)) { return }
+    Start-Process -FilePath 'wscript.exe' -ArgumentList @('//B', '//Nologo', "`"$shim`"") -WindowStyle Hidden
+  } catch { }   # a dream must never be able to break a launch, in either direction
+}
+Invoke-DreamAtClose $app
