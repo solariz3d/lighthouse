@@ -184,13 +184,39 @@ static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
 /// rewrites `DIRS` and then calls `board_push`, resolving two directories — had no way to hold it.
 /// The comment named the correct scope and the implementation could not reach it.
 ///
-/// How that surfaced, and why the loud version was the lucky one: the race was intermittent for as
-/// long as nobody looked (1 failure in 13 runs on 2026-08-09), then became DETERMINISTIC — 6 of 6 —
-/// when ~15 unrelated tests were added on 2026-08-10 and changed the scheduling. Nobody touched
-/// `DIRS`, `board_push`, or the blind test. The failing direction is the survivable one: when the
-/// interleaving goes the other way, the pushed line lands in another test's `board.jsonl`, the
-/// blind assertions pass because their own file is empty, and the guard test reports GREEN having
-/// never engaged the lock it exists to prove.
+/// How that surfaced: the race was intermittent for as long as nobody looked. The "6 of 6
+/// deterministic" figure this comment first carried was MY MEASUREMENT ERROR, retracted the same
+/// night — I matched the string FAILED without checking which test and ran a binary outside the
+/// crate root, so I was counting cochlea fixture failures.
+///
+/// MEASURED PROPERLY 2026-08-10 by an opposed pair who never saw each other's work, each with its
+/// own harness and its own positive control, both pinned and both citing their binary:
+///
+///     lock removed   A: 11/30 misdirected     B: 1/30      (A's trace widens the window)
+///     lock in place  A:  0/30                 B: 0/30      120 locked runs, zero foreign landings
+///     forced control A: 30/30                 B: 29/30
+///
+/// **So the fix IS demonstrated** — it was labelled NOT DEMONSTRATED at commit because I could not
+/// reproduce the failure, and A explains why with a number: the blind test's exposed span is ~10 ms
+/// and the first competing write lands at ~20 ms. Dose curve 10ms→0/30, 20ms→19/30, 40ms→25/30,
+/// 80ms→30/30. My 0/25 warm runs were not wrong; they were UNINFORMATIVE, sitting 10 ms short.
+///
+/// AND THE SIGNATURE I CLAIMED IS WRONG, corrected by both of them in opposite directions and worth
+/// keeping in that shape. I wrote that the failing direction is survivable and the silent direction
+/// reports GREEN. B: no silent-green in 90 runs, and structurally it needs a SECOND `board_push`
+/// caller to have set `BLIND_LAST`/`BLIND_MUTED` — there is none in the test binary, so this is a
+/// flaky guard test rather than a lying one. A: in every forced run the assertion meant to catch
+/// this — `THE GUARD DID NOT FIRE` — **passed vacuously**, and the test failed only on a neighbour
+/// assertion added for a different reason. So the silent green was never observed and is **one
+/// deleted assertion away**: the guard's own oracle is satisfiable by the failure it guards.
+///
+/// WHO MUST HOLD IT — corrected 2026-08-10 after the opposed-pair run, because the first version
+/// gave it to the four WRITERS and that is not the scope the comment above already named.
+/// **Any test that RESOLVES a directory from `DIRS` must hold this, whether or not it writes one.**
+/// A reader that resolves twice is exactly as exposed as a writer; it just fails by disagreeing
+/// with itself instead of by leaking, which is harder to recognise as a race. Measured: with the
+/// writers serialized, `a_panes_own_map_resolves_to_its_letter_file` still failed 1 of 30 because
+/// the blind test rewrote `DIRS` between its two `own_map_path` calls.
 ///
 /// Poison is recovered from rather than propagated: a panic in one case must not disable the rest.
 #[cfg(test)]
@@ -5858,6 +5884,25 @@ mod chair_tests {
         // require the string "lighthouse", which pinned the one machine the hardcoded path was
         // correct on — the assertion passed for years while the behaviour it guarded was
         // broken everywhere else. The portable half is the part worth pinning.
+        // HELD BECAUSE THIS TEST READS `DIRS`, NOT BECAUSE IT WRITES IT — and that distinction is
+        // the hole `DIRS_SERIAL` shipped with. The lock was given to the four WRITERS on
+        // 2026-08-10; its own comment already named the wider scope ("must not run beside anything
+        // that RESOLVES a directory") and the hoist to crate level still did not reach a reader.
+        //
+        // Measured by B during the opposed-pair run, not reasoned about: `LOCK_020` failed WITH the
+        // lock in place, 1 of 30 —
+        //     a_panes_own_map_resolves_to_its_letter_file panicked
+        //       left:  Some("C:\Users\zackn\.consonance\map")
+        //       right: Some("...\Temp\blindtest-20284\map")
+        // — because the blind test rewrote `DIRS` between this test's FIRST and SECOND resolution.
+        // Two `own_map_path` calls in one assertion, two different answers. Nothing here writes
+        // `DIRS`, so nothing here was serialized.
+        //
+        // The rule, and it is the class rather than this case: A TEST THAT RESOLVES A DIRECTORY
+        // FROM `DIRS` MUST HOLD `DIRS_SERIAL`, whether or not it writes one. A reader that
+        // resolves twice is exactly as exposed as a writer, and it fails by disagreeing with
+        // itself rather than by leaking, which is harder to read as a race.
+        let _serial = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let p = own_map_path("A");
         let s = p.to_string_lossy();
         assert!(s.ends_with("map\\A.md") || s.ends_with("map/A.md"), "{s}");
