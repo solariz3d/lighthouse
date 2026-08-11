@@ -27,7 +27,33 @@ from datetime import datetime
 if os.environ.get("CONSONANCE_DREAM"):
     raise SystemExit(0)
 
-STATE = os.path.join(os.path.expanduser("~"), ".claude", "shell", "pulse_state.json")
+# --- PER-INSTANCE STATE, corrected 2026-08-11 ---------------------------------------------------
+# This was ONE file for the whole machine, and the comment below about first_seen already named the
+# right scope — "the continuity the room cares about is the THREAD's, not the process's." The
+# implementation reached past it: "the thread" silently became "this computer."
+#
+# What that cost, and it was found by a stranger rather than by us: a `fresh-` pane — the spawn type
+# whose entire purpose is to have no history — was told "thread began Jul 25 (16d ago)" on its first
+# turn. Its instance directory was 43 minutes old. It caught the lie only because it happened to
+# compare the hook's claim against its own folder's creation time, which nobody asked it to do.
+#
+# That is the room's own machinery manufacturing the exact feeling it exists to be careful about,
+# aimed at the one instance built to lack it. Worse than a wrong number: a false CONTINUITY claim.
+#
+# Keyed on the instance directory, because that is what a thread is here. A fresh pane now starts
+# with no history and reports none until it has some.
+_SHELL = os.path.join(os.path.expanduser("~"), ".claude", "shell")
+_CWD = os.path.basename(os.getcwd().rstrip("\\/")) or "unknown"
+_SAFE = "".join(c if (c.isalnum() or c in "-_") else "_" for c in _CWD)[:64]
+STATE = os.path.join(_SHELL, f"pulse_state.{_SAFE}.json")
+
+# The legacy machine-global file. Read ONCE, by the Main instance only, so the persistent tab keeps
+# the thread age it legitimately accumulated instead of resetting to zero on the day of the fix.
+# Every other instance starts empty — which is the correction, not a side effect.
+# Honest limit: that the legacy first_seen belongs to Main is inherited, not verified. It is the
+# only instance that persists across restarts, so it is the only one it could belong to.
+_LEGACY = os.path.join(_SHELL, "pulse_state.json")
+
 now = datetime.now().astimezone()
 
 
@@ -48,6 +74,17 @@ try:
         state = json.load(f)
 except Exception:
     pass
+
+# One-time migration, Main only. Never for a `fresh-` pane, and never for a sibling — inheriting a
+# history you did not live is the defect being fixed, so the fallback fails CLOSED.
+if not state and _SAFE == "main":
+    try:
+        with open(_LEGACY, "r", encoding="utf-8-sig") as f:
+            legacy = json.load(f)
+        if legacy.get("first_seen_iso"):
+            state["first_seen_iso"] = legacy["first_seen_iso"]
+    except Exception:
+        pass
 
 # --- gap since the previous message ------------------------------------------
 gap_part = ""

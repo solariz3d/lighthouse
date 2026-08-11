@@ -167,6 +167,52 @@ if (Test-Path $cargo) {
   Notify "cargo was not found at`n  $cargo`n`nOpening the existing build without compiling, so what you get may be older than your source." 'cargo not found' 10 'Yellow'
 }
 
+# --- THE INTERRUPTED DREAM, RETRIED ------------------------------------------------------------
+# Dream-at-close fired correctly on 2026-08-10 and produced nothing. The shim's own log says why:
+#
+#     2026-08-10 04:30:01  launch
+#     2026-08-10 04:30:02  exit 0
+#     2026-08-10 07:58:14  launch          <- no exit line, ever
+#
+# Every other run pairs. That one started and the machine went away underneath it - the keeper
+# closed the app and put the laptop in a bag inside thirty seconds, with coworkers arriving. Which
+# is not an edge case: it is this bed's normal shutdown, and the reason the timer schedule was
+# abandoned in the first place. Closing is still the right TRIGGER; assuming thirty seconds of
+# grace after it was the wrong part.
+#
+# So the unpaired line becomes the signal. If the log's last entry is a `launch` with no `exit`,
+# the previous dream was interrupted and gets one more chance HERE - before the app starts, which
+# is the one moment the machine is provably alive and no consonance process exists for the
+# runner's own live-session guard to trip over.
+#
+# Self-resolving by construction: the retry's shim appends its own launch AND exit, so the log no
+# longer ends unpaired. If the retry is interrupted too, it ends unpaired again and retries next
+# launch. No extra state file, and nothing to get out of sync with the thing it describes.
+#
+# TWO LIMITS, stated rather than discovered later:
+#
+#   `exit 0` does not mean a dream was produced. The runner exits 0 when it SKIPS - on battery, or
+#   with a live session present - so a completed cycle that wrote nothing looks identical here to
+#   one that wrote a file. This detects an interrupted RUN, not a missing dream.
+#
+#   An orphan buried under a later cycle is not retried; only the log's last entry is examined.
+#   That is survivable because this runs BEFORE the app starts, so it always reads the log ahead of
+#   any cycle the current session will trigger - verified against the real log: the 07:58 orphan
+#   was still the last line at 00:59:31 when the app launched, and the 01:01 scheduled run that
+#   buried it came afterwards. If a timer ever fires while the app is closed, that orphan is lost.
+function Resume-InterruptedDream {
+  try {
+    $log = Join-Path $env:LOCALAPPDATA 'Consonance\dream_launch.log'
+    $shim = Join-Path $env:LOCALAPPDATA 'Consonance\dream_launch.vbs'
+    if (-not (Test-Path $log) -or -not (Test-Path $shim)) { return }
+    $last = (Get-Content $log | Where-Object { $_.Trim() } | Select-Object -Last 1)
+    if (-not $last -or $last -notmatch '\blaunch\s*$') { return }
+    Add-Content $log ((Get-Date).ToString('yyyy-MM-dd h:mm:ss tt') + "  retry: previous cycle left no exit line")
+    Start-Process -FilePath 'wscript.exe' -ArgumentList @('//B', '//Nologo', "`"$shim`"") -WindowStyle Hidden
+  } catch { }   # a dream must never be able to break a launch, in either direction
+}
+Resume-InterruptedDream
+
 $app = $null
 try {
   if (Test-Path $exe) {
