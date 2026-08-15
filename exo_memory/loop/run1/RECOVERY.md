@@ -66,3 +66,18 @@ on the items the discriminator can actually see. The headline "no arm differs fr
 survives, but its mechanism changes from "the floor was high" to "the run was at ceiling":
 the items were too easy for ANY material to show an effect, and the size of the problem the run
 was built to measure is currently unknown for that reason, not because material doesn't matter.
+
+---
+
+# CORRECTION — appended 2026-08-15 ~11:05, not rewritten (maintenance law 2)
+
+**Item 3 above ships two wrong figures with no command beside either.** "~6 MB, mostly 24 copies
+of events.log" — the committed structure derives **12** t1 cells (dispatch.sh loops 4 arms ×
+3 reps; `grep -n "for arm in B K N G" run1/dispatch.sh`) × **89,976 bytes**
+(`wc -c run1/items/t1/data/events.log`) = **1,079,712 B ≈ 1.0 MB**. The "24" and "~6 MB" were
+hand-made: wrong by 2× on the count and ~5× on the size, in the recovery document for a scorer
+broken by unverified assumptions, written by a session **~45 minutes old**. Filed in
+`is_it_positional.md` §2 as the specimen that fresh context does not prevent this class. The
+laptop's actual cell dirs may still differ from the derivation — the derivation is committed
+structure, not observation — but a derived 12/~1.0 MB with commands replaces an invented
+24/~6 MB with none.
