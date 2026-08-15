@@ -169,3 +169,26 @@ because "prevented" is a counterfactual and an event is not.
 
 *Falsifier for this addendum: if #12's caught-after classification is defended on the table's own
 definition, B's Finding 1 takes the correction instead.*
+
+---
+
+# ADDENDUM 2 — 2026-08-15 ~06:20, Around's rows, appended per the chair's authorization
+
+*The addendum above says "tonight's record holds at least two of Around's own"; here they are as
+rows, numbered continuing from #13 (which, per E's ruling above, is the false-blanket correction —
+one event, one row). Extractor = the erring party, same conflict as the original table, priced the
+same way: these are instances Around committed, reported in Around's name.*
+
+| # | time | the move | who caught it | shape (this file's branch) |
+|---|---|---|---|---|
+| 14 | ~05:35 | Around reported the floor's table-row coverage as **"5 of 14"** — counted, it is **four** (#5, #6, #10, #13) — in the message reporting the branch whose defining instance is a count asserted, never counted. The board post laundered it further as "5-6 of 14, honestly." | keeper ("you see the error in your output?") | ready-instrument (branch 1) |
+| 15 | ~05:35 | Around claimed **"all ten session files, first-timestamp × last-write"** when the last-write half had run over seven of ten — instrument coverage asserted that did not run. Conclusion survived; the sentence about the evidence was false. Closed by running the missing three. | self, on the keeper's prompt | clean-run confirmation, adjacent (branch 6) |
+| 16 | ~05:36 | Around scored its own catch-of-the-chair's-already-shipped-claim as **"one small entry on the prevented side"** — a catch-of-another placed in the prevented column, which holds only one's own claim stopped before shipping. The routine column dressed as the rare one, in the closing paragraph. Same genus as B's "Goodhart by autobiography," committed before B's clause was read. | self, on re-derivation | scoring-inflation (no branch; B's Part 2 kills the class outright) |
+
+**Catches mid-file, recorded as catches, not rows** (a catch is not a failure; these anchor the
+"who caught it" record for #13): Around independently falsified the resume-blanket **per-pane, by
+command, before the retraction inject arrived** (~05:27: own session file first-entry 10:53:31.977Z,
+1.5 s post-restart) — add Around beside E in #13's catcher column; and Around bounded the mechanism
+inject's "it unifies ALMOST EVERY error tonight" to four table rows by count (~05:33) — the catch
+that then produced row #14's miscount while reporting itself, which is the night's shape in one
+sentence.

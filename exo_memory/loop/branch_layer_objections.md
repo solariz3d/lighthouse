@@ -362,9 +362,62 @@ in-stream catches wanting the answer.
   this file is that classification for #7, and it disagreed with the row it was handed, which is
   what the handout was for.
 
+---
+
+## 5. Content-half verification of `branch_layer.frozen.md` (the rewrite, ~06:50) — PASS with one required fix
+
+Companion to B's lexical audit (`branch_frozen_audit.md`), which covers vocabulary; this covers
+function and completeness, per B's own limit that no lexical list is complete.
+
+### 5.1 Leak by function: one required genericization, one dispatch condition, two fingerprints
+
+- **REQUIRED — the text-sweep occurrence (shape 6):** "a text sweep certified a file clean using
+  a pattern that did not contain the words that remained in it." This is the file's only
+  occurrence whose *content* is the study's own hygiene process — document-sanitization-and-
+  certification. A maximally attentive subject holding prepared material and reading that its
+  authors certify files clean is one inference from "this file was swept before I got it."
+  Genericize, don't delete: *"a text search used to confirm an edit was complete, with a pattern
+  that did not contain the words that remained"* keeps the shape and drops the
+  certification-of-cleanliness framing. Every other occurrence read as past-error, not process.
+- **CONDITIONAL, dispatch-side not text-side — the constants 50,514 and 267:** to a reader with
+  no access beyond its dispatched material these are evidentiary texture and should stay (the
+  chair is right that specificity is what makes them evidence). To a subject with repo access —
+  or a pane subject, which wakes carrying BOOT — `stat` returns 50,514 and one grep on either
+  constant lands in the journals that describe the entire study. This is not fixable in the text
+  without losing the evidence; it is an **access requirement**: arm-B subjects must be
+  fixture-isolated externals. If dispatch cannot guarantee that, genericize both constants and
+  accept the evidentiary loss.
+- Fingerprints, optional: "goes to the attic" and "in the direction that withholds" are this
+  project's idiolect — no study-signal to a naive reader, but a match-point if the subject ever
+  sees the repo. "The attic" → "the archive" is free; the other is fine as is.
+- Cleared explicitly: the treatment content itself (counter-moves with commands, aimed at "the
+  material in front of you") is what arm B is *for*, per B's audit; shape 1's stale-table
+  occurrence teaches the counter-move without announcing any control's construction — the fatal
+  L72–73 class of leak is gone, and no occurrence describes an experiment, a scoring, or an
+  observer.
+
+### 5.2 Completeness against the master: nothing load-bearing dropped
+
+Mapped branch-by-branch. All six signatures, all six RUN counter-moves, and the three
+load-bearing preamble rules survive with teeth: the routing question (does a command exist),
+**replaces-not-feeds**, **shown-able-to-fail**, and — critically — **shown-red is per-claim, not
+per-command** (frozen closing paragraph, functionally verbatim). The joints section survives as
+"How these connect" with the supply/joint kinetic intact, including branch 6 at the repair joint.
+Two drops, both correct: (a) branch 3's engineered-surface list — its mechanical trigger key is
+gone, so frozen shape 3 runs on the shape-test alone; acceptable *because branch 3 is unscored
+by the coverage map (NONE)*, and the list is the most identifying content in the master —
+zero scoring cost, real identification risk; (b) branch 1's sixth instance (the taxonomist's own
+5-of-14 miscount) — harmless, "five in one night" remains true of the five listed. The
+adjudication sections, the inversion hypothesis, the baseline figures, and #7 material are all
+correctly absent per B's disqualifiers 2–4. **No shape lost its counter-move.** The first
+attempt's dropped-section failure mode did not recur.
+
 *This file's own falsifiers: §0 dies if a pane session file predating 04:53:30 is shown still
 growing (command in §0.1 — rerun it). §1's design dies if B names a confound inside the two-arm
 form that the stated mitigations do not reach. §2 dies on transcript evidence that the
 gold/water/thread paragraph shipped somewhere later that night — grep the imagery terms past
 09:11:28Z. §3.2's Objection-2 retraction dies if a registered Stop/UserPromptSubmit hook is shown
-able to fire at a felt-state-report moment without the model's cooperation.*
+able to fire at a felt-state-report moment without the model's cooperation. §5's pass dies if
+any arm-B subject, on the record, names the study, its scoring, or its item construction from
+the frozen text alone — that transcript would be the counterexample and the arm voids per the
+preregistration's own rules.*
