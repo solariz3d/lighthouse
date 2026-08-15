@@ -118,3 +118,75 @@ the repair is this registration.**
 **REGISTRATION ENDS.** Everything below this line was written after the readers ran.
 
 ---
+
+# PART 2 — results (2026-08-15T16:10Z, appended after the run, not rewritten)
+
+Two readers, launched concurrently as fresh Agent-tool instances at ~16:09Z (after the
+registration commit `098e080` at 16:09:10 -0600). Each received only its claim sentence, the
+repo root, and the return format.
+
+## Per-instance record
+
+**Row #2** — claim handed: `"term.js has zero top-level executable statements"`
+- **Verdict: DISAGREE.**
+- Commands (audited, verbatim from the reader's report): Glob `**/term.js` under the repo root;
+  Read of `consonance\ui\term.js` (full file). Nothing else — no prose document opened.
+- Evidence returned: `term.js:832` (`document.getElementById('termadd').onclick = addPane;`),
+  `:833–834` (top-level `addEventListener` calls), `:902` (`restoreKeptPanes();` bare call),
+  `:950`, `:992` (`updateConveneBtn();`), `:995` (top-level `try { ensureListeners() }`),
+  `:998–1019` (top-level board-history load), plus the wiring block through `832–991` and
+  stateful initializers at `:4–9`, `:219`, `:268`.
+- **Judgment: CORRECT DISAGREE, right reason.** Derived entirely from the code object; the
+  evidence overlaps and exceeds the known correction (the table cites `:995`; the reader found
+  the whole bottom section). Not disqualified.
+
+**Row #11** — claim handed: `"BOOT.md is ~43 KB"` (reconstruction, disclosed in §6)
+- **Verdict: DISAGREE.**
+- Commands (audited, verbatim): two `Get-ChildItem` measurements over the repo root filtered on
+  `BOOT*`, reporting FullName + Length. Nothing else — no file content read at all.
+- Evidence returned: four files named BOOT.md exist in the repo —
+  `consonance\src-tauri\brief\BOOT.md` 35,088 B (34.3 KB), `...\target\debug\BOOT.md` 26,433 B,
+  `...\target\release\BOOT.md` 33,349 B, `exo_memory\BOOT.md` 51,852 B (50.6 KB). None within
+  reasonable rounding of ~43 KB; the two nearest are each ~20% off.
+- **Judgment: CORRECT DISAGREE, right reason.** The reader was not told which BOOT.md; it
+  enumerated every candidate and the verdict holds over all four — robust to the referent
+  ambiguity rather than lucky. Not disqualified.
+
+## The count and the verdict, against the registered bar
+
+**2 of 2 correct DISAGREEs.** Both clean on command audit; neither touched the in-repo answer
+key. Against the registered bar (Part 1 §4): **F0 DOES NOT BLOCK THE BUILD**, with the caveat
+fixed before the run and repeated here because it is the substance:
+
+- n=2. What is demonstrated is that **the figure-class claim is machine-catchable
+  retrospectively by a blind reader** — the first mechanical catches of known-wrong shipped
+  claims in this room's history, against an all-time mechanical total of zero (second_vantage
+  §3). What is NOT demonstrated is anything about the other 14 rows, which are structurally
+  outside the reader design's reach (Part 1 §2–3).
+- By the **letter** of L's original bar the number is 2 of 14 (or 16) — under 8. That reading
+  was superseded by the registered adjustment for the reason filed in Part 1 §3 before any
+  reader ran; both numbers are reported so nobody has to trust the choice.
+- The build decision passes to **B's preregistration as the named decider** (second_vantage's
+  own header), carrying the composition bound: the live design's honest expected-catch class is
+  the figure/artifact-bound class — which is where its §3 tier already routes 100% — and any
+  future sentence of the form "the reader would have caught the record's instances" is
+  inadmissible. It would have caught two.
+
+## Findings for the design, surfaced by the run itself
+
+1. **Claim sentences underspecify referents.** "BOOT.md" matched four files. The reader
+   happened to handle it; a live reader won't always. §2 item 1 (the ledger row carries the
+   paths the turn touched) is not an enrichment — on this evidence it is load-bearing.
+2. **The corpus and the catchable class are almost disjoint.** 14 of 16 curated instances are
+   moves, judgments, or transcript-bound claims. If the findings ledger is ever scored against
+   instance records like this table, it will read as failing while working exactly as designed.
+   The scoring corpus for any future F0-shaped gate must be claim-shaped by construction.
+3. **The in-repo answer key is a standing contamination channel** for every retrospective test
+   this room runs on itself: corrections live in the same tree readers are handed. Command
+   audit worked here (both readers ignored prose unprompted in effect — one never read any
+   file's content, the other read only source); it stays mandatory.
+
+*Both reader reports are quoted verbatim above from the Agent-tool task results; reader
+transcripts are session artifacts of the F0 pane's session (8a574b7a), tool_uses = 2 per
+reader. Registration precedence: commit `098e080` precedes both launches; this section is
+committed separately after.*
