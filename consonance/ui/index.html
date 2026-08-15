@@ -392,7 +392,14 @@
   <script src="vendor/xterm.js"></script>
   <script src="vendor/addon-fit.js"></script>
   <script src="intro.js"></script>
-  <script src="app.js"></script>
+  <!-- term.js BEFORE app.js, and the order is load-bearing. These are plain scripts sharing one
+       global scope, and the dependency runs one way: app.js calls term.js's escapeHtml, while
+       term.js uses nothing app.js defines. With app.js first it worked only because all six of
+       its escapeHtml calls sit inside deferred callbacks; one top-level call would have been a
+       ReferenceError at load. Loading the definition first makes that correct by construction
+       rather than by accident. See app.js's header for the sibling hazard (redeclaring it), which
+       killed term.js outright on 2026-08-15. -->
   <script src="term.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

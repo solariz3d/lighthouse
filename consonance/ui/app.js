@@ -5,6 +5,14 @@ let state = {};
 
 const status = t => { $('#status').textContent = t; };
 
+// Untrusted strings (OS media-session title/artist, and the 'heard' text that embeds them)
+// reach innerHTML sinks below. The webview runs with csp:null and withGlobalTauri:true, so any
+// unescaped markup executes with full invoke() access — a track title is an attacker surface.
+// escapeHtml is the shared global from term.js (5-char escaping). Do NOT redeclare it here: a
+// top-level `const escapeHtml` collided with term.js's `function escapeHtml`, and the resulting
+// redeclaration SyntaxError killed term.js's whole script — which silently broke pane restore
+// (empty panes / no Main) on 2026-08-15. One definition, in term.js.
+
 // Single-page app — there is nowhere to navigate. Trap history back/forward
 // (keyboard or programmatic) and swallow the mouse X-buttons (3 = back, 4 = forward)
 // before WebView2 navigates and wipes the live panes.
@@ -65,7 +73,7 @@ $$('.tabs button').forEach(b => b.onclick = () => {
 });
 
 ['#roompath', '#instancesdir', '#datadir', '#ambientlabel', '#ambientlat', '#ambientlon', '#ambienttz'].forEach(s => { const el = $(s); if (el) el.addEventListener('change', persist); });
-const ssb = $('#savesettings'); if (ssb) ssb.onclick = () => persist().then(() => status('settings saved — applies to new spawns; restart for full effect')).catch(() => {});
+const ssb = $('#savesettings'); if (ssb) ssb.onclick = () => persist().then(() => status('settings saved — applies to new spawns; restart for full effect')).catch(e => status('could not save settings: ' + e));
 
 load();
 
@@ -113,7 +121,7 @@ load();
     // Bright and full-size: these are the voted lines, the ones that also reach the ledger. They
     // have to stay legible against the fast dim stream they now sit among.
     row.style.fontWeight = '600';
-    row.innerHTML = `<span style="opacity:.5">${h.at}</span>  <span style="color:${tone}">${h.text}</span>`;
+    row.innerHTML = `<span style="opacity:.5">${escapeHtml(h.at)}</span>  <span style="color:${tone}">${escapeHtml(h.text)}</span>`;
     log.appendChild(row);
     // A listening window should follow the sound rather than make you chase it.
     log.scrollTop = log.scrollHeight;
@@ -220,7 +228,7 @@ load();
       if (barFill) barFill.style.width = '0';
       return;
     }
-    const who = np.artist ? `<span style="opacity:.7">${np.artist}</span> — ` : '';
+    const who = np.artist ? `<span style="opacity:.7">${escapeHtml(np.artist)}</span> — ` : '';
     // An unknown length must not render as a full bar or a 0:00 that looks like a real position.
     const known = np.duration > 0;
     const time = known ? `${clock(np.position)} <span style="opacity:.45">/ ${clock(np.duration)}</span>`
@@ -228,7 +236,7 @@ load();
     const warn = np.matched ? ''
       : ' <span style="color:#e8b04b" title="this is the OS\'s current session and may belong to a different app than the one being captured">⚠ system session</span>';
     nowBox.innerHTML =
-      `<span style="color:#c98bdb">♪</span> ${who}<strong>${np.title}</strong>` +
+      `<span style="color:#c98bdb">♪</span> ${who}<strong>${escapeHtml(np.title)}</strong>` +
       `<span style="margin-left:auto; font-variant-numeric:tabular-nums">${time}</span>` +
       `${np.playing ? '' : ' <span class="hint">(paused)</span>'}${warn}`;
     if (barFill) barFill.style.width = known ? `${Math.min(100, 100 * np.position / np.duration)}%` : '0';
@@ -243,7 +251,7 @@ load();
     row.style.opacity = '.42';
     row.style.fontSize = '11px';
     row.innerHTML = `<span style="opacity:.6">·</span> <span style="color:${
-      restless ? '#e8b04b' : '#8b93a3'}">${text}</span>`;
+      restless ? '#e8b04b' : '#8b93a3'}">${escapeHtml(text)}</span>`;
     log.appendChild(row);
     log.scrollTop = log.scrollHeight;
     if (++lines > 500) { log.removeChild(log.firstChild); lines--; }
@@ -269,7 +277,7 @@ load();
     // The chord leads when there is one — it is what a reader wants, and the intervals are the
     // evidence for it. Unnamed is the common case and must not look like an error.
     const chord = s.chord
-      ? `<strong style="color:#7aa2f7; font-size:15px">${s.chord}</strong>   `
+      ? `<strong style="color:#7aa2f7; font-size:15px">${escapeHtml(s.chord)}</strong>   `
       : '';
     vsOut.innerHTML = vs.length === 0
       ? 'silent'
@@ -278,7 +286,7 @@ load();
           `<span style="opacity:.55"> · ${v[2]} partial${v[2] === 1 ? '' : 's'}` +
           `${v[3] ? ' · inferred' : ''}</span></span>`).join('   ') +
         (s.intervals && s.intervals.length
-          ? `<span style="opacity:.75">   —   ${s.intervals.join(' · ')}` +
+          ? `<span style="opacity:.75">   —   ${escapeHtml(s.intervals.join(' · '))}` +
             `${s.restless ? ' (wants to move)' : ''}</span>` : '') +
         '   ' + level;
   });

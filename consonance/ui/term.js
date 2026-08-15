@@ -10,7 +10,7 @@ let lastForming = null;       // last committee synthesis (for "give to focus")
 
 function inv(cmd, args) { return window.__TAURI__.core.invoke(cmd, args); }
 function setStatus(t) { const s = document.getElementById('status'); if (s) s.textContent = t; }
-function escapeHtml(s) { return String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
 function ensureListeners() {
   if (listenersReady) return;
@@ -85,9 +85,10 @@ function ensureListeners() {
       '<div class="gcwhy">' + escapeHtml(c.why) + '</div></div>' +
       '<div class="gcbtns"><button class="gcapprove">Approve</button><button class="gcdeny">Deny</button></div>';
     const decide = (approve) => {
-      inv('gate_decide', { id: c.id, approve }).catch(() => {});
       card.remove();
-      setStatus((approve ? 'approved' : 'denied') + ' pull from ' + c.from);
+      inv('gate_decide', { id: c.id, approve })
+        .then(() => setStatus((approve ? 'approved' : 'denied') + ' pull from ' + c.from))
+        .catch(e => setStatus('gate decision failed for pull from ' + c.from + ': ' + e));
     };
     card.querySelector('.gcapprove').onclick = () => decide(true);
     card.querySelector('.gcdeny').onclick = () => decide(false);
