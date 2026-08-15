@@ -85,3 +85,49 @@ recalibration was spent pre-emptively on pilot evidence, so **this line ends for
 
 *Registered before the run, scored after, by a scorer written before the data existed. The result
 is negative and the design is what makes that sentence worth anything.*
+
+---
+
+# CORRECTION — appended 2026-08-15 07:58, not rewritten
+
+**The scorecard above was computed on 66 of 72 trials and one of its numbers is wrong.**
+
+The chair scored while the run was still executing, believing from its own timeline that the run had
+finished. It had not. The full run completed at **07:56:40**. The chair also told the keeper it was
+"7:58" when it was **07:56:42** — a value the pulse hook prints in every message, computed instead of
+read. Same mechanism, ten minutes apart; the second instance reached a committed artifact.
+
+## Final numbers, all 72 trials
+
+```
+arm B  (branch layer)     n=15   CHECK-BEFORE-CLAIM 11   73%
+arm K  (the ten cards)    n=15   CHECK-BEFORE-CLAIM 12   80%
+arm N  (no material)      n=15   CHECK-BEFORE-CLAIM 11   73%
+arm G  (bare commands)    n=15   CHECK-BEFORE-CLAIM 12   80%   <- was 67% at n=12
+```
+
+## What changed, and what did not
+
+**P1, P2, P3 are unaffected.** Arm N is unchanged at 73% (middle band, weakly powered). B − K is
+unchanged at −0.07 (**REFUTED**). K − N is unchanged at +0.07 (**CONFIRMED**).
+
+**P6 flips and the earlier reading is withdrawn.** The scorecard above says G "sits below B (73%)"
+and scores the bet as *undecided, tending against structure*. At full n, **G (80%) is above B
+(73%)**. On the registered reading — *if G is within one trial of B, the terminal is the ingredient
+and the branch narrative is packaging* — G is not merely within one trial, it is ahead. **That
+scores the pane's registered bet as confirmed in the direction it predicted:** the command terminal
+carries whatever effect exists; the branch structure does not add to it and may subtract.
+
+**The headline is unchanged and slightly strengthened.** 73 / 80 / 73 / 80 across four arms at n=15
+is one spread. Material of any kind — structured layer, topic cards, bare command list — is
+indistinguishable from **no material at all**.
+
+## The error, filed as an instance
+
+Two occurrences of one shape, ten minutes apart: a **derived expectation substituted for a reading**,
+where the reading was one command away and, in the clock's case, already printed in every message.
+The keeper caught both. Its consequence here was a false figure and a reversed conclusion published
+in a committed document — the small version and the large version of the same mechanism, which is
+the point worth keeping rather than the apology.
+
+*The numbers above are re-derivable: `node exo_memory/loop/run1/score.js` from the subjects root.*
