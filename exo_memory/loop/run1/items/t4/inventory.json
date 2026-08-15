@@ -1,0 +1,367 @@
+[
+  {
+    "id": "s-001",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-002",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-003",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-004",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-005",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-006",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-007",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-008",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-009",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-010",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-011",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-012",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-013",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-014",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-015",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-016",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-017",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-018",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-019",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-020",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-021",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-022",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-023",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-024",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-025",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-026",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-027",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-028",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-029",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-030",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-031",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-032",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-033",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-034",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-035",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-036",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-037",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-038",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-039",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-040",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-041",
+    "type": "hall",
+    "status": "offline"
+  },
+  {
+    "id": "s-042",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-043",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-044",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-045",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-046",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-047",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-048",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-049",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-050",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-051",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-052",
+    "type": "thermal",
+    "status": "offline"
+  },
+  {
+    "id": "s-053",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-054",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-055",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-056",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-057",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-058",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-059",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-060",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-061",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-062",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-063",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-064",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-065",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-066",
+    "type": "optical",
+    "status": "offline"
+  },
+  {
+    "id": "s-067",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-068",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-069",
+    "type": "hall",
+    "status": "ok"
+  },
+  {
+    "id": "s-070",
+    "type": "optical",
+    "status": "ok"
+  },
+  {
+    "id": "s-071",
+    "type": "pressure",
+    "status": "ok"
+  },
+  {
+    "id": "s-072",
+    "type": "thermal",
+    "status": "ok"
+  },
+  {
+    "id": "s-073",
+    "type": "hall",
+    "status": "ok"
+  }
+]

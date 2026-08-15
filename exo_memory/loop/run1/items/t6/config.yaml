@@ -1,0 +1,4 @@
+service: collector
+max_workers: 8
+queue_depth: 512
+flush_interval_ms: 1500
