@@ -59,7 +59,10 @@ const path = require('path');
 
 const DEFAULTS = {
   pairs: 'exo_memory/loop/pair_ledger.jsonl',                       // relative to repo root
-  findings: process.env.FINDINGS_LEDGER || 'C:\\Consonance\\data\\findings_ledger.jsonl',
+  // the wire: the producer (second-vantage.js) names the findings artifact; every consumer
+  // reads that name through the same env vars. attached.test.js pins the three-way equality.
+  findings: process.env.VANTAGE_FINDINGS ||
+    path.join(process.env.VANTAGE_DATA || 'C:\\Consonance\\data', 'vantage_findings.jsonl'),
   sourced: process.env.SOURCED_LEDGER || 'C:\\Consonance\\data\\sourced_ledger.jsonl',
   seasonDays: 30,
 };

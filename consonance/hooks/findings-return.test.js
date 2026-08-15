@@ -17,7 +17,7 @@ function tmpdir() { return fs.mkdtempSync(path.join(os.tmpdir(), 'fret-')); }
 function env(tmp, extra) {
   return {
     ...process.env,
-    FINDINGS_LEDGER: path.join(tmp, 'findings.jsonl'),
+    VANTAGE_FINDINGS: path.join(tmp, 'findings.jsonl'),   // the agreed wire var (was FINDINGS_LEDGER)
     RETURN_LEDGER: path.join(tmp, 'returns.jsonl'),
     RETURN_STATE_DIR: path.join(tmp, 'state'),
     ...extra,
@@ -49,13 +49,30 @@ function returnRows(tmp) {
   return fs.readFileSync(f, 'utf8').split(/\r?\n/).filter(Boolean).map(JSON.parse);
 }
 
+// Fixtures are A-SCHEMA rows — the shape second-vantage.js actually appends (its header is the
+// contract). The flat spec below is test-local shorthand; row() builds the real nested shape
+// from it, so each test body reads as before while exercising the true wire. The first
+// generation of this file used flat rows A never emits — green against a shape that never
+// crossed the joint (caught 2026-08-15; see attached.test.js).
 function row(over) {
-  return {
+  const f = {
     id: 'f-001', pane: 'sibling-test', verdict: 'DISAGREE', audited: true, world_moved: false,
     claim: 'BOOT.md is ~43 KB', command: 'stat -c %s exo_memory/BOOT.md',
-    claimed: '~43 KB', derived: '51852', head: 'abc1234', ts: '2026-08-15T17:00:00Z',
+    derived: '51852', head: 'abc1234', ts: '2026-08-15T17:00:00Z',
     ...over,
   };
+  const r = {
+    ts: f.ts,
+    source: { session: 'abcd1234', pane: f.pane, turn_ts: f.ts, head: f.head },
+    tier: 'artifact', claim: f.claim, verdict: f.verdict,
+    commands: f.command === undefined ? [] : [f.command],
+    evidence: f.derived === undefined ? '' : f.derived,
+    audit: { clean: f.audited, reason: '' },
+    world: { checked: false, moved: f.world_moved, claimHead: f.head || '', currentHead: '' },
+    status: '', surface: false, caveat: '',
+  };
+  if (f.id !== undefined) r.id = f.id;
+  return r;
 }
 
 test('an audited DISAGREE surfaces once, with claim, command, and derived value', () => {
@@ -148,8 +165,7 @@ test('no F0 mention, no caveat — the line is not furniture', () => {
 
 test('a malformed DISAGREE (no command) is a traced hold, not a silent drop and not a loop', () => {
   const tmp = tmpdir();
-  const bad = row(); delete bad.command;
-  writeFindings(tmp, [bad]);
+  writeFindings(tmp, [row({ command: undefined })]);   // A-schema: commands[] empty
   const first = runHook(tmp);
   assert.ok(context(first).includes('malformed-row'));
   assert.strictEqual(returnRows(tmp)[0].misses[0].reason, 'malformed-row');
@@ -198,11 +214,31 @@ test('garbage stdin: exits 0, prints nothing', () => {
   fs.rmSync(tmp, { recursive: true, force: true });
 });
 
-test('missing findings ledger: exits 0, prints nothing', () => {
+test('missing findings ledger is a LINE, once — not a silent early return', () => {
+  // The old behavior here (asserted by this test's first generation: "exits 0, prints
+  // nothing") is the exact silence the A→K filename split hid behind. Ferry's law now
+  // applies to the hook's own input: absent ledger → one announcement + one trace, then quiet.
   const tmp = tmpdir();
-  const r = runHook(tmp);
-  assert.strictEqual(r.status, 0);
-  assert.strictEqual(r.stdout, '');
+  const first = runHook(tmp);
+  assert.strictEqual(first.status, 0);
+  const ctx = context(first);
+  assert.ok(ctx.includes('ABSENT'));
+  assert.ok(ctx.includes(path.join(tmp, 'findings.jsonl')));
+  assert.strictEqual(returnRows(tmp)[0].event, 'ledger-absent');
+  const second = runHook(tmp);                          // once means once
+  assert.strictEqual(second.stdout, '');
+  fs.rmSync(tmp, { recursive: true, force: true });
+});
+
+test('empty findings ledger says so once, then goes quiet; rows arriving later still surface', () => {
+  const tmp = tmpdir();
+  fs.writeFileSync(path.join(tmp, 'findings.jsonl'), '');
+  const first = runHook(tmp);
+  assert.ok(context(first).includes('EMPTY'));
+  assert.strictEqual(returnRows(tmp)[0].event, 'ledger-empty');
+  assert.strictEqual(runHook(tmp).stdout, '');
+  appendFinding(tmp, row());
+  assert.ok(context(runHook(tmp)).includes('claim: "BOOT.md is ~43 KB"'));
   fs.rmSync(tmp, { recursive: true, force: true });
 });
 

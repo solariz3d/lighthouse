@@ -208,10 +208,15 @@ function maskOwn(text, row) {
     let s = String(p).replace(/\\/g, '/');
     frags.add(path.basename(s));
     while (s && s !== '.' && s !== '/') {          // the path and every ancestor directory:
-      frags.add(s);                                 // locating the object is not contamination,
-      s = path.dirname(s);                          // and other FILES in those dirs still trip
-      if (s === '.') break;                         // the extension fence below by basename.
-    }
+      const up = path.dirname(s);                   // locating the object is not contamination,
+      if (up === s) break;                          // and other FILES in those dirs still trip
+      frags.add(s);                                 // the extension fence below by basename.
+      s = up;                                       // The fixpoint break is load-bearing:
+      if (s === '.') break;                         // dirname('C:/') === 'C:/', so absolute
+    }                                               // Windows paths — the only kind production
+    // rows carry — looped here FOREVER (found 2026-08-15 by attached.test.js's first realistic
+    // row; every prior fixture was repo-relative). The drive root is never added: masking 'C:/'
+    // out of a reader's report would blind the audit to every absolute path on the machine.
   }
   let t = text;
   for (const f of [...frags].filter(Boolean).sort((a, b) => b.length - a.length)) {
@@ -293,6 +298,35 @@ function processRow(row, tier, repoRoot, spawner) {
   return { ...base, status: 'SURFACE', surface: true };
 }
 
+// ---------- the B→A joint: schema v2 in, internal fields out ----------
+// sourced-stop.js emits ROW SCHEMA v2 (its header is the posted contract: claims[]{kinds,
+// channel,sentence,path}, paths[], heads{toplevel:sha}). This reader's internal fields
+// (sentences/wrote/read/head) predate that post and were never emitted by anyone — measured
+// 2026-08-15, the same day the A→K name split was. The producer names the artifact, so the
+// consumer adapts, HERE at the input boundary and nowhere else. Mapping:
+//   sentences <- claims[].sentence          wrote <- claims[channel==='artifact'].path
+//   read      <- paths[]                    head  <- heads[<this repo's toplevel>]
+// v1 rows (no claims[]) pass through unmapped and fail the C2 gate loudly as UNLAUNCHABLE —
+// correct, they carry no claim/paths/head. KNOWN GAP, B's side: v2 carries no `excerpt`, so
+// floor-tier selections of claimless rows are UNLAUNCHABLE until schema v3 adds it —
+// pinned green-and-loud in attached.test.js rather than left to be rediscovered.
+function fromV2(row) {
+  if (!row || typeof row !== 'object' || !Array.isArray(row.claims)) return row;
+  const sentences = row.claims.map(c => c && c.sentence).filter(Boolean);
+  const wrote = row.claims.filter(c => c && c.channel === 'artifact' && c.path).map(c => c.path);
+  const heads = (row.heads && typeof row.heads === 'object') ? row.heads : {};
+  const repoKey = REPO.replace(/\\/g, '/').toLowerCase();
+  let head = '';
+  for (const [top, sha] of Object.entries(heads)) {
+    if (String(top).toLowerCase() === repoKey) { head = String(sha); break; }
+  }
+  if (!head) {
+    const vals = Object.values(heads);
+    if (vals.length === 1) head = String(vals[0]); // one repo touched: unambiguous
+  }
+  return { ...row, sentences, wrote, read: Array.isArray(row.paths) ? row.paths : [], head };
+}
+
 // ---------- the run ----------
 function readLedger() {
   if (!fs.existsSync(LEDGER)) {
@@ -306,7 +340,7 @@ function readLedger() {
   }
   return fs.readFileSync(LEDGER, 'utf8').split(/\r?\n/).filter(Boolean).map(l => {
     try { return JSON.parse(l); } catch { return null; }
-  }).filter(Boolean);
+  }).filter(Boolean).map(fromV2);
 }
 
 function run(dry) {
@@ -339,12 +373,13 @@ function run(dry) {
 
 module.exports = {
   tierOf, rowLaunchable, hashSelect, brief, parseReader, audit, worldCheck, processRow, claimOf,
-  F0_CITATION, CONTAMINATION, FLOOR_PER_MILLE, REPO,
+  fromV2, F0_CITATION, CONTAMINATION, FLOOR_PER_MILLE, REPO, LEDGER, FINDINGS,
 };
 
 if (require.main === module) {
   const a = process.argv.slice(2);
   if (a.includes('--run')) run(false);
   else if (a.includes('--dry-run')) run(true);
-  else { console.log('usage: second-vantage.js --run | --dry-run   (see header)'); process.exit(2); }
+  else if (a.includes('--where')) console.log(JSON.stringify({ LEDGER, FINDINGS, WATERMARK, CELL }));
+  else { console.log('usage: second-vantage.js --run | --dry-run | --where   (see header)'); process.exit(2); }
 }

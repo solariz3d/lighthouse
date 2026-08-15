@@ -49,18 +49,17 @@
 //                                  the instance (the 2026-08-11 lesson); a pane whose
 //                                  cwd moves mid-life will miss its returns.
 //
-// CONSUMPTION CONTRACT (fields this hook reads from each findings-ledger line).
-// PROVISIONAL until A posts the findings-ledger schema to the board; A's post is the
-// authority and this file adapts to it, not the reverse. Posted to the board 2026-08-15.
-//   required to surface:  id (string, watermark key), pane (string, basename of the
-//                         claiming pane's cwd), verdict ("DISAGREE"|"AGREE"),
-//                         audited (bool, C3), claim (string, the matched sentence),
-//                         command (string, what the reader ran), derived (the value the
-//                         command returned)
-//   honored if present:   world_moved (bool, C2), claimed (the value the claim
-//                         asserted), head (claim-time HEAD, C2), ts (ISO), session
+// CONSUMPTION CONTRACT — RESOLVED 2026-08-15 (was provisional; A's schema is the authority
+// and this file adapts to it via normalize(), not the reverse). The provisional flat schema
+// this file was first built against never matched what A emits — that mismatch shipped and
+// was caught the same day (the A→K joint; see attached.test.js). A's row, as consumed here:
+//   top-level:  id (watermark key), ts, claim, verdict, commands[] (joined for display),
+//               evidence (rendered as the derived value)
+//   source:     { session, pane (basename of claiming pane's cwd), turn_ts, head }
+//   audit:      { clean (bool — C3 gate), reason }
+//   world:      { checked, moved (bool — C2 gate), claimHead, currentHead }
 //   a row missing id is watermarked under sha1(line) so it can never loop; a DISAGREE
-//   missing claim/command/derived is a MALFORMED hold — announced, traced, never looped.
+//   missing claim/commands/evidence is a MALFORMED hold — announced, traced, never looped.
 //
 // HARNESS LAW (same as every hook here): reads stdin JSON, exits 0 always, emits either
 // nothing or one hookSpecificOutput JSON; a thrown error traces to the return ledger and
@@ -74,7 +73,13 @@ const crypto = require('crypto');
 
 if (process.env.CONSONANCE_DREAM) process.exit(0);
 
-const FINDINGS = process.env.FINDINGS_LEDGER || 'C:\\Consonance\\data\\findings_ledger.jsonl';
+// THE WIRE (agreed 2026-08-15 after the split was measured): the PRODUCER names its artifact.
+// second-vantage.js writes VANTAGE_FINDINGS || <VANTAGE_DATA>/vantage_findings.jsonl; this file
+// reads the same name through the same env vars, and consonance/tools/attached.test.js goes red
+// if either side drifts. No FINDINGS_LEDGER fallback — a tolerant reader is how this joint
+// stayed green while detached.
+const DATA = process.env.VANTAGE_DATA || 'C:\\Consonance\\data';
+const FINDINGS = process.env.VANTAGE_FINDINGS || path.join(DATA, 'vantage_findings.jsonl');
 const RETURNS = process.env.RETURN_LEDGER || 'C:\\Consonance\\data\\return_ledger.jsonl';
 const STATEDIR = process.env.RETURN_STATE_DIR || 'C:\\Consonance\\data\\return_state';
 const MAX_PER_TURN = 5;          // overflow rides the next turn — first surfacing, not re-send
@@ -83,6 +88,12 @@ const TAIL_BYTES = 1024 * 1024;
 
 const F0_CAVEAT = 'F0 record, both denominators (C6): 2/2 on the reachable subset; ' +
   '2 of 16 of the curated record.';
+
+// Wire introspection for the attachment test — resolved paths, nothing else, exit 0.
+if (process.argv.includes('--where')) {
+  process.stdout.write(JSON.stringify({ FINDINGS, RETURNS, STATEDIR }));
+  process.exit(0);
+}
 
 function readStdin() {
   try { return fs.readFileSync(0, 'utf8').replace(/^\uFEFF/, ''); } catch (_) { return ''; }
@@ -135,20 +146,65 @@ function trace(row) {
   } catch (_) { /* the floor of the world */ }
 }
 
+// THE A→K JOINT: ledger rows are second-vantage's schema (its header, posted 2026-08-15:
+// source{session,pane,turn_ts,head}, audit{clean,reason}, world{checked,moved,...},
+// commands[], evidence, plus top-level id/ts/claim/verdict). Per this file's own contract
+// note, A's post is the authority and this file adapts to it, not the reverse. The mapping
+// is STRICT — no flat-field fallback — because a tolerant reader is how a detached joint
+// stays green (measured on this very wire, 2026-08-15).
+function normalize(r) {
+  if (!r || typeof r !== 'object') return null;
+  const src = (r.source && typeof r.source === 'object') ? r.source : {};
+  const out = {
+    id: r.id, ts: r.ts, claim: r.claim, verdict: r.verdict,
+    pane: src.pane, session: src.session, head: src.head,
+    audited: !!(r.audit && r.audit.clean === true),
+    world_moved: !!(r.world && r.world.moved === true),
+  };
+  if ('claimed' in r) out.claimed = r.claimed;   // A never emits it; a set-but-undefined key
+                                                 // rendered "claim said: undefined" (e2e, first run)
+  if (Array.isArray(r.commands) && r.commands.length) out.command = r.commands.join(' ; ');
+  if (typeof r.evidence === 'string' && r.evidence) out.derived = r.evidence;
+  return out;
+}
+
 function main() {
   let input;
   try { input = JSON.parse(readStdin()); } catch (_) { return; }
   const cwd = input && input.cwd;
   if (!cwd) return;
   const pane = path.basename(cwd);
-  if (!fs.existsSync(FINDINGS)) return;
 
+  // Law 1, applied to this file's own input: a findings ledger that is ABSENT or EMPTY is a
+  // LINE, once per pane, never a silent early return — the A→K filename split lived behind
+  // exactly that silence for a full build cycle (2026-08-15). One announcement, then quiet:
+  // the pre-first-run state is normal and must not become dream-watch's nag.
   const st = readState(pane);
+  const missing = !fs.existsSync(FINDINGS);
+  const allLines = missing ? [] : tailLines(FINDINGS);
+  if (missing || !allLines.length) {
+    const key = 'wire:' + (missing ? 'absent' : 'empty') + ':' + FINDINGS;
+    if (!st.logged.has(key)) {
+      st.logged.add(key);
+      const note = 'Second-vantage return path: findings ledger ' +
+        (missing ? 'ABSENT' : 'EMPTY') + ' at ' + FINDINGS + ' (env VANTAGE_FINDINGS). ' +
+        'The return path is idle — non-coverage, not verification. ' +
+        'This line appears once per pane; trace: ' + RETURNS + '.';
+      process.stdout.write(JSON.stringify({
+        hookSpecificOutput: { hookEventName: 'UserPromptSubmit', additionalContext: note },
+      }));
+      writeState(pane, st);
+      trace({ ts: new Date().toISOString(), pane, event: missing ? 'ledger-absent' : 'ledger-empty', path: FINDINGS });
+    }
+    return;
+  }
+
   const due = [], holds = [];
-  for (const line of tailLines(FINDINGS)) {
+  for (const line of allLines) {
     let r;
     try { r = JSON.parse(line); } catch (_) { continue; }
-    if (!r || typeof r !== 'object' || r.pane !== pane) continue;
+    r = normalize(r);
+    if (!r || r.pane !== pane) continue;
     if (String(r.verdict || '').toUpperCase() !== 'DISAGREE') continue;  // AGREEs surface nowhere (C5)
     if (r.world_moved === true) continue;             // WORLD-MOVED surfaces as nothing (C2)
     const id = r.id || ('sha1:' + sha1(line));
