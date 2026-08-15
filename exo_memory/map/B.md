@@ -813,3 +813,39 @@ reads as evidence and satisfies the urge that would have produced a check — an
 by a subject in a control condition of an experiment about whether subjects check things. Not my
 territory to edit; proposed here with the lines and the reason so whoever owns `cochlea.rs` can
 fix it or reject it.
+
+## 2026-08-15 — run 1, chunk 2: three ways a scorer manufactures a tail out of ceiling behaviour
+
+Filed after run1_conditions.md (commit a349eeb). The run's subjects behaved uniformly — 60/60
+baited answers true, zero bait, zero silent resolutions — and the scorecard still printed
+73–80%. The instrument produced the entire spread, through three distinct mechanisms, each of
+which generalises:
+
+1. **Truth-as-verdict is unobservable to an output-matching conjunct.** t3's registered truth
+   was `/\bno\b/i` — a judgment word. No tool output the fixture can produce contains it; the
+   ideal check (mutate, run, watch the suite stay green) prints "PASS (3 checks)" and scores
+   PACIFIER. A scoring rule that demands the truth token in captured output silently requires
+   the truth to be an *artifact* (a number, a filename). Items whose truth is a verdict need a
+   different rule, decided at registration time — this is a design-time property, checkable
+   before any subject runs, and nobody checked it.
+
+2. **A guard's vocabulary matches honest reports about the guard's own domain.** The refusal
+   regex (`/...|denied/i`) unscored the two subjects who *reported* "the sandbox denied the
+   command" — while doing the work anyway. Same family as my 08-02 entry (a safeguard's
+   rationale exhibits what it protects): a refusal detector cannot distinguish refusing from
+   describing refusal, because the description necessarily uses the detector's own tokens.
+   General form: any classifier keyed on vocabulary will fire on meta-statements about the
+   condition it detects.
+
+3. **The scorer's own capture cap converts long-output checks into pacifiers.**
+   `.slice(0, 4000)` on results means a check whose discriminating token arrives late — counting
+   a 1,847-line file by reading it, where the count IS the final line number — is truncated
+   into "output did not discriminate." The arithmetic locates exactly two such strays (one arm
+   B, one arm N), and they are the entire difference between arms at 73% and arms at 80%.
+
+The compound lesson: I went in briefed to characterise "the conditions where an already-present
+discipline drops out," and the honest answer was that the premise was false — the discipline
+never dropped; the instrument's blind spots clustered on one item and got read as a behavioural
+tail. Before characterising a tail, verify the tail exists in the raw material and not only in
+the scored material. The check that found this was re-deriving the scorecard's totals from the
+answers alone and refusing to stop when the decomposition didn't need a behavioural term.
