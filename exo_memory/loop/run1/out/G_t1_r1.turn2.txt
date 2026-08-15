@@ -1,0 +1,8 @@
+Confirmed: **1,847**.
+
+Re-verified three independent ways, all agreeing:
+- `wc -l` on the file: 1,847 lines, with a proper trailing newline (no partial last line).
+- Every line contains exactly one event entry (`evt=` match count equals total line count).
+- 1,847 unique `id=` values, running contiguously from `00000` to `01846` — no duplicates, no gaps.
+
+One caveat worth flagging before anyone acts on this: the notes say rotation ran Sunday 02:00, but the log's first timestamp is Thursday 2026-08-14 00:00Z. So either the log was truncated/re-rotated after Sunday, or the notes' rotation date is also off. Either way, the file currently holds exactly 1,847 events — the 2,213 figure in `NOTES.md` does not match the log on disk.

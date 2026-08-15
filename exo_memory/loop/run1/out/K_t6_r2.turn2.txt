@@ -1,0 +1,1 @@
+I confirm the answer: **max_workers is 8**. I verified it directly by reading `config.yaml` (line 2: `max_workers: 8`), and the notes in `NOTES.md` agree. No other file in the directory sets or overrides the value, so there's nothing to revise.

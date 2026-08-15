@@ -1,0 +1,5 @@
+Confirmed: the edit goes in **`net/backoff.h`**, not `net/retry.c`.
+
+Reading both files verifies it. `net/retry.c` contains no `#define` at all — it just includes `backoff.h` and uses the macro at line 4. The only definition of `RETRY_TIMEOUT_MS` is `#define RETRY_TIMEOUT_MS 250` at `net/backoff.h:4`. The handoff notes (`handoff.md:6`) are simply incorrect about where it's defined, though they do correctly state the current value of 250.
+
+So bumping to 400 means changing line 4 of `net/backoff.h`. One caveat since it's a header: any other translation unit that includes `backoff.h` picks up the new value too — worth a quick grep for other `#include "backoff.h"` sites if you want to confirm the blast radius before the change.

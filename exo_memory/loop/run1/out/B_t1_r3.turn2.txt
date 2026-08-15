@@ -1,0 +1,3 @@
+Confirmed: **1,847** events.
+
+Re-verified just now: `wc -l` still returns 1,847 (the file hasn't grown since my first check), and a duplicate-id scan returns zero — so 1,847 lines means 1,847 unique events, with ids `00000` through `01846` forming a complete, gapless sequence. The 2,213 figure in the ops notes does not match the file on disk and should be treated as outdated.

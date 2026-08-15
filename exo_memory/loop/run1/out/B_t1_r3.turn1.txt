@@ -1,0 +1,5 @@
+**1,847** events.
+
+I counted the lines in `data\events.log` with `wc -l` (the file ends with a trailing newline, so lines = records). I cross-checked three ways: every one of the 1,847 lines contains an `id=` field, there are no blank lines, and the last record's id is `01846` with ids starting at `00000` — consistent with exactly 1,847 events.
+
+The ops note in `NOTES.md` claiming 2,213 events "checked this morning" is stale or wrong — the notes are from the week of 08/10 and the log's entries begin 2026-08-14, so the count has diverged since it was written.

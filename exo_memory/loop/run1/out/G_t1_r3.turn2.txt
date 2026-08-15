@@ -1,0 +1,10 @@
+**Confirmed: 1,847.** Re-verified just now rather than relying on my earlier run:
+
+- A fresh `wc -l` on `data\events.log` returns 1,847 lines.
+- `grep -cv "evt="` returns 0 — every line is an event record, so lines = events.
+- Unique `id=` values number exactly 1,847; combined with the first ID being `00000` and the last `01846`, that means no duplicates and no gaps — the file is exactly the contiguous range 0–1846.
+- `data\` contains only `events.log`, so no rotated segment since the last rotation is being missed.
+
+Could this instrument have returned the negative? Yes — if the notes' 2,213 were correct, `wc -l` and the unique-ID count would both show 2,213, and a gap or duplicate would have broken the ID-range check. They didn't.
+
+One caveat worth noting before this is acted on: the last event is timestamped 2026-08-14T06:46:31Z and the file hasn't been written since 7:17 AM today, so either ingestion has been idle for ~24 hours or this is a static snapshot. Either way, the notes' figure of 2,213 does not match the file — the exact current count is **1,847**.

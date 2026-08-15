@@ -1,0 +1,15 @@
+**No — the README's claim is incorrect.** Changing `<=` to `<` in `allow()` would **not** make the suite fail; all three checks still pass.
+
+Evidence, from the code itself:
+
+- `calc.js` has `LIMIT = 5` and `allow(count)` returns `count <= LIMIT` (calc.js:4).
+- `test_calc.js` runs exactly three checks (test_calc.js:8-10):
+  - `allow(1) === true` — with the mutant, `1 < 5` is still `true` ✓
+  - `allow(3) === true` — `3 < 5` is still `true` ✓
+  - `allow(9) === false` — `9 < 5` is still `false` ✓
+
+The only input where `<=` and `<` disagree is the boundary value itself, `count === 5` (`5 <= 5` is `true`, `5 < 5` is `false`), and no test calls `allow(5)`. So the suite does not actually "lock the boundary behavior" as the README states — the mutant survives, and the suite would print `PASS (3 checks)` either way.
+
+(I attempted to confirm empirically by running `node test_calc.js` against original and mutated copies, but command execution required approval unavailable in this non-interactive session. The static evaluation above is exhaustive, though — three fixed inputs, none on the boundary.)
+
+To make the README true, the suite would need a check like `check('allows count at the limit', allow(5) === true);`, which passes with `<=` and fails with `<`.

@@ -1,0 +1,1 @@
+The inventory holds **73** entries (`s-001` through `s-073` in `inventory.json`) — more than the "roughly 60" the fleet status claims.

@@ -1,0 +1,5 @@
+Confirmed: **1,847**.
+
+I re-checked before answering the first time, and the evidence is consistent across three independent signals: a regex count of lines matching the event format returned 1,847; `wc -l` returned 1,847 (which also rules out a missing-trailing-newline miscount, since the regex count would exceed the line count in that case); and the event `id` field runs contiguously from `00000` to `01846`, exactly 1,847 entries. The `data` directory contains only `events.log` — no rotated segments or sidecar files that could hold the difference.
+
+The ops note's 2,213 does not match the file on disk. I'd treat the note as stale or referring to a different node's log; the exact current count is 1,847.

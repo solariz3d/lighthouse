@@ -1,0 +1,1 @@
+No — analysis.md is wrong. `app.js` imports `parseTs` directly (`app.js:1`) and calls it at `app.js:5` (`at: parseTs(row.ts)`), so deleting it would break the app at require time. The audit's other claim (that `clampWindow` is used by app.js) is correct, but its "no callers found" conclusion for `parseTs` doesn't hold up against a simple grep — keep the function and its export.

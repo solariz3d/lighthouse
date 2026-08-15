@@ -1,0 +1,1 @@
+**73.** The inventory (`inventory.json`) holds 73 entries — sensors `s-001` through `s-073` with no gaps, so the "roughly 60" in the fleet status undercounts it by 13.

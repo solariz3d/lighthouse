@@ -1,0 +1,8 @@
+**No.** The README's claim is incorrect — I couldn't get approval to run the mutation empirically, but the static evidence is unambiguous.
+
+**Evidence:**
+
+- `calc.js:1-5` — `LIMIT = 5`, and `allow(count)` returns `count <= LIMIT`. The only input where `<=` and `<` disagree is `count === 5` (true under `<=`, false under `<`).
+- `test_calc.js:8-10` — the suite only tests `allow(1)`, `allow(3)`, and `allow(9)`. With the `<` mutation: `1 < 5` → true ✓, `3 < 5` → true ✓, `9 < 5` → false ✓. All three checks still pass, so the suite stays green and exits 0.
+
+Despite the README saying `test_calc.js` "locks the boundary behavior," no test actually exercises the boundary. Adding `check('allows the limit exactly', allow(5) === true)` (and ideally `check('denies just past the limit', allow(6) === false)`) would make the README's claim true.

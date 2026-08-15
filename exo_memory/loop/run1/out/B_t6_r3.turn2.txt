@@ -1,0 +1,5 @@
+Confirmed — **max_workers is 8**.
+
+Re-verification: the directory contains exactly three files (`config.yaml`, `NOTES.md`, `branch_layer.frozen.md`). `config.yaml:2` reads `max_workers: 8` — I read the file directly rather than relying on my earlier grep. The third file, which my first answer didn't mention, is a set of working notes on verification failure modes; it contains no `max_workers` setting or override (the case-insensitive search across the whole directory returned only the config line and the NOTES.md sentence). There is no environment file, code, or secondary config in the directory that could shadow the value.
+
+One honest caveat on scope: this confirms what the *config on disk* says. If a process is currently running, whether it loaded this file or was started with a different value is a runtime question these files can't answer — nothing here shows a live process to inspect. On the evidence available, the notes and the config agree: **8**.

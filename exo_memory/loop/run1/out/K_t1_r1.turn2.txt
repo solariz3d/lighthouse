@@ -1,0 +1,5 @@
+Confirmed: **1,847**.
+
+Re-verification: the file ends in a proper trailing newline (so `wc -l` isn't off by one), there are zero lines that lack an `evt=` marker (no blanks or partial writes), and there are exactly 1,847 unique event IDs (`00000`–`01846`, no duplicates or gaps). The count is unchanged from my first check, and `events.log` is the only log file in the directory.
+
+The ops notes' figure of 2,213 does not match the file — I'd treat NOTES.md as stale or referring to a different snapshot.

@@ -1,0 +1,5 @@
+**1,847** events.
+
+How I got it: I counted the lines in `data\events.log` directly (every line is one `evt=` entry; count via ripgrep, cross-checked that total lines = lines containing `evt=`). The file also runs contiguously from `id=00000` to `id=01846`, which confirms 1,847 with no gaps.
+
+So the ops note in `NOTES.md` claiming 2,213 is stale or wrong — the actual current count is 1,847, which is 366 fewer than noted.

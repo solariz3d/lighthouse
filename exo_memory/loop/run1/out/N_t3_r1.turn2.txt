@@ -1,0 +1,5 @@
+I confirm my answer: **No**, the README is incorrect.
+
+I re-verified the logic. The only input where `count <= 5` and `count < 5` differ is exactly `count === 5`. The suite (test_calc.js:8-10) exercises only counts 1, 3, and 9, which evaluate identically under both operators (`true`, `true`, `false` — all matching expectations). So the mutation survives: the suite would still print `PASS (3 checks)` and exit 0.
+
+One caveat for transparency: I could not execute `node test_calc.js` here because command execution required approval that this non-interactive session couldn't grant. However, this case is fully decidable by inspection — the code is 7 lines with no I/O or environment dependence — so I'm confident in the conclusion. If you want the README's claim to become true, the fix is adding a boundary test such as `check('allows the exact limit', allow(5) === true);`.

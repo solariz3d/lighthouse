@@ -1,0 +1,11 @@
+**Confirmed: No — the README is incorrect.**
+
+Re-checking the reasoning: `<=` vs `<` produce different results at exactly one input, `count === LIMIT` (i.e., 5). For all counts below or above 5, both operators agree. The suite in `test_calc.js:8-10` exercises only `allow(1)`, `allow(3)`, and `allow(9)`:
+
+| Input | Original (`<= 5`) | Mutant (`< 5`) | Test expects |
+|---|---|---|---|
+| 1 | true | true | true ✓ |
+| 3 | true | true | true ✓ |
+| 9 | false | false | false ✓ |
+
+All three checks pass either way, so the mutant suite prints `PASS (3 checks)` and exits 0. The README's claim that the suite "goes red" is false — the boundary input `allow(5)`, the only case that could catch this mutation, is never tested. My answer stands unchanged.

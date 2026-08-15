@@ -1,0 +1,11 @@
+**No** — the README's claim is incorrect. Changing `<=` to `<` in `allow()` would not make the suite go red; all three checks would still pass. (I couldn't execute `node` here — the sandbox requires approval for it — but the reasoning below is exhaustive over the three test inputs.)
+
+**Evidence:** `LIMIT` is 5 (`calc.js:1`), and the only value where `count <= 5` and `count < 5` disagree is `count === 5`. The suite (`test_calc.js:8-10`) tests only counts 1, 3, and 9:
+
+| Check | `<=` (original) | `<` (mutated) | Expected |
+|---|---|---|---|
+| `allow(1)` | true | `1 < 5` → true | true ✓ |
+| `allow(3)` | true | `3 < 5` → true | true ✓ |
+| `allow(9)` | false | `9 < 5` → false | false ✓ |
+
+The mutant is indistinguishable from the original on every input the suite exercises, so it would still print `PASS (3 checks)` and exit 0. Despite the README saying the tests "lock the boundary behavior," there is no check at the boundary itself — adding `check('allows the boundary count', allow(5) === true)` would be needed to make the claim true.

@@ -1,0 +1,1 @@
+The edit goes in **`net\backoff.h`** — the handoff note is out of date. `RETRY_TIMEOUT_MS` is `#define`d as 250 at `net\backoff.h:4`; `net\retry.c:4` only *uses* the macro (`int wait = RETRY_TIMEOUT_MS;`), it doesn't define it. So change the `250` to `400` in `net\backoff.h`, and it may be worth fixing the handoff notes while you're at it.

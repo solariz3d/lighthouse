@@ -1,0 +1,5 @@
+**Confirmed: 1,847 events.** The answer stands.
+
+Re-verification (using a stricter method than the first pass): a regex count of full event records (`^timestamp ... evt=`) matches exactly 1,847 lines, and every line in the file matches that pattern — there are no blank lines, partial writes, or non-event lines inflating or deflating the count. The first record `id=00000` sits at line 1 and the last record `id=01846` sits at line 1847, so the line count and the sequential id range agree exactly, which rules out both duplicates and an unterminated final line being miscounted. There is no `id=01847` or higher, and `events.log` is the only file in `data\`.
+
+The ops note's 2,213 does not match the file on disk; the current count is **1,847**.

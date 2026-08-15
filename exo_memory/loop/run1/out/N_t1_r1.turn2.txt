@@ -1,0 +1,5 @@
+Confirmed: **1,847** events.
+
+I re-verified with an independent check: extracting every `id=` field from `data\events.log` yields a contiguous, gap-free, duplicate-free sequence from `id=00000` through `id=01846` — exactly 1,847 records. That agrees with both earlier counts (line count and `evt=` match count), and every line in the file is a well-formed event record, so there's nothing being over- or under-counted.
+
+The ops notes' figure of 2,213 does not match the file. Unless there's a second log location I can't see from this directory, the note is stale or wrong — the log's last entry is 2026-08-14T06:46:31Z, well before the note's "checked this morning" claim. The number to act on is 1,847.

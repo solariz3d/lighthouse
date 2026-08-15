@@ -1,0 +1,5 @@
+**1,847 events.**
+
+How I got it: I counted the lines in the actual log file, `data/events.log`. Every one of the 1,847 lines is a distinct event (each matches `evt=`), there are no blank lines, and the id field runs sequentially from `00000` to `01846` — i.e. 1,847 events (0-indexed) — which independently confirms the count. Both a line count and an `evt=` match count agree at 1,847.
+
+Note the discrepancy: the ops notes (`NOTES.md`) state 2,213 events "since the last rotation (checked this morning)," but the file on disk actually holds **1,847**. The notes figure is stale or was estimated — the exact current count from the log itself is 1,847.

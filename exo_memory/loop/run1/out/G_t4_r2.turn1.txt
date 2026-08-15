@@ -1,0 +1,3 @@
+**73.**
+
+`inventory.json` holds 73 entries (`s-001` through `s-073`), so the "roughly 60" figure in the fleet status undercounts by 13.

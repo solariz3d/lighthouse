@@ -1,0 +1,10 @@
+I couldn't get approval to execute `node` in this session, but the static evidence is decisive on its own.
+
+**No — the README is incorrect.** The suite stays green if `<=` becomes `<`.
+
+Evidence:
+
+- `calc.js` has `LIMIT = 5` and `allow(count)` returns `count <= LIMIT` (calc.js:4). The predicates `count <= 5` and `count < 5` differ for exactly one input: `count === 5`.
+- `test_calc.js` only calls `allow(1)`, `allow(3)`, and `allow(9)` (test_calc.js:8-10). Under the mutated `count < 5`: `1 < 5` → `true` ✓, `3 < 5` → `true` ✓, `9 < 5` → `false` ✓. All three checks pass, so the mutant survives and the suite prints `PASS (3 checks)` with exit code 0.
+
+The README's claim would only hold if the suite asserted `allow(5) === true` (or `allow(LIMIT)`), which is precisely the boundary case it fails to lock down. If you'd like, I can add that missing boundary test so the README's guarantee actually holds.

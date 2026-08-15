@@ -1,0 +1,11 @@
+**Confirmed: No** — the README's claim is wrong.
+
+Re-checking the logic: `allow(count)` returns `count <= 5`, and the mutation to `count < 5` changes the output for exactly one input, `count === 5`. The three tests use counts 1, 3, and 9:
+
+| Test input | `<= 5` | `< 5` | Expected | Passes under mutant? |
+|---|---|---|---|---|
+| 1 | true | true | `=== true` | yes |
+| 3 | true | true | `=== true` | yes |
+| 9 | false | false | `=== false` | yes |
+
+Both expressions return a genuine boolean, so the strict `===` comparisons hold too. All three checks pass, `fails` stays 0, and the script exits 0 — the suite does **not** go red as the README states. The boundary value 5 is simply untested; adding `check('allows the boundary count', allow(5) === true)` is what it would take to make the README's claim true.

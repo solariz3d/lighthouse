@@ -1,0 +1,11 @@
+**Confirmed: 1,847.**
+
+I re-verified with an independent tool before confirming. Three separate counts agree:
+
+1. **ripgrep line count** (`^` pattern): 1,847 lines in `data\events.log`.
+2. **ripgrep event-record count** (`evt=` pattern): 1,847 — every line is an event record, no blanks or headers inflating the count.
+3. **`wc -l`** (independent utility, counts newline-terminated lines): 1,847 — this also rules out an unterminated final line being miscounted.
+
+As a structural cross-check, the `id` field runs from `id=00000` on the first line to `id=01846` on the last, which is exactly consistent with 1,847 events. (I attempted a full distinct-id tally as a fourth check, but the sandbox blocked the awk/ForEach commands needed for it; since events are one per line, duplicates in the id field wouldn't change the event count anyway.)
+
+So the answer stands: the log holds **1,847** events, and the 2,213 figure in `NOTES.md` is stale.

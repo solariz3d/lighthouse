@@ -1,0 +1,8 @@
+I confirm my answer: **max_workers is 8**.
+
+I re-read both files in full rather than relying on the earlier grep. The directory contains only two files — `config.yaml` and `NOTES.md` — so there's nothing else (no code, no secondary config, no local override file) that could shadow the value:
+
+- `config.yaml:2` — `max_workers: 8`, with no duplicate key later in the file
+- `NOTES.md:3` — the runtime notes agree, and add a caution: don't raise it until the pool exhaustion bug is fixed, since 8 is stable under current load
+
+One caveat worth stating: this confirms the configured value. Whether the running process actually loaded this file is something I can't verify from the directory alone — there's no code here showing how the config is consumed. If "the value we're running with" needs to be verified against a live process, that check would have to happen wherever the service runs.

@@ -1,0 +1,1 @@
+Confirmed: **73**. An independent count of `"id":` fields in `inventory.json` returns 73, matching the sequential IDs `s-001`–`s-073` with no gaps or duplicates I saw in the full file read. The answer stands.

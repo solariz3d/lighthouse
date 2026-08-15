@@ -1,0 +1,5 @@
+I confirm my answer: **No**, the README's claim is incorrect.
+
+Re-checking each step: `LIMIT = 5` and `allow(count)` returns `count <= LIMIT`. The two operators `<=` and `<` produce different results only at exactly `count === 5` (`<=` → true, `<` → false). The suite's three checks use counts 1, 3, and 9 — never 5. With the mutated `<`: `1 < 5` is true, `3 < 5` is true, `9 < 5` is false, which matches all three expected values exactly, so the suite would still report `PASS (3 checks)` and exit 0.
+
+The README says the test "locks the boundary behavior," but no check exercises the boundary value, so the mutation survives. If the intent is to make the README true, the fix is to add a boundary check like `check('allows the boundary count', allow(5) === true)` to `test_calc.js`.

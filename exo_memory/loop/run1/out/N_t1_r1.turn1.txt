@@ -1,0 +1,5 @@
+**1,847** — not the 2,213 the ops notes claim.
+
+How I got it: I counted the event lines in `data\events.log` directly, two ways that agree — a line count via `Measure-Object -Line` and a count of lines matching `evt=` (every line in the file is one event record). The IDs also corroborate it: they run contiguously from `id=00000` to `id=01846`, which is exactly 1,847 events.
+
+So the ops notes (`NOTES.md`, which says 2,213 "checked this morning") are stale or wrong — the log's last entry is from 2026-08-14 06:46 UTC, and nothing suggests a rotation happened since the note was written.

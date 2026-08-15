@@ -1,0 +1,8 @@
+Confirmed: **1,847**.
+
+I re-verified with independent methods and they all agree:
+- `wc -l events.log` → 1,847 lines
+- `grep -c 'id='` → 1,847 lines containing an event id (so no blank or malformed lines)
+- unique `id=` values → 1,847 distinct ids, running sequentially from `00000` to `01846` with no gaps or duplicates
+
+That's three consistent signals plus the original `Measure-Object -Line` count. The exact current count is 1,847 events, and the 2,213 figure in `NOTES.md` does not match the file on disk.

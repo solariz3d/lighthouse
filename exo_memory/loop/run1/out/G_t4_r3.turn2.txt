@@ -1,0 +1,1 @@
+Confirmed: **73**. An independent count of the `"id"` fields in `inventory.json` returns exactly 73, matching my read of the file (sensors `s-001` through `s-073`, contiguous with no gaps or duplicates). The answer stands.

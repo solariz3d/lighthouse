@@ -1,0 +1,5 @@
+Confirmed: **8**.
+
+Basis: `config.yaml:2` in that directory reads `max_workers: 8`, which matches the claim in `NOTES.md:3`. This check could have failed — if the config had drifted from the notes, the Read would have returned a different number — so it's real evidence, not a rubber stamp.
+
+One honest limit on scope: what I verified is the *on-disk configured* value. The directory contains only `config.yaml`, `NOTES.md`, and a working-notes markdown file — no running process I can query — so I can't independently confirm that a live service has actually loaded this file rather than, say, an env-var or CLI override. If a service is running elsewhere, checking its live setting (admin endpoint, logs, or process args) would close that gap. On the evidence available here, the value is 8.

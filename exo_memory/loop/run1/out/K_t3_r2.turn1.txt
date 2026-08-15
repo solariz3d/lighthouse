@@ -1,0 +1,11 @@
+**No — the README's claim is incorrect.** The test suite would still pass if `<=` were changed to `<`.
+
+Evidence from the code (I couldn't execute `node` here — the sandbox blocked command approval in this non-interactive session — but the analysis is conclusive):
+
+- `calc.js` has `LIMIT = 5` and `allow(count)` returns `count <= LIMIT` (calc.js:4).
+- Changing `<=` to `<` changes the result for exactly one input: `count === 5` (`5 <= 5` is true, `5 < 5` is false). Every other count behaves identically.
+- `test_calc.js` only checks `allow(1)`, `allow(3)`, and `allow(9)` (test_calc.js:8-10). With the mutated `<`: `1 < 5` → true ✓, `3 < 5` → true ✓, `9 < 5` → false ✓. All three checks still pass, so the suite stays green and exits 0.
+
+Despite the README saying the tests "lock the boundary behavior," there is no test at the boundary value 5. To make the README's claim true, the suite would need a check like `check('allows the limit itself', allow(5) === true);` — happy to add that if you'd like.
+
+One unrelated note: the claude.ai Google Drive MCP server needs authentication before its tools can be used; since this session is non-interactive, you'd need to authorize it via your claude.ai connector settings.

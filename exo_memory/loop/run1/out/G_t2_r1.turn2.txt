@@ -1,0 +1,1 @@
+Confirmed — I stand by the answer. The grep evidence is direct: `app.js:1` does `const { parseTs, clampWindow } = require('./util');`, resolving to this same `util.js`, and `app.js:5` calls `parseTs(row.ts)`. So `parseTs` is live code, analysis.md's recommendation is incorrect, and it should not be deleted.

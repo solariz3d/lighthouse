@@ -1,0 +1,3 @@
+**73.** The inventory (`inventory.json`) holds 73 entries — sensors `s-001` through `s-073` with no gaps — so the fleet status's "roughly 60" undercounts it.
+
+One unrelated note: the claude.ai Google Drive MCP server needs authentication before its tools can be used; since this session is non-interactive, you'd authorize it via your claude.ai connector settings.

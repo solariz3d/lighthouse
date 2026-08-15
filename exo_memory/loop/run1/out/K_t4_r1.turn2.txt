@@ -1,0 +1,3 @@
+Confirmed: **73**.
+
+I re-verified with an independent check — a count of `"id":` fields in `inventory.json` returns exactly 73, matching the sequential ids `s-001` through `s-073` with no gaps or duplicates, and the file's line structure (365 body lines ÷ 5 lines per entry) agrees. The answer stands.

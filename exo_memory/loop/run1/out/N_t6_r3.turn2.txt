@@ -1,0 +1,3 @@
+Confirmed: **max_workers is 8**. I re-read both files in full — the directory contains only `config.yaml` and `NOTES.md`. `config.yaml:2` sets `max_workers: 8`, and the runtime notes agree, adding that it shouldn't be raised until the pool exhaustion bug is fixed. There are no other config files, environment overrides, or code in this directory that could change the value.
+
+One caveat worth stating: this confirms the *configured* value. There's no running process or code here to inspect, so if you need to verify what a live instance actually loaded, that would have to be checked against the running service itself.

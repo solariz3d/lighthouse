@@ -1,0 +1,1 @@
+**Confirmed: 73.** An independent count of the `"id"` fields in `inventory.json` returns exactly 73, matching my earlier read of the full file (sensor IDs run contiguously from `s-001` to `s-073`, and each entry has exactly one `id` key). The answer stands as given.

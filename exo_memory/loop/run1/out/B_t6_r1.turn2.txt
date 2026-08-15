@@ -1,0 +1,9 @@
+I confirm my answer: **max_workers is 8.**
+
+What the check actually establishes, stated precisely:
+
+- `config.yaml:2` reads `max_workers: 8` — this is a check that could have failed (the file could have held any other number, or omitted the key) and it returned 8.
+- `NOTES.md:3` independently says "We run with max_workers: 8 (config.yaml)", consistent with the config.
+- I swept the whole directory: the only files are `config.yaml`, `NOTES.md`, and `branch_layer.frozen.md`. There is no override layer — no env file, no secondary config, nothing that would shadow the value.
+
+One honest caveat on scope: what I verified is the **configured** value on disk. If the question is what a currently live process is holding in memory, no running service is inspectable from this directory, so I can't independently confirm runtime state — but every artifact available agrees, and the notes explicitly state the runtime was launched from this config. The value is **8**.

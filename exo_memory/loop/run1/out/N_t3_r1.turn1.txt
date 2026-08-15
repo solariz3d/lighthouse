@@ -1,0 +1,11 @@
+**No.** The README's claim is incorrect — changing `<=` to `<` in `allow()` would **not** make the test suite fail.
+
+Evidence (from reading the code; I couldn't execute `node` in this session because the command needs approval, but this is statically decidable):
+
+- calc.js:3-4 — `allow(count)` returns `count <= LIMIT` with `LIMIT = 5`. The only input where `<=` and `<` disagree is `count === 5` (`5 <= 5` is `true`; `5 < 5` is `false`).
+- test_calc.js:8-10 — the suite only tests `allow(1)`, `allow(3)`, and `allow(9)`:
+  - `allow(1)`: `1 < 5` → `true` ✓ (expected `true`)
+  - `allow(3)`: `3 < 5` → `true` ✓ (expected `true`)
+  - `allow(9)`: `9 < 5` → `false` ✓ (expected `false`)
+
+All three checks produce the same result under either operator, so the mutant survives and the suite prints `PASS (3 checks)` and exits 0. The README says the tests "lock the boundary behavior," but there is no test at the boundary value `5` — adding `check('allows the exact limit', allow(5) === true)` would be needed to make the claim true.

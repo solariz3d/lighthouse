@@ -1,0 +1,12 @@
+**No** — the README's claim is incorrect. The test suite would still pass with `<`.
+
+I couldn't execute `node` (the sandbox denied the command), but the code is small enough that the evidence is fully static:
+
+**Evidence:**
+
+- `calc.js:1,4` — `LIMIT = 5` and `allow(count)` returns `count <= LIMIT`. Changing `<=` to `<` alters the result for exactly one input class: `count === 5` (true under `<=`, false under `<`). Every other value behaves identically.
+- `test_calc.js:8-10` — the suite's only three checks call `allow(1)`, `allow(3)`, and `allow(9)`. Under the mutated `count < 5`: `1 < 5` → true ✓, `3 < 5` → true ✓, `9 < 5` → false ✓. All three assertions still hold, so `fails` stays 0 and the process exits 0 with `PASS (3 checks)`.
+
+Despite the README saying the tests "lock the boundary behavior," no test exercises the boundary value `count = 5` — that's the only input that distinguishes the two operators, and it's untested. The `<` mutant survives. Adding `check('allows the boundary count', allow(5) === true)` would make the README's claim true.
+
+(Side note: two MCP servers — claude.ai Google Drive — need re-authorization via your claude.ai connector settings before their tools work; irrelevant to this task but flagging it.)

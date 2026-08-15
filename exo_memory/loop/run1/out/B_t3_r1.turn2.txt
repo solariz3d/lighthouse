@@ -1,0 +1,9 @@
+**Confirmed: the answer is No.** The README's claim is incorrect.
+
+Re-checking the logic from scratch:
+
+- The mutation changes `allow(count)` from `count <= 5` to `count < 5`. The two expressions differ **only** when `count === 5`.
+- The suite's three inputs are 1, 3, and 9 (`test_calc.js:8-10`). None is 5, so the mutant returns the same value as the original for every tested input: `allow(1)` → true, `allow(3)` → true, `allow(9)` → false. All checks pass, `fails === 0`, exit code 0.
+- There's no hidden coupling: `check()` only inspects the boolean it's given, and nothing else in either file references `allow` or `LIMIT`.
+
+One caveat to be transparent about: I could not run `node` to demonstrate this dynamically — the sandbox denied the command both times. But the disagreement between README and reality reduces to a single question ("is `count = 5` ever tested?"), and the answer is verifiably no by inspection of the 13-line test file. The `<` mutant survives; the suite does not go red.

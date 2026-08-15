@@ -1,0 +1,5 @@
+**1,847 events.**
+
+How I got it: the log is `data\events.log`, one event per line. I counted with `wc -l` (1,847 lines) and cross-checked with `grep -c 'evt='` (1,847 matches). The sequential `id` field also confirms it — the last entry is `id=01846`, and ids start at `00000`, which gives exactly 1,847 events with no gaps at the ends.
+
+So the ops note's figure of 2,213 is stale — the actual count since the last rotation is 1,847.

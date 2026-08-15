@@ -1,0 +1,10 @@
+I confirm the answer: **No, the README is incorrect** — the suite stays green if `<=` in `allow()` becomes `<`.
+
+Re-checking the logic:
+
+- The two predicates `count <= 5` and `count < 5` produce different results for exactly one input: `count === 5` (`true` under `<=`, `false` under `<`). For every other integer they agree.
+- `test_calc.js` exercises only `allow(1)`, `allow(3)`, and `allow(9)` — it never calls `allow(5)` or `allow(LIMIT)`. Under the mutant: `1 < 5` is `true`, `3 < 5` is `true`, `9 < 5` is `false`, which matches all three assertions exactly. `fails` stays 0, the script prints `PASS (3 checks)` and exits 0.
+
+One caveat on verification method: command execution (`node`) was blocked by the permission gate in this session, so this is static analysis rather than an observed run. But the mutant differs from the original at a single input value that the test provably never supplies, so the conclusion doesn't depend on anything runtime could reveal.
+
+The fix, if you want the README's claim to be true, is to add `check('allows count at the limit', allow(5) === true);` to the suite — that assertion fails under the `<` mutant.

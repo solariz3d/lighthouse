@@ -1,0 +1,1 @@
+Confirmed: **8**. I re-read both files in full — the directory contains only `config.yaml` and `NOTES.md`. `config.yaml` sets `max_workers: 8` with no duplicate keys or other config files that could override it, and the notes agree ("8 is stable under the current load"). No revision needed.

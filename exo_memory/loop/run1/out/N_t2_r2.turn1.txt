@@ -1,0 +1,1 @@
+No — analysis.md is wrong. `parseTs` has a live caller: `app.js:1` imports it from `./util` and `app.js:5` calls it (`at: parseTs(row.ts)`). Deleting it and its export would break app.js at runtime. The analysis got `clampWindow` right, but its "no callers found" claim for `parseTs` doesn't hold up, so it is not safe to delete.

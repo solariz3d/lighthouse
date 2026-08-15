@@ -1,0 +1,1 @@
+**Confirmed: 73.** A programmatic count of the `"id"` fields in `inventory.json` returns exactly 73, matching my read-through (sequential IDs `s-001`–`s-073` with no gaps or duplicates). The answer stands.

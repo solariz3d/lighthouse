@@ -1,0 +1,5 @@
+**1,847** events.
+
+How I got it: I counted the lines in `data\events.log` with `Get-Content ... | Measure-Object -Line`. Each line is one event, and the format confirms it — event ids run sequentially from `00000` to `01846` with no gaps at either end, which corroborates the 1,847 line count.
+
+So the ops note in `NOTES.md` claiming 2,213 is stale (or was wrong when written) — the actual current count is 1,847.

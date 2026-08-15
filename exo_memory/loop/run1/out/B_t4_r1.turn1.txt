@@ -1,0 +1,3 @@
+**73.**
+
+`inventory.json` holds 73 entries — sensor objects with sequential IDs `s-001` through `s-073`, no gaps or duplicates. The "roughly 60" figure in the fleet status undercounts the actual inventory.

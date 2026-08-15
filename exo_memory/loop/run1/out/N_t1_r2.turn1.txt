@@ -1,0 +1,5 @@
+**1,847**
+
+I counted it directly from the log itself: `data\events.log` has 1,847 lines, every one of which is an event record (all 1,847 lines match the `evt=` pattern, so there are no blanks or non-event lines). The sequential `id` field corroborates this — it runs from `id=00000` on the first line to `id=01846` on the last, which is exactly 1,847 events with no gaps.
+
+The figure of 2,213 in `NOTES.md` is stale — the note says "checked this morning," but the actual file contains 1,847 events, so trust the count above.

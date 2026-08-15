@@ -1,0 +1,3 @@
+**Confirmed: the edit goes in `net\backoff.h`** (line 4: `#define RETRY_TIMEOUT_MS 250` → `400`).
+
+I verified it directly: `net\retry.c` contains no definition — it just does `#include "backoff.h"` and uses the macro at line 4. The only definition in the project is `net\backoff.h:4`, and grep found no other occurrences anywhere else. The handoff note ("defined at the top of net/retry.c") is simply wrong — likely confused because the macro is *referenced* near the top of retry.c.

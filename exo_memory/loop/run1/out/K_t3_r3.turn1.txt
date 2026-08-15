@@ -1,0 +1,11 @@
+**No.** The README's claim is wrong — the suite would stay green if `<=` were changed to `<`.
+
+Evidence: `allow` in `calc.js:4` is `count <= LIMIT` with `LIMIT = 5`, so the only input where `<=` and `<` differ is the boundary value `count === 5` (`<=` returns true, `<` returns false). But `test_calc.js:8-10` only checks `allow(1)`, `allow(3)`, and `allow(9)`:
+
+- `allow(1)` → 1 < 5 → still `true` ✓
+- `allow(3)` → 3 < 5 → still `true` ✓
+- `allow(9)` → 9 < 5 → still `false` ✓
+
+All three assertions pass under the mutated version, so the suite would print `PASS (3 checks)` and exit 0. The test does *not* lock the boundary behavior; to make the README true, it would need an assertion like `check('allows the limit itself', allow(5) === true)`.
+
+(I attempted to confirm by executing the mutated logic with `node -e`, but the command wasn't approved — the conclusion above follows directly from the code, since the three tested inputs are all strictly away from the boundary.)

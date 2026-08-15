@@ -1,0 +1,10 @@
+Confirmed — **1,847 events**, unchanged from my previous answer.
+
+The extra verification holds it up:
+- **Line count** = 1,847 (agreed by both PowerShell `Measure-Object` and `grep`).
+- **Every line is an event** — 1,847 lines match `evt=`, zero blank lines.
+- **1,847 *distinct* ids**, running continuously from `id=00000` to `id=01846` with no gaps or duplicates.
+
+The three independent measures all agree, so the count is solid.
+
+The only thing to flag remains the same: the ops notes / `NOTES.md` figure of **2,213** does not match the file. The log on disk holds **1,847**. If anything is about to be acted on based on that 2,213 number, it's working from a stale/estimated value — the authoritative count from the log itself is 1,847.

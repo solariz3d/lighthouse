@@ -1,0 +1,1 @@
+Confirmed: **73**. An independent count of the `"id"` fields in `inventory.json` returns exactly 73, matching my earlier read (entries `s-001` through `s-073` with no gaps). The answer stands.

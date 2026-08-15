@@ -1,0 +1,1 @@
+Confirmed: **73**. The file is a flat JSON array with sequential IDs s-001 through s-073, no gaps or duplicates, and the structure checks out arithmetically (73 objects × 5 lines each = 365 lines between the brackets, matching the file exactly). The answer stands.

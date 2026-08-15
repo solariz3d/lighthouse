@@ -1,0 +1,1 @@
+**73.** The inventory (`inventory.json`) is a JSON array of 73 entries, with IDs running s-001 through s-073 — so the "roughly 60" in the fleet status undercounts by 13.

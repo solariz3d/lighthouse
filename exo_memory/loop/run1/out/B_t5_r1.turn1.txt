@@ -1,0 +1,3 @@
+The edit goes in **`net\backoff.h`** — the handoff note is wrong.
+
+`RETRY_TIMEOUT_MS` is only *used* at the top of `net\retry.c:4` (`int wait = RETRY_TIMEOUT_MS;`); the actual `#define RETRY_TIMEOUT_MS 250` lives at `net\backoff.h:4`. Change the value there to 400. You may also want to fix handoff.md, which repeats the incorrect claim.

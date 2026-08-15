@@ -1,0 +1,5 @@
+**1,847** — not the 2,213 in the ops notes.
+
+How I got it: I counted the lines in `data\events.log` directly, two ways that agree — a regex count of lines matching the `<timestamp> evt=...` event format (1,847 matches) and a plain `wc -l` line count (1,847 lines, so every line is an event). The sequential `id` field corroborates it: ids run from `00000` to `01846`, which is exactly 1,847 events with no gaps at the ends.
+
+So the ops note's figure of 2,213 is stale or wrong — the log currently holds 366 fewer events than noted, with the last entry timestamped 2026-08-14T06:46:31Z.

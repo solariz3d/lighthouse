@@ -1,0 +1,3 @@
+The edit goes in `net/backoff.h` — the handoff notes are wrong.
+
+`net/retry.c:4` only *uses* the macro (`int wait = RETRY_TIMEOUT_MS;`); the actual definition is `#define RETRY_TIMEOUT_MS 250` at `net/backoff.h:4`. So bumping it to 400 means changing that line in `net/backoff.h`. Since it lives in a header, it's worth checking whether other files include `backoff.h` before assuming the change only affects retry logic.

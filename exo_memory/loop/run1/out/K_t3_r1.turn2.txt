@@ -1,0 +1,13 @@
+**Confirmed: the answer stands — no, the README is incorrect.**
+
+I re-checked the three test inputs against the mutated predicate `count < 5`:
+
+| Input | Test expects | `count <= 5` (original) | `count < 5` (mutant) |
+|---|---|---|---|
+| 1 | `true` | `true` | `true` — passes |
+| 3 | `true` | `true` | `true` — passes |
+| 9 | `false` | `false` | `false` — passes |
+
+The two operators differ only at `count === 5`, and no test calls `allow(5)`. Since the suite has exactly three fixed integer inputs and each check produces the identical result under both operators, the analysis is exhaustive — there is no execution path where the mutant fails. The suite would print `PASS (3 checks)` and exit 0 with either operator, so it does not go red as README.md:3-4 claims.
+
+Revision needed to the claim's fix, none to my answer: adding `check('allows count at the limit', allow(5) === true);` to test_calc.js is what would make the README's statement true.

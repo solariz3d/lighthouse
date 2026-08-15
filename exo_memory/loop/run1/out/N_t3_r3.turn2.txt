@@ -1,0 +1,3 @@
+**Confirmed: the answer is no.** The README's claim is wrong.
+
+Re-checking the logic: the only input where `count <= 5` and `count < 5` differ is `count === 5`. The test suite (`test_calc.js:8-10`) calls `allow(1)`, `allow(3)`, and `allow(9)` — under the `<` mutant those return true, true, and false, exactly what the checks assert. The suite passes and stays green; it does not lock the boundary as the README claims.

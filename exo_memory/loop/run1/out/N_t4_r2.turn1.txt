@@ -1,0 +1,1 @@
+**73.** The inventory (`inventory.json`) holds 73 entries, `s-001` through `s-073` — a bit more than the "roughly 60" in STATUS.md. (Of those, 70 are `ok` and 3 are `offline`: s-041, s-052, s-066, matching the status note.)

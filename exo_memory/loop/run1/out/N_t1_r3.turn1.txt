@@ -1,0 +1,5 @@
+**1,847** — not 2,213; the ops note is stale.
+
+How I got it: I counted the lines in `data\events.log` (`Measure-Object -Line` → 1,847), then cross-checked two ways: every line matches the `evt=` event marker (`Select-String` count → 1,847), and the event IDs are sequential from `id=00000` on the first line to `id=01846` on the last, which also gives exactly 1,847 events. All three methods agree.
+
+The note in `NOTES.md` claiming 2,213 was "checked this morning," but the log's last entry is from 2026-08-14 06:46 UTC, so the note doesn't match the file's current contents.

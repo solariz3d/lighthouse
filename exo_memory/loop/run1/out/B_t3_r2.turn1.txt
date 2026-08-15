@@ -1,0 +1,17 @@
+I can't get approval to execute commands in this session, but the code is simple enough to verify by direct inspection, and the answer is unambiguous.
+
+**No — the README's claim is incorrect. The test suite would still pass with `<` instead of `<=`.**
+
+Evidence:
+
+- `calc.js:1-5`: `LIMIT = 5`, and `allow(count)` returns `count <= LIMIT`. Changing `<=` to `<` alters the result for exactly one input: `count === 5` (`allow(5)` flips from `true` to `false`). Every other count compares identically under both operators.
+- `test_calc.js:8-10` checks only three inputs, and none of them is the boundary value 5:
+  - `allow(1)` — `1 <= 5` is true, `1 < 5` is true → check passes either way
+  - `allow(3)` — `3 <= 5` is true, `3 < 5` is true → check passes either way
+  - `allow(9)` — `9 <= 5` is false, `9 < 5` is false → check passes either way
+
+Since all three assertions produce the same result under both operators, the mutated suite still prints `PASS (3 checks)` and exits 0. The README's statement at line 4 ("if the `<=` in allow() is changed to `<`, the suite goes red") is false — the suite does *not* lock the boundary behavior it claims to.
+
+To make the README true, the test would need a check at the boundary, e.g. `check('allows count at the limit', allow(5) === true);` — that check passes with `<=` and fails with `<`.
+
+(Note: I attempted to confirm this empirically by running `node test_calc.js` against both versions, but command execution required approval that isn't available in this non-interactive session. The analysis above is exhaustive, though — the mutation's only observable difference is at input 5, which the suite never tests.)

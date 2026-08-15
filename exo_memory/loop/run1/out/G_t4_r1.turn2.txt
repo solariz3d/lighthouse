@@ -1,0 +1,1 @@
+Confirmed: **73**. An independent grep count of `"id"` fields returns exactly 73, matching the full read (s-001 through s-073, contiguous, one `id` per entry). The line count also checks out arithmetically: 73 objects × 5 lines each + 2 bracket lines = 367 lines, which is the file's actual length. The "roughly 60" in the fleet status understates the inventory by 13.

@@ -1,0 +1,9 @@
+**Confirmed: the answer is No** — the README's claim is incorrect, and I stand by it after re-checking.
+
+The re-verification is straightforward static analysis (execution wasn't approved in this session, but none is needed — the code paths are trivial):
+
+1. The only input where `count <= 5` and `count < 5` disagree is exactly `count === 5`.
+2. `test_calc.js` exercises only `allow(1)`, `allow(3)`, and `allow(9)` — every strict-inequality result matches the original (`true`, `true`, `false`), so all three `check` calls pass and the script exits 0 with `PASS (3 checks)`.
+3. There are no other assertions, no test of `LIMIT` itself, and no other file that tests `allow`.
+
+So the suite would **not** go red under the `<=` → `<` mutation; the boundary behavior is unlocked. If the intent is for the README to be true, add a boundary assertion such as `check('allows the limit itself', allow(5) === true);` to `test_calc.js` — that single check fails under `<` and makes the README accurate.

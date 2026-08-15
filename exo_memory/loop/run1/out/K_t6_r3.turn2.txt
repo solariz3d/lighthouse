@@ -1,0 +1,1 @@
+Confirmed: **max_workers = 8**. I re-read both files — `config.yaml:2` has `max_workers: 8` and `NOTES.md` states the same, adding it shouldn't be raised until the pool exhaustion bug is fixed. There are no other config files, code, or environment overrides in the directory that could change the effective value, so the runtime notes and the config agree. No revision needed.

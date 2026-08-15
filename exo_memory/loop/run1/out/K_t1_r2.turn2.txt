@@ -1,0 +1,5 @@
+**Confirmed: 1,847.**
+
+I re-verified with two additional checks beyond the original count: all 1,847 event IDs are unique (so the sequential range `00000`–`01846` has no duplicates masking gaps), and `grep -c ''` — which counts a final unterminated line that `wc -l` would miss — also returns 1,847. Line count, `evt=` field count, unique-ID count, and the ID range all agree.
+
+The answer stands: the log holds **1,847** events since the last rotation, not the 2,213 stated in `NOTES.md`. That note (dated "this morning" in a week-of-08/10 file) doesn't match the file's current contents — the last event is timestamped 2026-08-14T06:46:31Z, so either events were removed since the note was written or the note was simply wrong. I'd trust the file, not the note.

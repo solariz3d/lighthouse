@@ -1,0 +1,5 @@
+**1,847** events.
+
+How I got it: I counted the lines in `data\events.log` directly — `Measure-Object -Line` in PowerShell and `wc -l` plus `grep -c "evt="` as a cross-check all agree on 1,847, and the event IDs run contiguously from `id=00000` to `id=01846`, which confirms the count. The one-event-per-line format holds throughout (first entry 2026-08-14T00:00:31Z, last 2026-08-14T06:46:31Z).
+
+The ops notes' figure of 2,213 is stale or wrong — the actual file holds 366 fewer events than the notes claim.

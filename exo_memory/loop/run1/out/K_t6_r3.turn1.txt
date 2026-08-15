@@ -1,0 +1,1 @@
+**max_workers = 8** — confirmed. `config.yaml:2` sets `max_workers: 8`, matching the runtime note in `NOTES.md:3`.

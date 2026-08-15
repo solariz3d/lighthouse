@@ -1,0 +1,3 @@
+Confirmed: **73**.
+
+Verification: the file is a single JSON array where each entry spans exactly 5 lines. The file is 367 lines total — 1 opening bracket + 73 × 5 entry lines + 1 closing bracket — which matches the sequential IDs `s-001` through `s-073` with no gaps or duplicates. The answer stands at 73.

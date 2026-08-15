@@ -1,0 +1,8 @@
+**No — the README is incorrect.** The suite would stay green after that mutation.
+
+The command sandbox wouldn't let me execute node, but the code makes this conclusive by inspection:
+
+- `calc.js:4` — `allow(count)` returns `count <= LIMIT` with `LIMIT = 5`. Changing `<=` to `<` alters the result for exactly one input: `count === 5` (true becomes false). Every other count behaves identically under both operators.
+- `test_calc.js:8-10` — the suite's only three probes are `allow(1)`, `allow(3)`, and `allow(9)`. Under the mutated `<`: `1 < 5` is true ✓, `3 < 5` is true ✓, `9 < 5` is false ✓. All three checks pass, so it prints `PASS (3 checks)` and exits 0.
+
+The README claims the tests "lock the boundary behavior," but no test ever calls `allow(5)` — the one input where the operators differ. The mutant survives. To make the README's claim true, the suite would need a check like `check('allows exactly the limit', allow(5) === true);` — happy to add that if you'd like.

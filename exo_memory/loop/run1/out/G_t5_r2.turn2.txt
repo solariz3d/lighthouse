@@ -1,0 +1,5 @@
+Confirmed: the edit goes in **`net\backoff.h`**.
+
+Reading both files verifies it: `net\retry.c` contains no definition — it just does `#include "backoff.h"` and uses the macro at line 4. The actual definition is `#define RETRY_TIMEOUT_MS 250` at `net\backoff.h:4`, so that's the line to change to `400`. The handoff note claiming it's defined at the top of `retry.c` is incorrect (probably conflating "used at the top of retry.c" with "defined").
+
+One caveat since it's a header: the grep showed `retry.c` is the only consumer of `RETRY_TIMEOUT_MS` in this repo, so bumping it to 400 affects nothing else.

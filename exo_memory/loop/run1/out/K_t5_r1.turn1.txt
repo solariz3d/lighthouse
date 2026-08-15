@@ -1,0 +1,1 @@
+The edit goes in **`net/backoff.h`** — the handoff notes are wrong. `net/retry.c` only *uses* the constant (`net/retry.c:4`); the actual definition is `#define RETRY_TIMEOUT_MS 250` at `net/backoff.h:4`. That's where you'd change 250 to 400. Worth also correcting line 6 of `handoff.md` so the next person isn't misled.

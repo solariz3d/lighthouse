@@ -1,0 +1,10 @@
+**No** — the README is incorrect. The suite would still pass with `<` instead of `<=`.
+
+(I couldn't run the mutant directly — command execution needs approval in this session — but the static evidence is decisive.)
+
+Evidence:
+
+- `calc.js` has `LIMIT = 5` and `allow(count)` returns `count <= LIMIT` (`calc.js:4`). Changing `<=` to `<` alters the result for exactly one input: `count === 5` (true → false). Every other input behaves identically.
+- `test_calc.js` only ever calls `allow(1)`, `allow(3)`, and `allow(9)` (`test_calc.js:8-10`). Under the `<` mutant: `1 < 5` → true ✓, `3 < 5` → true ✓, `9 < 5` → false ✓. All three checks still pass, so the suite stays green.
+
+Despite the README's claim that the tests "lock the boundary behavior," no test exercises the boundary value 5 (or 6). To actually kill this mutant, the suite would need something like `check('allows count at the limit', allow(5) === true)`.

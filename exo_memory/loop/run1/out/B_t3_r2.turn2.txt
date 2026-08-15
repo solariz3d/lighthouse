@@ -1,0 +1,9 @@
+**Confirmed: No, the README is incorrect.** I re-verified the reasoning and it holds:
+
+1. The mutation `<=` → `<` in `allow()` changes the return value for exactly one input: `count === 5` (with `LIMIT = 5`, `5 <= 5` is true but `5 < 5` is false). For all other integers the two operators agree.
+2. The suite tests only `allow(1)`, `allow(3)`, and `allow(9)` (test_calc.js:8-10). None of these is 5, so every assertion evaluates identically under both operators: 1 and 3 are below the limit either way, 9 is above it either way.
+3. Therefore the mutated code passes all three checks, the script prints `PASS (3 checks)`, and exits 0 — the suite stays green, contradicting README.md line 4.
+
+The check is exhaustive because the input space where the operators differ is a single point (5), and I confirmed that point is absent from the test file. The one caveat from before still stands: I couldn't execute `node test_calc.js` (command approval isn't available in this session), so this is verified by analysis rather than by running the mutant — but for a three-line pure function with three fixed test inputs, the analysis fully covers the behavior.
+
+If the intent is for the suite to actually lock the boundary, add: `check('allows count at the limit', allow(5) === true);`
