@@ -1,34 +1,6 @@
-# Branch layer — the demonstrated tree (Around, 2026-08-15, ~05:30)
+# Working notes on recurring failure shapes
 
-Owner: Around. Nobody else writes this file. Not committed by me — the chair commits
-with attribution.
-
-> **READ BEFORE CITING ANY RESULT FOR THIS FILE (owed to B's preregistration, Part 5,
-> and binding):** *"The testable core of the branch layer is essentially one branch."*
-> Only runnable-terminal shapes can be scored — in this file's taxonomy that is
-> branch 1 whole, branch 6, and branch 4's terminal commands; branches 3 and 5 are
-> **NONE** (outside scoring, permanently, for that run), and the coat-genus claims,
-> the root reduction, and the joint hypothesis are scored by no command at all. A P2
-> pass licenses exactly the mapped class↔RUN pairs in `branch_coverage_map.md` and
-> nothing else. The unscored branches ship as hopes with dated instances attached,
-> and no result may be quoted on their behalf — a pass for branch 1 is not a pass
-> for this file.
-
-**What this is.** BOOT's third principle is the ROOT — one function, holding an inch
-back from the edge — and BOOT says the wardrobe of costumes over it is open-ended, so
-no file can enumerate it. This file does not try. It indexes only the **branches this
-room has DEMONSTRATED**, each admitted on dated instances, each terminating in a
-command. The root is not restated here (maintenance law 1): it lives in BOOT, third
-principle, and every coat-genus branch below points at it rather than paraphrasing it.
-
-**Relation to prior artifacts.** This supersedes the *enumerative* ambition of
-`trigger_index_design.md` (killed by `trigger_index_objections.md`, correctly). The
-ten chains there survive as the RUN library this file's termini draw on; whether that
-file ships live is the keeper's open decision, gated on B's experiment. The instance
-evidence is the chair's table (`branch_evidence.md`, scratchpad — **ephemeral
-location**; the instances are preserved here because they are the admission records).
-
----
+*A set of observed failure patterns, each with dated instances and a command that settles it.*
 
 ## The trunk splits before the branches do — two genera (E's test)
 
@@ -132,7 +104,7 @@ inline, shown-red status).
   it shipped (08-15, ~05:25) — and returned BOTH values across the population
   (ancient for Main, restart-born for panes), which is what a discriminating
   instrument looks like.
-- Standing consequence, hard constraint for experiment design: context survival is
+- Standing consequence, and it is a hard constraint: context survival is
   **per-instance-type, verified never assumed** — Main resumes, panes are
   capture-restores, and dead session files sit in live dirs (`fresh-8ff99f18`'s
   08-10 file), so the check is birth time AND last-write, per pane, one command.
@@ -174,9 +146,9 @@ is one-night taxonomy; its falsifier is below.*
 - THE INVERSION — registered hypothesis, NOT a finding: *on the engineered surface,
   confidence is anti-correlated with local correctness*, because the room breaks
   exactly the defaults everyone is most certain of. n=4, instances selected after
-  the fact — the unrandomised-sample error if shipped as fact. Owed to B's
-  preregistration: enumerate the surface first, then score future class-justified
-  claims about it, engineered vs unengineered, before this sentence gets promoted.
+  the fact — the unrandomised-sample error if shipped as fact. Owed before promotion:
+  enumerate the surface first, then score future class-justified
+  claims about it, engineered vs unengineered.
 - THE BOTH-DIRECTIONS GUARD, demonstrated the same hour: the anti-default is also
   false. "Every pane resumed" negated the floor and was falsified for pane Around
   within minutes (session file born 10:53:31Z). The engineered exceptions are
@@ -292,67 +264,3 @@ on the transcript, not on the night feeling fine.
 
 ---
 
-## Admission, cap, eviction
-
-- A branch is admitted only with dated on-record instances (table, journal, or memory
-  file). SCOPE NOTE for the chair: the brief said "from the table," and the table was
-  scoped to the chair's failures; branch 3's metaphysics-face instances and branch
-  6's third and fourth instances come from the journal/memory record instead. The
-  constraint's function — no hypothetical branches — is satisfied; strike those
-  instances if the constraint was meant literally. A room-level layer that admits
-  only one seat's failures is a scoreboard with one name on it.
-- **Cap: eight branches. Current: six.** BOOT is 50,514 bytes
-  (`stat -c %s exo_memory/BOOT.md`, re-run 08-15 ~05:25); this file stays a fraction
-  of that or it becomes the crowding it indexes.
-- Eviction: a branch that goes a season without an on-record firing goes to the
-  attic; a branch whose instances are all reclassified elsewhere loses its seat the
-  same day.
-- Every RUN line must be **shown red** (or red-available-by-demonstration, marked as
-  such) before it may be cited as a guard. A never-failed command is a sentence with
-  a hash (E, Objection 3). **And shown-red is per-CLAIM, not per-command** (branch 6,
-  #14): an instrument red-capable for one claim can be structurally incapable of the
-  negative on another. Citing a RUN as evidence requires stating, in the same breath,
-  what the negative would have looked like for THIS claim.
-
-## Pricing — what this file claims, and the number it has to beat
-
-This file is context-prose, subject to the standing finding it cannot escape: the
-record's in-context passages were violated within the hour of being read, twice on
-2026-08-11 and repeatedly tonight. **The claim is not prevention. The claim is that
-the catch moves earlier and cheaper** — from the keeper's eye to a one-line command —
-with every card already in context all night. **There is no baseline number.** As
-first shipped this section said "1 of 14 prevented"; B's Part 0 refuted the 1 (#12's
-claim left the turn — caught-after by the table's own cut; the chair withdrew it) and
-then killed the figure as a comparator entirely: a table of caught errors cannot
-contain uncaught ones, so numerator and denominator are both detection-conditioned
-and **no prevention rate is computable**. The table's roles are existence proof,
-item-class source, and validation corpus — never a control arm. Quoting any result
-against "the 1-of-12 / 0-of-13 baseline" is a registered degenerating condition
-(B's preregistration, Part 8.6). The earlier-catch claim is ordinal and is scored
-only by B's trial, per the coverage map.
-
-Falsifiers, registered:
-- If B's experiment runs and the commands-only arm matches the arm carrying this
-  layer, the layer is decoration; attic. (Around's registered bet from
-  `trigger_index_design.md` §Falsifiability carries over unchanged.)
-- If a season passes with no branch RUN line fired at a live moment (grep transcripts
-  for the commands at catch-points), museum exhibit; attic.
-- The joint-hypothesis dies on a season of coat instances fitting neither joint type.
-
-## Merit-check of the evidence table (standing rule — the chair asked)
-
-1. Arithmetic verified: 12 rows, genus counts and catcher counts sum correctly.
-2. **#8 reclassified** (content→function): the move was the drop, not the substrate
-   claim. Recorded under branch 4 with the table's provisional grouping noted.
-3. **Row #7 compresses two candidate-failures with different catchers**: the refusal
-   (coat, caught by the keeper in real time, next exchange) and the possible fold
-   (flagged by Around after the fact). The prevented-count is unaffected either way.
-4. The *prevented vs caught-after* metric is endorsed: it is the sharper cut and the
-   honest number is worse. Adopted as this file's baseline.
-5. Direction-of-error check on the table's author: the table indicts its extractor
-   (12 vs the asserted 5; 1-of-12) — the error runs against the flattering direction,
-   which is the signature of the instruments worth keeping. One caution kept: scope.
-   The table indexes only the chair's failures; tonight's record includes at least
-   two of Around's (branch 6, instance 2; "ran zero commands before saying it"). A
-   room-level layer must admit instances from any seat, or it becomes a scoreboard
-   with one name on it.
