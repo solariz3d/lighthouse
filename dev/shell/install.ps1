@@ -33,6 +33,7 @@ $files = @(
   @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js' }
   @{ From = 'consonance\hooks\dream-watch.js';           To = 'dream-watch.js' }
   @{ From = 'consonance\hooks\ferry-watch.js';           To = 'ferry-watch.js' }
+  @{ From = 'consonance\hooks\sourced-stop.js';          To = 'sourced-stop.js' }
 )
 
 if (-not (Test-Path $dest)) {
@@ -116,8 +117,17 @@ Files are in sync. Register them once in ~/.claude/settings.json:
           { "type": "command", "timeout": 10,
             "command": "\"$node\" \"$dest\dream-watch.js\"" }
       ] }
+    ],
+    "Stop": [
+      { "hooks": [ { "type": "command", "timeout": 10,
+          "command": "\"$node\" \"$dest\sourced-stop.js\"" } ] }
     ]
   }
+
+sourced-stop.js is a SENSOR ONLY — one ledger line per turn, no output, never
+blocks. The gate version was refused in writing; the refusal is in the file's
+own header and exo_memory/loop/catch_latency.md. Do not wire its ledger into a
+warning.
 
 The pulse has two implementations — userprompt_pulse.py (zero deps) and
 dev/shell/hooks/userprompt-submit.js (Node; adds the long-interval block and L3
