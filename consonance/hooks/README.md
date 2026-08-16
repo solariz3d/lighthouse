@@ -110,6 +110,56 @@ Node, not Rust, deliberately: no `cargo build`, no reinstall, no desktop — it 
 board the night it's written. Defensive throughout; never throws, never blocks a turn, always
 exits 0.
 
+## What is actually REGISTERED, as of 2026-08-15 23:10 local
+
+A hook file in this directory is not a hook. It becomes one when a settings file names it, and this
+repo had no record of which ones ever did — so a reader met `sourced-stop.js`, whose own header
+opens *"this room had never registered one"*, with no way to learn whether that was still true.
+Written down here because built-and-not-attached is the failure this repo has now found sixteen
+times, and the second-vantage pipeline was the largest instance: four modules, 1,684 lines, five
+green suites, an attachment test, and one hand-driven end-to-end run — with **two of its three
+pieces connected to nothing.**
+
+Registered in `~/.claude/settings.json` (personal config, deliberately not in this repo — it holds
+machine-absolute paths):
+
+| event | hook | position |
+|---|---|---|
+| `Stop` | `sourced-stop.js` | 4th, after `stop.js`, `l2-overseer.js`, `l3-overseer.js` |
+| `UserPromptSubmit` | `findings-return.js` | 2nd, after `userprompt-submit.js` |
+
+`tools/second-vantage.js` is fired by a duration goal (`~/.claude/shell/duration/second-vantage/`),
+daily at 09:05 America/Regina — a clock, not a decision, which is the design.
+
+**Pipe-tested against a real transcript before registration**, because a hook that silently does
+nothing is worse than none: both exited 0, and `sourced-stop.js` wrote an actual v2 ledger row
+carrying the `claims[]`, `paths[]` and `turn_ts` that `build_ruling.md` C2 makes a build
+requirement. Not a dry run.
+
+**How to check it is still true**, rather than trusting this table — the table is a claim about the
+world and ages like any other:
+
+```
+node -e "const j=JSON.parse(require('fs').readFileSync(process.env.USERPROFILE+'/.claude/settings.json','utf8'));
+for (const e of ['Stop','UserPromptSubmit'])
+  console.log(e, JSON.stringify(j.hooks[e]).match(/[a-z0-9-]+\.js/g));"
+```
+
+Expected today:
+
+```
+Stop [ 'stop.js', 'l2-overseer.js', 'l3-overseer.js', 'sourced-stop.js' ]
+UserPromptSubmit [ 'userprompt-submit.js', 'findings-return.js' ]
+```
+
+*(The character class needs the `0-9`. Written first without it, this printed `-overseer.js` twice
+— a check that misreports its own output, caught by running the command instead of reading it.)*
+
+**Caveat that bit us:** the settings watcher only reloads directories that held a settings file at
+session start. A freshly registered hook may not fire until `/hooks` is opened once, or the session
+restarts. Registration and firing are two states, and this paragraph exists because assuming they
+were one is how the whole class starts.
+
 ## The honest limit
 
 **An instrument makes the data impossible to miss; it cannot make the model look.** Four errors
