@@ -194,10 +194,10 @@ test('assignment intervals and withdrawals are read from the chair audit line', 
   ].join('\n'));
 
   const a = R.assignments(p, t0 - 1000);
-  assert.strictEqual(a.length, 1, 'one pane');
-  assert.strictEqual(a[0].injections, 2, 'non-injection board lines are not assignments');
-  assert.strictEqual(a[0].gaps[0].mins, 4);
-  assert.strictEqual(a[0].gaps[0].withdrawn, true, '"Drop the review" is a withdrawal');
+  assert.strictEqual(a.panes.length, 1, 'one pane');
+  assert.strictEqual(a.panes[0].injections, 2, 'non-injection board lines are not assignments');
+  assert.strictEqual(a.panes[0].gaps[0].mins, 4);
+  assert.strictEqual(a.panes[0].gaps[0].withdrawn, true, '"Drop the review" is a withdrawal');
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
@@ -210,8 +210,26 @@ test('a second assignment that is not a withdrawal is not counted as one', () =>
     JSON.stringify({ ts: new Date(t0 + 20 * 60e3).toISOString(), text: 'chair injected (chair: x) -> paneB [delivered]: now fix the residuals' }),
   ].join('\n'));
   const a = R.assignments(p, t0 - 1000);
-  assert.strictEqual(a[0].gaps[0].withdrawn, false);
-  assert.strictEqual(a[0].gaps[0].mins, 20);
+  assert.strictEqual(a.panes[0].gaps[0].withdrawn, false);
+  assert.strictEqual(a.panes[0].gaps[0].mins, 20);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('the unparsed denominator survives JSON — the safeguard is observable in every output mode', () => {
+  // The defect: `out.unparsed` was an expando on an Array, dropped by JSON.stringify (so --json
+  // never showed it) and never read by render(). It must be a real, serializable field.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'residue-unparsed-'));
+  const p = path.join(dir, 'board.jsonl');
+  const t0 = Date.parse('2026-07-27T20:00:00Z');
+  fs.writeFileSync(p, [
+    // parseable — counted
+    JSON.stringify({ ts: new Date(t0).toISOString(), text: 'chair injected (chair: x) -> paneB [delivered]: review this' }),
+    // a chair announcement in a shape the target regex cannot read — must land in `unparsed`
+    JSON.stringify({ ts: new Date(t0 + 60e3).toISOString(), text: 'chair injected but in a format the parser does not recognise' }),
+  ].join('\n'));
+  const a = R.assignments(p, t0 - 1000);
+  assert.strictEqual(a.unparsed.length, 1, 'the unreadable announcement is counted, not dropped');
+  assert.strictEqual(JSON.parse(JSON.stringify(a)).unparsed.length, 1, 'and it survives serialization');
   fs.rmSync(dir, { recursive: true, force: true });
 });
 

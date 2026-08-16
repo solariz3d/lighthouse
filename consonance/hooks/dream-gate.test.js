@@ -111,7 +111,7 @@ const ENTRY = {
   'sessionstart-ambient.js': 'const lib = resolveAmbient();',
   'userprompt_pulse.py': 'STATE = os.path.join',
   'board-digest.js': 'withStdin((input)',
-  'transcript-watch.js': '\nmain();',
+  'transcript-watch.js': 'withStdin(main)',
   'dream-watch.js': 'if (require.main === module)',
   // Unique to the CALL SITE, not the definition: ferry-watch defines `function main()` above the
   // guard and calls it at the bottom, so matching the bare name would compare the guard against

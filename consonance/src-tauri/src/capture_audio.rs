@@ -80,6 +80,18 @@ impl IActivateAudioInterfaceCompletionHandler_Impl for ActivationDone_Impl {
     }
 }
 
+// The event handle is signalled by ActivateCompleted, so its lifetime must outlive that callback.
+// The handler owns it and closes it exactly once, on drop — which the COM runtime only runs after
+// ActivateAudioInterfaceAsync has released the handler, i.e. after the callback can no longer fire.
+// run() must therefore NOT close the handle itself: doing so on an activation timeout (while the
+// async op is still in flight) left the handler holding a closed, possibly-recycled handle and
+// SetEvent'ing it later — a cross-thread use-after-close that could signal an unrelated object.
+impl Drop for ActivationDone {
+    fn drop(&mut self) {
+        unsafe { let _ = CloseHandle(self.0); }
+    }
+}
+
 /// Float32 stereo at 48 kHz, asserted because the pseudo-device cannot be asked.
 fn format() -> WAVEFORMATEX {
     WAVEFORMATEX {
@@ -136,11 +148,15 @@ pub fn run(pid: u32, tx: Sender<Vec<f32>>, stop: Arc<AtomicBool>) -> Result<(), 
 
         // Calling GetActivateResult before this returns E_ILLEGAL_METHOD_CALL, which reads like
         // a usage bug rather than a race and costs an hour to recognise.
+        //
+        // Do NOT CloseHandle(event) here — on either path. `handler` owns the handle and closes it
+        // on drop (see the Drop impl above), which only runs once the async op has released the
+        // handler. On timeout the op is still in flight and would still SetEvent this handle; closing
+        // it now is the use-after-close. `handler` is kept alive below to hold the handle open until
+        // this function returns (on timeout the system's own reference keeps it alive past that).
         if WaitForSingleObject(event, 5_000) != WAIT_OBJECT_0 {
-            let _ = CloseHandle(event);
             return Err("activation did not complete within 5s".into());
         }
-        let _ = CloseHandle(event);
 
         let mut hr = windows::core::HRESULT(0);
         let mut unknown = None;

@@ -13,6 +13,7 @@ const test = require('node:test');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const { scan, VALUE_PATTERNS, READING_TOOLS } = require('./sourced.js');
 
 function transcript(turns) {
@@ -74,6 +75,25 @@ test('every declared pattern actually matches something — no dead detector', (
     assert.ok(samples[p.name], `pattern ${p.name} has no sample — add one or delete the pattern`);
     assert.ok(p.re.test(samples[p.name]), `pattern ${p.name} matched nothing: dead detector`);
   }
+});
+
+test('a missing ~/.claude/projects exits 2 with a message, not an uncaught ENOENT', () => {
+  // newestMain() used to readdirSync(PROJECTS) unguarded, so on any box without ~/.claude/projects
+  // the tool crashed before reaching the "no transcript found" handler written for exactly that
+  // case. Point HOME/USERPROFILE at an empty dir (os.homedir() reads these) and run with no --file.
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'sourced-nohome-'));
+  const env = { ...process.env, USERPROFILE: home, HOME: home };
+  let code = 0, stderr = '';
+  try {
+    execFileSync(process.execPath, [path.join(__dirname, 'sourced.js')],
+      { env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  } catch (e) {
+    code = e.status;
+    stderr = String(e.stderr || '');
+  }
+  assert.strictEqual(code, 2, 'the designed "no transcript" exit code, not a crash (1) or success (0)');
+  assert.match(stderr, /no transcript found/, 'and the designed message');
+  fs.rmSync(home, { recursive: true, force: true });
 });
 
 test('a real transcript produces a non-zero denominator', () => {

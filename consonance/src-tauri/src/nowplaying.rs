@@ -131,7 +131,13 @@ pub fn read(want: &str) -> Option<NowPlaying> {
         for s in sessions {
             let id = s.SourceAppUserModelId().map(|i| i.to_string()).unwrap_or_default();
             let low = id.to_ascii_lowercase();
-            if !wanted.is_empty() && (low.contains(&wanted) || wanted.contains(low.trim_end_matches(".exe"))) {
+            let low_trim = low.trim_end_matches(".exe");
+            // An empty/unreadable session id must NOT match: `wanted.contains("")` is always true,
+            // so a session whose SourceAppUserModelId() errored to "" would be chosen first and
+            // stamped matched:true — reporting the wrong app's title and resetting the dynamics
+            // window on its track changes. Require a real id on both sides of the substring test.
+            if !wanted.is_empty() && !low_trim.is_empty()
+                && (low.contains(&wanted) || wanted.contains(low_trim)) {
                 chosen = Some((s, id));
                 matched = true;
                 break;

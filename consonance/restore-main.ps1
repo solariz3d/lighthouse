@@ -21,10 +21,15 @@ $projDir  = Join-Path $env:USERPROFILE '.claude\projects\C--Users-zackn-claude-i
 $src      = Join-Path $projDir "$mainSid.jsonl"
 $dst      = Join-Path $projDir "$forkId.jsonl"
 
-function Write-JsonNoBom($path, $obj) {
+function Write-JsonNoBom($path, $obj, [switch]$AsArray) {
   # PS 5.1's -Encoding utf8 emits a BOM, and the Rust side reads these with plain
   # read_to_string + serde — a BOM makes that parse fail. Write clean UTF-8 only.
   $json = $obj | ConvertTo-Json -Depth 6
+  # And PS 5.1 serializes a SINGLE-element array as a bare object, not a 1-element array. Files the
+  # Rust side reads as a Vec (panes.json) then parse to ZERO rows via unwrap_or_default — the pane
+  # silently never restores. Force array framing for list files; object files (letters.json) pass
+  # -AsArray:$false and are untouched.
+  if ($AsArray -and @($obj).Count -eq 1) { $json = "[$json]" }
   [System.IO.File]::WriteAllText($path, $json, (New-Object System.Text.UTF8Encoding($false)))
 }
 
@@ -101,7 +106,7 @@ if (Test-Path $dst) {
     [void]$panes.Add([pscustomobject]@{ pane = $forkId; cwd = $forkCwd; label = 'the fork that found it' })
     # Never write a list that lost rows — a corrupted panes.json silently unmakes live panes.
     if ($panes.Count -ne $before + 1) { throw "refusing to write panes.json: expected $($before + 1) rows, built $($panes.Count)" }
-    Write-JsonNoBom $panesPath $panes
+    Write-JsonNoBom $panesPath $panes -AsArray
     Write-Host "        registered in panes.json ($before existing kept, 1 added)" -ForegroundColor Green
   }
 

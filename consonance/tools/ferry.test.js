@@ -70,6 +70,19 @@ test('record() appends rather than overwriting - a ferry never erases an earlier
   assert.strictEqual(ferry.ledger().length, 2);
 });
 
+test('record() REFUSES a short sha rather than writing a phantom that blocks the full sha', () => {
+  // The other half of the short-sha defect: status() already ignores a short sha in the ledger,
+  // but record() used to WRITE one anyway — reporting success while the row was uncountable, and
+  // its prefix then blocking the correct full sha via the idempotency check. record() must enforce
+  // the same >=7 floor the readers filter on.
+  fs.writeFileSync(process.env.FERRY_LEDGER, '');
+  assert.throws(() => ferry.record('cb0df', ['C'], 100), /need >= 7/, 'a short sha must be refused, not written');
+  assert.strictEqual(ferry.ledger().length, 0, 'nothing may be written for a too-short sha');
+  const row = ferry.record(FULL, ['C'], 200);
+  assert.ok(row, 'the correct full sha now records cleanly — no short prefix was left to block it');
+  assert.strictEqual(ferry.ledger().length, 1);
+});
+
 test('only claim-bearing directories count as artifacts', () => {
   // Code is reviewed by its tests. The surface with no instrument is prose making claims,
   // which is what BOOT says is unguarded and what this tool is pointed at.
