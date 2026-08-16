@@ -4479,16 +4479,24 @@ fn short_id(id: &str) -> &str {
 // them. So the audit line stops inferring receipt from a successful write and goes and looks.
 //
 // Where it looks: the pane's own raw capture log (captures/<id>.log), which is the PTY byte stream
-// written unbuffered as it arrives — so the composer's echo of the pasted text lands there within
+// written unbuffered as it arrives — so the composer's render of the pasted text lands there within
 // milliseconds, with no dependence on claude's lazy jsonl flush.
 //
+// A NOTE ON THE WORD, because it was wrong here for weeks (keeper, 2026-08-16). This mechanism used
+// "echo" throughout, in the terminal sense: characters drawn back by the TUI. But `echo` is already
+// this codebase's word for the FAILURE — `tether.rs` carries `echo_ratio` as a measured collapse
+// metric, the digest prompt drops restated material as "(echo)", and the room's whole subject is
+// telling signal from echo. So `chair_inject` returned "echo confirmed" as its SUCCESS string: the
+// same word meaning both the thing Consonance exists to detect and it worked. Renamed to "render"
+// throughout the receipt path. `echo` keeps its one meaning: agreement that adds nothing.
+//
 // THE HONEST WORD IS "UNCONFIRMED", NEVER "FAILED". Three independent lags sit between the write
-// and the echo (the TUI's render, the capture writer, our poll). Absence inside the budget is
+// and the render (the TUI's draw, the capture writer, our poll). Absence inside the budget is
 // absence of evidence, not evidence of absence — and mislabelling it would rebuild the same false
 // certainty in the other direction. Written-but-unconfirmed is a real, reportable third state.
 // KNOWN BOUND, stated so the next person meets a comment instead of a mystery: the wait runs ON
 // the actuator thread, which processes chair commands serially. A confirmed receipt returns as
-// soon as the echo lands (~1 poll, typically 150-300ms), so the common case is cheap — but every
+// soon as the render lands (~1 poll, typically 150-300ms), so the common case is cheap — but every
 // UNCONFIRMED inject burns the full budget, and a fan-out serialises. At the current roster
 // (3 members) a worst-case fan-out costs 3 x 1.8s = 5.4s, inside the MCP caller's 15s timeout.
 // Past ~7 simultaneous unconfirmed injects it would not be, and the fix then is to audit "written"
@@ -4503,9 +4511,10 @@ const RECEIPT_NEEDLE_MIN: usize = 8;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum Receipt {
-    /// The injected text was found echoed in the pane's capture after the write.
+    /// The injected text was found rendered in the pane's capture after the write. This is the
+    /// PANE'S TERMINAL having drawn it — never proof the instance read it. Delivery, not receipt.
     Received,
-    /// The write succeeded; no echo appeared inside the budget. NOT a failure — see above.
+    /// The write succeeded; no render appeared inside the budget. NOT a failure — see above.
     Unconfirmed,
     /// Nothing was written (refused or delivery error), so there is nothing to confirm.
     NotAttempted,
@@ -4550,7 +4559,7 @@ fn strip_ansi(s: &str) -> String {
 }
 
 /// Strip escapes, then drop ALL whitespace. The composer hard-wraps a paste at its own width, so
-/// the echo of one phrase arrives split across rows with escapes between the halves — a literal
+/// the render of one phrase arrives split across rows with escapes between the halves — a literal
 /// substring search would miss text that plainly arrived. Squeezing makes the comparison survive
 /// wrapping without loosening what counts as a match.
 fn squeeze(s: &str) -> String {
@@ -4558,7 +4567,7 @@ fn squeeze(s: &str) -> String {
 }
 
 /// The distinctive fragment we look for. Empty or too-short messages yield an empty needle, which
-/// `echo_present` treats as unconfirmable — `contains("")` is always true, and a needle that always
+/// `render_present` treats as unconfirmable — `contains("")` is always true, and a needle that always
 /// matches would manufacture receipts for every injection, which is precisely the failure this
 /// whole mechanism exists to prevent.
 fn receipt_needle(text: &str) -> String {
@@ -4580,20 +4589,20 @@ fn receipt_needle_tail(text: &str) -> String {
     sq.chars().skip(n.saturating_sub(RECEIPT_NEEDLE_CHARS)).collect()
 }
 
-fn echo_present(window: &str, needle: &str) -> bool {
+fn render_present(window: &str, needle: &str) -> bool {
     if needle.is_empty() {
         return false;
     }
     squeeze(window).contains(needle)
 }
 
-/// Poll the capture log from `from` (its length BEFORE the write) for the echo.
+/// Poll the capture log from `from` (its length BEFORE the write) for the render.
 ///
 /// The offset is the load-bearing part. Matching against the whole file would let a re-injection of
 /// the same text confirm itself against its own earlier copy — a false receipt on a write that
 /// never landed, which is exactly the class the audit exists to catch. Only bytes that arrived
 /// AFTER the write count as evidence of that write.
-fn await_echo(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Receipt {
+fn await_render(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Receipt {
     if needle.is_empty() {
         return Receipt::Unconfirmed;
     }
@@ -4609,7 +4618,7 @@ fn await_echo(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Receip
             continue;
         }
         let window = String::from_utf8_lossy(&buf);
-        if echo_present(&window, needle) || echo_present(&window, tail_needle) {
+        if render_present(&window, needle) || render_present(&window, tail_needle) {
             return Receipt::Received;
         }
     }
@@ -4652,7 +4661,7 @@ fn chair_inject_audit_line(
             let state = match receipt {
                 Receipt::Received => "delivered and received".to_string(),
                 Receipt::Unconfirmed => format!(
-                    "WRITTEN BUT UNCONFIRMED — no echo in the pane's capture within {RECEIPT_WAIT_MS}ms"
+                    "WRITTEN BUT UNCONFIRMED — no render in the pane's capture within {RECEIPT_WAIT_MS}ms"
                 ),
                 // unreachable on the success path; rendered rather than panicked, because an audit
                 // line that can panic is an audit line that can go missing.
@@ -4690,7 +4699,7 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
     // whether the chair or the human is speaking to it
     let msg = format!("[chair:MAIN] {text}");
     // Receipt: the capture's length BEFORE the write, so only bytes that arrive after it can count
-    // as this write's echo. Taken before inject_to_pane, never after — the gap is the whole point.
+    // as this write's render. Taken before inject_to_pane, never after — the gap is the whole point.
     let cap = capture_path(&tid);
     let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
     let delivered = inject_to_pane(&panes, &tid, &msg);
@@ -4699,7 +4708,7 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
         preview.push('…');
     }
     let receipt = match delivered {
-        Ok(_) => await_echo(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
+        Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
         Err(_) => Receipt::NotAttempted,
     };
     chair_audit(
@@ -4716,8 +4725,8 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
         Ok(_) => match receipt {
             // The caller is the chair's own loop, and it acts on this string. It must learn the
             // difference here rather than discovering it later in its own audit trail.
-            Receipt::Received => format!("delivered to {} (echo confirmed)", short_id(&tid)),
-            _ => format!("written to {} — UNCONFIRMED (no echo yet; verify before treating as delivered)", short_id(&tid)),
+            Receipt::Received => format!("delivered to {} (rendered in pane — not proof it was read)", short_id(&tid)),
+            _ => format!("written to {} — UNCONFIRMED (no render yet; verify before treating as delivered)", short_id(&tid)),
         },
         Err(e) => format!("delivery failed: {e}"),
     }
@@ -5846,8 +5855,8 @@ mod chair_tests {
     #[test]
     fn an_empty_needle_can_never_confirm() {
         assert_eq!(receipt_needle(""), "");
-        assert!(!echo_present("anything at all in the capture", ""));
-        assert_eq!(await_echo(Path::new("nonexistent"), 0, "", ""), Receipt::Unconfirmed);
+        assert!(!render_present("anything at all in the capture", ""));
+        assert_eq!(await_render(Path::new("nonexistent"), 0, "", ""), Receipt::Unconfirmed);
     }
 
     /// Boundary: a message too short to be distinctive declines to confirm rather than matching
@@ -5859,20 +5868,20 @@ mod chair_tests {
         assert!(!receipt_needle("run the whole suite please").is_empty(), "a real message does produce a needle");
     }
 
-    /// The wrapping case, which is the normal case: the composer hard-wraps a paste, so the echo
+    /// The wrapping case, which is the normal case: the composer hard-wraps a paste, so the render
     /// arrives split across rows with escapes between the halves. A literal substring search would
     /// report UNCONFIRMED for text that plainly arrived.
     #[test]
-    fn an_echo_split_by_wrapping_and_escapes_is_still_found() {
+    fn a_render_split_by_wrapping_and_escapes_is_still_found() {
         let msg = "review the dream-cycle architecture end to end";
         let wrapped = "\x1b[2K\x1b[38;5;12mreview the dream-cycle arch\r\n\x1b[0mitecture end to end\x1b[0m";
-        assert!(echo_present(wrapped, &receipt_needle(msg)), "wrapping must not defeat the check");
+        assert!(render_present(wrapped, &receipt_needle(msg)), "wrapping must not defeat the check");
     }
 
     #[test]
     fn absent_text_is_not_found() {
         let window = "\x1b[0m❯ some entirely different pane output\r\n";
-        assert!(!echo_present(window, &receipt_needle("review the dream-cycle architecture")));
+        assert!(!render_present(window, &receipt_needle("review the dream-cycle architecture")));
     }
 
     /// The escape stripper must not leak the letters inside sequences into the comparison —
@@ -5897,7 +5906,7 @@ mod chair_tests {
         // nothing new arrives; the identical text is already present ABOVE the offset
         let needle = receipt_needle("review the dream-cycle architecture end to end");
         assert_eq!(
-            await_echo(&p, before, &needle, &needle),
+            await_render(&p, before, &needle, &needle),
             Receipt::Unconfirmed,
             "an earlier copy of the same text must never confirm a later write"
         );
