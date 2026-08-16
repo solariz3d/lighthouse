@@ -118,6 +118,12 @@ const ENTRY = {
   // the definition and report a correctly-placed guard as misplaced - the exact trap the comment
   // above this table records.
   'ferry-watch.js': 'try { main(); }',
+  // Same call-site-not-definition shape as ferry-watch: `function main()` is defined at :208, well
+  // above the guard, and the call sits at the bottom. Added 2026-08-16 — sourced-stop.js shipped
+  // 2026-08-15 (d29d31e) and the HOOKS roster discovers files automatically while this table is
+  // hand-maintained, so the suite went red the moment the hook landed and stayed red for a day.
+  // That is the table working as designed: it refused to skip what it could not check.
+  'sourced-stop.js': 'try { main(); }',
 };
 
 // A FRESH DATA DIR PER RUN, for two reasons found the hard way. dream-watch is stateful — it has
