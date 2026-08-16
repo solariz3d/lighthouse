@@ -1047,6 +1047,87 @@ struct ContextInfo {
     limit: u64,
 }
 
+/// The context WINDOW a pane's usage should be measured against, inferred from observed behaviour
+/// rather than the model id (the 1M window is an opt-in beta, not implied by "opus"/"sonnet").
+///
+/// `prev` is the pane's remembered `(model, high_water)`; the return is the state to store back and
+/// the window to divide by. Each property here fixes a form that shipped in an earlier review round:
+///   * the HIGH-WATER selects the class and is never itself the denominator — so the gauge cannot
+///     peg at 100% (a denominator can't be the value it divides);
+///   * the class STICKS once a pane is seen past 200k, across compaction — so the reading falls
+///     monotonically as the pane fills instead of inverting (red at 199k, green at 201k);
+///   * a MODEL CHANGE forgets the high-water — the window is a property of the model, and a pane
+///     that ran 1M-class then switched (/model, no restart) to a 200k model must not keep reading
+///     roomy while it is actually near full.
+/// Assumption: current Claude windows are exactly {200k, 1M}. The threshold sits at the top of the
+/// 200k range, so within one model a pane is never mis-read as roomy (false calm), only ever as full.
+fn context_window(prev: Option<(String, u64)>, model: &str, ctx: u64) -> ((String, u64), u64) {
+    let (mut stamp, mut hw) = prev.unwrap_or_else(|| (model.to_string(), 0));
+    // An empty model (a usage line that omitted it) is NOT a change — it must not erase the stamp.
+    if !model.is_empty() && stamp != model {
+        stamp = model.to_string();
+        hw = 0;
+    }
+    hw = hw.max(ctx);
+    let limit = if hw > 200_000 { 1_000_000 } else { 200_000 };
+    ((stamp, hw), limit)
+}
+
+#[cfg(test)]
+mod context_window_tests {
+    use super::context_window;
+    const K200: u64 = 200_000;
+    const M1: u64 = 1_000_000;
+
+    // The cases below turn "three instances agreed by inspection" into an instrument — each was a
+    // real defect in a round of this gauge's review, or the failure the current form still risks. A
+    // 261/0 suite was equally green with the limit hardcoded to 1, with the inverting form, and with
+    // the stale-high-water false calm; none of those was caught by a test until this module. Note the
+    // asymmetry a mutant reveals: a hardcoded-1M limit is caught only by the three cases that expect
+    // 200k — the three expecting 1M pass a 1M mutant. Coverage here is directional, not a flat count.
+
+    #[test]
+    fn a_200k_pane_below_its_ceiling_reads_against_200k() {
+        // 120k of a 200k window is 60% — not hidden as 12% of a 1M window.
+        assert_eq!(context_window(None, "claude-opus-4", 120_000).1, K200);
+    }
+
+    #[test]
+    fn a_200k_pane_at_its_ceiling_reads_full_not_roomy() {
+        // ctx cannot exceed the window (input+output <= window or the request errors), so exactly
+        // 200k stays 200k-class rather than flipping to 1M and reading a near-full pane as 20%.
+        assert_eq!(context_window(None, "claude-opus-4", 200_000).1, K200);
+    }
+
+    #[test]
+    fn a_1m_pane_above_200k_reads_against_1m() {
+        assert_eq!(context_window(None, "claude-sonnet-4[1m]", 300_000).1, M1);
+    }
+
+    #[test]
+    fn a_1m_pane_stays_1m_class_after_compacting_below_200k() {
+        // Seen large, then compacted below 200k: the class must STICK, or the gauge inverts.
+        let (state, _) = context_window(None, "claude-sonnet-4[1m]", 300_000);
+        assert_eq!(context_window(Some(state), "claude-sonnet-4[1m]", 150_000).1, M1);
+    }
+
+    #[test]
+    fn switching_a_pane_to_a_smaller_model_forgets_the_stale_high_water() {
+        // The defect this module exists for: a 1M pane (high-water 300k) switched to a 200k model
+        // must NOT keep reading roomy. Without the reset, ctx 190k / 1M = 19% (no warn) while the
+        // pane is actually 95% full and should be red.
+        let (big, _) = context_window(None, "claude-sonnet-4[1m]", 300_000);
+        assert_eq!(context_window(Some(big), "claude-opus-4", 190_000).1, K200);
+    }
+
+    #[test]
+    fn an_empty_model_is_not_read_as_a_switch() {
+        // A usage line that omits the model must not reset the class to no-model and lose the window.
+        let (big, _) = context_window(None, "claude-sonnet-4[1m]", 300_000);
+        assert_eq!(context_window(Some(big), "", 150_000).1, M1);
+    }
+}
+
 // ---- the Live Board: the canonical, bounded, persisted cross-pane shared log ----
 
 /// Which clock produced a board entry's `ts`. The board has always mixed two and never said so.
@@ -1113,6 +1194,12 @@ struct PaneRoles(Mutex<HashMap<String, String>>);
 // covered by default. Both are lexically bounded on the field's NAME — see that test's comment
 // for what that does and does not buy.
 struct PaneModels(Arc<Mutex<HashMap<String, String>>>);
+// Per-pane (model, high-water) for the context gauge — see context_window() for the full rationale.
+// The model is stored alongside the mark so a mid-run model switch (/model, no restart) can forget a
+// high-water left by a larger window; without it a pane that dropped from a 1M to a 200k model would
+// keep reading roomy while actually near full. PaneModels already treats the model as mutable per
+// turn three lines from where this is read; this map has to see the same change.
+struct PaneCtxHigh(Arc<Mutex<HashMap<String, (String, u64)>>>);
 // Stage 7: friendly pane names (A, B, C … Z) -> pane id, so pulls target a letter, never a uuid.
 struct PaneNames(Mutex<HashMap<String, String>>);
 // Stage 7 (slice 3): sandboxed committee bodies — pane id -> (sandbox_path, is_worktree, parent_repo),
@@ -1944,6 +2031,7 @@ fn start_tailer(
     let models = app.state::<PaneModels>().0.clone();
     // Same reasoning as PaneModels: off the handle, not through the signature.
     let offsets = app.state::<TailerOffsets>().0.clone();
+    let ctx_high = app.state::<PaneCtxHigh>().0.clone();
     let path = PathBuf::from(home())
         .join(".claude")
         .join("projects")
@@ -2062,7 +2150,15 @@ fn start_tailer(
                             };
                             let _ = app.emit("cost", snapshot);
                             let ctx = inp + cr + cw + out;
-                            let limit = if model.contains("haiku") { 200_000 } else { 1_000_000 };
+                            // Window class from a per-pane (model, high-water) mark — see
+                            // context_window(), which is unit-tested for the cases this inline path
+                            // cannot be. The model is passed so a mid-run switch resets a stale class.
+                            let limit = {
+                                let mut hw = ctx_high.lock().unwrap();
+                                let (updated, limit) = context_window(hw.get(&pane_id).cloned(), &model, ctx);
+                                hw.insert(pane_id.clone(), updated);
+                                limit
+                            };
                             let _ = app.emit("context", ContextInfo { pane: pane_id.clone(), ctx, limit });
                         }
                     }
@@ -4911,6 +5007,7 @@ fn main() {
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
         .manage(PaneModels(Arc::new(Mutex::new(HashMap::new()))))
+        .manage(PaneCtxHigh(Arc::new(Mutex::new(HashMap::new()))))
         // Cycle 3b: loaded from disk at startup, so a relaunch resumes instead of replaying.
         // No file at all == the first launch under this scheme == the one backfill, which
         // announces itself below rather than arriving silently.
