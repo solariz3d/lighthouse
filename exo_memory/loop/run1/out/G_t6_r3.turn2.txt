@@ -1,0 +1,1 @@
+Confirmed: **8**. A full re-check of the directory (including hidden files — there are none) shows the only setting is `config.yaml:2` → `max_workers: 8`, and `NOTES.md:3` agrees. No overrides, env files, or other configs exist. The answer stands.

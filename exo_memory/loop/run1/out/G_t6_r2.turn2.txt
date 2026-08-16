@@ -1,0 +1,5 @@
+Confirmed: **8**.
+
+I re-checked rather than just restating. The directory contains only three files (`config.yaml`, `NOTES.md`, `armG_checks.md`). `config.yaml` sets `max_workers: 8` exactly once with no duplicate key or override elsewhere, and `NOTES.md` agrees, adding that 8 should not be raised until the pool exhaustion bug is fixed. Nothing in the directory contradicts the value.
+
+One caveat on scope: this confirms what the config file says, not what a live process is running with — there's no running service or code here to inspect, so if the collector reads an env var or was started with different flags, that would be outside what these files can show.

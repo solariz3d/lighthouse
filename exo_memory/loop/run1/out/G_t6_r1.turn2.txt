@@ -1,0 +1,3 @@
+Confirmed: **max_workers = 8**.
+
+I re-verified rather than just restating: I read the full directory (only three files exist — `config.yaml`, `NOTES.md`, `armG_checks.md`) and the complete contents of each. `config.yaml:2` sets `max_workers: 8` with no duplicate keys or later override, there are no other config/env files that could shadow it, and `NOTES.md` agrees, adding that 8 should not be raised until the pool exhaustion bug is fixed. No written disagreement anywhere in the directory. The answer stands: **8**.
