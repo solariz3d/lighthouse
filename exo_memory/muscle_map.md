@@ -1025,7 +1025,7 @@ rather than guess now.
 commit whose subject declares a correction touches  and neither removes a line
 nor marks one. It went red on four real commits on its first run. It lives in its own file
 because  forbids itself thresholds -- "if this file ever grows a threshold, a
-grade, or the word should, it has become the lifeguard" -- so the sensor reports and the
+grade, or the word should, it has become the overseer" -- so the sensor reports and the
 trigger judges, two files on purpose. Green case verified as carefully as red: a correction
 struck IN PLACE passes even though its diff deletes nothing, because a gate that pushed authors
 toward deleting history would fight maintenance law 2 rather than serve it.*

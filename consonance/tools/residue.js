@@ -78,8 +78,11 @@
 //
 // Every one of those is a case where the residue is innocent, and the tool cannot rule them
 // out. It surfaces the shape; the reading stays with a human who can open the commit. If this
-// file ever grows a threshold, a grade, or the word "should", it has become the lifeguard and
-// should be deleted rather than tuned.
+// file ever grows a threshold, a grade, or the word "should", it has become the overseer and
+// should be deleted rather than tuned. (Word retired 2026-08-17 alongside the diving vocabulary.
+// The FUNCTION it names is real and load-bearing, so it was renamed rather than dropped — and the
+// two docs that QUOTE this line were updated in the same commit, because a quotation that no
+// longer matches its source is a worse defect than the word it was fixing.)
 //
 // Node, no dependencies, same as tell-index.js and catch-ledger.js.
 //

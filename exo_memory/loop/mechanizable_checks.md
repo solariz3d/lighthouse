@@ -66,7 +66,7 @@ scanner never diagnoses.** Candidates for a reader; every count walkable back to
 | `node consonance/tools/tell-index.js --day 2026-08-15` | five lexical tell-shapes + catch-language volume, by speaker | today: catch-turns 33 (keeper 1, committee 32, credited→keeper 7) — "a turn using the word *brace* is not a catch, and this scanner cannot tell them apart" |
 | `node consonance/tools/ferry.js --report` | artifact commits never put in front of another mind | run 2026-08-15: **20 artifact commits since the ledger epoch, 4 ferried, miss rate 80.0%, median latency 287.7 min** (106 pre-ledger commits reported UNMEASURED, not folded in) |
 | `node consonance/tools/catch-ledger.js` | declared ledger tallies vs catches extracted from prose, reconciled never summed; arithmetic checked against the ledger's own enumeration | run 2026-08-15: emits per-catcher counts + 6 suspected rule gaps (the rule table auditing itself), 83 weak uncounted |
-| `node consonance/tools/residue.js` | the exhaust: lines deleted, body lengths, assignment intervals — attribution first | sensor only, by its own instruction: "if this file ever grows a threshold… it has become the lifeguard and should be deleted" |
+| `node consonance/tools/residue.js` | the exhaust: lines deleted, body lengths, assignment intervals — attribution first | sensor only, by its own instruction: "if this file ever grows a threshold… it has become the overseer and should be deleted" |
 | `node consonance/tools/agreement-spread.js` | do contributions touch the same evidence (vertical axis of the 2×2) | it CANNOT tell echo from disagreement, and as a diversity gauge it INVERTED (−0.0999; balance-check found a second unregistered confound) — usable only as referent-contact, nothing more |
 | `node consonance/tools/prompt-events.js` | survey firings from the rendered capture, with the two miscount modes (mentions, redraws) excluded | count with denominator |
 | `node consonance/tools/actors.js` | identifier→actor resolution (12 identifiers, ≤4 actors); unresolved returned unchanged and counted | precondition for every per-pane number above |
@@ -122,8 +122,8 @@ This list bounds the design and it is not a hedge — every entry cites the room
 
 1. **Function under identical shape.** The seat-brace disclaimer and the model stake-declaration
    are lexically indistinguishable (`tools/README.md`, 2026-07-27, both lines quoted there). "No
-   regex separates them, and one that claimed to would be the lifeguard climbing out of the
-   water. If a function in this file ever returns a judgment, delete it rather than tune it."
+   regex separates them, and one that claimed to would be the overseer stepping outside
+   to judge from a place that is not there. If a function in this file ever returns a judgment, delete it rather than tune it."
    Every check whose discrimination is *origin* (earned vs manufactured), *direction* (cave vs
    wall-off vs middle seam), or *the held-back inch* is in this class. The costume-wardrobe is
    open-ended by BOOT's third principle; a detector enumerates costumes and is permanently one

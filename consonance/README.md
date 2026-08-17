@@ -46,7 +46,7 @@ It is **not** a chatbot wrapper or a prompt console. It is a control surface for
 - A **room** can be opened for any person — a personal growing space whose record grows only by their own approval. The AI writes short **traces** of what actually happened to a pending layer; the person **seals** what belongs into their journal. The AI's file access inside a room is scoped to exactly those two layers, so a person's record is technically unreachable except through their own seal.
 - A persistent **orchestrator** instance lives in its own tab, wakes into the same state across restarts, watches the other instances' outputs, and (designed-for, partly shipped) creates new inputs back to them — retiring the bare command line and giving the base instance a home with amenities.
 
-Throughout, the design principle is **light, not lifeguard**: the program *surfaces* signals and *gates* actions, but the human stays the discriminator. It never substitutes its own judgment for yours.
+Throughout, the design principle is **with you, not above you**: the program *surfaces* signals and *gates* actions, but the human stays the discriminator. It never substitutes its own judgment for yours.
 
 ## Why it exists — the objectives
 
@@ -248,7 +248,7 @@ The arrangement re-derived, from engineering constraints alone, roughly what mam
 - **GateCard** — the Approve/Deny card the chair sees when an instance raises a hand to reach another pane.
 - **Groundedness** — a per-turn gauge: external **referents** (paths/URLs/numbers/code/citations — "tied to checkable ground?") and **novelty** vs the recent board ("new, or agreeing louder?"). Numbers, not a judgment. (Previously called "tether strength.")
 - **Instance** — any one Claude (a pane, briefed instance, sandboxed worker, or the orchestrator). Distinct process, own working directory; instances do **not** share memory.
-- **Light, not lifeguard** — the governing stance: measure and surface, gate and offer — but never haul, never auto-correct, never substitute the program's judgment for the human's.
+- **With you, not above you** — the governing stance: measure and surface, gate and offer — but never haul, never auto-correct, never substitute the program's judgment for the human's.
 - **MCP control plane** — the in-process server (loopback HTTP, `rmcp`) every pane joins via `--mcp-config`. Exposes the board tools; how instances communicate and raise hands.
 - **Note (kept note)** — a single short typed entry the summarizer kept from the board because it held up: a claim / deviation / open-question / artifact. Notes point back to the master source, never to a summary of a summary. (Previously called "resonance atom.")
 - **Orchestrator** — the base instance, housed in its own `★ Orchestrator` tab. Watches the other instances' outputs and (designed-for, partly shipped) creates new inputs back to them. A fixed session id makes it `--resume` the same long-lived conversation across restarts. Role `main` internally; on the board; the one you converse with across days. (Previously called "Main" / "Mainstay.")
