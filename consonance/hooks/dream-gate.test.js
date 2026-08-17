@@ -64,11 +64,17 @@ function t(name, fn) {
 function manifestHooks() {
   const src = fs.readFileSync(INSTALL, 'utf8');
   const out = [];
-  const re = /From\s*=\s*'([^']+)'/g;
+  // Whole manifest LINES, so a line's own `Lib = $true` is visible here. Matching only the From
+  // value threw that away, which is why libraries could previously be identified by nothing but a
+  // `\lib\` path — a convention blind.js cannot follow, since board-digest requires it as
+  // './blind.js' from the same directory (2026-08-17).
+  const re = /^.*From\s*=\s*'([^']+)'.*$/gm;
   let m;
   while ((m = re.exec(src)) !== null) {
+    const line = m[0];
     const rel = m[1];
-    if (/\\lib\\/i.test(rel)) continue;
+    if (/\\lib\\/i.test(rel)) continue;        // path-declared library (dev\shell\lib\ambient.js)
+    if (/\bLib\s*=\s*\$true\b/i.test(line)) continue; // field-declared library (blind.js)
     out.push(rel);
   }
   return out;

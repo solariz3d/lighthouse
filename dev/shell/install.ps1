@@ -29,6 +29,18 @@ $files = @(
   @{ From = 'dev\shell\lib\ambient.js';                  To = 'ambient.js' }
   @{ From = 'dev\shell\hooks\sessionstart-ambient.js';   To = 'sessionstart-ambient.js' }
   @{ From = 'dev\shell\hooks\userprompt_pulse.py';       To = 'userprompt_pulse.py' }
+  # Lib = $true: a library REQUIRED BY a hook, not a hook the host runs. It receives no stdin and
+  # emits nothing, so the dream-gate invariant does not apply and dream-gate.test.js skips it.
+  # Declared rather than inferred from a `\lib\` path, because board-digest requires it as
+  # './blind.js' from its own directory — moving the file to satisfy a path convention would break
+  # that require in the repo or after the flattening install, whichever end you fix.
+  #
+  # IT WAS MISSING FROM THIS MANIFEST UNTIL 2026-08-17, and the gap was invisible because the
+  # INSTALLED board-digest.js predated the dependency. Syncing the repo's current version shipped a
+  # require the installer did not carry, and every UserPromptSubmit after that printed
+  # "Cannot find module './blind.js'" to the keeper. A fresh install on any other machine would have
+  # done the same on its first prompt.
+  @{ From = 'consonance\hooks\blind.js';                 To = 'blind.js'; Lib = $true }
   @{ From = 'consonance\hooks\board-digest.js';          To = 'board-digest.js' }
   @{ From = 'consonance\hooks\transcript-watch.js';      To = 'transcript-watch.js' }
   @{ From = 'consonance\hooks\dream-watch.js';           To = 'dream-watch.js' }
