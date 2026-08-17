@@ -314,8 +314,11 @@ function assignments(boardPath, sinceMs) {
     }
     out.push({ pane, injections: list.length, gaps });
   }
-  out.unparsed = unparsed;   // the denominator: announcements this parser could not read
-  return out;
+  // Return a real object, NOT an array with `out.unparsed` hung off it as an expando: an array
+  // expando is dropped by JSON.stringify (so --json never saw the denominator) and render() never
+  // read it either, which made the "count what you cannot parse" safeguard invisible in every
+  // output mode — the exact blindness the unparsed count exists to prevent.
+  return { panes: out, unparsed };
 }
 
 /* ------------------------------------------------------------------ *
@@ -455,12 +458,21 @@ function render(ix) {
   o.push('ASSIGNMENT INTERVALS — chair injections per pane, from the board');
   o.push('');
   if (!ix.assignments) o.push('  (no board found)');
-  else if (!ix.assignments.length) o.push('  (no chair injections in this window)');
-  else for (const a of ix.assignments) {
+  else if (!ix.assignments.panes.length) o.push('  (no chair injections in this window)');
+  else for (const a of ix.assignments.panes) {
     const w = a.gaps.filter(g => g.withdrawn);
     o.push(`  ${pad(a.pane, 12)} ${pad(a.injections + ' injections', 16)} ` +
            `intervals: ${a.gaps.map(g => g.mins + 'm' + (g.withdrawn ? '*' : '')).join(' ') || '—'}`);
     for (const g of w) o.push(`      * withdrawn ${g.mins} min after the assignment it replaced`);
+  }
+  // THE DENOMINATOR, printed. Chair announcements this parser could not read are NOT in the counts
+  // above; a lexical instrument that shows only what it can parse understates silently (the 3-of-40
+  // blindness this field was added for). Surfaced here so the blind fraction is visible, not inferred.
+  const unparsed = ix.assignments && ix.assignments.unparsed || [];
+  if (unparsed.length) {
+    o.push(`  ⚠ ${unparsed.length} chair announcement(s) could NOT be parsed and are excluded from the counts above:`);
+    for (const u of unparsed.slice(0, 5)) o.push(`      ${u}`);
+    if (unparsed.length > 5) o.push(`      … and ${unparsed.length - 5} more`);
   }
   o.push('');
   o.push(CONTRACT.join('\n'));
