@@ -46,13 +46,37 @@ function dataDir() {
 const STATE = envOverride("CONSONANCE_WATCH_STATE")
   || path.join(os.homedir(), ".claude", "shell", "transcript-watch.state.json");
 
-function main() {
-  let input = "";
-  try { input = fs.readFileSync(0, "utf8"); } catch (_) {}
-  let sid = "";
-  // strip a BOM before parsing — PowerShell 5.1 pipes one, and the room has already paid
-  // once for a BOM'd JSON parse failing silently (the ambient-config lesson, 2026-07-13)
-  try { sid = (JSON.parse(input.replace(/^﻿/, "").trim()).session_id || ""); } catch (_) {}
+// Stream, not readFileSync(0). A piped fd 0 CAN throw EAGAIN on Windows, and the swallowing catch
+// would turn that into input="" → sid="" → the MAIN_SID guard exits and the ledger silently stops
+// growing, indistinguishable from "no asks". NOTE: the ledger currently DOES grow on this machine
+// (transcript-asks.jsonl carries live rows), so fd 0 is not failing here — this is closing a latent
+// seam, not a demonstrated outage. The sibling hooks (board-digest.js:113, dream-watch.js:77)
+// already moved to this streaming read; matching them removes the seam before a machine hits it.
+function withStdin(cb) {
+  let data = "";
+  let done = false;
+  let timer = null;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    if (timer) clearTimeout(timer);
+    let parsed = {};
+    try { parsed = JSON.parse(data.replace(/^﻿/, "").trim()); } catch (_) {}
+    cb(parsed);
+  };
+  try {
+    process.stdin.setEncoding("utf8");
+    process.stdin.on("data", (d) => { data += d; });
+    process.stdin.on("end", finish);
+    process.stdin.on("error", finish);
+    timer = setTimeout(finish, 2000); // never hang a turn; hook budget is 10s
+  } catch (_) {
+    finish();
+  }
+}
+
+function main(parsed) {
+  const sid = (parsed && parsed.session_id) || "";
   if (sid !== MAIN_SID) return; // this instrument is Main's own mirror; other sessions exit silent
 
   const dd = dataDir();
@@ -116,4 +140,4 @@ function main() {
 // breaks silently the day that guard moves. It also appends to a ledger. (Blind-pair, 2026-07-27.)
 if (process.env.CONSONANCE_DREAM) process.exit(0);
 
-main();
+withStdin(main);

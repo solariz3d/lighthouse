@@ -111,7 +111,13 @@ const ENTRY = {
   'sessionstart-ambient.js': 'const lib = resolveAmbient();',
   'userprompt_pulse.py': 'STATE = os.path.join',
   'board-digest.js': 'withStdin((input)',
-  'transcript-watch.js': '\nmain();',
+  // Updated 2026-08-17 alongside transcript-watch.js moving to streaming stdin: its call site is
+  // now `withStdin(main)` and the bare `\nmain();` no longer exists in the file. This one line is
+  // the ONLY real content of the held branch's copy of this file — the copy itself was DROPPED,
+  // because it predates ce02d5a and carries no sourced-stop entry, so landing it verbatim would
+  // have deleted that entry and re-created the day-long red that ce02d5a fixed. Ported by hand
+  // rather than checked out, on pane B's finding.
+  'transcript-watch.js': 'withStdin(main)',
   'dream-watch.js': 'if (require.main === module)',
   // Unique to the CALL SITE, not the definition: ferry-watch defines `function main()` above the
   // guard and calls it at the bottom, so matching the bare name would compare the guard against
