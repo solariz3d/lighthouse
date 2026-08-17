@@ -72,6 +72,31 @@ test('the refutation rate is WITHHELD when most registrations are unscored', () 
   assert.ok(!/refutation rate: \d+%/.test(r.out), 'no percentage may appear while withheld');
 });
 
+// PANE A'S BYPASS, scripted rather than argued, kept as a permanent regression. v1 withheld on
+// `scored`, and `unresolved` counted as scored while never entering the denominator — so dumping
+// the inconvenient reads as unresolved unlocked a rate computed over a single favourable one.
+test('dumping reads as UNRESOLVED does not unlock the rate', () => {
+  reset();
+  const ids = [];
+  for (let i = 0; i < 6; i++) ids.push(registerOK('direction', `structural read number ${i} about the room`));
+  run(['--score', ids[0], '--outcome', 'confirmed', '--evidence', 'the instrument agreed']);
+  for (let i = 1; i < 6; i++) run(['--score', ids[i], '--outcome', 'unresolved', '--evidence', 'no instrument for this']);
+  const r = run(['--report']);
+  assert.ok(/WITHHELD/.test(r.out), `5 unresolved + 1 confirmed must not unlock a rate:\n${r.out}`);
+  assert.ok(!/refutation rate: \d+%/.test(r.out), 'no percentage may be printed off one decided read');
+  assert.ok(/DECIDED/.test(r.out), 'the withholding must name DECIDED, not merely scored');
+});
+
+test('the register→score interval is reported so same-breath scoring is visible', () => {
+  reset();
+  const id = registerOK('state', 'the suite reads 261 on this branch');
+  run(['--score', id, '--outcome', 'refuted', '--evidence', 'it read 261 not 267']);
+  const r = run(['--report']);
+  assert.ok(/register→score/.test(r.out), `the interval must be printed:\n${r.out}`);
+  assert.ok(/within 60s of registering/.test(r.out),
+    'a score written seconds after its registration must be flagged for hand-checking');
+});
+
 test('the rate IS computed once a majority are scored, and counts refutations', () => {
   reset();
   const ids = [];

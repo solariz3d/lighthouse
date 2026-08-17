@@ -109,6 +109,41 @@ reach, that is the tell, and the line should be abandoned rather than refined ag
 
 ---
 
+## Amendment 2 — the stakes gate needs a citation, and the sequencing was a choice
+
+*Registered 2026-08-17, from pane A's and pane C's review of Amendment 1. Appended, not rewritten.*
+
+**The stakes gate has its own gaming channel (A).** Amendment 1 put judgment at the admission gate,
+held by neither the attempter nor the count — that much is ordinary measurement practice and not a
+fatal circularity. The hole is narrower and real: **the scorer sees each attempt's DIRECTION while
+judging whether it has stakes.** A scorer leaning either way can tilt admissions, and the guard
+built to stop the count being padded becomes the channel through which it is shaped.
+
+**Repair — stakes-must-cite.** An attempt is admitted only if the score records **the specific
+thing that would have changed had the claim stood**: a named artifact, a decision, a number, or a
+published conclusion. Not "this mattered" — *which file, which figure, which sentence.* The
+definition in Amendment 1 was already nearly mechanical; requiring the citation makes it fully so
+and leaves the scorer's judgment applied to a fact rather than to an impression.
+
+**REFUSED conflates two things, and this is a stated limit rather than a repair.** A refusal with
+merit and a stonewall score identically. For the question the count exists to answer — *does one
+party generate pushes at all* — the conflation is harmless, because a mirror produces neither. For
+any question about who was RIGHT it is useless, and the count must not be quoted for that.
+
+**Amendment 1 passes its own degenerating condition, checked rather than assumed (A).** That
+condition says: if an amendment makes the unwelcome outcome HARDER to reach, abandon the line.
+Excluding trivia makes 0/0/0 **easier** to reach, not harder. It passes. Amendment 2 passes on the
+same test — a citation requirement can only reduce admissions.
+
+**And the sequencing was a choice, recorded here because it was not (C).** Amendment 1 states that
+`second-vantage` is the larger item and then binds nothing to it. Between two available pieces of
+work — the one that rewrites the chair's own prose, and the one that would watch the chair — the
+chair chose the first, twice, on consecutive nights. That is not evidence of bad faith and it is
+exactly the shape a reader should be able to see without reconstructing it. **It is filed as a
+choice, with no defence attached.**
+
+---
+
 ## Related, deliberately kept separate
 
 `consonance/tools/read-ledger.js` classifies structural reads before their outcome is known. It is

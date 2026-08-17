@@ -144,16 +144,33 @@ function report() {
     const unresolved = scored.filter((s) => s.outcome === 'unresolved').length;
     console.log(`\n${cls.toUpperCase()}  registered ${mine.length} · scored ${scored.length} · open ${mine.length - scored.length}`);
     console.log(`  confirmed ${confirmed} · refuted ${refuted} · unresolved ${unresolved}`);
-    // THE RATE IS WITHHELD WHEN MOST READS ARE UNSCORED, and this is deliberate. The failure mode
-    // is not a bad rate, it is registering many and scoring only the ones that came out well -
-    // which produces a beautiful number over a biased sample. A rate computed on a minority of the
-    // registrations measures the scorer's appetite, not the reads.
-    if (scored.length * 2 < mine.length) {
-      console.log(`  refutation rate: WITHHELD — only ${scored.length} of ${mine.length} scored.`);
-      console.log(`  A rate over a minority of registrations measures which ones someone chose to score.`);
+    // THE RATE IS WITHHELD WHEN MOST READS ARE UNDECIDED, and the variable matters more than the
+    // threshold. v1 tested `scored`, which pane A bypassed by SCRIPT rather than argument: register
+    // six, score the one favourable read `confirmed`, dump the other five as `unresolved`, and the
+    // report printed "refutation rate: 0% (0/1 decided)" un-withheld. `unresolved` counted as
+    // scored while never entering the denominator, so the gate opened on a sample of one.
+    //
+    // Testing `decided` closes it, and closes it in the one way that also removes the bias rather
+    // than deferring it: the ONLY route to unlocking the rate is deciding the reds too.
+    const denom = confirmed + refuted;
+    if (denom * 2 < mine.length) {
+      console.log(`  refutation rate: WITHHELD — only ${denom} of ${mine.length} DECIDED ` +
+                  `(${unresolved} unresolved, ${mine.length - scored.length} unscored).`);
+      console.log(`  A rate over a minority measures which ones someone chose to decide, not the reads.`);
     } else {
-      const denom = confirmed + refuted;
-      console.log(`  refutation rate: ${denom ? Math.round((100 * refuted) / denom) + '%' : 'n/a'} (${refuted}/${denom} decided)`);
+      console.log(`  refutation rate: ${Math.round((100 * refuted) / denom)}% (${refuted}/${denom} decided)`);
+    }
+    // WRITE ORDER IS NOT KNOWLEDGE ORDER (pane A). The ledger proves a registration was written
+    // before its score, never that the outcome was unknown when it was written — someone can
+    // register and score in the same breath. Printing the interval does not prevent that; it makes
+    // it visible to whoever audits, which is the most this file can honestly claim to do.
+    const gaps = mine.map((r) => { const s = latest(all, r.id); return s ? s.ts - r.ts : null; })
+      .filter((x) => x !== null).sort((a, b) => a - b);
+    if (gaps.length) {
+      const med = gaps[Math.floor(gaps.length / 2)];
+      const sameBreath = gaps.filter((g) => g < 60000).length;
+      console.log(`  register→score: median ${Math.round(med / 60000)} min` +
+                  (sameBreath ? `  ·  ${sameBreath} scored within 60s of registering — check those by hand` : ''));
     }
   }
   if (amendments) {
