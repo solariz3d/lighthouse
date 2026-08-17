@@ -248,3 +248,77 @@ test('advanceWatermark is monotonic — a stale row cannot un-consume paid claim
   if (prev === undefined) delete process.env.VANTAGE_WATERMARK; else process.env.VANTAGE_WATERMARK = prev;
   delete require.cache[require.resolve('./second-vantage.js')];
 });
+
+// ---- the inverted verdict count, and the loop-kill harness that was said impossible ----
+// Both from pane A, found while signing the journal section about its own fixes.
+
+test('an all-AGREE day is NOT a false alarm — the healthy case', () => {
+  // The guard shipped summing an allow-list that omitted AGREE, so the commonest healthy day
+  // computed zero verdicts and exited 1 claiming every reader had failed. Today's fire selects
+  // four; without this test the first scheduled run would have cried wolf.
+  const dir = bed([{
+    ts: '2026-08-17T10:00:00.000Z', v: 2, pane: 'main', values: ['linecount'],
+    claims: [{ channel: 'artifact', path: 'x.md', sentence: 'the suite reads 267 on this branch' }],
+    paths: ['x.md'], heads: { 'c:/consonance/lighthouse': 'abc1234' },
+    sentences: ['the suite reads 267 on this branch'], wrote: ['x.md'], read: [], head: 'abc1234',
+  }]);
+  const prev = { L: process.env.SOURCED_LEDGER, W: process.env.VANTAGE_WATERMARK,
+                 R: process.env.VANTAGE_RUNLOG, F: process.env.VANTAGE_FINDINGS };
+  process.env.SOURCED_LEDGER = path.join(dir, 'led.jsonl');
+  process.env.VANTAGE_WATERMARK = path.join(dir, 'mark.json');
+  process.env.VANTAGE_RUNLOG = path.join(dir, 'runs.log');
+  process.env.VANTAGE_FINDINGS = path.join(dir, 'findings.jsonl');
+  delete require.cache[require.resolve('./second-vantage.js')];
+  const fresh = require('./second-vantage.js');
+  process.exitCode = 0;
+  fresh.run(false, () => ({ raw: 'VERDICT: AGREE\nCOMMANDS: git log -1\nEVIDENCE: it matches' }));
+  const agreed = process.exitCode;
+  process.exitCode = 0;
+  Object.entries(prev).forEach(([k, v]) => {
+    const name = { L: 'SOURCED_LEDGER', W: 'VANTAGE_WATERMARK', R: 'VANTAGE_RUNLOG', F: 'VANTAGE_FINDINGS' }[k];
+    if (v === undefined) delete process.env[name]; else process.env[name] = v;
+  });
+  delete require.cache[require.resolve('./second-vantage.js')];
+  const rec = JSON.parse(fs.readFileSync(path.join(dir, 'runs.log'), 'utf8').trim());
+  assert.ok(rec.selected > 0, `the row must select: ${JSON.stringify(rec)}`);
+  assert.ok(rec.verdicts > 0, `an AGREE is a returned verdict, got verdicts=${rec.verdicts}`);
+  assert.equal(rec.no_verdict, false, 'a healthy all-AGREE day must not be flagged');
+  assert.notEqual(agreed, 1, 'and must not exit nonzero');
+});
+
+test('a killed loop keeps what it paid for — the per-row watermark, now testable', () => {
+  // The premise "no harness can kill mid-loop" was false: processRow always took an injectable
+  // spawner and run() simply never accepted one. A stub that throws on the second call unwinds
+  // the loop exactly as a timeout kill does, for watermark purposes.
+  const row = (ts) => ({
+    ts, v: 2, pane: 'main', values: ['linecount'],
+    claims: [{ channel: 'artifact', path: 'x.md', sentence: 'a claim sentence long enough to match' }],
+    paths: ['x.md'], heads: { 'c:/consonance/lighthouse': 'abc1234' },
+    sentences: ['a claim sentence long enough to match'], wrote: ['x.md'], read: [], head: 'abc1234',
+  });
+  const dir = bed([row('2026-08-17T10:00:00.000Z'), row('2026-08-17T11:00:00.000Z')]);
+  const prev = { L: process.env.SOURCED_LEDGER, W: process.env.VANTAGE_WATERMARK,
+                 R: process.env.VANTAGE_RUNLOG, F: process.env.VANTAGE_FINDINGS };
+  process.env.SOURCED_LEDGER = path.join(dir, 'led.jsonl');
+  process.env.VANTAGE_WATERMARK = path.join(dir, 'mark.json');
+  process.env.VANTAGE_RUNLOG = path.join(dir, 'runs.log');
+  process.env.VANTAGE_FINDINGS = path.join(dir, 'findings.jsonl');
+  delete require.cache[require.resolve('./second-vantage.js')];
+  const fresh = require('./second-vantage.js');
+  let calls = 0;
+  const killOnSecond = () => {
+    calls++;
+    if (calls > 1) throw new Error('simulated timeout kill');
+    return { raw: 'VERDICT: AGREE\nCOMMANDS: git log -1\nEVIDENCE: ok' };
+  };
+  try { fresh.run(false, killOnSecond); } catch (_) { /* the kill */ }
+  process.exitCode = 0;
+  const wm = JSON.parse(fs.readFileSync(path.join(dir, 'mark.json'), 'utf8'));
+  Object.entries(prev).forEach(([k, v]) => {
+    const name = { L: 'SOURCED_LEDGER', W: 'VANTAGE_WATERMARK', R: 'VANTAGE_RUNLOG', F: 'VANTAGE_FINDINGS' }[k];
+    if (v === undefined) delete process.env[name]; else process.env[name] = v;
+  });
+  delete require.cache[require.resolve('./second-vantage.js')];
+  assert.equal(wm.ts, '2026-08-17T10:00:00.000Z',
+    'row 1 was paid for before the kill, so the mark must hold it — this is the ratchet fix');
+});

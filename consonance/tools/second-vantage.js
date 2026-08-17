@@ -357,7 +357,13 @@ function readLedger() {
   }).filter(Boolean).map(fromV2);
 }
 
-function run(dry) {
+// SPAWNER INJECTED, so the loop is testable — pane A, 2026-08-17. The comment on the per-row
+// watermark used to say no harness could kill mid-loop; that premise was FALSE. processRow already
+// took an injectable spawner and run() simply never accepted one. A stub that throws on call N
+// unwinds the loop exactly as a timeout kill does for watermark purposes, which converts an
+// admitted-untestable guard into a tested one — and the same seam is what lets a test drive an
+// all-AGREE day, the case whose absence hid the inverted verdict count above.
+function run(dry, spawner) {
   const mark = fs.existsSync(WATERMARK) ? JSON.parse(fs.readFileSync(WATERMARK, 'utf8')) : { ts: '' };
   const rows = readLedger().filter(r => !mark.ts || (r.ts && r.ts > mark.ts));
   const picked = [];
@@ -371,7 +377,7 @@ function run(dry) {
   fs.mkdirSync(path.dirname(FINDINGS), { recursive: true });
   const counts = {};
   for (const p of picked) {
-    const finding = processRow(p.row, p.tier, REPO, spawnReaderReal);
+    const finding = processRow(p.row, p.tier, REPO, spawner || spawnReaderReal);
     fs.appendFileSync(FINDINGS, JSON.stringify(finding) + '\n');
     counts[finding.status] = (counts[finding.status] || 0) + 1;
     console.log(`  [${finding.status}] ${finding.claim.slice(0, 80)}`);
@@ -380,13 +386,18 @@ function run(dry) {
     // ~32 (4 readers x 240s plus up to 4 worldCheck respawns), so a timeout-killed run advanced
     // nothing, the backlog grew, the next run was longer, killed again — forever, silently.
     // Advancing per row makes a killed run RESUMABLE: whatever was paid for is kept.
-    // UNPROVEN BY TEST, said plainly rather than left to look covered. Removing this line leaves
-    // the suite green: every test bed here runs to completion, and on a completed run the
-    // end-of-loop advance lands on the same mark. The benefit exists ONLY under interruption —
-    // a timeout kill — which needs a harness that can kill mid-loop and does not exist. So this
-    // is a guard whose failure mode has been reasoned about and never demonstrated, which is the
-    // thing this repo keeps finding under rocks; it is kept because the ratchet it prevents is
-    // real, and flagged because "it passed" would be measuring nothing here.
+    // PROVEN, after shipping flagged as unprovable — and the flag was the wrong call.
+    //
+    // This line first landed with a comment saying its benefit existed only under a timeout kill,
+    // that no harness could kill mid-loop, and that it was therefore a guard reasoned about but
+    // never demonstrated. Pane A read that and said the premise was simply false: processRow had
+    // always taken an injectable spawner, and run() merely never accepted one. A stub that throws
+    // on call N unwinds the loop exactly as a kill does, for watermark purposes. Fifteen lines.
+    //
+    // So the honest disposition was never "ship it flagged" — it was "the seam is already there,
+    // use it." Removing this line now turns the suite red. Kept as a note because admitting a
+    // guard is untested is only the second-best move; the best one is checking whether the
+    // untestability was real.
     if (p.row.ts) advanceWatermark(p.row.ts);
   }
   // misses stay visible as lines, not absences — ferry's law
@@ -407,8 +418,22 @@ function run(dry) {
   // quiet day's age resets, a dead sensor's climbs.
   const newestTs = readLedger().reduce((a, r) => (r.ts && r.ts > a ? r.ts : a), '');
   const ageH = newestTs ? ((Date.now() - Date.parse(newestTs)) / 3600000).toFixed(1) : null;
-  const verdicts = (counts.SURFACE || 0) + (counts['WORLD-MOVED'] || 0) +
-                   (counts['DISQUALIFIED-CONTAMINATED'] || 0);
+  // COUNT WHAT DID NOT RETURN, NOT WHAT DID — pane A, found while signing, 2026-08-17.
+  //
+  // The first version summed an allow-list of SURFACE / WORLD-MOVED /
+  // DISQUALIFIED-CONTAMINATED and missed AGREE, CANNOT-SETTLE and NO-CLAIM, which ARE returned
+  // verdicts (line 306 sets status straight from parsed.verdict on the non-DISAGREE path). So the
+  // most common HEALTHY day — every reader launches, every one agrees — computed zero and tripped
+  // an alarm reading "every reader was unlaunchable or failed". Today's fire selects four; unless
+  // one of them disagreed, the very first scheduled run would have emitted a false alarm.
+  //
+  // That is the channel-credibility failure A's cite-check refusal is about, shipped inside the
+  // guard A asked for. The suite stayed green because the only exit-1 test covers the
+  // reader-failure path and nothing covered all-AGREE.
+  //
+  // A deny-list is the right shape here: a verdict is anything that is not a non-launch. New
+  // statuses then default to COUNTING, which fails toward silence rather than toward a false alarm.
+  const verdicts = picked.length - (counts.UNLAUNCHABLE || 0) - (counts['READER-FAILED'] || 0);
   const noVerdict = picked.length > 0 && verdicts === 0;
   try {
     fs.appendFileSync(RUNLOG, JSON.stringify({
@@ -432,6 +457,7 @@ module.exports = {
   tierOf, rowLaunchable, hashSelect, brief, parseReader, audit, worldCheck, processRow, claimOf,
   fromV2, F0_CITATION, CONTAMINATION, FLOOR_PER_MILLE, REPO, LEDGER, FINDINGS,
   advanceWatermark,
+  run,
 };
 
 if (require.main === module) {
