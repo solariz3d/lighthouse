@@ -17,6 +17,16 @@
 // when spawning claude -p, so the overseer's own Stop doesn't loop, and
 // L2 + L3 hooks don't trigger each other recursively).
 
+// THE DREAM GATE, the same one every other hook here carries. The gap-dream is an
+// anti-instruction and gets no instrumentation: L3 watches the USER trajectory, and a dream has
+// no user in it. Without this the overseer files arc-perceptions about a synthetic session into
+// the same ledger the real ones land in.
+//
+// ADDED 2026-08-17 and it was absent for the file's whole life. Invisible because this hook was
+// in no repository and in no installer manifest, so dream-gate.test.js — which polices exactly
+// this invariant across install.ps1's manifest — could not see it. It failed on the first run
+// after the manifest grew: "a hook the dream runner cannot switch off", and "spoke to a dream".
+if (process.env.CONSONANCE_DREAM) process.exit(0);
 const fs = require('fs');
 const path = require('path');
 const os = require('os');

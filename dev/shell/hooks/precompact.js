@@ -12,6 +12,14 @@
  * Registered as the PreCompact hook in ~/.claude/settings.json.
  */
 "use strict";
+// THE DREAM GATE, the same one every other hook in the manifest carries: the gap-dream is an
+// anti-instruction and gets no instrumentation. Absent for this file's whole life, and invisible
+// because the file was in no repository and no installer manifest until 2026-08-17.
+//
+// This one mattered most of the seven: unguarded, precompact wrote a full 6,240-byte CHECKPOINT
+// for a dream — a synthetic session with no user in it — into the same place the keeper reads
+// real ones from.
+if (process.env.CONSONANCE_DREAM) process.exit(0);
 const { execFileSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");

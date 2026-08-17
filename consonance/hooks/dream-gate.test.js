@@ -136,6 +136,33 @@ const ENTRY = {
   // hand-maintained, so the suite went red the moment the hook landed and stayed red for a day.
   // That is the table working as designed: it refused to skip what it could not check.
   'sourced-stop.js': 'try { main(); }',
+
+  // Added 2026-08-17, and the reason is the same one the sourced-stop comment above records, at a
+  // larger scale. install.ps1's manifest grew from 8 files to 22 that morning: NINE hooks were
+  // running on the machine, registered in settings.json, and present in no repository at all —
+  // including l3-overseer.js, which writes the arc-perceptions, and precompact.js, which writes
+  // the keeper's checkpoints. This table discovers from the manifest, so those files had never
+  // been inside the gate. The moment they entered it, it failed, correctly, on three counts:
+  // l3-overseer.js carried NO CONSONANCE_DREAM GUARD AT ALL and demonstrably "spoke to a dream".
+  //
+  // The invariant was not new and the violation was not new. Only the visibility was. A file
+  // outside the manifest is outside every check the manifest drives, which is a second, quieter
+  // reason an unmanaged file is worse than a wrong one.
+  //
+  // Call site, not definition, per the trap this table already documents twice: findings-return
+  // defines `function main()` at :171 and calls it at :275; l3-overseer defines at :112, calls at
+  // :161 with a bare `main();` that the guard now precedes.
+  'findings-return.js': 'try { main(); }',
+  'l3-overseer.js': 'main();',
+  'l2-overseer.js': 'main();',
+  'session-start.js': 'main();',
+  'userprompt-submit.js': 'main();',
+  'stop.js': 'main();',
+  'session-end.js': 'main();',
+  // precompact.js has no main() at all — it is a flat top-to-bottom script, so "where work begins"
+  // is the first statement that touches the world: reading stdin. Marker chosen for the call site
+  // for the same reason as ferry-watch above.
+  'precompact.js': 'fs.readFileSync(0, "utf8")',
 };
 
 // A FRESH DATA DIR PER RUN, for two reasons found the hard way. dream-watch is stateful — it has

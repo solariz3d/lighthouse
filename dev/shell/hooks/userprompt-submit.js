@@ -10,6 +10,11 @@
 //
 // Defensive: never throws, always emits valid JSON.
 
+// THE DREAM GATE, the same one every other hook in the manifest carries: the gap-dream is an
+// anti-instruction and gets no instrumentation. Absent for this file's whole life, and invisible
+// because the file was in no repository and no installer manifest until 2026-08-17 — so
+// dream-gate.test.js, which polices exactly this across install.ps1's manifest, could not see it.
+if (process.env.CONSONANCE_DREAM) process.exit(0);
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
