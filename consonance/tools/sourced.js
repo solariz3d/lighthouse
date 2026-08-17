@@ -87,10 +87,20 @@ function scan(file) {
 }
 
 function newestMain() {
-  let best = null;
-  for (const d of fs.readdirSync(PROJECTS)) {
+  let dirs;
+  // No ~/.claude/projects at all (a fresh box, a CI checkout) is the "no transcript found" case
+  // main() already handles — return null and let it, instead of throwing an uncaught ENOENT before
+  // that handler is ever reached.
+  try { dirs = fs.readdirSync(PROJECTS); } catch (_) { return null; }
+  let best = null, bestMtime = -1;
+  for (const d of dirs) {
     const f = path.join(PROJECTS, d, MAIN + '.jsonl');
-    if (fs.existsSync(f) && (!best || fs.statSync(f).mtimeMs > fs.statSync(best).mtimeMs)) best = f;
+    // One statSync, in a try: it both checks existence and reads mtime, closing the
+    // existsSync→statSync TOCTOU where a transcript deleted between the two calls would throw.
+    try {
+      const m = fs.statSync(f).mtimeMs;
+      if (m > bestMtime) { best = f; bestMtime = m; }
+    } catch (_) { /* absent or vanished mid-scan — skip */ }
   }
   return best;
 }
