@@ -49,6 +49,13 @@ const GREEN = 'console.log("  ok  a thing");console.log("1 passed, 0 failed");';
 const FAILING = 'console.log("  FAIL a thing");console.log("0 passed, 1 failed");process.exit(1);';
 const CRASHING = 'console.log("  ok  a thing");throw new Error("ENOENT: no such file");';
 const NOSUMMARY = 'console.log("did some work quietly");';
+const VACUOUS = 'console.log("0 passed, 0 failed");';
+
+// BUILT BY CONCATENATION ON PURPOSE. Writing the marker as one literal is what broke the runner:
+// v1 matched it anywhere in a file's bytes, so this very file declared ITSELF expected-red, went
+// green, and tripped CANARY SANG at the commit that shipped it. The runner is now anchored, so
+// this is belt-and-braces — but the anchoring is a regex and regexes here have a record.
+const MARK = '// JS-SUITE:' + ' EXPECTED-RED — waiting on the keeper\n';
 
 test('a tree with NO test files is refused, not reported green', () => {
   const root = tree({ 'readme.md': 'nothing here' });
@@ -85,10 +92,11 @@ test('exit 0 with no summary is SILENT — indistinguishable from testing nothin
   const root = tree({ 'a.test.js': NOSUMMARY });
   const r = run(root);
   assert.ok(/1 silent/.test(r.out), r.out);
+  assert.strictEqual(r.code, 1, "SILENT must fail the run");
 });
 
 test('a declared EXPECTED-RED file that is red does not fail the run', () => {
-  const root = tree({ 'a.test.js': '// JS-SUITE: EXPECTED-RED — waiting on the keeper\n' + FAILING });
+  const root = tree({ 'a.test.js': MARK + FAILING });
   const r = run(root);
   assert.strictEqual(r.code, 0, 'a declared canary must not break the build');
   assert.ok(/1 canary/.test(r.out), r.out);
@@ -96,11 +104,56 @@ test('a declared EXPECTED-RED file that is red does not fail the run', () => {
 });
 
 test('a declared EXPECTED-RED file that goes GREEN fails the run', () => {
-  const root = tree({ 'a.test.js': '// JS-SUITE: EXPECTED-RED — waiting on the keeper\n' + GREEN });
+  const root = tree({ 'a.test.js': MARK + GREEN });
   const r = run(root);
   assert.strictEqual(r.code, 1, 'the canary singing is a finding, not a pass');
   assert.ok(/CANARY SANG/.test(r.out), r.out);
   assert.ok(/suppress a real failure/.test(r.out), 'must say why a stale exemption is dangerous');
+});
+
+// REGRESSION for the defect that shipped: v1 matched the marker anywhere in a file's bytes, so a
+// file that merely QUOTES it — every test of this feature must — declared itself.
+test('a file that only QUOTES the marker mid-line does not declare itself', () => {
+  const root = tree({
+    'a.test.js': 'const fixture = "' + '// JS-SUITE:' + ' EXPECTED-RED";\n' + GREEN,
+  });
+  const r = run(root);
+  assert.strictEqual(r.code, 0, `a quoting file is an ordinary green:\n${r.out}`);
+  assert.ok(/1 green/.test(r.out), r.out);
+  assert.ok(/0 canary/.test(r.out), 'quoting the marker must not declare the file');
+  assert.ok(!/SANG/.test(r.out), 'and must not trip the singing-canary failure');
+});
+
+// The declaration is a HEADER declaration. Buried far down a file it is neither visible to a
+// reader nor distinguishable from a passing mention.
+test('the marker below the header window does not declare the file', () => {
+  const root = tree({ 'a.test.js': '//\n'.repeat(60) + MARK + FAILING });
+  const r = run(root);
+  assert.strictEqual(r.code, 1, 'an undeclared failure must fail the run');
+  assert.ok(/1 failed/.test(r.out), r.out);
+  assert.ok(/0 canary/.test(r.out), 'a marker 60 lines down is not a header declaration');
+});
+
+// A canary is an exemption from FAILING, never from being classified.
+test('a declared canary that CRASHES is reported as crashed, not excused', () => {
+  const root = tree({ 'a.test.js': MARK + CRASHING });
+  const r = run(root);
+  assert.strictEqual(r.code, 1, 'a canary that died on load is not the red it was declared for');
+  assert.ok(/1 crashed/.test(r.out), `expected crashed, got:\n${r.out}`);
+  assert.ok(/0 canary/.test(r.out), 'it must not be filed in the suppression bucket');
+});
+
+test('a summary counting ZERO passes is SILENT, not green', () => {
+  const root = tree({ 'a.test.js': VACUOUS });
+  const r = run(root);
+  assert.ok(/1 silent/.test(r.out), `"0 passed, 0 failed" is the right format and proves nothing:\n${r.out}`);
+  assert.ok(/0 green/.test(r.out), 'vacuity in the correct format is still vacuity');
+});
+
+test('a SILENT file fails the run — rule 2 holds per file, not just per tree', () => {
+  const root = tree({ 'good.test.js': GREEN, 'quiet.test.js': NOSUMMARY });
+  const r = run(root);
+  assert.strictEqual(r.code, 1, 'one untested file inside a green tree is the same bug at smaller scale');
 });
 
 test('node_modules is not walked', () => {

@@ -112,12 +112,36 @@ const stripAnsi = (s) => s.replace(/\x1b\[[0-9;]*m/g, '');
 // with a bare "16 passed". A runner reporting a hole that is really its own ignorance is worse
 // than no runner, so each shape here was read off actual output.
 const SUMMARY = /(\d+\s+passed,\s*\d+\s+failed)|(test result:)|(^\s*[ℹ#]\s*fail\s+\d+)|(^\s*\d+\s+passed\s*$)/im;
-const EXPECTED_RED = /JS-SUITE:\s*EXPECTED-RED/;
+
+// A SUMMARY THAT COUNTS ZERO PASSES IS NOT A COMPLETED RUN (pane A, 2026-08-17). "0 passed",
+// "0 passed, 0 failed" and "ℹ pass 0" all satisfy SUMMARY while proving nothing ran - which is the
+// definition of SILENT, not of green. Vacuity that reports itself in the right format is still
+// vacuity, and this repo has caught it three times in other instruments.
+// BOTH counts must be zero. The first version of this matched "0 passed" anywhere and therefore
+// swallowed "0 passed, 1 failed" — a genuinely completed run in which one test ran and failed —
+// reclassifying real failures as vacuous. Caught by this file's own canary test within a minute of
+// being written. Zero passes with a nonzero failure count is a RESULT; zero of both is a no-op.
+const VACUOUS = /(^\s*0\s+passed\s*$)|(\b0\s+passed,\s*0\s+failed)|(^\s*[ℹ#]\s*pass\s+0\s*$)/im;
+const VACUOUS_NODETEST = /^\s*[ℹ#]\s*fail\s+0\s*$/im;
+
+// ANCHORED, and this is a defect repair rather than a tidy-up. v1 matched the marker ANYWHERE in a
+// file's bytes, so js-suite.test.js - which necessarily quotes the marker inside its fixture
+// strings - declared ITSELF expected-red, went green, and tripped CANARY SANG. The runner failed
+// on itself at the very commit that shipped it. Two independent narrowings, because one was not
+// enough to have caught this: the marker must open a comment at line start, AND appear in the
+// file's header rather than deep in its body.
+const EXPECTED_RED = /^\s*(\/\/|#)\s*JS-SUITE:\s*EXPECTED-RED/m;
+const HEADER_LINES = 40;
+function declaresExpectedRed(file) {
+  try {
+    const head = fs.readFileSync(file, 'utf8').split('\n').slice(0, HEADER_LINES).join('\n');
+    return EXPECTED_RED.test(head);
+  } catch { return false; }   // unreadable is not red
+}
 
 for (const f of files) {
   const rel = path.relative(ROOT, f);
-  let declaredRed = false;
-  try { declaredRed = EXPECTED_RED.test(fs.readFileSync(f, 'utf8')); } catch { /* unreadable is not red */ }
+  const declaredRed = declaresExpectedRed(f);
   let code = 0, out = '', err = '';
   try {
     out = execFileSync(process.execPath, [f], {
@@ -129,12 +153,24 @@ for (const f of files) {
     out = e.stdout || '';
     err = e.stderr || '';
   }
-  const completed = SUMMARY.test(stripAnsi(out));
+  const clean = stripAnsi(out);
+  // node:test prints pass and fail on separate lines, so "nothing ran" there is pass 0 AND fail 0.
+  const vacuous = /^\s*[ℹ#]\s*pass\s+0\s*$/im.test(clean)
+    ? VACUOUS_NODETEST.test(clean)
+    : VACUOUS.test(clean);
+  const completed = SUMMARY.test(clean) && !vacuous;
   const entry = { rel, code, out, err };
   let tag;
   if (declaredRed) {
+    // A CANARY IS NOT AN EXEMPTION FROM CLASSIFICATION (pane A). v1 routed every declared file
+    // straight to the canary bucket, so a canary that started CRASHING on load - guard-census-style
+    // ENOENT, or a syntax error - read identically to the deliberate red it was declared for. That
+    // is the suppression bucket the declaration was supposed to avoid being, and it contradicts the
+    // room's own ratified principle that red is not one thing: only a failing NAMED assertion
+    // counts. So a declared file still has to reach its summary to be excused.
     if (code === 0) { canarySang.push(entry); tag = 'SANG '; }
-    else { canary.push(entry); tag = 'canary'; }
+    else if (completed) { canary.push(entry); tag = 'canary'; }
+    else { crashed.push(entry); tag = 'CRASH'; }
   } else if (code === 0) {
     if (completed) { green.push(entry); tag = ' ok  '; }
     else { silent.push(entry); tag = 'SILENT'; }
@@ -158,7 +194,11 @@ for (const e of failed) {
   console.log('  ' + (e.out || e.err).trim().split('\n').slice(-4).join('\n  '));
 }
 if (silent.length) {
-  console.log(`\nSILENT (exit 0, never reached a summary — indistinguishable from a file that tests nothing):`);
+  console.log(`\nSILENT — exit 0 but no completed summary, or a summary counting ZERO passes.`);
+  console.log(`Indistinguishable from a file that tests nothing, so it FAILS the run: rule 2 says a`);
+  console.log(`green over an empty set is the bug, and that has to hold per file, not just per tree.`);
+  console.log(`(This runner's summary regex has already been wrong twice, so a SILENT is at least as`);
+  console.log(` likely to be the classifier's ignorance as the test's vacuity — check before editing.)`);
   silent.forEach((e) => console.log('  ' + e.rel));
 }
 for (const e of canary) {
@@ -170,4 +210,9 @@ for (const e of canarySang) {
   console.log('  suppress a real failure here later. This counts as a failure until someone does.');
 }
 
-process.exit(failed.length || crashed.length || canarySang.length ? 1 : 0);
+// SILENT counts as a failure (pane A). v1 exited 0 over a silent file, which contradicted rule 2
+// at file granularity: a green run over an empty set is the bug, and one untested file inside a
+// green tree is the same bug at smaller scale. It also meant the NEXT summary-regex miss — and the
+// history says one is coming — would file a healthy suite SILENT while the run stayed green,
+// hiding the classifier's own defect behind a pass.
+process.exit(failed.length || crashed.length || canarySang.length || silent.length ? 1 : 0);
