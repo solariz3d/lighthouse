@@ -20,6 +20,52 @@ const os = require("os");
 const MAIN_SID = "0c0c0c0a-0000-4000-8000-000000000a01";
 const MARKER = "Can Anthropic look at your session transcript";
 const CLUSTER_GAP = 1024 * 1024; // bytes of log between hits that separates distinct asks
+
+// THE TURN MARKER, added 2026-08-17 to make a hypothesis testable instead of guessable.
+//
+// The ask has been recorded with a byte offset and nothing else, so every model of "when does the
+// survey fire" has been built on ONE axis: bytes of capture. On 2026-08-16 a byte-volume prediction
+// missed by 15M and was refuted, and the keeper then invalidated the whole frame by describing his
+// screen: there are TWO gates, a 1-3 rating window first and the share prompt only sometimes after,
+// and this hook only ever sees the second. So the intervals measure downstream events conditioned
+// on an unobserved upstream one.
+//
+// Then on 2026-08-17 an ask landed immediately after a 4m 10s turn and the keeper circled it. That
+// is a real alternative axis — asks follow heavy TURNS, not byte counts — and it was untestable,
+// because nothing in the row said anything about the turn it followed.
+//
+// So each ask row now also carries the turn count and the duration of the turn just before it.
+// MEASURED, not assumed: a full scan of the 150MB capture finds 1,667 DISTINCT turns after repaint
+// dedup (an earlier note said "1507 occurrences" — that was `grep -c`, which counts matching LINES,
+// not hits; the raw hit count is higher still). Meanwhile "out tok" and "session generated" appear
+// ZERO times — those live in the app's status bar, not the terminal stream — so session token
+// counts are NOT recordable here and are deliberately absent rather than guessed at.
+//
+// This records the axis. It does not settle anything: with one observation the turn-duration idea
+// is an anecdote, and four or five more asks are what turn it into a number or kill it.
+const TURN_MARKER = "Baked for";
+const TURN_GAP = 4096; // bytes between "Baked for" hits that separate real turns from repaints
+
+// "Baked for 4m 10s" / "Baked for 12s" -> milliseconds. Returns null when the tail is a partial
+// repaint ("Baked for " with no digits), which the capture also contains.
+function bakedMs(text, at) {
+  const m = /^Baked for (?:(\d+)h )?(?:(\d+)m )?(\d+)s/.exec(text.slice(at, at + 40));
+  if (!m) return null;
+  return ((+(m[1] || 0) * 3600) + (+(m[2] || 0) * 60) + +m[3]) * 1000;
+}
+
+// Distinct hits of `marker`, collapsing terminal repaints that sit within `gap` bytes.
+function distinctHits(text, base, marker, gap, lastEnd) {
+  const hits = [];
+  let i = 0, prev = lastEnd;
+  while ((i = text.indexOf(marker, i)) >= 0) {
+    const abs = base + i;
+    if (abs - prev > gap) hits.push({ abs, rel: i });
+    prev = abs;
+    i += marker.length;
+  }
+  return { hits, lastEnd: prev };
+}
 // Test seams, same convention as dream-watch.js:249 and board-digest.js. Added 2026-07-27 so the
 // dream-gate suite can run this hook end to end against a fixture instead of only checking that
 // its gate exists in the source — a textual check can be satisfied by a gate that does nothing
@@ -84,9 +130,15 @@ function main(parsed) {
   let size;
   try { size = fs.statSync(logPath).size; } catch (_) { return; } // no capture = nothing to see
 
-  let state = { offset: 0, lastAskEnd: -Infinity, firstRunDone: false };
+  let state = {
+    offset: 0, lastAskEnd: -Infinity, firstRunDone: false,
+    turns: 0, lastTurnEnd: -Infinity, lastAskTurns: null,
+  };
   try { state = { ...state, ...JSON.parse(fs.readFileSync(STATE, "utf8")) } } catch (_) {}
-  if (size < state.offset) { state.offset = 0; state.lastAskEnd = -Infinity; } // log rotated/shrank
+  if (size < state.offset) { // log rotated/shrank
+    state.offset = 0; state.lastAskEnd = -Infinity;
+    state.turns = 0; state.lastTurnEnd = -Infinity; state.lastAskTurns = null;
+  }
 
   if (size === state.offset) return;
 
@@ -100,14 +152,33 @@ function main(parsed) {
   } catch (_) { return; } finally { if (fd !== undefined) try { fs.closeSync(fd); } catch (_) {} }
   const text = buf.toString("latin1"); // byte-faithful; the marker is plain ASCII
 
+  // Turns first: the ask rows below need the turn that PRECEDED each ask, so the turn hits in this
+  // chunk have to be known before the asks are walked.
+  const turnScan = distinctHits(text, state.offset, TURN_MARKER, TURN_GAP, state.lastTurnEnd);
+  state.lastTurnEnd = turnScan.lastEnd;
+
   const newAsks = [];
   let i = 0;
   while ((i = text.indexOf(MARKER, i)) >= 0) {
     const abs = state.offset + i;
-    if (abs - state.lastAskEnd > CLUSTER_GAP) newAsks.push(abs); // far from the last ask = new ask
+    if (abs - state.lastAskEnd > CLUSTER_GAP) {
+      // Turns completed before this ask: those already counted in prior runs, plus the ones in this
+      // chunk that sit before it.
+      const before = turnScan.hits.filter((h) => h.abs < abs);
+      const turnsTotal = state.turns + before.length;
+      const last = before[before.length - 1];
+      newAsks.push({
+        off: abs,
+        turns_total: turnsTotal,
+        turns_since_prev_ask: state.lastAskTurns === null ? null : turnsTotal - state.lastAskTurns,
+        prev_turn_ms: last ? bakedMs(text, last.rel) : null,
+      });
+      state.lastAskTurns = turnsTotal;
+    }
     state.lastAskEnd = abs;
     i += MARKER.length;
   }
+  state.turns += turnScan.hits.length;
 
   const firstRun = !state.firstRunDone;
   state.firstRunDone = true;
@@ -121,7 +192,18 @@ function main(parsed) {
   let total = 0;
   try { total = fs.readFileSync(ledgerPath, "utf8").split("\n").filter(Boolean).length; } catch (_) {}
   try {
-    const lines = newAsks.map(off => JSON.stringify({ seen: now, log_offset: off, backfill: firstRun }) + "\n");
+    // turns_since_prev_ask and prev_turn_ms are null on the first row and on any row whose turn
+    // could not be parsed. Null is written rather than omitted: a missing field and a field that
+    // was measured as unknown read identically once the row is on disk, and this ledger already
+    // spent a night being wrong about what it could not see.
+    const lines = newAsks.map(a => JSON.stringify({
+      seen: now,
+      log_offset: a.off,
+      backfill: firstRun,
+      turns_total: a.turns_total,
+      turns_since_prev_ask: a.turns_since_prev_ask,
+      prev_turn_ms: a.prev_turn_ms,
+    }) + "\n");
     fs.appendFileSync(ledgerPath, lines.join(""));
     total += newAsks.length;
   } catch (_) {}
