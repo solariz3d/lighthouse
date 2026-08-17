@@ -96,10 +96,16 @@ t("nested block comments close correctly (rust allows them, C does not)", () => 
  * whole file is the test crate and it carries no #[cfg(test)]. Requiring the attribute
  * reported the eight guards that cycle 9 actually attacked as zero. */
 t("an integration test under tests/ counts its assertions with no #[cfg(test)] present", () => {
-  const f = path.join("C:/Users/nname/Desktop/lighthouse/consonance/src-tauri", "tests", "arch_test.rs");
+  // Repo-relative, not a machine-specific absolute path (the old C:/Users/nname/... threw ENOENT
+  // here and left this assertion dead). And the expected #[test] count is derived from the file
+  // rather than frozen as a literal — arch_test.rs grew from 8 to 12 while this test was dead, and
+  // a pinned number is exactly the rotting "dead detector" this file's own header warns against.
+  const f = path.join(__dirname, "..", "src-tauri", "tests", "arch_test.rs");
+  const expectedTests = (require("fs").readFileSync(f, "utf8").match(/#\[test\]/g) || []).length;
   const r = rustSites(f);
-  assert.ok(r.sites.length >= 8, `arch_test.rs reported ${r.sites.length} sites`);
-  assert.equal(r.tests, 8, `found ${r.tests} #[test] fns; cargo runs 8`);
+  assert.ok(expectedTests >= 8, `arch_test.rs has ${expectedTests} #[test] fns; expected the guard set to persist`);
+  assert.ok(r.sites.length >= expectedTests, `arch_test.rs reported ${r.sites.length} sites for ${expectedTests} tests`);
+  assert.equal(r.tests, expectedTests, `found ${r.tests} #[test] fns; file has ${expectedTests}`);
   const named = new Set(r.sites.map(s => s.test));
   assert.ok(named.has("no_serialized_struct_carries_a_rank_field_without_an_exemption"),
             "the one guard this room has ever seen fire was not attributed to its test");
@@ -240,7 +246,10 @@ t("wide and narrow write to different ledgers, so the two rates cannot merge", (
 /* ---- the third and fourth families ---- */
 
 t("all four families are pairwise disjoint in operator, so union growth is attributable", () => {
-  const src = require("fs").readFileSync("C:/Users/nname/Desktop/blackbox/ui/smokesim.js", "utf8");
+  // A real, substantial in-repo UI JS file, replacing the external C:/Users/nname/.../smokesim.js
+  // (gone on every current machine). The property under test — operator-set disjointness across
+  // families — is file-independent; any rich JS source exercises it.
+  const src = require("fs").readFileSync(path.join(__dirname, "..", "ui", "app.js"), "utf8");
   const ops = {};
   for (const set of ["narrow", "wide", "flow", "data"]) ops[set] = new Set(mutants(src, "js", set).map(m => m.op));
   const sets = Object.keys(ops);
@@ -249,7 +258,7 @@ t("all four families are pairwise disjoint in operator, so union growth is attri
 });
 
 t("every flow and data mutation's offset holds the bytes it claims", () => {
-  const src = require("fs").readFileSync("C:/Users/nname/Desktop/blackbox/ui/smokesim.js", "utf8");
+  const src = require("fs").readFileSync(path.join(__dirname, "..", "ui", "app.js"), "utf8");
   for (const set of ["flow", "data"])
     for (const m of mutants(src, "js", set)) assert.equal(src.slice(m.at, m.at + m.len), m.from, `${set} ${m.op} L${m.line}`);
 });

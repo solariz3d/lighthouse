@@ -69,8 +69,12 @@ const OUT = path.join(__dirname, "..", "data", "guard-census");        // small 
  * default was one `git add -A` away from publishing a mirror of another repo. Scratch belongs
  * in scratch. */
 const SCRATCH = path.join(require("os").tmpdir(), "guard-census");
-const BLACKBOX = "C:/Users/nname/Desktop/blackbox";
-const SRCTAURI = "C:/Users/nname/Desktop/lighthouse/consonance/src-tauri";
+// Derived from the repo, not a machine-specific absolute path. The originals were hardcoded to
+// `C:/Users/nname/Desktop/...` — a checkout that exists on no current machine, so the census (and
+// its test) threw ENOENT before running here. SRCTAURI is this repo's own crate; BLACKBOX is an
+// external opt-in corpus, so it takes an env override and otherwise defaults under the current user.
+const BLACKBOX = process.env.GUARD_CENSUS_BLACKBOX || path.join(process.env.USERPROFILE || "", "Desktop", "blackbox");
+const SRCTAURI = path.join(__dirname, "..", "src-tauri");
 const TOOLS = path.join(__dirname);
 const CARGO = path.join(process.env.USERPROFILE || "", ".cargo", "bin", "cargo.exe");
 
