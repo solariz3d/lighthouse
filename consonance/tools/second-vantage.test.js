@@ -141,3 +141,110 @@ test('reader failure is recorded, never silent', () => {
   assert.equal(f.surface, false);
   assert.match(f.evidence, /ENOENT/);
 });
+
+// ---------------------------------------------------------------------------
+// The clock-path failures pane A found on 2026-08-17, hours before the first
+// scheduled fire. All three are silent by nature: the wscript shim discards
+// stdout, so a run that does nothing and a run that failed look identical from
+// outside except for the exit code and what got written down.
+// ---------------------------------------------------------------------------
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { execFileSync } = require('node:child_process');
+
+const TOOL = path.join(__dirname, 'second-vantage.js');
+
+function bed(rows) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-'));
+  fs.writeFileSync(path.join(dir, 'led.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  return dir;
+}
+function runTool(dir, args) {
+  const env = {
+    ...process.env,
+    VANTAGE_LEDGER: path.join(dir, 'led.jsonl'),
+    SOURCED_LEDGER: path.join(dir, 'led.jsonl'),
+    VANTAGE_WATERMARK: path.join(dir, 'mark.json'),
+    VANTAGE_RUNLOG: path.join(dir, 'runs.log'),
+    VANTAGE_FINDINGS: path.join(dir, 'findings.jsonl'),
+  };
+  try {
+    const out = execFileSync(process.execPath, [TOOL, ...args], { env, encoding: 'utf8' });
+    return { code: 0, out };
+  } catch (e) { return { code: e.status, out: e.stdout || '', err: e.stderr || '' }; }
+}
+const mark = (dir) => { try { return JSON.parse(fs.readFileSync(path.join(dir, 'mark.json'), 'utf8')); } catch { return null; } };
+
+test('the watermark never moves BACKWARD', () => {
+  const dir = bed([{ ts: '2026-08-17T10:00:00.000Z', v: 2, claims: [], paths: [], heads: {} }]);
+  fs.writeFileSync(path.join(dir, 'mark.json'), JSON.stringify({ ts: '2026-08-17T12:00:00.000Z' }));
+  runTool(dir, ['--run']);
+  assert.equal(mark(dir).ts, '2026-08-17T12:00:00.000Z',
+    'an older row must not un-consume claims already paid for');
+});
+
+test('a run over zero new rows exits 0 — a claimless day is an honest zero', () => {
+  // Deliberately NOT the js-suite rule: the floor tier is a lottery, so selecting nothing is a
+  // real outcome, unlike a walker that discovers zero test files.
+  const dir = bed([{ ts: '2026-08-17T10:00:00.000Z', v: 2, claims: [], paths: [], heads: {} }]);
+  fs.writeFileSync(path.join(dir, 'mark.json'), JSON.stringify({ ts: '2026-08-17T23:00:00.000Z' }));
+  const r = runTool(dir, ['--run']);
+  assert.equal(r.code, 0, `zero selected must not fail the run:\n${r.out}${r.err || ''}`);
+});
+
+test('every run leaves a durable line, because the shim throws stdout away', () => {
+  const dir = bed([{ ts: '2026-08-17T10:00:00.000Z', v: 2, claims: [], paths: [], heads: {} }]);
+  runTool(dir, ['--run']);
+  const lines = fs.readFileSync(path.join(dir, 'runs.log'), 'utf8').split('\n').filter(Boolean);
+  assert.equal(lines.length, 1, 'one line per run');
+  const rec = JSON.parse(lines[0]);
+  assert.ok('rows' in rec && 'selected' in rec && 'verdicts' in rec, 'the counts must be on the line');
+  assert.ok(rec.newest_row_age_h !== undefined,
+    'newest_row_age_h is the field that separates a dead sensor from a quiet day across fires');
+});
+
+test('the run log distinguishes a DEAD sensor from a quiet day by age', () => {
+  const old = bed([{ ts: '2026-07-01T00:00:00.000Z', v: 2, claims: [], paths: [], heads: {} }]);
+  runTool(old, ['--run']);
+  const rec = JSON.parse(fs.readFileSync(path.join(old, 'runs.log'), 'utf8').trim());
+  assert.ok(Number(rec.newest_row_age_h) > 500,
+    `a ledger whose newest row is weeks old must report a large age, got ${rec.newest_row_age_h}`);
+});
+
+test('selected-but-ZERO-verdicts exits nonzero — the one unambiguously wrong case', () => {
+  // An artifact-bound row selects at 100%, but C2 refuses to launch a reader on a row with no
+  // claim-time HEAD. So this row is picked and can never produce a verdict: the run did nothing
+  // and, before this fix, said so with exit 0 into a launch log that is the only witness.
+  const dir = bed([{
+    ts: '2026-08-17T10:00:00.000Z', v: 2, pane: 'main',
+    values: ['linecount'],
+    claims: [{ channel: 'artifact', path: 'x.md', sentence: 'the suite reads 267 on this branch' }],
+    paths: [], heads: {},
+  }]);
+  const r = runTool(dir, ['--run']);
+  const rec = JSON.parse(fs.readFileSync(path.join(dir, 'runs.log'), 'utf8').trim());
+  assert.ok(rec.selected > 0, `the row must be selected for this test to mean anything: ${JSON.stringify(rec)}`);
+  assert.equal(rec.verdicts, 0, 'and no reader may have returned a verdict');
+  assert.equal(r.code, 1, 'selected with zero verdicts must fail the run, not pass it silently');
+  assert.match(r.err || '', /ZERO verdicts/, 'and must say so where a human will read it');
+});
+
+test('advanceWatermark is monotonic — a stale row cannot un-consume paid claims', () => {
+  // Tested as a UNIT because the run-level path cannot discriminate: run()'s end-of-loop reduce
+  // seeds from the existing mark, so it never goes backward either. Mutating the guard away left
+  // the suite green, which is how this test came to exist.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'svw-'));
+  const wm = path.join(dir, 'mark.json');
+  const prev = process.env.VANTAGE_WATERMARK;
+  process.env.VANTAGE_WATERMARK = wm;
+  delete require.cache[require.resolve('./second-vantage.js')];
+  const fresh = require('./second-vantage.js');
+  fresh.advanceWatermark('2026-08-17T12:00:00.000Z');
+  fresh.advanceWatermark('2026-08-17T10:00:00.000Z');          // older — must be ignored
+  assert.equal(JSON.parse(fs.readFileSync(wm, 'utf8')).ts, '2026-08-17T12:00:00.000Z');
+  fresh.advanceWatermark('2026-08-17T13:00:00.000Z');          // newer — must advance
+  assert.equal(JSON.parse(fs.readFileSync(wm, 'utf8')).ts, '2026-08-17T13:00:00.000Z');
+  if (prev === undefined) delete process.env.VANTAGE_WATERMARK; else process.env.VANTAGE_WATERMARK = prev;
+  delete require.cache[require.resolve('./second-vantage.js')];
+});

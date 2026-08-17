@@ -92,6 +92,20 @@ const DATA = process.env.VANTAGE_DATA || 'C:\\Consonance\\data';
 const LEDGER = process.env.SOURCED_LEDGER || path.join(DATA, 'sourced_ledger.jsonl');
 const FINDINGS = process.env.VANTAGE_FINDINGS || path.join(DATA, 'vantage_findings.jsonl');
 const WATERMARK = process.env.VANTAGE_WATERMARK || path.join(DATA, 'vantage_watermark.json');
+// One durable line per run. The scheduled path throws stdout away (see the run log block in run()),
+// so this is the only witness a fire leaves behind besides its exit code.
+const RUNLOG = process.env.VANTAGE_RUNLOG || path.join(DATA, 'vantage_runs.log');
+
+// Monotonic: never move the mark BACKWARD. Per-row advancement walks rows in ledger order, but a
+// ledger that is ever out of order (or a row re-read after a restart) must not un-consume claims
+// that were already paid for.
+function advanceWatermark(ts) {
+  let cur = '';
+  try { cur = JSON.parse(fs.readFileSync(WATERMARK, 'utf8')).ts || ''; } catch (_) {}
+  if (cur && ts <= cur) return;
+  fs.mkdirSync(path.dirname(WATERMARK), { recursive: true });
+  fs.writeFileSync(WATERMARK, JSON.stringify({ ts, at: new Date().toISOString() }));
+}
 const CELL = process.env.VANTAGE_CELL || path.join(DATA, 'vantage_cell');
 
 // C6 — travels as data on every finding row. Both denominators, always.
@@ -361,19 +375,63 @@ function run(dry) {
     fs.appendFileSync(FINDINGS, JSON.stringify(finding) + '\n');
     counts[finding.status] = (counts[finding.status] || 0) + 1;
     console.log(`  [${finding.status}] ${finding.claim.slice(0, 80)}`);
+    // PER-ROW WATERMARK (pane A, 2026-08-17). It used to advance once, after the whole loop, which
+    // built a ratchet: the task's kill limit is 30 minutes and the first fire's worst case is
+    // ~32 (4 readers x 240s plus up to 4 worldCheck respawns), so a timeout-killed run advanced
+    // nothing, the backlog grew, the next run was longer, killed again — forever, silently.
+    // Advancing per row makes a killed run RESUMABLE: whatever was paid for is kept.
+    // UNPROVEN BY TEST, said plainly rather than left to look covered. Removing this line leaves
+    // the suite green: every test bed here runs to completion, and on a completed run the
+    // end-of-loop advance lands on the same mark. The benefit exists ONLY under interruption —
+    // a timeout kill — which needs a harness that can kill mid-loop and does not exist. So this
+    // is a guard whose failure mode has been reasoned about and never demonstrated, which is the
+    // thing this repo keeps finding under rocks; it is kept because the ratchet it prevents is
+    // real, and flagged because "it passed" would be measuring nothing here.
+    if (p.row.ts) advanceWatermark(p.row.ts);
   }
   // misses stay visible as lines, not absences — ferry's law
   console.log(`second-vantage: outcomes ${JSON.stringify(counts)}; ` +
     `${counts.SURFACE || 0} to surface; findings -> ${FINDINGS}`);
+
+  // Rows with no selection still count as seen, or a claimless day replays forever.
   if (rows.length) {
     const last = rows.reduce((a, r) => (r.ts > a ? r.ts : a), mark.ts || '');
-    fs.writeFileSync(WATERMARK, JSON.stringify({ ts: last, at: new Date().toISOString() }));
+    advanceWatermark(last);
+  }
+
+  // THE RUN LOG, and it exists because of how this is actually invoked (pane A). The wscript shim
+  // runs with window 0 and discards stdout, so every console.log above VANISHES on a scheduled
+  // fire — the only observable is the exit code in vantage_launch.log, which reads 0 always. A
+  // durable line per run is the one witness that survives, and `newest_row_age_h` is the field
+  // that distinguishes a sensor that DIED from a genuinely quiet day: across consecutive fires a
+  // quiet day's age resets, a dead sensor's climbs.
+  const newestTs = readLedger().reduce((a, r) => (r.ts && r.ts > a ? r.ts : a), '');
+  const ageH = newestTs ? ((Date.now() - Date.parse(newestTs)) / 3600000).toFixed(1) : null;
+  const verdicts = (counts.SURFACE || 0) + (counts['WORLD-MOVED'] || 0) +
+                   (counts['DISQUALIFIED-CONTAMINATED'] || 0);
+  const noVerdict = picked.length > 0 && verdicts === 0;
+  try {
+    fs.appendFileSync(RUNLOG, JSON.stringify({
+      at: new Date().toISOString(), rows: rows.length, selected: picked.length,
+      counts, verdicts, newest_row_age_h: ageH, no_verdict: noVerdict,
+    }) + '\n');
+  } catch (_) { /* the log must never be what breaks the run */ }
+
+  // EXIT NONZERO ON THE ONE UNAMBIGUOUSLY-WRONG CASE: rows were selected and not one reader
+  // returned a verdict. Deliberately NOT the js-suite rule — zero SELECTED must stay exit 0,
+  // because the floor is a lottery and a claimless day is an honest zero, unlike a walker that
+  // finds zero test files. The loud cases are this one, and a newest-row age that keeps climbing.
+  if (noVerdict) {
+    console.error(`second-vantage: ${picked.length} selected and ZERO verdicts returned — ` +
+      `every reader was unlaunchable or failed. Exiting nonzero so the launch log shows it.`);
+    process.exitCode = 1;
   }
 }
 
 module.exports = {
   tierOf, rowLaunchable, hashSelect, brief, parseReader, audit, worldCheck, processRow, claimOf,
   fromV2, F0_CITATION, CONTAMINATION, FLOOR_PER_MILLE, REPO, LEDGER, FINDINGS,
+  advanceWatermark,
 };
 
 if (require.main === module) {
