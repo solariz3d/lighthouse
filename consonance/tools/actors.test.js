@@ -8,6 +8,13 @@
 // person all along. So the tests below weight that way: most of them are about refusing to
 // merge, and the census is required to publish its own failures.
 //
+// JS-SUITE: EXPECTED-RED — this file is the alias canary and is red ON PURPOSE. It stays red until
+// the 15-item alias worklist is curated with board evidence only the keeper has (recorded
+// 2026-08-11; the journal called it "deliberate; the canary"). Declared here 2026-08-17 because
+// that fact lived only in a journal, so nothing running this file could tell a deliberate red from
+// a broken one — and js-suite.js now reads this marker. When the worklist is curated and this goes
+// green, js-suite FAILS until the line is removed, so the exemption cannot outlive its reason.
+//
 //   node consonance/tools/actors.test.js
 'use strict';
 
