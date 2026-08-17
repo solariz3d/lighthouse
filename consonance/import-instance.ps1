@@ -94,6 +94,7 @@ Say ''
 # instead of silently overwriting them. Under-rewriting is recoverable; corrupting the prose
 # of a transcript is not.
 $raw = Utf8Read $Transcript
+$total = 0   # path occurrences rewritten; initialised here so the [2/3] line can report it in BOTH branches
 if ($FromUser -eq $ToUser) {
   Say "  rewrite: origin and target user are both '$FromUser' - nothing to rewrite" 'Green'
   $rewritten = $raw
@@ -107,7 +108,6 @@ if ($FromUser -eq $ToUser) {
     @{ from = "C--Users-$FromUser-";  to = "C--Users-$ToUser-" }   # encoded project dir
   )
   $rewritten = $raw
-  $total = 0
   foreach ($f in $forms) {
     $n = ([regex]::Matches($rewritten, [regex]::Escape($f.from))).Count
     if ($n -gt 0) {
@@ -163,13 +163,19 @@ New-Item -ItemType Directory -Force -Path $targetProj | Out-Null
 $dstTs = Join-Path $targetProj $tsName
 if (Test-Path $dstTs) { Say "        transcript already present - overwriting with rewritten copy" 'DarkYellow' }
 Utf8Write $dstTs $rewritten
-Say "  [2/3] transcript ($before paths rewritten) -> $dstTs" 'Green'
+Say "  [2/3] transcript ($total paths rewritten) -> $dstTs" 'Green'
 # 3. registry (guard row count; never write a list that lost rows)
 if (-not $existing) {
   $row = [pscustomobject]@{ pane = $newPaneId; cwd = $targetCwd; label = $Label }
   $out = @($panes) + $row
   if ($out.Count -ne $panes.Count + 1) { throw "refusing panes.json write: expected $($panes.Count + 1) rows, built $($out.Count)" }
-  Utf8Write $panesPath ($out | ConvertTo-Json -Depth 6)
+  # PS 5.1 ConvertTo-Json serializes a SINGLE-element array as a bare object, not a 1-element array.
+  # Rust reads this file as Vec<KeptPane> via from_str(...).ok().unwrap_or_default(), so a bare object
+  # fails to parse and silently yields ZERO kept panes - the imported pane never restores while this
+  # script still prints "registered pane" in green. Force array framing when there is only one row.
+  $panesJson = $out | ConvertTo-Json -Depth 6
+  if ($out.Count -eq 1) { $panesJson = "[$panesJson]" }
+  Utf8Write $panesPath $panesJson
   $letters[$newPaneId] = $Letter
   Utf8Write $lettersPath ($letters | ConvertTo-Json -Depth 6)
   Say "  [3/3] registered pane $newPaneId as letter $Letter" 'Green'
