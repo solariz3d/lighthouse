@@ -35,6 +35,12 @@ const path = require('path');
 
 const LEDGER = process.env.FERRY_LEDGER || 'C:\\Consonance\\data\\ferry.jsonl';
 
+// The one sha-length threshold, shared by record() and status()/report(). A sha shorter than this
+// is refused rather than matched loosely, because at 6 characters collisions stop being
+// hypothetical — and, crucially, record() enforces the SAME floor the readers filter on, so a
+// short sha can never be written as a phantom the counts ignore.
+const MIN_SHA = 7;
+
 // WHAT COUNTS AS AN ARTIFACT. Claim-bearing files only: a design, a registration, a result, a
 // map entry, a journal. Code commits are excluded deliberately - code is reviewed by its tests,
 // and the thing that went unchecked tonight was PROSE MAKING CLAIMS, which is the surface BOOT
@@ -90,6 +96,14 @@ function epoch() {
 }
 
 function record(sha, panes, when) {
+  // Refuse a sha too short to be counted. status()/report() drop rows below MIN_SHA, so a shorter
+  // sha would write as "success" yet never appear in any count — and its prefix would then match
+  // (and, via the idempotency check below, permanently BLOCK) the correct full sha, so the commit
+  // could never be ferried without hand-editing the ledger. Fail loud instead of writing a phantom.
+  if (!sha || sha.length < MIN_SHA) {
+    throw new Error(`refusing sha ${JSON.stringify(sha)}: need >= ${MIN_SHA} chars — a shorter sha ` +
+      `writes as success but is never counted, and its prefix then blocks recording the full sha`);
+  }
   fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
   // IDEMPOTENT. Without this the ledger accumulates duplicate rows for one commit — it already
   // holds `cb0df2d38` and `cb0df2d` for the same one, because a sha was typed twice. Counting
@@ -112,7 +126,7 @@ function record(sha, panes, when) {
  * rather than matched loosely, because at 6 characters collisions stop being hypothetical.
  */
 function status() {
-  const rows = ledger().filter(r => r.sha && r.sha.length >= 7);
+  const rows = ledger().filter(r => r.sha && r.sha.length >= MIN_SHA);
   return artifactCommits().map(c => ({
     ...c,
     ferry: rows.find(r => c.sha.startsWith(r.sha) || r.sha.startsWith(c.sha)) || null,
@@ -166,7 +180,12 @@ if (require.main === module) {
     if (!sha || !panes.length) { console.error('usage: --record <sha> <pane>...'); process.exit(2); }
     // Stamped by the caller, never by the module, so the ledger is reproducible in tests.
     const when = Number(process.env.FERRY_NOW) || Date.now();
-    console.log(JSON.stringify(record(sha, panes, when)));
+    try {
+      console.log(JSON.stringify(record(sha, panes, when)));
+    } catch (e) {
+      console.error(e.message);
+      process.exit(2);
+    }
   } else {
     report();
   }
