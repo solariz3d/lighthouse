@@ -130,6 +130,13 @@ const VACUOUS_NODETEST = /^\s*[ℹ#]\s*fail\s+0\s*$/im;
 // on itself at the very commit that shipped it. Two independent narrowings, because one was not
 // enough to have caught this: the marker must open a comment at line start, AND appear in the
 // file's header rather than deep in its body.
+//
+// CORRECTED 2026-08-17 by pane A, who wrote the finding: "one was not enough" is FALSE for the
+// demonstrated instance. The fixtures quote the marker mid-line inside strings (the line-start
+// anchor alone catches that) AND at lines past 40 (the header window alone catches that). Either
+// narrowing would have caught THIS case. Two is defence in depth against the next quoting site,
+// not a necessity for the one that shipped — and overstating it made the repair sound more forced
+// than the evidence supports.
 const EXPECTED_RED = /^\s*(\/\/|#)\s*JS-SUITE:\s*EXPECTED-RED/m;
 const HEADER_LINES = 40;
 function declaresExpectedRed(file) {
