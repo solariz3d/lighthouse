@@ -124,9 +124,17 @@ function instrumentSection(limit = 12) {
    * author read the line back, believed it said startsWith(' '), reasoned the parser must be
    * broken, and was contradicted by the output. A maintainer retyping that line puts a real
    * space there, every date becomes null, and this section drops silently into its FAILED
-   * branch -- taking the instrument list, which is the name's ground, with it. grep did say
-   * "Binary file matches" and it was ignored. A sentinel no path can begin with costs nothing
-   * and is legible. */
+   * branch -- taking the instrument list, which is the name's ground, with it. A sentinel no path
+   * can begin with costs nothing and is legible.
+   *
+   * CORRECTED 2026-08-18 by pane E, and the correction is the more useful half. This comment
+   * originally read "grep did say 'Binary file matches' and it was ignored." That is FALSE by the
+   * record: the transcript's first such warning is at 12:13:26, inside the author's own deliberate
+   * byte-dump diagnostic, and the repair script exists at 12:14:28 -- 62 seconds later. There was
+   * no earlier warning to ignore. The sentence MANUFACTURED NEGLIGENCE to sharpen the lesson,
+   * which is the flattering error mirrored: an unfalsifiable self-criticism reads as rigor and
+   * nobody checks it. The real lesson needs no invented fault -- an invisible byte in source is a
+   * landmine whether or not anyone was warned. */
   const firstSeen = new Map();
   if (log !== null) {
     let date = null;

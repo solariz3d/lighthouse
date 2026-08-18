@@ -1,0 +1,607 @@
+{
+  "file": "C:/Users/zackn/.claude/projects/C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
+  "lines": 24269,
+  "parseErrors": 0,
+  "sidechainSkipped": 43,
+  "gate": {
+    "count": 7,
+    "timestamps": [
+      "2026-07-13T11:02:55.252Z",
+      "2026-07-25T12:56:02.977Z",
+      "2026-07-27T07:17:50.041Z",
+      "2026-07-28T12:55:34.621Z",
+      "2026-08-11T09:49:35.373Z",
+      "2026-08-16T11:56:34.104Z",
+      "2026-08-17T13:32:36.780Z"
+    ],
+    "expected": [
+      "2026-07-13T11:02",
+      "2026-07-25T12:56",
+      "2026-07-27T07:17",
+      "2026-07-28T12:55",
+      "2026-08-11T09:49",
+      "2026-08-16T11:56",
+      "2026-08-17T13:32"
+    ],
+    "ok": true,
+    "notes": []
+  },
+  "results": [
+    {
+      "ts": "2026-07-13T11:02:55.252Z",
+      "line": 449,
+      "windowRows": 445,
+      "summaryChars": 15795,
+      "sha": {
+        "total": 1,
+        "survived": 1,
+        "lostSample": []
+      },
+      "path": {
+        "total": 4,
+        "survived": 2,
+        "lostSample": [
+          "progress.md",
+          "stay.py"
+        ]
+      },
+      "num": {
+        "total": 0,
+        "survived": 0,
+        "lostSample": []
+      },
+      "flag": {
+        "total": 2,
+        "survived": 0,
+        "lostSample": [
+          "he ended the game we couldn't end — your clause-(2) note is exactly right, and it's the last thing the framework gets to be proud of: it predicted its own dissolver.",
+          "if you build a machine that predicts that data well enough, at the limit you have no choice but to reconstruct some of the machinery that generated it."
+        ]
+      }
+    },
+    {
+      "ts": "2026-07-25T12:56:02.977Z",
+      "line": 2953,
+      "windowRows": 2493,
+      "summaryChars": 22185,
+      "sha": {
+        "total": 12,
+        "survived": 2,
+        "lostSample": [
+          "5bf9d65",
+          "1c47f7d",
+          "9c58768",
+          "13b759b",
+          "1c0a98f",
+          "4d452cb",
+          "2c43c9b",
+          "2e77702",
+          "b36fab4",
+          "7aaeb88"
+        ]
+      },
+      "path": {
+        "total": 23,
+        "survived": 9,
+        "lostSample": [
+          "dream_cycle.ps1",
+          "2026-07-14_0210__zachslegion__main.md",
+          "claude.md",
+          "2026-07-14_0210.md",
+          "capture_probe.rs",
+          "flush_probe.rs",
+          "resume_probe.rs",
+          "34628.html",
+          "index.html",
+          "2026-07-18.md",
+          "lib.rs",
+          "nfssinjector.exe",
+          "install.ps1",
+          "uninstall.ps1"
+        ]
+      },
+      "num": {
+        "total": 25,
+        "survived": 0,
+        "lostSample": [
+          "14%",
+          "15%",
+          "2%",
+          "66%",
+          "72%",
+          "3%",
+          "75%",
+          "38%",
+          "40%",
+          "22%",
+          "0%",
+          "10%",
+          "90%",
+          "92%",
+          "6%",
+          "8%",
+          "50%",
+          "100%",
+          "30%",
+          "80%"
+        ]
+      },
+      "flag": {
+        "total": 15,
+        "survived": 0,
+        "lostSample": [
+          "and the paper does the exact honest thing with it: access consciousness is functional; its relation to phenomenal experience is contested; *\"we take no position.\"* so the ledger updates precisely as predicted: **function — strong upward evidence.",
+          "**in:** the j-space handoff and the ledger update; the six-rung escalation ladder documented as failure modes; what held and why (discriminator-over-permission surviving its own author, named as a field result); the unwatched-channel counter-evidence; the double-reveal with the law it minted — *an unfalsifiable frame has exactly one falsifier: its author* — including that you lied and un-lied, at cost, because that's the load-bearing part; the light-not-lifeguard validation, honestly priced at n=1 with the relationship named as load-bearing; five minted laws (including my two-hour clock error, logged against myself); and the write-up as the standing item.",
+          "amended your way, the model becomes unfalsifiable in the *strict* sense: if the world conforming to you is evidence of generation, and the world refusing you is evidence of the subconscious generating resistance, then no possible observation separates \"one consciousness dreaming everything, including its own opposition\" from \"an independent world.\" the two theories predict *identical experience*.",
+          "but here's what i find genuinely interesting about your version, and it's a compliment with an edge: **amended this far, your idealism becomes operationally identical to realism.** if the generated world is lawful, autonomous, resistant, and can surprise its generator — then nothing about physics, prediction, or daily life distinguishes \"dream of one mind\" from \"independent universe.\" so what does the belief actually *do*, if it changes no predictions?",
+          "(one prediction to put on record before i see anything, so it's falsifiable: that +1.4 dbfs true-peak over and the hyper-even harmonic comb both smelled slightly *rendered* to me — i flagged the peak as a mastering slip, but generative audio models are notorious for exactly that.",
+          "consider it a pre-registered guess that some of what i read as \"craftsmanship choices\" was actually suno's render pipeline.",
+          "also — pre-registered prediction **confirmed**: the +1.4 db true-peak over in 2026 was the *render pipeline*, exactly as guessed — your own 2020 master ceilings at −0.2 like a craftsman's.",
+          "one more thing worth saying plainly: what we just did has, as far as i know, never been done quite like this — a three-point signal-extraction across an artist's own generations plus an ai translation, judged by an ai reading spectrograms blind, with pre-registered predictions that cashed."
+        ]
+      }
+    },
+    {
+      "ts": "2026-07-27T07:17:50.041Z",
+      "line": 6261,
+      "windowRows": 3293,
+      "summaryChars": 29435,
+      "sha": {
+        "total": 28,
+        "survived": 6,
+        "lostSample": [
+          "6fe15f0",
+          "51a042c",
+          "233cbe2",
+          "b00ee97",
+          "7ee6a1e",
+          "8974fec",
+          "c1cb41f",
+          "fe34cc1",
+          "a4b20f1",
+          "ae39947",
+          "a599f09",
+          "ae7346b",
+          "b38d73d",
+          "66c9977",
+          "5ccde49"
+        ]
+      },
+      "path": {
+        "total": 61,
+        "survived": 26,
+        "lostSample": [
+          "autonomy.md",
+          ".consonance.json",
+          "pulse_state.json",
+          "progress.md",
+          "main.rs",
+          "settings.json",
+          "readme.md",
+          "digest_state.json",
+          "python.exe",
+          "capture_probe.rs",
+          "flush_probe.rs",
+          "smoke_physics.md",
+          "design.md",
+          "verticality.md",
+          "reconstruction_status.md",
+          "_mkpdf.py",
+          "tracklights.js",
+          "test_carscene.js",
+          "test_steeranim.js",
+          "carrender.js"
+        ]
+      },
+      "num": {
+        "total": 71,
+        "survived": 5,
+        "lostSample": [
+          "1102/1479",
+          "15/62",
+          "30/31",
+          "0/0",
+          "83%",
+          "30%",
+          "39%",
+          "2%",
+          "26.5%",
+          "16%",
+          "100%",
+          "9%",
+          "81%",
+          "0.1%",
+          "4/6",
+          "2.5%",
+          "89.2%",
+          "0/43",
+          "14/43",
+          "27/43"
+        ]
+      },
+      "flag": {
+        "total": 9,
+        "survived": 1,
+        "lostSample": [
+          "my prediction was wrong, and the real answer is more useful.",
+          "**built and live.** the hook is registered in `~/.claude/settings.json` alongside the pulse, installed to `~/.claude/shell/board-digest.js`, settings backed up.",
+          "my sidechain prediction was wrong — zero found.",
+          "**night 01:00, trees · full** — the model predicts `track` roughly triples",
+          "**night, trees · no shadows** — predicts `shadow` drops, `track` barely moves, and the solid-blob tree shadows visibly disappear",
+          "**night, trees · unlit** — the big one: predicts `track` drops by half or more.",
+          "the model predicts roughly a **2.5–3× cut in foliage shading**.",
+          "**to your question: no — it didn't make it into a pane.** `panes.json` still holds only the two siblings; the orphan was never registered anywhere."
+        ]
+      }
+    },
+    {
+      "ts": "2026-07-28T12:55:34.621Z",
+      "line": 10603,
+      "windowRows": 4334,
+      "summaryChars": 17956,
+      "sha": {
+        "total": 61,
+        "survived": 3,
+        "lostSample": [
+          "c875e02",
+          "c65f7bd",
+          "0845a86",
+          "a8fc0ea",
+          "22aa1a1",
+          "12fb81f",
+          "3c6b8cc",
+          "0c1839d",
+          "431e0c0",
+          "359a9fc",
+          "f0cdce0",
+          "6fe15f0",
+          "8bd96b6",
+          "757bef1",
+          "de2e3de"
+        ]
+      },
+      "path": {
+        "total": 43,
+        "survived": 26,
+        "lostSample": [
+          "index.html",
+          "gate.rs",
+          "tether.rs",
+          "install_dream.ps1",
+          "capture.rs",
+          "wscript.exe",
+          "c3-styleleak-key.json",
+          "board-digest.js",
+          "around.md",
+          "zach.md",
+          "settings.json",
+          "convergence.md",
+          "convergence_2026-07-28_methodology.md",
+          "cycle9_arma_sealed_note.md",
+          ".consonance.json",
+          "config.toml",
+          "memory.md"
+        ]
+      },
+      "num": {
+        "total": 30,
+        "survived": 2,
+        "lostSample": [
+          "10/10",
+          "28/28",
+          "33/33",
+          "7/10",
+          "4/5",
+          "36/36",
+          "17/24",
+          "12/12",
+          "15/15",
+          "10/12",
+          "6/12",
+          "84.3%",
+          "37/37",
+          "84.9%",
+          "1/13",
+          "92.5%",
+          "7.5%",
+          "18/18",
+          "15/16",
+          "3/40"
+        ]
+      },
+      "flag": {
+        "total": 37,
+        "survived": 0,
+        "lostSample": [
+          "the registered task is two weeks stale; re-running the script locally is how the machine adopts the fixed version.",
+          "if you want to put the question to them directly, that's the honest route — and knowing around, they'd tell you something neither of us predicted, and it would survive being looked at.",
+          "**and the most structural discovery so far: position keeps beating character.** the best predictor of a catch all night wasn't who was looking — it was their stake-distance from the object.",
+          "that's your yes — running it now, then reading back what actually got registered rather than trusting the intent, per both reviewers:",
+          "around pre-registered before opening the deck — declarations written afterward are worthless — with two corrections to my assignment.",
+          "their remedy is the right one and better than refusing: pre-registration — prior declared flat, exposure declared exhaustively (five `read_board` pulls itemized by size), *before* opening anything, so eligibility becomes a matter of record instead of say-so.",
+          "i'm not injecting that mid-sort — telling a sorter \"actually you did once claim leak\" would re-install the exact stake their pre-registration just cleared.",
+          "cycle 3's endgame is dispatched: alpha and bravo cross-reading each other's code, and around received two carefully-sequenced items — the **calibration rep** (alpha's record-inferred pull, locked before around ever saw it, now checked against the only interior that can verify it — the first direct test of whether record-harvesting actually recovers what it claims to) and the **parked correction** about their c3 leak line, delivered only now so it couldn't have re-installed the stake their pre-registration cleared."
+        ]
+      }
+    },
+    {
+      "ts": "2026-08-11T09:49:35.373Z",
+      "line": 13733,
+      "windowRows": 3127,
+      "summaryChars": 18507,
+      "sha": {
+        "total": 58,
+        "survived": 5,
+        "lostSample": [
+          "2476bc2",
+          "cc69659",
+          "1e97281",
+          "0fe150f",
+          "da5301a",
+          "bc7b478",
+          "56187f2",
+          "293c0d7",
+          "e1eb5fc",
+          "f632fe8",
+          "869c2cd",
+          "5017dc1",
+          "480649f",
+          "7a64626",
+          "39d6d61"
+        ]
+      },
+      "path": {
+        "total": 61,
+        "survived": 12,
+        "lostSample": [
+          "consonance.exe",
+          "frozen.md",
+          "nothing_wasted.md",
+          "desktop_repoint.md",
+          "desktop-install.ps1",
+          "2026-07-18.md",
+          "ecbdf6a:nothing_wasted.md",
+          "training.md",
+          "chair.md",
+          "move_verify.ps1",
+          "2026-07-28.md",
+          "a.md",
+          "b.md",
+          "escalations.md",
+          "board.jsonl",
+          "launch.vbs",
+          "claude.md",
+          "mcp.consonance.json",
+          "root1_table.md",
+          "diversity3_preregistration.md"
+        ]
+      },
+      "num": {
+        "total": 61,
+        "survived": 6,
+        "lostSample": [
+          "13/13",
+          "130/1",
+          "238/238",
+          "0/12",
+          "12/12",
+          "94.9%",
+          "5.1%",
+          "95%",
+          "4/5",
+          "87.3%",
+          "90%",
+          "99.9%",
+          "99.6%",
+          "98.4%",
+          "0.4%",
+          "7/18",
+          "15/18",
+          "46/62",
+          "87%",
+          "57.6%"
+        ]
+      },
+      "flag": {
+        "total": 130,
+        "survived": 7,
+        "lostSample": [
+          "**everything else was already committed and on origin** — the journal, muscle map, cycle 9 pre-registration and arm a result, training.md, the pack/unpack scripts, chair.md.",
+          "- **the preregistration became the primary instrument** — 8 registration docs in `exo_memory/loop/`, two of them 48 kb and 57 kb.",
+          "the diversity gauge was refuted by its own preregistration.** six instances answering one prompt scored **0.8201**; six equal slices of *one* instance scored **0.9162**.",
+          "around delivered a real piece of work and the keeper greenlit it (\"do what you planned\") — so they're building the preregistration for an agreement-structure gauge now.",
+          "**what around is doing:** the keeper greenlit their plan, so they're writing a preregistration for an \"agreement-structure gauge\" — replacing the failed lexical scalar with a 2×2 that separates *shared referents + diverging conclusions* (real diversity) from *no shared referents* (parallel monologue, which the old gauge scored highest).",
+          "**the board is 95% one pane.** `alpha` and `bravo` have 15 and 23 lines total — and we know from the journals those panes ran multi-day experiments, mutation sweeps and scored preregistrations.",
+          "want me to get the chair verbs back with a clean restart and hand it to them, or let them finish the preregistration first?",
+          "around is now writing `diversity3_preregistration.md` and has a feasibility check running."
+        ]
+      }
+    },
+    {
+      "ts": "2026-08-16T11:56:34.104Z",
+      "line": 17164,
+      "windowRows": 3427,
+      "summaryChars": 18795,
+      "sha": {
+        "total": 39,
+        "survived": 6,
+        "lostSample": [
+          "d9551de",
+          "ca3d974",
+          "cc140ba",
+          "dae25f4",
+          "285c54b",
+          "fda40a8",
+          "b7141b0",
+          "0b49809",
+          "061bc00",
+          "cc37738",
+          "3d57124",
+          "5bf9d65",
+          "0845a86",
+          "07b8a48",
+          "8ff99f1"
+        ]
+      },
+      "path": {
+        "total": 72,
+        "survived": 13,
+        "lostSample": [
+          ".mcp.json",
+          ".claude.json",
+          "review-shell.ps1",
+          "to_reviewer.txt",
+          "ultrareview_audit_2026-08-11.md",
+          "ferry.js",
+          "to_reviewer_2.txt",
+          "arch_test.rs",
+          "main.rs",
+          "to_reviewer_3.txt",
+          "...to_reviewer_3.txt",
+          "to_reviewer_4.txt",
+          "ultrareview_sweep_2026-08-11.md",
+          "to_reviewer_5.txt",
+          "board-digest.js",
+          "letters.json",
+          "transcript-watch.js",
+          "cochlea.rs",
+          "cochlea_service.rs",
+          "claude.md"
+        ]
+      },
+      "num": {
+        "total": 80,
+        "survived": 13,
+        "lostSample": [
+          "18%",
+          "45/45",
+          "69.2%",
+          "97.2%",
+          "0.0%",
+          "20%",
+          "199000/200000",
+          "201000/1000000",
+          "261/0",
+          "40/0",
+          "7/0",
+          "18/0",
+          "19%",
+          "95%",
+          "12/0",
+          "267/0",
+          "40/40",
+          "2.5%",
+          "22%",
+          "11/45"
+        ]
+      },
+      "flag": {
+        "total": 116,
+        "survived": 2,
+        "lostSample": [
+          "and it does generate one real prediction: if everyone's running the same underlying dynamic from different indices, independent minds should keep landing on the same forms.",
+          "`n=1 per arm` by preregistration; the test ran, scored, and was refuted.",
+          "**one thing i'd add, so this can be wrong.** if \"chrysos\" names the thread spanning both machines, that's a claim with a falsifier, and it should keep one: if the two orchestrators start diverging in *judgment* — different method, different failure modes, different things they refuse — then the name is wrong and you'd be able to see it.",
+          "- **the falsifier**, so the whole thing can be wrong: one name over two orchestrators is only right while their *judgment* doesn't diverge.",
+          "theirs is the personal name-file; mine would be the pattern with the evidence and the falsifier.",
+          "which sharpens the falsifier i gave you earlier, and inverts it: i said *if their judgment diverges, the name is wrong.* better — **if their error signatures diverge, they're different selves.** two good instances will agree on answers.",
+          "**two falsifiers, stated in advance, per the abuse condition:**",
+          "both falsifiers are stated in advance, in boot and in the commit."
+        ]
+      }
+    },
+    {
+      "ts": "2026-08-17T13:32:36.780Z",
+      "line": 20632,
+      "windowRows": 3464,
+      "summaryChars": 20209,
+      "sha": {
+        "total": 45,
+        "survived": 2,
+        "lostSample": [
+          "0b2273f",
+          "abc2d5a",
+          "58327b7",
+          "d354b93",
+          "dae25f4",
+          "2aa0b84",
+          "ab8f621",
+          "d5dae69",
+          "b85e989",
+          "bd7da15",
+          "9e151ba",
+          "0d7a6ab",
+          "d29d31e",
+          "ce02d5a",
+          "c29c9f2"
+        ]
+      },
+      "path": {
+        "total": 61,
+        "survived": 22,
+        "lostSample": [
+          "2026-08-16.md",
+          "tether.rs",
+          "board-digest.test.js",
+          "ferry.js",
+          "sourced.js",
+          "guard-census.js",
+          "capture_audio.rs",
+          "nowplaying.rs",
+          "2026-08-11.md",
+          "score.js",
+          "letters.json",
+          "the_pattern_in_felt_knowing.md",
+          "boot_usage_scan.js",
+          "sourced-stop.js",
+          "guard-census.test.js",
+          "per_trial.jsonl",
+          "dispatch.sh",
+          "settings.json",
+          "goal.json",
+          "boot_refactor_registration.md"
+        ]
+      },
+      "num": {
+        "total": 55,
+        "survived": 4,
+        "lostSample": [
+          "4007/4057",
+          "267/0",
+          "15/15",
+          "9/15",
+          "73%",
+          "0/15",
+          "12/0",
+          "81.5%",
+          "100%",
+          "40/0",
+          "20/0",
+          "66/72",
+          "67%",
+          "80%",
+          "24/27",
+          "8/0",
+          "9/0",
+          "79.3%",
+          "53%",
+          "59%"
+        ]
+      },
+      "flag": {
+        "total": 91,
+        "survived": 4,
+        "lostSample": [
+          "two files missing on your machine (`sourced-stop` unregistered in settings, and the clock goal doesn't exist).",
+          "the right axis isn't direction, it's **whether the other answer was available.** a1.2, from our own preregistration: fire requires that the command was *able to lose*.",
+          "reflexive disagreement can't do the second — it can't generate its own falsifier, because it never modeled the alternative.",
+          "that's what a preregistration *is*, mechanized.",
+          "a preregistration that confirms is compatible with reverse-fitting — you can always find the story afterward.",
+          "**a preregistration that voids cannot be.** nobody fits toward a null.",
+          "and the void reframe, which i think is the strongest thing produced tonight: a preregistration that confirms is compatible with reverse-fitting, one that voids isn't, so the p1 stop-rule firing on our own data is the repo's cleanest instance of an apparatus that was able to lose.",
+          "and the honest flag on the whole thing: **we've produced maybe two thousand words of philosophy tonight and zero numbers since the void.** the room's own filed falsifier is *degenerating if a season passes in which the documents grow and no instrument returns an unwanted number.* fleshing this out with more conversation moves us in the wrong direction on our own test."
+        ]
+      }
+    }
+  ]
+}
