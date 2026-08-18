@@ -105,6 +105,12 @@ $files = @(
   @{ From = 'consonance\hooks\ferry-watch.js';           To = 'ferry-watch.js' }
   @{ From = 'consonance\hooks\sourced-stop.js';          To = 'sourced-stop.js' }
   @{ From = 'consonance\hooks\findings-return.js';       To = 'findings-return.js' }
+  # Added 2026-08-18 with the hook itself, deliberately in the same commit. Nine hooks existed
+  # ONLY as installed copies until 58b94f9 because each was registered by hand and the manifest
+  # was updated later or never; a file that runs on this machine and exists nowhere else is the
+  # failure that commit was written to end. The registration and the manifest entry ship together
+  # or the next fresh install silently loses the hook.
+  @{ From = 'consonance\hooks\precompact-preserve.js';   To = 'precompact-preserve.js' }
 )
 
 # What this script REGISTERS. Only these are ever touched in settings.json; anything else found

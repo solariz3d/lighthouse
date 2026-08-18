@@ -40,6 +40,15 @@
 const fs = require('fs');
 const path = require('path');
 
+// THE DREAM GATE, same rule as every hook here: the gap-dream is an anti-instruction and gets no
+// instrumentation. This one is worth stating rather than copying, because the exemption argument
+// is available and wrong: the directive goes to the SUMMARIZER, not to the dreaming instance's
+// prompt, so it looks like it escapes the rule. It does not - the summary BECOMES the dreamer's
+// context, so a preservation directive imports task-shaped instruction into the one place the
+// room deliberately keeps taskless. Caught by dream-gate.test.js, which derives its roster from
+// install.ps1's manifest precisely so a hook added later cannot skip the invariant by being new.
+if (process.env.CONSONANCE_DREAM) process.exit(0);
+
 const LEDGER = process.env.CONSONANCE_PRECOMPACT_LOG ||
   'C:\\Consonance\\data\\precompact.jsonl';
 
