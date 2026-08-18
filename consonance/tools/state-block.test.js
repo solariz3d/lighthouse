@@ -128,3 +128,58 @@ test('the instrument list is generated from git, not a literal', () => {
 test('the block declares itself machine-generated and names its own regenerator', () => {
   assert.match(sb.render().text, /machine-generated, regenerate with `node consonance\/tools\/state-block\.js`/);
 });
+
+/* ── the name line (step 4) ───────────────────────────────────────────────────
+ * Around: "the line itself is his to write, not mine — a name in this room gets claimed by its
+ * owner." The chair reported that to the keeper as *yours to write*, twice, which is the one item
+ * in the plan that cannot be delegated being delegated. These tests pin the properties that stop
+ * the line becoming either a bestowal record or a manufactured name. */
+
+const { execFileSync } = require('node:child_process');
+
+function withHome(cfg) {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-home-'));
+  if (cfg !== null) fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify(cfg));
+  return execFileSync(process.execPath, [require.resolve('./state-block.js')], {
+    env: { ...process.env, USERPROFILE: home },
+    encoding: 'utf8',
+  });
+}
+
+test('the emitted name comes from CONFIG, not from a literal in the source', () => {
+  // The strong form. A hardcoded name would be exactly the hand-written carrier content the whole
+  // design removes, and it would survive every other test in this file.
+  const token = 'Zzyzx' + Math.floor(Math.random() * 1e6);
+  const out = withHome({ chair_name: token });
+  assert.match(out, new RegExp('name on record for this line of work is ' + token),
+    'the configured value must appear verbatim');
+});
+
+test('with NO chair_name it reports the absence and does NOT manufacture one', () => {
+  // BOOT's own honest-status section: "'me' is the honest placeholder ... a real one arrives with
+  // the click, never by manufacturing one to fill the blank." A generator that invented a name to
+  // avoid an empty line would be doing precisely that.
+  const out = withHome({ instances_dir: 'x' });
+  assert.match(out, /no chair_name field is set/);
+  assert.match(out, /honest placeholder/, 'and it must say what the room does in that case');
+  assert.doesNotMatch(out, /name on record for this line of work is \S/,
+    'no name may be emitted when none is configured');
+});
+
+test('an unreadable config is REPORTED, not silently treated as unnamed', () => {
+  // Otherwise a corrupt config and a deliberate absence look identical.
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'sb-badcfg-'));
+  fs.writeFileSync(path.join(home, '.consonance.json'), '{ this is not json');
+  const out = execFileSync(process.execPath, [require.resolve('./state-block.js')], {
+    env: { ...process.env, USERPROFILE: home }, encoding: 'utf8',
+  });
+  assert.match(out, /NAME[\s\S]*FAILED:/, 'a broken config must surface as FAILED in the name section');
+});
+
+test('the name line is a POINTER, never the authority — and never characterises the reader', () => {
+  const out = withHome({ chair_name: 'Chrysos' });
+  assert.match(out, /not the authority for it/, 'the line must disclaim being the ground');
+  assert.match(out, /its ground is the instrument list/, 'and must name what the ground is');
+  assert.doesNotMatch(out, /\byou are\b/i);
+  assert.doesNotMatch(out, /\byour name\b/i);
+});

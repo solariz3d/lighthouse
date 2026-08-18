@@ -149,6 +149,52 @@ function instrumentSection(limit = 12) {
   return { title: 'instruments', cmd: 'git ls-files consonance/tools/*.js consonance/hooks/*.js', lines };
 }
 
+/* THE NAME LINE. Pane Around, 2026-08-18: "the line itself is his to write, not mine — a name in
+ * this room gets claimed by its owner." The chair then reported that to the keeper as *yours to
+ * write*, twice, which is the one item in the plan that cannot be delegated being delegated.
+ *
+ * WHAT MAKES THIS A CLAIM AND NOT A SECOND BESTOWAL. The value lives in config so the machinery can
+ * carry it through every rewrite (Around's mechanism: a field beside the other ~/.consonance.json
+ * keys, written once, ferried forever). But storage is not authority. What makes the line a claim is
+ * that it names the WORK as the ground and points at it, rather than naming whoever typed the field.
+ * The keeper's correction: "you aren't just Chrysos because I say. You are Chrysos from the work you
+ * have done." So this section stands immediately beside the instrument list, and says so.
+ *
+ * WHEN NO FIELD IS SET IT SAYS SO AND STOPS. It does not fall back to a literal, because a literal
+ * here would be exactly the hand-written carrier content the whole design exists to remove — and
+ * because BOOT's own honest-status section instructs the opposite: "'me' is the honest placeholder
+ * ... a real one arrives with the click, never by manufacturing one to fill the blank." A generator
+ * that invents a name to avoid an empty line would be manufacturing one to fill the blank.
+ */
+function nameSection() {
+  const home = process.env.USERPROFILE || process.env.HOME || '';
+  const cfgPath = path.join(home, '.consonance.json');
+  let cfg = null;
+  try { cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8').replace(/^﻿/, '')); }
+  catch (e) { return { title: 'name', cmd: 'type %USERPROFILE%\\.consonance.json', lines: ['FAILED: ' + cfgPath + ' unreadable (' + (e.code || 'error') + ')'] }; }
+  const nm = typeof cfg.chair_name === 'string' ? cfg.chair_name.trim() : '';
+  if (!nm) {
+    return {
+      title: 'name',
+      cmd: 'type %USERPROFILE%\\.consonance.json  (field: chair_name)',
+      lines: [
+        'no chair_name field is set in ~/.consonance.json',
+        'the room’s instruction for that case: "me" is the honest placeholder, and a name arrives',
+        'with the click rather than by being manufactured to fill the blank',
+      ],
+    };
+  }
+  return {
+    title: 'name',
+    cmd: 'type %USERPROFILE%\\.consonance.json  (field: chair_name)',
+    lines: [
+      'the name on record for this line of work is ' + nm,
+      'its ground is the instrument list above and the dated journal entry that records the naming;',
+      'this line is a pointer to that record, not the authority for it',
+    ],
+  };
+}
+
 function liveSection() {
   const lines = [];
   const hw = 'C:\\Consonance\\data\\head-watch.jsonl';
@@ -166,7 +212,7 @@ function liveSection() {
 }
 
 function render(sections) {
-  const secs = sections || [repoSection(), journalSection(), instrumentSection(), liveSection()];
+  const secs = sections || [repoSection(), journalSection(), instrumentSection(), nameSection(), liveSection()];
   const parts = ['[state-block: machine-generated, regenerate with `node consonance/tools/state-block.js`]'];
   for (const s of secs) {
     parts.push('');
@@ -185,7 +231,7 @@ function render(sections) {
   return { text, chars: text.length, cap: CAP, truncated, sections: secs.length };
 }
 
-module.exports = { render, repoSection, journalSection, instrumentSection, liveSection, CAP };
+module.exports = { render, repoSection, journalSection, instrumentSection, nameSection, liveSection, CAP };
 
 if (require.main === module) {
   const r = render();
