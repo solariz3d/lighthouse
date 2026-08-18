@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"C:/Users/zackn/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/compact-probe/hook.js\" sessionstart" }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"C:/Users/zackn/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/compact-probe/hook.js\" precompact" }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"C:/Users/zackn/AppData/Local/Temp/claude/C--Consonance-instances-sibling-3d57124e/6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f/scratchpad/compact-probe/hook.js\" postcompact" }
+        ]
+      }
+    ]
+  }
+}
