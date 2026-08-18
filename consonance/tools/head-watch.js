@@ -90,10 +90,153 @@ function classify(prev, cur) {
   return ev;
 }
 
-module.exports = { classify, fnv1a, HEAD_BYTES };
+/* SINGLE INSTANCE, required the moment this became a detached task (2026-08-18).
+ *
+ * Before that it was started by hand, so "one watcher" was true by accident. Now the scheduler
+ * starts one at logon and any hand-start makes two, both appending to the SAME ledger — a
+ * head-flip would land twice and the duplicate would read as two events rather than one seen
+ * twice. That is worse than no watcher, because the ledger is the evidence.
+ *
+ * Liveness is decided by process.kill(pid, 0), not by the lock file existing: a watcher killed
+ * with its parent (which is exactly how the 2026-08-18 relaunch was missed) leaves the lock
+ * behind, and a stale lock that blocks startup forever would turn one miss into permanent
+ * silence. Returns the release function, or null if another live watcher holds it.
+ *
+ * REWRITTEN 2026-08-18 after pane A's race harness broke the first version in 32 of 40 trials
+ * (up to seven of eight processes acquiring at once). The original had two holes, both from the
+ * same root — check-and-act were not atomic:
+ *   1. TAKEOVER RE-RACE. Two processes both read a stale lock, both unlinkSync, then both
+ *      wx-create — the second unlink deletes the first's FRESH lock. The retry loop was what
+ *      re-raced; "just drop the retry" is wrong the other way, because then a genuinely stale
+ *      lock is never reclaimed and one crash becomes permanent silence.
+ *   2. EMPTY-FILE WINDOW. writeFileSync(wx) is open-then-write; a reader landing between sees
+ *      zero bytes, Number('') is NaN, and the file reads as stale — so a watcher mid-startup
+ *      looked reclaimable to a racer.
+ *
+ * The fix is to make the two non-atomic steps atomic, and to NEVER throw (any unexpected error
+ * is "lost the race, refuse", never a crash — an uncaught EPERM here was itself a startup-crash
+ * vector that burned the scheduler's finite restart budget):
+ *   * PUBLISH by hard-linking a fully-written temp file into place. linkSync is atomic and fails
+ *     EEXIST if the target exists, and the published file is never seen empty because it already
+ *     holds the pid. (Falls back to wx-create only where hardlinks are unsupported; that path
+ *     keeps the tiny empty window, but an empty read is handled as stale-via-atomic-takeover
+ *     below, so it still cannot double-acquire — only refuse.)
+ *   * TAKE OVER by renaming the stale lock aside. Exactly one racer can rename a given file;
+ *     the losers get ENOENT and refuse. Whether the holder is a dead pid, garbage, or an empty
+ *     mid-write file, the takeover is the SAME single-winner path, so "treat garbage as
+ *     reclaimable" (the liveness rule the tests pin) no longer implies a double-acquire.
+ * At most ONE takeover is attempted; there is no unbounded retry to re-race.
+ */
+function makeRelease(lockPath, mine) {
+  return () => { try { if (fs.readFileSync(lockPath, 'utf8').trim() === mine) fs.unlinkSync(lockPath); } catch (_) {} };
+}
+
+function acquireLock(lockPath) {
+  const mine = String(process.pid);
+  const tmp = lockPath + '.tmp.' + mine;   // unique per process; pids are unique among the living
+  try { fs.writeFileSync(tmp, mine); } catch (_) { return null; }
+  const cleanupTmp = () => { try { fs.unlinkSync(tmp); } catch (_) {} };
+
+  // Atomic exclusive publish. 'won' | 'exists' | 'error' — never throws.
+  const publish = () => {
+    try { fs.linkSync(tmp, lockPath); return 'won'; }
+    catch (e) {
+      if (e.code === 'EEXIST') return 'exists';
+      if (e.code === 'ENOENT') return 'error';   // tmp vanished — refuse
+      // Hardlinks unsupported on this filesystem: fall back to exclusive create. Keeps the tiny
+      // empty window, but a concurrent empty read is handled as an atomic takeover, not a
+      // double-acquire.
+      try { fs.writeFileSync(lockPath, mine, { flag: 'wx' }); return 'won'; }
+      catch (e2) { return e2.code === 'EEXIST' ? 'exists' : 'error'; }
+    }
+  };
+
+  // Attempt 1.
+  let r = publish();
+  if (r === 'won') { cleanupTmp(); return makeRelease(lockPath, mine); }
+  if (r === 'error') { cleanupTmp(); return null; }
+
+  // A lock exists. Is its holder provably alive? Only a live pid blocks us; a dead pid, garbage,
+  // empty, or a file that vanishes mid-read are all reclaimable — but reclaimed ATOMICALLY.
+  let alive = false;
+  try {
+    const held = fs.readFileSync(lockPath, 'utf8').trim();
+    const pid = Number(held);
+    if (held && Number.isInteger(pid) && pid > 0) {
+      try { process.kill(pid, 0); alive = true; } catch (err) { alive = (err.code === 'EPERM'); }
+    }
+  } catch (_) { /* vanished mid-read: someone else is mid-takeover — treat as reclaimable, the
+                   rename below will lose ENOENT and we will refuse */ }
+  if (alive) { cleanupTmp(); return null; }
+
+  // Reclaim the stale lock. This is the step pane A's harness broke, and the lesson took two
+  // tries: the reap must be gated by CREATING a new exclusive name, never by consuming an
+  // existing one. renameSync is not a gate here — Node maps it to MoveFileEx with
+  // REPLACE_EXISTING, and even to distinct targets two racers both reported success, so both
+  // removed the stale lock and both published. mkdirSync IS a gate: CreateDirectory fails
+  // EEXIST if the directory exists, reliably, so exactly ONE process becomes the reaper. Only
+  // the reaper ever unlinks the stale lock; everyone else either publishes fresh (exclusive via
+  // link) or refuses. That makes at most one process capable of clearing lockPath, which is what
+  // the double-acquire needed.
+  const reapDir = lockPath + '.reaplock';
+  let reaper = false;
+  try { fs.mkdirSync(reapDir); reaper = true; }
+  catch (e) {
+    // A reaper that died mid-takeover would orphan reapDir and wedge every future reap into
+    // permanent silence. The reap is held for microseconds, so anything older than 30s is an
+    // orphan: clear it and take the reaper slot once.
+    if (e.code === 'EEXIST') {
+      try {
+        if (Date.now() - fs.statSync(reapDir).mtimeMs > 30000) {
+          fs.rmdirSync(reapDir); fs.mkdirSync(reapDir); reaper = true;
+        }
+      } catch (_) { /* someone else won the orphan-clear; refuse below */ }
+    }
+  }
+  if (!reaper) { cleanupTmp(); return null; }
+
+  // Sole reaper. Remove the stale lock — but re-check staleness first, so we never delete a lock
+  // a fresh publisher created in the gap between our alive-check and here.
+  try {
+    const held = fs.readFileSync(lockPath, 'utf8').trim();
+    const pid = Number(held);
+    let a = false;
+    if (held && Number.isInteger(pid) && pid > 0) {
+      try { process.kill(pid, 0); a = true; } catch (err) { a = (err.code === 'EPERM'); }
+    }
+    if (!a) fs.unlinkSync(lockPath);   // still stale — clear it
+    // if a live holder appeared, leave it; our publish below will EEXIST and we refuse
+  } catch (_) { /* already gone — fine, publish will create it */ }
+
+  r = publish();
+  try { fs.rmdirSync(reapDir); } catch (_) {}
+  cleanupTmp();
+  if (r !== 'won') return null;
+
+  // Final safety net, independent of any primitive's concurrency quirks: the lock is ours only
+  // if it actually holds our pid. Any residual race collapses to a refuse here, never a second
+  // live watcher.
+  try { if (fs.readFileSync(lockPath, 'utf8').trim() !== mine) return null; } catch (_) { return null; }
+  return makeRelease(lockPath, mine);
+}
+
+module.exports = { classify, fnv1a, acquireLock, HEAD_BYTES };
 
 if (require.main === module) {
   const file = process.argv[2] || DEFAULT_TRANSCRIPT;
+  const LOCK = process.env.CONSONANCE_HEADWATCH_LOCK ||
+    path.join(path.dirname(LEDGER), 'head-watch.lock');
+  const release = acquireLock(LOCK);
+  if (!release) {
+    // Loud, and exit 0: for a scheduler this is the CORRECT outcome, not a failure, and a
+    // non-zero code here would make every logon-with-one-already-running look like a fault.
+    console.error(`head-watch: another live watcher holds ${LOCK} — not starting a second.`);
+    process.exit(0);
+  }
+  for (const sig of ['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGBREAK']) {
+    try { process.on(sig, () => { release(); process.exit(0); }); } catch (_) {}
+  }
+  process.on('exit', release);
   const emit = (obj) => {
     const line = JSON.stringify({ ts: new Date().toISOString(), file, ...obj });
     console.log(line);

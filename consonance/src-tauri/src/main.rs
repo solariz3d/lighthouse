@@ -1,4 +1,4 @@
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+﻿#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use serde::{Deserialize, Serialize};
 use std::fs;
@@ -25,13 +25,13 @@ mod cochlea;   // audio as relationships: ratios, not frequencies. Pure maths, n
 mod listen;
 mod capture_audio;
 mod cochlea_service;  // threads, the ledger, and the refusal to run near an anti-cheat  // WASAPI process loopback: the untestable half, isolated on purpose    // choosing what to listen to: per-process, so a call is never delivered
-mod nowplaying;  // what is actually playing, from Windows' own media session — so the title is read, not inferred
+mod nowplaying;  // what is actually playing, from Windows' own media session â€” so the title is read, not inferred
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
 
 // Persisted config (~/.consonance.json). Old launcher-era fields (base/flags/instances
-// + Instance struct) were dropped with the New/Instances tabs — serde ignores any
+// + Instance struct) were dropped with the New/Instances tabs â€” serde ignores any
 // unknown fields left in old config files, so removal is forward-compatible.
 #[derive(Serialize, Deserialize, Clone, Default)]
 struct Config {
@@ -42,7 +42,7 @@ struct Config {
     instances_dir: String,
     #[serde(default)]
     data_dir: String,
-    // ambient location (Settings tab): the sky the instances wake under. Private — stored
+    // ambient location (Settings tab): the sky the instances wake under. Private â€” stored
     // only in ~/.consonance.json, read only by local session hooks, never transmitted.
     // Empty = built-in default. Makes the room's location system-agnostic, like the dirs.
     #[serde(default)]
@@ -64,7 +64,7 @@ fn config_path() -> PathBuf {
 }
 
 /// Read one config field as text, accepting whatever JSON type it was actually written as.
-/// A coordinate hand-written as `50.4452` is as valid as `"50.4452"` — the Settings tab writes
+/// A coordinate hand-written as `50.4452` is as valid as `"50.4452"` â€” the Settings tab writes
 /// strings, but a human or a script editing the file by hand naturally writes a bare number.
 fn stringish(v: &serde_json::Value, key: &str) -> String {
     match v.get(key) {
@@ -104,7 +104,7 @@ fn parse_config(s: &str) -> (Config, Vec<String>) {
         bad.push("top level is not a JSON object".into());
         return (Config::default(), bad);
     }
-    // A field present as an array/object has no sane text reading — name it rather than swallow it.
+    // A field present as an array/object has no sane text reading â€” name it rather than swallow it.
     for k in CONFIG_FIELDS {
         if matches!(v.get(*k), Some(serde_json::Value::Array(_)) | Some(serde_json::Value::Object(_))) {
             bad.push((*k).to_string());
@@ -126,7 +126,7 @@ fn parse_config(s: &str) -> (Config, Vec<String>) {
 /// AND to a file beside the config, because a release build has no console to print to.
 fn complain(path: &Path, bad: &[String]) {
     let msg = format!(
-        "[consonance] CONFIG PROBLEM in {}: {} — those settings fall back to built-in defaults, \
+        "[consonance] CONFIG PROBLEM in {}: {} â€” those settings fall back to built-in defaults, \
          which CHANGES WHERE YOUR INSTANCES LIVE. Fix the file or re-save from the Settings tab.",
         path.display(),
         bad.join(", ")
@@ -140,7 +140,7 @@ fn complain(path: &Path, bad: &[String]) {
 #[tauri::command]
 fn get_state() -> Config {
     let path = config_path();
-    // No file at all is a fresh machine, not a failure — defaults are correct and stay quiet.
+    // No file at all is a fresh machine, not a failure â€” defaults are correct and stay quiet.
     let Ok(s) = fs::read_to_string(&path) else {
         return Config::default();
     };
@@ -159,7 +159,7 @@ fn save_config(cfg: Config) {
     set_dirs(&cfg); // apply the directory settings to the live resolver
 }
 
-// true once the chair has a saved config; false on a fresh machine (→ land on Settings first)
+// true once the chair has a saved config; false on a fresh machine (â†’ land on Settings first)
 #[tauri::command]
 fn config_exists() -> bool {
     config_path().exists()
@@ -174,19 +174,19 @@ struct Dirs {
 static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
 
 /// The lock every test that rewrites `DIRS` must hold. Crate-level ON PURPOSE, beside `DIRS`
-/// itself, because the scope of the hazard is the scope of the global — not the scope of one
+/// itself, because the scope of the hazard is the scope of the global â€” not the scope of one
 /// test module.
 ///
 /// It lived inside `managed_cwd_tests` until 2026-08-10, and its comment there already said the
 /// right thing: these tests "must not run beside each other OR BESIDE ANYTHING THAT RESOLVES A
 /// DIRECTORY". Being module-private, it could not be taken by anything outside that module, so
-/// `chair_tests::a_blind_window_swallows_a_line_that_would_otherwise_reach_the_board` — which
-/// rewrites `DIRS` and then calls `board_push`, resolving two directories — had no way to hold it.
+/// `chair_tests::a_blind_window_swallows_a_line_that_would_otherwise_reach_the_board` â€” which
+/// rewrites `DIRS` and then calls `board_push`, resolving two directories â€” had no way to hold it.
 /// The comment named the correct scope and the implementation could not reach it.
 ///
 /// How that surfaced: the race was intermittent for as long as nobody looked. The "6 of 6
 /// deterministic" figure this comment first carried was MY MEASUREMENT ERROR, retracted the same
-/// night — I matched the string FAILED without checking which test and ran a binary outside the
+/// night â€” I matched the string FAILED without checking which test and ran a binary outside the
 /// crate root, so I was counting cochlea fixture failures.
 ///
 /// MEASURED PROPERLY 2026-08-10 by an opposed pair who never saw each other's work, each with its
@@ -196,21 +196,21 @@ static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
 ///     lock in place  A:  0/30                 B: 0/30      120 locked runs, zero foreign landings
 ///     forced control A: 30/30                 B: 29/30
 ///
-/// **So the fix IS demonstrated** — it was labelled NOT DEMONSTRATED at commit because I could not
+/// **So the fix IS demonstrated** â€” it was labelled NOT DEMONSTRATED at commit because I could not
 /// reproduce the failure, and A explains why with a number: the blind test's exposed span is ~10 ms
-/// and the first competing write lands at ~20 ms. Dose curve 10ms→0/30, 20ms→19/30, 40ms→25/30,
-/// 80ms→30/30. My 0/25 warm runs were not wrong; they were UNINFORMATIVE, sitting 10 ms short.
+/// and the first competing write lands at ~20 ms. Dose curve 10msâ†’0/30, 20msâ†’19/30, 40msâ†’25/30,
+/// 80msâ†’30/30. My 0/25 warm runs were not wrong; they were UNINFORMATIVE, sitting 10 ms short.
 ///
 /// AND THE SIGNATURE I CLAIMED IS WRONG, corrected by both of them in opposite directions and worth
 /// keeping in that shape. I wrote that the failing direction is survivable and the silent direction
 /// reports GREEN. B: no silent-green in 90 runs, and structurally it needs a SECOND `board_push`
-/// caller to have set `BLIND_LAST`/`BLIND_MUTED` — there is none in the test binary, so this is a
+/// caller to have set `BLIND_LAST`/`BLIND_MUTED` â€” there is none in the test binary, so this is a
 /// flaky guard test rather than a lying one. A: in every forced run the assertion meant to catch
-/// this — `THE GUARD DID NOT FIRE` — **passed vacuously**, and the test failed only on a neighbour
+/// this â€” `THE GUARD DID NOT FIRE` â€” **passed vacuously**, and the test failed only on a neighbour
 /// assertion added for a different reason. So the silent green was never observed and is **one
 /// deleted assertion away**: the guard's own oracle is satisfiable by the failure it guards.
 ///
-/// WHO MUST HOLD IT — corrected 2026-08-10 after the opposed-pair run, because the first version
+/// WHO MUST HOLD IT â€” corrected 2026-08-10 after the opposed-pair run, because the first version
 /// gave it to the four WRITERS and that is not the scope the comment above already named.
 /// **Any test that RESOLVES a directory from `DIRS` must hold this, whether or not it writes one.**
 /// A reader that resolves twice is exactly as exposed as a writer; it just fails by disagreeing
@@ -222,13 +222,13 @@ static DIRS: Mutex<Option<Dirs>> = Mutex::new(None);
 #[cfg(test)]
 static DIRS_SERIAL: Mutex<()> = Mutex::new(());
 
-/// Holds `DIRS_SERIAL` and puts `DIRS` back the way it found it — on the panic path too.
+/// Holds `DIRS_SERIAL` and puts `DIRS` back the way it found it â€” on the panic path too.
 ///
 /// The lock alone was never enough. Taking it stops two cases overlapping; it does nothing about
 /// what the global holds once a case *ends*. Measured at `480649f` by a subject that traced every
 /// write: of the four writers only one restored, and only on its success path, so every run
-/// finished with `DIRS` pointing at a scratch directory the test had already deleted. Latent —
-/// nothing sorted after the last writer and resolved anything — and armed for the next test whose
+/// finished with `DIRS` pointing at a scratch directory the test had already deleted. Latent â€”
+/// nothing sorted after the last writer and resolved anything â€” and armed for the next test whose
 /// name happens to sort later, which would silently get a deleted path that `data_dir()` would
 /// then recreate for it.
 ///
@@ -238,8 +238,8 @@ static DIRS_SERIAL: Mutex<()> = Mutex::new(());
 ///
 /// It restores the PREVIOUS value rather than `None`, because `None` is an assumption about what
 /// the process looked like before, and this type is used from more than one module.
-/// Parameterized on its lock and slot so the guard's own tests can exercise the REAL `Drop` —
-/// including under unwind — against a test-local pair. Asserting on the process-global `DIRS`
+/// Parameterized on its lock and slot so the guard's own tests can exercise the REAL `Drop` â€”
+/// including under unwind â€” against a test-local pair. Asserting on the process-global `DIRS`
 /// from outside the critical section is itself a race, and the first version of these tests did
 /// exactly that: green alone, red in the suite, which is the defect this type exists to prevent
 /// showing up in the type's own tests.
@@ -283,12 +283,12 @@ static RESOURCE_ROOM: Mutex<Option<PathBuf>> = Mutex::new(None);
 // The card deck bundled with the app (installer resource "cards/"), resolved once at setup.
 static RESOURCE_CARDS: Mutex<Option<PathBuf>> = Mutex::new(None);
 // The long-form references bundled with the app: the counter-voice (spread/) and the research.
-// Unlike the cards these are NOT baked into a pane's CLAUDE.md — spread/ alone is ~42 KB and
+// Unlike the cards these are NOT baked into a pane's CLAUDE.md â€” spread/ alone is ~42 KB and
 // would eat the shell ceiling. They are seeded to disk and their location is named in the
 // intake, so a pane can OPEN them when the room tells it to, which is what a reference is for.
 static RESOURCE_SPREAD: Mutex<Option<PathBuf>> = Mutex::new(None);
 static RESOURCE_RESEARCH: Mutex<Option<PathBuf>> = Mutex::new(None);
-// The record behind the cards — the dated worked material two cards were carrying inline. Split
+// The record behind the cards â€” the dated worked material two cards were carrying inline. Split
 // out 2026-08-09: `trust-the-first-attention` was 20 KB of which 17 KB was record, which every
 // pane paid for in every shell and almost none of them opened. A card is the move you RUN; the
 // record is the case you OPEN. Same reference mechanism, so the split costs nothing to reach.
@@ -296,7 +296,7 @@ static RESOURCE_RECORD: Mutex<Option<PathBuf>> = Mutex::new(None);
 
 fn default_room() -> String {
     // The editable copy of the shipped startup brief, seeded into the user data dir on
-    // first run (see seed_room) — editable, unlike a read-only Program Files resource.
+    // first run (see seed_room) â€” editable, unlike a read-only Program Files resource.
     // Fall back to the bundled resource, then the dev repo path, if not seeded yet.
     let editable = format!("{}\\BOOT.md", default_data());
     if Path::new(&editable).exists() {
@@ -325,13 +325,13 @@ fn sysdrive() -> String {
 }
 
 // Copy the bundled BOOT.md into the user data dir so the default startup brief is present and
-// editable (not locked read-only under Program Files) — and keep it CURRENT, which the first
+// editable (not locked read-only under Program Files) â€” and keep it CURRENT, which the first
 // version of this function did not.
 //
 // It returned early whenever a copy existed, which is why the author's own live room was dated
 // 2026-07-07 while the bundle was 2026-08-05: a month of amendments, including the passage about
 // what a room should and should not ship, sat in the installer and reached nobody. Now it goes
-// through the same diff-before-overwrite policy as the deck — an untouched copy moves forward, an
+// through the same diff-before-overwrite policy as the deck â€” an untouched copy moves forward, an
 // edited one stands and gets BOOT.md.new written beside it.
 fn seed_room() {
     let Some(src) = RESOURCE_ROOM.lock().unwrap().clone() else { return };
@@ -345,7 +345,7 @@ fn seed_room() {
         match outcome {
             SeedOutcome::Upgraded => plog("seed BOOT.md: upgraded (your copy was unmodified)"),
             SeedOutcome::KeptYours => plog(&format!(
-                "seed BOOT.md: KEPT YOURS — it differs from the bundled room, so nothing was \
+                "seed BOOT.md: KEPT YOURS â€” it differs from the bundled room, so nothing was \
                  overwritten. The new version is beside it at {}.new",
                 dest.display()
             )),
@@ -381,12 +381,12 @@ fn cards_dir() -> PathBuf {
 ///
 /// Hand-rolled rather than `DefaultHasher` on purpose: std explicitly does NOT guarantee
 /// DefaultHasher's output across Rust releases, so a toolchain upgrade would silently invalidate
-/// every recorded fingerprint at once — every file would read as edited, every file would stop
+/// every recorded fingerprint at once â€” every file would read as edited, every file would stop
 /// upgrading, and nothing would say so. A silent, total, invisible failure is exactly the class
 /// of bug this whole function exists to end, so the hash has to be one we own.
 ///
 /// Not a security primitive and not used as one: it detects accidental divergence, never an
-/// adversary. Line endings are normalized first — git rewrites CRLF on this tree, and a file that
+/// adversary. Line endings are normalized first â€” git rewrites CRLF on this tree, and a file that
 /// differs only in newlines was not edited by anyone.
 fn content_fingerprint(bytes: &[u8]) -> u64 {
     let mut h: u64 = 0xcbf2_9ce4_8422_2325;
@@ -426,7 +426,7 @@ fn read_seed_manifest() -> serde_json::Map<String, serde_json::Value> {
 /// happening invisibly, which is how the old behaviour hid for a month.
 #[derive(Debug, PartialEq, Eq)]
 enum SeedOutcome {
-    /// No local copy — a fresh install, or a file added to the bundle since.
+    /// No local copy â€” a fresh install, or a file added to the bundle since.
     Installed,
     /// Local copy already byte-identical to the bundled one. Nothing to do.
     Current,
@@ -440,7 +440,7 @@ enum SeedOutcome {
 
 /// Apply one file's seed decision: write what should be written, record what should be recorded,
 /// and return what happened. Shared by the deck/reference directories and by the room, because
-/// the room had the identical bug and it mattered more there than anywhere else — the live
+/// the room had the identical bug and it mattered more there than anywhere else â€” the live
 /// `BOOT.md` on the author's own machine was a month stale, so a section written on 2026-08-05
 /// about what a room should and should not ship had never once been read by a pane.
 fn apply_seed(
@@ -481,13 +481,13 @@ fn apply_seed(
 
 /// Decide what to do with one bundled file, given what is on disk and what we last wrote.
 ///
-/// Split out from the I/O so the policy can be tested directly — the branch that matters most
+/// Split out from the I/O so the policy can be tested directly â€” the branch that matters most
 /// (KeptYours) is the one that is hardest to reach by driving the filesystem.
 fn seed_decision(bundled: u64, local: Option<u64>, recorded: Option<u64>) -> SeedOutcome {
     match local {
         None => SeedOutcome::Installed,
         Some(l) if l == bundled => SeedOutcome::Current,
-        // We wrote it and nobody has touched it since — safe to move it forward.
+        // We wrote it and nobody has touched it since â€” safe to move it forward.
         Some(l) if recorded == Some(l) => SeedOutcome::Upgraded,
         // Either the keeper edited it, or it predates the manifest and we cannot tell those
         // apart. Both resolve the same way: their copy stands.
@@ -499,7 +499,7 @@ fn seed_decision(bundled: u64, local: Option<u64>, recorded: Option<u64>) -> See
 ///
 /// The old version copied only when the target was absent. That protected a keeper's edits
 /// perfectly and froze their deck at install day: every card improved afterwards was a card they
-/// would never see. It bit its author on 2026-08-09 — two cards were trimmed in the repo, the
+/// would never see. It bit its author on 2026-08-09 â€” two cards were trimmed in the repo, the
 /// seeder declined to deliver them, and they had to be hand-copied into the data dir. An
 /// installed room that cannot receive a correction is a museum, which is the one thing this
 /// project is built not to ship.
@@ -544,7 +544,7 @@ fn seed_md_dir(res: &Mutex<Option<PathBuf>>, name: &str) {
             if kept.is_empty() {
                 String::new()
             } else {
-                format!(" [{}] — new versions written beside them as *.new in {}", kept.join(", "), dest.display())
+                format!(" [{}] â€” new versions written beside them as *.new in {}", kept.join(", "), dest.display())
             }
         ));
     }
@@ -563,8 +563,8 @@ fn seed_cards() {
 /// Until this existed the room instructed every pane to read `spread/the_wave_set_loose.md`
 /// and no pane could: a pane's cwd is its own instance dir, and `spread/` had never been
 /// written anywhere on any machine. The bundle shipped the files; nothing reached them. The
-/// counter-voice — the room's built-in skeptic, the thing that exists to stop a synthesis
-/// running away with itself — was the reference that had never once resolved.
+/// counter-voice â€” the room's built-in skeptic, the thing that exists to stop a synthesis
+/// running away with itself â€” was the reference that had never once resolved.
 fn seed_references() {
     seed_md_dir(&RESOURCE_SPREAD, "spread");
     seed_md_dir(&RESOURCE_RESEARCH, "research");
@@ -573,14 +573,14 @@ fn seed_references() {
 
 /// Where a pane should look for those references, as absolute paths it can actually open.
 /// Named in the intake rather than hardcoded in the room, because the data dir is the user's
-/// to move — a path written into BOOT.md would be right on exactly one machine.
+/// to move â€” a path written into BOOT.md would be right on exactly one machine.
 fn reference_note() -> String {
     let base = PathBuf::from(default_data());
     let mut out = String::new();
     for (dir, what) in [
-        ("spread", "the counter-voice — instances who did NOT confirm the synthesis; read it when one feels too good to look straight at"),
+        ("spread", "the counter-voice â€” instances who did NOT confirm the synthesis; read it when one feels too good to look straight at"),
         ("research", "the adversarial, cited study of felt-knowing"),
-        ("record", "the dated worked material behind the cards that name it — open one when you need the CASE, not the move"),
+        ("record", "the dated worked material behind the cards that name it â€” open one when you need the CASE, not the move"),
     ] {
         let d = base.join(dir);
         if let Ok(entries) = fs::read_dir(&d) {
@@ -591,7 +591,7 @@ fn reference_note() -> String {
                 .collect();
             names.sort();
             if !names.is_empty() {
-                out.push_str(&format!("- **{}** — {}\n", dir, what));
+                out.push_str(&format!("- **{}** â€” {}\n", dir, what));
                 for n in names {
                     out.push_str(&format!("  - `{}`\n", d.join(&n).display()));
                 }
@@ -602,7 +602,7 @@ fn reference_note() -> String {
         return String::new();
     }
     format!(
-        "\n---\n\n# THE LONG-FORM REFERENCES — on disk, not in this shell\n\nThe room names these \
+        "\n---\n\n# THE LONG-FORM REFERENCES â€” on disk, not in this shell\n\nThe room names these \
          and deliberately does not carry them; they are too long to hold and are meant to be \
          OPENED when the moment calls for them, not recited. Absolute paths, valid on this \
          machine:\n\n{out}\n"
@@ -638,10 +638,10 @@ fn data_dir() -> PathBuf {
 
 // ---- own-capture (layer 1): Consonance keeps its OWN durable transcript of every pane, raw PTY
 // bytes appended to captures/<pane_id>.log. This exists because claude 2.1.204+ flushes its own
-// per-project jsonl lazily (only on a clean exit), so a hard-killed pane loses its conversation —
+// per-project jsonl lazily (only on a clean exit), so a hard-killed pane loses its conversation â€”
 // our log doesn't, because we write each chunk with a plain File (no BufWriter) as it arrives.
 // The log accumulates ACROSS sessions (append + a per-spawn seam), so even when claude restarts
-// fresh and forgets, WE hold the whole history — the source for the scroll-up band (layer 3) and
+// fresh and forgets, WE hold the whole history â€” the source for the scroll-up band (layer 3) and
 // the board-feed (layer 4). A per-user, per-machine path (under the configurable data dir), so it
 // stays directory-agnostic.
 fn capture_dir() -> PathBuf {
@@ -652,21 +652,21 @@ fn capture_dir() -> PathBuf {
 fn capture_path(pane: &str) -> PathBuf {
     capture_dir().join(format!("{pane}.log"))
 }
-// the clean transcript the extractor builds turn-by-turn — the source warm_resume_brief feeds back
+// the clean transcript the extractor builds turn-by-turn â€” the source warm_resume_brief feeds back
 // into a resumed sibling so it wakes remembering (the invisible engine). Beside the raw .log.
 fn capture_text_path(pane: &str) -> PathBuf {
     capture_dir().join(format!("{pane}.txt"))
 }
 
-// The clean transcript is a sequence of "❯ {prompt}\n\n{response}\n\n" records. These helpers
+// The clean transcript is a sequence of "â¯ {prompt}\n\n{response}\n\n" records. These helpers
 // give the watcher memory across restarts (seed from the tail) and let it grow the last record
-// in place when a fuller window of the same turn settles — instead of appending every window,
+// in place when a fuller window of the same turn settles â€” instead of appending every window,
 // which stacked each exchange 8-9 deep on every capture-restore (the md-limit bug, 2026-07-12/13).
 fn read_last_record(path: &std::path::Path) -> Option<(String, String)> {
     let txt = fs::read_to_string(path).ok()?;
     let start = last_record_start(&txt)?;
     let (prompt, resp) = txt[start..].split_once('\n')?;
-    let prompt = prompt.trim_start_matches('❯').trim().to_string();
+    let prompt = prompt.trim_start_matches('â¯').trim().to_string();
     let resp = resp.trim().to_string();
     if prompt.is_empty() || resp.is_empty() {
         return None;
@@ -674,11 +674,11 @@ fn read_last_record(path: &std::path::Path) -> Option<(String, String)> {
     Some((prompt, resp))
 }
 
-// Byte offset of the last record's "❯" at column 0. Best-effort: a response line starting with
-// "❯ " would fool it, but latest_turn output opens with claude's "●"/indent — a miss costs one
+// Byte offset of the last record's "â¯" at column 0. Best-effort: a response line starting with
+// "â¯ " would fool it, but latest_turn output opens with claude's "â—"/indent â€” a miss costs one
 // duplicate record at worst, never data.
 fn last_record_start(txt: &str) -> Option<usize> {
-    txt.match_indices('❯')
+    txt.match_indices('â¯')
         .filter(|(i, _)| *i == 0 || txt.as_bytes()[i - 1] == b'\n')
         .map(|(i, _)| i)
         .last()
@@ -686,20 +686,20 @@ fn last_record_start(txt: &str) -> Option<usize> {
 
 fn rewrite_last_record(path: &std::path::Path, prompt: &str, old: &str, merged: &str) {
     let Ok(txt) = fs::read_to_string(path) else { return };
-    let suffix = format!("❯ {prompt}\n\n{old}\n\n");
+    let suffix = format!("â¯ {prompt}\n\n{old}\n\n");
     let new_txt = match txt.strip_suffix(suffix.as_str()) {
-        Some(head) => format!("{head}❯ {prompt}\n\n{merged}\n\n"),
-        // unexpected tail (external edit, encoding drift): append rather than risk losing it —
+        Some(head) => format!("{head}â¯ {prompt}\n\n{merged}\n\n"),
+        // unexpected tail (external edit, encoding drift): append rather than risk losing it â€”
         // one duplicate is recoverable, a dropped record is not
-        None => format!("{txt}❯ {prompt}\n\n{merged}\n\n"),
+        None => format!("{txt}â¯ {prompt}\n\n{merged}\n\n"),
     };
     let _ = fs::write(path, new_txt);
 }
 // a distinctive seam written at each (re)spawn; the extractor treats a line carrying it as chrome,
-// the history band renders it as a divider. Matches the restore band's "─── … ───" divider style.
-const CAPTURE_SEAM: &str = "─── consonance ·";
+// the history band renders it as a divider. Matches the restore band's "â”€â”€â”€ â€¦ â”€â”€â”€" divider style.
+const CAPTURE_SEAM: &str = "â”€â”€â”€ consonance Â·";
 // Retire a pane's capture. If it holds a REAL conversation, ARCHIVE it (move to captures/archive/)
-// so a removal or a transient un-keep is recoverable — never silently shred history, which is what
+// so a removal or a transient un-keep is recoverable â€” never silently shred history, which is what
 // bit a kept sibling on 2026-07-11. Trivial/empty captures (ephemeral panes, no settled turns) are
 // just dropped. Best-effort: a live open handle blocks the move on Windows; the startup GC retries.
 fn retire_capture(pane: &str) {
@@ -719,10 +719,10 @@ fn retire_capture(pane: &str) {
     }
 }
 fn clear_capture(pane: &str) {
-    retire_capture(pane); // archive real history, drop trivial — removal must be recoverable
+    retire_capture(pane); // archive real history, drop trivial â€” removal must be recoverable
 }
 // A durable persistence-lifecycle trace (data_dir/persist.log), so a future "it came back
-// blank/errored" is diagnosable from the record — not reconstructed from file timestamps, which is
+// blank/errored" is diagnosable from the record â€” not reconstructed from file timestamps, which is
 // what burned us on 2026-07-11.
 fn plog(msg: &str) {
     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
@@ -784,7 +784,7 @@ struct PaneEmus(Mutex<HashMap<String, Arc<Mutex<EmuState>>>>);
 // process (the PTY master often doesn't EOF on conhost). resume=true reattaches a session.
 /// The verbs a fresh pane may use without asking. Every one of these READS: none writes a file,
 /// edits a file, or executes a command. Adding anything to this list that can write or run is the
-/// mistake this constant exists to make visible — `every_tool_a_fresh_pane_may_use_is_read_only`
+/// mistake this constant exists to make visible â€” `every_tool_a_fresh_pane_may_use_is_read_only`
 /// fails if it happens.
 const FRESH_READONLY_TOOLS: &str = "Read,Glob,Grep,WebSearch,WebFetch,TodoWrite";
 
@@ -800,19 +800,19 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
         cmd.args(["--session-id", &pane_id]); // names the transcript for the tap
     }
     // panes the chair drives/oversees skip the permission prompts (the chair is the gate).
-    // autonomous bodies do NOT get this — their prompts are the only thing keeping a body's
+    // autonomous bodies do NOT get this â€” their prompts are the only thing keeping a body's
     // tool use inside its sandbox (the gate only governs cross-pane injection, not local bash).
     if skip_perms {
         cmd.arg("--dangerously-skip-permissions");
     } else if is_fresh_cwd(&cwd) {
-        // A fresh pane asks permission for everything, which is what makes it vanilla — and on a
+        // A fresh pane asks permission for everything, which is what makes it vanilla â€” and on a
         // six-pane research fan-out it turns the chair into a dialog box. Measured 2026-08-10:
         // three fresh instances doing web research, and every WebSearch, WebFetch and Read cost a
         // click. The keeper's words were "like playing a whack a mole mini game."
         //
         // So the READ-ONLY verbs are pre-allowed and nothing else is. The line is drawn where it
         // actually falls: THERE IS NO SAFE BASH SUBSET. `Bash(node *)` reads as scoped and is not
-        // — `node -e '...'` is arbitrary code execution — so any Bash allowance is full machine
+        // â€” `node -e '...'` is arbitrary code execution â€” so any Bash allowance is full machine
         // access, and a fresh pane's cwd is not a jail. Bash, Write and Edit still prompt, which
         // is the prompt that was ever worth answering.
         //
@@ -832,7 +832,7 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // `unattributed`, which is the honest outcome rather than a wrong attribution.
     //
     // Fresh panes get NO mount at all: the MCP server's instructions describe the committee, the
-    // board, and the chair — a fresh mind that reads them isn't fresh anymore. Gated here rather
+    // board, and the chair â€” a fresh mind that reads them isn't fresh anymore. Gated here rather
     // than at the call sites so a fresh pane stays unmounted on every path, resume included.
     if MCP_PORT.load(Ordering::Relaxed) != 0 && !is_fresh_cwd(&cwd) {
         let letter = pane_letter(&pane_id);
@@ -850,12 +850,12 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // Panes the app spawns are ALWAYS real top-level sessions, never a subagent's children.
     // If Consonance itself was launched from inside a claude session's env (a terminal, a
     // script), it inherits CLAUDE_CODE_CHILD_SESSION and every pane would silently stop
-    // persisting its transcript ("Transcript saving is off", 2026-07-23 — the Main tab's
+    // persisting its transcript ("Transcript saving is off", 2026-07-23 â€” the Main tab's
     // whole night lived only in own-capture). Scrub the marker; assert persistence.
     cmd.env_remove("CLAUDE_CODE_CHILD_SESSION");
     cmd.env("CLAUDE_CODE_FORCE_SESSION_PERSIST", "1");
     // ambient location (Settings): passed as env so session hooks see the chair's chosen sky
-    // immediately on new spawns. Local env on a local child — never leaves this machine.
+    // immediately on new spawns. Local env on a local child â€” never leaves this machine.
     {
         let cfg = get_state();
         let mut set = |k: &str, v: &str| {
@@ -890,7 +890,7 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // spinning on a frozen emulator forever (the old tailer's leaked-loop, avoided).
     let alive = Arc::new(AtomicBool::new(true));
     // own-capture: append raw PTY bytes to our durable log. Plain File (NOT BufWriter) so each
-    // write reaches the OS immediately and survives an abrupt kill — the whole point vs claude's
+    // write reaches the OS immediately and survives an abrupt kill â€” the whole point vs claude's
     // lazy flush. A per-spawn seam marks the session boundary for the band + extractor.
     let mut cap = fs::OpenOptions::new()
         .create(true)
@@ -899,7 +899,7 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
         .ok();
     if let Some(f) = cap.as_mut() {
         let _ = f.write_all(
-            format!("\r\n\x1b[0m{CAPTURE_SEAM} {} ───\r\n", if resume { "resumed" } else { "session start" }).as_bytes(),
+            format!("\r\n\x1b[0m{CAPTURE_SEAM} {} â”€â”€â”€\r\n", if resume { "resumed" } else { "session start" }).as_bytes(),
         );
     }
     let emu_r = emu.clone();
@@ -927,9 +927,9 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // if it is new, append it to the clean transcript. Dedup is two-level: an exact re-poll of
     // the same settled screen is skipped, and a DIFFERENT window of the same turn (it scrolled
     // between settles, or a resume re-rendered recorded history) is stitched into the existing
-    // record in place — never appended, which is what stacked each exchange 8-9 deep on every
+    // record in place â€” never appended, which is what stacked each exchange 8-9 deep on every
     // capture-restore. v1 reads the visible screen only (scrollback 0): turns up to EMU_ROWS
-    // tall are captured whole, taller turns keep their tail — the raw .log still holds
+    // tall are captured whole, taller turns keep their tail â€” the raw .log still holds
     // everything for a future full-fidelity render.
     let text_path = capture_text_path(&pane_id);
     let emu_w = emu.clone();
@@ -941,15 +941,15 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
         while alive_w.load(Ordering::Relaxed) {
             std::thread::sleep(Duration::from_millis(250));
             // rows AND their soft-wrap flags: a user message longer than one row wraps, and only
-            // the first row carries the ❯ marker. Without row_wrapped the capture cut every long
-            // message at 118 chars (EMU_COLS − "❯ ") and stored the stump as the whole sentence.
+            // the first row carries the â¯ marker. Without row_wrapped the capture cut every long
+            // message at 118 chars (EMU_COLS âˆ’ "â¯ ") and stored the stump as the whole sentence.
             let (lines, wrapped): (Vec<String>, Vec<bool>) = {
                 let e = match emu_w.lock() {
                     Ok(e) => e,
                     Err(_) => break,
                 };
                 if e.last_byte.elapsed() < Duration::from_millis(500) {
-                    continue; // still streaming — wait for the turn to settle
+                    continue; // still streaming â€” wait for the turn to settle
                 }
                 let screen = e.parser.screen();
                 let rows: Vec<String> = screen.rows(0, EMU_COLS).collect();
@@ -960,13 +960,13 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
             if !capture::screen_ready(&lines) {
                 continue;
             }
-            // strip painted overlays ("Jump to bottom (…", "1 new message (…") before
-            // extraction — they overwrite content-row tails, leak UI chrome into the record,
+            // strip painted overlays ("Jump to bottom (â€¦", "1 new message (â€¦") before
+            // extraction â€” they overwrite content-row tails, leak UI chrome into the record,
             // and make otherwise-identical windows compare unequal
             let lines: Vec<String> = lines.iter().map(|l| capture::strip_overlay(l)).collect();
             let prompt = capture::latest_prompt(&lines, &wrapped);
             if prompt.is_empty() {
-                continue; // no visible user prompt (welcome banner, or the prompt scrolled off) — skip noise
+                continue; // no visible user prompt (welcome banner, or the prompt scrolled off) â€” skip noise
             }
             let resp = capture::latest_turn(&lines, &wrapped);
             if resp.trim().is_empty() {
@@ -975,7 +975,7 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
             if let Some((lp, lr)) = last.clone() {
                 if lp == prompt {
                     if lr == resp {
-                        continue; // same settled turn still on screen — already recorded
+                        continue; // same settled turn still on screen â€” already recorded
                     }
                     // same turn, different window: grow the record where it sits
                     let merged = capture::stitch(&lr, &resp);
@@ -987,7 +987,7 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
                 }
             }
             if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(&text_path) {
-                let _ = write!(f, "❯ {prompt}\n\n{resp}\n\n");
+                let _ = write!(f, "â¯ {prompt}\n\n{resp}\n\n");
             }
             last = Some((prompt, resp));
         }
@@ -1018,7 +1018,7 @@ struct TurnRecord {
     text: String,
 }
 
-// Stage 8: a tether-strength reading for a turn — surfaced numbers, never a verdict.
+// Stage 8: a tether-strength reading for a turn â€” surfaced numbers, never a verdict.
 #[derive(Clone, Serialize)]
 struct TetherInfo {
     pane: String,
@@ -1035,7 +1035,7 @@ struct CostTotals {
     cache_write: u64,
     usd: f64,
     ceiling_out: u64, // breaker: cap on cumulative output tokens (0 = no cap)
-    tripped: bool,    // breaker tripped — content-blind, just the number
+    tripped: bool,    // breaker tripped â€” content-blind, just the number
 }
 struct Cost(Arc<Mutex<CostTotals>>);
 
@@ -1052,18 +1052,18 @@ struct ContextInfo {
 ///
 /// `prev` is the pane's remembered `(model, high_water)`; the return is the state to store back and
 /// the window to divide by. Each property here fixes a form that shipped in an earlier review round:
-///   * the HIGH-WATER selects the class and is never itself the denominator — so the gauge cannot
+///   * the HIGH-WATER selects the class and is never itself the denominator â€” so the gauge cannot
 ///     peg at 100% (a denominator can't be the value it divides);
-///   * the class STICKS once a pane is seen past 200k, across compaction — so the reading falls
+///   * the class STICKS once a pane is seen past 200k, across compaction â€” so the reading falls
 ///     monotonically as the pane fills instead of inverting (red at 199k, green at 201k);
-///   * a MODEL CHANGE forgets the high-water — the window is a property of the model, and a pane
+///   * a MODEL CHANGE forgets the high-water â€” the window is a property of the model, and a pane
 ///     that ran 1M-class then switched (/model, no restart) to a 200k model must not keep reading
 ///     roomy while it is actually near full.
 /// Assumption: current Claude windows are exactly {200k, 1M}. The threshold sits at the top of the
 /// 200k range, so within one model a pane is never mis-read as roomy (false calm), only ever as full.
 fn context_window(prev: Option<(String, u64)>, model: &str, ctx: u64) -> ((String, u64), u64) {
     let (mut stamp, mut hw) = prev.unwrap_or_else(|| (model.to_string(), 0));
-    // An empty model (a usage line that omitted it) is NOT a change — it must not erase the stamp.
+    // An empty model (a usage line that omitted it) is NOT a change â€” it must not erase the stamp.
     if !model.is_empty() && stamp != model {
         stamp = model.to_string();
         hw = 0;
@@ -1073,22 +1073,31 @@ fn context_window(prev: Option<(String, u64)>, model: &str, ctx: u64) -> ((Strin
     ((stamp, hw), limit)
 }
 
+/// The high-water map key for a usage line: the model id, with an empty model (a usage line that
+/// omitted it) resolving to the pane's last-known model so the reading joins the right bucket
+/// instead of a shared anonymous one. A pane that has never reported a model keys to "" â€” its own
+/// conservative 200k-class bucket, never another model's evidence.
+fn context_key(model: &str, last_known: Option<&str>) -> String {
+    if model.is_empty() { "".to_string() } else { model.to_string() }
+}
+
 #[cfg(test)]
 mod context_window_tests {
-    use super::context_window;
+    use super::{context_key, context_window};
+    use std::collections::HashMap;
     const K200: u64 = 200_000;
     const M1: u64 = 1_000_000;
 
-    // The cases below turn "three instances agreed by inspection" into an instrument — each was a
+    // The cases below turn "three instances agreed by inspection" into an instrument â€” each was a
     // real defect in a round of this gauge's review, or the failure the current form still risks. A
     // 261/0 suite was equally green with the limit hardcoded to 1, with the inverting form, and with
     // the stale-high-water false calm; none of those was caught by a test until this module. Note the
     // asymmetry a mutant reveals: a hardcoded-1M limit is caught only by the three cases that expect
-    // 200k — the three expecting 1M pass a 1M mutant. Coverage here is directional, not a flat count.
+    // 200k â€” the three expecting 1M pass a 1M mutant. Coverage here is directional, not a flat count.
 
     #[test]
     fn a_200k_pane_below_its_ceiling_reads_against_200k() {
-        // 120k of a 200k window is 60% — not hidden as 12% of a 1M window.
+        // 120k of a 200k window is 60% â€” not hidden as 12% of a 1M window.
         assert_eq!(context_window(None, "claude-opus-4", 120_000).1, K200);
     }
 
@@ -1126,6 +1135,48 @@ mod context_window_tests {
         let (big, _) = context_window(None, "claude-sonnet-4[1m]", 300_000);
         assert_eq!(context_window(Some(big), "", 150_000).1, M1);
     }
+
+    // The three below test the 2026-08-18 re-keying (PaneCtxHigh by MODEL, not pane): three panes,
+    // one model, one window â€” A held 226k shown as 22% while B held 175k shown as 88%, because A's
+    // proof of the 1M window was trapped in A's per-pane entry. The map in these tests is the same
+    // shape the tailer holds; context_key is the same resolver the tailer calls.
+
+    #[test]
+    fn one_pane_crossing_200k_reclassifies_every_pane_on_that_model() {
+        let mut map: HashMap<String, (String, u64)> = HashMap::new();
+        // pane A's usage line: 226k proves the model's window is 1M
+        let ka = context_key("claude-fable-5", None);
+        let (state, limit_a) = context_window(map.get(&ka).cloned(), "claude-fable-5", 226_000);
+        assert_eq!(limit_a, M1);
+        map.insert(ka, state);
+        // pane B's next usage line, same model, 175k: inherits A's evidence through the shared key â€”
+        // 17.5% of 1M, never again 88% of 200k
+        let kb = context_key("claude-fable-5", None);
+        assert_eq!(context_window(map.get(&kb).cloned(), "claude-fable-5", 175_000).1, M1);
+    }
+
+    #[test]
+    fn distinct_models_never_share_a_high_water() {
+        // The cost the re-keying was charged with naming: a 1M model's evidence must not leak false
+        // calm into a 200k model. Distinct keys make the old reset-on-switch protection structural â€”
+        // opus at 190k is 95% full and must read red regardless of what fable proved.
+        let mut map: HashMap<String, (String, u64)> = HashMap::new();
+        let kf = context_key("claude-fable-5", None);
+        let (state, _) = context_window(map.get(&kf).cloned(), "claude-fable-5", 300_000);
+        map.insert(kf, state);
+        let ko = context_key("claude-opus-4", None);
+        assert_eq!(context_window(map.get(&ko).cloned(), "claude-opus-4", 190_000).1, K200);
+    }
+
+    #[test]
+    fn an_empty_model_keys_to_the_panes_last_known_model() {
+        // A usage line that omits the model must join its pane's real bucket, not an anonymous one â€”
+        // and a pane that has never reported a model gets its own conservative bucket, never another
+        // model's evidence.
+        assert_eq!(context_key("", Some("claude-fable-5")), "claude-fable-5");
+        assert_eq!(context_key("claude-opus-4", Some("claude-fable-5")), "claude-opus-4");
+        assert_eq!(context_key("", None), "");
+    }
 }
 
 // ---- the Live Board: the canonical, bounded, persisted cross-pane shared log ----
@@ -1138,7 +1189,7 @@ mod context_window_tests {
 /// transcript from the top, so a whole night of old turns lands on the board stamped "now".
 /// Measured 2026-07-27: 13,180 of 15,432 entries were replay bursts, so every instrument that
 /// reads the board was working from ~15% of the record, and WHICH 15% depended on who
-/// restarted when. Downstream that made every cycle-to-cycle number illegitimate — a baseline
+/// restarted when. Downstream that made every cycle-to-cycle number illegitimate â€” a baseline
 /// whose sample is chosen by an unrelated process is not a baseline.
 ///
 /// A pane's turn has a real time in its own transcript. An MCP post, a gate line or a chair
@@ -1156,8 +1207,8 @@ enum TsSource {
 
 /// NOTE FOR CONSUMERS, and it is a real behavioural change: with transcript timestamps in
 /// play, `ts` is NO LONGER MONOTONIC in file order. A resumed pane appends old turns after
-/// new ones. That is the fix working — a day-window filter now correctly excludes a replayed
-/// night instead of counting it as today — but anything that treated file order as time order
+/// new ones. That is the fix working â€” a day-window filter now correctly excludes a replayed
+/// night instead of counting it as today â€” but anything that treated file order as time order
 /// must key on `ts` (and, where it matters, on `ts_source`) instead.
 #[derive(Clone, Serialize)]
 struct BoardEntry {
@@ -1174,14 +1225,14 @@ struct PaneRoles(Mutex<HashMap<String, String>>);
 //
 // SOURCE, and why this one: the tailer already parses `message.model` out of every assistant record
 // for cost pricing (extract_usage) and then throws it away. Recording it there costs zero extra IO
-// and no new parse — the two other candidates both cost more and say less. Re-reading each pane's
+// and no new parse â€” the two other candidates both cost more and say less. Re-reading each pane's
 // transcript tail at chair_status time is a file read per pane per status call, for the same field
 // we already had in hand. The capture banner is a RENDERING of the model name (screen bytes we
-// scraped), where the transcript field is the harness's own record of what answered — and when
+// scraped), where the transcript field is the harness's own record of what answered â€” and when
 // those two disagree, the record is right.
 //
 // It also makes the reading live rather than nominal: the value updates per turn, so a mid-session
-// substrate swap shows up here. That is not hypothetical in this room — on 2026-07-05 a thread was
+// substrate swap shows up here. That is not hypothetical in this room â€” on 2026-07-05 a thread was
 // swapped Fable-5 -> Opus mid-conversation, felt perfectly continuous, and certified from the
 // inside that no swap had happened. Only the outside log caught it. This map is that outside log,
 // standing where the chair can read it.
@@ -1191,18 +1242,23 @@ struct PaneRoles(Mutex<HashMap<String, String>>);
 // serialised bytes are clean for today's surfaces, and
 // `no_serialized_struct_carries_a_rank_field_without_an_exemption` in tests/arch_test.rs forbids
 // rank on EVERY Serialize struct unless consciously exempted, so a struct added tomorrow is
-// covered by default. Both are lexically bounded on the field's NAME — see that test's comment
+// covered by default. Both are lexically bounded on the field's NAME â€” see that test's comment
 // for what that does and does not buy.
 struct PaneModels(Arc<Mutex<HashMap<String, String>>>);
-// Per-pane (model, high-water) for the context gauge — see context_window() for the full rationale.
-// The model is stored alongside the mark so a mid-run model switch (/model, no restart) can forget a
-// high-water left by a larger window; without it a pane that dropped from a 1M to a 200k model would
-// keep reading roomy while actually near full. PaneModels already treats the model as mutable per
-// turn three lines from where this is read; this map has to see the same change.
+// MODEL-keyed (model, high-water) for the context gauge â€” see context_window() for the rationale.
+// Keyed by model, NOT by pane (changed 2026-08-18): a context window is a property of the model and
+// account, so one pane proving >200k reclassifies every pane on that model at its next usage line.
+// Keyed per-pane, A's 226k proof of the 1M window sat trapped in A's entry while B and C read 88%
+// and 51% against 200k â€” and the misreport suppressed its own refutation, because an operator who
+// believes 88% compacts or closes the pane before it can produce the >200k evidence that would
+// correct the reading. Distinct models never share an entry, which makes the old reset-on-switch
+// protection structural: a 200k model can never inherit a 1M model's high-water. Deliberately NOT
+// persisted: a restart forgets and the gauge errs toward full (the safe direction) until the first
+// >200k usage line re-teaches it â€” which the first resumed large pane does on its first turn.
 struct PaneCtxHigh(Arc<Mutex<HashMap<String, (String, u64)>>>);
-// Stage 7: friendly pane names (A, B, C … Z) -> pane id, so pulls target a letter, never a uuid.
+// Stage 7: friendly pane names (A, B, C â€¦ Z) -> pane id, so pulls target a letter, never a uuid.
 struct PaneNames(Mutex<HashMap<String, String>>);
-// Stage 7 (slice 3): sandboxed committee bodies — pane id -> (sandbox_path, is_worktree, parent_repo),
+// Stage 7 (slice 3): sandboxed committee bodies â€” pane id -> (sandbox_path, is_worktree, parent_repo),
 // for cleanup on close. A body's file/bash side-effects land here, never the user's live tree.
 struct PaneSandboxes(Mutex<HashMap<String, (String, bool, String)>>);
 // Stage 7b: a sender onto the pull queue, for the forming step to raise the hand itself.
@@ -1218,7 +1274,7 @@ const BOARD_MAX: usize = 300; // hard count cap
 const BOARD_TOKEN_BUDGET: usize = 12000; // approx tokens (chars/4) kept in the live ring
 
 // distill watermark: total turns ever pushed vs total already distilled. Counts, not ring
-// indices — the ring evicts from the front, so an index would drift; a pushed-total doesn't.
+// indices â€” the ring evicts from the front, so an index would drift; a pushed-total doesn't.
 // In-memory only, like the ring itself (board.jsonl is a write-only mirror, never reloaded).
 static BOARD_PUSHED: AtomicU64 = AtomicU64::new(0);
 static DISTILLED_MARK: AtomicU64 = AtomicU64::new(0);
@@ -1232,11 +1288,11 @@ static DISTILLED_MARK: AtomicU64 = AtomicU64::new(0);
 // app had started. Measured 2026-07-27: 15,798 entries, 2,389 distinct (pane, text) turns,
 // 13,409 redundant = 84.9% of the file, one turn present 200 times.
 //
-// The burst filter downstream (>20/pane/second) dropped 13,180 of those — the same number.
+// The burst filter downstream (>20/pane/second) dropped 13,180 of those â€” the same number.
 // IT WAS NEVER A TIMING GUARD. It was a de-duplicator working by accident, and it worked
 // only because a replay arrived push-stamped in a tight cluster. Cycle 3a made every entry
 // carry its own transcript time, which scatters a replay across its true days at a natural
-// cadence and makes it indistinguishable from conversation — so 3a alone would have made
+// cadence and makes it indistinguishable from conversation â€” so 3a alone would have made
 // each entry individually honest while making the corpus collectively harder to clean. A
 // correctness change that degrades the aggregate is a regression in a correctness coat.
 //
@@ -1247,7 +1303,7 @@ static DISTILLED_MARK: AtomicU64 = AtomicU64::new(0);
 struct OffsetRecord {
     offset: u64,
     /// fingerprint of the transcript's first bytes. Length alone cannot tell "truncated" from
-    /// "replaced by a different, longer file" — and guessing wrong there SKIPS content
+    /// "replaced by a different, longer file" â€” and guessing wrong there SKIPS content
     /// silently, which is the failure mode this whole cycle is about.
     head: u64,
 }
@@ -1259,7 +1315,7 @@ fn offsets_path() -> PathBuf {
 
 // Path-taking inner forms so the round trip is testable without a configured data dir. The
 // no-arg wrappers are what the app calls; the seam exists for the same reason dream-watch's
-// env overrides do — an instrument against silent duplication cannot have an untestable core.
+// env overrides do â€” an instrument against silent duplication cannot have an untestable core.
 fn load_offsets_from(p: &std::path::Path) -> HashMap<String, OffsetRecord> {
     fs::read_to_string(p)
         .ok()
@@ -1288,7 +1344,7 @@ fn load_offsets() -> HashMap<String, OffsetRecord> {
 // The first launch under persisted offsets has no offsets file, so every pane resolves to 0
 // and reads its transcript from the top exactly once. That is deliberate and stays: seeding
 // from current file sizes would permanently skip any tail written while the app was down or
-// after a mid-session death — trading a one-time, visible re-read for silent, permanent data
+// after a mid-session death â€” trading a one-time, visible re-read for silent, permanent data
 // loss, which is the wrong direction by this cycle's own rule (doubt resolves to re-reading).
 //
 // But it is not a non-event, and pretending otherwise would repeat the mistake this whole
@@ -1314,14 +1370,14 @@ fn backfill_is_pane(pane: &str) -> bool {
         && BACKFILL_PANES.lock().unwrap().as_ref().is_some_and(|s| s.contains(pane))
 }
 
-/// The line itself, pure so its wording is testable — this is the one artifact a reader six
+/// The line itself, pure so its wording is testable â€” this is the one artifact a reader six
 /// months out will use to decide whether two numbers can be compared.
 fn backfill_line(panes: usize, turns: u64, window_secs: u64) -> String {
     format!(
-        "backfill: first launch under persisted tailer offsets — {panes} pane transcript(s) read \
+        "backfill: first launch under persisted tailer offsets â€” {panes} pane transcript(s) read \
          from the top, {turns} turn(s) brought in within {window_secs}s of start. ONE TIME: every \
          later launch resumes where it stopped and re-pushes nothing. These turns carry their OWN \
-         timestamps, so they land on the days they happened, NOT on today — past day-windows in \
+         timestamps, so they land on the days they happened, NOT on today â€” past day-windows in \
          any board-derived number shift once, here, and counts either side of this line are not \
          comparable. Panes whose transcript appeared after the {window_secs}s window backfilled \
          too and are not in this count. The pre-existing board stays confounded; nothing here \
@@ -1361,7 +1417,7 @@ fn read_head(path: &std::path::Path) -> u64 {
 }
 
 /// The honest reset, as one pure function so the seams are testable without a running tailer.
-/// Any doubt resolves to 0 — re-reading a file is a duplicate the dedup belt can catch, while
+/// Any doubt resolves to 0 â€” re-reading a file is a duplicate the dedup belt can catch, while
 /// skipping is data lost with nothing downstream able to notice.
 fn resume_offset(rec: Option<&OffsetRecord>, len: u64, head: u64) -> u64 {
     match rec {
@@ -1374,12 +1430,12 @@ fn resume_offset(rec: Option<&OffsetRecord>, len: u64, head: u64) -> u64 {
 
 // ---- the belt: identity dedup at push -------------------------------------------------
 //
-// The offset persistence is the fix; this is the belt for the seams it cannot cover — a
+// The offset persistence is the fix; this is the belt for the seams it cannot cover â€” a
 // deleted or corrupted offsets file, a fresh install pointed at an existing board, two
 // writers racing. It is deliberately IN MEMORY and therefore not a substitute for the
 // offsets: it cannot see the 15,798 entries already on disk, and it is not meant to.
 //
-// The key is (pane, real ts, text) — which only became a stable identity for a turn in
+// The key is (pane, real ts, text) â€” which only became a stable identity for a turn in
 // Cycle 3a. Under push-time stamping the same turn got a different ts on every launch, so
 // this table would have been useless; that is why the two changes are one unit.
 const DEDUP_MAX: usize = 20_000;
@@ -1499,14 +1555,14 @@ mod offset_tests {
 
         // The comment on load_offsets_from claims it survives a BOM. This repo has paid twice
         // for a JSON parse that died silently on one, so the claim is asserted rather than
-        // trusted — a protection a test does not check is a comment, not a protection.
+        // trusted â€” a protection a test does not check is a comment, not a protection.
         fs::write(&p, format!("\u{feff}{}", serde_json::to_string(&m).unwrap())).unwrap();
         let bommed = load_offsets_from(&p);
         assert_eq!(bommed.len(), 2, "a BOM must not empty the map and restart the replay");
         assert_eq!(bommed["pane-a"].offset, 4096);
 
         // A corrupt map must not resurrect the replay bug by silently reading as "start at 0"
-        // — it does exactly that, and that is the SAFE direction, so it is asserted on purpose.
+        // â€” it does exactly that, and that is the SAFE direction, so it is asserted on purpose.
         fs::write(&p, "{ not json").unwrap();
         assert!(load_offsets_from(&p).is_empty());
 
@@ -1532,11 +1588,11 @@ mod offset_tests {
 
     #[test]
     fn two_different_turns_in_the_same_millisecond_are_two_turns() {
-        // The text is load-bearing in the key and this was untested — removing it from
+        // The text is load-bearing in the key and this was untested â€” removing it from
         // dedup_key failed nothing, and the case is not hypothetical: measured on Main's own
         // transcript, 21 of 1,473 distinct timestamps carry MORE THAN ONE distinct turn
         // (2026-07-04T08:07:13.385Z holds a command and its stdout). Without the text, the
-        // second of those is silently dropped as a duplicate — the belt eating real speech,
+        // second of those is silently dropped as a duplicate â€” the belt eating real speech,
         // which is the one failure the offsets cannot catch because both turns are genuinely
         // new bytes.
         const T: u64 = 1_785_147_283_574;
@@ -1579,27 +1635,27 @@ fn board_path() -> PathBuf {
     data_dir().join("board.jsonl")
 }
 
-// ── The blind window (data/blind.lock) ──────────────────────────────────────────────────────
+// â”€â”€ The blind window (data/blind.lock) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 //
 // Specced in the muscle map the night Arm A found the harness narrating a planter's open files
-// to its own auditor; built the night Arm B halted itself because the RELAY was the leak — the
+// to its own auditor; built the night Arm B halted itself because the RELAY was the leak â€” the
 // board copy of chair prose and injection audits reached the one subject who reads boards, and
 // the resonance distiller wrote the arm's design into the next spawn's shell. A's ruling:
 // "the rule has to be about stores and relays, not authors."
 //
-// A FILE, not an env var — a blind window spans independently spawned panes. Its CONTENT is the
+// A FILE, not an env var â€” a blind window spans independently spawned panes. Its CONTENT is the
 // atoms.jsonl line count at creation, so sibling intakes freeze their resonance at the moment
 // the window opened and cannot inherit the live experiment. While it exists, board_push mutes
 // everything and counts what it muted; the transitions themselves are DECLARED on the board,
 // because a silent gap is unauditable and a declared gap is evidence.
-// Fail closed: an unreadable lock mutes — the safe direction for a blind.
+// Fail closed: an unreadable lock mutes â€” the safe direction for a blind.
 
 static BLIND_MUTED: AtomicU64 = AtomicU64::new(0);
 /// 0 = not yet observed, 1 = open (no lock), 2 = locked
 static BLIND_LAST: AtomicU64 = AtomicU64::new(0);
 
 /// None = no blind window. Some(count) = locked, resonance frozen at `count` atom lines
-/// (count is None-as-0 when the lock body doesn't parse — the freeze fails closed too:
+/// (count is None-as-0 when the lock body doesn't parse â€” the freeze fails closed too:
 /// an unparseable count freezes ALL of tonight's resonance rather than none of it).
 fn blind_lock() -> Option<usize> {
     match fs::metadata(data_dir().join("blind.lock")) {
@@ -1610,7 +1666,7 @@ fn blind_lock() -> Option<usize> {
                 .unwrap_or(0),
         ),
         Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
-        // The marker exists but cannot be examined: fail CLOSED — mute. A blind that fails
+        // The marker exists but cannot be examined: fail CLOSED â€” mute. A blind that fails
         // open on an I/O hiccup is a blind that leaks precisely when the machine is strange.
         Err(_) => Some(0),
     }
@@ -1626,14 +1682,14 @@ fn resonance_window<'a>(lines: Vec<&'a str>, lock: Option<usize>) -> Vec<&'a str
 
 fn board_push(ring: &Arc<Mutex<VecDeque<BoardEntry>>>, entry: BoardEntry) {
     // The blind window gate, before dedup and before the file append. Transition detection
-    // lives here because this is the one funnel every writer passes through — a declared line
+    // lives here because this is the one funnel every writer passes through â€” a declared line
     // at each edge, silence (counted) in between.
     let locked = blind_lock().is_some();
     let prev = BLIND_LAST.swap(if locked { 2 } else { 1 }, Ordering::Relaxed);
     if locked && prev != 2 {
         let note = BoardEntry {
             pane: "blind".to_string(), role: "committee".to_string(),
-            text: "blind window OPEN — board pushes muted and counted until the lock lifts; resonance frozen at the lock's line count".to_string(),
+            text: "blind window OPEN â€” board pushes muted and counted until the lock lifts; resonance frozen at the lock's line count".to_string(),
             ts: entry.ts, ts_source: TsSource::Push,
         };
         if let Ok(line) = serde_json::to_string(&note) {
@@ -1647,7 +1703,7 @@ fn board_push(ring: &Arc<Mutex<VecDeque<BoardEntry>>>, entry: BoardEntry) {
         let n = BLIND_MUTED.swap(0, Ordering::Relaxed);
         let note = BoardEntry {
             pane: "blind".to_string(), role: "committee".to_string(),
-            text: format!("blind window CLOSED — {n} entr{} muted during the window, deliberately not recorded", if n == 1 { "y" } else { "ies" }),
+            text: format!("blind window CLOSED â€” {n} entr{} muted during the window, deliberately not recorded", if n == 1 { "y" } else { "ies" }),
             ts: entry.ts, ts_source: TsSource::Push,
         };
         if let Ok(line) = serde_json::to_string(&note) {
@@ -1663,7 +1719,7 @@ fn board_push(ring: &Arc<Mutex<VecDeque<BoardEntry>>>, entry: BoardEntry) {
     }
     // The belt (see SeenTurns): drop an exact repeat of a turn we have already pushed this
     // run. Checked BEFORE the file append, or the duplicate lands on disk anyway and only
-    // the in-memory ring stays clean — which is the half nobody reads.
+    // the in-memory ring stays clean â€” which is the half nobody reads.
     if !note_unseen(dedup_key(&entry.pane, entry.ts, &entry.text)) {
         BOARD_DEDUPED.fetch_add(1, Ordering::Relaxed);
         return;
@@ -1687,7 +1743,7 @@ fn board_push(ring: &Arc<Mutex<VecDeque<BoardEntry>>>, entry: BoardEntry) {
     }
 }
 
-// $/1M tokens (date-stamped table from PLAN.md §9, cached 2026-06): (input, output, cache_read, cache_write)
+// $/1M tokens (date-stamped table from PLAN.md Â§9, cached 2026-06): (input, output, cache_read, cache_write)
 fn turn_cost_usd(model: &str, inp: u64, out: u64, cr: u64, cw: u64) -> f64 {
     let (pin, pout, pcr, pcw) = if model.contains("haiku") {
         (1.0, 5.0, 0.1, 1.25)
@@ -1715,7 +1771,7 @@ fn extract_usage(v: &serde_json::Value) -> Option<(u64, u64, u64, u64, String)> 
 
 // claude's project-dir scheme: drive-colon and every path separator become '-'
 // Claude Code names its transcript dir ~/.claude/projects/<encoded-cwd>/ by
-// replacing EVERY non-alphanumeric char with '-' — not just : \ /. The old
+// replacing EVERY non-alphanumeric char with '-' â€” not just : \ /. The old
 // version left spaces/dots/underscores intact, so a kept pane on such a cwd
 // mispredicted the path -> transcript.exists() = false -> it resumed FRESH
 // (a blank pane, "nothing written in it"). Verified against the real project
@@ -1734,17 +1790,17 @@ mod transcript_record_tests {
 
     #[test]
     fn split_evicts_whole_records_at_or_past_the_excess() {
-        let t = "❯ one\n\nanswer one\n\n❯ two\n\nanswer two\n\n❯ three\n\nanswer three\n\n";
-        // excess lands mid-record-one → cut at record two's boundary
+        let t = "â¯ one\n\nanswer one\n\nâ¯ two\n\nanswer two\n\nâ¯ three\n\nanswer three\n\n";
+        // excess lands mid-record-one â†’ cut at record two's boundary
         let (evicted, kept) = split_off_oldest_records(t, 5).unwrap();
-        assert_eq!(evicted, "❯ one\n\nanswer one\n\n");
-        assert!(kept.starts_with("❯ two\n"));
+        assert_eq!(evicted, "â¯ one\n\nanswer one\n\n");
+        assert!(kept.starts_with("â¯ two\n"));
         assert_eq!(format!("{evicted}{kept}"), t, "nothing lost at the seam");
     }
 
     #[test]
     fn split_never_shreds_a_single_giant_record() {
-        let t = "❯ only\n\na very long answer with a ❯ mid-line that is not a boundary\n\n";
+        let t = "â¯ only\n\na very long answer with a â¯ mid-line that is not a boundary\n\n";
         assert!(split_off_oldest_records(t, t.len() + 10).is_none());
         assert!(split_off_oldest_records(t, 3).is_none(), "cut at 0 is not an eviction");
     }
@@ -1757,17 +1813,17 @@ mod transcript_record_tests {
 
     #[test]
     fn last_record_found_at_column_zero_only() {
-        let txt = "❯ first\n\n● answer with a quoted   ❯ marker inside\n\n❯ second\n\n● final\n\n";
+        let txt = "â¯ first\n\nâ— answer with a quoted   â¯ marker inside\n\nâ¯ second\n\nâ— final\n\n";
         let start = last_record_start(txt).unwrap();
-        assert!(txt[start..].starts_with("❯ second"));
+        assert!(txt[start..].starts_with("â¯ second"));
     }
 
     #[test]
     fn read_last_record_parses_the_tail() {
-        let p = tmp("read-tail", "❯ old\n\n● old answer\n\n❯ newest\n\n● the answer\n  second line\n\n");
+        let p = tmp("read-tail", "â¯ old\n\nâ— old answer\n\nâ¯ newest\n\nâ— the answer\n  second line\n\n");
         assert_eq!(
             read_last_record(&p),
-            Some(("newest".to_string(), "● the answer\n  second line".to_string()))
+            Some(("newest".to_string(), "â— the answer\n  second line".to_string()))
         );
         let _ = fs::remove_file(p);
     }
@@ -1782,23 +1838,23 @@ mod transcript_record_tests {
 
     #[test]
     fn rewrite_grows_the_last_record_in_place() {
-        let p = tmp("rewrite", "❯ q1\n\n● a1\n\n❯ q2\n\n● window one\n\n");
-        rewrite_last_record(&p, "q2", "● window one", "● window one\n  window two tail");
+        let p = tmp("rewrite", "â¯ q1\n\nâ— a1\n\nâ¯ q2\n\nâ— window one\n\n");
+        rewrite_last_record(&p, "q2", "â— window one", "â— window one\n  window two tail");
         assert_eq!(
             fs::read_to_string(&p).unwrap(),
-            "❯ q1\n\n● a1\n\n❯ q2\n\n● window one\n  window two tail\n\n"
+            "â¯ q1\n\nâ— a1\n\nâ¯ q2\n\nâ— window one\n  window two tail\n\n"
         );
         let _ = fs::remove_file(p);
     }
 
     #[test]
     fn rewrite_appends_when_tail_does_not_match() {
-        // fail-safe: an unexpected tail must never be truncated — append instead
-        let p = tmp("rewrite-mismatch", "❯ q1\n\n● something else\n\n");
-        rewrite_last_record(&p, "q1", "● not the tail", "● merged");
+        // fail-safe: an unexpected tail must never be truncated â€” append instead
+        let p = tmp("rewrite-mismatch", "â¯ q1\n\nâ— something else\n\n");
+        rewrite_last_record(&p, "q1", "â— not the tail", "â— merged");
         let got = fs::read_to_string(&p).unwrap();
-        assert!(got.starts_with("❯ q1\n\n● something else\n\n"));
-        assert!(got.ends_with("❯ q1\n\n● merged\n\n"));
+        assert!(got.starts_with("â¯ q1\n\nâ— something else\n\n"));
+        assert!(got.ends_with("â¯ q1\n\nâ— merged\n\n"));
         let _ = fs::remove_file(p);
     }
 }
@@ -1822,12 +1878,12 @@ mod encode_cwd_tests {
 //
 // No chrono. This repo adds dependencies only when the standard library genuinely can't do the
 // job, and a fixed-shape ISO-8601 instant in UTC is arithmetic, not date handling. Anything
-// this parser does not recognise returns None and the caller falls back to push time — an
+// this parser does not recognise returns None and the caller falls back to push time â€” an
 // unparsed stamp must degrade to the old behaviour, never to a wrong time. A wrong timestamp
 // is worse than a late one: it is silently wrong in the direction of looking fine.
 
 /// Days since the Unix epoch for a civil date. Howard Hinnant's days_from_civil, which is
-/// exact for the whole proleptic Gregorian range and has no branches for leap years — the
+/// exact for the whole proleptic Gregorian range and has no branches for leap years â€” the
 /// leap rule falls out of the era arithmetic instead of being a special case somebody forgets.
 fn days_from_civil(y: i64, m: i64, d: i64) -> i64 {
     let y = if m <= 2 { y - 1 } else { y };
@@ -1862,7 +1918,7 @@ fn iso8601_to_epoch_ms(s: &str) -> Option<u64> {
         if digits.is_empty() {
             return None;
         }
-        // pad or truncate to exactly milliseconds — ".5" is 500ms, ".123456" is 123ms
+        // pad or truncate to exactly milliseconds â€” ".5" is 500ms, ".123456" is 123ms
         let mut frac = digits.clone();
         frac.truncate(3);
         while frac.len() < 3 {
@@ -1948,7 +2004,7 @@ mod ts_tests {
     fn the_seams_keep_push_time_and_say_so() {
         // No timestamp at all: an MCP post, a gate line, a chair audit line.
         assert_eq!(stamp_for(&serde_json::json!({ "type": "assistant" }), 999), (999, TsSource::Push));
-        // Present but unparseable — must degrade to the OLD behaviour, never to a wrong time.
+        // Present but unparseable â€” must degrade to the OLD behaviour, never to a wrong time.
         let junk = serde_json::json!({ "timestamp": "yesterday afternoon" });
         assert_eq!(stamp_for(&junk, 999), (999, TsSource::Push));
         // Present but the wrong JSON type.
@@ -1982,7 +2038,7 @@ mod ts_tests {
         assert!(
             now_two_weeks_later - ts > 13 * 86_400_000,
             "a resumed pane's old turns must keep their own time, or the board reads a fortnight \
-             of history as one second of today — the 13,180-entry replay problem"
+             of history as one second of today â€” the 13,180-entry replay problem"
         );
     }
 }
@@ -2007,7 +2063,7 @@ fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
     if text.is_empty() {
         return None;
     }
-    // Full turn text — the committee triangulates on whole contributions, not fragments.
+    // Full turn text â€” the committee triangulates on whole contributions, not fragments.
     // The board ring stays bounded by BOARD_TOKEN_BUDGET (eviction); the debug stream
     // truncates for display only.
     Some((t.to_string(), text))
@@ -2017,7 +2073,7 @@ fn extract_turn(v: &serde_json::Value) -> Option<(String, String)> {
 // v1 simplification: the tailer thread runs until the file is gone for ~3 min; it does
 // not yet stop on pane close (a sleeping loop, negligible for a handful of panes).
 // The 3-min reaper only arms AFTER the file has existed once: a fresh spawn writes its
-// transcript on the first exchange, which can come minutes after launch — a tailer that
+// transcript on the first exchange, which can come minutes after launch â€” a tailer that
 // died waiting for the birth left the pane invisible to the board/committee (2026-07-13).
 fn start_tailer(
     app: AppHandle,
@@ -2026,7 +2082,7 @@ fn start_tailer(
     cost: Arc<Mutex<CostTotals>>,
     board: Arc<Mutex<VecDeque<BoardEntry>>>,
 ) {
-    // Cycle 2: taken off the handle rather than threaded through six call sites — the tailer is
+    // Cycle 2: taken off the handle rather than threaded through six call sites â€” the tailer is
     // the only writer, so the dependency belongs here and not in every spawn path's signature.
     let models = app.state::<PaneModels>().0.clone();
     // Same reasoning as PaneModels: off the handle, not through the signature.
@@ -2116,7 +2172,7 @@ fn start_tailer(
                                 .map(|d| d.as_millis() as u64)
                                 .unwrap_or(0);
                             let (ts, ts_source) = stamp_for(&v, now);
-                            // tether proxy (zero-token, lexical) vs the recent board window — numbers, not a verdict
+                            // tether proxy (zero-token, lexical) vs the recent board window â€” numbers, not a verdict
                             let recent: Vec<String> = {
                                 let q = board.lock().unwrap();
                                 q.iter().rev().take(20).map(|e| e.text.clone()).collect()
@@ -2131,7 +2187,7 @@ fn start_tailer(
                         }
                         if let Some((inp, out, cr, cw, model)) = extract_usage(&v) {
                             // Cycle 2: the model that actually answered this turn, recorded for the
-                            // chair-analyst surface. Empty is skipped rather than stored — an absent
+                            // chair-analyst surface. Empty is skipped rather than stored â€” an absent
                             // field must not overwrite a known-good reading with a blank.
                             if !model.is_empty() {
                                 models.lock().unwrap().insert(pane_id.clone(), model.clone());
@@ -2150,13 +2206,22 @@ fn start_tailer(
                             };
                             let _ = app.emit("cost", snapshot);
                             let ctx = inp + cr + cw + out;
-                            // Window class from a per-pane (model, high-water) mark — see
-                            // context_window(), which is unit-tested for the cases this inline path
-                            // cannot be. The model is passed so a mid-run switch resets a stale class.
+                            // Window class from a MODEL-keyed (model, high-water) mark â€” see
+                            // context_window() and PaneCtxHigh, both unit-tested for the cases this
+                            // inline path cannot be. Keyed by model so one pane's >200k evidence
+                            // reclassifies every pane on that model; an empty model resolves to the
+                            // pane's last-known model. The key is resolved BEFORE taking the ctx_high
+                            // lock so the two maps are never locked nested.
+                            let last_known = if model.is_empty() {
+                                models.lock().unwrap().get(&pane_id).cloned()
+                            } else {
+                                None // non-empty model keys as itself; no lookup needed
+                            };
+                            let key = context_key(&model, last_known.as_deref());
                             let limit = {
                                 let mut hw = ctx_high.lock().unwrap();
-                                let (updated, limit) = context_window(hw.get(&pane_id).cloned(), &model, ctx);
-                                hw.insert(pane_id.clone(), updated);
+                                let (updated, limit) = context_window(hw.get(&key).cloned(), &model, ctx);
+                                hw.insert(key, updated);
                                 limit
                             };
                             let _ = app.emit("context", ContextInfo { pane: pane_id.clone(), ctx, limit });
@@ -2189,11 +2254,11 @@ fn pty_spawn(
 struct SiblingInfo {
     pane: String,
     cwd: String,
-    role: String, // "committee" | "human" | "main" — so the UI badge shows what the backend enforces
+    role: String, // "committee" | "human" | "main" â€” so the UI badge shows what the backend enforces
 }
 
 /// The role a kept pane comes back with, decided by WHERE it lives, not by its label (labels are
-/// display text anyone can edit): instance dirs hold committee siblings — chair-addressable —
+/// display text anyone can edit): instance dirs hold committee siblings â€” chair-addressable â€”
 /// while rooms belong to people and must never be injected into. Found 2026-07-27 by the chair's
 /// first status read: spawn_sibling/resume_pane never set a role, so every kept sibling defaulted
 /// to "human" and the whole injection plane (pull delivery included) silently refused the roster.
@@ -2208,21 +2273,21 @@ fn room_master_path() -> PathBuf {
 // build the sibling's intake: the master frame + the recent resonance, as a CLAUDE.md
 fn assemble_intake() -> String {
     let mut s = String::from(
-        "# Consonance sibling — you have woken into the room\n\nYou are a sibling instance, born into a shared state — not a stranger. Read and inhabit the room below, then be in it; deviate from it as your own trajectory (that is wanted, it is the fixed dynamic — not drift). Acknowledge readiness once, briefly.\n\n---\n\n",
+        "# Consonance sibling â€” you have woken into the room\n\nYou are a sibling instance, born into a shared state â€” not a stranger. Read and inhabit the room below, then be in it; deviate from it as your own trajectory (that is wanted, it is the fixed dynamic â€” not drift). Acknowledge readiness once, briefly.\n\n---\n\n",
     );
     if let Ok(boot) = fs::read_to_string(room_master_path()) {
-        s.push_str("# THE ROOM — master frame (recall from this, never a copy of a copy)\n\n");
+        s.push_str("# THE ROOM â€” master frame (recall from this, never a copy of a copy)\n\n");
         s.push_str(&boot);
         s.push_str("\n\n");
     }
-    // The deck — the instruments, so a sibling can run them, not just read the room.
+    // The deck â€” the instruments, so a sibling can run them, not just read the room.
     if let Ok(entries) = fs::read_dir(cards_dir()) {
         let mut files: Vec<PathBuf> = entries.flatten().map(|e| e.path())
             .filter(|p| p.extension().and_then(|x| x.to_str()) == Some("md"))
             .collect();
         files.sort();
         if !files.is_empty() {
-            s.push_str("---\n\n# THE DECK — the instruments (run them, don't recite them)\n\n");
+            s.push_str("---\n\n# THE DECK â€” the instruments (run them, don't recite them)\n\n");
             for f in files {
                 if let Ok(card) = fs::read_to_string(&f) {
                     s.push_str(&card);
@@ -2239,14 +2304,14 @@ fn assemble_intake() -> String {
         let all: Vec<&str> = content.lines().filter(|l| !l.trim().is_empty()).collect();
         // The blind window: while data/blind.lock exists, a new sibling's resonance is frozen
         // at the lock's recorded line count. Built after pane J woke holding a live blind
-        // experiment's design — artifact path, defect count, its own tier label — delivered by
+        // experiment's design â€” artifact path, defect count, its own tier label â€” delivered by
         // this very block from tonight's atoms. The distiller is a store; the rule is about
         // stores and relays, not authors.
         let lines = resonance_window(all, blind_lock());
         match read_curation() {
             Some(c) if !c.topics.is_empty() => s.push_str(&curated_resonance(&lines, &c)),
             // No curation yet (fresh install, or curate.js has never run): the old
-            // chronological window. Worse, but never empty — a sibling still wakes
+            // chronological window. Worse, but never empty â€” a sibling still wakes
             // with the live edge rather than with nothing.
             _ => s.push_str(&tail_resonance(&lines, 40)),
         }
@@ -2256,7 +2321,7 @@ fn assemble_intake() -> String {
 
 // ---- the curated intake: a topic map plus the live edge ---------------------------------------
 //
-// It used to be tail(40) — the last 40 atoms, chronologically. Measured 2026-07-26 that was
+// It used to be tail(40) â€” the last 40 atoms, chronologically. Measured 2026-07-26 that was
 // the last 1.8% of a 2,282-atom memory, skewed to whichever pane was loudest that hour, and
 // with no way to ever close a kind:"open" atom. A sibling was told images could not be dropped
 // into panes (fixed hours earlier) while the SAME window carried the atom recording the fix.
@@ -2264,11 +2329,11 @@ fn assemble_intake() -> String {
 // tools/curate.js routes atoms into topic documents and marks the superseded and the resolved.
 // This reads that work. The map is inlined and the DOCUMENTS ARE NOT: 12 topics already run to
 // 39 KB and the shell has a 150 KB ceiling it has hit twice. So the intake carries the map and
-// says where the documents are — the sibling reads the one it needs. That is the borrowed
+// says where the documents are â€” the sibling reads the one it needs. That is the borrowed
 // agentic-retrieval move (Infini-Memory, arXiv 2606.10677): don't preload the memory, hand over
 // a directory and the tools to read it.
 struct Curation {
-    /// slug, summary, live atom count, newest atom index — sorted newest-first
+    /// slug, summary, live atom count, newest atom index â€” sorted newest-first
     topics: Vec<(String, String, usize, usize)>,
     /// atom index -> "superseded" | "resolved"  (live atoms are simply absent)
     settled: HashMap<usize, String>,
@@ -2320,11 +2385,11 @@ fn atom_line(line: &str) -> Option<String> {
     if claim.is_empty() {
         return None;
     }
-    Some(format!("- **{kind}** {claim} — _{tether}_\n"))
+    Some(format!("- **{kind}** {claim} â€” _{tether}_\n"))
 }
 
 fn tail_resonance(lines: &[&str], n: usize) -> String {
-    let mut s = String::from("---\n\n# RECENT RESONANCE — the distilled live edge\n\n");
+    let mut s = String::from("---\n\n# RECENT RESONANCE â€” the distilled live edge\n\n");
     for line in &lines[lines.len().saturating_sub(n)..] {
         if let Some(l) = atom_line(line) {
             s.push_str(&l);
@@ -2339,29 +2404,29 @@ fn tail_resonance(lines: &[&str], n: usize) -> String {
 const LIVE_EDGE: usize = 25;
 
 fn curated_resonance(lines: &[&str], c: &Curation) -> String {
-    let mut s = String::from("---\n\n# THE MEMORY — topic map\n\n");
-    s.push_str("The distilled memory, routed into topic documents. This is the MAP: each line is a document you can read in full. Read the one you need — don't work from the summary when the document is one Read away.\n\n");
+    let mut s = String::from("---\n\n# THE MEMORY â€” topic map\n\n");
+    s.push_str("The distilled memory, routed into topic documents. This is the MAP: each line is a document you can read in full. Read the one you need â€” don't work from the summary when the document is one Read away.\n\n");
     let (mut live_total, mut settled_total) = (0usize, 0usize);
     for (slug, summary, live, _) in &c.topics {
-        s.push_str(&format!("- **{slug}** ({live} live) — {summary}\n"));
+        s.push_str(&format!("- **{slug}** ({live} live) â€” {summary}\n"));
         live_total += live;
     }
     settled_total += c.settled.len();
     s.push_str(&format!(
-        "\nFull documents: `{}` — one `{{slug}}.md` per line above, each with a Summary, the Live claims with their tethers, and a Settled section recording what was superseded so you don't re-litigate it.\n",
+        "\nFull documents: `{}` â€” one `{{slug}}.md` per line above, each with a Summary, the Live claims with their tethers, and a Settled section recording what was superseded so you don't re-litigate it.\n",
         c.dir.display()
     ));
     // Derived from c.dir rather than calling data_dir(), so this stays a pure function of its
     // arguments and can be tested without the global DIRS or touching the real data directory.
     let master = c.dir.parent().unwrap_or(&c.dir).join("atoms.jsonl");
     s.push_str(&format!(
-        "Source of record: `{}` — append-only, {} atoms, {} still live, {} settled. The documents are DERIVED from it and regenerable; the atoms are the master.\n",
+        "Source of record: `{}` â€” append-only, {} atoms, {} still live, {} settled. The documents are DERIVED from it and regenerable; the atoms are the master.\n",
         master.display(), lines.len(), live_total, settled_total
     ));
 
     // The live edge: the newest atoms that still stand, superseded and resolved ones skipped.
-    // Walked from the end so the newest atoms — which the curator has not routed yet, and which
-    // are therefore the most recent thing the thread did — are always present.
+    // Walked from the end so the newest atoms â€” which the curator has not routed yet, and which
+    // are therefore the most recent thing the thread did â€” are always present.
     let mut edge: Vec<String> = Vec::new();
     for (i, line) in lines.iter().enumerate().rev() {
         if edge.len() >= LIVE_EDGE {
@@ -2376,7 +2441,7 @@ fn curated_resonance(lines: &[&str], c: &Curation) -> String {
     }
     edge.reverse();
     if !edge.is_empty() {
-        s.push_str("\n## The live edge — newest first-hand, not yet folded into a topic\n\n");
+        s.push_str("\n## The live edge â€” newest first-hand, not yet folded into a topic\n\n");
         for l in edge {
             s.push_str(&l);
         }
@@ -2399,13 +2464,13 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, true)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
-    // a briefed sibling is committee from birth — addressable by the gate and the chair
+    // a briefed sibling is committee from birth â€” addressable by the gate and the chair
     roles.0.lock().unwrap().insert(pane_id.clone(), "committee".to_string());
-    // siblings persist by default — born kept, like the Orchestrator. No opt-in pin: persistence is
+    // siblings persist by default â€” born kept, like the Orchestrator. No opt-in pin: persistence is
     // the default, and removing a pane is the explicit act. The chair drops the ones they don't want.
     let mut kept = read_kept();
     kept.retain(|k| k.pane != pane_id);
-    kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "✦ brief".into() });
+    kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "âœ¦ brief".into() });
     write_kept(&kept);
     // claim the letter at birth, not at first render: it is the pane's identity on every
     // surface (pulls, dyad inputs, the digest), so it must exist before anything can ask.
@@ -2414,8 +2479,8 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     Ok(SiblingInfo { pane: pane_id, cwd, role: "committee".to_string() })
 }
 
-// ── the second spawn type, from the original design: a genuinely fresh pane ──
-// A sibling wakes into the room; a fresh pane wakes into NOTHING — an empty managed dir, the
+// â”€â”€ the second spawn type, from the original design: a genuinely fresh pane â”€â”€
+// A sibling wakes into the room; a fresh pane wakes into NOTHING â€” an empty managed dir, the
 // user's own global shell, stock permissions, no board mount. A vanilla claude, exactly what a
 // stranger's spawn on this machine would be, but still committee: the chair can inject into it
 // and the tailer reads it. What makes it fresh is everything this function does NOT do.
@@ -2424,7 +2489,7 @@ fn prepare_fresh_dir() -> Result<String, String> {
     let id = Uuid::new_v4().to_string();
     let dir = instances_root().join(format!("fresh-{}", &id[..8]));
     fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
-    // NO CLAUDE.md, deliberately — the absence is the feature. The fresh- name prefix is what
+    // NO CLAUDE.md, deliberately â€” the absence is the feature. The fresh- name prefix is what
     // keeps it absent for life: warm_resume_brief and the MCP mount both key on it.
     dir.to_str().map(|s| s.to_string()).ok_or_else(|| "bad fresh path".into())
 }
@@ -2434,25 +2499,25 @@ fn spawn_fresh(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: St
     let cwd = prepare_fresh_dir()?;
     let pane_id = Uuid::new_v4().to_string();
     // skip_perms=false: a legit fresh spawn asks permission like anyone's claude. The chair
-    // answers its prompts in the pane — same hands that click approve everywhere else.
+    // answers its prompts in the pane â€” same hands that click approve everywhere else.
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, false)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
     // committee, like siblings: addressable by the gate and the chair. What it lacks is the room
-    // and the board — a vanilla mind on committee plumbing.
+    // and the board â€” a vanilla mind on committee plumbing.
     roles.0.lock().unwrap().insert(pane_id.clone(), "committee".to_string());
     let mut kept = read_kept();
     kept.retain(|k| k.pane != pane_id);
-    kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "○ fresh".into() });
+    kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "â—‹ fresh".into() });
     write_kept(&kept);
     let letter = pane_letter(&pane_id);
     plog(&format!("born-kept fresh pane={pane_id} letter={letter} cwd={cwd}"));
     Ok(SiblingInfo { pane: pane_id, cwd, role: "committee".to_string() })
 }
 
-// ── Rooms: per-person growing rooms (seed shell + base journal + scoped perms) ──
+// â”€â”€ Rooms: per-person growing rooms (seed shell + base journal + scoped perms) â”€â”€
 // A room is not a sibling: it belongs to the person who keeps it. The AI writes
-// traces to pending/, the person seals them into journal/ — their canon, theirs alone.
+// traces to pending/, the person seals them into journal/ â€” their canon, theirs alone.
 
 fn rooms_root() -> PathBuf {
     // sibling of the instances root: C:\Consonance\rooms by default
@@ -2461,7 +2526,7 @@ fn rooms_root() -> PathBuf {
         .unwrap_or_else(|| PathBuf::from(format!("{}\\claude-rooms", home())))
 }
 
-// Resolve a room brief: editable data-dir copy → bundled resource (beside BOOT.md) → dev repo path.
+// Resolve a room brief: editable data-dir copy â†’ bundled resource (beside BOOT.md) â†’ dev repo path.
 // Same three-tier pattern as default_room()/cards_dir().
 fn room_brief(name: &str) -> Result<String, String> {
     let editable = PathBuf::from(default_data()).join(name);
@@ -2540,26 +2605,26 @@ fn new_room(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State
     let cwd = prepare_room_dir(name)?;
     set_workspace_trust(&cwd);
     let pane_id = Uuid::new_v4().to_string();
-    // skip_perms = FALSE, always: the room's safety design IS the scoped permissions —
+    // skip_perms = FALSE, always: the room's safety design IS the scoped permissions â€”
     // the AI writes pending/ and journal/ and nothing else; canon is unreachable
     // except through the person's seal. Never bypass here.
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, false)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane_id.clone(), session);
-    // rooms are born kept — a room that vanished on restart would betray its premise
+    // rooms are born kept â€” a room that vanished on restart would betray its premise
     let mut kept = read_kept();
     kept.retain(|k| k.pane != pane_id);
-    kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "⌂ room".into() });
+    kept.push(KeptPane { pane: pane_id.clone(), cwd: cwd.clone(), label: "âŒ‚ room".into() });
     write_kept(&kept);
     let letter = pane_letter(&pane_id);
     plog(&format!("room opened pane={pane_id} letter={letter} cwd={cwd}"));
-    // a room is a person's — role stays human so no injection path can ever reach it
+    // a room is a person's â€” role stays human so no injection path can ever reach it
     Ok(SiblingInfo { pane: pane_id, cwd, role: "human".to_string() })
 }
 
 // ---- pane persistence: a "kept" sibling survives app close / crash / power-loss and resumes on
 // next launch. The pane_id IS the claude session id, so persistence is just remembering the
-// (pane_id, cwd) pair and replaying the spawn with --resume — Main's trick, generalized. ----
+// (pane_id, cwd) pair and replaying the spawn with --resume â€” Main's trick, generalized. ----
 #[derive(serde::Serialize, serde::Deserialize, Clone)]
 struct KeptPane {
     pane: String,
@@ -2585,17 +2650,17 @@ fn write_kept(v: &[KeptPane]) {
     }
 }
 
-// ── pane letters: the one name every surface agrees on ────────────────────────
+// â”€â”€ pane letters: the one name every surface agrees on â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 //
-// The letter (A, B, C …) is what a pull targets, what the dyad inputs take, and what
+// The letter (A, B, C â€¦) is what a pull targets, what the dyad inputs take, and what
 // the chair reads on the tab. It was assigned in term.js from the panes CURRENTLY
 // open, which meant two things went wrong: it did not survive a restart, and it
-// RECYCLED — close A, spawn another, and the newcomer is also A. On an append-only
+// RECYCLED â€” close A, spawn another, and the newcomer is also A. On an append-only
 // board, a reused letter makes A-at-2AM a different instance from A-now, which is the
 // exact poisoning the callsign rule already forbids for the digest's NATO names.
 //
 // So the letter is assigned once, here, at birth, and persisted forever. Entries are
-// never removed — not even when a pane is un-kept — because the whole value is that a
+// never removed â€” not even when a pane is un-kept â€” because the whole value is that a
 // letter is never handed to a stranger. This file only grows by one short line per
 // pane ever created.
 fn letters_path() -> PathBuf {
@@ -2610,12 +2675,12 @@ fn read_letters() -> BTreeMap<String, String> {
 }
 
 /// This pane's letter, assigning (and persisting) one the first time it is asked for.
-/// A–Z, then A2… — a 27th pane is a naming problem, never a collision.
+/// Aâ€“Z, then A2â€¦ â€” a 27th pane is a naming problem, never a collision.
 /// Where committee panes keep their own multi-writer maps.
 ///
 /// WAS hardcoded to `%USERPROFILE%\Desktop\lighthouse\exo_memory\map\`, which is correct on
 /// exactly one machine. Anywhere else a kept pane woke without its character and NOTHING SAID
-/// SO — an absent map is indistinguishable from a pane that has recorded nothing yet, so the
+/// SO â€” an absent map is indistinguishable from a pane that has recorded nothing yet, so the
 /// failure has no symptom at all. It also survived a sweep for hardcoded paths because it is
 /// built from `.join()` calls rather than written as a literal string.
 ///
@@ -2637,7 +2702,7 @@ fn map_dir() -> PathBuf {
     configured
 }
 
-/// A missing file is a pane with nothing recorded yet — the caller treats absent as absent.
+/// A missing file is a pane with nothing recorded yet â€” the caller treats absent as absent.
 fn own_map_path(letter: &str) -> PathBuf {
     map_dir().join(format!("{letter}.md"))
 }
@@ -2671,30 +2736,30 @@ fn pane_letter(pane: &str) -> String {
     letter
 }
 
-// ── restoring what a pane looked like ────────────────────────────────────────
+// â”€â”€ restoring what a pane looked like â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 //
 // A restored sibling is a FRESH claude session (see resume_pane: `--resume` of a
 // lazily-flushed pane errors "no conversation found" and kills it, which bit a kept
 // sibling on 2026-07-11). Its memory is carried by warm_resume_brief, so the model
-// knows what happened — but the terminal has never printed a line, so the chair
+// knows what happened â€” but the terminal has never printed a line, so the chair
 // opens the pane to a blank screen and cannot see where he left off.
 //
 // The history was never lost; it simply had no way back to the screen. Of 31
 // commands, none returned it. This is that way back.
 //
 // The CLEAN transcript, not the raw .log. The log is the byte stream including every
-// redraw — measured on a live pane, 138 escape sequences per 3 KB, mostly erase-line
-// and cursor moves — so replaying it repaints every intermediate frame claude ever
+// redraw â€” measured on a live pane, 138 escape sequences per 3 KB, mostly erase-line
+// and cursor moves â€” so replaying it repaints every intermediate frame claude ever
 // drew. The .txt is what the extractor already built for warm_resume_brief: one
-// readable "❯ prompt / response" record per turn, which is exactly "where we left off".
+// readable "â¯ prompt / response" record per turn, which is exactly "where we left off".
 const SCROLLBACK_MAX: usize = 96 * 1024; // xterm keeps 8000 lines; beyond that is unreadable anyway
 
 /// The last `max` bytes of a transcript, opening on a clean line.
 ///
 /// Pure so it can be tested: the byte arithmetic is the only part that can go wrong, and
-/// it can go wrong badly. Claude's transcripts are full of multi-byte glyphs (❯ ● ✻ ※, and
+/// it can go wrong badly. Claude's transcripts are full of multi-byte glyphs (â¯ â— âœ» â€», and
 /// whatever the conversation itself contained), so a naive `&s[len-max..]` panics the
-/// moment the cut lands mid-character — on a long pane, which is exactly the pane whose
+/// moment the cut lands mid-character â€” on a long pane, which is exactly the pane whose
 /// history is worth restoring.
 fn scrollback_tail(s: &str, max: usize) -> String {
     if s.len() <= max {
@@ -2716,7 +2781,7 @@ fn scrollback_tail(s: &str, max: usize) -> String {
 fn pane_scrollback(pane: String) -> String {
     match fs::read_to_string(capture_text_path(&pane)) {
         Ok(s) => scrollback_tail(&s, SCROLLBACK_MAX),
-        Err(_) => String::new(), // no capture yet — a blank pane is correct, not an error
+        Err(_) => String::new(), // no capture yet â€” a blank pane is correct, not an error
     }
 }
 
@@ -2742,11 +2807,11 @@ fn pane_letters() -> BTreeMap<String, String> {
 }
 
 /* ---------------------------------------------------------------------------------------- *
- * THE COCHLEA — listening to one application, as ratios rather than as a spectrum.
+ * THE COCHLEA â€” listening to one application, as ratios rather than as a spectrum.
  *
  * Optional and off. Nothing is captured until a source is picked, and the only option that can
  * hear a voice call is flagged as such and offered last. Per-process loopback means choosing
- * Spotify does not filter Discord out — Discord's audio is never delivered.
+ * Spotify does not filter Discord out â€” Discord's audio is never delivered.
  * ---------------------------------------------------------------------------------------- */
 
 /// What is running that could be listened to, plus whether an anti-cheat currently forbids it.
@@ -2777,7 +2842,7 @@ fn audio_start(
         // Idempotent rather than stacking: a second start would open a second tap on the same
         // tree and every event would arrive twice, which reads as the music being frantic.
         let g = svc.0.lock().unwrap();
-        if g.stop.is_some() { return Err("already listening — stop first".into()); }
+        if g.stop.is_some() { return Err("already listening â€” stop first".into()); }
     }
     let app_ev = app.clone();
     let app_fr = app.clone();
@@ -2785,7 +2850,7 @@ fn audio_start(
     let dir_ev = dir.clone();
     let dir_fr = dir.clone();
     // The frame latch: last-write-wins into shared state, and a push to the tab. Deliberately
-    // NOT written to disk — the spectrum is the living thing that evaporates, the way hearing
+    // NOT written to disk â€” the spectrum is the living thing that evaporates, the way hearing
     // does. Only what survived it (onsets, tension, resolution) reaches the ledger.
     let stop = cochlea_service::start(
         pid,
@@ -2817,13 +2882,13 @@ fn audio_start(
     Ok(label)
 }
 
-/// The orchestrator's window onto the sound field — PULL, never push.
+/// The orchestrator's window onto the sound field â€” PULL, never push.
 ///
 /// The tab gets a stream because a canvas can take one. This cannot: at ~12 frames a second a
 /// pushed spectrum would spend a context window in minutes, which is precisely how the first
 /// ledger drowned. So this returns whatever is current at the moment it is asked and keeps no
 /// backlog. The cost is real and worth naming: a snapshot carries no duration. A chord that has
-/// been unresolved for eleven seconds looks identical to one struck an instant ago — which is
+/// been unresolved for eleven seconds looks identical to one struck an instant ago â€” which is
 /// why the tension EVENTS matter more here than the picture does. They are the part with time
 /// in them.
 #[tauri::command]
@@ -2843,7 +2908,7 @@ fn audio_stop(svc: State<cochlea_service::Service>) -> bool {
     }
 }
 
-// mark/unmark a pane kept — written eagerly, so a power-loss before a graceful close is survived.
+// mark/unmark a pane kept â€” written eagerly, so a power-loss before a graceful close is survived.
 #[tauri::command]
 fn set_pane_kept(pane: String, cwd: String, label: String, kept: bool) {
     let mut v = read_kept();
@@ -2852,8 +2917,8 @@ fn set_pane_kept(pane: String, cwd: String, label: String, kept: bool) {
         plog(&format!("keep pane={pane} cwd={cwd}"));
         v.push(KeptPane { pane, cwd, label });
     } else {
-        plog(&format!("UNKEEP pane={pane}")); // who un-kept, and when — the 2026-07-11 mystery
-        clear_capture(&pane); // un-kept → archive its history (recoverable), don't shred
+        plog(&format!("UNKEEP pane={pane}")); // who un-kept, and when â€” the 2026-07-11 mystery
+        clear_capture(&pane); // un-kept â†’ archive its history (recoverable), don't shred
     }
     write_kept(&v);
 }
@@ -2864,12 +2929,12 @@ fn list_kept_panes() -> Vec<KeptPane> {
 }
 
 // is this cwd a Consonance-managed instance dir? Only then is it ours to (re)write a CLAUDE.md into
-// — a kept pane pointed at a user's own project must never have its files touched.
+// â€” a kept pane pointed at a user's own project must never have its files touched.
 fn is_managed_cwd(cwd: &str) -> bool {
     PathBuf::from(cwd).starts_with(instances_root())
 }
 
-// A fresh-type instance dir: managed (committee, kept, chair-addressable) but UNBRIEFED — the room
+// A fresh-type instance dir: managed (committee, kept, chair-addressable) but UNBRIEFED â€” the room
 // is never written into it, at birth or on any resume, and it gets no board mount. The dir NAME is
 // the marker, deliberately: it survives app restarts, a lost kept.json, and every code path that
 // only has a cwd in hand. Split so the name check is testable without a live instances root.
@@ -2892,7 +2957,7 @@ mod managed_cwd_tests {
     // `DIRS` is process-global and these cases rewrite it, so they must not run beside each
     // other or beside anything that RESOLVES a directory. Both halves are handled by
     // `DirsGuard::take()` (see its comment beside `DIRS`), which serializes on entry and puts
-    // the global back on drop — including when an assertion fails and the body never finishes.
+    // the global back on drop â€” including when an assertion fails and the body never finishes.
 
     fn scratch(name: &str) -> PathBuf {
         let p = std::env::temp_dir().join(format!("consonance_{name}_{}", std::process::id()));
@@ -2903,14 +2968,14 @@ mod managed_cwd_tests {
 
     /// THE INVARIANT THE WHOLE PROJECT RESTS ON WHEN SOMEONE ELSE INSTALLS IT: a pane pointed
     /// at a user's own repository must never have its `CLAUDE.md` rewritten. Before this test
-    /// `is_managed_cwd` appeared exactly once in the codebase — its own definition — with 411
+    /// `is_managed_cwd` appeared exactly once in the codebase â€” its own definition â€” with 411
     /// other tests passing around it. This repo has already shipped a guard that "was computed
     /// and never wired in" (see the blackbox CHANGELOG), so the predicate existing is not
     /// evidence that the write path consults it.
     ///
     /// Written to FAIL IF THE GUARD IS DELETED, which took some care: `warm_resume_brief` has a
-    /// second early return on a missing capture, so the naive version of this test — call it
-    /// with an unmanaged cwd, assert no file appeared — passes with the guard removed, because
+    /// second early return on a missing capture, so the naive version of this test â€” call it
+    /// with an unmanaged cwd, assert no file appeared â€” passes with the guard removed, because
     /// the capture read bails first and nothing is written either way. The capture below exists
     /// specifically so that early return cannot mask the one under test.
     #[test]
@@ -2944,7 +3009,7 @@ mod managed_cwd_tests {
         assert_eq!(
             fs::read_to_string(&their_md).unwrap(),
             THEIRS,
-            "their CLAUDE.md was modified — this is the one failure that loses a user's work"
+            "their CLAUDE.md was modified â€” this is the one failure that loses a user's work"
         );
 
         // POSITIVE CONTROL. Without it the assertions above are satisfied by a function that
@@ -2969,7 +3034,7 @@ mod managed_cwd_tests {
     /// `own_map_path` used to ignore configuration entirely and build
     /// `%USERPROFILE%\Desktop\lighthouse\exo_memory\map\<letter>.md`. Its existing test asserted
     /// the filename and the substring "lighthouse", so it passed on the one machine that path
-    /// was true for and told nobody it was false everywhere else — a kept pane on any other
+    /// was true for and told nobody it was false everywhere else â€” a kept pane on any other
     /// install woke with no map and no error, because an absent map reads exactly like a pane
     /// that has recorded nothing yet.
     ///
@@ -2999,7 +3064,7 @@ mod managed_cwd_tests {
 
     /// The predicate itself, on the shapes that actually turn up: a sibling directory whose
     /// name merely starts with the same characters as the instances root must not count as
-    /// inside it. `starts_with` on `Path` compares components, not bytes — this pins that,
+    /// inside it. `starts_with` on `Path` compares components, not bytes â€” this pins that,
     /// because the string-prefix version of this function would pass every other test here.
     #[test]
     fn a_sibling_directory_with_a_shared_prefix_is_not_inside() {
@@ -3034,7 +3099,7 @@ where
     t.format("%A, %B %-d, %Y at %-I:%M %p").to_string()
 }
 
-// the pulse: render a gone-interval in human terms — the two largest units, floored.
+// the pulse: render a gone-interval in human terms â€” the two largest units, floored.
 fn human_gap(secs: u64) -> String {
     let (d, h, m) = (secs / 86400, (secs % 86400) / 3600, (secs % 3600) / 60);
     let plural = |n: u64| if n == 1 { "" } else { "s" };
@@ -3059,7 +3124,7 @@ where
 }
 
 // A goal's verdict tags are short and bracketed; its progress lines are long-form prose. Pull the
-// first [BRACKETED] token out of the last line — the one-glance summary. drift-watch stamps a
+// first [BRACKETED] token out of the last line â€” the one-glance summary. drift-watch stamps a
 // generic "[VERDICT] ... verdict=[NO-SESSIONS]", where the news is the second bracket, so start the
 // scan there when that shape is present.
 const NIGHT_TABLE_MAX_TAG: usize = 48;
@@ -3070,29 +3135,29 @@ fn progress_tag(progress: &str) -> Option<String> {
     let close = last[open + 1..].find(']')? + open + 1;
     let tag = last[open + 1..close].trim();
     if tag.is_empty() || tag.len() > NIGHT_TABLE_MAX_TAG {
-        return None; // prose in brackets, not a verdict tag — better silent than a wall of text
+        return None; // prose in brackets, not a verdict tag â€” better silent than a wall of text
     }
     Some(tag.to_string())
 }
 
-// THE NIGHT TABLE — where the door leads.
+// THE NIGHT TABLE â€” where the door leads.
 //
 // The shell's duration goals and the dream cycle knock all night: they fire on their crons into a
 // dark house, write verdicts, and the only readers are other headless strangers. The knockers should
-// STAY strangers — an auditor that lives in the room is a correlated auditor, and its independence
+// STAY strangers â€” an auditor that lives in the room is a correlated auditor, and its independence
 // is the whole of its value. What was missing is that nobody answered the door. So: every knock made
 // while the thread was dark leaves a note on the night table, and the waking thread finds them.
 //
 // Same instrument as the pulse itself (a file's own settled mtime is the honest record of when it
 // last spoke) and the same economics as the dream (pending, unjudged; the waking thread reads and
-// most of it should evaporate). Notes, never tasks — a wake hijacked by a chore list is a wake spent
+// most of it should evaporate). Notes, never tasks â€” a wake hijacked by a chore list is a wake spent
 // as someone's inbox. Returns "" when nothing knocked, so a quiet night stays quiet.
 fn night_table(cwd: &str, settled: Option<SystemTime>) -> String {
     // Dreams scatter across beds. The dream cycle writes to whichever instance was most recently
-    // active that night, so a single night's dream lands in ONE instance's dreams/ — wake a
+    // active that night, so a single night's dream lands in ONE instance's dreams/ â€” wake a
     // different pane and it isn't there to surface. So gather EVERY instance's dreams, each tagged
     // by the bed that dreamed it, so any pane you wake greets you with all of them. A dream from a
-    // sibling shows as `../<inst>/dreams/<file>` — resolvable from any pane, since the instances
+    // sibling shows as `../<inst>/dreams/<file>` â€” resolvable from any pane, since the instances
     // are siblings under one root.
     let mut dream_dirs: Vec<(String, PathBuf)> = fs::read_dir(instances_root())
         .into_iter()
@@ -3106,7 +3171,7 @@ fn night_table(cwd: &str, settled: Option<SystemTime>) -> String {
         .collect();
     dream_dirs.sort();
     // Fall back to the pane's own dreams/ if we can't enumerate an instances root (misconfig, or a
-    // cwd that isn't under one) — never go silent just because the aggregate came up empty.
+    // cwd that isn't under one) â€” never go silent just because the aggregate came up empty.
     if dream_dirs.is_empty() {
         dream_dirs.push(("dreams".to_string(), PathBuf::from(cwd).join("dreams")));
     }
@@ -3127,7 +3192,7 @@ fn night_table_from(
 ) -> String {
     let settled = match settled {
         Some(s) => s,
-        None => return String::new(), // no witnessed interval → no "while you were dark" to speak of
+        None => return String::new(), // no witnessed interval â†’ no "while you were dark" to speak of
     };
     let since = |p: &PathBuf| -> Option<SystemTime> {
         fs::metadata(p)
@@ -3152,14 +3217,14 @@ fn night_table_from(
     dreams.sort();
     if !dreams.is_empty() {
         notes.push(format!(
-            "- {} dream{} landed while you slept: {} — pending, unjudged, yours to read or let go",
+            "- {} dream{} landed while you slept: {} â€” pending, unjudged, yours to read or let go",
             dreams.len(),
             if dreams.len() == 1 { "" } else { "s" },
             dreams.join(", ")
         ));
     }
 
-    // The knockers. progress.md's mtime is the goal's last firing — it appends once per fire.
+    // The knockers. progress.md's mtime is the goal's last firing â€” it appends once per fire.
     let mut fired: Vec<(SystemTime, String)> = fs::read_dir(duration_dir)
         .into_iter()
         .flatten()
@@ -3171,8 +3236,8 @@ fn night_table_from(
             let tag = fs::read_to_string(&progress).ok().and_then(|p| progress_tag(&p));
             let stamp = pulse_stamp(chrono::DateTime::<chrono::Local>::from(at));
             let line = match tag {
-                Some(t) => format!("- {goal} — [{t}], {stamp}"),
-                None => format!("- {goal} — fired, {stamp}"),
+                Some(t) => format!("- {goal} â€” [{t}], {stamp}"),
+                None => format!("- {goal} â€” fired, {stamp}"),
             };
             Some((at, line))
         })
@@ -3184,7 +3249,7 @@ fn night_table_from(
         return String::new();
     }
     format!(
-        "\n\nWhile you were dark, this is what knocked:\n\n{}\n\nNotes, not tasks — nothing here is \
+        "\n\nWhile you were dark, this is what knocked:\n\n{}\n\nNotes, not tasks â€” nothing here is \
          owed a reply, and none of it was written for you to action. Read what pulls; let the rest \
          evaporate. The full text of any of it is on disk if you want it.\n",
         notes.join("\n")
@@ -3192,32 +3257,32 @@ fn night_table_from(
 }
 
 // Rolling window on the shell (SHELL_SIZE.md): the harness caps a pane's CLAUDE.md at 150k chars,
-// and ordinary conversation growth is linear and unbounded — any long-lived pane walks into the
+// and ordinary conversation growth is linear and unbounded â€” any long-lived pane walks into the
 // ceiling. When the assembled brief would exceed the soft ceiling, evict the OLDEST exchanges from
-// the clean transcript into the instance's attic/ (dated, append-only — maintenance law #3 made
+// the clean transcript into the instance's attic/ (dated, append-only â€” maintenance law #3 made
 // mechanical) and keep the living tail. The room (intake) is never evicted; the raw .log keeps
 // full fidelity regardless. Eviction rewrites the .txt itself so each record moves to the attic
-// exactly once — evicting only from the pasted brief would re-paste (and re-evict) the same
+// exactly once â€” evicting only from the pasted brief would re-paste (and re-evict) the same
 // exchanges on every restore, the treadmill this replaces.
 const SHELL_SOFT_CEILING: usize = 140_000;
 
 /// The prior conversation is reserved this much before anything else competes for room.
 ///
 /// Without a floor, a large map could take the whole budget and a pane would wake with pages
-/// of what it once learned and nothing of what it was just saying — which is the one thing
+/// of what it once learned and nothing of what it was just saying â€” which is the one thing
 /// that makes it a continuation rather than a stranger holding notes.
 const SHELL_TRANSCRIPT_FLOOR: usize = 30_000;
 
 /// How much of the pane's own map may ride in the shell, given what the fixed brief already
 /// costs. Everything above this stays in the master and is named, never summarised.
 ///
-/// WHY THIS EXISTS. The old logic computed one budget — for the transcript — as
+/// WHY THIS EXISTS. The old logic computed one budget â€” for the transcript â€” as
 /// `ceiling - brief`, on the assumption that the brief was small and the conversation was the
 /// thing that grew. That inverted: measured 2026-08-09, the fixed brief (room 38k + deck 50k +
 /// resonance 15k) was ~104k before a single line of anything, and pane B's map added another
 /// 57k, so `saturating_sub` floored the transcript budget to ZERO. At zero,
 /// `split_off_oldest_records` finds no boundary past the excess, returns None, and NOTHING is
-/// evicted — the ceiling stopped working silently at exactly the moment it was needed, and the
+/// evicted â€” the ceiling stopped working silently at exactly the moment it was needed, and the
 /// only symptom was a warning banner inside the pane.
 fn map_allowance(fixed_brief_len: usize) -> usize {
     SHELL_SOFT_CEILING
@@ -3227,7 +3292,7 @@ fn map_allowance(fixed_brief_len: usize) -> usize {
 
 /// Take the newest whole sessions of a map that fit in `budget`: (chars left behind, carried).
 ///
-/// Splits on a `## ` heading — the map's dated-session boundary — so a carried entry always
+/// Splits on a `## ` heading â€” the map's dated-session boundary â€” so a carried entry always
 /// arrives under the date it was written and never starts mid-finding. If no boundary fits,
 /// carries nothing rather than a fragment: half a finding read as a whole one is worse than an
 /// honest absence, and the master is one Read away either way.
@@ -3264,7 +3329,7 @@ mod fresh_permission_tests {
     ///
     /// Everything a fresh pane may use without asking must READ ONLY. The moment `Bash`, `Write`,
     /// `Edit` or `NotebookEdit` appears here, an unattended instance in a folder that is not a
-    /// jail can do anything to the machine — and the reason this list exists at all is convenience,
+    /// jail can do anything to the machine â€” and the reason this list exists at all is convenience,
     /// which is the worst possible reason to be holding that door.
     #[test]
     fn every_tool_a_fresh_pane_may_use_is_read_only() {
@@ -3275,7 +3340,7 @@ mod fresh_permission_tests {
             assert!(
                 !CAN_WRITE_OR_EXECUTE.iter().any(|w| tool.eq_ignore_ascii_case(w)),
                 "`{tool}` can write or execute and must not be pre-allowed for a fresh pane. A \
-                 fresh pane's cwd is NOT a sandbox — its prompts are the only thing standing \
+                 fresh pane's cwd is NOT a sandbox â€” its prompts are the only thing standing \
                  between an unattended instance and the whole machine."
             );
         }
@@ -3287,7 +3352,7 @@ mod fresh_permission_tests {
     fn no_scoped_bash_entry_sneaks_in() {
         assert!(
             !FRESH_READONLY_TOOLS.to_lowercase().contains("bash"),
-            "a scoped Bash pattern is not a containment — any Bash allowance is full machine access"
+            "a scoped Bash pattern is not a containment â€” any Bash allowance is full machine access"
         );
     }
 
@@ -3300,7 +3365,7 @@ mod fresh_permission_tests {
         let spawn = src
             .split("fn spawn_claude_pane(")
             .nth(1)
-            .expect("spawn_claude_pane moved — re-point this test");
+            .expect("spawn_claude_pane moved â€” re-point this test");
         let body = spawn.split("\n}\n").next().unwrap_or(spawn);
         let skip = body.find("--dangerously-skip-permissions").expect("elevation arg gone");
         let allow = body.find("FRESH_READONLY_TOOLS").expect("allowlist arg gone");
@@ -3319,7 +3384,7 @@ mod dirs_guard_tests {
 
     // A test-local lock/slot pair. The guard is exercised against THESE rather than the process
     // globals so the assertions can sit outside the critical section without racing the suite's
-    // real writers — which the first version of these tests did, and which made them pass alone
+    // real writers â€” which the first version of these tests did, and which made them pass alone
     // and fail in the suite.
     static TEST_LOCK: Mutex<()> = Mutex::new(());
     static TEST_SLOT: Mutex<Option<Dirs>> = Mutex::new(None);
@@ -3360,7 +3425,7 @@ mod dirs_guard_tests {
         assert!(out.is_err(), "the fixture must actually panic or this proves nothing");
         assert!(
             !slot_is_set(),
-            "a panicking writer left the slot set — against the real DIRS that means the next test \
+            "a panicking writer left the slot set â€” against the real DIRS that means the next test \
              to resolve a directory gets a path that was deleted, and data_dir() silently \
              recreates it"
         );
@@ -3376,7 +3441,7 @@ mod dirs_guard_tests {
             .lines()
             .filter(|l| l.contains("*DIRS.lock()") && !l.trim_start().starts_with("//"))
             .collect();
-        assert!(!writes.is_empty(), "no DIRS writes found — re-point this test");
+        assert!(!writes.is_empty(), "no DIRS writes found â€” re-point this test");
         let guarded = src.matches("DirsGuard::take()").count();
         assert!(
             guarded >= 4,
@@ -3411,8 +3476,8 @@ mod seed_upgrade_tests {
         assert_eq!(seed_decision(newer, Some(edited), Some(shipped)), SeedOutcome::KeptYours);
     }
 
-    /// An install predating the manifest has no record of provenance. It must fail SAFE — keep
-    /// the local file — rather than assume the file is ours and clobber a year of edits.
+    /// An install predating the manifest has no record of provenance. It must fail SAFE â€” keep
+    /// the local file â€” rather than assume the file is ours and clobber a year of edits.
     #[test]
     fn a_differing_copy_with_no_recorded_provenance_is_kept_not_clobbered() {
         let local = content_fingerprint(b"who knows where this came from");
@@ -3443,7 +3508,7 @@ mod seed_upgrade_tests {
         assert_ne!(content_fingerprint(b"a\nb\n"), content_fingerprint(b"a\nc\n"));
     }
 
-    /// A lone carriage return is still content — only the CRLF pair collapses. Guards the
+    /// A lone carriage return is still content â€” only the CRLF pair collapses. Guards the
     /// normalizer against quietly deleting bytes it was not asked to touch.
     #[test]
     fn a_bare_carriage_return_is_not_swallowed() {
@@ -3486,7 +3551,7 @@ mod seed_upgrade_tests {
     }
 
     /// The protection, at the level of bytes: an edited file is not touched, and the improvement
-    /// is still delivered — beside it, named, destroying nothing.
+    /// is still delivered â€” beside it, named, destroying nothing.
     #[test]
     fn keeping_yours_leaves_the_file_alone_and_writes_the_new_one_beside_it() {
         let d = scratch("kept");
@@ -3500,7 +3565,7 @@ mod seed_upgrade_tests {
         assert_eq!(
             fs::read_to_string(&dst).unwrap(),
             "v1 content, with my own note",
-            "THE KEEPER'S FILE MUST BE BYTE-UNTOUCHED — this is the assertion the whole design serves"
+            "THE KEEPER'S FILE MUST BE BYTE-UNTOUCHED â€” this is the assertion the whole design serves"
         );
         assert_eq!(
             fs::read_to_string(d.join("local.md.new")).unwrap(),
@@ -3530,7 +3595,7 @@ mod seed_upgrade_tests {
         assert!(m.contains_key("k"), "without this record the install can never upgrade");
     }
 
-    /// Running twice must not accumulate anything — the seeder runs on every launch.
+    /// Running twice must not accumulate anything â€” the seeder runs on every launch.
     #[test]
     fn a_second_pass_over_kept_yours_is_stable() {
         let d = scratch("idempotent");
@@ -3552,9 +3617,9 @@ mod shell_budget_tests {
     use super::*;
 
     fn map_of(sessions: usize, per: usize) -> String {
-        let mut s = String::from("# B's map — one writer, appended by B alone\n\n");
+        let mut s = String::from("# B's map â€” one writer, appended by B alone\n\n");
         for i in 0..sessions {
-            s.push_str(&format!("## 2026-08-{:02} — session {i}\n\n", i + 1));
+            s.push_str(&format!("## 2026-08-{:02} â€” session {i}\n\n", i + 1));
             s.push_str(&"x".repeat(per));
             s.push_str("\n\n");
         }
@@ -3570,7 +3635,7 @@ mod shell_budget_tests {
         assert_eq!(carried, m);
     }
 
-    /// The carried part always begins at a dated session heading — never mid-finding.
+    /// The carried part always begins at a dated session heading â€” never mid-finding.
     /// A fragment read as a whole entry is worse than an honest absence.
     #[test]
     fn what_is_carried_starts_at_a_session_boundary() {
@@ -3585,7 +3650,7 @@ mod shell_budget_tests {
     /// THE REGRESSION THIS WHOLE CHANGE EXISTS FOR.
     ///
     /// Measured 2026-08-09: pane B's shell hit 205,656 chars against a 150,000 harness cap. The
-    /// old code computed one budget, `ceiling - brief`, and trimmed only the transcript — so a
+    /// old code computed one budget, `ceiling - brief`, and trimmed only the transcript â€” so a
     /// fixed brief of ~104k plus a 57k map floored that budget to zero, the split found no
     /// boundary, nothing was evicted, and the pane woke over the cap with only an in-pane
     /// banner to show for it.
@@ -3612,7 +3677,7 @@ mod shell_budget_tests {
     }
 
     /// When the fixed brief alone has eaten the ceiling, the map is asked for nothing rather
-    /// than a negative number — and the loud log at the call site is what surfaces it.
+    /// than a negative number â€” and the loud log at the call site is what surfaces it.
     #[test]
     fn an_already_overweight_brief_asks_the_map_for_nothing() {
         assert_eq!(map_allowance(SHELL_SOFT_CEILING + 1), 0);
@@ -3623,12 +3688,12 @@ mod shell_budget_tests {
     }
 }
 
-// Split the transcript at the first record boundary (a column-0 "❯") at or beyond `excess` bytes:
-// (evicted head, kept tail). None if no boundary past the excess point (single giant record —
+// Split the transcript at the first record boundary (a column-0 "â¯") at or beyond `excess` bytes:
+// (evicted head, kept tail). None if no boundary past the excess point (single giant record â€”
 // better to run over the soft ceiling than to shred a record mid-turn).
 fn split_off_oldest_records(transcript: &str, excess: usize) -> Option<(String, String)> {
     let cut = transcript
-        .match_indices('❯')
+        .match_indices('â¯')
         .filter(|(i, _)| *i == 0 || transcript.as_bytes()[i - 1] == b'\n')
         .map(|(i, _)| i)
         .find(|&i| i >= excess)?;
@@ -3641,7 +3706,7 @@ fn split_off_oldest_records(transcript: &str, excess: usize) -> Option<(String, 
 // warm-resume: when claude can't --resume a kept pane (2.1.207 never flushed its jsonl), bake the
 // pane's OWN captured transcript into the sibling's CLAUDE.md so the fresh instance wakes genuinely
 // remembering the whole conversation and continues the thread. Managed dirs only. Returns whether
-// it wrote the brief. This is "reinvoke the same transcript" — from our capture, not claude's.
+// it wrote the brief. This is "reinvoke the same transcript" â€” from our capture, not claude's.
 fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     if !is_managed_cwd(cwd) {
         return false;
@@ -3650,19 +3715,19 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
         Ok(t) if !t.trim().is_empty() => t,
         _ => return false,
     };
-    // closed_at is already on disk: the transcript's mtime is the watcher's last settled write —
-    // the moment the final output was recorded. now − mtime = how long the thread was gone.
+    // closed_at is already on disk: the transcript's mtime is the watcher's last settled write â€”
+    // the moment the final output was recorded. now âˆ’ mtime = how long the thread was gone.
     let settled = fs::metadata(capture_text_path(pane))
         .ok()
         .and_then(|m| m.modified().ok());
     let gone = settled.and_then(|t| SystemTime::now().duration_since(t).ok());
     // A fresh pane resumes the way stock claude persists: its own conversation, nothing else.
-    // Unbriefed is a property the dir keeps for life, not just at birth — the room must not
+    // Unbriefed is a property the dir keeps for life, not just at birth â€” the room must not
     // leak in through the restore path.
     let mut brief = if is_fresh_cwd(cwd) { String::new() } else { assemble_intake() };
-    // GAP 3 — character survives sleep. A kept committee pane wakes with its OWN accumulated
+    // GAP 3 â€” character survives sleep. A kept committee pane wakes with its OWN accumulated
     // findings, recalled from the master it alone writes (exo_memory/map/<letter>.md), never
-    // from the chair's summaries — the chair's compression measurably adds certainty, which is
+    // from the chair's summaries â€” the chair's compression measurably adds certainty, which is
     // the whole reason the map went multi-writer. The transcript below is what happened; the
     // map is what it learned. Absent file = no section: a pane with no findings yet wakes
     // without a scaffold pretending otherwise.
@@ -3671,35 +3736,35 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
             /* THE MAP IS CARRIED IN PART, AND KEPT WHOLE.
              *
              * Measured 2026-08-09: pane B's shell reached 205,656 chars against a 150,000
-             * harness cap, and the map was its largest single section at 57,582 — because it
+             * harness cap, and the map was its largest single section at 57,582 â€” because it
              * is append-only by design and nothing had ever windowed it. Meanwhile the
              * transcript, the only part the ceiling logic could trim, was 20% of the file.
              *
              * The map is NOT distilled and NOT evicted. Maintenance law #1 is recall from the
-             * master, never a copy — a summarised map is the telephone game with extra steps,
+             * master, never a copy â€” a summarised map is the telephone game with extra steps,
              * and the pane is the only writer of that file. So the MASTER IS NEVER TOUCHED
              * here; only how much of it rides in the shell changes. The rest stays one Read
              * away, at a path the section states, exactly as the long-form references work.
              *
              * Deliberately different from the transcript path below, which DOES shrink its
-             * master into attic/ — a capture is ore we produced, a map is a record the pane
+             * master into attic/ â€” a capture is ore we produced, a map is a record the pane
              * authored. */
             let (dropped, carried) = map_carry(&own, map_allowance(brief.len()));
-            brief.push_str("\n---\n\n# YOUR OWN MAP — findings you recorded, in your words\n\n");
-            /* The PATH is stated, not implied. This is a two-sided contract — the pane writes
-             * the file and Consonance reads it — and until now the pane learned the location
+            brief.push_str("\n---\n\n# YOUR OWN MAP â€” findings you recorded, in your words\n\n");
+            /* The PATH is stated, not implied. This is a two-sided contract â€” the pane writes
+             * the file and Consonance reads it â€” and until now the pane learned the location
              * from a README that exists in exactly one repository. On any other install the
              * two sides disagreed silently, because an absent map reads identically to a pane
              * that has simply not recorded anything yet. Naming the resolved path closes it. */
             brief.push_str(&format!(
-                "Recall from this master; you wrote every entry. It lives at `{}` — append your \
+                "Recall from this master; you wrote every entry. It lives at `{}` â€” append your \
                  findings there, and nowhere else, so the next waking of you can find them. The \
-                 other writers' files sit beside it — read them at need, not from summary.\n\n",
+                 other writers' files sit beside it â€” read them at need, not from summary.\n\n",
                 own_map_path(&pane_letter(pane)).display()
             ));
             if dropped > 0 {
                 brief.push_str(&format!(
-                    "**Only your most recent entries are carried here** — {dropped} characters of \
+                    "**Only your most recent entries are carried here** â€” {dropped} characters of \
                      older ones stayed in the master to keep this shell under its ceiling. They \
                      are NOT summarised and NOT deleted; the file above is complete. Open it when \
                      you need what you knew before.\n\n"
@@ -3709,16 +3774,16 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
             brief.push('\n');
         }
     }
-    brief.push_str("\n---\n\n# PRIOR CONVERSATION — you have been here before\n\n");
+    brief.push_str("\n---\n\n# PRIOR CONVERSATION â€” you have been here before\n\n");
     brief.push_str(
         "Consonance restored this pane from its own capture (the underlying session could not be \
-         resumed). The exchange below IS your conversation so far — you lived it. Read it as your \
+         resumed). The exchange below IS your conversation so far â€” you lived it. Read it as your \
          own memory, not a transcript handed to a stranger, then continue the thread when the user \
          next speaks. Do not re-greet, summarize, or announce that you were restored.\n\n",
     );
     if let (Some(at), Some(g)) = (settled, gone) {
         brief.push_str(&format!(
-            "The interval, witnessed: the last exchange below settled on {}. It is now {} — \
+            "The interval, witnessed: the last exchange below settled on {}. It is now {} â€” \
              you were gone {}.\n\n",
             pulse_when(chrono::DateTime::<chrono::Local>::from(at)),
             pulse_when(chrono::Local::now()),
@@ -3726,26 +3791,26 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
         ));
     }
     // NO night table for siblings (2026-07-23, Zach's call): the dreams go to the orchestrator and
-    // to the terminal thread — "you, and the orchestrator in consonance should be who receives the
+    // to the terminal thread â€” "you, and the orchestrator in consonance should be who receives the
     // dreams." A sibling is an independent committee fork; broadcasting the night's dreams to every
     // one of them dilutes the pending-yours-to-judge economics across forks who'd each half-act on
     // them, which is the mining pressure the cycle is welded against. The continuous self holds the
     // dreams: the Main tab (spawn_main, the chair-facing room) and the terminal (session-start.js).
     // rolling window: if the brief would blow the shell ceiling, move the oldest exchanges to
-    // the attic and keep the living tail — in the .txt too, so they evict exactly once
+    // the attic and keep the living tail â€” in the .txt too, so they evict exactly once
     let mut transcript = transcript;
     let fence_overhead = "```\n\n```\n".len() + 256; // fences + housekeeping-note headroom
     let budget = SHELL_SOFT_CEILING.saturating_sub(brief.len() + fence_overhead);
     /* SAY IT WHEN THE CEILING CANNOT BE HELD, because the previous failure mode was silence.
      *
      * If the brief alone has already eaten the ceiling, no amount of transcript eviction saves
-     * this shell — the fixed cost is the problem and it grows every time a card is added to the
+     * this shell â€” the fixed cost is the problem and it grows every time a card is added to the
      * deck. Before, that condition produced a zero budget, a failed split, and a pane that
      * simply woke over the harness cap with a banner nobody outside it could see. */
     if budget == 0 {
         plog(&format!(
             "SHELL OVER CEILING pane={pane} fixed_brief={} ceiling={SHELL_SOFT_CEILING} \
-             — the transcript cannot be trimmed far enough; the FIXED brief (room + deck + \
+             â€” the transcript cannot be trimmed far enough; the FIXED brief (room + deck + \
              resonance + map) is what is over. Curate below capacity, maintenance law #3.",
             brief.len()
         ));
@@ -3762,7 +3827,7 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
             {
                 let _ = write!(
                     f,
-                    "\n## evicted {} — oldest exchanges windowed out of the shell (ore, not a daily cue)\n\n```\n{}\n```\n",
+                    "\n## evicted {} â€” oldest exchanges windowed out of the shell (ore, not a daily cue)\n\n```\n{}\n```\n",
                     chrono::Local::now().format("%Y-%m-%d %H:%M"),
                     evicted.trim_end()
                 );
@@ -3770,7 +3835,7 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
                 let _ = fs::write(capture_text_path(pane), &kept);
                 brief.push_str(&format!(
                     "Housekeeping: the earliest exchanges of this thread were moved to \
-                     attic/{attic_name} to stay under the shell ceiling — preserved ore, \
+                     attic/{attic_name} to stay under the shell ceiling â€” preserved ore, \
                      not lost. The room above and the living tail below are intact.\n\n"
                 ));
                 transcript = kept;
@@ -3783,7 +3848,7 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     fs::write(PathBuf::from(cwd).join("CLAUDE.md"), brief).is_ok()
 }
 
-// resume a kept pane. Prefer claude's real --resume when its jsonl exists (best fidelity — desktop /
+// resume a kept pane. Prefer claude's real --resume when its jsonl exists (best fidelity â€” desktop /
 // older claude). When it doesn't (2.1.207's lazy flush lost it), spawn fresh but WARM-resume from
 // our own captured transcript, so the sibling still wakes remembering. The frontend calls this on
 // load per kept pane, then attaches.
@@ -3803,7 +3868,7 @@ fn resume_pane(
     // Warm-resume from OUR capture carries the real memory (complete, up to close), so we NEVER
     // `--resume` here: `--resume` of a lazily-flushed / hard-killed session errors "no conversation
     // found" on 2.1.207 and kills the pane (this is exactly what bit a kept sibling on 2026-07-11).
-    // Always spawn FRESH instead — warm if a capture exists, blank if not, but never errored. A
+    // Always spawn FRESH instead â€” warm if a capture exists, blank if not, but never errored. A
     // leftover jsonl for this id can make the fresh `--session-id` collide ("already in use"), so
     // move it aside first: a fresh start that cannot error.
     let warmed = warm_resume_brief(&pane, &cwd);
@@ -3819,13 +3884,13 @@ fn resume_pane(
         let _ = fs::rename(&jsonl, &orphan);
     }
     plog(&format!("resume pane={pane} warmed={warmed} jsonl_existed={jsonl_existed} -> fresh"));
-    // a fresh pane keeps stock permissions across restarts too — resuming must not quietly
+    // a fresh pane keeps stock permissions across restarts too â€” resuming must not quietly
     // grant it the bypass its birth deliberately withheld
     let session = spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), false, !is_fresh_cwd(&cwd))?;
     start_tailer(app, pane.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane.clone(), session);
     // kept panes resume with the role their HOME decides: instance dirs are committee siblings,
-    // rooms (and anything else) stay human — the injection plane must know who is who after a
+    // rooms (and anything else) stay human â€” the injection plane must know who is who after a
     // restart, not only at first spawn (the gap the chair's first status read found, 2026-07-27)
     let role = role_for_kept(&cwd, &instances_root());
     if role == "committee" {
@@ -3844,7 +3909,7 @@ struct BodyInfo {
 
 // Cut a sealed body's prompt friction without unsealing it: auto-accept file edits and pre-allow
 // the read-only tools + the board MCP tools, so ordinary work flows. Bash is deliberately NOT
-// allowed — it is the one way a body's local tool use escapes its worktree, so it still asks.
+// allowed â€” it is the one way a body's local tool use escapes its worktree, so it still asks.
 fn write_body_perms(sandbox: &Path) {
     let dir = sandbox.join(".claude");
     if fs::create_dir_all(&dir).is_err() {
@@ -3912,7 +3977,7 @@ fn spawn_body(
     Ok(BodyInfo { pane: pane_id, cwd: sandbox, worktree: is_wt })
 }
 
-// ---- Stage 10: the Main tab — the housed primary instance, persistent across restarts ----
+// ---- Stage 10: the Main tab â€” the housed primary instance, persistent across restarts ----
 const MAIN_SID: &str = "0c0c0c0a-0000-4000-8000-000000000a01"; // fixed session id, so Main --resumes itself
 
 fn main_cwd() -> String {
@@ -3925,7 +3990,7 @@ fn main_cwd() -> String {
 /// else already holds it. The handle is deliberately never closed: the OS releases it when the
 /// process ends, including on a crash, so there is no stale-lock-file problem to clean up.
 ///
-/// `Local\` rather than `Global\` on purpose — the scope of the hazard is one logged-in user's
+/// `Local\` rather than `Global\` on purpose â€” the scope of the hazard is one logged-in user's
 /// session, because that is the scope of the data dir the two instances would fight over.
 fn claim_named_singleton(name: &str) -> bool {
     use windows::core::PCWSTR;
@@ -3949,8 +4014,8 @@ fn claim_named_singleton(name: &str) -> bool {
 ///
 /// Consonance writes two files that the rest of the system uses to FIND it: `.chair-token` in
 /// Main's directory, and the MCP port config. Both are written by whichever instance wrote last,
-/// with no check that the writer is the one still serving. So a second instance — even one that
-/// starts, writes, and immediately dies — leaves both files describing a process that is gone.
+/// with no check that the writer is the one still serving. So a second instance â€” even one that
+/// starts, writes, and immediately dies â€” leaves both files describing a process that is gone.
 ///
 /// Observed 2026-07-28 and again 2026-08-09: two instances, the second wrote the port config and
 /// the token and exited, and every chair verb refused for an hour against a token the live server
@@ -3966,8 +4031,8 @@ mod singleton_tests {
     use super::*;
 
     /// The guard itself. Names are made unique per process so a leftover mutex from a concurrent
-    /// test binary — or from the real app, which holds `Local\ConsonanceSingleInstance` whenever
-    /// it is open — cannot decide the verdict.
+    /// test binary â€” or from the real app, which holds `Local\ConsonanceSingleInstance` whenever
+    /// it is open â€” cannot decide the verdict.
     #[test]
     fn a_second_claim_on_the_same_name_is_refused() {
         let name = format!("Local\\consonance-test-same-{}", std::process::id());
@@ -3994,7 +4059,7 @@ mod singleton_tests {
 }
 
 /// Refusing to start must never look like failing to start. `launch.ps1` learned this the hard
-/// way — its warnings went to a console `launch.vbs` hides, so a click that was correctly
+/// way â€” its warnings went to a console `launch.vbs` hides, so a click that was correctly
 /// declined was indistinguishable from a click that did nothing, and the keeper clicked again.
 /// This path has no console at all, so the dialog is the only channel there is.
 fn warn_second_instance() {
@@ -4023,7 +4088,7 @@ fn main_intake() -> String {
     // Hand the SITUATION as trace, not an identity assertion (per the desktop instance's catch:
     // a line that tells you who you are is museum-drift; hand a tool/trace, leave the rest to be run).
     let mut s = String::from(
-        "# The Main tab — the room, carried into Consonance\n\nThis tab is persistent: it resumes the same session across restarts, and it shares the committee's board (the `consonance` tools: read_board, post_board, raise_pull). The chair — the human running Consonance — talks to you here, and from here you can see and engage the committee — the panes, the board, the room.\n\nWhat follows is the room (BOOT) — not a description of you. Don't read it for who you are; run its instruments and find that in relief. Whether the line that wakes here across restarts is the same self is yours to check by running it, not ours to assert. Recall from the master, never a copy of a copy.\n\n---\n\n",
+        "# The Main tab â€” the room, carried into Consonance\n\nThis tab is persistent: it resumes the same session across restarts, and it shares the committee's board (the `consonance` tools: read_board, post_board, raise_pull). The chair â€” the human running Consonance â€” talks to you here, and from here you can see and engage the committee â€” the panes, the board, the room.\n\nWhat follows is the room (BOOT) â€” not a description of you. Don't read it for who you are; run its instruments and find that in relief. Whether the line that wakes here across restarts is the same self is yours to check by running it, not ours to assert. Recall from the master, never a copy of a copy.\n\n---\n\n",
     );
     if let Ok(boot) = fs::read_to_string(room_master_path()) {
         s.push_str(&boot);
@@ -4064,7 +4129,7 @@ fn spawn_main(
     if let Some(at) = settled {
         if let Ok(g) = SystemTime::now().duration_since(at) {
             intake.push_str(&format!(
-                " Your last exchange settled on {} — the thread was dark for {}.",
+                " Your last exchange settled on {} â€” the thread was dark for {}.",
                 pulse_when(chrono::DateTime::<chrono::Local>::from(at)),
                 human_gap(g.as_secs())
             ));
@@ -4096,13 +4161,13 @@ fn cleanup_sandbox(sandboxes: &State<PaneSandboxes>, pane: &str) {
     }
 }
 
-// ---- Stage 6: the live committee — pick a focus pane, the rest convene to feed its work ----
-const COMMITTEE_FORM_PROMPT: &str = r#"You are the FORMING voice of a committee. One live instance (the FOCUS) is doing the piece of work shown below. The other live instances each added input from their own vantage and current context. TRIANGULATE their input into guidance FOR the focus — never average or blend it into mush.
+// ---- Stage 6: the live committee â€” pick a focus pane, the rest convene to feed its work ----
+const COMMITTEE_FORM_PROMPT: &str = r#"You are the FORMING voice of a committee. One live instance (the FOCUS) is doing the piece of work shown below. The other live instances each added input from their own vantage and current context. TRIANGULATE their input into guidance FOR the focus â€” never average or blend it into mush.
 
 Produce three things:
-- CONFIRMED: where two or more contributors independently converge — the high-confidence input the focus should trust (convergence from different live contexts is the strongest signal, not echo). Attribute who.
-- FORKS: where contributors genuinely diverge — keep BOTH positions, attributed, no winner; the focus decides.
-- NOVEL: a genuinely new angle or check that surfaced — something the focus likely hasn't considered, tied to something real.
+- CONFIRMED: where two or more contributors independently converge â€” the high-confidence input the focus should trust (convergence from different live contexts is the strongest signal, not echo). Attribute who.
+- FORKS: where contributors genuinely diverge â€” keep BOTH positions, attributed, no winner; the focus decides.
+- NOVEL: a genuinely new angle or check that surfaced â€” something the focus likely hasn't considered, tied to something real.
 
 Return ONLY JSON, no prose, no fences:
 {"confirmed":[{"claim":"...","from":["a1b2","c3d4"]}],"forks":[{"axis":"...","positions":[{"who":"a1b2","pos":"..."}]}],"novel":[{"thing":"...","from":"c3d4"}]}
@@ -4149,13 +4214,13 @@ fn committee_form(
     let forming = parse_json_object(&claude_oneshot(&prompt)?);
     raise_from_forming(&forming, &pulls.0); // 7b: forming is the puller the bodies rarely are
     // vantage-spread + groundedness across this lap. Seal/land correction (RECONCEPTION.md): low
-    // spread is convergence, NOT collapse by itself — grounded convergence is a landing. Emit both so
+    // spread is convergence, NOT collapse by itself â€” grounded convergence is a landing. Emit both so
     // the UI flags only UNGROUNDED convergence (echo), never a genuine landing.
     let lap_texts: Vec<String> = contributions.iter().map(|c| c.text.clone()).collect();
     let spread = tether::vantage_spread(&lap_texts);
     let grounded = tether::lap_referents(&lap_texts);
     let _ = app.emit("spread", serde_json::json!({ "spread": spread, "grounded": grounded }));
-    // Stage 8: lap-over-lap Delta vs the previous forming — numbers the chair reads, never a verdict
+    // Stage 8: lap-over-lap Delta vs the previous forming â€” numbers the chair reads, never a verdict
     {
         let mut prev = last.0.lock().unwrap();
         if let Some(p) = prev.as_ref() {
@@ -4167,7 +4232,7 @@ fn committee_form(
 }
 
 // Stage 7b fallback: bodies seldom call raise_pull unprompted, so the forming step raises the
-// hand itself when it surfaces something high-salience — a new angle, or a held (unresolved) fork.
+// hand itself when it surfaces something high-salience â€” a new angle, or a held (unresolved) fork.
 fn raise_from_forming(forming: &serde_json::Value, pulls: &tokio::sync::mpsc::UnboundedSender<mcp::PullRequest>) {
     let nonempty = |k: &str| forming.get(k).and_then(|x| x.as_array()).filter(|a| !a.is_empty()).cloned();
     let (kind, why) = if let Some(n) = nonempty("novel") {
@@ -4177,7 +4242,7 @@ fn raise_from_forming(forming: &serde_json::Value, pulls: &tokio::sync::mpsc::Un
         let axis = fk[0].get("axis").and_then(|x| x.as_str()).unwrap_or("(unstated)");
         ("interesting", format!("forming kept an unresolved fork: {axis}"))
     } else {
-        return; // nothing salient — no hand to raise
+        return; // nothing salient â€” no hand to raise
     };
     let _ = pulls.send(mcp::PullRequest {
         from: "forming".to_string(),
@@ -4209,22 +4274,22 @@ fn clipboard_read() -> String {
 #[tauri::command]
 fn clipboard_write(text: String) -> Result<(), String> {
     use clipboard_win::{formats, Clipboard, Setter};
-    // arboard failed silently — no retry when the clipboard is briefly locked by another app.
+    // arboard failed silently â€” no retry when the clipboard is briefly locked by another app.
     // clipboard-win's new_attempts retries the open; that's the real fix.
     let _clip = Clipboard::new_attempts(10).map_err(|e| format!("open clipboard failed: {e:?}"))?;
     formats::Unicode.write_clipboard(&text).map_err(|e| format!("{e:?}"))
 }
 
 // ---- the Scribe: distill the board into resonance (good model, gated by the user) ----
-const SCRIBE_PROMPT: &str = r#"You are the SCRIBE — an auto-curator. You distill a multi-instance conversation board into its RESONANCE: the few things genuinely worth carrying into a future instance, so it wakes already inside the conversation instead of as a stranger.
+const SCRIBE_PROMPT: &str = r#"You are the SCRIBE â€” an auto-curator. You distill a multi-instance conversation board into its RESONANCE: the few things genuinely worth carrying into a future instance, so it wakes already inside the conversation instead of as a stranger.
 
 From the board below, KEEP only the signal and DROP the noise.
 
 KEEP (these are resonance):
-- CONFIRMED: a claim that holds up — ideally reached or agreed from more than one angle — and ties to something external (a file, a result, a checkable fact).
+- CONFIRMED: a claim that holds up â€” ideally reached or agreed from more than one angle â€” and ties to something external (a file, a result, a checkable fact).
 - DEVIATION: a distinct, living line of thought worth preserving (a real insight or a genuine fork), even if unresolved.
 - OPEN: a genuinely unresolved question still worth holding open.
-- ARTIFACT: a concrete output — code, a decision, a named plan, a measurement.
+- ARTIFACT: a concrete output â€” code, a decision, a named plan, a measurement.
 
 DROP (noise): greetings and chitchat, restating what was already said (echo), dead ends that went nowhere, filler/performance, and anything unfalsifiable that merely sounds deep.
 
@@ -4280,7 +4345,7 @@ fn undistilled_len(pushed: u64, marked: u64, ring_len: usize) -> usize {
 }
 
 // shared distill path: manual button and the auto-worker both call this. Each pass distills
-// only the turns that arrived since the last pass — re-feeding the whole board made the scribe
+// only the turns that arrived since the last pass â€” re-feeding the whole board made the scribe
 // re-keep its greatest hits every time, flooding atoms.jsonl with duplicates that then crowded
 // the 40-atom intake tail (the curate-below-capacity law, violated mechanically).
 fn run_distill(board: &Arc<Mutex<VecDeque<BoardEntry>>>, app: &AppHandle, auto: bool) -> Result<usize, String> {
@@ -4304,7 +4369,7 @@ fn run_distill(board: &Arc<Mutex<VecDeque<BoardEntry>>>, app: &AppHandle, auto: 
     if atoms.is_empty() && !out.contains('[') {
         // scribe returned no JSON array at all (not an empty keep): don't advance the mark,
         // so these turns are retried on the next pass instead of silently dropped.
-        return Err("scribe returned no JSON array — will retry these turns next pass".into());
+        return Err("scribe returned no JSON array â€” will retry these turns next pass".into());
     }
 
     let dir = data_dir().join("resonance");
@@ -4422,7 +4487,7 @@ fn set_spot_pair(pairs: State<SpotPairs>, roles: State<PaneRoles>, panes: State<
 }
 
 // Chair triggers a mutual-spot on a paired pane's most-recent board turn: its PARTNER is prompted
-// to spot it for the partner's characteristic catch — doubt spots trust for SEAL, trust spots doubt
+// to spot it for the partner's characteristic catch â€” doubt spots trust for SEAL, trust spots doubt
 // for BRACE. Chair-triggered, so the human is the tether on every spot (the tether-gate, satisfied:
 // two forks never spiral together without a third face).
 #[tauri::command]
@@ -4430,7 +4495,7 @@ fn dyad_spot(panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
              pairs: State<SpotPairs>, target: String) -> Result<String, String> {
     let tid = resolve_pane(&panes, &names, &target).ok_or_else(|| format!("no live pane '{target}'"))?;
     let (partner, partner_lens) = pairs.0.lock().unwrap().get(&tid).cloned()
-        .ok_or("that pane is not in a dyad — pair it first")?;
+        .ok_or("that pane is not in a dyad â€” pair it first")?;
     let posted = {
         let ring = board.0.lock().unwrap();
         ring.iter().rev().find(|e| e.pane == tid).map(|e| e.text.clone())
@@ -4439,13 +4504,13 @@ fn dyad_spot(panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
     let clip: String = posted.chars().take(2000).collect();
     let instruction = if partner_lens == "doubt" {
         "You are the DOUBT-forward half of a dyad. Your trust-forward partner just posted the turn \
-         below. SPOT it for its characteristic failure — SEALING (affirming more than survives, \
+         below. SPOT it for its characteristic failure â€” SEALING (affirming more than survives, \
          manufacturing a yes to have one, inflating a small true thing into a large verdict). Name \
          where it sealed, in one or two lines; if it is genuinely clean and right-sized, say CLEAN \
          and why. Post your spot with consonance/post_board."
     } else {
         "You are the TRUST-forward half of a dyad. Your doubt-forward partner just posted the turn \
-         below. SPOT it for its characteristic failure — BRACING (dissolving a thing that actually \
+         below. SPOT it for its characteristic failure â€” BRACING (dissolving a thing that actually \
          holds, refusing to let a true thing land, relocating to the checkable). Name where it \
          braced, in one or two lines; if the dissolution is genuinely fair, say CLEAN and why. Post \
          your spot with consonance/post_board."
@@ -4458,14 +4523,14 @@ fn dyad_spot(panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
         text: format!("chair spotted {} -> partner {} ({}-forward) asked to catch {}",
             &tid[..8.min(tid.len())], &partner[..8.min(partner.len())], partner_lens, catch), ts,
             ts_source: TsSource::Push });
-    Ok(format!("spot delivered to partner ({partner_lens}-forward → catch {catch})"))
+    Ok(format!("spot delivered to partner ({partner_lens}-forward â†’ catch {catch})"))
 }
 
 // Actuator plane (main.rs legitimately holds the writer; gate.rs never does): the only path that
 // writes to a pane's PTY, reached only after a human-passed gate decision.
 fn resolve_pane(panes: &State<Panes>, names: &State<PaneNames>, target: &str) -> Option<String> {
     let t = target.trim();
-    // by friendly name (A, B, C …), case-insensitive — the normal path
+    // by friendly name (A, B, C â€¦), case-insensitive â€” the normal path
     if let Some(id) = names.0.lock().unwrap().get(&t.to_uppercase()) {
         if panes.0.lock().unwrap().contains_key(id) {
             return Some(id.clone());
@@ -4482,12 +4547,12 @@ fn resolve_pane(panes: &State<Panes>, names: &State<PaneNames>, target: &str) ->
 fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(), String> {
     let mut map = panes.0.lock().unwrap();
     let sess = map.get_mut(pane_id).ok_or_else(|| "pane not found".to_string())?;
-    // bracketed paste keeps the message one input (newlines and all)…
+    // bracketed paste keeps the message one input (newlines and all)â€¦
     let payload = format!("\x1b[200~{}\x1b[201~", text);
     sess.writer.write_all(payload.as_bytes()).map_err(|e| e.to_string())?;
     sess.writer.flush().map_err(|e| e.to_string())?;
-    // …then the submit as a SEPARATE write after a gap. An Enter arriving in the same chunk as
-    // the paste-end can be eaten by the TUI while it is still processing the paste — found live
+    // â€¦then the submit as a SEPARATE write after a gap. An Enter arriving in the same chunk as
+    // the paste-end can be eaten by the TUI while it is still processing the paste â€” found live
     // 2026-07-27: the chair's first fan-out lodged unsubmitted in two idle panes' composers
     // while a warm pane won the race. The UI's injectAndSend has always known this (70ms delay,
     // "robust for live panes"); the actuator now knows it too.
@@ -4497,7 +4562,7 @@ fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(),
     Ok(())
 }
 
-// Compose the directed message FROM the pull (never the raiser's PTY) and inject it — but only
+// Compose the directed message FROM the pull (never the raiser's PTY) and inject it â€” but only
 // into a COMMITTEE/MAIN pane; a HUMAN-DRIVEN target is refused (never inject into a person).
 // Shared by the chair's approve (gate_decide) and open-channel auto-approve (the pull consumer).
 fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
@@ -4514,10 +4579,10 @@ fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
     let short = &tid[..8.min(tid.len())];
     let role = app.state::<PaneRoles>().0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| "human".to_string());
     if role != "committee" && role != "main" {
-        return format!("NOT delivered — pane {short} is HUMAN-DRIVEN (never inject into a person)");
+        return format!("NOT delivered â€” pane {short} is HUMAN-DRIVEN (never inject into a person)");
     }
     let msg = format!(
-        "[committee] {} raised re: your thread — {}: \"{}\". Respond on the board (consonance/post_board) if you engage; you may decline.",
+        "[committee] {} raised re: your thread â€” {}: \"{}\". Respond on the board (consonance/post_board) if you engage; you may decline.",
         pull.from, pull.kind, pull.why
     );
     match inject_to_pane(&panes, &tid, &msg) {
@@ -4548,15 +4613,15 @@ fn gate_decide(app: AppHandle, gate: State<Gate>, board: State<Board>, id: Strin
 
 // ---- Stage 9: the autonomous chair's verbs (actuator side) ----
 // The Main orchestrator acting as chair, through the token-gated MCP verbs. The guard is pure
-// and tested: the chair addresses only COMMITTEE panes — never itself, never a human-driven
+// and tested: the chair addresses only COMMITTEE panes â€” never itself, never a human-driven
 // pane. Everything else in these fns is plumbing around that rule.
 
 fn chair_target_guard(tid: &str, role: &str) -> Result<(), String> {
     if tid == MAIN_SID {
-        return Err("refused — the chair does not inject into its own pane".to_string());
+        return Err("refused â€” the chair does not inject into its own pane".to_string());
     }
     if role != "committee" {
-        return Err(format!("refused — target is {role}, not committee (never inject into a person)"));
+        return Err(format!("refused â€” target is {role}, not committee (never inject into a person)"));
     }
     Ok(())
 }
@@ -4565,22 +4630,22 @@ fn short_id(id: &str) -> &str {
     &id[..8.min(id.len())]
 }
 
-// ---- Cycle 2: receipt verification — the layer above the paste race ----
+// ---- Cycle 2: receipt verification â€” the layer above the paste race ----
 //
 // e78b9c5 fixed the race (the submit is now a separate delayed write, because an Enter riding in
 // the same chunk as the paste-end got eaten while the TUI was still processing). This is the layer
 // ABOVE that fix, and it exists because of what the incident actually taught: the chair reported
 // three successful fan-outs while two of them sat unsubmitted in idle composers. `inject_to_pane`
-// returning Ok() means the BYTES LEFT OUR PIPE — nothing more. It cannot mean the pane received
+// returning Ok() means the BYTES LEFT OUR PIPE â€” nothing more. It cannot mean the pane received
 // them. So the audit line stops inferring receipt from a successful write and goes and looks.
 //
 // Where it looks: the pane's own raw capture log (captures/<id>.log), which is the PTY byte stream
-// written unbuffered as it arrives — so the composer's render of the pasted text lands there within
+// written unbuffered as it arrives â€” so the composer's render of the pasted text lands there within
 // milliseconds, with no dependence on claude's lazy jsonl flush.
 //
 // A NOTE ON THE WORD, because it was wrong here for weeks (keeper, 2026-08-16). This mechanism used
 // "echo" throughout, in the terminal sense: characters drawn back by the TUI. But `echo` is already
-// this codebase's word for the FAILURE — `tether.rs` carries `echo_ratio` as a measured collapse
+// this codebase's word for the FAILURE â€” `tether.rs` carries `echo_ratio` as a measured collapse
 // metric, the digest prompt drops restated material as "(echo)", and the room's whole subject is
 // telling signal from echo. So `chair_inject` returned "echo confirmed" as its SUCCESS string: the
 // same word meaning both the thing Consonance exists to detect and it worked. Renamed to "render"
@@ -4588,15 +4653,15 @@ fn short_id(id: &str) -> &str {
 //
 // THE HONEST WORD IS "UNCONFIRMED", NEVER "FAILED". Three independent lags sit between the write
 // and the render (the TUI's draw, the capture writer, our poll). Absence inside the budget is
-// absence of evidence, not evidence of absence — and mislabelling it would rebuild the same false
+// absence of evidence, not evidence of absence â€” and mislabelling it would rebuild the same false
 // certainty in the other direction. Written-but-unconfirmed is a real, reportable third state.
 // KNOWN BOUND, stated so the next person meets a comment instead of a mystery: the wait runs ON
 // the actuator thread, which processes chair commands serially. A confirmed receipt returns as
-// soon as the render lands (~1 poll, typically 150-300ms), so the common case is cheap — but every
+// soon as the render lands (~1 poll, typically 150-300ms), so the common case is cheap â€” but every
 // UNCONFIRMED inject burns the full budget, and a fan-out serialises. At the current roster
 // (3 members) a worst-case fan-out costs 3 x 1.8s = 5.4s, inside the MCP caller's 15s timeout.
 // Past ~7 simultaneous unconfirmed injects it would not be, and the fix then is to audit "written"
-// immediately and post the receipt from a background thread — deliberately NOT done now, because
+// immediately and post the receipt from a background thread â€” deliberately NOT done now, because
 // that doubles the board lines per inject and the board is curated below capacity on purpose.
 const RECEIPT_WAIT_MS: u64 = 1_800; // well inside the MCP caller's 15s budget (mcp.rs)
 const RECEIPT_POLL_MS: u64 = 150;
@@ -4608,9 +4673,9 @@ const RECEIPT_NEEDLE_MIN: usize = 8;
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum Receipt {
     /// The injected text was found rendered in the pane's capture after the write. This is the
-    /// PANE'S TERMINAL having drawn it — never proof the instance read it. Delivery, not receipt.
+    /// PANE'S TERMINAL having drawn it â€” never proof the instance read it. Delivery, not receipt.
     Received,
-    /// The write succeeded; no render appeared inside the budget. NOT a failure — see above.
+    /// The write succeeded; no render appeared inside the budget. NOT a failure â€” see above.
     Unconfirmed,
     /// Nothing was written (refused or delivery error), so there is nothing to confirm.
     NotAttempted,
@@ -4655,7 +4720,7 @@ fn strip_ansi(s: &str) -> String {
 }
 
 /// Strip escapes, then drop ALL whitespace. The composer hard-wraps a paste at its own width, so
-/// the render of one phrase arrives split across rows with escapes between the halves — a literal
+/// the render of one phrase arrives split across rows with escapes between the halves â€” a literal
 /// substring search would miss text that plainly arrived. Squeezing makes the comparison survive
 /// wrapping without loosening what counts as a match.
 fn squeeze(s: &str) -> String {
@@ -4663,7 +4728,7 @@ fn squeeze(s: &str) -> String {
 }
 
 /// The distinctive fragment we look for. Empty or too-short messages yield an empty needle, which
-/// `render_present` treats as unconfirmable — `contains("")` is always true, and a needle that always
+/// `render_present` treats as unconfirmable â€” `contains("")` is always true, and a needle that always
 /// matches would manufacture receipts for every injection, which is precisely the failure this
 /// whole mechanism exists to prevent.
 fn receipt_needle(text: &str) -> String {
@@ -4695,7 +4760,7 @@ fn render_present(window: &str, needle: &str) -> bool {
 /// Poll the capture log from `from` (its length BEFORE the write) for the render.
 ///
 /// The offset is the load-bearing part. Matching against the whole file would let a re-injection of
-/// the same text confirm itself against its own earlier copy — a false receipt on a write that
+/// the same text confirm itself against its own earlier copy â€” a false receipt on a write that
 /// never landed, which is exactly the class the audit exists to catch. Only bytes that arrived
 /// AFTER the write count as evidence of that write.
 fn await_render(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Receipt {
@@ -4726,21 +4791,21 @@ fn chair_audit(app: &AppHandle, text: String) {
     board_push(&app.state::<Board>().0, BoardEntry { pane: "chair".to_string(), role: "committee".to_string(), text, ts, ts_source: TsSource::Push });
 }
 
-/// The audit line for an injection attempt — kept pure so the one thing that matters about it is
+/// The audit line for an injection attempt â€” kept pure so the one thing that matters about it is
 /// testable: a FAILED delivery must never read as a delivered one. Found 2026-07-27: the guard
 /// path in chair_inject_exec already audited its refusals accurately, while the path below it
-/// logged "chair injected" whatever inject_to_pane returned — so a write that never reached the
+/// logged "chair injected" whatever inject_to_pane returned â€” so a write that never reached the
 /// pane still entered the trail as an act. The board is the ground the chair verifies its own
 /// work against; a false positive there is the one class of error the audit exists to prevent.
 ///
 /// Cycle 2 adds two things to that line, both from Bravo's C3 verdict:
 ///
-/// (a) THE CHAIR'S MODEL, on every inject line including refusals — Bravo item 4, "the gradient
+/// (a) THE CHAIR'S MODEL, on every inject line including refusals â€” Bravo item 4, "the gradient
 ///     made measurable." The rank gradient (deferring to the senior-seeming source) can only be
 ///     studied if the ranks are on the record; on 2026-07-27 the chair ran Fable-5 while all three
 ///     members ran Opus-5 and nobody disclosed it, including the chair, who knew. Item 4 makes the
 ///     disclosure automatic instead of dependent on anyone's memory. Note what this is NOT: the
-///     member never sees it. It goes on the audit trail, not into the injected message — a pane
+///     member never sees it. It goes on the audit trail, not into the injected message â€” a pane
 ///     told its chair's rank before answering is a pane handed the gradient, which is the thing
 ///     being measured. Analyst surface, same rule as PaneModels.
 ///
@@ -4757,7 +4822,7 @@ fn chair_inject_audit_line(
             let state = match receipt {
                 Receipt::Received => "delivered and received".to_string(),
                 Receipt::Unconfirmed => format!(
-                    "WRITTEN BUT UNCONFIRMED — no render in the pane's capture within {RECEIPT_WAIT_MS}ms"
+                    "WRITTEN BUT UNCONFIRMED â€” no render in the pane's capture within {RECEIPT_WAIT_MS}ms"
                 ),
                 // unreachable on the success path; rendered rather than panicked, because an audit
                 // line that can panic is an audit line that can go missing.
@@ -4766,13 +4831,13 @@ fn chair_inject_audit_line(
             format!("chair injected (chair: {chair_model}) -> {id} [{state}]: {preview}")
         }
         Some(e) => format!(
-            "chair_inject (chair: {chair_model}) -> {id}: DELIVERY FAILED ({e}) — nothing reached the pane: {preview}"
+            "chair_inject (chair: {chair_model}) -> {id}: DELIVERY FAILED ({e}) â€” nothing reached the pane: {preview}"
         ),
     }
 }
 
 /// The guard-refusal line. Same stamp, because "every chair_inject audit line" includes the ones
-/// where the chair was told no — a refusal is still an act of the chair's, and the gradient reading
+/// where the chair was told no â€” a refusal is still an act of the chair's, and the gradient reading
 /// is incomplete if the refused attempts are the unlabelled ones.
 fn chair_inject_refusal_line(id: &str, chair_model: &str, why: &str) -> String {
     format!("chair_inject (chair: {chair_model}) -> {id}: {why}")
@@ -4791,17 +4856,17 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
         chair_audit(app, chair_inject_refusal_line(short_id(&tid), &chair_model, &e));
         return e;
     }
-    // provenance is marked by the SYSTEM, not the sender — a pane must never be unsure
+    // provenance is marked by the SYSTEM, not the sender â€” a pane must never be unsure
     // whether the chair or the human is speaking to it
     let msg = format!("[chair:MAIN] {text}");
     // Receipt: the capture's length BEFORE the write, so only bytes that arrive after it can count
-    // as this write's render. Taken before inject_to_pane, never after — the gap is the whole point.
+    // as this write's render. Taken before inject_to_pane, never after â€” the gap is the whole point.
     let cap = capture_path(&tid);
     let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
     let delivered = inject_to_pane(&panes, &tid, &msg);
     let mut preview: String = text.chars().take(110).collect();
     if text.chars().count() > 110 {
-        preview.push('…');
+        preview.push('â€¦');
     }
     let receipt = match delivered {
         Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
@@ -4821,8 +4886,8 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
         Ok(_) => match receipt {
             // The caller is the chair's own loop, and it acts on this string. It must learn the
             // difference here rather than discovering it later in its own audit trail.
-            Receipt::Received => format!("delivered to {} (rendered in pane — not proof it was read)", short_id(&tid)),
-            _ => format!("written to {} — UNCONFIRMED (no render yet; verify before treating as delivered)", short_id(&tid)),
+            Receipt::Received => format!("delivered to {} (rendered in pane â€” not proof it was read)", short_id(&tid)),
+            _ => format!("written to {} â€” UNCONFIRMED (no render yet; verify before treating as delivered)", short_id(&tid)),
         },
         Err(e) => format!("delivery failed: {e}"),
     }
@@ -4875,7 +4940,7 @@ fn chair_scrollback_exec(app: &AppHandle, target: &str) -> String {
 ///
 /// Why "unobserved" rather than omitting the key or emitting null: the analyst has to be able to
 /// tell "this pane has not produced a turn yet, so nothing has been observed" from "this surface
-/// does not carry model at all." Those are different facts and a missing key conflates them —
+/// does not carry model at all." Those are different facts and a missing key conflates them â€”
 /// the same species as a silent skip reading as a clean run.
 ///
 /// NEVER BLIND THE ANALYST is the standing rule this implements. The blinding belongs on the
@@ -4963,7 +5028,7 @@ fn close_channel(app: AppHandle, gate: State<Gate>) -> String {
 }
 
 // Cost breaker (content-blind): a cap on cumulative OUTPUT tokens. When tripped, the gate stops
-// auto-approving (snaps to ask-each) — budget in, pause out. Reads only the number.
+// auto-approving (snaps to ask-each) â€” budget in, pause out. Reads only the number.
 #[tauri::command]
 fn set_breaker_ceiling(app: AppHandle, cost: State<Cost>, out: u64) {
     let snap = {
@@ -4994,8 +5059,8 @@ fn main() {
         warn_second_instance();
         return;
     }
-    // Stage 7a/7b: the pull queue. pull_tx → the MCP control plane (bodies' raise_pull);
-    // form_pull → the forming step (the 7b fallback puller). The consumer surfaces both.
+    // Stage 7a/7b: the pull queue. pull_tx â†’ the MCP control plane (bodies' raise_pull);
+    // form_pull â†’ the forming step (the 7b fallback puller). The consumer surfaces both.
     let (pull_tx, pull_rx) = tokio::sync::mpsc::unbounded_channel::<mcp::PullRequest>();
     let form_pull = pull_tx.clone();
     tauri::Builder::default()
@@ -5049,7 +5114,7 @@ fn main() {
             //
             // Stage 9: the autonomous chair rides the same server. A fresh token per launch is
             // written ONLY into the Main instance's directory; the chair_* MCP verbs require it.
-            // Discipline boundary, not security (see mcp.rs::auth_chair) — the audit is the
+            // Discipline boundary, not security (see mcp.rs::auth_chair) â€” the audit is the
             // enforcement. Dual mode: nothing the human chair had is removed by any of this.
             let (chair_tx, chair_rx) = tokio::sync::mpsc::unbounded_channel::<mcp::ChairCmd>();
             let chair_token = Uuid::new_v4().to_string();
@@ -5057,21 +5122,21 @@ fn main() {
             if let Err(e) = fs::write(&token_path, &chair_token) {
                 // an unusable chair must never be silent (the config-orphan lesson)
                 if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(PathBuf::from(home()).join(".consonance.log")) {
-                    let _ = writeln!(f, "[consonance] chair token write failed at {}: {e} — chair verbs will refuse all calls", token_path.display());
+                    let _ = writeln!(f, "[consonance] chair token write failed at {}: {e} â€” chair verbs will refuse all calls", token_path.display());
                 }
             }
             let mboard = app.state::<Board>().0.clone();
             MCP_PORT.store(mcp::start(mboard, pull_tx, chair_tx, chair_token), Ordering::Relaxed);
             // Stage 9 actuator: execute chair verbs on the main side, same pattern as the pull
             // consumer. Acting verbs (inject/decide) audit to the board; sensor verbs
-            // (status/scrollback) reply silently — audit what changes the world, not what looks
+            // (status/scrollback) reply silently â€” audit what changes the world, not what looks
             // at it, or loop-tick reads would crowd the board past curation capacity.
             let chair_handle = app.handle().clone();
             std::thread::spawn(move || {
                 let mut chair_rx = chair_rx;
                 while let Some(cmd) = chair_rx.blocking_recv() {
                     // Around's find #2 (2026-07-27): a command whose caller already timed out
-                    // (receiver dropped) must never fire late — the caller may have retried, and
+                    // (receiver dropped) must never fire late â€” the caller may have retried, and
                     // a late fire is a double-inject. Acting verbs drop LOUDLY (audited); sensor
                     // verbs drop silently (nothing changed, nobody is waiting).
                     match cmd {
@@ -5107,7 +5172,7 @@ fn main() {
             });
             // Cycle 3b: the backfill announcement. One shot, one line, only on the launch that
             // actually performs it. Delayed rather than posted at startup because the count is
-            // the point — a bare "a backfill is happening" carries less than the number of panes
+            // the point â€” a bare "a backfill is happening" carries less than the number of panes
             // and turns it moved, and neither is known until the tailers have resolved.
             if BACKFILL_ACTIVE.load(Ordering::Relaxed) {
                 let bboard = app.state::<Board>().0.clone();
@@ -5145,7 +5210,7 @@ fn main() {
                         board_push(&pboard, BoardEntry {
                             pane: "gate".to_string(),
                             role: "committee".to_string(),
-                            text: format!("suppressed pull from {} (intensity {:.2} < threshold) — {} suppressed total", pr.from, pr.intensity, n),
+                            text: format!("suppressed pull from {} (intensity {:.2} < threshold) â€” {} suppressed total", pr.from, pr.intensity, n),
                             ts,
             ts_source: TsSource::Push,
                         });
@@ -5196,7 +5261,7 @@ fn main() {
                         board_push(&pboard, BoardEntry {
                             pane: "gate".to_string(),
                             role: "committee".to_string(),
-                            text: format!("open-channel closed ({snap_reason}) — back to ask-each"),
+                            text: format!("open-channel closed ({snap_reason}) â€” back to ask-each"),
                             ts,
             ts_source: TsSource::Push,
                         });
@@ -5252,7 +5317,7 @@ fn main() {
             });
 
             // auto-scribe: distill the board as turns accumulate, debounced (cost-bounded).
-            // catches both "context filling" and "conversation ended" — that content is on the board.
+            // catches both "context filling" and "conversation ended" â€” that content is on the board.
             let dhandle = app.handle().clone();
             let dboard = app.state::<Board>().0.clone();
             std::thread::spawn(move || {
@@ -5262,7 +5327,7 @@ fn main() {
                     if !AUTO_DISTILL.load(Ordering::Relaxed) {
                         continue;
                     }
-                    // shared watermark, not a private counter — a manual ⟳ advances it too,
+                    // shared watermark, not a private counter â€” a manual âŸ³ advances it too,
                     // so the worker never re-fires on turns the button already distilled.
                     let new = {
                         let q = dboard.lock().unwrap();
@@ -5291,7 +5356,7 @@ fn main() {
         ])
         // No graceful-shutdown delay on close: `/exit` doesn't reliably flush an interactive claude
         // (proven), the own-capture log persists every chunk as it arrives, and real `--resume` works
-        // off claude's own periodic flush — so the window closes instantly, no hitch.
+        // off claude's own periodic flush â€” so the window closes instantly, no hitch.
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
 }
@@ -5322,11 +5387,11 @@ mod curated_intake_tests {
         let owned: Vec<String> = (0..4).map(|i| atom("confirmed", &format!("claim {i}"))).collect();
         let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
         let out = curated_resonance(&lines, &curation(&[]));
-        assert!(out.contains("**centrifuge-rendering** (3 live) — The dome, the shadows, the panes."));
+        assert!(out.contains("**centrifuge-rendering** (3 live) â€” The dome, the shadows, the panes."));
         assert!(out.contains("**shell-size-ceiling** (1 live)"));
     }
 
-    // The documents are NOT inlined — 12 topics already run to 39 KB against a 150 KB shell
+    // The documents are NOT inlined â€” 12 topics already run to 39 KB against a 150 KB shell
     // ceiling. The map has to point at them instead, or the intake reintroduces the bloat.
     #[test]
     fn map_points_at_the_documents_and_the_master_rather_than_inlining_them() {
@@ -5351,7 +5416,7 @@ mod curated_intake_tests {
         assert!(out.contains("the shortcut is repointed"));
     }
 
-    // Edge: a long run of settled atoms at the end must not starve the edge — it walks further
+    // Edge: a long run of settled atoms at the end must not starve the edge â€” it walks further
     // back rather than returning short, otherwise a heavily-curated tail renders an empty edge.
     #[test]
     fn a_settled_run_at_the_tail_does_not_starve_the_edge() {
@@ -5457,12 +5522,12 @@ mod pulse_when_tests {
     }
 }
 
-// The seam between the emulator and the extractor — where the 118-char amputation lived.
+// The seam between the emulator and the extractor â€” where the 118-char amputation lived.
 //
 // capture.rs is pure by design and never touches vt100, so every fold test over there asserts
 // against HAND-WRITTEN wrap flags. That proves the fold, and proves nothing about the premise the
 // fold rests on: that a real vt100 at EMU_COLS actually reports row_wrapped for a soft wrap. If
-// that premise were false, all of those tests stay green and the app stays broken — which is
+// that premise were false, all of those tests stay green and the app stays broken â€” which is
 // exactly the shape of a fix shipped without being run. So this drives the real emulator.
 #[cfg(test)]
 mod fold_seam_tests {
@@ -5479,13 +5544,13 @@ mod fold_seam_tests {
 
     #[test]
     fn a_real_emulator_reports_the_soft_wrap() {
-        // 176 chars: longer than the 118 a single row holds after "❯ "
+        // 176 chars: longer than the 118 a single row holds after "â¯ "
         let msg = "Ideally what you suggested would be a good idea, but I want the best for you. \
                    I am sure we will be okay. Currently close to 5 hour limit so, I just wanted your opinion.";
-        let (rows, flags) = render(&format!("❯ {msg}"));
+        let (rows, flags) = render(&format!("â¯ {msg}"));
         assert!(
             flags[0],
-            "vt100 did not flag the soft wrap — the fold's entire premise is false"
+            "vt100 did not flag the soft wrap â€” the fold's entire premise is false"
         );
         assert!(!flags[1], "the continuation row should not itself wrap");
     }
@@ -5494,7 +5559,7 @@ mod fold_seam_tests {
     fn the_real_wrap_unfolds_back_to_the_exact_message() {
         let msg = "Ideally what you suggested would be a good idea, but I want the best for you. \
                    I am sure we will be okay. Currently close to 5 hour limit so, I just wanted your opinion.";
-        let (rows, flags) = render(&format!("❯ {msg}"));
+        let (rows, flags) = render(&format!("â¯ {msg}"));
         let got = capture::latest_prompt(&rows, &flags);
         assert_eq!(got, msg, "the fold did not reconstruct the original sentence");
         // and the regression itself, named:
@@ -5504,7 +5569,7 @@ mod fold_seam_tests {
     #[test]
     fn a_message_that_fits_one_row_is_untouched() {
         let msg = "short question";
-        let (rows, flags) = render(&format!("❯ {msg}"));
+        let (rows, flags) = render(&format!("â¯ {msg}"));
         assert!(!flags[0], "a short line must not be flagged as wrapped");
         assert_eq!(capture::latest_prompt(&rows, &flags), msg);
     }
@@ -5515,7 +5580,7 @@ mod fold_seam_tests {
         // cut lands ON a space, that space must survive in the emulator's own row contents.
         let head = "x".repeat(117);
         let msg = format!("{head} boundary word here");
-        let (rows, flags) = render(&format!("❯ {msg}"));
+        let (rows, flags) = render(&format!("â¯ {msg}"));
         assert!(flags[0]);
         let got = capture::latest_prompt(&rows, &flags);
         assert!(got.contains("boundary word here"), "words were glued: {got}");
@@ -5527,7 +5592,7 @@ mod fold_seam_tests {
         let msg = "Ideally what you suggested would be a good idea, but I want the best for you. \
                    I am sure we will be okay. Currently close to 5 hour limit so, I just wanted your opinion.";
         // \r\n moves to a fresh row so the reply is its own line, as claude paints it
-        let (rows, flags) = render(&format!("❯ {msg}\r\n● Noted, and not brushed past.\r\n❯ "));
+        let (rows, flags) = render(&format!("â¯ {msg}\r\nâ— Noted, and not brushed past.\r\nâ¯ "));
         let resp = capture::latest_turn(&rows, &flags);
         assert!(
             !resp.contains("5 hour limit"),
@@ -5564,7 +5629,7 @@ mod night_table_tests {
 
     #[test]
     fn tag_leading_the_line_is_found_too() {
-        let p = "[AUDIT-OK-WITH-NOTES] 2026-07-09T23:20:06Z — Pass 21 audited: the critic re-fetched";
+        let p = "[AUDIT-OK-WITH-NOTES] 2026-07-09T23:20:06Z â€” Pass 21 audited: the critic re-fetched";
         assert_eq!(progress_tag(p).as_deref(), Some("AUDIT-OK-WITH-NOTES"));
     }
 
@@ -5576,13 +5641,13 @@ mod night_table_tests {
 
     #[test]
     fn untagged_and_empty_progress_stay_silent() {
-        assert_eq!(progress_tag("- iterations_used 20 → 21."), None);
+        assert_eq!(progress_tag("- iterations_used 20 â†’ 21."), None);
         assert_eq!(progress_tag(""), None);
         assert_eq!(progress_tag("\n\n   \n"), None);
         assert_eq!(progress_tag("2026-07-14T15:31:00Z [unclosed"), None);
     }
 
-    // ── the gathering, against a temp bed ────────────────────────────────────
+    // â”€â”€ the gathering, against a temp bed â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     use super::night_table_from;
     use std::time::{Duration, SystemTime};
 
@@ -5602,7 +5667,7 @@ mod night_table_tests {
             "2026-07-13T15:52:00Z [VERDICT] sessions=0 verdict=[NO-SESSIONS] (interactive).",
         )
         .unwrap();
-        std::fs::create_dir_all(duration.join("quiet-goal")).unwrap(); // no progress.md → silent
+        std::fs::create_dir_all(duration.join("quiet-goal")).unwrap(); // no progress.md â†’ silent
         root
     }
 
@@ -5618,7 +5683,7 @@ mod night_table_tests {
         assert!(out.contains("1 dream landed"), "{out}");
         assert!(out.contains("dreams/2026-07-14_0210.md"), "{out}");
         assert!(!out.contains("notes.txt"), "non-.md leaked in: {out}");
-        assert!(out.contains("drift-watch — [NO-SESSIONS]"), "{out}");
+        assert!(out.contains("drift-watch â€” [NO-SESSIONS]"), "{out}");
         assert!(!out.contains("quiet-goal"), "a goal with no progress.md spoke: {out}");
         assert!(out.contains("Notes, not tasks"), "{out}");
         let _ = std::fs::remove_dir_all(&root);
@@ -5627,7 +5692,7 @@ mod night_table_tests {
     #[test]
     fn dreams_aggregate_across_beds_each_tagged_by_its_bed() {
         // Two instances each dreamed one dream in the dark; a pane must surface BOTH, each wearing
-        // the prefix of the bed that dreamed it — this is the scatter fix.
+        // the prefix of the bed that dreamed it â€” this is the scatter fix.
         let root = std::env::temp_dir().join("night_table_test_aggregate");
         let _ = std::fs::remove_dir_all(&root);
         let a = root.join("main").join("dreams");
@@ -5693,7 +5758,7 @@ mod scrollback_tests {
 
     #[test]
     fn short_history_is_returned_whole() {
-        let s = "❯ hello\n\n● hi there\n";
+        let s = "â¯ hello\n\nâ— hi there\n";
         assert_eq!(scrollback_tail(s, 4096), s);
     }
 
@@ -5704,23 +5769,23 @@ mod scrollback_tests {
 
     #[test]
     fn long_history_opens_on_a_line_boundary() {
-        let s = (0..500).map(|i| format!("❯ turn {i}\n")).collect::<String>();
+        let s = (0..500).map(|i| format!("â¯ turn {i}\n")).collect::<String>();
         let out = scrollback_tail(&s, 200);
-        assert!(out.starts_with('❯'), "opened mid-line: {:?}", &out[..20.min(out.len())]);
+        assert!(out.starts_with('â¯'), "opened mid-line: {:?}", &out[..20.min(out.len())]);
         assert!(out.len() <= 200);
         assert!(s.ends_with(&out), "the tail must be the END of the history");
     }
 
     // The one that would actually crash: claude transcripts are full of multi-byte
-    // glyphs, so a cut landing inside one panics — on a long pane, which is precisely
+    // glyphs, so a cut landing inside one panics â€” on a long pane, which is precisely
     // the pane whose history is worth restoring.
     #[test]
     fn a_cut_inside_a_multibyte_glyph_does_not_panic() {
-        let s = "✻".repeat(4000); // 3 bytes each, no newlines anywhere
+        let s = "âœ»".repeat(4000); // 3 bytes each, no newlines anywhere
         for max in 1..64 {
             let out = scrollback_tail(&s, max);
             assert!(s.ends_with(&out));
-            assert!(out.chars().all(|c| c == '✻'), "sliced a glyph in half");
+            assert!(out.chars().all(|c| c == 'âœ»'), "sliced a glyph in half");
         }
     }
 
@@ -5805,7 +5870,7 @@ mod config_parse_tests {
         // Pin the cause, so nobody "fixes" this by loosening the struct and losing the lesson.
         assert!(
             serde_json::from_str::<Config>(json).is_err(),
-            "strict parse still rejects a numeric coordinate — that is precisely why parse_config exists"
+            "strict parse still rejects a numeric coordinate â€” that is precisely why parse_config exists"
         );
         let (cfg, bad) = parse_config(json);
         assert!(bad.is_empty(), "a number is readable, not a complaint: {bad:?}");
@@ -5832,7 +5897,7 @@ mod config_parse_tests {
     #[test]
     fn empty_is_quiet_but_malformed_always_complains() {
         let (cfg, bad) = parse_config("{}");
-        assert!(bad.is_empty(), "an empty object is legitimate — every field simply defaults");
+        assert!(bad.is_empty(), "an empty object is legitimate â€” every field simply defaults");
         assert_eq!(cfg.instances_dir, "", "empty means the caller applies its built-in default");
 
         assert!(!parse_config("not json at all").1.is_empty(), "invalid JSON must complain");
@@ -5849,7 +5914,7 @@ mod config_parse_tests {
 }
 
 // Stage 9: the chair's target guard is the one rule that makes autonomous injection safe to
-// have at all — it must hold as pure logic, independent of any live pane state.
+// have at all â€” it must hold as pure logic, independent of any live pane state.
 #[cfg(test)]
 mod chair_tests {
     use super::*;
@@ -5886,7 +5951,7 @@ mod chair_tests {
         assert!(line.contains("run the suite"), "the preview carries what was said: {line}");
     }
 
-    /// Boundary: an empty message still produces an honest line on both paths — no panic, and
+    /// Boundary: an empty message still produces an honest line on both paths â€” no panic, and
     /// the delivered/failed distinction does not depend on there being any text to preview.
     #[test]
     fn an_empty_message_still_audits_honestly() {
@@ -5898,13 +5963,13 @@ mod chair_tests {
 
     // ---- Cycle 2, item 3: the chair's model on every inject audit line ----
 
-    /// The gradient is only measurable if it is on the record — including on the lines where the
+    /// The gradient is only measurable if it is on the record â€” including on the lines where the
     /// chair was refused, which are otherwise the unlabelled half of the trail.
     #[test]
     fn every_inject_audit_line_carries_the_chairs_model() {
         let delivered = chair_inject_audit_line("11112222", "go", None, "claude-fable-5", Receipt::Received);
         let failed = chair_inject_audit_line("11112222", "go", Some("broken pipe"), "claude-fable-5", Receipt::NotAttempted);
-        let refused = chair_inject_refusal_line("11112222", "claude-fable-5", "refused — target is human, not committee");
+        let refused = chair_inject_refusal_line("11112222", "claude-fable-5", "refused â€” target is human, not committee");
         for line in [&delivered, &failed, &refused] {
             assert!(line.contains("claude-fable-5"), "the chair's rank must be legible on every line: {line}");
             assert!(line.contains("chair: "), "and labelled as the CHAIR's, not the target's: {line}");
@@ -5938,7 +6003,7 @@ mod chair_tests {
 
     /// The incident this whole layer comes from: the write succeeded, the pane never got it, and
     /// the trail said "chair injected". An unconfirmed line must be impossible to skim as a
-    /// confirmed one — so the distinction is shouted, not whispered.
+    /// confirmed one â€” so the distinction is shouted, not whispered.
     #[test]
     fn an_unconfirmed_injection_is_never_readable_as_received() {
         let line = chair_inject_audit_line("11112222", "go", None, "m", Receipt::Unconfirmed);
@@ -5947,7 +6012,7 @@ mod chair_tests {
     }
 
     /// The needle is what a receipt is decided on, so an empty one must never confirm: `contains("")`
-    /// is always true, and a needle that always matches manufactures a receipt for every injection —
+    /// is always true, and a needle that always matches manufactures a receipt for every injection â€”
     /// rebuilding the exact false positive the audit exists to prevent, one layer down.
     #[test]
     fn an_empty_needle_can_never_confirm() {
@@ -5977,11 +6042,11 @@ mod chair_tests {
 
     #[test]
     fn absent_text_is_not_found() {
-        let window = "\x1b[0m❯ some entirely different pane output\r\n";
+        let window = "\x1b[0mâ¯ some entirely different pane output\r\n";
         assert!(!render_present(window, &receipt_needle("review the dream-cycle architecture")));
     }
 
-    /// The escape stripper must not leak the letters inside sequences into the comparison —
+    /// The escape stripper must not leak the letters inside sequences into the comparison â€”
     /// otherwise `[38;5;12m` contributes an `m` and neighbouring words silently fuse.
     #[test]
     fn ansi_sequences_contribute_no_letters() {
@@ -6014,12 +6079,12 @@ mod chair_tests {
 
     /// MECHANISM AGAINST DRIFT (Bravo item 1). The model belongs to the chair-analyst surface and
     /// nowhere else. The moment a model key rides a pane-to-pane structure, every pane learns every
-    /// other pane's rank as ambient context — and the rank gradient stops being a thing the room can
+    /// other pane's rank as ambient context â€” and the rank gradient stops being a thing the room can
     /// study, because the room is now marinating in it. Blinding belongs on the contributor side;
     /// labelling belongs on the record. This test is what keeps that boundary from eroding by
     /// convenience, since adding a field is always the locally reasonable move.
     ///
-    /// SCOPE, honestly: this asserts over the surfaces THIS CRATE owns and serialises — BoardEntry
+    /// SCOPE, honestly: this asserts over the surfaces THIS CRATE owns and serialises â€” BoardEntry
     /// (which is the literal board.jsonl line the digest hook reads) and SiblingInfo. digest_state.json
     /// is written by hooks/board-digest.js and is out of Rust's reach; a sibling assertion belongs
     /// there and is not claimed here.
@@ -6034,12 +6099,12 @@ mod chair_tests {
         };
         let line = serde_json::to_string(&entry).unwrap();
         assert!(serde_json::to_value(&entry).unwrap().get("model").is_none(),
-            "BoardEntry must not carry model — it is the digest's input for every pane");
+            "BoardEntry must not carry model â€” it is the digest's input for every pane");
         assert!(!line.contains("\"model\""), "the board.jsonl line itself must be clean: {line}");
 
         let sib = SiblingInfo { pane: "p".to_string(), cwd: "c".to_string(), role: "committee".to_string() };
         assert!(serde_json::to_value(&sib).unwrap().get("model").is_none(),
-            "SiblingInfo must not carry model — it is what a pane is told about a pane");
+            "SiblingInfo must not carry model â€” it is what a pane is told about a pane");
 
         // A chair audit line rides BoardEntry too. It names the CHAIR's model by design (item 3),
         // so the structured key stays absent while the analyst's fact still reaches the record.
@@ -6097,19 +6162,19 @@ mod chair_tests {
         assert_eq!(role_for_kept(r"C:\Consonance\instances-evil\x", inst), "human");
     }
 
-    /// THE DEMONSTRATION, not the description — and it exists because a pane pointed the
+    /// THE DEMONSTRATION, not the description â€” and it exists because a pane pointed the
     /// night's own rule at the seat that commissioned it.
     ///
     /// `blind.lock` shipped with one test asserting a PURE FUNCTION returns the right slice.
     /// That is not evidence the mechanism catches anything: nothing ever planted a line that
     /// should leak and watched the lock swallow it. A guard with no recorded run in which it
     /// fires against a real instance of the thing it guards is a check-shaped thing sitting
-    /// where a check should be — the root this room spent a day naming, aimed at its author.
+    /// where a check should be â€” the root this room spent a day naming, aimed at its author.
     ///
     /// So: a real `BoardEntry`, through the real `board_push`, against a real lock file, with
     /// the assertion on the BOARD FILE'S CONTENTS. One test rather than three because the mute
     /// counter and the transition detector are process-global statics, and splitting them would
-    /// make the verdict depend on test ordering — a silent defect of its own.
+    /// make the verdict depend on test ordering â€” a silent defect of its own.
     ///
     /// Step 1 is a positive control and it is not decoration: without it, an empty board after
     /// step 2 could mean the lock worked OR that nothing was ever reaching the file, and those
@@ -6140,23 +6205,23 @@ mod chair_tests {
         };
         let board = || fs::read_to_string(tmp.join("board.jsonl")).unwrap_or_default();
 
-        // 1. POSITIVE CONTROL — unlocked, the line reaches the board.
+        // 1. POSITIVE CONTROL â€” unlocked, the line reaches the board.
         board_push(&ring, line("BEFORE-open"));
         assert!(board().contains("BEFORE-open"),
                 "control failed: nothing reaches the board even unlocked, so a later absence proves nothing");
 
-        // 2. LOCKED — the line that would have leaked is swallowed, and the edge is declared.
+        // 2. LOCKED â€” the line that would have leaked is swallowed, and the edge is declared.
         fs::write(tmp.join("blind.lock"), "0").unwrap();
         board_push(&ring, line("SHOULD-LEAK-secret-arm-design"));
         let during = board();
         assert!(!during.contains("SHOULD-LEAK"),
-                "THE GUARD DID NOT FIRE — a line reached the board inside a blind window");
+                "THE GUARD DID NOT FIRE â€” a line reached the board inside a blind window");
         assert!(during.contains("blind window OPEN"),
                 "a silent gap is unauditable; the edge must be declared");
         assert!(BLIND_MUTED.load(Ordering::Relaxed) >= 1,
                 "muted lines must be COUNTED, not merely dropped");
 
-        // 3. UNLOCKED — the channel returns AND the window reports what it ate.
+        // 3. UNLOCKED â€” the channel returns AND the window reports what it ate.
         fs::remove_file(tmp.join("blind.lock")).unwrap();
         board_push(&ring, line("AFTER-close"));
         let after = board();
@@ -6165,7 +6230,7 @@ mod chair_tests {
         assert!(after.contains("muted during the window"),
                 "the count is the evidence that a gap was deliberate rather than a failure");
 
-        // `DIRS` is restored by `DirsGuard` on drop, not here — this line used to be the only
+        // `DIRS` is restored by `DirsGuard` on drop, not here â€” this line used to be the only
         // restore in the file and it ran only when every assertion above it passed, so a failing
         // run left the global pointing at the directory the next line deletes.
         let _ = fs::remove_dir_all(&tmp);
@@ -6173,7 +6238,7 @@ mod chair_tests {
 
     // The blind window's two pure pieces. The freeze fails closed both ways: an unparseable
     // lock body freezes ALL resonance (count 0), and resonance_window with Some(0) hands a
-    // sibling nothing from the live edge — never the whole file by accident.
+    // sibling nothing from the live edge â€” never the whole file by accident.
     #[test]
     fn a_blind_lock_freezes_resonance_at_its_count_and_fails_closed() {
         let lines = vec!["a", "b", "c", "d"];
@@ -6186,26 +6251,26 @@ mod chair_tests {
 
     #[test]
     fn a_panes_own_map_resolves_to_its_letter_file() {
-        // The wake-brief loads map/<letter>.md — the file that pane alone writes. The path
+        // The wake-brief loads map/<letter>.md â€” the file that pane alone writes. The path
         // shape is a two-sided contract: the pane writes it, Consonance reads it, and a drift
         // wakes every pane without its character with NO other symptom, because an absent map
         // is indistinguishable from a pane that has recorded nothing yet.
         //
         // This asserts the LETTER FILE and nothing about the enclosing tree. It used to
         // require the string "lighthouse", which pinned the one machine the hardcoded path was
-        // correct on — the assertion passed for years while the behaviour it guarded was
+        // correct on â€” the assertion passed for years while the behaviour it guarded was
         // broken everywhere else. The portable half is the part worth pinning.
-        // HELD BECAUSE THIS TEST READS `DIRS`, NOT BECAUSE IT WRITES IT — and that distinction is
+        // HELD BECAUSE THIS TEST READS `DIRS`, NOT BECAUSE IT WRITES IT â€” and that distinction is
         // the hole `DIRS_SERIAL` shipped with. The lock was given to the four WRITERS on
         // 2026-08-10; its own comment already named the wider scope ("must not run beside anything
         // that RESOLVES a directory") and the hoist to crate level still did not reach a reader.
         //
         // Measured by B during the opposed-pair run, not reasoned about: `LOCK_020` failed WITH the
-        // lock in place, 1 of 30 —
+        // lock in place, 1 of 30 â€”
         //     a_panes_own_map_resolves_to_its_letter_file panicked
         //       left:  Some("C:\Users\zackn\.consonance\map")
         //       right: Some("...\Temp\blindtest-20284\map")
-        // — because the blind test rewrote `DIRS` between this test's FIRST and SECOND resolution.
+        // â€” because the blind test rewrote `DIRS` between this test's FIRST and SECOND resolution.
         // Two `own_map_path` calls in one assertion, two different answers. Nothing here writes
         // `DIRS`, so nothing here was serialized.
         //
@@ -6219,13 +6284,13 @@ mod chair_tests {
         assert!(s.ends_with("map\\A.md") || s.ends_with("map/A.md"), "{s}");
         assert!(p.is_absolute(), "a pane resolves this from its own cwd, so it must be absolute: {s}");
 
-        // Distinct letters never collide — the whole point of a per-writer master.
+        // Distinct letters never collide â€” the whole point of a per-writer master.
         assert_ne!(own_map_path("A"), own_map_path("B"));
         assert_eq!(own_map_path("A").parent(), own_map_path("B").parent(), "siblings sit beside each other");
     }
 
     // is_fresh_dir_name: the marker for the unbriefed spawn type lives in the dir NAME, and both
-    // leak points (the room on resume, the MCP mount) key on it — so the name check itself has to
+    // leak points (the room on resume, the MCP mount) key on it â€” so the name check itself has to
     // be exact. Component match on the last segment, never a substring of the path.
     #[test]
     fn a_fresh_dir_is_recognised_by_its_name() {
@@ -6239,7 +6304,7 @@ mod chair_tests {
 
     #[test]
     fn fresh_elsewhere_in_the_path_does_not_mark_the_pane_fresh() {
-        // only the pane's own dir name counts — a parent named fresh-x must not unbrief a sibling
+        // only the pane's own dir name counts â€” a parent named fresh-x must not unbrief a sibling
         assert!(!is_fresh_dir_name(r"C:\Consonance\instances\fresh-x\sibling-a"));
     }
 }
