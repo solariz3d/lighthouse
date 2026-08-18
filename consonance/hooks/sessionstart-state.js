@@ -44,7 +44,7 @@ const LEDGER = process.env.CONSONANCE_SESSIONSTATE_LOG || path.join(DATA, 'sessi
 /* Which sources get the block. `compact` is the one the plan exists for; `startup` and `resume`
  * are the carrier problem proper — an instance that wakes without state. Overridable so the set
  * can be narrowed without editing code, and so tests can drive it. */
-const SOURCES = (process.env.CONSONANCE_STATE_SOURCES || 'compact,startup,resume')
+const SOURCES = (process.env.CONSONANCE_STATE_SOURCES || 'compact')
   .split(',').map((s) => s.trim()).filter(Boolean);
 
 /* The generator lives in the repo; this hook runs from ~/.claude/shell, flat. Resolve rather than

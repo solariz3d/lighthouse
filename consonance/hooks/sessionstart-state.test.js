@@ -44,9 +44,18 @@ test('fires on source=compact — the case the whole plan exists for', () => {
   assert.match(o.hookSpecificOutput.additionalContext, /state-block: machine-generated/);
 });
 
-test('fires on spawn sources too — one file serves the carrier problem and compaction', () => {
+test('the DEFAULT is compact only — spawn sources are skipped until the cost is measured', () => {
+  // The hook can serve startup/resume (the carrier problem proper) but that costs ~1.2KB of
+  // context at EVERY session start across every pane. Registered 2026-08-18 at the case the plan
+  // exists for; widening is one env var and should follow a measurement, not an assumption.
   for (const src of ['startup', 'resume']) {
-    const o = JSON.parse(run({ source: src }));
+    assert.strictEqual(run({ source: src }).trim(), '', `${src} must be skipped by default`);
+  }
+});
+
+test('but it CAN serve spawn sources — one file covers both, when widened', () => {
+  for (const src of ['startup', 'resume']) {
+    const o = JSON.parse(run({ source: src }, { CONSONANCE_STATE_SOURCES: 'compact,startup,resume' }));
     assert.match(o.hookSpecificOutput.additionalContext, new RegExp('source=' + src));
   }
 });
