@@ -132,6 +132,14 @@ $register = @(
   @{ Event = 'Stop';             Rel = 'sourced-stop.js';             Runner = 'node' }
   @{ Event = 'SessionEnd';       Rel = 'hooks\session-end.js';        Runner = 'node' }
   @{ Event = 'PreCompact';       Rel = 'hooks\precompact.js';         Runner = 'node' }
+  # Added 2026-08-18, AFTER the manifest entries above shipped without them. Both hooks were in
+  # $files from the start, so a fresh install copied the .js and registered neither: the desktop
+  # would have pulled the repo, run this script, and received two files that never fire. Found by
+  # -Check reporting 'ok' on both -- which only ever meant 'the bytes match', never 'it is wired
+  # up'. The comment at the $files entries already said registration and manifest ship together;
+  # the comment shipped and the registration did not.
+  @{ Event = 'PreCompact';       Rel = 'precompact-preserve.js';      Runner = 'node' }
+  @{ Event = 'SessionStart';     Rel = 'sessionstart-state.js';       Runner = 'node' }
 )
 
 if (-not (Test-Path $dest)) {
