@@ -732,7 +732,16 @@ function fitPane(id) {
   if (!p) return;
   try {
     p.fit.fit();
-    inv('pty_resize', { pane: id, rows: p.term.rows, cols: p.term.cols });
+    const rows = p.term.rows, cols = p.term.cols;
+    // Only resize claude when the size ACTUALLY changed. fitAll fires on many triggers (window
+    // resize, tab clicks, a ResizeObserver on any layout shift), and most compute the SAME dims.
+    // A no-op resize still delivers a SIGWINCH that makes claude repaint its whole TUI, and a
+    // repaint landing mid-submission is what occasionally bakes the highlighted input box into the
+    // scrollback (the rare "input bar glued to the last output" artifact). Skip unchanged resizes.
+    if (rows !== p.sentRows || cols !== p.sentCols) {
+      p.sentRows = rows; p.sentCols = cols;
+      inv('pty_resize', { pane: id, rows, cols });
+    }
   } catch (_) {}
 }
 
