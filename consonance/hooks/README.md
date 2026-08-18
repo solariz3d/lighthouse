@@ -116,7 +116,7 @@ A hook file in this directory is not a hook. It becomes one when a settings file
 repo had no record of which ones ever did — so a reader met `sourced-stop.js`, whose own header
 opens *"this room had never registered one"*, with no way to learn whether that was still true.
 Written down here because built-and-not-attached is the failure this repo has now found sixteen
-times, and the second-vantage pipeline was the largest instance: four modules, 1,684 lines, five
+times, and the second-vantage pipeline was the largest instance: four modules, 1,231 lines, five
 green suites, an attachment test, and one hand-driven end-to-end run — with **two of its three
 pieces connected to nothing.**
 
@@ -171,3 +171,33 @@ That's not a flaw in the design, it *is* the design (light, not lifeguard). But 
 criterion honestly: not *the Orchestrator stops missing things*, but **the human's catch finally has
 something to catch it against.** Ask "what is Bravo doing" today and there is no shared view to be
 wrong about. Now there is.
+
+## Correction 2026-08-18 — and the reader that made it
+
+The line above read **"four modules, 1,684 lines"** until today. The four modules measure **1,231
+lines** at `cddf40d`, the commit that shipped the sentence, and 1,315 today.
+
+`1,684` was not invented. It is the insertion count `git diff --stat` printed across **eight** files
+— the four modules *and their four test suites* — over the range being examined at the time. A true
+number, attached to the wrong whole, and then carried into a committed artifact as a property of
+"four modules."
+
+That is the same defect a pane corrected in this room three days earlier, when a rate that was 82%
+*of value-turns* was written as 80% *of turns*. Same shape, same week, different denominator.
+
+**It was caught by `tools/second-vantage.js`, firing on its own clock, on a claim it was not told
+was suspect.** The reader was handed the sentence and the repo root — no author, no reasoning, no
+transcript — re-derived the figure from `git show cddf40d:<file> | wc -l`, then searched every
+four-file subset containing `second-vantage.js` for any grouping summing to 1,684 and found 24
+arithmetic hits, none coherent (`second-vantage.js + blind.js + actors.test.js + ui/term.js` is a
+representative one). It reported the claim overstated by ~37% and said which groupings it had ruled
+out.
+
+Two things that matter more than the figure:
+
+- **First autonomous catch in this room's record.** Every prior catch of this class came from the
+  keeper or from a pane he routed by hand. `build_ruling.md` §3 priced the expected yield at "~2-3
+  mechanical catches against an all-time mechanical total of zero." This is one of them, arriving
+  eleven days before F1's thirty-day kill window closes.
+- **It caught the seat that built it**, on a sentence written into the very README that documents
+  the pipeline — while that sentence was being used to argue that unrecorded state is dangerous.
