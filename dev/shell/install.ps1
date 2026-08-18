@@ -111,6 +111,9 @@ $files = @(
   # failure that commit was written to end. The registration and the manifest entry ship together
   # or the next fresh install silently loses the hook.
   @{ From = 'consonance\hooks\precompact-preserve.js';   To = 'precompact-preserve.js' }
+  # Added 2026-08-18 with the hook, same commit, same reason as the line above: registration and
+  # manifest ship together or a fresh install silently loses it.
+  @{ From = 'consonance\hooks\sessionstart-state.js';     To = 'sessionstart-state.js' }
 )
 
 # What this script REGISTERS. Only these are ever touched in settings.json; anything else found
