@@ -18,6 +18,16 @@ function norm(s) {
 }
 
 // --- extractors (per PREREG) ---
+// KNOWN DEFECT, 2026-08-18, found by pane B while attacking its own result -- NOT PATCHED.
+// \b[0-9a-f]{7,40}\b matches "000000000a01" inside the session UUID
+// 0c0c0c0a-0000-4000-8000-000000000a01, so "0c0c0c0" and "0000000" are counted as commit shas.
+// This affects BASELINE windows as well as the treated one. Correcting it moves the pooled
+// baseline 10.2% -> 6.8% (16/235) and event 8 72% -> 70.4% (19/27) -- i.e. fixing it makes the
+// measured effect LARGER, which is why B published it against its own attack.
+// Left unpatched on purpose: this extractor is fixed by PREREG.md, and editing a pre-registered
+// extractor after seeing the result is the tuning-until-it-agrees move even when it costs the
+// editor. Both numbers are recorded in exo_memory/journal/2026-08-18.md, seventh append, s3.
+// A future run decides; it must decide BEFORE seeing that run's numbers.
 function extractShas(text) {
   const out = new Set();
   const re = /\b[0-9a-f]{7,40}\b/g;
