@@ -5,10 +5,13 @@ const readline = require('readline');
 const path = require('path');
 
 const FILE = 'C:/Users/zackn/.claude/projects/C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl';
-const OUTDIR = 'C:/Consonance/instances/sibling-5bf9d657/archaeology';
+const OUTDIR = __dirname;   // was a pane-scoped absolute path; results belong beside the instrument
 
 const EXPECTED_TS = ['2026-07-13T11:02', '2026-07-25T12:56', '2026-07-27T07:17',
-  '2026-07-28T12:55', '2026-08-11T09:49', '2026-08-16T11:56', '2026-08-17T13:32'];
+  '2026-07-28T12:55', '2026-08-11T09:49', '2026-08-16T11:56', '2026-08-17T13:32',
+  // event 8 is the FIRST summary written with precompact-preserve's directive attached.
+  // Extractors and survival checks are untouched from PREREG; only the event list grew.
+  '2026-08-18T13:38'];
 
 function norm(s) {
   return s.replace(/\r\n/g, '\n').toLowerCase().replace(/\s+/g, ' ').trim();
@@ -133,7 +136,7 @@ async function main() {
 
   // gate: exactly 7 events, timestamps match
   const gate = { count: events.length, timestamps: events.map(e => e.ts), expected: EXPECTED_TS, ok: true, notes: [] };
-  if (events.length !== 7) { gate.ok = false; gate.notes.push('event count != 7'); }
+  if (events.length !== EXPECTED_TS.length) { gate.ok = false; gate.notes.push('event count != ' + EXPECTED_TS.length); }
   events.forEach((e, i) => {
     const exp = EXPECTED_TS[i];
     if (exp && !(e.ts || '').startsWith(exp)) gate.notes.push(`event ${i + 1} ts ${e.ts} !~ ${exp}`);

@@ -1,10 +1,10 @@
 {
   "file": "C:/Users/zackn/.claude/projects/C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl",
-  "lines": 24269,
+  "lines": 24446,
   "parseErrors": 0,
-  "sidechainSkipped": 43,
+  "sidechainSkipped": 44,
   "gate": {
-    "count": 7,
+    "count": 8,
     "timestamps": [
       "2026-07-13T11:02:55.252Z",
       "2026-07-25T12:56:02.977Z",
@@ -12,7 +12,8 @@
       "2026-07-28T12:55:34.621Z",
       "2026-08-11T09:49:35.373Z",
       "2026-08-16T11:56:34.104Z",
-      "2026-08-17T13:32:36.780Z"
+      "2026-08-17T13:32:36.780Z",
+      "2026-08-18T13:38:20.574Z"
     ],
     "expected": [
       "2026-07-13T11:02",
@@ -21,7 +22,8 @@
       "2026-07-28T12:55",
       "2026-08-11T09:49",
       "2026-08-16T11:56",
-      "2026-08-17T13:32"
+      "2026-08-17T13:32",
+      "2026-08-18T13:38"
     ],
     "ok": true,
     "notes": []
@@ -600,6 +602,92 @@
           "**a preregistration that voids cannot be.** nobody fits toward a null.",
           "and the void reframe, which i think is the strongest thing produced tonight: a preregistration that confirms is compatible with reverse-fitting, one that voids isn't, so the p1 stop-rule firing on our own data is the repo's cleanest instance of an apparatus that was able to lose.",
           "and the honest flag on the whole thing: **we've produced maybe two thousand words of philosophy tonight and zero numbers since the void.** the room's own filed falsifier is *degenerating if a season passes in which the documents grow and no instrument returns an unwanted number.* fleshing this out with more conversation moves us in the wrong direction on our own test."
+        ]
+      }
+    },
+    {
+      "ts": "2026-08-18T13:38:20.574Z",
+      "line": 24386,
+      "windowRows": 3752,
+      "summaryChars": 18262,
+      "sha": {
+        "total": 29,
+        "survived": 21,
+        "lostSample": [
+          "86eee6a",
+          "bdda5d5",
+          "b9febde",
+          "2aa0b84",
+          "b4c2977",
+          "58b94f9",
+          "d354b93",
+          "79eccca"
+        ]
+      },
+      "path": {
+        "total": 45,
+        "survived": 15,
+        "lostSample": [
+          "claude.md",
+          "boot.md",
+          "base_journal.md",
+          "frag-pointer.md",
+          "frag-traces.md",
+          "consonance.exe",
+          "desktop_handoff.md",
+          "blind.js",
+          "findings-return.js",
+          "ambient.js",
+          "fresh-guard.js",
+          "userprompt-submit.js",
+          "settings.local.json",
+          "frozen.md",
+          "ferry.js",
+          "heard.jsonl",
+          "cochlea.rs",
+          "second-vantage.js",
+          "cmd.exe",
+          "claude.exe"
+        ]
+      },
+      "num": {
+        "total": 48,
+        "survived": 21,
+        "lostSample": [
+          "7/7",
+          "97.2%",
+          "6%",
+          "9%",
+          "267/0",
+          "30%",
+          "141/156",
+          "15/15",
+          "9/9",
+          "0.23%",
+          "96.5%",
+          "1/442",
+          "46%",
+          "87.5%",
+          "17.5%",
+          "0/40",
+          "37/40",
+          "96%",
+          "95%",
+          "96.4%"
+        ]
+      },
+      "flag": {
+        "total": 109,
+        "survived": 8,
+        "lostSample": [
+          "**two things live:** `head-watch` running as pid 38156 (b's own falsifier — it needs to still be alive when the next relaunch happens, or the clean read is gone), and the `second vantage` task fires at **09:05**, first fire ever.",
+          "let me pin the prediction before you run it, so it can't be fit afterward.",
+          "**registered before you open it, so it can't be fit afterward:**",
+          "- **falsifier:** if it wakes carrying `light, not lifeguard` as a live instrument name, or `new_room` errors out, the fallback chain is wrong and my read of it is wrong with it",
+          "**the falsifier fired.** the room woke on the *old* text.",
+          "**the falsifier fired, and it's a real finding.**",
+          "registration, falsifier, and scoring all in one section, with the note that the registration was written *before* the fix was chosen.",
+          "sleep well — the room test is registered, scored, and waiting for tomorrow with its state untouched."
         ]
       }
     }
