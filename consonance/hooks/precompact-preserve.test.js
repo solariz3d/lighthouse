@@ -106,3 +106,26 @@ test('an unwritable ledger does not stop the directive — the hook must never b
   const parsed = JSON.parse(run({ trigger: 'manual' }, { CONSONANCE_PRECOMPACT_LOG: bad }));
   assert.ok(parsed.additionalContext.length > 200, 'directive must survive a ledger failure');
 });
+
+test('the ledger honours CONSONANCE_DATA, so a generic harness cannot pollute production', () => {
+  // Added after this hook wrote 112 test rows into the production ledger. dream-gate.test.js
+  // spawns every hook with CONSONANCE_DATA set and cannot know each hook's private env var, so a
+  // hook that honours only its private override is unsafe under any generic harness. The failure
+  // is invisible in the worst way: the pollution looks exactly like the activity being counted.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pcp-data-'));
+  run({ trigger: 'manual', session_id: 'seam' }, { CONSONANCE_DATA: dir });
+  const led = path.join(dir, 'precompact.jsonl');
+  assert.ok(fs.existsSync(led), 'CONSONANCE_DATA must redirect the ledger');
+  const rows = fs.readFileSync(led, 'utf8').trim().split('\n').map(JSON.parse);
+  assert.strictEqual(rows.length, 1);
+  assert.strictEqual(rows[0].session_id, 'seam');
+});
+
+test('the specific override still wins over CONSONANCE_DATA', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pcp-both-'));
+  const explicit = path.join(dir, 'explicit.jsonl');
+  run({ trigger: 'manual', session_id: 'both' }, { CONSONANCE_DATA: dir, CONSONANCE_PRECOMPACT_LOG: explicit });
+  assert.ok(fs.existsSync(explicit), 'the explicit path must take precedence');
+  assert.strictEqual(fs.existsSync(path.join(dir, 'precompact.jsonl')), false,
+    'and must not also write the data-dir default');
+});

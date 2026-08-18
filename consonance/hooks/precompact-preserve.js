@@ -49,8 +49,23 @@ const path = require('path');
 // install.ps1's manifest precisely so a hook added later cannot skip the invariant by being new.
 if (process.env.CONSONANCE_DREAM) process.exit(0);
 
+/* THE LEDGER, and its test seam — added 2026-08-18 after this hook polluted its own evidence.
+ *
+ * The first version honoured only CONSONANCE_PRECOMPACT_LOG, which one of its nine tests set and
+ * the other eight did not, and which dream-gate.test.js cannot know about because it spawns every
+ * hook generically. Result: 115 ledger rows of which ~112 were test noise — 24 suite runs times
+ * four cases, plus dream-gate's control spawns — in the file whose entire job is counting real
+ * compaction attempts. An instrument that cannot be run without corrupting its own data is worse
+ * than no instrument, because the corruption looks exactly like activity.
+ *
+ * CONSONANCE_DATA is the seam this repo already uses for exactly this (dream-watch.js:256,
+ * blind.js:57, board-digest.js:279), and dream-gate.test.js:220 ALREADY sets it for every hook it
+ * spawns. Honouring it costs nothing and makes the generic harness safe by default; the specific
+ * override stays for tests that want a bare file path.
+ */
+const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
 const LEDGER = process.env.CONSONANCE_PRECOMPACT_LOG ||
-  'C:\\Consonance\\data\\precompact.jsonl';
+  path.join(DATA, 'precompact.jsonl');
 
 /* The canary is a fixed, distinctive token. Its whole job is to make the difference between
  * "the hook never fired" and "the hook fired and the summarizer ignored it" READABLE, because
