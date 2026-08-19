@@ -32,6 +32,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const { execFileSync } = require('child_process');
 
 // THE DREAM GATE, same rule as every hook here: the gap-dream is an anti-instruction and gets no
@@ -40,6 +41,8 @@ if (process.env.CONSONANCE_DREAM) process.exit(0);
 
 const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
 const LEDGER = process.env.CONSONANCE_SESSIONSTATE_LOG || path.join(DATA, 'sessionstart-state.jsonl');
+const CONFIG_NAME = '.consonance.json';
+const BOM = /^﻿/;
 
 /* Which sources get the block. `compact` is the one the plan exists for; `startup` and `resume`
  * are the carrier problem proper — an instance that wakes without state. Overridable so the set
@@ -51,11 +54,38 @@ const SOURCES = (process.env.CONSONANCE_STATE_SOURCES || 'compact')
  * assume, and if it cannot be found SAY SO in the emitted block instead of emitting nothing — a
  * silent absence is indistinguishable from a healthy quiet room, which is the failure this repo
  * keeps finding. */
+/* MEASURED 2026-08-19, on the very compaction this hook was built for: it fired, routed
+ * `source=compact` correctly, and emitted 105 characters reading `[state-block FAILED: generator
+ * not found on any known path]`. Both candidates missed. The first resolves to `~/.claude/tools/`
+ * once the hook is installed flat — correct only when running from the repo. The second is an
+ * absolute path that exists on the LAPTOP and on no other machine, so a hook written to be
+ * portable carried one box's layout inside it. Repo and installed copy were byte-identical, so
+ * this is NOT landed-is-not-shipped; it is a correct file pointed at a referent that exists only
+ * elsewhere. It also failed LOUDLY, exactly as its own header intended — the emitted sentence is
+ * why this was found on the first turn after the gap rather than never.
+ *
+ * The fix is to ask the machine rather than to guess it: `~/.consonance.json` already names
+ * `room_path` (…/exo_memory/BOOT.md), and every peer hook in this directory reads that file for
+ * exactly this reason. Two levels up from BOOT.md is the repo root on whichever box is running.
+ *
+ * DO NOT copy the generator next to this hook instead. state-block.js resolves its own REPO as
+ * `__dirname/../..`; installed flat that becomes the user home, and it would emit a confident
+ * block about the wrong tree — the same wrong-referent defect one layer deeper, and silent. */
+function fromConfig() {
+  try {
+    const raw = fs.readFileSync(path.join(os.homedir(), CONFIG_NAME), "utf8").replace(BOM, "");
+    const cfg = JSON.parse(raw);
+    if (!cfg.room_path) return null;
+    return path.resolve(cfg.room_path, '..', '..', 'consonance', 'tools', 'state-block.js');
+  } catch (_) { return null; }
+}
+
 function findGenerator() {
   const candidates = [
     path.resolve(__dirname, '..', 'tools', 'state-block.js'),          // running from the repo
-    'C:\\Consonance\\lighthouse\\consonance\\tools\\state-block.js',   // installed copy, known root
-  ];
+    fromConfig(),                                                      // installed: ask the machine
+    'C:\\Consonance\\lighthouse\\consonance\\tools\\state-block.js',   // the laptop's root
+  ].filter(Boolean);
   if (process.env.CONSONANCE_STATE_BLOCK) candidates.unshift(process.env.CONSONANCE_STATE_BLOCK);
   for (const c of candidates) { try { if (fs.existsSync(c)) return c; } catch (_) {} }
   return null;

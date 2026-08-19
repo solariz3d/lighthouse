@@ -117,3 +117,48 @@ test('the emitted block is ledgered with its size and whether it failed', () => 
   assert.ok(rows[0].chars > 100);
   assert.strictEqual(rows[0].failed, false, 'the live generator must not be reporting FAILED');
 });
+
+/* THE TEST THAT WAS MISSING, and the reason this file went 10/10 green while the hook emitted
+ * `[state-block FAILED: generator not found on any known path]` on the live machine for the whole
+ * compaction it exists to serve.
+ *
+ * Every test above runs the hook FROM THE REPO, where `__dirname/../tools/state-block.js` always
+ * resolves. Installed, the hook sits flat in `~/.claude/shell/` and that candidate points at
+ * `~/.claude/tools/` — a directory that does not exist. The suite was green about a code path the
+ * installed copy never takes. Same shape as a static installer test passing on a box with nothing
+ * installed: the assertion was true and the referent was wrong.
+ *
+ * So this one refuses to run from the repo. It copies the hook to a flat directory, hands it a
+ * synthetic HOME whose `.consonance.json` names a room_path, and asserts the generator still
+ * resolves. Mutation-checked: delete the `fromConfig()` candidate and this goes red while all ten
+ * tests above stay green. */
+test('resolves the generator when installed FLAT, which is how it actually runs', () => {
+  const shell = tmp('sss-flat-');
+  fs.copyFileSync(HOOK, path.join(shell, 'sessionstart-state.js'));
+
+  const home = tmp('sss-home-');
+  const roomPath = path.join(__dirname, '..', '..', 'exo_memory', 'BOOT.md');
+  fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ room_path: roomPath }));
+
+  const found = execFileSync(process.execPath, [
+    '-e', 'process.stdout.write(String(require(process.argv[1]).findGenerator()))',
+    path.join(shell, 'sessionstart-state.js'),
+  ], { encoding: 'utf8', env: { ...process.env, USERPROFILE: home, HOME: home } }).trim();
+
+  assert.notStrictEqual(found, 'null', 'installed flat, the generator must still be found');
+  assert.ok(fs.existsSync(found), 'and the path it returns must exist: ' + found);
+  assert.match(found, /state-block\.js$/, 'it must be the generator, not some other file');
+});
+
+test('a HOME with no .consonance.json degrades to null rather than throwing', () => {
+  const shell = tmp('sss-flat2-');
+  fs.copyFileSync(HOOK, path.join(shell, 'sessionstart-state.js'));
+  const home = tmp('sss-nohome-');
+
+  const found = execFileSync(process.execPath, [
+    '-e', 'process.stdout.write(String(require(process.argv[1]).findGenerator()))',
+    path.join(shell, 'sessionstart-state.js'),
+  ], { encoding: 'utf8', env: { ...process.env, USERPROFILE: home, HOME: home } }).trim();
+
+  assert.strictEqual(found, 'null', 'no config and no repo means honestly not found, not a crash');
+});
