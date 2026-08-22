@@ -111,20 +111,20 @@
       </div>
     </section>
 
-    <section id="main" class="tab">
+    <section id="main" class="tab seat">
       <div class="mainbar">
         <span class="mainhead">Your <b>orchestrator</b> — the base instance that watches the other instances' outputs and creates new inputs back to them. Fixed-session, briefed (loaded with the shared startup brief), persistent across restarts; on the committee board.</span>
         <button id="wakemain" class="btn accent">Wake the orchestrator</button>
       </div>
-      <div id="mainpane"></div>
+      <div id="mainpane" class="seatpane"></div>
     </section>
 
-    <section id="librarian" class="tab">
+    <section id="librarian" class="tab seat">
       <div class="mainbar">
         <span class="mainhead">The <b>librarian</b> — a persistent seat that holds the room so the working seats do not have to. It <b>does no work</b>: no code, no tests, no taking sides. It surfaces the one relevant thing at the moment it applies, and it <b>cites rather than recalls</b> — a path you can open, never a summary you must trust. Saying nothing is a valid turn. Fixed-session, persistent across restarts; on the committee board.</span>
         <button id="wakelibrarian" class="btn accent">Wake the librarian</button>
       </div>
-      <div id="librarianpane"></div>
+      <div id="librarianpane" class="seatpane"></div>
     </section>
     <!-- THE COCHLEA. Everything arriving at an eardrum is one number — air pressure, wiggling.
          A snail of bone unmixes it back into voices. This does that job and reports the layer

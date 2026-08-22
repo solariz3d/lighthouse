@@ -229,12 +229,19 @@ input::placeholder { color: #55607a; }
 .brk-tripped { color: var(--amber); font-weight: 600; }
 
 /* the Main tab (Stage 10) — the housed primary instance */
-#main { gap: 0; }
+/* A HOUSED SEAT -- a persistent instance living in its own tab (the Orchestrator, the
+   Librarian). Keyed by CLASS on purpose since 2026-08-22: these three rules used to be #main
+   and #mainpane, so when the Librarian tab landed its pane inherited none of them and stopped
+   short of the window bottom. The header rendered fine because .mainbar/.mainhead were already
+   classes -- the parts that were classes worked and the parts that were IDs did not. Fixed as
+   classes rather than by adding a duplicate #librarianpane line, which would leave the same
+   trap set for a third seat. librarian-wiring.test.js asserts every seat carries them. */
+.seat { gap: 0; }
 .mainbar { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
 .mainhead { color: var(--muted); font-size: 13px; line-height: 1.5; flex: 1; }
 .mainhead b { color: var(--amber); font-weight: 600; }
-#mainpane { flex: 1; min-height: 0; display: flex; }
-#mainpane .pane { flex: 1; min-height: 0; }
+.seatpane { flex: 1; min-height: 0; display: flex; }
+.seatpane .pane { flex: 1; min-height: 0; }
 
 /* embedded terminal workspace (multi-pane) */
 #terminal { gap: 0; position: relative; }  /* anchor for gate cards + committee drawer */

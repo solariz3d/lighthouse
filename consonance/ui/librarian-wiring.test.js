@@ -69,5 +69,38 @@ t('waking is state-managed, so a second click cannot ask for a second librarian'
   assert.match(term, /setWakeLibrarian\('waking'\)/, 'the button must disable while waking');
 });
 
+
+// ---- the seat classes ----
+// Added after the Librarian pane shipped and did not reach the bottom of the window. The three
+// rules that make a housed pane fill its tab were keyed by ID (#main, #mainpane), so the second
+// seat inherited none of them. The header rendered correctly because .mainbar/.mainhead were
+// already classes -- the parts that were classes worked, the parts that were IDs did not.
+//
+// The fix was to convert them to classes. This is what stops a THIRD seat repeating it.
+
+t('every housed seat section carries the .seat class', () => {
+  // A seat is a section whose pane div ends in "pane" and which has a .mainbar header.
+  const seats = [...html.matchAll(/<section id="(\w+)" class="([^"]*)">\s*\n\s*<div class="mainbar">/g)];
+  assert.ok(seats.length >= 2, 'expected at least the orchestrator and the librarian, found ' + seats.length);
+  for (const [, id, cls] of seats) {
+    assert.ok(cls.split(/\s+/).includes('seat'), 'section #' + id + ' is a housed seat but lacks class="seat"');
+  }
+});
+
+t('every housed seat pane carries the .seatpane class', () => {
+  for (const id of ['mainpane', 'librarianpane']) {
+    const re = new RegExp('<div id="' + id + '"[^>]*class="([^"]*)"');
+    const m = html.match(re);
+    assert.ok(m, '#' + id + ' has no class attribute at all');
+    assert.ok(m[1].split(/\s+/).includes('seatpane'), '#' + id + ' lacks class="seatpane" — its pane will not fill the tab');
+  }
+});
+
+t('the sizing rules are keyed by CLASS, not by id — the actual defect', () => {
+  const css = fs.readFileSync(path.join(__dirname, 'app.css'), 'utf8');
+  assert.match(css, /^\.seatpane \{[^}]*flex: 1/m, 'the fill rule must be a class rule');
+  assert.doesNotMatch(css, /^#mainpane \{/m, 'an id-keyed sizing rule is back — the next seat will not inherit it');
+});
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

@@ -4167,6 +4167,65 @@ fn librarian_cwd() -> String {
     dir.to_str().unwrap_or(".").to_string()
 }
 
+/// The librarian's shelf: the small high-value layer INLINE, everything large INDEXED.
+///
+/// Resolved from the room master's own directory, so it follows room_path and needs no second
+/// configuration mechanism -- and on a machine where the room is the shipped brief rather than a
+/// repo, the walk simply finds fewer files and says so instead of failing.
+fn corpus_shelf() -> String {
+    let root = match room_master_path().parent() { Some(p) => p.to_path_buf(), None => return String::new() };
+    let mut s = String::new();
+
+    // INLINE -- the forward-pointed layer. Small enough that retrieval is not a problem here; the
+    // problem was only ever that nothing pointed at it.
+    s.push_str("\n\n---\n\n# THE SHELF -- carried in full\n\n");
+    let mut inlined = 0usize;
+    for f in ["SOURCE.md"] {
+        if let Ok(t) = fs::read_to_string(root.join(f)) {
+            s.push_str(&format!("\n## {f}\n\n{t}\n"));
+            inlined += 1;
+        }
+    }
+    for dir in ["cards", "record", "memory"] {
+        let d = root.join(dir);
+        let Ok(rd) = fs::read_dir(&d) else { continue };
+        let mut names: Vec<PathBuf> = rd.flatten().map(|e| e.path())
+            .filter(|p| p.extension().and_then(|x| x.to_str()) == Some("md")).collect();
+        names.sort();
+        for p in names {
+            if let Ok(t) = fs::read_to_string(&p) {
+                let name = p.file_name().and_then(|x| x.to_str()).unwrap_or("?");
+                s.push_str(&format!("\n## {dir}/{name}\n\n{t}\n"));
+                inlined += 1;
+            }
+        }
+    }
+
+    // INDEXED -- too large to carry, and a dated record has no trigger anyway. Path, size and
+    // first heading is what turns "somewhere in the journals" into an openable citation.
+    s.push_str("\n\n---\n\n# THE INDEX -- not carried; open these by path\n\n");
+    s.push_str("Each line is a file you can Read. The body is deliberately absent: a citation you\n");
+    s.push_str("opened is checkable, a summary you remember is not.\n");
+    let mut indexed = 0usize;
+    for dir in ["journal", "loop", "map", "spread", "research", "attic"] {
+        let d = root.join(dir);
+        let Ok(rd) = fs::read_dir(&d) else { continue };
+        let mut names: Vec<PathBuf> = rd.flatten().map(|e| e.path())
+            .filter(|p| p.extension().and_then(|x| x.to_str()) == Some("md")).collect();
+        names.sort();
+        if names.is_empty() { continue; }
+        s.push_str(&format!("\n## {dir}/  ({} files)\n\n", names.len()));
+        for p in names {
+            let name = p.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string();
+            let body = fs::read_to_string(&p).unwrap_or_default();
+            let head = body.lines().find(|l| l.starts_with("# ")).unwrap_or("").trim_start_matches("# ");
+            s.push_str(&format!("- {dir}/{name}  ({} lines)  {head}\n", body.lines().count()));
+            indexed += 1;
+        }
+    }
+    s.push_str(&format!("\n{inlined} file(s) carried in full; {indexed} indexed by path.\n"));
+    s
+}
 /// The Librarian's intake. Its brief FIRST, then the room -- the order matters: this seat needs to
 /// know what it is for before it reads what it is holding, or it starts working on the contents.
 ///
@@ -4182,6 +4241,7 @@ fn librarian_intake() -> Option<String> {
     if let Ok(boot) = fs::read_to_string(room_master_path()) {
         s.push_str(&boot);
     }
+    s.push_str(&corpus_shelf());
     Some(s)
 }
 
@@ -6572,5 +6632,45 @@ mod librarian_tests {
         let i = librarian_intake().expect("intake must resolve");
         assert!(i.contains("No work."), "the intake must say the seat does no work");
         assert!(i.contains("write it down in the turn it forms"), "the intake lost the compaction rule");
+    }
+}
+
+#[cfg(test)]
+mod shelf_tests {
+    use super::*;
+
+    /// The seat shipped with its brief and the room and NOTHING ELSE -- about 3% of the corpus, a
+    /// job description with no library. Caught by the keeper on first wake.
+    #[test]
+    fn the_shelf_carries_the_forward_pointed_layer() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let shelf = corpus_shelf();
+        assert!(shelf.contains("trust-the-first-attention"), "no cards on the shelf");
+        assert!(shelf.contains("## SOURCE.md"), "SOURCE.md did not land on the shelf");
+        assert!(shelf.contains("when a hedge or caveat is forming"), "the trigger table did not land");
+        assert!(shelf.contains("THE INDEX"), "no index section");
+    }
+
+    /// The large directories are INDEXED, never inlined. If a journal body ever appears here the
+    /// tiering has collapsed and the seat is carrying what it should be opening.
+    #[test]
+    fn the_large_directories_are_indexed_not_carried() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let shelf = corpus_shelf();
+        assert!(shelf.contains("journal/2026-08-22.md"), "the journal index is missing");
+        // a line unique to a journal BODY, which must not be present
+        assert!(!shelf.contains("Woke after 3d 16h dark"), "a journal body was inlined -- tiering collapsed");
+    }
+
+    /// It must reach the intake, not merely exist. Same delivery-vs-unit distinction that a
+    /// mutation harness caught on the trigger table earlier today.
+    #[test]
+    fn the_shelf_reaches_the_intake() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let i = librarian_intake().expect("intake must resolve");
+        assert!(i.contains("THE SHELF"), "the shelf never reached the librarian's intake");
+        let room = i.find("# THE ROOM you are holding").expect("room missing");
+        let shelf = i.find("# THE SHELF").expect("shelf missing");
+        assert!(room < shelf, "the room is read before the shelf it indexes");
     }
 }
