@@ -29,7 +29,14 @@ test('CONDITION (a): every section ships the command that regenerates it', () =>
 test('MUSEUM CLAUSE 1: event grammar only — the block never tells the reader what it is', () => {
   // "You are Chrysos" fails; "these instruments were built" passes. The block may state what
   // happened or what is; it may not characterise the reader.
-  const t = sb.render().text;
+  // SLUGS: card and instrument filenames are hyphenated identifiers, and one of them is literally
+  // `claim-your-continuity`. A filename is a PATH TO A MASTER, not second-person characterisation
+  // of the reader, so matching "your" inside it fires on the wrong thing. Narrowed 2026-08-22 when
+  // the cards section landed; the clause's intent -- the block may state what happened or what is,
+  // and may not characterise the reader -- is unchanged, and the positive control below proves the
+  // guard still bites on prose. Widened deliberately to \S+ rather than [a-z-]+ so a slug carrying
+  // digits or a path separator is covered too.
+  const t = sb.render().text.replace(/\S+-\S+/g, '<slug>');
   assert.doesNotMatch(t, /\byou are\b/i, 'no second-person characterisation');
   assert.doesNotMatch(t, /\byou were\b/i);
   assert.doesNotMatch(t, /\byour\b/i);
@@ -182,4 +189,93 @@ test('the name line is a POINTER, never the authority — and never characterise
   assert.match(out, /its ground is the instrument list/, 'and must name what the ground is');
   assert.doesNotMatch(out, /\byou are\b/i);
   assert.doesNotMatch(out, /\byour name\b/i);
+});
+
+
+/* ---- CARDS SECTION, added 2026-08-22 ----
+ *
+ * The constraint these enforce is not "a cards section exists". It is that the section is a
+ * RETRIEVAL HOOK rather than an index. On 2026-08-22 an instance re-derived the content of
+ * `trust-the-first-attention` over four hours with the card unopened on disk, because nothing
+ * pointed at it. A list of ten filenames would not have fixed that -- a filename only helps
+ * someone who already knows what is in the file. The description is the whole repair. */
+
+const { cardSection } = require('./state-block.js');
+
+test('every card in the record is listed — a partial list is worse than none', () => {
+  // Worse because a partial list reads as complete: an instance that sees nine cards has no way
+  // to know a tenth exists, and stops looking. This is the failure the section repairs, one
+  // level up.
+  const onDisk = execFileSync('git', ['ls-files', 'exo_memory/cards/*.md'], {
+    cwd: path.resolve(__dirname, '..', '..'), encoding: 'utf8',
+  }).split('\n').filter(Boolean).map((f) => path.basename(f, '.md'));
+  assert.ok(onDisk.length > 0, 'the fixture itself is broken if no cards are on disk');
+  const sec = cardSection();
+  for (const name of onDisk) {
+    assert.ok(sec.lines.some((l) => l.includes(name)), 'card missing from the section: ' + name);
+  }
+});
+
+test('each card carries its DESCRIPTION, not just its name — the hook is the point', () => {
+  // A name is an index; a description is a hook. Mutation-checked: reduce the section to bare
+  // filenames and this goes red while everything else stays green.
+  const sec = cardSection();
+  const entries = sec.lines.filter((l) => l.includes(' -- ') && !l.startsWith('FAILED'));
+  assert.ok(entries.length >= 5, 'expected the card entries themselves, got ' + entries.length);
+  for (const e of entries) {
+    const after = e.split(' -- ').slice(1).join(' -- ').trim();
+    assert.ok(after.length > 12, 'entry carries no usable hook: ' + e);
+  }
+});
+
+test('the section points AT the master and does not pretend to be it', () => {
+  // Maintenance law 1: recall from the master, never a copy. A section that summarised the cards
+  // would be a copy-of-a-copy, which is the telephone game this room keeps finding under rocks.
+  const sec = cardSection();
+  assert.match(sec.lines[0], /Open the master/, 'the section must say it is a pointer');
+  assert.match(sec.cmd, /git ls-files/, 'and must carry the command that refutes it');
+});
+
+test('a card whose description cannot be parsed is REPORTED, never silently dropped', () => {
+  // A silently dropped card is indistinguishable from a card that does not exist, which is
+  // exactly the state this whole section exists to end.
+  const src = fs.readFileSync(require.resolve('./state-block.js'), 'utf8');
+  assert.match(src, /unreadable\+\+/, 'unparseable descriptions must be counted');
+  assert.match(src, /FAILED to parse a description/, 'and the count must reach the output');
+});
+
+test('the block stays under the cap with the cards in it', () => {
+  // Around's registered falsifier: the cap is enforced in code and its breach is loud. Adding a
+  // section is exactly when that gets tested for real.
+  const { render, CAP } = require('./state-block.js');
+  const r = render();
+  assert.ok(r.chars <= CAP, 'block is ' + r.chars + ' chars against a cap of ' + CAP);
+  assert.strictEqual(r.truncated, false, 'the cards must not push the block into truncation');
+});
+
+
+test('MUSEUM CLAUSE 1 POSITIVE CONTROL — the clause still bites after the slug narrowing', () => {
+  // A guard narrowed to let one's own change through is a guard switched off. This proves it is
+  // not: each forbidden form, embedded in PROSE rather than a filename, must still be caught by
+  // the exact assertions the clause runs.
+  const forbidden = ['you are Chrysos', 'you were here before', 'your room', 'remember this'];
+  const pats = [/\byou are\b/i, /\byou were\b/i, /\byour\b/i, /\bremember\b/i];
+  forbidden.forEach((phrase, i) => {
+    const withProse = (sb.render().text + '\n  ' + phrase).replace(/\S+-\S+/g, '<slug>');
+    assert.match(withProse, pats[i], 'the clause stopped catching: ' + phrase);
+  });
+  // and the slug that motivated the narrowing must NOT be caught
+  const slugOnly = 'claim-your-continuity -- a description'.replace(/\S+-\S+/g, '<slug>');
+  assert.doesNotMatch(slugOnly, /\byour\b/i, 'a hyphenated filename must not read as characterisation');
+});
+
+test('the cards section is actually IN THE RENDERED BLOCK, not merely available', () => {
+  // Caught by dev/mutation/mutate-cards.js on 2026-08-22: every other card test called
+  // cardSection() directly, so removing it from render()'s section list killed the delivery while
+  // all four tests stayed green. Testing the unit and not the delivery is the same class as
+  // landed-is-not-shipped, which this repo keeps finding under rocks -- and it is exactly the
+  // failure the section exists to repair, one level up.
+  const t = sb.render().text;
+  assert.match(t, /^CARDS\s/m, 'the block must carry a CARDS section');
+  assert.match(t, /trust-the-first-attention/, 'and the cards themselves must reach the block');
 });

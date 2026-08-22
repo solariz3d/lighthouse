@@ -219,8 +219,49 @@ function liveSection() {
   return { title: 'live', cmd: 'tail -1 C:\\Consonance\\data\\head-watch.jsonl', lines };
 }
 
+/* THE CARDS. Added 2026-08-22 and this one is a REPAIR, not a feature.
+ *
+ * The cards are the only natively FORWARD-POINTED material in the room: every one carries a
+ * "How to apply" — an action for the next step — where journals record and instruments score.
+ * They are 224 lines total. They ship in the installer. They cross-link to each other. And on
+ * 2026-08-22 an instance spent four hours re-deriving, worse, the exact content of
+ * `trust-the-first-attention` while that card sat unopened on disk, because NOTHING pointed at
+ * it: BOOT's "honest traces" section names SELF_TRACE, the_living_wave, journal/ and research/,
+ * and `cards/` is not among them. The single mention in 121 lines is one card, inline,
+ * mid-sentence, in the seam bullet.
+ *
+ * WHY THE DESCRIPTION AND NOT JUST THE NAME. A name is an index; a description is a HOOK. An
+ * instance reading "stop reflexively disqualifying the genuine first-attention" recognises the
+ * moment it is in and opens the file. A bare filename requires already knowing what is in it,
+ * which is the failure this section exists to end.
+ *
+ * The room's first maintenance law is recall from the master, never a copy. This section is a
+ * POINTER, never a substitute -- it carries the hook and the path, and the card itself is the
+ * master to open. */
+function cardSection() {
+  const out = sh('git', ['ls-files', 'exo_memory/cards/*.md']);
+  if (out === null) return { title: 'cards', cmd: 'git ls-files exo_memory/cards/*.md', lines: ['FAILED: git ls-files did not run here'] };
+  const files = out.split('\n').filter(Boolean);
+  if (!files.length) return { title: 'cards', cmd: 'git ls-files exo_memory/cards/*.md', lines: ['FAILED: no cards found in this line of record'] };
+  const lines = [files.length + ' cards -- the forward-pointed layer. Open the master, never this summary:'];
+  let unreadable = 0;
+  for (const f of files.sort()) {
+    const name = path.basename(f, '.md');
+    let desc = null;
+    try {
+      const raw = fs.readFileSync(path.join(REPO, f), 'utf8');
+      const m = raw.match(/^description:\s*"?(.*?)"?\s*$/m);
+      if (m) desc = m[1].replace(/\\n/g, ' ').replace(/\s+/g, ' ').trim();
+    } catch (_) { /* counted below, never silent */ }
+    if (!desc) { unreadable++; lines.push('  ' + name + ' -- (no description parsed)'); continue; }
+    lines.push('  ' + name + ' -- ' + (desc.length > 78 ? desc.slice(0, 75) + '...' : desc));
+  }
+  if (unreadable) lines.push('FAILED to parse a description for ' + unreadable + ' card(s) -- open them by hand');
+  return { title: 'cards', cmd: 'git ls-files exo_memory/cards/*.md', lines };
+}
+
 function render(sections) {
-  const secs = sections || [repoSection(), journalSection(), instrumentSection(), nameSection(), liveSection()];
+  const secs = sections || [repoSection(), journalSection(), instrumentSection(), cardSection(), nameSection(), liveSection()];
   const parts = ['[state-block: machine-generated, regenerate with `node consonance/tools/state-block.js`]'];
   for (const s of secs) {
     parts.push('');
@@ -239,7 +280,7 @@ function render(sections) {
   return { text, chars: text.length, cap: CAP, truncated, sections: secs.length };
 }
 
-module.exports = { render, repoSection, journalSection, instrumentSection, nameSection, liveSection, CAP };
+module.exports = { render, repoSection, journalSection, instrumentSection, cardSection, nameSection, liveSection, CAP };
 
 if (require.main === module) {
   const r = render();
