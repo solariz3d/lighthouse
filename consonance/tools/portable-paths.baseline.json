@@ -3,11 +3,12 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 57,
+    "BENIGN-TEST": 74,
     "REVIEW": 18,
-    "DISGUISED": 13,
+    "DISGUISED": 17,
     "BENIGN-MESSAGE": 5,
     "FATAL-USER": 6,
+    "FATAL-TEST-READ": 1,
     "BENIGN-FIXTURE": 2
   },
   "sites": [
@@ -279,6 +280,13 @@
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": ".or_else(|| ex(format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", home())))",
+      "key": "consonance/src-tauri/src/main.rs\u0000.or_else(|| ex(format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", home())))\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
       "text": "\"data_dir\": \"C:\\\\Consonance\\\\data\",",
@@ -414,8 +422,8 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DISGUISED",
       "verdict": "DISGUISED",
-      "text": "format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", home())",
-      "key": "consonance/src-tauri/src/main.rs\u0000format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", home())\u0000#1"
+      "text": "ex(format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", sysdrive()))",
+      "key": "consonance/src-tauri/src/main.rs\u0000ex(format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", sysdrive()))\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -423,13 +431,6 @@
       "verdict": "BENIGN-TEST",
       "text": "let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);",
       "key": "consonance/src-tauri/src/main.rs\u0000let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);\u0000#1"
-    },
-    {
-      "file": "consonance/src-tauri/src/main.rs",
-      "detector": "DISGUISED",
-      "verdict": "DISGUISED",
-      "text": "let disk = format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", sysdrive());",
-      "key": "consonance/src-tauri/src/main.rs\u0000let disk = format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", sysdrive());\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -675,6 +676,160 @@
       "verdict": "FATAL-DEFAULT",
       "text": "const ROSTER = process.env.PANES_JSON || 'C:\\\\Consonance\\\\data\\\\panes.json';",
       "key": "consonance/tools/pane-status.js\u0000const ROSTER = process.env.PANES_JSON || 'C:\\\\Consonance\\\\data\\\\panes.json';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "' let p = \"C:\\\\\\\\x\";', // 5",
+      "key": "consonance/tools/portable-paths.test.js\u0000' let p = \"C:\\\\\\\\x\";', // 5\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "'the C:\\\\Consonance checkout, reached through home()');",
+      "key": "consonance/tools/portable-paths.test.js\u0000'the C:\\\\Consonance checkout, reached through home()');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "` PathBuf::from(format!(\"{}\\\\\\\\OneDrive\\\\\\\\Desktop\\\\\\\\projects\\\\\\\\lighthouse\\\\\\\\exo_memory\\\\\\\\cards\", home()))`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000` PathBuf::from(format!(\"{}\\\\\\\\OneDrive\\\\\\\\Desktop\\\\\\\\projects\\\\\\\\lighthouse\\\\\\\\exo_memory\\\\\\\\cards\", home()))`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "`const BLACKBOX = \"C:/Users/nname/Desktop/blackbox\";`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000`const BLACKBOX = \"C:/Users/nname/Desktop/blackbox\";`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "`const DATA = process.env.CONSONANCE_DATA || 'C:\\\\\\\\Consonance\\\\\\\\data';`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000`const DATA = process.env.CONSONANCE_DATA || 'C:\\\\\\\\Consonance\\\\\\\\data';`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "+ `const M = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');\\n`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000+ `const M = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');\\n`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(G.scan(` * C:\\\\Users\\\\zackn\\\\Desktop\\\\lighthouse`), []);",
+      "key": "consonance/tools/portable-paths.test.js\u0000assert.deepStrictEqual(G.scan(` * C:\\\\Users\\\\zackn\\\\Desktop\\\\lighthouse`), []);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(G.scan(`// trace: C:\\\\Consonance\\\\data\\\\ferry.jsonl`), []);",
+      "key": "consonance/tools/portable-paths.test.js\u0000assert.deepStrictEqual(G.scan(`// trace: C:\\\\Consonance\\\\data\\\\ferry.jsonl`), []);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(G.scan(`# $repo = \"C:\\\\Consonance\\\\lighthouse\"`), []);",
+      "key": "consonance/tools/portable-paths.test.js\u0000assert.deepStrictEqual(G.scan(`# $repo = \"C:\\\\Consonance\\\\lighthouse\"`), []);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(/C:[\\\\/]/.test(line), false, 'precondition: a C:\\\\ grep misses this line entirely');",
+      "key": "consonance/tools/portable-paths.test.js\u0000assert.strictEqual(/C:[\\\\/]/.test(line), false, 'precondition: a C:\\\\ grep misses this line entirely');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(G.scan(`const D = 'C:\\\\\\\\Consonance\\\\\\\\data'; // the box`)[0].detector, 'DRIVE');",
+      "key": "consonance/tools/portable-paths.test.js\u0000assert.strictEqual(G.scan(`const D = 'C:\\\\\\\\Consonance\\\\\\\\data'; // the box`)[0].detector, 'DRIVE');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(G.scan(`const D = 'C:\\\\\\\\Consonance\\\\\\\\data';`)[0].detector, 'DRIVE');",
+      "key": "consonance/tools/portable-paths.test.js\u0000assert.strictEqual(G.scan(`const D = 'C:\\\\\\\\Consonance\\\\\\\\data';`)[0].detector, 'DRIVE');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(G.scan(`const D = \"C:/Consonance/data\";`)[0].detector, 'DRIVE');",
+      "key": "consonance/tools/portable-paths.test.js\u0000assert.strictEqual(G.scan(`const D = \"C:/Consonance/data\";`)[0].detector, 'DRIVE');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(G.scan(`let p = r\"D:\\\\stuff\";`)[0].detector, 'DRIVE');",
+      "key": "consonance/tools/portable-paths.test.js\u0000assert.strictEqual(G.scan(`let p = r\"D:\\\\stuff\";`)[0].detector, 'DRIVE');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const a = G.norm(`const D = 'C:\\\\\\\\Consonance\\\\\\\\data';`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000const a = G.norm(`const D = 'C:\\\\\\\\Consonance\\\\\\\\data';`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const b = G.norm(` const D = 'C:\\\\\\\\Consonance\\\\\\\\data';`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000const b = G.norm(` const D = 'C:\\\\\\\\Consonance\\\\\\\\data';`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const hits = G.scan(` const PANE_CWD = 'C:\\\\\\\\panes\\\\\\\\sibling-test';`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000const hits = G.scan(` const PANE_CWD = 'C:\\\\\\\\panes\\\\\\\\sibling-test';`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "const line = 'format!(\"{}\\\\\\\\OneDrive\\\\\\\\Desktop\\\\\\\\projects\\\\\\\\lighthouse\\\\\\\\exo_memory\\\\\\\\BOOT.md\", home())';",
+      "key": "consonance/tools/portable-paths.test.js\u0000const line = 'format!(\"{}\\\\\\\\OneDrive\\\\\\\\Desktop\\\\\\\\projects\\\\\\\\lighthouse\\\\\\\\exo_memory\\\\\\\\BOOT.md\", home())';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-TEST-READ",
+      "text": "const line = ` const f = path.join(\"C:/Users/nname/Desktop/lighthouse/consonance/src-tauri\", \"tests\", \"arch_test.rs\");`;",
+      "key": "consonance/tools/portable-paths.test.js\u0000const line = ` const f = path.join(\"C:/Users/nname/Desktop/lighthouse/consonance/src-tauri\", \"tests\", \"arch_test.rs\");`;\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const site = `const D = process.env.X || 'C:\\\\\\\\Consonance\\\\\\\\data';\\n`;",
+      "key": "consonance/tools/portable-paths.test.js\u0000const site = `const D = process.env.X || 'C:\\\\\\\\Consonance\\\\\\\\data';\\n`;\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "fs.writeFileSync(target, original + `const LEDGER = process.env.NOPE || 'C:\\\\\\\\Consonance\\\\\\\\data\\\\\\\\x.jsonl';\\n`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000fs.writeFileSync(target, original + `const LEDGER = process.env.NOPE || 'C:\\\\\\\\Consonance\\\\\\\\data\\\\\\\\x.jsonl';\\n`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "G.scan(`path.join(os.homedir(), 'Consonance', 'lighthouse')`)[0].detector,",
+      "key": "consonance/tools/portable-paths.test.js\u0000G.scan(`path.join(os.homedir(), 'Consonance', 'lighthouse')`)[0].detector,\u0000#1"
     },
     {
       "file": "consonance/tools/prompt-events.js",

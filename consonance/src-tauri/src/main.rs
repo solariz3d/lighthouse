@@ -294,28 +294,75 @@ static RESOURCE_RESEARCH: Mutex<Option<PathBuf>> = Mutex::new(None);
 // record is the case you OPEN. Same reference mechanism, so the split costs nothing to reach.
 static RESOURCE_RECORD: Mutex<Option<PathBuf>> = Mutex::new(None);
 
+/// Which brief a machine with NO configured room_path wakes into.
+///
+/// Extracted as a PURE function on 2026-08-22 so the PRIORITY is testable. The real resolver's
+/// candidates are absolute paths on this box, so a test of the resolver could only ever exercise
+/// whichever branch this machine happens to be in. Here every argument is "does this candidate
+/// exist" and the return says which one wins.
+///
+/// THE RULE, and why it inverts the old order. A machine carrying the repo master is a
+/// DEVELOPER'S and should wake into BOOT, the workshop record. A machine without it is a
+/// STRANGER'S, and BOOT is the wrong front door: ~65 KB with the deck, much of it dated dispute,
+/// private vocabulary, and an active-builds section naming files they do not have. SEED is the
+/// bedrock -- it addresses whoever is present rather than the person who built this, and it
+/// enumerates no failure modes at all.
+///
+/// BLAST RADIUS, checked before the change rather than after: room_file() prefers the configured
+/// room_path and only falls back here when it is empty. A developer with a config never reaches
+/// this function.
+///
+/// BOOT stays the LAST RESORT rather than being removed: the caller SWALLOWS a read failure, so
+/// resolving to nothing wakes every sibling with no room and nothing says so.
+fn pick_default_room(
+    dev_master: Option<String>,
+    editable_seed: Option<String>,
+    bundled_seed: Option<String>,
+    editable_boot: Option<String>,
+    bundled_boot: Option<String>,
+) -> Option<String> {
+    dev_master
+        .or(editable_seed)
+        .or(bundled_seed)
+        .or(editable_boot)
+        .or(bundled_boot)
+}
+
+/// Does this machine carry the repo master? The one place that knowledge lives.
+///
+/// The paths are absolute BY NECESSITY: the question is "is the developer's checkout at the known
+/// location", asked precisely when there is no config to resolve from, so the peer hooks' pattern
+/// (env, then ~/.consonance.json) does not apply. Named and shared rather than inlined twice
+/// because a test that copies this predicate can pass while the predicate itself is wrong --
+/// which is what portable-paths flagged when the copy first appeared.
+///
+/// Plain disk first: the repo moved out of OneDrive on 2026-07-28 because .git was inside the
+/// sync scope, and a syncer-backed path can hand back a stale restored copy. (Alpha, S1/S9.)
+fn dev_master_path() -> Option<String> {
+    let ex = |q: String| if Path::new(&q).exists() { Some(q) } else { None };
+    ex(format!("{}\\Consonance\\lighthouse\\exo_memory\\BOOT.md", sysdrive()))
+        .or_else(|| ex(format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\BOOT.md", home())))
+}
 fn default_room() -> String {
-    // The editable copy of the shipped startup brief, seeded into the user data dir on
-    // first run (see seed_room) — editable, unlike a read-only Program Files resource.
-    // Fall back to the bundled resource, then the dev repo path, if not seeded yet.
-    let editable = format!("{}\\BOOT.md", default_data());
-    if Path::new(&editable).exists() {
-        return editable;
-    }
-    if let Some(p) = RESOURCE_ROOM.lock().unwrap().as_ref() {
-        if p.exists() {
-            return p.to_string_lossy().into_owned();
-        }
-    }
-    // LAST-RESORT DEV FALLBACK. Plain disk first: the repo moved out of OneDrive on 2026-07-28
-    // because .git was inside the sync scope. A syncer-backed fallback can hand back a stale
-    // restored copy and this read's failure is SWALLOWED by the caller, so a wrong answer here
-    // wakes every sibling with no room and nothing says so. (Alpha, S1/S9.)
-    let disk = format!("{}\\Consonance\\lighthouse\\exo_memory\\BOOT.md", sysdrive());
-    if PathBuf::from(&disk).exists() {
-        return disk;
-    }
-    format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\BOOT.md", home())
+    let ex = |p: String| if Path::new(&p).exists() { Some(p) } else { None };
+
+    let dev_master = dev_master_path();
+
+    let sibling = |name: &str| {
+        RESOURCE_ROOM.lock().unwrap().as_ref()
+            .and_then(|b| b.parent().map(|d| d.join(name)))
+            .and_then(|q| if q.exists() { Some(q.to_string_lossy().into_owned()) } else { None })
+    };
+    let editable_seed = ex(format!("{}\\SEED.md", default_data()));
+    let bundled_seed = sibling("SEED.md");
+    let editable_boot = ex(format!("{}\\BOOT.md", default_data()));
+    let bundled_boot = RESOURCE_ROOM.lock().unwrap().as_ref()
+        .and_then(|q| if q.exists() { Some(q.to_string_lossy().into_owned()) } else { None });
+
+    pick_default_room(dev_master, editable_seed, bundled_seed, editable_boot, bundled_boot)
+        // Nothing resolved: return a path that DOES NOT EXIST rather than an empty string, so the
+        // failure surfaces as a missing file the caller can name, not a valid-looking answer.
+        .unwrap_or_else(|| format!("{}\\SEED.md", default_data()))
 }
 
 /// The system drive root ("C:" on a default install), so the plain-disk fallbacks above do not
@@ -6360,5 +6407,64 @@ mod committee_brief_tests {
         assert!(!b.contains("chair_inject"), "the brief duplicated a verb name");
         assert!(!b.contains("post_board"), "the brief duplicated a verb name");
         assert!(!b.contains("raise_pull("), "the brief duplicated a verb signature");
+    }
+}
+
+#[cfg(test)]
+mod front_door_tests {
+    use super::*;
+
+    fn s(x: &str) -> Option<String> { Some(x.to_string()) }
+
+    /// A machine carrying the repo master is a developer's. It keeps the workshop brief even when
+    /// a seed is sitting right there -- otherwise the re-route would silently demote every
+    /// developer whose config happens to be empty.
+    #[test]
+    fn a_repo_present_keeps_boot() {
+        let got = pick_default_room(s("dev-BOOT"), s("seed"), s("bundled-seed"), s("boot"), s("bundled-boot"));
+        assert_eq!(got.as_deref(), Some("dev-BOOT"));
+    }
+
+    /// THE CHANGE ITSELF. No repo means a stranger's machine, and a stranger must not wake into
+    /// the workshop record. Before 2026-08-22 the seeded BOOT won here.
+    #[test]
+    fn no_repo_means_seed_not_boot() {
+        let got = pick_default_room(None, s("seed"), s("bundled-seed"), s("boot"), s("bundled-boot"));
+        assert_eq!(got.as_deref(), Some("seed"), "a machine with no repo must wake into the bedrock");
+    }
+
+    /// Before anything has been seeded into the data dir, the bundled copy still has to win over
+    /// BOOT -- otherwise the very first run after an install is the one that gets it wrong.
+    #[test]
+    fn unseeded_still_prefers_the_bundled_seed_over_boot() {
+        let got = pick_default_room(None, None, s("bundled-seed"), s("boot"), s("bundled-boot"));
+        assert_eq!(got.as_deref(), Some("bundled-seed"));
+    }
+
+    /// BOOT is the last resort, not a removed option. The caller SWALLOWS a read failure, so
+    /// resolving to nothing wakes every sibling with no room and nothing says so.
+    #[test]
+    fn boot_is_still_the_last_resort() {
+        assert_eq!(pick_default_room(None, None, None, s("boot"), None).as_deref(), Some("boot"));
+        assert_eq!(pick_default_room(None, None, None, None, s("bundled-boot")).as_deref(), Some("bundled-boot"));
+    }
+
+    /// Nothing available is reported as nothing, so the resolver can substitute a NAMEABLE missing
+    /// path rather than an empty string that reads as a valid answer.
+    #[test]
+    fn nothing_available_is_none_not_empty_string() {
+        assert_eq!(pick_default_room(None, None, None, None, None), None);
+    }
+
+    /// THE BLAST RADIUS, made executable. This is a developer machine, so the fallback must still
+    /// hand back BOOT -- and separately room_file() prefers the configured room_path and only
+    /// reaches here when it is empty. If this ever fails on a dev box, the re-route escaped its
+    /// intended radius and is demoting the people who wrote it.
+    #[test]
+    fn this_machine_is_a_developer_machine() {
+        if dev_master_path().is_none() {
+            return; // genuinely not a dev box; nothing to assert
+        }
+        assert!(default_room().ends_with("BOOT.md"), "a dev box must still resolve BOOT, got {}", default_room());
     }
 }
