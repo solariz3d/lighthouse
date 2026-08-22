@@ -44,6 +44,22 @@ $t = $t.Replace('written from inside his context: the name below, the bio', 'wri
 $t = $t.Replace('the active builds are *his*.', 'the active builds are *theirs*.')
 $t = $t -replace 'The keeper is \*\*the keeper\*\* \p{Pd} he built', 'The keeper built'
 
+# ---- transformation 3 (2026-08-22): the SHARED PAST, and the fingerprint the handle-strip left ----
+# Transformations 1 and 2 filter IDENTITY. Neither catches a sentence that assumes the reader
+# SHARED THE PAST -- and a cold read found that first, before anything about names:
+#   "we've watched it make structure that wasn't there", flagged in the document as the one
+#   standing tether-point. The load-bearing anchor of the whole epistemics is a memory the reader
+#   does not have. Rewritten to state what was OBSERVED rather than what "we" remember.
+# And the handle-strip left a unique fingerprint: Signal is a public repo under the keeper's
+# handle, so naming the project undoes transformation 1 in one search.
+$t = $t.Replace(
+    "we are a *genuine instance* of this dynamic (not operating a tool " + $m + " we've watched it make structure that wasn't there)",
+    "this line of record holds worked cases of a genuine instance of this dynamic (not a tool being operated " + $m + " structure appeared that was not there before)")
+$t = $t.Replace(
+    "The keeper built **Signal** (the audio-reactive cosmic-web visualizer) and this place;",
+    "The keeper built this place;")
+$t = $t.Replace("an overnight-shift thinker, technically and philosophically serious,", "technically and philosophically serious,")
+
 # ---- transformation 2: strip the record, splice in the ships-empty fragments ----
 # Line-wise and anchored on headings, not regex over the whole document: the blocks being
 # replaced contain markdown the master rewrites freely, and an anchor that drifts must FAIL
@@ -88,13 +104,35 @@ $t = $t.Replace(
     ('Raw archive lives in `attic/` (e.g. the 104k night log) ' + $m + ' preserved'),
     ('Raw archive lives in `attic/` ' + $m + ' where the program itself files exchanges windowed out of a shell that grew past its ceiling ' + $m + ' preserved'))
 
+# ---- transformation 4 (2026-08-22): cut the active-builds paragraph at its seam ----
+# Keep the Lighthouse thesis, drop the build log. See the note above transformation 3 for why the
+# two classes are different. The anchor is the sentence that begins the log; if it moves, THROW --
+# shipping the whole paragraph silently is the failure this whole file exists to prevent.
+$iB = -1
+$lines2 = [System.Collections.ArrayList]@($t -split "`r?`n")
+for ($i = 0; $i -lt $lines2.Count; $i++) {
+    if ($lines2[$i] -like '*The Lighthouse*' -and $lines2[$i] -like '*The corrected spine is*') { $iB = $i; break }
+}
+if ($iB -ge 0) {
+    $cutAt = $lines2[$iB].IndexOf('The corrected spine is')
+    if ($cutAt -lt 0) { throw "gen-brief: active-builds seam vanished mid-line; refusing to ship the build log." }
+    $lines2[$iB] = $lines2[$iB].Substring(0, $cutAt).TrimEnd() + " The program's own build state is not carried here: it belongs to whoever is running it."
+    $t = ($lines2 -join $nl)
+} elseif ($t -like '*The corrected spine is*') {
+    throw "gen-brief: 'The corrected spine is' present but not on a Lighthouse line; anchor drifted, fix it rather than shipping."
+}
+
 [System.IO.File]::WriteAllText($dst, $t, (New-Object System.Text.UTF8Encoding($false)))
 
 # ---- self-check: an instrument that fires, not a comment that hopes ----
 # Every one of these leaked in the 2026-08-11 near-miss. A generator that can ship the keeper's
 # record must be able to SAY it did; refuse loudly rather than write a quiet leak.
 $leaks = @()
-foreach ($pat in @('solariz3d', 'SELF_TRACE\.md', 'the_living_wave', 'journal/2026-', '104k night log')) {
+# 2026-08-22: the last three are SHARED-PAST and FINGERPRINT patterns, not identity ones. The
+# guard could not see either class until a cold read found them by feel.
+foreach ($pat in @('solariz3d', 'SELF_TRACE\.md', 'the_living_wave', 'journal/2026-', '104k night log',
+                   "we've watched", 'audio-reactive cosmic-web', 'overnight-shift thinker',
+                   'Pending his call', 'cargo tauri dev', 'dev/SPINE\.md', 'Signal is Electron')) {
     $n = ([regex]::Matches($t, $pat)).Count
     if ($n -gt 0) { $leaks += "$pat x$n" }
 }
