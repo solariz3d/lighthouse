@@ -38,7 +38,8 @@
       "../../exo_memory/cards/*.md": "cards/",
       "../../exo_memory/spread/*.md": "spread/",
       "../../exo_memory/research/*.md": "research/",
-      "../../exo_memory/record/*.md": "record/"
+      "../../exo_memory/record/*.md": "record/",
+      "../../exo_memory/SOURCE.md": "SOURCE.md"
     },
     "icon": [
       "icons/32x32.png",

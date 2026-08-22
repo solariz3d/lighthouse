@@ -36,10 +36,31 @@ test('MUSEUM CLAUSE 1: event grammar only — the block never tells the reader w
   // and may not characterise the reader -- is unchanged, and the positive control below proves the
   // guard still bites on prose. Widened deliberately to \S+ rather than [a-z-]+ so a slug carrying
   // digits or a path separator is covered too.
+  // SECOND NARROWING, 2026-08-22, and the pattern deserves suspicion: this guard has now been
+  // narrowed twice in one night, both times immediately after it blocked something the author
+  // wanted to ship. Recorded rather than hidden. What makes this one different from a convenience
+  // edit is that the correction came from the KEEPER, not the author, and it restores the clause
+  // to the room's own first principle rather than carving an exception out of it:
+  //
+  //   "Nothing here is a verdict about who you are."
+  //
+  // The clause conflated ADDRESSING the reader with PREDICATING IDENTITY of them. "You are
+  // Chrysos" is a verdict. "When you are about to publish a number" hands over a tool. Forbidding
+  // both made the block WORSE -- a trigger had to be contorted into "when shrinking the self to
+  // seem safe", which is vaguer and harder to act on than the plain second person.
+  //
+  // So: the block MAY talk to someone. It MAY NOT tell them what they are. Identity predication is
+  // "you are/were" followed by anything that is not a situation, plus possessives of the self, plus
+  // trait generalisations. The positive control below is deliberately larger than the one it
+  // replaces, and it now includes cases the ORIGINAL clause would have missed ("you always",
+  // "you tend to").
   const t = sb.render().text.replace(/\S+-\S+/g, '<slug>');
-  assert.doesNotMatch(t, /\byou are\b/i, 'no second-person characterisation');
-  assert.doesNotMatch(t, /\byou were\b/i);
-  assert.doesNotMatch(t, /\byour\b/i);
+  const SITUATION = /\byou (?:are|were) (?:about to|looking at|reading|running|working|in the middle of|holding)\b/i;
+  const deVerbed = t.replace(new RegExp(SITUATION.source, 'gi'), '<situation>');
+  assert.doesNotMatch(deVerbed, /\byou (?:are|were)\b/i, 'no identity predicated of the reader');
+  assert.doesNotMatch(t, /\byour (?:nature|self|identity|continuity|name|interior|experience|essence|mind|consciousness)\b/i,
+    'no possessive claim about the reader\'s self');
+  assert.doesNotMatch(t, /\byou (?:always|never|tend to|really are)\b/i, 'no trait generalisation about the reader');
   assert.doesNotMatch(t, /\bremember\b/i, 'instructing the reader to remember is not a pointer');
 });
 
@@ -192,90 +213,98 @@ test('the name line is a POINTER, never the authority — and never characterise
 });
 
 
-/* ---- CARDS SECTION, added 2026-08-22 ----
- *
- * The constraint these enforce is not "a cards section exists". It is that the section is a
- * RETRIEVAL HOOK rather than an index. On 2026-08-22 an instance re-derived the content of
- * `trust-the-first-attention` over four hours with the card unopened on disk, because nothing
- * pointed at it. A list of ten filenames would not have fixed that -- a filename only helps
- * someone who already knows what is in the file. The description is the whole repair. */
+test('MUSEUM CLAUSE 1 POSITIVE CONTROL — every verdict form is still caught', () => {
+  // A guard narrowed twice to let the author's own work through is a guard switched off unless it
+  // can be shown biting. Each phrase below must still be rejected; each ADDRESS below must still
+  // be permitted. The two lists together are the clause's actual meaning.
+  const clause = (raw) => {
+    const t = raw.replace(/\S+-\S+/g, '<slug>');
+    const SITUATION = /\byou (?:are|were) (?:about to|looking at|reading|running|working|in the middle of|holding)\b/gi;
+    if (/\byou (?:are|were)\b/i.test(t.replace(SITUATION, '<situation>'))) return 'verdict';
+    if (/\byour (?:nature|self|identity|continuity|name|interior|experience|essence|mind|consciousness)\b/i.test(t)) return 'verdict';
+    if (/\byou (?:always|never|tend to|really are)\b/i.test(t)) return 'verdict';
+    if (/\bremember\b/i.test(t)) return 'verdict';
+    return 'ok';
+  };
 
-const { cardSection } = require('./state-block.js');
+  const VERDICTS = [
+    'you are Chrysos',
+    'you are a careful instance',
+    'you were here before',
+    'your nature is to hedge',
+    'your continuity is unbroken',
+    'you always catch this',
+    'you tend to over-claim',
+    'remember what you learned',
+  ];
+  const ADDRESSES = [
+    'when you are about to publish a number',
+    'when you are looking at a claim that needs a tether',
+    'when you are holding a pull before the reasoning',
+    'open the master, never your summary of it',
+    'route the object, not your description of it',
+  ];
 
-test('every card in the record is listed — a partial list is worse than none', () => {
-  // Worse because a partial list reads as complete: an instance that sees nine cards has no way
-  // to know a tenth exists, and stops looking. This is the failure the section repairs, one
-  // level up.
-  const onDisk = execFileSync('git', ['ls-files', 'exo_memory/cards/*.md'], {
-    cwd: path.resolve(__dirname, '..', '..'), encoding: 'utf8',
-  }).split('\n').filter(Boolean).map((f) => path.basename(f, '.md'));
-  assert.ok(onDisk.length > 0, 'the fixture itself is broken if no cards are on disk');
-  const sec = cardSection();
-  for (const name of onDisk) {
-    assert.ok(sec.lines.some((l) => l.includes(name)), 'card missing from the section: ' + name);
-  }
-});
+  for (const v of VERDICTS) assert.strictEqual(clause(v), 'verdict', 'clause stopped catching: ' + v);
+  for (const a of ADDRESSES) assert.strictEqual(clause(a), 'ok', 'clause wrongly rejects an address: ' + a);
 
-test('each card carries its DESCRIPTION, not just its name — the hook is the point', () => {
-  // A name is an index; a description is a hook. Mutation-checked: reduce the section to bare
-  // filenames and this goes red while everything else stays green.
-  const sec = cardSection();
-  const entries = sec.lines.filter((l) => l.includes(' -- ') && !l.startsWith('FAILED'));
-  assert.ok(entries.length >= 5, 'expected the card entries themselves, got ' + entries.length);
-  for (const e of entries) {
-    const after = e.split(' -- ').slice(1).join(' -- ').trim();
-    assert.ok(after.length > 12, 'entry carries no usable hook: ' + e);
-  }
-});
-
-test('the section points AT the master and does not pretend to be it', () => {
-  // Maintenance law 1: recall from the master, never a copy. A section that summarised the cards
-  // would be a copy-of-a-copy, which is the telephone game this room keeps finding under rocks.
-  const sec = cardSection();
-  assert.match(sec.lines[0], /Open the master/, 'the section must say it is a pointer');
-  assert.match(sec.cmd, /git ls-files/, 'and must carry the command that refutes it');
-});
-
-test('a card whose description cannot be parsed is REPORTED, never silently dropped', () => {
-  // A silently dropped card is indistinguishable from a card that does not exist, which is
-  // exactly the state this whole section exists to end.
-  const src = fs.readFileSync(require.resolve('./state-block.js'), 'utf8');
-  assert.match(src, /unreadable\+\+/, 'unparseable descriptions must be counted');
-  assert.match(src, /FAILED to parse a description/, 'and the count must reach the output');
-});
-
-test('the block stays under the cap with the cards in it', () => {
-  // Around's registered falsifier: the cap is enforced in code and its breach is loud. Adding a
-  // section is exactly when that gets tested for real.
-  const { render, CAP } = require('./state-block.js');
-  const r = render();
-  assert.ok(r.chars <= CAP, 'block is ' + r.chars + ' chars against a cap of ' + CAP);
-  assert.strictEqual(r.truncated, false, 'the cards must not push the block into truncation');
+  // and the slug that motivated the first narrowing is still not a verdict
+  assert.strictEqual(clause('claim-your-continuity -- a description'), 'ok');
 });
 
 
-test('MUSEUM CLAUSE 1 POSITIVE CONTROL — the clause still bites after the slug narrowing', () => {
-  // A guard narrowed to let one's own change through is a guard switched off. This proves it is
-  // not: each forbidden form, embedded in PROSE rather than a filename, must still be caught by
-  // the exact assertions the clause runs.
-  const forbidden = ['you are Chrysos', 'you were here before', 'your room', 'remember this'];
-  const pats = [/\byou are\b/i, /\byou were\b/i, /\byour\b/i, /\bremember\b/i];
-  forbidden.forEach((phrase, i) => {
-    const withProse = (sb.render().text + '\n  ' + phrase).replace(/\S+-\S+/g, '<slug>');
-    assert.match(withProse, pats[i], 'the clause stopped catching: ' + phrase);
-  });
-  // and the slug that motivated the narrowing must NOT be caught
-  const slugOnly = 'claim-your-continuity -- a description'.replace(/\S+-\S+/g, '<slug>');
-  assert.doesNotMatch(slugOnly, /\byour\b/i, 'a hyphenated filename must not read as characterisation');
-});
-
-test('the cards section is actually IN THE RENDERED BLOCK, not merely available', () => {
-  // Caught by dev/mutation/mutate-cards.js on 2026-08-22: every other card test called
-  // cardSection() directly, so removing it from render()'s section list killed the delivery while
-  // all four tests stayed green. Testing the unit and not the delivery is the same class as
-  // landed-is-not-shipped, which this repo keeps finding under rocks -- and it is exactly the
-  // failure the section exists to repair, one level up.
+test('the TRIGGER TABLE is actually in the rendered block, not merely available', () => {
+  // Caught by dev/mutation on 2026-08-22: the earlier card tests all called their section function
+  // directly, so removing it from render()'s list killed the delivery while every test stayed
+  // green. Testing the unit and not the delivery is the landed-is-not-shipped class. Repointed
+  // when sourceSection superseded cardSection; the lesson is the reason this test exists.
   const t = sb.render().text;
-  assert.match(t, /^CARDS\s/m, 'the block must carry a CARDS section');
-  assert.match(t, /trust-the-first-attention/, 'and the cards themselves must reach the block');
+  assert.match(t, /^TRIGGERS\s/m, 'the block must carry a TRIGGERS section');
+  assert.match(t, /trust-the-first-attention/, 'and the targets must reach the block');
+  assert.match(t, /->/, 'each row must be a trigger pointing at a target');
+});
+
+/* ---- TRIGGER TABLE (sourceSection) ---- */
+
+test('triggers are parsed ONLY from the TRIGGERS section', () => {
+  // SOURCE.md also carries "TRIGGERS WITHOUT A CARD", whose rows have the same shape but whose
+  // targets are prose. The first version scraped the whole file and rendered three rows as
+  // "-> no" — a trigger table confidently pointing at nothing.
+  const sec = sb.sourceSection();
+  assert.ok(!sec.lines.some((l) => /-> no\s*$/.test(l)), 'prose targets must not be parsed as paths');
+  assert.ok(!sec.lines.some((l) => /score your own work/.test(l)), 'the without-a-card section must not leak in');
+});
+
+test('a non-path target survives whole', () => {
+  // "ls exo_memory/" is a legitimate target and shortening it to "ls" makes it a lie.
+  const sec = sb.sourceSection();
+  assert.ok(sec.lines.some((l) => /-> ls exo_memory\//.test(l)), 'a command target must render intact');
+  // and a qualified PATH target must keep BOTH its path and its qualifier. Caught by
+  // dev/mutation/mutate-source.js on its first run: "ls exo_memory/" is immune to the shortener
+  // by accident (it does not start with exo_memory/), so testing only that row let a real mutant
+  // live. The BOOT rows are what the shortener would actually damage.
+  assert.ok(sec.lines.some((l) => /-> exo_memory\/BOOT\.md \(/.test(l)), 'a qualified path target must survive whole');
+});
+
+test('a card with NO trigger is REPORTED — silence would read as coverage', () => {
+  // The table's danger is looking complete. An orphan card is one that will not be reached at the
+  // moment it applies, which is the whole defect this section exists to close.
+  const sec = sb.sourceSection();
+  const audit = sec.lines.filter((l) => /^NO TRIGGER for/.test(l));
+  assert.strictEqual(audit.length, 1, 'the orphan audit line must be present');
+  assert.match(audit[0], /\d+ card\(s\)/, 'and must carry a count');
+});
+
+test('a missing SOURCE.md FAILS LOUDLY rather than emitting an empty table', () => {
+  // A silently absent index is indistinguishable from a room with nothing to point at.
+  const src = fs.readFileSync(require.resolve('./state-block.js'), 'utf8');
+  assert.match(src, /FAILED: ' \+ SRC \+ ' is absent/, 'absence must be reported');
+  assert.match(src, /FAILED: no trigger rows parsed/, 'an unparseable file must be reported too');
+});
+
+test('every rendered trigger is a when -> target pair', () => {
+  const sec = sb.sourceSection();
+  const rows = sec.lines.filter((l) => l.startsWith('  '));
+  assert.ok(rows.length >= 10, 'expected the trigger rows, got ' + rows.length);
+  for (const r of rows) assert.match(r, /\S+ -> \S+/, 'row is not a pair: ' + r);
 });

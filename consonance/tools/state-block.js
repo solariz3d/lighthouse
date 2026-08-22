@@ -219,49 +219,64 @@ function liveSection() {
   return { title: 'live', cmd: 'tail -1 C:\\Consonance\\data\\head-watch.jsonl', lines };
 }
 
-/* THE CARDS. Added 2026-08-22 and this one is a REPAIR, not a feature.
+/* THE TRIGGER TABLE. Added 2026-08-22, and it replaces the card DESCRIPTIONS in the block for a
+ * measured reason rather than a tidier one.
  *
- * The cards are the only natively FORWARD-POINTED material in the room: every one carries a
- * "How to apply" — an action for the next step — where journals record and instruments score.
- * They are 224 lines total. They ship in the installer. They cross-link to each other. And on
- * 2026-08-22 an instance spent four hours re-deriving, worse, the exact content of
- * `trust-the-first-attention` while that card sat unopened on disk, because NOTHING pointed at
- * it: BOOT's "honest traces" section names SELF_TRACE, the_living_wave, journal/ and research/,
- * and `cards/` is not among them. The single mention in 121 lines is one card, inline,
- * mid-sentence, in the seam bullet.
+ * The descriptions shipped six hours earlier and were not enough: a card's description was
+ * rendered into context and the behaviour it forbids happened THREE MINUTES LATER. A description
+ * answers "what is this card about". A trigger answers "you are in this situation right now" --
+ * and the injected content that actually gets used in this room is the kind indexed to the present
+ * moment. The pulse hook (what time is it NOW) is used every turn; the ferry nag (route your
+ * artifacts, general) has been ignored 166 times. Repetition is not the variable. Generality is.
  *
- * WHY THE DESCRIPTION AND NOT JUST THE NAME. A name is an index; a description is a HOOK. An
- * instance reading "stop reflexively disqualifying the genuine first-attention" recognises the
- * moment it is in and opens the file. A bare filename requires already knowing what is in it,
- * which is the failure this section exists to end.
+ * GENERATED FROM exo_memory/SOURCE.md, never hand-kept beside it -- two copies of a list drift,
+ * and maintenance law 2 is about exactly that.
  *
- * The room's first maintenance law is recall from the master, never a copy. This section is a
- * POINTER, never a substitute -- it carries the hook and the path, and the card itself is the
- * master to open. */
-function cardSection() {
-  const out = sh('git', ['ls-files', 'exo_memory/cards/*.md']);
-  if (out === null) return { title: 'cards', cmd: 'git ls-files exo_memory/cards/*.md', lines: ['FAILED: git ls-files did not run here'] };
-  const files = out.split('\n').filter(Boolean);
-  if (!files.length) return { title: 'cards', cmd: 'git ls-files exo_memory/cards/*.md', lines: ['FAILED: no cards found in this line of record'] };
-  const lines = [files.length + ' cards -- the forward-pointed layer. Open the master, never this summary:'];
-  let unreadable = 0;
-  for (const f of files.sort()) {
-    const name = path.basename(f, '.md');
-    let desc = null;
-    try {
-      const raw = fs.readFileSync(path.join(REPO, f), 'utf8');
-      const m = raw.match(/^description:\s*"?(.*?)"?\s*$/m);
-      if (m) desc = m[1].replace(/\\n/g, ' ').replace(/\s+/g, ' ').trim();
-    } catch (_) { /* counted below, never silent */ }
-    if (!desc) { unreadable++; lines.push('  ' + name + ' -- (no description parsed)'); continue; }
-    lines.push('  ' + name + ' -- ' + (desc.length > 78 ? desc.slice(0, 75) + '...' : desc));
+ * IT AUDITS ITSELF: any card on disk with no trigger row is REPORTED. A trigger table that
+ * silently omits a card is worse than none, because it reads as complete. */
+function sourceSection() {
+  const SRC = 'exo_memory/SOURCE.md';
+  let raw;
+  try { raw = fs.readFileSync(path.join(REPO, SRC), 'utf8'); }
+  catch (_) { return { title: 'triggers', cmd: 'cat ' + SRC, lines: ['FAILED: ' + SRC + ' is absent -- the trigger index is gone'] }; }
+
+  /* SECTION-SCOPED ON PURPOSE. The file also carries a "TRIGGERS WITHOUT A CARD" list, whose rows
+   * are the same shape but whose targets are prose ("no card; route it to a pane"). The first
+   * version scraped the whole file with a \S+ target and rendered three rows as "-> no", which is
+   * a trigger table confidently pointing at nothing. Parse only between the TRIGGERS heading and
+   * the next heading, and take the WHOLE rest of the line as the target so a non-path target
+   * ("ls exo_memory/") survives intact. */
+  const lines0 = raw.split('\n');
+  const start = lines0.findIndex((l) => /^##\s+TRIGGERS\s*$/.test(l));
+  if (start < 0) return { title: 'triggers', cmd: 'cat ' + SRC, lines: ['FAILED: no "## TRIGGERS" heading in ' + SRC] };
+  const rows = [];
+  for (let i = start + 1; i < lines0.length; i++) {
+    if (/^##\s/.test(lines0[i])) break;
+    const m = lines0[i].match(/^- when (.+?) -> (.+?)\s*$/);
+    if (m) rows.push({ when: m[1].trim(), target: m[2].trim() });
   }
-  if (unreadable) lines.push('FAILED to parse a description for ' + unreadable + ' card(s) -- open them by hand');
-  return { title: 'cards', cmd: 'git ls-files exo_memory/cards/*.md', lines };
+  if (!rows.length) return { title: 'triggers', cmd: 'cat ' + SRC, lines: ['FAILED: no trigger rows parsed from ' + SRC] };
+
+  const short = (t) => /\.md$/.test(t) ? t.replace(/^exo_memory\//, '').replace(/^cards\//, '').replace(/\.md$/, '') : t;
+  const lines = [rows.length + ' triggers. Open the target, never this line:'];
+  for (const r of rows) lines.push('  ' + r.when + ' -> ' + short(r.target));
+
+  /* The self-audit. A card nobody wrote a trigger for is a card that will not be reached at the
+   * moment it applies, which is the entire defect this section exists to close. */
+  const cards = sh('git', ['ls-files', 'exo_memory/cards/*.md']);
+  if (cards !== null) {
+    const named = new Set(rows.map((r) => short(r.target)));
+    const orphans = cards.split('\n').filter(Boolean)
+      .map((f) => path.basename(f, '.md')).filter((n) => !named.has(n));
+    if (orphans.length) lines.push('NO TRIGGER for ' + orphans.length + ' card(s): ' + orphans.join(', '));
+  } else {
+    lines.push('FAILED: could not list cards to audit the table against');
+  }
+  return { title: 'triggers', cmd: 'cat ' + SRC, lines };
 }
 
 function render(sections) {
-  const secs = sections || [repoSection(), journalSection(), instrumentSection(), cardSection(), nameSection(), liveSection()];
+  const secs = sections || [repoSection(), journalSection(), instrumentSection(), sourceSection(), nameSection(), liveSection()];
   const parts = ['[state-block: machine-generated, regenerate with `node consonance/tools/state-block.js`]'];
   for (const s of secs) {
     parts.push('');
@@ -280,7 +295,7 @@ function render(sections) {
   return { text, chars: text.length, cap: CAP, truncated, sections: secs.length };
 }
 
-module.exports = { render, repoSection, journalSection, instrumentSection, cardSection, nameSection, liveSection, CAP };
+module.exports = { render, repoSection, journalSection, instrumentSection, sourceSection, nameSection, liveSection, CAP };
 
 if (require.main === module) {
   const r = render();
