@@ -1,0 +1,890 @@
+{
+  "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
+  "generated_by": "node consonance/tools/portable-paths.js --update",
+  "counts": {
+    "FATAL-DEFAULT": 24,
+    "BENIGN-TEST": 57,
+    "REVIEW": 18,
+    "DISGUISED": 13,
+    "BENIGN-MESSAGE": 5,
+    "FATAL-USER": 6,
+    "BENIGN-FIXTURE": 2
+  },
+  "sites": [
+    {
+      "file": "consonance/hooks/blind.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';",
+      "key": "consonance/hooks/blind.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dream-watch.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(W.underDir('', 'C:\\\\Consonance\\\\instances'), false);",
+      "key": "consonance/hooks/dream-watch.test.js\u0000assert.strictEqual(W.underDir('', 'C:\\\\Consonance\\\\instances'), false);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dream-watch.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(W.underDir('C:\\\\Consonance\\\\instances', 'C:\\\\Consonance\\\\instances'), true);",
+      "key": "consonance/hooks/dream-watch.test.js\u0000assert.strictEqual(W.underDir('C:\\\\Consonance\\\\instances', 'C:\\\\Consonance\\\\instances'), true);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dream-watch.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(W.underDir('C:\\\\Consonance\\\\instances\\\\sibling-a', 'C:\\\\Consonance\\\\instances'), true);",
+      "key": "consonance/hooks/dream-watch.test.js\u0000assert.strictEqual(W.underDir('C:\\\\Consonance\\\\instances\\\\sibling-a', 'C:\\\\Consonance\\\\instances'), true);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/dream-watch.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(W.underDir('C:\\\\Users\\\\zackn\\\\code', 'C:\\\\Consonance\\\\instances'), false);",
+      "key": "consonance/hooks/dream-watch.test.js\u0000assert.strictEqual(W.underDir('C:\\\\Users\\\\zackn\\\\code', 'C:\\\\Consonance\\\\instances'), false);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/ferry-watch.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "const LEDGER = \"C:\\\\Consonance\\\\data\\\\ferry.jsonl\";",
+      "key": "consonance/hooks/ferry-watch.js\u0000const LEDGER = \"C:\\\\Consonance\\\\data\\\\ferry.jsonl\";\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/ferry-watch.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const REPO = process.env.FERRY_REPO || \"C:\\\\Consonance\\\\lighthouse\";",
+      "key": "consonance/hooks/ferry-watch.js\u0000const REPO = process.env.FERRY_REPO || \"C:\\\\Consonance\\\\lighthouse\";\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/findings-return.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';",
+      "key": "consonance/hooks/findings-return.js\u0000const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/findings-return.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const RETURNS = process.env.RETURN_LEDGER || 'C:\\\\Consonance\\\\data\\\\return_ledger.jsonl';",
+      "key": "consonance/hooks/findings-return.js\u0000const RETURNS = process.env.RETURN_LEDGER || 'C:\\\\Consonance\\\\data\\\\return_ledger.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/findings-return.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const STATEDIR = process.env.RETURN_STATE_DIR || 'C:\\\\Consonance\\\\data\\\\return_state';",
+      "key": "consonance/hooks/findings-return.js\u0000const STATEDIR = process.env.RETURN_STATE_DIR || 'C:\\\\Consonance\\\\data\\\\return_state';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/findings-return.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const PANE_CWD = 'C:\\\\panes\\\\sibling-test';",
+      "key": "consonance/hooks/findings-return.test.js\u0000const PANE_CWD = 'C:\\\\panes\\\\sibling-test';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/precompact-preserve.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';",
+      "key": "consonance/hooks/precompact-preserve.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/precompact-preserve.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const bad = process.platform === 'win32' ? 'Z:\\\\nope\\\\precompact.jsonl' : '/proc/nope/x.jsonl';",
+      "key": "consonance/hooks/precompact-preserve.test.js\u0000const bad = process.platform === 'win32' ? 'Z:\\\\nope\\\\precompact.jsonl' : '/proc/nope/x.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sessionstart-state.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';",
+      "key": "consonance/hooks/sessionstart-state.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const LEDGER = process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl';",
+      "key": "consonance/hooks/sourced-stop.js\u0000const LEDGER = process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(ledgerRows(tmp)[0].paths, ['C:\\\\a\\\\one.js', 'C:\\\\a\\\\two.md']);",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000assert.deepStrictEqual(ledgerRows(tmp)[0].paths, ['C:\\\\a\\\\one.js', 'C:\\\\a\\\\two.md']);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(row.paths, ['C:\\\\repo\\\\lib\\\\mod.js']); // the path still rides",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000assert.deepStrictEqual(row.paths, ['C:\\\\repo\\\\lib\\\\mod.js']); // the path still rides\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(row.claims[0].path, 'C:\\\\repo\\\\notes\\\\report.md');",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000assert.strictEqual(row.claims[0].path, 'C:\\\\repo\\\\notes\\\\report.md');\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const r = runHook(JSON.stringify({ session_id: 'abcd1234-x', transcript_path: t, cwd: 'C:\\\\panes\\\\sibling-test' }), {}, tmp);",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000const r = runHook(JSON.stringify({ session_id: 'abcd1234-x', transcript_path: t, cwd: 'C:\\\\panes\\\\sibling-test' }), {}, tmp);\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "toolUse('Edit', { file_path: 'C:\\\\a\\\\one.js', old_string: 'x', new_string: 'y' }),",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000toolUse('Edit', { file_path: 'C:\\\\a\\\\one.js', old_string: 'x', new_string: 'y' }),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "toolUse('Edit', { file_path: 'C:\\\\repo\\\\journal.md', old_string: 'It has 99 lines.', new_string: 'It has 342 lines now.' }),",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000toolUse('Edit', { file_path: 'C:\\\\repo\\\\journal.md', old_string: 'It has 99 lines.', new_string: 'It has 342 lines now.' }),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "toolUse('Read', { file_path: 'C:\\\\a\\\\one.js' }),",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000toolUse('Read', { file_path: 'C:\\\\a\\\\one.js' }),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "toolUse('Write', { file_path: 'C:\\\\a\\\\two.md', content: 'no values here' }),",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000toolUse('Write', { file_path: 'C:\\\\a\\\\two.md', content: 'no values here' }),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "toolUse('Write', { file_path: 'C:\\\\repo\\\\lib\\\\mod.js', content: '// requires v2.3.1\\nconst LINES = \"500 lines\";\\n' }),",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000toolUse('Write', { file_path: 'C:\\\\repo\\\\lib\\\\mod.js', content: '// requires v2.3.1\\nconst LINES = \"500 lines\";\\n' }),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/sourced-stop.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "toolUse('Write', { file_path: 'C:\\\\repo\\\\notes\\\\report.md', content: 'Suite green.\\nThe suite has 267 tests passing.\\n' }),",
+      "key": "consonance/hooks/sourced-stop.test.js\u0000toolUse('Write', { file_path: 'C:\\\\repo\\\\notes\\\\report.md', content: 'Suite green.\\nThe suite has 267 tests passing.\\n' }),\u0000#1"
+    },
+    {
+      "file": "consonance/hooks/transcript-watch.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "return \"C:\\\\Consonance\\\\data\";",
+      "key": "consonance/hooks/transcript-watch.js\u0000return \"C:\\\\Consonance\\\\data\";\u0000#1"
+    },
+    {
+      "file": "consonance/import-instance.ps1",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "$DATA = 'C:\\Consonance\\data'",
+      "key": "consonance/import-instance.ps1\u0000$DATA = 'C:\\Consonance\\data'\u0000#1"
+    },
+    {
+      "file": "consonance/import-instance.ps1",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "$INSTANCES = 'C:\\Consonance\\instances'",
+      "key": "consonance/import-instance.ps1\u0000$INSTANCES = 'C:\\Consonance\\instances'\u0000#1"
+    },
+    {
+      "file": "consonance/restore-main.ps1",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "$projDir = Join-Path $env:USERPROFILE '.claude\\projects\\C--Users-zackn-claude-instances-main'",
+      "key": "consonance/restore-main.ps1\u0000$projDir = Join-Path $env:USERPROFILE '.claude\\projects\\C--Users-zackn-claude-instances-main'\u0000#1"
+    },
+    {
+      "file": "consonance/restore-main.ps1",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-MESSAGE",
+      "text": "Write-Host ' Main should resume its real thread at C:\\Consonance\\instances\\main' -ForegroundColor DarkGray",
+      "key": "consonance/restore-main.ps1\u0000Write-Host ' Main should resume its real thread at C:\\Consonance\\instances\\main' -ForegroundColor DarkGray\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/gen-deck.ps1",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "$dst = \"$env:USERPROFILE\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\cards\"",
+      "key": "consonance/src-tauri/gen-deck.ps1\u0000$dst = \"$env:USERPROFILE\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\cards\"\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/gen-deck.ps1",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "$src = \"$env:USERPROFILE\\.claude\\projects\\C--Users-zackn-OneDrive-Desktop-606\\memory\"",
+      "key": "consonance/src-tauri/gen-deck.ps1\u0000$src = \"$env:USERPROFILE\\.claude\\projects\\C--Users-zackn-OneDrive-Desktop-606\\memory\"\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/bin/capture_probe.rs",
+      "detector": "DRIVE",
+      "verdict": "FATAL-USER",
+      "text": "let claude = r\"C:\\Users\\zackn\\.local\\bin\\claude.exe\";",
+      "key": "consonance/src-tauri/src/bin/capture_probe.rs\u0000let claude = r\"C:\\Users\\zackn\\.local\\bin\\claude.exe\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/bin/flush_probe.rs",
+      "detector": "DRIVE",
+      "verdict": "FATAL-USER",
+      "text": "let claude = r\"C:\\Users\\zackn\\.local\\bin\\claude.exe\";",
+      "key": "consonance/src-tauri/src/bin/flush_probe.rs\u0000let claude = r\"C:\\Users\\zackn\\.local\\bin\\claude.exe\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/bin/jsonl_tap.rs",
+      "detector": "DRIVE",
+      "verdict": "FATAL-USER",
+      "text": "let cwd = r\"C:\\Users\\zackn\\OneDrive\\Desktop\\606\";",
+      "key": "consonance/src-tauri/src/bin/jsonl_tap.rs\u0000let cwd = r\"C:\\Users\\zackn\\OneDrive\\Desktop\\606\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/bin/pty_spike.rs",
+      "detector": "DRIVE",
+      "verdict": "FATAL-USER",
+      "text": "let claude = r\"C:\\Users\\zackn\\.local\\bin\\claude.exe\";",
+      "key": "consonance/src-tauri/src/bin/pty_spike.rs\u0000let claude = r\"C:\\Users\\zackn\\.local\\bin\\claude.exe\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/bin/pty_spike.rs",
+      "detector": "DRIVE",
+      "verdict": "FATAL-USER",
+      "text": "let cwd = r\"C:\\Users\\zackn\\OneDrive\\Desktop\\606\";",
+      "key": "consonance/src-tauri/src/bin/pty_spike.rs\u0000let cwd = r\"C:\\Users\\zackn\\OneDrive\\Desktop\\606\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/bin/resume_probe.rs",
+      "detector": "DRIVE",
+      "verdict": "FATAL-USER",
+      "text": "const CLAUDE: &str = r\"C:\\Users\\zackn\\.local\\bin\\claude.exe\";",
+      "key": "consonance/src-tauri/src/bin/resume_probe.rs\u0000const CLAUDE: &str = r\"C:\\Users\\zackn\\.local\\bin\\claude.exe\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "\"data_dir\": \"C:\\\\Consonance\\\\data\",",
+      "key": "consonance/src-tauri/src/main.rs\u0000\"data_dir\": \"C:\\\\Consonance\\\\data\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "\"instances_dir\": \"C:\\\\Consonance\\\\instances\",",
+      "key": "consonance/src-tauri/src/main.rs\u0000\"instances_dir\": \"C:\\\\Consonance\\\\instances\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "\"room_path\": \"C:\\\\room\\\\BOOT.md\",",
+      "key": "consonance/src-tauri/src/main.rs\u0000\"room_path\": \"C:\\\\room\\\\BOOT.md\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(cfg.data_dir, r\"C:\\Consonance\\data\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(cfg.data_dir, r\"C:\\Consonance\\data\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(cfg.data_dir, r\"C:\\Consonance\\data\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(cfg.data_dir, r\"C:\\Consonance\\data\");\u0000#2"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(cfg.instances_dir, r\"C:\\Consonance\\instances\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(cfg.instances_dir, r\"C:\\Consonance\\instances\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(cfg.instances_dir, r\"C:\\keep\\me\", \"a good field survives a bad neighbour\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(cfg.instances_dir, r\"C:\\keep\\me\", \"a good field survives a bad neighbour\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(cfg.room_path, r\"C:\\room\\BOOT.md\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(cfg.room_path, r\"C:\\room\\BOOT.md\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(encode_cwd(\"C:\\\\a b.c_d\"), \"C--a-b-c-d\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(encode_cwd(\"C:\\\\a b.c_d\"), \"C--a-b-c-d\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(encode_cwd(\"C:\\\\Consonance\\\\instances\\\\main\"), \"C--Consonance-instances-main\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(encode_cwd(\"C:\\\\Consonance\\\\instances\\\\main\"), \"C--Consonance-instances-main\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(encode_cwd(\"C:\\\\Users\\\\nname\\\\Desktop\\\\brain rot\"), \"C--Users-nname-Desktop-brain-rot\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(encode_cwd(\"C:\\\\Users\\\\nname\\\\Desktop\\\\brain rot\"), \"C--Users-nname-Desktop-brain-rot\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(read_head(std::path::Path::new(\"C:\\\\definitely\\\\not\\\\here.jsonl\")), 0);",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(read_head(std::path::Path::new(\"C:\\\\definitely\\\\not\\\\here.jsonl\")), 0);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(read_last_record(std::path::Path::new(\"Z:\\\\does\\\\not\\\\exist.txt\")), None);",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(read_last_record(std::path::Path::new(\"Z:\\\\does\\\\not\\\\exist.txt\")), None);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(role_for_kept(r\"C:\\Consonance\\instances-evil\\x\", inst), \"human\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(role_for_kept(r\"C:\\Consonance\\instances-evil\\x\", inst), \"human\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(role_for_kept(r\"C:\\Consonance\\instances\\sibling-0845a868\", inst), \"committee\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(role_for_kept(r\"C:\\Consonance\\instances\\sibling-0845a868\", inst), \"committee\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(role_for_kept(r\"C:\\Consonance\\rooms\\zach\", inst), \"human\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(role_for_kept(r\"C:\\Consonance\\rooms\\zach\", inst), \"human\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(!is_fresh_dir_name(r\"C:\\Consonance\\instances\\fresh-x\\sibling-a\"));",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert!(!is_fresh_dir_name(r\"C:\\Consonance\\instances\\fresh-x\\sibling-a\"));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(!is_fresh_dir_name(r\"C:\\Consonance\\instances\\sibling-0845a868\"));",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert!(!is_fresh_dir_name(r\"C:\\Consonance\\instances\\sibling-0845a868\"));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert!(is_fresh_dir_name(r\"C:\\Consonance\\instances\\fresh-0845a868\"));",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert!(is_fresh_dir_name(r\"C:\\Consonance\\instances\\fresh-0845a868\"));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", home())",
+      "key": "consonance/src-tauri/src/main.rs\u0000format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", home())\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);",
+      "key": "consonance/src-tauri/src/main.rs\u0000let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "let disk = format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", sysdrive());",
+      "key": "consonance/src-tauri/src/main.rs\u0000let disk = format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", sysdrive());\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "let disk = PathBuf::from(format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\cards\", sysdrive()));",
+      "key": "consonance/src-tauri/src/main.rs\u0000let disk = PathBuf::from(format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\cards\", sysdrive()));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let inst = Path::new(r\"C:\\Consonance\\instances\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000let inst = Path::new(r\"C:\\Consonance\\instances\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let inst = Path::new(r\"C:\\Consonance\\instances\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000let inst = Path::new(r\"C:\\Consonance\\instances\");\u0000#2"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let inst = Path::new(r\"C:\\Consonance\\instances\");",
+      "key": "consonance/src-tauri/src/main.rs\u0000let inst = Path::new(r\"C:\\Consonance\\instances\");\u0000#3"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let json = r#\"{\"instances_dir\":\"C:\\\\keep\\\\me\",\"ambient_lat\":{\"nested\":\"nonsense\"}}\"#;",
+      "key": "consonance/src-tauri/src/main.rs\u0000let json = r#\"{\"instances_dir\":\"C:\\\\keep\\\\me\",\"ambient_lat\":{\"nested\":\"nonsense\"}}\"#;\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "PathBuf::from(format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\cards\", home()))",
+      "key": "consonance/src-tauri/src/main.rs\u0000PathBuf::from(format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\cards\", home()))\u0000#1"
+    },
+    {
+      "file": "consonance/tools/actors.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": ": 'C:/Consonance/data/letters.json';",
+      "key": "consonance/tools/actors.js\u0000: 'C:/Consonance/data/letters.json';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/actors.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const board = process.argv[2] || 'C:/Consonance/data/board.jsonl';",
+      "key": "consonance/tools/actors.js\u0000const board = process.argv[2] || 'C:/Consonance/data/board.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/actors.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const board = 'C:/Consonance/data/board.jsonl';",
+      "key": "consonance/tools/actors.test.js\u0000const board = 'C:/Consonance/data/board.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/agreement-spread.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "const file = argv.includes('--board') ? argv[argv.indexOf('--board') + 1] : 'C:/Consonance/data/board.jsonl';",
+      "key": "consonance/tools/agreement-spread.js\u0000const file = argv.includes('--board') ? argv[argv.indexOf('--board') + 1] : 'C:/Consonance/data/board.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/attached.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(r.read, ['C:\\\\notes\\\\note.md']);",
+      "key": "consonance/tools/attached.test.js\u0000assert.deepStrictEqual(r.read, ['C:\\\\notes\\\\note.md']);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/attached.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.deepStrictEqual(r.wrote, ['C:\\\\notes\\\\note.md']);",
+      "key": "consonance/tools/attached.test.js\u0000assert.deepStrictEqual(r.wrote, ['C:\\\\notes\\\\note.md']);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/attached.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "heads: { 'c:/repo': 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeef' },",
+      "key": "consonance/tools/attached.test.js\u0000heads: { 'c:/repo': 'deadbeefdeadbeefdeadbeefdeadbeefdeadbeef' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/attached.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "input: JSON.stringify({ session_id: 'e2e00001-x', cwd: 'C:\\\\panes\\\\sibling-test' }),",
+      "key": "consonance/tools/attached.test.js\u0000input: JSON.stringify({ session_id: 'e2e00001-x', cwd: 'C:\\\\panes\\\\sibling-test' }),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/attached.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "paths: ['C:\\\\notes\\\\note.md'],",
+      "key": "consonance/tools/attached.test.js\u0000paths: ['C:\\\\notes\\\\note.md'],\u0000#1"
+    },
+    {
+      "file": "consonance/tools/attached.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "sentence: 'consonance/ui/term.js is 500 lines', path: 'C:\\\\notes\\\\note.md' }],",
+      "key": "consonance/tools/attached.test.js\u0000sentence: 'consonance/ui/term.js is 500 lines', path: 'C:\\\\notes\\\\note.md' }],\u0000#1"
+    },
+    {
+      "file": "consonance/tools/balance-check.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "const file = argv.includes('--board') ? argv[argv.indexOf('--board') + 1] : 'C:/Consonance/data/board.jsonl';",
+      "key": "consonance/tools/balance-check.js\u0000const file = argv.includes('--board') ? argv[argv.indexOf('--board') + 1] : 'C:/Consonance/data/board.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/board-audit.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const BOARD = process.env.CONSONANCE_BOARD || 'C:\\\\Consonance\\\\data\\\\board.jsonl';",
+      "key": "consonance/tools/board-audit.js\u0000const BOARD = process.env.CONSONANCE_BOARD || 'C:\\\\Consonance\\\\data\\\\board.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/cite-check.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "'C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe',",
+      "key": "consonance/tools/cite-check.js\u0000'C:\\\\Program Files\\\\Git\\\\bin\\\\bash.exe',\u0000#1"
+    },
+    {
+      "file": "consonance/tools/cite-check.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "'C:\\\\Program Files\\\\Git\\\\usr\\\\bin\\\\bash.exe',",
+      "key": "consonance/tools/cite-check.js\u0000'C:\\\\Program Files\\\\Git\\\\usr\\\\bin\\\\bash.exe',\u0000#1"
+    },
+    {
+      "file": "consonance/tools/curate.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';",
+      "key": "consonance/tools/curate.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/ferry.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const LEDGER = process.env.FERRY_LEDGER || 'C:\\\\Consonance\\\\data\\\\ferry.jsonl';",
+      "key": "consonance/tools/ferry.js\u0000const LEDGER = process.env.FERRY_LEDGER || 'C:\\\\Consonance\\\\data\\\\ferry.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/ferry.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "return process.env.FERRY_REPO || 'C:\\\\Consonance\\\\lighthouse';",
+      "key": "consonance/tools/ferry.js\u0000return process.env.FERRY_REPO || 'C:\\\\Consonance\\\\lighthouse';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/guard-census.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "const BLACKBOX = process.env.GUARD_CENSUS_BLACKBOX || path.join(process.env.USERPROFILE || \"\", \"Desktop\", \"blackbox\");",
+      "key": "consonance/tools/guard-census.js\u0000const BLACKBOX = process.env.GUARD_CENSUS_BLACKBOX || path.join(process.env.USERPROFILE || \"\", \"Desktop\", \"blackbox\");\u0000#1"
+    },
+    {
+      "file": "consonance/tools/guard-census.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const out = '@@FAILEV ' + JSON.stringify({ msg: \" FAIL elsewhere\", frames: [\"C:/x/other.js:4\"] });",
+      "key": "consonance/tools/guard-census.test.js\u0000const out = '@@FAILEV ' + JSON.stringify({ msg: \" FAIL elsewhere\", frames: [\"C:/x/other.js:4\"] });\u0000#1"
+    },
+    {
+      "file": "consonance/tools/guard-census.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const out = '@@FAILEV ' + JSON.stringify({ msg: \" FAIL something\", frames: [\"C:/x/test_a.js:9\", \"C:/x/test_a.js:120\"] });",
+      "key": "consonance/tools/guard-census.test.js\u0000const out = '@@FAILEV ' + JSON.stringify({ msg: \" FAIL something\", frames: [\"C:/x/test_a.js:9\", \"C:/x/test_a.js:120\"] });\u0000#1"
+    },
+    {
+      "file": "consonance/tools/guard-census.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const out = '@@FAILEV ' + JSON.stringify({ msg: \"3 FAILURE(S)\", frames: [\"C:/x/test_a.js:200\"] });",
+      "key": "consonance/tools/guard-census.test.js\u0000const out = '@@FAILEV ' + JSON.stringify({ msg: \"3 FAILURE(S)\", frames: [\"C:/x/test_a.js:200\"] });\u0000#1"
+    },
+    {
+      "file": "consonance/tools/guard-census.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const out = \" at TestContext.<anonymous> \\x1b[90m(C:\\\\a\\\\b\\\\\\x1b[39mgroove.test.js:287:10\\x1b[90m)\\x1b[39m\";",
+      "key": "consonance/tools/guard-census.test.js\u0000const out = \" at TestContext.<anonymous> \\x1b[90m(C:\\\\a\\\\b\\\\\\x1b[39mgroove.test.js:287:10\\x1b[90m)\\x1b[39m\";\u0000#1"
+    },
+    {
+      "file": "consonance/tools/head-watch.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const LEDGER = process.env.CONSONANCE_HEADWATCH_LOG || 'C:\\\\Consonance\\\\data\\\\head-watch.jsonl';",
+      "key": "consonance/tools/head-watch.js\u0000const LEDGER = process.env.CONSONANCE_HEADWATCH_LOG || 'C:\\\\Consonance\\\\data\\\\head-watch.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/head-watch.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "os.homedir(), '.claude', 'projects', 'C--Consonance-instances-main', `${MAIN_SID}.jsonl`);",
+      "key": "consonance/tools/head-watch.js\u0000os.homedir(), '.claude', 'projects', 'C--Consonance-instances-main', `${MAIN_SID}.jsonl`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/open-items.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const data = process.env.VANTAGE_DATA || 'C:/Consonance/data';",
+      "key": "consonance/tools/open-items.js\u0000const data = process.env.VANTAGE_DATA || 'C:/Consonance/data';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/open-items.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const data = process.env.VANTAGE_DATA || 'C:/Consonance/data';",
+      "key": "consonance/tools/open-items.js\u0000const data = process.env.VANTAGE_DATA || 'C:/Consonance/data';\u0000#2"
+    },
+    {
+      "file": "consonance/tools/pair-ledger.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "path.join(process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data', 'vantage_findings.jsonl'),",
+      "key": "consonance/tools/pair-ledger.js\u0000path.join(process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data', 'vantage_findings.jsonl'),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/pair-ledger.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "sourced: process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl',",
+      "key": "consonance/tools/pair-ledger.js\u0000sourced: process.env.SOURCED_LEDGER || 'C:\\\\Consonance\\\\data\\\\sourced_ledger.jsonl',\u0000#1"
+    },
+    {
+      "file": "consonance/tools/pane-status.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const ROSTER = process.env.PANES_JSON || 'C:\\\\Consonance\\\\data\\\\panes.json';",
+      "key": "consonance/tools/pane-status.js\u0000const ROSTER = process.env.PANES_JSON || 'C:\\\\Consonance\\\\data\\\\panes.json';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/prompt-events.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "const AFFORD = /y:\\s*Yes\\s*n:\\s*No/; // whitespace varies with terminal width",
+      "key": "consonance/tools/prompt-events.js\u0000const AFFORD = /y:\\s*Yes\\s*n:\\s*No/; // whitespace varies with terminal width\u0000#1"
+    },
+    {
+      "file": "consonance/tools/prompt-events.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "const CAPTURES = \"C:/Consonance/data/captures\";",
+      "key": "consonance/tools/prompt-events.js\u0000const CAPTURES = \"C:/Consonance/data/captures\";\u0000#1"
+    },
+    {
+      "file": "consonance/tools/prompt-events.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "const reg = JSON.parse(fs.readFileSync(\"C:/Consonance/data/panes.json\", \"utf8\"));",
+      "key": "consonance/tools/prompt-events.js\u0000const reg = JSON.parse(fs.readFileSync(\"C:/Consonance/data/panes.json\", \"utf8\"));\u0000#1"
+    },
+    {
+      "file": "consonance/tools/read-ledger.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const LEDGER = process.env.READ_LEDGER || 'C:\\\\Consonance\\\\data\\\\read_ledger.jsonl';",
+      "key": "consonance/tools/read-ledger.js\u0000const LEDGER = process.env.READ_LEDGER || 'C:\\\\Consonance\\\\data\\\\read_ledger.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/residue.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const board = a.board || path.join(process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data', 'board.jsonl');",
+      "key": "consonance/tools/residue.js\u0000const board = a.board || path.join(process.env.CONSONANCE_DATA || 'C:\\\\Consonance\\\\data', 'board.jsonl');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';",
+      "key": "consonance/tools/second-vantage.js\u0000const DATA = process.env.VANTAGE_DATA || 'C:\\\\Consonance\\\\data';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "if (s === '.') break; // dirname('C:/') === 'C:/', so absolute",
+      "key": "consonance/tools/second-vantage.js\u0000if (s === '.') break; // dirname('C:/') === 'C:/', so absolute\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "['wc -l \"C:/x/lighthouse/exo_memory/loop/run1/items/t1/data/events.log\" → 1847'],",
+      "key": "consonance/tools/second-vantage.test.js\u0000['wc -l \"C:/x/lighthouse/exo_memory/loop/run1/items/t1/data/events.log\" → 1847'],\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "paths: ['x.md'], heads: { 'c:/consonance/lighthouse': 'abc1234' },",
+      "key": "consonance/tools/second-vantage.test.js\u0000paths: ['x.md'], heads: { 'c:/consonance/lighthouse': 'abc1234' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/second-vantage.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "paths: ['x.md'], heads: { 'c:/consonance/lighthouse': 'abc1234' },",
+      "key": "consonance/tools/second-vantage.test.js\u0000paths: ['x.md'], heads: { 'c:/consonance/lighthouse': 'abc1234' },\u0000#2"
+    },
+    {
+      "file": "consonance/tools/state-block.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "const hw = 'C:\\\\Consonance\\\\data\\\\head-watch.jsonl';",
+      "key": "consonance/tools/state-block.js\u0000const hw = 'C:\\\\Consonance\\\\data\\\\head-watch.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/state-block.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "const pc = 'C:\\\\Consonance\\\\data\\\\precompact.jsonl';",
+      "key": "consonance/tools/state-block.js\u0000const pc = 'C:\\\\Consonance\\\\data\\\\precompact.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/state-block.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "return { title: 'live', cmd: 'tail -1 C:\\\\Consonance\\\\data\\\\head-watch.jsonl', lines };",
+      "key": "consonance/tools/state-block.js\u0000return { title: 'live', cmd: 'tail -1 C:\\\\Consonance\\\\data\\\\head-watch.jsonl', lines };\u0000#1"
+    },
+    {
+      "file": "consonance/tools/swell-head.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "reportLedger(valueOf('--ledger') || 'C:/Consonance/data/heard.jsonl');",
+      "key": "consonance/tools/swell-head.js\u0000reportLedger(valueOf('--ledger') || 'C:/Consonance/data/heard.jsonl');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/swell-head.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const p = 'C:/Consonance/data/heard.jsonl';",
+      "key": "consonance/tools/swell-head.test.js\u0000const p = 'C:/Consonance/data/heard.jsonl';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/tell-index.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "return 'C:\\\\Consonance\\\\data';",
+      "key": "consonance/tools/tell-index.js\u0000return 'C:\\\\Consonance\\\\data';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/tell-index.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(countReferents('see `foo` and 3 things in C:\\\\a\\\\b'), 3);",
+      "key": "consonance/tools/tell-index.test.js\u0000assert.strictEqual(countReferents('see `foo` and 3 things in C:\\\\a\\\\b'), 3);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/tell-index.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(stringish({ data_dir: ' C:\\\\x ' }, 'data_dir'), 'C:\\\\x');",
+      "key": "consonance/tools/tell-index.test.js\u0000assert.strictEqual(stringish({ data_dir: ' C:\\\\x ' }, 'data_dir'), 'C:\\\\x');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/whats-live.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const DATA = process.env.CONSONANCE_DATA || 'C:/Consonance/data';",
+      "key": "consonance/tools/whats-live.js\u0000const DATA = process.env.CONSONANCE_DATA || 'C:/Consonance/data';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/whats-live.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "const INSTANCES = 'C:/Consonance/instances';",
+      "key": "consonance/tools/whats-live.js\u0000const INSTANCES = 'C:/Consonance/instances';\u0000#1"
+    },
+    {
+      "file": "desktop-install.ps1",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "$repo = \"C:\\Consonance\\lighthouse\"",
+      "key": "desktop-install.ps1\u0000$repo = \"C:\\Consonance\\lighthouse\"\u0000#1"
+    },
+    {
+      "file": "desktop-install.ps1",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "if (-not (Test-Path \"$repo\\exo_memory\\BOOT.md\")) { $repo = \"$env:USERPROFILE\\lighthouse\" }",
+      "key": "desktop-install.ps1\u0000if (-not (Test-Path \"$repo\\exo_memory\\BOOT.md\")) { $repo = \"$env:USERPROFILE\\lighthouse\" }\u0000#1"
+    },
+    {
+      "file": "desktop-install.ps1",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "if (-not (Test-Path \"$repo\\exo_memory\\BOOT.md\")) { $repo = \"$env:USERPROFILE\\OneDrive\\Desktop\\projects\\lighthouse\" }",
+      "key": "desktop-install.ps1\u0000if (-not (Test-Path \"$repo\\exo_memory\\BOOT.md\")) { $repo = \"$env:USERPROFILE\\OneDrive\\Desktop\\projects\\lighthouse\" }\u0000#1"
+    },
+    {
+      "file": "dev/dream/dream_cycle.ps1",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "$root = \"C:\\Consonance\\instances\"",
+      "key": "dev/dream/dream_cycle.ps1\u0000$root = \"C:\\Consonance\\instances\"\u0000#1"
+    },
+    {
+      "file": "dev/dream/install_dream.ps1",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-MESSAGE",
+      "text": "Write-Host \"Dreams land in: C:\\Consonance\\instances\\<most-recent>\\dreams\\\"",
+      "key": "dev/dream/install_dream.ps1\u0000Write-Host \"Dreams land in: C:\\Consonance\\instances\\<most-recent>\\dreams\\\"\u0000#1"
+    },
+    {
+      "file": "dev/headwatch/install_headwatch.ps1",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-MESSAGE",
+      "text": "-Description \"head-watch: pane B's falsifier for the board-replay diagnosis. Polls Main's transcript every 500ms and logs head-flip / shrink / gone / back to C:\\Consonance\\data\\head-watch.jsonl. Detached because on 2026-08-18 it was a child of the chair's session and died in the same instant as the relaunch it was armed to observe.\" `",
+      "key": "dev/headwatch/install_headwatch.ps1\u0000-Description \"head-watch: pane B's falsifier for the board-replay diagnosis. Polls Main's transcript every 500ms and logs head-flip / shrink / gone / back to C:\\Consonance\\data\\head-watch.jsonl. Detached because on 2026-08-18 it was a child of the chair's session and died in the same instant as the relaunch it was armed to observe.\" `\u0000#1"
+    },
+    {
+      "file": "dev/headwatch/install_headwatch.ps1",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-MESSAGE",
+      "text": "Write-Host \"Ledger: C:\\Consonance\\data\\head-watch.jsonl\"",
+      "key": "dev/headwatch/install_headwatch.ps1\u0000Write-Host \"Ledger: C:\\Consonance\\data\\head-watch.jsonl\"\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/l2-overseer-worker.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "const LIGHTHOUSE_METHOD = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');",
+      "key": "dev/shell/hooks/l2-overseer-worker.js\u0000const LIGHTHOUSE_METHOD = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');\u0000#1"
+    },
+    {
+      "file": "dev/shell/hooks/l3-overseer-worker.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "const LIGHTHOUSE_WELFARE = path.join(os.homedir(), 'Desktop', 'lighthouse', 'WELFARE.md');",
+      "key": "dev/shell/hooks/l3-overseer-worker.js\u0000const LIGHTHOUSE_WELFARE = path.join(os.homedir(), 'Desktop', 'lighthouse', 'WELFARE.md');\u0000#1"
+    },
+    {
+      "file": "dev/vantage/install_vantage.ps1",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-MESSAGE",
+      "text": "-Description \"second-vantage: takes claims from sourced-stop's ledger and spawns a FRESH claude -p per claim holding only the claim sentence and the repo root, to re-derive the value from the world. Findings: C:\\Consonance\\data\\vantage_findings.jsonl\" `",
+      "key": "dev/vantage/install_vantage.ps1\u0000-Description \"second-vantage: takes claims from sourced-stop's ledger and spawns a FRESH claude -p per claim holding only the claim sentence and the repo root, to re-derive the value from the world. Findings: C:\\Consonance\\data\\vantage_findings.jsonl\" `\u0000#1"
+    }
+  ]
+}
