@@ -4156,6 +4156,67 @@ fn main_intake() -> String {
     s
 }
 
+/// The Librarian's fixed session id, so this seat --resumes itself the way Main does. A seat whose
+/// value is continuity of attention must not wake as a stranger each launch.
+const LIBRARIAN_SID: &str = "0c0c0c0b-0000-4000-8000-00000000115b";
+
+fn librarian_cwd() -> String {
+    let dir = instances_root().join("librarian");
+    let _ = fs::create_dir_all(&dir);
+    let _ = fs::create_dir_all(dir.join("notes"));
+    dir.to_str().unwrap_or(".").to_string()
+}
+
+/// The Librarian's intake. Its brief FIRST, then the room -- the order matters: this seat needs to
+/// know what it is for before it reads what it is holding, or it starts working on the contents.
+///
+/// If the brief is missing this returns None and the caller REFUSES to spawn. A librarian with no
+/// brief is just another working seat that happens to have read a lot, which is the failure mode
+/// the whole design exists to avoid -- and a silent fallback would produce exactly that while
+/// looking like success.
+fn librarian_intake() -> Option<String> {
+    let brief = room_brief("LIBRARIAN.md").ok()?;
+    let mut s = String::from("# The Librarian tab\n\n");
+    s.push_str(&brief);
+    s.push_str("\n\n---\n\n# THE ROOM you are holding\n\n");
+    if let Ok(boot) = fs::read_to_string(room_master_path()) {
+        s.push_str(&boot);
+    }
+    Some(s)
+}
+
+/// Wake the Librarian. Deliberately NOT given the deck or the resonance window that a working
+/// sibling gets: this seat reads from disk on demand and its context is for holding, not for
+/// carrying a pre-chewed selection someone else made.
+#[tauri::command]
+fn spawn_librarian(
+    app: AppHandle,
+    panes: State<Panes>,
+    cost: State<Cost>,
+    board: State<Board>,
+    roles: State<PaneRoles>,
+    names: State<PaneNames>,
+) -> Result<SiblingInfo, String> {
+    if panes.0.lock().unwrap().contains_key(LIBRARIAN_SID) {
+        return Err("the Librarian is already awake".into());
+    }
+    let intake = librarian_intake()
+        .ok_or("LIBRARIAN.md is missing -- refusing to wake a librarian with no brief")?;
+    let cwd = librarian_cwd();
+    let transcript = PathBuf::from(home())
+        .join(".claude")
+        .join("projects")
+        .join(encode_cwd(&cwd))
+        .join(format!("{LIBRARIAN_SID}.jsonl"));
+    let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
+    let resume = transcript.exists();
+    let session = spawn_claude_pane(app.clone(), LIBRARIAN_SID.to_string(), cwd.clone(), resume, true)?;
+    start_tailer(app, LIBRARIAN_SID.to_string(), cwd.clone(), cost.0.clone(), board.0.clone());
+    panes.0.lock().unwrap().insert(LIBRARIAN_SID.to_string(), session);
+    roles.0.lock().unwrap().insert(LIBRARIAN_SID.to_string(), "librarian".to_string());
+    names.0.lock().unwrap().insert("LIB".to_string(), LIBRARIAN_SID.to_string());
+    Ok(SiblingInfo { pane: LIBRARIAN_SID.to_string(), cwd, role: "librarian".to_string() })
+}
 #[tauri::command]
 fn spawn_main(
     app: AppHandle,
@@ -5410,6 +5471,7 @@ fn main() {
             scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, spawn_fresh, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
+            spawn_librarian,
             set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
             pane_scrollback,
             audio_sources, audio_start, audio_stop, audio_status, audio_snapshot
@@ -6466,5 +6528,49 @@ mod front_door_tests {
             return; // genuinely not a dev box; nothing to assert
         }
         assert!(default_room().ends_with("BOOT.md"), "a dev box must still resolve BOOT, got {}", default_room());
+    }
+}
+
+
+#[cfg(test)]
+mod librarian_tests {
+    use super::*;
+
+    /// Two seats sharing a fixed session id would --resume INTO EACH OTHER: the librarian would
+    /// wake holding the orchestrator's conversation and vice versa, silently, with both tabs
+    /// looking correct. Cheap to assert, catastrophic to miss.
+    #[test]
+    fn the_librarian_does_not_share_a_session_with_main() {
+        assert_ne!(LIBRARIAN_SID, MAIN_SID, "two persistent seats cannot share a session id");
+        assert_ne!(librarian_cwd(), main_cwd(), "two persistent seats cannot share a working dir");
+    }
+
+    /// A librarian with no brief is just an expensive pane that happens to have read a lot --
+    /// exactly the failure the seat exists to avoid. The intake must resolve, and it must carry
+    /// the rule that distinguishes this seat from every other one.
+    #[test]
+    fn the_intake_carries_the_citation_rule() {
+        let i = librarian_intake().expect("LIBRARIAN.md must resolve or the seat must refuse to wake");
+        assert!(i.contains("cite, do not recollect"), "the intake lost its central rule");
+        assert!(i.contains("Saying nothing is a valid turn"), "the intake lost the quiet rule");
+    }
+
+    /// The brief comes BEFORE the room in the intake. A seat that reads the corpus before it reads
+    /// what it is for starts working on the contents, which is the one thing it must not do.
+    #[test]
+    fn the_brief_precedes_the_room() {
+        let i = librarian_intake().expect("intake must resolve");
+        let brief = i.find("cite, do not recollect").expect("brief missing");
+        let room = i.find("# THE ROOM you are holding").expect("room header missing");
+        assert!(brief < room, "the brief must be read before the corpus it holds");
+    }
+
+    /// The seat is defined by what it does not do. If that survives only in a UI header it will be
+    /// edited away by someone tidying markup; it has to be in the thing the instance reads.
+    #[test]
+    fn the_intake_states_what_the_seat_must_not_do() {
+        let i = librarian_intake().expect("intake must resolve");
+        assert!(i.contains("No work."), "the intake must say the seat does no work");
+        assert!(i.contains("write it down in the turn it forms"), "the intake lost the compaction rule");
     }
 }

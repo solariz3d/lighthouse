@@ -588,6 +588,40 @@ async function wakeMain() {
   }
 }
 
+/* The Librarian seat. Mirrors wakeMain rather than inventing a second shape -- one pattern for
+ * "a persistent seat lives in its own tab" is the whole point of copying it.
+ *
+ * Note the failure wakeMain documents and does not fix: if the spawn SUCCEEDS and attachPane then
+ * throws, the backend has a seat while the button says idle, so a second click asks for a second
+ * one. Here that is defended at the BACKEND -- spawn_librarian refuses when the pane is already
+ * registered -- so the worst case is a visible error rather than two librarians.
+ */
+const WAKE_LIB_STATES = {
+  idle:   { disabled: false, text: 'Wake the librarian' },
+  waking: { disabled: true,  text: 'waking…' },
+  awake:  { disabled: true,  text: 'the librarian is awake' },
+};
+
+function setWakeLibrarian(state) {
+  const btn = document.getElementById('wakelibrarian');
+  const s = WAKE_LIB_STATES[state];
+  if (btn && s) { btn.disabled = s.disabled; btn.textContent = s.text; }
+}
+
+function resetWakeLibrarian() { setWakeLibrarian('idle'); }
+
+async function wakeLibrarian() {
+  setWakeLibrarian('waking');
+  try {
+    const r = await inv('spawn_librarian');
+    attachPane(r.pane, '▤ Librarian', r.cwd, 'librarian', 'librarianpane');
+    setWakeLibrarian('awake');
+    setStatus('the librarian is awake — it holds the room; ask it for a path, not an opinion');
+  } catch (e) {
+    setStatus('' + e);
+    setWakeLibrarian('idle');
+  }
+}
 // ---- Stage 6: the live committee — pick a focus pane, the rest convene to feed it ----
 function setFocus(id) {
   focusPaneId = (focusPaneId === id) ? null : id;
@@ -845,6 +879,10 @@ const tbtn = document.querySelector('.tabs button[data-tab="terminal"]');
 if (tbtn) tbtn.addEventListener('click', () => setTimeout(fitAll, 40));
 const wm = document.getElementById('wakemain');
 if (wm) wm.onclick = wakeMain;
+const wl = document.getElementById('wakelibrarian');
+if (wl) wl.onclick = wakeLibrarian;
+const ltab = document.querySelector('.tabs button[data-tab="librarian"]');
+if (ltab) ltab.addEventListener('click', () => setTimeout(fitAll, 40));
 const mtab = document.querySelector('.tabs button[data-tab="main"]');
 if (mtab) mtab.addEventListener('click', () => setTimeout(fitAll, 40));
 const dbtn = document.getElementById('distill');

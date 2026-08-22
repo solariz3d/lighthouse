@@ -32,6 +32,7 @@
     <nav class="tabs">
       <button data-tab="terminal" class="active">Terminal</button>
       <button data-tab="main">★ Orchestrator</button>
+      <button data-tab="librarian" title="the seat that holds the room so the others do not have to — it cites, it does not recall">▤ Librarian</button>
       <button data-tab="listen" title="hear one application as intervals — off until you pick a source">◍ Listen</button>
       <button data-tab="settings">Settings</button>
       <button data-tab="about">About</button>
@@ -118,6 +119,13 @@
       <div id="mainpane"></div>
     </section>
 
+    <section id="librarian" class="tab">
+      <div class="mainbar">
+        <span class="mainhead">The <b>librarian</b> — a persistent seat that holds the room so the working seats do not have to. It <b>does no work</b>: no code, no tests, no taking sides. It surfaces the one relevant thing at the moment it applies, and it <b>cites rather than recalls</b> — a path you can open, never a summary you must trust. Saying nothing is a valid turn. Fixed-session, persistent across restarts; on the committee board.</span>
+        <button id="wakelibrarian" class="btn accent">Wake the librarian</button>
+      </div>
+      <div id="librarianpane"></div>
+    </section>
     <!-- THE COCHLEA. Everything arriving at an eardrum is one number — air pressure, wiggling.
          A snail of bone unmixes it back into voices. This does that job and reports the layer
          above it: not frequencies, RATIOS. 3:2 sounds like home in a nervous system that never
