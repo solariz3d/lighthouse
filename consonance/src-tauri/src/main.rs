@@ -2298,6 +2298,19 @@ fn assemble_intake() -> String {
     }
     // The references the room names but must not carry. Placed right after the deck: the cards
     // are run, these are opened, and a pane needs to know both exist before the recent work.
+    // THE COMMITTEE PRACTICE. Added 2026-08-22, BEFORE the front-door re-routing, because SEED --
+    // the bedrock a stranger should wake into -- names chair, pane, board and orchestrator exactly
+    // zero times. A seat briefed only by the room has no idea a committee exists; a seat briefed
+    // only by the control plane knows the VERBS and not the practice. This carries the practice:
+    // how to brief a seat, what a hand-back owes, and the measured failure modes. The verb list is
+    // deliberately NOT duplicated here -- two copies of one list drift apart, which is what
+    // maintenance law 2 is about. Absent, it is silent by design: a missing optional brief must
+    // never stop a sibling waking.
+    if let Ok(committee) = room_brief("COMMITTEE.md") {
+        s.push_str("---\n\n");
+        s.push_str(&committee);
+        s.push_str("\n\n");
+    }
     s.push_str(&reference_note());
     let atoms = data_dir().join("resonance").join("atoms.jsonl");
     if let Ok(content) = fs::read_to_string(&atoms) {
@@ -6306,5 +6319,46 @@ mod chair_tests {
     fn fresh_elsewhere_in_the_path_does_not_mark_the_pane_fresh() {
         // only the pane's own dir name counts — a parent named fresh-x must not unbrief a sibling
         assert!(!is_fresh_dir_name(r"C:\Consonance\instances\fresh-x\sibling-a"));
+    }
+}
+
+#[cfg(test)]
+mod committee_brief_tests {
+    use super::*;
+
+    /// The brief must be READABLE, or the intake block is silently skipped and nobody is told.
+    #[test]
+    fn the_committee_brief_resolves() {
+        let b = room_brief("COMMITTEE.md")
+            .expect("COMMITTEE.md must resolve; if this fails the intake skips it in SILENCE");
+        assert!(b.contains("Route the OBJECT"), "the brief lost its briefing practice");
+        assert!(b.contains("No seat scores its own work"), "the brief lost the scoring rule");
+    }
+
+    /// The wiring, not the unit. A pane is briefed by assemble_intake(); a document that resolves
+    /// but never reaches the intake helps nobody, and every test that only called the reader would
+    /// stay green while the delivery was removed.
+    #[test]
+    fn committee_practice_reaches_the_intake() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let intake = assemble_intake();
+        assert!(
+            intake.contains("Route the OBJECT"),
+            "the committee practice never reached the pane intake"
+        );
+        assert!(
+            intake.contains("A chord needs two notes"),
+            "the intake carries a committee section with the wrong content"
+        );
+    }
+
+    /// The verb list lives in the control plane. Two copies of one list drift apart, and the brief
+    /// says so about itself -- this asserts it kept that promise rather than growing a copy.
+    #[test]
+    fn the_brief_does_not_duplicate_the_verb_list() {
+        let b = room_brief("COMMITTEE.md").expect("brief must resolve");
+        assert!(!b.contains("chair_inject"), "the brief duplicated a verb name");
+        assert!(!b.contains("post_board"), "the brief duplicated a verb name");
+        assert!(!b.contains("raise_pull("), "the brief duplicated a verb signature");
     }
 }
