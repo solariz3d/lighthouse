@@ -84,8 +84,20 @@ function findGenerator() {
   const candidates = [
     path.resolve(__dirname, '..', 'tools', 'state-block.js'),          // running from the repo
     fromConfig(),                                                      // installed: ask the machine
-    'C:\\Consonance\\lighthouse\\consonance\\tools\\state-block.js',   // the laptop's root
   ].filter(Boolean);
+  // A third candidate used to sit here: a literal path to the laptop's checkout, kept on
+  // 2026-08-19 because it is correct there. Removed 2026-08-22, measured rather than argued,
+  // because it did two kinds of harm and no good:
+  //   * fromConfig() already resolves that exact path on the laptop, so it was dead weight
+  //     (mutation: strip the literal, run flat with the real HOME -> still resolves).
+  //   * it made BOTH of this file's machine-independence tests machine-DEPENDENT. The "no
+  //     config degrades to null" test FAILED on the laptop and passed on the desktop; and the
+  //     "resolves when installed FLAT" test could not go red on the laptop under its own
+  //     registered mutation, because deleting fromConfig() left the literal to answer. That
+  //     proof only ever held on a box where the literal happened to be absent.
+  // A machine with no room_path now returns null and the hook emits its loud FAILED notice,
+  // which is the designed behaviour and strictly better than confidently naming another
+  // box's disk.
   if (process.env.CONSONANCE_STATE_BLOCK) candidates.unshift(process.env.CONSONANCE_STATE_BLOCK);
   for (const c of candidates) { try { if (fs.existsSync(c)) return c; } catch (_) {} }
   return null;
