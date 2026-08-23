@@ -1,0 +1,479 @@
+#!/usr/bin/env node
+/* gen-consumer — build the PUBLIC consonance tree from the PRIVATE lighthouse tree.
+ *
+ * THE MODEL. Private is SOURCE, public is GENERATED. There is one hand-maintained tree; the
+ * public one is an artifact of this script and must never be hand-edited. The moment anyone
+ * edits it directly it has become the second copy the whole design exists to prevent -- which is
+ * maintenance law 1 ("recall from the master, never a copy") applied to repositories.
+ *
+ * WHY THIS IS NOT gen-brief.ps1 GENERALISED. That script transforms ONE file with four
+ * hand-written anchors against BOOT.md's exact sentences. It is the right SHAPE -- refuse loudly,
+ * self-check the output, keep the shipped-only prose in fragments -- and the wrong SCALE. What
+ * generalises from it is not the string replaces; it is the discipline that a generator able to
+ * ship the keeper's record must be able to SAY it did.
+ *
+ * WHAT THE SURVEY SAID, and it changed the design (2026-08-23, over 115 candidate files):
+ *
+ *     IDENTITY   4 files,  10 hits    a real handle/email/OS user
+ *     DANGLING  25 files,  79 hits    a pointer that breaks on a stranger's tree
+ *     MACHINE   40 files, 116 hits    a real hardcoded absolute path
+ *     PROSE      7 files,   7 hits    shared-past, the class gen-brief needed a cold read to find
+ *
+ * The dominant class is NOT privacy. It is DANGLING: 79 citations to journals, loop entries and
+ * map files a consumer's tree will not contain. A dead pointer is worse than an absent one -- it
+ * reads as authoritative and resolves to nothing, which is a museum label for a room the reader
+ * was never in. So this script is a translator first and a sanitiser second.
+ *
+ * (A first survey reported 24.1% clean; it was wrong by more than 2x. `the keeper` x52 is what
+ * gen-brief PRODUCES rather than a leak, and C:\notes / C:/x / Users/nname are deliberate test
+ * fixtures. Corrected to 52.2%. The inflation direction is the one to watch: an over-counting
+ * survey makes the job look harder and the generator look more impressive for finishing it.)
+ *
+ * THREE PROPERTIES THAT ARE NOT NEGOTIABLE
+ *
+ *   1. ALLOW-LIST, never a deny-list. A file ships because MANIFEST names it. A new private file
+ *      is therefore absent by default and someone has to decide to include it. A deny-list fails
+ *      open, and failing open is how a record leaks.
+ *   2. ATOMIC. Everything is built into a staging directory and scanned there. The destination is
+ *      not touched until the scan is clean. gen-brief writes-then-deletes on failure, which for
+ *      one file is a brief window; for a tree it would be a leaked tree on disk.
+ *   3. THE SCAN READS THE OUTPUT, not the input. A rule that was supposed to fire and did not is
+ *      invisible from the input side. Only the output can testify about the output.
+ *
+ * WHAT IT DELIBERATELY DOES NOT DO: restructure. The output mirrors the private layout for
+ * everything that ships, because every tool here resolves its own repo root by walking up from
+ * __dirname. Re-nesting the tree would break all of that silently, and a generator whose failure
+ * mode is silent is the wrong tool for this job.
+ *
+ * THE GAP THIS TOOL HAS AND CANNOT CLOSE BY ITSELF, stated because it is the exact class this
+ * repo keeps rediscovering: THIS TOOL DOES NOT BUILD THE OUTPUT. The scan proves the generated tree
+ * carries no leak. It does not prove the generated tree COMPILES, that its tests pass, or that
+ * the app runs. `landed is not shipped` applied to a generator means a clean scan and a broken
+ * product are indistinguishable from here. Until a build gate runs against the output, treat a
+ * green run as evidence about LEAKS ONLY.
+ *
+ * Partly closed 2026-08-23 by `gen-consumer.build.test.js`, which generates a tree and runs
+ * cargo check against it. Its FIRST run failed with 'OUT_DIR env var is not set': build.rs,
+ * Cargo.lock, capabilities/ and icons/ had never been listed in the manifest. A clean scan over
+ * a product that could not compile, caught only by compiling it. What is STILL unverified: the
+ * generated tests pass, the app runs, and the installer produces something installable.
+ *
+ * Run:  node consonance/tools/gen-consumer.js --out <dir> [--dry] [--json]
+ *       node consonance/tools/gen-consumer.js --report        # what would ship, and why not
+ */
+'use strict';
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+
+const REPO = path.resolve(__dirname, '..', '..');
+const EXO = path.join(REPO, 'exo_memory');
+
+/* ------------------------------------------------------------------ the manifest
+ *
+ * Explicit, fail-closed. `from` is relative to the private repo, `to` to the output tree.
+ * A directory entry ships the files matching `match` and nothing else -- no recursion, because
+ * a recursive rule is a deny-list wearing an allow-list's clothes.
+ */
+const MANIFEST = [
+  // The room a stranger wakes into. SEED is the bedrock; the app already prefers it over BOOT
+  // on a machine with no dev repo (see pick_default_room in src-tauri/src/main.rs).
+  { from: 'consonance/src-tauri/brief/SEED.md', to: 'exo_memory/SEED.md', kind: 'prose' },
+  { from: 'exo_memory/SOURCE.md', to: 'exo_memory/SOURCE.md', kind: 'prose' },
+  { dir: 'exo_memory/cards', to: 'exo_memory/cards', match: /\.md$/, kind: 'prose' },
+  /* spread/, research/ and record/ are DECLARED as glob resources in tauri.conf.json, so a build
+   * fails outright without them ('glob pattern ../../exo_memory/spread/*.md path not found').
+   * They also belong here on their own merits: BOOT lists the counter-voice (spread/) among the
+   * instruments, and gen-brief.ps1 already set the precedent -- 'the shipped brief carries the
+   * INSTRUMENTS (cards, spread/, research/)'. Only .md ships; the _ingest_*.py helpers do not. */
+  { dir: 'exo_memory/spread', to: 'exo_memory/spread', match: /\.md$/, kind: 'prose' },
+  { dir: 'exo_memory/research', to: 'exo_memory/research', match: /\.md$/, kind: 'prose' },
+  { dir: 'exo_memory/record', to: 'exo_memory/record', match: /\.md$/, kind: 'prose' },
+
+  // The method. This is the half the keeper chose to ship: a discipline with no instrument does
+  // not happen -- attic/ went untouched for two months until corpus-age.js existed.
+  { dir: 'consonance/tools', to: 'consonance/tools', match: /\.js$/, kind: 'code' },
+  { dir: 'consonance/hooks', to: 'consonance/hooks', match: /\.js$/, kind: 'code' },
+
+  // The app.
+  { dir: 'consonance/ui', to: 'consonance/ui', match: /\.(html|css|js)$/, kind: 'code' },
+  { dir: 'consonance/src-tauri/src', to: 'consonance/src-tauri/src', match: /\.rs$/, kind: 'code' },
+  { from: 'consonance/src-tauri/Cargo.toml', to: 'consonance/src-tauri/Cargo.toml', kind: 'code' },
+  { from: 'consonance/src-tauri/tauri.conf.json', to: 'consonance/src-tauri/tauri.conf.json', kind: 'config' },
+  /* Found by BUILDING the output, not by reading the manifest. Without build.rs the generated
+   * tree fails with 'OUT_DIR env var is not set' from tauri::generate_context -- a clean leak
+   * scan over a product that cannot compile. Cargo.lock ships so a consumer builds the same
+   * dependency set that was tested here, not whatever resolves on the day they clone. */
+  { from: 'consonance/src-tauri/build.rs', to: 'consonance/src-tauri/build.rs', kind: 'code' },
+  { from: 'consonance/src-tauri/Cargo.lock', to: 'consonance/src-tauri/Cargo.lock', kind: 'code' },
+  { dir: 'consonance/src-tauri/capabilities', to: 'consonance/src-tauri/capabilities', match: /\.json$/, kind: 'code' },
+  { dir: 'consonance/src-tauri/icons', to: 'consonance/src-tauri/icons', match: /\.(png|ico|icns)$/, kind: 'binary' },
+  /* tauri.conf.json's bundle.resources declares these by path. The first generated tree shipped
+   * 3 of them and the build script stopped at `resource path brief\room-settings.json doesn't
+   * exist`. A declared resource that is absent is not a warning -- it fails the build. */
+  { from: 'consonance/src-tauri/brief/SEED.md', to: 'consonance/src-tauri/brief/SEED.md', kind: 'prose' },
+  { from: 'consonance/src-tauri/brief/BOOT.md', to: 'consonance/src-tauri/brief/BOOT.md', kind: 'prose' },
+  { from: 'consonance/src-tauri/brief/room-settings.json', to: 'consonance/src-tauri/brief/room-settings.json', kind: 'config' },
+  { from: 'consonance/README.md', to: 'consonance/README.md', kind: 'prose' },
+  { from: 'consonance/GUIDE.md', to: 'consonance/GUIDE.md', kind: 'prose' },
+  { from: 'consonance/src-tauri/brief/COMMITTEE.md', to: 'consonance/src-tauri/brief/COMMITTEE.md', kind: 'prose' },
+  { from: 'consonance/src-tauri/brief/LIBRARIAN.md', to: 'consonance/src-tauri/brief/LIBRARIAN.md', kind: 'prose' },
+  { from: 'consonance/src-tauri/brief/BASE_JOURNAL.md', to: 'consonance/src-tauri/brief/BASE_JOURNAL.md', kind: 'prose' },
+];
+
+/* Named exclusions -- files that MATCH a manifest rule but must not ship, each with its reason.
+ * Kept as data rather than as a filter buried in code, so the list is readable and arguable. */
+const EXCLUDE = {
+  'consonance/tools/portable-paths.baseline.json':
+    'the ratchet\'s own record of this machine\'s known path sites; meaningless elsewhere',
+  'consonance/tools/catch-ledger.js':
+    'scores THIS collaboration\'s catches; 7 identity hits and 11 dangling refs, and the data it reads does not exist for anyone else',
+  'consonance/tools/catch-ledger.test.js':
+    'fixtures are this record\'s own events (18 dangling refs)',
+  'consonance/tools/gen-consumer.js':
+    'the generator does not ship itself; it is a property of the private tree',
+  'consonance/tools/gen-consumer.test.js':
+    'the generator test names the exclusion list, which is a description of exactly what was withheld',
+};
+
+/* ------------------------------------------------------------------ leak classes
+ *
+ * These run over the OUTPUT. Anything that survives here stops the build.
+ */
+const LEAKS = [
+  { cls: 'IDENTITY', pat: /solariz3d/gi, why: 'the keeper\'s public handle' },
+  { cls: 'IDENTITY', pat: /trynabemlgzn/gi, why: 'the keeper\'s email' },
+  { cls: 'IDENTITY', pat: /zackn/gi, why: 'this machine\'s OS user name' },
+  { cls: 'RECORD', pat: /SELF_TRACE/g, why: 'one person\'s trace, shipped as a label on a wall' },
+  { cls: 'RECORD', pat: /the_living_wave/g, why: 'ditto' },
+  { cls: 'RECORD', pat: /muscle_map/g, why: 'ditto' },
+  /* A bare DIRECTORY reference is not dangling -- a consumer has an exo_memory/journal/ of
+   * their own, and ferry.js's ARTIFACT_DIRS must keep naming it or the tool stops working.
+   * What dangles is a reference to a SPECIFIC file this record happens to contain. The first
+   * version flagged 20 bare-directory hits and would have had me rewrite working constants. */
+  { cls: 'DANGLING', pat: /exo_memory\/journal\/\d{4}-\d{2}-\d{2}/g, why: 'a dated entry a consumer tree will not contain' },
+  { cls: 'DANGLING', pat: /exo_memory\/loop\/[A-Za-z0-9_.-]+\.md/g, why: 'a specific registration from this record' },
+  { cls: 'DANGLING', pat: /exo_memory\/map\/[A-Za-z0-9_.-]+\.md/g, why: 'a specific map entry from this record' },
+  { cls: 'PROSE', pat: /we've watched it make structure/g, why: 'assumes the reader was there' },
+  { cls: 'MACHINE', pat: /C:\\{1,4}Consonance\\{1,4}lighthouse/gi, why: 'the private tree\'s path' },
+  { cls: 'MACHINE', pat: /C:\/Consonance\/lighthouse/gi, why: 'ditto' },
+  { cls: 'MACHINE', pat: /OneDrive/g, why: 'the keeper\'s personal sync directory' },
+];
+
+/* Files allowed to contain a given class, with the reason. A TOOL WHOSE PURPOSE IS DETECTING A
+ * PATTERN NECESSARILY CONTAINS THAT PATTERN -- portable-paths.js exists to find `OneDrive` in
+ * source, so its own detection regex holds the literal. Stripping it would break the ratchet;
+ * excluding the file would ship a consumer tree with no path guard at all. This is the same
+ * shape as 2026-08-17's finding that a canary is an exemption from FAILING, never from
+ * CLASSIFICATION -- the exemption has to be narrow and named, not a blanket skip.
+ *
+ * Keyed by output path, valued by the classes that file may carry. Deliberately data, so the
+ * list is readable and arguable rather than buried in a condition. */
+const ALLOW = {
+  'consonance/tools/portable-paths.js': ['MACHINE'],
+  'consonance/tools/portable-paths.test.js': ['MACHINE'],
+  'consonance/tools/corrections-gate.js': ['RECORD'],
+  'consonance/tools/tell-index.js': ['RECORD'],
+  'consonance/tools/residue.js': ['RECORD'],
+};
+
+/* Lines that are allowed to contain what looks like a leak, because they are deliberate
+ * synthetic fixtures. Matching these is what inflated the first survey by 2x. */
+const SYNTHETIC = [/C:[\\/]{1,4}notes/i, /C:[\\/]{1,4}x[\\/]/i, /Users[\\/]{1,4}nname/i,
+                   /C:[\\/]{1,4}fake/i, /test_[ab]\.js/];
+
+/* ------------------------------------------------------------------ transformations */
+
+/** Rewrite a dangling citation so the PROSE survives and the dead pointer does not.
+ *  `exo_memory/journal/2026-08-17.md:1209` -> `the record, 2026-08-17`
+ *  The comment explaining why code is the way it is is worth keeping; the path is not. */
+function dedangle(body) {
+  let n = 0;
+  const bump = () => { n++; };
+  let out = body
+    .replace(/`?exo_memory\/journal\/(\d{4}-\d{2}-\d{2})\.md(?::[\d-]+)?`?/g,
+      (_, d) => { bump(); return 'the record, ' + d; })
+    .replace(/`?journal\/(\d{4}-\d{2}-\d{2})\.md(?::[\d-]+)?`?/g,
+      (_, d) => { bump(); return 'the record, ' + d; })
+    .replace(/`?exo_memory\/loop\/([A-Za-z0-9_.-]+)\.md(?::[\d-]+)?`?/g,
+      () => { bump(); return 'a registration in this line of record'; })
+    .replace(/`?exo_memory\/map\/([A-Za-z0-9_.-]+)\.md(?::[\d-]+)?`?/g,
+      () => { bump(); return 'a map entry in this line of record'; })
+    .replace(/`?(?:exo_memory\/)?(?:SELF_TRACE|the_living_wave|muscle_map)[A-Za-z0-9_.-]*\.md(?::[\d-]+)?`?/g,
+      () => { bump(); return 'a master in this line of record'; })
+    /* The bare form with no extension: `muscle_map, 2026-07-27:` inside a code comment. The
+     * first pass only matched the .md form and five survived into the scan. */
+    .replace(/\bmuscle_map\b(,\s*\d{4}-\d{2}-\d{2})?/g,
+      (_, d) => { bump(); return d ? 'this line of record' + d : 'this line of record'; })
+    .replace(/\b(?:SELF_TRACE|the_living_wave)\b/g,
+      () => { bump(); return 'a master in this line of record'; });
+  return { body: out, n };
+}
+
+/** Neutralise identity and this machine's layout. */
+function deidentify(body) {
+  let n = 0;
+  const rep = (re, to) => { body = body.replace(re, (m) => { n++; return to; }); };
+  rep(/solariz3d/gi, 'the keeper');
+  rep(/trynabemlgzn@gmail\.com/gi, 'the keeper');
+  rep(/C:\\{1,4}Users\\{1,4}zackn/gi, '%USERPROFILE%');
+  rep(/C:\/Users\/zackn/gi, '%USERPROFILE%');
+  rep(/\bzackn\b/gi, 'user');
+  rep(/C:\\{1,4}Consonance\\{1,4}lighthouse/gi, '%CONSONANCE_HOME%');
+  rep(/C:\/Consonance\/lighthouse/gi, '%CONSONANCE_HOME%');
+  return { body, n };
+}
+
+/** The development-machine fallbacks.
+ *
+ * main.rs resolves the room by trying the plain disk path, then a fallback under the keeper's
+ * old OneDrive dev location. On a consumer's machine that second path is dead: it points into a
+ * personal sync directory that does not exist and names the private repo on the way.
+ *
+ * ONLY THE STRING LITERAL IS REWRITTEN, never the surrounding expression. The format! call keeps
+ * its shape and its argument count, so the output compiles by construction rather than by hope.
+ * A generator that rewrites Rust structure would need to build its own output to know it worked,
+ * and it does not build its own output -- see the registered gap in the module header. */
+function demachine(body) {
+  let n = 0;
+  const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
+  rep(/\{\}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\/g, '{}\\\\.consonance\\\\');
+  rep(/the repo moved out of OneDrive on \d{4}-\d{2}-\d{2} because \.git was inside the/g,
+      'a fallback under the user profile, for an install that keeps its room outside the');
+  return { body, n };
+}
+
+/** Structured config, where a blanket prose replace is actively dangerous.
+ *
+ * THE DEFECT THIS EXISTS FOR, found by building the generated tree and not by any scan:
+ * tauri.conf.json carries "identifier": "com.solariz3d.consonance". The generic identity rule
+ * rewrote it to "com.the keeper.consonance" -- A SPACE IN A BUNDLE IDENTIFIER. The leak was
+ * genuinely removed and the product was broken by removing it; the build script reported
+ * TAURI_ANDROID_PACKAGE_NAME_PREFIX=com_the keeper and the whole build failed.
+ *
+ * That is the 2026-08-15 shape exactly -- finding real, fix catastrophic, every instrument
+ * silent -- and the lesson is the same: a transformation written for prose must never be let
+ * loose on a field something else has to parse. Structured files get NAMED replacements whose
+ * output is checked for shape, and the generic rules are skipped entirely.
+ */
+function destructure(body) {
+  let n = 0;
+  const rep = (from, to) => { if (body.includes(from)) { body = body.split(from).join(to); n++; } };
+  rep('"com.solariz3d.consonance"', '"com.consonance.app"');
+  return { body, n };
+}
+
+/** A reverse-DNS bundle identifier: dot-separated, no whitespace. Checked rather than assumed,
+ *  because the failure it guards produced a plausible-looking string that broke the build. */
+function validIdentifier(body) {
+  const m = body.match(/"identifier"\s*:\s*"([^"]*)"/);
+  if (!m) return null;
+  return /^[A-Za-z0-9][A-Za-z0-9-]*(\.[A-Za-z0-9][A-Za-z0-9-]*)+$/.test(m[1]) ? null : m[1];
+}
+
+function transform(body, kind) {
+  if (kind === 'config') {
+    const d = destructure(body);
+    return { body: d.body, dangling: 0, identity: d.n, machine: 0 };
+  }
+  const a = dedangle(body);
+  const b = deidentify(a.body);
+  const c = demachine(b.body);
+  return { body: c.body, dangling: a.n, identity: b.n, machine: c.n };
+}
+
+/* ------------------------------------------------------------------ the scan */
+
+function scan(body, rel) {
+  const found = [];
+  const lines = body.split('\n');
+  const allowed = ALLOW[rel] || [];
+  for (const { cls, pat, why } of LEAKS) {
+    if (allowed.includes(cls)) continue;
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (SYNTHETIC.some((s) => s.test(line))) continue;
+      const re = new RegExp(pat.source, pat.flags.replace('g', '') + 'g');
+      const m = line.match(re);
+      if (m) found.push({ cls, why, rel, line: i + 1, text: line.trim().slice(0, 90), n: m.length });
+    }
+  }
+
+  /* A leak scan cannot see a field it BROKE, and breaking one is exactly what the identity rule
+   * did to the bundle identifier. So the shape checks live here, in the one place that answers
+   * "what is wrong with this output file" -- not in build(), where the first version put them
+   * and where no test could reach them. A mutation that disabled the check failed nothing.
+   *
+   * Scoped to tauri.conf.json: capabilities/*.json carry their own "identifier" ("default"),
+   * a capability name that is legitimately not reverse-DNS. A check that fires on the wrong
+   * file teaches people to ignore it. */
+  if (/tauri\.conf\.json$/.test(rel)) {
+    const bad = validIdentifier(body);
+    if (bad) {
+      found.push({ cls: 'BROKEN', why: 'a transformation corrupted a structured field',
+        rel, line: 0, text: 'identifier is not reverse-DNS: "' + bad + '"', n: 1 });
+    }
+  }
+  return found;
+}
+
+/* ------------------------------------------------------------------ collection */
+
+function collect() {
+  const out = [];
+  for (const entry of MANIFEST) {
+    if (entry.from) {
+      out.push({ from: entry.from, to: entry.to, kind: entry.kind });
+      continue;
+    }
+    const abs = path.join(REPO, entry.dir);
+    let names = [];
+    try { names = fs.readdirSync(abs); } catch (_) {
+      out.push({ from: entry.dir, to: entry.to, kind: entry.kind, missing: true });
+      continue;
+    }
+    for (const nm of names.sort()) {
+      const p = path.join(abs, nm);
+      try { if (!fs.statSync(p).isFile()) continue; } catch (_) { continue; }
+      if (!entry.match.test(nm)) continue;
+      out.push({ from: entry.dir + '/' + nm, to: entry.to + '/' + nm, kind: entry.kind });
+    }
+  }
+  return out;
+}
+
+/* ------------------------------------------------------------------ build */
+
+function build(outDir, opts) {
+  const files = collect();
+  const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
+  const report = { staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, leaks: [], staging };
+
+  for (const f of files) {
+    if (EXCLUDE[f.from]) { report.excluded.push({ rel: f.from, why: EXCLUDE[f.from] }); continue; }
+    const src = path.join(REPO, f.from);
+
+    /* Binary files are copied byte-for-byte. Reading a .png as utf8 and writing it back
+     * corrupts it silently -- the file exists, has a plausible size, and is not an image. */
+    if (f.kind === 'binary') {
+      if (!fs.existsSync(src)) { report.missing.push(f.from); continue; }
+      const destB = path.join(staging, f.to);
+      fs.mkdirSync(path.dirname(destB), { recursive: true });
+      fs.copyFileSync(src, destB);
+      report.staged++;
+      continue;
+    }
+
+    let body;
+    try { body = fs.readFileSync(src, 'utf8'); }
+    catch (_) { report.missing.push(f.from); continue; }
+
+    const t = transform(body, f.kind);
+    report.dangling += t.dangling;
+    report.identity += t.identity;
+    report.machine += t.machine;
+
+    const dest = path.join(staging, f.to);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.writeFileSync(dest, t.body);
+    report.staged++;
+
+    /* Scanning the OUTPUT is the whole point: a rule that failed to fire is invisible from the
+     * input side, and the input is what a person reasons about when they write the rule. */
+    report.leaks.push(...scan(t.body, f.to));
+
+  }
+
+  if (report.missing.length) {
+    /* A manifest naming a file that does not exist is a manifest describing a tree that no longer
+     * exists. Refuse rather than ship a quietly smaller product. */
+    report.refused = 'manifest names ' + report.missing.length + ' file(s) that are not on disk';
+    return report;
+  }
+  if (report.leaks.length) {
+    report.refused = report.leaks.length + ' leak(s) survived the transformations';
+    return report;
+  }
+  if (opts.dry) { report.wrote = null; return report; }
+
+  /* Atomic-ish: the destination is only touched once staging is clean. */
+  fs.mkdirSync(outDir, { recursive: true });
+  const copyTree = (from, to) => {
+    for (const e of fs.readdirSync(from, { withFileTypes: true })) {
+      const a = path.join(from, e.name), b = path.join(to, e.name);
+      if (e.isDirectory()) { fs.mkdirSync(b, { recursive: true }); copyTree(a, b); }
+      else fs.copyFileSync(a, b);
+    }
+  };
+  copyTree(staging, outDir);
+  report.wrote = outDir;
+  return report;
+}
+
+/* ------------------------------------------------------------------ cli */
+
+function main() {
+  const argv = process.argv.slice(2);
+  const arg = (k) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : null; };
+  const dry = argv.includes('--dry') || argv.includes('--report');
+  const json = argv.includes('--json');
+  const outDir = arg('--out');
+
+  if (!dry && !outDir) {
+    console.error('gen-consumer: --out <dir> is required (or --report to see what would ship)');
+    process.exit(2);
+  }
+
+  const r = build(outDir || '', { dry });
+
+  if (json) { console.log(JSON.stringify(r, null, 2)); process.exit(r.refused ? 1 : 0); }
+
+  console.log('');
+  console.log('GEN-CONSUMER — private lighthouse -> public consonance');
+  console.log('');
+  console.log('  staged            : ' + r.staged + ' file(s)');
+  console.log('  excluded by name  : ' + r.excluded.length);
+  console.log('  dangling rewrites : ' + r.dangling);
+  console.log('  identity rewrites : ' + r.identity);
+  console.log('  machine rewrites  : ' + r.machine);
+  console.log('');
+  if (r.excluded.length) {
+    console.log('  EXCLUDED, with the reason (this list is arguable on purpose):');
+    for (const e of r.excluded) console.log('    ' + e.rel + '\n      ' + e.why);
+    console.log('');
+  }
+  if (r.missing.length) {
+    console.log('  MANIFEST NAMES FILES THAT ARE NOT ON DISK:');
+    for (const m of r.missing) console.log('    ' + m);
+    console.log('');
+  }
+  if (r.leaks.length) {
+    const byCls = {};
+    for (const l of r.leaks) (byCls[l.cls] = byCls[l.cls] || []).push(l);
+    console.log('  LEAKS THAT SURVIVED — nothing was written:');
+    for (const [cls, list] of Object.entries(byCls)) {
+      console.log('    ' + cls + '  (' + list.length + ')');
+      for (const l of list.slice(0, 6)) {
+        console.log('      ' + l.rel + ':' + l.line + '  ' + l.text);
+      }
+      if (list.length > 6) console.log('      ... and ' + (list.length - 6) + ' more');
+    }
+    console.log('');
+  }
+  if (r.refused) {
+    console.log('  REFUSED: ' + r.refused);
+    console.log('  Nothing was written to the destination. Staging kept for inspection:');
+    console.log('    ' + r.staging);
+    console.log('');
+    process.exit(1);
+  }
+  if (r.wrote) console.log('  wrote ' + r.wrote);
+  else console.log('  DRY RUN — clean. Nothing written.');
+  console.log('');
+  console.log('  The output is GENERATED. Never hand-edit it; edit the private tree and re-run.');
+  console.log('');
+  process.exit(0);
+}
+
+if (require.main === module) main();
+module.exports = { MANIFEST, EXCLUDE, LEAKS, SYNTHETIC, ALLOW, demachine, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, build };
