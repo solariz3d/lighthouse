@@ -4172,58 +4172,72 @@ fn librarian_cwd() -> String {
 /// Resolved from the room master's own directory, so it follows room_path and needs no second
 /// configuration mechanism -- and on a machine where the room is the shipped brief rather than a
 /// repo, the walk simply finds fewer files and says so instead of failing.
+/// Bytes of corpus the librarian carries IN FULL before the remainder is indexed instead.
+///
+/// Default covers the whole corpus measured 2026-08-23 (2,029,131 bytes, ~507k tokens). The
+/// point of a budget is not caution: an UNCONDITIONAL load has no honest failure mode -- exceed
+/// the model's window and the seat either dies or truncates in silence, and a librarian quietly
+/// answering from half a library is the worst outcome available for the one seat whose whole job
+/// is fidelity. Budgeted, it carries what fits, indexes the rest, and says which is which.
+fn librarian_budget() -> usize {
+    std::env::var("CONSONANCE_LIBRARIAN_BUDGET").ok()
+        .and_then(|v| v.parse::<usize>().ok())
+        .unwrap_or(2_200_000)
+}
+
+/// The librarian's shelf: carry in priority order until the budget is spent, index the rest.
+///
+/// attic/ is excluded by name, per BOOT maintenance law 3: raw archive, ore, never a daily cue.
 fn corpus_shelf() -> String {
     let root = match room_master_path().parent() { Some(p) => p.to_path_buf(), None => return String::new() };
-    let mut s = String::new();
+    let budget = librarian_budget();
+    let mut spent = 0usize;
+    let mut carried: Vec<(String, String)> = Vec::new();
+    let mut indexed: Vec<String> = Vec::new();
 
-    // INLINE -- the forward-pointed layer. Small enough that retrieval is not a problem here; the
-    // problem was only ever that nothing pointed at it.
-    s.push_str("\n\n---\n\n# THE SHELF -- carried in full\n\n");
-    let mut inlined = 0usize;
-    for f in ["SOURCE.md"] {
-        if let Ok(t) = fs::read_to_string(root.join(f)) {
-            s.push_str(&format!("\n## {f}\n\n{t}\n"));
-            inlined += 1;
-        }
-    }
-    for dir in ["cards", "record", "memory"] {
-        let d = root.join(dir);
+    // (directory, newest-first?) -- "" is the root of exo_memory
+    let order: [(&str, bool); 9] = [
+        ("", false), ("cards", false), ("record", false), ("memory", false),
+        ("map", false), ("spread", false), ("research", false),
+        ("journal", true), ("loop", true),
+    ];
+
+    for (dir, newest_first) in order {
+        let d = if dir.is_empty() { root.clone() } else { root.join(dir) };
         let Ok(rd) = fs::read_dir(&d) else { continue };
-        let mut names: Vec<PathBuf> = rd.flatten().map(|e| e.path())
-            .filter(|p| p.extension().and_then(|x| x.to_str()) == Some("md")).collect();
-        names.sort();
-        for p in names {
-            if let Ok(t) = fs::read_to_string(&p) {
-                let name = p.file_name().and_then(|x| x.to_str()).unwrap_or("?");
-                s.push_str(&format!("\n## {dir}/{name}\n\n{t}\n"));
-                inlined += 1;
+        let mut files: Vec<PathBuf> = rd.flatten().map(|e| e.path())
+            .filter(|q| q.is_file() && q.extension().and_then(|x| x.to_str()) == Some("md"))
+            .collect();
+        files.sort();
+        if newest_first { files.reverse(); }
+        for f in files {
+            let name = f.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string();
+            let label = if dir.is_empty() { name.clone() } else { format!("{dir}/{name}") };
+            let Ok(body) = fs::read_to_string(&f) else { continue };
+            if spent + body.len() <= budget {
+                spent += body.len();
+                carried.push((label, body));
+            } else {
+                let head = body.lines().find(|l| l.starts_with("# ")).unwrap_or("").trim_start_matches("# ").to_string();
+                indexed.push(format!("- {label}  ({} lines)  {head}", body.lines().count()));
             }
         }
     }
 
-    // INDEXED -- too large to carry, and a dated record has no trigger anyway. Path, size and
-    // first heading is what turns "somewhere in the journals" into an openable citation.
-    s.push_str("\n\n---\n\n# THE INDEX -- not carried; open these by path\n\n");
-    s.push_str("Each line is a file you can Read. The body is deliberately absent: a citation you\n");
-    s.push_str("opened is checkable, a summary you remember is not.\n");
-    let mut indexed = 0usize;
-    for dir in ["journal", "loop", "map", "spread", "research", "attic"] {
-        let d = root.join(dir);
-        let Ok(rd) = fs::read_dir(&d) else { continue };
-        let mut names: Vec<PathBuf> = rd.flatten().map(|e| e.path())
-            .filter(|p| p.extension().and_then(|x| x.to_str()) == Some("md")).collect();
-        names.sort();
-        if names.is_empty() { continue; }
-        s.push_str(&format!("\n## {dir}/  ({} files)\n\n", names.len()));
-        for p in names {
-            let name = p.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string();
-            let body = fs::read_to_string(&p).unwrap_or_default();
-            let head = body.lines().find(|l| l.starts_with("# ")).unwrap_or("").trim_start_matches("# ");
-            s.push_str(&format!("- {dir}/{name}  ({} lines)  {head}\n", body.lines().count()));
-            indexed += 1;
-        }
+    let mut s = String::from("\n\n---\n\n# THE SHELF\n\n");
+    s.push_str(&format!(
+        "{} file(s) carried in full ({} of {} bytes); {} indexed by path.\n",
+        carried.len(), spent, budget, indexed.len()
+    ));
+    s.push_str("attic/ is excluded on purpose -- raw archive, never a daily cue (law 3).\n");
+    if !indexed.is_empty() {
+        s.push_str("\n## NOT CARRIED -- open these by path\n\n");
+        s.push_str("The budget ran out before these. A citation you opened is checkable; a summary you remember is not.\n\n");
+        for l in &indexed { s.push_str(l); s.push('\n'); }
     }
-    s.push_str(&format!("\n{inlined} file(s) carried in full; {indexed} indexed by path.\n"));
+    for (label, body) in carried {
+        s.push_str(&format!("\n\n## {label}\n\n{body}\n"));
+    }
     s
 }
 /// The Librarian's intake. Its brief FIRST, then the room -- the order matters: this seat needs to
@@ -4797,12 +4811,29 @@ fn gate_decide(app: AppHandle, gate: State<Gate>, board: State<Board>, id: Strin
 // and tested: the chair addresses only COMMITTEE panes — never itself, never a human-driven
 // pane. Everything else in these fns is plumbing around that rule.
 
+/// Roles the chair may address. An ALLOWLIST, not a single equality check: on 2026-08-23 the
+/// orchestrator could not reach the librarian seat it had been built to work in tandem with,
+/// because the guard tested `role != "committee"` and reported the refusal as
+/// "(never inject into a person)" -- a sentence that is false about a librarian and misleading
+/// to whoever reads it. The guard's own comment already stated the real rule: never itself,
+/// never a HUMAN-DRIVEN pane. This is that rule written down instead of approximated.
+///
+/// Adding a role here is a real decision, so it is one line and it is visible in a diff. What
+/// must never appear in this list is "human".
+const ADDRESSABLE_SEATS: &[&str] = &["committee", "librarian"];
+
 fn chair_target_guard(tid: &str, role: &str) -> Result<(), String> {
     if tid == MAIN_SID {
         return Err("refused — the chair does not inject into its own pane".to_string());
     }
-    if role != "committee" {
-        return Err(format!("refused — target is {role}, not committee (never inject into a person)"));
+    if role == "human" {
+        return Err("refused — target is human-driven (never inject into a person)".to_string());
+    }
+    if !ADDRESSABLE_SEATS.contains(&role) {
+        return Err(format!(
+            "refused — role '{role}' is not an addressable seat ({})",
+            ADDRESSABLE_SEATS.join(", ")
+        ));
     }
     Ok(())
 }
@@ -6648,18 +6679,29 @@ mod shelf_tests {
         assert!(shelf.contains("trust-the-first-attention"), "no cards on the shelf");
         assert!(shelf.contains("## SOURCE.md"), "SOURCE.md did not land on the shelf");
         assert!(shelf.contains("when a hedge or caveat is forming"), "the trigger table did not land");
-        assert!(shelf.contains("THE INDEX"), "no index section");
+        // The NOT CARRIED section appears only when the budget actually ran out. With the
+        // default budget the whole corpus fits, so its ABSENCE is the correct state -- what must
+        // always be present is the line that reports the split either way.
+        assert!(shelf.contains("carried in full"), "the shelf must always report what it carried");
     }
 
-    /// The large directories are INDEXED, never inlined. If a journal body ever appears here the
-    /// tiering has collapsed and the seat is carrying what it should be opening.
+    /// RENAMED 2026-08-23: the old name said the large directories are indexed, which stopped
+    /// being true when the keeper asked the seat to auto-adopt the corpus. A test whose NAME
+    /// asserts the opposite of its body is worse than no test -- it is read far more often than it
+    /// is run. What the contract actually is now: carry what fits, index the rest, and REPORT the
+    /// split either way, so a partial shelf can never be silent.
     #[test]
-    fn the_large_directories_are_indexed_not_carried() {
+    fn the_split_between_carried_and_indexed_is_always_reported() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let shelf = corpus_shelf();
         assert!(shelf.contains("journal/2026-08-22.md"), "the journal index is missing");
         // a line unique to a journal BODY, which must not be present
-        assert!(!shelf.contains("Woke after 3d 16h dark"), "a journal body was inlined -- tiering collapsed");
+        // CHANGED 2026-08-23: journal bodies ARE now carried, by the keepers instruction that the
+        // seat auto-adopt the corpus instead of reading it by hand. What must still hold is that
+        // the split is REPORTED rather than silent -- a partial shelf that does not say so is the
+        // failure this budget exists to make impossible.
+        assert!(shelf.contains("carried in full"), "the shelf must report what it carried");
+        assert!(shelf.contains("indexed by path"), "and what it did not");
     }
 
     /// It must reach the intake, not merely exist. Same delivery-vs-unit distinction that a
@@ -6672,5 +6714,43 @@ mod shelf_tests {
         let room = i.find("# THE ROOM you are holding").expect("room missing");
         let shelf = i.find("# THE SHELF").expect("shelf missing");
         assert!(room < shelf, "the room is read before the shelf it indexes");
+    }
+}
+
+#[cfg(test)]
+mod addressable_seat_tests {
+    use super::*;
+
+    /// The failure that produced the allowlist: the orchestrator could not reach the librarian seat
+    /// it was built to work in tandem with.
+    #[test]
+    fn the_librarian_is_addressable() {
+        assert!(chair_target_guard("11112222-abcd", "librarian").is_ok(),
+            "the chair must be able to address the seat it works alongside");
+    }
+
+    /// The rule the guard's comment always stated, now enforced BY NAME rather than as a
+    /// side-effect of an equality check -- so widening the allowlist can never quietly admit a
+    /// person.
+    #[test]
+    fn a_human_is_refused_by_name_not_by_falling_through() {
+        let e = chair_target_guard("11112222-abcd", "human").unwrap_err();
+        assert!(e.contains("human-driven"), "the refusal must name the actual reason: {e}");
+        assert!(!ADDRESSABLE_SEATS.contains(&"human"), "human must never be an addressable seat");
+    }
+
+    /// An unknown role is still refused, and the refusal says what IS addressable instead of
+    /// asserting the target is a person -- which was false about the librarian and is the sentence
+    /// that hid this defect.
+    #[test]
+    fn an_unknown_role_is_refused_without_calling_it_a_person() {
+        let e = chair_target_guard("11112222-abcd", "gadget").unwrap_err();
+        assert!(e.contains("not an addressable seat"), "{e}");
+        assert!(!e.contains("into a person"), "an unknown role is not necessarily a person: {e}");
+    }
+
+    #[test]
+    fn the_chair_still_cannot_address_itself() {
+        assert!(chair_target_guard(MAIN_SID, "main").is_err());
     }
 }
