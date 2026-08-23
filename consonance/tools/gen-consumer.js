@@ -117,6 +117,7 @@ const MANIFEST = [
   { from: 'consonance/README.md', to: 'consonance/README.md', kind: 'prose' },
   { from: 'consonance/GUIDE.md', to: 'consonance/GUIDE.md', kind: 'prose' },
   { from: 'consonance/src-tauri/brief/COMMITTEE.md', to: 'consonance/src-tauri/brief/COMMITTEE.md', kind: 'prose' },
+  { from: 'consonance/src-tauri/brief/BUILDING.md', to: 'consonance/src-tauri/brief/BUILDING.md', kind: 'prose' },
   { from: 'consonance/src-tauri/brief/LIBRARIAN.md', to: 'consonance/src-tauri/brief/LIBRARIAN.md', kind: 'prose' },
   { from: 'consonance/src-tauri/brief/BASE_JOURNAL.md', to: 'consonance/src-tauri/brief/BASE_JOURNAL.md', kind: 'prose' },
 ];
