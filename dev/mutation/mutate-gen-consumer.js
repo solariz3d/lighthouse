@@ -60,6 +60,22 @@ const MUTANTS = [
   { name: 'a LEAK pattern is broadened until it collides with a synthetic fixture',
     from: "  { cls: 'MACHINE', pat: /OneDrive/g, why: 'the keeper\\'s personal sync directory' },",
     to:   "  { cls: 'MACHINE', pat: /C:[\\\\/]/g, why: 'broadened' },\n  { cls: 'MACHINE', pat: /OneDrive/g, why: 'the keeper\\'s personal sync directory' }," },
+
+  { name: 'fixtures lose their exemption — DANGLING/MACHINE rewrite test data again',
+    from: "  if (kind === 'fixture') {",
+    to:   "  if (false) {" },
+
+  { name: 'fixtures get the full deidentify, restructuring paths a test keys on',
+    from: '    const b = deidentifyTokens(body);',
+    to:   '    const b = deidentify(body);' },
+
+  { name: 'the coordinate substitution is removed (latitude ships)',
+    from: "  rep(/50\\.4452/g, '12.3456');",
+    to:   '' },
+
+  { name: 'unportable fixtures stop being reported (silent again)',
+    from: '      if (refs.length) report.unportable.push(',
+    to:   '      if (false) report.unportable.push(' },
 ];
 
 const raw = fs.readFileSync(GC, 'utf8');

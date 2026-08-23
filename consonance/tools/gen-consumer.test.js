@@ -210,3 +210,72 @@ test('scan() does not flag a capability identifier, which is legitimately not re
   assert.deepStrictEqual(G.scan(cap, 'consonance/src-tauri/capabilities/default.json'), [],
     'a capability name was flagged — a check that fires on the wrong file teaches people to ignore it');
 });
+
+/* ---------------------------------------------------------------- fixtures
+ *
+ * The librarian found the generator rewriting TEST FIXTURES: 11 of 26 changed files were tests,
+ * 3 lost referents their assertions key on, and main.rs shipped
+ * `assert!(shelf.contains("the record, 2026-08-22"))` -- an assertion that can never pass. Three
+ * suites went GREEN on rewritten fixtures, which is worse than red: it says nothing, convincingly.
+ *
+ * `cargo check` could not see any of it. Even --all-targets only TYPE-CHECKS; it never runs an
+ * assertion, so "cargo check against the generated tree exits 0" was true and nearly meaningless.
+ */
+
+test('a test file is classified as a fixture', () => {
+  for (const f of ['consonance/tools/x.test.js', 'consonance/src-tauri/src/main.rs',
+                   'consonance/src-tauri/tests/arch.rs']) {
+    assert.ok(G.isFixture(f), f + ' must be treated as a fixture');
+  }
+  assert.ok(!G.isFixture('consonance/tools/ferry.js'), 'a plain tool is not a fixture');
+});
+
+test('a fixture keeps its dangling reference — the assertion keys on it', () => {
+  const src = "const file = path.join(map, 'muscle_map.md');\n";
+  const out = G.transform(src, 'fixture').body;
+  assert.strictEqual(out, src, 'a fixture was rewritten; the assertion no longer keys on what it tested');
+});
+
+test('a fixture keeps its path SHAPE — token identity only', () => {
+  // portable-paths.test.js asserts its detector ignores a comment holding a real machine path.
+  // Rewrite the input to %USERPROFILE% and the assertion still passes while testing something else.
+  const src = "assert.deepStrictEqual(G.scan('  * C:\\Users\\zackn\\Desktop\\lighthouse'), []);\n";
+  const out = G.transform(src, 'fixture').body;
+  assert.match(out, /C:\\Users\\user\\Desktop/, 'the path shape was not preserved');
+  assert.doesNotMatch(out, /zackn/, 'the OS user name survived');
+  assert.doesNotMatch(out, /%USERPROFILE%/, 'the path was restructured — that changes what the test tests');
+});
+
+test('the Rust test assertion the generator once broke is left alone', () => {
+  const src = '        assert!(shelf.contains("journal/2026-08-22.md"), "the journal index is missing");\n';
+  const out = G.transform(src, 'fixture').body;
+  assert.strictEqual(out, src, 'the generator rewrote a Rust assertion into one that cannot pass');
+});
+
+test('coordinates are SUBSTITUTED, not exempted — shape preserved, value gone', () => {
+  // A float stays a float so `assert_eq!(cfg.ambient_lat, "...")` keeps exercising the same path.
+  const src = '"ambient_lat": 50.4452,\nassert_eq!(cfg.ambient_lat, "50.4452");\n';
+  const out = G.transform(src, 'fixture').body;
+  assert.doesNotMatch(out, /50\.4452/, "the keeper's latitude survived into a fixture");
+  assert.match(out, /"ambient_lat": 12\.3456,/, 'the value was not substituted shape-preservingly');
+  // consistency within the file, or the assertion breaks
+  const m = out.match(/12\.3456/g) || [];
+  assert.strictEqual(m.length, 2, 'the substitution was inconsistent within one file');
+});
+
+test('a fixture is exempt from REFERENCE classes and never from CONTENT classes', () => {
+  const rel = 'consonance/tools/x.test.js';
+  assert.deepStrictEqual(G.scan("path.join(d, 'muscle_map.md')\n", rel), [],
+    'a fixture was refused for a RECORD reference — that is a filename, not content');
+  const ident = G.scan('const who = "solariz3d";\n', rel);
+  assert.ok(ident.some((h) => h.cls === 'IDENTITY'),
+    'a fixture was exempted from IDENTITY — a handle in a fixture is still a handle');
+});
+
+test('unportable fixtures are REPORTED, and the report is not empty', () => {
+  const r = G.build('', { dry: true });
+  assert.ok(r.unportable.length > 0,
+    'no unportable fixtures reported — 11 of 43 suites do not run in a consumer tree and this is how they say so');
+  for (const u of r.unportable) assert.ok(u.refs.length > 0, u.rel + ' listed with no references');
+  try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {}
+});

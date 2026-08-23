@@ -144,6 +144,14 @@ const LEAKS = [
   { cls: 'IDENTITY', pat: /solariz3d/gi, why: 'the keeper\'s public handle' },
   { cls: 'IDENTITY', pat: /trynabemlgzn/gi, why: 'the keeper\'s email' },
   { cls: 'IDENTITY', pat: /zackn/gi, why: 'this machine\'s OS user name' },
+  { cls: 'IDENTITY', pat: /\bnname\b/g, why: 'the desktop machine\'s OS user name' },
+  { cls: 'RECORD', pat: /\bChrysos\b/g, why: "a name from this record; to a stranger it reads as the product's name" },
+  /* The keeper's coordinates and city. 2026-08-22 measured this class at 16 files and found 5
+   * real after false positives -- the survey matched audio fixture frequencies. Anchored on the
+   * exact latitude rather than a loose decimal, for that reason. */
+  { cls: 'IDENTITY', pat: /50\.4452/g, why: 'the keeper\'s latitude' },
+  { cls: 'IDENTITY', pat: /-?104\.6189/g, why: 'the keeper\'s longitude' },
+  { cls: 'IDENTITY', pat: /Regina,\s*Saskatchewan/g, why: 'the keeper\'s city' },
   { cls: 'RECORD', pat: /SELF_TRACE/g, why: 'one person\'s trace, shipped as a label on a wall' },
   { cls: 'RECORD', pat: /the_living_wave/g, why: 'ditto' },
   { cls: 'RECORD', pat: /muscle_map/g, why: 'ditto' },
@@ -205,6 +213,10 @@ function dedangle(body) {
      * first pass only matched the .md form and five survived into the scan. */
     .replace(/\bmuscle_map\b(,\s*\d{4}-\d{2}-\d{2})?/g,
       (_, d) => { bump(); return d ? 'this line of record' + d : 'this line of record'; })
+    /* A name from this record reads, to a stranger, as the product's name. Rendered as the
+     * template it actually is, so the sentence keeps teaching the clause without handing over
+     * someone else's name: "You are <a name>" fails clause 1. */
+    .replace(/\bChrysos\b/g, () => { bump(); return '<a name>'; })
     .replace(/\b(?:SELF_TRACE|the_living_wave)\b/g,
       () => { bump(); return 'a master in this line of record'; });
   return { body: out, n };
@@ -219,6 +231,7 @@ function deidentify(body) {
   rep(/C:\\{1,4}Users\\{1,4}zackn/gi, '%USERPROFILE%');
   rep(/C:\/Users\/zackn/gi, '%USERPROFILE%');
   rep(/\bzackn\b/gi, 'user');
+  rep(/\bnname\b/g, 'other');
   rep(/C:\\{1,4}Consonance\\{1,4}lighthouse/gi, '%CONSONANCE_HOME%');
   rep(/C:\/Consonance\/lighthouse/gi, '%CONSONANCE_HOME%');
   return { body, n };
@@ -271,15 +284,61 @@ function validIdentifier(body) {
   return /^[A-Za-z0-9][A-Za-z0-9-]*(\.[A-Za-z0-9][A-Za-z0-9-]*)+$/.test(m[1]) ? null : m[1];
 }
 
+/** Is this file's content DATA that an assertion keys on, rather than prose a reader reads?
+ *
+ * Test files and the Rust #[cfg(test)] block are fixtures. Rewriting a fixture either breaks the
+ * assertion or -- worse -- leaves it green over data that no longer means what it meant. Three
+ * shipped suites went green on rewritten fixtures before this existed. */
+function isFixture(rel) {
+  return /\.test\.js$/.test(rel) || /(^|\/)tests?\//.test(rel) || /\.rs$/.test(rel);
+}
+
+/** Name tokens only. Leaves every path shape exactly as written, so a fixture keeps exercising
+ *  the branch it was written for. Used for fixtures; prose gets the fuller `deidentify`. */
+function deidentifyTokens(body) {
+  let n = 0;
+  const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
+  rep(/solariz3d/gi, 'the keeper');
+  rep(/trynabemlgzn@gmail\.com/gi, 'the keeper');
+  rep(/\bzackn\b/gi, 'user');
+  /* nname is the desktop machine's OS user and appears in 9 shipped files as a foreign-path
+   * fixture. Same treatment: the token goes, the path shape stays. */
+  rep(/\bnname\b/g, 'other');
+  return { body, n };
+}
+
+/** Shape-preserving value substitution for the keeper's coordinates. Runs on prose AND fixtures,
+ *  because it changes only the value: a float stays a float, a string stays a string, and every
+ *  assertion that keyed on the old value keys on the new one consistently within its file. */
+function decoordinate(body) {
+  let n = 0;
+  const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
+  rep(/50\.4452/g, '12.3456');
+  rep(/-104\.6189/g, '-65.4321');
+  rep(/104\.6189/g, '65.4321');
+  rep(/Regina,\s*Saskatchewan/g, 'Example City');
+  rep(/America\/Regina/g, 'America/New_York');
+  return { body, n };
+}
+
 function transform(body, kind) {
   if (kind === 'config') {
     const d = destructure(body);
     return { body: d.body, dangling: 0, identity: d.n, machine: 0 };
   }
+  if (kind === 'fixture') {
+    /* TOKEN-level identity only: remove the name, never restructure the path. A handle in a
+     * fixture is still a leak; the SHAPE of a fixture is the test. Coordinates are substituted
+     * rather than exempted, because swapping a float for a float changes nothing structural. */
+    const b = deidentifyTokens(body);
+    const c = decoordinate(b.body);
+    return { body: c.body, dangling: 0, identity: b.n + c.n, machine: 0, fixture: true };
+  }
   const a = dedangle(body);
   const b = deidentify(a.body);
   const c = demachine(b.body);
-  return { body: c.body, dangling: a.n, identity: b.n, machine: c.n };
+  const d = decoordinate(c.body);
+  return { body: d.body, dangling: a.n, identity: b.n + d.n, machine: c.n };
 }
 
 /* ------------------------------------------------------------------ the scan */
@@ -287,7 +346,20 @@ function transform(body, kind) {
 function scan(body, rel) {
   const found = [];
   const lines = body.split('\n');
-  const allowed = ALLOW[rel] || [];
+  /* A fixture legitimately contains the paths it tests. Exempt from those two classes -- never
+   * from IDENTITY, RECORD, PROSE or BROKEN, because a canary is an exemption from failing and
+   * never from classification (2026-08-17). */
+  /* Three REFERENCE classes are exempt in a fixture; three CONTENT classes never are.
+   *
+   * DANGLING, MACHINE and RECORD all name a FILE a consumer does not have. In prose that is a
+   * dead pointer worth rewriting; in a fixture it is the data the assertion keys on --
+   * corrections-gate literally tests that it guards muscle_map.md -- and a filename discloses
+   * nothing about anyone. So they are REPORTED as unportable rather than refused.
+   *
+   * IDENTITY, PROSE and BROKEN still fire everywhere. A handle in a fixture is a handle; a
+   * corrupted structured field in a fixture is still corrupt. A canary is an exemption from
+   * FAILING, never from CLASSIFICATION (2026-08-17). */
+  const allowed = (ALLOW[rel] || []).concat(isFixture(rel) ? ['DANGLING', 'MACHINE', 'RECORD'] : []);
   for (const { cls, pat, why } of LEAKS) {
     if (allowed.includes(cls)) continue;
     for (let i = 0; i < lines.length; i++) {
@@ -347,7 +419,7 @@ function collect() {
 function build(outDir, opts) {
   const files = collect();
   const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
-  const report = { staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, leaks: [], staging };
+  const report = { staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], staging };
 
   for (const f of files) {
     if (EXCLUDE[f.from]) { report.excluded.push({ rel: f.from, why: EXCLUDE[f.from] }); continue; }
@@ -368,7 +440,11 @@ function build(outDir, opts) {
     try { body = fs.readFileSync(src, 'utf8'); }
     catch (_) { report.missing.push(f.from); continue; }
 
-    const t = transform(body, f.kind);
+    /* The path decides, not the manifest entry: a directory rule cannot know which of its files
+     * are tests, and getting this wrong silently corrupts data an assertion depends on. */
+    const kind = isFixture(f.to) ? 'fixture' : f.kind;
+    const t = transform(body, kind);
+    if (t.fixture) report.fixtures++;
     report.dangling += t.dangling;
     report.identity += t.identity;
     report.machine += t.machine;
@@ -381,6 +457,14 @@ function build(outDir, opts) {
     /* Scanning the OUTPUT is the whole point: a rule that failed to fire is invisible from the
      * input side, and the input is what a person reasons about when they write the rule. */
     report.leaks.push(...scan(t.body, f.to));
+
+    /* An unportable fixture is a real problem for a consumer and belongs in a list a person
+     * reads. It is NOT a reason to edit the fixture: that trades an honest failure for a green
+     * one. 11 of 43 shipped suites do not run in a consumer tree and this is how they say so. */
+    if (kind === 'fixture') {
+      const refs = (t.body.match(/exo_memory\/(?:journal|loop|map)\/[A-Za-z0-9_.-]+|muscle_map[A-Za-z0-9_.-]*|SELF_TRACE[A-Za-z0-9_.-]*|the_living_wave[A-Za-z0-9_.-]*/g) || []);
+      if (refs.length) report.unportable.push({ rel: f.to, refs: [...new Set(refs)].slice(0, 4), n: refs.length });
+    }
 
   }
 
@@ -436,6 +520,8 @@ function main() {
   console.log('  dangling rewrites : ' + r.dangling);
   console.log('  identity rewrites : ' + r.identity);
   console.log('  machine rewrites  : ' + r.machine);
+  console.log('  fixtures (identity-only, never rewritten) : ' + r.fixtures);
+  console.log('  fixtures with UNPORTABLE references       : ' + r.unportable.length);
   console.log('');
   if (r.excluded.length) {
     console.log('  EXCLUDED, with the reason (this list is arguable on purpose):');
@@ -467,6 +553,12 @@ function main() {
     console.log('');
     process.exit(1);
   }
+  if (r.unportable.length) {
+    console.log('  UNPORTABLE FIXTURES — these suites reference files a consumer tree does not have.');
+    console.log('  Reported, never rewritten: editing a fixture trades an honest failure for a green one.');
+    for (const u of r.unportable) console.log('    ' + u.rel + '  (' + u.n + ')  ' + u.refs.join(' '));
+    console.log('');
+  }
   if (r.wrote) console.log('  wrote ' + r.wrote);
   else console.log('  DRY RUN — clean. Nothing written.');
   console.log('');
@@ -476,4 +568,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { MANIFEST, EXCLUDE, LEAKS, SYNTHETIC, ALLOW, demachine, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, build };
+module.exports = { MANIFEST, EXCLUDE, LEAKS, SYNTHETIC, ALLOW, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, build };

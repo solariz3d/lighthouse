@@ -3,13 +3,13 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 74,
+    "BENIGN-TEST": 76,
     "REVIEW": 18,
     "DISGUISED": 17,
     "BENIGN-MESSAGE": 5,
-    "FATAL-USER": 6,
-    "FATAL-TEST-READ": 1,
-    "BENIGN-FIXTURE": 2
+    "FATAL-USER": 7,
+    "BENIGN-FIXTURE": 7,
+    "FATAL-TEST-READ": 1
   },
   "sites": [
     {
@@ -592,6 +592,62 @@
       "verdict": "FATAL-DEFAULT",
       "text": "return process.env.FERRY_REPO || 'C:\\\\Consonance\\\\lighthouse';",
       "key": "consonance/tools/ferry.js\u0000return process.env.FERRY_REPO || 'C:\\\\Consonance\\\\lighthouse';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "{ cls: 'MACHINE', pat: /C:\\/Consonance\\/lighthouse/gi, why: 'ditto' },",
+      "key": "consonance/tools/gen-consumer.js\u0000{ cls: 'MACHINE', pat: /C:\\/Consonance\\/lighthouse/gi, why: 'ditto' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "{ cls: 'MACHINE', pat: /C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi, why: 'the private tree\\'s path' },",
+      "key": "consonance/tools/gen-consumer.js\u0000{ cls: 'MACHINE', pat: /C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi, why: 'the private tree\\'s path' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "rep(/C:\\/Consonance\\/lighthouse/gi, '%CONSONANCE_HOME%');",
+      "key": "consonance/tools/gen-consumer.js\u0000rep(/C:\\/Consonance\\/lighthouse/gi, '%CONSONANCE_HOME%');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-USER",
+      "text": "rep(/C:\\/Users\\/zackn/gi, '%USERPROFILE%');",
+      "key": "consonance/tools/gen-consumer.js\u0000rep(/C:\\/Users\\/zackn/gi, '%USERPROFILE%');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "rep(/C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi, '%CONSONANCE_HOME%');",
+      "key": "consonance/tools/gen-consumer.js\u0000rep(/C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi, '%CONSONANCE_HOME%');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-FIXTURE",
+      "text": "rep(/C:\\\\{1,4}Users\\\\{1,4}zackn/gi, '%USERPROFILE%');",
+      "key": "consonance/tools/gen-consumer.js\u0000rep(/C:\\\\{1,4}Users\\\\{1,4}zackn/gi, '%USERPROFILE%');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const fixtures = ['C:/notes/note.md', 'C:/x/test_a.js', 'C:/Users/nname/Desktop/x.md'];",
+      "key": "consonance/tools/gen-consumer.test.js\u0000const fixtures = ['C:/notes/note.md', 'C:/x/test_a.js', 'C:/Users/nname/Desktop/x.md'];\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const hits = G.scan(\"const p = 'C:/Users/nname/Desktop/x.md';\\n\", 'consonance/tools/whatever.js');",
+      "key": "consonance/tools/gen-consumer.test.js\u0000const hits = G.scan(\"const p = 'C:/Users/nname/Desktop/x.md';\\n\", 'consonance/tools/whatever.js');\u0000#1"
     },
     {
       "file": "consonance/tools/guard-census.js",
