@@ -125,3 +125,42 @@ name in advance what would mark it as degenerating:
   second orchestrator after all and should be described as one.
 - **If a season passes in which these documents grow and no instrument returns an unwanted number**,
   the whole room is degenerating — that is BOOT's own falsifier and it governs this file too.
+
+---
+
+## THE JOINT STEP — the guess before the map (added 2026-08-23, the keeper's refinement)
+
+*Drafted by the Librarian and appended verbatim by the chair. Rewriting it here would be the
+copy-of-a-copy this document warns about two sections up.*
+
+Step 2 as drawn above has the Librarian measuring alone. It should not. The step has two halves,
+in this order, and the difference between them is the only number this loop produces.
+
+1. **The Orchestrator states its guess first, in writing**: given this inquiry, which parts of the
+   system it thinks apply — cards, instruments, prior registrations, journal entries. Three lines.
+   This is the Orchestrator's prior, and it is recorded BEFORE the Librarian answers so it cannot
+   be revised to match.
+2. **The inquiry goes to the Librarian verbatim** — the user's words, never the Orchestrator's
+   paraphrase. A summary at the mouth of the pipe is the copy-of-a-copy law 1 forbids, and on
+   2026-08-23 a merge of two readers' answers was reported as "two independent reads".
+3. **The Librarian returns a MAP, not content.** Every item is a path and a line and one clause:
+   - what in the corpus bears on this, ordered by the inquiry, 3–7 paths
+   - live registrations and falsifiers that touch it — the windows still open
+   - prior attempts at the same thing and how they ended (the lifecycle, not the filename)
+   - what to load or run before planning
+   - **what is ABSENT** — the question has no answer on disk. That is a finding, said plainly.
+4. **The plan is written against the map.** Map before plan: a map read after a plan exists becomes
+   support for the plan — the label becomes the premise.
+5. **Every lap leaves a row** — who initiated it, the guess, the map, and which paths were then
+   opened. The falsifiers in this document read from that row and from nothing else.
+
+**The number.** Per lap: the Orchestrator's guessed paths ∩ the Librarian's map. Where they agree,
+retrieval was not needed. Where the map names what the guess did not, the corpus reached the work.
+If the two are always equal, the Librarian is redundant and should be shut off. If they never
+overlap, the Orchestrator is not holding context. **Either extreme is a finding, and neither seat
+can produce the number alone.**
+
+**This is a question, not a reminder.** The room has measured the difference: a reminder that fires
+regardless is ignored; a reminder that carries a question and waits for its answer is acted on
+60 of 60 times. Anyone who turns this step into a hook line that says *"consult the librarian"* has
+rebuilt the first kind.

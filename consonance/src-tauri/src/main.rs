@@ -4153,6 +4153,16 @@ fn main_intake() -> String {
     if let Ok(boot) = fs::read_to_string(room_master_path()) {
         s.push_str(&boot);
     }
+    // BUILDING.md -- how a whole inquiry moves through the room, as opposed to how one seat is
+    // briefed (COMMITTEE.md, handed to siblings above). Landed 5baf576 and read by NOTHING for
+    // its first hour: it sat in the bundle while no seat received it, which is the same
+    // landed-is-not-shipped class this document is largely about. Absent-is-silent, the same
+    // way the committee brief is: a missing optional brief must never stop a seat waking.
+    if let Ok(building) = room_brief("BUILDING.md") {
+        s.push_str("\n\n---\n\n");
+        s.push_str(&building);
+        s.push_str("\n\n");
+    }
     s
 }
 
