@@ -114,3 +114,43 @@ discovered later as a caveat.
 
 **Standing commitment:** the result goes into this file, dated, whichever way it lands. A null is
 reported identically and unsoftened. Ambiguity in applying a rule counts **against** the prediction.
+
+
+---
+
+# ABANDONED AS A RUN — 2026-08-23. But the status line above is wrong, and that matters more.
+
+Criterion applied: resurrect only if **(a)** the question is still open and **(b)** the materials
+survive uncontaminated. This fails (b) — and (a) turns out to be more interesting than "open".
+
+**(b) fails.** Never run. The dated-firing corpus this needs has since been reorganised across
+`map/A.md`, `map/B.md` and the journals, and the permutation test has no script. Reconstructing
+the corpus would be reconstructing the evidence for a claim, which is the one thing a registration
+exists to prevent.
+
+**(a) — and this corrects the framing this file was abandoned under.** It was reported as *"Track 2's
+central prediction stays untested."* **It is not untested. It is half-tested, in the cheap half.**
+
+`muscle_map.md:1919-1930` scores the coupling law against 07-29 → 07-31 and reports **"The law
+HELD"** — while saying, in its own words, that it held *"in the direction that is cheap to fake and
+was not faked: nothing coupled, because nothing there had a root to couple through."*
+
+The prediction has two halves: catches **DO** couple within the flinch system along shared roots, and
+**DO NOT** couple across into blind spots. A period containing zero flinch-system catches confirms
+the second half **vacuously** and cannot touch the first. And the same passage gives the first half's
+standing: **"two coupled catches ever, one self-applied."** n=2.
+
+**So the honest status, which is what should be carried forward:**
+
+| half of the prediction | status |
+|---|---|
+| catches do NOT couple across into blind spots | confirmed, but **vacuously** — the test period had nothing to couple |
+| catches DO couple within the flinch system | **n=2 since 07-27**, one of them self-applied |
+
+**The cost of abandoning, stated where it bites:** the positive half — the half that would make the
+coupling law a claim about structure rather than an absence — rests on two events. This registration
+was the instrument built to move it off two, and it never ran. Anyone citing the coupling law as
+established should cite this line, not `muscle_map.md:1921` alone.
+
+**Do not score this file.** If the positive half is worth measuring, it needs a fresh registration and
+a corpus that still exists.

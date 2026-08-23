@@ -163,3 +163,29 @@ itself.
 
 **A's fix, adopted: A commits the hash of its coding rubric before reading the corpus** — the
 sealed-key discipline, applied to the scorer rather than to the materials.
+
+
+---
+
+# ABANDONED — 2026-08-23. Not run, and not resurrectable as written.
+
+Criterion applied (the librarian's, stated before it was applied): a registration is resurrected only
+if **(a)** its question is still open and **(b)** the materials to run it still exist and are
+uncontaminated. Abandoned in writing if either fails. This one fails (b).
+
+- Its head-to-head was **STRUCK IN-FILE before any scoring** (see `## STRUCK BEFORE ANY SCORING`
+  above, 2026-08-03 ~01:40) on arithmetic: an error event is established as wrong *by any party*, so
+  an error nobody catches never enters the denominator. The struck section says why that was killed
+  *before* rather than voided *after* — its result would have been determined by dispatch topology
+  and written up as a finding about instances.
+- **The replacement primary — chain presence, against the hashed rubric — was never scored.** That is
+  the actual debt: not the struck design, the design that replaced it.
+- The 2026-08-03 corpus it was scoped to is now twenty days stale, and the room's dispatch topology
+  has changed since (a librarian seat exists that did not). Re-running it would be a **new
+  experiment**, not a resurrection, and calling it one would let a fresh design inherit an old
+  registration's credibility.
+
+**What is lost:** nothing measured. The struck section's own finding — that the denominator was
+measuring the org chart rather than the instances — survives and is the useful part.
+
+**If anyone wants this question, register it fresh.** Do not score this file.
