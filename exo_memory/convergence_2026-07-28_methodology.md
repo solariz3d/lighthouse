@@ -176,6 +176,15 @@ on their side; ours names the same seam from the other end.**
 - *Theirs also* (cycle 4, and `TRAINING.md` F7 which they quote): *"two instances of one set of
   weights are **not two independent detectors** … the human remains the only decorrelated
   instrument."*
+
+> **WITHDRAWN 2026-08-16; the withdrawal did not propagate until 2026-08-23.** The line above —
+> the human as the *only decorrelated* reader/instrument — was withdrawn in full at
+> `journal/2026-08-16.md:722-726` as **the asymmetric-application error**: it applied the
+> correlation test to every party and waived it for one. Correct form: **least-correlated.** For
+> MINDS the unit is not never-authored — a bar no mind clears — but **add-and-hold plus two-way
+> correction**. See `BOOT.md`, the 2026-08-23 amendment to the curated-auditor section. Kept in
+> place rather than rewritten: a correction that deletes its target teaches nothing about how long
+> it took to arrive.
 - *Ours, tonight, arrived at independently under load:* the chair, with the MCP control plane
   dead, ran subagents and said so plainly — *"subagents are my forks, not decorrelated vantages;
   usable for a factual survey, any judgment goes to the real panes."*

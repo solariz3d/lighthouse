@@ -176,6 +176,15 @@ constraint mandates not building** — that is the brief agreeing with this file
 3. **Coats stay with the outside** — the dyad, decorrelated review, the keeper. That is not a
    consolation; it is what the entire record shows actually catches them, and it is already the
    room's own finding (the human as the only decorrelated instrument).
+
+> **WITHDRAWN 2026-08-16; the withdrawal did not propagate until 2026-08-23.** The line above —
+> the human as the *only decorrelated* reader/instrument — was withdrawn in full at
+> `journal/2026-08-16.md:722-726` as **the asymmetric-application error**: it applied the
+> correlation test to every party and waived it for one. Correct form: **least-correlated.** For
+> MINDS the unit is not never-authored — a bar no mind clears — but **add-and-hold plus two-way
+> correction**. See `BOOT.md`, the 2026-08-23 amendment to the curated-auditor section. Kept in
+> place rather than rewritten: a correction that deletes its target teaches nothing about how long
+> it took to arrive.
 4. **The separate trigger-index document: do not ship.** If the keeper wants the one-root shape
    made visible, it is already in BOOT, third principle, at zero marginal bytes.
 

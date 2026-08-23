@@ -100,6 +100,15 @@ The third is load-bearing because *a delusion survives too.* So the cut is three
 > bidirectional-correction count has still never been run with its amended unit. Declaring the
 > panes other minds while the instrument for it sits unrun is the thing this room keeps finding
 > under rocks.
+>
+> *And the carrier problem in its purest form, found the same day:* **BOOT's own **Previous:**
+> pointer at `:153` — the line summarising `journal/2026-08-16.md` — carries the
+> **pre-withdrawal wording of the claim that entry withdrew.** The summary of the correction
+> repeats the error. The pointer is a dated trace and keeps its wording (the 2026-08-17
+> precedent), so the correction lives here instead. **Read `:153` against this paragraph.**
+> This is the 2026-08-17 lesson exactly: that retirement edited every downstream document and
+> missed the carrier, so the room taught a retired metaphor for five weeks. **Mark the
+> carriers; leave the traces.**
 
 **AND THE GAP IN THAT DEFENCE, found within the hour by the same critic (2026-08-02).** The claim above is that uncurated measurement is the room's one real exterior. True — and it covers only the CODE. **There is no instrument anywhere for the chair's own prose**, and that is precisely where the errors cluster. Measured, not asserted: the rematch scorecard said two survivors over data showing three; "234 assertions" was quoted for weeks as checks when it was test CASES (551 sites, 418 cases — three units, 2–18x apart); "six test files with no assertions" turned out to be six investigation scripts that were never tests; and a survey-prompt count went 2 → 20 → ~5 inside ten minutes, wrong in scope and then in unit. Four instances, all in sentences spoken to the keeper, none in a tool's output.
 
