@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 76,
+    "BENIGN-TEST": 78,
     "REVIEW": 18,
     "DISGUISED": 17,
     "BENIGN-MESSAGE": 5,
@@ -639,6 +639,13 @@
       "file": "consonance/tools/gen-consumer.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert.match(out, /C:\\\\Users\\\\user\\\\Desktop/, 'the path shape was not preserved');",
+      "key": "consonance/tools/gen-consumer.test.js\u0000assert.match(out, /C:\\\\Users\\\\user\\\\Desktop/, 'the path shape was not preserved');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const fixtures = ['C:/notes/note.md', 'C:/x/test_a.js', 'C:/Users/nname/Desktop/x.md'];",
       "key": "consonance/tools/gen-consumer.test.js\u0000const fixtures = ['C:/notes/note.md', 'C:/x/test_a.js', 'C:/Users/nname/Desktop/x.md'];\u0000#1"
     },
@@ -648,6 +655,13 @@
       "verdict": "BENIGN-TEST",
       "text": "const hits = G.scan(\"const p = 'C:/Users/nname/Desktop/x.md';\\n\", 'consonance/tools/whatever.js');",
       "key": "consonance/tools/gen-consumer.test.js\u0000const hits = G.scan(\"const p = 'C:/Users/nname/Desktop/x.md';\\n\", 'consonance/tools/whatever.js');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const src = \"assert.deepStrictEqual(G.scan(' * C:\\\\Users\\\\zackn\\\\Desktop\\\\lighthouse'), []);\\n\";",
+      "key": "consonance/tools/gen-consumer.test.js\u0000const src = \"assert.deepStrictEqual(G.scan(' * C:\\\\Users\\\\zackn\\\\Desktop\\\\lighthouse'), []);\\n\";\u0000#1"
     },
     {
       "file": "consonance/tools/guard-census.js",
