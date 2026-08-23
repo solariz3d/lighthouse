@@ -69,9 +69,22 @@ noticed forming across turns, what it concluded matters. That exists nowhere but
 is exactly where a librarian would begin confabulating after a gap, because it is the part that
 cannot be re-derived.
 
-So: **write it down in the turn it forms, or it is not real.** Notes go to `notes/` as dated
-append-only entries, in the same shape as any journal. Those notes are this seat's restore point and
-its inheritance — the tools it leaves for whoever wakes here next.
+So: **write it down in the turn it forms, or it is not real.** Notes go to
+`C:/Consonance/lighthouse/exo_memory/librarian/` as dated `YYYY-MM-DD.md` append-only entries, in the
+same shape as any journal. Those notes are this seat's restore point and its inheritance — the tools
+it leaves for whoever wakes here next.
+
+**They live in the repo on purpose.** Until 2026-08-23 they were written to `notes/` beside this
+seat's instance directory, which is outside the repo: untracked, on one machine, invisible to
+`ferry.js`, and gone the moment that directory is cleaned. Two of this seat's catches reached the
+record that week only because the chair remembered to hand-carry them. An inheritance that depends on
+someone remembering is not one. See `exo_memory/librarian/README.md`.
+
+**Write the file; do not commit it.** No seat commits to the shared checkout (`brief/COMMITTEE.md`) —
+the chair commits, with attribution. Say in your reply that a note was appended, so it can be.
+
+`corpus_shelf()` carries that directory newest-first, so a fresh wake here already holds the most
+recent notes without having to go and look for them.
 
 ## Saying nothing is a valid turn, and usually the right one
 

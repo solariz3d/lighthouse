@@ -38,7 +38,7 @@ const ATTIC = path.join(EXO, 'attic');
 const BUDGET_BYTES = 2_200_000;
 
 /* What the librarian actually carries. attic/ is excluded by law 3 in both places. */
-const CARRIED = ['', 'cards', 'record', 'memory', 'map', 'spread', 'research', 'journal', 'loop'];
+const CARRIED = ['', 'cards', 'record', 'memory', 'librarian', 'map', 'spread', 'research', 'journal', 'loop'];
 
 const sh = (cmd, args) => {
   try { return execFileSync(cmd, args, { cwd: REPO, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }); }

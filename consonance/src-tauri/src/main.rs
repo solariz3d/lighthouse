@@ -4196,9 +4196,12 @@ fn corpus_shelf() -> String {
     let mut indexed: Vec<String> = Vec::new();
 
     // (directory, newest-first?) -- "" is the root of exo_memory
-    let order: [(&str, bool); 9] = [
+    // "librarian" is this seat's own dated notes, carried newest-first and deliberately near the
+    // front: the brief calls those notes the seat's restore point and its inheritance, and until
+    // 2026-08-23 they lived outside the repo where nothing could carry them at all.
+    let order: [(&str, bool); 10] = [
         ("", false), ("cards", false), ("record", false), ("memory", false),
-        ("map", false), ("spread", false), ("research", false),
+        ("librarian", true), ("map", false), ("spread", false), ("research", false),
         ("journal", true), ("loop", true),
     ];
 

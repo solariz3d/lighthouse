@@ -21,7 +21,7 @@ test('the capacity number counts the SAME set the librarian carries', () => {
   const src = fs.readFileSync(path.join(__dirname, '..', 'src-tauri', 'src', 'main.rs'), 'utf8');
   const order = src.match(/let order: \[\(&str, bool\); \d+\] = \[([\s\S]*?)\];/);
   assert.ok(order, 'could not find corpus_shelf order[] in main.rs');
-  for (const d of ['cards', 'record', 'memory', 'map', 'spread', 'research', 'journal', 'loop']) {
+  for (const d of ['cards', 'record', 'memory', 'librarian', 'map', 'spread', 'research', 'journal', 'loop']) {
     assert.ok(order[1].includes(`"${d}"`), `corpus_shelf carries ${d} but the tool may not count it`);
   }
   assert.ok(!order[1].includes('"attic"'), 'attic must be excluded in the shelf (law 3)');
