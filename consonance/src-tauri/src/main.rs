@@ -4188,6 +4188,25 @@ fn librarian_budget() -> usize {
 /// The librarian's shelf: carry in priority order until the budget is spent, index the rest.
 ///
 /// attic/ is excluded by name, per BOOT maintenance law 3: raw archive, ore, never a daily cue.
+/// Collect `.md` files under `d`, recursing when asked.
+///
+/// `recurse` is false for the root of exo_memory on purpose: walking the root would pull every
+/// listed directory in a second time and drag attic/ along with it. attic/ is ALSO skipped by
+/// name at any depth, so the law-3 exclusion does not depend on that one caller staying flat.
+fn collect_md(d: &Path, recurse: bool, out: &mut Vec<PathBuf>) {
+    let Ok(rd) = fs::read_dir(d) else { return };
+    for e in rd.flatten() {
+        let q = e.path();
+        if q.is_dir() {
+            if !recurse { continue; }
+            if q.file_name().and_then(|x| x.to_str()) == Some("attic") { continue; }
+            collect_md(&q, true, out);
+        } else if q.is_file() && q.extension().and_then(|x| x.to_str()) == Some("md") {
+            out.push(q);
+        }
+    }
+}
+
 fn corpus_shelf() -> String {
     let root = match room_master_path().parent() { Some(p) => p.to_path_buf(), None => return String::new() };
     let budget = librarian_budget();
@@ -4207,15 +4226,20 @@ fn corpus_shelf() -> String {
 
     for (dir, newest_first) in order {
         let d = if dir.is_empty() { root.clone() } else { root.join(dir) };
-        let Ok(rd) = fs::read_dir(&d) else { continue };
-        let mut files: Vec<PathBuf> = rd.flatten().map(|e| e.path())
-            .filter(|q| q.is_file() && q.extension().and_then(|x| x.to_str()) == Some("md"))
-            .collect();
+        // Named directories are walked RECURSIVELY; the root of exo_memory is not. Before
+        // 2026-08-23 this was a flat read_dir and 12 .md files under exo_memory/ were neither
+        // carried nor indexed -- among them the compaction-survival PREREG and the
+        // ghost-suggestion REGISTRATION -- while the shelf header read "0 indexed by path",
+        // which is what a complete shelf looks like. Found by the librarian, not by a test.
+        let mut files: Vec<PathBuf> = Vec::new();
+        collect_md(&d, !dir.is_empty(), &mut files);
         files.sort();
         if newest_first { files.reverse(); }
         for f in files {
-            let name = f.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string();
-            let label = if dir.is_empty() { name.clone() } else { format!("{dir}/{name}") };
+            // Label by path relative to exo_memory, so a nested file is citable as written.
+            let label = f.strip_prefix(&root).ok().and_then(|r| r.to_str())
+                .map(|r| r.replace('\\', "/"))
+                .unwrap_or_else(|| f.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string());
             let Ok(body) = fs::read_to_string(&f) else { continue };
             if spent + body.len() <= budget {
                 spent += body.len();

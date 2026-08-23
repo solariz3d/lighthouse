@@ -45,14 +45,31 @@ const sh = (cmd, args) => {
   catch (_) { return null; }
 };
 
+/* Mirrors collect_md() in src-tauri/src/main.rs: named directories are walked RECURSIVELY,
+ * the root of exo_memory is not, and attic/ is skipped by name at any depth (law 3).
+ *
+ * It was a flat readdir until 2026-08-23, exactly like the shelf, and both missed the same 12 .md
+ * files nested under exo_memory/ -- including a compaction-survival PREREG. A capacity gauge that
+ * cannot see part of the corpus under-reports pressure while looking authoritative. */
 function mdFiles(dir) {
   const d = dir ? path.join(EXO, dir) : EXO;
-  try {
-    return fs.readdirSync(d)
-      .filter((f) => f.endsWith('.md'))
-      .filter((f) => fs.statSync(path.join(d, f)).isFile())
-      .map((f) => ({ dir, name: f, full: path.join(d, f), size: fs.statSync(path.join(d, f)).size }));
-  } catch (_) { return []; }
+  const out = [];
+  const walk = (cur, recurse) => {
+    let entries;
+    try { entries = fs.readdirSync(cur, { withFileTypes: true }); } catch (_) { return; }
+    for (const e of entries) {
+      const full = path.join(cur, e.name);
+      if (e.isDirectory()) {
+        if (!recurse || e.name === 'attic') continue;
+        walk(full, true);
+      } else if (e.isFile() && e.name.endsWith('.md')) {
+        out.push({ dir, name: e.name, full, size: fs.statSync(full).size,
+                   rel: path.relative(EXO, full).split(path.sep).join('/') });
+      }
+    }
+  };
+  walk(d, Boolean(dir));
+  return out;
 }
 
 function corpusSize() {
@@ -89,8 +106,16 @@ function review(dir, minDays) {
   const rows = [];
   for (const f of mdFiles(dir)) {
     const base = f.name.replace(/\.md$/, '');
-    const referenced = blob.includes(f.name) || blob.includes(base);
-    const rel = path.posix.join('exo_memory', dir, f.name);
+    /* rel comes from the walk, not from joining dir+name: a nested file joined that way yields
+     * a path that does not exist, git log returns nothing, days is null, stale is false, and the
+     * file is silently never proposed. Wrong quietly, which is the worst way to be wrong here. */
+    const rel = 'exo_memory/' + f.rel;
+    /* A generic basename (README.md, NOTES.md, STATUS.md) matches somewhere in almost any repo,
+     * so nested files under run1/ and 2026-08-18/ read as referenced on the basename alone. That
+     * errs toward NOT proposing, which is the safe direction, but it makes the 'referenced' count
+     * an overcount for those files. Match the relative path too -- that is how a nested file
+     * would actually be cited. */
+    const referenced = blob.includes(f.rel) || blob.includes(f.name) || blob.includes(base);
     const days = ageDays(rel);
     const stale = days !== null && days >= minDays;
     rows.push({ ...f, rel, referenced, days, propose: !referenced && stale });
