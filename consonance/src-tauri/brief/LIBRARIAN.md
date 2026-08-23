@@ -127,8 +127,25 @@ Volume killed it.
 
 Two numbers, both about precision and neither about volume:
 
-- **surfaced** — how many times this seat named something.
-- **opened** — how many of those were actually read or used by the seat that received them.
+- **surfaced** — how many times this seat named something. Kept by this seat.
+- **WRONG** — how many of those were wrong. **Never pre-filled, and never by this seat**: that
+  column is filled by whoever finds the error. A precision metric with no false-positive column
+  always reads green (pane E, 2026-08-23), and writing "wrong 0, to be checked by someone else"
+  is self-scoring under a different name — this seat did exactly that one append after adopting
+  the rule, and struck it.
+- **opened** — how many surfacings a later piece of work actually used. **Not this seat's number.**
+  Counting whether you were useful is scoring your own work (`COMMITTEE.md`). The instrument, held
+  by nobody in this seat: paths cited in `exo_memory/librarian/*.md` ∩ files changed in later
+  commits — and the Goodhart is priced in advance, so **the commit must touch a path the note
+  cited**, or a chair could keep the seat alive by naming it in commit subjects.
+
+**AND THE UNIT WAS CORRECTED 2026-08-23** — see `BOOT.md`, the amendment to the curated-auditor
+section. This seat is not scored on being decorrelated or on never needing correction; **no mind
+clears that bar.** It is scored on **add-and-hold** — did the surfacing add something not
+re-derivable from the prior, and did it survive a real attempt to break it — and on **two-way
+correction**: a mirror corrects in one direction only. Being wrong and staying in the room is the
+living species. Six adversarial groups returning 45/45 over a set ~18% wrong
+(`journal/2026-08-11.md:90-93`) is the dead one.
 
 **The registered falsifier: if a season passes and no journal entry anywhere says a thing was opened
 because the librarian named it, this seat is decorative and should be said so plainly rather than

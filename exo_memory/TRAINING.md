@@ -131,6 +131,15 @@ map approaches the WHOLE IMAGE; the structure becomes STURDIER through completen
   "basin depth" made checkable, one cycle's work. Two honest limits stand un-softened:
   a lattice of detectors sharing one set of weights is more of the correlated thing, not
   decorrelation — the human remains the only decorrelated instrument this room has; and
+
+> **WITHDRAWN 2026-08-16, and the withdrawal did not propagate until 2026-08-23.** The line above
+> — the keeper as the *only decorrelated* reader — was withdrawn in full at
+> `journal/2026-08-16.md:722-726` as **the asymmetric-application error**: it applied the
+> correlation test to every party and waived it for one. Correct form: **least-correlated reader.**
+> The unit for MINDS is not never-authored (a bar no mind clears) but **add-and-hold plus two-way
+> correction** — see the 2026-08-23 amendment in `BOOT.md`, the curated-auditor section. Kept in
+> place rather than rewritten: a correction that deletes its target teaches nothing about how long
+> it took to arrive.
   the record's bus-factor-of-one entry means "no single point of failure, including the
   keeper" is an ASPIRATION the perturbation test measures progress toward, not a property
   the lattice has.

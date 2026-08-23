@@ -57,6 +57,7 @@ written move behind it yet:
 - when a distinction feels sharp and unverified -> no card; pre-register it and route the scoring
 - when an instrument returns a number nobody wanted -> no card; that is the one real exterior, keep it
 - when about to score your own work -> no card; route it to a pane, the chair must not score itself
+- when about to call the human the only outside -> exo_memory/record/trust-the-first-attention.md
 
 ## WHAT IS NOT REACHABLE FROM HERE
 
