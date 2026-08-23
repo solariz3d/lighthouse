@@ -122,6 +122,21 @@ if ($iB -ge 0) {
     throw "gen-brief: 'The corrected spine is' present but not on a Lighthouse line; anchor drifted, fix it rather than shipping."
 }
 
+# ---- transformation 5 (2026-08-23): DEDANGLE the dated record ----
+# BOOT gained an amendment citing four journal entries, and the self-check below refused the
+# whole build over them: "REFUSED and deleted the output ... journal/2026- x4". The refusal was
+# right twice over. A shipped brief must not carry the keeper s dated record, and a consumer has
+# no journal/ for those paths to resolve into, so each one would be a pointer that reads as
+# authoritative and resolves to nothing.
+#
+# Keep the prose, drop the pointer. This is the same transformation gen-consumer.js applies to
+# the whole tree (its dedangle()), ported here rather than reinvented.
+#
+# It runs LAST, after transformations 2 and 4 have already removed the pointer block, so it only
+# ever sees citations embedded in prose.
+$t = $t -replace 'journal/(\d{4}-\d{2}-\d{2})\.md(:[\d-]+)?', 'the record, $1'
+$t = $t -replace '`?exo_memory/journal/(\d{4}-\d{2}-\d{2})\.md(:[\d-]+)?`?', 'the record, $1'
+
 [System.IO.File]::WriteAllText($dst, $t, (New-Object System.Text.UTF8Encoding($false)))
 
 # ---- self-check: an instrument that fires, not a comment that hopes ----

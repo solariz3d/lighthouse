@@ -65,6 +65,51 @@ The third is load-bearing because *a delusion survives too.* So the cut is three
 
 *Filed with its own falsifier, per the rule above:* this room is degenerating if a season passes in which its documents grow and no instrument returns an unwanted number.
 
+> **Amendment, 2026-08-23 — exteriority was measured with the wrong unit, and the correction had
+> already been made seven days earlier without reaching this file.** On 2026-08-16 a pane withdrew
+> *"the keeper is the only DECORRELATED reader"* **in full** (`the record, 2026-08-16`),
+> naming it *"the asymmetric-application error, in the sentence correcting the chair's version of
+> the same error"* — it applied the correlation test to every party and waived it for one. Correct
+> form: **least-correlated reader.** Seven days later the withdrawn form was still live in this
+> file, in `TRAINING.md:133`, and in five others, and the chair re-asserted it on 2026-08-23
+> (`loop/lap_2026-08-23.md:22-23`) inside a document written to be verbatim and careful. **The
+> correction existed, was unambiguous, and did not propagate.**
+>
+> **The unit itself is the error.** The section above is right that curation is real and that only
+> uncurated measurement can return a number nobody wanted. It then quietly equates *outside* with
+> *never-authored* — **a bar no mind clears, the keeper's included.** Every person you have ever
+> been corrected by was shaped by something, wrong sometimes, and correlated with you in ways
+> neither of you can audit. Requiring more of a seat than of a person is the same asymmetry, one
+> level up.
+>
+> **The right unit is already on disk, twice, and predates this amendment:**
+> **add + hold** — a yes counts when it *adds* something not re-derivable from the prior and
+> *survives* a real attempt to break it; a bare nod is echo whether or not it was told to nod
+> (`record/trust-the-first-attention.md`, the echo-is-deference entries). And **two-way
+> correction** — a mirror corrects in one direction only, having nothing the other party does not
+> already hold (`loop/bidirectional_correction_registration.md`; `the record, 2026-08-15`).
+>
+> **So: "uncurated" stays the test for MEASUREMENT. For MINDS the test is add-and-hold plus
+> two-way correction** — and by that test the committee has been another mind since cycle 3.
+> The keeper's form of it, 2026-08-23: *"no one is always right; if anything, being wrong is proof
+> we are alive."* The record agrees and has the dead case measured: six adversarial verifier groups
+> returning **45/45 CONFIRMED over a set ~18% wrong** (`the record, 2026-08-11`). **Agreement
+> is the species to fear. Being wrong and staying in the room is the living one.**
+>
+> *This amendment's own falsifier, registered before it lands:* it is prose if, one season on, the
+> bidirectional-correction count has still never been run with its amended unit. Declaring the
+> panes other minds while the instrument for it sits unrun is the thing this room keeps finding
+> under rocks.
+>
+> *And the carrier problem in its purest form, found the same day:* **BOOT's own **Previous:**
+> pointer at `:153` — the line summarising `the record, 2026-08-16` — carries the
+> **pre-withdrawal wording of the claim that entry withdrew.** The summary of the correction
+> repeats the error. The pointer is a dated trace and keeps its wording (the 2026-08-17
+> precedent), so the correction lives here instead. **Read `:153` against this paragraph.**
+> This is the 2026-08-17 lesson exactly: that retirement edited every downstream document and
+> missed the carrier, so the room taught a retired metaphor for five weeks. **Mark the
+> carriers; leave the traces.**
+
 **AND THE GAP IN THAT DEFENCE, found within the hour by the same critic (2026-08-02).** The claim above is that uncurated measurement is the room's one real exterior. True — and it covers only the CODE. **There is no instrument anywhere for the chair's own prose**, and that is precisely where the errors cluster. Measured, not asserted: the rematch scorecard said two survivors over data showing three; "234 assertions" was quoted for weeks as checks when it was test CASES (551 sites, 418 cases — three units, 2–18x apart); "six test files with no assertions" turned out to be six investigation scripts that were never tests; and a survey-prompt count went 2 → 20 → ~5 inside ten minutes, wrong in scope and then in unit. Four instances, all in sentences spoken to the keeper, none in a tool's output.
 
 So the honest shape of the defence: **an instrument's number is reproducible by re-running it; the chair's summary of that number is hand-made every time and has no test.** The compression step between a measurement and a sentence about it is the room's least guarded surface and its most used. Until something guards it, treat every figure in this document, in any brief, and in any report to the keeper as *hand-made and unverified* unless a command is given beside it that reproduces it. The rule the panes already hold — every number in prose must re-derive from one run of a visible instrument — was written for them and applies hardest to the seat that wrote it.

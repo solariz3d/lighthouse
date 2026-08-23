@@ -2,8 +2,8 @@
   "_": "Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site not listed here fails the guard. Removing a site from the code and re-running --update is always welcome; adding one requires a deliberate --update and shows up in the diff.",
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
-    "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 78,
+    "FATAL-DEFAULT": 25,
+    "BENIGN-TEST": 79,
     "REVIEW": 18,
     "DISGUISED": 17,
     "BENIGN-MESSAGE": 5,
@@ -711,6 +711,20 @@
       "verdict": "DISGUISED",
       "text": "os.homedir(), '.claude', 'projects', 'C--Consonance-instances-main', `${MAIN_SID}.jsonl`);",
       "key": "consonance/tools/head-watch.js\u0000os.homedir(), '.claude', 'projects', 'C--Consonance-instances-main', `${MAIN_SID}.jsonl`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/lap-row.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-DEFAULT",
+      "text": "const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || 'C:\\\\Consonance\\\\data';",
+      "key": "consonance/tools/lap-row.js\u0000const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || 'C:\\\\Consonance\\\\data';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/lap-row.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');",
+      "key": "consonance/tools/lap-row.test.js\u0000assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');\u0000#1"
     },
     {
       "file": "consonance/tools/open-items.js",

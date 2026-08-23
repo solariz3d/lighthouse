@@ -67,8 +67,28 @@ const path = require('path');
 const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 
-const LEDGER = process.env.LAP_LEDGER || 'C:\\Consonance\\data\\lap.jsonl';
-const REPO = process.env.LAP_REPO || 'C:\\Consonance\\lighthouse';
+/* Resolved, not hardcoded. `portable-paths.js` classed the previous literals FATAL-DEFAULT: a
+ * machine-specific default that silently works on one box and silently writes to the wrong place
+ * on any other. Same shape as the two halves of this program disagreeing about the data dir.
+ *
+ * The order is the one every peer hook already uses (`hooks/transcript-watch.js` dataDir()):
+ * env override, then ~/.consonance.json, then the literal as a last resort. The loose-parse
+ * guard matters -- a hand-written config must not sink the read. */
+const os = require('os');
+
+function fromConfig(key) {
+  try {
+    const raw = fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, '');
+    const v = JSON.parse(raw);
+    const d = v && v[key] != null ? String(v[key]).trim() : '';
+    return d || null;
+  } catch (_) { return null; }
+}
+
+const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || 'C:\\Consonance\\data';
+const LEDGER = process.env.LAP_LEDGER || path.join(DATA_DIR, 'lap.jsonl');
+const REPO = process.env.LAP_REPO || fromConfig('room_path') && path.resolve(path.dirname(fromConfig('room_path')), '..')
+  || path.resolve(__dirname, '..', '..');
 
 // A RATE NEEDS AN n. ferry.js printed 97.2% off a denominator its instrument could not have
 // observed, then 0.0% off n=3; both were the same defect pointing opposite ways. Under this floor
