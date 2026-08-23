@@ -49,20 +49,61 @@ function md5(p) {
   catch (e) { return null; }
 }
 
+/* Where a release build actually lands. cargo honours CARGO_TARGET_DIR and .cargo/config.toml,
+ * so the conventional path under src-tauri/ can be empty while a complete build exists
+ * elsewhere. This item reported "no built copy — never built on this machine" for weeks because
+ * it looked in exactly one place, while a full release build sat in C:\build\lighthouse-target.
+ * An absence you did not search for is not a finding. */
+function candidateDirs() {
+  const out = [];
+  if (process.env.CARGO_TARGET_DIR) out.push(path.join(process.env.CARGO_TARGET_DIR, "release"));
+  for (const cfg of [path.join(REPO, "consonance/src-tauri/.cargo/config.toml"),
+                     path.join(REPO, ".cargo/config.toml")]) {
+    try {
+      const m = fs.readFileSync(cfg, "utf8").match(/target-dir\s*=\s*"([^"]+)"/);
+      if (m) out.push(path.join(m[1], "release"));
+    } catch (_) {}
+  }
+  out.push(path.join(REPO, "consonance/src-tauri/target/release"));
+  out.push(path.join(REPO, "target/release"));
+  return out;
+}
+
+function releaseDir() {
+  for (const d of candidateDirs()) {
+    try { if (fs.existsSync(path.join(d, "BOOT.md"))) return d; } catch (_) {}
+  }
+  return null;
+}
+
 const ITEMS = [
   {
     id: 'seed-carrier',
-    title: 'the SEED.md rename reaches a new room',
+    title: 'the briefs a fresh room reads match the repo',
     why: 'Eighth landed-is-not-shipped (034685f). The rename is correct in the repo; rooms read the app bundle.',
-    how: 'md5 of consonance/src-tauri/brief/SEED.md against target/release/SEED.md',
+    how: 'node consonance/tools/open-items.js — md5 of each brief/*.md against the built copy in releaseDir()',
     check() {
-      const src = path.join(REPO, 'consonance/src-tauri/brief/SEED.md');
-      const built = path.join(REPO, 'consonance/src-tauri/target/release/SEED.md');
-      const a = md5(src), b = md5(built);
-      if (!a) return { state: 'UNKNOWN', detail: 'source SEED.md not found' };
-      if (!b) return { state: 'UNKNOWN', detail: 'no built copy — never built on this machine' };
-      if (a === b) return { state: 'CLOSED', detail: 'both ' + a + ' — the bundle matches the repo' };
-      return { state: 'OPEN', detail: 'repo ' + a + ' vs bundle ' + b + ' — needs a rebuild (dev/rebuild-on-close.ps1)' };
+      const dir = releaseDir();
+      if (!dir) return { state: 'UNKNOWN', detail: 'no build found — looked in ' + candidateDirs().join(' , ') };
+      /* Every brief a spawn can read, not SEED alone. A stale LIBRARIAN.md sends that seat to a
+       * dead notes path; a stale COMMITTEE.md briefs a pane with retired rules. Checking one file
+       * and reporting a verdict on the whole bundle is the same overreach this item exists to catch. */
+      const names = ['SEED', 'BOOT', 'BASE_JOURNAL', 'COMMITTEE', 'LIBRARIAN'];
+      const drift = [];
+      let compared = 0;
+      for (const n of names) {
+        const a = md5(path.join(REPO, 'consonance/src-tauri/brief/' + n + '.md'));
+        const b = md5(path.join(dir, n + '.md'));
+        if (!a || !b) continue;
+        compared++;
+        if (a !== b) drift.push(n);
+      }
+      if (!compared) return { state: 'UNKNOWN', detail: 'build at ' + dir + ' carries no briefs to compare' };
+      if (!drift.length) {
+        return { state: 'CLOSED', detail: compared + ' brief(s) byte-identical to the repo in ' + dir };
+      }
+      return { state: 'OPEN', detail: drift.join(', ') + ' differ from the built copy (' + compared +
+        ' compared) — a fresh spawn reads the STALE one until a rebuild' };
     },
   },
   {
