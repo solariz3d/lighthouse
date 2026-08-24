@@ -108,7 +108,18 @@ function main() {
       { cwd: REPO, encoding: "utf8", timeout: 5000, maxBuffer: 8 * 1024 * 1024 }
     ).split(/\r?\n/).filter(Boolean);
     const stale = older.filter(sha => !ferried(sha)).length;
-    if (stale) backlog = `\nBacklog beyond the window: ${stale} never ferried (node consonance/tools/ferry.js --report).`;
+    /* Name the QUANTITY, and cite a command that actually prints it.
+     *
+     * This line used to read `${stale} never ferried (… --report)`. Two defects in one clause:
+     * `--report` prints a MISS RATE and never this number, and "never ferried" is a different
+     * quantity from the one being counted -- `--due` reports every unferried artifact, while this
+     * counts only those older than FRESH_HOURS. The two differ by whatever landed in the window,
+     * so they disagreed by 1-4 all week and three separate seats argued about which was right.
+     * The value was never the defect. A figure whose citation resolves to a different figure is
+     * worse than an uncited one: it reads as already checked. */
+    if (stale) backlog = `\nBacklog: ${stale} artifact commit(s) never ferried AND older than `
+      + `${FRESH_HOURS}h (this line is the only thing that prints it; \`--due\` prints the`
+      + ` untimed total, \`--report\` prints the miss rate).`;
   } catch (_) {}
 
   console.log(
