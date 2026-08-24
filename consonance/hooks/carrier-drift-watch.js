@@ -48,14 +48,60 @@
 if (process.env.CONSONANCE_DREAM) process.exit(0);
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
 
-const REPO = process.env.CARRIER_DRIFT_REPO || 'C:\\Consonance\\lighthouse';
-const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
+// PATHS ARE RESOLVED, NEVER LITERAL — and the first version of this file got it wrong in the way
+// the guard exists to catch. It shipped `process.env.CARRIER_DRIFT_REPO || 'C:\\Consonance\\...'`,
+// copying ferry-watch.js:48, and portable-paths.js called both sites FATAL-DEFAULT the moment the
+// file was tracked. ferry-watch's version is grandfathered in the baseline; a new one is not, and
+// the ratchet is right: guard-census.js carried another machine's absolute paths at three call
+// sites while its test passed.
+//
+// So there is no hardcoded fallback here at all. env, then ~/.consonance.json, then GIVE UP — and
+// giving up writes a row saying so, because a hook that cannot find the repo and says nothing is
+// indistinguishable from a hook that ran and found nothing wrong.
+function envOverride(name) {
+  const v = process.env[name];
+  return v && String(v).trim() ? String(v).trim() : null;
+}
+
+let CFG = {};
+try {
+  CFG = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''));
+} catch (_) { /* no local config: env or nothing */ }
+
+// room_path names the wake document INSIDE the repo (<repo>/exo_memory/BOOT.md), so the repo is
+// two levels up from it. Deriving beats a second config key nobody would remember to set.
+function repoRoot() {
+  const env = envOverride('CARRIER_DRIFT_REPO');
+  if (env) return env;
+  const room = CFG && CFG.room_path != null ? String(CFG.room_path).trim() : '';
+  if (room) return path.resolve(path.dirname(room), '..');
+  return null;
+}
+
+function dataDir() {
+  const env = envOverride('CONSONANCE_DATA');
+  if (env) return env;
+  const d = CFG && CFG.data_dir != null ? String(CFG.data_dir).trim() : '';
+  if (d) return d;
+  return path.join(os.homedir(), '.consonance');
+}
+
+const DATA = dataDir();
 const STATE = path.join(DATA, 'carrier-drift.state.json');
 const LEDGER = path.join(DATA, 'carrier-drift.jsonl');
 const COOLDOWN_H = 6;
+
+function ledger(row) {
+  try {
+    fs.mkdirSync(DATA, { recursive: true });
+    fs.appendFileSync(LEDGER, JSON.stringify(Object.assign(
+      { ts: new Date().toISOString(), pane: path.basename(process.cwd()) }, row)) + '\n');
+  } catch (_) { /* fail-open */ }
+}
 
 function fingerprint(findings) {
   const key = findings.map((f) => [f.kind, f.file, f.line].join(':')).sort().join('|');
@@ -63,6 +109,8 @@ function fingerprint(findings) {
 }
 
 function main() {
+  const REPO = repoRoot();
+  if (!REPO) { ledger({ verdict: 'UNRESOLVED', why: 'no CARRIER_DRIFT_REPO and no room_path in ~/.consonance.json' }); return; }
   const tool = path.join(REPO, 'consonance', 'tools', 'carrier-drift.js');
   if (!fs.existsSync(tool)) return;                     // no repo here: nothing to measure
 
@@ -98,19 +146,14 @@ function main() {
 
   // Every firing, spoken or not. This is the row that separates "silent because green" from
   // "silent because the hook is not installed", and there is no other way to tell them apart.
-  try {
-    fs.mkdirSync(DATA, { recursive: true });
-    fs.appendFileSync(LEDGER, JSON.stringify({
-      ts: new Date().toISOString(),
-      pane: path.basename(process.cwd()),
-      verdict: res.red ? 'RED' : 'GREEN',
-      findings: res.findings.length,
-      carriers: res.counts.carriers,
-      fp,
-      spoke: speak,
-      ms,
-    }) + '\n');
-  } catch (_) { /* fail-open */ }
+  ledger({
+    verdict: res.red ? 'RED' : 'GREEN',
+    findings: res.findings.length,
+    carriers: res.counts.carriers,
+    fp,
+    spoke: speak,
+    ms,
+  });
 }
 
 try { main(); } catch (_) { /* a sensor must never break a turn */ }

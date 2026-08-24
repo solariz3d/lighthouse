@@ -103,6 +103,18 @@
           "why": "the wording appears inside a shell command, as the search string. Not an assertion — and this tool exists partly because that command is line-based and misses the wrapped case; see the header."
         },
         {
+          "file": "exo_memory/handback/carrier-drift_2026-08-24.md",
+          "anchor": "on sweep: ``` grep -rl \"only decorrelated\" exo_memory/ | grep -v ",
+          "kind": "mention",
+          "why": "the room's registered propagation sweep, quoted as a shell command in pane B's hand-back. Found by this tool within seconds of the file being written, which is the first thing it caught that nobody already knew about."
+        },
+        {
+          "file": "exo_memory/handback/carrier-drift_2026-08-24.md",
+          "anchor": " pass: ``` git grep -l \"only decorrelated\" 21d5453^ -- exo_memory",
+          "kind": "mention",
+          "why": "the same sweep run against the historical tree, quoted as a command"
+        },
+        {
           "file": "exo_memory/loop/lap_2026-08-23.md",
           "anchor": " the keeper remains the only genuinely decorrelated reader. The case data c",
           "kind": "marked",
