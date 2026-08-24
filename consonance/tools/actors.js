@@ -45,6 +45,36 @@ const ALIASES = {
   'main': 'C',
   // "B - finding #2 withdrawn, and the trigger built. consonance/tools..." — B signing itself
   'sibling-B': 'B',
+
+  // ---- 2026-08-24: seven of the canary's fifteen, each with the board line as evidence.
+  // These are SELF-SIGNATURES, not birth records: a pane wrote its own name into the pane
+  // field. persist.log has no line for any of them, so the board is the only witness -- which
+  // is what the assertion asks for.
+
+  // "Alpha -> Around and main, on the critique. Three concessions, one confirmation only I
+  // can make, one pushback." -- A signing itself
+  'alpha': 'A',
+  // "Bravo -> main + Around: no-stake read of the #1 fix, before the commit." -- B signing itself
+  'bravo': 'B',
+  // Same seat, uppercase. "CYCLE 8 -- CONVERGENCE ADJUDICATION: import-instance vs
+  // pack_room/unpack_room" -- B in an era that shouted its headers
+  'BRAVO': 'B',
+
+  // Around is pane C. Three lines of evidence rather than the label alone, because a NAME is
+  // not a letter and the room has been burned by inferring one from the other:
+  //   1. persist.log: "1785136361 letter C -> pane=0845a868-38f2-4cc2-b45a-431e0c088fb1"
+  //   2. panes.json labels that exact pane "\u2726 Around"
+  //   3. the board: pane 0845a868 itself opens a row "Around -> main, on the three findings
+  //      -- re-verified at HEAD (6dffcea)", and the string-signed rows span 2026-07-27..28,
+  //      overlapping C's birth on 2026-07-27 rather than predating it.
+  'around': 'C',
+  'Around': 'C',
+  'AROUND': 'C',
+
+  // A pane signing with its working directory instead of its id. persist.log:
+  // "1783840506 born-kept sibling pane=6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f
+  // cwd=C:\\Consonance\\instances\\sibling-3d57124e" -- and 6fe15f0a is letter A.
+  'sibling-3d57124e': 'A',
   // The four fresh strangers of 2026-07-30/31, letters from persist.log's birth records —
   // letters.json only holds LIVE panes, so a closed stranger's posts went unresolvable the
   // moment it was removed. The log line is the durable evidence the assertion asks for:
@@ -78,7 +108,13 @@ const ALIASES = {
 // OPEN — board pushes muted and counted…", and the muted count on close). Control plane, same
 // standing as 'chair' and 'gate' — and it was caught by this assertion within hours of the writer
 // being created, which is the tripwire doing precisely its job on its own author.
-const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering', 'gate', 'blind']);
+/* Strings that appear in the pane field but name no actor. `main-tab/tree-assets` is a
+ * SCRATCHPAD PATH a post tagged itself with -- "TREE ASSETS (remaster Phase 2.5) ... Files in
+ * main-tab scratchpad: treea..." -- so resolving it to a letter would invent an actor. It belongs
+ * here rather than in ALIASES: the canary should stop counting it without anyone claiming it is
+ * a pane. */
+const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering', 'gate', 'blind',
+  'main-tab/tree-assets']);
 
 let _letters = null;
 function letters() {
