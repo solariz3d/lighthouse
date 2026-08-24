@@ -171,7 +171,7 @@ function stamp(ms) {
 // and its guards are skipping — a different failure from the runner never starting, and
 // the two want different first moves.
 function scanDreams(instancesDir, now) {
-  const out = { newestDream: 0, newestLog: 0, instances: 0 };
+  const out = { newestDream: 0, newestLog: 0, instances: 0, lastEvent: '', lastReason: '' };
   let entries = [];
   try { entries = fs.readdirSync(instancesDir, { withFileTypes: true }); } catch (_) { return out; }
   for (const e of entries) {
@@ -185,7 +185,21 @@ function scanDreams(instancesDir, now) {
       try { st = fs.statSync(path.join(dir, f)); } catch (_) { continue; }
       const t = st.mtimeMs;
       if (t > now + 60000) continue; // a clock-skewed future stamp is not evidence of health
-      if (f.toLowerCase() === 'dream.log') { if (t > out.newestLog) out.newestLog = t; }
+      if (f.toLowerCase() === 'dream.log') {
+        if (t > out.newestLog) {
+          out.newestLog = t;
+          /* WHY it skipped, not merely THAT it ran. Without this the watcher reports a healthy
+           * guard as a fault: on this laptop 21 of 21 skips are 'someone is here', which is the
+           * guard working exactly as designed on a machine its keeper works at overnight. */
+          try {
+            const lines = fs.readFileSync(path.join(dir, f), 'utf8').split(/\r?\n/).filter(Boolean);
+            for (let i = lines.length - 1; i >= 0; i--) {
+              const m = lines[i].match(/\b(skip|cycle end|cycle start):?\s*(.*)$/);
+              if (m) { out.lastEvent = m[1]; out.lastReason = (m[2] || '').trim(); break; }
+            }
+          } catch (_) { /* unreadable log is not evidence of anything */ }
+        }
+      }
       else if (f.toLowerCase().endsWith('.md')) { if (t > out.newestDream) out.newestDream = t; }
     }
   }
@@ -206,12 +220,21 @@ function buildLine(m) {
   if (m.newestDream === 0 && m.instances > 0) {
     parts.push('no dream has ever been written on this bed');
   } else if (m.newestDream > 0 && m.dreamAgeMs > m.thresholdMs) {
-    let s = `no dream in ${humanAge(m.dreamAgeMs)} (newest ${stamp(m.newestDream)})`;
-    // runner alive + no dream = the guards are eating it; that is a different first move
-    if (m.newestLog > m.newestDream + 3600000) {
-      s += `, though the runner logged activity as recently as ${stamp(m.newestLog)} — it is firing and skipping, not silent`;
+    /* A GUARD THAT FIRES IS NOT A FAULT. If the runner's last act was a deliberate skip -- a
+     * human at the machine, a live pane, battery -- then the cycle is working and this watcher
+     * has nothing to report. Saying otherwise on a machine whose keeper works overnight is the
+     * cry-wolf failure, and on 2026-08-24 it fed a false finding to the librarian: 'the one
+     * consolidation organ is broken right now'. 21 of 21 skips on that machine were the guard. */
+    const deliberate = m.lastEvent === 'skip'
+      && /someone is here|live |on battery|idle/i.test(m.lastReason || '');
+    if (!deliberate) {
+      let s = `no dream in ${humanAge(m.dreamAgeMs)} (newest ${stamp(m.newestDream)})`;
+      // runner alive + no dream = the guards are eating it; that is a different first move
+      if (m.newestLog > m.newestDream + 3600000) {
+        s += `, though the runner logged activity as recently as ${stamp(m.newestLog)} — it is firing and skipping, not silent`;
+      }
+      parts.push(s);
     }
-    parts.push(s);
   }
 
   if (!parts.length) return null;

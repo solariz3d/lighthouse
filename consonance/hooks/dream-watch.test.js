@@ -227,7 +227,9 @@ t('scanDreams finds the newest dream and the newest log across beds', () => {
 
 t('scanDreams reports nothing rather than throwing when the instances dir is absent', () => {
   const s = W.scanDreams(path.join(os.tmpdir(), 'definitely-not-here-' + Date.now()), Date.now());
-  assert.deepStrictEqual(s, { newestDream: 0, newestLog: 0, instances: 0 });
+  // lastEvent/lastReason added 2026-08-24: the watcher now reads WHY the runner skipped, because
+  // a deliberate skip (a human at the machine) is the guard working and must not read as a fault.
+  assert.deepStrictEqual(s, { newestDream: 0, newestLog: 0, instances: 0, lastEvent: '', lastReason: '' });
 });
 
 t('scanDreams ignores a future mtime — clock skew is not evidence of health', () => {
@@ -391,6 +393,40 @@ t('E2E: malformed stdin makes it fall back and stay quiet rather than crash', ()
 });
 
 // ── report ──────────────────────────────────────────────────────────────────
+
+// ── a deliberate skip is not a fault ──────────────────────────────────────────
+// Added 2026-08-24. On this laptop 21 of 21 skips were "someone is here" — the guard doing
+// exactly its job on a machine its keeper works at overnight — and the watcher reported it as
+// "no dream in 5d 20h ... firing and skipping" at every session start. That line fed a false
+// finding to the librarian: "the one consolidation organ is broken right now." The instrument
+// was reporting hardware as deficiency, third recurrence of a class the record already names.
+{
+  const base = { newestDream: Date.now() - 6 * 24 * 3600e3, newestLog: Date.now(),
+                 instances: 1, dreamAgeMs: 6 * 24 * 3600e3, thresholdMs: 24 * 3600e3,
+                 taskMissing: false, resultText: null, lastRun: null };
+
+  t('a deliberate skip — someone is here — is silent', () => {
+    const line = W.buildLine({ ...base, lastEvent: 'skip', lastReason: 'someone is here (Consonance open, idle 0.0 min < 20)' });
+    assert.strictEqual(line, null);
+  });
+
+  t('a deliberate skip — on battery — is silent', () => {
+    assert.strictEqual(W.buildLine({ ...base, lastEvent: 'skip', lastReason: 'on battery' }), null);
+  });
+
+  t('a runner that stopped for NO stated reason still speaks', () => {
+    // The alarm must survive. Silence about a genuine fault is the failure this watcher exists
+    // to prevent, and exempting every skip would have bought quiet at that price.
+    const line = W.buildLine({ ...base, lastEvent: 'cycle start', lastReason: '' });
+    assert.ok(line && /no dream in/.test(line), 'a genuine stall must still be reported');
+  });
+
+  t('an unrecognised skip reason still speaks — the exemption is narrow, not a blanket', () => {
+    const line = W.buildLine({ ...base, lastEvent: 'skip', lastReason: 'disk full' });
+    assert.ok(line && /no dream in/.test(line), 'only the KNOWN-deliberate reasons are exempt');
+  });
+}
+
 console.log(`\ndream-watch: ${pass} passed, ${fails.length} failed`);
 if (fails.length) {
   for (const f of fails) console.log('  FAIL  ' + f);
