@@ -4232,16 +4232,37 @@ fn corpus_shelf() -> String {
     //
     //   SYSTEM  BOOT, cards, SOURCE, record/, memory/, spread/, research/, this seat's own notes.
     //           The frame and the instruments. Stable, slow-growing, and what makes the seat
-    //           the seat. 53 files / 632,817 bytes / ~270k tokens on 2026-08-24.
+    //           the seat. 53 files / 632,817 bytes on 2026-08-24; ~250k tokens as the loaded
+    //           CLAUDE.md (723,964 bytes -- the file is larger than the corpus it carries,
+    //           because the brief and the shelf headers ride with it).
     //   RECORD  journal/, loop/, map/. What happened on particular nights. Dated, finished, and
-    //           reachable by grep. 115 files / 1,501,353 bytes / ~642k tokens -- 70.3% of the
-    //           corpus, and the half that grows every session.
+    //           reachable by grep. 115 files / 1,501,353 bytes / ~521k tokens -- 70.3% of the
+    //           corpus by bytes, and the half that grows every session.
     //
     // WHY, measured rather than argued. On 2026-08-24 the seat came out of a compaction at
     // 909,787 tokens against a 1M window, leaving ~90k to think in -- half of the previous
     // night's ~189k, because 2,458 lines had been written into exo_memory in one day. The
-    // corpus was eating the seat that holds it. Carrying the system alone costs ~270k and
-    // leaves ~730k. Ratio measured at 2.34 bytes/token, not assumed.
+    // corpus was eating the seat that holds it.
+    //
+    // RATIO: 2.89 bytes/token (range 2.88-2.91). CORRECTED 2026-08-24 by pane E, and the
+    // correction is worse than a wrong number. This comment first read "Ratio measured at
+    // 2.34 bytes/token, not assumed" -- while the seat's OWN CARRIED NOTES already held 2.94
+    // from the day before (librarian/2026-08-22.md:99, "1,995,532 bytes cost 679,449 tokens").
+    // Same repo, same week, 26% apart, and the words "measured, not assumed" were written over
+    // a figure the shelf contradicted. That is the carrier failure again, this time in shipped
+    // source rather than in prose.
+    //
+    // The 2.89 is independent of the seat's own measurement and cancels every overhead term:
+    // the librarian restarted onto the new shelf while its conversation stayed resident, so two
+    // adjacent readings differ ONLY by the record moving from carried to indexed --
+    //   08:10:07Z old shelf 915,791   ->   08:37:56Z new shelf 400,720
+    // 515,071 tokens for a 1,497,143-byte delta. Overhead, tool definitions, the compact summary
+    // and the conversation are byte-identical on both sides and drop out.
+    //
+    // Carrying the system alone costs ~250k and leaves ~710k. Post-compaction FLOOR is ~290k,
+    // not ~250k: `resume` is gated on transcript existence, which is permanently true, so this
+    // seat never wakes on the shelf alone. ~30k of that is fixed overhead, measured across
+    // eleven vantage_cell sessions with no CLAUDE.md at all (30,088-30,944 first-turn tokens).
     //
     // AND IT IS LAW 3, NOT A TUNING KNOB: "crowding shrinks the recall basins until even a clean
     // cue misses." On 2026-08-23 this seat missed a methodology recorded in SEVEN files while

@@ -118,3 +118,42 @@ Most of this is already mechanical: `state-block.js`, `open-items.js`, the last 
 >
 > **"The tier trades a rare serendipity class for the working room every other function needs. Right
 > trade. Don't revert."**
+
+---
+
+## SCORED 2026-08-24 by pane E — the ratio was wrong and this registration could not have detected it
+
+**The falsifier above is withdrawn as written.** It said: *if the next compaction does not land near ~270k, the tier did not take.*
+It would have landed near **290k and PASSED**, certifying nothing, because the reasoning it tested is wrong in three places that cancel:
+
+| the chair told the keeper | re-derived | error |
+|---|---|---|
+| record saved ~642k | **~521k** | **23% overstated, ~121k** |
+| system carried ~270k | ~250k | 7% |
+| working room ~730k | ~710k | 3% |
+| — | post-compact FLOOR ~290k | never stated |
+
+A 20%-low ratio applied to a 13%-small numerator (632,817 corpus bytes rather than the 723,964-byte file actually loaded),
+with ~39k of overhead-plus-summary omitted. **The one figure nothing tested — the 642k saving — is the one wrong by 121k.**
+
+**And no probe is needed: the tier already landed at RESTART.** `915,791` (08:10:07Z, old shelf)
+-> `400,720` (08:37:56Z, new shelf). That `400,720` is **not comparable to 270k** and must not be
+read as failure — it decomposes as ~250k shelf + ~150k overhead, summary and live conversation,
+and **the tier does not touch the second half.** `resume` is gated on transcript existence, which
+is permanently true, so this seat never wakes on the shelf alone.
+
+*The four values in this paragraph were destroyed once before being written: a `node -e` heredoc
+let bash execute the backtick spans, so `915,791`, `400,720`, `resume` and `muscle_map.md` were run
+as commands and vanished. In a correction about wrong numbers. The recorded fix — write scripts with
+a file, never through a nested shell — was available and not used.*
+
+**Replacement falsifier — the librarian’s formula, which does not cancel:**
+
+> post-compaction total ≈ (system-tier bytes AT compaction ÷ **2.89**) + summary + ~30k overhead, ±15%
+
+**And the census answered attack 2 against the raw number.** 49 record citations vs 34 system (59%) looks like a case for
+reverting; reading each catch back to its evidence, nearly every record citation is a **targeted open** into a file the
+dispatch already named — which works identically from an index. The class that genuinely needs residence is cross-file
+precedent recall, and it fired **twice in three nights**, one of them load-bearing (the summary-contamination precedent that
+voided a P1/P2 rather than banking it as a pass). **Price: roughly one load-bearing catch per three nights, in one named
+class, already covered by F-reach.** Do not revert. The single largest source in the notes is `muscle_map.md` (9 citations, tied with `BOOT.md`) — carried.
