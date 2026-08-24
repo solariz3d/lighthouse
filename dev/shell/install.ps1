@@ -114,6 +114,10 @@ $files = @(
   # Added 2026-08-18 with the hook, same commit, same reason as the line above: registration and
   # manifest ship together or a fresh install silently loses it.
   @{ From = 'consonance\hooks\sessionstart-state.js';     To = 'sessionstart-state.js' }
+  # Added 2026-08-24 with its registration below, same commit, same reason as the two entries
+  # above. This one is a PreToolUse gate, so it also needed Matcher support in $register -- an
+  # unmatched PreToolUse hook fires on every tool call in the session.
+  @{ From = 'consonance\hooks\dispatch-gate.js';          To = 'dispatch-gate.js' }
 )
 
 # What this script REGISTERS. Only these are ever touched in settings.json; anything else found
@@ -140,6 +144,10 @@ $register = @(
   # the comment shipped and the registration did not.
   @{ Event = 'PreCompact';       Rel = 'precompact-preserve.js';      Runner = 'node' }
   @{ Event = 'SessionStart';     Rel = 'sessionstart-state.js';       Runner = 'node' }
+  # The dispatch gate. Matcher-scoped on purpose: it must see the two verbs that put text into
+  # another seat's pane and nothing else. It ASKS rather than blocks, and fails open on any error.
+  @{ Event = 'PreToolUse';       Rel = 'dispatch-gate.js';            Runner = 'node';
+     Matcher = 'mcp__consonance__chair_inject|mcp__consonance__call_chair' }
 )
 
 if (-not (Test-Path $dest)) {
@@ -296,6 +304,21 @@ foreach ($e in $register) {
     $groups = @([pscustomobject]@{ hooks = @() })
   }
 
+  # MATCHER-SCOPED EVENTS (PreToolUse and friends). A group carries the matcher, so a hook
+  # appended to whatever group happens to be last would fire on every tool in the session -- a
+  # per-call node spawn, and a gate pointed at things it was never meant to see. Entries with no
+  # Matcher take the original path untouched.
+  $slot = $null
+  if ($e.Matcher) {
+    foreach ($g in $groups) {
+      if ($g.PSObject.Properties['matcher'] -and $g.matcher -eq $e.Matcher) { $slot = $g; break }
+    }
+    if (-not $slot) {
+      $slot = [pscustomobject]@{ matcher = $e.Matcher; hooks = @() }
+      $groups = @($groups) + @($slot)
+    }
+  }
+
   $found = $false
   foreach ($g in $groups) {
     if (-not $g.hooks) { continue }
@@ -314,7 +337,7 @@ foreach ($e in $register) {
   }
 
   if (-not $found) {
-    $target = $groups[$groups.Count - 1]
+    if ($slot) { $target = $slot } else { $target = $groups[$groups.Count - 1] }
     if (-not $target.PSObject.Properties['hooks']) {
       $target | Add-Member -NotePropertyName hooks -NotePropertyValue @() -Force
     }
