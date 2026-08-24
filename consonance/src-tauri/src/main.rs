@@ -4743,9 +4743,22 @@ fn set_pane_role(roles: State<PaneRoles>, pane: String, role: String) {
     roles.0.lock().unwrap().insert(pane, role);
 }
 
+/// The two SEATS' addresses, registered at spawn (`spawn_main`, `spawn_librarian`). A pane may
+/// not take one: before this guard, any pane the chair named "M" silently overwrote M -> MAIN_SID
+/// in the names map, so the orchestrator's own address could be captured by a pane and every
+/// later `resolve_pane("M")` would have delivered somewhere else. Found by pane E, 2026-08-24.
+const RESERVED_SEAT_NAMES: &[&str] = &["M", "LIB"];
+
 #[tauri::command]
 fn set_pane_name(names: State<PaneNames>, pane: String, name: String) {
-    names.0.lock().unwrap().insert(name.to_uppercase(), pane);
+    let n = name.to_uppercase();
+    if RESERVED_SEAT_NAMES.contains(&n.as_str()) {
+        // The UI drops this call's result (`term.js:462` .catch(() => {})), so a Result here would
+        // be swallowed and read as success. Refuse into the durable log instead of into nothing.
+        plog(&format!("set_pane_name REFUSED — '{n}' is a seat address (pane={pane})"));
+        return;
+    }
+    names.0.lock().unwrap().insert(n, pane);
 }
 
 // ---- the dyad (RECONCEPTION.md "mutual-spot"): two panes at OPPOSITE lenses spot each other ----
@@ -4756,8 +4769,8 @@ fn set_pane_name(names: State<PaneNames>, pane: String, name: String) {
 #[tauri::command]
 fn set_spot_pair(pairs: State<SpotPairs>, roles: State<PaneRoles>, panes: State<Panes>,
                  names: State<PaneNames>, trust: String, doubt: String) -> Result<String, String> {
-    let t = resolve_pane(&panes, &names, &trust).ok_or_else(|| format!("no live pane '{trust}'"))?;
-    let d = resolve_pane(&panes, &names, &doubt).ok_or_else(|| format!("no live pane '{doubt}'"))?;
+    let t = resolve_pane(&panes, &names, &trust)?;
+    let d = resolve_pane(&panes, &names, &doubt)?;
     if t == d {
         return Err("a dyad needs two different panes".into());
     }
@@ -4780,7 +4793,7 @@ fn set_spot_pair(pairs: State<SpotPairs>, roles: State<PaneRoles>, panes: State<
 #[tauri::command]
 fn dyad_spot(panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
              pairs: State<SpotPairs>, target: String) -> Result<String, String> {
-    let tid = resolve_pane(&panes, &names, &target).ok_or_else(|| format!("no live pane '{target}'"))?;
+    let tid = resolve_pane(&panes, &names, &target)?;
     let (partner, partner_lens) = pairs.0.lock().unwrap().get(&tid).cloned()
         .ok_or("that pane is not in a dyad — pair it first")?;
     let posted = {
@@ -4815,20 +4828,70 @@ fn dyad_spot(panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
 
 // Actuator plane (main.rs legitimately holds the writer; gate.rs never does): the only path that
 // writes to a pane's PTY, reached only after a human-passed gate decision.
-fn resolve_pane(panes: &State<Panes>, names: &State<PaneNames>, target: &str) -> Option<String> {
-    let t = target.trim();
-    // by friendly name (A, B, C …), case-insensitive — the normal path
-    if let Some(id) = names.0.lock().unwrap().get(&t.to_uppercase()) {
-        if panes.0.lock().unwrap().contains_key(id) {
-            return Some(id.clone());
+/// Match a target against live pane ids by prefix, REFUSING ambiguity by name.
+///
+/// Why this is not `keys().find(..)`. `MAIN_SID` and `LIBRARIAN_SID` share seven characters
+/// (`0c0c0c0`) and `Panes` is a `HashMap`, so a target of seven characters or fewer chose
+/// between the two ACTING seats on unspecified iteration order — silently, and in the direction
+/// that SUCCEEDS, so no error ever fired and the caller learned which seat it had addressed only
+/// by consequence. Found by pane E on 2026-08-24 while checking whether the librarian could
+/// safely be given the chair's plumbing; it needed no mistake by a reader, only a short target.
+///
+/// Fails CLOSED and names the collision, because the alternative to refusing here is delivering
+/// a brief into the wrong seat with nobody in the loop to catch it.
+///
+/// Pure, so both directions are pinned without a live app: unique prefixes still resolve, and a
+/// prefix shared by two seats can never resolve to either.
+fn match_prefix(ids: &[String], t: &str) -> Result<String, String> {
+    if t.is_empty() {
+        return Err("refused — empty target".to_string());
+    }
+    let mut hits: Vec<&String> = ids.iter().filter(|k| k.starts_with(t)).collect();
+    match hits.len() {
+        0 => Err(format!("no live pane matches '{t}'")),
+        1 => Ok(hits[0].clone()),
+        _ => {
+            hits.sort();
+            let shown: Vec<&str> = hits.iter().map(|k| &k[..8.min(k.len())]).collect();
+            Err(format!(
+                "refused — '{t}' is AMBIGUOUS: it matches {} live panes ({}). \
+Use a seat name (M, LIB, A…) or a longer id.",
+                hits.len(),
+                shown.join(", ")
+            ))
         }
     }
-    // fallback: raw id or id-prefix
-    let map = panes.0.lock().unwrap();
-    if map.contains_key(t) {
-        return Some(t.to_string());
+}
+
+/// The WHOLE resolution, pure. Err is the message the caller shows — "not found" and "ambiguous"
+/// are different facts and must never print the same sentence.
+///
+/// Why the whole thing and not just the prefix step: the first version of this fix left the name
+/// and exact-id lookups inside the live-state function and tested only `match_prefix`. The
+/// mutation harness then reverted `resolve_pane` to `keys().find(..)` and ALL SIX TESTS STILL
+/// PASSED — the unit was proven and the delivery was not, which is the distinction
+/// `the_shelf_reaches_the_intake` is named for. With the logic here there is exactly one place
+/// prefix matching can happen, and it is the place the tests reach.
+fn resolve_from(names: &HashMap<String, String>, live: &[String], target: &str) -> Result<String, String> {
+    let t = target.trim();
+    // by friendly name (A, B, C …), case-insensitive — the normal path
+    if let Some(id) = names.get(&t.to_uppercase()) {
+        if live.iter().any(|k| k == id) {
+            return Ok(id.clone());
+        }
     }
-    map.keys().find(|k| k.starts_with(t)).cloned()
+    // then the raw id, then a UNIQUE id-prefix
+    if live.iter().any(|k| k == t) {
+        return Ok(t.to_string());
+    }
+    match_prefix(live, t)
+}
+
+/// Lock, snapshot, delegate. Deliberately holds no logic of its own — see `resolve_from`.
+fn resolve_pane(panes: &State<Panes>, names: &State<PaneNames>, target: &str) -> Result<String, String> {
+    let live: Vec<String> = panes.0.lock().unwrap().keys().cloned().collect();
+    let n = names.0.lock().unwrap().clone();
+    resolve_from(&n, &live, target)
 }
 
 fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(), String> {
@@ -4860,8 +4923,8 @@ fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
     let panes = app.state::<Panes>();
     let names = app.state::<PaneNames>();
     let tid = match resolve_pane(&panes, &names, target) {
-        Some(t) => t,
-        None => return format!("no live pane matches '{target}'"),
+        Ok(t) => t,
+        Err(e) => return e,
     };
     let short = &tid[..8.min(tid.len())];
     let role = app.state::<PaneRoles>().0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| "human".to_string());
@@ -5151,8 +5214,8 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
     let panes = app.state::<Panes>();
     let names = app.state::<PaneNames>();
     let tid = match resolve_pane(&panes, &names, target) {
-        Some(t) => t,
-        None => return format!("no live pane matches '{target}'"),
+        Ok(t) => t,
+        Err(e) => return e,
     };
     let role = app.state::<PaneRoles>().0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| "human".to_string());
     let chair_model = chair_model(app);
@@ -5234,8 +5297,8 @@ fn chair_scrollback_exec(app: &AppHandle, target: &str) -> String {
     let panes = app.state::<Panes>();
     let names = app.state::<PaneNames>();
     match resolve_pane(&panes, &names, target) {
-        Some(tid) => pane_scrollback(tid),
-        None => format!("no live pane matches '{target}'"),
+        Ok(tid) => pane_scrollback(tid),
+        Err(e) => e,
     }
 }
 
@@ -6844,5 +6907,141 @@ mod addressable_seat_tests {
     #[test]
     fn the_chair_still_cannot_address_itself() {
         assert!(chair_target_guard(MAIN_SID, "main").is_err());
+    }
+}
+
+#[cfg(test)]
+mod resolve_pane_tests {
+    use super::*;
+
+    /// THE DEFECT, pinned with the two real ids. Before this, `keys().find(..)` over a `HashMap`
+    /// returned whichever of these two the iterator happened to reach first -- and both of them are
+    /// seats that can be ACTED ON, so the wrong answer was a brief delivered into the wrong mind
+    /// with nobody in the loop. Found by pane E, 2026-08-24.
+    #[test]
+    fn the_seven_character_prefix_the_two_seats_share_is_refused() {
+        let ids = vec![MAIN_SID.to_string(), LIBRARIAN_SID.to_string()];
+        let e = match_prefix(&ids, "0c0c0c0").unwrap_err();
+        assert!(e.contains("AMBIGUOUS"), "the refusal must name ambiguity: {e}");
+        assert!(e.contains("0c0c0c0a") && e.contains("0c0c0c0b"),
+            "it must say WHICH seats collided, or the caller cannot disambiguate: {e}");
+    }
+
+    /// The invariant rather than the one example: no prefix shared by the two acting seats may
+    /// resolve to either of them, at any length. A single case would pass a fix that special-cased
+    /// the number seven.
+    #[test]
+    fn no_shared_prefix_of_any_length_resolves_to_either_seat() {
+        let ids = vec![MAIN_SID.to_string(), LIBRARIAN_SID.to_string()];
+        let shared = "0c0c0c0";
+        for n in 1..=shared.len() {
+            let t = &shared[..n];
+            assert!(match_prefix(&ids, t).is_err(),
+                "target {t:?} must not resolve to a seat while it matches both");
+        }
+    }
+
+    /// The fix must not have bought safety by breaking the normal path.
+    #[test]
+    fn a_prefix_that_is_unique_still_resolves() {
+        let ids = vec![MAIN_SID.to_string(), LIBRARIAN_SID.to_string()];
+        assert_eq!(match_prefix(&ids, "0c0c0c0a").unwrap(), MAIN_SID);
+        assert_eq!(match_prefix(&ids, "0c0c0c0b").unwrap(), LIBRARIAN_SID);
+    }
+
+    /// "not found" and "ambiguous" are DIFFERENT facts. Printing one sentence for both is how the
+    /// original defect stayed invisible -- a caller that sees "no live pane matches" goes looking
+    /// for a dead pane, not for a collision.
+    #[test]
+    fn a_miss_and_a_collision_do_not_print_the_same_sentence() {
+        let ids = vec![MAIN_SID.to_string(), LIBRARIAN_SID.to_string()];
+        let miss = match_prefix(&ids, "zzzz").unwrap_err();
+        assert!(miss.contains("no live pane matches"), "{miss}");
+        assert!(!miss.contains("AMBIGUOUS"), "a miss is not a collision: {miss}");
+    }
+
+    /// An empty target matches every id by `starts_with`. Tested against ONE live pane on
+    /// purpose: with two, the ambiguity arm refuses it anyway and the guard's absence is
+    /// invisible — the mutation harness deleted the guard and this test passed regardless.
+    #[test]
+    fn an_empty_target_is_refused_rather_than_matching_the_only_pane() {
+        let one = vec![MAIN_SID.to_string()];
+        assert!(match_prefix(&one, "").is_err(),
+            "an empty target must never resolve, least of all when there is exactly one pane");
+        let two = vec![MAIN_SID.to_string(), LIBRARIAN_SID.to_string()];
+        assert!(match_prefix(&two, "").is_err());
+    }
+
+    /// DELIVERY, not unit: the live path must actually go through the refusing matcher. Without
+    /// this, reverting `resolve_pane` to `keys().find(..)` left every other test in this module
+    /// green — measured, not imagined (mutate-resolve-pane.js, mutant 1, first run).
+    #[test]
+    fn the_live_resolution_path_refuses_the_shared_prefix_too() {
+        let names = HashMap::new();
+        let live = vec![MAIN_SID.to_string(), LIBRARIAN_SID.to_string()];
+        let e = resolve_from(&names, &live, "0c0c0c0").unwrap_err();
+        assert!(e.contains("AMBIGUOUS"), "the resolution the app calls must refuse it: {e}");
+    }
+
+    /// …and the paths that must still work through it.
+    #[test]
+    fn the_live_resolution_path_still_resolves_names_ids_and_unique_prefixes() {
+        let mut names = HashMap::new();
+        names.insert("M".to_string(), MAIN_SID.to_string());
+        let live = vec![MAIN_SID.to_string(), LIBRARIAN_SID.to_string()];
+        assert_eq!(resolve_from(&names, &live, "m").unwrap(), MAIN_SID, "seat name, case-insensitive");
+        assert_eq!(resolve_from(&names, &live, LIBRARIAN_SID).unwrap(), LIBRARIAN_SID, "exact id");
+        assert_eq!(resolve_from(&names, &live, "0c0c0c0b").unwrap(), LIBRARIAN_SID, "unique prefix");
+        assert!(resolve_from(&names, &live, "nope").is_err(), "a miss is still a miss");
+    }
+
+    /// A name that points at a pane which is no longer live must fall through to the id paths
+    /// rather than returning a dead id — the behaviour the original had and must keep.
+    #[test]
+    fn a_name_pointing_at_a_dead_pane_does_not_resolve_to_it() {
+        let mut names = HashMap::new();
+        names.insert("M".to_string(), MAIN_SID.to_string());
+        let live = vec![LIBRARIAN_SID.to_string()];
+        assert!(resolve_from(&names, &live, "M").is_err(),
+            "a seat name must not resolve to a pane that is not running");
+    }
+
+    /// The mutant the unit tests structurally cannot reach: `resolve_pane` takes live Tauri
+    /// `State`, so nothing here can call it, and a future edit could match prefixes inside it
+    /// again while every test above stayed green — measured, mutant 2 of
+    /// `dev/mutation/mutate-resolve-pane.js`, which SURVIVED until this test existed.
+    ///
+    /// Pinned by reading our own source, the way the elevation/allowlist rule already is.
+    #[test]
+    fn resolve_pane_delegates_and_never_matches_prefixes_itself() {
+        // Normalised first. This file is CRLF on disk, so the closing-brace terminator used
+        // below never matches raw, `body` silently becomes the rest of the FILE, and the first
+        // version of this test failed on a doc comment two hundred lines away rather than on the
+        // function. The same latent flaw sits in `elevated_panes_do_not_also_get_the_allowlist`
+        // (main.rs, the spawn tests) — reported, not fixed here.
+        let src = fs::read_to_string("src/main.rs")
+            .expect("read own source")
+            .replace("\r\n", "\n");
+        let f = src
+            .split("fn resolve_pane(")
+            .nth(1)
+            .expect("resolve_pane moved — re-point this test");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        assert!(
+            body.contains("resolve_from("),
+            "resolve_pane must delegate to the pure, tested resolution — it holds no logic of its own"
+        );
+        assert!(
+            !body.contains("starts_with"),
+            "prefix matching must live in ONE place (match_prefix). A second copy here is how the \
+             collision between the two acting seats returns without a single test going red."
+        );
+    }
+
+    /// The other half of the same defect: a pane must not be able to take a seat's address.
+    #[test]
+    fn the_seat_addresses_are_reserved_against_panes() {
+        assert!(RESERVED_SEAT_NAMES.contains(&"M"), "the orchestrator's own address must be reserved");
+        assert!(RESERVED_SEAT_NAMES.contains(&"LIB"), "the librarian's address must be reserved");
     }
 }
