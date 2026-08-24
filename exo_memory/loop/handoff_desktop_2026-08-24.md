@@ -194,8 +194,8 @@ compliance. Do not treat a clean gate ledger as evidence the order was followed.
 |---|---|
 | **1** — land the three organs | **done** |
 | **2** — make the instruments run | **done** |
-| **3** — T5 forgetting · T4 exteroception | **in flight** (panes C and A) |
-| **4** — T6 BOOT amendment · the bidirectional count | **in flight** (pane B) |
+| **3** — T5 forgetting · T4 exteroception | **landed, NOT verified** — `4555373` |
+| **4** — T6 BOOT amendment · the bidirectional count | **landed, NOT verified** — `4555373` |
 | **5** — the consumer version | **not started, deliberately last** |
 
 Chunk boundaries and the one declared reorder are in `loop/chunk_sequence_2026-08-24.md`. **Read its
@@ -206,6 +206,18 @@ the corrected ground is in `7fbc524`, not in the first version.
 beside `TRAINING.md:133`, and the SOURCE trigger row all landed **on 08-23**. What remains is the
 count its own falsifier demands — *the recognition is prose if the bidirectional-correction count has
 still never been run with its amended unit.*
+
+**THE FIRST ITEM FOR TOMORROW, ahead of any new work: the three hand-backs in `4555373` were
+committed WITHOUT the verification pass.** The night ended mid-stride. Every earlier hand-back got a
+real one — re-running its reproduce-commands, checking a regex rather than trusting a green,
+independently confirming a Test-Path claim — and one of those passes caught a wrong figure in an
+otherwise exemplary document. These three got their headlines read and nothing else. **They are not
+yet load-bearing.** Do not build on the exteroception pricing, the forgetting registration, or the
+bidirectional count until each has been checked the way the others were.
+
+One thing in them is worth knowing before it is verified, because it changes a decision: pane A
+found that **the cheapest outward-sense option is the one the keeper has deferred** — the consumer
+tree as a standing foreign machine. It flagged the collision rather than pricing around it.
 
 **Do not copy `librarian/LEDGER.md` — open it.** It is the maintained lifecycle note, updated per lap,
 and it is the answer to "which windows are still open". Same for the librarian's own notes.
