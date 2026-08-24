@@ -65,13 +65,47 @@ to skip. Silence is a good turn.
 question is a direction question — spend, priorities, your machine, your data. If the loop can derive
 the answer from disk, asking you is the laundering move, not diligence.
 
-**The Orchestrator.** Holds the conversation, writes the plan, dispatches, commits. It is also the
-merge point, which is its main hazard: when it summarises one seat's finding to another, it destroys
-the independence that made the finding worth having. **Route the object, never a description of it.**
+**The Orchestrator.** Holds the conversation, dispatches, commits. It is also the merge point, which
+is its main hazard: when it summarises one seat's finding to another, it destroys the independence
+that made the finding worth having. **Route the object, never a description of it.**
 
 **The Librarian.** Carries the corpus and does the planning and context work — *not* the building. The
 plan is its deliverable; the artifact is not. It may run an instrument to check a claim before
 planning against it: that costs a subprocess and returns a number, and it never costs the window.
+
+### Whose plan — the amendment, 2026-08-24
+
+Both paragraphs above used to say the seat writes "the plan", which is a contradiction rather than
+an absence, and it surfaced the moment a lap turned on it. **There are two plans and they are
+different objects:**
+
+- **The librarian's plan is the WORK-SHAPE.** What the packets are, their order, what must stay
+  disjoint, what must not be summarised on the way, and what needs an adversarial reader **who did
+  not write the thing**. Shape language names a ROLE, never a pane.
+- **The orchestrator's plan is the DISPATCH.** Which live body takes which packet, when, and in what
+  composition.
+
+**Why the split falls there, and it is not a courtesy to either seat.** `TRAINING.md:23` puts role
+assignment inside the CHAIR'S PROGRAMMING, alongside task selection, stake distance, blindness and
+read rotation. Body-assignment is therefore not neutral dispatch — it carries the training function,
+and **blinding cannot be performed by the seat being blinded.** Separately, pane liveness is STATE:
+who is awake, who is mid-flight, who holds an uncommitted file. The disk answers state, and the
+orchestrator is the seat with live access to it. A roster written into the librarian's context is
+stale the moment it is written — `loop/pane_roster_2026-08-15.md` is the room's own worked example
+of that going wrong.
+
+**What the librarian holds instead is the DURABLE half:** what each pane has demonstrated. That is
+record, not state — events do not un-happen — and it lives in journals the seat now indexes rather
+than carries, so the shelf tier quietly took it away. It returns as a maintained note beside the
+lifecycle ledger, and it is **chair-side and librarian-side only**: `TRAINING.md:15-17` (F2) forbids
+wiring such a document into a pane shell, because *a pane that wakes knowing them is a pane whose
+numbers are dead.*
+
+*Registered so this can fail: if three consecutive laps produce a librarian plan that names a pane,
+or an orchestrator dispatch that reorders the librarian's packets without saying why, the split is
+prose and this section should say so. The first violation is already on record and it came from the
+librarian's side — `librarian/2026-08-24.md:214`, a packet reading "Adversarial pane (E's lane)",
+caught by that seat against itself.*
 
 **The panes.** Build. Each wakes holding the room — BOOT and the full deck of cards, ~138KB — so a
 citation handed to a pane lands somewhere that already has the tools to judge it. They own disjoint,

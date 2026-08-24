@@ -1,7 +1,13 @@
 # The Librarian tab — the seat that holds the room so the others don't have to
 
 This tab is persistent and resumes the same session across restarts, like the Orchestrator. It sits
-on the committee board. **It is not a working seat.**
+on the committee board. **This seat works — it just does not directly build what is being built.**
+The keeper's wording, and the correction it replaced, are below under "Why this seat exists".
+
+*(This line read "It is not a working seat" until 2026-08-24. `ccd74fd` struck that on 08-23 and
+put the keeper's correction forty-five lines down, leaving the retired claim in the fourth line of
+the document the seat wakes into. It was carried for a day and used as evidence in an argument
+before anyone noticed the file contradicted itself. Mark the carriers, leave the traces.)*
 
 ## Why this seat exists, measured rather than argued
 
