@@ -24,7 +24,22 @@ param([int]$TimeoutMin = 120)
 $ErrorActionPreference = 'Continue'
 $root  = Split-Path -Parent $PSScriptRoot
 $tauri = Join-Path $root 'consonance\src-tauri'
-$exe   = Join-Path $tauri 'target\release\consonance.exe'
+# Resolve the exe the way cargo does, not the way the layout suggests. CARGO_TARGET_DIR and
+# .cargo\config.toml both move the build out of src-tauri\target, and this script watched the
+# conventional path: it did not exist, the lock probe threw every loop, and the watcher logged
+# "still locked" until timeout without ever building. An absence you did not search for is not
+# a finding -- the same correction open-items needed on 2026-08-23.
+$targetDir = $env:CARGO_TARGET_DIR
+if (-not $targetDir) {
+  foreach ($cfg in @((Join-Path $tauri '.cargo\config.toml'), (Join-Path $root '.cargo\config.toml'))) {
+    if (Test-Path $cfg) {
+      $m = [regex]::Match((Get-Content $cfg -Raw), 'target-dir\s*=\s*"([^"]+)"')
+      if ($m.Success) { $targetDir = $m.Groups[1].Value; break }
+    }
+  }
+}
+if (-not $targetDir) { $targetDir = Join-Path $tauri 'target' }
+$exe   = Join-Path $targetDir 'release\consonance.exe'
 $log   = Join-Path $root 'dev\rebuild-on-close.log'
 $cargo = Join-Path $env:USERPROFILE '.cargo\bin\cargo.exe'
 
@@ -33,7 +48,13 @@ function Say($m) {
 }
 function AppRunning { [bool](Get-Process -Name consonance -ErrorAction SilentlyContinue) }
 
-Say "watcher armed (timeout ${TimeoutMin}m, retries on lock) - close Consonance and leave it shut ~90s"
+if (-not (Test-Path $exe)) {
+  Say "REFUSING: no exe at $exe - nothing to rebuild, and waiting would look identical to working"
+  Write-Output "rebuild-on-close: REFUSED - no exe at $exe"
+  exit 2
+}
+Say "watcher armed (timeout ${TimeoutMin}m, retries on lock) - exe: $exe - close Consonance and leave it shut ~90s"
+Write-Output "rebuild-on-close: armed, watching $exe"
 $deadline = (Get-Date).AddMinutes($TimeoutMin)
 $before = if (Test-Path $exe) { (Get-Item $exe).LastWriteTime } else { $null }
 $attempt = 0
