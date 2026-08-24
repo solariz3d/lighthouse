@@ -130,6 +130,9 @@ const ENTRY = {
   // the definition and report a correctly-placed guard as misplaced - the exact trap the comment
   // above this table records.
   'ferry-watch.js': 'try { main(); }',
+  // Added 2026-08-24 with dispatch-gate.js itself. Call site, not definition, for the reason the
+  // header of this table records: `function main()` is declared above the guard.
+  'dispatch-gate.js': 'try { main(); }',
   // Added 2026-08-18 with precompact-preserve.js itself. Call site, not definition: `function
   // main()` is declared above the guard and invoked at the bottom under require.main, so the
   // bare name would compare the guard against the definition — the trap this table's header

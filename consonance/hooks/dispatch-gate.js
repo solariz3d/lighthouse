@@ -28,10 +28,35 @@
 
 'use strict';
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const REPO = process.env.FERRY_REPO || 'C:\\Consonance\\lighthouse';
+// THE DREAM GATE. The gap-dream is an anti-instruction and gets no hooks. Kept here even though
+// the dream runner dispatches nothing and would never trip this, because ferry-watch.js states
+// the reason and it is the right one: a rule that holds only because a DIFFERENT guard happens to
+// cover it breaks silently the day that guard moves. Placed above everything, so it precedes the
+// entry point rather than merely existing in the file.
+if (process.env.CONSONANCE_DREAM) process.exit(0);
+
+/// The repo, resolved rather than assumed. `room_path` points at the room MASTER
+/// (.../exo_memory/BOOT.md), so the repository is two directories up.
+///
+/// Returns null rather than guessing. A gate that silently checks citations against the wrong
+/// tree would report every correct dispatch as uncited, and a gate that silently gives up is
+/// indistinguishable from a satisfied one - which is the failure class this room keeps finding.
+function repoRoot() {
+  const env = (process.env.FERRY_REPO || '').trim();
+  if (env) return env;
+  try {
+    const raw = fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, '');
+    const room = String((JSON.parse(raw) || {}).room_path || '').trim();
+    if (room) return path.dirname(path.dirname(room));
+  } catch (_) { /* an unreadable config is not a repo path */ }
+  return null;
+}
+
+const REPO = repoRoot();
 
 // The two verbs that put text into another seat's pane. raise_pull is deliberately NOT here: it
 // queues a card for a human to read and decide, so it is already gated by a person.
@@ -112,6 +137,15 @@ function main() {
 
   const verb = payload && payload.tool_name;
   if (!DISPATCH_VERBS.has(verb)) process.exit(0);
+
+  // No repo, no citation check. Allow - but SAY so, because a gate that quietly stops working
+  // reads exactly like a gate that is being satisfied every time.
+  if (!REPO) {
+    process.stdout.write(JSON.stringify({
+      systemMessage: 'dispatch-gate is INERT: could not resolve the repo (set FERRY_REPO, or room_path in ~/.consonance.json). Dispatches are NOT being checked for citations.',
+    }));
+    process.exit(0);
+  }
 
   const text = payload.tool_input && payload.tool_input.text;
   const exists = (p) => { try { return fs.existsSync(path.join(REPO, p)); } catch (_) { return false; } };
