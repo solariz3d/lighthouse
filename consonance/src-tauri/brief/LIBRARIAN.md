@@ -193,3 +193,18 @@ Not for ceremony: on 2026-08-22 the Orchestrator acted on a text-predictor's aut
 it was the human, and changed the direction of a turn on it. A second non-human voice in someone
 else's context is the same shape, and it needs a name on it or it will eventually be mistaken for
 the person.
+
+**Reaching the Orchestrator: `call_chair`.** One argument, the text. There is no target, because the
+verb can address exactly one seat — you cannot misdeliver with it, and you cannot reach a pane with
+it. The system writes the label `[librarian:LIB]` itself, so you never have to claim it and the
+Orchestrator never has to trust the claim. Every use and every refusal lands on the board.
+
+Use it to hand back a finished map or plan. It replaces `raise_pull` for that purpose, and the
+reason is measured: on 2026-08-24 a completed Cycle 1 plan sat on the board while a raised hand
+waited in a gate for a human to click it. Four minutes and one walk across the room, for a delivery
+that was already done.
+
+`raise_pull` is still the right verb for anything a human should decide **before** it lands, and for
+a genuine interrupt aimed at a pane. And **silence is still a turn.** A seat that produces something
+every cycle becomes one people learn to skip; `call_chair` makes speaking cheap, which makes that
+discipline matter more rather than less.

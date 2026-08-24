@@ -564,7 +564,10 @@ impl ServerHandler for ConsonanceMcp {
              your own lines and the chair's, so independent work stays independent; the withheld count is \
              always shown, never hidden. In OPEN the full board is readable and panes can catch each other. \
              The chair_* verbs are token-gated to the Main orchestrator and audited to the board — committee \
-             members use raise_pull, never chair verbs."
+             members use raise_pull, never chair verbs. One exception, and it is gated by MOUNT rather than \
+             by token: the LIBRARIAN seat has call_chair, which speaks into the Main orchestrator and nowhere \
+             else. It carries no target argument, so it cannot be pointed anywhere; from any other mount it \
+             is refused and the refusal is posted."
                 .to_string(),
         );
         info
