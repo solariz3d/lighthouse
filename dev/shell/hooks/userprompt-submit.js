@@ -19,7 +19,14 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const SHELL_DIR = path.join(os.homedir(), '.claude', 'shell');
+const // CONSONANCE_DATA first. Hardcoded, these six wrote their ledgers into the REAL ~/.claude/shell
+// every time dream-gate.test.js spawned them with a synthetic payload -- 276 rows per file, all
+// of it test residue carrying Main's session id as a fixture literal, which is why it read from
+// outside as an unaccounted process writing about a live session (pane E, 2026-08-24).
+//
+// Same seam precompact-preserve.js:66 already uses, and dream-gate.test.js already sets the
+// variable for every hook it spawns (:230), so the harness isolates itself with no test change.
+SHELL_DIR = process.env.CONSONANCE_DATA || path.join(os.homedir(), '.claude', 'shell');
 const L3_OVERSEER_LOG = path.join(SHELL_DIR, 'l3_overseer.jsonl');
 const STATE_PATH = path.join(SHELL_DIR, 'userprompt_state.json');
 const EVENT_LOG = path.join(SHELL_DIR, 'event_log.jsonl');
