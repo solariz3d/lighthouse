@@ -11,24 +11,28 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
-- retirement_carry_registration.md — SCORES 2026-08-31 (does editing the carrier move the count)
+- retirement_carry_registration.md — SCORES 2026-08-31 — NEEDS A NAMED BODY before the date (chunk ruling R3.3)
 - shelf_tier_2026-08-24.md — falsifiers F-reach (10-lap window) / F-cite / F-ledger / F-growth, all armed
 - librarian_compact_2026-08-24.md — P1/P2 scored 08-24 (P1 valid; P2 4-of-6, 2 void); the tier-experiment
   FORMULA registered for the NEXT compaction — that half is still open
 - bidirectional_correction_registration.md — reported DEAD as exact counter 08-16, but the 08-23 BOOT
   amendment's falsifier REVIVES it: prose if never run with the amended unit within a season
-- opposition_preregistration.md (+ amendments 1–3) — registered 08-10, NEVER RUN. Chair's call: run or attic
+- opposition_preregistration.md (+ amendments 1–3) — registered 08-10, NEVER RUN — moved to the overdue-decisions
+  list beside boot_v2 (chunk ruling R3.2): run or attic, one keeper sentence
 - boot_refactor_registration.md + two boot_v2 DRAFTs — deadline was 08-24 ("one dated sitting or attic",
   handoff_2026-08-17.md:117) — OVERDUE, needs the one-sentence call
 - forward_pointed_prereg_2026-08-22.md — UNVERIFIED (56 lines; scoring condition not re-checked since audit)
 - loop/2026-08-18/suggestion-probe/REGISTRATION.md — UNVERIFIED
-- sealed/restart_continuity_2026-08-15.md (outside loop/, belongs here) — 9 DAYS OVERDUE, T1 in Cycle 1 plan
 
 ## EXPECTED NEXT (Cycle 1, not yet on disk)
 - exteroception_registration.md — P-SENSE deliverable; must carry own falsifier or does not proceed
 - forgetting_registration.md — P-FORGET deliverable; same rule
 
 ## CONSUMED — ran, scored, closed
+- sealed/restart_continuity_2026-08-15.md — SCORED 08-24 (loop/restart_continuity_scorecard_2026-08-24.md,
+  9677a5f): mostly UNSCORABLE (void audited, not accepted), one CONFIRMED (55-day unbroken session). C declared
+  the conflict: the void's decisive figure came from C's own since-replaced session file — not re-derivable.
+  One repro command chair-checked WRONG ("three hits" → 2). Carrier finding still live per the scorecard.
 - root1_preregistration.md / root1b / root1_items / root1_table — VOID at 36 of 90, then 63 subjects; closed 08-03
 - transmission_preregistration.md + amendment — run VOID (08-16 correction); line ended, recalibration spent
 - regime_preregistration.md / primes / item_rule / candidates / screening_halted — HALTED 15 of 25, closed

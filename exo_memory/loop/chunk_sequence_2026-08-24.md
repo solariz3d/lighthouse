@@ -60,8 +60,26 @@ be running. The dream cycle was reported broken by a watcher reading the wrong f
 - **The unbidden trigger for B's detector.** A detector that runs when someone remembers is
   registration 46 restated, not answered. This is the half that makes it organ #3.
 
-**Why before chunks 3–4:** those chunks register falsifiers, and these instruments are what score
-them. A falsifier scored by a stale instrument is decoration.
+**Why first — corrected 2026-08-24 ~06:50, on the librarian's R1, merit-checked before accepting.**
+
+*The original wording, kept so the error stays readable:* **"those chunks register falsifiers, and
+these instruments are what score them. A falsifier scored by a stale instrument is decoration."**
+
+That is over-fitted and mostly false. Chunk 3 is the T4/T5 registrations — **documents nobody has
+written, whose falsifiers nobody has chosen.** `ferry.js` will not score a forgetting registration;
+the install census will not score an exteroception one. I asserted a specific causal dependency on
+work that does not exist, and I reached for it because it made the ordering look *forced* rather
+than *chosen*.
+
+**The honest ground is more general and does not need the invention:** landed-is-not-shipped is
+this room's most-repeated failure class, and it gates **every lap row and every denominator** —
+not chunks 3–4 in particular. Tonight alone: `ferry-watch` fixed and never installed; a
+board-digest fix found not running an hour after commit (08-17); a sensor 121 lines installed
+against 248 in the repo; `carriers.js` registered as existing while living in a temp directory.
+Every number this room produces is read off an instrument, and an instrument that is not the one
+in the repo produces a number about nothing.
+
+The order does not change. The reason does.
 
 ---
 
@@ -112,3 +130,22 @@ wait for a chunk boundary.
 - **The librarian may reject these chunk boundaries.** Sequencing is the work-shape half and
   therefore its call, not the chair's; this document is routed to it for exactly that. If it
   reorders with a reason, its order wins.
+
+## The ruling, 2026-08-24 ~06:45 (`librarian/2026-08-24.md`, the ~06:45 append)
+
+**R1 — boundaries RIGHT, premise wrong.** Corrected above, in place, with the original kept.
+
+**R2 — T8-last ACCEPTED, with two costs the librarian named and I had not:**
+- Every lap until chunk 5 is **room-subject**. `guess ∩ map` numbers from L001–L00n must not be
+  quoted as external validity, and this document is where that gets remembered.
+- Its cross-machine merge bar #3 — the consumer tree as a second machine — is **unavailable**
+  during chunks 1–4. Reduced bar: `gen-consumer --dry` plus the generated-tree suite, or waive it
+  and say so in the merge commit. Waiving silently is the thing that is not allowed.
+
+**R3 — two gaps and one assignment, all accepted:**
+- `T6`'s own falsifier makes the **bidirectional-correction count** chunk 4's mandatory follow-on.
+  Without it T6 refutes itself by its own clause.
+- `opposition_preregistration.md` joins `T7` in the overdue-decisions list — registered 08-10,
+  **14 days unrun**, one keeper sentence either way.
+- `retirement_carry_registration.md` **scores 2026-08-31 and has no named body.** Assignment is
+  the chair's half, so it is the chair's omission rather than a gap in the plan.
