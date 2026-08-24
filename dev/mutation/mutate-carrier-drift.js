@@ -8,7 +8,7 @@
  * failed exactly that way: `grep -rl "only decorrelated"` returned four files and looked like a
  * complete sweep, and the file it missed was the one the pass was named after.
  *
- * So "it has tests" is not the claim. The claim is that the suites go red on all twenty-one.
+ * So "it has tests" is not the claim. The claim is that the suites go red on all twenty-four.
  *
  * THREE TARGETS. Half this tool's behaviour lives in DATA: a registry is not configuration here,
  * it is the armed half of the detector, and a mutation that weakens a pattern or relabels a site
@@ -151,6 +151,22 @@ const MUTANTS = [
     file: HOOK, test: HOOK_TEST,
     apply: (s) => s.replace("const LEDGER = path.join(DATA, 'carrier-drift.jsonl');",
       "const LEDGER = path.join(DATA, 'no-such-dir', 'carrier-drift.jsonl');"),
+  },
+  {
+    name: '(hook) an unresolvable repo returns silently instead of recording UNRESOLVED',
+    file: HOOK, test: HOOK_TEST,
+    apply: (s) => s.replace("  if (!REPO) { ledger({ verdict: 'UNRESOLVED', why: 'no CARRIER_DRIFT_REPO and no room_path in ~/.consonance.json' }); return; }",
+      '  if (!REPO) { return; }'),
+  },
+  {
+    name: '(hook) room_path is ignored, so a machine with only config and no env goes dark',
+    file: HOOK, test: HOOK_TEST,
+    apply: (s) => s.replace("  if (room) return path.resolve(path.dirname(room), '..');", '  if (false) return null;'),
+  },
+  {
+    name: '(hook) the env override loses to the config, so no test can point it anywhere',
+    file: HOOK, test: HOOK_TEST,
+    apply: (s) => s.replace("  const env = envOverride('CARRIER_DRIFT_REPO');\n  if (env) return env;", ''),
   },
   {
     name: '(hook) going green never re-arms, so the next red is suppressed as a repeat',

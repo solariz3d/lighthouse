@@ -122,6 +122,31 @@ test('the dream gate holds: CONSONANCE_DREAM silences it and leaves no row', () 
   assert.strictEqual(r.rows.length, 0, 'not even a ledger row — a dream gets no instrumentation');
 });
 
+test('with no env and no config, it records UNRESOLVED rather than going quietly missing', () => {
+  // there is no hardcoded repo path to fall back on, by design — so the failure has to be
+  // written down, or it reads exactly like a clean run
+  const b = bed({ marker: false });
+  const home = path.join(b.root, 'nohome');
+  fs.mkdirSync(home, { recursive: true });
+  const r = fire(b, { CARRIER_DRIFT_REPO: '', USERPROFILE: home, HOME: home });
+  assert.strictEqual(r.status, 0);
+  assert.strictEqual(r.out.trim(), '');
+  assert.strictEqual(r.rows.length, 1, 'the give-up must leave a trace');
+  assert.strictEqual(r.rows[0].verdict, 'UNRESOLVED');
+});
+
+test('the repo is derived from room_path when no env override is set', () => {
+  const b = bed({ marker: false });
+  const home = path.join(b.root, 'home');
+  fs.mkdirSync(home, { recursive: true });
+  fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({
+    room_path: path.join(b.repo, 'exo_memory', 'BOOT.md'),
+  }));
+  const r = fire(b, { CARRIER_DRIFT_REPO: '', USERPROFILE: home, HOME: home });
+  assert.match(r.out, /CARRIER DRIFT/, 'room_path must resolve to the repo two levels up');
+  assert.strictEqual(r.rows[0].verdict, 'RED');
+});
+
 test('no repo at the configured path is silent and harmless', () => {
   const b = bed({ marker: false });
   const r = fire(b, { CARRIER_DRIFT_REPO: path.join(b.root, 'nowhere') });

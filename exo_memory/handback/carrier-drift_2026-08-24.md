@@ -1,7 +1,10 @@
 # Pane B — packet T3, hand-back. `carrier-drift`, built.
 
-**Nothing committed.** Six new files, three modified, all in the working tree. Every figure below
-has the command that re-derives it beside it; nothing is quoted from the brief.
+**I committed nothing.** The chair committed the first cut mid-run as `69959d8` while this file was
+being written, and the fix as `f5d7d01`. **`69959d8` shipped RED** — see *The commit that landed
+while I was still working* below. Still unstaged when this was written: the two new hook-resolution
+tests, three new mutants, and this file. Every figure below has the command that re-derives it
+beside it; nothing is quoted from the brief.
 
 > **THIS FILE IS INSIDE THE CORPUS THE TOOL SCANS.** It quotes the withdrawn wording, so it is
 > registered as a `mention` site in `consonance/tools/carrier-drift.registry.json`. **If you move
@@ -55,15 +58,18 @@ Modified, and each is half of a **pair** that would have shipped broken alone:
 
 ```
 node consonance/tools/carrier-drift.js --quiet
-  → GREEN — carrier-drift · 190 carriers · 0 findings
+  → GREEN — carrier-drift · 192 carriers · 0 findings
 
-node --test consonance/tools/carrier-drift.test.js      → 19 tests, 19 pass, 0 fail
-node --test consonance/hooks/carrier-drift-watch.test.js →  7 tests,  7 pass, 0 fail
-node dev/mutation/mutate-carrier-drift.js               → applied 21 · caught 21 · NOT APPLIED 0
-node consonance/hooks/dream-gate.test.js                → 51 passed, 0 failed
-node consonance/tools/js-suite.js                       → 56 green · 0 failed · 0 crashed · 0 silent
-node consonance/tools/portable-paths.js                 → green, 0 new
+node --test consonance/tools/carrier-drift.test.js       → 19 tests, 19 pass, 0 fail
+node --test consonance/hooks/carrier-drift-watch.test.js →  9 tests,  9 pass, 0 fail
+node dev/mutation/mutate-carrier-drift.js                → applied 24 · caught 24 · NOT APPLIED 0
+node consonance/hooks/dream-gate.test.js                 → 51 passed, 0 failed
+node consonance/tools/js-suite.js                        → 56 green · 0 failed · 0 crashed · 0 silent
+node consonance/tools/portable-paths.js                  → green, 147 files, 159 known sites, 0 new
 ```
+
+*(The carrier count moves — 189 → 190 → 191 → 192 across this run, as other panes add markdown.
+It is a reading of the tree at the moment of the run, not a standing figure.)*
 
 The historical half is not a hand-typed fixture. `carrier-drift.test.js` materialises **every
 markdown file in the tree at `21d5453^`** through one `git ls-tree` and one `git cat-file --batch`
@@ -138,6 +144,24 @@ trigger that is a no-op on the machine it was built on — registration 46's dis
 coat. **This is not a defect in precompact.js**; it is fail-open behaviour working as designed.
 It is a defect in reading `muscle_map.md:1049` as machine-independent.
 
+**And it is worse than that, found with pane C's instrument.** C's uncommitted `install.ps1`
+change splits ABSENT from DRIFT. Run against this machine, the chain is dead at three points, not
+one:
+
+```
+powershell -File dev/shell/install.ps1 -Check
+  → ABSENT   hooks\precompact.js   never installed - nothing to compare
+
+node -e "…read ~/.claude/settings.json…"
+  → PreCompact registers ONE hook: precompact-preserve.js.  hooks\precompact.js is not
+    registered on this machine at all.
+```
+
+So: not registered, not installed, and its script path absent. The rest of that picture is C's
+packet (13 ABSENT, 1 DRIFT) and is not re-derived here beyond the two rows that bear on this
+choice. It only strengthens the conclusion — **Stop was the right event**, and the reasoning
+would have held even if only the first of the three had been true.
+
 So the trigger is a **Stop** hook. The reasoning, each clause from a measured failure:
 
 - **Not PreToolUse.** The dispatch gate built four hours ago fires correctly and bypass mode
@@ -172,15 +196,51 @@ runs by command today.
 
 ---
 
+## The commit that landed while I was still working, and what it exposed
+
+`69959d8` ("T3: the immune organ…") was made by the chair at 06:39 while this hand-back was being
+written. It moved my six files from untracked to tracked, **and that alone turned the suite red.**
+
+```
+git archive 69959d8 | (extract; git init; git add -A; commit)
+node consonance/tools/portable-paths.js
+  → RED — 2 machine-specific path(s) not in the baseline
+      DRIVE FATAL-DEFAULT  consonance/hooks/carrier-drift-watch.js:54
+        const REPO = process.env.CARRIER_DRIFT_REPO || 'C:\Consonance\lighthouse';
+      DRIVE FATAL-DEFAULT  consonance/hooks/carrier-drift-watch.js:55
+        const DATA = process.env.CONSONANCE_DATA || 'C:\Consonance\data';
+```
+
+**The defect is mine.** I copied `ferry-watch.js:48`, which has exactly that shape — and that site
+is *grandfathered in the baseline*, so copying a shipped line reproduced a violation the ratchet
+was built to stop. Fixed in the tree: env → `~/.consonance.json` (`room_path`, from which the repo
+is two levels up) → **give up and record `UNRESOLVED`.** There is now no hardcoded path in the hook
+at all, and three new mutants cover the resolution chain.
+
+**But the mechanism that HID it is the finding, and it is general.** I ran `portable-paths.js`
+after writing the hook and got *green — 143 files in scope, 0 new*. That was a true reading and a
+useless one: `portable-paths.js:106` builds its scope from `git ls-files`, so **untracked work is
+outside every check it drives.** Scope went 143 → 147 the moment the chair committed.
+
+> **Running a tracked-file guard on untracked work is not a weak check, it is a check of something
+> else.** "Green before the commit" is not a prediction of "green after the commit," and the gap is
+> silent in the safe-looking direction. This is the `dream-gate`/manifest lesson one level up: a
+> guard that discovers its own scope cannot see what has not entered that scope yet.
+
+The cheap fix, not taken because it is not my packet: `portable-paths.js` could add
+`git ls-files --others --exclude-standard` behind a flag, so a pane can run the ratchet against
+what it is about to hand over. Flagged, not built.
+
 ## Three things found on the way, outside the packet
 
-1. **`ferry-watch.js`'s fix from tonight is not installed.** `b6057b1` (2026-08-24 01:39) rewrote
-   the backlog line because its citation resolved to a different figure. The installed copy still
-   contains the old one-line version:
+1. **`ferry-watch.js` is the one hook on this machine that is genuinely stale, and its fix from
+   tonight is not running.** `b6057b1` (2026-08-24 01:39) rewrote the backlog line because its
+   citation resolved to a different figure. The installed copy still contains the old version:
    ```
    diff consonance/hooks/ferry-watch.js ~/.claude/shell/ferry-watch.js
      → installed still prints: "Backlog beyond the window: N never ferried (…--report)."
-   powershell -File dev/shell/install.ps1 -Check   → DRIFT ferry-watch.js  (13 files drifted)
+   powershell -File dev/shell/install.ps1 -Check
+     → DRIFT ferry-watch.js        (the only DRIFT; the other 13 are ABSENT, per pane C's split)
    ```
    *Stated where it applies:* I cannot tell from here whether an install was attempted tonight —
    `Copy-Item` preserves `LastWriteTime`, so the installed file's Aug-10 mtime shows which SOURCE
@@ -238,16 +298,31 @@ runs by command today.
   as `STALE-SITE` until the registry is pruned. That friction is now named rather than discovered.
 - **I nearly reported `ferry-watch` as "the install did not take"** off an mtime. `Copy-Item`
   preserves mtime, so the mtime cannot carry that claim. Narrowed to what the bytes show.
+- **I shipped two hardcoded machine paths in the hook** by copying a grandfathered line from
+  `ferry-watch.js`, verified them "green" with a guard that could not see untracked files, and
+  found out only because the chair's commit put them in scope. Fixed, mutants added, and the
+  blind spot written up above rather than filed as my own bad luck.
+- **The tool caught this document.** Writing the hand-back put two occurrences of the withdrawn
+  wording into the corpus — both inside quoted shell commands — and `carrier-drift` went RED on
+  them within seconds. Registered as `mention` sites. It is the first thing it found that nobody
+  already knew about, and it found it on its author.
 
 ---
 
 ## What I did not touch
 
 `consonance/tools/actors.js`, `consonance/tools/actors.test.js` (pane A), `exo_memory/loop/`
-(pane C). Both A's files and three of C's show modified in `git status` from their own work; none
-of it is mine.
+(pane C). None of their work is mine.
+
+**Read the working tree carefully before committing this:** `dev/shell/install.ps1` shows as
+modified right now and **that diff is pane C's**, not mine (the ABSENT/DRIFT split). My two
+install.ps1 lines are already in `69959d8`. Mine, unstaged, are exactly four files:
+`consonance/hooks/carrier-drift-watch.js`, `consonance/hooks/carrier-drift-watch.test.js`,
+`dev/mutation/mutate-carrier-drift.js`, `consonance/tools/carrier-drift.registry.json`, plus this
+hand-back. Two panes editing one checkout means `git status` is not an attribution.
 
 **Scope taken beyond the three files the dispatch named:** `dev/shell/install.ps1` and
 `consonance/hooks/dream-gate.test.js`, both because the trigger is half of the packet's objective
-and each of those is the other half of a pair that fails alone. Neither is claimed by another
-pane this cycle. Say if that was wrong and I will unwind it.
+and each of those is the other half of a pair that fails alone. Neither was claimed by another
+pane when I took them — C has since edited install.ps1 for its own packet, and the two changes are
+in different regions and do not conflict. Say if that was wrong and I will unwind it.
