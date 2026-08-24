@@ -83,3 +83,57 @@ and the single noise row `main-tab/tree-assets`.
 
 *Re-derive this table with `data/letters.json` and `board.jsonl`; do not trust the numbers above if
 the files have moved on. A trace to re-run, not a doctrine to believe.*
+
+---
+
+## Append, 2026-08-24 (pane A) — the open mechanism item, closed on its stated evidence
+
+The section above leaves this open: *"which write path prunes `letters.json`"*, resting on two
+observations. One of them does not survive re-derivation.
+
+**`061bc00e` was never in `letters.json` to be pruned.** The roster reads its absence as proof that
+entries get dropped, on the grounds that it *"postdates the oldest surviving entry"* — it posted on
+2026-07-14, two days after A's first board row on 07-12. That is the right fact against the wrong
+clock. A's first board row is not when A got a letter. The letter system's first assignment is
+
+```
+persist.log:64   1785057198 letter A -> pane=6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f
+```
+
+`1785057198` = **2026-07-26T09:13:18Z**, twelve days after 061bc00e's last row. There was no letter
+for it to lose. It is not a pruned entry; it is a pane that died before the mechanism existed. Same
+for the other six ids in the list above, all of them dead by 07-14.
+
+**The stronger negative, which the roster could have had:** `persist.log` holds exactly **13**
+`letter X -> pane=` assignments, A through M, and `letters.json` holds exactly **13** entries. They
+match one-for-one, in both directions, with nothing extra on either side. **Nothing that was ever
+assigned a letter has been removed from the map.** `F` being retained while not live is the same
+finding from the other end rather than a second puzzle: F was assigned on 2026-08-10 and has zero
+board rows to this day, so it is not a survivor of pruning, it is a pane that never spoke.
+
+*So the item closes on its evidence — but read the limit below before treating pruning as refuted.*
+
+**The limit, stated because it is the part that could overturn this.** `actors.js`'s ALIASES block
+cites seven `born-kept fresh pane=… letter=…` lines for panes it dates to 2026-07-30/31. **None of
+those lines is in this machine's `persist.log`, and none of those seven ids has a single board row
+here.** The window is blank in *both* files independently — no `persist.log` line and no board row
+between **2026-07-28T12:50Z and 2026-08-09T07:17Z** — while the commits that added those aliases
+(`e292741`, 2026-07-31; `2a943f1`, 2026-08-01) land squarely inside it. The obvious reading is that
+those panes lived on the other machine, whose `persist.log` is not here. **That cannot be checked
+from this box**, and if it is right then the 13-for-13 match above is a property of one machine's
+log rather than of the letter system. Anyone with the desktop's `persist.log` closes this in one
+grep.
+
+**And the list above is stale.** `sibling-3d57124e` was resolved on 2026-08-24 (`393c798`). The
+remaining seven are no longer an unresolved worklist: they are the `pre-letter` class in
+`actors.js`, each carrying its board evidence, and `census` now reports them under their own `via`
+instead of as ids the file does not know.
+
+Re-derive all of the above:
+
+```
+grep -nE "^[0-9]+ letter [A-Z] -> pane=" C:/Consonance/data/persist.log | head -1
+node -e "console.log(Object.keys(require('C:/Consonance/data/letters.json')).length)"
+node consonance/tools/actors.js            # PRE-LETTER block at the foot of the output
+node consonance/tools/actors.test.js       # 20 assertions, incl. LETTER_BIRTH re-derived from persist.log
+```

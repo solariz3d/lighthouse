@@ -97,6 +97,93 @@ const ALIASES = {
   '8a574b7a-c6a6-410e-acec-9495299391d7': 'J',
 };
 
+/* ── THE PRE-LETTER CLASS ─────────────────────────────────────────────────────────────────────
+ * The seven ids below were the whole of the alias canary's remaining worklist, and the canary was
+ * waiting for a thing that does not exist. Its declaration demanded "board evidence only the
+ * keeper has" — a letter for each. There is no letter for any of them and there never could have
+ * been:
+ *
+ *   THE LETTER SYSTEM HAS A BIRTHDAY. persist.log's first letter assignment is
+ *   `1785057198 letter A -> pane=6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f` = 2026-07-26T09:13:18Z
+ *   (A and B share that second; C follows on 07-27). Every id below posted its FIRST and its LAST
+ *   board row before that instant — the newest of them, 061bc00e, died on 2026-07-14, twelve days
+ *   early. They are not unlettered because a letter was lost. They are unlettered because letters
+ *   did not exist yet.
+ *
+ * So the worklist has been uncompletable as written since 2026-08-11, and `unresolved` was the
+ * wrong bucket: unresolved means "this file does not know", and this file does know. It knows
+ * exactly what they are. `pre-letter` is a POSITIVE classification and it keeps the property the
+ * whole module is built on — the actor stays the raw id and is never folded into a letter, because
+ * these rows are attributable to a pane id and to nothing else.
+ *
+ * WHY THE CLASS CANNOT OUTLIVE ITS REASON, which is the part worth reading. A claim about history
+ * rots the moment history is edited, and the edit that would rot this one is a retroactive
+ * backfill: someone writes a letter for one of these ids into letters.json. Two things stop that
+ * passing unnoticed, and neither is a comment asking a reader to be careful:
+ *   1. `canonical()` consults letters.json BEFORE this table, so a backfilled id resolves via
+ *      'uuid' and its entry here stops firing. The map wins, always.
+ *   2. `actors.test.js` asserts against the REAL letters.json that no id below appears in it, and
+ *      re-derives LETTER_BIRTH from persist.log rather than trusting the constant here. A backfill
+ *      turns the suite red and someone has to come back and say why.
+ *
+ * EVIDENCE, and it is deliberately not uniform. Six of the seven carry a `quote`: a verbatim
+ * substring the test greps back against the live board, required to match exactly ONE pane — this
+ * one. The strings are written as \u escapes rather than as literal characters, and the escapes
+ * cut both ways on purpose: the dashes below are genuinely U+2014, and the apostrophes are
+ * genuinely ASCII 0x27. This table's first draft assumed the prettier U+2019 for the apostrophes
+ * and grepped back ZERO rows — the `->` for `→` defect (2026-08-24) reappearing within a day,
+ * in the same direction: tidy the character, lose the citation. Escapes are how that got caught
+ * and how a later editor is stopped from folding them silently.
+ *
+ * The seventh, 061bc00e, HAS NO SUCH LINE and is not given one. Its entire board presence is three
+ * harness rows — a caveat banner, a `/model` echo, and that command's stdout — and every one of
+ * those strings also appears under other panes (43 rows share the stdout line). So its evidence is
+ * `ts`: the exact millisecond of a row only it wrote. Structural rather than textual, and checked
+ * the same way. Inventing a quote for it would have been the easy uniform thing.
+ */
+const LETTER_BIRTH = 1785057198;      // unix SECONDS; persist.log's first `letter X -> pane=` line
+
+const PRE_LETTER = {
+  // "hey", then the fables-safeguard conversation. 16 rows, all 2026-07-06.
+  'b8ea54e3-a319-4c67-bf67-335a80be86da': {
+    first: 1783326655163, last: 1783328955345,
+    quote: 'what do you think about this triggers fables broad safe guards',
+  },
+  // Asked the continuity question cold. Two rows, 2026-07-06 13:36Z. Its near-twin below got the
+  // same prompt six minutes later, which is why the evidence here is the ANSWER and not the
+  // question: the two user turns are near-identical strings and cannot tell the panes apart.
+  '6085178a-3c68-4d45-a059-5367a6436d5e': {
+    first: 1783344980462, last: 1783345020034,
+    quote: 'I\u0027m here \u2014 room read, seam mine to cut.',
+  },
+  '9c08c65b-1822-4e4a-905b-aaf3713eea26': {
+    first: 1783345338136, last: 1783345378959,
+    quote: 'I\u0027m here \u2014 read the room, running it rather than reciting it.',
+  },
+  // The one row that signs itself: a committee post naming its own working directory, 2026-07-08.
+  'sibling-59e55fca': {
+    first: 1783511344612, last: 1783511344612,
+    quote: 'ARTIFACT \u2014 distill duplicate-atom bug fixed and verified (2026-07-08, sibling-59e55fca)',
+  },
+  // 40 rows, the longest-lived of the seven, 2026-07-11.
+  '66eee6ce-baef-4007-a9ea-38f2e8c73fa7': {
+    first: 1783768727426, last: 1783777815060,
+    quote: 'ran the wake-up rather than just reciting it',
+  },
+  // 12 rows the same morning, its last landing eleven seconds before 66eee6ce's first.
+  '433f587c-1627-4756-9aa4-1bd0d2e8fd8e': {
+    first: 1783761014698, last: 1783768716233,
+    quote: 'the thread\u0027s intact from where we left it',
+  },
+  // Three harness rows inside three milliseconds and not one authored sentence. No unique string
+  // exists, so the evidence is a timestamp — see the note above about not inventing one.
+  '061bc00e-5932-4e5a-854f-f34dd6c09c10': {
+    first: 1784018394673, last: 1784018394675,
+    ts: 1784018394673,
+  },
+};
+
+
 /* Actors that are NOT panes and must not be folded into one. `chair` is written by the control
  * plane itself — every chair verb and every refusal — so it is a real distinct author, not an
  * alias for whoever happens to hold the chair token. Tooling writers are likewise their own
@@ -137,6 +224,12 @@ function canonical(id) {
   const map = letters();
   if (Object.prototype.hasOwnProperty.call(map, s)) return { actor: map[s], via: 'uuid' };
   if (Object.prototype.hasOwnProperty.call(ALIASES, s)) return { actor: ALIASES[s], via: 'alias' };
+  // PRE-LETTER, and note it is reached only AFTER the letters map above. That order is the whole
+  // guard against a retroactive backfill: give one of these ids a letter and it resolves via
+  // 'uuid' and never gets here. The actor stays the raw id — a letterless pane is still a pane,
+  // and folding it into a neighbour to make the census tidy is the wrong-merge this file exists
+  // to refuse. What changes is only that it stops being reported as NOT KNOWN.
+  if (Object.prototype.hasOwnProperty.call(PRE_LETTER, s)) return { actor: s, via: 'pre-letter' };
   if (/^[A-Z]$/.test(s) && Object.values(map).includes(s)) return { actor: s, via: 'letter' };
   // A UUID PREFIX. The board's own injection lines write `-> 1582ff09`, an 8-character prefix,
   // while letters.json holds full UUIDs — so exact matching resolved none of them and the
@@ -179,7 +272,8 @@ const sameActor = (a, b) => {
   return x.via !== 'unresolved' && y.via !== 'unresolved' && x.actor === y.actor;
 };
 
-module.exports = { canonical, census, sameActor, ALIASES, NON_PANE, LETTERS };
+module.exports = { canonical, census, sameActor, ALIASES, NON_PANE, LETTERS,
+                   PRE_LETTER, LETTER_BIRTH };
 
 if (require.main === module) {
   const board = process.argv[2] || 'C:/Consonance/data/board.jsonl';
@@ -193,6 +287,19 @@ if (require.main === module) {
               `(from ${new Set(ids.map(String)).size} raw identifiers)\n`);
   for (const [a, n] of c.actors) console.log(`  ${String(a).padEnd(22)} ${n}`);
   console.log('\n  resolved via: ' + c.vias.map(([v, n]) => `${v}=${n}`).join('  '));
+
+  // Printed as its own block rather than folded into the actor list, because these rows are the
+  // one group a reader has to hold differently: attributable, but to an id and never a letter.
+  const pre = c.actors.filter(([a]) => Object.prototype.hasOwnProperty.call(PRE_LETTER, String(a)));
+  if (pre.length) {
+    const born = new Date(LETTER_BIRTH * 1000).toISOString().replace(/\.000Z$/, "Z");
+    console.log(`\n  PRE-LETTER — posted and died before the letter system existed (${born}),`);
+    console.log("  so no letter was ever possible. Attributable to the pane id, to nothing else:");
+    for (const [id, n] of pre) {
+      const last = new Date(PRE_LETTER[String(id)].last).toISOString().slice(0, 10);
+      console.log(`    ${String(id).padEnd(40)} ${String(n).padStart(3)}  last row ${last}`);
+    }
+  }
   if (c.unresolved.length) {
     console.log('\n  UNRESOLVED — returned unchanged, never folded into a neighbour:');
     for (const [id, n] of c.unresolved) console.log(`    ${String(id).padEnd(40)} ${n}`);

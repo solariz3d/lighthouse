@@ -8,12 +8,13 @@
 // person all along. So the tests below weight that way: most of them are about refusing to
 // merge, and the census is required to publish its own failures.
 //
-// JS-SUITE: EXPECTED-RED — this file is the alias canary and is red ON PURPOSE. It stays red until
-// the 15-item alias worklist is curated with board evidence only the keeper has (recorded
-// 2026-08-11; the journal called it "deliberate; the canary"). Declared here 2026-08-17 because
-// that fact lived only in a journal, so nothing running this file could tell a deliberate red from
-// a broken one — and js-suite.js now reads this marker. When the worklist is curated and this goes
-// green, js-suite FAILS until the line is removed, so the exemption cannot outlive its reason.
+// RESOLVED 2026-08-24 and the declaration removed with it. This file carried a
+// `JS-SUITE: EXPECTED-RED` marker from 2026-08-17: red on purpose until the alias worklist was
+// curated "with board evidence only the keeper has". That evidence never existed — the seven
+// remaining ids all died before the letter system was born — so the condition was uncompletable
+// rather than merely unmet, and the exemption would have outlived its reason indefinitely.
+// js-suite reports a declared-red file that goes green as CANARY SANG and fails the run, which
+// is why the marker had to come out in the same commit that made the file green.
 //
 //   node consonance/tools/actors.test.js
 'use strict';
@@ -32,7 +33,23 @@ fs.writeFileSync(path.join(dir, 'letters.json'), JSON.stringify({
   '18916fe2-463d-4bef-a513-c577506d4c02': 'B',
 }));
 process.env.CONSONANCE_DATA = dir;
-const { canonical, census, sameActor } = require('./actors.js');
+const { canonical, census, sameActor, PRE_LETTER, LETTER_BIRTH } = require('./actors.js');
+
+// The real corpus, named once. Everything else derives from it, so this file carries exactly one
+// machine-specific literal and a different box changes one line.
+const board = 'C:/Consonance/data/board.jsonl';
+const realData = path.dirname(board);
+const persist = path.join(realData, 'persist.log');
+const realLetters = path.join(realData, 'letters.json');
+
+const boardRows = () => {
+  const out = [];
+  for (const line of fs.readFileSync(board, 'utf8').split(/\r?\n/)) {
+    if (!line.trim()) continue;
+    try { out.push(JSON.parse(line)); } catch { /* not a record */ }
+  }
+  return out;
+};
 
 test('a UUID resolves to its letter, and says it came from the map', () => {
   const r = canonical('18916fe2-463d-4bef-a513-c577506d4c02');
@@ -121,20 +138,157 @@ test('an absent letters map resolves nothing and claims nothing', () => {
   assert.strictEqual(JSON.parse(r).via, 'unresolved');
 });
 
-test('the real board resolves with nothing left over', () => {
-  // Not a fixture: the actual corpus, because a synthetic map agrees with the rule by
-  // construction and only the corpus can disagree with it.
-  const board = 'C:/Consonance/data/board.jsonl';
-  if (!fs.existsSync(board)) return;                    // other machine: skip, do not fail
+
+// Run in a child process so it sees the REAL letters map (see the test below for why).
+const SNIPPET = `
+  const fs = require('fs');
+  const { census } = require(${JSON.stringify(path.join(__dirname, 'actors.js'))});
   const ids = [];
-  for (const line of fs.readFileSync(board, 'utf8').split(/\r?\n/)) {
+  for (const line of fs.readFileSync(process.env.CONSONANCE_DATA + '/board.jsonl', 'utf8').split(/\\r?\\n/)) {
     if (!line.trim()) continue;
-    try { ids.push(JSON.parse(line).pane); } catch { /* not a record */ }
+    try { ids.push(JSON.parse(line).pane); } catch {}
   }
   const c = census(ids);
-  assert.ok(c.actors.length < new Set(ids.map(String)).size,
-    'the resolver must actually collapse something on the real board');
+  console.log(JSON.stringify({
+    actors: c.actors.length,
+    rawIds: new Set(ids.map(String)).size,
+    unresolved: c.unresolved,
+  }));
+`;
+test('the real board resolves with nothing left over — under the REAL letters map', (t) => {
+  // Not a fixture: the actual corpus, because a synthetic map agrees with the rule by
+  // construction and only the corpus can disagree with it.
+  //
+  // AND IT HAD TO BE RUN IN A CHILD PROCESS, which is a defect repair rather than a refactor.
+  // Every assertion in this file runs under the three-pane fixture map installed at the top, and
+  // this one read the LIVE board through it. So it reported A, C, M, E, G, H, I, J, K and B's own
+  // UUID as unresolved — sixteen ids, nine of them panes that resolve perfectly well against the
+  // real letters.json. The canary was therefore UNREACHABLE: curating the alias worklist could
+  // never have turned it green, because most of what it was red about was its own fixture. Worse,
+  // its failure message reads "add them to ALIASES with a quoted line as evidence", which invites
+  // copying live panes out of letters.json into a hand-kept table — the stale-duplicate defect
+  // this module was written to end, arriving as the fix for a symptom the module never had.
+  //
+  // A fixture is right for the unit tests above and wrong here. The child process is how one file
+  // holds both: the module caches its map on first read, so the only way to ask it a question
+  // about the real map is to ask a fresh process.
+  if (!fs.existsSync(board)) return t.skip('board.jsonl absent on this machine');
+  if (!fs.existsSync(realLetters)) return t.skip('letters.json absent on this machine');
+  const out = require('child_process').execFileSync(process.execPath, ['-e', SNIPPET],
+    { encoding: 'utf8', env: { ...process.env, CONSONANCE_DATA: realData } });
+  const c = JSON.parse(out);
+  assert.ok(c.actors < c.rawIds, 'the resolver must actually collapse something on the real board');
   assert.deepStrictEqual(c.unresolved, [],
-    'unresolved ids on the live board: add them to ALIASES with a quoted line as evidence, ' +
-    'or leave them — but this assertion is how you find out they appeared');
+    'unresolved ids on the live board. If one is a pane that predates the letter system, it ' +
+    'belongs in PRE_LETTER with its evidence; if it is a live pane, letters.json is the fix and ' +
+    'NOT a hand-copied alias. Either way this assertion is how you find out it appeared');
+});
+
+// ── THE PRE-LETTER CLASS ─────────────────────────────────────────────────────────────────────
+// The seven ids the canary was waiting on. `unresolved` said "this file does not know"; the file
+// does know, and the tests below are about the difference between those two states. Note which
+// direction they weight: almost all of them are still about REFUSING to merge, because a class
+// that made the census tidy by folding a letterless pane into a neighbour would be the exact
+// failure the module was written against, arriving through the door marked "fix".
+
+test('a pre-letter id is CLASSIFIED, and is still never folded into a letter', () => {
+  for (const id of Object.keys(PRE_LETTER)) {
+    assert.deepStrictEqual(canonical(id), { actor: id, via: 'pre-letter' },
+      `${id} must resolve to ITSELF — the class says "attributable to a pane id", not to a letter`);
+    for (const letter of ['A', 'B', 'C']) {
+      assert.ok(!sameActor(id, letter), `${id} must not become ${letter}`);
+    }
+  }
+});
+
+test('two rows from ONE pre-letter pane are one actor — the difference from unresolved', () => {
+  // This is the whole gain, and it is worth stating as an assertion rather than a comment.
+  // `sameActor` answers "known to be one actor", so two identical UNKNOWN strings stay `false`
+  // (asserted above). A pre-letter id is known: it is a specific pane that specifically has no
+  // letter. Same string, and now a real answer.
+  const id = '66eee6ce-baef-4007-a9ea-38f2e8c73fa7';
+  assert.ok(sameActor(id, id));
+  assert.ok(!sameActor('sibling-de4ec539', 'sibling-de4ec539'));
+});
+
+test('census reports pre-letter as its own via, and stops calling them unknown', () => {
+  const id = 'b8ea54e3-a319-4c67-bf67-335a80be86da';
+  const c = census(['A', id, id, 'who-is-this']);
+  const vias = new Map(c.vias);
+  assert.strictEqual(vias.get('pre-letter'), 2);
+  assert.deepStrictEqual(c.unresolved, [['who-is-this', 1]],
+    'a pre-letter id must leave the unresolved list, and a genuine unknown must stay in it');
+});
+
+test('a RETROACTIVE BACKFILL wins: given a letter, an id stops being pre-letter', () => {
+  // The one edit that would make this class a lie is someone writing a letter for one of these
+  // ids. `canonical` consults the map first, so the table simply stops firing — asserted here in
+  // a child process because the module caches its map on first read.
+  const dir2 = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-backfill-'));
+  fs.writeFileSync(path.join(dir2, 'letters.json'),
+    JSON.stringify({ '061bc00e-5932-4e5a-854f-f34dd6c09c10': 'Z' }));
+  const out = require('child_process').execFileSync(process.execPath, ['-e', `
+    process.env.CONSONANCE_DATA = ${JSON.stringify(dir2)};
+    const { canonical } = require(${JSON.stringify(path.join(__dirname, 'actors.js'))});
+    console.log(JSON.stringify(canonical('061bc00e-5932-4e5a-854f-f34dd6c09c10')));
+  `], { encoding: 'utf8' });
+  assert.deepStrictEqual(JSON.parse(out), { actor: 'Z', via: 'uuid' },
+    'the letters map must outrank the pre-letter table, or the class outlives its reason');
+});
+
+// ── THE CORPUS TESTS ─────────────────────────────────────────────────────────────────────────
+// Everything below reads the real files. They SKIP on a machine that does not have them rather
+// than crash (guard-census died ENOENT on another box's absolute paths for longer than a week) —
+// and they skip VISIBLY, via t.skip, because a corpus test that quietly returns is reported as a
+// pass and is indistinguishable from one that ran. That is the canary lesson at file scale: an
+// exemption has to be legible as an exemption.
+
+test('LETTER_BIRTH re-derives from persist.log, rather than being trusted', (t) => {
+  if (!fs.existsSync(persist)) return t.skip('persist.log absent on this machine');
+  const stamps = fs.readFileSync(persist, 'utf8').split(/\r?\n/)
+    .map((l) => /^(\d{9,12}) letter [A-Z] -> pane=\S+/.exec(l))
+    .filter(Boolean).map((m) => Number(m[1]));
+  assert.ok(stamps.length > 0, 'no letter assignments in persist.log at all — read it before editing this');
+  assert.strictEqual(Math.min(...stamps), LETTER_BIRTH,
+    'the first letter ever assigned is not the constant in actors.js; one of them is wrong');
+});
+
+test('every pre-letter id posted its LAST row before the first letter existed', (t) => {
+  if (!fs.existsSync(board)) return t.skip('board.jsonl absent on this machine');
+  const rows = boardRows();
+  for (const [id, ev] of Object.entries(PRE_LETTER)) {
+    const ts = rows.filter((r) => String(r.pane) === id).map((r) => r.ts).filter((n) => typeof n === 'number');
+    assert.ok(ts.length > 0, `${id} has no timestamped board rows — the class claims it posted`);
+    assert.strictEqual(Math.min(...ts), ev.first, `${id}: recorded first row does not match the board`);
+    assert.strictEqual(Math.max(...ts), ev.last, `${id}: recorded last row does not match the board`);
+    assert.ok(ev.last < LETTER_BIRTH * 1000,
+      `${id} was still posting after the letter system existed — it is NOT pre-letter, and the ` +
+      'reason it has no letter is something else that nobody has established');
+  }
+});
+
+test('each evidence line greps back, and to exactly ONE pane', (t) => {
+  if (!fs.existsSync(board)) return t.skip('board.jsonl absent on this machine');
+  const rows = boardRows();
+  for (const [id, ev] of Object.entries(PRE_LETTER)) {
+    const hits = ev.quote
+      ? rows.filter((r) => String(r.text || '').includes(ev.quote))
+      : rows.filter((r) => r.ts === ev.ts);
+    const panes = [...new Set(hits.map((h) => String(h.pane)))];
+    assert.ok(hits.length > 0,
+      `${id}: its evidence matches NOTHING on the board. A citation that does not grep back is a ` +
+      'pacifier citation — check for a tidied em-dash or apostrophe before assuming the row is gone');
+    assert.deepStrictEqual(panes, [id],
+      `${id}: its evidence also matches ${panes.length - 1} other pane(s), so it identifies nobody`);
+  }
+});
+
+test('no pre-letter id has been given a letter since', (t) => {
+  if (!fs.existsSync(realLetters)) return t.skip('letters.json absent on this machine');
+  const map = JSON.parse(fs.readFileSync(realLetters, 'utf8'));
+  for (const id of Object.keys(PRE_LETTER)) {
+    assert.ok(!(id in map),
+      `${id} now HAS a letter (${map[id]}). The pre-letter class is stale for it: either the ` +
+      'backfill is right and the entry goes, or the backfill is wrong. Somebody has to say which');
+  }
 });
