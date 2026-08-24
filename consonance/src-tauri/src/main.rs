@@ -6952,8 +6952,17 @@ mod shelf_tests {
         let i = librarian_intake().expect("intake must resolve");
         assert!(i.contains("THE SHELF"), "the shelf never reached the librarian's intake");
         let room = i.find("# THE ROOM you are holding").expect("room missing");
-        let shelf = i.find("# THE SHELF").expect("shelf missing");
-        assert!(room < shelf, "the room is read before the shelf it indexes");
+        // The EXACT header corpus_shelf emits, not the substring. `find("# THE SHELF")` matched
+        // "## THE SHELF IS TIERED" in the brief (LIBRARIAN.md:90) — which is pushed BEFORE the
+        // room — so this test was red from the moment that heading was written, while reporting
+        // an ordering defect that did not exist. Two readers published two different wrong
+        // diagnoses off it before anyone looked at what find() had actually landed on.
+        let shelf = i.find("\n# THE SHELF\n").expect("the shelf SECTION missing");
+        assert!(
+            room < shelf,
+            "the shelf is emitted BEFORE the room it indexes — a wake should meet the frame \
+             before the holdings"
+        );
     }
 }
 
