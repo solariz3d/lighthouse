@@ -133,6 +133,11 @@ const ENTRY = {
   // Added 2026-08-24 with dispatch-gate.js itself. Call site, not definition, for the reason the
   // header of this table records: `function main()` is declared above the guard.
   'dispatch-gate.js': 'try { main(); }',
+  // Added 2026-08-24 with carrier-drift-watch.js itself, in the same change as its install.ps1
+  // manifest entry. Landing the manifest line without this one is the guard-census failure in
+  // miniature: the roster is discovered and this table is hand-kept, so the suite would have
+  // gone red on a hook that was fine. Call site, not definition, per this table's header.
+  'carrier-drift-watch.js': 'try { main(); }',
   // Added 2026-08-18 with precompact-preserve.js itself. Call site, not definition: `function
   // main()` is declared above the guard and invoked at the bottom under require.main, so the
   // bare name would compare the guard against the definition — the trap this table's header

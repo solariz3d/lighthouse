@@ -118,6 +118,12 @@ $files = @(
   # above. This one is a PreToolUse gate, so it also needed Matcher support in $register -- an
   # unmatched PreToolUse hook fires on every tool call in the session.
   @{ From = 'consonance\hooks\dispatch-gate.js';          To = 'dispatch-gate.js' }
+  # Added 2026-08-24 with its registration below, same commit, same reason as the entries above.
+  # It is a Stop hook rather than a PreCompact one ON PURPOSE: precompact.js resolves its script
+  # under %USERPROFILE%\Desktop\lighthouse, which does not exist on the laptop, so the PreCompact
+  # chain the record describes as "residue fired from checkpoint" has never run on this machine.
+  # Copying that wiring would have shipped a trigger that is a no-op here. See the hook's header.
+  @{ From = 'consonance\hooks\carrier-drift-watch.js';    To = 'carrier-drift-watch.js' }
 )
 
 # What this script REGISTERS. Only these are ever touched in settings.json; anything else found
@@ -148,6 +154,11 @@ $register = @(
   # another seat's pane and nothing else. It ASKS rather than blocks, and fails open on any error.
   @{ Event = 'PreToolUse';       Rel = 'dispatch-gate.js';            Runner = 'node';
      Matcher = 'mcp__consonance__chair_inject|mcp__consonance__call_chair' }
+  # Carrier drift. Silent when green, silent when the same red is already outstanding, and it
+  # writes a ledger row on EVERY firing including the silent ones -- a hook that is quiet because
+  # it is working reads exactly like a hook that was never installed, which is what the dispatch
+  # gate's first probe cost to learn.
+  @{ Event = 'Stop';             Rel = 'carrier-drift-watch.js';      Runner = 'node' }
 )
 
 if (-not (Test-Path $dest)) {
