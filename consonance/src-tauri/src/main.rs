@@ -2734,6 +2734,35 @@ fn read_letters() -> BTreeMap<String, String> {
         .unwrap_or_default()
 }
 
+/// The SEAT a mount letter belongs to: "main", "librarian", or "committee".
+///
+/// Resolved from `letters.json` — the same registry that chose the mount — so the answer cannot
+/// drift from the routing. Before this, every board entry was stamped `role: "committee"`
+/// whoever posted it, so no seat was distinguishable by role on the read path, and the librarian
+/// read its own correct attribution (`[M]`) as a defect because the role beside it said
+/// otherwise (pane E, 2026-08-24).
+///
+/// Unknown letters are "committee" rather than an error: a pane with no seat IS the committee.
+fn seat_role_from(letters: &BTreeMap<String, String>, letter: &str) -> &'static str {
+    for (sid, l) in letters {
+        if l == letter {
+            if sid == LIBRARIAN_SID {
+                return "librarian";
+            }
+            if sid == MAIN_SID {
+                return "main";
+            }
+            return "committee";
+        }
+    }
+    "committee"
+}
+
+/// Read the registry, delegate. Holds no logic of its own — see `seat_role_from`.
+pub fn seat_role_for_letter(letter: &str) -> &'static str {
+    seat_role_from(&read_letters(), letter)
+}
+
 /// This pane's letter, assigning (and persisting) one the first time it is asked for.
 /// A–Z, then A2… — a 27th pane is a naming problem, never a collision.
 /// Where committee panes keep their own multi-writer maps.
@@ -5293,6 +5322,53 @@ fn chair_decide_exec(app: &AppHandle, id: &str, approve: bool) -> String {
     format!("approved + {outcome}")
 }
 
+/// The librarian speaking into Main. The narrow half of the 2026-08-24 widening.
+///
+/// No target: the destination is `MAIN_SID` and nothing else, so this cannot misdeliver and does
+/// not consult `resolve_pane` at all. `chair_target_guard` is deliberately NOT relaxed — the
+/// chair still cannot address its own pane; that rule is about SELF-injection and is untouched.
+///
+/// Provenance is written by the system rather than by the sender, for the reason
+/// `brief/LIBRARIAN.md:191-193` records: on 2026-08-22 the orchestrator acted on a
+/// text-predictor's autocomplete believing it was the human. A second non-human voice in
+/// someone else's context needs a name on it or it is eventually mistaken for the person.
+fn librarian_call_exec(app: &AppHandle, text: &str) -> String {
+    let panes = app.state::<Panes>();
+    if !panes.0.lock().unwrap().contains_key(MAIN_SID) {
+        let out = "the Main orchestrator is not awake — nothing was delivered".to_string();
+        chair_audit(app, format!("call_chair REFUSED — {out}"));
+        return out;
+    }
+    let msg = format!("[librarian:LIB] {text}");
+    // Receipt taken BEFORE the write, so only bytes arriving after it can count as this
+    // write's render — the same discipline as chair_inject_exec, and for the same reason:
+    // inject_to_pane returning Ok means the bytes left our pipe and nothing more.
+    let cap = capture_path(MAIN_SID);
+    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
+    let delivered = inject_to_pane(&panes, MAIN_SID, &msg);
+    let mut preview: String = text.chars().take(110).collect();
+    if text.chars().count() > 110 {
+        preview.push('…');
+    }
+    let receipt = match delivered {
+        Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
+        Err(_) => Receipt::NotAttempted,
+    };
+    match delivered {
+        Ok(_) => {
+            chair_audit(app, format!("call_chair -> Main [{receipt:?}]: \"{preview}\""));
+            match receipt {
+                Receipt::Received => "delivered to Main (rendered in its pane — not proof it was read)".to_string(),
+                _ => "written to Main — UNCONFIRMED (no render yet; verify before treating as delivered)".to_string(),
+            }
+        }
+        Err(e) => {
+            chair_audit(app, format!("call_chair -> Main FAILED: {e}"));
+            format!("delivery failed: {e}")
+        }
+    }
+}
+
 fn chair_scrollback_exec(app: &AppHandle, target: &str) -> String {
     let panes = app.state::<Panes>();
     let names = app.state::<PaneNames>();
@@ -5521,6 +5597,15 @@ fn main() {
                                 continue;
                             }
                             let _ = reply.send(chair_decide_exec(&chair_handle, &id, approve));
+                        }
+                        mcp::ChairCmd::CallChair { text, reply } => {
+                            // Acting verb: a caller that already timed out must never fire late,
+                            // and the drop is LOUD (Around, 2026-07-27).
+                            if reply.is_closed() {
+                                chair_audit(&chair_handle, "call_chair: EXPIRED unexecuted (caller timed out before the actuator ran)".to_string());
+                                continue;
+                            }
+                            let _ = reply.send(librarian_call_exec(&chair_handle, &text));
                         }
                         mcp::ChairCmd::Scrollback { target, reply } => {
                             if reply.is_closed() {
@@ -6907,6 +6992,142 @@ mod addressable_seat_tests {
     #[test]
     fn the_chair_still_cannot_address_itself() {
         assert!(chair_target_guard(MAIN_SID, "main").is_err());
+    }
+}
+
+#[cfg(test)]
+mod seat_role_tests {
+    use super::*;
+
+    fn registry() -> BTreeMap<String, String> {
+        // the real shape: the librarian holds M and the orchestrator holds D, which is exactly
+        // the pairing that made `[M] committee` look like a defect when it was correct
+        let mut m = BTreeMap::new();
+        m.insert(LIBRARIAN_SID.to_string(), "M".to_string());
+        m.insert(MAIN_SID.to_string(), "D".to_string());
+        m.insert("6fe15f0a-aaaa-bbbb-cccc-dddddddddddd".to_string(), "A".to_string());
+        m
+    }
+
+    /// The defect: every board entry was stamped `role: "committee"` whoever posted it, so the
+    /// librarian was indistinguishable BY ROLE from any pane on the read path (pane E,
+    /// 2026-08-24, confirming it at three sites in mcp.rs).
+    #[test]
+    fn each_seat_reports_its_own_role() {
+        let r = registry();
+        assert_eq!(seat_role_from(&r, "M"), "librarian");
+        assert_eq!(seat_role_from(&r, "D"), "main");
+        assert_eq!(seat_role_from(&r, "A"), "committee");
+    }
+
+    /// A pane with no seat IS the committee — an unknown letter must not be an error and must
+    /// never accidentally read as a privileged seat, because this answer gates `call_chair`.
+    #[test]
+    fn an_unknown_letter_is_committee_and_never_a_seat() {
+        let r = registry();
+        assert_eq!(seat_role_from(&r, "Z"), "committee");
+        assert_eq!(seat_role_from(&r, ""), "committee");
+        assert_ne!(seat_role_from(&r, "Z"), "librarian", "an unknown mount must not gain the seat's verb");
+    }
+
+    /// DELIVERY. `seat_role_from` above is fully covered and says nothing about whether the
+    /// function the app actually calls consults it. Mutant 11 of
+    /// `dev/mutation/mutate-librarian-call.js` replaced the reader with `if letter == "M"` and
+    /// every test here stayed green — the third time in one night that a tested core sat behind
+    /// an untested reader.
+    ///
+    /// This matters more than the other two: the answer gates an acting verb, and a hardcoded
+    /// letter would keep working right up until the letters are reassigned, at which point the
+    /// librarian's verb belongs to whichever pane inherited M.
+    #[test]
+    fn the_reader_delegates_and_hardcodes_no_letter() {
+        let src = fs::read_to_string("src/main.rs")
+            .expect("read own source")
+            .replace("\r\n", "\n");
+        let f = src
+            .split("pub fn seat_role_for_letter(")
+            .nth(1)
+            .expect("seat_role_for_letter moved — re-point this test");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        assert!(body.contains("seat_role_from("),
+            "the reader must delegate to the tested core — it holds no mapping of its own");
+        assert!(!body.contains("\"librarian\""),
+            "a seat named here is a mapping that bypasses the registry the mount was chosen from");
+        assert!(!body.contains("\"M\""),
+            "letters are ASSIGNED at spawn; hardcoding one survives exactly until they change");
+    }
+
+    /// The letters are ASSIGNED, so nothing may hardcode which one the librarian holds. If the
+    /// registry says the librarian is on D, the librarian is on D.
+    #[test]
+    fn the_seat_follows_the_registry_rather_than_a_hardcoded_letter() {
+        let mut swapped = BTreeMap::new();
+        swapped.insert(LIBRARIAN_SID.to_string(), "D".to_string());
+        swapped.insert(MAIN_SID.to_string(), "M".to_string());
+        assert_eq!(seat_role_from(&swapped, "D"), "librarian");
+        assert_eq!(seat_role_from(&swapped, "M"), "main");
+    }
+}
+
+#[cfg(test)]
+mod librarian_call_tests {
+    use super::*;
+
+    /// `librarian_call_exec` takes live Tauri `State`, so no unit test can call it. What must
+    /// hold is structural, and structure is readable from the source — the same way
+    /// `resolve_pane` is pinned above.
+    fn body() -> String {
+        let src = fs::read_to_string("src/main.rs")
+            .expect("read own source")
+            .replace("\r\n", "\n");
+        let f = src
+            .split("fn librarian_call_exec(")
+            .nth(1)
+            .expect("librarian_call_exec moved — re-point this test")
+            .to_string();
+        f.split("\n}\n").next().unwrap_or(&f).to_string()
+    }
+
+    /// NARROW BY CONSTRUCTION, which is the whole design: no target argument, no resolution step,
+    /// one destination. A policy saying "only Main" could be relaxed later by editing a rule; a
+    /// function with nowhere else to send cannot be.
+    #[test]
+    fn the_librarian_verb_can_reach_exactly_one_seat() {
+        let b = body();
+        assert!(b.contains("MAIN_SID"), "the destination must be the orchestrator, named");
+        assert!(!b.contains("resolve_pane"),
+            "this verb must not resolve a target — a target is the thing it does not have");
+        assert!(!b.contains("match_prefix"),
+            "and it must not reach the prefix matcher by another route");
+    }
+
+    /// The 2026-08-22 incident, as a test: the orchestrator acted on a text-predictor's
+    /// autocomplete believing it was the human. A second non-human voice needs its OWN name, and
+    /// borrowing the chair's prefix would be that incident rebuilt as infrastructure.
+    #[test]
+    fn the_librarian_speaks_under_its_own_name_never_the_chairs() {
+        let b = body();
+        assert!(b.contains("[librarian:LIB] "), "the system must mark the librarian's voice");
+        assert!(!b.contains("[chair:MAIN]"),
+            "a shared provenance prefix makes the orchestrator unable to tell which voice spoke");
+    }
+
+    /// Acting verbs are audited; that is what enforces the boundary, since the mount gate is a
+    /// discipline boundary and not a security one.
+    #[test]
+    fn every_outcome_reaches_the_board() {
+        let b = body();
+        assert!(b.matches("chair_audit(").count() >= 3,
+            "refusal, success and failure must each be audited — found {}", b.matches("chair_audit(").count());
+    }
+
+    /// The rule this build deliberately did NOT relax. It is about SELF-injection and has nothing
+    /// to do with the librarian; if a later edit widens it to make Main addressable, the chair
+    /// becomes able to inject itself.
+    #[test]
+    fn the_chair_still_cannot_address_its_own_pane() {
+        assert!(chair_target_guard(MAIN_SID, "main").is_err());
+        assert!(!ADDRESSABLE_SEATS.contains(&"main"));
     }
 }
 

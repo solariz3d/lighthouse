@@ -67,6 +67,10 @@ pub enum ChairCmd {
     Scrollback { target: String, reply: tokio::sync::oneshot::Sender<String> },
     /// panes, gate mode, pending cards, cost — one structured snapshot (sensor)
     Status { reply: tokio::sync::oneshot::Sender<String> },
+    /// the LIBRARIAN speaking into the Main orchestrator (acting — audited). No target field:
+    /// this verb can address exactly one seat, so "narrow" is a property of the type rather
+    /// than a rule someone can relax later.
+    CallChair { text: String, reply: tokio::sync::oneshot::Sender<String> },
 }
 
 #[derive(Clone)]
@@ -141,6 +145,12 @@ pub struct ChairInjectArgs {
     /// the pane to address: a letter name (A, B, …) or a pane id / id prefix
     target: String,
     /// the prompt to deliver (the system prefixes provenance: "[chair:MAIN] …")
+    text: String,
+}
+
+#[derive(serde::Deserialize, schemars::JsonSchema)]
+pub struct CallChairArgs {
+    /// the message to deliver (the system prefixes provenance: "[librarian:LIB] …")
     text: String,
 }
 
@@ -237,6 +247,46 @@ impl ConsonanceMcp {
         ok
     }
 
+    /// The seat this connection belongs to, derived from the mount rather than claimed.
+    ///
+    /// Every board entry used to be stamped `role: "committee"` regardless of who posted it, so
+    /// no seat was distinguishable BY ROLE on the read path (pane E, 2026-08-24). The letter is
+    /// resolved against the same registry that CHOSE the mount, so the two cannot drift.
+    fn seat(&self) -> String {
+        match &self.identity {
+            Some(l) => crate::seat_role_for_letter(l).to_string(),
+            None => "committee".to_string(),
+        }
+    }
+
+    /// Gate the librarian's one acting verb on the MOUNT.
+    ///
+    /// Same honest limit as `auth_chair`: a DISCIPLINE boundary, not a security one. It is
+    /// stronger than the token in one respect that matters here — a token can be copied into
+    /// another seat's directory, whereas the mount is chosen by whoever spawned the process and
+    /// cannot be restated by the caller. What actually enforces it is the same audit.
+    fn auth_librarian(&self, verb: &str) -> bool {
+        let ok = self.seat() == "librarian";
+        if !ok {
+            if let Some(absorbed) = refusal_should_post(verb, now_ms()) {
+                let who = self.identity.clone().unwrap_or_else(|| "unattributed".to_string());
+                let text = if absorbed > 0 {
+                    format!("{verb} REFUSED — mount {who} is not the librarian (+{absorbed} more absorbed this past minute)")
+                } else {
+                    format!("{verb} REFUSED — mount {who} is not the librarian")
+                };
+                board_push(&self.board, BoardEntry {
+                    pane: "chair".to_string(),
+                    role: "committee".to_string(),
+                    text,
+                    ts: now_ms(),
+                    ts_source: crate::TsSource::Push,
+                });
+            }
+        }
+        ok
+    }
+
     /// Send a chair command to the actuator and await its reply. The timeout keeps a dead
     /// consumer thread from hanging a chair tool call forever.
     async fn send_chair(&self, cmd: ChairCmd, rx: tokio::sync::oneshot::Receiver<String>) -> String {
@@ -259,6 +309,21 @@ impl ConsonanceMcp {
         }
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::Inject { target, text, reply: tx }, rx).await;
+        Ok(CallToolResult::success(vec![Content::text(out)]))
+    }
+
+    #[tool(description = "LIBRARIAN VERB (mount-gated, the librarian seat only): deliver a message into the MAIN ORCHESTRATOR's pane — the one seat this verb can reach. There is no target argument: it addresses Main or nothing. Use it to hand back a finished map or plan instead of raising a hand and waiting for a human to click. Every use and every refusal is audited to the board, and the system marks the message \"[librarian:LIB]\" so the orchestrator is never unsure whether the librarian or the human is speaking. Panes: this is not your tool — use raise_pull.")]
+    async fn call_chair(
+        &self,
+        Parameters(CallChairArgs { text }): Parameters<CallChairArgs>,
+    ) -> Result<CallToolResult, McpError> {
+        if !self.auth_librarian("call_chair") {
+            return Ok(CallToolResult::success(vec![Content::text(
+                "refused: this verb belongs to the librarian seat (the attempt was posted to the board)",
+            )]));
+        }
+        let (tx, rx) = tokio::sync::oneshot::channel();
+        let out = self.send_chair(ChairCmd::CallChair { text, reply: tx }, rx).await;
         Ok(CallToolResult::success(vec![Content::text(out)]))
     }
 
@@ -384,7 +449,7 @@ impl ConsonanceMcp {
                 .identity
                 .clone()
                 .unwrap_or_else(|| "unattributed".to_string()),
-            role: "committee".to_string(),
+            role: self.seat(),
             text,
             ts: now_ms(),
             ts_source: crate::TsSource::Push,
@@ -522,6 +587,54 @@ pub fn config_path_for(letter: char) -> std::path::PathBuf {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// This file's own source, normalised. CRLF on disk, and a raw `\n}\n` terminator silently
+    /// swallows the rest of the FILE when it does not match — measured on main.rs the same night.
+    fn body_of(header: &str) -> String {
+        let src = std::fs::read_to_string("src/mcp.rs")
+            .expect("read own source")
+            .replace("\r\n", "\n");
+        let f = src
+            .split(header)
+            .nth(1)
+            .unwrap_or_else(|| panic!("{header} moved — re-point this test"))
+            .to_string();
+        f.split("\n    }\n").next().unwrap_or(&f).to_string()
+    }
+
+    /// DELIVERY, not unit. `seat_role_from` is tested in main.rs and proves nothing about whether
+    /// the board actually asks. Before 2026-08-24 this site read `role: "committee"` for every
+    /// mount, so no seat was distinguishable by role on the read path and the librarian read its
+    /// own correct attribution as a defect.
+    #[test]
+    fn post_board_stamps_the_calling_seat_rather_than_a_constant() {
+        let b = body_of("async fn post_board(");
+        assert!(b.contains("role: self.seat()"),
+            "post_board must stamp the seat the connection belongs to");
+        assert!(!b.contains("role: \"committee\".to_string()"),
+            "a hardcoded role here makes every mount look alike, which is the defect this replaced");
+    }
+
+    /// The librarian's verb must be gated, and gated on the MOUNT. A token here would be
+    /// payload-identity — the thing this file rejects twice in its own prose (:497, :517).
+    #[test]
+    fn call_chair_is_gated_on_the_mount() {
+        let b = body_of("async fn call_chair(");
+        assert!(b.contains("auth_librarian("),
+            "call_chair must be gated — an ungated acting verb is reachable from every pane");
+        assert!(!b.contains("token"),
+            "the gate must be the mount, not a token the caller can present");
+    }
+
+    /// The gate itself: exactly the librarian seat, and a refusal that reaches the board. The
+    /// audit is what enforces this, since the mount gate is a discipline boundary and not a
+    /// security one — mcp.rs:211 says so about the token and it is equally true here.
+    #[test]
+    fn the_librarian_gate_admits_one_seat_and_audits_refusals() {
+        let b = body_of("fn auth_librarian(");
+        assert!(b.contains("== \"librarian\""), "the gate must name the seat it admits");
+        assert!(b.contains("board_push("), "a refused acting verb must land on the board");
+    }
 
     // NOTE: REFUSALS is a process-global — each test uses its own verb name for isolation.
 
