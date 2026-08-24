@@ -25,6 +25,14 @@
 // FAILS OPEN, always. Any error, any timeout, any shape it does not recognise: allow. A gate that
 // can break a dispatch is worse than no gate - the same reasoning ferry-watch states about nags,
 // one severity up. This may only ever ADD a question, never remove the ability to speak.
+//
+// KNOWN LIMIT, measured on the first live run and stated here because it decides how much this
+// file is worth: BYPASS-PERMISSIONS MODE OVERRIDES "ask". An uncited dispatch went through with
+// no prompt while `data/dispatch-gate.jsonl` recorded outcome:"asked", chars:80 - the hook ran,
+// decided, and the decision was dropped. Under bypass the systemMessage below is all that reaches
+// anyone, and a line that prints regardless is precisely the kind of reminder this room measured
+// as ignorable. So: this gate BITES only when bypass is off. Under bypass it is a visible
+// warning, which is better than silence and is NOT the mechanism the ferry rate needed.
 
 'use strict';
 const fs = require('fs');
@@ -57,6 +65,36 @@ function repoRoot() {
 }
 
 const REPO = repoRoot();
+
+/// Where the gate records that it ran. Same resolution order as the repo, and it degrades to null
+/// rather than guessing - a ledger written somewhere unexpected is worse than none.
+function dataDir() {
+  const env = (process.env.CONSONANCE_DATA || '').trim();
+  if (env) return env;
+  try {
+    const raw = fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, '');
+    const d = String((JSON.parse(raw) || {}).data_dir || '').trim();
+    if (d) return d;
+  } catch (_) {}
+  return null;
+}
+
+/// Write one row per firing. THE POINT: an uncited dispatch went through with no prompt on
+/// 2026-08-24 and two explanations looked identical from outside - bypass-permissions mode
+/// overriding "ask", or the hook never running at all. A gate whose silence cannot be told from
+/// its absence is the 08-17 failure, where three pipe tests returned `0 rows` and exit 0 and a
+/// verdict was one step from being published on an instrument that was working the whole time.
+///
+/// Never throws, never blocks: a ledger that can break a dispatch is the thing this file refuses
+/// to be.
+function record(row) {
+  try {
+    const dir = dataDir();
+    if (!dir) return;
+    fs.appendFileSync(path.join(dir, 'dispatch-gate.jsonl'),
+      JSON.stringify({ ts: new Date().toISOString(), ...row }) + '\n');
+  } catch (_) { /* the gate's job is the question, not the bookkeeping */ }
+}
 
 // The two verbs that put text into another seat's pane. raise_pull is deliberately NOT here: it
 // queues a card for a human to read and decide, so it is already gated by a person.
@@ -141,6 +179,7 @@ function main() {
   // No repo, no citation check. Allow - but SAY so, because a gate that quietly stops working
   // reads exactly like a gate that is being satisfied every time.
   if (!REPO) {
+    record({ verb, outcome: 'inert', why: 'no repo resolved' });
     process.stdout.write(JSON.stringify({
       systemMessage: 'dispatch-gate is INERT: could not resolve the repo (set FERRY_REPO, or room_path in ~/.consonance.json). Dispatches are NOT being checked for citations.',
     }));
@@ -158,13 +197,23 @@ function main() {
     } catch (_) { return false; }
   };
 
-  if (findCitation(text, exists, shaOk)) process.exit(0);
+  const cited = findCitation(text, exists, shaOk);
+  if (cited) {
+    record({ verb, outcome: 'allowed', cited, chars: (text || '').length });
+    process.exit(0);
+  }
 
+  record({ verb, outcome: 'asked', cited: null, chars: (text || '').length });
+
+  const question = buildQuestion(verb, isDirty());
   process.stdout.write(JSON.stringify({
+    // Survives bypass mode, where permissionDecision does not. Deliberately the same words: two
+    // channels, one question, so nothing is softened on the path that still reaches a reader.
+    systemMessage: 'UNCITED DISPATCH — ' + question,
     hookSpecificOutput: {
       hookEventName: 'PreToolUse',
       permissionDecision: 'ask',
-      permissionDecisionReason: buildQuestion(verb, isDirty()),
+      permissionDecisionReason: question,
     },
   }));
   process.exit(0);
