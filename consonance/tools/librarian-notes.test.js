@@ -48,7 +48,7 @@ test('the brief points the seat at exo_memory/librarian/, not at an instance-loc
 
 test('corpus_shelf() carries the librarian directory, so a fresh wake holds its own last notes', () => {
   const src = read(MAIN_RS);
-  const order = src.match(/let order: \[\(&str, bool\); \d+\] = \[([\s\S]*?)\];/);
+  const order = src.match(/let order: \[\(&str, bool, bool\); \d+\] = \[([\s\S]*?)\];/);
   assert.ok(order, 'could not find corpus_shelf order[] in main.rs');
   assert.ok(order[1].includes('"librarian"'),
     'the shelf does not carry exo_memory/librarian/ — the seat would have to go looking for its own notes');
@@ -56,18 +56,18 @@ test('corpus_shelf() carries the librarian directory, so a fresh wake holds its 
 
 test('the librarian directory is carried NEWEST-FIRST — an inheritance is the most recent one', () => {
   const src = read(MAIN_RS);
-  const order = src.match(/let order: \[\(&str, bool\); \d+\] = \[([\s\S]*?)\];/);
-  assert.match(order[1], /\("librarian",\s*true\)/,
-    'librarian is carried oldest-first; under budget pressure the seat would inherit its oldest notes');
+  const order = src.match(/let order: \[\(&str, bool, bool\); \d+\] = \[([\s\S]*?)\];/);
+  assert.match(order[1], /\("librarian",\s*true,\s*true\)/,
+    'librarian must be (newest-first, carried): it is the seat\'s own restore point');
 });
 
 test('the declared arity of order[] matches the number of entries in it', () => {
   // A stale `; 9]` against 10 entries does not compile, but the reverse -- adding an entry and
   // bumping the count without adding the directory -- is a silent no-op. Count them.
   const src = read(MAIN_RS);
-  const m = src.match(/let order: \[\(&str, bool\); (\d+)\] = \[([\s\S]*?)\];/);
+  const m = src.match(/let order: \[\(&str, bool, bool\); (\d+)\] = \[([\s\S]*?)\];/);
   const declared = parseInt(m[1], 10);
-  const actual = (m[2].match(/\(\s*"[^"]*"\s*,\s*(?:true|false)\s*\)/g) || []).length;
+  const actual = (m[2].match(/\(\s*"[^"]*"\s*,\s*(?:true|false)\s*,\s*(?:true|false)\s*\)/g) || []).length;
   assert.strictEqual(actual, declared, 'order[] declares ' + declared + ' entries but contains ' + actual);
 });
 

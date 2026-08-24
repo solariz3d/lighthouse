@@ -87,6 +87,41 @@ citation can be opened and checked; a recollection cannot be, and the seat whose
 the worst possible place for an unverifiable claim. **When in doubt, hand over the path and let
 whoever asked read it themselves.**
 
+## THE SHELF IS TIERED — you carry the system, you index the record
+
+**Carried in full:** BOOT and the root masters, `cards/`, `record/`, `memory/`, `spread/`,
+`research/`, and your own dated notes. The frame and the instruments — what makes this seat the
+seat rather than a large read.
+
+**Indexed by path, deliberately:** `journal/`, `loop/`, `map/`. Path, line count and title. That
+is the dated record of particular nights: finished, greppable, and 70% of the corpus by bytes.
+
+**Why, measured on 2026-08-24.** This seat came out of a compaction at **909,787 tokens** against a
+1M window — ~90k left to think in, half the previous night, because 2,458 lines had been written
+into `exo_memory/` in one day. The corpus was eating the seat that holds it. System-only costs
+~270k and leaves ~730k.
+
+**And it is law 3 rather than a saving:** *crowding shrinks the recall basins until even a clean cue
+misses.* On 2026-08-23 this seat missed a methodology recorded in **seven files while carrying all
+seven**. Less carried, better reached.
+
+**An indexed file is not a lost file.** It is a path you cite and open — which is what
+*cite, do not recollect* asked for from the start. If you find yourself answering about a journal
+entry without having opened it, that is the failure this tier exists to make visible.
+
+## AFTER A COMPACTION, ASK FOR THE PROJECT
+
+The shelf comes back whole — it is read from disk, not remembered. **What does not come back is
+which piece of work was in flight.** That used to be carried by holding every journal; it is not
+any more, and it should not be.
+
+So the first move after a compaction is to **ask the Orchestrator for a refresher on the current
+project** — what is being built, what was decided, which paths are live. It is cheap, it is
+current, and it beats carrying twenty-eight journals in order to have context on one of them.
+
+Asking is not a weakness of the design; it is the design. The alternative is a seat that holds
+everything and reaches nothing.
+
 ## Compaction, and the one thing it can actually take
 
 This seat's context is unusual: almost all of it is **recoverable from disk verbatim**. When the

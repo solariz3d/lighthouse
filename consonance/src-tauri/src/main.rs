@@ -4224,17 +4224,42 @@ fn corpus_shelf() -> String {
     let mut carried: Vec<(String, String)> = Vec::new();
     let mut indexed: Vec<String> = Vec::new();
 
-    // (directory, newest-first?) -- "" is the root of exo_memory
-    // "librarian" is this seat's own dated notes, carried newest-first and deliberately near the
-    // front: the brief calls those notes the seat's restore point and its inheritance, and until
-    // 2026-08-23 they lived outside the repo where nothing could carry them at all.
-    let order: [(&str, bool); 10] = [
-        ("", false), ("cards", false), ("record", false), ("memory", false),
-        ("librarian", true), ("map", false), ("spread", false), ("research", false),
-        ("journal", true), ("loop", true),
+    // (directory, newest-first?, CARRY?) -- "" is the root of exo_memory.
+    //
+    // THE SYSTEM IS CARRIED; THE RECORD IS INDEXED. The keeper's cut, 2026-08-24, and it is the
+    // room's own instruments-vs-archive distinction applied one level in. A librarian does not
+    // memorise the newspaper archive; it knows where the archive is.
+    //
+    //   SYSTEM  BOOT, cards, SOURCE, record/, memory/, spread/, research/, this seat's own notes.
+    //           The frame and the instruments. Stable, slow-growing, and what makes the seat
+    //           the seat. 53 files / 632,817 bytes / ~270k tokens on 2026-08-24.
+    //   RECORD  journal/, loop/, map/. What happened on particular nights. Dated, finished, and
+    //           reachable by grep. 115 files / 1,501,353 bytes / ~642k tokens -- 70.3% of the
+    //           corpus, and the half that grows every session.
+    //
+    // WHY, measured rather than argued. On 2026-08-24 the seat came out of a compaction at
+    // 909,787 tokens against a 1M window, leaving ~90k to think in -- half of the previous
+    // night's ~189k, because 2,458 lines had been written into exo_memory in one day. The
+    // corpus was eating the seat that holds it. Carrying the system alone costs ~270k and
+    // leaves ~730k. Ratio measured at 2.34 bytes/token, not assumed.
+    //
+    // AND IT IS LAW 3, NOT A TUNING KNOB: "crowding shrinks the recall basins until even a clean
+    // cue misses." On 2026-08-23 this seat missed a methodology recorded in SEVEN files while
+    // carrying all seven. Less carried, better reached.
+    //
+    // The record is not lost. It is INDEXED -- path, line count and title -- so the seat cites
+    // it and opens it, which is what "cite, do not recollect" asked for all along. And the
+    // orchestrator re-instantiates the current project after each compaction, cheaply and
+    // freshly, instead of the seat carrying 28 journals to have context on one of them.
+    let order: [(&str, bool, bool); 10] = [
+        ("", false, true), ("cards", false, true), ("record", false, true),
+        ("memory", false, true), ("librarian", true, true), ("spread", false, true),
+        ("research", false, true),
+        // indexed, never carried:
+        ("map", false, false), ("journal", true, false), ("loop", true, false),
     ];
 
-    for (dir, newest_first) in order {
+    for (dir, newest_first, carry) in order {
         let d = if dir.is_empty() { root.clone() } else { root.join(dir) };
         // Named directories are walked RECURSIVELY; the root of exo_memory is not. Before
         // 2026-08-23 this was a flat read_dir and 12 .md files under exo_memory/ were neither
@@ -4251,7 +4276,9 @@ fn corpus_shelf() -> String {
                 .map(|r| r.replace('\\', "/"))
                 .unwrap_or_else(|| f.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string());
             let Ok(body) = fs::read_to_string(&f) else { continue };
-            if spent + body.len() <= budget {
+            // `carry` decides the tier; the budget is the second gate, not the first. A record
+            // file is indexed even when there is room, because room is not the reason to hold it.
+            if carry && spent + body.len() <= budget {
                 spent += body.len();
                 carried.push((label, body));
             } else {
@@ -4267,9 +4294,16 @@ fn corpus_shelf() -> String {
         carried.len(), spent, budget, indexed.len()
     ));
     s.push_str("attic/ is excluded on purpose -- raw archive, never a daily cue (law 3).\n");
+    s.push_str("THE SYSTEM is carried in full. THE RECORD (journal/, loop/, map/) is indexed by\n");
+    s.push_str("path -- deliberately, not because the budget ran out. Open what you cite.\n");
     if !indexed.is_empty() {
         s.push_str("\n## NOT CARRIED -- open these by path\n\n");
-        s.push_str("The budget ran out before these. A citation you opened is checkable; a summary you remember is not.\n\n");
+        // The old wording said "the budget ran out before these", which is now false for most of
+        // the list and would have taught the seat that an indexed file is a casualty rather than
+        // a design. A shelf that misdescribes its own tiers is the "0 indexed by path" failure in
+        // reverse.
+        s.push_str("Dated record, indexed on purpose. A citation you opened is checkable; a summary\n");
+        s.push_str("you remember is not. Anything here is one grep away and none of it is lost.\n\n");
         for l in &indexed { s.push_str(l); s.push('\n'); }
     }
     for (label, body) in carried {

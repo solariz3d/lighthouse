@@ -19,7 +19,7 @@ test('the capacity number counts the SAME set the librarian carries', () => {
   // If these drift apart the headline is a lie in the direction that matters: it would under-report
   // pressure on the seat while looking authoritative.
   const src = fs.readFileSync(path.join(__dirname, '..', 'src-tauri', 'src', 'main.rs'), 'utf8');
-  const order = src.match(/let order: \[\(&str, bool\); \d+\] = \[([\s\S]*?)\];/);
+  const order = src.match(/let order: \[\(&str, bool, bool\); \d+\] = \[([\s\S]*?)\];/);
   assert.ok(order, 'could not find corpus_shelf order[] in main.rs');
   for (const d of ['cards', 'record', 'memory', 'librarian', 'map', 'spread', 'research', 'journal', 'loop']) {
     assert.ok(order[1].includes(`"${d}"`), `corpus_shelf carries ${d} but the tool may not count it`);
