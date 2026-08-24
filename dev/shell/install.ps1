@@ -166,8 +166,9 @@ if (-not (Test-Path $dest)) {
   else { New-Item -ItemType Directory -Force -Path $dest | Out-Null; Write-Host "created $dest" }
 }
 
-$drift = 0
-$held  = 0
+$drift  = 0   # exists at the destination and the bytes differ
+$absent = 0   # not at the destination at all - a different fact, and it used to print as drift
+$held   = 0
 foreach ($f in $files) {
   $src = Join-Path $repo $f.From
   $dst = Join-Path $dest $f.To
@@ -178,13 +179,32 @@ foreach ($f in $files) {
     continue
   }
 
+  # TWO FACTS, NOT ONE. Until 2026-08-24 this computed only $same, which is false both when the
+  # destination file is MISSING and when its bytes DIFFER -- so both printed "DRIFT". Pane C
+  # measured the cost: 13 of 14 flagged files did not exist at the destination at all, and the
+  # chair had asked for a per-file drift DIRECTION, a question twelve of them cannot answer
+  # because they are not drifted in any direction. They were never installed.
+  $exists = Test-Path $dst
   $same = $false
-  if (Test-Path $dst) {
+  if ($exists) {
     $same = (Get-FileHash $src).Hash -eq (Get-FileHash $dst).Hash
   }
 
   if ($same) {
     Write-Host ("ok       {0}" -f $f.To) -ForegroundColor DarkGray
+  } elseif (-not $exists) {
+    # NEVER INSTALLED. Deliberately BEFORE the Hold branch: a two-way conflict needs two sides,
+    # and userprompt-submit.js was reporting HOLD about a file that is not there.
+    if ($Check) {
+      Write-Host ("ABSENT   {0}   never installed - nothing to compare" -f $f.To) -ForegroundColor Cyan
+      $absent++
+    } else {
+      $dstDir = Split-Path -Parent $dst
+      if ($dstDir -and -not (Test-Path $dstDir)) { New-Item -ItemType Directory -Force -Path $dstDir | Out-Null }
+      Copy-Item $src $dst -Force
+      Write-Host ("installed {0}" -f $f.To) -ForegroundColor Green
+      $absent++
+    }
   } elseif ($f.Hold) {
     # Differs, and declared unresolvable by this script. Say so loudly every run, in both modes,
     # and change nothing. A conflict that stops being mentioned is a conflict that gets resolved
@@ -216,9 +236,15 @@ if ($held -gt 0) {
 }
 
 if ($Check) {
-  if ($drift -eq 0) { Write-Host "`nin sync with the repo." -ForegroundColor Green }
-  else { Write-Host "`n$drift file(s) drifted. Re-run without -Check to sync." -ForegroundColor Yellow }
-  exit ($(if ($drift -eq 0) { 0 } else { 1 }))
+  # Reported separately on purpose. Summing them is what produced "13 drifted" for a machine with
+  # one drifted file, and a summary that re-folds the distinction undoes the fix above.
+  if ($absent -gt 0) {
+    Write-Host ("`n{0} file(s) ABSENT - never installed here. Installing them REGISTERS their hooks; read the `$register list before running without -Check." -f $absent) -ForegroundColor Cyan
+  }
+  if ($drift -eq 0 -and $absent -eq 0) { Write-Host "`nin sync with the repo." -ForegroundColor Green }
+  elseif ($drift -eq 0) { Write-Host "`nno file drifted; see the absent list above." -ForegroundColor Yellow }
+  else { Write-Host "`n$drift file(s) drifted (installed copy differs). Re-run without -Check to sync." -ForegroundColor Yellow }
+  exit ($(if ($drift -eq 0 -and $absent -eq 0) { 0 } else { 1 }))
 }
 
 $node = (Get-Command node -ErrorAction SilentlyContinue).Source
