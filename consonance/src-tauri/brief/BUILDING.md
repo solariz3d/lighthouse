@@ -122,6 +122,45 @@ named files. They never commit to a shared checkout.
 4. **Permission to refuse.** Say plainly that the answer may be *this is wrong* or *do not build this*.
    A brief that cannot come back negative is a brief for a rubber stamp.
 
+## THE ORDER OF A DISPATCH — finish, verify, file, THEN ring (added 2026-08-24)
+
+Every dispatch this room has ever sent went out **mid-turn**: composed from reasoning that was not
+finished, not verified, and not written anywhere yet. The keeper named it the night the librarian
+got a channel of its own, and it applies to the chair at greater volume — chair→pane has worked
+this way for as long as there have been panes.
+
+**The correct sequence, and it costs one extra turn:**
+
+    finish the output  ->  verify the claims  ->  write/commit to a path  ->  dispatch, citing it
+
+**Ground 1 — a dispatch is UN-REVISABLE.** Once it renders in another seat's pane it is spent.
+There is no edit, and the receiving seat begins reasoning from it immediately. Sending before
+verifying is present-then-prove, which is the exact inversion `verify-before-claiming` names.
+
+*The measured case, 2026-08-24, first night of the librarian channel:* the chair dispatched "your
+intake puts THE SHELF before THE ROOM it indexes" — a claim read off a failing assertion's
+implication and never checked against the source. The librarian ruled on it ("the test is right,
+fix the intake") and its ruling was wrong **because the brief it was given was wrong**. An
+unverified claim was delivered un-revisably into another seat, which then reasoned from it. One
+extra turn would have cost thirty seconds; this cost a wrong ruling in a second mind.
+
+**Ground 2 — the order is WHY the ferry rate is 77.1%, and it is not forgetfulness.** Dispatching
+before committing makes citing the commit *impossible*: there is no sha yet, so the brief has no
+choice but to carry prose. The sequence forces the failure the ferry hook prints every turn.
+Reverse the order and the citation becomes the cheap option instead of the disciplined one.
+
+**Ground 3 — the channel must not outrank the master.** The notes, the commit, the journal are the
+master record; the dispatch is the POINTER. A channel message cannot be cited by `path:line`
+later, and a copy that outranks its master is the telephone game's first step (maintenance law 1).
+The librarian adopted this for itself first: *grep → write the deliverable → re-read → then ring.*
+
+**The one carve-out, and keep it narrow:** a genuine interrupt — *stop, you are about to clobber
+something* — goes immediately. It is not a deliverable and nothing is being claimed.
+
+*Registered so this can fail: if the next ten dispatches follow this order and the ferry miss rate
+has not moved off 77.1%, the order was not the cause and this section is a story about one bad
+night. `node consonance/tools/ferry.js --report`.*
+
 ## WHAT A HAND-BACK OWES
 
 1. **Mutation results, not assertions.** `applied N / caught N / NOT APPLIED N`. A NOT APPLIED mutant
