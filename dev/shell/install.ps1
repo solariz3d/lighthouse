@@ -230,6 +230,105 @@ foreach ($f in $files) {
   }
 }
 
+# =============================================================================================
+# THE UNIVERSE PRINT -- N seen / M skipped / the rule that decided, on every run.
+#
+# P-UNIVERSE, registered 2026-08-25. This instrument's denominator is the $files manifest above,
+# and a manifest is hand-maintained: a file that is not on it is not GREEN, it is INVISIBLE.
+# That is measured history here, not a worry. Nine hooks ran untracked until 58b94f9, and one
+# manifest entry was missing until 2026-08-17 -- and through both, this script printed a clean
+# bill of health, because it can only ever check what somebody remembered to list.
+#
+# So the counts below are not a summary of the check. They are the check's BLIND SPOT, printed,
+# so that a green line above is read as "everything listed is in sync" and never as "everything
+# is in sync". carrier-drift.js:73-78 states the same law for its corpus: a rule that silently
+# ate half the repo would look exactly like a green tree.
+#
+# PATH-MISMATCH is the category that pays for this block. 'lib\ambient.js' prints ABSENT above
+# while a byte-identical ambient.js sits FLAT at the destination and is the copy actually being
+# loaded -- sessionstart-ambient.js resolveAmbient() tries __dirname/ambient.js FIRST, before the
+# ..\lib\ candidate. The file is installed, live, and in sync. The ok/ABSENT loop compares exact
+# paths, so it is right about the path and wrong about the file, and it had no way to say so.
+#
+# The rules are printed with the counts on purpose. A skipped count whose rule is not stated is
+# the same defect one level up: a denominator you cannot audit.
+$mfFrom = @{}
+$mfToLeaf = @{}
+$mfToRel = @{}
+foreach ($f in $files) {
+  $mfFrom[$f.From.ToLower()] = $true
+  $mfToRel[$f.To.ToLower()] = $true
+  $mfToLeaf[(Split-Path -Leaf $f.To).ToLower()] = $f.To
+}
+
+# ---- A. THE SOURCE UNIVERSE: every file in the directories the manifest itself draws from.
+# The directory list is DERIVED from the manifest rather than written out, so a manifest entry
+# pointing somewhere new brings its whole directory under audit automatically. A hardcoded list
+# would be a second hand-maintained denominator guarding the first one.
+$srcDirs = @()
+foreach ($f in $files) {
+  $d = Split-Path -Parent $f.From
+  if ($d -and ($srcDirs -notcontains $d)) { $srcDirs += $d }
+}
+$srcSeen = 0
+$srcSkipped = 0
+$srcClaimed = 0
+$srcUnmanaged = @()
+foreach ($d in $srcDirs) {
+  $full = Join-Path $repo $d
+  if (-not (Test-Path $full)) { continue }
+  foreach ($file in (Get-ChildItem -Path $full -File -ErrorAction SilentlyContinue)) {
+    $srcSeen++
+    if ($file.Name -match '\.test\.js$' -or $file.Name -match '\.md$' -or $file.Name -match '\.bak') {
+      $srcSkipped++
+      continue
+    }
+    $rel = Join-Path $d $file.Name
+    if ($mfFrom.ContainsKey($rel.ToLower())) { $srcClaimed++ }
+    else { $srcUnmanaged += $rel }
+  }
+}
+
+# ---- B. THE DESTINATION UNIVERSE: everything actually sitting where the hooks are loaded from.
+# Recursive, because the manifest's own 'lib\' and 'hooks\' paths would otherwise fall outside a
+# top-level-only sweep -- an audit that cannot see the layout it prescribes.
+$dstSeen = 0
+$dstState = 0
+$dstClaimed = 0
+$dstMismatch = @()
+$dstUnclaimed = @()
+if (Test-Path $dest) {
+  foreach ($file in (Get-ChildItem -Path $dest -File -Recurse -ErrorAction SilentlyContinue)) {
+    $dstSeen++
+    if ($file.Name -match '\.(json|jsonl|log|md|txt)$' -or $file.Name -match '\.bak') {
+      $dstState++
+      continue
+    }
+    $rel = $file.FullName.Substring($dest.Length).TrimStart('\')
+    $leaf = $file.Name.ToLower()
+    if ($mfToRel.ContainsKey($rel.ToLower())) { $dstClaimed++ }
+    elseif ($mfToLeaf.ContainsKey($leaf)) { $dstMismatch += ("{0}   manifest expects it at {1}" -f $rel, $mfToLeaf[$leaf]) }
+    else { $dstUnclaimed += $rel }
+  }
+}
+
+Write-Host ""
+Write-Host "universe -- what this run could and could not see" -ForegroundColor Cyan
+Write-Host ("  manifest      {0,4} entr(ies)   the denominator; a file absent from it is INVISIBLE, not green" -f $files.Count)
+Write-Host ("  repo sources  {0,4} file(s) under {1}" -f $srcSeen, ($srcDirs -join ', '))
+Write-Host ("                {0,4} skipped     rule: *.test.js, *.md, *.bak*" -f $srcSkipped)
+Write-Host ("                {0,4} claimed by a manifest entry" -f $srcClaimed)
+Write-Host ("                {0,4} UNMANAGED   in the repo, installable, on no manifest entry" -f $srcUnmanaged.Count) -ForegroundColor $(if ($srcUnmanaged.Count) { 'Yellow' } else { 'DarkGray' })
+foreach ($u in $srcUnmanaged) { Write-Host ("                     {0}" -f $u) -ForegroundColor Yellow }
+Write-Host ("  destination   {0,4} file(s) under {1}" -f $dstSeen, $dest)
+Write-Host ("                {0,4} skipped     rule: *.json, *.jsonl, *.log, *.md, *.txt, *.bak*  (runtime state, not code)" -f $dstState)
+Write-Host ("                {0,4} claimed at the exact path the manifest names" -f $dstClaimed)
+Write-Host ("                {0,4} PATH-MISMATCH  installed, but under a path the manifest expects elsewhere" -f $dstMismatch.Count) -ForegroundColor $(if ($dstMismatch.Count) { 'Yellow' } else { 'DarkGray' })
+foreach ($m in $dstMismatch) { Write-Host ("                     {0}" -f $m) -ForegroundColor Yellow }
+Write-Host ("                {0,4} UNCLAIMED   code at the destination no manifest entry owns" -f $dstUnclaimed.Count) -ForegroundColor $(if ($dstUnclaimed.Count) { 'Yellow' } else { 'DarkGray' })
+foreach ($u in $dstUnclaimed) { Write-Host ("                     {0}" -f $u) -ForegroundColor Yellow }
+# =============================================================================================
+
 if ($held -gt 0) {
   Write-Host ("`n{0} file(s) HELD - a real two-way conflict this script refuses to decide." -f $held) -ForegroundColor Magenta
   Write-Host "Resolve by hand, then drop Hold from the manifest entry." -ForegroundColor Magenta

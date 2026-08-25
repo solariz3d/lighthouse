@@ -284,3 +284,138 @@ test('THE COMPARISON: the registered sweep misses the carrier this tool finds', 
   assert.ok(res.findings.some((f) => f.file === 'exo_memory/loop/lap_2026-08-23.md'),
     'this tool must find what the sweep missed');
 });
+
+// ─────────────────────────────────────────────────────────────────────────────────────────
+// CH-4: the instruction-reachable set (P-CH4, 2026-08-25, pane B).
+//
+// THE BAR WAS SET BEFORE ANY OF THIS WAS WRITTEN, by the librarian via the chair: the
+// instrument must go RED on exo_memory/record/trust-the-first-attention.md — the file that
+// produced the only measured use of retired vocabulary in b7f3775 — before it is believed green
+// on anything. It is encoded as a test rather than left as a one-off run, because a bar that was
+// met once and never re-checked is indistinguishable from a bar that was never met.
+const DIVING = {
+  id: 'diving-vocabulary-2026-08-17',
+  claim: 'the diving apparatus as live instrument vocabulary',
+  withdrawn_at: 'exo_memory/BOOT.md, the 2026-08-17 amendment (7b06334)',
+  correct_form: 'with you, not above you',
+  pattern: 'dive[- ]buddy(?!-reframe)|light,? not lifeguard|dive, and stay',
+  marker: 'diving vocabulary is retired|vocabulary retired|kept as dated trace',
+  sites: [],
+};
+
+test('THE BAR: armed with the diving withdrawal, the tool is RED on the record/ file that produced the only measured use', () => {
+  const res = CD.scan({ root: REPO, registry: { withdrawals: [DIVING] } });
+  assert.ok(res.red, 'arming a withdrawal with no census must be red, not green by absence');
+  const hit = res.findings.find((f) => f.file === 'exo_memory/record/trust-the-first-attention.md');
+  assert.ok(hit, 'the known carrier must be named: ' + JSON.stringify(res.findings.map((f) => f.file).slice(0, 8)));
+  assert.strictEqual(hit.kind, 'UNACCOUNTED');
+  assert.strictEqual(hit.ch4, true, 'and it must be labelled CH-4 — it is reachable by instruction from BOOT');
+});
+
+test('CH-4 IS A LABEL, NOT A FILTER: a carrier OUTSIDE the reachable set is still red', () => {
+  // The failure one reading away from "the detector inherits the walker's boundary" is narrowing
+  // the scanned corpus to the reachable set. Measured cost of that reading: 14 of 17 registered
+  // sites drop out, including the lap_2026-08-23.md re-assertion this tool was built for. They
+  // would not go red, they would go ABSENT — the false-green class. This test is the guard.
+  const root = tmpTree({});
+  treeAt(PREFIX, root);
+  const res = CD.scan({ root, registry: liveRegistry() });
+  const lap = res.findings.find((f) => f.file === 'exo_memory/loop/lap_2026-08-23.md');
+  assert.ok(lap, 'the re-assertion must still be found');
+  assert.ok(!lap.ch4, 'and it is NOT in the CH-4 set — which is exactly why the set must not be a filter');
+});
+
+test('the shipped frozen CH-4 list still matches a live walk — the registry is self-consistent', () => {
+  const reg = liveRegistry();
+  assert.ok(reg.ch4_corpus && Array.isArray(reg.ch4_corpus.files), 'registry must carry ch4_corpus.files');
+  const walked = CD.ch4Walk(REPO).files;
+  assert.deepStrictEqual(walked.slice().sort(), reg.ch4_corpus.files.slice().sort(),
+    'walk and frozen list disagree — re-run --ch4-walk and re-freeze AFTER reading what changed');
+});
+
+test('a file that becomes instruction-reachable and is not frozen is RED, not silently absorbed', () => {
+  const trimmed = JSON.parse(JSON.stringify(liveRegistry()));
+  const dropped = trimmed.ch4_corpus.files.pop();
+  const res = CD.scan({ root: REPO, registry: trimmed });
+  const f = res.findings.find((x) => x.kind === 'CH4-DRIFT-ADDED' && x.file === dropped);
+  assert.ok(f, 'dropping ' + dropped + ' from the frozen list must surface it as newly reachable');
+});
+
+test('a frozen file the walk no longer reaches is RED — a removed pointer is a real change', () => {
+  const trimmed = JSON.parse(JSON.stringify(liveRegistry()));
+  trimmed.ch4_corpus.files.push('exo_memory/NO_SUCH_FILE.md');
+  const res = CD.scan({ root: REPO, registry: trimmed });
+  assert.ok(res.findings.some((f) => f.kind === 'CH4-DRIFT-REMOVED' && f.file === 'exo_memory/NO_SUCH_FILE.md'));
+});
+
+test('a registry with no ch4_corpus is RED over a real room — nothing to diff the walk against', () => {
+  const res = CD.scan({ root: REPO, registry: { withdrawals: [DIVING] } });
+  assert.ok(res.findings.some((f) => f.kind === 'CH4-UNFROZEN'),
+    'an unfrozen set on a tree that HAS the roots is a defect');
+});
+
+test('CH-4 does not fire at all on a tree that is not a room — the tool must not describe its own fixtures', () => {
+  const root = tmpTree({ 'a.md': 'the only decorrelated reader\n' });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.ok(!kinds(res).some((k) => k.startsWith('CH4-')),
+    'no BOOT and no SOURCE means no CH-4 claim to make, not an unfrozen room: ' + kinds(res));
+  assert.strictEqual(res.counts.ch4, undefined, 'and no CH-4 line in the universe print');
+});
+
+test('a CITATION is not walked — path:line is evidence of a past event, and traces keep their wording', () => {
+  const root = tmpTree({
+    'exo_memory/BOOT.md': 'Read exo_memory/target.md for the move.\nSee exo_memory/cited.md:41 for what happened.\n',
+    'exo_memory/SOURCE.md': '# SOURCE\n',
+    'exo_memory/target.md': 'x\n',
+    'exo_memory/cited.md': 'y\n',
+  });
+  const w = CD.ch4Walk(root);
+  assert.ok(w.files.includes('exo_memory/target.md'), 'an instruction pointer is walked');
+  assert.ok(!w.files.includes('exo_memory/cited.md'), 'a path:line citation is not');
+});
+
+test('the instruction verb must be NEAR the pointer — a long paragraph does not make every path it cites an instruction', () => {
+  const far = 'Read this. ' + 'x'.repeat(200) + ' The file exo_memory/mentioned.md exists.';
+  const root = tmpTree({
+    'exo_memory/BOOT.md': far + '\nRun exo_memory/near.md now.\n',
+    'exo_memory/SOURCE.md': '# SOURCE\n',
+    'exo_memory/mentioned.md': 'x\n',
+    'exo_memory/near.md': 'y\n',
+  });
+  const w = CD.ch4Walk(root);
+  assert.ok(w.files.includes('exo_memory/near.md'), 'a verb beside the pointer walks it');
+  assert.ok(!w.files.includes('exo_memory/mentioned.md'),
+    'a verb 200 characters away does not — this is what kept journals out of the set');
+});
+
+test('a TRACE that is instruction-reachable is excluded from the set and reported separately', () => {
+  const root = tmpTree({
+    'exo_memory/BOOT.md': 'Read exo_memory/journal/2026-01-01.md, newest first.\n',
+    'exo_memory/SOURCE.md': '# SOURCE\n',
+    'exo_memory/journal/2026-01-01.md': 'x\n',
+  });
+  const w = CD.ch4Walk(root);
+  assert.ok(!w.files.includes('exo_memory/journal/2026-01-01.md'),
+    'labelling a trace CH-4 while the scan skips it would be two rules disagreeing about one file');
+  assert.ok(w.tracesReached.includes('exo_memory/journal/2026-01-01.md'),
+    'but it is reported, not silently dropped — the corpus rule prints what it ate');
+});
+
+test('BOTH roots are walked — single-root blindness is the error this set exists to prevent', () => {
+  const root = tmpTree({
+    'exo_memory/BOOT.md': 'Read exo_memory/fromboot.md.\n',
+    'exo_memory/SOURCE.md': 'when a pull arrives -> exo_memory/fromsource.md\n',
+    'exo_memory/fromboot.md': 'x\n',
+    'exo_memory/fromsource.md': 'y\n',
+  });
+  const w = CD.ch4Walk(root);
+  assert.ok(w.files.includes('exo_memory/fromboot.md'));
+  assert.ok(w.files.includes('exo_memory/fromsource.md'),
+    'SOURCE is the second standing pointer file; a BOOT-only walk repeats the finding one file over');
+});
+
+test('a missing root over a tree that has the other one is RED, not quietly a smaller walk', () => {
+  const root = tmpTree({ 'exo_memory/BOOT.md': 'Read exo_memory/x.md.\n', 'exo_memory/x.md': 'x\n' });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.ok(kinds(res).includes('CH4-ROOT-MISSING'), kinds(res).join(','));
+});

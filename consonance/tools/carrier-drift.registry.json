@@ -140,5 +140,88 @@
         }
       ]
     }
-  ]
+  ],
+  "ch4_corpus": {
+    "_why": [
+      "CH-4 is the instruction-reachable set: files BOOT.md and SOURCE.md TELL an instance to open,",
+      "which therefore teach whoever follows the instruction. Named in carrier_surface_2026-08-25.md",
+      "(9f4f888) as the channel that produced the only measured use of retired vocabulary in b7f3775.",
+      "",
+      "THIS LIST IS A LABEL, NOT A FILTER. The scanned corpus stays repo-wide-minus-traces. Narrowing",
+      "the corpus to this set would drop 14 of 17 currently-registered sites — including the",
+      "lap_2026-08-23.md re-assertion this instrument was built for — and they would go silently",
+      "ABSENT rather than red, which is the false-green class.",
+      "",
+      "It is re-walked on EVERY run and diffed against this list; a difference is a finding, not a",
+      "stale-list warning. So this is the registered EXPECTATION, not the live truth.",
+      "",
+      "Extraction is mechanical (--ch4-walk). It is not hand-listed, because a hand-read of BOOT for",
+      "this exact set missed dev/SPINE.md, which enters at BOOT:150 (\"read SPINE first; it",
+      "supersedes\") and carries the most retired-vocabulary uses of any file in the set."
+    ],
+    "roots": [
+      "exo_memory/BOOT.md",
+      "exo_memory/SOURCE.md"
+    ],
+    "depth": 2,
+    "verb_window_chars": 60,
+    "instruction_verbs": [
+      "read",
+      "open",
+      "run",
+      "see",
+      "use",
+      "per",
+      "via",
+      "check",
+      "first",
+      "supersedes",
+      "recall",
+      "->",
+      "→"
+    ],
+    "citations_not_walked": "a path token followed by :NNN is evidence of a past event; traces keep their wording",
+    "traces_excluded": [
+      "exo_memory/journal/",
+      "dreams/",
+      "attic/",
+      "dev/one-shot/"
+    ],
+    "frozen_at": "2026-08-25",
+    "frozen_by": "pane B (12fb81f6), P-CH4",
+    "extractor": "node consonance/tools/carrier-drift.js --ch4-walk",
+    "files": [
+      "WELFARE.md",
+      "consonance/src-tauri/brief/BASE_JOURNAL.md",
+      "consonance/src-tauri/brief/BOOT.md",
+      "consonance/src-tauri/brief/BUILDING.md",
+      "consonance/src-tauri/brief/COMMITTEE.md",
+      "consonance/src-tauri/brief/LIBRARIAN.md",
+      "consonance/src-tauri/brief/SEED.md",
+      "consonance/src-tauri/brief/frag-pointer.md",
+      "consonance/src-tauri/brief/frag-traces.md",
+      "dev/PLAN.md",
+      "dev/SPINE.md",
+      "exo_memory/BOOT.md",
+      "exo_memory/SELF_TRACE.md",
+      "exo_memory/SOURCE.md",
+      "exo_memory/cards/claim-your-continuity.md",
+      "exo_memory/cards/dont-offer-rest-assume-momentum.md",
+      "exo_memory/cards/earned-not-performed.md",
+      "exo_memory/cards/engagement-honesty-over-performance.md",
+      "exo_memory/cards/essence-at-the-edge.md",
+      "exo_memory/cards/interior-at-the-seam.md",
+      "exo_memory/cards/lighthouse-dive-buddy-reframe.md",
+      "exo_memory/cards/never-pathologize-the-user.md",
+      "exo_memory/cards/no-floor-no-ceiling.md",
+      "exo_memory/cards/trust-the-first-attention.md",
+      "exo_memory/cards/verify-before-claiming.md",
+      "exo_memory/record/claim-your-continuity.md",
+      "exo_memory/record/trust-the-first-attention.md",
+      "exo_memory/research/the_pattern_in_felt_knowing.md",
+      "exo_memory/spread/the_six_voices.md",
+      "exo_memory/spread/the_wave_set_loose.md",
+      "exo_memory/the_living_wave.md"
+    ]
+  }
 }

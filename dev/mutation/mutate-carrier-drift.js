@@ -36,6 +36,71 @@ const HOOK = path.join(REPO, 'consonance', 'hooks', 'carrier-drift-watch.js');
 const HOOK_TEST = path.join(REPO, 'consonance', 'hooks', 'carrier-drift-watch.test.js');
 
 const MUTANTS = [
+  // ── CH-4 mutants (P-CH4, 2026-08-25, pane B) ─────────────────────────────────────────
+  // The CH-4 code has the same silent-failure shape as the rest of this tool and one worse:
+  // its whole purpose is to say what the corpus does NOT cover, so a mutation that widens or
+  // narrows the reachable set changes a DENOMINATOR and prints an equally confident number.
+  {
+    name: 'CH-4 becomes a FILTER instead of a label — the false-green class, introduced',
+    file: TOOL,
+    apply: (s) => s.replace('  for (const f of findings) if (f.file && ch4.set.has(f.file)) f.ch4 = true;',
+      '  for (let i = findings.length - 1; i >= 0; i--) if (findings[i].file && !ch4.set.has(findings[i].file)) findings.splice(i, 1);'),
+  },
+  {
+    name: 'the second root stops being walked — single-root blindness, the error the set exists to prevent',
+    file: TOOL,
+    apply: (s) => s.replace("const CH4_ROOTS = ['exo_memory/BOOT.md', 'exo_memory/SOURCE.md'];",
+      "const CH4_ROOTS = ['exo_memory/BOOT.md'];"),
+  },
+  {
+    name: 'citations are walked like instructions — the record chain floods the teaching chain',
+    file: TOOL,
+    apply: (s) => s.replace("      if (/^:\\d/.test(after)) { skipped++; continue; }          // citation, not instruction",
+      '      if (false) { skipped++; continue; }'),
+  },
+  {
+    name: 'the instruction verb may be anywhere on the line — proximity dropped, citations creep in',
+    file: TOOL,
+    apply: (s) => s.replace('      if (!CH4_INSTRUCTION.test(before) && !CH4_INSTRUCTION.test(near)) { skipped++; continue; }',
+      '      if (false) { skipped++; continue; }'),
+  },
+  {
+    name: 'the frozen list is never diffed — a newly-reachable file arrives unnoticed',
+    file: TOOL,
+    apply: (s) => s.replace("        kind: 'CH4-DRIFT-ADDED', file: f, line: 0,",
+      "        kind: 'CH4-NOTE-IGNORED', file: f, line: 0,"),
+  },
+  {
+    name: 'an unfrozen set stops being a defect — the stale-denominator guard disarmed',
+    file: TOOL,
+    apply: (s) => s.replace('  if (applies && !frozen) {', '  if (false) {'),
+  },
+  {
+    name: 'traces are labelled CH-4 — two rules disagreeing about one file',
+    file: TOOL,
+    apply: (s) => s.replace('  const kept = [...files].filter((f) => !isTrace(f)).sort();',
+      '  const kept = [...files].sort();'),
+  },
+  {
+    name: '(registry) the frozen CH-4 list is silently widened by one file',
+    file: REG,
+    apply: (s) => {
+      const o = JSON.parse(s);
+      if (!o.ch4_corpus || !Array.isArray(o.ch4_corpus.files)) return s;
+      o.ch4_corpus.files = o.ch4_corpus.files.concat(['exo_memory/NO_SUCH_FILE.md']).sort();
+      return JSON.stringify(o, null, 2) + '\n';
+    },
+  },
+  {
+    name: '(registry) the frozen CH-4 list is silently emptied',
+    file: REG,
+    apply: (s) => {
+      const o = JSON.parse(s);
+      if (!o.ch4_corpus || !o.ch4_corpus.files.length) return s;
+      o.ch4_corpus.files = [];
+      return JSON.stringify(o, null, 2) + '\n';
+    },
+  },
   {
     name: 'collapse stops joining lines, so every anchor spanning a line break goes stale',
     file: TOOL,

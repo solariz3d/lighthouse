@@ -80,6 +80,8 @@
 //   node consonance/tools/carrier-drift.js --quiet     one line
 //   node consonance/tools/carrier-drift.js --census    print proposed registry sites for every
 //                                                      occurrence found, for a HUMAN to classify
+//   node consonance/tools/carrier-drift.js --ch4-walk  re-extract the instruction-reachable set
+//                                                      and diff it against the frozen list
 'use strict';
 
 const fs = require('fs');
@@ -99,6 +101,126 @@ const TRACE_PREFIXES = [
   'attic/',
   'dev/one-shot/',   // landed unmodified as a trace, by its own header
 ];
+
+// ── CH-4: the instruction-reachable set ──────────────────────────────────────────────────
+// WHAT THIS IS AND WHAT IT IS EMPHATICALLY NOT. `carrier_surface_2026-08-25.md` (9f4f888) found
+// five channels by which retired wording reaches a waking instance. CH-4 is the one with no
+// shipping step: files BOOT and SOURCE *instruct* an instance to open, which therefore teach
+// whoever follows the instruction. It produced the only measured use in b7f3775.
+//
+// CH-4 IS A LABEL ON THE CORPUS, NEVER A REPLACEMENT FOR IT. The librarian's Q2 ruling is that a
+// detector inherits the walker's boundary; the failure mode one reading away is narrowing the
+// scanned corpus to the reachable set, and that reading is measurably catastrophic:
+//
+//   registered site FILES  9 · inside the CH-4 set  2 · OUTSIDE  7
+//   registered SITES lost if the corpus were narrowed to CH-4:  14 of 17
+//
+// Among the fourteen is `loop/lap_2026-08-23.md` — THE re-assertion, the event this instrument
+// was built for. They would not go red; they would go silently ABSENT, which is the false-green
+// class (Q3) introduced by the packet that names it. So: the scanned corpus stays repo-wide minus
+// traces, and CH-4 rides along as a flag on findings and a line in the universe print.
+//
+// FROZEN, AND ALSO RE-WALKED EVERY RUN. The registry carries the extracted list. The walk is two
+// root files at depth 2, so it is cheap enough to redo on every invocation rather than on a
+// commit trigger — which removes staleness as a failure mode entirely instead of trading against
+// it. The frozen list is therefore not the live truth; it is the REGISTERED EXPECTATION, and a
+// difference is a finding (CH4-DRIFT), because a file that has just become instruction-reachable
+// from BOOT is a file nobody has classified yet.
+//
+// EXTRACTION IS MECHANICAL, BY PATTERN, NEVER BY HAND-READING. That is not a style preference:
+// the librarian hand-read BOOT for this exact set and missed `dev/SPINE.md`, which enters at
+// BOOT:150 ("read SPINE first; it supersedes") and carries 13 apparatus hits — the largest of any
+// file in the set. A hand-read of a 160-line document is not a corpus rule.
+const CH4_ROOTS = ['exo_memory/BOOT.md', 'exo_memory/SOURCE.md'];
+const CH4_DEPTH = 2;
+// A line carrying one of these is telling the reader to go somewhere. A path with a `:NNN` suffix
+// is a CITATION — evidence of a past event — and is never walked: traces keep their wording.
+const CH4_INSTRUCTION = /(\b(read|open|run|see|use|per|via|check|first|supersedes|recall)\b)|->|→/i;
+const CH4_VERB_WINDOW = 60;   // 60 and 90 give the identical set; 30 loses real pointers, 200 admits citations.
+const CH4_SEEDED_DIRS = [
+  'exo_memory/cards', 'exo_memory/spread', 'exo_memory/research', 'exo_memory/record',
+];
+const CH4_BRIEF_DIR = 'consonance/src-tauri/brief';
+const CH4_SEARCH = ['', 'exo_memory', 'exo_memory/cards', 'exo_memory/record', 'exo_memory/spread',
+  'exo_memory/research', 'exo_memory/loop', 'consonance', CH4_BRIEF_DIR, 'dev'];
+const CH4_TOKEN = /(?:[A-Za-z0-9_.-]+\/)*[A-Za-z0-9_.-]+\.md|\[\[([a-z0-9-]+)\]\]/g;
+
+function ch4Resolve(root, token, fromDir) {
+  const rel = token.replace(/\\/g, '/').replace(/^\.\//, '');
+  const tries = [path.join(fromDir, rel)];
+  for (const d of CH4_SEARCH) tries.push(path.join(root, d, rel));
+  for (const t of tries) {
+    try {
+      if (fs.statSync(t).isFile()) return path.relative(root, t).split(path.sep).join('/');
+    } catch { /* not here */ }
+  }
+  return null;
+}
+
+/** Instruction-pointer targets of one file. Citations (`path.md:12`) are skipped and counted. */
+function ch4Targets(root, rel) {
+  let raw;
+  try { raw = fs.readFileSync(path.join(root, rel), 'utf8'); } catch { return { targets: [], skipped: 0 }; }
+  const fromDir = path.dirname(path.join(root, rel));
+  const out = new Set();
+  let skipped = 0;
+  for (const line of raw.split(/\r?\n/)) {
+    CH4_TOKEN.lastIndex = 0;
+    let m;
+    while ((m = CH4_TOKEN.exec(line)) !== null) {
+      const token = m[1] ? m[1] + '.md' : m[0];
+      const after = line.slice(m.index + m[0].length, m.index + m[0].length + 5);
+      if (/^:\d/.test(after)) { skipped++; continue; }          // citation, not instruction
+      // PROXIMITY, not line-membership. A 900-word BOOT paragraph almost always contains some
+      // instruction verb somewhere, so "the line has a verb" admits every file the paragraph
+      // happens to cite. The verb has to be near the pointer to be pointing AT it. The window is
+      // a declared parameter, not a taste: widen it and citations creep in, narrow it and real
+      // pointers ("read SPINE first") drop out.
+      const before = line.slice(Math.max(0, m.index - CH4_VERB_WINDOW), m.index);
+      const near = line.slice(m.index + m[0].length, m.index + m[0].length + CH4_VERB_WINDOW);
+      if (!CH4_INSTRUCTION.test(before) && !CH4_INSTRUCTION.test(near)) { skipped++; continue; }
+      const r = ch4Resolve(root, token, fromDir);
+      if (r) out.add(r);
+    }
+  }
+  return { targets: [...out], skipped };
+}
+
+/**
+ * The instruction-reachable set: both roots, depth CH4_DEPTH, unioned with the closed universe
+ * the room actually seeds (four dirs) and bundles (the briefs). Mechanical and reproducible.
+ */
+function ch4Walk(root) {
+  const depth = {};
+  const missingRoots = [];
+  for (const r of CH4_ROOTS) {
+    try { fs.statSync(path.join(root, r)); depth[r] = 0; } catch { missingRoots.push(r); }
+  }
+  let frontier = Object.keys(depth);
+  let skipped = 0;
+  for (let d = 1; d <= CH4_DEPTH; d++) {
+    const next = [];
+    for (const f of frontier) {
+      const t = ch4Targets(root, f);
+      skipped += t.skipped;
+      for (const x of t.targets) if (!(x in depth)) { depth[x] = d; next.push(x); }
+    }
+    frontier = next;
+  }
+  const files = new Set(Object.keys(depth));
+  for (const d of CH4_SEEDED_DIRS.concat([CH4_BRIEF_DIR])) {
+    let entries;
+    try { entries = fs.readdirSync(path.join(root, d)); } catch { continue; }
+    for (const f of entries) if (f.toLowerCase().endsWith('.md')) files.add(d + '/' + f);
+  }
+  // A TRACE can be instruction-reachable and still keeps its wording by design (BOOT names
+  // `journal/` as a class). Including one here would label it CH-4 while the scan skips it —
+  // two rules disagreeing about the same file, inside a tool whose subject is exactly that.
+  const isTrace = (f) => TRACE_PREFIXES.some((p) => f.startsWith(p));
+  const kept = [...files].filter((f) => !isTrace(f)).sort();
+  const tracesReached = [...files].filter(isTrace).sort();
+  return { files: kept, tracesReached, depth, skipped, missingRoots };
+}
 
 // Anchors are grown from the match outward until they are UNIQUE in the file, and no further.
 // Two failure directions and both are real: too short and one entry silently excuses a second
@@ -172,6 +294,52 @@ function scan(opts = {}) {
   const findings = [];
   const perWithdrawal = [];
 
+  // ── CH-4, re-walked every run and diffed against the frozen list ───────────────────────
+  // The set is cheap (two roots, depth 2), so it is recomputed rather than trusted. A frozen
+  // list that is never re-derived is the stale-denominator failure with a timestamp on it.
+  const walked = ch4Walk(root);
+  const frozen = (reg.ch4_corpus && Array.isArray(reg.ch4_corpus.files)) ? reg.ch4_corpus.files : null;
+  // CH-4 is only meaningful over a tree that HAS the roots. A tree with neither is not a room
+  // with an unfrozen set, it is not a room — and reporting a missing-root defect against a
+  // synthetic fixture would be the tool describing its own test harness. Applicability first,
+  // then the two real defects: some roots present (single-root blindness) and none frozen.
+  const applies = walked.missingRoots.length < CH4_ROOTS.length;
+  const ch4 = { applies, walked: walked.files, frozen, set: new Set(applies ? walked.files : []),
+    missingRoots: walked.missingRoots, tracesReached: walked.tracesReached };
+  if (applies && walked.missingRoots.length) {
+    findings.push({
+      kind: 'CH4-ROOT-MISSING', file: walked.missingRoots.join(', '), line: 0,
+      detail: 'a declared CH-4 root does not exist, so the reachable set was computed from fewer ' +
+              'roots than registered — the single-root blindness this set exists to prevent',
+    });
+  }
+  if (applies && !frozen) {
+    findings.push({
+      kind: 'CH4-UNFROZEN', file: path.relative(root, REGISTRY), line: 0,
+      detail: 'registry carries no ch4_corpus.files, so there is nothing to diff the walk against ' +
+              'and a newly-reachable file would arrive unnoticed. Run --ch4-walk and freeze it.',
+    });
+  } else if (applies && frozen) {
+    const fset = new Set(frozen);
+    const added = walked.files.filter((f) => !fset.has(f));
+    const removed = frozen.filter((f) => !ch4.set.has(f));
+    for (const f of added) {
+      findings.push({
+        kind: 'CH4-DRIFT-ADDED', file: f, line: 0,
+        detail: 'this file is now reachable by instruction from BOOT/SOURCE and is not in the ' +
+                'frozen set — nobody has classified what it teaches. Re-freeze deliberately, ' +
+                'after reading it, never as a formality',
+      });
+    }
+    for (const f of removed) {
+      findings.push({
+        kind: 'CH4-DRIFT-REMOVED', file: f, line: 0,
+        detail: 'the frozen set names a file the walk no longer reaches — a pointer was removed ' +
+                'or the file moved. Either is a real change to what the room teaches',
+      });
+    }
+  }
+
   // A registry with no withdrawals in it is not a green tree, it is an unarmed instrument. Same
   // rule js-suite applies to a green run over zero tests.
   if (!Array.isArray(reg.withdrawals) || reg.withdrawals.length === 0) {
@@ -180,7 +348,9 @@ function scan(opts = {}) {
       detail: 'no withdrawals registered — this tool is armed by its registry and an empty one ' +
               'reports green over everything it cannot see',
     });
-    return { red: true, findings, withdrawals: [], counts: { carriers: carriers.length, traces: traces.length } };
+    return { red: true, findings, withdrawals: [], ch4,
+      counts: { carriers: carriers.length, traces: traces.length,
+        ch4: applies ? walked.files.length : undefined } };
   }
 
   // Read each carrier once, not once per withdrawal.
@@ -303,10 +473,20 @@ function scan(opts = {}) {
       correct_form: w.correct_form, occurrences, accounted });
   }
 
+  // CH-4 membership is a property of a finding, not a filter on it: an unaccounted occurrence in
+  // an instruction-reachable file is taught to whoever follows the instruction, and one outside
+  // the set is still a carrier. Both are red; only one is labelled.
+  for (const f of findings) if (f.file && ch4.set.has(f.file)) f.ch4 = true;
+
   const red = findings.length > 0;
   return {
-    red, findings, withdrawals: perWithdrawal,
-    counts: { carriers: carriers.length, traces: traces.length },
+    red, findings, withdrawals: perWithdrawal, ch4,
+    counts: {
+      carriers: carriers.length,
+      traces: traces.length,
+      ch4: applies ? walked.files.length : undefined,
+      ch4InCorpus: applies ? walked.files.filter((f) => carriers.includes(f)).length : undefined,
+    },
   };
 }
 
@@ -363,6 +543,14 @@ function report(res, opts = {}) {
   say();
   say('  corpus: ' + res.counts.carriers + ' carriers · ' + res.counts.traces +
       ' traces skipped (' + TRACE_PREFIXES.join(', ') + ')');
+  if (res.counts.ch4 !== undefined) {
+    say('  CH-4:   ' + res.counts.ch4 + ' instruction-reachable from ' + CH4_ROOTS.join(' + ') +
+        ' at depth ' + CH4_DEPTH + ' · ' + res.counts.ch4InCorpus + ' of them inside the scanned corpus' +
+        ' · re-walked this run' +
+        (res.ch4 && res.ch4.frozen ? ' · frozen list ' + res.ch4.frozen.length : ' · NOT FROZEN'));
+    say('          CH-4 is a LABEL on findings, never a filter — narrowing the corpus to it would ' +
+        'drop 14 of 17 registered sites');
+  }
   say();
   for (const w of res.withdrawals) {
     say('  ' + w.id);
@@ -375,7 +563,7 @@ function report(res, opts = {}) {
     say();
     say('  RED — ' + res.findings.length + (res.findings.length === 1 ? ' finding' : ' findings'));
     for (const f of res.findings) {
-      say('    ' + f.kind + '  ' + f.file + (f.line ? ':' + f.line : ''));
+      say('    ' + f.kind + '  ' + f.file + (f.line ? ':' + f.line : '') + (f.ch4 ? '   [CH-4]' : ''));
       say('      ' + f.detail);
       if (f.excerpt) say('      … ' + f.excerpt + ' …');
     }
@@ -390,6 +578,30 @@ function report(res, opts = {}) {
 
 if (require.main === module) {
   const argv = process.argv.slice(2);
+  if (argv.includes('--ch4-walk')) {
+    const w = ch4Walk(REPO);
+    const reg = JSON.parse(fs.readFileSync(REGISTRY, 'utf8'));
+    const frozen = (reg.ch4_corpus && reg.ch4_corpus.files) || [];
+    const fset = new Set(frozen);
+    const wset = new Set(w.files);
+    console.log('CH-4 WALK — instruction pointers, roots ' + CH4_ROOTS.join(' + ') + ', depth ' + CH4_DEPTH);
+    console.log('  reached: ' + w.files.length + ' · citation/non-instruction tokens skipped: ' + w.skipped);
+    if (w.missingRoots.length) console.log('  MISSING ROOTS: ' + w.missingRoots.join(', '));
+    console.log('  frozen:  ' + frozen.length);
+    const added = w.files.filter((f) => !fset.has(f));
+    const removed = frozen.filter((f) => !wset.has(f));
+    if (added.length) { console.log('  ADDED since freeze:'); added.forEach((f) => console.log('    + ' + f)); }
+    if (removed.length) { console.log('  REMOVED since freeze:'); removed.forEach((f) => console.log('    - ' + f)); }
+    if (!added.length && !removed.length) console.log('  no drift');
+    console.log();
+    console.log('  the set (depth shown for walked members; blank = seeded dir or brief):');
+    for (const f of w.files) console.log('    ' + (w.depth[f] !== undefined ? 'd' + w.depth[f] : '  ') + '  ' + f);
+    console.log();
+    console.log('  To freeze: paste the list above into carrier-drift.registry.json ch4_corpus.files');
+    console.log('  AFTER READING what each newly-added file teaches. Freezing without reading is');
+    console.log('  the rubber-stamp this registry warns about in its own _README.');
+    process.exit(0);
+  }
   if (argv.includes('--census')) {
     for (const r of census()) {
       console.log(JSON.stringify({ file: r.file, anchor: r.anchor, kind: '', why: '' }) +
@@ -407,4 +619,7 @@ if (require.main === module) {
   process.exit(res.red ? 1 : 0);
 }
 
-module.exports = { scan, census, collapse, corpus, report, TRACE_PREFIXES, REPO, REGISTRY };
+module.exports = {
+  scan, census, collapse, corpus, report, ch4Walk, ch4Targets,
+  TRACE_PREFIXES, CH4_ROOTS, CH4_DEPTH, CH4_SEEDED_DIRS, CH4_BRIEF_DIR, REPO, REGISTRY,
+};
