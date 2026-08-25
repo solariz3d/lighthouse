@@ -4556,6 +4556,22 @@ fn corpus_shelf() -> String {
         files.sort();
         if newest_first { files.reverse(); }
         for f in files {
+            // BOOT IS ALREADY IN THE INTAKE — skip it here or it rides twice.
+            //
+            // Found 2026-08-25 by the DESKTOP, measuring the artifact on disk rather than reading
+            // the code that writes it: 63,848 bytes, ~7% of an 878,197-byte intake, zero new
+            // information. librarian_intake() appends room_master_path() explicitly and this walk
+            // includes ("", false, true) — the root of exo_memory, where BOOT.md lives. NEITHER
+            // FUNCTION IS WRONG ON ITS OWN. The duplication exists only in the composition, which
+            // is exactly why reading either one would never show it and why a second machine
+            // measuring the output found it in one pass.
+            //
+            // Skipped rather than removed from the walk: the root entry also carries SOURCE.md and
+            // the twelve files the 2026-08-23 recursion fix rescued, and dropping the entry to
+            // solve a duplicate would re-create that hole.
+            if f == room_master_path() {
+                continue;
+            }
             // Label by path relative to exo_memory, so a nested file is citable as written.
             let label = f.strip_prefix(&root).ok().and_then(|r| r.to_str())
                 .map(|r| r.replace('\\', "/"))
@@ -7457,6 +7473,45 @@ mod shelf_tests {
             // Every indexed file must be namable by path, or "one read away" is not actionable.
             assert!(i.contains(".md  ("), "the indexed list carries no paths");
         }
+    }
+
+    #[test]
+    /// BOOT rides ONCE. Found by the desktop on 2026-08-25 by measuring the written artifact —
+    /// 63,848 bytes duplicated, ~7% of the intake — because librarian_intake() appends it and
+    /// corpus_shelf() walked a corpus containing it, and neither knew about the other.
+    ///
+    /// ASSERTED ON THE COMPOSITION, not on either half. Testing corpus_shelf alone would pass with
+    /// the duplicate intact, since the second copy comes from the OTHER function. That is the whole
+    /// shape of the defect and it is why nothing here caught it.
+    #[test]
+    fn the_librarian_intake_carries_boot_exactly_once() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let i = librarian_intake().expect("intake must resolve");
+        // A line unique to BOOT and stable: its own opening header.
+        let n = i.matches("# BOOT — the room you wake into").count();
+        assert_eq!(n, 1, "BOOT appears {n} time(s) in the librarian intake — expected exactly 1");
+    }
+
+    /// The librarian intake is UNBOUNDED and this test does not pretend otherwise — it records the
+    /// size so a person reading a run has the number, and fails only on a duplicate-scale jump.
+    ///
+    /// DELIBERATELY NOT AN INTAKE_LIMIT ASSERTION. The Third Place's limit is a host constraint on
+    /// a seat that must fit; this seat's shelf is budgeted at 2_200_000 by librarian_budget() and
+    /// whether the host silently TRUNCATES a large CLAUDE.md on read is UNMEASURED on any machine
+    /// (desktop round 2: "I measured the file, did not open the seat"). Asserting a bound here
+    /// before that is known would be fitting a number to a guess. What this catches is a
+    /// REGRESSION of the duplication class — anything that suddenly re-adds a BOOT-sized block.
+    #[test]
+    fn the_librarian_intake_size_is_recorded_and_not_silently_doubling() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let i = librarian_intake().expect("intake must resolve");
+        eprintln!("LIBRARIAN INTAKE {} bytes (unbounded by design; budget {})",
+            i.len(), librarian_budget());
+        assert!(
+            i.len() <= librarian_budget(),
+            "intake {} exceeds librarian_budget() {} — the shelf's own bound is not holding",
+            i.len(), librarian_budget()
+        );
     }
 
     #[test]
