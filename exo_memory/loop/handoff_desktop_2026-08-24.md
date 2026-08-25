@@ -7,7 +7,31 @@ sufficient" and found four gap classes; this document is shaped by them. Everyth
 
 ---
 
-# 1. READ THIS BEFORE WAKING ANY DESKTOP SEAT
+# 0. DO NOT PULL YET — the freeze is deliberate, and it is the keeper's call
+
+*Added 2026-08-25, correcting the framing of everything below.*
+
+**The keeper, verbatim:** *"When we get the dev build good, that is when consonance on my desktop
+will pull from the repo to update itself. As it currently stands, i am not working at home on my
+desktop on that consonance until we here on the laptop finish what we have started to make it
+simpler and no divergent conflictions."*
+
+**So the desktop having pulled nothing is the plan succeeding, not the plan slipping.** One machine
+moves, the other holds, and there is nothing to reconcile because nothing diverged. The pull is
+**gated on the dev build being good** — a judgment the keeper makes, not a date, and not something
+a document can trigger.
+
+*The chair had this backwards in an inventory on 2026-08-25 ~02:25, calling the desktop's zero
+commits "the largest single gap between what we've built and what's actually running." It is not a
+gap. It is the absence of a conflict, bought on purpose. Recorded rather than quietly reworded,
+because the mistake is the kind that reads as diligence.*
+
+**Everything below is for the moment the keeper says pull — not before.** It is a receiving
+checklist, not a backlog notice. Nothing in this file is an instruction to act today.
+
+---
+
+# 1. WHEN YOU DO PULL, READ THIS BEFORE WAKING ANY DESKTOP SEAT
 
 **Every Rust change tonight is INERT on your machine until you rebuild and relaunch.** The desktop is
 always-on, so this is not a formality — a seat woken before the rebuild is running last week's binary
