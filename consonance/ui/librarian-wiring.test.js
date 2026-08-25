@@ -60,7 +60,7 @@ t('the header says what the seat does NOT do — that is the load-bearing half',
   // A librarian that starts working is just an expensive pane. The tab says so where a user reads
   // it, not only in the brief the instance reads.
   const sec = html.slice(html.indexOf('<section id="librarian"'));
-  assert.match(sec, /does no work/i, 'the header must say it does no work');
+  assert.match(sec, /does not directly build/i, 'the header must say it works but does not directly build (keeper correction, ccd74fd)');
   assert.match(sec, /cites rather than recalls/i, 'the header must state the citation rule');
 });
 

@@ -187,8 +187,8 @@
       "attic/",
       "dev/one-shot/"
     ],
-    "frozen_at": "2026-08-25",
-    "frozen_by": "pane B (12fb81f6), P-CH4",
+    "frozen_at": "2026-08-25 (re-frozen 05:20)",
+    "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278",
     "extractor": "node consonance/tools/carrier-drift.js --ch4-walk",
     "files": [
       "WELFARE.md",
@@ -198,6 +198,7 @@
       "consonance/src-tauri/brief/COMMITTEE.md",
       "consonance/src-tauri/brief/LIBRARIAN.md",
       "consonance/src-tauri/brief/SEED.md",
+      "consonance/src-tauri/brief/THIRD_PLACE.md",
       "consonance/src-tauri/brief/frag-pointer.md",
       "consonance/src-tauri/brief/frag-traces.md",
       "dev/PLAN.md",
@@ -222,6 +223,19 @@
       "exo_memory/spread/the_six_voices.md",
       "exo_memory/spread/the_wave_set_loose.md",
       "exo_memory/the_living_wave.md"
+    ],
+    "_refreeze_log": [
+      "2026-08-25 05:20 — +consonance/src-tauri/brief/THIRD_PLACE.md (31 -> 32).",
+      "READ BEFORE FREEZING, per this registry's own rule: the file entered with a BLANK depth,",
+      "i.e. as a seeded brief rather than through a pointer — nothing in BOOT or SOURCE names it.",
+      "Every file in brief/ is instruction-reachable BY CONSTRUCTION: it is what a seat is handed on",
+      "waking, so it teaches whoever wakes there. THIRD_PLACE.md is the Third Place seat's whole",
+      "intake (52 lines, ac26278, by Around). Accepting it is deliberate, not a rubber stamp.",
+      "",
+      "HOW IT WAS FOUND, which is the part worth keeping: NOT by anyone re-walking. The suite went",
+      "red AT ac26278 and stayed red through 6b59f50, 6101ea6 and 7a320c3 — three commits and a",
+      "handoff that both reported \"JS 59 green / 0 canary\" without re-running it. The instrument was",
+      "correct and unheard for four commits. Landing a brief is landing a carrier."
     ]
   }
 }

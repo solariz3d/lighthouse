@@ -6988,12 +6988,20 @@ mod librarian_tests {
         assert!(brief < room, "the brief must be read before the corpus it holds");
     }
 
-    /// The seat is defined by what it does not do. If that survives only in a UI header it will be
-    /// edited away by someone tidying markup; it has to be in the thing the instance reads.
+    /// The seat is defined by the line between working and BUILDING. If that survives only in a UI
+    /// header it will be edited away by someone tidying markup; it has to be in the thing the
+    /// instance reads.
+    ///
+    /// THIS ASSERTION USED TO PIN "No work." and was green for two days over a claim the keeper had
+    /// struck. The phrase left the brief at ccd74fd; the sentence that RETIRES it quotes it verbatim
+    /// ("This section used to read \"No work. ...\""), so the test went on matching the obituary.
+    /// Fifth instance of the self-reference trap in this repo and the sharpest: not a marker matched
+    /// by the comment removing it, but a test satisfied by the correction of the thing it asserts.
+    /// Pinned now to the live corrected wording at LIBRARIAN.md:4, which appears exactly once.
     #[test]
     fn the_intake_states_what_the_seat_must_not_do() {
         let i = librarian_intake().expect("intake must resolve");
-        assert!(i.contains("No work."), "the intake must say the seat does no work");
+        assert!(i.contains("does not directly build"), "the intake must carry the corrected frame: the seat works, it does not directly build (keeper, ccd74fd)");
         assert!(i.contains("write it down in the turn it forms"), "the intake lost the compaction rule");
     }
 }
