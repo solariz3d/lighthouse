@@ -31,6 +31,14 @@ verified-sounding markers. Re-derive first, especially where it reads as settled
   measured the real denominator: **46 numbered registrations, complete 1–46, ZERO checked.**
 - **"The corpus deletes almost nothing."** Sharper than that: **0 files have ever left the reading
   path.** Every deleted line is churn inside a file still on it. `node consonance/tools/forget-rate.js`
+- **"JS 59 green · Rust 311." Both handoffs and the chair say it. IT WAS FALSE WHEN WRITTEN.**
+  js-suite went **red at `ac26278`** — landing `brief/THIRD_PLACE.md` made carrier-drift's frozen
+  CH-4 list 32 where it was frozen at 31 — and stayed red through `6b59f50`, `6101ea6`, `7a320c3`.
+  The number was measured once and quoted four times without a re-run. Repaired at `c24f334`
+  (re-frozen 31 → 32, deliberately, with the reading recorded). **The general form, which is the
+  reason this belongs in a list about what not to trust: A GREEN QUOTED FROM AN EARLIER RUN IS NOT
+  A GREEN. `landed ≠ shipped` has a sibling — `verified once ≠ verified now`.** And the specific
+  trigger to keep: **landing a brief is landing a carrier.**
 
 ---
 
