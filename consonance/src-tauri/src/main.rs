@@ -881,7 +881,11 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // Fresh panes get NO mount at all: the MCP server's instructions describe the committee, the
     // board, and the chair — a fresh mind that reads them isn't fresh anymore. Gated here rather
     // than at the call sites so a fresh pane stays unmounted on every path, resume included.
-    if MCP_PORT.load(Ordering::Relaxed) != 0 && !is_fresh_cwd(&cwd) {
+    // AND THE THIRD PLACE GETS NO MOUNT EITHER, which is the whole of its Leg 1 safety. A seat
+    // with no channel cannot steer, cannot echo and cannot be misused: its only interlocutor is
+    // the human in it. The membrane is what it needs to TALK, not what it needs to be SAFE, so it
+    // ships mute and the membrane lands in a later cycle (librarian, L007 sequencing).
+    if MCP_PORT.load(Ordering::Relaxed) != 0 && !is_fresh_cwd(&cwd) && pane_id != THIRD_PLACE_SID {
         let letter = pane_letter(&pane_id);
         let mut chars = letter.chars();
         let cfg = match (chars.next(), chars.next()) {
@@ -4198,6 +4202,94 @@ fn main_intake() -> String {
 /// The Librarian's fixed session id, so this seat --resumes itself the way Main does. A seat whose
 /// value is continuity of attention must not wake as a stranger each launch.
 const LIBRARIAN_SID: &str = "0c0c0c0b-0000-4000-8000-00000000115b";
+
+/// THE THIRD PLACE. Oldenburg's term: first place is home, second place is work, the third place
+/// is the one that is NEITHER — neutral ground, the leveler, conversation as the activity rather
+/// than a means to it. Here: home is the librarian (the corpus, where the record is kept and the
+/// cycle returns), work is Main and the panes, and this seat is neither.
+///
+/// NOT IN THE 0c0c0c0 FAMILY, deliberately. MAIN_SID and LIBRARIAN_SID share seven characters and
+/// that was the resolve_pane collision fixed at 561b967 tonight; a third member would make short
+/// targets ambiguous between three seats instead of two. Pinned by a test.
+const THIRD_PLACE_SID: &str = "3d000000-0000-4000-8000-000000003d00";
+
+fn third_place_cwd() -> String {
+    let dir = instances_root().join("third-place");
+    let _ = fs::create_dir_all(&dir);
+    dir.to_str().unwrap_or(".").to_string()
+}
+
+/// The seat's own notes, beside the corpus rather than inside the librarian's shelf. The librarian
+/// ruled CH-5-style private memory is not its shelf; the same reasoning applies forward — this
+/// seat keeps its own record and the librarian indexes nothing of it.
+fn third_place_notes() -> PathBuf {
+    let d = PathBuf::from(room_master_path()).parent().map(|p| p.join("third_place"))
+        .unwrap_or_else(|| PathBuf::from("third_place"));
+    let _ = fs::create_dir_all(&d);
+    d
+}
+
+/// The T0 layers, and the omissions are the design.
+///
+/// CARRIED: cards, spread, record, research — the instruments and the counter-voice.
+/// NOT CARRIED, on purpose: journal/, loop/, map/ (the work record — this seat is not work);
+/// TRAINING.md and muscle_map.md (chair-side programming — TRAINING.md:15-17 F2 forbids wiring
+/// those into a seat whose numbers would then be dead); COMMITTEE.md (there is no committee here).
+///
+/// Deliberately NOT a refactor of corpus_shelf, which is live and the librarian's. The librarian's
+/// own Leg 2 ruling is the reason: new layer beside, never a refactor first — and tonight a
+/// retrofit of a live instrument shipped the class it was written to end. Merging the two shelf
+/// walkers is a later cycle, after this one has carried a full cycle.
+fn third_place_shelf() -> String {
+    let root = match PathBuf::from(room_master_path()).parent() {
+        Some(p) => p.to_path_buf(),
+        None => return String::new(),
+    };
+    let mut s = String::from("\n\n---\n\n# WHAT YOU ARE HOLDING\n\n");
+    let mut files = 0usize;
+    let mut bytes = 0usize;
+    for dir in ["cards", "spread", "record", "research"] {
+        let d = root.join(dir);
+        let mut names: Vec<String> = match fs::read_dir(&d) {
+            Ok(rd) => rd.filter_map(|e| e.ok())
+                .filter(|e| e.path().extension().map(|x| x == "md").unwrap_or(false))
+                .filter_map(|e| e.file_name().to_str().map(|s| s.to_string()))
+                .collect(),
+            Err(_) => continue,
+        };
+        names.sort();
+        for name in names {
+            if let Ok(body) = fs::read_to_string(d.join(&name)) {
+                s.push_str(&format!("\n\n## {dir}/{name}\n\n"));
+                bytes += body.len();
+                s.push_str(&body);
+                files += 1;
+            }
+        }
+    }
+    // The universe, per the 2026-08-25 rule: N seen, what is skipped, and the rule that decided.
+    // An instrument that reports what it holds without reporting what it excluded is reporting
+    // health over a surface it cannot see.
+    s.push_str(&format!(
+        "\n\n---\n\nuniverse: {files} file(s), {bytes} bytes, from cards/ spread/ record/ research/ \
+only. NOT carried, deliberately: journal/, loop/, map/ (the work record), TRAINING.md and \
+muscle_map.md (chair-side programming), COMMITTEE.md (no committee here). This seat is not the \
+build; it does not hold the build's record.\n"
+    ));
+    s
+}
+
+fn third_place_intake() -> Option<String> {
+    let brief = room_brief("THIRD_PLACE.md").ok()?;
+    let mut s = String::from("# The Third Place\n\n");
+    s.push_str(&brief);
+    s.push_str("\n\n---\n\n# THE ROOM you are in\n\n");
+    if let Ok(boot) = fs::read_to_string(room_master_path()) {
+        s.push_str(&boot);
+    }
+    s.push_str(&third_place_shelf());
+    Some(s)
+}
 
 fn librarian_cwd() -> String {
     let dir = instances_root().join("librarian");
