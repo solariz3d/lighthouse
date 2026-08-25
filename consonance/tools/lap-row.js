@@ -216,10 +216,49 @@ function laps(all = rows()) {
 // was deleted by hand, and reusing that id silently MERGES a new lap with the remains of a dead one
 // - a guess from one inquiry scored against the map of another, with nothing in the output to show
 // it happened.
+/* RULE 2W-1 — THE LAP ID CARRIES ITS MINT SITE. Registered by pane A in
+ * exo_memory/loop/two_writers_registration_2026-08-25.md, adopted here.
+ *
+ * THE FAILURE IT CLOSES, and it is the only SILENT one A found in ten measured shapes. This ledger
+ * is machine-local (outside the repo) and mintId is max+1 over the LOCAL rows — but the ids it
+ * produces get written into TRACKED prose, nine files as of that registration. Two machines both
+ * mint L009 for different inquiries, each writes it into its own documents, and git merges cleanly
+ * BECAUSE THEY ARE DIFFERENT FILES. No conflict, no warning, no later moment where it surfaces: the
+ * record simply contains two laps with one name, and every falsifier keyed to L009 becomes
+ * ambiguous retroactively and permanently.
+ *
+ * A's own note on why this and not the obvious fix: per-machine FILENAMES do not prevent a
+ * collision, they remove the NOTIFICATION of one, and every other collision shape it found is
+ * already loud. This is aimed at the failure that makes no sound.
+ *
+ * THE DEFAULT IS THE WHOLE SAFETY PROPERTY. A tag that is the same everywhere IS the collision, so
+ * absence of config must not fall back to a constant. It falls back to the HOSTNAME's first
+ * alphanumeric, which differs per machine without anyone configuring anything — the desktop is
+ * protected on its first run whether or not someone remembers to set a field.
+ *
+ * COST, stated by A in full and not softened: ids are one character wider; L001-L008 predate the
+ * rule and stay as they are, so the record carries two id shapes forever and a reader must know
+ * that a bare L-id means "before 2026-08-25"; every grep for the id pattern widens. It does NOT
+ * split the record, which is what per-machine filenames would have cost.
+ */
+function machineTag() {
+  const env = (process.env.LAP_MACHINE_TAG || '').trim();
+  if (env) return env[0].toUpperCase();
+  const cfg = fromConfig('machine_tag');
+  if (cfg) return String(cfg).trim()[0].toUpperCase();
+  // No config: derive. Per-machine by construction, which is the point.
+  const host = require('os').hostname().replace(/[^A-Za-z0-9]/g, '');
+  return host ? host[0].toUpperCase() : 'X';
+}
+
 function mintId(all) {
-  const max = all.map(r => Number(String(r.lap || '').replace(/^L/, '')))
+  // Strip ANY single-letter prefix, not just L: after this rule the local ledger may hold ids from
+  // more than one shape (a machine whose tag changed, an imported row), and a parse that only knows
+  // 'L' would read those as NaN, drop them from the max, and re-mint an id that already exists —
+  // reintroducing the gap-filling merge the comment below spent its whole length forbidding.
+  const max = all.map(r => Number(String(r.lap || '').replace(/^[A-Za-z]/, '')))
     .filter(Number.isFinite).reduce((a, b) => Math.max(a, b), 0);
-  return 'L' + String(max + 1).padStart(3, '0');
+  return machineTag() + String(max + 1).padStart(3, '0');
 }
 
 // ---------------------------------------------------------------- the three writes

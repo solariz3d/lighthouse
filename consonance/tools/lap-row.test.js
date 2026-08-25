@@ -374,3 +374,87 @@ test('cli: no verb prints usage and exits 2', () => {
   assert.match(r.stderr, /usage:/);
   fs.rmSync(dir, { recursive: true, force: true });
 });
+
+// ---------------------------------------------------------------- 2W-1: the mint site
+
+// RULE 2W-1, registered in exo_memory/loop/two_writers_registration_2026-08-25.md and the only fix
+// in that document aimed at a SILENT failure. This ledger is machine-local and ids mint as max+1
+// locally, but the ids land in TRACKED prose. Two machines both minting L009 for different work
+// merge CLEANLY because they write different files -- no conflict, no warning, and every falsifier
+// keyed to that id is ambiguous forever after.
+function cliTagged(args, ledger, tag) {
+  try {
+    return { code: 0, stdout: execFileSync(NODE, [TOOL, ...args], {
+      encoding: 'utf8', env: { ...process.env, LAP_LEDGER: ledger, LAP_MACHINE_TAG: tag } }) };
+  } catch (e) {
+    return { code: e.status, stdout: e.stdout || '', stderr: e.stderr || '' };
+  }
+}
+
+test('2W-1: two machines minting against their OWN ledgers do not produce the same id', () => {
+  // The real scenario, and it is NOT two writers on one ledger: each machine has its own
+  // machine-local lap.jsonl, so both are at the same count and both mint the same NUMBER. Only the
+  // tag separates them. A test that shared one ledger would prove nothing, because the second mint
+  // would see the first row and increment past it -- the collision would be hidden by the fixture.
+  const dirA = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1a-'));
+  const dirB = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1b-'));
+  const ledA = path.join(dirA, 'lap.jsonl');
+  const ledB = path.join(dirB, 'lap.jsonl');
+
+  const a = cliTagged(['--open', '--initiator', 'chair', '--inquiry', 'q1', '--guess', 'a.md'], ledA, 'L');
+  const b = cliTagged(['--open', '--initiator', 'chair', '--inquiry', 'q2', '--guess', 'b.md'], ledB, 'D');
+  const idA = (a.stdout.match(/([A-Z][0-9][0-9][0-9])/) || [])[1];
+  const idB = (b.stdout.match(/([A-Z][0-9][0-9][0-9])/) || [])[1];
+
+  assert.ok(idA && idB, `both mints must print an id, got ${JSON.stringify([a.stdout, b.stdout])}`);
+  assert.strictEqual(idA.slice(1), idB.slice(1), 'the NUMBER must match — that is the whole hazard');
+  assert.notStrictEqual(idA, idB, 'the ids must differ, or the silent collision is live');
+
+  fs.rmSync(dirA, { recursive: true, force: true });
+  fs.rmSync(dirB, { recursive: true, force: true });
+});
+
+test('2W-1: an unconfigured machine does NOT fall back to a shared constant', () => {
+  // THE DEFAULT IS THE SAFETY PROPERTY, so this must exercise the UNCONFIGURED path — and the
+  // first version of this test did not. It computed its expectation from ~/.consonance.json, the
+  // same file the tool reads, so it agreed with the tool by construction: with machine_tag=L set
+  // here, a mutant hardcoding 'L' as the fallback passed cleanly. A test that consults the same
+  // source as the thing it checks cannot disagree with it.
+  //
+  // Fixed by making the machine genuinely unconfigured: HOME and USERPROFILE point at an empty
+  // temp dir, so fromConfig finds nothing and the derivation is the only path left.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1c-'));
+  const fakeHome = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-nohome-'));
+  const ledger = path.join(dir, 'lap.jsonl');
+  const env = { ...process.env, LAP_LEDGER: ledger, HOME: fakeHome, USERPROFILE: fakeHome };
+  delete env.LAP_MACHINE_TAG;
+  const out = execFileSync(NODE, [TOOL, '--open', '--initiator', 'chair', '--inquiry', 'q', '--guess', 'a.md'],
+    { encoding: 'utf8', env });
+  const id = (out.match(/([A-Z][0-9][0-9][0-9])/) || [])[1];
+  assert.ok(id, 'a mint with no config anywhere must still produce an id');
+
+  // os.hostname() does not depend on HOME, so this is a real independent expectation rather than
+  // a second reading of the tool's own input.
+  const derived = (os.hostname().replace(/[^A-Za-z0-9]/g, '')[0] || 'X').toUpperCase();
+  assert.strictEqual(id[0], derived,
+    `with no config the prefix must derive from the HOSTNAME (${derived}), got ${id[0]}`);
+
+  fs.rmSync(dir, { recursive: true, force: true });
+  fs.rmSync(fakeHome, { recursive: true, force: true });
+});
+
+test('2W-1: max+1 still holds when the ledger carries MORE THAN ONE tag', () => {
+  // The parse used to strip only /^L/. Left alone it would read a D-row as NaN, drop it from the
+  // max, and re-mint an id that already exists -- reintroducing the exact gap-filling merge that
+  // mintId's own comment forbids at length.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-2w1d-'));
+  const ledger = path.join(dir, 'lap.jsonl');
+  fs.writeFileSync(ledger,
+    JSON.stringify({ lap: 'L001', stage: 'open', initiator: 'chair', inquiry: 'x', guess: ['a.md'], ts: 1 }) + '\n' +
+    JSON.stringify({ lap: 'D007', stage: 'open', initiator: 'chair', inquiry: 'y', guess: ['b.md'], ts: 2 }) + '\n');
+  const out = cliTagged(['--open', '--initiator', 'chair', '--inquiry', 'z', '--guess', 'c.md'], ledger, 'L').stdout;
+  const id = (out.match(/([A-Z][0-9][0-9][0-9])/) || [])[1];
+  assert.strictEqual(id, 'L008', `the foreign-tagged row must count toward the max, got ${id}`);
+
+  fs.rmSync(dir, { recursive: true, force: true });
+});
