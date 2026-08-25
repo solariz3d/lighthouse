@@ -55,8 +55,28 @@ t('term.js references EVERY id the markup declares', () => {
   }
 });
 
-t('the handler calls the backend command that exists', () => {
+t('the frontend calls a backend command by name', () => {
+  // RENAMED 2026-08-25. This case was called "the handler calls the backend command THAT EXISTS"
+  // and its body only ever grepped term.js. The name asserted existence; nothing checked it. It
+  // passed 9/9 with mutation 6/6 for four hours while the command did not exist in any commit,
+  // and the tab called a verb the binary had never heard of. A test whose NAME claims more than
+  // its BODY checks is worse than a missing test: it occupies the slot where the real one would go.
   assert.match(term, /inv\('spawn_third_place'\)/, 'no call to spawn_third_place');
+});
+
+t('AND THE BACKEND ACTUALLY DEFINES IT — the half that was missing', () => {
+  // The unit-vs-delivery gap, inside the test written to close the unit-vs-delivery gap. The
+  // frontend naming a command proves only that the frontend names it. Read the Rust.
+  //
+  // TWO ASSERTIONS, because #[tauri::command] and the generate_handler list are separate acts and
+  // omitting either produces the same dead button: 34afdf6 shipped four supporting functions and
+  // neither of these.
+  const rs = fs.readFileSync(
+    path.join(__dirname, '..', 'src-tauri', 'src', 'main.rs'), 'utf8');
+  assert.match(rs, /fn spawn_third_place\s*\(/,
+    'main.rs does not DEFINE spawn_third_place — the tab calls a verb that does not exist');
+  assert.match(rs, /^\s*spawn_third_place,\s*$/m,
+    'spawn_third_place is defined but NOT REGISTERED in generate_handler — invoke will still fail');
 });
 
 t('opening is state-managed, so a second click cannot ask for a second seat', () => {

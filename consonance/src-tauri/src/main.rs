@@ -4545,6 +4545,51 @@ fn librarian_intake() -> Option<String> {
     Some(s)
 }
 
+/// Open the Third Place. Mirrors spawn_librarian, and differs in exactly three ways, each of them
+/// the point:
+///   NO ROLE OF ITS OWN in the addressable sense — registered "third_place", which is not in
+///   ADDRESSABLE_SEATS, so chair_target_guard refuses it the way it refuses a person.
+///   NO NAME in PaneNames — nothing can resolve a target to it, because nothing should address it.
+///   NO MCP MOUNT — spawn_claude_pane skips the config for this SID (see the gate there).
+/// It still resumes: a persistent seat is the whole point, and the transcript is its record.
+///
+/// THIS FUNCTION WAS MISSING FROM EVERY COMMIT UNTIL 2026-08-25 ~10:40, while `34afdf6` and
+/// `cdc82d0` both reported Leg 1 as landed and then shipped. The supporting functions above
+/// (third_place_cwd/_notes/_shelf/_intake) all landed; the COMMAND did not, so the tab called a
+/// verb that did not exist. Nothing caught it: cargo test never referenced it, and
+/// ui/third-place-wiring.test.js has a case NAMED "the handler calls the backend command that
+/// exists" whose body only greps term.js. The name asserted existence; the body never checked it.
+/// That test now reads this file — see its last case, and do not delete it.
+#[tauri::command]
+fn spawn_third_place(
+    app: AppHandle,
+    panes: State<Panes>,
+    cost: State<Cost>,
+    board: State<Board>,
+    roles: State<PaneRoles>,
+) -> Result<SiblingInfo, String> {
+    if panes.0.lock().unwrap().contains_key(THIRD_PLACE_SID) {
+        return Err("the Third Place is already open".into());
+    }
+    let intake = third_place_intake()
+        .ok_or("THIRD_PLACE.md is missing -- refusing to open a room with no brief")?;
+    let cwd = third_place_cwd();
+    let _ = third_place_notes();
+    let transcript = PathBuf::from(home())
+        .join(".claude")
+        .join("projects")
+        .join(encode_cwd(&cwd))
+        .join(format!("{THIRD_PLACE_SID}.jsonl"));
+    let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
+    let resume = transcript.exists();
+    let session = spawn_claude_pane(app.clone(), THIRD_PLACE_SID.to_string(), cwd.clone(), resume, true)?;
+    start_tailer(app, THIRD_PLACE_SID.to_string(), cwd.clone(), cost.0.clone(), board.0.clone());
+    panes.0.lock().unwrap().insert(THIRD_PLACE_SID.to_string(), session);
+    roles.0.lock().unwrap().insert(THIRD_PLACE_SID.to_string(), "third_place".to_string());
+    // deliberately NOT inserted into PaneNames: an unaddressable seat needs no address
+    Ok(SiblingInfo { pane: THIRD_PLACE_SID.to_string(), cwd, role: "third_place".to_string() })
+}
+
 /// Wake the Librarian. Deliberately NOT given the deck or the resonance window that a working
 /// sibling gets: this seat reads from disk on demand and its context is for holding, not for
 /// carrying a pre-chewed selection someone else made.
@@ -6020,6 +6065,7 @@ fn main() {
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
             spawn_librarian,
+            spawn_third_place,
             set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
             pane_scrollback,
             audio_sources, audio_start, audio_stop, audio_status, audio_snapshot
