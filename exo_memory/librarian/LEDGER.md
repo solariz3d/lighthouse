@@ -17,8 +17,10 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
   SUCCEEDED against registration 44 (row below); second-pane scoring rule carried
 - registration 44 ("the corpus has never deleted anything", journal/2026-08-24.md:179) — CORRECTED (13c31bd):
   false all-time (+41,359/-696); falsifier was noise-satisfiable within four hours. Re-aim or strike at carrier
-- retirement_carry_registration.md — SCORES 2026-08-31 — STILL NO NAMED BODY (flagged twice: R3.3 and the
-  08-25 return leg; six days out)
+- retirement_carry_registration.md — SCORES 2026-08-31 — BODY ASSIGNED: pane B (e4e6339, 00:39:56 08-25;
+  assignment at loop/retirement_carry_body_2026-08-25.md). Note: the registration's own precondition was
+  stale (~/.consonance/BOOT.md refreshed 08-23 vs recorded 07-07) — handed to B as fact; "the window never
+  opened" is a real outcome distinct from refutation
 - shelf_tier_2026-08-24.md — falsifiers F-reach (10-lap window) / F-cite / F-ledger / F-growth, all armed
 - librarian_compact_2026-08-24.md — P1/P2 scored 08-24 (P1 valid; P2 4-of-6, 2 void); the tier-experiment
   FORMULA registered for the NEXT compaction — that half is still open
