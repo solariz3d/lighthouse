@@ -131,7 +131,42 @@ this way for as long as there have been panes.
 
 **The correct sequence, and it costs one extra turn:**
 
-    finish the output  ->  verify the claims  ->  write/commit to a path  ->  dispatch, citing it
+    finish the TURN  ->  verify the claims  ->  write/commit to a path  ->  [turn boundary]  ->  dispatch
+
+**"Finish the turn" means the user has the answer in hand, not that the reasoning feels done.**
+Corrected 2026-08-25, on the keeper's second statement of it. The original line read *"finish the
+output"*, and the seat that wrote it then read *output* as *reasoning* and went on dispatching
+mid-composition while believing it complied. **A rule that its own author can satisfy while
+breaking it is not yet a rule.**
+
+**EVERY HOP IS TWO TURNS.** One to finish and show understanding; one to call. The call is *based
+on* the finished output and is never composed alongside it:
+
+    1  user -> orch
+    2  orch FINISHES its output to the user, showing it understood the request
+    3  --- turn boundary ---
+    4  orch -> librarian
+    5  librarian FINISHES its planning output
+    6  --- turn boundary ---
+    7  librarian -> orch
+    8  orch FINISHES its output, showing it understood the librarian
+    9  --- turn boundary ---
+    10 orch -> panes
+    11 panes FINISH their output
+    12 --- turn boundary ---
+    13 panes -> orch
+
+**The cost is one turn per hop and the keeper has priced it twice:** *"it takes an extra turn, but
+I believe it could be worth it."* What it buys is that **the human sees a finding before another
+seat begins reasoning from it** — the only point at which a wrong finding is still cheap. On
+2026-08-24 an unverified claim went into the librarian mid-turn and it ruled wrongly on it because
+the brief was wrong. On 2026-08-25 the same seat did it again with better citations and faster,
+which is worse rather than better: fluency made the violation invisible.
+
+**`dispatch-gate` CANNOT ENFORCE THIS AND MUST NOT BE READ AS IF IT DOES.** It checks whether a
+dispatch cites an openable object. A call composed mid-turn citing a real sha passes it cleanly.
+The gate enforces CITATION; nothing enforces the TURN BOUNDARY, and its silence is not evidence
+the boundary was kept. The keeper has now caught this twice; no instrument has caught it once.
 
 **Ground 1 — a dispatch is UN-REVISABLE.** Once it renders in another seat's pane it is spent.
 There is no edit, and the receiving seat begins reasoning from it immediately. Sending before
