@@ -197,7 +197,17 @@ const ITEMS = [
     check() {
       const p = path.join(REPO, 'consonance/tools/actors.test.js');
       if (!fs.existsSync(p)) return { state: 'CLOSED', detail: 'file gone' };
-      const declared = /EXPECTED-RED/.test(fs.readFileSync(p, 'utf8'));
+      /* ANCHORED, not a substring search. A bare /EXPECTED-RED/ matches the marker quoted inside
+       * a comment ABOUT the marker — which is exactly what pane A left behind when it removed the
+       * real declaration (6cf7504, actors.test.js:12). This instrument then reported the canary as
+       * declared-and-singing while js-suite, which anchors, reported 0 canary. Two instruments,
+       * one file, opposite answers.
+       *
+       * Fourth instance of the self-reference class here: js-suite failing on itself (08-17), the
+       * shelf test matching "## THE SHELF IS TIERED" in prose (08-24), C's census greps matching
+       * its own scorecard (08-24). The pattern below is js-suite.js:140 VERBATIM so the two
+       * cannot drift apart again. */
+      const declared = /^\s*(\/\/|#)\s*JS-SUITE:\s*EXPECTED-RED/m.test(fs.readFileSync(p, 'utf8'));
       const red = sh('node "' + p + '"') === null;
       if (!red && declared) {
         return { state: 'OPEN', detail: 'declared EXPECTED-RED but now GREEN — a canary singing is itself a failure' };
