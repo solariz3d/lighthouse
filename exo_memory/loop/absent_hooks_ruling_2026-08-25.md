@@ -78,21 +78,31 @@ stat -c%s /c/Users/zackn/.claude/projects/C--Consonance-instances-main/0c0c0c0a-
 grep -n "TAIL_BYTES =" dev/shell/hooks/l2-overseer.js dev/shell/hooks/l3-overseer.js
 ```
 
-→ 149,828,001 bytes; `l2-overseer.js` `TAIL_BYTES = 4 * 1024 * 1024`, `l3-overseer.js`
-`TAIL_BYTES = 8 * 1024 * 1024`.
+Main's transcript is the live file Main is writing into, so **every reading of its size is already
+stale** — it read 149,828,001 bytes when the runs were taken and 149,998,799 when cite-check
+re-ran the same command forty minutes later. That drift is a property of the number, not a
+footnote; the command below returns whatever it is now, which is what the latency figures should
+be read against
+(`stat -c%s /c/Users/zackn/.claude/projects/C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl`).
+Nothing in the ruling turns on the exact value — only on it being far larger than the 4 and 8 MiB
+the hooks read. The tail constants do not drift
+(`grep -n "TAIL_BYTES =" dev/shell/hooks/l2-overseer.js dev/shell/hooks/l3-overseer.js`
+→ `4 * 1024 * 1024` at l2-overseer.js:69, `8 * 1024 * 1024` at l3-overseer.js:85).
 
 | hook | reads | latency, 3 runs | writes per firing |
 |---|---|---|---|
 | `l2-overseer.js` | last 4 MiB of the transcript | 90 / 84 / 78 ms | one 4,402-byte job file |
 | `l3-overseer.js` | last 8 MiB of the transcript | 103 / 120 / 113 ms | one 8,319-byte job file |
 
-Latencies and job sizes re-derive from the sandboxed run in the reproduction block below
-(`stat -c%s "$SP/data/l2-jobs"/*.json`); the timing loop is `date +%s%N` either side of the hook.
+The two job sizes sum to 12,721 bytes per Stop. Job sizes and latencies come from the sandboxed
+run in the reproduction block below — `stat -c%s` on the emitted job files, and `date +%s%N`
+either side of each hook. **They are not re-runnable from this line**: both need the scratchpad
+that run created, and the latencies are warm-cache wall-clock, not a benchmark.
 
-**~190–210 ms added to every turn end, per pane, for nothing** — plus **12,721 bytes of orphaned job
-file per Stop, forever.** The `unlink` that would clean a job up lives inside the `claude` close
-handler (dev/shell/hooks/l2-overseer-worker.js, line 129), which is never reached when the
-discipline document is missing. Verified: three runs, three job files still on disk.
+**~190–210 ms added to every turn end, per pane, for nothing** — plus a job file per Stop that is
+never swept. The `unlink` that would clean one up lives inside the `claude` close handler
+(dev/shell/hooks/l2-overseer-worker.js, line 129), which is never reached when the discipline
+document is missing. Verified: three runs, three job files still on disk.
 
 ### And what they would cost if the path were repaired
 
@@ -270,8 +280,9 @@ packet and not mine to fix here:
    cell that *produced* the finding, and `findings-return.js` matches on it as the pane that should
    *receive* it. For the tier of finding a blind cell raises about its own reading, those are not
    the same seat.
-2. **25 of 27 rows fail the audit gate** — `node -e "const L=require('fs').readFileSync('/c/Consonance/data/vantage_findings.jsonl','utf8').trim().split('\n').filter(Boolean).map(JSON.parse);console.log(L.length,'rows;',L.filter(r=>r.audit&&r.audit.clean).length,'clean')"`
-   → `27 rows; 2 clean`, i.e. a 2-of-27 clean rate. The return path has almost nothing to return,
+2. **Only 2 of 27 rows pass the audit gate**
+   (`node -e "const L=require('fs').readFileSync('C:/Consonance/data/vantage_findings.jsonl','utf8').trim().split('\n').filter(Boolean).map(JSON.parse);console.log(L.length,'rows;',L.filter(r=>r.audit&&r.audit.clean).length,'clean')"`)
+   → `27 rows; 2 clean`. The return path has almost nothing to return,
    and the reason is upstream in `second-vantage.js:audit()`. Whether that rate is the
    deliberately asymmetric audit working as designed or a threshold set wrong is a question for
    whoever holds A's instrument; I did not touch it.
@@ -367,7 +378,7 @@ ls -d /c/Users/zackn/OneDrive/Desktop/lighthouse          # No such file or dire
 env | grep -i anthropic                                    # (empty)
 
 # the Stop rate, from a hook that logs every firing including silent ones
-node -e "const fs=require('fs');const r=fs.readFileSync('/c/Consonance/data/carrier-drift.jsonl','utf8').split('\n').filter(Boolean).map(JSON.parse);const h={};for(const x of r)h[x.ts.slice(0,13)]=1;console.log(r.length,'firings /',Object.keys(h).length,'active hours =',(r.length/Object.keys(h).length).toFixed(1))"
+node -e "const fs=require('fs');const r=fs.readFileSync('C:/Consonance/data/carrier-drift.jsonl','utf8').split('\n').filter(Boolean).map(JSON.parse);const h={};for(const x of r)h[x.ts.slice(0,13)]=1;console.log(r.length,'firings /',Object.keys(h).length,'active hours =',(r.length/Object.keys(h).length).toFixed(1))"
 
 # who reads the digest chain — every hit is one of the four
 grep -rn "digests" --include=*.js --include=*.ps1 --include=*.py .
@@ -386,7 +397,7 @@ tr -d '\r' < /c/Users/zackn/.claude/shell/ambient.js | sha256sum | cut -c1-16
 tr -d '\r' < dev/shell/lib/ambient.js                | sha256sum | cut -c1-16
 
 # the findings ledger: 27 rows, 27 audited, 2 clean
-node -e "const fs=require('fs');const L=fs.readFileSync('/c/Consonance/data/vantage_findings.jsonl','utf8').trim().split('\n').filter(Boolean).map(JSON.parse);console.log(L.length,'rows;',L.filter(r=>r.audit).length,'audited;',L.filter(r=>r.audit&&r.audit.clean).length,'clean');for(const r of L.filter(r=>r.verdict==='DISAGREE'))console.log(' ',r.id,'clean='+!!(r.audit&&r.audit.clean),'moved='+!!(r.world&&r.world.moved),'pane='+r.source.pane)"
+node -e "const fs=require('fs');const L=fs.readFileSync('C:/Consonance/data/vantage_findings.jsonl','utf8').trim().split('\n').filter(Boolean).map(JSON.parse);console.log(L.length,'rows;',L.filter(r=>r.audit).length,'audited;',L.filter(r=>r.audit&&r.audit.clean).length,'clean');for(const r of L.filter(r=>r.verdict==='DISAGREE'))console.log(' ',r.id,'clean='+!!(r.audit&&r.audit.clean),'moved='+!!(r.world&&r.world.moved),'pane='+r.source.pane)"
 ```
 
 **Sandboxed runs — nothing live is written by any of these.** Payload cwds use forward slashes
@@ -450,6 +461,31 @@ cached 2026-06-24 — not from memory, and not re-derivable by a command on this
    the hooks fire; I am relying on the `CONSONANCE_DREAM` gates existing *because* they did. If a
    headless spawn is shown not to fire user-level hooks, that section falls and the spend figures
    stand alone.
+
+---
+
+## WHAT CITE-CHECK SAYS ABOUT THIS DOCUMENT
+
+`node consonance/tools/cite-check.js exo_memory/loop/absent_hooks_ruling_2026-08-25.md --run`
+— reported here rather than left for the next reader to run, because a clean-looking file with no
+stated lint result implies a green it did not get.
+
+It caught three real defects during drafting: **a node citation using a git-bash path
+(`/c/Consonance/…`) that node cannot resolve** — three occurrences, none of which I had actually
+run in the form I wrote; **a "25 of 27" whose command prints 27 and 2 and never the 25**, since
+corrected to the figure the command emits; and **the transcript size going stale between the
+measurement and the verification.**
+
+What it still reports, and why each is left standing:
+
+- **1 RED**, the transcript size. Main is writing to that file continuously, so every reading is
+  stale on arrival. Declared in the paragraph it appears in; nothing in the ruling turns on it.
+- **1 NOT-RUN**, `main.rs::night_table` — a source reference, not a command. cite-check executes
+  every backticked token; this is the instrument being literal, not a defect in the line.
+- **5 uncited figure-bearing lines** — the three hook latencies, the two job-file sizes, and their
+  sum. These came from a sandboxed run whose scratchpad is gone, and the latencies are warm-cache
+  wall-clock that would not reproduce exactly anyway. **Stated as not re-runnable in the paragraph
+  beside them.** They are the weakest figures in this document and the right ones to attack.
 
 ---
 

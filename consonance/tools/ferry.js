@@ -23,7 +23,8 @@
 //
 // Usage:
 //   node ferry.js --due                       artifact commits with no ferry recorded
-//   node ferry.js --record <sha> <pane> ...   mark an artifact as ferried to panes
+//   node ferry.js --record <sha> <pane> ...   mark an artifact as ferried to panes. REPEATABLE:
+//                                             a later call naming a NEW pane merges into the set.
 //   node ferry.js --report                    miss rate and latency over all history
 //
 // The ledger lives OUTSIDE the repo, beside board.jsonl, because it is machine state and not a
@@ -95,6 +96,33 @@ function epoch() {
   return times.length ? Math.min(...times) : null;
 }
 
+/** A row's panes, tolerant of the shapes the ledger actually holds (array; bare string; absent).
+ * The epoch row carries no panes at all and must contribute nothing rather than throw. */
+function panesOf(r) {
+  if (Array.isArray(r.panes)) return r.panes;
+  if (typeof r.panes === 'string' && r.panes) return [r.panes];
+  return [];
+}
+
+/** The join, as ONE function that status() and its test both call.
+ *
+ * The rule was written out in three places - here, ferry-watch.js, and the test file's own local
+ * helper. The hook keeps its copy deliberately and says why (it lives outside the repo and must
+ * survive the repo moving). The TEST had no such reason, and a test that reimplements the rule it
+ * is checking can pass while the shipped rule is broken - which is exactly the failure mode this
+ * whole tool exists to make visible.
+ *
+ * FIRST matching row wins for the timestamp; panes are the UNION across the whole matching group.
+ */
+function joinRows(commits, rows) {
+  const usable = rows.filter(r => r.sha && r.sha.length >= MIN_SHA);
+  return commits.map(c => {
+    const group = usable.filter(r => c.sha.startsWith(r.sha) || r.sha.startsWith(c.sha));
+    if (!group.length) return { ...c, ferry: null };
+    return { ...c, ferry: { ...group[0], panes: [...new Set(group.flatMap(panesOf))] } };
+  });
+}
+
 function record(sha, panes, when) {
   // Refuse a sha too short to be counted. status()/report() drop rows below MIN_SHA, so a shorter
   // sha would write as "success" yet never appear in any count — and its prefix would then match
@@ -105,15 +133,42 @@ function record(sha, panes, when) {
       `writes as success but is never counted, and its prefix then blocks recording the full sha`);
   }
   fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
-  // IDEMPOTENT. Without this the ledger accumulates duplicate rows for one commit — it already
-  // holds `cb0df2d38` and `cb0df2d` for the same one, because a sha was typed twice. Counting
-  // dedupes, so the totals stayed right; row count and ferry count would have drifted apart until
-  // someone read the difference as data.
-  const already = ledger().some(r => r.sha && (sha.startsWith(r.sha) || r.sha.startsWith(sha)));
-  if (already) return null;
-  const row = { sha, panes, ferried_at: when };
+  // IDEMPOTENT PER (sha, pane) — NOT per sha, and that distinction is the defect this repairs.
+  //
+  // The first version deduped on the SHA ALONE: `some(r => sha matches r.sha)` then `return null`.
+  // It was written against a real failure — the ledger holds `cb0df2d38` and `cb0df2d` for one
+  // commit because a sha was typed twice — and it was too wide. A commit routed to a SECOND pane
+  // is not a duplicate; it is new information about reach, and it is the only thing the panes
+  // field was ever for. Under the old rule the second `--record <sha> <pane>` wrote nothing,
+  // returned null and exited 0 — printing EXACTLY what a genuine duplicate printed — so the pane
+  // list silently under-reported every multi-routed commit and no operator could see it happen.
+  //
+  // Measured against the board on 2026-08-25, before the fix: of 43 countable ledger rows, 6 have
+  // a chair dispatch naming a pane the row lacks within ten minutes of the row's own stamp, and 9
+  // have one at any distance. `71c5d83` is the clean case — three chair briefs into three distinct
+  // pane sessions inside 28 seconds, all citing that sha, and the ledger reads `panes:["C"]`.
+  //
+  // WHY IT APPENDS RATHER THAN REWRITING THE ROW. The readers take the FIRST matching row's
+  // `ferried_at` as the ferry time, so appending leaves latency measuring time-to-FIRST-ferry and
+  // leaves the SET of ferried shas byte-identical. That is what makes the miss rate provably
+  // unaffected by this change rather than asserted to be — see the two tests that pin it. It also
+  // keeps the ledger append-only, so a crash mid-write can lose a new row but never corrupt an old
+  // one.
+  const prior = ledger().filter(r => r.sha && (sha.startsWith(r.sha) || r.sha.startsWith(sha)));
+  const known = new Set(prior.flatMap(panesOf));
+  const added = panes.filter(p => !known.has(p));
+  if (prior.length && !added.length) {
+    // A NO-OP MUST NOT LOOK LIKE A WRITE — and it must not look like a silent drop either. Both
+    // used to print `null`, which is precisely how the dropped second pane went unnoticed: the
+    // operator saw the same output whether the tool recorded nothing because it already knew, or
+    // recorded nothing because it was throwing information away.
+    return { sha, panes: [...known], added: [], already: true, ferried_at: prior[0].ferried_at };
+  }
+  // Only the NEW panes go into the row. The full set is the union across the group, computed on
+  // read, so each row stays an honest record of what that one invocation actually contributed.
+  const row = { sha, panes: added, ferried_at: when };
   fs.appendFileSync(LEDGER, JSON.stringify(row) + '\n');
-  return row;
+  return { ...row, added, already: false };
 }
 
 /** The two sets joined. An artifact is FERRIED if any ledger row names its sha.
@@ -124,13 +179,13 @@ function record(sha, panes, when) {
  * write and then silently omits it from its own count is the failure this whole tool exists to
  * make visible, reproduced inside the tool on its first use. A row shorter than 7 is refused
  * rather than matched loosely, because at 6 characters collisions stop being hypothetical.
+ *
+ * The join itself moved to joinRows() above so the test can call the shipped rule instead of a
+ * copy. This note stays here, where it was written, because it is the record of WHY the prefix
+ * rule exists — and a reason detached from its incident is the first thing to rot.
  */
 function status() {
-  const rows = ledger().filter(r => r.sha && r.sha.length >= MIN_SHA);
-  return artifactCommits().map(c => ({
-    ...c,
-    ferry: rows.find(r => c.sha.startsWith(r.sha) || r.sha.startsWith(c.sha)) || null,
-  }));
+  return joinRows(artifactCommits(), ledger());
 }
 
 function report() {
@@ -181,7 +236,13 @@ if (require.main === module) {
     // Stamped by the caller, never by the module, so the ledger is reproducible in tests.
     const when = Number(process.env.FERRY_NOW) || Date.now();
     try {
-      console.log(JSON.stringify(record(sha, panes, when)));
+      const result = record(sha, panes, when);
+      console.log(JSON.stringify(result));
+      // The stdout JSON already differs (`already:true, added:[]`), but an operator reading a
+      // terminal should not have to diff two objects to learn that nothing happened.
+      if (result.already) {
+        console.error(`already recorded: ${sha} -> ${result.panes.join(', ')} — nothing added`);
+      }
     } catch (e) {
       console.error(e.message);
       process.exit(2);
@@ -191,4 +252,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { artifactCommits, ledger, record, status, report, epoch, LEDGER, ARTIFACT_DIRS };
+module.exports = { artifactCommits, ledger, record, status, report, epoch, joinRows, panesOf, LEDGER, ARTIFACT_DIRS, MIN_SHA };

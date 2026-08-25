@@ -34,10 +34,19 @@ present-tense instruction on every wake and every prompt, and are not installed.
 
 *`cite-check` on this file, reported rather than tuned away:
 `node consonance/tools/cite-check.js exo_memory/loop/carrier_surface_2026-08-25.md` →
-**7 figure-bearing lines · 2 in a paragraph with a command · 5 not.** Four of the five are rows of
-the summary table immediately above, each of which is re-derived under its own heading in §3 with the
-command beside it; the fifth is a false positive on the date "2026-08-17". The table is a summary, so
+**7 figure-bearing lines · 1 in a paragraph with a command · 6 not.** Five of the six are rows of the
+summary table immediately above, each of which is re-derived under its own heading in §3 with the
+command beside it; the sixth is a false positive on the date "2026-08-17". The table is a summary, so
 read §3 for the runs.*
+
+> **Correction, same file, ten minutes later — the librarian's own rule from tonight, caught on me.**
+> The line above first read **"2 in a paragraph with a command · 5 not."** I had just added a
+> `git ls-files | wc -l` citation and wrote the new figure from the *expectation* that it would move
+> the count, without re-running. It did not move: the command landed in a sentence, not in the
+> paragraph cite-check scores. **A derived expectation substituted for a reading** — filed at
+> `librarian/2026-08-25.md` ~00:50 as *the moving-figure class, for FACTS*, minted roughly an hour
+> before I did it, in the paragraph of my own document that exists to report a figure honestly.
+> The wrong version shipped in `9f4f888`; this is the append that corrects it.
 
 ---
 
