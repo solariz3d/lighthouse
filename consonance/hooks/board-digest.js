@@ -283,6 +283,24 @@ function main(input) {
   // report and the hook says nothing at all.
   if (!underDir(cwd, instancesDir)) emit(null);
 
+  // THE THIRD PLACE GETS NO DIGEST. Its brief says, in its own words, "You have no way to reach
+  // anything else in this program... nothing reaches in. This is a guarantee, not a limitation" —
+  // and on the seat's FIRST DAY, 2026-08-25, this hook put [panes] into its context three times,
+  // carrying the working seats' names and what they were doing. The seat noticed and handled it
+  // correctly ("a word went by, not a status"), which is exactly why it must be fixed in code:
+  // a guarantee that depends on the guarded party being gracious is not a guarantee.
+  //
+  // THE EDGE THE TOPOLOGY CUT WAS work -> third, and this is that edge. It was never opened by
+  // the MCP mount (spawn_claude_pane skips it) or by an address (no PaneNames entry, and
+  // chair_target_guard refuses the role). It came in UNDERNEATH all of that, through a
+  // UserPromptSubmit hook that predates the seat and knew nothing about it — which is the
+  // room's own carrier lesson one more time: the membrane was built at every layer anyone
+  // thought to name, and the leak arrived through the layer nobody re-read.
+  //
+  // Matched on CWD, not on the SID: the SID is a main.rs constant this file cannot import, and a
+  // copied literal is one more carrier to drift. The seat's directory is its address here.
+  if (/[\\/]third-place[\\/]?$/i.test(cwd.replace(/[\\/]+$/, ''))) emit(null);
+
   const boardPath = path.join(dataDir, 'board.jsonl');
   if (!fs.existsSync(boardPath)) emit(null);
 

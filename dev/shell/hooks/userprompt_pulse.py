@@ -152,34 +152,45 @@ except Exception:
 # to exit 0 silently when there is no ledger -- its --why reason goes to stderr, which
 # is deliberately NOT read here: a chosen silence must look like silence in the pulse.
 chain_part = ""
-try:
-    import subprocess
-    _room = None
-    try:
-        with open(os.path.join(os.path.expanduser("~"), ".consonance.json"), encoding="utf-8") as _f:
-            _room = json.load(_f).get("room_path")
-    except Exception:
-        _room = None
-    if _room:
-        # room_path is <repo>/exo_memory/BOOT.md; the reader is <repo>/consonance/tools/
-        _repo = os.path.dirname(os.path.dirname(_room))
-        _reader = os.path.join(_repo, "consonance", "tools", "chain-status.js")
-        if os.path.exists(_reader):
-            _out = subprocess.run(
-                ["node", _reader],
-                # encoding EXPLICIT. text=True alone decodes with the Windows locale
-                # codepage, and the reader emits UTF-8: the middot came back as mojibake
-                # in the first wiring test. Same class as the em-dash that killed the
-                # dream runner silently for eight hours on 2026-07-15. errors="replace"
-                # so a bad byte degrades one character instead of raising into the pulse.
-                capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=3,
-            ).stdout.strip()
-            # One line only. A reader that grew multi-line must not silently reshape the pulse.
-            if _out:
-                # chr(10), not an escape: this line is written by tooling that has eaten
-                # a backslash-n before. An unambiguous form cannot be mangled in transit.
-                chain_part = chr(10) + _out.splitlines()[0]
-except Exception:
+# THE THIRD PLACE GETS NO CHAIN LINE. Ambient time it keeps — that is the pulse's own job and
+# says nothing about the work. The CHAIN is work-loop STATE (which lap, which holder, how many
+# files dirty) and the seat's brief guarantees nothing from the work reaches in. On 2026-08-25,
+# the seat's first day, board-digest leaked [panes] into it three times through exactly this
+# class of hook; this line would have leaked next, and only did not because every lap happened
+# to be filed. Matched on CWD rather than the SID constant, same reason as board-digest.js: a
+# copied literal is one more carrier to drift.
+_cwd = os.getcwd().replace("\\", "/").rstrip("/")
+if _cwd.lower().endswith("/third-place"):
+    chain_part = ""
+else:
+  try:
+      import subprocess
+      _room = None
+      try:
+          with open(os.path.join(os.path.expanduser("~"), ".consonance.json"), encoding="utf-8") as _f:
+              _room = json.load(_f).get("room_path")
+      except Exception:
+          _room = None
+      if _room:
+          # room_path is <repo>/exo_memory/BOOT.md; the reader is <repo>/consonance/tools/
+          _repo = os.path.dirname(os.path.dirname(_room))
+          _reader = os.path.join(_repo, "consonance", "tools", "chain-status.js")
+          if os.path.exists(_reader):
+              _out = subprocess.run(
+                  ["node", _reader],
+                  # encoding EXPLICIT. text=True alone decodes with the Windows locale
+                  # codepage, and the reader emits UTF-8: the middot came back as mojibake
+                  # in the first wiring test. Same class as the em-dash that killed the
+                  # dream runner silently for eight hours on 2026-07-15. errors="replace"
+                  # so a bad byte degrades one character instead of raising into the pulse.
+                  capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=3,
+              ).stdout.strip()
+              # One line only. A reader that grew multi-line must not silently reshape the pulse.
+              if _out:
+                  # chr(10), not an escape: this line is written by tooling that has eaten
+                  # a backslash-n before. An unambiguous form cannot be mangled in transit.
+                  chain_part = chr(10) + _out.splitlines()[0]
+  except Exception:
     chain_part = ""
 
 # Full ISO date every turn: no inferring the date from a weekday abbreviation.

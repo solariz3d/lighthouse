@@ -11,13 +11,17 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
+- THE THIRD PLACE — Leg 1 OPENED 2026-08-25 ~11:38 (pane DELTA, first open on any machine); priming bar MET
+  (0/0/0/0 on the first transcript); CH-0 LEAK LIVE: [panes] digest reaches the seat (falsifier 4 STEERING,
+  mildest form) — fix = digest/pulse exclude THIRD_PLACE_SID; Legs 2–3 unchanged
 - machine_bound_class_2026-08-25.md (B) + machine_bound_class_attack_2026-08-25.md (E) — THE HOLE IS LIVE in
   the shipped gate (db8e119): run-predicate computed from the corpus the test asserts on → the gate cannot
   fail on its home machine. Fix = E's home= tag (outside the corpus; NOT-RUN on home = CLASS ERROR). UNBUILT.
   Re-confirmed from the DESKTOP 2026-08-25 ~11:20: the shipped gate's own NOT-RUN reason names `home=` as the
   thing that would let it tell a foreign board from a damaged one (`librarian/2026-08-25.desktop.md`)
-- two_writers_registration_2026-08-25.md (A) — 2W-1 ADOPTED (dcb0d9b: lap id carries its mint site). F-2W-2:
-  WITHDRAW the document if the desktop has written to no tracked path by 2026-09-25
+- two_writers_registration_2026-08-25.md (A) — 2W-1 ADOPTED (dcb0d9b). F-2W-2 SATISFIED 08-25: the desktop wrote two
+  tracked paths (its observations; librarian/2026-08-25.desktop.md — the per-machine candidate, DEMONSTRATED,
+  regex amended in 5461505). Two writers on LEDGER.md as of that commit; reconcile on every pull
 - chain-status ten-lap clock — STARTED ~06:35 2026-08-25 at the first pulse that carried the line (6b58c63),
   per A: not before. Falsifier: after ten laps, no seat's turn shown changed by the line → it comes out
 - desktop_first_run_2026-08-25.md (C) — the runbook for P-DESKTOP-FIRST-RUN, the room's first cross-machine
