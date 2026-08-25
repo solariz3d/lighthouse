@@ -16,6 +16,36 @@ const { execFileSync } = require('child_process');
 const TOOL = path.join(__dirname, 'lap-row.js');
 const NODE = process.execPath;
 
+/* THE PIN, added 2026-08-25 after the desktop ran this suite and 18 of 33 tests went red.
+ *
+ * WHAT HAPPENED. `dcb0d9b` (rule 2W-1) made `mintId` derive its tag per machine --
+ * LAP_MACHINE_TAG -> ~/.consonance.json `machine_tag` -> the hostname's first alphanumeric. That
+ * is the fix working as designed: the desktop mints D001 exactly as specified. This FILE, though,
+ * still names the minted ids as literals (`L001`, `L004`, `L009`) at roughly fifteen sites, so
+ * every test that mints a lap and then addresses it by name was asserting a fact about WHICH
+ * MACHINE WAS RUNNING rather than about the ledger. Verified rather than assumed, both directions:
+ *
+ *     git show dcb0d9b~1:consonance/tools/lap-row.js  -> mintId returned 'L' + n unconditionally
+ *     LAP_MACHINE_TAG=D node --test consonance/tools/lap-row.test.js  -> 18 of 33 fail
+ *
+ * So the suite was portable BEFORE 2W-1 and became machine-dependent AT it. It was green when
+ * committed on exactly one machine and red on every other from that moment -- the same shape as
+ * "verified it existed, never verified it shipped", one axis over: verified it passes HERE.
+ *
+ * WHAT THE PIN DOES, AND WHAT IT MUST NOT DO. Fixing the tag makes the tests below assert LEDGER
+ * LOGIC -- ordering, seals, max+1, the metric -- on any machine. It must not also swallow the
+ * per-machine property, or the pin would have eaten the thing 2W-1 exists to hold. It does not,
+ * and the reason is mechanical rather than a promise: the three `2W-1:` tests at the foot of this
+ * file each set the tag EXPLICITLY in the child env, and the unconfigured-machine test DELETES
+ * this variable and blanks HOME/USERPROFILE so the hostname derivation is the only path left. A
+ * pin at this level cannot reach into a child env that overrides or removes it.
+ *
+ * Checked by mutation on 2026-08-25 WITH the pin in place: a `machineTag` returning a constant,
+ * one falling back to a constant only when unconfigured, and one ignoring the env override all go
+ * RED here. If a later edit makes any of those survive, the pin has begun eating the property and
+ * this comment is where to start. The commands are in the hand-back. */
+process.env.LAP_MACHINE_TAG = 'L';
+
 /** A fresh ledger and a fresh module instance bound to it. */
 function fixture() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-'));
@@ -33,6 +63,21 @@ function cli(args, ledger) {
     return { code: e.status, stdout: e.stdout || '', stderr: e.stderr || '' };
   }
 }
+
+// ---------------------------------------------------------------- the pin itself
+
+test('pin: the ledger-logic tests address a PINNED tag, not this machine', () => {
+  // Without this, removing the pin fails eighteen tests with `no such lap: L001` and nothing in
+  // the output says why -- the reader has to know that `mintId` is per-machine to decode it. One
+  // named failure is the whole point of this test; it asserts no ledger behaviour of its own.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.mintId([]), 'L001',
+    'LAP_MACHINE_TAG is not pinned to L for this file, so every literal id below names a machine ' +
+    'rather than a lap. See the pin comment at the head of this file. This is NOT a defect in ' +
+    'mintId: per-machine derivation is rule 2W-1 working, and the three 2W-1 tests below still ' +
+    'assert it independently of this pin.');
+  cleanup();
+});
 
 // ---------------------------------------------------------------- paths
 
