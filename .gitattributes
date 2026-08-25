@@ -1,0 +1,45 @@
+# Line endings, pinned. Added 2026-08-25, the day before the desktop's first pull.
+#
+# WHY. `core.autocrlf=true` was silently changing bytes under work in this repo three times in two
+# nights — the dated case is exo_memory/loop/two_writers_registration_2026-08-25.md, where a pane's
+# collision harness reported THREE CASES OF SILENT DATA LOSS that were all false: each clone got a
+# CRLF working tree, the harness's re-insert anchor (a bare LF) stopped matching, and it deleted
+# rows while failing to re-add them. The disappearance was attributed to git. Pinned off, all three
+# inverted to CONFLICT. One contaminated harness invalidates everything it produced.
+#
+# MEASURED BEFORE WRITING THIS FILE, because the obvious fear is a repo-wide rewrite:
+#   git add --renormalize .   ->  0 files.  The index is already LF throughout.
+#   tracked text files 640    ->  0 carry CRLF in the working tree today.
+# So this changes NOTHING on the machine that added it. What it changes is the NEXT checkout, here
+# and anywhere else: without it, autocrlf converts all 640 on the way out, which is what a fresh
+# clone gets. Every "LF will be replaced by CRLF the next time Git touches it" warning this repo
+# prints is that conversion queued up and not yet spent.
+#
+# WHY eol=lf AND NOT text=auto ALONE. `text=auto` fixes what git STORES, which was never wrong here.
+# The failure was in the WORKING TREE — what a tool opens and what an anchor matches. Only eol=lf
+# makes that deterministic, and determinism across two machines is the whole point: this repo is
+# about to have a second writer, and "which bytes are on disk" must not depend on which machine
+# checked them out.
+#
+# Everything here is a Windows-native toolchain — node, PowerShell, Rust, Python — and all of them
+# read LF without complaint. There is no CRLF consumer in this repo to protect.
+#
+# WHAT THIS DOES NOT DO, so it is not mistaken for more: it does not touch files already on disk,
+# it does not settle whether the desktop's git config matches (it does not have to — that is the
+# point of pinning it in-tree), and it does not fix the collision shapes in the registration above,
+# which are a different subject that merely shared a symptom.
+
+* text=auto eol=lf
+
+# Binary: never line-ending-converted, never diffed as text. Listed explicitly rather than left to
+# git's content heuristic, because a heuristic that guesses right today is not a decision.
+*.png binary
+*.bmp binary
+*.ico binary
+*.exe binary
+*.dll binary
+*.pdf binary
+*.zip binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
