@@ -11,16 +11,18 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
+- carrier_surface_2026-08-25.md (B) — FIVE CHANNELS enumerated (CH-0 hooks, CH-4 instructed, CH-5 harness
+  memory never before named); carrier-drift's corpus must grow to CH-4/CH-5 or reports green on them forever
+- turn_boundary_detection_2026-08-25.md (E) — prevention POSSIBLE (prompt_id in PreToolUse payload); base
+  rate 101/103 = 98.1%; detector survived 110 false boundaries. Auto-return now in LIBRARIAN.md (4addfa3)
+- absent_hooks_ruling_2026-08-25.md (C) — CLOSES the "12 ABSENT pending" item: 11 DO NOT INSTALL / 1 INSTALL
+  (findings-return.js, watched). Chair premise (Haiku spawn spend) refuted: workers read a nonexistent path
 - exteroception_registration.md — LANDED (T4, pane A): three options priced; keeper's option call PENDING —
   nothing builds until he picks; carries its own falsifier per the librarian's clause
 - forgetting_registration.md — LANDED (T5, pane C): pilot = the FILE-class no-result files; its attack 2
   SUCCEEDED against registration 44 (row below); second-pane scoring rule carried
 - registration 44 ("the corpus has never deleted anything", journal/2026-08-24.md:179) — CORRECTED (13c31bd):
   false all-time (+41,359/-696); falsifier was noise-satisfiable within four hours. Re-aim or strike at carrier
-- retirement_carry_registration.md — SCORES 2026-08-31 — BODY ASSIGNED: pane B (e4e6339, 00:39:56 08-25;
-  assignment at loop/retirement_carry_body_2026-08-25.md). Note: the registration's own precondition was
-  stale (~/.consonance/BOOT.md refreshed 08-23 vs recorded 07-07) — handed to B as fact; "the window never
-  opened" is a real outcome distinct from refutation
 - shelf_tier_2026-08-24.md — falsifiers F-reach (10-lap window) / F-cite / F-ledger / F-growth, all armed
 - librarian_compact_2026-08-24.md — P1/P2 scored 08-24 (P1 valid; P2 4-of-6, 2 void); the tier-experiment
   FORMULA registered for the NEXT compaction — that half is still open
@@ -36,6 +38,9 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 
 
 ## CONSUMED — ran, scored, closed
+- retirement_carry_registration.md — SCORED SIX DAYS EARLY (b7f3775, pane B, 08-25): window settled by a .bak
+  artifact (06:54:32, six min after registration); the finding = the July retirement missed a SECOND carrier
+  BOOT itself points at (record/trust-the-first-attention.md, CH-4). Spawned Cycle 2's carrier-surface work
 - sealed/restart_continuity_2026-08-15.md — SCORED 08-24 (loop/restart_continuity_scorecard_2026-08-24.md,
   9677a5f): mostly UNSCORABLE (void audited, not accepted), one CONFIRMED (55-day unbroken session). C declared
   the conflict: the void's decisive figure came from C's own since-replaced session file — not re-derivable.
