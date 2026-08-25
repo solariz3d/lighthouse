@@ -33,7 +33,19 @@ const read = (p) => fs.readFileSync(p, 'utf8');
 
 test('the notes directory exists in the repo and is not empty', () => {
   assert.ok(fs.existsSync(NOTES_DIR), 'exo_memory/librarian/ is missing');
-  const dated = fs.readdirSync(NOTES_DIR).filter((f) => /^\d{4}-\d{2}-\d{2}\.md$/.test(f));
+  // AN OPTIONAL MACHINE SUFFIX IS PART OF THE NAME. The desktop librarian's first wake wrote
+  // `2026-08-25.desktop.md` rather than appending to the laptop's `2026-08-25.md` (81,697 bytes
+  // that day) — P-TWO-WRITERS' cheap candidate, avoiding a loud add/add on one file two machines
+  // both want. `/^\d{4}-\d{2}-\d{2}\.md$/` could not see it, so the seat's own notes were
+  // invisible to the guard that exists to prove it has a restore point.
+  //
+  // THE FAILURE MODE, STATED CORRECTLY, because the hand-back stated it wrong and the difference
+  // is the whole distinction this repo runs on. The seat reported that a desktop-only future
+  // would leave "the guard's universe empty and the suite green." It would not: `dated.length`
+  // would be 0 and the assertion below would go RED. Loudly, which is the good failure. What the
+  // old regex actually cost was narrower and still worth fixing — the guard could not COUNT the
+  // desktop's notes, so it verified the laptop's restore point and called that the seat's.
+  const dated = fs.readdirSync(NOTES_DIR).filter((f) => /^\d{4}-\d{2}-\d{2}(\.[a-z0-9-]+)?\.md$/.test(f));
   assert.ok(dated.length > 0, 'no dated notes present — the seat has no restore point to carry');
 });
 
