@@ -11,6 +11,11 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
+- machine_bound_class_2026-08-25.md (B) + machine_bound_class_attack_2026-08-25.md (E) — THE HOLE IS LIVE in
+  the shipped gate (db8e119): run-predicate computed from the corpus the test asserts on → the gate cannot
+  fail on its home machine. Fix = E's home= tag (outside the corpus; NOT-RUN on home = CLASS ERROR). UNBUILT
+- desktop_observations_2026-08-25.md (the desktop, 03a5fbc) — the room's first cross-machine test; its §1 block
+  is the acceptance test for 0f4296b and HAS NOT BEEN RE-RUN there. "Fixed" is this machine's claim until then
 - two_writers_registration_2026-08-25.md (A) — 2W-1 ADOPTED (dcb0d9b: lap id carries its mint site). F-2W-2:
   WITHDRAW the document if the desktop has written to no tracked path by 2026-09-25
 - chain-status ten-lap clock — STARTED ~06:35 2026-08-25 at the first pulse that carried the line (6b58c63),
@@ -59,6 +64,9 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 
 
 ## CONSUMED — ran, scored, closed
+- paneA_repo_root_2026-08-25.md (0f4296b) — the one root under nine Rust reds fixed portably; proven under a
+  forced foreign SystemDrive+USERPROFILE (A corrected the librarian's bar, which could not prove). Rust 318
+- desktop_first_run_2026-08-25.md — EXECUTED ONCE by a second machine; extended by C (f2d0de8) with what it hit
 - coat_preregistration.md / typology_comparison.md (+failure_types_K/L) / wire_run_2026-08-15.md — JOURNALED
   08-23 (journal/2026-08-23.md §§1-3, e3ec457). Mis-filed as NO-RESULT/FILE on 08-24 by this seat; corrected
   08-25 on C's forgetting_pilot finding
