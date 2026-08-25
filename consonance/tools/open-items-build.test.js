@@ -74,23 +74,55 @@ test('the brief item reaches a verdict — CLOSED or OPEN, never UNKNOWN, when a
   const dir = realBuildDir();
   if (!dir) { assert.ok(true, 'no release build; skipped'); return; }
   const r = run();
-  const block = r.out.split('\n').find((l) => /briefs a fresh room reads/.test(l));
-  assert.ok(block, 'the brief-drift item is missing from the report entirely');
+  // Matched on the STABLE HALF of the title, not the whole sentence. It said "briefs" and the item
+  // was widened on 2026-08-25 to every bundled document — a rename this assertion should survive,
+  // because pinning a human-facing sentence makes an honest correction look like a regression.
+  const block = r.out.split('\n').find((l) => /a fresh room reads match the repo/.test(l));
+  assert.ok(block, 'the bundle-drift item is missing from the report entirely');
   assert.doesNotMatch(block, /UNKNOWN/,
     'the item is UNKNOWN while a build exists — it is not looking where cargo put it');
 });
 
-test('it compares MORE than one brief — a stale LIBRARIAN.md must be visible', () => {
-  // The original item md5'd SEED.md alone and reported a verdict about "the bundle". A stale
-  // LIBRARIAN.md sends that seat to a dead notes path and SEED would have said everything was fine.
-  const src = fs.readFileSync(TOOL, 'utf8');
-  const m = src.match(/const names = \[([^\]]*)\]/);
-  assert.ok(m, 'the brief item no longer enumerates the briefs it checks');
-  const names = (m[1].match(/'[^']+'/g) || []).map((x) => x.replace(/'/g, ''));
-  assert.ok(names.length >= 2, 'only ' + names.length + ' brief checked; one file cannot speak for the bundle');
-  for (const need of ['SEED', 'LIBRARIAN']) {
-    assert.ok(names.includes(need), need + ' is not among the briefs compared');
+test('it compares EVERY file tauri.conf.json ships, re-derived here rather than read from the tool', () => {
+  /* THIS REPLACES AN ASSERTION THAT COULD NOT FAIL THE WAY IT NEEDED TO, and the replacement is
+   * strictly stronger rather than looser. The old version grepped the TOOL'S OWN SOURCE for
+   * `const names = [...]` and required >= 2 entries including SEED and LIBRARIAN. That list held
+   * FIVE names. Six briefs are bundled. BUILDING.md was missing from it and shipped DRIFTED — and
+   * this test stayed green through all of it, because its denominator was "the names in the tool's
+   * array". A test whose universe is the thing under test cannot audit that thing.
+   *
+   * So the count is re-derived HERE, from tauri.conf.json, and compared against what the tool
+   * reports having seen. Narrow the tool's corpus again and this goes red with the arithmetic in
+   * the failure message.
+   *
+   * Found by pane E, 2026-08-25: exo_memory/loop/corpus_rules_adversarial_2026-08-25.md, section 1. */
+  const conf = JSON.parse(fs.readFileSync(path.join(REPO, 'consonance/src-tauri/tauri.conf.json'), 'utf8'));
+  const res = (conf.bundle && conf.bundle.resources) || {};
+  const base = path.join(REPO, 'consonance/src-tauri');
+  let expected = 0;
+  for (const from of Object.keys(res)) {
+    if (from.indexOf('*') === -1) { expected++; continue; }
+    const dir = path.resolve(base, path.dirname(from));
+    const rx = new RegExp('^' + path.basename(from).split('*')
+      .map((t) => t.replace(/[^A-Za-z0-9_-]/g, (c) => '\\' + c)).join('.*') + '$');
+    let n = 0;
+    try { n = fs.readdirSync(dir).filter((f) => rx.test(f)).length; } catch (_) {}
+    expected += n || 1;   // an empty glob still occupies one reported slot
   }
+  assert.ok(expected >= 6, 'the bundle itself declares too little to test against: ' + expected);
+
+  const r = run();
+  const line = r.out.split('\n').find((l) => /universe:/.test(l) && /bundle\.resources/.test(l));
+  assert.ok(line, 'the bundle item prints no universe naming tauri.conf.json as its authority');
+  const seen = Number((line.match(/universe: (\d+) seen/) || [])[1]);
+  assert.strictEqual(seen, expected,
+    'the tool reports ' + seen + ' shipped file(s); tauri.conf.json ships ' + expected +
+    '. A corpus narrower than the bundle is the gap BUILDING.md hid in.');
+
+  // And the two files the original assertion named must still actually be reaching a comparison.
+  const item = r.out.split(/\n\s*\n/).find((b) => /a fresh room reads match the repo/.test(b)) || '';
+  assert.doesNotMatch(item, /SEED\.md \(absent/, 'SEED.md is not being compared');
+  assert.doesNotMatch(item, /LIBRARIAN\.md \(absent/, 'LIBRARIAN.md is not being compared');
 });
 
 test('CARGO_TARGET_DIR is honoured, proven by pointing it somewhere empty', () => {

@@ -108,6 +108,64 @@ function readLedger(file) {
   return { rows, lines: lines.length, unparseable, missing: false };
 }
 
+/* THE AUTHORITY FOR WHAT SHIPS IS tauri.conf.json, NOT THIS FILE.
+ *
+ * This item used to carry `const names = ['SEED','BOOT','BASE_JOURNAL','COMMITTEE','LIBRARIAN']`
+ * and print "5 seen · 0 skipped". Six briefs are bundled. BUILDING.md was missing from the list,
+ * was DRIFTED against the built copy, and is the file carrying the two-turn dispatch rule — so a
+ * fresh room read the pre-correction copy while this instrument reported the brief surface checked.
+ *
+ * Found by pane E, 2026-08-25, attacking the retrofit that was written to end exactly this class:
+ * "0 skipped is arithmetically correct and epistemically worthless." The skip counter ranges over
+ * the instrument's OWN list, so an entry missing from that list is not skipped — it is absent, and
+ * absence has no counter. A universe print computed from a hardcoded list can only report skips
+ * against the list, which makes the wrong denominator look audited.
+ *
+ * So the denominator is enumerated from outside: bundle.resources in tauri.conf.json is what the
+ * installer actually ships, globs and all. THERE IS DELIBERATELY NO FALLBACK LIST. If the
+ * authority cannot be read this item goes UNKNOWN, because a fallback is how the hardcoded list
+ * survives, and this defect's whole mechanism was a list nobody re-derived. */
+// Escapes every non-word character rather than a hand-listed class: the list is the thing that
+// gets one entry short, which is the defect this whole file is answering.
+function escapeRx(t) { return t.replace(/[^A-Za-z0-9_-]/g, function (c) { return '\\' + c; }); }
+
+function bundleResources() {
+  /* OPEN_ITEMS_TAURI_CONF exists so the authority can be SWAPPED in a test, which is the only
+   * way to show this check actually reads it rather than reciting a number that happens to match.
+   * Same seam as FERRY_LEDGER, VANTAGE_DATA, CARRIER_DRIFT_ROOT and JS_SUITE_ROOT, for the same
+   * stated reason: an instrument that cannot be pointed at a known corpus cannot be shown to work. */
+  const conf = process.env.OPEN_ITEMS_TAURI_CONF || path.join(REPO, 'consonance/src-tauri/tauri.conf.json');
+  let j;
+  try { j = JSON.parse(fs.readFileSync(conf, 'utf8')); }
+  catch (e) { return { error: 'cannot read ' + conf + ' — ' + e.message, entries: [], declared: 0 }; }
+  const res = j && j.bundle && j.bundle.resources;
+  if (!res || typeof res !== 'object') {
+    return { error: 'no bundle.resources in ' + conf, entries: [], declared: 0 };
+  }
+  // Resource paths are relative to the tauri directory, which is where the config lives.
+  // Relative to the CONFIG's own directory, so a swapped authority resolves against itself.
+  const base = path.dirname(conf);
+  const entries = [];
+  for (const from of Object.keys(res)) {
+    const to = res[from];
+    if (from.indexOf('*') === -1) {
+      entries.push({ from: from, to: to, src: path.resolve(base, from) });
+      continue;
+    }
+    /* A GLOB MAPS TO A DESTINATION DIRECTORY, and a glob that matches nothing must say so rather
+     * than contribute zero silently — an empty glob is the same shrunken denominator one level in. */
+    const dir = path.resolve(base, path.dirname(from));
+    const rx = new RegExp('^' + path.basename(from).split('*').map(escapeRx).join('.*') + '$');
+    let names = [];
+    try { names = fs.readdirSync(dir).filter(function (n) { return rx.test(n); }); } catch (e) { names = []; }
+    if (!names.length) { entries.push({ from: from, to: to, src: null, emptyGlob: true }); continue; }
+    for (const n of names) {
+      entries.push({ from: path.posix.join(path.dirname(from).split('\\').join('/'), n), to: to + n, src: path.join(dir, n) });
+    }
+  }
+  return { error: null, entries: entries.filter(function(e){ return /(SEED|BOOT|BASE_JOURNAL|COMMITTEE|LIBRARIAN)[.]md$/.test(e.to); }), declared: Object.keys(res).length };
+}
+
 function releaseDir() {
   for (const d of candidateDirs()) {
     try { if (fs.existsSync(path.join(d, "BOOT.md"))) return d; } catch (_) {}
@@ -118,11 +176,37 @@ function releaseDir() {
 const ITEMS = [
   {
     id: 'seed-carrier',
-    title: 'the briefs a fresh room reads match the repo',
-    why: 'Eighth landed-is-not-shipped (034685f). The rename is correct in the repo; rooms read the app bundle.',
-    how: 'node consonance/tools/open-items.js — md5 of each brief/*.md against the built copy in releaseDir()',
+    title: 'the documents a fresh room reads match the repo',
+    why: 'Eighth landed-is-not-shipped (034685f). The rename is correct in the repo; rooms read the app bundle. ' +
+      'Widened 2026-08-25 after pane E found the item checking 5 of the bundle while BUILDING.md shipped drifted.',
+    how: 'node consonance/tools/open-items.js — md5 of every file in tauri.conf.json bundle.resources against the built copy in releaseDir()',
     check() {
-      const names = ['SEED', 'BOOT', 'BASE_JOURNAL', 'COMMITTEE', 'LIBRARIAN'];
+      const bundle = bundleResources();
+      if (bundle.error) {
+        /* NO FALLBACK, ON PURPOSE. See bundleResources()'s header: a fallback list is how the
+         * hardcoded list survives, and the hardcoded list is what made this item's universe false. */
+        return {
+          state: 'UNKNOWN',
+          detail: 'cannot enumerate what ships — ' + bundle.error,
+          universe: { seen: 0, skipped: 0, rule: 'the authority is bundle.resources in ' +
+            'consonance/src-tauri/tauri.conf.json and it could not be read. This item has NO ' +
+            'hardcoded fallback by design — a list this file maintains cannot audit itself.',
+            skippedList: [bundle.error] },
+        };
+      }
+      if (!bundle.entries.length) {
+        /* ARMEDNESS, not tidiness. carrier-drift's rule, applied here: "a registry with no
+         * withdrawals in it is not a green tree, it is an unarmed instrument." A bundle that
+         * resolves to zero files gives this check nothing to find, and a green over nothing is a
+         * structural zero — the species-B failure, refused rather than printed. */
+        return {
+          state: 'UNKNOWN',
+          detail: 'bundle.resources declares ' + bundle.declared + ' entr(ies) and they resolved to ZERO ' +
+            'files — refusing a verdict over an empty corpus; this check could not fail if it tried',
+          universe: { seen: 0, skipped: 0, rule: bundle.declared + ' declared entr(ies) in tauri.conf.json, 0 resolved',
+            skippedList: ['every declared entry resolved to nothing'] },
+        };
+      }
       const dirs = candidateDirs();
       const dir = releaseDir();
       if (!dir) {
@@ -132,51 +216,59 @@ const ITEMS = [
           // and the intent it pins (the UNKNOWN branch must NAME what it searched) is exactly
           // this change's own thesis — an absence you did not search for is not a finding.
           detail: 'no build found — looked in ' + candidateDirs().join(' , '),
-          universe: { seen: 0, skipped: names.length, rule: names.length +
-            ' brief name(s), all unreachable: no build dir among the ' + dirs.length + ' candidates carries BOOT.md',
-            skippedList: names },
+          universe: { seen: bundle.entries.length, skipped: bundle.entries.length,
+            rule: bundle.entries.length + ' file(s) resolved from tauri.conf.json bundle.resources, ' +
+              'all unreachable: no build dir among the ' + dirs.length + ' candidates carries BOOT.md',
+            skippedList: ['no build directory — every shipped file is uncomparable'] },
         };
       }
-      /* Every brief a spawn can read, not SEED alone. A stale LIBRARIAN.md sends that seat to a
-       * dead notes path; a stale COMMITTEE.md briefs a pane with retired rules. Checking one file
-       * and reporting a verdict on the whole bundle is the same overreach this item exists to catch. */
-      /* AND THE SKIP IS NOW COUNTED. This loop used to `continue` when either side was unreadable,
-       * so a brief missing from the repo or from the build vanished from the denominator and the
-       * CLOSED line reported "N brief(s) byte-identical" over whatever happened to survive. Same
-       * shape as install.ps1's $same, which was false both for MISSING and for DIFFERENT: a
-       * comparison that cannot run is not a comparison that passed. */
+      /* EVERY BUNDLED FILE, not the briefs alone and certainly not SEED alone. A stale LIBRARIAN.md
+       * sends that seat to a dead notes path; a stale COMMITTEE.md briefs a pane with retired rules;
+       * a stale BUILDING.md teaches a rule its author has already corrected. Which files those are
+       * is not this file's opinion — it is whatever tauri.conf.json ships.
+       *
+       * AND THE SKIP IS COUNTED, in a space wide enough for the skip to exist in. Two versions of
+       * this loop were wrong in the same direction: the first `continue`d silently when a side was
+       * unreadable, and the second counted those skips against a five-name list that had already
+       * omitted the sixth file. A skip counter only means something over a denominator somebody
+       * else decided. */
       const drift = [];
       const skipped = [];
       let compared = 0;
-      for (const n of names) {
-        const a = md5(path.join(REPO, 'consonance/src-tauri/brief/' + n + '.md'));
-        const b = md5(path.join(dir, n + '.md'));
-        if (!a && !b) { skipped.push(n + ' (absent from BOTH repo and build)'); continue; }
-        if (!a) { skipped.push(n + ' (absent from the REPO — the build carries one the repo does not)'); continue; }
-        if (!b) { skipped.push(n + ' (absent from the BUILD — a fresh room never reads it)'); continue; }
+      for (const e of bundle.entries) {
+        if (e.emptyGlob) { skipped.push(e.from + ' (glob matched NOTHING in the repo — it ships zero files)'); continue; }
+        const a = md5(e.src);
+        const b = md5(path.join(dir, e.to));
+        if (!a && !b) { skipped.push(e.to + ' (absent from BOTH repo and build)'); continue; }
+        if (!a) { skipped.push(e.to + ' (absent from the REPO — the build carries one the repo does not)'); continue; }
+        if (!b) { skipped.push(e.to + ' (absent from the BUILD — a fresh room never reads it)'); continue; }
         compared++;
-        if (a !== b) drift.push(n);
+        if (a !== b) drift.push(e.to);
       }
       const universe = {
-        seen: names.length,
+        seen: bundle.entries.length,
         skipped: skipped.length,
-        rule: 'the ' + names.length + ' brief names a spawn can read, compared repo vs ' + dir +
-          '; a name is SKIPPED when either side is unreadable — never silently dropped',
+        rule: bundle.declared + ' entr(ies) in tauri.conf.json bundle.resources resolving to ' +
+          bundle.entries.length + ' file(s) (globs expanded), compared repo vs ' + dir +
+          '. THE LIST IS NOT MAINTAINED HERE — it is read from what the installer ships, because a ' +
+          'list this file keeps can only report skips against itself. A file is SKIPPED when either ' +
+          'side is unreadable, and which side is named.',
         skippedList: skipped,
       };
-      if (!compared) return { state: 'UNKNOWN', detail: 'build at ' + dir + ' carries no briefs to compare', universe };
+      if (!compared) return { state: 'UNKNOWN', detail: 'build at ' + dir + ' carries none of the ' +
+        bundle.entries.length + ' shipped files to compare', universe };
       if (skipped.length) {
-        /* A brief that is absent from the BUILD is not a passing comparison — it is the failure
-         * this item exists to catch, in its most complete form. Say OPEN. */
-        return { state: 'OPEN', detail: compared + ' of ' + names.length + ' compared' +
+        /* A shipped file absent from the BUILD is not a passing comparison — it is the failure this
+         * item exists to catch, in its most complete form. Say OPEN. */
+        return { state: 'OPEN', detail: compared + ' of ' + bundle.entries.length + ' compared' +
           (drift.length ? ', ' + drift.join(', ') + ' DRIFTED' : ', no drift among them') +
           ' — but ' + skipped.length + ' could not be compared at all: ' + skipped.join('; '), universe };
       }
       if (!drift.length) {
-        return { state: 'CLOSED', detail: compared + ' brief(s) byte-identical to the repo in ' + dir, universe };
+        return { state: 'CLOSED', detail: compared + ' shipped file(s) byte-identical to the repo in ' + dir, universe };
       }
       return { state: 'OPEN', detail: drift.join(', ') + ' differ from the built copy (' + compared +
-        ' compared) — a fresh spawn reads the STALE one until a rebuild', universe };
+        ' of ' + bundle.entries.length + ' compared) — a fresh spawn reads the STALE one until a rebuild', universe };
     },
   },
   {
