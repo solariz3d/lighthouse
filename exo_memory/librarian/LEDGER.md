@@ -11,6 +11,15 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
+- two_writers_registration_2026-08-25.md (A) — 2W-1 ADOPTED (dcb0d9b: lap id carries its mint site). F-2W-2:
+  WITHDRAW the document if the desktop has written to no tracked path by 2026-09-25
+- chain-status ten-lap clock — STARTED ~06:35 2026-08-25 at the first pulse that carried the line (6b58c63),
+  per A: not before. Falsifier: after ten laps, no seat's turn shown changed by the line → it comes out
+- desktop_first_run_2026-08-25.md (C) — the runbook for P-DESKTOP-FIRST-RUN, the room's first cross-machine
+  test; UNRUN until the desktop pulls. Its printed outputs are the score
+- overseer_path_ruling_2026-08-25.md (E) — overseers inert because NOT INSTALLED + path hardcoded to a June
+  location; supersedes both the chair's METHOD.md reason and my "may be live on the desktop" (both local)
+- portable-paths (B, 8644352) — .md exemption fixed on scope and kind; 27 shipped prose files now in scope
 - commitment_census_2026-08-25.md (B) — every promise the room has made vs what can check it; 136 files walked;
   its own instrument failed clause 2 (§4); the count is at §5 — the standing list of UNCHECKED commitments
   this ledger should absorb one row at a time, not copy
