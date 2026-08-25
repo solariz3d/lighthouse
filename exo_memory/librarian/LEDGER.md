@@ -11,6 +11,18 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
+- commitment_census_2026-08-25.md (B) — every promise the room has made vs what can check it; 136 files walked;
+  its own instrument failed clause 2 (§4); the count is at §5 — the standing list of UNCHECKED commitments
+  this ledger should absorb one row at a time, not copy
+- gemini_channel_attack_2026-08-25.md (E) — the chair's "cross-model channel already works, 2/2" INVERTS
+  (denominator unrecoverable: the record keeps only hits); T4's three options stand unchanged; Option A
+  slightly strengthened, flagged against its own verdict's direction
+- universe_print_registration_2026-08-25.md (A) — P-UNIVERSE registered; retrofit landed on two instruments,
+  NOT the turn scanner; own falsifier: zero downstream citations → revert not extend; §8 says the retrofit
+  shipped the class it was written to end — read before trusting any green
+- forgetting_pilot_2026-08-25.md (C) — pilot corpus VOID (named files were already consumed); falsifier
+  re-aimed to `node consonance/tools/forget-rate.js` (reads zero today); registration 44's carrier still
+  needs its beside-correction at journal/2026-08-24.md:179
 - carrier_surface_2026-08-25.md (B) — FIVE CHANNELS enumerated (CH-0 hooks, CH-4 instructed, CH-5 harness
   memory never before named); carrier-drift's corpus must grow to CH-4/CH-5 or reports green on them forever
 - turn_boundary_detection_2026-08-25.md (E) — prevention POSSIBLE (prompt_id in PreToolUse payload); base
@@ -38,6 +50,9 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 
 
 ## CONSUMED — ran, scored, closed
+- coat_preregistration.md / typology_comparison.md (+failure_types_K/L) / wire_run_2026-08-15.md — JOURNALED
+  08-23 (journal/2026-08-23.md §§1-3, e3ec457). Mis-filed as NO-RESULT/FILE on 08-24 by this seat; corrected
+  08-25 on C's forgetting_pilot finding
 - retirement_carry_registration.md — SCORED SIX DAYS EARLY (b7f3775, pane B, 08-25): window settled by a .bak
   artifact (06:54:32, six min after registration); the finding = the July retirement missed a SECOND carrier
   BOOT itself points at (record/trust-the-first-attention.md, CH-4). Spawned Cycle 2's carrier-surface work
@@ -61,8 +76,8 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 - librarian's own compaction prereg 08-23 — void, superseded by librarian_compact_2026-08-24
 
 ## NO-RESULT — classified 08-23, disposition pending execution
-- FILE (results exist in-file, never journaled): coat_preregistration.md; typology_comparison.md (+
-  failure_types_K/L); wire_run_2026-08-15.md — filing debt, P-FORGET's pilot may distill these
+- (FILE row REMOVED 08-25: coat / typology+K/L / wire_run were journaled at journal/2026-08-23.md §§1-3, e3ec457,
+  BEFORE this ledger was seeded — the row was stale at birth; C's pilot found it. Now under CONSUMED.)
 - ABANDON: selfcatch_preregistration.md (struck before scoring); coupling_preregistration.md (never run —
   leaves muscle_map.md:321-325 within-arm prediction untested; said there by the 08-23 correction)
 

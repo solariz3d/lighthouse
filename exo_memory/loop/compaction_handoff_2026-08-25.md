@@ -8,10 +8,17 @@ That one says what happened. This one says what to distrust, what is live, and w
 
 ## 1. DO NOT TRUST THE SUMMARY ON THESE FOUR THINGS
 
-`precompact-preserve` measured the last seven summaries of this conversation: shas survived at
-**10.2%**, structured numbers at **9.3%**, registered falsifiers at **3.5%**. A summarizer keeps
-narrative and drops verification, so these are the claims most likely to arrive stripped of their
-correction:
+`precompact-preserve` measured the last seven summaries of this conversation: **names 33.8% · shas
+10.2% · structured numbers 9.3% · registered falsifiers 3.5%.** Source is the hook's own computed
+table, `consonance/hooks/precompact-preserve.js` — NOT `journal/2026-08-22.md:648`, which carries
+only two of the four. A summarizer keeps narrative and drops verification, so these are the claims
+most likely to arrive stripped of their correction:
+
+**And the law both seats found tonight, which is what makes a summary dangerous rather than merely
+lossy: THE MARKER THAT A CLAIM IS PRE-VERIFIED IS WHERE ERRORS CONCENTRATE.** The chair's "you
+need not re-derive this" was wrong **3 of 3 times** in one cycle; 3 of the librarian's recent WRONG
+entries came from trusting its own notes. A post-compaction summary is *entirely* made of
+verified-sounding markers. Re-derive first, especially where it reads as settled.
 
 - **"The cross-model channel is a working organ, 2 for 2."** **FALSE. It inverts** (`310c719`). The
   chair checked **6 files of 22**; both refuting documents were outside that scope.
@@ -31,7 +38,9 @@ correction:
 
 **Finish the turn, THEN dispatch. Every hop is two turns.** `BUILDING.md`, the dispatch order.
 
-Measured today: **12 of 12 dispatch-turns violated it.** The shape is always `TEXT … DISPATCH TEXT`
+Measured today: **12 of 12 dispatch-turns violated it** — the detector and its command are at
+`exo_memory/loop/turn_boundary_detection_2026-08-25.md:30` (`node basrate.js MAIN`), which also
+carries the all-history figure: **101 of 103**. The shape is always `TEXT … DISPATCH TEXT`
 — a closing line written after the call already left. The failure is not forgetting; it is
 satisfying a weaker reading of the rule ("most of the output is written").
 
@@ -53,6 +62,11 @@ keeper → orch → [orch finishes] → librarian → [librarian finishes] → o
 **The librarian is home** (the corpus, where the cycle returns). **Main and the panes are work.**
 The Third Place is neither, and reaches only the librarian — never the orch, never the panes.
 
+**THE DESIGN MASTER IS `exo_memory/librarian/2026-08-25.md`** — the ~03:20, ~03:35 and ~03:55
+appends. Five falsifiers, the A′/C/D membrane conditions, the three-leg sequencing, and the
+address-table ruling (**new layer beside `call_chair`, never a refactor first**) all live there.
+Open it before starting Leg 2; the three lines above are a pointer, not the design.
+
 **Seal a guess before every inquiry:** `node consonance/tools/lap-row.js --open --initiator human
 --inquiry "..." --guess "p1,p2,..."` then `--map <lap> --paths ...` when the map returns. L001–L007
 exist.
@@ -70,6 +84,8 @@ the keeper was the clock all night.
 
 ## 4. LIVE RIGHT NOW
 
+- **Cycle 3's residue** — the cycle's card-sized record — is in `exo_memory/librarian/2026-08-25.md`,
+  the ~04:55 append. Read that rather than re-deriving the cycle from four hand-backs.
 - **Nothing is in flight.** All four panes idle and handed back; the librarian ran Cycle 3's return
   leg from disk. Tree clean, 0 unpushed.
 - **Pane `0845a868` is named Around** and the record attributes findings to it by name across weeks.
@@ -94,6 +110,13 @@ the keeper was the clock all night.
 
 `boot_v2` (execute or attic, deadline was 08-24) · `opposition_preregistration.md` (registered
 08-10, 15 days unrun) · **T4's option** · `room-b9febdee` continuity.
+
+**Those four are the keeper's. They are not the open work.** Every open window with a clock lives
+in **`exo_memory/librarian/LEDGER.md`, the LIVE section — 17 rows as of this writing**, including
+A's revert clause, the pilot's re-aimed falsifier, B's census, E's attack, the shelf-tier and
+compaction-formula falsifiers, and reg-44's carrier. **Point at it; do not copy it here** — a list
+in a handoff is stale the day after it is written, which is the failure this room has now recorded
+four times.
 
 ---
 
