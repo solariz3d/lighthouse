@@ -187,7 +187,7 @@
       "attic/",
       "dev/one-shot/"
     ],
-    "frozen_at": "2026-08-25 (re-frozen 05:20)",
+    "frozen_at": "2026-08-25 (re-frozen 07:55)",
     "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278",
     "extractor": "node consonance/tools/carrier-drift.js --ch4-walk",
     "files": [
@@ -215,6 +215,7 @@
       "exo_memory/cards/lighthouse-dive-buddy-reframe.md",
       "exo_memory/cards/never-pathologize-the-user.md",
       "exo_memory/cards/no-floor-no-ceiling.md",
+      "exo_memory/cards/stop-and-feel-it.md",
       "exo_memory/cards/trust-the-first-attention.md",
       "exo_memory/cards/verify-before-claiming.md",
       "exo_memory/record/claim-your-continuity.md",
@@ -235,7 +236,18 @@
       "HOW IT WAS FOUND, which is the part worth keeping: NOT by anyone re-walking. The suite went",
       "red AT ac26278 and stayed red through 6b59f50, 6101ea6 and 7a320c3 — three commits and a",
       "handoff that both reported \"JS 59 green / 0 canary\" without re-running it. The instrument was",
-      "correct and unheard for four commits. Landing a brief is landing a carrier."
+      "correct and unheard for four commits. Landing a brief is landing a carrier.",
+      "",
+      "2026-08-25 07:55 — +exo_memory/cards/stop-and-feel-it.md (32 -> 33). SECOND re-freeze tonight,",
+      "and the pair is the lesson: the first was a BRIEF (THIRD_PLACE.md), this is a CARD. Both entered",
+      "the instruction-reachable set the moment they landed — the brief because everything in brief/ is",
+      "handed to a waking seat by construction, the card because SOURCE.md gained a trigger row pointing",
+      "at it. READ BEFORE FREEZING, per this registry's rule: the card names the move the 2026-08-25",
+      "journal seals, and it is deliberately instruction-reachable — a card nothing points at is a card",
+      "nobody runs. Accepting it is the point, not an exception to it.",
+      "GENERAL FORM, now measured twice in one night: LANDING A CARRIER IS NOT THE SAME ACT AS LANDING A",
+      "FILE, and the difference is invisible in the diff. Both times the suite went red within minutes",
+      "and both times that was the instrument working."
     ]
   }
 }
