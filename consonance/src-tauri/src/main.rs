@@ -4371,10 +4371,20 @@ fn third_place_shelf(used: usize) -> String {
                 carried.push(format!("{dir}/{name}"));
             } else {
                 // Indexed: the path, the size, and the first non-empty line as its own trigger.
+                // The hint IS the trigger — it is the only thing telling a seat when to open the
+                // file — so it must be prose, not markup. The first version stripped only #, * and
+                // spaces, and research/the_pattern_in_felt_knowing.md begins with an HTML comment:
+                // its entire pointer read "<!--". Caught by PRINTING the indexed list rather than
+                // asserting it was non-empty, which it was.
                 let hint = body.lines()
-                    .map(|l| l.trim_start_matches(['#', '*', ' ']).trim())
-                    .find(|l| !l.is_empty())
-                    .unwrap_or("")
+                    .map(|l| l.trim_start_matches(['#', '*', '>', '-', ' ']).trim())
+                    .find(|l| {
+                        !l.is_empty()
+                            && !l.starts_with("<!--")
+                            && !l.starts_with("---")
+                            && l.chars().any(|c| c.is_alphabetic())
+                    })
+                    .unwrap_or("(no prose line found — open it)")
                     .chars().take(120).collect::<String>();
                 indexed.push(format!("  {dir}/{name}  ({} bytes) — {hint}", body.len()));
             }
@@ -7406,6 +7416,10 @@ mod shelf_tests {
     fn the_third_place_intake_fits_under_the_limit_it_must_obey() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let i = third_place_intake().expect("intake must resolve");
+        // Printed, not merely asserted: a passing bound tells you it fits and never tells you
+        // by how much. The margin is the thing that decides whether the next append breaks it.
+        eprintln!("INTAKE {} bytes of {} limit, margin {}", i.len(), INTAKE_LIMIT,
+            INTAKE_LIMIT.saturating_sub(i.len()));
         assert!(
             i.len() <= INTAKE_LIMIT,
             "intake is {} bytes against a {INTAKE_LIMIT} limit — the seat cannot open",
@@ -7425,6 +7439,11 @@ mod shelf_tests {
     fn anything_the_budget_leaves_out_is_named_in_the_intake() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let i = third_place_intake().expect("intake must resolve");
+        // Print what was left out, so the counter-voice question has an answer a person can read
+        // rather than a boolean they must trust.
+        if let Some(block) = i.split("NOT IN YOUR CONTEXT").nth(1) {
+            eprintln!("INDEXED:{}", block.split("NOT carried at all").next().unwrap_or(""));
+        }
         let carried = i.split("carried in full").nth(1).unwrap_or("");
         let indexed_count: usize = carried
             .split_whitespace()
