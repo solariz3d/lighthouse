@@ -120,6 +120,11 @@ const MANIFEST = [
   { from: 'consonance/src-tauri/brief/BUILDING.md', to: 'consonance/src-tauri/brief/BUILDING.md', kind: 'prose' },
   { from: 'consonance/src-tauri/brief/LIBRARIAN.md', to: 'consonance/src-tauri/brief/LIBRARIAN.md', kind: 'prose' },
   { from: 'consonance/src-tauri/brief/BASE_JOURNAL.md', to: 'consonance/src-tauri/brief/BASE_JOURNAL.md', kind: 'prose' },
+  // THIRD_PLACE.md is not optional for the consumer tree: tauri.conf DECLARES it as a bundle
+  // resource, so its absence is not a missing feature, it is a tree that does not build. The
+  // guard here found that within a minute of the resource being declared -- the manifest is an
+  // ALLOW-list, so a new declared resource is ABSENT by default, and absent reads like fine.
+  { from: 'consonance/src-tauri/brief/THIRD_PLACE.md', to: 'consonance/src-tauri/brief/THIRD_PLACE.md', kind: 'prose' },
 ];
 
 /* Named exclusions -- files that MATCH a manifest rule but must not ship, each with its reason.

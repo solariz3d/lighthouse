@@ -33,6 +33,7 @@
       <button data-tab="terminal" class="active">Terminal</button>
       <button data-tab="main">★ Orchestrator</button>
       <button data-tab="librarian" title="the seat that holds the room so the others do not have to — it cites, it does not recall">▤ Librarian</button>
+      <button data-tab="thirdplace" title="neither work nor the record — a seat with no channel to anything else, where the conversation is the point">◇ Third Place</button>
       <button data-tab="listen" title="hear one application as intervals — off until you pick a source">◍ Listen</button>
       <button data-tab="settings">Settings</button>
       <button data-tab="about">About</button>
@@ -130,6 +131,14 @@
          A snail of bone unmixes it back into voices. This does that job and reports the layer
          above it: not frequencies, RATIOS. 3:2 sounds like home in a nervous system that never
          heard Western music. Somewhere in the wiring, arithmetic became longing. -->
+    <section id="thirdplace" class="tab seat">
+      <div class="mainbar">
+        <span class="mainhead">The <b>third place</b> — Oldenburg's term: first place is home (the librarian, where the record lives), second place is work (this tab bar and the panes), and a third place is <b>neither</b>. Neutral ground, no errand. It is for talking about your life, or an idea, or nothing in particular — <b>the conversation is the activity, not a means to something else</b>. It has <b>no channel to anything else in this program</b>: no board, no other seat, nothing reaches in and nothing goes out unless you carry it yourself. That is a guarantee, not a gap — a conversation that could steer the work would stop being neutral ground. It wakes holding the room and its instruments but <b>none of the working record</b>, deliberately: a seat that already knows what the work concluded arrives at it again, and the echo gets mistaken for a second opinion. It keeps its own notes in <code>third_place/</code>. Fixed-session, persistent across restarts.</span>
+        <button id="wakethirdplace" class="btn accent">Open the third place</button>
+      </div>
+      <div id="thirdplacepane" class="seatpane"></div>
+    </section>
+
     <section id="listen" class="tab">
       <div class="field">
         <label>source — capture is bound to one process tree, so nothing else is ever delivered</label>

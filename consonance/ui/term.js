@@ -622,6 +622,39 @@ async function wakeLibrarian() {
     setWakeLibrarian('idle');
   }
 }
+/* The Third Place. Same shape as wakeLibrarian for the same stated reason -- one pattern for
+ * "a persistent seat lives in its own tab". The differences are all in the BACKEND and are the
+ * design: no PaneNames entry (nothing can address it), a role outside ADDRESSABLE_SEATS (the
+ * chair is refused it the way it is refused a person), and no MCP mount (it has no channel at
+ * all). Nothing here needs to enforce that, and nothing here should try to.
+ */
+const WAKE_TP_STATES = {
+  idle:   { disabled: false, text: 'Open the third place' },
+  waking: { disabled: true,  text: 'opening…' },
+  awake:  { disabled: true,  text: 'the third place is open' },
+};
+
+function setWakeThirdPlace(state) {
+  const btn = document.getElementById('wakethirdplace');
+  const s = WAKE_TP_STATES[state];
+  if (btn && s) { btn.disabled = s.disabled; btn.textContent = s.text; }
+}
+
+function resetWakeThirdPlace() { setWakeThirdPlace('idle'); }
+
+async function wakeThirdPlace() {
+  setWakeThirdPlace('waking');
+  try {
+    const r = await inv('spawn_third_place');
+    attachPane(r.pane, '◇ Third Place', r.cwd, 'third_place', 'thirdplacepane');
+    setWakeThirdPlace('awake');
+    setStatus('the third place is open — it reaches nothing else here, and nothing reaches it');
+  } catch (e) {
+    setStatus('' + e);
+    setWakeThirdPlace('idle');
+  }
+}
+
 // ---- Stage 6: the live committee — pick a focus pane, the rest convene to feed it ----
 function setFocus(id) {
   focusPaneId = (focusPaneId === id) ? null : id;
@@ -881,6 +914,10 @@ const wm = document.getElementById('wakemain');
 if (wm) wm.onclick = wakeMain;
 const wl = document.getElementById('wakelibrarian');
 if (wl) wl.onclick = wakeLibrarian;
+const wtp = document.getElementById('wakethirdplace');
+if (wtp) wtp.onclick = wakeThirdPlace;
+const tptab = document.querySelector('.tabs button[data-tab="thirdplace"]');
+if (tptab) tptab.addEventListener('click', () => setTimeout(fitAll, 40));
 const ltab = document.querySelector('.tabs button[data-tab="librarian"]');
 if (ltab) ltab.addEventListener('click', () => setTimeout(fitAll, 40));
 const mtab = document.querySelector('.tabs button[data-tab="main"]');
