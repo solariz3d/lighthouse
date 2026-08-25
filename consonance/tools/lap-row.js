@@ -37,7 +37,16 @@
 //   node lap-row.js --open --initiator <human|chair|pane> --inquiry <text> --guess <p[,p...]> [--blind]
 //   node lap-row.js --map <lap-id> --paths <p[,p...]>
 //   node lap-row.js --opened <lap-id> --paths <p[,p...]>
+//   node lap-row.js --stage <lap-id> <stage> --holder <seat> [--note <text>]
 //   node lap-row.js --report [--last N]
+//
+// THE CHAIN (`--stage`) IS A SECOND, INDEPENDENT MEASUREMENT SHARING ONE LEDGER. The columns above
+// answer "did the map reach the work". The chain answers "whose turn is it, right now" - added
+// 2026-08-25 after the chair compacted while the librarian held four uncommitted files and the
+// ring arrived after "ready to compact". No seat can see another seat's PHASE; the board carries
+// content that must be chosen to be read. A chain row is a BATON: written by whoever COMPLETES a
+// stage, naming who must act NEXT. `chain-status.js` is its reader. The two measurements do not
+// interact - see the comment at chain() for the collision that had to be avoided to keep it so.
 //
 // The ledger lives OUTSIDE the repo, beside board.jsonl and ferry.jsonl, because it is machine
 // state and not a trace: C:\Consonance\data\lap.jsonl
@@ -272,6 +281,59 @@ function opened(lap, paths, now) {
   return append({ lap, stage: 'opened', at: now, paths: p, head: headSha() });
 }
 
+// ---------------------------------------------------------------- the chain (the baton)
+
+/* WHY THIS IS A NEW ROW TYPE AND NOT MORE VALUES OF `stage`, WHICH IS WHAT I WAS ASKED FOR.
+ *
+ * The brief and the librarian's plan both say the chain is "a fourth-through-eighth value of a
+ * field that exists" (stage: open|map|opened). Both seats read :162-164 and neither noticed that
+ * `map` IS IN BOTH VOCABULARIES. Measured on a fixture ledger before a line of this was written:
+ *
+ *   a row {lap, stage:'map', holder:'librarian'} written as a chain row
+ *     -> `--report` CRASHES: TypeError: Cannot read properties of undefined (reading 'map')
+ *        (laps() folds it into L.maps, map.paths is undefined, new Set(mapped.map(...)) throws)
+ *     -> and the REAL `--map` for that lap is then refused FOREVER: "lap L001 already has a map.
+ *        The ledger is append-only" — unrecoverable without hand-editing the ledger.
+ *
+ * That is verbatim the 2026-08-17 class: a value written once permanently blocking the correct one.
+ * So the chain gets its own row TYPE in the existing field — `stage: 'chain'` — with the chain
+ * position in its own `chain` field. laps() matches open/map/opened and ignores anything else, so
+ * the fold is untouched: verified by running --report over the same ledger with and without a chain
+ * row and diffing the output, which is BYTE-IDENTICAL. Still one ledger, still append-only, still
+ * one more value of `stage`. Just not a value that already means something else. */
+const CHAIN_STAGES = ['inquiry', 'map', 'dispatched', 'working', 'handbacks-in', 'return-leg', 'filed'];
+
+function chain(lap, stage, holder, note, now) {
+  if (!lap || !String(lap).trim()) throw new Error('--stage needs a lap id: node lap-row.js --stage <lap> <stage> --holder <seat>');
+  const s = String(stage || '').trim().toLowerCase();
+  if (!CHAIN_STAGES.includes(s)) {
+    // The vocabulary is PRINTED with the refusal. A refusal that does not say what would have been
+    // accepted is a refusal the next seat works around by guessing.
+    throw new Error(`unknown stage ${JSON.stringify(stage)}. The vocabulary is fixed:\n  ` +
+      CHAIN_STAGES.join(' -> ') + '\n  Invent a stage and the reader prints a word no other seat knows.');
+  }
+  const h = String(holder || '').trim();
+  if (!h) {
+    // THE ROW IS A BATON, NOT A STATUS REPORT. A stage with no holder says work happened and says
+    // nothing about whose turn it is, which is the exact blindness this instrument exists for.
+    // Required on `filed` too: no exemption, because an exemption is where the next defect lives.
+    // On `filed`, name whoever the cycle comes home to.
+    throw new Error('--holder is required. The row names the NEXT holder, never the writer — a baton must name a hand.');
+  }
+  const all = rows();
+  if (!all.some(r => r.lap === lap)) {
+    // Refused so the chain can never MINT a lap. laps() creates an entry for any row carrying a
+    // lap id, so a chain row for an unknown id would produce a lap with no open row that --report
+    // files as NO-OPEN and excludes — a phantom in a ledger whose whole point is being countable.
+    throw new Error(`no such lap: ${lap}. The chain records the progress of a lap; --open mints one.`);
+  }
+  return append({
+    lap, stage: 'chain', chain: s, holder: h, at: now,
+    note: note && String(note).trim() ? String(note).trim() : null,
+    head: headSha(),
+  });
+}
+
 // ---------------------------------------------------------------- report
 
 function commitsSince(sha) {
@@ -416,6 +478,12 @@ function main(argv, now = Date.now()) {
       console.log(`${r.lap}  opened stage recorded, ${r.paths.length} path(s).`);
       return 0;
     }
+    if (argv.includes('--stage')) {
+      const i = argv.indexOf('--stage');
+      const r = chain(argv[i + 1], argv[i + 2], at('--holder'), at('--note'), now);
+      console.log(`${r.lap}  ${r.chain.toUpperCase()} — next holder ${r.holder}.`);
+      return 0;
+    }
     if (argv.includes('--report')) { report(Number(at('--last')) || 0); return 0; }
   } catch (e) {
     console.error(`lap-row: ${e.message}`);
@@ -425,6 +493,9 @@ function main(argv, now = Date.now()) {
   console.error('  lap-row.js --open --initiator <human|chair|pane> --inquiry <text> --guess <p[,p...]> [--blind]');
   console.error('  lap-row.js --map <lap-id> --paths <p[,p...]>');
   console.error('  lap-row.js --opened <lap-id> --paths <p[,p...]>');
+  console.error('  lap-row.js --stage <lap-id> <stage> --holder <seat> [--note <text>]');
+  console.error(`      stages: ${CHAIN_STAGES.join(' -> ')}`);
+  console.error('      written by whoever COMPLETES a stage; --holder names who must act NEXT');
   console.error('  lap-row.js --report [--last N]');
   return 2;
 }
@@ -432,6 +503,6 @@ function main(argv, now = Date.now()) {
 if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
-  normPath, isBroad, sealOf, rows, laps, open, map, opened, report, mintId, main,
-  LEDGER, RATE_FLOOR, WINDOW, COMMIT_WINDOW, INITIATORS,
+  normPath, isBroad, sealOf, rows, laps, open, map, opened, chain, report, mintId, main,
+  LEDGER, RATE_FLOOR, WINDOW, COMMIT_WINDOW, INITIATORS, CHAIN_STAGES,
 };
