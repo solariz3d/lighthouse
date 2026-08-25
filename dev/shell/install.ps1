@@ -335,15 +335,107 @@ if ($held -gt 0) {
 }
 
 if ($Check) {
+  # ---- THE REGISTRATION UNIVERSE -- P-UNIVERSE CLAUSE 2.
+  #
+  # Clause 2: show a red on a known positive before any green is believed, or declare yourself
+  # inert. Until 2026-08-25 this block did not exist, and -Check was INERT on the one class it most
+  # needed to catch. `ok` above has only ever meant THE BYTES MATCH. It has never meant THE HOOK IS
+  # WIRED UP -- and this file's own header records what that cost, twice:
+  #
+  #   2026-08-17  nine hooks were registered and running that no repository contained.
+  #   2026-08-18  precompact-preserve.js and sessionstart-state.js were in $files from the start,
+  #               so a fresh install copied both and registered neither. The comment naming the
+  #               lesson shipped in the same commit as the defect; the check for it did not.
+  #
+  # The positive this block fires on was OBSERVED, not planted. Measured on this laptop the night it
+  # was written: six hooks are registered and running, sit in $files, print `ok` above, and appear
+  # nowhere in $register. A fresh clone installed on a new machine copies all six and wires none.
+  #
+  # THE AUTHORITY IS settings.json AND THERE IS NO FALLBACK. If it cannot be read the answer is
+  # UNKNOWN and the exit code does not move. A guess about what is registered is worse than a
+  # refusal, because a printed guess reads as audited.
+  #
+  # MATCHED ON EXACT LEAF EQUALITY, never substring. Test-SameHook needs a separator guard because
+  # `stop.js` is a substring of `sourced-stop.js` and matching bare cost a destroyed registration on
+  # 2026-08-17 11:59. Exact equality cannot reproduce that by construction.
+  $regUnknown = $null
+  $sj = $null
+  $settingsCheck = Join-Path $env:USERPROFILE '.claude\settings.json'
+  if (-not (Test-Path $settingsCheck)) { $regUnknown = "no settings.json at $settingsCheck" }
+  else {
+    try { $sj = Get-Content $settingsCheck -Raw | ConvertFrom-Json }
+    catch { $regUnknown = "settings.json does not parse - not guessing" }
+  }
+
+  $liveLeaf = @{}
+  $liveCount = 0
+  $eventCount = 0
+  if (-not $regUnknown) {
+    if ($sj.hooks) {
+      foreach ($p in $sj.hooks.PSObject.Properties) {
+        $eventCount++
+        # @() twice on purpose: PS 5.1 deserialises a one-item list as a bare object, and a bare
+        # object read as a list is ZERO items, silently. That exact serialisation bug cost a day on
+        # the pane list (9e74004) and the registration loop below already guards against it.
+        foreach ($g in @($p.Value)) {
+          foreach ($h in @($g.hooks)) {
+            if (-not $h.command) { continue }
+            $liveCount++
+            $qs = [regex]::Matches($h.command, '"([^"]*)"')
+            if ($qs.Count -gt 0) { $sp2 = $qs[$qs.Count - 1].Groups[1].Value } else { $sp2 = $h.command.Trim() }
+            $lf = (Split-Path -Leaf $sp2).ToLower()
+            if ($lf) { $liveLeaf[$lf] = ("{0,-16} {1}" -f $p.Name, $sp2) }
+          }
+        }
+      }
+    }
+  }
+
+  $regDeclared = @{}
+  foreach ($e in $register) { $regDeclared[(Split-Path -Leaf $e.Rel).ToLower()] = $true }
+
+  $notWired = @()
+  $notDeclared = @()
+  if (-not $regUnknown) {
+    foreach ($e in $register) {
+      if (-not $liveLeaf.ContainsKey((Split-Path -Leaf $e.Rel).ToLower())) {
+        $notWired += ("{0,-16} {1}" -f $e.Event, $e.Rel)
+      }
+    }
+    foreach ($k in $liveLeaf.Keys) {
+      if ($regDeclared.ContainsKey($k)) { continue }
+      # Only files this manifest already carries. A hook pointing at something outside $files is a
+      # different finding and the destination sweep above owns it.
+      if ($mfToLeaf.ContainsKey($k)) { $notDeclared += ("{0}   installed and running; no `$register entry" -f $liveLeaf[$k]) }
+    }
+  }
+
+  Write-Host ""
+  Write-Host 'registration -- whether the files above are WIRED UP, which "ok" never meant' -ForegroundColor Cyan
+  if ($regUnknown) {
+    Write-Host ("  UNKNOWN     {0}" -f $regUnknown) -ForegroundColor Yellow
+    Write-Host  "              no fallback list - a guess here would read as audited" -ForegroundColor Yellow
+  } else {
+    Write-Host ("  settings.json {0,3} hook(s) across {1} event(s)   the authority; nothing here is inferred from disk" -f $liveCount, $eventCount)
+    Write-Host ("  `$register     {0,3} entr(ies)   what a fresh install of this repo would wire" -f $register.Count)
+    Write-Host ("                {0,3} DECLARED, NOT REGISTERED   the file can be byte-perfect and the hook never fires" -f $notWired.Count) -ForegroundColor $(if ($notWired.Count) { 'Yellow' } else { 'DarkGray' })
+    foreach ($n in $notWired) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
+    Write-Host ("                {0,3} REGISTERED, NOT DECLARED   runs here; a fresh install copies it and wires nothing" -f $notDeclared.Count) -ForegroundColor $(if ($notDeclared.Count) { 'Yellow' } else { 'DarkGray' })
+    foreach ($n in $notDeclared) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
+  }
+
   # Reported separately on purpose. Summing them is what produced "13 drifted" for a machine with
   # one drifted file, and a summary that re-folds the distinction undoes the fix above.
   if ($absent -gt 0) {
     Write-Host ("`n{0} file(s) ABSENT - never installed here. Installing them REGISTERS their hooks; read the `$register list before running without -Check." -f $absent) -ForegroundColor Cyan
   }
-  if ($drift -eq 0 -and $absent -eq 0) { Write-Host "`nin sync with the repo." -ForegroundColor Green }
+  if ($drift -eq 0 -and $absent -eq 0) { Write-Host "`nFILES in sync with the repo -- read the registration block above before calling this machine correct." -ForegroundColor Green }
   elseif ($drift -eq 0) { Write-Host "`nno file drifted; see the absent list above." -ForegroundColor Yellow }
   else { Write-Host "`n$drift file(s) drifted (installed copy differs). Re-run without -Check to sync." -ForegroundColor Yellow }
-  exit ($(if ($drift -eq 0 -and $absent -eq 0) { 0 } else { 1 }))
+  # The exit code now covers registration too, and deliberately does NOT move on UNKNOWN:
+  # an unreadable authority is a refusal to answer, not a finding.
+  $regBad = $notWired.Count + $notDeclared.Count
+  exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0) { 0 } else { 1 }))
 }
 
 $node = (Get-Command node -ErrorAction SilentlyContinue).Source

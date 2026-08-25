@@ -28,7 +28,14 @@
 //                bundle item enumerates from tauri.conf.json and CHANGES ITS ANSWER when pointed
 //                at a different authority; an empty bundle is refused rather than reported green;
 //                an unreadable authority does NOT fall back to a built-in list.
-//   NOT COVERED  dev/shell/install.ps1 -Check. Its universe is real and was demonstrated by hand
+//   NOT COVERED  dev/shell/install.ps1 -Check, INCLUDING its 2026-08-25 registration block,
+//                which reports entries declared in $register but not registered on this machine
+//                and hooks registered here that no $register entry declares. Both were
+//                demonstrated by hand against a throwaway USERPROFILE: files perfectly in sync
+//                plus a settings.json registering nothing printed 13 DECLARED-NOT-REGISTERED and
+//                exited 1 where the old code printed "in sync with the repo." and exited 0; a
+//                corrupt and a missing settings.json each printed UNKNOWN and left the exit code
+//                alone. Its file universe was demonstrated by hand
 //                (a probe in dev/shell/hooks/ printed as UNMANAGED, a probe at the destination as
 //                UNCLAIMED, both named). Automating it means planting files in the repo and in
 //                ~/.claude/shell on every suite run, which is a decision for the seat that owns
@@ -256,6 +263,113 @@ test('NO FALLBACK: an unreadable authority goes UNKNOWN rather than reverting to
     || it.universe.rule.match(/hardcoded fallback/),
     'the absence of a fallback must be stated, not merely true: ' + it.universe.rule);
   assert.ok(!it.detail.match(/\bbrief\(s\)? byte-identical/), 'it fell back to comparing briefs anyway');
+});
+
+
+// ---------------------------------------------------------------------------------------------
+// CLAUSE 2, ON THE ONE ITEM WHERE IT WAS MEASURED AND FAILED.
+//
+// `hold-userprompt-submit` asks whether a two-way conflict between the repo's userprompt-submit.js
+// and the copy THIS MACHINE RUNS is still open. Until 2026-08-25 it hashed
+// HOME/.claude/shell/hooks/userprompt-submit.js - a path chosen because the manifest names it,
+// never because anything loads from it. Run on the real instrument in both directions:
+//
+//   the repo copy placed where this machine ACTUALLY loads hooks (flat)  -> verdict UNCHANGED, OPEN
+//   the repo copy placed at hooks\, which nothing on this machine loads  -> verdict flipped, CLOSED
+//
+// That is registration section 8e exactly: a planted positive drawn from the INSTRUMENT'S OWN UNIT
+// fired, while a positive drawn from the PHENOMENON could not move it - and the one that fired
+// produced a FALSE CLOSED, so the trap does not merely fail to prove armedness, it can be used to
+// close the item. The unit is now the REGISTERED path, read from settings.json, and the tests below
+// pin both directions: the red must be reachable, and a byte-identical copy sitting at an
+// unregistered path must not buy a green.
+
+function settingsFixture(name, registered) {
+  const d = path.join(tmp, name);
+  fs.mkdirSync(d, { recursive: true });
+  const p = path.join(d, 'settings.json');
+  const hooks = registered.map((cmdPath) => ({ type: 'command', command: '"node.exe" "' + cmdPath + '"' }));
+  fs.writeFileSync(p, JSON.stringify({ hooks: { UserPromptSubmit: [{ hooks: hooks }] } }, null, 1));
+  return p;
+}
+function runHold(settingsPath) {
+  const env = Object.assign({}, process.env, { OPEN_ITEMS_SETTINGS: settingsPath });
+  const r = spawnSync(process.execPath, [TOOL, '--json'], { encoding: 'utf8', env: env, maxBuffer: 32 * 1024 * 1024 });
+  const rows = JSON.parse(r.stdout || '[]');
+  return rows.find((x) => x.id === 'hold-userprompt-submit');
+}
+// The real repo copy is the fixed side of the comparison; only the machine side is fixtured.
+const REPO_UPS = path.join(__dirname, '..', '..', 'dev', 'shell', 'hooks', 'userprompt-submit.js');
+const upsBody = fs.readFileSync(REPO_UPS);
+
+test('CLAUSE 2 - the RED: the registered copy differs from the repo, and the item says so', () => {
+  const d = path.join(tmp, 'hold-red');
+  fs.mkdirSync(d, { recursive: true });
+  const live = path.join(d, 'userprompt-submit.js');
+  fs.writeFileSync(live, Buffer.concat([upsBody, Buffer.from('\n// divergence\n')]));
+  const it = runHold(settingsFixture('hold-red-s', [live]));
+  assert.strictEqual(it.state, 'OPEN', 'a live divergence must be RED: ' + it.detail);
+  assert.ok(it.detail.match(/registered copy/), 'the detail must name WHICH copy: ' + it.detail);
+  assert.ok(it.detail.indexOf(live) >= 0, 'the registered path must be printed: ' + it.detail);
+  assert.strictEqual(it.universe.seen, 2, 'two real sides were compared');
+});
+
+test('CLAUSE 2 - the GREEN it must be able to reach: an identical registered copy CLOSES it', () => {
+  // Without this the red above proves nothing: an item that is always OPEN is a structural zero
+  // in the other direction, and would pass the red test by never passing anything.
+  const d = path.join(tmp, 'hold-green');
+  fs.mkdirSync(d, { recursive: true });
+  const live = path.join(d, 'userprompt-submit.js');
+  fs.writeFileSync(live, upsBody);
+  const it = runHold(settingsFixture('hold-green-s', [live]));
+  assert.strictEqual(it.state, 'CLOSED', 'an identical registered copy is a resolved conflict: ' + it.detail);
+  assert.ok(it.detail.match(/RUNS/), 'the green must say it is about the copy that RUNS: ' + it.detail);
+});
+
+test('THE TRAP, pinned: a byte-identical copy at an UNREGISTERED path does not buy a green', () => {
+  // This is the exact defect. A file placed where nothing loads from used to flip the item to
+  // CLOSED. The verdict must come from the registered path and from nowhere else, however many
+  // identical copies are lying around the disk.
+  //
+  // ITS MEASURED LIMIT, stated because a test whose reach is unprinted is the same failure one
+  // level up: this test does NOT by itself kill the historical defect. Mutation-run 2026-08-25,
+  // reverting the unit to HOME/.claude/shell/hooks/userprompt-submit.js: this test still PASSED,
+  // because that path does not exist on this laptop, so the reverted code found nothing and stayed
+  // OPEN for the wrong reason. The mutation was killed by the GREEN test below it. Both are load-
+  // bearing, and on a machine where the hooks layout DOES exist this one would kill it alone.
+  const d = path.join(tmp, 'hold-trap');
+  fs.mkdirSync(path.join(d, 'hooks'), { recursive: true });
+  const registered = path.join(d, 'userprompt-submit.js');
+  const decoy = path.join(d, 'hooks', 'userprompt-submit.js');
+  fs.writeFileSync(registered, Buffer.concat([upsBody, Buffer.from('\n// divergence\n')]));
+  fs.writeFileSync(decoy, upsBody);            // perfect, and loaded by nothing
+  const it = runHold(settingsFixture('hold-trap-s', [registered]));
+  assert.strictEqual(it.state, 'OPEN', 'the decoy closed the item - the unit is wrong again: ' + it.detail);
+  assert.ok(it.detail.indexOf(registered) >= 0, 'the verdict must cite the registered path: ' + it.detail);
+});
+
+test('NOT LIVE HERE is said out loud rather than smuggled in as an absent side', () => {
+  // The old output was "repo <md5> vs installed absent", which reads as a path problem. On a
+  // machine that runs a DIFFERENT UserPromptSubmit implementation entirely, the honest answer is
+  // that the conflict cannot be scored from here at all - and it must name what does run.
+  const d = path.join(tmp, 'hold-elsewhere');
+  fs.mkdirSync(d, { recursive: true });
+  const other = path.join(d, 'userprompt_pulse.py');
+  fs.writeFileSync(other, 'print(1)');
+  const it = runHold(settingsFixture('hold-elsewhere-s', [other]));
+  assert.strictEqual(it.state, 'OPEN');
+  assert.ok(it.detail.match(/NOT LIVE ON THIS MACHINE/), 'it must say so: ' + it.detail);
+  assert.ok(it.detail.match(/userprompt_pulse\.py/), 'it must name what DOES run: ' + it.detail);
+  assert.strictEqual(it.universe.seen, 1, 'only one side existed to be seen');
+});
+
+test('NO FALLBACK on the registration authority either: unreadable settings.json goes UNKNOWN', () => {
+  // The defect was hashing a path nobody registered. A fallback path is how that guess survives
+  // the fix that removed it, so there must not be one.
+  const it = runHold(path.join(tmp, 'nope', 'settings.json'));
+  assert.strictEqual(it.state, 'UNKNOWN', 'a guess here is worse than a refusal: ' + it.detail);
+  assert.ok(it.universe.skippedList.join(' ').match(/does not guess/),
+    'the refusal to guess must be stated, not merely true: ' + JSON.stringify(it.universe.skippedList));
 });
 
 console.log(`\n${pass} passed, ${fail} failed`);

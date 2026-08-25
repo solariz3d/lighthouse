@@ -275,7 +275,7 @@ const ITEMS = [
     id: 'hold-userprompt-submit',
     title: 'the userprompt-submit.js two-way conflict',
     why: '83 real lines differ — 69 only in the repo including a BOM-strip fix, 14 only on this machine. The installer refuses to decide it.',
-    how: 'the Hold flag on the manifest entry, plus md5 of repo against installed',
+    how: 'the Hold flag on the manifest entry, plus md5 of the repo copy against THE COPY THIS MACHINE IS REGISTERED TO RUN',
     check() {
       const inst = path.join(REPO, 'dev/shell/install.ps1');
       let src;
@@ -283,25 +283,82 @@ const ITEMS = [
       catch (e) { return { state: 'UNKNOWN', detail: 'install.ps1 unreadable' }; }
       const held = /userprompt-submit\.js';[^\n]*Hold\s*=\s*\$true/.test(src);
       const repoPath = path.join(REPO, 'dev/shell/hooks/userprompt-submit.js');
-      const instPath = path.join(HOME, '.claude/shell/hooks/userprompt-submit.js');
       const a = md5(repoPath);
-      const b = md5(instPath);
-      /* TWO SIDES IS THE WHOLE UNIVERSE, and naming which one is missing is the point: a two-way
-       * conflict needs two sides, and install.ps1 spent months reporting HOLD about a file that
-       * was not there. The installed path here is hooks\userprompt-submit.js, which on this
-       * machine does not exist — the destination layout is flat. That is why b reads absent, and
-       * a reader who is only shown "absent" cannot tell "not installed" from "installed
-       * elsewhere". */
+
+      /* THE UNIT IS THE REGISTERED PATH, AND IT IS NOT A PATH THIS FILE GUESSES.
+       *
+       * Until 2026-08-25 this check hashed HOME/.claude/shell/hooks/userprompt-submit.js — a path
+       * chosen because the MANIFEST names it, never because anything loads from it. This laptop's
+       * destination layout is flat and has no hooks\ directory at all, so `b` was null on every run
+       * and the verdict fell out of that nullness rather than out of the conflict.
+       *
+       * P-UNIVERSE clause 2, run on this instrument in both directions before it was changed:
+       *   the repo copy placed where this machine ACTUALLY loads hooks  -> verdict UNCHANGED, OPEN
+       *   the repo copy placed at hooks\, which nothing loads from      -> verdict flipped to CLOSED
+       * A positive drawn from the instrument's own unit fired. A positive drawn from the phenomenon
+       * could not move it — and the one that fired produced a FALSE CLOSED, so the trap does not
+       * merely fail to prove armedness, it can be used to close the item. That is §8e's abuse
+       * condition, measured, and this is the instrument it was measured on.
+       *
+       * So the authority is settings.json and THERE IS NO FALLBACK PATH. Unreadable means UNKNOWN:
+       * hashing a path nobody registered is the entire defect above, and a fallback is how a guessed
+       * path survives the fix that removed it. */
+      const settingsPath = process.env.OPEN_ITEMS_SETTINGS || path.join(HOME, '.claude/settings.json');
+      let S = null, why = null;
+      /* \uFEFF as an ESCAPE, never a literal BOM in the source: an invisible character inside a
+       * regex is unreviewable, and this repo already lost eight hours to an em-dash sitting inside
+       * a generated .vbs. PowerShell's `Set-Content -Encoding utf8` prepends a BOM and JSON.parse
+       * rejects it outright, so a settings.json written that way is unreadable to every Node
+       * consumer while still looking fine to PowerShell. */
+      try { S = JSON.parse(fs.readFileSync(settingsPath, 'utf8').replace(/^\uFEFF/, '')); }
+      catch (e) { why = fs.existsSync(settingsPath) ? 'settings.json does not parse' : 'no settings.json at ' + settingsPath; }
+
+      /* Matched on EXACT leaf equality, never substring: `stop.js` is a substring of
+       * `sourced-stop.js` and matching bare cost install.ps1 a destroyed registration on
+       * 2026-08-17 11:59. Exact equality cannot reproduce that. */
+      let ranAt = null;
+      const otherUps = [];
+      if (S) {
+        for (const g of [].concat((S.hooks && S.hooks.UserPromptSubmit) || [])) {
+          for (const h of [].concat((g && g.hooks) || [])) {
+            if (!h || !h.command) continue;
+            const q = h.command.match(/"([^"]*)"/g);
+            const p2 = q && q.length ? q[q.length - 1].replace(/"/g, '') : h.command.trim();
+            /* path.win32.basename, not a hand-rolled character class: the first version of this
+             * line shipped as [^\/]+$ because one backslash of the pair was eaten in transit, which
+             * means it matched "not a forward slash" and returned the WHOLE Windows path. It ran
+             * clean and the leaf comparison silently never matched. Caught by reading the output,
+             * not by the code failing. win32.basename handles both separators on any platform. */
+            const leaf = path.win32.basename(p2);
+            if (leaf.toLowerCase() === 'userprompt-submit.js') ranAt = p2;
+            else otherUps.push(leaf);
+          }
+        }
+      }
+      const b = ranAt ? md5(ranAt) : null;
+
       const universe = {
-        seen: 2,
-        skipped: (a ? 0 : 1) + (b ? 0 : 1),
-        rule: 'exactly two files: ' + repoPath + ' and ' + instPath +
-          '; unreadable counts as SKIPPED, and a side that is absent cannot be a side of a conflict',
-        skippedList: [].concat(a ? [] : ['repo copy unreadable'], b ? [] : ['installed copy absent at that exact path']),
+        seen: 1 + (ranAt ? 1 : 0),
+        skipped: (a ? 0 : 1) + (S ? (ranAt && !b ? 1 : 0) : 1),
+        rule: 'the repo copy at ' + repoPath + ', against whatever ' + settingsPath +
+          ' registers on UserPromptSubmit' +
+          (S ? (ranAt ? ' (' + ranAt + ')' : ' — nothing named userprompt-submit.js') : ' (unreadable)') +
+          '. A copy sitting at a path nothing loads from is NOT a side of this conflict, however byte-identical it is.',
+        skippedList: [].concat(
+          a ? [] : ['repo copy unreadable'],
+          S ? [] : [why + ' — the registered path is UNKNOWN and this check does not guess one'],
+          (S && ranAt && !b) ? ['the registered command names ' + ranAt + ', which is unreadable'] : []),
       };
+
       if (!held) return { state: 'CLOSED', detail: 'Hold flag removed from the manifest — somebody resolved it', universe };
-      if (a && b && a === b) return { state: 'CLOSED', detail: 'files identical now — drop the Hold flag', universe };
-      return { state: 'OPEN', detail: 'still HELD · repo ' + (a || '?') + ' vs installed ' + (b || 'absent'), universe };
+      if (!S) return { state: 'UNKNOWN', detail: why + ' — cannot tell what this machine runs, so the conflict cannot be scored', universe };
+      if (!ranAt) {
+        return { state: 'OPEN', detail: 'still HELD, and NOT LIVE ON THIS MACHINE — nothing named userprompt-submit.js is registered on UserPromptSubmit' +
+          (otherUps.length ? ' (it runs ' + otherUps.join(', ') + ')' : '') +
+          '. The 83-line conflict was measured on the desktop and cannot be scored from here.', universe };
+      }
+      if (a && b && a === b) return { state: 'CLOSED', detail: 'the copy this machine RUNS (' + ranAt + ') is byte-identical to the repo — drop the Hold flag', universe };
+      return { state: 'OPEN', detail: 'still HELD · repo ' + (a || '?') + ' vs the registered copy ' + (b || 'unreadable') + ' at ' + ranAt, universe };
     },
   },
   {

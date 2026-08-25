@@ -221,11 +221,16 @@ hand-maintained and there is no directory of things that are owed. The footer sa
 
 ### 3c. Pinned, not merely demonstrated
 
-`consonance/tools/universe-print.test.js` — 10 tests (cmd: `node consonance/tools/universe-print.test.js`), five of them added by the §8 amendment,
-fixture-only via `VANTAGE_DATA`, **zero repo or destination mutation**, auto-discovered by js-suite. Includes a positive control (a clean fixture
+`consonance/tools/universe-print.test.js` — 15 tests (cmd: `node consonance/tools/universe-print.test.js`), five of them added by the §8 amendment
+and five more by §9, fixture-only via `VANTAGE_DATA`, `OPEN_ITEMS_TAURI_CONF` and `OPEN_ITEMS_SETTINGS`, **zero repo or destination mutation**,
+auto-discovered by js-suite. Includes a positive control (a clean fixture
 must report **zero** skipped, so the bar is not satisfied by a tool that always claims a skip).
 
-    node consonance/tools/universe-print.test.js      -> 10 passed, 0 failed
+    node consonance/tools/universe-print.test.js      -> 15 passed, 0 failed
+
+*This line said `10` until 03:40 on 2026-08-25, when §9 added five tests and `cite-check --run` went RED on it —
+the third time a figure in this document has gone stale between being written and being re-run, and the third time
+the instrument caught it rather than a reader. See correction (e).*
     node consonance/tools/js-suite.js --quiet         -> 57 green · 0 failed · 0 crashed · 0 silent
     node consonance/tools/open-items-build.test.js    -> green (its pinned spelling was restored,
                                                          not relaxed — see §7c)
@@ -297,11 +302,16 @@ retrofitted the instruments is the degenerating move: adding coverage and callin
 
 - **Nothing about the desktop.** `~/.claude/shell` and `~/.claude/settings.json` are machine-local.
   Every destination figure in §3a is about this laptop and reproduces nowhere else.
-- **The destination counts go stale by design.** `63 file(s)` re-derives now
-  (cmd: `find "$USERPROFILE/.claude/shell" -type f | wc -l`) and will not agree with this document for
+- **The destination counts go stale by design, and this one already did — within four hours.** The
+  destination holds **`64 file(s)`**
+  (cmd: `find "$USERPROFILE/.claude/shell" -type f | wc -l`). The figure written here at ~02:00 was
+  one lower, and `cite-check --run` went RED on it at 03:45 — caught by the instrument, not by anyone
+  re-reading the sentence. The prediction in this bullet was confirmed by the bullet itself, and the
+  superseded number is deliberately not repeated next to the command, because a stale figure sitting
+  beside a live one is how the wrong half gets quoted. It will not agree with this document for
   long, because it counts runtime state that accumulates
   (`pulse_state.*.json`, digests, `.bak-*`). The figure is a reading of one moment, not a constant;
-  only the *categories* are stable. Quoting `63` later without re-running is the hand-made-figure
+  only the *categories* are stable. Quoting `64` later without re-running is the hand-made-figure
   failure this room already has a rule about.
 - **The `lib\` vs flat layout is reported, not resolved.** Which layout is correct is a decision for
   the seat that owns the manifest.
@@ -317,11 +327,23 @@ retrofitted the instruments is the degenerating move: adding coverage and callin
 - **Clause 2 is registered and only thinly demonstrated.** It is exercised on one item of one
   instrument. `install.ps1 -Check` has no clause-2 demonstration at all, and neither does the
   `hold-userprompt-submit` item. Registering a clause is not complying with it.
+  **— CLOSED 2026-08-25, same night, same seat: see §9.** Both named items now have one, and both
+  turned out to be inert on the class they exist for. `hold-userprompt-submit` was inert *and had
+  already passed a unit-derived positive that produced a false CLOSED*. `install.ps1 -Check` is now
+  armed on the wiring class and **declared INERT and unfixed** on the loaded-path class. This bullet
+  is amended in place rather than appended to because it is a CARRIER — it is the sentence that sent
+  the next seat to do this work, and leaving it live would send another.
 - **The bundle item reads 26 where pane E reads 25.** Different unit, both true, and neither is
   re-derivable from the other without knowing which one counts `room-settings.json`. A third seat
   quoting either number without its definition is where this goes hand-made.
 - **`BUILDING.md`, `COMMITTEE.md` and `LIBRARIAN.md` are still drifted.** This packet made the drift
   *visible*; it did not rebuild. A fresh room spawned right now still reads the stale copies.
+  **— NO LONGER TRUE as of 2026-08-25 ~03:30: somebody rebuilt.** `node consonance/tools/open-items.js`
+  now reads `CLOSED · 26 shipped file(s) byte-identical to the repo in C:\build\lighthouse-target\release`.
+  Amended in place rather than left standing, because a stale "still drifted" in a document people
+  quote is exactly the hand-made figure this registration is about — and note that **nobody had to
+  come back and edit this line for the instrument to be right**: the item recomputed and changed its
+  own answer. That is the whole design, and this bullet is the part of it that does not recompute.
 
 ---
 
@@ -501,3 +523,220 @@ right about the cited defect and wrong as a verdict, because the instrument does
 failure — I found it twenty minutes later, in the same file, by running the thing I had just built.
 The correction runs *toward* the chair's position, which is worth recording in a document whose
 headline runs against it.
+
+---
+
+## 9. CLAUSE 2, COMPLIED WITH ON THE TWO ITEMS §6 NAMED AS GAPS (2026-08-25, same seat, later the same night)
+
+§6 said: *"`install.ps1 -Check` has no clause-2 demonstration at all, and neither does the
+`hold-userprompt-submit` item. Registering a clause is not complying with it."* This section is the
+compliance. **Both instruments turned out to be inert on the class they exist for, in different
+ways, and one of them had already passed a unit-derived planted positive — which is F-U4's question
+answered with a live case rather than a prediction.**
+
+### 9a. `hold-userprompt-submit` — the abuse condition of §8e, MEASURED on a live instrument
+
+The item asks whether a two-way conflict between the repo's `userprompt-submit.js` and *the copy
+this machine runs* is still open. It hashed `HOME/.claude/shell/hooks/userprompt-submit.js` — a path
+chosen because the **manifest** names it, never because anything loads from it. Both positives were
+run against the instrument **before** it was changed:
+
+| positive | constructed from | result |
+|---|---|---|
+| the repo copy placed at `~/.claude/shell/userprompt-submit.js` — the FLAT layout this machine actually loads every hook from | the **phenomenon** | **verdict UNCHANGED**: `OPEN · still HELD · repo 37f9a28b vs installed absent` |
+| the repo copy placed at `~/.claude/shell/hooks/userprompt-submit.js` — the exact path the check reads, in a directory that **does not exist on this machine** and that nothing loads from | the **instrument's own unit** | **verdict flipped to `CLOSED` — "files identical now — drop the Hold flag"** |
+
+Both probes were removed and their absence verified in the same run
+(cmd: `ls ~/.claude/shell/userprompt-submit.js ~/.claude/shell/hooks` -> both `No such file`).
+
+**So the trap is worse than §8e stated.** §8e said a unit-derived positive "proves the instrument can
+fire on *that* positive" and never proves the unit represents what matters. On this instrument the
+unit-derived positive produced a **FALSE CLOSED** — it does not merely fail to demonstrate armedness,
+it is a procedure for closing an open commitment by creating a file in a directory nothing reads.
+*Had clause 2 been discharged the easy way, this item would now be marked resolved.*
+
+**THE UNDERLYING FACT, and it is why the old unit could never work:** this laptop's destination layout
+is flat. There is no `lib\` or `hooks\` directory under `~/.claude/shell` at all
+(cmd: `ls -R ~/.claude/shell` — the root and `digests/`, nothing else), and **no
+`userprompt-submit.js` anywhere at the destination**. What this machine runs on `UserPromptSubmit` is
+`userprompt_pulse.py`, `board-digest.js`, `transcript-watch.js`, `dream-watch.js`, `ferry-watch.js`
+(cmd: `node consonance/tools/open-items.js`). The 83-line conflict the item describes was measured
+**on the desktop**; `b` was null on every run this laptop has ever made, and the `OPEN` verdict came
+out of that nullness rather than out of the conflict. The item would have printed the same `OPEN`
+for a machine where the conflict was fully resolved, and for a machine that never had it.
+
+**The repair: the unit is the REGISTERED path, read from `~/.claude/settings.json`, with no fallback.**
+Overridable in tests by `OPEN_ITEMS_SETTINGS`, following the `OPEN_ITEMS_TAURI_CONF` precedent in the
+same file. Unreadable authority -> `UNKNOWN`, because hashing a path nobody registered is the entire
+defect and a fallback is how the guess survives the fix that removed it.
+
+    node consonance/tools/open-items.js
+
+    OPEN  the userprompt-submit.js two-way conflict
+          still HELD, and NOT LIVE ON THIS MACHINE - nothing named userprompt-submit.js is
+          registered on UserPromptSubmit (it runs userprompt_pulse.py, board-digest.js,
+          transcript-watch.js, dream-watch.js, ferry-watch.js). The 83-line conflict was
+          measured on the desktop and cannot be scored from here.
+          universe: 1 seen - 0 skipped - ... A copy sitting at a path nothing loads from is
+                    NOT a side of this conflict, however byte-identical it is.
+
+**Pinned by five tests** in `consonance/tools/universe-print.test.js`
+(cmd: `node consonance/tools/universe-print.test.js` -> **15 passed, 0 failed**;
+cmd: `node consonance/tools/js-suite.js --quiet` -> **59 green · 0 failed · 0 crashed · 0 silent · 0 canary**):
+the RED (a registered copy that differs), the GREEN it must be able to reach (an identical registered
+copy CLOSES it — without which "always OPEN" would pass the red test by never passing anything),
+**the trap itself** (a byte-identical decoy at an unregistered path must not buy a green),
+NOT-LIVE-HERE said out loud, and no fallback on the registration authority. All fixture-only; nothing
+touches `~/.claude`.
+
+**Mutation, four ways, restored byte-identical (md5 verified):**
+
+| mutant | result |
+|---|---|
+| revert the unit to the manifest path (the original defect) | **KILLED** |
+| add a fallback path when `settings.json` is unreadable | **KILLED** |
+| never reach CLOSED — always report the conflict open | **KILLED** |
+| stop naming what the machine does run | **KILLED** |
+
+> **The limit, and it is the interesting one.** Mutant 1 was killed by the **GREEN** test, not by the
+> trap test. The trap test PASSED under the reverted unit — because `hooks\userprompt-submit.js`
+> does not exist on this laptop, so the reverted code found nothing and stayed `OPEN` **for the wrong
+> reason**. A test can pass against the very defect it was written for, on a machine whose disk
+> happens to hide it. Recorded in the test file beside the test rather than here alone.
+
+### 9b. `install.ps1 -Check` — INERT on the class it exists for, repaired, and red on an OBSERVED positive
+
+Asking "can I make it print a red" is the wrong question; the right one is what a DRIFT is on a
+machine, and whether the unit can represent every kind. Enumerated from the phenomenon — *what this
+machine runs is not what the repo says* — and scored against the unit:
+
+| kind of drift, defined by the phenomenon | representable? |
+|---|---|
+| a managed file's bytes differ at the managed path | **yes** — `DRIFT` |
+| a managed file is missing at the destination | **yes** — `ABSENT`, since `1e63d3a` |
+| a file installed under a path the manifest expects elsewhere | **partly** — named in the universe block as `PATH-MISMATCH`, while the verdict line still calls it `ABSENT` |
+| **the copy that is actually LOADED diverges from the repo** | **NO — structural zero** |
+| **a file is byte-perfect and NOT WIRED UP** | **NO — the check never read `settings.json`** |
+
+**The fourth row, demonstrated rather than argued.** `sessionstart-ambient.js` `resolveAmbient()`
+tries `__dirname/ambient.js` first, so the flat `~/.claude/shell/ambient.js` is the copy that runs.
+Mutate it and re-run:
+
+    md5 ~/.claude/shell/ambient.js   54895FA5077C47DBDAAA9191F03E7504   (== repo dev/shell/lib/ambient.js)
+    -> append one comment line       6817CCE695D939A184E552BABB9737D6
+    -> restore                       54895FA5077C47DBDAAA9191F03E7504   (byte-identical to before)
+
+    -Check output across the mutation: BYTE-IDENTICAL (md5 of the two captured runs equal)
+
+**The code this machine actually executes changed, and the instrument said the same thing both
+times. DECLARED INERT ON THIS CLASS AND DELIBERATELY NOT FIXED** — fixing it means deciding whether
+the `lib\`/`hooks\` layout or the flat one is correct, and §6 already states that is a decision for
+the seat that owns the manifest, not a repair. *Clause 2's own words: declaring yourself inert is
+compliance.*
+
+**The fifth row was repaired, because its positive was already sitting on the disk.** This file's own
+header records the class twice — nine hooks registered and running that no repository contained
+(2026-08-17), and two hooks that a fresh install copied and registered neither (2026-08-18, *"Found
+by -Check reporting 'ok' on both -- which only ever meant 'the bytes match', never 'it is wired
+up'"*). The comment naming the lesson shipped. The check for it did not, for eight days.
+
+`-Check` now reads `settings.json` and reports both directions
+(cmd: `powershell -NoProfile -ExecutionPolicy Bypass -File dev/shell/install.ps1 -Check`):
+
+    registration -- whether the files above are WIRED UP, which "ok" never meant
+      settings.json  11 hook(s) across 5 event(s)   the authority; nothing here is inferred from disk
+      $register      13 entr(ies)   what a fresh install of this repo would wire
+                      8 DECLARED, NOT REGISTERED   the file can be byte-perfect and the hook never fires
+                      6 REGISTERED, NOT DECLARED   runs here; a fresh install copies it and wires nothing
+                         UserPromptSubmit ...\ferry-watch.js            installed and running; no $register entry
+                         UserPromptSubmit ...\userprompt_pulse.py       installed and running; no $register entry
+                         UserPromptSubmit ...\dream-watch.js            installed and running; no $register entry
+                         UserPromptSubmit ...\board-digest.js           installed and running; no $register entry
+                         SessionStart     ...\sessionstart-ambient.js   installed and running; no $register entry
+                         UserPromptSubmit ...\transcript-watch.js       installed and running; no $register entry
+
+**Six of them print `ok` above.** A fresh clone of this repo, installed on a new machine, copies all
+six and wires none — and every one is a hook whose output the keeper reads every turn. The `8` and
+the `6` were derived twice independently: once by a throwaway reader written before the block existed
+(`scratchpad/regmeasure.js`, not shipped) and once by the block itself; **they agree**. *The first
+run of that reader printed `13` and `11` because of the backslash defect in correction (g) below; the
+tell was full Windows paths in output where filenames belonged, and the figures above are the
+re-derived ones.*
+
+**The constructed positive, on a throwaway `USERPROFILE`, with the file check perfectly green:**
+
+| fixture | old behaviour | now |
+|---|---|---|
+| all 24 manifest files copied in, `settings.json` registers **nothing** | `in sync with the repo.` · **exit 0** | `13 DECLARED, NOT REGISTERED` · **exit 1** |
+| same, `settings.json` corrupt | *(never read it)* | `UNKNOWN — settings.json does not parse - not guessing` · **exit 0** |
+| same, no `settings.json` at all | *(never read it)* | `UNKNOWN — no settings.json at ...` · **exit 0** |
+
+That first row is the 2026-08-18 machine exactly, and the old instrument called it *in sync with the
+repo*. **The authority is read with no fallback, and UNKNOWN does NOT move the exit code:** an
+unreadable authority is a refusal to answer, not a finding, and a printed guess reads as audited.
+
+**Two behaviour changes to know about before this lands.** (i) `-Check`'s exit code now covers
+registration findings — nothing in the repo consumes it (cmd:
+`grep -rn "install\.ps1.*-Check" --include=*.js --include=*.ps1 --include=*.json --include=*.py .`
+returns only this file's own usage line and a test comment), so this is safe, and it is still a
+change. (ii) the all-green summary now reads *"FILES in sync with the repo -- read the registration
+block above before calling this machine correct"*, because a green summary printing above a red
+registration block is the false-green this whole registration is about.
+
+*Encoding, per the chair's constraint, checked rather than assumed:* BOM intact, **0** CRLF
+introduced (the file is LF), **182** non-ASCII characters before and **182** after — zero added — and
+it parses clean under the PS 5.1 parser (`[System.Management.Automation.Language.Parser]::ParseFile`).
+
+**Not fixed, and named:** the `8 DECLARED, NOT REGISTERED` are all also `ABSENT`, so a reader already
+got *a* red for them — a red about the wrong thing (*never installed* rather than *not wired*). No
+false green there today. Whether the six undeclared hooks should be added to `$register` or are
+deliberately hand-managed is the manifest owner's call, not mine; the instrument now says they exist.
+
+### 9c. What 9a and 9b together say about F-U4
+
+F-U4 asks whether clause 2 can be complied with honestly, or whether every demonstration turns out to
+be a positive drawn from the instrument's own unit. One night, two instruments, three outcomes:
+
+- **an honest phenomenon-derived positive is available** (9b's registration block, observed on disk,
+  nothing planted);
+- **an honest declaration of inertness is available** (9b's load-path class, refused rather than
+  papered over);
+- **and the failure mode F-U4 predicts is real and already happened here** — 9a's instrument passed a
+  unit-derived positive that produced a false CLOSED, and *nothing about the passing run looked
+  wrong.*
+
+That is evidence F-U4's replacement clause is not needed yet, and **it is not a score.** I wrote both
+the clause and both repairs, so I am disqualified from F-U4 by §4's own rule. **The scorer should also
+check whether 9a's pair is genuinely two positives or one positive and one restatement** — the
+distinction the whole clause rests on, and the one I have the strongest reason to get wrong in my own
+favour.
+
+### 9d. Corrections I made to myself tonight, kept
+
+**(g) The shell transport ate one backslash of every doubled pair, twice, and both times the code
+RAN.** A quoted heredoc through this session's Bash tool turned a `[^ backslash-backslash / ]+$`
+character class into `[^ backslash / ]+$` — "not a forward slash" — so leaf extraction returned whole
+Windows paths and the comparison silently never matched. It happened first in the throwaway measuring
+script (printing `13`/`11` instead of `8`/`6`) and then again in the shipped file. **Neither failed.
+Both printed something plausible.** Caught by reading output that showed `C:\Users\...\ferry-watch.js`
+where a filename belonged. Fixed by removing the hand-rolled character class entirely in favour of
+`path.win32.basename`, with the reason recorded at the line. *Verified that single-backslash escapes
+pass through intact — only doubled backslashes are affected, which is why the surrounding regexes
+survived and this one did not.*
+
+**(h) `open-items.js` is CRLF and my first splice would have made it mixed.** Caught by a pre-flight
+that refuses to proceed unless the file is uniformly CRLF — added after the third failed attempt, not
+before the first. Same family as correction (a): on this machine, line endings are the thing that
+moves while you are looking somewhere else.
+
+**(i) I wrote a literal U+FEFF into the source, as a regex and again in a comment.** It worked. It is
+also invisible and unreviewable, which is the class that cost this room eight hours on an em-dash
+inside a generated `.vbs`. Replaced with the `\uFEFF` escape (measured: 2 literal BOM characters in
+the file before, 0 after).
+
+**(j) My first clause-2 attempt on `hold-userprompt-submit` was going to be the unit-derived plant.**
+Planting at `hooks\`, watching it flip to CLOSED, and calling the item armed was the obvious move and
+it fired on the first try. It appears in 9a as the *failure* rather than the demonstration only
+because §8e was written down four hours earlier and I read it before writing this. **A rule I wrote
+caught me inside the same night — which is the case for keeping clause 2, and equally the case for
+not trusting my own score of it.**
