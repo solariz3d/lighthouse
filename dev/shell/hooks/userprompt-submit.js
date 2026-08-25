@@ -225,7 +225,33 @@ function buildBeacon(state) {
     if (prev && isFinite(prev.getTime()) && prev.toDateString() !== now.toDateString()) {
       rollover = `  ⟨NEW DAY — ${now.toLocaleString('en-US', { weekday: 'long' })}⟩`;
     }
-    return parts.join(' · ') + rollover + '\n';
+    // THE CHAIN LINE (CHAIN STATUS piece 3, 2026-08-25) — mirror of the .py.
+    // Kept in step with dev/shell/hooks/userprompt_pulse.py, which is the copy that
+    // ACTUALLY RUNS on the laptop. THIS FILE IS NOT INSTALLED HERE — ~/.claude/shell/hooks/
+    // does not exist, and this is the one DECLARED registration on this event
+    // (install.ps1:137). That disjointness is recorded at 1e5dbe8. Mirrored so the two beds
+    // do not diverge; PIPE-TESTED here, NOT verified in a live hook, and said so.
+    // Same defensive contract as the .py: the reader may not break the pulse.
+    let chain = '';
+    try {
+      const cp = require('child_process');
+      const os2 = require('os'), path2 = require('path');
+      const cfg = JSON.parse(fs.readFileSync(path2.join(os2.homedir(), '.consonance.json'), 'utf8'));
+      if (cfg.room_path) {
+        // room_path is <repo>/exo_memory/BOOT.md; the reader is <repo>/consonance/tools/
+        const repo = path2.dirname(path2.dirname(cfg.room_path));
+        const reader = path2.join(repo, 'consonance', 'tools', 'chain-status.js');
+        if (fs.existsSync(reader)) {
+          const r = cp.spawnSync(process.execPath, [reader], { encoding: 'utf8', timeout: 3000 });
+          // String.fromCharCode(10), not an escape: the tooling that writes this file has
+          // eaten a backslash-n twice tonight. Matches chr(10) in the .py for the same reason.
+          const line = (r.stdout || '').trim().split(String.fromCharCode(10))[0];
+          if (line) chain = line + String.fromCharCode(10);
+        }
+      }
+    } catch (e) { chain = ''; }
+
+    return parts.join(' · ') + rollover + String.fromCharCode(10) + chain;
   } catch (e) { return ''; } // a hook that fails by going mute is the worst kind
 }
 

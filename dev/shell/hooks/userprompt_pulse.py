@@ -11,8 +11,14 @@
 # the thread's own age — so "six days ago" is a subtraction from numbers in
 # front of the model, not a memory retrieval. A day rollover shouts.
 #
-# Python, not Node: this bed has no Node runtime (the desktop's ambient.js
-# stack does; see dev/shell/ in the lighthouse repo for the framework master).
+# Python, not Node for the pulse ITSELF, so the line survives a bed with no Node.
+# CORRECTED 2026-08-25: the original comment said "this bed has no Node runtime".
+# That is false here and was false when the chain line was added -- five Node hooks
+# run on this same event (board-digest, transcript-watch, dream-watch, ferry-watch,
+# and sessionstart-ambient on its own). The chain reader below is Node and is called
+# as a subprocess. It is called DEFENSIVELY rather than trusted: if Node is genuinely
+# missing on some other bed, the call fails, the chain line is omitted, and the pulse
+# is unchanged -- which is what "survives a bed with no Node" actually has to mean.
 # Defensive: never throws, always emits valid JSON, never blocks a turn.
 import json
 import os
@@ -128,11 +134,59 @@ try:
 except Exception:
     pass
 
+# --- THE CHAIN LINE (CHAIN STATUS piece 3, 2026-08-25) ------------------------
+# Why here: this hook already reaches EVERY seat on EVERY turn, so the chain costs
+# no new channel and no context beyond one line. The miss that motivated it was
+# symmetric -- the chair compacted while the librarian held four uncommitted files,
+# and neither could see the other's PHASE. The board carries CONTENT that must be
+# chosen to be read; this arrives whether or not anyone reaches for it.
+#
+# WHAT IT DOES NOT DO, and this must not be reported as met: UserPromptSubmit fires
+# when a HUMAN SUBMITS into a seat. A pane working alone for twenty minutes sees
+# nothing new. It removes the keeper as the RELAY, not as the TRIGGER -- a smaller
+# claim than the ask (pane A, hand-back, 2026-08-25).
+#
+# THE PULSE MUST SURVIVE EVERYTHING THIS CALL CAN DO. A hook that breaks takes every
+# seat's every turn with it, so: hard timeout, every exception swallowed, stdout only,
+# non-zero exit ignored, empty output means print nothing. The reader's own contract is
+# to exit 0 silently when there is no ledger -- its --why reason goes to stderr, which
+# is deliberately NOT read here: a chosen silence must look like silence in the pulse.
+chain_part = ""
+try:
+    import subprocess
+    _room = None
+    try:
+        with open(os.path.join(os.path.expanduser("~"), ".consonance.json"), encoding="utf-8") as _f:
+            _room = json.load(_f).get("room_path")
+    except Exception:
+        _room = None
+    if _room:
+        # room_path is <repo>/exo_memory/BOOT.md; the reader is <repo>/consonance/tools/
+        _repo = os.path.dirname(os.path.dirname(_room))
+        _reader = os.path.join(_repo, "consonance", "tools", "chain-status.js")
+        if os.path.exists(_reader):
+            _out = subprocess.run(
+                ["node", _reader],
+                # encoding EXPLICIT. text=True alone decodes with the Windows locale
+                # codepage, and the reader emits UTF-8: the middot came back as mojibake
+                # in the first wiring test. Same class as the em-dash that killed the
+                # dream runner silently for eight hours on 2026-07-15. errors="replace"
+                # so a bad byte degrades one character instead of raising into the pulse.
+                capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=3,
+            ).stdout.strip()
+            # One line only. A reader that grew multi-line must not silently reshape the pulse.
+            if _out:
+                # chr(10), not an escape: this line is written by tooling that has eaten
+                # a backslash-n before. An unambiguous form cannot be mangled in transit.
+                chain_part = chr(10) + _out.splitlines()[0]
+except Exception:
+    chain_part = ""
+
 # Full ISO date every turn: no inferring the date from a weekday abbreviation.
 stamp = now.strftime("%a %Y-%m-%d %#I:%M %p") if os.name == "nt" else now.strftime("%a %Y-%m-%d %-I:%M %p")
 print(json.dumps({
     "hookSpecificOutput": {
         "hookEventName": "UserPromptSubmit",
-        "additionalContext": f"[pulse] {stamp}{age_part}{gap_part}{newday_part}",
+        "additionalContext": f"[pulse] {stamp}{age_part}{gap_part}{newday_part}{chain_part}",
     }
 }))

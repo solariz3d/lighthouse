@@ -56,8 +56,18 @@ function fromConfig(key) {
   } catch (_) { return null; }
 }
 
-const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || 'C:\\Consonance\\data';
-const LEDGER = process.env.LAP_LEDGER || path.join(DATA_DIR, 'lap.jsonl');
+// NO FATAL DEFAULT. This resolution was copied from lap-row.js:97, which ends in a hardcoded
+// data-dir literal — grandfathered there by portable-paths' baseline, and RED here the moment
+// this file was committed. Worth keeping as its own finding: portable-paths scans TRACKED files,
+// so a new tool is invisible to it while untracked. "Green before the commit" was true and meant
+// nothing; the instrument's universe only included this file once git did.
+//
+// Degrading LOUDLY, per that tool's own instruction, means something specific for a reader whose
+// contract is to exit 0 in silence: it must NOT invent a path and then report 'no ledger there',
+// which is a false statement about a machine it never looked at. Unresolved is its own reason,
+// and --why says so on stderr.
+const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || null;
+const LEDGER = process.env.LAP_LEDGER || (DATA_DIR ? path.join(DATA_DIR, 'lap.jsonl') : null);
 const REPO = process.env.LAP_REPO
   || (fromConfig('room_path') && path.resolve(path.dirname(fromConfig('room_path')), '..'))
   || path.resolve(__dirname, '..', '..');
@@ -118,6 +128,9 @@ function openLaps(rows) {
 function line(opts = {}) {
   const now = opts.now != null ? opts.now : Date.now();
   const led = readLedger(opts.ledger || LEDGER);
+  if (!(opts.ledger || LEDGER)) {
+    return { text: null, why: 'cannot locate the ledger — no CONSONANCE_DATA and no data_dir in ~/.consonance.json' };
+  }
   if (led.missing) return { text: null, why: 'no ledger at ' + (opts.ledger || LEDGER) };
 
   const open = openLaps(led.rows);
