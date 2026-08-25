@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 25,
-    "BENIGN-TEST": 87,
+    "BENIGN-TEST": 86,
     "REVIEW": 18,
     "DISGUISED": 13,
     "BENIGN-MESSAGE": 5,
@@ -488,13 +488,6 @@
       "verdict": "FATAL-DEFAULT",
       "text": "const board = process.argv[2] || 'C:/Consonance/data/board.jsonl';",
       "key": "consonance/tools/actors.js\u0000const board = process.argv[2] || 'C:/Consonance/data/board.jsonl';\u0000#1"
-    },
-    {
-      "file": "consonance/tools/actors.test.js",
-      "detector": "DRIVE",
-      "verdict": "BENIGN-TEST",
-      "text": "const board = 'C:/Consonance/data/board.jsonl';",
-      "key": "consonance/tools/actors.test.js\u0000const board = 'C:/Consonance/data/board.jsonl';\u0000#1"
     },
     {
       "file": "consonance/tools/agreement-spread.js",
