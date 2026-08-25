@@ -163,7 +163,7 @@ function bundleResources() {
       entries.push({ from: path.posix.join(path.dirname(from).split('\\').join('/'), n), to: to + n, src: path.join(dir, n) });
     }
   }
-  return { error: null, entries: entries.filter(function(e){ return /(SEED|BOOT|BASE_JOURNAL|COMMITTEE|LIBRARIAN)[.]md$/.test(e.to); }), declared: Object.keys(res).length };
+  return { error: null, entries: entries, declared: Object.keys(res).length };
 }
 
 function releaseDir() {

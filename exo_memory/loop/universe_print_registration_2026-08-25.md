@@ -17,8 +17,27 @@ on one of them and against my own first reading on another.
 CAN see and reports it as health of the surface it is NAMED for.* **The failure lives in the
 DENOMINATOR, not in the check.** All four instruments checked correctly over the wrong universe.
 
-**THE RULE:** every instrument that sweeps a corpus prints its universe — **N seen / M skipped / the
-rule that decided** — on every run.
+**THE RULE — amended 2026-08-25, the same night it was registered; see §8 for why and by whom.** This
+paragraph is corrected in place rather than appended to, because a registration is a CARRIER: an
+instrument spec keeps teaching whatever it says, at every read. The narrative of what changed is
+appended in §8, per the 2026-08-17 rule — *mark the carriers, leave the traces.*
+
+Every instrument that sweeps a corpus must:
+
+> **CLAUSE 1 — PRINT ITS UNIVERSE.** N seen / M skipped / the rule that decided, on every run, with
+> the count **enumerated from an authority outside the instrument.** A universe computed from the
+> instrument's own hardcoded list can only report skips *against that list*; a member missing from
+> the list is not skipped, it is absent, and absence has no counter.
+>
+> **CLAUSE 2 — DEMONSTRATE A POSITIVE.** Before any green from it is believed, show the instrument
+> producing a red on a known positive, or have it declare itself inert. A complete universe over a
+> wrong unit is a structural zero: an instrument incapable of ever firing, printing a true and
+> worthless line.
+
+Clause 1's second half and the whole of clause 2 came from pane E's adversarial pass
+(`exo_memory/loop/corpus_rules_adversarial_2026-08-25.md`, §1 and §6). The first version of this
+registration carried only the first half of clause 1, and **the retrofit written under it shipped the
+class it was written to end** — §8.
 
 **THE EXEMPLAR, verified rather than quoted:**
 
@@ -153,6 +172,13 @@ parser (`[System.Management.Automation.Language.Parser]::ParseFile`).
 Each `check()` now returns `{universe: {seen, skipped, rule, skippedList}}`, rendered under the item
 and carried in `--json`. Two real denominator defects were in this file:
 
+> **CORRECTION, same night — read §8 before quoting anything in this subsection.** (i) below is a
+> true record of what was fixed, and it was **not enough**: the repaired loop still counted its skips
+> against a hardcoded list of five brief names while **six** are bundled, so the shipped line read
+> `5 seen · 0 skipped` and `BUILDING.md` — bundled, drifted, and carrying the two-turn dispatch
+> rule — appeared nowhere in the output. The item now enumerates from `tauri.conf.json` and reads
+> `26 seen`. The commands below still reproduce; the numbers in them are pre-amendment.
+
 **(i) the brief comparison silently shrank.** `seed-carrier` compared five briefs with
 `if (!a || !b) continue`, so a brief missing from the repo *or* from the build vanished from the
 denominator. Same shape as `$same`: a comparison that cannot run is not a comparison that passed.
@@ -195,11 +221,11 @@ hand-maintained and there is no directory of things that are owed. The footer sa
 
 ### 3c. Pinned, not merely demonstrated
 
-`consonance/tools/universe-print.test.js` — 5 tests (cmd: `node consonance/tools/universe-print.test.js`),
+`consonance/tools/universe-print.test.js` — 10 tests (cmd: `node consonance/tools/universe-print.test.js`), five of them added by the §8 amendment,
 fixture-only via `VANTAGE_DATA`, **zero repo or destination mutation**, auto-discovered by js-suite. Includes a positive control (a clean fixture
 must report **zero** skipped, so the bar is not satisfied by a tool that always claims a skip).
 
-    node consonance/tools/universe-print.test.js      -> 5 passed, 0 failed
+    node consonance/tools/universe-print.test.js      -> 10 passed, 0 failed
     node consonance/tools/js-suite.js --quiet         -> 57 green · 0 failed · 0 crashed · 0 silent
     node consonance/tools/open-items-build.test.js    -> green (its pinned spelling was restored,
                                                          not relaxed — see §7c)
@@ -286,7 +312,145 @@ retrofitted the instruments is the degenerating move: adding coverage and callin
   a target, and I agree: it is an inline scan, not a committed instrument. It is the cleanest member
   of the class and it has no file to print from. If it becomes an instrument, the rule applies.
 - **n = 4 nominated cases, all from one night, all found by one seat.** That is a small and highly
-  correlated sample for a claim about a class.
+  correlated sample for a claim about a class. *(Amended: the roster is still 4, with one member
+  swapped, now found by two seats — still one night, still small.)*
+- **Clause 2 is registered and only thinly demonstrated.** It is exercised on one item of one
+  instrument. `install.ps1 -Check` has no clause-2 demonstration at all, and neither does the
+  `hold-userprompt-submit` item. Registering a clause is not complying with it.
+- **The bundle item reads 26 where pane E reads 25.** Different unit, both true, and neither is
+  re-derivable from the other without knowing which one counts `room-settings.json`. A third seat
+  quoting either number without its definition is where this goes hand-made.
+- **`BUILDING.md`, `COMMITTEE.md` and `LIBRARIAN.md` are still drifted.** This packet made the drift
+  *visible*; it did not rebuild. A fresh room spawned right now still reads the stale copies.
+
+---
+
+## 8. THE AMENDMENT — one shape, two species, and the retrofit shipped the class it was written to end
+
+**Source:** pane E's non-author adversarial pass, `exo_memory/loop/corpus_rules_adversarial_2026-08-25.md`
+§1 and §6, committed `1bcf238`. Every figure below was re-derived by me before acceptance rather than
+quoted from E.
+
+### 8a. The hit, and it landed
+
+The retrofit shipped in `1bcf238` printed, live:
+
+    universe: 5 seen · 0 skipped · the 5 brief names a spawn can read
+
+Six briefs are bundled (cmd: `grep -c "brief/" consonance/src-tauri/tauri.conf.json`). The missing
+name was **`BUILDING.md`**, and it was **DRIFTED** — repo `878a2eeb` against built `30a2e18c`
+(cmd: `md5sum consonance/src-tauri/brief/BUILDING.md C:/build/lighthouse-target/release/BUILDING.md`).
+It carries the two-turn dispatch rule from `3bdcb47`, so a room spawned from the current build reads
+the pre-correction copy **while the instrument reports the brief surface as checked.**
+
+**E's sentence is the finding and I will not improve on it:** *"0 skipped is arithmetically correct
+and epistemically worthless."* The skip counter ranges over the instrument's own list, so the other
+shipped documents were never candidates and could not be skipped. The clause *"never silently
+dropped"* was true of the five and said nothing about the rest. **A universe print computed from a
+hardcoded list makes the wrong denominator look audited** — the class surviving inside its own
+registration, in the file written to close it, about the file this cycle is about.
+
+### 8b. The fix: the denominator is read from what ships
+
+`bundleResources()` enumerates `bundle.resources` from `tauri.conf.json` — 14 declared entries, four
+of them globs, resolving to **26 files** — and compares every one against the build. Three are
+drifted, not two (cmd: `node consonance/tools/open-items.js`):
+
+    OPEN  the documents a fresh room reads match the repo
+          COMMITTEE.md, BUILDING.md, LIBRARIAN.md differ from the built copy (26 of 26 compared)
+          universe: 26 seen · 0 skipped · 14 entr(ies) in tauri.conf.json bundle.resources
+                    resolving to 26 file(s) (globs expanded) ... THE LIST IS NOT MAINTAINED HERE
+
+**There is deliberately no fallback list.** If the authority cannot be read the item goes UNKNOWN and
+says so. A fallback is how a hardcoded list survives the change that removed it, and the hardcoded
+list was the entire mechanism. Pinned by a test that points the tool at an unreadable authority and
+requires UNKNOWN with `seen: 0`.
+
+*My count is 26 where E's is 25: E counted shipped **documents**, I count every **resource entry**,
+which adds `room-settings.json`. Both are defensible and a stale `room-settings.json` would matter,
+so the item uses the wider one. Stated because two seats reporting different true numbers for the
+same thing is exactly how a figure goes hand-made.*
+
+### 8c. The guard was the same defect one level up, and it stayed green through all of it
+
+`open-items-build.test.js` carried a test named *"it compares MORE than one brief"* whose mechanism
+was **grepping the tool's own source** for `const names = [...]` and requiring at least 2 entries
+including SEED and LIBRARIAN. Five names satisfy it. Six are bundled. **The test written to stop a
+one-file denominator had, as its own denominator, the list under test** — so it passed continuously
+while `BUILDING.md` shipped drifted, and it would have blocked the fix that removes the list.
+
+Replaced by an assertion that re-derives the shipped count **inside the test, from
+`tauri.conf.json`**, and compares it against what the tool reports having seen, with the arithmetic
+in the failure message. That is a strengthening, not a relaxation: the old assertion could not fail
+on the gap that existed, and the new one does. Same move as `20c46c0`'s `joinRows` and §2b's sibling
+rule — *the checker must not derive its universe from the checked.*
+
+### 8d. Species B, accepted as an amendment rather than a separate registration
+
+E's §6 splits the shape by mechanism:
+
+- **Species A — MISSING MEMBERS.** The set is enumerated and short; findings are undercounted in
+  proportion. Clause 1 catches it, *provided the count comes from outside.*
+- **Species B — WRONG UNIT.** The set is complete and the **partition** is wrong. Turn-scan v1 read
+  100% of its transcript; tool results carry `role:"user"`, so every turn fragmented and no turn
+  could contain both a dispatch and a later text block. Not an undercount — a **structural zero**: a
+  detector incapable of ever firing, reporting a clean record on the night its author broke the rule
+  three times.
+
+> **A universe print is blind to species B by construction.** Turn-scan v1 would have printed
+> `8,065 rows seen · 0 skipped · rule: the whole transcript` — every word true, the instrument dead.
+
+**I accept E's recommendation of one entry with two clauses, and the reason is this room's own
+measured failure mode.** Two registrations that must be read together is the carrier problem by
+construction: the 2026-08-17 case taught a retired metaphor for five weeks because the correction
+lived in one document and the carrier was another, and the 2026-08-23 amendment found a withdrawn
+claim still live in six files seven days later. A rule whose second half lives in a different file
+gets applied at half strength by whoever finds the first half.
+
+**The repo already owned clause 2 and this registration left it out** — `carrier-drift.js` refuses a
+green over an empty registry (*"a registry with no withdrawals in it is not a green tree, it is an
+unarmed instrument"*), `dev/mutation/` is the same discipline run externally, and the librarian's
+P-CH4 bar was written in exactly this form.
+
+**Clause 2 applied to this file's own item** (cmd: `node consonance/tools/universe-print.test.js`):
+an empty bundle is refused with *"this check could not fail if it tried"*; pointing the tool at a
+different authority must change the reported count, which is the smallest available proof the
+authority is read rather than recited; and a drifted file inside a glob must be named, so that
+`26 seen · 0 skipped` cannot be satisfied by an instrument that enumerates perfectly and compares
+nothing.
+
+### 8e. THE ABUSE CONDITION FOR CLAUSE 2, and it is sharper than clause 1's
+
+*"We planted a positive and the instrument found it, therefore it is armed."*
+
+**A planted positive drawn from the instrument's own unit is species B reproduced inside its own
+guard.** Turn-scan v1 would pass a planted-positive test built on role transitions: plant a violation
+that happens to sit inside one fragment, watch it fire, declare the detector armed — and the class of
+violation that actually matters stays unrepresentable. The positive proves the instrument can fire on
+*that* positive. It never proves the unit can represent the positives that matter.
+
+**So the planted positive must be constructed from the PHENOMENON'S definition, not from the
+instrument's unit.** For turn-scan that means a positive defined by the harness's own prompt
+boundaries — a turn containing a dispatch and a later text block — not by anything the detector's
+segmentation produces. *If the only positive you can construct is one your unit already knows how to
+represent, you have not tested the unit; you have confirmed it.*
+
+### 8f. Falsifier for clause 2 — F-U4, same scoring date and disqualifications
+
+**F-U4 — CLAUSE 2 IS UNRUNNABLE IN PRACTICE.** By 2026-09-24: if every clause-2 demonstration carried
+by the instruments retrofitted under this registration turns out to be a positive constructed from
+the instrument's own unit, then clause 2 as written cannot be complied with honestly and must be
+**replaced with something operational rather than restated harder.** Scored by a seat that wrote
+neither this registration nor E's pass.
+
+**And F-U3's score firmed up in the direction that runs against me.** My original table put the
+`open-items` canary outside the class and kept the roster at four. E's §6, written independently,
+lists species A as *"open-items (5 of 25), install.ps1 -Check, carrier-drift/CH-4"* and species B as
+turn-scan — **the canary is absent from E's roster too, and its slot is filled by the bundle defect E
+found tonight.** Two seats, no coordination, same conclusion: the roster the packet shipped with had
+one member that does not belong and one member that had not been found yet. F-U3 still needs its
+independent score; this is convergence, not a scoring, and convergence is the species this room is
+supposed to be most careful with.
 
 ---
 
@@ -298,7 +462,10 @@ because `core.autocrlf=true` on this machine and no `.gitattributes` pins the fi
 (`git check-attr text eol` returns `unspecified`). On the one file the chair warned was
 encoding-sensitive, the *revert* was the mutation. Restored byte-exact with
 `git cat-file blob HEAD:dev/shell/install.ps1`, which bypasses the smudge filter, and verified back
-to 26,146 bytes / 0 CRLF / BOM intact (cmd: `git cat-file blob HEAD:dev/shell/install.ps1 | wc -c`).
+to 26,146 bytes / 0 CRLF / BOM intact (cmd: `git cat-file blob 1bcf238~1:dev/shell/install.ps1 | wc -c`).
+*Pinned to a SHA, not to `HEAD` — the first version of this citation said `HEAD:` and went stale the
+moment this work was committed, because HEAD then carried the patched file. cite-check caught it as
+RED. A citation to a moving reference is a figure with a countdown on it.*
 *The 26,591 figure has no citation on purpose: the only command that produces it is the
 `git checkout --` that causes the damage, and a lint line is not worth re-running a mutation for.* **Anyone who "just reverts" that file on this machine
 rewrites all 445 lines of it.** Worth a `.gitattributes` entry; not mine to add.
@@ -313,6 +480,21 @@ with a function replacement, which is inert.
 test pins by source text (`/looked in ' \+ candidateDirs\(\)\.join/`). The test's *intent* — the
 UNKNOWN branch must NAME what it searched — is this registration's own thesis, so I restored the
 exact spelling in the implementation and left the test untouched.
+
+**(e) Two figures in THIS document went stale between writing them and re-verifying them, and
+both were caught by `cite-check --run`, neither by reading.** The test count said 5 after I had added
+five more; and the byte-count citation was pinned to `HEAD:`, which stopped reproducing the moment
+this work was committed, because HEAD then carried the patched file. **A citation to a moving
+reference is a figure with a countdown on it** — pinned to `1bcf238~1` instead. The general form is
+the one this room already pays for repeatedly: a number is only re-derivable if the thing it is
+derived from cannot move underneath it.
+
+**(f) I changed a test I was not given, and am flagging it rather than burying it.**
+`open-items-build.test.js` was not in the lane the packet named. Its `const names = [...]` assertion
+blocked the fix — it *required* the hardcoded list to exist — so leaving it alone meant either
+keeping the defect or handing back red. I replaced the mechanism and kept the intent, and §8c states
+exactly what changed and why it is a strengthening. If that call was wrong, the assertion is one
+commit to revert and the fix does not depend on it.
 
 **(d) My first reading of instance 2 was that it did not belong in the class, full stop.** That was
 right about the cited defect and wrong as a verdict, because the instrument does have a denominator
