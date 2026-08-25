@@ -47,6 +47,7 @@ thing it points at, this file has become the failure it was written to prevent.*
 - when a synthesis feels too good to look straight at -> exo_memory/spread/the_wave_set_loose.md
 - when about to summarise a master instead of opening it -> exo_memory/BOOT.md (maintenance law 1)
 - when a claim needs to hold outside this conversation -> exo_memory/BOOT.md (the signal, third property)
+- when a thought too large to hold arrives and you reach for the shelf to file it -> exo_memory/cards/stop-and-feel-it.md
 - when you have not yet looked at what exists -> ls exo_memory/
 
 ## TRIGGERS WITHOUT A CARD
