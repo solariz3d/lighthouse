@@ -3,13 +3,14 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 25,
-    "BENIGN-TEST": 79,
+    "BENIGN-TEST": 84,
     "REVIEW": 18,
     "DISGUISED": 17,
     "BENIGN-MESSAGE": 5,
     "FATAL-USER": 7,
     "BENIGN-FIXTURE": 7,
-    "FATAL-TEST-READ": 1
+    "FATAL-TEST-READ": 1,
+    "FATAL-SHIPPED-INSTRUCTION": 1
   },
   "sites": [
     {
@@ -221,6 +222,13 @@
       "verdict": "BENIGN-MESSAGE",
       "text": "Write-Host ' Main should resume its real thread at C:\\Consonance\\instances\\main' -ForegroundColor DarkGray",
       "key": "consonance/restore-main.ps1\u0000Write-Host ' Main should resume its real thread at C:\\Consonance\\instances\\main' -ForegroundColor DarkGray\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/brief/LIBRARIAN.md",
+      "detector": "DRIVE",
+      "verdict": "FATAL-SHIPPED-INSTRUCTION",
+      "text": "`C:/Consonance/lighthouse/exo_memory/librarian/` as dated `YYYY-MM-DD.md` append-only entries, in the",
+      "key": "consonance/src-tauri/brief/LIBRARIAN.md\u0000`C:/Consonance/lighthouse/exo_memory/librarian/` as dated `YYYY-MM-DD.md` append-only entries, in the\u0000#1"
     },
     {
       "file": "consonance/src-tauri/gen-deck.ps1",
@@ -798,6 +806,13 @@
     },
     {
       "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "+ '\\n# Notes go to `C:/Consonance/lighthouse/exo_memory/librarian/` as dated entries\\n');",
+      "key": "consonance/tools/portable-paths.test.js\u0000+ '\\n# Notes go to `C:/Consonance/lighthouse/exo_memory/librarian/` as dated entries\\n');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
       "detector": "DISGUISED",
       "verdict": "DISGUISED",
       "text": "+ `const M = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');\\n`);",
@@ -877,6 +892,27 @@
       "file": "consonance/tools/portable-paths.test.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "const bullet = '* Write them to C:/Consonance/lighthouse/exo_memory/';",
+      "key": "consonance/tools/portable-paths.test.js\u0000const bullet = '* Write them to C:/Consonance/lighthouse/exo_memory/';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const heading = '# Notes live in C:/Consonance/lighthouse/exo_memory/';",
+      "key": "consonance/tools/portable-paths.test.js\u0000const heading = '# Notes live in C:/Consonance/lighthouse/exo_memory/';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const hits = G.scan('For example `C:/nowhere/at/all/x.md` would be wrong', false);",
+      "key": "consonance/tools/portable-paths.test.js\u0000const hits = G.scan('For example `C:/nowhere/at/all/x.md` would be wrong', false);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "const hits = G.scan(` const PANE_CWD = 'C:\\\\\\\\panes\\\\\\\\sibling-test';`);",
       "key": "consonance/tools/portable-paths.test.js\u0000const hits = G.scan(` const PANE_CWD = 'C:\\\\\\\\panes\\\\\\\\sibling-test';`);\u0000#1"
     },
@@ -886,6 +922,13 @@
       "verdict": "DISGUISED",
       "text": "const line = 'format!(\"{}\\\\\\\\OneDrive\\\\\\\\Desktop\\\\\\\\projects\\\\\\\\lighthouse\\\\\\\\exo_memory\\\\\\\\BOOT.md\", home())';",
       "key": "consonance/tools/portable-paths.test.js\u0000const line = 'format!(\"{}\\\\\\\\OneDrive\\\\\\\\Desktop\\\\\\\\projects\\\\\\\\lighthouse\\\\\\\\exo_memory\\\\\\\\BOOT.md\", home())';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const line = 'Notes go to `C:/Consonance/lighthouse/exo_memory/librarian/` as dated entries';",
+      "key": "consonance/tools/portable-paths.test.js\u0000const line = 'Notes go to `C:/Consonance/lighthouse/exo_memory/librarian/` as dated entries';\u0000#1"
     },
     {
       "file": "consonance/tools/portable-paths.test.js",

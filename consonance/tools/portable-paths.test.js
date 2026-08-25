@@ -181,11 +181,18 @@ test('scope includes what ships and what runs, and excludes what is a dated reco
 
 // ── the ratchet, end to end ──────────────────────────────────────────────────────────────────
 
+// The fixture carries BOTH scope classes, because the guard now refuses to run without an
+// authority for the second one. `brief/CLEAN.md` is the stand-in for a bundled instruction.
 function fixtureRepo() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'portable-paths-'));
   const tools = path.join(dir, 'consonance', 'tools');
+  const brief = path.join(dir, 'consonance', 'src-tauri', 'brief');
   fs.mkdirSync(tools, { recursive: true });
+  fs.mkdirSync(brief, { recursive: true });
   fs.writeFileSync(path.join(tools, 'clean.js'), `'use strict';\nconst D = process.env.X;\n`);
+  fs.writeFileSync(path.join(brief, 'CLEAN.md'), `# A brief\n\nNotes go to the repo.\n`);
+  fs.writeFileSync(path.join(dir, 'consonance', 'src-tauri', 'tauri.conf.json'),
+    JSON.stringify({ bundle: { resources: { 'brief/CLEAN.md': 'CLEAN.md' } } }, null, 2) + '\n');
   execFileSync('git', ['-C', dir, 'init', '-q']);
   execFileSync('git', ['-C', dir, 'add', '-A']);
   return dir;
@@ -273,11 +280,13 @@ test('a green run over ZERO files is refused, not reported clean', () => {
   const root = fixtureRepo();
   const baseline = path.join(root, 'baseline.json');
   runGuard(root, baseline, ['--update']);
-  fs.rmSync(path.join(root, 'consonance'), { recursive: true, force: true });
+  // Only the CODE is removed. The manifest stays, because the manifest read happens first and
+  // its own refusal would otherwise answer for this one — two distinct failures, two messages.
+  fs.rmSync(path.join(root, 'consonance', 'tools'), { recursive: true, force: true });
   execFileSync('git', ['-C', root, 'add', '-A']);
   const r = runGuard(root, baseline);
   assert.strictEqual(r.code, 2, 'zero files in scope must be a refusal, not a green');
-  assert.match(r.out, /ZERO files/);
+  assert.match(r.out, /code scope matched ZERO files/);
   fs.rmSync(root, { recursive: true, force: true });
 });
 
@@ -287,6 +296,134 @@ test('a missing baseline is a refusal with instructions, not a silent pass', () 
   assert.strictEqual(r.code, 2);
   assert.match(r.out, /--update/);
   fs.rmSync(root, { recursive: true, force: true });
+});
+
+// ── scope class 2: SHIPPED PROSE ─────────────────────────────────────────────────────────────
+// Added 2026-08-25. The guard's declared principle was "IN scope = what ships"; its
+// implementation was `.js/.rs/.ps1`, and the gap was held open by an exemption whose stated
+// reason had gone stale — "the one generated shipped brief is already guarded by gen-brief.ps1's
+// self-check". Seven briefs ship, gen-brief generates one of them, and its self-check tests
+// identity leaks and not paths. These tests are that correction, and its motivating site.
+
+test('the shipped-prose universe is READ from the manifest, never recited', () => {
+  const p = G.shippedProse();
+  // The count is re-derived here from the same authority rather than asserted as a literal: a
+  // number written into this test would be the hardcoded list one level up, which is the exact
+  // defect the scope correction exists for.
+  const conf = JSON.parse(fs.readFileSync(
+    path.resolve(__dirname, '..', 'src-tauri', 'tauri.conf.json'), 'utf8'));
+  assert.strictEqual(p.entries, Object.keys(conf.bundle.resources).length);
+  assert.ok(p.files.length >= p.entries, 'globs expand to at least one file per entry');
+  for (const b of ['BOOT', 'SEED', 'BASE_JOURNAL', 'COMMITTEE', 'BUILDING', 'LIBRARIAN']) {
+    assert.ok(p.files.includes(`consonance/src-tauri/brief/${b}.md`), `${b}.md must be in scope`);
+  }
+  assert.ok(p.files.every((f) => !f.includes('\\')), 'paths are repo-relative with forward slashes');
+});
+
+test('THE MOTIVATING SITE: a bundled brief naming one checkout is FATAL-SHIPPED-INSTRUCTION', () => {
+  // brief/LIBRARIAN.md:143, live and green under the old partition. Nothing executes it, so no
+  // runtime can catch it — a seat reads it and writes its notes into a path that may not exist.
+  const line = 'Notes go to `C:/Consonance/lighthouse/exo_memory/librarian/` as dated entries';
+  const hits = G.scan(line, false);
+  assert.strictEqual(hits.length, 1);
+  assert.strictEqual(hits[0].detector, 'DRIVE');
+  assert.strictEqual(
+    G.classifyProse('consonance/src-tauri/brief/LIBRARIAN.md', hits[0]),
+    'FATAL-SHIPPED-INSTRUCTION');
+});
+
+test('a synthetic path in prose is a fixture, not an instruction', () => {
+  const hits = G.scan('For example `C:/nowhere/at/all/x.md` would be wrong', false);
+  assert.strictEqual(G.classifyProse('consonance/src-tauri/brief/BOOT.md', hits[0]), 'BENIGN-FIXTURE');
+});
+
+test('the code comment rule is OFF for prose, or a markdown heading hides a path', () => {
+  // `#` opens a comment in ps1 and a heading in markdown; `*` opens a jsdoc line and a bullet.
+  // Under the code rule both are skipped, which would have made most of every brief invisible.
+  const heading = '# Notes live in C:/Consonance/lighthouse/exo_memory/';
+  const bullet = '* Write them to C:/Consonance/lighthouse/exo_memory/';
+  assert.deepStrictEqual(G.scan(heading), [], 'precondition: the CODE rule skips it');
+  assert.deepStrictEqual(G.scan(bullet), [], 'precondition: the CODE rule skips it');
+  assert.strictEqual(G.scan(heading, false).length, 1, 'the PROSE rule must see it');
+  assert.strictEqual(G.scan(bullet, false).length, 1, 'the PROSE rule must see it');
+});
+
+test('THE BAR: a laptop path planted in a BUNDLED BRIEF turns it red, removing it turns it green', () => {
+  const root = fixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  const target = path.join(root, 'consonance', 'src-tauri', 'brief', 'CLEAN.md');
+  const original = fs.readFileSync(target, 'utf8');
+
+  runGuard(root, baseline, ['--update']);
+  const before = runGuard(root, baseline);
+  assert.strictEqual(before.code, 0, 'baseline state must be green:\n' + before.out);
+
+  // MUTATE — the shape of brief/LIBRARIAN.md:143, in a heading so the old code rule would
+  // ALSO have skipped the line even if .md had been in scope. Both halves of the defect.
+  fs.writeFileSync(target, original
+    + '\n# Notes go to `C:/Consonance/lighthouse/exo_memory/librarian/` as dated entries\n');
+  const red = runGuard(root, baseline);
+  assert.strictEqual(red.code, 1, 'a path in a bundled brief must fail the guard');
+  assert.match(red.out, /RED/);
+  assert.match(red.out, /FATAL-SHIPPED-INSTRUCTION/);
+  assert.match(red.out, /CLEAN\.md/);
+  assert.match(red.out, /not a code fix/, 'the remedy printed must be the prose one');
+
+  // RESTORE
+  fs.writeFileSync(target, original);
+  const green = runGuard(root, baseline);
+  assert.strictEqual(green.code, 0, 'removing it must return to green:\n' + green.out);
+  assert.strictEqual(fs.readFileSync(target, 'utf8'), original, 'restored byte-identical');
+
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('an unreadable manifest is a REFUSAL, and there is no fallback list', () => {
+  const root = fixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  runGuard(root, baseline, ['--update']);
+  fs.rmSync(path.join(root, 'consonance', 'src-tauri', 'tauri.conf.json'));
+  const r = runGuard(root, baseline);
+  assert.strictEqual(r.code, 2, 'no authority must mean refuse, never a green over a guessed list');
+  assert.match(r.out, /cannot read the shipped-resource authority/);
+  assert.match(r.out, /no fallback list/);
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('a manifest that resolves to zero files is a refusal, not a green', () => {
+  const root = fixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  runGuard(root, baseline, ['--update']);
+  fs.writeFileSync(path.join(root, 'consonance', 'src-tauri', 'tauri.conf.json'),
+    JSON.stringify({ bundle: { resources: { 'brief/GONE.md': 'GONE.md' } } }));
+  const r = runGuard(root, baseline);
+  assert.strictEqual(r.code, 2);
+  assert.match(r.out, /ZERO files/);
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('a declared resource missing from disk is SKIPPED and NAMED, never silently dropped', () => {
+  const root = fixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  fs.writeFileSync(path.join(root, 'consonance', 'src-tauri', 'tauri.conf.json'),
+    JSON.stringify({ bundle: { resources: { 'brief/CLEAN.md': 'CLEAN.md', 'brief/GONE.md': 'GONE.md' } } }));
+  runGuard(root, baseline, ['--update']);
+  const r = runGuard(root, baseline);
+  assert.strictEqual(r.code, 0);
+  assert.match(r.out, /1 skipped/);
+  assert.match(r.out, /SKIPPED brief\/GONE\.md/);
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('the green line says how many baselined sites are FATAL — exempted is not fixed', () => {
+  // The census failure, in this file's own output: a FATAL in the exemption list used to be
+  // invisible on a green run, which reads exactly like having no FATAL at all.
+  const r = runGuard(path.resolve(__dirname, '..', '..'),
+    path.join(__dirname, 'portable-paths.baseline.json'));
+  assert.strictEqual(r.code, 0, r.out);
+  assert.match(r.out, /baselined site\(s\) carry a FATAL verdict — exempted, NOT fixed/);
+  assert.match(r.out, /universe: \d+ code/);
+  assert.match(r.out, /shipped prose from \d+ bundle\.resources/);
 });
 
 test('the real repo is green against its committed baseline', () => {
