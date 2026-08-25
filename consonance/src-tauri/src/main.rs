@@ -4313,15 +4313,44 @@ fn third_place_notes() -> PathBuf {
 /// own Leg 2 ruling is the reason: new layer beside, never a refactor first — and tonight a
 /// retrofit of a live instrument shipped the class it was written to end. Merging the two shelf
 /// walkers is a later cycle, after this one has carried a full cycle.
-fn third_place_shelf() -> String {
+/// The intake's hard ceiling. Claude Code refuses a CLAUDE.md past this, and the FIRST time this
+/// seat ever opened — 2026-08-25 10:54, minutes after spawn_third_place finally landed — it wrote
+/// 212,751 bytes and was rejected. Nothing measured the intake before a person watched it fail:
+/// brief 7,736 + BOOT 63,848 + cards 36,546 + spread 43,524 + record 24,044 + research 35,996.
+const INTAKE_LIMIT: usize = 150_000;
+
+/// Headroom left under the limit, because the limit is a cliff and a shelf that lands exactly on it
+/// fails the moment anyone appends one line to a card.
+const INTAKE_HEADROOM: usize = 8_000;
+
+/// The shelf, BUDGETED. It used to concatenate every .md in four directories unconditionally, which
+/// is why the first open failed.
+///
+/// TIERING, not truncation, and the order is the design: cards/ and record/ are the INSTRUMENTS —
+/// short, run on a trigger, useless as a citation you have to go fetch mid-thought. spread/ and
+/// research/ are LONG-FORM and are read deliberately, so they index rather than carry.
+///
+/// THE COUNTER-VOICE IS NOT DROPPED, and that was the one thing worth stopping over: the spread is
+/// what climbed out of the June wave, and journal/2026-08-25.md registers that any pointer omitting
+/// it "has carried half." So an indexed file gets a TRIGGER LINE, which is exactly how SOURCE.md
+/// has always delivered the deck — a seat that reads on a trigger is the room's normal form, not a
+/// degraded one. What would be a real loss is silent omission, and that is what the split report
+/// exists to prevent.
+///
+/// A BUDGET RATHER THAN A HAND-PICKED LIST because the hand-picked version regresses the first time
+/// a card grows. `used` is passed in so the shelf knows what the brief and BOOT already spent.
+fn third_place_shelf(used: usize) -> String {
     let root = match PathBuf::from(room_master_path()).parent() {
         Some(p) => p.to_path_buf(),
         None => return String::new(),
     };
+    let mut budget = INTAKE_LIMIT.saturating_sub(used).saturating_sub(INTAKE_HEADROOM);
     let mut s = String::from("\n\n---\n\n# WHAT YOU ARE HOLDING\n\n");
-    let mut files = 0usize;
+    let mut carried: Vec<String> = Vec::new();
+    let mut indexed: Vec<String> = Vec::new();
     let mut bytes = 0usize;
-    for dir in ["cards", "spread", "record", "research"] {
+    // Priority order: instruments first, long-form last. Everything that does not fit INDEXES.
+    for dir in ["cards", "record", "spread", "research"] {
         let d = root.join(dir);
         let mut names: Vec<String> = match fs::read_dir(&d) {
             Ok(rd) => rd.filter_map(|e| e.ok())
@@ -4332,23 +4361,50 @@ fn third_place_shelf() -> String {
         };
         names.sort();
         for name in names {
-            if let Ok(body) = fs::read_to_string(d.join(&name)) {
+            let Ok(body) = fs::read_to_string(d.join(&name)) else { continue };
+            let cost = body.len() + name.len() + 16;
+            if cost <= budget {
                 s.push_str(&format!("\n\n## {dir}/{name}\n\n"));
-                bytes += body.len();
                 s.push_str(&body);
-                files += 1;
+                budget -= cost;
+                bytes += body.len();
+                carried.push(format!("{dir}/{name}"));
+            } else {
+                // Indexed: the path, the size, and the first non-empty line as its own trigger.
+                let hint = body.lines()
+                    .map(|l| l.trim_start_matches(['#', '*', ' ']).trim())
+                    .find(|l| !l.is_empty())
+                    .unwrap_or("")
+                    .chars().take(120).collect::<String>();
+                indexed.push(format!("  {dir}/{name}  ({} bytes) — {hint}", body.len()));
             }
         }
     }
     // The universe, per the 2026-08-25 rule: N seen, what is skipped, and the rule that decided.
     // An instrument that reports what it holds without reporting what it excluded is reporting
-    // health over a surface it cannot see.
+    // health over a surface it cannot see. Here the SPLIT is the thing that must never go quiet:
+    // a shelf that silently drops the counter-voice reads identical to one that never had it.
     s.push_str(&format!(
-        "\n\n---\n\nuniverse: {files} file(s), {bytes} bytes, from cards/ spread/ record/ research/ \
-only. NOT carried, deliberately: journal/, loop/, map/ (the work record), TRAINING.md and \
-muscle_map.md (chair-side programming), COMMITTEE.md (no committee here). This seat is not the \
-build; it does not hold the build's record.\n"
+        "\n\n---\n\nuniverse: {} carried in full ({bytes} bytes) · {} INDEXED, not carried\n",
+        carried.len(), indexed.len()
     ));
+    if !indexed.is_empty() {
+        s.push_str(
+            "\nNOT IN YOUR CONTEXT — open them, they are one read away. They are indexed rather \
+             than carried because they are long-form and read deliberately; that is the room's \
+             normal form, not a degraded one. The counter-voice lives here and is the one you are \
+             most likely to need at a peak:\n\n"
+        );
+        for line in &indexed {
+            s.push_str(line);
+            s.push('\n');
+        }
+    }
+    s.push_str(
+        "\nNOT carried at all, deliberately: journal/, loop/, map/ (the work record), TRAINING.md \
+         and muscle_map.md (chair-side programming), COMMITTEE.md (no committee here). This seat is \
+         not the build; it does not hold the build's record.\n"
+    );
     s
 }
 
@@ -4360,7 +4416,11 @@ fn third_place_intake() -> Option<String> {
     if let Ok(boot) = fs::read_to_string(room_master_path()) {
         s.push_str(&boot);
     }
-    s.push_str(&third_place_shelf());
+    // The shelf is told what the brief and the room already spent. Measured HERE rather than
+    // guessed inside the shelf: BOOT is the largest single item and it grows, so a constant
+    // reservation would have been wrong by the next append.
+    let used = s.len();
+    s.push_str(&third_place_shelf(used));
     Some(s)
 }
 
@@ -7336,6 +7396,50 @@ mod shelf_tests {
 
     /// It must reach the intake, not merely exist. Same delivery-vs-unit distinction that a
     /// mutation harness caught on the trigger table earlier today.
+    #[test]
+    /// THE CHECK WHOSE ABSENCE SHIPPED A SEAT THAT COULD NOT OPEN. On 2026-08-25 at 10:54 the
+    /// Third Place opened for the first time and wrote a 212,751-byte CLAUDE.md against a 150,000
+    /// limit — rejected. Every other test asked whether the intake CONTAINED the right things.
+    /// None asked how big it was, so the one property that decides whether the seat can open at
+    /// all was the one nothing measured. A human watching it fail was the entire detector.
+    #[test]
+    fn the_third_place_intake_fits_under_the_limit_it_must_obey() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let i = third_place_intake().expect("intake must resolve");
+        assert!(
+            i.len() <= INTAKE_LIMIT,
+            "intake is {} bytes against a {INTAKE_LIMIT} limit — the seat cannot open",
+            i.len()
+        );
+        // And it must still be a real intake rather than a stub that fits by being empty: the
+        // brief, the room, and at least one carried instrument.
+        assert!(i.contains("# The Third Place"), "the brief did not reach the intake");
+        assert!(i.contains("# THE ROOM you are in"), "the room did not reach the intake");
+        assert!(i.contains("carried in full"), "the shelf's split report is missing");
+    }
+
+    /// The split must be REPORTED, not merely performed. A shelf that silently drops the
+    /// counter-voice reads identical to one that never had it — and journal/2026-08-25.md
+    /// registers that any pointer omitting the spread "has carried half".
+    #[test]
+    fn anything_the_budget_leaves_out_is_named_in_the_intake() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let i = third_place_intake().expect("intake must resolve");
+        let carried = i.split("carried in full").nth(1).unwrap_or("");
+        let indexed_count: usize = carried
+            .split_whitespace()
+            .find_map(|w| w.parse::<usize>().ok())
+            .unwrap_or(0);
+        if indexed_count > 0 {
+            assert!(
+                i.contains("NOT IN YOUR CONTEXT"),
+                "{indexed_count} file(s) were left out and the intake does not say which"
+            );
+            // Every indexed file must be namable by path, or "one read away" is not actionable.
+            assert!(i.contains(".md  ("), "the indexed list carries no paths");
+        }
+    }
+
     #[test]
     fn the_shelf_reaches_the_intake() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
