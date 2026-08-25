@@ -5015,6 +5015,51 @@ fn resolve_pane(panes: &State<Panes>, names: &State<PaneNames>, target: &str) ->
     resolve_from(&n, &live, target)
 }
 
+/// What the chair is told when the write succeeded and no render appeared.
+///
+/// NOT DELIVERED-SHAPED, deliberately. The old string was "written to X — UNCONFIRMED (no render
+/// yet; verify before treating as delivered)". It is accurate, the board line said UNCONFIRMED too,
+/// and on 2026-08-25 the chair read both, reported "dispatched" and "running" to the keeper, and
+/// the brief was sitting unsubmitted in the pane's composer the whole time. TWO ACCURATE WARNINGS,
+/// ONE WRONG REPORT — so more accuracy was never the missing ingredient. This names the OBSERVED
+/// failure and the recovery instead, because a string that says what to do next is harder to
+/// summarise away than one that says what is unknown.
+///
+/// A function rather than a literal at the call site so a test can hold the CONTRACT rather than a
+/// copy of the wording — see the test, which was itself wrong the first time in that exact way.
+fn unconfirmed_delivery_line(short: &str) -> String {
+    format!(
+        "NOT CONFIRMED DELIVERED to {short} — the text may be sitting UNSUBMITTED in that pane's \
+         composer (observed 2026-07-27 and 2026-08-25, both on idle panes). LOOK AT THE PANE \
+         before saying it was sent; if the text is in the box, press Enter there. Do NOT \
+         re-inject — a second write APPENDS to what is already there."
+    )
+}
+
+/// How long to wait between the bracketed paste and the submit, as a function of payload BYTES.
+///
+/// Pure so it can be tested without a PTY — the thing that made the July fix un-checkable was that
+/// its only expression was a literal inside an I/O function, so nothing could ask whether it was
+/// still the right number. It was not, and nobody could have found that except by watching a
+/// dispatch fail.
+///
+/// The shape, and it is a floor-and-ceiling rather than a guess: FLOOR is July's 120ms, which is
+/// known to work for short messages, so this can never regress that case. The slope is one
+/// millisecond per 32 bytes. The CEILING is 900ms because past about a second a dispatch reads as
+/// hung, and a delay long enough to be noticed will be shortened by whoever notices it.
+///
+/// HONEST LIMIT, because this is a mitigation and not a fix: the real signal — "the TUI has
+/// finished the paste and will accept a submit" — is not available to us. Nothing in the pipe says
+/// it. So this reduces the odds of the race and cannot close it, and the RECEIPT is what actually
+/// tells you (see chair_inject_exec). Do not read a green dispatch as proof the wait was enough.
+fn submit_delay_ms(payload_bytes: usize) -> u64 {
+    const FLOOR_MS: u64 = 120;
+    const CEILING_MS: u64 = 900;
+    const BYTES_PER_MS: u64 = 32;
+    let scaled = FLOOR_MS.saturating_add(payload_bytes as u64 / BYTES_PER_MS);
+    scaled.min(CEILING_MS)
+}
+
 fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(), String> {
     let mut map = panes.0.lock().unwrap();
     let sess = map.get_mut(pane_id).ok_or_else(|| "pane not found".to_string())?;
@@ -5027,7 +5072,14 @@ fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(),
     // 2026-07-27: the chair's first fan-out lodged unsubmitted in two idle panes' composers
     // while a warm pane won the race. The UI's injectAndSend has always known this (70ms delay,
     // "robust for live panes"); the actuator now knows it too.
-    std::thread::sleep(Duration::from_millis(120));
+    //
+    // AND THE FLAT 120ms WAS NOT ENOUGH, 2026-08-25. A ~3.7KB brief to a pane idle for 54 minutes
+    // lodged in the composer exactly as in July — the fix that closed the July case was a CONSTANT,
+    // and a constant cannot scale with the thing it is waiting for. A longer paste is strictly more
+    // work for the TUI to process before it can accept a submit, so the wait is now a function of
+    // the payload. Bounded at both ends: never below the July value, never long enough to make a
+    // dispatch feel hung.
+    std::thread::sleep(Duration::from_millis(submit_delay_ms(payload.len())));
     sess.writer.write_all(b"\r").map_err(|e| e.to_string())?;
     sess.writer.flush().map_err(|e| e.to_string())?;
     Ok(())
@@ -5375,7 +5427,7 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
             // The caller is the chair's own loop, and it acts on this string. It must learn the
             // difference here rather than discovering it later in its own audit trail.
             Receipt::Received => format!("delivered to {} (rendered in pane — not proof it was read)", short_id(&tid)),
-            _ => format!("written to {} — UNCONFIRMED (no render yet; verify before treating as delivered)", short_id(&tid)),
+            _ => unconfirmed_delivery_line(short_id(&tid)),
         },
         Err(e) => format!("delivery failed: {e}"),
     }
@@ -6494,6 +6546,78 @@ mod chair_tests {
         let line = chair_inject_audit_line("11112222", "run the suite", None, "claude-opus-5", Receipt::Received);
         assert!(line.contains("chair injected"), "a real act must read as one: {line}");
         assert!(line.contains("run the suite"), "the preview carries what was said: {line}");
+    }
+
+    /// The submit gap scales with the paste, because the flat 120ms did not hold. Tested as a pure
+    /// function precisely because the July version could only be expressed as a literal inside an
+    /// I/O call, where nothing could ask whether it was still right.
+    #[test]
+    fn the_submit_gap_scales_with_the_payload_and_is_bounded_both_ways() {
+        // FLOOR: the July value is known-good for short messages and must never regress.
+        assert_eq!(submit_delay_ms(0), 120, "an empty payload must still wait the July gap");
+        assert!(submit_delay_ms(200) >= 120, "no payload may wait less than the floor");
+
+        // SLOPE: the 3.7KB brief that actually lodged must wait materially longer than 120ms.
+        // This is the regression case, named by its size rather than by a round number.
+        let lodged = submit_delay_ms(3700);
+        assert!(lodged > 200, "the payload size that lodged must buy a longer gap, got {lodged}");
+
+        // CEILING: past about a second a dispatch reads as hung, and a delay someone notices is a
+        // delay someone shortens. A megabyte must not stall the chair.
+        assert_eq!(submit_delay_ms(10_000_000), 900, "the gap must be capped");
+
+        // MONOTONIC: bigger paste, never a shorter wait. Guards a future "optimisation".
+        assert!(submit_delay_ms(4000) >= submit_delay_ms(400));
+    }
+
+    /// The unconfirmed string must NOT be summarisable as success. On 2026-08-25 the chair read
+    /// "written to X — UNCONFIRMED" and reported "dispatched" to the keeper while the brief sat in
+    /// the composer. Accuracy was not the missing ingredient; the recovery action was.
+    ///
+    /// TESTS THE FUNCTION THE CALLER ACTUALLY CALLS. The first draft of this test built its own
+    /// copy of the literal and asserted on that, which is the unit-vs-delivery defect this repo hit
+    /// three times in one night: the copy passes forever while the call site is rewritten to
+    /// anything at all. The string is a function now for exactly that reason.
+    #[test]
+    fn the_unconfirmed_string_names_the_failure_and_the_recovery() {
+        let s = unconfirmed_delivery_line("11112222");
+        assert!(s.contains("11112222"), "the pane must be named: {s}");
+        assert!(!s.starts_with("written to"), "must not open with a word that reads as done: {s}");
+        assert!(s.contains("NOT CONFIRMED"), "the verdict must lead: {s}");
+        assert!(s.contains("UNSUBMITTED"), "it must name the OBSERVED failure, not just uncertainty");
+        assert!(s.contains("press") && s.contains("Enter"), "it must carry the recovery action");
+        assert!(s.contains("Do NOT re-inject"), "re-injecting appends; the string must say so");
+    }
+
+    /// THE DELIVERY, not the unit. The test above proves the FUNCTION is right and says nothing
+    /// about whether the caller uses it — rewrite the match arm to any literal and it stays green.
+    /// That is the exact defect pattern this repo hit three times in one night (resolve_pane,
+    /// seat_role_for_letter, post_board), each time with a fully-tested core behind a thin reader
+    /// that could be bypassed with every test passing.
+    ///
+    /// SCOPED TO THE FUNCTION BODY ON PURPOSE. Searching the whole file for the call would match
+    /// THIS TEST'S OWN TEXT — the self-reference trap, which in this repo has already produced a
+    /// marker matched by the comment removing it and a test satisfied by the sentence retiring the
+    /// claim it asserted. So the source is sliced to chair_inject_exec first, and the slice is
+    /// asserted non-trivial before anything is read from it.
+    #[test]
+    fn the_unconfirmed_arm_actually_calls_that_function() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let start = src.find("fn chair_inject_exec").expect("chair_inject_exec must exist");
+        let body = &src[start..];
+        let end = body[1..].find("\nfn ").map(|i| i + 1).unwrap_or(body.len());
+        let body = &body[..end];
+        assert!(body.len() > 200, "the slice must be a real function body, got {}", body.len());
+        assert!(!body.contains("fn the_unconfirmed_arm"), "the slice must not include this test");
+        assert!(
+            body.contains("unconfirmed_delivery_line("),
+            "chair_inject_exec must build its unconfirmed string through unconfirmed_delivery_line, \
+             or the tested wording is decoration and the caller can say anything"
+        );
+        assert!(
+            !body.contains("written to {}"),
+            "the old delivered-shaped literal must not be back at the call site"
+        );
     }
 
     /// Boundary: an empty message still produces an honest line on both paths — no panic, and
