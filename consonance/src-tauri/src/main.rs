@@ -328,20 +328,88 @@ fn pick_default_room(
         .or(bundled_boot)
 }
 
-/// Does this machine carry the repo master? The one place that knowledge lives.
+/// Read `room_path` out of ~/.consonance.json WITHOUT touching the live `DIRS` resolver.
 ///
-/// The paths are absolute BY NECESSITY: the question is "is the developer's checkout at the known
-/// location", asked precisely when there is no config to resolve from, so the peer hooks' pattern
-/// (env, then ~/.consonance.json) does not apply. Named and shared rather than inlined twice
-/// because a test that copies this predicate can pass while the predicate itself is wrong --
-/// which is what portable-paths flagged when the copy first appeared.
+/// Deliberately not `get_state()` and deliberately not `room_file()`: `default_room()` is itself the
+/// fallback for an EMPTY `room_path`, so routing back through the resolver would recurse. The read
+/// is on cold paths only -- startup, room creation, card seeding.
+fn configured_room_path() -> String {
+    fs::read_to_string(config_path())
+        .map(|s| parse_config(&s).0.room_path)
+        .unwrap_or_default()
+}
+
+/// `<repo>\exo_memory\BOOT.md` -> `<repo>`. PURE, so the derivation is testable with no disk and no
+/// config -- the same reason `pick_default_room` was extracted on 2026-08-22.
 ///
-/// Plain disk first: the repo moved out of OneDrive on 2026-07-28 because .git was inside the
-/// sync scope, and a syncer-backed path can hand back a stale restored copy. (Alpha, S1/S9.)
+/// Returns None for anything that cannot have that shape. It does NOT decide whether the answer is
+/// really a checkout; the caller checks the file it actually wants.
+fn repo_root_from_room_path(room_path: &str) -> Option<PathBuf> {
+    let p = room_path.trim();
+    if p.is_empty() {
+        return None;
+    }
+    Path::new(p)
+        .parent()?
+        .parent()
+        .map(|r| r.to_path_buf())
+        .filter(|r| !r.as_os_str().is_empty())
+}
+
+/// WHERE THIS CHECKOUT IS -- resolved, never hardcoded. The one place that knowledge lives.
+///
+/// WHAT THIS REPLACED, and why it is not a tidy-up. Three resolvers (`dev_master_path`, `cards_dir`,
+/// `room_brief`) each ended in the same two absolute literals -- `{sysdrive}\Consonance\lighthouse\`
+/// and `{home}\OneDrive\Desktop\projects\lighthouse\`, this author's two historical repo locations.
+/// `cargo test` has no Tauri resource root, so on the machine that wrote them every brief-touching
+/// test resolved through those literals and passed. On 2026-08-25 a second machine pulled 683d468
+/// and nine Rust tests failed with one message. They had been green for seven weeks BECAUSE tier 3
+/// is where this laptop keeps the repo. They never tested resolution; they tested that the laptop
+/// is the laptop.
+///
+/// The two arms, and why they are split:
+/// - Under `cargo test` there is no resource root and no guarantee of a config, so the checkout is
+///   located from the crate being compiled: this manifest IS `<repo>\consonance\src-tauri`. Gated to
+///   test builds ON PURPOSE -- baking the BUILD machine's path into a shipped binary would be the
+///   same defect wearing a compile-time coat.
+/// - At runtime, a developer's configured room master already IS `<repo>\exo_memory\BOOT.md`, so the
+///   checkout's location is on disk in ~/.consonance.json and needs no second mechanism.
+///
+/// NARROWER THAN WHAT IT REPLACED, stated rather than smuggled: at runtime a developer whose
+/// `room_path` is EMPTY is no longer recognised as carrying the repo, and wakes into SEED instead of
+/// BOOT. "Is the checkout at the one known location" was the defect, not the premise -- but this is
+/// a behaviour change. Both machines in this room have `room_path` set to their own repo's BOOT.md.
+fn repo_root() -> Option<PathBuf> {
+    #[cfg(test)]
+    {
+        let manifest = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        if let Some(root) = manifest.parent().and_then(|p| p.parent()) {
+            if root.join("exo_memory").join("BOOT.md").is_file() {
+                return Some(root.to_path_buf());
+            }
+        }
+    }
+    let root = repo_root_from_room_path(&configured_room_path())?;
+    if root.join("exo_memory").join("BOOT.md").is_file() {
+        Some(root)
+    } else {
+        None
+    }
+}
+
+/// Does this machine carry the repo master?
+///
+/// Named and shared rather than inlined twice because a test that copies this predicate can pass
+/// while the predicate itself is wrong -- which is what portable-paths flagged when the copy first
+/// appeared. (The historical note this used to carry: the repo moved out of OneDrive on 2026-07-28
+/// because .git was inside the sync scope, and a syncer-backed path can hand back a stale restored
+/// copy -- Alpha, S1/S9. The ordering is moot now: there is one resolved answer, not two guesses.)
 fn dev_master_path() -> Option<String> {
-    let ex = |q: String| if Path::new(&q).exists() { Some(q) } else { None };
-    ex(format!("{}\\Consonance\\lighthouse\\exo_memory\\BOOT.md", sysdrive()))
-        .or_else(|| ex(format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\BOOT.md", home())))
+    repo_root()?
+        .join("exo_memory")
+        .join("BOOT.md")
+        .to_str()
+        .map(|s| s.to_string())
 }
 fn default_room() -> String {
     let ex = |p: String| if Path::new(&p).exists() { Some(p) } else { None };
@@ -415,12 +483,16 @@ fn cards_dir() -> PathBuf {
             return p.clone();
         }
     }
-    // Plain disk first, same reasoning as room_master_path (Alpha, S9).
-    let disk = PathBuf::from(format!("{}\\Consonance\\lighthouse\\exo_memory\\cards", sysdrive()));
-    if disk.is_dir() {
-        return disk;
+    // Last tier: the repo's deck, RESOLVED (see repo_root). Two machine-specific literals used to
+    // sit here, and are part of why nine tests were green on one laptop and red on the next machine.
+    if let Some(disk) = repo_root().map(|r| r.join("exo_memory").join("cards")) {
+        if disk.is_dir() {
+            return disk;
+        }
     }
-    PathBuf::from(format!("{}\\OneDrive\\Desktop\\projects\\lighthouse\\exo_memory\\cards", home()))
+    // Nothing resolved: hand back a NAMEABLE missing path rather than a valid-looking wrong one --
+    // same policy as default_room().
+    PathBuf::from(default_data()).join("cards")
 }
 
 /// A stable 64-bit content fingerprint (FNV-1a), used only to answer "is this file still exactly
@@ -2605,19 +2677,20 @@ fn room_brief(name: &str) -> Result<String, String> {
             }
         }
     }
-    // Plain disk first, same reasoning as room_master_path (Alpha, S9).
-    let disk = format!(
-        "{}\\Consonance\\lighthouse\\consonance\\src-tauri\\brief\\{}",
-        sysdrive(), name
-    );
-    if PathBuf::from(&disk).exists() {
-        return fs::read_to_string(&disk).map_err(|e| e.to_string());
-    }
-    let dev = format!(
-        "{}\\OneDrive\\Desktop\\projects\\lighthouse\\consonance\\src-tauri\\brief\\{}",
-        home(), name
-    );
-    fs::read_to_string(&dev).map_err(|e| format!("brief {name} not found: {e}"))
+    // Last tier: the repo's own brief directory, RESOLVED (see repo_root). THIS is the site that
+    // produced the nine reds -- and a note for anyone trusting the guard: these two literals were
+    // never even baselined. portable-paths matches a portable prefix and a machine segment ON ONE
+    // LINE, and this `format!` split them across two, so the pair that actually broke the suite was
+    // INVISIBLE to the scanner while four harmless-by-comparison cousins sat in the exemption list.
+    let Some(repo) = repo_root() else {
+        return Err(format!(
+            "brief {name} not found: no editable copy in the data dir, no bundled resource, and no \
+             repo checkout resolved (room_path in ~/.consonance.json is what names it)"
+        ));
+    };
+    let disk = repo.join("consonance").join("src-tauri").join("brief").join(name);
+    fs::read_to_string(&disk)
+        .map_err(|e| format!("brief {name} not found at {}: {e}", disk.display()))
 }
 
 fn prepare_room_dir(name: Option<String>) -> Result<String, String> {
@@ -7016,6 +7089,53 @@ mod committee_brief_tests {
         assert!(!b.contains("chair_inject"), "the brief duplicated a verb name");
         assert!(!b.contains("post_board"), "the brief duplicated a verb name");
         assert!(!b.contains("raise_pull("), "the brief duplicated a verb signature");
+    }
+}
+
+#[cfg(test)]
+mod repo_root_tests {
+    use super::*;
+
+    /// The shape a developer's config actually has.
+    #[test]
+    fn a_room_master_yields_the_checkout_above_it() {
+        assert_eq!(
+            repo_root_from_room_path(r"D:\somewhere\else\checkout\exo_memory\BOOT.md"),
+            Some(PathBuf::from(r"D:\somewhere\else\checkout"))
+        );
+    }
+
+    /// Unset and hand-whitespaced are the two states a real config file produces.
+    #[test]
+    fn an_empty_room_path_is_no_checkout() {
+        assert_eq!(repo_root_from_room_path(""), None);
+        assert_eq!(repo_root_from_room_path("   "), None);
+    }
+
+    /// Too shallow to have a repo above it must be None, never a drive root -- a drive root would
+    /// send every later `join` looking for a brief directory at the top of the disk.
+    #[test]
+    fn a_path_with_no_grandparent_is_none() {
+        assert_eq!(repo_root_from_room_path(r"D:\BOOT.md"), None);
+        assert_eq!(repo_root_from_room_path("BOOT.md"), None);
+    }
+
+    /// THE REGRESSION ITSELF, made executable. The resolver must find the checkout it is compiled
+    /// from, wherever that is -- not the two paths one laptop has historically used. Run this suite
+    /// from a clone at any path and it holds; that is the whole difference from what it replaced.
+    #[test]
+    fn the_checkout_resolves_wherever_this_source_actually_is() {
+        let root = repo_root().expect("a cargo test run must locate its own checkout");
+        assert!(
+            root.join("consonance").join("src-tauri").join("brief").join("COMMITTEE.md").is_file(),
+            "resolved {} but it carries no brief directory",
+            root.display()
+        );
+        assert!(
+            PathBuf::from(env!("CARGO_MANIFEST_DIR")).starts_with(&root),
+            "the checkout must be the one this crate is compiled from, got {}",
+            root.display()
+        );
     }
 }
 

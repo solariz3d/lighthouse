@@ -3,9 +3,9 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 25,
-    "BENIGN-TEST": 84,
+    "BENIGN-TEST": 87,
     "REVIEW": 18,
-    "DISGUISED": 17,
+    "DISGUISED": 13,
     "BENIGN-MESSAGE": 5,
     "FATAL-USER": 7,
     "BENIGN-FIXTURE": 7,
@@ -288,13 +288,6 @@
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
-      "detector": "DISGUISED",
-      "verdict": "DISGUISED",
-      "text": ".or_else(|| ex(format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", home())))",
-      "key": "consonance/src-tauri/src/main.rs\u0000.or_else(|| ex(format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", home())))\u0000#1"
-    },
-    {
-      "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
       "text": "\"data_dir\": \"C:\\\\Consonance\\\\data\",",
@@ -388,6 +381,13 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(repo_root_from_room_path(r\"D:\\BOOT.md\"), None);",
+      "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(repo_root_from_room_path(r\"D:\\BOOT.md\"), None);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "assert_eq!(role_for_kept(r\"C:\\Consonance\\instances-evil\\x\", inst), \"human\");",
       "key": "consonance/src-tauri/src/main.rs\u0000assert_eq!(role_for_kept(r\"C:\\Consonance\\instances-evil\\x\", inst), \"human\");\u0000#1"
     },
@@ -428,24 +428,10 @@
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
-      "detector": "DISGUISED",
-      "verdict": "DISGUISED",
-      "text": "ex(format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", sysdrive()))",
-      "key": "consonance/src-tauri/src/main.rs\u0000ex(format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\BOOT.md\", sysdrive()))\u0000#1"
-    },
-    {
-      "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
       "text": "let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);",
       "key": "consonance/src-tauri/src/main.rs\u0000let (cfg, bad) = parse_config(r#\"{\"data_dir\":\" C:\\\\Consonance\\\\data \"}\"#);\u0000#1"
-    },
-    {
-      "file": "consonance/src-tauri/src/main.rs",
-      "detector": "DISGUISED",
-      "verdict": "DISGUISED",
-      "text": "let disk = PathBuf::from(format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\cards\", sysdrive()));",
-      "key": "consonance/src-tauri/src/main.rs\u0000let disk = PathBuf::from(format!(\"{}\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\cards\", sysdrive()));\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
@@ -477,10 +463,17 @@
     },
     {
       "file": "consonance/src-tauri/src/main.rs",
-      "detector": "DISGUISED",
-      "verdict": "DISGUISED",
-      "text": "PathBuf::from(format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\cards\", home()))",
-      "key": "consonance/src-tauri/src/main.rs\u0000PathBuf::from(format!(\"{}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\exo_memory\\\\cards\", home()))\u0000#1"
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "repo_root_from_room_path(r\"D:\\somewhere\\else\\checkout\\exo_memory\\BOOT.md\"),",
+      "key": "consonance/src-tauri/src/main.rs\u0000repo_root_from_room_path(r\"D:\\somewhere\\else\\checkout\\exo_memory\\BOOT.md\"),\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "Some(PathBuf::from(r\"D:\\somewhere\\else\\checkout\"))",
+      "key": "consonance/src-tauri/src/main.rs\u0000Some(PathBuf::from(r\"D:\\somewhere\\else\\checkout\"))\u0000#1"
     },
     {
       "file": "consonance/tools/actors.js",
