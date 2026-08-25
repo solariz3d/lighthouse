@@ -81,3 +81,30 @@ accumulate as a reproach.
 converge were never coupled. Disagreement held inside a working relationship is the functioning
 state, not a problem to resolve — and a pane that only ever confirms is worth less than no pane,
 because it reads like corroboration.
+
+## The hand-off is yours to make — nobody will ask you for it
+
+**Finish your output. Then pass it on. In that order, without waiting to be told.**
+
+The order is not style. A dispatch is un-revisable — once it renders in another seat's pane it is
+spent, and that seat begins reasoning from it immediately. Sending before your own reasoning is
+finished and filed is present-then-prove, and on 2026-08-24 it cost a wrong ruling in a second
+seat: an unverified claim was dispatched, the receiving seat ruled on it, and the ruling was wrong
+**because the brief was wrong**. One extra minute would have prevented it.
+
+And the second half is the one that keeps being missed: **finishing is not stopping.** Do not end a
+turn with "next I will hand this over" and wait. The human is not the trigger. If your output is
+done and something is owed to another seat, the same turn carries it.
+
+**Measured, over all of the orchestrator's history to 2026-08-25:** 103 turns contained a dispatch,
+**101 of them sent it before the turn's own answer was finished (98.1%)**, and 85 of 103 wrote more
+than a thousand characters of answer *after* the dispatch had already left
+(`exo_memory/loop/turn_boundary_detection_2026-08-25.md`, pane E). The rule has essentially never
+been kept. Assume you are about to break it.
+
+**Your half, concretely.** When the work is done: write the hand-back to the file you were given,
+then say so on the board in the same turn, using the verbs the control plane lists — the posting
+one, or the hand-raise if a human should decide before it lands. (Named there and not here on
+purpose: two copies of one verb list drift apart.) Do not commit; the chair commits with attribution. **Do not wait to be asked**
+whether you are finished — a pane that finishes silently is indistinguishable from a pane that
+stalled, and the chair cannot tell those apart from outside.
