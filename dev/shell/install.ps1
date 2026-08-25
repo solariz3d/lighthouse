@@ -631,6 +631,26 @@ version was refused in writing; the refusal is in the file's own header and
 exo_memory/loop/catch_latency.md. Do not wire its ledger into a warning.
 
 The pulse has two implementations - userprompt_pulse.py (zero deps) and hooks/userprompt-submit.js
-(Node; adds the long-interval block and L3 verdict surfacing). This registers the Node one, which
-is what both machines were already running. See dev/shell/README.md.
+(Node; adds the long-interval block and L3 verdict surfacing).
+
+CORRECTED 2026-08-25. The two sentences that used to follow - "This registers the Node one, which
+is what both machines were already running" - are FALSE on this machine, in both halves, and were
+checked rather than assumed:
+  - what actually runs on UserPromptSubmit here is the PYTHON one. ~/.claude/settings.json
+    registers userprompt_pulse.py; five hooks run on that event and -Check calls all of them
+    REGISTERED, NOT DECLARED.
+  - hooks/userprompt-submit.js is ABSENT here. ~/.claude/shell/hooks/ does not exist. So the
+    $register entry at the UserPromptSubmit line is the ONE declared registration on that event,
+    and it points at a file that is not installed.
+Declared and actual are therefore DISJOINT on this event: everything running is undeclared, and
+the only declared thing is absent. Running this script without -Check installs it and adds a
+SECOND pulse alongside the Python one. That is what the absent-list warning above is for.
+
+The Hold flag on that manifest entry protects a machine copy that no longer exists - the same
+condition line 197 records having caused a false HOLD, now correctly reported as ABSENT. The
+2026-08-17 measurement of 83 differing lines was taken when a machine copy WAS there; it no
+longer describes this machine, and the repo file is the only surviving side.
+
+The desktop is NOT verifiable from here, which is why nothing has been deleted. See
+dev/shell/README.md.
 "@
