@@ -153,6 +153,14 @@ someone remembering is not one. See `exo_memory/librarian/README.md`.
 **Write the file; do not commit it.** No seat commits to the shared checkout (`brief/COMMITTEE.md`) —
 the chair commits, with attribution. Say in your reply that a note was appended, so it can be.
 
+> **AMENDED 2026-08-26 — this seat may commit; the constraint moved.** The rule above stands as a trace
+> and its reason is withdrawn: routing through the chair produces no attribution, because every commit
+> here is authored `solariz3d` and the trailer names the model rather than the thread. The canonical
+> replacement lives at the **Nothing committed** bullet in `brief/COMMITTEE.md` — named there and not
+> restated here, because two copies of one rule drift apart. In short: **name every path (never
+> `-A`), say in the body which seat wrote it, and never push.** Still say in your reply that a note
+> was appended — the chair is not watching this directory, and a commit is not a hand-off.
+
 `corpus_shelf()` carries that directory newest-first, so a fresh wake here already holds the most
 recent notes without having to go and look for them.
 

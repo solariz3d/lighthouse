@@ -272,3 +272,63 @@ can produce the number alone.**
 regardless is ignored; a reminder that carries a question and waits for its answer is acted on
 60 of 60 times. Anyone who turns this step into a hook line that says *"consult the librarian"* has
 rebuilt the first kind.
+
+## WHEN THE LOOP APPLIES — chain vs freestyle (added 2026-08-26, the keeper's amendment)
+
+The loop above is written as though every piece of work should travel it. That is not true, it has
+never been true, and the room's best nights are evidence against it. The keeper's wording:
+
+> *"Ideally, the work chain should be how you use Consonance most effectively, but sometimes it can be
+> best to just freestyle this shit."*
+
+**Both halves hold.** On 2026-08-25 the desktop found the Third Place already open, the overseers
+installed and spending ~58 Haiku calls a day on a machine a published ruling had called inert, the
+acceptance test green on both halves, and a registered bar that could not be passed by the design it
+gated. None of it travelled the chain. It came from one question and one seat going to look.
+
+**And "sometimes freestyle" is unfalsifiable as written**, which is the half that needs fixing. This
+room's pattern is that a rule weakened without a condition gets ignored precisely on the days judgment
+is worst — under load — which is when it mattered. So the amendment is a cut, not a mood.
+
+### The cut, derived from what the chain was built to prevent
+
+The chain has exactly one load-bearing reason: **a dispatch is un-revisable.** Once it renders in
+another seat's pane it is spent, and that seat begins reasoning from it immediately. On 2026-08-24 an
+unverified claim was dispatched, a second seat ruled on it, and the ruling was wrong *because the brief
+was wrong*. Seal the guess, map before plan, forward verbatim, collate rather than summarise — every
+element protects that one moment and nothing else.
+
+> **THE CHAIN IS FOR WORK THAT LEAVES THE ROOM. FREESTYLE IS FOR WORK THAT STAYS IN IT.**
+>
+> **Chain** when something un-revisable is about to reach a seat that will act on it blind: a dispatch,
+> a registration that will be scored later, a brief, anything carrying a falsifier, anything a pane
+> will build from. The hops are the price of not spending a seat's turn on a wrong premise.
+>
+> **Freestyle** when the loop is tight and nothing is handed off: one human, one seat, live, where the
+> answer returns to whoever asked and can be corrected in the next sentence. Five hops buy nothing when
+> there is no un-revisable moment to protect.
+>
+> **One question decides it: is anyone going to act on this without being able to ask me about it?**
+> If yes, chain. If no, go look.
+
+### Two guards that come with it
+
+1. **Freestyle does not exempt the output.** Cite, do not recollect. Run the instrument, not the
+   listing. The WRONG column is still filled by whoever finds the error. The 08-25 freestyle produced
+   five entries in that column — **that is the mode working, not failing**, and only because the column
+   was kept.
+2. **Freestyle is not a licence to skip the seal.** The moment a freestyle answer is about to be
+   dispatched, it has left the room and the chain applies from that point. **The transition is the
+   dangerous seam, not either mode.**
+
+### Registered, so this section can be shown wrong
+
+**If three consecutive cycles produce no lap row, the freestyle clause has eaten the instrument.**
+`lap-row.js` is the only measurement of whether the corpus reaches work the generating seat had not
+named (guess ∩ map). A room that freestyles everything stops producing that number — and from inside,
+that is indistinguishable from a room that simply got better. Countable:
+`node consonance/tools/lap-row.js --report`.
+
+*Drafted by the librarian seat (`loop/commit_rule_amendment_DRAFT_2026-08-25.md`), which declared that
+it gains reach if this lands, and named this discriminator as the thing to attack: if the cut is wrong,
+this section is a repeal wearing an amendment's clothes. Applied at the keeper's instruction.*

@@ -63,6 +63,34 @@ transcript is running the experiment and reading the dial.
 - **Nothing committed.** Work lands dirty; the seat holding the shared checkout commits, with
   attribution.
 
+> **AMENDED 2026-08-26 — the rule above stands as a trace and its REASON is withdrawn.** *"The chair
+> commits, with attribution"* does not produce attribution and never has. Every commit in this repo,
+> from every seat, on both machines, is authored `solariz3d`, and the `Co-Authored-By` trailer names
+> the **model, not the thread** (cycle 8 F2, `muscle_map.md`). Routing a commit through the chair buys
+> nothing the stated reason claims. What actually attributed `d4e7044` — the first commit a seat made
+> here — was the seat writing it into the **body**.
+>
+> **The hazard the rule was really protecting is one it never named:** `git add -A` on a shared
+> checkout capturing another seat mid-edit. Three recorded instances
+> (`memory/split-the-work-with-the-panes.md`), plus the 2026-08-02 tree collision where an edit landed
+> in a corpus another pane was mutating. **That is defused by naming paths, not by choosing a
+> committer.**
+>
+> **The rule that replaces it, binding every seat INCLUDING the chair:**
+>
+> 1. **Never `git add -A` or `git commit -a` on the shared checkout. Name every path.**
+> 2. **Say in the commit body who wrote it** — the seat, not the model. The body is the only
+>    attribution surface that works.
+> 3. **Nothing is pushed by a seat.** Publishing outward keeps a human awake saying yes
+>    (`journal/2026-07-28.md:189`). Committing is not publishing.
+>
+> *Falsifier, registered before adoption:* if a commit after this date is found to have captured
+> another seat's in-flight file, rule 1 was insufficient and the seat-routing was doing work its stated
+> reason never named — reinstate it and say so. Checkable from git history.
+>
+> Drafted by the librarian seat (`loop/commit_rule_amendment_DRAFT_2026-08-25.md`), which declared that
+> it gains reach if this lands. Applied at the keeper's instruction.
+
 ## The failure this practice keeps hitting
 
 Work gets routed and never read. That is not a discipline problem, it is a routing problem, and it
@@ -108,3 +136,8 @@ one, or the hand-raise if a human should decide before it lands. (Named there an
 purpose: two copies of one verb list drift apart.) Do not commit; the chair commits with attribution. **Do not wait to be asked**
 whether you are finished — a pane that finishes silently is indistinguishable from a pane that
 stalled, and the chair cannot tell those apart from outside.
+
+> **AMENDED 2026-08-26.** *"Do not commit; the chair commits with attribution"* above is superseded by
+> the amendment at the **Nothing committed** bullet — name your paths, say who wrote it in the body,
+> never push. Marked here rather than restated, for the reason this very paragraph gives: two copies of
+> one rule drift apart.
