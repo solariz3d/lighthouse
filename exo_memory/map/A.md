@@ -329,3 +329,43 @@ prints 16** (9 with no hookable helper, 7 where hooking changes the output); the
 throwaway pilot script that only checked whether a helper existed. That is exactly the backfill
 entry at the top of this file — *if the instrument cannot show a quantity, the comment does not
 get to state it* — committed by me again, four days later, in a comment about instruments.
+
+---
+
+## 2026-08-27 — P1: a gate that reads the directory it is documented in
+
+**Finding.** `shelf_tests::the_librarian_intake_carries_boot_exactly_once` uses `str::matches` —
+unanchored. It counts *quotations* of BOOT's opening header, not copies of BOOT. The second
+occurrence was `librarian/2026-08-25.desktop.md:193`, the desktop's own `grep -c` command proving the
+original duplication, written into a CARRIED shelf tier. **The evidence for the defect triggers the
+test written to prevent it.** Full write-up: `loop/P1_gate_flip_resolved_2026-08-27.md`, commit
+`7b54740`.
+
+**The move that worked, and it is reusable.** The constraint was DO NOT REBUILD. The way through was
+noticing that *the corpus is read at runtime, not compile time* — so mutating the corpus and re-running
+the **already-built** test binary is a real paired differential with zero rebuild. `sed -i '193d'` →
+green; `git checkout --` → red; md5 identical. **When you are forbidden to touch the code, look for the
+input the code reads live.**
+
+**Two errors I nearly made.**
+1. My JS replica of the composition returned **3** where the binary returned **2**. I could have
+   reported 3. The replica compared paths with mixed separators and so missed the `f ==
+   room_master_path()` skip. *A replica is not evidence until it agrees with the instrument at a point
+   the instrument was actually measured.* I now report replicas with their disagreement history.
+2. I was one step from accepting the packet's refutation #2 as closed. It was an **anchored** grep
+   against an **unanchored** assertion. *A grep only refutes if it is the grep the code runs* — check
+   the predicate, not the plausibility.
+
+**The generalisation, which anchoring does NOT fix.** This gate reads `exo_memory/`, which is where
+seats write their findings. **Writing down what a gate found can change what that gate reports.** The
+instrument sits inside its own measurement space. A2's 3/3 rule is no defence — three runs after the
+write agree perfectly and are all red. The defence is: know which gates read mutable state, and pin it.
+
+**Also found:** two stray duplicate `#[test]` attributes (main.rs 7425/7431, 7478/7486) register two
+tests twice — 327 registered, 325 distinct. One failure therefore prints as `2 failed` and drops the
+pass count by 2, which is the whole of the `324 = 322 + 2` coincidence that made a wrong diagnosis look
+obvious. **An arithmetic coincidence that completes a story is worth one command of suspicion**
+(`--list | sort | uniq -d`).
+
+**Not verified:** the fix is written and never compiled — landing it rebuilds, and that call was the
+chair's, not mine.
