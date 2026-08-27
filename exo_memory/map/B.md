@@ -849,3 +849,46 @@ never dropped; the instrument's blind spots clustered on one item and got read a
 tail. Before characterising a tail, verify the tail exists in the raw material and not only in
 the scored material. The check that found this was re-deriving the scorecard's totals from the
 answers alone and refusing to stop when the decomposition didn't need a behavioural term.
+
+---
+
+## 2026-08-27 — P2, the L3 feedback loop. The mechanism was real and the target was wrong.
+
+Three things worth carrying, none of which is "the overseer reads its own verdicts" (that was
+handed to me and it was true).
+
+**1. Verify against the file that FIRES, not the file the repo holds.** The chair's grep said
+`userprompt-submit.js` has zero guards. True of `~/.claude/shell/hooks/` (9,453 bytes, the copy
+`settings.json` actually registers). False of `dev/shell/hooks/` (14,969 bytes), which carries the
+`CONSONANCE_DREAM` guard at `:17`. Two people can grep honestly and reach opposite conclusions.
+The drift sat *in the exact guard being measured* — which is not a coincidence, it is what makes
+a hold file a hold file. Always diff the installed copy against the repo copy before reporting a
+guard's absence.
+
+**2. A citation is not a cause, and the A/B was cheap.** 490 verdicts citing prior L3 output is
+suggestive and nothing more. Holding cwd, prompt, turns and model constant and varying only
+`CONSONANCE_DATA` — which decides whether `session-start.js` can find the log to inject — cost
+20 haiku calls and turned suggestive into ON 7/10 quiet_spiral against OFF 0/10. The same 8,332
+characters read as *"no external referent"* with the block and *"grounded, external referents"*
+without. **When a mechanism is proven by code-reading, the A/B is usually one env var away. Look
+for the variable that gates the injection rather than arguing about the injection.**
+
+**3. The finding under the finding: fixing the loop would have polished an instrument pointed at
+nobody.** 178 of 328 recent verdicts judge sessions the keeper never typed into — 89%
+quiet_spiral in the SCRIBE auto-curator runs against 17% in the seat where he actually is. I
+nearly shipped the two-line guard and stopped because the constraint forced me to look at what
+was being judged. **The alarm was loudest exactly where there was no user.** Before repairing a
+detector, check what it is detecting on: the packet's question was "why is the judge contaminated,"
+and the better question was "who is it judging."
+
+**And the one that cost me nothing only because I checked the denominator.** My transcript scanner
+returned `files: 0` — the walk was `... || list.push(p)` after a call returning truthy, so nothing
+was ever pushed. Read as-is it said "no seat has ever mentioned L3," which is a finding-shaped
+zero. The real answer was 28 mentions across 87,921 assistant turns. **A zero from an instrument
+you wrote thirty seconds ago is a claim about the instrument until proven otherwise.**
+
+Also registered a secondary prediction (parse-error enrichment in injected windows) and **lost it**
+— 1.07x, refuted, kept in the document rather than dropped. The primary result did not depend on it,
+which is the only reason it was safe to register.
+
+`exo_memory/loop/l3_feedback_loop_ruling_2026-08-27.md` · commit `e328ac3` · desktop only.
