@@ -892,3 +892,45 @@ Also registered a secondary prediction (parse-error enrichment in injected windo
 which is the only reason it was safe to register.
 
 `exo_memory/loop/l3_feedback_loop_ruling_2026-08-27.md` · commit `e328ac3` · desktop only.
+
+---
+
+## 2026-08-28 — D002, the replacement falsifier. Where to put the denominator.
+
+**The move that made this tractable, and it generalises past falsifiers.** A check is only as good as
+the writer of its denominator. Ask one question: *can the behaviour under test suppress the thing I
+am counting?* The struck falsifier counted lap rows to test a clause whose licensed mode is **not
+writing lap rows** — so the object under test controlled its own evidence, and the check could only
+ever read green. The fix was not a better threshold. It was **moving the count to the receiving end**:
+the app stamps `[chair:MAIN]` at `main.rs:5605` and mirrors the *receiving* pane's transcript, so a
+dispatch leaves a row because it happened, not because anyone chose to log it.
+
+**Then the self-report becomes safe.** The numerator is still a hand-written ledger — and that is
+fine once absence FIRES instead of passing. **Put the suppressible ledger in the numerator, the
+unsuppressible event in the denominator, and the direction of the error takes care of itself.**
+
+**I declined the literal form of a constraint I was handed, and the number is why.** The return leg
+said phrase it in stages. Taken literally — *does each dispatch carry a `dispatched` row* — it fires
+today at 12 of 12, because both laps sealed properly and just never wrote that baton. That is the
+original defect mirrored onto a different row: a presence test again. So the stages gave the
+*definition* (dispatched is where work leaves the room) and the seal gave the *signal*. **When a
+constraint's literal reading reproduces the defect it was written to prevent, compute both readings
+and let the divergence make the argument.** Two numbers ended that discussion; an opinion would not
+have.
+
+**Boundary tests need no n.** I kept reaching for a window and a rate floor out of habit. A boundary
+is crossed once or not at all — **one event fires it**, which is exactly why it can fire next week
+instead of at some unreachable count. Rate floors are for rates.
+
+**Absence needs its own exit code.** UNMEASURED is a third verdict with its own code, because a caller
+testing `=== 0` will otherwise read "could not run" as "passed." That is the whole failure being
+replaced, one level down.
+
+**And the bug my own bar caught.** Writing "what it cannot see" BEFORE the tool forced a test for a
+missing board — which found that `readline` re-emits a stream error on the Interface, crashing with
+**exit 1, which was my FIRES code**. A check that could not run was reporting the harm it exists to
+detect. I did not suspect it; the discipline found it. **Write the limits first and they become
+tests.**
+
+`exo_memory/loop/boundary_falsifier_2026-08-28.md` · `consonance/tools/boundary-check.js` · commit
+`72bba70` · desktop only.
