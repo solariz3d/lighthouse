@@ -7422,7 +7422,7 @@ mod shelf_tests {
 
     /// It must reach the intake, not merely exist. Same delivery-vs-unit distinction that a
     /// mutation harness caught on the trigger table earlier today.
-    #[test]
+    ///
     /// THE CHECK WHOSE ABSENCE SHIPPED A SEAT THAT COULD NOT OPEN. On 2026-08-25 at 10:54 the
     /// Third Place opened for the first time and wrote a 212,751-byte CLAUDE.md against a 150,000
     /// limit — rejected. Every other test asked whether the intake CONTAINED the right things.
@@ -7475,21 +7475,87 @@ mod shelf_tests {
         }
     }
 
-    #[test]
-    /// BOOT rides ONCE. Found by the desktop on 2026-08-25 by measuring the written artifact —
-    /// 63,848 bytes duplicated, ~7% of the intake — because librarian_intake() appends it and
-    /// corpus_shelf() walked a corpus containing it, and neither knew about the other.
+    /// Bytes of BOOT sampled per span. NOT a taste: the longest verbatim run of BOOT that appears
+    /// anywhere in the 58 OTHER carried files is between 128 and 256 bytes -- probed at 64, 128,
+    /// 256, 512, 1024 and 2048 bytes, stride size/4, across the whole document; 256 and up are
+    /// absent from the corpus entirely. 2_000 is roughly 8x the largest quotation the room has ever
+    /// contained, and the margin is the reason this needle cannot be tripped by prose.
+    const BOOT_SPAN: usize = 2_000;
+
+    /// Head, middle and tail of BOOT, snapped to char boundaries (the document is full of em
+    /// dashes; a byte slice would panic). A room too small to sample three times is returned whole
+    /// -- one span, still a content check, never a panic. That is the shipped-brief machine, where
+    /// the walk finds fewer files and says so instead of failing.
+    fn boot_spans<'a>(boot: &'a str) -> Vec<(&'static str, &'a str)> {
+        let n = boot.len();
+        if n < BOOT_SPAN * 3 {
+            return vec![("whole body,", boot)];
+        }
+        let up = |mut x: usize| { while x < n && !boot.is_char_boundary(x) { x += 1 } x };
+        let down = |mut x: usize| { while x > 0 && !boot.is_char_boundary(x) { x -= 1 } x };
+        let mid = down(n / 2);
+        vec![
+            ("opening", &boot[..up(BOOT_SPAN)]),
+            ("middle", &boot[mid..up(mid + BOOT_SPAN)]),
+            ("closing", &boot[down(n - BOOT_SPAN)..]),
+        ]
+    }
+
+    /// BOOT rides ONCE -- asserted on CONTENT, not on a line of text.
+    ///
+    /// Found by the desktop on 2026-08-25 by measuring the written artifact -- 63,848 bytes
+    /// duplicated, ~7% of the intake -- because librarian_intake() appends it and corpus_shelf()
+    /// walked a corpus containing it, and neither knew about the other.
     ///
     /// ASSERTED ON THE COMPOSITION, not on either half. Testing corpus_shelf alone would pass with
     /// the duplicate intact, since the second copy comes from the OTHER function. That is the whole
     /// shape of the defect and it is why nothing here caught it.
+    ///
+    /// THE NEEDLE CHANGED ON 2026-08-28, AND THE REASON IS THE POINT. The first version counted
+    /// `i.matches(<BOOT's opening header line>)` -- unanchored. That is a count of QUOTATIONS, not
+    /// of copies, and the shelf carries librarian/ IN FULL. So every document written ABOUT this
+    /// defect raised the count by one:
+    ///
+    ///     2026-08-25   2   the chair's own `grep -c` of the header, quoted as evidence
+    ///     2026-08-27   3   the librarian quoting the assertion while explaining that
+    ///                      quotations are the defect
+    ///
+    /// The gate read the directory the seats write their findings into, so WRITING DOWN WHAT THE
+    /// GATE FOUND CHANGED WHAT THE GATE REPORTED. Full derivation, with the 59-second timeline and
+    /// the paired differential: loop/P1_gate_flip_resolved_2026-08-27.md.
+    ///
+    /// THE FIX: sample BOOT's own BYTES -- head, middle and tail, read live from the file -- and
+    /// require each span exactly once. A second copy of BOOT reproduces all three spans. A note
+    /// quoting the header line reproduces none of them.
+    ///
+    /// WHAT THIS CAN NO LONGER CATCH, said plainly because a test that cannot state what it stopped
+    /// seeing is a silencing rather than a fix:
+    ///
+    ///   * A NEAR-copy. A second BOOT differing by even one byte inside EVERY one of the three
+    ///     sampled regions passes -- a heavily drifted rewrite, or a copy truncated below 2,000
+    ///     bytes. The old needle caught any copy that kept the header line. Three spans instead of
+    ///     one is the hedge, not a cure: a drifted copy must differ in head AND middle AND tail.
+    ///   * A duplicated FRAGMENT smaller than a span. If 500 bytes of BOOT ride twice, nothing
+    ///     here fires. This test's class is a whole document re-added; scale is the next test's job.
+    ///   * The exact position of a duplicate. It reports that a span rides twice, not where from.
+    ///
+    /// WHAT IT GAINS, and it is the property the old needle could not have: EVERY TRIGGER IS A TRUE
+    /// POSITIVE. To fire this you must put 2,000 contiguous bytes of BOOT into a carried tier --
+    /// which IS BOOT riding twice, and is also what maintenance law 1 forbids. There is no longer
+    /// any way to turn this gate red by writing about it.
     #[test]
     fn the_librarian_intake_carries_boot_exactly_once() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let boot = fs::read_to_string(room_master_path()).expect("the room master must be readable");
         let i = librarian_intake().expect("intake must resolve");
-        // A line unique to BOOT and stable: its own opening header.
-        let n = i.matches("# BOOT — the room you wake into").count();
-        assert_eq!(n, 1, "BOOT appears {n} time(s) in the librarian intake — expected exactly 1");
+        for (part, span) in boot_spans(&boot) {
+            let n = i.matches(span).count();
+            assert_eq!(
+                n, 1,
+                "BOOT's {part} {} bytes appear {n} time(s) in the librarian intake -- expected exactly 1",
+                span.len()
+            );
+        }
     }
 
     /// The librarian intake is UNBOUNDED and this test does not pretend otherwise — it records the
