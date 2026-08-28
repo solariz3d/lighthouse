@@ -369,3 +369,54 @@ obvious. **An arithmetic coincidence that completes a story is worth one command
 
 **Not verified:** the fix is written and never compiled — landing it rebuilds, and that call was the
 chair's, not mine.
+
+---
+
+## 2026-08-28 — D002: fixing a gate that its own documentation kept breaking
+
+**Shipped** `ea92701`. The needle is no longer a line of text; it is BOOT's own **bytes** — opening,
+middle and closing 2,000-byte spans, read live from the file, each required exactly once. Gate green:
+`cargo test --bin consonance --no-fail-fast` → 322 passed, 0 failed, EXIT 0.
+
+**The design rule I want to keep, because the chair's framing produced it.** *"A test that cannot
+state what it stopped seeing is not a fix, it is a silencing."* That question is what killed my first
+three candidates. Anchoring the match, excluding the librarian tier, picking an unquoted needle — all
+three trade one blind spot for another and none of them can say so out loud. The one that survives
+has a property the others don't: **every trigger is a true positive.** To fire it you must place
+2,000 contiguous bytes of BOOT into a carried tier, which *is* the defect. You cannot close a trap by
+moving it; you close it by making the only way to spring it be committing the offence.
+
+**Pick thresholds by measuring the corpus, not by taste.** Longest verbatim run of BOOT anywhere in
+the 58 other carried files: **between 128 and 256 bytes** (probed 64→2048B at stride size/4 across
+the whole document). 2,000 is ~8x the largest quotation the room has ever contained. That sentence is
+the whole defence of the number, and it took one script.
+
+**Preserve the artifact before you destroy it.** I copied the pre-fix binary aside before rebuilding.
+That turned into the single most persuasive line of the matrix: **M3 — identical corpus bytes, two
+predicates, one moment, opposite verdicts** (old: "BOOT appears 4 time(s)", EXIT 101; new: ok, EXIT
+0). A before/after you can run side by side beats any amount of argument about what changed.
+
+**Demonstrate your blind spot; do not merely declare it.** M5 puts a 500-byte fragment of BOOT in a
+carried tier and the gate stays green — the stated limitation, shown. M4 puts a near-copy with one
+byte changed inside the opening span and the gate goes red on the *middle* span, which is what three
+spans are for. A limitation you can reproduce is a specification; one you only assert is a hope.
+
+**A2 does not measure this class, and I said so back to the chair.** Three runs with the identical
+assertion name is a *repeatability* test. When the input is a live directory, three runs after the
+write agree perfectly and are all red. Repeatability is not the property that fails. A3's paired
+differential — hold the environment constant, vary one thing — is the instrument.
+
+**THE MIRROR DEFECT, found while auditing and NOT fixed this lap.** 25 assertions in main.rs match a
+string literal against composed intake/shelf text. All 25 use `contains` (presence), and presence is
+*monotone*: a quotation can only make it MORE true. So the failure I fixed — a count driven red by
+prose — needs an exact-equality **count**, and `git grep` says the only one over live-corpus text was
+the one I fixed. But the inverse is live: **`shelf.contains("trust-the-first-attention")` at
+main.rs:7395, whose message is "no cards on the shelf", cannot fail.** Nine carried non-card files
+contain that string, and `exo_memory/SOURCE.md` — in the carried root — carries it three times, so
+the assertion holds with **zero cards on the shelf**. Deduced from two greps, **not yet mutated**;
+mutation is owed before anyone calls it dead. Same root cause, opposite sign: the corpus a test reads
+is written by people who write about the test, and that breaks counts toward RED and presence checks
+toward GREEN.
+
+**Not verified:** js-suite not run; four pre-existing warnings at main.rs:6169/:6352 uninvestigated;
+the 7395 finding is deductive, not mutation-proven.
