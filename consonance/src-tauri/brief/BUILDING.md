@@ -323,11 +323,54 @@ element protects that one moment and nothing else.
 
 ### Registered, so this section can be shown wrong
 
-**If three consecutive cycles produce no lap row, the freestyle clause has eaten the instrument.**
-`lap-row.js` is the only measurement of whether the corpus reaches work the generating seat had not
-named (guess ∩ map). A room that freestyles everything stops producing that number — and from inside,
-that is indistinguishable from a room that simply got better. Countable:
-`node consonance/tools/lap-row.js --report`.
+**If a chair dispatch renders in a receiving pane while no lap holds a sealed guess, then work left
+the room without one and this cut was applied at a boundary it does not cover.**
+
+    node consonance/tools/boundary-check.js
+
+**One unsealed dispatch fires it.** There is no window to fill and no rate to reach: the check is a
+boundary test, and a boundary is crossed once or not at all. At registration it reads **HOLDS — 0 of
+12** over the dispatches since this section landed, which is a reading and not a result.
+
+**Why the denominator is trustworthy and the numerator does not need to be.** The count of dispatches
+comes from `data/board.jsonl`, which the app writes when the text ARRIVES in the receiving pane —
+`main.rs:5605` stamps `[chair:MAIN]` and `board_push` mirrors the receiving transcript. A sending seat
+cannot suppress that row; it exists because the dispatch happened, not because anyone chose to record
+it. The seal count comes from `lap.jsonl`, which is self-reported — but here **failing to write a lap
+makes the check FIRE, not pass.** That asymmetry is the whole repair, and it is the exact inversion of
+what was registered here before.
+
+*What was here before, and why it was struck rather than kept* (`loop/freestyle_falsifier_ruling_2026-08-27.md`,
+the librarian's return leg, and `loop/boundary_falsifier_2026-08-28.md`): it read *"if three consecutive
+cycles produce no lap row…"*. **Nothing counts cycles**, so no run of any tool could evaluate it. It was
+a **presence** test aimed at a **boundary** harm — a room logging laps for its tight-loop work while
+freestyling every dispatch read green while having exactly the 08-24 failure this section exists to
+prevent. And its signal was an absence on the one ledger the licensed behaviour suppresses: freestyle is
+the mode that hands nothing off, a lap row is the artifact of handing something off, so the clause
+licensed not generating its own evidence. When one row finally appeared it read **SATISFIED off n=1** —
+and the row that satisfied it was D001, the lap convened to attack it. **An unfireable falsifier is
+strictly worse than none: none is visibly absent, and this one read as passing.**
+
+**What this replacement cannot see** — stated here because a falsifier whose limits live only in its
+source is a falsifier nobody applies limits to:
+
+- **Only `[chair:…]` arrivals count.** A brief pasted into a pane by hand, a file carried to the other
+  machine, a pane-to-pane handoff — all left the room, and none of them appear. **The denominator is a
+  floor**, so the true rate can only be worse than what prints.
+- **It reads that a guess existed, not that it was good.** Four junk paths seal a lap.
+- **It cannot say why a lap is absent.** A dispatch with no covering lap fires whether the seat
+  misclassified it or simply never opened one. **It is biased toward firing on purpose**; a fire is a
+  reason to go look, not a proof of misclassification.
+- **A blind window blinds it too.** `board_push` mutes every writer while `data/blind.lock` exists,
+  transcript ingest included — one ran 2026-06-30 → 2026-08-01 and swallowed 2,473 entries. So a window
+  overlapping a blind period prints **UNMEASURED**, and **an empty window prints UNMEASURED, not green**.
+  Absence is classified here rather than accepted, which is the one thing its predecessor never did.
+- **One machine.** Both ledgers are machine-local; this is whichever machine ran it.
+
+*Replacement drafted by the pane briefed as D002's falsifier seat — not by the seat that wrote the
+original, and not by the seat that ruled on its removal. `boundary-check.test.js` mutation-proves the
+four load-bearing behaviours; guard 2's owed paragraph (P5 §1, A-1) is a separate repair and is still
+outstanding.*
 
 *Drafted by the librarian seat (`loop/commit_rule_amendment_DRAFT_2026-08-25.md`), which declared that
 it gains reach if this lands, and named this discriminator as the thing to attack: if the cut is wrong,
