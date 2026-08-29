@@ -11,6 +11,9 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
+- P-UNIV (a85d359) — LIVE: registration (A) + coldread prereg v3 (C) + attack (E). Sequence: P-UNIV-WITHDRAWAL-ATTACK (unassigned) -> cold read; egress for A1 arms = keeper's ASK.md yes, never inferred; F-GATE: the BOOT amendment must state closure as WHAT THE COLD READ WILL TEST or the run is void. Arm C (BOOT:12 alone, in git) is the always-runnable core. BOOT changes under every outcome incl. total instrument failure (A's row D).
+- carrier-drift superseded-instrument-wordings class (a85d359, B) — LIVE and GREEN, tests 0 fail; first registered instrument-wording: the cant_lose crude handle, five carriers accounted
+- stalled-lap detector — SECOND OPEN DEFECT: collation gap (lap at WORKING with work done; holder=panes + all panes idle sat on the pulse as an uncomputed conjunction for 80m). Fix-shape in librarian/2026-08-29.md ~05:45; non-author body
 - cant_lose_repair_registration_2026-08-29.md — THE FIRST THIRD-PLACE CROSSING, adjudication IN PROGRESS:
   the chair's break-attempt (appended in-file ~02:40) found a real defect (the repair rests on speaker
   say-so — the surface tonight's law says cannot gate) AND its fix (the disk-side proxy: "did a check
