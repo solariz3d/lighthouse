@@ -11,10 +11,18 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
-- E'S FALSIFIER 2 — FIRED 2026-08-29 (window closed at 119/20 chair commits; keeper-initiated 10/11 laps =
-  90.9%). Registered consequence on the table: "the human is still the ferry and the three tools are
-  decorative." NOT tuned away; but its computation mixes universes (commits GLOBAL incl. 25 desktop; laps
-  MACHINE-LOCAL) — the P-UNIVERSE class inside a falsifier. Chair+keeper adjudicate; scope clause needed
+- falsifier_scope_2026-08-29.md (A) — the machine-scope table for every mechanized falsifier; adds UNSOURCED
+  (worse than MIXED). LIVE as the scoping authority; F2 excluded by its own row
+- stalled_lap_detector (C, chain-status.js) + attack (E) — BUILT; E's defect OPEN: the verdict VANISHES when
+  one healthy lap files after dead ones (stdout empty at 11 checkpoints); own decorative clause armed (ten
+  chained laps). Fix unassigned
+- THE SAY-SO-VS-DISK LAW (L012 residue) — three chair shapes, one law: a gate resting on the subject's say-so
+  is not a gate. ASK.md is the disk-state proof. ABSENT: the symmetric channel (nothing asks the CHAIR and
+  waits on disk) — the keeper's design question, unbuilt
+- E'S FALSIFIER 2 — FIRES HARDER (B's non-author rescore, 4fe8d7f): every defensible unit fires; the chair's
+  "still fires" was the weakest reading (conclusion kept, reason struck); the METRIC is broken both ways —
+  one unit exonerates at 9.1% with nobody lying, and the denominator is minted by the subject (moved 90.9→83.3
+  during adjudication). A's scope row: "cannot be fixed by a clause." TO THE KEEPER, both readings side by side
 - F-LEDGER — FIRED 08-29 00:33 (LEDGER mtime 08-25 11:42 < lap.jsonl): cured this leg by this update. The
   3.5-day dark window is what fired it; per-lap maintenance resumes
 - ask channel — LIVE (1bd57a2 registration; exo_memory/ASK.md holds SIX OPEN asks the keeper clears by
