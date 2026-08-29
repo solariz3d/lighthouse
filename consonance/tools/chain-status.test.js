@@ -109,7 +109,18 @@ test('an unfiled lap alongside a filed one is the one reported, and the count is
     { lap: 'L008', stage: 'chain', at: 4000, chain: 'working', holder: 'pane-a' }]);
   const r = mod().line({ ledger: fx.ledger, now: 4000, dirty: 2 });
   assert.match(r.text, /^chain: L008 WORKING/);
-  assert.ok(!/L007/.test(r.text), 'the filed lap must not appear: ' + r.text);
+  assert.doesNotMatch(r.text, /^chain: L007/, 'a finished lap must not be reported as the chain position: ' + r.text);
+  // NARROWED 2026-08-29 BY THE WORK-LEG CLAUSE, recorded here rather than done quietly. The
+  // original assertion was `!/L007/` - "must not appear ANYWHERE in the line" - which was
+  // equivalent to the property above ONLY because a filed lap had no other reason to be named.
+  // It has one now: this fixture's L007 carries a single `filed` row and no work-leg row, so it is
+  // exactly the shape the new clause counts. The property the test protects is asserted above and
+  // is STRICTER about position than the old form was. What is no longer asserted is that the id is
+  // absent from the whole string - and that absence is the blindness the chair dispatched this to
+  // end. So the id is pinned to ONE segment instead: if L007 leaks anywhere else, this still fails.
+  const seg = r.text.split(' · ').filter(s => /L007/.test(s));
+  assert.deepStrictEqual(seg, ['1 of 2 chained laps unwitnessed (L007)'],
+    'L007 appeared outside the work-leg clause: ' + r.text);
   assert.ok(!/more open/.test(r.text), 'one open lap must not claim others: ' + r.text);
   fx.cleanup();
 });
@@ -241,4 +252,258 @@ test('THE COLLISION: a chain row must not land in the `stage` field, and does no
   assert.deepStrictEqual(after, before, 'a baton row changed the guess-vs-map report; the two measurements are entangled');
 
   fx.cleanup(); fx2.cleanup();
+});
+
+// ---------------------------------------------------------------- the work leg (2026-08-29)
+//
+// THE FAILURE UNDER TEST is the chair's, twice: a lap reached MAP and never reached the panes
+// (L010, L011 - both `dispatched -> map -> filed`). The reader was blind to it BY CONSTRUCTION,
+// because filing a dead lap removes it from the line. Every fixture below is a real ledger shape
+// transcribed from C:\Consonance\data\lap.jsonl, not one invented to make a rule look good.
+//
+// AND THE ONE THAT MATTERS MOST IS THE SPARING, not the firing. L009 has no `working` row either
+// and the panes demonstrably worked; a rule that fires on it is counting paperwork.
+
+/** L010/L011: dispatched -> map -> filed. Nothing ever attested the work leg. */
+const DEAD = (lap, t) => [
+  { lap, stage: 'open', at: t, initiator: 'chair', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+  { lap, stage: 'chain', at: t + 1, chain: 'dispatched', holder: 'librarian' },
+  { lap, stage: 'chain', at: t + 2, chain: 'map', holder: 'chair' },
+  { lap, stage: 'chain', at: t + 3, chain: 'filed', holder: 'chair' },
+];
+/** L008: the full healthy lap, work leg crossed. */
+const ALIVE = (lap, t) => [
+  { lap, stage: 'open', at: t, initiator: 'human', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+  { lap, stage: 'chain', at: t + 1, chain: 'dispatched', holder: 'librarian' },
+  { lap, stage: 'chain', at: t + 2, chain: 'map', holder: 'chair' },
+  { lap, stage: 'chain', at: t + 3, chain: 'working', holder: 'panes' },
+  { lap, stage: 'chain', at: t + 4, chain: 'filed', holder: 'chair' },
+];
+
+test('THE BAR: a lap filed without ever reaching the work leg is NAMED, where this was silent', () => {
+  const fx = fixture(DEAD('L010', 1000));
+  const r = mod().line({ ledger: fx.ledger, now: 1000 + 60 * 60000, dirty: 6 });
+  assert.ok(r.text, 'a lap that died before the panes must produce a line; silence here IS the bug');
+  assert.match(r.text, /^chain: L010 FILED/, r.text);
+  assert.match(r.text, /WORK LEG UNWITNESSED/, r.text);
+  assert.strictEqual(r.text.split('\n').length, 1, 'still ONE line: ' + JSON.stringify(r.text));
+  fx.cleanup();
+});
+
+test('THE MUTATION: one `working` row silences it, and it is the ONLY thing that changed', () => {
+  // Red-then-green on a single row. If the red arm passed without the mutation, the assertion
+  // would be reading something other than the rule.
+  const red = fixture(DEAD('L010', 1000));
+  const green = fixture(ALIVE('L010', 1000));
+  const a = mod().line({ ledger: red.ledger, now: 5000, dirty: 6 });
+  const b = mod().line({ ledger: green.ledger, now: 5000, dirty: 6 });
+  assert.match(a.text, /WORK LEG UNWITNESSED/, 'red arm did not fire: ' + a.text);
+  assert.strictEqual(b.text, null, 'green arm still printed a line: ' + b.text);
+  assert.strictEqual(b.unwitnessed, 0, 'green arm still counted the lap as unwitnessed');
+  red.cleanup(); green.cleanup();
+});
+
+test('THE DISCRIMINATION: a lap that reached `return-leg` with no `working` row is SPARED', () => {
+  // L009, verbatim: dispatched -> return-leg -> filed. The `working` row was never written and the
+  // panes worked anyway - four hand-backs, per that row's own note. A definition that catches this
+  // measures bookkeeping, not chain deaths, and would have reported the night's real work dead.
+  const fx = fixture([
+    { lap: 'L009', stage: 'open', at: 1000, initiator: 'human', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+    { lap: 'L009', stage: 'chain', at: 1001, chain: 'dispatched', holder: 'panes' },
+    { lap: 'L009', stage: 'chain', at: 1002, chain: 'return-leg', holder: 'librarian' },
+    { lap: 'L009', stage: 'chain', at: 1003, chain: 'filed', holder: 'chair' },
+  ]);
+  const r = mod().line({ ledger: fx.ledger, now: 9000, dirty: 6 });
+  assert.strictEqual(r.text, null, 'L009 was reported dead; the panes had worked: ' + r.text);
+  assert.strictEqual(r.unwitnessed, 0, 'L009 counted as unwitnessed - the false-positive class');
+  fx.cleanup();
+});
+
+test('a healthy lap prints the line it printed before this section existed, byte for byte', () => {
+  // "silent as now" asserted as EQUALITY, not as the absence of one substring. A clause added
+  // anywhere in a healthy line is a clause the reader learns to skip past.
+  const fx = fixture([
+    { lap: 'L008', stage: 'open', at: 1000, initiator: 'human', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+    { lap: 'L008', stage: 'chain', at: 2000, chain: 'working', holder: 'panes' },
+  ]);
+  const r = mod().line({ ledger: fx.ledger, now: 2000 + 11 * 60000, dirty: 4 });
+  assert.strictEqual(
+    r.text,
+    'chain: L008 WORKING \u00b7 holder panes \u00b7 dirty 4 repo-wide \u00b7 11m \u00b7 this machine only',
+    'a healthy lap picked up a new clause');
+  fx.cleanup();
+});
+
+test('the universe rides the claim: the denominator is printed WITH it, never left to the reader', () => {
+  const fx = fixture([...DEAD('L010', 1000), ...DEAD('L011', 2000), ...ALIVE('L008', 500)]);
+  const r = mod().line({ ledger: fx.ledger, now: 9000, dirty: 6 });
+  assert.match(r.text, /2 of 3 chained laps unwitnessed/, r.text);
+  // and the universe is CHAINED laps, not every lap in the ledger
+  fs.appendFileSync(fx.ledger, JSON.stringify(
+    { lap: 'L001', stage: 'open', at: 10, initiator: 'human', inquiry: 'y', guess: ['q.js'], head: null }) + '\n');
+  const r2 = mod().line({ ledger: fx.ledger, now: 9000, dirty: 6 });
+  assert.match(r2.text, /2 of 3 chained laps unwitnessed/, 'a lap with no chain row entered the denominator: ' + r2.text);
+  fx.cleanup();
+});
+
+test('the claim carries its own limit, and ONLY where the claim is made', () => {
+  // `unwitnessed` is a fact about ROWS. The ledger is self-report, so the line must never read as
+  // "the panes did not work" - `rows only` is that limit, printed rather than filed in a header.
+  const dead = fixture(DEAD('L010', 1000));
+  const alive = fixture(ALIVE('L008', 1000));
+  assert.match(mod().line({ ledger: dead.ledger, now: 9000, dirty: 6 }).text, /rows only/);
+  const ok = mod().line({ ledger: alive.ledger, now: 9000, dirty: 6 });
+  assert.strictEqual(ok.text, null, 'expected silence on the healthy fixture: ' + ok.text);
+  dead.cleanup(); alive.cleanup();
+});
+
+test('the loud clause is bounded to the NEWEST lap: an open lap leads, the dead one falls to the count', () => {
+  // The bound is structural, not a timeout. Without it a lap that died three weeks ago headlines
+  // every turn forever, and a hook that nags is a hook that gets uninstalled - this file's own law.
+  const fx = fixture([...DEAD('L010', 1000),
+    { lap: 'L012', stage: 'open', at: 3000, initiator: 'human', inquiry: 'z', guess: ['a/b.js'], blind: true, head: null },
+    { lap: 'L012', stage: 'chain', at: 3001, chain: 'working', holder: 'panes' }]);
+  const r = mod().line({ ledger: fx.ledger, now: 9000, dirty: 6 });
+  assert.match(r.text, /^chain: L012 WORKING/, 'the live lap must lead: ' + r.text);
+  assert.doesNotMatch(r.text, /WORK LEG UNWITNESSED/, 'the loud clause outlived its lap: ' + r.text);
+  assert.match(r.text, /1 of 2 chained laps unwitnessed \(L010\)/, 'the dead lap vanished entirely: ' + r.text);
+  fx.cleanup();
+});
+
+test("E-3.1: ONE healthy lap filing after the deaths must not mute the alarm on STDOUT", () => {
+  // THE FINDING THIS REPLACES WAS MINE AND IT WAS WRONG. v1 gated the all-filed speak-up on the
+  // newest lap being the dead one, and I wrote a test asserting exactly that: silence here, with
+  // the finding parked on `--why`. Pane E swept eleven fixtures and showed stdout empty at every
+  // one - and `userprompt_pulse.py:151-153` does not read stderr, deliberately. So the alarm died
+  // one healthy lap after the deaths, in the quiet-ledger state a stalled loop actually produces.
+  //
+  // Silence must mean the ledger is CLEAN. It must not mean the ledger is QUIET.
+  const fx = fixture([...DEAD('L010', 1000), ...ALIVE('L011', 2000)]);
+  const r = mod().line({ ledger: fx.ledger, now: 9000, dirty: 6 });
+  assert.ok(r.text, 'the alarm went mute behind one healthy lap - E-3.1, reopened');
+  assert.match(r.text, /^chain: no open lap/, 'no live position, and the line must say so: ' + r.text);
+  assert.match(r.text, /1 of 2 chained laps unwitnessed \(L010\)/, r.text);
+  assert.match(r.text, /rows only/, r.text);
+  fx.cleanup();
+});
+
+test('E-3.1: and it reaches STDOUT through the cli, which is the only channel the pulse reads', () => {
+  const fx = fixture([...DEAD('L010', 1000), ...ALIVE('L011', 2000)]);
+  const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
+  assert.strictEqual(r.code, 0, 'exit ' + r.code + ' / ' + r.stderr);
+  assert.match(r.stdout, /unwitnessed \(L010\)/, 'stdout: ' + JSON.stringify(r.stdout));
+  assert.strictEqual(r.stdout.trim().split('\n').length, 1,
+    'the pulse keeps only the FIRST line; a second would ship green and never leave the tool');
+  fx.cleanup();
+});
+
+test('E-3.2: the window cap names what it dropped instead of shrinking the count in silence', () => {
+  // E swept the real ledger forward: L010 left the count at +8 healthy laps and L011 at +9, after
+  // which --why reported "every lap with a baton row is filed" over a ledger holding two chain
+  // deaths. The cap stays; its silence does not.
+  const rows = [];
+  for (let i = 1; i <= 3; i++) rows.push(...DEAD('D' + i, i * 1000));
+  for (let i = 1; i <= 9; i++) rows.push(...ALIVE('H' + i, 10000 + i * 1000));
+  const fx = fixture(rows);
+  const r = mod().line({ ledger: fx.ledger, now: 99000, dirty: 0 });
+  assert.ok(r.text, 'twelve chained laps, three of them dead, and the reader went silent');
+  assert.strictEqual(r.older, 2, 'expected two deaths pushed past the 10-lap window, got ' + r.older);
+  assert.match(r.text, /2 older beyond the 10-lap window/, 'the cap dropped two laps silently: ' + r.text);
+  fx.cleanup();
+});
+
+test('E-3.3: a lap with a damaged chain row is UNKNOWN, never counted as a chain death', () => {
+  // `attested` asks whether any row carries a work-attesting `chain` value. A `working` row whose
+  // `chain` field is damaged therefore un-attests a HEALTHY lap and manufactures a chain death out
+  // of corruption. Unknown is not absent - residue.js, 2026-08-17.
+  const fx = fixture([
+    { lap: 'L0', stage: 'open', at: 1, initiator: 'chair', inquiry: 'x', guess: ['a.js'], head: null },
+    { lap: 'L0', stage: 'chain', at: 2, chain: 'dispatched', holder: 'librarian' },
+    { lap: 'L0', stage: 'chain', at: 3, holder: 'panes' },              // was `working`; field gone
+    { lap: 'L0', stage: 'chain', at: 4, chain: 'filed', holder: 'chair' }]);
+  const r = mod().line({ ledger: fx.ledger, now: 90, dirty: 0 });
+  assert.strictEqual(r.unwitnessed, 0, 'damage was reported as a chain death: ' + r.text);
+  assert.strictEqual(r.damaged, 1, 'and the damage was dropped instead of counted');
+  assert.match(r.text, /1 lap\(s\) UNKNOWN, damaged rows/, r.text);
+  fx.cleanup();
+});
+
+test('E-3.3: a wholly corrupt ledger reads as CORRUPT on stdout, never as clean', () => {
+  // `led.unreadable` was computed on every path and appended only where a line already printed, so
+  // all three silent returns threw it away: a destroyed ledger and an unstarted one were one
+  // output. The count is load-bearing now - `0 unwitnessed` over an unreadable file is a false
+  // green with an alarm attached to it.
+  const fx = fixture(null);
+  fs.writeFileSync(fx.ledger, 'not json\n{broken\ngarbage\n');
+  const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
+  assert.strictEqual(r.code, 0, 'exit ' + r.code + ' / ' + r.stderr);
+  assert.match(r.stdout, /3 unreadable/, 'a destroyed ledger printed nothing: ' + JSON.stringify(r.stdout));
+  fx.cleanup();
+});
+
+test('membership, never ordering: the map/dispatched order every real lap uses is read the same', () => {
+  // lap-row.js declares map -> dispatched; all four real laps write dispatched -> map. A rule
+  // computing "did it get past index N" would misread the entire record.
+  const a = fixture([{ lap: 'L0', stage: 'open', at: 1, initiator: 'chair', inquiry: 'x', guess: ['a.js'], head: null },
+    { lap: 'L0', stage: 'chain', at: 2, chain: 'dispatched', holder: 'librarian' },
+    { lap: 'L0', stage: 'chain', at: 3, chain: 'map', holder: 'chair' },
+    { lap: 'L0', stage: 'chain', at: 4, chain: 'filed', holder: 'chair' }]);
+  const b = fixture([{ lap: 'L0', stage: 'open', at: 1, initiator: 'chair', inquiry: 'x', guess: ['a.js'], head: null },
+    { lap: 'L0', stage: 'chain', at: 2, chain: 'map', holder: 'chair' },
+    { lap: 'L0', stage: 'chain', at: 3, chain: 'dispatched', holder: 'librarian' },
+    { lap: 'L0', stage: 'chain', at: 4, chain: 'filed', holder: 'chair' }]);
+  const ra = mod().line({ ledger: a.ledger, now: 90, dirty: 0 });
+  const rb = mod().line({ ledger: b.ledger, now: 90, dirty: 0 });
+  assert.strictEqual(ra.unwitnessed, 1);
+  assert.strictEqual(rb.unwitnessed, 1, 'the two stage orders classified differently');
+  a.cleanup(); b.cleanup();
+});
+
+test('a lap continued after being filed is OPEN, not dead - the two readers agree about `closed`', () => {
+  // `filed` reads the NEWEST row, matching openLaps(). If one asked "is there a filed row anywhere"
+  // and the other "is the newest row filed", a resumed lap would be open and dead in the same line.
+  // THE FIXTURE HAS TO STAY PRE-WORK AFTER THE FILE, or the two definitions cannot diverge and
+  // this asserts nothing. The first version resumed with a `working` row: `attested` then went
+  // true and BOTH definitions reported the lap healthy, so the test passed under the mutation it
+  // was written to catch. Caught by mutating the line it guards (M2, 2026-08-29) - which is the
+  // only reason it is known to bite now.
+  const fx = fixture([{ lap: 'L0', stage: 'open', at: 1, initiator: 'chair', inquiry: 'x', guess: ['a.js'], head: null },
+    { lap: 'L0', stage: 'chain', at: 2, chain: 'map', holder: 'chair' },
+    { lap: 'L0', stage: 'chain', at: 3, chain: 'filed', holder: 'chair' },
+    { lap: 'L0', stage: 'chain', at: 4, chain: 'dispatched', holder: 'librarian' }]);
+  const r = mod().line({ ledger: fx.ledger, now: 90, dirty: 0 });
+  assert.match(r.text, /^chain: L0 DISPATCHED/, 'the resumed lap must lead as open: ' + r.text);
+  assert.strictEqual(r.unwitnessed, 0,
+    'a lap reported OPEN in the same line was also counted dead - the two readers disagree about `closed`');
+  assert.doesNotMatch(r.text, /unwitnessed/, r.text);
+  fx.cleanup();
+});
+
+test('more unwitnessed laps than the list cap: ids truncate with +N and the COUNT stays exact', () => {
+  const rows = [];
+  for (let i = 1; i <= 5; i++) rows.push(...DEAD('L' + String(i).padStart(3, '0'), i * 1000));
+  const fx = fixture(rows);
+  const r = mod().line({ ledger: fx.ledger, now: 90000, dirty: 0 });
+  assert.match(r.text, /^chain: L005 FILED/, r.text);
+  assert.match(r.text, /5 of 5 chained laps unwitnessed/, 'the count truncated with the list: ' + r.text);
+  assert.match(r.text, /\+1/, 'the truncation was silent: ' + r.text);
+  assert.strictEqual(r.text.split('\n').length, 1);
+  fx.cleanup();
+});
+
+test('a ledger with chain rows and NOTHING unwitnessed still exits 0 in silence', () => {
+  const fx = fixture(ALIVE('L008', 1000));
+  const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
+  assert.strictEqual(r.code, 0, 'exit ' + r.code + ' / ' + r.stderr);
+  assert.strictEqual(r.stdout, '', 'printed on a clean chain: ' + JSON.stringify(r.stdout));
+  assert.strictEqual(r.stderr, '');
+  fx.cleanup();
+});
+
+test('the dead lap reaches the ACTUAL cli, not only line() - the hook reads stdout', () => {
+  const fx = fixture(DEAD('L010', 1000));
+  const r = run(READER, ['--ledger', fx.ledger], fx.ledger);
+  assert.strictEqual(r.code, 0, 'exit ' + r.code + ' / ' + r.stderr);
+  assert.match(r.stdout, /WORK LEG UNWITNESSED/, 'stdout: ' + JSON.stringify(r.stdout));
+  fx.cleanup();
 });
