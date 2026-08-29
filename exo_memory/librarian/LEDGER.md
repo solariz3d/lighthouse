@@ -11,6 +11,13 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
+- cant_lose_repair_registration_2026-08-29.md — THE FIRST THIRD-PLACE CROSSING, adjudication IN PROGRESS:
+  the chair's break-attempt (appended in-file ~02:40) found a real defect (the repair rests on speaker
+  say-so — the surface tonight's law says cannot gate) AND its fix (the disk-side proxy: "did a check
+  precede the claim?" — observable from transcript+ledgers). Found a live case the OLD wording passes
+  ("we are idle", said without open-items). NEXT: keeper adjudicates; if adopted, BOOT amendment via the
+  chair's pen carries the repair + the proxy together; the membrane falsifier is SATISFIED (an attempt
+  was made before adoption)
 - falsifier_scope_2026-08-29.md (A) — the machine-scope table for every mechanized falsifier; adds UNSOURCED
   (worse than MIXED). LIVE as the scoping authority; F2 excluded by its own row
 - stalled_lap_detector (C, chain-status.js) + attack (E) — BUILT; E's defect OPEN: the verdict VANISHES when
