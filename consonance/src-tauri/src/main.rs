@@ -2305,7 +2305,28 @@ fn start_tailer(
                             if backfill_is_pane(&pane_id) {
                                 BACKFILL_TURNS.fetch_add(1, Ordering::Relaxed);
                             }
-                            board_push(&board, BoardEntry { pane: pane_id.clone(), role: role.clone(), text: text.clone(), ts, ts_source });
+                            // THE THIRD PLACE NEVER REACHES THE BOARD. Found 2026-08-25, the seat's
+                            // first day, by actors.evidence.test.js refusing to resolve its SID —
+                            // "this assertion is how you find out it appeared", and it was right.
+                            //
+                            // TEN ROWS OF A PRIVATE CONVERSATION were on the shared committee board
+                            // because spawn_third_place passes `board` to start_tailer, mirroring
+                            // spawn_librarian. THE MIRROR WAS COPIED WITHOUT ASKING WHAT IT CARRIED.
+                            // Every deliberate channel was cut — no MCP mount, no PaneNames entry,
+                            // a role outside ADDRESSABLE_SEATS — and then the transcript tailer,
+                            // which is not a channel anyone thinks about, wrote it out anyway.
+                            //
+                            // This is the third -> work direction and it is the worse one. The
+                            // digest leak (board-digest.js, same day) let work state IN; this let
+                            // the conversation OUT, onto a surface every pane can read in OPEN
+                            // phase. The brief's guarantee is "whatever is said here goes nowhere
+                            // unless the person carries it there themselves."
+                            //
+                            // The UI `turn` emit stays: that is how the pane draws its own text in
+                            // its own tab, and it reaches nobody else.
+                            if pane_id != THIRD_PLACE_SID {
+                                board_push(&board, BoardEntry { pane: pane_id.clone(), role: role.clone(), text: text.clone(), ts, ts_source });
+                            }
                             let _ = app.emit("turn", TurnRecord { pane: pane_id.clone(), role, text });
                         }
                         if let Some((inp, out, cr, cw, model)) = extract_usage(&v) {
@@ -7473,6 +7494,35 @@ mod shelf_tests {
             // Every indexed file must be namable by path, or "one read away" is not actionable.
             assert!(i.contains(".md  ("), "the indexed list carries no paths");
         }
+    }
+
+    /// THE THIRD PLACE NEVER REACHES THE BOARD — asserted on the SOURCE, because the leak was in a
+    /// call site and no unit test of the tailer would have seen it.
+    ///
+    /// On the seat's first day its SID had TEN ROWS of a private conversation on the shared
+    /// committee board: spawn_third_place hands `board` to start_tailer, mirroring spawn_librarian.
+    /// Every deliberate channel was cut and the transcript tailer wrote it out anyway.
+    ///
+    /// SCOPED TO THE TAILER'S BODY, not the file: searching main.rs for the guard would match THIS
+    /// TEST'S OWN TEXT — the self-reference trap, which in this repo has already produced a marker
+    /// matched by the comment removing it and a test satisfied by the sentence retiring its claim.
+    #[test]
+    fn the_third_place_transcript_never_reaches_the_board() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let start = src.find("fn start_tailer").expect("start_tailer must exist");
+        let body = &src[start..];
+        let end = body[1..].find("\nfn ").map(|i| i + 1).unwrap_or(body.len());
+        let body = &body[..end];
+        assert!(body.len() > 500, "the slice must be a real function body, got {}", body.len());
+        assert!(!body.contains("fn the_third_place_transcript"), "the slice must not include this test");
+
+        let push = body.find("board_push(").expect("the tailer must still push to the board");
+        let guard = body.find("if pane_id != THIRD_PLACE_SID");
+        assert!(
+            guard.is_some() && guard.unwrap() < push,
+            "board_push in the tailer is not guarded by THIRD_PLACE_SID — a private seat's \
+             transcript will be written to the shared committee board"
+        );
     }
 
     /// Bytes of BOOT sampled per span. NOT a taste: the longest verbatim run of BOOT that appears
