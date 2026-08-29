@@ -53,3 +53,8 @@ consonance/**/lyrics-cache.json
 # The rebuild watcher's own log. Machine state, not a record — it says what happened to one build
 # on one machine.
 dev/rebuild-on-close.log
+
+# The Third Place keeps its own record. Private conversation, and the keeper's standing rule is
+# that it travels through OneDrive and never the repo. Untracked was one `git add -A` from
+# permanent; this makes it explicit. Added 2026-08-29.
+exo_memory/third_place/
