@@ -11,14 +11,25 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 02:40 append).
 
 ## LIVE — windows open, with clocks
+- E'S FALSIFIER 2 — FIRED 2026-08-29 (window closed at 119/20 chair commits; keeper-initiated 10/11 laps =
+  90.9%). Registered consequence on the table: "the human is still the ferry and the three tools are
+  decorative." NOT tuned away; but its computation mixes universes (commits GLOBAL incl. 25 desktop; laps
+  MACHINE-LOCAL) — the P-UNIVERSE class inside a falsifier. Chair+keeper adjudicate; scope clause needed
+- F-LEDGER — FIRED 08-29 00:33 (LEDGER mtime 08-25 11:42 < lap.jsonl): cured this leg by this update. The
+  3.5-day dark window is what fired it; per-lap maintenance resumes
+- ask channel — LIVE (1bd57a2 registration; exo_memory/ASK.md holds SIX OPEN asks the keeper clears by
+  editing Status lines; ask.js wired c0d7325). The boot_v2/opposition/T4 decisions route THERE now
+- Third Place — board tailer leak FIXED (b601440, after 3 days uncommitted); 11 private rows on this
+  machine's board.jsonl await the KEEPER's removal call (user data, not a bug); js-suite RED until then
+- F-REACH — window FULL (11 laps ≥ 10): does NOT fire — one borderline instance (SPINE via BOOT:150,
+  findable by instruction-verb grep = vocabulary), short of the registered two content-required misses
+- D001–D003 exist on the DESKTOP's lap ledger only — no machine sees the whole lap record (2W-1 working
+  as designed; the merge question remains ABSENT and now has a measured cost: falsifier windows)
 - THE THIRD PLACE — Leg 1 OPENED 2026-08-25 ~11:38 (pane DELTA, first open on any machine); priming bar MET
   (0/0/0/0 on the first transcript); CH-0 LEAK LIVE: [panes] digest reaches the seat (falsifier 4 STEERING,
   mildest form) — fix = digest/pulse exclude THIRD_PLACE_SID; Legs 2–3 unchanged
-- machine_bound_class_2026-08-25.md (B) + machine_bound_class_attack_2026-08-25.md (E) — THE HOLE IS LIVE in
-  the shipped gate (db8e119): run-predicate computed from the corpus the test asserts on → the gate cannot
-  fail on its home machine. Fix = E's home= tag (outside the corpus; NOT-RUN on home = CLASS ERROR). UNBUILT.
-  Re-confirmed from the DESKTOP 2026-08-25 ~11:20: the shipped gate's own NOT-RUN reason names `home=` as the
-  thing that would let it tell a foreign board from a damaged one (`librarian/2026-08-25.desktop.md`)
+- machine_bound_class — HOLE CLOSED: E's home= tag LANDED (actors.evidence.test.js:1 "MACHINE-BOUND home=L",
+  desktop phase). NOT-RUN on the home machine is now distinguishable. Moved to CONSUMED next sweep
 - two_writers_registration_2026-08-25.md (A) — 2W-1 ADOPTED (dcb0d9b). F-2W-2 SATISFIED 08-25: the desktop wrote two
   tracked paths (its observations; librarian/2026-08-25.desktop.md — the per-machine candidate, DEMONSTRATED,
   regex amended in 5461505). Two writers on LEDGER.md as of that commit; reconcile on every pull
