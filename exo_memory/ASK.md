@@ -118,6 +118,27 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 
 ---
 
+
+### ASK-007 — univ-coldread egress, asked 2026-08-29
+**Source:**  §6.1;  §2 — the gate says this yes is never inferred from a dispatch.
+**Question:** May the four sealed UNIV documents (machine-local, ) be handed to fresh  subjects for the A0/A1 artifact arms? Stages 1–2 (calibration, floor, arm C) run without this and are not waiting.
+**Status:** OPEN
+
+### ASK-008 — cant_lose adjudication, asked 2026-08-29
+**Source:**  (the chair's break-attempt is in-file; membrane falsifier satisfied).
+**Question:** Adopt the repair — the Third Place's wording as the WHY, the disk-proxy "did a check precede the claim?" as the HOW — as the BOOT:22 amendment, executed as strike-in-place handle replacement? Gates P-HANDLE; B's registry is already armed for the sweep.
+**Status:** OPEN
+
+### ASK-009 — the 11 Third Place board rows, asked 2026-08-29
+**Source:**  red at HEAD; the rows are from the Third Place's first session, written to the shared board before b601440.
+**Question:** The rows are your conversation — remove, keep, or redact? js-suite stays honestly RED until called; this is user data, not a bug.
+**Status:** OPEN
+
+### ASK-010 — third_place/ tracking, asked 2026-08-29
+**Source:**  gitignored the directory; carrier-drift's census went red tonight on the seat's 07:51 notes (a carrier the sweep sees either way).
+**Question:** Third Place notes: private-stays-local (gitignored), or tracked? Bears on how the carrier census accounts that file.
+**Status:** OPEN
+
 ## CLEARED
 
 *(none yet — this file is one day old)*
