@@ -362,6 +362,36 @@ function scan(opts = {}) {
   }
 
   for (const w of reg.withdrawals) {
+    // ── ARMED, and why a disarmed entry is not the same thing as no entry ─────────────────
+    // A wording can be REGISTERED before it is SUPERSEDED. The case that forced this: the
+    // cant_lose repair (loop/cant_lose_repair_registration_2026-08-29.md) is filed, its five
+    // instruction-reachable carriers are enumerated, and the keeper has not adjudicated. Arming
+    // it now would have this tool report the room's own LIVE doctrine as a propagation failure —
+    // an instrument calling the current instrument an error. Leaving it out entirely would mean
+    // the accounting is done from scratch, under time pressure, on the night of adoption; that
+    // is when the July-12 diving pass missed BOOT.md.
+    //
+    // So: a disarmed entry is scanned in FULL and its findings are computed and PRINTED. They
+    // carry `pending` and do not set red. Arming is one word. Two consequences that are the
+    // whole point: the entry cannot rot unnoticed while it waits (a stale anchor shows up in
+    // every run), and adoption cannot silently under-cover, because the unaccounted sites are
+    // already on screen before anyone decides.
+    //
+    // AND A DISARMED ENTRY MUST NAME WHAT ARMS IT. Same rule as `acknowledged` needing `see`:
+    // an exemption with no destination is a silencer, and "we'll arm it later" with no named
+    // later is how a registry becomes a list.
+    const armed = w.armed !== false;
+    const wStart = findings.length;
+    // Held back until after the pending-marking below: BAD-DISARM is a defect in the REGISTRY,
+    // not a carrier finding, so it is red even for the entry that is disarmed.
+    const hard = [];
+    if (!armed && !w.arms_on) {
+      hard.push({
+        w: w.id, kind: 'BAD-DISARM', file: path.relative(root, REGISTRY), line: 0,
+        detail: 'a disarmed entry must name what arms it ("arms_on"); a registration that waits ' +
+                'on nothing in particular waits forever and reads as coverage',
+      });
+    }
     const pat = new RegExp(w.pattern, 'gi');
     const markerRe = new RegExp(w.marker, 'i');
     const sitesByFile = new Map();
@@ -469,8 +499,13 @@ function scan(opts = {}) {
       }
     }
 
+    if (!armed) for (let i = wStart; i < findings.length; i++) findings[i].pending = true;
+    const pending = findings.length - wStart;
+    for (const f of hard) findings.push(f);
+
     perWithdrawal.push({ id: w.id, claim: w.claim, withdrawn_at: w.withdrawn_at,
-      correct_form: w.correct_form, occurrences, accounted });
+      correct_form: w.correct_form, occurrences, accounted,
+      armed, arms_on: w.arms_on || null, pending: armed ? 0 : pending });
   }
 
   // CH-4 membership is a property of a finding, not a filter on it: an unaccounted occurrence in
@@ -478,7 +513,8 @@ function scan(opts = {}) {
   // the set is still a carrier. Both are red; only one is labelled.
   for (const f of findings) if (f.file && ch4.set.has(f.file)) f.ch4 = true;
 
-  const red = findings.length > 0;
+  // A pending finding belongs to a disarmed entry: computed, printed, and not yet a failure.
+  const red = findings.some((f) => !f.pending);
   return {
     red, findings, withdrawals: perWithdrawal, ch4,
     counts: {
@@ -529,6 +565,24 @@ const LIMITS = [
   'It matches WORDING, not meaning. A carrier asserting the same withdrawn claim in different',
   '  words is invisible here — record/claim-your-continuity.md:15 calls the keeper "the',
   '  decorrelated instrument" with no "only" and this tool does not see it.',
+  'IT SCANS FILES; A HANDLE FIRES IN A TURN. 2026-08-29 registered a wording because a seat ran',
+  '  the crude form of a test WHILE CARRYING the document that corrects it — nothing on disk was',
+  '  wrong at that moment. The measurement that produced the finding (journal/2026-08-17, pane C)',
+  '  counted LIVE TURNS: a spoken short form fired 13 times while its written long form sat in the',
+  '  never-invoked list. That universe is not this one. Green here means no file still teaches the',
+  '  wording. It does not mean nobody still uses it, and it never will.',
+  'IT READS .md ONLY, and wordings live outside it. Measured, same registration: the crude test is',
+  '  in consonance/tools/tell-index.js:172 as a detector\'s rationale, and in',
+  '  dev/shell/hooks/l2-overseer-worker.js:34 INSIDE A LIVE MODEL PROMPT — the strongest carrier',
+  '  class there is, since it instructs at runtime rather than teaching a reader. Both are',
+  '  structurally invisible here.',
+  'IT HAS NO CONCEPT OF TYPOGRAPHIC POSITION, and the finding it was grown for says position IS',
+  '  retrieval weight — whatever is bold is the handle. A file that strikes the crude wording and',
+  '  leaves it in the bold slot, with the repair added in plain text below, is GREEN here and is',
+  '  the exact failure. Only a human reading the diff catches that.',
+  'THE PATTERN ALTERNATION IS ENUMERATED, NOT CLOSED. It admits the four forms measured in this',
+  '  corpus (can\'t / cannot / can you / can I). A fifth phrasing of the same handle, written',
+  '  tomorrow, is green forever and nothing here will say so.',
   'It cannot tell you what has been withdrawn. The registry is hand-written; a withdrawal',
   '  nobody registers is a withdrawal this reports green on, forever.',
   'It reads .md only, and only under the corpus rule printed above.',
@@ -552,21 +606,39 @@ function report(res, opts = {}) {
         'drop 14 of 17 registered sites');
   }
   say();
+  const armedN = res.withdrawals.filter((w) => w.armed).length;
+  say('  registry: ' + res.withdrawals.length + ' registered · ' + armedN + ' ARMED · ' +
+      (res.withdrawals.length - armedN) + ' DISARMED (scanned and printed, never red)');
+  say();
   for (const w of res.withdrawals) {
-    say('  ' + w.id);
+    say('  ' + w.id + (w.armed ? '' : '   — DISARMED'));
     say('    claim        ' + w.claim);
     say('    withdrawn at ' + w.withdrawn_at);
     say('    correct form ' + w.correct_form);
     say('    ' + w.occurrences + ' occurrences in carriers · ' + w.accounted + ' accounted');
-  }
-  if (res.findings.length) {
-    say();
-    say('  RED — ' + res.findings.length + (res.findings.length === 1 ? ' finding' : ' findings'));
-    for (const f of res.findings) {
-      say('    ' + f.kind + '  ' + f.file + (f.line ? ':' + f.line : '') + (f.ch4 ? '   [CH-4]' : ''));
-      say('      ' + f.detail);
-      if (f.excerpt) say('      … ' + f.excerpt + ' …');
+    if (!w.armed) {
+      say('    ARMS ON      ' + w.arms_on);
+      say('    UNTIL THEN THIS ENTRY PROTECTS NOTHING. ' + w.pending +
+          ' finding(s) below are computed and shown, and do not set red.');
     }
+  }
+  const live = res.findings.filter((f) => !f.pending);
+  const pend = res.findings.filter((f) => f.pending);
+  const show = (f) => {
+    say('    ' + f.kind + '  ' + f.file + (f.line ? ':' + f.line : '') + (f.ch4 ? '   [CH-4]' : ''));
+    say('      ' + f.detail);
+    if (f.excerpt) say('      … ' + f.excerpt + ' …');
+  };
+  if (live.length) {
+    say();
+    say('  RED — ' + live.length + (live.length === 1 ? ' finding' : ' findings'));
+    for (const f of live) show(f);
+  }
+  if (pend.length) {
+    say();
+    say('  PENDING — ' + pend.length + (pend.length === 1 ? ' finding' : ' findings') +
+        ' against DISARMED entries. Not red. These are what arming would fire.');
+    for (const f of pend) show(f);
   }
   say();
   say('WHAT THIS CANNOT SEE');
@@ -611,8 +683,10 @@ if (require.main === module) {
   }
   const res = scan();
   if (argv.includes('--quiet')) {
+    const pend = res.findings.filter((f) => f.pending).length;
     console.log((res.red ? 'RED' : 'GREEN') + ' — carrier-drift · ' + res.counts.carriers +
-      ' carriers · ' + res.findings.length + ' findings');
+      ' carriers · ' + (res.findings.length - pend) + ' findings' +
+      (pend ? ' · ' + pend + ' PENDING against disarmed entries' : ''));
   } else {
     console.log(report(res));
   }

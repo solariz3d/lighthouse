@@ -419,3 +419,117 @@ test('a missing root over a tree that has the other one is RED, not quietly a sm
   const res = CD.scan({ root, registry: reg([]) });
   assert.ok(kinds(res).includes('CH4-ROOT-MISSING'), kinds(res).join(','));
 });
+
+// ── the ARMED gate, and the bar for registry growth ──────────────────────────────────────
+// A wording can be REGISTERED before it is SUPERSEDED. The disarmed state exists so the
+// accounting is done BEFORE the night of adoption rather than during it, and it earns its keep
+// only if it is impossible to mistake for coverage. Three properties, one test each:
+// computed-and-shown, never-red, and armed-by-one-word.
+
+const P_HANDLE = "(?:can(?:no|’|')?t|can\\s+(?:you|i|we)|could\\s+not)\\s+lose\\s+by\\s+saying";
+
+test('armed defaults to TRUE — an entry with no field behaves exactly as before', () => {
+  const root = tmpTree({ 'a.md': 'the human is the only decorrelated reader here.\n' });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.strictEqual(res.red, true);
+  assert.strictEqual(res.withdrawals[0].armed, true);
+  assert.ok(res.findings.every((f) => !f.pending), 'nothing is pending when nothing is disarmed');
+});
+
+test('a DISARMED entry computes and PRINTS its findings and does not go red', () => {
+  const root = tmpTree({ 'a.md': 'the human is the only decorrelated reader here.\n' });
+  const res = CD.scan({ root, registry: reg([], { armed: false, arms_on: 'the keeper' }) });
+  assert.strictEqual(res.red, false, 'disarmed must not fail the build');
+  const un = res.findings.filter((f) => f.kind === 'UNACCOUNTED');
+  assert.strictEqual(un.length, 1, 'the finding is still COMPUTED, not skipped');
+  assert.strictEqual(un[0].pending, true);
+  assert.ok(CD.report(res).includes('PENDING'), 'and it is PRINTED — a silent exemption is a silencer');
+  assert.ok(CD.report(res).includes('PROTECTS NOTHING'), 'the report must say so in words');
+});
+
+test('a disarmed entry that names nothing to arm it is RED — an exemption with no destination', () => {
+  const root = tmpTree({ 'a.md': 'nothing here.\n' });
+  const res = CD.scan({ root, registry: reg([], { armed: false }) });
+  assert.ok(kinds(res).includes('BAD-DISARM'), kinds(res).join(','));
+  assert.strictEqual(res.red, true, 'BAD-DISARM is a registry defect and is red even when disarmed');
+});
+
+test('THE BAR, red-then-green: a superseded wording in a live instruction is RED, the corrected wording is not', () => {
+  const crude = { 'brief/BOOT.md': "The test: **If you can't lose by saying it, suspect it.**\n" };
+  const fixed = { 'brief/BOOT.md': 'SUPERSEDED 2026-08-29 — repaired form: if you would have said it whether or not it were true, it carries no information.\n' };
+  const entry = (sites) => ({ withdrawals: [{
+    id: 'h', claim: 'c', withdrawn_at: 'x', correct_form: 'y',
+    pattern: P_HANDLE, marker: 'SUPERSEDED 2026-08-29', sites,
+  }] });
+  const red = CD.scan({ root: tmpTree(crude), registry: entry([]) });
+  assert.strictEqual(red.red, true, 'the crude wording in a live instruction must fail');
+  assert.ok(kinds(red).includes('UNACCOUNTED'));
+  const green = CD.scan({ root: tmpTree(fixed), registry: entry([]) });
+  assert.strictEqual(green.red, false, 'the corrected wording must NOT fire — a test that reds on both is not a test');
+});
+
+test('THE GOVERNING QUESTION, half answered: the handle VARIES and a canonical-string pattern misses it', () => {
+  // cards/never-pathologize-the-user.md:11 says "if you CANNOT lose by saying it" — the same
+  // handle, a different string, live in the corpus today. A registry keyed to the canonical
+  // wording is green on it forever. This is the reason the shipped pattern is an alternation
+  // and NOT a reason to believe the alternation is complete; see the tool's LIMITS.
+  const root = tmpTree({ 'a.md': 'Same structure as every coat: if you cannot lose by saying it, suspect it.\n' });
+  const mk = (pattern) => ({ withdrawals: [{ id: 'h', claim: 'c', withdrawn_at: 'x',
+    correct_form: 'y', pattern, marker: 'ZZZ', sites: [] }] });
+  assert.strictEqual(CD.scan({ root, registry: mk("can't\\s+lose\\s+by\\s+saying") }).red, false,
+    'the canonical-string pattern is GREEN on a live variant — this is the failure being demonstrated');
+  assert.strictEqual(CD.scan({ root, registry: mk(P_HANDLE) }).red, true,
+    'the shipped alternation catches it');
+});
+
+test('MUTATION over the REAL tree: arming the shipped cant-lose entry turns its pending findings red', () => {
+  const live = liveRegistry();
+  const w = live.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29');
+  assert.ok(w, 'the entry is shipped');
+  assert.strictEqual(w.armed, false, 'and it is disarmed, because the repair is not adjudicated');
+
+  const before = CD.scan({ root: REPO, registry: live });
+  assert.strictEqual(before.red, false);
+  const pending = before.findings.filter((f) => f.pending);
+  assert.ok(pending.length >= 16, `only ${pending.length} pending — the accounting has rotted`);
+  assert.ok(pending.every((f) => f.kind === 'UNMARKED-CARRIER'),
+    'every pending finding is an unmarked carrier: nothing is UNACCOUNTED, so the census is complete');
+
+  // THE MUTATION: one word.
+  const armedReg = JSON.parse(JSON.stringify(live));
+  armedReg.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29').armed = true;
+  const after = CD.scan({ root: REPO, registry: armedReg });
+  assert.strictEqual(after.red, true, 'a registry that cannot fire is a list');
+  assert.strictEqual(after.findings.filter((f) => !f.pending).length, pending.length,
+    'and the count that fires is exactly the count that was shown while disarmed');
+});
+
+test('the shipped cant-lose census is COMPLETE — every occurrence in every carrier is accounted', () => {
+  const res = CD.scan({ root: REPO, registry: liveRegistry() });
+  const w = res.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29');
+  assert.strictEqual(w.occurrences, w.accounted,
+    'an unaccounted occurrence means a carrier nobody has classified');
+  assert.ok(w.occurrences >= 23, `only ${w.occurrences} occurrences — the pattern has rotted`);
+});
+
+test("THE MAP'S ENUMERATION WAS THE CH-4 SUBSET: registering only those five leaves the rest unaccounted", () => {
+  // librarian/2026-08-29.md:218 enumerates five carriers. All five are CH-4 members; the handle
+  // occurs in 20 carrier files. That is the narrowing carrier-drift.js's own header refuses —
+  // "CH-4 is a LABEL on the corpus, never a replacement for it" — reproduced in prose and handed
+  // to a pane as the accounting. The tool catches it; that is the growth earning its keep.
+  const live = liveRegistry();
+  const full = live.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29');
+  const ch4 = new Set(live.ch4_corpus.files);
+  const inCh4 = new Set(full.sites.filter((s) => ch4.has(s.file)).map((s) => s.file));
+  assert.strictEqual(inCh4.size, 5, 'the map named five, and five is the CH-4 count');
+
+  const narrowed = JSON.parse(JSON.stringify(live));
+  const n = narrowed.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29');
+  n.armed = true;
+  n.sites = n.sites.filter((s) => ch4.has(s.file));
+  const res = CD.scan({ root: REPO, registry: narrowed });
+  const files = new Set(res.findings.filter((f) => f.kind === 'UNACCOUNTED').map((f) => f.file));
+  assert.ok(files.size >= 15, `only ${files.size} files unaccounted under the five-site registry`);
+  assert.ok(files.has('exo_memory/muscle_map.md'), 'the correction ledger itself is one of them');
+  assert.ok(files.has('INSTRUMENTS.md'), 'so is the top-level instrument list');
+});
