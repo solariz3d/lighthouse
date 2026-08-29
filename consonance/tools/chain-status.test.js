@@ -507,3 +507,237 @@ test('the dead lap reaches the ACTUAL cli, not only line() - the hook reads stdo
   assert.match(r.stdout, /WORK LEG UNWITNESSED/, 'stdout: ' + JSON.stringify(r.stdout));
   fx.cleanup();
 });
+
+// ── THE COLLATION CLAIM (pane B, 2026-08-29) ─────────────────────────────────────────────────────
+// A store here is a temp dir holding all three files the claim joins — lap.jsonl, board.jsonl and
+// letters.json — because the claim is a CONJUNCTION and a fixture that supplies one of them is
+// testing something else. Nothing below reads C:\Consonance\data.
+
+const LET = { 'aaaaaaaa-0000-4000-8000-000000000001': 'A', 'bbbbbbbb-0000-4000-8000-000000000002': 'B' };
+const DISPATCH = (ts, id) => ({ pane: 'chair', role: 'committee', ts,
+  text: 'chair injected (chair: claude-opus-5) -> ' + id.slice(0, 8) + ' [delivered and received]: go' });
+const HANDBACK = (ts, letter) => ({ pane: letter, role: 'committee', ts, text: '[pane ' + letter + '] done' });
+const WORKING = (at) => ([
+  { lap: 'L900', stage: 'open', at: at - 100, initiator: 'human', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+  { lap: 'L900', stage: 'chain', at, chain: 'working', holder: 'panes' },
+]);
+
+/** lap.jsonl + board.jsonl + letters.json in one temp dir. `board:null` omits the board entirely. */
+function store(lapRows, boardRows, opts = {}) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-store-'));
+  fs.writeFileSync(path.join(dir, 'lap.jsonl'), lapRows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  if (boardRows !== null) {
+    fs.writeFileSync(path.join(dir, 'board.jsonl'),
+      (opts.rawBoard || boardRows.map((r) => JSON.stringify(r)).join('\n')) + '\n');
+  }
+  if (opts.letters !== null) {
+    fs.writeFileSync(path.join(dir, 'letters.json'), opts.rawLetters || JSON.stringify(opts.lettersMap || LET));
+  }
+  return { dir, ledger: path.join(dir, 'lap.jsonl'), cleanup: () => fs.rmSync(dir, { recursive: true, force: true }) };
+}
+const A = 'aaaaaaaa-0000-4000-8000-000000000001';
+const B = 'bbbbbbbb-0000-4000-8000-000000000002';
+
+test('BAR 1 — holder=panes and every dispatched pane has posted: the line SAYS SO', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A'), HANDBACK(1400, 'B')]);
+  const r = mod().line({ ledger: s.ledger, now: 1400 + 65 * 60000, dirty: 0 });
+  assert.match(r.text, /HANDBACKS IN, NOT COLLATED — 2 of 2 \(A,B\), last 65m ago/, r.text);
+  s.cleanup();
+});
+
+test('BAR 2 — one pane has not posted: SILENT on the claim, and it names who is owed', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A')]);
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.ok(!/HANDBACKS IN/.test(r.text), 'fired with a pane still owing: ' + r.text);
+  assert.match(r.text, /handbacks 1 of 2 \(owing B\)/, r.text);
+  s.cleanup();
+});
+
+test('BAR 2b — a hand-back that PREDATES the dispatch does not count: it answered an older brief', () => {
+  const s = store(WORKING(1000), [HANDBACK(1050, 'A'), DISPATCH(1100, A)]);
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.match(r.text, /handbacks 0 of 1 \(owing A\)/, r.text);
+  s.cleanup();
+});
+
+test('BAR 3 — holder=chair is silent on the claim no matter how long every pane has been quiet', () => {
+  const rows = [...WORKING(1000), { lap: 'L900', stage: 'chain', at: 2000, chain: 'return-leg', holder: 'chair' }];
+  const s = store(rows, [DISPATCH(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A'), HANDBACK(1400, 'B')]);
+  const r = mod().line({ ledger: s.ledger, now: 1400 + 99 * 3600000, dirty: 0 });
+  assert.ok(!/HANDBACKS IN|handbacks |collation /.test(r.text), 'the claim leaked onto a chair line: ' + r.text);
+  s.cleanup();
+});
+
+test('BAR 3b — holder=librarian is silent too, on the identical board', () => {
+  const rows = [...WORKING(1000), { lap: 'L900', stage: 'chain', at: 2000, chain: 'return-leg', holder: 'librarian' }];
+  const s = store(rows, [DISPATCH(1100, A), HANDBACK(1300, 'A')]);
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.ok(!/HANDBACKS IN|handbacks |collation /.test(r.text), r.text);
+  s.cleanup();
+});
+
+// ── THE TRAP: silent-on-unreadable is the false-green class ───────────────────────────────────────
+
+test('THE TRAP — an UNPARSEABLE board says UNKNOWN, never silent', () => {
+  const s = store(WORKING(1000), [], { rawBoard: '{not json' });
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  // The first draft SKIPPED unparseable lines, which emptied the round, which read as 'n/a', which
+  // printed silence — a damaged source reporting as nothing-to-say. Counted, and loud.
+  assert.ok(r.text.includes('collation UNKNOWN — 1 board line(s) unreadable'), r.text);
+  assert.ok(!/HANDBACKS IN/.test(r.text), 'a garbage board produced an all-in claim: ' + r.text);
+  s.cleanup();
+});
+
+test('THE TRAP — an unreadable letters.json says UNKNOWN, and the line carries it', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), HANDBACK(1300, 'A')], { rawLetters: '{oops' });
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.match(r.text, /collation UNKNOWN — letters\.json unreadable/, r.text);
+  s.cleanup();
+});
+
+test('THE TRAP — a dispatch to a pane with NO letter is UNKNOWN, not a smaller round', () => {
+  // The false-green shape: drop the pane you cannot name, and the remaining round is "all in".
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, 'cccccccc-0000-4000-8000-000000000003'), HANDBACK(1300, 'A')]);
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.match(r.text, /collation UNKNOWN — 1 dispatch target\(s\) unresolved/, r.text);
+  assert.ok(!/HANDBACKS IN/.test(r.text), r.text);
+  s.cleanup();
+});
+
+test('THE TRAP — an AMBIGUOUS id prefix resolves to nothing rather than to a guess', () => {
+  const two = { 'abcdef00-0000-4000-8000-000000000001': 'A', 'abcdef00-0000-4000-8000-000000000002': 'B' };
+  assert.strictEqual(mod().toLetter('abcdef00', two), null, 'a prefix matching two panes was guessed');
+  assert.strictEqual(mod().toLetter('abcdef00-0000-4000-8000-000000000002', two), 'B');
+  s_cleanup_noop();
+});
+function s_cleanup_noop() {}
+
+test('THE TRAP — a byte tail that does not reach the anchor is UNKNOWN, not "nobody owes"', () => {
+  // The anchor is the previous `filed` row. A tail whose oldest committee row is NEWER than the
+  // anchor could be missing a dispatch, so the round could be short and a short round reads all-in.
+  const c = mod().collation({
+    now: 9e6, anchor: 1000,
+    boardLines: [JSON.stringify(HANDBACK(5000, 'A'))], boardTruncated: true,
+    lettersMap: LET, board: 'x', letters: 'y',
+  });
+  assert.strictEqual(c.state, 'unknown', JSON.stringify(c));
+  assert.match(c.why, /did not reach the anchor/);
+});
+
+test('the anchor scopes the round: a dispatch from BEFORE the last `filed` row is not this cycle', () => {
+  const rows = [
+    { lap: 'L899', stage: 'open', at: 100, initiator: 'human', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+    { lap: 'L899', stage: 'chain', at: 900, chain: 'filed', holder: 'chair' },
+    ...WORKING(1000),
+  ];
+  // B was dispatched in the PREVIOUS cycle and never answered. Without the anchor it would owe
+  // forever and this claim would be permanently mute — the measured failure over 206 dispatches.
+  const s = store(rows, [DISPATCH(500, B), DISPATCH(1100, A), HANDBACK(1300, 'A')]);
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 5 * 60000, dirty: 0 });
+  assert.match(r.text, /HANDBACKS IN, NOT COLLATED — 1 of 1 \(A\)/, r.text);
+  s.cleanup();
+});
+
+test('a store with NO board.jsonl is not a room running a committee: n/a and silent', () => {
+  // The applicability cut, and the reason it exists: the first version of this joined a temp-dir
+  // fixture against the live 185 MB board. Around's byte-identical test caught it on run one.
+  const s = store(WORKING(1000), null);
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.ok(!/collation|handbacks/.test(r.text), r.text);
+  s.cleanup();
+});
+
+test('the chair\'s own board traffic is not a hand-back', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), { pane: 'chair', role: 'committee', ts: 1500, text: 'call_chair -> Main [Received]: "x"' }]);
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.match(r.text, /handbacks 0 of 1 \(owing A\)/, 'a chair row was counted as a pane hand-back: ' + r.text);
+  s.cleanup();
+});
+
+test('a delivery-UNCONFIRMED dispatch is counted and said, not silently treated as delivered', () => {
+  const bad = { pane: 'chair', role: 'committee', ts: 1100,
+    text: 'chair injected (chair: x) -> ' + A.slice(0, 8) + " [WRITTEN BUT UNCONFIRMED — no render in the pane's capture within 1800ms]: go" };
+  const s = store(WORKING(1000), [bad, HANDBACK(1300, 'A')]);
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 3 * 60000, dirty: 0 });
+  assert.match(r.text, /1 dispatch\(es\) delivery-unconfirmed/, r.text);
+  s.cleanup();
+});
+
+test('THE UNIVERSE rides the claim: N of M and the round are printed, never left to the reader', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A'), HANDBACK(1400, 'B')]);
+  const r = mod().line({ ledger: s.ledger, now: 1400 + 60000, dirty: 0 });
+  assert.match(r.text, /2 of 2/, 'the denominator is missing: ' + r.text);
+  assert.match(r.text, /\(A,B\)/, 'the round is not named: ' + r.text);
+  s.cleanup();
+});
+
+test('MUTATION — remove one hand-back row and the fired claim goes silent', () => {
+  const full = [DISPATCH(1100, A), DISPATCH(1200, B), HANDBACK(1300, 'A'), HANDBACK(1400, 'B')];
+  const s1 = store(WORKING(1000), full);
+  assert.match(mod().line({ ledger: s1.ledger, now: 9e6, dirty: 0 }).text, /HANDBACKS IN/);
+  s1.cleanup();
+  const s2 = store(WORKING(1000), full.slice(0, 3));
+  const r = mod().line({ ledger: s2.ledger, now: 9e6, dirty: 0 });
+  assert.ok(!/HANDBACKS IN/.test(r.text), 'the claim survived deleting the evidence for it: ' + r.text);
+  s2.cleanup();
+});
+
+// ── THE BLIND GATE — pane E's attack §2b, the one item it said not to ship without ────────────────
+// The claim carries cross-pane state onto a line printed in every seat. blind.js exists to mute that
+// traffic; reading board.jsonl directly routes around it unless the gate is here.
+
+test('BLIND — an active window withholds the claim and DECLARES the mute', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), HANDBACK(1300, 'A')]);
+  fs.writeFileSync(path.join(s.dir, 'blind.lock'),
+    JSON.stringify({ until: new Date(Date.now() + 3600000).toISOString(), why: 'run', by: 'chair' }));
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.ok(!/HANDBACKS IN/.test(r.text), 'cross-pane state leaked through a blind window: ' + r.text);
+  assert.match(r.text, /collation UNKNOWN — blind window/, r.text);
+  s.cleanup();
+});
+
+test('BLIND — an UNREADABLE marker fails CLOSED, per blind.js decision 3', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), HANDBACK(1300, 'A')]);
+  fs.writeFileSync(path.join(s.dir, 'blind.lock'), '{ this is not json');
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.match(r.text, /collation UNKNOWN — blind window/, 'an unreadable marker did not mute: ' + r.text);
+  s.cleanup();
+});
+
+test('BLIND — an EXPIRED marker does not mute: fail-closed is not fail-forever', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), HANDBACK(1300, 'A')]);
+  fs.writeFileSync(path.join(s.dir, 'blind.lock'),
+    JSON.stringify({ until: new Date(Date.now() - 3600000).toISOString(), why: 'over', by: 'chair' }));
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 60000, dirty: 0 });
+  assert.match(r.text, /HANDBACKS IN, NOT COLLATED/, 'an expired window kept the claim muted: ' + r.text);
+  s.cleanup();
+});
+
+test('BLIND — the marker is read from the STORE, never from the live machine', () => {
+  // The same defect Around's byte-identical test caught in the first draft, one file over: a
+  // fixture must not consult C:\Consonance\data for anything, the blind window included.
+  const s = store(WORKING(1000), [DISPATCH(1100, A), HANDBACK(1300, 'A')]);
+  let asked = null;
+  const c = mod().collation({
+    now: 9e6, anchor: 0, board: path.join(s.dir, 'board.jsonl'), letters: path.join(s.dir, 'letters.json'),
+    blindState: (p) => { asked = p; return { blind: false, reason: 'no-lock' }; },
+  });
+  assert.strictEqual(asked, path.join(s.dir, 'blind.lock'), 'the gate consulted ' + asked);
+  assert.strictEqual(c.state, 'all-in');
+  s.cleanup();
+});
+
+test('COVERAGE, stated: this claim cannot fire on a lap whose holder never reached panes', () => {
+  // Pane E's §1. L010 and L011 died at MAP with holder=chair; only L013 is this clause's case. A
+  // hand-back saying "this closes the failure I committed three times" is wrong by two-thirds.
+  const rows = [
+    { lap: 'L010', stage: 'open', at: 900, initiator: 'human', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+    { lap: 'L010', stage: 'chain', at: 1000, chain: 'dispatched', holder: 'librarian' },
+    { lap: 'L010', stage: 'chain', at: 1100, chain: 'map', holder: 'chair' },
+  ];
+  const s = store(rows, [DISPATCH(1200, A), HANDBACK(1300, 'A')]);
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.ok(!/HANDBACKS IN|handbacks |collation /.test(r.text),
+    'the claim fired on a lap that never dispatched anyone: ' + r.text);
+  s.cleanup();
+});
