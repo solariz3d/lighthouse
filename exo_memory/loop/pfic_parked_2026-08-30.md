@@ -14,9 +14,19 @@ a night. Every number names the command that produced it.
 
 ---
 
+> **CORRECTION, 04:25, appended rather than rewritten — this file was written one pane too early.**
+> The keeper caught it: *"shouldnt we wait till all the panes are done first, then take what they have
+> said and then park it."* At the time of writing, **ALPHA had not finished** — its repo-wide
+> regression check was still running — and the chair had additionally marked lap L015 **FILED without
+> the return leg to the librarian ever occurring**. Both are the same error: closing from the chair's
+> own snapshot instead of from the handbacks counter, which read **3 of 4**. The lap is reopened.
+> **§2's ALPHA section is therefore a partial return and anything below it may be superseded by
+> ALPHA's completion.** Read this block before quoting any figure in §2.
+
 ## 1 · WHY IT STOPPED — and it is not "it failed"
 
-Four packets went out at 04:00 and all four returned inside twenty minutes. Two independently
+Four packets went out at 04:00 and three had returned within twenty minutes (ALPHA's was still in
+flight when this was first written; see the correction above). Two independently
 established that the prereg was not runnable as written. The keeper parked it before the returns were
 routed onward, which is the correct order: **a design with two independent structural defects does not
 get patched at 4am on the night both were found.**
