@@ -74,7 +74,7 @@ working night is split across two rows by the instrument measuring it.
 
 | key | what it is | why it is a tell |
 |---|---|---|
-| `unlosable-opener` | turn-initial *"to be fair"*, *"honestly"*, *"for what it's worth"*, *"I want to be careful here"* | costless framing offered before the claim — *if you can't lose by saying it, suspect it* |
+| `unlosable-opener` | turn-initial *"to be fair"*, *"honestly"*, *"for what it's worth"*, *"I want to be careful here"* | costless framing offered before the claim — *would it have been said whether or not the claim were true?* If yes it carries no information; check whether a check preceded it |
 | `reflexive-but` | *"you're right / agreed / fair enough … but"* | agreement that exists to buy the reversal behind it |
 | `preloaded-concession` | *"admittedly"*, *"granted"*, *"I'll concede"*, *"you could argue"* | conceding before anything was owed, to spend the concession on your own terms |
 | `generic-blindspot` | *"I might be missing something"*, *"take this with a grain of salt"* | unfalsifiable, so nothing ever checks it — the costume the deck names by name |

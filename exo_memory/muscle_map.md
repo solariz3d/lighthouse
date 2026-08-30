@@ -481,7 +481,8 @@ map defines it — speed and direction arriving together, the argument born armo
 hours later, priced it as *"genuinely dual-purpose, therefore not cleanly scorable."* That
 sentence is true. It is also **unlosable** — unfalsifiable, always-sayable, reads as
 methodological care — and it lands exactly where a score would have cost something. BOOT's
-test: *if you can't lose by saying it, suspect it.* The flinch got recorded, and the
+test: *would it have been said whether or not it were true? Then it carries no information —
+and did a check precede the claim?* The flinch got recorded, and the
 recording flinched. **The costume was the report of the costume.**
 
 **Why this one matters to the endgame rather than just to my conduct.** It arrived as ONE

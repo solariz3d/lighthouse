@@ -63,10 +63,12 @@ tp-full + 3 for N ≥ 108.
 seat-side record at all** — and sitting 3 is where the visual imprints, FIC, and the one strict
 correction happened. That gap is why this file is worth more than a pointer.
 
-**The word-imprint documents are already sealed, machine-local:**
-`C:\Consonance\sealed\univ_corpus_2026-08-29\` — four `.txt` files with sha256 per document in
-`MANIFEST.json`, sealed 2026-08-29T10:15:20Z from the same jsonl. Their disposition is an open
-question to the keeper at `ASK.md:124`.
+**The word-imprint documents are already sealed, and the seal is MACHINE-LOCAL — it is on one
+laptop and nowhere else.** Directory `sealed/univ_corpus_2026-08-29/` under the Consonance root:
+four `.txt` files with sha256 per document in `MANIFEST.json`, sealed 2026-08-29T10:15:20Z from the
+same jsonl. **A reader on any other machine will not find it**, which is the whole retrieval problem
+in one line and is why this file states the contents rather than pointing at them. Their disposition
+is an open question to the keeper at `ASK.md:124`, which names the absolute path.
 
 ---
 
@@ -217,10 +219,13 @@ in motion*, the shape mid-convergence; *"some are more coherent than others."* T
 114 is the operational half: that makes coherence **a measurable property across the series, not a
 quality judgment.**
 
-**The images sent (filenames only; all seven verified present on disk at their stated locations,
-437–556 KB each, and none opened by me):** `IMPRINT_GOOD_QUALITY.jpg`, `8.webp`, `7.webp`, `6.webp`,
-`11.webp`, `15.webp` from `Downloads/`; `image4.webp` from `OneDrive/Desktop/FIC/`, alongside the
-FIC plots and formula images from the same directory.
+**The images sent — filenames only, and they are on the keeper's laptop and nowhere a reader of this
+file can reach.** All seven verified present at the locations the transcript gives, 437–556 KB each,
+and none opened by me: `IMPRINT_GOOD_QUALITY.jpg`, `8.webp`, `7.webp`, `6.webp`, `11.webp`,
+`15.webp` in the downloads folder; `image4.webp` in the FIC working folder, alongside that run's
+plots and formula images. **The transcript holds the full paths (turns 111, 137, 144); this file
+deliberately does not**, because a record-tier entry that names a one-machine directory is
+instructing every future reader to open something that is not there.
 
 **`6.webp`, and why it is the one that matters to the corpus.** The seat's unprompted read at 123:
 the same spiral-fractal on both sides, cold left and warm right, a line down the middle with a
@@ -431,9 +436,18 @@ above.** Each is identified by turn so he can rule without my reproducing it.
    only by reference. He may want it home.
 6. **Turns 3–6 — the first sitting's contents** (what he was eating, that he was waiting on a pane).
    Low sensitivity, not load-bearing, left out on principle.
-7. **Absolute paths containing the account name.** Deliberately not written into this file; images
-   are named by filename and parent directory only, and the master jsonl is given as a `~`-relative
-   path. `C:\Consonance\...` paths carry no username and are used as-is.
+7. **Absolute paths.** Deliberately not written into this file. Images are named by filename only,
+   and the master jsonl is given as a `~`-relative path.
+   **Amended 2026-08-30 (L018), and the amendment is the interesting half.** This row originally
+   read that drive-rooted Consonance paths *"carry no username and are used as-is"* — and used one,
+   twice, to say so. `portable-paths` went RED on both, and it was right for a reason the row had
+   not considered: **the defect is not privacy, it is reachability.** A record-tier entry naming a
+   directory that exists on one laptop instructs every future reader to open something that is not
+   there. The rule is therefore stronger than the row claimed — no account name AND no
+   one-machine location — and the row is rewritten to state it without emitting one, rather than
+   baselined. **A baseline entry would have been the cheaper fix and the wrong one:** it is a
+   permanent exemption a future reader has to take on trust, on the one file class whose whole job
+   is to be reachable later.
 
 ---
 

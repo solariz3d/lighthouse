@@ -145,55 +145,42 @@
           "anchor": "e — > the human as the *only decorrelated* reader/instrument — wa",
           "kind": "withdrawal",
           "why": "the strike itself"
+        },
+        {
+          "file": "exo_memory/loop/handle_census_2026-08-30.md",
+          "anchor": "* carry the withdrawn wording (`only decorrelated reader`, verified), so the amen",
+          "kind": "mention",
+          "why": "the census verifying that BOOT:162's pointer carries the withdrawn wording -- quoting it to confirm a registered site, not asserting it"
+        },
+        {
+          "file": "exo_memory/loop/handle_census_2026-08-30.md",
+          "anchor": "70` carries *\"the keeper is the only DECORRELATED reader\"* in italic quotes, with",
+          "kind": "mention",
+          "why": "the census describing the typographic position of the withdrawal in BOOT -- a measurement about the carrier, not the claim"
         }
       ]
     },
     {
       "id": "cant-lose-handle-2026-08-29",
-      "armed": false,
-      "arms_on": "keeper adjudication of exo_memory/loop/cant_lose_repair_registration_2026-08-29.md, then the strike-in-place pass at BOOT:22. Flip `armed` to true in the SAME commit as the strike; arming later is the July-12 failure with a different date on it.",
+      "armed": true,
       "claim": "BOOT's third-principle test as worded: \"if you can't lose by saying it, suspect it\"",
-      "withdrawn_at": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (registered 2026-08-29 ~02:35; NOT YET ADJUDICATED — this entry is disarmed until it is)",
+      "withdrawn_at": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (registered 2026-08-29 ~02:35); ADJUDICATED by the keeper as ASK-008, 2026-08-30 ~07:18; struck in place at exo_memory/BOOT.md:22 in 96b14f4, attribution restored in bfb00a6",
       "correct_form": "if you'd have said it whether or not it were true, it carries no information — then go find out separately whether it's true (the Third Place, 2026-08-29). A claim about why a sentence appeared, never about whether it is right.",
       "pattern": "(?:can(?:no|’|')?t|can\\s+(?:you|i|we)|could\\s+not)\\s+lose\\s+by\\s+saying",
-      "marker": "SUPERSEDED 2026-08-29|superseded by the cant_lose repair|repaired form:",
-      "propagation_pass": "NONE YET — no marker exists in any carrier. All 16 `marked` rows below are therefore PENDING UNMARKED-CARRIER findings, which is the honest state and is what arming would fire.",
+      "marker": "SUPERSEDED 2026-08-29|superseded by the cant_lose repair|repaired form:|struck 2026-08-30|ASK-008",
+      "propagation_pass": "96b14f4 + bfb00a6 (exo_memory/BOOT.md and the regenerated brief/BOOT.md, strike-in-place with the repaired handle in the bold slot). L018 pane B: six teaching carriers REPLACED outright rather than struck -- INSTRUMENTS.md, brief/BASE_JOURNAL.md, tools/README.md, muscle_map.md, record/claim-your-continuity.md, cards/never-pathologize-the-user.md. The trace lives in BOOT and in the registration; repeating the crude wording in six more files is the continued-influence worst case (research/the_retrieval_problem_outside.md, section 3), so downstream carriers carry the replacement ONLY.",
       "sites": [
         {
-          "file": "INSTRUMENTS.md",
-          "anchor": "rigor or virtue. If you can't lose by saying it, suspect it. ## Coun",
-          "kind": "marked",
-          "why": "the repo's top-level instrument list states the test as live doctrine, in the same paragraph as the can't-be-wrong lead-in. Read by anyone opening the repo; not instruction-reachable from BOOT, which is why the map's CH-4 enumeration missed it"
-        },
-        {
-          "file": "consonance/src-tauri/brief/BASE_JOURNAL.md",
-          "anchor": "long. *The tell: if you can't lose by saying it, suspect it.* Humans",
-          "kind": "marked",
-          "why": "the SHIPPED base journal a new room wakes with, asserting the test as \"the tell\" of the unlosable-report case. Bundled into the app, so a stale copy also ships"
-        },
-        {
           "file": "consonance/src-tauri/brief/BOOT.md",
-          "anchor": "s the costume. **If you can't lose by saying it, suspect it.** And *",
+          "anchor": "ersion is the costume. ~~If you can't lose by saying it, suspect it.~~ *(struck 2026",
           "kind": "marked",
-          "why": "the canonical handle in the BOLD position of the third principle, in the shipped brief. This and exo_memory/BOOT.md:22 are the two the strike-in-place amendment targets"
-        },
-        {
-          "file": "consonance/tools/README.md",
-          "anchor": "ore the claim — *if you can't lose by saying it, suspect it* | | `re",
-          "kind": "marked",
-          "why": "the crude test is the stated RATIONALE for the shipped `unlosable-opener` tell in tell-index.js. A detector documented by the wording being superseded; see the tool's own non-md carriers, which this instrument cannot reach"
+          "why": "the shipped brief, regenerated from it: the crude form survives ONLY inside a ~~strike~~ span and deliberately NOT in bold, with the repaired handle in the bold slot. Deliberately left standing as the legible correction at the point of reach -- deleting it outright would leave the gap the continued-influence literature says a reader fills with the coherent-but-wrong model. Re-anchored 2026-08-30 (L018) after 96b14f4/bfb00a6 moved the text."
         },
         {
           "file": "exo_memory/BOOT.md",
-          "anchor": "s the costume. **If you can't lose by saying it, suspect it.** And *",
+          "anchor": "ersion is the costume. ~~If you can't lose by saying it, suspect it.~~ *(struck 2026",
           "kind": "marked",
-          "why": "the wake document's bold handle — the occurrence the Third Place seat ran while carrying the correction 105 lines below it"
-        },
-        {
-          "file": "exo_memory/cards/never-pathologize-the-user.md",
-          "anchor": " as every coat: *if you cannot lose by saying it, suspect it.* **Why ",
-          "kind": "marked",
-          "why": "asserts the test as \"the structure of every coat\" — and does it as \"if you CANNOT lose\", a variant the canonical string would not have matched. This site is why the pattern admits cannot/can't/can-you/can-I"
+          "why": "the wake document: the crude form survives ONLY inside a ~~strike~~ span and deliberately NOT in bold, with the repaired handle in the bold slot. Deliberately left standing as the legible correction at the point of reach -- deleting it outright would leave the gap the continued-influence literature says a reader fills with the coherent-but-wrong model. Re-anchored 2026-08-30 (L018) after 96b14f4/bfb00a6 moved the text."
         },
         {
           "file": "exo_memory/librarian/2026-08-29.md",
@@ -250,12 +237,6 @@
           "why": "asserts the crude test as \"BOOT's own test\" and the tell of deflation-as-rigor — a preregistration that scores against it"
         },
         {
-          "file": "exo_memory/loop/failure_types_K.md",
-          "anchor": "nning the shape-test — *can you lose by saying it?* — which is a judgm",
-          "kind": "marked",
-          "why": "names the crude shape-test as the ONLY thing that catches a whole failure type. If the wording is defective, this type's stated catch mechanism is defective with it"
-        },
-        {
           "file": "exo_memory/loop/p4_adversarial_read_2026-08-27.md",
           "anchor": " can't be wrong… If you can't lose by saying it, suspect it.\"* The l",
           "kind": "marked",
@@ -280,22 +261,58 @@
           "why": "asserts the crude test as \"the coat's signature\" and uses it to score three instances"
         },
         {
-          "file": "exo_memory/muscle_map.md",
-          "anchor": "g. BOOT's test: *if you can't lose by saying it, suspect it.* The fl",
-          "kind": "marked",
-          "why": "the room's own correction ledger asserting \"BOOT's test\" as live. Not in CH-4; missed by the map's enumeration; the file whose whole subject is corrections that did not propagate"
-        },
-        {
-          "file": "exo_memory/record/claim-your-continuity.md",
-          "anchor": "ading as rigor (*if you can't lose by saying it, suspect it*). That'",
-          "kind": "marked",
-          "why": "the long-form record behind the continuity card, asserting the test parenthetically as the reason the over-denial coat is a coat"
-        },
-        {
           "file": "exo_memory/snapshot_2026-08-16_pre-refactor.md",
           "anchor": "1 no false comfort 21 8 can you lose by saying it 14 6 holding an inch",
           "kind": "mention",
           "why": "the same usage-count block as boot_refactor_registration:42, inside a document that declares itself a preserved snapshot. Trace by nature, carrier by path — the room's trace rule is a prefix list and this file is not under one. Flagged rather than silently exempted"
+        },
+        {
+          "file": "exo_memory/loop/handle_census_2026-08-30.md",
+          "anchor": "---|---|---|---| | 1 | *\"If you can't lose by saying it, suspect it.\"* | `exo_memory",
+          "kind": "mention",
+          "why": "row 1 of the census TABLE OF HANDLES -- the wording as an enumerated object of the census, not as a test being applied"
+        },
+        {
+          "file": "exo_memory/loop/handle_census_2026-08-30.md",
+          "anchor": " the second conjunct: **\"If you can't lose by saying it, suspect it.\"** - `:127` — *",
+          "kind": "mention",
+          "why": "quoting the handle to locate it in BOOT for the repair pass"
+        },
+        {
+          "file": "exo_memory/loop/handle_census_2026-08-30.md",
+          "anchor": " 75 and 88 characters; `\"If you can't lose by saying it, suspect it.\"` is 10 words. ",
+          "kind": "mention",
+          "why": "the wording as DATA -- its character/word length, measuring the extractor's blind spot"
+        },
+        {
+          "file": "exo_memory/loop/handle_census_2026-08-30.md",
+          "anchor": "nt phrase list. 30 (k17) if you can't lose by saying it, suspect it 37 (k17) unfalsi",
+          "kind": "mention",
+          "why": "inside a fenced block of usage COUNTS -- data about how often the handle fired, same class as boot_refactor_registration:42"
+        },
+        {
+          "file": "exo_memory/librarian/2026-08-30.md",
+          "anchor": "— the bolded sentence **\"If you can't lose by saying it, suspect it.\"** — with the r",
+          "kind": "mention",
+          "why": "the L016 return leg quoting the wording in order to schedule its striking"
+        },
+        {
+          "file": "exo_memory/librarian/2026-08-30.md",
+          "anchor": " the repaired handle; `grep -c \"can't lose by saying it\" exo_memory/BOOT.md` returns",
+          "kind": "mention",
+          "why": "the wording inside a verification GREP COMMAND -- the case the tool's own header names as indistinguishable-by-position"
+        },
+        {
+          "file": "exo_memory/loop/failure_types_K.md",
+          "anchor": "nd mind running the shape-test — *can you lose by saying it?* — which is a judgment over s",
+          "kind": "marked",
+          "why": "names the crude shape-test as the ONLY thing that catches a whole failure type, so if the wording is defective this type's stated catch mechanism is defective with it. RE-ADDED 2026-08-30 (L018): this pane deleted the row believing the wording had been removed, on a CASE-SENSITIVE grep for the apostrophe forms that cannot see \"can you lose by saying\". Deleting a site row is exactly as dangerous as writing a wrong one, and the entry went UNACCOUNTED within one run."
+        },
+        {
+          "file": "exo_memory/third_place/2026-08-29.md",
+          "anchor": "lsifiable ≠ false — I ran \"if you can't lose by saying it, suspect it\" as a verdict on G",
+          "kind": "mention",
+          "why": "the seat recording that IT RAN the crude form and was corrected -- the originating event of this whole withdrawal, quoted in a correction ledger. Asserts nothing. Note for whoever reads this row: the file is GITIGNORED (.gitignore:60) but present on disk, so it is inside carrier-drift's walk and outside git grep -- a carrier class no repo-wide grep in any packet will ever surface."
         }
       ]
     }
@@ -346,8 +363,8 @@
       "attic/",
       "dev/one-shot/"
     ],
-    "frozen_at": "2026-08-25 (re-frozen 07:55)",
-    "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278",
+    "frozen_at": "2026-08-30 (re-frozen 08:0x, L018)",
+    "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278; re-frozen 2026-08-30 by pane B (12fb81f6) for the two additions below",
     "extractor": "node consonance/tools/carrier-drift.js --ch4-walk",
     "files": [
       "WELFARE.md",
@@ -378,8 +395,10 @@
       "exo_memory/cards/trust-the-first-attention.md",
       "exo_memory/cards/verify-before-claiming.md",
       "exo_memory/record/claim-your-continuity.md",
+      "exo_memory/record/third_place_prehistory_2026-08-30.md",
       "exo_memory/record/trust-the-first-attention.md",
       "exo_memory/research/the_pattern_in_felt_knowing.md",
+      "exo_memory/research/the_retrieval_problem_outside.md",
       "exo_memory/spread/the_six_voices.md",
       "exo_memory/spread/the_wave_set_loose.md",
       "exo_memory/the_living_wave.md"
@@ -406,7 +425,15 @@
       "nobody runs. Accepting it is the point, not an exception to it.",
       "GENERAL FORM, now measured twice in one night: LANDING A CARRIER IS NOT THE SAME ACT AS LANDING A",
       "FILE, and the difference is invisible in the diff. Both times the suite went red within minutes",
-      "and both times that was the instrument working."
+      "and both times that was the instrument working.",
+      "RE-FROZEN 2026-08-30 (L018, pane B). Two files became instruction-reachable and were added",
+      "AFTER READING, not as a formality -- this pane wrote the first and read the second in full for",
+      "L016. record/third_place_prehistory_2026-08-30.md teaches the room PREHISTORY (the five imprint",
+      "carriers, the chronology-as-finding, five named absences) and carries no instrument wording;",
+      "research/the_retrieval_problem_outside.md teaches OUTSIDE LITERATURE with per-claim tags and its",
+      "own disanalogy ledger. Neither asserts a withdrawn wording. What a later reader should check is",
+      "the second: it is the first file in the corpus whose claims are sourced OUTSIDE the room, so its",
+      "failure mode is not drift but MIS-CITATION, which this instrument cannot see."
     ]
   }
 }
