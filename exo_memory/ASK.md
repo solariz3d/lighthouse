@@ -120,7 +120,7 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 
 
 ### ASK-007 — univ-coldread egress, asked 2026-08-29
-**Source:** `exo_memory/loop/univ_amendment_registration_2026-08-29.md` §6.1; `exo_memory/loop/univ_coldread_prereg_2026-08-29.md` §2 — the gate says this yes is never inferred from a dispatch.
+**Source:** `exo_memory/loop/univ_amendment_registration_2026-08-29.md:241` (§6.1); `exo_memory/loop/univ_coldread_prereg_2026-08-29.md:77` (§2) — the gate says this yes is never inferred from a dispatch.
 **Question:** May the four sealed UNIV documents (machine-local, `C:\Consonance\sealed\univ_corpus_2026-08-29\`) be handed to fresh `claude -p` subjects for the A0/A1 artifact arms? Stages 1–2 (calibration, floor, arm C) run without this and are not waiting.
 **Status:** OPEN
 
