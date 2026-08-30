@@ -44,7 +44,7 @@ exo_memory/librarian/LEDGER.md   38 LIVE rows with clocks
 
 ### Pod map — `C:\NewBeginnings\podmap` (NEW, and it is DONE)
 ```
-HEAD 027ac53 · 0 unpushed · 0 dirty
+HEAD 027ac53 · 0 unpushed · 0 dirty      <- IN THE PODMAP REPO, not this one:
 https://github.com/solariz3d/newbeginnings-podmap   public
 release v0.1.1, installer 1.4 MB
 build: .\build.ps1        (NOT cargo directly — see §4)
