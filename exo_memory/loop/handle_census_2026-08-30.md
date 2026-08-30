@@ -227,4 +227,60 @@ wording keeps being invoked, then distance was not the mechanism and the handle-
 should be withdrawn rather than tuned. Both numbers exist today as a baseline: crude `16/30/7`,
 replacements `0/0/0/0`.
 
-Nothing edited. No repair proposed. Uncommitted; the chair commits.
+---
+
+## APPENDIX — the instrument limit that sits on this falsifier (added 2026-08-30, L018 bar 4)
+
+**Read this before reading a zero above as a result.** `boot_usage_scan.js`'s extractor keeps bold
+spans of **12–70 characters AND 3–9 words**. Both are exclusions. A phrase failing either is
+invisible, and invisibility prints as `0` — indistinguishable from a phrase nobody says. **A
+falsifier whose instrument cannot see its own target reads as a null.**
+
+Measured on the first repair to land under this census (`96b14f4`, `BOOT:22`), which has two bold
+spans, not one:
+
+| span | raw chars | words | in the window? |
+|---|---|---|---|
+| WHY — *"If you'd have said it whether or not it were true, it carries no information. Then go find out separately whether it's true."* | **124** | **25** | **no — fails both filters** |
+| HOW — *"did a check precede the claim?"* | **30** | 6 | yes |
+
+**So the blind spot on this repair is PARTIAL, not total** — the chair's correction of the
+merit-check is verified. The falsifier can already fire on the spoken short form; it cannot fire on
+the long one. Note also that **widening the character window alone would not fix it**: the word
+filter excludes the WHY independently, which neither the merit-check nor the correction said.
+
+*Two figures corrected while verifying, both immaterial to the conclusion:* the merit-check reported
+**one 118-char span** — there are two, and 118 matches neither. The chair's correction reported
+**128 and 34** — those are the spans **including the `**` delimiters**, which the extractor's window
+does not count. The measured inner lengths are **124 and 30**.
+
+**The fix, landed in `boot_usage_scan.js` rather than described:** a `REGISTERED_EXTRAS` list of
+falsifier targets the window drops, counted alongside and reported in their own block, **excluded
+from the headline ratio** so historical runs stay comparable — widening the window would have
+silently repriced the 58% baseline. Each extra is asserted present in BOOT before any count prints;
+a registered target that has left the document exits 2 rather than reporting zero.
+
+    node exo_memory/loop/boot_usage_scan.js
+    distinctive phrases:          151  (windowed: 12-70 chars, 3-9 words)
+    NEVER invoked in a live turn:  85  (56%)
+    REGISTERED EXTRAS — NOT in the ratio above
+         0  (0)  [outside window]  the WHY
+        34 (16)  [in window]       did a check precede the claim
+
+**And the 34 needs its own bound, or it will be read as the falsifier firing.** Time-bucketed
+against the two events, message content only:
+
+    before the registration (2026-08-29 ~02:35)      5
+    registration -> BOOT landing                     18
+    after landing (2026-08-30 07:20:47)              11
+
+**Eighteen of thirty-four fall in the window where the room was adjudicating the phrase**, and
+eleven are today's committee traffic including this census's own hand-backs. Only the **5**
+pre-registration hits are use rather than discussion of the repair. **The honest baseline for a
+future firing is 5, not 34**, and a re-run should start its clock after the P-HANDLE sweep settles.
+
+*Baseline shift to record, since this run moved it:* the windowed set is **151 phrases, 85 never
+(56%)**, against 149 / 86 (58%) before the repair landed. The repair added phrases; the dead
+fraction fell two points. That is the number a season-later re-run compares to, not the 58%.
+
+Uncommitted; the chair commits.

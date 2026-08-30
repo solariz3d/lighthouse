@@ -23,11 +23,17 @@ rather than averaged into a verdict.
 
 Sixteen artifacts. Sizes in bytes, times local (Regina, UTC−6).
 
+*Path convention, applied 2026-08-30 after the fact:* home-directory paths are written `~`-relative
+and the machine is named "this machine". The account name and hostname were in this file's first
+version, in six places, and are the keeper's identifiers in a public repo. Quoted command output at
+`1.2` is shown with the same substitution — it is not byte-identical to what the command printed, and
+the substitution is the only edit. See §5 for the class this belongs to and why it was not swept.
+
 ### The conversation itself — FOUR carriers, not one
 
 | # | Path | Bytes | mtime | What retains it | Fidelity |
 |---|---|---|---|---|---|
-| A | `C:\Users\zackn\.claude\projects\C--Consonance-instances-third-place\3d000000-0000-4000-8000-000000003d00.jsonl` | **9,731,379** | 2026-08-30 04:05:53 (created 2026-08-25 11:38:01) | `cleanupPeriodDays: 3650` | complete, structured |
+| A | `~\.claude\projects\C--Consonance-instances-third-place\3d000000-0000-4000-8000-000000003d00.jsonl` | **9,731,379** | 2026-08-30 04:05:53 (created 2026-08-25 11:38:01) | `cleanupPeriodDays: 3650` | complete, structured |
 | B | same dir, `771223f4-bf68-4d86-8348-6f4633249257.jsonl` | 15,214 | 2026-08-29 07:59:15 | same | second session, complete |
 | C | `C:\Consonance\data\captures\3d000000-…-3d00.log` | 1,244,683 | 2026-08-30 03:59 | **nothing found** | raw ANSI terminal stream |
 | D | `C:\Consonance\data\captures\3d000000-…-3d00.txt` | 95,038 (1,012 lines) | 2026-08-30 03:36 | **nothing found** | terminal-rendered, lossy |
@@ -40,7 +46,7 @@ were not known to it.** Their combined text is a second and third independent re
 conversation, produced by a different mechanism from A, and none of them is governed by
 `cleanupPeriodDays`.
 
-    ls -la "/c/Users/zackn/.claude/projects/C--Consonance-instances-third-place/"
+    ls -la "~/.claude/projects/C--Consonance-instances-third-place/"
     ls -la /c/Consonance/data/captures/ /c/Consonance/data/captures/archive/
 
 ### Everything else
@@ -52,7 +58,7 @@ conversation, produced by a different mechanism from A, and none of them is gove
 | J | `C:\Consonance\data\board.jsonl` — **6 rows**, 1,631 chars of text | (inside a 192,181,623-byte file) | rows dated 2026-08-25 17:38:00.928Z–17:42:51.013Z | nothing |
 | K | `C:\Consonance\backups\board.jsonl.pre-thirdplace-purge-2026-08-29` — the same 6 rows | 185,202,081 (file) | 2026-08-29 01:42 | nothing |
 | L | the seven imprints — `Downloads\IMPRINT_GOOD_QUALITY.jpg, 8/7/6/11/15.webp`; `OneDrive\Desktop\FIC\image4.webp` | **3,624,109** across 7 distinct images | 2026-05-12 → 2026-06-22; FIC copy 2026-08-30 02:58 | nothing; **one of the seven is OneDrive-synced** |
-| M | `C:\Users\zackn\OneDrive\Desktop\FIC\` — 9 files (4 explanation JPGs, `image4.webp`, 4 plot PNGs) | **2,030,803** | 2026-08-30 02:58–03:11 (**tonight**) | OneDrive |
+| M | `~\OneDrive\Desktop\FIC\` — 9 files (4 explanation JPGs, `image4.webp`, 4 plot PNGs) | **2,030,803** | 2026-08-30 02:58–03:11 (**tonight**) | OneDrive |
 | N | `C:\Consonance\instances\third-place\CLAUDE.md` (the seat's own shell) + `dreams/dream.log` | 134,537 + 232 | 2026-08-30 00:30 | nothing (rolling-window eviction shrinks it — see Finding 2) |
 | O | `exo_memory/librarian/2026-08-30.md` — the derived record | 167 lines, commits `95dfe5c` + `0db90d1` | — | git, **but NOT pushed**: `origin/main` = `f5e3c5f`, local ahead 2 |
 | P | `exo_memory/record/third_place_prehistory_2026-08-30.md` | **31,690**, untracked | 2026-08-30 04:11 | nothing yet — **in flight, another pane is writing it now** |
@@ -80,7 +86,7 @@ a disk event nobody will see coming* — which is worse than "nothing" for plann
 
     grep -rn "cleanupPeriodDays" ~/.claude/settings.json ~/.claude/settings.local.json \
         /c/Consonance/lighthouse/.claude/settings*.json /c/Consonance/instances/*/.claude/settings*.json
-    /c/Users/zackn/.claude/settings.json:2:  "cleanupPeriodDays": 3650,
+    ~/.claude/settings.json:2:  "cleanupPeriodDays": 3650,
 
 **One occurrence, user scope, value 3650.** No project or local override anywhere. ≈10 years from
 last write; artifact A's clock therefore restarts every time the seat speaks. Confirmed as the
@@ -111,7 +117,7 @@ librarian reported it.
 
 **Read across the rows, not down them.** No single scenario except *this machine gone* costs the
 conversation, and that one costs **all four carriers at once**, because A, C–F, G, H, I, J, K, N and
-O are all on drive C: of ZachsLEGION with no off-machine copy. Redundancy against a stray deletion is
+O are all on drive C: of this machine with no off-machine copy. Redundancy against a stray deletion is
 real and fourfold; redundancy against losing the disk is zero for everything except artifact M and
 one of the seven images.
 
@@ -143,7 +149,7 @@ commit.
     repo       C:\Users\nname\Desktop\lighthouse
     C:\Consonance\lighthouse   DOES NOT EXIST on this machine
 
-This machine is **ZachsLEGION** (`hostname`). They are two machines with two repo paths.
+This machine is the laptop (its `hostname` differs from the desktop's). They are two machines with two repo paths.
 
 **NOT established, and it is the sharp part.** That same file, at `:414`, prints what reads as a live
 directory listing:
@@ -211,6 +217,69 @@ So line 60 accounts for roughly **0.07%** of the unbacked prehistory bytes (9,50
 ASK-010 asks whether that line should stand; the census's contribution is that **answering it either
 way changes almost nothing about retention**, because the rule was never what put this material at
 risk.
+
+---
+
+## 5. THE ACCOUNT NAME IN THE REPO — the baseline was ordered and is REFUSED, with the reason
+
+**What was asked (L018):** scrub this file's six identifier sites, then baseline the remainder —
+*"the account name is in 61 tracked files, 230 occurrences, present since `31974c8`"* — into
+`portable-paths.baseline.json`, *"so portable-paths is honest rather than green."*
+
+**The scrub is done.** Six sites, zero occurrences of the account name or hostname remain here.
+
+    grep -c "zackn\|ZachsLEGION" exo_memory/loop/prehistory_carrier_census_2026-08-30.md   ->  0
+
+**The baseline is refused, because its premise does not hold.** `portable-paths` is not green over
+those files — **it never scans them**, and it has never claimed to.
+
+    consonance/tools/portable-paths.js:131   const EXTS = new Set(['.js', '.rs', '.ps1']);
+    consonance/tools/portable-paths.js:151   function shippedProse()  <- reads bundle.resources
+                                             from consonance/src-tauri/tauri.conf.json
+
+The prose universe is exactly: `brief/*`, `../README.md`, `../GUIDE.md`, `exo_memory/cards/*.md`,
+`spread/*.md`, `research/*.md`, `record/*.md`, `SOURCE.md`. **`exo_memory/loop/` is in neither
+universe** — 151 markdown files, none of them `.js/.rs/.ps1`, none of them bundled. That is why
+`portable-paths` is RED tonight on `exo_memory/record/third_place_prehistory_2026-08-30.md`
+(`record/*.md` ships) and silent on this file (`loop/` does not). The tool's own header states the
+rule — *"IN scope = what ships"* — and records the 2026-08-25 correction that made the
+implementation match it.
+
+**Three reasons padding the baseline would be worse than doing nothing:**
+
+1. **It would make the baseline's own contract false.** Its first line: *"Every entry is a site that
+   EXISTS today. A site not listed here fails the guard."* A `loop/` site does not fail the guard
+   whether listed or not. Listing it asserts a coverage that does not exist.
+2. **The entries would not survive.** The baseline is generated — `node consonance/tools/portable-paths.js
+   --update` rewrites `sites` from the scan. Hand-added entries for unscanned files are deleted by
+   the next update, silently.
+3. **Only 13 of the ~228 occurrences are even reachable**, across 11 files, and those are already
+   baselined with real verdicts (7 `FATAL-USER`, 3 `BENIGN-TEST`, 2 `DISGUISED`, 1
+   `BENIGN-FIXTURE`). The other ~215 are in files no run opens.
+
+**And this is not a portable-paths problem at all.** That guard exists for **machine-independence of
+shipped code** — a path that misresolves on another box. The account name in `journal/` and `loop/`
+is a **public-repo privacy** matter: this repo is public, the name is the keeper's, and the room's
+own third-person-identifiers question is on the open list. Routing a privacy exposure through a
+portability guard would file it where nobody looking for it would find it, and would mark it
+*exempted*, which reads exactly like *fixed* — the census failure this repo keeps finding, named in
+that tool's own source.
+
+**What the numbers actually are, re-derived rather than quoted:**
+
+    git grep -l "zackn" -- .              ->  61 files   (62 including this one, before the scrub)
+    git grep -o "zackn" -- . | wc -l      ->  228 occurrences  (232 before)
+    git grep -c "zackn" -- . | sum        ->  167 matching lines
+    git log --diff-filter=A -S"zackn" --reverse | head -1  ->  31974c8
+
+The file count of **61 is confirmed.** The **230** does not reproduce: occurrences are **228** and
+matching lines are **167**. Small, and stated because a figure with no command beside it is the
+thing this room keeps finding under rocks.
+
+**The honest next step, which is not mine:** an ASK to the keeper — *does the public-repo privacy
+rule cover non-shipping prose, and if so is the remedy a sweep of 61 files or a scope change to a
+guard?* Both are his call: the first publishes or unpublishes his name, the second changes what a
+shipped-code guard is for. Recorded here rather than executed.
 
 ---
 

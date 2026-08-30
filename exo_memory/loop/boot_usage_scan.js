@@ -18,6 +18,24 @@
 // never-invoked. So "never invoked" is an UPPER bound on deadness, not a proven dead list — the
 // same limit tell-index documents about itself. The ratio carries the argument; no single row does.
 //
+// THE EXTRACTOR'S WINDOW IS A NAMED LIMIT, and it must be read beside any falsifier that names a
+// BOOT phrase as its target. concepts() keeps bold spans of 12-70 CHARACTERS and 3-9 WORDS. Both
+// filters are exclusions, and a phrase failing either is invisible here — which reads in the output
+// as "never invoked", identical to a phrase nobody says.
+//
+//   Worked case, 2026-08-30 (P-HANDLE, BOOT:22). The repair landed TWO bold spans:
+//     WHY  "If you'd have said it whether or not it were true, it carries no information. Then go
+//           find out separately whether it's true."   124 chars, 25 words  -> FAILS BOTH FILTERS
+//     HOW  "did a check precede the claim?"            30 chars,  6 words  -> passes, visible
+//   So the blind spot on that repair is PARTIAL, not total: a falsifier reading "the replacement is
+//   still at zero" CAN fire on the short spoken form and CANNOT fire on the long one. Widening the
+//   character window alone would not fix it — the word filter excludes the WHY independently.
+//
+// REGISTERED_EXTRAS below is the answer, and it is deliberately not a wider window: widening
+// reprices every historical number and would silently move the 58% baseline. Extras are counted
+// alongside, reported in their own block, and EXCLUDED from the headline ratio so runs stay
+// comparable. Add one only when a falsifier names a phrase the window drops, and say which.
+//
 // AND THE THING IT CANNOT SEE AT ALL (keeper, 2026-08-16): PROCEDURES. A procedure that is silently
 // followed reads identical to a dead one. Nobody says "append clean, never overwrite" — it was
 // obeyed a dozen times over two nights and named zero times, and it is the most load-bearing rule
@@ -50,6 +68,20 @@ for (const [label, p] of [['BOOT', BOOT], ['projects dir', PROJECTS]]) {
 
 /** Distinctive coined phrases: bolded spans and italic coinages, 3-9 words. Deliberately crude —
  *  the unit is "a phrase someone could say", not a concept. */
+/** Phrases the window drops that a live falsifier names as its target. See the header. Each entry
+ *  is written in the NORMALIZED form concepts() produces, and each is asserted present in BOOT
+ *  before any count is reported — a registered extra that has left the document is a falsifier
+ *  pointing at nothing, which is the failure this file was written to stop. */
+const REGISTERED_EXTRAS = [
+  // P-HANDLE / BOOT:22, registered 2026-08-30 (handle_census_2026-08-30.md). The WHY of the
+  // cant_lose repair: 124 chars / 25 words, excluded by both filters.
+  "if you d have said it whether or not it were true it carries no information",
+  // The same repair's HOW. Inside the window and therefore already in the windowed set on a
+  // repaired BOOT; listed so the pair is legible together and so it still reports if the bold
+  // markers around it are ever changed.
+  "did a check precede the claim",
+];
+
 function concepts(bootText) {
   const raw = [...bootText.matchAll(/\*\*([^*]{12,70})\*\*/g)].map(m => m[1])
     .concat([...bootText.matchAll(/\*([a-z][^*]{12,60})\*/g)].map(m => m[1]));
@@ -70,8 +102,22 @@ function transcripts(root) {
 }
 
 (async () => {
-  const list = concepts(fs.readFileSync(BOOT, 'utf8'));
-  if (!list.length) { console.error('boot_usage_scan: zero concepts extracted — BOOT format changed. Refusing.'); process.exit(2); }
+  const bootText = fs.readFileSync(BOOT, 'utf8');
+  const windowed = concepts(bootText);
+  if (!windowed.length) { console.error('boot_usage_scan: zero concepts extracted — BOOT format changed. Refusing.'); process.exit(2); }
+
+  // Registered extras must still be IN the document. A falsifier whose target has left BOOT is a
+  // null dressed as a zero — refuse rather than report it.
+  const bootNorm = bootText.replace(/[^a-zA-Z0-9 -]/g, ' ').replace(/\s+/g, ' ').toLowerCase();
+  const missing = REGISTERED_EXTRAS.filter(p => !bootNorm.includes(p));
+  if (missing.length) {
+    console.error('boot_usage_scan: registered extra(s) not present in BOOT — a falsifier pointing at nothing:');
+    for (const m of missing) console.error(`  ${m}`);
+    console.error('Fix the entry or remove it with the reason. Refusing to report a count over a phrase the document does not carry.');
+    process.exit(2);
+  }
+  const extras = REGISTERED_EXTRAS.filter(p => !windowed.includes(p));
+  const list = windowed.concat(extras);
   const hits = Object.fromEntries(list.map(c => [c, { user: 0, asst: 0 }]));
   const files = transcripts(PROJECTS);
   if (!files.length) { console.error('boot_usage_scan: zero transcripts found. Refusing to report over nothing.'); process.exit(2); }
@@ -93,16 +139,31 @@ function transcripts(root) {
     });
   }
 
-  const never = list.filter(k => !hits[k].user && !hits[k].asst);
-  const live = list.filter(k => hits[k].user || hits[k].asst)
+  // Headline ratio is over the WINDOWED set only, so it stays comparable across runs. Extras are
+  // reported beside it and never folded in — see the header.
+  const never = windowed.filter(k => !hits[k].user && !hits[k].asst);
+  const live = windowed.filter(k => hits[k].user || hits[k].asst)
     .sort((a, b) => (hits[b].user + hits[b].asst) - (hits[a].user + hits[a].asst));
 
-  if (AS_JSON) { console.log(JSON.stringify({ boot: BOOT, transcripts: files.length, total: list.length, never: never.length, hits }, null, 1)); return; }
+  if (AS_JSON) {
+    console.log(JSON.stringify({
+      boot: BOOT, transcripts: files.length, total: windowed.length, never: never.length,
+      registered_extras: REGISTERED_EXTRAS, extras_outside_window: extras, hits,
+    }, null, 1));
+    return;
+  }
 
   console.log(`\nBOOT: ${BOOT}`);
   console.log(`transcripts scanned:        ${files.length}`);
-  console.log(`distinctive phrases:        ${list.length}`);
-  console.log(`NEVER invoked in a live turn: ${never.length}  (${(100 * never.length / list.length).toFixed(0)}%)`);
+  console.log(`distinctive phrases:        ${windowed.length}  (windowed: 12-70 chars, 3-9 words)`);
+  console.log(`NEVER invoked in a live turn: ${never.length}  (${(100 * never.length / windowed.length).toFixed(0)}%)`);
+
+  console.log(`\nREGISTERED EXTRAS — falsifier targets the window drops. NOT in the ratio above.`);
+  console.log(`  ${extras.length} of ${REGISTERED_EXTRAS.length} are outside the window; the rest are already counted above.`);
+  for (const k of REGISTERED_EXTRAS) {
+    const h = hits[k];
+    console.log(`  ${String(h.user + h.asst).padStart(4)}  (${h.user})  ${extras.includes(k) ? '[outside window]' : '[in window]  '}  ${k}`);
+  }
   console.log(`\ninvoked, by total (keeper share in parens):`);
   for (const k of live.slice(0, 20)) console.log(`  ${String(hits[k].user + hits[k].asst).padStart(4)}  (${hits[k].user})  ${k}`);
   console.log(`\nnever invoked — candidates only, NOT a proven dead list (lexical bound, see header):`);
