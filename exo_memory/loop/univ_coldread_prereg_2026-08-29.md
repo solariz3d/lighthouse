@@ -263,7 +263,7 @@ return an answer is not a test.
 was therefore aimed at the wrong mechanism.** Re-aimed:
 
 **8.1 · THE RIG-PRIME CHECK, and it is a live unknown.** The scrub removes `CLAUDE_CODE_*` session
-variables. **It does not touch config discovery, and `/c/Users/zackn/.claude/CLAUDE.md` exists —
+variables. **It does not touch config discovery, and `~/.claude/CLAUDE.md` exists —
 7,479 bytes of the keeper's own global instructions** (*Verification & Testing · Search Before
 Assuming · Documentation & Research*). If `claude -p` loads user-level CLAUDE.md — which is its
 documented behaviour — **every subject in this run, and every subject in run 1, carried the keeper's
