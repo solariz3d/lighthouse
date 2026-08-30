@@ -129,9 +129,9 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 **Question:** Adopt the repair — the Third Place's wording as the WHY, the disk-proxy "did a check precede the claim?" as the HOW — as the BOOT:22 amendment, executed as strike-in-place handle replacement? Gates P-HANDLE; B's registry is already armed for the sweep.
 **Status:** OPEN
 
-### ASK-009 — the 11 Third Place board rows, asked 2026-08-29
-**Source:** `consonance/tools/actors.evidence.test.js` red at HEAD; the rows are from the Third Place's first session, written to the shared board before b601440.
-**Question:** The rows are your conversation — remove, keep, or redact? js-suite stays honestly RED until called; this is user data, not a bug.
+### ASK-009 — the Third Place board rows (SIX, not eleven — corrected 2026-08-30), asked 2026-08-29
+**Source:** `consonance/tools/actors.evidence.test.js` red at HEAD; the rows are from the Third Place's first session, written to the shared board before b601440. **Count corrected by pane E's census** (`exo_memory/loop/prehistory_carrier_census_2026-08-30.md`, finding 1): parsed by pane field, the live board and the pre-purge backup both hold **6 rows, 1,631 characters, all within one five-minute window on 2026-08-25** — the "11" was a grep over the SID string, 5 of whose hits were one chair turn replayed by the board's replay ratchet. The leak did not continue after discovery; two sessions since produced zero rows.
+**Question:** The rows are your conversation — remove, keep, or redact? js-suite stays honestly RED until called; this is user data, not a bug. The object you are ruling on is six rows in five minutes, not eleven across three days.
 **Status:** OPEN
 
 ### ASK-010 — third_place/ tracking, asked 2026-08-29
