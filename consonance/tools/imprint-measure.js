@@ -1425,6 +1425,7 @@ module.exports = {
   mulberry32, subSeed, shuffleInPlace,
   median, mean, stdev, quantile, holmAdjust, chooseCapped, leastSquaresSlope,
   controlSubsetTest, pooledPermutationTest, RULES,
+  calibrationCheck, CALIBRATION_DISTRIBUTIONS, drawGaussian, drawExponential,
   crc32, decodePng, encodeGrayPng,
   centreCropSquare, resizeBox, normalise,
   fft, fft2, sobelMagnitude, edgeMap, boxCountDimension, spectralSlope, multiscaleEntropy,
