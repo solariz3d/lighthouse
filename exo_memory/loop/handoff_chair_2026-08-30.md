@@ -12,13 +12,20 @@ Everything below is re-derivable. **Re-run it; do not quote this file.**
 
 **Rebuild + relaunch.** It is the last step of L018 and it was sequenced last on purpose. Until it runs:
 
-- `consonance/src-tauri/brief/BOOT.md` is GENERATED and currently carries the repair **without** the two
-  clause fixes that landed after it (`That's` restored, and the keeper credited for the BREAK rather
-  than as adopter). The rebuild supersedes it from `exo_memory/BOOT.md`.
-- **open-items is OPEN**: `exo_memory/research/the_retrieval_problem_outside.md` and
-  `exo_memory/record/third_place_prehistory_2026-08-30.md` are in the bundle globs but ABSENT FROM THE
-  BUILD. **No fresh seat reads either until the rebuild.** Two of the night's best artifacts currently
-  reach nobody, which is the retrieval problem eating the retrieval work.
+- **open-items is OPEN, and the scope is SIX files, not the one this file first named.** Corrected on
+  the double-check, from `node consonance/tools/open-items.js` rather than from memory:
+  - **4 DRIFTED** — the built copy a fresh room reads no longer matches the repo: `BOOT.md`,
+    `BASE_JOURNAL.md`, `cards/never-pathologize-the-user.md`, `record/claim-your-continuity.md`. All
+    four were touched by tonight's sweep. **This file originally named only `brief/BOOT.md`, and that
+    undercounted the rebuild by three.**
+  - **2 ABSENT** — `research/the_retrieval_problem_outside.md` and
+    `record/third_place_prehistory_2026-08-30.md` are in the bundle globs but not in the build at all.
+    **No fresh seat reads either until the rebuild.** The night's two best artifacts reach nobody,
+    which is the retrieval problem eating the retrieval work.
+  - 28 of 30 compared; the 2 absent could not be compared at all.
+- `consonance/src-tauri/brief/BOOT.md` is GENERATED. **Also corrected:** something regenerated it after
+  the clause fixes landed, so the working copy DID carry them while the committed copy did not; that
+  regeneration is now committed. It is still the rebuild's to own, not a hand-edit's.
 - `node consonance/tools/carrier-drift.js` reads **RED at `325fb03`, deliberately.** Eight residual
   `loop/` carriers. It was committed red and said so in the body rather than held back for green.
 
