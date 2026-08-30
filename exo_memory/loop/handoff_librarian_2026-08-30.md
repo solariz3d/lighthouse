@@ -72,6 +72,33 @@ CIE counts" overclaim (E); ASK-007 provenance (suite); the polluted-ledger figur
 proceduralized in the notes. The through-line the keeper named and I confirmed: zero of them were caught
 in-stream by this seat; all by a non-author. That is the routing thesis and it held all night.
 
+## DOUBLE-CHECK FINDINGS (06:45, at the keeper's ask, different instruments than the first check)
+- **Two tracked, PUSHED files carry the account name and hostname**, in a public repo:
+  `loop/prehistory_carrier_census_2026-08-30.md:30,43,55,83,114,146` (`C:\Users\zackn\…`, `ZachsLEGION`)
+  and `loop/univ_coldread_prereg_2026-08-29.md:266` (`/c/Users/zackn/.claude/CLAUDE.md`). The room's
+  own rule (B's prehistory entry states it: no absolute path carrying the account name) — violated by the
+  census that is ABOUT privacy. Routed to the chair for the authors: `~`-relative paths, "this machine"
+  for the hostname. The exposure class is pre-existing (`nname` in 9 files, 08-22 §12), which lowers the
+  marginal harm and does not excuse the additions. **My process miss:** I pushed at 06:35 without running
+  the leak scan my own 08-23 merge bar names (bar #3). Pushing under the keeper's word does not waive the
+  scan; next push runs `gen-consumer --dry` first.
+- **`gen-consumer` REFUSES to generate the consumer tree** — one MACHINE leak survives its rewrites:
+  `record/third_place_prehistory_2026-08-30.md:222` (`OneDrive/Desktop/FIC/`). Same file carries the two
+  DRIVE paths at :67,:436 (portable-paths RED). Three portability hits in one file; B's, one edit.
+- **Suite at HEAD: 61 green · 5 red of 66**, every red owned: actors.evidence (ASK-009, keeper);
+  ask.test (provenance regex over-fit, D001's instrument, routed); carrier-drift (census growth — new
+  carriers of the registered wording since B sealed it, incl. the Third Place's notes; non-author
+  disposition); gen-consumer (the :222 leak above); portable-paths (:67,:436 above).
+- **open-items flipped an item back to OPEN:** `research/the_retrieval_problem_outside.md` and
+  `record/third_place_prehistory_2026-08-30.md` are in the bundle globs but ABSENT FROM THE BUILD — a
+  fresh room never reads either until a rebuild. Tonight's two most-cited new documents reach no waking
+  seat yet. The plan's "one rebuild when convenient" now has a concrete cost.
+- **The watch's liveness cannot be proven from disk** (Monitor tasks write no output file until they
+  emit, and no lap is open, so no emission is expected). The tool confirmed `b1fc9fv4d` armed and
+  persistent; the keeper's `/tasks` is the check. If absent: re-arm (case-insensitive, any lap).
+- Git: clean, 0 unpushed, HEAD == origin. Handoff paths verified to exist (`LEDGER.md` =
+  `exo_memory/librarian/LEDGER.md`; `dispatch-gate.jsonl` = `C:\Consonance\data\dispatch-gate.jsonl`).
+
 ## WHAT THE NEXT WINDOW OWES, in order
 1. Confirm the watch (`/tasks`); re-arm if gone.
 2. Ask the chair for the current inquiry (post-compaction rule).
