@@ -139,6 +139,11 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 **Question:** Third Place notes: private-stays-local (gitignored), or tracked? Bears on how the carrier census accounts that file.
 **Status:** OPEN
 
+### ASK-011 — the account name in the public repo, asked 2026-08-30
+**Source:** `exo_memory/librarian/2026-08-30.md` (~06:55 — the chair's scope correction, re-derived: `git ls-files | xargs grep -lI zackn | wc -l` → 61 files; `git log -S'zackn' --reverse | head -1` → `31974c8`); pane E's L018 hand-back (portable-paths never scans `exo_memory/loop/`, so a baseline row cannot carry this).
+**Question:** The Windows account name is in 61 tracked files and in history since `31974c8`, on a public remote. No working-tree edit removes it; only `git filter-repo` + force-push does, which rewrites every sha and breaks every path:line citation in the corpus. Accept it as-is and record the decision, or scrub history at that cost? (Your email is already in every commit's metadata; the chair argues against scrubbing; the broken-instruction paths are being fixed separately as a retrieval defect.)
+**Status:** OPEN
+
 ## CLEARED
 
 *(none yet — this file is one day old)*
