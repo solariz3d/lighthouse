@@ -98,6 +98,28 @@ function record(row) {
 
 // The two verbs that put text into another seat's pane. raise_pull is deliberately NOT here: it
 // queues a card for a human to read and decide, so it is already gated by a person.
+// ── GATE MODE, 2026-08-31 ────────────────────────────────────────────────────────────────────────
+//
+// 'print' keeps the ledger row and the systemMessage and DROPS permissionDecision, so the verb no
+// longer stops for a click. 'ask' restores the prompt. ONE LINE turns it back on, deliberately —
+// the keeper asked for this off during a working session and kept for after, not deleted.
+//
+// WHY IT IS OFF: 18 asked rows on the live ledger, every one a click he had to make, and the last
+// was the chair dispatching prose with no sha — the chair failing the gate's own rule and the
+// keeper paying for it. The gate is a cue for the chair; the cost was landing on him.
+//
+// AND IT IS AN EXPERIMENT, NOT A CONCESSION. This is exactly BRAVO's focal+PRINTS-no-ask cell —
+// the 2x2 corner nothing could build, because a print at PreToolUse cannot change an already
+// composed dispatch while an ask can. It now runs as a natural experiment on one subject for free.
+// FALSIFIER, BRAVO's own and registered before the switch: if the cited-rate under 'print' does not
+// fall well below the 90.4% measured under 'ask', THE ASK WAS NOT THE LEVER — and ASK-012's gated
+// second vantage matters less than it was registered to.
+//
+// The ledger row carries `mode` from this timestamp so --report can split the rate by mode. Rows
+// before it have no mode field and are 'ask' by construction; do not backfill them.
+const GATE_MODE = 'print';           // 'print' | 'ask'  — flip this one word to restore the prompt
+const GATE_MODE_SINCE = '2026-08-31';
+
 const DISPATCH_VERBS = new Set([
   'mcp__consonance__chair_inject',
   'mcp__consonance__call_chair',
@@ -219,24 +241,27 @@ function main() {
   const cited = detail.kind;
   if (cited) {
     record({ verb, outcome: 'allowed', cited, citation: detail.token, target,
-             chars: (text || '').length });
+             chars: (text || '').length, mode: GATE_MODE });
     process.exit(0);
   }
 
   record({ verb, outcome: 'asked', cited: null, citation: null, target,
-           chars: (text || '').length });
+           chars: (text || '').length, mode: GATE_MODE });
 
   const question = buildQuestion(verb, isDirty());
-  process.stdout.write(JSON.stringify({
-    // Survives bypass mode, where permissionDecision does not. Deliberately the same words: two
-    // channels, one question, so nothing is softened on the path that still reaches a reader.
-    systemMessage: 'UNCITED DISPATCH — ' + question,
-    hookSpecificOutput: {
+  // Survives bypass mode, where permissionDecision does not. Deliberately the same words: two
+  // channels, one question, so nothing is softened on the path that still reaches a reader.
+  const out = { systemMessage: 'UNCITED DISPATCH — ' + question };
+  // In 'print' mode the question still reaches the chair on the channel that survives bypass; what
+  // is dropped is the CLICK, which was landing on the keeper rather than on the seat being cued.
+  if (GATE_MODE === 'ask') {
+    out.hookSpecificOutput = {
       hookEventName: 'PreToolUse',
       permissionDecision: 'ask',
       permissionDecisionReason: question,
-    },
-  }));
+    };
+  }
+  process.stdout.write(JSON.stringify(out));
   process.exit(0);
 }
 
