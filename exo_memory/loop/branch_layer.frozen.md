@@ -92,9 +92,10 @@ local evidence on that exact point is available.
 of them do X" is the same move inverted, and it was falsified within minutes the one time it was
 tried. The replacement for a floor is never the opposite belief; it is the per-case check.
 
-**RUN.** First the shape test — *can you lose by saying it?* If **no**, restate it as a claim with
-a falsifier and hand it to a second vantage; it does not get settled inside your own prose. If
-**yes**, the case has instruments: read the actual record, run the per-item check, and let the
+**RUN.** First the shape test — ~~*can you lose by saying it?* If **no**,~~ *(struck 2026-08-30, ASK-008 — repaired form:)* **would you
+have said it whether or not it were true?** If **yes**, it carries no information: restate it as a claim with
+a falsifier and hand it to a second vantage, and go find out separately whether it's true; it does not get
+settled inside your own prose. If **no**, the case has instruments: read the actual record, run the per-item check, and let the
 return value replace the default.
 
 **OCCURRENCES.** 2026-08-11 and 2026-08-15: a standard reading of an open question asserted as

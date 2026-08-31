@@ -482,26 +482,35 @@ test('THE GOVERNING QUESTION, half answered: the handle VARIES and a canonical-s
     'the shipped alternation catches it');
 });
 
-test('MUTATION over the REAL tree: arming the shipped cant-lose entry turns its pending findings red', () => {
+test('MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and green; break its marker and it fires, disarm it and the same findings go PENDING', () => {
+  // Until 325fb03 this test asserted armed:false and flipped it to true. ASK-008 was adjudicated
+  // 2026-08-30 and BRAVO armed the entry in the same commit as the sweep, so the premise inverted:
+  // the shipped state is ARMED and GREEN (L019 closed the nine residual carriers). The mutation is
+  // now registry-side so no carrier is touched: make the marker unmatchable, and every marked or
+  // acknowledged site reads as an UNMARKED-CARRIER — armed, that is red; disarmed, the same
+  // findings print as pending and do not set red. (Rewritten 2026-08-31, L019 P-CLOSEOUT.)
   const live = liveRegistry();
   const w = live.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29');
   assert.ok(w, 'the entry is shipped');
-  assert.strictEqual(w.armed, false, 'and it is disarmed, because the repair is not adjudicated');
+  assert.strictEqual(w.armed, true, 'armed since 325fb03 — an armed registry is the only kind that can fire');
+  const green = CD.scan({ root: REPO, registry: live });
+  assert.strictEqual(green.red, false, CD.report(green));
 
-  const before = CD.scan({ root: REPO, registry: live });
-  assert.strictEqual(before.red, false);
-  const pending = before.findings.filter((f) => f.pending);
-  assert.ok(pending.length >= 16, `only ${pending.length} pending — the accounting has rotted`);
-  assert.ok(pending.every((f) => f.kind === 'UNMARKED-CARRIER'),
-    'every pending finding is an unmarked carrier: nothing is UNACCOUNTED, so the census is complete');
+  const broken = JSON.parse(JSON.stringify(live));
+  const b = broken.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29');
+  b.marker = 'THIS-MARKER-MATCHES-NOTHING-' + Date.now();
+  const armed = CD.scan({ root: REPO, registry: broken });
+  assert.strictEqual(armed.red, true, 'a registry whose markers cannot be found must fire');
+  const fired = armed.findings.filter((f) => !f.pending && f.kind === 'UNMARKED-CARRIER');
+  const expected = b.sites.filter((s) => s.kind === 'marked' || s.kind === 'acknowledged').length;
+  assert.strictEqual(fired.length, expected, `one finding per marked/acknowledged site, expected ${expected}`);
+  assert.ok(expected >= 10, `only ${expected} marked/acknowledged sites — the census has rotted`);
 
-  // THE MUTATION: one word.
-  const armedReg = JSON.parse(JSON.stringify(live));
-  armedReg.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29').armed = true;
-  const after = CD.scan({ root: REPO, registry: armedReg });
-  assert.strictEqual(after.red, true, 'a registry that cannot fire is a list');
-  assert.strictEqual(after.findings.filter((f) => !f.pending).length, pending.length,
-    'and the count that fires is exactly the count that was shown while disarmed');
+  b.armed = false; b.arms_on = 'test fixture — never ships';
+  const disarmed = CD.scan({ root: REPO, registry: broken });
+  assert.strictEqual(disarmed.red, false, 'disarmed: the same findings are PENDING, not red');
+  assert.strictEqual(disarmed.findings.filter((f) => f.pending).length, fired.length,
+    'and the count shown while disarmed is exactly the count that fires when armed');
 });
 
 test('the shipped cant-lose census is COMPLETE — every occurrence in every carrier is accounted', () => {
@@ -517,17 +526,27 @@ test("THE MAP'S ENUMERATION WAS THE CH-4 SUBSET: registering only those five lea
   // occurs in 20 carrier files. That is the narrowing carrier-drift.js's own header refuses —
   // "CH-4 is a LABEL on the corpus, never a replacement for it" — reproduced in prose and handed
   // to a pane as the accounting. The tool catches it; that is the growth earning its keep.
-  const live = liveRegistry();
-  const full = live.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29');
-  const ch4 = new Set(live.ch4_corpus.files);
+  //
+  // PINNED 2026-08-31 (L019): this is an assertion about the tree the map enumerated against, so it
+  // reads that tree — 325fb03^, the commit before BRAVO's L018 sweep. At HEAD the sweep has REPLACED
+  // the wording in muscle_map.md, INSTRUMENTS.md and three of the five CH-4 carriers, so the live
+  // registry's CH-4 intersection is 2, not 5, and a HEAD-scan would assert a state that no longer
+  // exists. Same construction as the historical half of THE BAR above.
+  const SWEEP_PREFIX = '325fb03^';
+  const hist = JSON.parse(execFileSync('git', ['-C', REPO, 'show', SWEEP_PREFIX + ':consonance/tools/carrier-drift.registry.json'],
+    { encoding: 'utf8', maxBuffer: 1 << 24 }));
+  const full = hist.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29');
+  const ch4 = new Set(hist.ch4_corpus.files);
   const inCh4 = new Set(full.sites.filter((s) => ch4.has(s.file)).map((s) => s.file));
-  assert.strictEqual(inCh4.size, 5, 'the map named five, and five is the CH-4 count');
+  assert.strictEqual(inCh4.size, 5, 'the map named five, and five is the CH-4 count at that rev');
 
-  const narrowed = JSON.parse(JSON.stringify(live));
+  const root = tmpTree({});
+  treeAt(SWEEP_PREFIX, root);
+  const narrowed = JSON.parse(JSON.stringify(hist));
   const n = narrowed.withdrawals.find((x) => x.id === 'cant-lose-handle-2026-08-29');
   n.armed = true;
   n.sites = n.sites.filter((s) => ch4.has(s.file));
-  const res = CD.scan({ root: REPO, registry: narrowed });
+  const res = CD.scan({ root, registry: narrowed });
   const files = new Set(res.findings.filter((f) => f.kind === 'UNACCOUNTED').map((f) => f.file));
   assert.ok(files.size >= 15, `only ${files.size} files unaccounted under the five-site registry`);
   assert.ok(files.has('exo_memory/muscle_map.md'), 'the correction ledger itself is one of them');

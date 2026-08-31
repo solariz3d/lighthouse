@@ -241,17 +241,52 @@ test('an unreachable duration dir reports unreachable, never "zero candidates"',
 
 /* ── the shipped store is real freight, not a fixture ───────────────────────────────────────── */
 
+// CHECKABLE PROVENANCE — what ASK.md:41 actually specifies: `<path>:<line> — where the sentence
+// actually is`. Until 2026-08-31 this test accepted only /system-cron\.log|pending\// — the cron-log
+// paths of the six ORIGINAL asks — so every ask sourced to a repo file (ASK-007 onward) failed it,
+// and only ASK-007 was ever named because the loop threw on the first. Widened to: a path carrying a
+// line number, OR a commit sha (7–40 hex with at least one digit, so a hex-looking word such as
+// "defaced" does not pass). A BARE PATH STAYS RED — a file with no line is the un-checkable form
+// this gate exists to refuse. Both directions are asserted on fixtures in the next test.
+// (L019 P-CLOSEOUT, pane Around, 2026-08-31.)
+const CHECKABLE_PROVENANCE = /[^\s`'"()]+\.[A-Za-z0-9]+:\d+|\b(?=[0-9a-f]*\d)[0-9a-f]{7,40}\b/;
+const provenanceFailures = (asks) => asks
+  .filter((a) => !(a.source && CHECKABLE_PROVENANCE.test(a.source)))
+  .map((a) => a.id + ': ' + a.source);
+
 test('the shipped ASK.md parses, is non-empty, and every open ask clears the fact floor', () => {
   const st = A.load(A.STORE);
   assert.strictEqual(st.missing, false, 'exo_memory/ASK.md is missing');
   const open = A.openAsks(st, Date.now());
   assert.ok(open.length > 0, 'the store shipped with no open asks — the channel has no freight');
   assert.strictEqual(st.unreadable.length, 0, `shipped store has unreadable blocks: ${JSON.stringify(st.unreadable)}`);
-  for (const a of open) {
-    assert.ok(A.trimFact(a.question).length >= A.MIN_FACT_CHARS,
-      `${a.id} carries a category, not a question`);
-    assert.ok(a.source && /system-cron\.log|pending\//.test(a.source),
-      `${a.id} has no checkable provenance: ${a.source}`);
-  }
+  const thin = open.filter((a) => A.trimFact(a.question).length < A.MIN_FACT_CHARS).map((a) => a.id);
+  assert.deepStrictEqual(thin, [], 'these asks carry a category, not a question');
+  // every failure named at once — a loop that throws on the first reports one of N
+  assert.deepStrictEqual(provenanceFailures(open), [],
+    'open asks with no checkable provenance (ASK.md:41 wants path:line; a sha also checks)');
   assert.ok(!/HAS NO USABLE QUESTION TEXT/.test(A.line(st, Date.now())));
+});
+
+test('provenance gate, BOTH directions: path:line and a sha pass; a bare path, a timestamp, a hex-looking word do not', () => {
+  const Q = 'Is this a real question with enough words in it to clear the fact floor of the store, quoted verbatim from a goal?';
+  const block = (n, source) => '### ASK-9' + n + ' — fixture, asked 2026-08-30\n**Source:** ' + source + '\n**Question:** ' + Q + '\n**Status:** OPEN\n\n';
+  const st = A.parseStore(
+    block(1, '`exo_memory/loop/univ_amendment_registration_2026-08-29.md:241` (§6.1)') +                    // path:line in the repo — ASK-007's real shape
+    block(2, '`~/.claude/shell/duration/daily-news-digest/system-cron.log:1109` (2026-08-25T05:31:13Z)') +   // the original cron-log shape
+    block(3, '`2fc006c` gitignored the directory') +                                                          // a sha alone
+    block(4, '`exo_memory/loop/cant_lose_repair_registration_2026-08-29.md` (the break-attempt is in-file)') + // BARE PATH — red
+    block(5, 'asked at 2026-08-25T05:31:13Z in the librarian pane') +                                           // a timestamp is not a location — red
+    block(6, 'see the defaced record, obviously') +                                                              // hex-looking word, no digit — red
+    block(7, '`consonance/tools/actors.evidence.test.js` red at HEAD'));                                      // bare path, no line, no sha — red
+  const open = A.openAsks(st, Date.now());
+  assert.strictEqual(open.length, 7, 'fixture store did not parse to seven open asks');
+  const failures = provenanceFailures(open).map((s) => s.split(':')[0]);
+  assert.deepStrictEqual(failures, ['ASK-94', 'ASK-95', 'ASK-96', 'ASK-97'],
+    'exactly the un-checkable sources fail, and every one of them is named, not just the first');
+
+  // and the thing that was wrong: the pre-2026-08-31 regex rejected ASK-007's real shape
+  const PRE = /system-cron\.log|pending\//;
+  assert.ok(!PRE.test(open[0].source), 'the old regex rejected a repo path:line — the over-fit this test replaced');
+  assert.ok(PRE.test(open[1].source) && CHECKABLE_PROVENANCE.test(open[1].source), 'the original cron-log shape still passes');
 });

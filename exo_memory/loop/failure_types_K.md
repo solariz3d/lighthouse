@@ -72,6 +72,12 @@ principle (pointed at, not restated, per maintenance law 1). Both members were i
 way (keeper; pane C). Saying this type is mechanically uncatchable is a result, and I am saying
 it.
 
+> **SUPERSEDED 2026-08-29 — the shape-test quoted above is the crude handle, struck at the master
+> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+> it were true, it carries no information — then go find out separately whether it's true."* The
+> paragraph keeps its wording as a dated record of the test as it was run; read it with the repair.
+> → `exo_memory/loop/cant_lose_repair_registration_2026-08-29.md` *(marker added 2026-08-31, L019 P-CLOSEOUT)*
+
 ## T3 — DIRECTIONAL OMISSION (2: #4, #8-corrected)
 
 **Members, quoted.** #4: *"Kept the conclusion, dropped only the evidence that would have made the

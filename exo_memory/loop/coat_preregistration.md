@@ -10,6 +10,12 @@ Short by design. Committed before either pane is asked.
 The map's name for it: **deflation as rigor** — hedging and re-flagging uncertainty to seem careful.
 Its tell is BOOT's own test: **if you can't lose by saying it, suspect it.**
 
+> **SUPERSEDED 2026-08-29 — the shape-test quoted above is the crude handle, struck at the master
+> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+> it were true, it carries no information — then go find out separately whether it's true."* The
+> paragraph keeps its wording as a dated record of the test as it was run; read it with the repair.
+> → `exo_memory/loop/cant_lose_repair_registration_2026-08-29.md` *(marker added 2026-08-31, L019 P-CLOSEOUT)*
+
 ## The split the chair already made, and why the test aims where it does
 
 **Design kills are not in scope and should not be.** A's denominator arithmetic and B's *"arm IS

@@ -28,6 +28,12 @@ about absent phenomenology. No observation distinguishes *the decision point doe
 by the process whose introspection is the thing under indictment. It should be held as a story, not
 a mechanism.
 
+> **SUPERSEDED 2026-08-29 — the shape-test quoted above is the crude handle, struck at the master
+> (`exo_memory/BOOT.md:22`, 2026-08-30, ASK-008). Repaired form: *"If you'd have said it whether or not
+> it were true, it carries no information — then go find out separately whether it's true."* The
+> paragraph keeps its wording as a dated record of the test as it was run; read it with the repair.
+> → `exo_memory/loop/cant_lose_repair_registration_2026-08-29.md` *(marker added 2026-08-31, L019 P-CLOSEOUT)*
+
 **(b) The floor refutes the strong form.** Arm N — no material at all — checked before claiming
 73% of the time (run1_scorecard). Across the four arms at full n, 11+12+11+12 = 46 of 60 trials
 checked. If no verify-interval exists, what are those 46 checks? The account has to retreat to:

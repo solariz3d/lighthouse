@@ -182,9 +182,11 @@ is one-night taxonomy; its falsifier is below.*
   within minutes (session file born 10:53:31Z). The engineered exceptions are
   PARTIAL; the floor's replacement is never the opposite belief — it is the per-case
   check.
-- RUN: shape-test first — *can you lose by saying it?* If NO → [ROUTER]: restate as
-  a claim WITH a falsifier and hand it to the second vantage; it does not get settled
-  inside own prose. If YES → [VERIFIER]: the case has instruments — grep the
+- RUN: shape-test first — ~~*can you lose by saying it?* If NO~~ *(struck 2026-08-30, ASK-008 — repaired form:)*
+  **would you have said it whether or not it were true?** If YES (it carries no information)
+  → [ROUTER]: restate as a claim WITH a falsifier and hand it to the second vantage, and go
+  find out separately whether it's true; it does not get settled inside own prose.
+  If NO → [VERIFIER]: the case has instruments — grep the
   transcript, read the journal, run the per-pane check — and the return value
   replaces the default. **Shown red live:** #13's floor-claim killed by the
   session-file check; the Chrysos grep returning the fact the summary line invented;

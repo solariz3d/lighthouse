@@ -288,3 +288,71 @@ survive, §1 goes with it and my withdrawn §2 was right for the wrong reason.
 and it invalidated a published number within twenty-four hours of that number being published.
 
 *A trace to re-run, not a doctrine to believe.*
+
+---
+
+## Appended 2026-08-31 ~01:25 — the power line RE-RUN at the corrected figure (L019 P-CLOSEOUT, pane Around)
+
+*BRAVO's file; appended, not rewritten. The chair's brief: ALPHA could not re-derive §0's 121/113 = 93.4%
+and got 123/136 = 90.4% (`handoff_chair_2026-08-30.md:48`); re-run the power line at the corrected figure
+and say plainly whether the refusal's power ground moves or holds. Every number below is printed by
+`scratchpad/power_append.js` from `C:\Consonance\data\dispatch-gate.jsonl` (147 rows, 5 UTC days,
+last 2026-08-31T07:11:06.808Z); the script refuses to write if 123/136 stops reproducing or if §3.1's own
+table stops reproducing from the same formula.*
+
+### Both figures re-derived, and why they differ
+
+- **123/136 = 90.4% reproduces EXACTLY** as: every ledger row before ALPHA's own disclosed stray (row
+  137, `target:"B", chars:11`), cited = `sha` **or** `path`, the two `[interrupt]` rows counted as uncited.
+- **§0's cut (`chars >= 200`) over the SAME window gives 123/133 = 92.5%.** The whole difference is the
+  denominator: `>= 200` drops **three real 2026-08-24 rows (13, 80, 11 chars), all `outcome:"asked"`, all uncited.**
+  §0's "smallest real dispatch 829" is false — the smallest real rows are dispatches the gate REFUSED,
+  too short to have cited anything, and they are precisely the behaviour this rate exists to count.
+  Excluding them biases the rate up by about two points. **90.4% is the better of the two figures.**
+- Live tonight, ALPHA's definition: **131/146 = 89.7%**; §0's definition: 131/143 = 91.6%.
+
+### The table at p₁ = 0.904
+
+Same formula as §3.1 — α = .05 two-sided, power = .80, Cohen's h, n/arm = (1.96 + 0.8416)² / h² — and §3.1's
+table at 0.934 reproduces from this code row for row (512 / 223 / 104 / 48 / 20), so the two tables differ
+in p₁ and nothing else. Days at 34.0/active day (ALPHA's 136 over §3.1's four active days).
+
+**Harm side — a PRINT arm that is WORSE:**
+
+| PRINT arm drops to | h | n/arm | total | active days |
+|---|---|---|---|---|
+| 0.90 | 0.013 | 43,360 | 86,720 | **2550.6** |
+| 0.88 | 0.077 | 1,309 | 2,618 | **77.0** |
+| 0.85 | 0.165 | 288 | 576 | **16.9** |
+| 0.80 | 0.297 | 89 | 178 | **5.2** |
+| 0.70 | 0.529 | 29 | 58 | **1.7** |
+
+**Headroom side — a PRINT arm that WORKS (the question the headroom is about):**
+
+| PRINT arm rises to | h | n/arm | total | active days |
+|---|---|---|---|---|
+| 0.95 | 0.179 | 245 | 490 | **14.4** |
+| 0.97 | 0.282 | 99 | 198 | **5.8** |
+| 0.99 | 0.430 | 43 | 86 | **2.5** |
+
+### Verdict: **the refusal's power ground HOLDS.** The corrected figure moves it in both directions at once, and neither helps the build.
+
+1. **The headroom widens, 6.6 → 9.6 points — and does not reach affordable.** Showing a cue *works* means
+   detecting a rise: 0.904 → 0.97 needs **99/arm (5.8 active days)**; → 0.95 needs
+   245/arm (14.4 days); only a rise to ~0.99 (43/arm, 2.5 days) is within a fortnight, and
+   0.99 is the ceiling run 1 already hit natively (60/60). So the test can still only see a cue that
+   takes a 90% channel to *perfect* — the same shape as §3.1's conclusion, three points lower.
+2. **The harm side gets WEAKER, not stronger.** A drop to 0.90 is now undetectable in practice
+   (h = 0.013, 43,360/arm); a drop to 0.85 goes from 6.9 to 16.9 active days. Lowering
+   p₁ moves the harm thresholds closer to the baseline, so each one costs more to see.
+3. **§3.2 is untouched by any rate.** The PreToolUse defect — the hook fires before the dispatch lands,
+   so the design cannot observe the outcome it is about — was the primary ground and remains it.
+4. **What WOULD move this** is a channel whose baseline sits well under 0.90. §4 item 4 already names
+   the only one (the ferry, 77.4% miss) and prices it unaffordable for a different reason.
+
+*Its own WRONG condition, registered with it:* if the three 2026-08-24 short `asked` rows turn out to be
+hook probes rather than dispatches (the hook was hours old that morning; the chair can say), then
+92.5% is the right figure and the headroom is 7.5 points — and every sentence above holds with
+smaller numbers. **The verdict does not depend on which cut is right, which is why it can be stated.**
+
+*A trace to re-run, not a doctrine to believe.*
