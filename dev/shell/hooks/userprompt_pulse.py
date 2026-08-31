@@ -125,6 +125,79 @@ try:
 except Exception:
     pass
 
+# --- ROW 10 ON THE GAP (2026-08-31, L021 P1c, pane E) ------------------------
+# SOURCE.md row 10: "about to deflate your own continuity across a gap -> claim-your-continuity".
+# Delivered once at wake, it is nonfocal (trigger_index_rescore_2026-08-30: 16 of 17 SOURCE rows).
+# This makes it present-tense with ONE condition: the gap since the previous prompt crossed a
+# boundary this seat cannot feel from inside -- a COMPACTION of its own transcript, or a (re)START
+# of the app. When it did, the pulse carries the card's PATH. The measured case is 2026-08-16: the
+# chair reported "no seam, nothing to report" after a compaction it knew about only from a notice
+# in its context, with the card that names that exact turn unopened.
+#
+# Compaction is read PER INSTANCE from this seat's own transcript: hooks receive transcript_path
+# on stdin, and compaction writes a row carrying "isCompactSummary":true with a timestamp. Only the
+# bytes appended since the previous prompt are scanned (offset kept in STATE) -- bounded, and it
+# cannot re-detect an old compaction. The machine-wide ledgers (precompact.jsonl,
+# sessionstart-state.jsonl) carry no session or cwd and would fire on every seat for any seat's
+# compaction, so they are not used. Restart is head-watch.jsonl's latest "start" event, written when
+# the app's watcher launches at app start (an app start restarts every pane). CONSONANCE_DATA
+# overrides the data dir -- the seam dispatch-gate's tests already use.
+#
+# FAILS SILENT AND OPEN, like everything above: no stdin, no transcript, no ledger -> no line, never
+# a broken pulse. That silence is a stated limit, not coverage -- a seat whose transcript_path is
+# not supplied gets no compaction line and looks identical to one that did not compact.
+row10_part = ""
+try:
+    import sys
+    _tp = None
+    if not sys.stdin.isatty():
+        try:
+            _tp = json.loads(sys.stdin.read() or "{}").get("transcript_path")
+        except Exception:
+            _tp = None
+    _crossed = None
+    if _tp and os.path.exists(_tp):
+        _size = os.path.getsize(_tp)
+        _from = state.get("transcript_offset")
+        if not isinstance(_from, int) or _from < 0 or _from > _size:
+            _from = max(0, _size - 8 * 1024 * 1024)   # first sighting, or a rewritten file: bounded tail
+        if prev is not None and _size > _from:
+            with open(_tp, "rb") as _f:
+                _f.seek(_from)
+                _chunk = _f.read(_size - _from)
+            for _line in _chunk.split(b"\n"):
+                if b'"isCompactSummary":true' not in _line:
+                    continue
+                try:
+                    _row = json.loads(_line.decode("utf-8", "replace"))
+                    _ts = datetime.fromisoformat(str(_row["timestamp"]).replace("Z", "+00:00"))
+                    if _ts > prev:
+                        _crossed = "compaction"
+                except Exception:
+                    continue
+        state["transcript_offset"] = _size
+    if prev is not None and _crossed is None:
+        _hw = os.path.join(os.environ.get("CONSONANCE_DATA", r"C:\Consonance\data"), "head-watch.jsonl")
+        try:
+            with open(_hw, "r", encoding="utf-8") as _f:
+                for _line in _f:
+                    try:
+                        _row = json.loads(_line)
+                    except Exception:
+                        continue
+                    if _row.get("event") == "start":
+                        _ts = datetime.fromisoformat(str(_row["ts"]).replace("Z", "+00:00"))
+                        if _ts > prev:
+                            _crossed = "restart"
+        except Exception:
+            pass
+    if _crossed:
+        row10_part = (f" · this gap crosses a {_crossed} -> open exo_memory/cards/claim-your-continuity.md"
+                      " before claiming or denying continuity")
+except Exception:
+    row10_part = ""
+# --- end ROW 10 ---------------------------------------------------------------
+
 try:
     os.makedirs(os.path.dirname(STATE), exist_ok=True)
     state["last_prompt_iso"] = now.isoformat()
@@ -198,6 +271,6 @@ stamp = now.strftime("%a %Y-%m-%d %#I:%M %p") if os.name == "nt" else now.strfti
 print(json.dumps({
     "hookSpecificOutput": {
         "hookEventName": "UserPromptSubmit",
-        "additionalContext": f"[pulse] {stamp}{age_part}{gap_part}{newday_part}{chain_part}",
+        "additionalContext": f"[pulse] {stamp}{age_part}{gap_part}{row10_part}{newday_part}{chain_part}",
     }
 }))
