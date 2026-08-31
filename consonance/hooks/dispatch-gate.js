@@ -404,8 +404,17 @@ function cliQuarantine(args) {
   console.log('  real rows kept ' + c.keep.length);
   const cited = c.keep.filter((r) => r.cited === 'sha' || r.cited === 'path').length;
   const gated = c.keep.filter((r) => r.outcome === 'allowed' || r.outcome === 'asked').length;
-  console.log('  of the kept: ' + cited + ' cited of ' + gated + ' gated = ' +
-              (gated ? (cited / gated * 100).toFixed(1) : '0') + '%');
+  // The RATE is gone on purpose, 2026-08-31, on ECHO's recommendation and the librarian's ruling.
+  // These rows span two gate modes -- 'ask' before GATE_MODE_SINCE and 'print' after -- and pooling
+  // them destroys the one comparison BRAVO's falsifier needs: whether the cited-rate under print
+  // falls below the 90.4% measured under ask. Two periods are not one population.
+  //
+  // A LABEL WOULD NOT HAVE SAVED IT. Labelling the figure "pooled" and printing it anyway is how a
+  // number gets quoted without its caveat -- the room has the case: 25.3% travelled for weeks as
+  // evidence a cue worked, and 79% of it was the test suite measuring itself. So the counts stay
+  // and the division goes; anyone who wants a rate uses the tool that refuses to pool.
+  console.log('  of the kept: ' + cited + ' cited of ' + gated + ' gated' +
+              '   (no rate here: rows span two gate modes — use dispatch-gate-report.js)');
   console.log('  orphans (test-shaped rows NOT in a quadruple, left in place): ' + c.orphans.length);
   console.log('  near misses (values matched, clock did not, left in place): ' + c.nearMisses.length);
   for (const n of c.nearMisses) console.log('      index ' + n.index + ' ' + n.ts + ' span ' + n.spanMs + 'ms');
