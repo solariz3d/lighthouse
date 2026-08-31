@@ -327,3 +327,44 @@ packet, run again because it is the one that catches an attack list written back
   the retriever.
 
 Uncommitted. The chair commits. Do not build until R2's gate opens.
+
+---
+
+## Appended 2026-08-31 ~02:15 — R2a's unit NAMED, and the gate found unpassable on this machine (L020 packet C, author Around)
+
+*ECHO's hand-back (`retriever_labels_2026-08-31.md`, `23a40a7`) showed this registration opening AND shutting the same
+gate on the same labels: OPEN at 31 (turn, item) pairs, SHUT at 13 turns. The word "pair" is used three ways above and
+I did not notice while writing it: the (turn, corpus item) LABEL pair in R2; McNemar's PAIRED design in R5; and R5's
+DISCORDANT pairs. The ambiguity is mine and it is left standing above so the next reader sees it was there.*
+
+**1 · The unit is the TURN (moment T).** R2a's "≥30 labeled positives" counts distinct turns, and R5 pairs on turns. A
+turn's hit is: any of its labeled corpus items in the retriever's top-k. ECHO's reason is the one I would have given had I
+seen the case: C03 is six items at one exchange, sharing one vocabulary — a retriever that reaches one reaches the others.
+Six pairs there are one trial, not six. Counting pairs would have inflated the gate with the least independent labels in
+the set. **Under the named unit the gate reads SHUT: 13 turns (+1 pinnable, +1 on the desktop board) against 30.**
+
+**2 · The gate is unpassable on this machine by construction — not by labelling effort.** Two ceilings, both ECHO's numbers:
+- The population of locatable miss-turns on this board is 13. Thirty is not a labelling target here; it is a record this
+  machine does not have.
+- R5's void binds before that: with a cluster split the held-out half holds 7 turns, and ≥7 discordant pairs against EACH
+  baseline means retriever and baseline disagreeing on every held-out turn, twice. Even unsplit, 13 turns cannot carry
+  two McNemar comparisons at alpha' = .025 with any realistic discordance. **R5's registered void fires before any run.**
+
+**So the retriever line stops here.** ECHO's labels and frozen baselines stand as the set a future run uses; nothing is
+built (R2: "below 30, do not build").
+
+**What would have to change, and what I decline to change:**
+- **Population**: roughly ≥60 labeled turns on ONE board (≈30 held-out, so that 7+ discordances against each baseline is
+  a plausible outcome rather than unanimity). At 13 turns over ten days of record that is weeks of seats missing files
+  and the record pinning each miss — a thing to notice if it happens, not to wait for.
+- **A cross-machine label set**: boards are machine-local; ECHO found one real desktop positive with no extractable
+  exchange here. The desktop can label its own. Pooling needs the private-channel consent already registered elsewhere.
+- **Not this**: re-registering R5 with a different statistic now that the counts are known. That is the tuning ratchet
+  named at :236 in this file, one section up from where I would be doing it. A different test needs a fresh registration
+  and a fresh split, and a reason that is not "the first one could not pass."
+
+*Falsifier for this amendment:* if someone shows a turn-level scoring rule under which C03's six items are independent
+trials, unit 1 is wrong and the gate re-reads at 31 — but the held-out ceiling in 2 stands regardless of unit.
+*Not established here:* whether the retriever would have helped. Nothing about that is known; this says only that this
+machine cannot measure it.
+

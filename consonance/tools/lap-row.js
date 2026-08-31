@@ -38,6 +38,7 @@
 //   node lap-row.js --map <lap-id> --paths <p[,p...]>
 //   node lap-row.js --opened <lap-id> --paths <p[,p...]>
 //   node lap-row.js --stage <lap-id> <stage> --holder <seat> [--note <text>]
+//   node lap-row.js --void <lap-id> --reason <text> --by <seat>
 //   node lap-row.js --report [--last N]
 //
 // THE CHAIN (`--stage`) IS A SECOND, INDEPENDENT MEASUREMENT SHARING ONE LEDGER. The columns above
@@ -104,6 +105,17 @@ const REPO = process.env.LAP_REPO || fromConfig('room_path') && path.resolve(pat
 // the counts print and the ratio does not.
 const RATE_FLOOR = 5;
 
+// A MAP ROW WRITTEN WITHIN THIS MANY SECONDS OF ITS OPEN ROW CANNOT BE A FRESH LIBRARIAN MAP. Found
+// 2026-08-31 while building the void stage: the gap is 0.1 s on five of eighteen scored laps and
+// under 40 s on eight. The librarian's own maps on this ledger took 171 s and 199 s (L011, L019);
+// the earliest laps took minutes. One seat writing both rows in one command sequence is the only
+// thing that produces a tenth of a second — which is either a chair-authored map (L020, admitted)
+// or a guess recorded AFTER the map already existed on the board, which is not a prior. The seal
+// cannot see either: it detects a guess EDITED after the map row, not a guess WRITTEN after the map.
+// The gap is printed per lap and counted, never used to exclude — voiding is a judgement that
+// carries a reason, and this constant is a threshold that carries none.
+const FRESH_MAP_FLOOR_S = 60;
+
 // BUILDING.md's falsifier is stated over ten dispatches, and this tool's own over ten laps.
 const WINDOW = 10;
 // Pane E's falsifier is stated over twenty chair commits.
@@ -166,15 +178,21 @@ function laps(all = rows()) {
   const byId = new Map();
   for (const r of all) {
     if (!r.lap) continue;
-    if (!byId.has(r.lap)) byId.set(r.lap, { lap: r.lap, opens: [], maps: [], openeds: [] });
+    if (!byId.has(r.lap)) byId.set(r.lap, { lap: r.lap, opens: [], maps: [], openeds: [], voids: [] });
     const L = byId.get(r.lap);
     if (r.stage === 'open') L.opens.push(r);
     else if (r.stage === 'map') L.maps.push(r);
     else if (r.stage === 'opened') L.openeds.push(r);
+    else if (r.stage === 'void') L.voids.push(r);
   }
   return [...byId.values()].map(L => {
     const open = L.opens[0] || null;
     const map = L.maps[0] || null;
+    // The void, if any. A voided lap is folded like every other so it stays VISIBLE in the report;
+    // report() is where it is kept out of the totals. Dropping it here would make it vanish, which
+    // is the same failure as counting it, pointing the other way.
+    const voided = L.voids[0] ? { at: L.voids[0].at, reason: L.voids[0].reason, by: L.voids[0].by } : null;
+    const gapS = map && open ? (map.at - open.at) / 1000 : null;
     const guess = open ? open.guess : [];
     const mapped = map ? map.paths : [];
     const opened = L.openeds.flatMap(r => r.paths);
@@ -208,6 +226,7 @@ function laps(all = rows()) {
       guess, guessNarrow, guessBroad: guess.filter(isBroad),
       mapped, opened, both, mapOnly, openedFromMap, openedFromMapOnly,
       hasMap: !!map, hasOpened: opened.length > 0, integrity,
+      voided, gapS,
     };
   }).sort((a, b) => a.at - b.at);
 }
@@ -373,6 +392,42 @@ function chain(lap, stage, holder, note, now) {
   });
 }
 
+// ---------------------------------------------------------------- the void (a measurement withdrawn)
+
+/* A THIRD ROW TYPE, NOT A CHAIN STAGE, and the event that forced it is the reason it is not one.
+ *
+ * On 2026-08-31 the chair found that L017's and L020's map rows were CHAIR-AUTHORED — one seat
+ * playing both sides of a comparison built to need two — and appended correction notes. The
+ * report did not see them: a note is a chain row, and the report subtracts stages, not notes, so
+ * both manufactured BOTH=3 figures stayed quotable with nothing marking them. With no void stage
+ * the chair wrote L017's note through `--stage dispatched`, WHICH REOPENED A LAP THAT HAD BEEN
+ * FILED (chain-status reads the last chain row), and then had to write a second `filed` row to
+ * restore it. The defect demonstrated itself inside the act of documenting it.
+ *
+ * So: `stage: 'void'`. laps() folds it beside open/map/opened; chain-status.js reads only
+ * `stage === 'chain'` and never sees it (verified in the test, byte-identical chain view before and
+ * after). Voiding a MEASUREMENT is not reopening the WORK, and the two must not share a field.
+ *
+ * WHAT A VOID DOES: the lap's guess/map/BOTH/opened-from-map columns leave every total, and the lap
+ * is PRINTED as void with its reason — never dropped. A number that quietly disappears is the same
+ * failure as one that is quietly counted. WHAT IT DOES NOT DO: touch the chain, touch falsifier 2
+ * (the lap still happened and its initiator is still a fact), or reverse. The ledger is append-only;
+ * a void that was wrong is answered by a new lap and a note in the record beside it, not by an
+ * un-void verb whose existence would make every void provisional. */
+function voidLap(lap, reason, by, now) {
+  if (!lap || !String(lap).trim()) throw new Error('--void needs a lap id: node lap-row.js --void <lap> --reason <text> --by <seat>');
+  const r = String(reason || '').trim();
+  if (!r) throw new Error('--reason is required. A void with no reason is a number that disappeared; the next reader must be able to see why it is gone.');
+  const b = String(by || '').trim();
+  if (!b) throw new Error('--by is required: name the seat voiding the measurement. The subject of a measure does not get to void it anonymously.');
+  const all = rows();
+  if (!all.some(x => x.lap === lap)) throw new Error(`no such lap: ${lap}. A void withdraws a measurement; it cannot mint one.`);
+  if (all.some(x => x.lap === lap && x.stage === 'void')) {
+    throw new Error(`lap ${lap} is already void. One void is the whole effect; a second reason belongs in the record beside the first, not in the ledger.`);
+  }
+  return append({ lap, stage: 'void', at: now, reason: r, by: b, head: headSha() });
+}
+
 // ---------------------------------------------------------------- report
 
 function commitsSince(sha) {
@@ -385,13 +440,23 @@ function report(last, out = console.log) {
   const L = laps();
   const valid = L.filter(l => l.integrity === 'OK');
   const bad = L.filter(l => l.integrity !== 'OK');
-  const scored = valid.filter(l => l.hasMap);
+  // THE SUBTRACTION. A voided lap leaves `scored` — the set every guess/map/BOTH total and
+  // falsifier 1 are computed over — and nothing else. It stays in `valid` (falsifier 2 counts
+  // initiators, and the lap was initiated) and in the table (marked VOID). Remove `!l.voided` here
+  // and the manufactured numbers come back; the test proves that by doing exactly that.
+  const voided = valid.filter(l => l.hasMap && l.voided);
+  const scored = valid.filter(l => l.hasMap && !l.voided);
 
   out(`lap-row - ${LEDGER}`);
-  out(`laps                   ${L.length}   (${L.filter(l => l.hasMap).length} with a map, ${L.filter(l => l.hasOpened).length} with an opened stage)`);
+  out(`laps                   ${L.length}   (${L.filter(l => l.hasMap).length} with a map, ${L.filter(l => l.hasOpened).length} with an opened stage` +
+    (voided.length ? `, ${voided.length} VOID` : '') + ')');
   if (bad.length) {
     out(`EXCLUDED               ${bad.length}   these are not counted anywhere below:`);
     for (const l of bad) out(`    ${l.lap}  ${l.integrity}`);
+  }
+  if (voided.length) {
+    out(`VOID                   ${voided.length}   measurement withdrawn; the lap and its chain stand, its guess/map figures count nowhere below:`);
+    for (const l of voided) out(`    ${l.lap}  by ${l.voided.by}: ${l.voided.reason}`);
   }
   if (!L.length) {
     out('');
@@ -401,12 +466,17 @@ function report(last, out = console.log) {
     return { laps: 0 };
   }
 
-  const shown = scored.slice(-(last || WINDOW));
+  // The window is over mapped laps INCLUDING voided ones, so a void is seen in its place in the
+  // table rather than inferred from a gap in the ids.
+  const shown = valid.filter(l => l.hasMap).slice(-(last || WINDOW));
+  const gapCol = l => l.gapS == null ? '?' : (l.gapS < 1 ? l.gapS.toFixed(1) : String(Math.round(l.gapS)));
   if (shown.length) {
     out('');
-    out('  lap   init    blind  guess  broad  map  BOTH  map-only  opened  from-map');
+    out('  lap   init    blind  gap(s)  guess  broad  map  BOTH  map-only  opened  from-map');
     for (const l of shown) {
-      out(`  ${l.lap.padEnd(6)}${String(l.initiator || '?').padEnd(8)}${(l.blind === true ? 'yes' : '?').padEnd(7)}` +
+      const head = `  ${l.lap.padEnd(6)}${String(l.initiator || '?').padEnd(8)}${(l.blind === true ? 'yes' : '?').padEnd(7)}${gapCol(l).padEnd(8)}`;
+      if (l.voided) { out(head + `VOID   (by ${l.voided.by} — counted nowhere; reason above)`); continue; }
+      out(head +
         `${String(l.guessNarrow.length).padEnd(7)}${String(l.guessBroad.length).padEnd(7)}${String(l.mapped.length).padEnd(5)}` +
         `${String(l.both.length).padEnd(6)}${String(l.mapOnly.length).padEnd(10)}` +
         `${String(l.opened.length).padEnd(8)}${l.openedFromMap.length}`);
@@ -433,6 +503,14 @@ function report(last, out = console.log) {
       (blindScored.length < scored.length
         ? ' The redundancy reading is REFUSED on the rest: a map that saw the guess cannot corroborate it.'
         : ''));
+  }
+  // The gap, counted. Printed above the floor and below it alike: it is a count, not a rate.
+  const fast = scored.filter(l => l.gapS != null && l.gapS < FRESH_MAP_FLOOR_S);
+  if (fast.length) {
+    out(`  map row within ${FRESH_MAP_FLOOR_S} s of the guess: ${fast.length} of ${scored.length} scored laps (${fast.map(l => l.lap).join(', ')}).`);
+    out('  A fresh librarian map cannot be produced in that time. These are chair-authored, or a guess recorded');
+    out('  after the map already existed - and the seal sees neither. Counted above regardless: the gap is a');
+    out('  signal, not a verdict. Voiding is a judgement that carries a reason (--void); this line carries none.');
   }
 
   // ---- FALSIFIER 1 (BUILDING.md)
@@ -490,7 +568,7 @@ function report(last, out = console.log) {
   out('  c. a path opened BECAUSE the map named it from one that would have been opened anyway.');
   out('  d. whether the lap happened at all. Every row here is self-reported by a participant; the seal');
   out('     detects a rewritten guess and nothing else.');
-  return { laps: L.length, scored: scored.length, excluded: bad.length, answered, withOpened };
+  return { laps: L.length, scored: scored.length, excluded: bad.length, voided: voided.length, answered, withOpened };
 }
 
 // ---------------------------------------------------------------- cli
@@ -523,6 +601,11 @@ function main(argv, now = Date.now()) {
       console.log(`${r.lap}  ${r.chain.toUpperCase()} — next holder ${r.holder}.`);
       return 0;
     }
+    if (argv.includes('--void')) {
+      const r = voidLap(at('--void'), at('--reason'), at('--by'), now);
+      console.log(`${r.lap}  VOID — measurement withdrawn by ${r.by}. The lap and its chain stand; its guess/map figures count nowhere.`);
+      return 0;
+    }
     if (argv.includes('--report')) { report(Number(at('--last')) || 0); return 0; }
   } catch (e) {
     console.error(`lap-row: ${e.message}`);
@@ -535,6 +618,8 @@ function main(argv, now = Date.now()) {
   console.error('  lap-row.js --stage <lap-id> <stage> --holder <seat> [--note <text>]');
   console.error(`      stages: ${CHAIN_STAGES.join(' -> ')}`);
   console.error('      written by whoever COMPLETES a stage; --holder names who must act NEXT');
+  console.error('  lap-row.js --void <lap-id> --reason <text> --by <seat>');
+  console.error('      withdraws the lap\'s guess/map MEASUREMENT from every total; the lap stays visible and its chain is untouched');
   console.error('  lap-row.js --report [--last N]');
   return 2;
 }
@@ -542,6 +627,6 @@ function main(argv, now = Date.now()) {
 if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
-  normPath, isBroad, sealOf, rows, laps, open, map, opened, chain, report, mintId, main,
-  LEDGER, RATE_FLOOR, WINDOW, COMMIT_WINDOW, INITIATORS, CHAIN_STAGES,
+  normPath, isBroad, sealOf, rows, laps, open, map, opened, chain, voidLap, report, mintId, main,
+  LEDGER, RATE_FLOOR, WINDOW, COMMIT_WINDOW, INITIATORS, CHAIN_STAGES, FRESH_MAP_FLOOR_S,
 };

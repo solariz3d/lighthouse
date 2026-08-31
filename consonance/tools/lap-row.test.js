@@ -503,3 +503,138 @@ test('2W-1: max+1 still holds when the ledger carries MORE THAN ONE tag', () => 
 
   fs.rmSync(dir, { recursive: true, force: true });
 });
+
+// ---------------------------------------------------------------- the void (2026-08-31, L020 packet C-2)
+//
+// THE EVENT. The chair found L017's and L020's map rows were chair-authored, appended correction
+// NOTES, and the report kept printing BOTH=3 for both: it subtracts stages, not notes. With no
+// void stage the chair wrote L017's note through `--stage dispatched`, which REOPENED a FILED lap.
+// These tests are built from that: a void must leave every guess/map total, must stay visible,
+// must not touch the chain, and — the bar that matters — removing the subtraction must bring the
+// numbers back, or "they are gone" is an assertion rather than a measurement.
+
+/** Six identical laps, above RATE_FLOOR: each guesses a,b and is mapped a,c -> per lap g=2 m=2 BOTH=1. */
+function sixLaps(mod) {
+  for (let i = 1; i <= 6; i++) {
+    mod.open({ initiator: 'human', inquiry: 'q' + i, guess: ['a.md', 'b.md'], now: i * 10 });
+    mod.map('L00' + i, ['a.md', 'c.md'], i * 10 + 5);
+  }
+}
+function totals(text) {
+  const m = /guessed \(narrow\) (\d+) · mapped (\d+) · in both (\d+)/.exec(text);
+  return m ? m.slice(1).map(Number) : null;
+}
+
+test('void: a voided lap leaves every guess/map total, is PRINTED as void with its reason, and the lap count does not move', () => {
+  const { mod, cleanup } = fixture();
+  sixLaps(mod);
+  let out = []; let r = mod.report(0, s => out.push(s));
+  assert.deepStrictEqual(totals(out.join('\n')), [12, 12, 6], 'control: six laps of 2/2/1');
+  assert.strictEqual(r.scored, 6);
+
+  mod.voidLap('L003', 'map row chair-authored; one seat wrote both sides', 'pane-x', 100);
+  out = []; r = mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.deepStrictEqual(totals(text), [10, 10, 5], 'exactly L003\'s 2/2/1 is gone and nothing else moved');
+  assert.strictEqual(r.scored, 5);
+  assert.strictEqual(r.voided, 1);
+  assert.strictEqual(r.laps, 6, 'the lap still EXISTS - a number that quietly disappears is the same failure the other way');
+  assert.match(text, /^laps\s+6\s+\(6 with a map, 0 with an opened stage, 1 VOID\)/m, 'the header says how many are void');
+  assert.match(text, /^VOID\s+1\s+measurement withdrawn/m, 'a VOID section exists');
+  assert.match(text, /L003  by pane-x: map row chair-authored; one seat wrote both sides/, 'reason and seat are printed, not just the id');
+  assert.match(text, /^  L003 .*VOID/m, 'the lap is in the table, marked, in its place');
+  assert.doesNotMatch(text, /^  L003 .*\b2\s+0\s+2\s+1\b/m, 'and its numbers are not printed as if measured');
+  cleanup();
+});
+
+test('void: the chain is untouched - a FILED lap stays filed, where the chair\'s workaround through --stage reopened it', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'human', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['a.md'], 2);
+  mod.chain('L001', 'filed', 'chair', 'done', 3);
+  const chainRows = () => fs.readFileSync(ledger, 'utf8').trim().split('\n').map(JSON.parse).filter(r => r.stage === 'chain');
+  const before = chainRows();
+  assert.strictEqual(before[before.length - 1].chain, 'filed');
+
+  mod.voidLap('L001', 'withdrawn', 'pane-x', 4);
+  const after = chainRows();
+  assert.deepStrictEqual(after, before, 'not one chain row added, changed or removed: voiding a measurement is not reopening the work');
+  assert.strictEqual(after[after.length - 1].chain, 'filed', 'chain-status reads the LAST chain row; it still reads filed');
+
+  // THE CONTRAST, which is what actually happened on 2026-08-31 08:10 to L017: a void note written
+  // through the chain vocabulary is a baton, and a baton reopens the lap.
+  mod.chain('L001', 'dispatched', 'chair', 'VOID (written the wrong way)', 5);
+  const wrong = chainRows();
+  assert.strictEqual(wrong[wrong.length - 1].chain, 'dispatched', 'the workaround reopens a filed lap - the defect this stage exists to close');
+  cleanup();
+});
+
+test('void: MUTATION - remove the subtraction and the voided numbers come back', () => {
+  const { mod, ledger, dir, cleanup } = fixture();
+  sixLaps(mod);
+  mod.voidLap('L003', 'withdrawn', 'pane-x', 100);
+  let out = []; mod.report(0, s => out.push(s));
+  assert.deepStrictEqual(totals(out.join('\n')), [10, 10, 5], 'control: the shipped code subtracts');
+
+  // One edit, the one the comment in report() names: `l.hasMap && !l.voided` -> `l.hasMap`.
+  const src = fs.readFileSync(TOOL, 'utf8');
+  const needle = 'const scored = valid.filter(l => l.hasMap && !l.voided);';
+  assert.strictEqual(src.split(needle).length - 1, 1, 'the subtraction line must exist exactly once, or this mutation is not testing it');
+  const mutant = path.join(dir, 'lap-row.mutant.js');
+  fs.writeFileSync(mutant, src.replace(needle, 'const scored = valid.filter(l => l.hasMap);'));
+  process.env.LAP_LEDGER = ledger;                 // the mutant binds to the same fixture ledger at load
+  const M = require(mutant);
+  out = []; const r = M.report(0, s => out.push(s));
+  assert.deepStrictEqual(totals(out.join('\n')), [12, 12, 6], 'without the subtraction L003\'s 2/2/1 is back in every total');
+  assert.strictEqual(r.scored, 6, 'and the voided lap is scored again - which is what the shipped line prevents');
+  delete require.cache[require.resolve(mutant)];
+  cleanup();
+});
+
+test('void: refusals write nothing - no reason, no seat, unknown lap, second void', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'human', inquiry: 'q', guess: ['a.md'], now: 1 });
+  mod.map('L001', ['a.md'], 2);
+  const lines = () => fs.readFileSync(ledger, 'utf8').trim().split('\n').length;
+  const n = lines();
+  assert.throws(() => mod.voidLap('L001', '', 'pane-x', 3), /--reason is required/, 'a void with no reason is a number that disappeared');
+  assert.throws(() => mod.voidLap('L001', 'r', '', 3), /--by is required/);
+  assert.throws(() => mod.voidLap('L999', 'r', 'pane-x', 3), /no such lap/, 'a void cannot mint a lap');
+  assert.strictEqual(lines(), n, 'refusals appended nothing');
+  mod.voidLap('L001', 'r', 'pane-x', 3);
+  assert.throws(() => mod.voidLap('L001', 'again', 'pane-x', 4), /already void/, 'one void is the whole effect');
+  assert.strictEqual(lines(), n + 1);
+  cleanup();
+});
+
+test('void: the cli verb round-trips and a refusal exits non-zero', () => {
+  const { ledger, cleanup } = fixture();
+  cli(['--open', '--initiator', 'human', '--inquiry', 'q', '--guess', 'a.md'], ledger);
+  cli(['--map', 'L001', '--paths', 'a.md'], ledger);
+  const bad = cli(['--void', 'L001', '--by', 'pane-x'], ledger);
+  assert.strictEqual(bad.code, 2);
+  assert.match(bad.stderr, /--reason is required/);
+  const ok = cli(['--void', 'L001', '--reason', 'chair-authored map', '--by', 'pane-x'], ledger);
+  assert.strictEqual(ok.code, 0, ok.stderr);
+  assert.match(ok.stdout, /L001  VOID — measurement withdrawn by pane-x/);
+  const rep = cli(['--report'], ledger).stdout;
+  assert.match(rep, /VOID\s+1/);
+  assert.match(rep, /L001  by pane-x: chair-authored map/);
+  cleanup();
+});
+
+test('gap: the open->map gap is printed per lap, and maps written under the fresh-map floor are counted and named, never excluded', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'human', inquiry: 'fast', guess: ['a.md'], now: 1000 });
+  mod.map('L001', ['a.md'], 1100);                       // 0.1 s - one seat, one command
+  mod.open({ initiator: 'human', inquiry: 'slow', guess: ['a.md'], now: 2000 });
+  mod.map('L002', ['a.md'], 2000 + 199 * 1000);          // 199 s - L019's librarian round
+  const out = []; const r = mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /^  L001 .*\?\s+0\.1\s+1\s+0\s+1\s+1/m, 'L001 shows a 0.1 s gap and is STILL SCORED');
+  assert.match(text, /^  L002 .*\?\s+199\s+1\s+0\s+1\s+1/m, 'L002 shows 199 s');
+  assert.match(text, new RegExp(`map row within ${mod.FRESH_MAP_FLOOR_S} s of the guess: 1 of 2 scored laps \\(L001\\)`), 'counted and named');
+  assert.match(text, /the gap is a\n\s+signal, not a verdict/, 'and the line says it does not exclude');
+  assert.strictEqual(r.scored, 2, 'a fast map is a signal; only --void, with a reason, removes a lap');
+  cleanup();
+});
