@@ -132,9 +132,26 @@ $files = @(
 #           a repo path (done by hand on 2026-08-15) means a pull silently changes what executes
 #           mid-session and the installer cannot manage it.
 #   Runner— 'node' or 'py'.
+#   Conflicts — leaf names of OTHER files that must not be live on the same event when this one is
+#           registered. The registration step REFUSES to add the entry if one is, and -Check reports
+#           both live as a finding. Exists for the pulse (below); nothing else uses it yet.
 $register = @(
   @{ Event = 'SessionStart';     Rel = 'hooks\session-start.js';      Runner = 'node' }
-  @{ Event = 'UserPromptSubmit'; Rel = 'hooks\userprompt-submit.js';  Runner = 'node' }
+  # THE PULSE — 2026-08-31 (L022 P2b, pane Around). This line used to declare the NODE pulse,
+  # `hooks\userprompt-submit.js`. It never described any machine this script has run on: the file
+  # is Hold in the manifest (never copied), so a bare run REGISTERED a hook against a path the same
+  # run refused to create — node against a missing file, every prompt, every pane
+  # (loop/absent_hooks_ruling_2026-08-25.md, "cannot be installed by this installer"). Meanwhile the
+  # pulse that actually runs here, userprompt_pulse.py, was installed at $files:89 and declared
+  # nowhere, so -Check called it REGISTERED, NOT DECLARED for six days. Declaring Python WITHOUT
+  # removing the Node line would have left two pulses declared on one event and a fresh install
+  # wiring both. So: Python declared, Node line REMOVED. The manifest Hold entry for the Node FILE
+  # is kept as it was — nothing is deleted, and the desktop, which this script cannot see, keeps
+  # whatever it runs (this script never unregisters). If the desktop runs the Node pulse its -Check
+  # will now say REGISTERED, NOT DECLARED for it, which is the true state and the reason the
+  # Conflicts guard below exists: on THAT machine a bare run must not add a second pulse either.
+  @{ Event = 'UserPromptSubmit'; Rel = 'userprompt_pulse.py';         Runner = 'py';
+     Conflicts = @('userprompt-submit.js') }
   @{ Event = 'UserPromptSubmit'; Rel = 'findings-return.js';          Runner = 'node' }
   @{ Event = 'Stop';             Rel = 'hooks\stop.js';               Runner = 'node' }
   @{ Event = 'Stop';             Rel = 'hooks\l2-overseer.js';        Runner = 'node' }
@@ -396,6 +413,7 @@ if ($Check) {
 
   $notWired = @()
   $notDeclared = @()
+  $conflicts = @()
   if (-not $regUnknown) {
     foreach ($e in $register) {
       if (-not $liveLeaf.ContainsKey((Split-Path -Leaf $e.Rel).ToLower())) {
@@ -407,6 +425,18 @@ if ($Check) {
       # Only files this manifest already carries. A hook pointing at something outside $files is a
       # different finding and the destination sweep above owns it.
       if ($mfToLeaf.ContainsKey($k)) { $notDeclared += ("{0}   installed and running; no `$register entry" -f $liveLeaf[$k]) }
+    }
+    # Two implementations of one hook live on one event. Found the day the Python pulse was
+    # declared (2026-08-31): the Node pulse had been the declared one for six days on a machine
+    # running the Python one, and a bare run would have wired both. Reported and counted as red.
+    foreach ($e in $register) {
+      if (-not $e.Conflicts) { continue }
+      $mine = (Split-Path -Leaf $e.Rel).ToLower()
+      foreach ($c in @($e.Conflicts)) {
+        if ($liveLeaf.ContainsKey($mine) -and $liveLeaf.ContainsKey($c.ToLower())) {
+          $conflicts += ("{0,-16} {1}  AND  {2}   two implementations live on one event" -f $e.Event, $mine, $c)
+        }
+      }
     }
   }
 
@@ -422,6 +452,10 @@ if ($Check) {
     foreach ($n in $notWired) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
     Write-Host ("                {0,3} REGISTERED, NOT DECLARED   runs here; a fresh install copies it and wires nothing" -f $notDeclared.Count) -ForegroundColor $(if ($notDeclared.Count) { 'Yellow' } else { 'DarkGray' })
     foreach ($n in $notDeclared) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
+    if ($conflicts.Count) {
+      Write-Host ("                {0,3} CONFLICT   two implementations of one hook live on one event; a bare run adds nothing here, but resolve it by hand" -f $conflicts.Count) -ForegroundColor Magenta
+      foreach ($n in $conflicts) { Write-Host ("                     {0}" -f $n) -ForegroundColor Magenta }
+    }
   }
 
   # Reported separately on purpose. Summing them is what produced "13 drifted" for a machine with
@@ -434,7 +468,7 @@ if ($Check) {
   else { Write-Host "`n$drift file(s) drifted (installed copy differs). Re-run without -Check to sync." -ForegroundColor Yellow }
   # The exit code now covers registration too, and deliberately does NOT move on UNKNOWN:
   # an unreadable authority is a refusal to answer, not a finding.
-  $regBad = $notWired.Count + $notDeclared.Count
+  $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count
   exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0) { 0 } else { 1 }))
 }
 
@@ -514,7 +548,7 @@ catch { Write-Host "`nsettings.json DOES NOT PARSE — changing nothing. Fix it 
 
 if (-not $settings.hooks) { $settings | Add-Member -NotePropertyName hooks -NotePropertyValue ([pscustomobject]@{}) -Force }
 
-$added = 0; $repointed = 0; $already = 0
+$added = 0; $repointed = 0; $already = 0; $refused = 0
 $changes = @()
 
 foreach ($e in $register) {
@@ -564,6 +598,26 @@ foreach ($e in $register) {
     }
   }
 
+  # THE CONFLICT GUARD (2026-08-31). Before adding an entry, look for a live registration of any
+  # file it declares a conflict with, on the same event. If one is there, REFUSE loudly and add
+  # nothing: this script never unregisters, so the only way to avoid two pulses on a machine that
+  # already runs the other one is to not add the second. Applies to ADD only — an entry already
+  # registered is re-pointed as usual, because that changes what runs, not how many things run.
+  if (-not $found -and $e.Conflicts) {
+    foreach ($c in @($e.Conflicts)) {
+      foreach ($g in $groups) {
+        if (-not $g.hooks) { continue }
+        foreach ($h in @($g.hooks)) {
+          if ($h.command -and ($h.command -match ('[\\/]' + [regex]::Escape($c)))) {
+            Write-Host ("  REFUSED  {0,-17} {1}   {2} is already live on this event; two implementations of one hook would run. Resolve by hand, then re-run." -f $ev, (Split-Path -Leaf $e.Rel), $c) -ForegroundColor Magenta
+            $found = $true; $refused++
+          }
+        }
+      }
+    }
+    if ($found) { $settings.hooks.$ev = $groups; continue }
+  }
+
   if (-not $found) {
     if ($slot) { $target = $slot } else { $target = $groups[$groups.Count - 1] }
     if (-not $target.PSObject.Properties['hooks']) {
@@ -578,7 +632,8 @@ foreach ($e in $register) {
 }
 
 if ($added -eq 0 -and $repointed -eq 0) {
-  Write-Host "`nregistration: already correct ($already hook(s) verified, nothing changed)." -ForegroundColor Green
+  if ($refused -gt 0) { Write-Host "`nregistration: nothing changed; $already hook(s) verified, $refused REFUSED above (a conflicting implementation is live). Not 'correct' until the refusal is resolved by hand." -ForegroundColor Magenta }
+  else { Write-Host "`nregistration: already correct ($already hook(s) verified, nothing changed)." -ForegroundColor Green }
 } else {
   $bak = "$settingsPath.bak-$(Get-Date -Format yyyyMMdd-HHmmss)"
   Copy-Item $settingsPath $bak -Force
@@ -640,7 +695,7 @@ checked rather than assumed:
     registers userprompt_pulse.py; five hooks run on that event and -Check calls all of them
     REGISTERED, NOT DECLARED.
   - hooks/userprompt-submit.js is ABSENT here. ~/.claude/shell/hooks/ does not exist. So the
-    $register entry at the UserPromptSubmit line is the ONE declared registration on that event,
+    `$register entry at the UserPromptSubmit line is the ONE declared registration on that event,
     and it points at a file that is not installed.
 Declared and actual are therefore DISJOINT on this event: everything running is undeclared, and
 the only declared thing is absent. Running this script without -Check installs it and adds a
@@ -650,6 +705,27 @@ The Hold flag on that manifest entry protects a machine copy that no longer exis
 condition line 197 records having caused a false HOLD, now correctly reported as ABSENT. The
 2026-08-17 measurement of 83 differing lines was taken when a machine copy WAS there; it no
 longer describes this machine, and the repo file is the only surviving side.
+
+RESOLVED IN PART 2026-08-31 (L022 P2b, pane Around — not the seat that wired row 10). Both pulse
+files read before deciding. userprompt_pulse.py is now DECLARED in `$register (Runner 'py'), and the
+Node line that declared hooks/userprompt-submit.js on the same event is REMOVED from `$register —
+not because the Node file is wrong (it is the fuller one: beacon + long-interval block + L3
+surfacing) but because its declaration never described a machine: the manifest Hold blocks the
+copy in both modes, so the declaration only ever produced a registration against a missing file,
+and beside a Python declaration it produced two pulses. The manifest Hold entry for the FILE is
+untouched; nothing is deleted; this script still never unregisters anything. The desktop is still
+not visible from here: if it runs the Node pulse, its -Check now reports that as REGISTERED, NOT
+DECLARED (true), and the Conflicts guard on the Python entry refuses to add a second pulse there.
+That guard is the reason declaring Python is safe on a machine nobody here can see.
+
+OUT OF SCOPE OF THAT CHANGE AND STILL RED on this machine, so nobody reads the pulse line as a
+green -Check: five hooks remain REGISTERED, NOT DECLARED — sessionstart-ambient.js (SessionStart),
+board-digest.js, transcript-watch.js, dream-watch.js, ferry-watch.js (all UserPromptSubmit). Each
+is one `$register line AND a decision about whether a fresh install should wire it; the pulse was
+the only one of the six with a same-event twin, which is why it was the one taken alone. The
+eleven ABSENT hooks/ and lib/ files are ruled DO NOT INSTALL in loop/absent_hooks_ruling_2026-08-25.md
+and stay declared-not-registered until someone acts on that ruling; findings-return.js is absent
+for its own reason. -Check exits 1 until all of that is resolved, and it should.
 
 The desktop is NOT verifiable from here, which is why nothing has been deleted. See
 dev/shell/README.md.
