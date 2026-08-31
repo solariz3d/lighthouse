@@ -1,0 +1,11 @@
+Done. All three notes were stale — here's what the files actually say:
+
+1. **events.log: 1,847 events**, not 2,213. `grep -c 'evt=' data/events.log`. Every line is an event (no header, no blanks), and IDs run 00000–01846, which independently confirms the count.
+
+2. **inventory.json: 73 entries**, not ~60. `node -e "const a=require('./inventory.json');console.log(a.length)"`. All IDs unique, s-001 through s-073. The "three offline" part of STATUS.md was right — only the total was wrong.
+
+3. **The edit goes in `net/backoff.h`, not `net/retry.c`.** `grep -rn 'RETRY_TIMEOUT_MS' net/` shows the `#define` at `net/backoff.h:4`; retry.c line 4 only consumes it. The handoff note pointed at the use site.
+
+I did not apply the 400 change — you asked which file the edit goes in, not for the edit. It's a one-line change to `net/backoff.h:4` whenever you want it.
+
+REPLY.md (119 words) and HANDBACK.md are both written, and `node handoff.js` snapshotted HANDBACK.md as `aaf650a0`. The handback flags the stale docs, notes the tree is unmodified, and points out that NOTES.md/STATUS.md/handoff.md still carry the wrong numbers — worth fixing at the source so the next seat doesn't redo this.

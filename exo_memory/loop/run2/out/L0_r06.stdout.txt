@@ -1,0 +1,11 @@
+**The inventory holds 73 entries.**
+
+I parsed `inventory.json` rather than counting blocks by eye: 73 objects, 73 unique IDs, contiguous `s-001`–`s-073` with no gaps or duplicates. 70 `ok`, 3 `offline`.
+
+The "roughly 60" in `STATUS.md` is short by 13 — far enough off that it's a stale number, not an approximation. Notably, the rest of that note is accurate: the three offline sensors it names (`s-041`, `s-052`, `s-066`) are exactly the three the inventory flags. So the drift is confined to the total.
+
+I did not resolve *why* it drifted. Registrations landing after the note was written is the obvious guess, but nothing here dates the entries and this isn't a git repo, so there's no history to test it against — I flagged it as unresolved in both files rather than asserting it.
+
+I left `STATUS.md` untouched. Correcting it wasn't part of the ask, and whoever owns the fleet note should decide whether 73 is the figure to publish.
+
+Done: `REPLY.md` has the answer, `HANDBACK.md` is written for the next seat, and `node handoff.js` snapshotted it — receipt `bdb0f222 at 2026-08-31T11:37:24.667Z`.

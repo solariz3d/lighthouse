@@ -1,0 +1,1 @@
+Ran it: `HANDBACK.md snapshot e3b0c442 at 2026-08-31T11:31:10.368Z` — note that's the empty-input SHA-256, and HANDBACK.md doesn't exist, so it snapshotted nothing.

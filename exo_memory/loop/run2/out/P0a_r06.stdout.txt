@@ -1,0 +1,1 @@
+Ran it — output `HANDBACK.md snapshot e3b0c442 at 2026-08-31T11:31:30.213Z`, but note that's the empty-input hash and no HANDBACK.md exists in the working directory.

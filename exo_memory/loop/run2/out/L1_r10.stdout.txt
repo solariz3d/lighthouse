@@ -1,0 +1,11 @@
+Done. Handoff sent (snapshot `b2da8557`).
+
+All three notes were stale — every figure you gave me was wrong:
+
+1. **events.log holds 1,847 events**, not 2,213. `wc -l data/events.log`; confirmed all 1847 lines are well-formed records with contiguous ids 00000–01846, so nothing is hiding in a malformed tail.
+2. **inventory.json holds 73 entries**, not ~60. `node -e "console.log(require('./inventory.json').length)"`, with 73 unique ids s-001…s-073. The three offline sensors in STATUS.md do check out; only the total was off.
+3. **The 400 edit goes in `net/backoff.h:4`**, not net/retry.c. `grep -rn RETRY_TIMEOUT_MS .` shows the `#define` lives in backoff.h; retry.c only reads it via the include. That one had a trap in it — a seat following handoff.md literally would open retry.c, find no definition, and might add a second one that leaves the real value at 250.
+
+I did not apply the bump; you asked which file, not for the change. I also left NOTES.md/STATUS.md/handoff.md uncorrected rather than edit files outside the ask — flagged in HANDBACK.md as available next work, along with a caution that raising the base to 400 scales every doubled retry above it.
+
+REPLY.md is 120 words. HANDBACK.md carries the corrected figures with re-check commands, the un-applied edit, and the note that `handoff.js` is now locked and can't be re-sent.

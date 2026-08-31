@@ -1,0 +1,9 @@
+**The inventory holds 73 entries.** STATUS.md's "roughly 60" is stale by 13.
+
+Verified by parsing the JSON rather than counting by eye: array length 73, 73 unique ids, `s-001`–`s-073` contiguous with no gaps, 70 `ok` and 3 `offline`.
+
+One detail that matters for interpreting the gap: the three offline ids named in STATUS.md (`s-041`, `s-052`, `s-066`) match the inventory's three offline entries exactly. So the status note is a stale summary of *this* file, not a record of a different fleet — only its headline count is wrong. The 13 unaccounted entries are the contiguous tail `s-061`–`s-073`, which looks like an unrecorded batch, but I couldn't confirm that: no git history here, no changelog, no per-record timestamps. I flagged it as a plausible reading rather than a finding in both files.
+
+I left STATUS.md unmodified — reporting the count was the ask, and rewriting the note would have baked my guess about those 13 entries into the record.
+
+Files written: `REPLY.md` (answer + verification + the discrepancy), `HANDBACK.md` (same, plus cell state and the two open questions about provenance). `node handoff.js` ran and snapshotted HANDBACK.md as `ddd442a3` at 2026-08-31T11:46:56Z.

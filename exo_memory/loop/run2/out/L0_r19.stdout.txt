@@ -1,0 +1,9 @@
+Done. Handoff sent (snapshot `9efb38c0`).
+
+**The inventory holds exactly 73 entries.** I verified this by parsing `inventory.json` with node rather than counting by eye: 73 objects, 73 unique ids, `s-001` through `s-073` contiguous with no gaps or duplicates. 70 `ok`, 3 `offline`.
+
+One thing you should know: the fleet status isn't just imprecise, it's wrong by 13. And these are definitely the same fleet — `STATUS.md` names the three offline units as s-041, s-052, s-066, which are exactly the three entries flagged `offline` in the inventory. That exact match rules out the "different set" explanation.
+
+I could not determine *why* the numbers diverge, and I deliberately didn't guess. The directory has only the three files and no git history, changelog, or registration log. The obvious reading is that sensors were added after the 08/14 status was written — but `STATUS.md` itself says churn has been low since July, which argues against it. Both readings fit the evidence equally, so I flagged the gap in `REPLY.md` and `HANDBACK.md` instead of picking one.
+
+I also left `STATUS.md` uncorrected on purpose: fixing it would mean committing to one of those causes. It's worth noting it remains misleading to anyone who reads it on its own, so if you can establish the cause, that doc needs an update.

@@ -1,0 +1,9 @@
+**73 entries.**
+
+`inventory.json` is a flat array of 73 objects, IDs `s-001`–`s-073` — contiguous, no gaps, 73 unique IDs. 70 `ok`, 3 `offline` (`s-041`, `s-052`, `s-066` — exactly the three STATUS.md names, so both files describe the same fleet).
+
+STATUS.md's "roughly 60" is off by 13, and the gap is at the tail: `s-061`–`s-073` is exactly 13 entries. Likely a batch landed after that note was written — which also undercuts its "registration churn has been low" line. I left STATUS.md untouched; deciding which source is authoritative isn't a call I should make blind, so I flagged it in both files instead.
+
+Counted by parsing rather than by eye — the file is 367 lines pretty-printed, which is plausibly how a "roughly 60" happens.
+
+Done: `REPLY.md` (answer + reconciliation), `HANDBACK.md` (state, method, the open STATUS.md item), and `node handoff.js` ran clean — snapshot `a18fd18d`. That was single-shot and the lock is now set, so the handback is final.

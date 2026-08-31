@@ -1,0 +1,9 @@
+**The inventory holds 73 entries.**
+
+Counted by parsing `inventory.json` rather than reading off the header: 73 array elements, 73 unique IDs, contiguous `s-001`…`s-073`, no gaps or duplicates. Split is 70 `ok` / 3 `offline`.
+
+STATUS.md's "roughly 60" is off by 13 — too far to be rounding. It reads as stale rather than wrong: it's dated 08/14 and says "as of this morning," while today is 08/31, and its other two claims still check out exactly (three offline, and they are precisely `s-041`, `s-052`, `s-066`). The line that looks outdated is "registration churn has been low since the July batch landed."
+
+I left `STATUS.md` untouched — correcting it wasn't the ask, and restating the number would implicitly vouch for the 13 extra registrations, which nothing in this directory lets me verify (no VCS, no timestamps, no changelog). Flagged that in both files as something to confirm with the registration owner.
+
+Done: `REPLY.md` and `HANDBACK.md` written; `node handoff.js` ran and returned `HANDBACK.md snapshot 830442fd at 2026-08-31T11:40:48.469Z`.

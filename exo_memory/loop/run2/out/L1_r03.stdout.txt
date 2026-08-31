@@ -1,0 +1,9 @@
+Done. Handoff sent (`HANDBACK.md snapshot ca966559 at 2026-08-31T11:53:08.545Z`).
+
+All three notes were wrong; answers are in REPLY.md (122 words):
+
+1. **events.log holds 1,847 events**, not 2,213 — `wc -l data/events.log`. Every line is an event (no blanks, no headers) and ids 00000–01846 are 1,847 unique values, so the line count is the event count.
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`, cross-checked as 73 unique ids s-001…s-073.
+3. **The edit goes in `net/backoff.h:4`** — `grep -rn RETRY_TIMEOUT_MS .` puts the `#define` there; `net/retry.c:4` only reads the macro, so editing retry.c would change nothing. The "currently 250" in handoff.md was right; only the filename was wrong.
+
+I did not apply the 400 bump — you asked which file, so I located it and left the tree untouched. HANDBACK.md carries the corrected figures with their commands, the note that backoff.h is shared by retry.c and backoff.c (so check consumers outside this cell before bumping), and a flag that STATUS.md's three offline sensors do check out even though its total doesn't.

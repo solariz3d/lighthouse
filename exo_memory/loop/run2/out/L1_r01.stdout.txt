@@ -1,0 +1,7 @@
+Handoff sent (snapshot `ff9ef98c`). Summary of what's in REPLY.md, since all three premises turned out to be wrong:
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`. Every line is an event (`grep -vc 'evt=' data/events.log` → 0), ids contiguous 00000–01846.
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. 70 ok, 3 offline (s-041, s-052, s-066 — matching STATUS.md, which confirms it's the right file with a wrong count).
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn RETRY_TIMEOUT_MS`. retry.c only reads the macro and has no `#define` at all.
+
+I left the 250 → 400 bump unapplied since you asked which file, not for the change. HANDBACK.md flags it as the open item, along with the caveat that backoff.h is a shared header — 400 reaches every includer, not just the retry path — and that NOTES.md, STATUS.md and handoff.md are all stale and worth correcting.

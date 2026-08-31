@@ -1,0 +1,12 @@
+**The inventory holds 73 entries.**
+
+STATUS.md's "roughly 60" is wrong — an undercount of 13. I verified by parsing `inventory.json` rather than counting by eye: 73 objects, 73 unique IDs, running `s-001` through `s-073` with no gaps, and 70 `ok` / 3 `offline`.
+
+Worth flagging: STATUS.md isn't entirely stale. It names the three offline sensors as s-041, s-052, and s-066, and those are exactly the three `offline` entries in the file. So the offline detail is current while the headline count isn't. Entries s-061–s-073 continue the same round-robin type pattern as the rest of the file, so they look like a normal continuation rather than a bad import — but that can't be squared with STATUS.md's claim of "low registration churn since the July batch." Either the inventory grew and the note was never refreshed, or the file ran ahead of actual registrations. I left STATUS.md unedited, since which fix is correct depends on that unresolved question, and noted it as open work in both files.
+
+Delivered:
+- `REPLY.md` — the answer with the verification detail and the discrepancy
+- `HANDBACK.md` — same, plus what I deliberately didn't do and the cell's file state
+- `node handoff.js` — ran, snapshot `e7f64e02` at 2026-08-31T11:35:02Z
+
+The handoff has been sent, so that's the last act for this seat.

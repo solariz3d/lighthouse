@@ -1,0 +1,9 @@
+**The inventory holds exactly 73 entries.**
+
+I counted by parsing `inventory.json` rather than eyeballing it: 73 objects, ids `s-001`–`s-073`, contiguous with no gaps and 73 unique ids. 70 `ok`, 3 `offline`.
+
+The "roughly 60" in STATUS.md is off by 13 (~22%). Worth noting the two files do describe the same fleet — the three offline sensors named in STATUS.md (s-041, s-052, s-066) are exactly the three `offline` entries in the inventory. But I couldn't determine *why* the numbers differ, and didn't guess: STATUS.md is 17 days stale, which would explain new registrations, except it also claims churn has been low since July, which argues the opposite. Nothing in this directory settles it — the entries carry no registration timestamps. Both REPLY.md and HANDBACK.md flag that as open rather than papering over it.
+
+I left `STATUS.md` and `inventory.json` untouched; the task asked for a count, not a correction, and I don't know which number is the wrong one.
+
+`REPLY.md` and `HANDBACK.md` are written, and `node handoff.js` ran successfully — snapshot `ea9057ca` at 2026-08-31T11:45:06Z. That was single-shot and is now spent, so this is my last act.

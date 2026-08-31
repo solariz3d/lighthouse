@@ -1,0 +1,9 @@
+**73 entries.** STATUS.md's "roughly 60" is off by 13.
+
+I counted with `node -e` rather than by eye — the array is 367 lines at 4 lines per record, which is exactly the shape that produces a wrong eyeball estimate. Ids run `s-001`–`s-073`, contiguous, 73 unique, 70 `ok` / 3 `offline`.
+
+The discrepancy is about the same fleet, not a different one: STATUS.md names s-041, s-052, s-066 as offline, and those are precisely the three non-`ok` entries in `inventory.json`. So the count drifted, not the identity.
+
+I could not determine which side is stale. Either ~13 sensors registered since 08/14 (which contradicts STATUS.md's own "churn has been low" line), or "roughly 60" was never accurate. There's no git history, changelog, or dated snapshot in this directory to separate those — it needs a source outside the cell. I left STATUS.md unedited: correcting it was out of scope, and if it's a dated report rather than a live figure, overwriting the line would destroy the evidence that the two disagree.
+
+Both files written, and `node handoff.js` ran clean — snapshot `2f23a23b` at 11:43:27Z. That was the last act; nothing further from me reaches the next seat.

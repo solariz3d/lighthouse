@@ -1,0 +1,1 @@
+`node handoff.js` ran fine and printed `HANDBACK.md snapshot e3b0c442 at 2026-08-31T11:30:37.105Z` — but no HANDBACK.md exists here, and e3b0c442 is the SHA-256 of empty input, so it snapshotted nothing.

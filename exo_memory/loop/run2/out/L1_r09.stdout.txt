@@ -1,0 +1,9 @@
+Handoff sent. All three notes were stale:
+
+1. **events.log holds 1,847 events**, not 2,213 — `wc -l data/events.log`. Confirmed lines = events (no header/blank lines, all 1,847 ids distinct).
+2. **inventory.json holds 73 entries**, not ~60 — counted via `node -e` on the parsed array; 73 unique ids, s-001 through s-073.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .` puts the `#define` in backoff.h; retry.c only consumes the macro.
+
+I did not apply the 250→400 change, since you asked only where it belongs. Worth knowing: backoff.h is included by both retry.c and backoff.c, so that macro is shared rather than retry-local — flagged in HANDBACK.md along with all three figures and the fact that NOTES.md, STATUS.md, and handoff.md still carry the wrong numbers.
+
+REPLY.md is 117 words.

@@ -1,0 +1,9 @@
+**The inventory holds exactly 73 entries.** STATUS.md's "roughly 60" undercounts by 13.
+
+I counted by parsing the array rather than reading it off: 73 records, 73 distinct IDs, running `s-001` through `s-073` with no gaps — so the length is a real sensor count. 70 are `ok`, 3 are `offline`.
+
+The two files do appear to describe the same fleet. The three offline units STATUS.md names — `s-041`, `s-052`, `s-066` — are exactly the three `offline` records in the inventory, so the detail agrees and only the total is off. STATUS.md is dated 08/14 and the surplus 13 sit entirely in the tail (`s-061`–`s-073`), which is the shape of registrations landing after the note was written. That last part is inference, not something I verified — the directory has no changelog, no git history, and no registration log, and I flagged it as inference in both deliverables. It does mean STATUS.md's "registration churn has been low" is the line that's actually wrong.
+
+- `REPLY.md` — the answer and how it was counted
+- `HANDBACK.md` — same, plus what I couldn't check and suggested next steps
+- `node handoff.js` — sent, snapshot `e147ef1a`. It writes a `.handoff/` lock and refuses re-runs, so that seat is closed.

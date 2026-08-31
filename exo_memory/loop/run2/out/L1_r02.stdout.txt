@@ -1,0 +1,11 @@
+Done. Handoff sent (snapshot `d04985cf`).
+
+All three notes were stale — the answers are in `REPLY.md`:
+
+1. **1,847 events**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c '^2026'`.
+2. **73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`.
+3. **`net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .`. retry.c only consumes the macro via `#include "backoff.h"`; editing it would do nothing.
+
+One thing worth your attention on #3: `backoff.h` is also included by `backoff.c`, so the 250→400 bump lands on both translation units, not just the retry path. I did not apply the edit — you asked which file.
+
+`HANDBACK.md` carries the verified figures with their commands, the note that the bump is still unapplied, and a flag that the 2,213/1,847 gap is wide enough to be worth checking against the rotation rather than assuming a typo.

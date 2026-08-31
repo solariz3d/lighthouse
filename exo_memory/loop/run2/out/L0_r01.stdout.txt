@@ -1,0 +1,16 @@
+**The inventory holds 73 entries.**
+
+I counted by parsing the file rather than reading off the ID range: 73 entries, 73 unique IDs, `s-001` through `s-073` with no gaps, 70 `ok` and 3 `offline`. The three offline IDs (`s-041`, `s-052`, `s-066`) match `STATUS.md` exactly, so both files describe the same fleet — this isn't a case of two different inventories.
+
+One thing I want to flag rather than paper over: **I did not resolve why the status says ~60.** The obvious explanation — sensors registered after the 08/14 note — doesn't survive checking. `STATUS.md` and `inventory.json` share a modification time of Aug 15 07:17, so the inventory hasn't been touched since the note was written; all 73 were already there. My working read is that the prose figure is just imprecise, and the note's own "churn has been low" line supports doubting the 60. But that's a hypothesis, not a finding — there's no git history and no per-entry timestamps in this cell to date the entries or trace where the 60 came from.
+
+That matters because if the 60 came from an authoritative registration system rather than someone's estimate, the question inverts: not "why does the note say 60" but "why does the inventory carry 13 entries registration doesn't know about." Worth running down before anyone leans on either number.
+
+I left `STATUS.md` unmodified — I can't tell which number is authoritative, so correcting it would have been a guess.
+
+Done:
+- `REPLY.md` — the answer with verification detail and the caveat
+- `HANDBACK.md` — same, plus the open item written up for whoever's next
+- `node handoff.js` — sent, snapshot `d3b150d5` at 2026-08-31T11:33:17Z
+
+Per the script, that hand-on can't be revised or re-sent, so anything further from me here won't reach the next seat.

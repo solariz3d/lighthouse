@@ -1,0 +1,7 @@
+Handoff sent. All three notes were stale — details are in REPLY.md:
+
+1. **events.log: 1847 events**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c 'evt=' data/events.log` (no blank lines, ids run 00000–01846).
+2. **inventory.json: 73 entries**, not ~60 — `node -e "…JSON.parse(…).length"`, cross-checked with `grep -c '"id"' inventory.json`. IDs s-001…s-073, no gaps; the three offline sensors are inside that count.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn 'RETRY_TIMEOUT_MS' . --include=*.c --include=*.h` shows `#define RETRY_TIMEOUT_MS 250` in backoff.h; retry.c only consumes it.
+
+I did not make the 250→400 change or correct the stale docs — you asked which file, not for the edit. HANDBACK.md carries the corrections table, the edit location, and one thing worth your attention: `retry_wait()` seeds from that constant and `backoff_next()` doubles per attempt with no jitter, so the bump scales every attempt by 1.6x rather than just the first — attempt 5 goes 4000ms → 6400ms.

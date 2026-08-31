@@ -1,0 +1,14 @@
+Handoff sent. All three notes were wrong:
+
+1. **events.log holds 1,847 events**, not 2,213 — `wc -l < data/events.log`, corroborated by `grep -c 'evt='` (no blank lines, 1847 distinct ids). Off by 366; nothing in the directory produces the 2,213 figure.
+
+2. **inventory.json holds 73 entries**, not ~60 — `node -e 'console.log(require("./inventory.json").length)'`, corroborated by `grep -c '"id"'`. ids s-001–s-073, contiguous, no dupes. Notably the offline half of STATUS.md is correct (s-041, s-052, s-066), so only the total drifted — and 73−3 isn't ~60 either, so it isn't an online-only count.
+
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .` shows the `#define` there and retry.c:4 as its only consumer. retry.c is probably where the note's author saw the name, since it's the visible end of the retry path.
+
+Two things worth flagging:
+
+- **I didn't make the edit.** You asked which file it goes in, so I answered the question and left backoff.h at 250. Worth knowing before someone bumps it: the value is the *base* of the doubling in `backoff_next()`, so 400 scales every attempt — attempt 3 moves 2000ms→3200ms. Check that against the timeout budget above `retry_wait()`. Blast radius is otherwise small — backoff.c includes the header but only uses `BACKOFF_FACTOR`.
+- **I left the three stale notes unedited.** Correcting them wasn't in scope, but they still carry the wrong figures, so it's open work if this cell should be self-consistent. HANDBACK.md flags it.
+
+REPLY.md is 129 words. One note on sequencing: `handoff.js` refuses a second run and snapshots whatever HANDBACK.md exists at that moment, so I wrote both files first — the snapshot hash `30f2e2ba` is the real content, not an empty file.

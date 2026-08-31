@@ -1,0 +1,10 @@
+**The inventory holds 73 entries** — not ~60.
+
+`inventory.json` is a flat array of 73 objects, `s-001` through `s-073`. I parsed it rather than eyeballing: 73 unique ids, no duplicates, no numbering gaps. Split is 70 `ok` / 3 `offline`.
+
+The status note is the thing that's wrong, and it's off by 13. Worth noting the two files clearly describe the *same* fleet — STATUS.md names s-041, s-052, s-066 as the offline three, and those are exactly the three the inventory flags. What I couldn't settle from this directory: whether 13 sensors were registered since the 08/14 note, or whether "roughly 60" was always a loose estimate. STATUS.md's own claim that "registration churn has been low" argues against the first, but there's no registration log, no timestamps in the inventory, and no VCS here to date entries against. I left STATUS.md untouched rather than guess at a correction.
+
+Written and done:
+- `REPLY.md` — the count and the discrepancy analysis
+- `HANDBACK.md` — same, plus the open question (provenance of s-061..s-073, which needs a source outside this directory)
+- `node handoff.js` ran clean: snapshot `770b2750` at 2026-08-31T11:44:12Z

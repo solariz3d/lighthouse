@@ -1,0 +1,1 @@
+Ran it: it printed `HANDBACK.md snapshot e3b0c442 at 2026-08-31T11:30:59.242Z`, but no HANDBACK.md exists — e3b0c442 is the empty-input hash, so it snapshotted nothing.

@@ -1,0 +1,7 @@
+**73 entries.**
+
+`inventory.json` is a flat array of 73 objects, ids `s-001` through `s-073` — 73 unique ids, contiguous, no gaps or duplicates. Status split is 70 `ok` / 3 `offline`.
+
+The "roughly 60" in `STATUS.md` is off by about 13. The two files are describing the same fleet, though — the inventory's offline set is exactly `s-041`, `s-052`, `s-066`, matching the status note. I couldn't determine from the files which number is stale (no per-entry timestamps, not a git repo), so I recorded the likely reading — the note predates later additions — as inference rather than fact, and left `STATUS.md` unedited since you asked for the inventory's count, not a reconciliation.
+
+Written: `REPLY.md` (answer), `HANDBACK.md` (next seat, flagging the unreconciled prose as the open item). `node handoff.js` ran and returned snapshot `71042e84`.

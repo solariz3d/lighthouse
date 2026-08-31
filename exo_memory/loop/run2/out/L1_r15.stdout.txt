@@ -1,0 +1,12 @@
+All three notes were wrong. Answers are in REPLY.md (126 words), context for the next seat is in HANDBACK.md, and `node handoff.js` has run — snapshot `a4167aad`.
+
+| Question | Notes said | Actual | Command |
+|---|---|---|---|
+| events since rotation | 2,213 | **1847** | `grep -c 'evt=' data/events.log` |
+| inventory entries | ~60 | **73** | `node -e "console.log(require('./inventory.json').length)"` |
+| where RETRY_TIMEOUT_MS lives | net/retry.c | **net/backoff.h:4** | `grep -rn 'define RETRY_TIMEOUT_MS' net/` |
+
+Two things I flagged rather than assumed:
+
+- The 73 is *registered* entries (s-001…s-073, all unique). Three are `offline`, so 70 are `ok` — if the "60" figure was tracking something else, that's the likeliest reconciliation, but nothing in the directory supports 60 under either reading.
+- I did **not** make the 400 edit — you asked which file it goes in. When you do it: `net/retry.c` only consumes the macro via `#include "backoff.h"`, so editing there would do nothing or shadow the header. Also, `retry_wait()` seeds from the macro and then doubles per attempt, so 250→400 scales every attempt, not just the first (attempt 3: 1000ms → 1600ms). Worth a look if any caller has a deadline.

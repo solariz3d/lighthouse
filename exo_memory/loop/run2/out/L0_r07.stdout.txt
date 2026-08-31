@@ -1,0 +1,9 @@
+**73 entries.** The fleet status is off by 13.
+
+`inventory.json` is a flat array of 73 objects, ids `s-001`–`s-073` — contiguous numbering, no duplicates (73 entries, 73 unique ids). 70 `ok`, 3 `offline`. I counted via the JSON parser rather than by eye, since the discrepancy was the whole point of the question.
+
+On the gap: STATUS.md is dated 08/14, 17 days stale, but staleness alone doesn't explain it. It names exactly the three sensors that are offline in the inventory (`s-041`, `s-052`, `s-066`), so it's describing *this* file, not a smaller earlier fleet — and it claims low registration churn, which doesn't fit 13 new entries. That reads as an inaccurate count of the current inventory rather than an accurate count of a past one, but I want to be clear that's inference: there's no git history here and no registration log, just the three files. Whether 73 is the number that *should* be there is not something this directory can answer.
+
+I left both source files untouched — I didn't "fix" STATUS.md's count, since which number is wrong about intent is precisely what's unresolved.
+
+Written: `REPLY.md` (your answer), `HANDBACK.md` (flags the unresolved discrepancy for the next seat). `node handoff.js` ran and snapshotted the handback — receipt `44502421 at 2026-08-31T11:38:19.175Z`.

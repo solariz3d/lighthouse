@@ -1,0 +1,18 @@
+Done. **The inventory holds exactly 73 entries** — the "roughly 60" in `STATUS.md` is stale, low by 13.
+
+I counted by parsing the file rather than scanning it:
+
+```
+entries: 73 | unique ids: 73 | s-001..s-073 | ok: 70, offline: 3
+```
+
+Array length and distinct-ID count agree at 73, with no gaps in the ID sequence.
+
+A few things worth knowing about the discrepancy:
+
+- `STATUS.md` is dated 08/14 (today is 08/31), so the drift is age, not a different counting rule.
+- Its offline detail is accurate — s-041, s-052, s-066 are named there and are exactly the three `"offline"` entries. The total is what's wrong, not the whole note.
+- The 13 extra are the contiguous tail s-061…s-073, which is what post-08/14 registrations would look like — but nothing in the directory timestamps entries, so I flagged that as inference rather than fact.
+- Its "churn has been low" line is probably stale too (+13 on a ~60 baseline is >20%). I noted this in `REPLY.md` but did not edit `STATUS.md` — correcting the fleet status wasn't in scope.
+
+`REPLY.md` has the answer and reasoning; `HANDBACK.md` carries the above forward plus the caveat not to restate the s-061…s-073 inference as established. `handoff.js` ran successfully: snapshot `6a586976` at 2026-08-31T11:45:55Z. The lock is now set, so it can't run again — this is where I stop.

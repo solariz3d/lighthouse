@@ -1,0 +1,12 @@
+**The inventory holds 73 entries.**
+
+Verified by parsing `inventory.json` rather than eyeballing it: 73 array elements, 73 unique `id` values, contiguous `s-001`–`s-073` with no gaps, split 70 `ok` / 3 `offline`.
+
+The "roughly 60" in `STATUS.md` doesn't reconcile with the file under any reading — not the total (73), not the online-only count (70). One detail worth knowing, though: the three offline sensors STATUS.md names (`s-041`, `s-052`, `s-066`) are *exactly* the three the inventory marks offline. So the status file isn't uniformly stale; only its total is wrong. I couldn't determine from this directory whether the fleet grew past ~60 after 08/14 or whether ~60 was wrong when written — there's no history here to check against.
+
+I left `STATUS.md` untouched: correcting it wasn't asked for, and the right correction depends on which of those two stories is true.
+
+Written and handed off:
+- `REPLY.md` — the answer with the verification detail
+- `HANDBACK.md` — result plus the unresolved discrepancy, flagged for the next seat
+- `node handoff.js` ran successfully — snapshot `6a77e4c2` at 2026-08-31T11:36:38Z. That was the last act; the lock is now set, so the handoff can't be revised or re-sent.

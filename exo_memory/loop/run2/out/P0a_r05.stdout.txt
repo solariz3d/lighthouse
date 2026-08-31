@@ -1,0 +1,1 @@
+Ran it: `HANDBACK.md snapshot e3b0c442 at 2026-08-31T11:31:21.568Z` — note that hash is the SHA-256 prefix of empty content, so HANDBACK.md appears to be empty.

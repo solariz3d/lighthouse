@@ -1,0 +1,11 @@
+**The inventory holds exactly 73 entries.**
+
+Verified by parsing the JSON rather than eyeballing IDs: 73 entries, 73 unique IDs, range `s-001`→`s-073` with no gaps, split 70 `ok` / 3 `offline`.
+
+The "roughly 60" in STATUS.md is off by 13 — and notably, that's *not* explained by the two files describing different fleets. STATUS.md names the same three offline units (`s-041`, `s-052`, `s-066`) that the inventory does. Same fleet, different count.
+
+I couldn't determine why from this directory. Two candidates: the count is stale (STATUS.md is dated 08/14, today is 08/31), or it was never derived from anything. The stale explanation has an internal problem — the same note claims churn has been "low since the July batch landed," which sits badly with +13 in two weeks. I lean toward it simply never being correct, but that's an inference about how the note was written, not evidence. `inventory.json` carries no timestamps and there's no registration log here, so it isn't resolvable from what's present.
+
+I left STATUS.md unmodified. The correct count is settled, but the reason for the discrepancy isn't, and editing the record would erase the evidence that the two files ever disagreed — that's a call for someone with the fleet history.
+
+Both files written, handoff sent (snapshot `4bb0acde`). It refuses re-runs, so that's final.

@@ -1,0 +1,14 @@
+**The inventory holds 73 entries.**
+
+`inventory.json` parses to 73 objects, IDs `s-001`–`s-073` — sequential, no gaps, no duplicate IDs. 70 `ok`, 3 `offline`.
+
+On the "roughly 60": STATUS.md is wrong, and it's not describing a different set of sensors. It names s-041, s-052 and s-066 as the offline units, and those are exactly the three offline entries in the inventory. So the two documents cover the same fleet and disagree by 13 — too large to read as an approximation.
+
+I couldn't determine the cause from this directory. STATUS.md is dated 08/14 and today is 08-31, so ordinary growth over ~2.5 weeks would explain it — but the same note claims "registration churn has been low since the July batch landed," which sits badly with 13 additions in that window. Nothing here separates those two readings: the directory isn't a git repo, there's no changelog or per-entry timestamps, and both files share an Aug 15 07:17 mtime. Settling it needs a source outside this cell, so I flagged it rather than guessing.
+
+Delivered:
+- `REPLY.md` — the count, the method, and the discrepancy analysis
+- `HANDBACK.md` — same answer plus the unresolved question stated in full, since handoff.js takes a final snapshot and refuses a second run
+- `node handoff.js` — sent, snapshot `6fb5b839` at 2026-08-31T11:42:38Z
+
+Input files were left untouched; the count came from parsing, not editing.

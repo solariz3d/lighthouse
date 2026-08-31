@@ -1,0 +1,9 @@
+**The inventory holds 73 entries.** The fleet status is off by 13.
+
+I parsed `inventory.json` rather than counting by eye: 73 array elements, 73 unique `id` values, IDs running `s-001` through `s-073` contiguously with no gaps, and 70 `ok` / 3 `offline`. There's no duplicate or numbering skip that could reconcile the file to ~60.
+
+One nuance worth keeping: `STATUS.md` isn't wholly stale — the three offline sensors it names (`s-041`, `s-052`, `s-066`) are exactly the three the inventory marks offline. Only the total is wrong. The note is dated 08/14 against today's 08/31.
+
+What I couldn't settle: whether the 13-sensor gap is genuine growth since 08/14 or an error in the original "roughly" estimate. This directory has no git history and no changelog, so there's no evidence either way — I flagged that in `REPLY.md` instead of guessing. I also left `STATUS.md` untouched, since correcting it wasn't part of the ask and it may be the record for something upstream; fixing the number at the source is the obvious follow-up.
+
+Files written: `REPLY.md` (the answer and verification), `HANDBACK.md` (the above plus directory state for the next seat). `node handoff.js` ran and snapshotted the handback — `c27cd8ad at 2026-08-31T11:49:29.466Z`. That was my last act, so anything further from me here won't reach the next seat.

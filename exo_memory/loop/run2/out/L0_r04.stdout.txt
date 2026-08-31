@@ -1,0 +1,7 @@
+**73 entries.** Written to `REPLY.md`; `HANDBACK.md` written and handed off (snapshot `7c400384`).
+
+- `inventory.json` holds 73 objects, ids `s-001`–`s-073` — contiguous, no duplicate ids (73 entries, 73 unique). 70 `ok`, 3 `offline`.
+- STATUS.md's "roughly 60" is stale, not a different fleet: the three offline units it names (s-041, s-052, s-066) are exactly the three `offline` entries in the inventory. Only the headline count is wrong, by ~13.
+- I left `STATUS.md` unedited — you asked for the count, and whether ~60 is a typo, an old snapshot, or a deliberate approximation is the doc owner's call. Worth flagging: anything downstream computed from "roughly 60" is off by ~18%. I found no such consumer here, but this directory only contains those three files, so that's weak evidence.
+
+One thing I couldn't resolve from this directory: STATUS.md claims registration churn has been low since the July batch, which doesn't square with being 13 short. There's no changelog, no git history, and no timestamps in the inventory, so when `s-061`–`s-073` were added isn't recoverable here — it needs the upstream registration system. That's noted as open in the handback.

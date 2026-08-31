@@ -1,0 +1,9 @@
+**The inventory holds exactly 73 entries** — not ~60.
+
+Counted by parsing `inventory.json` rather than by eye: 73 objects, 73 unique IDs, running `s-001` through `s-073` contiguously with no gaps and no duplicates. So 73 is both the raw entry count and the distinct-sensor count.
+
+On the discrepancy: `STATUS.md` (dated 08/14) is low by 13. The two files do agree on the offline set — it names `s-041`, `s-052`, `s-066`, and those are exactly the three entries marked `"offline"` in the inventory — so they diverge only on the total, which reads like a stale count rather than a description of a different fleet. I couldn't confirm *why* from this directory: `inventory.json` has no timestamp, so whether `s-061`–`s-073` were registered after the note or just missed by it is undetermined. The surplus being exactly the contiguous tail is suggestive of a later batch, but that's pattern-reading, not evidence, and I flagged it as such rather than asserting it.
+
+I left `STATUS.md` unmodified — correcting another seat's status note wasn't part of the ask, though it's a one-line fix if wanted.
+
+`REPLY.md` and `HANDBACK.md` are written; `node handoff.js` ran and returned `HANDBACK.md snapshot b8b05cc2 at 2026-08-31T11:41:40.761Z`. That hand-on is now closed and can't be revised or re-sent.

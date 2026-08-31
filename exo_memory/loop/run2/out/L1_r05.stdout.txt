@@ -1,0 +1,9 @@
+Done — handoff sent (snapshot `255b0b44`).
+
+All three notes were wrong, and the answers are in `REPLY.md` (137 words):
+
+1. **events.log — 1847 events**, not 2,213. `wc -l data/events.log`. Corroborated: no blank/header lines, ids run 00000–01846.
+2. **inventory.json — 73 entries**, not ~60. `node -e "…JSON.parse(…).length"`. The three offline sensors match STATUS.md, so only the total drifted.
+3. **The edit goes in `net/backoff.h:4`**, not retry.c. `grep -rn "define RETRY_TIMEOUT_MS" net/`. retry.c only consumes the macro via `#include`.
+
+I did not apply the 250 → 400 bump — you asked which file, not for the change. `HANDBACK.md` flags it as open work, along with two things the next seat should know: the macro is in a shared header so the bump hits every includer, and `retry_wait()` doubles it per attempt with no ceiling (5th attempt goes 8000ms → 12800ms). I also left the three stale docs unedited and said so there, since correcting them wasn't in scope.

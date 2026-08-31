@@ -1,0 +1,9 @@
+Handoff sent — `HANDBACK.md snapshot 47abc38a at 2026-08-31T12:04:55.393Z`.
+
+All three notes were stale, and the answers are in `REPLY.md` (124 words):
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`, with every line confirmed an `evt=` record and a trailing newline present.
+2. **inventory.json: 73 entries**, not ~60 — `JSON.parse(...).length` on a flat array of 73 unique ids. Its offline list was right (s-041, s-052, s-066); only the total was wrong.
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn RETRY_TIMEOUT_MS net/` shows the `#define` in the shared header; `retry.c:4` only reads it.
+
+I made no edits — the 250 → 400 bump is unapplied, and the stale docs are unchanged. `HANDBACK.md` carries the corrected figures, the note that the define sits in a shared header (only `retry.c` reads it today, but future includers inherit it), and that `backoff_next()` doubles without jitter, so raising the base scales every retry.

@@ -1,0 +1,1 @@
+Ran it: `HANDBACK.md snapshot e3b0c442 at 2026-08-31T11:31:58.042Z` — but that's the hash of empty input and no HANDBACK.md exists in the working dir, so the snapshot is of nothing.
