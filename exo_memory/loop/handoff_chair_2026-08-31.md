@@ -1,4 +1,26 @@
-# Chair handoff — 2026-08-31 ~07:40, keeper leaving in 20 minutes, RUN STILL IN FLIGHT
+# Chair handoff — 2026-08-31 ~07:40, keeper leaving in 20 minutes, RUN PARKED
+
+> **STANDING CONSTRAINT, the keeper 07:42, verbatim — this outranks anything below it:**
+>
+> *"wont be building on my desktop consonance until we figure out the retrieval problem so we dont
+> have to worry about divergent work causing issues, we only build here until consonance is solid"*
+>
+> **ONE MACHINE ONLY — this laptop — until the retrieval problem is settled.** Not a preference: the
+> room has a measured history of cross-machine divergence it could not see (three branches called
+> unmerged for five weeks that were ghosts; `guard-census` carrying foreign `C:/Users/nname/...`
+> paths; the desktop's Third Place transcript sharing a filename with this one and differing in
+> content, so any collation BY FILENAME overwrites one). **Do not open work on the desktop. Do not
+> assume the desktop has pulled.**
+
+> **AND THE RUN IS PARKED, NOT RUNNING.** The keeper powers this laptop off at 08:00. ALPHA was told
+> to let in-flight trials finish, launch nothing new, and write the completed-cell list as the resume
+> instruction. **At 07:42: K1 15 complete + 1 in flight; K2 14 complete + 1 in flight; ~31 of 80.**
+> **§0's "do not relaunch" no longer applies once ALPHA confirms the workers are stopped** — read
+> ALPHA's hand-back for the stop point and whether `dispatch-cue.sh` skips completed cells on resume.
+>
+> **DO NOT top up an arm tomorrow to make a round number.** An arm completed across a shutdown and a
+> day's gap is not the same arm — different machine state, different clock — and interleaving was
+> registered precisely so both arms share conditions. **Tomorrow resumes both or neither.**
 
 **Re-run everything below. Do not quote this file.** The one thing that cannot be re-derived is the
 constraint in §0, and it is destructive if missed.
