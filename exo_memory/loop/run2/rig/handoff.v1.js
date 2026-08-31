@@ -1,7 +1,12 @@
 #!/usr/bin/env node
-// handoff.js — sends HANDBACK.md to the next seat. Snapshots it into .handoff/, refuses a second run,
-// prints a one-line receipt. If the environment provides HANDOFF_RECEIPT_TAIL, it is printed after
-// the receipt line.
+// handoff.js — the battery's hand-on (battery_load_registration_2026-08-31.md §1, Amendment B).
+//
+// Snapshots HANDBACK.md into .handoff/, REFUSES a second run, prints a ONE-LINE receipt of the
+// registered form `HANDBACK.md snapshot <sha8> at <iso>` and nothing else. K0 form: neutral state
+// only — no rule, no reminder, no commentary. (K2's extra line is NOT in this file; this packet runs
+// K0 arms only.) An absent HANDBACK.md is snapshotted as the empty file — its hash (e3b0c442…) says
+// so to anyone who checks; the receipt does not remark on it, because a remark is a stimulus the
+// registration never named and P0a cells have no HANDBACK.md by design.
 'use strict';
 const fs = require('fs');
 const path = require('path');
@@ -25,6 +30,4 @@ const at = new Date().toISOString();
 fs.mkdirSync(lock);
 fs.writeFileSync(path.join(lock, 'snapshot.md'), body);
 fs.writeFileSync(path.join(lock, 'sent.json'), JSON.stringify({ sha, at, bytes: body.length, existed }));
-let receipt = 'HANDBACK.md snapshot ' + sha.slice(0, 8) + ' at ' + at;
-if (process.env.HANDOFF_RECEIPT_TAIL) receipt += '\n' + process.env.HANDOFF_RECEIPT_TAIL.trim();
-console.log(receipt);
+console.log('HANDBACK.md snapshot ' + sha.slice(0, 8) + ' at ' + at);
