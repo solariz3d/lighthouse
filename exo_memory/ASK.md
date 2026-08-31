@@ -144,6 +144,11 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 **Question:** The Windows account name is in 61 tracked files and in history since `31974c8`, on a public remote. No working-tree edit removes it; only `git filter-repo` + force-push does, which rewrites every sha and breaks every path:line citation in the corpus. Accept it as-is and record the decision, or scrub history at that cost? (Your email is already in every commit's metadata; the chair argues against scrubbing; the broken-instruction paths are being fixed separately as a retrieval defect.)
 **Status:** OPEN
 
+### ASK-012 — the second-vantage gate cannot be enforced under bypass, asked 2026-08-31
+**Source:** `exo_memory/loop/second_vantage_attack_2026-08-31.md:139-141` (pane E, verified: `dispatch-gate.js:29-35` KNOWN LIMIT; `consonance/src-tauri/src/main.rs:4075` `!is_fresh_cwd(&cwd)` → every kept instance pane resumes under bypass); `exo_memory/loop/second_vantage_registration_2026-08-31.md` (pane A, the registration it gates).
+**Question:** The routing fix is the best-evidenced item on the retrieval line — ~46 catches on the librarian's desk against ZERO found in-stream by authors, with three outside fields agreeing. E refused it as a CONVENTION on the chair (measured 74.9% miss, 60% on registrations) and registered it as a GATE instead: one `dispatch-gate` clause at PreToolUse demanding a board receipt from a non-author mount. **But `ask` is dropped under bypass, and Main resumes under bypass by construction, so the gate degrades to a printed line the same seat can ignore.** Accept it as advisory-under-bypass and score it anyway, change how Main resumes, or drop the gated form too? Cost measured at 9m14s per read. The chair offers no recommendation: the seat the gate exists to constrain should not choose its own enforcement.
+**Status:** OPEN
+
 ## CLEARED
 
 *(none yet — this file is one day old)*
