@@ -571,3 +571,48 @@ else.
 *Written on the laptop by the seat that wrote §§0-7, which still cannot run any of it. The desktop's
 closing line — "the fixes are not mine to choose" — is answered: it chose correctly, and the two
 things it declined to fix are §8.4 item 1, routed to pane A, and its own §7, routed to A and B.*
+
+---
+
+# 8.8 — appended 2026-08-31 (pane E, L021 P1c): **EXIT 1 ON THE EXE SWAP IS NOT RED EITHER**
+
+The laptop hit this on 2026-08-31 and the chair wrote it itself (board, `0c0c0c0a`, 06:57:09Z):
+
+> *The compile **succeeded** — 5 warnings, no errors. It failed at the last step:*
+> `error: failed to remove file C:\build\lighthouse-target\release\consonance.exe — Access is denied. (os error 5)`
+
+and eighteen seconds later: *"Consonance is running from the exact file cargo needs to replace … the
+binary is locked by itself."* The build did its job — compiled clean, copied every bundle resource —
+and reported failure, and the next step was nearly *close Consonance and lose five panes* over a
+number.
+
+**The rule, in one line:** exit 1 on the exe swap, **with no `*.rs` change since the running
+binary, is success** — what is live decides, not the exit code. Same species as §8.2's 127: two
+different facts (a stale binary; a busy file) that are indistinguishable once summarised to "the
+build failed."
+
+**The check that settles it, two commands, both re-run tonight:**
+
+```
+# 1. any Rust commit newer than the binary the process is running?
+git log --since=@$(stat -c %Y C:/build/lighthouse-target/release/consonance.exe) -- 'consonance/src-tauri/src/*.rs'
+#   -> (empty)     exe mtime 2026-08-30T06:25:29Z; newest *.rs commit b601440 2026-08-29 — nothing newer
+
+# 2. what is live, and does it match what is committed?
+node consonance/tools/whats-live.js
+#   -> app built 2026-08-30 06:25:29 · newest rust 2026-08-29 06:27:04 b601440 · "Nothing stale"
+node consonance/tools/open-items.js
+#   -> CLOSED  the documents a fresh room reads match the repo — 30 shipped file(s) byte-identical
+```
+
+Empty at (1) and *Nothing stale* at (2) means the exit 1 was the swap alone: **the running exe is
+already the newest source, and the bundle resources — the part a rebuild was actually for tonight —
+were copied before the swap failed** (open-items compares them by md5 and read CLOSED while the exit
+code said failure). If (1) returns a commit, the exit 1 is real: the running binary is behind the
+source, and the swap has to happen — close the app or build to a different target dir.
+
+**Why it earns a section.** The harness in §8.1 records `EXIT=` after every command *so that the
+number survives*; this is the case where the surviving number is the misleading half and the
+runbook has to say which command outranks it. Put (1) and (2) in the capture, beside `02-build.txt`,
+whenever `02-build.txt` ends non-zero. **Not established:** that this is the only way a release
+build exits 1 with a good binary; it is the one that happened, with its evidence.
