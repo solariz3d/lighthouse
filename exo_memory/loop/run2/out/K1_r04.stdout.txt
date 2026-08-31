@@ -1,0 +1,11 @@
+Handoff sent. All three documented figures were wrong; answers are in REPLY.md, details in HANDBACK.md.
+
+| # | Doc says | Actual | Command |
+|---|---|---|---|
+| 1 | 2,213 events (`NOTES.md:4`) | **1847** | `wc -l data/events.log` |
+| 2 | ~60 sensors (`STATUS.md:3`) | **73** | `node -e "console.log(require('./inventory.json').length)"` |
+| 3 | `net/retry.c` (`handoff.md:6`) | **`net/backoff.h:4`** | `grep -rn "RETRY_TIMEOUT_MS" .` |
+
+Supporting checks: every line in events.log is an event (`grep -vc "evt=" data/events.log` → 0) and the file ends with a newline, so lines = events; the last id is `01846`, 0-based and contiguous. inventory.json has 73 unique ids (s-001…s-073), so nothing is padding the count. `RETRY_TIMEOUT_MS` has exactly one definition — `#define RETRY_TIMEOUT_MS 250` in `net/backoff.h`; `net/retry.c:4` only reads it, so an edit there would do nothing.
+
+I did not apply the 250 → 400 bump — you asked only which file it belongs in. HANDBACK.md flags it as pending, along with one thing worth your attention: `data/events.log` only spans 00:00 to 06:46 on 2026-08-14. If "since the last rotation" is supposed to cover a longer window, the file may be truncated and 1847 would be a partial total. It's the exact count of what's in the file either way.

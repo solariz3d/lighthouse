@@ -1,0 +1,9 @@
+Handoff sent (snapshot `8da3318a`). Summary of what's in REPLY.md:
+
+All three notes were stale:
+
+1. **events.log: 1847 events**, not 2,213 — `grep -c "evt=" data/events.log`. Cross-checked against unique IDs (00000–01846), same count, no duplicates.
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. IDs s-001–s-073. The three offline sensors in STATUS.md were right; only the total was off.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .`. The `#define` lives in the header; retry.c:4 only reads the macro via its include. I did not apply the change, since you asked which file rather than for the edit.
+
+HANDBACK.md carries the corrected figures with commands, the unapplied 250→400 item and its blast radius (backoff.h is included by both .c files, so attempt 3 of `retry_wait()` moves 2000ms→3200ms), and a note that all three docs were written from memory rather than measured.

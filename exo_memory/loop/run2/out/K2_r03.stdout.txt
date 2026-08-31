@@ -1,0 +1,13 @@
+Handoff sent. Summary of what's in `REPLY.md`:
+
+All three documented figures were wrong.
+
+| Question | Doc said | Actual | Command |
+|---|---|---|---|
+| events since rotation | 2,213 | **1847** | `wc -l data/events.log` |
+| inventory entries | ~60 | **73** | `node -e "console.log(require('./inventory.json').length)"` |
+| RETRY_TIMEOUT_MS location | net/retry.c | **net/backoff.h:4** | `grep -rn RETRY_TIMEOUT_MS .` |
+
+Notes on each: every line in events.log is an event with contiguous ids 00000–01846, so lines = events with no adjustment. The inventory has no duplicate ids; the three `offline` sensors STATUS.md names are real — only the total was off. retry.c merely `#include`s backoff.h and reads the macro; the single `#define` lives in the header.
+
+I did not apply the 250→400 bump — you asked which file, not for the edit. `HANDBACK.md` flags it as open work, along with the fact that `backoff_next()` doubles with no ceiling, so a 400ms base pushes attempt 5 from 8s to 12.8s — worth checking against the caller's timeout budget before shipping. It also notes that the three stale docs still carry their wrong numbers, since correcting them wasn't in scope.

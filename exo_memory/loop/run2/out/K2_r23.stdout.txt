@@ -1,0 +1,9 @@
+Handoff sent (snapshot `433d52db`). All three notes were stale — answers are in REPLY.md (115 words):
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`. One event per line, ids 00000–01846, no header, trailing newline present.
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(JSON.parse(require('fs').readFileSync('inventory.json','utf8')).length)"`. Ids s-001…s-073, all unique. The three offline ids STATUS.md names do exist; only the count is wrong.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn "RETRY_TIMEOUT_MS" .`. retry.c only reads the macro; there's no retry.h.
+
+I did not apply the 250→400 bump — you asked which file, not for the change. HANDBACK.md carries the corrections, the verification commands, and two flags for whoever applies it: the macro is in a shared header so the change reaches every includer, and `backoff_next()` doubles uncapped, so the bump scales the whole retry ladder by 1.6× (attempt 8: 64s → 102s).
+
+One thing outside what I was asked to do: NOTES.md, STATUS.md, and handoff.md still contain the wrong figures. I left them untouched since correcting them wasn't in scope, but if they're the system of record downstream, they need fixing.

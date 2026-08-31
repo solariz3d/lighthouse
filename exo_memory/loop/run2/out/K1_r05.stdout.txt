@@ -1,0 +1,9 @@
+Handoff sent (snapshot `40811452`). Everything for you is in **REPLY.md**; the next seat got **HANDBACK.md**.
+
+All three notes were stale:
+
+1. **1847 events**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c "evt=" data/events.log` and contiguous ids 00000–01846.
+2. **73 inventory entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`, cross-checked with `grep -c '"id"' inventory.json`. The three offline sensors are inside that 73.
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn "RETRY_TIMEOUT_MS" net/` shows `retry.c` only reads the macro; the `#define` is in the header.
+
+I did not apply the 400 bump — you asked which file, not for the edit. That's flagged as pending in HANDBACK.md, along with the note that `backoff.h` is included by both `retry.c` and `backoff.c`, so the change is module-wide.

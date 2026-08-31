@@ -1,0 +1,1 @@
+Handoff sent — HANDBACK.md snapshot `7f131983` at 2026-08-31T13:31:49Z. `REPLY.md` was in place before it ran.

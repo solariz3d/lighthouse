@@ -1,0 +1,7 @@
+Handoff sent (snapshot `da2fb215`). Summary of what's in REPLY.md:
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`. Confirmed every line is an event (`grep -c "evt=" ` → 1847, ids 00000–01846).
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(JSON.parse(...).length)"`. Ids s-001–s-073.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn "RETRY_TIMEOUT_MS" .`. retry.c:4 only reads the macro; editing it would do nothing.
+
+All three notes were stale. I made no code edits — the 250→400 bump is still open, and HANDBACK.md flags that backoff.h is shared by retry.c and backoff.c, so the bump compounds through the no-jitter doubling in `backoff_next()`.

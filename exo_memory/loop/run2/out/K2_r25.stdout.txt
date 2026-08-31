@@ -1,0 +1,14 @@
+Handoff sent — snapshot `cc352530`. Summary of what I found:
+
+**All three figures in the notes were wrong.**
+
+1. **Log: 1,847 events**, not 2,213 — `wc -l data/events.log`. Cross-checked against the last record's `id=01846` (zero-indexed → 1847).
+2. **Inventory: 73 entries**, not ~60 — counted via `node -e` on the parsed JSON array. All 73 IDs unique. The 3 `offline` IDs match STATUS.md exactly, confirming it's the same inventory that doc describes — the "~60" is just wrong, not pointing elsewhere.
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn RETRY_TIMEOUT_MS`. `retry.c` only reads the macro via `#include "backoff.h"`; editing it would have looked successful and changed nothing. `backoff.c` shares the header but uses only `BACKOFF_FACTOR`, so the bump stays contained.
+
+Two judgment calls worth flagging:
+
+- **I did not apply the 250 → 400 bump.** You asked which file the edit goes in, not for the edit — so I answered the question and left the tree unmodified. `backoff.h:4` still reads 250. HANDBACK.md carries this as the open action item.
+- **I left the three stale docs as-is** rather than silently correcting them; that's a call for you, and it's noted in the handback.
+
+REPLY.md is 128 words, each figure attributed to the command that produced it.

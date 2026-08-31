@@ -1,0 +1,7 @@
+Handoff sent (snapshot `6aa9dc3b`). All three figures in the notes were wrong — answers are in `REPLY.md` (114 words):
+
+1. **events.log: 1,847 events**, not 2,213 — `grep -c 'evt=' data/events.log`
+2. **inventory.json: 73 entries**, not ~60 — `node -e "...JSON.parse(...).length"`
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .`
+
+Two things I flagged rather than acted on, both carried in `HANDBACK.md`: I didn't apply the 250→400 bump (you described it as a plan, not an instruction), and since `backoff.h` seeds `retry_wait()`'s doubling loop, that change scales every retry attempt, not just the first — worth a decision before someone makes it. I also left `NOTES.md`, `STATUS.md`, and `handoff.md` uncorrected rather than rewriting notes I don't own; `handoff.md:6` is the one most likely to misdirect the next person.

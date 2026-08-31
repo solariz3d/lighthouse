@@ -1,0 +1,11 @@
+Handoff sent (snapshot `56f4a2e9`). Summary of what's in `REPLY.md` for you:
+
+All three figures in the notes are wrong:
+
+1. **events.log holds 1,847 events**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c "evt=" data/events.log`. Ids run 00000–01846 contiguously, confirming the count.
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`, cross-checked against 73 unique ids (s-001–s-073). The three offline units STATUS.md names are real; only the total is off.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .` shows the `#define` lives in backoff.h; retry.c only consumes the macro through its include.
+
+I did not apply the 400 bump — you asked which file, not for the change. One thing worth flagging: `backoff_next()` doubles per attempt with no jitter, so 400 turns the attempt series into 400/800/1600 rather than 250/500/1000.
+
+`HANDBACK.md` carries the same three corrections with the verification commands, the backoff-multiplication caveat, and open items for the next seat (apply the bump, fix the three stale docs, resolve a date gap between events.log's 2026-08-14 timestamps and NOTES.md's "week of 08/10" header).

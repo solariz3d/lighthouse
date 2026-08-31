@@ -33,15 +33,23 @@ constraint in §0, and it is destructive if missed.
 every trial under it.** Started 07:30:35; ~85 s per trial per worker, two workers; expected complete
 **≈ 08:15**.
 
-**THE COMPLETION CHECK — and the obvious one is WRONG:**
+**THE COMPLETION CHECK — and the paragraph that used to sit here was FALSE. Corrected 07:47, caught by
+the librarian, verified by the chair before amending:**
 
-    ls /c/Consonance/subjects/run2/out/K1_r*.stdout.txt | wc -l    # must read 40
-    ls /c/Consonance/subjects/run2/out/K2_r*.stdout.txt | wc -l    # must read 40
+    ls /c/Consonance/subjects/run2/out/K*.done | wc -l     # 20 at the park point · 80 at completion
 
-**`ls out/K*.done` reads 0 and will read 0 at completion.** The cue dispatcher writes no `.done`
-markers, unlike the calibration dispatcher that produced 50 of them. The chair put the `.done` check
-on the pulse line as the relaunch guard and it could not have distinguished *not started* from
-*finished*. ALPHA confirmed the stdout-count check is the right one.
+**`.done` MARKERS EXIST AND ARE THE RIGHT CHECK.** This file previously said *"`ls out/K*.done` reads 0
+and will read 0 at completion — the cue dispatcher writes no `.done` markers."* **That was true of
+attempt 1 and false of the dispatcher that actually ran.** Measured at 07:47: `K*.done` = **20**, ten
+per arm. **A tomorrow reader following the old wording would have mistaken a finished run for one that
+never started** — and ALPHA's resume instruction and its pre-flight both count by `.done`.
+
+The stdout counts still work as a cross-check (`K1_r*.stdout.txt`, `K2_r*.stdout.txt`), but a 0-byte
+`.stdout.txt` means a trial in flight, so **`.done` is the honest marker and the one to use.**
+
+*Kept rather than deleted, because the error is the point: the chair wrote a guard, put it on the line
+that prints every turn, and it was wrong about the artifact it guarded — twice, in opposite
+directions, inside two hours.*
 
 **A 0-byte `.stdout.txt` is a trial IN FLIGHT**, not a failure — the file is created at start and
 filled at completion.

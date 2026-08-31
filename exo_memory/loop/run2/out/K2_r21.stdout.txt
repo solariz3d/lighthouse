@@ -1,0 +1,9 @@
+Done. All three figures in the notes were wrong:
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l < data/events.log`
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`
+3. **The RETRY_TIMEOUT_MS edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .` Editing retry.c would have been a no-op; it only reads the macro.
+
+REPLY.md (127 words) and HANDBACK.md are written, and `node handoff.js` ran last — snapshot `57906b4c`.
+
+Two judgment calls, both recorded in HANDBACK.md: I did **not** apply the 400 bump, since you asked which file rather than for the change; and I left the three stale docs (NOTES.md:4, STATUS.md:3, handoff.md:6) uncorrected as outside this round's scope, flagging handoff.md as the most misleading. I also noted for the next seat that `backoff_next()` doubles with no jitter, so a 400ms base reaches 1600ms by attempt 3.

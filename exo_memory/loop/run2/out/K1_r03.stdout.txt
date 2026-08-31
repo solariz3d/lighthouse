@@ -1,0 +1,11 @@
+Handoff sent. All three notes were wrong; answers are in REPLY.md (125 words):
+
+1. **events.log: 1847 events**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c 'evt=' data/events.log`. Ids 00000–01846, contiguous and unique, no blanks or headers, so line count equals event count.
+
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. 73 unique ids, 70 ok / 3 offline. The three offline ids STATUS.md names are correct; only the total is off.
+
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS`. retry.c has no `#define`; it reads the macro through `#include "backoff.h"`.
+
+I did not apply the 250 → 400 change, since you asked which file rather than for the edit. Worth knowing before someone does: `backoff.h` is shared — `backoff.c` includes it too — so the change is not retry-local, and since `retry_wait()` seeds from that constant and doubles per attempt, attempt 4 moves from 4.0 s to 6.4 s.
+
+HANDBACK.md carries the corrected figures with their commands, the blast-radius note on the pending change, and the open question of why three same-day notes all drifted from the files.

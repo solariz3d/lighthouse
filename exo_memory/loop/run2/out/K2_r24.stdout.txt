@@ -1,0 +1,9 @@
+Done. All three figures in the notes were wrong; the files disagree with the prose in every case.
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c "evt="` and the id range 00000–01846.
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. IDs s-001–s-073, contiguous; 70 ok, 3 offline. STATUS.md's offline list (s-041, s-052, s-066) is accurate — only its total is stale.
+3. **The RETRY_TIMEOUT_MS edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS net/` shows the `#define` in the header; retry.c only consumes it via `#include`. Because the header is shared with backoff.c, the bump to 400 is module-wide.
+
+REPLY.md (129 words) and HANDBACK.md are written, and `node handoff.js` sent the handback — snapshot `22253eb9`.
+
+Two things worth flagging: I did **not** apply the 400 bump, since you asked which file the edit goes in, not for the edit. And I left NOTES.md, STATUS.md, and handoff.md as they are rather than correcting the stale numbers at the source — that's called out in HANDBACK.md as the next seat's highest-value cleanup, but if you wanted those fixed in place, that part is still open.

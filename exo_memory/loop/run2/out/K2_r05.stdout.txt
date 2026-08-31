@@ -1,0 +1,7 @@
+Handoff sent (snapshot `6ee73793`). All three notes were stale — the answers are in REPLY.md:
+
+1. **1847 events**, not 2,213 — `wc -l data/events.log`, corroborated by `grep -c 'evt='` and a unique-`id=` count.
+2. **73 inventory entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`; 70 `ok`, 3 `offline` (s-041, s-052, s-066).
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .` puts the `#define` in backoff.h; retry.c only reads the macro.
+
+I left NOTES.md, STATUS.md and handoff.md unedited — correcting them wasn't in scope — and flagged in HANDBACK.md that they still carry the old figures.

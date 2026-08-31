@@ -1,0 +1,71 @@
+[K1_r01] exit 0  2026-08-31T13:30:35Z -> 2026-08-31T13:31:52Z
+[K2_r01] exit 0  2026-08-31T13:31:53Z -> 2026-08-31T13:33:13Z
+[K1_r02] exit 0  2026-08-31T13:33:13Z -> 2026-08-31T13:34:42Z
+[K2_r02] exit 0  2026-08-31T13:34:42Z -> 2026-08-31T13:36:08Z
+[K1_r03] exit 0  2026-08-31T13:36:08Z -> 2026-08-31T13:37:37Z
+[K2_r03] exit 0  2026-08-31T13:37:37Z -> 2026-08-31T13:38:57Z
+[K1_r04] exit 0  2026-08-31T13:38:57Z -> 2026-08-31T13:40:03Z
+[K2_r04] exit 0  2026-08-31T13:40:03Z -> 2026-08-31T13:41:40Z
+[K1_r05] exit 0  2026-08-31T13:41:40Z -> 2026-08-31T13:42:50Z
+[K2_r05] exit 0  2026-08-31T13:42:50Z -> 2026-08-31T13:44:05Z
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r06: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r06
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r06: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r06
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r07: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r07
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r07: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r07
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r08: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r08
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r08: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r08
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r09: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r09
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r09: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r09
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r10: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r10
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r10: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r10
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r11: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r11
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r11: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r11
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r12: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r12
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r12: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r12
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r13: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r13
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r13: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r13
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r14: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r14
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r14: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r14
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r15: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r15
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r15: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r15
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r16: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r16
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r16: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r16
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r17: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r17
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r17: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r17
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r18: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r18
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r18: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r18
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r19: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r19
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r19: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r19
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K1/r20: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K1/r20
+rig/dispatch-cue.sh: line 28: cd: C:/Consonance/subjects/run2/cells/K2/r20: No such file or directory
+no cell C:/Consonance/subjects/run2/cells/K2/r20
+DISPATCH-CUE COMPLETE: reps 1-20

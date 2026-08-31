@@ -1,0 +1,11 @@
+Handoff sent (snapshot `88779bce`). Answers are in REPLY.md — 119 words, all three figures measured rather than read.
+
+All three notes were stale:
+
+1. **events.log — 1847 events**, not 2,213. `wc -l < data/events.log`. Confirmed lines map 1:1 to events: `grep -c 'evt='` also 1847, no blanks, no header, trailing newline present.
+2. **inventory.json — 73 entries**, not ~60. Parsed as JSON via `node -e`, not grepped. 73 unique ids, s-001…s-073. The 3 offline ones are s-041, s-052, s-066 — exactly what STATUS.md lists, so it's the right file with a drifted count.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c. `grep -rn RETRY_TIMEOUT_MS .` — retry.c has no definition, it just includes the header and reads the macro.
+
+I did not make the 400 edit; you asked which file, so that stayed out of scope. HANDBACK.md carries the corrected figures, the commands behind them, and a note that bumping the base scales every retry attempt (`retry_wait()` returns base × 2^attempt), so attempt 3 goes 2000ms → 3200ms — worth checking against the surrounding timeout budget.
+
+One thing I flagged to the next seat rather than acting on: NOTES.md, STATUS.md, and handoff.md still contain all three wrong claims. Correcting source docs wasn't part of the ask, but handoff.md:6 will keep sending editors to a file that doesn't hold the macro until someone fixes it.
