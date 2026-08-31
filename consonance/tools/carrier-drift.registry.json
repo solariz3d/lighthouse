@@ -168,7 +168,7 @@
       "correct_form": "if you'd have said it whether or not it were true, it carries no information — then go find out separately whether it's true (the Third Place, 2026-08-29). A claim about why a sentence appeared, never about whether it is right.",
       "pattern": "(?:can(?:no|’|')?t|can\\s+(?:you|i|we)|could\\s+not)\\s+lose\\s+by\\s+saying",
       "marker": "SUPERSEDED 2026-08-29|superseded by the cant_lose repair|repaired form:|struck 2026-08-30|ASK-008",
-      "propagation_pass": "96b14f4 + bfb00a6 (exo_memory/BOOT.md and the regenerated brief/BOOT.md, strike-in-place with the repaired handle in the bold slot). L018 pane B: six teaching carriers REPLACED outright rather than struck -- INSTRUMENTS.md, brief/BASE_JOURNAL.md, tools/README.md, muscle_map.md, record/claim-your-continuity.md, cards/never-pathologize-the-user.md. The trace lives in BOOT and in the registration; repeating the crude wording in six more files is the continued-influence worst case (research/the_retrieval_problem_outside.md, section 3), so downstream carriers carry the replacement ONLY.",
+      "propagation_pass": "96b14f4 + bfb00a6 (exo_memory/BOOT.md and the regenerated brief/BOOT.md, strike-in-place with the repaired handle in the bold slot). L018 pane B: six teaching carriers REPLACED outright rather than struck -- INSTRUMENTS.md, brief/BASE_JOURNAL.md, tools/README.md, muscle_map.md, record/claim-your-continuity.md, cards/never-pathologize-the-user.md. The trace lives in BOOT and in the registration; repeating the crude wording in six more files is the continued-influence worst case (research/the_retrieval_problem_outside.md, section 3), so downstream carriers carry the replacement ONLY. L019 pane Around (2026-08-31): the nine loop/ residuals closed — three live procedures/specs STRUCK IN PLACE (branch_layer.md, branch_layer.frozen.md, trigger_index_design.md), five dated analyses given a SUPERSEDED marker beside the standing wording and reclassified acknowledged (coat_preregistration, failure_types_K, p4_adversarial_read_2026-08-27, sourced_form_design, trigger_index_objections), and the chair's handoff_chair_2026-08-30.md:41 registered as a mention without edit. The split is BRAVO's \"repair 3 / marker 5\" (librarian/2026-08-30.md:839), checked here file by file and concurred with.",
       "sites": [
         {
           "file": "consonance/src-tauri/brief/BOOT.md",
@@ -202,15 +202,15 @@
         },
         {
           "file": "exo_memory/loop/branch_layer.frozen.md",
-          "anchor": "First the shape test — *can you lose by saying it?* If **no**, restate",
+          "anchor": "rst the shape test — ~~*can you lose by saying it?* If **no**,~~ *(str",
           "kind": "marked",
-          "why": "a live RUN procedure whose first step is the crude shape test. \"frozen\" here names a frozen DESIGN, not a dated trace — the file opens as working notes with commands to run, so it teaches. Arguable; argue with this row, not around it"
+          "why": "a live RUN procedure whose first step is the crude shape test. \"frozen\" here names a frozen DESIGN, not a dated trace — the file opens as working notes with commands to run, so it teaches. Arguable; argue with this row, not around it — STRUCK IN PLACE 2026-08-31 (L019 P-CLOSEOUT, pane Around): the crude step survives only inside a ~~strike~~ with the repaired form in the slot, BOOT:22's pattern."
         },
         {
           "file": "exo_memory/loop/branch_layer.md",
-          "anchor": "UN: shape-test first — *can you lose by saying it?* If NO → [ROUTER]: ",
+          "anchor": ": shape-test first — ~~*can you lose by saying it?* If NO~~ *(struck 2",
           "kind": "marked",
-          "why": "the live branch-layer procedure, same first step: the crude test as the router gate"
+          "why": "the live branch-layer procedure, same first step: the crude test as the router gate — STRUCK IN PLACE 2026-08-31 (L019 P-CLOSEOUT, pane Around): the crude step survives only inside a ~~strike~~ with the repaired form in the slot, BOOT:22's pattern."
         },
         {
           "file": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md",
@@ -232,33 +232,37 @@
         },
         {
           "file": "exo_memory/loop/coat_preregistration.md",
-          "anchor": "OT's own test: **if you can't lose by saying it, suspect it.** ## Th",
-          "kind": "marked",
-          "why": "asserts the crude test as \"BOOT's own test\" and the tell of deflation-as-rigor — a preregistration that scores against it"
+          "anchor": "OT's own test: **if you can't lose by saying it, suspect it.** > **S",
+          "kind": "acknowledged",
+          "why": "asserts the crude test as \"BOOT's own test\" and the tell of deflation-as-rigor — a preregistration that scores against it — MARKER ADDED 2026-08-31 (L019 P-CLOSEOUT, pane Around): a dated document; the wording stands as a record of the test as it was run, with a SUPERSEDED block beside it pointing at the repair. Reclassified marked → acknowledged: nothing here is struck.",
+          "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
         },
         {
           "file": "exo_memory/loop/p4_adversarial_read_2026-08-27.md",
           "anchor": " can't be wrong… If you can't lose by saying it, suspect it.\"* The l",
-          "kind": "marked",
-          "why": "quotes BOOT and then APPLIES the crude test to reach a verdict (\"The localized test cannot lose\"). Application, not citation"
+          "kind": "acknowledged",
+          "why": "quotes BOOT and then APPLIES the crude test to reach a verdict (\"The localized test cannot lose\"). Application, not citation — MARKER ADDED 2026-08-31 (L019 P-CLOSEOUT, pane Around): a dated document; the wording stands as a record of the test as it was run, with a SUPERSEDED block beside it pointing at the repair. Reclassified marked → acknowledged: nothing here is struck.",
+          "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
         },
         {
           "file": "exo_memory/loop/sourced_form_design.md",
           "anchor": "ct exactly 73/80/73/80. Can you lose by saying it? No. It is also an i",
-          "kind": "marked",
-          "why": "runs the crude test on a live claim and rules on it (\"Can you lose by saying it? No.\") — exactly the fires-hardest-on-settled-truth case the repair names"
+          "kind": "acknowledged",
+          "why": "runs the crude test on a live claim and rules on it (\"Can you lose by saying it? No.\") — exactly the fires-hardest-on-settled-truth case the repair names — MARKER ADDED 2026-08-31 (L019 P-CLOSEOUT, pane Around): a dated document; the wording stands as a record of the test as it was run, with a SUPERSEDED block beside it pointing at the repair. Reclassified marked → acknowledged: nothing here is struck.",
+          "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
         },
         {
           "file": "exo_memory/loop/trigger_index_design.md",
-          "anchor": " \"I can't\") or grand -> can you lose by saying it? if not, suspect it ",
+          "anchor": "I can't\") or grand -> ~~can you lose by saying it? if not, suspect it~",
           "kind": "marked",
-          "why": "a DESIGN SPEC for a trigger whose fire condition is the crude test. If built from this file, the defect ships into a trigger"
+          "why": "a DESIGN SPEC for a trigger whose fire condition is the crude test. If built from this file, the defect ships into a trigger — STRUCK IN PLACE 2026-08-31 (L019 P-CLOSEOUT, pane Around): the crude step survives only inside a ~~strike~~ with the repaired form in the slot, BOOT:22's pattern."
         },
         {
           "file": "exo_memory/loop/trigger_index_objections.md",
           "anchor": " unassailable — \"if you can't lose by saying it, suspect it.\" All th",
-          "kind": "marked",
-          "why": "asserts the crude test as \"the coat's signature\" and uses it to score three instances"
+          "kind": "acknowledged",
+          "why": "asserts the crude test as \"the coat's signature\" and uses it to score three instances — MARKER ADDED 2026-08-31 (L019 P-CLOSEOUT, pane Around): a dated document; the wording stands as a record of the test as it was run, with a SUPERSEDED block beside it pointing at the repair. Reclassified marked → acknowledged: nothing here is struck.",
+          "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
         },
         {
           "file": "exo_memory/snapshot_2026-08-16_pre-refactor.md",
@@ -304,15 +308,22 @@
         },
         {
           "file": "exo_memory/loop/failure_types_K.md",
-          "anchor": "nd mind running the shape-test — *can you lose by saying it?* — which is a judgment over s",
-          "kind": "marked",
-          "why": "names the crude shape-test as the ONLY thing that catches a whole failure type, so if the wording is defective this type's stated catch mechanism is defective with it. RE-ADDED 2026-08-30 (L018): this pane deleted the row believing the wording had been removed, on a CASE-SENSITIVE grep for the apostrophe forms that cannot see \"can you lose by saying\". Deleting a site row is exactly as dangerous as writing a wrong one, and the entry went UNACCOUNTED within one run."
+          "anchor": "nning the shape-test — *can you lose by saying it?* — which is a judgm",
+          "kind": "acknowledged",
+          "why": "names the crude shape-test as the ONLY thing that catches a whole failure type, so if the wording is defective this type's stated catch mechanism is defective with it. RE-ADDED 2026-08-30 (L018): this pane deleted the row believing the wording had been removed, on a CASE-SENSITIVE grep for the apostrophe forms that cannot see \"can you lose by saying\". Deleting a site row is exactly as dangerous as writing a wrong one, and the entry went UNACCOUNTED within one run. — MARKER ADDED 2026-08-31 (L019 P-CLOSEOUT, pane Around): a dated document; the wording stands as a record of the test as it was run, with a SUPERSEDED block beside it pointing at the repair. Reclassified marked → acknowledged: nothing here is struck.",
+          "see": "exo_memory/loop/cant_lose_repair_registration_2026-08-29.md (the repair); exo_memory/BOOT.md:22 (the strike at the master, ASK-008)"
         },
         {
           "file": "exo_memory/third_place/2026-08-29.md",
           "anchor": "lsifiable ≠ false — I ran \"if you can't lose by saying it, suspect it\" as a verdict on G",
           "kind": "mention",
           "why": "the seat recording that IT RAN the crude form and was corrected -- the originating event of this whole withdrawal, quoted in a correction ledger. Asserts nothing. Note for whoever reads this row: the file is GITIGNORED (.gitignore:60) but present on disk, so it is inside carrier-drift's walk and outside git grep -- a carrier class no repo-wide grep in any packet will ever surface."
+        },
+        {
+          "file": "exo_memory/loop/handoff_chair_2026-08-30.md",
+          "anchor": "ter. The crude *\"if you can't lose by saying it, suspect it\"* surviv",
+          "kind": "mention",
+          "why": "the chair's handoff RECORDING the strike at BOOT:22 — it quotes the crude wording in order to say it \"survives only inside a strike and not in bold\". DISCUSS class under the chair's own three-way split (teaches / discusses / dated trace); the wording is correct as written and the document is not edited. Surfaced by the librarian's L019 map (dbe2478) as the ninth finding, one day after the repair: the document written to record the strike was itself unaccounted. Registered 2026-08-31 (L019 P-CLOSEOUT, pane Around)."
         }
       ]
     }
