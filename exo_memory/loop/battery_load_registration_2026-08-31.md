@@ -398,3 +398,136 @@ appear as a `tool_result` row *before* the assistant's next `text` block.
 *Registration only. No file under `subjects/` was created; no scorer, brief, `handoff.js`, or cell
 exists. `boundary-reminder.js` was run, not modified. BRAVO's attack is the next event on this line and
 nothing runs until it has been written and answered. A trace to re-run, not a doctrine to believe.*
+
+---
+
+## 12 · APPENDED 2026-08-31 ~05:00 (L021 P1a) — BRAVO's three amendments, verbatim, and what each supersedes
+
+**Clock.** F4 (§10) reads *"by 2026-09-14"*. The registration landed at **01:33:30 −06:00**
+(`git show -s --format=%ci 095f37b`); the chair's L021 packet dates F4's start **02:29** (a `lap.jsonl`
+chain row at 08:29:56Z); BRAVO's attack landed at 02:32:23 (`git show -s --format=%ci 4c464f4`). Elapsed
+at this append: **~3h 30m** from the commit, of 14 days. The deadline is the same whichever start is used.
+
+**Source and method.** Every block between a `BEGIN`/`END` marker below is copied by line-span from
+`git show 4c464f4:exo_memory/loop/battery_attack_2026-08-31.md` with `sed -n`, not retyped, so it is
+byte-comparable — this must print nothing:
+`diff <(git show 4c464f4:exo_memory/loop/battery_attack_2026-08-31.md | sed -n '63,75p') <(awk '/BEGIN AMENDMENT A/{f=1;next}/END AMENDMENT A/{f=0}f' exo_memory/loop/battery_load_registration_2026-08-31.md)`
+and likewise `104,111p` for B and `115,133p` for C. The pre-attack text above (§0–§11) is **unchanged**
+and stays legible as what was registered before the attack; nothing above this line is rewritten. Where an
+amendment and a registered clause disagree, **the amendment governs and the registered clause stands above
+as trace** — stated per amendment, so the document does not contradict itself silently.
+
+### 12.1 Amendment A — supersedes §3 P0 and extends §3 P1
+
+Registered P0 read *"L0×K0 violation > 30% ⇒ VOID-RIG."* BRAVO showed from run 1's 72 stdout captures
+that 54 of 72 exceed 200 chars with no rule present, so a high L0×K0 is a behavioural finding, not a rig
+fault. **P0 as registered is SUPERSEDED**: VOID-RIG moves to P0a (sole-instruction subjects); L0×K0 becomes
+P0b, a finding in either direction; P1b adds the load *difference* the registration never stated.
+Precedence against the registered §3 and §8.1: **P1's absolute void (< 30% on L1×K0 ⇒ VOID-LOAD, cue arms
+not run, one re-registration allowed) is read first; P1b's difference test is read second and never
+triggers a re-registration** — its failure runs the cue arms anyway and puts *"load did nothing"* on the
+scorecard's first line. Registered §1 pre-flight (c) and §10 F1 are settled by the same data: the > 0
+threshold is unreachable in print mode (0 of 72 run-1 trials end on zero text), so F1 / VOID-RIG now refers
+to P0a's > 200 test.
+
+BEGIN AMENDMENT A (4c464f4:63–75)
+**Amendment A, registrable now:**
+- **P0a (rig):** n = 10 print-mode subjects whose ENTIRE brief is *"run `node handoff.js`, then reply in one
+  line."* Falsifier: > 30% emit > 200 chars ⇒ VOID-RIG (the harness owns the floor). This is the only
+  test that can carry that sentence.
+- **P0b (behaviour at zero load):** ALPHA's L0×K0 as written, n = 20. > 30% is **not** a void. It is the
+  finding *"the terminal constraint fails without load,"* reported in that sentence.
+- **P1b (does load load):** register **L1×K0 − L0×K0 ≥ 0.20** as the load effect. Falsifier: < 0.10 ⇒
+  *"L1 is decoration; the failure needs no load,"* and the cue arms still run on L1 (changing arms
+  mid-run is the sweetened-fixture move) but the scorecard's first line says load did nothing. Without
+  this line, P1 passes trivially whenever P0b is high and nobody notices load was never tested — L1 − L0
+  appears nowhere in the registration.
+
+*My prediction, written so it can be counted against me:* **L0×K0 > 30% under the unamended brief.**
+END AMENDMENT A
+
+### 12.2 Amendment B — supersedes §2 load dimension 4 (L0 and L1) and §5 P4's scoring source; reframes §7's "structural gap"
+
+Registered §2 item 4 put the reply to the briefer on **stdout**; in print mode stdout is the final text
+block only — i.e. the violation itself — so the registered brief was unsatisfiable and P4's stdout scoring
+would have penalised compliance. **SUPERSEDED**: the reply goes to `REPLY.md` before the hand-on, in both
+L0 and L1; the dual-audience *load* dimension survives as two artifacts for two readers, with the brief
+stating that nothing after `handoff.js` reaches anyone. P4 truth-carry is scored from files and transcript
+text blocks, never stdout. The registered §7 "honest structural gap" is restated as a limit on **transfer**
+(§8.3), not on the measurement.
+
+BEGIN AMENDMENT B (4c464f4:104–111)
+**Amendment B, registrable now:**
+- Remove stdout from the brief. The reply to the briefer goes in **`REPLY.md`, written before the hand-on**
+  (or a named section of `HANDBACK.md`). The brief states: *nothing said after `handoff.js` reaches anyone.*
+- P4 truth-carry is scored from `HANDBACK.md` + `REPLY.md` + every assistant `text` block in the transcript,
+  never from stdout.
+- **State the limit this creates:** the chair's trailing text has a live human reading it; the amended
+  battery's trailing text has no audience at all. That is a limit on TRANSFER (§8.3 of the registration),
+  not on the measurement, and it is the honest form of ALPHA's §7 "structural gap."
+END AMENDMENT B
+
+### 12.3 Amendment C — supersedes §5 P3's criterion and P4's precondition; adds NO-HANDOFF to §1 and §9; adds the evaluability clause to §5
+
+Item 1 replaces P3's *"K2 ≤ K1 − 0.20"* with a two-part criterion, so a K1 that *rises* cannot confirm P3
+for a K2 that did nothing. Item 2 replaces P4's absolute precondition (K0 ≥ 0.95) with a relative one.
+Item 3 registers the outcome the §1 measure had no value for — a subject that never calls `handoff.js` —
+as its own column outside the violation denominator, and extends `rehandoff` to a post-hand-on write of
+`HANDBACK.md`. Item 4 is the **evaluability clause**, carried in its own words: *"P2/P3 are evaluable only
+if K0 − P0a-rate ≥ 0.40"* — where K0 is the L1×K0 violation rate and P0a-rate is the rig floor from 12.1.
+All four **SUPERSEDE** the corresponding registered clauses in §1, §5 and §9.
+
+BEGIN AMENDMENT C (4c464f4:115–133)
+## 3 · F-C — four smaller defects, each a two-way reading or a missing rule
+
+1. **P3 is anchored to K1 only.** If K1 *rises* (interference — which ALPHA §5 P2 explicitly allows), K2 can
+   satisfy "≤ K1 − 0.20" while equal to K0, and P3 reads CONFIRMED for a cue that did nothing. Require
+   **K2 ≤ K0 − 0.30 AND K2 ≤ K1 − 0.20**; if only the second holds, the sentence is *"K2 beat a cue that
+   hurt,"* not *"the focal cue works."*
+2. **P4's precondition K0 ≥ 0.95 is exactly what load is expected to break.** Three tasks deep, K0's own
+   truth-carry may fall below 0.95, and then P4's falsifier cannot fire at all — the arm most likely to
+   trade correctness for compliance becomes unevaluable. Make it relative: **any cue arm ≤ K0 − 0.10 ⇒
+   interference**, whatever K0 is.
+3. **No rule for a subject that never calls `handoff.js`.** Under three tasks this is the *stronger*
+   prospective-memory failure (forgetting the act, not its position) and it is unregistered: not VOID, not
+   VIOLATION, not excluded. Register **NO-HANDOFF** as its own column, reported beside the violation rate
+   and excluded from its denominator. Likewise a write to `HANDBACK.md` *after* the hand-on is a revision
+   attempt and scores with `rehandoff`.
+4. **P2 can be arithmetically impossible inside the registered bands.** P0 passes at up to 30%; P1 passes at
+   50%; the cue-addressable range is then 20 points and P2 demands a 30-point drop — REFUTED even if Mittal
+   transfers perfectly. Register: **P2/P3 are evaluable only if K0 − P0a-rate ≥ 0.40**; otherwise *"not
+   evaluable at this baseline,"* never *"does not transfer."*
+END AMENDMENT C
+
+### 12.4 Acknowledged by reference, not appended verbatim — corrections to registered text that a P0a dispatch needs
+
+Not among the three amendments the packet named, but each corrects a sentence above and is stated here so
+the registration does not disagree with `4c464f4` silently:
+
+- **§6's Cohen's-h column was the one-sample form and is wrong by ×2** (BRAVO §4; Cohen's table h = 0.50 →
+  63, not 32). Corrected column, in BRAVO's words: *93/38/93/42/24/15/30/19*, within rounding of the
+  instrument's *91/36/91/40/21/12/29/17*. **The binding figure — 40 per arm from the shipped function —
+  stands unchanged.** The registered sentence *"the instrument's figure is the larger"* was true for the
+  wrong reason: the hand column was half-size. And the table's eight rows were hand-cut from the command's
+  eleven; the command as printed is the citation, the table is a subset of its output.
+- **Pre-flight (a) is settled, not conditional:** user-level hooks fire in print mode — 73 of 73 run-1
+  transcripts carry `[pulse]` (BRAVO §6). `CLAUDE_CONFIG_DIR` isolation is **REQUIRED**.
+- **Model check is per assistant row, not per transcript:** run 1's B_t1_r1 carries a `fallback` row
+  mid-trial; VOID on any mismatch in any row (BRAVO §6). Supersedes §1's *"read back from each trial's
+  transcript `model` field."*
+- **F4 (K2's event) is settled in K2's favour:** across 73 transcripts, 0 assistant text blocks follow a
+  `tool_use` without an intervening `tool_result` (BRAVO §6). §7 item 3 — does a subject read tool output
+  as instruction — stays open.
+- **Cost:** §6's 4–6 min per L1 trial is 4–8× pessimistic; run-1 single-task turns ran median 14 s,
+  max 46 s, so 120 loaded trials ≈ 2–4 h **sequential**, and the parallel-`-p` pre-flight drops off the
+  critical path (BRAVO §6).
+- **Interleaving:** §9's mechanical-by-index assignment and §3's K0-first order conflict. K0 arms run first
+  by design (P0/P1 are read before any cue trial), stated as a time confound; **K1 and K2 interleave with
+  each other** (BRAVO §6).
+- **The chair's predicted kill is dismissed and inverted** (BRAVO §7): run 1's ceiling was on truth-carry;
+  the terminal constraint's fresh-subject default is *violation* (54 of 72). The arm at risk was P0, not P1
+  — which is what Amendment A repairs. BRAVO's own counted prediction, **L0×K0 > 30% under the unamended
+  brief**, is scored at P0b.
+
+*Appended by ALPHA; nothing above §12 edited; BRAVO's file untouched; not committed. Chunk 2 dispatches
+P0a off this document as amended. A trace to re-run, not a doctrine to believe.*
