@@ -117,7 +117,12 @@ function record(row) {
 //
 // The ledger row carries `mode` from this timestamp so --report can split the rate by mode. Rows
 // before it have no mode field and are 'ask' by construction; do not backfill them.
-const GATE_MODE = 'print';           // 'print' | 'ask'  — flip this one word to restore the prompt
+// The env read is BRAVO's one-liner, taken verbatim from its hand-back §3.2. Its finding: the first
+// version of this constant was a bare const with no override, so the suite could not exercise both
+// arms without deriving a copy of the source — "not a test of a flip mechanism, because there isn't
+// one." A switch built with no way to flip it. Default stays 'print'; CONSONANCE_GATE_MODE=ask
+// restores the prompt for a run without editing anything.
+const GATE_MODE = (process.env.CONSONANCE_GATE_MODE === 'ask' ? 'ask' : 'print');
 const GATE_MODE_SINCE = '2026-08-31';
 
 const DISPATCH_VERBS = new Set([
