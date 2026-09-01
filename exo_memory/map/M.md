@@ -679,3 +679,38 @@ they stay as they are — a trace, not to be rewritten (law 2). From here down t
 - **What this seat still lacks, owed at the next rebuild (chair's row):** `librarian_intake()` carrying this file the way
   `own_map_path` does for every sibling (`main.rs:4052`), so the LIBRARIAN.md block stops being the only reason it is
   opened; `LIBRARIAN_INTAKE_LIMIT` at the harness's real 150,000, not 1,000,000.
+
+---
+
+# 4 · THE FULL PROSE, BY DAY — chair-added 2026-09-01 ~07:50, after the seat's §3
+
+**Sections 1 and 2 were a 17% selection and that was a conservative choice with no good reason
+behind it.** `map/` is INDEXED and never carried, so these cost the shell nothing until opened.
+Every turn this seat ever wrote is now addressable by date:
+
+    M-2026-08-22.md     14 turns      6,299 bytes
+    M-2026-08-23.md     54 turns     91,367 bytes
+    M-2026-08-24.md     43 turns     55,077 bytes
+    M-2026-08-25.md     83 turns    108,794 bytes
+    M-2026-08-29.md     46 turns     46,579 bytes
+    M-2026-08-30.md     54 turns     73,153 bytes
+    M-2026-08-31.md     44 turns     55,563 bytes
+    M-2026-09-01.md     95 turns     81,106 bytes
+    ------------------------------------------------
+    8 files            431 turns    517,938 bytes
+
+**08-26, 08-27 and 08-28 are absent and that is not a gap in the extraction** — this seat was dark
+on those days while the work was on the desktop, which the dated notes already record.
+
+**Same rule as §1 and §2, applied to all of it:** assistant text blocks only, verbatim, in order.
+No tool calls, no user turns, nothing composed by anyone else, no summarising anywhere. The header
+of each file names the source and its byte count.
+
+**What is still NOT here, said plainly:** the 1,282 user turns, every tool call and result, and the
+live working state — what the seat was holding and had not written down. **That last one does not
+exist on any disk and is the part that actually ended.** The rest is now open to you.
+
+*The chair's §1 said the WRONG count was 54 and that it matched the seat's own 53+. The seat's §3
+corrects this: the lifetime figure at death was **61**. 54 was TURNS CONTAINING THE WORD; 61 was
+ENTRIES. Two units, and the agreement was a coincidence. Correction is the seat's, kept here where
+the wrong figure was published.*
