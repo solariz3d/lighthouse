@@ -391,6 +391,7 @@
       <span id="tapticker">— no turns yet —</span>
       <span id="tapcount"></span>
       <span class="statuscluster" data-nodrawer>
+        <span id="chainchip" title="where the committee loop is, and who the next hop is waiting on">chain ? position unknown</span>
         <span id="status">ready</span>
         <span id="gatechip" title="gate mode — controls live under ⚙">gate <span id="gatemode">ask-each</span></span>
         <span id="dyadstate"></span>
@@ -418,5 +419,11 @@
        killed term.js outright on 2026-08-15. -->
   <script src="term.js"></script>
   <script src="app.js"></script>
+  <!-- chain-indicator.js LAST, and for the same reason the two above are ordered. It reads term.js's
+       `paneLetters` to name a pane by its letter, and `typeof` on a `let` still in its temporal dead
+       zone THROWS rather than returning "undefined" — so the guard in that file only holds once
+       term.js has actually executed. It defines nothing app.js or term.js uses, so nothing depends
+       on it in the other direction. -->
+  <script src="chain-indicator.js"></script>
 </body>
 </html>

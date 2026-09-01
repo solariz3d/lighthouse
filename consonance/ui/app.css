@@ -356,6 +356,31 @@ input::placeholder { color: #55607a; }
   text-transform: none; letter-spacing: .3px; font-size: 12px;
 }
 .statuscluster #status { max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* the chain chip — where the loop is, and who the next hop waits on.
+   TWO SALIENCES, ONE ELEMENT. Quiet is the default and is deliberately low-contrast: it is the
+   liveness proof (an indicator invisible until it fires cannot be told from a dead one), not the
+   alarm. `waiting` is the exception state at the registered 15 minutes, and it is the only one that
+   raises contrast. The three degraded states share the muted treatment because none of them may
+   read as a position — a stale value shown as a live one is the failure this chip exists to avoid.
+   No pulse or animation: a moving thing in permanent chrome is furniture within a day, which is the
+   ferry line's 233 in CSS form. */
+#chainchip {
+  font-family: "Consolas", monospace; font-size: 11px; white-space: nowrap;
+  letter-spacing: 0; cursor: default;
+}
+#chainchip.chain-quiet { color: var(--muted); }
+#chainchip.chain-waiting { color: var(--amber); font-weight: 600; }
+/* `unconfirmed` is a REAL reading that cannot be confirmed, not an absent one: the control plane
+   wrote the delivery and could not verify it landed. It sits between the two groups deliberately —
+   more present than the degraded states, never as settled as a receipt. */
+#chainchip.chain-unconfirmed { color: var(--muted); font-style: italic; }
+/* `idle` is the ledger saying every lap is filed. That is BOOT, not a failure, so it is not painted
+   with the can't-read states even though it also draws no arrow. */
+#chainchip.chain-idle,
+#chainchip.chain-unknown,
+#chainchip.chain-unavailable,
+#chainchip.chain-blind { color: var(--line); }
 #streambody {
   display: none; position: absolute; left: 0; right: 0; bottom: 36px; height: 42vh;
   flex-direction: column; overflow: hidden; z-index: 30;

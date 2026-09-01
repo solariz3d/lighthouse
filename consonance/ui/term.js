@@ -1078,7 +1078,20 @@ updateConveneBtn();
 // register listeners at load too, so the RAM/process HUD updates before any pane exists
 try { ensureListeners(); } catch (_) {}
 
-// load the persisted board history into the stream (survives app restarts)
+// Load whatever the board ring currently holds into the stream.
+//
+// CORRECTED 2026-09-01. This said "the persisted board history ... survives app restarts", and it
+// does not. `get_board` returns the IN-MEMORY ring, which main.rs builds as
+// `VecDeque::new()` (search `manage(Board(Arc::new`) and never rehydrates. main.rs says so itself:
+// "board.jsonl is a write-only mirror, never reloaded". On a relaunch this call returns an EMPTY
+// array, and the ring then fills only with new pushes; since Cycle 3b persisted the tailer offsets
+// precisely to stop transcripts being replayed, nothing refills it from history either. The
+// comment was most likely true before that change and was not updated with it.
+//
+// Left as a comment fix, not a behaviour fix: making the ring survive restarts means loading
+// board.jsonl in main.rs, which is a backend change nobody asked for here. Found while wiring
+// chain-indicator.js, which depends on this exact fact — the chip must read an empty ring as
+// "position unknown" rather than drawing an arrow it cannot support.
 try {
   inv('get_board').then((entries) => {
     const log = document.getElementById('streamlog');
@@ -1091,7 +1104,9 @@ try {
       log.appendChild(row);
     });
     log.scrollTop = log.scrollHeight;
-    // seed the ticker from the last entry so the bar isn't blank on launch — restored
+    // seed the ticker from the last entry so the bar isn't blank on launch. (In practice the ring
+    // is empty at launch — see the correction above — so this seeds nothing until the first push;
+    // the guard below is what keeps that harmless.) — restored
     // history is not unread, so no count
     const last = entries[entries.length - 1];
     if (last) {
