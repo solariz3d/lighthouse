@@ -1,8 +1,12 @@
 **SUPERSEDED by `exo_memory/loop/handoff_librarian_2026-09-01.md`, 2026-09-01.** Wording kept,
-authority removed. The run it parks completed 80/80 on 2026-09-01 and is scored. **And one line in it
-is now known to be too broad: `:26-27`'s wall sentence — the established form is "no event OF THE
-HAND-ON precedes the decision" (scorecard §4), which leaves `Write HANDBACK.md` untested.** For what
-is open, read `exo_memory/librarian/LEDGER.md`, never this.
+authority removed. The run it parks completed 80/80 on 2026-09-01 and is scored. For what is open,
+read `exo_memory/librarian/LEDGER.md`, never this.
+
+*(A previous version of this line said this file's `:26-27` carried an over-broad wall sentence. It
+does not — **this handoff predates the wall**, which was measured 2026-09-01. The sentence is in the
+09-01 handoff and the librarian has narrowed it there. Corrected at the librarian's catch; kept
+visible because it is the fourth pointer tonight that named a POSITION instead of a THING, after
+ALPHA's "v2", the journal's `LEDGER.md:21`, and the chair's `.done` marker.)*
 
 # Handoff — the librarian seat, 2026-08-31 ~07:50, the laptop powers off at 08:00; the run is PARKED at 20 of 80
 

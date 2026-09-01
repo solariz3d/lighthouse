@@ -23,7 +23,9 @@ ask the chair for the current inquiry; open LEDGER; then this.
   4. Push; both handoffs; then the REBUILD (ships the edge; kills every pane; the librarian resumes on its fixed SID).
 - **The result of the line, in the words to carry:** no cue moved the number (K0 65 / K1 72.5 / K2 82.5; every pairwise
   p ≥ 0.20); the outcome is decided when the subject COMPOSES its summary, before any tool event; no event this harness
-  exposes precedes that composition — the wall. K-vs-K0 is confounded (handoff.js v1/v2; separate session); K1-vs-K2
+  exposes precedes that composition — the wall. **[NARROWED 2026-09-01 ~03:35, C-found, scorecard §4: established form is
+  "no event OF THE HAND-ON precedes the decision"; the last tool result BEFORE the hand-on (Write HANDBACK.md, 83/100) does
+  precede it and is UNTESTED — scorecard §7(a). The broad sentence is this seat's WRONG #54.]** K-vs-K0 is confounded (handoff.js v1/v2; separate session); K1-vs-K2
   is clean and null. Never say "the focal cue made it worse."
 - **The edge (B):** built and tested, NOT LIVE until the rebuild — `ADDRESS_TABLE` at n=3, `call_librarian`, the
   counter's deadlock closed, BUILDING.md step 6 rewritten. After the rebuild the counter can complete with this seat in
