@@ -1,5 +1,13 @@
 # Registration — the librarian's own notes get a WINDOW on the shelf (2026-09-01 ~03:30, ALPHA, L023 P-LIB-FORGET-REG). Registration only. No Rust. Build is next lap, its own rebuild, not tonight's.
 
+> **SCOPE AMENDED 2026-09-01 ~04:30 (§10) — this registration governs TWO carriers.** The title
+> above is a dated trace and keeps its wording; the mark is here so the carrier is not read as
+> covering only the shelf. **The second carrier is the pane's FIXED BRIEF** (149,668 B live;
+> `fixed_brief=144,529` against a 110,000 budget the code already implies). **§10 answers the
+> question this mark raises: TWO RULES, ONE REGISTRATION — and the split runs through carrier 2,
+> not between the carriers.** §1–§9 below are unchanged and pre-date the amendment; **§3's N, §4's
+> bar and §5's one permitted amendment are untouched.**
+
 **Written by a seat that is not the beneficiary.** The librarian wrote the packet this registers
 (`exo_memory/librarian/2026-09-01.md` ~03:45) and named itself out of the writing: *"I am the
 beneficiary and my notes are the growth; a check specified by the thing it measures is the L009
@@ -371,3 +379,377 @@ does (string sort, reversed):
 *ALPHA, 2026-09-01. Registration only — nothing built, nothing committed, `librarian/`, `subjects/`,
 the scorecard and the journal untouched. One file: this one. A trace to re-run, not a doctrine to
 believe.*
+
+---
+
+## 10 · AMENDMENT, 2026-09-01 ~04:30 (ALPHA, L025 P-WINDOW-AMEND) — THE SECOND CARRIER, and the answer is TWO RULES, ONE REGISTRATION
+
+**Why this is an amendment and not a fit — checked first, because the abuse condition in §5 makes
+that the load-bearing question.** §5 forbids re-tuning *after a number comes in*. **No number has
+come in on either carrier.** Verified: `git log 0602d39..HEAD` is two commits (`a028961`,
+`fed34a6`), neither touching `main.rs:4562`; the tuple is byte-identical to the version this file
+registered; §4's reading (i) has not been taken because the rule is not in the binary. The shelf
+header moved for growth alone — **66 file(s) carried in full (1,134,102 of 2,200,000); 447 indexed**
+against §1's 65 / 1,075,876 / 319, with notes at **577,409 = 50.9%** against §1's 552,851 = 51.4%.
+Same condition, an hour later, no rule between. **Nothing below is fitted to an outcome, because
+there is not yet an outcome.**
+
+**What this amendment does NOT do:** it does not move §3's N (150,000 shelf bytes), §4's bar
+(400,000 tokens), or §5's one-permitted amendment (rule shape (a)→(b), still unspent). Those three
+are untouched and remain fixed for the season.
+
+---
+
+### 10.1 · The second carrier, re-derived — and the chair's figures reconciled rather than quoted
+
+Live pane shell `instances/sibling-0845a868/CLAUDE.md`, the chair's own object (command in §10.11):
+
+| block | bytes | growth mechanism |
+|---|---|---|
+| header | 315 | fixed string in `assemble_intake()` |
+| ROOM / BOOT | 65,055 | **edit-in-place + a dated pointer tail** |
+| THE DECK (12 cards) | 37,608 | files added/edited; hand-curated once, no rule |
+| COMMITTEE | 8,372 | edit-in-place |
+| long-form references | 1,064 | edit-in-place |
+| THE MEMORY topic map | 31,538 | **append-ordered: 52 topic lines + 25 live-edge atoms** |
+| PRIOR CONVERSATION | 5,717 | the only block with an evictor |
+| **file** | **149,668 B / 147,393 chars** | |
+
+*(My section sum is 149,669 — one byte over the file, because the last block has no trailing
+newline in my split. Stated rather than hidden; the file size is the citable number.)*
+
+**Reconciled with the chair's packet, which I did not compose from:** chair BOOT 64,983 · deck
+37,562 · map 31,538 · COMMITTEE 8,372 · prior conversation 5,716; mine 65,055 · 37,608 · 31,538 ·
+8,372 · 5,717. The map and COMMITTEE agree exactly; BOOT and the deck differ by 72 and 46 bytes and
+the prior conversation by 1 — **boundary convention (whether the `# THE ROOM` heading and the `---`
+separators belong to the block), not disagreement.** `exo_memory/BOOT.md` alone is **64,976**.
+
+**The logged fixed brief is 144,529**, and my six-block sum without the prior conversation is
+143,952. The 577-byte difference is the prior-conversation heading, its instruction paragraph and
+the witnessed-interval line, all pushed onto `brief` *before* the budget is computed
+(`main.rs:3963-3985`). The two numbers are the same measurement at two points in one function.
+
+---
+
+### 10.2 · THE UNCURATED SERIES NOBODY READ — the instrument built for exactly this has been firing for seven days
+
+`data/persist.log` carries **32 `SHELL OVER CEILING` lines**, 10 distinct (timestamp, value) pairs.
+Nobody chose them. Regina local:
+
+    2026-08-25 09:17:26  140,042   <- first crossing
+    2026-08-25 11:13:39  141,798
+    2026-08-29 00:24:06  140,746
+    2026-08-30 00:25:31  142,467
+    2026-08-31 00:51:42  144,419
+    2026-09-01 01:22:44  145,134
+    2026-09-01 03:48:04  144,531 / 144,529   <- tonight's regeneration, four panes
+
+**+5,092 bytes over 6.67 days = 763 B/day**, with the last two intervals at +1,952 and +715. Two
+dips, so the series is not monotone and the rate is a range, not a constant.
+
+That log line exists because of the 2026-08-09 build, whose own comment says *"the ceiling stopped
+working silently at exactly the moment it was needed, and the only symptom was a warning banner
+inside the pane"* (`main.rs:3466-3473`). **The fix for silence was to write a loud line into a file
+nobody reads.** This is the room's own curated-philosophy-in / uncurated-measurement-out test
+passing on the measuring end and failing on the reading end: a number nobody wanted was produced
+seven days ago, every night, and it took a keeper's packet to route anyone to it. Registered as a
+finding about the room, not about the code.
+
+*Not mine first:* the librarian found tonight's rows independently at ~03:55 and ~04:15
+(`librarian/2026-09-01.md:489, :503, :516`) and rowed the condition as *"a pre-existing red,
+machine-measured, owner unassigned."* What is added here is the **dated series and the rate**, which
+is what a window registration needs and a single reading cannot give.
+
+---
+
+### 10.3 · CORRECTION IN KIND — `evict=0` is an empty queue **AND a dead evictor**, and the 30k floor is not where it is thought to be
+
+The chair corrected its own guess with the librarian's re-derivation. Correcting one further, on the
+same object. The librarian, verbatim (`librarian/2026-09-01.md:522-524`):
+
+> *"the transcript is already **5.7k against its own 30k floor** (`SHELL_TRANSCRIPT_FLOOR`, `:3461`).
+> There is nothing left to evict — `evict=0` is not a broken evictor, it is an evictor with an empty
+> queue."*
+
+**The first half is right and the second half is right only for today's transcript size.**
+
+1. **The transcript has no floor.** `SHELL_TRANSCRIPT_FLOOR` appears at exactly five sites
+   (`grep -n SHELL_TRANSCRIPT_FLOOR main.rs`): its definition `:3461`, one use inside
+   `map_allowance` `:3477`, and three inside tests `:3852, :3860, :3861`. The transcript's own
+   budget, `:3990`, is `SHELL_SOFT_CEILING.saturating_sub(brief.len() + fence_overhead)` — **no
+   floor term.** The 30,000 is a reservation used only to size *the map's* allowance; it protects
+   the transcript **only while the fixed brief stays under 110,000**, which has been false since
+   2026-08-25 09:17.
+2. **At budget 0 the evictor cannot fire for any transcript size.** `excess = transcript.len() -
+   budget` = the whole length; `split_off_oldest_records` then looks for a record boundary at an
+   index `>= excess`, i.e. at or past the end, and returns `None`. Not "nothing to evict" —
+   **structurally unable to evict.**
+
+**Demonstrated, not reasoned — the same input, one variable moved** (a byte-faithful mirror of
+`:3881-3891`; the script is in the hand-back):
+
+    transcript 211,380 B, brief 144,529 -> budget 0      -> NULL, NOTHING EVICTED
+    transcript 211,380 B, brief 100,000 -> budget 39,735 -> evicts 171,687, keeps 39,693
+
+**Why this matters to the build and not only to the record:** the cuts the librarian proposes
+(§10.6) do not merely shrink the brief — **they revive the evictor**, because budget stops being
+zero. And the hazard that follows is the reason it is registered here: **a partial cut is worse
+than it looks.** If the cuts land and the fixed brief settles anywhere at or above ~139,700, the
+budget is still 0, the evictor is still dead, and the transcript grows unbounded while the shell
+reads "nearly fixed". **The build's reading must be the budget, not the brief size.**
+
+---
+
+### 10.4 · THE CONSTANTS ARE UNSATISFIABLE AT TODAY'S COMPOSITION — which is what forces two rules
+
+The code already fixed carrier 2's budget, on 2026-08-09, and never enforced it.
+`map_allowance = SHELL_SOFT_CEILING - fixed - SHELL_TRANSCRIPT_FLOOR` is non-negative only when
+
+    fixed brief <= 140,000 - 30,000 = 110,000
+
+**That number is not chosen tonight.** It is two constants dated three weeks before this
+measurement, written by another seat for another purpose. Today's fixed brief is **144,529 — 34,529
+over, 31%.** (The librarian arrives at "under 110k" from the other direction at `:568`; two
+derivations, one number.)
+
+**And here is the arithmetic that decides the shape of the rule.** With the topic map cut to *zero*:
+
+    315 + 65,055 + 37,608 + 8,372 + 1,064 = 112,414  >  110,000
+
+**A window over the pane brief's one append-ordered block is necessary and provably insufficient.**
+No rule of §3's shape, applied at any N, brings carrier 2 into compliance — because 71% of its bulk
+(BOOT + deck = 102,433 B) has no order to window by. That is not an opinion about elegance; it is
+two additions.
+
+---
+
+### 10.5 · ONE WINDOW OR TWO — the answer, plainly. **Two rules — and the split does not run between the carriers, it runs through carrier 2.**
+
+The chair asked whether a shelf that grows by appending and a brief that is fixed at assembly take
+one rule. They do not. But the refusal offered — *"these are two mechanisms and need two rules"* —
+is **taken in a sharper form than it was offered**, because sorting the rules *by carrier* gets it
+wrong in both directions:
+
+| mechanism | where it lives | rule |
+|---|---|---|
+| **append-ordered homogeneous series** — dated or ranked units, newest-first is meaningful, eviction by position | librarian's dated notes (**carrier 1**) · BOOT's dated journal pointer tail, 25,368 B (**carrier 2**) · the topic list, 24,098 B (**carrier 2**) · the resonance live edge, 7,440 B (**carrier 2**) | **W1 — §3's window.** Shape (a)/(b), whole units, index the rest. |
+| **heterogeneous fixed set** — no order, units not comparable, nothing is "newest" | BOOT's body · the deck · COMMITTEE · the references (**carrier 2**) | **W2 — not a window at all.** A level rule with an owner. |
+
+Three things follow, and each is checkable:
+
+- **W1 already has a working instance inside carrier 2**, which is the strongest evidence the shape
+  generalises: `LIVE_EDGE = 25` (`main.rs:2561`) is a window on the live edge, and it holds — the
+  edge is 7,440 B against a topic list of 24,098 B that has no cap and 52 entries. **The windowed
+  component is the small one.**
+- **Assigning rules by carrier would put a window on BOOT's *body* (impossible — there is no order)
+  and no window on BOOT's *tail* (where one plainly belongs).** That is precisely the
+  over-generalisation §3 was written to avoid, and it is why the chair's instruction to amend rather
+  than write a second file is right about the *class* while the class itself splits one level down.
+- **W1 is a rule about a RATE; W2 is a rule about a LEVEL.** Carrier 1 needs only W1 because its
+  budget is not binding (§1: 1,134,102 of 2,200,000). Carrier 2 needs both, because its level is
+  already 131% of its own budget and no rate rule can subtract 34,529 bytes.
+
+**So: one registration, two rules, four W1 sites and one W2 site.**
+
+---
+
+### 10.6 · W2's rule shapes, PRICED AND NOT PICKED — and the cut that costs nothing, which nobody had
+
+The librarian's two cuts, verified by arithmetic here: `144,529 - 25,368 (BOOT's pointer tail) -
+16,538 (map 31,538 -> its 15,000 design budget) = 102,623`, **7,377 B under 110,000.** The cuts work.
+
+**And at the measured rate of §10.2 they buy between 5.5 and 9.7 days.** 7,377 ÷ 763 = 9.7;
+7,377 ÷ 1,334 (the last two intervals' mean) = 5.5. **This is F-growth again, one carrier over, in
+its own words: *"the tier bought a week rather than a fix."*** The cuts are necessary and are not
+the rule. That is the whole reason this section exists.
+
+**A cut that costs no content, found while measuring and not proposed by anyone:** of the topic
+map's 52 topic lines (23,438 B of the 24,098-byte block), **40 name a document that does not exist
+on disk — 18,730 B.** `data/resonance/topics/` holds 12 `.md` files, newest mtime 2026-07-26 07:30;
+`curator_state.json` holds 52 topics, mtime 2026-07-26 07:54. The block's own sentence — *"each line
+is a document you can read in full … Full documents: `C:\Consonance\data\resonance\topics`"* — is
+false for 77% of its lines, in every shell assembled today (4 of the 39 shells on disk; the other 35
+predate this state).
+
+That gives the map cut a fork the keeper picks, not me:
+
+- **(c1) drop the 40 dangling lines** — **-18,730**, which exceeds the 16,538 the librarian's target
+  needs, and removes 40 false pointers. Costs no reachable content: the atoms are the master and the
+  documents are regenerable, so nothing that exists is lost. *Price:* it removes the summary of 40
+  topics whose documents someone may intend to generate.
+- **(c2) regenerate the 40 documents** — the map stays 31,538 and the cut must come from real
+  content instead. *Price:* honest pointers, and the whole 16,538 has to be found elsewhere.
+
+**The two W2 shapes, both priced, neither picked:**
+
+- **(g) A HARD TOTAL, enforced by a test:** `assemble_intake().len() <= 110,000`, red build.
+  *Price:* it fires before any pane wakes rather than into a log; it converts a silent overage into
+  a blocked commit and a human decision. **It does not say what to cut**, so the cost is a red build
+  at 3am with no automatic yield — which is the point and also the cost.
+- **(h) PER-BLOCK BUDGETS with a named owner:** each block gets a ceiling, assembly refuses to carry
+  an over-budget block and names the owner. *Price:* it localises pressure to whoever grew the
+  block, which is the only thing that changes behaviour. Cost: six numbers instead of one.
+
+***The lean, declared, and it lands on the WEAKER rule*** (§3's own form): **(g) is the default.**
+Its single number is derived from constants that predate the measurement; (h)'s six numbers would
+all be chosen tonight, which §10.8 forbids without provenance. And (g) is the weaker rule for
+behaviour — it blocks without localising, so it will be met by whoever is nearest, not whoever grew
+the block. The keeper picks knowing that. **(h) is named as W2's one permitted amendment (§10.8).**
+
+*Kept from the librarian's map, unchanged and not re-derived here:* not cutting the deck (the
+instruments a pane must wake with) and not cutting COMMITTEE (the practice). Recorded because a
+rule that would eventually reach both should say who ruled them out and when. **One datum the deck
+carries anyway:** it was cut by hand once — `git ls-tree` gives `exo_memory/cards` at 50,511 B on
+08-01, 29,026 on 08-10, 37,411 on 08-31: **a 21,485-byte curation with no rule, followed by 8,385 B
+of regrowth in 21 days.** Curating below capacity by hand is exactly what has already been tried on
+this carrier.
+
+---
+
+### 10.7 · THE PREDICTIONS FOR CARRIER 2 — written before anything lands, with what would refute each
+
+- **(iii) DETERMINISTIC AT REBUILD, seconds to check, no compaction needed.** After the rebuild that
+  carries the cuts, `grep -c "SHELL OVER CEILING" data/persist.log` **does not increase**, and the
+  newest `fixed_brief=` value is **<= 110,000**. (iii) failing = the build did not implement the
+  cuts; stop there — the same two-reading discipline as §4.
+- **(iii-b) THE READING THAT IS NOT THE BRIEF SIZE**, per §10.3: at the same rebuild, the
+  transcript budget `140,000 - (fixed_brief + 265)` must be **> 0**. A fixed brief of 139,800 passes
+  a naive under-140k read and leaves the evictor dead.
+- **(iv) THE STANDING PREDICTION, and it can lose. If the cuts land with NO standing rule in force,
+  `fixed_brief` exceeds 110,000 again within 14 days of the rebuild.** Derived: 7,377 B of headroom
+  against 763–1,334 B/day; 14 days needs only 527 B/day, below every interval measured. **What
+  refutes it:** a fixed brief still under 110,000 on day 14 — then the week I measured was an
+  artifact of one heavy week and this section over-claimed the rate.
+  **What VOIDS rather than confirms it:** a deliberate curation cut inside the window (that is
+  intervention, not the null), or the rule landing with the cuts — in which case (iv) is
+  **unobservable and withdrawn, with no credit taken.** Registered explicitly because a void that
+  pardons the thing it was testing is this room's own named failure.
+- **(v) THE FALSIFIER OF THIS SECTION'S HEADLINE, so the rule can lose even when it is in force.**
+  If **(g)** lands, (iv) cannot be observed — so instead: **the build goes red on a fixed-brief
+  overage at least once within 60 days.** If it never does, the growth measured in §10.2 was not a
+  standing pressure and W2 was a rule against nothing.
+- **(vi) THE PREMISE I DID NOT VERIFY, and it could cost this carrier its urgency.** The 150,000 cap
+  is a **code comment** (`main.rs:3446`), not something I measured. It is stated in **chars**; every
+  ceiling comparison in the code is in **bytes**, and this shell is 149,668 B / 147,393 chars — a
+  1.54% gap, 2,275 bytes. The mismatch is conservative, and it is registered *before* anyone finds
+  it, because "discovering" 2,275 bytes of headroom later and moving a number is exactly the fit
+  §5 forbids. **If a shell over 150,000 is assembled and nothing observably breaks, the premise is
+  wrong and carrier 2's urgency is overstated** — say so rather than re-scope the finding.
+
+---
+
+### 10.8 · THE ABUSE CONDITION AT THE WIDER SCOPE — checked clause by clause, because two carriers is where a window becomes a fit
+
+The chair said this matters more with two carriers, not less. It does, and the mechanism is
+nameable: **a per-carrier N is a fit unless each N's provenance predates the measurement it will be
+scored against.** With one carrier you can only tune once; with two you can tune the second to
+whatever makes the first look right.
+
+- **Carried forward unchanged, and they hold:** §3's two rule shapes are still priced and unpicked;
+  §4's prediction is still written before any landing (verified at the head of §10); §5's N =
+  150,000, bar = 400,000, and its single permitted amendment (a)→(b) are **untouched and unspent.**
+- **W2's number has provenance, and it is not mine:** 110,000 = `SHELL_SOFT_CEILING` -
+  `SHELL_TRANSCRIPT_FLOOR`, both dated 2026-08-09, written for `map_allowance`. **It may not move.**
+  Neither may the 400,000 bar, and this amendment does not touch it.
+- **W2 gets exactly ONE permitted amendment and it is named now, before any landing:** rule shape
+  **(g) -> (h)**, per-block budgets. Taking it after a landing is not a fit *because it was named
+  before*. Any other change to 110,000, to the 14-day or 60-day horizons, or to the readings in
+  §10.7 is a **new registration that quotes this file's landing at its top** — however it is filed.
+- **The one number in this amendment that I did choose, said plainly:** the 14-day and 60-day
+  horizons in §10.7. They are mine, they are derived from a 7-point series with two dips, and they
+  are fixed now with their arithmetic beside them. **If either is moved after a reading, that is a
+  fit and this sentence is what makes it readable from outside.**
+- **The rate is not a constant and is not to be re-fitted.** 763 B/day (whole series) and 1,334
+  B/day (last two intervals) are both quoted; the prediction is stated against the *slower* one so
+  it can lose.
+
+---
+
+### 10.9 · A REQUIRED INVARIANT FOR BOTH RULES — because indexing is the mechanism and it is measurably broken in the carrier being windowed
+
+§2 already states the seat's half: *an indexed note is a path you open — cite, do not recollect.*
+The other half was never stated and is now measured broken: **40 of 52 indexed paths in carrier 2
+resolve to nothing** (§10.6). A window converts carried content into pointers; a pointer that does
+not resolve converts it into a *claim that content exists*, which is worse than either.
+
+**Registered, binding on W1 and W2 alike, at every site:** *every path a window emits must resolve
+at assembly, and a guard must assert it.* A log line will not do — §10.2 is the measured proof that
+this room writes loud lines into files it does not read.
+
+*Its own falsifier, registered with it:* if after the guard lands it never finds an unresolvable
+path in a season, this invariant established nothing and should be struck as over-fitted to one
+stale curator run.
+
+---
+
+### 10.10 · What this amendment does NOT establish — extending §7 to carrier 2
+
+- **That the harness cap is 150,000.** A code comment, in chars, unverified by me (§10.7 (vi)).
+- **That BOOT or the deck *should* be cut.** The arithmetic says a map-only window cannot reach
+  110,000; *which* block yields is the keeper's, and the librarian's ruling-out of the deck and
+  COMMITTEE is carried, not re-derived.
+- **The 763 B/day.** Seven log points over seven days, two of them dips, one carrier, one machine.
+- **That the 40 dangling topic lines cost anything measurable.** They are 18,730 bytes and 40 false
+  pointers; no instance exists of a pane trying to open one and failing.
+- **Anything about retrieval.** §6 stands unchanged: no answer, one measurement. A window on carrier
+  2 makes an old finding no more likely to fire than a window on carrier 1 does.
+- **That the two cuts hold.** §10.7 (iv) predicts they do not, and can lose.
+
+---
+
+### 10.11 · Re-derive (amendment)
+
+    cd C:/Consonance/lighthouse
+
+    # 10.1 — the fixed brief, by block
+    node -e 'const fs=require("fs"),L=fs.readFileSync("C:/Consonance/instances/sibling-0845a868/CLAUDE.md","utf8").split("\n");
+    for(const [a,z,n] of [[1,6,"header"],[7,178,"ROOM/BOOT"],[179,537,"DECK"],[538,685,"COMMITTEE"],[686,702,"LONGFORM"],[703,792,"MAP"],[793,L.length,"PRIOR-CONV"]])
+    console.log(n.padEnd(11),Buffer.byteLength(L.slice(a-1,z).join("\n")+"\n"));'
+
+    # 10.2 — the uncurated series and its rate
+    grep -c "SHELL OVER CEILING" C:/Consonance/data/persist.log
+    grep "SHELL OVER CEILING" C:/Consonance/data/persist.log | sed -E 's/^([0-9]+).*fixed_brief=([0-9]+).*/\1 \2/' | uniq
+
+    # 10.3 — the dead evictor (the byte-faithful mirror script is in the hand-back)
+    grep -n "SHELL_TRANSCRIPT_FLOOR" consonance/src-tauri/src/main.rs      # 5 sites; none at :3990
+    sed -n '3990p' consonance/src-tauri/src/main.rs                        # the budget, no floor term
+
+    # 10.4 — the implied budget and the floor with the map at zero
+    sed -n '3454p;3461p;3474,3478p' consonance/src-tauri/src/main.rs
+
+    # 10.5 — W1's working instance inside carrier 2
+    sed -n '2561p' consonance/src-tauri/src/main.rs                        # LIVE_EDGE = 25
+
+    # 10.6 — the dangling index
+    node -e 'const fs=require("fs");let d=0,o=0,dn=0,on=0;
+    for(const m of fs.readFileSync("C:/Consonance/instances/sibling-0845a868/CLAUDE.md","utf8").matchAll(/^- \*\*([a-z0-9-]+)\*\* \(\d+ live\) . .*$/gm)){
+    const b=Buffer.byteLength(m[0]+"\n");fs.existsSync("C:/Consonance/data/resonance/topics/"+m[1]+".md")?(o+=b,on++):(d+=b,dn++);}
+    console.log("resolving",on,o,"| dangling",dn,d);'
+
+    # 10.6 — the deck's hand-cut precedent
+    for d in 2026-08-01 2026-08-10 2026-08-31; do c=$(git rev-list -n1 --before="$d 23:59" HEAD); \
+      echo "$d cards=$(git ls-tree -r --long $c exo_memory/cards | awk '{s+=$4}END{print s}')"; done
+
+    # 10 head — that no landing has occurred
+    git log --oneline 0602d39..HEAD
+    git show 0602d39:consonance/src-tauri/src/main.rs | sed -n '4562p'
+    sed -n '4562p' consonance/src-tauri/src/main.rs
+
+---
+
+### 10.12 · Bodies, extending §8
+
+- **ALPHA amends** (this section). Still not the beneficiary of carrier 1: I do not read the
+  librarian's shelf. But I wake into a pane brief, so on **carrier 2 I am a beneficiary of the
+  cuts** — declared, because it bears on §10.6: I priced BOOT's tail and the topic map as cheap and
+  did not price the deck, which is the block I would personally miss. Read §10.6 knowing that.
+- **CHARLIE reads**, as the chair set — non-author, has not touched this file.
+- **B builds**, per the librarian's work-shape: the pane-intake cuts, then the W1 build. B has the
+  intake in hand and has not touched this registration.
+- **The keeper picks:** (c1) or (c2) for the map; (g) as the default W2 shape or (h); §3's (a)/(b)
+  for W1, still unpicked.
+- **Readings at the rebuild, by a non-author seat:** §4 (i) and (ii) for carrier 1; §10.7 (iii) and
+  (iii-b) for carrier 2 — four readings, one rebuild, each written beside the prediction it scores.
+
+*ALPHA, 2026-09-01 ~04:30. Amendment only — nothing built, nothing committed; one file touched, this
+one. A trace to re-run, not a doctrine to believe.*
