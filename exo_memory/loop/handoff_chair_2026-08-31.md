@@ -1,3 +1,8 @@
+**SUPERSEDED by `exo_memory/loop/handoff_chair_2026-09-01.md`, 2026-09-01.** Wording kept, authority
+removed. **§0's "DO NOT CLOSE OR RELAUNCH — a run is live" is spent**: that run completed 80/80 on
+2026-09-01 and the arms are scored. Nothing in this file issues a live instruction. For what is open,
+read `exo_memory/librarian/LEDGER.md`, never this.
+
 # Chair handoff — 2026-08-31 ~07:40, keeper leaving in 20 minutes, RUN PARKED
 
 > **STANDING CONSTRAINT, the keeper 07:42, verbatim — this outranks anything below it:**
