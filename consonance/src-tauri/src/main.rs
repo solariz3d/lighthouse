@@ -4632,9 +4632,96 @@ fn collect_md(d: &Path, recurse: bool, out: &mut Vec<PathBuf>) {
     }
 }
 
+/// The bytes the librarian's assembled intake must fit under, enforced by a test, not recorded.
+///
+/// A LIMIT, DELIBERATELY, AND THE REASON THE OLD RECORDER WAS NOT ENOUGH. Until 2026-09-01 this
+/// seat had `the_librarian_intake_size_is_recorded_and_not_silently_doubling`, whose own comment
+/// refused a bound because "whether the host silently TRUNCATES a large CLAUDE.md on read is
+/// UNMEASURED on any machine". That was honest then and is no longer true: at 1,305,657 bytes the
+/// seat returned "Context limit reached" to every message including the keeper's. The growth was
+/// watched faithfully, for nine days, by a check that could only ever say how big it had got.
+///
+/// WHERE THE NUMBER COMES FROM, all three bounds stated so it can be argued with:
+///   * BELOW the one measured death. 1,305,657 bytes is a shell that could not open. That is an
+///     upper bound on the fatal size, never the threshold itself -- nobody has bisected it -- so
+///     the limit sits 305,657 under the only point we know is past the edge.
+///   * ABOVE today's build, by 84,006 (intake 915,994 with the window in). Printed on every run.
+///   * AND IT MEANS SOMETHING IN TOKENS. At the shelf's independently-derived 2.89 bytes/token
+///     (see corpus_shelf, the two-adjacent-readings measurement) 1,000,000 bytes is ~346,021
+///     tokens -- under the 400,000-token landing bar that
+///     `loop/librarian_window_registration_2026-09-01.md` §4 predicts. The shell is the FLOOR
+///     under every post-compaction landing, so a shell that alone ate that budget would make the
+///     prediction unmeasurable.
+///
+/// **THIS IS EXPECTED TO GO RED, and that is the job.** The window bounds `librarian/`; the other
+/// carried tiers are still unbounded, and `muscle_map.md` alone is 164,593 bytes and appended
+/// every cycle. 84,006 of margin is LESS than one recent night's corpus growth (~104k, 08-31 to
+/// 09-01). When this fires, the answer is the next tier's horizon -- not a bigger number here. A
+/// limit that gets raised whenever it is inconvenient is the recorder again, wearing a limit's
+/// name.
+///
+/// Not env-overridable, unlike `librarian_budget()`. A ceiling you can switch off from the
+/// environment is a suggestion.
+const LIBRARIAN_INTAKE_LIMIT: usize = 1_000_000;
+
+/// The date a librarian note is FOR, read off its filename: `YYYY-MM-DD[.suffix].md`.
+///
+/// Filename, never mtime. `2026-08-25.desktop.md` was last written on 08-29 and is a note about
+/// 08-25; the window is a claim about WHEN THE NIGHT WAS, and mtime answers a different question
+/// (when someone last touched the file) that would drag four desktop notes into a window they do
+/// not belong to.
+///
+/// Returns None for anything that is not a dated note -- LEDGER.md, README.md, and any future
+/// undated file. The caller decides what None means; this function only reads the name.
+fn librarian_note_date(file_name: &str) -> Option<chrono::NaiveDate> {
+    let stem = file_name.strip_suffix(".md")?;
+    if !stem.is_char_boundary(10) { return None; }
+    let (head, rest) = stem.split_at(10);
+    // A suffix must be a SUFFIX: `2026-08-25.desktop` yes, `2026-08-25x` no. Without this,
+    // `chrono` would still parse the first ten bytes of a name that was never a dated note.
+    if !(rest.is_empty() || rest.starts_with('.')) { return None; }
+    chrono::NaiveDate::parse_from_str(head, "%Y-%m-%d").ok()
+}
+
+/// Rule (a) BY DATE, from `loop/librarian_window_registration_2026-09-01.md` §3, the shape the
+/// keeper picked: **today + yesterday carried in full, every older dated note INDEXED.**
+///
+/// WHY THIS EXISTS, and it is not tidying. On 2026-09-01 the librarian seat returned "Context
+/// limit reached" to every message including the keeper's, with a 1,305,657-byte CLAUDE.md
+/// carrying 1,179,734 bytes -- and 604,465 of those, over half, were the seat's OWN notes, carried
+/// in full because this directory was `("librarian", true, true)` with no window. The seat that
+/// holds the record was being killed by holding its own. It predicted this itself, in its own
+/// shell at :7008: *"the seat's own notes are the growth ... Fix = librarian-tier forgetting:
+/// carry today+yesterday full, index older."*
+///
+/// WHOLE FILES ONLY. A note is carried entire or indexed entire, never truncated -- a cut note is
+/// the summary `loop/forgetting_registration.md` §2 refuses. Nothing here slices a body.
+///
+/// LEDGER.md and README.md ride OUTSIDE the window (37,289 bytes today): the maintained index and
+/// the rule. Everything else undated is INDEXED rather than carried, so a future undated note
+/// cannot silently escape the window -- it appears by path under NOT CARRIED, which is visible,
+/// where an unbounded carve-out would not be.
+///
+/// THE PRICE, registered before the build and not hidden here: this is content-defined, not
+/// size-defined. It carries "the last two days" whatever they weigh -- over this directory's
+/// record a consecutive pair ranges 23,865 to 176,601 bytes, a 7.4x swing. And after three silent
+/// days the window is EMPTY. That is the rule working, not failing, and the shelf header says so
+/// out loud rather than leaving a seat to notice its own notes are gone.
+fn librarian_note_is_carried(file_name: &str, today: chrono::NaiveDate) -> bool {
+    if file_name == "LEDGER.md" || file_name == "README.md" { return true; }
+    match librarian_note_date(file_name) {
+        Some(d) => Some(d) == Some(today) || Some(d) == today.pred_opt(),
+        None => false,
+    }
+}
+
 fn corpus_shelf() -> String {
     let root = match room_master_path().parent() { Some(p) => p.to_path_buf(), None => return String::new() };
     let budget = librarian_budget();
+    // Machine-local calendar, per the registration. Read ONCE so a walk that straddles midnight
+    // cannot carry two different "today"s in one shelf.
+    let today = chrono::Local::now().date_naive();
+    let mut windowed: Vec<String> = Vec::new();
     let mut spent = 0usize;
     let mut carried: Vec<(String, String)> = Vec::new();
     let mut indexed: Vec<String> = Vec::new();
@@ -4687,6 +4774,11 @@ fn corpus_shelf() -> String {
     // it and opens it, which is what "cite, do not recollect" asked for all along. And the
     // orchestrator re-instantiates the current project after each compaction, cheaply and
     // freshly, instead of the seat carrying 28 journals to have context on one of them.
+    //
+    // ONE EXCEPTION TO THE FLAT FLAG, added 2026-09-01 after the seat died of this: `librarian`
+    // reads `true` here and is WINDOWED in the walk below -- today + yesterday carried, older
+    // dated notes indexed. See librarian_note_is_carried. The flag stays `true` because the tier
+    // IS a carried tier; what changed is that one carried tier now has a horizon.
     let order: [(&str, bool, bool); 10] = [
         ("", false, true), ("cards", false, true), ("record", false, true),
         ("memory", false, true), ("librarian", true, true), ("spread", false, true),
@@ -4728,6 +4820,15 @@ fn corpus_shelf() -> String {
                 .map(|r| r.replace('\\', "/"))
                 .unwrap_or_else(|| f.file_name().and_then(|x| x.to_str()).unwrap_or("?").to_string());
             let Ok(body) = fs::read_to_string(&f) else { continue };
+            // THE WINDOW. `librarian/` is the one carried tier that grows every night with the
+            // seat's own writing, so its tier flag alone is not enough: today + yesterday are
+            // carried, older dated notes are indexed. Every other directory keeps the flat rule.
+            let carry = if dir == "librarian" {
+                let name = f.file_name().and_then(|x| x.to_str()).unwrap_or("");
+                let keep = librarian_note_is_carried(name, today);
+                if keep { windowed.push(name.to_string()); }
+                keep
+            } else { carry };
             // `carry` decides the tier; the budget is the second gate, not the first. A record
             // file is indexed even when there is room, because room is not the reason to hold it.
             if carry && spent + body.len() <= budget {
@@ -4748,6 +4849,25 @@ fn corpus_shelf() -> String {
     s.push_str("attic/ is excluded on purpose -- raw archive, never a daily cue (law 3).\n");
     s.push_str("THE SYSTEM is carried in full. THE RECORD (journal/, loop/, map/) is indexed by\n");
     s.push_str("path -- deliberately, not because the budget ran out. Open what you cite.\n");
+    // THE WINDOW, REPORTED. The seat must never have to work out for itself why its own older
+    // notes are missing -- that is exactly the "0 indexed by path" failure, where a shelf
+    // misdescribes its own tiers and the seat trusts the description. Named on the header, with
+    // the empty case said out loud, because an empty window and a broken window read identically
+    // from the inside.
+    let dated: Vec<&String> = windowed.iter()
+        .filter(|n| librarian_note_date(n).is_some()).collect();
+    if dated.is_empty() {
+        s.push_str("YOUR OWN NOTES ARE WINDOWED and THE WINDOW IS EMPTY today: no librarian/ note is\n");
+        s.push_str("dated today or yesterday, so every one of them is indexed below. This is the rule\n");
+        s.push_str("working, not a fault. LEDGER.md and README.md ride outside the window.\n");
+    } else {
+        s.push_str(&format!(
+            "YOUR OWN NOTES ARE WINDOWED -- today + yesterday carried in full ({}); every older\n",
+            dated.iter().map(|n| n.as_str()).collect::<Vec<_>>().join(", ")
+        ));
+        s.push_str("librarian/ note is indexed below, whole, by path. LEDGER.md and README.md ride\n");
+        s.push_str("outside the window. Nothing is truncated and nothing is lost -- open what you cite.\n");
+    }
     if !indexed.is_empty() {
         s.push_str("\n## NOT CARRIED -- open these by path\n\n");
         // The old wording said "the budget ran out before these", which is now false for most of
@@ -8156,15 +8276,133 @@ mod shelf_tests {
         }
     }
 
-    /// The librarian intake is UNBOUNDED and this test does not pretend otherwise — it records the
-    /// size so a person reading a run has the number, and fails only on a duplicate-scale jump.
+    /// THE CHECK WHOSE ABSENCE KILLED THE SEAT. The mirror of
+    /// `the_third_place_intake_fits_under_the_limit_it_must_obey`, nine days late.
     ///
-    /// DELIBERATELY NOT AN INTAKE_LIMIT ASSERTION. The Third Place's limit is a host constraint on
-    /// a seat that must fit; this seat's shelf is budgeted at 2_200_000 by librarian_budget() and
-    /// whether the host silently TRUNCATES a large CLAUDE.md on read is UNMEASURED on any machine
-    /// (desktop round 2: "I measured the file, did not open the seat"). Asserting a bound here
-    /// before that is known would be fitting a number to a guess. What this catches is a
-    /// REGRESSION of the duplication class — anything that suddenly re-adds a BOOT-sized block.
+    /// On 2026-09-01 the librarian returned "Context limit reached · /compact or /clear to
+    /// continue" to every message including the keeper's, on a 1,305,657-byte CLAUDE.md. The
+    /// growth had been WATCHED the whole time — the recorder below printed it faithfully at every
+    /// run — and watching is not stopping. The seat had even diagnosed itself in its own shell:
+    /// "the seat's own notes are the growth ... carry today+yesterday full, index older."
+    ///
+    /// This test is red if the window in `corpus_shelf` is removed: without it the intake measures
+    /// 1,305,797 against a 1,000,000 limit. That property is the point of the test and not a
+    /// side-effect of it — see LIBRARIAN_INTAKE_LIMIT for where the number comes from and why it
+    /// is expected to fire again.
+    #[test]
+    fn the_librarian_intake_fits_under_the_limit_it_must_obey() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let i = librarian_intake().expect("intake must resolve");
+        // Printed, not merely asserted, for the reason the Third Place's twin prints it: a passing
+        // bound says it fits and never says by how much, and the margin is what decides whether
+        // the next append breaks it. This one degrades into a readable warning before it fails.
+        eprintln!("LIBRARIAN INTAKE {} bytes of {} limit, margin {}", i.len(), LIBRARIAN_INTAKE_LIMIT,
+            LIBRARIAN_INTAKE_LIMIT.saturating_sub(i.len()));
+        // The shelf header and the window line, echoed here so the two numbers a reader actually
+        // wants — the split, and which days are in the window — come out of a test run instead of
+        // requiring a relaunch and a look at the seat's CLAUDE.md.
+        // Anchored on the header's own phrasing, not on "carried in full" — that substring occurs
+        // nine more times in the corpus BODY, and the loose version printed the seat's own notes
+        // back at the reader as if they were the header. The same self-match trap this file's
+        // marker tests already carry a comment about.
+        for l in i.lines().filter(|l| l.contains("file(s) carried in full")
+            || l.starts_with("YOUR OWN NOTES ARE WINDOWED")) {
+            eprintln!("SHELF | {l}");
+        }
+        assert!(
+            i.len() <= LIBRARIAN_INTAKE_LIMIT,
+            "librarian intake is {} bytes against a {LIBRARIAN_INTAKE_LIMIT} limit — the seat \
+             cannot open. Window the next tier; do not raise the limit.",
+            i.len()
+        );
+        // And a real intake, not a stub that fits by being empty — the same guard the Third
+        // Place's limit carries, for the same reason: a bound satisfied by absence is worse than
+        // no bound, because it reports green.
+        assert!(i.contains("# The Librarian tab"), "the brief did not reach the intake");
+        assert!(i.contains("# THE ROOM you are holding"), "the room did not reach the intake");
+        assert!(i.contains("carried in full"), "the shelf's split report is missing");
+    }
+
+    /// The window RULE, as a pure function — date-independent, so these hold every night.
+    ///
+    /// Split from the shelf test on purpose. The shelf test can only see what today's directory
+    /// happens to contain; a mutant that widens the window to three days is invisible on a day
+    /// with no third file. The predicate is checkable against dates that will never be on disk.
+    #[test]
+    fn the_librarian_window_is_today_and_yesterday_and_nothing_else() {
+        let today = chrono::NaiveDate::from_ymd_opt(2026, 9, 1).unwrap();
+        assert!(librarian_note_is_carried("2026-09-01.md", today), "today must be carried");
+        assert!(librarian_note_is_carried("2026-08-31.md", today), "yesterday must be carried");
+        // The mutant this exists for: three days instead of two.
+        assert!(!librarian_note_is_carried("2026-08-30.md", today), "two days ago must be indexed");
+        assert!(!librarian_note_is_carried("2026-08-22.md", today), "old notes must be indexed");
+        // A future-dated note is not "today or yesterday" either. Nothing writes one today; a
+        // window defined as "not older than yesterday" would carry it, and this says which rule
+        // shipped.
+        assert!(!librarian_note_is_carried("2026-09-02.md", today), "a future note is not in the window");
+
+        // Yesterday crosses month and year boundaries, because pred_opt does the arithmetic and
+        // string comparison on the prefix would not.
+        let newyear = chrono::NaiveDate::from_ymd_opt(2026, 1, 1).unwrap();
+        assert!(librarian_note_is_carried("2025-12-31.md", newyear), "yesterday across a year boundary");
+        assert!(!librarian_note_is_carried("2025-12-30.md", newyear), "two days back across a year boundary");
+
+        // The `.suffix` form is a real note — four desktop files on the record use it.
+        assert!(librarian_note_is_carried("2026-08-31.desktop.md",  today), "a suffixed note is dated");
+        assert!(!librarian_note_is_carried("2026-08-25.desktop.md", today), "a suffixed note obeys the window");
+
+        // LEDGER and README ride OUTSIDE the window; every other undated file is indexed, so a
+        // future undated note cannot silently escape it.
+        assert!(librarian_note_is_carried("LEDGER.md", today), "the maintained index rides outside");
+        assert!(librarian_note_is_carried("README.md", today), "the rule rides outside");
+        assert!(!librarian_note_is_carried("notes.md", today), "an undated note is indexed, not carried");
+        // Not a dated note: the ten-byte prefix parses, the eleventh byte says it was never one.
+        assert!(!librarian_note_is_carried("2026-08-31x.md", today), "a suffix must be a suffix");
+        assert!(librarian_note_date("2026-08").is_none(), "too short to be dated");
+        assert!(librarian_note_date("2026-13-40.md").is_none(), "not a real date");
+    }
+
+    /// The rule must REACH THE SHELF — the delivery-vs-unit distinction this file has been caught
+    /// by before. A correct predicate wired to nothing is the "0 indexed by path" failure again.
+    ///
+    /// Anchored on `librarian/2026-08-22.md`, the oldest note on the record and finished: it can
+    /// never be in the window, on any future date, so this assertion does not rot.
+    #[test]
+    fn the_shelf_windows_the_librarians_own_notes() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let shelf = corpus_shelf();
+        // A carried file is emitted as "\n\n## {label}\n\n{body}"; an indexed one as "- {label}".
+        assert!(!shelf.contains("\n## librarian/2026-08-22.md\n"),
+            "the oldest note is CARRIED — the window is not reaching the shelf");
+        assert!(shelf.contains("- librarian/2026-08-22.md  ("),
+            "the oldest note is neither carried nor indexed — it fell out of the shelf entirely");
+
+        // WHOLE FILES ONLY. The mutant here is truncate-instead-of-index: cut the old notes to a
+        // head and keep carrying them. That leaves the count low and would pass a count-only
+        // check, so assert the carried body is byte-identical to disk.
+        let ledger = fs::read_to_string(
+            room_master_path().parent().expect("root").join("librarian").join("LEDGER.md")
+        ).expect("LEDGER.md must be readable");
+        assert!(shelf.contains(&ledger), "LEDGER.md is carried truncated — whole files only");
+        assert!(shelf.contains("\n## librarian/LEDGER.md\n"), "LEDGER.md must ride outside the window");
+        assert!(shelf.contains("\n## librarian/README.md\n"), "README.md must ride outside the window");
+
+        // At most four librarian entries carried: two dated days plus LEDGER and README. Catches
+        // truncate-and-carry (which would leave all fourteen) directly on the delivered artifact.
+        let carried = shelf.matches("\n## librarian/").count();
+        assert!(carried <= 4, "{carried} librarian files carried; the window allows at most 4 \
+            (today, yesterday, LEDGER, README)");
+
+        // And the seat must be TOLD, or an empty window and a broken window read identically from
+        // the inside.
+        assert!(shelf.contains("YOUR OWN NOTES ARE WINDOWED"),
+            "the shelf performs the window without reporting it");
+    }
+
+    /// The recorder that was not enough, KEPT. It catches a different class than the limit above —
+    /// a duplicate-scale jump anywhere in the walk — and it prints the number for a person reading
+    /// a run. Its old comment argued against ever asserting a bound; that argument is answered by
+    /// LIBRARIAN_INTAKE_LIMIT and the seat that died proving the host constraint is real.
     #[test]
     fn the_librarian_intake_size_is_recorded_and_not_silently_doubling() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
