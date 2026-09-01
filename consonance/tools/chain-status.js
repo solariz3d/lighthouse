@@ -184,6 +184,16 @@
 //                         back to the anchor. NEVER silent on an unreadable source: silence here
 //                         would mean "nobody owes", which is the false-green class this file exists
 //                         to fight. Truncation is checked against the anchor, not assumed away.
+//   "N board line(s) fused" — a line that held TWO complete rows glued `}{` with no newline between.
+//                         This is a WRITE defect, not a read one: board_push (main.rs) appends with
+//                         `writeln!` on an unbuffered File, which lands the row and its '\n' as two
+//                         syscalls, so two writer threads interleave as A · B\n · \n. Measured
+//                         2026-09-01: 30 of 152,806 board lines, every one exactly two rows from two
+//                         different panes, every one followed by the stray empty line. Both rows
+//                         are recovered and examined like any other — a dispatch inside a fused line
+//                         is SEEN, not dropped — and the count prints so the defect stays visible.
+//                         A line that does not decompose into complete objects is still unreadable
+//                         and still UNKNOWN; salvage never guesses.
 //   pane identity       — a hand-back is matched by the committee row's `pane` field. The board has
 //                         historically stored free text there ('bravo', 'around', 'sibling-3d57124e'
 //                         are all in the record), so whether that field is mount-resolved or
@@ -420,6 +430,51 @@ function tail(file, maxBytes) {
   }
 }
 
+/**
+ * One board line -> its rows, or null if the line is unreadable.
+ *
+ * The common case is one row. The salvaged case is a FUSED line: two complete rows glued `}{` with
+ * no newline between, the torn-append shape board_push produces when two writers race (see the
+ * header). Salvage never guesses: it only splits at a `}{` boundary where the prefix is itself a
+ * complete JSON object, and JSON permits exactly one top-level value, so that boundary is unique —
+ * a prefix that parses cannot be extended to a longer one that also parses. Every recovered piece
+ * must be a plain object; a line that leaves any remainder unparsed is unreadable, not partially
+ * readable, because a half-recovered line is the false green wearing a repair.
+ *
+ * @returns {{ rows: object[], fused: boolean } | null}
+ */
+function parseBoardLine(raw) {
+  const isRow = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+  let e;
+  try { e = JSON.parse(raw); } catch (_) { e = undefined; }
+  // A whole line that parses is returned as-is, object or not — the caller's role/ts guard has
+  // always skipped non-rows silently, and this repair changes only what happens on a parse FAILURE.
+  if (e !== undefined) return { rows: [e], fused: false };
+
+  const rows = [];
+  let rest = String(raw);
+  while (rest.length) {
+    let cut = -1;
+    let head;
+    for (let i = rest.indexOf('}{'); i !== -1; i = rest.indexOf('}{', i + 1)) {
+      try { head = JSON.parse(rest.slice(0, i + 1)); } catch (_) { continue; }
+      cut = i + 1;
+      break;
+    }
+    if (cut === -1) {
+      // No fused boundary left: the remainder must be a whole row on its own, or the line is bad.
+      try { head = JSON.parse(rest); } catch (_) { return null; }
+      if (!isRow(head)) return null;
+      rows.push(head);
+      break;
+    }
+    if (!isRow(head)) return null;
+    rows.push(head);
+    rest = rest.slice(cut);
+  }
+  return rows.length > 1 ? { rows, fused: true } : null;
+}
+
 /* A→ALPHA and back. Copied rather than imported for the reason stated at fromConfig(): this is
  * called from a hook that must survive the repo moving. Only the letters this room has assigned. */
 const CALLSIGN_TO_LETTER = {
@@ -502,13 +557,19 @@ function collation(opts = {}) {
   let unconfirmed = 0;
   let earliest = Infinity;
   let unreadable = 0;
+  let fused = 0;
+  const rows = [];
   for (const raw of t.lines) {
-    let e;
     // COUNTED, never filtered away — residue.js's law, and it caught this file's own first draft.
     // A board that parses to nothing yielded an empty round, which yielded `n/a`, which printed
     // SILENT. A damaged source reading as "nothing to say" is the false green the brief warned
     // about, reproduced inside the fix for it.
-    try { e = JSON.parse(raw); } catch (_) { unreadable++; continue; }
+    const parsed = parseBoardLine(raw);
+    if (!parsed) { unreadable++; continue; }
+    if (parsed.fused) fused++;
+    for (const e of parsed.rows) rows.push(e);
+  }
+  for (const e of rows) {
     if (!e || e.role !== 'committee' || !e.ts) continue;
     if (e.ts < earliest) earliest = e.ts;
     if (e.ts > now) continue;
@@ -530,17 +591,17 @@ function collation(opts = {}) {
   // read do not reach back past the anchor, a dispatch could sit before the window and be invisible
   // — which would understate M and could turn an owing round into a false 'all-in'.
   if (unreadable) {
-    return { state: 'unknown', why: unreadable + ' board line(s) unreadable', unreadable,
+    return { state: 'unknown', why: unreadable + ' board line(s) unreadable', unreadable, fused,
       examined: dispatched.size };
   }
   if (t.truncated && earliest !== Infinity && earliest > anchor) {
-    return { state: 'unknown', why: 'board tail did not reach the anchor', examined: dispatched.size };
+    return { state: 'unknown', why: 'board tail did not reach the anchor', examined: dispatched.size, fused };
   }
   if (unresolved) {
     return { state: 'unknown', why: unresolved + ' dispatch target(s) unresolved to a letter',
-      examined: dispatched.size, unresolved };
+      examined: dispatched.size, unresolved, fused };
   }
-  if (!dispatched.size) return { state: 'n/a', why: 'no dispatches since the anchor' };
+  if (!dispatched.size) return { state: 'n/a', why: 'no dispatches since the anchor', fused };
 
   const owing = [];
   let allIn = 0;
@@ -552,9 +613,9 @@ function collation(opts = {}) {
   const examined = dispatched.size;
   const round = [...dispatched.keys()].sort();
   if (owing.length) {
-    return { state: 'owing', examined, round, owing: owing.sort(), in: examined - owing.length, unconfirmed };
+    return { state: 'owing', examined, round, owing: owing.sort(), in: examined - owing.length, unconfirmed, fused };
   }
-  return { state: 'all-in', examined, round, in: examined, allIn, unconfirmed };
+  return { state: 'all-in', examined, round, in: examined, allIn, unconfirmed, fused };
 }
 
 function line(opts = {}) {
@@ -663,6 +724,9 @@ function line(opts = {}) {
       ' (' + col.round.join(',') + '), last ' + ago(now - col.allIn) + ' ago');
   }
   if (col && col.unconfirmed) parts.push(col.unconfirmed + ' dispatch(es) delivery-unconfirmed');
+  // A fused line is recovered, not cleaned: the count prints so the torn-append defect in
+  // board_push stays visible from the one line everyone reads, instead of vanishing into a repair.
+  if (col && col.fused) parts.push(col.fused + ' board line(s) fused, rows recovered');
 
   parts.push('this machine only');
   // Only where a work-leg claim was actually made: a healthy lap's line stays byte-identical to what
@@ -744,5 +808,5 @@ if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
   line, openLaps, chainLaps, unwitnessed, readLedger, dirtyCount, ago, main, collation, toLetter, tail, replay,
-  LEDGER, REPO, BOARD, LETTERS, WORK_ATTESTING, WINDOW, LIST_CAP, BOARD_TAIL_BYTES, DISPATCH_RE,
+  LEDGER, REPO, BOARD, LETTERS, WORK_ATTESTING, WINDOW, LIST_CAP, BOARD_TAIL_BYTES, DISPATCH_RE, parseBoardLine,
 };

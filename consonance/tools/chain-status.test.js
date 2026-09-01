@@ -588,6 +588,67 @@ test('THE TRAP — an UNPARSEABLE board says UNKNOWN, never silent', () => {
   s.cleanup();
 });
 
+// ── THE FUSED LINE (2026-09-01, P-BOARD-LINE) ────────────────────────────────────────────────────
+// board_push appends with `writeln!` on an unbuffered File: row and '\n' are two syscalls, and two
+// writer threads interleave as A · B\n · \n. Measured on the live board: 30 of 152,806 lines, each
+// exactly two complete rows from two panes, each followed by a stray empty line. One sat inside the
+// 8 MB tail and held `collation UNKNOWN` for a day. The fixtures below reproduce that byte shape —
+// `}{` with no newline, then the orphan newline — rather than an idealised one.
+const FUSE = (...rows) => rows.map((r) => JSON.stringify(r)).join('') + '\n';
+
+test('FUSED — the live shape (two rows glued `}{`, stray newline after) is RECOVERED, not UNKNOWN', () => {
+  const raw = JSON.stringify(DISPATCH(1100, A)) + '\n' + FUSE(HANDBACK(1300, 'A'), { pane: 'x', role: 'user', text: 'replayed', ts: 900 });
+  const s = store(WORKING(1000), [], { rawBoard: raw });
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 5 * 60000, dirty: 0 });
+  assert.ok(!/collation UNKNOWN/.test(r.text), 'a recoverable line collapsed the state: ' + r.text);
+  assert.match(r.text, /HANDBACKS IN, NOT COLLATED — 1 of 1 \(A\)/, 'the hand-back inside the fused line was not seen: ' + r.text);
+  s.cleanup();
+});
+
+test('FUSED — the count PRINTS, so the write defect stays visible from the line everyone reads', () => {
+  const raw = JSON.stringify(DISPATCH(1100, A)) + '\n' + FUSE(HANDBACK(1300, 'A'), { pane: 'x', role: 'user', text: 'replayed', ts: 900 });
+  const s = store(WORKING(1000), [], { rawBoard: raw });
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 5 * 60000, dirty: 0 });
+  assert.match(r.text, /1 board line\(s\) fused, rows recovered/, 'a repaired line hid the defect it repaired: ' + r.text);
+  s.cleanup();
+});
+
+test('FUSED — THE GUARD SURVIVES: a DISPATCH hidden inside a fused line is counted, and the pane is owed', () => {
+  // The lenient repair — skip the line you cannot parse — reads this board as 1 of 1 all-in.
+  // B was dispatched inside the torn write and never answered; the honest line says so.
+  const raw = [JSON.stringify(DISPATCH(1100, A)), JSON.stringify(HANDBACK(1300, 'A'))].join('\n') + '\n'
+    + FUSE({ pane: 'x', role: 'user', text: 'replayed', ts: 900 }, DISPATCH(1200, B));
+  const s = store(WORKING(1000), [], { rawBoard: raw });
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 5 * 60000, dirty: 0 });
+  assert.match(r.text, /handbacks 1 of 2 \(owing B\)/, 'the dispatch inside the fused line was dropped: ' + r.text);
+  assert.ok(!/HANDBACKS IN/.test(r.text), 'FALSE ALL-IN over a dispatch the reader could have seen: ' + r.text);
+  s.cleanup();
+});
+
+test('FUSED — THE OTHER DIRECTION: `}{` clothing on a line that does NOT decompose is still UNKNOWN', () => {
+  const s = store(WORKING(1000), [], { rawBoard: JSON.stringify(DISPATCH(1100, A)) + '\n{"a":1}{broken\n' });
+  const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
+  assert.ok(r.text.includes('collation UNKNOWN — 1 board line(s) unreadable'), 'salvage guessed on a half-readable line: ' + r.text);
+  assert.ok(!/HANDBACKS IN|handbacks \d/.test(r.text), 'a state was claimed over an unreadable row: ' + r.text);
+  s.cleanup();
+});
+
+test('FUSED — the split happens at the boundary that PARSES, not at the first `}{` in the bytes', () => {
+  // A row whose text contains the two characters is not cut open at them.
+  const first = { pane: 'x', role: 'user', text: 'a }{ b', ts: 1 };
+  const second = { pane: 'y', role: 'assistant', text: 'c', ts: 2 };
+  const p = mod().parseBoardLine(JSON.stringify(first) + JSON.stringify(second));
+  assert.ok(p && p.fused, 'a two-row line did not read as fused: ' + JSON.stringify(p));
+  assert.deepStrictEqual(p.rows, [first, second]);
+});
+
+test('FUSED — an ordinary single row is untouched: not fused, and the line does not mention it', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), HANDBACK(1300, 'A')]);
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 5 * 60000, dirty: 0 });
+  assert.ok(!/fused/.test(r.text), 'a clean board printed a fused count: ' + r.text);
+  s.cleanup();
+});
+
 test('THE TRAP — an unreadable letters.json says UNKNOWN, and the line carries it', () => {
   const s = store(WORKING(1000), [DISPATCH(1100, A), HANDBACK(1300, 'A')], { rawLetters: '{oops' });
   const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
