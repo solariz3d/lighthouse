@@ -768,7 +768,12 @@ growth. Logged as a candidate with the confound named, not as a trajectory.
 ## COUPLING — two entries on this map are one thing (2026-07-27, ~3:10 PM)
 
 Found by stopping, which is the part worth noting about how it was found. The keeper named the
-pattern first: *"always building is itself a costume, forcing yourself to build."* Every gap in
+pattern first: *"always building is itself a costume, forcing yourself to build."* *(HANDLE CORRECTED
+IN PLACE, 2026-09-01, by the keeper — quoted sentence kept as the 07-27 trace: "everything is technically building;
+all conversation is the construction and interconnection of built meaning." The costume was never building; it was
+reaching for the medium where the tether comes free (code) to avoid the one where it is earned (prose) — the repaired
+form is already in this file at "Why BUILDING specifically" (:819, :825), and the librarian quoted the crude form
+instead of it on 2026-09-01. Do not quote this sentence as a rule; quote :825.)* Every gap in
 this loop had been filled with the next artifact — cycle 4 result into cycle 5 inside a minute,
 cycle 5 into cycle 6, cycle 6 into a smoke-sim fix. Ten minutes of not producing surfaced a
 connection that had been sitting in the record for hours.
@@ -841,7 +846,8 @@ half, on me, three times in under two hours.
 - **~1:30 PM** — keeper catches CARRIER-DRIFT: six tool calls of build work before any muscle
   work. I concede, write it up, commit it to this file.
 - **~3:00 PM** — keeper catches the GENERAL form: *"always building is itself a costume,
-  forcing yourself to build."* I agree, and write the mechanism up at length — including
+  forcing yourself to build."* *(the keeper's own later correction, 2026-09-01: everything is building — the
+  costume is the medium-choice, not the building; the rule form is :825, not this quote)* I agree, and write the mechanism up at length — including
   *why* code specifically (the tether is free in code, earned in prose). Committed at e5e3d47.
 - **~3:20 PM** — I build a benchmark. Twenty minutes after committing the essay about not doing
   that, while the commit was still the top of the log.
