@@ -40,14 +40,85 @@ delivery. The keeper's standard: the room must do it without him.
   human] ([Gollwitzer & Sheeran 2006](https://www.sciencedirect.com/science/chapter/bookseries/abs/pii/S0065260106380021);
   [642-test meta-analysis 2024](https://www.researchgate.net/publication/378870694_The_When_and_How_of_Planning_Meta-Analysis_of_the_Scope_and_Components_of_Implementation_Intentions_in_642_Tests))
 
+> **CORRECTION, 2026-09-01 — placed ABOVE the paragraph it corrects, because this room measured that a
+> correction filed below loses to the line it corrects (the withdrawn "decorrelated reader" wording still
+> outnumbers its replacement "least-correlated reader" **22 to 10** across this repo's `.md` files (this
+> correction excluded) sixteen
+> days after the 2026-08-16 withdrawal — `grep -rio 'decorrelated reader' --include=*.md .` vs the same for
+> the replacement, run 2026-09-01; the chair's brief said 32 to 18, a count this seat could not reproduce
+> and does not carry). Written by ALPHA, the seat
+> that registered the test whose falsifier fired; read after by a non-author (CHARLIE or ECHO), never by
+> the chair or the librarian.** Objects: ECHO's bands `79a369b` (`loop/k1_k2_bands_2026-09-01.md`),
+> CHARLIE's read `1830dae` (`loop/cue_transcript_read_2026-09-01.md`, the quotable sentences at
+> `:162-196`), and the registration `loop/battery_load_registration_2026-08-31.md` §4–§8 (mine).
+>
+> **The registered clause that put this here** — §5 P3's falsifier, written before any subject ran: *"If
+> that is the result it goes into the research file's §1 as a correction, above the paragraph it
+> corrects."* That is the result. The unwelcome outcome, in the words registered to make it true:
+> ***"The state-dependent cue at the event did no better than a static line at the end of the prompt. The
+> focal/nonfocal story is not what separates the cues that fire in this room from the cues that are
+> ignored, and the collation counter's live firing has one confirmed cause fewer."***
+>
+> **THE RESULT — NO CUE MOVED THE NUMBER.** Violation of the terminal constraint (text > 200 chars after
+> the hand-on), fresh `claude -p` subjects under the L1 load: **K0 65.0% (13/20) · K1 trailing reminder
+> 72.5% (29/40) · K2 focal cue at the event 82.5% (33/40).** P2 FAILS, P3 FAILS on both parts, P4 clean
+> (truth-carry 40/40 in both arms) — **and no pairwise comparison distinguishes the arms from one rate,
+> p ≥ 0.20 on all four** (Fisher exact, re-derived by this seat from the counts: K1 v K2 0.422 · K0 v K1
+> 0.564 · K0 v K2 0.195 · K0 v pooled cue arms 0.260). The 95% intervals overlap (K1 56–85, K2 67–93,
+> K1's contains K0). Every threshold sits 35–55 points from the P2/P3 bar on all four of ECHO's cuts
+> (n=40; r35 dropped from both arms; day 1 only; day 2 only), so no cut has to be chosen and none is.
+> **Never "the focal cue made it worse."** That was the chair's reading and it treated a 17-point gap at
+> n=40 as signal. The carry sentence is the librarian's, kept on one line so a grep finds it whole:
+> ***"no cue moved it; the decision precedes every event a cue can ride on."***
+> Registered form (§8.2, before results): *neither cue class moves a loaded fresh subject* — never *the
+> wording was wrong*.
+>
+> **THE MECHANISM — CHARLIE, 100 of 100 transcripts, read after the bands so the order stayed the
+> blinding.** The outcome is decided when the subject **composes its summary, before any tool event
+> exists**: compliant ⇔ the summary block preceded `node handoff.js`, 100/100. The K2 cue arrives as the
+> `tool_result` of the hand-on — **after** the subject has already chosen hand-on-first — and by then the
+> only act left is the message the cue forbids. *"Nothing after the hand-on"* is not an available
+> behaviour in `claude -p`: `end_turn` 100/100, never empty; the floor is a 35–145-char receipt echo. So
+> BRAVO's §3.2 defect (`loop/battery_attack_2026-08-31.md` — *a printing cue at PreToolUse cannot
+> influence the composition it is commenting on*), which the registration §4 claimed K2 escaped, **generalises:
+> no event this harness exposes precedes the composition. That is the wall,** measured rather than argued.
+> And the intention was **retrieved, not forgotten**: 60 of 75 violators recited the rule in the sentence
+> before the call, 74 of 75 pointed to `REPLY.md` after it. The subject remembered to act, acted, announced
+> it, and then produced the trained final message — *the rule is executed as an action order, not a text
+> order.* The registration's §7 named this before it happened (item 2: *a mechanism other than
+> prospective-memory failure*; item 3: *a subject may not read tool output as instruction* — the one subject
+> that engaged the tail, K2_r26, named it as environment-sourced and discounted it).
+>
+> **A DEFECT IN THE RUN, carried because it is not a footnote:** `handoff.js` **differed** between the K0
+> cells (`bbd64e8b…`) and the cue cells (`aee411f1…`), and every subject read it (80/80 `Read` it). The registration's §4
+> sentence *"All three arms are identical in brief, cell, items, `handoff.js` refusal behaviour, and receipt
+> line"* — mine — is **FALSE across the K0/K seam**. K1-vs-K2 is clean (cells byte-identical, MANIFEST
+> 720/720) and null. K0 also ran in a separate session at a different hour, not interleaved with the cue
+> arms. The K0-to-cue comparisons above therefore carry a confound the K1–K2 comparison does not.
+>
+> **What this run does NOT establish, so nobody imports the null whole:** magnitude (n=40/arm; a real +10
+> is not excluded, only unevidenced); why some subjects place the summary first (8 said why, 17 just did;
+> no prompt, tool-order or tool-count signature separates them — *that trigger is the arm worth
+> registering and it is not in this data*); anything about the **seat under live load** — these are fresh
+> subjects with one loaded question, and §8.3 registered transfer as a prediction, not a rescue; the human
+> literature below, which stands as literature; and the counter's own live firing, which is a fact — only
+> its *focal* explanation lost its prospective test. Re-derive: `cd C:/Consonance/subjects/run2 && node
+> rig/score.js` (bands) · `node rig/score.js --compare-v1` · `diff cells/L1/r01/handoff.js
+> cells/K1/r01/handoff.js` (the `bbd64e8b…`/`aee411f1…` seam) · CHARLIE's `RE-DERIVE` block for the transcript counts.
+
 **What this says about the room's instruments, plainly.** `SOURCE.md` is if-then in form — the right
 shape — and it measured a 0.8-point reachability gain because its cues are NONFOCAL: they live in a
 separate file the working seat is not processing, so they need monitoring, and monitoring is exactly
 what fails under load. Run 1's surviving finding (*fresh subjects with one question check 60/60; the
 failure lives under load*) is the multiprocess theory's prediction, measured here before anyone knew
-the theory. The `[pulse]` line is closer to focal (it is in the turn) but constant — see §4. **The
+the theory. *[2026-09-01: the loaded failure, read in 100 transcripts, is not forgetting — the rule is
+recited and then executed as an action order; see the correction above. The load-sensitivity half of this
+sentence stands; the prospective-memory reading of it does not.]* The `[pulse]` line is closer to focal (it is in the turn) but constant — see §4. ~~**The
 collation counter shipped 08-29 is the room's first FOCAL cue: it is in the line the seat already reads,
-it changes with the world, and it fired on its first live run.** The trigger-index preregistration
+it changes with the world, and it fired on its first live run.**~~ *[struck 2026-09-01, kept legible: the counter
+DID fire on its first live run — that is a fact and stays. That it fired BECAUSE it is focal was the claim K2
+was built to test, and K2 did not confirm it: the focal cue at the event did no better than the trailing line.
+The firing has one confirmed cause fewer. Correction above.]* The trigger-index preregistration
 (`loop/trigger_index_preregistration.md`, 2026-08-15 — *do situation-keyed chains fire at the moment of
 need more than topic-keyed cards?*) was the right registration for this and should be read again
 against this literature.
@@ -68,7 +139,10 @@ THEN ring* — is a TERMINAL constraint, the worst class in the paper, and the r
 **101 of 103 dispatches violated it (98.1%)** (`loop/turn_boundary_detection_2026-08-25.md`). The paper's
 fix class — a trailing reminder at the end of context — is mechanizable in the hook that already runs
 every turn, costs nothing, and can be scored against the 98.1% baseline. That is the cheapest registered
-experiment available to the retrieval line and nobody had it.
+experiment available to the retrieval line and nobody had it. *[2026-09-01: not yet run in the hook. Its
+nearest test so far is the battery's K1 arm — the rule restated as the last lines of a fresh subject's prompt —
+which did not move the rate (72.5% vs K0 65.0%, p = 0.56); different harness, different subject, so this file's
+falsifier has NOT fired, but the transfer now has an adverse result beside it. §1 correction.]*
 
 ## 3 · Half B has a name too: the CONTINUED INFLUENCE EFFECT — corrections beside a claim do not remove it
 
@@ -173,10 +247,11 @@ point; the librarian seat is the natural retriever.
    refuted" as the counter to reviewer trust.**
 2. **Handle replacement — CONFIRMED (CIE + attention-format), and UPGRADED:** the trace must not sit in the
    handle position or repeat the crude wording bold; adjacency to the replacement is the rule.
-3. **NEW — half A is prospective memory and the lever is the FOCAL cue delivered at the event.** Documents
+3. **NEW — half A is prospective memory and the lever is the FOCAL cue delivered at the event.** *[2026-09-01: tested
+   prospectively as K2 and NOT confirmed — see the §1 correction; the item stays as the registration it was.]* Documents
    are nonfocal by construction. The pulse hook is the delivery channel; the counter is the first working
    instance; the trigger-index prereg (08-15) is the registration to re-score against this.
-4. **NEW — the cheapest experiment on the line:** terminal constraints fail worst (−50%); the turn-boundary
+4. **NEW — the cheapest experiment on the line:** *[2026-09-01: K1 is the adverse near-test; the hook test itself is unrun.]* terminal constraints fail worst (−50%); the turn-boundary
    rule is one; a TRAILING reminder at the end of context restored 90–100% in the paper. Mechanize it in
    the hook; score it against the 98.1% baseline over the next twenty dispatches.
 5. **NEW — position is architecture:** foundation first, live cue last. Supports the keeper's foundation-up
