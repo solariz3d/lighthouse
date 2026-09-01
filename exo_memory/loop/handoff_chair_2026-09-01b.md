@@ -1,3 +1,6 @@
+**SUPERSEDED by `exo_memory/loop/handoff_chair_2026-09-01c.md`, 2026-09-01 ~07:55.** Wording kept,
+authority removed. Its §2 rebuild happened, and its §9 Third Place is deferred again.
+
 # Chair handoff — 2026-09-01 ~05:00, L025 MID-FLIGHT, rebuild pending
 
 **Supersedes `handoff_chair_2026-09-01.md`** (~03:30). That one was written before the first rebuild;
