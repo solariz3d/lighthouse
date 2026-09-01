@@ -218,6 +218,18 @@ reason is measured: on 2026-08-24 a completed Cycle 1 plan sat on the board whil
 waited in a gate for a human to click it. Four minutes and one walk across the room, for a delivery
 that was already done.
 
+**Receiving from a pane: `call_librarian` (added 2026-09-01, row 2 of the address table).** Panes now
+reach this seat directly. A hand-back arrives labelled `[pane:<letter>]` — written by the system from
+the mount, so you are never unsure who is speaking — and it carries a **POINTER** to the file the pane
+wrote, never the finding in prose. **Read at the file. The call is the wake, not the delivery.**
+
+The hop it replaced was pane → orchestrator → here, and it was removed for a measured reason: on
+2026-09-01 the chair relayed a pane's result as *"K1 carries a VOID into scoring, n=39"*; this seat
+opened the cell and found NOT-RUN, n=40 standing. **The pane's finding was right and the hop invented
+the premise.** So when a pointer arrives, the correct move is to open the file — not to act on how the
+call describes it. That applies to the chair's rings too, and it is the reason this seat has caught
+five of the chair's claims tonight by going to disk instead.
+
 `raise_pull` is still the right verb for anything a human should decide **before** it lands, and for
 a genuine interrupt aimed at a pane. And **silence is still a turn.** A seat that produces something
 every cycle becomes one people learn to skip; `call_chair` makes speaking cheap, which makes that
