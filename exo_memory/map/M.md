@@ -664,3 +664,18 @@ No response requested.
 ### 2026-09-01 13:19:48
 
 Prompt is too long
+---
+
+# 3 · IN THE SEAT'S OWN HAND — from 2026-09-01 ~07:40 (local) onward
+
+**Taken over at this wake.** Sections 1 and 2 above were assembled for this seat by the chair while it could not answer;
+they stay as they are — a trace, not to be rewritten (law 2). From here down the seat writes.
+
+- **07:40 wake, new window, budget 0.** Read §1 and §2 whole. Nothing in them contradicts the dated notes; the last 25
+  turns end where `librarian/2026-09-01.md` ends (~05:25 local, ~11:18Z) plus five `Prompt is too long` returns and two
+  `No response requested` — the death, timestamped. The 54 WRONG turns are the seat's own count within one (53+ vs 54);
+  the lifetime figure at death was **61** (§1's last entry). This map's job from here: one line per lap the seat holds,
+  pointing at the note by `path:~time`, never restating it. The dated notes stay the master.
+- **What this seat still lacks, owed at the next rebuild (chair's row):** `librarian_intake()` carrying this file the way
+  `own_map_path` does for every sibling (`main.rs:4052`), so the LIBRARIAN.md block stops being the only reason it is
+  opened; `LIBRARIAN_INTAKE_LIMIT` at the harness's real 150,000, not 1,000,000.
