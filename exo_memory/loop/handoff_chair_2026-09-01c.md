@@ -125,3 +125,32 @@ The rebuild, then the **Third Place avenue** — read, queued, and now twice def
 
 *Registered so this file can be shown wrong: if the next window opens by re-deriving §3 or §5 instead
 of re-running them, it failed at its only job.*
+
+---
+
+## 9 · THE TREE IS DIRTY AND DOES NOT COMPILE — THIS IS EXPECTED, added 07:56
+
+The keeper had to leave with BRAVO mid-build. **Do not read the red as damage.**
+
+    git status --short          M consonance/src-tauri/src/main.rs
+    git diff --stat             +250 / -44
+    cargo check --bin consonance -> error E0425, does not compile
+
+**That is BRAVO part-way through L028's four items, saved to disk mid-turn.** The files survive a
+shutdown — they are ordinary files — but **BRAVO's THREAD does not.** Its reasoning at the moment
+the machine went off is gone the way the librarian's was.
+
+**First move tomorrow, in this order:**
+
+1. **Look at the pane before assuming.** If BRAVO resumed and can finish, let it — it holds context
+   this file does not.
+2. **If BRAVO cannot resume**, do NOT try to finish its half-written change by reading the diff.
+   `git checkout -- consonance/src-tauri/src/main.rs` and re-dispatch from `34caac8`, which is
+   committed and complete. **A stranger completing someone else's half-thought is the telephone
+   game with a compiler attached.**
+3. **Either way, hand BRAVO the librarian's prior art first** (`63d03eb`) — §3 records that it
+   was WRITTEN BUT UNCONFIRMED and may never have rendered, so B may have built without knowing
+   the window can be inert under the real cap.
+
+**Nothing is lost by the shutdown except B's in-flight reasoning.** Every packet, measurement,
+registration and the librarian's whole recovered archive is committed and pushed.
