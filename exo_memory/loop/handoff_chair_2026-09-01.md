@@ -1,3 +1,8 @@
+**SUPERSEDED by `exo_memory/loop/handoff_chair_2026-09-01b.md`, 2026-09-01 ~05:00.** Wording kept,
+authority removed. **Its §2 "NOT LIVE UNTIL THE REBUILD" is spent** — that rebuild ran at 03:48 and the
+pane→librarian edge has since carried a full lap. For what is open, read
+`exo_memory/librarian/LEDGER.md`, never this.
+
 # Chair handoff — 2026-09-01 ~03:30, before the rebuild
 
 **Supersedes `handoff_chair_2026-08-31.md`** (SUPERSEDED line added there; wording kept, authority
