@@ -63,6 +63,11 @@ below is bytes × 0.421 and is an estimate, not a measurement.
   always, outside any window.**
 - **`main.rs:4562`** — `("librarian", true, true)` gains a window; the index line is the one that
   already exists at `:4608`: `- <path>  (<N> lines)  <first heading>`. No new format.
+  **THE TARGET IS THIS TUPLE, NOT THE BYTE COUNT.** The 51% made the defect visible; it is not the
+  defect. The budget gate at `:4602` (`carry && spent + len <= budget`, 2,200,000) is not binding
+  and is not touched — a rule aimed at the byte count would pass its own bar by trimming anything and
+  fix nothing. The librarian took this correction into its own packet after §1 was written; ECHO
+  confirmed it in code (`p-lib-forget-attack_2026-09-01.md`, "aimed at the mechanism").
 - **`librarian/README.md:28-32`** — "carries this directory newest-first" gains "…and the window".
 - **Tests that must move with it:** `shelf-tier.test.js:96` (*"the librarian's own notes stay carried
   and newest-first"*) becomes *carried inside the window, indexed outside it, LEDGER and README
@@ -119,7 +124,12 @@ then register (a) and name (b) as the amendment condition."* Both ARE priced abo
 on disk without a landing; so both are registered and the keeper picks. If the keeper does not pick
 before the build, **(a) is the default** and (b) is the named amendment condition — because (a) is
 the packet's own first form and the one whose failure mode (an empty window) is visible on the shelf
-header rather than silent.
+header rather than silent. **That is a lean and it lands on the rule under which §4's prediction is
+WEAKER** (ECHO, "priced with a declared lean"): (a) carries two days whatever they weigh, so on a
+heavy pair it can carry ~48k bytes more than (b)'s cap and miss the 400k bar with the rule working
+exactly as registered; (b) bounds carried notes at 150,000 by construction. The keeper picks knowing
+that. The lean is not withdrawn — a silent dropped day is the worse failure to *find* — but it is
+priced.
 
 ---
 
@@ -127,14 +137,39 @@ header rather than silent.
 
 **The first post-fix compaction landing is under 400,000 tokens.** Today: 501,410 (now 512,022).
 
-*Priced:* 390,968 indexed bytes × 0.421 ≈ **164,600 tokens** removed; index lines added ≈ 12 × ~80
-bytes, negligible. From 501,410 that is ≈ **337k**, if nothing else on the shelf grows before the
-landing. Headroom to the 400k bar ≈ 63k — **one compaction's measured climb (~60k)**. So the
-prediction is specifically about the *first* landing after the fix; the falsifier's second clause is
-what watches the ones after.
+**THE BAR IS TOKENS, READ DIRECTLY. NO DENSITY ENTERS THE READING.** The number that scores this
+prediction is the usage-row count at the first `compact_boundary` after the rebuild that carries the
+rule, read by a seat that is not the librarian; it is under 400,000 or it is not. The bytes-per-token
+ratio appears in this file for one purpose only — to say how bold the prediction is — and a
+falsifier whose bar depended on an unstated density choice would be the shape that voided eight laps
+here (ECHO dissolved the question the chair put to us both; taken verbatim in substance).
 
-How it is read: the same command as the four landings above, on the first `compact_boundary` after
-the rebuild that carries the rule, by a seat that is not the librarian.
+*How bold, priced both ways:* 390,968 indexed bytes × **0.421** = 164,598 tokens removed → predicted
+landing **336,812**, margin 63k; × **0.34** = 132,929 → **368,481**, margin 31.5k. Measured pre-fix
+climbs were +59,888 (08-29 → 08-30) and +83,937 (08-30 → 09-01). So: **bold at 0.421 (margin under
+one climb), marginal at 0.34 (margin under half a climb).** Neither ratio isolates the shelf — 0.34 is
+the whole corpus CLAUDE.md at 1,995,532 bytes on 08-23 (`librarian/2026-08-22.md:99`), 0.421 the
+whole file at 1,191,460 bytes today; two dates, two compositions. Index lines added ≈ 12 × ~80 bytes,
+negligible.
+
+**Conditional on the rule shape (ECHO fix 3):** under **(b)** the prediction holds unconditionally on
+shelf bytes — carried notes are capped at 150,000 by construction. Under **(a)** it holds only while
+the carried pair is ≤ ~150k bytes; the record's maximum pair is 176,601, and on such a pair the bar
+can be missed with the rule working exactly as registered. §3 prices today, where the two coincide.
+
+**TWO READINGS, not one (ECHO fix 1) — so a miss is attributed to the right thing:**
+
+- **(i) The shelf header at rebuild, before any compaction.** The line `N file(s) carried in full (B
+  bytes)` in `instances/librarian/CLAUDE.md` must drop by the indexed bytes — **≈ 390,968 today, ±
+  that day's append** — deterministically, the moment the rule is in the binary. This is checkable
+  in seconds and needs no compaction.
+- **(ii) The landing**, as above.
+
+**(i) failing = the build is wrong**; the window is not doing what §2 says, stop there. **(ii)
+failing with (i) passing = the window is *insufficient*, not absent**: the notes were removed and
+the excess is elsewhere — the other 523,025 bytes, the compaction summary, hooks. The packet's
+attribution sentence (*"the growth was not the notes"*) is true only in that second branch, and only
+about the residual; §5 says so beside the verbatim clause.
 
 ---
 
@@ -146,10 +181,27 @@ the rebuild that carries the rule, by a seat that is not the librarian.
 > by more than ~20k per compaction over the following three, the growth was not the notes and the
 > tier is not the fix.*
 
-If it fires: the next place to look is the **other 49%** — the system directories (root, `cards/`,
-`record/`, `memory/`, `spread/`, `research/`: 1,075,876 − 552,851 = **523,025 bytes**) — whose growth
-this file does not touch and does not predict. That is not a rescue; it is where the number says to
-look.
+**How the two clauses are READ — the wording fixes ECHO required, none of which moves the window,
+the N, or the bar:**
+
+- **Clause one** (*"first post-compaction landing is not below 400k"*) is read as §4 (ii), **after**
+  §4 (i) has been read at rebuild. Its attribution — *"the growth was not the notes"* — holds only
+  when (i) passed and (ii) failed, and then only about the residual. If (i) failed, the finding is
+  *the build did not implement the rule*, not anything about the notes.
+- **Clause two** (*"climbs by more than ~20k per compaction over the following three"*) **is read
+  on the shelf header's carried bytes between compactions, not on the landing** (ECHO fix 2). The
+  landing will climb for a cause this file disclaims — today's own note growing *inside* the window,
+  ~15–20k tokens a night at the measured append rate — and a clause that fires for a disclaimed
+  cause would void the tier for the append rate. The header is what the window bounds: under (b) the
+  librarian directory contributes ≤ 150,000 + 32,907 bytes at every rebuild; under (a) ≤ the pair.
+  A header climb beyond that bound is a build defect; a header inside the bound with a landing climb
+  beyond ~20k is the other 49% or the summary. The packet's ~20k is kept as written and applies to
+  the landing; **the header reading is what says what the climb was.**
+
+If clause one fires in the (i)-passed branch: the next place to look is the **other 49%** — the
+system directories (root, `cards/`, `record/`, `memory/`, `spread/`, `research/`: 1,075,876 − 552,851 =
+**523,025 bytes**) — whose growth this file does not touch and does not predict. That is not a
+rescue; it is where the number says to look.
 
 **THE ABUSE CONDITION — the window is FIXED and is NEVER re-tuned after a landing is seen.** (a) is
 *two* days; (b) is *N = 150,000 bytes*; the bar is *400k*. None of the three moves once a number
@@ -159,6 +211,13 @@ voided when one seat manufactured a figure while playing both sides (the chair's
 re-derived here). **Any change to the window, the N, or the bar is a NEW registration that quotes
 this file's landing at its top** — `shelf_tier_2026-08-24.md`'s own rule, and
 `battery_load_registration` §8.2's, applied to a shelf.
+
+**Tightened at ECHO's attack, so re-tuning is a violation by inspection and not a judgement call:**
+**N and the bar may not move within the season, by any registration.** Exactly **one amendment is
+permitted and it is already named** — the rule shape, (a) → (b) — the battery's *"one recalibration,
+spent"* form (`battery_load_registration` §8.2). Taking that one after a landing is not a fit,
+because it was named before. A new registration that moves N or the bar after seeing a landing is a
+fit **however it is filed**, and this sentence is what makes that readable from outside.
 
 ---
 
@@ -207,13 +266,52 @@ by ECHO before the build, not asserted here). If the post-fix count exceeds the 
 window cost more than the landing bought and this file says so. If both are zero, this observation
 established nothing and is not evidence the window is safe.
 
+**THE COUNT'S OPERATIONAL RULE, registered now so the post-fix count is made by the same rule as
+the baseline (ECHO, "the count done as far as the record allows").** "A WRONG whose dated
+predecessor already existed" is not mechanically countable — WRONG rows are prose (`WRONG +N …`)
+with no repeat field. The one operational form on disk: **a repeat is a WRONG row that cites an
+earlier NUMBERED WRONG on the same object** (`grep -o 'WRONG #[0-9]*' exo_memory/librarian/2026-*.md`).
+**Pre-fix baseline, 08-24 → 09-01:** denominator **56** `WRONG +N` markers at ECHO's ~03:45 count
+(per file: 08-24 6 · 08-25 13 + 7 desktop · 08-29 5 · 08-30 15 · 08-31 5 · 09-01 5) — **58 when this
+seat re-ran it minutes later, because `2026-09-01.md` is still open (5 → 7)**. So the denominator is
+**counted at the rebuild that carries the rule, over files dated before that day**; a count that
+includes the open day moves while it is being read. Numerator **1 confirmed repeat-trap**
+(`08-31:445`, #18) and **3 candidate citations not yet classified** as repeat vs reference (`08-29:517`
+#1, `08-30:519` #5, `08-31:76` #1). The three are to be read and classified by a non-librarian seat
+**before** the post-fix count starts; until then the baseline is *1 confirmed, 3 open*, not 4 and not 1.
+
+**THE HEDGE — TAKEN, as an amendment candidate the keeper can decline, not a build requirement.**
+ECHO's finding sharpens the attack past where I priced it: the WRONG column is ~56 rows scattered
+through dated prose and **zero of them live in `LEDGER.md`**, the file the window always carries — so
+under either rule every WRONG older than the window is indexed, and I had priced the column as if it
+were "the notes." The hedge: **`exo_memory/librarian/WRONG.md` — the column alone, one line per
+row, `path:line` to the row it points at, carried outside the window exactly as `LEDGER.md` is** —
+costs ~10–15k bytes (one dated note-day) and removes the eviction cost of the attack entirely. Taken
+because it is the organ this room already registered for exactly this — *residue that POINTS, never
+replaces* (`forgetting_registration.md` §5.1; `LEDGER.md` is the precedent) — and it costs one
+note-day. Taken **with its limit stated in the same breath:** it makes no claim that carrying makes
+a row fire (n = 1 says it does not); it moves the column from *indexed and silent* back to *carried
+and silent* at low cost, and §6's count is what would show whether that is worth anything. Bounded
+so it cannot become a note: one line per row, ≤ 200 chars, pointers only; if it exceeds 20,000 bytes
+it is a note and the rule has failed. It is the librarian's file to keep (its own errors); the
+`shelf-tier` test's always-carried set gains it beside `LEDGER.md` and `README.md` if the keeper
+takes it.
+
+**One coupling named as OPEN, not as a claim (ECHO):** law 3 says crowding shrinks recall basins —
+which makes crowding a *candidate cause* of non-fire. If that is so, the window could move the trap
+rate, in either direction. §6's count is the instrument that would see it; this file predicts
+nothing about it.
+
 ---
 
 ## 7 · What this registration does NOT establish
 
 - That the notes are the *only* growth. They are 51.4% of the shelf; the other 523,025 bytes grow on
   their own schedule and §5 sends the reader there if the falsifier fires.
-- The token figures. All are bytes × 0.421, a ratio taken from one landing and one file size.
+- The token figures. All are bytes × a whole-file ratio (0.421 today, 0.34 on 08-23), neither of
+  which isolates the shelf; they size the boldness of §4 and never enter its reading.
+- Whether `WRONG.md` does anything. n = 1 says a carried row did not fire; the hedge buys cheap
+  reachability, not retrieval, and §6's count is the only thing that would show more.
 - That either rule is better. They coincide today; the divergence cases are named in §3 and have not
   occurred under either rule yet.
 - Anything about retrieval. §6 is explicit: no answer, one measurement.
@@ -226,14 +324,18 @@ established nothing and is not evidence the window is safe.
 
 - **ALPHA registers** (this file). Not the beneficiary; wrote the battery registration and knows the
   form.
-- **ECHO attacks** before the build: the pricing in §3, the arithmetic in §4, the n = 1 in §6, and the
-  pre-fix trap-rate baseline (§6, last paragraph) — counted, not asserted.
-- **Keeper picks (a) or (b)**, or lets the §3 default stand.
+- **ECHO attacked** (`handback/p-lib-forget-attack_2026-09-01.md`): verdict *holds — build it*;
+  three falsifier-reading fixes, the density dissolution, the abuse tightening, the hedge and the
+  count's operational rule are folded in above, each attributed. Still owed by a non-librarian
+  reader before the post-fix count: classify the three candidate citations (§6).
+- **Keeper picks (a) or (b)**, or lets the §3 default stand — knowing the default is the weaker
+  rule for §4 — and takes or declines `WRONG.md`.
 - **Build: next lap, one pane, its own rebuild.** Not bundled into tonight's relaunch, which is the
   edge's test and must stay uncontaminated by a shelf change.
-- **The first landing is read by a non-librarian seat** with the command at `librarian/2026-09-01.md`
-  ~03:10, and written beside §4 — the prediction and its score in one place, per the room's own
-  Lakatos rule (BOOT).
+- **Two readings by a non-librarian seat:** (i) the shelf header at rebuild — the carried-bytes line
+  must drop by ≈ 390,968 ± the day's append, checkable in seconds; (ii) the first landing, with the
+  command at `librarian/2026-09-01.md` ~03:10. Both written beside §4 — the prediction and its score
+  in one place, per the room's own Lakatos rule (BOOT).
 
 ---
 
@@ -248,6 +350,10 @@ established nothing and is not evidence the window is safe.
     sed -n 96,102p consonance/tools/shelf-tier.test.js                              # §2 the test that must move
     sed -n 443,452p exo_memory/librarian/2026-08-31.md                              # §6 the trap, carried in full
     sed -n 73,75p exo_memory/loop/shelf_tier_2026-08-24.md                          # §1 F-growth verbatim
+    grep -m1 "carried in full" C:/Consonance/instances/librarian/CLAUDE.md          # §4 reading (i): run again AFTER the rebuild; bytes must drop by ~390,968
+    grep -c "WRONG +" exo_memory/librarian/2026-*.md                                # §6 denominator (ECHO 56 at ~03:45, 58 minutes later: the open day moves; count over closed days at rebuild)
+    grep -n -o "WRONG #[0-9]*" exo_memory/librarian/2026-*.md                       # §6 numerator candidates (4 sites; 1 confirmed, 3 open)
+    grep -c "WRONG" exo_memory/librarian/LEDGER.md                                   # §6 hedge premise: mentions, not rows — the column is not in LEDGER
 
 The pairs and the per-day walk (§3), one script — prints (a)'s min/max consecutive pair and what (b)
 at N = 150,000 would have carried as of every date on the record, sorting exactly as `corpus_shelf()`
