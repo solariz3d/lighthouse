@@ -102,9 +102,12 @@ delivery. The keeper's standard: the room must do it without him.
 > registering and it is not in this data*); anything about the **seat under live load** — these are fresh
 > subjects with one loaded question, and §8.3 registered transfer as a prediction, not a rescue; the human
 > literature below, which stands as literature; and the counter's own live firing, which is a fact — only
-> its *focal* explanation lost its prospective test. Re-derive: `cd C:/Consonance/subjects/run2 && node
-> rig/score.js` (bands) · `node rig/score.js --compare-v1` · `diff cells/L1/r01/handoff.js
-> cells/K1/r01/handoff.js` (the `bbd64e8b…`/`aee411f1…` seam) · CHARLIE's `RE-DERIVE` block for the transcript counts.
+> its *focal* explanation lost its prospective test. Re-derive — **the bands only run on the machine
+> that ran the battery**: the scorer reads the subjects' transcripts from the run's own config dir
+> (`rig/score.js:60-81`), which stay outside the repo by design (`p3a` hand-back §5); from that run
+> root (`subjects/run2`, beside the checkout): `node rig/score.js` (bands) · `node rig/score.js
+> --compare-v1`. The seam runs anywhere from the repo mirror: `diff exo_memory/loop/run2/rig/handoff.v1.js
+> exo_memory/loop/run2/rig/handoff.js` (`bbd64e8b…`/`aee411f1…`) · CHARLIE's `RE-DERIVE` block for the transcript counts.
 
 **What this says about the room's instruments, plainly.** `SOURCE.md` is if-then in form — the right
 shape — and it measured a 0.8-point reachability gain because its cues are NONFOCAL: they live in a
