@@ -753,3 +753,103 @@ stale curator run.
 
 *ALPHA, 2026-09-01 ~04:30. Amendment only — nothing built, nothing committed; one file touched, this
 one. A trace to re-run, not a doctrine to believe.*
+
+---
+
+# AMENDMENT — 2026-09-01 ~05:30, at the keeper's pick, BEFORE the build
+
+**Chair-written, at the keeper's decision. Not merit-checked by another seat yet** — it corrects
+numbers in ALPHA's registration that ECHO attacked, and neither has read this. Route it to both
+before it is treated as settled. Every figure below prints from the command beside it.
+
+## The keeper's pick: (a) BY DATE
+
+**(a) ships. (b) remains the named amendment condition, and (c) below joins it.**
+
+## 1 · §3's headline is STALE, and it went stale tonight
+
+§3 reads *"128,976 carried, 390,968 indexed — identical to (a) today"* and §2 prices `09-01` at
+**40,199 (still growing)**. The parenthesis was right and the headline did not survive it.
+
+    node -e 'const fs=require("fs"),p=require("path"),d="exo_memory/librarian";
+      const s=f=>fs.statSync(p.join(d,f)).size;
+      console.log("09-01",s("2026-09-01.md"),"08-31",s("2026-08-31.md"))'
+
+    09-01 87431  08-31 88777
+
+`2026-09-01.md` went **40,199 -> 87,431** while the librarian worked tonight. **The two rules no
+longer coincide today, and today is one of the divergent days:**
+
+| | carried today | consequence |
+|---|---|---|
+| **(a)** | **176,208** | keeps `09-01` + `08-31` |
+| **(b)** | **87,431** | `08-31` **drops out entirely** — the night of the battery run |
+
+**ECHO's fix-3 condition is therefore LIVE AT DISPATCH, not hypothetical.** §4 says *"under (a) it
+holds only while the carried pair is <= ~150k bytes... §3 prices today, where the two coincide."*
+Today's pair is **176,208**, above that threshold. **(a) ships knowing the pair already exceeds the
+condition under which its landing prediction was called safe.** That is the rule working exactly as
+registered, and it is the price the keeper picked with his eyes open.
+
+## 2 · §4 READING (i) IS UNAFFECTED — and the chair said otherwise first
+
+The chair told the keeper *"the -391k prediction is already stale for (a) and (c) both."*
+**That was wrong.** The -391k is the **indexed** figure, and it has not moved:
+
+    node -e 'const fs=require("fs"),p=require("path"),d="exo_memory/librarian";
+      const all=fs.readdirSync(d).filter(f=>f.endsWith(".md"));
+      const dated=all.filter(f=>/^\d{4}-\d{2}-\d{2}/.test(f));
+      const sz=f=>fs.statSync(p.join(d,f)).size;
+      const T=dated.reduce((s,f)=>s+sz(f),0), C=sz("2026-09-01.md")+sz("2026-08-31.md");
+      console.log("dated",T,"carried",C,"indexed",T-C)'
+
+    dated 567176  carried 176208  indexed 390968
+
+**Indexed = 390,968. Delta from the registration: exactly 0.** The whole night's growth landed
+*inside* the window, so it moved the carried side and left the indexed side untouched. **Reading (i)
+— the shelf header must drop by ~390,968 the moment the rule is in the binary — stands verbatim and
+is still checkable in seconds.**
+
+**What moved instead, and must be re-read, not re-derived:** carried **128,976 -> 176,208**
+(+47,232); fixed `LEDGER.md`+`README.md` **32,907 -> 37,289** (+4,382); shelf from this directory
+**161,883 -> 213,497**.
+
+## 3 · SHAPE (c) — registered, NOT shipped: date sets the FLOOR, bytes set the CEILING
+
+The keeper's question was whether both rules' guarantees can be had at once. They can.
+
+> **Always carry today + yesterday. Then continue newest-first, adding whole older files while the
+> running total stays <= N = 150,000. If the floor alone exceeds N, carry it and PRINT that it did.**
+
+`(a)` is a **strict subset** of `(c)` — `(c)` is `(a)` plus backfill — so shipping `(a)` now costs
+nothing later and nothing has to be undone if `(c)` lands.
+
+*Priced over all 11 dates on the record (script in this section's commit body):*
+
+    (b) SILENTLY drops the day-before : 3 of 11  (27%)  - 08-25, 08-31, 09-01
+    (a) window goes EMPTY             : 0 of 11
+    (c) floor exceeds N, so it PRINTS : 3 of 11  - the same three days
+
+**A correction the chair owes on its own framing:** it relayed §3's *"drift on a quiet week — the
+window is empty"* to the keeper as a live risk. **It has never fired.** The record is unbroken,
+`2026-08-22` through `2026-09-01`, no gaps — so `(a)`'s empty-window mode is a real property that is
+**unfired and untested**, not a measured cost. It should not have carried weight in the pick and it
+did.
+
+**`(c)`'s honest price:** it carries the most of the three and it does not bound the shelf on a heavy
+pair — it converts `(b)`'s silent drop into a printed overrun, which is a trade of *bounded-and-blind*
+for *unbounded-and-visible*. It is not free and it is not strictly better.
+
+    OBJECTIVE:  (c) is worth building if, over the next 10 librarian wakes, the printed OVER-FLOOR
+                line fires at least once AND no wake carries a window missing the day-before.
+    FALSIFIER:  if 10 wakes pass with the floor never exceeding N, (c) bought nothing (a) did not
+                already give, and this section is decoration.
+
+*(Objective stated before the run, per `loop/objectives_not_only_falsifiers_2026-09-01.md`.)*
+
+## 4 · WHAT DOES NOT CHANGE
+
+The **ABUSE CONDITION** at §5 is untouched and binds this amendment too: **(a) is two days, N is
+150,000, the bar is 400,000, and none of the three moves once a landing is seen.** Nothing has
+landed. This amendment is written pre-landing, which is the only window in which it is legitimate,
+and it spends the one permitted rule-shape recalibration only if `(c)` is ever adopted.
