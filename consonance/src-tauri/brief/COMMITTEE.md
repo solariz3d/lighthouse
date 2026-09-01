@@ -18,6 +18,37 @@ collapsing to one note.** The number that matters is not how much was said; it i
 voices stayed *distinct* while staying *coupled*. Both poles score zero — voices that never touch
 carry nothing joint, and voices that merely agree carry nothing new.
 
+## The loop, in one card
+
+Quoted from `BUILDING.md`, the master. **Read it there before reconstructing any of this from
+memory** — a paraphrase of a route is how a route rots.
+
+```
+        you
+         │  1. state the inquiry or the project
+         ▼
+   ORCHESTRATOR ──────► LIBRARIAN        2. measured against the corpus
+         │  ◄──────────────┘             3. the parts of the system that apply, cited
+         │
+         │  4. a plan built from what came back
+         ▼
+       PANES                             5. briefed, disjoint, each owning named files
+         │
+         │  `call_librarian`             6. hand-backs go STRAIGHT to the Librarian, as a pointer
+         ▼                                  to the file — the orchestrator is not in this hop
+      LIBRARIAN ──────► ORCHESTRATOR     7. checked; silence is a valid answer; the orchestrator
+         │                                  COMMITS what the librarian collated, and composes nothing
+         ▼
+        you                              8. only on direction — never on state
+```
+
+**Step 6, verbatim:**
+
+**A pane finishes, writes its hand-back to
+the file it was given, and calls `call_librarian` with the POINTER, in that same turn.** The system
+labels it `[pane:<letter>]` from the mount; the board carries the audit row; `chain-status` reads
+that row as the hand-back.
+
 ## The two seats
 
 - **The orchestrator** holds the chair verbs and can deliver work into a committee pane. Every use
@@ -131,11 +162,26 @@ than a thousand characters of answer *after* the dispatch had already left
 been kept. Assume you are about to break it.
 
 **Your half, concretely.** When the work is done: write the hand-back to the file you were given,
-then say so on the board in the same turn, using the verbs the control plane lists — the posting
-one, or the hand-raise if a human should decide before it lands. (Named there and not here on
-purpose: two copies of one verb list drift apart.) Do not commit; the chair commits with attribution. **Do not wait to be asked**
+then ring the Librarian with `call_librarian` in the same turn, carrying the POINTER to that file.
+The board is not its destination and the chair is not in this hop — that middle hop is where a
+finding got re-characterised on 2026-09-01, and a seat nearly scored an arm on a premise the relay
+had invented. (`BUILDING.md` step 6 is the master; this is the pane-facing half of it. A verb is
+named in this document because here the route *is* the rule — the rest of the list stays in the
+control plane.) Do not commit; the chair commits with attribution. **Do not wait to be asked**
 whether you are finished — a pane that finishes silently is indistinguishable from a pane that
 stalled, and the chair cannot tell those apart from outside.
+
+**Where the file goes.** Your packet names it. When it does not — and on 2026-09-01 two packets did
+not — the convention is `exo_memory/handback/<packet-name>_<YYYY-MM-DD>.md`, repo-relative. Do not
+invent a different one: **a correct hand-back written where the librarian does not read is
+indistinguishable from a hand-back never written.**
+
+**What may ride in the call.** The path, and just enough to say which packet it answers. **Never the
+finding in prose — not even when every word of it is also in the file.** This brief used to say only
+*nothing in the call that is not already in the file*, which is looser than the verb's own rule and
+lets a summary through; on 2026-09-01 three calls met the brief and broke the verb, two of them by
+the seat that wrote this paragraph. The file is the master and the call is the pointer — the
+librarian's own rule, turned around.
 
 > **AMENDED 2026-08-26.** *"Do not commit; the chair commits with attribution"* above is superseded by
 > the amendment at the **Nothing committed** bullet — name your paths, say who wrote it in the body,

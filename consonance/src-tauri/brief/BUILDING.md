@@ -222,7 +222,11 @@ night. `node consonance/tools/ferry.js --report`.*
    hand-back to the file you were given, then ring the librarian with the path in the same turn —
    the notes are the master and the call is the pointer, the librarian's own rule turned around.
    Not the orchestrator: that hop is where findings got re-characterised, and the verb has no row
-   for it. Nothing in the call that is not already in the file.
+   for it. **The call carries the POINTER and a one-line orientation — never the finding.** "Nothing
+   in the call that is not already in the file" was the weaker form: it permits restating the whole
+   finding, which is the re-characterisation this edge was built to remove. **Write the hand-back to
+   `exo_memory/handback/<packet>_<date>.md`** — the librarian polls that directory and every hand-back
+   of 2026-09-01 landed there; ruled from that desk, confirmed here.
 
 ---
 

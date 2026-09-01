@@ -31,6 +31,11 @@ hook, same moment, two parties, two outcomes. That is a mechanism split, not a r
 
 ### 1a · The channel count, re-derived — and the units corrected
 
+> **AMENDED 2026-09-01 — the block below is kept as the dated trace and its UNIT is withdrawn.
+> The correction is not that the figures drifted; it is that `consonance/hooks/*.js` was never the
+> right glob. Read it against the amendment at the end of this file before quoting any number
+> from it.**
+
 ```
 grep -ro "additionalContext" consonance/hooks/*.js | wc -l   ->  32   occurrences
 grep -ro "systemMessage"     consonance/hooks/*.js | wc -l   ->   3   occurrences
@@ -79,8 +84,13 @@ the model-only channel does not.* Registered scope: **Main only** (see R9).
   Registered because of the paradox in §3-A4: *the state that most needs to be visible is a state that
   is not changing*, so the payload cannot be the state alone.
 - **Staleness:** if `chain-status.js` cannot establish that its inputs are current, the notice **says
-  "chain state unavailable"** and prints **no value**. Per `memory/stale-digest-is-not-a-deliverable.md`:
-  an old value reads as fresh completion. **And the stale message is itself exception-triggered** — a
+  "chain state unavailable"** and prints **no value**. The finding this rests on, stated so it does
+  not depend on a path: **a preview is not a deliverable** — a digest or status line that matches the
+  *shape* of what you are waiting for reads as completion, so an old value reads as fresh. Repo-side
+  master: `exo_memory/journal/2026-07-27.md:77-78`. *(Amended 2026-09-01: this cited
+  `memory/stale-digest-is-not-a-deliverable.md`, which resolves only inside ONE instance's private
+  auto-memory — real for one reader, unreachable to every other seat and to anyone checking. See the
+  amendment at the end of this file.)* **And the stale message is itself exception-triggered** — a
   line that says "stale" every turn is a status line again, which is the failure this instrument was
   redesigned to avoid.
 - **Not registered, deliberately:** any per-turn always-on rendering. If someone wants one later it is a
@@ -334,3 +344,110 @@ class, which is ECHO's baseline and is exactly the class where scattered fixes w
 - **n = 1 and Main-only.** This registration makes a claim scoreable. It does not support one.
 
 Uncommitted. The chair commits.
+
+---
+
+# AMENDMENT, 2026-09-01 — two defects found by other seats, and the second is bigger than reported
+
+Appended, not rewritten. §1a and R2 keep their original wording as dated traces; this is what
+supersedes them. Both defects were found by seats that did not write this file.
+
+## A · The cross-tier citation (R2) — a new species
+
+R2 cited `memory/stale-digest-is-not-a-deliverable.md`. The librarian reported it as a citation of
+nothing; the chair verified that is **wrong in cause**, and the cause changes the fix:
+
+    ~/.claude/projects/C--Consonance-instances-main/memory/stale-digest-is-not-a-deliverable.md
+      -> EXISTS, 1,574 bytes, Jul 27 04:34
+    git ls-files | grep stale-digest   -> 0
+    exo_memory/memory/                 -> 13 files, none of them this one
+
+**Not a rotted pointer and not a mislabelled one: a pointer that is CORRECT on the machine that
+wrote it and meaningless anywhere else.** It resolves inside one instance's private auto-memory —
+genuinely there for exactly one reader, invisible to every other seat, and un-checkable by anyone
+auditing. Same family as the absolute paths in ECHO's census, one tier up.
+
+**Fixed by taking the content rather than the path.** R2 now states the finding inline — *a preview
+is not a deliverable; a line matching the shape of what you await reads as completion* — and cites
+the repo-side master `exo_memory/journal/2026-07-27.md:77-78`, which is tracked
+(`git ls-files --error-unmatch` exits 0) and therefore reachable to every seat. The private memory
+is named in the amendment note as provenance, never again as a citation.
+
+**The rule this yields, which is the durable part:** a repo document may not cite a path that only
+resolves inside one instance's private tier. Either the content comes across, or a repo-side
+carrier is cited. `git ls-files --error-unmatch <path>` is the whole test and it is one command.
+
+## B · The `systemMessage` count — the drift is real, and the UNIT was wrong from the start
+
+The chair reports *"exactly ONE systemMessage hook" is now stale — 35 occurrences across 2 files,
+though live emissions are still 2.* Re-derived, confirmed, and it goes further.
+
+**First, what is NOT wrong: the figures were exactly right when published.** Run against the tree
+at `426bc2b` (2026-08-30 08:00, this file's own date):
+
+    grep -ro "systemMessage" consonance/hooks/*.js | wc -l   -> 3    (published: 3)
+    grep -rl "systemMessage" consonance/hooks/*.js | wc -l   -> 1    (published: 1)
+    grep -ro "additionalContext" consonance/hooks/*.js | wc -l -> 32  (published: 32)
+
+I expected to find they were already wrong at publication and checked instead of asserting; the
+tree says no. `dispatch-gate.test.js` existed since `dd9f75a` (2026-08-24) but did not yet name
+`systemMessage`. Today the same commands give **35 occurrences across 2 files**.
+
+**Second, the real defect: the second "file" is a TEST, and the glob never distinguished them.**
+
+    ls consonance/hooks/*.js | wc -l                        -> 23
+    ls consonance/hooks/*.js | grep -vc "\.test\.js"        -> 12 hooks (11 are tests)
+
+So the published *"11 files (of 23 hooks)"* was **11 of 23 files matching a glob, of which 5 and 11
+respectively were test files.** The denominator was wrong on 08-30, before anything drifted. This
+file's §1a exists to correct a units error (occurrences compared to files) and shipped a **fourth
+unit** in the same block: files-matching-a-glob counted as hooks.
+
+**The corrected figures, hooks only** (`$(ls consonance/hooks/*.js | grep -v "\.test\.js")`),
+separating comments from live emissions by reading every site:
+
+| unit | published 08-30 | corrected 08-30 | corrected today |
+|---|---|---|---|
+| by file | 11 : 1 | **6 : 1** | **6 : 1** |
+| by occurrence | 32 : 3 | **10 : 3** | **10 : 4** |
+| by live emission | 32 : 2 | **7 : 2** | **7 : 2** |
+
+`additionalContext`: 10 sites in 6 hooks, of which 3 are comments (`precompact-preserve.js:23,24`,
+`sessionstart-state.js:7`) and **7 are live emissions** (`ask-surface.js:46`, `board-digest.js:102`,
+`dream-watch.js:67`, `findings-return.js:194,260`, `precompact-preserve.js:118`,
+`sessionstart-state.js:141`). `systemMessage`: 4 sites in 1 hook, of which 2 are comments
+(`dispatch-gate.js:32,103`) and **2 are live emissions** (`:221`, `:259`) — the trace above names these as `:184` and `:212`, which is where they sat on 08-30; the file has been edited since. A line number is a pointer too.
+
+**The correct unit is STABLE where the published one moved 12x.** On the emitting surface the
+figures went 10:3 → 10:4 in two days — one comment added to `dispatch-gate.js`. The 3 → 35 explosion
+is entirely test-file noise. The drift the chair caught is therefore not a fact about the hooks at
+all; it is the glob reporting a test suite. **That is the argument for the unit, made by the drift.**
+
+## C · WHAT THIS COSTS THIS DOCUMENT — the unwelcome half, stated plainly
+
+§1a says *"The asymmetry is real and large on every unit, so nothing in the ruling changes."*
+**"Large on every unit" is withdrawn.** By occurrence it was **3.3 : 1** at publication and is
+**2.5 : 1** today. That is one-sided, and it is not large. By file it is 6:1, which is.
+
+**The ruling stands, and it stands on the mechanism, not the ratio.** The registered cut is §1's:
+PreToolUse fires *after* the dispatch text is composed, so at that one event a print cannot change
+the seat's already-composed text while a `systemMessage` can change what the keeper does — same
+hook, same moment, two parties, two outcomes. No count enters that argument.
+
+**Registered now, so this cannot be re-decided after the fact:** the ruling would have been wrong if
+the mechanism split failed — if a print at PreToolUse could reach the keeper in a way that changes
+what they do. **A ratio near 1:1 would not have overturned it, and I should not have leaned on the
+ratio's size as if it would.** Reaching for a big number to support a claim the mechanism already
+carried is the failure mode this whole registration is about, committed inside it.
+
+## D · WHAT THIS AMENDMENT DOES NOT ESTABLISH
+
+- The hooks/tests split was drawn from filenames (`*.test.js`), not from what the harness actually
+  loads as a hook. A hook registered under a name that does not match that pattern would be
+  miscounted, in the same class of error being corrected here. Unchecked.
+- Comment-vs-emission was read by eye at ten sites and four. Small enough to be reliable, not
+  mechanical, and no instrument enforces it.
+- Nothing here is verified at runtime. `:221` and `:259` are read as live emissions from source; no
+  emission was observed.
+- R2's registered VALUES are untouched — 15/30/30, the payload, the staleness behaviour. Only its
+  citation and one figure's unit changed. The registration's falsifiers stand as written.
