@@ -123,6 +123,18 @@ $env:CONSONANCE_LIBRARIAN_BUDGET = '0'
 $sources = @(
   (Join-Path $root 'src-tauri\src'),
   (Join-Path $root 'ui'),
+  # brief/ ADDED 2026-09-01, and its absence was a silent one-way valve.
+  # The briefs are bundle RESOURCES: tauri.conf.json:35 copies them next to the exe at build
+  # time, and room_brief() (main.rs:2818) serves tier 2 -- "beside BOOT.md" -- from that copy,
+  # because BOOT.md IS beside the exe. So the repo file is NOT what a pane reads; the build
+  # directory's copy is, and only a build refreshes it.
+  # brief/ was not on this list, so a brief-only edit changed nothing a seat could see AND
+  # could not trigger the rebuild that is the only thing which ships it. A one-way valve:
+  # edit, relaunch, observe no change, with every instrument green.
+  # Found the hard way at 07:36 -- the librarian was told in LIBRARIAN.md to open its own map,
+  # the shell regenerated, and the instruction was absent because the bundled copy was still
+  # the 04:17 version. The chair had twice told the keeper "brief changes need no rebuild".
+  (Join-Path $root 'src-tauri\brief'),
   (Join-Path $root 'src-tauri\Cargo.toml'),
   (Join-Path $root 'src-tauri\Cargo.lock'),
   (Join-Path $root 'src-tauri\tauri.conf.json')
