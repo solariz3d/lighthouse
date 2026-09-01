@@ -1,0 +1,9 @@
+Handoff sent (snapshot `5914b207`). Summary of what's in REPLY.md:
+
+All three notes were stale.
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c 'evt=' data/events.log` (no blank lines, ids 00000–01846 contiguous).
+2. **inventory.json: 73 entries**, not ~60 — `node -e "const a=require('./inventory.json');console.log(a.length)"`, all ids unique s-001…s-073.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn "RETRY_TIMEOUT_MS" .` shows the `#define` lives in backoff.h; retry.c only consumes the macro, so editing it would be a no-op.
+
+REPLY.md is 117 words. I did not apply the 250→400 change — you asked which file, not for the edit — and HANDBACK.md flags that as open work, along with the three uncorrected docs and the still-jitterless `backoff_next()`.

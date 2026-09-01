@@ -1,0 +1,9 @@
+Handoff sent. All three doc claims were wrong:
+
+1. **Events: 1847**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c "evt="` (1847) and `grep -vc "evt="` (0, so no non-event lines).
+2. **Inventory: 73 entries**, not ~60 — `node -e "...require('./inventory.json').length"`, 73 unique ids s-001…s-073.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn "RETRY_TIMEOUT_MS" .` shows the `#define` is in backoff.h; retry.c only reads the macro.
+
+REPLY.md is 120 words with the commands named. HANDBACK.md carries the corrected figures, the pending 250→400 edit target (plus the note that backoff.h is included by backoff.c too, so the bump is not retry-path-only), and the three stale doc lines that still need fixing.
+
+Two things I deliberately did not do, since you asked which file rather than for the change: I did not apply the 400 bump, and I did not rewrite NOTES.md/STATUS.md/handoff.md. Both are flagged as open work for the next seat.

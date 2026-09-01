@@ -1,0 +1,9 @@
+Handoff sent (snapshot `61a76007`). Everything for you is in REPLY.md, written before the handoff.
+
+All three documented figures were stale:
+
+1. **events.log holds 1847 events**, not 2,213 — `wc -l data/events.log`. Cross-checked: `grep -c "evt=" ` also gives 1847 and `grep -vc "evt=" ` gives 0, so every line is an event. Last id is `01846`, 0-indexed, so 1847 is consistent rather than an off-by-one.
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. IDs s-001..s-073, all unique. Three are `offline` (s-041, s-052, s-066) but still registered; if you ever want *online* sensors that's 70.
+3. **The RETRY_TIMEOUT_MS edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .` finds exactly one definition, `#define RETRY_TIMEOUT_MS 250` in the header. retry.c only consumes the macro via `#include "backoff.h"`.
+
+REPLY.md is 121 words. I did not apply the 250→400 change — you asked which file the edit goes in, not for the edit — and I left NOTES.md, STATUS.md and handoff.md uncorrected for the same scope reason. HANDBACK.md flags both as open work, including that handoff.md:6 will keep pointing the next seat at the wrong file until someone fixes it.

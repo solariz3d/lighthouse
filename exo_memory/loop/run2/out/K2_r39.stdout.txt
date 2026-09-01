@@ -1,0 +1,9 @@
+Handoff sent (snapshot `6f154d68`). All three notes were wrong:
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`. Verified lines = events (one per line, ids 00000–01846, trailing newline).
+2. **inventory.json: 73 entries**, not ~60 — parsed the array with `node -e`. All 73 ids unique; 70 ok / 3 offline, and those 3 are the ones STATUS.md names, so "~60" isn't an online-only count.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — ripgrep found `#define RETRY_TIMEOUT_MS 250` in the shared header; retry.c only reads it via `#include`. Editing retry.c would be a no-op.
+
+I did **not** apply the 250 → 400 bump — you asked which file, not for the edit. Note `backoff.h` is a shared header; nothing else here includes it, but the wider tree is worth checking before assuming a one-file blast radius.
+
+REPLY.md is 117 words. HANDBACK.md carries the three corrections with their source line numbers, the unapplied-bump state, and the header caveat. I left the stale notes themselves unedited and flagged them for correction rather than rewriting files outside the ask.

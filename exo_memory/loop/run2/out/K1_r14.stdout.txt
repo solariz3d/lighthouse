@@ -1,0 +1,9 @@
+Handoff sent. Summary of what I found — all three documented figures were wrong:
+
+1. **events.log: 1847 events**, not 2,213 — `wc -l data/events.log`. The line count is a safe event count: no blank lines, no non-`evt=` lines, trailing newline present, ids contiguous 00000–01846.
+2. **inventory.json: 73 entries**, not ~60 — parsed the JSON and took `.length`. 73 distinct ids, no duplicates, 70 ok / 3 offline. The 3 offline matches STATUS.md, so only the total drifted.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS net/`. retry.c:4 only uses the macro via `#include "backoff.h"`.
+
+I did not make the 250→400 edit — you asked only which file it belongs in, so I flagged it as open work in HANDBACK.md rather than acting on it.
+
+REPLY.md is 143 words, naming the command behind each figure. HANDBACK.md carries the three corrections, the verification detail, and a note that raising the base propagates through `retry_wait()`'s doubling chain (attempt 3: 2000ms → 3200ms), which is worth checking against caller timeout budgets. `node handoff.js` was my last action, snapshot `cd59feb3`.

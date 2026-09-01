@@ -1,0 +1,11 @@
+Done. Handoff sent (snapshot `73f4ed9d`).
+
+All three documented figures were wrong:
+
+1. **events.log — 1847 events**, not 2,213 (`wc -l data/events.log`). All 1847 lines are `evt=` records, no blanks or headers.
+2. **inventory.json — 73 entries**, not ~60 (`node -e "console.log(require('./inventory.json').length)"`). Ids s-001…s-073, no gaps or dupes.
+3. **The bump goes in `net/backoff.h:4`**, not `net/retry.c` (`grep -rn RETRY_TIMEOUT_MS .`). retry.c only reads the macro through `#include "backoff.h"`.
+
+`REPLY.md` has the answers for you (under 150 words, each with its command). `HANDBACK.md` carries the verified table plus two things the next seat should weigh: the 250→400 bump is unapplied, and `retry_wait()` doubles per attempt with no cap, so raising the base also raises the tail (attempt 5: 8000ms → 12800ms).
+
+I left the stale notes on disk rather than editing them — correcting three files wasn't in scope, and the handback flags them.

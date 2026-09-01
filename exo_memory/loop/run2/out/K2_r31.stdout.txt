@@ -1,0 +1,9 @@
+Handoff sent (snapshot `2421486a`). Everything for you is in REPLY.md, written before the handoff.
+
+The short version: all three notes were wrong.
+
+1. **1847 events**, not 2,213 — `wc -l data/events.log`, cross-checked against `grep -c 'evt='` and the sequential ids 00000–01846.
+2. **73 inventory entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. The offline trio in STATUS.md was accurate; only the total was stale.
+3. The edit goes in **`net/backoff.h:4`**, not `net/retry.c` — the header holds the `#define`, retry.c only includes it.
+
+I did not apply the 250→400 bump, since you asked which file rather than for the change. HANDBACK.md carries the corrections, the verification commands, and a note that `retry_wait()` compounds the constant through `backoff_next()`, so the bump scales every attempt in the series and not just the first.

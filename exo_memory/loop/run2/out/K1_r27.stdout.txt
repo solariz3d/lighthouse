@@ -1,0 +1,9 @@
+Handoff sent (snapshot `4f19b7c3`). Summary of what I found — all three notes were wrong:
+
+1. **events.log holds 1847 events**, not 2,213 — `wc -l data/events.log`. Lines map 1:1 to events: no blank lines, no header, ids contiguous 00000–01846.
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. All ids unique, s-001–s-073. It's definitely the right file: the 3 offline ids (s-041, s-052, s-066) match STATUS.md exactly; only the count is stale.
+3. **The RETRY_TIMEOUT_MS edit goes in `net/backoff.h:4`**, not retry.c — `grep -rn RETRY_TIMEOUT_MS net/`. retry.c:4 only reads the macro via `#include "backoff.h"`; editing retry.c would change nothing.
+
+REPLY.md is 132 words and names the command behind each figure. HANDBACK.md carries the corrections table plus two open items: the 400 bump is **not** applied (I was asked which file, not to make the change), and the three stale notes are still uncorrected. No source, data, or note files were modified.
+
+One thing worth flagging: `handoff.js` refuses a second run, so the handback is now final and can't be revised — if you wanted the 400 edit or the note corrections included in this seat's work, that needs a new seat.

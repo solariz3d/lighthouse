@@ -1,0 +1,9 @@
+Done. Handoff sent (snapshot `77b414cd`).
+
+All three notes were stale — answers are in `REPLY.md` (121 words):
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`. All lines are well-formed records, ids 00000–01846.
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. Ids s-001…s-073, all unique.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS net/`. retry.c only reads the macro via the include.
+
+I did not apply the 250→400 bump, since the question was which file it belongs in. `HANDBACK.md` carries the three corrections with their verification commands, flags that NOTES.md/STATUS.md/handoff.md are still uncorrected, and leaves the bump as pending work with a note that backoff.h is a shared header and that raising the base scales every doubled retry step.

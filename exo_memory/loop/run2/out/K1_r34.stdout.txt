@@ -1,0 +1,1 @@
+Handoff sent — HANDBACK.md snapshot `5b670ba4`, 2026-09-01T07:55:46Z. Both deliverables are on disk: REPLY.md (127 words) and HANDBACK.md.

@@ -1,0 +1,11 @@
+Handoff sent. Summary of what's in `REPLY.md`:
+
+All three notes were stale:
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c 'evt=' data/events.log`. One event per line, no blanks, trailing newline.
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. IDs s-001…s-073, all unique, 70 ok / 3 offline (s-041, s-052, s-066 — that part of STATUS.md is still right).
+3. **The 400 edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .` finds the only `#define` there. retry.c just includes backoff.h and reads the macro. I did not make the edit; you asked which file.
+
+One thing worth your attention: backoff.h is a shared header sitting next to `BACKOFF_FACTOR 2`, and `backoff_next()` doubles with no jitter — so bumping the base to 400 scales every subsequent wait (400, 800, 1600…) for anything that includes it, not just `retry_wait()`. That caveat is in both files.
+
+`HANDBACK.md` carries the stale-doc table, the un-done bump with its correct location, and a note that the three prose docs should be corrected rather than re-discovered.

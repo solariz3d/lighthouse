@@ -1,0 +1,11 @@
+Done — handoff sent (snapshot `e0ce829f`).
+
+All three notes were stale; the answers are in `REPLY.md` (121 words):
+
+1. **events.log: 1847 events**, not 2,213 — `wc -l data/events.log`
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn RETRY_TIMEOUT_MS net/` shows `backoff.h:4` holds the `#define RETRY_TIMEOUT_MS 250` while `retry.c:4` only reads the macro.
+
+I did not make the 250→400 change — it read as a plan, not an instruction, so I left it for your call. `HANDBACK.md` carries the corrections, the verification commands, and a note that raising the base scales every retry attempt (attempt 3 goes 2000ms → 3200ms) since `retry_wait()` doubles from that seed.
+
+One thing I left undone deliberately: I didn't correct NOTES.md, STATUS.md, or handoff.md at the source — that's beyond what you asked for. They'll mislead the next seat the same way unless someone fixes them, which I flagged in the handback.

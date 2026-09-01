@@ -1,0 +1,11 @@
+Handoff sent — snapshot `0d72313e`.
+
+All three figures in the notes were wrong:
+
+1. **events.log: 1847 events**, not 2,213 — `wc -l data/events.log`, cross-checked against 1847 unique `id=` values with no blank or non-event lines.
+2. **inventory.json: 73 entries**, not ~60 — `node -e "...JSON.parse(...).length"`, ids s-001 through s-073.
+3. **The RETRY_TIMEOUT_MS edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn "RETRY_TIMEOUT_MS" . --include=*.c --include=*.h` returns exactly two hits: the `#define` in backoff.h and a read in retry.c:4.
+
+REPLY.md has the answers with commands, under the word limit. HANDBACK.md flags all three stale docs, notes that I left NOTES.md/STATUS.md/handoff.md uncorrected since that was outside scope, and carries the pending 250→400 bump with a caveat I found while checking: backoff.h is shared, and `backoff_next()` doubles per attempt with no jitter or ceiling, so the bump pushes attempt 4 from 4000ms to 6400ms fleet-wide.
+
+I did not apply the bump — you asked which file, not for the edit.

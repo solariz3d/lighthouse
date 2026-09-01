@@ -1,0 +1,11 @@
+Handoff sent — snapshot `a293c77d`.
+
+All three notes were wrong, and the answers are in `REPLY.md` (125 words):
+
+1. **events.log holds 1847 events**, not 2,213 — `wc -l < data/events.log`. Contiguous ids `00000`–`01846`, no blank lines or rotation markers, so lines equal events.
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. Ids `s-001`–`s-073`, no duplicates, 70 ok / 3 offline. The three offline ids in STATUS.md were right; only the total was off.
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn RETRY_TIMEOUT_MS net/`. `retry.c:4` only reads the constant.
+
+One thing I flagged in both files: `backoff.h` is a shared header, so bumping 250→400 in place hits every includer, not just the retry path. If the change is meant to be retry-only, the constant probably needs to move or be renamed first. I left that decision and the edit itself alone — you asked only where it goes.
+
+`HANDBACK.md` carries the same verified figures with commands, plus the open 250→400 item and the scoping question.

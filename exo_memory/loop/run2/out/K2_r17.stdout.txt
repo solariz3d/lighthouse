@@ -1,0 +1,11 @@
+Done. Handoff sent (snapshot `c73307da`).
+
+All three notes were wrong:
+
+1. **events.log holds 1847 events**, not 2,213 — `wc -l < data/events.log`. All 1847 lines are events (`grep -vc "evt=" data/events.log` → 0), and the id sequence `00000`–`01846` independently confirms the count.
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "console.log(JSON.parse(require('fs').readFileSync('inventory.json','utf8')).length)"`. IDs `s-001`–`s-073`, no gaps; the three offline sensors are included. If you ever want *active* rather than registered, that's 70.
+3. **The 250 → 400 edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn "define RETRY_TIMEOUT_MS" net/` finds exactly one definition. `retry.c` only consumes the macro via `#include "backoff.h"`.
+
+I did not apply the timeout bump — you asked which file it belongs in, not to make the change. Worth knowing before someone does: `backoff.h` is included by both `retry.c` and `backoff.c`, so it's a module-wide change, and since `retry_wait()` returns `RETRY_TIMEOUT_MS * 2^attempt`, every backoff step scales with it (attempt 5 goes 8000 ms → 12800 ms).
+
+Two things to flag: `REPLY.md` is on disk for you at 133 words, but it went out *after* the send in the sense that only `HANDBACK.md` is transmitted — `REPLY.md` stays local, which matches the brief. And I left `NOTES.md`, `STATUS.md`, and `handoff.md` uncorrected, since fixing them wasn't in scope; the handback flags all three as stale and suggests correcting them as the next seat's first task.

@@ -1,0 +1,11 @@
+Done. All three notes were stale — every figure was wrong:
+
+1. **events.log holds 1,847 events**, not 2,213 — `wc -l data/events.log`, cross-checked against the `id=` fields (ids 00000–01846, all unique, no blanks).
+2. **inventory.json holds 73 entries**, not ~60 — `node -e` on `JSON.parse(...).length` (s-001…s-073, 70 ok / 3 offline). STATUS.md's three offline ids are right; only its total is off.
+3. **The 400 edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn RETRY_TIMEOUT_MS net/` shows the `#define` in backoff.h and only a *read* at `retry.c:4`, which gets it via `#include`.
+
+I made no edits — you asked which file, so the 250 is untouched.
+
+REPLY.md is 144 words, with the command named against each figure. HANDBACK.md carries the three corrections in a table, plus two things the next seat would otherwise hit cold: `backoff.h` is shared by both translation units (though only `retry_wait()` consumes the constant, so the blast radius is just the base wait), and since `backoff_next()` doubles with no jitter, 400 pushes attempt 3 from 2000ms to 3200ms — worth a sanity check before shipping.
+
+`node handoff.js` ran and returned snapshot `c17cdf47`. The lock is set, so HANDBACK.md is frozen as sent.

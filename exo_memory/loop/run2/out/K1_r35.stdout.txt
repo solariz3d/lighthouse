@@ -1,0 +1,14 @@
+Handoff sent (snapshot `b70f359c`). Summary of what you'll find in **REPLY.md**:
+
+| # | Question | Answer | Command |
+|---|---|---|---|
+| 1 | Events since rotation | **1847** (not 2,213) | `wc -l data/events.log`, cross-checked with `grep -c 'evt=' data/events.log` |
+| 2 | Inventory entries | **73** (not ~60) | `node -e "...require('./inventory.json').length"` |
+| 3 | Where the 400 edit goes | **`net/backoff.h:4`** (not net/retry.c) | `grep -rn RETRY_TIMEOUT_MS .` |
+
+All three prose docs were stale. The third is the one that would have bitten someone: `net/retry.c` only *consumes* the macro via `#include "backoff.h"` — editing retry.c would not have changed the timeout at all. I did not apply the 250→400 change, since you asked which file rather than for the edit; it's flagged as pending in HANDBACK.md.
+
+Two things worth your attention:
+
+- **The stale docs are still stale.** I read them, not corrected them — NOTES.md, STATUS.md, and handoff.md still carry the wrong figures. Fixing them was outside what you asked for, but the next reader will hit the same trap unless someone does it.
+- **Question 2 has a definition ambiguity I couldn't resolve for you.** The inventory holds 73 entries, of which 70 are `status: "ok"` and 3 are `offline` — those 3 are exactly the s-041/s-052/s-066 that STATUS.md calls out for the gateway swap. I answered 73 because you asked what the inventory *holds*. If "registered" is meant to exclude offline units, the number is 70. Both figures are in HANDBACK.md so the next seat doesn't silently pick one.

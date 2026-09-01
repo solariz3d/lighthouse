@@ -1,0 +1,9 @@
+Handoff sent (snapshot `9f240cd1`). Summary of what I found — all three notes were stale:
+
+1. **Events: 1,847**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c "evt="`. IDs run 00000–01846 unbroken, so that's the true event count.
+2. **Inventory: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. 73 unique IDs, 70 ok / 3 offline. The three offline units in STATUS.md were correct; only the total was wrong.
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn RETRY_TIMEOUT_MS .`. retry.c has no `#define`; it picks the macro up via `#include "backoff.h"`, so editing retry.c would have compiled and silently done nothing.
+
+I did not make the 250 → 400 change — you asked which file, not for the edit — and flagged it in HANDBACK.md as an open item, along with the caveat that backoff.h is shared, so the bump isn't scoped to the retry path alone.
+
+REPLY.md is 136 words, and both files were written before `node handoff.js`, which locks after a single run.

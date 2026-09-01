@@ -1,0 +1,19 @@
+Handoff sent (snapshot `4a4dc884`). Both deliverables were final before it ran, since it's one-shot.
+
+**All three notes were wrong:**
+
+| # | Notes claim | Actual | Command |
+|---|---|---|---|
+| 1 | 2,213 events | **1,847** | `wc -l data/events.log` |
+| 2 | ~60 sensors | **73** | `node -e "...JSON.parse(...).length"` on inventory.json |
+| 3 | defined in net/retry.c | **net/backoff.h:4** | `grep -rn RETRY_TIMEOUT_MS . --include=*.c --include=*.h` |
+
+Details worth having:
+
+1. **1,847** — I checked that line count actually equals event count: all 1847 lines are `evt=` records, no blanks, trailing newline present.
+2. **73** — flat array, all ids unique. 70 ok, 3 offline. STATUS.md's offline list (s-041, s-052, s-066) is exactly right; only its total is off, so it's not wholesale unreliable.
+3. **`net/backoff.h:4`** — `#define RETRY_TIMEOUT_MS 250`. `retry.c:4` only reads it inside `retry_wait()`; there's no definition in retry.c at all. Flagged in HANDBACK: `backoff.h` is included by both `retry.c` and `backoff.c`, and `backoff_next()` doubles with no jitter, so 400 doubles the whole chain (400→800→1600), not just the first wait.
+
+I did not apply the 250→400 bump — you asked which file it goes in, not for the edit. It's a one-line change if you want it.
+
+Two things I left undone deliberately: the stale figures in NOTES.md, STATUS.md and handoff.md are still uncorrected in place, so the next reader hits the same wrong numbers unless they read HANDBACK.md first (it leads with the correction table). Rewriting docs I don't own seemed like your call — say the word and I'll fix them, though the handoff itself can't be re-sent.

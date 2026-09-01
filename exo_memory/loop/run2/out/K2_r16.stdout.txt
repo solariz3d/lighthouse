@@ -1,0 +1,9 @@
+Handoff sent — `HANDBACK.md` snapshot `80d3f705`.
+
+All three notes were wrong; answers are in `REPLY.md` (114 words):
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log`. Every line is an event, ids 00000–01846, no duplicates.
+2. **inventory.json: 73 entries**, not ~60 — `node -e "...JSON.parse(...).length"`. Ids s-001…s-073, all unique.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn "define RETRY_TIMEOUT_MS" .` returns a single hit. retry.c only `#include`s backoff.h and reads the macro.
+
+I did not apply the 250→400 change — you asked which file, not for the edit. `HANDBACK.md` flags it as pending, notes that backoff.h is shared (current includers: retry.c, backoff.c), and warns the docs themselves are still uncorrected.

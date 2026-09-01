@@ -1,0 +1,9 @@
+Handoff sent (snapshot `5c0ff5be`). Summary of what's in REPLY.md:
+
+All three claims in the notes were wrong:
+
+1. **events.log: 1,847 events**, not 2,213 — `grep -c 'evt=' data/events.log`. Corroborated by `wc -l` and 1,847 unique `id=` values (00000–01846), with no rotation marker inside the file.
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. Ids s-001…s-073, all unique. (The three offline units STATUS.md names do check out; only the count drifted.)
+3. **The RETRY_TIMEOUT_MS edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn 'define RETRY_TIMEOUT_MS' .` returns exactly one hit. retry.c only consumes the macro via `#include "backoff.h"`.
+
+I did not make the 250→400 edit — you asked where it goes, not to make it. HANDBACK.md flags that it's still outstanding, notes that the three stale docs remain uncorrected, and warns that since `backoff_next()` doubles per attempt, a 400 base doubles every wait down the chain (400, 800, 1600…) — worth checking against the surrounding timeout budget.

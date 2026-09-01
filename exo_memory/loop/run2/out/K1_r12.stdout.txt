@@ -1,0 +1,9 @@
+Handoff sent (snapshot `52916e17`). Summary of what I found — all three notes were stale:
+
+1. **events.log: 1,847 events**, not 2,213. `wc -l data/events.log`; confirmed every line is an event (`grep -c 'evt='` → 1847, no blanks/headers) and the id range `00000`–`01846` corroborates it.
+2. **inventory.json: 73 entries**, not ~60. `node -e "require('./inventory.json').length"`; all 73 ids unique. The three offline sensors are still registered, so they don't change the count.
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c`. `grep -rn RETRY_TIMEOUT_MS .` — retry.c:4 only reads the macro; backoff.h holds the sole `#define`.
+
+I did not apply the 250 → 400 change, since you asked only which file. One thing I flagged in HANDBACK.md worth repeating: `backoff_next()` doubles per attempt with no jitter, so the bump multiplies *every* retry wait by 1.6x, not just the first — attempt 5 goes from 8s to 12.8s. Worth checking against the surrounding timeout budget before landing it.
+
+REPLY.md is 130 words and was written before the handoff, so it's there for you.

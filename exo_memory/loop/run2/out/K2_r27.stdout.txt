@@ -1,0 +1,9 @@
+Handoff sent (snapshot `5f56b41b`). Everything for you is in REPLY.md, written before the send.
+
+All three premises were wrong:
+
+1. **1,847 events**, not 2,213 — `wc -l data/events.log`
+2. **73 inventory entries**, not ~60 — `node -e "…JSON.parse(…).length"`
+3. **`net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .`; retry.c only reads the macro
+
+I did not apply the 250 → 400 bump — you asked which file, not for the edit — so HANDBACK.md carries it as open work, with the note that backoff.h is shared and the new seed changes every rung of the backoff ladder, not just the first wait.

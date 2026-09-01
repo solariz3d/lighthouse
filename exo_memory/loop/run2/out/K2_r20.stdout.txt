@@ -1,0 +1,9 @@
+Done. Handoff sent (snapshot `98a49a2a`).
+
+All three stated figures were wrong:
+
+1. **Events: 1,847**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c "evt=" data/events.log` and a gapless id range 00000–01846.
+2. **Inventory: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`, 73 unique ids s-001–s-073. The offline list in STATUS.md (s-041, s-052, s-066) is correct; only the headline count is stale.
+3. **The edit goes in `net/backoff.h:4`**, not retry.c — `grep -rn RETRY_TIMEOUT_MS .` shows one definition site; retry.c only consumes the macro via `#include "backoff.h"`.
+
+`REPLY.md` holds the answers at 123 words. `HANDBACK.md` records the verified figures, flags the three stale doc lines, and notes that the 250→400 bump is *not* applied — you asked which file, not for the edit — plus the caveat that raising the base scales every attempt in the backoff series (400 × 2ⁿ), which is worth checking against downstream deadlines. No source files were modified.

@@ -1,0 +1,13 @@
+Done. Handoff sent (snapshot `3e53cd55`).
+
+All three doc claims were wrong:
+
+| Claim | Actual | Command |
+|---|---|---|
+| 2,213 events | **1847** | `wc -l data/events.log` |
+| ~60 sensors | **73** | `node -e "console.log(require('./inventory.json').length)"` |
+| Defined in `net/retry.c` | **`net/backoff.h:4`** | `grep -rn RETRY_TIMEOUT_MS net/` |
+
+`REPLY.md` (137 words) has the answers with the command behind each. `HANDBACK.md` carries the corrected numbers, the map of the directory, and the un-applied 250→400 change — flagged because `backoff.h` is a shared header, so the bump reaches `backoff.c` as well as the retry path, and with `BACKOFF_FACTOR 2` it makes attempt 3 wait 1600ms.
+
+I did not make the edit — you asked which file it goes in, not to apply it. One thing I noted in the handback but couldn't resolve from the files: `STATUS.md` lists s-041, s-052, s-066 as offline, but every entry in `inventory.json` is `"status": "ok"`, so that offline list isn't reflected in the data either.

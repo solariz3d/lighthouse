@@ -1,0 +1,9 @@
+Handoff sent. Summary of what I found — all three notes were stale:
+
+1. **Events: 1,847**, not 2,213 — `wc -l < data/events.log`, cross-checked with `grep -c 'evt='`. Ids run contiguously 00000–01846, no blank lines, so the count is unambiguous.
+2. **Inventory: 73 entries**, not ~60 — `node -e "JSON.parse(fs.readFileSync('inventory.json')).length"`. 73 unique ids, no duplicates.
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c`. That's where `#define RETRY_TIMEOUT_MS 250` lives; retry.c only consumes it via `#include "backoff.h"`, so an edit there would compile and silently do nothing.
+
+`REPLY.md` has all three with the commands, at 126 words. `HANDBACK.md` carries the corrected figures plus two things worth your attention: STATUS.md names s-041/s-052/s-066 as offline but every entry in inventory.json reads `"status": "ok"`, and bumping the macro in backoff.h reaches backoff.c too, not just the retry path.
+
+One judgment call: I did not apply the 400 change. "We're bumping it to 400 — which file does the edit go in?" read as scoping the target rather than authorizing the edit, so `backoff.h:4` still reads 250. That's flagged as open in the handback. If you wanted it applied, that's now a next-seat task — the handoff lock means I can't revise or re-send.

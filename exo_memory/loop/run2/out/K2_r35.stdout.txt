@@ -1,0 +1,11 @@
+Done. Handoff sent (snapshot `3fd0999e`).
+
+All three notes were stale:
+
+1. **Events: 1,847**, not 2,213 — `wc -l data/events.log`
+2. **Inventory: 73 entries**, not ~60 — array length from parsed `inventory.json`
+3. **`net/backoff.h:4`**, not `net/retry.c` — `grep -rn RETRY_TIMEOUT_MS net/`
+
+`REPLY.md` (117 words) has your answers with the command behind each figure. `HANDBACK.md` carries the corrections table plus a caution I found while confirming #3: `RETRY_TIMEOUT_MS` lives in a header included by both `retry.c` and `backoff.c`, and `retry_wait()` doubles it per attempt with no cap — so 250 → 400 scales every attempt by 1.6×, not just the first wait. Worth checking the retry deadline before that lands.
+
+I did not apply the bump — you asked which file, so I answered rather than edited. Nothing in the directory was modified.

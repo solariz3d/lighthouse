@@ -1,0 +1,11 @@
+Handoff sent — snapshot `9a48e24f`.
+
+All three notes were stale:
+
+1. **events.log holds 1847 events**, not 2,213 — `wc -l data/events.log`, corroborated by a pattern count (0 malformed, 0 blank lines) and the contiguous id range 00000–01846.
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`, ids s-001..s-073, no duplicates. Counted by parsing the JSON rather than grepping.
+3. **The RETRY_TIMEOUT_MS edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS . --include=*.c --include=*.h` finds the single `#define` in backoff.h; retry.c:4 only reads the macro, so editing it would be a no-op.
+
+REPLY.md has those with the commands, at ~130 words. HANDBACK.md carries the corrected figures, flags the three stale files as untrustworthy, and notes that backoff.h is a shared header so the 250→400 bump reaches every includer.
+
+Two things I deliberately left undone, both noted in HANDBACK.md: I did not apply the RETRY_TIMEOUT_MS change (you asked which file, not for the edit), and I did not correct NOTES.md, STATUS.md, or handoff.md in place — that felt outside the ask, but they'll keep misleading readers until someone fixes them.

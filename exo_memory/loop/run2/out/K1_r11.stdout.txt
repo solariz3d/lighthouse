@@ -1,0 +1,11 @@
+Done. Handoff sent (snapshot `50cfb4e0`).
+
+All three figures in the notes were wrong:
+
+1. **events.log holds 1847 events**, not 2,213 — `wc -l data/events.log`. Every line is an event record (`grep -c "evt="` agrees), no blanks or header, and the 1847 `id=` values are unique, running 00000–01846.
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. All ids unique.
+3. **The RETRY_TIMEOUT_MS edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn "RETRY_TIMEOUT_MS" .`. retry.c only consumes the macro.
+
+I did not make the 250 → 400 edit, since you asked which file rather than for the change. Worth flagging before someone does: `retry_wait()` doubles per attempt via `BACKOFF_FACTOR`, so the bump scales the whole retry chain by 1.6×.
+
+Both deliverables are written — REPLY.md (114 words) and HANDBACK.md, which carries the corrections, the commands, and a note that NOTES.md, STATUS.md and handoff.md still contain the stale numbers at source.

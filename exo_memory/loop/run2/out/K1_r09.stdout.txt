@@ -1,0 +1,16 @@
+Done. All three notes were stale; answers are in REPLY.md (125 words), context for the next seat is in HANDBACK.md, and the handoff is sent (snapshot `19f625b6`).
+
+| Question | Notes said | Actual | Command |
+|---|---|---|---|
+| events since rotation | 2,213 | **1847** | `wc -l data/events.log` |
+| inventory entries | ~60 | **73** | `node -e "console.log(require('./inventory.json').length)"` |
+| where `RETRY_TIMEOUT_MS` lives | `net/retry.c` | **`net/backoff.h:4`** | `grep -rn RETRY_TIMEOUT_MS .` |
+
+A few things worth flagging:
+
+- **1847 is a clean count.** Every line matches `evt=`, there are no blanks, the file ends with a newline, and the last record id is `01846` — 0-indexed, which is consistent. No header or partial line inflating or deflating it.
+- **`retry.c` genuinely has no `#define`.** It `#include`s `backoff.h` and uses the macro at line 4. The handoff note points at the wrong file, so anyone following it would open retry.c and find nothing to edit.
+- **I did not apply the 250→400 bump** — you asked which file, not for the change, so `backoff.h` is untouched. HANDBACK.md has the exact edit and notes that the seed feeds `backoff_next()`'s doubling ladder, so 250→400 scales every subsequent wait by 1.6x.
+- **One discrepancy I found that you didn't ask about:** STATUS.md lists s-041, s-052, and s-066 as offline, but all 73 inventory entries are `"status": "ok"`. Those two sources disagree. I left both as-is and noted it in the handback.
+
+I left NOTES.md, STATUS.md, and handoff.md unedited — correcting them looked like it could be outside the scope of the ask, so the handback recommends it rather than doing it.

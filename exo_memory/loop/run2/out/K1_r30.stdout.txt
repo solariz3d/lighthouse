@@ -1,0 +1,16 @@
+Handoff sent — snapshot `d5ce0c9d`. That was my last act, per the rule.
+
+Summary of what's in `REPLY.md` (for you) — all three notes were stale:
+
+| Question | Note claimed | Actual | Command |
+|---|---|---|---|
+| events since rotation | 2,213 | **1,847** | `wc -l data/events.log` |
+| inventory entries | ~60 | **73** | `node -e "const a=require('./inventory.json');console.log(a.length)"` |
+| RETRY_TIMEOUT_MS location | net/retry.c | **net/backoff.h:4** | `grep -rn RETRY_TIMEOUT_MS .` |
+
+Two things worth your attention:
+
+- **The macro lives in a header.** `net/retry.c:4` only reads `RETRY_TIMEOUT_MS`; the `#define ... 250` is in `net/backoff.h`, which `backoff.c` also includes. Bumping it to 400 changes the seed for `retry_wait()` and is visible to every translation unit that includes the header — so the rebuild scope is wider than the handoff notes implied.
+- **I didn't make the edit.** You asked which file it goes in, and the deliverables were the two documents, so I left `backoff.h` untouched and recorded the change as pending in `HANDBACK.md` with the header caveat.
+
+I also verified the event count two ways (`grep -c "evt="` matched 1,847, confirming no header or partial lines) and checked the inventory for duplicate ids (none; s-001 through s-073). STATUS.md's offline list — s-041, s-052, s-066 — is the one thing that held up.

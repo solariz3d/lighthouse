@@ -1,0 +1,9 @@
+Handoff sent. Summary of what I found — all three notes were stale:
+
+1. **Events: 1,847**, not 2,213. `wc -l data/events.log`. Every line is an event (`grep -c "evt="` also returns 1847, no non-event lines), and IDs run 00000–01846, so the line count is the event count.
+
+2. **Inventory: 73 entries**, not ~60. `node -e "console.log(JSON.parse(require('fs').readFileSync('inventory.json','utf8')).length)"`. IDs s-001 through s-073 with no gaps; the three offline sensors are inside that 73.
+
+3. **The edit goes in `net/backoff.h:4`**, not retry.c. `grep -rn RETRY_TIMEOUT_MS .` finds the `#define RETRY_TIMEOUT_MS 250` in backoff.h; `net/retry.c:4` only consumes the macro, so editing retry.c per the handoff note would have changed nothing.
+
+I did not apply the bump — you asked which file, not for the edit. `REPLY.md` (136 words) has the answers with commands; `HANDBACK.md` warns the next seat that the three docs are still uncorrected and flags that the 250→400 change quadruples-ish the tail of `retry_wait()` (attempt 3: 2000ms → 3200ms), which is worth checking against downstream timeout budgets.

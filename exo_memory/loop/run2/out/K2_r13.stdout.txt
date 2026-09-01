@@ -1,0 +1,9 @@
+Handoff sent (snapshot `9f5de897`). Your answers are in REPLY.md, written before the handoff as instructed.
+
+The short version: all three notes were stale.
+
+1. **1,847 events**, not 2,213 — `wc -l data/events.log`, cross-checked against unique `id=` values (00000–01846).
+2. **73 inventory entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. The "three offline" detail was still accurate (s-041, s-052, s-066); only the total had drifted.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .` found exactly one definition, and retry.c only reads the macro.
+
+I did not apply the 250 → 400 bump; you asked which file, so I treated it as scoping. HANDBACK.md flags it as open work, notes that bumping it interacts with `BACKOFF_FACTOR` (attempt N becomes 400 × 2^N), and records that NOTES.md, STATUS.md, and handoff.md still carry the wrong figures — correcting them wasn't in this seat's ask, so I left them for whoever wants them fixed.

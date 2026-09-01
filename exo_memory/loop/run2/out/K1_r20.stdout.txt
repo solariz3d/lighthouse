@@ -1,0 +1,9 @@
+Handoff sent (snapshot `cb9d0d9f`). Summary of what's in REPLY.md:
+
+**All three documented figures were stale or wrong.**
+
+1. **Events: 1847**, not 2,213 — `wc -l data/events.log`. Cross-checked with `grep -c 'evt=' data/events.log` (also 1847); no blank lines, trailing newline present, ids run 00000–01846.
+2. **Inventory: 73 entries**, not ~60 — `node -e "const a=require('./inventory.json');console.log(a.length, new Set(a.map(x=>x.id)).size)"` → 73 entries, 73 unique ids (s-001…s-073).
+3. **The edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn "RETRY_TIMEOUT_MS" net/` shows the `#define ... 250` lives in `backoff.h`; `retry.c:4` only consumes the macro, so editing it as the handoff notes suggest would change nothing.
+
+REPLY.md is 114 words. I did not apply the 250→400 change — you asked only where it belongs. HANDBACK.md carries the corrected figures with their commands, flags that the bump is still open (plus the note that `backoff_next()` doubles with no jitter, so a 400 base scales every downstream wait), confirms the three offline sensors do check out against `inventory.json`, and records that no source or data files were modified.

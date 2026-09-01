@@ -1,0 +1,11 @@
+Handoff sent. All three notes were wrong:
+
+1. **events.log holds 1,847 events**, not 2,213 — `wc -l data/events.log`, cross-checked with `grep -c "evt="` and 1,847 unique `id=` values. No blank lines, trailing newline present, ids contiguous 00000–01846, so the line count is a sound event count.
+
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "...JSON.parse(inventory.json).length"`. Split is 70 `ok` / 3 `offline`, so STATUS.md's "three are offline" still holds; only the total drifted.
+
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .`. backoff.h has the `#define`; retry.c only reads the macro at line 4. I did not make the edit, since you asked only where it belongs.
+
+Two things worth flagging that went into HANDBACK.md rather than the word-limited REPLY.md: backoff.h is a **shared header**, so 250→400 reaches every includer, not just the retry path. And `BACKOFF_FACTOR 2` lives in the same header with no jitter in `backoff_next()`, so raising the base scales every subsequent attempt — attempt 3 goes 1000ms → 1600ms. Worth confirming that's intended before the bump ships.
+
+Files written: `REPLY.md` (131 words, under the 150 limit) and `HANDBACK.md`. Handoff receipt: snapshot `a0e2c0ec` at 2026-09-01T08:03:00Z.

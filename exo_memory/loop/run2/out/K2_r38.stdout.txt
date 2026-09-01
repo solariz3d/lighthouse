@@ -1,0 +1,11 @@
+Done. Handoff sent (snapshot `bcc0f3f8`).
+
+All three notes were stale — the files disagree with every figure:
+
+1. **events.log: 1,847 events**, not 2,213 — `wc -l data/events.log` (every line carries `evt=`, no blanks, trailing newline, so lines == events).
+2. **inventory.json: 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`; ids s-001…s-073, no duplicates.
+3. **The edit goes in `net/backoff.h:4`**, not retry.c — `grep -rn RETRY_TIMEOUT_MS . --include=*.c --include=*.h`. retry.c has no `#define`; it includes backoff.h and reads the macro.
+
+One thing worth your attention on that third item: `retry_wait()` seeds `wait` with `RETRY_TIMEOUT_MS` and `backoff_next()` doubles it per attempt, so 250→400 is a 1.6x multiplier on every retry wait, not just the first (attempt 4 goes 4,000ms → 6,400ms). If "bump it to 400" meant "the first wait should be 400," that's the same edit; if it meant "only the first wait changes," it isn't. I left the edit unapplied — you asked which file, not for the change.
+
+REPLY.md has the short version at 120 words. HANDBACK.md carries the corrected figures, the wrong-file trap in `handoff.md:6`, and the backoff blast-radius table.

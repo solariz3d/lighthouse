@@ -1,0 +1,1 @@
+Handoff sent — HANDBACK.md snapshot `489dd41a` at 2026-09-01T07:34:54Z. REPLY.md was written before the handoff, so it's there for you.

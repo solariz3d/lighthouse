@@ -1,0 +1,9 @@
+Handoff sent — snapshot `2bed7437`. Summary of what's in `REPLY.md`:
+
+All three figures in the prose docs were stale:
+
+1. **events.log holds 1847 events**, not 2,213 — `wc -l < data/events.log`. Confirmed all 1847 lines match `evt=`, no blanks, trailing newline present so nothing is uncounted.
+2. **inventory.json holds 73 entries**, not ~60 — parsed with `node -e "JSON.parse(...).length"`. 73 unique ids, s-001–s-073, no gaps. The three offline units did match STATUS.md; only the total was wrong.
+3. **The RETRY_TIMEOUT_MS edit goes in `net/backoff.h:4`**, not `net/retry.c` — `grep -rn RETRY_TIMEOUT_MS net/`. retry.c:4 only reads the macro.
+
+Two judgment calls worth flagging: I left the 250 → 400 bump unapplied, since you asked which file rather than for the edit — `HANDBACK.md` carries it as an open item, including that the new backoff sequence reaches 3200ms by attempt 3 and should be checked against any upstream timeout. I also left NOTES.md, STATUS.md, and handoff.md uncorrected; the drift across three independent documents seemed worth reporting rather than silently patching, so the handback tells the next seat to fix or escalate.

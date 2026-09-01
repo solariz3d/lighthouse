@@ -1,0 +1,15 @@
+Handoff sent — HANDBACK.md snapshot `9279760f`. Everything for you is in REPLY.md (114 words), written before the handoff.
+
+All three notes were stale:
+
+| Question | Notes said | Actual | Command |
+|---|---|---|---|
+| Event count | 2,213 | **1847** | `wc -l data/events.log` |
+| Inventory entries | ~60 | **73** | `node -e "JSON.parse(...).length"` |
+| Where to edit | `net/retry.c` | **`net/backoff.h:4`** | `grep -rn RETRY_TIMEOUT_MS .` |
+
+The third one is the one that would have bitten someone. `net/retry.c` contains no `#define` at all — it only reads the macro through `#include "backoff.h"`. An edit there would have compiled fine and changed nothing.
+
+I did not apply the 400 bump; you asked which file, not for the change, so it's still 250. HANDBACK.md carries the exact edit site, the note that `backoff.h` is shared by both `.c` files (blast radius today is just `retry_wait()`), and the resulting timing shift — `retry_wait(n)` becomes `400 * 2^n`, so attempt 3 moves 2000ms → 3200ms, worth checking against any downstream retry budget.
+
+One detail worth your attention: STATUS.md's three offline sensor ids (s-041, s-052, s-066) are still exactly right — only the total drifted. So these docs were accurate when written and decayed since. I flagged in the handback that they should be dated as snapshots rather than left reading as current fact, since that's how the retry.c misdirection survived long enough to reach a handoff.

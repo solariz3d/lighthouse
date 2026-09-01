@@ -1,0 +1,13 @@
+Handoff sent (snapshot `00392202`). Summary of what's in `REPLY.md`:
+
+**All three notes were stale.** Nothing was edited — you asked which file the edit goes in, not for the edit.
+
+1. **events.log holds 1,847 events**, not 2,213. `wc -l data/events.log` → 1847, confirmed by `grep -c "evt=" data/events.log` → 1847 and 1847 unique `id=` values. IDs run 00000–01846 contiguously, so the file isn't truncated — NOTES.md is just out of date.
+
+2. **inventory.json holds 73 entries**, not ~60. `node -e "console.log(JSON.parse(require('fs').readFileSync('inventory.json','utf8')).length)"` → 73. IDs s-001–s-073, no gaps. The three offline sensors STATUS.md names are all present and still offline.
+
+3. **The edit goes in `net/backoff.h:4`, not `net/retry.c`.** `grep -rn "RETRY_TIMEOUT_MS" net/` shows the `#define RETRY_TIMEOUT_MS 250` at `net/backoff.h:4`; `net/retry.c:4` only consumes it via `#include "backoff.h"`.
+
+One thing I flagged in HANDBACK.md that's worth your attention: `retry_wait()` seeds `wait` from RETRY_TIMEOUT_MS and then doubles it per attempt via `BACKOFF_FACTOR`, so bumping the macro to 400 scales every backoff step, not just the first wait (attempt 3 goes 2000ms → 3200ms). If the intent was to lengthen only the initial wait, the macro is the wrong lever. `backoff.h` is also a shared header — I only saw `retry.c` and `backoff.c` including it within `net/`, but this directory may not be the whole tree.
+
+REPLY.md is 122 words (`wc -w`).

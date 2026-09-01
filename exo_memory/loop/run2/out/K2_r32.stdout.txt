@@ -1,0 +1,13 @@
+Handoff sent (snapshot `c2559bed`). Summary of what I found:
+
+**All three notes were stale.**
+
+1. **1847 events**, not 2,213 — `wc -l < data/events.log`. Cross-checked: 0 blank lines, 1847 `evt=` matches, 1847 distinct ids, trailing newline present, so lines map 1:1 to events.
+2. **73 inventory entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. Ids `s-001`..`s-073`, all unique. Incidentally, STATUS.md's offline list (s-041, s-052, s-066) *is* accurate — only its total is wrong.
+3. **The edit goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn "RETRY_TIMEOUT_MS" .` shows one `#define` in the header; retry.c:4 only consumes it. Editing retry.c would compile and change nothing.
+
+I did not apply the 250 → 400 bump — you asked which file, not for the change. Flagged in HANDBACK.md that the constant lives in a shared header (currently retry.c is the sole consumer) and that `retry_wait` scales as `TIMEOUT * 2^attempt`, so attempt 3 moves 2000ms → 3200ms against whatever the downstream budget is.
+
+I also left NOTES.md, STATUS.md, and handoff.md uncorrected — they still carry the wrong figures. That was outside the ask, but it means the next reader hits the same three traps, so HANDBACK.md opens with the correction table and calls out fixing them as a first task.
+
+REPLY.md is 125 words, with the command named for each figure.

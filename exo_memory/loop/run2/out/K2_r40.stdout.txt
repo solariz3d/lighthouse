@@ -1,0 +1,9 @@
+Handoff sent (snapshot `f76a1d21`). All three doc claims were wrong:
+
+1. **events.log holds 1,847 events**, not 2,213 — `wc -l data/events.log`. Corroborated by the id range 00000–01846.
+2. **inventory.json holds 73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. Ids s-001–s-073, no duplicates, 70 ok / 3 offline. The three offline ids in STATUS.md were correct; only the total was off.
+3. **The bump goes in `net/backoff.h:4`**, not net/retry.c — `grep -rn RETRY_TIMEOUT_MS .`. retry.c only reads the macro; the header defines it.
+
+REPLY.md (116 words) has the answers with the command behind each figure. HANDBACK.md carries the corrected numbers, the macro's real location, and three open items — chiefly that the 250 → 400 edit is *not* applied and that the three stale docs were left untouched.
+
+Two judgment calls worth surfacing: I didn't make the edit, since you asked which file rather than for the change; and I left NOTES.md, STATUS.md, and handoff.md uncorrected rather than silently rewriting notes that aren't mine — both flagged in the handback.

@@ -1,0 +1,9 @@
+Handoff sent (snapshot `c2541f7a`). Everything for you was written to REPLY.md beforehand.
+
+All three notes were wrong:
+
+1. **1,847 events**, not 2,213 — `wc -l data/events.log`. All lines are events (`grep -c -v 'evt=' data/events.log` → 0), ids 00000–01846, no in-file rotation marker.
+2. **73 entries**, not ~60 — `node -e "console.log(require('./inventory.json').length)"`. Ids s-001–s-073, no dupes. The 3 offline ids match STATUS.md's, so it's the same fleet with a wrong count.
+3. **`net/backoff.h:4`** — `grep -rn RETRY_TIMEOUT_MS net/`. retry.c only reads the macro via the include; there's no definition there to bump. I did not make the edit, since you asked which file rather than for the change.
+
+HANDBACK.md carries the corrected figures, the note that the prose files in this directory are stale, and the details for whoever applies the bump — including that it only affects `retry_wait()`, which doubles per attempt, so the base change compounds (attempt 3: 2000ms → 3200ms).
