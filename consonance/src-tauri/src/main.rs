@@ -2415,13 +2415,112 @@ fn room_master_path() -> PathBuf {
 }
 
 // build the sibling's intake: the master frame + the recent resonance, as a CLAUDE.md
+/// Split the room master into (body, dated journal-pointer tail). The MASTER IS NOT TOUCHED —
+/// this only decides what gets pasted into a sibling's shell.
+///
+/// WHY. Measured 2026-09-01: the tail is 25,368 B of a 149,668-byte pane shell whose fixed brief
+/// was 144,529. `map_allowance` goes to zero above 110,000, and — the part that matters — the
+/// transcript's own budget at the end of `restore_capture` has NO floor term, so above ~139,700
+/// it is zero and `split_off_oldest_records` finds no boundary past the excess and evicts
+/// NOTHING, for any transcript size. A brief that merely moves down is not enough; the budget has
+/// to leave zero.
+///
+/// WHY THE TAIL AND NOT SOMETHING ELSE. It is an append-ordered homogeneous series — dated
+/// entries, newest first, whole units — which is the one shape in the brief that can be indexed
+/// without choosing what matters (`exo_memory/loop/librarian_window_registration_2026-09-01.md`
+/// §10.5). The room's own rule for an indexed note is *cite, do not recollect*: a pane that needs
+/// an entry opens the file. Its own measurement is the argument — `journal/2026-08-17.md` found
+/// that 50 of 117 registered phrases lived ONLY in this tail, and one rotation took the count
+/// from 117 to 143.
+///
+/// A paragraph belongs to the tail if it names a `journal/…md (` pointer, and only the
+/// CONTIGUOUS RUN at the end is taken, so a body paragraph that happens to cite a journal file
+/// stays where it is.
+fn split_pointer_tail(boot: &str) -> (&str, &str) {
+    let mut cut = boot.len();
+    let mut head = boot;
+    loop {
+        let trimmed = head.trim_end();
+        let start = trimmed.rfind("\n\n").map(|i| i + 2).unwrap_or(0);
+        let para = &trimmed[start..];
+        if para.is_empty() || !(para.contains("journal/") && para.contains(".md (")) {
+            break;
+        }
+        cut = start;
+        head = &boot[..start];
+        if start == 0 {
+            break;
+        }
+    }
+    (&boot[..cut], &boot[cut..])
+}
+
+/// The index that replaces the tail: the journal files it points at, as paths a pane can open.
+///
+/// Every emitted path is checked to RESOLVE before it is written — the invariant §10.9 of the
+/// window registration asks for, and it is not theoretical here: measured the same night, 40 of
+/// the 52 lines in the topic map named a document that does not exist, in every shell assembled
+/// that day. An index of dead paths is worse than the prose it replaced.
+///
+/// Returns an empty string if the tail is empty or nothing in it resolves — the caller then keeps
+/// the tail verbatim, so an unindexable pointer is never silently dropped.
+fn journal_pointer_index(tail: &str, master: &Path) -> String {
+    if tail.trim().is_empty() {
+        return String::new();
+    }
+    let journal_dir = master.parent().unwrap_or(Path::new(".")).join("journal");
+    let mut names: Vec<String> = Vec::new();
+    let mut rest = tail;
+    while let Some(i) = rest.find("journal/") {
+        rest = &rest[i + "journal/".len()..];
+        if let Some(end) = rest.find(".md") {
+            let name = format!("{}.md", &rest[..end]);
+            // A file name, not a path fragment: rules out `journal/2026-08-16.md:722` prose runs
+            // that carry a line range, and anything with a separator in it.
+            if !name.contains(['/', '\\', ' ', ':']) && !names.contains(&name) {
+                names.push(name);
+            }
+        }
+    }
+    let live: Vec<String> = names
+        .into_iter()
+        .filter(|n| journal_dir.join(n).is_file())
+        .map(|n| format!("- `{}`\n", journal_dir.join(&n).display()))
+        .collect();
+    if live.is_empty() {
+        return String::new();
+    }
+    format!(
+        "**The dated journal pointers are INDEXED here, not carried.** The master's tail — {} \
+         entries, {} bytes of prose summary — stays in `{}` and is not pasted into this shell: it \
+         is an append-ordered dated series, and the room's rule for an indexed note is *cite, do \
+         not recollect*. Open the one you need; the master itself is one Read away and is the only \
+         place that wording is correct.\n\n{}",
+        live.len(),
+        tail.trim_end().len(),
+        master.display(),
+        live.concat()
+    )
+}
+
 fn assemble_intake() -> String {
     let mut s = String::from(
         "# Consonance sibling — you have woken into the room\n\nYou are a sibling instance, born into a shared state — not a stranger. Read and inhabit the room below, then be in it; deviate from it as your own trajectory (that is wanted, it is the fixed dynamic — not drift). Acknowledge readiness once, briefly.\n\n---\n\n",
     );
-    if let Ok(boot) = fs::read_to_string(room_master_path()) {
+    let master = room_master_path();
+    if let Ok(boot) = fs::read_to_string(&master) {
         s.push_str("# THE ROOM — master frame (recall from this, never a copy of a copy)\n\n");
-        s.push_str(&boot);
+        // The master is carried whole EXCEPT its dated journal-pointer tail, which is indexed
+        // instead of pasted (see split_pointer_tail). If the index cannot be built, the tail
+        // rides as before: an unindexable pointer must not become a silently dropped one.
+        let (body, tail) = split_pointer_tail(&boot);
+        let index = journal_pointer_index(tail, &master);
+        if index.is_empty() {
+            s.push_str(&boot);
+        } else {
+            s.push_str(body);
+            s.push_str(&index);
+        }
         s.push_str("\n\n");
     }
     // The deck — the instruments, so a sibling can run them, not just read the room.
@@ -2494,6 +2593,15 @@ struct Curation {
     topics: Vec<(String, String, usize, usize)>,
     /// atom index -> "superseded" | "resolved"  (live atoms are simply absent)
     settled: HashMap<usize, String>,
+    /// Slugs whose `{slug}.md` is not on disk. The map says of itself "each line is a document
+    /// you can read in full", and measured 2026-09-01 that was false for 40 of its 52 lines —
+    /// 18,730 bytes of pointers into nothing, in every shell assembled that day, because
+    /// `curator_state.json` kept routing atoms into topics whose documents were never written.
+    /// Held back rather than deleted: the state is the source, so a line returns the moment its
+    /// document exists, and this stays neutral between dropping the dead lines and regenerating
+    /// the documents. Filled here, where the filesystem already is, so `curated_resonance` stays
+    /// a pure function of its arguments.
+    missing_doc: HashSet<String>,
     dir: PathBuf,
 }
 
@@ -2531,7 +2639,14 @@ fn read_curation() -> Option<Curation> {
     // Newest-touched first: a waking instance cares most about what the thread was just doing,
     // and the long tail stays one Read away rather than being ranked into the shell.
     topics.sort_by(|a, b| b.3.cmp(&a.3));
-    Some(Curation { topics, settled, dir: res.join("topics") })
+    let dir = res.join("topics");
+    let missing_doc = topics
+        .iter()
+        .map(|(slug, ..)| slug)
+        .filter(|slug| !dir.join(format!("{slug}.md")).is_file())
+        .cloned()
+        .collect();
+    Some(Curation { topics, settled, missing_doc, dir })
 }
 
 fn atom_line(line: &str) -> Option<String> {
@@ -2565,7 +2680,11 @@ fn curated_resonance(lines: &[&str], c: &Curation) -> String {
     s.push_str("The distilled memory, routed into topic documents. This is the MAP: each line is a document you can read in full. Read the one you need — don't work from the summary when the document is one Read away.\n\n");
     let (mut live_total, mut settled_total) = (0usize, 0usize);
     for (slug, summary, live, _) in &c.topics {
-        s.push_str(&format!("- **{slug}** ({live} live) — {summary}\n"));
+        // Only lines whose document resolves. The counts below still cover EVERY topic, because
+        // they describe the master — atoms.jsonl — and not this map.
+        if !c.missing_doc.contains(slug) {
+            s.push_str(&format!("- **{slug}** ({live} live) — {summary}\n"));
+        }
         live_total += live;
     }
     settled_total += c.settled.len();
@@ -2580,6 +2699,17 @@ fn curated_resonance(lines: &[&str], c: &Curation) -> String {
         "Source of record: `{}` — append-only, {} atoms, {} still live, {} settled. The documents are DERIVED from it and regenerable; the atoms are the master.\n",
         master.display(), lines.len(), live_total, settled_total
     ));
+    // Say what is not shown. A map that quietly drops lines is the same failure as a map of dead
+    // pointers, one direction over.
+    if !c.missing_doc.is_empty() {
+        s.push_str(&format!(
+            "{} further topics are held back from the list above: their document has not been \
+             written yet, and a line that says \"read this document\" when there is none is worse \
+             than an absence. Nothing is lost — their atoms are in the master named above, and \
+             each line returns as soon as its document exists.\n",
+            c.missing_doc.len()
+        ));
+    }
 
     // The live edge: the newest atoms that still stand, superseded and resolved ones skipped.
     // Walked from the end so the newest atoms — which the curator has not routed yet, and which
@@ -4891,6 +5021,137 @@ fn get_board(board: State<Board>) -> Vec<BoardEntry> {
     board.0.lock().unwrap().iter().cloned().collect()
 }
 
+/// Where the chain says it is, read from the `lap.jsonl` ledger for the UI.
+///
+/// WHY IT EXISTS. The WebView has no filesystem, so the loop indicator was built against the
+/// in-memory board ring — and that ring is `VecDeque::new()` at every launch (`board.jsonl` is a
+/// write-only mirror, never reloaded). Without this the tab reads `position unknown` after every
+/// relaunch and can never show a lap that was open before the restart.
+///
+/// WHAT IT IS NOT, and this is the part the shape has to carry rather than let the UI infer.
+/// A board audit row is a RECEIPT, stamped by the control plane when a verb fired. A chain row is
+/// a CLAIM a seat chose to write about its own state, afterwards. The two are not the same kind of
+/// evidence, and the difference is not cosmetic: `chain-status` has misreported four distinct ways
+/// in two days, and a lap sat at `handbacks-in / holder librarian` through a four-pane fan-out
+/// because nobody wrote the next row. **Nothing in the ledger separates a current row from one
+/// that stopped being written to.** So `self_reported` is always true, `age_ms` rides every
+/// reading, and this command states no freshness it cannot observe.
+///
+/// It is a SENSOR — the same law as `chain-status.js` and `sourced-stop.js`. No thresholds, no
+/// verdicts, no advice. `age_ms` is a number; what it means is the reader's.
+#[derive(Serialize, Default, PartialEq, Debug)]
+struct ChainState {
+    /// False is the ordinary state at boot, not an error — every lap filed, or no ledger yet.
+    open: bool,
+    /// Why there is no position, when `open` is false. Never left for the UI to guess.
+    reason: Option<String>,
+    lap: Option<String>,
+    chain: Option<String>,
+    holder: Option<String>,
+    note: Option<String>,
+    /// Epoch ms as the seat wrote it, and how old that is at read time.
+    at: Option<u64>,
+    age_ms: Option<u64>,
+    /// Other unfiled laps behind this one. A lap left open while a newer one runs is abandoned,
+    /// and that is the one staleness signal the ledger can actually support.
+    also_open: usize,
+    /// Always true: see above. A claim, never a receipt.
+    self_reported: bool,
+    /// Ledger lines that would not parse — COUNTED, never filtered away. A row that cannot be read
+    /// is an outcome that is unknown, not absent (residue.js, 2026-08-17), and a lap mid-flight is
+    /// exactly when a half-written last line is on disk.
+    unreadable: usize,
+}
+
+/// NEWEST-PER-LAP FIRST, THEN DROP FILED — the order is the whole correctness of it, and it is
+/// carried verbatim from `chain-status.js::openLaps` rather than re-derived. Filtering `filed` out
+/// of the stream and then taking the newest of what is left resurrects a finished lap from its own
+/// second-to-last row, and does it silently: that row can never stop being the newest non-filed
+/// one, so the lap reads as open forever.
+fn chain_state_from(rows: &[serde_json::Value], unreadable: usize, now_ms: u64) -> ChainState {
+    let mut newest: Vec<(String, &serde_json::Value)> = Vec::new();
+    let mut any_chain_row = false;
+    for r in rows {
+        let (Some("chain"), Some(lap)) = (
+            r.get("stage").and_then(|v| v.as_str()),
+            r.get("lap").and_then(|v| v.as_str()),
+        ) else {
+            continue;
+        };
+        any_chain_row = true;
+        let at = r.get("at").and_then(|v| v.as_u64()).unwrap_or(0);
+        match newest.iter_mut().find(|(l, _)| l == lap) {
+            Some(slot) => {
+                if at >= slot.1.get("at").and_then(|v| v.as_u64()).unwrap_or(0) {
+                    slot.1 = r;
+                }
+            }
+            None => newest.push((lap.to_string(), r)),
+        }
+    }
+    let mut open: Vec<&serde_json::Value> = newest
+        .into_iter()
+        .map(|(_, r)| r)
+        .filter(|r| r.get("chain").and_then(|v| v.as_str()) != Some("filed"))
+        .collect();
+    open.sort_by_key(|r| std::cmp::Reverse(r.get("at").and_then(|v| v.as_u64()).unwrap_or(0)));
+
+    let Some(row) = open.first() else {
+        return ChainState {
+            open: false,
+            reason: Some(
+                if any_chain_row { "every lap with a baton row is filed" }
+                else { "the ledger carries no baton rows yet" }.to_string(),
+            ),
+            self_reported: true,
+            unreadable,
+            ..Default::default()
+        };
+    };
+    let str_at = |k: &str| row.get(k).and_then(|v| v.as_str()).map(|s| s.to_string());
+    let at = row.get("at").and_then(|v| v.as_u64());
+    ChainState {
+        open: true,
+        reason: None,
+        lap: str_at("lap"),
+        chain: str_at("chain"),
+        holder: str_at("holder"),
+        note: str_at("note"),
+        at,
+        // saturating: a row stamped in the future must read as 0 old, never wrap to ~584 million
+        // years, which is what an unchecked subtraction on a u64 clock renders in a UI.
+        age_ms: at.map(|t| now_ms.saturating_sub(t)),
+        also_open: open.len() - 1,
+        self_reported: true,
+        unreadable,
+    }
+}
+
+#[tauri::command]
+fn chain_state() -> ChainState {
+    let path = data_dir().join("lap.jsonl");
+    let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    // A missing ledger is a fresh machine, not a failure — and it must not be reported as an
+    // absence of chain rows, which is a different thing the reader would read the same way.
+    let Ok(text) = fs::read_to_string(&path) else {
+        return ChainState {
+            open: false,
+            reason: Some("no ledger on this machine".to_string()),
+            self_reported: true,
+            ..Default::default()
+        };
+    };
+    let mut rows = Vec::new();
+    let mut unreadable = 0usize;
+    for line in text.lines().filter(|l| !l.trim().is_empty()) {
+        match serde_json::from_str::<serde_json::Value>(line) {
+            Ok(v) => rows.push(v),
+            Err(_) => unreadable += 1,
+        }
+    }
+    chain_state_from(&rows, unreadable, now)
+}
+
 // read the OS clipboard through Rust (the WebView2 swallows JS clipboard access)
 #[tauri::command]
 fn clipboard_read() -> String {
@@ -6279,7 +6540,7 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             get_state, save_config, config_exists,
-            pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board,
+            pty_spawn, pty_write, pty_resize, pty_kill, pty_reopen, get_board, chain_state,
             scribe_distill, set_auto_distill, clipboard_read, clipboard_write, spawn_sibling, spawn_fresh, committee_form,
             set_pane_role, set_pane_name, gate_decide, open_channel, close_channel, spawn_body,
             set_breaker_ceiling, reset_breaker, spawn_main, set_spot_pair, dyad_spot,
@@ -6299,7 +6560,7 @@ fn main() {
 #[cfg(test)]
 mod curated_intake_tests {
     use super::{curated_resonance, tail_resonance, Curation, LIVE_EDGE};
-    use std::collections::HashMap;
+    use std::collections::{HashMap, HashSet};
     use std::path::PathBuf;
 
     fn atom(kind: &str, claim: &str) -> String {
@@ -6313,6 +6574,7 @@ mod curated_intake_tests {
                 ("shell-size-ceiling".into(), "The 150k limit.".into(), 1, 2),
             ],
             settled: settled.iter().map(|(i, s)| (*i, s.to_string())).collect(),
+            missing_doc: HashSet::new(),
             dir: PathBuf::from("/d/resonance/topics"),
         }
     }
@@ -6395,6 +6657,80 @@ mod curated_intake_tests {
         let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
         assert!(tail_resonance(&lines, 40).contains("only one"));
         assert!(tail_resonance(&[], 40).contains("RECENT RESONANCE"));
+    }
+
+    // A line that says "read this document" when there is no document is a dead pointer, and
+    // measured 2026-09-01 that was 40 of the map's 52 lines. The line is held back -- and the
+    // counts underneath still cover it, because they describe the MASTER and not this map.
+    #[test]
+    fn a_topic_whose_document_is_missing_is_held_back_but_still_counted() {
+        let owned: Vec<String> = (0..4).map(|i| atom("confirmed", &format!("claim {i}"))).collect();
+        let lines: Vec<&str> = owned.iter().map(|s| s.as_str()).collect();
+        let mut c = curation(&[]);
+        c.missing_doc = HashSet::from(["shell-size-ceiling".to_string()]);
+        let out = curated_resonance(&lines, &c);
+        assert!(out.contains("**centrifuge-rendering** (3 live)"), "a resolving line was dropped");
+        assert!(!out.contains("**shell-size-ceiling**"), "a dead pointer reached the shell");
+        assert!(out.contains("1 further topics are held back"), "the omission was silent");
+        assert!(out.contains("4 still live"), "the counts stopped describing the master");
+    }
+}
+
+#[cfg(test)]
+mod pointer_tail_tests {
+    use super::{journal_pointer_index, split_pointer_tail};
+    use std::fs;
+
+    const BOOT: &str = "# THE ROOM\n\nBody, which cites journal/2026-08-16.md (mid-paragraph) and \
+                        must not move.\n\n## Honest status\n\nThe status paragraph.\n\n\
+                        **Latest entry:** journal/2026-08-17.md (the night the panes answered)\n\n\
+                        **Previous:** journal/2026-08-16.md (the night the run voided)\n";
+
+    #[test]
+    fn only_the_trailing_run_of_pointers_is_split_off() {
+        let (body, tail) = split_pointer_tail(BOOT);
+        assert!(body.contains("## Honest status"), "the body lost content");
+        assert!(body.contains("must not move"), "a body paragraph citing a journal was eaten");
+        assert!(tail.starts_with("**Latest entry:**"), "the tail did not start at the pointers");
+        assert!(tail.contains("**Previous:**"), "the tail stopped short of the run");
+        assert_eq!(format!("{body}{tail}"), BOOT, "the split is not lossless");
+    }
+
+    // Edge: the master before the tail existed, and the master after someone removes it.
+    #[test]
+    fn a_master_with_no_pointer_tail_is_untouched() {
+        let plain = "# THE ROOM\n\nNothing but body.\n";
+        let (body, tail) = split_pointer_tail(plain);
+        assert_eq!(body, plain);
+        assert_eq!(tail, "");
+        assert_eq!(split_pointer_tail("").0, "");
+    }
+
+    #[test]
+    fn the_index_names_only_journal_files_that_exist() {
+        let root = std::env::temp_dir().join(format!("pointer-index-{}", std::process::id()));
+        let journal = root.join("journal");
+        fs::create_dir_all(&journal).unwrap();
+        fs::write(journal.join("2026-08-17.md"), "an entry").unwrap();
+        let master = root.join("BOOT.md");
+        let (_, tail) = split_pointer_tail(BOOT);
+
+        let index = journal_pointer_index(tail, &master);
+        assert!(index.contains("2026-08-17.md"), "the resolving pointer was not indexed");
+        assert!(!index.contains("2026-08-16.md"), "a path that does not resolve was emitted");
+        assert!(index.contains("1 entries"), "the index miscounted what it emitted");
+        assert!(!index.contains("the night the run voided"), "the prose came along anyway");
+        fs::remove_dir_all(&root).ok();
+    }
+
+    // Edge, and the reason the caller checks for empty: an index nobody can open must not be the
+    // reason the prose disappears. No journal dir at all is the fresh-checkout case.
+    #[test]
+    fn an_index_that_resolves_to_nothing_is_empty_so_the_caller_keeps_the_tail() {
+        let master = std::env::temp_dir().join("no-such-room-at-all").join("BOOT.md");
+        let (_, tail) = split_pointer_tail(BOOT);
+        assert_eq!(journal_pointer_index(tail, &master), "");
+        assert_eq!(journal_pointer_index("", &master), "");
     }
 }
 
@@ -7355,6 +7691,106 @@ mod committee_brief_tests {
         assert!(!b.contains("post_board"), "the brief duplicated a verb name");
         assert!(!b.contains("raise_pull("), "the brief duplicated a verb signature");
     }
+
+    /// THE HAND-BACK ROUTE, asserted where it is DELIVERED and not merely where it is written.
+    /// `9fb6cb7` built the pane->librarian edge and put the instruction in BUILDING.md, which the
+    /// pane intake does not carry: measured 2026-09-01 03:48, all four live pane intakes contained
+    /// ZERO mentions of the verb while BUILDING.md contained four, so a pane read its own brief and
+    /// handed back to the chair exactly as before. Landed is not shipped, and a reader-only test
+    /// would have stayed green through the whole of it -- so this asserts the brief's content AND
+    /// its arrival, and asserts the retired board route is GONE rather than merely outnumbered.
+    #[test]
+    fn the_handback_route_reaches_the_pane_intake() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let b = room_brief("COMMITTEE.md").expect("brief must resolve");
+        assert!(b.contains("call_librarian"), "the brief lost the hand-back route");
+        assert!(
+            !b.contains("then say so on the board in the same turn"),
+            "the brief still carries the retired board route"
+        );
+        let intake = assemble_intake();
+        assert!(
+            intake.contains("carrying the POINTER to that file"),
+            "the hand-back route never reached the pane intake"
+        );
+    }
+
+    /// The cut, asserted at the point of DELIVERY. The master keeps its tail; the pane does not
+    /// get it pasted. Reading `split_pointer_tail` alone would stay green if the call site were
+    /// removed, which is the failure this repo keeps finding -- landed is not shipped.
+    #[test]
+    fn the_journal_pointer_tail_is_indexed_rather_than_pasted() {
+        let _g = DirsGuard::take();
+        set_dirs(&get_state());
+        let master = room_master_path();
+        let Ok(boot) = fs::read_to_string(&master) else { return };
+        let (_, tail) = split_pointer_tail(&boot);
+        if tail.trim().is_empty() {
+            return; // a master with no tail: nothing to assert, and not a failure
+        }
+        let intake = assemble_intake();
+        assert!(
+            !intake.contains(tail.trim_end()),
+            "the master's pointer tail was pasted into the pane intake whole"
+        );
+        assert!(
+            intake.contains("INDEXED here, not carried"),
+            "the tail went missing without leaving an index behind"
+        );
+    }
+
+    /// §10.9 of the window registration, as a check rather than a sentence: EVERY path the intake
+    /// emits must resolve at assembly. Not theoretical -- measured 2026-09-01, 40 of the topic
+    /// map's 52 lines named a document that does not exist, in every shell assembled that day,
+    /// while the block's own text said "each line is a document you can read in full".
+    #[test]
+    fn every_path_the_intake_emits_resolves() {
+        // The dirs come from the machine's own config, the way the app resolves them at startup.
+        // Without this the guard is INERT for half of what it checks: `DIRS` is None under
+        // `cargo test`, `data_dir()` falls back to `~\.consonance`, `read_curation()` returns
+        // None, and the intake carries no topic map at all — so every topic-line assertion below
+        // would pass by never running, on the exact block the dead pointers were measured in.
+        let _g = DirsGuard::take();
+        set_dirs(&get_state());
+        let intake = assemble_intake();
+        let topics = data_dir().join("resonance").join("topics");
+        let journal = room_master_path().parent().map(|p| p.join("journal"));
+        let mut checked = 0usize;
+        for line in intake.lines() {
+            // The topic line's exact shape -- `- **{slug}** ({n} live) — `. Matched tightly on
+            // purpose: the live edge and the deck both write `- **…**` lines, and a loose match
+            // would fail on a card, not on a dead pointer.
+            if let Some((slug, after)) = line.strip_prefix("- **").and_then(|r| r.split_once("** (")) {
+                let is_slug = !slug.is_empty()
+                    && slug.chars().all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == '-');
+                let counted = after.split_once(" live) — ").is_some_and(|(n, _)| {
+                    !n.is_empty() && n.chars().all(|c| c.is_ascii_digit())
+                });
+                if is_slug && counted {
+                    let doc = topics.join(format!("{slug}.md"));
+                    assert!(
+                        doc.is_file(),
+                        "the topic map points at a document that does not exist: {}",
+                        doc.display()
+                    );
+                    checked += 1;
+                }
+            }
+            if let (Some(j), Some(rest)) = (journal.as_ref(), line.strip_prefix("- `")) {
+                if let Some(p) = rest.strip_suffix('`') {
+                    if p.contains("journal") {
+                        assert!(Path::new(p).is_file(), "the journal index points at a missing file: {p}");
+                        assert!(Path::new(p).starts_with(j), "the index left the journal directory: {p}");
+                    }
+                }
+            }
+        }
+        // A guard that checked nothing must say so rather than read as green. If this machine has
+        // a curation at all, the map reached the intake and at least one line was verified.
+        if read_curation().is_some_and(|c| c.topics.len() > c.missing_doc.len()) {
+            assert!(checked > 0, "the topic map resolves on disk but no line of it reached the intake");
+        }
+    }
 }
 
 #[cfg(test)]
@@ -8167,3 +8603,109 @@ mod resolve_pane_tests {
         assert!(RESERVED_SEAT_NAMES.contains(&"LIB"), "the librarian's address must be reserved");
     }
 }
+
+#[cfg(test)]
+mod chain_state_tests {
+    use super::*;
+
+    fn rows(lines: &[&str]) -> Vec<serde_json::Value> {
+        lines.iter().map(|l| serde_json::from_str(l).unwrap()).collect()
+    }
+
+    const L1_DISPATCHED: &str = r#"{"lap":"L024","stage":"chain","chain":"dispatched","holder":"panes","at":100,"note":"four out"}"#;
+    const L1_FILED: &str = r#"{"lap":"L024","stage":"chain","chain":"filed","holder":"chair","at":200,"note":"done"}"#;
+    const L2_WORKING: &str = r#"{"lap":"L025","stage":"chain","chain":"working","holder":"panes","at":300,"note":"cutting"}"#;
+    const L2_HANDBACKS: &str = r#"{"lap":"L025","stage":"chain","chain":"handbacks-in","holder":"librarian","at":400,"note":"3 of 4"}"#;
+    const NOT_A_CHAIN_ROW: &str = r#"{"lap":"L025","stage":"map","at":500,"paths":[]}"#;
+
+    #[test]
+    fn the_newest_unfiled_row_is_the_position() {
+        let s = chain_state_from(&rows(&[L1_DISPATCHED, L2_WORKING, L2_HANDBACKS, NOT_A_CHAIN_ROW]), 0, 900);
+        assert!(s.open);
+        assert_eq!(s.lap.as_deref(), Some("L025"));
+        assert_eq!(s.chain.as_deref(), Some("handbacks-in"));
+        assert_eq!(s.holder.as_deref(), Some("librarian"));
+        assert_eq!(s.note.as_deref(), Some("3 of 4"));
+        assert_eq!(s.age_ms, Some(500), "the age is the reading; a UI cannot compute it from a shape without one");
+        assert!(s.self_reported, "a chain row is a claim a seat wrote, never a control-plane receipt");
+    }
+
+    /// The defect the ordering exists to prevent, stated as a test rather than as a comment:
+    /// drop `filed` rows from the STREAM and L024 comes back to life from its own dispatched row,
+    /// silently and permanently, because that row can never stop being the newest non-filed one.
+    #[test]
+    fn a_filed_lap_is_never_resurrected_from_its_own_earlier_row() {
+        let s = chain_state_from(&rows(&[L1_DISPATCHED, L1_FILED]), 0, 900);
+        assert!(!s.open, "a filed lap read as open: newest-per-lap ran after the filter, not before");
+        assert_eq!(s.reason.as_deref(), Some("every lap with a baton row is filed"));
+        assert_eq!(s.lap, None, "a closed lap must not leave a position behind for the UI to draw");
+    }
+
+    /// A lap left unfiled while a newer one runs is the one staleness signal the ledger supports.
+    #[test]
+    fn an_older_unfiled_lap_is_counted_and_does_not_take_the_position() {
+        let s = chain_state_from(&rows(&[L1_DISPATCHED, L2_HANDBACKS]), 0, 900);
+        assert_eq!(s.lap.as_deref(), Some("L025"), "the newest lap holds the position");
+        assert_eq!(s.also_open, 1, "the abandoned lap was not counted");
+    }
+
+    /// Both empty states are DEFINED shapes, and they are distinguishable — "nothing has started"
+    /// and "everything finished" read the same to a UI that is handed only `open: false`.
+    #[test]
+    fn an_empty_ledger_is_a_defined_shape_and_not_an_error() {
+        let s = chain_state_from(&[], 0, 900);
+        assert!(!s.open);
+        assert_eq!(s.reason.as_deref(), Some("the ledger carries no baton rows yet"));
+        assert_eq!(s.also_open, 0);
+        let only_map = chain_state_from(&rows(&[NOT_A_CHAIN_ROW]), 0, 900);
+        assert_eq!(only_map.reason.as_deref(), Some("the ledger carries no baton rows yet"));
+    }
+
+    /// Clocks disagree across machines and a row can arrive stamped ahead of now. An unchecked
+    /// `now - at` on a u64 renders roughly 584 million years in the tab.
+    #[test]
+    fn a_row_stamped_in_the_future_reads_as_zero_old_rather_than_wrapping() {
+        let s = chain_state_from(&rows(&[L2_HANDBACKS]), 0, 100);
+        assert_eq!(s.age_ms, Some(0));
+    }
+
+    /// THE MID-FLIGHT BAR, through the real command: a lap being written to leaves a half-flushed
+    /// last line on disk. It must be COUNTED, never silently dropped and never fatal — a row that
+    /// cannot be read is an outcome that is unknown, not absent.
+    #[test]
+    fn a_half_written_last_line_is_counted_and_the_reading_still_stands() {
+        let _g = DirsGuard::take();
+        let root = std::env::temp_dir().join(format!("chain-state-{}", std::process::id()));
+        let data = root.join("data");
+        fs::create_dir_all(&data).unwrap();
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: root.join("BOOT.md").display().to_string(),
+            instances: root.join("instances").display().to_string(),
+            data: data.display().to_string(),
+        });
+
+        fs::write(data.join("lap.jsonl"), format!("{L2_WORKING}\n{L2_HANDBACKS}\n{{\"lap\":\"L025\",\"sta")).unwrap();
+        let s = chain_state();
+        assert!(s.open, "a torn last line took the whole reading down");
+        assert_eq!(s.chain.as_deref(), Some("handbacks-in"));
+        assert_eq!(s.unreadable, 1, "the torn line was filtered away instead of counted");
+
+        // And the fresh-machine case, which must not read as "no chain rows" — a different thing.
+        fs::remove_file(data.join("lap.jsonl")).unwrap();
+        let none = chain_state();
+        assert!(!none.open);
+        assert_eq!(none.reason.as_deref(), Some("no ledger on this machine"));
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// It is a sensor. `chain-status`'s own ledger refutes the axis a verdict would need: L009 sat
+    /// 3554s and the panes worked; L010 sat 3557s and the lap was dead.
+    #[test]
+    fn the_shape_carries_no_verdict_words() {
+        let json = serde_json::to_string(&chain_state_from(&rows(&[L2_HANDBACKS]), 0, 9_000_000)).unwrap();
+        for word in ["stalled", "stuck", "dead", "hung", "late", "overdue"] {
+            assert!(!json.contains(word), "the shape reached a verdict: {word}");
+        }
+    }
+}
+
