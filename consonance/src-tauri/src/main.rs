@@ -5375,6 +5375,46 @@ fn gate_decide(app: AppHandle, gate: State<Gate>, board: State<Board>, id: Strin
 /// must never appear in this list is "human".
 const ADDRESSABLE_SEATS: &[&str] = &["committee", "librarian"];
 
+// ---- THE ADDRESS TABLE — who may speak to whom across seats, in one place (P-ADDRESS) ----
+//
+// `call_chair` (b5b3b6a) was n=1 of a shape: a mount-gated, target-less verb whose one destination
+// is a property of the function rather than a rule. The pane→librarian edge (`6677540`, the keeper's
+// decision of 2026-08-31: *"the panes should go directly back to the librarian with their build or
+// work, this would mean the orch doesnt lose the findings in translation"*) makes n=2, and the Third
+// Place's rows are already designed (`librarian/2026-08-25.md:416`). At n=3 the room generalises,
+// so the topology lives HERE as data rather than as a third special-cased verb.
+//
+// A row is (the seat a mount resolves to, the verb, the one session it may reach). The verb's gate
+// looks its caller up in this table; the executor looks its destination up in this table. Remove a
+// row and the verb fails at BOTH ends — that is the mutation `address_table_tests` runs. The rows
+// that are NOT here are the topology too: no seat→orchestrator for panes, no seat→pane for anyone
+// but the chair, and the chair's own verbs stay token-gated and outside this table on purpose.
+//
+// Row 1 is `call_chair`, which this table DESCRIBES and does not yet ROUTE. The librarian's leg-2
+// order (08-25 ~03:55: *"new layer BESIDE call_chair, never a refactor first"*) has the live verb
+// migrate into the table only after the new rows have carried a full cycle. Until then
+// `address_table_tests::row_one_agrees_with_the_live_verb` pins the row to the code path it names,
+// so the table cannot drift from the verb it does not yet drive.
+pub struct AddressRow {
+    pub from_seat: &'static str,
+    pub verb: &'static str,
+    pub to: &'static str,
+}
+
+pub const ADDRESS_TABLE: &[AddressRow] = &[
+    AddressRow { from_seat: "librarian", verb: "call_chair", to: MAIN_SID },
+    AddressRow { from_seat: "committee", verb: "call_librarian", to: LIBRARIAN_SID },
+];
+
+/// The one destination a seat may reach with a verb, or None — and None is REFUSED, never
+/// defaulted. A missing row is the design saying no, not a gap to fill with a guess.
+pub fn address_row(from_seat: &str, verb: &str) -> Option<&'static str> {
+    ADDRESS_TABLE
+        .iter()
+        .find(|r| r.from_seat == from_seat && r.verb == verb)
+        .map(|r| r.to)
+}
+
 fn chair_target_guard(tid: &str, role: &str) -> Result<(), String> {
     if tid == MAIN_SID {
         return Err("refused — the chair does not inject into its own pane".to_string());
@@ -5738,6 +5778,70 @@ fn librarian_call_exec(app: &AppHandle, text: &str) -> String {
     }
 }
 
+/// A committee pane speaking into the librarian. Row 2 of `ADDRESS_TABLE`; the mirror of
+/// `librarian_call_exec`, built the same way and for the same reasons.
+///
+/// No target: the destination is drawn from the address table by (seat, verb), never from the
+/// caller, and this does not consult `resolve_pane` at all. Remove the row and this refuses —
+/// the executor and the gate fail together, so the table is the topology at both ends.
+///
+/// WHY THIS EDGE EXISTS (`6677540`): the hand-back used to travel pane → chair → librarian, and the
+/// middle hop is where findings were re-characterised. On 2026-09-01 the chair relayed *"K1 carries a
+/// VOID into scoring"* — the librarian opened the cell and found NOT-RUN, n=40 standing. Nothing was
+/// wrong with the pane's finding; the hop invented a premise. This removes the hop.
+///
+/// Provenance is written by the system, and it names the MOUNT LETTER — `[pane:A]` — never a
+/// self-chosen tag, per the 2026-08-22 incident `librarian_call_exec` cites. A caller on the legacy
+/// unlettered mount has no name to write, so it is refused rather than delivered anonymously: a
+/// second non-human voice in the librarian's context without a name on it is that incident rebuilt.
+fn pane_call_librarian_exec(app: &AppHandle, from: Option<&str>, text: &str) -> String {
+    let Some(letter) = from.filter(|l| !l.is_empty()) else {
+        let out = "your mount carries no letter — connect through your lettered mcp config; an unnamed voice is not delivered".to_string();
+        chair_audit(app, format!("call_librarian REFUSED — {out}"));
+        return out;
+    };
+    let Some(dest) = address_row("committee", "call_librarian") else {
+        let out = "no address row for committee -> call_librarian — nothing was delivered".to_string();
+        chair_audit(app, format!("call_librarian {letter} REFUSED — {out}"));
+        return out;
+    };
+    let panes = app.state::<Panes>();
+    if !panes.0.lock().unwrap().contains_key(dest) {
+        let out = "the librarian is not awake — nothing was delivered".to_string();
+        chair_audit(app, format!("call_librarian {letter} REFUSED — {out}"));
+        return out;
+    }
+    let msg = format!("[pane:{letter}] {text}");
+    // Receipt taken BEFORE the write, so only bytes arriving after it can count as this write's
+    // render — same discipline as chair_inject_exec and librarian_call_exec.
+    let cap = capture_path(dest);
+    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
+    let delivered = inject_to_pane(&panes, dest, &msg);
+    let mut preview: String = text.chars().take(110).collect();
+    if text.chars().count() > 110 {
+        preview.push('…');
+    }
+    let receipt = match delivered {
+        Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
+        Err(_) => Receipt::NotAttempted,
+    };
+    match delivered {
+        Ok(_) => {
+            // `chain-status.js` reads this exact shape (`call_librarian <letter> -> LIB [Received]`)
+            // as the letter's hand-back. Change the shape and change the reader in the same commit.
+            chair_audit(app, format!("call_librarian {letter} -> LIB [{receipt:?}]: \"{preview}\""));
+            match receipt {
+                Receipt::Received => "delivered to the librarian (rendered in its pane — not proof it was read)".to_string(),
+                _ => "written to the librarian — UNCONFIRMED (no render yet; verify before treating as delivered)".to_string(),
+            }
+        }
+        Err(e) => {
+            chair_audit(app, format!("call_librarian {letter} -> LIB FAILED: {e}"));
+            format!("delivery failed: {e}")
+        }
+    }
+}
+
 fn chair_scrollback_exec(app: &AppHandle, target: &str) -> String {
     let panes = app.state::<Panes>();
     let names = app.state::<PaneNames>();
@@ -5975,6 +6079,14 @@ fn main() {
                                 continue;
                             }
                             let _ = reply.send(librarian_call_exec(&chair_handle, &text));
+                        }
+                        mcp::ChairCmd::CallLibrarian { from, text, reply } => {
+                            // Acting verb, same expiry rule as call_chair: never fire late, drop LOUD.
+                            if reply.is_closed() {
+                                chair_audit(&chair_handle, "call_librarian: EXPIRED unexecuted (caller timed out before the actuator ran)".to_string());
+                                continue;
+                            }
+                            let _ = reply.send(pane_call_librarian_exec(&chair_handle, from.as_deref(), &text));
                         }
                         mcp::ChairCmd::Scrollback { target, reply } => {
                             if reply.is_closed() {
@@ -7821,6 +7933,102 @@ mod librarian_call_tests {
     fn the_chair_still_cannot_address_its_own_pane() {
         assert!(chair_target_guard(MAIN_SID, "main").is_err());
         assert!(!ADDRESSABLE_SEATS.contains(&"main"));
+    }
+}
+
+#[cfg(test)]
+mod address_table_tests {
+    use super::*;
+
+    /// THE BAR (P-ADDRESS, `librarian/2026-08-25.md:323`): a call from a mount with no table row is
+    /// refused. The lookup is the gate; None is the refusal. Every seat that is not in the table —
+    /// and "human" and "main" are the ones that matter — gets None for the pane verb.
+    #[test]
+    fn a_seat_with_no_row_is_refused() {
+        assert_eq!(address_row("main", "call_librarian"), None, "the chair must not reach the librarian by the panes' edge");
+        assert_eq!(address_row("human", "call_librarian"), None);
+        assert_eq!(address_row("librarian", "call_librarian"), None, "the librarian does not ring itself");
+        assert_eq!(address_row("committee", "call_chair"), None, "panes do not speak into the orchestrator — that edge is the one the keeper cut");
+        assert_eq!(address_row("committee", "chair_inject"), None, "chair verbs are token-gated and outside this table");
+    }
+
+    /// The two rows that exist, and exactly where they lead.
+    #[test]
+    fn the_two_rows_lead_to_the_two_fixed_seats() {
+        assert_eq!(address_row("committee", "call_librarian"), Some(LIBRARIAN_SID));
+        assert_eq!(address_row("librarian", "call_chair"), Some(MAIN_SID));
+        assert_eq!(ADDRESS_TABLE.len(), 2, "a third row is the Third Place's, and it lands with its own tests");
+    }
+
+    /// THE MUTATION, in the only form a const table admits: the executor's destination IS the
+    /// lookup, so a table without the row yields None and the executor's `let Some(dest) = … else`
+    /// branch refuses. This test pins that the source has no second path to the librarian.
+    #[test]
+    fn the_pane_executor_has_no_destination_but_the_table() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn pane_call_librarian_exec(").nth(1).expect("pane_call_librarian_exec moved — re-point this test");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        assert!(body.contains("address_row(\"committee\", \"call_librarian\")"), "the destination must come from the table");
+        assert!(!body.contains("LIBRARIAN_SID"), "a literal destination would survive the row's removal — the mutation must be able to fail");
+        assert!(!body.contains("resolve_pane") && !body.contains("match_prefix"), "no target resolution — a target is the thing it does not have");
+    }
+
+    /// Row 1 describes `call_chair` without yet routing it (the leg-2 order). So the row must
+    /// agree with the live verb's code path, or the table lies about the one edge it does not drive.
+    #[test]
+    fn row_one_agrees_with_the_live_verb() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn librarian_call_exec(").nth(1).expect("librarian_call_exec moved");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        assert!(body.contains("MAIN_SID"), "call_chair delivers to MAIN_SID");
+        assert_eq!(address_row("librarian", "call_chair"), Some(MAIN_SID), "and the table must say the same");
+        let mcp = fs::read_to_string("src/mcp.rs").expect("read mcp.rs").replace("\r\n", "\n");
+        let gate = mcp.split("fn auth_librarian(").nth(1).expect("auth_librarian moved");
+        assert!(gate.split("\n    }\n").next().unwrap_or(gate).contains("== \"librarian\""), "call_chair's gate admits the librarian seat, as row 1 says");
+    }
+}
+
+#[cfg(test)]
+mod pane_call_tests {
+    use super::*;
+
+    fn body() -> String {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn pane_call_librarian_exec(").nth(1).expect("pane_call_librarian_exec moved — re-point this test").to_string();
+        f.split("\n}\n").next().unwrap_or(&f).to_string()
+    }
+
+    /// The system names the MOUNT LETTER, and never borrows the chair's or the librarian's prefix.
+    /// The 2026-08-22 incident again: a voice in someone's context needs its own name on it.
+    #[test]
+    fn a_pane_speaks_under_its_mount_letter_and_no_other_name() {
+        let b = body();
+        assert!(b.contains("[pane:{letter}] "), "the system must write the pane's provenance from the mount");
+        assert!(!b.contains("[chair:MAIN]") && !b.contains("[librarian:LIB]"), "a borrowed prefix is the incident rebuilt");
+    }
+
+    /// An unlettered caller is refused, not delivered as nobody.
+    #[test]
+    fn an_unlettered_mount_is_refused_before_delivery() {
+        let b = body();
+        let refusal = b.find("carries no letter").expect("the unlettered refusal must exist");
+        let delivery = b.find("inject_to_pane(").expect("the delivery must exist");
+        assert!(refusal < delivery, "the name check must precede the write");
+    }
+
+    /// Acting verbs are audited on every path — refusal(s), success, failure.
+    #[test]
+    fn every_outcome_reaches_the_board() {
+        let b = body();
+        assert!(b.matches("chair_audit(").count() >= 5, "refusals, success and failure must each be audited — found {}", b.matches("chair_audit(").count());
+    }
+
+    /// The audit line's shape is a CONTRACT with `chain-status.js`, which reads it as the letter's
+    /// hand-back. If this string changes, the counter goes blind to the new route in silence.
+    #[test]
+    fn the_success_audit_line_is_the_shape_the_counter_reads() {
+        let b = body();
+        assert!(b.contains("\"call_librarian {letter} -> LIB [{receipt:?}]"), "chain-status.js CALL_LIB_RE reads exactly this shape");
     }
 }
 

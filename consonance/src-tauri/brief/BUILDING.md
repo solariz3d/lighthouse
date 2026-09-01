@@ -19,15 +19,28 @@ to brief a single seat; this says how a whole inquiry moves. It is written from 
          ▼
        PANES                             5. briefed, disjoint, each owning named files
          │
-         ▼
-   ORCHESTRATOR ──────► LIBRARIAN        6. hand-backs go back VERBATIM, never summarised
-         │  ◄──────────────┘             7. checked; silence is a valid answer
+         │  `call_librarian`             6. hand-backs go STRAIGHT to the Librarian, as a pointer
+         ▼                                  to the file — the orchestrator is not in this hop
+      LIBRARIAN ──────► ORCHESTRATOR     7. checked; silence is a valid answer; the orchestrator
+         │                                  COMMITS what the librarian collated, and composes nothing
          ▼
         you                              8. only on direction — never on state
 ```
 
 Steps 2 and 6 are the ones that get skipped, and skipping them is what turns the Librarian into a
 second orchestrator nobody needs.
+
+> **Step 6 changed on 2026-09-01 (`6677540`, the keeper's decision of 08-31).** It used to read
+> *ORCHESTRATOR ──► LIBRARIAN, hand-backs go back VERBATIM* — and the word *verbatim* was the tell
+> that the hop was a copy. The keeper's words: *"the panes should go directly back to the librarian
+> with their build or work, this would mean the orch doesnt lose the findings in translation back to
+> the lib and the lib can see them straight from the source rather than orchs hand off."* The case
+> that landed it, an hour before the edge was built: the chair relayed a pane's result as *"K1 carries
+> a VOID into scoring, n=39"*; the librarian opened the cell and found NOT-RUN, n=40 standing. The
+> pane's finding was right; the hop invented the premise. **A pane finishes, writes its hand-back to
+> the file it was given, and calls `call_librarian` with the POINTER, in that same turn.** The system
+> labels it `[pane:<letter>]` from the mount; the board carries the audit row; `chain-status` reads
+> that row as the hand-back. The chair's inbound role on a hand-back is commit-only.
 
 ---
 
@@ -152,9 +165,12 @@ on* the finished output and is never composed alongside it:
     8  orch FINISHES its output, showing it understood the librarian
     9  --- turn boundary ---
     10 orch -> panes
-    11 panes FINISH their output
+    11 panes FINISH their output, written to the hand-back file they were given
     12 --- turn boundary ---
-    13 panes -> orch
+    13 panes -> librarian   (`call_librarian`, the pointer — the orchestrator is NOT in this hop)
+    14 librarian FINISHES the collation
+    15 --- turn boundary ---
+    16 librarian -> orch     (`call_chair`; the orchestrator commits, quoting the leg — never composing)
 
 **The cost is one turn per hop and the keeper has priced it twice:** *"it takes an extra turn, but
 I believe it could be worth it."* What it buys is that **the human sees a finding before another
@@ -202,6 +218,11 @@ night. `node consonance/tools/ferry.js --report`.*
    proves nothing and must be reported as such rather than counted as a pass.
 2. **Every number re-derivable by a command printed beside it.**
 3. **What was NOT verified.** That sentence is worth more than a clean summary.
+4. **Its destination is the Librarian, by `call_librarian`, as a POINTER** (2026-09-01). Write the
+   hand-back to the file you were given, then ring the librarian with the path in the same turn —
+   the notes are the master and the call is the pointer, the librarian's own rule turned around.
+   Not the orchestrator: that hop is where findings got re-characterised, and the verb has no row
+   for it. Nothing in the call that is not already in the file.
 
 ---
 

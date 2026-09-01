@@ -71,6 +71,10 @@ pub enum ChairCmd {
     /// this verb can address exactly one seat, so "narrow" is a property of the type rather
     /// than a rule someone can relax later.
     CallChair { text: String, reply: tokio::sync::oneshot::Sender<String> },
+    /// a COMMITTEE PANE speaking into the librarian (acting — audited). Row 2 of the address
+    /// table in main.rs. `from` is the mount letter, carried so the system can write the
+    /// provenance label; the destination is looked up from the table, never carried here.
+    CallLibrarian { from: Option<String>, text: String, reply: tokio::sync::oneshot::Sender<String> },
 }
 
 #[derive(Clone)]
@@ -151,6 +155,12 @@ pub struct ChairInjectArgs {
 #[derive(serde::Deserialize, schemars::JsonSchema)]
 pub struct CallChairArgs {
     /// the message to deliver (the system prefixes provenance: "[librarian:LIB] …")
+    text: String,
+}
+
+#[derive(serde::Deserialize, schemars::JsonSchema)]
+pub struct CallLibrarianArgs {
+    /// the hand-back to deliver — a POINTER to the file you wrote, never the finding in prose (the system prefixes provenance: "[pane:<letter>] …")
     text: String,
 }
 
@@ -324,6 +334,54 @@ impl ConsonanceMcp {
         }
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::CallChair { text, reply: tx }, rx).await;
+        Ok(CallToolResult::success(vec![Content::text(out)]))
+    }
+
+    /// Gate a cross-seat verb on the ADDRESS TABLE (main.rs `ADDRESS_TABLE`), by the seat the
+    /// MOUNT resolves to. The table is the topology: a (seat, verb) pair with no row is refused and
+    /// the refusal is posted, throttled the same way the other gates throttle. Same honest limit as
+    /// `auth_chair` and `auth_librarian` — a discipline boundary, enforced by the audit.
+    ///
+    /// `call_chair` is deliberately NOT routed through this yet (the leg-2 order, 08-25: beside,
+    /// never a refactor first); its row exists in the table so the topology is complete in one
+    /// place, and a main.rs test pins the row to the live verb's code path.
+    fn auth_address(&self, verb: &str) -> bool {
+        let seat = self.seat();
+        let ok = crate::address_row(&seat, verb).is_some();
+        if !ok {
+            if let Some(absorbed) = refusal_should_post(verb, now_ms()) {
+                let who = self.identity.clone().unwrap_or_else(|| "unattributed".to_string());
+                let text = if absorbed > 0 {
+                    format!("{verb} REFUSED — mount {who} (seat {seat}) has no address row for {verb} (+{absorbed} more absorbed this past minute)")
+                } else {
+                    format!("{verb} REFUSED — mount {who} (seat {seat}) has no address row for {verb}")
+                };
+                board_push(&self.board, BoardEntry {
+                    pane: "chair".to_string(),
+                    role: "committee".to_string(),
+                    text,
+                    ts: now_ms(),
+                    ts_source: crate::TsSource::Push,
+                });
+            }
+        }
+        ok
+    }
+
+    #[tool(description = "PANE VERB (mount-gated by the address table, committee panes only): deliver your HAND-BACK into the LIBRARIAN's pane — the one seat this verb can reach. There is no target argument: it addresses the librarian or nothing. Send a POINTER to the file you wrote (path, sha), never the finding in prose — the librarian reads at source, and this edge exists so the orchestrator no longer re-characterises findings on the way (2026-09-01: a relayed \"VOID\" was NOT-RUN at the cell). Every use and every refusal is audited to the board, and the system marks the message \"[pane:<letter>]\" from your mount, so the librarian is never unsure who is speaking. The orchestrator, the librarian and human-driven panes have no row for this verb and are refused. Then say so on the board as before.")]
+    async fn call_librarian(
+        &self,
+        Parameters(CallLibrarianArgs { text }): Parameters<CallLibrarianArgs>,
+    ) -> Result<CallToolResult, McpError> {
+        if !self.auth_address("call_librarian") {
+            return Ok(CallToolResult::success(vec![Content::text(
+                "refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)",
+            )]));
+        }
+        let (tx, rx) = tokio::sync::oneshot::channel();
+        let out = self
+            .send_chair(ChairCmd::CallLibrarian { from: self.identity.clone(), text, reply: tx }, rx)
+            .await;
         Ok(CallToolResult::success(vec![Content::text(out)]))
     }
 
@@ -567,7 +625,10 @@ impl ServerHandler for ConsonanceMcp {
              members use raise_pull, never chair verbs. One exception, and it is gated by MOUNT rather than \
              by token: the LIBRARIAN seat has call_chair, which speaks into the Main orchestrator and nowhere \
              else. It carries no target argument, so it cannot be pointed anywhere; from any other mount it \
-             is refused and the refusal is posted."
+             is refused and the refusal is posted. Its mirror for COMMITTEE PANES is call_librarian: your \
+             hand-back goes straight to the librarian's pane, labelled [pane:<letter>] from your mount, \
+             gated by an ADDRESS TABLE of who-may-speak-to-whom — a mount with no row is refused and the \
+             refusal is posted. Send a pointer to the file you wrote, not the finding in prose."
                 .to_string(),
         );
         info
@@ -627,6 +688,32 @@ mod tests {
             "call_chair must be gated — an ungated acting verb is reachable from every pane");
         assert!(!b.contains("token"),
             "the gate must be the mount, not a token the caller can present");
+    }
+
+    /// The panes' verb is gated on the ADDRESS TABLE, resolved from the mount — no token, no
+    /// target, no self-declared seat. Mirror of the test above, for row 2.
+    #[test]
+    fn call_librarian_is_gated_on_the_address_table() {
+        let b = body_of("async fn call_librarian(");
+        assert!(b.contains("auth_address(\"call_librarian\")"),
+            "call_librarian must be gated on the table — an ungated acting verb is reachable from every seat");
+        assert!(!b.contains("token"), "the gate must be the mount's row, not a token the caller can present");
+        assert!(!b.contains("target"), "a target argument is the thing this verb must not have");
+    }
+
+    /// The table gate itself: it asks the table and nothing else, and a refusal reaches the board.
+    /// `call_chair` is NOT routed through it yet (leg-2 order) — pinned so the migration is a
+    /// deliberate edit to this test and not a drift.
+    #[test]
+    fn the_address_gate_asks_the_table_and_audits_refusals() {
+        let b = body_of("fn auth_address(");
+        assert!(b.contains("crate::address_row("), "the gate must consult the address table");
+        assert!(!b.contains("== \"librarian\"") && !b.contains("== \"committee\""),
+            "no seat literal here — the table is the only place a row may exist");
+        assert!(b.contains("board_push("), "a refused acting verb must land on the board");
+        let cc = body_of("async fn call_chair(");
+        assert!(cc.contains("auth_librarian(") && !cc.contains("auth_address("),
+            "call_chair stays on its own gate until the new rows have carried a cycle (08-25 leg-2 order)");
     }
 
     /// The gate itself: exactly the librarian seat, and a refusal that reaches the board. The

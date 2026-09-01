@@ -194,6 +194,12 @@
 //                         is SEEN, not dropped — and the count prints so the defect stays visible.
 //                         A line that does not decompose into complete objects is still unreadable
 //                         and still UNKNOWN; salvage never guesses.
+//   the librarian's letter — NOT IN THE UNIVERSE (2026-09-01, P3d). A chair ring to the librarian is
+//                         a wake, not a dispatch; counting it as owing a hand-back made the counter
+//                         wait for the seat that waits for the counter (live: `owing B,M`, M the
+//                         librarian). Panes now hand back pane -> librarian by `call_librarian`, and
+//                         the app's audit row for that edge (`call_librarian <L> -> LIB [...]`) is
+//                         read as L's hand-back alongside the older board-post signal.
 //   pane identity       — a hand-back is matched by the committee row's `pane` field. The board has
 //                         historically stored free text there ('bravo', 'around', 'sibling-3d57124e'
 //                         are all in the record), so whether that field is mount-resolved or
@@ -485,6 +491,17 @@ const CALLSIGN_TO_LETTER = {
 /** The dispatch row the app writes on arrival. The target id is TRUNCATED in the text. */
 const DISPATCH_RE = /^chair injected \([^)]*\) -> ([0-9a-fA-F][0-9a-fA-F-]{5,}) \[([^\]]+)\]/;
 
+/** The audit row the app writes when a pane hands back by `call_librarian` (main.rs
+ *  `pane_call_librarian_exec`). Group 1 is the MOUNT LETTER, written by the system. Receipt state is
+ *  deliberately not required to read `Received`: a written-but-unconfirmed hand-back is still a
+ *  hand-back the pane made, and the existing board-post signal never required a receipt either. */
+const CALL_LIB_RE = /^call_librarian ([A-Z][A-Z0-9]*) -> LIB \[/;
+
+/** The librarian's fixed session id (main.rs LIBRARIAN_SID). Copied for the reason fromConfig()
+ *  states: a hook must survive the repo moving. Used only to find the librarian's LETTER in
+ *  letters.json so a chair ring to that seat is read as a wake rather than a dispatch. */
+const LIBRARIAN_SID = '0c0c0c0b-0000-4000-8000-00000000115b';
+
 /**
  * A pane identifier as it appears on the board -> its letter, or null.
  * Null is a real answer here and is counted as UNRESOLVED; it never falls back to a guess, because
@@ -569,6 +586,13 @@ function collation(opts = {}) {
     if (parsed.fused) fused++;
     for (const e of parsed.rows) rows.push(e);
   }
+  // THE LIBRARIAN IS NOT IN THE UNIVERSE (2026-09-01, P3d). A chair ring to the librarian is a WAKE,
+  // not a dispatch: the librarian is the seat that collates the hand-backs, so counting it as owing
+  // one made the counter wait for the librarian while the librarian waited for the counter — the
+  // deadlock the live line printed as `owing B,M` with M the librarian's letter. Resolved from
+  // letters.json by the fixed session id, the same way the app resolves the seat.
+  const librarianLetter = letters && Object.prototype.hasOwnProperty.call(letters, LIBRARIAN_SID)
+    ? letters[LIBRARIAN_SID] : null;
   for (const e of rows) {
     if (!e || e.role !== 'committee' || !e.ts) continue;
     if (e.ts < earliest) earliest = e.ts;
@@ -578,8 +602,20 @@ function collation(opts = {}) {
       if (e.ts <= anchor) continue;
       const L = toLetter(m[1], letters);
       if (!L) { unresolved++; continue; }
+      if (librarianLetter && L === librarianLetter) continue;   // a wake, not an obligation
       if (!/^delivered/i.test(m[2])) unconfirmed++;
       if (e.ts > (dispatched.get(L) || 0)) dispatched.set(L, e.ts);
+      continue;
+    }
+    // THE NEW ROUTE (P3d): a pane's hand-back now goes pane -> librarian by `call_librarian`, and the
+    // audit row the app writes for it is the strongest hand-back signal there is — the edge itself,
+    // with a receipt. Read it as the letter's hand-back. The chair writes this row, so it is read
+    // BEFORE the chair's other traffic is skipped below. Shape is a contract with main.rs
+    // `pane_call_librarian_exec` (its test names this reader).
+    const c = CALL_LIB_RE.exec(String(e.text || ''));
+    if (c) {
+      const L = toLetter(c[1], letters);
+      if (L && e.ts > (posted.get(L) || 0)) posted.set(L, e.ts);
       continue;
     }
     if (String(e.pane) === 'chair') continue;   // the chair's own traffic is not a hand-back

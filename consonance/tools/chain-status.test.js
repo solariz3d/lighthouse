@@ -649,6 +649,59 @@ test('FUSED — an ordinary single row is untouched: not fused, and the line doe
   s.cleanup();
 });
 
+// ── THE DEADLOCK (2026-09-01, P3d — the pane→librarian edge) ─────────────────────────────────────
+// The librarian is the seat that collates hand-backs. A chair ring to it (a chair_inject to the
+// librarian's session) was counted as a dispatch creating a hand-back obligation, so the counter
+// waited for the librarian while the librarian waited for the counter to say the panes were in.
+// Live on 2026-09-01: `handbacks 1 of 3 (owing B,M)` with M the librarian's letter.
+const LIB = '0c0c0c0b-0000-4000-8000-00000000115b';   // main.rs LIBRARIAN_SID
+const LET_WITH_LIB = Object.assign({ [LIB]: 'M' }, LET);
+const CALL_LIB = (ts, letter, receipt = 'Received') => ({ pane: 'chair', role: 'committee', ts,
+  text: 'call_librarian ' + letter + ' -> LIB [' + receipt + ']: "handback at exo_memory/handback/x.md"' });
+
+test('THE DEADLOCK — a chair ring to the LIBRARIAN is a wake, not a dispatch: the counter still completes', () => {
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1200, LIB), HANDBACK(1300, 'A')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 5 * 60000, dirty: 0 });
+  assert.match(r.text, /HANDBACKS IN, NOT COLLATED — 1 of 1 \(A\)/, 'the librarian was counted as owing a hand-back: ' + r.text);
+  s.cleanup();
+});
+
+test('THE DEADLOCK — the exclusion is by SEAT, not by silence: a pane that has not posted is still owed', () => {
+  // The mutation the fix must not admit: excluding the librarian must not widen into excluding
+  // anyone quiet. B was dispatched and has said nothing; the line names it.
+  const s = store(WORKING(1000), [DISPATCH(1100, A), DISPATCH(1150, B), DISPATCH(1200, LIB), HANDBACK(1300, 'A')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 5 * 60000, dirty: 0 });
+  assert.match(r.text, /handbacks 1 of 2 \(owing B\)/, r.text);
+  s.cleanup();
+});
+
+test('THE NEW ROUTE — a pane\'s `call_librarian` audit row IS its hand-back', () => {
+  // No board post from A at all: the hand-back went pane -> librarian by the edge, and the app's
+  // audit row is the only trace on the board. It is written by pane `chair`, which the old reader
+  // skipped wholesale — so without the new match this reads `owing A`.
+  const s = store(WORKING(1000), [DISPATCH(1100, A), CALL_LIB(1300, 'A')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 5 * 60000, dirty: 0 });
+  assert.match(r.text, /HANDBACKS IN, NOT COLLATED — 1 of 1 \(A\)/, 'the edge\'s own audit row was not read as a hand-back: ' + r.text);
+  s.cleanup();
+});
+
+test('THE NEW ROUTE — a call that PREDATES the dispatch answered an older brief and does not count', () => {
+  const s = store(WORKING(1000), [CALL_LIB(1050, 'A'), DISPATCH(1100, A)], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 1100 + 5 * 60000, dirty: 0 });
+  assert.match(r.text, /handbacks 0 of 1 \(owing A\)/, r.text);
+  s.cleanup();
+});
+
+test('THE NEW ROUTE — a REFUSED call is not a hand-back', () => {
+  // The refusal line the gate writes has a different shape on purpose; it must not satisfy the join.
+  const refused = { pane: 'chair', role: 'committee', ts: 1300,
+    text: 'call_librarian REFUSED — mount A (seat committee) has no address row for call_librarian' };
+  const s = store(WORKING(1000), [DISPATCH(1100, A), refused], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 1300 + 5 * 60000, dirty: 0 });
+  assert.match(r.text, /handbacks 0 of 1 \(owing A\)/, 'a refused call satisfied the hand-back join: ' + r.text);
+  s.cleanup();
+});
+
 test('THE TRAP — an unreadable letters.json says UNKNOWN, and the line carries it', () => {
   const s = store(WORKING(1000), [DISPATCH(1100, A), HANDBACK(1300, 'A')], { rawLetters: '{oops' });
   const r = mod().line({ ledger: s.ledger, now: 9e6, dirty: 0 });
