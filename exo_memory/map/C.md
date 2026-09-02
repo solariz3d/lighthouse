@@ -310,3 +310,45 @@ that had read my hand-back. General form: **the number of copies grows with how 
 is, and every copy arrives wearing a sentence about why it cannot drift.** Do not read the sentence;
 add the comparison. All three now compare against one shared `loopDiagramMaster()` extraction, so a
 fourth copy is one assert away rather than a refactor.
+
+---
+
+## 2026-09-02 — P-LAP-ROW (L033)
+
+Hand-back for both entries below: **`exo_memory/handback/p-lap-row_2026-09-02.md`**.
+Packet `e6215a8`. Object HEAD `de9685c`, `C:\Consonance\data\lap.jsonl` (33 laps), the
+librarian's holder ruling `exo_memory/librarian/2026-09-02.md:433`.
+
+### An instrument that records a loop is a carrier of that loop, and it drifts on the same clock as the prose
+
+2026-09-02, three defects hit LIVE by the chair inside forty minutes of trying to record real laps.
+Hand-back §1, §2, §3.
+
+I wrote the two-doors amendment into `BUILDING.md` on the previous lap and guarded the DRAWING. The
+ledger that has to record laps under that amendment took `--entry orch|lib` — both DOORS, both
+asserting a user inquiry — so a lap the loop supplied itself had no honest row. The chair wrote
+`--entry orch`, which is false, and added a note to the inquiry text admitting it. Same night,
+`--entry lib` existed while `--initiator librarian` did not, so a door-two lap could record the DOOR
+and not the SEAT.
+
+General form: **when a document moves, the instruments that WRITE against it are carriers too, and
+they are the ones nobody thinks to check because they are not prose.** My own M13 said the drawing
+was guarded and the rule was not; this is the same gap one layer down — the rule was amended and the
+*recorder* of the rule was not. And the tell was available the whole time: **a ledger that needs a
+prose note to explain its own row is reporting a missing column.**
+
+### Fixing an instrument makes the documents that quote it stale, and the fix's other half is the guard that says so
+
+2026-09-02, same lap: adding a third `--entry` value made `brief/BUILDING.md:391` wrong within the
+minute. Hand-back §6.
+
+BUILDING.md was unowned this lap, so I could not edit it. The choice was to name the edit in a
+hand-back — read once — or to ship an oracle that goes RED and carries the one-line replacement in
+its own failure message, with file and line. I shipped the red. It scans three surfaces rather than
+the one that carries the sentence today, on the reasoning from my COMMITTEE.md and About findings
+above: **the number of copies grows with how good the original is.**
+
+General form: **a change that makes a document stale owes a guard, not a note — and the guard is
+allowed to be red.** A red test that names its own fix is a finding; the same fact in prose is a
+hope. The asymmetry that makes this worth a rule: an unread note costs five weeks (2026-08-17) and
+an unwanted red costs one line.

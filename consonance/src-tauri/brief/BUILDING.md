@@ -32,6 +32,31 @@ to brief a single seat; this says how a whole inquiry moves. It is written from 
                                             waits at.
 ```
 
+> **THE BATON RULE — the keeper, 2026-09-02 07:15-07:18, and it supersedes "one lap in flight."**
+> Verbatim: **while a loop runs, exactly ONE station is active — terminals, or orch, or lib — and
+> every other seat waits for the loop to come back to it.** Off-loop work is allowed only if it never
+> calls a seat mid-build. **And the human is not the exception:** nothing renders into a pane whose
+> prompt is not idle, and nothing into the keeper's typing.
+>
+> **Fan-out WITHIN the panes stage is not limited** — four panes working at once is the panes station
+> holding the baton, not four stations active. What the rule forbids is a seat that is not the holder
+> speaking into one that is working.
+>
+> **It demonstrated itself in the act of being reported.** Three of the keeper's messages were spliced
+> by rings into the librarian's pane inside ten minutes; one was cut off MID-WORD by a pane's hand-back
+> arriving while he typed — and the sentence it cut in half was about calls interrupting each other.
+> The chair had by then made four mid-lap dispatches in one lap, resetting the hand-back counter each
+> time, and had captured two seats' in-flight files in commits about other work.
+>
+> **Two mechanisms, because discipline was already tried and is what failed.** `P-ONE-STATION`: the
+> verbs REFUSE — not queue — a dispatch or ring from a seat that is not the open lap's holder, and the
+> refusal is posted to the board. `P-INBOX`: every delivery queues per pane and drains only when the
+> target's screen is READY **and its prompt line is EMPTY**. With no open lap everything is allowed —
+> freestyle is not gated.
+>
+>     FALSIFIER:  a call rendered inside a running turn, or into a user message; or a dispatch or ring
+>                 from a non-holder while a lap is open. `chain-status` prints OUT OF TURN.
+
 Steps 2 and 6 are the ones that get skipped, and skipping them is what turns the Librarian into a
 second orchestrator nobody needs.
 
@@ -388,8 +413,22 @@ librarian. **A route is not a failure**, and calling it one makes the repair loo
 when it is design.
 
 **Which is why the lap row carries the door.** `consonance/tools/lap-row.js --open` takes
-`--entry orch|lib`, and without it a direct-entry lap and a lap where the chair simply failed to
+`--entry orch|lib|ring`, and without it a direct-entry lap and a lap where the chair simply failed to
 seal are the same row on the ledger — and the second should be visible.
+
+**`ring` is not a door** (added 2026-09-02, pane C's ruling on `p-lap-row`). A ring lap has no entry:
+the loop is cycling on its own under AMENDMENT 1 — *"once the loop is going the beginning chain
+doesnt need to be used again"* — and no user inquiry entered anywhere. Before this, such a lap had to
+be recorded as door one with a prose note admitting the row was false, which the ledger did on L033,
+the very lap that put the ring in the drawing above. **`--initiator` also gains `librarian`**: door
+two existed while the enum that names who used it did not.
+
+**And a ring lap may carry a real prior — the chair's guess that it should be forced ABSENT was
+wrong, and C corrected it.** L033 sealed four line-numbered paths before any map existed. What is
+needed is only that an EMPTY guess on a ring lap reads *inapplicable* rather than *missed*: `--report`
+prints `ring laps with no guess: N of M`, scored as "no guess — ring lap", while a ring lap with a
+prior scores normally. **Done-vs-never-started, one more time** — the distinction this room has now
+missed seven ways in two nights.
 
     FALSIFIER:  a direct-entry lap whose guess is sealed AFTER the map's commit time means the rule
                 was not kept. The row then reads "no guess — direct entry" rather than pretending a

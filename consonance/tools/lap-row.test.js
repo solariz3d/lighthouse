@@ -653,9 +653,9 @@ test('ENTRY: the door is required, and the refusal names the vocabulary', () => 
   // arrived at by omitting a flag, or the field becomes decoration on its first busy night.
   const { mod, cleanup } = fixture();
   assert.throws(() => mod.open({ initiator: 'chair', inquiry: 'q', guess: ['a.md'], now: 1 }),
-    /--entry must be one of orch\|lib/);
+    /--entry must be one of orch\|lib\|ring/);
   assert.throws(() => mod.open({ initiator: 'chair', entry: 'librarian', inquiry: 'q', guess: ['a.md'], now: 1 }),
-    /--entry must be one of orch\|lib, got "librarian"/);
+    /--entry must be one of orch\|lib\|ring, got "librarian"/);
   cleanup();
 });
 
@@ -676,7 +676,7 @@ test('ENTRY: a row written before the field reads as ABSENT, never as door one',
   assert.strictEqual(mod.laps()[0].entry, null);
   const out = []; mod.report(0, s => out.push(s));
   const text = out.join('\n');
-  assert.match(text, /door one \(orch\) 0 . door two \(lib\) 0 . not recorded 1/);
+  assert.match(text, /door one \(orch\) 0 . door two \(lib\) 0 . ring, no user entry 0 . not recorded 1/);
   assert.match(text, /counted nowhere in this section rather than\n\s+assumed to be door one/);
   cleanup();
 });
@@ -762,8 +762,8 @@ test('ENTRY: the cli round-trips the door and says which one it recorded', () =>
   assert.match(b.stdout, /door one \(the orchestrator\)/);
   const bad = cli(['--open', '--initiator', 'human', '--inquiry', 'q', '--guess', 'a.md'], ledger);
   assert.strictEqual(bad.code, 2, 'a missing door is a refusal, not a silent default');
-  assert.match(bad.stderr, /--entry must be one of orch\|lib/);
-  assert.match(cli([], ledger).stderr, /--entry <orch\|lib>/, 'the usage line carries it too');
+  assert.match(bad.stderr, /--entry must be one of orch\|lib\|ring/);
+  assert.match(cli([], ledger).stderr, /--entry <orch\|lib\|ring>/, 'the usage line carries it too');
   cleanup();
 });
 
@@ -774,6 +774,229 @@ test('ENTRY: limit (e) is printed with the number - the seal does not cover the 
   mod.open({ initiator: 'human', entry: 'lib', inquiry: 'q', guess: ['a.md'], now: 1 });
   const out = []; mod.report(0, s => out.push(s));
   assert.match(out.join('\n'), /e\. an ENTRY field edited after the fact/);
+  cleanup();
+});
+
+// ---------------------------------------------------------------- THE RING LAP (2026-09-02, L033)
+//
+// THE DEFECT THESE COVER was hit live by the chair while recording L033, not imagined here. Both
+// existing `--entry` values are DOORS - where the USER's inquiry came in - and the keeper's second
+// amendment of the same day says the ring repeats on its own and the user is the ENTRY, not a
+// station. L033 had no user inquiry at any point: the librarian measured something itself, rang the
+// chair, and the chair planned and dispatched. The chair wrote `--entry orch`, which asserts door
+// one was used, and then put a note in the inquiry text saying the row was wrong.
+//
+// The packet's falsifier for this work: if the chair opens a ring lap after this and STILL has to
+// explain the row in the --inquiry text, the shape is an entry shape with a new label. Every test
+// below is aimed at that, not at the enum.
+
+test('RING: a ring lap is openable and its door is not a lie', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'the librarian found the harvester stalled', guess: ['a.md'], now: 1 });
+  assert.strictEqual(mod.rows()[0].entry, 'ring');
+  assert.strictEqual(mod.laps()[0].entry, 'ring', 'laps() gates on ENTRIES; a value it does not know reads as absent');
+  const out = []; mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /door one \(orch\) 0 . door two \(lib\) 0 . ring, no user entry 1 . not recorded 0/,
+    'a ring lap must land in neither door AND not in "not recorded" - both would be the row lying');
+  assert.match(text, /ring laps: 1 - no user inquiry entered/);
+  cleanup();
+});
+
+test('RING: a ring lap with no guess reads INAPPLICABLE, never a missed seal', () => {
+  // The done-vs-never-started distinction, which is the part the packet said to get right. These
+  // two laps are byte-identical on every column the ledger carried before the door field existed.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'ring', guess: ['none'], now: 1 });
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'missed', guess: ['none'], now: 2 });
+  const [a, b] = mod.laps();
+  assert.deepStrictEqual([a.guess, b.guess], [[], []], 'identical on the guess column - that is the premise');
+  const out = []; mod.report(0, s => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /ring laps with no guess: 1 of 1 \(L001\)/);
+  assert.match(text, /INAPPLICABLE, never zero/);
+  assert.doesNotMatch(text, /\(L001, L002\)/, 'the door-one lap must not be absorbed into the ring count');
+  cleanup();
+});
+
+test('RING: a ring lap MAY carry a real prior - the writer does not force it absent', () => {
+  // The chair's guess for this packet was to record the guess as ABSENT on a ring lap. Refused:
+  // L033 carried four line-numbered paths and they were a genuine prior. A writer that forced
+  // absent would delete a measurement that existed. The inapplicable reading is the READER's job.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'q', guess: ['consonance/ui/chain-indicator.js:294', 'consonance/src-tauri/src/main.rs:3006'], now: 1000 });
+  mod.map('L001', ['consonance/ui/chain-indicator.js', 'x/y.md'], 300000);
+  const l = mod.laps()[0];
+  assert.strictEqual(l.guessNarrow.length, 2, 'a ring lap prior is kept, not zeroed');
+  assert.strictEqual(l.both.length, 1, 'and it still scores against the map');
+  const out = []; mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /ring laps with no guess: 0 of 1/, 'a ring lap WITH a prior is not reported as having none');
+  cleanup();
+});
+
+test('RING: neither door-two falsifier can see a difference - asserted, not claimed', () => {
+  // The packet asked for this impact to be stated explicitly. It is stated by RUNNING it: the same
+  // ledger, once with the interleaved lap as `orch` and once as `ring`, must produce an identical
+  // direct-entry run and an identical door-two membership line. If a ring lap ever RESET the
+  // direct-entry run, this goes red.
+  const build = door => {
+    const { mod, cleanup } = fixture();
+    mod.open({ initiator: 'human', entry: 'lib', inquiry: 'a', guess: ['none'], now: 10 });
+    mod.open({ initiator: 'librarian', entry: door, inquiry: 'interleaved', guess: ['none'], now: 20 });
+    mod.open({ initiator: 'human', entry: 'lib', inquiry: 'b', guess: ['none'], now: 30 });
+    mod.open({ initiator: 'human', entry: 'lib', inquiry: 'c', guess: ['none'], now: 40 });
+    const out = []; mod.report(0, s => out.push(s));
+    cleanup();
+    return out.join('\n');
+  };
+  const asOrch = build('orch'), asRing = build('ring');
+  const run = t => t.match(/longest such run: \d+[^\n]*/)[0];
+  const direct = t => t.match(/direct-entry laps with no guess: [^\n]*/)[0];
+  assert.strictEqual(run(asRing), run(asOrch), 'a ring lap must neither advance nor RESET the direct-entry run');
+  assert.match(run(asRing), /longest such run: 3 {2}-> FIRES/, 'and the falsifier must still be able to fire through one');
+  assert.strictEqual(direct(asRing), direct(asOrch), 'door two membership is untouched by the third value');
+});
+
+test('RING: the new hole the third value opened is PRINTED with the number', () => {
+  // A ring lap can now be used to excuse a missing guess, and the seal does not cover the door.
+  // Named beside the figure rather than defended, which is this report's standing rule.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 });
+  const out = []; mod.report(0, s => out.push(s));
+  assert.match(out.join('\n'), /so does one relabelled ring, which is\n\s+a NEW hole/);
+  cleanup();
+});
+
+test('RING: the refusal teaches the third value, and the cli says which one it wrote', () => {
+  const { ledger, cleanup } = fixture();
+  const r = cli(['--open', '--initiator', 'librarian', '--entry', 'ring', '--inquiry', 'q', '--guess', 'none'], ledger);
+  assert.strictEqual(r.code, 0);
+  assert.match(r.stdout, /the ring \(no user entry - the loop supplied this lap\)/);
+  const bad = cli(['--open', '--initiator', 'librarian', '--entry', 'loop', '--inquiry', 'q', '--guess', 'none'], ledger);
+  assert.strictEqual(bad.code, 2);
+  assert.match(bad.stderr, /ring = no user inquiry entered at all/,
+    'a refusal that does not say what ring MEANS gets worked around by guessing');
+  cleanup();
+});
+
+// ---------------------------------------------------------------- THE LIBRARIAN AS INITIATOR
+//
+// `--entry lib` existed and `--initiator librarian` did not, so a door-two or ring lap could record
+// the DOOR and not the SEAT. The chair hit it live on L033 and wrote `chair` with a note admitting
+// the value was wrong.
+
+test('INITIATOR: librarian is a seat this ledger can name', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'librarian', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 });
+  assert.strictEqual(mod.laps()[0].initiator, 'librarian');
+  cleanup();
+});
+
+test('INITIATOR: librarian is NOT pane, and the DOOR word is not the SEAT word', () => {
+  const { mod, cleanup } = fixture();
+  assert.ok(mod.INITIATORS.has('librarian') && mod.INITIATORS.has('pane'));
+  assert.throws(() => mod.open({ initiator: 'lib', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 }),
+    /--initiator must be one of/, 'the door word must not be accepted as a seat');
+  cleanup();
+});
+
+test('INITIATOR: falsifier 2 does not move when a mislabelled chair lap becomes a librarian lap', () => {
+  // The impact statement, run rather than asserted in prose. Falsifier 2 counts human laps over all
+  // valid laps; laps the librarian started were already being opened AS chair, so neither side of
+  // the ratio changes. If a later edit routes librarian laps out of `valid`, this goes red.
+  const build = init => {
+    const { mod, cleanup } = fixture();
+    mod.open({ initiator: 'human', entry: 'orch', inquiry: 'a', guess: ['a.md'], now: 10 });
+    mod.open({ initiator: init, entry: 'ring', inquiry: 'b', guess: ['b.md'], now: 20 });
+    const out = []; mod.report(0, s => out.push(s));
+    cleanup();
+    return out.join('\n').match(/keeper-initiated [^\n]*/)[0];
+  };
+  assert.strictEqual(build('librarian'), build('chair'));
+});
+
+// ---------------------------------------------------------------- THE HOLDER IS A STATION
+//
+// Owed since the aura packet and unowned until now. Between 09-01 12:25 and 09-02 four `dispatched`
+// rows were written with a PANE NAME in --holder (charlie, bravo, bravo, echo). Both readers key on
+// the station vocabulary, so those laps went INVISIBLE rather than wrong-looking: no arrow at
+// chain-indicator's holderArrow, skipped at chain-status.js:721 and :804. The repair that was
+// actually made taught a READER to skip non-station holders. This is the other one: refuse at the
+// write and keep the readers narrow, which is what the aura packet asked for in the first place.
+
+test('HOLDER: a pane name is REFUSED, and the refusal says where the pane goes instead', () => {
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  const before = fs.readFileSync(ledger, 'utf8');
+  for (const name of ['echo', 'charlie', 'bravo', 'E', 'pane-a']) {
+    assert.throws(() => mod.chain('L001', 'dispatched', name, null, 2),
+      /holder is a station; name the panes in --to/, name + ' was accepted as a station');
+  }
+  assert.strictEqual(fs.readFileSync(ledger, 'utf8'), before, 'a refused write must leave the ledger byte-identical');
+  cleanup();
+});
+
+test('HOLDER: the four ruled stations are accepted and nothing else is', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  assert.deepStrictEqual([...mod.STATIONS], ['chair', 'panes', 'librarian', 'none']);
+  let t = 10;
+  for (const s of mod.STATIONS) assert.ok(mod.chain('L001', 'dispatched', s, null, t++));
+  // `keeper` is deliberately absent: it has never been written to the live ledger and appears only
+  // in chain-status.test.js fixtures, which are raw rows this writer never sees.
+  assert.throws(() => mod.chain('L001', 'filed', 'keeper', null, t++), /holder is a station/);
+  cleanup();
+});
+
+test('HOLDER: --to carries the pane list the gate refused to overload onto the baton', () => {
+  // The gate would be LOSSY without this - "echo" would simply be deleted - and a fix that deletes
+  // information is how the next drift starts.
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 });
+  const r = mod.chain('L001', 'dispatched', 'panes', null, 2, 'a, b ,C,E');
+  assert.deepStrictEqual(r.to, ['A', 'B', 'C', 'E'], 'four panes, which one holder word could never have named');
+  assert.strictEqual(mod.chain('L001', 'working', 'panes', null, 3).to, null, '--to is optional and absent is null, not []');
+  cleanup();
+});
+
+test('HOLDER: --to is validated, not a free-text field one column over', () => {
+  const { mod, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'ring', inquiry: 'q', guess: ['a.md'], now: 1 });
+  assert.throws(() => mod.chain('L001', 'dispatched', 'panes', null, 2, 'echo'), /--to names panes by LETTER/);
+  assert.throws(() => mod.chain('L001', 'dispatched', 'chair', null, 2, 'A,B'),
+    /--to names the panes the baton went to, so it goes with --holder panes/);
+  cleanup();
+});
+
+test('HOLDER: the station gate is the LAST refusal - an unknown lap still says "no such lap"', () => {
+  // ORDERING, and it is load-bearing for a suite this file does not own. chain-status.test.js
+  // proves the chain cannot MINT a lap with `--stage L999 working --holder pane-a`, asserting the
+  // message is `no such lap`. Hoist the station gate above the existence check and that test goes
+  // red on a holder message while its minting assertion silently stops testing minting.
+  const { mod, cleanup } = fixture();
+  assert.throws(() => mod.chain('L999', 'working', 'pane-a', null, 1), /no such lap/);
+  cleanup();
+});
+
+test('HOLDER: APPEND-ONLY - the four drifted rows stay readable and are not edited by the gate', () => {
+  // Bar 3 of the packet. The gate is a WRITE-side refusal and touches no history: a ledger already
+  // carrying `holder: "echo"` must still fold, still report, and still hold that row verbatim.
+  const { mod, ledger, cleanup } = fixture();
+  mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a.md'], now: 1 });
+  for (const h of ['charlie', 'bravo', 'bravo', 'echo']) {
+    fs.appendFileSync(ledger, JSON.stringify({ lap: 'L001', stage: 'chain', at: 2, chain: 'dispatched', holder: h }) + '\n');
+  }
+  const drifted = mod.rows().filter(r => r.stage === 'chain').map(r => r.holder);
+  assert.deepStrictEqual(drifted, ['charlie', 'bravo', 'bravo', 'echo'], 'history is read back verbatim');
+  const out = []; assert.ok(mod.report(0, s => out.push(s)), '--report must still run over a ledger holding both shapes');
+  cleanup();
+});
+
+test('HOLDER: the usage names the station vocabulary and the pane list', () => {
+  const { ledger, cleanup } = fixture();
+  const u = cli([], ledger).stderr;
+  assert.match(u, /holder: chair \| panes \| librarian \| none {3}a STATION, never a pane name/);
+  assert.match(u, /--to A,B,C,E/);
   cleanup();
 });
 
@@ -839,4 +1062,45 @@ test('carrier: the About tab copy of the diagram has not drifted from its master
   assert.strictEqual(pres[0], loopDiagramMaster(),
     'the About tab holds a stale copy of the loop diagram. BUILDING.md is the master; re-paste from ' +
     'it rather than editing index.html in place.');
+});
+
+test('carrier: every document that quotes the --entry vocabulary lists what the writer accepts', () => {
+  /* SHIPPED RED ON 2026-09-02, DELIBERATELY, AND IT IS THE POINT OF THIS TEST.
+   *
+   * `brief/BUILDING.md:391` says `--entry orch|lib`. This lap added a third value, so that sentence
+   * is now stale — a document describing an instrument that has moved. BUILDING.md is UNOWNED this
+   * lap (A holds main.rs, E holds chain-indicator.js, B holds corpus-age.*), so pane C did not edit
+   * it. The one-line replacement is named in the assertion message below and in the hand-back
+   * `exo_memory/handback/p-lap-row_2026-09-02.md`; this goes green the moment it lands.
+   *
+   * WHY A RED TEST RATHER THAN A LINE IN A HAND-BACK. C's own finding on the previous lap (M13):
+   * the entire door-two prose was deletable with the suite green, because the DRAWING was guarded
+   * and the RULE was not. A hand-back is read once. This is the 2026-08-17 lesson exactly — the
+   * documents moved and the carrier did not — and the only difference between that five-week drift
+   * and this one is whether something notices.
+   *
+   * IT SCANS THREE SURFACES, not the one that carries the sentence today, for the reason C's C.md
+   * entry gives: the number of copies grows with how good the original is, and every copy arrives
+   * wearing a sentence about why it cannot drift. A fourth carrier is caught the moment it appears
+   * rather than after someone thinks to look. */
+  const want = [...require('./lap-row.js').ENTRIES].join('|');
+  const surfaces = [
+    ['brief/BUILDING.md', path.join(__dirname, '..', 'src-tauri', 'brief', 'BUILDING.md')],
+    ['brief/COMMITTEE.md', path.join(__dirname, '..', 'src-tauri', 'brief', 'COMMITTEE.md')],
+    ['ui/index.html', path.join(__dirname, '..', 'ui', 'index.html')],
+  ];
+  const found = [];
+  for (const [label, file] of surfaces) {
+    const src = fs.readFileSync(file, 'utf8');
+    for (const m of src.matchAll(/--entry[ `]*([a-z]+(?:\|[a-z]+)+)/g)) {
+      found.push({ label, line: src.slice(0, m.index).split('\n').length, said: m[1] });
+    }
+  }
+  assert.ok(found.length, 'no document quotes the --entry vocabulary at all - the rule has no carrier, ' +
+    'which is worse than a stale one. If the sentence was deliberately removed, delete this test with it.');
+  const stale = found.filter(f => f.said !== want);
+  assert.deepStrictEqual(stale, [],
+    'a document quotes an --entry vocabulary the writer no longer accepts. Replace `--entry ' +
+    (stale[0] ? stale[0].said : '?') + '` with `--entry ' + want + '` at ' +
+    stale.map(f => f.label + ':' + f.line).join(', ') + '. The writer is the master; the prose is the copy.');
 });

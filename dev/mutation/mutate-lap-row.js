@@ -81,6 +81,79 @@ const MUTANTS = [
     name: 'the redundancy reading is printed even on laps whose map saw the guess',
     apply: s => s.replace("? ' The redundancy reading is REFUSED on the rest: a map that saw the guess cannot corroborate it.'", "? ''"),
   },
+
+  /* ---- L033, 2026-09-02. THE RING LAP, THE LIBRARIAN SEAT, AND THE STATION GATE.
+   *
+   * Two of the three defects below were DESIGN GAPS rather than bugs, which is why the mutants
+   * matter more than usual here: a gap leaves no red anywhere, so the only evidence that the fix is
+   * guarded is that removing it goes red. Pane C's own finding on the previous lap is the standard
+   * these are written to — the entire door-two prose was deletable with the suite green, because
+   * the DRAWING was guarded and the RULE was not. */
+  {
+    name: 'RING: the third entry value is removed, so a ring lap must be recorded as a door that was not used',
+    apply: s => s.replace("const ENTRIES = new Set(['orch', 'lib', 'ring']);", "const ENTRIES = new Set(['orch', 'lib']);"),
+  },
+  {
+    name: 'RING: ring laps are folded into the not-recorded bucket (inapplicable becomes never-started)',
+    apply: s => s.replace("const noDoor = valid.filter(l => l.entry === null);",
+      "const noDoor = valid.filter(l => l.entry === null || l.entry === 'ring');"),
+  },
+  {
+    name: 'RING: a ring lap is counted as door one - the exact lie the chair had to write by hand',
+    apply: s => s.replace("const orchDoor = byDoor('orch'), libDoor = byDoor('lib'), ringLaps = byDoor('ring');",
+      "const orchDoor = valid.filter(l => l.entry === 'orch' || l.entry === 'ring'), libDoor = byDoor('lib'), ringLaps = byDoor('ring');"),
+  },
+  {
+    name: 'RING: the inapplicable-not-zero reading stops printing, so an empty guess reads as a missed seal again',
+    apply: s => s.replace('  if (ringLaps.length) {\n', '  if (false) {\n'),
+  },
+  {
+    name: 'RING: a ring lap resets the direct-entry run, silently un-firing a registered falsifier',
+    apply: s => s.replace("      if (l.entry !== 'lib') continue;", "      if (l.entry !== 'lib') { run = 0; continue; }"),
+  },
+  {
+    name: 'INITIATOR: librarian is dropped again, so a lap the librarian started must be filed under another seat',
+    apply: s => s.replace("const INITIATORS = new Set(['human', 'chair', 'pane', 'librarian']);",
+      "const INITIATORS = new Set(['human', 'chair', 'pane']);"),
+  },
+  {
+    name: 'HOLDER: the station gate is removed, and a pane name goes back into the baton',
+    apply: s => s.replace('  if (!STATIONS.has(h)) {', '  if (false) {'),
+  },
+  {
+    name: 'HOLDER: the station gate is HOISTED above the lap-existence check (breaks a suite this file does not own)',
+    apply: s => {
+      const a = s.indexOf('  if (!STATIONS.has(h)) {');
+      if (a < 0) return s;
+      const end = s.indexOf('\n  }\n', a) + '\n  }\n'.length;
+      const gate = s.slice(a, end);
+      const without = s.slice(0, a) + s.slice(end);
+      const anchor = "  const all = rows();\n  if (!all.some(r => r.lap === lap)) {";
+      const i = without.indexOf(anchor);
+      return i < 0 ? s : without.slice(0, i) + gate + without.slice(i);
+    },
+  },
+  {
+    name: 'HOLDER: --to stops being validated, and the field it exists to replace becomes free text',
+    apply: s => s.replace("    const bad = toList.filter(x => !/^[A-Z]$/.test(x));", '    const bad = [];'),
+  },
+  {
+    name: 'HOLDER: --to is accepted beside any station, re-opening the overload one field over',
+    apply: s => s.replace("    if (h !== 'panes') {", '    if (false) {'),
+  },
+  {
+    /* THE WRONG REPAIR, made executable. When the drift was found, a READER was taught to skip
+     * non-station holders; the aura packet said widening the readers would bless the fan-out error.
+     * This mutant is that repair applied one level deeper — the READ filtering history out — which
+     * would make the four drifted rows vanish rather than stay countable. Append-only means the
+     * rows are refused going FORWARD and untouched going back; without this mutant the test
+     * asserting exactly that is green at HEAD and green here, and proves nothing. */
+    name: 'APPEND-ONLY: the reader silently drops history whose holder the new gate would refuse',
+    apply: s => s.replace(
+      "    .map(l => { try { return JSON.parse(l); } catch { return null; } })\n    .filter(Boolean);",
+      "    .map(l => { try { return JSON.parse(l); } catch { return null; } })\n" +
+      "    .filter(Boolean).filter(r => r.stage !== 'chain' || STATIONS.has(r.holder));"),
+  },
 ];
 
 const raw = fs.readFileSync(TOOL, 'utf8');
