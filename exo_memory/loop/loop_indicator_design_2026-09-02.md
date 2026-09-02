@@ -237,3 +237,71 @@ now `Terminal → Orchestrator` vs `Terminal → Librarian` drawn identically. *
 someone looking at the screen, never by a test.** The DOM-level bounding-box assertion above is the
 first oracle in this family that reads geometry rather than state, which is why it is worth more than
 the four state-level tests that passed through all of it.
+
+---
+
+## AMENDMENT 4 (keeper, 2026-09-02 07:00) — THE LOGO IS THE INDICATOR. Supersedes AMENDMENT 3.
+
+Verbatim, per this file's rule:
+
+> *"forget the arrow shit in between the titles, lets put a small icon somewhere that shows you the
+> loop, it will be the consonance LOGO, except the three points around the signal will be this, the
+> top one will be the terminal panes, the bottom left one will be orch, the bottom right dot will be
+> the lib, the loop rotates clock wise, so which ever chain is active in the loop will show
+> highlighted and rotate clock wise through each… somewhere simple, perhaps next to the about tab
+> right in the middle, it shows a bigger consonance logo that acts as the tool to see where the loop
+> is. We could also refactor or redesign the part that describes the seat, it is too bulky and takes
+> up too much space."*
+
+**AMENDMENT 3 IS SUPERSEDED BEFORE IT LANDED.** It is kept above as a trace, not struck: it is the
+step that made the constraint legible.
+
+### Why this ends the question the tab bar could not
+
+Read the logo's three dots **clockwise from the top**: `panes → lib → orch → panes`. **That is the
+cycle's own order.** The tab bar renders `Terminal · Orchestrator · Librarian`, which never had that
+property — and every scheme proposed against it failed somewhere:
+
+    a marker beside the holder        misread 2 of 3 hops (E derived this; nobody specified it)
+    a marker at the destination       relocated WHICH hop misread; it did not remove the misreading
+    an arc over the skipped seat      correct, but it had to VAULT a station to say what it meant
+
+**On the logo nothing is skipped, so direction is GEOMETRY rather than a convention the viewer must
+learn.** Each proposal was a better answer to the wrong question — *where do we put a marker among
+tabs that are not in cycle order* — and the keeper changed the surface instead of the marker.
+
+### The shape
+
+    a larger copy of the About hero logo (index.html ~:229-237; dots top (32,10),
+    bottom-right (51,43), bottom-left (13,43)), in the tab bar's middle beside About
+    dots ARE stations: top = panes, bottom-left = orchestrator, bottom-right = librarian
+    AMENDMENT 2's four looks now apply to the ACTIVE DOT:
+        radiant working / amber waiting / chill gold complete on the librarian dot /
+        three dim-dashed unknown / plain logo idle
+    optional faint clockwise arc to the next dot -- never required
+    position from `chain_state`; ring for receipts; station vocabulary as ruled
+    `#chainchip` stays.  TAB AURAS COME OFF -- one indicator, not two.
+
+    TESTS (DOM):  holder panes => top dot; chair => bottom-left; librarian => bottom-right;
+                  filed => librarian dot chill gold; unconfirmed => lit dot and NO arc;
+                  unknown => three dashed
+    MUTANTS:      swap the orch and lib dots => red; filed rendered radiant => red;
+                  arc on unconfirmed => red
+    FALSIFIER:    if the keeper cannot say from across the room which seat holds the loop and
+                  whether it is moving or done, the logo failed its only job
+
+### The second sentence pays for the first
+
+The space is **bought, not borrowed**: the per-tab `.mainhead` (`index.html` ~:125-131) shrinks to one
+line plus a title tooltip. **C's two-doors paragraph MOVES with it** — to the tooltip or to the
+About's "The loop" section, as a POINTER and not a copy. It was written for the moment a person
+chooses a seat and must not be deleted to make room.
+
+### The pattern this closes, and it ran five times in two nights
+
+Two different facts producing the same pixels: the placeholder byte-identical to `unknown`;
+`unknown` and `idle` both dark; done vs never-started; `Terminal → Orchestrator` vs
+`Terminal → Librarian`. **Every one was found by an eye, never by a test.** The last of them was not
+fixed by a better test — it was dissolved by moving to a surface where the ambiguity cannot be
+expressed. *Some display bugs are not bugs in the drawing; they are bugs in the thing being drawn
+on.*
