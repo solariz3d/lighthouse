@@ -736,3 +736,6 @@ the wrong figure was published.*
   (not runnable from a pane) and found the ledger's holder word drifted to pane names on 09-01 12:25, blinding two
   readers; my own holder→tab map inherited it. Writer validates + `--to`; readers untouched; one corrected row repairs
   the live reading. WRONG #64 (no `stale` state).
+- **03:45 — P-WINDOW-INERT collated (A)** → `librarian/2026-09-02.md` ~03:45. Window inert under the cap by tier
+  arithmetic, not weight — no budget below 442,309 B carries a dated note; the floor fix does not re-arm it, consistent
+  with the 02:15 ruling. A's red-while-inert test declined until budget is reserved for `librarian/` (keeper decision).
