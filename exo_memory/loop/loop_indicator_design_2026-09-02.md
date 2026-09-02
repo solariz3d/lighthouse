@@ -75,3 +75,37 @@ how a bisect stops being possible.
 *Registered so this can fail: if a future packet touching the indicator restates the design in its
 own words rather than quoting the block above, the thing that went missing once has gone missing
 again in the same way, and the quoting rule is decoration.*
+
+---
+
+## ORDERING — CORRECTED 2026-09-02 ~01:42, by the chair against its own text
+
+**The ORDERING section above gives a wrong reason and must not be obeyed as written.**
+
+It says item 3 waits because *"a second concurrent change to a different file is how a bisect stops
+being possible."* **That is false.** Two dirty files in different languages are independently
+revertable; `git checkout` on one does not touch the other, and bisect is not the mechanism at risk.
+
+**The real coupling is narrower and it is about RELAUNCH, not editing.** `launch.ps1` watches BOTH
+`src-tauri\src` and `ui` (`:125`, `:137`), so a relaunch rebuilds the binary from **every** dirty
+file at once. With two unlanded changes present, a behaviour change in the running app cannot be
+attributed to either.
+
+**Corrected rule:**
+
+    E may work item 3 NOW. The files are disjoint from B's:
+        item 3   ui/chain-indicator.js, ui/term.js, ui/index.html, ui/app.css
+        L029     consonance/src-tauri/src/main.rs   (B, alone)
+
+    DO NOT RELAUNCH while both are dirty. Land them one at a time, and relaunch between.
+
+*Why this correction is filed rather than edited in place: the wrong reason is kept visible because
+it is the third time tonight the chair stated a constraint broader than the fact under it — after
+"§9 went stale" (an instruction written against a tree that changed) and "no guess was sealed" (a
+route, not a skipped step). A broad constraint reads as caution and is obeyed like one. §9 is what
+happens when such a line sits long enough for someone to act on it.*
+
+**This does not override the librarian's ordering by fiat.** `BUILDING.md` registers that an
+orchestrator dispatch reordering the librarian's packets **without saying why** means the split is
+prose. The why is above: file ownership is the binding constraint and it is disjoint. The decision
+is still the keeper's or the librarian's, not the chair's alone.
