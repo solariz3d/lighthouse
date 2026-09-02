@@ -801,6 +801,28 @@ t('main.rs still returns the exact `reason` COMPLETE is keyed on', () => {
     'chain_state no longer distinguishes "never ran" from "all filed" — the two would re-merge');
 });
 
+t('the chip yields WIDTH in the stream bar but never yields its EXISTENCE', () => {
+  // Keeper, 2026-09-02: the bottom bar "sometimes appears taking up unneeded space" — a document
+  // horizontal scrollbar caused by the status cluster overflowing the row. The fix is a
+  // degradation order in app.css, and the part of it this file owns is the chip: it must
+  // ellipsize rather than disappear, because a chip that silently vanishes and a chip reading
+  // nothing are the same two-states-one-appearance defect the placeholder had.
+  //
+  // NO MUTANT IS SCORED FOR THE CSS ITSELF. There is no layout engine in this harness, so a
+  // mutation of a width rule has no oracle here and inventing one would be a green test over an
+  // unmeasured property — the exact thing tonight's M3 lesson is about. This asserts the RULES
+  // exist, which is all that is checkable from node, and says so rather than implying more.
+  const css = fs.readFileSync(path.join(__dirname, 'app.css'), 'utf8');
+  assert.match(css, /#streambar\s*\{[^}]*overflow:\s*hidden/,
+    'the stream bar has no overflow backstop; a wide cluster widens the DOCUMENT and the ' +
+    'viewport scrollbar eats height from the panes');
+  const chip = /\.statuscluster\s+#chainchip\s*\{([^}]*)\}/.exec(css);
+  assert.ok(chip, 'the chip has no width rule in the cluster at all');
+  assert.match(chip[1], /text-overflow:\s*ellipsis/, 'the chip must show that it was truncated');
+  assert.match(chip[1], /min-width:\s*[1-9]/,
+    'the chip must keep a visible stub — shrinking to zero is vanishing, not degrading');
+});
+
 t('index.html carries the nav id and the arrow element renderTabs needs', () => {
   const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   assert.match(html, /<nav class="tabs" id="tabs">/, 'renderTabs finds the nav by id and nothing else');

@@ -411,6 +411,63 @@ input::placeholder { color: #55607a; }
 }
 .statuscluster #status { max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+/* ── THE STREAM BAR MUST NEVER WIDEN THE DOCUMENT ────────────────────────────────────────────
+   Keeper, 2026-09-02: the bottom bar "sometimes appears taking up unneeded space". It is a
+   HORIZONTAL SCROLLBAR, and it is the DOCUMENT's, not the bar's:
+
+     #streambar is display:flex with no overflow rule, so it is `visible`, and a visible overflow
+     draws no scrollbar of its own — it enlarges the scrollable area of the VIEWPORT instead.
+     html,body are height:100%, so that scrollbar eats ~15px off the bottom of a full-height
+     layout; `main { flex: 1 }` absorbs the loss and the terminals get shorter. Intermittent
+     because it depends on content width.
+
+   WHY THE ROW CANNOT SHRINK TODAY: a flex item's automatic minimum size is its min-content
+   width, and every chip in .statuscluster is `white-space: nowrap` with visible overflow, so
+   each one refuses to give up a single pixel. #tapticker is the only guarded item on the row.
+   The cluster as a whole is also min-width:auto, so it cannot shrink even where its children
+   could. At the 840px default window the cluster's own min-content already exceeds the row.
+
+   THE FIX IS A DEGRADATION ORDER, NOT A CLIP. Nothing is dropped and nothing vanishes: the
+   least load-bearing readouts yield first, every one of them ellipsizes, and the `…` IS the
+   signal that there is more. A chip that silently disappeared would be the same defect class as
+   the placeholder fixed earlier tonight — two states, one appearance.
+
+     floor  #tapticker    a ticker of completed turns, and the only guarded item on the row. It
+                          is flex:1, so its flex-basis is 0 and flex-shrink cannot reach it — under
+                          overflow it simply sits on its min-width. LOWERING THAT FLOOR from 120px
+                          to 60px is what frees its space, not a shrink weight; a shrink factor
+                          here would have been decoration that read like a fix
+        50  #status       already ellipsized, and it had no min-width:0, so its automatic minimum
+                          was its content and it never actually gave anything back
+        20  #chainchip    yields THIRD and keeps a 7ch stub, because after tonight the tab aura
+                          at the TOP is the primary display for holder and next hop — this row is
+                          the detail line, so it is the right thing to compress and the wrong
+                          thing to remove
+         1  #cost, #hud   last resort, and the honest cost of it is in the hand-back: neither
+                          carries a title attribute, so a truncated value is not recoverable on
+                          hover until the window is widened
+         0  everything else — the gate chip, the auto checkbox, the summarize BUTTON and the
+            chevron never shrink. The controls are at the RIGHT end, which is where a clip would
+            land, so they are the one group that must not be in the shrink chain at all.
+
+   The `overflow: hidden` below is a BACKSTOP and should be unreachable: the chain above gives
+   back ~700px, and the window's own minWidth is 700. It exists so that an unforeseen chip can
+   never reintroduce the scrollbar. Its one cost is that the lit-pane glow (a 7px text-shadow in
+   a 28px row) may clip by a pixel or two at the very top and bottom. */
+#streambar { overflow: hidden; }
+#tapticker { min-width: 60px; }
+.statuscluster { min-width: 0; }
+.statuscluster #status { min-width: 0; flex-shrink: 50; }
+.statuscluster #chainchip {
+  min-width: 7ch; flex-shrink: 20; overflow: hidden; text-overflow: ellipsis;
+}
+.statuscluster #cost, .statuscluster #hud {
+  min-width: 0; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;
+}
+.statuscluster #gatechip, .statuscluster #dyadstate, .statuscluster #breakerstate,
+.statuscluster .autolbl, .statuscluster .distillbtn,
+#tappanes, #tapcount, #tapchev { flex-shrink: 0; }
+
 /* the chain chip — where the loop is, and who the next hop waits on.
    TWO SALIENCES, ONE ELEMENT. Quiet is the default and is deliberately low-contrast: it is the
    liveness proof (an indicator invisible until it fires cannot be told from a dead one), not the
