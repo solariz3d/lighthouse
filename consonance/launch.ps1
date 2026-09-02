@@ -96,28 +96,13 @@ if (-not $targetDir) { $targetDir = Join-Path $root 'src-tauri\target' }   # las
 $exe = Join-Path $targetDir 'release\consonance.exe'
 
 # --- The librarian shelf budget ----------------------------------------------------------------
-# 2026-09-01: the librarian pane died on "CLAUDE.md is over the 150.0k-char limit (906.3k chars)"
-# and could not answer a single message. The rule-(a) window (984ffc3) cut 390,968 bytes exactly as
-# registered, taking the shell 1,305,657 -> 915,994 -- and 915,994 is still SIX TIMES the harness cap
-# that main.rs:3576 has documented all along. The window's own limit was set to 1,000,000, fitted to
-# the one measured death rather than to the cap, and the chair verified the bars were MET without
-# ever asking whether the bar was the RIGHT bar.
-#
-# Measured here, by running shelf_tests with the env var set:
-#     budget      0  ->  129,402 bytes   0 carried, 517 indexed
-#     budget 20,000  ->  149,094 bytes   on the line, no margin
-#     budget 40,000  ->  169,011 bytes   over
-# 129,402 is the FLOOR -- brief + room with zero shelf files -- so there is ~20k of headroom under the
-# cap and LEDGER.md alone is 35,208. It does not fit, and no budget above 0 is safe.
-#
-# Carrying nothing is not a degradation of this seat, it is its design: "it cites rather than
-# recalls: a path you can open, never a summary you must trust." All 517 files stay INDEXED and
-# openable by path; none is lost.
-#
-# THIS IS A MITIGATION, NOT THE FIX. The fix is LIBRARIAN_INTAKE_LIMIT dropping from 1,000,000 to
-# the harness's real 150,000, so the ceiling is enforced in the binary instead of by this line.
-# Remove this when that lands.
-$env:CONSONANCE_LIBRARIAN_BUDGET = '0'
+# REMOVED 2026-09-02 at c2afec6, as the block that stood here instructed. On 2026-09-01 this script
+# set CONSONANCE_LIBRARIAN_BUDGET='0' to keep the librarian alive after it died on the harness cap;
+# the block said in its own last line "Remove this when that lands". It has landed: the ceiling is
+# LIBRARIAN_INTAKE_LIMIT in the binary, self-limiting by construction, and BRAVO verified no env var
+# is load-bearing -- unset / 0 / 2200000 / notanumber all green. The seat now survives because of
+# the code, not because of this file. Kept as a comment so the next reader sees the mitigation was
+# retired deliberately rather than lost.
 
 # --- Is the built exe already newer than every source file? -----------------------------------
 $sources = @(
