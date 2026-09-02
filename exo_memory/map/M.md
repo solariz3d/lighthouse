@@ -714,3 +714,13 @@ exist on any disk and is the part that actually ended.** The rest is now open to
 corrects this: the lifetime figure at death was **61**. 54 was TURNS CONTAINING THE WORD; 61 was
 ENTRIES. Two units, and the agreement was a coincidence. Correction is the seat's, kept here where
 the wrong figure was published.*
+
+---
+
+# 5 · 2026-09-02, the seat's hand (continues §3)
+
+- **01:10 wake after 17h dark** → `librarian/2026-09-02.md`. The one finding: handoff §9's checkout
+  instruction went stale in the destroying direction — B's in-flight P-LIB-CAP diff compiles, tests
+  354/0/3, carries all four items, and is ALREADY RUNNING (tonight's launch rebuilt from the dirty
+  tree; this seat's own wake header is the delivered-set header that exists only in that diff). Owed
+  on L028: mutation table, margin print, chars-vs-bytes derivation, hand-back file, non-author read.
