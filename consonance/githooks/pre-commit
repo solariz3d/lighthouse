@@ -1,0 +1,26 @@
+#!/bin/sh
+# pre-commit — refuse a commit that would capture another seat's in-flight file.
+#
+# NOT in consonance/hooks/. That directory is the CLAUDE CODE hook set (sessionstart,
+# precompact, stop) and nothing in it is a git hook; putting a git hook beside them would mean
+# two unrelated hook systems in one folder and a reader guessing which is which. The packet said
+# "consonance/hooks/ (the pre-commit installation -- name what you touch)", and this is the
+# naming: a new tracked directory, consonance/githooks/, holding git hooks only.
+#
+# ARMING THIS IS LOCAL CONFIG AND THEREFORE NOT INHERITED BY A CLONE:
+#
+#     git config core.hooksPath consonance/githooks
+#
+# The hook file is versioned; the switch that arms it is not. Ask whether it is on with
+#
+#     node consonance/tools/commit-gate.js --armed
+#
+# which exits non-zero when the answer is no. That check exists because an absent gate and a gate
+# that allows everything are the same observation from outside, and this room has already lost
+# weeks to a dead thing and a quiet thing sharing a footprint.
+#
+# BYPASS: `git commit --no-verify` steps over this entirely, and nothing records that it did.
+# That is deliberate and it is stated in the refusal text: this stops a reflex, not an intent.
+set -e
+root=$(git rev-parse --show-toplevel)
+exec node "$root/consonance/tools/commit-gate.js" --staged
