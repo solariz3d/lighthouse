@@ -23,10 +23,18 @@ carry nothing joint, and voices that merely agree carry nothing new.
 Quoted from `BUILDING.md`, the master. **Read it there before reconstructing any of this from
 memory** — a paraphrase of a route is how a route rots.
 
+**Two doors, 2026-09-02** (`0714963`, `c177984`, the keeper). Work enters at the orchestrator OR
+goes straight to the librarian, and *"either way the chain works when it starts."* Under door two the
+librarian rings the chair THE INQUIRY — one line, no map — before filing the map, so the guess still
+precedes the map. And the user is the **ENTRY, not a station**: once a lap is open the cycle
+`orch → panes → lib → orch` repeats on its own. **BUILDING.md's THE JOINT STEP is the master for
+both**; this card carries the drawing only because a pane reads this one first.
+
 ```
         you
-         │  1. state the inquiry or the project
-         ▼
+         │  1. state the inquiry or the project. This is ENTRY, and it runs ONCE — by
+         ├──────────────────┐  EITHER door. See THE JOINT STEP for what door two owes.
+         ▼  door one        ▼  door two
    ORCHESTRATOR ──────► LIBRARIAN        2. measured against the corpus
          │  ◄──────────────┘             3. the parts of the system that apply, cited
          │
@@ -37,9 +45,13 @@ memory** — a paraphrase of a route is how a route rots.
          │  `call_librarian`             6. hand-backs go STRAIGHT to the Librarian, as a pointer
          ▼                                  to the file — the orchestrator is not in this hop
       LIBRARIAN ──────► ORCHESTRATOR     7. checked; silence is a valid answer; the orchestrator
-         │                                  COMMITS what the librarian collated, and composes nothing
+         │                 │                COMMITS what the librarian collated, and composes nothing
+         │                 └──► back to 4   THE RING — orch → panes → lib → orch — repeats on its
+         │                                  own. The user is the ENTRY, not a station it returns to.
          ▼
-        you                              8. only on direction — never on state
+        you                              8. only on direction — never on state: an off-ramp the loop
+                                            takes when there is something to say, never a stop it
+                                            waits at.
 ```
 
 **Step 6, verbatim:**

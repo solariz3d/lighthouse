@@ -4,8 +4,10 @@
 //
 // WHY THIS EXISTS, and it is a hole rather than a feature request.
 //
-// `brief/BUILDING.md` documents the loop the room runs - you -> orchestrator -> librarian -> plan
-// -> panes -> orchestrator -> librarian -> you - and its joint step ends: "Every lap leaves a row
+// `brief/BUILDING.md` documents the loop the room runs - ENTRY, once, by either door
+// (you -> orchestrator -> librarian, OR you -> librarian), then the ring that repeats on its own:
+// orchestrator -> panes -> librarian -> orchestrator. The user is the ENTRY, not a station the loop
+// returns to (2026-09-02, `0714963` and `c177984`). Its joint step ends: "Every lap leaves a row
 // [...] The falsifiers in this document read from that row and from nothing else." There was no
 // row. Three falsifiers were registered against a record that did not exist, which is the same
 // shape as the document itself landing in the bundle and being read by nothing for its first hour.
@@ -34,7 +36,8 @@
 //      and EXCLUDED from the metric rather than quietly counted.
 //
 // Usage:
-//   node lap-row.js --open --initiator <human|chair|pane> --inquiry <text> --guess <p[,p...]> [--blind]
+//   node lap-row.js --open --initiator <human|chair|pane> --entry <orch|lib> --inquiry <text>
+//                    --guess <p[,p...]> [--blind]
 //   node lap-row.js --map <lap-id> --paths <p[,p...]>
 //   node lap-row.js --opened <lap-id> --paths <p[,p...]>
 //   node lap-row.js --stage <lap-id> <stage> --holder <seat> [--note <text>]
@@ -70,6 +73,11 @@
 //      is a self-report ledger, and the room's own standard says curated input is not an outside.
 //      The one uncurated signal available is the SEAL, which detects a rewritten guess and nothing
 //      else.
+//   e. AN ENTRY FIELD EDITED AFTER THE FACT. `guess_seal` hashes the GUESS and nothing else, and it
+//      is not widened to cover `entry` because that would recompute every historical seal and file
+//      the whole existing ledger as TAMPERED - breaking the reader on history to close a hole that
+//      is smaller than the break. So a lap relabelled `lib` after the chair failed to seal reads as
+//      a legitimate direct entry, and the ledger cannot tell. Named here rather than defended.
 'use strict';
 
 const fs = require('fs');
@@ -122,6 +130,28 @@ const WINDOW = 10;
 const COMMIT_WINDOW = 20;
 
 const INITIATORS = new Set(['human', 'chair', 'pane']);
+
+/* WHICH DOOR THE WORK CAME IN BY. `brief/BUILDING.md` THE JOINT STEP, the keeper 2026-09-02: work
+ * may enter at the orchestrator or go straight to the librarian, and "either way the chain works
+ * when it starts."
+ *
+ * WHY THE FIELD IS NOT COSMETIC. Under door two the map arrives first by construction, so unless the
+ * librarian rings the chair the inquiry before filing, the lap produces no guess. Without this field
+ * that lap and one where the chair simply FAILED TO SEAL are the same row - guess column 0, nothing
+ * to tell them apart - and the second is the one that should be visible. The chair mislabelled
+ * exactly this on 2026-09-02, writing "no guess was sealed before the map" as though a step had been
+ * skipped when nothing had: the ask entered at the librarian. A route is not a failure.
+ *
+ * REQUIRED on --open, for the reason --guess is required two functions down: a legitimate state must
+ * be SAID rather than arrived at by omitting a flag. ABSENT on history is a different thing and is
+ * left alone - rows written before this field are reported as `?` and are excluded from the door
+ * readings rather than assumed to be `orch`. Assuming would manufacture the number the field exists
+ * to make honest. */
+const ENTRIES = new Set(['orch', 'lib']);
+
+// Three in a row is the falsifier BUILDING.md registers against the ring rule; it lives here so the
+// report reads it from the ledger rather than from anyone remembering to check.
+const DIRECT_NO_GUESS_RUN = 3;
 
 // ---------------------------------------------------------------- paths
 
@@ -220,6 +250,8 @@ function laps(all = rows()) {
     return {
       lap: L.lap, at: open ? open.at : (map ? map.at : 0),
       initiator: open ? open.initiator : null,
+      // A row from before the field carries `undefined`; it is reported as absent, never as 'orch'.
+      entry: open && ENTRIES.has(open.entry) ? open.entry : null,
       inquiry: open ? open.inquiry : null,
       blind: open ? open.blind : null,
       head: open ? open.head : null,
@@ -282,9 +314,17 @@ function mintId(all) {
 
 // ---------------------------------------------------------------- the three writes
 
-function open({ initiator, inquiry, guess, blind, now }) {
+function open({ initiator, entry, inquiry, guess, blind, now }) {
   if (!INITIATORS.has(initiator)) {
     throw new Error(`--initiator must be one of ${[...INITIATORS].join('|')}, got ${JSON.stringify(initiator)}`);
+  }
+  if (!ENTRIES.has(entry)) {
+    // The refusal PRINTS the vocabulary, as the chain stage refusal does: a refusal that does not say
+    // what would have been accepted is one the next seat works around by guessing.
+    throw new Error(`--entry must be one of ${[...ENTRIES].join('|')}, got ${JSON.stringify(entry)}. ` +
+      `orch = the ask reached the orchestrator first; lib = it went straight to the librarian ` +
+      `(brief/BUILDING.md, THE JOINT STEP). A lap with no door recorded cannot tell a direct entry ` +
+      `from a chair that failed to seal.`);
   }
   if (!inquiry || !String(inquiry).trim()) throw new Error('--inquiry is required: a lap with no inquiry cannot be read back');
   if (!guess.length) {
@@ -296,7 +336,7 @@ function open({ initiator, inquiry, guess, blind, now }) {
   const lap = mintId(all);
   const g = (guess.length === 1 && normPath(guess[0]) === 'none') ? [] : guess;
   const row = append({
-    lap, stage: 'open', at: now, initiator, inquiry: String(inquiry).trim(),
+    lap, stage: 'open', at: now, initiator, entry, inquiry: String(inquiry).trim(),
     guess: g, blind: blind === true ? true : null, head: headSha(),
   });
   // CHECKED AFTER THE WRITE, not before. Two panes opening a lap at once both read the same
@@ -472,9 +512,10 @@ function report(last, out = console.log) {
   const gapCol = l => l.gapS == null ? '?' : (l.gapS < 1 ? l.gapS.toFixed(1) : String(Math.round(l.gapS)));
   if (shown.length) {
     out('');
-    out('  lap   init    blind  gap(s)  guess  broad  map  BOTH  map-only  opened  from-map');
+    out('  lap   init    entry  blind  gap(s)  guess  broad  map  BOTH  map-only  opened  from-map');
     for (const l of shown) {
-      const head = `  ${l.lap.padEnd(6)}${String(l.initiator || '?').padEnd(8)}${(l.blind === true ? 'yes' : '?').padEnd(7)}${gapCol(l).padEnd(8)}`;
+      const head = `  ${l.lap.padEnd(6)}${String(l.initiator || '?').padEnd(8)}${String(l.entry || '?').padEnd(7)}` +
+        `${(l.blind === true ? 'yes' : '?').padEnd(7)}${gapCol(l).padEnd(8)}`;
       if (l.voided) { out(head + `VOID   (by ${l.voided.by} — counted nowhere; reason above)`); continue; }
       out(head +
         `${String(l.guessNarrow.length).padEnd(7)}${String(l.guessBroad.length).padEnd(7)}${String(l.mapped.length).padEnd(5)}` +
@@ -511,6 +552,52 @@ function report(last, out = console.log) {
     out('  A fresh librarian map cannot be produced in that time. These are chair-authored, or a guess recorded');
     out('  after the map already existed - and the seal sees neither. Counted above regardless: the gap is a');
     out('  signal, not a verdict. Voiding is a judgement that carries a reason (--void); this line carries none.');
+  }
+
+  // ---- WHICH DOOR (BUILDING.md, THE JOINT STEP, added 2026-09-02)
+  // Read over `valid`, not `scored`: a direct-entry lap that produced no guess is exactly the case
+  // this section exists to make readable, and it is not in `scored` at all if it never got a map.
+  out('');
+  out('ENTRY - which door the work came in by. Two doors, and only the second costs a step.');
+  const byDoor = d => valid.filter(l => l.entry === d);
+  const orchDoor = byDoor('orch'), libDoor = byDoor('lib');
+  const noDoor = valid.filter(l => l.entry === null);
+  out(`  door one (orch) ${orchDoor.length} \u00b7 door two (lib) ${libDoor.length} \u00b7 not recorded ${noDoor.length}`);
+  if (noDoor.length) {
+    out(`  ${noDoor.length} lap(s) carry no entry field. They are counted nowhere in this section rather than`);
+    out('  assumed to be door one - and on them an empty guess is UNREADABLE: a direct entry and a chair');
+    out('  that failed to seal are the same row. That hole is what the field closes, going forward only.');
+  }
+  if (libDoor.length) {
+    // "no guess - direct entry" is the row the amendment asks for by name, in place of a
+    // measurement that does not exist.
+    const noGuess = libDoor.filter(l => l.guess.length === 0);
+    out(`  direct-entry laps with no guess: ${noGuess.length} of ${libDoor.length}` +
+      (noGuess.length ? ` (${noGuess.map(l => l.lap).join(', ')})` : '') +
+      ' - these read "no guess - direct entry", not a missed seal.');
+    // The ring rule's own falsifier: the guess must PRECEDE the map. A map row landing within the
+    // fresh-map floor of the open row is the same signal the chair-authored check uses above.
+    const late = libDoor.filter(l => l.hasMap && l.gapS != null && l.gapS < FRESH_MAP_FLOOR_S);
+    if (late.length) {
+      out(`  direct-entry laps whose map landed within ${FRESH_MAP_FLOOR_S} s of the guess: ${late.length} of ` +
+        `${libDoor.length} (${late.map(l => l.lap).join(', ')}).`);
+      out('  The ring rule is that the librarian carries the INQUIRY to the chair - one line, no map -');
+      out('  before filing. These are where the guess did not really precede the map.');
+    }
+  }
+  // The registered falsifier, read from the ledger: N direct-entry laps in a row carrying no guess.
+  {
+    let run = 0, worst = 0;
+    for (const l of valid) {
+      if (l.entry !== 'lib') continue;
+      run = l.guess.length === 0 ? run + 1 : 0;
+      if (run > worst) worst = run;
+    }
+    out(`  FALSIFIER (brief/BUILDING.md, THE JOINT STEP) - ${DIRECT_NO_GUESS_RUN} consecutive direct-entry laps ` +
+      `carrying no guess means the ring rule is not being kept.`);
+    out(`  longest such run: ${worst}` +
+      (worst >= DIRECT_NO_GUESS_RUN ? '  -> FIRES. The second door has cost the loop its only measurement.'
+        : (libDoor.length ? '  -> does not fire.' : '  -> no direct-entry laps yet; nothing to read.')));
   }
 
   // ---- FALSIFIER 1 (BUILDING.md)
@@ -568,6 +655,9 @@ function report(last, out = console.log) {
   out('  c. a path opened BECAUSE the map named it from one that would have been opened anyway.');
   out('  d. whether the lap happened at all. Every row here is self-reported by a participant; the seal');
   out('     detects a rewritten guess and nothing else.');
+  out('  e. an ENTRY field edited after the fact. The seal covers the guess only, deliberately - widening');
+  out('     it would file every historical lap as TAMPERED. A lap relabelled lib after a missed seal reads');
+  out('     here as a legitimate direct entry.');
   return { laps: L.length, scored: scored.length, excluded: bad.length, voided: voided.length, answered, withOpened };
 }
 
@@ -578,10 +668,11 @@ function main(argv, now = Date.now()) {
   try {
     if (argv.includes('--open')) {
       const r = open({
-        initiator: at('--initiator'), inquiry: at('--inquiry'),
+        initiator: at('--initiator'), entry: at('--entry'), inquiry: at('--inquiry'),
         guess: splitPaths(at('--guess')), blind: argv.includes('--blind'), now,
       });
-      console.log(`${r.lap}  opened by ${r.initiator}${r.blind ? ' (blind)' : ''}, ${r.guess.length} guessed path(s).`);
+      console.log(`${r.lap}  opened by ${r.initiator} via ${r.entry === 'lib' ? 'door two (straight to the librarian)' : 'door one (the orchestrator)'}` +
+        `${r.blind ? ', blind' : ''}, ${r.guess.length} guessed path(s).`);
       console.log(`  next: node consonance/tools/lap-row.js --map ${r.lap} --paths <p,...>`);
       return 0;
     }
@@ -612,7 +703,8 @@ function main(argv, now = Date.now()) {
     return 2;
   }
   console.error('usage:');
-  console.error('  lap-row.js --open --initiator <human|chair|pane> --inquiry <text> --guess <p[,p...]> [--blind]');
+  console.error('  lap-row.js --open --initiator <human|chair|pane> --entry <orch|lib> --inquiry <text> --guess <p[,p...]> [--blind]');
+  console.error(`      entry:  ${[...ENTRIES].join(' | ')}   orch = the ask reached the chair first; lib = straight to the librarian`);
   console.error('  lap-row.js --map <lap-id> --paths <p[,p...]>');
   console.error('  lap-row.js --opened <lap-id> --paths <p[,p...]>');
   console.error('  lap-row.js --stage <lap-id> <stage> --holder <seat> [--note <text>]');
@@ -628,5 +720,6 @@ if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
   normPath, isBroad, sealOf, rows, laps, open, map, opened, chain, voidLap, report, mintId, main,
-  LEDGER, RATE_FLOOR, WINDOW, COMMIT_WINDOW, INITIATORS, CHAIN_STAGES, FRESH_MAP_FLOOR_S,
+  LEDGER, RATE_FLOOR, WINDOW, COMMIT_WINDOW, INITIATORS, ENTRIES, CHAIN_STAGES, FRESH_MAP_FLOOR_S,
+  DIRECT_NO_GUESS_RUN,
 };

@@ -10,8 +10,9 @@ to brief a single seat; this says how a whole inquiry moves. It is written from 
 
 ```
         you
-         │  1. state the inquiry or the project
-         ▼
+         │  1. state the inquiry or the project. This is ENTRY, and it runs ONCE — by
+         ├──────────────────┐  EITHER door. See THE JOINT STEP for what door two owes.
+         ▼  door one        ▼  door two
    ORCHESTRATOR ──────► LIBRARIAN        2. measured against the corpus
          │  ◄──────────────┘             3. the parts of the system that apply, cited
          │
@@ -22,9 +23,13 @@ to brief a single seat; this says how a whole inquiry moves. It is written from 
          │  `call_librarian`             6. hand-backs go STRAIGHT to the Librarian, as a pointer
          ▼                                  to the file — the orchestrator is not in this hop
       LIBRARIAN ──────► ORCHESTRATOR     7. checked; silence is a valid answer; the orchestrator
-         │                                  COMMITS what the librarian collated, and composes nothing
+         │                 │                COMMITS what the librarian collated, and composes nothing
+         │                 └──► back to 4   THE RING — orch → panes → lib → orch — repeats on its
+         │                                  own. The user is the ENTRY, not a station it returns to.
          ▼
-        you                              8. only on direction — never on state
+        you                              8. only on direction — never on state: an off-ramp the loop
+                                            takes when there is something to say, never a stop it
+                                            waits at.
 ```
 
 Steps 2 and 6 are the ones that get skipped, and skipping them is what turns the Librarian into a
@@ -41,6 +46,27 @@ second orchestrator nobody needs.
 > the file it was given, and calls `call_librarian` with the POINTER, in that same turn.** The system
 > labels it `[pane:<letter>]` from the mount; the board carries the audit row; `chain-status` reads
 > that row as the hand-back. The chair's inbound role on a hand-back is commit-only.
+
+> **Two doors, and the ring, added 2026-09-02 (`0714963` and `c177984`, the keeper's amendments).**
+> The drawing above used to have ONE door — `you → ORCHESTRATOR → LIBRARIAN` — and it was
+> incomplete rather than wrong. The keeper, verbatim: *"They could talk to the orch first then go to
+> the lib, or directly to the lib themselves. either way the chain works when it starts."*
+> **Flexibility is the rule; entry is not to be constricted.** What door two costs, and the
+> librarian's rule that pays it back, are at THE JOINT STEP below.
+>
+> And the same night, on the loop's other end, verbatim: *"i dont see anything, since there is no
+> workchain loop going, but even after the first workchain ends, it should still light up the lib on
+> its return trip, then once it comes back to the lib, it goes straight to the orch, so once the orch
+> is going it doesnt have to be interacted with again unless the user just wanted to. You get what I
+> mean? Once the loop is going the beginning chain doesnt need to be used again"* — **the user is
+> the ENTRY, not a station the loop returns to.** Step 8 is an off-ramp taken when there is something
+> to say; the cycle `orch → panes → lib → orch` repeats on its own and never parks waiting on the
+> keeper.
+>
+> **The drawing is the carrier.** Editing this prose and leaving the diagram alone is the 2026-08-17
+> lesson verbatim: that retirement edited every downstream document, missed the carrier, and the room
+> taught a retired metaphor for five weeks. Both amendments are IN the drawing above, which is why
+> this note can be short.
 
 ---
 
@@ -297,6 +323,44 @@ can produce the number alone.**
 regardless is ignored; a reminder that carries a question and waits for its answer is acted on
 60 of 60 times. Anyone who turns this step into a hook line that says *"consult the librarian"* has
 rebuilt the first kind.
+
+### DOOR TWO — the librarian's ring rule (added 2026-09-02, the keeper's amendment `0714963`)
+
+*Quoted, not restated. The design file this comes from carries a falsifier saying that restating a
+keeper's design in one's own words is how it goes missing, and it went missing exactly that way once.*
+
+The step above has the inquiry entering at the Orchestrator. **Under door two it enters at the
+Librarian**, and that costs exactly one thing: **the sealed guess is worthless after the map
+exists.** The whole value of step 1 is that the Orchestrator's prior is recorded BEFORE the
+Librarian answers, so it cannot be revised to match. Under door two the map arrives first *by
+construction*, so the lap would produce no number.
+
+**The fix is the Librarian's, and it keeps the number under EITHER door:**
+
+> On a direct ask, the librarian rings the chair **the inquiry** — one line, the ask itself, **no
+> map** — BEFORE filing the map. The chair seals three lines while the librarian works.
+
+**Same order as drawn. Different messenger.** The guess still precedes the map; only the party who
+carries the inquiry changes.
+
+**And a direct entry is not a skipped step.** When this first happened the chair wrote *"no guess was
+sealed before the map"* as though something had been missed. Nothing was. The ask entered at the
+librarian. **A route is not a failure**, and calling it one makes the repair look like discipline
+when it is design.
+
+**Which is why the lap row carries the door.** `consonance/tools/lap-row.js --open` takes
+`--entry orch|lib`, and without it a direct-entry lap and a lap where the chair simply failed to
+seal are the same row on the ledger — and the second should be visible.
+
+    FALSIFIER:  a direct-entry lap whose guess is sealed AFTER the map's commit time means the rule
+                was not kept. The row then reads "no guess — direct entry" rather than pretending a
+                measurement exists.
+
+    FALSIFIER:  if three consecutive direct-entry laps carry no guess, the ring rule is not being
+                kept and the second door has cost the loop its only measurement.
+
+Both are read by `node consonance/tools/lap-row.js --report` from the ledger's own rows, and need
+nobody's honesty.
 
 ## WHEN THE LOOP APPLIES — chain vs freestyle (added 2026-08-26, the keeper's amendment)
 
