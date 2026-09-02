@@ -109,3 +109,47 @@ happens when such a line sits long enough for someone to act on it.*
 orchestrator dispatch reordering the librarian's packets **without saying why** means the split is
 prose. The why is above: file ownership is the binding constraint and it is disjoint. The decision
 is still the keeper's or the librarian's, not the chair's alone.
+
+---
+
+## AMENDMENT — the keeper, 2026-09-02 03:03, verbatim. THE USER IS ENTRY, NOT A STATION.
+
+> *"i dont see anything, since there is no workchain loop going, but even after the first workchain
+> ends, it should still light up the lib on its return trip, then once it comes back to the lib, it
+> goes straight to the orch, so once the orch is going it doesnt have to be interacted with again
+> unless the user just wanted to. You get what I mean? Once the loop is going the beginning chain
+> doesnt need to be used again"*
+
+**The rule this fixes, and the original design section above does not carry it:**
+
+    ENTRY (once)        you -> orch -> lib      or      you -> lib      (the two doors, 0714963)
+
+    THE CYCLE (repeats) orch -> panes -> lib -> orch -> panes -> lib -> orch ...
+
+**The user is not a station the loop returns to.** Once work is moving, the aura cycles among the
+three seats indefinitely and **never parks waiting on the keeper.** He re-enters only when he wants
+to, not because the loop needs him.
+
+**What that means for the render, concretely:**
+
+1. **The aura is lit whenever a lap is open, at whatever stage** — including `return-leg` and
+   `handbacks-in`, not only during an active dispatch.
+2. **`lib -> orch` is a live hop and must draw an arrow.** The librarian's return leg is a stage of
+   the cycle, not the end of one.
+3. **There is no "waiting on the user" state in the cycle.** If a lap is open, some seat holds it,
+   and that seat is lit.
+4. **Dark means one thing only: no open lap.** Not "between messages", not "the keeper has not
+   spoken."
+
+**AND IT SHOULD BE LIT RIGHT NOW.** At the moment the keeper reported seeing nothing,
+`chain-status` read `L029 RETURN-LEG · holder chair` — an open lap with the orchestrator holding it.
+By this design the Orchestrator tab is lit with an arrow to the next hop. **So "nothing there" is
+not only about there being no loop; it is also that the chip sits in `#streambar` at the BOTTOM of
+the window (`index.html:394`), inside a `statuscluster` between `ready`, `gate ask-each`, cost and
+hud — the opposite end of the screen from the tabs at `:32-35`.**
+
+    OBJECTIVE (amended):  with a lap open at ANY stage, the holder's tab is lit and an arrow points
+                          at the next seat; the display never goes dark merely because the keeper is
+                          not being asked for something.
+    FALSIFIER (amended):  if the indicator is dark while `chain-status` reports an open lap, the
+                          render is keyed to the wrong condition.
