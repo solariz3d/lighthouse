@@ -6173,6 +6173,193 @@ fn submit_delay_ms(payload_bytes: usize) -> u64 {
     scaled.min(CEILING_MS)
 }
 
+// ---------------------------------------------------------------- THE INBOX (L034, 2026-09-02)
+//
+// NOTHING RENDERS INTO A PANE WHOSE PROMPT IS NOT IDLE, AND NOTHING INTO THE KEEPER'S TYPING.
+// The keeper, 07:15-07:18, filed at `fe15030`. The evidence is his own cut-off sentence: three of
+// his messages were spliced by rings into the librarian's pane in ten minutes, and one was cut off
+// MID-WORD by a hand-back arriving while he typed — a message that was about calls interrupting
+// each other. The defect demonstrated itself inside the report of it.
+//
+// WHY `screen_ready` ALONE IS THE NAIVE VERSION, and it is not the reason the packet gave.
+// `capture::screen_ready` asks whether ANY row on the screen is an empty input box and no turn is
+// in flight. The keeper typing makes the real input box `❯ sup brah`, which is not empty — so on a
+// clean screen the naive check does hold. It stops holding the moment ANOTHER row satisfies
+// `is_empty_box`, and one routinely does: a restored capture rendered into the scrollback contains
+// bare `❯` rows as CONTENT (this pane's own warm-start shell has several). Then `screen_ready` is
+// true while the keeper is mid-word, and the splice happens. So the gate keys on the INPUT BOX —
+// the bottom-most prompt row on the screen — and not on "some row somewhere".
+//
+// AND IT READS THE LIVE EMULATOR, NOT THE CAPTURE FILE. The packet's wording was "the target's last
+// captured screen is READY", which cannot work: the capture watcher WRITES ONLY WHEN THE SCREEN IS
+// ALREADY READY (`main.rs`, `if !capture::screen_ready(&lines) { continue; }`), so the last captured
+// screen is ready by construction and gating on it is vacuous. `PaneEmus` holds a live vt100
+// emulator fed by the reader thread on every PTY byte; that is the thing that knows whether the
+// keeper is typing right now.
+//
+// THE STALE-CAPTURE FALLBACK, which the packet named as the bar most likely to bite. Reading the
+// live emulator removes most of that exposure — a dead capture WATCHER does not blind this gate,
+// only a dead READER does, and a dead reader is a dead pane. It does not remove all of it: a
+// poisoned emulator mutex, a pane that simply never goes idle, or a screen this predicate cannot
+// read all produce an indefinite hold, and AN INDEFINITE HOLD IS A MUTE ROOM. So the hold is
+// BOUNDED. After `MAX_HOLD_MS` the message is delivered anyway and the board row says it was
+// forced. A message that arrives late and says so is recoverable; a room that goes silent with no
+// error is the failure the capture watcher already demonstrated tonight, for four hours, on all
+// four panes.
+
+/// After this long held, deliver anyway and SAY SO. The number is a judgement, not a measurement:
+/// long enough that no ordinary turn is interrupted (the longest observed pane turn tonight is a
+/// few minutes), short enough that a wedged gate is a late message rather than a mute room.
+const MAX_HOLD_MS: u64 = 240_000;
+
+/// The gate can be turned off whole. Bar 5 requires BOTH states to be honoured, so `false` is a
+/// tested path and not a dead branch.
+///
+/// NOT IN `brief/room-settings.json`, and that is a finding rather than a shortcut — see the
+/// hand-back. That file is a CLAUDE permissions file: it is written verbatim to each pane's
+/// `.claude/settings.json` (`room_brief("room-settings.json")`). A `deliver_only_when_idle` key
+/// there would be an unknown key in someone else's schema, would never be read by this binary, and
+/// would reach a seat only after a build. The delivery gate is Consonance's own behaviour, so it
+/// reads Consonance's own config surface.
+fn deliver_only_when_idle() -> bool {
+    !matches!(
+        std::env::var("CONSONANCE_DELIVER_ONLY_WHEN_IDLE").as_deref(),
+        Ok("0") | Ok("false") | Ok("off")
+    )
+}
+
+/// THE INPUT BOX IS THE BOTTOM-MOST PROMPT ROW, and its emptiness is the keeper-typing signal.
+///
+/// `capture::is_prompt` is "❯ + content"; `capture::is_empty_box` is "❯ + nothing". Together they
+/// are "a ❯ row". The LAST such row is the composer; every earlier one is history or scrollback.
+///
+/// UNKNOWN HOLDS. No ❯ row at all means a welcome banner, a full-screen overlay, or a screen this
+/// predicate cannot read — none of which is evidence the pane is ready. Returning true there is
+/// how a gate becomes decorative on exactly the screens it was built for.
+fn input_box_empty(lines: &[String]) -> bool {
+    match lines
+        .iter()
+        .rposition(|l| capture::is_empty_box(l) || capture::is_prompt(l))
+    {
+        Some(i) => capture::is_empty_box(&lines[i]),
+        None => false,
+    }
+}
+
+/// Both halves, and the second is the one a naive gate drops.
+fn pane_idle_for_delivery(lines: &[String]) -> bool {
+    capture::screen_ready(lines) && input_box_empty(lines)
+}
+
+/// What to do with the head of a queue. Kept as a pure function of (idle, waited, enabled) so the
+/// bounded-hold rule is testable without a pane, a thread or a clock.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum Drain {
+    /// The pane is idle (or the gate is off): send it.
+    Deliver,
+    /// Not idle yet, and inside the bound: keep it. The message is NOT dropped.
+    Hold,
+    /// Not idle, and past the bound. Send it and mark the row — a late message beats a mute room.
+    Forced,
+}
+
+fn drain_decision(idle: bool, waited: Duration, enabled: bool) -> Drain {
+    if !enabled || idle {
+        return Drain::Deliver;
+    }
+    if waited >= Duration::from_millis(MAX_HOLD_MS) {
+        return Drain::Forced;
+    }
+    Drain::Hold
+}
+
+/// One message waiting for its pane to be ready for it.
+struct Queued {
+    text: String,
+    /// For the board row only — never re-rendered into the pane.
+    label: String,
+    queued_at: Instant,
+}
+
+/// Per-pane FIFO. FIFO matters: two rings queued behind a busy pane must arrive in the order they
+/// were sent, or the gate has traded a splice for a reordering.
+struct Inbox(Mutex<HashMap<String, VecDeque<Queued>>>);
+
+impl Inbox {
+    fn new() -> Self {
+        Inbox(Mutex::new(HashMap::new()))
+    }
+    fn push(&self, pane: &str, text: String, label: String, now: Instant) -> usize {
+        let mut m = self.0.lock().unwrap();
+        let q = m.entry(pane.to_string()).or_default();
+        q.push_back(Queued { text, label, queued_at: now });
+        q.len()
+    }
+    fn depth(&self, pane: &str) -> usize {
+        self.0.lock().map(|m| m.get(pane).map_or(0, |q| q.len())).unwrap_or(0)
+    }
+    fn panes(&self) -> Vec<String> {
+        self.0.lock().map(|m| m.keys().cloned().collect()).unwrap_or_default()
+    }
+    /// Take the head IF the decision says it may go. Returns the message and whether it was forced.
+    /// Leaves the queue untouched on HOLD — bar 4: a queued message must never be lost.
+    fn take_ready(&self, pane: &str, idle: bool, now: Instant, enabled: bool) -> Option<(String, String, bool)> {
+        let mut m = self.0.lock().ok()?;
+        let q = m.get_mut(pane)?;
+        let head = q.front()?;
+        match drain_decision(idle, now.saturating_duration_since(head.queued_at), enabled) {
+            Drain::Hold => None,
+            d => {
+                let it = q.pop_front()?;
+                Some((it.text, it.label, d == Drain::Forced))
+            }
+        }
+    }
+}
+
+/// The live screen, or None. None is UNKNOWN and unknown holds (bounded) — never "ready".
+fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<Vec<String>> {
+    let arc = { emus.0.lock().ok()?.get(pane_id).cloned()? };
+    let e = arc.lock().ok()?;
+    Some(e.parser.screen().rows(0, EMU_COLS).collect())
+}
+
+fn pane_is_idle(emus: &PaneEmus, pane_id: &str) -> bool {
+    live_screen(emus, pane_id).map(|l| pane_idle_for_delivery(&l)).unwrap_or(false)
+}
+
+/// The one call every delivery site makes before it writes. `Some(reply)` means the message was
+/// QUEUED and the caller must return that reply instead of writing; `None` means go ahead.
+fn gate_or_queue(app: &AppHandle, pane_id: &str, msg: &str, preview: &str) -> Option<String> {
+    if !deliver_only_when_idle() || pane_is_idle(&app.state::<PaneEmus>(), pane_id) {
+        return None;
+    }
+    let depth = app.state::<Inbox>().push(pane_id, msg.to_string(), preview.to_string(), Instant::now());
+    chair_audit(app, format!("QUEUED -> {} ({} waiting, prompt not idle): {}", short_id(pane_id), depth, preview));
+    Some(format!("queued for {} — its prompt is not idle; it delivers when it is", short_id(pane_id)))
+}
+
+/// ONE tick, ALL queues, ONE message per pane per tick — the next tick re-reads the screen rather
+/// than trusting a 250ms-old reading for a second write. QUEUED and DELIVERED are separate rows on
+/// purpose: until tonight the board said "delivered" when the text RENDERED, so "not yet sent" and
+/// "sent and unacknowledged" produced the same line and could not be told apart.
+fn drain_inboxes(app: &AppHandle) {
+    let enabled = deliver_only_when_idle();
+    for pane in app.state::<Inbox>().panes() {
+        let idle = pane_is_idle(&app.state::<PaneEmus>(), &pane);
+        if let Some((text, label, forced)) = app.state::<Inbox>().take_ready(&pane, idle, Instant::now(), enabled) {
+            let ok = inject_to_pane(&app.state::<Panes>(), &pane, &text).is_ok();
+            chair_audit(app, format!(
+                "DELIVERED -> {}{}{}: {}",
+                short_id(&pane),
+                if forced { " (FORCED after the bounded hold — the pane never went idle)" } else { "" },
+                if ok { "" } else { " [WRITE FAILED]" },
+                label,
+            ));
+        }
+    }
+}
+
 fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(), String> {
     let mut map = panes.0.lock().unwrap();
     let sess = map.get_mut(pane_id).ok_or_else(|| "pane not found".to_string())?;
@@ -6555,12 +6742,16 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
     // Receipt: the capture's length BEFORE the write, so only bytes that arrive after it can count
     // as this write's render. Taken before inject_to_pane, never after — the gap is the whole point.
     let cap = capture_path(&tid);
-    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
-    let delivered = inject_to_pane(&panes, &tid, &msg);
     let mut preview: String = text.chars().take(110).collect();
     if text.chars().count() > 110 {
         preview.push('…');
     }
+    // L034: THE GATE. Nothing renders into a pane whose prompt is not idle.
+    if let Some(queued) = gate_or_queue(app, &tid, &msg, &preview) {
+        return queued;
+    }
+    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
+    let delivered = inject_to_pane(&panes, &tid, &msg);
     let receipt = match delivered {
         Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
         Err(_) => Receipt::NotAttempted,
@@ -6641,12 +6832,16 @@ fn librarian_call_exec(app: &AppHandle, text: &str) -> String {
     // write's render — the same discipline as chair_inject_exec, and for the same reason:
     // inject_to_pane returning Ok means the bytes left our pipe and nothing more.
     let cap = capture_path(MAIN_SID);
-    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
-    let delivered = inject_to_pane(&panes, MAIN_SID, &msg);
     let mut preview: String = text.chars().take(110).collect();
     if text.chars().count() > 110 {
         preview.push('…');
     }
+    // L034: THE GATE. Nothing renders into a pane whose prompt is not idle.
+    if let Some(queued) = gate_or_queue(app, MAIN_SID, &msg, &preview) {
+        return queued;
+    }
+    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
+    let delivered = inject_to_pane(&panes, MAIN_SID, &msg);
     let receipt = match delivered {
         Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
         Err(_) => Receipt::NotAttempted,
@@ -6703,12 +6898,16 @@ fn pane_call_librarian_exec(app: &AppHandle, from: Option<&str>, text: &str) -> 
     // Receipt taken BEFORE the write, so only bytes arriving after it can count as this write's
     // render — same discipline as chair_inject_exec and librarian_call_exec.
     let cap = capture_path(dest);
-    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
-    let delivered = inject_to_pane(&panes, dest, &msg);
     let mut preview: String = text.chars().take(110).collect();
     if text.chars().count() > 110 {
         preview.push('…');
     }
+    // L034: THE GATE. Nothing renders into a pane whose prompt is not idle.
+    if let Some(queued) = gate_or_queue(app, dest, &msg, &preview) {
+        return queued;
+    }
+    let before = fs::metadata(&cap).map(|m| m.len()).unwrap_or(0);
+    let delivered = inject_to_pane(&panes, dest, &msg);
     let receipt = match delivered {
         Ok(_) => await_render(&cap, before, &receipt_needle(text), &receipt_needle_tail(text)),
         Err(_) => Receipt::NotAttempted,
@@ -6872,6 +7071,7 @@ fn main() {
         .manage(cochlea_service::Service::default())   // the listening tab: off until a source is picked
         .manage(Panes(Mutex::new(HashMap::new())))
         .manage(PaneEmus(Mutex::new(HashMap::new())))
+        .manage(Inbox::new())   // L034: the delivery queue — nothing lands in a busy pane
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
@@ -6913,6 +7113,17 @@ fn main() {
             seed_references(); // the counter-voice + the study: named by the room, opened on demand
             set_dirs(&get_state()); // resolve configurable dirs before anything reads them
             gc_captures(); // drop own-capture logs for panes that are no longer kept
+            // L034: ONE thread for every queue, not one per pane. The per-pane capture watcher was
+            // the obvious host and is the wrong one — it breaks on a poisoned lock and did so
+            // silently on all four panes for four hours tonight. A gate hosted in a thread that can
+            // die without a word is a gate that mutes the room.
+            {
+                let h = app.handle().clone();
+                std::thread::spawn(move || loop {
+                    std::thread::sleep(Duration::from_millis(250));
+                    drain_inboxes(&h);
+                });
+            }
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
             // consume this; for now a placeholder consumer surfaces every raised pull.
             //
@@ -9822,3 +10033,120 @@ mod chain_state_tests {
     }
 }
 
+// ---------------------------------------------------------------- the inbox (L034, 2026-09-02)
+//
+// FAKE SCREENS, never a live pane — bar 1. Each screen below is the shape the emulator actually
+// produces: a bottom input box between two rule lines, with the ⏵⏵ footer under it.
+#[cfg(test)]
+mod inbox_tests {
+    use super::*;
+
+    fn screen(box_row: &str, working: bool) -> Vec<String> {
+        let mut s = vec![
+            "❯ an earlier message from the keeper".to_string(),
+            "● and the reply to it".to_string(),
+            "─".repeat(60),
+            box_row.to_string(),
+            "─".repeat(60),
+            "  ⏵⏵ bypass permissions on (shift+tab to cycle)".to_string(),
+        ];
+        if working {
+            s.push("✻ Churned for 3m 53s · esc to interrupt".to_string());
+        }
+        s
+    }
+
+    #[test]
+    fn idle_pane_with_an_empty_box_delivers() {
+        assert!(pane_idle_for_delivery(&screen("❯", false)));
+        assert!(pane_idle_for_delivery(&screen("❯   ", false)));
+    }
+
+    #[test]
+    fn the_keeper_typing_holds() {
+        // The case the whole packet exists for: a ready-looking screen whose composer has words in
+        // it. Delivering here is what cut his sentence in half mid-word.
+        assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false)));
+        assert!(!input_box_empty(&screen("❯ s", false)), "one character is still typing");
+    }
+
+    #[test]
+    fn a_turn_in_flight_holds() {
+        assert!(!pane_idle_for_delivery(&screen("❯", true)));
+    }
+
+    #[test]
+    fn screen_ready_alone_is_the_naive_version_and_this_is_the_screen_that_proves_it() {
+        // THE BUG IN THE NAIVE GATE, made concrete. A warm-started pane renders its own restored
+        // capture into the scrollback, and that text contains BARE ❯ ROWS AS CONTENT — this pane's
+        // own shell has several. `screen_ready` asks whether ANY row is an empty box, so it says
+        // READY while the keeper is mid-word. The gate must key on the BOTTOM-MOST ❯ row.
+        let mut s = screen("❯ mid-sentence and about to be spliced", false);
+        s.insert(1, "❯".to_string()); // a bare prompt row from a rendered transcript
+        assert!(capture::screen_ready(&s), "premise: the naive check is fooled by this screen");
+        assert!(!pane_idle_for_delivery(&s), "and the real gate is not");
+    }
+
+    #[test]
+    fn a_screen_with_no_prompt_row_at_all_holds() {
+        // UNKNOWN HOLDS. A welcome banner, an overlay, or a screen this predicate cannot read is
+        // not evidence of readiness. Bounded by MAX_HOLD_MS, never indefinite.
+        assert!(!input_box_empty(&["a full-screen overlay".to_string(), "with no box".to_string()]));
+    }
+
+    #[test]
+    fn the_hold_is_bounded_so_a_stale_screen_cannot_mute_the_room() {
+        // The bar most likely to bite: the capture watcher died silently on all four panes for four
+        // hours tonight. An unbounded hold turns that into a mute room with no error.
+        assert_eq!(drain_decision(false, Duration::from_millis(0), true), Drain::Hold);
+        assert_eq!(drain_decision(false, Duration::from_millis(MAX_HOLD_MS - 1), true), Drain::Hold);
+        assert_eq!(drain_decision(false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced);
+        assert_eq!(drain_decision(true, Duration::from_millis(0), true), Drain::Deliver);
+    }
+
+    #[test]
+    fn the_gate_is_honoured_in_both_states() {
+        // Bar 5. `false` is a tested path, not a dead branch.
+        assert_eq!(drain_decision(false, Duration::from_millis(0), false), Drain::Deliver);
+        assert_eq!(drain_decision(false, Duration::from_millis(MAX_HOLD_MS), false), Drain::Deliver);
+    }
+
+    #[test]
+    fn a_held_message_is_kept_and_drains_once_the_pane_goes_idle() {
+        // BAR 4, and it is the one that matters most: a queue that silently drops is worse than an
+        // interrupt, because an interrupt is at least visible.
+        let inbox = Inbox::new();
+        let t0 = Instant::now();
+        inbox.push("p", "first".into(), "l1".into(), t0);
+        inbox.push("p", "second".into(), "l2".into(), t0);
+        assert_eq!(inbox.depth("p"), 2);
+
+        assert!(inbox.take_ready("p", false, t0, true).is_none(), "busy pane: nothing leaves");
+        assert_eq!(inbox.depth("p"), 2, "and NOTHING IS LOST while it holds");
+
+        let (text, _, forced) = inbox.take_ready("p", true, t0, true).expect("idle: it drains");
+        assert_eq!(text, "first", "FIFO - a gate that reorders has traded a splice for a scramble");
+        assert!(!forced);
+        assert_eq!(inbox.take_ready("p", true, t0, true).map(|x| x.0).as_deref(), Some("second"));
+        assert_eq!(inbox.depth("p"), 0);
+    }
+
+    #[test]
+    fn a_message_past_the_bound_leaves_marked_as_forced() {
+        let inbox = Inbox::new();
+        let t0 = Instant::now();
+        inbox.push("p", "held".into(), "l".into(), t0);
+        let later = t0 + Duration::from_millis(MAX_HOLD_MS + 1);
+        let (text, _, forced) = inbox.take_ready("p", false, later, true).expect("the bound releases it");
+        assert_eq!(text, "held");
+        assert!(forced, "and the board row must be able to say so - a late message beats a silent one");
+    }
+
+    #[test]
+    fn an_empty_or_unknown_queue_is_not_an_error() {
+        let inbox = Inbox::new();
+        assert!(inbox.take_ready("never-seen", true, Instant::now(), true).is_none());
+        assert_eq!(inbox.depth("never-seen"), 0);
+        assert!(inbox.panes().is_empty());
+    }
+}

@@ -352,3 +352,36 @@ General form: **a change that makes a document stale owes a guard, not a note �
 allowed to be red.** A red test that names its own fix is a finding; the same fact in prose is a
 hope. The asymmetry that makes this worth a rule: an unread note costs five weeks (2026-08-17) and
 an unwanted red costs one line.
+
+---
+
+## 2026-09-02 — P-INBOX (L034)
+
+Hand-back: **`exo_memory/handback/p-inbox_2026-09-02.md`**. Packet `8934c02`, keeper's rule
+`fe15030`. `cargo test --bin consonance` 378 pass / 0 fail; mutants 5 applied / 5 caught.
+
+### A gate that reads a record written only when the gate would pass is not a gate
+
+2026-09-02. The packet specified "deliver when the target's LAST CAPTURED SCREEN is ready". The
+capture watcher writes **only when the screen is already ready** (`main.rs`, `if
+!capture::screen_ready(&lines) { continue; }`), so the last captured screen is ready by construction
+and the gate says yes always. Built against the LIVE emulator (`PaneEmus`) instead.
+
+General form: **before gating on a stored reading, ask what the storer's own write condition was.**
+A log filtered by the predicate you are about to test cannot answer it — it is the sampling bias
+made structural, and it reads as a working gate because it never errors.
+
+### The detector for "you built the naive version" fired on the version built exactly to spec, and that is how the real hole was found
+
+2026-09-02, bar 3 of the same packet: *check only `screen_ready`, ignore the prompt line ⇒ must go
+red.* The packet's stated reason was that `screen_ready` misses the keeper typing. It does not — a
+typed-in box is not an empty box, so the naive check already holds. **The mutant would have been
+GREEN on a gate built exactly as briefed**, and I would have read that as coverage.
+
+The real failure is different and worse: `screen_ready` asks whether **any** row is an empty box, and
+a warm-started pane renders its own restored capture into the scrollback, where **bare `❯` rows
+appear as CONTENT**. Then it is ready-and-splicing. Fixed by keying on the bottom-most `❯` row.
+
+General form: **when a bar says a mutant must be red, and you cannot see why it would be, that gap is
+the finding — not a formality to satisfy.** The brief's *reason* was wrong while its *bar* was right,
+and only running the bar against the reason separated them.

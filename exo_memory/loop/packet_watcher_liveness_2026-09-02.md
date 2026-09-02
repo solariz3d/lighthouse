@@ -4,6 +4,19 @@
 queued behind it. From E's leg-1 hand-back and the LIBRARIAN's collation (`dee876a`). §1 is E's
 work, verified by the chair at the lines.**
 
+> **PARKED 2026-09-02 ~07:45 — NOT STARTED, and this packet never held `main.rs`.** The 08:00 cutoff
+> arrived first. **B did not enter `main.rs`; CHARLIE did, for P-INBOX, and handed back.** The
+> capture-harvest leg 2 rides a later build.
+>
+> **A's commit gate found this, and it is a finding about the gate's own model rather than about
+> anyone's work:** a PARKED packet still holds its `WHAT YOU OWN` claim, so it blocked the landing of
+> a different seat's finished work in the same file. **A packet needs a parked state the gate can
+> read** — otherwise work that was never started holds a file hostage indefinitely, which is a new
+> way for two facts to share one footprint: *held because someone is working* and *held because
+> nobody ever did* look identical. That is the eighth instance of that shape in two nights.
+>
+> Nothing below is withdrawn. E's leg-1 evidence stands and the fixes are still the right ones.
+
 ## 1 · LEG 1 ANSWERED, AND IT REFUTED THE PACKET THAT SENT IT
 
 **The chair's candidate — *the prompt bar changed with the 02:38 build or the model switch, so the
