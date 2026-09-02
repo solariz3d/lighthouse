@@ -193,3 +193,47 @@ plumbing.
 
 *Quote this block; do not restate it. That rule is registered above and it exists because the design
 went missing once already.*
+
+---
+
+## AMENDMENT 3 (keeper, 2026-09-02 06:54) — DRAW THE PATH, don't place a marker
+
+Verbatim, per this file's own rule that restating a keeper's design in one's own words is how it
+goes missing:
+
+> *"the arrow from the terminal is pointing at the orch like it goes there, when it goes to lib, an
+> arrow should be drawn going around the orch and towards the lib."*
+
+**WHY EVERY ANCHORING RULE FAILS, and this closes the question rather than moving it.** The tabs
+render `Terminal · Orchestrator · Librarian`, which is **not cycle order**. Any arrow *between* two
+adjacent tabs reads as *"from this one to the next one"* — so a marker after Terminal reads
+`Terminal → Orchestrator` even when the loop is going `Terminal → Librarian`. E derived
+anchor-at-the-destination on 09-02 and it was a genuine improvement, but it relocates which hop
+misreads instead of removing the misreading. **A marker between two things cannot express a
+non-adjacent relation. Only a path can.**
+
+**The keeper's fix is a different primitive, not a better placement.**
+
+    an SVG overlay over .tabs -- NOT an element sitting between buttons
+    a curved path from the centre-top of the LIT button to the centre-top of the DESTINATION button
+    non-adjacent hops RISE OVER the intermediate button and land with an arrowhead INTO the target
+    adjacent hops get a low arc
+    colour = the aura's state colour
+    NO path on unconfirmed / idle / unknown / complete
+    the actor -> destination mapping from P-AURA-ARROW still stands; this changes the RENDER only
+    reduced-motion: static
+
+    TEST (DOM):  fixture holder panes + last hop dispatch => path starts at the Terminal button,
+                 ends at the Librarian button, and its bounding box SPANS the Orchestrator button
+    MUTANT:      the destination-anchored marker => red
+    PROOF:       the keeper says the arrow visibly goes AROUND the orchestrator
+
+    FALSIFIER:   if he cannot read `Terminal -> Librarian` off a panes-held lap without being told,
+                 the path failed its only job.
+
+**This is the fourth time in two nights that two different facts produced the same pixels** — the
+placeholder byte-identical to `unknown`; `unknown` and `idle` both dark; done vs never-started; and
+now `Terminal → Orchestrator` vs `Terminal → Librarian` drawn identically. **Each was found by
+someone looking at the screen, never by a test.** The DOM-level bounding-box assertion above is the
+first oracle in this family that reads geometry rather than state, which is why it is worth more than
+the four state-level tests that passed through all of it.
