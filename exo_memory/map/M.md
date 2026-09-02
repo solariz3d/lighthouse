@@ -732,3 +732,7 @@ the wrong figure was published.*
 - **02:15 — L029 item 1 collated, LAND IT** → `librarian/2026-09-02.md` ~02:15. 7/8 mutants caught on their own oracle;
   suite flakes ~10% in parallel (score serialized); the shelf's body budget is spent on a byte-identical copy of the
   harness-injected global CLAUDE.md — drop it, drop run artifacts, cards first. WRONG #63 (247→246, hand-count).
+- **03:30 — L029 item 3 collated; RULING: `holder` is a STATION** → `librarian/2026-09-02.md` ~03:30. E stopped at bar 0
+  (not runnable from a pane) and found the ledger's holder word drifted to pane names on 09-01 12:25, blinding two
+  readers; my own holder→tab map inherited it. Writer validates + `--to`; readers untouched; one corrected row repairs
+  the live reading. WRONG #64 (no `stale` state).
