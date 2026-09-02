@@ -490,6 +490,53 @@ t('THE BAR — a relaunch with a lap open shows the LAP, not "position unknown"'
   assert.strictEqual(v.elapsedMin, 4, 'age comes from the command');
 });
 
+t('the chip\'s PRE-RENDER placeholder must not read as any state this file renders', () => {
+  // A DEAD SCRIPT AND A LIVE `unknown` LOOKED IDENTICAL ON SCREEN. index.html shipped the chip
+  // with the literal text `chain ? position unknown` — byte-for-byte the `unknown` state's own
+  // text — so "chain-indicator.js never executed" and "it executed and had no reading" produced
+  // the same pixels. The seam falsifier (loop/packet_aura_2026-09-02.md §6) splits three ways on
+  // the assumption that a rendered state is what is on screen; with an identical placeholder it
+  // splits four, and the fourth is invisible. The placeholder is the ONLY string a person can see
+  // that was not produced by `render()`, so it has to be unmistakable.
+  const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  const m = /<span id="chainchip"[^>]*>([^<]*)<\/span>/.exec(html);
+  assert.ok(m, 'the #chainchip span is gone from index.html; the whole chip renders nowhere');
+  const placeholder = m[1].trim();
+  const rendered = [
+    C.chainView([], T0, {}),                       // unknown
+    C.chainView(null, T0, {}),                     // unavailable
+    C.chainView([], T0, { chain: CLOSED }),        // idle
+  ].map((v) => v.text);
+  for (const text of rendered) {
+    assert.notStrictEqual(placeholder, text,
+      'the placeholder is identical to a rendered state (' + JSON.stringify(text) +
+      '), so a chip that never ran is indistinguishable from one that ran and read that state');
+  }
+});
+
+t('THE VOCABULARY IS THE LIBRARIAN\'S RULING, and a holder outside it draws no arrow and says whose', () => {
+  // The ruling (chain-indicator.js:301) is chair -> panes, panes -> LIB, librarian -> orch.
+  // This pins BOTH halves, because the second half is load-bearing and untested until now: the
+  // ledger's `holder` is free text (tools/lap-row.js:373 accepts any --holder), and since L027 the
+  // dispatch rows have carried PANE NAMES (`charlie`, `bravo`, `echo`) instead of `panes`. Those
+  // fall through to null here — correctly, since inventing a station from an unknown word is the
+  // stale-reading failure — but SILENTLY unless the tooltip names the word it could not place.
+  // Widening the map at this reader would bless a drift that also breaks tools/chain-status.js:721,
+  // so the vocabulary is pinned rather than widened; see handback/p-aura_2026-09-02.md.
+  const arrowFor = (holder) => C.chainView([], T0, {
+    chain: { open: true, lap: 'L029', chain: 'dispatched', holder, at: T0, age_ms: 0,
+             self_reported: true, also_open: 0, unreadable: 0 },
+  });
+  assert.strictEqual(arrowFor('chair').arrow, '-> panes');
+  assert.strictEqual(arrowFor('panes').arrow, '-> LIB');
+  assert.strictEqual(arrowFor('librarian').arrow, '-> orch');
+
+  const v = arrowFor('echo');
+  assert.strictEqual(v.arrow, null, 'an unregistered holder must not be guessed into a station');
+  assert.ok(v.why.includes('"echo"'),
+    'the tooltip must name the holder it could not place, or the gap is invisible: ' + v.why);
+});
+
 t('THE BAR — with NO lap open the chip renders, and says so as BOOT rather than as an error', () => {
   const v = C.chainView([], T0, { chain: CLOSED });
   assert.strictEqual(v.state, 'idle');

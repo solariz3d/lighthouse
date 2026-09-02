@@ -391,7 +391,12 @@
       <span id="tapticker">— no turns yet —</span>
       <span id="tapcount"></span>
       <span class="statuscluster" data-nodrawer>
-        <span id="chainchip" title="where the committee loop is, and who the next hop is waiting on">chain ? position unknown</span>
+        <!-- The placeholder MUST NOT match any state chain-indicator.js renders. It said
+             "chain ? position unknown" — byte-identical to the `unknown` state's text — so a
+             chip whose script never ran and a chip that ran and read `unknown` looked the same
+             on screen, and the falsifier for the seam (loop/packet_aura_2026-09-02.md §6) could
+             not separate them. Pinned by a test in chain-indicator.test.js. -->
+        <span id="chainchip" title="where the committee loop is, and who the next hop is waiting on">chain — no reading yet</span>
         <span id="status">ready</span>
         <span id="gatechip" title="gate mode — controls live under ⚙">gate <span id="gatemode">ask-each</span></span>
         <span id="dyadstate"></span>
