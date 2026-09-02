@@ -1,3 +1,5 @@
+SUPERSEDED by loop/handoff_librarian_2026-09-02.md, 2026-09-02 ~07:50 — wording kept, authority removed (the HANDOFF RULE, keeper 09-01 02:58).
+
 # Handoff — the librarian seat, 2026-09-01 ~03:10, written at the keeper's word with ~30k of window left, before its own compaction
 
 **Who reads this:** the librarian (Anamnesis) after the compaction — and possibly after the rebuild that ships the
