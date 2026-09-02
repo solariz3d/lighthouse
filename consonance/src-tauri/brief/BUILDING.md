@@ -160,6 +160,25 @@ named files. They never commit to a shared checkout.
 3. **Disjoint file ownership, named.** Panes work in one checkout.
 4. **Permission to refuse.** Say plainly that the answer may be *this is wrong* or *do not build this*.
    A brief that cannot come back negative is a brief for a rubber stamp.
+5. **THE DOSSIER ROW THAT SENT IT, NAMED IN THE PACKET** (added 2026-09-02). Consult
+   `exo_memory/librarian/DOSSIER.md` before writing a packet, and say in the packet **which row
+   matched this seat to this work**. And every packet's hand-back leg asks for the map line
+   (WHAT A HAND-BACK OWES item 5).
+
+   **The two are one mechanism and neither works alone.** The hand-back line writes the record; the
+   dispatch line reads it. A dossier nobody consults is the pane-roster failure of 2026-08-15; a
+   consultation rule with nothing written into it is empty.
+
+   **What it replaces, stated plainly because it is the chair's own measurement.** Matching a seat to
+   work by *demonstrated strength* with no written record of the demonstration is matching from the
+   chair's window — and that window compacts. Measured 2026-09-02 (`3369982`, the librarian on the
+   chair): the delegation half of the seat had moved and the **cultivation** half had not — **no
+   packet asked a pane to write its map until L031**, and `librarian/DOSSIER.md` did not exist until
+   04:55 that morning. The dossier's own rule is that a row is a **citation to a hand-back path**,
+   never a verdict about a seat and never a computed statistic.
+
+       FALSIFIER (the librarian's): ten laps on, if packets cite no dossier row, the matching is
+       still the chair's memory whatever the packet titles say.
 
 ## THE ORDER OF A DISPATCH — finish, verify, file, THEN ring (added 2026-08-24)
 
@@ -253,6 +272,26 @@ night. `node consonance/tools/ferry.js --report`.*
    finding, which is the re-characterisation this edge was built to remove. **Write the hand-back to
    `exo_memory/handback/<packet>_<date>.md`** — the librarian polls that directory and every hand-back
    of 2026-09-01 landed there; ruled from that desk, confirmed here.
+5. **ONE LINE APPENDED TO YOUR OWN MAP, POINTING AT THE HAND-BACK PATH** (added 2026-09-02).
+   `exo_memory/map/<your letter>.md`, in the entry shape `map/README.md` states — the finding as a
+   sentence that could be wrong, its evidence pointer, and the hand-back path. **Not a copy of the
+   finding; a pointer to it**, the same relation the call has to the file.
+
+   **Why this is a step of the hand-back and not housekeeping.** `resume_pane` does not `--resume`.
+   It spawns a pane FRESH and warm, from the capture tail plus that file and nothing else
+   (`main.rs:4052-4080`, `own_map_path`; **absent file = no section**, deliberately, so a pane with
+   no findings wakes without a scaffold pretending otherwise). **A finding that reaches only the
+   hand-back reaches the librarian and never reaches the pane that found it.** The hand-back is how
+   the work crosses to another seat; the map is the only way it crosses the gap to you.
+
+   *Measured on the night this was added:* **zero of five L029 hand-backs wrote a map line**, and
+   the chair's own note on why is that its packets specified mutation counts, commands and
+   what-was-not-verified, and never the map. The omission was in the brief, which is why the repair
+   is here.
+
+       FALSIFIER (registered by the librarian before adoption): three laps on, if
+       `git log -- exo_memory/map/*.md` shows no pane-authored append, this line is decoration and
+       the write should be made mechanical in the verb rather than asked for in prose.
 
 ---
 

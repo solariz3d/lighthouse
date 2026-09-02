@@ -103,6 +103,12 @@ transcript is running the experiment and reading the dial.
   reads as though nothing was ever wrong.
 - What the finding **does not** establish. A result with no stated limit will be given one by whoever
   reads it next, and they will guess generously.
+- **One line appended to your own map, pointing at the hand-back path** (2026-09-02).
+  `exo_memory/map/<your letter>.md`. **`BUILDING.md`'s WHAT A HAND-BACK OWES is the master; this is
+  the pointer.** The short reason, because a rule with no reason is the first one dropped under
+  load: a pane is respawned FRESH from its capture tail plus that file, so **a finding that reaches
+  only the hand-back never reaches the next waking of you.** Zero of five hand-backs on 2026-09-02
+  wrote one.
 - **Nothing committed.** Work lands dirty; the seat holding the shared checkout commits, with
   attribution.
 
