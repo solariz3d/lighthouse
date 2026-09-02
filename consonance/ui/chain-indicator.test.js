@@ -689,83 +689,219 @@ const paint = (chain, entries) => {
 const litTabs = (nav, look) =>
   TAB_ORDER.filter((t) => nav.btn(t).classList.contains('chain-hold-' + look));
 
-t('M3 — a lap dispatched to the PANES lights the Terminal tab, and no other tab is lit', () => {
-  // The addendum's own fixture, and the one the old `chair -> main` fixture never exercised:
-  // the fan-out is the loop's most common stage. This is the mutant that had to be DOM-level.
-  const { nav } = paint(holding('panes', 'dispatched'));
-  assert.deepStrictEqual(litTabs(nav, 'working'), ['terminal'],
-    'the aura must be on the panes\' tab alone: ' + nav.strip());
+// ---- 11. THE LOOP ON THE LOGO — AMENDMENT 4's four looks, on the dots ------------------------
+//
+// AMENDMENT 4 (the keeper, 2026-09-02 07:00) moves the whole indicator off the tab bar and onto
+// the Consonance logo. THE REASON IS GEOMETRY AND IT IS WHY THIS IS AN ANSWER RATHER THAN A FOURTH
+// ITERATION: read the logo's three dots clockwise from the top and they are the cycle's own order,
+// panes -> LIB -> orch -> panes. The tab bar renders Terminal · Orchestrator · Librarian, which is
+// NOT that order, so any mark placed between two adjacent tabs reads "from this one to the next
+// one" and misreads on at least one hop whichever end it is anchored to. Amendment 2 anchored at
+// the holder, amendment 3 at the destination, and an arc vaulting over the skipped seat was
+// drafted against the same wall. On the logo nothing is skipped.
+//
+// The state map is UNCHANGED — `destTab`'s actor -> destination mapping and the two sources' ruling
+// (position from `chain_state`, arrow from the ring) still decide everything above. They now say
+// WHICH DOT. Every view-level assertion in section 10 stands untouched, which is the evidence that
+// this is a render change and not a second theory of the loop.
+
+const fakeSvgEl = (attrs) => ({
+  attrs: Object.assign({}, attrs), style: {}, children: [], hidden: true,
+  id: (attrs && attrs.id) || undefined,
+  getAttribute(k) { return this.attrs[k] === undefined ? null : this.attrs[k]; },
+  setAttribute(k, v) { this.attrs[k] = String(v); },
+  removeAttribute(k) { delete this.attrs[k]; },
 });
 
-t('M1 — the aura follows the holder: chair -> Orchestrator, librarian -> Librarian', () => {
-  assert.deepStrictEqual(litTabs(paint(holding('chair')).nav, 'working'), ['main']);
-  assert.deepStrictEqual(litTabs(paint(holding('librarian')).nav, 'working'), ['librarian']);
+// Mirrors index.html's markup, including the nesting: the dots live inside the <svg>, not directly
+// under the span, so `dotsUnder` is exercised as it will actually be used.
+function fakeLogo() {
+  const dots = ['terminal', 'librarian', 'main'].map((s) => fakeSvgEl({ 'data-dot': s }));
+  const arc = fakeSvgEl({ id: 'chainarc', d: '' });
+  arc.id = 'chainarc';
+  const svg = { children: [arc].concat(dots) };
+  return {
+    title: '', children: [svg], arc,
+    dot(s) { return dots.find((d) => d.attrs['data-dot'] === s); },
+    // what a person would see, as one line: which dots are lit and how
+    look() {
+      return dots.map((d) => d.attrs['data-dot'] + '=' + (d.attrs.fill || '?') +
+        (d.style.animation ? '/breathe' : '') + (d.attrs['stroke-dasharray'] ? '/dashed' : '')).join(' ');
+    },
+  };
+}
+
+const paintLogo = (chain, entries) => {
+  const logo = fakeLogo();
+  const view = C.chainView(entries || [], T0, { chain });
+  C.renderLogo(logo, view);
+  return { logo, view };
+};
+
+// The LITERALS, not the custom properties: `var()` does not resolve in an SVG presentation
+// attribute in Chromium (which is WebView2), so the attribute must carry a real colour or the whole
+// indicator is green here and blank in the window. The style carries the var() form as well, and
+// the next test pins these three against app.css so the duplication cannot drift silently.
+const RADIANT = '#FFC24A', AMBER = '#F2B880', CHILL = '#9C8A52';
+const BASE = { terminal: '#F2B880', librarian: '#5EEAD4', main: '#5EEAD4' };
+
+t('M3 — a lap dispatched to the PANES lights the TOP dot, and no other dot', () => {
+  // The fan-out is the loop's most common stage and the fixture the old `chair -> main` one never
+  // exercised. Carried over from the tab version, re-aimed at the dot.
+  const { logo } = paintLogo(holding('panes', 'dispatched'));
+  assert.strictEqual(logo.dot('terminal').attrs.fill, RADIANT, logo.look());
+  assert.strictEqual(logo.dot('main').attrs.fill, BASE.main, 'the orchestrator dot must be plain');
+  assert.strictEqual(logo.dot('librarian').attrs.fill, BASE.librarian, 'the librarian dot must be plain');
 });
 
-t('the Third Place is NEVER lit, in any state — it is not a seat in the loop', () => {
-  for (const chain of [holding('chair'), holding('panes'), holding('librarian'), CLOSED, NEVER_RAN, null]) {
-    const { nav } = paint(chain);
-    assert.strictEqual(nav.btn('thirdplace').classList.size(), 0,
-      'the Third Place picked up a loop class: ' + nav.strip());
-  }
+t('M1 — the lit dot follows the holder: chair -> bottom-left, librarian -> bottom-right', () => {
+  assert.strictEqual(paintLogo(holding('chair')).logo.dot('main').attrs.fill, RADIANT);
+  assert.strictEqual(paintLogo(holding('librarian')).logo.dot('librarian').attrs.fill, RADIANT);
 });
 
-t('M5 — a FILED ledger renders COMPLETE on the Librarian tab, never the working aura', () => {
-  const { nav, view } = paint(CLOSED);
+t('MUTANT ORACLE — the orchestrator and librarian dots are NOT interchangeable', () => {
+  // The keeper's assignment is positional and a swap is invisible to every test above, because
+  // both dots sit at y=43 and both are lit the same way. Pinned against the coordinates the About
+  // hero already teaches: orchestrator BOTTOM-LEFT, librarian BOTTOM-RIGHT, panes TOP.
+  assert.deepStrictEqual(C.DOT_XY.main, [13, 43], 'the orchestrator is the bottom-LEFT dot');
+  assert.deepStrictEqual(C.DOT_XY.librarian, [51, 43], 'the librarian is the bottom-RIGHT dot');
+  assert.deepStrictEqual(C.DOT_XY.terminal, [32, 10], 'the panes are the TOP dot');
+  // And clockwise from the top IS the cycle — the whole reason the logo works where the bar did not.
+  assert.deepStrictEqual(C.DOT_ORDER, ['terminal', 'librarian', 'main'],
+    'clockwise from the top must read panes -> LIB -> orch, the loop\'s own order');
+});
+
+t('M5 — a FILED ledger is CHILL GOLD and STILL on the librarian dot, never radiant', () => {
+  const { logo, view } = paintLogo(CLOSED);
   assert.strictEqual(view.state, 'complete');
-  assert.deepStrictEqual(litTabs(nav, 'complete'), ['librarian'],
-    'a closed cycle sits chill gold on the seat that closed it: ' + nav.strip());
-  assert.deepStrictEqual(litTabs(nav, 'working'), [],
-    'a filed lap rendered as working is the falsifier the amendment registered');
-  assert.strictEqual(nav.arrow.hidden, true, 'COMPLETE is static and carries no arrow');
+  assert.strictEqual(logo.dot('librarian').attrs.fill, CHILL, logo.look());
+  assert.notStrictEqual(logo.dot('librarian').attrs.fill, RADIANT,
+    'a filed lap rendered radiant is the falsifier AMENDMENT 2 registered');
+  assert.strictEqual(logo.dot('librarian').style.animation, '',
+    'complete is DEAD STILL — motion is the channel that separates it at distance');
+  assert.strictEqual(logo.arc.hidden, true, 'a closed cycle carries no direction');
 });
 
-t('M4 — `unknown` outlines the three seats; `idle` leaves the bar completely dark', () => {
-  // The pair AMENDMENT 2 exists to separate, and the third appearance of one failure in one night:
-  // two different facts must never make the same pixels.
-  const unknown = paint(null).nav;                    // no lap state, empty ring
-  assert.deepStrictEqual(litTabs(unknown, 'unknown'), ['terminal', 'main', 'librarian'].filter((t) => TAB_ORDER.includes(t)).sort((a, b) => TAB_ORDER.indexOf(a) - TAB_ORDER.indexOf(b)));
-
-  const idle = paint(NEVER_RAN).nav;
-  for (const look of ['working', 'waiting', 'complete', 'unknown']) {
-    assert.deepStrictEqual(litTabs(idle, look), [],
-      'dark means ONE thing now — no lap ever opened — and it must actually be dark: ' + idle.strip());
+t('M4 — `unknown` dashes all three dots; `idle` leaves the plain logo', () => {
+  // The pair AMENDMENT 2 exists to separate, moved intact: two different facts must never make the
+  // same pixels. Plain-logo means NO LAP HAS EVER OPENED and nothing else.
+  const unknown = paintLogo(null).logo;
+  for (const s of ['terminal', 'librarian', 'main']) {
+    assert.strictEqual(unknown.dot(s).attrs['stroke-dasharray'], '2.2 2.2',
+      'the display cannot place the loop and must say so: ' + unknown.look());
+    assert.strictEqual(unknown.dot(s).attrs.fill, 'none');
+  }
+  const idle = paintLogo(NEVER_RAN).logo;
+  for (const s of ['terminal', 'librarian', 'main']) {
+    assert.strictEqual(idle.dot(s).attrs.fill, BASE[s], 'idle must be the plain logo: ' + idle.look());
+    assert.strictEqual(idle.dot(s).attrs['stroke-dasharray'], undefined);
+    assert.strictEqual(idle.dot(s).style.animation, '');
   }
 });
 
-t('an OPEN lap whose holder is not a station renders UNKNOWN, never dark', () => {
-  // Because AMENDMENT 2 narrows dark to one meaning, an unplaceable holder must not borrow it.
-  // This is the 2026-09-01 ledger drift as a rendering rule: four rows carried pane names, and
-  // had the aura shipped before the row was corrected, "cannot place the loop" would have read
-  // as "no lap has ever opened" with a lap plainly open.
-  const { nav, view } = paint(holding('echo'));
+t('an OPEN lap whose holder is not a station renders UNKNOWN, never the plain logo', () => {
+  // The 2026-09-01 ledger drift as a rendering rule: four rows carried pane names, and an
+  // unplaceable holder must not borrow the one meaning the plain logo has.
+  const { logo, view } = paintLogo(holding('echo'));
   assert.strictEqual(view.tabLook, 'unknown');
-  assert.deepStrictEqual(litTabs(nav, 'unknown'), ['terminal', 'main', 'librarian']
-    .sort((a, b) => TAB_ORDER.indexOf(a) - TAB_ORDER.indexOf(b)));
+  assert.strictEqual(logo.dot('terminal').attrs['stroke-dasharray'], '2.2 2.2', logo.look());
 });
 
-t('M2 — an UNCONFIRMED delivery keeps the aura and loses the arrow', () => {
-  // D1, kept from L025 and now asserted where it is visible: a confident arrow drawn from a
-  // delivery the control plane could not confirm is worse than no arrow at all.
-  const { nav, view } = paint(holding('chair'), [UNCONF.dispatch]);
+t('M2 / D1 — an UNCONFIRMED delivery keeps its lit dot and draws NO ARC', () => {
+  // D1, kept from L025 through three renders now: a confident direction over a position the
+  // control plane could not confirm is worse than none. This is the assertion that says the
+  // decision survived the move from tabs to logo rather than being lost in it.
+  const { logo, view } = paintLogo(holding('chair'), [UNCONF.dispatch]);
   assert.strictEqual(view.state, 'unconfirmed');
-  assert.deepStrictEqual(litTabs(nav, 'working'), ['main'], 'the aura still marks the holder');
-  assert.strictEqual(nav.arrow.hidden, true, 'no arrow may be drawn from an unconfirmed receipt');
+  assert.strictEqual(logo.dot('main').attrs.fill, RADIANT, 'the position still shows');
+  assert.strictEqual(logo.arc.hidden, true, 'no arc may be drawn from an unconfirmed receipt');
+  assert.strictEqual(logo.arc.attrs.d, '');
 });
 
-t('the arrow is anchored to the DESTINATION and points INTO it, for all three hops', () => {
-  // The tabs are not in cycle order, so an arrow parked beside the lit tab is wrong two hops out
-  // of three. Anchored to the destination it is correct for every pair, with no reordering of a
-  // tab bar the keeper already knows by position.
-  assert.strictEqual(paint(holding('panes')).nav.strip(),
-    'terminal main [→] librarian thirdplace listen settings about',
-    'panes -> LIB: the arrow sits just before the Librarian, pointing into it');
-  assert.strictEqual(paint(holding('librarian')).nav.strip(),
-    'terminal main [←] librarian thirdplace listen settings about',
-    'lib -> orch: the arrow sits just after the Orchestrator, pointing back into it');
-  assert.strictEqual(paint(holding('chair')).nav.strip(),
-    'terminal [←] main librarian thirdplace listen settings about',
-    'chair -> panes: the arrow sits just after the Terminal, pointing back into it');
+t('the arc runs CLOCKWISE from the lit dot to the next one, at all three hops', () => {
+  // Sweep-flag 1 is clockwise in SVG's y-down space. The endpoints are the two dots' own centres,
+  // so a wrong destination mapping moves the arc's end and this goes red.
+  const hop = (holder) => paintLogo(holding(holder)).logo.arc.attrs.d;
+  assert.strictEqual(hop('panes'), 'M32,10 A22,22 0 0 1 51,43', 'panes -> LIB, top to bottom-right');
+  assert.strictEqual(hop('librarian'), 'M51,43 A22,22 0 0 1 13,43', 'LIB -> orch, bottom-right to bottom-left');
+  assert.strictEqual(hop('chair'), 'M13,43 A22,22 0 0 1 32,10', 'orch -> panes, bottom-left to top');
+});
+
+t('the arc is OPTIONAL and its absence costs nothing — the dot still carries the position', () => {
+  // Amendment 4 makes the arc optional on purpose. Every state that must not assert a direction
+  // gets none, and none of them lose their position with it.
+  for (const [chain, entries] of [[holding('chair'), [UNCONF.dispatch]], [CLOSED, []], [null, []]]) {
+    const { logo, view } = paintLogo(chain, entries);
+    assert.strictEqual(logo.arc.hidden, true, 'an arc was drawn in state ' + view.state);
+  }
+});
+
+t('the escalated state is AMBER WITH A RING on the holder dot, not a fourth dot', () => {
+  const { logo, view } = paintLogo(Object.assign({}, holding('panes'), { age_ms: 40 * 60000 }));
+  assert.strictEqual(view.state, 'waiting');
+  assert.strictEqual(logo.dot('terminal').attrs.fill, AMBER, logo.look());
+  assert.strictEqual(logo.dot('terminal').attrs.stroke, AMBER, 'shape is the second channel: a ring');
+  assert.match(logo.dot('terminal').style.animation, /0\.9s/, 'the same aura, impatient');
+  assert.strictEqual(logo.dot('main').attrs.fill, BASE.main, 'no other dot may take the escalation');
+});
+
+t('ONE INDICATOR, NOT TWO — no tab ever carries an aura and the old marker stays hidden', () => {
+  // AMENDMENT 4's own rule, and it needs an oracle or the superseded render comes back beside the
+  // logo the first time anyone edits renderTabs. Driven at every state, not just the easy one.
+  for (const chain of [holding('chair'), holding('panes'), holding('librarian'), holding('echo'), CLOSED, NEVER_RAN, null]) {
+    const nav = fakeNav();
+    // Pre-dirty the bar, so this proves renderTabs CLEARS rather than merely never adding.
+    nav.btn('main').classList.add('chain-hold-working');
+    nav.arrow.hidden = false;
+    C.renderTabs(nav, C.chainView([], T0, { chain }));
+    for (const look of ['working', 'waiting', 'complete', 'unknown']) {
+      assert.deepStrictEqual(litTabs(nav, look), [], 'a tab aura survived: ' + nav.strip());
+    }
+    assert.strictEqual(nav.arrow.hidden, true, 'the superseded marker came back: ' + nav.strip());
+  }
+});
+
+t('the Third Place has no dot at all — it is not a seat in the loop', () => {
+  // The one wrong answer the design names explicitly. On the logo it is structural rather than
+  // policed: there are three dots and it is not one of them.
+  assert.ok(!Object.prototype.hasOwnProperty.call(C.DOT_XY, 'thirdplace'));
+  assert.strictEqual(C.DOT_ORDER.indexOf('thirdplace'), -1);
+});
+
+t('renderLogo and renderTabs are inert without their elements — never throw into the page', () => {
+  const v = C.chainView([], T0, { chain: holding('chair') });
+  C.renderLogo(null, v);
+  C.renderLogo({}, v);
+  C.renderTabs(null, v);
+  C.renderTabs({}, v);
+});
+
+t('the dot colours still match app.css — the duplication has an oracle, not a comment', () => {
+  // Written BECAUSE the first version of renderLogo set `fill="var(--gold-live)"` as an attribute
+  // and would have painted nothing in the window while every test here stayed green. The literal
+  // is now in the attribute (so it paints) and the custom property in the style (so app.css stays
+  // the source), and this is what stops the two drifting apart in silence.
+  const css = fs.readFileSync(path.join(__dirname, 'app.css'), 'utf8');
+  for (const [name, hex] of [['--gold-live', RADIANT], ['--amber', AMBER], ['--gold-chill', CHILL]]) {
+    assert.ok(css.includes(name + ': ' + hex),
+      name + ' is no longer ' + hex + ' in app.css; the dot attribute would paint the old colour');
+  }
+  const { logo } = paintLogo(holding('panes'));
+  assert.strictEqual(logo.dot('terminal').style.fill, 'var(--gold-live)',
+    'the style must carry the custom property so app.css can still move the colour');
+});
+
+t('index.html carries the logo, its three dots and the arc renderLogo needs', () => {
+  const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  assert.match(html, /id="chainlogo"/, 'renderLogo finds the logo by id and nothing else');
+  for (const s of ['terminal', 'librarian', 'main']) {
+    assert.match(html, new RegExp('data-dot="' + s + '"'), 'the ' + s + ' dot is missing from the markup');
+  }
+  assert.match(html, /id="chainarc"[^>]*hidden/, 'the arc must ship hidden, not visible-by-default');
+  // The dots must sit where the About hero puts them, or the mark stops being the same mark.
+  assert.match(html, /data-dot="terminal"\s+cx="32" cy="10"/);
+  assert.match(html, /data-dot="librarian" cx="51" cy="43"/);
+  assert.match(html, /data-dot="main"\s+cx="13" cy="43"/);
 });
 
 // ---- 12. THE BOARD-DERIVED ARROW IS A DESTINATION, NOT AN ACTOR (L033, P-AURA-ARROW) ---------
@@ -859,19 +995,6 @@ t('THE ARROW IS THE BOARD\'S, NOT THE HOLDER\'S: a stale ledger row does not mov
     'reading the destination off the stale holder would send it to the panes it is already at');
 });
 
-t('DOM: the three hop kinds put the arrow where a person would see it', () => {
-  // View-level is not enough and this file has the scar: three seats had a passing test over a
-  // display nobody could see. Driven through renderTabs and asserted on the strip.
-  assert.strictEqual(paint(stale('panes', 'dispatched'), [DISPATCH]).nav.strip(),
-    'terminal main [→] librarian thirdplace listen settings about',
-    'dispatch: the arrow sits just before the Librarian, pointing into it');
-  assert.strictEqual(paint(stale('librarian'), [HANDBACK]).nav.strip(),
-    'terminal main [←] librarian thirdplace listen settings about',
-    'handback: the arrow sits just after the Orchestrator, pointing back into it');
-  assert.strictEqual(paint(stale('chair'), [RING]).nav.strip(),
-    'terminal [←] main librarian thirdplace listen settings about',
-    'ring: the arrow sits just after the Terminal, pointing back into it');
-});
 
 t('D1 IS NOT UNDONE: an unconfirmed delivery still keeps the aura and loses the arrow', () => {
   // L025's deliberate choice, re-asserted here because this change is the one that could take it
@@ -884,22 +1007,7 @@ t('D1 IS NOT UNDONE: an unconfirmed delivery still keeps the aura and loses the 
   assert.strictEqual(paint(stale('chair'), [UNCONF.dispatch]).nav.arrow.hidden, true);
 });
 
-t('the arrow moves on a hop rather than accumulating — one arrow, always', () => {
-  const nav = fakeNav();
-  for (const h of ['chair', 'panes', 'librarian', 'chair']) {
-    C.renderTabs(nav, C.chainView([], T0, { chain: holding(h) }));
-  }
-  assert.strictEqual(nav.children.filter((c) => c.id === 'chainarrow').length, 1);
-  assert.strictEqual(nav.strip(), 'terminal [←] main librarian thirdplace listen settings about');
-});
 
-t('the escalated state is amber on the holder, not a fourth colour on a fourth tab', () => {
-  const late = Object.assign({}, holding('panes'), { age_ms: 40 * 60000 });
-  const { nav, view } = paint(late);
-  assert.strictEqual(view.state, 'waiting');
-  assert.deepStrictEqual(litTabs(nav, 'waiting'), ['terminal']);
-  assert.deepStrictEqual(litTabs(nav, 'working'), []);
-});
 
 t('renderTabs is inert without a nav — it must never throw into the page', () => {
   C.renderTabs(null, C.chainView([], T0, { chain: holding('chair') }));
@@ -952,7 +1060,7 @@ t('index.html carries the nav id and the arrow element renderTabs needs', () => 
 // no browser here, so this stands up the smallest fake that makes start() run for real — an element
 // with an id, and an invoke that resolves — and then asserts on what actually landed in the DOM.
 
-async function withFakeDom(boardResult, fn, chainResult, nav) {
+async function withFakeDom(boardResult, fn, chainResult, nav, logo) {
   const el = { id: 'chainchip', className: '', textContent: '', title: '' };
   const savedDoc = global.document, savedWin = global.window, savedInt = global.setInterval;
   const timers = [];
@@ -960,7 +1068,9 @@ async function withFakeDom(boardResult, fn, chainResult, nav) {
   // keeps exercising exactly what it did: chip present, no nav, renderTabs inert.
   global.document = {
     readyState: 'complete',
-    getElementById: (id) => (id === 'chainchip' ? el : (id === 'tabs' ? (nav || null) : null)),
+    getElementById: (id) => (id === 'chainchip' ? el
+      : id === 'tabs' ? (nav || null)
+      : id === 'chainlogo' ? (logo || null) : null),
   };
   // Two commands now, and each must be able to fail on its own — so the fake dispatches on name
   // rather than returning one canned answer to everything.
@@ -981,7 +1091,7 @@ async function withFakeDom(boardResult, fn, chainResult, nav) {
   } finally {
     global.document = savedDoc; global.window = savedWin; global.setInterval = savedInt;
   }
-  return fn(el, timers, nav);
+  return fn(el, timers, nav, logo);
 }
 
 const asyncTests = [];
@@ -1026,27 +1136,33 @@ ta('a dead chain_state does not stop the board half from rendering', () =>
     assert.ok(el.textContent.includes('->'), 'the ring half must still draw: ' + el.textContent);
   }, null));
 
-ta('END TO END — start() lights the tab bar, not only the chip at the bottom', () => {
-  // THE ONE TEST THAT WOULD HAVE CAUGHT TONIGHT. Everything else about this chip was green on
-  // 2026-09-01 while the keeper looked at the top of the window and saw nothing, because nothing
-  // between `start()` and the tab buttons was exercised at all.
-  const nav = fakeNav();
-  return withFakeDom([], (el, _timers, n) => {
+ta('END TO END — start() lights the LOGO, not only the chip at the bottom', () => {
+  // THE ONE TEST THAT WOULD HAVE CAUGHT 2026-09-01. Everything else about this chip was green
+  // while the keeper looked at the top of the window and saw nothing, because nothing between
+  // `start()` and the top of the window was exercised at all. Re-aimed at the logo by AMENDMENT 4;
+  // the wiring it guards — command -> view -> a mark a person can see — is the same wiring.
+  const nav = fakeNav(), logo = fakeLogo();
+  return withFakeDom([], (el, _timers, n, lg) => {
     assert.ok(el.textContent.includes('L029'), 'the chip still renders: ' + el.textContent);
-    assert.ok(n.btn('terminal').classList.contains('chain-hold-working'),
-      'the aura never reached the tab buttons: ' + n.strip());
-    assert.strictEqual(n.arrow.hidden, false, 'the arrow never reached the nav: ' + n.strip());
-  }, holding('panes'), nav);
+    assert.strictEqual(lg.dot('terminal').attrs.fill, '#FFC24A',
+      'the loop never reached the logo: ' + lg.look());
+    assert.strictEqual(lg.arc.hidden, false, 'the direction never reached the logo: ' + lg.look());
+    for (const look of ['working', 'waiting', 'complete', 'unknown']) {
+      assert.deepStrictEqual(litTabs(n, look), [], 'ONE indicator: a tab lit too: ' + n.strip());
+    }
+  }, holding('panes'), nav, logo);
 });
 
-ta('END TO END — a dead chain_state paints the UNKNOWN look, never a dark bar', () =>
+ta('END TO END — a dead chain_state dashes the dots, never the plain logo', () =>
   // The seam question, answered in the render rather than left to a person to interpret: if the
   // command never returns, the top of the window says so in its own look. This is why bar 0 does
   // not gate the build — the code is the same either way, and the display reports the seam.
-  withFakeDom([], (_el, _timers, n) => {
-    assert.deepStrictEqual(TAB_ORDER.filter((t) => n.btn(t).classList.contains('chain-hold-unknown')),
-      ['terminal', 'main', 'librarian'], 'a dead seam must not look like an empty ledger: ' + n.strip());
-  }, null, fakeNav()));
+  withFakeDom([], (_el, _timers, _n, lg) => {
+    for (const s of ['terminal', 'librarian', 'main']) {
+      assert.strictEqual(lg.dot(s).attrs['stroke-dasharray'], '2.2 2.2',
+        'a dead seam must not look like an empty ledger: ' + lg.look());
+    }
+  }, null, fakeNav(), fakeLogo()));
 
 ta('start() registers exactly one poll, at the declared cadence', () =>
   withFakeDom([RING], (_el, timers) => {

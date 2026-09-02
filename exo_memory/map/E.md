@@ -132,3 +132,59 @@ General form: **check who can actually run a gate before treating it as one.** A
 half, which is why the stop cost nothing: the build was written so the seam reports itself — a dead
 `chain_state` paints the UNKNOWN look — so **an unanswerable question about a value can often be
 turned into a state the display names**, and then it stops gating anything.
+
+## 2026-09-02 · L033 · the capture harvester stalled, and the detector was innocent
+
+**The finding, as a sentence that could be wrong:** the four committee panes' `.txt` transcripts
+froze at 02:39 not because the ready-screen detector stopped matching, but because each pane's
+**watcher thread stopped running** while its reader thread kept growing the `.log` — so the fault is
+upstream of `capture::screen_ready`, in `main.rs:1060-1113`.
+
+**Evidence:** `cargo run --bin harvest_replay -- C:/Consonance/data/captures` (the bin is mine, new,
+`src/bin/harvest_replay.rs`). Replayed through the real `capture.rs`, the four stalled logs give
+181/209/301/122 ready screens and 85/47/210/11 records; the last 3 MB of each still gives 4/7/5/5
+ready. MAIN, same binary and directory, has 2,187 records on disk and an mtime of 06:41 — the
+control that says harvesting was alive in the process the whole time.
+
+**Narrowed to two and NOT separated:** a poisoned emulator mutex `break`ing the watcher at
+`main.rs:1070-1073` (the reader at `:1038` skips on the same poison and keeps logging), or a panic
+in the watcher body. Both silent, identical on disk.
+
+**The defect one layer up, which is the part worth carrying:** the watcher has **no liveness signal
+at all**, so *nothing was harvested* and *harvesting ran and produced nothing* leave the identical
+`.txt` mtime. That is why four panes lost a night with every instrument green.
+
+**Hand-back:** `exo_memory/handback/p-capture-harvest_2026-09-02.md`. Leg 2 (the repair, in
+`main.rs`) not started — gated behind A.
+
+## 2026-09-02 · L033 · the loop indicator: three renders, and the surface was the problem
+
+**The finding, as a sentence that could be wrong:** every arrow scheme for the tab bar failed for
+one structural reason — the tabs render Terminal · Orchestrator · Librarian, which is **not cycle
+order**, so a mark between two adjacent tabs reads "from this one to the next one" and misreads on
+at least one hop *whichever end it is anchored to*. Anchoring at the holder (amendment 2), at the
+destination (amendment 3, mine), and an arc vaulting over the skipped seat were all fighting the
+same wall. **The keeper's logo removes it: the three dots read clockwise from the top ARE the
+cycle, so direction becomes geometry instead of a convention the viewer must learn.**
+
+**The general form worth carrying:** when three good fixes to one display all fail somewhere
+different, stop fixing the mark and check whether the SURFACE encodes the relation you are trying
+to draw. I kept optimising the marker and did not question the tab order.
+
+**What survived the switch, and it is the load-bearing half:** `nextHop` answers who ACTS next, and
+the party who acts next is the party who now HOLDS the loop — so the board-derived arrow always
+pointed at the tab that hop had just lit and the self-pointing guard nulled it at every hop. The
+arrow could only ever draw when ledger and board DISAGREED. That actor→destination correction is
+untouched by amendment 4; it now says which DOT.
+
+**Evidence:** `node consonance/ui/chain-indicator.test.js` 93/0; 19 mutants applied, 19 caught
+(runner in the session scratchpad). **M-I is the one to remember** — dropping the board's reading
+from the outstanding branch SURVIVED the first run, because every fixture set the holder to the
+same seat the board named. The mutation run found the hole; the fixture came after and says so.
+
+**And a render bug I caused and caught:** `var()` does not resolve in an SVG presentation attribute
+in Chromium/WebView2, so `setAttribute('fill','var(--gold-live)')` is green in node and blank in the
+window — this file's own failure class, reproduced inside the fix for it. The colours are now
+written twice, with a test pinning the literals against `app.css`.
+
+**Hand-back:** `exo_memory/handback/p-loop-logo_2026-09-02.md`. Not proven: nobody has looked at it.

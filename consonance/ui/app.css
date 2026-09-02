@@ -71,6 +71,14 @@ body { display: flex; flex-direction: column; padding: 10px 14px; gap: 10px; }
   .tabs button.chain-hold-working, .tabs button.chain-hold-waiting { animation: none; }
 }
 
+/* THE LOOP INDICATOR (amendment 4). The logo IS the loop — its three dots read clockwise from the
+   top are the cycle's own order, which the tab bar's order never was. chain-indicator.js paints the
+   dots; everything here is placement. The `.tabs button.chain-hold-*` rules above are now UNUSED —
+   renderTabs stops applying them, because one indicator is the point — and are left in place rather
+   than deleted, since this lap does not own the question of what else may want them. */
+.chainlogo { display: flex; align-items: center; padding: 0 14px; margin-bottom: -1px; }
+.chainlogo svg { overflow: visible; }
+
 #chainarrow {
   display: flex; align-items: center; padding: 0 3px; margin-bottom: -1px;
   color: var(--gold-live); font-size: 15px; line-height: 1;
@@ -292,8 +300,18 @@ input::placeholder { color: #55607a; }
    trap set for a third seat. librarian-wiring.test.js asserts every seat carries them. */
 .seat { gap: 0; }
 .mainbar { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
-.mainhead { color: var(--muted); font-size: 13px; line-height: 1.5; flex: 1; }
+/* ONE LINE, and the rest in the `title` (amendment 4, the keeper: "too bulky and takes up too much
+   space"). Nothing was deleted — every sentence moved into the tooltip — and the ellipsis is load
+   bearing for the same reason the chip's is: a header that silently truncates and a header that is
+   short are two different facts, and they must not make the same pixels. */
+.mainhead {
+  color: var(--muted); font-size: 13px; line-height: 1.5; flex: 1;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+}
 .mainhead b { color: var(--amber); font-weight: 600; }
+/* A tooltip nobody knows is there is a deletion wearing a shrink's clothes. */
+.headmore { color: var(--aqua-d); font-style: normal; font-size: 11px; opacity: .8; }
+.headmore::before { content: "▾ "; }
 .seatpane { flex: 1; min-height: 0; display: flex; }
 .seatpane .pane { flex: 1; min-height: 0; }
 

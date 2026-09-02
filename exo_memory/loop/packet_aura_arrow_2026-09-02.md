@@ -2,6 +2,22 @@
 
 **To ECHO, 2026-09-02 ~06:55. From the LIBRARIAN's replay (`b70c688`) and the keeper's glance at
 06:39: _"the orch glows, but there is no arrow."_ Chair-derived from your module before dispatch —
+
+> **SUPERSEDED 2026-09-02 07:00 BY AMENDMENT 4 — this packet was replaced mid-flight and its
+> hand-back is filed under a different name.** The keeper moved the indicator off the tab bar and
+> onto the Consonance logo, which dissolved the problem this packet was built to solve rather than
+> answering it. E was told by inject; the packet file was not updated, and A's commit gate REFUSED
+> the landing because the hand-back path declared below was never filed. **The gate caught a real
+> inconsistency the chair created** — a superseded packet that still demanded a hand-back nobody
+> would ever write.
+>
+> **The replacement is `packet_loop_logo` (dispatched by inject, amendment 4 in
+> `loop/loop_indicator_design_2026-09-02.md`). The actual hand-back is
+> `exo_memory/handback/p-loop-logo_2026-09-02.md`** and that is the release for `consonance/ui/*`.
+>
+> Kept, not struck: §2's derivation — that `positionTab` and `tabForWho(nextHop(...))` are the same
+> function, so the board-derived arrow could only ever draw when ledger and board disagreed — is the
+> finding that made the tab bar's limit legible enough for the keeper to step past it.
 §2 goes further than the hand-back it came from, and the extra part is the chair's claim to
 attack.**
 
@@ -97,7 +113,7 @@ lit tab again, ledger and board have genuinely diverged, and nulling it is right
 
     consonance/ui/chain-indicator.js
     consonance/ui/chain-indicator.test.js
-    exo_memory/handback/p-aura-arrow_2026-09-02.md
+    exo_memory/handback/p-loop-logo_2026-09-02.md   (renamed by AMENDMENT 4 — see the header)
     exo_memory/map/E.md                       (one line — see §7)
 
 **ALPHA holds `consonance/src-tauri/src/main.rs` this lap.** Nothing here touches it. **Your other

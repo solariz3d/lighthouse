@@ -696,59 +696,194 @@
   var LOOK_CLASSES = ['chain-hold-working', 'chain-hold-waiting', 'chain-hold-complete', 'chain-hold-unknown'];
 
   /**
-   * Paint the tab bar. DOM-only: every decision was made in `decorateTabs`.
+   * ONE INDICATOR, NOT TWO — the tab bar carries NO aura. AMENDMENT 4 (the keeper, 2026-09-02
+   * 07:00) takes the auras off the tabs and puts the whole loop on the Consonance logo, and this
+   * function's only remaining job is to make sure nothing from the two superseded renders is left
+   * painted on the bar. It is not dead code: a stale class or the old marker surviving beside the
+   * logo would be exactly the two-indicators state the amendment forbids, and only a test that
+   * drives this can say it does not happen.
    *
-   * THE ARROW IS PLACED AGAINST THE DESTINATION, NOT THE HOLDER, and that is not a style choice.
-   * The tabs are NOT in cycle order (Terminal, Orchestrator, Librarian, ... — the cycle is
-   * orch -> panes -> lib -> orch), so an arrow parked beside the lit tab would point at whatever
-   * happened to sit next to it and would be wrong two hops out of three. Anchoring it to the
-   * destination and pointing INTO the destination is correct for every pair with no reordering of
-   * a tab bar the keeper already has muscle memory for:
-   *
-   *     destination to the RIGHT of the holder  ->  arrow immediately BEFORE it, "->"
-   *     destination to the LEFT  of the holder  ->  arrow immediately AFTER  it, "<-"
+   * THE TRACE, kept because it is the reasoning that made the logo the answer rather than a
+   * fourth iteration. The tabs render Terminal · Orchestrator · Librarian, which is NOT cycle
+   * order, so ANY mark between two adjacent tabs reads "from this one to the next one" and
+   * misreads on at least one hop whichever end it is anchored to. Amendment 2 anchored it at the
+   * holder, amendment 3 at the destination, and a path arcing over the skipped seat was drafted
+   * against the same constraint. All three were fighting the tab order. The logo's three dots,
+   * read clockwise from the top, ARE the cycle — panes -> LIB -> orch -> panes — so direction
+   * becomes geometry instead of a convention the viewer has to be taught. `destTab`'s
+   * actor -> destination mapping survives untouched; it now says WHICH DOT rather than which tab.
    */
   function renderTabs(nav, view) {
     if (!nav || !nav.children) return;
     var kids = Array.prototype.slice.call(nav.children);
-    var btns = kids.filter(function (el) { return el.getAttribute && el.getAttribute('data-tab'); });
-    var arrow = null;
-    for (var a = 0; a < kids.length; a++) if (kids[a].id === 'chainarrow') arrow = kids[a];
-
-    var lit = null, target = null, litIdx = -1, targetIdx = -1;
-    for (var i = 0; i < btns.length; i++) {
-      var name = btns[i].getAttribute('data-tab');
-      for (var c = 0; c < LOOK_CLASSES.length; c++) btns[i].classList.remove(LOOK_CLASSES[c]);
-      if (view.tabLook === 'unknown' && SEAT_TABS.indexOf(name) >= 0) {
-        btns[i].classList.add('chain-hold-unknown');
+    for (var i = 0; i < kids.length; i++) {
+      if (kids[i].classList) {
+        for (var c = 0; c < LOOK_CLASSES.length; c++) kids[i].classList.remove(LOOK_CLASSES[c]);
       }
-      if (name === view.tab) { lit = btns[i]; litIdx = i; }
-      if (name === view.arrowTab) { target = btns[i]; targetIdx = i; }
+      if (kids[i].id === 'chainarrow') kids[i].hidden = true;   // the superseded marker
     }
-    if (view.tabLook && view.tabLook !== 'unknown' && lit) {
-      lit.classList.add('chain-hold-' + view.tabLook);
+  }
+
+  /** The three dots, by station, in the cycle's own clockwise order from the top. */
+  var DOT_ORDER = ['terminal', 'librarian', 'main'];
+
+  /** Dot centres — the About hero's own coordinates, so it is the same mark the window teaches. */
+  var DOT_XY = { terminal: [32, 10], librarian: [51, 43], main: [13, 43] };
+  var DOT_BASE = { terminal: '#F2B880', librarian: '#5EEAD4', main: '#5EEAD4' };
+
+  /**
+   * THE COLOURS ARE WRITTEN TWICE, AND THE DUPLICATION IS THE BUG FIX, not laziness.
+   *
+   * `var()` DOES NOT RESOLVE IN AN SVG PRESENTATION ATTRIBUTE in Chromium, which is WebView2 and
+   * therefore this app. `circle.setAttribute('fill', 'var(--gold-live)')` yields an invalid paint
+   * and the dot renders wrong or not at all — a whole indicator that is green in node and blank in
+   * the window, which is the exact failure class this file was built after. It DOES resolve in the
+   * `style` property, and an inline style outranks the presentation attribute.
+   *
+   * So both are written: the literal is the attribute (guaranteed to paint), the custom property is
+   * the style (wins where it resolves, so app.css stays the source of truth). The literals below
+   * are app.css:3 and :5 and the test pins them against that file rather than trusting this comment.
+   */
+  var RADIANT = '#FFC24A', AMBER = '#F2B880', CHILL = '#9C8A52', MUTED = '#8893AD';
+
+  /**
+   * The four looks of AMENDMENT 2, moved from the tabs onto the ACTIVE DOT. The separation is
+   * unchanged and is still on three independent channels, so losing any one leaves two:
+   *
+   *   SHAPE       working is a bare filled dot; waiting adds a ring; complete is filled and
+   *               larger with no ring; unknown is an unfilled dashed outline.
+   *   MOTION      working and waiting BREATHE (waiting faster — the same aura, impatient);
+   *               complete is dead still, which is the channel that reads at distance.
+   *   BRIGHTNESS  radiant #FFC24A vs amber #F2B880 vs chill #9C8A52 vs muted.
+   *
+   * Returns the per-dot instruction rather than touching the DOM, so every state below is
+   * assertable without a browser. `null` means "leave it at its base colour".
+   */
+  function dotLook(view, station) {
+    var look = view.tabLook;
+    if (look === 'unknown') {
+      return { fill: 'none', fillVar: null, stroke: MUTED, strokeVar: 'var(--muted)', dash: '2.2 2.2', r: 4.2, breathe: null, opacity: 0.7 };
+    }
+    if (!look) return null;                                  // idle / complete-on-another-dot
+    if (station !== view.tab) return null;
+    if (look === 'complete') {
+      // Filed. Still, on the seat that closes the cycle — the amendment names the dot as it named
+      // the tab, and motion being ABSENT is what tells it from working across a room.
+      return { fill: CHILL, fillVar: 'var(--gold-chill)', stroke: null, strokeVar: null, dash: null, r: 5, breathe: null, opacity: 1 };
+    }
+    if (look === 'waiting') {
+      return { fill: AMBER, fillVar: 'var(--amber)', stroke: AMBER, strokeVar: 'var(--amber)', dash: null, r: 5, breathe: 0.9, opacity: 1 };
+    }
+    return { fill: RADIANT, fillVar: 'var(--gold-live)', stroke: null, strokeVar: null, dash: null, r: 5, breathe: 2.4, opacity: 1 };
+  }
+
+  /**
+   * The faint clockwise arc from the lit dot to the next one. OPTIONAL BY DESIGN — the dots carry
+   * the position and the amendment does not require it — so every state that must not assert a
+   * direction simply gets `null` here and loses nothing it was relying on.
+   *
+   * D1 (L025) RIDES ON THIS AND IS THE REASON IT IS DERIVED FROM `view.arrowTab` RATHER THAN FROM
+   * the position: an `unconfirmed` delivery keeps its lit dot and draws NO arc, because a
+   * confident direction over a position the control plane could not confirm is worse than none.
+   * `view.arrowTab` is already null there, and null again when ledger and board disagree.
+   */
+  function loopArc(view) {
+    if (!view.arrowTab || !view.tab || view.arrowTab === view.tab) return null;
+    if (view.tabLook !== 'working' && view.tabLook !== 'waiting') return null;
+    var a = DOT_XY[view.tab], b = DOT_XY[view.arrowTab];
+    if (!a || !b) return null;
+    // Sweep-flag 1 is clockwise in SVG's y-down space, which is the direction the loop runs.
+    return 'M' + a[0] + ',' + a[1] + ' A22,22 0 0 1 ' + b[0] + ',' + b[1];
+  }
+
+  /** Every element under `el` carrying `data-dot`, without needing querySelectorAll on a stub. */
+  function dotsUnder(el, out) {
+    out = out || [];
+    var kids = el && el.children ? el.children : [];
+    for (var i = 0; i < kids.length; i++) {
+      if (kids[i].getAttribute && kids[i].getAttribute('data-dot')) out.push(kids[i]);
+      if (kids[i].children) dotsUnder(kids[i], out);
+    }
+    return out;
+  }
+
+  function findById(el, id) {
+    var kids = el && el.children ? el.children : [];
+    for (var i = 0; i < kids.length; i++) {
+      if (kids[i].id === id) return kids[i];
+      var deep = findById(kids[i], id);
+      if (deep) return deep;
+    }
+    return null;
+  }
+
+  /**
+   * Paint the logo. DOM-only: `dotLook` and `loopArc` made every decision, which is what lets the
+   * state tests assert what a person would see rather than what an object says.
+   */
+  function renderLogo(el, view) {
+    if (!el) return;
+    var dots = dotsUnder(el);
+    for (var i = 0; i < dots.length; i++) {
+      var station = dots[i].getAttribute('data-dot');
+      var look = dotLook(view, station);
+      var base = DOT_BASE[station] || '#5EEAD4';
+      if (!look) {
+        dots[i].setAttribute('fill', base);
+        dots[i].setAttribute('r', '4.2');
+        dots[i].removeAttribute('stroke');
+        dots[i].removeAttribute('stroke-dasharray');
+        dots[i].setAttribute('opacity', '1');
+        if (dots[i].style) { dots[i].style.animation = ''; dots[i].style.fill = ''; dots[i].style.stroke = ''; }
+        continue;
+      }
+      dots[i].setAttribute('fill', look.fill);
+      if (dots[i].style) dots[i].style.fill = look.fillVar || '';
+      dots[i].setAttribute('r', String(look.r));
+      dots[i].setAttribute('opacity', String(look.opacity));
+      if (look.stroke) {
+        dots[i].setAttribute('stroke', look.stroke);
+        dots[i].setAttribute('stroke-width', '1.6');
+        if (dots[i].style) dots[i].style.stroke = look.strokeVar || '';
+      } else {
+        dots[i].removeAttribute('stroke');
+        if (dots[i].style) dots[i].style.stroke = '';
+      }
+      if (look.dash) dots[i].setAttribute('stroke-dasharray', look.dash);
+      else dots[i].removeAttribute('stroke-dasharray');
+      // `chain-breathe` is app.css's own keyframe; the reduced-motion query there covers the tab
+      // buttons only, so the check is made here rather than assumed.
+      var still = typeof window !== 'undefined' && window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (dots[i].style) {
+        dots[i].style.animation = (look.breathe && !still)
+          ? 'chain-breathe ' + look.breathe + 's ease-in-out infinite' : '';
+      }
     }
 
-    if (!arrow) return;
-    if (!lit || !target || target === lit) { arrow.hidden = true; return; }
-    var right = targetIdx > litIdx;
-    arrow.textContent = right ? '→' : '←';
-    arrow.title = 'next in the loop: ' + (view.next ? view.next.who + ' ' + view.next.verb : target.getAttribute('data-tab'));
-    arrow.hidden = false;
-    // Re-seat it. Removing first keeps the index arithmetic honest when it is already in the nav.
-    if (Array.prototype.indexOf.call(nav.children, arrow) >= 0) nav.removeChild(arrow);
-    var after = null, seen = false;
-    for (var k = 0; k < nav.children.length; k++) {
-      if (nav.children[k] === target) { seen = true; if (right) { after = target; break; } continue; }
-      if (seen) { after = nav.children[k]; break; }
+    var arc = findById(el, 'chainarc');
+    if (arc) {
+      var d = loopArc(view);
+      if (d) {
+        arc.setAttribute('d', d);
+        arc.setAttribute('stroke', view.tabLook === 'waiting' ? AMBER : RADIANT);
+        if (arc.style) arc.style.stroke = view.tabLook === 'waiting' ? 'var(--amber)' : 'var(--gold-live)';
+        arc.setAttribute('stroke-opacity', '.45');
+        arc.hidden = false;
+      } else {
+        arc.setAttribute('d', '');
+        arc.hidden = true;
+      }
     }
-    if (after) nav.insertBefore(arrow, after); else nav.appendChild(arrow);
+    // The tooltip is the detail line for a mark this small; `why` already carries every limit.
+    el.title = view.text ? view.text + (view.arrow ? ' ' + view.arrow : '') + ' — ' + view.why : view.why;
   }
 
   function start() {
     var el = typeof document !== 'undefined' && document.getElementById('chainchip');
     var nav = typeof document !== 'undefined' && document.getElementById('tabs');
-    if (!el && !nav) return;
+    var logo = typeof document !== 'undefined' && document.getElementById('chainlogo');
+    if (!el && !nav && !logo) return;
 
     var inv = function (cmd) {
       // Each source fails on its own. A dead board must not take the lap state down with it, and
@@ -765,6 +900,7 @@
         var view = chainView(r[0], Date.now(), { letters: letters, chain: r[1] });
         render(el, view);
         renderTabs(nav, view);
+        renderLogo(logo, view);
       });
     };
 
@@ -778,7 +914,8 @@
     outstanding: outstanding, confirmedReceipt: confirmedReceipt,
     holderArrow: holderArrow, holderTab: holderTab, tabForWho: tabForWho,
     destTab: destTab, positionStation: positionStation,
-    render: render, renderTabs: renderTabs, start: start,
+    render: render, renderTabs: renderTabs, renderLogo: renderLogo, start: start,
+    dotLook: dotLook, loopArc: loopArc, DOT_ORDER: DOT_ORDER, DOT_XY: DOT_XY,
     SEAT_TABS: SEAT_TABS, LOOK_CLASSES: LOOK_CLASSES,
     ESCALATE_MIN: CHAIN_ESCALATE_MIN, POLL_MS: CHAIN_POLL_MS
   };
