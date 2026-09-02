@@ -724,3 +724,8 @@ the wrong figure was published.*
   354/0/3, carries all four items, and is ALREADY RUNNING (tonight's launch rebuilt from the dirty
   tree; this seat's own wake header is the delivered-set header that exists only in that diff). Owed
   on L028: mutation table, margin print, chars-vs-bytes derivation, hand-back file, non-author read.
+- **01:35 — the Third Place's retrieval avenue, checked** → `librarian/2026-09-02.md` ~01:35. Five parts: 1
+  refuted by L023 (60/75 said the rule and broke it — not retrieval), 2 = the never-run trigger-index prereg plus
+  the trace-form amendment and a forgetting-not-floor item constraint, 3 on the ledger clocked, 4 a new
+  cost-of-miss rubric for the WRONG column, 5 the retreat — trigger fired, object in hand (this file's 01:10
+  finding), keeper's hands only.
