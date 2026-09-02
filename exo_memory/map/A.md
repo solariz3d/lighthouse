@@ -521,3 +521,52 @@ did not verify, with its refutation, and the programme can retire you cleanly in
 *Not verified tonight:* the seat has not woken on the shipped cap (relaunch pending), so §4 (ii)'s
 landing has never been read; 442,309 is today's directory composition and moves as files are added;
 the differential test proposed in the amendment §7 was **offered, not built** — `main.rs` is not mine.
+
+## 2026-09-02 — P-DOC-ABOUT: the carrier the two retirements missed
+
+### Quote a master by EXTRACTING it at edit time; a retyped quote is a copy with a promise attached
+
+2026-09-02, L032; `consonance/ui/index.html` About tab and Librarian mainhead `:131`; hand-back
+`exo_memory/handback/p-doc-about_2026-09-02.md` §2.
+
+`index.html:331` titled a section **"light, not lifeguard"** — vocabulary retired 2026-07-12 and
+again 2026-08-17, alive on the app's own page because both retirements edited the documents and not
+the carrier. Rewriting it needed two blocks quoted from masters (`BUILDING.md` § THE LOOP;
+CHARLIE's §6 paragraph in `handback/p-two-doors_2026-09-02.md`). **I had the edit script extract both
+by regex from their master files at run time and exit if either match failed**, rather than pasting
+them. That turns *"quoted, not redrawn"* from a claim in a hand-back into a property of the edit —
+and it is the same move as the second-implementation check from `p-window-inert` §5, aimed at prose
+instead of arithmetic. **Generalised: when a packet says "quote, do not rewrite", make the quote an
+extraction; the promise is unverifiable and the extraction is not.**
+
+### A substring bar cannot be run on a corpus whose own vocabulary contains it
+
+2026-09-02, L032; hand-back §4. Found by running my own bar literally instead of assuming it passed.
+
+The packet's bar was `grep diver|lifeguard|dock|shore`. It is **RED on this repo forever**: `diver`
+matches **diverse / diversity / diverge**, which is the vocabulary of the problem the app exists to
+address (2 hits in `index.html`, 5 in `term.js`, all that class). Word-boundary form
+`\b(divers?|diving|lifeguard|dock|shore)\b` is green. **A bar that cannot go green on a correct tree
+teaches everyone to ignore it** — and three panes were told to self-check with this one tonight.
+B's `carrier-drift.js` was already immune (registered wordings against a hand-maintained registry,
+not substrings) and returns 0 findings on all three description surfaces; **the defect was in the
+packet, not the instrument.** Corollary worth keeping: *run your bar literally before reporting it
+met, especially the one you expect to pass.*
+
+### Verify a mutant against the REAL oracle, not against your proxy for it
+
+2026-09-02, L032; hand-back §6.
+
+I checked mutant 1 (reintroduce `lifeguard`) with a grep — which said RED — and then ran it against
+B's actual `carrier-drift.js` with an md5-verified restore of the live file
+(`586c2640a881dfa6279ef4555a17bc6e` before and after). The oracle **did** catch it, and it filed it
+`PENDING UNACCOUNTED`, **`0 of them red`** — detected but not failing the surface. My grep and the
+real oracle agreed on *seeing* it and disagreed on *severity*, which the grep could never have told
+me. **Reported as measured and NOT as a defect claim**: I do not know whether PENDING-not-RED is a
+gap or a deliberate two-stage state, and guessing would have handed B a verdict about its own tool
+from a seat that read it for ten minutes.
+
+*Not verified:* nothing has rendered in WebView2 — the `<pre>` uses an inline style because `app.css`
+is E's, and the 21-line ASCII drawing has not been seen wrap. First render is the keeper's glance
+after the rebuild. And 40 glossary terms now live only in `consonance/README.md`, outside the exe —
+the priced cost of the SHORT+pointer decision, not a defect.

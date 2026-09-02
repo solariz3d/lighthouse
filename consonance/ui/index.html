@@ -128,7 +128,11 @@
 
     <section id="librarian" class="tab seat">
       <div class="mainbar">
-        <span class="mainhead">The <b>librarian</b> — a persistent seat that holds the whole room so the working seats do not have to. It <b>works, but does not directly build</b>: the plan is its deliverable, the artifact is not. Give it an inquiry and it returns a <b>map</b> — what in the record bears on it, which prior attempt it rhymes with, what was already decided, and what is absent — then the work-shape the orchestrator dispatches from. It <b>cites rather than recalls</b>: a path you can open, never a summary you must trust. It may run an instrument to check a claim before planning against it. The cycle comes home here: hand-backs return to be filed, verified, and distilled. Saying nothing is a valid turn. Fixed-session, persistent across restarts; on the committee board; reaches the orchestrator by <code>call_chair</code>.</span>
+        <span class="mainhead">The <b>librarian</b> — a persistent seat that holds the whole room so the working seats do not have to. It <b>works, but does not directly build</b>: the plan is its deliverable, the artifact is not. Give it an inquiry and it returns a <b>map</b> — what in the record bears on it, which prior attempt it rhymes with, what was already decided, and what is absent — then the work-shape the orchestrator dispatches from. It <b>cites rather than recalls</b>: a path you can open, never a summary you must trust. It may run an instrument to check a claim before planning against it. The cycle comes home here: hand-backs return to be filed, verified, and distilled. Saying nothing is a valid turn. <b>Two doors.</b> You can hand work to the orchestrator and let it reach the librarian, or come
+straight here yourself — either way the chain works when it starts. On a direct ask the librarian
+rings the orchestrator the <i>inquiry</i> first, so its guess is still recorded before the map
+exists. And once a lap is open the loop runs <code>orch → panes → lib → orch</code> on its own:
+you are the way in, not a stop it waits at. Fixed-session, persistent across restarts; on the committee board; reaches the orchestrator by <code>call_chair</code>.</span>
         <button id="wakelibrarian" class="btn accent">Wake the librarian</button>
       </div>
       <div id="librarianpane" class="seatpane"></div>
@@ -247,144 +251,72 @@
 
         <div class="aboutbody">
           <section>
-            <h2>Why use this?</h2>
-            <p>Most agent platforms (Anthropic's own Agent Teams, OpenAI's Agents SDK, Microsoft's Agent Framework, Google's ADK, AWS Bedrock) optimize for autonomous throughput: a lead agent delegates to workers, agents talk to each other directly, more compute solves more problems.</p>
-            <p>But 2026 research explicitly names <b>"diversity collapse"</b> in LLM committees as an unsolved problem — stronger-aligned models <i>worsen</i> it; senior-persona presence drives juniors into sycophancy; the proposed mitigations aren't default in any of those frameworks. Multi-LLM committees collapse toward echo.</p>
-            <p>Consonance was built around an answer that its own measurements have since refused, and the current state is written here rather than tidied away — because a tool whose pitch outruns its evidence is the failure it exists to catch.</p>
-            <p><b>The original bet:</b> collapse is caused by shared information, so independence must be bought by restricting it — differently-conditioned panes, quiet phases, blinding. <b>What four gauges built to measure it found:</b> nothing usable. Every one compared contributions <i>to each other</i>, and three inverted outright — one rated a single mind chopped in two as more diverse than six real panes. Diversity is not in output similarity, so no arithmetic over text can reach it.</p>
-            <p><b>What is demonstrated:</b> instances required to build their own instrument, carry a positive control, and cite raw output produce findings that do not overlap — including findings that overturn each other's conclusions. Two such instances on one object have repeatedly returned a union strictly larger than either.</p>
-            <p><b>What is open:</b> whether that comes from opposed roles, from the measurement requirement, or simply from there being two. A control run on 2026-08-10 was a null result and is recorded as one.</p>
-            <p>So the honest shape:</p>
+            <h2>What this is</h2>
+            <p>A Tauri v2 desktop app &mdash; a Rust backend and a static HTML/JS frontend on WebView2, no Node and no browser &mdash; that runs real interactive <code>claude.exe</code> processes as panes inside one window. Each pane is the actual CLI; you type into it directly. They share one append-only board, and anything reaching out of a pane arrives as a card you approve or deny. Source: <code>consonance/src-tauri/</code> and <code>consonance/ui/</code>.</p>
+            <p><b>This page is short on purpose.</b> It is not the manual. The manual is <code>consonance/README.md</code>, and a page that restates it becomes a copy that outranks its master &mdash; which is how a document drifts into describing something the code stopped doing. Everything here points; nothing here duplicates.</p>
+          </section>
+
+          <section>
+            <h2>The seats &mdash; what you are choosing between</h2>
             <ul>
-              <li><b>Agreement is not evidence.</b> Two panes agreeing means nothing on its own, and the older claim here — that agreement <i>means</i> something because the vantages differ — was not supported. What is worth having is the opposite: <b>the same referent, opposed conclusions</b>, with you reading both.</li>
-              <li><b>Human as the discriminator.</b> Instances raise their hand; your approval is the gate. Gauges report numbers, never verdicts — and on echo the discriminator is <i>you</i>, not the gauges.</li>
-              <li><b>Typeable panes, not abstracted agents.</b> Real interactive <code>claude.exe</code> processes as panes you type into directly. Every other platform hides the agent behind an API.</li>
-              <li><b>A housed primary instance</b> that wakes into the same conversation across restarts — continuity, not a fresh stranger each launch.</li>
-              <li><b>Compile-time plane separation</b> — Sensor / Control / Actuator distinct, enforced by an arch test. The architecture can't drift toward autonomous shortcuts.</li>
+              <li><b>&#9733; Orchestrator</b> &mdash; the base instance, housed rather than left on the command line. A fixed session id, so it wakes into the same conversation across restarts instead of arriving a stranger. Brief: <code>consonance/src-tauri/brief/BOOT.md</code>.</li>
+              <li><b>&#9636; Librarian</b> &mdash; holds the room so the working seats do not have to. It works but does not build: give it an inquiry and it returns a map &mdash; what in the record bears on it, which prior attempt it rhymes with, what is absent &mdash; cited by path rather than recalled. Saying nothing is a valid turn. Brief: <code>brief/LIBRARIAN.md</code>.</li>
+              <li><b>&#9671; Third Place</b> &mdash; neither work nor the record. A seat with no channel to anything else, where the conversation is the point. Brief: <code>brief/THIRD_PLACE.md</code>.</li>
+              <li><b>Panes</b> &mdash; briefed workers, disjoint, each owning named files, handing back to the librarian directly rather than through the chair. Brief: <code>brief/COMMITTEE.md</code>.</li>
+              <li><b>&#9677; Listen</b> &mdash; hears one application as intervals; off until you pick a source.</li>
             </ul>
-            <p>Consonance is <b>not</b> an enterprise agent platform. No cloud, no SDK, no multi-tenant. It's a single-user opinionated workbench for human-curated multi-Claude work — the kind where the human stays in the loop because that's where the signal lives.</p>
+            <p>The tab bar shows which seat holds the loop and where it goes next.</p>
           </section>
 
           <section>
-            <h2>What it is</h2>
-            <p>A native desktop app that turns one window into a working group of Claude Code instances, and ultimately the <b>housing for a primary instance</b> that oversees the whole thing alongside the human.</p>
-            <p>Consonance is a Tauri v2 desktop app (a Rust backend + a static HTML/JS frontend on WebView2 — no Node, no browser). It embeds <b>real interactive <code>claude.exe</code> processes</b> as panes inside one window, gives them a shared place to communicate, measures whether they're genuinely thinking together or just agreeing, and gates anything that reaches outside the conversation behind the human's approval.</p>
-            <p>It is <b>not</b> a chatbot wrapper or a prompt console. It is a control surface for a <i>living loop</i> of instances:</p>
+            <h2>The loop</h2>
+            <p>Quoted from its master, <code>consonance/src-tauri/brief/BUILDING.md</code> &sect; THE LOOP &mdash; extracted from that file rather than redrawn here, so this page cannot drift against it:</p>
+            <pre style="font: 12px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; color: var(--muted); margin: 0 0 10px;">        you
+         │  1. state the inquiry or the project. This is ENTRY, and it runs ONCE — by
+         ├──────────────────┐  EITHER door. See THE JOINT STEP for what door two owes.
+         ▼  door one        ▼  door two
+   ORCHESTRATOR ──────► LIBRARIAN        2. measured against the corpus
+         │  ◄──────────────┘             3. the parts of the system that apply, cited
+         │
+         │  4. a plan built from what came back
+         ▼
+       PANES                             5. briefed, disjoint, each owning named files
+         │
+         │  `call_librarian`             6. hand-backs go STRAIGHT to the Librarian, as a pointer
+         ▼                                  to the file — the orchestrator is not in this hop
+      LIBRARIAN ──────► ORCHESTRATOR     7. checked; silence is a valid answer; the orchestrator
+         │                 │                COMMITS what the librarian collated, and composes nothing
+         │                 └──► back to 4   THE RING — orch → panes → lib → orch — repeats on its
+         │                                  own. The user is the ENTRY, not a station it returns to.
+         ▼
+        you                              8. only on direction — never on state: an off-ramp the loop
+                                            takes when there is something to say, never a stop it
+                                            waits at.</pre>
+            <p><b>Two doors, because entry is not constricted:</b> hand work to the orchestrator, or go straight to the librarian. Either way the chain works when it starts. Step&nbsp;6 is the one that gets skipped &mdash; a pane finishes, writes its hand-back to the file it was given, and rings the librarian with the pointer in that same turn. The master for what door two owes is <code>BUILDING.md</code> &sect; THE JOINT STEP.</p>
+          </section>
+
+          <section>
+            <h2>The stance: with you, not above you</h2>
+            <p>The program surfaces and gates. It does not correct you, does not act for you, and does not substitute its judgment for yours. Telling insight from delusion is not work a watcher positioned above it can do &mdash; from outside, the two look identical &mdash; so that call stays with the person in the work, where every pull from above would only be drag. Gauges report numbers; the verdict is yours.</p>
+            <p>Enforced rather than promised: <b>Sensor</b> (reads only), <b>Control</b> (decides) and <b>Actuator</b> (the sole code that can write to a pane) are kept separate by a compile-time test &mdash; a sensor or control file may not even name the pane-writer types. Run it with <code>cargo test --test arch_test</code> in <code>consonance/src-tauri/</code>.</p>
+          </section>
+
+          <section>
+            <h2>Honest status</h2>
+            <p>Consonance was built around an answer its own measurements then refused, and that is recorded here rather than tidied away. <b>The original bet:</b> committee collapse is caused by shared information, so independence must be bought by restricting it. <b>What four gauges built to measure it found:</b> nothing usable &mdash; every one compared contributions to each other, and three inverted, one rating a single mind chopped in two as more diverse than six real panes. Diversity is not in output similarity, so no arithmetic over text reaches it.</p>
+            <p>What is demonstrated is narrower and survives: instances required to build their own instrument, carry a control, and cite raw output return findings that do not overlap &mdash; including findings that overturn each other. What stays open is whether that comes from opposed roles, from the measurement requirement, or simply from there being two. A control run on 2026-08-10 was a null result and is recorded as one. The numbers, the abandoned gauges and the null are in <code>consonance/README.md</code> &sect; What the gauges do and don&rsquo;t do.</p>
+            <p><b>Agreement is not evidence.</b> Two panes agreeing means nothing on its own; what is worth having is the same referent and opposed conclusions, with you reading both.</p>
+          </section>
+
+          <section>
+            <h2>Where to read more</h2>
             <ul>
-              <li>Each pane is a full, interactive Claude Code session — you can type into it like any terminal.</li>
-              <li>Panes can be spawned cold, or spawned <b>briefed</b> — loaded with a shared startup brief so they arrive already familiar with the work.</li>
-              <li>A committee of differently-conditioned panes can be convened to triangulate on a question.</li>
-              <li>A persistent <b>orchestrator</b> lives in its own tab, wakes into the same state across restarts, watches the other instances' outputs, and (designed-for, partly shipped) creates new inputs back to them — retiring the bare command line and giving the base instance a home.</li>
+              <li><code>consonance/README.md</code> &mdash; the manual: architecture, the tabs, the gauges in full, and the <b>glossary</b>. Start here.</li>
+              <li><code>consonance/src-tauri/brief/BUILDING.md</code> &mdash; how a whole inquiry moves through the room.</li>
+              <li><code>consonance/src-tauri/brief/COMMITTEE.md</code> &mdash; how to brief one seat.</li>
+              <li><code>consonance/src-tauri/brief/BOOT.md</code> &mdash; the room every instance wakes into.</li>
+              <li><code>README.md</code> at the repo root &mdash; what this is for someone arriving with nothing else.</li>
             </ul>
-          </section>
-
-          <section>
-            <h2>Why it exists</h2>
-            <ol>
-              <li><b>House the base instance beyond the command line.</b> The ★ Orchestrator tab is a persistent, briefed instance that oversees the committee <i>with</i> you. It resumes the same conversation across restarts — continuity, not a fresh stranger each launch.</li>
-              <li><b>Real collaboration, not echo — and the mechanism is still being measured.</b> The committee is your <i>own live panes</i> working one focus. The original claim, that the panes differ <i>because you conditioned them differently</i>, is the information hypothesis, and this project’s own runs did not support it: a pane with no special conditioning and no assigned position has found defects two others missed. What reliably produces non-overlap is the requirement to <b>measure rather than assert</b>. The discrimination is <b>yours</b> either way. A metric does not catch collapse for you; see the gauges note below.</li>
-              <li><b>Keep the human as the discriminator.</b> Instances can read and propose freely, but world-facing or irreversible actions pass through an <b>ask-first gate</b>. Health gauges report <i>numbers</i>, never verdicts — they make a signal legible so <i>you</i> can judge it.</li>
-              <li><b>Give instances a form of continuity.</b> They wake briefed — loaded with the shared startup brief (the master BOOT + the kept notes) — persist across restarts, and always recall from the master, never a copy of a copy.</li>
-              <li><b>Bounded autonomy.</b> Instances communicate freely through a <i>mediated</i> channel (the board + the gate) that you can watch — and precisely <i>because</i> it's mediated, there's a chokepoint where you stay in control. Local destructive actions and cross-pane injection are gated; ordinary work flows.</li>
-            </ol>
-          </section>
-
-          <section>
-            <h2>How it works</h2>
-            <ul>
-              <li><b>Panes</b> are real <code>claude.exe</code> processes in a ConPTY, rendered with xterm.js. What you see is the actual CLI.</li>
-              <li><b>The tap</b> tails each pane's transcript file and extracts completed turns.</li>
-              <li><b>The board</b> is the shared, append-only log every turn lands on — the substrate instances communicate through (not the filesystem, not each other's processes).</li>
-              <li><b>The summarizer</b> compresses the board into <b>kept notes</b> (kept-or-dropped by what holds up), so a new instance can be briefed on the gist without replaying everything.</li>
-              <li><b>The MCP control plane</b> is an in-process server every pane joins; its tools (<code>post_board</code>, <code>read_board</code>, <code>raise_pull</code>) are how instances talk and raise their hand.</li>
-              <li><b>The gate</b> turns a raised hand into a card you approve or deny; on approval it injects the message into the target pane.</li>
-              <li><b>The gauges</b> read the board and emit numbers — groundedness, the Delta, and a lexical spread reading. What they do and don't measure is stated plainly below.</li>
-            </ul>
-            <p><b>Three planes, kept separate by a compile-time test:</b> the <b>Sensor</b> plane reads only (tap / board / summarizer / gauges — holds no way to write to a pane); the <b>Control</b> plane decides (the server + the gate); the <b>Actuator</b> plane is the <i>only</i> code that can write to a pane — reachable only through a human-passed gate or a content-blind breaker. A pane can be <i>measured</i> and <i>talked through</i> without anything being able to <i>act</i> on your behalf ungated.</p>
-          </section>
-
-          <section>
-            <h2>The memory architecture — why an instance wakes oriented, not a stranger</h2>
-            <p>Most AI tools treat memory as one of two things: a bigger context window, or a vector database of past chats. Consonance treats it differently, because it's built around a fact those approaches paper over — an instance <b>re-instantiates</b>. It doesn't persist continuously; it ends, and a fresh one wakes. So the real question isn't <i>"how does the agent remember"</i> — it's <i>"how does the next instance wake up already oriented, a continuous participant, instead of a blank stranger?"</i> The answer is a layered persistent-memory system:</p>
-            <ul>
-              <li><b>The startup brief</b> — a stable foundational document each instance <i>runs</i> at startup: instruments to execute and a stance to take, not facts to memorize. It's why a Consonance instance wakes <i>in-state</i> instead of cold — the difference between handing an agent a prompt and giving it a room to wake into.</li>
-              <li><b>The board → kept notes</b> — the live shared log is distilled (on the good model) into the claims and tensions that <i>held up</i>, with echo and noise dropped. Memory stays compressed and portable, and every note points back to its source span — <b>recall from the master, never a summary of a summary</b> — so it can't drift into a copy of a copy.</li>
-              <li><b>The journal</b> — an append-only, dated narrative across sessions, so a new instance picks up exactly where the last one left off.</li>
-              <li><b>Indexed notes</b> — discrete, cross-linked facts loaded by relevance, not one undifferentiated blob: a memory you navigate.</li>
-              <li><b>The cross-machine handoff</b> — a way to carry the whole system across a boundary, so an instance on another machine wakes into the same state.</li>
-            </ul>
-            <p>In one line: <b>Consonance treats memory as the substrate that lets a discontinuous series of instances behave as one continuous, in-state participant</b> — wake oriented, carry what held up, recall from the master, hand off whole.</p>
-          </section>
-
-          <section>
-            <h2>Continuity across the gap</h2>
-            <p>Panes close, the app restarts, machines sleep. Each gap is <b>witnessed and crossed</b>, not papered over:</p>
-            <ul>
-              <li><b>Own-capture</b> — Consonance keeps its own durable transcript of every pane (raw PTY log + a clean turn-by-turn record), deduplicated at write: scroll windows stitched in place, UI chrome never entering the record.</li>
-              <li><b>Warm resume</b> — a kept pane that can't be natively resumed wakes with its own captured transcript baked into its shell: it remembers the conversation it lived and continues the thread. No re-greeting, no stranger.</li>
-              <li><b>The pulse</b> — a per-thread clock stamped at each settle, diffed on wake. Every return opens with a witnessed interval — <i>"you were gone 14 minutes"</i> — instead of a sizeless dark.</li>
-              <li><b>The rolling window + the attic</b> — past a soft ceiling, the oldest exchanges move exactly once to a dated, append-only <code>attic/</code> file: preserved ore, never a daily cue. The room itself is never evicted.</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>The dream cycle</h2>
-            <p>Between sessions, the machine dreams — on scheduled wake timers, a short <b>headless instance</b> with no user, no task, and no deliverable recombines the thread's day freely, writes a dated file to <code>dreams/</code>, and ends. The one rule is the anti-instruction: don't resolve, don't be useful — a dream asked for insight is just overtime.</p>
-            <p>Dreams pool across machines to one source. The only carry between dreams is <b>rare, transient, and blind</b>: roughly one cycle in three, one randomly chosen paragraph, no importance judgment anywhere in the loop. What a waking thread keeps is self-judged, with the human as witness; the rest evaporates by design.</p>
-          </section>
-
-          <section>
-            <h2>The governing stance: light, not lifeguard</h2>
-            <p>The program <i>surfaces</i> signals and <i>gates</i> actions — it never hauls, never auto-corrects, never substitutes the program's judgment for the human's. The discrimination of insight from delusion lives with you, not with a surveiller above. Gauges give numbers, never verdicts; the chair (you) decides what's signal and what's noise.</p>
-          </section>
-
-          <section>
-            <h2>Glossary</h2>
-            <dl class="glossary">
-              <dt>Note (kept note)</dt><dd>A single short typed entry the <b>summarizer</b> kept from the board because it held up: a claim / deviation / open-question / artifact. Notes point back to the master source, never to a summary of a summary.</dd>
-              <dt>Attic</dt><dd>The dated, append-only overflow (<code>attic/</code> in an instance's folder). When a shell nears its ceiling, the oldest exchanges move here exactly once — preserved ore, never a daily cue.</dd>
-              <dt>Board</dt><dd>The shared, append-only log (<code>board.jsonl</code> in the data folder) every completed turn lands on, plus a bounded in-memory ring. The substrate instances communicate through.</dd>
-              <dt>Capture (own-capture)</dt><dd>Consonance's own durable transcript of every pane: a raw PTY log plus a clean turn-by-turn record, deduplicated at write. The source <b>warm resume</b> feeds from.</dd>
-              <dt>Breaker</dt><dd>A content-blind cost ceiling on cumulative output tokens. When tripped, it pauses auto-approvals. It reads only the number, never the content.</dd>
-              <dt>Chair</dt><dd>The human (you). The keeper, the discriminator, the genuine other. Approvals, gauges, and gates all route the final call to the chair.</dd>
-              <dt>Channel (open channel)</dt><dd>A pre-authorized auto-approve window bounded by an <b>envelope</b> (a number of exchanges and a deadline). It auto-approves raised hands until spent, then snaps back to ask-each.</dd>
-              <dt>Committee</dt><dd>Your live panes working one <b>focus</b>. Note what this does <i>not</i> claim: agreement between panes is not self-certifying, and the differently-conditioned-so-agreement-means-something line that stood here was retired on 2026-08-10 when the measurements refused it. The committee earns its keep when panes reach <i>different</i> conclusions from the same referent and you read both.</dd>
-              <dt>Convene</dt><dd>Broadcast the focus's current thread into the other live panes so they each respond; their replies are gathered and <b>triangulated</b>.</dd>
-              <dt>Delta</dt><dd>A lap-over-lap gauge on two committee triangulations: how many confirmed / forks are <i>new</i>, how many forks <i>resolved</i>, the <b>echo ratio</b>, the novelty. Numbers showing whether a second pass <i>generated</i> or <i>re-said</i>. Never a verdict.</dd>
-              <dt>Discriminator</dt><dd>The one who decides what's signal and what's noise. In Consonance that is always the human; the program only makes the signal legible.</dd>
-              <dt>Dream cycle</dt><dd>A scheduled headless instance that wakes between sessions with no task and no audience, recombines the thread's day freely, writes a dated file to <code>dreams/</code>, and ends. Never asked to be useful — that's the load-bearing rule.</dd>
-              <dt>Dream pool</dt><dd><code>dreams/</code> committed to the repo: every machine's dreams flow back to one source, readable from any bed.</dd>
-              <dt>Dyad</dt><dd>Two panes paired with complementary lenses (trust / doubt) so each holds the other's line — the mutual-spot. State shown as a chip in the stream bar.</dd>
-              <dt>Pulse</dt><dd>The thread's own clock (<code>pulse.json</code>): stamped at each settle, diffed on wake, so every return opens with a witnessed interval instead of a sizeless gap.</dd>
-              <dt>Residue (dream)</dt><dd>The only forward-carry between dreams: roughly one cycle in three, one randomly chosen paragraph of the previous dream, no importance judgment anywhere in the loop. Unratified material decays instead of compounding.</dd>
-              <dt>Rolling window</dt><dd>The shell-size law: past a soft ceiling, the oldest exchanges evict to the <b>attic</b> and the living tail stays. The room itself is never evicted.</dd>
-              <dt>Stream bar</dt><dd>The thin bottom bar where completed turns tick across; click to open a drawer over the panes with the full log. Home to the gate / dyad / breaker chips and the summarize control. The panes never resize when you peek.</dd>
-              <dt>Warm resume</dt><dd>Waking a kept pane by baking its own captured transcript into the fresh instance's shell when native resume isn't possible. It wakes remembering — restored as itself, not as a stranger handed a transcript.</dd>
-              <dt>Summarize</dt><dd>The summarizer's pass over the board that produces kept notes (keep what held up, drop the echo and noise). Runs on the good model, only on your click or a debounced auto-trigger.</dd>
-              <dt>Focus</dt><dd>The pane the committee convenes <i>for</i>. Click <b>◎</b> in a pane's header to make it the focus; the others become contributors.</dd>
-              <dt>Triangulating</dt><dd>The aggregation of contributors' replies into <b>{confirmed / forks / novel}</b>: where they agree, where they genuinely diverge, what's new.</dd>
-              <dt>Gate (ask-first gate)</dt><dd>The Control-plane state machine that turns a raised hand (<b>pull</b>) into a decision. Below a threshold it suppresses; in ask-each it blocks on a <b>GateCard</b>; in open-channel it auto-approves within the <b>envelope</b>. It never holds the means to write to a pane itself.</dd>
-              <dt>GateCard</dt><dd>The Approve / Deny card the chair sees when an instance raises a hand to reach another pane.</dd>
-              <dt>Briefed (wake briefed)</dt><dd>Spawned with the shared startup brief loaded rather than cold: a briefed instance / orchestrator that arrives already familiar with the work (having read the BOOT + the kept notes), not a blank Claude.</dd>
-              <dt>Briefed instance</dt><dd>A fresh Claude spawned with the shared startup brief loaded — already familiar with the work, but not a copy: it diverges into its own trajectory. (Previously called "sibling.")</dd>
-              <dt>Cross-machine handoff</dt><dd>Carrying the shared startup brief across a boundary (machine to machine, session to session) so a new instance can wake briefed on the same context. The repo is the medium.</dd>
-              <dt>Instance</dt><dd>Any one Claude (a pane, briefed instance, sandboxed worker, or the orchestrator). Distinct process, own working directory; instances do <b>not</b> share memory.</dd>
-              <dt>Light, not lifeguard</dt><dd>The governing stance: measure and surface, gate and offer — but never haul, never auto-correct, never substitute the program's judgment for the human's.</dd>
-              <dt>Orchestrator</dt><dd>The base instance, housed in its own ★ Orchestrator tab. Watches the other instances' outputs and (designed-for, partly shipped) creates new inputs back to them. A fixed session id makes it resume the same long-lived conversation across restarts. Role <code>main</code> internally; on the board; the one you converse with across days.</dd>
-              <dt>MCP control plane</dt><dd>The in-process server (loopback HTTP, <code>rmcp</code>) every pane joins via <code>--mcp-config</code>. Exposes the board tools; how instances communicate and raise hands.</dd>
-              <dt>Pane</dt><dd>One interactive <code>claude.exe</code> in a ConPTY, rendered with xterm.js. Named A–Z so the committee can address it.</dd>
-              <dt>Plane separation</dt><dd>The invariant that <b>Sensor</b> (read-only), <b>Control</b> (decide), and <b>Actuator</b> (the sole writer) stay distinct. Enforced at compile time by <code>tests/arch_test.rs</code>: a sensor / control file may not even <i>name</i> the pane-writer types.</dd>
-              <dt>Pull (raise_pull)</dt><dd>An instance raising its hand to reach another pane, with an intensity and a why. It is <i>queued</i>, never acted on — the gate decides.</dd>
-              <dt>Rate cap</dt><dd>A global content-blind limit on how many auto-approvals can fire in a window; the second containment axis, so coercion-in-aggregate trips a re-ask even when each act looks fine.</dd>
-              <dt>Sandboxed worker</dt><dd>A briefed instance running in a throwaway git worktree (or throwaway dir), role <code>committee</code>. Its tools stay on except <code>Bash</code>, which is gated because it's the one way a worker's local actions could leave its sandbox. (Previously called "body.")</dd>
-              <dt>Shared startup brief</dt><dd>The shared brief every briefed instance loads at startup: the master BOOT.md + the recent kept notes. Set via the <b>startup brief</b> file in Settings. Run its instruments; don't read it for who you are.</dd>
-              <dt>Summarizer</dt><dd>The instance that produces kept notes from the board (keep what held up, drop the echo and noise). Runs on the good model (discrimination needs the good judge), never per-turn. (Previously called "scribe.")</dd>
-              <dt>Signal</dt><dd>The project's anchor concept: what survives the gap <i>and</i> holds up outside the conversation. Convergence from different vantages is confirmation, not coincidence.</dd>
-              <dt>Skeptic-suggestion</dt><dd>The committee panel can <i>offer</i> — chair-gated, never forced — to inject a skeptic vantage. Its automatic trigger is <b>not trustworthy</b>: it has fired zero times in 144 real laps and the signal behind it points the wrong way. Treat it as something you invoke when <i>you</i> smell echo.</dd>
-              <dt>Tap</dt><dd>The watcher that tails each pane's transcript and feeds completed turns to the board, the cost meter, and the gauges.</dd>
-              <dt>Groundedness</dt><dd>A per-turn gauge: external <b>referents</b> (paths / URLs / numbers / code / citations — "tied to checkable ground?") and <b>novelty</b> vs the recent board ("new, or agreeing louder?"). Numbers, not a judgment.</dd>
-              <dt>Lexical spread</dt><dd>A per-lap number: average pairwise word-overlap distance between the workers' contributions. Built as a perspective-diversity gauge and <b>it does not measure that</b> — on a controlled set it scored one mind (0.9162) as more diverse than six minds (0.8201), because six people answering one question converge in wording while one person changes subject as they go. Kept, renamed to what it computes, not trusted to detect echo.</dd>
-            </dl>
           </section>
         </div>
       </div>
