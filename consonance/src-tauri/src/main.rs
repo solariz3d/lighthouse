@@ -4604,11 +4604,23 @@ fn librarian_cwd() -> String {
 /// the model's window and the seat either dies or truncates in silence, and a librarian quietly
 /// answering from half a library is the worst outcome available for the one seat whose whole job
 /// is fidelity. Budgeted, it carries what fits, indexes the rest, and says which is which.
-fn librarian_budget() -> usize {
-    std::env::var("CONSONANCE_LIBRARIAN_BUDGET").ok()
-        .and_then(|v| v.parse::<usize>().ok())
-        .unwrap_or(2_200_000)
-}
+///
+/// WAS `librarian_budget()`, WHICH READ `CONSONANCE_LIBRARIAN_BUDGET`. Removed 2026-09-01 (BRAVO,
+/// L028) and this is the reason, measured rather than argued:
+///   * It was LOAD-BEARING. From 06:11 to 07:45 the only thing keeping this seat openable was
+///     `$env:CONSONANCE_LIBRARIAN_BUDGET = '0'` at `launch.ps1:120`. Start the app any other way
+///     and the librarian died. A ceiling that lives in a launcher script is not a ceiling, and
+///     `LIBRARIAN_INTAKE_LIMIT`'s own comment already said an env-overridable one is a suggestion.
+///   * It LEAKED. Every pane inherits the launcher's environment, so `cargo test --bin consonance`
+///     run from inside any Consonance pane reported 348 passed / 3 failed while the same commit ran
+///     351 / 0 with the variable unset. A mitigation placed in the environment is never only where
+///     you put it, and three tests silently became tests of the machine.
+///   * Nothing needs it now. Its one honest use was measuring the floor by hand; the floor is
+///     printed on every run of the limit test, from `corpus_shelf_at(0)`.
+/// The delivered budget is computed in `librarian_shelf`, from the cap, in the binary. Nothing
+/// outside the binary can raise it OR lower it. Its old default survives as `CORPUS_WALK_BUDGET`
+/// in `shelf_tests`, where the tests of the WALK's tiering rules now state their budget instead of
+/// inheriting one from whatever launched them.
 
 /// The librarian's shelf: carry in priority order until the budget is spent, index the rest.
 ///
@@ -4641,28 +4653,83 @@ fn collect_md(d: &Path, recurse: bool, out: &mut Vec<PathBuf>) {
 /// seat returned "Context limit reached" to every message including the keeper's. The growth was
 /// watched faithfully, for nine days, by a check that could only ever say how big it had got.
 ///
-/// WHERE THE NUMBER COMES FROM, all three bounds stated so it can be argued with:
-///   * BELOW the one measured death. 1,305,657 bytes is a shell that could not open. That is an
-///     upper bound on the fatal size, never the threshold itself -- nobody has bisected it -- so
-///     the limit sits 305,657 under the only point we know is past the edge.
-///   * ABOVE today's build, by 84,006 (intake 915,994 with the window in). Printed on every run.
-///   * AND IT MEANS SOMETHING IN TOKENS. At the shelf's independently-derived 2.89 bytes/token
-///     (see corpus_shelf, the two-adjacent-readings measurement) 1,000,000 bytes is ~346,021
-///     tokens -- under the 400,000-token landing bar that
-///     `loop/librarian_window_registration_2026-09-01.md` §4 predicts. The shell is the FLOOR
-///     under every post-compaction landing, so a shell that alone ate that budget would make the
-///     prediction unmeasurable.
+/// CORRECTED 2026-09-01 (BRAVO, L028): 1,000,000 -> 150_000, AND THE OLD NUMBER IS THE LESSON.
+/// The previous value was fitted to the one measured death (1,305,657 bytes) rather than to the
+/// cap this file has documented at :3576 the whole time, so the limit test PASSED at 915,994 while
+/// the seat was refusing every message including the keeper's. A limit calibrated to the wrong
+/// limit is green through a failure -- the same species as the recorder it replaced, one level up.
 ///
-/// **THIS IS EXPECTED TO GO RED, and that is the job.** The window bounds `librarian/`; the other
-/// carried tiers are still unbounded, and `muscle_map.md` alone is 164,593 bytes and appended
-/// every cycle. 84,006 of margin is LESS than one recent night's corpus growth (~104k, 08-31 to
-/// 09-01). When this fires, the answer is the next tier's horizon -- not a bigger number here. A
-/// limit that gets raised whenever it is inconvenient is the recorder again, wearing a limit's
-/// name.
+/// WHERE THE NUMBER COMES FROM, and the unit is the part that needed settling. The harness's own
+/// refusal is the only measurement of it anyone has:
 ///
-/// Not env-overridable, unlike `librarian_budget()`. A ceiling you can switch off from the
-/// environment is a suggestion.
-const LIBRARIAN_INTAKE_LIMIT: usize = 1_000_000;
+///     CLAUDE.md is over the 150.0k-char limit (906.3k chars)
+///
+/// printed against a file measured at 915,994 BYTES. So:
+///   * `k` IS 1000, NOT 1024, and this is forced rather than assumed. At 1024, "906.3k chars"
+///     would be 928,051 characters in a 915,994-byte file. In UTF-8 no counting convention can
+///     exceed the byte length -- a scalar costs 1..4 bytes, and a UTF-16 code unit costs 2 bytes
+///     for the astral pairs and 1..3 for everything else -- so 928,051 is impossible and 1024 is
+///     ruled out by arithmetic. The cap is 150,000 characters.
+///   * THE LIMIT HERE IS IN BYTES, WHICH IS THE CONSERVATIVE SIDE OF THE SAME INEQUALITY. Because
+///     characters <= bytes under every convention the host could be using, a shelf bounded at
+///     150,000 BYTES is bounded at <= 150,000 chars whatever "char" means to the harness. The
+///     reverse would not hold: a 150,000-CHAR bound admits a 600,000-byte file. Measured on the
+///     one file we have both readings of, the corpus runs 1.0107 bytes/char (915,994 / 906,300),
+///     so the conservatism costs about 1% of the shelf and buys not having to guess the host's
+///     unit.
+///   * `INTAKE_LIMIT` (the Third Place's, :4471) is already 150_000 for the same host cap. These
+///     two seats now agree, which they did not before.
+///
+/// **THE MARGIN IS SMALL AND THE FLOOR IS THE NEXT HORIZON, NOT THIS NUMBER.** Every figure here
+/// comes out of `cargo test --bin consonance shelf_tests -- --nocapture`, which prints all of them
+/// on every run; 2026-09-01 08:02:
+///
+///     LIBRARIAN INTAKE 141258 bytes of 150000 limit, margin 8742
+///     LIBRARIAN INTAKE 139786 chars (1.0105 bytes/char)
+///     LIBRARIAN FLOOR head 83645 + shelf-at-budget-0 48700 = 132345; bodies got 8913
+///     LIBRARIAN FLOOR is 88.2% of the 150000-byte cap
+///     LIBRARIAN INDEX run artifacts 246 file(s), 15753 bytes of the floor
+///
+/// The FLOOR is 88.2% of the cap: room master 64,976 + brief 18,005 in the head, and 48,700 of
+/// shelf header and index across 526 paths. Only the last 12% is bodies, and only the bodies are
+/// budgeted. The index is not, and it grows ~90 bytes per new file, so **this limit will fire from
+/// the floor side, not from the shelf side** -- and when it does the answer is a horizon on the
+/// INDEX, not a bigger number here. The cheapest one is priced above: 246 run artifacts under
+/// `loop/run1/items/` and `loop/run2/cells/` cost 15,753 bytes, nearly twice what the bodies get.
+/// A limit raised whenever it is inconvenient is the recorder again, wearing a limit's name.
+///
+/// The measured 1.0105 bytes/char is an independent confirmation of the unit argument above: it was
+/// predicted at 1.0107 from the harness's own two figures, before this test printed one.
+///
+/// Not env-overridable. A ceiling you can switch off from the
+/// environment is a suggestion -- and between 06:11 and now, an env var in a launcher script was
+/// the only thing keeping this seat alive. See `librarian_shelf`.
+/// DERIVED, NOT RETYPED: the same figure as the host's cap, reinterpreted as BYTES, which is the
+/// conservative side of the inequality argued above. Written as a derivation so the relationship is
+/// structural -- lowering this is free, and RAISING it means writing a literal here, in front of
+/// the paragraph that explains why 150,000 is the number and beside a test that measures the host's
+/// own unit independently.
+const LIBRARIAN_INTAKE_LIMIT: usize = HARNESS_CLAUDE_MD_CHAR_CAP;
+
+/// THE HOST'S OWN CAP, IN THE HOST'S OWN UNIT, so that raising the byte limit above cannot quietly
+/// un-guard the seat.
+///
+/// FOUND BY MUTATION, and it is the whole reason this constant is separate. Reverting
+/// `LIBRARIAN_INTAKE_LIMIT` to its old 1,000,000 left the suite GREEN: the shelf is self-limiting
+/// now, so it simply took the extra 850k, produced a ~900k intake, and passed its own bound. The
+/// limit test would have gone on reporting green while the seat could not open -- the exact failure
+/// this lap was dispatched to end, reproduced inside the fix for it. A budget derived from a limit
+/// cannot also check the limit.
+///
+/// So the intake is asserted against BOTH: the byte bound above, which is the internal conservative
+/// proxy the shelf budgets to, and this, which is the number the harness actually refused on:
+///
+///     CLAUDE.md is over the 150.0k-char limit (906.3k chars)
+///
+/// It is not re-derivable from anything in this repo -- it is a property of the host and the only
+/// measurement of it is that message. Changing it is a claim about the host and must be made with a
+/// new observation beside it, never to make a test pass.
+const HARNESS_CLAUDE_MD_CHAR_CAP: usize = 150_000;
 
 /// The date a librarian note is FOR, read off its filename: `YYYY-MM-DD[.suffix].md`.
 ///
@@ -4715,13 +4782,31 @@ fn librarian_note_is_carried(file_name: &str, today: chrono::NaiveDate) -> bool 
     }
 }
 
-fn corpus_shelf() -> String {
+/// The shelf walk, AT A BUDGET THE CALLER STATES.
+///
+/// Was `corpus_shelf()`, which read `librarian_budget()` itself. The budget is now an argument
+/// because the delivered shelf must be bounded by the intake cap rather than by an unrelated
+/// constant (`librarian_shelf`), and because a walk that reads an environment variable makes every
+/// test of it a test of the machine it ran on.
+fn corpus_shelf_at(budget: usize) -> String {
     let root = match room_master_path().parent() { Some(p) => p.to_path_buf(), None => return String::new() };
-    let budget = librarian_budget();
     // Machine-local calendar, per the registration. Read ONCE so a walk that straddles midnight
     // cannot carry two different "today"s in one shelf.
     let today = chrono::Local::now().date_naive();
-    let mut windowed: Vec<String> = Vec::new();
+    // TWO WINDOW SETS, AND THE SPLIT IS THE 2026-09-01 FIX. `window_rule` is what the rule WOULD
+    // carry; `window_delivered` is what the budget actually put in the intake. The header reports
+    // the second. Before this, one set was pushed BEFORE the budget gate and the header branched
+    // on it, so at budget 0 the shelf printed "today + yesterday carried in full (2026-09-01.md,
+    // 2026-08-31.md)" four lines under "0 file(s) carried in full" with both notes listed as NOT
+    // CARRIED. Found by the librarian seat in its own wake shell (9c6a131). The branch existed and
+    // read the wrong variable, which is worse than no branch: it looks like the case was handled.
+    let mut window_rule: Vec<String> = Vec::new();
+    let mut window_delivered: Vec<String> = Vec::new();
+    // Files whose TIER said carry and whose BUDGET said no. The difference between "indexed by
+    // design" and "indexed because we ran out" is the one thing the header cannot get wrong
+    // without teaching the seat that its shelf is complete when it is not.
+    let mut budget_dropped = 0usize;
+    let mut budget_dropped_bytes = 0usize;
     let mut spent = 0usize;
     let mut carried: Vec<(String, String)> = Vec::new();
     let mut indexed: Vec<String> = Vec::new();
@@ -4823,18 +4908,29 @@ fn corpus_shelf() -> String {
             // THE WINDOW. `librarian/` is the one carried tier that grows every night with the
             // seat's own writing, so its tier flag alone is not enough: today + yesterday are
             // carried, older dated notes are indexed. Every other directory keeps the flat rule.
+            let name = f.file_name().and_then(|x| x.to_str()).unwrap_or("").to_string();
+            let mut in_window = false;
             let carry = if dir == "librarian" {
-                let name = f.file_name().and_then(|x| x.to_str()).unwrap_or("");
-                let keep = librarian_note_is_carried(name, today);
-                if keep { windowed.push(name.to_string()); }
+                let keep = librarian_note_is_carried(&name, today);
+                // Dated notes only: LEDGER.md and README.md ride OUTSIDE the window and must not
+                // be named on a line that claims a day was carried.
+                if keep && librarian_note_date(&name).is_some() {
+                    window_rule.push(name.clone());
+                    in_window = true;
+                }
                 keep
             } else { carry };
             // `carry` decides the tier; the budget is the second gate, not the first. A record
             // file is indexed even when there is room, because room is not the reason to hold it.
             if carry && spent + body.len() <= budget {
                 spent += body.len();
+                if in_window { window_delivered.push(name); }
                 carried.push((label, body));
             } else {
+                if carry {
+                    budget_dropped += 1;
+                    budget_dropped_bytes += body.len();
+                }
                 let head = body.lines().find(|l| l.starts_with("# ")).unwrap_or("").trim_start_matches("# ").to_string();
                 indexed.push(format!("- {label}  ({} lines)  {head}", body.lines().count()));
             }
@@ -4847,26 +4943,50 @@ fn corpus_shelf() -> String {
         carried.len(), spent, budget, indexed.len()
     ));
     s.push_str("attic/ is excluded on purpose -- raw archive, never a daily cue (law 3).\n");
-    s.push_str("THE SYSTEM is carried in full. THE RECORD (journal/, loop/, map/) is indexed by\n");
-    s.push_str("path -- deliberately, not because the budget ran out. Open what you cite.\n");
+    // THE TIER LINE, ALSO REPORTED FROM THE DELIVERED SET. "THE SYSTEM is carried in full" was
+    // printed unconditionally, and under the intake cap it is simply false: the budget stops
+    // partway down the carried tiers. Same class as the window line below, in the sentence
+    // immediately above it, and it would have gone on telling the seat its library was complete.
+    if budget_dropped == 0 {
+        s.push_str("THE SYSTEM is carried in full. THE RECORD (journal/, loop/, map/) is indexed by\n");
+        s.push_str("path -- deliberately, not because the budget ran out. Open what you cite.\n");
+    } else {
+        s.push_str("THE RECORD (journal/, loop/, map/) is indexed by path deliberately -- that is the\n");
+        s.push_str(&format!(
+            "tier, not the budget. AND THE SYSTEM IS NOT CARRIED IN FULL TODAY: {budget_dropped} file(s)\n\
+             ({budget_dropped_bytes} bytes) the tier would carry are indexed too, because the budget ran\n"
+        ));
+        s.push_str("out. Both kinds sit below by path and nothing is truncated. Open what you cite.\n");
+    }
     // THE WINDOW, REPORTED. The seat must never have to work out for itself why its own older
     // notes are missing -- that is exactly the "0 indexed by path" failure, where a shelf
     // misdescribes its own tiers and the seat trusts the description. Named on the header, with
     // the empty case said out loud, because an empty window and a broken window read identically
     // from the inside.
-    let dated: Vec<&String> = windowed.iter()
-        .filter(|n| librarian_note_date(n).is_some()).collect();
-    if dated.is_empty() {
-        s.push_str("YOUR OWN NOTES ARE WINDOWED and THE WINDOW IS EMPTY today: no librarian/ note is\n");
-        s.push_str("dated today or yesterday, so every one of them is indexed below. This is the rule\n");
-        s.push_str("working, not a fault. LEDGER.md and README.md ride outside the window.\n");
-    } else {
+    //
+    // THREE CASES, because there are three states and the old code had two. The one it could not
+    // say is the third: the rule found notes and the BUDGET did not carry them. That is the state
+    // the seat woke into at 07:19 today, and the header told it the opposite.
+    if !window_delivered.is_empty() {
         s.push_str(&format!(
             "YOUR OWN NOTES ARE WINDOWED -- today + yesterday carried in full ({}); every older\n",
-            dated.iter().map(|n| n.as_str()).collect::<Vec<_>>().join(", ")
+            window_delivered.join(", ")
         ));
         s.push_str("librarian/ note is indexed below, whole, by path. LEDGER.md and README.md ride\n");
         s.push_str("outside the window. Nothing is truncated and nothing is lost -- open what you cite.\n");
+    } else if !window_rule.is_empty() {
+        s.push_str(&format!(
+            "YOUR OWN NOTES ARE WINDOWED and THE BUDGET CARRIED NONE OF THEM. {} {} dated today or\n",
+            window_rule.join(", "),
+            if window_rule.len() == 1 { "is" } else { "are" }
+        ));
+        s.push_str("yesterday and the window would carry them; there was no room under the intake cap, so\n");
+        s.push_str("they are INDEXED below with the rest. This is the BUDGET, not the rule -- you have\n");
+        s.push_str("written notes today that are not in front of you. Open them by path.\n");
+    } else {
+        s.push_str("YOUR OWN NOTES ARE WINDOWED and THE WINDOW IS EMPTY today: no librarian/ note is\n");
+        s.push_str("dated today or yesterday, so every one of them is indexed below. This is the rule\n");
+        s.push_str("working, not a fault. LEDGER.md and README.md ride outside the window.\n");
     }
     if !indexed.is_empty() {
         s.push_str("\n## NOT CARRIED -- open these by path\n\n");
@@ -4883,6 +5003,54 @@ fn corpus_shelf() -> String {
     }
     s
 }
+
+/// The librarian's letter. The registry pairs this seat with `M`, and `exo_memory/map/M.md` is the
+/// file it writes -- see `seat_role_tests::registry`, which encodes the same pairing.
+const LIBRARIAN_MAP_LETTER: &str = "M";
+
+/// THE SHELF THE SEAT ACTUALLY RECEIVES -- bounded by `LIBRARIAN_INTAKE_LIMIT`, by construction,
+/// with nothing outside the binary able to raise it.
+///
+/// WHY THIS EXISTS. Until 2026-09-01 the shelf's only bound was `librarian_budget()`, a constant
+/// unrelated to the intake cap, and between 06:11 and 07:45 the single thing keeping this seat
+/// alive was `$env:CONSONANCE_LIBRARIAN_BUDGET = '0'` on line 120 of `launch.ps1`. A ceiling that
+/// lives in a launcher script is not a ceiling: start the app any other way and the seat dies
+/// again. (It also leaked -- every pane inherits the launcher's environment, so `cargo test --bin
+/// consonance` run from inside any Consonance pane was 348/3 at HEAD while CI saw 351/0. A
+/// mitigation in the environment is never only where you put it.)
+///
+/// TWO PASSES, AND THE FIRST ONE IS THE POINT. The floor -- the fixed head, the shelf headers and
+/// the index of every path -- is not budgetable: those bytes are spent whatever we carry. So run
+/// the walk at budget 0 to MEASURE the floor rather than estimate it, and give the bodies what is
+/// left. The estimate is what the old code never had, and estimating it is how a bound like this
+/// goes quietly wrong.
+///
+/// THE BOUND IS CONSERVATIVE, DELIBERATELY. `corpus_shelf_at(b)` is at most `floor + b` bytes:
+/// carrying a file ADDS its body and REMOVES its index line, so the delivered shelf is a little
+/// smaller than the sum, never larger. The header prose differs between the branches by a few
+/// hundred bytes at most. `INTAKE_HEADROOM` covers that many times over, and the limit test
+/// asserts the finished artifact rather than trusting this paragraph.
+///
+/// NO ENVIRONMENT VARIABLE, IN EITHER DIRECTION. See `CORPUS_WALK_BUDGET` for what was removed and
+/// what it cost. Nothing outside this binary can make the seat unopenable again, and nothing
+/// outside it can starve the shelf either.
+fn librarian_shelf(head_len: usize) -> String {
+    let floor = corpus_shelf_at(0);
+    corpus_shelf_at(librarian_shelf_room(head_len, floor.len()))
+}
+
+/// The bytes left for BODIES, as a pure function of the two measured fixed costs.
+///
+/// Separated from the walk so the arithmetic is checkable without a corpus on disk: the shelf test
+/// can only see what today's directory happens to weigh, and the term that matters -- what happens
+/// as the floor rises toward the cap -- is not reachable that way. Saturating, so a floor that has
+/// already eaten the cap asks for zero rather than wrapping to a budget larger than the disk.
+fn librarian_shelf_room(head_len: usize, floor_len: usize) -> usize {
+    LIBRARIAN_INTAKE_LIMIT
+        .saturating_sub(INTAKE_HEADROOM)
+        .saturating_sub(head_len.saturating_add(floor_len))
+}
+
 /// The Librarian's intake. Its brief FIRST, then the room -- the order matters: this seat needs to
 /// know what it is for before it reads what it is holding, or it starts working on the contents.
 ///
@@ -4891,6 +5059,18 @@ fn corpus_shelf() -> String {
 /// the whole design exists to avoid -- and a silent fallback would produce exactly that while
 /// looking like success.
 fn librarian_intake() -> Option<String> {
+    let mut s = librarian_intake_head()?;
+    let head = s.len();
+    s.push_str(&librarian_shelf(head));
+    Some(s)
+}
+
+/// Everything in the intake that is NOT the shelf: the brief, the room, the map pointer.
+///
+/// Split out so the shelf's budget can be computed against a measured head rather than a guessed
+/// one, and so a test can print the floor -- head plus index -- which is the term that decides when
+/// `LIBRARIAN_INTAKE_LIMIT` fires next and is invisible in the total.
+fn librarian_intake_head() -> Option<String> {
     let brief = room_brief("LIBRARIAN.md").ok()?;
     let mut s = String::from("# The Librarian tab\n\n");
     s.push_str(&brief);
@@ -4898,8 +5078,75 @@ fn librarian_intake() -> Option<String> {
     if let Ok(boot) = fs::read_to_string(room_master_path()) {
         s.push_str(&boot);
     }
-    s.push_str(&corpus_shelf());
+    s.push_str(&librarian_map_pointer());
     Some(s)
+}
+
+/// THE POINTER TO THE SEAT'S OWN MAP -- the one section every sibling pane has had since GAP 3 and
+/// this seat never did.
+///
+/// `librarian_intake()` carried no `own_map_path` and no `capture_text_path` while `restore_capture`
+/// (:4052) gives every committee pane both. The seat whose whole job is everyone else's continuity
+/// was built with none of its own, and on 2026-09-01 that came due: the thread died at the context
+/// cap and `exo_memory/map/M.md` -- the file only it writes -- did not exist, because nothing had
+/// ever told it the file was its. It was assembled from that seat's own transcript instead (5bfcde9)
+/// and the first line of the file says so, which is a defect to be corrected, not a map.
+///
+/// THE POINTER, NOT THE FILE, and the arithmetic is the reason. M.md is ~90k against a floor of
+/// ~130,500 and a cap of 150,000: carrying it would put the intake over the limit on its own. The
+/// map is INDEXED with everything else under `map/`; this section only says which of those files is
+/// the seat's to write -- which is the difference between a path in a list of 527 and a path the
+/// seat knows to open.
+///
+/// AND IT IS IN THE BINARY, not the brief, for a reason measured this morning. The same pointer was
+/// added to `LIBRARIAN.md` at 07:31 and never reached the wake shell: `brief/` was not in the
+/// launcher's watch list, so the edit could not trigger the build that ships it (72c077a), and the
+/// seat found the gap itself with `git log` (d081773). A brief is data that a build has to carry; a
+/// line here is carried by the same build as the seat.
+///
+/// Absent file = no section, matching the sibling path exactly: a seat with nothing recorded yet
+/// wakes without a scaffold pretending otherwise.
+/// The librarian's map, RESOLVED FROM THE ROOM ROOT -- deliberately not `own_map_path`.
+///
+/// FOUND BY MUTATION, 2026-09-01, and it is a defect wider than this seat. `own_map_path` resolves
+/// through `map_dir()`, which is `data_dir()/map` if that directory exists, else the 2026-era
+/// `~/Desktop/lighthouse/exo_memory/map`, else `data_dir()/map` anyway. On this machine
+/// `data_dir` is `C:\Consonance\data` (`~/.consonance.json`), so `map_dir()` answers
+/// `C:\Consonance\data\map` -- WHICH DOES NOT EXIST. The maps are at
+/// `C:\Consonance\lighthouse\exo_memory\map\` (A.md 30,030; B.md 65,945; M.md 89,891), under the
+/// configured `room_path`. `map_dir()`'s own comment predicted the symptom exactly: "an absent map
+/// is indistinguishable from a pane that has recorded nothing yet -- the failure has no symptom at
+/// all." A pointer built from it would have named a path with no file at it, which is worse than
+/// no pointer.
+///
+/// So this resolves from `room_master_path().parent()`, THE SAME ROOT `corpus_shelf_at` walks. That
+/// is not a preference: the shelf indexes the file as `map/M.md` relative to that root, and a
+/// pointer that disagreed with the index would hand the seat two answers for one file.
+///
+/// NOT FIXED HERE: `map_dir()` is shared with every committee pane's GAP 3 map carry
+/// (`restore_capture`, :4052), so correcting its resolution changes what A and B wake holding and
+/// is a decision with its own blast radius. Reported rather than taken.
+fn librarian_map_path() -> PathBuf {
+    room_master_path().parent()
+        .map(|r| r.join("map"))
+        .unwrap_or_else(|| PathBuf::from("map"))
+        .join(format!("{LIBRARIAN_MAP_LETTER}.md"))
+}
+
+fn librarian_map_pointer() -> String {
+    let p = librarian_map_path();
+    let Ok(meta) = fs::metadata(&p) else { return String::new() };
+    format!(
+        "\n\n---\n\n# YOUR OWN MAP -- the findings you recorded, in your words\n\n\
+         It lives at `{}` ({} bytes). You are the only writer of that file; the other seats' maps \
+         sit beside it. It is INDEXED on the shelf below rather than carried, because at its size \
+         carrying it would put this shell over the limit that killed the thread it was made from -- \
+         so it is one Read away, entire, and nothing here is a summary of it.\n\n\
+         Open it before you claim or deny what you knew, and append every finding to it from now \
+         on, there and nowhere else, so the next waking of you can find them.\n",
+        p.display(),
+        meta.len()
+    )
 }
 
 /// Open the Third Place. Mirrors spawn_librarian, and differs in exactly three ways, each of them
@@ -8075,12 +8322,27 @@ mod librarian_tests {
 mod shelf_tests {
     use super::*;
 
+    /// The budget the WALK tests use, stated here instead of read from the environment.
+    ///
+    /// These three tests assert the walk's TIERING RULES -- which directory carries, which indexes,
+    /// where the window falls -- and those are properties of the rule, not of how much room today's
+    /// cap leaves. They used to call `corpus_shelf()`, which reads `CONSONANCE_LIBRARIAN_BUDGET`,
+    /// so the launcher's mitigation (`launch.ps1:120`, `$env:...= '0'`) was INHERITED by every pane
+    /// and the suite ran 348 passed / 3 failed inside Consonance while CI ran 351 / 0. A unit test
+    /// that reads its input from the ambient environment reports on the machine, not on the code.
+    ///
+    /// Nothing is loosened by this: the value is the removed function's own documented default, so
+    /// each assertion below is the same assertion against the same shelf it was written for. What
+    /// the SEAT receives is bounded separately and much harder -- see
+    /// `the_librarian_intake_fits_under_the_limit_it_must_obey`, which measures the real artifact.
+    const CORPUS_WALK_BUDGET: usize = 2_200_000;
+
     /// The seat shipped with its brief and the room and NOTHING ELSE -- about 3% of the corpus, a
     /// job description with no library. Caught by the keeper on first wake.
     #[test]
     fn the_shelf_carries_the_forward_pointed_layer() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
-        let shelf = corpus_shelf();
+        let shelf = corpus_shelf_at(CORPUS_WALK_BUDGET);
         assert!(shelf.contains("trust-the-first-attention"), "no cards on the shelf");
         assert!(shelf.contains("## SOURCE.md"), "SOURCE.md did not land on the shelf");
         assert!(shelf.contains("when a hedge or caveat is forming"), "the trigger table did not land");
@@ -8098,7 +8360,7 @@ mod shelf_tests {
     #[test]
     fn the_split_between_carried_and_indexed_is_always_reported() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
-        let shelf = corpus_shelf();
+        let shelf = corpus_shelf_at(CORPUS_WALK_BUDGET);
         assert!(shelf.contains("journal/2026-08-22.md"), "the journal index is missing");
         // a line unique to a journal BODY, which must not be present
         // CHANGED 2026-08-23: journal bodies ARE now carried, by the keepers instruction that the
@@ -8298,6 +8560,36 @@ mod shelf_tests {
         // the next append breaks it. This one degrades into a readable warning before it fails.
         eprintln!("LIBRARIAN INTAKE {} bytes of {} limit, margin {}", i.len(), LIBRARIAN_INTAKE_LIMIT,
             LIBRARIAN_INTAKE_LIMIT.saturating_sub(i.len()));
+        // BOTH UNITS, because the host's refusal is quoted in chars and this bound is in bytes.
+        // The ratio is the evidence for the claim in LIBRARIAN_INTAKE_LIMIT's comment that bytes
+        // are the conservative side; printing it means the next reader can check that instead of
+        // believing it. `chars()` is Unicode scalars; UTF-16 code units sit between it and the
+        // byte count, so both conventions are bounded by the byte figure above.
+        let chars = i.chars().count();
+        eprintln!("LIBRARIAN INTAKE {chars} chars ({:.4} bytes/char) -- the harness refuses on chars",
+            i.len() as f64 / chars.max(1) as f64);
+        // THE FLOOR, MEASURED ON EVERY RUN, because it is what fires this limit next and it is not
+        // budgetable: the head and the index are spent whatever the shelf carries.
+        let head = librarian_intake_head().expect("head must resolve");
+        let floor = corpus_shelf_at(0);
+        let fixed = head.len() + floor.len();
+        eprintln!("LIBRARIAN FLOOR head {} + shelf-at-budget-0 {} = {fixed}; bodies got {}",
+            head.len(), floor.len(), i.len().saturating_sub(fixed));
+        eprintln!("LIBRARIAN FLOOR is {:.1}% of the {LIBRARIAN_INTAKE_LIMIT}-byte cap",
+            fixed as f64 * 100.0 / LIBRARIAN_INTAKE_LIMIT as f64);
+        // THE CHEAPEST HEADROOM, PRICED HERE RATHER THAN ESTIMATED IN PROSE. The librarian rang
+        // this as prior art at 07:48 and marked its own figure ESTIMATED ("~70 bytes a line ...
+        // ~17k"), asking for the real one. This is the real one, and it comes out of the same run
+        // as every other number above instead of out of a script nobody keeps. It is NOT acted on
+        // in this lap: narrowing what the seat can cite is the seat's call, not a non-author's.
+        let run_bytes: usize = floor.lines()
+            .filter(|l| l.starts_with("- loop/run1/items/") || l.starts_with("- loop/run2/cells/"))
+            .map(|l| l.len() + 1)
+            .sum();
+        let run_n = floor.lines()
+            .filter(|l| l.starts_with("- loop/run1/items/") || l.starts_with("- loop/run2/cells/"))
+            .count();
+        eprintln!("LIBRARIAN INDEX run artifacts {run_n} file(s), {run_bytes} bytes of the floor");
         // The shelf header and the window line, echoed here so the two numbers a reader actually
         // wants — the split, and which days are in the window — come out of a test run instead of
         // requiring a relaunch and a look at the seat's CLAUDE.md.
@@ -8315,12 +8607,148 @@ mod shelf_tests {
              cannot open. Window the next tier; do not raise the limit.",
             i.len()
         );
+        // AND IN THE HOST'S UNIT, against the host's own refusal. Not a duplicate of the line
+        // above: that bound is ours and can be edited; this one is a measurement of the harness,
+        // and it is what stays red if someone raises LIBRARIAN_INTAKE_LIMIT to make room. See
+        // HARNESS_CLAUDE_MD_CHAR_CAP — a self-limiting shelf will happily fill whatever limit it
+        // is given, so the limit cannot be the only thing checking the limit.
+        assert!(
+            chars < HARNESS_CLAUDE_MD_CHAR_CAP,
+            "librarian CLAUDE.md is {chars} chars against the harness's {HARNESS_CLAUDE_MD_CHAR_CAP}-char \
+             cap — every message to this seat will be refused, whatever LIBRARIAN_INTAKE_LIMIT says."
+        );
         // And a real intake, not a stub that fits by being empty — the same guard the Third
         // Place's limit carries, for the same reason: a bound satisfied by absence is worse than
         // no bound, because it reports green.
         assert!(i.contains("# The Librarian tab"), "the brief did not reach the intake");
         assert!(i.contains("# THE ROOM you are holding"), "the room did not reach the intake");
         assert!(i.contains("carried in full"), "the shelf's split report is missing");
+    }
+
+    /// SELF-LIMITING, AS ARITHMETIC — the property the launcher's env var was standing in for.
+    ///
+    /// Split from the shelf test deliberately, the same way the window rule is: the shelf test can
+    /// only see what today's directory weighs, and the term that decides this seat's future is what
+    /// happens as the floor RISES toward the cap. That is unreachable from disk and trivial here.
+    ///
+    /// The mutant this exists for is "let the walk budget govern again": any body budget that is
+    /// not derived from the cap fails the third case below, whatever the environment says.
+    #[test]
+    fn the_shelf_budget_is_derived_from_the_cap_and_saturates() {
+        // Nothing else on the shelf: the whole cap minus the headroom is available to bodies.
+        assert_eq!(librarian_shelf_room(0, 0), LIBRARIAN_INTAKE_LIMIT - INTAKE_HEADROOM);
+        // Every fixed byte is one fewer body byte, one for one.
+        assert_eq!(librarian_shelf_room(100_000, 30_000),
+            LIBRARIAN_INTAKE_LIMIT - INTAKE_HEADROOM - 130_000);
+        // THE CASE THIS SEAT IS WALKING INTO. When the floor alone eats the cap, the answer is
+        // zero, not a wrap-around to a budget larger than the disk. `saturating_sub` on usize is
+        // the whole guard and a plain `-` here would panic in debug and carry ~18 exabytes in
+        // release — which is the shape of the failure this packet was written about, exactly.
+        assert_eq!(librarian_shelf_room(LIBRARIAN_INTAKE_LIMIT, 1), 0);
+        assert_eq!(librarian_shelf_room(usize::MAX, usize::MAX), 0);
+        // And it can never exceed the cap for any input.
+        for (h, f) in [(0, 0), (1, 1), (60_000, 50_000), (140_000, 9_000)] {
+            assert!(librarian_shelf_room(h, f) + h + f <= LIBRARIAN_INTAKE_LIMIT,
+                "room({h}, {f}) lets the intake past the cap");
+        }
+    }
+
+    /// THE HEADER REPORTS WHAT WAS DELIVERED, NOT WHAT THE RULE WOULD HAVE DELIVERED.
+    ///
+    /// The load-bearing mutant of this lap. The librarian woke at 07:19 into a shelf that said
+    ///
+    ///   0 file(s) carried in full (0 of 0 bytes); 518 indexed by path.
+    ///   THE SYSTEM is carried in full.
+    ///   YOUR OWN NOTES ARE WINDOWED -- today + yesterday carried in full (2026-09-01.md, ...)
+    ///
+    /// with both of those notes listed under NOT CARRIED four lines below. Two unconditional
+    /// sentences and one branch that read `windowed` — the set the RULE would carry — which is
+    /// worse than no branch, because it looks like the case was handled. Budget 0 is the state the
+    /// launcher's mitigation actually put the seat in, so this test runs the shelf in it.
+    ///
+    /// Revert either the window branch or the tier line to its unconditional form and this is red.
+    #[test]
+    fn the_shelf_header_reports_the_delivered_set_not_the_rules_set() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let shelf = corpus_shelf_at(0);
+        assert!(shelf.contains("0 file(s) carried in full"),
+            "budget 0 must carry nothing — this test is measuring the wrong state");
+        // THE CLAIM THAT LIED. It may appear only when something was actually delivered.
+        assert!(!shelf.contains("today + yesterday carried in full"),
+            "the header claims the window was carried while carrying nothing");
+        // The tier line, same class, one line above it in the same header.
+        assert!(!shelf.contains("THE SYSTEM is carried in full"),
+            "the header claims the system is complete while carrying nothing");
+        // And no body header at all: `## <label>` is how a carried file is emitted.
+        assert!(!shelf.contains("\n## librarian/"),
+            "a librarian file was carried at budget 0");
+        // It must still SAY what happened rather than going quiet — an empty window and a broken
+        // window read identically from the inside, and so do an empty shelf and a broken one.
+        assert!(shelf.contains("YOUR OWN NOTES ARE WINDOWED"),
+            "the shelf stopped reporting the window entirely");
+        assert!(shelf.contains("indexed by path"), "the shelf stopped reporting the index");
+        // The third branch: notes exist that the rule wants and the budget refused. Only assert it
+        // on a day when such a note is actually on disk, so this does not rot into a date-dependent
+        // red — the branch itself is proven by the two negatives above on any day.
+        let today = chrono::Local::now().date_naive();
+        let root = room_master_path().parent().expect("root").join("librarian");
+        let mut wanted: Vec<String> = Vec::new();
+        if let Ok(rd) = fs::read_dir(&root) {
+            for e in rd.flatten() {
+                let n = e.file_name().to_string_lossy().to_string();
+                if librarian_note_date(&n).is_some() && librarian_note_is_carried(&n, today) {
+                    wanted.push(n);
+                }
+            }
+        }
+        if !wanted.is_empty() {
+            assert!(shelf.contains("THE BUDGET CARRIED NONE OF THEM"),
+                "{} dated note(s) are in the window and none was carried, and the header does not \
+                 say so: {:?}", wanted.len(), wanted);
+            for n in &wanted {
+                assert!(shelf.contains(n.as_str()),
+                    "the header does not name {n}, which the seat wrote and cannot see");
+            }
+        }
+    }
+
+    /// THE INTAKE NAMES THE SEAT'S OWN MAP — item D, and the asymmetry it closes.
+    ///
+    /// `restore_capture` gives every sibling pane its own map and its own last words; this seat had
+    /// neither, and on 2026-09-01 the thread ended at the context cap with `exo_memory/map/M.md`
+    /// not existing at all, because nothing had ever told the seat the file was its. The same
+    /// pointer was added to `LIBRARIAN.md` at 07:31 and never reached a wake shell — `brief/` was
+    /// outside the launcher's watch list, so the only edit that ships it could not trigger the
+    /// build that ships it (72c077a). This one is in the binary, and this test is why it stays.
+    ///
+    /// POINTER, NOT FILE, asserted both ways: the path must be there and the ~90k body must not.
+    #[test]
+    fn the_librarian_intake_names_its_own_map_by_path() {
+        let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
+        let p = librarian_map_path();
+        // THE PATH MUST EXIST. This assertion is the one that caught `own_map_path` resolving to
+        // `data_dir()/map`, which is not where any map on this machine is — an absent-file early
+        // return let a MUTANT THAT DELETED THE POINTER PASS, because "no map, no section" and "no
+        // pointer at all" are the same green. A pointer whose file is not there is the defect, not
+        // an excuse, so it fails here rather than being skipped.
+        let map = fs::read_to_string(&p).unwrap_or_else(|e|
+            panic!("the librarian's map does not resolve: {} — {e}. The seat would be handed a \
+                    path with no file at it, which is worse than no pointer.", p.display()));
+        let i = librarian_intake().expect("intake must resolve");
+        assert!(i.contains("# YOUR OWN MAP"), "the seat is not told it has a map");
+        assert!(i.contains(&p.display().to_string()),
+            "the map section does not name the resolved path — the seat cannot open it");
+        // AND THE POINTER MUST AGREE WITH THE SHELF'S INDEX. The shelf lists the same file as
+        // `map/M.md` relative to the room root; if these two disagreed the seat would hold two
+        // answers for one file and no way to tell which is live.
+        assert!(i.contains(&format!("- map/{LIBRARIAN_MAP_LETTER}.md  (")),
+            "the shelf does not index the map the pointer names");
+        // NOT the body. M.md is ~90k against a ~130k floor; carrying it is the death this fixes.
+        let probe: String = map.lines().skip(20).take(6).collect::<Vec<_>>().join("\n");
+        assert!(probe.len() > 80, "probe too short to be evidence");
+        assert!(!i.contains(&probe),
+            "the map's BODY is in the intake — this must be a pointer, at {} bytes it does not fit",
+            map.len());
     }
 
     /// The window RULE, as a pure function — date-independent, so these hold every night.
@@ -8370,7 +8798,7 @@ mod shelf_tests {
     #[test]
     fn the_shelf_windows_the_librarians_own_notes() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
-        let shelf = corpus_shelf();
+        let shelf = corpus_shelf_at(CORPUS_WALK_BUDGET);
         // A carried file is emitted as "\n\n## {label}\n\n{body}"; an indexed one as "- {label}".
         assert!(!shelf.contains("\n## librarian/2026-08-22.md\n"),
             "the oldest note is CARRIED — the window is not reaching the shelf");
@@ -8408,11 +8836,11 @@ mod shelf_tests {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let i = librarian_intake().expect("intake must resolve");
         eprintln!("LIBRARIAN INTAKE {} bytes (unbounded by design; budget {})",
-            i.len(), librarian_budget());
+            i.len(), CORPUS_WALK_BUDGET);
         assert!(
-            i.len() <= librarian_budget(),
-            "intake {} exceeds librarian_budget() {} — the shelf's own bound is not holding",
-            i.len(), librarian_budget()
+            i.len() <= CORPUS_WALK_BUDGET,
+            "intake {} exceeds CORPUS_WALK_BUDGET {} — the shelf's own bound is not holding",
+            i.len(), CORPUS_WALK_BUDGET
         );
     }
 
