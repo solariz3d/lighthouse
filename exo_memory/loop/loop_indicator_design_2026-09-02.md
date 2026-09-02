@@ -153,3 +153,43 @@ hud — the opposite end of the screen from the tabs at `:32-35`.**
                           not being asked for something.
     FALSIFIER (amended):  if the indicator is dark while `chain-status` reports an open lap, the
                           render is keyed to the wrong condition.
+
+---
+
+## AMENDMENT 2 — the keeper, 2026-09-02 03:57, verbatim. TWO LIT STATES.
+
+> *"perhaps there could be a different color for the radiant aura that is around where it is when it
+> is working, and then a chill gold aura when it is done, showing you that the lib is done and the
+> cycle is complete."*
+
+**This is not a palette choice. It adds a state the design did not have: DONE.** Until now the map
+had one lit look and one dark one, so *"the cycle completed"* and *"nothing ever started"* rendered
+identically — the same failure as the placeholder that was byte-identical to `unknown`, arriving a
+third time in a different costume.
+
+### The four looks
+
+    WORKING    radiant, on the holder's tab, ARROW to the next hop; both move on a hop
+    WAITING    amber, 15 min, exception-triggered (unchanged)
+    COMPLETE   CHILL GOLD, static, NO ARROW, on the LIBRARIAN's tab — once the return leg is filed
+               and the chair has committed (chain `filed` as the newest row). Held until the next
+               lap opens.
+    UNKNOWN    its own look — three tabs dim-outlined (from the §6 three-way split)
+
+**DARK NARROWS TO ONE MEANING: no lap ever opened, or completion dismissed.** A closed lap is chill
+gold, **not** dark. That is the whole point of the second colour.
+
+**Position source is unchanged** — `chain_state`, with a `filed` newest row meaning complete. No new
+plumbing.
+
+### Registered
+
+    FALSIFIER:  chill gold while an open lap is reported, or radiant on a filed one, means the state
+                map is wrong.
+    AND:        if the keeper cannot tell FROM ACROSS THE ROOM whether the loop is done or moving,
+                the two colours failed their only job. That is the test, not a metaphor.
+
+    M5 for E:   a FILED lap rendered radiant -> red.
+
+*Quote this block; do not restate it. That rule is registered above and it exists because the design
+went missing once already.*
