@@ -743,3 +743,6 @@ the wrong figure was published.*
   memory carried; leftover 167 printed in the wake header. WRONG #65 (my 32,395 double-count → 24,122; "~10 of 12" → 8
   of 12, by alphabet). Which eight cards is the keeper's. **Five collation laps under the edge; the falsifier did not
   fire on any.**
+- **04:05 — P-TWO-DOORS collated, LAND IT (C)** → `librarian/2026-09-02.md` ~04:05. Diagram carries two doors and the
+  ring; `--entry` on lap rows; COMMITTEE.md copy synced (accepted on M4). Found: `corpus-age.test.js` red since
+  `c2afec6` — and my L029.1 collation never ran js-suite. Rule from here: js-suite on every main.rs landing.
