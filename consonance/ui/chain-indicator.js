@@ -115,6 +115,12 @@
   var RE_HANDBACK = /^call_librarian ([A-Z][A-Z0-9]*) -> LIB \[([^\]]*)\]/;
   var RE_RING = /^call_chair -> Main \[([^\]]*)\]/;
 
+  // A FOURTH CONTRACT WITH main.rs, and it is pinned in the test against main.rs's own source for
+  // the same reason the three above are: `chain_state` returns this exact sentence when every lap
+  // is filed, and a rename there would silently turn a COMPLETED cycle back into a dark tab bar —
+  // which is the one thing AMENDMENT 2 exists to prevent.
+  var RE_ALL_FILED = /every lap with a baton row is filed/;
+
   /**
    * Did the control plane CONFIRM the delivery landed, or only that it wrote?
    *
@@ -314,6 +320,48 @@
     return null;
   }
 
+  /**
+   * WHICH TAB CARRIES THE AURA. `holder` is a STATION — chair | panes | librarian | none — never a
+   * pane, and that is the librarian's ruling, not a convenience here.
+   *
+   * IT MAPS EXACTLY THE WORDS `holderArrow` MAPS AND NOT ONE MORE. On 2026-09-01 the ledger began
+   * carrying pane NAMES on dispatch rows (`charlie`, `bravo`, `echo`) and four rows drifted; the
+   * repair was a corrected ledger row and a validation packet for `lap-row.js`, NOT a widening
+   * here — widening the readers would bless the fan-out error, since a dispatch goes to SEVERAL
+   * panes and one name cannot stand for the leg (loop/packet_aura_addendum_2026-09-02.md §1).
+   * An unregistered word therefore returns null, and the caller renders UNKNOWN rather than dark.
+   */
+  function holderTab(holder) {
+    var h = String(holder || '').toLowerCase();
+    if (h === 'chair' || h === 'orch' || h === 'orchestrator') return 'main';
+    if (h === 'panes' || h === 'pane') return 'terminal';
+    if (h === 'librarian' || h === 'lib') return 'librarian';
+    return null;
+  }
+
+  /**
+   * The tab a `next.who` string names. It has to cover BOTH alphabets this file produces:
+   * holderArrow's stations ('panes' | 'LIB' | 'orch') and the receipt side's pane forms
+   * ('pane A', 'panes A, B', '3 panes'). The panes all live behind the Terminal tab.
+   */
+  function tabForWho(who) {
+    var w = String(who || '');
+    if (/pane/i.test(w)) return 'terminal';
+    if (w === 'LIB') return 'librarian';
+    if (w === 'orch') return 'main';
+    return null;
+  }
+
+  /** Where a RECEIPT puts the loop, as a tab. The fallback when no lap state is available. */
+  function positionTab(hop) {
+    switch (hop.kind) {
+      case 'dispatch': return 'terminal';
+      case 'handback': return 'librarian';
+      case 'ring': return 'main';
+      default: return null;
+    }
+  }
+
   /** Where the loop IS — the party that now holds it. */
   function positionLabel(hop, letters) {
     switch (hop.kind) {
@@ -342,7 +390,7 @@
    * state: 'unavailable' | 'unknown' | 'blind' | 'quiet' | 'waiting'
    * Only 'quiet' and 'waiting' carry an arrow. The other three deliberately carry none.
    */
-  function chainView(entries, nowMs, opts) {
+  function chainViewCore(entries, nowMs, opts) {
     opts = opts || {};
     var escalateMin = opts.escalateMin == null ? CHAIN_ESCALATE_MIN : opts.escalateMin;
     var letters = opts.letters || {};
@@ -374,12 +422,31 @@
     // --- neither source has anything to say -------------------------------------------------
     if (!found && !(chain && chain.open)) {
       if (chain && chain.open === false) {
-        // NOT an error and not "unknown": the ledger was read and says every lap is filed. This is
-        // the ordinary state at boot, and the bar for this build is that it renders as such.
+        var reason = chain.reason || 'the ledger reports none';
+        // AMENDMENT 2 (4e0de97), and the reason it exists: "the cycle completed" and "nothing ever
+        // started" were BOTH `idle`, so they rendered identically — the third time in one night
+        // that two different facts produced the same pixels (the placeholder byte-identical to
+        // `unknown`; `unknown` and `idle` both drawing no aura; and this).
+        //
+        // main.rs's `chain_state` HAS ALWAYS DISTINGUISHED THEM and nothing read it: `reason` is
+        // "every lap with a baton row is filed" when laps ran and closed, and "the ledger carries
+        // no baton rows yet" / "no ledger on this machine" when none ever ran. No new plumbing —
+        // the amendment's own line — because the discriminator was already on the wire.
+        if (RE_ALL_FILED.test(reason)) {
+          return {
+            state: 'complete', text: 'chain — cycle complete', arrow: null, elapsedMin: null,
+            selfReported: !!chain.self_reported, outstanding: 0,
+            why: 'every lap with a baton row in the ledger is FILED: the return leg landed and the ' +
+              'cycle is closed. This is COMPLETE, held until the next lap opens — not an absence. ' +
+              'Dark now means one thing only: no lap has ever opened.' + extra
+          };
+        }
+        // NOT an error and not "unknown": the ledger was read and carries no baton rows at all.
+        // This is the ordinary state at boot, and the bar for this build is that it renders as such.
         return {
           state: 'idle', text: 'chain — no lap open', arrow: null, elapsedMin: null,
           selfReported: !!chain.self_reported, outstanding: 0,
-          why: 'no lap is open: ' + (chain.reason || 'the ledger reports none') +
+          why: 'no lap is open: ' + reason +
             '. This is the ordinary state at boot, not a failure.' + extra
         };
       }
@@ -489,6 +556,71 @@
     };
   }
 
+  /**
+   * THE TOP-OF-WINDOW HALF OF THE RENDER — the four looks, and which tab wears them.
+   *
+   * WHY THIS EXISTS AT ALL, kept here because it is the whole lesson of the build: the pure view
+   * below has been CORRECT since L025 while the keeper looked at the tab bar and saw nothing. The
+   * chip mounted into `#chainchip`, a text row at the BOTTOM of the window in a status cluster
+   * beside `ready` / `gate ask-each` / cost / hud, and the design — quoted in
+   * loop/loop_indicator_design_2026-09-02.md, never restated — puts it at the TOP, on the tabs.
+   * Every instrument was green over a display nobody could see. So the decision stays pure and
+   * testable, and `renderTabs` is the only part that touches an element.
+   *
+   * The four looks are AMENDMENT 2's (4e0de97), quoted in that file, not paraphrased here.
+   *
+   * TWO RULES THAT ARE NOT OBVIOUS FROM THE LOOKS LIST:
+   *
+   *  1. POSITION COMES FROM `chain_state`, ARROW FROM THE RING — the librarian's L025 ruling,
+   *     already implemented for the chip and simply carried up here. So the aura sits on the
+   *     holder's tab even when a receipt is newer; the arrow is drawn from whichever source
+   *     produced `next`.
+   *  2. AN OPEN LAP THIS FILE CANNOT PLACE RENDERS `unknown`, NEVER DARK. AMENDMENT 2 narrows
+   *     dark to exactly one meaning, so a holder word outside the station vocabulary must not
+   *     borrow it — "the display cannot place the loop" is what the unknown look says, and that
+   *     is precisely what an unmappable holder is. Without this, the drift of 2026-09-01 would
+   *     have rendered as "no lap has ever opened" while a lap was plainly open.
+   */
+  function decorateTabs(view, chain, entries) {
+    view.tab = null; view.tabLook = null; view.arrowTab = null;
+
+    if (view.state === 'idle') return view;                       // dark, and it means one thing
+    if (view.state === 'complete') {
+      view.tabLook = 'complete';
+      view.tab = 'librarian';   // the seat that closes the cycle; the amendment names it
+      return view;
+    }
+    if (view.state === 'unknown' || view.state === 'unavailable' || view.state === 'blind') {
+      view.tabLook = 'unknown';                                   // the three seats, dim-outlined
+      return view;
+    }
+
+    // quiet | waiting | unconfirmed — some seat is holding a lap.
+    var tab = chain && chain.open ? holderTab(chain.holder) : null;
+    if (!tab) {
+      var boardUsable = Array.isArray(entries) && !blindOpen(entries);
+      var found = boardUsable ? latestHop(entries) : null;
+      if (found) tab = positionTab(found.hop);
+    }
+    if (!tab) { view.tabLook = 'unknown'; return view; }           // rule 2 above
+
+    view.tab = tab;
+    view.tabLook = view.state === 'waiting' ? 'waiting' : 'working';
+    // `unconfirmed` keeps the aura and loses the arrow — D1, kept from L025: a confident arrow on
+    // a position the control plane could not confirm is worse than none. `view.arrow` is already
+    // null there, so this needs no special case, only the comment saying it was not an oversight.
+    view.arrowTab = view.arrow ? tabForWho(view.next && view.next.who) : null;
+    if (view.arrowTab === view.tab) view.arrowTab = null;          // never point a tab at itself
+    return view;
+  }
+
+  /** The whole render decision: the chip's view, plus which tab wears which look. */
+  function chainView(entries, nowMs, opts) {
+    opts = opts || {};
+    var chain = opts.chain && typeof opts.chain === 'object' ? opts.chain : null;
+    return decorateTabs(chainViewCore(entries, nowMs, opts), chain, entries);
+  }
+
   // ---- wiring (browser only) ---------------------------------------------------------------
 
   function render(el, view) {
@@ -507,9 +639,65 @@
     el.title = view.why;
   }
 
+  /** The three seat tabs, in the cycle's own order. Third Place is never lit — it is not a seat
+   *  in the loop, and lighting it would be the one wrong answer the design names explicitly. */
+  var SEAT_TABS = ['main', 'terminal', 'librarian'];
+  var LOOK_CLASSES = ['chain-hold-working', 'chain-hold-waiting', 'chain-hold-complete', 'chain-hold-unknown'];
+
+  /**
+   * Paint the tab bar. DOM-only: every decision was made in `decorateTabs`.
+   *
+   * THE ARROW IS PLACED AGAINST THE DESTINATION, NOT THE HOLDER, and that is not a style choice.
+   * The tabs are NOT in cycle order (Terminal, Orchestrator, Librarian, ... — the cycle is
+   * orch -> panes -> lib -> orch), so an arrow parked beside the lit tab would point at whatever
+   * happened to sit next to it and would be wrong two hops out of three. Anchoring it to the
+   * destination and pointing INTO the destination is correct for every pair with no reordering of
+   * a tab bar the keeper already has muscle memory for:
+   *
+   *     destination to the RIGHT of the holder  ->  arrow immediately BEFORE it, "->"
+   *     destination to the LEFT  of the holder  ->  arrow immediately AFTER  it, "<-"
+   */
+  function renderTabs(nav, view) {
+    if (!nav || !nav.children) return;
+    var kids = Array.prototype.slice.call(nav.children);
+    var btns = kids.filter(function (el) { return el.getAttribute && el.getAttribute('data-tab'); });
+    var arrow = null;
+    for (var a = 0; a < kids.length; a++) if (kids[a].id === 'chainarrow') arrow = kids[a];
+
+    var lit = null, target = null, litIdx = -1, targetIdx = -1;
+    for (var i = 0; i < btns.length; i++) {
+      var name = btns[i].getAttribute('data-tab');
+      for (var c = 0; c < LOOK_CLASSES.length; c++) btns[i].classList.remove(LOOK_CLASSES[c]);
+      if (view.tabLook === 'unknown' && SEAT_TABS.indexOf(name) >= 0) {
+        btns[i].classList.add('chain-hold-unknown');
+      }
+      if (name === view.tab) { lit = btns[i]; litIdx = i; }
+      if (name === view.arrowTab) { target = btns[i]; targetIdx = i; }
+    }
+    if (view.tabLook && view.tabLook !== 'unknown' && lit) {
+      lit.classList.add('chain-hold-' + view.tabLook);
+    }
+
+    if (!arrow) return;
+    if (!lit || !target || target === lit) { arrow.hidden = true; return; }
+    var right = targetIdx > litIdx;
+    arrow.textContent = right ? '→' : '←';
+    arrow.title = 'next in the loop: ' + (view.next ? view.next.who + ' ' + view.next.verb : target.getAttribute('data-tab'));
+    arrow.hidden = false;
+    // Re-seat it. Removing first keeps the index arithmetic honest when it is already in the nav.
+    if (Array.prototype.indexOf.call(nav.children, arrow) >= 0) nav.removeChild(arrow);
+    var after = null, seen = false;
+    for (var k = 0; k < nav.children.length; k++) {
+      if (nav.children[k] === target) { seen = true; if (right) { after = target; break; } continue; }
+      if (seen) { after = nav.children[k]; break; }
+    }
+    if (after) nav.insertBefore(arrow, after); else nav.appendChild(arrow);
+  }
+
   function start() {
     var el = typeof document !== 'undefined' && document.getElementById('chainchip');
-    if (!el) return;
+    var nav = typeof document !== 'undefined' && document.getElementById('tabs');
+    if (!el && !nav) return;
 
     var inv = function (cmd) {
       // Each source fails on its own. A dead board must not take the lap state down with it, and
@@ -523,7 +711,9 @@
     var tick = function () {
       var letters = (typeof paneLetters !== 'undefined' && paneLetters) ? paneLetters : {};
       Promise.all([inv('get_board'), inv('chain_state')]).then(function (r) {
-        render(el, chainView(r[0], Date.now(), { letters: letters, chain: r[1] }));
+        var view = chainView(r[0], Date.now(), { letters: letters, chain: r[1] });
+        render(el, view);
+        renderTabs(nav, view);
       });
     };
 
@@ -535,7 +725,9 @@
     readHop: readHop, latestHop: latestHop, nextHop: nextHop, chainView: chainView,
     blindOpen: blindOpen, paneLabel: paneLabel, positionLabel: positionLabel,
     outstanding: outstanding, confirmedReceipt: confirmedReceipt,
-    render: render, start: start,
+    holderArrow: holderArrow, holderTab: holderTab, tabForWho: tabForWho,
+    render: render, renderTabs: renderTabs, start: start,
+    SEAT_TABS: SEAT_TABS, LOOK_CLASSES: LOOK_CLASSES,
     ESCALATE_MIN: CHAIN_ESCALATE_MIN, POLL_MS: CHAIN_POLL_MS
   };
 

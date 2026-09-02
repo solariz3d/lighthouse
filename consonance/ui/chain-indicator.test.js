@@ -474,10 +474,15 @@ const OPEN = {
   note: 'this must never be rendered', at: T0, age_ms: 4 * 60000,
   also_open: 1, self_reported: true, unreadable: 0,
 };
+// TWO closed shapes, and until AMENDMENT 2 (4e0de97) this file had one. `chain_state` returns a
+// different `reason` for "laps ran and every one is filed" than for "no lap has ever opened", and
+// nothing read the difference, so a COMPLETED CYCLE and a machine that had never run one rendered
+// identically. Both fixtures carry main.rs's own wording, pinned against its source below.
 const CLOSED = {
   open: false, reason: 'every lap with a baton row is filed', lap: null, chain: null,
   holder: null, note: null, at: null, age_ms: null, also_open: 0, self_reported: true, unreadable: 0,
 };
+const NEVER_RAN = Object.assign({}, CLOSED, { reason: 'the ledger carries no baton rows yet' });
 
 t('THE BAR — a relaunch with a lap open shows the LAP, not "position unknown"', () => {
   // The empty ring is exactly the post-relaunch state, and before this command it produced
@@ -537,8 +542,14 @@ t('THE VOCABULARY IS THE LIBRARIAN\'S RULING, and a holder outside it draws no a
     'the tooltip must name the holder it could not place, or the gap is invisible: ' + v.why);
 });
 
-t('THE BAR — with NO lap open the chip renders, and says so as BOOT rather than as an error', () => {
-  const v = C.chainView([], T0, { chain: CLOSED });
+t('THE BAR — with NO lap ever opened the chip renders, and says so as BOOT rather than as an error', () => {
+  // AMENDED for AMENDMENT 2: this test used the CLOSED fixture, whose reason is "every lap ... is
+  // filed", and asserted `idle`. That fixture is now `complete` — the assertion encoded the
+  // pre-amendment spec in which done and never-started were one state. The test's INTENT (a closed
+  // ledger renders as boot, not as an error) is unchanged and is now carried by NEVER_RAN; the
+  // other half of the old fixture moved to the `complete` test below. Nothing was weakened: what
+  // was one assertion is now two, over two facts that used to be one.
+  const v = C.chainView([], T0, { chain: NEVER_RAN });
   assert.strictEqual(v.state, 'idle');
   assert.strictEqual(v.text, 'chain — no lap open');
   assert.strictEqual(v.arrow, null);
@@ -621,6 +632,181 @@ t('main.rs still exposes chain_state as a command with the fields this reads', (
   }
 });
 
+// ---- 8b. THE TAB BAR — the four looks, driven into elements ------------------------------------
+//
+// EVERY TEST IN THIS SECTION IS AT THE DOM LAYER, AND THAT IS THE WHOLE POINT. A view-level
+// version of them would have been green all night while the tab bar was dark, because the view has
+// been correct since L025 and the chip mounted into a text row at the BOTTOM of the window. That
+// is measured, not asserted — three seats looked at the render and all three had a passing test
+// over a display nobody could see. A mutant that is green through the actual defect is not a
+// mutant, so these are driven through renderTabs() and asserted on what a person would see.
+//
+// The looks are AMENDMENT 2's (`4e0de97`), quoted in loop/loop_indicator_design_2026-09-02.md.
+
+const TAB_ORDER = ['terminal', 'main', 'librarian', 'thirdplace', 'listen', 'settings', 'about'];
+
+function fakeBtn(tab) {
+  const set = new Set();
+  return {
+    getAttribute: (k) => (k === 'data-tab' ? tab : null),
+    classList: {
+      add: (c) => set.add(c), remove: (c) => set.delete(c), contains: (c) => set.has(c),
+      size: () => set.size,
+    },
+  };
+}
+
+function fakeNav() {
+  const children = TAB_ORDER.map(fakeBtn);
+  const arrow = { id: 'chainarrow', hidden: true, textContent: '', title: '' };
+  children.push(arrow);
+  return {
+    children, arrow,
+    insertBefore(node, ref) { children.splice(children.indexOf(ref), 0, node); },
+    appendChild(node) { children.push(node); },
+    removeChild(node) { children.splice(children.indexOf(node), 1); },
+    btn(tab) { return children.find((c) => c.getAttribute && c.getAttribute('data-tab') === tab); },
+    // what the bar reads like left to right, with the arrow shown where it actually sits
+    strip() {
+      return children.map((c) => (c === arrow ? (c.hidden ? null : '[' + c.textContent + ']')
+                                              : c.getAttribute('data-tab'))).filter(Boolean).join(' ');
+    },
+  };
+}
+
+const holding = (holder, stage) => ({
+  open: true, reason: null, lap: 'L029', chain: stage || 'dispatched', holder,
+  note: null, at: T0, age_ms: 60000, also_open: 0, self_reported: true, unreadable: 0,
+});
+
+const paint = (chain, entries) => {
+  const nav = fakeNav();
+  const view = C.chainView(entries || [], T0, { chain });
+  C.renderTabs(nav, view);
+  return { nav, view };
+};
+
+const litTabs = (nav, look) =>
+  TAB_ORDER.filter((t) => nav.btn(t).classList.contains('chain-hold-' + look));
+
+t('M3 — a lap dispatched to the PANES lights the Terminal tab, and no other tab is lit', () => {
+  // The addendum's own fixture, and the one the old `chair -> main` fixture never exercised:
+  // the fan-out is the loop's most common stage. This is the mutant that had to be DOM-level.
+  const { nav } = paint(holding('panes', 'dispatched'));
+  assert.deepStrictEqual(litTabs(nav, 'working'), ['terminal'],
+    'the aura must be on the panes\' tab alone: ' + nav.strip());
+});
+
+t('M1 — the aura follows the holder: chair -> Orchestrator, librarian -> Librarian', () => {
+  assert.deepStrictEqual(litTabs(paint(holding('chair')).nav, 'working'), ['main']);
+  assert.deepStrictEqual(litTabs(paint(holding('librarian')).nav, 'working'), ['librarian']);
+});
+
+t('the Third Place is NEVER lit, in any state — it is not a seat in the loop', () => {
+  for (const chain of [holding('chair'), holding('panes'), holding('librarian'), CLOSED, NEVER_RAN, null]) {
+    const { nav } = paint(chain);
+    assert.strictEqual(nav.btn('thirdplace').classList.size(), 0,
+      'the Third Place picked up a loop class: ' + nav.strip());
+  }
+});
+
+t('M5 — a FILED ledger renders COMPLETE on the Librarian tab, never the working aura', () => {
+  const { nav, view } = paint(CLOSED);
+  assert.strictEqual(view.state, 'complete');
+  assert.deepStrictEqual(litTabs(nav, 'complete'), ['librarian'],
+    'a closed cycle sits chill gold on the seat that closed it: ' + nav.strip());
+  assert.deepStrictEqual(litTabs(nav, 'working'), [],
+    'a filed lap rendered as working is the falsifier the amendment registered');
+  assert.strictEqual(nav.arrow.hidden, true, 'COMPLETE is static and carries no arrow');
+});
+
+t('M4 — `unknown` outlines the three seats; `idle` leaves the bar completely dark', () => {
+  // The pair AMENDMENT 2 exists to separate, and the third appearance of one failure in one night:
+  // two different facts must never make the same pixels.
+  const unknown = paint(null).nav;                    // no lap state, empty ring
+  assert.deepStrictEqual(litTabs(unknown, 'unknown'), ['terminal', 'main', 'librarian'].filter((t) => TAB_ORDER.includes(t)).sort((a, b) => TAB_ORDER.indexOf(a) - TAB_ORDER.indexOf(b)));
+
+  const idle = paint(NEVER_RAN).nav;
+  for (const look of ['working', 'waiting', 'complete', 'unknown']) {
+    assert.deepStrictEqual(litTabs(idle, look), [],
+      'dark means ONE thing now — no lap ever opened — and it must actually be dark: ' + idle.strip());
+  }
+});
+
+t('an OPEN lap whose holder is not a station renders UNKNOWN, never dark', () => {
+  // Because AMENDMENT 2 narrows dark to one meaning, an unplaceable holder must not borrow it.
+  // This is the 2026-09-01 ledger drift as a rendering rule: four rows carried pane names, and
+  // had the aura shipped before the row was corrected, "cannot place the loop" would have read
+  // as "no lap has ever opened" with a lap plainly open.
+  const { nav, view } = paint(holding('echo'));
+  assert.strictEqual(view.tabLook, 'unknown');
+  assert.deepStrictEqual(litTabs(nav, 'unknown'), ['terminal', 'main', 'librarian']
+    .sort((a, b) => TAB_ORDER.indexOf(a) - TAB_ORDER.indexOf(b)));
+});
+
+t('M2 — an UNCONFIRMED delivery keeps the aura and loses the arrow', () => {
+  // D1, kept from L025 and now asserted where it is visible: a confident arrow drawn from a
+  // delivery the control plane could not confirm is worse than no arrow at all.
+  const { nav, view } = paint(holding('chair'), [UNCONF.dispatch]);
+  assert.strictEqual(view.state, 'unconfirmed');
+  assert.deepStrictEqual(litTabs(nav, 'working'), ['main'], 'the aura still marks the holder');
+  assert.strictEqual(nav.arrow.hidden, true, 'no arrow may be drawn from an unconfirmed receipt');
+});
+
+t('the arrow is anchored to the DESTINATION and points INTO it, for all three hops', () => {
+  // The tabs are not in cycle order, so an arrow parked beside the lit tab is wrong two hops out
+  // of three. Anchored to the destination it is correct for every pair, with no reordering of a
+  // tab bar the keeper already knows by position.
+  assert.strictEqual(paint(holding('panes')).nav.strip(),
+    'terminal main [→] librarian thirdplace listen settings about',
+    'panes -> LIB: the arrow sits just before the Librarian, pointing into it');
+  assert.strictEqual(paint(holding('librarian')).nav.strip(),
+    'terminal main [←] librarian thirdplace listen settings about',
+    'lib -> orch: the arrow sits just after the Orchestrator, pointing back into it');
+  assert.strictEqual(paint(holding('chair')).nav.strip(),
+    'terminal [←] main librarian thirdplace listen settings about',
+    'chair -> panes: the arrow sits just after the Terminal, pointing back into it');
+});
+
+t('the arrow moves on a hop rather than accumulating — one arrow, always', () => {
+  const nav = fakeNav();
+  for (const h of ['chair', 'panes', 'librarian', 'chair']) {
+    C.renderTabs(nav, C.chainView([], T0, { chain: holding(h) }));
+  }
+  assert.strictEqual(nav.children.filter((c) => c.id === 'chainarrow').length, 1);
+  assert.strictEqual(nav.strip(), 'terminal [←] main librarian thirdplace listen settings about');
+});
+
+t('the escalated state is amber on the holder, not a fourth colour on a fourth tab', () => {
+  const late = Object.assign({}, holding('panes'), { age_ms: 40 * 60000 });
+  const { nav, view } = paint(late);
+  assert.strictEqual(view.state, 'waiting');
+  assert.deepStrictEqual(litTabs(nav, 'waiting'), ['terminal']);
+  assert.deepStrictEqual(litTabs(nav, 'working'), []);
+});
+
+t('renderTabs is inert without a nav — it must never throw into the page', () => {
+  C.renderTabs(null, C.chainView([], T0, { chain: holding('chair') }));
+  C.renderTabs({}, C.chainView([], T0, { chain: holding('chair') }));
+});
+
+t('main.rs still returns the exact `reason` COMPLETE is keyed on', () => {
+  // The fourth contract with main.rs, pinned like the other three against its own source. A
+  // rename there would silently turn a completed cycle back into a dark tab bar, which is the
+  // one thing AMENDMENT 2 exists to prevent.
+  const rs = fs.readFileSync(MAIN_RS, 'utf8');
+  assert.ok(rs.includes('every lap with a baton row is filed'),
+    'chain_state no longer returns the reason the COMPLETE look is keyed on');
+  assert.ok(rs.includes('the ledger carries no baton rows yet'),
+    'chain_state no longer distinguishes "never ran" from "all filed" — the two would re-merge');
+});
+
+t('index.html carries the nav id and the arrow element renderTabs needs', () => {
+  const html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
+  assert.match(html, /<nav class="tabs" id="tabs">/, 'renderTabs finds the nav by id and nothing else');
+  assert.match(html, /id="chainarrow"[^>]*hidden/, 'the arrow must ship hidden, not visible-by-default');
+});
+
 // ---- 9. THE WIRING ITSELF, exercised — not just the pure functions -----------------------------
 //
 // The pure tests above would all be green while the chip rendered nothing, which is precisely the
@@ -628,11 +814,16 @@ t('main.rs still exposes chain_state as a command with the fields this reads', (
 // no browser here, so this stands up the smallest fake that makes start() run for real — an element
 // with an id, and an invoke that resolves — and then asserts on what actually landed in the DOM.
 
-async function withFakeDom(boardResult, fn, chainResult) {
+async function withFakeDom(boardResult, fn, chainResult, nav) {
   const el = { id: 'chainchip', className: '', textContent: '', title: '' };
   const savedDoc = global.document, savedWin = global.window, savedInt = global.setInterval;
   const timers = [];
-  global.document = { readyState: 'complete', getElementById: (id) => (id === 'chainchip' ? el : null) };
+  // `nav` is optional and defaults to absent, so every caller written before the tab bar existed
+  // keeps exercising exactly what it did: chip present, no nav, renderTabs inert.
+  global.document = {
+    readyState: 'complete',
+    getElementById: (id) => (id === 'chainchip' ? el : (id === 'tabs' ? (nav || null) : null)),
+  };
   // Two commands now, and each must be able to fail on its own — so the fake dispatches on name
   // rather than returning one canned answer to everything.
   const answer = (cmd) => {
@@ -652,7 +843,7 @@ async function withFakeDom(boardResult, fn, chainResult) {
   } finally {
     global.document = savedDoc; global.window = savedWin; global.setInterval = savedInt;
   }
-  return fn(el, timers);
+  return fn(el, timers, nav);
 }
 
 const asyncTests = [];
@@ -696,6 +887,28 @@ ta('a dead chain_state does not stop the board half from rendering', () =>
   withFakeDom([RING_NOW], (el) => {
     assert.ok(el.textContent.includes('->'), 'the ring half must still draw: ' + el.textContent);
   }, null));
+
+ta('END TO END — start() lights the tab bar, not only the chip at the bottom', () => {
+  // THE ONE TEST THAT WOULD HAVE CAUGHT TONIGHT. Everything else about this chip was green on
+  // 2026-09-01 while the keeper looked at the top of the window and saw nothing, because nothing
+  // between `start()` and the tab buttons was exercised at all.
+  const nav = fakeNav();
+  return withFakeDom([], (el, _timers, n) => {
+    assert.ok(el.textContent.includes('L029'), 'the chip still renders: ' + el.textContent);
+    assert.ok(n.btn('terminal').classList.contains('chain-hold-working'),
+      'the aura never reached the tab buttons: ' + n.strip());
+    assert.strictEqual(n.arrow.hidden, false, 'the arrow never reached the nav: ' + n.strip());
+  }, holding('panes'), nav);
+});
+
+ta('END TO END — a dead chain_state paints the UNKNOWN look, never a dark bar', () =>
+  // The seam question, answered in the render rather than left to a person to interpret: if the
+  // command never returns, the top of the window says so in its own look. This is why bar 0 does
+  // not gate the build — the code is the same either way, and the display reports the seam.
+  withFakeDom([], (_el, _timers, n) => {
+    assert.deepStrictEqual(TAB_ORDER.filter((t) => n.btn(t).classList.contains('chain-hold-unknown')),
+      ['terminal', 'main', 'librarian'], 'a dead seam must not look like an empty ledger: ' + n.strip());
+  }, null, fakeNav()));
 
 ta('start() registers exactly one poll, at the declared cadence', () =>
   withFakeDom([RING], (_el, timers) => {

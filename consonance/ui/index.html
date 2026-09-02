@@ -29,7 +29,12 @@
       </svg>
       <span>Consonance</span>
     </span>
-    <nav class="tabs">
+    <!-- id="tabs" so chain-indicator.js can find the nav with getElementById and nothing else.
+         The loop aura lands on these buttons: the design (loop/loop_indicator_design_2026-09-02.md,
+         quoted there, not restated) puts the indicator HERE, at the top, and the chip in the stream
+         bar at the bottom stays as the detail line. #chainarrow is moved between the buttons by
+         renderTabs and is hidden whenever no arrow is drawn. -->
+    <nav class="tabs" id="tabs">
       <button data-tab="terminal" class="active">Terminal</button>
       <button data-tab="main">★ Orchestrator</button>
       <button data-tab="librarian" title="the seat that holds the room so the others do not have to — it cites, it does not recall">▤ Librarian</button>
@@ -37,6 +42,7 @@
       <button data-tab="listen" title="hear one application as intervals — off until you pick a source">◍ Listen</button>
       <button data-tab="settings">Settings</button>
       <button data-tab="about">About</button>
+      <span id="chainarrow" hidden aria-hidden="true"></span>
     </nav>
     <span class="topctl">
       <span class="spawnwrap">

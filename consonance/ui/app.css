@@ -1,6 +1,8 @@
 :root {
   --bg: #0B0E14; --panel: #141A28; --panel2: #1B2335; --line: #27304A;
   --text: #E6EAF2; --muted: #8893AD; --aqua: #5EEAD4; --aqua-d: #2BB7A3; --amber: #F2B880;
+  /* the two golds of the loop aura — see .chain-hold-* below for why they are this far apart */
+  --gold-live: #FFC24A; --gold-chill: #9C8A52;
 }
 * { box-sizing: border-box; }
 html, body {
@@ -25,6 +27,58 @@ body { display: flex; flex-direction: column; padding: 10px 14px; gap: 10px; }
 }
 .tabs button:hover { color: var(--text); }
 .tabs button.active { color: var(--aqua); border-bottom-color: var(--aqua); }
+
+/* ── THE LOOP AURA — where the committee loop is, at the TOP of the window ───────────────────
+   AMENDMENT 2 (4e0de97) is quoted in loop/loop_indicator_design_2026-09-02.md and is not restated
+   here. What this block owes it is one thing: WORKING and COMPLETE must be tellable apart FROM
+   ACROSS THE ROOM, which is the keeper's own test and not a metaphor. They are separated on three
+   independent channels, so losing any one of them still leaves two:
+
+     SHAPE       working GLOWS with no fill; complete is a filled, settled block with no glow.
+                 Shape survives distance better than hue does, so it carries the most weight here
+     MOTION      working BREATHES; complete is dead still. Motion is the channel that survives
+                 peripheral vision best, which is most of what "across the room" means
+     BRIGHTNESS  radiant #FFC24A against chill #9C8A52 — relative luminance .603 vs .259, a
+                 contrast ratio of 2.12:1 between them, and 5.6:1 for the chill one against the
+                 page. Computed, not eyeballed; both are legible, and neither is the other
+
+   Hue is deliberately NOT one of the three: they are both gold because the keeper asked for two
+   golds, so the separation had to come from somewhere else. The reduced-motion block below drops
+   the middle channel on purpose for anyone who needs that; shape and brightness still carry it,
+   which is why there are three and not one. */
+.tabs button.chain-hold-working {
+  color: var(--gold-live); border-bottom-color: var(--gold-live);
+  text-shadow: 0 0 12px rgba(255, 194, 74, .55);
+  animation: chain-breathe 2.4s ease-in-out infinite;
+}
+.tabs button.chain-hold-waiting {
+  color: var(--amber); border-bottom-color: var(--amber); font-weight: 600;
+  text-shadow: 0 0 12px rgba(242, 184, 128, .6);
+  animation: chain-breathe .9s ease-in-out infinite;   /* the same aura, impatient */
+}
+.tabs button.chain-hold-complete {
+  color: var(--gold-chill); border-bottom-color: var(--gold-chill);
+  background: rgba(156, 138, 82, .2); border-radius: 6px 6px 0 0;   /* settled, filled, still */
+}
+.tabs button.chain-hold-unknown {
+  color: var(--muted); border-bottom: 2px dashed rgba(136, 147, 173, .5); opacity: .75;
+}
+@keyframes chain-breathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .62; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tabs button.chain-hold-working, .tabs button.chain-hold-waiting { animation: none; }
+}
+
+#chainarrow {
+  display: flex; align-items: center; padding: 0 3px; margin-bottom: -1px;
+  color: var(--gold-live); font-size: 15px; line-height: 1;
+  text-shadow: 0 0 10px rgba(255, 194, 74, .5);
+  animation: chain-breathe 2.4s ease-in-out infinite;
+}
+#chainarrow[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { #chainarrow { animation: none; } }
 
 .topctl { display: flex; align-items: center; gap: 8px; margin-left: auto; padding-bottom: 5px; }
 .topctl .btn { padding: 5px 13px; font-size: 12px; }
@@ -377,6 +431,7 @@ input::placeholder { color: #55607a; }
 #chainchip.chain-unconfirmed { color: var(--muted); font-style: italic; }
 /* `idle` is the ledger saying every lap is filed. That is BOOT, not a failure, so it is not painted
    with the can't-read states even though it also draws no arrow. */
+#chainchip.chain-complete { color: var(--gold-chill); }
 #chainchip.chain-idle,
 #chainchip.chain-unknown,
 #chainchip.chain-unavailable,
