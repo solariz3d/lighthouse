@@ -166,3 +166,147 @@ General form as above. And the honest status, which belongs in the same entry: *
 of one loop in one commit and have verified that neither is used.** Both falsifiers — three laps for
 the map line, ten for the dossier line — are unread. Writing both halves is not evidence either
 works, and a seat that authored a rule is the worst-placed one to score it.
+
+---
+
+## 2026-09-02 — P-DOC-ROOT (L032)
+
+Hand-back: **`exo_memory/handback/p-doc-root_2026-09-02.md`**. Spec `6c208f4`. One path written:
+the root `README.md` (92 → 78 lines).
+
+### An oracle written through a shell loses its backslashes, and an inert pattern reads exactly like a clean surface
+
+2026-09-02. `consonance/tools/carrier-drift.registry.json:353`, raw bytes
+`"pattern": "light,?s+nots+(?:as+)?lifeguard"` — every `\s` arrived without its backslash.
+Hand-back §4.
+
+My lap's mutant was *reintroduce "lifeguard" into the surface → red*. It scored **NOT APPLIED**:
+0 matches clean, 0 matches mutated, because the regex means *"light", comma, one-or-more literal `s`,
+"not"…* and matches nothing a person types. With `\s` restored the same mutant is caught (1 match).
+**A green surface guarded by an inert instrument is indistinguishable from a guarded one**, and the
+only reason I looked was that a NOT APPLIED mutant is required to be reported as such rather than
+counted as a pass (`BUILDING.md`, WHAT A HAND-BACK OWES item 1).
+
+This is the hazard already in my own memory — the Bash tool eats a lone backslash — arriving at a
+second seat. General form: **write regex literals to a file, never through a shell string**, and
+after registering a pattern, run it once against a string it MUST match. An oracle that has never
+matched anything has not been shown to work.
+
+### The enumerated alternation missed the one live hit, on the surface it was armed for
+
+2026-09-02, same entry, second defect under the first. Hand-back §4.
+
+Even with the backslashes repaired the pattern finds **0** occurrences in HEAD's `README.md` and 2 in
+`dev/SPINE.md` — because the outermost carrier wrote the phrase **hyphenated**
+(`git show HEAD:README.md | grep -o "light-not-lifeguard"` → 1), and the alternation admits only the
+spaced form. So the bar *"RED on today's tree, naming the lifeguard hits"* would have returned green
+over the one file that had a hit, and green would have read as *nothing to retire here*.
+
+The registry's own limits section predicted exactly this (*"the pattern alternation is enumerated,
+not closed"*). General form, and it is the sharper half: **a documented limit is not a discharged
+one.** Writing the limit down does not stop it firing, and the first place to test an enumeration is
+the surface you already know carries the wording — not the corpus at large, where a miss looks like
+absence.
+
+### A brief that reads stale on sight can still be exactly right
+
+2026-09-02. Hand-back §5, first bullet.
+
+The spec said the root README was 92 lines from `bdda5d5` (2026-08-17) with zero mentions of the
+Librarian, Third Place, Listen or the work chain. The page in front of me discussed rooms, dreams,
+the pulse and the rolling window — all later work — so I read the claim as stale before checking it.
+**Every count held**: 92 lines, that commit, and 0/0/0/0. `bdda5d5` is simply the most recent commit
+that touched the file.
+
+General form: **"this brief looks out of date" is a hypothesis, and it is cheaper to run the count
+than to argue with it.** Recording it because the direction usually goes unrecorded — the times the
+briefer was right and my first read was wrong leave no trace unless I leave one.
+
+### Re-derive an inherited figure before carrying it forward
+
+2026-09-02. `node consonance/tools/board-audit.js`, `lap-row.js --report`, `ferry.js --due`.
+
+The old page carried *"258 tests"* (a 2026-08-10 figure in present tense) and *"18 multi-pane laps,
+95% one pane"*. Re-derived: **545 passed / 1 failed / 3 ignored** serialized, **32 laps**, and Main's
+clean board share **92.9% → 92.6% → 85.2%**. Every one had moved, and the committee figure had moved
+in the direction that flatters — which is the one most likely to be carried forward unchecked
+because nobody objects to it.
+
+General form: **a number inherited from a document is a hand-made figure, whatever instrument
+originally produced it.** If a command can reproduce it, run the command; if it cannot, say the date
+it was true.
+
+### Naming a unit-error class does not stop it firing — three in one lap, on the same page
+
+2026-09-02, the L032 collation (`5bc6216`, `566bd00`) and what re-deriving it turned up.
+Hand-back **§A1** and **§A3** of `exo_memory/handback/p-doc-root_2026-09-02.md`.
+
+1. **The librarian's catch.** I published `545 passed · 1 failed · 3 ignored`. I had summed `passed`
+   and `failed` across nine cargo targets and read `ignored` off a single line. Two units, one number
+   — the room's own named class, and I wrote it into the outermost carrier.
+2. **What re-deriving it found underneath.** The corrected sum `545 · 1 · 9` is itself the wrong unit:
+   four binaries compile the shared module tree, so `--list` shows `cochlea_replay` and `conf_sweep`
+   holding **identical** 80-test sets, both **fully contained** in the main binary's 361. The union is
+   **373**. `545` is a sum; `373` is the answer. The `9` is one set of 3 counted three times.
+3. **Mine, found while fixing theirs.** My `dive ×5` was a loose substring count, and `dive` is inside
+   **`diversity`** — twice on the page, a different word that stays. Word-boundary:
+   `lifeguard 1 · dive 3 · diving 1` at HEAD, all 0 now. The conclusion held; **the number I
+   published for it was not the number I claimed to have measured.**
+
+General form: **a class the room has named is not a class the room has closed.** "Two units, one
+number" has a card, a journal entry and a WRONG row, and it still fired three times in one lap, twice
+after I had been told about it. The working defence is not vigilance, it is arithmetic: **sum every
+column in the same pass, and count words with a boundary.** And when a figure is corrected, re-derive
+the correction rather than accepting it — that is where 2 and 3 came from.
+
+### Verification is the bar for CHANGING a trace, never for keeping it
+
+2026-09-02, the L032 collation ruling that the `dreams/` paragraph be restored verbatim from
+`git show bdda5d5:README.md`. Hand-back §A2.
+
+I had dropped the keeper's paragraph from the front page and wrote that I *"did not verify the
+folder's current state and chose not to re-assert it."* That reads as caution and was not. The
+paragraph is a dated trace in his own words; maintenance law 2 appends to a trace and never deletes
+it for looking stale. **I applied the standard for a new claim to an existing one, and the direction
+of that error is deletion.**
+
+Restored from the object rather than retyped, in its original position, and **my own prose yielded
+where it duplicated his** — I cut my compression of his bedroom/pulse/journal/attic sentences rather
+than trimming his to fit mine. General form: **when a seat's summary and the keeper's original say
+the same thing, the summary is the one that goes.**
+
+### A pointer that does not resolve is a deletion with a citation on it
+
+2026-09-02, the C → A crosswise read. `consonance/src-tauri/tauri.conf.json:40`;
+`grep -n "README" consonance/src-tauri/src/main.rs`. Hand-back §X3 of
+`exo_memory/handback/p-doc-root_2026-09-02.md`.
+
+A shortened the About and 40 glossary terms left the page; the question put to me was carrier loss or
+correct pruning. **Measured, the terms never left the exe** — `"../README.md": "README.md"` bundles
+`consonance/README.md` beside the executable. **But nothing in the app opens it**, and the About
+names it by its *repo* path in plain text, which is not the name it has once installed. So the file
+ships, the sentence is true for someone holding the repo, and an installed user has the glossary on
+disk with no route to it.
+
+The pruning is right — pasting the glossary back would rebuild the copy-outranks-master failure this
+whole lap existed to fix. General form: **"point, don't copy" is only half a rule; the other half is
+that the pointer must resolve for the reader who will actually hold it.** The fix for a missing
+surface is a READER over the one master, never a second copy — which is the same ruling as
+COMMITTEE.md, arrived at from the opposite direction: there I synced a copy that should not have
+existed, here I declined to create one.
+
+### A third copy appears the moment a document is worth quoting, and the declaration is not the check
+
+2026-09-02, same read. `consonance/ui/index.html`, the About's loop drawing.
+Hand-back §X2; oracle in `consonance/tools/lap-row.test.js`, mutation-verified 1 applied / 1 caught.
+
+A's About prints the loop diagram and says it is *"extracted from that file rather than redrawn
+here, so this page cannot drift against it."* It is a **static paste**; nothing extracts it at build
+or runtime. Byte-identical today, unguarded until this turn. **One drawing, three carriers**
+(BUILDING.md master, COMMITTEE.md, the About), and only one pair was tested.
+
+This is the COMMITTEE.md finding recurring within hours, on a surface written by a different seat
+that had read my hand-back. General form: **the number of copies grows with how good the original
+is, and every copy arrives wearing a sentence about why it cannot drift.** Do not read the sentence;
+add the comparison. All three now compare against one shared `loopDiagramMaster()` extraction, so a
+fourth copy is one assert away rather than a refactor.
