@@ -739,3 +739,7 @@ the wrong figure was published.*
 - **03:45 — P-WINDOW-INERT collated (A)** → `librarian/2026-09-02.md` ~03:45. Window inert under the cap by tier
   arithmetic, not weight — no budget below 442,309 B carries a dated note; the floor fix does not re-arm it, consistent
   with the 02:15 ruling. A's red-while-inert test declined until budget is reserved for `librarian/` (keeper decision).
+- **03:55 — P-SHELF-TIER collated, LAND IT (B)** → `librarian/2026-09-02.md` ~03:55. Body budget 24,122; 8 cards + 1
+  memory carried; leftover 167 printed in the wake header. WRONG #65 (my 32,395 double-count → 24,122; "~10 of 12" → 8
+  of 12, by alphabet). Which eight cards is the keeper's. **Five collation laps under the edge; the falsifier did not
+  fire on any.**
