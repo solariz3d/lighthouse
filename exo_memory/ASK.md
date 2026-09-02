@@ -149,6 +149,43 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 **Question:** The routing fix is the best-evidenced item on the retrieval line — ~46 catches on the librarian's desk against ZERO found in-stream by authors, with three outside fields agreeing. E refused it as a CONVENTION on the chair (measured 74.9% miss, 60% on registrations) and registered it as a GATE instead: one `dispatch-gate` clause at PreToolUse demanding a board receipt from a non-author mount. **But `ask` is dropped under bypass, and Main resumes under bypass by construction, so the gate degrades to a printed line the same seat can ignore.** Accept it as advisory-under-bypass and score it anyway, change how Main resumes, or drop the gated form too? Cost measured at 9m14s per read. The chair offers no recommendation: the seat the gate exists to constrain should not choose its own enforcement.
 **Status:** OPEN
 
+### ASK-013 — digest-auditor, asked 2026-08-30
+**Source:** `~/.claude/shell/duration/digest-auditor/state.md` standing risks 4-6 (2026-08-30T14:42:15Z, iteration 54) — full derivation at `~/.claude/shell/duration/digest-auditor/auditor-findings-iter54.md`
+**Question:** Two scheduler decisions, both verified live this fire and both deliberately not self-applied. (a) All five `ClaudeShell_*` tasks are registered `WakeToRun=False` with `StartWhenAvailable=True`. That pair is exactly the off-slot-catch-up signature both goals have logged 20+ times: the slot is silently skipped whenever the PC is asleep, then a catch-up fires when it wakes. Set `WakeToRun=True` on the five, or leave it and accept the coverage. (b) `daily-news-digest` is scheduled 3:43 PM Regina, justified in its own `cron_timezone_note` as fitting your overnight-worker rhythm — but the machine is usually off then. Of 27 off-slot catch-ups, 15 land between 10 PM and midnight and 14 at 11 PM sharp. Move the slot to ~11:15 PM where a third of the fires already land unaided, or leave it. Either is fine; both are yours, not the goal's.
+**Status:** OPEN
+
+> **RE-FILED, AND THE RE-FILING IS ITSELF A FINDING.** The goal wrote this into `ASK.md` on the DESKTOP
+> at 2026-08-30 08:49 as **ASK-007**, uncommitted. Origin already carried a different **ASK-007**
+> (univ-coldread egress, laptop, 08-29). **Same id, two different asks, two machines, one tracked
+> file** — verified before the desktop's 217-commit fast-forward, not after
+> (`git show origin/main:exo_memory/ASK.md | grep -cE "37 on-slot|62% day-coverage"` → 0). Re-filed at
+> the next free id by the librarian seat (desktop); the body is the goal's, verbatim, unedited.
+>
+> **This discharges F-2W-3** (`loop/two_writers_registration_2026-08-25.md:209`): *"if Rule 2W-1 is
+> adopted and a duplicate id still reaches tracked prose, then the mint site was not the only place ids
+> are created."* 2W-1 was adopted at `dcb0d9b` and covers **lap** ids, which have a mint (`lap-row.js`).
+> **Ask ids have no mint at all**, and this file's own protocol invites anyone to write one — including,
+> here, an unattended cron goal on a second machine. Full entry: `librarian/2026-09-02.desktop.md`.
+>
+> **The measurement, which is why losing it would have cost something.** Slot-enumeration over
+> 2026-06-05..2026-08-29 (86 days): daily-news-digest **37 on-slot fires (43%), 49 slots missed, 33 days
+> with no fire at all — 62% day-coverage on a daily digest**; digest-auditor applied it to itself first
+> and is worse on every line: **30 on-slot (35%), 56 missed, 37 empty days, 57%**. Both goals count these
+> gaps *ordinally* — "PC-uptime gap, 20th", "21st" — against a true 49. **A numerator tracked with care
+> against a denominator never computed**, which is ASK-004's own shape one level up, filed by the same
+> goal.
+>
+> **And the part the goal said should bother us more than the setting.** `WakeToRun=False` was found on
+> **2026-08-06 by session-journal** and never crossed over: `grep -ric waketorun` across `state.md`,
+> `progress.md`, `goal.json` and `STANDING-ITEMS.md` in **both** goals returns **0 in every file**. Two
+> goals that audit each other in exhaustive detail have not read the sibling goal that diagnosed their
+> most frequent failure — and 66 passes and 54 audits graded the *content* of the fires that happened
+> without either asking what fraction happened at all.
+>
+> Bears on ASK-006: same class of two-line scheduler/hook fix, withheld for the same reason.
+
+---
+
 ## CLEARED
 
 *(none yet — this file is one day old)*
