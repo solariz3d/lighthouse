@@ -768,6 +768,122 @@ t('the arrow is anchored to the DESTINATION and points INTO it, for all three ho
     'chair -> panes: the arrow sits just after the Terminal, pointing back into it');
 });
 
+// ---- 12. THE BOARD-DERIVED ARROW IS A DESTINATION, NOT AN ACTOR (L033, P-AURA-ARROW) ---------
+//
+// THE DEFECT, in one line: `positionTab(hop)` and `tabForWho(nextHop(hop).who)` return the
+// IDENTICAL tab for all three hop kinds (dispatch->terminal, handback->librarian, ring->main).
+// `nextHop` answers who ACTS next, and the party who acts next is the party who now HOLDS the
+// loop — so the board-derived arrow pointed at the tab the same hop had just lit, and `:613`'s
+// "never point a tab at itself" nulled it. Not at one hop. At every hop.
+//
+// Which inverts the instrument: the board arrow could only ever DRAW when the ledger holder and
+// the board's latest hop DISAGREED — i.e. when one of them was stale. On 2026-09-02 the keeper
+// saw an arrow at 06:32 (the chair had left L029 at `dispatched · holder panes` for three hours
+// with the hand-backs already in) and none at 06:39 (the row was advanced and the librarian rang).
+// The arrow vanished BECAUSE the data became correct.
+//
+// WHY EVERY FIXTURE ABOVE MISSED IT: every tab-arrow test in section 11 passes `entries: []`.
+// That is the ledger-only path, which goes through `holderArrow` — destinations already. Not one
+// exercised the board path. This is the fixture failure this room has hit five times in two
+// nights: every fixture used the one holder value that works.
+
+const stale = (holder, stage) => ({
+  open: true, reason: null, lap: 'L029', chain: stage || 'handbacks-in', holder,
+  note: null, at: T0, age_ms: 60000, also_open: 0, self_reported: true, unreadable: 0,
+});
+
+t('BAR 1 — the live case: holder chair, board ring LIB -> orch, arrow points at the TERMINAL', () => {
+  // The keeper's 06:39 glance, as a fixture. The loop sits with the orchestrator and the next
+  // thing it does is DISPATCH, so the arrow belongs on the panes' tab. Today: null.
+  const v = C.chainView([RING], T0, { chain: stale('chair', 'handbacks-in') });
+  assert.strictEqual(v.tab, 'main', 'the aura is on the holder');
+  assert.strictEqual(v.arrowTab, 'terminal',
+    'orch -> dispatch: the loop goes to the panes, not back into the tab it is already on');
+});
+
+t('BAR 2a — hop kind DISPATCH: holder panes, arrow points at the LIBRARIAN', () => {
+  const v = C.chainView([DISPATCH], T0, { chain: stale('panes', 'dispatched') });
+  assert.strictEqual(v.tab, 'terminal');
+  assert.strictEqual(v.arrow, '-> pane a2122153', 'the chip text still names WHO is out');
+  assert.strictEqual(v.arrowTab, 'librarian', 'a pane hands back to LIB: that is where it goes');
+});
+
+t('BAR 2b — hop kind HANDBACK: holder librarian, arrow points at the ORCHESTRATOR', () => {
+  const v = C.chainView([HANDBACK], T0, { chain: stale('librarian', 'handbacks-in') });
+  assert.strictEqual(v.tab, 'librarian');
+  assert.strictEqual(v.arrowTab, 'main', 'LIB rings the orchestrator');
+});
+
+t('BAR 2c — hop kind RING: holder chair, arrow points at the TERMINAL', () => {
+  const v = C.chainView([RING], T0, { chain: stale('chair', 'dispatched') });
+  assert.strictEqual(v.tab, 'main');
+  assert.strictEqual(v.arrowTab, 'terminal');
+});
+
+t('the arrow never points at the lit tab in a state where ledger and board AGREE', () => {
+  // The falsifier the packet registered, run over all three hops at once.
+  const cases = [[[DISPATCH], 'panes'], [[HANDBACK], 'librarian'], [[RING], 'chair']];
+  for (const [entries, holder] of cases) {
+    const v = C.chainView(entries, T0, { chain: stale(holder) });
+    assert.ok(v.arrowTab, 'no arrow drawn at holder ' + holder + ' — the actor reading is back');
+    assert.notStrictEqual(v.arrowTab, v.tab, 'self-pointing arrow at holder ' + holder);
+  }
+});
+
+t('THE GUARD SURVIVES AS A STALENESS DETECTOR: ledger and board disagreeing draws NO arrow', () => {
+  // Holder says the chair has it; the newest receipt says a pane handed back to LIB, whose next
+  // hop is the orchestrator — straight back into the lit tab. One of the two is stale and the
+  // display must not assert a direction over a contradiction. This is the only fixture in the
+  // file where `:613` can still fire, and without it the guard leaves silently.
+  const v = C.chainView([HANDBACK], T0, { chain: stale('chair') });
+  assert.strictEqual(v.tab, 'main', 'the aura follows the ledger holder');
+  assert.strictEqual(v.arrowTab, null,
+    'ledger says chair, board says LIB-about-to-ring-the-chair: contradiction, so no arrow');
+});
+
+t('THE ARROW IS THE BOARD\'S, NOT THE HOLDER\'S: a stale ledger row does not move it', () => {
+  // Written because the mutation run found the hole rather than the other way round: dropping
+  // `atStation` from the OUTSTANDING branch survived every fixture above, because each of them
+  // set the holder to the same seat the board named, so the fallback happened to agree.
+  //
+  // This is the 06:32 shape exactly — the chair's row said `holder chair` for three hours while a
+  // dispatch was out. L025 gives the arrow to the receipt (a control-plane record) over the ledger
+  // (a claim a seat wrote about itself), so the arrow reads from the board: a pane is out, and a
+  // pane hands back to LIB. The aura still follows the holder; the two are allowed to disagree,
+  // and that they can is the whole reason both are drawn.
+  const v = C.chainView([DISPATCH], T0, { chain: stale('chair', 'dispatched') });
+  assert.strictEqual(v.tab, 'main', 'the aura is the ledger\'s');
+  assert.strictEqual(v.arrowTab, 'librarian',
+    'the arrow is the board\'s: a dispatch is outstanding, so the loop goes to LIB next');
+  assert.notStrictEqual(v.arrowTab, 'terminal',
+    'reading the destination off the stale holder would send it to the panes it is already at');
+});
+
+t('DOM: the three hop kinds put the arrow where a person would see it', () => {
+  // View-level is not enough and this file has the scar: three seats had a passing test over a
+  // display nobody could see. Driven through renderTabs and asserted on the strip.
+  assert.strictEqual(paint(stale('panes', 'dispatched'), [DISPATCH]).nav.strip(),
+    'terminal main [→] librarian thirdplace listen settings about',
+    'dispatch: the arrow sits just before the Librarian, pointing into it');
+  assert.strictEqual(paint(stale('librarian'), [HANDBACK]).nav.strip(),
+    'terminal main [←] librarian thirdplace listen settings about',
+    'handback: the arrow sits just after the Orchestrator, pointing back into it');
+  assert.strictEqual(paint(stale('chair'), [RING]).nav.strip(),
+    'terminal [←] main librarian thirdplace listen settings about',
+    'ring: the arrow sits just after the Terminal, pointing back into it');
+});
+
+t('D1 IS NOT UNDONE: an unconfirmed delivery still keeps the aura and loses the arrow', () => {
+  // L025's deliberate choice, re-asserted here because this change is the one that could take it
+  // out quietly — `view.arrow` is null on `unconfirmed` and the arrowTab must follow it, not the
+  // position. Named in the packet's own permission-to-refuse.
+  const v = C.chainView([UNCONF.dispatch], T0, { chain: stale('chair') });
+  assert.strictEqual(v.state, 'unconfirmed');
+  assert.strictEqual(v.tab, 'main', 'the aura stays');
+  assert.strictEqual(v.arrowTab, null, 'a position the control plane could not confirm draws none');
+  assert.strictEqual(paint(stale('chair'), [UNCONF.dispatch]).nav.arrow.hidden, true);
+});
+
 t('the arrow moves on a hop rather than accumulating — one arrow, always', () => {
   const nav = fakeNav();
   for (const h of ['chair', 'panes', 'librarian', 'chair']) {

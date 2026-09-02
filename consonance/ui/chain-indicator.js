@@ -362,6 +362,43 @@
     }
   }
 
+  /**
+   * WHERE THE LOOP GOES NEXT from where it SITS — one step around the cycle, as tabs.
+   *
+   * L033, and the defect it repairs is worth stating because the two readings look identical
+   * until you line them up: `positionTab(hop)` and `tabForWho(nextHop(hop).who)` return the SAME
+   * tab for all three hop kinds. `nextHop` answers who ACTS next, and the party who acts next is
+   * the party who now HOLDS the loop — so the board-derived arrow pointed at the tab that hop had
+   * just lit, and `decorateTabs`'s never-point-a-tab-at-itself guard nulled it at EVERY hop, not
+   * one. The arrow could therefore only ever draw when the ledger holder and the newest board hop
+   * DISAGREED — it vanished exactly when the data was current, which is the inversion of an
+   * instrument. On 2026-09-02 the keeper saw an arrow at 06:32 over a three-hour-stale ledger row
+   * and none at 06:39 once the row was advanced.
+   *
+   * `holderArrow` already had these semantics on the ledger side ('chair -> panes' is a
+   * DESTINATION). This is that same step expressed in tabs, so both sources answer one question.
+   * It has NO FIXED POINT by construction, which is what leaves the self-pointing guard meaning
+   * something: it can now only fire when the two sources genuinely diverge.
+   */
+  function destTab(tab) {
+    switch (tab) {
+      case 'main': return 'terminal';        // the orchestrator dispatches to the panes
+      case 'terminal': return 'librarian';   // a pane hands back to LIB
+      case 'librarian': return 'main';       // LIB rings the orchestrator
+      default: return null;
+    }
+  }
+
+  /** Where a RECEIPT puts the loop, in the STATION vocabulary `holderTab`/`holderArrow` read. */
+  function positionStation(hop) {
+    switch (hop.kind) {
+      case 'dispatch': return 'panes';
+      case 'handback': return 'librarian';
+      case 'ring': return 'orch';
+      default: return null;
+    }
+  }
+
   /** Where the loop IS — the party that now holds it. */
   function positionLabel(hop, letters) {
     switch (hop.kind) {
@@ -531,6 +568,10 @@
         selfReported: !!(chain && chain.open && chain.self_reported),
         outstanding: out.count,
         next: { who: who, verb: 'to hand back to LIB' },
+        // The BOARD's own answer to "where is the loop", kept separate from the ledger holder so
+        // the two can be compared rather than silently merged. Outstanding dispatches outrank the
+        // newest receipt here (Defect 2), so this is 'panes', not the latest hop's station.
+        atStation: 'panes',
         why: out.count + ' dispatch(es) in this leg have no matching hand-back: ' + who +
           '. Elapsed is measured from the OLDEST outstanding dispatch — the thing waited on longest — ' +
           'not from the newest receipt, which is what v1 read and why it announced the loop was at LIB ' +
@@ -549,6 +590,7 @@
       selfReported: !!(chain && chain.open && chain.self_reported),
       outstanding: 0,
       next: next,
+      atStation: positionStation(found.hop),
       why: 'last hop ' + hopLabel(found.hop, letters) + ', ' + elapsedMin + 'm ago; waiting on ' +
         (next ? next.who + ' ' + next.verb : 'nothing named') +
         '. No dispatch in this leg is outstanding. Dwell is a number, not a verdict: this room has a ' +
@@ -609,8 +651,17 @@
     // `unconfirmed` keeps the aura and loses the arrow — D1, kept from L025: a confident arrow on
     // a position the control plane could not confirm is worse than none. `view.arrow` is already
     // null there, so this needs no special case, only the comment saying it was not an oversight.
-    view.arrowTab = view.arrow ? tabForWho(view.next && view.next.who) : null;
-    if (view.arrowTab === view.tab) view.arrowTab = null;          // never point a tab at itself
+    // THE ARROW IS A DESTINATION, NEVER AN ACTOR — see `destTab`. `view.atStation` is the BOARD's
+    // reading of where the loop is, and is absent on the ledger-only path, where `view.tab` (the
+    // holder) is the only reading there is. Stepping whichever one produced the arrow keeps the
+    // two sources answering the same question in the same vocabulary.
+    var arrowFrom = holderTab(view.atStation) || view.tab;
+    view.arrowTab = view.arrow ? destTab(arrowFrom) : null;
+    // NOW A STALENESS DETECTOR, not dead weight. `destTab` has no fixed point, so this can only
+    // fire when ledger and board disagree — e.g. holder 'chair' while the newest receipt is a
+    // hand-back, whose next hop is the chair. Asserting a direction over a contradiction is worse
+    // than drawing nothing.
+    if (view.arrowTab === view.tab) view.arrowTab = null;
     return view;
   }
 
@@ -726,6 +777,7 @@
     blindOpen: blindOpen, paneLabel: paneLabel, positionLabel: positionLabel,
     outstanding: outstanding, confirmedReceipt: confirmedReceipt,
     holderArrow: holderArrow, holderTab: holderTab, tabForWho: tabForWho,
+    destTab: destTab, positionStation: positionStation,
     render: render, renderTabs: renderTabs, start: start,
     SEAT_TABS: SEAT_TABS, LOOK_CLASSES: LOOK_CLASSES,
     ESCALATE_MIN: CHAIN_ESCALATE_MIN, POLL_MS: CHAIN_POLL_MS

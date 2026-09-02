@@ -3001,12 +3001,47 @@ pub fn seat_role_for_letter(letter: &str) -> &'static str {
 /// failure has no symptom at all. It also survived a sweep for hardcoded paths because it is
 /// built from `.join()` calls rather than written as a literal string.
 ///
-/// Resolution: the configured data dir first (portable), then the original repo location, so
-/// an existing keeper's accumulated maps are not orphaned by this change.
+/// Resolution: the configured data dir first (portable), then THE CHECKOUT, then the 2026-era
+/// literal, so an existing keeper's accumulated maps are not orphaned by this change.
+///
+/// THE CHECKOUT TIER WAS MISSING UNTIL 2026-09-02, and its absence had the exact no-symptom
+/// shape the paragraph above predicts. `293c0d7` added two tiers and omitted the one where the
+/// maps are: on this machine `data_dir()` is `C:Consonancedata`, so the walk asked for
+/// `C:Consonancedatamap` (missing), then `~Desktoplighthouse...` (missing), then
+/// returned the first anyway -- while every map sits under the configured checkout at
+/// `<repo>exo_memorymap`. `own_map_path` named a file that is never there, `warm_resume_brief`
+/// treats absent as absent by design, and so NO PANE MAP HAD EVER BEEN CARRIED INTO A WAKE:
+/// `grep -c "YOUR OWN MAP" instances/sibling-*/CLAUDE.md` returned 0 of 4 with `A.md` and `B.md`
+/// on disk since 2026-08-15.
+///
+/// RESOLVED THROUGH `repo_root()`, NOT A FOURTH PRIVATE TIER. A second resolver for the same
+/// question is the defect `293c0d7` shipped -- one place guessing where the checkout is while
+/// another knows -- so this asks the resolver that already exists (:382) and inherits its
+/// corrections. A hardcoded `C:Consonance` path here would re-break that commit one machine
+/// later, which is why the tier is a resolution and not a constant.
+///
+/// WHY THIS ORDER. Configuration still wins (`293c0d7`, unchanged, and its test still pins it):
+/// a keeper who put maps under their data dir chose that. The checkout comes SECOND because it
+/// is the resolved form of what the third tier only guesses at, so where both answer, the
+/// resolved one is right. The literal stays LAST rather than being deleted: it is the pre-08-06
+/// location and removing it would orphan a keeper this change is supposed to protect.
+///
+/// KNOWN DISAGREEMENT, reported rather than taken (it is not this packet's file to change):
+/// `librarian_map_path` (:5248) resolves the SAME directory by a different mechanism --
+/// `room_master_path().parent()` -- deliberately, so its pointer agrees with the shelf index.
+/// The two coincide while `room_path` is `<repo>exo_memoryBOOT.md`, and they would disagree
+/// if a `data_dir()/map` ever existed, since only this walk consults it. Unifying them changes a
+/// live pointer and belongs to that seat.
 fn map_dir() -> PathBuf {
     let configured = data_dir().join("map");
     if configured.is_dir() {
         return configured;
+    }
+    if let Some(repo) = repo_root() {
+        let checkout = repo.join("exo_memory").join("map");
+        if checkout.is_dir() {
+            return checkout;
+        }
     }
     let legacy = PathBuf::from(home())
         .join("Desktop")
@@ -3377,6 +3412,87 @@ mod managed_cwd_tests {
         assert!(p.ends_with("map\\A.md") || p.ends_with("map/A.md"), "{}", p.display());
 
         let _ = fs::remove_dir_all(&root);
+    }
+
+    /// THE WALK MUST REACH THE MAPS -- the defect the test above cannot see, because it asserts
+    /// where the walk STOPS when tier 1 exists and never asks what happens when it does not.
+    ///
+    /// Measured 2026-09-02: `grep -c "YOUR OWN MAP" /c/Consonance/instances/sibling-*/CLAUDE.md`
+    /// returned 0 of 4. `map_dir()` walked `data_dir()/map` (missing), then the 2026-era literal
+    /// `~/Desktop/lighthouse/exo_memory/map` (missing), then back to the first -- and the maps are
+    /// at `<repo>/exo_memory/map`, which was in NONE of the three. `own_map_path` therefore named
+    /// a file that is never there; `warm_resume_brief` treats absent as absent BY DESIGN, so no
+    /// section was appended and nothing said so. `A.md` and `B.md` have existed since 2026-08-15
+    /// and no pane map has ever been carried into a wake on this machine. `293c0d7` (2026-08-06,
+    /// "stop the pane map resolving to one machine") added two tiers and omitted the one where
+    /// the maps are.
+    ///
+    /// THE ASSERTION IS A WALK, NOT A PATH: every lettered pane in `letters.json` that has
+    /// recorded findings must be REACHABLE through `own_map_path`. It is blind to which tier
+    /// answers, so deleting the repo tier fails it at the resolver rather than at a string.
+    ///
+    /// The expected directory is computed here a SECOND TIME from `CARGO_MANIFEST_DIR`, not
+    /// through `repo_root()`, so the check does not share the mechanism under test.
+    ///
+    /// Panes with no map file are outside the domain on purpose: absent-means-nothing-recorded is
+    /// the design, so quantifying over ALL of `letters.json` would assert the opposite of it --
+    /// the live registry holds 13 letters and 5 maps, and that is correct, not a failure.
+    #[test]
+    fn the_map_walk_reaches_the_repo_maps_when_no_data_dir_map_exists() {
+        let _serial = DirsGuard::take();
+
+        let repo = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .and_then(|p| p.parent())
+            .expect("the crate sits at <repo>/consonance/src-tauri")
+            .to_path_buf();
+        let maps = repo.join("exo_memory").join("map");
+        assert!(maps.is_dir(), "no map directory in this checkout: {}", maps.display());
+
+        // The domain: single-letter maps that exist -- the panes that HAVE recorded findings.
+        let mut letters: Vec<String> = fs::read_dir(&maps)
+            .expect("read the map directory")
+            .filter_map(|e| e.ok())
+            .filter_map(|e| e.file_name().into_string().ok())
+            .filter_map(|n| n.strip_suffix(".md").map(|s| s.to_string()))
+            .filter(|s| s.len() == 1 && s.chars().all(|c| c.is_ascii_uppercase()))
+            .collect();
+        letters.sort();
+        assert!(letters.len() >= 2, "too few maps for this to be a walk: {letters:?}");
+
+        // Tier 1 is deterministically ABSENT: a scratch data dir with no `map/` inside it. Its
+        // letters.json is the registry the walk is checked against.
+        let root = scratch("mapwalk");
+        let data = root.join("data");
+        fs::create_dir_all(&data).unwrap();
+        let reg: BTreeMap<String, String> = letters
+            .iter()
+            .enumerate()
+            .map(|(i, l)| (format!("00000000-0000-4000-8000-{i:012}"), l.clone()))
+            .collect();
+        fs::write(data.join("letters.json"), serde_json::to_string_pretty(&reg).unwrap()).unwrap();
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: repo.join("exo_memory").join("BOOT.md").display().to_string(),
+            instances: root.join("instances").display().to_string(),
+            data: data.display().to_string(),
+        });
+
+        let resolved = map_dir();
+        let missing: Vec<String> = read_letters()
+            .values()
+            .filter(|l| !own_map_path(l.as_str()).is_file())
+            .map(|l| l.to_string())
+            .collect();
+
+        let _ = fs::remove_dir_all(&root);
+
+        assert!(
+            missing.is_empty(),
+            "map_dir() resolved to {}, which holds no map for {:?}. The maps are at {}.",
+            resolved.display(),
+            missing,
+            maps.display()
+        );
     }
 
     /// The predicate itself, on the shapes that actually turn up: a sibling directory whose
