@@ -746,3 +746,4 @@ the wrong figure was published.*
 - **04:05 — P-TWO-DOORS collated, LAND IT (C)** → `librarian/2026-09-02.md` ~04:05. Diagram carries two doors and the
   ring; `--entry` on lap rows; COMMITTEE.md copy synced (accepted on M4). Found: `corpus-age.test.js` red since
   `c2afec6` — and my L029.1 collation never ran js-suite. Rule from here: js-suite on every main.rs landing.
+- **04:25 — P-AURA BUILT, collated (E)** → `librarian/2026-09-02.md` ~04:25. LAND IT + one rebuild; four looks on the tab buttons; arrow anchored to the destination; §11 unknown-not-dark KEPT; §15: COMPLETE unreachable until the chair files L026-L028. The glance is the acceptance test for five things at once.
