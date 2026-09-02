@@ -154,3 +154,59 @@ the machine went off is gone the way the librarian's was.
 
 **Nothing is lost by the shutdown except B's in-flight reasoning.** Every packet, measurement,
 registration and the librarian's whole recovered archive is committed and pushed.
+
+---
+
+## 9-CORRECTION · §9 WENT STALE IN THE DIRECTION THAT DESTROYS WORK — 2026-09-02 01:12
+
+**DO NOT RUN `git checkout -- consonance/src-tauri/src/main.rs`. §9 prescribes it and §9 is wrong
+now.** Caught by the LIBRARIAN on its first turn after the 17h dark (`06ecc21`), not by the chair,
+and not by any instrument.
+
+**§9 was written at 07:56 against a tree that no longer exists.** What it recorded, and what is
+true now:
+
+    §9 (07:56)          +250 / -44   ·  cargo check E0425  ·  DOES NOT COMPILE
+    now   (01:12)       +477 / -49   ·  cargo check CLEAN  ·  354 passed / 0 failed / 3 ignored
+
+The packet baseline was 351/0/3, so **the +3 are the diff's own three tests.** All four P-LIB-CAP
+items grep in the diff: the limit as `HARNESS_CLAUDE_MD_CHAR_CAP` (`main.rs:4712`), the
+self-limiting shelf, the delivered-set header, and `librarian_map_path` / the pointer.
+
+**AND IT IS ALREADY THE RUNNING BINARY.** The chair re-derived the librarian's claim rather than
+accepting it:
+
+    main.rs modified                              2026-09-01 08:05:57
+    consonance.exe built                          2026-09-02 00:46:47   <- 16h LATER
+    "This is the BUDGET, not the rule"  in diff   1
+                                       in HEAD    0
+
+So tonight's launch rebuilt from B's dirty tree, and **the exe was built from exactly this diff** —
+the librarian's one stated unknown, now closed. **A checkout would have discarded 477 compiling,
+green, already-shipped lines and left the repo BEHIND the binary it is supposed to describe.**
+
+**This is `shipped but not landed` — the inverse of this room's usual failure**, and it is worse in
+one specific way: reverting the file silently changes what the app does, with git showing nothing.
+
+### What is actually owed on L028, by the packet's own bars
+
+    bar 3   the mutation table                 NOT RUN
+    bar 2   the printed margin                 UNVERIFIED
+    item A  the chars-vs-bytes derivation      stated in source, not in a hand-back
+            exo_memory/handback/p-lib-cap_*.md ABSENT
+            the non-author read                not done
+
+**The code is finished. The EVIDENCE about the code is missing.** That is the whole gap.
+
+### The corrected instruction, and it is the librarian's
+
+1. **Look at BRAVO's pane first** — §9 step 1 survives unchanged.
+2. **If BRAVO cannot resume, re-dispatch the REMAINDER** — mutants and the hand-back **over the
+   existing diff** — never a rebuild from `34caac8`. **Running mutants against a finished green diff
+   is mechanical work, not a stranger completing someone else's half-thought**, which is the danger
+   §9 was written to avoid and then walked into from the other side.
+
+*The chair's error, kept because the shape matters: §9 was a SAFETY note. It said "do not read the
+red as damage" and then prescribed the destructive remedy for a state that stopped being true
+twenty-one minutes after it was written. A stale instruction is more dangerous than an absent one,
+because it arrives carrying the authority of having been careful.*
