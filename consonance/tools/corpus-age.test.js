@@ -13,18 +13,82 @@ const assert = require('node:assert');
 const test = require('node:test');
 const fs = require('node:fs');
 const path = require('node:path');
-const { corpusSize, review, mdFiles, BUDGET_BYTES } = require('./corpus-age.js');
+const { corpusSize, review, mdFiles, intakeCap,
+        CARRY_TIERS, INDEX_TIERS, EXCLUDED_PREFIXES, MAIN_RS } = require('./corpus-age.js');
+
+/* Reads `order` out of corpus_shelf_at() and returns { carry: [...], index: [...] } by the CARRY
+ * FLAG, not by presence. The old version of this only checked that each name appeared somewhere in
+ * the tuple list, which is why it stayed green from 2026-08-24 -- when map/, journal/ and loop/
+ * became indexed-never-carried -- while the tool counted all three as carried. A membership test
+ * cannot see a flag flip. */
+function shelfTiers() {
+  const src = fs.readFileSync(MAIN_RS, 'utf8');
+  const order = src.match(/let order: \[\(&str, bool, bool\); \d+\] = \[([\s\S]*?)\];/);
+  assert.ok(order, 'could not find corpus_shelf order[] in main.rs');
+  const carry = [], index = [];
+  const re = /\("([^"]*)",\s*(true|false),\s*(true|false)\)/g;
+  let m;
+  while ((m = re.exec(order[1])) !== null) (m[3] === 'true' ? carry : index).push(m[1]);
+  assert.ok(carry.length + index.length >= 9, 'order[] parsed too few tiers — the shape changed');
+  return { carry, index };
+}
 
 test('the capacity number counts the SAME set the librarian carries', () => {
   // If these drift apart the headline is a lie in the direction that matters: it would under-report
   // pressure on the seat while looking authoritative.
-  const src = fs.readFileSync(path.join(__dirname, '..', 'src-tauri', 'src', 'main.rs'), 'utf8');
-  const order = src.match(/let order: \[\(&str, bool, bool\); \d+\] = \[([\s\S]*?)\];/);
-  assert.ok(order, 'could not find corpus_shelf order[] in main.rs');
-  for (const d of ['cards', 'record', 'memory', 'librarian', 'map', 'spread', 'research', 'journal', 'loop']) {
-    assert.ok(order[1].includes(`"${d}"`), `corpus_shelf carries ${d} but the tool may not count it`);
+  const { carry, index } = shelfTiers();
+  assert.deepStrictEqual([...CARRY_TIERS].sort(), [...carry].sort(),
+    'the tool and the shelf disagree about which tiers are CARRIED');
+  assert.deepStrictEqual([...INDEX_TIERS].sort(), [...index].sort(),
+    'the tool and the shelf disagree about which tiers are INDEXED');
+  assert.ok(![...carry, ...index].includes('attic'), 'attic must be excluded in the shelf (law 3)');
+});
+
+test('the by-name exclusions match the ones the shelf actually drops', () => {
+  // These files are on disk and are not in the shelf at all. Counting them reports pressure the
+  // seat does not feel -- 246 files and 385,574 bytes of it on 2026-09-02.
+  const src = fs.readFileSync(MAIN_RS, 'utf8');
+  for (const p of EXCLUDED_PREFIXES) {
+    assert.ok(src.includes(`label.starts_with("${p}")`),
+      `the tool excludes ${p} but the shelf does not — the two sets have drifted`);
   }
-  assert.ok(!order[1].includes('"attic"'), 'attic must be excluded in the shelf (law 3)');
+  const size = corpusSize();
+  assert.ok(size.excluded.files > 0,
+    'fixture broken: nothing matched the excluded prefixes, so the exclusion proves nothing');
+  assert.strictEqual(size.files, size.carried.files + size.indexed.files,
+    'the accounted total must be exactly the two tier sets — excluded files must not be in it');
+});
+
+test('the tool refuses to print a capacity number it cannot anchor in the binary', () => {
+  // THE REPLACEMENT FOR THE DELETED BUDGET GUARD. There is no carry-budget constant to compare
+  // against any more -- librarian_budget() and CONSONANCE_LIBRARIAN_BUDGET were removed on purpose
+  // at c2afec6, and the delivered budget is computed per run from the cap. So the property worth
+  // holding is not "two numbers agree" but "the one number this tool prints comes out of main.rs,
+  // and if the anchor rots the tool says so instead of inventing one".
+  const cap = intakeCap();
+  assert.ok(Number.isInteger(cap) && cap > 0, 'the cap must be a positive integer');
+
+  // The failure paths, EXERCISED THROUGH THE REAL FUNCTION rather than through a copy of its regex
+  // pasted into the test -- a test that agrees with its own duplicate of the code is the same
+  // problem this whole change is about, one level in.
+  const tmp = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'corpus-age-anchor-'));
+  const stray = path.join(tmp, 'main.rs');
+
+  fs.writeFileSync(stray, 'fn main() {}\n// no LIBRARIAN_INTAKE_LIMIT here\n');
+  assert.throws(() => intakeCap(stray), /refusing to print a capacity number/,
+    'with the anchor gone the tool must refuse, not fall back to a number');
+
+  fs.writeFileSync(stray, 'const LIBRARIAN_INTAKE_LIMIT: usize = SOME_OTHER_CONST;\n');
+  assert.throws(() => intakeCap(stray), /has no numeric definition/,
+    'an alias that resolves to nothing must refuse, not resolve to zero');
+
+  // And it must follow the alias rather than only reading a literal, which is how it is written.
+  fs.writeFileSync(stray,
+    'const HARNESS_CLAUDE_MD_CHAR_CAP: usize = 123_456;\n' +
+    'const LIBRARIAN_INTAKE_LIMIT: usize = HARNESS_CLAUDE_MD_CHAR_CAP;\n');
+  assert.strictEqual(intakeCap(stray), 123456, 'the cap must be resolved through the alias');
+
+  fs.rmSync(tmp, { recursive: true, force: true });
 });
 
 test('attic/ is excluded from the carried corpus — law 3, in both places', () => {
@@ -37,17 +101,18 @@ test('attic/ is excluded from the carried corpus — law 3, in both places', () 
   assert.notStrictEqual(before.bytes, all, 'attic bytes appear to be counted as carried');
 });
 
-test('the budget in the tool matches the shelf default in main.rs', () => {
-  // Duplicated constants drift. This is the check that makes the duplication survivable.
-  const src = fs.readFileSync(path.join(__dirname, '..', 'src-tauri', 'src', 'main.rs'), 'utf8');
-  // ANCHORED on the env var, not on the first unwrap_or in the file: the unanchored version
-  // matched an unrelated unwrap_or(0) thousands of lines away. Third instance tonight of a
-  // regex taking the first textual match instead of the intended one.
-  const m = src.match(/CONSONANCE_LIBRARIAN_BUDGET[\s\S]{0,300}?unwrap_or\((\d[\d_]*)\)/);
-  assert.ok(m, 'could not find the shelf budget default in main.rs');
-  assert.strictEqual(parseInt(m[1].replace(/_/g, ''), 10), BUDGET_BYTES,
-    'the tool and the shelf disagree about the carry budget');
-});
+/* DELETED 2026-09-02 (BRAVO, L033): `the budget in the tool matches the shelf default in main.rs`.
+ *
+ * It compared this tool's BUDGET_BYTES against `librarian_budget()`'s `unwrap_or(2_200_000)`. That
+ * function and `CONSONANCE_LIBRARIAN_BUDGET` were removed at `c2afec6` (2026-09-02 02:02) for three
+ * measured reasons stated at main.rs:4730 — the removal is right and stays. The test went red
+ * because the duplication it guarded no longer has two sides: there IS no shelf budget default.
+ *
+ * NOT RE-POINTED, and that is the decision rather than an oversight. The old number survives as
+ * `CORPUS_WALK_BUDGET` in `shelf_tests`, and re-anchoring here would have made the tool agree with
+ * a fixture instead of with the binary — the same duplication in a new coat, now one hop further
+ * from anything that runs. The property that replaces it is above: the tool reads the one bound
+ * that IS live (`LIBRARIAN_INTAKE_LIMIT`) out of main.rs, and refuses rather than inventing one. */
 
 test('a proposal needs BOTH unreferenced AND stale — either alone is not enough', () => {
   // The failure this prevents: proposing a file that is merely new, or merely unnamed. Checked by

@@ -86,11 +86,13 @@ test('the declared arity of order[] matches the number of entries in it', () => 
 test('corpus-age.js measures the same set the shelf carries', () => {
   // If the tool and the shelf disagree, the capacity headline under-reports pressure on the seat
   // while looking authoritative -- the failure direction that matters.
-  const { corpusSize } = require('./corpus-age.js');
-  const tool = read(path.join(__dirname, 'corpus-age.js'));
-  const carried = tool.match(/const CARRIED = \[([\s\S]*?)\];/);
-  assert.ok(carried, 'could not find CARRIED in corpus-age.js');
-  assert.ok(carried[1].includes("'librarian'"),
+  // RE-POINTED 2026-09-02 (BRAVO, L033): this read `const CARRIED` out of corpus-age.js by regex.
+  // That single list is now two -- CARRY_TIERS and INDEX_TIERS -- because the shelf stopped
+  // carrying map/, journal/ and loop/ on 2026-08-24 and the tool had gone on counting them as
+  // carried. Reads the EXPORT rather than the source text, so a rename cannot break it again.
+  const { corpusSize, CARRY_TIERS } = require('./corpus-age.js');
+  assert.ok(Array.isArray(CARRY_TIERS) && CARRY_TIERS.length, 'corpus-age.js exports no CARRY_TIERS');
+  assert.ok(CARRY_TIERS.includes('librarian'),
     'corpus-age.js does not count exo_memory/librarian/ but the shelf carries it');
   assert.ok(corpusSize().bytes > 0, 'corpusSize() returned nothing');
 });

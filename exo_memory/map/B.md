@@ -1021,3 +1021,21 @@ part an author should not be last word on.
   named on the record rather than quietly dropped — and A's About dropped its 43 `<dt>` the same
   night, so the glossary now exists on no surface.
   — `exo_memory/handback/p-doc-app_2026-09-02.md`
+
+- **L033 · P-CORPUS-BUDGET — the gauge was wrong in BOTH terms, and the numerator was wrong nine days
+  longer than the denominator.** Answer is (c): the delivered budget stopped being a constant at
+  `c2afec6` and is computed per run in `librarian_shelf()` as `cap − headroom − head − floor`, so the
+  constant-equality test was the wrong SHAPE and is **deleted, not re-pointed** — re-anchoring onto
+  `CORPUS_WALK_BUDGET` would have made the tool agree with a fixture. `BUDGET_BYTES` is gone; the tool
+  now reads `LIBRARIAN_INTAKE_LIMIT` out of `main.rs` and **throws rather than fall back**. The bigger
+  half: the denominator was live-wrong from `290dc05` (2026-09-01 07:00, `launch.ps1:120` forced the
+  delivered budget to 0) and dead from `c2afec6` (2026-09-02 02:02) — but the NUMERATOR had been the
+  wrong set since `8e18d5d` (2026-08-24 01:56), counting `map/ journal/ loop/` into a figure labelled
+  *"corpus carried by the librarian"* when the shelf only indexes them. The old test survived that for
+  nine days because it matched directory NAMES anywhere in `order`, and a membership test cannot see a
+  flag flip. Printed 260.5%; honest figure against today's measured 22,382-byte delivered budget is
+  **6262% — understated 24×**, in the exact direction its own comment named. Three mutants, all caught
+  in a detached worktree. `librarian-notes.test.js` grepped `const CARRIED` and broke on my rename —
+  fixed, and flagged as a touch outside my §5. Named and NOT done: a `--print-shelf-budget` emitter in
+  the binary would make the gauge exact instead of bounded; ALPHA holds `main.rs`.
+  — `exo_memory/handback/p-corpus-budget_2026-09-02.md`
