@@ -729,3 +729,6 @@ the wrong figure was published.*
   the trace-form amendment and a forgetting-not-floor item constraint, 3 on the ledger clocked, 4 a new
   cost-of-miss rubric for the WRONG column, 5 the retreat — trigger fired, object in hand (this file's 01:10
   finding), keeper's hands only.
+- **02:15 — L029 item 1 collated, LAND IT** → `librarian/2026-09-02.md` ~02:15. 7/8 mutants caught on their own oracle;
+  suite flakes ~10% in parallel (score serialized); the shelf's body budget is spent on a byte-identical copy of the
+  harness-injected global CLAUDE.md — drop it, drop run artifacts, cards first. WRONG #63 (247→246, hand-count).
