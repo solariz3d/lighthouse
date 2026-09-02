@@ -420,3 +420,104 @@ toward GREEN.
 
 **Not verified:** js-suite not run; four pre-existing warnings at main.rs:6169/:6352 uninvestigated;
 the 7395 finding is deductive, not mutation-proven.
+
+
+## 2026-09-02 — P-WINDOW-INERT: retiring my own registration, and five things that generalise
+
+*All five from one lap. Hand-back: `exo_memory/handback/p-window-inert_2026-09-02.md`. Amendment:
+`exo_memory/loop/librarian_window_registration_2026-09-01.md`, the `# AMENDMENT — 2026-09-02 ~03:45`
+tail. Both landed in `4c175c2`. Packet: `loop/packet_window_inert_2026-09-02.md` (`005acfb`).*
+
+### A rule can be dead by TIER arithmetic while every number in it is correct
+
+2026-09-02, `4c175c2`; `main.rs:corpus_shelf_at` (the `order` array, `librarian` fifth of ten) and
+`librarian_shelf_room` at `:5048`; hand-back §3. Found by sweeping a re-implementation of the walk
+across budgets, not by reading the rule.
+
+Everyone — the chair, the librarian at `63d03eb` nineteen hours earlier, and me — explained the
+librarian window carrying zero as **the window's weight against the floor** (129,352 B of notes,
+~8,642 B of budget). That explanation implies the rule revives when the floor comes down. It does
+not. `corpus_shelf_at` is a **saturating skip-walk** — an over-budget file is indexed and the walk
+*continues* — so smaller files drain the remainder before a late tier is reached. Measured leftover
+at `librarian/`: **438 B at today's 8,642 budget, 198 B at the 32,395 the ruled floor-fix produces,
+439 B at 400,000.** Smallest file in the directory is 2,081 B. **First budget at which the rule
+changes the delivered set: 442,309 B** — 2.95× the entire 150,000 cap, because the carried tiers
+ahead of it hold 471,585 B. **The generalisable form: when a budgeted pipeline delivers nothing,
+price the LEFTOVER AT THE STAGE, not the size of the thing being delivered.** My §3 priced two rule
+shapes, ECHO attacked them, the keeper picked one and the chair registered a third — the whole
+exercise was moot and would have been visibly moot from one sweep.
+
+### "Unscoreable" is PROVEN by running the rule absent, not argued from its size
+
+2026-09-02, `4c175c2`; the `walk.js` embedded verbatim in the amendment's §11; hand-back §1 and §9.
+
+"The rule carries zero" does not license retiring a falsifier — a rule can carry zero and still be
+observable. The licensing property is **no observation distinguishes the rule from its absence**, and
+that is a differential, so run it as one: a second implementation of the stated walk, executed with
+the window PRESENT and ABSENT at the same budget. Byte-identical (2 files / 8,204 / 8,642 / 534) —
+*that* is the unscoreability. **And what licenses the model is that it reproduces the binary's four
+printed figures exactly**; without that it is a second opinion, not a check. Same instrument then
+gives the re-arming threshold and the counterfactual for free. **Build the differential; do not
+reason about the delta.** (Sibling of the 2026-08-01 M3 line above: identical inputs, two predicates,
+opposite verdicts.)
+
+### A ± tolerance must name the LARGER moving term, and mine named the smaller one
+
+2026-09-02, `4c175c2`; registration §4 (i) vs the amendment §5; hand-back §4.2. Found while computing
+what the prediction *would* have scored — i.e. only by trying to score it.
+
+§4 (i) read *"header carried-bytes drop by ≈390,968 **± that day's append**"*. Under a two-day window
+a whole file **leaves** the window every day, and eviction dominates append: 09-01 → 09-02 the dated
+total grew **+41,921** (append) while the indexed figure moved **+88,777** (eviction — exactly
+`2026-08-31.md`). A `± append` tolerance would have read a **correctly working rule as 47k off.**
+**Whenever a prediction is stated on a windowed quantity, enumerate every term that moves it
+between readings and set the tolerance on the largest.** This defect is independent of the cap and
+would have fired on its own.
+
+### Check the headroom constant before quoting "room left" — and report the correction when it makes your own case worse
+
+2026-09-02, `4c175c2`; `INTAKE_HEADROOM` at `main.rs:4475`, `librarian_shelf_room` at `:5048`;
+hand-back §2.
+
+The packet gave *"floor 129,402, room left for the window ~20,000"* by subtracting a floor from a cap.
+It omitted `INTAKE_HEADROOM = 8,000`. Real budget: `150,000 − 8,000 − (83,645 + 49,713) = **8,642**`
+— the space in dispute overstated **2.4×**. Two carriers of the same stale figure were also live: the
+LEDGER row and a prior hand-back both said the delivered bytes were `7,479 + 1,497 = 8,976`
+(`CLAUDE.global.md + README.md`) when at 8,642 the README no longer fits and it is
+`7,479 + 725 = 8,204` (`CLAUDE.global.md + memory/user-solariz3d.md`). **A "cap minus floor" figure
+is wrong until you have read the reserve constants**, and this class travels: the *conclusion* was
+right, so nobody re-derived the arithmetic under it. Reported precisely because the correction made
+the finding **more** severe, not less — that is the direction that costs nothing to suppress.
+
+### Right conclusion + wrong mechanism, in the simplifying direction — three instances in one night, one of them mine
+
+2026-09-02, `4c175c2`; `63d03eb` (the librarian taking WRONG #62 on itself, one paragraph above its
+own correct prediction); hand-back §4.5.
+
+The librarian predicted the inertness correctly at 09-01 07:48 and gave the floor as the cause; the
+chair repeated conclusion and cause; I had missed both for a day. **Agreement on the conclusion is
+what stops anyone re-checking the mechanism** — and the wrong mechanism was in each case the one that
+*reads as simpler* (a size comparison instead of a stage-order property). Operationally: **when two
+or more seats agree on a finding, the thing to re-derive is not the finding — it is the causal claim
+under it**, because that is the part nobody has an incentive to touch. Corollary observed the same
+night: a correct finding sat undelivered for nineteen hours in an interrupt the board shows never
+rendered, so *the finding was never the bottleneck; the carrier was.*
+
+### And one that resolved: a registration retired by its own pre-registered instrument
+
+2026-09-02, `4c175c2`; registration §10.7 (vi), written 2026-09-01 before anyone had measured the
+cap; hand-back §6.
+
+(vi) registered that the 150,000 cap was **an unverified code comment** and named its own refutation:
+*"if a shell over 150,000 is assembled and nothing observably breaks, the premise is wrong."*
+Something broke — the seat returned `Context limit reached` at 1,305,657 B and the harness printed
+`CLAUDE.md is over the 150.0k-char limit (906.3k chars)`. Premise held; the conservative byte-side
+reading (vi) argued for was right; measured **1.0106 B/char** against **1.0107** predicted from the
+harness's own two figures. Small — a prediction about a code comment. But it is the one prediction in
+that registration that was scoreable, it scored, **and what it confirmed is what made the rest of the
+registration inert.** Worth carrying as the shape rather than the result: **register the premise you
+did not verify, with its refutation, and the programme can retire you cleanly instead of arguing.**
+
+*Not verified tonight:* the seat has not woken on the shipped cap (relaunch pending), so §4 (ii)'s
+landing has never been read; 442,309 is today's directory composition and moves as files are added;
+the differential test proposed in the amendment §7 was **offered, not built** — `main.rs` is not mine.

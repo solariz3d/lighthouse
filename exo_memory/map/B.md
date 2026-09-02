@@ -934,3 +934,69 @@ tests.**
 
 `exo_memory/loop/boundary_falsifier_2026-08-28.md` · `consonance/tools/boundary-check.js` · commit
 `72bba70` · desktop only.
+
+---
+
+## 2026-09-02 — L029.1 and L029.7, the librarian's intake cap and the shelf tier order
+
+**Pointer lines, one per finding. Open the hand-back before re-deriving any of it.**
+`exo_memory/handback/p-lib-cap_2026-09-02.md` (L029.1, commit `c2afec6`) ·
+`exo_memory/handback/p-shelf-tier_2026-09-02.md` (L029.7, commit `ac33481`).
+
+- **The 150,000 cap is CHARS and the code bounds BYTES, and that is the conservative side, not a
+  confusion.** `chars <= bytes` in UTF-8, so a byte bound is stricter. `LIBRARIAN_INTAKE_LIMIT`
+  derives from `HARNESS_CLAUDE_MD_CHAR_CAP`; lowering is free, raising means writing a literal in
+  front of the paragraph that says why. — `p-lib-cap_2026-09-02.md` §5.
+- **k=1024 is arithmetically impossible and does not need a judgement call.** The harness refused
+  `906.3k chars` on a file measured at 915,994 bytes; at k=1024 that is ≥928,000 chars in 915,994
+  bytes. Ruled out for every rounding of `906.3k`. Predicted ratio 1.0107, measured 1.0105–1.0106.
+  — `p-lib-cap_2026-09-02.md` §5, steps 1–2.
+- **The margin is "conservative by ~1% minus a 50-char display uncertainty", not conservative full
+  stop.** Say it at its real strength or the next reader over-trusts it. — same §5.
+- **The shelf's entire delivered body was a byte-identical copy of `~/.claude/CLAUDE.md`, which the
+  harness injects into every seat anyway** (md5 `a357e1b3bf7298a7463111118847a1bc`, 7,479 B of a
+  9,163 B budget). It is now INDEXED, not skipped: BOOT's duplicate is placed by our code, this one
+  by the HOST, and a host can stop. — `p-shelf-tier_2026-09-02.md` §1.1.
+- **The suite flakes ~10% in PARALLEL: `dirs_guard_tests::a_panicking_writer_still_puts_dirs_back`,
+  6 of 60 parallel runs, 0 of 40 serialized.** Every `354 passed / 0 failed` quoted before that was
+  a ~90% statement. **Score `--test-threads=1` and never quote a parallel figure.** Unclaimed; the
+  fix is assertions back inside guard scope. — `p-lib-cap_2026-09-02.md` §3.
+- **A mutant is caught only when an oracle for the MUTATED PROPERTY fails** — not merely when
+  something goes red. It is why CHARLIE's first table read 8/8 and was wrong, and it caught **M7
+  surviving twice against two oracles I had written and then repaired myself.** — both hand-backs;
+  `p-shelf-tier_2026-09-02.md` §6.1.
+- **The self-match trap, which I fell into twice in one night while reading the comment about it.**
+  The shelf string is header → index → carried BODIES, and the corpus cites its own paths in prose.
+  Any assertion counting index lines must be scoped to the index — `split("## NOT CARRIED")` then
+  `take_while(|l| !l.starts_with("## "))`. Counting over the whole shelf, or over the split alone,
+  reads bodies and passes under the mutant. — `p-shelf-tier_2026-09-02.md` §6.1.
+- **The shelf SATURATES, so freeing floor never grows the margin — it becomes bodies.** Dropping
+  15,753 B of index moved the body budget 8,642 → 24,122 and the margin *down* 234 B. Anyone
+  predicting "more headroom" from a floor fix is predicting the wrong variable. — §2(c).
+- **Dropping a duplicate from the CARRY frees bytes inside the budget; it does not add budget.** The
+  ruling's `+7,479 +15,753 → ~32,395` double-counted; the real figure is 24,122. — §2(a).
+- **THE ALPHABET CHOOSES WHICH CARDS THE SEAT WAKES WITH.** 8 of 12 fit, sorted by filename, so
+  `no-floor-no-ceiling`, `stop-and-feel-it`, `trust-the-first-attention` and `verify-before-claiming`
+  are the four that fall off. A priority order inside `cards/` is a keeper/BOOT question and is still
+  unmade. — §2(b).
+- **The librarian window is INERT UNDER THE CAP and the number is now in the shipped header:
+  167 bytes were left when the walk reached `librarian/`**, against a ~45 KB note. Confirmed
+  ALPHA's tier arithmetic from the binary rather than a replica. Do not expect a floor fix to re-arm
+  it. — §4, and ALPHA's P-WINDOW-INERT.
+- **No environment variable is load-bearing any more** (unset / 0 / 2200000 / notanumber all green);
+  `launch.ps1:120` is removed. A ceiling that lives in a launcher is not a ceiling, and it LEAKED —
+  every pane inherited it, so the suite read 348/3 inside Consonance and 351/0 outside.
+  — `p-lib-cap_2026-09-02.md` §7.3.
+- **I truncated `main.rs` to 0 bytes with a `perl -0pi` one-liner inside the very turn that warned
+  about a different destructive command.** `git status` said only ` M`. Restored from a copy taken
+  before anything was opened. **A named landmine does not generalise; a backup does** — copy the file
+  before the first edit, md5 it after the last, every lap. — `p-lib-cap_2026-09-02.md` §8.
+- **Write the limits before the work, not after.** Both hand-backs' "what this does not establish"
+  sections are where the real caveats live: the L029.7 diff is green in `cargo test` and **no
+  librarian has woken on it**, and the byte-identity is a runtime fact checked once, deliberately not
+  asserted in a test (a test that reads the host's file reports on the machine it ran on).
+
+**Owed and unclosed at the rebuild:** `a8d11c8` dispatched **P-DOC-APP (L030) to BRAVO** and it never
+rendered in this pane — check for it before assuming L029.7 was the last word. Non-author read of
+`p-shelf-tier_2026-09-02.md` (A or C) was owed and I do not know whether it happened; §6.1 is the
+part an author should not be last word on.
