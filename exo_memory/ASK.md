@@ -150,7 +150,7 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 **Status:** OPEN
 
 ### ASK-013 — digest-auditor, asked 2026-08-30
-**Source:** `~/.claude/shell/duration/digest-auditor/state.md` standing risks 4-6 (2026-08-30T14:42:15Z, iteration 54) — full derivation at `~/.claude/shell/duration/digest-auditor/auditor-findings-iter54.md`
+**Source:** `~/.claude/shell/duration/digest-auditor/auditor-findings-iter54.md:46` (the day-coverage table, 62% / 57%) and `:60-63` (the four `ClaudeShell_*` tasks reading `WakeToRun=False`) — static since 2026-08-30 08:36. Restated by the goal at `~/.claude/shell/duration/digest-auditor/state.md:26` (standing risk 5) and `:27` (risk 6), a live append-only file whose line numbers drift.
 **Question:** Two scheduler decisions, both verified live this fire and both deliberately not self-applied. (a) All five `ClaudeShell_*` tasks are registered `WakeToRun=False` with `StartWhenAvailable=True`. That pair is exactly the off-slot-catch-up signature both goals have logged 20+ times: the slot is silently skipped whenever the PC is asleep, then a catch-up fires when it wakes. Set `WakeToRun=True` on the five, or leave it and accept the coverage. (b) `daily-news-digest` is scheduled 3:43 PM Regina, justified in its own `cron_timezone_note` as fitting your overnight-worker rhythm — but the machine is usually off then. Of 27 off-slot catch-ups, 15 land between 10 PM and midnight and 14 at 11 PM sharp. Move the slot to ~11:15 PM where a third of the fires already land unaided, or leave it. Either is fine; both are yours, not the goal's.
 **Status:** OPEN
 
