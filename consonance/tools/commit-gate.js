@@ -76,8 +76,37 @@
 'use strict';
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
+
+// ── WHERE THE LEDGER IS — resolved, and LOUD when it cannot be ────────────────────────────
+//
+// This shipped with `path.resolve(arg('--data', 'C:/Consonance/data'))`, which portable-paths
+// flagged DRIVE/REVIEW on its first run over this file. It was a real defect and it was in the
+// worst possible place: **a gate that resolves to one machine's data dir reads no ledger on the
+// second machine, finds no lap, and therefore ALLOWS EVERY COMMIT** — silently, wearing the same
+// green as a gate that checked and approved. That is the silent-absence failure this tool's own
+// §7 was written about, installed inside the tool that exists to stop things being hidden. It was
+// not baselined.
+//
+// Shape taken from the peer hooks (`consonance/hooks/transcript-watch.js` dataDir()): env
+// override, then `~/.consonance.json`. **The last tier is where this deliberately differs from
+// them.** They fall back to a literal default, which is right for a watcher — a watcher that
+// guesses wrong writes state to the wrong place and someone notices. A GATE that guesses wrong
+// waves commits through and nobody notices, so there is no default here: unresolved returns null
+// and the caller refuses. Degrade loudly means degrade to REFUSE.
+function resolveDataDir() {
+  const env = (process.env.CONSONANCE_DATA || '').trim();
+  if (env) return env;
+  try {
+    const raw = fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, '');
+    const v = JSON.parse(raw);
+    const d = v && v.data_dir != null ? String(v.data_dir).trim() : '';
+    if (d) return d;
+  } catch (e) { /* no config is a legitimate state; the caller says so out loud */ }
+  return null;
+}
 
 // The callsigns the room actually uses on its panes, mapped to the letters letters.json assigns.
 // Kept here rather than read from letters.json because letters.json maps SESSION IDS to letters
@@ -313,7 +342,17 @@ if (require.main === module) {
     return i >= 0 && argv[i + 1] ? argv[i + 1] : dflt;
   };
   const repo = path.resolve(arg('--repo', path.resolve(__dirname, '..', '..')));
-  const dataDir = path.resolve(arg('--data', 'C:/Consonance/data'));
+  const resolved = arg('--data', null) || resolveDataDir();
+  if (!resolved && !argv.includes('--armed') && !argv.includes('--install')) {
+    process.stdout.write(
+      'commit-gate: REFUSED — the data dir could not be resolved, so the lap ledger cannot be read.\n\n' +
+      '  tried  $CONSONANCE_DATA, then data_dir in ~/.consonance.json\n\n' +
+      'A gate that cannot find the ledger finds no open lap and would allow everything, which is\n' +
+      'indistinguishable from a gate that checked. So it refuses instead. Set CONSONANCE_DATA or\n' +
+      'pass --data <dir>.\n');
+    process.exit(1);
+  }
+  const dataDir = resolved ? path.resolve(resolved) : null;
 
   if (argv.includes('--armed')) {
     const a = armed(repo);

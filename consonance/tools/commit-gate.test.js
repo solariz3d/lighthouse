@@ -283,3 +283,34 @@ test('the shipped githooks/pre-commit runs commit-gate.js', () => {
   assert.match(body, /commit-gate\.js/);
   assert.match(body, /^#!/, 'a hook without a shebang is a hook git will not run');
 });
+
+// ── the data dir is RESOLVED, and unresolved refuses rather than guessing ──────────────────
+//
+// This file shipped with `C:/Consonance/data` as the default and portable-paths caught it. The
+// bug was not cosmetic: on a second machine the gate would read no ledger, find no open lap, and
+// ALLOW EVERY COMMIT while printing green.
+test('the tool carries no hardcoded machine path', () => {
+  const src = fs.readFileSync(path.join(__dirname, 'commit-gate.js'), 'utf8');
+  const code = src.split('\n').filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l)).join('\n');
+  assert.ok(!/[A-Za-z]:[\/]Consonance/.test(code),
+    'a drive-letter path in the gate resolves to one machine and waves commits through on every other');
+});
+
+test('an unresolvable data dir REFUSES; it does not fall back to a guess', () => {
+  const env = { ...process.env };
+  delete env.CONSONANCE_DATA;
+  env.HOME = tmp('nohome');
+  env.USERPROFILE = env.HOME;          // os.homedir() reads USERPROFILE on Windows
+  // execFileSync THROWS on a non-zero exit, and a non-zero exit is exactly what this asserts:
+  // refusing has to cost the commit. So the throw is the pass condition, read off e.status.
+  let out = null;
+  let status = 0;
+  try {
+    out = execFileSync(process.execPath,
+      [path.join(__dirname, 'commit-gate.js'), '--repo', REPO, '--paths', 'some/file.js'],
+      { env, encoding: 'utf8', cwd: REPO });
+  } catch (e) { out = e.stdout; status = e.status; }
+  assert.strictEqual(status, 1, 'an unresolved data dir must fail the commit, not warn about it');
+  assert.match(out, /REFUSED — the data dir could not be resolved/,
+    'degrade loudly means degrade to refuse, not to a default that reads as green');
+});

@@ -118,7 +118,7 @@ not to you.
 ## 7 · WHAT YOU OWN
 
     consonance/src-tauri/src/main.rs        <- yours alone once you take this
-    src/bin/harvest_replay.rs               (placement only; E authored it)
+    consonance/src-tauri/src/bin/harvest_replay.rs               (placement only; E authored it)
     exo_memory/handback/p-watcher-liveness_2026-09-02.md
     exo_memory/map/B.md
 

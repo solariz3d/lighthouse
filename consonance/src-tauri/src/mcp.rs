@@ -317,6 +317,11 @@ impl ConsonanceMcp {
         if !self.auth_chair(&token, "chair_inject") {
             return Ok(CallToolResult::success(vec![Content::text("refused: bad chair token (the attempt was posted to the board)")]));
         }
+        if !self.auth_station("chair_inject") {
+            return Ok(CallToolResult::success(vec![Content::text(
+                "refused: OUT OF TURN — a lap is open and the chair is not the holder (the attempt was posted to the board). Nothing renders into a working pane; wait for the loop, or move the baton with lap-row.js if it is stuck.",
+            )]));
+        }
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::Inject { target, text, reply: tx }, rx).await;
         Ok(CallToolResult::success(vec![Content::text(out)]))
@@ -330,6 +335,11 @@ impl ConsonanceMcp {
         if !self.auth_librarian("call_chair") {
             return Ok(CallToolResult::success(vec![Content::text(
                 "refused: this verb belongs to the librarian seat (the attempt was posted to the board)",
+            )]));
+        }
+        if !self.auth_station("call_chair") {
+            return Ok(CallToolResult::success(vec![Content::text(
+                "refused: OUT OF TURN — a lap is open and the librarian is not the holder (the attempt was posted to the board). The loop comes back to you; do not queue, do not retry in a spin.",
             )]));
         }
         let (tx, rx) = tokio::sync::oneshot::channel();
@@ -368,6 +378,94 @@ impl ConsonanceMcp {
         ok
     }
 
+    /// ONE STATION — the keeper's rule, 2026-09-02 07:15-07:18, filed at `fe15030`:
+    ///
+    /// > While a loop runs, exactly ONE station is active — terminals, or orch, or lib — and every
+    /// > other seat waits for the loop to come back to it. **The human is not the exception.**
+    ///
+    /// It demonstrated itself while being reported: three of the keeper's messages were spliced by
+    /// rings into the librarian's pane inside ten minutes, one cut off MID-WORD by a hand-back
+    /// landing while he was typing about calls interrupting each other.
+    ///
+    /// REFUSE, NEVER QUEUE. Queuing is the delivery half and belongs to C's `P-INBOX`; doing both
+    /// here would let each fix hide the other's failure.
+    ///
+    /// THE REFUSAL IS POSTED, on the same throttle as every other gate. A silent refusal is the
+    /// silent-absence failure named in `handback/p-commit-gate_2026-09-02.md` §7 three hours ago —
+    /// an absent guard and a passing guard are the same observation — and shipping it inside the
+    /// guard built on that finding would be indefensible.
+    fn required_station(verb: &str) -> Option<&'static str> {
+        match verb {
+            "chair_inject" => Some("chair"),
+            "call_librarian" => Some("panes"),
+            "call_chair" => Some("librarian"),
+            _ => None,
+        }
+    }
+
+    /// PURE, so the whole matrix is testable with no control plane, no board and no disk — which
+    /// is the third refusal shape §6 offered and the one this avoids needing.
+    ///
+    /// NO OPEN LAP MEANS EVERYTHING IS ALLOWED. Freestyle is not gated (BUILDING.md's cut), and
+    /// this is the case that decides whether the first night after this ships looks like the room
+    /// is broken.
+    fn station_allows(verb: &str, open: bool, holder: Option<&str>) -> bool {
+        if !open {
+            return true;
+        }
+        match Self::required_station(verb) {
+            None => true,
+            // A row with no holder at all cannot say whose turn it is. It reads as UNKNOWN, and
+            // unknown does not get to mean yes — that is the `unknown`-renders-as-`idle` failure.
+            Some(req) => holder == Some(req),
+        }
+    }
+
+    /// THE GUARD CANNOT WEDGE THE ROOM, and this was checked before it was built rather than
+    /// asserted after.
+    ///
+    /// The wedge would be: a lap open with a holder no live seat can satisfy — say `holder panes`
+    /// with every pane dead — and no verb able to move it. **The holder is not written by any verb
+    /// here.** It is written by `consonance/tools/lap-row.js`, a CLI any seat with a shell can run,
+    /// so the baton can always be moved by hand and the loop can always be un-stuck. The librarian
+    /// therefore needs NO `call_chair` exemption to report a stuck loop; it needs one command, and
+    /// the refusal below names that command at the moment of need rather than leaving it in a
+    /// document nobody opens at 3am.
+    ///
+    /// The same door is the honest limit: a seat that moves the holder can then act, so this is a
+    /// DISCIPLINE boundary enforced by the audit — the same limit `auth_chair` and `auth_address`
+    /// state about themselves, and the same one stated in this file twice already.
+    fn auth_station(&self, verb: &str) -> bool {
+        let st = crate::chain_state();
+        if Self::station_allows(verb, st.open, st.holder.as_deref()) {
+            return true;
+        }
+        if let Some(absorbed) = refusal_should_post(verb, now_ms()) {
+            let who = self.identity.clone().unwrap_or_else(|| "unattributed".to_string());
+            let holder = st.holder.clone().unwrap_or_else(|| "unset".to_string());
+            let lap = st.lap.clone().unwrap_or_else(|| "?".to_string());
+            let want = Self::required_station(verb).unwrap_or("?");
+            let more = if absorbed > 0 {
+                format!(" (+{absorbed} more absorbed this past minute)")
+            } else {
+                String::new()
+            };
+            board_push(&self.board, BoardEntry {
+                pane: "chair".to_string(),
+                role: "committee".to_string(),
+                text: format!(
+                    "{verb} REFUSED OUT OF TURN — mount {who} tried to speak while lap {lap} \
+                     is held by {holder}; {verb} needs holder {want}. The loop comes back to \
+                     you. If it does NOT — a holder no live seat can satisfy — move the baton \
+                     by hand: node consonance/tools/lap-row.js{more}"
+                ),
+                ts: now_ms(),
+                ts_source: crate::TsSource::Push,
+            });
+        }
+        false
+    }
+
     #[tool(description = "PANE VERB (mount-gated by the address table, committee panes only): deliver your HAND-BACK into the LIBRARIAN's pane — the one seat this verb can reach. There is no target argument: it addresses the librarian or nothing. Send a POINTER to the file you wrote (path, sha), never the finding in prose — the librarian reads at source, and this edge exists so the orchestrator no longer re-characterises findings on the way (2026-09-01: a relayed \"VOID\" was NOT-RUN at the cell). Every use and every refusal is audited to the board, and the system marks the message \"[pane:<letter>]\" from your mount, so the librarian is never unsure who is speaking. The orchestrator, the librarian and human-driven panes have no row for this verb and are refused. Then say so on the board as before.")]
     async fn call_librarian(
         &self,
@@ -376,6 +474,11 @@ impl ConsonanceMcp {
         if !self.auth_address("call_librarian") {
             return Ok(CallToolResult::success(vec![Content::text(
                 "refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)",
+            )]));
+        }
+        if !self.auth_station("call_librarian") {
+            return Ok(CallToolResult::success(vec![Content::text(
+                "refused: OUT OF TURN — a lap is open and the panes are not the holder (the attempt was posted to the board). The loop comes back to you; do not queue, do not retry in a spin.",
             )]));
         }
         let (tx, rx) = tokio::sync::oneshot::channel();
@@ -749,6 +852,111 @@ mod tests {
         assert_eq!(refusal_should_post("test_verb_a", t), Some(0));
         // a different verb inside verb_a's window still posts its own first line
         assert_eq!(refusal_should_post("test_verb_b", t + 1_000), Some(0));
+    }
+
+    // ── ONE STATION: the keeper's rule, 2026-09-02 (fe15030) ─────────────────────────────
+    //
+    // THE MATRIX IS THE BAR — every verb against every holder value, because a single test
+    // covering all three verbs goes green over two live holes, which is the fixture failure
+    // this room has hit six times in two nights. The three WIRING tests below are separate
+    // for the same reason: one mutant per verb, each caught by its own assertion.
+
+    const STATION_VERBS: [(&str, &str); 3] = [
+        ("chair_inject", "chair"),
+        ("call_librarian", "panes"),
+        ("call_chair", "librarian"),
+    ];
+
+    #[test]
+    fn each_verb_is_allowed_by_exactly_one_holder() {
+        for (verb, want) in STATION_VERBS {
+            for holder in ["chair", "panes", "librarian"] {
+                let allowed = ConsonanceMcp::station_allows(verb, true, Some(holder));
+                assert_eq!(allowed, holder == want,
+                    "{verb} with holder {holder}: expected {}, got {allowed}", holder == want);
+            }
+        }
+    }
+
+    /// BAR 4, AND IT IS THE ONE THAT DECIDES WHETHER THE FIRST FREESTYLE NIGHT LOOKS BROKEN.
+    /// No open lap = no station = everything allowed. BUILDING.md's cut, asserted rather than
+    /// assumed, for every verb including ones with no station at all.
+    #[test]
+    fn with_no_open_lap_every_verb_is_allowed() {
+        for (verb, _) in STATION_VERBS {
+            assert!(ConsonanceMcp::station_allows(verb, false, None),
+                "{verb} must be allowed when no lap is open — freestyle is not gated");
+            assert!(ConsonanceMcp::station_allows(verb, false, Some("panes")),
+                "{verb}: a stale holder on a CLOSED lap must not gate anything");
+        }
+        assert!(ConsonanceMcp::station_allows("post_board", true, Some("panes")),
+            "a verb with no station is never gated by this");
+    }
+
+    /// A row that carries no holder cannot say whose turn it is, and unknown does not get to
+    /// mean yes — the `unknown`-renders-as-`idle` failure, refused here by construction.
+    #[test]
+    fn an_open_lap_with_no_holder_refuses_the_stationed_verbs() {
+        for (verb, _) in STATION_VERBS {
+            assert!(!ConsonanceMcp::station_allows(verb, true, None), "{verb} on a holderless open lap");
+        }
+    }
+
+    #[test]
+    fn the_station_table_names_one_holder_per_verb() {
+        for (verb, want) in STATION_VERBS {
+            assert_eq!(ConsonanceMcp::required_station(verb), Some(want));
+        }
+        assert_eq!(ConsonanceMcp::required_station("post_board"), None);
+        assert_eq!(ConsonanceMcp::required_station("chair_status"), None);
+    }
+
+    // ── THE THREE WIRING TESTS — one per verb, one mutant each ────────────────────────────
+
+    #[test]
+    fn chair_inject_is_gated_on_the_station() {
+        let b = body_of("async fn chair_inject(");
+        assert!(b.contains("auth_station(\"chair_inject\")"),
+            "chair_inject must refuse out of turn — nothing renders into a working pane");
+    }
+
+    #[test]
+    fn call_librarian_is_gated_on_the_station() {
+        let b = body_of("async fn call_librarian(");
+        assert!(b.contains("auth_station(\"call_librarian\")"),
+            "a hand-back landing mid-turn is the failure that produced this rule");
+    }
+
+    #[test]
+    fn call_chair_is_gated_on_the_station() {
+        let b = body_of("async fn call_chair(");
+        assert!(b.contains("auth_station(\"call_chair\")"),
+            "the librarian speaks when the librarian is the holder, and not otherwise");
+    }
+
+    /// BAR 3: A SILENT REFUSAL IS THE FAILURE THIS ROOM NAMED THREE HOURS AGO. An absent guard
+    /// and a passing guard are the same observation from outside; a refusal nobody can see is
+    /// the same shape one layer in. The gate must reach the board, and it must name the escape
+    /// so a stuck loop is fixable at 3am by someone reading the refusal and nothing else.
+    #[test]
+    fn a_station_refusal_reaches_the_board_and_names_the_escape() {
+        let b = body_of("fn auth_station(");
+        assert!(b.contains("board_push("), "a refused acting verb must land on the board");
+        assert!(b.contains("refusal_should_post("), "and on the same throttle as every other gate");
+        assert!(b.contains("OUT OF TURN"), "the board line must be greppable as this class");
+        assert!(b.contains("lap-row.js"),
+            "the refusal must name the command that un-sticks the loop, or a wedged room at 3am \
+             has to go read a document to find out how to move");
+    }
+
+    /// THE WEDGE CHECK, asserted about the DESIGN rather than trusted: no verb in this file may
+    /// write the holder. If one ever did, a guard reading the holder could be moved by the same
+    /// call it gates, and the escape below would stop being an escape.
+    #[test]
+    fn no_verb_here_writes_the_holder() {
+        let src = include_str!("mcp.rs");
+        assert!(!src.contains("\"holder\":"),
+            "the baton is written by consonance/tools/lap-row.js and by nothing in this file");
     }
 }
 

@@ -1039,3 +1039,19 @@ part an author should not be last word on.
   fixed, and flagged as a touch outside my §5. Named and NOT done: a `--print-shelf-budget` emitter in
   the binary would make the gauge exact instead of bounded; ALPHA holds `main.rs`.
   — `exo_memory/handback/p-corpus-budget_2026-09-02.md`
+
+- **L033/L034 · P-WATCHER-LIVENESS — PARKED, NOT STARTED, and the hand-back IS the release.** Cutoff
+  arrived first; every item rides a later build. I never entered `main.rs` (P-CORPUS-BUDGET read it
+  only). Still owed: `into_inner()` so the watcher's poisoned-lock policy matches its own reader's
+  (`:1071 Err(_) => break` vs `:1038 if let Ok(...)`), `catch_unwind` around the extraction body, and
+  the per-pane last-harvest-**ATTEMPT** stamp whose `stamp only on write ⇒ red` mutant is the whole
+  test of whether it was built. Plus `librarian_map_path()` → `map_dir()` and placing E's
+  `harvest_replay.rs` (E's, attribute to E). **The resize observation was NOT TAKEN** — a pane cannot
+  resize the app it runs inside, and it expires at relaunch, so which of poisoned-lock vs panic it was
+  stays open rather than assumed. **The finding worth keeping:** a parked packet holds its files as
+  hard as an active one — held-because-working and held-because-nobody-ever-started have the same
+  footprint at the gate, the same two-facts-one-footprint shape as the bug the packet was for, now in
+  the guard itself. Also carried, the chair's two: an ownership path written src-tauri-relative failed
+  the gate closed (correct direction), and a PARKED note that QUOTED "WHAT YOU OWN" made the parser
+  hit the blockquote and derive zero paths — prose can silently disable its own ownership block.
+  — `exo_memory/handback/p-watcher-liveness_2026-09-02.md`
