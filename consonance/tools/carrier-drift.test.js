@@ -552,3 +552,154 @@ test("THE MAP'S ENUMERATION WAS THE CH-4 SUBSET: registering only those five lea
   assert.ok(files.has('exo_memory/muscle_map.md'), 'the correction ledger itself is one of them');
   assert.ok(files.has('INSTRUMENTS.md'), 'so is the top-level instrument list');
 });
+
+// ── .html: the About tab, invisible to this tool until 2026-09-02 ─────────────────────────
+//
+// THE POSITIVE CONTROL, AND WHY IT IS A FIXTURE RATHER THAN THE REPO. The packet's bar was "red
+// on today's tree, naming the lifeguard hits". By the time the corpus was widened, the pane that
+// owns index.html had already rewritten the About tab in the working tree and the slogan was gone
+// — so the working tree could not be the control, and neither can HEAD once that rewrite lands.
+// A control that expires the moment the thing it controls for is fixed is not a control. This one
+// carries the defect in its own fixture and cannot rot.
+
+test('an .html carrier asserting a withdrawn wording is RED — the About tab, which was invisible before', () => {
+  const root = tmpTree({
+    'ui/index.html': '<h2>The governing stance: the human remains the only decorrelated instrument</h2>',
+  });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.strictEqual(res.red, true, 'an .html carrier is not being scanned at all');
+  const f = res.findings.find((x) => x.file === 'ui/index.html');
+  assert.ok(f, 'the finding does not name the html file: ' + JSON.stringify(kinds(res)));
+  assert.strictEqual(f.kind, 'UNACCOUNTED');
+});
+
+test('MUTATION: drop .html from the scanned extensions and the same file goes silently GREEN', () => {
+  // The packet's required mutant, expressed as the property rather than as an edit to the source:
+  // a corpus that excludes .html cannot see the file, and the failure mode is ABSENCE, not a
+  // different verdict. That is the false-green class — the finding does not go red somewhere
+  // else, it stops existing.
+  const root = tmpTree({
+    'ui/index.html': '<h2>the human remains the only decorrelated instrument</h2>',
+    'kept.md': 'nothing withdrawn here',
+  });
+  const all = CD.scan({ root, registry: reg([]) });
+  assert.strictEqual(all.counts.carriers, 2, 'the fixture must hold exactly the two files');
+  assert.ok(all.findings.some((x) => x.file === 'ui/index.html'), 'baseline: the html is seen');
+
+  const mdOnly = CD.corpus(root).carriers.filter((c) => c.endsWith('.md'));
+  assert.deepStrictEqual(mdOnly, ['kept.md'],
+    'under the pre-2026-09-02 rule the About tab is not in the corpus, so no run over it could ' +
+    'ever be red — the tool reported GREEN over the slogan for six weeks by not looking');
+});
+
+test('the .html widening changed what the tool SEES and not what drift MEANS', () => {
+  // The packet's refusal condition, as a test rather than as a paragraph: extending the universe
+  // is only a config change if the withdrawals already registered return the same verdict over
+  // the same files. Measured on the real tree at the time: 589 carriers -> 590, findings
+  // unchanged. Asserted here as the invariant, so a future extension cannot quietly move it.
+  const root = tmpTree({
+    'a.md': 'the human remains the only decorrelated instrument',
+    'b.html': '<p>nothing withdrawn in here at all</p>',
+  });
+  const res = CD.scan({ root, registry: reg([]) });
+  const onMd = res.findings.filter((f) => f.file === 'a.md');
+  assert.strictEqual(onMd.length, 1, 'the .md verdict must be untouched by the presence of .html');
+  assert.ok(!res.findings.some((f) => f.file === 'b.html'), 'a clean .html adds no finding');
+});
+
+test('the three description surfaces are reported by name, and the line is a REPORT not a filter', () => {
+  // A scope flag that hid findings outside the surfaces would be the silencer the registry's own
+  // README warns about. So: the line names the surfaces, and `red` stays repo-wide — a run can
+  // say "the surfaces are clean" while failing on something else, and it must.
+  const root = tmpTree({
+    'README.md': 'clean',
+    'consonance/README.md': 'clean',
+    'consonance/ui/index.html': '<p>clean</p>',
+    'elsewhere/live.md': 'the human remains the only decorrelated instrument',
+  });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.strictEqual(res.red, true, 'a finding outside the surfaces must still be red');
+  const out = CD.report(res);
+  assert.match(out, /DESCRIPTION SURFACES/);
+  assert.match(out, /no registered wording still asserted on any of the three/);
+  assert.match(out, /Omission is a/, 'the report must say what this count cannot see');
+});
+
+test('a DISARMED entry prints its findings and does not set red — the light-not-lifeguard case', () => {
+  // Registered before it is armed, on purpose: arming belongs in the same commit as the
+  // strike-in-place pass, and that pass is 16 carriers wide and is a keeper decision. What must
+  // hold meanwhile is that the accounting is ON SCREEN rather than waiting to be discovered on
+  // the night of adoption — which is when the 2026-07-12 diving pass missed BOOT.md.
+  const root = tmpTree({ 'live.md': 'the human remains the only decorrelated instrument' });
+  const res = CD.scan({ root, registry: reg([], { armed: false, arms_on: 'the strike-in-place pass' }) });
+  assert.strictEqual(res.red, false, 'a disarmed entry must not set red');
+  assert.strictEqual(res.findings.filter((f) => f.pending).length, 1, 'and must still compute it');
+  assert.match(CD.report(res), /PENDING — 1 finding/);
+});
+
+test('a DISARMED entry with no arms_on is RED — an exemption with no destination is a silencer', () => {
+  const root = tmpTree({ 'live.md': 'nothing here' });
+  const res = CD.scan({ root, registry: reg([], { armed: false }) });
+  assert.strictEqual(res.red, true);
+  assert.ok(kinds(res).includes('BAD-DISARM'));
+});
+
+test('the HYPHENATED form of a slogan is admitted — the enumerated-alternation limit, fired', () => {
+  // The registry's own registered limit going live within an hour of the entry landing: "THE
+  // PATTERN ALTERNATION IS ENUMERATED, NOT CLOSED ... a fifth phrasing written tomorrow is green
+  // forever and nothing here will say so."
+  //
+  // The first pattern for light-not-lifeguard admitted the comma form only. README.md:78 carries
+  // "with-not-above, light-not-lifeguard, the guard as an undisablable floor" — a live hit on a
+  // description surface that the instrument read as clean. Found by CHARLIE, running this lap's
+  // surface mutant against the entry from the other side of the lap; the pane that wrote the
+  // pattern had already measured the comma form going red on index.html and stopped there.
+  //
+  // A SIXTH PHRASING IS STILL GREEN FOREVER. This pins the two forms that are known to exist in
+  // this corpus; it does not close the class, and no pattern here can.
+  const PAT = 'light[,\\s-]+not[\\s-]+(?:a[\\s-]+)?lifeguard';
+  const root = tmpTree({
+    'README.md': 'the spine: with-not-above, light-not-lifeguard, the guard as a floor',
+    'ui/index.html': '<h2>The governing stance: light, not lifeguard</h2>',
+    'spaced.md': 'overseer-above; light not lifeguard; the three-body living loop',
+  });
+  const res = CD.scan({ root, registry: reg([], { pattern: PAT, marker: 'retired' }) });
+  const hit = new Set(res.findings.filter((f) => f.kind === 'UNACCOUNTED').map((f) => f.file));
+  assert.ok(hit.has('README.md'), 'the hyphenated form is missed — the form that was live on the ' +
+    'repo\'s front door while this instrument reported it clean');
+  assert.ok(hit.has('ui/index.html'), 'the comma form is missed');
+  assert.ok(hit.has('spaced.md'), 'the bare-space form is missed');
+
+  // AND THE NARROW PATTERN IS KEPT AS THE CONTROL: it must go green on the very file that made
+  // the widening necessary, or this test is asserting nothing about the widening.
+  const narrow = CD.scan({ root, registry: reg([], { pattern: 'light,\\s+not\\s+lifeguard', marker: 'retired' }) });
+  const narrowHit = new Set(narrow.findings.filter((f) => f.kind === 'UNACCOUNTED').map((f) => f.file));
+  assert.ok(!narrowHit.has('README.md'),
+    'the pre-widening pattern must MISS the hyphenated form, or the widening fixed nothing');
+});
+
+
+test('a description surface has NO trace exemption — a hit there is RED even when the entry is DISARMED', () => {
+  // Ruling, 2026-09-02, on A's §6: with the light-not-lifeguard entry disarmed, the About mutant
+  // was SEEN and filed PENDING — 0 red. Right for the record tiers, where a dated document may
+  // carry a retired wording and the strike-in-place pass is a keeper decision. Wrong for the
+  // front door: nobody reads an About tab as a dated trace, and a user-facing page asserts in the
+  // present tense to a person deciding what this is.
+  const PAT = 'light[,\\s-]+not[\\s-]+lifeguard';
+  const surface = tmpTree({
+    'consonance/ui/index.html': '<h2>The governing stance: light, not lifeguard</h2>',
+  });
+  const res = CD.scan({ root: surface, registry: reg([], { pattern: PAT, marker: 'retired', armed: false, arms_on: 'the pass' }) });
+  const f = res.findings.filter((x) => x.file === 'consonance/ui/index.html');
+  assert.strictEqual(f.length, 1, 'the surface hit is not seen at all');
+  assert.ok(!f[0].pending, 'a disarmed entry filed a SURFACE hit as pending — the front door has no trace exemption');
+  assert.strictEqual(res.red, true, 'a surface hit must set red whatever the arming state');
+
+  // AND THE CLAUSE MUST BE NARROW: the same wording in a record-tier file stays PENDING, or the
+  // disarm buys nothing and the 16 carriers it was written for all fire tonight.
+  const record = tmpTree({ 'exo_memory/loop/x.md': 'the stance was light, not lifeguard' });
+  const r2 = CD.scan({ root: record, registry: reg([], { pattern: PAT, marker: 'retired', armed: false, arms_on: 'the pass' }) });
+  const g = r2.findings.filter((x) => x.file === 'exo_memory/loop/x.md');
+  assert.strictEqual(g.length, 1);
+  assert.ok(g[0].pending, 'a record-tier hit must stay pending under a disarmed entry');
+});

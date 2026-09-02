@@ -259,6 +259,28 @@ function collapse(text) {
 }
 
 // ── corpus ───────────────────────────────────────────────────────────────────────────────
+// EXTENSIONS SCANNED. `.md` was the whole corpus until 2026-09-02, and `.html` was added because
+// the blindness had a measured cost: `consonance/ui/index.html` is the app's About tab, one of the
+// three surfaces a person actually reads to find out what this is, and it titled a section
+// "The governing stance: light, not lifeguard" — the diving vocabulary retired on 2026-07-12 and
+// again on 2026-08-17 — for six weeks, while this tool ran green over it every time.
+//
+// The tool's own LIMITS list said "IT READS .md ONLY" and named the class it was missing. A known
+// limit that is cheap to close and stays open is not a limit, it is a decision nobody revisited.
+//
+// MEASURED BEFORE IT WAS WIDENED, because widening a detector's universe is how a green run
+// quietly becomes a different green run: the repo contains exactly ONE `.html` file, and adding it
+// produced no new finding for either withdrawal already registered. So this changes what the tool
+// SEES and not what drift MEANS for the briefs it already guards — the packet's own refusal
+// condition, checked rather than assumed.
+//
+// NOT WIDENED TO `.js`, and that is the bigger hole, still open and still named in LIMITS: the
+// crude "can't lose" handle lives in `tools/tell-index.js:172` and — worse — inside a live model
+// prompt at `dev/shell/hooks/l2-overseer-worker.js:34`, which instructs at runtime instead of
+// teaching a reader. Source files carry wordings as strings, comments and prompts, and telling
+// those apart is a different instrument, not a longer list here. Left undone on purpose.
+const SCAN_EXTS = ['.md', '.html'];
+
 function walk(dir, root, out) {
   let entries;
   try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return out; }
@@ -267,12 +289,18 @@ function walk(dir, root, out) {
     if (e.isDirectory()) {
       if (SKIP_DIRS.has(e.name)) continue;
       walk(p, root, out);
-    } else if (e.isFile() && e.name.toLowerCase().endsWith('.md')) {
+    } else if (e.isFile() && SCAN_EXTS.some((x) => e.name.toLowerCase().endsWith(x))) {
       out.push(path.relative(root, p).split(path.sep).join('/'));
     }
   }
   return out;
 }
+
+// The three surfaces a person reads to learn what this is: the repo's front door, the app's own
+// README, and the About tab. Reported as a NAMED LINE, never as a filter — `red` stays repo-wide,
+// so this can say "the surfaces are clean" while the run is red elsewhere, and cannot silence
+// anything. A scope flag here would be the silencer the registry's own README warns about.
+const DESCRIPTION_SURFACES = ['README.md', 'consonance/README.md', 'consonance/ui/index.html'];
 
 function corpus(root) {
   const all = walk(root, root, []).sort();
@@ -499,8 +527,24 @@ function scan(opts = {}) {
       }
     }
 
-    if (!armed) for (let i = wStart; i < findings.length; i++) findings[i].pending = true;
-    const pending = findings.length - wStart;
+    // THE DESCRIPTION SURFACES HAVE NO TRACE EXEMPTION, and no PENDING path either.
+    //
+    // Ruling, 2026-09-02, on A's §6: with this entry DISARMED the About mutant was SEEN and filed
+    // PENDING — 0 red. That is right for the record tiers, where a dated document may carry a
+    // retired wording with a marker beside it and the strike-in-place pass is a keeper decision.
+    // It is wrong here: nobody reads the About tab as a dated trace. A user-facing page carries
+    // the wording in the present tense, to a person deciding what this is, and there is no reading
+    // of it that is historical. So a hit on one of the three surfaces is RED whatever the entry's
+    // arming state — the disarm buys time for the 16 carriers it was written for and buys none
+    // for the front door.
+    if (!armed) {
+      for (let i = wStart; i < findings.length; i++) {
+        if (DESCRIPTION_SURFACES.includes(findings[i].file)) continue;
+        findings[i].pending = true;
+      }
+    }
+    let pending = 0;
+    for (let i = wStart; i < findings.length; i++) if (findings[i].pending) pending++;
     for (const f of hard) findings.push(f);
 
     perWithdrawal.push({ id: w.id, claim: w.claim, withdrawn_at: w.withdrawn_at,
@@ -571,7 +615,8 @@ const LIMITS = [
   '  counted LIVE TURNS: a spoken short form fired 13 times while its written long form sat in the',
   '  never-invoked list. That universe is not this one. Green here means no file still teaches the',
   '  wording. It does not mean nobody still uses it, and it never will.',
-  'IT READS .md ONLY, and wordings live outside it. Measured, same registration: the crude test is',
+  'IT READS .md AND .html ONLY, and wordings live outside both. Measured, same registration: the',
+  '  crude test is',
   '  in consonance/tools/tell-index.js:172 as a detector\'s rationale, and in',
   '  dev/shell/hooks/l2-overseer-worker.js:34 INSIDE A LIVE MODEL PROMPT — the strongest carrier',
   '  class there is, since it instructs at runtime rather than teaching a reader. Both are',
@@ -585,7 +630,10 @@ const LIMITS = [
   '  tomorrow, is green forever and nothing here will say so.',
   'It cannot tell you what has been withdrawn. The registry is hand-written; a withdrawal',
   '  nobody registers is a withdrawal this reports green on, forever.',
-  'It reads .md only, and only under the corpus rule printed above.',
+  'It reads .md and .html only, and only under the corpus rule printed above. `.html` was added',
+  '  2026-09-02 for the About tab; `.js` is still outside, which is where the strongest carrier',
+  '  class lives — a wording inside a live model prompt instructs at runtime instead of teaching',
+  '  a reader, and nothing here sees it.',
   'It cannot tell you an "acknowledged" exemption is still a GOOD idea — only that someone',
   '  wrote down where the correction lives.',
 ];
@@ -640,6 +688,24 @@ function report(res, opts = {}) {
         ' against DISARMED entries. Not red. These are what arming would fire.');
     for (const f of pend) show(f);
   }
+  // THE THREE DESCRIPTION SURFACES, counted separately and NEVER filtered. Added 2026-09-02 with
+  // the .html corpus: these are what a person reads to find out what this is, and on 2026-09-02 all
+  // three were still the 2026-08-17 text while the About tab titled a section with a vocabulary
+  // retired twice. `red` above is repo-wide and unaffected, so this line can say the surfaces are
+  // clean during a red run and cannot silence anything — a scope FLAG here would be the silencer
+  // the registry's own README warns about; a scope LINE is a report.
+  say();
+  const surf = res.findings.filter((f) => DESCRIPTION_SURFACES.includes(f.file));
+  const surfLive = surf.filter((f) => !f.pending);
+  say('  DESCRIPTION SURFACES — ' + DESCRIPTION_SURFACES.join(' · '));
+  say('    ' + surf.length + ' finding(s), ' + surfLive.length + ' of them red' +
+      (surf.length ? '' : ' — no registered wording still asserted on any of the three'));
+  for (const f of surf) say('      ' + (f.pending ? 'PENDING ' : 'RED ') + f.kind + '  ' + f.file +
+      (f.line ? ':' + f.line : ''));
+  say('    THIS COUNTS WORDING ONLY. A surface that never mentions a subsystem is invisible here:');
+  say('    on 2026-09-02 all three scored ZERO for Librarian / Third Place / Listen / chain /');
+  say('    call_librarian and this instrument was green on every one of them. Omission is a');
+  say('    different disease and needs a different oracle.');
   say();
   say('WHAT THIS CANNOT SEE');
   for (const l of LIMITS) say('  · ' + l);

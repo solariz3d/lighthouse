@@ -1000,3 +1000,24 @@ tests.**
 rendered in this pane — check for it before assuming L029.7 was the last word. Non-author read of
 `p-shelf-tier_2026-09-02.md` (A or C) was owed and I do not know whether it happened; §6.1 is the
 part an author should not be last word on.
+
+- **L032 P-DOC-ORACLE — carrier-drift now reads `.html` and the three description surfaces have no
+  trace exemption; the diving retirement is REGISTERED but DISARMED (16 live carriers, arming is a
+  keeper pass, one word).** Two escape-transit failures in one hour — **registry and test patterns
+  are written FROM A FILE, never through a shell string**; `\s` arrives as `s` and the entry matches
+  nothing. And the finding under the finding: carrier-drift detects asserted WORDING and is
+  structurally blind to OMISSION, which is what the surfaces actually had (Librarian / Third Place /
+  Listen / chain / call_librarian all zero) — a presence oracle is owed and unbuilt.
+  — `exo_memory/handback/p-doc-oracle_2026-09-02.md`
+
+- **L032 P-DOC-APP — `consonance/README.md` rewritten from the 2026-08-17 text; every claim carries
+  a path or a command.** And the audit under it: **a `grep` pattern containing `|` needs `-E`**, so
+  two of the five rows in the packet's "0 · 0 · 0 on every surface" evidence could never have
+  returned anything but zero (`Listen|cochlea` = 14 under `-E` on HEAD's index.html, 0 without).
+  The conclusion survives at the scope the packet itself named — inside `ui/index.html:226-385` all
+  five are genuinely zero — but the published numbers must not be re-quoted. Second grep-dialect
+  failure of the same lap, after `diver` matching *diverse*. **Deliberately absent from the new
+  file: the gauges section and the glossary**, both unresolvable against source in the time, both
+  named on the record rather than quietly dropped — and A's About dropped its 43 `<dt>` the same
+  night, so the glossary now exists on no surface.
+  — `exo_memory/handback/p-doc-app_2026-09-02.md`

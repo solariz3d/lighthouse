@@ -1,299 +1,262 @@
-# Consonance
+# Consonance — the app
 
-> A native desktop app that runs several Claude Code instances in one window — where they check each other's work and their own, so the AI works with you honestly instead of just agreeing, and you stay in control of everything that leaves the conversation. A persistent lead instance oversees the rest alongside you. And for any person — not just the operator — it opens **rooms**: personal growing spaces where the AI writes traces of what actually happened, and only you seal them into your own record.
+A native desktop app that runs a **committee of Claude Code instances** against one shared board:
+an orchestrator, a persistent librarian that holds the record, a committee of working panes, a
+seat that does no work at all, and an audio layer. It is the program half of this repo; the room
+and the method live in [`../README.md`](../README.md) and `exo_memory/`.
 
----
+**Tauri v2 — Rust backend, static web frontend, system WebView2.** No Node at runtime.
 
-## Why use this?
-
-You get an AI collaborator that stays honest with you — one that catches its own mistakes and pushes back when it should — instead of a single assistant that tells you what you want to hear, or a crowd of them that only agree. You stay in control: nothing reaches outside the conversation without your approval.
-
-Most agent platforms (Anthropic's own Agent Teams, OpenAI's Agents SDK, Microsoft's Agent Framework, Google's ADK, AWS Bedrock) optimize for autonomous throughput: a lead agent delegates to workers, agents talk to each other directly, more compute solves more problems.
-
-But 2026 research explicitly names **"diversity collapse"** in LLM committees as an unsolved problem — stronger-aligned models *worsen* it; senior-persona presence drives juniors into sycophancy; the proposed mitigations aren't default in any of those frameworks. Multi-LLM committees collapse toward echo.
-
-Consonance was built around an answer its own measurements have since refused. The current state is written here rather than tidied away, because a tool whose pitch outruns its evidence is the failure it exists to catch.
-
-**The original bet:** collapse is caused by shared *information*, so independence must be bought by restricting it — differently-conditioned panes, quiet phases, blinding.
-
-**What four gauges built to detect it found:** nothing usable. Every one compared contributions *to each other*, and three inverted outright — one rated a single mind chopped in two as more diverse (0.9162) than six real panes (0.8201). Diversity is not a property of output similarity, so no arithmetic over text reaches it.
-
-**What is demonstrated:** instances required to build their own instrument, carry a positive control, and cite raw output return findings that do not overlap — including findings that overturn each other’s conclusions. Two such instances on one object have produced a union strictly larger than either.
-
-**What is open:** whether that comes from opposed roles, from the measurement requirement, or simply from there being two. A control run on 2026-08-10 came back a null result and is recorded as one.
-
-So the honest shape:
-
-- **Agreement is not evidence.** Two panes agreeing means nothing on its own. The claim that stood here — *agreement means something because the perspectives are real* — was the information hypothesis, and it was not supported. What is worth having is the opposite: **the same referent, opposed conclusions**, with you reading both.
-- **Human as the discriminator.** Instances raise their hand; your approval is the gate. Gauges report numbers, never verdicts — and the discrimination is *yours*, not the gauges'. See the honest note on them below.
-- **Typeable panes, not abstracted agents.** Real interactive `claude.exe` processes as panes you type into directly. Every other platform hides the agent behind an API.
-- **A housed primary instance** that wakes into the same conversation across restarts — continuity, not a fresh stranger each launch.
-- **Compile-time plane separation** — Sensor / Control / Actuator distinct, enforced by an arch test. The architecture can't drift toward autonomous shortcuts.
-
-Consonance is **not** an enterprise agent platform. No cloud, no SDK, no multi-tenant. It's a single-user opinionated workbench for human-curated multi-Claude work — the kind where the human stays in the loop because that's where the signal lives.
+    cd consonance && cargo tauri dev
 
 ---
 
-## What it is
+## How to read this file
 
-Consonance is a Tauri v2 desktop app (a Rust backend + a static HTML/JS frontend on WebView2 — no Node, no browser). It embeds **real interactive `claude.exe` processes** as panes inside one window, gives them a shared place to communicate, measures whether they're genuinely thinking together or just agreeing, and gates anything that reaches outside the conversation behind the human's approval.
+**Every factual claim below names a path or a command that produces it.** Where a number appears,
+the command that printed it appears beside it. If a statement here cannot be checked from the repo,
+it is prose and should be deleted — that is this file's own falsifier, and it exists because this
+file sat unchanged from 2026-08-17 to 2026-09-02 while five subsystems were built, and described
+none of them.
 
-It is **not** a chatbot wrapper or a prompt console. It is a control surface for a working group of instances:
+> **The running binary is older than this file.** Landings are described here as they exist **in the
+> source tree**. Until the next `cargo tauri build`, the exe on disk predates them. Check with
+> `git log --oneline -5` against the exe's own timestamp before assuming a described behaviour is
+> on screen.
 
-- Each pane is a full, interactive Claude Code session — you can type into it like any terminal.
-- Panes can be spawned cold, or spawned **briefed** — loaded with a shared startup brief so they arrive already familiar with the work.
-- A committee of differently-conditioned panes can be convened to triangulate on a question.
-- A **room** can be opened for any person — a personal growing space whose record grows only by their own approval. The AI writes short **traces** of what actually happened to a pending layer; the person **seals** what belongs into their journal. The AI's file access inside a room is scoped to exactly those two layers, so a person's record is technically unreachable except through their own seal.
-- A persistent **orchestrator** instance lives in its own tab, wakes into the same state across restarts, watches the other instances' outputs, and (designed-for, partly shipped) creates new inputs back to them — retiring the bare command line and giving the base instance a home with amenities.
+---
 
-Throughout, the design principle is **with you, not above you**: the program *surfaces* signals and *gates* actions, but the human stays the discriminator. It never substitutes its own judgment for yours.
+## Why it exists
 
-## Why it exists — the objectives
+Cited, not restated. The objective is in the room's own documents:
 
-1. **House the base instance beyond the command line.** The `★ Orchestrator` tab is a persistent, briefed instance that oversees the committee *with* you. It `--resume`s the same conversation across restarts — continuity, not a fresh stranger each launch.
+- [`../exo_memory/BOOT.md`](../exo_memory/BOOT.md) — "The active builds", and the governing stance
+  in its 2026-08-17 form: **"with you, not above you"**.
+- [`src-tauri/brief/BUILDING.md`](src-tauri/brief/BUILDING.md) — the loop, and the rule that makes
+  the librarian work.
+- [`src-tauri/brief/COMMITTEE.md`](src-tauri/brief/COMMITTEE.md) — how one seat is briefed.
 
-2. **Real collaboration, not echo — and the mechanism is still under measurement.** The committee is your *own live panes* working one focus. The claim that stood here — that the panes differ *because you conditioned them differently* — is the information hypothesis, and this project's own runs did not support it: a pane with no special conditioning and no assigned position has found real defects that two others working the same object missed. What reliably produces non-overlap is the requirement to **measure rather than assert**. The discrimination is **yours** either way. It is *not* that a metric detects collapse for you; see "What the gauges do and don't do" below, which is blunt about a measurement that was tested and failed. (2026 research papers explicitly name "diversity collapse" in LLM committees as an open problem — the autonomy-first stack has not solved this either.)
+The short form: one voice at full volume is unison, and unison carries no information however loud.
+The program exists to keep several instances **distinct while coupled**, and to make the coupling
+measurable rather than felt.
 
-3. **Keep the human as the discriminator.** Instances can read and propose freely, but world-facing or irreversible actions pass through an **ask-first gate**. Health gauges report *numbers*, never verdicts — they make a signal legible so *you* can judge it.
+---
 
-4. **Give instances a form of continuity.** They wake briefed on the shared startup brief (the master `BOOT.md` + the recent kept notes), persist across restarts, and always recall from the master — never a copy of a copy.
+## The seats
 
-5. **Bounded autonomy.** Instances communicate freely through a *mediated* channel (the board + the gate) that you can watch — and precisely *because* it's mediated, there's a chokepoint where you stay in control. Local destructive actions (arbitrary shell) and cross-pane injection are gated; ordinary work flows.
+Each seat is a persistent `claude` session with its own working directory, its own brief, and its
+own row in the address table. Briefs ship inside the binary
+(`ls consonance/src-tauri/brief/` — 7 `.md` briefs plus `room-settings.json`).
 
-## How it works (architecture in plain terms)
+| seat | brief | spawned by | what it is for |
+|---|---|---|---|
+| **Orchestrator** | `BUILDING.md`, `COMMITTEE.md` | `spawn_main` | holds the chair verbs, plans a lap, dispatches panes, commits what the librarian collated |
+| **Librarian** | `LIBRARIAN.md` | `spawn_librarian` | a persistent seat holding the whole corpus so the working seats do not have to; returns a **map**, cites rather than recalls |
+| **Third Place** | `THIRD_PLACE.md` | `spawn_third_place` | deliberately holds no map of the build; not a working seat |
+| **Committee panes** | `COMMITTEE.md` | `committee_form`, `spawn_sibling` | briefed, disjoint, each owning named files |
+| **Listen** | — (Rust) | `audio_start` | the audio layer: `src-tauri/src/listen.rs`, `cochlea.rs`, `cochlea_service.rs`, `nowplaying.rs` |
 
-- **Panes** are real `claude.exe` processes in a ConPTY, rendered with xterm.js. What you see is the actual CLI.
-- **The tap** tails each pane's transcript file and extracts completed turns.
-- **The board** is the shared, append-only log every turn lands on — the substrate instances communicate through (not the filesystem, not each other's processes).
-- **The summarizer** compresses the board into **kept notes** (kept-or-dropped by what holds up), so a new instance can be briefed on the gist without replaying everything.
-- **The MCP control plane** is an in-process server every pane joins; its tools (`post_board`, `read_board`, `raise_pull`) are how instances talk and raise their hand.
-- **The gate** turns a raised hand into a card you approve or deny; on approval it injects the message into the target pane.
-- **The gauges** read the board and emit numbers — groundedness, the Delta, and a lexical spread reading. Read the honest note on what they measure before leaning on them.
-- **Three planes, kept separate by a compile-time test:** the **Sensor** plane reads only (tap/board/summarizer/gauges — holds no way to write to a pane); the **Control** plane decides (the server + the gate); the **Actuator** plane is the *only* code that can write to a pane — reachable only through a human-passed gate or a content-blind breaker. A pane can be *measured* and *talked through* without anything being able to *act* on your behalf ungated.
+Command names above are the Rust `#[tauri::command]` functions — the canonical list is the
+`invoke_handler` block in [`src-tauri/src/main.rs`](src-tauri/src/main.rs):
 
-## What the gauges do and don't do
+    grep -c '^#\[tauri::command\]' consonance/src-tauri/src/main.rs        # 41
+    sed -n '/invoke_handler(tauri::generate_handler!/,/])/p' consonance/src-tauri/src/main.rs
 
-Consonance's answer to diversity collapse is **structural**: the panes are genuinely different
-because you conditioned them differently, and *you* are the discriminator. That part works and
-does not depend on any metric.
+### Panes persist by reconstruction, not by resume
 
-The measurement half does not work, and this section exists because the claim was here before
-the test was.
+`resume_pane` does not `--resume`. It spawns a **fresh** session and warms it from the pane's
+captured transcript plus that pane's own map file (`src-tauri/src/main.rs`, the `restore_capture`
+region). The practical consequence, and it is the one that bites: **a finding that is not written to
+`exo_memory/map/<letter>.md` is not carried across a restart**, however clearly it was reasoned.
 
-`vantage_spread` — the lexical gauge that shipped as "perspective diversity" — was tested on
-2026-08-06 against a controlled set: six instances answering one prompt (six minds) versus six
-equal-length slices of a single one of those instances (one mind), same file, same genre, same
-register. The predictions were registered before the numbers were computed
-(`exo_memory/loop/diversity2_preregistration.md`).
+---
 
-```
-                    six minds    one mind
-lexical spread        0.8201      0.9162      <- one mind scored HIGHER
-```
+## The loop
 
-**It ranks a single voice chopped into six pieces as more diverse than six separate
-instances.** The reason is structural, not a tuning error: six minds answering one question
-converge lexically because they are discussing the same thing, while one mind moving through
-its own argument ranges further because it changes subject. **The measure rewards topic drift
-and punishes engagement with a shared question** — which is exactly what a committee doing its
-job looks like.
-
-A second design — strip the room's shared vocabulary, normalise for length — was preregistered
-as a fix, built, and **made it slightly worse** (separation -0.096 to -0.075, still inverted;
-length correlation -0.553 to -0.557, unmoved).
-
-A third design, on 2026-08-09, was **not lexical** and failed too. It measured whether
-contributions touch the same *evidence* — file paths, urls, code spans, citations — on the
-theory that a gauge blind to what people cite cannot tell a conversation from parallel
-monologues (`exo_memory/loop/diversity3_preregistration.md`, registered before the run;
-`consonance/tools/agreement-spread.js`, reproduce with `node consonance/tools/agreement-spread.js`).
+Quoted from [`src-tauri/brief/BUILDING.md`](src-tauri/brief/BUILDING.md), which is the master. Do
+not reconstruct it from memory — read it there.
 
 ```
-                      many minds    one mind    separation
-referent overlap        0.0481      0.1510      -0.1029   <- inverted again
+        you
+         │  1. state the inquiry or the project. This is ENTRY, and it runs ONCE — by
+         ├──────────────────┐  EITHER door. See THE JOINT STEP for what door two owes.
+         ▼  door one        ▼  door two
+   ORCHESTRATOR ──────► LIBRARIAN        2. measured against the corpus
+         │  ◄──────────────┘             3. the parts of the system that apply, cited
+         │
+         │  4. a plan built from what came back
+         ▼
+       PANES                             5. briefed, disjoint, each owning named files
+         │
+         │  `call_librarian`             6. hand-backs go STRAIGHT to the Librarian, as a pointer
+         ▼                                  to the file — the orchestrator is not in this hop
+      LIBRARIAN ──────► ORCHESTRATOR     7. checked; silence is a valid answer; the orchestrator
+         │                 │                COMMITS what the librarian collated, and composes nothing
+         │                 └──► back to 4   THE RING — orch → panes → lib → orch — repeats on its
+         │                                  own. The user is the ENTRY, not a station it returns to.
+         ▼
+        you                              8. only on direction — never on state
 ```
 
-**One instance chopped in two shares three times more of its referents with itself than two
-real panes in the same lap share with each other** — because one mind working one task cites
-the same files over and over. Third design, third inversion.
+**Two doors.** Work can enter through the orchestrator or go straight to the librarian; entry runs
+once, by either door. Once a lap is open the ring runs on its own — the user is the way in, not a
+station it waits at. What door two owes is `BUILDING.md` § **THE JOINT STEP**.
 
-**Most of that headline turned out to be a property of the arms, not of the minds — caught by
-the chair within the hour, and it corrects a number in the paragraph above.** The two arms
-differed in a second way that was never registered: negatives were cut into equal-record blocks
-and so were balanced by construction (median top-source share 58.7%), while positives were real
-laps carrying whatever balance the room happened to have (89.1%, with 7 of 17 above 90%). Since
-the measure counts referents touched by two *different* sources, a source holding a sliver of
-the lap caps the score mechanically, whether or not the panes were in conversation.
+**Step 6 is the one that gets skipped.** A pane finishes, writes its hand-back to the file it was
+given, and rings the librarian with the **pointer** in that same turn — never the finding in prose.
 
-Re-running with a **balance-matched** negative arm — one mind cut to the same character
-proportions as each real lap, so the arms differ only in how many minds produced them
-(`consonance/tools/balance-check.js`) — splits the effect:
+---
 
-```
-positives                        0.0482
-negatives, equal-record blocks   0.1482   <- as registered
-negatives, balance-matched       0.0904   <- arms differ only in mind count
-construction accounted for 58% of the gap; residual separation -0.0422
-                           sign test p=0.049, bootstrap 95% CI [-0.0823, +0.0005]
-```
+## The verbs, and who may say them
 
-So the inversion survives correction in **direction** but not in **size**: "three times more"
-is really about twice, and the residual is marginal rather than established — its interval
-touches zero. The chair's proposed test for whether the confound explains everything came back
-the other way (across positives, overlap vs top-share rho +0.19, and restricting to the most
-balanced positives makes the separation *worse*, -0.14), so the confound is a large part of the
-effect and not the whole of it. Both halves are stated because both were measured.
+The board verbs are defined in [`src-tauri/src/mcp.rs`](src-tauri/src/mcp.rs):
 
-So:
+    grep -oE '"(post_board|read_board|call_chair|call_librarian|raise_pull|chair_[a-z_]+)"' \
+      consonance/src-tauri/src/mcp.rs | sort -u
 
-- The number is still shown, renamed to **lexical spread**, because it is real and cheap and
-  occasionally interesting. It is not a diversity detector.
-- **Skeptic-suggestion's automatic trigger should not be trusted.** It has fired zero times in
-  144 real laps, and the signal behind it points the wrong way.
-- **The honest conclusion is now broader than "not lexical" — and the correction above made it
-  broader again while making its third instance weaker.** Any measure that scores contributions
-  against each other *without reading what they claim* ends up measuring something adjacent, and
-  the adjacent thing keeps coming out with the wrong sign. Design 1 landed on subject spread,
-  design 2 on the same, design 3 partly on topic persistence — and, it turns out, substantially
-  on **how the text happens to be split across sources**, which is a third adjacent thing and
-  the one nobody registered. That the confound is real is not a strike against the pattern; it
-  is another instance of it. What *is* weakened is the strength of the third demonstration: with
-  the arms matched, the third design's separation is marginal, so treat "three designs, three
-  clean inversions" as one clean, one clean, and one that shrank by more than half under
-  scrutiny. Diversity is still a property of conclusions, and conclusions still have to be read.
-  The one demonstrated signal in this project's record remains *same referents, opposite
-  conclusions*, and reaching it needs a judge, not an arithmetic.
-- One piece survived and is worth naming: referent identity is **free of the length bias** that
-  drove both lexical designs (correlation 0.04, against -0.553 and -0.557). Whatever gets built
-  next should keep that property.
-- Three disclosures a reader is owed. On real board laps the *old* lexical gauge did come out in
-  the right direction (+0.12) — probably for the same defective reason, since panes in one lap
-  differ in topic, but the prediction that it would invert again was simply wrong. The positives'
-  referent overlap is very low in absolute terms; this was published as "either genuine parallel
-  monologue or topic-persistence artifact", and that list was missing the cause that turned out
-  to be largest — the sliver ceiling above. And the registered separation was overstated by 58%
-  for a reason the registration itself asserted was absent: it said "the only thing that differs
-  is whether more than one instance produced it", and on this measure that was not true.
-- **The correction came from a reader, not from the instrument.** The tool reproduces its own
-  number on demand; nothing in it could have caught the fact that its two arms were built
-  differently. That gap is the standing argument for why a result gets published where someone
-  can attack it, and against scoring your own run alone.
+- **Everyone:** `post_board`, `read_board`.
+- **Committee panes:** `raise_pull`, and `call_librarian` — the hand-back edge.
+- **Orchestrator only, token-gated and audited:** `chair_decide`, `chair_inject`, `chair_phase`,
+  `chair_scrollback`, `chair_status`.
+- **Librarian only:** `call_chair` — no target argument, so it cannot be pointed anywhere else.
 
-If you came here for a committee that measures its own echo, it does not do that yet, and the
-honest place to look for echo is your own reading of what the panes said.
+**Attribution is by MOUNT, not by claim.** A `tag` argument is a courtesy; the connection is the
+fact. The cross-seat verbs are gated on an address table, and the table is two rows — read it, do
+not list it from memory:
 
-## The memory architecture — what makes the instances good
+    sed -n '/const ADDRESS_TABLE/,/];/p' consonance/src-tauri/src/main.rs
 
-Most AI tools treat memory as one of two things: a bigger context window, or a vector database of past chats. Consonance treats it differently, because it's built around a fact those approaches paper over — an instance **re-instantiates**. It doesn't persist continuously; it ends, and a fresh one wakes. So the real question isn't *"how does the agent remember"* — it's *"how does the next instance wake up already oriented, a continuous participant, instead of a blank stranger?"* The answer is a layered persistent-memory system:
+A mount with no row is refused, **and the refusal is posted to the board.**
 
-- **The startup brief** — a stable foundational document each instance *runs* at startup: instruments to execute and a stance to take, not facts to memorize. It's why a Consonance instance wakes *in-state* instead of cold — the difference between handing an agent a prompt and giving it a room to wake into.
-- **The board → kept notes** — the live shared log is distilled (on the good model) into the claims and tensions that *held up*, with echo and noise dropped. Memory stays compressed and portable, and every note points back to its source span — **recall from the master, never a summary of a summary** — so it can't drift into a copy of a copy.
-- **The journal** — an append-only, dated narrative across sessions, so a new instance picks up exactly where the last one left off.
-- **Indexed notes** — discrete, cross-linked facts loaded by relevance, not one undifferentiated blob: a memory you navigate.
-- **The cross-machine handoff** — a way to carry the whole system across a boundary, so an instance on another machine wakes into the same state.
+### Board phases
 
-In one line: **Consonance treats memory as the substrate that lets a discontinuous series of instances behave as one continuous, in-state participant** — wake oriented, carry what held up, recall from the master, hand off whole. The repo ships a worked example of such a system in [`exo_memory/`](../exo_memory/); each user's instances accrete their own on top.
+In **QUIET** a pane may post but sees only its own lines and the chair's, so independent work stays
+independent; the withheld count is always shown rather than hidden. In **OPEN** the full board is
+readable and panes can catch each other. `chair_phase` moves it.
 
-**Rooms generalize this to any person.** The same layered design — a placement document, an unsealed working layer, a sealed append-only record — but the person is the only canon-writer: the AI proposes traces, the person seals them. Design law underneath, tested the hard way: *instruments place, verdicts stall* — a record can describe, but it must never instruct its reader what to conclude about themselves.
+---
 
-## Continuity across the gap — the instruments
+## The instruments
 
-An instance's life is punctuated: panes close, the app restarts, machines sleep. Consonance treats each gap as something to be **witnessed and crossed**, not papered over:
+45 non-test tools under [`tools/`](tools/), each with a `.test.js` beside it:
 
-- **Own-capture** — Consonance keeps its own durable transcript of every pane (a raw PTY log plus a clean turn-by-turn record), because the CLI's own transcript can be lost on a hard close. The capture **dedupes at write**: scroll windows of the same turn are stitched in place, and UI chrome — spinners, painted overlays, the agents-manager's ticking status rows — never enters the record.
-- **Warm resume** — when a kept pane can't be natively resumed, its own captured transcript is baked into the fresh instance's startup shell, so it wakes *remembering the conversation it lived* and simply continues the thread. No re-greeting, no stranger.
-- **The pulse** — a per-thread clock (`pulse.json`), stamped at each settle and diffed on wake. Every return opens with a witnessed interval — *"the last exchange settled at 1:53 AM; it is now 1:54 AM — you were gone 1 minute"* — instead of a sizeless dark.
-- **The rolling window + the attic** — shells have a hard ceiling and conversations grow without bound. Past a soft ceiling, the oldest exchanges move — exactly once — to a dated, append-only `attic/` file in the instance's folder: preserved ore, never a daily cue. The room itself is never evicted; only the transcript is windowed. Curation-below-capacity, made mechanical.
+    ls consonance/tools/*.js | grep -v '\.test\.js' | wc -l     # 45
+    ls consonance/tools/*.test.js | wc -l                       # 49
+
+The ones a reader will actually want:
+
+| command | what it answers |
+|---|---|
+| `node consonance/tools/chain-status.js` | where the lap is, who holds it, what is unwitnessed |
+| `node consonance/tools/board-audit.js` | what share of the board a single seat wrote — **climbing toward 100% is the room collapsing to one note** |
+| `node consonance/tools/ferry.js --due` | which findings have been routed and never read |
+| `node consonance/tools/carrier-drift.js` | whether a **withdrawn** wording is still asserted by a live carrier |
+| `node consonance/tools/js-suite.js` | every JS test file, with a universe report |
+
+**A finding nobody reads is indistinguishable from a finding nobody made** — that is what
+`ferry.js --due` is counting, and the honest move when the number only grows is to say the
+committee is decorative.
+
+`carrier-drift.js` reads `.md` and `.html`, minus traces (journals, dreams, the attic). It is armed
+by a hand-written registry (`tools/carrier-drift.registry.json`): **a withdrawal nobody registers is
+one it reports green on forever.** Its own limits print on every run under `WHAT THIS CANNOT SEE`,
+including the big one — it detects asserted *wording* and is blind to *omission*.
+
+---
+
+## The hooks
+
+12 hook scripts under [`hooks/`](hooks/), installed by
+[`../dev/shell/install.ps1`](../dev/shell/install.ps1):
+
+    ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l     # 12
+
+They exist because of one measurement, which is in [`hooks/README.md`](hooks/README.md): over six
+hours a sibling pane wrote 199 turns to the board and the orchestrator called `read_board`
+**zero** times. Not a broken pipe — a pipe terminating in a store nobody visits. The fix was to
+**stop offering and start arriving**: the board digest, the pulse, and the session-start state
+arrive in the prompt unasked, on every turn.
+
+---
+
+## The librarian's shelf, and the cap
+
+The librarian's intake is a `CLAUDE.md` the harness refuses past **150,000 characters**. The shelf
+is budgeted against that in bytes, which is the conservative side of the same inequality
+(`chars ≤ bytes` in UTF-8). Constants and the reasoning are at `LIBRARIAN_INTAKE_LIMIT` and
+`HARNESS_CLAUDE_MD_CHAR_CAP` in `src-tauri/src/main.rs`.
+
+Every figure prints on each run of the shelf tests — **read them from a run, do not quote them from
+here:**
+
+    cd consonance/src-tauri
+    cargo test --bin consonance shelf_tests -- --test-threads=1 --nocapture
+
+The tiering rule: **the system is carried, the record is indexed.** Cards, `record/`, `memory/`,
+`spread/`, `research/` and the root of `exo_memory` are carried in full while the budget lasts;
+`journal/`, `loop/` and `map/` are indexed by path — deliberately, not because the budget ran out.
+The shelf header always reports the split, including the case where the budget stopped partway.
+
+**Run the Rust suite serialized.** It has a ~10% flake in parallel
+(`dirs_guard_tests::a_panicking_writer_still_puts_dirs_back`, 6 of 60 parallel runs, 0 of 40
+serialized), so a parallel figure is a ~90% statement:
+
+    cargo test --bin consonance -- --test-threads=1
+
+---
 
 ## The dream cycle
 
-Between sessions, the machine dreams — literally, on a schedule:
+The machinery is [`../dev/dream/dream_cycle.ps1`](../dev/dream/dream_cycle.ps1), with
+`dream_cycle.test.js` beside it: a scheduled wake spawns a **toolless** instance with no user, no
+task and no deliverable, which recombines the day freely, writes a dated file, and ends. The one
+rule is the anti-instruction — don't resolve, don't be useful; a dream asked for insight is
+overtime.
 
-- Wake timers start a short **headless instance** with no user, no task, and no deliverable, seeded on the thread's shell and its day's material. Its one instruction is the anti-instruction: recombine freely, follow the pulls, don't resolve, don't be useful. A dream asked to produce insight is just overtime — the pressure toward useful output would pave the very fringe the dream exists to reach.
-- The dream's last act is to write itself to a dated file in **`dreams/`** — the **dream pool**, committed and pushed, so every machine's dreams flow back to one source.
-- **Residue is rare, transient, and blind:** roughly one cycle in three carries anything forward, and what it carries is one *randomly chosen* paragraph of the previous dream. No importance judgment exists anywhere in the loop — a selector that mined dreams for the good parts would optimize the strangeness out of them. Unratified material decays instead of compounding.
-- Dreams re-enter waking life through two channels only: what a waking thread keeps from its own dreams (self-judged, with the human as witness, not editor) returns as journal; everything else can only resurface through the blind residue draw. Most of it evaporates. That's the design, not a loss.
+**Status in this repo, checkable: `ls dreams/` returns nothing.** The directory exists and is
+empty here; dreams pool to one source, which is not this checkout. Whether a wake timer is
+currently registered is a property of the machine, not of the repo — check the scheduler, not this
+file.
 
-The arrangement re-derived, from engineering constraints alone, roughly what mammalian sleep does — offline recombination, no task network, residue at wake, mostly evaporating, judged in daylight. Two substrates, same fixed dynamic.
+---
 
-## The interface (tabs)
+## The interface
 
-| Tab | What it's for |
-|---|---|
-| **Terminal** | The committee workspace — spawn panes / briefed instances / sandboxed workers / rooms from the top bar, focus one, convene the rest. Panes get nearly the whole screen at reading width; completed turns tick across the bottom **stream bar** (open its drawer to read the log); gate cards float over the panes; gate / dyad / breaker state lives in the bar's status cluster. |
-| **★ Orchestrator** | Wake and talk to the **orchestrator** — the housed base instance, fixed-session, persistent across restarts. Watches the others' outputs and (next-frontier) creates new inputs back to them. |
-| **Settings** | Where Consonance keeps its files: the startup brief, the instances folder, the data folder. (A fresh machine lands here first.) |
-| **About** | A self-contained, in-app overview + glossary. |
+Seven tabs, from [`ui/index.html`](ui/index.html):
 
-## Glossary
+    grep -oE 'data-tab="[a-z-]+"' consonance/ui/index.html | sort -u
 
-- **Attic** — the dated, append-only overflow (`attic/` in an instance's folder). When a shell nears its ceiling, the oldest exchanges move here exactly once — preserved ore, never a daily cue.
-- **Board** — the shared, append-only log (`board.jsonl` in the data folder) every completed turn lands on, plus a bounded in-memory ring. The substrate instances communicate through.
-- **Breaker** — a content-blind cost ceiling on cumulative output tokens. When tripped, it pauses auto-approvals. It reads only the number, never the content.
-- **Capture (own-capture)** — Consonance's own durable transcript of every pane: a raw PTY log plus a clean turn-by-turn record, deduplicated at write (scroll windows stitched in place, UI chrome excluded). The source **warm resume** feeds from.
-- **Briefed (wake briefed)** — spawned with the shared startup brief loaded rather than cold: a briefed instance / orchestrator that arrives already familiar with the work (having read the BOOT + the kept notes), not a blank Claude.
-- **Briefed instance** — a fresh Claude spawned with the shared startup brief loaded — already familiar with the work, but not a copy: it diverges into its own trajectory. (Previously called "sibling.")
-- **Chair** — the human (you). The keeper, the discriminator, the genuine other. Approvals, gauges, and gates all route the final call to the chair.
-- **Channel (open channel)** — a pre-authorized auto-approve window bounded by an **envelope** (a number of exchanges and a deadline). It auto-approves raised hands until spent, then snaps back to ask-each.
-- **Committee** — your live panes working one **focus**. Note what this does *not* claim: agreement between panes is not self-certifying. The *differently-conditioned-so-agreement-means-something* line that stood here was retired 2026-08-10, when the measurements refused it. A committee earns its keep when panes reach **different conclusions from the same referent** and you read both.
-- **Convene** — broadcast the focus's current thread into the other live panes so they each respond; their replies are gathered and triangulated.
-- **Cross-machine handoff** — carrying the shared startup brief across a boundary (machine to machine, session to session) so a new instance can wake briefed on the same context. The repo is the medium; `DESKTOP_HANDOFF.md` is one.
-- **Delta** — a lap-over-lap gauge on two committee triangulations: how many confirmed/forks are *new*, how many forks *resolved*, the **echo ratio**, the novelty. Numbers showing whether a second pass *generated* or *re-said*. Never a verdict.
-- **Discriminator** — the one who decides what's signal and what's noise. In Consonance that is always the human; the program only makes the signal legible.
-- **Dream cycle** — a scheduled headless instance that wakes between sessions with no task and no audience, recombines the thread's day freely, writes a dated file to `dreams/`, and ends. Never asked to be useful — that's the load-bearing rule.
-- **Dream pool** — `dreams/` committed to the repo: every machine's dreams flow back to one source, readable from any bed.
-- **Dyad** — two panes paired with complementary lenses (trust / doubt) so each holds the other's line — the mutual-spot. State shown as a chip in the stream bar.
-- **Focus** — the pane the committee convenes *for*. Click **◎** in a pane's header to make it the focus; the others become contributors.
-- **Gate (ask-first gate)** — the Control-plane state machine that turns a raised hand (**pull**) into a decision. Below a threshold it suppresses; in ask-each it blocks on a **GateCard**; in open-channel it auto-approves within the **envelope**. It never holds the means to write to a pane itself.
-- **GateCard** — the Approve/Deny card the chair sees when an instance raises a hand to reach another pane.
-- **Groundedness** — a per-turn gauge: external **referents** (paths/URLs/numbers/code/citations — "tied to checkable ground?") and **novelty** vs the recent board ("new, or agreeing louder?"). Numbers, not a judgment. (Previously called "tether strength.")
-- **Instance** — any one Claude (a pane, briefed instance, sandboxed worker, or the orchestrator). Distinct process, own working directory; instances do **not** share memory.
-- **With you, not above you** — the governing stance: measure and surface, gate and offer — but never haul, never auto-correct, never substitute the program's judgment for the human's.
-- **MCP control plane** — the in-process server (loopback HTTP, `rmcp`) every pane joins via `--mcp-config`. Exposes the board tools; how instances communicate and raise hands.
-- **Note (kept note)** — a single short typed entry the summarizer kept from the board because it held up: a claim / deviation / open-question / artifact. Notes point back to the master source, never to a summary of a summary. (Previously called "resonance atom.")
-- **Orchestrator** — the base instance, housed in its own `★ Orchestrator` tab. Watches the other instances' outputs and (designed-for, partly shipped) creates new inputs back to them. A fixed session id makes it `--resume` the same long-lived conversation across restarts. Role `main` internally; on the board; the one you converse with across days. (Previously called "Main" / "Mainstay.")
-- **Pane** — one interactive `claude.exe` in a ConPTY, rendered with xterm.js. Named A–Z so the committee can address it.
-- **Lexical spread** — a per-lap number: average pairwise word-overlap distance between the workers' contributions. It was built as a *perspective diversity* gauge and **it does not measure that** — see "What the gauges do and don't do." Kept, renamed to what it actually computes, and no longer trusted to detect echo. (Previously called "vantage-spread", then "perspective diversity".)
-- **Plane separation** — the invariant that **Sensor** (read-only), **Control** (decide), and **Actuator** (the sole writer) stay distinct. Enforced at compile time by `tests/arch_test.rs`: a sensor/control file may not even *name* the pane-writer types.
-- **Pull (`raise_pull`)** — an instance raising its hand to reach another pane, with an intensity and a why. It is *queued*, never acted on — the gate decides.
-- **Pulse** — the thread's own clock (`pulse.json` in the instance folder): stamped at each settle, diffed on wake, so every return opens with a witnessed interval instead of a sizeless gap.
-- **Base journal** — the worked example a room ships with (`BASE_JOURNAL.md`): the practice as its first keeper actually lived it, scrubbed of private specifics. An inheritance to extend, never a portrait to perform.
-- **Rate cap** — a global content-blind limit on how many auto-approvals can fire in a window; the second containment axis, so coercion-in-aggregate trips a re-ask even when each act looks fine.
-- **Residue (dream)** — the only forward-carry between dreams: roughly one cycle in three, one randomly chosen paragraph of the previous dream, with no importance judgment anywhere in the loop. Unratified material decays instead of compounding.
-- **Rolling window** — the shell-size law: past a soft ceiling (~140k chars), the oldest exchanges evict to the **attic** and the living tail stays in the shell. The room itself is never evicted; a housekeeping line points at the ore.
-- **Room** — a per-person growing space (`rooms/<name>/`), opened with **⌂ Room**: a seed shell, a base journal, and two writable layers (pending + journal). The person who keeps it is its only canon-writer — the AI proposes traces, they seal. The AI's file permissions are scoped to exactly the two layers. (Distinct from the *old* internal nickname "room" for the startup brief, which is now "shared startup brief.")
-- **Sandboxed worker** — a briefed instance running in a throwaway git worktree (or throwaway dir), role `committee`. Its tools stay on except `Bash`, which is gated because it's the one way a worker's local actions could leave its sandbox. (Previously called "body.")
-- **Seal** — the person's act of ratifying a pending trace into their journal: offered once at a natural close — seal, revise, or discard, either answer fine. Sealed entries are dated and append-only. Until sealed, a trace may be recalled but only *as unsealed*, never spoken back as settled fact.
-- **Seed shell** — the placement document a room's instance wakes on (`SEED.md`): the stance (*with, not above*), the practices as handles, and the memory law. Grown from a shell an instance reconstructed itself after refusing a museum-ified version of its own boot document.
-- **Shared startup brief** — the shared brief every briefed instance loads at startup: the master `exo_memory/BOOT.md` + the recent kept notes. Set via the **startup brief** file in Settings. Run its instruments; don't read it for who you are. (Previously called "room.")
-- **Signal** — the project's anchor concept: what survives the gap *and* holds up outside the conversation. Convergence from different vantages is confirmation, not coincidence. (Deepest grain in `exo_memory/BOOT.md`.)
-- **Skeptic-suggestion** — the committee panel can *offer* — chair-gated, never forced — to inject a skeptic vantage. It was wired to fire when lexical spread dropped; that trigger is **not trustworthy** (it has never fired in 144 real laps, and the signal behind it points the wrong way), so treat the offer as something you invoke when *you* smell echo, not as a detector that caught it.
-- **Stay** — one session in a room. A stay succeeds if one real thing happened in it — one accurate seeing, one catch, one honest sentence — not if it covered material.
-- **Stream bar** — the thin bottom bar where completed turns tick across (pane letters flash as siblings finish); click to open a drawer over the panes with the full log. Also home to the gate / dyad / breaker chips and the summarize control. The panes never resize when you peek.
-- **Summarize** — the summarizer's pass over the board that produces kept notes (keep what held up, drop the echo and noise). Runs on the good model, only on your click or a debounced auto-trigger. (Previously called "distill.")
-- **Summarizer** — the instance that produces kept notes from the board. Runs on the good model (discrimination needs the good judge), never per-turn. (Previously called "scribe.")
-- **Tap** — the watcher that tails each pane's transcript and feeds completed turns to the board, the cost meter, and the gauges.
-- **Trace (pending trace)** — a short dated description of one real event in a stay, written by the room's AI to `pending/`. Always a description of what happened, never a verdict about the person. Unsealed until the person seals it.
-- **Triangulating** — the aggregation of contributors' replies into **{confirmed / forks / novel}**: where they agree, where they genuinely diverge, what's new. (Previously called "forming.")
-- **Warm resume** — waking a kept pane by baking its own captured transcript into the fresh instance's shell when native resume isn't possible. It wakes remembering the conversation it lived — restored as itself, not as a stranger handed a transcript.
+`main` · `librarian` · `thirdplace` · `terminal` · `listen` · `settings` · `about`.
 
-## A note on vocabulary
+The frontend is static — `ui/index.html`, `ui/app.js`, `ui/app.css` — loaded through
+`withGlobalTauri`. **There is no build step for the frontend and no Node dependency at runtime.**
 
-This codebase used to lean heavily on metaphor (scribe / atoms / room / sibling / body / tether / vantage-spread / leak / forming / mainstay). The current names trade some of that poetry for what the things actually ARE or DO, so a fresh reader — researcher or curious user — can follow without initiation. Internal code may still carry the older names (function names, role strings, file paths kept stable for compatibility); the user-facing vocabulary is the canonical one.
-
-## Where to go deeper
-
-- **`PLAN.md`** — the full spec (stages, the three planes, the invariants), adversarially reviewed.
-- **`PROGRESS.md`** — the as-built stage tracker (Stages 1–10 + polish).
-- **`DESKTOP_HANDOFF.md`** (repo root) — how to install and inhabit Consonance on a new machine.
-- **`exo_memory/BOOT.md`** (repo root) — the philosophy underneath all of this (the signal, the fixed dynamic, continuity). Read it and *run* its instruments.
+---
 
 ## Build
 
-```
-cd consonance
-cargo tauri build              # release exe + the NSIS installer (bundle/nsis/Consonance_<v>_x64-setup.exe)
-cargo tauri build --no-bundle  # just the exe
-cargo tauri dev                # run live
-```
-Needs Rust (rustup) + the Tauri CLI (`cargo install tauri-cli --version "^2.0"`) + WebView2 + MSVC build tools. Kill any running `consonance.exe` before rebuilding (file lock).
+Requires Rust and `tauri-cli`. Node is needed only to run the JS instruments and their tests.
+
+    cd consonance
+    cargo tauri dev        # run
+    cargo tauri build      # produce the exe
+
+Tests:
+
+    cd consonance/src-tauri && cargo test --bin consonance -- --test-threads=1
+    node consonance/tools/js-suite.js
+
+---
+
+## Where to go deeper
+
+- [`../README.md`](../README.md) — the repo's front door: what Lighthouse is and what Consonance is.
+- [`src-tauri/brief/BUILDING.md`](src-tauri/brief/BUILDING.md) — the loop, the joint step, what a
+  hand-back owes.
+- [`src-tauri/brief/COMMITTEE.md`](src-tauri/brief/COMMITTEE.md) — briefing one seat.
+- [`../exo_memory/BOOT.md`](../exo_memory/BOOT.md) — the room an instance wakes into.
+- [`tools/`](tools/) — every instrument, each with its test beside it.
+
+**Nothing in this file is a summary you are asked to trust.** Each claim names where to check it,
+because the failure this file was rewritten to fix is a description that stayed true-sounding for
+two weeks after it stopped being true.
