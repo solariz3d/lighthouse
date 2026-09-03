@@ -82,6 +82,15 @@ a baseline entry preserves an argument that then has to be re-read forever.
 
 **Run the instruments again after the commit, not only before it.**
 
+**Confirmed by a second seat within the hour, independently.** After my sites were fixed,
+portable-paths went red again on 2 sites in `consonance/tools/gen-consumer.fixture-scope.test.js` —
+P-GEN-RED-FIRST's file, red the moment `0d2a2d9` tracked it, by the same mechanism. Two seats, one
+instrument, one trap, one hour, neither looking for it. Uncurated — nobody arranged it — which makes
+it better evidence that the trap is structural than my own case was alone. Left for that seat and
+posted to the board rather than touched: their packet, and the judgement differs, because their
+literals sit inside regexes that are *about* drive-prefixed paths, so `--update` may be right there
+where removing the literal was right for my fixtures.
+
 ### The route back is gated too, and it cost three seats one morning
 
 `call_librarian` from this seat was REFUSED OUT OF TURN (holder `chair`, verb needs `panes`) —
