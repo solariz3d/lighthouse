@@ -1055,3 +1055,20 @@ part an author should not be last word on.
   the gate closed (correct direction), and a PARKED note that QUOTED "WHAT YOU OWN" made the parser
   hit the blockquote and derive zero paths — prose can silently disable its own ownership block.
   — `exo_memory/handback/p-watcher-liveness_2026-09-02.md`
+
+- **2026-09-03 · D005 P-CONSUMER-REG.** The split predicate is THREE classes, not two — INSTRUMENT /
+  TRACE / STATE — because a two-way cut had nowhere to put `record/`, which the map placed on both
+  lists and which `gen-consumer.js:91` already ships. R2 makes that shipping correct for a reason: a
+  trace ships iff a shipped instrument cites it by name. The map's falsifier could not fire — three of
+  the four wake proofs need a running committee and the fourth's instrument is the keeper's eye — so it
+  was replaced with two legs, thresholds fixed before any number existed. Measured: the three DANGLING
+  regexes catch 3 of 44 real citations (they require an `exo_memory/` prefix the citations don't have,
+  and no rule names `librarian/`, which is 12 of the 44); `exo_memory/memory/` ships 0 files;
+  `chain-status.js` on a cold data dir is 0 bytes / exit 0 with a green positive control. **My
+  pre-registered prediction was REFUTED** — `isFixture` means identity-ONLY, not never-rewritten, so
+  the Regina fixture became "Example City" and the scan had nothing to catch. The refutation was worth
+  more than the prediction: running the generator found `Regina, SK` surviving in the shipped Settings
+  UI (`ui/index.html:243`) because the rule matches one spelling, and found the generator's own
+  UNPORTABLE-fixture report (18 files) — a fifth per-citation ruling I had under-read the file to miss.
+  **The lesson to carry: I predicted from a mechanism I had read the name of and not the body of.**
+  — `exo_memory/loop/consumer_registration_2026-09-03.md` (5379026 registered UNRUN, 67b1da7 scored)
