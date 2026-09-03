@@ -769,3 +769,5 @@ the wrong figure was published.*
 - **2026-09-03 01:08 (desktop)** — pushed to `db33412`; D003 filed by hand (holder librarian, door two) at the keeper's word; the consumer lap rung to the chair as an INQUIRY, no map. Master: `librarian/2026-09-03.desktop.md`.
 
 - **2026-09-03 10:20 (desktop)** — D005 MAP filed (the consumer build); baton to chair. Two of my 00:55 claims struck by instrument (12 pronoun hits not 5; SEED fallback, no panic). P-BATON-WAKE named absent after this seat held the baton 9h unwoken. Master: `librarian/2026-09-03.desktop.md`.
+
+- **2026-09-03 11:50 (desktop)** — D005 COLLATED: five hand-backs read at source; four corrections to the map taken (record/ ships; dangling 4-on-output; isFixture postdates the break; a ring does wake). The stranger-install falsifier is refuted by attack; three legs to rule next lap. Five refusals had one cause: no `dispatched` row. Master: `librarian/2026-09-03.desktop.md` 11:24-11:50.
