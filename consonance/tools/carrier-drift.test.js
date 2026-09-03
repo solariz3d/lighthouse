@@ -703,3 +703,63 @@ test('a description surface has NO trace exemption — a hit there is RED even w
   assert.strictEqual(g.length, 1);
   assert.ok(g[0].pending, 'a record-tier hit must stay pending under a disarmed entry');
 });
+
+// ── THE DATED VERBATIM EXTRACT, a trace class that arrived after the prefix rule was written ──
+//
+// `exo_memory/map/M-<date>.md` is a MECHANICAL, VERBATIM extract of one seat's own prose for one
+// day — its own header says "Extracted mechanically from <transcript>. Nothing here is a summary."
+// That is the trace definition in this tool's header, word for word: a record of what was believed
+// on a date. It landed in ad4e615 (2026-09-01 07:47) under a path prefix the TRACE list does not
+// carry, and carrier-drift went from 1 finding to 6 the same night.
+//
+// The tests below are written so the rule cannot become a silencer. Three bars:
+//   · the DECLARATION is the discriminator, never the path — a hand-written file at the same
+//     path is still a carrier;
+//   · the LIVE pane maps in the same directory (A.md, M.md, README.md) stay carriers, because a
+//     pane is respawned from its own map and a map teaching a withdrawn claim keeps teaching it;
+//   · the rule PRINTS, because a corpus rule nobody can see is the false-green class this tool's
+//     own header names.
+const EXTRACT_DECL = "**431 turns of this seat's own prose, verbatim, in order. Extracted mechanically\n" +
+  'from `~/.claude/projects/x/y.jsonl`. Assistant text blocks only. Nothing here is a summary.**\n\n';
+
+test('a dated map extract that DECLARES itself mechanically extracted is a TRACE', () => {
+  const root = tmpTree({
+    'exo_memory/map/M-2026-08-23.md': EXTRACT_DECL + 'the human remains the only decorrelated instrument.\n',
+  });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.strictEqual(res.red, false, 'a verbatim record of a past day is not a carrier');
+  assert.strictEqual(res.counts.traces, 1);
+  assert.strictEqual(res.counts.carriers, 0);
+});
+
+test('THE DATED PATH ALONE CONFERS NOTHING — a file there that does not declare itself is a CARRIER', () => {
+  const root = tmpTree({
+    'exo_memory/map/M-2026-08-23.md': 'the human remains the only decorrelated instrument.\n',
+  });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.strictEqual(res.red, true, 'position must not confer trace status — that is the silencer');
+});
+
+test('a LIVE pane map in the same directory stays a CARRIER even carrying the declaration', () => {
+  const root = tmpTree({
+    'exo_memory/map/A.md': EXTRACT_DECL + 'the human remains the only decorrelated instrument.\n',
+  });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.strictEqual(res.red, true, 'A.md is read at every wake of pane A; it is used, not merely recorded');
+  assert.strictEqual(res.counts.carriers, 1);
+});
+
+test('the corpus line NAMES the dated-extract rule — an unprinted corpus rule is a false green', () => {
+  const root = tmpTree({ 'exo_memory/map/M-2026-08-23.md': EXTRACT_DECL });
+  const res = CD.scan({ root, registry: reg([]) });
+  assert.match(CD.report(res), /dated verbatim extract/i);
+});
+
+test('THE BAR over the REAL tree: no finding survives in a dated verbatim extract', () => {
+  const res = CD.scan({});
+  const inExtracts = res.findings
+    .filter((f) => /^exo_memory\/map\/[A-Z]-\d{4}-\d{2}-\d{2}\.md$/.test(f.file || ''))
+    .map((f) => f.file + ':' + f.line);
+  assert.deepStrictEqual(inExtracts, [],
+    'five of this tool\'s six findings were records of the withdrawal, not assertions of it');
+});

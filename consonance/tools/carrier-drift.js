@@ -102,6 +102,51 @@ const TRACE_PREFIXES = [
   'dev/one-shot/',   // landed unmodified as a trace, by its own header
 ];
 
+// ── THE DATED VERBATIM EXTRACT, and why a prefix could not carry it ───────────────────────
+//
+// `ad4e615` (2026-09-01 07:47) landed `exo_memory/map/M-<date>.md`: one seat's own prose for one
+// day, extracted MECHANICALLY from its transcript, whose header says "Nothing here is a summary."
+// That is this file's own definition of a TRACE, word for word — a true record of what was
+// believed on a date, which maintenance law 2 forbids rewriting. It landed under `exo_memory/map/`
+// and this tool went from 1 finding to 6 the same night. All five new ones are the librarian
+// REPORTING a withdrawal (two of them are it SPECIFYING THIS REGISTRY), and none asserts anything.
+//
+// A PATH PREFIX CANNOT EXPRESS THIS, and reaching for one would have been the disaster. The same
+// directory holds `A.md`, `M.md` and `README.md` — the live pane maps, and a pane is respawned
+// FRESH from its own map (BUILDING.md, WHAT A HAND-BACK OWES). Exempting `exo_memory/map/` would
+// have silently taken the strongest carrier class in the room out of the corpus while reading as
+// housekeeping. That is the Q3 false-green class named forty lines above.
+//
+// SO THE DISCRIMINATOR IS THE FILE'S OWN DECLARATION, NEVER ITS POSITION. The path pattern only
+// bounds the blast radius; the file must SAY it is a mechanical extract. Measured, 2026-09-03:
+// 8 of 8 dated extracts declare, 0 of 3 live maps do. A hand-written file at the same path stays
+// a carrier, which is the bar this rule is tested against — because "it sits in the right folder"
+// is exactly the positional inference this tool exists to refuse.
+//
+// FALSIFIER, registered before adoption: if a dated extract is ever found ASSERTING a withdrawn
+// claim as live guidance rather than recording it, the declaration is not the discriminator and
+// this rule is a silencer — strike it and register the sites by hand instead. Checkable by
+// reading any finding this rule removes; the five it removes today are quoted in the hand-back.
+const TRACE_EXTRACT_PATH = /^exo_memory\/map\/[A-Z]-\d{4}-\d{2}-\d{2}\.md$/;
+const TRACE_EXTRACT_DECLARATION = /Extracted mechanically/i;
+const TRACE_EXTRACT_RULE =
+  'dated verbatim extract (exo_memory/map/<X>-<date>.md declaring "Extracted mechanically")';
+
+/** A dated map file is a trace only if it DECLARES itself a mechanical extract. Position never. */
+function isDatedExtract(root, rel) {
+  if (!TRACE_EXTRACT_PATH.test(rel)) return false;
+  try {
+    return TRACE_EXTRACT_DECLARATION.test(fs.readFileSync(path.join(root, rel), 'utf8').slice(0, 4000));
+  } catch (e) {
+    return false;   // unreadable is not exempt
+  }
+}
+
+/** The one trace predicate. Everything that splits carriers from traces goes through here. */
+function isTraceFile(root, rel) {
+  return TRACE_PREFIXES.some((p) => rel.startsWith(p)) || isDatedExtract(root, rel);
+}
+
 // ── CH-4: the instruction-reachable set ──────────────────────────────────────────────────
 // WHAT THIS IS AND WHAT IT IS EMPHATICALLY NOT. `carrier_surface_2026-08-25.md` (9f4f888) found
 // five channels by which retired wording reaches a waking instance. CH-4 is the one with no
@@ -216,7 +261,7 @@ function ch4Walk(root) {
   // A TRACE can be instruction-reachable and still keeps its wording by design (BOOT names
   // `journal/` as a class). Including one here would label it CH-4 while the scan skips it —
   // two rules disagreeing about the same file, inside a tool whose subject is exactly that.
-  const isTrace = (f) => TRACE_PREFIXES.some((p) => f.startsWith(p));
+  const isTrace = (f) => isTraceFile(root, f);
   const kept = [...files].filter((f) => !isTrace(f)).sort();
   const tracesReached = [...files].filter(isTrace).sort();
   return { files: kept, tracesReached, depth, skipped, missingRoots };
@@ -304,8 +349,8 @@ const DESCRIPTION_SURFACES = ['README.md', 'consonance/README.md', 'consonance/u
 
 function corpus(root) {
   const all = walk(root, root, []).sort();
-  const traces = all.filter((f) => TRACE_PREFIXES.some((p) => f.startsWith(p)));
-  const carriers = all.filter((f) => !TRACE_PREFIXES.some((p) => f.startsWith(p)));
+  const traces = all.filter((f) => isTraceFile(root, f));
+  const carriers = all.filter((f) => !isTraceFile(root, f));
   return { all, traces, carriers };
 }
 
@@ -644,7 +689,7 @@ function report(res, opts = {}) {
   say('CARRIER DRIFT — registered withdrawals vs the carriers that still assert them');
   say();
   say('  corpus: ' + res.counts.carriers + ' carriers · ' + res.counts.traces +
-      ' traces skipped (' + TRACE_PREFIXES.join(', ') + ')');
+      ' traces skipped (' + TRACE_PREFIXES.join(', ') + ', ' + TRACE_EXTRACT_RULE + ')');
   if (res.counts.ch4 !== undefined) {
     say('  CH-4:   ' + res.counts.ch4 + ' instruction-reachable from ' + CH4_ROOTS.join(' + ') +
         ' at depth ' + CH4_DEPTH + ' · ' + res.counts.ch4InCorpus + ' of them inside the scanned corpus' +
@@ -762,4 +807,5 @@ if (require.main === module) {
 module.exports = {
   scan, census, collapse, corpus, report, ch4Walk, ch4Targets,
   TRACE_PREFIXES, CH4_ROOTS, CH4_DEPTH, CH4_SEEDED_DIRS, CH4_BRIEF_DIR, REPO, REGISTRY,
+  TRACE_EXTRACT_PATH, TRACE_EXTRACT_DECLARATION, TRACE_EXTRACT_RULE, isDatedExtract, isTraceFile,
 };
