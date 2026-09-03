@@ -370,3 +370,62 @@ Registered UNRUN. Scored below, in a separate commit, so the order is checkable 
    unannounced repo. A number chosen with no prior is honest about its timing and not about its value.
 5. **§4.** I claim the carrier defect *is* the predicate failing rather than a footnote. That is an
    argument, not a measurement, and it is the sentence in this document I would most like attacked.
+
+---
+
+## 8 · THE PREDICTION, SCORED — REFUTED, and the refutation is worth more than the prediction was
+
+Run after the commit above, so the order is in git and not in my word:
+
+    T=$(mktemp -d) && node consonance/tools/gen-consumer.js --out "$T"
+    -> exit 0. A tree was written. identity rewrites: 43 · machine rewrites: 0
+       fixtures (identity-only, never rewritten): 75 · fixtures with UNPORTABLE references: 18
+
+**The prediction is refuted, and it was refuted because I misread the mechanism I predicted from.**
+`isFixture` (`gen-consumer.js:298`) does not mean *never rewritten*. It means **identity-only**: a fixture
+still gets `deidentifyTokens`, it is only spared the path and dangling rewrites. The generated
+`main.rs:7974-7977` reads `"ambient_lat": 12.3456 · "ambient_lon": -65.4321 · "ambient_label": "Example
+City" · "ambient_tz": "America/New_York"`. The scan had nothing to catch. **§3's sentence about that
+fixture — "a test's data, not a fallback" — stands; my inference from it did not.**
+
+**What the run found instead, which no section above anticipated.**
+
+**(i) The city leak the rule was written for survives, in the product's own UI.** The IDENTITY rule is
+`/Regina,\s*Saskatchewan/`. Three bare `Regina` hits are in the generated tree and none match it:
+
+    consonance/ui/index.html:243   "Blank = default (Regina, SK)."   <- user-visible Settings text
+    consonance/tools/baton-wake.js:7                                  <- a comment, "…-> map 10:06:59, Regina"
+    exo_memory/record/third_place_prehistory_2026-08-30.md:53         <- "Regina is UTC−6"
+
+The first is the one that matters: **a stranger opening Settings is told the default sky is the keeper's
+city.** A rule that matches one spelling of a place name is a rule that catches the spelling, not the place.
+Named, not fixed — I do not hold that file.
+
+**(ii) The generator already has the channel §2 says it lacks, and it is better than my patch.** It reports
+**18 files with UNPORTABLE references** by name and count — `carrier-drift.test.js` (15), `forget-rate.test.js`
+(22), `main.rs` (7), `lap-row.test.js` (5) — and states the reason it will not rewrite them: *editing a
+fixture trades an honest failure for a green one.* **I under-read the file.** §2's 3-of-44 figure is
+still correct about the three DANGLING *regexes*, and it is not the whole story: the generator's answer to
+dangling-in-fixtures is to REPORT rather than rewrite, which is a fourth ruling my C1–C4 does not contain.
+
+**So §2 is amended by its own run, not by argument:**
+
+    C5  UNPORTABLE-IN-FIXTURE — a citation to STATE inside a file isFixture() calls a fixture.
+        REPORT IT, NEVER REWRITE IT. The generator already does this for 18 files. C2/C3 apply to
+        PROSE only; applying them to a fixture is the exact failure gen-consumer.js:294-297 was
+        built to stop (three shipped suites green over rewritten data).
+
+**(iii) One thing the identity path does that is worth a second look, and I am not claiming it is a
+defect.** The fixture rewrite changed assertion *data* — `Regina, Saskatchewan` → `Example City`, real
+coordinates → `12.3456`. That specific test survives correctly (it asserts `is_err()` on *numeric*
+coordinates and the substitutes are still numeric). But identity-rewriting a fixture is the same motion the
+dangling path is forbidden to make, and it is unguarded. **I checked one assertion of 75 identity-rewritten
+fixtures. The other 74 are unchecked and that is the shape of the 08-23 break.**
+
+**What §5 Leg 1 would have to become to catch (i) or (iii):** nothing about a cold data dir touches either.
+Both are properties of the GENERATED tree, and both were found by running the generator once. That is a
+third leg neither of us registered — *run the generator and read its own report* — and it is cheaper than
+both of mine.
+
+**Scored honestly:** one prediction registered, one refuted, zero confirmed. The finder on (i) and (ii) is
+this run, not me; the misreading in §5 is mine and is the entry, not the catch.
