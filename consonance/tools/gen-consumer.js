@@ -140,6 +140,8 @@ const EXCLUDE = {
     'the generator does not ship itself; it is a property of the private tree',
   'consonance/tools/gen-consumer.test.js':
     'the generator test names the exclusion list, which is a description of exactly what was withheld',
+  'consonance/tools/gen-consumer.fixture-scope.test.js':
+    'requires gen-consumer.js, which does not ship; it would crash on load in a consumer tree',
 };
 
 /* ------------------------------------------------------------------ leak classes
