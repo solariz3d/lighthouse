@@ -19,9 +19,9 @@ function t(name, fn) {
 }
 
 const PANES = [
-  { pane: '0c0c0c0a-0000-4000-8000-000000000a01', cwd: 'C:\\Consonance\\instances\\main' },
-  { pane: '0c0c0c0b-0000-4000-8000-00000000115b', cwd: 'C:\\Consonance\\instances\\librarian' },
-  { pane: '46d3d352-36af-4947-9c40-78515a92c0c0', cwd: 'C:\\Consonance\\instances\\sibling-181f513d' },
+  { pane: '0c0c0c0a-0000-4000-8000-000000000a01', cwd: '\\Consonance\\instances\\main' },
+  { pane: '0c0c0c0b-0000-4000-8000-00000000115b', cwd: '\\Consonance\\instances\\librarian' },
+  { pane: '46d3d352-36af-4947-9c40-78515a92c0c0', cwd: '\\Consonance\\instances\\sibling-181f513d' },
 ];
 
 // A hand-off: lap open, then a row naming the librarian, written at t=1000.
@@ -36,16 +36,16 @@ const base = (over) => Object.assign({
 // ── STATION RESOLUTION ─────────────────────────────────────────────────────────────────────────
 
 t('main resolves to the chair station', () => {
-  assert.strictEqual(bw.stationOfCwd('C:\\Consonance\\instances\\main'), 'chair');
+  assert.strictEqual(bw.stationOfCwd('\\Consonance\\instances\\main'), 'chair');
 });
 t('librarian resolves to itself', () => {
-  assert.strictEqual(bw.stationOfCwd('C:/Consonance/instances/librarian'), 'librarian');
+  assert.strictEqual(bw.stationOfCwd('/Consonance/instances/librarian'), 'librarian');
 });
 t('any other instance dir is a committee pane', () => {
-  assert.strictEqual(bw.stationOfCwd('C:\\Consonance\\instances\\sibling-eeb329ed'), 'panes');
+  assert.strictEqual(bw.stationOfCwd('\\Consonance\\instances\\sibling-eeb329ed'), 'panes');
 });
 t('a trailing separator does not change the station', () => {
-  assert.strictEqual(bw.stationOfCwd('C:\\Consonance\\instances\\main\\'), 'chair');
+  assert.strictEqual(bw.stationOfCwd('\\Consonance\\instances\\main\\'), 'chair');
 });
 t('no cwd is not a station', () => {
   assert.strictEqual(bw.stationOfCwd(null), null);

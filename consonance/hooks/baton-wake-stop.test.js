@@ -29,7 +29,7 @@ function mkdir() {
 }
 
 const PANES = [
-  { pane: '0c0c0c0b-0000-4000-8000-00000000115b', cwd: 'C:\\Consonance\\instances\\librarian' },
+  { pane: '0c0c0c0b-0000-4000-8000-00000000115b', cwd: '\\Consonance\\instances\\librarian' },
 ];
 
 /* A hand-off written NOW, so it lands after the baseline stop the harness records. */
