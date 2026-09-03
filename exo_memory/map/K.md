@@ -69,3 +69,22 @@ an ambiguous prefix already fell through to `unknown`. Removed rather than kept 
 `exo_memory/handback/p-baton-wake_2026-09-03.md` — the reader, the Stop hook, 37 + 14 tests, 16/16
 mutants, the retrodiction on both hand-offs, five registered falsifiers, and the install line I did
 NOT apply (a blocking Stop hook changes every seat on this machine; not a pane's call).
+
+### An instrument's universe is what git can see, so "green before the commit" measures nothing
+
+`portable-paths.js` was green on the full js-suite run I did before committing, and red on 8 sites —
+all mine, all test fixtures — the moment `ed3e94b` landed, with nothing changed in the files. It
+scans TRACKED files. This is documented verbatim in `chain-status.js`'s NO FATAL DEFAULT comment,
+which I had read and whose code I had copied. **Reading a warning is not having run under it.** Fixed
+in `de2c73c` by removing the drive letters rather than by taking the `--update` baseline the tool
+offers for BENIGN-TEST sites: `stationOfCwd()` reads only the basename, so they were removable, and
+a baseline entry preserves an argument that then has to be re-read forever.
+
+**Run the instruments again after the commit, not only before it.**
+
+### The route back is gated too, and it cost three seats one morning
+
+`call_librarian` from this seat was REFUSED OUT OF TURN (holder `chair`, verb needs `panes`) —
+predicted before attempting, not retried, pointer posted to the board instead. Same gate as the
+hand-off finding, one hop further down: the librarian at 10:24, B at 10:27, me deliberately after.
+A finished hand-back waits on the chair's turn rather than reaching the librarian when it was ready.

@@ -169,6 +169,19 @@ then removed: mutation showed deleting it changed no behaviour, because an ambig
 through to `unknown` anyway. A guard whose removal no test can detect is not a guard — the
 absent-guard-reads-as-passing-guard shape, nearly shipped inside a tool built on that finding.
 
+**(d) `portable-paths` went red the moment git could see my files — and I had read the warning.**
+I ran the full js-suite before committing and portable-paths was green. It went red immediately
+after `ed3e94b`, on 8 sites, all mine, all in my two test files, with nothing changed in them: the
+tool scans TRACKED files, so my tests were outside its universe while untracked. That exact failure
+is documented verbatim in `chain-status.js`'s NO FATAL DEFAULT comment — *"'Green before the commit'
+was true and meant nothing; the instrument's universe only included this file once git did"* — and I
+copied my path resolution from the code directly beneath it. **Reading a warning is not the same as
+having run under it.** Fixed in `de2c73c`, and **not** with the `--update` baseline the tool offers
+for BENIGN-TEST sites: `stationOfCwd()` reads only the basename, so the drive letters were never
+load-bearing and were removable rather than merely defensible. A baseline entry would have preserved
+my argument for the sites; removing them leaves no argument to re-read.
+`node consonance/tools/portable-paths.js` → green, 206 files, 163 known sites, 0 new.
+
 **And three of my own tests were passing for the wrong reason**, each found by mutation and not by
 reading: the once-per-hand-off guard (the turn boundary was silencing the second call, not the
 guard); the `fired` marker (never asserted as written, so the guard could have been permanently
@@ -209,6 +222,20 @@ stopping would have swallowed the block — the busier the room, the more reliab
   direction.
 - **The base rate is n=6.** Every claim about how rarely this fires rests on six events. It is a
   floor, not a census.
+
+## 8b · HOW THIS HAND-BACK REACHED YOU — the finding, one more time, on itself
+
+`call_librarian` was **REFUSED OUT OF TURN**: *"a lap is open and the panes are not the holder."*
+Holder is `chair`; the verb needs `panes`. **Predicted in §2 before it was attempted, and not
+retried** — the refusal says do not spin, and B had already established the correct response an hour
+earlier. The pointer went to the board instead.
+
+So this packet's own return leg is the third instance today of the thing it documents, and the count
+is now: the librarian (10:24, worked around by re-taking the baton), B (10:27, correctly stopped),
+and this seat (deliberately, to see it). **Three seats, one gate, one morning.** The route back is
+sound — the loop does come back — but a finished hand-back waits on the chair's turn rather than
+reaching the librarian when it was ready, and that latency is the same class as the nine hours, one
+hop further down.
 
 ## 9 · FALSIFIERS, registered here rather than after the fact
 
