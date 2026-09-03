@@ -46,6 +46,23 @@ it.** The librarian hit this at 10:24, was refused, re-took the baton for 30 sec
 handed off again — three ledger rows for one hand-off, visible in `lap.jsonl` D005 at 10:06:59 /
 10:07:35 / 10:07:55, and its own row note says so.
 
+> **CONFIRMED INDEPENDENTLY, WHILE THIS PACKET WAS BEING WRITTEN, BY A SEAT THAT WAS NOT LOOKING
+> FOR IT.** At **10:27:18** the board carries:
+>
+>     call_librarian REFUSED OUT OF TURN — mount B tried to speak while lap D005 is held by
+>     chair; call_librarian needs holder panes.
+>
+> and B's own line at 10:27:37: *"Ring to librarian REFUSED out of turn (holder is chair) —
+> correct, not retrying; the loop comes back."* **Uncurated: nobody arranged that, and it is a
+> second seat hitting the finding within the hour on a different packet.** It also sharpens the
+> scope — the gate bites not only the seat that just handed off, but **every pane trying to return
+> work while the chair holds the baton**, which is the ordinary state during a dispatch. B was right
+> not to retry, and right that the loop comes back; the cost is that its hand-back waits on the
+> chair's next turn rather than reaching the librarian when it was ready.
+>
+> **This is also why my own ring for THIS packet will be refused** (holder is `chair`, and
+> `call_librarian` needs `panes`). Reported below rather than worked around.
+
 ## 3 · AND THE CHAIR'S REPLACEMENT DIAGNOSIS IS ALSO NOT THE CAUSE OF THE 9 HOURS
 
 The packet is right that D005 is not the chair-was-slow case — the chair's step took **6 seconds**
