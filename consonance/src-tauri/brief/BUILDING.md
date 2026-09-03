@@ -222,6 +222,47 @@ output"*, and the seat that wrote it then read *output* as *reasoning* and went 
 mid-composition while believing it complied. **A rule that its own author can satisfy while
 breaking it is not yet a rule.**
 
+### AMENDED 2026-09-03 — THE BOUNDARY MOVES INSIDE THE TURN (the keeper)
+
+Verbatim, because a keeper amendment restated in the seat's own words is how one goes missing:
+
+> *"how about you do not have to finish the turn itself, but the output you are going to give me,
+> so instead of calling pane while you are still thinking, you finish your thought, then in the
+> same turn call consonance"*
+
+**The sequence becomes:**
+
+    finish the OUTPUT TO THE USER  ->  verify  ->  write/commit  ->  dispatch, SAME TURN
+
+**WHY THIS IS NOT A REVERSAL OF THE 2026-08-25 CORRECTION**, which struck the words *"finish the
+output"* for being self-satisfiable. That correction was right about its failure: a seat read
+*output* as *reasoning* and dispatched mid-composition while believing it complied. The keeper's
+form closes that hole rather than reopening it, because **"the output you are going to give me" is
+OBSERVABLE and "my reasoning feels done" is not.** The message text either exists before the call
+fires or it does not, and the transcript shows which. *A rule its own author can satisfy while
+breaking it is not yet a rule* — this one cannot be.
+
+**WHAT IT PROTECTS, UNCHANGED.** The ground was never the turn boundary; it was that a dispatch is
+UN-REVISABLE and must not carry unfinished reasoning. Finishing the output finishes the reasoning.
+The 2026-08-24 failure — an unverified claim dispatched mid-turn, a second seat ruling wrongly
+because the brief it was given was wrong — is still prevented.
+
+**WHAT IT DROPS, SAID PLAINLY.** The keeper no longer sees a finding before another seat reasons
+from it. That was the boundary's stated purchase, and he is declining it, which is his to decline.
+
+**AND THE MEASUREMENT THAT FORCED IT.** `lap-row --report`, 2026-09-03: five laps, three carrying a
+map with **27 paths the chair did not have**, and `opened` **0**, `from-map` **0** on every one. Not
+one map has ever reached a pane. The stall is structural rather than forgetful: the chair ends its
+turn with a report, the dispatch is owed to the NEXT turn, and **the next turn is always the
+keeper's** — so the baton is dropped at exactly the seam meant to protect it. The two-turn rule
+bought a review nobody wanted at the price of every dispatch that was never made.
+
+    FALSIFIER:  a chair_inject that the same turn's message to the keeper does not describe means
+                the output was not finished first. Checkable by tool-call order in the transcript.
+    SCORED BY:  node consonance/tools/lap-row.js --report — `from-map` must leave 0 within three
+                laps of this amendment. If it does not, the boundary was never what stopped the
+                dispatch, and this amendment is a story about one bad week.
+
 **EVERY HOP IS TWO TURNS.** One to finish and show understanding; one to call. The call is *based
 on* the finished output and is never composed alongside it:
 
