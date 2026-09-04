@@ -1,19 +1,28 @@
-// JS-SUITE: EXPECTED-RED
+// CANARY RETIRED 2026-09-04. This file carried `JS-SUITE: EXPECTED-RED` on the line above from the
+// commit that landed it until the commit that fixed what it named. All three declared reds are
+// green; js-suite treats an expected-red that goes green as a failure, which is what forced the
+// marker's removal to be part of the repair rather than a courtesy. It worked as designed.
 //
-// The marker must sit on a line that STARTS with `//` or `#` — js-suite.js:217 is
-// /^\s*(\/\/|#)\s*JS-SUITE:\s*EXPECTED-RED/m, while its header at :41 says only "a file declares
-// itself by containing the marker". Declared inside the block comment below, it was not detected:
-// the suite read this file as `FAILED`, 0 canary. Measured, then moved here.
+// The marker's own history is kept because it cost a measurement: it must sit on a line that
+// STARTS with `//` or `#` — js-suite.js:217 is /^\s*(\/\/|#)\s*JS-SUITE:\s*EXPECTED-RED/m, while
+// its header at :41 says only "a file declares itself by containing the marker". Declared inside
+// the block comment below, it was not detected and the suite read this file as FAILED, 0 canary.
 
 /* gen-consumer.fixture-scope — the red-first test for the fixture guard's SCOPE.
  *
- * WHY THIS FILE IS DECLARED EXPECTED-RED, and what clears the declaration. Three of the
- * assertions below are red at the commit that lands them. That is deliberate: the defect they
- * name is live, and this lap is a REGISTRATION lap -- other seats are measuring the generator's
- * current output, so changing what it emits underneath them would invalidate their readings. The
- * declaration lives here rather than in a roster so it dies with the fix: js-suite treats an
- * expected-red that goes GREEN as a failure, which is what forces whoever repairs `isFixture` to
- * come back and delete the marker. Removing it is part of the fix, not a courtesy.
+ * STATUS, 2026-09-04: THE DEFECT IS FIXED AND THE DECLARATION IS RETIRED. This section is kept
+ * because it explains why the file was born red, and because the mechanism it describes worked.
+ *
+ * WHY THIS FILE WAS DECLARED EXPECTED-RED, and what cleared the declaration. Three of the
+ * assertions below were red at the commit that landed them. That was deliberate: the defect they
+ * named was live, and that lap was a REGISTRATION lap -- other seats were measuring the
+ * generator's current output, so changing what it emitted underneath them would have invalidated
+ * their readings. The declaration lived here rather than in a roster so it would die with the fix:
+ * js-suite treats an expected-red that goes GREEN as a failure, which is what forced whoever
+ * repaired `isFixture` to come back and delete the marker. It did exactly that. Below, the header
+ * of this file records the retirement; the sections that follow are HISTORY unless marked
+ * otherwise, and the paragraph headed WHAT THESE TESTS CANNOT CATCH has been corrected because one
+ * of its limits was closed by the repair.
  *
  * THE HISTORY, because the fix and the defect are the same edit.
  *
@@ -30,9 +39,12 @@
  * `gen-consumer.test.js` calls `transform()` on a synthetic literal, which measures a model of the
  * break rather than the break; a replica is not evidence until it agrees with the instrument.
  *
- * THE DEFECT THE REPAIR INTRODUCED, and it is a leak rather than a broken test. `isFixture` keys
- * on /\.rs$/, so it classifies the WHOLE of main.rs -- ~10,000 lines, of which the #[cfg(test)]
- * block is a small tail -- as a fixture. Two guards then stand down together:
+ * THE DEFECT THE REPAIR INTRODUCED -- FIXED 2026-09-04, described here as it stood. It was a leak
+ * rather than a broken test. `isFixture` keyed on /\.rs$/, so it classified the WHOLE of main.rs
+ * as a fixture. (One correction to the sentence that follows, measured while fixing it: the
+ * #[cfg(test)] block is NOT "a small tail". main.rs carries FORTY #[cfg(test)] attributes
+ * interleaved through 10,153 lines and no `mod tests` at all -- which is precisely why the repair
+ * could not scope the waiver by region.) Two guards then stood down together:
  *
  *   1. `transform()` routes it to the token-only branch, so `demachine()` never runs on it.
  *   2. `scan()` exempts fixtures from DANGLING, MACHINE and RECORD.
@@ -69,13 +81,19 @@
  * substitution is available today and the fixture routing is what declines it.
  *
  * WHAT THESE TESTS CANNOT CATCH, stated because a test that cannot say what it stopped seeing is
- * a silencing:
- *   - They assert on OUTPUT CONTENT, not on the predicate. A fix that keeps `isFixture` over-broad
- *     but deletes the offending comments from main.rs turns them green while the hole stays open
- *     for the next Rust file. The scope claim itself is not directly asserted here, because
- *     asserting it needs a #[cfg(test)] region model, and a model is the thing this file exists
- *     to avoid trusting.
- *   - They say nothing about the OTHER failures the generated tree carries. Run at this commit:
+ * a silencing. CORRECTED 2026-09-04 -- the first limit below was real, was hit exactly as written,
+ * and is now closed:
+ *   - [CLOSED] "They assert on OUTPUT CONTENT, not on the predicate. A fix that keeps `isFixture`
+ *     over-broad but deletes the offending comments from main.rs turns them green while the hole
+ *     stays open for the next Rust file." That is what happened: mutation M1 reverts the waiver
+ *     and tests 1-3 stay green. Section 4 below now asserts `scan()`'s contract on synthetic
+ *     input, in both directions, and M1 turns it red. The prediction that a #[cfg(test)] region
+ *     model would be needed was wrong -- the predicate is assertable without one.
+ *   - [CLOSED] Nothing here asserted the generator still BUILDS. The first draft of the repair
+ *     passed tests 1-3 while refusing over 10 leaks it had introduced in three other fixtures.
+ *     Section 4's last test is that assertion.
+ *   - They say nothing about the OTHER failures the generated tree carries. Run at the commit
+ *     that landed this file, and NOT re-measured since -- treat as stale:
  *     private 66 green / 3 failed of 70; generated 42 green / 17 failed / 3 crashed of 63. That
  *     delta is unattributed here and is not this file's claim.
  *   - They say nothing about whether the generated tree compiles or runs.
@@ -122,7 +140,7 @@ test('the 2026-08-23 casualties survive the REAL build byte-intact', () => {
 
 /* ---------------------------------------------------------------- 2. the scope the repair took */
 
-test('RED: the generated Rust carries no MACHINE-class path', () => {
+test('the generated Rust carries no MACHINE-class path', () => {
   /* `LEAKS` calls OneDrive "the keeper's personal sync directory" and refuses it everywhere else.
    * It ships here because main.rs matched /\.rs$/ and `isFixture` waived MACHINE for the whole
    * file. These two lines are `///` doc comments in live code, not fixtures by any reading of the
@@ -143,7 +161,7 @@ test('RED: the generated Rust carries no MACHINE-class path', () => {
     priv + " reference(s) to the private tree's own path shipped in main.rs, same waiver");
 });
 
-test('RED: a MACHINE hit in a Rust file is refused OR reported -- never silent', () => {
+test('a MACHINE hit in a Rust file is refused OR reported -- never silent', () => {
   /* The narrow, load-bearing claim. DANGLING and RECORD hits in main.rs ARE surfaced: the file
    * appears in `unportable` with 7 refs, so a reader is told. MACHINE is in neither channel --
    * `scan()` waives it for fixtures and `unportable`'s regex never matched it. So the one class
@@ -166,7 +184,64 @@ test('RED: a MACHINE hit in a Rust file is refused OR reported -- never silent',
 
 /* ---------------------------------------------------------------- 3. the header's own claim */
 
-test('RED: the module header does not call the source tree private', () => {
+/* ---------------------------------------------------------------- 4. the predicate itself
+ *
+ * ADDED 2026-09-04, BECAUSE THE REPAIR ABOVE PROVED THE TESTS ABOVE CANNOT SEE IT. The mutation
+ * run on the landed fix:
+ *
+ *   HEAD (repaired)                     main.rs MACHINE=0  leaks= 0  refused=none
+ *   M1 waiver reverted to MACHINE-waived  main.rs MACHINE=0  leaks= 0  refused=none   <-- SILENT
+ *   M2 demachine off the fixture branch   main.rs MACHINE=2  leaks= 3  refused=3 leak(s)
+ *   M3 both reverted (pre-repair)         main.rs MACHINE=2  leaks= 0  refused=none
+ *
+ * M1 is the finding. Once `demachine()` removes the three doc-comment paths, tests 2 and 3 go
+ * green whether or not the predicate was ever fixed — which is verbatim what this file's own
+ * docstring predicted ("a fix that keeps isFixture over-broad but deletes the offending comments
+ * turns them green while the hole stays open for the next Rust file"). It predicted it and then
+ * did not guard it.
+ *
+ * These assert the CONTRACT of `scan()` on synthetic input, so they are not a model of Rust and
+ * they do not depend on what main.rs happens to contain today. M1 turns the first one red. */
+
+test('a MACHINE path in live Rust is scanned; in a path-fixture it is waived', () => {
+  const machineLine = '/// see C:\\Consonance\\lighthouse\\exo_memory\\map\\\n';
+
+  const live = G.scan(machineLine, 'consonance/src-tauri/src/anything.rs');
+  assert.ok(live.some((f) => f.cls === 'MACHINE'),
+    'a MACHINE path in a LIVE .rs file was waived; /\\.rs$/ is making whole files fixtures again '
+    + '— the hole that shipped the keeper\'s OneDrive path in main.rs doc comments');
+
+  /* The other direction, so the fix cannot be "delete the waiver". These are the fixtures the
+   * class-wide narrowing broke when it was tried: rewriting them breaks their assertions. */
+  const fixture = G.scan(machineLine, 'consonance/tools/lap-row.test.js');
+  assert.ok(!fixture.some((f) => f.cls === 'MACHINE'),
+    'MACHINE fired inside a .test.js fixture; assertion literals like '
+    + "normPath('C:\\\\Consonance\\\\lighthouse\\\\...') would be rewritten and their tests broken");
+});
+
+test('a DANGLING reference in live Rust is still waived, and reported instead', () => {
+  /* The narrowing was by CLASS WITHIN KIND, not a blanket removal. Rust doc comments legitimately
+   * cite this record's filenames — main.rs carries 7 such refs — and those are surfaced through
+   * `unportable` rather than refused. If this goes red the waiver was deleted rather than cut. */
+  const dangling = G.scan('/// see exo_memory/loop/some_registration_2026-01-01.md\n',
+                          'consonance/src-tauri/src/anything.rs');
+  assert.ok(!dangling.some((f) => f.cls === 'DANGLING'),
+    'DANGLING fired in a .rs file; the fixture waiver was removed wholesale rather than narrowed');
+});
+
+test('the repaired generator still BUILDS — no leak refuses it', () => {
+  /* The failure this file could not see, and the reason it is asserted separately: staging is
+   * written BEFORE the refusal check, so every test above reads a staged tree that the generator
+   * then declines to emit. The first draft of this repair passed tests 1-3 while refusing the
+   * build over 10 leaks in three fixtures it had broken. A green scope test over a generator that
+   * produces nothing is the worst reading available. */
+  assert.ok(!R.refused, 'the generator refused: ' + JSON.stringify(R.refused)
+    + ' — leaks in ' + JSON.stringify([...new Set(R.leaks.map((l) => l.rel))]));
+});
+
+/* ---------------------------------------------------------------- 5. the header's own claim */
+
+test('the module header does not call the source tree private', () => {
   /* `gh repo view solariz3d/lighthouse --json isPrivate` returns false, and has since 2026-08-22.
    * Line 2 reads "build the PUBLIC consonance tree from the PRIVATE lighthouse tree". This is not
    * a typo: the three non-negotiable properties in the header, the allow-list, and every leak class

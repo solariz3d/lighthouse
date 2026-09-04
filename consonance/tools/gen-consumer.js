@@ -1,10 +1,25 @@
 #!/usr/bin/env node
-/* gen-consumer — build the PUBLIC consonance tree from the PRIVATE lighthouse tree.
+/* gen-consumer — build the CONSUMER consonance tree from the lighthouse working tree.
  *
- * THE MODEL. Private is SOURCE, public is GENERATED. There is one hand-maintained tree; the
- * public one is an artifact of this script and must never be hand-edited. The moment anyone
- * edits it directly it has become the second copy the whole design exists to prevent -- which is
- * maintenance law 1 ("recall from the master, never a copy") applied to repositories.
+ * WHAT THE SOURCE TREE ACTUALLY IS, corrected 2026-09-04 because this header was wrong about it
+ * and every property below is justified from it. Line 2 used to read "build the PUBLIC consonance
+ * tree from the PRIVATE lighthouse tree". It is not private:
+ *
+ *     gh repo view solariz3d/lighthouse --json isPrivate   ->   {"isPrivate":false}
+ *
+ * and has not been since 2026-08-22. A generator wrong about its own source is wrong about what
+ * its scan is FOR: this was never a privacy boundary holding a record back from publication,
+ * because the record is already published. What the scan genuinely does is narrower and still
+ * worth every line of it -- it produces a tree A STRANGER CAN USE, with the identity surface
+ * removed, the dead pointers rewritten and this machine's absolute paths gone. Whether lighthouse
+ * becomes private is an open call and it is the keeper's; when it is answered, correct this
+ * paragraph rather than deleting it.
+ *
+ * THE MODEL. The working tree is SOURCE, the consumer tree is GENERATED. There is one
+ * hand-maintained tree; the generated one is an artifact of this script and must never be
+ * hand-edited. The moment anyone edits it directly it has become the second copy the whole design
+ * exists to prevent -- which is maintenance law 1 ("recall from the master, never a copy")
+ * applied to repositories.
  *
  * WHY THIS IS NOT gen-brief.ps1 GENERALISED. That script transforms ONE file with four
  * hand-written anchors against BOOT.md's exact sentences. It is the right SHAPE -- refuse loudly,
@@ -106,6 +121,22 @@ const MANIFEST = [
    * dependency set that was tested here, not whatever resolves on the day they clone. */
   { from: 'consonance/src-tauri/build.rs', to: 'consonance/src-tauri/build.rs', kind: 'code' },
   { from: 'consonance/src-tauri/Cargo.lock', to: 'consonance/src-tauri/Cargo.lock', kind: 'code' },
+  /* MANIFEST GAP CLOSED 2026-09-04 BY SHIPPING, which is the only way a gap closes. `cochlea.rs`
+   * SHIPS (the src/*.rs rule above) and its #[cfg(test)] blocks read these files by relative path:
+   *
+   *     grep -n 'tests/fixture-' consonance/src-tauri/src/cochlea.rs   ->  :2611 :2631 :2725 :2851
+   *
+   * so a consumer running `cargo test` on the generated tree got a panic from a file the manifest
+   * had never named. `arch_test.rs` is the other half: it asserts plane separation over
+   * `src/mcp.rs`, `src/gate.rs`, `src/tether.rs` and `../ui/term.js` -- all four of which already
+   * ship -- so it is a test about the shipped product that the shipped product could not run.
+   *
+   * THE COST, NAMED RATHER THAN HIDDEN: the eight .jsonl fixtures are ~5.8 MB, which is most of
+   * the consumer tree's weight. They are audio spectra -- {t, db, peaks} rows off recordings --
+   * not transcripts, and they carry no identity surface. Excluding them to keep the tree small
+   * would be closing a manifest gap by EXCLUDE, which is the degenerating move this lap
+   * registered against. They ship, and the size is the argument someone may re-open. */
+  { dir: 'consonance/src-tauri/tests', to: 'consonance/src-tauri/tests', match: /\.(rs|jsonl)$/, kind: 'code' },
   { dir: 'consonance/src-tauri/capabilities', to: 'consonance/src-tauri/capabilities', match: /\.json$/, kind: 'code' },
   { dir: 'consonance/src-tauri/icons', to: 'consonance/src-tauri/icons', match: /\.(png|ico|icns)$/, kind: 'binary' },
   /* tauri.conf.json's bundle.resources declares these by path. The first generated tree shipped
@@ -125,13 +156,50 @@ const MANIFEST = [
   // guard here found that within a minute of the resource being declared -- the manifest is an
   // ALLOW-list, so a new declared resource is ABSENT by default, and absent reads like fine.
   { from: 'consonance/src-tauri/brief/THIRD_PLACE.md', to: 'consonance/src-tauri/brief/THIRD_PLACE.md', kind: 'prose' },
+
+  /* TWO MANIFEST GAPS ARE KNOWINGLY LEFT OPEN, 2026-09-04, and they are NOT in EXCLUDE on purpose.
+   *
+   *     dev/shell/install.ps1
+   *     dev/shell/hooks/userprompt-submit.js
+   *
+   * Both are named by files that ship -- `README.md:170` links the first, `open-items.js:280,:285`
+   * reads both at runtime -- so a consumer tree has two references that resolve to nothing.
+   * Neither can be closed by adding the line above it, and that is the finding rather than an
+   * excuse. `install.ps1` is an INSTALLER whose own `$files` list (`:58-`) enumerates
+   * `dev\shell\lib\*` and `dev\shell\hooks\*` -- twelve files, none of them in this manifest --
+   * so shipping it alone hands a stranger a script whose entire source list is absent, which is
+   * worse than the dangling link it was meant to fix. `userprompt-submit.js` is one of the files
+   * that installer installs. Closing either properly means deciding whether the whole dev-shell
+   * hook layer ships, and that is a repo-shape decision sitting with the keeper, not a manifest
+   * patch a seat makes on its way past.
+   *
+   * THEY ARE NOT EXCLUDED, because an EXCLUDE entry would say "we considered these and withheld
+   * them", and the true state is "nobody has decided yet". Under an allow-list, absent already
+   * means undecided, and that is the honest encoding. Closing a manifest gap by EXCLUDE is the
+   * degenerating move registered against this lap; this comment is what stands in its place.
+   *
+   * ALSO FOUND, and it belongs to whoever owns README.md rather than to this file: `README.md:170`
+   * says the 12 hooks under `consonance/hooks/` are "installed by ../dev/shell/install.ps1". They
+   * are not -- that script's file list points at `dev\shell\hooks\*`, a different set. The link is
+   * a mis-citation in the private tree already, before any question of shipping it. */
 ];
 
 /* Named exclusions -- files that MATCH a manifest rule but must not ship, each with its reason.
  * Kept as data rather than as a filter buried in code, so the list is readable and arguable. */
+/* A value beginning with `UNREACHABLE:` declares that NO manifest rule currently reaches this
+ * path, so the entry is a standing guard against a future widening rather than a live exclusion.
+ * The declaration is checked in both directions (see build()): an undeclared dead entry refuses,
+ * and so does a declared entry that has become reachable. Without that, a dead exclusion reads as
+ * coverage -- the same shape as the demachine() pattern that could not match, found the same day. */
 const EXCLUDE = {
+  /* MEASURED 2026-09-04: this entry has never been able to fire. The only rule that could reach
+   * `consonance/tools/` is `match: /\.js$/`, and `/\.js$/.test('portable-paths.baseline.json')` is
+   * false -- `$` anchors the end and the name ends `.json`. It is KEPT rather than deleted because
+   * the reason is still true and P3 re-points the manifest next: the moment anyone widens that
+   * rule to `/\.(js|json)$/`, this machine's path baseline would ship, and the entry is what stops
+   * it. Declared unreachable so the entry cannot be mistaken for a guard that is doing work. */
   'consonance/tools/portable-paths.baseline.json':
-    'the ratchet\'s own record of this machine\'s known path sites; meaningless elsewhere',
+    'UNREACHABLE: the ratchet\'s own record of this machine\'s known path sites; meaningless elsewhere',
   'consonance/tools/catch-ledger.js':
     'scores THIS collaboration\'s catches; 7 identity hits and 11 dangling refs, and the data it reads does not exist for anyone else',
   'consonance/tools/catch-ledger.test.js':
@@ -259,8 +327,31 @@ function demachine(body) {
   let n = 0;
   const rep = (re, to) => { body = body.replace(re, () => { n++; return to; }); };
   rep(/\{\}\\\\OneDrive\\\\Desktop\\\\projects\\\\lighthouse\\\\/g, '{}\\\\.consonance\\\\');
-  rep(/the repo moved out of OneDrive on \d{4}-\d{2}-\d{2} because \.git was inside the/g,
-      'a fallback under the user profile, for an install that keeps its room outside the');
+
+  /* ---- ADDED 2026-09-04. These three fire on main.rs's LIVE `///` doc comments, which shipped
+   * unrewritten for as long as `isFixture` routed every .rs file to the token-only transform.
+   * All three are prose inside a comment, so no expression shape is at risk; the surrounding
+   * sentence is kept readable rather than merely scrubbed, because a mangled sentence is how a
+   * reader learns to stop reading the comments. */
+
+  /* THE PATTERN ABOVE IT NEVER FIRED, and that is the finding rather than a tidy-up. It required
+   * a single space between the date and `because`, but the sentence WRAPS in main.rs:404-405 --
+   * "...on 2026-07-28\n/// because .git was inside the sync scope..." -- so the regex could not
+   * match across the doc-comment continuation and the guard had been inert since it was written.
+   * A rule that cannot fire is indistinguishable from no rule, and this one read as coverage.
+   * Replaced with a single-line form that only has to reach the leaking token. */
+  rep(/the repo moved out of OneDrive on (\d{4}-\d{2}-\d{2})/g,
+      'the repo moved out of a personal sync directory on $1');
+
+  /* main.rs:363. The sentence names two historical repo locations and the second is the keeper's
+   * OneDrive path; the literal is replaced in place so "two absolute literals" stays true. */
+  rep(/\{home\}\\OneDrive\\Desktop\\projects\\lighthouse\\/g, '{home}\\<sync-dir>\\projects\\lighthouse\\');
+
+  /* main.rs:5351. Two disclosures on one line: the private tree's own absolute path, and three of
+   * this record's map filenames WITH their byte sizes -- which is the record leaking through a
+   * MACHINE-class line, so removing the path alone would not have been enough. */
+  rep(/`C:\\Consonance\\lighthouse\\exo_memory\\map\\` \(A\.md [\d,]+; B\.md [\d,]+; M\.md [\d,]+\)/g,
+      '`<room>\\exo_memory\\map\\`');
   return { body, n };
 }
 
@@ -298,7 +389,30 @@ function validIdentifier(body) {
  * assertion or -- worse -- leaves it green over data that no longer means what it meant. Three
  * shipped suites went green on rewritten fixtures before this existed. */
 function isFixture(rel) {
-  return /\.test\.js$/.test(rel) || /(^|\/)tests?\//.test(rel) || /\.rs$/.test(rel);
+  return fixtureKind(rel) !== null;
+}
+
+/* WHY a file is a fixture, which turns out to matter more than WHETHER (2026-09-04).
+ *
+ *   'whole'  the PATH says the file is a test artifact end to end: `*.test.js`, or anything
+ *            under a `tests/` directory. Every line in it is assertion data.
+ *   'rust'   only the EXTENSION says so. `.rs` was added to this predicate to protect the
+ *            `#[cfg(test)]` blocks inside main.rs -- but main.rs is 10,153 lines carrying FORTY
+ *            interleaved `#[cfg(test)]` attributes and no single `mod tests`, so the file is
+ *            overwhelmingly LIVE CODE that happens to contain fixtures.
+ *
+ * The distinction exists because scan() waives reference classes for fixtures, and the argument
+ * for waiving them ("this is the data the assertion keys on") is true of the first kind and false
+ * of the second. It is not an abstraction added ahead of need: narrowing the waiver for BOTH kinds
+ * was tried first and mutation-measured at 10 leaks in three genuine test fixtures --
+ * `lap-row.test.js` asserting on `normPath('C:\Consonance\lighthouse\...')`,
+ * `memory-sweep.test.js` on an encoded-cwd fixture name containing `OneDrive`,
+ * `second-vantage.test.js` on a heads map keyed `c:/consonance/lighthouse`. Rewriting any of
+ * those breaks its assertion, which is the 2026-08-23 damage returning by a different door. */
+function fixtureKind(rel) {
+  if (/\.test\.js$/.test(rel) || /(^|\/)tests?\//.test(rel)) return 'whole';
+  if (/\.rs$/.test(rel)) return 'rust';
+  return null;
 }
 
 /** Name tokens only. Leaves every path shape exactly as written, so a fixture keeps exercising
@@ -340,7 +454,15 @@ function transform(body, kind) {
      * rather than exempted, because swapping a float for a float changes nothing structural. */
     const b = deidentifyTokens(body);
     const c = decoordinate(b.body);
-    return { body: c.body, dangling: 0, identity: b.n + c.n, machine: 0, fixture: true };
+    /* demachine() JOINED THE FIXTURE BRANCH ON 2026-09-04, and it is the half of the fixture-scope
+     * repair that removes rather than refuses. Narrowing the scan's waiver (see scan()) makes a
+     * MACHINE hit in a Rust file FAIL the build; it does not take the path out. `demachine` is the
+     * one transform safe to run here, because it is a list of NAMED literal replacements rather
+     * than a generic rewrite -- which is the destructure() lesson applied one file over. Its count
+     * is reported as `machine` so a fixture that changed is visible in the run rather than silent;
+     * measured at this commit, it fires on main.rs only. */
+    const d = demachine(c.body);
+    return { body: d.body, dangling: 0, identity: b.n + c.n, machine: d.n, fixture: true };
   }
   const a = dedangle(body);
   const b = deidentify(a.body);
@@ -357,17 +479,52 @@ function scan(body, rel) {
   /* A fixture legitimately contains the paths it tests. Exempt from those two classes -- never
    * from IDENTITY, RECORD, PROSE or BROKEN, because a canary is an exemption from failing and
    * never from classification (2026-08-17). */
-  /* Three REFERENCE classes are exempt in a fixture; three CONTENT classes never are.
+  /* TWO REFERENCE classes are exempt in a fixture; four classes never are.
    *
-   * DANGLING, MACHINE and RECORD all name a FILE a consumer does not have. In prose that is a
-   * dead pointer worth rewriting; in a fixture it is the data the assertion keys on --
-   * corrections-gate literally tests that it guards muscle_map.md -- and a filename discloses
-   * nothing about anyone. So they are REPORTED as unportable rather than refused.
+   * DANGLING and RECORD name a FILE a consumer does not have. In prose that is a dead pointer
+   * worth rewriting; in a fixture it is the data the assertion keys on -- corrections-gate
+   * literally tests that it guards muscle_map.md -- and a filename discloses nothing about
+   * anyone. So they are REPORTED as unportable rather than refused.
    *
    * IDENTITY, PROSE and BROKEN still fire everywhere. A handle in a fixture is a handle; a
    * corrupted structured field in a fixture is still corrupt. A canary is an exemption from
-   * FAILING, never from CLASSIFICATION (2026-08-17). */
-  const allowed = (ALLOW[rel] || []).concat(isFixture(rel) ? ['DANGLING', 'MACHINE', 'RECORD'] : []);
+   * FAILING, never from CLASSIFICATION (2026-08-17).
+   *
+   * MACHINE LEFT THE 'rust' LIST ON 2026-09-04, and the reason is the whole of the fixture-scope
+   * finding. `isFixture` keyed on /\.rs$/, so it classified the ENTIRE 10,153-line main.rs as a
+   * fixture. Three MACHINE hits then shipped in LIVE `///` doc comments -- two naming the
+   * keeper's OneDrive path, one naming `C:\Consonance\lighthouse\exo_memory\map\` together with
+   * three of this record's map filenames and their byte sizes -- refused by nothing, reported by
+   * nothing (build()'s `unportable` regex matched DANGLING and RECORD only). Not refused, not
+   * reported: silent, which is the one outcome this generator exists to prevent.
+   *
+   * WHY THE WAIVER NARROWED BY FIXTURE KIND, and not by class and not by region.
+   *
+   *   NOT BY REGION, which is what `P-GEN-RED-FIRST_2026-09-03.md` proposed. Measured before
+   *   choosing: main.rs carries FORTY `#[cfg(test)]` attributes, interleaved, and no `mod tests` --
+   *
+   *       grep -c '#\[cfg(test)\]' consonance/src-tauri/src/main.rs      -> 40
+   *       grep -c '^\s*mod tests\b' consonance/src-tauri/src/main.rs     -> 0
+   *
+   *   so region-scoping means a forty-site brace-extent model of Rust, and the fixture-scope
+   *   test's own docstring says a model is the thing it exists to avoid trusting.
+   *
+   *   NOT BY CLASS EITHER, and this was tried and MEASURED WRONG rather than reasoned away.
+   *   Dropping MACHINE for every fixture looked principled -- a filename discloses nothing, an
+   *   absolute path does -- and the mutation run returned 10 leaks in three real test fixtures
+   *   (`lap-row.test.js` :96, `memory-sweep.test.js` x7, `second-vantage.test.js` :262,:296),
+   *   every one an assertion literal that a rewrite would break. The prediction was that nothing
+   *   would break; the instrument said three files would.
+   *
+   * So the cut is fixtureKind: a file that is a fixture BY PATH keeps the full waiver, because
+   * every line in it really is assertion data; a file that is a fixture only BY EXTENSION keeps
+   * DANGLING and RECORD (its `#[cfg(test)]` blocks do cite record filenames) and loses MACHINE,
+   * because no Rust test here asserts on a real path -- they use synthetic literals like
+   * `C:\Consonance\instances` and `C:\Consonance\data`, which match no MACHINE pattern. If a real
+   * machine path ever appears in live Rust, it SHOULD fail, and now it does. */
+  const kind = fixtureKind(rel);
+  const allowed = (ALLOW[rel] || []).concat(
+    kind === 'whole' ? ['DANGLING', 'MACHINE', 'RECORD'] : kind === 'rust' ? ['DANGLING', 'RECORD'] : []);
   for (const { cls, pat, why } of LEAKS) {
     if (allowed.includes(cls)) continue;
     for (let i = 0; i < lines.length; i++) {
@@ -427,7 +584,24 @@ function collect() {
 function build(outDir, opts) {
   const files = collect();
   const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
-  const report = { staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], staging };
+  const report = { staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], staging };
+
+  /* THE EXCLUDE LIST IS CHECKED AGAINST THE MANIFEST, IN BOTH DIRECTIONS. An exclusion no rule can
+   * reach withholds nothing while reading as though it does; a `UNREACHABLE:` declaration that has
+   * become reachable is a stale note on a guard that is now load-bearing. Either way the list has
+   * drifted from the manifest it describes, and the list is the thing a person reads to learn what
+   * was withheld. Found 2026-09-04 with exactly one dead entry of six. */
+  {
+    const reachable = new Set(files.map((f) => f.from));
+    for (const [rel, why] of Object.entries(EXCLUDE)) {
+      const declared = /^UNREACHABLE:/.test(why);
+      if (!reachable.has(rel) && !declared) {
+        report.excludeDrift.push({ rel, why: 'no manifest rule reaches it; it withholds nothing. Delete it, or prefix its reason with UNREACHABLE: to keep it as a standing guard.' });
+      } else if (reachable.has(rel) && declared) {
+        report.excludeDrift.push({ rel, why: 'declared UNREACHABLE but a manifest rule now reaches it; the declaration is stale and the entry is live. Drop the prefix.' });
+      }
+    }
+  }
 
   for (const f of files) {
     if (EXCLUDE[f.from]) { report.excluded.push({ rel: f.from, why: EXCLUDE[f.from] }); continue; }
@@ -470,7 +644,13 @@ function build(outDir, opts) {
      * reads. It is NOT a reason to edit the fixture: that trades an honest failure for a green
      * one. 11 of 43 shipped suites do not run in a consumer tree and this is how they say so. */
     if (kind === 'fixture') {
-      const refs = (t.body.match(/exo_memory\/(?:journal|loop|map)\/[A-Za-z0-9_.-]+|muscle_map[A-Za-z0-9_.-]*|SELF_TRACE[A-Za-z0-9_.-]*|the_living_wave[A-Za-z0-9_.-]*/g) || []);
+      /* MACHINE JOINED THIS REGEX ON 2026-09-04. It used to match DANGLING and RECORD only, which
+       * is how three MACHINE hits in main.rs came to be neither refused nor reported -- the scan
+       * waived them for fixtures and this list never looked for them. The waiver is gone now, so a
+       * MACHINE hit refuses the build and cannot reach here; this alternation is the belt to that
+       * brace, so the claim "refused OR reported, never silent" holds structurally rather than by
+       * the accident of one class being caught somewhere else. */
+      const refs = (t.body.match(/exo_memory\/(?:journal|loop|map)\/[A-Za-z0-9_.-]+|muscle_map[A-Za-z0-9_.-]*|SELF_TRACE[A-Za-z0-9_.-]*|the_living_wave[A-Za-z0-9_.-]*|OneDrive[A-Za-z0-9_.\\/-]*|C:[\\/]{1,4}Consonance[\\/]{1,4}lighthouse[A-Za-z0-9_.\\/-]*/g) || []);
       if (refs.length) report.unportable.push({ rel: f.to, refs: [...new Set(refs)].slice(0, 4), n: refs.length });
     }
 
@@ -480,6 +660,10 @@ function build(outDir, opts) {
     /* A manifest naming a file that does not exist is a manifest describing a tree that no longer
      * exists. Refuse rather than ship a quietly smaller product. */
     report.refused = 'manifest names ' + report.missing.length + ' file(s) that are not on disk';
+    return report;
+  }
+  if (report.excludeDrift.length) {
+    report.refused = report.excludeDrift.length + ' exclusion(s) have drifted from the manifest';
     return report;
   }
   if (report.leaks.length) {
@@ -521,7 +705,10 @@ function main() {
   if (json) { console.log(JSON.stringify(r, null, 2)); process.exit(r.refused ? 1 : 0); }
 
   console.log('');
-  console.log('GEN-CONSUMER — private lighthouse -> public consonance');
+  /* The banner carried "private lighthouse -> public consonance" until 2026-09-04. Same false
+   * claim as the module header, in the one line a person actually reads when they run the tool --
+   * the carrier, corrected alongside the document (the 2026-08-17 lesson: mark the carriers). */
+  console.log('GEN-CONSUMER — lighthouse working tree -> consumer consonance tree');
   console.log('');
   console.log('  staged            : ' + r.staged + ' file(s)');
   console.log('  excluded by name  : ' + r.excluded.length);
@@ -534,6 +721,11 @@ function main() {
   if (r.excluded.length) {
     console.log('  EXCLUDED, with the reason (this list is arguable on purpose):');
     for (const e of r.excluded) console.log('    ' + e.rel + '\n      ' + e.why);
+    console.log('');
+  }
+  if (r.excludeDrift && r.excludeDrift.length) {
+    console.log('  THE EXCLUSION LIST HAS DRIFTED FROM THE MANIFEST:');
+    for (const d of r.excludeDrift) console.log('    ' + d.rel + '\n      ' + d.why);
     console.log('');
   }
   if (r.missing.length) {

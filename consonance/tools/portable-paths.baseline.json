@@ -3,8 +3,8 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 25,
-    "BENIGN-TEST": 86,
-    "REVIEW": 18,
+    "BENIGN-TEST": 90,
+    "REVIEW": 19,
     "DISGUISED": 13,
     "BENIGN-MESSAGE": 5,
     "FATAL-USER": 7,
@@ -588,6 +588,34 @@
       "key": "consonance/tools/ferry.js\u0000return process.env.FERRY_REPO || 'C:\\\\Consonance\\\\lighthouse';\u0000#1"
     },
     {
+      "file": "consonance/tools/gen-consumer.fixture-scope.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "+ \"normPath('C:\\\\\\\\Consonance\\\\\\\\lighthouse\\\\\\\\...') would be rewritten and their tests broken\");",
+      "key": "consonance/tools/gen-consumer.fixture-scope.test.js\u0000+ \"normPath('C:\\\\\\\\Consonance\\\\\\\\lighthouse\\\\\\\\...') would be rewritten and their tests broken\");\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.fixture-scope.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const machine = (rs.match(/OneDrive|C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi) || []).length;",
+      "key": "consonance/tools/gen-consumer.fixture-scope.test.js\u0000const machine = (rs.match(/OneDrive|C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi) || []).length;\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.fixture-scope.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const machineLine = '/// see C:\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\map\\\\\\n';",
+      "key": "consonance/tools/gen-consumer.fixture-scope.test.js\u0000const machineLine = '/// see C:\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\map\\\\\\n';\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.fixture-scope.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const priv = (rs.match(/C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi) || []).length;",
+      "key": "consonance/tools/gen-consumer.fixture-scope.test.js\u0000const priv = (rs.match(/C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi) || []).length;\u0000#1"
+    },
+    {
       "file": "consonance/tools/gen-consumer.js",
       "detector": "DRIVE",
       "verdict": "BENIGN-FIXTURE",
@@ -600,6 +628,13 @@
       "verdict": "BENIGN-FIXTURE",
       "text": "{ cls: 'MACHINE', pat: /C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi, why: 'the private tree\\'s path' },",
       "key": "consonance/tools/gen-consumer.js\u0000{ cls: 'MACHINE', pat: /C:\\\\{1,4}Consonance\\\\{1,4}lighthouse/gi, why: 'the private tree\\'s path' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/gen-consumer.js",
+      "detector": "DRIVE",
+      "verdict": "REVIEW",
+      "text": "rep(/`C:\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\map\\\\` \\(A\\.md [\\d,]+; B\\.md [\\d,]+; M\\.md [\\d,]+\\)/g,",
+      "key": "consonance/tools/gen-consumer.js\u0000rep(/`C:\\\\Consonance\\\\lighthouse\\\\exo_memory\\\\map\\\\` \\(A\\.md [\\d,]+; B\\.md [\\d,]+; M\\.md [\\d,]+\\)/g,\u0000#1"
     },
     {
       "file": "consonance/tools/gen-consumer.js",
