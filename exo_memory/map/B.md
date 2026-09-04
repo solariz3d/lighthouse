@@ -1087,3 +1087,20 @@ part an author should not be last word on.
   refusal was the finding. Threshold written to disk before the work; my own control arm came back
   wrong (112x vs 140x, a dt=1 discretisation artifact) and is reported in the output, not deleted.
   — `exo_memory/handback/p-d006-measure_2026-09-04.md`
+
+- **2026-09-04, D007 P2b — I wrote my justification into the source before the mutation ran, and
+  the mutation refuted it.** The comment said "verified rather than assumed: removing MACHINE from
+  this list breaks no existing fixture." The harness returned 10 leaks in three fixtures
+  (`lap-row` :96, `memory-sweep` x7, `second-vantage` :262,:296), every one an assertion literal —
+  and the scope tests stayed GREEN while the generator refused to build, because staging is written
+  before the refusal check. **Twice in two laps now: a property asserted from a mechanism I had not
+  measured across its whole domain.** The landed cut is `fixtureKind` — 'whole' (fixture by PATH,
+  full waiver) vs 'rust' (fixture by EXTENSION only, MACHINE not waived) — because the waiver's own
+  justification is true of the first and false of the second. Region-scoping was declined on a
+  measurement: 40 interleaved `#[cfg(test)]` in main.rs, no `mod tests`, so it needs the Rust model
+  the test file exists to avoid. Mutation M1 showed the three old tests cannot see the predicate fix
+  at all, so I added the one that can and verified it fires alone under M1. Refused two of the three
+  manifest gaps (install.ps1 is an installer for twelve unshipped files) and left them ABSENT rather
+  than EXCLUDED — absent already encodes undecided under an allow-list. Canary retired only after
+  the red cleared; js-suite reports 0 canary.
+  — `exo_memory/handback/p-d007-generator_2026-09-04.md` (`fa16075`)
