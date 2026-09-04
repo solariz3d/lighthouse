@@ -1104,3 +1104,20 @@ part an author should not be last word on.
   than EXCLUDED — absent already encodes undecided under an allow-list. Canary retired only after
   the red cleared; js-suite reports 0 canary.
   — `exo_memory/handback/p-d007-generator_2026-09-04.md` (`fa16075`)
+
+- **2026-09-04, D007 P1-ATTACK — the two "unreconciled inputs" were never a conflict, and the number
+  that WAS wrong was the one nobody flagged.** S 74-vs-73 is one untracked file
+  (`ambient-default-claim.test.js`, tracked since `e0973ff`); G 66-vs-63 is a stale citation — I
+  generated a tree and MEASURED 66. Both dissolved in four commands without P4. But A's derivation
+  mixed universes inside one sum: the addends `52+12+4` are TRACKED counts at its own HEAD and total
+  **68**, printed as **69**, which is the working-tree number — **right conclusion (I=8), shown work
+  that does not add up.** Nobody catches that by checking the answer. The real defect: A's §10.2
+  self-declared gap is real and worse — the cold sweep run INSIDE the generated tree gives M+B=3, not
+  2 (`carrier-drift` dies on `carrier-drift.registry.json`, a `.json` no `/\.js$/` rule ships — gap 4
+  of the class I ruled on eight hours earlier, breaking one of the ruling's own five tools). **Every
+  correction moved the bar the harder way, D>=20 -> >=21.** My own oracle broke twice mechanising A's
+  BROKEN classifier (`^Error:` missed ferry's `<ref *1>` banner; frame-only counted js-suite's
+  children) — three values from one tree, which proves the classifier cannot be automated as written.
+  **The lesson to carry: when two numbers are flagged as conflicting, check whether they are even
+  about the same object before reconciling them — and check the number nobody flagged.**
+  — `exo_memory/handback/p-d007-falsifier-attack_2026-09-04.md`
