@@ -112,3 +112,58 @@ ships**. Found by generating the tree and grepping, not by reading my own diff; 
 `demachine()` even rewrote one of my three and left two, demonstrating the §1 guard gap inside my
 own file. **Reaching for the vivid evidence was the leak.** Rewrote to name the class; counts live
 in the hand-back, which does not ship.
+
+## 2026-09-04 — P4, the parity run (lap D010)
+
+### Record: `exo_memory/loop/consumer_parity_2026-09-04.md` · hand-back: `exo_memory/handback/p-d010-parity_2026-09-04.md`
+
+**REFUTED. (P, M, B) = (18, 1, 1) against a bar of zero; I = 74 − 66 = 8.** Generated from
+`f21dbc9`, clean at open and close, HEAD unmoved, no seat committed in the window.
+
+### The two number-deltas were one event, and the file at the centre was mine
+
+`S = 74 by find vs 73 tracked` and `G = 66 derived vs 63 measured` and A's non-summing
+`52 + 12 + 4 = 69` are **the same event seen three times**: at `3d2f1bc`,
+`consonance/tools/ambient-default-claim.test.js` was on disk and not in the index — I wrote it in
+D007 P2c, it landed at `e0973ff`. `find` walks the WORKTREE, `git ls-files` reads the INDEX; A took
+a total from one and an addend from the other. **Two universes, not two counts** — and my own
+uncommitted file was what separated them. My 63 was simply an older HEAD (63 + 3 = 66); A's
+derivation was sound. **Before reconciling two counts, ask which object each one walked.**
+
+### `cargo check` returns 0 over a product with six failing Rust tests
+
+The command in A's ruling and in `gen-consumer.build.test.js`. `cargo check` and `cargo check
+--tests` both exit 0; `cargo test` finds bin 2-failed and **aborts at the first failing target**, so
+`arch_test`'s 4 more are invisible unless you run `--test arch_test` separately. The
+`gen-consumer.js` header's own gap, one level up: not a clean scan over a product that cannot
+compile, but **a clean check over a product that compiles and fails.** Two of the four Rust parity
+breaks are sharp — the generated tree's binary resolved its checkout to
+`C:\Users\nname\Desktop\lighthouse` (FALSE-COLD inside the shipped artifact, caught by its own test),
+and the map walk fails because `exo_memory/map/` never ships **by design**, so that test cannot pass
+in a consumer tree no matter what any seat does.
+
+### P has a floor, and the bar should still stay at zero
+
+A's §10 weakness 3 asked whether `>0` is discipline or stubbornness; it now has a case. 2 of the 18
+are `ENOENT` on the two gaps K deliberately left open rather than EXCLUDE-ing — blocked on a
+repo-shape call that is the keeper's, not a seat's — and at least one Rust break is irreducible by
+construction. **The honest fix is a declared-inert class on the Rust side, not a softer bar**: the JS
+suite has MACHINE-BOUND for exactly this shape and Rust has no equivalent, so a workshop-premised
+test reads as a product defect. Moving the bar is clause 3 and it would be done by someone who
+thought they were being reasonable.
+
+### The clause I registered has now been satisfied in the affirmative
+
+`carrier-drift.js` moved BROKEN → SPEAKS between B's run and mine, **because a manifest gap was
+closed by shipping the file** rather than by hiding it. Worth naming as loudly as the failures. And
+zero EXCLUDE entries were added this lap; K wrote the withheld-vs-undecided distinction into
+`gen-consumer.js` instead. `ΔD = 0, ΔI = 0` — no degeneration, and no progress. **Clause 2 is armed
+with one of two laps elapsed (`202c459`).**
+
+### I recorded a count and not a list, and it cost me
+
+`P = 18` today and `P = 18` in D005 — **not the same 18**: 63 files then, 66 now; 3 crashes then, 2
+now. One crash cleared and the total held, so something else broke, and **I cannot name it because I
+kept the integer and threw away the members.** Registered, and applied in this run's own tables:
+**print the member list, not the count.** The diff between two laps' lists is the measurement; the
+delta between two integers is a rumour.
