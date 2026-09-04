@@ -207,6 +207,16 @@ named files. They never commit to a shared checkout.
 
 ## THE ORDER OF A DISPATCH — finish, verify, file, THEN ring (added 2026-08-24)
 
+
+> **RING BEFORE THE ROW.** The dispatch fires *before* `lap-row.js --stage ... --holder <them>`, never
+> after: writing the row hands the baton away and **revokes your own standing to send it**
+> (`mcp.rs:397` -- each seat's one verb requires that seat to be the holder). That is the nine
+> out-of-turn refusals on the board, two of them caused by exactly this inversion, including the
+> chair's own at 03:35 on 2026-09-04 with the rule in its own context. The writer now enforces it:
+> a row that moves the baton needs `--by <you>`, and a hand-off with no audited ring is refused and
+> names the recovery. `--by X --holder X` is a re-take and is always allowed.
+>
+> *Drafted by pane K (P-D006 packet 5, `3f363c1`), landed by the chair -- the file is a shared carrier.*
 Every dispatch this room has ever sent went out **mid-turn**: composed from reasoning that was not
 finished, not verified, and not written anywhere yet. The keeper named it the night the librarian
 got a channel of its own, and it applies to the chair at greater volume — chair→pane has worked
