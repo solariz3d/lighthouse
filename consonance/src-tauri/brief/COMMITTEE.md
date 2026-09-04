@@ -127,7 +127,20 @@ transcript is running the experiment and reading the dial.
 >
 > **The rule that replaces it, binding every seat INCLUDING the chair:**
 >
-> 1. **Never `git add -A` or `git commit -a` on the shared checkout. Name every path.**
+> 1. **Never `git add -A`, `git commit -a`, or a bare `git commit` on the shared checkout. Name every
+>    path — on the `commit`, not only on the `add`** (`git commit -- <paths>`), so a commit can only
+>    ever carry what its author named.
+>
+>    *AMENDED 2026-09-04. The 08-26 amendment registered its own falsifier — "if a commit after this
+>    date is found to have captured another seat's in-flight file, rule 1 was insufficient" — and it
+>    FIRED, checkably, at `38ae5c2`: the librarian's commit captured seven of pane K's staged files.
+>    Rule 1 governed `git add`; the hazard lives in `git commit`, which needs no `add` at all and takes
+>    whatever is in the shared index. Found and diagnosed by K (`handback/p-d007-smallfixes_2026-09-04.md`
+>    §10), landed by the chair — this file is a shared carrier. The amendment's own proposed remedy,
+>    reinstating chair-routed commits, is still refused for the reason the amendment gave: routing it
+>    through the chair produces the same capture with a different name on it. K's registration: if a
+>    capture happens again after this, the index is not lockable by convention and the answer is
+>    per-seat worktrees, not a better sentence.*
 > 2. **Say in the commit body who wrote it** — the seat, not the model. The body is the only
 >    attribution surface that works.
 > 3. **Nothing is pushed by a seat.** Publishing outward keeps a human awake saying yes
