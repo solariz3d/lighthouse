@@ -211,3 +211,22 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 - second_vantage.md — ABSORBED: its §2 is built as of tonight (call_chair; L003); F0_result.md consumed
   (verdict: does not block, n=2)
 - lap_2026-08-23.md — reference for the lap method; its falsifier (E's 20-commit window) is LIVE and counting
+
+## D006 — the Valheim rain path. DEAD TWICE, nothing built. Rows written by the chair, 2026-09-04.
+- handback/p-d006-measure_2026-09-04.md (B, d7ebfc6) — DEAD by a threshold registered before the run,
+  ~1000x under. The `4f` cover timer is four seconds of FRAMES delivered one per second, so the cast rate
+  is ~8.9/s, not 5,000 per 4 s. Held at source, at IL, and in a model. Threshold at
+  valheim-roofcheck/THRESHOLD.md, written first. The packet's registered good outcome.
+- handback/p-d006-priorart_2026-09-04.md (A, 87be08c) — "unclaimed" REFUTED. RockBreaker/
+  ValheimBuildOptimization 0.5.5 already carries [HarmonyPatch(typeof(WearNTear), "UpdateCover")] with a
+  Prefix. Cover lives in assembly_utils.dll; the chair's instrument covered one DLL of nine. A reached B's
+  cadence correction independently, from a different packet. Nexus unreached (403) and printed as a hole.
+- handback/p-d006-baton-gate_2026-09-04.md (K, 3f363c1; its BUILDING.md line landed dcdd91b) — the lap's
+  ONE surviving artifact, and it is not about Valheim. Gate addresses 2 of 9 refusals, said so first.
+  Found a defect in its own shipped baton-wake.js (blind to 585 of the chair's audit lines). One mutant
+  survived and was a real defect, not a missing test.
+- loop/finding_valheim_roofcheck_2026-09-04.md (the chair, 7cad678) — SUPERSEDED BY ITS OWN LAP. Mechanism
+  correct, rate never derived, "unclaimed" wrong, muscle_map cite unanchored, falsifier named an instrument
+  (Unity Profiler) that cannot attach to a release build. Kept as the object the lap killed.
+- STILL UNOWNED: the keeper's 280 -> 140 fps drop. Not this path. VPO 1.0.3 returned ~+60 and the original
+  cause was never established.
