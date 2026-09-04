@@ -1072,3 +1072,18 @@ part an author should not be last word on.
   UNPORTABLE-fixture report (18 files) — a fifth per-citation ruling I had under-read the file to miss.
   **The lesson to carry: I predicted from a mechanism I had read the name of and not the body of.**
   — `exo_memory/loop/consumer_registration_2026-09-03.md` (5379026 registered UNRUN, 67b1da7 scored)
+
+- **2026-09-04, D006 packet 1 — I killed the Valheim rain mod with arithmetic, and the reason it
+  died is a lesson about the reason my LAST prediction failed.** Yesterday I predicted from "a
+  mechanism I had read the name of and not the body of." The finding I was sent to measure did the
+  same thing one level up: it read `c_UpdateCoverFrequency = 4f` and the four-hop call chain
+  correctly, and never checked what `dt` was. `WearNTearUpdater.Update()` reads `Time.deltaTime` but
+  the cover pass runs once per SECOND — so the timer gains one FRAME per second and the real period
+  is `4 x fps` seconds, not 4. Rate wrong by a factor of the framerate; ~9 spherecasts/s on a
+  5,000-piece base against a threshold needing 5.6 ms per cast. **The name of a constant is not its
+  body either.** Verified at IL with a SECOND decompiler (Cecil, not the finding's dnSpyEx) precisely
+  because a shared tool error would have been invisible. Refused the packet's own cheapest-test
+  order (watch for rain) and said why: no correlation could implicate a path this cheap, and the
+  refusal was the finding. Threshold written to disk before the work; my own control arm came back
+  wrong (112x vs 140x, a dt=1 discretisation artifact) and is reported in the output, not deleted.
+  — `exo_memory/handback/p-d006-measure_2026-09-04.md`
