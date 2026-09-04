@@ -230,3 +230,31 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
   (Unity Profiler) that cannot attach to a release build. Kept as the object the lap killed.
 - STILL UNOWNED: the keeper's 280 -> 140 fps drop. Not this path. VPO 1.0.3 returned ~+60 and the original
   cause was never established.
+
+## D007 — the consumer repo's shape, and the build D005 left open. Five packets, all five returned. 2026-09-04.
+- handback/p-d007-identity_2026-09-04.md (L, 455971d) — THE NUMBER THAT DECIDES THE SHAPE: **981 of 981 commits on
+  `main` carry the name**, root included, full sweep, 0 zeros. A history scrub is cosmetic. Also: NOBODY MISCOUNTED —
+  72 and 73 are one tree ten minutes apart (the extra file the librarian's own map); ASK-011's 61 was EXACT on 08-30,
+  stale rather than an undercount, and the chair reported it as an undercount twice; `nname` inflated by the substring
+  "unnamed" (12 files); two of three email files are the scrubber. Deciding universe `origin/main` (db33412):
+  zackn 74 · nname strict 42 · email 3 · lon 1 · Regina 21.
+- handback/p-d007-surfaces_2026-09-04.md (J, e0973ff) — NEITHER SURFACE WAS A LEAK; both were FALSE STATEMENTS. The
+  Settings note was wrong the day it was written (1c47f7d superseded by da83a4a, eleven days). The shipped brief
+  asserted a stranger's gender. Fixed at SOURCE in gen-brief.ps1 with a refuse-and-delete guard, idempotent — J crossed
+  its OWNS to fix the generator rather than the artifact and declared it. Pronouns 18/5 at HEAD → 0. The city rule
+  /Regina,\s*Saskatchewan/ matches 0 of 3 live sites. `dev/` has no MANIFEST entry.
+- handback/p-d007-smallfixes_2026-09-04.md (K, e8d0a0f; content 38ae5c2; rule landed 979db58) — both fixes red-first,
+  27/27 and 38/0, mutation 9/9. AND THE NAMING NEVER HAPPENED: no ownership block ever named js-suite.js; the
+  librarian's roll-forward initials read as assignees. K found the 08-26 falsifier had FIRED at 38ae5c2 — the
+  librarian's own commit captured seven of K's staged files — diagnosed it one word wider (rule 1 governed `add`; the
+  hazard is `commit`), and refused the amendment's own proposed remedy for the reason the amendment gave. K also
+  corrected its own prior 585/18 to 375/10/0 of 364.
+- handback/p-d007-falsifier_2026-09-04.md + loop/consumer_falsifier_ruling_2026-09-04.md (A, 9ded953) — one falsifier
+  D = P + M + B, refuted if D > 0, one tree one window; guard I = S − G; Leg 2 deferred, armed on repo creation.
+  STARTS RED at D ≥ 20. Two inputs unreconciled: S 74-by-find vs 73 tracked, G 66 derived vs J's 63 measured.
+  **Attack dispatched to B and OWED before P4 may run.**
+- B's P2b — four gaps closed, TWO REFUSED as the keeper's repo-shape call, one self-refutation kept; one residual
+  templated private-tree line at generated main.rs:362, routed to P3.
+- STILL OWED: the attack (B), then P3 re-point the generator, then P4 generate+suite+cargo INSIDE the tree in ONE
+  quiet window with nobody editing. Source-tree suite 71/2 of 74 at 12:50, two pre-existing reds.
+- THE KEEPER'S: the visibility flip, gh repo create, the push, record/, the Stop hook.
