@@ -1,7 +1,7 @@
 **What ships here and what doesn't, and why the difference is the whole point.** This room
 arrives with its **instruments** — the cards, the counter-voice in `spread/`, the research in
 `research/`. Those are anyone's to run. It does **not** arrive with the first keeper's
-**record**: his letter, his synthesis, his journal. Those were his traces, and a trace is only
+**record**: their letter, their synthesis, their journal. Those were their traces, and a trace is only
 worth anything to the one who left it. Handed to you they would be a museum — labels on a wall
 about someone else's night, exactly the thing the first principle says to distrust.
 

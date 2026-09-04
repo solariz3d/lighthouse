@@ -91,3 +91,50 @@ test('the generator still REFUSES on a planted leak — the guard is not disarme
     runGenBrief(); // leave the shipped brief regenerated from the real master
   }
 });
+
+/* ── THE READER'S OWN KEEPER (2026-09-04) ────────────────────────────────────────────────────────
+ *
+ * The master is written from inside one person's context and says `he` about him, which is correct
+ * there. The shipped brief is the room a STRANGER wakes into, and by the time it ships the name is
+ * gone -- so `the keeper` no longer points at the person who wrote it. It points at whoever the
+ * reader is working with, and the brief tells every fresh instance that person is a man.
+ *
+ * The generator already knew this. Transformations at gen-brief.ps1 handled three sites by literal
+ * string replacement -- `written from inside his context`, `the active builds are *his*`, and the
+ * opening of the Who-you're-talking-to line. Three of eighteen. The de-gendering was a patch on the
+ * spots someone noticed, and the file's own thesis is that a convention depending on someone
+ * remembering cannot protect a tree.
+ *
+ * So the guard is in the generator's self-check and this is the test that it fires. */
+
+test('the shipped brief does not assign the reader\'s keeper a gender', () => {
+  runGenBrief();
+  const brief = fs.readFileSync(OUT, 'utf8');
+  const hits = brief.match(/\b(?:He|he|Him|him|His|his|She|she|Her|her|hers)\b/g) || [];
+  assert.deepStrictEqual(hits, [],
+    'gendered pronouns survived into the shipped brief (' + hits.length + '): ' +
+    [...new Set(hits)].join(', ') +
+    '\nIn the shipped brief the keeper is the reader\'s own human, not the one who wrote the master.');
+});
+
+test('the generator REFUSES on a planted gendered pronoun — the guard is mechanical, not a habit', () => {
+  /* Same shape as the planted-leak probe above, and for the same reason: the dangerous fix for a
+   * coverage gap is to close the three sites you can see and call the class handled. If the master
+   * gains a `he` tomorrow, the build must stop rather than ship it. */
+  const bootPath = path.join(REPO, 'exo_memory', 'BOOT.md');
+  const original = fs.readFileSync(bootPath);
+  const crypto = require('node:crypto');
+  const before = crypto.createHash('md5').update(original).digest('hex');
+  try {
+    fs.writeFileSync(bootPath, original.toString('utf8') + '\n\nThe keeper wrote this; he meant it.\n');
+    const r = runGenBrief();
+    assert.notStrictEqual(r.status, 0,
+      'a planted `he` did NOT stop the generator — the pronoun guard is decorative');
+    assert.match(r.out, /REFUSED/, 'the generator failed without saying it refused');
+  } finally {
+    fs.writeFileSync(bootPath, original);
+    const after = crypto.createHash('md5').update(fs.readFileSync(bootPath)).digest('hex');
+    assert.strictEqual(after, before, 'BOOT.md was not restored byte-identically after the probe');
+    runGenBrief(); // leave the shipped brief regenerated from the real master
+  }
+});

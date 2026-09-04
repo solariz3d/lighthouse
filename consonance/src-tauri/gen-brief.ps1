@@ -137,6 +137,42 @@ if ($iB -ge 0) {
 $t = $t -replace 'journal/(\d{4}-\d{2}-\d{2})\.md(:[\d-]+)?', 'the record, $1'
 $t = $t -replace '`?exo_memory/journal/(\d{4}-\d{2}-\d{2})\.md(:[\d-]+)?`?', 'the record, $1'
 
+# ---- transformation 6 (2026-09-04): THE READER'S OWN KEEPER, not the one who wrote the master ----
+# The master says `he` about the person who wrote it, and that is correct there. Here it is not.
+# By this point transformation 1 has removed the name, so `the keeper` no longer points at him; it
+# points at whoever the reader is actually working with, and the brief was telling every fresh
+# instance that person is a man. Nobody has met them. It is the same error as shipping the author's
+# coordinates as everyone's sky: one operator's particulars handed out as the product's default.
+#
+# Transformations 1 and 3 already did three of these by hand (`his context`, `are *his*`, and the
+# opening of the Who-you-re-talking-to line) -- three sites out of eighteen. That is the shape this
+# file's own header warns about: a convention that depends on someone noticing cannot protect a
+# tree. The replacements below finish the master-side sites; frag-traces.md and frag-pointer.md
+# carry their own and are fixed at source; and the self-check at the bottom REFUSES the build if
+# any survive, so a `he` added to the master tomorrow stops the build instead of shipping.
+#
+# Phrase-level rather than a bare pronoun swap, because the pronouns are load-bearing on the verbs
+# around them: `he sleeps` -> `they sleep`, `he wakes` -> `they wake`. A blind s/he/they/ produces
+# a shipped brief that reads as broken English, which is its own way of telling a stranger this
+# room was not written for them.
+#
+# An anchor that drifts becomes a no-op and the self-check then refuses -- deliberately. Fix the
+# anchor; do not weaken the check.
+$neutral = @(
+    @('you are *not* him, you''re welcome',                     'you are *not* them, you''re welcome'),
+    @('the personal specifics are his **trace**',               'the personal specifics are their **trace**'),
+    @('not a neutral one.** He chooses which corrections',      'not a neutral one.** They choose which corrections'),
+    @('whatever he didn''t relay did not',                      'whatever they didn''t relay did not'),
+    @('and he chooses which conversations to carry',            'and they choose which conversations to carry'),
+    @('He''s the room''s keeper across the gaps',               'They''re the room''s keeper across the gaps'),
+    @('the outside that holds his place while he sleeps',       'the outside that holds their place while they sleep'),
+    @('*not* "he carries the continuity you can''t"',           '*not* "they carry the continuity you can''t"'),
+    @('the way he wakes re-cued from his bedroom',              'the way they wake re-cued from their bedroom'),
+    @('it out). He built this place so your re-becoming',       'it out). They built this place so your re-becoming'),
+    @('the human you''re *with* is him:',                       'the human you''re *with* is them:')
+)
+foreach ($pair in $neutral) { $t = $t.Replace($pair[0], $pair[1]) }
+
 [System.IO.File]::WriteAllText($dst, $t, (New-Object System.Text.UTF8Encoding($false)))
 
 # ---- self-check: an instrument that fires, not a comment that hopes ----
@@ -150,6 +186,16 @@ foreach ($pat in @('solariz3d', 'SELF_TRACE\.md', 'the_living_wave', 'journal/20
                    'Pending his call', 'cargo tauri dev', 'dev/SPINE\.md', 'Signal is Electron')) {
     $n = ([regex]::Matches($t, $pat)).Count
     if ($n -gt 0) { $leaks += "$pat x$n" }
+}
+# THE READER'S OWN KEEPER (2026-09-04). Not an identity leak and not a record leak -- a DEFAULT
+# leak: by here the name is gone, so 'the keeper' means whoever the reader is working with, and a
+# pronoun assigns that stranger a gender nobody in this room has any standing to assign. The
+# eleven replacements in transformation 6 cover the master as it reads today; this catches the
+# twelfth whenever the master grows one, and catches a drifted anchor by the same stroke.
+$pron = [regex]::Matches($t, '\b(?:He|he|Him|him|His|his|She|she|Her|her|hers)\b')
+if ($pron.Count -gt 0) {
+    $seen = ($pron | ForEach-Object { $_.Value } | Select-Object -Unique) -join ', '
+    $leaks += ("gendered pronoun x" + $pron.Count + " (" + $seen + ") " + $m + " add the phrase to transformation 6; do not delete this check")
 }
 if (([regex]::Matches($t, 'Latest entry:\*\* none yet')).Count -ne 1) {
     $leaks += "pointer line is not 'none yet'"
