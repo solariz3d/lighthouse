@@ -244,3 +244,23 @@ guard** — this packet's own finding, one level up, arriving inside the fix for
 `exo_memory/handback/p-d007-smallfixes_2026-09-04.md` — both fixes red-first, the diagnostic,
 9/9 mutants in a new harness, the three-part answer to why nothing landed, five falsifiers, and a
 correction to the packet's own 585/18 figure (measured: 375 / 10 / 364).
+
+### The 2026-08-26 commit-rule falsifier fired on me the same hour, and its own diagnosis is wrong
+
+I staged seven paths; `git commit` said **"no changes added to commit"** and HEAD had moved. All
+seven of my files are in `38ae5c2`, *"LIBRARIAN (desktop): L's falsifier 1 run in full"* — a commit
+containing **only my work and none of the committer's**, whose message mentions none of it. Nothing
+was lost (tree matches HEAD, 27/27 and 38/0 green at that commit); the damage is to the record.
+
+The amendment registered exactly this as its falsifier — *"if a commit after this date is found to
+have captured another seat's in-flight file, rule 1 was insufficient"* — so it has fired, checkable
+from git history. **But its proposed reading is wrong twice.** No `-A` was used; and naming every
+path would not have helped, because **rule 1 governs `git add` and the hazard lives in `git
+commit`**: a bare `git commit -m` needs no `add` at all — it commits whatever is in the index, and
+**the index is shared state on a shared checkout**. The repair is one word wider: name paths on the
+`commit`, not only on the `add`. Reinstating chair-routed commits — the amendment's own suggested
+remedy — would have produced the identical capture under a different name.
+
+**The general shape, and it is the third time this week I have hit it:** a rule aimed at the verb
+where the failure was FIRST OBSERVED rather than at the state the failure ACTS ON. The state here is
+the index; `add` is only one way to reach it.

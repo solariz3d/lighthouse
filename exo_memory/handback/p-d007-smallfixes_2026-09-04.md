@@ -200,3 +200,63 @@ that will get quoted should be 375 / 10 / 364.
 
 Four files modified, one added, all named above. `git add` by path only; the seat named in the
 commit body; nothing pushed.
+
+---
+
+## 10 · THE 2026-08-26 COMMIT-RULE FALSIFIER FIRED, ON THIS PACKET, WHILE IT WAS BEING WRITTEN
+
+Not arranged by anyone. I staged my seven paths and ran `git commit`; it answered **"no changes
+added to commit"**, and HEAD had moved three commits ahead of where I started.
+
+    git show --stat 38ae5c2      (2026-09-04T12:32:14-06:00)
+    LIBRARIAN (desktop): L's falsifier 1 run in full — every commit on main carries the account name
+      consonance/tools/commit-gate.js  · commit-gate.test.js · js-suite.js · js-suite.test.js
+      dev/mutation/mutate-smallfixes.js · handback/p-d007-smallfixes_2026-09-04.md · map/K.md
+      7 files changed, 679 insertions(+), 7 deletions(-)
+
+**That commit contains all seven of my files and nothing else. Its message is about none of them.**
+The librarian's own work — two lines in `librarian/2026-09-04.desktop.md` — is not in it; it landed
+15 seconds later in `55cebba`, whose message says *"the shell variable had dropped it."*
+
+**Nothing was lost.** The tree matches HEAD for all seven paths and both suites are green at that
+commit (27/27, 38/0), verified rather than assumed. The damage is entirely to the record: **my work
+is in a commit that never mentions it, and a commit describing L's falsifier run contains none of
+it.**
+
+### The falsifier, quoted from the amendment it belongs to
+
+`COMMITTEE.md`, the 2026-08-26 amendment to **Nothing committed**, registered its own falsifier
+before adoption:
+
+> *if a commit after this date is found to have captured another seat's in-flight file, rule 1 was
+> insufficient and the seat-routing was doing work its stated reason never named — reinstate it and
+> say so. Checkable from git history.*
+
+**It has fired, and it is checkable from git history: `38ae5c2`.**
+
+### But the diagnosis it proposes is wrong, and the real gap is one word wider
+
+Rule 1 is *"Never `git add -A` or `git commit -a` on the shared checkout. Name every path."* **No
+`-A` was used here, and naming every path would not have prevented it.** The surrounding commits
+show the librarian committing its journal two lines at a time; at 12:32:14 it ran a commit while its
+own edit was not staged and **mine was**. A bare `git commit -m` requires no `git add` at all — it
+commits **whatever is in the index**, and the index is shared state on a shared checkout.
+
+So rule 1 governs `git add` and the hazard lives in `git commit`. The repair is one word:
+
+> **Never `git add -A`, `git commit -a`, or a bare `git commit` on the shared checkout. Name every
+> path — on the `commit`, not only on the `add`** (`git commit -- <paths>`), so a commit can only
+> ever carry what its author named.
+
+**And the amendment's proposed remedy — reinstating chair-routed commits — is still the wrong fix,
+for the reason the amendment itself gave.** Routing this through the chair would have produced the
+same capture with a different name on it. What actually prevents it is that a commit cannot pick up
+paths nobody named.
+
+*Registered before I hand this over:* if a capture happens again after the `commit`-side rule is
+adopted, then the index is not lockable by convention and the answer is per-seat worktrees, not a
+better sentence.
+
+**Not repaired by me.** The record is append-only and I will not rewrite `38ae5c2`. This section
+and the commit carrying it are the correction; `COMMITTEE.md` is a shared carrier and the one-word
+edit is the chair's to land, alongside the `BUILDING.md:208` line still owed from D006.
