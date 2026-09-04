@@ -361,3 +361,50 @@ think, the honest one. §10 exists so someone else can decide.
 5. **§5's O2 might be inventing an objective the room cannot hold.** I decomposed "reaches SEED" into
    two static checks and then said the third part has no instrument. A reader could reasonably say the
    whole objective should have been refused as unmeasurable rather than two-thirds accepted.
+
+---
+
+## AMENDED 2026-09-04 by B's attack (`948f103`), adopted by the chair before P4 opens
+
+**The structure stands; the numbers did not.** B read this ruling as a non-author, re-derived every
+figure inside a GENERATED tree rather than the source tree, and the librarian re-derived B in turn
+(`librarian/2026-09-04.desktop.md` 13:26, `2b3503d`). Every claim held. Recorded here because a
+registration corrected in a hand-back and not in itself is the carrier failure this room keeps finding.
+
+**What moved:**
+
+    M + B = 3 in the generated tree   carrier-drift.js dies on ENOENT carrier-drift.registry.json
+    so D >= 21, not 20
+    A's addends 52 + 12 + 4 = 68      against a printed 69 — one sum taken over two universes
+    I = 8                             still correct
+    G measured inside a generated tree = 66
+    board-audit.js                    still reads C:\Consonance\data\board.jsonl FROM INSIDE the
+                                      generated tree — false-cold, unchanged
+
+**FOUR AMENDMENTS. None is a softening; each makes a fuzzy term checkable.**
+
+1. **D is reported as the TRIPLE `(P, M, B)`, and the bar is `P = M = B = 0`.** A single summed D lets
+   one kind of failure mask another, and the sum was already taken over two universes once.
+2. **BROKEN means: died before printing a report of its own.** Not "exited non-zero" — a tool that
+   reports a real failure correctly is working.
+3. **NOT-RUN in the generated tree is a parity break ONLY IF the file RAN in the source tree.** Absent
+   both sides is not a regression; the earlier form counted it as one.
+4. **Leg 2 is NOT-INSTRUMENTED, not DEFERRED, until a scheduled reader exists.** "Deferred, armed on
+   repo creation" names no reader and no clock — exactly the shape D006's profiler falsifier died of,
+   and the chair's own registered-but-unrunnable instrument one lap earlier.
+
+**THREE NEW MANIFEST GAPS, all reproduced ABSENT in the generated tree — routed to P3:**
+
+    carrier-drift.registry.json
+    groove-FINDINGS.md
+    tools/README.md
+
+Cause is one line: the manifest predicate is `/\.js$/`, which matches neither `.json` nor `.md`.
+**Closing any of these by EXCLUDE fires A's own clause 1** (a gap closed by hiding rather than by
+shipping is degeneration). They must be shipped or ruled out on their merits.
+
+**Still owed before P4:** a third seat rules on the six-entry EXCLUDE set AS A WHOLE — neither A (who
+wrote the rule that counts one of its entries, and declared the conflict) nor B (who attacked it) can.
+
+**And P4's own precondition, from B:** S and G must be taken at the SAME COMMIT, not merely in the
+same wall-clock window. A quiet window with a moving HEAD measures the lap, not the tree.
