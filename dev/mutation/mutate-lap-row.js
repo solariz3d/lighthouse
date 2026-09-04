@@ -154,6 +154,84 @@ const MUTANTS = [
       "    .map(l => { try { return JSON.parse(l); } catch { return null; } })\n" +
       "    .filter(Boolean).filter(r => r.stage !== 'chain' || STATIONS.has(r.holder));"),
   },
+
+  /* ── THE BATON-ORDER GATE (2026-09-04) ────────────────────────────────────────────────────────
+   *
+   * The gate's failure modes split two ways and BOTH are silent. Too loose: it writes the row that
+   * disarms the writer, exactly as the tool did for the seven refusals of 2026-09-03/04. Too tight:
+   * it refuses a hand-off that WAS announced, which is worse than no gate, because a gate that
+   * fires on correct behaviour teaches seats to route around it — the defect `baton-wake.js` v1
+   * shipped and no test of mine caught. So the mutants below run in both directions: some make it
+   * permit a bare hand-off, some make it refuse a rung one. */
+  {
+    name: 'GATE OFF: an un-rung hand-off is written, and the writer disarms itself (the 09-03/04 defect, restored)',
+    apply: s => s.replace("  if (g.verdict === 'refuse') {", '  if (false) {'),
+  },
+  {
+    name: 'a baton move with no --by is written unchecked (omission becomes the bypass)',
+    apply: s => s.replace("  if (!by) return { verdict: 'no-by' };", "  if (!by) return { verdict: 'unarmed' };"),
+  },
+  {
+    /* THE MUTANT THAT SURVIVED THE FIRST RUN, kept pointing the other way. The original was
+     * "a REFUSED ring counts as a delivery"; deleting the keyword guard changed nothing, because
+     * the anchored shapes already exclude every refusal — so the guard was a comment, and one that
+     * DISCARDED 2 of 376 real deliveries whose preview quoted a failure. It was removed rather than
+     * given a test. This mutant restores it, and the suite must now go red on its RETURN. */
+    name: 'the keyword guard comes back, discarding real deliveries whose preview quotes a failure',
+    apply: s => s.replace('  if (/^call_chair -> Main \\[NotAttempted\\]',
+      '  if (/REFUSED|FAILED/.test(t)) return null;\n  if (/^call_chair -> Main \\[NotAttempted\\]'),
+  },
+  {
+    name: 'an injection that was NEVER ATTEMPTED counts as a delivery',
+    apply: s => s.replace("^call_librarian \\S+ -> LIB \\[NotAttempted\\]/.test(t)) return null;",
+      '^call_librarian \\S+ -> LIB \\[NotAttempted-never\\]/.test(t)) return null;'),
+  },
+  {
+    name: 'the possession WINDOW is dropped: a ring from any time in history satisfies the gate',
+    apply: s => s.replace('.filter((d) => d && Number(d.ts) >= windowStart)', '.filter((d) => d)'),
+  },
+  {
+    name: 'a ring to ANYONE satisfies the gate, not a ring to the incoming holder',
+    apply: s => s.replace("inWindow.some((d) => d.station === holder)", 'inWindow.some((d) => d.station != null)'),
+  },
+  {
+    name: 'the FIRST chain row of a lap is exempted (the D006 03:35 row sails through)',
+    apply: s => s.replace('  if (prevHolder != null && holder === prevHolder) return { verdict: \'unchanged\' };',
+      '  if (prevHolder == null || holder === prevHolder) return { verdict: \'unchanged\' };'),
+  },
+  {
+    name: 'a RE-TAKE is no longer exempt - the no-wedge property mcp.rs rests on is broken',
+    apply: s => s.replace("  if (by === holder) return { verdict: 'retake' };", '  if (false) return { verdict: \'retake\' };'),
+  },
+  {
+    name: 'an ambiguous sid prefix resolves to whichever seat was tested first, silently',
+    apply: s => s.replace('if (reserved.length === 1) return reserved[0][1];', 'if (reserved.length >= 1) return reserved[0][1];'),
+  },
+  {
+    name: 'an UNRESOLVED delivery stops allowing - the gate refuses on ambiguity it cannot settle',
+    apply: s => s.replace("if (inWindow.some((d) => d.station === 'unknown')) return { verdict: 'rung-unknown' };",
+      "if (false) return { verdict: 'rung-unknown' };"),
+  },
+  {
+    name: 'a blind window no longer disarms it, so muted rings read as no ring at all',
+    apply: s => s.replace('  else if (fs.existsSync(blindPath()))', '  else if (false)'),
+  },
+  {
+    name: 'the gate arms off DATA_DIR instead of the ledger\'s own directory (a fixture inherits the live board)',
+    apply: s => s.replace("path.join(path.dirname(LEDGER), 'board.jsonl')", "path.join(DATA_DIR, 'board.jsonl')"),
+  },
+  {
+    name: 'an unchecked hand-off no longer SAYS it was unchecked (absent guard reads as passing guard)',
+    apply: s => s.replace("      if (r.gate === 'unarmed') {", '      if (false) {'),
+  },
+  {
+    name: '--by accepts any string, so a pane name lands in the field the station gate exists to keep clean',
+    apply: s => s.replace('  if (b && !STATIONS.has(b)) {', '  if (false) {'),
+  },
+  {
+    name: 'the verdict is not recorded on the row, so the gate\'s own bypasses stop being countable',
+    apply: s => s.replace("    by: b, gate: g.verdict === 'unchanged' ? null : g.verdict,", '    by: b,'),
+  },
 ];
 
 const raw = fs.readFileSync(TOOL, 'utf8');

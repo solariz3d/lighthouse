@@ -40,7 +40,8 @@
 //                    --inquiry <text> --guess <p[,p...]> [--blind]
 //   node lap-row.js --map <lap-id> --paths <p[,p...]>
 //   node lap-row.js --opened <lap-id> --paths <p[,p...]>
-//   node lap-row.js --stage <lap-id> <stage> --holder <station> [--to <letters>] [--note <text>]
+//   node lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--note <text>]
+//                    --by is REQUIRED when the row moves the baton - see THE BATON-ORDER GATE below
 //   node lap-row.js --void <lap-id> --reason <text> --by <seat>
 //   node lap-row.js --report [--last N]
 //
@@ -504,7 +505,204 @@ function opened(lap, paths, now) {
  * one more value of `stage`. Just not a value that already means something else. */
 const CHAIN_STAGES = ['inquiry', 'map', 'dispatched', 'working', 'handbacks-in', 'return-leg', 'filed'];
 
-function chain(lap, stage, holder, note, now, to) {
+// ---------------------------------------------------------------- THE BATON-ORDER GATE
+
+/* WHY THIS IS IN THE WRITER AND NOT IN A DOCUMENT. Seven out-of-turn refusals in one day
+ * (2026-09-03/04): the librarian at 10:24, then B, K, A, J and L between 10:27 and 10:46, then the
+ * CHAIR at 03:35 the following night — with the rule quoted in its own context while it did the
+ * opposite. It wrote `--stage D006 inquiry --holder librarian`, which handed the baton away, and
+ * its `chair_inject` was then REFUSED OUT OF TURN. The recovery is on the ledger as three rows for
+ * one hand-off (D006 inquiry/librarian 03:35:35, inquiry/chair 03:36:23 "CORRECTION", inquiry/
+ * librarian 03:36:45). Discipline was tried; the rule is written; it failed on the seat that had
+ * just read it.
+ *
+ * THE MECHANISM, from `mcp.rs:397` (`required_station`): every speaking verb is gated on the
+ * CURRENT holder, and each seat's one verb requires that seat to be the holder —
+ *
+ *     chair_inject   needs holder chair       call_chair  needs holder librarian
+ *     call_librarian needs holder panes
+ *
+ * so writing `--holder <someone else>` REVOKES YOUR OWN STANDING TO ANNOUNCE IT, in the same act.
+ * The tool let a seat disarm itself and said nothing. The fix is an ORDER, not a channel: ring
+ * first, write the row second. `handback/p-baton-wake_2026-09-03.md` §8 named this file as the
+ * right home for it, and this is that.
+ *
+ * THE ORDERING PROBLEM IN THE GATE ITSELF, checked at source rather than assumed. The ring is
+ * audited to `board.jsonl` and the row is written here — two systems. If the audit landed after the
+ * verb returned, a CORRECT sequence would be refused, which is worse than no gate. It does not:
+ * `chair_audit` (main.rs:6669) calls `board_push` (main.rs:1806), which appends to the board file
+ * INLINE, before returning, and the verb handler audits before it returns its result string. By the
+ * time a seat can type the next command, the line is on disk. The one exception is the blind
+ * window, and it is handled below by refusing to arm rather than by refusing the row.
+ *
+ * ── WHAT THIS GATE CANNOT SEE, and every one of these resolves toward ALLOW ────────────────────
+ *
+ *   1. A RELAY BY HAND. The keeper telling a seat leaves no audit row; a hand-off announced that
+ *      way reads here as silence. Same limit `chain-status.js` states: rows, never the world.
+ *   2. A RING ABOUT SOMETHING ELSE. Any audited delivery to the incoming holder inside the window
+ *      passes the gate, whether or not it mentioned the baton. This is a FALSE PASS by
+ *      construction and it is the deliberate direction: the expensive error here is refusing a
+ *      correct sequence, because a gate that does that teaches seats to route around it.
+ *   3. AN UNRESOLVED PANE ID. A `chair injected -> <prefix>` line whose prefix matches no known
+ *      pane resolves to `unknown`, and unknown ALLOWS — the opposite of `baton-wake.js`, which
+ *      fires on unknown and says so. That is not an inconsistency: baton-wake REPORTS, so a wrong
+ *      guess costs a line; this REFUSES, so a wrong guess costs a blocked write. The cost
+ *      asymmetry points the other way, so the same ambiguity resolves the other way. The allow is
+ *      PRINTED, never silent.
+ *   4. CROSS-MACHINE. `lap.jsonl` and `board.jsonl` are machine-local. A hand-off rung from the
+ *      laptop is invisible here.
+ *   5. THE BLIND WINDOW. While `blind.lock` sits in the data dir, `board_push` MUTES every entry
+ *      (main.rs:1839) — including the audit line for a ring that really happened. The gate
+ *      disarms itself for the duration rather than refusing rows it structurally cannot check.
+ *   6. WHETHER THE WRITER IS WHO IT SAYS. `--by` is self-report. That is acceptable here and would
+ *      not be in a measurement: this is a GUARD against an honest seat disarming itself, not an
+ *      instrument anyone is scored by. A seat that lies to it has bypassed a guard aimed at its
+ *      own foot.
+ *
+ * ── WHY THERE IS NO --force, AND WHY THAT DOES NOT WEDGE THE ROOM ─────────────────────────────
+ *
+ * `mcp.rs` rests its no-wedge argument on this file: "the holder is not written by any verb here
+ * [...] so the baton can always be moved by hand and the loop can always be un-stuck." A gate that
+ * could refuse unconditionally would break that property. It cannot: `--by X --holder X` is a
+ * RE-TAKE and is always allowed, so any seat can always pull the baton to itself, ring, and hand
+ * off — which is the documented recovery, and the exact three rows the chair wrote tonight. A
+ * bypass flag would therefore only ever be used to skip the ring, which is the thing being gated.
+ * *Falsifier, registered before this ships:* if any seat is found genuinely stuck behind this gate
+ * with no legal move, the reasoning is wrong and `--force <reason>` is owed. */
+
+const MAIN_SID = '0c0c0c0a-0000-4000-8000-000000000a01';        // main.rs:4414 — the chair
+const LIBRARIAN_SID = '0c0c0c0b-0000-4000-8000-00000000115b';   // main.rs:4544 — the librarian
+
+/* The board, the blind marker and the pane table live BESIDE THE LEDGER — not at DATA_DIR — and
+ * that adjacency is the arming rule, not a convenience. A ledger in a temp directory is a FIXTURE,
+ * and a fixture has no board; so every existing suite that drives this writer keeps passing by
+ * CONSTRUCTION rather than by an exemption, including `chain-status.test.js`, which this file does
+ * not own and has broken once before by widening a rule under it. */
+const boardPath = () => process.env.LAP_BOARD || path.join(path.dirname(LEDGER), 'board.jsonl');
+const blindPath = () => path.join(path.dirname(LEDGER), 'blind.lock');
+const panesPath = () => path.join(path.dirname(LEDGER), 'panes.json');
+
+/** A pane's cwd names its station. Copied from baton-wake.js:stationOfCwd; the authority is cited
+ *  rather than imported, the rule every hook in this repo already follows for its own duplicate. */
+function stationOfPaneCwd(cwd) {
+  if (!cwd) return null;
+  const base = String(cwd).replace(/[\\/]+$/, '').split(/[\\/]/).pop().toLowerCase();
+  if (base === 'main') return 'chair';
+  if (base === 'librarian') return 'librarian';
+  return 'panes';
+}
+
+/* WHICH STATION A BOARD LINE REACHED — or `unknown`, or null for "not a delivery at all".
+ *
+ * THE FOUR SHAPES ARE READ OFF THE SOURCE, NOT OFF MEMORY, and the reason is a measurement taken
+ * before a line of this was written. `baton-wake.js:deliveryStation` gates on `QUEUED ->`,
+ * `DELIVERED ->` or `[Received]`, and over the live board:
+ *
+ *     audit lines matching a known success/queued shape : 375
+ *     that predicate returns non-null on               :  10
+ *     successful `chair_inject` deliveries it sees     :   0 of 364
+ *
+ * The chair's only speaking verb is invisible to it, and the chair is one of the two seats that
+ * pass batons. Building this gate on that predicate would have refused every correctly-announced
+ * chair hand-off — the failure mode this packet was told to design against, inherited from my own
+ * file. Reproduce: `dev/mutation/mutate-lap-row.js --coverage` (and see the hand-back).
+ *
+ *   main.rs:6711  chair injected (chair: M) -> {id} [delivered and received | WRITTEN BUT ...]
+ *   main.rs:6723  chair_inject (chair: M) -> {id}: DELIVERY FAILED (...)        <- NOT a delivery
+ *   main.rs:6851  call_chair -> Main [Received|Unconfirmed]: "..."
+ *   main.rs:6917  call_librarian {letter} -> LIB [Received|Unconfirmed]: "..."
+ *   gate_or_queue QUEUED -> {id} ...   queued behind a busy pane; it lands, so it counts
+ *
+ * `call_librarian`'s success shape has NEVER appeared on this board (0 lines, all time) — every
+ * `call_librarian` on record is a refusal. So that branch is contracted against the source string
+ * and has no live confirmation, which is said here rather than left for a reader to assume. */
+function deliveryStation(text, panes) {
+  const t = String(text || '');
+  /* A REFUSAL IS NOT A DELIVERY, AND IT IS EXCLUDED BY SHAPE RATHER THAN BY KEYWORD. The first
+   * draft opened with `if (/REFUSED|FAILED|NotAttempted/.test(t)) return null`, copied from
+   * `baton-wake.js`. Mutation SURVIVED it — deleting the line changed nothing, because every
+   * refusal and failure shape in main.rs already fails the anchored patterns below
+   * (`call_chair REFUSED …` and `call_chair -> Main FAILED:` both lack the `[`; the failure line
+   * is `chair_inject (chair: …)`, underscore, against `chair injected (chair: …)`, past tense).
+   *
+   * So it was a guard whose removal no test could detect — a comment that reads like one, the
+   * shape my own map names — AND it was worse than dead. Measured on the live board: it discards
+   * 2 of 376 real deliveries (0.5%), both `[delivered and received]` chair injections whose
+   * 110-character PREVIEW happened to quote "THE BUILD RAN AND FAILED". Dropping a real delivery
+   * makes this gate refuse a correctly-announced hand-off, which is the one failure this packet
+   * was told to design against, arriving inside the guard meant to prevent it.
+   *
+   * What survives is the narrow case the broad test was hiding: `Receipt::NotAttempted` means the
+   * injection was never attempted. It is unreachable on today's success paths (main.rs computes it
+   * only when `delivered` is Err, which routes to a FAILED line) and is refused anyway, because an
+   * unreachable state that would read as a delivery is exactly what changes under someone else's
+   * edit. It is matched inside the receipt bracket, never anywhere in the preview. */
+  if (/^call_chair -> Main \[NotAttempted\]|^call_librarian \S+ -> LIB \[NotAttempted\]/.test(t)) return null;
+  if (/^call_chair -> Main \[/.test(t)) return 'chair';
+  if (/^call_librarian \S+ -> LIB \[/.test(t)) return 'librarian';
+  const m = t.match(/^(?:chair injected \(chair: [^)]*\) -> |QUEUED -> )([0-9a-f]{4,})/);
+  if (!m) return null;
+  /* AMBIGUITY IS UNKNOWN, NEVER A GUESS. MAIN_SID and LIBRARIAN_SID share their first seven
+   * characters (main.rs:4551 says so), so a prefix matching both must not resolve to whichever was
+   * tested first. Only an exactly-one match resolves. */
+  const reserved = [[MAIN_SID, 'chair'], [LIBRARIAN_SID, 'librarian']].filter(([sid]) => sid.startsWith(m[1]));
+  if (reserved.length === 1) return reserved[0][1];
+  const hit = (panes || []).find((p) => String(p.pane || '').startsWith(m[1]));
+  return hit ? stationOfPaneCwd(hit.cwd) : 'unknown';
+}
+
+/* PURE, so the whole matrix is testable with no disk, no board and no live pane — the same reason
+ * `station_allows` in mcp.rs is pure. `deliveries` is [{ts, station}], already resolved.
+ *
+ * THE WINDOW IS THE POSSESSION, NOT A CLOCK. A ring counts if it landed since the baton last moved
+ * (or since the lap opened, on the first chain row). No threshold constant, so there is none to
+ * defend — and the one hand-off in the record that was done RIGHT (D005, ring 10:07:43, row
+ * 10:07:55, twelve seconds) passes on any window that starts before it. That case is the
+ * retrodiction that killed the first draft of `baton-wake.js`, and it is asserted here as a test
+ * rather than trusted a second time. */
+function gateVerdict({ prevHolder, windowStart, holder, by, deliveries, armed }) {
+  if (prevHolder != null && holder === prevHolder) return { verdict: 'unchanged' };
+  if (holder === 'none') return { verdict: 'parked' };   // parking the baton wakes nobody
+  if (!armed) return { verdict: 'unarmed' };
+  if (!by) return { verdict: 'no-by' };
+  if (by === holder) return { verdict: 'retake' };       // pulling it to yourself needs no ring
+  const inWindow = (deliveries || []).filter((d) => d && Number(d.ts) >= windowStart);
+  if (inWindow.some((d) => d.station === holder)) return { verdict: 'rung' };
+  if (inWindow.some((d) => d.station === 'unknown')) return { verdict: 'rung-unknown' };
+  return { verdict: 'refuse' };
+}
+
+/** Each seat's one speaking verb. Keyed on the SENDER, never the holder — baton-wake.js:verbFor
+ *  had this backwards first and printed a requirement that was wrong twice over. */
+function verbFor(station) {
+  return station === 'chair' ? 'chair_inject'
+    : station === 'librarian' ? 'call_chair'
+      : station === 'panes' ? 'call_librarian' : null;
+}
+
+/** Board + panes off disk, and whether the gate may arm at all. Never throws: an unreadable board
+ *  disarms the gate loudly, it does not take the write down with it. */
+function gateContext() {
+  let armed = true, why = null;
+  if (!fs.existsSync(boardPath())) { armed = false; why = `no board.jsonl beside ${LEDGER}`; }
+  else if (fs.existsSync(blindPath())) { armed = false; why = 'a blind window is open (blind.lock); board pushes are muted'; }
+  let deliveries = [];
+  if (armed) {
+    let panes = [];
+    try { panes = JSON.parse(fs.readFileSync(panesPath(), 'utf8')); } catch (_) { panes = []; }
+    try {
+      for (const l of fs.readFileSync(boardPath(), 'utf8').split(/\r?\n/)) {
+        if (!l) continue;
+        let b; try { b = JSON.parse(l); } catch (_) { continue; }
+        const station = deliveryStation(b && b.text, panes);
+        if (station) deliveries.push({ ts: Number(b.ts || b.at || 0), station });
+      }
+    } catch (_) { armed = false; why = 'board.jsonl could not be read'; deliveries = []; }
+  }
+  return { armed, why, deliveries };
+}
+
+function chain(lap, stage, holder, note, now, to, by) {
   if (!lap || !String(lap).trim()) throw new Error('--stage needs a lap id: node lap-row.js --stage <lap> <stage> --holder <seat>');
   const s = String(stage || '').trim().toLowerCase();
   if (!CHAIN_STAGES.includes(s)) {
@@ -557,10 +755,49 @@ function chain(lap, stage, holder, note, now, to) {
       throw new Error(`--to names the panes the baton went to, so it goes with --holder panes; got --holder ${JSON.stringify(h)}.`);
     }
   }
+  /* THE BATON-ORDER GATE, and it is deliberately the LAST refusal, for the reason the station gate
+   * above is second-to-last: `chain-status.test.js` asserts that `--stage L999 working --holder
+   * pane-a` is refused with `no such lap`, and every refusal placed above that one silently stops
+   * that assertion testing what it names. This gate also reads the ledger's own prior rows, so it
+   * cannot run before the existence check anyway. */
+  const b = by == null ? null : String(by).trim();
+  if (b && !STATIONS.has(b)) {
+    throw new Error(`--by is the STATION writing this row, and it takes the same vocabulary as --holder: ` +
+      `${[...STATIONS].join('|')}. Got ${JSON.stringify(b)}.`);
+  }
+  const prior = all.filter((r) => r.lap === lap && r.stage === 'chain' && r.holder);
+  const prev = prior.length ? prior[prior.length - 1] : null;
+  const openRow = all.find((r) => r.lap === lap && r.stage === 'open');
+  const windowStart = prev ? prev.at : (openRow ? openRow.at : 0);
+  const ctx = gateContext();
+  const g = gateVerdict({
+    prevHolder: prev ? prev.holder : null,
+    windowStart, holder: h, by: b, deliveries: ctx.deliveries, armed: ctx.armed,
+  });
+  if (g.verdict === 'no-by') {
+    throw new Error(`this row MOVES THE BATON (${prev ? prev.holder : 'no holder yet'} -> ${h}) and must name who is moving it: add --by <${[...STATIONS].join('|')}>.\n` +
+      `  --by ${h} is a RE-TAKE (pulling the baton to yourself) and is always allowed.\n` +
+      `  --by <anyone else> is a HAND-OFF and requires that you rang ${h} FIRST — writing this row\n` +
+      `  revokes your own standing to send it (mcp.rs:397).`);
+  }
+  if (g.verdict === 'refuse') {
+    const verb = verbFor(b);
+    throw new Error(`RING FIRST, ROW SECOND. This row hands the baton ${b} -> ${h}, and no audited delivery to ` +
+      `${h} appears on the board since the baton last moved.\n` +
+      `  Writing it would REVOKE your own standing to announce it: your verb is ${verb} and it needs holder ${b} (mcp.rs:397).\n` +
+      `  That is the seven out-of-turn refusals of 2026-09-03/04, including the chair's own at 03:35.\n` +
+      `  Do this instead:  ${verb} ...   (ring ${h} NOW, while you still hold the baton)\n` +
+      `  then re-run this exact command. If you are not the holder, take it back first:\n` +
+      `      node consonance/tools/lap-row.js --stage ${lap} ${s} --holder ${b} --by ${b}\n` +
+      `  This sees AUDITED deliveries only — a relay by hand reads here as silence.`);
+  }
   return append({
     lap, stage: 'chain', chain: s, holder: h, at: now,
     to: toList.length ? toList : null,
     note: note && String(note).trim() ? String(note).trim() : null,
+    // The verdict rides on the row so the gate's own bypasses are COUNTABLE rather than inferred:
+    // `unarmed` is a hand-off nothing checked, `rung-unknown` one allowed on an unresolved pane id.
+    by: b, gate: g.verdict === 'unchanged' ? null : g.verdict,
     head: headSha(),
   });
 }
@@ -847,8 +1084,20 @@ function main(argv, now = Date.now()) {
     }
     if (argv.includes('--stage')) {
       const i = argv.indexOf('--stage');
-      const r = chain(argv[i + 1], argv[i + 2], at('--holder'), at('--note'), now, at('--to'));
+      const r = chain(argv[i + 1], argv[i + 2], at('--holder'), at('--note'), now, at('--to'), at('--by'));
       console.log(`${r.lap}  ${r.chain.toUpperCase()} — next holder ${r.holder}${r.to ? ` (${r.to.join(',')})` : ''}.`);
+      /* THE NON-REFUSING VERDICTS ARE PRINTED. An absent guard and a passing guard must never
+       * produce the same observation — `handback/p-commit-gate_2026-09-02.md` §7 — so a hand-off
+       * the gate could not check says so on the way past, rather than looking like one it cleared. */
+      if (r.gate === 'unarmed') {
+        console.log(`  BATON-ORDER GATE DID NOT RUN: ${gateContext().why}. This hand-off was written UNCHECKED.`);
+      } else if (r.gate === 'rung-unknown') {
+        console.log('  gate allowed on an UNRESOLVED pane id: a delivery landed in the window but resolves to no known pane.');
+      } else if (r.gate === 'rung') {
+        console.log(`  gate: an audited delivery to ${r.holder} precedes this row.`);
+      } else if (r.gate === 'retake') {
+        console.log('  gate: RE-TAKE (--by equals --holder) — you pulled the baton to yourself; no ring owed.');
+      }
       return 0;
     }
     if (argv.includes('--void')) {
@@ -867,9 +1116,12 @@ function main(argv, now = Date.now()) {
   console.error('              ring = no user inquiry entered - the loop supplied this lap itself');
   console.error('  lap-row.js --map <lap-id> --paths <p[,p...]>');
   console.error('  lap-row.js --opened <lap-id> --paths <p[,p...]>');
-  console.error('  lap-row.js --stage <lap-id> <stage> --holder <station> [--to <letters>] [--note <text>]');
+  console.error('  lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--note <text>]');
   console.error(`      stages: ${CHAIN_STAGES.join(' -> ')}`);
   console.error(`      holder: ${[...STATIONS].join(' | ')}   a STATION, never a pane name`);
+  console.error('      --by:   the station WRITING the row. REQUIRED when the row moves the baton.');
+  console.error('              --by == --holder is a re-take; --by != --holder is a hand-off and needs a RING FIRST');
+  console.error('              (writing the row revokes your standing to send it — mcp.rs:397).');
   console.error('      --to:   the pane letters the baton fanned out to, e.g. --to A,B,C,E (with --holder panes)');
   console.error('      written by whoever COMPLETES a stage; --holder names who must act NEXT');
   console.error('  lap-row.js --void <lap-id> --reason <text> --by <seat>');
@@ -882,6 +1134,7 @@ if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
   normPath, isBroad, sealOf, rows, laps, open, map, opened, chain, voidLap, report, mintId, main,
+  deliveryStation, gateVerdict, verbFor, gateContext, stationOfPaneCwd,
   LEDGER, RATE_FLOOR, WINDOW, COMMIT_WINDOW, INITIATORS, ENTRIES, STATIONS, CHAIN_STAGES, FRESH_MAP_FLOOR_S,
-  DIRECT_NO_GUESS_RUN,
+  DIRECT_NO_GUESS_RUN, MAIN_SID, LIBRARIAN_SID,
 };

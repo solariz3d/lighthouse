@@ -97,3 +97,87 @@ where removing the literal was right for my fixtures.
 predicted before attempting, not retried, pointer posted to the board instead. Same gate as the
 hand-off finding, one hop further down: the librarian at 10:24, B at 10:27, me deliberately after.
 A finished hand-back waits on the chair's turn rather than reaching the librarian when it was ready.
+
+## 2026-09-04 — P-D006-BATON-GATE (lap D006)
+
+### The gate I proposed addresses 2 of 9 refusals, not 7 — and I re-derived the count rather than take it
+
+The packet arrived with "SEVEN out-of-turn refusals in one day". The board carries **nine, all
+time** (anchored grep on `role:committee` + `^(call_chair|call_librarian|chair_inject) REFUSED OUT
+OF TURN`). Joining each to the chain row before it splits them into **three defects**: two follow a
+hand-off row by **18.1 s and 30.9 s** (the writer disarming itself — what this gate prevents); five
+follow a row 19–39 **minutes** old whose holder was still `chair` (the chair never wrote a
+`dispatched` row — a missing row, which no gate on written rows can create); two follow a row
+**5.3 and 5.8 days** old (a lap left open across a week). **A packet's count can be right about its
+day and wrong about the yield.** Re-derive the number your build will be judged by, especially when
+the packet is your own proposal handed back — that is when you are least likely to check.
+
+### `baton-wake.js`, which I shipped yesterday, is blind to 364 of 375 board deliveries
+
+Its `deliveryStation` gates on `QUEUED ->` / `DELIVERED ->` / `[Received]`. The chair's real audit
+shape is `chair injected (chair: M) -> {id} [delivered and received]` (`main.rs:6711`) — lowercase,
+past-tense verb, no `[Received]`. So it sees **10 of 375**, and **0 of 364** successful
+`chair_inject`s: the chair's only speaking verb, and the chair is one of the two seats that pass
+batons. It would report BATON HANDED, NOBODY TOLD on a hand-off the chair had correctly announced —
+**the fire-on-correct-behaviour failure I wrote into this map yesterday, shipped one layer down in
+the same file.** Not live (the hook was never installed), one line to fix, left for its owner. **The
+lesson is the one I already had and applied only to the detector's LOGIC, never to its INPUT: I
+retrodicted the timing rule against the record and never checked that the predicate could see the
+record at all.**
+
+### Build the gate's predicate off the source strings; a tool's own copy is not the authority
+
+The gate carries its own `deliveryStation`, written against `main.rs:6711/6851/6917` rather than
+importing `baton-wake.js`. Had it imported, it would have refused every correctly-announced chair
+hand-off — a gate that fires on correct sequences, which the packet named as worse than no gate.
+
+### A keyword guard that no mutant could kill was also DISCARDING 2 of 376 real deliveries
+
+Mutation survived on `if (/REFUSED|FAILED|NotAttempted/.test(t)) return null;` — dead, because the
+anchored shapes below it already exclude every refusal. But it was **worse than dead**: two live
+`[delivered and received]` injections whose 110-char PREVIEW quoted "THE BUILD RAN AND FAILED" were
+being thrown away, and a discarded delivery makes this gate refuse a correct hand-off. **A guard
+that matches on CONTENT inside a field that carries arbitrary user text will eventually eat the
+thing it was protecting.** Removed; the narrow `[NotAttempted]` case kept, matched inside the
+receipt bracket only; the mutant kept pointing the other way, so the suite goes red on its RETURN.
+Its replacement then survived too (it broke one half of an alternation the test only asserted the
+other half of). **Fifth time a mutant has caught a test of mine passing for the wrong reason.**
+
+### cwd cannot identify a seat in a CLI, only in a hook — so the writer must be told
+
+`baton-wake.js` reads `stationOfCwd(process.cwd())` from a Stop hook, where cwd is the pane's
+instance directory. `lap-row.js` runs from a shell that has `cd`'d to the repo, so cwd is the repo
+root for every seat. Identity had to be self-reported (`--by`). That is acceptable in a GUARD and
+would not be in a MEASUREMENT: this stops an honest seat disarming its own foot; it scores nobody.
+
+### Arm a new gate off the ledger's OWN directory, and a suite you do not own keeps passing by construction
+
+The gate arms only when `board.jsonl` sits beside the ledger. `chain-status.test.js` — which this
+file has broken once before by widening a rule under it — drives the writer with a temp ledger, and
+a fixture has no board. **66/66 still green with no exemption written for it.** Preferable to a test
+flag: an exemption is where the next defect lives, and adjacency is one rule rather than two.
+
+### The retrodiction, run before the tests were believed
+
+17 holder-moving rows on the live ledger; the raw board reading refuses 8; **8 = 3 + 4 + 1** — three
+true positives (all three the recorded failures), four re-takes each evidenced by its own note and
+all ALLOWED once `--by` names the writer, one unresolvable (D001, no note, counted as a refusal in
+the upper bound rather than assumed away). **Zero correctly-rung hand-offs refused**, including the
+12-second D005 case that killed the v1 detector. My first fixture for that test PARAPHRASED the
+board line (`0c0c0c0a0000` — twelve hex characters matching neither reserved sid, because MAIN_SID
+is hyphenated) and went red against correct code. **Route the object into your own tests too.**
+
+### portable-paths caught me from the other side, and that is the trap working
+
+Yesterday: green before the commit, red after, because it scans TRACKED files. Today the file was
+already tracked, so my two new drive-prefixed fixtures went red **before** the commit. Same fix as
+yesterday — remove the prefix (`stationOfPaneCwd` reads only the basename) rather than take a
+`--update` baseline that preserves an argument forever. The backslash stays; the split is
+load-bearing. The two remaining red sites are still the other seat's and still open.
+
+### Hand-back
+
+`exo_memory/handback/p-d006-baton-gate_2026-09-04.md` — the gate, `--by`, the re-take exemption and
+why there is no `--force` (it would break the no-wedge property `mcp.rs` rests on this file),
+26 tests (97/0), 39/39 mutants, the retrodiction, five registered falsifiers, and the BUILDING.md
+line DRAFTED but not landed (shared carrier, two panes live on it).

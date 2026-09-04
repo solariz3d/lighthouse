@@ -1104,3 +1104,323 @@ test('carrier: every document that quotes the --entry vocabulary lists what the 
     (stale[0] ? stale[0].said : '?') + '` with `--entry ' + want + '` at ' +
     stale.map(f => f.label + ':' + f.line).join(', ') + '. The writer is the master; the prose is the copy.');
 });
+
+// ---------------------------------------------------------------- THE BATON-ORDER GATE (2026-09-04)
+//
+// SEVEN OUT-OF-TURN REFUSALS IN ONE DAY is what this is tested against, not a hypothesis: the
+// librarian at 10:24, then B, K, A, J and L between 10:27 and 10:46, then the CHAIR at 03:35 the
+// next night with the rule quoted in its own context. The failure is that writing `--holder
+// <someone else>` revokes the writer's own standing to announce it (mcp.rs:397), so the tool let a
+// seat disarm itself and said nothing.
+//
+// THE TEST THAT MATTERS MOST IS THE ONE THAT MUST PASS, not the ones that refuse. `baton-wake.js`
+// v1 fired on the single hand-off in the whole record that was done RIGHT, and no test caught it
+// because every test encoded the same misreading. So the real D005 sequence - ring 10:07:43, row
+// 10:07:55, twelve seconds apart - is carried below as a fixture and asserted as an ALLOW.
+
+/** A fixture ledger with a board.jsonl beside it, which is what ARMS the gate. */
+function armed(rows, boardLines) {
+  const fx = fixture();
+  for (const r of rows) fs.appendFileSync(fx.ledger, JSON.stringify(r) + '\n');
+  fs.writeFileSync(path.join(fx.dir, 'board.jsonl'),
+    (boardLines || []).map(b => JSON.stringify(b)).join('\n') + (boardLines && boardLines.length ? '\n' : ''));
+  delete require.cache[require.resolve('./lap-row.js')];
+  process.env.LAP_LEDGER = fx.ledger;
+  return { dir: fx.dir, ledger: fx.ledger, cleanup: fx.cleanup, mod: require('./lap-row.js') };
+}
+
+const OPENED = { lap: 'L001', stage: 'open', at: 1000, initiator: 'chair', entry: 'orch', inquiry: 'x', guess: ['a/b.js'] };
+const INJECT = (ts, id) => ({ pane: 'chair', role: 'committee', ts, text: `chair injected (chair: claude-opus-5) -> ${id} [delivered and received]: hello` });
+const LIBSID = '0c0c0c0b-0000-4000-8000-00000000115b';
+
+// ---- the delivery predicate, read off main.rs rather than off memory
+
+test('gate/delivery: the four success shapes in main.rs each resolve to a station', () => {
+  const { mod, cleanup } = fixture();
+  const d = (t, p) => mod.deliveryStation(t, p);
+  assert.strictEqual(d('call_chair -> Main [Received]: "hi"'), 'chair', 'main.rs:6851');
+  assert.strictEqual(d('call_chair -> Main [Unconfirmed]: "hi"'), 'chair', 'an unconfirmed write still reached the pane');
+  assert.strictEqual(d('call_librarian K -> LIB [Received]: "hi"'), 'librarian', 'main.rs:6917');
+  assert.strictEqual(d(`chair injected (chair: claude-opus-5) -> ${LIBSID.slice(0, 8)} [delivered and received]: hi`),
+    'librarian', 'main.rs:6711, resolved through LIBRARIAN_SID');
+  assert.strictEqual(d('chair injected (chair: claude-opus-5) -> abcd1234 [delivered and received]: hi',
+    // No drive letter: `stationOfPaneCwd` reads only the BASENAME, so the prefix was never
+    // load-bearing and portable-paths is right to call it machine-specific. The backslash stays,
+    // because the separator split IS load-bearing. Same call I made on 2026-09-03 — remove the
+    // literal rather than take a baseline entry, which would preserve an argument forever.
+    [{ pane: 'abcd1234-0000', cwd: 'instances\\sibling-x' }]), 'panes');
+  cleanup();
+});
+
+test('gate/delivery: a REFUSAL or a FAILURE is not a delivery - the clause the whole finding rests on', () => {
+  // Counting a refused ring as a ring would make this gate blind to its own subject: the refused
+  // `call_chair` IS the case where a seat tried to wake a holder and the machinery stopped it.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.deliveryStation('call_chair REFUSED OUT OF TURN - mount M tried to speak'), null);
+  assert.strictEqual(mod.deliveryStation('call_chair -> Main FAILED: pane gone'), null);
+  assert.strictEqual(mod.deliveryStation('call_librarian K -> LIB FAILED: pane gone'), null);
+  assert.strictEqual(mod.deliveryStation('chair_inject (chair: m) -> abcd: DELIVERY FAILED (x) - nothing reached the pane: hi'), null);
+  assert.strictEqual(mod.deliveryStation('just some prose mentioning call_chair in passing'), null);
+  assert.strictEqual(mod.deliveryStation('call_chair -> Main [NotAttempted]: "hi"'), null,
+    'an injection never attempted is not a delivery, and the check is inside the receipt bracket');
+  assert.strictEqual(mod.deliveryStation('call_librarian K -> LIB [NotAttempted]: "hi"'), null,
+    'BOTH halves of the alternation, or a mutant breaking one of them survives — it did, on the first run');
+  cleanup();
+});
+
+test('gate/delivery: a REAL delivery whose PREVIEW quotes a failure still counts', () => {
+  /* THE MUTANT THAT SURVIVED, and it was not a missing test — it was a real defect. The first
+   * draft opened with a keyword guard, `/REFUSED|FAILED|NotAttempted/`. Deleting it changed
+   * nothing, because the anchored shapes already exclude every refusal; so it guarded nothing.
+   * Measured on the live board it did worse than nothing: it DISCARDED 2 of 376 real deliveries
+   * (0.5%), both `[delivered and received]` injections whose preview quoted "THE BUILD RAN AND
+   * FAILED". A discarded delivery makes this gate refuse a correctly-announced hand-off — the one
+   * failure the packet named — from inside the guard meant to prevent it.
+   *
+   * The line below is verbatim from board.jsonl, not a paraphrase of it. */
+  const { mod, cleanup } = fixture();
+  const real = 'chair injected (chair: claude-opus-5) -> 18916fe2 [delivered and received]: [chair] THE BUILD RAN AND FAILED. 9 errors, 8 of them yours';
+  assert.strictEqual(mod.deliveryStation(real, [{ pane: '18916fe2-463d', cwd: 'instances\\sibling-a80a1c20' }]),
+    'panes', 'a keyword anywhere in the message body must not disqualify the delivery that carried it');
+  cleanup();
+});
+
+test('gate/delivery: an id prefix matching BOTH reserved seats is unknown, never the first tested', () => {
+  // MAIN_SID and LIBRARIAN_SID share their first seven characters (main.rs:4551). A shorter board
+  // format would otherwise file every librarian delivery as a chair one, silently, and the
+  // instrument would read cleaner the more wrong it got.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.MAIN_SID.slice(0, 7), mod.LIBRARIAN_SID.slice(0, 7), 'the premise of this test');
+  assert.strictEqual(mod.deliveryStation('chair injected (chair: m) -> 0c0c0c0 [delivered and received]: hi'), 'unknown');
+  assert.strictEqual(mod.deliveryStation('chair injected (chair: m) -> deadbeef [delivered and received]: hi', []), 'unknown');
+  cleanup();
+});
+
+// ---- the pure verdict matrix
+
+test('gate/verdict: a row that does not move the baton is not a hand-off and needs nothing', () => {
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({ prevHolder: 'chair', holder: 'chair', armed: true, windowStart: 0 }).verdict, 'unchanged');
+  cleanup();
+});
+
+test('gate/verdict: a RE-TAKE is always allowed - this is the no-wedge property mcp.rs rests on', () => {
+  // `mcp.rs` argues the room can never wedge because lap-row.js can always move the baton by hand.
+  // A gate that could refuse unconditionally would break that. `--by X --holder X` always passes,
+  // so any seat can pull the baton to itself, ring, and hand off - the documented recovery.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({ prevHolder: 'chair', holder: 'librarian', by: 'librarian', armed: true, windowStart: 0, deliveries: [] }).verdict, 'retake');
+  cleanup();
+});
+
+test('gate/verdict: a hand-off with no audited ring is REFUSED; with one, allowed', () => {
+  const { mod, cleanup } = fixture();
+  const base = { prevHolder: 'chair', holder: 'librarian', by: 'chair', armed: true, windowStart: 100 };
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [] }).verdict, 'refuse');
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [{ ts: 150, station: 'librarian' }] }).verdict, 'rung');
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [{ ts: 150, station: 'panes' }] }).verdict, 'refuse',
+    'a ring to somebody ELSE is not a ring to the incoming holder');
+  cleanup();
+});
+
+test('gate/verdict: THE WINDOW IS THE POSSESSION - a ring from before the baton last moved does not count', () => {
+  const { mod, cleanup } = fixture();
+  const base = { prevHolder: 'chair', holder: 'librarian', by: 'chair', armed: true, windowStart: 100 };
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [{ ts: 99, station: 'librarian' }] }).verdict, 'refuse');
+  assert.strictEqual(mod.gateVerdict({ ...base, deliveries: [{ ts: 100, station: 'librarian' }] }).verdict, 'rung',
+    'the boundary is inclusive: a ring at the instant the baton moved is inside the possession');
+  cleanup();
+});
+
+test('gate/verdict: an UNRESOLVED delivery allows, and that is the opposite of baton-wake by design', () => {
+  // baton-wake REPORTS, so a wrong guess costs a line and `unknown` fires. This REFUSES, so a wrong
+  // guess costs a blocked write. The cost asymmetry points the other way, so the same ambiguity
+  // resolves the other way - and the allow is printed rather than silent.
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({
+    prevHolder: 'chair', holder: 'librarian', by: 'chair', armed: true, windowStart: 0,
+    deliveries: [{ ts: 5, station: 'unknown' }],
+  }).verdict, 'rung-unknown');
+  cleanup();
+});
+
+test('gate/verdict: parking the baton at `none` wakes nobody, so no ring is owed', () => {
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({ prevHolder: 'chair', holder: 'none', by: 'chair', armed: true, windowStart: 0, deliveries: [] }).verdict, 'parked');
+  cleanup();
+});
+
+test('gate/verdict: an unarmed gate never refuses - it reports that it did not run', () => {
+  const { mod, cleanup } = fixture();
+  assert.strictEqual(mod.gateVerdict({ prevHolder: 'chair', holder: 'librarian', by: 'chair', armed: false, windowStart: 0, deliveries: [] }).verdict, 'unarmed');
+  cleanup();
+});
+
+// ---- armed, through the writer
+
+test('gate: a hand-off with no ring is REFUSED and the ledger is byte-identical', () => {
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'chair', at: 2000 }], []);
+  const before = fs.readFileSync(fx.ledger, 'utf8');
+  assert.throws(() => fx.mod.chain('L001', 'map', 'librarian', null, 3000, null, 'chair'), /RING FIRST, ROW SECOND/);
+  assert.strictEqual(fs.readFileSync(fx.ledger, 'utf8'), before, 'a refused write must leave the ledger byte-identical');
+  fx.cleanup();
+});
+
+test('gate: the refusal names the WRITER verb and the exact re-take command', () => {
+  // A refusal that does not say what would have been accepted is one the next seat works around by
+  // guessing - this file's own rule, applied to the newest gate in it.
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'librarian', at: 2000 }], []);
+  let msg = '';
+  try { fx.mod.chain('L001', 'return-leg', 'chair', null, 3000, null, 'librarian'); } catch (e) { msg = e.message; }
+  assert.match(msg, /call_chair/, 'the verb is keyed on the SENDER, never the holder');
+  assert.match(msg, /needs holder librarian/);
+  assert.match(msg, /--stage L001 return-leg --holder librarian --by librarian/, 'the recovery must be copy-pasteable');
+  assert.match(msg, /relay by hand reads here as silence/, 'the limit rides with the refusal');
+  fx.cleanup();
+});
+
+test('gate: a hand-off PRECEDED by an audited ring is written, and carries gate:rung', () => {
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'chair', at: 2000 }],
+    [INJECT(2500, LIBSID.slice(0, 8))]);
+  const r = fx.mod.chain('L001', 'map', 'librarian', 'rung then rowed', 3000, null, 'chair');
+  assert.strictEqual(r.holder, 'librarian');
+  assert.strictEqual(r.gate, 'rung');
+  assert.strictEqual(r.by, 'chair', 'the row records who moved the baton - the ledger never carried that before');
+  fx.cleanup();
+});
+
+test('gate: a RE-TAKE is written with no ring at all - the room cannot be wedged', () => {
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'panes', at: 2000 }], []);
+  const r = fx.mod.chain('L001', 'working', 'chair', null, 3000, null, 'chair');
+  assert.strictEqual(r.gate, 'retake');
+  fx.cleanup();
+});
+
+test('gate: a row that keeps the holder needs no --by and is untouched by any of this', () => {
+  const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'inquiry', holder: 'chair', at: 2000 }], []);
+  const r = fx.mod.chain('L001', 'map', 'chair', null, 3000);
+  assert.strictEqual(r.gate, null, 'a non-hand-off carries no verdict; only baton MOVES are gated');
+  fx.cleanup();
+});
+
+test('gate: the FIRST chain row of a lap is a hand-off too - that is the D006 03:35 case exactly', () => {
+  // The chair opened D006 and wrote `--stage inquiry --holder librarian` as the first chain row.
+  // There is no prior holder, so a rule keyed only on "the holder changed" would have exempted the
+  // one row that cost the room its night. The window falls back to the lap's OPEN row.
+  const fx = armed([OPENED], []);
+  assert.throws(() => fx.mod.chain('L001', 'inquiry', 'librarian', null, 3000, null, 'chair'), /RING FIRST/);
+  fx.cleanup();
+});
+
+test('gate: --by must be a STATION, the same vocabulary as --holder', () => {
+  const fx = armed([OPENED], []);
+  assert.throws(() => fx.mod.chain('L001', 'inquiry', 'librarian', null, 3000, null, 'echo'), /--by is the STATION/);
+  fx.cleanup();
+});
+
+test('gate: a baton move with NO --by is refused, and the refusal teaches both readings', () => {
+  const fx = armed([OPENED], []);
+  let msg = '';
+  try { fx.mod.chain('L001', 'inquiry', 'librarian', null, 3000); } catch (e) { msg = e.message; }
+  assert.match(msg, /MOVES THE BATON/);
+  assert.match(msg, /RE-TAKE/, 'the message must say the re-take reading exists, or a stuck seat cannot find it');
+  fx.cleanup();
+});
+
+// ---- the two ways the gate must DISARM rather than refuse
+
+test('gate: NO BOARD beside the ledger means the gate cannot run - it writes and SAYS SO', () => {
+  // The arming rule is adjacency, and it is why `chain-status.test.js` - a suite this file does not
+  // own - keeps passing by CONSTRUCTION rather than by an exemption: a fixture has no board.
+  const fx = fixture();
+  fs.appendFileSync(fx.ledger, JSON.stringify(OPENED) + '\n');
+  const r = cli(['--stage', 'L001', 'inquiry', '--holder', 'librarian', '--by', 'chair'], fx.ledger);
+  assert.strictEqual(r.code, 0, r.stderr);
+  assert.match(r.stdout, /BATON-ORDER GATE DID NOT RUN/, 'an absent guard and a passing guard must never read the same');
+  assert.match(r.stdout, /written UNCHECKED/);
+  fx.cleanup();
+});
+
+test('gate: a BLIND WINDOW disarms it - board pushes are muted, so a real ring would be invisible', () => {
+  // main.rs:1839: while blind.lock exists, board_push MUTES every entry including a ring's audit
+  // line. Refusing there would refuse correct sequences for the duration of the window.
+  const fx = armed([OPENED], []);
+  fs.writeFileSync(path.join(fx.dir, 'blind.lock'), '0');
+  const r = fx.mod.chain('L001', 'inquiry', 'librarian', null, 3000, null, 'chair');
+  assert.strictEqual(r.gate, 'unarmed', 'a gate that cannot see must not refuse');
+  fx.cleanup();
+});
+
+// ---- ordering, so a fix to this file does not break a suite it does not own
+
+test('gate: it is the LAST refusal - an unknown lap still says `no such lap`', () => {
+  // chain-status.test.js asserts exactly this message, and every refusal placed above it silently
+  // stops that assertion testing what it names. Same reason the station gate is placed where it is.
+  const fx = armed([OPENED], []);
+  assert.throws(() => fx.mod.chain('L999', 'working', 'librarian', null, 3000, null, 'chair'), /no such lap/);
+  assert.throws(() => fx.mod.chain('L001', 'nope', 'librarian', null, 3000, null, 'chair'), /unknown stage/);
+  assert.throws(() => fx.mod.chain('L001', 'working', 'echo', null, 3000, null, 'chair'), /holder is a station/);
+  fx.cleanup();
+});
+
+// ---- THE RETRODICTION. Real rows, real board lines, real timestamps.
+
+test('RETRODICTION: the one hand-off in the record done RIGHT is ALLOWED (D005, ring 12 s before the row)', () => {
+  /* THE TEST THIS WHOLE GATE HAD TO PASS BEFORE IT COULD SHIP. On 2026-09-03 the librarian was
+   * refused for row-then-ring, re-took the baton for 30 s, rang the chair at 10:07:43, and wrote
+   * the hand-off row at 10:07:55. `baton-wake.js` v1 called that an orphaned baton - an instrument
+   * firing on correct behaviour, at the moment a seat did the hard part. The real timestamps are
+   * carried here rather than paraphrased. */
+  const RING = 1788401263000;   // 10:07:43 - call_chair, QUEUED behind a busy chair pane
+  const ROW = 1788401275000;    // 10:07:55 - the hand-off row, twelve seconds later
+  const fx = armed(
+    [{ ...OPENED, at: 1788368850000 }, { lap: 'L001', stage: 'chain', chain: 'map', holder: 'librarian', at: 1788401255000 }],
+    /* THE BOARD LINE IS THE REAL ONE, verbatim from board.jsonl, and the first draft of this test
+     * paraphrased it as `0c0c0c0a0000` — twelve hex characters that match NEITHER reserved sid,
+     * because MAIN_SID is hyphenated. The gate correctly returned `rung-unknown` and the test went
+     * red on a fixture I had invented rather than copied. Route the OBJECT, not a description of
+     * it — including into your own test. */
+    [{ pane: 'chair', role: 'committee', ts: RING, text: 'QUEUED -> 0c0c0c0a (1 waiting, prompt not idle): D005 MAP filed' }],
+  );
+  const r = fx.mod.chain('L001', 'return-leg', 'chair', 'hand-off after the ring', ROW, null, 'librarian');
+  assert.strictEqual(r.gate, 'rung', 'the gate refused the sequence it exists to teach');
+  fx.cleanup();
+});
+
+test('RETRODICTION: the D005 stall and the D006 03:35 inversion are both REFUSED', () => {
+  /* D005: `holder librarian` written 2026-09-03 01:07:30 with no ring; the map sat 8h57m.
+   * D006: the chair wrote `inquiry --holder librarian` at 03:35:35 with the rule in its own
+   * context, and its next `chair_inject` was REFUSED OUT OF TURN. Both are the gate's subject. */
+  const fx = armed([{ ...OPENED, at: 1788368840000 }], []);
+  assert.throws(() => fx.mod.chain('L001', 'inquiry', 'librarian', 'door two', 1788368850000, null, 'chair'),
+    /RING FIRST, ROW SECOND/, 'D005 01:07:30');
+  fx.cleanup();
+
+  const fx2 = armed([{ ...OPENED, at: 1788514470514 }], []);
+  assert.throws(() => fx2.mod.chain('L001', 'inquiry', 'librarian', null, 1788514535322, null, 'chair'),
+    /RING FIRST, ROW SECOND/, 'D006 03:35:35');
+  fx2.cleanup();
+});
+
+test('RETRODICTION: the three recovery rows the seats actually wrote are all ALLOWED as re-takes', () => {
+  /* Of eight holder-moving rows the raw board reading would refuse, FOUR are re-takes evidenced by
+   * their own notes - D002 "chair holds pending return leg", D005 10:07:35 "re-taken for 30s",
+   * D005 11:26 "written BY HAND from the librarian seat", D006 03:36:23 "CORRECTION ... Holder
+   * returned to chair". Every one is allowed once --by names the writer, which is the whole reason
+   * the flag exists rather than the gate inferring identity it cannot see. */
+  for (const [prevHolder, holder] of [['chair', 'librarian'], ['librarian', 'chair'], ['panes', 'chair']]) {
+    const fx = armed([OPENED, { lap: 'L001', stage: 'chain', chain: 'map', holder: prevHolder, at: 2000 }], []);
+    const r = fx.mod.chain('L001', 'working', holder, 'recovery', 3000, null, holder);
+    assert.strictEqual(r.gate, 'retake', `${prevHolder} -> ${holder} was refused; the recovery path is broken`);
+    fx.cleanup();
+  }
+});
+
+test('gate: the usage names --by and what it is for', () => {
+  const fx = fixture();
+  const r = cli([], fx.ledger);
+  assert.strictEqual(r.code, 2);
+  assert.match(r.stderr, /--by:/);
+  assert.match(r.stderr, /RING FIRST/);
+  fx.cleanup();
+});
