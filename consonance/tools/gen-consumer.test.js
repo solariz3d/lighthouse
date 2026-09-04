@@ -279,3 +279,218 @@ test('unportable fixtures are REPORTED, and the report is not empty', () => {
   for (const u of r.unportable) assert.ok(u.refs.length > 0, u.rel + ' listed with no references');
   try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {}
 });
+
+// ── D009 P3 — THE RE-POINT ──────────────────────────────────────────────────────────────────────
+//
+// L ruled the EXCLUDE set (`handback/p-d007-exclude_2026-09-04.md`) and its closing block is this
+// section's brief. Four manifest gaps, one of them a live uncaught crash; the widening that closes
+// them arms EXCLUDE entry 1; the set's dangling debt had no instrument.
+
+test('RE-POINT: the widening reaches the three tools gaps', () => {
+  const e = G.MANIFEST.find((m) => m.dir === 'consonance/tools');
+  for (const nm of ['README.md', 'carrier-drift.registry.json', 'groove-FINDINGS.md']) {
+    assert.ok(e.match.test(nm), `consonance/tools/${nm} is unreachable by any manifest rule`);
+  }
+  assert.ok(e.match.test('ferry.js'), 'the widening must not lose the .js files it already carried');
+});
+
+test('RE-POINT: the widening does NOT close the fourth gap, and that is measured, not assumed', () => {
+  /* L's ruling and the packet that carried it both say widening `consonance/tools` "closes all four
+   * gaps in one line". It closes THREE. `consonance/hooks/README.md` lives under a different
+   * manifest entry with its own predicate, and no widening of the tools rule can reach it.
+   *
+   * Asserted rather than written in a comment, because the claim that it was closed is the one a
+   * later reader is most likely to inherit. If someone widens the hooks rule deliberately, this
+   * test goes red and its message says what the decision was. */
+  const hooks = G.MANIFEST.find((m) => m.dir === 'consonance/hooks');
+  assert.ok(!hooks.match.test('README.md'),
+    'consonance/hooks/README.md now ships. That is a CONTENT decision reserved to the keeper — it ' +
+    'is substantially this machine\'s state (a registered-hooks table naming three files absent ' +
+    'from this repo, an "Expected today" block true only here, two commit shas, another private ' +
+    'project\'s paths, and two bare build_ruling.md citations dedangle cannot reach). If the ' +
+    'keeper ruled that it ships, delete this test with the decision recorded beside it.');
+});
+
+test('RE-POINT: entry 1 is ARMED — the baseline is reachable and withheld', () => {
+  // The dead exclusion earning its keep. Before the widening this path could not be reached by any
+  // rule; after it, this machine's own path register is one predicate away from shipping.
+  const K = 'consonance/tools/portable-paths.baseline.json';
+  const e = G.MANIFEST.find((m) => m.dir === 'consonance/tools');
+  assert.ok(e.match.test(path.basename(K)), 'a manifest rule must now REACH the baseline');
+  assert.ok(G.EXCLUDE[K], 'and EXCLUDE must withhold it');
+  assert.ok(!/^UNREACHABLE:/.test(G.EXCLUDE[K]),
+    'a live guard must not declare itself unreachable — build() refuses on exactly this');
+  assert.ok(!G.collect().some((f) => f.from === K && !G.EXCLUDE[f.from]),
+    'the baseline must never reach staging');
+});
+
+test('RE-POINT: restoring the UNREACHABLE: prefix REFUSES the build', () => {
+  /* The step the packet predicted would look like a regression. It is the guard working: a stale
+   * declaration on a now-live entry is refused, and dropping the prefix is the required half of the
+   * widening rather than a way around the refusal. Proven by running it both ways. */
+  const K = 'consonance/tools/portable-paths.baseline.json';
+  const real = G.EXCLUDE[K];
+  try {
+    G.EXCLUDE[K] = 'UNREACHABLE: ' + real;
+    const r = G.build(null, { dry: true });
+    assert.match(String(r.refused || ''), /drifted/,
+      'the widening armed this entry; a stale UNREACHABLE: on it must refuse');
+    assert.ok(r.excludeDrift.some((d) => d.rel === K && /now reaches it/.test(d.why)));
+  } finally { G.EXCLUDE[K] = real; }
+  assert.strictEqual(G.build(null, { dry: true }).refused, undefined, 'and clean once the prefix is dropped');
+});
+
+test('RE-POINT: entry 6 names its SUBJECT, not the crash', () => {
+  /* L's clause 1, counterfactual form: would this reason still be true if the tree it ships into
+   * were perfect? The load crash would not be — it exists only because entry 4 withholds the
+   * generator. What survives is that the file's subject is the generator. */
+  const why = G.EXCLUDE['consonance/tools/gen-consumer.fixture-scope.test.js'];
+  assert.match(why, /subject/i, 'the reason must name what the file is ABOUT');
+  assert.ok(!/^requires |^it would crash/i.test(why),
+    'a reason that opens on the symptom is the degenerating grammar the ruling named');
+});
+
+// ── the seeded registry ────────────────────────────────────────────────────────────────────────
+
+test('SEED: the registry ships and the private bytes do not', () => {
+  const K = 'consonance/tools/carrier-drift.registry.json';
+  assert.ok(G.SEEDED[K], 'the gap is closed by SEEDING, never by EXCLUDE — carrier-drift.js ships ' +
+    'and hard-requires this file, so excluding the .json leaves the crash exactly where it was');
+  assert.ok(!G.EXCLUDE[K], 'and it must not ALSO be excluded');
+  const real = fs.readFileSync(path.join(REPO, K), 'utf8');
+  assert.ok(real.length > 30000, 'premise: the private register is large and is this record\'s state');
+  assert.ok(!G.SEEDED[K].includes('"before"') && G.SEEDED[K].length < 2000,
+    'the seed must not carry the private register');
+  const seededHits = (G.SEEDED[K].match(/exo_memory\/(journal|loop|map)\//g) || []).length;
+  assert.strictEqual(seededHits, 0, 'the seed carries no citation into this record');
+
+  /* AND THE ASSERTION THAT ACTUALLY GUARDS IT — the three above describe the SEED, which is a
+   * constant in this file, so all three stay green while build() happily reads the private bytes
+   * instead. Mutation survived exactly that. This reads the STAGED OUTPUT, which is the only place
+   * the substitution can be observed. The output is what matters; a rule that failed to fire is
+   * invisible from the input side. */
+  const out = path.join(os.tmpdir(), 'gc-seed-' + process.pid);
+  fs.rmSync(out, { recursive: true, force: true });
+  try {
+    const r = G.build(out, {});
+    assert.ok(r.seeded.includes(K), 'the report must name what it seeded');
+    const shipped = fs.readFileSync(path.join(out, K), 'utf8');
+    assert.ok(shipped.length < 2000,
+      `the PRIVATE registry shipped: ${shipped.length} bytes reached the output tree`);
+    assert.strictEqual(JSON.parse(shipped).withdrawals.length, 0, 'and it must be the empty one');
+    assert.ok(!/exo_memory\/(journal|loop|map)\//.test(shipped),
+      'this record\'s register of withdrawn wordings must not travel');
+  } finally { fs.rmSync(out, { recursive: true, force: true }); }
+});
+
+test('SEED: its shape is the one carrier-drift.js actually reads', () => {
+  /* Read off the consuming tool, not guessed. The first draft wrote `withdrawn: []` — not a key
+   * the tool reads — which would have produced the right OUTPUT by the wrong ROUTE: inert because
+   * the key was missing rather than because the list was empty. */
+  const seed = JSON.parse(G.SEEDED['consonance/tools/carrier-drift.registry.json']);
+  assert.ok(Array.isArray(seed.withdrawals), 'carrier-drift.js:418 reads reg.withdrawals');
+  assert.strictEqual(seed.withdrawals.length, 0, 'empty, so the tool declares itself INERT');
+  assert.ok(!('ch4_corpus' in seed),
+    'ch4_corpus must be ABSENT, not present-and-empty: :374 reads an absent one as null (one ' +
+    'CH4-UNFROZEN finding saying "run --ch4-walk") and an empty one as a frozen list of nothing ' +
+    '(every walked file reported CH4-ADDED — a flood of false positives on a stranger\'s first run)');
+});
+
+test('SEED: a seeded file that is missing on disk still reports missing', () => {
+  /* A seed must close a gap, never COVER a manifest error. If the private tree loses the file, the
+   * output would still contain a valid-looking one while the manifest quietly described nothing.
+   *
+   * THE FIRST VERSION OF THIS TEST ASSERTED THE PREMISE AND NOT THE BEHAVIOUR — that the file is on
+   * disk and the manifest reaches it, both true regardless of the guard. Mutation SURVIVED deleting
+   * the existence check, which is exactly what a test of a premise cannot catch. It now removes the
+   * file. */
+  const K = 'consonance/tools/carrier-drift.registry.json';
+  const abs = path.join(REPO, K);
+  assert.ok(fs.existsSync(abs), 'premise: it is on disk now');
+  assert.ok(G.collect().some((f) => f.from === K), 'and the manifest reaches it');
+
+  /* A seed must close a gap and never COVER a manifest error. The first version of this guard was
+   * an `fs.existsSync` inside the seeding branch; this test failed against it and the TEST WAS
+   * RIGHT — for a `dir` rule that check is unreachable by construction, because `collect()`
+   * enumerates the directory, so a vanished private file never becomes a named-but-absent entry.
+   * It simply stops being produced. The guard could only ever have fired on a race.
+   *
+   * The detectable state is the seed reaching NOTHING, and it covers strictly more: the vanished
+   * file, a typo in a seed key, and a manifest edit that drops the rule — one refusal, same
+   * two-way shape as the exclusion check. Asserted by removing the file, which is the real event. */
+  const hidden = abs + '.p3-test-moved';
+  fs.renameSync(abs, hidden);
+  try {
+    const r = G.build(null, { dry: true });
+    assert.ok(r.seedDrift.some((d) => d.rel === K),
+      'a seed no manifest rule reaches must be REPORTED. Otherwise the seed closes the gap in the ' +
+      'output while the manifest describes a file nobody has, and a seed protecting nothing reads ' +
+      'exactly like one that is protecting something.');
+    assert.match(String(r.refused || ''), /reach nothing/, 'and the build must refuse');
+  } finally { fs.renameSync(hidden, abs); }
+  assert.ok(fs.existsSync(abs), 'the private file must be put back whatever happened above');
+  assert.strictEqual(G.build(null, { dry: true }).seedDrift.length, 0, 'and clean again once it is');
+});
+
+// ── the exclusion set's dangling debt ──────────────────────────────────────────────────────────
+
+test('DEBT: the exclusion set is charged for the references it orphans', () => {
+  /* L measured 9 (+3 for the baseline) and showed no instrument could ever return the number: the
+   * three DANGLING patterns are shaped `exo_memory/...` while an excluded sibling is
+   * `consonance/tools/<name>.js`, so the set could grow forever and nothing would move. */
+  const r = G.build(null, { dry: true });
+  assert.ok(Array.isArray(r.orphaned), 'the report must carry the count');
+  assert.ok(r.orphaned.length > 0, 'today the set costs something and the number must say so');
+  assert.ok(r.orphaned.some((o) => o.names.includes('catch-ledger')),
+    'catch-ledger is excluded and named by shipped tools; that is the debt');
+  assert.ok(r.orphaned.some((o) => o.rel === 'consonance/tools/tell-index.js'),
+    'tell-index.js PRINTS the pointer in its own report — the worst instance and the one that ' +
+    'must never fall out of the count silently');
+  /* AND THE PROSE SIDE, which the assertions above do not reach. Mutation SURVIVED dropping `.md`
+   * from the scanned extensions: every assertion here named a .js file, so the counter could go
+   * blind to shipped documentation and stay green. `tools/README.md` is the one file MY widening
+   * added to this debt — it names catch-ledger as "the room's only computation" of a number — so
+   * the cost of the change in this same commit is the thing the test pins. */
+  assert.ok(r.orphaned.some((o) => o.rel === 'consonance/tools/README.md' && o.names.includes('catch-ledger')),
+    'shipped PROSE that names a withheld file must be charged too — it is a dead pointer that ' +
+    'reads as authoritative, which the generator\'s own header calls the dominant leak class');
+});
+
+test('DEBT: the pattern is derived from EXCLUDE, so a seventh entry is charged automatically', () => {
+  /* Built from Object.keys(EXCLUDE) rather than a written list. This is L's clause 3 turned from a
+   * discipline into an instrument: a new entry is priced the moment it lands, with nobody
+   * remembering to add a pattern. Verified by adding one and watching the count move. */
+  const K = 'consonance/tools/ferry.js';
+  assert.ok(!G.EXCLUDE[K], 'premise: ferry.js ships today');
+  const before = G.build(null, { dry: true }).orphaned.length;
+  try {
+    G.EXCLUDE[K] = 'a seventh entry, added by a test to prove the debt counter is derived';
+    const after = G.build(null, { dry: true }).orphaned;
+    assert.ok(after.some((o) => o.names.includes('ferry')),
+      'a newly excluded file must be charged for its references with no edit to the counter');
+    assert.ok(after.length > before, 'and the count must move');
+  } finally { delete G.EXCLUDE[K]; }
+});
+
+// ── B's residual ───────────────────────────────────────────────────────────────────────────────
+
+test('RESIDUAL: the private tree\'s path with the drive TEMPLATED out is caught and rewritten', () => {
+  /* Located by the librarian at generated `main.rs:362`: `{sysdrive}\Consonance\lighthouse\`. The
+   * two MACHINE patterns key on a literal `C:`, so a leak that had already had its drive letter
+   * templated walked past both — wearing the shape of a fix. The OneDrive half of the same
+   * sentence WAS rewritten, which is what made the survivor invisible: the line looked handled. */
+  const line = '/// each ended in the same two absolute literals -- `{sysdrive}\\Consonance\\lighthouse\\`';
+  assert.ok(G.LEAKS.some((l) => l.cls === 'MACHINE' && new RegExp(l.pat.source, l.pat.flags).test(line)),
+    'the templated form must be a MACHINE leak class');
+  const out = G.demachine(line);
+  assert.ok(!/Consonance\\lighthouse/i.test(out.body), 'and it must be rewritten: ' + out.body);
+  assert.match(out.body, /%CONSONANCE_HOME%/, 'to the same placeholder deidentify() uses');
+});
+
+test('RESIDUAL: the generated main.rs carries neither half of that sentence\'s private paths', () => {
+  // The output is what matters; a rule that failed to fire is invisible from the input side.
+  const src = fs.readFileSync(path.join(REPO, 'consonance/src-tauri/src/main.rs'), 'utf8');
+  const t = G.transform(src, 'rust');
+  assert.ok(!/\{sysdrive\}\\Consonance/i.test(t.body), 'the templated literal survived');
+  assert.ok(!/OneDrive\\Desktop\\projects/i.test(t.body), 'and the OneDrive half must stay rewritten');
+});

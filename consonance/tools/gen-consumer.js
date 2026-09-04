@@ -107,7 +107,48 @@ const MANIFEST = [
 
   // The method. This is the half the keeper chose to ship: a discipline with no instrument does
   // not happen -- attic/ went untouched for two months until corpus-age.js existed.
-  { dir: 'consonance/tools', to: 'consonance/tools', match: /\.js$/, kind: 'code' },
+  /* WIDENED 2026-09-04 (D009 P3) from /\.js$/, on L's ruling (`handback/p-d007-exclude`, §5). The
+   * old predicate left three files under this directory unreachable by ANY manifest rule, and one
+   * of them was a live crash rather than a missing file: `carrier-drift.js` ships and hard-requires
+   * `carrier-drift.registry.json` at its `:364`, so a consumer running it got an uncaught ENOENT.
+   *
+   * R0 (B's `loop/consumer_registration_2026-09-03.md`) governs this line: THE PREDICATE NARROWS,
+   * THE MANIFEST ADMITS. Widening it does not make this a deny-list — every file it now reaches is
+   * still named by this entry and still passes EXCLUDE, the leak scan and the seed rule below.
+   *
+   * AND IT ARMS EXCLUDE ENTRY 1 IN THE SAME EDIT, which is the point rather than a side effect:
+   * `portable-paths.baseline.json` is this machine's own path register and becomes reachable the
+   * instant `json` joins this pattern. The entry has been sitting there declared UNREACHABLE
+   * waiting for exactly this line. See the note on it below. */
+  { dir: 'consonance/tools', to: 'consonance/tools', match: /\.(js|json|md)$/, kind: 'code' },
+  /* THE FOURTH GAP IS NOT CLOSED HERE, AND IT IS NOT CLOSED BY THE LINE ABOVE.
+   *
+   * L's ruling and the packet that carried it both say widening `consonance/tools` "closes all four
+   * gaps in one line". MEASURED, IT CLOSES THREE. `consonance/hooks/README.md` is the fourth, and it
+   * lives under THIS entry, whose predicate is separate:
+   *
+   *     git ls-tree -r --name-only HEAD -- consonance/hooks | grep -v '\.js$'  ->  consonance/hooks/README.md
+   *
+   * so no widening of the rule above can reach it. It needs a second line, and that second line is a
+   * decision this seat was told not to make: whether the three README/findings files ship AS CONTENT
+   * is the keeper's, not P3's.
+   *
+   * WHY THIS ONE IS LEFT OPEN WHEN THE OTHER TWO .md FILES ARE NOT. I cold-read all three, which is
+   * the PROSE class L priced mechanically and explicitly did not read for. `tools/README.md` and
+   * `groove-FINDINGS.md` document instruments that ship. `hooks/README.md` is substantially THIS
+   * MACHINE'S STATE presented as documentation: a table of which hooks are registered in the
+   * keeper's personal `~/.claude/settings.json` "as of 2026-08-15 23:10 local", naming three files
+   * (`stop.js`, `l2-overseer.js`, `l3-overseer.js`) that are not in this repo at all; an "Expected
+   * today" block whose expected output is true only on this machine; two commit shas from this
+   * record; a worked example carrying a DIFFERENT private project's file paths
+   * (`blackbox/ui/carrender.js`); and two bare citations to `build_ruling.md`, which lives at
+   * `exo_memory/loop/` and is R1 STATE that never ships — written without their path, so
+   * `dedangle()` structurally cannot rewrite them.
+   *
+   * That is B's class 1 (state) wearing an instrument's filename, and it is the one class a grep
+   * does not find, which is why the read was worth doing. ROUTED TO THE KEEPER, NOT RULED HERE, and
+   * NOT put in EXCLUDE: under an allow-list, absent already means undecided, and an EXCLUDE entry
+   * would assert a decision nobody has made. Same encoding as the two dev/shell gaps below. */
   { dir: 'consonance/hooks', to: 'consonance/hooks', match: /\.js$/, kind: 'code' },
 
   // The app.
@@ -192,14 +233,24 @@ const MANIFEST = [
  * and so does a declared entry that has become reachable. Without that, a dead exclusion reads as
  * coverage -- the same shape as the demachine() pattern that could not match, found the same day. */
 const EXCLUDE = {
-  /* MEASURED 2026-09-04: this entry has never been able to fire. The only rule that could reach
-   * `consonance/tools/` is `match: /\.js$/`, and `/\.js$/.test('portable-paths.baseline.json')` is
-   * false -- `$` anchors the end and the name ends `.json`. It is KEPT rather than deleted because
-   * the reason is still true and P3 re-points the manifest next: the moment anyone widens that
-   * rule to `/\.(js|json)$/`, this machine's path baseline would ship, and the entry is what stops
-   * it. Declared unreachable so the entry cannot be mistaken for a guard that is doing work. */
+  /* ARMED 2026-09-04 (D009 P3). The `UNREACHABLE:` prefix is DROPPED here, and that is the whole
+   * point of the entry rather than a bookkeeping tidy-up.
+   *
+   * A wrote on 2026-09-04: this entry has never been able to fire, because the only rule reaching
+   * `consonance/tools/` was `match: /\.js$/` and `/\.js$/.test('portable-paths.baseline.json')` is
+   * false. It was kept anyway, declared unreachable, with the prediction that "the moment anyone
+   * widens that rule to `/\.(js|json)$/`, this machine's path baseline would ship, and the entry is
+   * what stops it."
+   *
+   * THAT MOMENT IS THIS EDIT, AND THE PREDICTION WAS CORRECT. The widening above makes this path
+   * reachable; `build()`'s two-way drift check then REFUSES the build while the prefix remains,
+   * because a live guard declaring itself dead is a guard nobody will read. Dropping the prefix is
+   * the required half of the same edit, not a way around the refusal.
+   *
+   * This is a dead exclusion earning its keep, and it is the answer to "why keep one": it was the
+   * only thing standing between the obvious one-line widening and a live identity leak. */
   'consonance/tools/portable-paths.baseline.json':
-    'UNREACHABLE: the ratchet\'s own record of this machine\'s known path sites; meaningless elsewhere',
+    'the ratchet\'s own record of THIS machine\'s known path sites; meaningless elsewhere and identity-bearing here',
   'consonance/tools/catch-ledger.js':
     'scores THIS collaboration\'s catches; 7 identity hits and 11 dangling refs, and the data it reads does not exist for anyone else',
   'consonance/tools/catch-ledger.test.js':
@@ -208,8 +259,82 @@ const EXCLUDE = {
     'the generator does not ship itself; it is a property of the private tree',
   'consonance/tools/gen-consumer.test.js':
     'the generator test names the exclusion list, which is a description of exactly what was withheld',
+  /* REASON AMENDED 2026-09-04 (D009 P3) on L's ruling. It read: "requires gen-consumer.js, which
+   * does not ship; it would crash on load in a consumer tree." Every word of that is true and it
+   * named the wrong thing — the SYMPTOM, not the SUBJECT.
+   *
+   * L's clause 1 test is counterfactual: WOULD THIS REASON STILL BE TRUE IF THE TREE IT SHIPS INTO
+   * WERE PERFECT? The crash would not be — it exists only because entry 4 withholds the generator,
+   * and a symptom that a fix elsewhere would erase was never the reason. What survives a perfect
+   * tree is that this file's subject is the generator, and the generator is a property of the
+   * private tree. That holds in every tree, forever, and it is what the entry has always been for.
+   *
+   * The substance stood; only the grammar was degenerating. Kept as a worked example of the
+   * difference, because "it crashes" is the shape any entry can be talked into. */
   'consonance/tools/gen-consumer.fixture-scope.test.js':
-    'requires gen-consumer.js, which does not ship; it would crash on load in a consumer tree',
+    'its SUBJECT is the generator, which is a property of the private tree and does not ship; the load crash is a consequence of that, not the reason',
+};
+
+/* ------------------------------------------------------------------ seeded files
+ *
+ * A file that MUST EXIST in the output but whose PRIVATE CONTENT must not leave. The manifest names
+ * it, the gap closes, and the bytes never travel: the private file is not read at all.
+ *
+ * THIS IS NOT AN EXCLUDE, AND THE DIFFERENCE IS THE WHOLE POINT. An exclusion says "considered and
+ * withheld" and leaves the consumer without the file. Closing a manifest gap by EXCLUDE is the
+ * degenerating move this lap registered against, and here it would not even work: `carrier-drift.js`
+ * SHIPS and hard-requires this registry at its `:364`, so removing the .json leaves the crash
+ * exactly where it was. Excluding `carrier-drift.js` instead is forbidden — it is the exemplar
+ * instrument of the room's own universe-print registration, and deleting an instrument to make a
+ * count go down is the clause-1 failure in its purest form.
+ *
+ * AND SHIPPING THE REAL FILE IS THE OTHER WRONG MOVE, which is the one that costs something. The
+ * live registry is 38,167 bytes of this record's register of withdrawn wordings and their sites —
+ * B's class 1, state — carrying 43 DANGLING-pattern hits plus SELF_TRACE and muscle_map. Running
+ * the generator's rewrites over it would EDIT A MEASUREMENT, which is the fixture hazard this tool
+ * refuses everywhere else. It is one line to ship and it would hand a stranger this room's state.
+ *
+ * The shape that is neither was already built into the tool being fixed: `carrier-drift.js:416-421`
+ * declares itself INERT on an empty registry — "a registry with no withdrawals in it is not a green
+ * tree, it is an unarmed instrument" — which is the universe-print clause already implemented. So a
+ * seeded-empty registry turns an uncaught ENOENT into an instrument that says what it does not know.
+ *
+ * THE SEED IS AUTHORED HERE, IN FULL, so a reader can see every byte that ships. It still passes
+ * through transform() and scan() rather than bypassing them: a seed is a file like any other, and
+ * exempting it would build the one hole this table exists to close.
+ *
+ * ITS SHAPE IS READ OFF THE CONSUMING TOOL, NOT GUESSED. Every field `carrier-drift.js` touches:
+ *
+ *     :418  reg.withdrawals            Array.isArray + length -> the INERT declaration
+ *     :437  reg.withdrawals            iterated
+ *     :634  reg.withdrawals || []      iterated
+ *     :374  reg.ch4_corpus.files       optional frozen list; null means "re-walk", the safe default
+ *     :767  reg.ch4_corpus.files || [] compared against the re-walk
+ *
+ * The first draft of this seed wrote `withdrawn: []`. That is not a key the tool reads; it would
+ * have produced the right OUTPUT by the wrong ROUTE — inert because the key was missing rather than
+ * because the list was empty — and a later edit adding the correct key would have looked like a
+ * regression. Caught by reading `carrier-drift.js`, which is the only authority on its own input.
+ *
+ * AND `ch4_corpus` IS DELIBERATELY ABSENT, not present-and-empty. `:374` reads it as
+ * `Array.isArray(files) ? files : null`, and the two states are not the same instrument:
+ *
+ *     absent  -> frozen = null -> ONE finding, CH4-UNFROZEN, which says "run --ch4-walk and freeze it"
+ *     files:[] -> frozen = []  -> every file the walk finds is reported CH4-ADDED, a flood of false
+ *                                 positives on a stranger's first run
+ *
+ * An empty frozen list asserts "the reachable set is nothing", which is false in any real tree.
+ * Absent asserts "nobody has frozen this yet", which is true. Same distinction the manifest itself
+ * draws between EXCLUDE and a gap left open: withheld is not the same as undecided. */
+const SEEDED = {
+  'consonance/tools/carrier-drift.registry.json': JSON.stringify({
+    _README: 'Seeded empty for the consumer tree. This instrument is ARMED BY ITS REGISTRY: add a ' +
+      'withdrawn wording and the sites that must stop carrying it, and carrier-drift.js begins ' +
+      'checking. Until then it reports EMPTY-REGISTRY and declares itself inert, which is a true ' +
+      'statement about an empty registry rather than a green one over everything it cannot see. ' +
+      'The private tree\'s own register is this room\'s state and is deliberately not shipped.',
+    withdrawals: [],
+  }, null, 2) + '\n',
 };
 
 /* ------------------------------------------------------------------ leak classes
@@ -241,6 +366,16 @@ const LEAKS = [
   { cls: 'PROSE', pat: /we've watched it make structure/g, why: 'assumes the reader was there' },
   { cls: 'MACHINE', pat: /C:\\{1,4}Consonance\\{1,4}lighthouse/gi, why: 'the private tree\'s path' },
   { cls: 'MACHINE', pat: /C:\/Consonance\/lighthouse/gi, why: 'ditto' },
+  /* THE TEMPLATED FORM, ADDED 2026-09-04 (D009 P3) from B's residual, located by the librarian at
+   * generated `main.rs:362`: `{sysdrive}\Consonance\lighthouse\`. The two patterns above key on a
+   * literal `C:`, and this line writes the drive as a `{sysdrive}` placeholder — so the leak wore
+   * the shape of a fix and walked past both. It is a live `///` doc comment, not a fixture region
+   * (nearest `#[cfg(test)]` is 90 lines above), and the OneDrive half of the same sentence WAS
+   * rewritten, which is what made the survivor invisible: the line looked handled.
+   *
+   * Anchored on the private tree's NAME rather than on any drive prefix, because the prefix is the
+   * part that varies and the name is the part that identifies. */
+  { cls: 'MACHINE', pat: /\{sysdrive\}[\\/]{1,4}Consonance[\\/]{1,4}lighthouse/gi, why: 'the private tree\'s path with the drive templated out — the shape that escaped the two literal patterns' },
   { cls: 'MACHINE', pat: /OneDrive/g, why: 'the keeper\'s personal sync directory' },
 ];
 
@@ -346,6 +481,14 @@ function demachine(body) {
   /* main.rs:363. The sentence names two historical repo locations and the second is the keeper's
    * OneDrive path; the literal is replaced in place so "two absolute literals" stays true. */
   rep(/\{home\}\\OneDrive\\Desktop\\projects\\lighthouse\\/g, '{home}\\<sync-dir>\\projects\\lighthouse\\');
+
+  /* THE FIRST of those "two absolute literals", which shipped for as long as this rewrite named
+   * only the second. Generated `main.rs:362` carries `{sysdrive}\Consonance\lighthouse\` — the
+   * private tree's path with the drive already templated out, which is precisely why the two
+   * literal `C:\Consonance\lighthouse` patterns could not see it. Rewritten to the same
+   * placeholder `deidentify()` uses for the untemplated form, so the two halves of one sentence
+   * now read consistently instead of one being scrubbed and one surviving. */
+  rep(/\{sysdrive\}\\{1,4}Consonance\\{1,4}lighthouse\\{0,4}/g, '%CONSONANCE_HOME%\\');
 
   /* main.rs:5351. Two disclosures on one line: the private tree's own absolute path, and three of
    * this record's map filenames WITH their byte sizes -- which is the record leaking through a
@@ -584,7 +727,7 @@ function collect() {
 function build(outDir, opts) {
   const files = collect();
   const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-'));
-  const report = { staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], staging };
+  const report = { staged: 0, excluded: [], missing: [], dangling: 0, identity: 0, machine: 0, fixtures: 0, unportable: [], leaks: [], excludeDrift: [], seedDrift: [], seeded: [], orphaned: [], staging };
 
   /* THE EXCLUDE LIST IS CHECKED AGAINST THE MANIFEST, IN BOTH DIRECTIONS. An exclusion no rule can
    * reach withholds nothing while reading as though it does; a `UNREACHABLE:` declaration that has
@@ -599,6 +742,30 @@ function build(outDir, opts) {
         report.excludeDrift.push({ rel, why: 'no manifest rule reaches it; it withholds nothing. Delete it, or prefix its reason with UNREACHABLE: to keep it as a standing guard.' });
       } else if (reachable.has(rel) && declared) {
         report.excludeDrift.push({ rel, why: 'declared UNREACHABLE but a manifest rule now reaches it; the declaration is stale and the entry is live. Drop the prefix.' });
+      }
+    }
+  }
+
+  /* THE SEED LIST IS CHECKED AGAINST THE MANIFEST TOO, and this guard replaced a worse one.
+   *
+   * The first version checked `fs.existsSync` on the private file inside the seeding branch, on the
+   * reasoning that a seed must close a gap and never COVER a manifest error. Its test then failed,
+   * and the test was right: for a `dir` rule that check is unreachable by construction. `collect()`
+   * enumerates the directory, so a private file that disappears does not become a NAMED-but-absent
+   * entry — it simply stops being produced, and the existence check inside the loop never runs for
+   * it. The guard could only have fired on a race between collect() and the read.
+   *
+   * The detectable state is the one that matters anyway: A SEED NO MANIFEST RULE REACHES. That
+   * covers the vanished file (the dir rule stops producing it, so its seed goes unreached), a typo
+   * in a seed key, and a manifest edit that drops the rule — all as one refusal, and the same
+   * two-way shape the EXCLUDE check above already uses. A seed that substitutes nothing reads
+   * exactly like one that is protecting something, which is the failure this whole file is built
+   * around. */
+  {
+    const reachable = new Set(files.map((f) => f.from));
+    for (const rel of Object.keys(SEEDED)) {
+      if (!reachable.has(rel)) {
+        report.seedDrift.push({ rel, why: 'a seed is declared for this path and no manifest rule reaches it, so it substitutes nothing. Either the rule was dropped, the key is a typo, or the private file is gone — in every case the seed is not protecting what it claims to.' });
       }
     }
   }
@@ -618,9 +785,19 @@ function build(outDir, opts) {
       continue;
     }
 
+    /* A SEEDED file's private bytes are never read — not opened, not transformed, not scanned from
+     * disk. What guards against a seed COVERING a manifest error is not an existence check here
+     * (see the seed-drift block above: for a `dir` rule the file's disappearance makes the seed
+     * unreached, which is the detectable state); it is that the seed must be reached by a rule at
+     * all. */
     let body;
-    try { body = fs.readFileSync(src, 'utf8'); }
-    catch (_) { report.missing.push(f.from); continue; }
+    if (SEEDED[f.from]) {
+      body = SEEDED[f.from];
+      report.seeded.push(f.from);
+    } else {
+      try { body = fs.readFileSync(src, 'utf8'); }
+      catch (_) { report.missing.push(f.from); continue; }
+    }
 
     /* The path decides, not the manifest entry: a directory rule cannot know which of its files
      * are tests, and getting this wrong silently corrupts data an assertion depends on. */
@@ -656,6 +833,49 @@ function build(outDir, opts) {
 
   }
 
+  /* ------------------------------------------------------------ THE EXCLUSION'S DANGLING DEBT
+   *
+   * WHAT THIS COUNTS, AND WHY NOTHING COULD COUNT IT BEFORE. Every EXCLUDE entry removes a file
+   * that other SHIPPED files may still name. L measured nine such references on 2026-09-04 and
+   * showed the guard was structurally blind to all of them: the three DANGLING patterns are shaped
+   * `exo_memory/...`, while an excluded sibling is `consonance/tools/<name>.js`. The scan checked
+   * correctly over a universe that excluded the one thing the EXCLUDE list manufactures — so the
+   * set could grow forever and no number would move. This is that number.
+   *
+   * It is built from `Object.keys(EXCLUDE)` rather than from a written list, so it cannot go stale:
+   * a seventh entry is charged for its debt the moment it lands, with nobody remembering to add a
+   * pattern. That is L's clause 3 turned from a discipline into an instrument.
+   *
+   * IT REPORTS AND DOES NOT REFUSE, and that is a decision rather than an oversight. Nine of these
+   * exist today, at least one PRINTED to the reader by a shipped tool (`tell-index.js:785-789`
+   * names `catch-ledger.js` as the room's only computation of a number). Making it refuse would
+   * block every build until nine pre-existing references are resolved, which is a ruling about
+   * shipped documentation that belongs to the people who own those files, not to a build gate that
+   * discovers it. Precedent is C5: an unportable citation inside a fixture is REPORTED, never
+   * rewritten. The debt is now visible and attributable; what to do about it is the next decision,
+   * not this one.
+   *
+   * *Registered falsifier:* if this count only ever grows, the report is decoration and it should
+   * become a refusal — the same standard the ferry's unread count is held to. */
+  {
+    const bases = Object.keys(EXCLUDE).map((k) => path.basename(k, path.extname(k)));
+    const pat = new RegExp('\\b(' + bases.map((b) => b.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\b');
+    const staged = [];
+    const walk = (d, rel) => {
+      for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+        const a = path.join(d, e.name), r = rel ? rel + '/' + e.name : e.name;
+        if (e.isDirectory()) walk(a, r); else staged.push([a, r]);
+      }
+    };
+    try { walk(staging, ''); } catch (_) { /* nothing staged yet is not a defect here */ }
+    for (const [abs, rel] of staged) {
+      if (!/\.(js|md|rs|html|json|toml)$/.test(rel)) continue;
+      let text; try { text = fs.readFileSync(abs, 'utf8'); } catch (_) { continue; }
+      const hits = [...new Set((text.match(new RegExp(pat.source, 'g')) || []))];
+      if (hits.length) report.orphaned.push({ rel, names: hits });
+    }
+  }
+
   if (report.missing.length) {
     /* A manifest naming a file that does not exist is a manifest describing a tree that no longer
      * exists. Refuse rather than ship a quietly smaller product. */
@@ -664,6 +884,10 @@ function build(outDir, opts) {
   }
   if (report.excludeDrift.length) {
     report.refused = report.excludeDrift.length + ' exclusion(s) have drifted from the manifest';
+    return report;
+  }
+  if (report.seedDrift.length) {
+    report.refused = report.seedDrift.length + ' seed(s) reach nothing in the manifest';
     return report;
   }
   if (report.leaks.length) {
@@ -728,6 +952,29 @@ function main() {
     for (const d of r.excludeDrift) console.log('    ' + d.rel + '\n      ' + d.why);
     console.log('');
   }
+  if (r.seeded && r.seeded.length) {
+    console.log('  SEEDED — the manifest names these and the private content did NOT travel:');
+    for (const s of r.seeded) console.log('    ' + s);
+    console.log('');
+  }
+  /* PRINTED WHETHER OR NOT IT IS ZERO, unlike every list above it. A debt that only appears when
+   * it is non-zero cannot be watched falling, and this number exists to be watched: it is the one
+   * cost of the EXCLUDE mechanism that no instrument could return before today. */
+  {
+    const n = (r.orphaned || []).reduce((a, o) => a + o.names.length, 0);
+    console.log('  DANGLING DEBT OF THE EXCLUSION SET — shipped files naming a file EXCLUDE removed:');
+    console.log('    ' + (r.orphaned || []).length + ' file(s), ' + n + ' reference(s).' +
+      ((r.orphaned || []).length ? '' : ' The set costs nothing today.'));
+    for (const o of (r.orphaned || []).slice(0, 12)) {
+      console.log('      ' + o.rel + '  ->  ' + o.names.join(', '));
+    }
+    if ((r.orphaned || []).length > 12) console.log('      ... and ' + (r.orphaned.length - 12) + ' more');
+    if ((r.orphaned || []).length) {
+      console.log('    REPORTED, NOT REFUSED: what to do about a shipped file that names a withheld one');
+      console.log('    is a ruling for that file\'s owner, not for a build gate that discovered it.');
+    }
+    console.log('');
+  }
   if (r.missing.length) {
     console.log('  MANIFEST NAMES FILES THAT ARE NOT ON DISK:');
     for (const m of r.missing) console.log('    ' + m);
@@ -768,4 +1015,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { MANIFEST, EXCLUDE, LEAKS, SYNTHETIC, ALLOW, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, build };
+module.exports = { MANIFEST, EXCLUDE, SEEDED, LEAKS, SYNTHETIC, ALLOW, demachine, isFixture, deidentifyTokens, decoordinate, destructure, validIdentifier, collect, transform, scan, dedangle, deidentify, build };

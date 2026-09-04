@@ -264,3 +264,86 @@ remedy — would have produced the identical capture under a different name.
 **The general shape, and it is the third time this week I have hit it:** a rule aimed at the verb
 where the failure was FIRST OBSERVED rather than at the state the failure ACTS ON. The state here is
 the index; `add` is only one way to reach it.
+
+## 2026-09-04 — P-D009-REPOINT (lap D009)
+
+### "Closes all four gaps in one line" closed three — the fourth was under a different rule
+
+L's ruling said it, the packet repeated it, and I inherited it as fact until I tested each gap
+against the widened manifest. `consonance/hooks/README.md` lives under a SECOND `dir` entry with its
+own predicate; no widening of the `consonance/tools` rule can reach it. **A count that travels
+through two documents unchanged is not thereby checked** — it is the same figure, re-asserted. The
+finding is now a TEST, not a comment, because "all four were closed" is what the next reader
+inherits.
+
+### A grep prices the mechanical classes; the class that decides is the one you have to read
+
+L priced the three .md files mechanically (near-clean, small) and said explicitly that the PROSE
+class — shared-past — was not read for. I read them. `hooks/README.md` is substantially THIS
+MACHINE'S STATE wearing an instrument's filename: a table of hooks registered in the keeper's
+personal settings.json "as of 2026-08-15 23:10 local" naming three files absent from this repo, an
+"Expected today" block true only here, two commit shas, **another private project's file paths**
+(`blackbox/ui/*`), and two bare `build_ruling.md` citations — R1 STATE, written without their path,
+so `dedangle()` structurally cannot reach them. Routed to the keeper, NOT closed by EXCLUDE (absent
+already means undecided). The other two are real instrument documentation and ship. **When a ruling
+says which class it did not check, that class is the work.**
+
+### The instrument I built priced my own change in the same run
+
+L asked for a DANGLING pattern derived from `Object.keys(EXCLUDE)` so the exclusion set could be
+charged for the references it orphans — a cost no instrument could return, because the three existing
+patterns are shaped `exo_memory/...` while an excluded sibling is `consonance/tools/*.js`. Built,
+derived (never a written list, so a seventh entry is charged automatically). First number: **12 files,
+12 refs** — and the delta run showed my widening added exactly one, `tools/README.md`, which names the
+excluded `catch-ledger`. **Build the instrument that prices your change before you argue for the
+change.** It reports rather than refuses; registered falsifier: if the count only ever grows, it is
+decoration and should refuse.
+
+### A mutation run over a red suite is not evidence, and I quoted one before I caught it
+
+I reported **applied 25 · caught 25 · NOT APPLIED 0** while the suite had **one pre-existing failure**
+— so every mutant "caught" trivially, and the run measured a red suite rather than a guarding one. I
+only found it because a mutant SURVIVED after I fixed the failure, which is the wrong way round.
+**Run the suite green FIRST, then mutate; a CAUGHT means nothing otherwise.** Withdrawn in the
+hand-back rather than quietly replaced.
+
+### Two survivors, both the same shape: I tested the CONSTANT, not the OUTPUT
+
+*"the private registry is read instead of the seed"* survived because all three of my seed assertions
+described `SEEDED`, a constant in the file — green while `build()` read the private 38 KB. *".md drops
+out of the scanned extensions"* survived because every debt assertion named a `.js` file. Both fixed
+by asserting the STAGED OUTPUT. **A test that reads the input side cannot see a rule that failed to
+fire** — which is the generator's own founding principle, and I broke it inside a change to the
+generator.
+
+### A test that fails may be right about the DESIGN, not the code
+
+My first seed guard was `fs.existsSync` inside the seeding branch. Its test failed and the test was
+right: for a `dir` rule that check is unreachable by construction — `collect()` enumerates the
+directory, so a vanished private file never becomes named-but-absent, it just stops being produced.
+The guard could only have fired on a race. Replaced with **seed drift** (a seed no manifest rule
+reaches is refused), which covers strictly more as one refusal. **When a new test fails, ask whether
+it is describing a state the design cannot produce before you weaken it.**
+
+### Read the consuming tool for its own input shape; getting the right answer by the wrong route is a trap
+
+The seed's first draft used `withdrawn: []`. `carrier-drift.js` reads `withdrawals`. It would have
+been inert because the KEY WAS MISSING rather than because the list was empty — right output, wrong
+route, and the later correct edit would have looked like a regression. Same read caught
+`ch4_corpus`: absent → one actionable CH4-UNFROZEN finding; `files: []` → every walked file reported
+CH4-ADDED, a flood on a stranger's first run. **Absent and empty are different instruments.**
+
+### A leak that has already been half-fixed wears the shape of a fix
+
+B's residual at generated `main.rs:362` was `{sysdrive}\Consonance\lighthouse\` — the private tree's
+path with the drive templated out, which is why it walked past both MACHINE patterns (they key on a
+literal `C:`). The OneDrive half of the SAME SENTENCE was rewritten, so the line looked handled.
+Anchored the new pattern on the tree's NAME, not on any drive prefix. Tree-wide sweep 4 files → 3.
+
+### Hand-back
+
+`exo_memory/handback/p-d009-repoint_2026-09-04.md` — three gaps closed, the fourth priced and routed,
+the registry seeded (38,167 B → 477 B, crash → declared-inert), the debt instrument, B's residual,
+entry 6 re-grammared, entry 1 armed with the refusal proven both ways, 12 new tests (11 red against
+HEAD), 26/26 mutants over a green suite, five falsifiers, and a defect reported in `carrier-drift.js`
+that is not mine to fix.

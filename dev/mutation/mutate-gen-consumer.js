@@ -76,6 +76,68 @@ const MUTANTS = [
   { name: 'unportable fixtures stop being reported (silent again)',
     from: '      if (refs.length) report.unportable.push(',
     to:   '      if (false) report.unportable.push(' },
+
+  /* ── D009 P3, THE RE-POINT ────────────────────────────────────────────────────────────────────
+   * Both directions. Some mutants reopen a gap the widening closed; some ship something the seed
+   * and the exclusions withhold. The second kind is the expensive one. */
+
+  { name: 'RE-POINT: the tools predicate reverts, reopening three gaps and disarming entry 1',
+    // String.raw throughout this block: these anchors are REGEX SOURCE, and a plain quoted string
+    // eats the backslashes, which makes the mutant report NOT APPLIED — an outcome that looks like
+    // a harness problem and is indistinguishable, at a glance, from a mutant that proved something.
+    from: String.raw`{ dir: 'consonance/tools', to: 'consonance/tools', match: /\.(js|json|md)$/, kind: 'code' }`,
+    to:   String.raw`{ dir: 'consonance/tools', to: 'consonance/tools', match: /\.js$/, kind: 'code' }` },
+
+  { name: 'RE-POINT: entry 1 declares itself UNREACHABLE again while a rule reaches it',
+    from: "  'consonance/tools/portable-paths.baseline.json':\n    'the ratchet",
+    to:   "  'consonance/tools/portable-paths.baseline.json':\n    'UNREACHABLE: the ratchet" },
+
+  { name: 'RE-POINT: entry 6 goes back to naming the crash instead of its subject',
+    from: "'its SUBJECT is the generator, which is a property of the private tree and does not ship; the load crash is a consequence of that, not the reason'",
+    to:   "'requires gen-consumer.js, which does not ship; it would crash on load in a consumer tree'" },
+
+  { name: 'SEED: the private registry is read instead of the seed — 38 KB of this record ships',
+    from: "      body = SEEDED[f.from];",
+    to:   "      body = fs.readFileSync(src, 'utf8');" },
+
+  { name: 'SEED: the key becomes `withdrawn`, so the tool is inert by the WRONG route',
+    from: "    withdrawals: [],",
+    to:   "    withdrawn: []," },
+
+  { name: 'SEED: ch4_corpus is shipped present-and-empty, flooding a stranger with CH4-ADDED',
+    from: "    withdrawals: [],\n  }, null, 2)",
+    to:   "    withdrawals: [],\n    ch4_corpus: { files: [] },\n  }, null, 2)" },
+
+  { name: 'SEED: a seed reaching NO manifest rule stops refusing — it protects nothing and reads as if it does',
+    from: "        report.seedDrift.push({ rel,",
+    to:   "        void ({ rel,"  },
+
+  { name: 'SEED: seed drift is collected but never refuses the build',
+    from: "  if (report.seedDrift.length) {",
+    to:   "  if (false && report.seedDrift.length) {" },
+
+  /* DELETED: 'SEED: the on-disk existence check is skipped'. That check no longer exists — its own
+   * test failed and the test was right (for a `dir` rule the check was unreachable by
+   * construction), so it was replaced by the seed-drift guard the two mutants above cover. A mutant
+   * whose anchor has been legitimately removed must be deleted rather than left reporting NOT
+   * APPLIED forever: a standing NOT APPLIED is indistinguishable at a glance from a harness
+   * problem, and it trains the reader to skim past the line that says a mutation proved nothing. */
+
+  { name: 'DEBT: the counter uses a frozen list instead of Object.keys(EXCLUDE) — a 7th entry is free',
+    from: "    const bases = Object.keys(EXCLUDE).map((k) => path.basename(k, path.extname(k)));",
+    to:   "    const bases = ['catch-ledger', 'gen-consumer', 'portable-paths.baseline'];" },
+
+  { name: 'DEBT: .md drops out of the scanned extensions, so shipped prose owes nothing',
+    from: String.raw`      if (!/\.(js|md|rs|html|json|toml)$/.test(rel)) continue;`,
+    to:   String.raw`      if (!/\.(js|rs|html|json|toml)$/.test(rel)) continue;` },
+
+  { name: 'RESIDUAL: the templated private-tree path stops being rewritten',
+    from: String.raw`  rep(/\{sysdrive\}\\{1,4}Consonance\\{1,4}lighthouse\\{0,4}/g, '%CONSONANCE_HOME%\\');`,
+    to:   '' },
+
+  { name: 'RESIDUAL: the templated form drops out of the MACHINE leak class',
+    from: String.raw`  { cls: 'MACHINE', pat: /\{sysdrive\}[\\/]{1,4}Consonance[\\/]{1,4}lighthouse/gi,`,
+    to:   String.raw`  { cls: 'MACHINE', pat: /\{sysdrive\}ZZZ[\\/]{1,4}Consonance[\\/]{1,4}lighthouse/gi,` },
 ];
 
 const raw = fs.readFileSync(GC, 'utf8');
