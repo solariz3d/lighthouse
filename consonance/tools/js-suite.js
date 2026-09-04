@@ -38,9 +38,23 @@
 // could tell a deliberate red from a broken one, and a permanently-red channel is the one A
 // warned about: fire constantly and you train the reader to skip it.
 //
-// A file declares itself by containing the marker `JS-SUITE: EXPECTED-RED`. Keeping it in the file
-// means the declaration travels with the artifact and dies when someone fixes the test, instead of
-// rotting in a roster here - the same reason discovery walks the tree.
+// A file declares itself with the marker `JS-SUITE: EXPECTED-RED` — but CONTAINING it is not
+// enough, and the two narrowings below are the whole rule. The marker must be on its OWN LINE,
+// which starts with `//` or `#`, and within the first 40 lines of the file (`HEADER_LINES`). A
+// marker quoted mid-line, or sitting inside a block comment as ` * JS-SUITE: …`, or written past
+// line 40, does NOT declare the file: the runner reads it as an ordinary FAILED and reports
+// `0 canary`.
+//
+// CORRECTED 2026-09-04. This paragraph said only "by containing the marker" for as long as the
+// marker has existed, while the code enforced both narrowings — and on 2026-09-03 pane B declared
+// a canary inside a block comment, exactly as this sentence permitted, and found out only by
+// running the suite (`handback/P-GEN-RED-FIRST_2026-09-03.md`). A docstring looser than its code is
+// a trap laid for the next seat. `js-suite.test.js` now reads both constants out of this source and
+// requires this paragraph to carry them, so widening the window or dropping the line anchor turns
+// THIS SENTENCE red rather than leaving it to rot.
+//
+// Keeping the declaration in the file means it travels with the artifact and dies when someone
+// fixes the test, instead of rotting in a roster here - the same reason discovery walks the tree.
 //
 // AND AN EXPECTED-RED THAT GOES GREEN IS ITSELF A FAILURE. The canary singing means the condition
 // it was waiting on has been met and someone owes the file an edit; letting that pass silently

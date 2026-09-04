@@ -450,5 +450,69 @@ test('an UNDECLARED file printing NOT-RUN gets no exemption from it', () => {
   assert.ok(/0 not-run/.test(r.out), r.out);
 });
 
+// ── THE DOCSTRING IS A CARRIER, AND IT HAD DRIFTED FROM THE CODE (2026-09-04) ────────────────────
+//
+// Found by pane B on 2026-09-03 while landing `gen-consumer.fixture-scope.test.js`
+// (`handback/P-GEN-RED-FIRST_2026-09-03.md`): it declared the canary inside a block comment as
+// ` * JS-SUITE:' + ' EXPECTED-RED`, the runner read the file as FAILED with `0 canary`, and B only
+// found out by running the suite. The header says a file declares itself "by CONTAINING the
+// marker". The code requires more, in TWO ways, and the header named neither:
+//
+//     EXPECTED_RED   the LINE must start with // or #
+//     HEADER_LINES   only the first N lines are read
+//
+// Both are already tested behaviourally two tests up. The gap was never the code; it was that the
+// sentence a seat READS before writing a declaration described a looser rule than the one enforced.
+// B correctly did not take it — not B's file.
+//
+// A TEST RATHER THAN JUST AN EDIT, because an edited comment drifts again the moment either
+// constant moves. This reads both values out of the source and requires the prose to carry them —
+// the same coupling `lap-row.test.js` uses on the documents that quote its `--entry` vocabulary.
+// Widen the window to 60 or drop the line anchor, and the SENTENCE goes red.
+
+test('CARRIER: the header describes the marker rule the code actually enforces', () => {
+  const src = fs.readFileSync(TOOL, 'utf8');
+
+  const win = src.match(/^const HEADER_LINES = (\d+);/m);
+  assert.ok(win, 'HEADER_LINES is no longer a top-level const; this test cannot read the code it guards');
+  // Checked as a literal substring rather than a regex-about-a-regex: the first draft of this line
+  // WAS a regex about a regex, it was wrong, and it failed claiming the CODE had changed when the
+  // only thing broken was the test's escaping. A guard that misreports its subject is worse than no
+  // guard — which is the finding this whole packet is landing, one level up.
+  const anchor = src.match(/^const EXPECTED_RED = (\S+);/m);
+  assert.ok(anchor, 'EXPECTED_RED is no longer a top-level const');
+  assert.ok(anchor[1].startsWith('/^\\s*(') && anchor[1].includes('#'),
+    `EXPECTED_RED is no longer anchored to a line starting // or #  (${anchor[1]}); the prose this test demands may now be the wrong prose`);
+
+  const para = src.split('\n').filter((l) => /^\/\/ /.test(l)).join('\n')
+    .match(/^\/\/ A file declares itself[\s\S]*?(?=\n\/\/ *$|\n\/\/ [A-Z]{2,})/m);
+  assert.ok(para, 'the "A file declares itself" paragraph is gone; find where the rule is stated now');
+  const t = para[0];
+
+  assert.ok(/own line|starts? with|beginning of the line/i.test(t),
+    'the paragraph must say the marker needs its OWN LINE beginning // or #. It said only "by ' +
+    'containing the marker", and a block-comment declaration was read as a plain FAILED on ' +
+    '2026-09-03. A docstring looser than its code is a trap laid for the next seat.');
+  assert.ok(t.includes(win[1]),
+    `the paragraph must name the header window (${win[1]} lines) — a marker below it does not declare ` +
+    'the file and nothing in the prose said so. Update the sentence when HEADER_LINES changes.');
+});
+
+test('CARRIER: the two narrowings the paragraph names are the two the runner applies', () => {
+  // Prose is only worth trusting when it is checked against BEHAVIOUR, not against itself. Both
+  // cases have behavioural tests above; this pins them to the paragraph's two claims, so a third
+  // narrowing cannot be added without the sentence going red.
+  // Marker built by concatenation, for the reason MARK is: a literal here declares THIS file.
+  const M = 'JS-SUITE:' + ' EXPECTED-RED';
+  const block = tree({ 'a.test.js': `/*\n * ${M}\n */\n${FAILING}` });
+  assert.match(run(block).out, /0 canary/,
+    'a marker inside a block comment must not declare the file — the 2026-09-03 case');
+
+  const below = tree({ 'b.test.js': '// pad\n'.repeat(Number(fs.readFileSync(TOOL, 'utf8')
+    .match(/^const HEADER_LINES = (\d+);/m)[1]) + 5) + `// ${M}\n${FAILING}` });
+  assert.match(run(below).out, /0 canary/,
+    'a marker below the header window must not declare the file');
+});
+
 console.log(`\njs-suite-self: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

@@ -150,10 +150,39 @@ function lapState(dataDir) {
 // Three things, all of them already written in every packet this room has produced:
 //   letter    the addressee. "To ALPHA" / "**To BRAVO," — the callsign, not the letter, because
 //             that is what packets say.
-//   owned     the indented path lines under a `WHAT YOU OWN` heading. A trailing `/` means a
+//   owned     the indented path lines under a `WHAT YOU OWN` HEADING. A trailing `/` means a
 //             directory and matches by prefix. Anything after the path (a `(note)`, an arrow) is
 //             discarded; the block ends at the first line that starts in column zero.
 //   handback  the hand-back path the packet demands, which is the release token.
+//   why       null when the block parsed; otherwise WHY it did not. See THE DIAGNOSTIC below.
+//
+// THE ANCHOR IS A HEADING, NOT A MENTION (2026-09-04, landing L's proof from
+// `handback/p-live-red_2026-09-03.md` §2b). This read `/WHAT YOU OWN/i` and took the FIRST match.
+// `e8ee98d` prepended a PARKED notice to `exo_memory/loop/packet_watcher_liveness_2026-09-02.md`
+// that QUOTES the phrase inside a blockquote at line 12; line 13 starts with `>`, which is column
+// zero, so the block ended before it began and the real block at :118 was never read. Owned paths
+// parsed to ZERO, this file hit its own "a live packet that claims no paths is a parse failure"
+// branch, and REFUSED EVERY PATH IN THE LAP with holder `null`. Red 27 hours, then two more laps.
+//
+// VERIFIED AGAINST HEAD BEFORE LANDING, because a two-lap-old repair is a claim about a tree that
+// has moved since:
+//
+//     grep -h  "WHAT YOU OWN" exo_memory/loop/packet_*.md   -> 18 occurrences
+//     grep -hE "^#+.*WHAT YOU OWN" exo_memory/loop/packet_*.md -> 17
+//     the one excluded is exactly the blockquote that caused the outage
+//
+// Perfect discrimination on the live corpus. Taking the LAST match instead would also fix the
+// observed case and is the cheaper repair; it is wrong, because a packet quoting the phrase AFTER
+// its block would then truncate to nothing. Both directions are asserted in the suite.
+//
+// THE DIAGNOSTIC, and it is the part that is not L's. The anchor makes this parser STRICTER, so a
+// packet whose block is not a markdown heading (`**WHAT YOU OWN**`) now lands in the same
+// fail-closed branch behind the same message L had to BISECT for 27 hours to decode. A stricter
+// parser with an undiagnostic failure is how this recurs under a new trigger, so the refusal now
+// carries which of the two happened. The cause is computed here, where it is known, rather than
+// guessed at the refusal site, where it is not.
+const OWN_HEADING = /^#+.*WHAT YOU OWN/i;
+
 function parsePacket(text) {
   const to = text.match(/\bTo\s+([A-Z]{4,8})\b/);
   const letter = to && NATO[to[1]] ? NATO[to[1]] : null;
@@ -162,7 +191,7 @@ function parsePacket(text) {
 
   const owned = [];
   const lines = text.split(/\r?\n/);
-  const start = lines.findIndex((l) => /WHAT YOU OWN/i.test(l));
+  const start = lines.findIndex((l) => OWN_HEADING.test(l));
   if (start >= 0) {
     for (let j = start + 1; j < lines.length; j++) {
       const l = lines[j];
@@ -172,7 +201,18 @@ function parsePacket(text) {
       if (m && (m[1].includes('/') || m[1].includes('.'))) owned.push(m[1]);
     }
   }
-  return { letter, owned, handback };
+
+  let why = null;
+  if (!owned.length) {
+    const mentions = lines.filter((l) => /WHAT YOU OWN/i.test(l)).length;
+    why = start >= 0
+      ? `the WHAT YOU OWN heading at line ${start + 1} is followed by no indented path — an empty block`
+      : mentions
+        ? `no WHAT YOU OWN heading: the phrase appears ${mentions} time(s) but never as a markdown heading ` +
+          '(the block must start with #, or a mention in prose is read as the block)'
+        : 'no WHAT YOU OWN block at all';
+  }
+  return { letter, owned, handback, why };
 }
 
 // ── who holds what, right now ─────────────────────────────────────────────────────────────
@@ -251,7 +291,7 @@ function check({ repo, dataDir, paths }) {
   if (blind.length) {
     return refuseAll(
       `live packet(s) claim no paths, so ownership cannot be derived — failing closed: ${
-        blind.map((b) => b.packet).join(', ')}`);
+        blind.map((b) => `${b.packet} (${b.why})`).join(', ')}`);
   }
 
   const refusals = [];

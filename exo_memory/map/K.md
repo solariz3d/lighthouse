@@ -181,3 +181,66 @@ load-bearing. The two remaining red sites are still the other seat's and still o
 why there is no `--force` (it would break the no-wedge property `mcp.rs` rests on this file),
 26 tests (97/0), 39/39 mutants, the retrodiction, five registered falsifiers, and the BUILDING.md
 line DRAFTED but not landed (shared carrier, two panes live on it).
+
+## 2026-09-04 — P-D007-SMALLFIXES (lap D007)
+
+### "A one-line fix with a named owner" was never assigned to anyone — the parentheses named the FINDER
+
+Two fixes sat unlanded for two laps with owners apparently named. Measured cause, three parts, all
+checkable. **(a)** Ownership in this room is created by a packet's `WHAT YOU OWN` block, and
+`commit-gate.js` appears in exactly one such block ever (`packet_commit_gate_2026-09-02.md`, a
+closed lap) while `js-suite.js` appears in **none**; the newest packet FILE is 2026-09-02, because
+every packet since arrived by `chair_inject` and left no file, so the ownership surface has recorded
+nothing for two days. **(b)** The roll-forward read *"anchor (L, proven) … docstring (A)"* — but both
+panes had written the opposite in their hand-backs (*"not my file, not taken"*). **A finding with an
+initial beside it reads as assigned and is not**, and that one rendering convention is enough to
+explain two laps of stillness. **(c)** L proved the repair in a git worktree; `git worktree list`
+shows only the main checkout. **The proof did not survive the seat that made it.**
+
+### An uninstalled instrument's red is a number, not a force
+
+`commit-gate` is NOT ARMED — no `.git/hooks/pre-commit`, `core.hooksPath` unset, `armed()` false —
+so its 27-hour red blocked no commit and refused no path. Its own test file says the unarmed state
+is deliberate, so this is known rather than scandalous, but it answers the packet's question from
+the other side: nothing pressed anyone to fix it. **My own `baton-wake-stop.js` is in the identical
+state for the identical class of reason.** Two instruments now, both correct, both inert. When
+asking why a fix did not land, check whether anything RUNS the thing it fixes.
+
+### Verify a two-lap-old fix against HEAD before landing it — it is a claim about a tree that moved
+
+L's `/^#+.*WHAT YOU OWN/i` still discriminates perfectly: 18 occurrences of the phrase across live
+packets, 17 are `##` headings, and the single exclusion is exactly the blockquote that caused the
+outage. Landed, and the REPLAY test is green for the first time since `e8ee98d` (2026-09-02 07:34).
+
+### A stricter parser with an undiagnostic failure recurs under a new trigger
+
+The anchor makes `parsePacket` stricter, so a packet writing `**WHAT YOU OWN**` now fails closed
+behind the same message L had to BISECT 27 hours to decode. Added `why` — no-heading vs empty-block,
+computed where it is known, carried into the refusal. **Landing someone else's fix means owning the
+failure mode the fix creates**, not only the one it removes.
+
+### Mutation killed two of my tests again, and one of them was a control I wrote FOR that exact mutant
+
+Survivor 1: my "taking the LAST match would be wrong" test was **vacuous** — its later mention is a
+blockquote, a blockquote is not a heading, so under the anchored regex first and last match are the
+same line and the readings cannot differ. **A control that cannot fail is not a control, and writing
+it while thinking about the mutant is no protection.** Survivor 2: the `^` was untested because the
+observed quote carried no `#` at all; the realistic form is a PARKED notice quoting the packet's own
+heading (`> ## 7 · WHAT YOU OWN`). Both survivors were the same class as the bug being fixed: a rule
+that looked guarded and was not. 9/9 after. Neither file had a mutation harness before this one.
+
+### Fix a drifted docstring by COUPLING it to the code, not by rewriting the sentence
+
+`js-suite.js:41` claimed a file declares itself "by containing the marker" while the code required
+the marker on its own `//` line within the first 40. `js-suite.test.js` now reads both constants out
+of the source and requires the paragraph to carry them — widen the window or drop the anchor and
+**the sentence goes red**. An edited comment drifts again the moment a constant moves; a coupled one
+cannot. (My first attempt to detect the anchor was a regex-about-a-regex, got its escaping wrong,
+and failed claiming the CODE had changed. **A guard that misreports its subject is worse than no
+guard** — this packet's own finding, one level up, arriving inside the fix for it.)
+
+### Hand-back
+
+`exo_memory/handback/p-d007-smallfixes_2026-09-04.md` — both fixes red-first, the diagnostic,
+9/9 mutants in a new harness, the three-part answer to why nothing landed, five falsifiers, and a
+correction to the packet's own 585/18 figure (measured: 375 / 10 / 364).

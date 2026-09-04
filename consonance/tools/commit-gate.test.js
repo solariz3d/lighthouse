@@ -314,3 +314,154 @@ test('an unresolvable data dir REFUSES; it does not fall back to a guess', () =>
   assert.match(out, /REFUSED — the data dir could not be resolved/,
     'degrade loudly means degrade to refuse, not to a default that reads as green');
 });
+
+// ── THE ANCHOR (2026-09-04, landing L's proof from p-live-red_2026-09-03.md §2b) ────────────────
+//
+// RED FOR 27 HOURS AND THEN FOR TWO MORE LAPS. `e8ee98d` prepended a PARKED notice to
+// `exo_memory/loop/packet_watcher_liveness_2026-09-02.md` that QUOTES the phrase `WHAT YOU OWN`
+// inside a blockquote at line 12. `findIndex` takes the FIRST match; line 13 starts with `>`,
+// which is column zero, so the block ended before it began. The real block is at line 118. Owned
+// paths parsed to zero, the gate hit its own "a live packet that claims no paths is a parse
+// failure" branch, and REFUSED EVERY PATH IN THE LAP with holder `null`.
+//
+// L bisected it, proved the one-line repair in a worktree with a control, and correctly did not
+// apply it because `commit-gate.js` was not L's file. The worktree is gone (`git worktree list`
+// shows only the main checkout), so the proof did not survive the seat that made it — which is the
+// answer to why a one-line fix with a named owner sat unlanded for two laps.
+//
+// VERIFIED AGAINST CURRENT HEAD BEFORE LANDING, because a two-lap-old fix is a claim about a tree
+// that has moved:
+//
+//     grep -h "WHAT YOU OWN" exo_memory/loop/packet_*.md              -> 18 occurrences
+//     grep -hE "^#+.*WHAT YOU OWN" exo_memory/loop/packet_*.md        -> 17
+//     the one that does not match: the blockquote at watcher_liveness:12
+//
+// Perfect discrimination on the live corpus: every real ownership block is a `## N · WHAT YOU OWN`
+// heading, and the only non-heading occurrence is the one that must be skipped.
+
+test('ANCHOR: a packet that QUOTES the phrase before its real block still parses the real block', () => {
+  // The failure, reduced to its shape. Written and run RED before the anchor existed.
+  const text = [
+    '# Packet L999',
+    '',
+    '> **A PARKED packet still holds its `WHAT YOU OWN` claim**, so it blocked the landing of',
+    '> anyone else\'s work.',
+    '',
+    'Some prose.',
+    '',
+    '## 7 · WHAT YOU OWN',
+    '',
+    '    consonance/tools/commit-gate.js',
+    '    consonance/tools/commit-gate.test.js',
+    '',
+    'exo_memory/handback/p-fake_2026-09-04.md',
+  ].join('\n');
+  const p = G.parsePacket(text);
+  assert.deepStrictEqual(p.owned, ['consonance/tools/commit-gate.js', 'consonance/tools/commit-gate.test.js'],
+    'the first MENTION of the phrase is not the block; the first HEADING is');
+});
+
+test('ANCHOR: the real packet that caused the outage parses its 7 owned paths', () => {
+  // Not a model of the break — the file itself, at HEAD. `e8ee98d` is still in the tree.
+  const f = path.join(REPO, 'exo_memory', 'loop', 'packet_watcher_liveness_2026-09-02.md');
+  const p = G.parsePacket(fs.readFileSync(f, 'utf8'));
+  assert.ok(p.owned.length > 0,
+    'this exact file parsed to ZERO owned paths for 27 hours and refused an entire lap');
+  assert.ok(p.owned.some((o) => o.includes('harvest_replay')),
+    `the real block at :118 must be the one read; got ${JSON.stringify(p.owned)}`);
+});
+
+test('ANCHOR: a quote AFTER the block does not truncate it either', () => {
+  const text = [
+    '## 3 · WHAT YOU OWN',
+    '',
+    '    consonance/tools/js-suite.js',
+    '',
+    '> a later note mentioning WHAT YOU OWN in passing',
+  ].join('\n');
+  assert.deepStrictEqual(G.parsePacket(text).owned, ['consonance/tools/js-suite.js']);
+});
+
+test('ANCHOR: with two real headings the FIRST block wins, not the last', () => {
+  /* THIS TEST EXISTS BECAUSE THE ONE ABOVE WAS VACUOUS. Mutation SURVIVED "take the LAST match
+   * instead of the first" — the cheaper repair L's fix rules out — and the test written to catch it
+   * could not, because its later mention is a BLOCKQUOTE and a blockquote is not a heading, so
+   * first and last match are the same line under the anchored regex. A control that cannot fail is
+   * not a control. The later mention has to be a heading for the two readings to differ at all. */
+  const text = [
+    '## 3 · WHAT YOU OWN',
+    '',
+    '    consonance/tools/commit-gate.js',
+    '',
+    '## 9 · WHAT YOU OWN (addendum, restated)',
+    '',
+    '    exo_memory/loop/somewhere-else.md',
+  ].join('\n');
+  assert.deepStrictEqual(G.parsePacket(text).owned, ['consonance/tools/commit-gate.js'],
+    'first-match is the shipped reading and a restated section must not replace the real one');
+});
+
+test('ANCHOR: a heading QUOTED inside a blockquote is still not the block', () => {
+  /* The second survivor: dropping the `^` from the heading anchor. The originally observed quote
+   * carried no `#`, so every test above still passed without the column-zero requirement — but a
+   * PARKED notice that quotes the packet's own SECTION HEADING (`> ## 7 · WHAT YOU OWN`) is the
+   * realistic form, and it reintroduces the outage exactly. The `^` is load-bearing and now says so. */
+  const text = [
+    '> **PARKED.** The section it claims reads:',
+    '> ## 7 · WHAT YOU OWN',
+    '>     consonance/tools/NOT-THIS-ONE.js',
+    '',
+    '## 7 · WHAT YOU OWN',
+    '',
+    '    consonance/tools/commit-gate.js',
+  ].join('\n');
+  assert.deepStrictEqual(G.parsePacket(text).owned, ['consonance/tools/commit-gate.js']);
+});
+
+// ── THE DIAGNOSTIC, and why it is not scope creep ───────────────────────────────────────────────
+//
+// The anchor makes the parser STRICTER. A packet whose ownership block is not a markdown heading —
+// `**WHAT YOU OWN**`, say — now lands in the same fail-closed branch, with the same message L had
+// to bisect 27 hours to decode: "live packet(s) claim no paths". A stricter parser with an
+// undiagnostic failure is how this recurs under a different trigger. The refusal now says WHICH of
+// the two happened, which turns the bisect into a sentence.
+
+test('DIAGNOSTIC: "no heading found" and "heading found, block empty" are different refusals', () => {
+  const noHeading = G.parsePacket([
+    '# Packet L999',
+    '**WHAT YOU OWN**',
+    '',
+    '    consonance/tools/js-suite.js',
+  ].join('\n'));
+  assert.strictEqual(noHeading.owned.length, 0, 'the anchor requires a heading; this is the cost of it');
+  assert.match(String(noHeading.why || ''), /heading/i,
+    'a packet that mentions the phrase but never as a heading must SAY so');
+  assert.ok(/1/.test(String(noHeading.why || '')), 'and say how many times it was mentioned');
+
+  const emptyBlock = G.parsePacket(['## 4 · WHAT YOU OWN', '', 'not indented, so not a path'].join('\n'));
+  assert.strictEqual(emptyBlock.owned.length, 0);
+  assert.match(String(emptyBlock.why || ''), /empty|no path/i,
+    'a heading with nothing under it is a different failure from no heading at all');
+  assert.notStrictEqual(emptyBlock.why, noHeading.why, 'two causes must not produce one message');
+
+  const fine = G.parsePacket(['## 4 · WHAT YOU OWN', '', '    a/b.js'].join('\n'));
+  assert.strictEqual(fine.why, null, 'a packet that parsed carries no complaint');
+});
+
+test('DIAGNOSTIC: the fail-closed refusal carries the parse cause, not just the packet name', () => {
+  const root = tmp('diag');
+  const data = path.join(root, 'data');
+  const repo = path.join(root, 'repo');
+  fs.mkdirSync(data, { recursive: true });
+  fs.mkdirSync(path.join(repo, 'exo_memory', 'loop'), { recursive: true });
+  fs.writeFileSync(path.join(data, 'lap.jsonl'),
+    JSON.stringify({ lap: 'L999', stage: 'chain', chain: 'dispatched', at: Date.now() }) + '\n');
+  fs.writeFileSync(path.join(repo, 'exo_memory', 'loop', 'packet_broken_2026-09-04.md'),
+    ['# L999', '**WHAT YOU OWN**', '', '    a/b.js'].join('\n'));
+
+  const r = G.check({ repo, dataDir: data, paths: ['a/b.js'] });
+  assert.strictEqual(r.verdict, 'REFUSE');
+  assert.match(r.reason, /packet_broken_2026-09-04\.md/, 'the packet is still named');
+  assert.match(r.reason, /heading/i,
+    'and the CAUSE rides with it — otherwise the next seat bisects for 27 hours as L did');
+});
