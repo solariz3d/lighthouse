@@ -38,3 +38,31 @@ comparing methods — `for c in $(git rev-list --max-count=80 HEAD); do echo "$(
 finds the transition commit in one loop, and `comm -13` on the two file lists names the delta file.
 Nine times in ten it is time, not method. And check whether the delta file is the one that published
 the number: a count of a corpus that includes the counting is self-inflating by construction.
+
+## 2026-09-04 · D008 · P6 — THE EXCLUDE SET, RULED
+
+`exo_memory/handback/p-d007-exclude_2026-09-04.md` — **all six entries stand**; the chair's sealed
+prior that one hides a gap is REFUTED, its second half (the missing growth rule) CONFIRMED. Six
+entries encode THREE facts — the generator cannot ship itself (23 identity hits in `gen-consumer.js`
+by construction: its LEAKS array IS the identity), `catch-ledger` reads this record's state
+(`:930,:932` = `muscle_map.md` + `journal/`, neither shipped, while its three shipped siblings read
+the BOARD — runtime state, so the discriminator is real), and one standing guard. Three of the six
+are derived tests. **The real defect is one neither seat named: the SET creates 9 dangling
+references in shipped files** — 7 to `catch-ledger`, 2 to `gen-consumer`, none a runtime require but
+`tell-index.js:785-789` PRINTS one in its own report — **and the generator's DANGLING class can never
+count them, because all three of its patterns are shaped `exo_memory/…` and an excluded sibling is
+`consonance/tools/*.js`.** P-UNIVERSE denominator class, inside the tool the P-UNIVERSE registration
+uses as its exemplar. Also: entry 6's REASON (*"it would crash on load"*) is the degenerating grammar
+even though its substance stands — and it is the template P3 would have copied. Forward: **four
+manifest gaps, not three** (`consonance/hooks/README.md` is the fourth; the shipped front door links
+to it at `consonance/README.md:174`, one of FIVE dead links there), and
+`carrier-drift.registry.json` is a **live uncaught ENOENT crash** at `carrier-drift.js:364`, not a
+missing file — neither one-line move is right, and widening `tools` to `/\.(js|json|md)$/` closes
+all four while arming entry 1.
+
+**Carry forward:** to rule a withholding list, never argue the entries — **generate the artifact and
+count what the withholding COSTS in it.** `node gen-consumer.js --out $T`, then
+`grep -rl <excluded-basename> $T` returns a number no reading of the reasons can produce. And check
+the guard's own pattern SHAPES against the defect class you just found: a guard whose regexes are all
+one path-shape cannot see a defect of another shape, however correct each regex is. Same denominator
+move as P5's stale-vs-wrong cut — the entries were fine and the frame around them was not.
