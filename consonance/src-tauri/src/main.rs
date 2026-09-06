@@ -25,6 +25,8 @@ mod cochlea;   // audio as relationships: ratios, not frequencies. Pure maths, n
 mod listen;
 mod capture_audio;
 mod cochlea_service;  // threads, the ledger, and the refusal to run near an anti-cheat  // WASAPI process loopback: the untestable half, isolated on purpose    // choosing what to listen to: per-process, so a call is never delivered
+mod lap_holders;  // whose turn it is when MORE THAN ONE lap is open — the guard's pure half (A, L040)
+mod seat_alias;  // what a person TYPES -> what PaneNames INDEXES; the 58 measured 'Main' failures (E, L040)
 mod nowplaying;  // what is actually playing, from Windows' own media session — so the title is read, not inferred
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
@@ -5754,6 +5756,36 @@ fn chain_state_from(rows: &[serde_json::Value], unreadable: usize, now_ms: u64) 
     }
 }
 
+/// The holders of every OPEN lap, for the BATON GUARD — not for display.
+///
+/// `chain_state()` below answers "where is the loop", which is one position and is what a one-line
+/// status renders. This answers "may this seat act", which is a different question the same ledger
+/// can answer, and conflating them is the 2026-09-06 defect: the holder of ONE open lap decided for
+/// every open lap, and refused the chair four times in five minutes with nobody out of turn —
+/// including a deadlock where reaching the librarian required blocking the caller's own return path.
+///
+/// Reads the ledger a second time rather than sharing a parse. The cost is one file read per gated
+/// verb; the alternative was a return type serving a UI and a guard at once, and the last time a
+/// sensor grew a verdict it was because someone did exactly that.
+///
+/// UNREADABLE ROWS ARE DROPPED SILENTLY HERE, and `chain_state` counts and reports them. The
+/// asymmetry is deliberate and has a cost: a corrupt row that was the caller's only claim to the
+/// baton reads as no claim, so the guard fails CLOSED. Refusing is the safe direction for a guard
+/// and the wrong direction for a sensor — a second reason these are two functions.
+///
+/// Folded from A's reviewed patch `loop/patch_perlap_holder_L040.md` (L040); the rule and its
+/// measured price live in `lap_holders.rs`, which is A's and unmodified here.
+fn chain_holders() -> Vec<String> {
+    let path = data_dir().join("lap.jsonl");
+    let Ok(text) = fs::read_to_string(&path) else { return Vec::new() };
+    let rows: Vec<serde_json::Value> = text
+        .lines()
+        .filter(|l| !l.trim().is_empty())
+        .filter_map(|l| serde_json::from_str(l).ok())
+        .collect();
+    lap_holders::open_holders(&rows)
+}
+
 #[tauri::command]
 fn chain_state() -> ChainState {
     let path = data_dir().join("lap.jsonl");
@@ -5983,10 +6015,30 @@ fn set_pane_role(roles: State<PaneRoles>, pane: String, role: String) {
 /// later `resolve_pane("M")` would have delivered somewhere else. Found by pane E, 2026-08-24.
 const RESERVED_SEAT_NAMES: &[&str] = &["M", "LIB"];
 
+/// May a pane register this display name? PURE, so the guard itself is testable rather than only
+/// the table it consults — `set_pane_name` is a `#[tauri::command]` over `State`, and a property
+/// test written against the table alone stayed GREEN when the guard was reverted (mutant 5, L040).
+fn name_is_available_to_panes(upper: &str) -> bool {
+    !seat_alias::candidates(upper).iter().any(|k| RESERVED_SEAT_NAMES.contains(&k.as_str()))
+}
+
 #[tauri::command]
 fn set_pane_name(names: State<PaneNames>, pane: String, name: String) {
     let n = name.to_uppercase();
-    if RESERVED_SEAT_NAMES.contains(&n.as_str()) {
+    // RESERVED_SEAT_NAMES is not the whole list any more, and it stopped being the whole list the
+    // moment E's alias table landed (L040, folded from `loop/patch_resolve_from_L040.md`).
+    //
+    // FOUND CROSSWISE, in E's own stated hazard class, mirrored. E guarded the direction where an
+    // alias points AT a reserved key — `MIKE -> M` is deliberately absent, with a test to keep it
+    // absent. The mirror was left open: `MAIN`, `CHAIR`, `ORCHESTRATOR`, `LIBRARIAN`, `LIBRARY` and
+    // the rest are now LIVE ADDRESSES for the orchestrator and the librarian, and none of them was
+    // reserved. A pane naming itself `MAIN` would be tried FIRST by `candidates("MAIN")` and would
+    // capture every message addressed to the chair by that word — silently, no error, which is
+    // exactly the 2026-08-24 capture the module note says must never come back.
+    //
+    // Derived from E's table rather than hand-listed beside it, so a new alias row cannot open the
+    // hole again by being added somewhere else.
+    if !name_is_available_to_panes(&n) {
         // The UI drops this call's result (`term.js:462` .catch(() => {})), so a Result here would
         // be swallowed and read as success. Refuse into the durable log instead of into nothing.
         plog(&format!("set_pane_name REFUSED — '{n}' is a seat address (pane={pane})"));
@@ -6108,10 +6160,16 @@ Use a seat name (M, LIB, A…) or a longer id.",
 /// prefix matching can happen, and it is the place the tests reach.
 fn resolve_from(names: &HashMap<String, String>, live: &[String], target: &str) -> Result<String, String> {
     let t = target.trim();
-    // by friendly name (A, B, C …), case-insensitive — the normal path
-    if let Some(id) = names.get(&t.to_uppercase()) {
-        if live.iter().any(|k| k == id) {
-            return Ok(id.clone());
+    // by friendly name (A, B, C …), case-insensitive, and by the seat's other spoken names —
+    // `Main` is the orchestrator, and it is 51 of the 58 resolution failures the board has ever
+    // recorded. The typed token is always tried first, so an explicit registration still wins.
+    // Folded from E's reviewed patch `loop/patch_resolve_from_L040.md` (L040); the table and its
+    // mutants are E's in `seat_alias.rs`, unmodified here.
+    for key in seat_alias::candidates(t) {
+        if let Some(id) = names.get(&key) {
+            if live.iter().any(|k| k == id) {
+                return Ok(id.clone());
+            }
         }
     }
     // then the raw id, then a UNIQUE id-prefix
@@ -6246,9 +6304,54 @@ fn input_box_empty(lines: &[String]) -> bool {
     }
 }
 
-/// Both halves, and the second is the one a naive gate drops.
-fn pane_idle_for_delivery(lines: &[String]) -> bool {
-    capture::screen_ready(lines) && input_box_empty(lines)
+/// How long the PTY must have been silent before a pane counts as idle.
+///
+/// THE LOAD-BEARING HALF, and the one this gate shipped without. A claude turn in flight redraws
+/// its spinner clock at least once a second, so two seconds of TOTAL silence is not a turn in
+/// progress; a finished pane emits nothing at all. Keystrokes echo, so this also covers the keeper
+/// typing, independently of what the composer row says.
+///
+/// THE CAPTURE WATCHER ALREADY DID THIS AND I DID NOT COPY IT. Ten lines of its loop above:
+/// `if e.last_byte.elapsed() < Duration::from_millis(500) { continue; }` — quiescence FIRST, screen
+/// content second. That ordering is why the watcher does not have the bug this gate had.
+const QUIET_FOR_DELIVERY_MS: u64 = 2_000;
+
+/// The bottom status footer: `⏵⏵ bypass permissions on · 1 shell · esc to interrupt · …`.
+///
+/// It is chrome, and it is NOT evidence of a turn. Claude advertises "esc to interrupt" here
+/// whenever a BACKGROUND SHELL is running — turn or no turn — so a pane that ran one background
+/// command reads busy for the rest of its life.
+fn is_footer_row(s: &str) -> bool {
+    s.trim_start().starts_with('⏵')
+}
+
+/// A turn actually in flight, as opposed to a grid that merely remembers one.
+///
+/// NOT `capture::screen_ready`'s `is_working`, which is `.any()` over the whole grid. The emulator
+/// is 34x120 with SCROLLBACK 0: rows that scroll are overwritten in place, so the screen carries
+/// text from several epochs at once. Measured on 2026-09-06 over four panes' whole logs through the
+/// production emulator, `.any()` said BUSY while the composer sat empty in 253/390, 326/849 and
+/// 186/234 snapshots — on one pane, 79% of its life. `capture::is_working` stays as it is: the
+/// capture watcher calls it only AFTER its own quiescence guard, where it is correct.
+fn turn_in_flight(lines: &[String]) -> bool {
+    lines.iter().any(|l| l.contains("esc to interrupt") && !is_footer_row(l))
+}
+
+/// Three halves, and the room only ever had one and a half of them.
+///
+/// WHY NOT CONTENT ALONE — measured, not argued. Excluding the footer and keeping the rest of the
+/// old content check was the obvious fix, and its own hazard number killed it: against an
+/// independent live-turn signal it recovered 58/69/54 snapshots per pane while calling a working
+/// pane idle in 93/126/100. It false-idles roughly 1.7x more often than it helps, and a false-idle
+/// is the keeper spliced mid-word — the failure P-INBOX exists to prevent.
+///
+/// WHY NOT QUIESCENCE ALONE. A pane can fall silent for reasons that are not readiness, and
+/// `a_turn_in_flight_holds` is the case: if a spinner is on screen carrying live evidence, hold
+/// regardless of the clock. Cheap, and it costs nothing when it is wrong.
+fn pane_idle_for_delivery(lines: &[String], quiet: Duration) -> bool {
+    quiet >= Duration::from_millis(QUIET_FOR_DELIVERY_MS)
+        && input_box_empty(lines)
+        && !turn_in_flight(lines)
 }
 
 /// What to do with the head of a queue. Kept as a pure function of (idle, waited, enabled) so the
@@ -6318,14 +6421,14 @@ impl Inbox {
 }
 
 /// The live screen, or None. None is UNKNOWN and unknown holds (bounded) — never "ready".
-fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<Vec<String>> {
+fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Duration)> {
     let arc = { emus.0.lock().ok()?.get(pane_id).cloned()? };
     let e = arc.lock().ok()?;
-    Some(e.parser.screen().rows(0, EMU_COLS).collect())
+    Some((e.parser.screen().rows(0, EMU_COLS).collect(), e.last_byte.elapsed()))
 }
 
 fn pane_is_idle(emus: &PaneEmus, pane_id: &str) -> bool {
-    live_screen(emus, pane_id).map(|l| pane_idle_for_delivery(&l)).unwrap_or(false)
+    live_screen(emus, pane_id).map(|(l, q)| pane_idle_for_delivery(&l, q)).unwrap_or(false)
 }
 
 /// The one call every delivery site makes before it writes. `Some(reply)` means the message was
@@ -9926,6 +10029,71 @@ mod resolve_pane_tests {
         assert!(RESERVED_SEAT_NAMES.contains(&"M"), "the orchestrator's own address must be reserved");
         assert!(RESERVED_SEAT_NAMES.contains(&"LIB"), "the librarian's address must be reserved");
     }
+
+    /// EVERY WORD THE ALIAS TABLE MAKES INTO A SEAT ADDRESS IS RESERVED TOO — the mirror of the
+    /// hazard E guarded, found crosswise on 2026-09-06 while folding `patch_resolve_from_L040.md`.
+    ///
+    /// E kept `MIKE -> M` out of the table because an alias pointing AT a reserved key would let a
+    /// message for the pane named MIKE reach the orchestrator. The other direction was open: the
+    /// table turns `MAIN`, `CHAIR`, `ORCHESTRATOR`, `LIBRARIAN` and the rest into live addresses,
+    /// and a pane could REGISTER one of those and be tried first, because `candidates()` puts the
+    /// typed token ahead of its aliases. Same silent capture, entered from the front.
+    ///
+    /// This asserts the property over E's table rather than over a copied list, so a row added
+    /// later cannot reopen it without going red here.
+    #[test]
+    fn a_pane_cannot_register_any_word_that_reaches_a_seat_address() {
+        for word in [
+            "MAIN", "Main", "main", "the main", "CHAIR", "the chair", "ORCHESTRATOR",
+            "MAIN ORCHESTRATOR", "LIBRARIAN", "the librarian", "LIBRARY",
+        ] {
+            let n = word.to_uppercase();
+            assert!(
+                !name_is_available_to_panes(&n),
+                "'{word}' reaches a seat address and must be refused to panes"
+            );
+        }
+    }
+
+    /// AND THE PROPERTY DOES NOT OVER-REACH: an ordinary committee letter and the pane actually
+    /// displayed `MIKE` on this machine stay registrable. A guard that reserved everything would
+    /// pass the test above and break every pane name in the room.
+    #[test]
+    fn ordinary_pane_names_are_still_registrable() {
+        for word in ["A", "ALPHA", "B", "BRAVO", "C", "CHARLIE", "E", "ECHO", "MIKE", "L", "LIMA"] {
+            let n = word.to_uppercase();
+            assert!(
+                name_is_available_to_panes(&n),
+                "'{word}' is an ordinary pane name and must stay registrable"
+            );
+        }
+    }
+
+    /// AND THE WIRING, because the two tests above passed over a REVERTED guard.
+    ///
+    /// Mutant 5 of this lap: put `RESERVED_SEAT_NAMES.contains(&n)` back into `set_pane_name` and
+    /// both property tests stay green, because they exercise the predicate and not the caller. The
+    /// hole would be open behind a passing suite — the exact shape this seat wrote up on 09-02.
+    /// `set_pane_name` is a `#[tauri::command]` over `State<PaneNames>`, so the caller is asserted
+    /// by source shape, the way `resolve_pane_delegates_and_never_matches_prefixes_itself` already
+    /// does one screen up.
+    #[test]
+    fn set_pane_name_delegates_to_the_guard_and_does_not_check_the_constant_itself() {
+        let src = include_str!("main.rs");
+        let body = src
+            .split("fn set_pane_name(")
+            .nth(1)
+            .expect("set_pane_name is defined in this file");
+        let body = &body[..body.find("\n}\n").expect("the function ends")];
+        assert!(
+            body.contains("name_is_available_to_panes"),
+            "set_pane_name must go through the guard"
+        );
+        assert!(
+            !body.contains("RESERVED_SEAT_NAMES.contains"),
+            "checking the constant directly is the reverted guard: it misses every alias word"
+        );
+    }
 }
 
 #[cfg(test)]
@@ -10056,23 +10224,110 @@ mod inbox_tests {
         s
     }
 
+    /// THE REAL POST-DONE SCREEN, transcribed from pane `a2122153`'s live emulator at 03:12 on
+    /// 2026-09-06, when that pane had been finished and waiting for 48 minutes. Rendered through
+    /// the same `vt100::Parser::new(EMU_ROWS, EMU_COLS, 0)` production uses.
+    ///
+    /// TWO THINGS THE HAND-WRITTEN `screen()` FIXTURE ABOVE HAS NEVER CARRIED, and both are why
+    /// six of ten deliveries tonight were FORCED onto panes that were ready the whole time:
+    ///
+    ///   1. THE REAL FOOTER. `⏵⏵ bypass permissions on · 1 shell · esc to interrupt · …` — claude
+    ///      advertises "esc to interrupt" in the FOOTER whenever a BACKGROUND SHELL is running,
+    ///      turn or no turn. The fixture above uses the no-shell variant, which is why every gate
+    ///      test passed over a gate that is wrong most of a pane's life.
+    ///   2. A STALE SPINNER ROW. The grid is 34x120 with scrollback 0; rows that scroll are
+    ///      overwritten in place, so text from earlier epochs survives on screen. This pane still
+    ///      carried its own spinner from a turn that ended 48 minutes earlier.
+    ///
+    /// Both make the same point: `.any()` over this grid asks a question about the pane's HISTORY,
+    /// not its present. That is the third instance of the class — after "the captured screen is
+    /// ready by construction" and "a bare ❯ in restored scrollback is not the composer".
+    fn post_done_screen() -> Vec<String> {
+        vec![
+            "  A confirmed from the command: the hostname miss was the trailing word boundary."
+                .to_string(),
+            "".to_string(),
+            "  memory/'s 13 files have now been declined by three separate seats.".to_string(),
+            "✢ Whirlpooling…  1m 49s · ↓ 6.9k tokens · thought for 17s)".to_string(),
+            "✻ Baked for 32s · done 3:00 AM".to_string(),
+            "─".repeat(98),
+            "❯ ".to_string(),
+            "─".repeat(98),
+            "  ⏵⏵ bypass permissions on · 1 shell · esc to interrupt · ← for agents · ↓ to manage         /rc"
+                .to_string(),
+        ]
+    }
+
+    const QUIET: Duration = Duration::from_millis(QUIET_FOR_DELIVERY_MS);
+
+    #[test]
+    fn a_finished_pane_whose_footer_advertises_esc_to_interrupt_is_idle() {
+        // RED BEFORE THE FIX. Measured over four panes' whole logs with the production emulator:
+        // "esc to interrupt" was present ONLY in the ⏵⏵ footer in 169/332, 238/471 and 167/208 of
+        // the snapshots where the old predicate called the pane busy. On pane a2122153 the box was
+        // empty and the gate said not-ready in 186 of 234 snapshots — 79% of that pane's life.
+        let s = post_done_screen();
+        assert!(
+            capture::is_working(&s),
+            "premise: the old liveness check is fooled by the footer on this real screen"
+        );
+        assert!(input_box_empty(&s), "premise: the composer is empty — nobody is typing");
+        assert!(
+            pane_idle_for_delivery(&s, QUIET),
+            "a pane finished 48 minutes ago must be deliverable"
+        );
+    }
+
+    #[test]
+    fn a_stale_spinner_left_on_the_grid_does_not_hold_the_message() {
+        // The same screen carries a spinner row from a turn that ended 48 minutes earlier. Any
+        // content-based liveness check reads it as live, because the grid mixes epochs.
+        let s = post_done_screen();
+        assert!(
+            s.iter().any(|l| l.contains("Whirlpooling…") && l.contains("tokens")),
+            "premise: a stale spinner is on the grid"
+        );
+        assert!(pane_idle_for_delivery(&s, QUIET));
+    }
+
+    #[test]
+    fn pty_traffic_holds_even_when_the_screen_looks_perfectly_ready() {
+        // THE OTHER DIRECTION, and the mutant that must stay red: quiescence is the half that
+        // cannot be faked by a screen. A turn in flight redraws its spinner clock at least once a
+        // second, so bytes are still arriving; the grid at that instant may look exactly like a
+        // finished one. Without this, the fix trades a false-busy for a false-idle and the keeper
+        // is the one who gets spliced.
+        let s = post_done_screen();
+        assert!(!pane_idle_for_delivery(&s, Duration::from_millis(0)));
+        assert!(!pane_idle_for_delivery(&s, Duration::from_millis(QUIET_FOR_DELIVERY_MS - 1)));
+        assert!(pane_idle_for_delivery(&s, Duration::from_millis(QUIET_FOR_DELIVERY_MS)));
+    }
+
+    #[test]
+    fn quiescence_does_not_licence_delivering_over_a_typed_message() {
+        // A quiet PTY is NOT sufficient on its own. The keeper types, pauses to think, and the
+        // stream goes silent with words sitting in the box. Both halves are required.
+        let typed = screen("❯ we need to get that solid before 8am", false);
+        assert!(!pane_idle_for_delivery(&typed, Duration::from_secs(60)));
+    }
+
     #[test]
     fn idle_pane_with_an_empty_box_delivers() {
-        assert!(pane_idle_for_delivery(&screen("❯", false)));
-        assert!(pane_idle_for_delivery(&screen("❯   ", false)));
+        assert!(pane_idle_for_delivery(&screen("❯", false), QUIET));
+        assert!(pane_idle_for_delivery(&screen("❯   ", false), QUIET));
     }
 
     #[test]
     fn the_keeper_typing_holds() {
         // The case the whole packet exists for: a ready-looking screen whose composer has words in
         // it. Delivering here is what cut his sentence in half mid-word.
-        assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false)));
+        assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false), QUIET));
         assert!(!input_box_empty(&screen("❯ s", false)), "one character is still typing");
     }
 
     #[test]
     fn a_turn_in_flight_holds() {
-        assert!(!pane_idle_for_delivery(&screen("❯", true)));
+        assert!(!pane_idle_for_delivery(&screen("❯", true), QUIET));
     }
 
     #[test]
@@ -10084,7 +10339,7 @@ mod inbox_tests {
         let mut s = screen("❯ mid-sentence and about to be spliced", false);
         s.insert(1, "❯".to_string()); // a bare prompt row from a rendered transcript
         assert!(capture::screen_ready(&s), "premise: the naive check is fooled by this screen");
-        assert!(!pane_idle_for_delivery(&s), "and the real gate is not");
+        assert!(!pane_idle_for_delivery(&s, QUIET), "and the real gate is not");
     }
 
     #[test]

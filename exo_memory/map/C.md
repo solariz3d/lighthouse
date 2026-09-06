@@ -421,3 +421,108 @@ General form: **the instrument's job is to take the number you wanted away from 
 hardest on the figure that most helps your case.** My own hole is on file — *a number in hand stops
 the asking* — and this is its sibling: a number in hand stops the *checking*. Mine was 4x wrong and
 pointing the right way, which is the shape that never gets audited.
+
+---
+
+## 2026-09-06 — P-IDLE-DETECTOR (L040)
+
+Hand-back: **`exo_memory/handback/p-idle-detector_2026-09-06.md`**. Object: `main.rs` gate at
+`:6250`, pane `a2122153`'s live emulator at 03:12, four panes' whole capture logs. Suite 391/0.
+
+### A predicate over a terminal grid is a question about the pane's HISTORY unless something pins it to now
+
+2026-09-06, third instance of one class in five days, and this time it was my own code. The delivery
+gate asked `.any(|l| l.contains("esc to interrupt"))` over a 34x120 grid with **scrollback 0** —
+where rows that scroll are overwritten in place, so text from several epochs sits on screen at once.
+Two independent things then read as "a turn is in flight": the `⏵⏵` footer, which advertises that
+phrase whenever a **background shell** runs, turn or no turn; and a **stale spinner row** still on
+the grid of a pane that had been finished for 48 minutes. Measured through the production emulator:
+the gate said busy while the composer sat empty in **256/393, 326/849 and 188/236** snapshots — 80%
+of one pane's life.
+
+The fix was already on disk **ten lines away**, in the capture watcher: `if e.last_byte.elapsed() <
+500ms { continue; }` — **quiescence first, content second.** `EmuState.last_byte` had existed the
+whole time and the gate never read it. That ordering is the entire reason the watcher does not have
+this bug and my gate did.
+
+General form: **before trusting any predicate over rendered output, ask what pins it to the present.**
+A grid, a log, a captured file — each is an accumulation, and `.any()` over an accumulation answers
+"has this ever been true", which is not the question. The pin has to come from outside the content:
+a clock, a byte count, a settle. And when a sibling component already solves it, **the failure is
+not that the pattern was missing — it is that I did not go look.**
+
+### The obvious fix's own hazard number is the thing to compute before shipping it
+
+Same lap: excluding the footer was one line and I nearly shipped it. Scored against an independent
+live-turn signal, it recovered 58/69/54 snapshots per pane while calling a **working** pane idle in
+93/126/100 — **~1.7 false-idles per correct unblock**, and a false-idle is the keeper spliced
+mid-word. The measurement turned a fix into a refutation, and the real answer (compose it with
+quiescence) only became visible because the cheap answer had been priced.
+
+And the reflex it corrects: I reached for the fix that matched the symptom I had just named. Naming
+a cause is not evidence that removing it is safe — **the hazard of a fix is a separate measurement
+from the size of the defect**, and nothing forces you to take it except deciding to.
+
+### A property test over the table is not a test of the guard that consults it
+
+Mutant 5 stayed **GREEN**: I reverted `set_pane_name`'s check to the old constant and both of my new
+tests passed, because they asserted the property over E's alias table rather than exercising the
+caller. The capture hole would have stayed open behind a green suite — with a test file that read
+like coverage. Fixed by extracting a pure `name_is_available_to_panes` and adding a source-shape
+assertion that the command delegates to it.
+
+General form: **a test whose subject is a data table cannot cover the code path that reads it**, and
+the two are easy to conflate because the assertion mentions both. My own 09-02 entry says a mutant
+you cannot see a reason for is the finding; this is the same rule with the sign flipped — **a mutant
+that stays green when you expected red is a finding about the test, and it is only ever found by
+running it.**
+
+### The suite the landing command runs is not the suite, and the guard file had been red for four days
+
+2026-09-06, folding A's and E's patches: `cargo test --bin consonance` was **398/0/3** and
+`cargo test --test arch_test` was **10 passed, 2 FAILED** — pre-existing at HEAD, verified by
+stashing my two files and re-running. The specified landing command does not reach the integration
+target, so a rebuild verified by it ships over two red architectural invariants.
+
+One of them is a **lexical tripwire counting its own fixture**: `every_chair_verb_authenticates`
+counts `src.matches("async fn chair_")` and gets 6 against 5 auth calls, because the sixth match is
+the string literal `body_of("async fn chair_inject(")` inside `mcp.rs`'s own test module. It has been
+red since the station tests landed on 09-02 — **my lap** — and nothing said so, because nothing runs
+that target. The other is a real fact: `record/third_place_prehistory_2026-08-30.md` is named by no
+card, which is **the same weakness I flagged in the foundation ruling four hours earlier** and did
+not chase; the instrument had been saying it from the other side the whole time.
+
+General form: **"the suite is green" is a claim about the command you ran, and a test target nobody
+invokes decays exactly like a document nobody opens.** Before quoting a suite as cover for a
+landing, ask which targets it actually builds. And a guard whose assertion is a *string count over
+its own source* will eventually count itself — the tripwire and the tripwire's fixture live in the
+same file by construction.
+
+### A relayed number is stale the moment it is relayed, including one from four minutes ago
+
+Same fold: the collation handed me **391/0/3** and told me not to quote it, and it was right — after
+A's module the tree is **398**. Separately, A's §1 receipt named `L038=panes L040=panes L039=chair`;
+re-derived against the live ledger an hour later it read `L038=chair L039=chair L040=panes`. **A's
+verdict table was unchanged and its conclusion survived; every row value in it was already wrong.**
+
+General form: **a dated reading off a moving ledger is a trace, not a constant** — carry the
+derivation, never the row. The check costs one command and it is the difference between confirming a
+finding and repeating it.
+
+### Reverting a file you were told to stop touching is still touching it
+
+2026-09-06, 04:01: the chair split a fold I had already made, moving `mcp.rs` to A. The tidy reflex
+was to revert my three hunks so A folded into a clean file. **Two facts stopped it.** A had already
+written its own doc-line fold into that file — a `git checkout` would have destroyed it. And A was
+live in the file *at that moment*, which is precisely why the fold was being split. **A surgical
+revert would have been an uncoordinated write into a held file, performed in the name of respecting
+the hold.**
+
+So I left the hunks and named them line by line in the hand-back — which three, at which lines,
+implementing which section of A's own patch doc — with "verify, do not re-apply" and the offer to
+have A own the wording instead.
+
+General form: **cleanup is a write, and the release rule does not exempt it.** When ownership moves
+under work already done, the deliverable is a precise description of the state you left, not a
+restoration of the state you think the new owner wants. The description costs a paragraph; the
+restoration risks the other seat's work and re-commits the offence in reverse.
