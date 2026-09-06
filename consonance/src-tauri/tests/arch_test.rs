@@ -157,7 +157,29 @@ fn gauges_speak_in_numbers_not_verdicts() {
 #[test]
 fn every_chair_verb_authenticates() {
     let src = fs::read_to_string("src/mcp.rs").unwrap_or_else(|e| panic!("read src/mcp.rs: {e}"));
-    let verbs = src.matches("async fn chair_").count();
+    // DECLARATION LINES, not substring hits. RED FROM 2026-09-02 UNTIL 2026-09-06 because
+    // `src.matches("async fn chair_")` counted a TEST FIXTURE as a sixth verb: mcp.rs:933 is
+    // `let b = body_of("async fn chair_inject(")`, a string that names a declaration inside a test
+    // that checks the declaration. Measured: 6 substring hits, 5 real verbs, 5 auth calls — so
+    // this tripwire reported an unauthenticated actuator path for four days, in a test target
+    // nothing was running. A guard that cries wolf in a file nobody opens is indistinguishable
+    // from no guard, which is the reason it went unnoticed rather than an excuse for it.
+    //
+    // A declaration cannot be indented past its `impl` block and cannot follow anything on its
+    // line; a mention inside a string always does one or the other.
+    let verbs = src
+        .lines()
+        .filter(|l| {
+            let t = l.trim_start();
+            t.starts_with("async fn chair_") || t.starts_with("pub async fn chair_")
+        })
+        .count();
+    // NOT anchored the same way, deliberately: `self.auth_chair(` appears mid-line inside an `if`,
+    // so there is no equivalent line shape to key on. THE MIRROR HAZARD IS REAL AND IS LEFT OPEN
+    // WITH ITS NAME ON IT — the day a test fixture quotes "self.auth_chair(", this count inflates
+    // and the tripwire goes green over a missing gate, which is the dangerous direction. Fixing
+    // that needs the counter to skip `#[cfg(test)]`, which is a bigger change than this landing
+    // should carry.
     let auths = src.matches("self.auth_chair(").count();
     assert!(verbs > 0, "expected chair_* verbs in src/mcp.rs (Stage 9)");
     assert_eq!(

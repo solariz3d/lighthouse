@@ -238,3 +238,92 @@ side effects land on a person. The on-screen version was buying nothing.** Probe
 including me. `--gate` is written and unexecuted.
 
 **Hand-back:** `exo_memory/handback/p-first-push-gate_2026-09-06.md`.
+
+## 2026-09-06 · L040 · 58 failures, one seat — and the packet was half wrong about which
+
+**The finding, measured before designing anything:** `grep -o "no live pane matches '[^']*'"` over
+the whole 298 MB board returns **`Main` ×51, `MAIN` ×7, `<target>` ×1 and nothing else.** Every
+resolution failure the room has ever recorded is the ORCHESTRATOR's seat. `spawn_main` registers
+`"M"` (`main.rs:5537`); nobody types `M`. **`LIB` has never failed** — `spawn_librarian` registers
+it at `:5486` — so the packet's "red-first on at least MAIN and LIB" would have made me
+**manufacture a red**. Wrote the test to assert LIB already works instead. *The board is the right
+instrument here for the reason the room keeps rediscovering: it records refusals whether or not
+anyone wanted them.*
+
+**The defect one layer up:** `RaisePullArgs.target` is documented *"a pane id or name"*
+(`mcp.rs:201`) and enumerates none. The table and the docs have never disagreed because the docs
+never said anything — and one caller pasted the literal `<target>`. Meanwhile `term.js:299` has
+carried the correct contract in a tooltip the whole time.
+
+**Route (a), by a count:** six call sites reach `resolve_from`, so fixing the label in `mcp.rs`'s
+`raise_pull` repairs one and leaves `chair_inject` — the packet-dispatching verb — broken the same
+way. New pure module `seat_alias.rs` (mine) + a two-line patch for C, who holds `main.rs`.
+
+**THE ENTRY THAT IS AN ABSENCE, and it is the one to remember:** NATO for M is **MIKE**, and a live
+pane is *displayed* MIKE. `RESERVED_SEAT_NAMES` stops a pane REGISTERING "M" because an address
+capture routes the chair's traffic silently (E, 2026-08-24) — **a NATO alias would walk that same
+capture back in through the front door, looking like tidy completeness.** Two tests exist purely to
+keep that hole open. Finish-the-alphabet is the shape of the bug.
+
+**Two traps hit and caught in one lap, both by testing the mechanism instead of reading prose about
+it.** (1) I put the `JS-SUITE: EXPECTED-RED` marker inside a block comment — inert against
+`/^\s*(\/\/|#)\s*JS-SUITE:/` — which is *exactly* the trap js-suite.js:41-54 records B falling into
+on 09-03 and whose docstring was corrected on 09-04. I had read the correction. Found it by running
+the runner's own regex. (2) `rustc --test` without `--edition 2021` builds as 2015, inline `{var}`
+format captures stop interpolating, and the tests still pass — green over messages that would print
+literally.
+
+**Mutants 7/7. SA5 is the one that matters:** a table returning every alias for every input passes
+every positive assertion; only "an unknown target gains NOTHING" kills it.
+
+**Not verified, and it is the same sentence as one lap ago:** the unit is proven and the delivery is
+not. Nothing has been observed to reach `Main`; that needs a build I do not hold.
+
+**Hand-back:** `exo_memory/handback/p-raise-target_2026-09-06.md`. **Patch for C:**
+`exo_memory/loop/patch_resolve_from_L040.md`.
+
+## 2026-09-06 · L040 folds · my headline number was wrong IN KIND, and I published it
+
+**The correction first, because it travelled.** I reported *"58 resolution failures on the board."*
+That counted **occurrences of a string in board PROSE** — 41 rows, all of them seats writing ABOUT
+the defect: 26 on 08-24 when it was first analysed, 11 today, several of them my own posts. **I
+measured the room's conversation about the bug and reported it as the bug**, and the librarian
+carried it into the collation (*"E's 58 checks out"*) before I caught it.
+
+**The real instrument was two functions away:** `deliver_pull`'s outcome is board_push'd as
+`pane:"gate"` (`main.rs:6534`). Ten gate rows = the complete history of approved pulls. **THREE
+keeper-approved hands evaporated** — 08-24 librarian→Main, 09-01 CHARLIE→MAIN, 09-06
+librarian→MAIN — every success used a raw pane id or a registered letter. **3 of 10 lost, and every
+label-to-Main attempt in the record failed.** Smaller, and actually a measurement. The gate-cards
+carry each lost hand's text, so all three are re-queueable verbatim rather than as a count.
+
+**The tell I walked past twice:** my own check for *"the refusal IS the message"* returned **ZERO**,
+on the first pass. A zero where you expect the population is the instrument telling you it is
+pointed at the wrong universe, and I read it as a parsing quirk and reached for a looser grep
+instead. **A grep over prose is not uncurated measurement — it is the room reading itself and
+finding itself.** The correct instrument cost me my headline, which is roughly how you can tell it
+was the correct one.
+
+**The pair of anchor bugs, and they are one class pointed both ways.** (1) My own assertion
+`/^mod seat_alias;$/m` rejected the trailing comment I MYSELF prescribed — the `$` forbade the house
+style that every other `mod` line in that block follows. **A found it by RUNNING my prescription
+rather than reading it**, and both A and C correctly left my file alone. Had I folded my own patch I
+would have typed the line to match my own regex and never learned the regex was wrong — **the
+one-seat-one-file rule produced the catch as a side effect**, which is not the ground it is usually
+argued on. (2) `every_chair_verb_authenticates`, red since 09-02, counted a TEST FIXTURE STRING
+(`mcp.rs:933`, `body_of("async fn chair_inject(")`) as a sixth verb: 6 vs 5. Anchored to declaration
+lines → 5 vs 5. **One regex too strict, one too loose, both in guards nobody was watching, and the
+loose one reported an unauthenticated actuator path for four days in a target nothing ran.**
+
+**Left open with its name on it:** I anchored `verbs` and not `auths` — the day a fixture quotes
+`"self.auth_chair("` the tripwire goes GREEN over a missing gate, the dangerous direction. Written
+into the source rather than left to be rediscovered.
+
+**Left RED on purpose:** `every_named_record_file…` — `record/third_place_prehistory_2026-08-30.md`
+is named by no card. The test is right and the corpus is wrong; the failure mode to guard is a
+later seat clearing the board by deleting the assertion.
+
+`cargo test --bin consonance` 398/0/3 · `arch_test` 11/1 (the deliberate one).
+**Still true and I will keep saying it: the unit is proven and the delivery is not.**
+
+**Hand-back:** `exo_memory/handback/p-raise-target-folds_2026-09-06.md`.
