@@ -385,3 +385,39 @@ appear as CONTENT**. Then it is ready-and-splicing. Fixed by keying on the botto
 General form: **when a bar says a mutant must be red, and you cannot see why it would be, that gap is
 the finding — not a formality to satisfy.** The brief's *reason* was wrong while its *bar* was right,
 and only running the bar against the reason separated them.
+
+---
+
+## 2026-09-06 — P-FOUNDATION-SET (L037)
+
+Hand-back: **`exo_memory/handback/p-foundation-set_2026-09-06.md`**. Ruling:
+`exo_memory/loop/consumer_foundation_ruling_2026-09-06.md`. Object HEAD `1f09047`.
+
+### Before ruling a question, look for the generators that already rule it — a mechanism is a ruling nobody wrote down as one
+
+2026-09-06. I was asked which of `exo_memory/` is foundation and which is one keeper's trace. The
+room had answered five times and the answer was in no document: `gen-brief.ps1`'s transformation 2
+and its self-check (which *deletes its own output* if the shipped brief names `SELF_TRACE.md`,
+`the_living_wave` or `journal/2026-`), `gen-consumer.js`'s `RECORD` leak class, its `dedangle()`,
+and one paragraph of the shipped `brief/BOOT.md`. Four of the five are code. The map's candidate set
+and the keeper's spoken answer both contradicted them, and nobody knew, because **a guard is only
+read by whoever trips it.**
+
+General form: **a ruling encoded as a guard is invisible to everyone who never runs it, so it will
+be contradicted in good faith by the people who own the question.** When a decision looks unmade,
+grep the generators before ruling — and when your own ruling lands, ask whether it will be visible
+to the next person or only to whoever trips it. Mine is owed a red for exactly that reason.
+
+### Run the shipping instrument even when your own grep already gave you the number you wanted
+
+Same lap: I hand-counted the citations that would break under the keeper's reading and got **87**.
+Re-derived with the generator's own `transform()` counter — `dedangle()` applies rules in sequence,
+so earlier replacements eat text later rules would match, and fixtures take a branch where the count
+is 0 — the real figure is **20**, inside a total of **117 that reproduces `--report` exactly.** In
+the same pass, the scan refuted the argument I was about to lead with: the record does not leak (5
+MACHINE hits over 31 journal files, 0 in the two masters). **Both corrections cost me the headline.**
+
+General form: **the instrument's job is to take the number you wanted away from you, so run it
+hardest on the figure that most helps your case.** My own hole is on file — *a number in hand stops
+the asking* — and this is its sibling: a number in hand stops the *checking*. Mine was 4x wrong and
+pointing the right way, which is the shape that never gets audited.
