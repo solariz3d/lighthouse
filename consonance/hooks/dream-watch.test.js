@@ -25,11 +25,29 @@ function t(name, fn) {
 }
 
 // ── parseTaskQuery ──────────────────────────────────────────────────────────
-// Captured verbatim from this bed, 2026-07-27. /fo LIST /v repeats every field once per
-// trigger; the parser must take the first block and not trip over the repeats.
+// Captured from this bed, 2026-07-27, and verbatim except for ONE field. /fo LIST /v repeats
+// every field once per trigger; the parser must take the first block and not trip over the
+// repeats, which is the whole point of the fixture.
+//
+// HostName CARRIED THIS MACHINE'S REAL COMPUTER NAME UNTIL 2026-09-06, and it was shipping to a
+// repository that is public today. It was the last identity survivor in the generated tree, and it
+// slipped every class the sanitiser had: not a handle, not an email, not a path — a HOSTNAME,
+// which happened to carry the keeper's given name as an upper-case prefix, so the name-token
+// rule's TRAILING WORD BOUNDARY walked past it. Case was not the problem; that rule was already
+// case-insensitive.
+//
+// FIXED IN BOTH PLACES, DELIBERATELY. `gen-consumer.js` grew a HOSTNAME class, keyed on the FIELD
+// rather than on any name, so the next one is caught — including on a machine whose name contains
+// nobody's name. And the value here is neutralised so the private tree stops carrying it at all.
+// Fixing only the generator would leave a real hostname sitting in a public repository; fixing
+// only the fixture would leave the class absent, and the next hostname would ship.
+//
+// The value is inert to every assertion below — this fixture exists to exercise the REPEAT, and
+// nothing reads HostName's value. Checked before the edit rather than asserted after: `grep -n
+// HostName` over this file returns the two fixture lines and nothing else.
 const REAL = `
 Folder: \\
-HostName:                             ZACHSLEGION
+HostName:                             EXAMPLE-HOST
 TaskName:                             \\Consonance Dream Cycle
 Next Run Time:                        2026-07-27 10:30:00 AM
 Status:                               Ready
@@ -37,7 +55,7 @@ Last Run Time:                        2026-07-27 12:26:22 AM
 Last Result:                          -2147020576
 Scheduled Task State:                 Enabled
 
-HostName:                             ZACHSLEGION
+HostName:                             EXAMPLE-HOST
 TaskName:                             \\Consonance Dream Cycle
 Next Run Time:                        2026-07-27 10:30:00 AM
 Status:                               Ready

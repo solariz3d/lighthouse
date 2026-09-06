@@ -1121,3 +1121,71 @@ part an author should not be last word on.
   **The lesson to carry: when two numbers are flagged as conflicting, check whether they are even
   about the same object before reconciling them — and check the number nobody flagged.**
   — `exo_memory/handback/p-d007-falsifier-attack_2026-09-04.md`
+
+- **2026-09-06 · L037 P2 · dev-shell into the manifest.** Closed both knowingly-open gaps by shipping: 17 files (`install.ps1`, `dev/shell/README.md`, 2 `lib/`, 12 `hooks/`, `consonance/hooks/README.md` rewritten as a stranger's document and shipping byte-identical to its private copy). Derived the installer list from its AST, not the comment: it is **13** dev/shell files, not twelve — the missed one is `userprompt_pulse.py`, the only non-.js entry and the registered pulse. Both floor breaks went ENOENT → RUN (`universe-print` 15/0; `dream-gate` 50/1, the one red a THIRD gap the crash was hiding: `dev/dream/dream_cycle.ps1`, ruled open rather than patched). Two generator defects found by shipping: `dedangle()` and its LEAKS twin both REQUIRED the `exo_memory/` prefix, so the bare relative form was invisible to rule and scan alike (54 → 117 rewrites); and the keeper's **given name** shipped in prose with no LEAKS class for it — 5 sites, 4 files, one of them this packet's own — the survey that built that list searched for machine shapes and structurally could not find a first name. Hand-back: `exo_memory/handback/p-dev-shell_2026-09-06.md`.
+
+- **2026-09-06 · L038 P5 · inheritance into the manifest.** The keeper's `inheritance/` shape built:
+  34 entries + the two masters under a labelled directory, `journal/` seeded with an honest note,
+  `CUTOFF.md` generator-written as a **pure function of the commit** (date from `git show -s`, not the
+  clock, so a forged DATE is caught too) with `--verify-cutoff` proving it both ways. `scan()` now reads
+  `f.to`: a handle in a FILENAME shipped past every class until this lap. **The packet's tell was wrong
+  in its mechanism and the correction is the finding** — `\bzach\b/gi` was already case-insensitive and
+  missed `ZACHSLEGION` on the TRAILING WORD BOUNDARY; a relaxed twin of all 22 classes found extras in
+  exactly two, and 13 of the 14 were the substring inside `unnamed`. **So do not relax these classes**;
+  the survivor is a HOSTNAME, keyed on the field so it catches a machine named after nobody. Three leak
+  classes re-pointed, each with a test that fires on the OLD form, because a re-pointed class is one
+  character from catching nothing while reading green — and the regex was TRADED for a resolution check
+  against what actually staged. Two defects shipped and caught in-lap, both by reading OUTPUT rather
+  than a verdict: `$1` unexpanded in a callback replacement (leak gone, fixture destroyed, every
+  instrument green) and `repath()` ordered four lines too low (a shipped index link with a space in it).
+  14 mutants, 14 caught. Parity P=18, unchanged, while crashes went 2→0 — the number stood still over a
+  tree that got better, which is the argument for demoting it. Hand-back:
+  `exo_memory/handback/p-inheritance_2026-09-06.md`.
+
+- **2026-09-06 · L038 · A's attack came back LAND IT, two fixes.** (1) A second live `$1` ten lines
+  above my own comment about the class — `demachine()`'s `rep` passed a callback, whose return is not
+  `$1`-expanded, so generated `main.rs` shipped `on $1` since `fa16075`. **Found by A running MY §9
+  method over the whole file, not just my edits** — the instruction outlived the lap. Fixed by
+  delegating expansion to the engine, not writing a third expander. (2) The generator read the WORKING
+  TREE and stamped `git rev-parse HEAD` with no cleanliness check: **every tree this room has generated
+  claims a provenance that was never true**, and `--verify-cutoff` passed over all of them because the
+  document really is a pure function of a sha that really exists — *correct about the wrong thing*, the
+  hard kind to notice. Now refuses a WRITE (never a dry run, or the override becomes a habit);
+  `--allow-dirty` stamps an UNEARNED block a reader meets without knowing the flag exists.
+  **The mutant that survived was mine:** the test read expected-dirtiness from the function under
+  test, so the guard was compared against itself — E-2 committed inside the test written to close a
+  provenance hole. Oracle moved to `git status --porcelain`; 8/8 caught.
+
+- **2026-09-06 · L038 · the memory/ cut (method ships, state drops).** Keeper's rule implemented; his
+  list was **not a partition** — 11 of 12 named, and under a `dir` rule the unnamed one SHIPS, the
+  inverse of this manifest's allow-list default. Classified it by his own rule and flagged it. Both
+  routed calls DROPPED with the reword shown: `user-solariz3d` because the reword is already SEED.md
+  and the `type: user` slot belongs to the new user; `dont-offer-rest` because the reword already
+  ships as `cards/never-pathologize-the-user.md`. **The finding to carry: the cut does not reach
+  `cards/`** — 6 of 12 memory cards also live there, so dropping the retired dive-buddy card removes
+  nothing (the 08-17 carrier lesson, again), and 4 of the 6 he KEPT are duplicates with
+  `claim-your-continuity`'s memory copy the STALE one (law 1, not law 3). MEMORY.md is now FILTERED
+  against staging so it cannot dangle. **14 dangling `[[wiki-links]]` — a surface no class here could
+  see; 5 pre-dated the cut, being the wiki form of the markdown-link bug I fixed hours earlier.**
+  Three more defects found by reading output not verdicts: bare slugs adrift in prose, a stub rule
+  keyed on label names instead of shape, and a transform eating a file's final newline.
+  **Both mutation survivors were my TESTS, not my code** — one asserted only that nothing dangles,
+  which a rule stripping EVERY link satisfies perfectly; the other was an equivalent mutant, closed
+  by pinning the SET rather than the output. 7/7 after. Second time this lap.
+
+- **2026-09-06 · L038 · one master (keeper 03:56).** `cards/` is the master; the retired dive-buddy
+  card excluded AT THE CARRIER (cutting it from `memory/` an hour earlier while `cards/` shipped it
+  was the 08-17 failure reproduced inside the lap that reported it), and `memory/` ships only its two
+  UNIQUE cards plus the filtered index. A test now fails on any card name shipping from two
+  directories. **The consequence was a new dangling link of a shape the earlier cut never made:** a
+  TYPED EDGE, where the link is the object of the row — strip it and the row asserts a relationship
+  and withholds the other end. Blast radius counted BEFORE writing the rule (exactly one list item),
+  so: a list item that loses its only link loses the item; prose keeps its words. **Third test-fault
+  of the lap:** an assertion I added an hour ago went false for a real reason — it proxied "the
+  resolution set covers memory/" by requiring a surviving link into `memory/`, and after this change
+  nothing links there. Withdrawn, not weakened; the direct set-pinning covers the same mutant
+  without depending on which links exist today. All three were the same shape — a guard keyed to the
+  current data instead of to the mechanism. 4/4 mutants. Answered the chair explicitly: this does
+  NOT make the divergent-pair append harder — both files untouched, EXCLUDE withholds rather than
+  deletes, one line to lift — but the duplicate-name test is a tripwire in the reconciler’s path and
+  they should read it before choosing the shape.

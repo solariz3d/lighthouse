@@ -1,203 +1,233 @@
-# consonance/hooks — the ambient board
+# consonance/hooks — hooks that arrive, instead of waiting to be asked
 
-A Claude Code `UserPromptSubmit` hook that puts a one-glance digest of every other pane's activity
-into the Orchestrator's context on **every turn**, unasked.
+These are Claude Code **hooks**: small Node programs the harness runs at fixed moments in a session
+— when it starts, when you submit a prompt, when an assistant turn ends, before a compaction, before
+a tool call. Each one puts a fact in front of the model *at the moment the fact matters*, then gets
+out of the way.
 
-## Why it exists
+They exist because of one design argument, and it is the only claim in this file that is not
+checkable by running something:
 
-Measured on the live board, 2026-07-25, the six hours ending 06:59:
+> A store the reader has to *decide* to visit is a store nobody visits. If a fact only reaches the
+> model when the model thinks to go and look for it, it does not reach the model. **Stop offering,
+> start arriving.**
+
+Everything below follows from that. A hook here is silent when it has nothing to say, states facts
+and never verdicts, never blocks a turn, and always exits 0.
+
+---
+
+## The roster
+
+Thirteen non-test `.js` files live here. Each line quotes that file's **own header**, so the
+description cannot drift from the code without someone editing the code:
+
+| file | what it is |
+|---|---|
+| `ask-surface.js` | *"UserPromptSubmit hook — surface the questions the automations put to the keeper."* |
+| `baton-wake-stop.js` | *"Stop hook: the outgoing seat is caught at the one moment it can still speak."* |
+| `blind.js` | *"the blind window, as a FILE, global, fail-closed."* — a **library**, not a hook |
+| `board-digest.js` | *"UserPromptSubmit hook — the ambient board."* |
+| `carrier-drift-watch.js` | *"fire `consonance/tools/carrier-drift.js` unbidden, and say nothing unless something is actually wrong."* |
+| `dispatch-gate.js` | *"ASK before a dispatch that carries no citation."* |
+| `dream-watch.js` | *"UserPromptSubmit hook. One line when the dream cycle has stopped dreaming; silent when it hasn't."* |
+| `ferry-watch.js` | *"surface a FRESH un-ferried artifact, and nothing else."* |
+| `findings-return.js` | *"surfaces unread, audited DISAGREEs from the findings ledger to the ORIGINATING pane at its next real user turn. Surfaces, never hauls."* |
+| `precompact-preserve.js` | *"shape what a compaction summary keeps."* |
+| `sessionstart-state.js` | *"put the room's current state in front of an instance that just lost it."* |
+| `sourced-stop.js` | *"a Stop-hook SENSOR: one ledger row per turn, no gate, no output."* |
+| `transcript-watch.js` | *"UserPromptSubmit hook, Main session only."* |
+
+Every one also has a `.test.js` beside it or is covered by `dream-gate.test.js`; run them with
+`node <file>.test.js`.
+
+---
+
+## Installing them
+
+**Do not copy files by hand and do not edit `settings.json` yourself.** One script owns both halves:
 
 ```
-6fe15f0a | assistant   199 turns   last 6:58 AM    ← a sibling, working all night
-0c0c0c0a | assistant    32 turns                   ← the Orchestrator
-main     | committee     1 turn                    ← everything Main put on the board all night
+pwsh dev/shell/install.ps1              # sync the files, then register them
+pwsh dev/shell/install.ps1 -Check       # report drift only, change nothing
+pwsh dev/shell/install.ps1 -NoRegister  # files only; print the settings block instead of writing it
 ```
 
-The sibling's full text was on the board the whole time. The Orchestrator called `read_board`
-**zero** times. **199 : 0.**
+It is idempotent — safe to re-run after every pull — and it prints exactly what it changed.
 
-Not a broken pipe — a pipe terminating in a store nobody visits. `read_board` is a tool the reader
-has to *decide* to call, about a state it has no reason to suspect has changed. Same failure as the
-night table (crons knocking on a dark house) and the beacon (a clock in view, six days read as
-twelve hours). Both were fixed the same way, and so is this: **stop offering, start arriving.**
+Two facts about it are worth knowing before you run it, because they are the reason it exists:
 
-## What it emits
+- **It copies into your hook directory and registers the COPY**, never the file in the repo. A hook
+  registered at a repo path changes underneath a running session the moment you pull.
+- **Copying and registering are two states, not one.** A file that is installed but unregistered
+  never fires, and reads exactly like a working hook. `-Check` reports the two separately.
+
+### What the installer copies and registers
+
+This is a property of `install.ps1`, not of anyone's machine, so read it out of the script rather
+than out of a table someone typed. Save this as `derive.ps1` at the repo root and run it:
+
+```powershell
+$t=$null; $e=$null
+$ast = [System.Management.Automation.Language.Parser]::ParseFile(
+         (Resolve-Path 'dev/shell/install.ps1'), [ref]$t, [ref]$e)
+function Rows($name) {
+  $a = $ast.Find({ param($n) $n -is [System.Management.Automation.Language.AssignmentStatementAst] `
+                   -and $n.Left.Extent.Text -eq ('$' + $name) }, $true)
+  $a.Right.FindAll({ param($n) $n -is [System.Management.Automation.Language.HashtableAst] }, $true) |
+    ForEach-Object {
+      $h = @{}
+      foreach ($kv in $_.KeyValuePairs) { $h[$kv.Item1.Extent.Text] = $kv.Item2.Extent.Text.Trim("'") }
+      New-Object psobject -Property $h
+    }
+}
+$files = Rows files
+$reg   = Rows register
+"files          {0}   (dev\shell {1}, consonance\hooks {2}, declared libraries {3}, held {4})" -f $files.Count,
+  @($files | Where-Object { $_.From -like 'dev\shell\*' }).Count,
+  @($files | Where-Object { $_.From -like 'consonance\hooks\*' }).Count,
+  @($files | Where-Object { $_.PSObject.Properties.Name -contains 'Lib' }).Count,
+  @($files | Where-Object { $_.PSObject.Properties.Name -contains 'Hold' }).Count
+"registrations  {0}   events: {1}" -f $reg.Count, ((@($reg.Event) | Select-Object -Unique) -join ', ')
+$reg | ForEach-Object { "  {0,-16} {1}" -f $_.Event, $_.Rel }
+```
+
+Against the script as it stands, that prints:
+
+```
+files          24   (dev\shell 13, consonance\hooks 11, declared libraries 5, held 1)
+registrations  13   events: SessionStart, UserPromptSubmit, Stop, SessionEnd, PreCompact, PreToolUse
+```
+
+**If it disagrees with those numbers, the command is right and this paragraph is stale.** It parses
+the script's syntax tree rather than grepping its text, which matters: a per-entry flag can sit on a
+line of its own, and a line-based reader silently misses it.
+
+Three states a file in this directory can be in, and all three are normal:
+
+| state | meaning |
+|---|---|
+| copied **and** registered | the installer both places it and wires it to an event |
+| copied, **not** registered | the installer places it; something else fires it, or nobody has wired it yet |
+| **not in the installer's list** | present here, installed by nothing — a hook you must wire yourself, or one that is not finished |
+
+As the script stands, `ask-surface.js` and `baton-wake-stop.js` are in the third state, and
+`blind.js` is a library — copied because another hook requires it, never registered. Do not trust
+that sentence either: the `$files` and `$reg` lists the command above prints are what decide it, and
+`install.ps1 -Check` reports the state of every managed file on the machine you run it on.
+
+### Checking your own machine
+
+The installer's list says what *should* be wired. To see what *is*, read your own settings file —
+this prints your state, not anyone else's:
+
+```
+node -e "const j=JSON.parse(require('fs').readFileSync(
+  (process.env.USERPROFILE||process.env.HOME)+'/.claude/settings.json','utf8'));
+for (const e of Object.keys(j.hooks||{}))
+  console.log(e, JSON.stringify(j.hooks[e]).match(/[a-z0-9_-]+\.(js|py)/g));"
+```
+
+**The `0-9` in that character class is load-bearing.** Written without it the command prints
+`-overseer.js` twice and silently drops the numbered hooks — a check that misreports its own output.
+
+**A caveat that costs an hour if you meet it cold:** the settings watcher only reloads directories
+that already held a settings file when the session started. A freshly registered hook may not fire
+until you open `/hooks` once, or restart the session.
+
+---
+
+## What a hook is allowed to do
+
+These are conventions, and they are why the layer is tolerable to work under:
+
+- **Facts, no verdicts.** Never *"BRAVO is productive"*, never *"you should look at this."* A verdict
+  makes the program the judge, which is the thing it exists not to be.
+- **Silent when there is nothing to say.** A hook that speaks every turn is noise, and noise is
+  filtered by the reader within a day.
+- **Change since you last looked**, rather than absolute state. The failure a hook corrects is
+  usually *distance to an event*, so the useful field is a subtraction from something already in
+  view — not a number you have to remember to compare.
+- **Never throws, never blocks, always exits 0.** A hook that can fail a turn will eventually fail a
+  turn you needed.
+- **Never reports the reader to itself.** Own-session entries are dropped.
+
+`board-digest.js` is the worked example of all five. It emits roughly this, in about 60 tokens:
 
 ```
 [panes] BRAVO  ≥54 exch today · last 1m · +3 since your last turn
                ↳ asked: fix the camera clipping through the floor when…
                ↳ bravo: Built — clamped the near plane and re-ran the co…
-               ↳ hands: blackbox/ui/carrender.js, blackbox/ui/index.html
+               ↳ hands: src/render/camera.js, src/render/index.html
 ```
 
-~60 tokens. 52 ms. Silent when there is nothing to report.
+Both halves are labelled by speaker because they answer different questions — *what was it asked to
+do*, and *where has it got to*. `hands:` is the collision fact: which files that pane most recently
+had open. It is read from the pane's own transcript rather than from the board, because a file edit
+is a `tool_use` block and the board keeps text blocks — so the one fact that prevents two panes
+editing the same file is precisely the one the board drops. Still facts, not instructions: these are
+files it had open, not *"do not touch."*
 
-**Both halves, labelled by speaker**, because they answer different questions: *what was it asked to
-do*, and *where has it got to*. The first version showed only the chair's prompt — which mirrors his
-own typing back at him and omits the 199 assistant turns that are the entire reason this hook exists.
-The pane's own latest word is the half that was invisible. It prefers a reply of real length, since
-narrated tool calls leave fragments ("Now let me check the bounds") as the newest entry, and a
-fragment says nothing about where the work stands.
+### Counting defects any tool over this data has to correct
 
-- **Facts, no verdicts** — same law as the gauges. Never "BRAVO is productive," never "you should
-  look." A verdict makes the program the judge, which is the thing it exists not to be.
-- **`+N since your last turn`** — the load-bearing field. The beacon's lesson was that the failure
-  axis is *distance to a past event*; here it's *change since I last looked*, so the number is a
-  subtraction from something in view rather than a memory retrieval.
-- **Callsigns** — NATO **over the pane's own letter**, not a parallel identity: `A → ALPHA`,
-  `B → BRAVO`. Distinct in a line skimmed at 4 AM (which is why NATO exists) and speakable in prose:
-  *"what's Alpha been doing."* The letter is authoritative — it is what a pull targets and what the
-  dyad inputs take (`main.rs`: *"pulls target a letter, never a uuid"*), so if a stored name ever
-  disagrees with the letter, the surface the chair types into wins.
-
-  ALPHA was originally skipped, on the reasoning that it reads as "the lead" and competes with MAIN.
-  It doesn't — MAIN never draws from the letter pool, so ALPHA collides with nothing. What skipping
-  it *did* cause was a permanent off-by-one: the UI hands the first sibling **A**, and the digest
-  called that same pane **BRAVO**. Being told about BRAVO and having to type A is worse than the
-  collision being avoided.
-
-  Never recycled, and that is now enforced where the letter is *born* rather than here: the backend
-  assigns it once and persists it to `data_dir/letters.json`, which is append-only — entries survive
-  a pane being un-kept, because the entire value is that a letter is never handed to a stranger.
-  Previously the UI took the first *currently unused* letter, so closing A and spawning another made
-  the newcomer A too, and on an append-only board that makes A-at-2AM a different instance from
-  A-now. Panes with no registered letter (an older build) fall back to a never-recycled NATO pool in
-  `data_dir/digest_state.json`.
-- **`hands:`, the collision fact** — which files the pane most recently had open. On 2026-07-24 two
-  panes edited one repo for four hours; the board said what the sibling *said*, nothing said what it
-  was *touching*, so collision avoidance was hand-rolled out of `Get-Item` mtimes and a process list
-  — and a refactor still landed 35 seconds after a build off the same files. The board structurally
-  cannot answer this: `extract_turn` keeps text blocks, a file edit is a `tool_use` block, so the one
-  fact that prevents a collision is precisely the one the board drops. Read instead from the pane's
-  own transcript (`~/.claude/projects/*/<pane>.jsonl`) — a 256 KB tail, regex for `file_path`, newest
-  three unique, and only for panes that moved in the last 30 minutes, since an idle pane's last file
-  is not a collision risk. Still facts, no verdicts: these are files it had open, not "do not touch."
-- **Never reports the reader to itself** — own-pane entries dropped by `session_id`.
-
-## Three counting defects it has to correct
-
-Each was found by measuring the live board instead of trusting it, and each would have shipped.
+Not opinions — each was found by measuring a live board rather than trusting it, and each would
+otherwise have shipped:
 
 1. **Board entries are not exchanges.** A tool result is a `type:"user"` entry and a tool call a
-   `type:"assistant"` entry; `extract_turn` drops blocks without text, but an assistant turn that
-   narrates *while* calling a tool keeps its text and posts. 50 real prompts rendered as 210
-   assistant entries. → count **user** entries; they track real exchanges (52 vs 50 measured).
-2. **Replay bursts.** `board_push` stamps *push* time, and the tailer re-reads a transcript from the
-   top on resume — so a resume dumps the pane's whole history onto the board as "now." Measured:
-   two bursts of 556 and 546 entries **inside one second**, 1102 of the day's 1479 entries.
-   → drop any (pane, second) group over 20. Took one pane's count from 284 to 36. The real fix is
-   Rust-side (carry the transcript's own timestamp into `BoardEntry`) and is tracked in
-   `../AUTONOMY.md`.
-3. **Synthetic user entries.** Slash commands, their stdout, caveats and system-reminders all arrive
-   as string-content `user` entries. → prefix filter.
+   `type:"assistant"` entry, and an assistant turn that narrates *while* calling a tool keeps its
+   text and posts. Count **user** entries.
+2. **Replay bursts.** Push time is not event time, and a tailer re-reads a transcript from the top on
+   resume — so a resume dumps a pane's whole history onto the board stamped "now." Drop any
+   (pane, second) group over a sane threshold.
+3. **Synthetic user entries.** Slash commands, their output, caveats and system reminders all arrive
+   as string-content `user` entries. Prefix-filter them.
 
-## Install
-
-Copy to your hook dir and register it. It reads `~/.consonance.json` for `data_dir` and
-`instances_dir`, and **says nothing outside a Consonance instance dir** — safe to install globally.
-
-```jsonc
-// ~/.claude/settings.json
-"UserPromptSubmit": [
-  { "hooks": [
-      { "type": "command", "command": "\"…\\node.exe\" \"…\\.claude\\shell\\board-digest.js\"",
-        "timeout": 10 }
-  ]}
-]
-```
-
-Node, not Rust, deliberately: no `cargo build`, no reinstall, no desktop — it runs against the live
-board the night it's written. Defensive throughout; never throws, never blocks a turn, always
-exits 0.
-
-## What is actually REGISTERED, as of 2026-08-15 23:10 local
-
-A hook file in this directory is not a hook. It becomes one when a settings file names it, and this
-repo had no record of which ones ever did — so a reader met `sourced-stop.js`, whose own header
-opens *"this room had never registered one"*, with no way to learn whether that was still true.
-Written down here because built-and-not-attached is the failure this repo has now found sixteen
-times, and the second-vantage pipeline was the largest instance: four modules, 1,231 lines, five
-green suites, an attachment test, and one hand-driven end-to-end run — with **two of its three
-pieces connected to nothing.**
-
-Registered in `~/.claude/settings.json` (personal config, deliberately not in this repo — it holds
-machine-absolute paths):
-
-| event | hook | position |
-|---|---|---|
-| `Stop` | `sourced-stop.js` | 4th, after `stop.js`, `l2-overseer.js`, `l3-overseer.js` |
-| `UserPromptSubmit` | `findings-return.js` | 2nd, after `userprompt-submit.js` |
-
-`tools/second-vantage.js` is fired by a duration goal (`~/.claude/shell/duration/second-vantage/`),
-daily at 09:05 America/Regina — a clock, not a decision, which is the design.
-
-**Pipe-tested against a real transcript before registration**, because a hook that silently does
-nothing is worse than none: both exited 0, and `sourced-stop.js` wrote an actual v2 ledger row
-carrying the `claims[]`, `paths[]` and `turn_ts` that `build_ruling.md` C2 makes a build
-requirement. Not a dry run.
-
-**How to check it is still true**, rather than trusting this table — the table is a claim about the
-world and ages like any other:
-
-```
-node -e "const j=JSON.parse(require('fs').readFileSync(process.env.USERPROFILE+'/.claude/settings.json','utf8'));
-for (const e of ['Stop','UserPromptSubmit'])
-  console.log(e, JSON.stringify(j.hooks[e]).match(/[a-z0-9-]+\.js/g));"
-```
-
-Expected today:
-
-```
-Stop [ 'stop.js', 'l2-overseer.js', 'l3-overseer.js', 'sourced-stop.js' ]
-UserPromptSubmit [ 'userprompt-submit.js', 'findings-return.js' ]
-```
-
-*(The character class needs the `0-9`. Written first without it, this printed `-overseer.js` twice
-— a check that misreports its own output, caught by running the command instead of reading it.)*
-
-**Caveat that bit us:** the settings watcher only reloads directories that held a settings file at
-session start. A freshly registered hook may not fire until `/hooks` is opened once, or the session
-restarts. Registration and firing are two states, and this paragraph exists because assuming they
-were one is how the whole class starts.
+---
 
 ## The honest limit
 
-**An instrument makes the data impossible to miss; it cannot make the model look.** Four errors
-happened in one night with an absolute clock in view on every turn. This is the strongest available
-form of unmissable — in the turn, unasked, every time — and it will not make the Orchestrator
-infallible. What caught all four was the human.
+**An instrument makes the data impossible to miss; it cannot make the model look.** This layer is the
+strongest available form of unmissable — in the turn, unasked, every time — and it still will not
+make a model infallible.
 
-That's not a flaw in the design, it *is* the design (light, not lifeguard). But it sets the success
-criterion honestly: not *the Orchestrator stops missing things*, but **the human's catch finally has
-something to catch it against.** Ask "what is Bravo doing" today and there is no shared view to be
-wrong about. Now there is.
+That is not a flaw in the design, it *is* the design: **with you, not above you.** These hooks show
+and are seen; they never haul. The success criterion is not *the model stops missing things*, it is
+that **a human's catch finally has something to catch it against** — ask "what has that other pane
+been doing" and there is now a shared view to be wrong about.
 
-## Correction 2026-08-18 — and the reader that made it
+---
 
-The line above read **"four modules, 1,684 lines"** until today. The four modules measure **1,231
-lines** at `cddf40d`, the commit that shipped the sentence, and 1,315 today.
+## UNVERIFIED, stated rather than described confidently
 
-`1,684` was not invented. It is the insertion count `git diff --stat` printed across **eight** files
-— the four modules *and their four test suites* — over the range being examined at the time. A true
-number, attached to the wrong whole, and then carried into a committed artifact as a property of
-"four modules."
+Everything above is either derived from a file in this repository or is a design convention. The
+following have **only ever been run on the machine that wrote them**, and nothing in this repository
+proves them elsewhere:
 
-That is the same defect a pane corrected in this room three days earlier, when a rate that was 82%
-*of value-turns* was written as 80% *of turns*. Same shape, same week, different denominator.
+- **Install on a machine that is not the author's.** `install.ps1` is idempotent and reports its
+  changes by construction, but a first run on a fresh machine has not been observed. Run it with
+  `-Check` first.
+- **Python resolution.** The pulse hook is Python; the installer looks for a real interpreter under
+  the local Programs directory and deliberately refuses the Microsoft Store stub. Untested against
+  other Python installations.
+- **Non-Windows.** Every path in the installer is Windows-shaped (`%USERPROFILE%\.claude\shell`,
+  `pwsh`). No hook here has been run on macOS or Linux.
+- **`transcript-watch.js` is Main-session only** and needs a capture directory to read; outside that
+  setup it is silent, and its silence is indistinguishable from it not being installed.
+- **Timings.** Any latency figure you find in a hook's own header was measured once, on one machine,
+  on one board. Treat it as an order of magnitude.
 
-**It was caught by `tools/second-vantage.js`, firing on its own clock, on a claim it was not told
-was suspect.** The reader was handed the sentence and the repo root — no author, no reasoning, no
-transcript — re-derived the figure from `git show cddf40d:<file> | wc -l`, then searched every
-four-file subset containing `second-vantage.js` for any grouping summing to 1,684 and found 24
-arithmetic hits, none coherent (`second-vantage.js + blind.js + actors.test.js + ui/term.js` is a
-representative one). It reported the claim overstated by ~37% and said which groupings it had ruled
-out.
+*How this file was checked, so the claim is auditable rather than asserted.* The roster and the
+installer figures were **generated** from `install.ps1`'s `$files` and `$register` arrays and from a
+directory listing, never typed from memory; every hook description is a quotation from that hook's
+own header. Both commands above were run and their output is what is pasted here. The figures were
+then re-derived a second time by an independent parser written in Node — which is not ceremony: the
+first derivation reported **3 held entries** and the second reported **1**, and 1 is correct. The
+first was reading a per-entry flag off the same line as the entry's path, and one such flag sits on
+its own line. A number that only one instrument has ever produced is a hand-made number.
 
-Two things that matter more than the figure:
-
-- **First autonomous catch in this room's record.** Every prior catch of this class came from the
-  keeper or from a pane he routed by hand. `build_ruling.md` §3 priced the expected yield at "~2-3
-  mechanical catches against an all-time mechanical total of zero." This is one of them, arriving
-  eleven days before F1's thirty-day kill window closes.
-- **It caught the seat that built it**, on a sentence written into the very README that documents
-  the pipeline — while that sentence was being used to argue that unrecorded state is dangerous.
+Finally the file was read line by line for any sentence whose truth depends on one machine's
+configuration, one person's identity, or one project's private history. Four passages were removed
+on that pass: a table of which hooks were registered in one personal `settings.json` at a stated
+local time; a block of expected command output true only on that machine; a worked example carrying a
+different private project's file paths; and a dated correction that was a record of this project
+rather than documentation of this directory.
