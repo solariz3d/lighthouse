@@ -198,7 +198,8 @@ pub struct ChairStatusArgs {
 
 #[derive(serde::Deserialize, schemars::JsonSchema)]
 pub struct RaisePullArgs {
-    /// who you want to engage, if any (a pane id or name)
+    /// who you want to engage, if any: a committee letter (A, B, C…), a raw pane id, or a
+    /// seat — M (the orchestrator, also "Main") or LIB (the librarian). Case-insensitive.
     target: Option<String>,
     /// the kind of pull: "novel" | "wrong" | "interesting"
     kind: Option<String>,
@@ -409,16 +410,23 @@ impl ConsonanceMcp {
     /// NO OPEN LAP MEANS EVERYTHING IS ALLOWED. Freestyle is not gated (BUILDING.md's cut), and
     /// this is the case that decides whether the first night after this ships looks like the room
     /// is broken.
-    fn station_allows(verb: &str, open: bool, holder: Option<&str>) -> bool {
-        if !open {
-            return true;
-        }
-        match Self::required_station(verb) {
-            None => true,
-            // A row with no holder at all cannot say whose turn it is. It reads as UNKNOWN, and
-            // unknown does not get to mean yes — that is the `unknown`-renders-as-`idle` failure.
-            Some(req) => holder == Some(req),
-        }
+    /// THE HOLDER OF ONE LAP MUST NOT DECIDE FOR EVERY OPEN LAP (L040, A's patch).
+    ///
+    /// Takes the holders of ALL open laps and permits when ANY of them is the required station. A
+    /// row with no holder still cannot say whose turn it is — it contributes nothing to the set, so
+    /// a holderless open lap remains UNKNOWN and unknown still does not mean yes.
+    ///
+    /// THE PRICE, NAMED RATHER THAN DISCOVERED: with one open lap this is identical to the old
+    /// rule; with N open laps carrying K distinct holders, K gated stations are open at once
+    /// instead of one. **The guard's strength is now inversely proportional to how many laps are
+    /// left open**, so its real enforcement has moved out of this function and into the discipline
+    /// of FILING LAPS. Anyone citing this guard should cite that too. `lap_holders`' own
+    /// `the_price_of_the_fix_is_two_stations_of_three` pins tonight's number so it cannot drift
+    /// silently.
+    ///
+    /// The rule lives in `lap_holders`; the verb table stays here, where it has always been.
+    fn station_allows(verb: &str, open: bool, holders: &[String]) -> bool {
+        crate::lap_holders::station_allows(Self::required_station(verb), open, holders)
     }
 
     /// THE GUARD CANNOT WEDGE THE ROOM, and this was checked before it was built rather than
@@ -436,8 +444,9 @@ impl ConsonanceMcp {
     /// DISCIPLINE boundary enforced by the audit — the same limit `auth_chair` and `auth_address`
     /// state about themselves, and the same one stated in this file twice already.
     fn auth_station(&self, verb: &str) -> bool {
-        let st = crate::chain_state();
-        if Self::station_allows(verb, st.open, st.holder.as_deref()) {
+        let st = crate::chain_state();        // still the source of open/lap/holder FOR THE MESSAGE
+        let holders = crate::chain_holders(); // and the set the decision is actually made on
+        if Self::station_allows(verb, st.open, &holders) {
             return true;
         }
         if let Some(absorbed) = refusal_should_post(verb, now_ms()) {
@@ -453,11 +462,17 @@ impl ConsonanceMcp {
             board_push(&self.board, BoardEntry {
                 pane: "chair".to_string(),
                 role: "committee".to_string(),
+                // REWORDED WITH THE RULE (L040). The old line named the NEWEST lap and its holder,
+                // which was the whole defect wearing a sentence: under the per-lap read the refusal
+                // means "NO open lap is held by {want}", and naming one lap sent the reader to check
+                // a lap that was never the reason. `holder`/`lap` stay, as the newest row, because a
+                // reader still wants to know where the loop is standing.
                 text: format!(
-                    "{verb} REFUSED OUT OF TURN — mount {who} tried to speak while lap {lap} \
-                     is held by {holder}; {verb} needs holder {want}. The loop comes back to \
-                     you. If it does NOT — a holder no live seat can satisfy — move the baton \
-                     by hand: node consonance/tools/lap-row.js{more}"
+                    "{verb} REFUSED OUT OF TURN — mount {who} tried to speak while NO open lap \
+                     is held by {want}; open laps are held by {holders:?} (newest: lap {lap}, \
+                     holder {holder}). The loop comes back to you. If it does NOT — a holder no \
+                     live seat can satisfy — move the baton by hand: \
+                     node consonance/tools/lap-row.js{more}"
                 ),
                 ts: now_ms(),
                 ts_source: crate::TsSource::Push,
@@ -871,7 +886,7 @@ mod tests {
     fn each_verb_is_allowed_by_exactly_one_holder() {
         for (verb, want) in STATION_VERBS {
             for holder in ["chair", "panes", "librarian"] {
-                let allowed = ConsonanceMcp::station_allows(verb, true, Some(holder));
+                let allowed = ConsonanceMcp::station_allows(verb, true, &[holder.to_string()]);
                 assert_eq!(allowed, holder == want,
                     "{verb} with holder {holder}: expected {}, got {allowed}", holder == want);
             }
@@ -884,12 +899,12 @@ mod tests {
     #[test]
     fn with_no_open_lap_every_verb_is_allowed() {
         for (verb, _) in STATION_VERBS {
-            assert!(ConsonanceMcp::station_allows(verb, false, None),
+            assert!(ConsonanceMcp::station_allows(verb, false, &[]),
                 "{verb} must be allowed when no lap is open — freestyle is not gated");
-            assert!(ConsonanceMcp::station_allows(verb, false, Some("panes")),
+            assert!(ConsonanceMcp::station_allows(verb, false, &["panes".to_string()]),
                 "{verb}: a stale holder on a CLOSED lap must not gate anything");
         }
-        assert!(ConsonanceMcp::station_allows("post_board", true, Some("panes")),
+        assert!(ConsonanceMcp::station_allows("post_board", true, &["panes".to_string()]),
             "a verb with no station is never gated by this");
     }
 
@@ -898,7 +913,7 @@ mod tests {
     #[test]
     fn an_open_lap_with_no_holder_refuses_the_stationed_verbs() {
         for (verb, _) in STATION_VERBS {
-            assert!(!ConsonanceMcp::station_allows(verb, true, None), "{verb} on a holderless open lap");
+            assert!(!ConsonanceMcp::station_allows(verb, true, &[]), "{verb} on a holderless open lap");
         }
     }
 

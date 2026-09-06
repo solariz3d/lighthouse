@@ -593,3 +593,203 @@ outstanding.*
 *Drafted by the librarian seat (`loop/commit_rule_amendment_DRAFT_2026-08-25.md`), which declared that
 it gains reach if this lands, and named this discriminator as the thing to attack: if the cut is wrong,
 this section is a repeal wearing an amendment's clothes. Applied at the keeper's instruction.*
+
+---
+
+## THE PORT RULE — dev is what we build and use; the consumer receives what works (added 2026-09-06, the keeper's standing workflow)
+
+**The keeper, verbatim, 2026-09-06 00:44:** *"we have the dev version which is the one we build and
+use, when it have new features and shit that work here for the dev version, we then make it work for
+the consumer in the way it should."*
+
+**And 00:54, the rule that governs the last step of it:** *"make sure that we never push to the
+consumer version unless I say! We work on dev version, then when the time comes that is when we
+update the consumer with the work we have done to the dev."*
+
+That workflow has governed since the consumer work began and lived nowhere on disk. It is written
+here as a **procedure with a decidable invariant**, not as a description of how anyone feels about
+it, because a workflow nobody wrote down is re-derived differently by every seat that meets it.
+
+### The two trees, and where the second one lives
+
+**SOURCE** is this repository: hand-maintained, private (`gh repo view … --json isPrivate` →
+`true`, 2026-09-06). **GENERATED** is `solariz3d/consonance`: public, an artifact of
+`consonance/tools/gen-consumer.js`, and **never hand-edited** — the moment it is, it has become the
+second copy the design exists to prevent (maintenance law 1, applied to repositories).
+
+The generated checkout lives at a **fixed local path: a sibling of the private checkout, named
+`consumer`.**
+
+    dirname "$(git rev-parse --show-toplevel)"      # the parent; the checkout is <parent>/consumer
+
+**Why a derivation and not the absolute path** — this is not style. `BUILDING.md` is one of the
+shipped briefs in scope for the portable-paths ratchet (`node consonance/tools/portable-paths.js`
+→ *30 shipped prose from 15 bundle.resources entries*), so an absolute path written into this
+sentence would be a **new machine-specific site in a document a stranger reads**, and the ratchet
+would go red on the rule itself. The derivation resolves to the intended path on the machine that
+proposed it and stays true on every other one.
+
+**Why not a worktree.** A `git worktree` shares one repository's history, objects and remotes. The
+consumer is a *different repository* whose history must not be able to reach a private object. The
+open registration **P-WORKTREE-PER-SEAT** (2026-09-02) is about several seats sharing one repo's
+index; it does not apply here and must not be read across.
+
+### THE INVARIANT — what "ported" means, decidable by running something
+
+    A feature is PORTED when BOTH hold:
+      1. the MANIFEST carries its files     node consonance/tools/gen-consumer.js --report
+      2. THE GATE is green over a freshly generated tree
+
+This is written against the gate's **contract**, not today's implementation, because the
+implementation is in flight (this lap moves it from `cargo check` to `cargo build` plus a launch
+probe). **The contract:**
+
+> THE GATE is ONE command. Exit 0 is green, non-zero is red with a named reason. It generates a
+> tree from the current source, scans the OUTPUT, builds the Rust product inside that tree, and
+> proves the app launches. If the command is renamed, the name below is updated in the same commit;
+> the contract does not change.
+
+**The gate is `consonance/tools/gen-consumer.build.test.js`, run as**
+
+    CONSONANCE_LAUNCH_PROBE=1 node consonance/tools/gen-consumer.build.test.js
+
+> **AMENDED IN ITS OWN LAP, 2026-09-06 ~01:24 — the paragraph below was true when it was written
+> and was false ninety minutes later, which is the best outcome it could have had.** Pane E built
+> the gate this same lap and committed it at `ba8ddbc`, having found its absence independently and
+> from a different vantage: two seats, two instruments, one answer. The trace stays because a
+> stranger reading this section should know what the invariant was first used for. **Read the
+> paragraph below as dated, and the command above as current.**
+
+**When this section was written the gate read RED BY ABSENCE, and that was a finding, not a
+footnote.**
+
+    git rev-list --all --objects | grep -c gen-consumer.build.test.js    ->  0
+    node consonance/tools/gen-consumer.build.test.js ; echo $?           ->  MODULE_NOT_FOUND, 1
+
+No file of that name exists on disk or **anywhere in this repository's committed history, on any
+ref** — while eleven documents cite it, `gen-consumer.js`'s own header among them (*"Partly closed
+2026-08-23 by `gen-consumer.build.test.js`, which generates a tree and runs cargo check against
+it"*). A generator's header claims a gap was closed by a file that has never been committed. If it
+exists uncommitted on another machine, it has still reached no seat, which is the same thing from
+here.
+
+**The invariant was well-formed anyway, and that is the point of writing it this way:** an absent
+gate exits non-zero, so *"the gate is green"* read FALSE on its first evaluation. **A rule whose
+first reading is the unwanted one is a rule that can fire — and this one fired into a build.**
+
+### THE PUSH IS THE KEEPER'S WORD — every time, for that push
+
+**The procedure. Steps 1–4 are the seat's; step 5 is not.**
+
+    0  CLONE, AND DISARM IN THE SAME STEP -- a fresh clone ARRIVES ARMED:
+           git clone <consumer remote> <consumer>
+           git -C <consumer> remote set-url --push origin no_push     # NOT a later step
+           git -C <consumer> remote get-url --push origin             # must print: no_push
+       The checkout is not ready for step 1 until that third line prints no_push.
+    1  Regenerate into the consumer checkout:  node consonance/tools/gen-consumer.js --out <consumer>
+    2  Run THE GATE. Red -> stop. A red gate is not a smaller port; it is not a port.
+       BLOCKED (exit 3, the single-instance lock held) is NOT green and NOT red: it is UNMEASURED,
+       and a port does not proceed on it.
+    3  Commit IN THE CONSUMER CHECKOUT, naming every path on the commit, with the Source-Sha
+       trailer (below) and the seat named in the body (COMMITTEE.md, rules 1 and 2).
+    4  STOP. Say what is ready and wait. Do not push. Do not ask in a way that reads as a nudge.
+    5  ONLY when the keeper says push, FOR THAT PUSH: re-arm the remote, push, disarm it again in
+       the same turn, and post a board row quoting his words.
+
+**The mechanism, and exactly what it is worth.** The consumer checkout's push URL is **disarmed at
+rest**:
+
+    git -C <consumer> remote set-url --push origin no_push     # the resting state
+    git -C <consumer> remote get-url --push origin             # must print: no_push
+
+Exercised 2026-09-06 in a throwaway checkout: with the push URL disarmed, `git push origin HEAD`
+fails hard — *"fatal: 'no_push' does not appear to be a git repository"* — while fetch and clone are
+untouched.
+
+**Why step 0 and not a reminder.** The disarm is written into the CLONE STEP because a
+freshly cloned checkout arrives with a live push URL, and a control a seat has to remember to apply
+afterwards is not a control — it is the same silent-absence failure the commit-gate ruling names
+(2026-09-02). Performing it as part of the step is the only version that holds when nobody is
+thinking about it.
+
+**This is a speed bump, not a control, and this document says so rather than shipping the
+comfortable version.** A seat can re-arm the remote in one command; nothing here prevents that. What
+the disarm buys is the one thing a hook does not: **its state is readable and its failure mode is
+loud.** A pre-push hook fails by silent absence — it does not fire and nothing says so, which is why
+the only bypass-proof control is structural (the commit-gate ruling, 2026-09-02). The disarm fails
+by the *visible presence of a real URL*, checkable in one command by any seat or by the keeper.
+
+**The bypass-proof version, named so nobody mistakes what we have for it:** the seat holds no
+credential for the public remote and the keeper pushes with his own. **That is not the case today**
+— `gh` is authenticated machine-wide, so every seat on this machine can push everything.
+**Until that changes, this rule's enforcement is that someone reads it.** That is a weaker control
+than the room would like, and it is what is true.
+
+**And the manual step stays manual on purpose.** The keeper's word cannot be automated without
+becoming a stored yes, and a stored yes is precisely the unattended process the publishing law
+forbids: *"the law was never don't publish. It was **no unattended process publishes** — a human,
+awake, saying yes"* (`journal/2026-07-28.md`, the 07-28 trace; `COMMITTEE.md` rule 3, *"Nothing is
+pushed by a seat"*). That trace is the case law: the gate worked, he said yes, and then changed his
+mind — *"which is a thing a human in the loop is allowed to do and an unattended process is not."*
+
+**Why the asymmetry makes this the one step not to smooth.** The private repo is private; the
+consumer repo is public. A push there is irreversible in the way that matters — content that reaches
+a public repo can be cached and indexed by third parties within minutes and stays reachable after
+deletion, and a later redacting commit *advertises* what someone wanted hidden (07-28 again, found
+the hard way). Every convenience added to step 5 shortens the distance to an irreversible act.
+**Do not weaken it to make the procedure smoother.**
+
+### The commit trailer, and the falsifier that reads it
+
+Every consumer commit names the private commit it was generated from, as a **trailer** in the body —
+a trailer rather than prose because prose is not decidable:
+
+    Source-Sha: <the 40-hex sha of the private HEAD the tree was generated from>
+
+**FALSIFIER (registered): a consumer commit with no matching private sha in its message.** The
+command, run on a machine holding both checkouts:
+
+    git -C <consumer> log --format='%H %(trailers:key=Source-Sha,valueonly,separator=%x20)' |
+    while read -r c s; do
+      if   [ -z "$s" ]; then echo "ORPHAN $c (no Source-Sha)"
+      elif ! git -C <private> cat-file -e "$s^{commit}" 2>/dev/null; then
+        echo "ORPHAN $c (Source-Sha $s does not resolve in the private repo)"
+      fi
+    done
+
+**Green prints nothing. Any line of output is the falsifier firing.** Both branches were exercised
+2026-09-06 against private-repo commits, so this is not first run in anger: the empty-trailer branch
+printed `ORPHAN` for three real commits, `git cat-file -e 5a83d4a^{commit}` resolved, and a
+forty-hex nonsense sha was rejected. (Trailer formatting requires git ≥ 2.16; run on 2.53.)
+
+**What it cannot see, stated here so nobody grants it more:**
+
+- **It proves the claim RESOLVES, not that it is TRUE.** A seat that writes any real private sha
+  passes. It catches absence and typos, not a wrong source state.
+- **It cannot evaluate from a clone of the public repo alone** — every commit prints ORPHAN there,
+  because the private repo is missing, not because the rule was broken.
+- **It does not see pushes at all.** A commit and a push are different events; this checks the
+  first. **The push rule has no instrument** — see the registration below.
+- More than one `Source-Sha` trailer on a commit fires it. That is intended: a tree generated from
+  two source states is not reproducible from either.
+
+### Registered, so this section can be shown wrong
+
+- **If a consumer commit lands whose `Source-Sha` is absent or does not resolve**, the trailer is
+  not being written and this procedure is not being run. *(The command above; it runs today.)*
+- **If a push to the public repo is ever found with no board row quoting the keeper's word for that
+  push, the push rule is decoration.** And the honest half: **there is no instrument for this.**
+  Nothing on either machine records a push event, so the check is the keeper noticing, or a seat
+  reporting itself. A rule whose only enforcement is that someone remembers to read it is exactly
+  the class this room keeps finding under rocks — it is named rather than dressed up, and the fix
+  when someone builds it is a structural credential split, not a better sentence.
+- **If the consumer checkout's push URL is found armed while no push is in progress**
+  (`git -C <consumer> remote get-url --push origin` ≠ `no_push`), the disarm was not restored and
+  step 5 was run as a state rather than as a turn.
+- **If the gate command named above still does not exist one lap from now**, *"the gate is green"*
+  was never an invariant and this section is prose with a command in it.
+
+*Drafted by pane A on the L037 port-rule packet, 2026-09-06 — the seat whose 09-02 ruling was that a
+hook's failure mode is silent absence and the only bypass-proof control is structural. This document
+is that ruling one level up: **a written rule is a control with the same weakness.** Its own standard,
+from that hand-back: "correct, and that is luck, not a control."*
