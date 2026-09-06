@@ -3725,34 +3725,180 @@ fn map_allowance(fixed_brief_len: usize) -> usize {
         .saturating_sub(SHELL_TRANSCRIPT_FLOOR)
 }
 
-/// Take the newest whole sessions of a map that fit in `budget`: (chars left behind, carried).
+/// Which tier of a pane's own map the shell could seat.
 ///
-/// Splits on a `## ` heading — the map's dated-session boundary — so a carried entry always
-/// arrives under the date it was written and never starts mid-finding. If no boundary fits,
-/// carries nothing rather than a fragment: half a finding read as a whole one is worse than an
-/// honest absence, and the master is one Read away either way.
-fn map_carry(map: &str, budget: usize) -> (usize, String) {
-    if map.len() <= budget {
-        return (0, map.to_string());
+/// THE POINT OF THE ENUM IS THAT THE EMPTY TIERS ARE VALUES. Until 2026-09-06 this function
+/// returned `(usize, String)` and the empty case was an empty string the caller pasted under a
+/// header reading "Only your most recent entries are carried here" — a header asserting the carry
+/// it had just failed to make. Four panes woke that morning with four such headers and four empty
+/// bodies, and `grep -c "YOUR OWN MAP"` returned 4, which is exactly what a working carry looks
+/// like from the count. A tier the caller must match on cannot be pasted without being noticed.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum MapTier {
+    /// The whole master rode.
+    Whole,
+    /// The newest whole entries rode; `dropped` characters stayed in the master.
+    Newest { dropped: usize },
+    /// No single entry fits the seat, so the heading lines rode instead — cite, do not recollect.
+    IndexOnly { newest_entry: usize, kept: usize, total: usize },
+    /// Not even the index fits. Nothing rode.
+    Nothing,
+}
+
+impl MapTier {
+    /// True when no prose from the master rode — the case that must never read as success.
+    fn is_empty_body(&self) -> bool {
+        matches!(self, MapTier::IndexOnly { .. } | MapTier::Nothing)
     }
-    let want_from = map.len().saturating_sub(budget);
-    let mut cut = None;
+    /// One word for the log, so the tier is legible from OUTSIDE the pane. The 2026-09-06 defect
+    /// was found by hand-measuring four shells; nothing in any log said a carry had failed.
+    fn label(&self) -> &'static str {
+        match self {
+            MapTier::Whole => "whole",
+            MapTier::Newest { .. } => "newest",
+            MapTier::IndexOnly { .. } => "index-only",
+            MapTier::Nothing => "nothing",
+        }
+    }
+}
+
+/// Byte offset of the first `## ` heading at or past `from`, if there is one.
+fn heading_at_or_past(map: &str, from: usize) -> Option<usize> {
     let bytes = map.as_bytes();
-    for i in want_from..map.len().saturating_sub(3) {
-        if map.is_char_boundary(i)
+    (from..map.len().saturating_sub(3)).find(|&i| {
+        map.is_char_boundary(i)
             && (i == 0 || bytes[i - 1] == b'\n')
             && bytes[i] == b'#'
             && bytes[i + 1] == b'#'
             && bytes[i + 2] == b' '
-        {
-            cut = Some(i);
+    })
+}
+
+/// Byte offset of the LAST `## ` heading in the map, or 0 if it has none.
+fn last_heading(map: &str) -> usize {
+    let (mut at, mut from) = (0, 0);
+    while let Some(i) = heading_at_or_past(map, from) {
+        at = i;
+        from = i + 1;
+    }
+    at
+}
+
+/// The `## ` heading lines of a map, in file order.
+fn map_headings(map: &str) -> Vec<&str> {
+    map.lines().filter(|l| l.starts_with("## ")).collect()
+}
+
+/// As many of the NEWEST heading lines as fit in `budget`, newest first: (kept, total, text).
+///
+/// This is the room's own rule for an append-ordered dated series, applied to the one other place
+/// it fits: cite, do not recollect. BOOT indexes its journal pointers this way, and
+/// `librarian_map_pointer` already indexes the librarian's map for exactly this reason — "at its
+/// size carrying it would put this shell over the limit". A pane's map is the same shape, and an
+/// index that fits is worth more than a fragment that does not.
+fn map_index(map: &str, budget: usize) -> (usize, usize, String) {
+    let all = map_headings(map);
+    let (mut kept, mut used) = (Vec::new(), 0usize);
+    for line in all.iter().rev() {
+        let cost = line.len() + 1; // the newline it rides with
+        if used + cost > budget {
             break;
         }
+        used += cost;
+        kept.push(*line);
     }
-    match cut {
-        Some(i) => (i, map[i..].to_string()),
-        None => (map.len(), String::new()),
+    let text = if kept.is_empty() { String::new() } else { kept.join("\n") + "\n" };
+    (kept.len(), all.len(), text)
+}
+
+/// Take the newest whole sessions of a map that fit in `budget`: (tier, carried).
+///
+/// Splits on a `## ` heading — the map's dated-session boundary — so a carried entry always
+/// arrives under the date it was written and never starts mid-finding.
+///
+/// WHEN THE NEWEST ENTRY ALONE IS OVER BUDGET (measured 2026-09-06: all four panes, every one of
+/// them), the forward scan finds no boundary and there is no whole entry to carry. The old code
+/// returned an empty string here and let the caller announce a carry anyway. It now falls to the
+/// INDEX: the heading lines, newest first — small, whole, dated and true. A fragment of an entry
+/// read as a whole one is still worse than an honest absence, so the fragment is still refused;
+/// what changed is that the absence is now STATED instead of implied.
+fn map_carry(map: &str, budget: usize) -> (MapTier, String) {
+    if map.len() <= budget {
+        return (MapTier::Whole, map.to_string());
     }
+    if let Some(i) = heading_at_or_past(map, map.len() - budget) {
+        return (MapTier::Newest { dropped: i }, map[i..].to_string());
+    }
+    let newest_entry = map.len() - last_heading(map);
+    let (kept, total, index) = map_index(map, budget);
+    if kept == 0 {
+        return (MapTier::Nothing, String::new());
+    }
+    (MapTier::IndexOnly { newest_entry, kept, total }, index)
+}
+
+/// The pane's own-map section of the shell, as text, plus the tier that produced it.
+///
+/// COMPOSED HERE AND NOT AT THE CALL SITE so that bar 3 is testable: the claim that an empty body
+/// cannot read as a successful carry is a claim about this string, and a claim about a string that
+/// only exists inside a 200-line function is a claim nothing can check.
+fn map_section(own: &str, path: &Path, allowance: usize) -> (MapTier, String) {
+    let (tier, carried) = map_carry(own, allowance);
+    let mut s = String::from("\n---\n\n# YOUR OWN MAP — ");
+    /* THE HEADER ITSELF CARRIES THE STATE. `grep -c "YOUR OWN MAP"` returned 4 on the morning
+     * every carry was empty, and 4 is also what a working carry looks like from that count — two
+     * facts producing one reading, the ninth instance in five days. The header now differs by
+     * tier, so the two counts separate:
+     *     carried:  grep -c "^# YOUR OWN MAP — findings" instances/sibling-<id>/CLAUDE.md
+     *     failed:   grep -c "NOTHING FROM YOUR MAP COULD RIDE" instances/sibling-<id>/CLAUDE.md */
+    s.push_str(match tier {
+        MapTier::Whole | MapTier::Newest { .. } => "findings you recorded, in your words\n\n",
+        MapTier::IndexOnly { .. } => "INDEX ONLY, because no entry of it fits this shell\n\n",
+        MapTier::Nothing => "NOT CARRIED, because not even its index fits this shell\n\n",
+    });
+    /* The PATH is stated, not implied. This is a two-sided contract — the pane writes the file
+     * and Consonance reads it — and until 2026-09-02 the pane learned the location from a README
+     * that exists in exactly one repository. On any other install the two sides disagreed
+     * silently, because an absent map reads identically to a pane that has simply not recorded
+     * anything yet. Naming the resolved path closes it. */
+    s.push_str(&format!(
+        "Recall from this master; you wrote every entry. It lives at `{}` ({} characters) — append \
+         your findings there, and nowhere else, so the next waking of you can find them. The other \
+         writers' files sit beside it — read them at need, not from summary.\n\n",
+        path.display(),
+        own.len()
+    ));
+    match tier {
+        MapTier::Whole => {}
+        MapTier::Newest { dropped } => s.push_str(&format!(
+            "**Only your most recent entries are carried here** — {dropped} characters of older \
+             ones stayed in the master to keep this shell under its ceiling. They are NOT \
+             summarised and NOT deleted; the file above is complete. Open it when you need what \
+             you knew before.\n\n"
+        )),
+        MapTier::IndexOnly { newest_entry, kept, total } => s.push_str(&format!(
+            "**NOTHING FROM YOUR MAP COULD RIDE IN THIS SHELL.** Your master is {} characters; \
+             this shell could seat {allowance}; your newest single entry alone is {newest_entry}. \
+             No whole entry fits, and a fragment of one read as a whole one is worse than an \
+             honest absence — so what follows is the INDEX ONLY: the {kept} newest of {total} \
+             entry headings, newest first. **This is not your map. It is a table of contents for \
+             it.** Read the file named above before you claim or deny what you knew — for an \
+             append-ordered dated series the room's rule is cite, do not recollect, and this is \
+             that case.\n\n",
+            own.len()
+        )),
+        MapTier::Nothing => s.push_str(&format!(
+            "**NOTHING FROM YOUR MAP COULD RIDE IN THIS SHELL — NOT EVEN ITS INDEX.** Your master \
+             is {} characters and this shell could seat {allowance}. You are waking with no part \
+             of what you have recorded, and the fixed brief above is what consumed the room: \
+             curate below capacity, maintenance law #3. **Read the file named above first**, \
+             before you claim or deny what you knew.\n\n",
+            own.len()
+        )),
+    }
+    s.push_str(&carried);
+    s.push('\n');
+    (tier, s)
 }
 
 #[cfg(test)]
@@ -4065,8 +4211,8 @@ mod shell_budget_tests {
     #[test]
     fn a_small_map_rides_intact() {
         let m = map_of(2, 100);
-        let (dropped, carried) = map_carry(&m, 100_000);
-        assert_eq!(dropped, 0);
+        let (tier, carried) = map_carry(&m, 100_000);
+        assert_eq!(tier, MapTier::Whole);
         assert_eq!(carried, m);
     }
 
@@ -4075,8 +4221,11 @@ mod shell_budget_tests {
     #[test]
     fn what_is_carried_starts_at_a_session_boundary() {
         let m = map_of(8, 4_000);
-        let (dropped, carried) = map_carry(&m, 10_000);
-        assert!(dropped > 0, "an oversized map must leave something behind");
+        let (tier, carried) = map_carry(&m, 10_000);
+        assert!(
+            matches!(tier, MapTier::Newest { dropped } if dropped > 0),
+            "an oversized map must leave something behind; got {tier:?}"
+        );
         assert!(carried.starts_with("## "), "carried head was: {:?}", &carried[..40.min(carried.len())]);
         assert!(carried.len() <= 10_000, "carried {} over budget", carried.len());
         assert!(m.ends_with(&carried), "the NEWEST entries are the ones kept");
@@ -4102,13 +4251,156 @@ mod shell_budget_tests {
         );
 
         let m = map_of(20, 3_000); // ~60k, pane B's scale
-        let (dropped, carried) = map_carry(&m, allowance);
-        assert!(dropped > 0, "a 60k map cannot ride inside a 104k-fixed shell");
+        let (tier, carried) = map_carry(&m, allowance);
+        assert!(
+            matches!(tier, MapTier::Newest { dropped } if dropped > 0),
+            "a 60k map cannot ride inside a 104k-fixed shell; got {tier:?}"
+        );
         assert!(
             fixed + carried.len() + SHELL_TRANSCRIPT_FLOOR <= SHELL_SOFT_CEILING,
             "fixed {fixed} + carried {} + floor {SHELL_TRANSCRIPT_FLOOR} broke the ceiling",
             carried.len()
         );
+    }
+
+
+    /// RED FIRST, 2026-09-06. The boundary the greedy whole-entry fit cannot read.
+    ///
+    /// Measured on the four rebuilt shells that morning (exe 04:26:05): every one carried ZERO of
+    /// its map. `grep -bo "^# YOUR OWN MAP" instances/sibling-*` put the header at byte 106,945 in
+    /// all four, and it is pushed after `map_allowance(brief.len())` behind a 6-byte separator, so
+    /// the real fixed brief was 106,939 and the real allowance
+    /// 140,000 - 106,939 - 30,000 = **3,061**. The newest single entry of each master was 3,366
+    /// (E), 7,122 (C), 32,559 (A) and 23,532 (B) — every one of them larger than the whole seat.
+    ///
+    /// `map_carry` scans FORWARD from `len - budget` for a `## `, so when the newest entry alone
+    /// is over budget there is no boundary at or past that point and the old `None` arm returned
+    /// an empty carry. Not a zero allowance and not a merely tight one: an allowance that is small
+    /// carries a small amount, and this carried none.
+    ///
+    /// The fixture is the measured boundary, not an invented one: the real allowance, and a
+    /// newest entry just over it.
+    #[test]
+    fn a_master_whose_newest_entry_exceeds_the_seat_still_carries_something() {
+        const MEASURED_ALLOWANCE: usize = 3_061; // 140_000 - 106_939 - 30_000, 2026-09-06
+        let m = map_of(6, MEASURED_ALLOWANCE + 39); // newest entry: heading + body, just over
+        let (tier, carried) = map_carry(&m, MEASURED_ALLOWANCE);
+        assert!(
+            !carried.is_empty(),
+            "a seat of {MEASURED_ALLOWANCE} carried NOTHING of a {} master — this is the \
+             2026-09-06 defect: four panes, four headers, four empty bodies",
+            m.len()
+        );
+        assert!(carried.len() <= MEASURED_ALLOWANCE, "carried {} over the seat", carried.len());
+        assert!(
+            matches!(tier, MapTier::IndexOnly { kept: 6, total: 6, .. }),
+            "no whole entry fits, so the tier must SAY index-only; got {tier:?}"
+        );
+    }
+
+    /// What rides in the index tier is headings and nothing else. A fragment of an entry read as
+    /// a whole entry is the failure this refuses; an index is not a fragment, it is a citation.
+    #[test]
+    fn the_index_tier_carries_headings_only_and_newest_first() {
+        let m = map_of(4, 9_000);
+        let (tier, carried) = map_carry(&m, 500);
+        assert!(matches!(tier, MapTier::IndexOnly { .. }), "got {tier:?}");
+        assert!(
+            carried.lines().all(|l| l.starts_with("## ")),
+            "prose leaked into the index: {carried:?}"
+        );
+        assert!(!carried.contains('x'), "no entry body may ride in the index tier");
+        assert!(
+            carried.starts_with("## 2026-08-04"),
+            "the index must be NEWEST FIRST — a pane reads the top of a section, not the bottom: \
+             {carried:?}"
+        );
+        assert!(carried.len() <= 500, "the index itself broke the seat at {}", carried.len());
+    }
+
+    /// MUTANT (bar 4): force the allowance to zero. The empty case must be DETECTABLE.
+    ///
+    /// Not "must not crash" and not "must carry nothing" — the old code already did both, which is
+    /// precisely why four panes woke empty and nothing said so. The section itself has to name its
+    /// own failure, in a string a grep can count.
+    #[test]
+    fn a_zero_allowance_says_so_in_the_shell_instead_of_going_quiet() {
+        let m = map_of(4, 5_000);
+        let (tier, section) = map_section(&m, Path::new("exo_memory/map/B.md"), 0);
+        assert_eq!(tier, MapTier::Nothing, "not even one heading fits a zero seat");
+        assert!(tier.is_empty_body());
+        assert!(
+            section.contains("NOTHING FROM YOUR MAP COULD RIDE"),
+            "a zero carry that does not announce itself is the 2026-09-06 defect: {section}"
+        );
+        assert!(
+            section.contains("NOT CARRIED"),
+            "the HEADER must differ too — `grep -c \"YOUR OWN MAP\"` counted 4 on the morning all \
+             four were empty, so the header is where the two facts have to stop reading alike"
+        );
+        assert!(
+            section.contains("exo_memory/map/B.md"),
+            "with nothing carried, the PATH is the only thing left that helps"
+        );
+    }
+
+    /// BAR 3, stated as an assertion: a header with an empty body must not read as a success.
+    ///
+    /// The exact wording that shipped on 2026-09-06 was "**Only your most recent entries are
+    /// carried here** — 89483 characters of older ones stayed in the master", over nothing. The
+    /// sentence is a claim about a carry, and it was printed by the branch that had just failed to
+    /// make one. No empty tier may ever print it again.
+    #[test]
+    fn an_empty_body_never_claims_a_carry() {
+        let p = Path::new("exo_memory/map/B.md");
+        for allowance in [0usize, 40, 500, 3_061] {
+            let (tier, section) = map_section(&map_of(6, 3_100), p, allowance);
+            if !tier.is_empty_body() {
+                continue;
+            }
+            assert!(
+                !section.contains("Only your most recent entries are carried here"),
+                "tier {tier:?} at allowance {allowance} claimed a carry it did not make"
+            );
+            assert!(
+                section.contains("NOTHING FROM YOUR MAP COULD RIDE"),
+                "tier {tier:?} at allowance {allowance} went quiet"
+            );
+            assert!(
+                !section.contains("# YOUR OWN MAP — findings you recorded"),
+                "the carried-header must be reserved for shells that carried something, or the \
+                 grep that counts real carries counts the failures too"
+            );
+        }
+    }
+
+    /// The two headers must be distinguishable by the same command, because that is the failure
+    /// mode: `grep -c "YOUR OWN MAP"` returned 4 with four empty bodies and would return 4 with
+    /// four full ones. One count, two states.
+    #[test]
+    fn a_real_carry_and_a_failed_one_do_not_grep_alike() {
+        let p = Path::new("exo_memory/map/B.md");
+        let (full_tier, full) = map_section(&map_of(2, 100), p, 100_000);
+        let (empty_tier, empty) = map_section(&map_of(6, 3_100), p, 3_061);
+        assert_eq!(full_tier, MapTier::Whole);
+        assert!(empty_tier.is_empty_body());
+        const CARRIED: &str = "# YOUR OWN MAP — findings you recorded";
+        assert!(full.contains(CARRIED));
+        assert!(!empty.contains(CARRIED));
+        const FAILED: &str = "NOTHING FROM YOUR MAP COULD RIDE";
+        assert!(!full.contains(FAILED));
+        assert!(empty.contains(FAILED));
+    }
+
+    /// The index tier states the three numbers that make the failure diagnosable from inside the
+    /// pane, so the seat knows to Read before it claims or denies what it knew.
+    #[test]
+    fn the_index_tier_states_the_arithmetic_that_produced_it() {
+        let m = map_of(6, 3_100);
+        let (_t, section) = map_section(&m, Path::new("exo_memory/map/B.md"), 3_061);
+        assert!(section.contains(&m.len().to_string()), "the master's size is missing");
+        assert!(section.contains("3061"), "the seat's size is missing");
+        assert!(section.contains("table of contents"), "the seat must not mistake index for map");
     }
 
     /// When the fixed brief alone has eaten the ceiling, the map is asked for nothing rather
@@ -4117,9 +4409,9 @@ mod shell_budget_tests {
     fn an_already_overweight_brief_asks_the_map_for_nothing() {
         assert_eq!(map_allowance(SHELL_SOFT_CEILING + 1), 0);
         assert_eq!(map_allowance(SHELL_SOFT_CEILING - 1), 0, "the transcript floor still binds");
-        let (dropped, carried) = map_carry(&map_of(4, 5_000), 0);
+        let (tier, carried) = map_carry(&map_of(4, 5_000), 0);
         assert!(carried.is_empty(), "no budget must carry nothing, not a fragment");
-        assert!(dropped > 0);
+        assert_eq!(tier, MapTier::Nothing, "and the tier must SAY nothing rode");
     }
 }
 
@@ -4184,29 +4476,26 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
              * Deliberately different from the transcript path below, which DOES shrink its
              * master into attic/ — a capture is ore we produced, a map is a record the pane
              * authored. */
-            let (dropped, carried) = map_carry(&own, map_allowance(brief.len()));
-            brief.push_str("\n---\n\n# YOUR OWN MAP — findings you recorded, in your words\n\n");
-            /* The PATH is stated, not implied. This is a two-sided contract — the pane writes
-             * the file and Consonance reads it — and until now the pane learned the location
-             * from a README that exists in exactly one repository. On any other install the
-             * two sides disagreed silently, because an absent map reads identically to a pane
-             * that has simply not recorded anything yet. Naming the resolved path closes it. */
-            brief.push_str(&format!(
-                "Recall from this master; you wrote every entry. It lives at `{}` — append your \
-                 findings there, and nowhere else, so the next waking of you can find them. The \
-                 other writers' files sit beside it — read them at need, not from summary.\n\n",
-                own_map_path(&pane_letter(pane)).display()
+            let allowance = map_allowance(brief.len());
+            let path = own_map_path(&pane_letter(pane));
+            let (tier, section) = map_section(&own, &path, allowance);
+            /* SAY IT OUTSIDE THE PANE. The 2026-09-06 defect — four rebuilt shells, four map
+             * headers, four empty bodies — was found by hand-measuring the four CLAUDE.md files,
+             * because nothing anywhere else said a carry had failed. A tier in the log is the
+             * cheapest instrument that would have caught it on the morning it started. */
+            plog(&format!(
+                "MAP CARRY pane={pane} master={} allowance={allowance} carried={} tier={}{}",
+                own.len(),
+                section.len(),
+                tier.label(),
+                if tier.is_empty_body() {
+                    " — NO ENTRY OF THE MAP FITS; the pane wakes with an index or less, and the \
+                     FIXED brief is what consumed the room (curate below capacity, law #3)"
+                } else {
+                    ""
+                }
             ));
-            if dropped > 0 {
-                brief.push_str(&format!(
-                    "**Only your most recent entries are carried here** — {dropped} characters of \
-                     older ones stayed in the master to keep this shell under its ceiling. They \
-                     are NOT summarised and NOT deleted; the file above is complete. Open it when \
-                     you need what you knew before.\n\n"
-                ));
-            }
-            brief.push_str(&carried);
-            brief.push('\n');
+            brief.push_str(&section);
         }
     }
     brief.push_str("\n---\n\n# PRIOR CONVERSATION — you have been here before\n\n");

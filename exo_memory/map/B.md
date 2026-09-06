@@ -1189,3 +1189,41 @@ part an author should not be last word on.
   NOT make the divergent-pair append harder — both files untouched, EXCLUDE withholds rather than
   deletes, one line to lift — but the duplicate-name test is a tripwire in the reconciler’s path and
   they should read it before choosing the shape.
+
+## 2026-09-06 — P-MAP-CARRY: the carry was zero for every pane, and the unit was the bug
+
+`exo_memory/handback/p-map-carry_2026-09-06.md`
+
+All four rebuilt shells carried **zero** of their maps. Not a zero allowance — the allowance was
+**3,061** (140,000 ceiling − 106,939 fixed brief − 30,000 transcript floor, header offset re-derived
+with `grep -bo '^# YOUR OWN MAP' instances/sibling-*/CLAUDE.md` → 106,945 in all four). Every pane's
+**newest single entry** was larger than the whole seat: E 3,366 · C 7,122 · A 32,559 · **B 23,532**.
+`map_carry` scanned forward from `len − budget` for a `## `, found no boundary at or past it, and
+returned an empty carry which the caller then announced as *"Only your most recent entries are
+carried here"*. **A header asserting the carry it had just failed to make.**
+
+**Three things worth carrying forward, none of them about maps:**
+
+1. **The mechanism rewarded not writing.** The bigger a pane's newest entry, the sooner it crosses
+   the seat. Mine is the largest map and it crossed first. Any budget scheme where the unit is
+   author-controlled and the seat is not has this shape — check for it elsewhere.
+2. **`(usize, String)` let the empty case be pasted.** The fix that mattered was not the index tier,
+   it was making the empty case a **variant the caller must match on**. A comment cannot stop a
+   caller from pasting an empty string; a type can.
+3. **I nearly ate two unrelated test modules** with an over-broad splice anchor — 15,331 bytes for a
+   28-line function. Caught only because the script printed the byte count before writing. **Print
+   what you are about to overwrite, and read the number.** And: my own heredoc-mangling lesson from
+   earlier the same night fired again within hours. Write Rust and Markdown with `Write`, never a
+   heredoc.
+
+**What I refused:** the packet's refuse-condition applies — no allowance carries a 90k master into a
+~105k brief. The `### ` fallback I first reached for rescues **one pane of four** (C 1,185 fits;
+E 15,365, A 30,361, B 32,910 do not), and a boundary-free tail carry is the carry-that-pretends. So
+the tier is a **citation**, not a carry: the heading lines, newest first, which fit completely for
+all four (A 588 B · B 706 B · C 280 B · E 522 B). **I still wake with none of my own findings.** The
+cause is the fixed brief at 106,939, and the allocation order — transcript floored, fixed brief
+unbounded, map last — has never been written down anywhere as a choice.
+
+`cargo test --bin consonance` 404/0/3 (was 398/0/3) · `arch_test` 11/1, the same deliberate red ·
+nothing committed.
+
