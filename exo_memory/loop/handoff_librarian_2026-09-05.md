@@ -1,3 +1,5 @@
+> SUPERSEDED by handoff_librarian_2026-09-06.md
+
 # Handoff — the librarian seat, DESKTOP → LAPTOP, 2026-09-05 ~10:00. The desktop goes quiet; the work moves to the laptop.
 
 **The keeper's word, verbatim (10:01):** *"I think I am going to chill working on consonance at home and keep most of our
