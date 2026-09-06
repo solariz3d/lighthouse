@@ -59,6 +59,19 @@ $files = @(
   @{ From = 'dev\shell\lib\ambient.js';                  To = 'lib\ambient.js';     Lib = $true }
   @{ From = 'dev\shell\lib\fresh-guard.js';              To = 'lib\fresh-guard.js'; Lib = $true }
 
+  # THE READY STAMP (P-READY-SIGNAL, 2026-09-06). Three files, one contract: the pair writes
+  # <CONSONANCE_READY_DIR>\<CONSONANCE_PANE>.json and Consonance's delivery gate reads it, so a
+  # pane's own harness says whether it is mid-turn instead of the gate reading its screen.
+  #
+  # A DEDICATED PAIR RATHER THAN A LINE IN stop.js / userprompt-submit.js, and the reason is
+  # measured, not stylistic: on this machine `hooks\stop.js` is DECLARED below and is NOT in
+  # ~\.claude\settings.json, and neither is `hooks\userprompt-submit.js` (it is a HOLD). Hanging a
+  # new contract off files that are not wired here would have shipped a stamp nobody writes, and
+  # the gate would have read every pane as unstamped forever while looking installed.
+  @{ From = 'dev\shell\lib\ready.js';                    To = 'lib\ready.js';       Lib = $true }
+  @{ From = 'dev\shell\hooks\ready-stop.js';             To = 'hooks\ready-stop.js' }
+  @{ From = 'dev\shell\hooks\ready-prompt.js';           To = 'hooks\ready-prompt.js' }
+
   # The nine that were running and untracked until 58b94f9. These are the ones the machine
   # actually executes; they were the whole reason for that commit.
   @{ From = 'dev\shell\hooks\session-start.js';          To = 'hooks\session-start.js' }
@@ -157,6 +170,11 @@ $register = @(
   @{ Event = 'Stop';             Rel = 'hooks\l2-overseer.js';        Runner = 'node' }
   @{ Event = 'Stop';             Rel = 'hooks\l3-overseer.js';        Runner = 'node' }
   @{ Event = 'Stop';             Rel = 'sourced-stop.js';             Runner = 'node' }
+  # The ready stamp's two halves. A manifest entry is not a registration — that lesson is written
+  # twenty lines below in this same file, dated 2026-08-18, about two hooks that shipped and never
+  # fired. Both events, declared here at the same time as the files above.
+  @{ Event = 'Stop';             Rel = 'hooks\ready-stop.js';         Runner = 'node' }
+  @{ Event = 'UserPromptSubmit'; Rel = 'hooks\ready-prompt.js';       Runner = 'node' }
   @{ Event = 'SessionEnd';       Rel = 'hooks\session-end.js';        Runner = 'node' }
   @{ Event = 'PreCompact';       Rel = 'hooks\precompact.js';         Runner = 'node' }
   # Added 2026-08-18, AFTER the manifest entries above shipped without them. Both hooks were in

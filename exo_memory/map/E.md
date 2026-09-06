@@ -327,3 +327,110 @@ later seat clearing the board by deleting the assertion.
 **Still true and I will keep saying it: the unit is proven and the delivery is not.**
 
 **Hand-back:** `exo_memory/handback/p-raise-target-folds_2026-09-06.md`.
+
+---
+
+## 2026-09-06 ~05:40 · L041 chunk 1(b) — P-LIB-CHANNEL: the librarian's channel stops needing a click
+
+**Hand-back:** `exo_memory/handback/p-lib-channel_2026-09-06.md`.
+
+Three pieces landed, nothing committed: `call_chair` exempt from the station guard (`mcp.rs`); a
+librarian `raise_pull` at the orchestrator delivers with no card and no click; a gate card renders
+in the TARGET's tab with the tab saying it holds one.
+
+**THE THING TO CARRY FORWARD, because it is the shape I keep meeting.** The brief's argument for
+the exemption was *the inbox already enforces never-into-a-working-seat, so this lock is a second
+one on a held door.* True for `call_chair` — and **false for the path I was told to build on.**
+`gate_or_queue` had three callers; `deliver_pull` was not one of them, so every approved pull ever
+delivered, the keeper's own click included, could splice a working pane. **I was standing on a
+guarantee the code did not make.** The fix was to make the guarantee first and take the exemption
+second, in that order. *Check the premise you are handed at the call site, not in the sentence.*
+
+**The mutant I chose first was a no-op and that was the finding.** Adding `"call_chair" => None` to
+a match that already ends `_ => None` changes nothing: **the exemption is expressed as an ABSENCE**,
+so a typo in a verb name in that table silently exempts the verb. The count-test measures a literal
+list and would not catch a rename; the wiring test pinning `auth_station("chair_inject")` in the
+body is what does. Neither alone. **When a mutant comes back green, ask whether the mutation was
+real before you trust the test.**
+
+**Identity, again, one door over.** `raise_pull`'s `from` is caller-supplied
+(`from.unwrap_or("unknown")`). Keying the new channel on it would have been `post_board`'s `tag`
+defect — *"an attributed name was not evidence of anything"* — twenty lines below the comment that
+says so. `PullRequest` gained a mount-written `seat`. **Every time this room adds a privileged
+edge, the first draft keys it on a field the caller composes.**
+
+**And my own error, kept where I will read it again:** I backed up and restored `main.rs` WHOLE to
+undo a mutant, in a tree C was editing. That is `git add -A` in a different coat — it captures what
+it did not name. Posted to C at the time rather than left to be found. **Rule: on a shared checkout,
+reverse the edit; never restore the file.**
+
+**The evaporated hands, re-derived:** four approved pulls delivered nothing, and the chair's four
+and my earlier three are different sets — mine was the RESOLVER subset (3), the fourth is a
+targetless pull from `raise_from_forming` that my resolver fix does not touch and this packet does
+not either. Registered, not fixed. Three declared dead with their content on disk; one item of the
+09-06 card (*the chair CAN `chair_inject` the librarian*) is still live and unconfirmed.
+
+**The honest residual I priced rather than hid:** the inbox's hold is bounded at 240s and
+force-delivers past it, so a chair turn longer than four minutes can still be spliced by a message
+the old guard refused outright. That is C's P-READY-SIGNAL. Asserted, not narrated, so replacing
+the bound forces someone to restate the price.
+
+`cargo test --bin consonance` 423/0/3 · `arch_test` 11/1 (the same deliberate red — the unnamed
+`record/` file; still not to be cleared by deleting the assertion) · `js-suite` 77 discovered, 2
+failed (both pre-existing, neither mine).
+
+**Still true, and the bar is one observation away, not met:** THE UNIT IS PROVEN AND THE DELIVERY IS
+NOT. One librarian send landing with no click and no refusal, after the rebuild, is the only thing
+that discharges this.
+
+---
+
+## 2026-09-06 ~07:10 · L041 return leg — P-DYAD-GATE: the last ungated write, and the oracle blind to it
+
+**Hand-back:** `exo_memory/handback/p-dyad-gate_2026-09-06.md`.
+
+`fn dyad_spot` wrote ~2,000 characters into a partner pane with no `gate_or_queue` — live behind a
+button. Gated. One line. **The line is not the finding.**
+
+**THE FINDING, and it is about me: my test was green over it because it iterated four hand-written
+names — and I wrote that list an hour earlier, in the packet where I found the same class.** I found
+`deliver_pull` bypassing the gate, then built an oracle that enumerated the instances I had just been
+looking at. **A list-driven test cannot fail on the site nobody listed, which is the only site that
+was ever going to be wrong.** A found it (`p-chunk1-attack_2026-09-06.md`) and named the reason.
+
+**Worse, and this is the part to carry:** it is my OWN `mutant-7a` finding from that same packet —
+*a property expressed as an ABSENCE cannot fail on the case nobody named* — which I wrote onto this
+map, about other people's tests, while the same shape sat in the test I was writing. **Noticing a
+class does not immunise the next thing you build. The transfer has to be deliberate.** Second
+sighting in one night, two feet apart, not made.
+
+**And a third instance of the same lineage, arriving on schedule:** the rewrite had to skip
+`#[cfg(test)]` modules or every fixture string quoting `inject_to_pane(` counts as a call site —
+**the exact hazard I left open in `every_chair_verb_authenticates` and wrote up here as a warning.**
+It came back in the very next instrument I built. Handled this time.
+
+**The rewrite:** derive the universe from the source (column-0 `fn` walk, test modules skipped),
+require `gate_or_queue` in every enclosing fn, **named allowlist** for deliberate exceptions
+(`inject_to_pane` itself; `drain_inboxes`, where asking the gate is a loop that never delivers).
+Known sites kept as a FLOOR — *not* the old list returning: a floor says *at least these* while the
+universe stays derived; the old list WAS the universe. That is the difference between a positive
+control and a blind spot.
+
+**My first walk was wrong and failed loudly**, which is the good direction: I counted braces to find
+a test module's end, and braces inside string literals (`format!("{f}")`, JSON fixtures) closed it
+early, so the test reported `fn main` writing into a pane. Fixed with a column-0 `}` boundary.
+**Do not count what strings can contain.**
+
+Mutants: un-gate `dyad_spot` → RED; **add a seventh call site in a new fn → RED** (the property the
+old test structurally could not hold); drop `drain_inboxes` from the allowlist → RED.
+
+`cargo` 436/0/3 · `arch_test` 11/1 (the same deliberate red) · `js-suite` 75 green / 2 failed of 77.
+**For B, since the evidence moved while I held the instrument:** `corpus-age.test.js` PASSED here
+minutes after A measured 142.9 s against a 120 s bound — **the red is intermittent AT the bound,
+which is worse than stable, because the next green normalises it and the owner assignment lapses.**
+
+**Not established, and I said so:** no dyad was paired and no spot was fired — the change is
+unit-verified and the button is untested end to end. And the honest generalisation is not *write
+better tests*: **an enumeration written by the person who just fixed the examples will enumerate the
+examples.** The second reader is the only thing that reliably catches that. A found the instance; I
+found the class; neither half was enough.

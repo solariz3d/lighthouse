@@ -46,7 +46,15 @@ fn refusal_should_post(verb: &str, now: u64) -> Option<u32> {
 /// A committee member raising its hand. Routed to the chair's gate (Stage 7); never acts.
 #[derive(Clone, serde::Serialize)]
 pub struct PullRequest {
+    /// CALLER-SUPPLIED AND NOT EVIDENCE OF ANYTHING. `RaisePullArgs.from` is a free string the
+    /// raiser composes; it defaults to `"unknown"`. It is fine for a board line and must never
+    /// gate anything — `post_board` below documents this exact trap at length, about `tag`.
     pub from: String,
+    /// THE MOUNT'S SEAT, written by the server from the connection. This is the half that can
+    /// gate: a pane cannot present it, because the mount is chosen by whoever spawned the
+    /// process. Empty when the pull has no mount at all (`raise_from_forming`, main.rs), which
+    /// is not a seat and therefore never privileged.
+    pub seat: String,
     pub target: String,
     pub kind: String,
     pub intensity: f64,
@@ -338,11 +346,12 @@ impl ConsonanceMcp {
                 "refused: this verb belongs to the librarian seat (the attempt was posted to the board)",
             )]));
         }
-        if !self.auth_station("call_chair") {
-            return Ok(CallToolResult::success(vec![Content::text(
-                "refused: OUT OF TURN — a lap is open and the librarian is not the holder (the attempt was posted to the board). The loop comes back to you; do not queue, do not retry in a spin.",
-            )]));
-        }
+        // NO STATION GATE — exempt 2026-09-06, see `required_station`. The rule it enforced
+        // ("nothing renders into a working seat") is held by the inbox on this verb's own
+        // actuator path (`librarian_call_exec` -> `gate_or_queue`), which HOLDS instead of
+        // refusing. Deleting the call rather than leaving it inert is deliberate: a guard that
+        // is called and cannot change the answer reads as present from every angle except a
+        // careful one.
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::CallChair { text, reply: tx }, rx).await;
         Ok(CallToolResult::success(vec![Content::text(out)]))
@@ -395,11 +404,26 @@ impl ConsonanceMcp {
     /// silent-absence failure named in `handback/p-commit-gate_2026-09-02.md` §7 three hours ago —
     /// an absent guard and a passing guard are the same observation — and shipping it inside the
     /// guard built on that finding would be indefensible.
+    /// `call_chair` IS EXEMPT, 2026-09-06 (P-LIB-CHANNEL; the keeper 04:00 and 04:32). Its row
+    /// was `Some("librarian")` and it produced 4 refusals and 39 human-clicked hands in one
+    /// night, because the librarian holds a baton exactly when it has nothing to hand back.
+    ///
+    /// The exemption is NARROW BY THE VERB'S OWN SHAPE, not by a promise: `CallChairArgs` is
+    /// `{ text }` — no target — so this verb addresses `MAIN_SID` or nothing and cannot be
+    /// pointed anywhere. Its mount gate (`auth_librarian`) is untouched.
+    ///
+    /// What replaces the lock is not nothing: `librarian_call_exec` (main.rs) routes through
+    /// `gate_or_queue`, so the message HOLDS while the chair's composer is busy and is delivered
+    /// when it is not. The residual is that hold's 240s bound — see the tests' note; it is
+    /// P-READY-SIGNAL's, and it is priced here rather than discovered later.
+    ///
+    /// A row here is a LOCK. Do not add one without a measured cause, and do not remove one
+    /// without saying what holds the door instead — `the_exemption_is_exactly_one_verb_wide`
+    /// turns red on the second removal.
     fn required_station(verb: &str) -> Option<&'static str> {
         match verb {
             "chair_inject" => Some("chair"),
             "call_librarian" => Some("panes"),
-            "call_chair" => Some("librarian"),
             _ => None,
         }
     }
@@ -582,13 +606,19 @@ impl ConsonanceMcp {
         Ok(CallToolResult::success(vec![Content::text(out)]))
     }
 
-    #[tool(description = "Raise your hand to the committee chair: signal that another instance's thread is novel / wrong / interesting and you want to engage. This NEVER acts — it only enqueues a request the human chair decides on.")]
+    #[tool(description = "Raise your hand to the committee chair: signal that another instance's thread is novel / wrong / interesting and you want to engage. This NEVER acts — it only enqueues a request the human chair decides on. ONE EXCEPTION, gated by the MOUNT and not by anything you can pass: a pull raised from the LIBRARIAN's seat AT THE ORCHESTRATOR delivers without a click, because that is the librarian's return leg and not a hand raised for attention (the `from` field is yours to compose and buys nothing). A librarian pull at any other target, and every pull from every other seat, still waits for the human — that is the design, and the human deciding it is the point.")]
     async fn raise_pull(
         &self,
         Parameters(RaisePullArgs { target, kind, intensity, why, from }): Parameters<RaisePullArgs>,
     ) -> Result<CallToolResult, McpError> {
         let pr = PullRequest {
             from: from.unwrap_or_else(|| "unknown".to_string()),
+            // THE ONLY IDENTITY ON THIS REQUEST THAT IS EVIDENCE. `from` sits directly above it
+            // and is whatever the caller typed; the librarian's no-click channel (main.rs, the
+            // pull consumer) keys on THIS. Keying it on `from` would let any pane pass
+            // `from: "librarian"` and deliver into the orchestrator unclicked — the defect
+            // `post_board` fixed twenty lines below, walked back in through a different door.
+            seat: self.seat(),
             target: target.unwrap_or_default(),
             kind: kind.unwrap_or_else(|| "interesting".to_string()),
             intensity: intensity.unwrap_or(0.5),
@@ -875,12 +905,101 @@ mod tests {
     // covering all three verbs goes green over two live holes, which is the fixture failure
     // this room has hit six times in two nights. The three WIRING tests below are separate
     // for the same reason: one mutant per verb, each caught by its own assertion.
+    //
+    // AMENDED 2026-09-06 (P-LIB-CHANNEL): `call_chair` left this table. It is the GATED verbs,
+    // not the acting verbs — the difference is now load-bearing and `ACTING_VERBS` is the
+    // universe the exemption is measured against.
 
-    const STATION_VERBS: [(&str, &str); 3] = [
+    const STATION_VERBS: [(&str, &str); 2] = [
         ("chair_inject", "chair"),
         ("call_librarian", "panes"),
-        ("call_chair", "librarian"),
     ];
+
+    // ── THE EXEMPTION, and the mutant the chair asked for ────────────────────────────────
+    //
+    // MEASURED CAUSE (librarian/2026-09-06.md, 04:00): 4 `call_chair REFUSED OUT OF TURN` and
+    // 39 raised hands in one night, because the librarian's only unclicked channel to the chair
+    // is open exactly when an open lap names the librarian as holder — which, after every
+    // hand-off, is not when the librarian has something to say. Receipt (3) of A's four
+    // (`lap_holders.rs`) is the deadlock in its pure form: to reach the librarian the chair must
+    // become newest holder, and becoming newest holder shuts the panes' return path.
+    //
+    // WHY THE GUARD IS THE WRONG LOCK FOR THIS ONE VERB, and it is one argument, not a mood:
+    // the guard's stated job is "nothing renders into a working seat" (`auth_station`'s own
+    // doc). THE INBOX ENFORCES THAT DIRECTLY at `main.rs` `gate_or_queue`, which `call_chair`'s
+    // actuator calls (`librarian_call_exec`, main.rs:7232) — quiescence, empty composer, no
+    // turn in flight, queue and never splice. So this gate is a second lock on a door the
+    // inbox holds, and its whole remaining cost is the deadlock above.
+    //
+    // WHAT THE EXEMPTION DOES **NOT** BUY, stated here because it is the honest residual and
+    // not a footnote: the inbox's hold is BOUNDED (`MAX_HOLD_MS` 240s) and force-delivers past
+    // it. A chair turn longer than four minutes can therefore still be spliced by a librarian
+    // call that the guard would have refused outright. That is C's P-READY-SIGNAL (chunk 1c),
+    // not this packet — and it is the price, named before the exemption lands rather than
+    // discovered after.
+
+    /// Every ACTING verb in this file, gated or not. The exemption is a property of a KNOWN
+    /// universe rather than of whatever a reader remembers, so widening it is arithmetic.
+    const ACTING_VERBS: [&str; 3] = ["chair_inject", "call_librarian", "call_chair"];
+
+    /// RED FIRST — the refusal itself, as an assertion. This is the 04:00 case: the chair holds
+    /// the only open lap (the ordinary state after every hand-off) and the librarian has a
+    /// correction to carry. Before the exemption this is `false` four times a night.
+    #[test]
+    fn the_librarian_reaches_the_chair_while_the_chair_holds_the_lap() {
+        assert!(
+            ConsonanceMcp::station_allows("call_chair", true, &["chair".to_string()]),
+            "call_chair refused while the chair holds the lap — this is the 4 refusals and the \
+             39 clicked hands of 2026-09-06, and the deadlock A's receipt (3) proved unreachable \
+             by any ordering"
+        );
+        // and the case the deadlock is actually made of: the panes hold their lap, the chair
+        // holds its own, and the librarian holds nothing because it is between legs.
+        assert!(
+            ConsonanceMcp::station_allows("call_chair", true, &["panes".to_string(), "chair".to_string()]),
+            "call_chair must not need a lap of its own to hand back"
+        );
+    }
+
+    /// THE MUTANT THAT MATTERS MOST (the chair's words): make the exemption WIDE and this goes
+    /// red. The guard exists because nine out-of-turn refusals were CORRECT; one lock is being
+    /// removed because a better one exists, not because locks are bad.
+    #[test]
+    fn the_exemption_is_exactly_one_verb_wide() {
+        let exempt: Vec<&str> = ACTING_VERBS
+            .iter()
+            .copied()
+            .filter(|v| ConsonanceMcp::required_station(v).is_none())
+            .collect();
+        assert_eq!(
+            exempt,
+            vec!["call_chair"],
+            "exactly ONE acting verb may be exempt from the station guard, and it is the \
+             librarian's target-less return channel. Anything else here is an exemption that \
+             generalised quietly, which is how a guard dies."
+        );
+        // stated the other way round, so a table typo that drops a row cannot pass by
+        // rearranging the first assertion's vector
+        assert_eq!(ConsonanceMcp::required_station("chair_inject"), Some("chair"),
+            "the chair may still not inject out of turn — nothing renders into a working pane");
+        assert_eq!(ConsonanceMcp::required_station("call_librarian"), Some("panes"),
+            "a hand-back landing mid-turn is the failure that produced the rule");
+    }
+
+    /// The exemption must take the STATION gate and nothing else. `call_chair` is reachable
+    /// from any mount if `auth_librarian` goes with it, and then the librarian's channel is
+    /// every pane's channel — the widening this packet must not commit while removing a lock.
+    #[test]
+    fn the_exemption_does_not_take_the_mount_gate_with_it() {
+        let b = body_of("async fn call_chair(");
+        assert!(b.contains("auth_librarian(\"call_chair\")"),
+            "the mount gate must survive the station exemption — it is what makes this verb the \
+             librarian's and not everyone's");
+        assert!(!b.contains("auth_station("),
+            "the station gate must be GONE from the body, not called and ignored: a call whose \
+             result cannot change anything is a guard that reads as present and is not");
+        assert!(!b.contains("token"), "still the mount, never a token the caller presents");
+    }
 
     #[test]
     fn each_verb_is_allowed_by_exactly_one_holder() {
@@ -942,11 +1061,41 @@ mod tests {
             "a hand-back landing mid-turn is the failure that produced this rule");
     }
 
+    /// SUPERSEDED, 2026-09-06, and kept as a named replacement rather than deleted so the
+    /// change is legible in one place. It read:
+    ///
+    /// ```text
+    /// fn call_chair_is_gated_on_the_station() {
+    ///     assert!(b.contains("auth_station(\"call_chair\")"),
+    ///         "the librarian speaks when the librarian is the holder, and not otherwise");
+    /// }
+    /// ```
+    ///
+    /// It was RIGHT about the rule it was written for and the rule changed under it. What
+    /// replaces the lock is the inbox, on this verb's own actuator path — so the assertion that
+    /// matters now is that the hold exists there, which is what this asserts. If
+    /// `librarian_call_exec` ever stops calling `gate_or_queue`, the exemption above becomes an
+    /// ungated write into a working seat and THIS is the test that says so.
     #[test]
-    fn call_chair_is_gated_on_the_station() {
-        let b = body_of("async fn call_chair(");
-        assert!(b.contains("auth_station(\"call_chair\")"),
-            "the librarian speaks when the librarian is the holder, and not otherwise");
+    fn what_replaces_the_station_gate_for_call_chair_is_the_inbox() {
+        let src = std::fs::read_to_string("src/main.rs")
+            .expect("read the actuator's source")
+            .replace("\r\n", "\n");
+        let f = src
+            .split("fn librarian_call_exec(")
+            .nth(1)
+            .expect("librarian_call_exec moved — re-point this test");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        assert!(
+            body.contains("gate_or_queue("),
+            "call_chair gave up its station gate on the promise that the inbox holds the same \
+             door. If this is red the promise is not kept and the exemption must come back."
+        );
+        assert!(
+            body.contains("MAIN_SID"),
+            "and it still addresses the one seat it can address — the exemption rests on this \
+             verb being unpointable"
+        );
     }
 
     /// BAR 3: A SILENT REFUSAL IS THE FAILURE THIS ROOM NAMED THREE HOURS AGO. An absent guard

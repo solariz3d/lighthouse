@@ -260,11 +260,25 @@ input::placeholder { color: #55607a; }
 /* gate cards (Stage 7) — the chair Approves/Denies a surfaced pull.
    Floating corner stack: urgency doesn't require layout shift — a card arriving
    must never reflow the pane grid mid-read. */
-#gatecards {
+.gatecards {
   display: flex; flex-direction: column; gap: 8px;
   position: absolute; top: 8px; right: 8px; width: min(440px, 55%); z-index: 40;
 }
-#gatecards:empty { display: none; }
+.gatecards:empty { display: none; }
+/* KEYED BY CLASS SINCE 2026-09-06, for exactly the reason stated forty lines below about
+   #main/#mainpane: an ID rule cannot be inherited by a second container, and a second container is
+   what P-LIB-CHANNEL piece 3 needs — a card belongs in the tab of the seat it is FOR (the keeper,
+   04:32: "you'd think it would appear in the orch tab"). The seat tabs need the positioning anchor
+   #terminal already has, or an absolutely-positioned stack escapes to the viewport. */
+.tab.seat { position: relative; }
+/* A tab holding an undecided pull. Deliberately quiet, and it marks that a DECISION IS WAITING —
+   not where the loop is standing. That second render was retired (loop_indicator_design_2026-09-02,
+   amendments 2-3); this one is anchored to the tab that holds the thing, so there is no direction
+   to misread. */
+.tabs button.gcpending { color: var(--amber); }
+.tabs button.gcpending::after {
+  content: "\25CF"; font-size: 8px; vertical-align: super; margin-left: 4px; color: var(--amber);
+}
 .gatecard {
   display: flex; align-items: center; gap: 12px; justify-content: space-between;
   background: var(--panel2); border: 1px solid var(--amber); border-left: 3px solid var(--amber);

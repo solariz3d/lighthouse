@@ -138,6 +138,13 @@ const ENTRY = {
   // miniature: the roster is discovered and this table is hand-kept, so the suite would have
   // gone red on a hook that was fine. Call site, not definition, per this table's header.
   'carrier-drift-watch.js': 'try { main(); }',
+  // Added 2026-09-06 with the ready stamp's two hooks (P-READY-SIGNAL), in the same change as
+  // their install.ps1 manifest entries — this suite refused them by name on the first run, which
+  // is the roster-discovered/table-hand-kept seam working exactly as its header describes. Both
+  // files are ten lines and their entry point is the require of the shared lib: nothing is read,
+  // written or resolved before it, so the guard above it guards everything.
+  'ready-stop.js': "const ready = require(path.join(SHELL_DIR, 'lib', 'ready.js'));",
+  'ready-prompt.js': "const ready = require(path.join(SHELL_DIR, 'lib', 'ready.js'));",
   // Added 2026-08-18 with precompact-preserve.js itself. Call site, not definition: `function
   // main()` is declared above the guard and invoked at the bottom under require.main, so the
   // bare name would compare the guard against the definition — the trap this table's header

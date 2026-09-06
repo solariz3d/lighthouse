@@ -12,6 +12,69 @@ function inv(cmd, args) { return window.__TAURI__.core.invoke(cmd, args); }
 function setStatus(t) { const s = document.getElementById('status'); if (s) s.textContent = t; }
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
+// ---- P-LIB-CHANNEL piece 3 (2026-09-06): a gate card renders WHERE THE RECEIVER IS ----
+//
+// THE MEASURED CAUSE. 39 raised hands in one night waited on a click, and the keeper's own words
+// for why (04:32): *"you'd think it would appear in the orch tab."* Every card has always
+// rendered into `#gatecards`, which lives inside `<section id="terminal">` — so a pull aimed at
+// the orchestrator surfaced in the pane grid, and a card in a tab nobody is looking at is a card
+// nobody sees. The failure is invisible to every test that only checks the card was CREATED,
+// which is the class this seat has now hit twice (a letter registered where a label was
+// expected; `var()` in an SVG presentation attribute). Creation is not arrival.
+//
+// RESOLUTION IS THE BACKEND'S. `c.target_pane` is the session id `resolve_from` already produced;
+// this reads it and never re-derives it. A second resolver in JavaScript is how the two drift
+// apart, and `resolve_pane_delegates_and_never_matches_prefixes_itself` (main.rs) says the same
+// thing about the Rust side.
+//
+// AND IT FALLS BACK RATHER THAN DROPS: unresolved target, unknown pane, or a pane in the grid all
+// return the terminal stack, which is exactly today's behaviour. This can move a card; it can
+// never lose one.
+function gateCardHost(targetPane) {
+  const fallback = document.getElementById('gatecards');
+  const p = targetPane && panes.get(targetPane);
+  if (!p || !p.el) return fallback;
+  const section = p.el.closest('section.tab');
+  if (!section || section.id === 'terminal') return fallback;
+  let wrap = section.querySelector('.gatecards');
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.className = 'gatecards';
+    section.insertBefore(wrap, section.firstChild);
+  }
+  return wrap;
+}
+
+// The other half, and without it piece 3 would be a LATERAL move: a card correctly filed in the
+// Orchestrator tab is no more visible to someone sitting in Terminal than one filed in Terminal
+// was to someone sitting in the Orchestrator. So the tab says it holds one.
+//
+// IT TRACKS THE CONTAINER, NOT AN EVENT. The mark is present exactly while that tab holds an
+// undecided card — counted off the DOM after every append and every decision — so there is no
+// second copy of the state to fall out of step with the cards themselves. It deliberately does
+// NOT clear when you open the tab: an undecided card is still undecided after you have glanced
+// at it, and a mark that clears on attention is how 39 hands went unread.
+//
+// NOT THE RETIRED PER-TAB AURA. That render (loop_indicator_design_2026-09-02.md, amendments 2-3)
+// tried to show WHERE THE BATON IS and was superseded by the logo because a marker between two
+// tabs misreads on one hop. This says something else entirely — *a decision is waiting here* —
+// and it is anchored to the tab that holds the thing, so there is no direction to misread.
+function refreshGateBadge(wrap) {
+  const section = wrap && wrap.closest ? wrap.closest('section.tab') : null;
+  if (!section) return;
+  const n = section.querySelectorAll('.gatecard').length;
+  const btn = document.querySelector('.tabs button[data-tab="' + section.id + '"]');
+  if (!btn) return;
+  btn.classList.toggle('gcpending', n > 0);
+  // The Librarian and Third Place buttons ship with a title that TEACHES THE SEAT, and a naive
+  // set-then-remove here erases it permanently on the first decided card. The shipped text is
+  // stashed once, on first touch, and restored — the badge borrows the tooltip, it does not own it.
+  if (btn.dataset.baseTitle === undefined) btn.dataset.baseTitle = btn.getAttribute('title') || '';
+  if (n > 0) btn.title = n + ' pull' + (n === 1 ? '' : 's') + ' waiting on your decision here';
+  else if (btn.dataset.baseTitle) btn.title = btn.dataset.baseTitle;
+  else btn.removeAttribute('title');
+}
+
 function ensureListeners() {
   if (listenersReady) return;
   const listen = window.__TAURI__.event.listen;
@@ -73,7 +136,7 @@ function ensureListeners() {
   });
   listen('gate-card', (e) => {
     const c = e.payload;
-    const wrap = document.getElementById('gatecards');
+    const wrap = gateCardHost(c.target_pane);
     if (!wrap) return;
     const card = document.createElement('div');
     card.className = 'gatecard';
@@ -86,6 +149,7 @@ function ensureListeners() {
       '<div class="gcbtns"><button class="gcapprove">Approve</button><button class="gcdeny">Deny</button></div>';
     const decide = (approve) => {
       card.remove();
+      refreshGateBadge(wrap);
       inv('gate_decide', { id: c.id, approve })
         .then(() => setStatus((approve ? 'approved' : 'denied') + ' pull from ' + c.from))
         .catch(e => setStatus('gate decision failed for pull from ' + c.from + ': ' + e));
@@ -93,6 +157,7 @@ function ensureListeners() {
     card.querySelector('.gcapprove').onclick = () => decide(true);
     card.querySelector('.gcdeny').onclick = () => decide(false);
     wrap.appendChild(card);
+    refreshGateBadge(wrap);
   });
   listen('gate-mode', (e) => {
     const el = document.getElementById('gatemode');

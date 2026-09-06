@@ -30,7 +30,13 @@ pub struct Envelope {
 pub struct GateCard {
     pub id: String,
     pub from: String,
+    /// What the raiser TYPED — `MAIN`, `E`, a raw id, or nothing. Display only.
     pub target: String,
+    /// What that resolved to: a pane session id, or `""` when nothing matched. Added
+    /// 2026-09-06 (P-LIB-CHANNEL piece 3) so the UI can render the card in the TAB OF THE SEAT
+    /// IT IS FOR rather than always in the terminal tab. Resolution belongs to the backend —
+    /// `resolve_from` is the one resolver and a second one in JavaScript is how the two drift.
+    pub target_pane: String,
     pub kind: String,
     pub intensity: f64,
     pub why: String,

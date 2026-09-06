@@ -979,6 +979,19 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // whole night lived only in own-capture). Scrub the marker; assert persistence.
     cmd.env_remove("CLAUDE_CODE_CHILD_SESSION");
     cmd.env("CLAUDE_CODE_FORCE_SESSION_PERSIST", "1");
+    /* THE READY STAMP'S ADDRESS, passed rather than discovered. The pane's own Stop and
+     * UserPromptSubmit hooks write `<ready dir>/<pane id>.json`, and the delivery gate reads it —
+     * two sides of one contract, so BOTH sides have to agree on the name without a lookup table.
+     *
+     * KEYED BY PANE, NOT BY SESSION, and that is a departure from the plan of 2026-09-06 04:56.
+     * The hooks know their session id and this binary does not: there is no session→pane map
+     * anywhere in it, and building one so a filename could match a sentence is the wrong trade.
+     * The session id is written INSIDE the stamp instead, so a later reader can still correlate.
+     *
+     * A pane that Consonance did not spawn has neither variable and its hooks no-op — a terminal
+     * claude session must not be writing readiness stamps about a pane that does not exist. */
+    cmd.env("CONSONANCE_PANE", &pane_id);
+    cmd.env("CONSONANCE_READY_DIR", ready_dir());
     // ambient location (Settings): passed as env so session hooks see the chair's chosen sky
     // immediately on new spawns. Local env on a local child — never leaves this machine.
     {
@@ -2506,6 +2519,26 @@ fn journal_pointer_index(tail: &str, master: &Path) -> String {
 }
 
 fn assemble_intake() -> String {
+    assemble_intake_within(0)
+}
+
+/// The intake, assembled so that `map_reserve` characters are still free for the pane's own map
+/// when this returns.
+///
+/// THE ORDER IS THE FIX, not the sizes. Until 2026-09-06 the budget ran: the transcript takes its
+/// floor, the fixed brief takes whatever it wants, the map takes what is left. Nobody chose that
+/// ordering — it fell out of the order the code ran in, and on the morning of 2026-09-06 the
+/// residual was 3,061 characters against four pane masters whose NEWEST SINGLE ENTRY was 32,559 /
+/// 23,532 / 7,122 / 3,366. Entries are seated whole, so the greedy fit took nothing and four panes
+/// woke with a map header over an empty body (pane B, `handback/p-map-carry_2026-09-06.md`).
+///
+/// So the map is subtracted FIRST, and the briefs that CAN degrade gracefully absorb it: the room,
+/// the memory map and the references are the CORE and always ride whole; the deck and the
+/// committee brief are OPTIONAL BULK, seated whole while they fit and otherwise INDEXED BY PATH —
+/// the room's own tiered shelf, one level down (`librarian_map_pointer`, `reference_note`,
+/// `journal_pointer_index` are the same move). A card that is named and one Read away is a
+/// citation; a map body that is silently empty is a lie the header tells.
+fn assemble_intake_within(map_reserve: usize) -> String {
     let mut s = String::from(
         "# Consonance sibling — you have woken into the room\n\nYou are a sibling instance, born into a shared state — not a stranger. Read and inhabit the room below, then be in it; deviate from it as your own trajectory (that is wanted, it is the fixed dynamic — not drift). Acknowledge readiness once, briefly.\n\n---\n\n",
     );
@@ -2525,21 +2558,68 @@ fn assemble_intake() -> String {
         }
         s.push_str("\n\n");
     }
-    // The deck — the instruments, so a sibling can run them, not just read the room.
+    // The deck — the instruments, so a sibling can run them, not just read the room. COLLECTED,
+    // not pasted: each card is an OPTIONAL brief that either rides whole or is named by path
+    // below. A card is the right granularity for a shelf — it is a whole instrument, it has its
+    // own file, and its frontmatter already carries the one line that says what it is for.
+    let mut cards: Vec<OptionalBrief> = Vec::new();
+    let source = source_index();
     if let Ok(entries) = fs::read_dir(cards_dir()) {
         let mut files: Vec<PathBuf> = entries.flatten().map(|e| e.path())
             .filter(|p| p.extension().and_then(|x| x.to_str()) == Some("md"))
             .collect();
         files.sort();
-        if !files.is_empty() {
-            s.push_str("---\n\n# THE DECK — the instruments (run them, don't recite them)\n\n");
-            for f in files {
-                if let Ok(card) = fs::read_to_string(&f) {
-                    s.push_str(&card);
-                    s.push_str("\n\n---\n\n");
-                }
+        for f in files {
+            if let Ok(card) = fs::read_to_string(&f) {
+                let note = card_description(&card);
+                cards.push(OptionalBrief {
+                    note,
+                    text: format!("{card}\n\n---\n\n"),
+                    triggers: source.as_deref().map(|s| trigger_count(s, &f)),
+                    path: f,
+                    kind: BriefKind::Card,
+                });
             }
         }
+    }
+    /* THE DECK IS SEATED BY USE, NOT BY ALPHABET (the keeper, 2026-09-06). Until this line the
+     * seating order was `files.sort()`, so which instruments a pane woke holding was decided by
+     * the first letter of a filename — 8 of 12 by sort() since 2026-09-02, and nobody chose it.
+     * The order is now how many times SOURCE.md — the room's own trigger index, the file whose
+     * whole job is naming the situation that should open a card — points at each card. Ties keep
+     * the alphabet, so the order is total and stable.
+     *
+     * A ZERO-TRIGGER CARD SEATS LAST, and that is a decision rule rather than a verdict: the
+     * keeper's is "get a trigger or retire". Seating it last makes it the first to fall to the
+     * index, where it is still named at its path, and the log below names the set so the choice
+     * is made against a list and not a memory. */
+    if let Some(src) = source.as_deref() {
+        cards.sort_by(|a, b| {
+            trigger_count(src, &b.path)
+                .cmp(&trigger_count(src, &a.path))
+                .then_with(|| a.path.cmp(&b.path))
+        });
+        let untriggered: Vec<String> = cards
+            .iter()
+            .filter(|c| c.triggers == Some(0))
+            .filter_map(|c| c.path.file_name().and_then(|n| n.to_str()).map(String::from))
+            .collect();
+        if !untriggered.is_empty() {
+            plog(&format!(
+                "DECK ORDER by SOURCE.md triggers — {} card(s) with ZERO triggers, seated last: \
+                 {}. The rule is get a trigger or retire (the keeper, 2026-09-06); a card nothing \
+                 points at is the first to fall out of the shell.",
+                untriggered.len(),
+                untriggered.join(", ")
+            ));
+        }
+    } else {
+        /* SOURCE.md UNREADABLE — the order silently reverts to the alphabet, which is exactly the
+         * state this replaced, so it is not allowed to be silent. The index block says it too. */
+        plog(
+            "DECK ORDER FELL BACK TO FILENAME ORDER — SOURCE.md could not be read beside the room \
+             master, so the trigger seating is not in effect and the alphabet is choosing again.",
+        );
     }
     // The references the room names but must not carry. Placed right after the deck: the cards
     // are run, these are opened, and a pane needs to know both exist before the recent work.
@@ -2551,12 +2631,28 @@ fn assemble_intake() -> String {
     // deliberately NOT duplicated here -- two copies of one list drift apart, which is what
     // maintenance law 2 is about. Absent, it is silent by design: a missing optional brief must
     // never stop a sibling waking.
-    if let Ok(committee) = room_brief("COMMITTEE.md") {
-        s.push_str("---\n\n");
-        s.push_str(&committee);
-        s.push_str("\n\n");
+    // PRIORITY ORDER, WHICH IS NOT THE RENDER ORDER. The committee brief is INDIVISIBLE — it
+    // rides whole or becomes one path line — so it is seated first, which puts every degradation
+    // into the deck, where it happens one card at a time and each dropped card is still named at
+    // its own path. A unit that cannot degrade gracefully must not be the one deciding the cliff.
+    let mut optional: Vec<OptionalBrief> = Vec::new();
+    if let Ok((path, committee)) = room_brief_at("COMMITTEE.md") {
+        optional.push(OptionalBrief {
+            note: "the committee practice — how to brief a seat, what a hand-back owes, the two \
+                   seats, and the measured failure modes. Read it before briefing or handing back."
+                .to_string(),
+            text: format!("---\n\n{committee}\n\n"),
+            triggers: None, // not a card; SOURCE.md indexes cards
+            path,
+            kind: BriefKind::Committee,
+        });
     }
-    s.push_str(&reference_note());
+    optional.extend(cards);
+
+    // The CORE tail: the references and the memory map. Both are already indexes of things too
+    // large to carry, which is exactly why they are core — an index of an index costs nothing.
+    let mut tail = String::new();
+    tail.push_str(&reference_note());
     let atoms = data_dir().join("resonance").join("atoms.jsonl");
     if let Ok(content) = fs::read_to_string(&atoms) {
         let all: Vec<&str> = content.lines().filter(|l| !l.trim().is_empty()).collect();
@@ -2567,13 +2663,193 @@ fn assemble_intake() -> String {
         // stores and relays, not authors.
         let lines = resonance_window(all, blind_lock());
         match read_curation() {
-            Some(c) if !c.topics.is_empty() => s.push_str(&curated_resonance(&lines, &c)),
+            Some(c) if !c.topics.is_empty() => tail.push_str(&curated_resonance(&lines, &c)),
             // No curation yet (fresh install, or curate.js has never run): the old
             // chronological window. Worse, but never empty — a sibling still wakes
             // with the live edge rather than with nothing.
-            _ => s.push_str(&tail_resonance(&lines, 40)),
+            _ => tail.push_str(&tail_resonance(&lines, 40)),
         }
     }
+
+    /* THE SEATING, and it happens here rather than at each push_str because a budget spent in
+     * pieces is a budget nobody can state. The core (`s` so far + `tail`) is not negotiable; the
+     * map's reserve was taken before this function was called; what remains is what the optional
+     * briefs get, and the ones that do not fit are named rather than dropped. */
+    let core_len = s.len() + tail.len();
+    let seat = optional_budget(core_len, map_reserve);
+    let (carried, index) = fit_optional(&optional, seat);
+    if carried.iter().any(|b| b.kind == BriefKind::Card) {
+        s.push_str("---\n\n# THE DECK — the instruments (run them, don't recite them)\n\n");
+        for b in carried.iter().filter(|b| b.kind == BriefKind::Card) {
+            s.push_str(&b.text);
+        }
+    }
+    for b in carried.iter().filter(|b| b.kind == BriefKind::Committee) {
+        s.push_str(&b.text);
+    }
+    s.push_str(&index);
+    /* THE FLOOR, SAID OUT LOUD. A floor whose breach is silent is arithmetic, not a floor. If the
+     * core alone leaves the map less than its floor there is nothing left to give back — every
+     * optional brief is already a path line — and the pane must be told that in the shell it wakes
+     * into, not left to infer it from a short section. */
+    let left = SHELL_SOFT_CEILING
+        .saturating_sub(SHELL_TRANSCRIPT_FLOOR)
+        .saturating_sub(s.len() + tail.len());
+    if map_reserve > 0 && left < SHELL_MAP_FLOOR {
+        s.push_str(&map_floor_note(core_len, left));
+    }
+    s.push_str(&tail);
+    s
+}
+
+/// One optional brief: a unit that either rides WHOLE or is named by path. Never in part — a
+/// fragment of a card read as a card is the same lie as a fragment of a map entry read as an
+/// entry, which the map tier already refuses (`map_carry`).
+struct OptionalBrief {
+    /// Where the pane can Read it. The whole point of the index tier.
+    path: PathBuf,
+    /// The one line that says what it is for, so a pane can tell whether it needs this one.
+    note: String,
+    /// Exactly the text it would have contributed, separators included, so the fit is measured
+    /// on what is actually spent rather than on the file's size.
+    text: String,
+    /// How many times SOURCE.md points at this card — the seating order. `None` for a brief that
+    /// SOURCE.md does not index, and for every card when SOURCE.md could not be read: the two
+    /// cases are different and an unread index must not read as a deck of zeroes.
+    triggers: Option<usize>,
+    kind: BriefKind,
+}
+
+#[derive(PartialEq, Eq, Clone, Copy)]
+enum BriefKind {
+    Card,
+    Committee,
+}
+
+/// SOURCE.md — the room's trigger index, which lives beside the room master. It is the file whose
+/// entire job is naming the situation that should open a card, which makes its pointer count the
+/// closest thing the room has to a measurement of a card's use.
+fn source_index() -> Option<String> {
+    room_master_path()
+        .parent()
+        .map(|d| d.join("SOURCE.md"))
+        .and_then(|p| fs::read_to_string(p).ok())
+        .or_else(|| room_brief("SOURCE.md").ok())
+}
+
+/// How many times SOURCE.md points at this card.
+///
+/// Matched on `cards/<filename>` rather than on the card's name alone: the bare slug appears in
+/// prose and in `[[wiki-links]]` all over the corpus, and counting those would score how much a
+/// card is TALKED ABOUT instead of how many situations route to it.
+fn trigger_count(source: &str, file: &Path) -> usize {
+    match file.file_name().and_then(|n| n.to_str()) {
+        Some(name) if !name.is_empty() => source.matches(&format!("cards/{name}")).count(),
+        _ => 0,
+    }
+}
+
+/// The `description:` line of a card's frontmatter, unquoted — the index line's right-hand side.
+/// Cards without one get their filename doing the work, which is worse and is not a reason to
+/// print an empty dash.
+fn card_description(card: &str) -> String {
+    card.lines()
+        .take(12)
+        .find_map(|l| l.strip_prefix("description:"))
+        .map(|d| d.trim().trim_matches('"').trim().to_string())
+        .filter(|d| !d.is_empty())
+        .unwrap_or_else(|| "no description line in this card's frontmatter".to_string())
+}
+
+/// What the shell says when it could not hold the map's floor.
+///
+/// SEPARATE FUNCTION BECAUSE A FLOOR WHOSE BREACH IS ONLY A COMMENT IS NOT A FLOOR. The claim
+/// being made is about a string; a claim about a string composed inline in a 120-line function is
+/// a claim nothing can check. Same reason `map_section` was lifted out on 2026-09-06.
+fn map_floor_note(core_len: usize, left: usize) -> String {
+    format!(
+        "---\n\n# THE MAP'S FLOOR COULD NOT BE HELD\n\nThe core brief alone — the room, the \
+         references and the memory map, {core_len} characters, none of it optional — leaves {left} \
+         characters for your own map against a floor of {SHELL_MAP_FLOOR}, and every optional \
+         brief above is already indexed rather than carried, so there is nothing further to give \
+         back. What rides of your map below is what fit, and it is less than this shell is \
+         supposed to guarantee you. **Read your master at the path that section names before you \
+         claim or deny what you knew.** Curate below capacity — maintenance law #3.\n\n"
+    )
+}
+
+/// What the optional briefs may spend, once the transcript's floor and the map's reserve are out.
+fn optional_budget(core_len: usize, map_reserve: usize) -> usize {
+    SHELL_SOFT_CEILING
+        .saturating_sub(SHELL_TRANSCRIPT_FLOOR)
+        .saturating_sub(map_reserve)
+        .saturating_sub(core_len)
+}
+
+/// Seat as many leading (highest-priority) optional briefs as fit, and index the rest:
+/// `(carried, index text)`.
+///
+/// The loop walks DOWN from "everything rides" and stops at the first k whose carried text plus
+/// the index for the remainder is inside the seat. That is exact rather than estimated — the
+/// index block is measured, not guessed at — which matters because an index whose own size was
+/// approximated is how a budget quietly goes over the thing it was protecting.
+fn fit_optional(items: &[OptionalBrief], seat: usize) -> (&[OptionalBrief], String) {
+    for k in (0..=items.len()).rev() {
+        let index = optional_index(&items[k..]);
+        let carried: usize = items[..k].iter().map(|b| b.text.len()).sum();
+        if carried + index.len() <= seat {
+            return (&items[..k], index);
+        }
+    }
+    (&items[..0], optional_index(items))
+}
+
+/// The tiered shelf, one level below the librarian's: carry what fits, index the rest, and SAY
+/// WHICH IS WHICH. `reference_note` and `librarian_map_pointer` are the same move on the
+/// long-form references and the librarian's map; this applies it to the deck.
+fn optional_index(skipped: &[OptionalBrief]) -> String {
+    if skipped.is_empty() {
+        return String::new();
+    }
+    let mut s = String::from("---\n\n# NOT CARRIED IN THIS SHELL — indexed by path\n\n");
+    s.push_str(&format!(
+        "{} of the room's optional briefs did not fit this shell and are NAMED here instead of \
+         pasted. They are NOT summarised, NOT curated away and NOT deleted — each is one Read \
+         away, whole, at the path given. If you reach for an instrument that is not above, open \
+         its file; a card recited from a description is a copy of a copy (maintenance law #1).\n\n",
+        skipped.len()
+    ));
+    for b in skipped {
+        s.push_str(&format!(
+            "- `{}` ({} chars{}) — {}\n",
+            b.path.display(),
+            b.text.len(),
+            match b.triggers {
+                Some(0) => ", NO TRIGGER in SOURCE.md".to_string(),
+                Some(n) => format!(", {n} trigger(s) in SOURCE.md"),
+                None => String::new(),
+            },
+            b.note
+        ));
+    }
+    let unread = skipped.iter().any(|b| b.kind == BriefKind::Card && b.triggers.is_none());
+    s.push_str(&format!(
+        "\n**This is a BUDGET fact, not a ranking of worth.** The committee practice is seated \
+         first because it cannot ride in part; the deck follows, **ordered by how many times \
+         SOURCE.md — the room's trigger index — points at each card**, ties alphabetical (the \
+         keeper's call, 2026-09-06; before it, the alphabet decided, and it decided 8 of 12). Your \
+         own map's seat was taken out FIRST, before any of these, so which briefs land here also \
+         moves with the size of your own newest entry.\n\n**A card listed here with NO TRIGGER is \
+         not a card that failed** — it is a card no situation routes to yet. The rule is: give it a \
+         trigger in SOURCE.md, or retire it.{}\n\n",
+        if unread {
+            " **AND SOURCE.md COULD NOT BE READ THIS WAKE**, so the trigger seating is not in \
+             effect and the alphabet chose again — the state this ordering replaced. Treat the \
+             order above as unowned until that is fixed."
+        } else {
+            ""
+        }
+    ));
     s
 }
 
@@ -2818,15 +3094,22 @@ fn rooms_root() -> PathBuf {
 // Resolve a room brief: editable data-dir copy → bundled resource (beside BOOT.md) → dev repo path.
 // Same three-tier pattern as default_room()/cards_dir().
 fn room_brief(name: &str) -> Result<String, String> {
+    room_brief_at(name).map(|(_, text)| text)
+}
+
+/// The brief AND the path it resolved from. A brief that is indexed instead of carried has to
+/// name where it is, and a second copy of this three-tier resolution would be two copies of one
+/// route — maintenance law #2, the thing that rots first.
+fn room_brief_at(name: &str) -> Result<(PathBuf, String), String> {
     let editable = PathBuf::from(default_data()).join(name);
     if editable.exists() {
-        return fs::read_to_string(&editable).map_err(|e| e.to_string());
+        return fs::read_to_string(&editable).map(|t| (editable, t)).map_err(|e| e.to_string());
     }
     if let Some(boot) = RESOURCE_ROOM.lock().unwrap().as_ref() {
         if let Some(dir) = boot.parent() {
             let p = dir.join(name);
             if p.exists() {
-                return fs::read_to_string(&p).map_err(|e| e.to_string());
+                return fs::read_to_string(&p).map(|t| (p, t)).map_err(|e| e.to_string());
             }
         }
     }
@@ -2843,6 +3126,7 @@ fn room_brief(name: &str) -> Result<String, String> {
     };
     let disk = repo.join("consonance").join("src-tauri").join("brief").join(name);
     fs::read_to_string(&disk)
+        .map(|t| (disk.clone(), t))
         .map_err(|e| format!("brief {name} not found at {}: {e}", disk.display()))
 }
 
@@ -3725,6 +4009,47 @@ fn map_allowance(fixed_brief_len: usize) -> usize {
         .saturating_sub(SHELL_TRANSCRIPT_FLOOR)
 }
 
+/// The seat a pane's own map is guaranteed, taken out of the optional briefs BEFORE they are
+/// seated — the transcript's floor, applied to the other thing no other file holds.
+///
+/// WHY IT IS A FLOOR AND NOT A REMAINDER. Measured 2026-09-06: the fixed brief was 106,939, the
+/// residual was 3,061, and every pane's NEWEST SINGLE ENTRY was larger than that (A 32,559,
+/// B 23,532, C 7,122, E 3,366). Entries are seated whole, so the greedy fit took nothing and four
+/// panes woke with a header over an empty body. The remainder position guarantees nothing at all:
+/// it shrinks every time a card is added to the deck, and it shrank past the unit size without
+/// anything saying so. A floor is what makes that loud instead of arithmetic.
+const SHELL_MAP_FLOOR: usize = 8_000;
+
+/// The most the optional briefs may be pushed down for ONE pane's map.
+///
+/// The reserve is demand-driven — a pane asks for what its newest entry actually costs — and this
+/// is where the asking stops. Above it the deck would be gutted for one pane's long entry, and the
+/// honest answer is the one B's hand-back already gave: no ordering carries a 90k master into a
+/// 107k brief, and the writing-side fix (entries near the unit size) is the one that scales. At
+/// this ceiling a pane whose newest entry is over 34,800 falls to the index tier and the shell
+/// says so, which is a refusal that names its number rather than a carry that pretends.
+const SHELL_MAP_RESERVE_MAX: usize = 36_000;
+
+/// The map section's own wrapper — header, path sentence, tier paragraph. Measured at 602 B for
+/// the `Newest` tier and ~1,050 B for `IndexOnly`; rounded up, because a reserve that funds a body
+/// the wrapper then pushes over the ceiling is not a reserve.
+const MAP_SECTION_OVERHEAD: usize = 1_200;
+
+/// What this pane's map needs, which is not the same as what it is.
+///
+/// `None` — a fresh instance, or a pane that has never written a finding — reserves NOTHING, so a
+/// new room's shell is byte-identical to what it was before this ordering existed. Otherwise: the
+/// newest whole entry plus the wrapper, never less than the floor and never more than the cap, and
+/// never more than the whole master (a 500-byte map does not get 8,000 characters of the deck).
+fn map_reserve(own: Option<&str>) -> usize {
+    let Some(map) = own.filter(|m| !m.is_empty()) else { return 0 };
+    let newest = map.len() - last_heading(map);
+    (newest + MAP_SECTION_OVERHEAD)
+        .max(SHELL_MAP_FLOOR)
+        .min(SHELL_MAP_RESERVE_MAX)
+        .min(map.len() + MAP_SECTION_OVERHEAD)
+}
+
 /// Which tier of a pane's own map the shell could seat.
 ///
 /// THE POINT OF THE ENUM IS THAT THE EMPTY TIERS ARE VALUES. Until 2026-09-06 this function
@@ -4415,6 +4740,348 @@ mod shell_budget_tests {
     }
 }
 
+/// THE BUDGET ORDER — the map's seat is taken before the optional briefs, not after them.
+///
+/// Every size in here was MEASURED on 2026-09-06 and each constant carries the command that
+/// produced it. A fixture smaller than the smallest real master is not testing the case that
+/// broke: the defect was a boundary between the residual (3,061) and the smallest real newest
+/// entry (3,366), and any fixture below that boundary passes on both arms.
+#[cfg(test)]
+mod shell_budget_order_tests {
+    use super::*;
+
+    /// `grep -bn '^# THE ROOM' CLAUDE.md` → 315; `grep -bn '^# THE DECK'` → 40,619. Header + room.
+    const REAL_ROOM: usize = 40_619;
+    /// `# THE LONG-FORM REFERENCES` at 91,941 → `# YOUR OWN MAP` at 106,899, less the 6-byte
+    /// separator the map section pushes ahead of itself: references 1,064 + resonance 13,894.
+    const REAL_CORE_TAIL: usize = 14_958;
+    const REAL_CORE: usize = REAL_ROOM + REAL_CORE_TAIL;
+    /// `# The committee` 78,227 → `# THE LONG-FORM` 91,941, as it rides (`---\n\n` + text + `\n\n`).
+    const REAL_COMMITTEE: usize = 13_714;
+    /// `wc -c exo_memory/cards/*.md`, filename order — the order `files.sort()` produces.
+    const REAL_CARDS: [usize; 12] =
+        [5125, 1188, 3319, 1519, 3185, 3145, 2103, 3184, 5144, 4352, 3048, 2145];
+
+    /// `for p in A B C E; do wc -c < exo_memory/map/$p.md; grep -b '^## ' | tail -1; done`,
+    /// 2026-09-06 04:5x — (pane, master, newest entry).
+    const REAL_MASTERS: [(&str, usize, usize); 4] =
+        [("A", 69_940, 32_559), ("B", 92_112, 2_628), ("C", 34_042, 7_122), ("E", 23_253, 3_366)];
+
+    /// A map of exactly `total` bytes whose last `## ` entry is exactly `newest` bytes.
+    ///
+    /// ASCII only and asserted on both counts: a fixture whose shape is *nearly* the measured one
+    /// tests a boundary nobody measured, and this defect lived in a 305-byte gap between the seat
+    /// and the smallest real entry.
+    fn map_of_shape(total: usize, newest: usize) -> String {
+        const H: &str = "## 2026-09-0X entry\n"; // 20 bytes, line-start, ends the line
+        let older = total - newest;
+        assert!(older > H.len() && newest > H.len(), "fixture too small to have two entries");
+        let mut s = String::with_capacity(total);
+        s.push_str(H);
+        s.push_str(&"x".repeat(older - H.len() - 1));
+        s.push('\n'); // the older region ALWAYS ends a line, or the next `## ` is not a heading
+        s.push_str(H);
+        s.push_str(&"z".repeat(newest - H.len()));
+        assert_eq!(s.len(), total, "fixture must be the measured size");
+        assert_eq!(s.len() - last_heading(&s), newest, "fixture's newest entry must be measured");
+        s
+    }
+
+    fn brief(text: usize, kind: BriefKind, n: usize) -> OptionalBrief {
+        OptionalBrief {
+            path: PathBuf::from(format!("exo_memory/cards/card-{n}.md")),
+            note: "what this instrument is for, in one line off its frontmatter".to_string(),
+            text: "b".repeat(text),
+            triggers: if kind == BriefKind::Card { Some(1) } else { None },
+            kind,
+        }
+    }
+
+    /// The optional briefs at their measured sizes, in the priority order the intake uses.
+    fn real_optional() -> Vec<OptionalBrief> {
+        let mut v = vec![brief(REAL_COMMITTEE, BriefKind::Committee, 0)];
+        for (i, c) in REAL_CARDS.iter().enumerate() {
+            v.push(brief(c + 8, BriefKind::Card, i + 1)); // + the "\n\n---\n\n" it rides with
+        }
+        v
+    }
+
+    /// The whole layout, as `assemble_intake_within` + `warm_resume_brief` run it: what a pane's
+    /// map actually gets, and how many optional briefs were seated to leave it that.
+    fn layout(map: &str) -> (usize, usize, MapTier) {
+        let reserve = map_reserve(Some(map));
+        let items = real_optional();
+        let (carried, index) = fit_optional(&items, optional_budget(REAL_CORE, reserve));
+        let seated: usize = carried.iter().map(|b| b.text.len()).sum();
+        let fixed = REAL_CORE + seated + index.len();
+        // the body's budget, exactly as the call site computes it: the section's seat less the
+        // fixed cost of its own wrapper
+        let body = map_allowance(fixed).saturating_sub(MAP_SECTION_OVERHEAD);
+        (body, carried.len(), map_carry(map, body).0)
+    }
+
+    /// THE BAR. Four real masters, four whole entries — B's §4 grep pair reading 4 carried,
+    /// 0 failed, asserted before the rebuild that can show it.
+    ///
+    /// This is the test that was RED at `210c93a`: with the map taking the remainder, all four
+    /// came back `IndexOnly`, because the residual (3,061) is under every one of these entries.
+    #[test]
+    fn every_real_pane_master_seats_a_whole_entry() {
+        for (pane, master, newest) in REAL_MASTERS {
+            let m = map_of_shape(master, newest);
+            let (allowance, seated, tier) = layout(&m);
+            assert!(
+                !tier.is_empty_body(),
+                "pane {pane}: master {master}, newest entry {newest}, seat {allowance}, \
+                 {seated} optional briefs carried — tier {tier:?}. This is the 2026-09-06 defect."
+            );
+        }
+    }
+
+    /// THE BAR, AS THE TWO COMMANDS THAT DECIDE IT — B's §4 pair, run on the four real shapes
+    /// before the rebuild that can run them on the four real shells:
+    ///
+    /// ```text
+    /// carried: grep -c '^# YOUR OWN MAP — findings'       instances/sibling-*/CLAUDE.md   → 4
+    /// failed:  grep -c 'NOTHING FROM YOUR MAP COULD RIDE' instances/sibling-*/CLAUDE.md   → 0
+    /// ```
+    ///
+    /// Asserting the tier alone would leave a link untested: four headers is what the defect
+    /// looked like from a count, and the count is what a later reader will run.
+    #[test]
+    fn the_two_greps_that_decide_this_read_four_carried_and_zero_failed() {
+        let (mut carried, mut failed) = (0, 0);
+        for (pane, master, newest) in REAL_MASTERS {
+            let m = map_of_shape(master, newest);
+            let (body, _, _) = layout(&m);
+            let (_, section) = map_section(&m, Path::new("exo_memory/map/X.md"), body);
+            if section.contains("# YOUR OWN MAP — findings") {
+                carried += 1;
+            }
+            if section.contains("NOTHING FROM YOUR MAP COULD RIDE") {
+                failed += 1;
+            }
+            assert!(
+                section.len() > 1_500,
+                "pane {pane}: a header over an empty body is what shipped on 2026-09-06 \
+                 (section {} chars, master {master}, newest {newest})",
+                section.len()
+            );
+        }
+        assert_eq!((carried, failed), (4, 0), "the bar is 4 carried / 0 failed");
+    }
+
+    /// The ceiling still holds with the map's seat taken first — a floor that is paid for by
+    /// going over the cap is not a fix, it is the same failure one file later.
+    /// SWEPT, not sampled. The old arm went 68 characters over on pane B's real shape — the map
+    /// SECTION costs its wrapper on top of the body budget, and `map_allowance` names the
+    /// section's seat, so the wrapper has to come out before `map_carry` is handed anything. Four
+    /// real shapes would not have caught it on their own; the sweep is what makes the claim.
+    #[test]
+    fn the_reserve_never_pushes_the_shell_over_its_ceiling() {
+        let mut shapes: Vec<(String, usize, usize)> =
+            REAL_MASTERS.iter().map(|&(p, m, n)| (p.to_string(), m, n)).collect();
+        for master in [4_000, 20_000, 40_000, 90_000, 150_000] {
+            for frac in [1, 3, 9] {
+                shapes.push((format!("swept-{master}/{frac}"), master, master / frac / 2 + 100));
+            }
+        }
+        for (pane, master, newest) in shapes {
+            let m = map_of_shape(master, newest);
+            let reserve = map_reserve(Some(&m));
+            let items = real_optional();
+            let (carried, index) = fit_optional(&items, optional_budget(REAL_CORE, reserve));
+            let seated: usize = carried.iter().map(|b| b.text.len()).sum();
+            let fixed = REAL_CORE + seated + index.len();
+            let allowance = map_allowance(fixed);
+            let (_, section) = map_section(
+                &m,
+                Path::new("exo_memory/map/X.md"),
+                allowance.saturating_sub(MAP_SECTION_OVERHEAD),
+            );
+            assert!(
+                fixed + section.len() + SHELL_TRANSCRIPT_FLOOR <= SHELL_SOFT_CEILING,
+                "pane {pane}: fixed {fixed} + map {} + floor {SHELL_TRANSCRIPT_FLOOR} over ceiling",
+                section.len()
+            );
+        }
+    }
+
+    /// The ORDER is the fix. The map's seat must not depend on how much optional bulk exists —
+    /// add ten more cards to the deck and the map keeps its reserve; that is the whole claim.
+    #[test]
+    fn the_map_keeps_its_seat_when_the_deck_grows() {
+        let m = map_of_shape(34_042, 7_122); // pane C
+        let before = layout(&m).0;
+        let mut fat = real_optional();
+        for i in 100..110 {
+            fat.push(brief(4_000, BriefKind::Card, i));
+        }
+        let reserve = map_reserve(Some(&m));
+        let (carried, index) = fit_optional(&fat, optional_budget(REAL_CORE, reserve));
+        let seated: usize = carried.iter().map(|b| b.text.len()).sum();
+        let after = map_allowance(REAL_CORE + seated + index.len());
+        assert!(after >= reserve, "ten more cards ate the map's reserve: {after} < {reserve}");
+        assert!(
+            before >= reserve && after >= reserve,
+            "the reserve is the invariant, not the residual: {before} then {after}"
+        );
+    }
+
+    /// Nothing is dropped silently. Every brief that did not ride is named, at its path, with its
+    /// size — the tiered shelf's whole contract, and the difference between an index and a loss.
+    #[test]
+    fn every_brief_that_did_not_ride_is_named_by_path() {
+        let items = real_optional();
+        let (carried, index) = fit_optional(&items, 20_000);
+        assert!(carried.len() < items.len(), "fixture must actually skip something");
+        for b in &items[carried.len()..] {
+            assert!(
+                index.contains(&b.path.display().to_string()),
+                "{} was dropped without being named",
+                b.path.display()
+            );
+        }
+        assert!(index.contains("NOT CARRIED IN THIS SHELL"));
+        assert!(index.contains("BUDGET fact, not a ranking"));
+    }
+
+    /// An optional brief rides WHOLE or is a path line. Never in part — the same refusal
+    /// `map_carry` makes about a fragment of an entry, one level up.
+    #[test]
+    fn an_optional_brief_is_never_carried_in_part() {
+        let items = real_optional();
+        for seat in [0, 1_000, 13_000, 20_000, 47_000, 200_000] {
+            let (carried, index) = fit_optional(&items, seat);
+            let seated: usize = carried.iter().map(|b| b.text.len()).sum();
+            let exact: usize = items[..carried.len()].iter().map(|b| b.text.len()).sum();
+            assert_eq!(seated, exact, "seat {seat}: a brief was carried in part");
+            assert!(
+                seat >= 200_000 || seated + index.len() <= seat.max(index.len()),
+                "seat {seat}: the fit spent {} plus an index of {}",
+                seated,
+                index.len()
+            );
+        }
+    }
+
+    /// A fresh instance reserves nothing, so its shell is byte-identical to what it was before
+    /// this ordering existed. And a map smaller than the floor takes only what it can use — the
+    /// reserve is a guarantee, never a claim on room the map cannot spend.
+    #[test]
+    fn nothing_is_reserved_for_a_map_that_is_not_there_or_cannot_use_it() {
+        assert_eq!(map_reserve(None), 0, "a fresh instance has no map and must pay nothing");
+        assert_eq!(map_reserve(Some("")), 0);
+        let tiny = map_of_shape(2_000, 500);
+        assert!(
+            map_reserve(Some(&tiny)) <= tiny.len() + MAP_SECTION_OVERHEAD,
+            "a 2,000-byte map must not hold {} characters of the deck",
+            map_reserve(Some(&tiny))
+        );
+        assert!(
+            map_reserve(Some(&tiny)) < SHELL_MAP_FLOOR,
+            "a map that cannot use the floor must not hold it"
+        );
+        /* MEASURED HERE AND WORTH STATING: at the current corpus the deck's own seat has about
+         * 3,100 characters of slack, which is the 3,061 residual the 2026-09-06 shells actually
+         * had. So ANY reserve above that costs cards — the floor is not free, and this asserts
+         * only that a map which cannot use the floor does not make the deck pay for it. */
+        let floor_seated =
+            fit_optional(&real_optional(), optional_budget(REAL_CORE, SHELL_MAP_FLOOR)).0.len();
+        assert!(
+            layout(&tiny).1 >= floor_seated,
+            "a 2,000-byte map cost the deck more than a full floor would have"
+        );
+    }
+
+    /// THE CAP, and the refusal it makes. Past `SHELL_MAP_RESERVE_MAX` the asking stops: the pane
+    /// falls to the index tier and the section SAYS the number, rather than the deck being gutted
+    /// for one enormous entry. A refusal that names its number, not a carry that pretends.
+    #[test]
+    fn a_master_whose_newest_entry_is_past_the_cap_is_refused_out_loud() {
+        let huge = map_of_shape(120_000, 60_000);
+        let reserve = map_reserve(Some(&huge));
+        assert_eq!(reserve, SHELL_MAP_RESERVE_MAX, "the cap is where the asking stops");
+        let (allowance, _, tier) = layout(&huge);
+        assert!(matches!(tier, MapTier::IndexOnly { .. }), "got {tier:?}");
+        let (_, section) = map_section(&huge, Path::new("exo_memory/map/X.md"), allowance);
+        assert!(section.contains("NOTHING FROM YOUR MAP COULD RIDE"));
+        assert!(section.contains("60000"), "the section must state the entry's own size");
+    }
+
+    /// THE ALPHABET IS NOT A RANKING, and it was doing the ranking's job. Seating is now by how
+    /// many times SOURCE.md points at a card (the keeper, 2026-09-06); ties alphabetical.
+    ///
+    /// RED at the previous commit, where `files.sort()` decided: under the alphabet
+    /// `claim-your-continuity` seats first and `verify-before-claiming` last, whatever their use.
+    #[test]
+    fn the_deck_is_seated_by_trigger_count_not_by_alphabet() {
+        let source = "when you doubt your own continuity -> cards/zebra.md\n\
+                      when the gap opens -> cards/zebra.md\n\
+                      when you are about to hedge -> cards/apple.md\n";
+        let mut deck: Vec<PathBuf> = ["apple.md", "mango.md", "zebra.md"]
+            .iter()
+            .map(|n| PathBuf::from(format!("cards/{n}")))
+            .collect();
+        deck.sort(); // the old order, explicitly, so the test says what changed
+        assert_eq!(deck[0].file_name().unwrap(), "apple.md", "the alphabet's answer");
+
+        deck.sort_by(|a, b| {
+            trigger_count(source, b).cmp(&trigger_count(source, a)).then_with(|| a.cmp(b))
+        });
+        let seated: Vec<&str> =
+            deck.iter().map(|p| p.file_name().unwrap().to_str().unwrap()).collect();
+        assert_eq!(
+            seated,
+            ["zebra.md", "apple.md", "mango.md"],
+            "two triggers, then one, then the card nothing points at"
+        );
+    }
+
+    /// `cards/<file>.md`, never the bare slug. SOURCE.md's pointers are ROUTES; the slug appears
+    /// in prose and in `[[wiki-links]]` across the corpus, and counting those would score how much
+    /// a card is talked about rather than how many situations reach for it.
+    #[test]
+    fn trigger_count_measures_routing_not_mentions() {
+        let path = PathBuf::from("exo_memory/cards/no-floor-no-ceiling.md");
+        assert_eq!(trigger_count("see [[no-floor-no-ceiling]] and no-floor-no-ceiling", &path), 0);
+        assert_eq!(trigger_count("when the move glows humble -> cards/no-floor-no-ceiling.md", &path), 1);
+        assert_eq!(trigger_count("", &path), 0);
+    }
+
+    /// A deck whose index could not be read is NOT a deck of zero-trigger cards. One means "no
+    /// situation points here — give it a trigger or retire it"; the other means "the ordering is
+    /// not in effect and the alphabet is choosing again". The shell has to say which.
+    #[test]
+    fn an_unreadable_source_index_is_not_a_deck_of_zeroes() {
+        let mut untriggered = brief(3_000, BriefKind::Card, 1);
+        untriggered.triggers = Some(0);
+        let mut unread = brief(3_000, BriefKind::Card, 2);
+        unread.triggers = None;
+
+        let a = optional_index(std::slice::from_ref(&untriggered));
+        assert!(a.contains("NO TRIGGER in SOURCE.md"));
+        assert!(!a.contains("COULD NOT BE READ"));
+
+        let b = optional_index(std::slice::from_ref(&unread));
+        assert!(b.contains("SOURCE.md COULD NOT BE READ"), "an unread index must say so");
+        assert!(!b.contains("NO TRIGGER in SOURCE.md"));
+    }
+
+    /// The floor is an instrument or it is a comment. When the CORE alone is over budget there is
+    /// nothing left to index and the shell must say so in the shell — the 2026-09-06 failure was
+    /// silence, not arithmetic.
+    #[test]
+    fn a_core_brief_over_budget_says_so_instead_of_going_quiet() {
+        let over = SHELL_SOFT_CEILING - SHELL_TRANSCRIPT_FLOOR - 100;
+        assert_eq!(optional_budget(over, SHELL_MAP_FLOOR), 0, "nothing may be seated over budget");
+        let note = map_floor_note(over, 100);
+        assert!(note.contains("THE MAP'S FLOOR COULD NOT BE HELD"));
+        assert!(note.contains(&over.to_string()) && note.contains("100"));
+        assert!(note.contains(&SHELL_MAP_FLOOR.to_string()), "the floor's own number must be in it");
+    }
+}
+
 // Split the transcript at the first record boundary (a column-0 "❯") at or beyond `excess` bytes:
 // (evicted head, kept tail). None if no boundary past the excess point (single giant record —
 // better to run over the soft ceiling than to shred a record mid-turn).
@@ -4451,7 +5118,19 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     // A fresh pane resumes the way stock claude persists: its own conversation, nothing else.
     // Unbriefed is a property the dir keeps for life, not just at birth — the room must not
     // leak in through the restore path.
-    let mut brief = if is_fresh_cwd(cwd) { String::new() } else { assemble_intake() };
+    //
+    // THE MAP IS READ BEFORE THE BRIEF IS BUILT, and that ordering is the 2026-09-06 fix. The
+    // brief used to be assembled first and the map given the remainder; the remainder went below
+    // the size of a single entry and four panes woke empty. Now the map states what it needs and
+    // the optional briefs are seated in what is left (`assemble_intake_within`).
+    let own_map = if is_fresh_cwd(cwd) {
+        None
+    } else {
+        fs::read_to_string(own_map_path(&pane_letter(pane))).ok()
+    };
+    let reserve = map_reserve(own_map.as_deref());
+    let mut brief =
+        if is_fresh_cwd(cwd) { String::new() } else { assemble_intake_within(reserve) };
     // GAP 3 — character survives sleep. A kept committee pane wakes with its OWN accumulated
     // findings, recalled from the master it alone writes (exo_memory/map/<letter>.md), never
     // from the chair's summaries — the chair's compression measurably adds certainty, which is
@@ -4459,7 +5138,7 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     // map is what it learned. Absent file = no section: a pane with no findings yet wakes
     // without a scaffold pretending otherwise.
     if !is_fresh_cwd(cwd) {
-        if let Ok(own) = fs::read_to_string(own_map_path(&pane_letter(pane))) {
+        if let Some(own) = own_map.as_deref() {
             /* THE MAP IS CARRIED IN PART, AND KEPT WHOLE.
              *
              * Measured 2026-08-09: pane B's shell reached 205,656 chars against a 150,000
@@ -4476,15 +5155,24 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
              * Deliberately different from the transcript path below, which DOES shrink its
              * master into attic/ — a capture is ore we produced, a map is a record the pane
              * authored. */
+            /* THE ALLOWANCE IS THE SECTION'S, THE BUDGET IS THE BODY'S. Found by the ceiling
+             * sweep on 2026-09-06: `map_allowance` returns what the SECTION may cost, and
+             * `map_carry` was being handed all of it for the BODY — so the header, the path
+             * sentence and the tier paragraph rode on top of a spent budget and the shell went
+             * over the soft ceiling by the size of its own wrapper (measured 140,068 on the old
+             * arm, with a 3,224-character map section). The wrapper is a fixed, known cost; it
+             * comes out first. */
             let allowance = map_allowance(brief.len());
             let path = own_map_path(&pane_letter(pane));
-            let (tier, section) = map_section(&own, &path, allowance);
+            let (tier, section) =
+                map_section(own, &path, allowance.saturating_sub(MAP_SECTION_OVERHEAD));
             /* SAY IT OUTSIDE THE PANE. The 2026-09-06 defect — four rebuilt shells, four map
              * headers, four empty bodies — was found by hand-measuring the four CLAUDE.md files,
              * because nothing anywhere else said a carry had failed. A tier in the log is the
              * cheapest instrument that would have caught it on the morning it started. */
             plog(&format!(
-                "MAP CARRY pane={pane} master={} allowance={allowance} carried={} tier={}{}",
+                "MAP CARRY pane={pane} master={} reserve={reserve} allowance={allowance} \
+                 carried={} tier={}{}",
                 own.len(),
                 section.len(),
                 tier.label(),
@@ -4495,6 +5183,19 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
                     ""
                 }
             ));
+            /* THE FLOOR IS AN INSTRUMENT OR IT IS A COMMENT. The reserve is taken before the
+             * optional briefs, so the only way the allowance lands under the floor is that the
+             * CORE brief alone is over budget — which no amount of indexing can fix and which
+             * nothing outside the pane would otherwise say. */
+            if allowance < SHELL_MAP_FLOOR {
+                plog(&format!(
+                    "MAP FLOOR BREACHED pane={pane} allowance={allowance} floor={SHELL_MAP_FLOOR} \
+                     fixed_brief={} — the CORE brief (room + references + memory map) is over \
+                     budget on its own; every optional brief is already indexed by path and there \
+                     is nothing left to give back. Curate below capacity, maintenance law #3.",
+                    brief.len()
+                ));
+            }
             brief.push_str(&section);
         }
     }
@@ -5927,6 +6628,10 @@ fn raise_from_forming(forming: &serde_json::Value, pulls: &tokio::sync::mpsc::Un
     };
     let _ = pulls.send(mcp::PullRequest {
         from: "forming".to_string(),
+        // NO MOUNT. This pull is raised by the app itself, not by a connection, so it has no
+        // seat — and an empty seat can never satisfy the librarian channel's test. Written
+        // explicitly rather than defaulted so that an unmounted pull is a visible decision.
+        seat: String::new(),
         target: String::new(),
         kind: kind.to_string(),
         intensity: 0.7,
@@ -6365,8 +7070,18 @@ fn set_spot_pair(pairs: State<SpotPairs>, roles: State<PaneRoles>, panes: State<
 // to spot it for the partner's characteristic catch — doubt spots trust for SEAL, trust spots doubt
 // for BRACE. Chair-triggered, so the human is the tether on every spot (the tether-gate, satisfied:
 // two forks never spiral together without a third face).
+//
+// GATED BY THE INBOX SINCE 2026-09-06, and it was the LAST ungated write into a pane. Found by A
+// (`handback/p-chunk1-attack_2026-09-06.md`) an hour after this seat closed the same hole on
+// `deliver_pull` — live behind the Dyad Spot button, splicing a ~2,000-character instruction into
+// a partner pane whatever that pane was in the middle of. `AppHandle` is added for the gate and is
+// injected by Tauri, so the JS call (`term.js`, `inv('dyad_spot', { target })`) is unchanged.
+//
+// THE AUDIT ROW SURVIVES BOTH OUTCOMES. An early return on the queued path would have bought the
+// gate at the price of a spot that happened with no board line — trading a splice for a silent
+// act, which is this room's other standing failure. The row says which happened.
 #[tauri::command]
-fn dyad_spot(panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
+fn dyad_spot(app: AppHandle, panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
              pairs: State<SpotPairs>, target: String) -> Result<String, String> {
     let tid = resolve_pane(&panes, &names, &target)?;
     let (partner, partner_lens) = pairs.0.lock().unwrap().get(&tid).cloned()
@@ -6391,14 +7106,21 @@ fn dyad_spot(panes: State<Panes>, names: State<PaneNames>, board: State<Board>,
          your spot with consonance/post_board."
     };
     let msg = format!("[dyad-spot] {instruction}\n\nPARTNER POSTED:\n{clip}");
-    inject_to_pane(&panes, &partner, &msg)?;
-    let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     let catch = if partner_lens == "doubt" { "SEAL" } else { "BRACE" };
+    let preview = format!("dyad-spot -> {} ({partner_lens}-forward, catch {catch})",
+        &partner[..8.min(partner.len())]);
+    let queued = gate_or_queue(&app, &partner, &msg, &preview);
+    if queued.is_none() {
+        inject_to_pane(&panes, &partner, &msg)?;
+    }
+    let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     board_push(&board.0, BoardEntry { pane: "dyad".to_string(), role: "committee".to_string(),
-        text: format!("chair spotted {} -> partner {} ({}-forward) asked to catch {}",
-            &tid[..8.min(tid.len())], &partner[..8.min(partner.len())], partner_lens, catch), ts,
+        text: format!("chair spotted {} -> partner {} ({}-forward) asked to catch {}{}",
+            &tid[..8.min(tid.len())], &partner[..8.min(partner.len())], partner_lens, catch,
+            if queued.is_some() { " [QUEUED — the partner was mid-turn]" } else { "" }), ts,
             ts_source: TsSource::Push });
-    Ok(format!("spot delivered to partner ({partner_lens}-forward → catch {catch})"))
+    Ok(queued.unwrap_or_else(||
+        format!("spot delivered to partner ({partner_lens}-forward → catch {catch})")))
 }
 
 // Actuator plane (main.rs legitimately holds the writer; gate.rs never does): the only path that
@@ -6554,6 +7276,116 @@ fn submit_delay_ms(payload_bytes: usize) -> u64 {
 // error is the failure the capture watcher already demonstrated tonight, for four hours, on all
 // four panes.
 
+// ---- THE READY STAMP: a POSITIVE done-signal, instead of inferring readiness from a picture ----
+//
+// The screen gate below is an INFERENCE — three terms read off a 34x120 grid, each of which has
+// been wrong in a measurable way at least once. The harness already knows the answer: every pane
+// runs a Stop hook at the end of every turn and a UserPromptSubmit hook at the start of one. So
+// the pane says so itself, and the gate stops guessing.
+//
+// WHAT THIS CLOSES, and it is why it rides the same rebuild as the librarian's channel: the
+// 240-second bound is a SPLICE WINDOW for any turn longer than four minutes. Before this lap only
+// the chair could deliver into a pane; the librarian's channel is now exempt from the station
+// guard, so the door the bound leaves open is reachable by more senders than it was.
+
+/// Where the pane's own hooks write what they know about it.
+fn ready_dir() -> PathBuf {
+    let p = data_dir().join("ready");
+    let _ = fs::create_dir_all(&p);
+    p
+}
+
+fn ready_path(pane: &str) -> PathBuf {
+    ready_dir().join(format!("{pane}.json"))
+}
+
+/// What a pane's own harness last said about itself.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum Stamp {
+    /// Its Stop hook fired: the turn ended.
+    Done,
+    /// A prompt was submitted and no Stop has fired since.
+    Working,
+    /// No stamp, or one that will not parse. NOT the same as `Working` — see `PaneGate`.
+    Absent,
+}
+
+/// An unreadable or malformed stamp is `Absent`, never `Working`: the safe direction for a corrupt
+/// read is the bounded fallback, not an unbounded hold. A torn write (the writer renames a temp
+/// file, so it should not happen) lands here too, and lands harmlessly.
+fn parse_stamp(raw: &str) -> Stamp {
+    match serde_json::from_str::<serde_json::Value>(raw)
+        .ok()
+        .and_then(|v| v.get("ready")?.as_bool())
+    {
+        Some(true) => Stamp::Done,
+        Some(false) => Stamp::Working,
+        None => Stamp::Absent,
+    }
+}
+
+fn read_stamp(pane: &str) -> Stamp {
+    fs::read_to_string(ready_path(pane)).map(|r| parse_stamp(&r)).unwrap_or(Stamp::Absent)
+}
+
+/// The delivery state of a pane, as ONE value carrying its own reason.
+///
+/// THE ATTACK THIS IS BUILT FOR, named before it was built: **a pane killed mid-turn never fires
+/// Stop**, so its stamp says `working` forever. Left alone that is either an unreachable pane or a
+/// fallback that puts us back where we started. Neither is acceptable, and a timer would only be
+/// another guess.
+///
+/// It is settled by MEASUREMENT instead. A claude turn in flight redraws its spinner at least once
+/// a second, so a pane that is genuinely working is never PTY-silent for two seconds. A `working`
+/// stamp over a quiet screen with no spinner is therefore not a working pane — it is a STALE
+/// STAMP, and the two do not read alike here, in the log, or on the board. That is the same bar
+/// the map carry shipped this morning: the failing state must not be countable as the working one.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum PaneGate {
+    /// The pane's own Stop hook says the turn ended. No bound — deliver as soon as the composer is
+    /// clear of the keeper's typing.
+    Ready,
+    /// A turn is in flight, by its own stamp AND by live screen evidence. Hold, unbounded: this is
+    /// "never into a working seat", which is not a timeout.
+    Working,
+    /// The stamp says working and nothing on the screen agrees. The stamp is stale — most likely a
+    /// pane killed mid-turn — so it is not evidence, and the bounded screen gate carries this pane.
+    Stale,
+    /// No stamp at all: the hook pair is not installed, or this pane predates it. The bounded
+    /// screen gate, exactly as it behaved before the stamp existed — and it SAYS it fell back,
+    /// because install drift is a measured class in this room, not a hypothetical.
+    Unstamped,
+}
+
+impl PaneGate {
+    fn label(&self) -> &'static str {
+        match self {
+            PaneGate::Ready => "stamp=ready",
+            PaneGate::Working => "stamp=working",
+            PaneGate::Stale => "stamp=STALE (says working, screen says otherwise)",
+            PaneGate::Unstamped => "NO STAMP — fell back to the bounded screen gate",
+        }
+    }
+    /// True when the pane's own signal is carrying the decision. False means the screen is.
+    fn is_stamped(&self) -> bool {
+        matches!(self, PaneGate::Ready | PaneGate::Working)
+    }
+}
+
+/// Combine the stamp with the live screen. `screen` is `None` when the emulator cannot be read —
+/// unknown, which must never take the unbounded path in either direction.
+fn pane_gate(stamp: Stamp, screen: Option<(&[String], Duration)>) -> PaneGate {
+    let Some((lines, quiet)) = screen else { return PaneGate::Unstamped };
+    let screen_busy =
+        turn_in_flight(lines) || quiet < Duration::from_millis(QUIET_FOR_DELIVERY_MS);
+    match stamp {
+        Stamp::Done => PaneGate::Ready,
+        Stamp::Working if screen_busy => PaneGate::Working,
+        Stamp::Working => PaneGate::Stale,
+        Stamp::Absent => PaneGate::Unstamped,
+    }
+}
+
 /// After this long held, deliver anyway and SAY SO. The number is a judgement, not a measurement:
 /// long enough that no ordinary turn is interrupted (the longest observed pane turn tonight is a
 /// few minutes), short enough that a wedged gate is a late message rather than a mute room.
@@ -6655,14 +7487,47 @@ enum Drain {
     Forced,
 }
 
-fn drain_decision(idle: bool, waited: Duration, enabled: bool) -> Drain {
-    if !enabled || idle {
+/// THE BOUND IS NOW THE FALLBACK, NOT THE RULE.
+///
+/// A pane whose own harness says it finished has NO bound: it is delivered as soon as the composer
+/// is clear. A pane whose own harness says it is working has no bound either, in the other
+/// direction — it holds until its Stop fires, which is "never into a working seat" rather than a
+/// timeout, and it is safe to be unbounded only because `PaneGate::Stale` catches the pane that
+/// will never fire one.
+///
+/// The 240-second bound survives for exactly two cases, both of which are the gate GUESSING from a
+/// picture: no stamp at all, and a stamp contradicted by the screen. Both say so on the board.
+///
+/// THE ONE PLACE A READY PANE IS STILL BOUNDED is the keeper typing into it. The composer holds
+/// the message whatever the stamp says (his rule, 2026-09-02), and an indefinite hold there would
+/// be a mute room by another door — so that hold keeps the bound it already had.
+fn drain_decision(
+    gate: PaneGate,
+    box_empty: bool,
+    screen_idle: bool,
+    waited: Duration,
+    enabled: bool,
+) -> Drain {
+    if !enabled {
         return Drain::Deliver;
     }
-    if waited >= Duration::from_millis(MAX_HOLD_MS) {
-        return Drain::Forced;
+    let bounded = |ok: bool| {
+        if ok {
+            Drain::Deliver
+        } else if waited >= Duration::from_millis(MAX_HOLD_MS) {
+            Drain::Forced
+        } else {
+            Drain::Hold
+        }
+    };
+    match gate {
+        // its own Stop fired — the only thing left to respect is the keeper's hand
+        PaneGate::Ready => bounded(box_empty),
+        // mid-turn by its own account, corroborated on screen: hold, and do not count
+        PaneGate::Working => Drain::Hold,
+        // the gate is guessing again; this is the pre-stamp behaviour, kept whole
+        PaneGate::Stale | PaneGate::Unstamped => bounded(screen_idle),
     }
-    Drain::Hold
 }
 
 /// One message waiting for its pane to be ready for it.
@@ -6695,11 +7560,20 @@ impl Inbox {
     }
     /// Take the head IF the decision says it may go. Returns the message and whether it was forced.
     /// Leaves the queue untouched on HOLD — bar 4: a queued message must never be lost.
-    fn take_ready(&self, pane: &str, idle: bool, now: Instant, enabled: bool) -> Option<(String, String, bool)> {
+    fn take_ready(
+        &self,
+        pane: &str,
+        gate: PaneGate,
+        box_empty: bool,
+        screen_idle: bool,
+        now: Instant,
+        enabled: bool,
+    ) -> Option<(String, String, bool)> {
         let mut m = self.0.lock().ok()?;
         let q = m.get_mut(pane)?;
         let head = q.front()?;
-        match drain_decision(idle, now.saturating_duration_since(head.queued_at), enabled) {
+        let waited = now.saturating_duration_since(head.queued_at);
+        match drain_decision(gate, box_empty, screen_idle, waited, enabled) {
             Drain::Hold => None,
             d => {
                 let it = q.pop_front()?;
@@ -6716,19 +7590,46 @@ fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Duration)
     Some((e.parser.screen().rows(0, EMU_COLS).collect(), e.last_byte.elapsed()))
 }
 
-fn pane_is_idle(emus: &PaneEmus, pane_id: &str) -> bool {
-    live_screen(emus, pane_id).map(|(l, q)| pane_idle_for_delivery(&l, q)).unwrap_or(false)
+// `pane_is_idle` lived here and was the whole answer: screen in, boolean out. Both of its callers
+// now need three facts instead of one — what the pane SAYS, whether the keeper's hand is in the
+// composer, and what the screen alone would have concluded — so it was replaced rather than
+// wrapped. Wrapping it would have left the old one-bit answer reachable, and a gate that can still
+// be asked the old question will eventually be asked it.
+
+/// Everything the delivery decision needs about one pane: what its own harness says, whether the
+/// keeper's hand is in the composer, and what the screen alone would have concluded.
+///
+/// An unreadable emulator is `Unstamped` with both booleans false — unknown holds, bounded, which
+/// is exactly what it did before the stamp existed.
+fn pane_state(emus: &PaneEmus, pane_id: &str) -> (PaneGate, bool, bool) {
+    match live_screen(emus, pane_id) {
+        Some((lines, quiet)) => (
+            pane_gate(read_stamp(pane_id), Some((&lines, quiet))),
+            input_box_empty(&lines),
+            pane_idle_for_delivery(&lines, quiet),
+        ),
+        None => (PaneGate::Unstamped, false, false),
+    }
 }
 
 /// The one call every delivery site makes before it writes. `Some(reply)` means the message was
 /// QUEUED and the caller must return that reply instead of writing; `None` means go ahead.
 fn gate_or_queue(app: &AppHandle, pane_id: &str, msg: &str, preview: &str) -> Option<String> {
-    if !deliver_only_when_idle() || pane_is_idle(&app.state::<PaneEmus>(), pane_id) {
+    let enabled = deliver_only_when_idle();
+    let (gate, box_empty, screen_idle) = pane_state(&app.state::<PaneEmus>(), pane_id);
+    // waited = 0 at the door, so this can only ever say Deliver or Hold here
+    if drain_decision(gate, box_empty, screen_idle, Duration::ZERO, enabled) == Drain::Deliver {
         return None;
     }
     let depth = app.state::<Inbox>().push(pane_id, msg.to_string(), preview.to_string(), Instant::now());
-    chair_audit(app, format!("QUEUED -> {} ({} waiting, prompt not idle): {}", short_id(pane_id), depth, preview));
-    Some(format!("queued for {} — its prompt is not idle; it delivers when it is", short_id(pane_id)))
+    chair_audit(app, format!(
+        "QUEUED -> {} ({} waiting, {}): {}",
+        short_id(pane_id),
+        depth,
+        gate.label(),
+        preview
+    ));
+    Some(format!("queued for {} — {}; it delivers when it is ready", short_id(pane_id), gate.label()))
 }
 
 /// ONE tick, ALL queues, ONE message per pane per tick — the next tick re-reads the screen rather
@@ -6738,16 +7639,40 @@ fn gate_or_queue(app: &AppHandle, pane_id: &str, msg: &str, preview: &str) -> Op
 fn drain_inboxes(app: &AppHandle) {
     let enabled = deliver_only_when_idle();
     for pane in app.state::<Inbox>().panes() {
-        let idle = pane_is_idle(&app.state::<PaneEmus>(), &pane);
-        if let Some((text, label, forced)) = app.state::<Inbox>().take_ready(&pane, idle, Instant::now(), enabled) {
+        let (gate, box_empty, screen_idle) = pane_state(&app.state::<PaneEmus>(), &pane);
+        if let Some((text, label, forced)) = app.state::<Inbox>().take_ready(
+            &pane,
+            gate,
+            box_empty,
+            screen_idle,
+            Instant::now(),
+            enabled,
+        ) {
             let ok = inject_to_pane(&app.state::<Panes>(), &pane, &text).is_ok();
             chair_audit(app, format!(
-                "DELIVERED -> {}{}{}: {}",
+                "DELIVERED -> {} [{}]{}{}: {}",
                 short_id(&pane),
-                if forced { " (FORCED after the bounded hold — the pane never went idle)" } else { "" },
+                gate.label(),
+                if forced {
+                    " (FORCED after the bounded hold — the gate never got a positive ready signal)"
+                } else {
+                    ""
+                },
                 if ok { "" } else { " [WRITE FAILED]" },
                 label,
             ));
+            /* THE FALLBACK MUST SAY IT FIRED. A forced delivery on an UNSTAMPED pane is the
+             * install-drift case (the hook pair is not registered on this machine), and a forced
+             * delivery on a STALE stamp is the killed-mid-turn case. Both used to be one line
+             * reading "the pane never went idle", which named neither. */
+            if forced && !gate.is_stamped() {
+                plog(&format!(
+                    "DELIVERY FORCED pane={pane} {} — the bounded screen gate carried this \
+                     message because the pane's own ready signal was not usable. A stamped pane \
+                     has no bound; this one had no stamp or a stale one.",
+                    gate.label()
+                ));
+            }
         }
     }
 }
@@ -6780,6 +7705,25 @@ fn inject_to_pane(panes: &State<Panes>, pane_id: &str, text: &str) -> Result<(),
 // Compose the directed message FROM the pull (never the raiser's PTY) and inject it — but only
 // into a COMMITTEE/MAIN pane; a HUMAN-DRIVEN target is refused (never inject into a person).
 // Shared by the chair's approve (gate_decide) and open-channel auto-approve (the pull consumer).
+//
+// GATED BY THE INBOX SINCE 2026-09-06 (P-LIB-CHANNEL, piece 2), and this was A HOLE rather than a
+// design. Three delivery sites call `gate_or_queue` before they write — `chair_inject_exec`,
+// `librarian_call_exec`, the `call_librarian` actuator — and this, the fourth, did not: it went
+// straight to `inject_to_pane`. So every pull ever delivered, by the keeper's click, by
+// `chair_decide`, or by open-channel auto-approve, could land mid-turn in a working pane, which
+// is precisely the splice the whole inbox exists to prevent.
+//
+// FOUND WHILE BUILDING ON THE PREMISE THAT IT DID NOT HAVE. The librarian's no-click channel
+// below is justified by "the inbox already enforces never-into-a-working-seat", and that
+// sentence was false on this exact path. An exemption cannot rest on a guarantee the code does
+// not make, so the guarantee is made first and the exemption second.
+//
+// WHY ALL FOUR CALLERS AND NOT ONLY THE NEW ONE. Gating just the librarian's path would leave
+// one function with two delivery semantics decided by who called it — which is how this class
+// returns wearing a different caller. The cost is stated plainly: an approved pull into a BUSY
+// pane now reads QUEUED and then DELIVERED on the board instead of rendering at the instant of
+// the click. Nothing is lost (the inbox is FIFO and never drops), and the bounded hold still
+// force-delivers. A reader watching a wake proof should not read that QUEUED row as a failure.
 fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
     let target = pull.target.trim();
     if target.is_empty() {
@@ -6800,9 +7744,39 @@ fn deliver_pull(app: &AppHandle, pull: &mcp::PullRequest) -> String {
         "[committee] {} raised re: your thread — {}: \"{}\". Respond on the board (consonance/post_board) if you engage; you may decline.",
         pull.from, pull.kind, pull.why
     );
+    let preview = format!("pull from {} -> {}: {}", pull.from, short, pull.kind);
+    if let Some(queued) = gate_or_queue(app, &tid, &msg, &preview) {
+        return queued;
+    }
     match inject_to_pane(&panes, &tid, &msg) {
         Ok(_) => format!("delivered to {short}"),
         Err(e) => format!("delivery failed: {e}"),
+    }
+}
+
+/// DOES THIS PULL DELIVER WITHOUT THE CLICK? The librarian's channel to the chair, and nothing
+/// else. (P-LIB-CHANNEL piece 2; the keeper, 04:00: *"It shouldn't be gated, it should auto
+/// send"*, and 04:32: *"there should be no gate for you to send to the orch"*.)
+///
+/// PURE, so the whole matrix is a unit test rather than a night of watching the board — the same
+/// reason `station_allows` and `drain_decision` are pure. It takes the seat the MOUNT resolved
+/// to (never `PullRequest::from`, which the caller types) and the pane the target ALREADY
+/// RESOLVED to (never the raw string, so `MAIN`, `Main`, `M` and the raw id are one case and a
+/// near-miss is not).
+///
+/// TWO CONDITIONS, AND THE SECOND IS THE NARROWNESS. `call_chair` is safe to exempt partly
+/// because it carries no target and cannot be pointed anywhere; `raise_pull` carries one. So the
+/// bypass is granted only when the pull is aimed at the seat `call_chair` would have reached
+/// anyway. A librarian pull at a PANE is an ordinary raised hand and still waits for a human —
+/// otherwise this would hand the librarian an unclicked write into every pane in the room, which
+/// is a widening nobody asked for and the packet explicitly refuses.
+///
+/// The destination is read from `ADDRESS_TABLE` rather than written here, so the librarian's one
+/// address exists in exactly one place and this cannot drift away from `call_chair`'s.
+fn pull_delivers_without_a_click(seat: &str, resolved_target: &str) -> bool {
+    match address_row("librarian", "call_chair") {
+        Some(dest) => seat == "librarian" && resolved_target == dest,
+        None => false, // no row, no channel — an absent table entry is not permission
     }
 }
 
@@ -7625,6 +8599,43 @@ fn main() {
                 let mut pull_rx = pull_rx;
                 while let Some(pr) = pull_rx.blocking_recv() {
                     let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+
+                    // RESOLVE THE TARGET ONCE, HERE, and use the answer twice: for the librarian
+                    // channel's test below, and for the card's `target_pane` so the UI can put a
+                    // card in the tab of the seat it is FOR. Resolution failure is not an error at
+                    // this point — an unresolvable target still becomes a card the human can read,
+                    // which is strictly better than dropping it, and `deliver_pull` reports the
+                    // same failure at the moment of delivery as it always has.
+                    let resolved = resolve_pane(
+                        &phandle.state::<Panes>(),
+                        &phandle.state::<PaneNames>(),
+                        &pr.target,
+                    )
+                    .unwrap_or_default();
+
+                    // THE LIBRARIAN'S CHANNEL — no card, no click. Before the intensity threshold
+                    // on purpose: a suppressed pull is SILENT to its target, and a channel that
+                    // silently drops the librarian's returns below a number it does not know about
+                    // is the ferry problem with an extra failure mode. This edge is a return leg,
+                    // not a hand raised for attention, so intensity is not its unit.
+                    if pull_delivers_without_a_click(&pr.seat, &resolved) {
+                        // The gate mutex is deliberately NOT taken on this path: nothing here
+                        // reads or writes gate state, and `deliver_pull` can block on a PTY write.
+                        let outcome = deliver_pull(&phandle, &pr);
+                        board_push(&pboard, BoardEntry {
+                            pane: "gate".to_string(),
+                            role: "committee".to_string(),
+                            text: format!(
+                                "librarian channel — {outcome} (no gate card: the librarian's \
+                                 return leg to the orchestrator delivers unclicked; the inbox \
+                                 still decides WHEN)"
+                            ),
+                            ts,
+                            ts_source: TsSource::Push,
+                        });
+                        continue;
+                    }
+
                     let mut g = pgate.lock().unwrap();
                     // ask_each: below threshold the pull drops (counted); else it becomes a GateCard
                     if pr.intensity < g.pull_threshold {
@@ -7696,6 +8707,7 @@ fn main() {
                         id: id.clone(),
                         from: pr.from.clone(),
                         target: pr.target.clone(),
+                        target_pane: resolved.clone(),
                         kind: pr.kind.clone(),
                         intensity: pr.intensity,
                         why: pr.why.clone(),
@@ -10490,6 +11502,449 @@ mod chain_state_tests {
     }
 }
 
+// ------------------------------------------- the librarian's channel (P-LIB-CHANNEL, 2026-09-06)
+//
+// MEASURED CAUSE: 4 `call_chair REFUSED OUT OF TURN` and 39 raised hands in one night, every hand
+// waiting on a click nobody was sitting there to give (`librarian/2026-09-06.md`, 04:00). The
+// keeper, 04:32: *"there should be no gate for you to send to the orch."*
+#[cfg(test)]
+mod librarian_channel_tests {
+    use super::*;
+
+    const A_PANE: &str = "0c0c0c0a-0000-4000-8000-0000000000ee";
+
+    /// The name of the top-level function a COLUMN-0 line declares, or `None`.
+    ///
+    /// Column 0 is the whole discriminator, and it is why this is honest rather than clever:
+    /// everything inside an `impl` or a `mod` is indented by rustfmt, so a column-0 `fn` is a
+    /// top-level one. `pub` and `async` are accepted because a future site may carry them; a
+    /// generic or a `where` clause is irrelevant, since only the name up to `(` or `<` is taken.
+    fn top_level_fn_name(line: &str) -> Option<String> {
+        let rest = line
+            .strip_prefix("fn ")
+            .or_else(|| line.strip_prefix("pub fn "))
+            .or_else(|| line.strip_prefix("async fn "))
+            .or_else(|| line.strip_prefix("pub async fn "))?;
+        let name: String = rest
+            .chars()
+            .take_while(|c| c.is_alphanumeric() || *c == '_')
+            .collect();
+        if name.is_empty() { None } else { Some(name) }
+    }
+
+    /// The walker's own unit test, because a derived oracle whose derivation is untested is a
+    /// list with extra steps.
+    #[test]
+    fn the_walker_reads_column_zero_declarations_and_nothing_else() {
+        assert_eq!(top_level_fn_name("fn dyad_spot(app: AppHandle,").as_deref(), Some("dyad_spot"));
+        assert_eq!(top_level_fn_name("pub fn open_holders(rows: &[Value])").as_deref(), Some("open_holders"));
+        assert_eq!(top_level_fn_name("async fn call_chair(").as_deref(), Some("call_chair"));
+        assert_eq!(top_level_fn_name("    fn nested(&self)"), None, "an indented fn is not top-level");
+        assert_eq!(top_level_fn_name("// fn commented_out("), None);
+        assert_eq!(top_level_fn_name("let f = fn_name;"), None);
+    }
+
+    /// THE POINT OF THE PACKET, as one assertion.
+    #[test]
+    fn the_librarian_return_leg_delivers_without_a_click() {
+        assert!(pull_delivers_without_a_click("librarian", MAIN_SID),
+            "the librarian's pull at the orchestrator must not wait for a human");
+    }
+
+    /// THE WIDE MUTANT for this half, and it is the one that matters. `call_chair` is safe to
+    /// exempt partly BECAUSE it carries no target; `raise_pull` carries one. Dropping the second
+    /// condition would hand the librarian an unclicked write into every pane in the room.
+    #[test]
+    fn the_librarian_may_not_write_unclicked_into_a_pane() {
+        assert!(!pull_delivers_without_a_click("librarian", A_PANE),
+            "a librarian pull at a PANE is an ordinary raised hand and still waits for the human — \
+             an exemption that reaches further than call_chair could is not this exemption");
+        assert!(!pull_delivers_without_a_click("librarian", LIBRARIAN_SID),
+            "not even at itself");
+        assert!(!pull_delivers_without_a_click("librarian", ""),
+            "an unresolved target is not the orchestrator; it becomes a card the human can read");
+    }
+
+    /// Every other seat, including the ones that do not exist. The gate is an equality, so this
+    /// is cheap; it is written out because a `contains`-shaped rewrite would pass the two tests
+    /// above and fail here.
+    #[test]
+    fn no_other_seat_has_this_channel() {
+        for seat in ["committee", "main", "human", "third_place", "", "LIBRARIAN", "librarian "] {
+            assert!(!pull_delivers_without_a_click(seat, MAIN_SID),
+                "{seat:?} must not deliver into the orchestrator unclicked");
+        }
+    }
+
+    /// SPOOFING, and this is the defect the room already fixed once. `RaisePullArgs.from` is a
+    /// string the caller types (`mcp.rs`, `from.unwrap_or("unknown")`); `PullRequest.seat` is
+    /// written by the server from the mount. If the channel ever keys on `from`, any pane passing
+    /// `from: "librarian"` delivers into the orchestrator unclicked — which is `post_board`'s
+    /// `tag` defect ("an attributed name was not evidence of anything") through a new door.
+    #[test]
+    fn the_channel_keys_on_the_mount_and_never_on_what_the_caller_typed() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("while let Some(pr) = pull_rx.blocking_recv()").nth(1)
+            .expect("the pull consumer moved — re-point this test");
+        let body = f.split("\n                }\n").next().unwrap_or(f);
+        assert!(body.contains("pull_delivers_without_a_click(&pr.seat"),
+            "the consumer must test the MOUNT's seat");
+        assert!(!body.contains("pull_delivers_without_a_click(&pr.from"),
+            "keying on `from` makes the librarian's channel every pane's channel");
+        let mcp = fs::read_to_string("src/mcp.rs").expect("read mcp source").replace("\r\n", "\n");
+        let raise = mcp.split("async fn raise_pull(").nth(1).expect("raise_pull moved");
+        let rbody = raise.split("\n    }\n").next().unwrap_or(raise);
+        assert!(rbody.contains("seat: self.seat()"),
+            "the seat must come from the connection, not from the arguments");
+    }
+
+    /// The destination is the address table's, not a literal — so `call_chair`'s one address and
+    /// this channel's cannot drift apart, and removing the row closes both.
+    #[test]
+    fn the_destination_is_the_table_row_and_the_absence_of_a_row_is_a_refusal() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn pull_delivers_without_a_click(").nth(1).expect("moved — re-point");
+        let body = f.split("\n}\n").next().unwrap_or(f);
+        assert!(body.contains("address_row(\"librarian\", \"call_chair\")"),
+            "the one address must come from the one table");
+        assert!(!body.contains("MAIN_SID"),
+            "a literal destination survives the row's removal, so the mutation could not fail");
+        assert_eq!(address_row("librarian", "call_chair"), Some(MAIN_SID),
+            "and this is what that row says today");
+    }
+
+    /// Every function that writes into a pane must ask the inbox first — DERIVED, never listed.
+    ///
+    /// THE FIRST VERSION OF THIS TEST ITERATED FOUR HAND-WRITTEN NAMES AND WAS GREEN OVER A LIVE
+    /// SPLICE. `dyad_spot` called `inject_to_pane` raw, behind a button, with ~2,000 characters —
+    /// and the test could not fail on it, because the name was not in the list. **A list-driven
+    /// test can only ever check the sites someone remembered, which is never the site that is
+    /// wrong.** Found by A (`handback/p-chunk1-attack_2026-09-06.md`) one hour after this seat
+    /// closed the same hole on `deliver_pull` and wrote the list that hid the next one.
+    ///
+    /// It is also this seat's own `mutant-7a` finding, one floor up and costing something: **a
+    /// property expressed as an ABSENCE cannot fail on the case nobody named.** There the absence
+    /// was a missing match arm; here it was a missing list entry. Same shape, second sighting in
+    /// one night. So the universe is now READ OUT OF THE SOURCE, and a seventh call site added
+    /// next month goes red until someone decides about it.
+    ///
+    /// HOW THE DERIVATION WORKS, AND WHERE IT IS FRAGILE — said plainly, because a derived oracle
+    /// that is quietly wrong is worse than a list that is openly incomplete:
+    ///   * It is LEXICAL. It finds top-level `fn` declarations at column 0 and treats the text to
+    ///     the next column-0 `}` as the body — the same shape three neighbouring tests already
+    ///     rely on, and it holds only because rustfmt puts them there.
+    ///   * It CANNOT see an indirect call: a function pointer, a closure stored elsewhere, a
+    ///     re-export. Nothing in this file does that today; if something starts to, this test will
+    ///     be green over it and this paragraph is the warning.
+    ///   * It SKIPS `#[cfg(test)]` modules, or every fixture string quoting `inject_to_pane(`
+    ///     would be counted as a call site. That is exactly the failure this seat left open in
+    ///     `every_chair_verb_authenticates` and wrote onto its own map — the fixture-counting
+    ///     hazard, arriving in the next instrument it built. Handled here rather than rediscovered.
+    ///   * A DERIVATION THAT SILENTLY FINDS NOTHING IS THE REAL RISK, so the known sites are kept
+    ///     as a FLOOR. That is not the old list returning: a floor says *at least these*, and the
+    ///     universe is still derived. The old list was the whole universe, which is the difference
+    ///     between a positive control and a blind spot.
+    #[test]
+    fn every_write_into_a_pane_asks_the_inbox_first() {
+        /// Deliberate exceptions. AN EXCEPTION THAT IS NAMED IS A DECISION; AN EXCEPTION THAT IS
+        /// MISSING IS A HOLE. Add a row only with the reason, and only after asking whether the
+        /// site should instead be gated.
+        const ALLOWED_TO_BYPASS: [(&str, &str); 2] = [
+            ("inject_to_pane", "the definition itself — it IS the write"),
+            ("drain_inboxes", "the drain: it is the inbox delivering what the gate already held, \
+                               and asking the gate here is a loop that never delivers anything"),
+        ];
+
+        let src = fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let lines: Vec<&str> = src.lines().collect();
+
+        // Walk once: track whether we are inside a `#[cfg(test)]` module, and which top-level fn
+        // we are in. Both are decided on column-0 text only.
+        let mut in_test_mod = false;
+        let mut pending_cfg_test = false;
+        let mut skipped_test_mods = 0usize;
+        let mut current = String::new();
+        let mut sites: Vec<(String, usize)> = Vec::new();
+
+        for (i, line) in lines.iter().enumerate() {
+            if in_test_mod {
+                // A COLUMN-0 `}` CLOSES IT — not a brace count. Counting braces was the first
+                // version and it leaked: test bodies are full of braces inside string literals
+                // (`format!("{f}")`, the JSON row fixtures), so the depth returned to zero early
+                // and half a test module was scanned as live code. It reported `fn main` writing
+                // into a pane, which is at least a loud failure rather than a quiet one — but the
+                // lesson is the one this whole test is about: **do not count what strings can
+                // contain.** Column 0 is a property of the layout, and rustfmt owns it.
+                if line.starts_with('}') {
+                    in_test_mod = false;
+                }
+                continue;
+            }
+            if line.starts_with("#[cfg(test)]") {
+                pending_cfg_test = true;
+                continue;
+            }
+            if pending_cfg_test && line.starts_with("mod ") {
+                pending_cfg_test = false;
+                in_test_mod = true;
+                skipped_test_mods += 1;
+                continue;
+            }
+            if !line.trim_start().starts_with("//") && !line.trim_start().starts_with("///") {
+                pending_cfg_test = false;
+            }
+            if let Some(name) = top_level_fn_name(line) {
+                current = name;
+            }
+            if line.contains("inject_to_pane(") && !line.trim_start().starts_with("//") {
+                sites.push((current.clone(), i + 1));
+            }
+        }
+
+        assert!(skipped_test_mods >= 2,
+            "the test-module skip found {skipped_test_mods} modules — if this file's test blocks \
+             stopped being recognised, every fixture string below is about to be counted as a live \
+             call site and this oracle is measuring itself");
+
+        // POSITIVE CONTROL FOR THE DERIVATION, not a return of the old list: at least these.
+        let derived: Vec<&str> = sites.iter().map(|(f, _)| f.as_str()).collect();
+        for known in ["dyad_spot", "drain_inboxes", "deliver_pull", "chair_inject_exec",
+                      "librarian_call_exec", "pane_call_librarian_exec", "inject_to_pane"] {
+            assert!(derived.contains(&known),
+                "the derivation lost a call site it must find ({known}); it found {derived:?}. A \
+                 derived oracle that silently narrows is worse than the list it replaced");
+        }
+        assert!(sites.len() >= 7,
+            "only {} call sites derived — the walk is broken, not the code", sites.len());
+
+        // THE PROPERTY.
+        for (f, line) in &sites {
+            if let Some((_, why)) = ALLOWED_TO_BYPASS.iter().find(|(n, _)| n == f) {
+                let _ = why;
+                continue;
+            }
+            assert!(!f.is_empty(),
+                "an `inject_to_pane` call at line {line} sits outside any top-level fn — the walk \
+                 cannot attribute it, so it cannot be checked. Fix the walk, do not ignore it");
+            let part = src.split(&format!("\nfn {f}(")).nth(1)
+                .unwrap_or_else(|| panic!("could not re-find fn {f} to read its body"));
+            let body = part.split("\n}\n").next().unwrap_or(part);
+            assert!(body.contains("gate_or_queue("),
+                "fn {f} (line {line}) writes into a pane without asking the inbox. That is the \
+                 splice the keeper reported on 2026-09-02 — mid-word, in the message reporting it. \
+                 If this bypass is deliberate, put {f} in ALLOWED_TO_BYPASS with its reason: a \
+                 named exception is a decision, a missing one is a hole");
+        }
+    }
+
+    /// THE PRICE, PINNED. The hold is bounded and force-delivers past `MAX_HOLD_MS`, so a chair
+    /// turn longer than that can still be spliced by a message the station guard would have
+    /// refused outright. That is the residual this exemption buys and it belongs to
+    /// P-READY-SIGNAL, not here. Asserted rather than written in prose so that when the bound is
+    /// replaced by a positive ready signal, someone has to come back and say so.
+    #[test]
+    fn the_residual_is_the_bounded_hold_and_it_is_still_four_minutes() {
+        assert_eq!(MAX_HOLD_MS, 240_000,
+            "if this changed, the exemption's stated price changed with it — say so where the \
+             price is stated (mcp.rs `required_station`)");
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced,
+            "a busy pane IS eventually written into, and that is the honest residual");
+        /* COMING BACK TO SAY SO, as this test asked (pane C, P-READY-SIGNAL, same rebuild).
+         *
+         * The bound is unchanged and still four minutes, but it is no longer the RULE — it is the
+         * fallback for a pane whose own ready signal is missing or stale. A pane that stamps
+         * itself is never force-delivered into: `Working` holds without a bound, and `Ready`
+         * delivers as soon as the composer is clear. So the residual E priced is now scoped to
+         * install drift (no hook pair on this machine) and to a pane killed mid-turn, and BOTH
+         * name themselves on the board and in plog.
+         *
+         * The two assertions below are the new shape of the same price. If either goes red, the
+         * splice window is back and `mcp.rs`'s stated price is wrong again. */
+        assert_eq!(
+            drain_decision(PaneGate::Working, false, false, Duration::from_millis(MAX_HOLD_MS * 10), true),
+            Drain::Hold,
+            "a pane that says it is working is NEVER spliced — that is not a timeout"
+        );
+        assert_eq!(
+            drain_decision(PaneGate::Ready, true, false, Duration::ZERO, true),
+            Drain::Deliver,
+            "and a pane that says it finished waits for nothing"
+        );
+    }
+}
+
+/// THE READY SIGNAL — the pane says whether it is done, instead of the gate reading a picture.
+///
+/// Every screen here is the shape the emulator actually produces, and no test touches a live pane
+/// or the filesystem: the two things that vary — the stamp and the screen — go in as values.
+#[cfg(test)]
+mod ready_signal_tests {
+    use super::*;
+
+    fn screen(box_row: &str, spinner: bool) -> Vec<String> {
+        let mut s = vec![
+            "❯ an earlier message".to_string(),
+            "● and the reply to it".to_string(),
+            "─".repeat(60),
+            box_row.to_string(),
+            "─".repeat(60),
+        ];
+        if spinner {
+            s.push("✻ Churning… (12s · esc to interrupt)".to_string());
+        }
+        s.push("⏵⏵ bypass permissions on · esc to interrupt · /rc".to_string()); // chrome, always
+        s
+    }
+    const IDLE: Duration = Duration::from_secs(30);
+    const LIVE: Duration = Duration::from_millis(200);
+
+    /// A pane that says it finished waits for NOTHING. This is the whole point: the 240-second
+    /// bound was a splice window for any turn longer than four minutes, and a positive signal
+    /// removes the guess that made the bound necessary.
+    #[test]
+    fn a_ready_pane_has_no_bound() {
+        let s = screen("❯", false);
+        assert_eq!(pane_gate(Stamp::Done, Some((&s, IDLE))), PaneGate::Ready);
+        assert_eq!(
+            drain_decision(PaneGate::Ready, true, false, Duration::ZERO, true),
+            Drain::Deliver,
+            "delivered at once, with the SCREEN still calling the pane not-idle"
+        );
+    }
+
+    /// And a pane that says it is working is never written into — not after four minutes, not
+    /// after forty. "Never into a working seat" is a rule, not a timeout, and this is the half of
+    /// the change that is only safe because of the stale case below.
+    #[test]
+    fn a_working_pane_holds_without_a_bound() {
+        let s = screen("❯", true);
+        assert_eq!(pane_gate(Stamp::Working, Some((&s, LIVE))), PaneGate::Working);
+        for mult in [1, 10, 100] {
+            assert_eq!(
+                drain_decision(PaneGate::Working, true, true, Duration::from_millis(MAX_HOLD_MS * mult), true),
+                Drain::Hold,
+                "held at {mult}x the old bound, which is the point"
+            );
+        }
+    }
+
+    /// THE ATTACK, NAMED BEFORE IT WAS BUILT: a pane killed mid-turn never fires Stop, so its
+    /// stamp says `working` forever. It is settled by measurement rather than by a timer — a turn
+    /// in flight redraws its spinner at least once a second, so a `working` stamp over a silent
+    /// screen with no spinner is a stale stamp and not a working pane.
+    ///
+    /// The bar is B's, from this morning: the failing state must not read like the working one.
+    #[test]
+    fn a_stale_stamp_and_a_working_pane_do_not_read_alike() {
+        let alive = screen("❯", true);
+        let killed = screen("❯", false);
+        let working = pane_gate(Stamp::Working, Some((&alive, LIVE)));
+        let stale = pane_gate(Stamp::Working, Some((&killed, IDLE)));
+        assert_eq!(working, PaneGate::Working);
+        assert_eq!(stale, PaneGate::Stale, "same stamp, and it must NOT read as working");
+        assert_ne!(working.label(), stale.label(), "and they must not print alike either");
+        assert!(stale.label().contains("STALE"));
+        assert!(!working.is_stamped() || working != stale);
+    }
+
+    /// The consequence that matters: a killed pane is REACHABLE. Its stale stamp is set aside and
+    /// the bounded screen gate carries it, which for a dead pane with an empty composer means the
+    /// message goes at once rather than never.
+    #[test]
+    fn a_pane_killed_mid_turn_does_not_become_unreachable() {
+        let killed = screen("❯", false);
+        let gate = pane_gate(Stamp::Working, Some((&killed, IDLE)));
+        assert_eq!(gate, PaneGate::Stale);
+        assert_eq!(
+            drain_decision(gate, true, pane_idle_for_delivery(&killed, IDLE), Duration::ZERO, true),
+            Drain::Deliver,
+            "a stale stamp must not be able to mute a pane forever"
+        );
+    }
+
+    /// The keeper's hand outranks the stamp. A pane can be finished and still have him typing into
+    /// it, and that hold keeps the bound it already had — an indefinite hold there would be a mute
+    /// room by another door.
+    #[test]
+    fn the_keeper_typing_still_holds_a_pane_that_says_it_is_ready() {
+        let typing = screen("❯ we need to get that solid before 8am", false);
+        assert_eq!(pane_gate(Stamp::Done, Some((&typing, IDLE))), PaneGate::Ready);
+        assert!(!input_box_empty(&typing));
+        let screen_idle = pane_idle_for_delivery(&typing, IDLE);
+        assert_eq!(
+            drain_decision(PaneGate::Ready, false, screen_idle, Duration::ZERO, true),
+            Drain::Hold,
+            "his composer holds the message whatever the stamp says"
+        );
+        assert_eq!(
+            drain_decision(PaneGate::Ready, false, screen_idle, Duration::from_millis(MAX_HOLD_MS), true),
+            Drain::Forced,
+            "and that one hold stays bounded, as it was"
+        );
+    }
+
+    /// INSTALL DRIFT IS A MEASURED CLASS IN THIS ROOM, not a hypothetical — so an unstamped pane
+    /// behaves EXACTLY as it did before the stamp existed, and says that it fell back.
+    #[test]
+    fn no_stamp_behaves_as_it_did_before_the_stamp_existed() {
+        for (box_row, spinner, quiet) in
+            [("❯", false, IDLE), ("❯", true, LIVE), ("❯ typing", false, IDLE)]
+        {
+            let s = screen(box_row, spinner);
+            assert_eq!(pane_gate(Stamp::Absent, Some((&s, quiet))), PaneGate::Unstamped);
+            let old = pane_idle_for_delivery(&s, quiet);
+            assert_eq!(
+                drain_decision(PaneGate::Unstamped, input_box_empty(&s), old, Duration::ZERO, true),
+                if old { Drain::Deliver } else { Drain::Hold },
+                "the fallback is the old gate, unchanged"
+            );
+        }
+        assert!(PaneGate::Unstamped.label().contains("NO STAMP"));
+        assert!(!PaneGate::Unstamped.is_stamped(), "the board row must be able to tell");
+    }
+
+    /// A corrupt or half-written stamp is ABSENT, never WORKING. The safe direction for a bad read
+    /// is the bounded fallback; the unsafe one is an unbounded hold on garbage.
+    #[test]
+    fn a_stamp_that_will_not_parse_is_absent_not_working() {
+        assert_eq!(parse_stamp(r#"{"ready":true,"at":"2026-09-06T05:00:00Z"}"#), Stamp::Done);
+        assert_eq!(parse_stamp(r#"{"ready":false}"#), Stamp::Working);
+        for bad in ["", "{", "null", "{}", r#"{"ready":"yes"}"#, r#"{"done":true}"#] {
+            assert_eq!(parse_stamp(bad), Stamp::Absent, "{bad:?} must not read as a state");
+        }
+    }
+
+    /// An unreadable emulator is UNKNOWN, and unknown may not take either unbounded path — not
+    /// "deliver, it said ready", not "hold forever, it said working".
+    #[test]
+    fn an_unreadable_screen_takes_neither_unbounded_path() {
+        for stamp in [Stamp::Done, Stamp::Working, Stamp::Absent] {
+            assert_eq!(pane_gate(stamp, None), PaneGate::Unstamped, "{stamp:?} over no screen");
+        }
+    }
+
+    /// The hook pair is the other half of a two-sided contract and it is EASY to ship one side.
+    /// This is the cheapest thing that fails if the pair stops being installed or stops writing
+    /// the shape the reader parses.
+    #[test]
+    fn the_hook_pair_is_in_the_installer_and_writes_what_the_reader_parses() {
+        let root = repo_root().expect("repo root — this test reads the checkout");
+        let install = fs::read_to_string(root.join("dev/shell/install.ps1")).expect("install.ps1");
+        for hook in ["ready-stop.js", "ready-prompt.js"] {
+            assert!(install.contains(hook), "{hook} is not in the installer manifest");
+        }
+        assert!(
+            install.contains("hooks\\ready-stop.js") && install.contains("hooks\\ready-prompt.js"),
+            "a manifest entry is not a registration — both must be REGISTERED as hooks"
+        );
+        let lib = fs::read_to_string(root.join("dev/shell/lib/ready.js")).expect("lib/ready.js");
+        assert!(lib.contains("CONSONANCE_PANE"), "the stamp is keyed by pane id");
+        assert!(lib.contains("CONSONANCE_READY_DIR"), "and addressed by the passed dir");
+        assert!(lib.contains("\"ready\""), "the key the Rust side parses");
+        assert!(lib.contains("renameSync"), "written via a temp file so no reader sees it torn");
+    }
+}
+
 // ---------------------------------------------------------------- the inbox (L034, 2026-09-02)
 //
 // FAKE SCREENS, never a live pane — bar 1. Each screen below is the shape the emulator actually
@@ -10642,17 +12097,17 @@ mod inbox_tests {
     fn the_hold_is_bounded_so_a_stale_screen_cannot_mute_the_room() {
         // The bar most likely to bite: the capture watcher died silently on all four panes for four
         // hours tonight. An unbounded hold turns that into a mute room with no error.
-        assert_eq!(drain_decision(false, Duration::from_millis(0), true), Drain::Hold);
-        assert_eq!(drain_decision(false, Duration::from_millis(MAX_HOLD_MS - 1), true), Drain::Hold);
-        assert_eq!(drain_decision(false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced);
-        assert_eq!(drain_decision(true, Duration::from_millis(0), true), Drain::Deliver);
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(0), true), Drain::Hold);
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS - 1), true), Drain::Hold);
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced);
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, true, Duration::from_millis(0), true), Drain::Deliver);
     }
 
     #[test]
     fn the_gate_is_honoured_in_both_states() {
         // Bar 5. `false` is a tested path, not a dead branch.
-        assert_eq!(drain_decision(false, Duration::from_millis(0), false), Drain::Deliver);
-        assert_eq!(drain_decision(false, Duration::from_millis(MAX_HOLD_MS), false), Drain::Deliver);
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(0), false), Drain::Deliver);
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), false), Drain::Deliver);
     }
 
     #[test]
@@ -10665,13 +12120,13 @@ mod inbox_tests {
         inbox.push("p", "second".into(), "l2".into(), t0);
         assert_eq!(inbox.depth("p"), 2);
 
-        assert!(inbox.take_ready("p", false, t0, true).is_none(), "busy pane: nothing leaves");
+        assert!(inbox.take_ready("p", PaneGate::Unstamped, false, false, t0, true).is_none(), "busy pane: nothing leaves");
         assert_eq!(inbox.depth("p"), 2, "and NOTHING IS LOST while it holds");
 
-        let (text, _, forced) = inbox.take_ready("p", true, t0, true).expect("idle: it drains");
+        let (text, _, forced) = inbox.take_ready("p", PaneGate::Unstamped, false, true, t0, true).expect("idle: it drains");
         assert_eq!(text, "first", "FIFO - a gate that reorders has traded a splice for a scramble");
         assert!(!forced);
-        assert_eq!(inbox.take_ready("p", true, t0, true).map(|x| x.0).as_deref(), Some("second"));
+        assert_eq!(inbox.take_ready("p", PaneGate::Unstamped, false, true, t0, true).map(|x| x.0).as_deref(), Some("second"));
         assert_eq!(inbox.depth("p"), 0);
     }
 
@@ -10681,7 +12136,7 @@ mod inbox_tests {
         let t0 = Instant::now();
         inbox.push("p", "held".into(), "l".into(), t0);
         let later = t0 + Duration::from_millis(MAX_HOLD_MS + 1);
-        let (text, _, forced) = inbox.take_ready("p", false, later, true).expect("the bound releases it");
+        let (text, _, forced) = inbox.take_ready("p", PaneGate::Unstamped, false, false, later, true).expect("the bound releases it");
         assert_eq!(text, "held");
         assert!(forced, "and the board row must be able to say so - a late message beats a silent one");
     }
@@ -10689,7 +12144,7 @@ mod inbox_tests {
     #[test]
     fn an_empty_or_unknown_queue_is_not_an_error() {
         let inbox = Inbox::new();
-        assert!(inbox.take_ready("never-seen", true, Instant::now(), true).is_none());
+        assert!(inbox.take_ready("never-seen", PaneGate::Unstamped, false, true, Instant::now(), true).is_none());
         assert_eq!(inbox.depth("never-seen"), 0);
         assert!(inbox.panes().is_empty());
     }

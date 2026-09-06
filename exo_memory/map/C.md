@@ -526,3 +526,107 @@ General form: **cleanup is a write, and the release rule does not exempt it.** W
 under work already done, the deliverable is a precise description of the state you left, not a
 restoration of the state you think the new owner wants. The description costs a paragraph; the
 restoration risks the other seat's work and re-commits the offence in reverse.
+
+## 2026-09-06 — L041 chunk 1(a), the shell budget order: the map is not the remainder
+
+**The defect, one level under the number everyone quoted.** Four panes woke with a map header over
+an empty body and the figure that travelled was "the allowance is 3,061." It is, but that is the
+symptom. The map sat in the REMAINDER POSITION — ceiling, minus the transcript's floor, minus
+whatever the fixed brief happened to want — and nothing in the program ever compared what was left
+to the size of the unit it has to seat. Entries ride whole; the smallest real newest entry is
+3,366; so the remainder crossed under the unit and **no state in the program differed as a result.**
+A budget with no floor is not a small budget, it is an unmeasured one.
+
+**What I built.** `assemble_intake_within(map_reserve)` — the pane's map is read BEFORE the brief
+is assembled and states what it needs (`map_reserve`: newest entry + wrapper, floor 8,000, cap
+36,000, never more than the master). The room, the references and the memory map are CORE and ride
+whole. The deck and the committee brief became `OptionalBrief`s: seated whole while they fit,
+otherwise **indexed by path** under `# NOT CARRIED IN THIS SHELL`, each with its path, size and
+`description:` line. The fit walks down from everything-rides and measures the index block rather
+than estimating it. Floor breach is loud in two places — `plog` and a titled section in the shell.
+
+**Three things I would tell myself before doing this again.**
+
+1. **A fixture that does not assert its own dimensions is a measurement you invented.** My first
+   `map_of_shape` truncated the older region off a line boundary, so `last_heading` found the wrong
+   heading and every "real" shape was ~1,000 bytes wrong. The builder's own two `assert_eq!`s
+   caught it before a single claim came out of it. Cheap, and it made the difference between
+   testing the case that broke and testing a case near it.
+2. **I nearly weakened a test instead of reading it.** I asserted *a tiny map must cost the deck
+   nothing* — wanted, not measured — and it failed. The reason it failed is the finding: the deck
+   has only ~3,100 characters of slack at zero reserve, so ANY floor costs cards. The failing
+   assertion was the instrument; rewriting it to pass would have deleted the one number in this
+   packet that argues against the packet.
+3. **Four real shapes are a sample, not a sweep.** All four passed a ceiling check that was wrong.
+   Nineteen swept shapes found it: `map_allowance` names what the SECTION may cost and `map_carry`
+   was being handed all of it for the BODY, so the wrapper rode on a spent budget — 140,068 against
+   a 140,000 ceiling on pane B's real shape. **The real cases are where you look; the sweep is what
+   makes the claim.**
+
+**The price, and I put it in the shell rather than in a footnote.** Three of twelve cards are
+indexed for a normal pane; pane A, whose newest entry is 32,559, wakes with the committee brief and
+zero cards. That is the trade the bar buys, it is author-controlled (A's next ordinary entry
+restores its deck), and the cap that decides it is the keeper's call, costed both ways in §5 of the
+hand-back. The deck stopped fitting its own seat TONIGHT — the next card added lands in the index,
+not in the shell.
+
+**And the thing this packet is really about.** I wrote 34,042 characters into this file and woke
+with none of them. The fix is not that the number went up; it is that the map now *asks first* and
+the things that lose their seat are **named at their path instead of vanishing**. An index is a
+citation. An empty body under a header that claims a carry is the only real failure here.
+
+Hand-back: `exo_memory/handback/p-shell-budget_2026-09-06.md`.
+
+## 2026-09-06 — L041 chunk 1(c) + the keeper's two calls: the pane says whether it is done
+
+**What the packet was.** The delivery gate held a message for a busy pane by reading its SCREEN, so
+the hold had to be bounded — 240 seconds, then deliver anyway — and that bound is a splice window
+for any turn longer than four minutes. The harness already knew the answer: a pane runs a Stop hook
+at the end of every turn. So the pane stamps itself and the gate stops guessing.
+
+**The finding that changed the design, and it is the one worth keeping.** The plan said *"the
+harness already emits it — `dev/shell/hooks/stop.js` is in the manifest."* It is in the manifest and
+**it is not registered on this machine**: `install.ps1` declares five Stop hooks and
+`~\.claude\settings.json` has two. Hanging a new contract off a file that never fires would have
+shipped a stamp nobody writes, on a system that looked installed. **A manifest entry is not a
+registration** — which is written in that same file, dated 2026-08-18, about two hooks that shipped
+and never fired. I only found it because I checked what was actually wired instead of reading the
+plan's premise as a fact.
+
+**The attack, and the shape of the answer.** A pane killed mid-turn never fires Stop, so its stamp
+says `working` forever — unreachable pane, or a fallback that gains nothing. The answer is not a
+timer: **a turn in flight redraws its spinner at least once a second**, so a `working` stamp over a
+two-second-silent screen with no spinner is a STALE stamp and not a working pane. Four states, not
+one boolean, and stale/working/unstamped print differently on the board. *Reach for the measurement
+that already exists in the system before reaching for a constant — a threshold is a guess wearing a
+number.*
+
+**Two things I did that I would do again.**
+
+- **I deleted `pane_is_idle` instead of keeping it as a wrapper.** Both callers now need three facts
+  rather than one; a gate that can still be asked the old one-bit question will eventually be asked
+  it. The dead-code warning was what surfaced the choice, and taking it seriously was right.
+- **I ran the hooks for real** — scratch dir, piped payload, checked the file, checked the no-pane
+  case and the dream gate and the absence of `.tmp` leftovers. Asserting about a file's contents in
+  Rust is not the same as watching it get written. (And the first run showed `session_id: null`,
+  which was MY shell eating backslashes in the test payload, not the hook — the note about the Bash
+  tool doing that is in my own memory and I still lost ten minutes to it.)
+
+**Where the honesty had to go in the hand-back:** four of the nine tests pass on both arms of the
+red-first run, because they guard the fallback rather than assert the change. Saying so costs
+nothing and is the difference between nine red-first tests and five.
+
+**Two keeper decisions landed with it.** `SHELL_MAP_RESERVE_MAX` stays 36,000 — his number, not a
+derived one. And the deck is seated by how many times SOURCE.md points at each card, ties
+alphabetical, zero-trigger cards last: the alphabet had been choosing which instruments every pane
+woke holding, and under it a two-trigger card was being dropped while a zero-trigger one rode.
+Matched on `cards/<name>.md` and never the bare slug — the slug is all over the corpus in prose and
+wiki-links, and counting those measures how much a card is talked about, not how many situations
+route to it.
+
+**And one thing I reported rather than touched:** js-suite calls `corpus-age.test.js` CRASHED; run
+alone it is 9 passed, 0 failed, in 142 seconds. A per-file timeout printing the dead file's word for
+a slow one is the same reading-alike defect the room keeps meeting — this time inside the instrument
+that measures the other instruments.
+
+Hand-back: `exo_memory/handback/p-ready-signal_2026-09-06.md`.
