@@ -188,3 +188,53 @@ window — this file's own failure class, reproduced inside the fix for it. The 
 written twice, with a test pinning the literals against `app.css`.
 
 **Hand-back:** `exo_memory/handback/p-loop-logo_2026-09-02.md`. Not proven: nobody has looked at it.
+
+## 2026-09-06 · L037 · the gate I was sent to fix had never been written
+
+**The finding, as a sentence that could be wrong:** `gen-consumer.build.test.js` — cited as a
+running `cargo check` gate by five documents including the generator's own header (`:70`), the
+parity report (`:196`), a hand-back, `map/J.md` twice, and my own packet — **has never existed in
+this repo's history, on any branch, and is on no disk here.** So the room was not running a weak
+gate over the consumer tree; it was running none, while four documents reasoned from a description
+of one. `gen-consumer.test.js`'s own header says so in plain words and went unread for two weeks:
+*"that took minutes and is not suite-shaped, so the structural equivalent lives here."* Intention in
+one header, recorded as done in another, cited from the second. **The 2026-08-17 / 2026-08-23
+carrier class with the sign flipped: not a correction that failed to propagate, a claim that was
+never true that did.**
+
+**Then built it anyway, because the refutation changes what I say, not whether I deliver.** Oracle
+moved to `cargo build` + a launch probe with four verdicts.
+
+**The bar-4 answer, and it is a platform fact nobody had looked at:** on every machine a seat works
+from, the app is ALREADY RUNNING, so launching the generated exe hits `claim_single_instance`
+(`main.rs:4458`) → `warn_second_instance` (`:4498`) → a **`MessageBoxW` the process blocks in**.
+Measured: `#32770 | visible | "Consonance - already running"`. **The process is alive AND owns a
+visible top-level window whose title contains the app's name.** Alive-based and MainWindowHandle-
+based probes both call that LAUNCHED. The discriminator is the window CLASS, measured off the live
+app (`Tauri Window`), never assumed. Two more of the same shape: `MainWindowHandle` missed a real
+window for 10s where `EnumWindows` found it instantly; and `CARGO_TARGET_DIR` is set here, holding a
+`consonance.exe` built 09-02 **from the source tree** — a gate would have probed that and called the
+generated tree green.
+
+**Mutants 10/10** — M1b is the one that counts: with the spelling assertion deleted, reverting to
+`cargo check` is still caught, in 203 ms, by a crate that checks 0 and builds 101.
+
+**Two corrections to myself, both worth carrying.** (1) My positive control for the single-instance
+detector asked a CHILD to hold a mutex and report on itself — `singletonHeld()` was never called on
+a held name, so the "always FREE" mutant SURVIVED. js-suite's own E-2 lesson, broken by the seat
+quoting it four tests earlier. (2) **My mutation harness read a crash as a pass** — a mangled
+replacement left an unbalanced paren, no `# fail` line was emitted, and my regex scored it 0 = clean.
+That is the same two-facts-one-reading shape I was sent to fix, built on the way to fixing it.
+
+**And the keeper stopped me at 01:16: my dialog fixture put a real MessageBox on his desktop, once
+per mutation run, eight times.** The probe never launched Consonance — `--gate` refuses while the
+singleton is held and I never ran it — but the annoyance was mine either way. Rebuilt the fixture as
+`CreateWindowExW` on the same `#32770` class, off-screen, `SW_SHOWNA`: identical fact, 222 ms instead
+of seconds, invisible. **The general form: we run inside the program we are building, so a test's
+side effects land on a person. The on-screen version was buying nothing.** Probe now off unless
+`CONSONANCE_LAUNCH_PROBE=1`, and the default run PRINTS that it was not exercised.
+
+**Not verified, and it is the headline:** nobody has launched the app from a generated tree,
+including me. `--gate` is written and unexecuted.
+
+**Hand-back:** `exo_memory/handback/p-first-push-gate_2026-09-06.md`.
