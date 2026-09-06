@@ -217,6 +217,16 @@ named files. They never commit to a shared checkout.
 > names the recovery. `--by X --holder X` is a re-take and is always allowed.
 >
 > *Drafted by pane K (P-D006 packet 5, `3f363c1`), landed by the chair -- the file is a shared carrier.*
+
+> **RECORD THE OPENED ROW BEFORE THE DISPATCH ROW.** On a lap that has a map, `lap-row.js --stage ...
+> dispatched` and `... filed` are refused until `--opened <lap> --paths <p,...>` exists. If none of the
+> map's paths were opened, `--paths none` is the answer and it is the falsifier firing, which is
+> worth more than a blank. A lap with no map row is not gated — there would be no legal move.
+>
+> *Offered verbatim by pane K (P-D011 packet 1, `a474645`) and landed by the chair. The gap it closes:
+> `--opened` had never been called — 0 rows of 61, across eleven laps — so `from-map = 0` was an empty
+> column that the chair published to the keeper as a finding. The word appeared in these briefs only as
+> a SCORER and zero times as an instruction. Not a failed prose ask: an ask never written.*
 Every dispatch this room has ever sent went out **mid-turn**: composed from reasoning that was not
 finished, not verified, and not written anywhere yet. The keeper named it the night the librarian
 got a channel of its own, and it applies to the chair at greater volume — chair→pane has worked
@@ -272,6 +282,14 @@ bought a review nobody wanted at the price of every dispatch that was never made
     SCORED BY:  node consonance/tools/lap-row.js --report — `from-map` must leave 0 within three
                 laps of this amendment. If it does not, the boundary was never what stopped the
                 dispatch, and this amendment is a story about one bad week.
+
+    STATUS 2026-09-06: NOT-INSTRUMENTED, neither refuted nor re-armed. This falsifier was scored on a
+                column that had never been written: `--opened` was called 0 times in 61 ledger rows,
+                so `from-map = 0` meant NEVER MEASURED, not measured-and-zero. The chair read the
+                render and reported to the keeper that this falsifier had FIRED. ~~It fired.~~ It could
+                not fire. STRUCK 2026-09-06, dated in place rather than deleted.
+                THE CLOCK STARTS 2026-09-06T17:12Z, at D011's opened row — the first non-empty cell
+                in that column (opened 5, from-map 3). Three laps from there is the window.
 
 **EVERY HOP IS TWO TURNS.** One to finish and show understanding; one to call. The call is *based
 on* the finished output and is never composed alongside it:
