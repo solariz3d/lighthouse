@@ -347,3 +347,53 @@ the registry seeded (38,167 B → 477 B, crash → declared-inert), the debt ins
 entry 6 re-grammared, entry 1 armed with the refusal proven both ways, 12 new tests (11 red against
 HEAD), 26/26 mutants over a green suite, five falsifiers, and a defect reported in `carrier-drift.js`
 that is not mine to fix.
+
+## 2026-09-06 — P-D011 packet 1, THE WRITER-GATE for the opened row (lap D011)
+
+### The gate reaches a lap only as far as its map row does — and the part that PASSES is the finding
+
+Retrodicted before a line was written: of eleven laps, **six refuse at eight rows**; **four are not
+gated at all** because they have no `--map` row (D002 and the ring laps D008–D010), so seven gated
+rows sail through; D011 passes because its opened row exists. The packet offered "if the answer is
+all of them, say so" — it wasn't, and the gap is the shape of the week: **ring laps skip `--map`, so
+a gate hung off the map row is structurally half-blind.** Asserted as a test that fails if the
+refused list ever grows to eleven.
+
+### The refusal that has no legal move is the one to design against, and `opened()` decides where
+
+`opened()` refuses on a lap with no map row, so gating a mapless lap would leave a seat **nothing to
+type — not even `--paths none`.** That is why the gate is conditioned on the map and not on the lap.
+Two WEDGE mutants exist for exactly this (gate a mapless lap; make a recorded `none` stop
+satisfying), because **five of the fifteen new tests are green at HEAD by design** — they are the
+ALLOW side, and a test asserting something is NOT refused passes just as well against a tool with no
+gate in it. **Only mutation can tell an ALLOW test from a decoration.**
+
+### `--paths none` recorded and the verb never called were THE SAME STATE in the fold
+
+`hasOpened` was `opened.length > 0` — off the paths — so a lap that deliberately recorded *nothing
+was opened* filed as UNMEASURED, in the exact field this tool's own falsifier counts. The verb's
+refusal text had been asking seats to record that since the day it was built. My own D009 finding —
+**absent and empty are different instruments** — arriving one column over, inside the instrument that
+taught it to me. Found by writing the `--paths none` test, not by reading the code.
+
+### A guard one row disarms forever is theatre pointing the other way
+
+This tool's own falsifier reads `withOpened === 0` over the WHOLE ledger. `L.length` only grows, so
+**the single opened row written today silences it permanently** — eleven laps could pass from here
+with nothing opened and it would still print *does not fire*. I did not re-base a registered
+falsifier; the windowed form that CAN fire twice is printed beside it and named NOT REGISTERED, and
+the call is routed up. **Ask what would catch the lapse AFTER your gate ships; at HEAD the answer was
+nothing.**
+
+### A number that travels one document unchanged is still not checked
+
+The packet's object was `0 opened rows of 61` — true when written, stale when I read it (65 rows, 1
+opened: D011's own row, written in between). Re-deriving rather than quoting is the only reason D011
+is in the retrodiction as an ALLOW at all.
+
+### Hand-back
+
+`exo_memory/handback/p-d011-opened-gate_2026-09-06.md` — the gate, the retrodiction, two defects
+found under it (the fold conflation, the one-shot falsifier), the remove-vs-repair refusal actually
+weighed, four falsifiers, one existing test fixture changed with its reason stated, 15 new tests
+(10 red against HEAD), 113/0 suite, 51/51 mutants over a green suite.

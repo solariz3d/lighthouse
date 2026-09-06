@@ -39,7 +39,7 @@
 //   node lap-row.js --open --initiator <human|chair|pane|librarian> --entry <orch|lib|ring>
 //                    --inquiry <text> --guess <p[,p...]> [--blind]
 //   node lap-row.js --map <lap-id> --paths <p[,p...]>
-//   node lap-row.js --opened <lap-id> --paths <p[,p...]>
+//   node lap-row.js --opened <lap-id> --paths <p[,p...]>   (--paths none is legal; see THE OPENED-ROW GATE)
 //   node lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--note <text>]
 //                    --by is REQUIRED when the row moves the baton - see THE BATON-ORDER GATE below
 //   node lap-row.js --void <lap-id> --reason <text> --by <seat>
@@ -360,7 +360,14 @@ function laps(all = rows()) {
       head: open ? open.head : null,
       guess, guessNarrow, guessBroad: guess.filter(isBroad),
       mapped, opened, both, mapOnly, openedFromMap, openedFromMapOnly,
-      hasMap: !!map, hasOpened: opened.length > 0, integrity,
+      hasMap: !!map,
+      /* AN OPENED ROW EXISTS, which is NOT the same as "paths were opened" — and the difference is
+       * this lap's whole subject. `--opened --paths none` is a legal, deliberate record of the
+       * falsifier firing (`opened()` says so in its own refusal text), and folding it to
+       * `opened.length > 0` filed it as UNMEASURED: the recorded none and the never-written read
+       * identically, in the field the tool's own falsifier counts. Found while building the writer
+       * gate; the conflation the gate exists to remove was already inside the fold. */
+      hasOpened: L.openeds.length > 0, openedRows: L.openeds.length, integrity,
       voided, gapS,
     };
   }).sort((a, b) => a.at - b.at);
@@ -504,6 +511,61 @@ function opened(lap, paths, now) {
  * row and diffing the output, which is BYTE-IDENTICAL. Still one ledger, still append-only, still
  * one more value of `stage`. Just not a value that already means something else. */
 const CHAIN_STAGES = ['inquiry', 'map', 'dispatched', 'working', 'handbacks-in', 'return-leg', 'filed'];
+
+// ---------------------------------------------------------------- THE OPENED-ROW GATE
+
+/* WHY THIS IS IN THE WRITER AND NOT IN A THIRD PROSE ASK. `--opened` was built on 2026-08-27 and
+ * CALLED ZERO TIMES in the eleven laps that followed. The column rendered as `0` rather than as
+ * absent; the chair read the render and published `from-map = 0` to the keeper as a finding about
+ * the librarian's maps when it was a fact about a verb nobody ran.
+ *
+ * THE TOOL HAD ALREADY SAID SO, which is the part worth keeping: `--report` has printed
+ * "FIRES. 11 laps, 0 with an opened stage [...] the opened column should be removed or the practice
+ * repaired rather than the number kept for the look of it" since the tenth lap opened, under the
+ * table, unread across at least four runs. A FOOTER IS NOT A CALL SITE. The librarian's ruling
+ * (`librarian/2026-09-06.desktop.md`, 11:03) is that the verb already exists and what is missing is
+ * the place it gets called: "the writer enforces the order". This is that place.
+ *
+ * AND IT IS THE 09-04 BATON GATE ONE TURN OVER, deliberately — same shape, same refusal grammar,
+ * same no-wedge obligation: a rule nobody could keep by discipline becomes a refusal that names the
+ * command that satisfies it.
+ *
+ * WHY THESE TWO STAGES. The map's paths are consumed AT DISPATCH — that is the moment a seat has
+ * just decided which of them to open, and the one place no document names the verb. `filed` is the
+ * backstop, not a duplicate: it catches the lap whose dispatch row predates its own map row (limit
+ * 2 below), where the dispatch check structurally cannot fire. Every other stage is untouched.
+ *
+ * WHY ONLY A LAP THAT HAS A MAP, and this is the no-wedge property rather than a softening.
+ * `opened()` refuses on a lap with no map row — "opened records which of the MAP's paths were
+ * used" — so gating a mapless lap would leave the seat NO LEGAL MOVE, not even `--paths none`.
+ * A refusal with no satisfying command is the wedge `mcp.rs` rests on this file not to create.
+ *
+ * ── WHAT THIS GATE CANNOT SEE, and unlike the baton gate these do not all resolve toward allow ──
+ *
+ *   1. WHETHER THE ROW IS TRUE. `--opened --paths a,b` is self-report exactly as `--by` is. The
+ *      gate makes an answer REQUIRED; it cannot make one correct. Limit (c) already stood and is
+ *      unchanged: the row records what was opened, never why.
+ *   2. A MAP THAT ARRIVED AFTER THE DISPATCH — the case the packet asked about by name, and the
+ *      answer is NO. The check reads the ledger AT WRITE TIME, which is everything an append-only
+ *      writer has: at the instant such a `dispatched` row is written the lap has no map, so no
+ *      `opened` row is writable and the gate must let it pass. The lap's `filed` row is refused
+ *      instead, one stage later, because the map exists by then. So the sequence is caught late,
+ *      never missed — unless the lap never gets a map at all, which is (3). On the live ledger this
+ *      has never happened: all seven mapped laps wrote their map row before their first gated row.
+ *      Counted by `--report` rather than left to this comment.
+ *   3. A LAP WITH NO MAP ROW AT ALL. Four of the eleven laps on record — D002, and the ring laps
+ *      D008/D009/D010 — never got one, so seven gated rows pass unchecked. That is not a hole for
+ *      this gate to close: a lap with no map has no map-path measurement to reach, and the missing
+ *      thing is the `--map` row, a different instrument's subject.
+ *   4. A SECOND DISPATCH. One opened row satisfies every later gated row on the lap. A fan-out that
+ *      opens new paths on its second packet MAY record another; nothing here requires it, because a
+ *      requirement no seat can satisfy on a lap that opened nothing new is (again) a wedge.
+ *
+ * *Falsifier, registered before this ships:* if a seat is found stuck behind this gate with no
+ * legal move — the same falsifier the baton gate carries — the reasoning above is wrong. Checkable
+ * against the ledger: any lap whose `dispatched`/`filed` row is missing while its map row exists
+ * and its `opened` row cannot be written. */
+const OPENED_GATED_STAGES = new Set(['dispatched', 'filed']);
 
 // ---------------------------------------------------------------- THE BATON-ORDER GATE
 
@@ -755,6 +817,37 @@ function chain(lap, stage, holder, note, now, to, by) {
       throw new Error(`--to names the panes the baton went to, so it goes with --holder panes; got --holder ${JSON.stringify(h)}.`);
     }
   }
+  /* THE OPENED-ROW GATE, placed BELOW every vocabulary check and ABOVE the baton gate. Both halves
+   * of that position are load-bearing:
+   *
+   *   below the lap-existence and station checks, for the reason the station gate is where it is —
+   *   `chain-status.test.js` asserts that `--stage L999 working --holder pane-a` is refused with
+   *   `no such lap`, and any refusal hoisted above that one silently stops that assertion testing
+   *   what it names;
+   *
+   *   above the baton gate, because this reads THIS LAP'S OWN ROWS and nothing else — no board, no
+   *   possession window, no second system — and the file's existing ladder puts the cross-system
+   *   check last. The order between the two costs a seat nothing either way: writing the opened row
+   *   does not move the baton, so a ring already in the window stays in it.
+   *
+   * The refusal names the command that satisfies it, and names `--paths none` as legal in the same
+   * breath, because the one way this gate could do harm is by reading as "you must have opened
+   * something". It is a gate on the RECORD, never on the behaviour. */
+  if (OPENED_GATED_STAGES.has(s)
+      && all.some((r) => r.lap === lap && r.stage === 'map')
+      && !all.some((r) => r.lap === lap && r.stage === 'opened')) {
+    throw new Error(`this lap HAS A MAP and NO OPENED ROW, and \`${s}\` is the stage where that stops being fixable.\n` +
+      `  The map named paths. Nothing records which of them the receiving seat actually opened, so\n` +
+      `  the from-map column reads 0 when the honest answer is NEVER WRITTEN — the exact column the\n` +
+      `  chair published to the keeper as a finding on 2026-09-06, after 11 laps and 0 calls.\n` +
+      `  Do this first:\n` +
+      `      node consonance/tools/lap-row.js --opened ${lap} --paths <p[,p...]>\n` +
+      `  If NONE of the map's paths were opened, SAY SO — that is legal, it is this tool's own\n` +
+      `  falsifier firing, and it is worth more than a blank:\n` +
+      `      node consonance/tools/lap-row.js --opened ${lap} --paths none\n` +
+      `  Then re-run this exact command. The row records WHAT was opened, never why (limit c), and\n` +
+      `  a lap with no map row is not gated at all — there would be no legal move.`);
+  }
   /* THE BATON-ORDER GATE, and it is deliberately the LAST refusal, for the reason the station gate
    * above is second-to-last: `chain-status.test.js` asserts that `--stage L999 working --holder
    * pane-a` is refused with `no such lap`, and every refusal placed above that one silently stops
@@ -890,7 +983,10 @@ function report(last, out = console.log) {
       out(head +
         `${String(l.guessNarrow.length).padEnd(7)}${String(l.guessBroad.length).padEnd(7)}${String(l.mapped.length).padEnd(5)}` +
         `${String(l.both.length).padEnd(6)}${String(l.mapOnly.length).padEnd(10)}` +
-        `${String(l.opened.length).padEnd(8)}${l.openedFromMap.length}`);
+        // NEVER WRITTEN IS NOT ZERO. J's D010 lesson, applied to the column that taught it: a count
+        // that cannot distinguish "measured, and the answer was none" from "nobody ever called the
+        // verb" is a rumour. A `0` here now means a recorded `--paths none`, and nothing else.
+        `${(l.hasOpened ? String(l.opened.length) : 'never').padEnd(8)}${l.hasOpened ? l.openedFromMap.length : 'never'}`);
     }
   }
 
@@ -1004,6 +1100,35 @@ function report(last, out = console.log) {
     out(`  ${answered} of ${WINDOW}.`);
   }
   out(`  of those, ${reached} opened a path the guess had NOT named - that subset is the only one where the corpus reached the work.`);
+  /* THE DENOMINATOR'S HONESTY, printed rather than left to whoever quotes the number next. A lap
+   * with no opened row is counted above as though the answer were NO, because that is the only
+   * reading available until the row exists — but it is NEVER WRITTEN, not zero, and for the first
+   * eleven laps of this ledger it was every lap. The arithmetic is deliberately NOT changed: the
+   * falsifier is registered in brief/BUILDING.md over dispatches, and re-basing it on a measured
+   * subset is that document's call and not this file's. What changes is that the number can no
+   * longer be read as though its whole window had been measured. */
+  const unmeasured = w.filter((l) => !l.hasOpened).length;
+  if (unmeasured) {
+    out(`  ${unmeasured} of those ${w.length} carry NO opened row: NEVER WRITTEN, not zero. They count above as`);
+    out('  "did not return an opened path", which is the only available reading and is not a measurement.');
+    out('  The writer now REFUSES dispatched/filed on a mapped lap until that row exists.');
+  }
+  /* LIMIT 2 OF THE OPENED-ROW GATE, made countable instead of narrated: a gated row written BEFORE
+   * its own lap's map row cannot be refused, because at that instant no opened row is writable. The
+   * lap's `filed` row catches it one stage later. A count here that keeps growing while no `filed`
+   * row is ever refused means the backstop is not doing its job. */
+  const allRows = rows();
+  const lateMap = L.filter((l) => {
+    const mapRow = allRows.find((r) => r.lap === l.lap && r.stage === 'map');
+    if (!mapRow) return false;
+    return allRows.some((r) => r.lap === l.lap && r.stage === 'chain'
+      && OPENED_GATED_STAGES.has(r.chain) && r.at < mapRow.at);
+  });
+  out(`  laps whose dispatched/filed row PREDATES their own map row: ${lateMap.length}` +
+    (lateMap.length ? ` (${lateMap.map((l) => l.lap).join(', ')}) - the opened-row gate cannot fire on those` : '') +
+    ` of ${L.length}.`);
+  out(`  laps with a map and no opened row at all: ${L.filter((l) => l.hasMap && !l.hasOpened).length} of ` +
+    `${L.filter((l) => l.hasMap).length} mapped. A lap with no map is NOT gated - there would be no legal move.`);
 
   // ---- FALSIFIER 2 (pane E)
   out('');
@@ -1035,6 +1160,27 @@ function report(last, out = console.log) {
   } else {
     out(`  ${withOpened} of ${L.length} laps carry an opened stage. ${L.length < WINDOW ? `Window not full (${WINDOW}).` : 'Does not fire.'}`);
   }
+  /* THIS FALSIFIER IS A ONE-SHOT, and saying so is the point of the two lines below.
+   *
+   * It reads `withOpened === 0` over the WHOLE ledger, so the single opened row written by hand on
+   * 2026-09-06 (D011, five paths) disarms it PERMANENTLY: `L.length` only grows and `withOpened`
+   * never returns to zero, so no future lapse - however long - can ever fire it again. A guard that
+   * one row silences for the life of the ledger is theatre pointing the other way from the theatre
+   * it was registered to catch.
+   *
+   * THE REGISTERED ARITHMETIC IS DELIBERATELY NOT CHANGED. The sentence above is the falsifier as
+   * written when this tool shipped, and re-basing a registered falsifier on a different denominator
+   * is a decision to be made in the open, not a repair to slip in beside a gate. So the windowed
+   * reading - the one that can fire twice - is PRINTED beside it and named as not-yet-registered.
+   * Whoever rules on it has both numbers in front of them.
+   *
+   * Found while building the opened-row gate, by asking what would catch the practice lapsing AFTER
+   * the gate ships. The answer at HEAD was: nothing. */
+  const recent = L.slice(-WINDOW);
+  const recentOpened = recent.filter((l) => l.hasOpened).length;
+  out(`  NOT REGISTERED, printed beside it: over the LAST ${recent.length} lap(s), ${recentOpened} carry an opened stage.`);
+  out('  The line above reads the whole ledger, so ONE opened row disarms it permanently - it can never');
+  out('  fire again on this ledger whatever happens next. This windowed reading is the form that can.');
 
   // ---- the limits, printed WITH the number rather than filed in a header
   out('');
@@ -1116,6 +1262,8 @@ function main(argv, now = Date.now()) {
   console.error('              ring = no user inquiry entered - the loop supplied this lap itself');
   console.error('  lap-row.js --map <lap-id> --paths <p[,p...]>');
   console.error('  lap-row.js --opened <lap-id> --paths <p[,p...]>');
+  console.error('      --paths none is LEGAL and records the falsifier firing; it is NOT the same as never calling this.');
+  console.error('      REQUIRED before --stage <lap> dispatched|filed on a lap that has a map (the opened-row gate).');
   console.error('  lap-row.js --stage <lap-id> <stage> --holder <station> [--by <station>] [--to <letters>] [--note <text>]');
   console.error(`      stages: ${CHAIN_STAGES.join(' -> ')}`);
   console.error(`      holder: ${[...STATIONS].join(' | ')}   a STATION, never a pane name`);
@@ -1136,5 +1284,6 @@ module.exports = {
   normPath, isBroad, sealOf, rows, laps, open, map, opened, chain, voidLap, report, mintId, main,
   deliveryStation, gateVerdict, verbFor, gateContext, stationOfPaneCwd,
   LEDGER, RATE_FLOOR, WINDOW, COMMIT_WINDOW, INITIATORS, ENTRIES, STATIONS, CHAIN_STAGES, FRESH_MAP_FLOOR_S,
+  OPENED_GATED_STAGES,
   DIRECT_NO_GUESS_RUN, MAIN_SID, LIBRARIAN_SID,
 };

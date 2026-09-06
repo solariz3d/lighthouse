@@ -232,6 +232,95 @@ const MUTANTS = [
     name: 'the verdict is not recorded on the row, so the gate\'s own bypasses stop being countable',
     apply: s => s.replace("    by: b, gate: g.verdict === 'unchanged' ? null : g.verdict,", '    by: b,'),
   },
+
+  /* ── THE OPENED-ROW GATE (2026-09-06) ───────────────────────────────────
+   *
+   * FIVE OF THIS GATE'S FIFTEEN TESTS ARE GREEN AT HEAD ON PURPOSE, and that is why these mutants
+   * carry more of the weight than usual. They are the ALLOW side — a recorded `--paths none` satisfies
+   * the gate, a mapless lap is not gated at all, D011 passes — and a test asserting that something
+   * is NOT refused passes equally well against a tool with no gate in it. Nothing but a mutation can
+   * tell those apart from a guard, so the wedge-shaped defects below are the only evidence that the
+   * ALLOW side is held rather than merely stated.
+   *
+   * The direction that matters most is the one the baton gate already names: too tight is worse
+   * than absent. A gate that refuses a lap with no legal move wedges the room; a gate that demands
+   * PATHS teaches seats to invent them. Both are below. */
+  {
+    name: 'OPENED-GATE OFF: a mapped lap reaches dispatched/filed with the column never written (the state this lap found)',
+    apply: s => s.replace('  if (OPENED_GATED_STAGES.has(s)', '  if (false && OPENED_GATED_STAGES.has(s)'),
+  },
+  {
+    name: 'OPENED-GATE WEDGE: a lap with NO MAP is gated too, and no legal move exists there (opened() refuses it)',
+    apply: s => s.replace("      && all.some((r) => r.lap === lap && r.stage === 'map')\n", ''),
+  },
+  {
+    name: 'OPENED-GATE WEDGE: a recorded --paths none stops satisfying it, so a seat must invent paths to proceed',
+    apply: s => s.replace("      && !all.some((r) => r.lap === lap && r.stage === 'opened')) {",
+      "      && !all.some((r) => r.lap === lap && r.stage === 'opened' && r.paths.length)) {"),
+  },
+  {
+    name: 'OPENED-GATE: the terminal stage is exempted, and the backstop for a late map row goes with it',
+    apply: s => s.replace("const OPENED_GATED_STAGES = new Set(['dispatched', 'filed']);",
+      "const OPENED_GATED_STAGES = new Set(['dispatched']);"),
+  },
+  {
+    name: 'OPENED-GATE: every chain stage is gated, so a lap cannot even record its inquiry',
+    apply: s => s.replace("const OPENED_GATED_STAGES = new Set(['dispatched', 'filed']);",
+      'const OPENED_GATED_STAGES = new Set(CHAIN_STAGES);'),
+  },
+  {
+    /* THE HOIST, the same mutant the station gate carries, aimed at the newest refusal. A refusal
+     * placed above the lap-existence check breaks an assertion in a suite this file does not own:
+     * chain-status.test.js requires `--stage L999 working --holder pane-a` to say `no such lap`. */
+    name: 'OPENED-GATE: HOISTED above the lap-existence check (breaks a suite this file does not own)',
+    apply: s => {
+      const a = s.indexOf('  if (OPENED_GATED_STAGES.has(s)');
+      if (a < 0) return s;
+      const end = s.indexOf('\n  }\n', a) + '\n  }\n'.length;
+      const gate = s.slice(a, end);
+      const without = s.slice(0, a) + s.slice(end);
+      const target = "  const all = rows();\n  if (!all.some(r => r.lap === lap)) {";
+      const i = without.indexOf(target);
+      return i < 0 ? s : without.slice(0, i) + gate + without.slice(i);
+    },
+  },
+  {
+    /* THE CONFLATION, restored at its source. Not a gate defect: it is the FOLD reading "an opened
+     * row exists" off the PATHS, so a deliberate `--paths none` — the falsifier firing, which the
+     * verb's own refusal text asks seats to record — files as never-measured. Shipped behaviour
+     * until this lap, in the field this tool's own falsifier counts. */
+    name: 'FOLD: hasOpened reads the PATHS again, so a recorded none is indistinguishable from never written',
+    apply: s => s.replace('      hasOpened: L.openeds.length > 0, openedRows: L.openeds.length, integrity,',
+      '      hasOpened: opened.length > 0, openedRows: L.openeds.length, integrity,'),
+  },
+  {
+    name: 'REPORT: the opened columns print 0 again, so never-written and a measured none are one number',
+    apply: s => s.replace(
+      "        `${(l.hasOpened ? String(l.opened.length) : 'never').padEnd(8)}${l.hasOpened ? l.openedFromMap.length : 'never'}`);",
+      '        `${String(l.opened.length).padEnd(8)}${l.openedFromMap.length}`);'),
+  },
+  {
+    name: 'REPORT: falsifier 1 stops saying how much of its own window was never measured',
+    apply: s => s.replace('  if (unmeasured) {', '  if (false) {'),
+  },
+  {
+    name: 'REPORT: the case the gate CANNOT refuse (a dispatch predating its map row) stops being counted',
+    apply: s => s.replace('  out(`  laps whose dispatched/filed row PREDATES their own map row: ${lateMap.length}`',
+      '  out(``'),
+  },
+
+  {
+    /* The one-shot finding, guarded. The registered falsifier reads the WHOLE ledger, so the single
+     * opened row of 2026-09-06 silences it forever; the windowed reading printed beside it is the
+     * only thing that can still see a lapse. Delete it and the report reads exactly as a room that
+     * kept the practice - which is the shape this whole lap is about. */
+    name: 'FALSIFIER: the windowed reading stops printing, so the one-shot silence looks like compliance',
+    apply: s => s.replace('  const recent = L.slice(-WINDOW);', '  const recent = [];'),
+  },
+  {
+    name: 'FALSIFIER: the windowed reading reads the whole ledger too, and is a second copy of the one-shot',
+    apply: s => s.replace('  const recent = L.slice(-WINDOW);', '  const recent = L.slice();'),
+  },
 ];
 
 const raw = fs.readFileSync(TOOL, 'utf8');
