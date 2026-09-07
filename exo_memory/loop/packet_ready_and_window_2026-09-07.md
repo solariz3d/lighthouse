@@ -17,6 +17,42 @@ decide what it does: hold, or deliver with the row saying it overrode a live scr
 why** — and remember the keeper's rule that his hand outranks the stamp, which is the case that
 taught us the third `Forced` producer exists at all.
 
+
+## 1a · P-GHOST-TEXT — THE KEEPER FOUND THIS AT 05:09 AND IT OUTRANKS THE REST OF §1
+
+**His words:** *"the greyed out text prediction! If it spawns in the bar, it stops the loop."*
+
+**The mechanism.** `input_box_empty` (`main.rs:7418`, over `capture::is_empty_box`) reads the grid as
+**plain text**. Claude Code's dim-grey autocomplete prediction sits in the composer as real cells, so
+**the gate reads a prediction as the keeper typing** and every delivery holds.
+
+**Three stalls tonight were ghosts, not the keeper:** *"score it"*, *"start L042"*, *"dispatch them"*.
+The chair looked at A's captured screen at 05:10 and read `/rc` as *"three stray characters nobody
+sent"* — **wrong**: it is the predictor's ghost, which regenerates, and cannot be cleared once.
+
+**It is the 2026-08-22 predictor error with the sign flipped.** Then a seat acted on the predictor's
+text *as the human*. Now the gate refuses *because* it reads the predictor's text as the human. Same
+surface, same confusion of author, opposite direction.
+
+**THE FIX:** `input_box_empty` counts **only cells at DEFAULT SGR attributes** as typed text. The
+prediction is dim — SGR 2, or a grey foreground in the emulator's cells. Typed text is not.
+
+    RED FIRST   a captured screen with a ghost in the box must read EMPTY after, BUSY before.
+                Fixture: the librarian's scratchpad chair_ghost_0509.bin, or reproduce one by
+                opening a composer and letting the prediction appear.
+    MUTANT      count dim cells as typed again => red.
+    MUTANT      count NOTHING as typed => red. Real typing must still hold a delivery, or the
+                keeper gets spliced mid-sentence and we have traded the whole point away.
+    FALSIFIER   a delivery held with stamp=ready over a box holding only dim text => not fixed.
+
+**AND CHECK `None => false` WHILE YOU ARE IN THERE.** `input_box_empty` returns FALSE — busy — when
+it finds no prompt and no empty box at all. A capture that is merely unrecognisable therefore reads
+as *the keeper is typing*. **That may be right (fail safe) or wrong (fail stuck); say which and why**,
+because tonight four packets sat queued for two and a half hours on a pane nobody was at.
+
+**THIS IS THE ONE THAT UNBLOCKS THE OTHERS.** Its own packet could not be delivered to you because of
+it.
+
 ## 2 · YOUR §6 — a red at HEAD, and it is the two-writers class
 
 `shelf_tests::the_shelf_windows_the_librarians_own_notes` **fails right now.** Chair-confirmed at the
