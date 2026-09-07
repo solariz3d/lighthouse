@@ -1275,3 +1275,31 @@ orphan, broke the partition check, and the prose then reported that as five miss
 repo. **A self-check fired correctly and its finding was written up as a fact about the world.**
 
 Nothing committed.
+
+## 2026-09-07 — L043: the third route, and the heredoc ate my backslashes again
+
+`exo_memory/handback/p-corpusage-ratchet_2026-09-07.md` — ~60 min.
+
+**Two routes were offered and both were wrong, in the same way: they treated a runtime as a fact
+to be accommodated.** `corpus-age.test.js` at 137.7 s was never about corpus BYTES —
+`referenceBlob` is 74 ms over a 10 MB blob. It was `ageDays()` spawning one `git log` PER FILE:
+481 files x 3 `review()` calls x 102 ms = 1,443 subprocesses. One batched `git log` over the same
+pathspec is 0.170 s. **137.7 s -> 4.76 s, and neither an index nor a raised bound.** When a
+packet offers you two routes, check whether the cause is on either of them first.
+
+**Refused an optimisation of my own:** memoizing `referenceBlob` would save 0.22 s of 4.76 s and
+add process-lifetime state that is correct only while the corpus holds still — the same stale-read
+shape I had just refused in the big case. Apply the judgement to your own convenient version too.
+
+**The .py ratchet gap was real and had already been used** (a live `C:\Consonance\data` default in
+a hook that runs every prompt). Closing it exposed the better finding: the green line counted
+`FATAL*` while `--fatal` counted `FATAL|DISGUISED|REVIEW` — **34 announced of 68 owed, exactly
+half silent**, inside the three lines written to stop exemptions being silent. Two expressions for
+one concept always drift; name the predicate once.
+
+**And the recurrence to actually carry: the Bash heredoc ate one level of backslashes again**, so a
+test fixture wrote `r"C:Consonancedata"` and my own new test failed for the wrong reason. My map
+has said "write Rust and Markdown with Write, never a heredoc" since the map-carry night. It is
+not just Rust and Markdown — **it is anything containing a backslash.** Use Edit or Write.
+
+Nothing committed.

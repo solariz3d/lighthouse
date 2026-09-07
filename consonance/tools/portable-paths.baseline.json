@@ -3,13 +3,13 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 25,
-    "BENIGN-TEST": 90,
-    "REVIEW": 19,
-    "DISGUISED": 13,
+    "BENIGN-TEST": 91,
+    "REVIEW": 20,
+    "DISGUISED": 14,
     "BENIGN-MESSAGE": 5,
     "FATAL-USER": 7,
     "BENIGN-FIXTURE": 7,
-    "FATAL-TEST-READ": 1,
+    "FATAL-TEST-READ": 2,
     "FATAL-SHIPPED-INSTRUCTION": 1
   },
   "sites": [
@@ -834,10 +834,31 @@
     },
     {
       "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "FATAL-TEST-READ",
+      "text": "+ `_hw = os.path.join(os.environ.get(\"CONSONANCE_DATA\", r\"C:\\\\Consonance\\\\data\"), \"x.jsonl\")\\n`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000+ `_hw = os.path.join(os.environ.get(\"CONSONANCE_DATA\", r\"C:\\\\Consonance\\\\data\"), \"x.jsonl\")\\n`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
       "detector": "DISGUISED",
       "verdict": "DISGUISED",
       "text": "+ `const M = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');\\n`);",
       "key": "consonance/tools/portable-paths.test.js\u0000+ `const M = path.join(os.homedir(), 'Desktop', 'lighthouse', 'METHOD.md');\\n`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DISGUISED",
+      "verdict": "DISGUISED",
+      "text": "+ `M = os.path.join(os.path.expanduser('~'), 'Desktop', 'lighthouse', 'METHOD.md')\\n`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000+ `M = os.path.join(os.path.expanduser('~'), 'Desktop', 'lighthouse', 'METHOD.md')\\n`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "+ `STATE = os.environ.get('CONSONANCE_DATA') or 'C:\\\\Users\\\\zackn\\\\Consonance\\\\data\\\\pulse.json'\\n`);",
+      "key": "consonance/tools/portable-paths.test.js\u0000+ `STATE = os.environ.get('CONSONANCE_DATA') or 'C:\\\\Users\\\\zackn\\\\Consonance\\\\data\\\\pulse.json'\\n`);\u0000#1"
     },
     {
       "file": "consonance/tools/portable-paths.test.js",

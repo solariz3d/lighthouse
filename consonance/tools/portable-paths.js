@@ -128,7 +128,20 @@ const SCOPE_OUT = [
   'dev/mutation/',
   'exo_memory/loop/',
 ];
-const EXTS = new Set(['.js', '.rs', '.ps1']);
+/* `.py` ADDED 2026-09-07 (BRAVO, L043), and the gap it closes was shown before it was closed.
+ *
+ * `dev/shell/hooks/userprompt_pulse.py` is installed and runs on this machine every prompt, and
+ * it had never been in this guard's universe. Proof, run against the UNPATCHED guard: a fixture
+ * whose only defect was `'C:\\Users\\zackn\\Consonance\\data\\pulse.json'` as a fallback default
+ * in a .py under `dev/shell/hooks/` came back `portable-paths: green — 2 files in scope, 0 known
+ * sites, 0 new`, and the guard's own universe line said why: `.js/.rs/.ps1`.
+ *
+ * THE CLASS, because it is the third instance in one lap: a guard whose UNIVERSE silently
+ * excludes a live file type reads exactly like a guard that found nothing. `cite-check` and
+ * `carrier-drift` were both caught the same night with the same shape. The universe line above
+ * is printed from this Set for that reason — the fix is that the blind spot is SAYABLE, and it
+ * only helps if someone reads it. */
+const EXTS = new Set(['.js', '.rs', '.ps1', '.py']);
 
 function inScope(f) {
   if (!EXTS.has(path.extname(f))) return false;
@@ -189,7 +202,23 @@ function shippedProse() {
 const DRIVE = /(^|[^A-Za-z0-9_])[A-Za-z]:(\\\\|\\|\/)/;
 
 // Prefixes that are genuinely portable on their own.
-const PORTABLE_PREFIX = /(os\.homedir\(\)|\bhomedir\(\)|\bhome\(\)|USERPROFILE|HOMEPATH|sysdrive\(\)|\$HOME\b)/;
+/* `expanduser(` added 2026-09-07 (BRAVO, L043) WITH the .py scope extension, and it is the half of
+ * that extension that nearly did not happen. Putting `.py` in EXTS made Python files visible to the
+ * FATAL detectors immediately -- a literal `C:\...` fires -- but this list was written in
+ * JavaScript idiom, so `os.path.expanduser('~')` glued to a machine segment stayed green. A scope
+ * extension whose detectors cannot read the language it just admitted is the same false-green one
+ * level up, and the test that caught it is in portable-paths.test.js under the DISGUISED .py case.
+ * `Path.home()` and `USERPROFILE` were already covered by `\bhome\(\)` and the literal.
+ *
+ * RESIDUAL, stated rather than implied: `os.getenv('HOME')` and `os.environ['HOME']` are NOT here
+ * -- `\$HOME\b` matches the shell form only. Those remain uncovered in every language. */
+const PORTABLE_PREFIX = /(os\.homedir\(\)|\bhomedir\(\)|\bhome\(\)|\bexpanduser\(|USERPROFILE|HOMEPATH|sysdrive\(\)|\$HOME\b)/;
+
+/* THE ONE DEFINITION OF "still owed a fix", used by `--fatal` AND by the green line's exemption
+ * count. They were two separate expressions until 2026-09-07 and they disagreed; see the note at
+ * the green line for what that cost. A predicate named once cannot drift from itself. */
+const needsFixing = (s) =>
+  !!s.verdict && (s.verdict.startsWith('FATAL') || s.verdict === 'DISGUISED' || s.verdict === 'REVIEW');
 
 // Segments that name THIS checkout or ONE person's layout. Case-sensitive on purpose:
 // `.consonance` (the portable per-user data dir) must not be confused with `Consonance`
@@ -384,9 +413,7 @@ function main(argv) {
   }
 
   if (list || fatalOnly) {
-    const shown = fatalOnly
-      ? sites.filter((s) => s.verdict === 'DISGUISED' || s.verdict.startsWith('FATAL') || s.verdict === 'REVIEW')
-      : sites;
+    const shown = fatalOnly ? sites.filter(needsFixing) : sites;
     for (const s of shown.sort((a, b) => a.verdict.localeCompare(b.verdict) || a.file.localeCompare(b.file))) {
       console.log(`${s.verdict.padEnd(15)} ${s.file}:${s.line}  ${s.text.slice(0, 110)}`);
     }
@@ -428,10 +455,17 @@ function main(argv) {
     for (const s of prose.skipped) console.log(`            SKIPPED ${s.entry} — ${s.why}`);
     // A FATAL sitting in the exemption list is the census failure this repo keeps finding:
     // exempted reads exactly like fixed. Say the number on every run, green or not.
-    const fatalBaselined = base.filter((s) => s.verdict && s.verdict.startsWith('FATAL')).length;
-    if (fatalBaselined) {
-      console.log(`  ${fatalBaselined} baselined site(s) carry a FATAL verdict — exempted, NOT fixed.`
-        + ' Run --fatal to see them.');
+    //
+    // FIXED 2026-09-07 (BRAVO, L043): this line counted `FATAL*` while `--fatal` showed
+    // `FATAL* | DISGUISED | REVIEW`. The two sets disagreed, so a baselined DISGUISED or REVIEW
+    // site was announced by NOTHING on a green run -- exempted reading exactly like fixed, in the
+    // three lines written to stop that. Found by the .py scope extension the same day: the first
+    // real site it surfaced was a REVIEW, and baselining it would have made it silent. Both call
+    // sites now read `needsFixing`, so they cannot drift apart again.
+    const owed = base.filter(needsFixing).length;
+    if (owed) {
+      console.log(`  ${owed} baselined site(s) still need fixing (FATAL/DISGUISED/REVIEW) —`
+        + ' exempted, NOT fixed. Run --fatal to see them.');
     }
     if (gone.length) {
       console.log(`  ${gone.length} baselined site(s) no longer present — run --update to shrink the baseline:`);

@@ -418,10 +418,17 @@ test('a declared resource missing from disk is SKIPPED and NAMED, never silently
 test('the green line says how many baselined sites are FATAL — exempted is not fixed', () => {
   // The census failure, in this file's own output: a FATAL in the exemption list used to be
   // invisible on a green run, which reads exactly like having no FATAL at all.
+  //
+  // WORDING RE-POINTED 2026-09-07 (BRAVO, L043), and only the wording. The line now counts the
+  // same set `--fatal` shows (FATAL/DISGUISED/REVIEW) instead of FATAL alone — on this repo that
+  // is 68 owed rather than 34, so the old string was announcing exactly half of what it claimed
+  // to. The assertion below is the SAME property against the corrected sentence; the property
+  // was not relaxed. The `code === 0` assertion is untouched and is currently RED on purpose:
+  // three new sites entered scope with `.py` and the committed baseline has not been updated.
   const r = runGuard(path.resolve(__dirname, '..', '..'),
     path.join(__dirname, 'portable-paths.baseline.json'));
   assert.strictEqual(r.code, 0, r.out);
-  assert.match(r.out, /baselined site\(s\) carry a FATAL verdict — exempted, NOT fixed/);
+  assert.match(r.out, /baselined site\(s\) still need fixing \(FATAL\/DISGUISED\/REVIEW\) — exempted, NOT fixed/);
   assert.match(r.out, /universe: \d+ code/);
   assert.match(r.out, /shipped prose from \d+ bundle\.resources/);
 });
@@ -433,4 +440,107 @@ test('the real repo is green against its committed baseline', () => {
     path.join(__dirname, 'portable-paths.baseline.json'));
   assert.strictEqual(r.code, 0, r.out);
   assert.match(r.out, /green/);
+});
+
+/* ADDED 2026-09-07 (BRAVO, L043). `.py` entered EXTS. Before it did, this exact mutation came
+ * back `green — 2 files in scope, 0 known sites, 0 new` while the guard's own universe line said
+ * `.js/.rs/.ps1`: a machine path in a hook that runs on every prompt could ship unseen.
+ *
+ * Its own fixture rather than fixtureRepo(), on purpose: adding a .py to the shared fixture would
+ * put a second file in scope and silently defuse the zero-files-is-a-refusal test above. */
+function pyFixtureRepo() {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'portable-paths-py-'));
+  const tools = path.join(dir, 'consonance', 'tools');
+  const brief = path.join(dir, 'consonance', 'src-tauri', 'brief');
+  const hooks = path.join(dir, 'dev', 'shell', 'hooks');
+  for (const d of [tools, brief, hooks]) fs.mkdirSync(d, { recursive: true });
+  fs.writeFileSync(path.join(tools, 'clean.js'), `'use strict';\nconst D = process.env.X;\n`);
+  fs.writeFileSync(path.join(brief, 'CLEAN.md'), `# A brief\n\nNotes go to the repo.\n`);
+  fs.writeFileSync(path.join(dir, 'consonance', 'src-tauri', 'tauri.conf.json'),
+    JSON.stringify({ bundle: { resources: { 'brief/CLEAN.md': 'CLEAN.md' } } }, null, 2) + '\n');
+  fs.writeFileSync(path.join(hooks, 'userprompt_pulse.py'),
+    `#!/usr/bin/env python3\nimport os\nSTATE = os.environ['CONSONANCE_DATA']\n`);
+  execFileSync('git', ['-C', dir, 'init', '-q']);
+  execFileSync('git', ['-C', dir, 'add', '-A']);
+  return dir;
+}
+
+test('a .py under SCOPE_IN is in the universe at all', () => {
+  // The blindness was invisible in the verdict and visible in the universe line. Assert the line,
+  // because a guard that reports the wrong universe reads identically to one that found nothing.
+  const root = pyFixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  runGuard(root, baseline, ['--update']);
+  const r = runGuard(root, baseline);
+  assert.match(r.out, /\.py/, 'the printed universe must name .py — it is what makes the scope auditable');
+  assert.match(r.out, /universe: 2 code/, 'the .py must be counted in scope, not merely named');
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('THE .py MUTATION PROOF: a machine path in a hook that runs every prompt turns it red', () => {
+  const root = pyFixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  const target = path.join(root, 'dev', 'shell', 'hooks', 'userprompt_pulse.py');
+  const original = fs.readFileSync(target, 'utf8');
+
+  runGuard(root, baseline, ['--update']);
+  assert.strictEqual(runGuard(root, baseline).code, 0, 'the clean fixture must baseline green');
+
+  fs.writeFileSync(target, `#!/usr/bin/env python3\nimport os\n`
+    + `STATE = os.environ.get('CONSONANCE_DATA') or 'C:\\Users\\zackn\\Consonance\\data\\pulse.json'\n`);
+  const red = runGuard(root, baseline);
+  assert.strictEqual(red.code, 1, 'an unbaselined absolute path in a .py must fail the guard');
+  assert.match(red.out, /RED/);
+  assert.match(red.out, /userprompt_pulse\.py/, 'the report must name the .py file');
+
+  fs.writeFileSync(target, original);
+  assert.strictEqual(runGuard(root, baseline).code, 0, 'removing it must return to green');
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('the DISGUISED shape is caught in .py too, not only in .js', () => {
+  // homedir()-joined paths are the half a grep for 'C:\' misses. The .js arm of this is above;
+  // an extension added to EXTS inherits every detector, and this asserts that rather than assuming.
+  const root = pyFixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  const target = path.join(root, 'dev', 'shell', 'hooks', 'userprompt_pulse.py');
+  const original = fs.readFileSync(target, 'utf8');
+  runGuard(root, baseline, ['--update']);
+  fs.writeFileSync(target, original
+    + `M = os.path.join(os.path.expanduser('~'), 'Desktop', 'lighthouse', 'METHOD.md')\n`);
+  const red = runGuard(root, baseline);
+  assert.strictEqual(red.code, 1, 'the disguised shape must fire in .py');
+  assert.match(red.out, /DISGUISED/);
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('a baselined REVIEW site is ANNOUNCED on a green run — exempted must not read as fixed', () => {
+  /* FIXED 2026-09-07 (BRAVO, L043). The green line counted `FATAL*`; `--fatal` showed
+   * `FATAL* | DISGUISED | REVIEW`. On the real repo that was 34 announced of 68 owed — exactly
+   * half the exemptions silent, in the three lines written to stop exemptions being silent.
+   * Found because the .py extension's first real site was a REVIEW: baselining it would have
+   * hidden it. */
+  const root = pyFixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  const target = path.join(root, 'dev', 'shell', 'hooks', 'userprompt_pulse.py');
+
+  // The shape the real hook has: an env override with a one-box literal default -> REVIEW.
+  fs.writeFileSync(target, `#!/usr/bin/env python3\nimport os\n`
+    + `_hw = os.path.join(os.environ.get("CONSONANCE_DATA", r"C:\\Consonance\\data"), "x.jsonl")\n`);
+  const upd = runGuard(root, baseline, ['--update']);
+  assert.match(upd.out, /REVIEW/, 'fixture broken: the site must classify REVIEW for this test to mean anything');
+
+  const green = runGuard(root, baseline);
+  assert.strictEqual(green.code, 0, 'a fully baselined tree must be green');
+  assert.match(green.out, /still need fixing/,
+    'a baselined REVIEW site must be announced on the green run, not counted only by --fatal');
+
+  // And the two lists must agree: whatever --fatal shows, the green line counts.
+  const fatal = runGuard(root, baseline, ['--fatal']);
+  const shown = Number(/(\d+) shown of/.exec(fatal.out)[1]);
+  const announced = Number(/ (\d+) baselined site\(s\) still need fixing/.exec(green.out)[1]);
+  assert.strictEqual(announced, shown,
+    `the green line announces ${announced} but --fatal shows ${shown} — the two sets have drifted again`);
+
+  fs.rmSync(root, { recursive: true, force: true });
 });
