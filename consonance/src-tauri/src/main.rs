@@ -28,6 +28,7 @@ mod cochlea_service;  // threads, the ledger, and the refusal to run near an ant
 mod lap_holders;  // whose turn it is when MORE THAN ONE lap is open — the guard's pure half (A, L040)
 mod seat_alias;  // what a person TYPES -> what PaneNames INDEXES; the 58 measured 'Main' failures (E, L040)
 mod nowplaying;  // what is actually playing, from Windows' own media session — so the title is read, not inferred
+mod harvest_guard;  // the capture watcher's recovery + liveness policy; one mutex, one policy (E, L043)
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -1050,7 +1051,12 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
                 Ok(0) | Err(_) => break,
                 Ok(n) => {
                     if let Some(f) = cap.as_mut() { let _ = f.write_all(&buf[..n]); }
-                    if let Ok(mut e) = emu_r.lock() {
+                    // ONE MUTEX, ONE POLICY (E, L043). Declining to feed the emulator after a
+                    // poisoning freezes the screen PERMANENTLY, which is indistinguishable from
+                    // the watcher being dead — so recovering only the watcher would have bought a
+                    // green light over the same frozen screen.
+                    {
+                        let mut e = harvest_guard::recover(emu_r.lock());
                         e.parser.process(&buf[..n]);
                         e.last_byte = Instant::now();
                     }
@@ -1072,63 +1078,54 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     let text_path = capture_text_path(&pane_id);
     let emu_w = emu.clone();
     let alive_w = alive.clone();
+    let pane_w = pane_id.clone(); // the liveness stamp needs to say WHICH pane went quiet
     std::thread::spawn(move || {
         // seed from the transcript's tail so a resume's re-rendered history dedups against
         // what's already on disk instead of re-recording it after every restart
         let mut last: Option<(String, String)> = read_last_record(&text_path);
+        let mut hg = harvest_guard::HarvestGuard::new();
         while alive_w.load(Ordering::Relaxed) {
             std::thread::sleep(Duration::from_millis(250));
-            // rows AND their soft-wrap flags: a user message longer than one row wraps, and only
-            // the first row carries the ❯ marker. Without row_wrapped the capture cut every long
-            // message at 118 chars (EMU_COLS − "❯ ") and stored the stump as the whole sentence.
-            let (lines, wrapped): (Vec<String>, Vec<bool>) = {
-                let e = match emu_w.lock() {
-                    Ok(e) => e,
-                    Err(_) => break,
-                };
-                if e.last_byte.elapsed() < Duration::from_millis(500) {
-                    continue; // still streaming — wait for the turn to settle
+            let now = harvest_guard::now_ms();
+
+            // ATTEMPT, before the work and regardless of its outcome. A stamp that advanced only
+            // on a successful write could not tell a dead thread from a quiet pane — which is the
+            // bug this stamp exists to detect, rebuilt inside the detector.
+            if hg.attempt(now) {
+                write_harvest_stamp(&pane_w, &hg);
+            }
+
+            match harvest_guard::guarded(|| harvest_once(&emu_w, &text_path, &mut last)) {
+                Ok(recorded) => {
+                    hg.note_ok();
+                    if recorded {
+                        hg.note_record(now);
+                    }
                 }
-                let screen = e.parser.screen();
-                let rows: Vec<String> = screen.rows(0, EMU_COLS).collect();
-                let flags: Vec<bool> =
-                    (0..rows.len() as u16).map(|i| screen.row_wrapped(i)).collect();
-                (rows, flags)
-            };
-            if !capture::screen_ready(&lines) {
-                continue;
-            }
-            // strip painted overlays ("Jump to bottom (…", "1 new message (…") before
-            // extraction — they overwrite content-row tails, leak UI chrome into the record,
-            // and make otherwise-identical windows compare unequal
-            let lines: Vec<String> = lines.iter().map(|l| capture::strip_overlay(l)).collect();
-            let prompt = capture::latest_prompt(&lines, &wrapped);
-            if prompt.is_empty() {
-                continue; // no visible user prompt (welcome banner, or the prompt scrolled off) — skip noise
-            }
-            let resp = capture::latest_turn(&lines, &wrapped);
-            if resp.trim().is_empty() {
-                continue;
-            }
-            if let Some((lp, lr)) = last.clone() {
-                if lp == prompt {
-                    if lr == resp {
-                        continue; // same settled turn still on screen — already recorded
+                Err(msg) => {
+                    // A panic costs ONE TURN, not the pane. The message is kept because the app's
+                    // stderr goes to no file, and on 09-02 that is exactly what was missing.
+                    //
+                    // AND RECOVERY IS BOUNDED. A DETERMINISTIC panic — a screen state that kills
+                    // `rows()` every time — would otherwise be a permanent panic loop at the 250ms
+                    // poll: a burned core, forever. Three consecutive panics is not transient, so
+                    // the parser is rebuilt once; one success clears the count, so scattered
+                    // unrelated panics never accumulate into a reset. A reset costs one screen; a
+                    // loop costs a core.
+                    if hg.note_panic(msg) == harvest_guard::Recovery::Reinitialise {
+                        {
+                            let mut e = harvest_guard::recover(emu_w.lock());
+                            e.parser = vt100::Parser::new(EMU_ROWS, EMU_COLS, 0);
+                        }
+                        hg.note_reinitialised();
                     }
-                    // same turn, different window: grow the record where it sits
-                    let merged = capture::stitch(&lr, &resp);
-                    if merged != lr {
-                        rewrite_last_record(&text_path, &prompt, &lr, &merged);
-                        last = Some((prompt, merged));
-                    }
-                    continue;
+                    write_harvest_stamp(&pane_w, &hg); // a panic is worth a stamp immediately
                 }
             }
-            if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(&text_path) {
-                let _ = write!(f, "❯ {prompt}\n\n{resp}\n\n");
-            }
-            last = Some((prompt, resp));
         }
+        // The reader ended, which is the ordinary reason to stop. Say so: a killed thread cannot.
+        hg.note_exit();
+        write_harvest_stamp(&pane_w, &hg);
     });
 
     std::thread::spawn(move || {
@@ -7288,6 +7285,92 @@ fn submit_delay_ms(payload_bytes: usize) -> u64 {
 // the chair could deliver into a pane; the librarian's channel is now exempt from the station
 // guard, so the door the bound leaves open is reachable by more senders than it was.
 
+/// Where the app's own watcher thread writes whether it is still alive (E, L043).
+fn harvest_dir() -> PathBuf {
+    let p = data_dir().join("harvest");
+    let _ = fs::create_dir_all(&p);
+    p
+}
+
+/// The watcher's liveness stamp. SEPARATE from `data/ready/` on purpose, and it is not a
+/// preference: `ready/` is written by the HOOKS inside the pane's claude process and answers "is
+/// the harness idle?"; this is written by the APP'S WATCHER THREAD and answers "is the thing that
+/// records this pane still alive?". Different subject, different writer, different failure — and
+/// sharing one path would put a node hook and a Rust thread on it unsynchronised, which is the
+/// two-writers window this same lap fixed in the librarian's shelf.
+fn write_harvest_stamp(pane: &str, hg: &harvest_guard::HarvestGuard) {
+    let _ = fs::write(harvest_dir().join(format!("{pane}.json")), hg.stamp_json(pane));
+}
+
+/// One harvest pass. Returns whether a turn was appended or stitched.
+///
+/// THE BODY IS THE OLD WATCHER LOOP VERBATIM, with each `continue` become `return false`, lifted
+/// out so a whole pass fits inside one `catch_unwind`. Nothing is re-ordered. The comments are the
+/// original's and were restored in the fold — E's patch dropped four of them, and they are the
+/// only record of why the wrap flags and the overlay strip exist.
+fn harvest_once(
+    emu: &Arc<Mutex<EmuState>>,
+    text_path: &Path,
+    last: &mut Option<(String, String)>,
+) -> bool {
+    // rows AND their soft-wrap flags: a user message longer than one row wraps, and only
+    // the first row carries the ❯ marker. Without row_wrapped the capture cut every long
+    // message at 118 chars (EMU_COLS − "❯ ") and stored the stump as the whole sentence.
+    let (lines, wrapped): (Vec<String>, Vec<bool>) = {
+        // ONE MUTEX, ONE POLICY: the reader tolerates a poisoned lock, so the watcher does too.
+        let e = harvest_guard::recover(emu.lock());
+        if e.last_byte.elapsed() < Duration::from_millis(500) {
+            return false; // still streaming — wait for the turn to settle
+        }
+        let screen = e.parser.screen();
+        let rows: Vec<String> = screen.rows(0, EMU_COLS).collect();
+        let flags: Vec<bool> = (0..rows.len() as u16).map(|i| screen.row_wrapped(i)).collect();
+        (rows, flags)
+    };
+    if !capture::screen_ready(&lines) {
+        return false;
+    }
+    // strip painted overlays ("Jump to bottom (…", "1 new message (…") before
+    // extraction — they overwrite content-row tails, leak UI chrome into the record,
+    // and make otherwise-identical windows compare unequal
+    let lines: Vec<String> = lines.iter().map(|l| capture::strip_overlay(l)).collect();
+    let prompt = capture::latest_prompt(&lines, &wrapped);
+    if prompt.is_empty() {
+        return false; // no visible user prompt (welcome banner, or the prompt scrolled off) — skip noise
+    }
+    let resp = capture::latest_turn(&lines, &wrapped);
+    if resp.trim().is_empty() {
+        return false;
+    }
+    if let Some((lp, lr)) = last.clone() {
+        if lp == prompt {
+            if lr == resp {
+                return false; // same settled turn still on screen — already recorded
+            }
+            // same turn, different window: grow the record where it sits
+            let merged = capture::stitch(&lr, &resp);
+            if merged != lr {
+                rewrite_last_record(text_path, &prompt, &lr, &merged);
+                *last = Some((prompt, merged));
+                return true;
+            }
+            return false;
+        }
+    }
+    // KEPT DELIBERATELY, and it looks like a bug: if the append fails, the original still updates
+    // `last` and moves on, so the turn is treated as recorded when it was not. That is the old
+    // behaviour byte for byte; changing it is a separate call with its own reasoning (E, §4).
+    if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(text_path) {
+        let _ = write!(f, "❯ {prompt}
+
+{resp}
+
+");
+    }
+    *last = Some((prompt, resp));
+    true
+}
+
 /// Where the pane's own hooks write what they know about it.
 fn ready_dir() -> PathBuf {
     let p = data_dir().join("ready");
@@ -7355,6 +7438,18 @@ enum PaneGate {
     /// screen gate, exactly as it behaved before the stamp existed — and it SAYS it fell back,
     /// because install drift is a measured class in this room, not a hypothetical.
     Unstamped,
+    /// THE MIRROR OF `Stale`, and the asymmetry that was the defect. `Stale` catches a stamp that
+    /// is too OLD. Nothing caught a stamp that is too CONFIDENT — positive, current, and wrong
+    /// about the screen underneath it — so a pane whose Stop fired while a turn was visibly running
+    /// was delivered into IMMEDIATELY, with no screen check at all, BY THE GATE'S OWN INJECT. That
+    /// is the splice the inbox exists to prevent, reachable through the one path built to prevent
+    /// it.
+    ///
+    /// It is reachable by the gate's own action: the drain ticks every 250ms, the pane's
+    /// UserPromptSubmit hook costs 75-81ms plus claude's dispatch to flip the stamp, and
+    /// `last_byte` only moves once the pane ECHOES. So for one round-trip after we write, a
+    /// positive stamp describes the turn BEFORE the one we just started.
+    Contradicted,
 }
 
 impl PaneGate {
@@ -7364,6 +7459,7 @@ impl PaneGate {
             PaneGate::Working => "stamp=working",
             PaneGate::Stale => "stamp=STALE (says working, screen says otherwise)",
             PaneGate::Unstamped => "NO STAMP — fell back to the bounded screen gate",
+            PaneGate::Contradicted => "stamp=ready CONTRADICTED (says done, a live turn is on screen)",
         }
     }
     /// True when the pane's own signal is carrying the decision. False means the screen is.
@@ -7378,7 +7474,15 @@ fn pane_gate(stamp: Stamp, screen: Option<(&[String], Duration)>) -> PaneGate {
     let Some((lines, quiet)) = screen else { return PaneGate::Unstamped };
     let screen_busy =
         turn_in_flight(lines) || quiet < Duration::from_millis(QUIET_FOR_DELIVERY_MS);
+    // A LIVE TURN IS THE STRONG SIGNAL AND BOTH HALVES ARE REQUIRED — deliberately NOT
+    // `screen_busy`, which is an OR and would fire on any recently-noisy pane, including the echo
+    // of our own write. A spinner on the grid is not evidence on its own either: rows scroll in
+    // place at scrollback 0, so a spinner from a turn that ended 48 minutes ago is still drawn
+    // there (`a_stale_spinner_left_on_the_grid_does_not_hold_the_message`). A LIVE turn redraws
+    // its spinner at least once a second, so it is the spinner AND the noise together.
+    let live_turn = turn_in_flight(lines) && quiet < Duration::from_millis(QUIET_FOR_DELIVERY_MS);
     match stamp {
+        Stamp::Done if live_turn => PaneGate::Contradicted,
         Stamp::Done => PaneGate::Ready,
         Stamp::Working if screen_busy => PaneGate::Working,
         Stamp::Working => PaneGate::Stale,
@@ -7405,6 +7509,49 @@ fn deliver_only_when_idle() -> bool {
         std::env::var("CONSONANCE_DELIVER_ONLY_WHEN_IDLE").as_deref(),
         Ok("0") | Ok("false") | Ok("off")
     )
+}
+
+/// WHAT THE KEEPER ACTUALLY TYPED, separated from what the TUI merely DREW in the same row.
+///
+/// FOUND BY THE KEEPER, 2026-09-07 05:09: *"the greyed out text prediction! If it spawns in the
+/// bar, it stops the loop."* Claude Code's autocomplete prediction occupies real cells in the
+/// composer, so a gate reading the grid as plain text reads a PREDICTION AS THE KEEPER TYPING and
+/// every delivery holds. Three stalls that night were ghosts, not him.
+///
+/// IT IS THE 2026-08-22 PREDICTOR ERROR WITH THE SIGN FLIPPED. Then a seat acted on the
+/// predictor's text as though the human wrote it. Now the gate refuses because it reads the
+/// predictor's text as the human. Same surface, same confusion of author, opposite direction.
+///
+/// THE DISCRIMINATOR IS COLOUR, AND IT WAS MEASURED, NOT ASSUMED. Replaying this machine's own
+/// capture log through the parser production uses: the `❯` and the NBSP after it are `Default`;
+/// text the keeper typed is `Default`; the prediction, the right-aligned hints (`← for agents`),
+/// `paste again to expand` and a bled-through status line are all `Rgb(153,153,153)`. A mixed row
+/// reads `❯ Both h` in Default with `ow are you` in grey after it — typed prefix, drawn
+/// completion, in one row.
+///
+/// NOT SGR 2. The obvious guess is the dim attribute, and **vt100 0.15 does not track it** — its
+/// SGR match handles 1/3/4/7 and the colours, and `2` falls through unrecorded. Had the prediction
+/// been dim rather than grey, this fix would have been impossible without changing emulators, and
+/// that is the version of this packet I would have had to refuse.
+///
+/// THE BOUND, stated because this is a colour heuristic and not a protocol: anything the keeper
+/// types that is NOT at default foreground reads here as chrome. Nothing in the record does that,
+/// and a paste renders at default — but it is the assumption to break first if a real hold is ever
+/// missed.
+fn typed_only(screen: &vt100::Screen) -> Vec<String> {
+    (0..EMU_ROWS)
+        .map(|r| {
+            (0..EMU_COLS)
+                .map(|c| match screen.cell(r, c) {
+                    Some(cell) if cell.fgcolor() == vt100::Color::Default => {
+                        let s = cell.contents();
+                        if s.is_empty() { " ".to_string() } else { s }
+                    }
+                    _ => " ".to_string(),
+                })
+                .collect::<String>()
+        })
+        .collect()
 }
 
 /// THE INPUT BOX IS THE BOTTOM-MOST PROMPT ROW, and its emptiness is the keeper-typing signal.
@@ -7442,8 +7589,15 @@ const QUIET_FOR_DELIVERY_MS: u64 = 2_000;
 /// It is chrome, and it is NOT evidence of a turn. Claude advertises "esc to interrupt" here
 /// whenever a BACKGROUND SHELL is running — turn or no turn — so a pane that ran one background
 /// command reads busy for the rest of its life.
+/// ANYWHERE IN THE ROW, not only at its start — found 2026-09-07 while measuring the ghost, in
+/// this machine's own capture log. The emulator catches frames mid-redraw where the footer is
+/// drawn ONTO the composer row: `❯ ⏵⏵ bypass permissions on (shift+tab to cycle) · esc to
+/// interrupt`. That row does not START with `⏵`, so `is_footer_row` said false, `turn_in_flight`
+/// said true, and `pane_gate` returned `Working` — whose hold is UNBOUNDED. One such frame latched
+/// at poll time is a pane nobody can reach again, which is the shape of the four packets that sat
+/// queued for two and a half hours on a pane nobody was at.
 fn is_footer_row(s: &str) -> bool {
-    s.trim_start().starts_with('⏵')
+    s.contains('⏵')
 }
 
 /// A turn actually in flight, as opposed to a grid that merely remembers one.
@@ -7469,9 +7623,13 @@ fn turn_in_flight(lines: &[String]) -> bool {
 /// WHY NOT QUIESCENCE ALONE. A pane can fall silent for reasons that are not readiness, and
 /// `a_turn_in_flight_holds` is the case: if a spinner is on screen carrying live evidence, hold
 /// regardless of the clock. Cheap, and it costs nothing when it is wrong.
-fn pane_idle_for_delivery(lines: &[String], quiet: Duration) -> bool {
+/// `typed` is the same grid with everything the TUI drew removed (see `typed_only`); `lines` is the
+/// grid as rendered. The composer question is asked of `typed` and the turn question of `lines`,
+/// because a spinner IS drawn chrome and is still evidence, while a prediction is drawn chrome and
+/// is not.
+fn pane_idle_for_delivery(lines: &[String], typed: &[String], quiet: Duration) -> bool {
     quiet >= Duration::from_millis(QUIET_FOR_DELIVERY_MS)
-        && input_box_empty(lines)
+        && input_box_empty(typed)
         && !turn_in_flight(lines)
 }
 
@@ -7504,6 +7662,9 @@ enum Forced {
     SignalOutranked,
     /// No usable stamp — stale, or none at all. The bounded screen gate carried this message.
     NoUsableSignal,
+    /// The stamp was positive and CONTRADICTED by a live turn on screen. Distinct from both: the
+    /// signal existed and was current, and the gate overrode it rather than trusting or missing it.
+    SignalContradicted,
 }
 
 /// THE BOUND IS NOW THE FALLBACK, NOT THE RULE.
@@ -7549,6 +7710,9 @@ fn drain_decision(
         PaneGate::Working => Drain::Hold,
         // the gate is guessing again; this is the pre-stamp behaviour, kept whole
         PaneGate::Stale | PaneGate::Unstamped => bounded(screen_idle, Forced::NoUsableSignal),
+        // THE MIRROR FALLS BACK, IT DOES NOT DELIVER AND IT DOES NOT HOLD FOREVER. Same shape as
+        // `Stale`, for the same reason: the stamp is not evidence, so the screen decides, bounded.
+        PaneGate::Contradicted => bounded(screen_idle, Forced::SignalContradicted),
     }
 }
 
@@ -7610,10 +7774,13 @@ impl Inbox {
 }
 
 /// The live screen, or None. None is UNKNOWN and unknown holds (bounded) — never "ready".
-fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Duration)> {
+fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Vec<String>, Duration)> {
     let arc = { emus.0.lock().ok()?.get(pane_id).cloned()? };
     let e = arc.lock().ok()?;
-    Some((e.parser.screen().rows(0, EMU_COLS).collect(), e.last_byte.elapsed()))
+    let screen = e.parser.screen();
+    // BOTH VIEWS COME FROM ONE LOCK AND ONE SCREEN. Reading the grid twice would let a redraw land
+    // between them, and the whole point here is to compare what was drawn against what was typed.
+    Some((screen.rows(0, EMU_COLS).collect(), typed_only(screen), e.last_byte.elapsed()))
 }
 
 // `pane_is_idle` lived here and was the whole answer: screen in, boolean out. Both of its callers
@@ -7629,10 +7796,10 @@ fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Duration)
 /// is exactly what it did before the stamp existed.
 fn pane_state(emus: &PaneEmus, pane_id: &str) -> (PaneGate, bool, bool) {
     match live_screen(emus, pane_id) {
-        Some((lines, quiet)) => (
+        Some((lines, typed, quiet)) => (
             pane_gate(read_stamp(pane_id), Some((&lines, quiet))),
-            input_box_empty(&lines),
-            pane_idle_for_delivery(&lines, quiet),
+            input_box_empty(&typed),
+            pane_idle_for_delivery(&lines, &typed, quiet),
         ),
         None => (PaneGate::Unstamped, false, false),
     }
@@ -7682,6 +7849,8 @@ fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
                   its composer never cleared)",
             Some(Forced::NoUsableSignal) =>
                 " (FORCED after the bounded hold — the gate never got a usable ready signal)",
+            Some(Forced::SignalContradicted) =>
+                " (FORCED after the bounded hold — the pane's signal said ready and a live turn                   stayed on screen; the screen gate carried this)",
         }
     )
 }
@@ -7725,6 +7894,12 @@ fn drain_inboxes(app: &AppHandle) {
                     "DELIVERY FORCED pane={pane} {} — the bounded screen gate carried this \
                      message because the pane's own ready signal was not usable. A stamped pane \
                      has no bound; this one had no stamp or a stale one.",
+                    gate.label()
+                )),
+                Some(Forced::SignalContradicted) => plog(&format!(
+                    "DELIVERY FORCED pane={pane} {} — the pane's own signal said READY while a \
+                     LIVE TURN stayed on screen for the whole bound. Either the stamp is wrong or \
+                     the pane has been mid-turn for four minutes; the screen gate carried this.",
                     gate.label()
                 )),
                 Some(Forced::SignalOutranked) => plog(&format!(
@@ -10938,11 +11113,74 @@ mod shelf_tests {
         assert!(shelf.contains("\n## librarian/LEDGER.md\n"), "LEDGER.md must ride outside the window");
         assert!(shelf.contains("\n## librarian/README.md\n"), "README.md must ride outside the window");
 
-        // At most four librarian entries carried: two dated days plus LEDGER and README. Catches
-        // truncate-and-carry (which would leave all fourteen) directly on the delivered artifact.
-        let carried = shelf.matches("\n## librarian/").count();
-        assert!(carried <= 4, "{carried} librarian files carried; the window allows at most 4 \
-            (today, yesterday, LEDGER, README)");
+        // THE CAP IS THE RULE, NOT A NUMBER — changed 2026-09-07 after it went red at HEAD.
+        //
+        // It read `carried <= 4`: "two dated days plus LEDGER and README". That arithmetic assumes
+        // ONE WRITER. `librarian/` holds `2026-09-06.md` AND `2026-09-06.desktop.md` — two machines
+        // wrote a note for the same day, both are the seat's own notes, and
+        // `librarian_note_is_carried` correctly carries both (the test above has asserted a
+        // suffixed note is dated since it was written). A DATE IS NOT A KEY; (date, writer) is.
+        // The predicate was right and the constant beside it was wrong.
+        //
+        // WHAT THE WINDOW NOW MEANS, stated because it changes what a librarian wakes holding:
+        // today and yesterday PER WRITER, so the ceiling is 2×writers + 2 rather than 4. The cost
+        // is that the window's weight scales with the number of machines writing — real, and
+        // already the registered price of a content-defined window (a 7.4x swing across
+        // consecutive pairs). It is NOT "newest per machine": that silently drops a note the seat
+        // wrote, which is the failure this whole window exists to avoid.
+        //
+        // AND THE COUNT IS REPLACED BY THE INVARIANT, which is strictly stronger. A count passes
+        // when the WRONG four are carried; this asserts every carried file satisfies the window,
+        // which is what truncate-and-carry (all fourteen) actually violates. The `<=` survives so
+        // a tight budget carrying fewer is not a red — that is the partial state, owned by the
+        // test below.
+        // INDEPENDENT OF THE PREDICATE, deliberately. My first version of this check asked
+        // `librarian_note_is_carried` whether each carried file belonged — which is the shelf's own
+        // rule marking its own homework: break the predicate and both sides agree. The age is
+        // computed here from the date alone, so a widened or inverted window is caught by a
+        // different route than the one that would have widened it.
+        let today = chrono::Local::now().date_naive();
+        let root = room_master_path().parent().expect("root").join("librarian");
+        let mut in_window: Vec<String> = Vec::new();
+        if let Ok(rd) = fs::read_dir(&root) {
+            for e in rd.flatten() {
+                let n = e.file_name().to_string_lossy().to_string();
+                if !n.ends_with(".md") {
+                    continue;
+                }
+                match librarian_note_date(&n) {
+                    Some(d) if (0..=1).contains(&(today - d).num_days()) => in_window.push(n),
+                    _ => {}
+                }
+            }
+        }
+        in_window.sort();
+        let mut carried_names: Vec<String> = Vec::new();
+        for seg in shelf.split("\n## librarian/").skip(1) {
+            carried_names.push(seg.lines().next().unwrap_or_default().trim().to_string());
+        }
+        carried_names.sort();
+        for n in &carried_names {
+            if n == "LEDGER.md" || n == "README.md" {
+                continue; // the maintained index and the rule ride outside, asserted above
+            }
+            let d = librarian_note_date(n).unwrap_or_else(|| {
+                panic!("librarian/{n} is CARRIED, is not LEDGER/README, and carries no date")
+            });
+            let age = (today - d).num_days();
+            assert!(
+                (0..=1).contains(&age),
+                "librarian/{n} carried at {age} days old — the window is today and yesterday"
+            );
+        }
+        // The ceiling, derived rather than hardcoded: every dated file in the window, whoever wrote
+        // it, plus LEDGER and README. Today that is 2×writers + 2, not 4.
+        assert!(
+            carried_names.len() <= in_window.len() + 2,
+            "{} librarian files carried; the window holds {} dated file(s) plus LEDGER and README: \
+             carried {:?}, window {:?}",
+            carried_names.len(), in_window.len(), carried_names, in_window
+        );
 
         // And the seat must be TOLD, or an empty window and a broken window read identically from
         // the inside.
@@ -11918,7 +12156,7 @@ mod ready_signal_tests {
         let gate = pane_gate(Stamp::Working, Some((&killed, IDLE)));
         assert_eq!(gate, PaneGate::Stale);
         assert_eq!(
-            drain_decision(gate, true, pane_idle_for_delivery(&killed, IDLE), Duration::ZERO, true),
+            drain_decision(gate, true, pane_idle_for_delivery(&killed, &killed, IDLE), Duration::ZERO, true),
             Drain::Deliver,
             "a stale stamp must not be able to mute a pane forever"
         );
@@ -11932,7 +12170,7 @@ mod ready_signal_tests {
         let typing = screen("❯ we need to get that solid before 8am", false);
         assert_eq!(pane_gate(Stamp::Done, Some((&typing, IDLE))), PaneGate::Ready);
         assert!(!input_box_empty(&typing));
-        let screen_idle = pane_idle_for_delivery(&typing, IDLE);
+        let screen_idle = pane_idle_for_delivery(&typing, &typing, IDLE);
         assert_eq!(
             drain_decision(PaneGate::Ready, false, screen_idle, Duration::ZERO, true),
             Drain::Hold,
@@ -11955,7 +12193,7 @@ mod ready_signal_tests {
         {
             let s = screen(box_row, spinner);
             assert_eq!(pane_gate(Stamp::Absent, Some((&s, quiet))), PaneGate::Unstamped);
-            let old = pane_idle_for_delivery(&s, quiet);
+            let old = pane_idle_for_delivery(&s, &s, quiet);
             assert_eq!(
                 drain_decision(PaneGate::Unstamped, input_box_empty(&s), old, Duration::ZERO, true),
                 if old { Drain::Deliver } else { Drain::Hold },
@@ -11989,15 +12227,74 @@ mod ready_signal_tests {
     /// EVERY way a delivery can be forced, each obtained by ASKING `drain_decision` rather than by
     /// naming a variant — so this test does not have to change when the answer changes shape, and
     /// a fourth forcing path added later arrives here already covered.
-    fn every_forced_case() -> Vec<(&'static str, PaneGate, bool, bool)> {
-        vec![
-            // the stamp is POSITIVE and the keeper's composer never cleared — his rule, working
-            ("ready, composer occupied", PaneGate::Ready, false, false),
-            // killed mid-turn: the stamp says working and the screen does not agree
-            ("stale stamp", PaneGate::Stale, false, false),
-            // the hook pair is not registered on this machine
-            ("no stamp", PaneGate::Unstamped, false, false),
-        ]
+    /// EXHAUSTIVE BY THE COMPILER, NOT BY MEMORY — rewritten 2026-09-07, correcting my own claim.
+    ///
+    /// This was a hand-written list of three cases, and I wrote beside it that "a fourth forcing
+    /// path added later arrives here already covered." IT DID NOT. `PaneGate::Contradicted` landed
+    /// this lap and was invisible to every test that read this list. That is the room's own named
+    /// failure — a test that enumerates from a hand-written list can only check what someone
+    /// remembered — committed inside the test written to prevent it.
+    ///
+    /// `gate_ordinal`'s match is exhaustive, so adding a variant BREAKS THE BUILD until it is
+    /// mapped, and `ALL_GATES` is then checked to contain every ordinal exactly once.
+    fn gate_ordinal(g: PaneGate) -> usize {
+        match g {
+            PaneGate::Ready => 0,
+            PaneGate::Working => 1,
+            PaneGate::Stale => 2,
+            PaneGate::Unstamped => 3,
+            PaneGate::Contradicted => 4,
+        }
+    }
+    const ALL_GATES: [PaneGate; 5] = [
+        PaneGate::Ready,
+        PaneGate::Working,
+        PaneGate::Stale,
+        PaneGate::Unstamped,
+        PaneGate::Contradicted,
+    ];
+
+    #[test]
+    fn the_gate_sweep_covers_every_state_there_is() {
+        let mut seen: Vec<usize> = ALL_GATES.iter().map(|g| gate_ordinal(*g)).collect();
+        seen.sort();
+        seen.dedup();
+        assert_eq!(
+            seen.len(),
+            ALL_GATES.len(),
+            "ALL_GATES repeats a state, so the sweep below is not a sweep"
+        );
+        assert_eq!(seen, (0..ALL_GATES.len()).collect::<Vec<_>>(),
+            "a PaneGate variant is missing from ALL_GATES — every test that sweeps is blind to it");
+    }
+
+    /// Every way to be forced, DERIVED by asking `drain_decision` over the whole input space
+    /// rather than by listing the ones I could think of.
+    fn every_forced_case() -> Vec<(String, PaneGate, bool, bool)> {
+        let mut out = vec![];
+        for gate in ALL_GATES {
+            for box_empty in [true, false] {
+                for screen_idle in [true, false] {
+                    let d = drain_decision(
+                        gate,
+                        box_empty,
+                        screen_idle,
+                        Duration::from_millis(MAX_HOLD_MS),
+                        true,
+                    );
+                    if let Drain::Forced(why) = d {
+                        out.push((
+                            format!("{gate:?} box_empty={box_empty} screen_idle={screen_idle} -> {why:?}"),
+                            gate,
+                            box_empty,
+                            screen_idle,
+                        ));
+                    }
+                }
+            }
+        }
+        assert!(!out.is_empty(), "no forcing path at all — the sweep is broken, not the code");
+        out
     }
 
     /// THE ROW MAY NOT ASSERT A FACT AND ITS NEGATION.
@@ -12033,36 +12330,44 @@ mod ready_signal_tests {
         }
     }
 
-    /// THE THREE FORCED ROWS MUST NOT READ ALIKE — the same bar `a_stale_stamp_and_a_working_pane`
+    /// NO TWO FORCING CAUSES MAY READ ALIKE — the same bar `a_stale_stamp_and_a_working_pane`
     /// sets for the gate, applied to the sentence the reader actually gets.
     ///
-    /// This is the half that was missing. The gate has told stale from working since the moment it
-    /// shipped; the ROW collapsed all three causes into one wording, so the distinction existed
-    /// everywhere except where anyone reads it. `PaneGate::Stale` has still never printed on this
-    /// machine — 0 rows containing "STALE" in 47 delivered rows on the board — so the stale row is
-    /// asserted here or it is asserted nowhere.
+    /// This is the half that was missing. The gate has told stale from working since it shipped;
+    /// the ROW collapsed the causes into one wording, so the distinction existed everywhere except
+    /// where anyone reads it. `PaneGate::Stale` has still never printed on this machine — 0 rows
+    /// containing "STALE" in 47 delivered rows on the board — so it is asserted here or nowhere.
+    ///
+    /// KEYED ON (gate, cause), NOT ON THE INPUTS. The sweep yields the same row from several input
+    /// combinations, which is correct — the row is a function of what was decided, not of how the
+    /// gate got there.
     #[test]
-    fn the_three_forced_rows_each_name_their_own_cause() {
-        let mut seen: Vec<String> = vec![];
+    fn no_two_forcing_causes_read_alike() {
+        let mut rows: std::collections::BTreeMap<String, String> = Default::default();
         for (name, gate, box_empty, screen_idle) in every_forced_case() {
             let d = drain_decision(
-                gate,
-                box_empty,
-                screen_idle,
-                Duration::from_millis(MAX_HOLD_MS),
-                true,
+                gate, box_empty, screen_idle, Duration::from_millis(MAX_HOLD_MS), true,
             );
             let Drain::Forced(why) = d else { panic!("premise: {name} forces") };
             let row = delivery_note(gate, Some(why));
             assert!(row.contains("FORCED"), "{name}: a forced row must say it forced");
-            assert!(!seen.contains(&row), "{name} reads exactly like an earlier cause: {row}");
-            seen.push(row);
+            let key = format!("{gate:?}/{why:?}");
+            if let Some(prev) = rows.insert(key.clone(), row.clone()) {
+                assert_eq!(prev, row, "{key} produced two different rows");
+            }
         }
-        assert_eq!(seen.len(), 3);
+        let distinct: std::collections::BTreeSet<&String> = rows.values().collect();
+        assert_eq!(
+            distinct.len(), rows.len(),
+            "two causes print the same row and cannot be told apart on the board: {rows:#?}"
+        );
         // and each says the thing an observer would act on
-        assert!(seen[0].contains("stamp=ready") && seen[0].contains("composer never cleared"));
-        assert!(seen[1].contains("STALE"), "the killed-mid-turn pane must be nameable on the board");
-        assert!(seen[2].contains("NO STAMP"), "install drift must stay nameable too");
+        let all: Vec<&String> = rows.values().collect();
+        let has = |nee: &str| all.iter().any(|r| r.contains(nee));
+        assert!(has("composer never cleared"), "the keeper-outranks case must be nameable");
+        assert!(has("STALE"), "the killed-mid-turn pane must be nameable on the board");
+        assert!(has("NO STAMP"), "install drift must stay nameable too");
+        assert!(has("CONTRADICTED"), "the mirror must be nameable — bar 3 of this packet");
     }
 
     /// THE INVARIANT UNDER THE WHOLE FIX: a reason can only be produced by the branch that holds
@@ -12070,7 +12375,7 @@ mod ready_signal_tests {
     /// that had no usable stamp — otherwise the row is free to lie again, just more quietly.
     #[test]
     fn a_reason_can_only_come_from_the_gate_that_owns_it() {
-        for gate in [PaneGate::Ready, PaneGate::Working, PaneGate::Stale, PaneGate::Unstamped] {
+        for gate in ALL_GATES {
             for box_empty in [true, false] {
                 for screen_idle in [true, false] {
                     let d = drain_decision(
@@ -12106,6 +12411,188 @@ mod ready_signal_tests {
             assert!(!row.contains("FORCED"), "{gate:?}: {row}");
             assert_eq!(row, format!("[{}]", gate.label()));
         }
+    }
+
+    /// `None => false` IS RIGHT, AND IT IS NOT WHAT STALLED ANYTHING — the packet's second §1a
+    /// question, answered with an assertion instead of a paragraph.
+    ///
+    /// An unreadable composer must read as BUSY: returning "empty" there delivers into a screen
+    /// nobody could parse, which is how a gate becomes decorative on exactly the screens it was
+    /// built for. That is fail-safe, not fail-stuck — and the reason it is not fail-stuck is that
+    /// EXACTLY ONE gate state holds without a bound, and it is not reachable from an unreadable
+    /// box. A no-`❯` screen on a ready pane forces after four minutes; it cannot sit for hours.
+    ///
+    /// SO THE FOUR PACKETS THAT SAT FOR TWO AND A HALF HOURS WERE NOT THIS. 240 seconds is not two
+    /// and a half hours, and the arithmetic is the whole argument. The unbounded state is
+    /// `Working`, and what let it latch forever was the bled footer row above — `turn_in_flight`
+    /// reading the footer's own "esc to interrupt" as a live turn, so a working stamp could never
+    /// become `Stale` and the hold never ended.
+    #[test]
+    fn only_a_corroborated_working_pane_holds_without_a_bound() {
+        for gate in ALL_GATES {
+            let d = drain_decision(gate, false, false, Duration::from_millis(MAX_HOLD_MS * 100), true);
+            if gate == PaneGate::Working {
+                assert_eq!(d, Drain::Hold, "a corroborated working pane is never written into");
+            } else {
+                assert!(
+                    matches!(d, Drain::Forced { .. }),
+                    "{gate:?} can hold forever — an unreadable or contradicted screen must still \
+                     release at the bound, or the gate has a second way to mute a pane"
+                );
+            }
+        }
+    }
+
+    /// THE MIRROR OF STALE — a stamp that is too CONFIDENT rather than too old.
+    ///
+    /// Registered by me on 2026-09-07 and deliberately not fixed in that packet; this is the fix.
+    /// Before it, `Stamp::Done` returned `Ready` unconditionally and `Ready` consults neither
+    /// `turn_in_flight` nor quiescence — so a positive stamp over a running turn delivered
+    /// immediately, which is the splice the inbox exists to prevent, arriving through the inbox.
+    #[test]
+    fn a_ready_stamp_over_a_live_turn_does_not_deliver() {
+        let live = screen("❯", true);
+        assert!(turn_in_flight(&live), "premise: a turn is on screen");
+        let gate = pane_gate(Stamp::Done, Some((&live, LIVE)));
+        assert_eq!(gate, PaneGate::Contradicted, "a positive stamp over a live turn is contradicted");
+        assert_ne!(gate, PaneGate::Ready, "and must not read as an ordinary ready pane");
+        assert_eq!(
+            drain_decision(gate, true, pane_idle_for_delivery(&live, &live, LIVE), Duration::ZERO, true),
+            Drain::Hold,
+            "it must not splice a live turn even with an empty composer"
+        );
+    }
+
+    /// AND IT IS BOUNDED, not a new way to mute a pane. The screen evidence can be wrong; an
+    /// unbounded hold on a screen reading is the failure mode this room refuses.
+    #[test]
+    fn the_mirror_is_bounded_and_says_which_cause_forced_it() {
+        let live = screen("❯", true);
+        let gate = pane_gate(Stamp::Done, Some((&live, LIVE)));
+        let d = drain_decision(gate, true, false, Duration::from_millis(MAX_HOLD_MS), true);
+        assert_eq!(d, Drain::Forced(Forced::SignalContradicted), "bounded, like Stale");
+        let row = delivery_note(gate, Some(Forced::SignalContradicted));
+        assert!(row.contains("CONTRADICTED"), "the state must print, the way STALE does: {row}");
+        assert!(!row.contains("never got a"), "the signal existed — the row must not deny it");
+    }
+
+    /// THE REGRESSION THIS COULD EASILY HAVE CAUSED, and the reason the rule is an AND.
+    ///
+    /// Rows scroll in place at scrollback 0, so a spinner from a turn that ended long ago is still
+    /// drawn on the grid. Had the mirror keyed on `turn_in_flight` alone — or on `screen_busy`,
+    /// which is an OR over a 2s quiet window — every delivery to a long-finished pane would have
+    /// gone back onto the bounded screen gate and waited four minutes. That is the "six of ten
+    /// deliveries FORCED onto panes that were ready the whole time" failure, restored.
+    #[test]
+    fn a_stale_spinner_on_a_quiet_pane_is_still_an_ordinary_ready_pane() {
+        let stale_spinner = screen("❯", true);
+        assert!(turn_in_flight(&stale_spinner), "premise: the spinner is still drawn");
+        assert_eq!(
+            pane_gate(Stamp::Done, Some((&stale_spinner, IDLE))),
+            PaneGate::Ready,
+            "a spinner nobody is redrawing is not a live turn"
+        );
+        assert_eq!(
+            drain_decision(PaneGate::Ready, true, false, Duration::ZERO, true),
+            Drain::Deliver,
+            "and it delivers at once, with no bound — the mirror must cost the common case nothing"
+        );
+    }
+
+    // ── THE GHOST (P-GHOST-TEXT, the keeper 2026-09-07 05:09) ────────────────────────────────
+    //
+    // REAL ESCAPE SEQUENCES, not a hand-drawn screen. Every constant below was read out of this
+    // machine's own `data/captures/*.log` by replaying it through `vt100::Parser::new(EMU_ROWS,
+    // EMU_COLS, 0)` — the parser production uses — and dumping per-cell foregrounds. A fixture of
+    // plain strings cannot fail this test, because the whole defect is that the two kinds of text
+    // are identical once colour is thrown away.
+
+    /// Claude Code's grey: measured as `38;2;153;153;153` in the capture, 50 occurrences in an
+    /// 8KB window. NOT SGR 2 — vt100 0.15 does not record the dim attribute at all.
+    const GHOST: &str = "\x1b[38;2;153;153;153m";
+    const PLAIN: &str = "\x1b[0m";
+
+    /// A composer row as the emulator receives it. `❯` and the NBSP after it are Default in the
+    /// capture, which is what lets the reduction keep the marker while dropping the drawn text.
+    fn box_screen(typed: &str, ghost: &str) -> vt100::Parser {
+        let mut p = vt100::Parser::new(EMU_ROWS, EMU_COLS, 0);
+        p.process(b"\x1b[2J\x1b[H");
+        p.process("● an earlier reply\r\n".as_bytes());
+        p.process("\x1b[33;1H".as_bytes()); // the composer row
+        p.process(format!("\u{276f}\u{a0}{PLAIN}{typed}{GHOST}{ghost}{PLAIN}").as_bytes());
+        p.process("\x1b[34;1H  \u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle)".as_bytes());
+        p
+    }
+
+    /// RED FIRST. A box holding ONLY the predictor's grey text is an EMPTY box; before this, the
+    /// gate read it as the keeper typing and every delivery to that pane held. Three stalls on the
+    /// night this was found were ghosts, not him.
+    #[test]
+    fn a_ghost_in_the_composer_is_not_the_keeper_typing() {
+        let p = box_screen("", "score it");
+        let rendered: Vec<String> = p.screen().rows(0, EMU_COLS).collect();
+        let typed = typed_only(p.screen());
+
+        // the premise: as plain text the two are the same row, which is the whole defect
+        assert!(
+            rendered.iter().any(|l| l.contains("score it")),
+            "premise: the ghost IS on the rendered grid"
+        );
+        assert!(!input_box_empty(&rendered), "premise: read as plain text it looks like typing");
+
+        assert!(input_box_empty(&typed), "a box holding only a prediction is EMPTY");
+    }
+
+    /// THE MUTANT IN THE OTHER DIRECTION, and it is the one that matters: real typing must still
+    /// hold a delivery. Trading a false hold for a splice mid-sentence gives the whole point away.
+    #[test]
+    fn real_typing_still_holds_a_delivery_even_with_a_prediction_after_it() {
+        for (typed, ghost, want_empty, why) in [
+            ("", "", true, "a bare box is empty"),
+            ("", "paste again to expand", true, "a hint is not typing"),
+            ("", "                                    \u{2190} for agents", true,
+                "right-aligned chrome is not typing"),
+            ("score it", "", false, "typed text holds"),
+            ("Both h", "ow are you", false, "typed prefix + drawn completion still holds"),
+        ] {
+            let p = box_screen(typed, ghost);
+            assert_eq!(input_box_empty(&typed_only(p.screen())), want_empty, "{why}");
+        }
+    }
+
+    /// The reduction must not eat the composer itself. `❯` is Default in the capture; if it were
+    /// not, blanking non-default cells would delete the marker, `input_box_empty` would find no
+    /// prompt row, and `None => false` would call every pane busy forever — a worse stall than the
+    /// one being fixed, and silent.
+    #[test]
+    fn the_prompt_marker_survives_the_reduction() {
+        let p = box_screen("", "score it");
+        let typed = typed_only(p.screen());
+        assert!(
+            typed.iter().any(|l| l.trim_start().starts_with('\u{276f}')),
+            "the reduction removed the composer marker itself"
+        );
+        assert_eq!(typed.len(), EMU_ROWS as usize, "the reduction must preserve the grid shape");
+    }
+
+    /// THE UNBOUNDED STALL, found while measuring the ghost — a different defect in the same row.
+    ///
+    /// The emulator catches frames mid-redraw where the status footer is drawn ONTO the composer
+    /// row. That row does not start with `⏵`, so the old `is_footer_row` said false and
+    /// `turn_in_flight` counted the footer's own "esc to interrupt" as a live turn — and
+    /// `PaneGate::Working`'s hold has NO BOUND. One latched frame is a pane nobody can reach again.
+    #[test]
+    fn a_footer_drawn_onto_the_composer_row_is_not_a_turn_in_flight() {
+        let bled = vec![
+            "● an earlier reply".to_string(),
+            "\u{276f}\u{a0}\u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle) · esc to interrupt"
+                .to_string(),
+        ];
+        assert!(is_footer_row(&bled[1]), "the footer is chrome wherever it is drawn");
+        assert!(!turn_in_flight(&bled), "a bled footer must not read as a live turn");
+        // and the real thing must still be caught
+        let live = vec!["✻ Concocting… (12s · esc to interrupt)".to_string()];
+        assert!(turn_in_flight(&live), "a real spinner is still a turn");
     }
 
     /// The hook pair is the other half of a two-sided contract and it is EASY to ship one side.
@@ -12202,7 +12689,7 @@ mod inbox_tests {
         );
         assert!(input_box_empty(&s), "premise: the composer is empty — nobody is typing");
         assert!(
-            pane_idle_for_delivery(&s, QUIET),
+            pane_idle_for_delivery(&s, &s, QUIET),
             "a pane finished 48 minutes ago must be deliverable"
         );
     }
@@ -12216,7 +12703,7 @@ mod inbox_tests {
             s.iter().any(|l| l.contains("Whirlpooling…") && l.contains("tokens")),
             "premise: a stale spinner is on the grid"
         );
-        assert!(pane_idle_for_delivery(&s, QUIET));
+        assert!(pane_idle_for_delivery(&s, &s, QUIET));
     }
 
     #[test]
@@ -12227,9 +12714,9 @@ mod inbox_tests {
         // finished one. Without this, the fix trades a false-busy for a false-idle and the keeper
         // is the one who gets spliced.
         let s = post_done_screen();
-        assert!(!pane_idle_for_delivery(&s, Duration::from_millis(0)));
-        assert!(!pane_idle_for_delivery(&s, Duration::from_millis(QUIET_FOR_DELIVERY_MS - 1)));
-        assert!(pane_idle_for_delivery(&s, Duration::from_millis(QUIET_FOR_DELIVERY_MS)));
+        assert!(!pane_idle_for_delivery(&s, &s, Duration::from_millis(0)));
+        assert!(!pane_idle_for_delivery(&s, &s, Duration::from_millis(QUIET_FOR_DELIVERY_MS - 1)));
+        assert!(pane_idle_for_delivery(&s, &s, Duration::from_millis(QUIET_FOR_DELIVERY_MS)));
     }
 
     #[test]
@@ -12237,26 +12724,26 @@ mod inbox_tests {
         // A quiet PTY is NOT sufficient on its own. The keeper types, pauses to think, and the
         // stream goes silent with words sitting in the box. Both halves are required.
         let typed = screen("❯ we need to get that solid before 8am", false);
-        assert!(!pane_idle_for_delivery(&typed, Duration::from_secs(60)));
+        assert!(!pane_idle_for_delivery(&typed, &typed, Duration::from_secs(60)));
     }
 
     #[test]
     fn idle_pane_with_an_empty_box_delivers() {
-        assert!(pane_idle_for_delivery(&screen("❯", false), QUIET));
-        assert!(pane_idle_for_delivery(&screen("❯   ", false), QUIET));
+        assert!(pane_idle_for_delivery(&screen("❯", false), &screen("❯", false), QUIET));
+        assert!(pane_idle_for_delivery(&screen("❯   ", false), &screen("❯   ", false), QUIET));
     }
 
     #[test]
     fn the_keeper_typing_holds() {
         // The case the whole packet exists for: a ready-looking screen whose composer has words in
         // it. Delivering here is what cut his sentence in half mid-word.
-        assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false), QUIET));
+        assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false), &screen("❯ we need to get that solid before 8am", false), QUIET));
         assert!(!input_box_empty(&screen("❯ s", false)), "one character is still typing");
     }
 
     #[test]
     fn a_turn_in_flight_holds() {
-        assert!(!pane_idle_for_delivery(&screen("❯", true), QUIET));
+        assert!(!pane_idle_for_delivery(&screen("❯", true), &screen("❯", true), QUIET));
     }
 
     #[test]
@@ -12268,7 +12755,7 @@ mod inbox_tests {
         let mut s = screen("❯ mid-sentence and about to be spliced", false);
         s.insert(1, "❯".to_string()); // a bare prompt row from a rendered transcript
         assert!(capture::screen_ready(&s), "premise: the naive check is fooled by this screen");
-        assert!(!pane_idle_for_delivery(&s, QUIET), "and the real gate is not");
+        assert!(!pane_idle_for_delivery(&s, &s, QUIET), "and the real gate is not");
     }
 
     #[test]

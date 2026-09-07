@@ -478,3 +478,49 @@ was the instrument that was wrong, not the mutation.
 **Handed back unmet, deliberately:** difficulty. Whether 24 plants sit where three readers can
 engage is not something the planter can settle, and the packet said I did not have to settle it
 alone. I did not manufacture a judgement to close the row.
+
+---
+
+## 2026-09-07 ~05:30 · L043 · P-HARVESTER LEG 2 — the tolerant half of a mutex was the other half of the bug
+
+**Hand-back:** `exo_memory/handback/p-harvester-leg2_2026-09-07.md`.
+**Patch for C:** `exo_memory/loop/patch_harvester_leg2_L043.md`. **Module (mine):**
+`consonance/src-tauri/src/harvest_guard.rs` — 17 tests, 4 mutants applied, 4 caught, 0 survivors.
+`main.rs` not touched; nothing committed.
+
+**THE CORRECTION TO CARRY, and it is to my own five-day-old diagnosis.** I found `main.rs:1071`
+`Err(_) => break` in the watcher against `:1038`'s tolerant reader and called it *one mutex, two
+policies* — correct, and I named the wrong half as the defect. **The reader's `if let Ok` is not the
+safe policy; it is the other half of the same bug.** On a poisoned lock it declines to feed the
+emulator *permanently*. So fixing only the watcher buys a thread that locks fine, harvests a frozen
+screen, dedups it to nothing, and reports a healthy attempt clock forever — **the same dead `.txt`
+with a green light on it.** When one mutex has two policies, do not ask which one is right; both
+sides need the same one or neither is fixed.
+
+**THE FAILURE THAT ONLY EXISTS WHEN THE FIXES COMPOSE.** Item 1 (recover) plus item 2
+(`catch_unwind`) is a permanent panic loop if the panic is deterministic — catching and continuing
+at a 250 ms poll burns a core forever, writing to a stderr that goes to no file. **Recovering
+harder made it worse.** So recovery is bounded: three consecutive panics rebuilds the parser once,
+one success in between clears the count. That is the packet's *"recover but re-initialise"* arriving
+from the failure mode rather than from the hint — **and I would not have seen it by evaluating
+either item alone. Compose the fixes before believing either.**
+
+**Placement, decided on the failure mode rather than on tidiness:** the harvest stamp stays OUT of
+`data/ready/`. That file is written by the hooks in the pane's own process; the harvest stamp is
+written by the app's watcher thread. **A shared file's freshness would be maintained by whichever
+writer survived — a dead watcher plus live hooks reads as healthy.** That is the 09-02 bug rebuilt
+inside the detector, exactly like stamping on write instead of on attempt, one level up. **Join at
+the reader, never at the file.**
+
+**And the thing I built because the evidence expired:** the separating observation — *poisoned
+mutex, or panic in the body?* — was never taken and is gone, and the app's stderr goes to no file.
+I cannot recover it and I did not guess. So `guarded` carries the panic MESSAGE out into the stamp.
+**When you cannot answer the question, make the next occurrence answer it** — that is cheaper than
+a diagnosis and it does not expire.
+
+**Named NOT APPLIED, because "shape compiles" must not read as "compiles":** the patch was compiled
+verbatim against stub types (proving the borrow/unwind structure and that one `AssertUnwindSafe`
+covers the `&mut last` capture), **not inside the crate** — there is no `target/` on this machine
+and a cold Tauri build did not fit the lap. Mutants 1 and 2 were applied to my policy module, not to
+the watcher; at `main.rs` level they are NOT APPLIED and only C's fold applies them. The stall is
+not fixed and I did not say it was — the relaunch falsifier is the keeper's hand.

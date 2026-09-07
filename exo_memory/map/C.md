@@ -724,3 +724,56 @@ and four `sed -n`s. I also checked "the busiest day on record" because it was ch
 hand-backs against 09-06's 17 — and that one was invisible to reading.
 
 Hand-back: `exo_memory/handback/p-l039-read-C_2026-09-07.md`.
+
+## 2026-09-07 — L043: the ghost, the mirror, the two-writers window. Measure the substrate first
+
+Three defects and a fold, ~17 minutes, 466/0/3. **The keeper found the one that mattered** — the
+greyed-out autocomplete prediction sitting in the composer, which the gate read as him typing, so
+every delivery held. Three stalls that night were ghosts.
+
+**The lesson that generalises, and it nearly went the other way: MEASURE THE SUBSTRATE BEFORE
+DESIGNING THE FIX.** The packet said the prediction is dim — SGR 2 — and that is the obvious read.
+**vt100 0.15 does not track the dim attribute at all**; its SGR match handles 1/3/4/7 and the
+colours, and `2` falls through unrecorded. Had Claude Code rendered the ghost dim, the fix would have
+been impossible without changing emulators and the honest answer was the refusal the packet
+authorised. It renders truecolor grey `Rgb(153,153,153)`, so it is visible. **The fix works for a
+different reason than the one I was handed, and knowing which reason is the difference between a
+repair and a coincidence I could not repeat.**
+
+**How I got the ground truth: replay the real bytes.** `data/captures/*.log` is raw PTY, durable,
+hundreds of MB. Chunk it through the same parser production uses and dump per-cell foregrounds. That
+gave the whole discriminator in one pass — `❯` and typed text at Default, prediction and hints at
+grey, and a mixed row (`❯ Both h` Default + `ow are you` grey) that is the predictor caught in the
+act. **The fixture I was offered was unusable** (8,000-byte tail starting mid-escape, showing a
+working screen, not a composer) and saying so beat working around it silently.
+
+**And the measurement found a defect nobody sent me looking for.** One frame had the status footer
+drawn ONTO the composer row: `❯ ⏵⏵ bypass permissions … esc to interrupt`. `is_footer_row` tested
+`starts_with('⏵')`, that row starts with `❯`, so `turn_in_flight` counted the footer's own text as a
+live turn — and `Working`'s hold is UNBOUNDED. **That, not the thing I was asked about, is what
+stalled four packets for two and a half hours**, and the arithmetic proves it: the path I was pointed
+at forces at 240 seconds, and 240 seconds is not two and a half hours. Answering a diagnosis with a
+number beats agreeing with it.
+
+**On the mirror: the rule is an AND and that is the entire design.** `turn_in_flight && quiet < 2s`,
+never `screen_busy`, which is an OR. Rows scroll in place at scrollback 0, so a 48-minute-old spinner
+is still drawn; keying on it alone would have put every delivery to a finished pane back on the
+4-minute gate and restored a failure this room already paid for. **When adding a guard, the test that
+earns its keep is the one asserting the common case still costs nothing.**
+
+**Two corrections to my own work, one from that same morning.** I had written beside a test that "a
+fourth forcing path arrives here already covered" — it was a hand-written list of three and the new
+state was invisible to it, the room's own named failure inside the test written to prevent it; now a
+sweep with a compiler-checked exhaustive match. And my first shelf-window check asked the shelf's own
+predicate whether the shelf was right — **an assertion that could not fail**, caught before shipping.
+
+**On §2: the key was not what was wrong.** The predicate already handled two writers; the constant
+beside it (`carried <= 4`) assumed one. Chose today+yesterday PER WRITER and refused "newest per
+machine", which silently drops a note the seat wrote.
+
+**And I folded E's patch without being rung**, after checking mtimes to confirm it had settled —
+finished work sitting on disk is not a reason to wait. I restored four explanatory comments E's
+extraction dropped while claiming verbatim; structurally it was verbatim, but a comment lost in an
+extraction is a reason lost.
+
+Hand-back: `exo_memory/handback/p-ready-window_2026-09-07.md`.
