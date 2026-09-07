@@ -6,7 +6,7 @@ written for a three-arm design that B's freeze pass killed on arithmetic.**
 **Read first, at the file:**
 
     exo_memory/loop/l039_preregistration_2026-09-07.md   ← the null, statistic, bar, and void conditions
-    exo_memory/handback/p-freeze-attack_2026-09-07.md    ← B's §10 and §12, the design and its power table
+    handback/p-freeze-attack_2026-09-07.md    ← B's §10 and §12, the design and its power table
 
 ## 1 · WHAT CHANGED AND WHY — the old packet was not wrong, it was unmeasurable
 

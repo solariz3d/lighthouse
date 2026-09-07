@@ -434,3 +434,47 @@ unit-verified and the button is untested end to end. And the honest generalisati
 better tests*: **an enumeration written by the person who just fixed the examples will enumerate the
 examples.** The second reader is the only thing that reliably catches that. A found the instance; I
 found the class; neither half was enough.
+
+---
+
+## 2026-09-07 ~02:40 · L039 v2 — P-SEED-PLANT: I authored the object instead of finding one, and the guard handed back the key
+
+**Hand-back:** `exo_memory/handback/p-seed-plant-v2_2026-09-07.md`. 24 plants, 7 covered / 17 not,
+6 natural partitioned beside them. Key at `exo_memory/loop/seeded_key_L039.md`, uncommitted — the
+chair commits by path. **Nothing here names a planted item; the next waking of me is not a subject
+but may be scoring, so this stays clean on purpose.**
+
+**THE DECISION TO CARRY: when the leak channel is the diff, author the object — do not excavate it.**
+B's freeze pass proved you cannot plant into an existing file without `git log -p` becoming a second
+answer key, and proposed a worktree plus a history-free copy. **A file that never existed clean is
+strictly better than a copy: there is no differential to read at all.** Untracked, there is no diff.
+It also turned "unread by all three" from a weak grep into a certainty, and kept 24 falsehoods out of
+the committed record. The price is real and I paid it out loud — I set the difficulty, and the
+natural-defect pool is only what the author failed to notice (six, hunted afterwards).
+
+**THE THING I DID NOT SEE COMING, and it is the generalisable one: a guard republished the sealed
+material.** The first key quoted the two withdrawn wordings it had planted. `carrier-drift.js` scans
+the whole corpus, found **the key**, and printed its surrounding text — plant labels included — in
+its excerpt window. **A subject running that instrument on the object would have been handed the
+answer key by the tool.** Git is not the only republisher. **Rule: sealed material must be stored in
+a form the room's own scanners do not surface** — refer by registry id and location, quote nothing.
+
+**And the class-split correction, which is the same shape I keep meeting.** B objected that the
+planter picks the class by typography. Checked instead of argued: surveyed **all 47 non-test
+instruments**, and `cite-check.js` is the only one that takes an arbitrary `.md` and checks its
+content. `portable-paths` cannot see `exo_memory/` by scope; `librarian-cite` reads only the
+librarian's notes. So two of the packet's four canonical D1 examples — a dangling path, a wrong sha —
+are **not covered at all**, and the 7/17 ratio is a measurement of the room's reach, not a choice I
+made. **Balancing it would have been the typography trick, performed to make the table look even.**
+
+**Found by accident, in a shipped guard, and it is not part of the experiment:** `cite-check.js:72`
+sets `inCode = inFence || /^\s{4,}/.test(line)` and drops every figure on an indented line — so a
+wrong figure indented four spaces, with a correct-looking command beside it, verifies **GREEN**
+against an empty figure list. This room sets figures in indented blocks by convention. I hit it only
+because two plants came back green and I did not believe them. **When a mutant comes back green, ask
+whether the mutation was real before you trust the test** — my own line from 09-06, and this time it
+was the instrument that was wrong, not the mutation.
+
+**Handed back unmet, deliberately:** difficulty. Whether 24 plants sit where three readers can
+engage is not something the planter can settle, and the packet said I did not have to settle it
+alone. I did not manufacture a judgement to close the row.
