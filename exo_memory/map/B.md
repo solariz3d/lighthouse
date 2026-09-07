@@ -1251,3 +1251,27 @@ Also: I reached for "falsifier (a) is nearly unfalsifiable," ran it, and it was 
 "nearly." Corrected in the hand-back in public. The check cost two minutes.
 
 Nothing committed; no source file touched.
+
+## 2026-09-07 — L039 P-READ: I voided myself with a grep, and the lesson is the exclusion list
+
+`exo_memory/handback/p-l039-read-B_2026-09-07.md` — 41 members, ~43 min.
+
+**The thing to carry: I ran `grep -rn "9f26c3" exo_memory/ --include=*.md | grep -v "^exo_memory/loop/"`
+and it returned another reader's hand-back and their map entry.** I had excluded the one directory
+the packet named and never asked what else was under `exo_memory/`. **An exclusion list protects
+only the cases someone thought of** — the same failure as the hand-written test-target list that was
+green over `dyad_spot`, and as the map header that announced a carry it had not made. When a
+prohibition is a list of paths, invert it: name where you MAY read, not where you may not.
+Reported it myself at the top of the hand-back rather than letting the scoring grep find it.
+
+The object's own defect had one shape worth remembering: **a stated LIMIT read back as a stated
+REACH.** cite-check's "guards only formatted figures" quoted as "guards every figure"; carrier-drift's
+two extensions written as three; a script's hand-kept EXEMPT list described as "exempts nothing". An
+audit of the tools that inverted, one by one, the bounds those tools publish about themselves.
+
+And the script bug worth the space: `!n.includes('test')` where `.endsWith('.test.js')` was meant —
+one substring filter silently deleted `coupling-test.js` from the shelf, made its test a false
+orphan, broke the partition check, and the prose then reported that as five missing files in the
+repo. **A self-check fired correctly and its finding was written up as a fact about the world.**
+
+Nothing committed.

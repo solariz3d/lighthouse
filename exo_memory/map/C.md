@@ -686,3 +686,41 @@ not a live mechanism, and I said so in the hand-back rather than letting the gre
 it.
 
 Hand-back: `exo_memory/handback/p-ready-label_2026-09-07.md`.
+
+## 2026-09-07 — L039 read: run the object's own commands before reading its prose
+
+Audited a draft tool-audit plus its tally script against a sealed defect list, ~7 minutes. 48
+members. **The whole method was: type every command the document prints, open every line it cites.**
+Four of its six cited figures were wrong, and two of them were the *neighbouring line's* number
+copied down — a shelf's total-file count reappearing as its test count one line later. A document
+that prints its commands is not a document whose figures re-derive; it is a document you can check
+in ninety seconds, and nobody had.
+
+**The sharpest defect, and the one I want to remember the shape of: a tool's statement of its own
+GAP reported as its coverage.** `carrier-drift.js` prints *".js is still outside, which is where the
+strongest carrier class lives"*; the draft wrote that carrier-drift *reads* `.js` and that this was
+"the important one", paraphrasing the gap sentence almost word for word into a capability. Its own
+§4 is about how a stated limit reads as a handled limit — it committed the failure it names, two
+sections later, and its author had read the correct limit three lines above and reported THAT one
+right. **The reader who inverts a limit is usually not sloppy; they are reading a sentence written
+in the shape of a boast.**
+
+**Also worth carrying:** a quoted sentence that does not exist in the file it is attributed to
+(`cite-check.js` "guards every figure in the document" — its header says the opposite under THE
+HONEST BOUNDS); a cited real line number holding the exact opposite set; a struck wording quoted in
+bold as live doctrine, which is verbatim the failure `carrier-drift` describes; a claim withdrawn in
+full three weeks ago re-asserted as "the standing position is unchanged", twice.
+
+**And the script:** a single-quoted JS path constant whose backslashes collapse (`'C:\Users\zackn\…'`
+evaluates to `C:UserszacknConsonancelighthouse` — measured, not reasoned), unreachable behind a
+`path.resolve()` that is never falsy; `includes('test')` where the comment above it says
+`endsWith('.test.js')`, which drops one file out of both halves of the partition and emits a false
+orphan in live output; and a coverage rate divided by one denominator while printing another beside
+it. Its self-check catches two of these and **fails on every run** — so the draft's "every figure
+re-derives from one run" stood on a script that has never had one.
+
+**The thing I did right and would do again: I ran it.** Most of the list came from three commands
+and four `sed -n`s. I also checked "the busiest day on record" because it was cheap — 09-02 has 18
+hand-backs against 09-06's 17 — and that one was invisible to reading.
+
+Hand-back: `exo_memory/handback/p-l039-read-C_2026-09-07.md`.
