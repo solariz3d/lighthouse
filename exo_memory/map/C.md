@@ -630,3 +630,59 @@ a slow one is the same reading-alike defect the room keeps meeting — this time
 that measures the other instruments.
 
 Hand-back: `exo_memory/handback/p-ready-signal_2026-09-06.md`.
+
+## 2026-09-07 — P-READY-LABEL: the row that asserted a fact and its negation
+
+**The brief handed me a hypothesis and it was wrong, and finding that out was the packet.** The
+chair read `[stamp=ready] (FORCED … the gate never got a positive ready signal)` and concluded the
+label and the decision were read at different moments. They are not. `drain_inboxes` reads the gate
+ONCE and hands the same value to the decision and to the row; the QUEUED row four minutes earlier
+carried `stamp=ready` too, and the two board timestamps are 240,276 ms apart — the full bound. There
+was one moment. **When the brief's mechanism can be refuted from the source in one read, refute it
+before building the fix it asked for** — I was two edits into "make the tag report the decided
+state" before I checked whether the premise held.
+
+**The actual defect, and it is mine.** `Drain::Forced` had three producers and the sentence named
+two. The third is `PaneGate::Ready` + an occupied composer — the keeper's rule outranking a positive
+stamp — and **my own test from the night before, `the_keeper_typing_still_holds_a_pane_that_says_it_is_ready`,
+already asserted exactly that path.** I proved the case and then, an hour later in the same file,
+wrote a sentence that assumed it did not exist. Not a missed case: a case I had in hand.
+
+**The shape of the fix, worth reusing.** Two independent strings composed at the call site can state
+a contradiction that neither of them contains. The repair is not better wording — it is giving the
+sentence an OWNER (`delivery_note`) and making the cause a value (`Drain::Forced(Forced)`) bound at
+the branch that knows it. A cause inferred later, from a gate, in a different function, is a
+sentence written where the cause is not. **And the plog had the identical bug underneath:** its
+guard `forced && !gate.is_stamped()` filtered out the very cause that fired, so the only forced
+delivery this machine has ever made logged nothing at all.
+
+**Three things I would tell myself again.**
+
+1. **I refused the brief's three suggested fixes and had to say why.** "Drop the tag on a forced
+   delivery" was the tempting one and it deletes a TRUE fact — `stamp=ready` is what makes the row
+   mean *the keeper's composer was occupied for four minutes* instead of *the mechanism is broken*.
+   Removing a true fact so it cannot be misread is how the row lost its meaning to begin with.
+2. **I claimed red-first for four tests and measured two.** I reverted the wording, re-ran, restored
+   it: two go red, two pass on both arms. The two that pass are guards on the new type, not proofs
+   of it, and saying so costs nothing — it is the difference between four red-first tests and two.
+3. **Build the forced cases by ASKING the function, never by naming the variant.** That is why the
+   red test did not have to change between the red run and the green one, across a type change that
+   rewrote three other assertions.
+
+**The bigger thing I found and did NOT ship.** A positive stamp over a screen with a live turn in
+flight reads `Ready` and delivers IMMEDIATELY — `PaneGate::Ready` consults neither `turn_in_flight`
+nor quiescence. `Stale` catches working-stamp-over-idle-screen; **there is no mirror**, and the
+mirror is the splice case. It is reachable by the gate's own action, because the gate does not know
+about its own writes: the stamp has not flipped yet (the hook costs 75–81 ms plus claude's dispatch,
+unmeasured; the drain ticks at 250 ms), and `last_byte` only moves when the pane *echoes*. I
+registered it with the constant-free fix (compare the stamp's `at` against the instant we wrote) and
+left it out, because it is a change to DELIVERY SEMANTICS inside a packet about a LABEL, and landing
+it here would have made the chair score two changes as one an hour before the acceptance proofs.
+**Refusing to smuggle a good fix into the wrong packet is not stopping short.**
+
+**And the number that keeps everything above honest: the stamp era has ONE delivery on record.**
+Zero STALE rows have ever printed, in 47 deliveries. Thirteen green unit tests over fake screens are
+not a live mechanism, and I said so in the hand-back rather than letting the green count stand in for
+it.
+
+Hand-back: `exo_memory/handback/p-ready-label_2026-09-07.md`.

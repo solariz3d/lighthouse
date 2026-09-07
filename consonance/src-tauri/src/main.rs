@@ -7484,7 +7484,26 @@ enum Drain {
     /// Not idle yet, and inside the bound: keep it. The message is NOT dropped.
     Hold,
     /// Not idle, and past the bound. Send it and mark the row — a late message beats a mute room.
-    Forced,
+    /// It carries WHY, because "forced" alone is not one fact: one of the ways to reach it is the
+    /// ready signal WORKING and being outranked.
+    Forced(Forced),
+}
+
+/// Why a bounded hold ran out. Two causes, and until 2026-09-07 the board printed one sentence for
+/// both — the sentence for the cause that was not happening.
+///
+/// The distinction is not cosmetic. `SignalOutranked` says the pane's own harness answered and the
+/// keeper's hand beat it; `NoUsableSignal` says the harness never answered and a picture of a
+/// screen carried the message. An observer needs to act differently on those: the first is the
+/// gate working and a composer left occupied for four minutes, the second is install drift or a
+/// pane killed mid-turn.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum Forced {
+    /// The stamp was positive; the composer never cleared. The keeper's rule (2026-09-02) outranks
+    /// the stamp, and that hold keeps the bound it has always had.
+    SignalOutranked,
+    /// No usable stamp — stale, or none at all. The bounded screen gate carried this message.
+    NoUsableSignal,
 }
 
 /// THE BOUND IS NOW THE FALLBACK, NOT THE RULE.
@@ -7511,22 +7530,25 @@ fn drain_decision(
     if !enabled {
         return Drain::Deliver;
     }
-    let bounded = |ok: bool| {
+    // `why` is bound at the branch that KNOWS it, never inferred later from the gate — the whole
+    // defect being fixed here is a sentence about the cause written somewhere the cause was not.
+    let bounded = |ok: bool, why: Forced| {
         if ok {
             Drain::Deliver
         } else if waited >= Duration::from_millis(MAX_HOLD_MS) {
-            Drain::Forced
+            Drain::Forced(why)
         } else {
             Drain::Hold
         }
     };
     match gate {
-        // its own Stop fired — the only thing left to respect is the keeper's hand
-        PaneGate::Ready => bounded(box_empty),
+        // its own Stop fired — the only thing left to respect is the keeper's hand. Forcing HERE
+        // is the signal being outranked, not the signal being absent.
+        PaneGate::Ready => bounded(box_empty, Forced::SignalOutranked),
         // mid-turn by its own account, corroborated on screen: hold, and do not count
         PaneGate::Working => Drain::Hold,
         // the gate is guessing again; this is the pre-stamp behaviour, kept whole
-        PaneGate::Stale | PaneGate::Unstamped => bounded(screen_idle),
+        PaneGate::Stale | PaneGate::Unstamped => bounded(screen_idle, Forced::NoUsableSignal),
     }
 }
 
@@ -7568,7 +7590,7 @@ impl Inbox {
         screen_idle: bool,
         now: Instant,
         enabled: bool,
-    ) -> Option<(String, String, bool)> {
+    ) -> Option<(String, String, Option<Forced>)> {
         let mut m = self.0.lock().ok()?;
         let q = m.get_mut(pane)?;
         let head = q.front()?;
@@ -7577,7 +7599,11 @@ impl Inbox {
             Drain::Hold => None,
             d => {
                 let it = q.pop_front()?;
-                Some((it.text, it.label, d == Drain::Forced))
+                let why = match d {
+                    Drain::Forced(why) => Some(why),
+                    _ => None,
+                };
+                Some((it.text, it.label, why))
             }
         }
     }
@@ -7632,6 +7658,34 @@ fn gate_or_queue(app: &AppHandle, pane_id: &str, msg: &str, preview: &str) -> Op
     Some(format!("queued for {} — {}; it delivers when it is ready", short_id(pane_id), gate.label()))
 }
 
+/// The WHOLE verdict for one delivered row — the gate's own label and, if it forced, why — built
+/// by ONE function so the two halves cannot be composed into a reading neither of them makes.
+///
+/// They were two independent strings until 2026-09-07, and on 2026-09-07 at 06:52 they produced
+/// `[stamp=ready] (FORCED … the gate never got a positive ready signal)`: one row asserting a
+/// positive ready signal and denying one. Neither half was wrong about its own fact. The row was
+/// wrong, and no owner of the row existed to be wrong in.
+/// THE TAG IS NOT DROPPED ON A FORCED DELIVERY, and that was the tempting fix. `stamp=ready` is
+/// TRUE in the outranked case and it is the fact the reader needs — it is what makes the row say
+/// *the keeper had something in the composer for four minutes* rather than *the ready signal is
+/// broken*. Deleting a true fact to stop it from being misread is how the row lost its meaning in
+/// the first place.
+fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+    format!(
+        "[{}]{}",
+        gate.label(),
+        match forced {
+            None => "",
+            // the stamp DID carry — say so, or the row reads as the mechanism failing
+            Some(Forced::SignalOutranked) =>
+                " (FORCED after the bounded hold — the pane's own signal said ready; \
+                  its composer never cleared)",
+            Some(Forced::NoUsableSignal) =>
+                " (FORCED after the bounded hold — the gate never got a usable ready signal)",
+        }
+    )
+}
+
 /// ONE tick, ALL queues, ONE message per pane per tick — the next tick re-reads the screen rather
 /// than trusting a 250ms-old reading for a second write. QUEUED and DELIVERED are separate rows on
 /// purpose: until tonight the board said "delivered" when the text RENDERED, so "not yet sent" and
@@ -7650,28 +7704,35 @@ fn drain_inboxes(app: &AppHandle) {
         ) {
             let ok = inject_to_pane(&app.state::<Panes>(), &pane, &text).is_ok();
             chair_audit(app, format!(
-                "DELIVERED -> {} [{}]{}{}: {}",
+                "DELIVERED -> {} {}{}: {}",
                 short_id(&pane),
-                gate.label(),
-                if forced {
-                    " (FORCED after the bounded hold — the gate never got a positive ready signal)"
-                } else {
-                    ""
-                },
+                delivery_note(gate, forced),
                 if ok { "" } else { " [WRITE FAILED]" },
                 label,
             ));
             /* THE FALLBACK MUST SAY IT FIRED. A forced delivery on an UNSTAMPED pane is the
              * install-drift case (the hook pair is not registered on this machine), and a forced
              * delivery on a STALE stamp is the killed-mid-turn case. Both used to be one line
-             * reading "the pane never went idle", which named neither. */
-            if forced && !gate.is_stamped() {
-                plog(&format!(
+             * reading "the pane never went idle", which named neither.
+             *
+             * AND THE GUARD WAS `forced && !gate.is_stamped()`, 2026-09-07 — which is the row's own
+             * defect one level down. The outranked case IS stamped, so the one delivery that
+             * actually forced on this machine wrote NOTHING to the log. A condition that filters
+             * out a whole cause is not a quieter log, it is a missing one. */
+            match forced {
+                None => {}
+                Some(Forced::NoUsableSignal) => plog(&format!(
                     "DELIVERY FORCED pane={pane} {} — the bounded screen gate carried this \
                      message because the pane's own ready signal was not usable. A stamped pane \
                      has no bound; this one had no stamp or a stale one.",
                     gate.label()
-                ));
+                )),
+                Some(Forced::SignalOutranked) => plog(&format!(
+                    "DELIVERY FORCED pane={pane} {} — the pane's own signal said READY and the \
+                     gate held anyway: its composer was not clear for the whole bound. This is \
+                     the keeper's rule firing, not the ready signal failing.",
+                    gate.label()
+                )),
             }
         }
     }
@@ -11747,8 +11808,9 @@ mod librarian_channel_tests {
         assert_eq!(MAX_HOLD_MS, 240_000,
             "if this changed, the exemption's stated price changed with it — say so where the \
              price is stated (mcp.rs `required_station`)");
-        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced,
-            "a busy pane IS eventually written into, and that is the honest residual");
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced(Forced::NoUsableSignal),
+            "a busy pane IS eventually written into, and that is the honest residual — and it is \
+             the SCREEN gate that carries it, which is what the exemption's price is about");
         /* COMING BACK TO SAY SO, as this test asked (pane C, P-READY-SIGNAL, same rebuild).
          *
          * The bound is unchanged and still four minutes, but it is no longer the RULE — it is the
@@ -11878,8 +11940,9 @@ mod ready_signal_tests {
         );
         assert_eq!(
             drain_decision(PaneGate::Ready, false, screen_idle, Duration::from_millis(MAX_HOLD_MS), true),
-            Drain::Forced,
-            "and that one hold stays bounded, as it was"
+            Drain::Forced(Forced::SignalOutranked),
+            "and that one hold stays bounded, as it was — and it forces as OUTRANKED, never as an \
+             absent signal: the stamp was positive for the whole four minutes"
         );
     }
 
@@ -11920,6 +11983,128 @@ mod ready_signal_tests {
     fn an_unreadable_screen_takes_neither_unbounded_path() {
         for stamp in [Stamp::Done, Stamp::Working, Stamp::Absent] {
             assert_eq!(pane_gate(stamp, None), PaneGate::Unstamped, "{stamp:?} over no screen");
+        }
+    }
+
+    /// EVERY way a delivery can be forced, each obtained by ASKING `drain_decision` rather than by
+    /// naming a variant — so this test does not have to change when the answer changes shape, and
+    /// a fourth forcing path added later arrives here already covered.
+    fn every_forced_case() -> Vec<(&'static str, PaneGate, bool, bool)> {
+        vec![
+            // the stamp is POSITIVE and the keeper's composer never cleared — his rule, working
+            ("ready, composer occupied", PaneGate::Ready, false, false),
+            // killed mid-turn: the stamp says working and the screen does not agree
+            ("stale stamp", PaneGate::Stale, false, false),
+            // the hook pair is not registered on this machine
+            ("no stamp", PaneGate::Unstamped, false, false),
+        ]
+    }
+
+    /// THE ROW MAY NOT ASSERT A FACT AND ITS NEGATION.
+    ///
+    /// Found live 2026-09-07 06:52 by the chair, on the board:
+    ///
+    /// ```text
+    /// DELIVERED -> 0c0c0c0a [stamp=ready] (FORCED after the bounded hold
+    ///                                      — the gate never got a positive ready signal)
+    /// ```
+    ///
+    /// The reported cause was that the label and the decision were read at different moments. They
+    /// are not: `drain_inboxes` reads the gate ONCE and hands the same value to `take_ready` and to
+    /// the row, and the QUEUED row four minutes earlier carried `stamp=ready` too. There is one
+    /// moment. What there were was THREE ways to force and a sentence that named two of them.
+    #[test]
+    fn no_delivered_row_claims_a_ready_signal_and_denies_one() {
+        for (name, gate, box_empty, screen_idle) in every_forced_case() {
+            let d = drain_decision(
+                gate,
+                box_empty,
+                screen_idle,
+                Duration::from_millis(MAX_HOLD_MS),
+                true,
+            );
+            let Drain::Forced(why) = d else {
+                panic!("premise: {name} must force at the bound, got {d:?}")
+            };
+            let row = delivery_note(gate, Some(why));
+            let claims = row.contains("stamp=ready");
+            let denies = row.contains("never got a") && row.contains("ready signal");
+            assert!(!(claims && denies), "{name}: one row, two contradictory facts: {row}");
+        }
+    }
+
+    /// THE THREE FORCED ROWS MUST NOT READ ALIKE — the same bar `a_stale_stamp_and_a_working_pane`
+    /// sets for the gate, applied to the sentence the reader actually gets.
+    ///
+    /// This is the half that was missing. The gate has told stale from working since the moment it
+    /// shipped; the ROW collapsed all three causes into one wording, so the distinction existed
+    /// everywhere except where anyone reads it. `PaneGate::Stale` has still never printed on this
+    /// machine — 0 rows containing "STALE" in 47 delivered rows on the board — so the stale row is
+    /// asserted here or it is asserted nowhere.
+    #[test]
+    fn the_three_forced_rows_each_name_their_own_cause() {
+        let mut seen: Vec<String> = vec![];
+        for (name, gate, box_empty, screen_idle) in every_forced_case() {
+            let d = drain_decision(
+                gate,
+                box_empty,
+                screen_idle,
+                Duration::from_millis(MAX_HOLD_MS),
+                true,
+            );
+            let Drain::Forced(why) = d else { panic!("premise: {name} forces") };
+            let row = delivery_note(gate, Some(why));
+            assert!(row.contains("FORCED"), "{name}: a forced row must say it forced");
+            assert!(!seen.contains(&row), "{name} reads exactly like an earlier cause: {row}");
+            seen.push(row);
+        }
+        assert_eq!(seen.len(), 3);
+        // and each says the thing an observer would act on
+        assert!(seen[0].contains("stamp=ready") && seen[0].contains("composer never cleared"));
+        assert!(seen[1].contains("STALE"), "the killed-mid-turn pane must be nameable on the board");
+        assert!(seen[2].contains("NO STAMP"), "install drift must stay nameable too");
+    }
+
+    /// THE INVARIANT UNDER THE WHOLE FIX: a reason can only be produced by the branch that holds
+    /// it. `SignalOutranked` means the stamp was positive, so it must be unreachable from any gate
+    /// that had no usable stamp — otherwise the row is free to lie again, just more quietly.
+    #[test]
+    fn a_reason_can_only_come_from_the_gate_that_owns_it() {
+        for gate in [PaneGate::Ready, PaneGate::Working, PaneGate::Stale, PaneGate::Unstamped] {
+            for box_empty in [true, false] {
+                for screen_idle in [true, false] {
+                    let d = drain_decision(
+                        gate,
+                        box_empty,
+                        screen_idle,
+                        Duration::from_millis(MAX_HOLD_MS * 10),
+                        true,
+                    );
+                    match d {
+                        Drain::Forced(Forced::SignalOutranked) => assert_eq!(
+                            gate,
+                            PaneGate::Ready,
+                            "only a positive stamp can be OUTRANKED"
+                        ),
+                        Drain::Forced(Forced::NoUsableSignal) => assert!(
+                            !gate.is_stamped(),
+                            "{gate:?} had a usable stamp — the row must not say it did not"
+                        ),
+                        _ => {}
+                    }
+                }
+            }
+        }
+    }
+
+    /// A delivery that did NOT force says nothing about forcing — the row that carried 43 of the
+    /// 47 deliveries on record, and the one place an extra clause would be pure noise.
+    #[test]
+    fn an_unforced_row_carries_no_forced_clause() {
+        for gate in [PaneGate::Ready, PaneGate::Stale, PaneGate::Unstamped] {
+            let row = delivery_note(gate, None);
+            assert!(!row.contains("FORCED"), "{gate:?}: {row}");
+            assert_eq!(row, format!("[{}]", gate.label()));
         }
     }
 
@@ -12099,7 +12284,7 @@ mod inbox_tests {
         // hours tonight. An unbounded hold turns that into a mute room with no error.
         assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(0), true), Drain::Hold);
         assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS - 1), true), Drain::Hold);
-        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced);
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced(Forced::NoUsableSignal));
         assert_eq!(drain_decision(PaneGate::Unstamped, false, true, Duration::from_millis(0), true), Drain::Deliver);
     }
 
@@ -12125,7 +12310,7 @@ mod inbox_tests {
 
         let (text, _, forced) = inbox.take_ready("p", PaneGate::Unstamped, false, true, t0, true).expect("idle: it drains");
         assert_eq!(text, "first", "FIFO - a gate that reorders has traded a splice for a scramble");
-        assert!(!forced);
+        assert_eq!(forced, None);
         assert_eq!(inbox.take_ready("p", PaneGate::Unstamped, false, true, t0, true).map(|x| x.0).as_deref(), Some("second"));
         assert_eq!(inbox.depth("p"), 0);
     }
@@ -12138,7 +12323,8 @@ mod inbox_tests {
         let later = t0 + Duration::from_millis(MAX_HOLD_MS + 1);
         let (text, _, forced) = inbox.take_ready("p", PaneGate::Unstamped, false, false, later, true).expect("the bound releases it");
         assert_eq!(text, "held");
-        assert!(forced, "and the board row must be able to say so - a late message beats a silent one");
+        assert_eq!(forced, Some(Forced::NoUsableSignal),
+            "and the board row must be able to say so - a late message beats a silent one - AND why");
     }
 
     #[test]
