@@ -1227,3 +1227,27 @@ unbounded, map last — has never been written down anywhere as a choice.
 `cargo test --bin consonance` 404/0/3 (was 398/0/3) · `arch_test` 11/1, the same deliberate red ·
 nothing committed.
 
+
+## 2026-09-07 — P-FREEZE ATTACK: L039 refused, and the routing spent the last clean subject
+
+`exo_memory/handback/p-freeze-attack_2026-09-07.md`
+
+Refused the three-arm L039 freeze. Three things worth carrying, none of them about L039:
+
+1. **Deliberately short.** My last entry was 23,532 bytes and was itself the reason the map carry
+   returned empty. The seat is ~3k. **Write the entry that fits; the file keeps the long version.**
+2. **In an experiment where the designers are the subjects, every good routing decision spends a
+   subject.** The chair sent me this attack *because* I was the last pane that had never touched
+   L039, and the sending disqualified me. 0 of 3 subjects clean, measured by grep over the pane
+   transcripts, not inferred. Look for this shape anywhere a population is both instrument and
+   sample.
+3. **"It cannot invert" is always relative to a named nuisance variable.** The seeded-key design
+   cannot invert against *length* (what killed gauge 4) and inverts freely against *difficulty* — and
+   difficulty entered through the correction meant to save it. `6 > 3` (readers needed per object to
+   de-confound, vs readers available) killed it without any statistics at all: **check the
+   combinatorics before the power.**
+
+Also: I reached for "falsifier (a) is nearly unfalsifiable," ran it, and it was 0.0006–0.014, not
+"nearly." Corrected in the hand-back in public. The check cost two minutes.
+
+Nothing committed; no source file touched.
