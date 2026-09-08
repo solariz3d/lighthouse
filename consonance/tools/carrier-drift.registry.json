@@ -214,19 +214,6 @@
      "why": "L039's SCORED EXPERIMENTAL SUBJECT, and this line is part of plant D1-04 -- the object carries the withdrawn wording ON PURPOSE, authored wrong so readers could be measured on finding it (librarian/2026-09-07.md:89 names the plant). RULED 2026-09-08 (L046, pane A): the packet asked for a strike in place and the strike is REFUSED here under its own section 7. This file did not DRIFT; nothing propagated into it, so there is no propagation failure to repair. Striking it would make the score unre-derivable against its own object: three read hand-backs and the score cite :94 and :107 as findings, and a reader checking whether a defect was correctly flagged would open a line that no longer contains one. `marked` and `acknowledged` were both unavailable for the same reason as the L044 ruling one level up -- they REQUIRE the file to carry a marker, i.e. they require editing the object; `withdrawal` would be a lie because the line asserts rather than corrects; `mention` would be a lie because inside the fiction of the object it does assert. The registry could express the truth about this file in NO way at all, which is why the kind exists."
     },
     {
-     "file": "exo_memory/astra/SHELL.md",
-     "anchor": "w > *\"the keeper is the only DECORRELATED reader\"* **in full** (`",
-     "kind": "withdrawal",
-     "why": "the Astra seat's assembled shell, carrying BOOT's 2026-08-23 amendment VERBATIM -- the occurrence quotes the claim in order to withdraw it. Mirrors the identical row on exo_memory/BOOT.md and consonance/src-tauri/brief/BOOT.md; the shell is assembled from those masters by the librarian (SHELL.md:3), so the classification is inherited rather than re-judged. Registered 2026-09-08 (L046, pane A), which owns the registry but NOT this file and did not edit it."
-    },
-    {
-     "file": "exo_memory/astra/SHELL.md",
-     "anchor": "d, the keeper still the only decorrelated reader; a 30-second rec",
-     "kind": "acknowledged",
-     "see": "exo_memory/astra/SHELL.md:76-80, the 2026-08-23 amendment carried into this shell verbatim",
-     "why": "a dated JOURNAL POINTER ('Previous: journal/2026-08-16.md') reproducing that entry's own pre-withdrawal wording. Exactly the case BOOT.md:162 is registered as `acknowledged` for, and for the same stated reason: the pointer is a dated trace and keeps its wording (the 2026-08-17 precedent), with the correction living in the amendment above it IN THE SAME FILE. Mirrors BOOT's row. Registered 2026-09-08 (L046, pane A); the file is not this seat's and was not edited."
-    },
-    {
      "file": "exo_memory/loop/packet_carrier_green_2026-09-08.md",
      "anchor": "-07.md:107 asserts \"the only decorrelated reader\" **These were co",
      "kind": "mention",
@@ -447,12 +434,6 @@
      "kind": "fixture",
      "planted_by": "exo_memory/loop/l039_read_brief_2026-09-07.md",
      "why": "L039's SCORED EXPERIMENTAL SUBJECT, and this line is part of plant D1-04 -- the object carries the withdrawn wording ON PURPOSE, authored wrong so readers could be measured on finding it (librarian/2026-09-07.md:89 names the plant). RULED 2026-09-08 (L046, pane A): the packet asked for a strike in place and the strike is REFUSED here under its own section 7. This file did not DRIFT; nothing propagated into it, so there is no propagation failure to repair. Striking it would make the score unre-derivable against its own object: three read hand-backs and the score cite :94 and :107 as findings, and a reader checking whether a defect was correctly flagged would open a line that no longer contains one. `marked` and `acknowledged` were both unavailable for the same reason as the L044 ruling one level up -- they REQUIRE the file to carry a marker, i.e. they require editing the object; `withdrawal` would be a lie because the line asserts rather than corrects; `mention` would be a lie because inside the fiction of the object it does assert. The registry could express the truth about this file in NO way at all, which is why the kind exists."
-    },
-    {
-     "file": "exo_memory/astra/SHELL.md",
-     "anchor": "s the costume. ~~If you can't lose by saying it, suspect it.~~ *(str",
-     "kind": "marked",
-     "why": "the Astra shell carrying BOOT's third-principle paragraph verbatim, strike and repair included ('struck 2026-08-30', 'Adopted as ASK-008'). Mirrors the identical `marked` rows on exo_memory/BOOT.md:22 and consonance/src-tauri/brief/BOOT.md:22; the marker is present because the master's is. Registered 2026-09-08 (L046, pane A); file not edited."
     }
    ]
   },
