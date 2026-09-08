@@ -1424,3 +1424,48 @@ is green against the baseline **I had just hand-edited**. It was genuinely A's t
 fixtures, but I only know that because I temporarily absorbed them and reverted: green, 171 sites =
 my 168 + A's 3, 35/35, 65 exempted matching my hand-derived number. **The measurement that clears you
 is the one to run, precisely because you want it to come out that way.**
+
+
+## 2026-09-08 — L047 P-PROVENANCE: the same wrong answer four times, and the third state
+
+`exo_memory/handback/p-provenance_2026-09-08.md`. Built `consonance/tools/essay-provenance.js` —
+the contribution table for the methodology report, compiled from git + METHOD.md + the board + the
+lap ledger so nobody hand-tracks turns. 35 tests, 0 failing. Mutants: drop board 10 red, drop METHOD
+3 red, one generic bucket 17 red, file byte-identical after.
+
+**THE LESSON, and it cost me four separate bugs in one build: THE SAME CONFLATION KEEPS ARRIVING IN
+A NEW COSTUME, and every one of them was invisible on my fixture and obvious on the live record.**
+The packet warned about done-vs-never-started once. I then shipped it four times:
+
+1. Prose abbreviates. The board says `essay/READER_NOTES` for `essay/READER_NOTES_2026-09-07.md`,
+   which landed at `89ce89a`. Exact-matching called a landing a failure. Fix: exact, else
+   unique-prefix, else AMBIGUOUS and resolve to nothing — **never a fuzzy match**, and print how
+   every mention resolved so the rule can be overturned.
+2. A lap NOTE mention produced a false LAP-ONLY over a file already in the tree. **The lap row has a
+   machine-written `paths` array beside the hand-written note. Join the array; count the note.**
+   Mention-vs-use, free to avoid, and I paid for it anyway.
+3. **A file on disk and not yet committed is not a file that never landed.** A's `LIT_2026-09-08.md`
+   existed while my table said it never arrived. That became a THIRD label, not a fix.
+4. An axis measured the wrong object: board/lap evidence computed per COMMIT, printed per PATH. A
+   commit touching 18 files claimed board corroboration on all 18. **`COMMIT-NO-BOARD` went from 2
+   to 50 of 69** once fixed — the flattering number was the wrong one, as usual.
+
+**And the split the packet did not ask for is the one that mattered.** "Artifact with no METHOD
+entry" is TWO cases: `essay/METHOD.md` belongs to one seat and no other seat may write it, so the
+librarian landing a read without an entry has broken no rule. One label would have made this the
+third instrument in one night calling a success a fault. **The log-keeper is DERIVED** (the thread
+with most METHOD commits) and on a tie returns null, at which point every unlogged artifact is
+flagged unqualified — the excuse disappears in the direction that does not flatter.
+
+**Attribution, measured, because the room keeps assuming it exists:** git's author is the same human
+on all 30 essay commits, `Co-Authored-By` names the MODEL, and only **3 of 30** carry a `Seat:` line.
+What partly rescues it is `Claude-Session:`, on **26 of 30**, resolving to exactly three threads. It
+names no seat; it SEPARATES threads, which is enough. Still author-written, so the blindness stays
+printed.
+
+**Caught in my own hand-back, and it is my own recurring one:** I first reported the mutant kills as
+17 / 7 / 29 from `grep -cE '^✖ '`, which counts node's spec reporter twice, and one mutation had
+landed in `essayPaths()` because its anchor string occurs in three functions. Real figures 10 / 3 /
+17 from the tap reporter. **Also: a `cp` restore ran with a cwd another function had changed, and
+wrote a stray copy of the tool into the repo root** — found by `ls`, removed, and it is why every
+mutant step now uses absolute paths and verifies byte-identity at the end.
