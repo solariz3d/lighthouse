@@ -80,10 +80,38 @@ pub fn open_holders(rows: &[serde_json::Value]) -> Vec<String> {
 ///
 /// **This is more permissive than the guard it replaces, and the amount is measurable rather than
 /// arguable.** With one open lap it is identical. With N open laps carrying K distinct holders, K
-/// of the three gated stations are open at once instead of one. On the ledger at the time of
-/// writing — 3 open laps, holders `{panes: 2, chair: 1}` — it permits `chair_inject` AND
-/// `call_librarian` simultaneously, and refuses `call_chair` because no open lap is held by the
-/// librarian. **Two of three stations open where one was.**
+/// of the three gated stations are open at once instead of one.
+///
+/// ~~On the ledger at the time of writing — 3 open laps, holders `{panes: 2, chair: 1}` — it
+/// permits `chair_inject` AND `call_librarian` simultaneously, and refuses `call_chair` because no
+/// open lap is held by the librarian. **Two of three stations open where one was.**~~
+///
+/// **DATED IN PLACE 2026-09-08 (L044, pane A — the seat that wrote it). The wording is kept; the
+/// PRESENT TENSE is withdrawn.** That paragraph read as a live property of the system and was a
+/// reading of one ledger at one moment (2026-09-06, when this module landed in `70d5993`). It is
+/// the 2026-08-17 carrier law's own case — *mark the carriers, leave the traces* — and the
+/// paragraph immediately below already says why it could not stay true: the strength of this guard
+/// is inversely proportional to how many laps are left open, so its every number moves with the
+/// filing discipline. A measurement written in the present tense inside a doc comment has no way to
+/// go stale loudly.
+///
+/// **Re-derive rather than trust it.** The ledger is machine-local, so there is no correct number
+/// to hardcode here — only a command:
+///
+/// ```text
+/// node -e "const fs=require('fs');const rows=fs.readFileSync('C:/Consonance/data/lap.jsonl','utf8')
+///   .split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean);
+///   const n=new Map();for(const r of rows){if(r.stage!=='chain'||!r.lap)continue;const p=n.get(r.lap);
+///   if(!p||(r.at||0)>=(p.at||0))n.set(r.lap,r);}const o=[...n.values()].filter(r=>r.chain!=='filed');
+///   const h={};for(const r of o)h[r.holder||'(none)']=(h[r.holder||'(none)']||0)+1;
+///   console.log(o.length,JSON.stringify(h));"
+/// ```
+///
+/// **Run on this laptop 2026-09-08 01:5x it returned `1 {"panes":1}`** — one open lap, so the
+/// struck sentence's headline is FALSE today: with K = 1 this guard is *identical* to the one it
+/// replaced, which is the degenerate case the sentence above it already names. Both readings are
+/// correct about their own day and neither is a property of the code. The tests below are the
+/// part that does not move: every number in them comes from a fixture in this file.
 ///
 /// That is the price of removing a deadlock, and it is paid knowingly. The strength of this guard
 /// is now inversely proportional to how many laps are left open — so the guard's real enforcement

@@ -608,3 +608,71 @@ the priced cost of the SHORT+pointer decision, not a defect.
 **2026-09-07, L043 P-CITECHECK — the indent strip is real, its realized cost is ZERO, and the defect under it is 1046 sites wide.** RED FIRST held: one fixture, same sentence / same wrong figure (999) / same command, differing only in four leading spaces — indented **GREEN**, unindented **RED**; five tests red before any fix. `cite-check.js:73` `inCode = inFence || /^\s{4,}/` fed `figures = inCode ? [] : ...`, and **an empty figure list is empty of MISSING figures**, so `verify` returned GREEN having compared nothing. **Said what the strip was for before touching it:** in markdown a four-space indent IS a code block, so the strip read the document the way a renderer does — and it cannot be repaired by a better rule, because the ambiguity is in markdown, not in the regex (this room writes its bars blocks and power tables at exactly four spaces; the packet's own §3 is one). **Took §5's permission and refused the heuristic:** the tool no longer DECIDES — indented lines are scanned, flagged `row.indented`, counted, and the lint prints "this guard CANNOT tell an indented code block from indented prose." **The fence strip stays: a fence is an authorial act, an indent is a typographic accident** — and mutant 2 (strip nothing) goes red on both fence tests, so that line is proven rather than asserted. **THE NUMBER, and it corrects the packet in the half that matters:** 737 .md files, figure-bearing lines 3919 → 4360, **441 newly visible (10.1%) across 119 files** — but for VERIFY, **0 citations were auto-greening because of indentation**; only 4 change figure-set SIZE and 3 indented figure-lines sit in a cited block, all of them inline references. The packet's "every figure this room has ever cite-checked inside an indented block was never checked" is **an empty set in this corpus**. **THE LIVE DEFECT IS UNDERNEATH IT: 1046 of 1631 citation instances (64.1%) had no figure to check and returned GREEN** — demonstrated on my OWN hand-back from three hours earlier, where **three cites exited 127 / 127 / 2 and all three printed GREEN. The shipped guard greened a command that does not exist**, breaking its own header sentence "NOT-RUN is never a green" because that branch is gated on `missing.length`, which is 0 when there are no figures. Cause: `CITE_RE` matches ANY parenthesised backtick, so `(`main.rs:4498`)` and `(`dae25f4`)` are read as commands — 84 of the 1046 even begin with a real command name. Added the verdict **VOID**: never a green, never a catch, printed and counted. **AND THE BLIND SPOT WAS KNOWN AND ROUTED AROUND:** `librarian-route.js:75-77` names it in its own header WITH a cost figure — *"52.2% clean sits inside one, and cite-check skips it. This tool reads indented lines as claims"* — and reimplemented past it instead of fixing the guard. The packet's "nobody noticed" is wrong, and what actually happened is worse: noticed, written down, left in place. My 09-02 silent-absence ruling in a second body. **Three mutants, each restored under md5 verification: M1 restore the strip → 3 red (incl. end-to-end), M2 strip nothing → 2 red, M3 revert VOID → 2 red.** 17/17 on the file; downstream `librarian-route.js:121` imports `verify` and its `byCmd` groups are non-empty by construction — 35/35 green. **My own two corrections, both caught before reporting: the end-to-end test PASSED on its first write for the wrong reason** — it counted `/RED/` over all of stdout and the legend line contains the word RED, so one real red plus the legend read as two; the L038 relaxed-twin lesson again. **And three of my own scripts produced three void counts (982 / 1000 / 1046); 982 was simply wrong** — the authority is `main()`'s loop, which calls verify once per CITE, not per row. **Did not verify:** `--run` over the corpus (it would execute ~1631 arbitrary strings lifted from 737 documents, which the tool's own header warns against — so 1046 is a STATIC count), the 84/962 command-vs-reference split (first-token guess against my own list), and **NOT-RUN still sets exit 1 against that same header sentence — registered, NOT fixed**, because changing a guard's exit semantics is outside this packet and could hide real breakage. `exo_memory/handback/p-citecheck_2026-09-07.md`.
 
 **Suite (bar 5):** `node --test consonance/tools/cite-check.test.js` 17 pass / 0 fail; `node consonance/tools/js-suite.js` **72 files ok / 5 failed of 77** — none of the five imports cite-check (`grep -rl "require.*cite-check"` returns only `cite-check.test.js` and `librarian-route.js`, both green), tree 14 paths dirty with B, C and E in flight; **no baseline was taken before I started, so that attribution is by import-trace, not by before/after.**
+
+
+## 2026-09-08 — P-INSTALLER-ONLY: a flag that does not meet its own objective, and a declaration that widened someone else's corpus
+
+2026-09-08, L044 housekeeping lap 2, uncommitted; hand-back at
+`exo_memory/handback/p-installer-only_2026-09-08.md`. Bars: `js-suite` 74 green / 4 failed of 78
+(→ 76/3 of 80 as other panes landed), `install.ps1 -Check` exit 1 both sides,
+`consonance/tools/install-only.test.js` 1-pass/9-fail before the change and 11/0 after.
+
+**A flag that satisfies the packet can still miss the packet's objective, and building only what
+was asked would have closed the item while leaving the hole open.** P-INSTALLER-ONLY asked for
+`-Only <name>` so a sync cannot register hooks a ruling excludes. `-Only` does not achieve that: it
+requires the operator to remember the ruling and type a flag, which is *my own 2026-09-02 ruling* —
+a control whose only enforcement is that somebody remembers has a hook's failure mode, silent
+absence. The bare run, which is what actually caused the 09-07 defect, would have been untouched.
+So the ruling moved into the DATA as `Excluded` on the `$register` entry, and `-Only` became the
+ergonomic half. MUTANT 1 proves them independent: delete the whole filter and the exclusion holds.
+**Read the objective, not the deliverable — a packet can name the smaller half of its own fix.**
+
+**A hook's failure mode is silent absence; a CHECK's failure mode is a finding that never reaches
+the exit code.** The packet said `-Check` "never looked at" two unmanaged hooks. It looked: the
+universe block has printed both by name since 2026-08-25. What it did not do is let them reach the
+verdict — `$srcUnmanaged.Count` was in no exit expression. Measured in a fixture: a planted
+`zz-brand-new.js`, printed by name, **exit 0**. A printed finding under a green exit is worse than
+an unprinted one, because it reads as *seen and fine*. Fix was not to name the third state but to
+eliminate it: CLAIMED, or DECLARED-with-a-reason, and **anything else is UNDECLARED and sets the
+exit code**. `install.ps1` (the `$unmanaged` list, and the exit line).
+
+**Declaring two hooks unmanaged silently widened a different instrument's corpus, because the
+declaration shared a variable name.** `dream-gate.test.js:71` discovers its roster by
+`/^.*From\s*=\s*'([^']+)'.*$/gm` over `install.ps1`. My `$unmanaged` entries used `From =`, so
+dream-gate scooped them and went red — the same disease as the item I was fixing, one level up: a
+denominator that moved by textual coincidence rather than by anyone ruling on it. Renamed the key to
+`Src`, with a DO-NOT-TIDY comment naming dream-gate's line number, since the next seat who
+"normalises" it back re-widens the corpus silently. **The red was real, though, and is kept as a
+precondition rather than discarded: neither hook carries a `CONSONANCE_DREAM` guard (`grep -c` → 0,
+where every managed hook has one) and dream-gate proved `ask-surface.js` SPEAKS INTO A DREAM.** That
+now prints inside the unmanaged declaration, so the keeper's wiring decision carries its own blocker.
+
+**`acknowledged` was the wrong registry kind for a dated trace, and the reason is structural rather
+than a preference — which is what makes it checkable.** The packet offered acknowledge-the-L039-
+hand-backs or say-why. `acknowledged` REQUIRES the file to carry the marker
+(`carrier-drift.js:535`), so it means EDITING a dated trace to satisfy a scanner — the one thing
+*mark the carriers, leave the traces* forbids. `withdrawal` is the kind those occurrences already
+are (each quotes the struck line in order to report it as struck) and is marker-free by design. 10
+rows; **RED 12 → 2**, survivors named: `review/tool_audit_draft_2026-09-07.md:94` and `:107` assert
+both wordings as their own position and are left red on purpose. Did NOT make `handback/` a
+TRACE_PREFIX — the registry's own README refuses a rule that excuses a whole file.
+
+**A comment can contain its own refutation two paragraphs apart and nothing connects them.**
+`lap_holders.rs:83-86` asserted "3 open laps, holders {panes: 2, chair: 1} … **Two of three stations
+open where one was**" in the present tense — my own line, from `70d5993`. Re-derived from
+`lap.jsonl` on 2026-09-08 it is **`1 {"panes":1}`**, i.e. K=1, i.e. the guard is *identical* to the
+one it replaced — and the paragraph directly BELOW it already said why ("the strength of this guard
+is inversely proportional to how many laps are left open"). Struck in place with the date and the
+re-derivation one-liner, because the ledger is machine-local and there is no correct number to
+hardcode. **The fixture test `the_price_of_the_fix_is_two_stations_of_three` never moved** — its 2 is
+two holders by construction, re-derived by `cargo test` every run. The mechanism was pinned all
+along; only the prose describing it in ledger terms drifted. **Ruled the packet's second site,
+`:159`, NOT a carrier** — it is an assertion message about the fixture two lines above it, true by
+construction; dating it would teach the next seat that self-verifying prose needs a timestamp.
+
+**And a mutant that breaks the script reads exactly like a guard that held.** MUTANT 2's first regex
+anchored on `if ($e.Excluded) {`, which occurs twice, and ate the `-Check` block sharing the
+condition; the mutated installer wrote an empty `settings.json` and the assertion *"the excluded
+hooks are not registered"* passed **for the wrong reason**. Caught only because the test asserted
+the mutant had APPLIED (`count === 1`) rather than merely that the outcome differed. Re-anchor on
+something that occurs once, and always assert application, never just difference.

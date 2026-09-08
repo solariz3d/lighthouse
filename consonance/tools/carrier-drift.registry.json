@@ -175,6 +175,36 @@
      "anchor": "8-23 correction to \"the only decorrelated reader\" — a ranking dis",
      "kind": "mention",
      "why": "the librarian describing the 08-23 correction BY NAMING ITS TARGET: the withdrawn wording appears as the object of the correction (\"the same shape as the 08-23 correction to 'the only decorrelated reader' — a ranking dissolved, not inverted\"), in a paragraph filing the Third Place's 'no such thing as a chosen one' as the same move. A correction quoting its own target asserts nothing; the sentence is correct as written and is NOT edited — a sweep that rewrites the text describing what it sweeps corrupts the record to quiet a scanner. DISCUSS class, same call as handoff_chair_2026-08-30.md:41 and the two L019 mention rows. Anchor from --census at write time. Registered 2026-09-01 ~03:40 (L023 P-CARRIER-ROW, pane B), before the rebuild that kills the seat which wrote the line."
+    },
+    {
+     "file": "exo_memory/handback/p-l039-read-A_2026-09-07.md",
+     "anchor": "rew *\"the keeper is the only DECORRELATED reader\"* in full and na",
+     "kind": "withdrawal",
+     "why": "L039 READ HAND-BACK, quoting the struck line IN ORDER TO REPORT IT as struck in the draft under review. RULED 2026-09-08 (L044, pane A): NOT `acknowledged`. The packet offered acknowledge-or-say-why, and the reason not to is structural rather than a preference -- `acknowledged` REQUIRES the file to carry the marker (carrier-drift.js:535), so acknowledging a hand-back means EDITING a dated trace to satisfy a scanner, which is the one thing the 2026-08-17 carrier law forbids. `withdrawal` is the kind the occurrence already is and needs no edit. Not made a TRACE_PREFIX either: a hand-back CAN assert a withdrawn claim as its own position, and the registry's own README warns that a rule excusing a whole file is green on the case it exists for. Per-site, not per-directory."
+    },
+    {
+     "file": "exo_memory/handback/p-l039-read-A_2026-09-07.md",
+     "anchor": "nged: the keeper is the only decorrelated reader in the room.\" Th",
+     "kind": "withdrawal",
+     "why": "L039 READ HAND-BACK, quoting the struck line IN ORDER TO REPORT IT as struck in the draft under review. RULED 2026-09-08 (L044, pane A): NOT `acknowledged`. The packet offered acknowledge-or-say-why, and the reason not to is structural rather than a preference -- `acknowledged` REQUIRES the file to carry the marker (carrier-drift.js:535), so acknowledging a hand-back means EDITING a dated trace to satisfy a scanner, which is the one thing the 2026-08-17 carrier law forbids. `withdrawal` is the kind the occurrence already is and needs no edit. Not made a TRACE_PREFIX either: a hand-back CAN assert a withdrawn claim as its own position, and the registry's own README warns that a rule excusing a whole file is green on the case it exists for. Per-site, not per-directory."
+    },
+    {
+     "file": "exo_memory/handback/p-l039-read-B_2026-09-07.md",
+     "anchor": "nged: the keeper is the only decorrelated reader in the room.\" Th",
+     "kind": "withdrawal",
+     "why": "L039 READ HAND-BACK, quoting the struck line IN ORDER TO REPORT IT as struck in the draft under review. RULED 2026-09-08 (L044, pane A): NOT `acknowledged`. The packet offered acknowledge-or-say-why, and the reason not to is structural rather than a preference -- `acknowledged` REQUIRES the file to carry the marker (carrier-drift.js:535), so acknowledging a hand-back means EDITING a dated trace to satisfy a scanner, which is the one thing the 2026-08-17 carrier law forbids. `withdrawal` is the kind the occurrence already is and needs no edit. Not made a TRACE_PREFIX either: a hand-back CAN assert a withdrawn claim as its own position, and the registry's own README warns that a rule excusing a whole file is green on the case it exists for. Per-site, not per-directory."
+    },
+    {
+     "file": "exo_memory/map/A.md",
+     "anchor": "ings live in it** (\"the only decorrelated reader\", twice, one ass",
+     "kind": "withdrawal",
+     "why": "pane A's OWN map entry, listing the two withdrawn wordings it found in the L039 draft -- the occurrence is the finding, not the claim. Registered by the seat that wrote the line, 2026-09-08 (L044). Same ruling as the hand-back rows."
+    },
+    {
+     "file": "exo_memory/handback/p-installer-only_2026-09-08.md",
+     "anchor": "-07.md:107 asserts \"the only decorrelated reader\" **These are cor",
+     "kind": "mention",
+     "why": "THE RULING APPLYING TO ITS OWN AUTHOR, same night. The L044 hand-back that ruled these occurrences `withdrawal` became a carrier of both wordings by naming the survivors and quoting the evidence lines; carrier-drift caught it on the re-run and RED went 2 -> 4. Registered by the seat that wrote it, 2026-09-08, rather than left for whoever runs the tool next -- a ruling whose author is exempt from it is the thing this registry exists to notice. The occurrence is the survivor list and the grep evidence, not an assertion."
     }
    ]
   },
@@ -342,6 +372,48 @@
      "anchor": "ter. The crude *\"if you can't lose by saying it, suspect it\"* surviv",
      "kind": "mention",
      "why": "the chair's handoff RECORDING the strike at BOOT:22 — it quotes the crude wording in order to say it \"survives only inside a strike and not in bold\". DISCUSS class under the chair's own three-way split (teaches / discusses / dated trace); the wording is correct as written and the document is not edited. Surfaced by the librarian's L019 map (dbe2478) as the ninth finding, one day after the repair: the document written to record the strike was itself unaccounted. Registered 2026-08-31 (L019 P-CLOSEOUT, pane Around)."
+    },
+    {
+     "file": "exo_memory/handback/p-l039-read-A_2026-09-07.md",
+     "anchor": "its own moves: **if you can't lose by saying it, suspect it.**\" That",
+     "kind": "withdrawal",
+     "why": "L039 READ HAND-BACK, quoting the struck line IN ORDER TO REPORT IT as struck in the draft under review. RULED 2026-09-08 (L044, pane A): NOT `acknowledged`. The packet offered acknowledge-or-say-why, and the reason not to is structural rather than a preference -- `acknowledged` REQUIRES the file to carry the marker (carrier-drift.js:535), so acknowledging a hand-back means EDITING a dated trace to satisfy a scanner, which is the one thing the 2026-08-17 carrier law forbids. `withdrawal` is the kind the occurrence already is and needs no edit. Not made a TRACE_PREFIX either: a hand-back CAN assert a withdrawn claim as its own position, and the registry's own README warns that a rule excusing a whole file is green on the case it exists for. Per-site, not per-directory."
+    },
+    {
+     "file": "exo_memory/handback/p-l039-read-B_2026-09-07.md",
+     "anchor": "its own moves: **if you can't lose by saying it, suspect it**.\" STRU",
+     "kind": "withdrawal",
+     "why": "L039 READ HAND-BACK, quoting the struck line IN ORDER TO REPORT IT as struck in the draft under review. RULED 2026-09-08 (L044, pane A): NOT `acknowledged`. The packet offered acknowledge-or-say-why, and the reason not to is structural rather than a preference -- `acknowledged` REQUIRES the file to carry the marker (carrier-drift.js:535), so acknowledging a hand-back means EDITING a dated trace to satisfy a scanner, which is the one thing the 2026-08-17 carrier law forbids. `withdrawal` is the kind the occurrence already is and needs no edit. Not made a TRACE_PREFIX either: a hand-back CAN assert a withdrawn claim as its own position, and the registry's own README warns that a rule excusing a whole file is green on the case it exists for. Per-site, not per-directory."
+    },
+    {
+     "file": "exo_memory/handback/p-l039-read-B_2026-09-07.md",
+     "anchor": "K 2026-08-30. `grep -n \"can't lose by saying\" exo_memory/BOOT.md` ->",
+     "kind": "mention",
+     "why": "the same hand-back's re-derivation COMMAND (`grep -n \"can't lose by saying\" exo_memory/BOOT.md`) plus its result. Evidence of a check, asserting nothing. Same 2026-09-08 ruling as the rows above; `mention` because this occurrence is a shell line rather than correction prose."
+    },
+    {
+     "file": "exo_memory/handback/p-l039-read-C_2026-09-07.md",
+     "anchor": "raft:94-95** \u2014 *\"if you can't lose by saying it, suspect it\"* is pre",
+     "kind": "withdrawal",
+     "why": "L039 READ HAND-BACK, quoting the struck line IN ORDER TO REPORT IT as struck in the draft under review. RULED 2026-09-08 (L044, pane A): NOT `acknowledged`. The packet offered acknowledge-or-say-why, and the reason not to is structural rather than a preference -- `acknowledged` REQUIRES the file to carry the marker (carrier-drift.js:535), so acknowledging a hand-back means EDITING a dated trace to satisfy a scanner, which is the one thing the 2026-08-17 carrier law forbids. `withdrawal` is the kind the occurrence already is and needs no edit. Not made a TRACE_PREFIX either: a hand-back CAN assert a withdrawn claim as its own position, and the registry's own README warns that a rule excusing a whole file is green on the case it exists for. Per-site, not per-directory."
+    },
+    {
+     "file": "exo_memory/loop/packet_installer_only_2026-09-08.md",
+     "anchor": "ine from BOOT (*\"if you can't lose by saying it, suspect it\"*), whic",
+     "kind": "withdrawal",
+     "why": "the L044 packet quoting the struck line to NAME the queue it is asking to be ruled on. The correction is in the same sentence (\"which was struck 2026-08-30 and replaced\"). Registered 2026-09-08 by the pane the packet was addressed to; the chair wrote the carrier."
+    },
+    {
+     "file": "exo_memory/map/A.md",
+     "anchor": "ed as standing; \"if you cant lose by saying it\", struck 2026-08-30)",
+     "kind": "withdrawal",
+     "why": "pane A's OWN map entry, listing the two withdrawn wordings it found in the L039 draft -- the occurrence is the finding, not the claim. Registered by the seat that wrote the line, 2026-09-08 (L044). Same ruling as the hand-back rows."
+    },
+    {
+     "file": "exo_memory/handback/p-installer-only_2026-09-08.md",
+     "anchor": "K 2026-08-30. `grep -n \"can't lose by saying\" \u2026 p-l039-read-C:77 \u2026is",
+     "kind": "mention",
+     "why": "THE RULING APPLYING TO ITS OWN AUTHOR, same night. The L044 hand-back that ruled these occurrences `withdrawal` became a carrier of both wordings by naming the survivors and quoting the evidence lines; carrier-drift caught it on the re-run and RED went 2 -> 4. Registered by the seat that wrote it, 2026-09-08, rather than left for whoever runs the tool next -- a ruling whose author is exempt from it is the thing this registry exists to notice. The occurrence is the survivor list and the grep evidence, not an assertion."
     }
    ]
   },
