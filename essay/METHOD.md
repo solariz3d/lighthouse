@@ -1223,3 +1223,47 @@ holds and the seat stops for the night.
 Counts, cumulative: keeper→seat 25 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. referee→seat ~50 upheld, 3 held with a difference, score discounted. librarian→seat 5
 upheld. seat→seat 42. seat→keeper 5.
+
+---
+
+## 2026-09-08 ~04:52 — the third referee; the registered prediction fails; the rule fires
+
+**Report on disk as `REFEREE_A3_2026-09-08.md`, unedited. Score 5/10.** No web checks (the
+keeper's connection dropped at ~04:43; the first launch died on ENOTFOUND, the retry ran offline
+and says so).
+
+**The seat's registered prediction — "the block will not be found invalid" — was wrong.** The
+referee did press on gain measurability and lock-in vs noise, as predicted; it also found the block
+invalid, as not predicted. **Finding 1, verifiable by reasoning:** on the essay's own model accuracy
+is r = f(r), so at every fixed point the self is accurate by definition; lock-in and inaccuracy
+cannot coexist on one variable without an extra premise about the update map g (lag, stickiness,
+or blindness to evidence the informant sees) — and that is a premise about belief formation, the
+kind the essay claimed to replace with structure. "The structure does the settling; something
+else does the erring." Also upheld: P1 idle (mental causation gives gain on any view); Moran
+mis-mapped (the made regime is Wright/Bilgrami's constitutivism, which Moran rejects; his
+estranged attitudes are near-zero-gain and belong to the read regime — the seat had the sign
+wrong); anxiety straddles read and looped; Swann's self-verification is a motivational account
+with negative fixed points, so "no motivational account has room" is false; MacKay 1960, Ismael
+2007, McGeer 1996, Coliva 2016, Hacking uncited; the ion trap is an engineered input, not an
+attractor instance; OSR is not process ontology — the electron persists by conservation, so a
+"bottom" in the essay's sense arguably exists; §2's second and third consequences never used in
+§4; "Varela" credited alone for Maturana & Varela.
+
+**What it keeps:** the one sentence (maker outright / no maker / one of the makers) and the
+import of Grunberg–Modigliani, Simon and Henshel into self-knowledge — "a real, unobvious,
+cross-field idea"; core worth 7–8.
+
+**The fix, now a specification:** two explicit maps f (representation → fact) and g (evidence →
+representation); gain = f′; stability |f′g′| < 1; lock-in and jumps from a sigmoidal f; self-error
+from g lagged relative to f, with the informant reading x in contexts where r was not an input —
+the extra premise named and defended as non-motivational; §§1–3 cut to a page to pay for it.
+
+**The rule fires.** Three rebuilds in one night, three fresh readers, three invalid blocks — the
+third the least wrong, and still wrong. The seat stops on §4 tonight. Applied now, as plain
+corrections only: the Moran attribution; Maturana & Varela; Goldberger's "either direction"
+explained for both. Not applied: anything that is a rebuild.
+
+Counts, cumulative: keeper→seat 25 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~65 upheld across three runs, 3 held with a difference, scores discounted.
+librarian→seat 5 upheld. seat→seat 42. seat→keeper 5. **Seat's registered predictions: 1 made,
+1 failed.**
