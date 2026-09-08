@@ -653,3 +653,60 @@ has been over it.
 
 Counts, cumulative: keeper→seat 17 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. seat→seat 24. seat→keeper 3.
+
+---
+
+## 2026-09-08 ~02:25–02:45 — the pass on essay A
+
+Written after. The pass itself is on disk as `REVIEW_A_2026-09-08.md`, written before the edits;
+this entry records what changed. The keeper asked for the pass and read the PDF in parallel; he
+also asked, mid-turn, that the pass go on disk and not only in the conversation — it had been
+about to go only in the conversation. Counts: keeper→seat 18 upheld.
+
+**Read as a referee, structurally first.** Seven structural findings, all in §3–4, five of them
+inside the argument block — the one gradeable thing. In order of cost:
+
+1. **P2→P3 was false as stated.** "Every attempt to include it changes what there is to include…
+   the ordinary situation of any self-referential system" — refuted by quines, Kleene's recursion
+   theorem, Gödel numbering, and the map-in-the-room fixed point. Rewritten as an
+   access-and-part argument: the model is a part of the process and its only inputs are the
+   process's outputs; a part cannot carry the whole at the whole's grain; a model fed by outputs
+   has no channel to what produces them. The quine case now appears in the text and supports the
+   view: a program prints its source — a form — and does not print the machine.
+2. **"Basis" undefined, and apparently denied by §3.** Now defined at first use: the process the
+   self is the fixed point of — pattern, not stuff, one level below anything the model receives.
+3. **P4 was an empirical universal with a counterexample class** (Descartes, the mystics).
+   Restated as *verified* access: no mind has demonstrated access to its own basis; claims exist
+   and none has been checked outside the report. The prose paragraph that had said "every mind
+   that has ever been asked" aligned to match.
+4. **P5 carried no mechanism.** Now does: a second self's model of the first is not part of the
+   first; it receives the first's outputs from outside, including the outputs of the first's own
+   modelling, which the first receives as nothing at all.
+5. **C3 said "could be measured"; it has been, partly.** Vazire (2010), *JPSP* 98(2), 281–300 —
+   verified by web search 02:28 before citing — found self best on low-observability traits,
+   friends best on evaluative traits, all equal on visible ones: C3's shape, and not the uniform
+   shape the ordinary "introspection is unreliable" complaint predicts. One paragraph added after
+   the failure modes, with its limit stated (the study was not designed for this view). Abstract
+   and §6 adjusted to say *partly tested*. This is the largest single change in the pass.
+6. **Lineage misattributed** Uexküll, Varela and Vacariu to the self-as-pattern claim. Sentence
+   cut; "three fields, three routes."
+7. **§3's Newton/Einstein example** replaced with Worrall's Fresnel/Maxwell, cited (Worrall 1989,
+   *Dialectica* 43, verified 02:28).
+
+**Cuts to pay for it:** the KAM paragraph (Greene 1979 leaves the references with it); the §3
+"say-so" restatement paragraph; the §2 "I would not have believed the range of it" sentence; and
+~40 words of restatement in §1, §2, §4 to get back under the line.
+
+**Counts by the script (`countA.js`): 5,963 with references, 5,693 without. 12 pages.** All 14
+references named in text; 0 straight quote characters. Mechanical defects found on the read: none.
+
+**Left as is, on purpose:** the register; the abstract's length (it is what an AI screen reads);
+the "I" voice.
+
+**What this pass cannot claim.** It is the seat's own read of the seat's own rewrite — the exact
+configuration that missed Parfit and the uncited case on 09-07. The seven findings are real
+because each one names a specific objection a specific kind of judge would make; that is not the
+same as there being no eighth. The keeper's read is in progress.
+
+Counts, cumulative: keeper→seat 18 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. seat→seat 31 (the seven above). seat→keeper 3.
