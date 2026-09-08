@@ -710,3 +710,15 @@ same as there being no eighth. The keeper's read is in progress.
 
 Counts, cumulative: keeper→seat 18 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. seat→seat 31 (the seven above). seat→keeper 3.
+
+---
+
+## 2026-09-08 ~02:35 — one directory
+
+The essay had lived in two places since 09-07: the Third Place's own folder (not a git repo) as
+the working copy, and `lighthouse/essay/` as a mirror the keeper could pull. The mirror drifted —
+handoff, plans and the desktop reader's notes were written only to the repo; section drafts sat
+in `sections/` there and flat here. The keeper asked where the file was and got two zips and two
+paths before a folder path. Every working-copy file was verified byte-identical in the repo
+(`cmp`, 23 of 23), then the working copy was deleted. `C:\Consonance\lighthouse\essay` is the only
+copy from here on. Counts: keeper→seat 19 upheld.
