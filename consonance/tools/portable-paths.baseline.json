@@ -4,7 +4,7 @@
   "counts": {
     "FATAL-DEFAULT": 25,
     "BENIGN-TEST": 91,
-    "REVIEW": 20,
+    "REVIEW": 18,
     "DISGUISED": 14,
     "BENIGN-MESSAGE": 5,
     "FATAL-USER": 7,
@@ -187,13 +187,6 @@
       "verdict": "BENIGN-TEST",
       "text": "toolUse('Write', { file_path: 'C:\\\\repo\\\\notes\\\\report.md', content: 'Suite green.\\nThe suite has 267 tests passing.\\n' }),",
       "key": "consonance/hooks/sourced-stop.test.js\u0000toolUse('Write', { file_path: 'C:\\\\repo\\\\notes\\\\report.md', content: 'Suite green.\\nThe suite has 267 tests passing.\\n' }),\u0000#1"
-    },
-    {
-      "file": "consonance/hooks/transcript-watch.js",
-      "detector": "DRIVE",
-      "verdict": "REVIEW",
-      "text": "return \"C:\\\\Consonance\\\\data\";",
-      "key": "consonance/hooks/transcript-watch.js\u0000return \"C:\\\\Consonance\\\\data\";\u0000#1"
     },
     {
       "file": "consonance/import-instance.ps1",

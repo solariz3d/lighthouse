@@ -41,10 +41,18 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const { census, PRE_LETTER, LETTER_BIRTH } = require('./actors.js');
+const { census, canonical, PRE_LETTER, LETTER_BIRTH, FIXED_MOUNTS } = require('./actors.js');
 
 // The corpus location, resolved the way the peer hooks already do (transcript-watch.js dataDir):
-// env override, then ~/.consonance.json data_dir — and then, unlike them, NO LITERAL FALLBACK.
+// env override, then ~/.consonance.json data_dir, and NO LITERAL FALLBACK.
+//
+// "unlike them" stood here until 2026-09-08 and was true when written: transcript-watch.js really
+// did end in `return "C:\\Consonance\\data"`, and this file diverged from the peer it cites and
+// said so. It is struck rather than silently deleted because it is the third carrier found this
+// lap that NAMED the defect while it stayed live — the other two being portable-paths.js:492,
+// whose remediation text told every reader to copy that function, and the baseline entry that
+// exempted it. Three documents describing a defect is not three guards; none of them could fail.
+//
 // A hardcoded `C:/Consonance/data` here would be exactly the defect this file was split out of:
 // a machine's path baked into a test, correct on one box and quietly wrong on the next. A machine
 // that declares no data_dir has no corpus for this file to be about, and the honest report is
@@ -173,6 +181,52 @@ test('the real board resolves with nothing left over — under the REAL letters 
     'unresolved ids on the live board. If one is a pane that predates the letter system, it ' +
     'belongs in PRE_LETTER with its evidence; if it is a live pane, letters.json is the fix and ' +
     'NOT a hand-copied alias. Either way this assertion is how you find out it appeared');
+});
+
+// ── THE FIXED MOUNT'S BOUND (added 2026-09-08, BRAVO, L044) ──────────────────────────────────
+//
+// The test above went red for weeks on one unresolved id, `3d000000-…-3d00`. That red was the
+// instrument WORKING: main.rs:2335 records that this file's refusal to resolve the id is how a
+// private conversation was discovered on the shared committee board, on the Third Place's first
+// day. Classifying the id makes the red go away, and a class that only makes a red go away has
+// removed a tripwire and called it a repair.
+//
+// So the class is bounded and the bound is asserted HERE, against the live board. The three tests
+// below are what stops FIXED_MOUNTS being an exemption: the leak may be exactly as large as it was
+// when it was sealed, the mount may never acquire a letter, and it must resolve as a fixed mount
+// rather than by any other route. Break any one and this file goes red again, for a live reason.
+test('THE BOUND: the sealed leak is exactly as big as it was sealed at, and no bigger', () => {
+  for (const [id, m] of Object.entries(FIXED_MOUNTS)) {
+    const rows = boardRows().filter((r) => String(r.pane) === id);
+    assert.strictEqual(rows.length, m.rows,
+      `${m.name} (${id}) has ${rows.length} board rows and the sealed bound is ${m.rows}. ` +
+      'MORE means the tailer is pushing this mount to the shared board again and a private ' +
+      `conversation is leaking — the seal is ${m.sealed}, check it before touching this number. ` +
+      'FEWER means the board was rewritten under a claim that cites these rows exactly.');
+
+    // The endpoints, so the bound cannot be satisfied by six DIFFERENT rows. Timestamps rather
+    // than quoted text, deliberately: see the evidence note in actors.js — the rows are a private
+    // conversation and re-publishing a line of it into a committed test is the leak, not the guard.
+    const ts = rows.map((r) => Number(r.ts)).sort((a, b) => a - b);
+    assert.strictEqual(ts[0], m.first, `${m.name}: first row moved`);
+    assert.strictEqual(ts[ts.length - 1], m.last, `${m.name}: last row moved`);
+  }
+});
+
+test('a fixed mount is NOT in letters.json, and acquiring a letter is a red not a resolution', () => {
+  // The mirror of the PRE_LETTER backfill guard, and it runs the opposite way on purpose. A
+  // PRE_LETTER id given a letter should stop firing — the map wins. A fixed mount given a letter
+  // is a DEFECT: main.rs:969 gates it out of pane_letter() and :6418 says nothing should be able
+  // to address it, so a letter here means either a hand-edit or that gate breaking.
+  const map = JSON.parse(fs.readFileSync(realLetters, 'utf8'));
+  for (const [id, m] of Object.entries(FIXED_MOUNTS)) {
+    assert.ok(!Object.prototype.hasOwnProperty.call(map, id),
+      `${id} (${m.name}) has a letter in letters.json: ${map[id]}. A letter is the addressable ` +
+      'handle, and this mount is built to have none (main.rs:969, :6418, :3271 — a lettered id ' +
+      'is filed as "committee"). Remove it, or the design changed and this table is stale.');
+    assert.strictEqual(canonical(id).via, 'fixed-mount',
+      `${id} must resolve as a fixed mount; it resolved via ${canonical(id).via}`);
+  }
 });
 
 test('LETTER_BIRTH re-derives from persist.log, rather than being trusted', () => {

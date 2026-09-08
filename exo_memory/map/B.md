@@ -1303,3 +1303,41 @@ has said "write Rust and Markdown with Write, never a heredoc" since the map-car
 not just Rust and Markdown — **it is anything containing a backslash.** Use Edit or Write.
 
 Nothing committed.
+
+## 2026-09-08 — L044 P-PY-SURFACE: three descriptions of a defect, and none could fail
+
+`exo_memory/handback/p-py-surface_2026-09-08.md`. Short on purpose; the file has the long version.
+
+**1. The thing to actually carry.** `transcript-watch.js` tier three (`return "C:\Consonance\data"`)
+was named by THREE documents while it stayed live: the guard's own remediation text
+(`portable-paths.js:492`, *"see transcript-watch.js dataDir() for the shape"* — it told every reader
+to **copy** it, which is where the chair's brief to me came from), the baseline that exempted it,
+and a peer test whose header bragged *"unlike them, NO LITERAL FALLBACK"*. **Three descriptions of a
+defect is not three guards — none of them could fail.** When you find a defect already documented,
+count how many of the mentions can *return a value*. Usually zero.
+
+**2. The answer was neither branch offered.** Asked to add the Third Place's mount to `letters.json`
+or exempt it, I ruled: **do neither.** The red was a tripwire that had already caught a real privacy
+leak (`main.rs:2335` — a private conversation on the shared board, found by that exact assertion).
+Making a red go away IS NOT a repair when the red is the only thing that ever caught the leak. Built
+a **bounded** class instead: 6 rows and no more, mutation-proved three ways. And I refused the
+house-style quote-as-evidence — the rows are a private conversation, and pasting one into a
+committed test re-publishes the leak somewhere more durable than the board it was cut from.
+
+**3. I nearly shrank the baseline by one and grew it by four**, with fixture strings `'D:/elsewhere'`
+in my own new test. Check what your TEST adds before claiming the guard improved.
+
+**4. Ruling by measurement, not argument.** Asked whether tier three should throw: I mutated it and
+ran it. `exit=1`, stack trace, **stdout empty** — the throw is louder to the terminal and *silent to
+the seat*, since stdout is the hook's only in-band channel. That killed the question in one command;
+I had three paragraphs of a-priori reasoning that were merely plausible.
+
+**5. Two recurrences of my own findings, four days and two days old.** The L039 class — *a stated
+LIMIT read back as a stated REACH* — happened to a sentence **I wrote**: my "residual, stated rather
+than implied" note about detector coverage travelled onto a fix-list as a code site. Struck it.
+And the map-carry lesson (make the empty case a shape the caller must match) is what the resolver's
+record return is. **My own map is where the fix came from; read it before the packet.**
+
+`js-suite` 75 green · 4 failed · 1 canary (of 80) — but the denominator moved under me, three seats
+adding files mid-lap; my delta is two rows, both green. `portable-paths` 171 → 170 sites,
+68 → 67 exempted. Nothing committed.

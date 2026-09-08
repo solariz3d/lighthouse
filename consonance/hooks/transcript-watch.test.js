@@ -122,5 +122,104 @@ t('the row still carries what it always carried', () => {
   assert.ok('backfill' in r, 'backfill must survive');
 });
 
+// ── THE RESOLVER (added 2026-09-08, BRAVO, L044) ─────────────────────────────────────────────
+//
+// Until this lap `dataDir()`'s third tier was `return "C:\\Consonance\\data"` — one machine's disk
+// inside a shipped hook. Nothing here could see it: every case above passes CONSONANCE_DATA, so
+// tier one answers and tiers two and three never run. The guard that should have caught it had the
+// site BASELINED, so it was green by construction. A defect can be simultaneously covered by a test
+// suite and exempted by a ratchet and still be live on every prompt.
+//
+// THE RESOLVER IS LOADED FROM THE SHIPPED BYTES, not re-implemented. The hook's entry point is
+// `withStdin(main)` at the bottom and there is deliberately no `require.main` guard (dream-gate
+// checks for the ENTRY marker), so it cannot be `require`d. It is evaluated in a `vm` with
+// `os.homedir()` stubbed and a stdin that ends immediately — `main` then exits on the SID guard, so
+// nothing is read and nothing is written. Testing a hand-copied resolver would assert only that I
+// can copy; this asserts about the file that ships.
+function resolver({ home, withEnv }) {
+  const vm = require('vm');
+  const src = fs.readFileSync(HOOK, 'utf8');
+  const fakeOs = Object.create(require('os'));
+  fakeOs.homedir = () => home;
+  const env = { ...process.env };
+  delete env.CONSONANCE_DATA;
+  if (withEnv) env.CONSONANCE_DATA = withEnv;
+  const ctx = {
+    require: (n) => (n === 'os' ? fakeOs : require(n)),
+    module: { exports: {} }, exports: {},
+    process: { env, exit() {}, stdin: { setEncoding() {}, on(ev, cb) { if (ev === 'end') setImmediate(cb); } } },
+    console: { log() {} }, Buffer, setTimeout, clearTimeout, setImmediate,
+    __dirname: path.dirname(HOOK), __filename: HOOK,
+  };
+  vm.createContext(ctx);
+  vm.runInContext(src + '\n;__r = dataDir;', ctx, { filename: HOOK });
+  return ctx.__r();
+}
+
+function emptyHome() { return fs.mkdtempSync(path.join(os.tmpdir(), 'twatch-home-')); }
+
+t('THE BAR: with no env and no config, the resolver names NO directory and no machine path', () => {
+  const got = resolver({ home: emptyHome() });
+  assert.strictEqual(got.dir, null,
+    `unresolvable must be null, got ${JSON.stringify(got.dir)} — if this is a drive path, one `
+    + "machine's disk is back in a shipped hook");
+  assert.ok(!/[A-Za-z]:[\\/]/.test(JSON.stringify(got)),
+    `the resolver returned a drive path: ${JSON.stringify(got)}`);
+});
+
+t('the unresolvable case is a SHAPE the caller must meet, not an empty string', () => {
+  // `map_carry` returned '' for "no carry possible" on 2026-09-06 and the caller pasted it beneath
+  // a header announcing the carry it had just failed to make. A falsy string is usable by accident;
+  // a record whose `dir` is null has to be destructured and looked at.
+  const got = resolver({ home: emptyHome() });
+  assert.strictEqual(typeof got, 'object', 'the resolver must return a record, not a bare value');
+  assert.ok('tier' in got, 'the record must say WHICH tier answered — that is the missing diagnostic');
+  assert.strictEqual(got.tier, null, 'no tier answered, so tier must be null');
+});
+
+t('the two real tiers still answer, so the fix removed the literal and not the resolution', () => {
+  // The two fixture dirs are BUILT, never written as `D:/...` literals. A hand-written drive path
+  // here would be a genuinely benign test constant AND a new line in portable-paths.baseline.json —
+  // and this lap exists because a baselined site stayed invisible for weeks. A fix that shrinks the
+  // exemption list by one and grows it by four has not shrunk it.
+  const home = emptyHome();
+  const two_dir = path.join(home, 'from-config');
+  const one_dir = path.join(home, 'from-env');
+  fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ data_dir: two_dir }));
+  const two = resolver({ home });
+  assert.strictEqual(two.dir, two_dir, 'tier two must still read ~/.consonance.json');
+  assert.strictEqual(two.tier, '~/.consonance.json');
+
+  const one = resolver({ home, withEnv: one_dir });
+  assert.strictEqual(one.dir, one_dir, 'tier one must still win over tier two');
+  assert.strictEqual(one.tier, 'CONSONANCE_DATA');
+});
+
+t('OFF IS ANNOUNCED: an unresolvable data dir says so instead of exiting like a quiet session', () => {
+  // The defect this closes is not that the hook stopped — it is that "the instrument is off for the
+  // whole session" and "nobody asked for your transcript" printed the same thing: nothing.
+  const home = emptyHome();
+  const env = { ...process.env, USERPROFILE: home, HOME: home,
+    CONSONANCE_WATCH_STATE: path.join(home, 'watch.state.json') };
+  delete env.CONSONANCE_DATA;
+  const out = execFileSync(process.execPath, [HOOK], {
+    input: JSON.stringify({ session_id: MAIN_SID }), env, encoding: 'utf8', timeout: 30000,
+  });
+  assert.ok(/OFF for this session/.test(out), `expected a spoken degrade, got: ${JSON.stringify(out)}`);
+  assert.ok(/data_dir|CONSONANCE_DATA/.test(out), 'the degrade must say what to set, not just that it failed');
+});
+
+t('a RESOLVED but empty data dir is still quiet — only the OFF state was made loud', () => {
+  // Guard against over-correction: the hook's "quiet when nothing new" contract covers three real
+  // nothing-to-say states and this change was allowed to convert exactly one of them.
+  const dd = fs.mkdtempSync(path.join(os.tmpdir(), 'twatch-empty-'));
+  const out = execFileSync(process.execPath, [HOOK], {
+    input: JSON.stringify({ session_id: MAIN_SID }),
+    env: { ...process.env, CONSONANCE_DATA: dd, CONSONANCE_WATCH_STATE: path.join(dd, 's.json') },
+    encoding: 'utf8', timeout: 30000,
+  });
+  assert.strictEqual(out.trim(), '', `no capture is a genuine nothing-to-say; got: ${JSON.stringify(out)}`);
+});
+
 console.log(`\ntranscript-watch: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
