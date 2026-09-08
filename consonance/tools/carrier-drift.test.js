@@ -509,8 +509,27 @@ test('MUTATION over the REAL tree: the shipped cant-lose entry is ARMED and gree
   b.armed = false; b.arms_on = 'test fixture — never ships';
   const disarmed = CD.scan({ root: REPO, registry: broken });
   assert.strictEqual(disarmed.red, false, 'disarmed: the same findings are PENDING, not red');
-  assert.strictEqual(disarmed.findings.filter((f) => f.pending).length, fired.length,
+  // SCOPED TO THIS ENTRY, corrected 2026-09-08 (L046, pane A). This filtered `f.pending` across
+  // the WHOLE run and compared it against one entry's fired count. It was right when it was
+  // written on 2026-08-31 — cant-lose was then the only disarmed entry, so run-wide and
+  // entry-wide were the same number — and `light-not-lifeguard` was registered disarmed on
+  // 2026-09-02, after which the left side silently carried that entry's 35 pending findings too
+  // (46 vs 11). NOBODY SAW IT FOR SIX DAYS BECAUSE :497 WAS FAILING: the tree carried unaccounted
+  // carriers, the first assertion threw, and every assertion below it was unreachable. A red test
+  // hides its own later assertions, so fixing the tree is what surfaced this — the count of
+  // failing TESTS is not the count of failing ASSERTIONS, and only the first defect in a case is
+  // ever visible.
+  const pendingHere = disarmed.findings.filter((f) => f.pending && f.w === w.id);
+  assert.strictEqual(pendingHere.length, fired.length,
     'and the count shown while disarmed is exactly the count that fires when armed');
+  // The other half of the same correction: the mutation is registry-side and scoped to ONE entry,
+  // so every other disarmed entry must report exactly what it reported before it. Without this,
+  // re-scoping the line above would hide a mutation that leaked across entries.
+  const others = disarmed.findings.filter((f) => f.pending && f.w !== w.id).length;
+  const baseline = CD.scan({ root: REPO, registry: live })
+    .findings.filter((f) => f.pending && f.w !== w.id).length;
+  assert.strictEqual(others, baseline,
+    'breaking one entry\'s marker must not change what any other entry reports');
 });
 
 test('the shipped cant-lose census is COMPLETE — every occurrence in every carrier is accounted', () => {
@@ -762,4 +781,76 @@ test('THE BAR over the REAL tree: no finding survives in a dated verbatim extrac
     .map((f) => f.file + ':' + f.line);
   assert.deepStrictEqual(inExtracts, [],
     'five of this tool\'s six findings were records of the withdrawal, not assertions of it');
+});
+
+// ── THE `fixture` KIND, and the hole it was cut out of (L046, 2026-09-08, pane A) ─────────
+//
+// WHY A FIFTH KIND EXISTS AT ALL. `exo_memory/review/tool_audit_draft_2026-09-07.md:94,:107`
+// carry two withdrawn wordings because a run PLANTED them there: the file is L039's scored
+// experimental subject and those lines are plant D1-04, authored wrong on purpose so readers
+// could be measured on finding them. None of the four existing kinds can say that without
+// lying. `marked` and `acknowledged` both REQUIRE the file to carry a correction marker, i.e.
+// they require editing the fixture — repairing a test object to satisfy a scanner, which
+// destroys the thing the score refers to. `withdrawal` means the occurrence IS correction
+// text; these assert. `mention` means the wording asserts nothing; inside the fiction of the
+// object, it does. So the registry could express the truth about this file in no way at all,
+// and the honest fix is a kind rather than a forced classification.
+//
+// AND THE REASON THIS IS NOT A BACK DOOR is the pair of guards below. A `fixture` row must
+// name the run that planted it, and it is REFUSED on any instruction-reachable (CH-4) file —
+// the room must never be able to exempt something it teaches from by calling it a test object.
+
+test('a fixture site with no `planted_by` is RED — an exemption with no author is a silencer', () => {
+  const root = tmpTree({ 'exo_memory/review/OBJ.md': 'the only decorrelated reader\n' });
+  const res = CD.scan({ root, registry: reg([
+    { file: 'exo_memory/review/OBJ.md', anchor: 'the only decorrelated reader', kind: 'fixture', why: 'planted' },
+  ]) });
+  assert.strictEqual(res.red, true);
+  assert.ok(kinds(res).includes('BAD-FIXTURE'), JSON.stringify(kinds(res)));
+});
+
+test('a fixture site that names its run is GREEN, and needs no marker in the object', () => {
+  // the whole point: the object is NOT edited. No strike, no marker, bytes untouched.
+  const root = tmpTree({ 'exo_memory/review/OBJ.md': 'the only decorrelated reader\n' });
+  const res = CD.scan({ root, registry: reg([
+    { file: 'exo_memory/review/OBJ.md', anchor: 'the only decorrelated reader', kind: 'fixture',
+      why: 'plant D1-04', planted_by: 'loop/l039_read_brief_2026-09-07.md' },
+  ]) });
+  assert.strictEqual(res.red, false, JSON.stringify(res.findings));
+});
+
+test('MUTATION: a fixture row on an INSTRUCTION-REACHABLE file is RED, whatever it names', () => {
+  // The back door, closed. BOOT.md is CH-4 by construction here, so a `fixture` row over it
+  // must never buy silence — a document the room wakes instances into is not a test object.
+  const root = tmpTree({
+    'exo_memory/BOOT.md': 'see [x](SOURCE.md)\nthe only decorrelated reader\n',
+    'exo_memory/SOURCE.md': 'nothing\n',
+  });
+  const res = CD.scan({ root, registry: reg([
+    { file: 'exo_memory/BOOT.md', anchor: 'the only decorrelated reader', kind: 'fixture',
+      why: 'claiming the wake document is a test object', planted_by: 'loop/whatever.md' },
+  ]) });
+  assert.strictEqual(res.red, true, 'a fixture exemption over CH-4 must not be honoured');
+  assert.ok(kinds(res).includes('FIXTURE-IN-DOCTRINE'), JSON.stringify(kinds(res)));
+});
+
+test('an UNKNOWN kind is RED — before this, a typo silently accounted for a carrier', () => {
+  // Found while cutting the kind above: nothing validated `kind` against anything. `withdrawl`,
+  // `noted`, `""` — any string reached the accounting branch and excused the site. That means
+  // every kind guard in this file could be bypassed by misspelling the kind it guards.
+  const root = tmpTree({ 'exo_memory/CARD.md': 'the only decorrelated reader\n' });
+  const res = CD.scan({ root, registry: reg([
+    { file: 'exo_memory/CARD.md', anchor: 'the only decorrelated reader', kind: 'withdrawl', why: 'typo' },
+  ]) });
+  assert.strictEqual(res.red, true, 'a misspelled kind must not buy silence');
+  assert.ok(kinds(res).includes('BAD-KIND'), JSON.stringify(kinds(res)));
+});
+
+test('MUTATION: `acknowledged` misspelled loses its `see` guard unless kinds are checked', () => {
+  // The concrete cost of the hole above, on the guard this file already tests at :121.
+  const root = tmpTree({ 'exo_memory/CARD.md': 'the only decorrelated reader\n' });
+  const res = CD.scan({ root, registry: reg([
+    { file: 'exo_memory/CARD.md', anchor: 'the only decorrelated reader', kind: 'acknowleged', why: 'no see, no marker' },
+  ]) });
+  assert.strictEqual(res.red, true, 'the typo must not slip past BAD-ACK and UNMARKED-CARRIER both');
 });
