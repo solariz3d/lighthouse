@@ -1158,3 +1158,68 @@ named files at the named commits falsifies it.
 Not in the report, on purpose: anything from the Third Place conversation that is not about the
 essay's production. The transcript is retained and private by the keeper's rule; the report says
 so and says the release decision is his.
+
+---
+
+## 2026-09-08 ~04:25–04:55 — §4 rebuilt a third time, after reading
+
+**The keeper:** "lets get the first solid, then we will draft the second." The seat's 03:55 rule
+was no rebuild without reading; the reading was done first, at 04:26 — the SEP entry on
+self-knowledge (Moran §3.7: authority for attitudes formed by deliberation, alienation for those
+known only by observation; Coliva/McGeer performative and commissive accounts; Carruthers ISA
+§3.3, sensations read, attitudes interpreted) and the reflexive-prediction literature
+(Grunberg–Modigliani 1954, Simon 1954 via Brouwer — a correct self-affecting prediction exists if
+the reaction function is continuous; Henshel 1995 — for persons it is discontinuous, thresholds
+and benchmarks, so fixed points may be several or none). Henshel's citation verified 04:30
+(*J. Socio-Economics* 24(3), 501–520).
+
+**What the reading changed.** The second referee's fatal objection — first-person authority is at
+its maximum where believing makes it so — becomes the argument's middle term instead of its
+refutation. Three regimes by gain: **read** (zero gain — sensation, current anxiety; the self
+reads, the informant is blind), **made** (constitutive gain — intention, avowal; Moran's, the self
+authoritative), **looped** (causal gain without constitution — trait self-beliefs that shift
+behaviour without settling it; the representation is a fixed point of a discontinuous reaction
+function, updated from evidence it helped produce, so it settles or jumps rather than tracks).
+The old sentence "a self cannot see itself head-on" is stated as old *and false*, and replaced:
+*a self is the better instrument on itself where it is the maker outright, and where it is no
+maker at all; it is the worse instrument exactly where it is one of the makers.* Moran's
+alienation is the self in the looped regime discovering it is not in the made one.
+
+**Block rebuilt:** P1 the view; P2 gain as a constituent's property (zero on an observer view —
+this is what P1 adds); P3 the three fixed-point cases with Moran, G–M/Simon, Henshel; C1 the three
+regimes; P4 the second self as a reading in every regime, blind on unobservables; C2 the asymmetry
+with a shape; C3 the prediction — lock-in and discontinuous change on looped variables, and
+self–informant discrepancy **in both directions**. Every premise now does downstream work.
+
+**Vazire:** recovered (anxiety = read; intellect = looped) and parted from in two places a
+motivational account cannot reach: informant advantage on *non-evaluative* looped variables
+(calls people back; morning person), and **self-error in both directions** — an unflattering
+fixed point is as stable as a flattering one, and it is rumination, which §4's aperiodicity
+paragraph already names. "Self-enhancement is one basin. Rumination is another. A theory that
+predicts only the first has half the data." Three failure conditions stated; the two-signed test
+first, since panel data with self and informant ratings over time exist.
+
+**Answers to the second referee's findings, by number:** 1 (indeterminacy ≠ inaccuracy) — the
+looped regime now says *state of the loop, not a reading*, and predicts lock-in and jumps, not
+inaccuracy at a fixed point; 2 (avowal) — conceded as the made regime; 3 (G–M/Simon, Hacking,
+Carruthers' location) — G–M, Simon and Henshel cited and used, Carruthers' cut named as one of
+the things the gain quantity sorts, Hacking not cited (kind-level looping is a different object);
+4 (observability smuggled) — P4 now states blindness on unobservables as a separate clause; 5
+(other-gain) — P4 "zero or intermittent… only through what it expresses"; 6 (three senses of
+fixed point) — the block uses one sense, fixed point of the reaction function, and the attractor
+sense stays in P1 only; 7 (P2/C1 idle) — Ryle moved to prose, every premise used; 8 (predictions)
+— old 1 and 2 gone, the two new ones are two-signed error and non-evaluative informant advantage.
+
+**Counts:** 5,609 without references (the rules' count), 6,096 with, 12 pages. Six references
+added (Anscombe, Grunberg–Modigliani, Henshel, Moran, Simon, Velleman); 26 total, all named in
+text. Abstract and §6's companion line updated to match.
+
+**A third fresh referee runs on this version.** The seat's prediction, registered before the run:
+the block will not be found invalid; the referee will press on (i) whether "gain" is measurable
+independently of the outcome it predicts, and (ii) whether lock-in and jumps are distinguishable
+from ordinary self-report noise. If it finds the block invalid again, the pattern named at 03:55
+holds and the seat stops for the night.
+
+Counts, cumulative: keeper→seat 25 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~50 upheld, 3 held with a difference, score discounted. librarian→seat 5
+upheld. seat→seat 42. seat→keeper 5.
