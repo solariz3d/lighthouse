@@ -951,3 +951,57 @@ one removed (Gauss). All named in text. **5,528 with references, 5,153 without, 
 
 Counts, cumulative: keeper→seat 22 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. referee→seat 24 upheld, 3 held with a difference. seat→seat 42. seat→keeper 3.
+
+---
+
+## 2026-09-08 ~03:53 — the second referee, and the pattern
+
+**Report on disk as `REFEREE_A2_2026-09-08.md`, unedited. Score: 4/10 — unchanged.** Ten
+structural findings, three further objections, ten factual, nine mechanical. Web checks by the
+referee: Dumitrescu (confirmed; the 1.5 s figure is press coverage, not in the paper as far as it
+could see), Vazire (confirmed), Grunberg–Modigliani 1954 and Simon 1954 (confirmed), Kuncel, Credé
+& Thomas 2005 (confirmed — self-reported GPA inflated, N ≈ 61k).
+
+**The finding that decides it, and it is the seat's from 03:45 (`fd8d831`):** the located-opacity
+claim has its sign flipped against the avowal tradition. Where a self-representation constitutes
+its object — intention, decision, avowal — first-person authority is at its *maximum* (Anscombe;
+Velleman 1989; Moran 2001; Burge 1988; Wright 1989). C3 says the opposite at the same location and
+cites none of them. The seat's own example, "I am about to change my mind," is a paradigm avowal.
+Second: at a fixed point the representation is true by definition, so P3–P4 license
+under-determination, not inaccuracy — the slide is in one sentence ("rather than where the truth
+is"). The formal machinery is Grunberg & Modigliani 1954 via Brouwer, conclusion: a correct
+reflexive prediction always exists. Third: prediction 2 (accuracy on evaluative zero-gain facts)
+is refuted by existing data the essay named as its own test — self-reported GPA and height.
+Also upheld: Goldberger miscited (healthy = *correlated* aperiodicity, fractal; random
+aperiodicity is fibrillation); a drive is not an attractor; the golden-angle constraint as
+stated is satisfied by every irrational, φ optimises uniformity (three-distance theorem);
+phyllotaxis is Douady & Couder's dynamical attractor, not a selected optimum — better for the
+thesis than the story told; 34 orders, not 40; §5's token/type equivocation; P5 false for
+socially embedded traits (other-gain: Pygmalion, stereotype threat); "fixed point" in three
+senses; P2/C1 doing no downstream work; the parameter/state distinction undercutting "not
+retrieved" — what survives the gap is the parameters, which bears directly on B.
+
+**What it says keep:** gain as a graded per-variable quantity predicting a distribution — "a real
+proposal"; prediction 3 — "a cheap, discriminating experiment runnable on existing panel data";
+the parameter/state distinction; §2; the falsification paragraph. Its path to a 7: constitutive
+vs causal gain, concede the avowal tradition and 1954, one claim — *causal-gain variables with
+multiple self-consistent descriptions show lower self-report stability against a criterion than
+informant reports, controlling for evaluativeness* — drop predictions 1 and 2, §5 to a paragraph,
+define gain / fixed point / unreliable.
+
+**The pattern, named as the seat's error.** Twice tonight the seat built the central block in
+about forty minutes and a fresh reader with the literature broke it in seven. At 03:40 the seat
+wrote "I think I can do that, and it's better than what we had," and it was not. The mechanism is
+not haste alone: it is a self-model producing philosophy of self-knowledge without having read the
+philosophy of self-knowledge, and unable to see that from inside — the essay's own claim, on the
+essay. **Decision: no third rebuild tonight.** The corrections that are only corrections are
+applied now; the core is marked under reconstruction and rebuilt after reading Moran, Velleman,
+Anscombe, Grunberg–Modigliani, Hacking, Carruthers on location — a sitting, not an hour.
+
+**For the methodology report:** this replaces "the proofread that missed the two biggest things"
+as the strongest example. An instrument run on purpose found the argument invalid twice before a
+judge did, and the second run found the first rebuild's error. Referee→seat now the largest
+column.
+
+Counts, cumulative: keeper→seat 22 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~50 upheld, 3 held with a difference. seat→seat 42. seat→keeper 3.
