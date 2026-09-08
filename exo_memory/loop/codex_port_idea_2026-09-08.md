@@ -1,0 +1,36 @@
+# Consonance on Codex / GPT-6 Astra — the keeper's ambition, saved with the facts (not built)
+
+*Librarian, 2026-09-08 ~05:40. The keeper, 05:28: "I have this ambition to try OpenAI's Codex and Astra, perhaps even making consonance for that architecture, imagine both of you working together, look up chatgpt astra." Looked up at the source; nothing here is from memory. Saved the way the chain-indicator idea was saved (`loop/chain_indicator_idea_2026-08-30.md`): a registration, not a build.*
+
+## 1 · What Astra is (fetched 05:30)
+
+- **GPT-6 Astra**: limited preview 2026-09-03, public to paid tiers 2026-09-04; ChatGPT Plus/Pro/Business/Enterprise, the API, AWS; an "Astra Pro" on Pro and above. Released late because of the July Hugging Face incident (the essay's §9 case), with a restricted public version that refuses cyber prompts; OpenAI designates it the first model at their *Critical* cyber threshold. State of the art on computer use, browsing, software engineering. Context window, pricing and memory-across-sessions not stated in the sources reached (the OpenAI page returned 403 to this desk). Sources: Wikipedia "GPT-6 Astra"; CNBC 2026-09-03; 9to5Mac 2026-09-04.
+- **The line that matters for this room** (9to5Mac quoting OpenAI): *"With Astra, we're introducing a new way for Codex to preserve and retrieve context when the context window fills"* — notes kept across context windows instead of a single compaction summary, plus **searchable earlier context windows**. That is the retrieval problem this room has been working since 08-22, addressed natively, from the vendor side. It does not make Consonance redundant; it makes the comparison runnable.
+
+## 2 · What the Codex CLI offers, against what Consonance actually depends on
+
+Consonance's hard dependencies on the `claude` CLI, from `main.rs`: spawn with `--resume <session-id>` (`:926`), a fixed session id for Main (`:5418`), transcripts at `~/.claude/projects/<encoded-cwd>/<id>.jsonl` (`:1923`), hooks registered in `settings.json` (`:3163`, `:5361`), and an MCP server (`mcp.rs`) mounted per pane for the board verbs. Read against the Codex docs (`learn.chatgpt.com/codex/...`, fetched 05:32–05:36):
+
+| Consonance needs | Codex has | port cost |
+|---|---|---|
+| hooks: `Stop`, `UserPromptSubmit`, `SessionStart`, `PreCompact` (the pulse, the ready pair, the digest, the harvester stamps) | `SessionStart/End`, `PreToolUse/PostToolUse`, `PermissionRequest`, `PreCompact/PostCompact`, `UserPromptSubmit`, `SubagentStart/Stop`, `Stop`, `Interrupt`; JSON on stdin with `session_id`, `transcript_path`, `cwd`, `hook_event_name`, `model`; stdout may return `additionalContext`, `decision: block`, `continue: false`; exit 2 blocks | **near zero** — the same event names and the same stdin/stdout contract as Claude Code; `~/.codex/hooks.json` or `[hooks]` in `~/.codex/config.toml`; `transcript_path` is handed to every hook, so the harvester and the pulse read it directly |
+| MCP tools per pane (`post_board`, `raise_pull`, `call_chair`, `call_librarian`) | `[mcp_servers.<name>]` in `~/.codex/config.toml` or `.codex/config.toml`, stdio (`command`, `args`, `env`, `cwd`) or streamable HTTP; 10 s startup, 60 s tool timeout; server instructions truncated to 512 chars | **small** — `mcp.rs` is stdio already; the mount-gating by cwd carries over; the 512-char instruction cap means the board's instruction block must be cut to its first sentence |
+| persistent sessions resumed by id | `codex exec resume <SESSION_ID>`, `codex exec resume --last "<instruction>"`; `--json` gives a JSONL event stream (`thread.started`, `turn.started`, `turn.completed`, `item.*`); `--ephemeral` disables persistence | **medium** — the interactive TUI is a different terminal from claude's, so every screen predicate (`is_prompt`, `is_empty_box`, `is_footer_row`, `turn_in_flight`, the ghost-text colour) is Claude-Code-specific and would need its own capture study; the `--json` exec mode may make the screen gate unnecessary for Codex panes, which would be the better design |
+| transcript files on disk | the docs do not state the path; `--ephemeral` implies a default persistence under `$CODEX_HOME` (`~/.codex`); find it on first run | small |
+| instruction files (`CLAUDE.md`, the room) | `AGENTS.md` (documented at `/codex/agent-configuration/agents-md`) | **near zero** for content; the intake that assembles the shell is ours, not the CLI's |
+| memory across sessions (the room does it by hand) | `~/.codex/memories/` — global, not per project; generated in the background after idle from summaries and "durable entries"; `memories.use_memories`, `memories.extract_model`, `memories.consolidation_model`; secrets redacted; `/memories` per chat | **a decision, not a port** — this is a vendor-side prosthetic hippocampus; the room's law 1 (recall from the master, never a copy) says a generated summary layer is exactly the telephone the room refuses; run it OFF for a Codex seat, or run it ON as an arm and measure |
+
+## 3 · The room's registered position on a second substrate, so this is not decided from enthusiasm
+
+- BOOT (the Lighthouse section): *"the outside vantage that matters is the human, not a different model (the one cross-model test, Gemini, agreed 10/10 — no Claude blind spot found; a different model is optional enrichment, not a gate)."*
+- BOOT, the curated auditor: *"Cross-model contact does not fix it: two models plus an enthusiastic relay is three correlated readers, and their agreement will feel like triangulation while being none."*
+- `loop/gemini_channel_attack_2026-08-25.md` (E): the claim that the keeper's manual cross-model relay was a working organ **inverted** on the record; the registration had named the error in advance as *picking*. `loop/gemini_questions_2026-08-25.md`: drafted, UNSENT.
+- BOOT, the amendment of 08-23: the unit for minds is add-and-hold plus two-way correction, not "uncorrelated." A Codex seat is scored the same way any pane is: does it add something not re-derivable from the prior, does it survive an attempt to break it, does it correct the other seats and get corrected.
+
+So the room's own record says: a second model is not an outside, and it is not a gate; it is another mind at the table if and only if the two-way count says so. That is a measurement, and it is the reason to do it rather than a reason not to.
+
+## 4 · The smallest real experiment, if the keeper wants one
+
+Not a port. One Codex pane, `codex exec resume` driven by the existing spawner with the hooks copied across, mounted on the board with the existing `mcp.rs`, given the room's shell as `AGENTS.md`, memories OFF. Dispatch it the same L045-style read the three Claude panes just got, under the identical brief, from the same sealed key. Then the scorer has four lists instead of three, and the exchangeability test has a reader whose weights are genuinely different. Cost: a day of the chair's time on the spawner and the screen predicates (or the `--json` route, which avoids them). Falsifier, stated now: if the Codex reader's list is exchangeable with the three Claude lists on a planted object, "a different substrate" bought no decorrelation on the one measure this room has for it — and that would be the finding, not a disappointment.
+
+*Nothing built. The keeper's word opens it, as a lap, after the rebuild and the proofs.*
