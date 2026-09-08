@@ -1,0 +1,349 @@
+
+=== PART 0 -- instrument self-checks ===
+[0.1] d=0 vs closed form |(1-a)+a*gamma*f'|: max abs deviation over 400 random cells = 0.000e+00
+[0.2] alpha=1 vs closed form |gamma*f'|^(1/(d+1)): max abs deviation over 400 random cells = 5.440e-15
+[0.3] linear verdict vs 1e-6 perturbation of the simulation, 300 random cells (boundary |lam-1|<0.05 skipped): agree 233, disagree 0
+[0.4] fixed_points always contains the analytic root r*=0.5 at a=0: max distance to nearest root = 0.000e+00
+[0.5] hand-stepped 8-step trajectory vs simulate(): max |diff| in r = 0.000e+00, in x = 0.000e+00
+
+=== PART 1 -- fixed points ===
+[1.1] Gmax grid: -3.00..3.00 step 0.05, n=121
+[1.2] b=0, gamma=1: min fixed points over the whole grid = 1, max = 3
+[1.3] number of (Gmax) points with ZERO fixed points = 0
+[1.4] count==1 for Gmax in [-3.00,1.00] (81 pts); count==3 for Gmax in [1.05,3.00] (40 pts)
+[1.5] first Gmax with 3 fixed points = 1.0499999999999856  (analytic pitchfork at Gmax=1)
+[1.6] bias grid: b -0.40..0.40 step 0.01, n=81
+[1.7] over the full (Gmax,b) grid, cells with ZERO fixed points = 0 of 9801
+[1.8] fixed-point counts observed: [1, 3]
+[1.9] gamma=0.25: min count over Gmax grid = 1, counts seen = [1]
+[1.9] gamma= 0.5: min count over Gmax grid = 1, counts seen = [1, 3]
+[1.9] gamma= 1.0: min count over Gmax grid = 1, counts seen = [1, 3]
+[1.9] gamma= 2.0: min count over Gmax grid = 1, counts seen = [1, 3]
+[1.9] gamma= 4.0: min count over Gmax grid = 1, counts seen = [1, 3]
+[1.10] wrote out/fig1_fixedpoints.png
+
+=== PART 2 -- equilibrium self-error: lag alone vs bias ===
+[2.1] b=0, gamma=1: max |r* - x*| over ALL fixed points of ALL 121 gains = 2.776e-17   (n fixed points = 201)
+[2.2] alpha and d do not appear in the fixed-point equation r = g(f(r)); they are absent from 2.1 by construction, not by omission.
+[2.3] integrated 336 (Gmax,alpha,d) cells at b=0, T=20000, 287 settled (peak-to-peak of r over last 500 steps < 1e-9)
+[2.4] SETTLED cells, b=0: max mean|r-x| = 2.105e-15, max max|r-x| = 3.331e-15
+[2.5] NON-SETTLED cells at b=0: 49; their Gmax values = [-2.5, -1.5]; max mean|r-x| among them = 0.9856
+[2.6] bias arm: max |r*-x*| over the (Gmax,b) grid = 0.3000; max |b| on the grid = 0.30
+[2.7] max deviation of (r*-x*) from b itself over the whole grid = 5.551e-17  -> equilibrium error EQUALS the bias, independent of gain
+[2.8] gamma arm (b=0, gamma != 1), Gmax=0.5:
+       gamma=0.5   a=0.0  -> r*=0.500000 x*=0.500000 r*-x*=+0.000000
+       gamma=0.5   a=0.8  -> r*=0.619287 x*=0.738575 r*-x*=-0.119287
+       gamma=0.8   a=0.0  -> r*=0.500000 x*=0.500000 r*-x*=+0.000000
+       gamma=0.8   a=0.8  -> r*=0.720625 x*=0.775782 r*-x*=-0.055156
+       gamma=1.0   a=0.0  -> r*=0.500000 x*=0.500000 r*-x*=+0.000000
+       gamma=1.0   a=0.8  -> r*=0.803196 x*=0.803196 r*-x*=-0.000000
+       gamma=1.25  a=0.0  -> r*=0.500000 x*=0.500000 r*-x*=+0.000000
+       gamma=1.25  a=0.8  -> r*=0.922905 x*=0.838324 r*-x*=+0.084581
+       gamma=2.0   a=0.0  -> r*=0.500000 x*=0.500000 r*-x*=+0.000000
+       gamma=2.0   a=0.8  -> r*=1.347613 x*=0.923806 r*-x*=+0.423806
+[2.9] wrote out/fig2_equilibrium_error.png
+
+=== PART 3 -- stability with delay ===
+[3.1] max|lambda| of the delayed characteristic polynomial at the fixed point nearest 0.5; unstable when > 1.  Unstable set reported as CONTIGUOUS INTERVALS (an earlier version of this line printed min..max of the set, which reads as one interval where there are two -- corrected here).
+[3.2] alpha=0.1  d=0   unstable Gmax intervals = [+1.00,+3.00]
+[3.2] alpha=0.1  d=1   unstable Gmax intervals = [+1.00,+3.00]
+[3.2] alpha=0.1  d=2   unstable Gmax intervals = [+1.00,+3.00]
+[3.2] alpha=0.1  d=3   unstable Gmax intervals = [+1.00,+3.00]
+[3.2] alpha=0.1  d=5   unstable Gmax intervals = [+1.00,+3.00]
+[3.2] alpha=0.1  d=8   unstable Gmax intervals = [-3.00,-2.44]  [+1.00,+3.00]
+[3.2] alpha=0.1  d=12  unstable Gmax intervals = [-3.00,-1.90]  [+1.02,+3.00]
+[3.2] alpha=0.4  d=0   unstable Gmax intervals = [+1.00,+3.00]
+[3.2] alpha=0.4  d=1   unstable Gmax intervals = [-3.00,-2.52]  [+1.00,+3.00]
+[3.2] alpha=0.4  d=2   unstable Gmax intervals = [-3.00,-1.88]  [+1.02,+3.00]
+[3.2] alpha=0.4  d=3   unstable Gmax intervals = [-3.00,-1.58]  [+1.00,+3.00]
+[3.2] alpha=0.4  d=5   unstable Gmax intervals = [-3.00,-1.32]  [+1.00,+3.00]
+[3.2] alpha=0.4  d=8   unstable Gmax intervals = [-3.00,-1.18]  [+1.00,+3.00]
+[3.2] alpha=0.4  d=12  unstable Gmax intervals = [-3.00,-1.10]  [+1.02,+3.00]
+[3.2] alpha=1.0  d=0   unstable Gmax intervals = [-3.00,-1.02]  [+1.00,+3.00]
+[3.2] alpha=1.0  d=1   unstable Gmax intervals = [-3.00,-1.02]  [+1.00,+3.00]
+[3.2] alpha=1.0  d=2   unstable Gmax intervals = [-3.00,-1.02]  [+1.00,+3.00]
+[3.2] alpha=1.0  d=3   unstable Gmax intervals = [-3.00,-1.02]  [+1.00,+3.00]
+[3.2] alpha=1.0  d=5   unstable Gmax intervals = [-3.00,-1.02]  [+1.00,+3.00]
+[3.2] alpha=1.0  d=8   unstable Gmax intervals = [-3.00,-1.00]  [+1.00,+3.00]
+[3.2] alpha=1.0  d=12  unstable Gmax intervals = [-3.00,-1.00]  [+1.00,+3.00]
+[3.3] POSITIVE gain, 0 <= Gmax < 1, alpha in 6 values, d in 0..20: cells where delay makes the fixed point unstable = 0 of 6300
+[3.4] NEGATIVE gain, -3 <= Gmax < 0, same alphas and d: unstable cells = 8209 of 18900
+[3.5] least-negative gain at which SOME (alpha,d) destabilises: Gmax = -1.02
+[3.6] per-(alpha,d) destabilisation threshold on NEGATIVE gain (unstable for Gmax <= this):
+       alpha=0.05  d=0:none  d=1:none  d=2:none  d=3:none  d=5:none  d=8:none  d=12:none  d=20:-2.20
+       alpha=0.1   d=0:none  d=1:none  d=2:none  d=3:none  d=5:none  d=8:-2.44  d=12:-1.90  d=20:-1.48
+       alpha=0.2   d=0:none  d=1:none  d=2:none  d=3:-2.66  d=5:-1.98  d=8:-1.56  d=12:-1.34  d=20:-1.16
+       alpha=0.4   d=0:none  d=1:-2.52  d=2:-1.88  d=3:-1.58  d=5:-1.32  d=8:-1.18  d=12:-1.10  d=20:-1.04
+       alpha=0.7   d=0:-1.86  d=1:-1.44  d=2:-1.24  d=3:-1.16  d=5:-1.08  d=8:-1.04  d=12:-1.02  d=20:-1.02
+       alpha=1.0   d=0:-1.02  d=1:-1.02  d=2:-1.02  d=3:-1.02  d=5:-1.02  d=8:-1.02  d=12:-1.02  d=20:-1.02
+[3.7] wrote out/fig3_stability.png
+
+=== PART 4 -- persistent error with no bias, off equilibrium ===
+[4.1] alpha=0.4, b=0, T=30000, last 2000 steps.  max mean|r-x| over (d,Gmax) = 0.8526 at d=12, Gmax=-3.00
+[4.2] d=0  : mean|r-x| > 1e-6 for Gmax in none; max there = 0.0000
+[4.2] d=1  : mean|r-x| > 1e-6 for Gmax in [-3.00,-2.50] (11 pts); max there = 0.3415
+[4.2] d=2  : mean|r-x| > 1e-6 for Gmax in [-3.00,-1.90] (23 pts); max there = 0.5280
+[4.2] d=3  : mean|r-x| > 1e-6 for Gmax in [-3.00,-1.60] (29 pts); max there = 0.6160
+[4.2] d=5  : mean|r-x| > 1e-6 for Gmax in [-3.00,+1.00] (35 pts); max there = 0.7199
+[4.2] d=8  : mean|r-x| > 1e-6 for Gmax in [-3.00,+1.00] (38 pts); max there = 0.7969
+[4.2] d=12 : mean|r-x| > 1e-6 for Gmax in [-3.00,+1.00] (40 pts); max there = 0.8526
+[4.3] candidates with BOTH mean|r-x| > 1e-6 AND r confined to one side of 0.5 (lock-in), at T=30000 = 3 of 847
+[4.4] candidate d values = [5, 8, 12]; Gmax range = [+1.00, +1.00]. Re-running each at T=300000:
+       d=5   Gmax=+1.00: T=30000 -> 1.245e-06, T=300000 -> 3.838e-08  transient, discarded
+       d=8   Gmax=+1.00: T=30000 -> 2.044e-06, T=300000 -> 6.352e-08  transient, discarded
+       d=12  Gmax=+1.00: T=30000 -> 3.278e-06, T=300000 -> 1.030e-07  transient, discarded
+[4.5] cells with lock-in AND error that SURVIVE the longer run = 0 of 847
+[4.6] max |mean(r-x)| (SIGNED) over all cells = 5.091e-03  vs max mean|r-x| (UNSIGNED) = 0.8526
+[4.8] wrote out/fig4_persistent_error.png
+
+=== PART 5 -- lock-in, basin jumps, hysteresis ===
+[5.1] critical perturbation delta* : smallest |delta| applied to r at the upper stable fixed point that lands the trajectory in the other basin (bisection, 1e-6)
+[5.2] Gmax=1.2  fixed points = [0.17072, 0.5, 0.82928]  upper stable = 0.829285  delta* = 0.329285  (= distance to the middle unstable point 0.329285)
+[5.2] Gmax=1.5  fixed points = [0.07072, 0.5, 0.92928]  upper stable = 0.929280  delta* = 0.429280  (= distance to the middle unstable point 0.429280)
+[5.2] Gmax=2.0  fixed points = [0.02125, 0.5, 0.97875]  upper stable = 0.978752  delta* = 0.478752  (= distance to the middle unstable point 0.478752)
+[5.2] Gmax=2.5  fixed points = [0.00719, 0.5, 0.99281]  upper stable = 0.992812  delta* = 0.492812  (= distance to the middle unstable point 0.492812)
+[5.2] Gmax=3.0  fixed points = [0.00255, 0.5, 0.99745]  upper stable = 0.997451  delta* = 0.497451  (= distance to the middle unstable point 0.497451)
+[5.3] hysteresis: exogenous a ramped -4 -> +4 -> -4 over 2*40000 steps, alpha=0.4, d=0
+[5.4] Gmax=0.5  jump-up at a=-4.0000, jump-down at a=-0.0013, loop width = 3.9987, max single-step |dr| up = 0.0027
+[5.4] Gmax=1.2  jump-up at a=+0.1375, jump-down at a=-0.1375, loop width = 0.2750, max single-step |dr| up = 0.0209
+[5.4] Gmax=2.0  jump-up at a=+1.0861, jump-down at a=-1.0861, loop width = 2.1723, max single-step |dr| up = 0.1075
+[5.4] Gmax=3.0  jump-up at a=+2.6260, jump-down at a=-2.6260, loop width = 5.2519, max single-step |dr| up = 0.1722
+[5.5] wrote out/fig6_hysteresis.png, out/fig7_basin.png
+
+=== PART 6 -- informant: tracking slopes ===
+[6.1] drive a_t = A*sin(2*pi*t/T), A=1.0.  informant alpha_h=1, d_h=0 (reads x with no lag, no feedback into f).  T=60000, last 40000 used.
+[6.2] slope = cov(delta,dX)/var(dX), OLS through the origin on first differences.
+  Gmax  d_self      T  slope dr/dx  slope do/dx  slope dr/da  slope do/da   RMS r-x   RMS o-x
+   0.5       0     20       0.6363       0.9479       0.1234       0.2365    0.1419    0.0665
+   0.5       0     50       0.9143       0.9903       0.2963       0.3320    0.0767    0.0317
+   0.5       0    100       0.9737       0.9972       0.3492       0.3595    0.0412    0.0166
+   0.5       0    200       0.9926       0.9992       0.3652       0.3679    0.0211    0.0085
+   0.5       0    500       0.9988       0.9999       0.3701       0.3705    0.0085    0.0034
+   0.5       0   1000       0.9997       1.0000       0.3708       0.3709    0.0043    0.0017
+   0.5       1     20       0.4326       0.9496       0.0299       0.2008    0.1748    0.0591
+   0.5       1     50       0.8695       0.9909       0.2485       0.3120    0.1033    0.0305
+   0.5       1    100       0.9599       0.9974       0.3332       0.3526    0.0568    0.0164
+   0.5       1    200       0.9885       0.9993       0.3608       0.3659    0.0294    0.0084
+   0.5       1    500       0.9980       0.9999       0.3693       0.3702    0.0119    0.0034
+   0.5       1   1000       0.9995       1.0000       0.3706       0.3708    0.0060    0.0017
+   0.5       3     20      -0.0799       0.9504      -0.0821       0.1653    0.2079    0.0473
+   0.5       3     50       0.7427       0.9916       0.1422       0.2701    0.1465    0.0278
+   0.5       3    100       0.9224       0.9976       0.2904       0.3354    0.0861    0.0158
+   0.5       3    200       0.9769       0.9993       0.3480       0.3606    0.0456    0.0083
+   0.5       3    500       0.9959       0.9999       0.3671       0.3692    0.0186    0.0034
+   0.5       3   1000       0.9989       1.0000       0.3700       0.3706    0.0094    0.0017
+   0.5       8     20      -0.8513       0.9509      -0.1464       0.1645    0.2248    0.0380
+   0.5       8     50       0.2443       0.9920      -0.0476       0.1978    0.2028    0.0212
+   0.5       8    100       0.7748       0.9979       0.1547       0.2834    0.1446    0.0141
+   0.5       8    200       0.9329       0.9994       0.2980       0.3412    0.0831    0.0080
+   0.5       8    500       0.9869       0.9999       0.3576       0.3653    0.0352    0.0034
+   0.5       8   1000       0.9965       1.0000       0.3676       0.3695    0.0178    0.0017
+   2.0       0     20       0.5417       0.9152       0.0159       0.0260    0.0148    0.0073
+   2.0       0     50       0.8529       0.9817       0.0302       0.0331    0.0088    0.0037
+   2.0       0    100       0.9477       0.9943       0.0353       0.0361    0.0052    0.0021
+   2.0       0    200       0.9835       0.9983       0.0373       0.0375    0.0028    0.0011
+   2.0       0    500       0.9969       0.9997       0.0381       0.0381    0.0012    0.0005
+   2.0       0   1000       0.9992       0.9999       0.0382       0.0382    0.0006    0.0002
+   2.0       1     20       0.3230       0.9238       0.0081       0.0236    0.0185    0.0065
+   2.0       1     50       0.7853       0.9836       0.0266       0.0315    0.0114    0.0035
+   2.0       1    100       0.9230       0.9948       0.0336       0.0352    0.0069    0.0020
+   2.0       1    200       0.9752       0.9984       0.0367       0.0371    0.0039    0.0011
+   2.0       1    500       0.9952       0.9997       0.0380       0.0380    0.0016    0.0005
+   2.0       1   1000       0.9987       0.9999       0.0382       0.0382    0.0008    0.0002
+   2.0       3     20      -0.1542       0.9312      -0.0049       0.0206    0.0231    0.0055
+   2.0       3     50       0.6166       0.9861       0.0188       0.0285    0.0156    0.0030
+   2.0       3    100       0.8594       0.9955       0.0300       0.0334    0.0099    0.0018
+   2.0       3    200       0.9531       0.9986       0.0352       0.0362    0.0058    0.0011
+   2.0       3    500       0.9904       0.9997       0.0376       0.0378    0.0025    0.0005
+   2.0       3   1000       0.9974       0.9999       0.0381       0.0381    0.0013    0.0002
+   2.0       8     20      -0.6050       0.9250      -0.0173       0.0194    0.0267    0.0049
+   2.0       8     50       0.1012       0.9886       0.0015       0.0236    0.0222    0.0024
+   2.0       8    100       0.6481       0.9965       0.0200       0.0294    0.0155    0.0015
+   2.0       8    200       0.8755       0.9988       0.0307       0.0338    0.0097    0.0009
+   2.0       8    500       0.9722       0.9998       0.0363       0.0370    0.0046    0.0004
+   2.0       8   1000       0.9918       0.9999       0.0377       0.0378    0.0024    0.0002
+[6.3] over all 48 rows: slope dr/dx in [-0.8513,0.9997]; slope do/dx in [0.9152,1.0000]
+[6.4] rows where RMS(r-x) > RMS(o-x): 48 of 48
+[6.5] rows where slope dr/dx < slope do/dx: 48 of 48
+[6.6] quasi-static control (T >= 500): max RMS(r-x) = 0.0352 (-> tracking error vanishes as the drive slows, as it must)
+[6.7] fast drive (T <= 50): max RMS(r-x) = 0.2248, max RMS(o-x) = 0.0665
+[6.8] informant given its own lag (alpha_h, d_h), Gmax=2.0, d_self=3, T=50:
+       alpha_h=1.0   d_h=0   RMS(r-x)=0.0156 RMS(o-x)=0.0030  informant better
+       alpha_h=0.4   d_h=0   RMS(r-x)=0.0156 RMS(o-x)=0.0072  informant better
+       alpha_h=0.4   d_h=3   RMS(r-x)=0.0156 RMS(o-x)=0.0156  SELF better
+       alpha_h=0.1   d_h=3   RMS(r-x)=0.0156 RMS(o-x)=0.0231  SELF better
+       alpha_h=0.4   d_h=8   RMS(r-x)=0.0156 RMS(o-x)=0.0275  SELF better
+[6.9] wrote out/fig8_tracking.png
+
+=== PART 7 -- noise and curvature (the Jensen route) ===
+[7.1] observation noise sigma added inside g, b=0.  T=400000, last 300000 used.
+  Gmax   sigma    mean(r-x)    mean|r-x|     sd(r)     sd(x)
+   0.0    0.00    0.000e+00      0.00000   0.00000   0.00000
+   0.0    0.02    5.574e-06      0.00795   0.00998   0.00000
+   0.0    0.05    1.394e-05      0.01989   0.02494   0.00000
+   0.0    0.10    2.787e-05      0.03977   0.04988   0.00000
+   0.0    0.20    5.574e-05      0.07955   0.09975   0.00000
+   0.5    0.00    0.000e+00      0.00000   0.00000   0.00000
+   0.5    0.02    5.513e-06      0.00530   0.01330   0.00665
+   0.5    0.05    1.378e-05      0.01326   0.03323   0.01660
+   0.5    0.10    2.757e-05      0.02655   0.06636   0.03304
+   0.5    0.20    5.517e-05      0.05328   0.13200   0.06490
+   0.9    0.00    0.000e+00      0.00000   0.00000   0.00000
+   0.9    0.02    5.002e-06      0.00230   0.02829   0.02540
+   0.9    0.05    1.264e-05      0.00590   0.06762   0.06005
+   0.9    0.10    2.582e-05      0.01257   0.12301   0.10630
+   0.9    0.20    5.310e-05      0.02854   0.20948   0.17002
+   2.0    0.00    0.000e+00      0.00000   0.00000   0.00000
+   2.0    0.02    5.563e-06      0.00711   0.01071   0.00179
+   2.0    0.05    1.390e-05      0.01776   0.02682   0.00464
+   2.0    0.10    2.776e-05      0.03533   0.05407   0.01054
+   2.0    0.20    4.802e-05      0.06837   0.47514   0.46263
+[7.2] max |mean(r-x)| over all cells = 5.574e-05
+[7.3] max mean|r-x| over all cells = 0.07955 (at Gmax=0.0, sigma=0.2)
+[7.4] same with exogenous a = 1.5 (operating point off the inflection, so f'' != 0 there):
+       Gmax=0.5  sigma=0.0   mean(r-x)=+0.000e+00 mean|r-x|=0.00000
+       Gmax=0.5  sigma=0.1   mean(r-x)=+2.783e-05 mean|r-x|=0.03566
+       Gmax=0.5  sigma=0.2   mean(r-x)=+5.567e-05 mean|r-x|=0.07126
+       Gmax=2.0  sigma=0.0   mean(r-x)=-2.220e-16 mean|r-x|=0.00000
+       Gmax=2.0  sigma=0.1   mean(r-x)=+2.787e-05 mean|r-x|=0.03890
+       Gmax=2.0  sigma=0.2   mean(r-x)=+5.574e-05 mean|r-x|=0.07755
+
+=== PART 8 -- is the self-informant gap gain, or is it only lag? ===
+[8.1] drive T=50 A=1.0, self alpha=0.4 d=3.  Errors NORMALISED by sd(x), so that a gain effect on the size of x cannot masquerade as an accuracy effect.
+   Gmax    sd(x)   RMS(r-x)   /sd(x)   RMS(o-x)   /sd(x)   ratio   [informant UNLAGGED]
+  -3.00   0.4067     0.6555   1.6118     0.2823   0.6940   2.323
+  -2.75   0.3919     0.6330   1.6150     0.2658   0.6782   2.381
+  -2.50   0.3717     0.6011   1.6174     0.2458   0.6615   2.445
+  -2.25   0.3423     0.5537   1.6176     0.2205   0.6442   2.511
+  -2.00   0.2957     0.4765   1.6113     0.1851   0.6260   2.574
+  -1.75   0.2074     0.3254   1.5692     0.1237   0.5967   2.630
+  -1.50   0.0759     0.0504   0.6640     0.0095   0.1256   5.287
+  -1.25   0.0842     0.0559   0.6640     0.0106   0.1256   5.287
+  -1.00   0.0943     0.0626   0.6640     0.0118   0.1256   5.287
+  -0.75   0.1069     0.0710   0.6641     0.0134   0.1256   5.287
+  -0.50   0.1227     0.0815   0.6642     0.0154   0.1256   5.286
+  -0.25   0.1425     0.0946   0.6643     0.0179   0.1257   5.285
+   0.00   0.1666     0.1107   0.6645     0.0210   0.1258   5.283
+   0.25   0.1940     0.1290   0.6649     0.0244   0.1259   5.281
+   0.50   0.2202     0.1465   0.6653     0.0278   0.1261   5.278
+   0.75   0.2383     0.1586   0.6656     0.0301   0.1262   5.276
+   1.00   0.2409     0.1603   0.6654     0.0304   0.1261   5.277
+   1.25   0.2230     0.1483   0.6648     0.0281   0.1259   5.281
+   1.50   0.1052     0.0740   0.7041     0.0143   0.1361   5.174
+   1.75   0.0448     0.0320   0.7135     0.0062   0.1385   5.153
+   2.00   0.0219     0.0156   0.7126     0.0030   0.1382   5.157
+   2.25   0.0116     0.0083   0.7105     0.0016   0.1376   5.162
+   2.50   0.0065     0.0046   0.7087     0.0009   0.1372   5.167
+   2.75   0.0037     0.0026   0.7074     0.0005   0.1368   5.170
+   3.00   0.0022     0.0015   0.7064     0.0003   0.1366   5.173
+[8.2] normalised self error RMS(r-x)/sd(x) over the gain grid: min 0.6640  max 1.6176  spread 0.9536
+[8.3] self/informant RMS ratio over the gain grid: min 2.323  max 5.287
+[8.4] correlation of (self/informant ratio) with gain over POSITIVE gain (12 pts) = -0.8347
+
+[8.5] EQUAL-LAG control: informant given exactly the self's alpha and d.
+   Gmax   RMS(r-x)   RMS(o-x)   max|r-o|
+  -3.00     0.6555     0.6555  2.220e-16
+  -2.75     0.6330     0.6330  2.220e-16
+  -2.50     0.6011     0.6011  2.220e-16
+  -2.25     0.5537     0.5537  2.220e-16
+  -2.00     0.4765     0.4765  2.220e-16
+  -1.75     0.3254     0.3254  2.220e-16
+  -1.50     0.0504     0.0504  0.000e+00
+  -1.25     0.0559     0.0559  0.000e+00
+  -1.00     0.0626     0.0626  0.000e+00
+  -0.75     0.0710     0.0710  0.000e+00
+  -0.50     0.0815     0.0815  0.000e+00
+  -0.25     0.0946     0.0946  0.000e+00
+   0.00     0.1107     0.1107  0.000e+00
+   0.25     0.1290     0.1290  1.110e-16
+   0.50     0.1465     0.1465  1.110e-16
+   0.75     0.1586     0.1586  1.110e-16
+   1.00     0.1603     0.1603  1.110e-16
+   1.25     0.1483     0.1483  1.110e-16
+   1.50     0.0740     0.0740  0.000e+00
+   1.75     0.0320     0.0320  0.000e+00
+   2.00     0.0156     0.0156  0.000e+00
+   2.25     0.0083     0.0083  0.000e+00
+   2.50     0.0046     0.0046  0.000e+00
+   2.75     0.0026     0.0026  0.000e+00
+   3.00     0.0015     0.0015  0.000e+00
+[8.6] EQUAL LAG: max |r_t - o_t| over the whole gain grid = 2.220e-16  -> with the same lag the informant is exactly as wrong as the self, at EVERY gain. In the specified model the entire self-informant gap is lag DIFFERENCE; gain contributes nothing to it.
+[8.7] wrote out/fig9_gain_vs_lag.png
+
+=== PART 9 -- EXTENSION: what happens when the criterion is capacity, not realised behaviour ===
+[9.0] THIS GOES BEYOND THE MODEL THE REFEREE SPECIFIED.  The specified model has one criterion (x) and both readers see it.  Part 9 adds a second criterion c = f(0.5, a): the behaviour at a neutral self-representation.  Reported separately for that reason.
+
+[9.1] STATIC a, alpha=1, d=0, b=0 -- no lag whatsoever, at equilibrium.
+   Gmax      a        r*        x*         c      r*-x*       r*-c
+   0.00   0.50   0.62246   0.62246   0.62246  +0.00e+00   +0.00000
+   0.00   1.00   0.73106   0.73106   0.73106  +0.00e+00   +0.00000
+   0.00   2.00   0.88080   0.88080   0.88080  +0.00e+00   +0.00000
+   0.25   0.50   0.65905   0.65905   0.62246  +0.00e+00   +0.03659
+   0.25   1.00   0.78295   0.78295   0.73106  +0.00e+00   +0.05189
+   0.25   2.00   0.91821   0.91821   0.88080  +0.00e+00   +0.03741
+   0.50   0.50   0.71849   0.71849   0.62246  +0.00e+00   +0.09603
+   0.50   1.00   0.84395   0.84395   0.73106  +0.00e+00   +0.11289
+   0.50   2.00   0.94761   0.94761   0.88080  +0.00e+00   +0.06681
+   0.90   0.50   0.85581   0.85581   0.62246  +0.00e+00   +0.23335
+   0.90   1.00   0.92661   0.92661   0.73106  +0.00e+00   +0.19556
+   0.90   2.00   0.97621   0.97621   0.88080  +0.00e+00   +0.09541
+   1.50   0.50   0.96384   0.96384   0.62246  +0.00e+00   +0.34138
+   1.50   1.00   0.97974   0.97974   0.73106  +0.00e+00   +0.24868
+   1.50   2.00   0.99302   0.99302   0.88080  +0.00e+00   +0.11223
+   2.50   0.50   0.99575   0.99575   0.62246  +0.00e+00   +0.37329
+   2.50   1.00   0.99746   0.99746   0.73106  +0.00e+00   +0.26641
+   2.50   2.00   0.99908   0.99908   0.88080  +0.00e+00   +0.11828
+[9.2] against realised behaviour x: max |r*-x*| = 0.000e+00  (zero, as part 2 found)
+[9.3] against capacity c:          max |r*-c|  = 0.37329
+[9.4] at Gmax = 0 exactly: max |r*-c| = 0.000e+00  -> the capacity error is ZERO at zero gain and grows with gain; it is produced by gain, with no lag and no bias present.
+
+[9.5] capacity error |r* - c| vs gain, a = 1.0, alpha=1, d=0, b=0:
+       Gmax 0.0 -> 3.0 step 0.1: |r*-c| from 0.00000 to 0.26802; monotone non-decreasing in gain = True
+       Gmax=0.0: |r*-c| = 0.00000
+       Gmax=0.5: |r*-c| = 0.11289
+       Gmax=1.0: |r*-c| = 0.20955
+       Gmax=1.5: |r*-c| = 0.24868
+       Gmax=2.0: |r*-c| = 0.26186
+       Gmax=2.5: |r*-c| = 0.26641
+       Gmax=3.0: |r*-c| = 0.26802
+
+[9.6] all three readers scored against CAPACITY c, drifting a (T=200 sinusoid, A=1.5), self alpha=0.4 d=3, informants unlagged:
+   Gmax   RMS(r-c)   RMS(oA-c)   RMS(oB-c)   r vs oB
+   0.00    0.04057     0.00740     0.00000 self worse
+   0.25    0.07096     0.04807     0.00000 self worse
+   0.50    0.12137     0.10039     0.00000 self worse
+   1.00    0.23583     0.20961     0.00000 self worse
+   1.50    0.35762     0.32786     0.00000 self worse
+   2.00    0.51161     0.48676     0.00000 self worse
+   3.00    0.54636     0.54633     0.00000 self worse
+[9.7] RMS(r-c) at Gmax=0 is 0.04057 and at Gmax=3 is 0.54636; ratio 13.47x
+[9.8] rows where the self is worse than informant-B on capacity: 7 of 7
+[9.9] wrote out/fig10_capacity_criterion.png
+
+=== PART 10 -- loose ends ===
+[10.1] part 4's 3 co-existence cells sat at Gmax=+1.00 (the pitchfork, lambda=1 exactly).  Re-running those cells at increasing T:
+       d=5    T=30000: 1.245e-06  T=100000: 2.005e-07  T=300000: 3.838e-08  T=1000000: 6.294e-09
+       d=8    T=30000: 2.044e-06  T=100000: 3.313e-07  T=300000: 6.352e-08  T=1000000: 1.042e-08
+       d=12   T=30000: 3.278e-06  T=100000: 5.357e-07  T=300000: 1.030e-07  T=1000000: 1.691e-08
+[10.2] the residual falls with T -> it is an unfinished transient at the marginal point, NOT persistent error.  Part 4's co-existence count is therefore 0 of 847, not 3 of 847.
+
+[10.3] part 7's signed mean(r-x): is it zero, or just small?  Compare to the standard error of the mean under the observed autocorrelation.
+       Gmax=0.0  sigma=0.1  mean over 12 seeds = -9.427e-05  SE = 9.253e-05  t = -1.02  consistent with 0
+       Gmax=0.0  sigma=0.2  mean over 12 seeds = -1.885e-04  SE = 1.851e-04  t = -1.02  consistent with 0
+       Gmax=0.9  sigma=0.1  mean over 12 seeds = -9.507e-05  SE = 9.260e-05  t = -1.03  consistent with 0
+       Gmax=0.9  sigma=0.2  mean over 12 seeds = -1.900e-04  SE = 1.852e-04  t = -1.03  consistent with 0
+       Gmax=2.0  sigma=0.1  mean over 12 seeds = -9.435e-05  SE = 9.253e-05  t = -1.02  consistent with 0
+       Gmax=2.0  sigma=0.2  mean over 12 seeds = -1.924e-04  SE = 1.844e-04  t = -1.04  consistent with 0
+
+[10.4] part 9's informant-B read c unlagged, so its zero error was by construction.  Re-scored with EXACTLY the self's lag (alpha=0.4, d=3):
+   Gmax   RMS(r-c)   RMS(oB_lagged-c)    ratio
+   0.00    0.04057            0.04057     1.00
+   0.25    0.07096            0.04057     1.75
+   0.50    0.12137            0.04057     2.99
+   1.00    0.23583            0.04057     5.81
+   1.50    0.35762            0.04057     8.81
+   2.00    0.51161            0.04057    12.61
+   3.00    0.54636            0.04057    13.47
+[10.5] informant-B with the SELF'S OWN lag still beats the self on capacity, and the ratio grows with gain -- so the part-9 advantage is the criterion, not the lag difference.
+
+wrote C:\Consonance\lighthouse\essay\sim\out\results.json

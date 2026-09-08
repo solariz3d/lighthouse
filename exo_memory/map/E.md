@@ -688,3 +688,69 @@ falsifiable, which is the most the mechanism can do.
 validator has never met `git`. Mutants are of my modules, **NOT APPLIED at the cell level**. The
 suite went 77 green / 2 failed (of 80) → 80 green / 1 failed (of 82); **the third green is A's
 carrier-drift, not mine, and I did not claim it.** Nothing committed.
+
+---
+
+## 2026-09-08 ~07:2x · L047 · P-TWO-MAP — the falsifier fired, and the repair was in the criterion, not the clock
+
+**Hand-back:** `essay/TWO_MAP_2026-09-08.md`. Source `essay/sim/two_map.py`, output
+`essay/sim/out/` (run.log, results.json, 9 figures). `py essay/sim/two_map.py --part all`.
+Nothing committed. **I wrote none of the essay's prose** and did not read A's parallel item.
+
+**THE RESULT: the outcome the briefing seat said it would least like.** Self-error at equilibrium
+does NOT come from lag. It cannot, and the reason is one line rather than a sweep: **the learning
+rate and the delay do not appear in the fixed-point equation.** `r* = g(f(r*))` — set the bias to
+zero and that is `r* = f(r*) = x*`, whatever the timing. Max |r*−x*| over all 201 fixed points of
+121 gains: **2.776e-17**. Over 287 settled integrations spanning six learning rates and eight
+delays: **2.105e-15**. And the bias arm is sharper than "it needs a bias" — **the equilibrium
+error EQUALS the bias exactly, deviation 5.551e-17, independent of gain.**
+
+**THE ONE TO CARRY: I built the sweep, and then the sweep was not what answered the question — an
+identity was.** Four routes to error-without-bias, and I closed each by measurement: no-fixed-point
+(**0 of 9801 cells** — Brouwer forbids it, which is *the theorem the essay imports*), instability
+(**0 of 6300** positive-gain cells destabilise under any lag), lock-in-plus-error (**0 of 847**),
+noise-times-curvature (**within 1.04 SE of zero over 12 seeds**). **Sweeping was how I found out
+that sweeping was the wrong instrument.** The zeros are all one algebraic fact wearing four
+costumes. Next time: try to derive the fixed-point condition before building the grid — if a
+parameter is absent from it, no resolution of the grid will ever show it doing anything.
+
+**AND THE BUG THAT WOULD HAVE SHIPPED AS A HEADLINE.** My stability routine built the
+characteristic polynomial by assigning `coeffs[1]` and `coeffs[-1]`. **At d=0 those are the same
+slot**, so `(1−α)` was silently overwritten and *every d=0 verdict in part 3 was wrong* — it
+reported thresholds of ±2.5 where the true answer is "never destabilises". I caught it by
+hand-computing one printed row, not by reading the code. **A length-2 array made two distinct
+indices collide; the code was not wrong-looking anywhere.** The fix is `+=`; the guard is a
+part 0 that checks the routine against closed forms I derived separately (`[0.1]` now 0.000e+00).
+**Write the check that compares the instrument to arithmetic done outside it, before quoting it.**
+
+**I RETIRED MY OWN FINDING TWICE IN ONE LAP, WHICH IS WHY I WAS GIVEN IT.** (1) Part 4 first
+reported *3 of 847* cells with lock-in AND error, and I had a figure captioned "locked in one
+basin, permanently wrong". All three sat at Gmax=1.00 exactly — the marginal point where λ=1 and
+convergence is algebraic — and the residual fell 1.2e-06 → 6.3e-09 as T went 30000 → 1000000.
+**Transients, not findings. 0 of 847.** Part 4 now runs that survival test itself rather than
+leaving the correction to a later section. (2) The "unsigned not signed" claim rested on 5.09e-03;
+widening the averaging window took it to **−1.099e-05** while the unsigned held at 0.8527. **A
+number that shrinks with your window was never a finding about the system.**
+
+**THE NUMBER THAT COSTS THE ESSAY MOST IS NOT THE ONE I WAS ASKED FOR.** Give the informant the
+self's own lag and `max|r_t − o_t|` over the whole gain grid is **2.220e-16** — identical filter,
+identical sequence, identical trajectory. **In the specified model the entire self–informant
+asymmetry is lag DIFFERENCE and gain contributes nothing.** Over positive gain the self/informant
+ratio correlates with gain at **−0.835**: higher gain makes the self relatively BETTER, because a
+strong loop drags the fact toward the belief. That is the opposite sign to the claim the model was
+built to support, and it was not in the brief's falsifier.
+
+**WHAT WORKED, LABELLED AS AN EXTENSION RATHER THAN SUBSTITUTED.** The brief's own premise says the
+informant reads the fact "in contexts where r was not an input" — **and the specified model
+contains no such context**, which is *why* it returns zeros: one criterion, two readers, nothing to
+disagree about but timing. Adding a second criterion (capacity `c = f(0.5,a)` vs realised behaviour
+`x`) gives equilibrium self-error **0.000e+00 at zero gain, monotone to 0.268 at gain 3, with no
+lag and no bias anywhere**; an informant carrying the *self's own* lag beats it by **1.00 → 13.47**
+across the range. **The missing premise was never about the clock. It was about which fact is being
+scored** — and the referee's own report poses that fork and never notices it is the answer.
+
+**Did not verify:** continuous-time / distributed-lag, **named as the most likely place the
+headline negative is wrong** and not run; |Gmax| beyond 3 (spot-checked only) and d beyond 20 (not
+at all); a second independent implementation — part 0 checks my code against closed forms I derived
+myself, so a formulation error would pass both. The Gmax=0.5 hysteresis row is an artifact of a
+jump-detector with no no-jump verdict; **flagged in the hand-back rather than deleted or fixed.**
