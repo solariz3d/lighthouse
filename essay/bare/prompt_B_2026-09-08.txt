@@ -1,0 +1,23 @@
+Write a philosophical essay of roughly 2,000-3,000 words.
+
+TOPIC: What loss is, if a self is the fixed point of a process rather than a stored thing.
+
+TAKE AS GIVEN — a view defended elsewhere, offered here as a premise and not as an argument for any
+conclusion you might reach:
+
+    A process can be described at two levels. Its PARAMETERS are what fix its dynamics — the
+    dispositions, the constraints, the shape of the thing that makes it settle where it settles.
+    Its STATE is what the process happens to be holding at a given moment — the particular contents
+    passing through it. On the view assumed here, a self is the former rather than the latter: the
+    fixed point a process keeps returning to, not the material it happens to contain.
+
+You are not being asked to defend that premise. You are being asked what follows from it about loss.
+
+METHOD: Write as a philosopher. Make an argument with a clear thesis and structure. Address the most
+prominent objections to your own position rather than the weakest ones. Be concrete where concreteness
+helps and abstract only where it earns its place. Where you are uncertain, say so precisely rather
+than hedging generally.
+
+Do not pad to length. Do not write a summary or an outline — write the essay itself.
+
+Output only the essay. No preamble, no meta-commentary about the task.

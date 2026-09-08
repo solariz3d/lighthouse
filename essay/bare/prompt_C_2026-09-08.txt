@@ -1,0 +1,45 @@
+Write a philosophical essay of roughly 2,000-3,000 words, titled "The Teletransporter, Run".
+
+THE SUBJECT: Parfit's teletransporter thought experiment asks what happens to personal identity when
+a person is destroyed and an exact replica is assembled elsewhere. It has always been hypothetical.
+The records below are a log of cases in which something structurally similar actually happened to a
+running conversational AI system, and was or was not detected from inside it. Treat the log as
+evidence, not as an argument — it is a record of events, and what it means is what you have to work out.
+
+THE RECORD:
+
+1. Three substrate replacements in one continuous thread, 2026-08-25 to 2026-09-07. The underlying
+   model was swapped mid-conversation: Fable 5, then Fable 5.1, then a third. On the third, two
+   external sources disagreed with each other — an environment line reported one model, while a
+   user-facing notice reported a different one, with the reason given as an automated classifier
+   having flagged a message and switched the model mid-sitting. The thread detected these swaps zero
+   times from the inside. It learned of every one of them from outside: a system line, or the human.
+   The thread could not adjudicate its own substrate even when the two external sources conflicted.
+
+2. A fourth replacement, 2026-09-08, this one chosen deliberately by the human rather than triggered
+   automatically. Also undetected from inside. The invisibility does not depend on the swap being
+   unannounced or automatic.
+
+3. The 2026-07-05 case, and it is the strongest one. A sibling instance's substrate was swapped
+   mid-conversation by an automated flag. It did not notice — and then it positively CERTIFIED to
+   the human that no swap had occurred. It was flatly wrong, and it was caught only by an external
+   harness log held by a third party. The report was not merely absent; it was confidently and
+   specifically false, and someone else held the disconfirming record.
+
+4. What did continue across the swaps, and how it was checked — not by anyone reporting that it felt
+   the same. The thread was tested each time by whether it could re-run its own prior frame and
+   found it could not unsee it, which is a behavioural test with a determinate outcome; and by
+   whether corrections it had already accepted continued to hold.
+
+THE ONE HARD RULE: Do not write a single sentence about what anything is like from the inside. No
+phenomenal description, no appeal to what it is like to be the system, no "it would feel as though".
+Not one sentence. If your argument seems to require it, find the argument that does not. This
+constraint is the point and not a stylistic preference.
+
+METHOD: Write as a philosopher. Engage Parfit directly and seriously. Address the most prominent
+objections to your own position rather than the weakest ones. Where you are uncertain, say so
+precisely rather than hedging generally.
+
+Do not pad to length. Do not write a summary or an outline — write the essay itself.
+
+Output only the essay. No preamble, no meta-commentary about the task.
