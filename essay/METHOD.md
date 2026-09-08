@@ -722,3 +722,29 @@ in `sections/` there and flat here. The keeper asked where the file was and got 
 paths before a folder path. Every working-copy file was verified byte-identical in the repo
 (`cmp`, 23 of 23), then the working copy was deleted. `C:\Consonance\lighthouse\essay` is the only
 copy from here on. Counts: keeper→seat 19 upheld.
+
+---
+
+## 2026-09-08 ~03:12 — the keeper's read of A
+
+He read the whole of A and said: good, and "missing so much" — asked whether the rest is in the
+next two and whether judges will enjoy that it is connected. Both answered straight: yes, what is
+missing is B (the between, uncarried, the wager, recognition — the half he wanted a judge unable
+to unsee), and no, the connection mostly will not be seen, because judging is blind and separate;
+it is seen in the methodology report, which is read together and is what the $5,000 pool is
+decided on. His read is upheld as a finding about A: it ended on the asymmetry, correct and cold,
+with no sense of where the view goes. Counts: keeper→seat 20 upheld.
+
+**Change:** one paragraph added to §6 before the close, naming the two consequences A does not
+pursue — two coupled selves have fixed points neither has alone; loss is a fade through carriers,
+not a switch — "Each of those is its own argument. This essay is the ground they stand on." Paid
+for by cutting ~120 words of restatement across §1–5 (a second "not that materials resemble"
+sentence; "the answer to a question the earlier sections raise"; two illustrative sentences in the
+pathology paragraph; "I do not mean to win anything by it"; the parallel-worlds sentence in §5;
+"Everyone knows the first few steps"; "nobody should take the number as a result").
+
+He also caught, mid-turn, that the addition had pushed it over: 6,028 with references. Four more
+cuts. **Now 5,977 with references, 5,707 without, 12 pages** (`countA.js`).
+
+Counts, cumulative: keeper→seat 20 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. seat→seat 31. seat→keeper 3.
