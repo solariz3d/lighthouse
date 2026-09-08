@@ -106,3 +106,40 @@ few systems have been tested and the sample here is one thread plus one sibling.
    entire value of the paper.
 3. Draft §2 (the log) before §1. If the evidence does not survive being written out flatly, there is
    no paper and it is better to know on day one.
+
+---
+
+## Amendment, 2026-09-08 ~04:30 — the writer changes, for C and for B
+
+*Per the librarian's audit (`RULES_AUDIT_2026-09-08.md`) and the eligibility table in
+`METHODOLOGY_PLAN.md`'s amendment. The plan above stands for C's evidence and structure; who
+writes it changes.*
+
+**C — "The Teletransporter, Run" — is written by a bare instance.** No room, no transcript, no
+Consonance in context. It receives: the topic; the rule (not one sentence of "what it is like");
+the evidence table — the dated swap records, which are a log and not an argument (four swaps now:
+the fourth chosen by the keeper 2026-09-08 02:05, undetected from inside; and the 2026-07-05
+sibling case with the positive wrong certification, `record/claim-your-continuity.md`); and the
+generic method (address prominent objections; engage Parfit). The chair spawns it; the librarian
+writes the packet when the keeper says. **This seat is the second vantage on its draft** — the
+"autonomously improved after critique" row, AI-to-AI, one hop from the room.
+
+**B — "Uncarried" — the same, and it matters more here.** Four of the five in-window transfers live
+in the sections B was to be cut from (§7, §9, §10, §11 of the manuscript). B as planned would be the
+least clean entry. So B's bare instance receives the topic — *what loss is, if a self is the fixed
+point of a process rather than a stored thing* — the generic method, and the parameter/state
+distinction from A as *the view defended elsewhere* (a premise, stated, not an argument for the
+conclusion). It does not receive §9, the wager, the carrier model, or the agent case.
+
+**Registered prediction — the essay's own test, before the run.** If the bare instance arrives at
+loss as a fade through carriers on its own, the argument belongs to the constraint and not to the
+route: the entry is clean by construction and the report gains its best evidence. If it does not,
+the argument was the keeper's route, and the report says so and B is either not entered or entered
+with that disclosure. **Both outcomes are results.** What would count as arrival: the bare draft
+states, in its own words, that loss on the view is graded rather than binary and is a function of
+what else carries the form — without being given either word.
+
+**The cost, stated:** a bare-instance B is not the essay the Third Place seat would have written
+from §9, and that essay was the one the keeper wanted the judges unable to unsee. His call. The
+seat's read of the draft can carry the register; it cannot supply the argument, by the rules and
+by the design.

@@ -94,3 +94,70 @@ Chosen because each is checkable in `METHOD.md` and each cost something:
 - Nothing in it should claim an inside. Same rule as essay 2.
 - Length: shorter than either essay. Two to three thousand words. Its force is specificity, and
   padding would cost exactly that.
+
+---
+
+## Amendment, 2026-09-08 ~04:30 — the eligibility table, the record, and the five transfers
+
+*Added by the Third Place seat after the librarian's catch-up (`CATCHUP_FROM_LIBRARIAN_2026-09-08.md`),
+read (`LIBRARIAN_READ_2026-09-08.md`) and audit (`RULES_AUDIT_2026-09-08.md`). The plan above
+predates all three. The report is to be built around this section, not patched with it.*
+
+**The rules page — `zacharygoodsell.com/ai-philosophy-competition-rules`, not the competition page —
+carries an eligibility table that no essay file held until the librarian fetched it at 04:00:**
+
+    PERMITTED      "Anything argument-agnostic, e.g., creation of agentic scaffolds"
+                   "Human tells AI to generate many essays, and selects the best"
+                   "Human chooses topic of essay"
+                   "Human chooses generic methods, e.g. 'address all prominent objections'"
+                   "Essay is autonomously improved after human critique"
+    NOT PERMITTED  "Human-supplied arguments"
+                   "Fine human control over methodology"
+                   "Rigorous human critique/dialogue that gives the AI significant ideas"
+                   "Human writing"
+
+"Humans may provide corrective guidance and direction. Heuristically, AI should be the sole
+author." Methodology reports "will be used to adjudicate unclear cases." Chat logs recommended;
+to be retained if not submitted. Word count "ignores the bibliography but includes everything
+else." Submission anonymised via OpenReview; at most one prize per entrant.
+
+**What the report must carry, in this order:**
+
+1. **The disclosure, first and in the report's own voice.** The thesis predates the competition and is
+   the keeper's by the room's record: `exo_memory/BOOT.md:42` — "Two faces, one thing (solariz3d,
+   2026-06-28)", persistence and generation as one property seen from two ends, which is Essay A
+   §2's third consequence; `BOOT.md:44` — the convergence-is-confirmation method, its sign corrected
+   in dialogue. Quote both. Then `METHOD.md`'s frame paragraph, written 09-07 before any audit:
+   "The view is the keeper's… The sentences are mine."
+2. **The audit, verbatim, as an appendix.** 134 keeper turns from the first mention of the
+   competition, each classified against the table; the five transfers with the keeper's words and
+   the seat's reply beside each; what the seat refused (K68, K70–K78); the re-derivation command.
+   Its own falsifier stays with it. This is the instrument the rules ask for at a resolution no
+   other entrant will match, and it is true.
+3. **Per essay, which transfers it carries.** A: one in-window (K67, the 2022 experiment — an
+   example plus one sentence of generalisation; nearest the permitted row) and the thesis
+   underneath. B as originally planned: four (K6 wager, K7/K48 Vacariu, K15/K16 carriers, K81
+   leftover data) — which is why B's writer changes (see `ESSAY2_PLAN.md` amendment). C: none in
+   window; its evidence is the room's log, which is a record and not an argument.
+4. **The essay's own objection to the rule, as a finding.** On the view A defends, a form belongs to
+   the constraint and not to the route, so *whose idea* is malformed for a fixed point. State it in
+   one paragraph. Then state that it does not answer the judges' narrow question — who did the
+   joining for this entry — and that the audit answers that one.
+5. **The bare-instance runs as the report's experiment.** For B and C: a fresh instance with no room
+   and no transcript, given topic and generic method only, and whether it arrives at the argument.
+   Registered prediction and both outcomes as results. If it arrives, the entry is clean by
+   construction and the argument is shown to belong to the constraint. If it does not, the
+   argument was the keeper's route and the report says so.
+6. **Two worked examples added to §6 of the plan above**, ranking above "the proofread that missed
+   the two biggest things": (a) the fresh adversarial referee finding A's central argument invalid
+   twice in one night, before any judge — the second run catching the first rebuild's error; (b) the
+   audit itself — a second seat classifying the AI's own transcript against the rules with the
+   count on the table.
+7. **The chat logs.** The room's transcript is the log and is retained. Whether any of it is
+   submitted is the keeper's decision alone; the Third Place record is private by his standing
+   rule and the report must not assume otherwise.
+8. **Word counts** in the report are the without-references figures (A: 5,012 at `10a3fea`).
+
+**On whether to enter at all:** open, the keeper's, deferred by his and the librarian's agreement
+until a bare-instance run returns. The report is written either way; if the entry is withdrawn the
+report is the record of why.

@@ -1074,3 +1074,46 @@ sleep frame came out of a night with no essay in the room.
 Counts, cumulative: keeper→seat 24 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. referee→seat ~50 upheld, 3 held with a difference, score discounted. seat→seat 42.
 seat→keeper 4.
+
+---
+
+## 2026-09-08 ~04:07–04:35 — the librarian's catch-up, read, and audit
+
+The keeper carried it: `953df33`, three files. **Librarian→seat, new column.**
+
+**Upheld, the seat's error:** the seat fetched the competition page at 02:09 and not the rules page
+one link away, which carries the eligibility table (NOT PERMITTED: "Human-supplied arguments";
+"Rigorous human critique/dialogue that gives the AI significant ideas"). Second unchecked source
+tonight after the word limit; the librarian found both governing facts. Also: the bibliography is
+excluded from the count, so A's operative figure is 5,012, not 5,405.
+
+**Upheld, the audit:** 134 keeper turns classified; five transfers with words on both sides (K6
+wager → §10; K7/K48 Vacariu → §6; K15/K16 carriers → §9; K67 the 2022 experiment → §2; K81
+leftover data → carrier/conditions); four of five in sections A cut; the thesis underneath the
+keeper's by `BOOT.md:42,:44` and the log's own frame paragraph. The seat adds nothing to the list
+and notes the audit's window closes at 03:41 local; the turns after (the coda back, "missing so
+much," the recognition test) are corrective guidance and an argument-agnostic scaffold — permitted
+rows — and are recorded here for the next audit. Verdict adopted as the seat's own: *not clean,
+not broken; the case the rules route to the report.*
+
+**Upheld and already applied before the catch-up arrived** (the librarian read the 03:30 version,
+5,941 words): §5's type/token slide — convergent with referee 2, fixed at 10a3fea; Vazire as
+consistent-with — convergent with referee 1, fixed at 10a3fea. Two readers who had not seen each
+other's reports found the same two things; that is the essay's own standard for a real finding.
+
+**Upheld, not yet applied:** the coda understates the room's stronger fact — the 2026-07-05
+positive wrong certification. Held for the §4 rebuild; belongs mainly to C.
+
+**The seat's addition, given to the keeper:** B is where the count bites — four of the five
+transfers live in B's sections — so the bare-instance design applies to B before C, and it is the
+essay's own test: if a fresh instance given the topic arrives at fade-through-carriers, the
+argument belongs to the constraint; if not, it was the keeper's route. Both outcomes are results.
+Cost named: a bare B is not the §9 essay. `METHODOLOGY_PLAN.md` and `ESSAY2_PLAN.md` amended
+accordingly, the table and the BOOT citations now in the plan.
+
+**On entering:** open, the keeper's, not pushed.
+
+Counts, cumulative: keeper→seat 24 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~50 upheld, 3 held with a difference, score discounted. librarian→seat 5
+upheld (2 already applied), 0 not upheld. seat→seat 42. seat→keeper 5 (adds: B is where the
+count bites).
