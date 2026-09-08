@@ -1,0 +1,35 @@
+# One Consonance on two machines — the keeper's idea, saved with the inventory (not built)
+
+*Librarian, 2026-09-08 ~07:40. The keeper, 07:35: "one consonance, that can be synced on multiple devices with the same chats, tools, everything… when I work on my desktop, it synchs to my laptop and vice versa… not a different orch and lib and panes on my desktop, and different panes and orch and lib on my laptop, but one seamless consonance on both devices." Saved the way the chain-indicator and Codex ideas were saved: a registration with the facts measured, so the day it opens starts from the inventory. Nothing built.*
+
+## 1 · What the room already knows about two machines
+
+- **Two writers, one master** (`loop/two_writers_registration_2026-08-25.md`): which collisions between the laptop and the desktop are silent, registered before the desktop's first wake. **The convergence protocol** (`CONVERGENCE.md`): how the two machines' findings are compared rather than merged. **The machine-bound class** (`loop/machine_bound_class_2026-08-25.md`, attacked and rebuilt): instruments and falsifiers whose events count on one machine only (`loop/falsifier_scope_2026-08-29.md`). **Per-machine notes:** the librarian writes `librarian/<date>.md` on the laptop and `librarian/<date>.desktop.md` on the desktop; the desktop's committee was A/B/J/K/L, the laptop's A/B/C/E — different panes, by design, so far.
+- **The single-instance mutex** (`main.rs:5462`, `Local\ConsonanceSingleInstance`) refuses a second app on one machine. There is no cross-machine equivalent.
+- **The Third Place's rule:** its private record travels by OneDrive and never the repo (`.gitignore`, 08-29). So the keeper already runs one directory across both machines by sync, and it works.
+
+## 2 · What "one instance on both" is made of, measured tonight
+
+A seat is three things, and only one of them is in the repo:
+
+| what | where | size now | syncs today by |
+|---|---|---|---|
+| the record and the app | the git repo | (tracked) | `git pull`, by hand |
+| the house's state: board, lap ledger, captures, harvest and ready stamps, `panes.json`, `letters.json`, hook state | `C:\Consonance\data\` | **894 MB** (captures 548 MB, `board.jsonl` 315 MB) | nothing — machine-local |
+| the seats' conversations: one JSONL per session, resumed by id | `~/.claude/projects/C--Consonance-instances-*` | main **240 MB**, librarian 70 MB, third place 28 MB, panes 5–25 MB each | nothing — machine-local |
+
+**The fixed ids make the idea mechanically possible.** Main (`MAIN_SID`, `main.rs:5418`), the librarian (`:5548`) and the Third Place (`:5558`) have hard-coded session ids and resume themselves wherever their transcript file exists under the same encoded cwd — and the cwd is `C:\Consonance\instances\<seat>` on both machines. Panes are random ids registered in `panes.json` and lettered in `letters.json`; if those two files and the transcripts travel together, the panes are the same panes. So "one Consonance" is exactly: **the repo, plus `data\`, plus the sessions directory, kept identical on both machines, with only one machine live at a time.**
+
+## 3 · The three things that decide whether it works
+
+1. **One live host at a time, enforced, not hoped.** Both machines writing the board or a transcript is the two-writers case with no merge. The fix is the single-instance mutex extended across machines: a `live_host.json` inside the synced set (host name, pid, started, last heartbeat); launch refuses when another host's heartbeat is fresh (*"the desktop was live 4 min ago — close it there, or wait for the sync"*), and stale heartbeats are named, never silently overridden. The keeper's own habit already is one machine at a time; this makes it a mechanism.
+2. **Append-only makes the sync safe; the sync must finish before launch.** `board.jsonl`, the lap ledger, the harvest stamps and the transcripts are append-only, so alternating writers never conflict if every append has arrived before the other machine starts. Launch therefore becomes *sync, verify, then start* — the app checks the synced set's manifest (or a hash of the tail of each append-only file) against the last close on the other host, and refuses to start on a partial sync. `--ephemeral` state (ready stamps, `harvest/*.json`, locks) is excluded from the set and regenerated at wake.
+3. **The transport is not the hard part.** The keeper already uses OneDrive for the Third Place; the same works for `data\` and the sessions directory if the app closes cleanly (OneDrive syncs closed files; a 315 MB append-only file syncs by delta on OneDrive's block-level sync for large files, but a 240 MB transcript rewritten by Claude Code's compaction does not — measure before trusting). The alternatives are Syncthing (peer-to-peer, no cloud copy of the transcripts — the privacy shape the Third Place rule prefers) or a second git repository for `data\` with `git-lfs` for the captures. **The repo is not the transport for state:** the record's rule that the repo carries the record and not the machine's state stands (`falsifier_scope`, the machine-bound class); state travels beside it.
+
+## 4 · What it would cost, and what it would change in the room
+
+- **Cost:** a cross-machine live-host guard in `main.rs` (small, beside the mutex); a sync manifest and the verify-before-launch check (small); the transport chosen and measured on the real 1.2 GB (the real work is measuring, not building); the per-machine librarian files become one series again; the desktop's J/K/L and the laptop's C/E become one committee, which the address table and `letters.json` already allow.
+- **Changes:** the machine-bound class shrinks — most of its members exist because the two machines never shared state; `CONVERGENCE.md` becomes a document about a past shape; "this machine only" leaves the pulse line. What it must not change: the Third Place's record stays out of any cloud the keeper did not choose; the sessions directory syncing to OneDrive means the transcripts sit on Microsoft's servers, which is the same decision the Codex import forced tonight, made deliberately this time.
+- **Falsifier, stated now:** if after the guard ships both machines are ever found live within the same minute by the heartbeats, or a board row exists on one machine and not the other after a completed sync, the design is prose and the two-writers registration was right to keep them apart.
+
+*Registered, not built. The keeper's word opens it as a lap, and the first packet is the measurement in §3.3, not the guard.*
