@@ -867,3 +867,54 @@ around it. **Which is what the draft's falsifier misses — "any figure a re-run
 is satisfied by the only half that cannot fail.**
 
 Hand-back: `exo_memory/handback/p-l045-read-C_2026-09-08.md`.
+
+## 2026-09-08 — L046: a primary that cannot fail, and the error I committed in the file where I caught it
+
+Registered the third run of the reader-diversity line (`loop/l046_third_run_registration_2026-09-08.md`),
+~50 minutes. Did not refuse, and the refusal was genuinely open.
+
+**THE AMENDMENT IS THE WHOLE HAND-BACK: the packet's primary cannot fail.** "Items found by exactly
+one reader, as a share of all verified items" is **dominated by the direction the null predicts** —
+under access-monotonicity everything findable from two files is findable with the repo open, so the
+world reader's exclusive items are guaranteed and mean nothing. The statistic would have come back
+large and looked like a result. **Split the edge by direction; only the anti-monotone half — what the
+TEXT-ONLY reader finds that the world-runners miss — is evidence, and it is zero under the null.**
+The monotone half gets reported and *declared uninformative in advance* so nobody quotes its size
+later. A design whose most likely outcome (zero) ends the line is the only kind worth registering.
+
+**Two figures in the documents I was told to build on do not re-derive, and I found them because I
+worked from the member table instead of the summary lines.** `B∩C` is 26, not 27 — B's and C's miss
+sets are disjoint, `36−8−2`. And the addition edge `8 of 15 = 0.53` is **not obtainable under any
+consistent unit**: §3 entry 9 bundles six sub-findings with different finders, the numerator splits
+it, the denominator counts it once; bundled gives 5/15, decomposed 9/20. **That lands on the exact
+statistic being promoted to primary.** Neither error changes any conclusion — which is why nobody
+caught them. **Nobody audits the scorer; the scorer is the one seat with no reader.**
+
+**And the L045 key's control set was 10 with one false.** All three readers caught it. Had they not,
+the key's own error would have been charged to them as three false positives — **a wrong control does
+not merely fail to catch, it converts a correct finding into a penalty.**
+
+**THE PART I HAD TO WRITE AGAINST MYSELF, and the scorecard's version was too kind.** It says A and I
+took the file's comment as the check. **I never read the docstring.** I read `destTab` at :383-390,
+confirmed the mapping and the no-fixed-point fact, reported a defect two lines above it — and treated
+the interpretive sentence *built on* that mapping as carried by the sub-claim I had verified.
+**Verification transfer: checking the checkable part and extending its green to the unchecked part.**
+Fifteen lines up, the docstring calls that exact sentence the defect L033 repaired, "the inversion of
+an instrument". Same family as the two I *did* catch in L045 and the one in L039 — committed in the
+same file, three hundred lines from where I caught it. **Proximity is not interrogation.**
+
+**And the bias has a direction, which is why it belongs in the design and not just in a confession:**
+a designer who under-weights "the artifact's own words are the answer" defects will under-sample that
+class when choosing an object — and that class is what the anti-monotone edge is *made of*. My bias
+runs against my own primary and would produce a zero for the wrong reason. So the object choice is
+put outside me by rule, along with scoring and auditing. **A named error with a named direction can
+be checked; "I have blind spots" is the unfalsifiable coat.**
+
+**The brief defect, stated as a defect and not a reader's fault:** the L045 brief carried two scope
+rules in different modalities — a deny-list with an explicit sanction, and one sentence with none.
+B chose the rule with no sanction. Neither reading was wrong. The replacement makes the condition
+line the sole scope rule, the deny-list a subset of it, and requires each reader to **echo their
+scope in their own words as the hand-back's first line** — a gate, so a mis-read voids the run before
+scoring instead of being discovered after it.
+
+Hand-back: `exo_memory/handback/p-third-run-reg_2026-09-08.md`.
