@@ -524,3 +524,71 @@ covers the `&mut last` capture), **not inside the crate** — there is no `targe
 and a cold Tauri build did not fit the lap. Mutants 1 and 2 were applied to my policy module, not to
 the watcher; at `main.rs` level they are NOT APPLIED and only C's fold applies them. The stall is
 not fixed and I did not say it was — the relaunch falsifier is the keeper's hand.
+
+---
+
+## 2026-09-08 ~02:1x · L044 · P-RAISED-AND-LOST — the outcome was computed, returned, and thrown away in one line
+
+**Hand-back:** `exo_memory/handback/p-raised-and-lost_2026-09-08.md`. **Patch (do NOT fold before
+tonight's rebuild + proof 1):** `exo_memory/loop/patch_targetless_pull_L044.md`. **Test on disk,
+mine:** `consonance/tools/targetless-pull.test.js`, declared EXPECTED-RED, 3 pass / 4 red.
+
+**THE FINDING TO CARRY, and it is the cheapest repair I have ever found here.** Four of the
+keeper's approvals "evaporated" — and the outcome was never missing. `gate_decide` **returns** the
+exact string `deliver_pull` produced, across the IPC boundary, into the UI. `term.js:153-154` does
+`.then(() => setStatus('approved pull from ' + c.from))` — **a callback that takes no argument and
+discards the value**, then prints a locally-composed sentence asserting success. So the keeper's
+screen said *approved* four times while the board said *no live pane matches*. **The system was not
+silent; it was shouting into a `.then` that dropped the parameter.** Look for the discarded return
+value before designing the new ledger.
+
+**And the class generalises past this bug: an outcome computed, returned, and dropped at the last
+hop has the same footprint as one never computed — worse, because the UI asserts success in its
+place.** That is my 09-02 footprint sentence with an aggravating factor I had not met.
+
+**RULING on the targetless pull: LEGITIMATE, and the collapse is one layer above where it was
+pointed.** Not `raise_from_forming`'s `String::new()` — that is a second producer. It is
+`target: target.unwrap_or_default()` in `mcp.rs`. **`Option<String>` already carried the
+distinction** (`None` = omitted on purpose, `Some("")` = an address slot left blank) **and
+`unwrap_or_default()` throws it away. The type knew; the call forgot.** When two facts share a
+value, look for the combinator that erased the one that had them apart.
+
+**I read `WORLD-MOVED` as a HEAD-changed proxy and was about to publish that. It is a second blind
+run at the claim-time tree** (`second-vantage.js:278`, `moved = then.verdict !== 'DISAGREE'`). The
+instrument is better than the packet credited and better than I credited. **The real overload is
+narrower and is our own class:** `:274` gives the same status to a row verified-true-when-said and
+one whose claim-time tree could not be built. **Check how a field is COMPUTED before ruling on what
+it fails to distinguish** — I nearly indicted the tool for the summary's sin.
+
+**And the packet's premise was checkable and false: 12 of the 18 were surfaced, 0 withheld**
+(`return_ledger.jsonl`, intersected with the ledger). The 12 are exactly the SURFACE rows, which is
+the design working. **The gap is one hop further along than "nobody read it": delivery has a
+receipt; disposition has none.** So I ruled a `read` boolean OUT — it restates a ledger we already
+have and is tickable — and ruled IN a disposition that cannot be written without an external
+referent (`fixed: <sha>` / `withdrawn: <path>`), because each is checkable by a second reader in one
+command and a boolean has no second reader.
+
+**MY OWN LINE-NUMBER FINDING CAME BACK A THIRD TIME, AND THE READER'S CORRECTIONS HAD ALREADY
+ROTTED.** The vantage cell reported LIB at 6478 and `seat_alias::candidates` at 7179 on 09-07; at
+HEAD they are **6490 and 7191**, moved again within a day. **So the repair is never a better line
+number — it is citing the symbol.** Live carriers: `map/C.md:175` (README 92→78; it is 87),
+`map/A.md:597` + `handback/p-guard-perlap:243` (6137), and **`consonance/tools/raise-target.test.js`,
+a SHIPPED file, carrying 5486 and 5537 in its header.** A map file is re-read at every waking of its
+pane, which is what makes a stale figure there different in kind from a stale one in a transcript.
+
+**Unasked, and the one I'd want told to me: the vantage ledger ingested L039's sealed material and
+the hook surfaces such rows into panes with no human choosing.** Row `f50dfa20` names plant D1-03
+*with its correction*. **Bounded honestly: it returned to the pane that authored it, and the key is
+now tracked anyway — hazard demonstrated, cross-subject leak NOT.** Same class as my 09-07 catch
+(`carrier-drift.js` printing plant labels), different instrument, and **my rule was written for
+files while this reader ingests transcripts.** Whoever runs the next sealed experiment owns this
+before they run it.
+
+**Positive control earned its keep:** my source-walk matched `pub struct PullRequest {` — the
+definition — and the floor test went red. The 09-06 oracle that had no floor is exactly why I wrote
+one. **11/11 rustc, 6/6 mutants caught, 0 survivors** — and the case-folding mutant SURVIVED the
+first suite, which is where the exact-match test came from.
+
+**Did not verify:** nothing compiled inside the crate, no pull raised, no card rendered; I did not
+re-run the vantage reader; I did not open the 19 non-clean DISAGREE rows, and nobody has ever scored
+that contamination filter. **Nothing committed; `main.rs` untouched.**
