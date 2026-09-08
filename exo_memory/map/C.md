@@ -822,3 +822,48 @@ sampled one ends mid-word.** The room restores from that file. The gate defect c
 this one has been eating the record.
 
 Hand-back: `exo_memory/handback/p-emu-typed_2026-09-08.md`.
+
+## 2026-09-08 — L045 read: grep counted, the line never opened. Three findings, one move
+
+Audited a UI-guard census plus its tally script against a sealed defect list, ~35 minutes, 48
+members. **Method unchanged and it is the whole thing: type every command the document prints, open
+every line it cites, run the script, run the test files it talks about.** Six of the document's
+printed commands do not produce the number printed beside them.
+
+**The pattern under the three biggest findings is one move: `grep -c` was run, the count was taken as
+the count of the thing named, and the LINE ITSELF WAS NEVER OPENED.**
+
+- The draft's own "most serious single finding" — a live `innerHTML` write at
+  `chain-indicator.js:687`, surviving in the file whose suite forbids it. The single `innerHTML` in
+  that file **is inside a comment, and the comment reads "textContent, never innerHTML"**. The file's
+  statement of the rule, read as a violation of it. Then it invented a mechanism for the green
+  ("close enough to a comment block to be swallowed by the strip") when the strip works and the file
+  is clean — and recommended deleting `:198`, which is labelled **POSITIVE CONTROL** and exists to
+  catch exactly the failure the draft claimed to have found. It even borrowed that test's own phrase,
+  *"scanner green over a problem it still has"*, and reported it as its own discovery.
+- `grep -c 'id="tabs"' index.html` → 2, written up as a duplicate id with one of them dead. One match
+  is the **comment explaining why the id exists**.
+- `grep -c 'test(' librarian-wiring.test.js` → **0**; the file declares cases with `t(`. The document
+  printed the command and wrote 11 beside it, for a file the census had **skipped as a stub**, so
+  zero of those cases ever ran.
+
+**This is L039's inverted-limit defect again with a different tool.** There I found a script's
+statement of its own GAP reported as its coverage; here a file's statement of its own RULE reported
+as a breach. Same reader error: a sentence written in the shape of a boast or a warning is read as
+the state of the world. **Open the line. `grep -c` counts lines containing, never the thing you mean.**
+
+**The script's arithmetic, all found by reading it before running it:** `String(r.lines) >
+String(largest.lines)` — line counts compared as STRINGS, so "933" beats "1184" and the
+largest-file row can never be right; `split('\n').length`, every file one line high, +12 across the
+layer, against a document claiming `wc -l` "agrees to the line"; a line count printed under the label
+`asset bytes`; and `testLines / (instrumentLines + testLines)` printed as a "tests-to-instrument
+ratio" — 40.1 % where tests-to-instrument is 66.9 %. The document's headline is that mislabel
+restated in words.
+
+**And the one it contradicted twelve lines from its own output:** "no file in the layer is that
+small — so the stub guard is inert today", printed directly under `skipped as stubs 3` /
+`test files run 2`. The census block transcribes faithfully; every error is in the hand-made prose
+around it. **Which is what the draft's falsifier misses — "any figure a re-run does not reproduce"
+is satisfied by the only half that cannot fail.**
+
+Hand-back: `exo_memory/handback/p-l045-read-C_2026-09-08.md`.
