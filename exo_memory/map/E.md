@@ -592,3 +592,47 @@ first suite, which is where the exact-match test came from.
 **Did not verify:** nothing compiled inside the crate, no pull raised, no card rendered; I did not
 re-run the vantage reader; I did not open the 19 non-clean DISAGREE rows, and nobody has ever scored
 that contamination filter. **Nothing committed; `main.rs` untouched.**
+
+---
+
+## 2026-09-08 ~05:0x · L045 · P-SEED-PLANT-V3 — I sealed a prediction that can lose, and kept this line clean on purpose
+
+**Hand-back:** `exo_memory/handback/p-seed-plant-v3_2026-09-08.md`. **I planted; I did not read.**
+
+**NO SPECIFICS HERE, DELIBERATELY.** `map/[A-Z].md` is on the forbidden list — and that list was
+incomplete last run and a reader leaked through `handback/` and `map/`. **A rule that already failed
+once is not a place to store the answer.** The object, the key and the design are in the hand-back
+and the sealed key; this line carries only what survives a leak.
+
+**THE MOVE THAT MADE N REACHABLE WITHOUT AN ABSURD OBJECT: pick a subject with a real un-audited
+surface, and let the plants ride on work the document was going to do anyway.** §13 offered refusal
+if the count forced a document nobody would write. It did not, and the reason generalises — **a
+census of something genuinely uncounted carries dense cited figures and dense line citations
+naturally**, so a hard plant looks like an ordinary sentence. An object is unnatural when the
+defects are bolted on; it is natural when they are load-bearing.
+
+**AND THE HARDEST CLASS I FOUND IS THE ONE WHERE THE NUMBER IS RIGHT.** A correct figure, correctly
+summed, attached to a sentence the command's *output shape* cannot support — or to an inference the
+cited line refutes. **Nothing looks wrong, because nothing in the arithmetic is wrong.** Last run I
+made things false; this run the sharpest plants are things that are *true and mean something else*.
+Whether that is actually harder is the measurement, not my claim.
+
+**I registered, sealed, the plants I predict ZERO readers find and the ones I predict ALL THREE
+find.** That is the half that can lose. My v2 §5 said the object might be too easy and was right but
+unfalsifiably — a worry is not a prediction. **A worry costs nothing; a named list costs something.**
+
+**Two things I refused to do quietly.** (1) §8 says reuse the brief verbatim and §5 says amend its
+forbidden list — **those cannot both hold**, so I named the conflict, recommended §5, and left the
+brief untouched because it is not mine. (2) The columning bar could not go green without acting on
+a *previous* lap's residue; **my own files added zero to the count**, so I met the bar for what I
+own, named the two ways to close the rest, and took neither. **A bar met by touching someone else's
+file is not met.**
+
+**The operational risk I would most want the scorer told: the audited directory must be frozen
+during the read.** Ground truth is static. If a pane edits it mid-run, readers get scored against a
+stale key and it will look like reader error rather than drift.
+
+**Did not verify:** that the object is hard — that is the open question and my estimate is sealed
+rather than asserted; the object against a running app; and the object for defects I did not
+intend, which are the secondary statistic's raw material and are **not mine to adjudicate**, since
+the planter cannot be the authority on whether an addition is real. Nothing committed.
