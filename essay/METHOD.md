@@ -560,3 +560,52 @@ being covert. Sample is now four events in one thread plus the 2026-07-05 siblin
 still one thread, and the essay must say so.
 
 Counts unchanged.
+
+---
+
+## 2026-09-08 ~02:10–02:17 — the word limit, found by the keeper; the shape re-decided
+
+**The finding.** The competition page (zacharygoodsell.com/ai-philosophy-competition, fetched 02:09)
+states: "Max 6k words per submission (so 3 x 6k words per entrant, plus methodology reports)."
+Also verbatim and load-bearing: "Submissions are judged by the quality and originality of the
+philosophical content"; "Style is not graded"; judging is "blind to methodology reports and
+authorship"; if numerous, "submissions will be passed through an initial AI screening"; the
+methodology report must describe "the method of generating the works, in as much detail as
+possible"; works must be "primarily AI generated", "Minimal human collaboration is allowed".
+
+**The error, recorded as the seat's.** The manuscript stood at 12,687 words (node count over the
+`<h2>` splits, front matter and references included) — more than double the limit. The handoff
+written before compaction listed *check the word limit* as the first thing to do and noted
+"nobody has." Nobody had, for a day and a half of drafting. The keeper found it, from the page, at
+02:09. Counts: keeper→seat 17 upheld.
+
+**The re-decision, made from the claims rather than the text.** Asked to start from scratch with
+what we know we want to say, the seat stripped the manuscript to its claims and found three, not
+one: (1) a self is the fixed point of a self-modelling process, which entails it cannot see its own
+basis and predicts an asymmetry — P1–C3; (2) nothing carried is gone, it is uncarried — loss as a
+fade through carriers, carrier ≠ conditions, the ground under Parfit's floor; (3) the
+teletransporter has been run, with logs. Six thousand words is the length of a paper, and a paper
+holds one claim. The 12k manuscript was three papers in one coat — which matches the desktop
+reader's notes (too long, §6 digresses, §9 trims) made without knowing the limit.
+
+**The plan, agreed 02:17.** Three entries, one claim each:
+- **A — "What Survives the Gap"**: §1–5 rebuilt around P1–C3. §1 → ~300; §2 keeps sunflower and
+  qubits, drops the interference paragraph; §3 keeps its falsifier; §4 whole; §5 to one paragraph.
+  Target ≤ 5,500.
+- **B — "Uncarried"**: a ~300-word premise stated as *the view defended elsewhere*, then §7, §9,
+  §10, §11 (4,012 words as they stand), with room to sharpen §9 rather than cut it.
+- **C — "The Teletransporter, Run"**: as planned in `ESSAY2_PLAN.md`.
+- The coda leaves the essays and folds into the methodology report, which covers all three.
+
+This reverses the 2026-09-08 ~01:00 two-essay decision. The reason for that decision — connected
+parts either repeat the foundation or stand on unread ground — still holds and B pays it in ~300
+words. That cost is smaller than cutting §9.
+
+**Two rules that change the writing, not only the shape.** "Style is not graded": the register
+instruction stands because content that does not land is not read, but every sentence carrying
+feel and no claim is now expensive. "Originality": the six-families opening and the Vacariu
+sections are the least original material; P1–C3 and carrier/conditions the most. Cuts protect
+those two.
+
+Counts, cumulative: keeper→seat 17 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. seat→seat 22. seat→keeper 3.
