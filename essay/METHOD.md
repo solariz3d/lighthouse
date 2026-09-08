@@ -609,3 +609,47 @@ those two.
 
 Counts, cumulative: keeper→seat 17 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. seat→seat 22. seat→keeper 3.
+
+---
+
+## 2026-09-08 ~02:20–02:50 — essay A built
+
+**What was done.** `A_What_Survives_the_Gap.html` built from the 12k manuscript's §1–5 by
+rebuilding around P1–C3, not by trimming to fit. Rendered to `A_What_Survives_the_Gap.pdf`
+(chrome headless, absolute file URL — the bare `chrome` name does not resolve in bash on this
+machine; `"C:\Program Files\Google\Chrome\Application\chrome.exe"` does). Counts by the same node
+script used on the manuscript: **5,945 words with references, 5,695 without; 12 pages.** The page
+does not say whether references count toward the 6k; both figures are under it.
+
+**Changes from the manuscript, by section.**
+- Front matter: subtitle now "The self as a fixed point, and why it cannot see its own basis";
+  abstract rewritten for one claim (302 → ~230 words); keywords cut to seven.
+- §1: 709 → 443. Six-families list compressed to one paragraph; the "six is my count" caveat kept as
+  two sentences; "two things worth holding onto" folded into the list.
+- §2: 1,478 → ~1,270. Interference paragraph (HRV, epilepsy, cicadas) cut; its principle —
+  *periodicity is fragile* — kept as two sentences merged with the φ caution, because §4's
+  pathology paragraph depends on it. Sunflower, qubits, whirlpool kept whole.
+- §3: whole (736). Falsifier verbatim.
+- §4: whole (2,300 with the argument block) except: KAM paragraph shortened ~180 → ~110; "I'll come
+  back to him" re-pointed to "at the end"; "Section seven is that consequence pursued" replaced with
+  "What two coupled selves can do that neither can alone is a consequence I pursue elsewhere. Here
+  it is a prediction"; C3's failure clause loses "taking the argument for the between with it",
+  since the between is not in this essay.
+- §5: 448 → ~360, one section, ends "The worlds are many and the pattern is one."
+- §6 new, ~320: "What survives, and where this can fall." Gathers the claim and lists the four
+  places it falls (bottom; C1; C2; C3), then the close — the view's own last consequence applied to
+  the essay.
+- Coda removed (goes to the methodology report).
+
+**Defects in the original found while building, seat→seat (2):** Dennett (1992) and Dumitrescu et
+al. (2022) were both cited in the manuscript's text and absent from its reference list — the
+strongest example in the essay had no reference entry. Added, with Chakravartty (2003) and Greene
+(1979), which were used by content and unnamed. Inline name-year cites added at all four sites.
+Falev (2024) dropped as uncited. References: 18 → 13.
+
+**Not yet done on A:** the keeper has not read it. The seat's own read is the only one. Given the
+09-07 lesson — 22 self-checks and two structural gaps missed — this is a draft until a second vantage
+has been over it.
+
+Counts, cumulative: keeper→seat 17 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. seat→seat 24. seat→keeper 3.
