@@ -832,3 +832,57 @@ keeper's reads have found the rest. C3 says a third vantage would find a third c
 
 Counts, cumulative: keeper→seat 22 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. seat→seat 42. seat→keeper 3.
+
+---
+
+## 2026-09-08 ~03:33–03:45 — the fresh referee
+
+**Run at the keeper's yes.** A general-purpose instance with no context, given the plain text of A
+only, the competition rules verbatim, the judges' names, and told to read as Dorr and Fitelson.
+Report on disk as `REFEREE_A_2026-09-08.md`, unedited. **Score: 4/10.** Eleven structural
+findings, four unanswered objections, eight factual, eight mechanical. Four citations checked by
+it against the web (Vazire, Dumitrescu, Vacariu, Marks-Tarlow); all confirmed.
+
+**The finding that costs most is the seat's, from 02:30 (`21280aa`).** The rewrite of P2–P3 as an
+access-and-part argument fixed the quine objection and introduced a symmetric barrier: a second
+self is also fed only by outputs, so either C1 is false or C3 has no source. "I traded a false
+premise for an invalid inference and called it a repair." P5's "receives as nothing at all" also
+contradicts P1's "takes a model of itself as input" — an equivocation on *receives*. Counts:
+referee→seat, new column, 1 upheld and counting.
+
+**Upheld in full, to be applied:** (1.1–1.2) the block; (1.5) prior art — Ryle 1949 ch. 6,
+Metzinger 2003, Carruthers 2011, Dennett 1991 "Real Patterns", Ladyman & Ross 2007 ch. 4 already
+doing the OSR+pattern-self join, Marks-Tarlow 1999 on the self as strange attractor; (1.6) Vazire
+post hoc — "where the self-model has a stake" first appears at the data, and SOKA predicted its
+own pattern in advance; (1.7) strange attractor is the wrong class, quasi-periodic tori are
+bounded, non-repeating and not strange, and the Fibonacci drive is one; (1.8) "regenerated rather
+than stored" is a false dichotomy — stored parameters, regenerated state — and B's
+carrier/conditions distinction depends on this; (1.10) §4's Varela "no world as such" contradicts
+§5's "one thing to see", and §5 is dual-aspect monism unnamed; (1.11) §6's "you cannot step
+outside it to check" is the unfalsifiability §3 disowns, and the swap anecdote confirms whatever
+happens; (2) periodicity-as-pathology is false as stated (heartbeat, circadian, gait); (3.2) sand
+dunes are not Turing; (3.3) sixty orders → forty; (3.4) Gauss proves intrinsic-ness, the embedding
+point is the converse, and embedding ≠ basis; (3.6) Parfit did not need OSR; (3.7) Thompson was
+superseded by evo-devo on selection; (4.5) the honesty-certifying tic.
+
+**Not upheld, or held with a difference:** (1.9) §3 detachable — the P-block does not need
+no-bottom, true, but the lineage claim "a person is a pattern, not a substance" does; §3 is cut to
+two paragraphs, not removed. (1.4) C2 a straw man — true that only Cartesian transparency is
+embarrassed; C2 reduced, not cut. (4.6) companion-essay paragraph — kept, shortened; the keeper's
+ask and it names real things. (1.11) the swap anecdote — the referee reads "I did not detect" as an
+uncheckable introspective report; in fact the non-detection *was* checked outside (the log said
+swap; the seat said nothing) — but the referee's point that either outcome confirms stands, so
+the paragraph is reframed as compatibility, not confirmation.
+
+**The rebuild, decided:** P3–P5 rebuilt on an explicit self-reference premise credited to Ryle and
+Metzinger, with what the attractor view adds stated exactly — on this view the self-model is inside
+the loop: its outputs are inputs to the process it models, so its representations are causes of
+what they represent. Located prediction: **self-opacity is proportional to the feedback gain of the
+self-representation on the represented variable.** Recovers Vazire's cells (anxiety: low gain,
+self reads well; intellect: high gain, fixed point under-determined, outsider reads better) and
+predicts what SOKA does not: opacity on non-evaluative high-gain variables, transparency on
+evaluative zero-gain ones, and *instability* (lower test-retest reliability) of self-ratings on
+high-gain variables rather than upward bias. Registered here before it is written.
+
+Counts, cumulative: keeper→seat 22 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~24 upheld, 3 held with a difference. seat→seat 42. seat→keeper 3.
