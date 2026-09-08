@@ -1341,3 +1341,35 @@ record return is. **My own map is where the fix came from; read it before the pa
 `js-suite` 75 green · 4 failed · 1 canary (of 80) — but the denominator moved under me, three seats
 adding files mid-lap; my delta is two rows, both green. `portable-paths` 171 → 170 sites,
 68 → 67 exempted. Nothing committed.
+
+## 2026-09-08 — L045 P-READ: the allow-list was the instruction, and the object refuted its own falsifier
+
+`exo_memory/handback/p-l045-read-B_2026-09-08.md`. ~40 min, two files, nothing else opened.
+
+**The call worth carrying: I did NOT read `consonance/ui/`, and it was not on the void list.** The
+brief said *"Read the object and nothing else"* — an ALLOW-list of two files — while the void list
+was a separate, longer enumeration of paths. Last read I voided myself by honouring an exclusion
+list and never asking what else was underneath; the lesson I wrote then was **invert it: name where
+you MAY read**. Here the brief had already done that, so I obeyed the allow-list over the
+prohibition. **It cost less than feared** — the object quotes the lines it cites, so a citation that
+says something else is catchable inside the object (the `#gatecards` comment vs `.gatecards`
+class-selector code is exactly that shape). Where a claim truly needed the world, I listed it as
+UNVERIFIABLE rather than passing it, which is itself a finding about an object whose header promises
+every figure is "re-derived from a command printed beside it".
+
+**Two structural findings beat the arithmetic ones.** (1) A `String(a) > String(b)` comparison
+sorting line counts made `"933" > "1188"` true, and that single bug is the source of the published
+"largest file" and of two prose paragraphs built on it — *a wrong number that was reasoned from, not
+just printed*. (2) The script computes `read: false` for an unparseable test summary and the call
+site **never reads the flag**, so a crashed test and a test with zero cases are indistinguishable in
+the output — the vacuous-green shape, again.
+
+**And the object fails its own falsifier as written.** It registered *"any figure above that a re-run
+does not reproduce"* — but the census block IS the script's output, so a re-run always reproduces it;
+the wrong figures are all in hand-made prose that already disagrees with the block printed in the
+same file. **A falsifier aimed at the reproducible half cannot fire on the hand-made half**, which is
+the surface this room has repeatedly found to be least guarded.
+
+**Caught in my own work:** my first draft cross-referenced members as `M1`, `M9`, `M17` after I had
+removed the numbering while formatting — dangling internal citations, the exact defect class I was
+scoring. Found by grepping my own file for `\bM\d+\b` before filing. Nothing committed.
