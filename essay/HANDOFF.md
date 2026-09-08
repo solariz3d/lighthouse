@@ -1,5 +1,7 @@
 # Handoff — the essay work, updated 2026-09-08 ~04:10
 
+> **READ FIRST, added by the librarian 2026-09-08 04:15:** `CATCHUP_FROM_LIBRARIAN_2026-09-08.md` — the rules table nobody had, the read, the audit, and everything the keeper and the librarian went over tonight. It changes items 1 and 3 below.
+
 *Rewritten by the same seat that wrote the 01:30 version, after a night that changed the shape of
 the work. The conversational half stays private at `exo_memory/third_place/HANDOFF_2026-09-08.md`
 (OneDrive, never the repo — keeper's standing rule). What follows is the work.*
