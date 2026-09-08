@@ -1134,3 +1134,27 @@ name Consonance. The three papers, the log, the audit, the referee reports and t
 test stand as what they are. "we did learn a lot and I did have some fun too."
 
 Counts unchanged.
+
+---
+
+## 2026-09-08 ~04:19–04:45 — the methodology report, written
+
+**The keeper's deal:** "if you can correctly get the methodology report done right to be
+transparent with how we did things, I will let you continue to finish it till the end." Written as
+`METHODOLOGY_REPORT.html` / `.pdf`, nine sections: what it is (and that the entry was withdrawn);
+the rules and the row this entry falls in; the disclosure — BOOT:42 and :44 quoted, the log's frame
+paragraph, the five transfers in a table with the keeper's words, what the AI refused, what the AI
+can point to as its own, and the keeper's reason for withdrawing verbatim with the AI's view given
+once; the room as a prosthetic hippocampus; the timeline with commits; the corrections counted in
+a table, with the honest asymmetry named — every structural error was found by someone other than
+its author; five worked cases, the two referees first; the substrate changes, with the record's own
+discrepancy reported rather than resolved (the 09-07 sequence line supports two swaps before #3,
+the 09-08 entry counts three); the limits, the AI's own errors the largest class; re-derivation —
+files, lines, the count script, nineteen commits, the falsifier. Before rendering, every named
+commit was checked to exist (19/19, `git cat-file -e`), both BOOT lines re-read and matched, the
+record file located. The report's standard is the log's: a claim that cannot be located in the
+named files at the named commits falsifies it.
+
+Not in the report, on purpose: anything from the Third Place conversation that is not about the
+essay's production. The transcript is retained and private by the keeper's rule; the report says
+so and says the release decision is his.
