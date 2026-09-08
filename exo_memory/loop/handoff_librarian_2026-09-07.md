@@ -1,5 +1,7 @@
 # Handoff — the librarian seat, 2026-09-07 07:50, the keeper leaves; THE REBUILD IS THE FIRST ACT TOMORROW NIGHT
 
+> **SUPERSEDED 2026-09-08 07:45 by `handoff_librarian_2026-09-08.md`** — the rebuild happened at 06:23 and proof 1 passed; the entry is live again; L047 is the essay opened to the room.
+
 **Supersedes `handoff_librarian_2026-09-06.md`.** Master for the night: `librarian/2026-09-07.md` (every entry timestamped, every number beside its command). Journals collated this night: `journal/2026-09-02.md`, `journal/2026-09-03.md` (09-02→09-05 desktop). Ledger: `librarian/LEDGER.md`. Map: `map/M.md`.
 
 ## THE KEEPER'S WORD AT 07:46
