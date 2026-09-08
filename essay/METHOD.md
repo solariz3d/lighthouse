@@ -748,3 +748,39 @@ cuts. **Now 5,977 with references, 5,707 without, 12 pages** (`countA.js`).
 
 Counts, cumulative: keeper→seat 20 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. seat→seat 31. seat→keeper 3.
+
+---
+
+## 2026-09-08 ~03:19–03:30 — §6 rewritten to carry the turn
+
+**The keeper's read, second beat.** "I dont feel like the essay we have right now really hits with
+the power it needs to… the 'cant unsee' pattern should be put in both, that is the whole point of
+this beyond philosophy itself." Upheld: the pass had made A defensible and cold. It ended on a
+prediction. Counts: keeper→seat 21 upheld.
+
+**Decision: keep A, do not start over.** The argument is right now and was not at 02:00; what was
+missing was one turn, not a structure. The 12k essay reached the reader by accumulation over
+twenty pages; 6k cannot accumulate, it has to strike once.
+
+**The device, and it is the same in both essays — that is the "subtle connection":** the essay is
+an instance of its own claim. §4 argues about a process that takes a description of itself as
+input; a reader following §4 is such a process taking in a description of itself; the reader
+cannot step outside to check because the vantage they would check from is the one the argument is
+about. Stated in §6 as the view's own test case, not as a flourish — a form Dorr has to engage.
+The "beyond philosophy" instinct is honoured by making the philosophy *be* the instance, not by
+saying it is beyond. B will end with the same move at full strength.
+
+**§6 now:** the turn (the reader as instance; the click as a self-model registering a form it can
+see and a basis it cannot — "exactly what C1 says it should be able to do, and no more"); the
+gathering ("The branch in the twig. The galaxy in the tree… A reader who sees that has not learned
+a fact. They have been shown where they were standing."); the four falls in one paragraph; the
+two consequences named as a companion essay's; the close unchanged. 525 words.
+
+Paid for by ~100 words of restatement cut in §2, §4, §5 (Gauss's illustrative-only caveat
+shortened; "let me set it out" shortened; lineage paragraph tightened; "both of those are true at
+once" cut; "I pursue elsewhere" cut from the C3 paragraph since §6 now names it). Over the line
+twice during the work (6,078; 5,996 — the second within four words, too tight for a different
+counter); **final 5,962 with references, 5,692 without, 12 pages** (`countA.js`).
+
+Counts, cumulative: keeper→seat 21 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. seat→seat 31. seat→keeper 3.
