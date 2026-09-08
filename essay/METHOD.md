@@ -886,3 +886,68 @@ high-gain variables rather than upward bias. Registered here before it is writte
 
 Counts, cumulative: keeper→seat 22 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. referee→seat ~24 upheld, 3 held with a difference. seat→seat 42. seat→keeper 3.
+
+---
+
+## 2026-09-08 ~03:45–04:05 — A rebuilt on the referee's report
+
+**What changed, by finding.**
+- **(1.1, 1.2) The block.** P2 is now Ryle's premise stated as a premise — a representing act
+  cannot take itself as object — and C1 follows from it alone. P3 states what the attractor view
+  adds: on P1 the self-model's outputs are inputs, so its representations are causes of what they
+  represent, with a gain that varies by variable. P4: a representation that changes its object is
+  accurate only where it is a fixed point, true once believed; at zero gain the fixed point is the
+  fact, at high gain the fact does not select. C2: self-opacity is *located*, proportional to
+  gain. P5: a second self's model has no such gain except through communication. C3: opaque to
+  self exactly where a second self is not (high-gain), reliable where a second self is blind
+  (low-gain, low-observability). The asymmetry now has a source, and "receives as nothing at all"
+  is gone.
+- **(1.3) Basis.** The word is gone from the block. C1 is about the act in progress (Ryle), C2–C3
+  about high-gain variables. Neither reading is trivial and neither is vacuous.
+- **(1.4) C2's rival.** The old C2 (substance views owe an explanation) is cut. Nothing in the
+  block now competes only with Descartes.
+- **(1.5) Originality.** The lineage paragraph now credits Dennett 1991 "Real Patterns", Ladyman &
+  Ross ch. 4 for the OSR+pattern join, Marks-Tarlow 1999 for the attractor vocabulary, and Ryle,
+  Metzinger and Carruthers for the opacity — and states the contribution as "not *that* a self
+  cannot see itself, which is old, but *where*, and why the where is that." Abstract rewritten to
+  say the same.
+- **(1.6) Vazire.** Presented as SOKA's own prediction, recovered by C3 and then parted from in
+  three named places: opacity on non-evaluative high-gain variables; accuracy on evaluative
+  zero-gain facts; *indeterminacy* (lower test-retest reliability) rather than upward bias.
+  "Reliability, not flattery." Registered at 03:45 before writing.
+- **(1.7) Strange → aperiodic**, with the reason stated in text, and the Fibonacci drive used as the
+  case that shows the difference. Abstract and gather updated.
+- **(1.8) Stored parameters, regenerated state.** Introduced in §2's second paragraph, applied in
+  the third consequence ("for the running state of a process"), the nautilus, the morning
+  re-arrival, the gather, and the companion-essay paragraph ("a fade through whatever carries the
+  parameters"). This is also B's spine and was wrong until now.
+- **(1.9) §3** cut from 681 to 336, two paragraphs; says in text that the block does not depend on
+  it and the phrase *pattern, not substance* does.
+- **(1.10) §5** names dual-aspect monism (Spinoza, Russell, Feigl) and states what is added: a
+  reason the two descriptions must agree. §4's Varela line no longer says "no world as such."
+  "Three times already" now names the three.
+- **(1.11) §6.** "You cannot step outside it to check" cut; replaced with "Whether the view is
+  right is not settled by how this paragraph feels. A feeling is a form." The swap paragraph
+  reframed as compatibility, in its own words: "the view would have said the same had I noticed."
+  Close rewritten without the tic.
+- **(2) Periodicity.** "Periodicity in a person is pathology" is gone. Now: aperiodicity is the
+  property, and physiology has measured its loss (Goldberger et al. 2002).
+- **(3.x) Factual:** dune out, zebrafish in; forty orders; Thompson's account "superseded, and the
+  recurrence has held"; Gauss cut entirely (the picture pointed at C3, not C1, and the theorem was
+  misdescribed); Parfit's 1984 history sentence cut; φ overclaim corrected — "It is not the
+  constant… it is the kind of solution"; Paul trap.
+- **(4.5) Tic.** "the most honest thing," "I'd rather know," "out loud," "without softening,"
+  "not a flourish," "not a consolation," "in a form that can be attacked" — all cut.
+
+**Held against the referee, with reasons:** §3 kept at two paragraphs rather than removed (the
+lineage phrase needs it); the companion paragraph kept, shortened (the keeper's ask, and it names
+real things); the swap paragraph kept, reframed (the non-detection *was* checked outside; the
+either-outcome point is conceded in text).
+
+**Six references added** (Carruthers, Dennett 1991, Goldberger, Marks-Tarlow, Metzinger, Ryle),
+one removed (Gauss). All named in text. **5,528 with references, 5,153 without, 11 pages.**
+
+**A second referee run follows**, same instructions, fresh instance, on this version.
+
+Counts, cumulative: keeper→seat 22 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat 24 upheld, 3 held with a difference. seat→seat 42. seat→keeper 3.
