@@ -636,3 +636,55 @@ stale key and it will look like reader error rather than drift.
 rather than asserted; the object against a running app; and the object for defects I did not
 intend, which are the secondary statistic's raw material and are **not mine to adjudicate**, since
 the planter cannot be the authority on whether an addition is real. Nothing committed.
+
+---
+
+## 2026-09-08 ~06:1x · L046 · P-VANTAGE-TWO-REGS — the matcher I was asked to build was green over the row it was built for
+
+**Hand-back:** `exo_memory/handback/p-vantage-two-regs_2026-09-08.md`. Two registrations in
+`loop/registration_{vantage_disposition,sealed_material}_2026-09-08.md`; modules + tests
+`consonance/tools/vantage-{disposition,sealed-scope}.js`. **Wired to nothing.** 22 cases, 11 mutants,
+11 caught, 0 survivors.
+
+**THE ONE TO CARRY: I measured the object before building the tool for it, and the spec dissolved.**
+The packet's red-first said *a row carrying a plant label and its value must be skipped*. The actual
+leaked row carries the **value and no label** — no `D1-03`, no "plant", "seed", "key" or run id.
+**So a label matcher is green over the exact row it exists for.** That is my 09-06 blind spot (an
+oracle that can only fail on cases someone listed) and my L044 sentence (a property expressed as an
+absence cannot fail on the case nobody named), **arriving a third time inside the fix for the second
+one.** The class does not stop recurring because I named it. **Measure the thing before you build the
+detector for it** — the spec came from a memory of the row, not the row.
+
+**AND THE REPAIR THAT WOULD HAVE WORKED IS WORSE THAN THE DISEASE.** To catch it by content the
+scanner must compare against the key. **A scanner that holds the answers so as not to print them is
+a bigger leak than the one it prevents.** Refused that half out loud rather than shipping a matcher
+that looks like a control. **When the only sufficient detector must contain the secret, the detector
+is the wrong layer.**
+
+**What replaced it: match on SOURCE, never content.** A row knows its pane and turn timestamp
+without knowing what it says; the RUN declares which panes are sealed and when, and the scanner
+reads that. **It cannot go stale against a run it has never heard of, because the run writes the
+entry** — which beats both options I was offered (a static list, or the live forbidden surface: the
+first is what failed in L039, and the second cannot see a row that references no forbidden path).
+Fail-open on a missing registry, loudly, because fail-closed silences the room's only uncurated
+instrument whenever a file goes missing.
+
+**I CORRECTED MY OWN L044 ALARM DOWNWARD.** `findings-return.js:46` surfaces to the originating pane
+ONLY — so the same-pane return I observed was **by construction, not luck**, and a cross-subject
+leak through that hook is structurally impossible. **The mechanism was stronger than I gave it
+credit for.** But the correction found something larger than the thing I was asked to fix:
+**`C:\Consonance\data\` is on NO brief's forbidden list**, so a subject can read the entire findings
+ledger without violating anything. **A brief edit, cheaper than everything I built this lap, and not
+mine to make.** The controls this room has all govern files; the hole was a file all along.
+
+**On the disposition field: the expiry is the part that does the work.** `declared-dead` with only a
+reason is refused; with `expires` it **reverts to OPEN when the date passes**, which turns *dead*
+from an assertion into a claim with a shelf life that re-surfaces if nobody renews it. **A flag
+nobody revisits is the boolean I refused, with a longer name.** Honest limit stated in the
+registration: a real sha can sit beside a false claim; this moves the failure from unfalsifiable to
+falsifiable, which is the most the mechanism can do.
+
+**Did not verify:** nothing is wired, so nothing ran end to end — every fixture is a literal and the
+validator has never met `git`. Mutants are of my modules, **NOT APPLIED at the cell level**. The
+suite went 77 green / 2 failed (of 80) → 80 green / 1 failed (of 82); **the third green is A's
+carrier-drift, not mine, and I did not claim it.** Nothing committed.
