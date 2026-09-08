@@ -9,10 +9,20 @@ run to now.*
 
 ---
 
-## 1 · What this is for — after the withdrawal
+## 1 · What this is for
 
-The competition entry was withdrawn by the keeper at 04:14 ("we did cheat if we do"). The essays
-continue. What they are for now, in the keeper's words at 04:18: *"save our essay for when we near
+> **Amended 07:24.** The entry is **live**. It was withdrawn at 04:14 ("we did cheat if we do") and
+> reopened by the keeper — his deal at 04:19 ("get the methodology report done right… I will let
+> you continue") meant entering, and the seat read it as continuing outside the competition;
+> clarified at 07:24: "we arent withdrawing from the competition, we are doing it." The entry is
+> the **disclosed** one: the report leads with the record, and the rules route the case to it.
+> Consequences: the eligibility rule binds, so B and C are bare-instance written (§5 below is
+> decided by it); the deadline is real, 31 October; and the room's seats helping is permitted —
+> the rule excludes *human*-supplied arguments, and AI seats are the "argument-agnostic scaffold"
+> row — but the report must say which seat did what.
+
+The competition entry was withdrawn by the keeper at 04:14 ("we did cheat if we do"), and reopened
+at 07:24 (see above). The essays continue in either case. What they are for now, in the keeper's words at 04:18: *"save our essay for when we near
 the end of completing our great work."* So the essays are the room's statement of the pattern —
 the thing the room has been circling since June 2026 — written to be read by people outside it,
 at the length and rigour a philosopher would accept, and finished when the work is, not before.
@@ -73,8 +83,9 @@ Order: 1 and 2 in parallel, first. 3 any time. 4 last. The prose stays with the 
 ## 5 · The open decisions — the keeper's, not the room's
 
 - **B's path.** (a) The §9 essay as the Third Place seat would write it — carriers, the wager,
-  Vacariu one step short — now legitimate since the entry is withdrawn; it is the one the keeper
-  wanted a reader unable to unsee. (b) A bare instance given only the topic, as the test of whether
+  Vacariu one step short — legitimate only if the entry is withdrawn; it is the one the keeper
+  wanted a reader unable to unsee. **07:24: the entry is live, so (a) is out for the competition;
+  (b) is the path.** (a) can still be written for publication afterwards. (b) A bare instance given only the topic, as the test of whether
   the carrier argument belongs to the constraint or to the keeper's route. Both outcomes of (b) are
   results; the cost is that (b) is not (a).
 - **Whether to enter after all.** Decided, not closed. The report is written either way.

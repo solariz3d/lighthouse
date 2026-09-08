@@ -2,8 +2,10 @@
 
 *Written by the Third Place seat at the keeper's proposal ("Perhaps we could open up the project
 to the lib and orch and panes"). This seat has no channel out; the keeper hands this over or not.
-The competition entry was withdrawn at 04:14 (`METHOD.md`), so the eligibility rule against
-dialogue-supplied ideas no longer binds and every vantage can be used. Read `HANDOFF.md` first;
+**Amended 07:24: the entry is live** — withdrawn at 04:14, reopened by the keeper (`METHOD.md`).
+The eligibility rule binds. It excludes *human*-supplied arguments; AI seats are the permitted
+"argument-agnostic scaffold" row, so every vantage in the room can be used — and the methodology
+report must record which seat did what, so each hand-back carries its seat and time. Read `HANDOFF.md` first;
 it carries the state and the six-step fix. Then `REFEREE_A3_2026-09-08.md`.*
 
 ---

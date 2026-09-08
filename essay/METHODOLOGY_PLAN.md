@@ -161,3 +161,9 @@ else." Submission anonymised via OpenReview; at most one prize per entrant.
 **On whether to enter at all:** open, the keeper's, deferred by his and the librarian's agreement
 until a bare-instance run returns. The report is written either way; if the entry is withdrawn the
 report is the record of why.
+
+**07:24 — entering.** Withdrawn 04:14, reopened 07:24 as a disclosed entry. Two additions to the
+report's required content: (a) the reversal itself, in the timeline, with both of the keeper's
+sentences; (b) **which seat did what** — the librarian, chair and panes are now working on A's §4
+simulation, the literature, and the report itself; every hand-back carries its seat and time, and
+the final compile lists them, because "in as much detail as possible" includes the scaffold.

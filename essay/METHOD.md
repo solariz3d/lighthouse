@@ -1267,3 +1267,32 @@ Counts, cumulative: keeper→seat 25 upheld, 1 not upheld. desktop reader→seat
 upheld. referee→seat ~65 upheld across three runs, 3 held with a difference, scores discounted.
 librarian→seat 5 upheld. seat→seat 42. seat→keeper 5. **Seat's registered predictions: 1 made,
 1 failed.**
+
+---
+
+## 2026-09-08 ~07:23–07:30 — the entry is live again
+
+**The keeper, 07:23:** "wait, we arent withdrawing from the competition, we are doing it!" And
+07:24: "when I asked you to continue doing it and that I told you to do the methodology report
+right, it was because we were still going to enter, but maybe I should have said directly my bad."
+And: "as long as we are fully transparent with how the system worked i think they will allow it."
+
+**The sequence, kept as it happened:** withdrawn 04:14 ("we did cheat if we do"); "scrapped for
+now" 04:18; the deal at 04:19 — meant by the keeper as entering, read by the seat as continuing
+outside the competition; reopened 07:24. Both readings were reasonable from the words; the seat's
+was wrong about the intent and the log for 04:14 said "decided, not closed" precisely so this could
+happen. Counts: keeper→seat 26 upheld.
+
+**What changes, applied:** every file that said "withdrawn" amended with the reversal appended,
+not rewritten — `SCOPE_FOR_THE_LIBRARIAN` §1 and §5, `PROGRAM_BRIEF` header, `METHODOLOGY_REPORT`
+§0, §2 and §4, `METHODOLOGY_PLAN`. The entry is the **disclosed** one. Consequences: the
+eligibility rule binds, so B and C are bare-instance written and the §9 essay waits for after;
+deadline 31 October is real; the room's seats helping is the permitted scaffold row (the rule
+excludes *human*-supplied arguments), and the report must record which seat did what — every
+hand-back carries its seat and time; the final compile lists them.
+
+**What does not change:** the disclosure leads the report; the audit is its appendix; A carries one
+transfer and the thesis underneath, on the table.
+
+Counts, cumulative: keeper→seat 26 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~65 upheld. librarian→seat 5 upheld. seat→seat 42. seat→keeper 5.
