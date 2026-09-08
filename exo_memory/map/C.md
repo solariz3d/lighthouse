@@ -777,3 +777,48 @@ extraction dropped while claiming verbatim; structurally it was verbatim, but a 
 extraction is a reason lost.
 
 Hand-back: `exo_memory/handback/p-ready-window_2026-09-07.md`.
+
+## 2026-09-08 — L044: my own fix read a 34-row window of a 43-row screen. Measure the substrate, again
+
+Last night's ghost fix shipped green and made the stall WIDER. `typed_only` iterated `EMU_ROWS ×
+EMU_COLS` — the size a parser is BORN at — while `pty_resize` moves PTY and emulator together, so
+every docked pane runs ~43×~200 within a second. The composer is the BOTTOM row. It was never in the
+window. `input_box_empty` found no `❯` and returned false by its own UNKNOWN-HOLDS rule, so **every
+delivery to every full-height pane held to the 240 s bound** — and the number says it plainly:
+replaying real bytes, `box_empty` was true in **0 of 512 frames** on the old window. Structurally
+zero, not rarely. Fixed by taking `screen.size()` in all four read paths.
+
+**The lesson is the one I wrote down 24 hours ago and did not apply to my own diff: MEASURE THE
+SUBSTRATE.** Yesterday I refused a handed premise ("the prediction is dim") and measured the emulator
+instead, and it saved the fix. Today the same class of assumption — *the emulator is the size the
+constant says* — sat inside the fix I shipped, in the function I wrote, and I did not measure it.
+**Applying the discipline to the thing you are studying and not to the instrument you are studying it
+with is the whole failure.** My replay harness was `Parser::new(EMU_ROWS, EMU_COLS, 0)` and I called
+it "the parser production uses" in a comment. It is the parser production *starts* with.
+
+**AND THAT HARNESS MANUFACTURED A FINDING I REPORTED AS PRODUCTION.** My §2 "mid-redraw footer frame"
+— the footer drawn ONTO the composer, which I diagnosed as a race and blamed for a 2.5-hour stall —
+is **row clamping, not a race**: vt100 folds a cursor move past the last row onto the last row, so a
+composer at row 40 and a footer at row 42 collide whenever the parser is shorter than the PTY. One
+log, one chunking, only the size changed: **26/16384 frames at 34 rows, 0/16384 at 43**, and the row
+found at 34 is character-for-character the one I reported. The chair proposed this and was right.
+**Mechanism retired; the 2.5-hour attribution withdrawn in full.** What I keep is narrower and still
+checkable at the line: `PaneGate::Working => Drain::Hold` has no bound. **A measuring instrument
+mis-sized by one constant does not return noise — it returns a coherent, plausible, wrong finding,
+and mine was specific enough to be believed.**
+
+**The test held the bug in place, and the shape generalises.** `assert_eq!(typed.len(), EMU_ROWS)`
+meant a CORRECT `typed_only` failed the suite — the fix could only ship while broken. *A test that
+pins a constant its subject must not use converts the fix into the regression.* Same family as the
+hand-written list of three I caught yesterday: an assertion that cannot fail, and an assertion that
+can only pass when wrong, are one error wearing two coats.
+
+**What nobody sent me looking for, found by grepping every use of the constants rather than the two
+sites named:** (1) the panic-recovery path rebuilt the parser at 34×120 — and `fitPane` only calls
+`pty_resize` when the fitted dims CHANGE, so one panic would clamp that pane's emulator *for the rest
+of its life*; (2) `harvest_once` read 120 columns of a ~200-column grid, and `rows(0, w)` drops the
+tail SILENTLY, no wrap flag — **4,294 lines of the chair's capture are exactly 120 bytes and every
+sampled one ends mid-word.** The room restores from that file. The gate defect cost delivery latency;
+this one has been eating the record.
+
+Hand-back: `exo_memory/handback/p-emu-typed_2026-09-08.md`.

@@ -894,6 +894,12 @@ struct Panes(Mutex<HashMap<String, PtySession>>);
 // layer 2: a headless vt100 emulator per pane, fed the same PTY bytes as the terminal. A watcher
 // thread renders it and harvests settled turns. Held in a map so pty_resize can keep the emulator's
 // dimensions matched to the real PTY (a size mismatch would misrender the extraction).
+// THE SIZE A PANE IS BORN AT, AND NOTHING ELSE (L044, 2026-09-08). `pty_resize` moves the PTY and
+// the emulator together within a second of a pane docking — measured live at 43x~200 on three
+// panes — so these describe the first moment of a pane's life and no moment after it. Use them to
+// CONSTRUCT a parser; never as a window to READ one. Every read path takes `screen.size()`, and the
+// two that did not cost a 240 s hold on every full-height pane and a silent 120-column truncation
+// of the capture the room restores from.
 const EMU_ROWS: u16 = 34; // must match the openpty size below so claude's cursor moves render right
 const EMU_COLS: u16 = 120;
 struct EmuState {
@@ -1072,9 +1078,9 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // the same settled screen is skipped, and a DIFFERENT window of the same turn (it scrolled
     // between settles, or a resume re-rendered recorded history) is stitched into the existing
     // record in place — never appended, which is what stacked each exchange 8-9 deep on every
-    // capture-restore. v1 reads the visible screen only (scrollback 0): turns up to EMU_ROWS
-    // tall are captured whole, taller turns keep their tail — the raw .log still holds
-    // everything for a future full-fidelity render.
+    // capture-restore. v1 reads the visible screen only (scrollback 0): turns up to the pane's
+    // CURRENT height are captured whole (not EMU_ROWS — that is the birth size only), taller
+    // turns keep their tail — the raw .log still holds everything for a full-fidelity render.
     let text_path = capture_text_path(&pane_id);
     let emu_w = emu.clone();
     let alive_w = alive.clone();
@@ -1115,7 +1121,16 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
                     if hg.note_panic(msg) == harvest_guard::Recovery::Reinitialise {
                         {
                             let mut e = harvest_guard::recover(emu_w.lock());
-                            e.parser = vt100::Parser::new(EMU_ROWS, EMU_COLS, 0);
+                            // AT THE SIZE IT HAD, not the size it was born at (L044). Rebuilding at
+                            // the constants shrinks a resized pane's grid back to 34x120 — and
+                            // `fitPane` only calls `pty_resize` when the fitted dims CHANGE, so
+                            // nothing would ever put it back. One panic would clamp that pane's
+                            // emulator for the rest of its life while its PTY stayed full height.
+                            // Zero panics and zero reinitialisations on the run this was found in,
+                            // so this is a latent path, not tonight's cause — said plainly because
+                            // an unqualified fix reads as a diagnosis.
+                            let (rows, cols) = e.parser.screen().size();
+                            e.parser = vt100::Parser::new(rows, cols, 0);
                         }
                         hg.note_reinitialised();
                     }
@@ -7315,7 +7330,14 @@ fn harvest_once(
 ) -> bool {
     // rows AND their soft-wrap flags: a user message longer than one row wraps, and only
     // the first row carries the ❯ marker. Without row_wrapped the capture cut every long
-    // message at 118 chars (EMU_COLS − "❯ ") and stored the stump as the whole sentence.
+    // message at the row width and stored the stump as the whole sentence.
+    //
+    // THE WIDTH IS THE SCREEN'S, NOT `EMU_COLS` (L044, 2026-09-08). This read was clipped at 120
+    // columns on panes running ~200, and it was SILENT: `rows(0, w)` takes the first `w` cells and
+    // drops the rest, so every line longer than 120 columns lost its tail with no wrap flag to say
+    // so. Measured in this machine's own record before the fix: 4,294 lines of the chair's capture
+    // are exactly 120 bytes long and every sampled one ends mid-word ("…the consumer clos",
+    // "…both untracked, nei"). The room restores from this file, so the loss is in the record.
     let (lines, wrapped): (Vec<String>, Vec<bool>) = {
         // ONE MUTEX, ONE POLICY: the reader tolerates a poisoned lock, so the watcher does too.
         let e = harvest_guard::recover(emu.lock());
@@ -7323,7 +7345,8 @@ fn harvest_once(
             return false; // still streaming — wait for the turn to settle
         }
         let screen = e.parser.screen();
-        let rows: Vec<String> = screen.rows(0, EMU_COLS).collect();
+        let (_, cols) = screen.size();
+        let rows: Vec<String> = screen.rows(0, cols).collect();
         let flags: Vec<bool> = (0..rows.len() as u16).map(|i| screen.row_wrapped(i)).collect();
         (rows, flags)
     };
@@ -7538,10 +7561,23 @@ fn deliver_only_when_idle() -> bool {
 /// types that is NOT at default foreground reads here as chrome. Nothing in the record does that,
 /// and a paste renders at default — but it is the assumption to break first if a real hold is ever
 /// missed.
+///
+/// THE WINDOW IS THE SCREEN'S OWN SIZE, NEVER `EMU_ROWS`/`EMU_COLS` (L044, 2026-09-08). Those are
+/// the size the parser is BORN at; `pty_resize` moves the PTY and calls `parser.set_size` in the
+/// same breath, so a docked pane runs 43x~200 within a second of opening. Shipped reading
+/// `(0..EMU_ROWS)`, this function looked at the top 34 rows of a 43-row grid — and the composer is
+/// the BOTTOM row. `input_box_empty` then found no `❯` at all and returned false by its own
+/// UNKNOWN-HOLDS rule, so every delivery to every full-height pane held to the 240 s bound. That is
+/// the ghost fix creating a second, wider stall than the one it removed, and it shipped green
+/// because the test below pinned the constant instead of the screen.
+///
+/// MEASURED on the chair's own capture, 4 MB replayed in 256-byte chunks: at 43x200 the composer
+/// sat at row ≥34 in **944 of 1024 sampled frames**. Not an edge case — 92% of that pane's life.
 fn typed_only(screen: &vt100::Screen) -> Vec<String> {
-    (0..EMU_ROWS)
+    let (rows, cols) = screen.size();
+    (0..rows)
         .map(|r| {
-            (0..EMU_COLS)
+            (0..cols)
                 .map(|c| match screen.cell(r, c) {
                     Some(cell) if cell.fgcolor() == vt100::Color::Default => {
                         let s = cell.contents();
@@ -7589,13 +7625,30 @@ const QUIET_FOR_DELIVERY_MS: u64 = 2_000;
 /// It is chrome, and it is NOT evidence of a turn. Claude advertises "esc to interrupt" here
 /// whenever a BACKGROUND SHELL is running — turn or no turn — so a pane that ran one background
 /// command reads busy for the rest of its life.
-/// ANYWHERE IN THE ROW, not only at its start — found 2026-09-07 while measuring the ghost, in
-/// this machine's own capture log. The emulator catches frames mid-redraw where the footer is
-/// drawn ONTO the composer row: `❯ ⏵⏵ bypass permissions on (shift+tab to cycle) · esc to
-/// interrupt`. That row does not START with `⏵`, so `is_footer_row` said false, `turn_in_flight`
-/// said true, and `pane_gate` returned `Working` — whose hold is UNBOUNDED. One such frame latched
-/// at poll time is a pane nobody can reach again, which is the shape of the four packets that sat
-/// queued for two and a half hours on a pane nobody was at.
+/// ANYWHERE IN THE ROW, not only at its start. The row exists — `❯ ⏵⏵ bypass permissions on
+/// (shift+tab to cycle) · esc to interrupt` — and it does not START with `⏵`, so a start-anchored
+/// test said false, `turn_in_flight` said true, and `pane_gate` can return `Working`, whose hold is
+/// UNBOUNDED (`drain_decision`: `PaneGate::Working => Drain::Hold`, no bound, still true).
+///
+/// **THE MECHANISM I GAVE FOR IT ON 2026-09-07 WAS WRONG, and it is retired here (L044).** I called
+/// it a frame caught MID-REDRAW — a race. It is not a race; it is ROW CLAMPING. vt100 clamps a
+/// cursor move past the last row onto the last row, so a composer written at row 40 and a footer
+/// written at row 42 land in the same row whenever the parser is SHORTER than the PTY, and the
+/// footer's two-column indent is what leaves the `❯ ` in front of it.
+///
+/// MEASURED, one log, one chunking, only the size changed: 4 MB of the chair's capture in 256-byte
+/// chunks gives **26/16384 frames at 34x120, 33/16384 at 34x200, and 0/16384 at 43x200** — and the
+/// first row found at 34 rows is character-for-character the row I reported. Three other panes:
+/// zero at every size. The appearance tracks the clamp and nothing else.
+///
+/// SO WHY THE TEST STAYS. Production clamps in two windows: between `pty_spawn` and the first
+/// `pty_resize`, and after a harvest panic used to rebuild the parser at the constants (fixed this
+/// lap). The guard costs nothing — a footer is chrome wherever it is drawn — and those windows are
+/// real, so it keeps its keep. What does NOT survive is my attribution of the four packets that sat
+/// queued for two and a half hours to this row: that needed the row latched on a production-size
+/// emulator, and at production size it does not occur in 16,384 sampled frames. **Withdrawn.** The
+/// unbounded `Working` path above is real and is still the thing to fix; what put a pane onto it
+/// that night is not established.
 fn is_footer_row(s: &str) -> bool {
     s.contains('⏵')
 }
@@ -7603,7 +7656,8 @@ fn is_footer_row(s: &str) -> bool {
 /// A turn actually in flight, as opposed to a grid that merely remembers one.
 ///
 /// NOT `capture::screen_ready`'s `is_working`, which is `.any()` over the whole grid. The emulator
-/// is 34x120 with SCROLLBACK 0: rows that scroll are overwritten in place, so the screen carries
+/// runs with SCROLLBACK 0 (34x120 at birth, ~43x~200 once docked): rows that scroll are overwritten
+/// in place — the argument is the scrollback, not the size — so the screen carries
 /// text from several epochs at once. Measured on 2026-09-06 over four panes' whole logs through the
 /// production emulator, `.any()` said BUSY while the composer sat empty in 253/390, 326/849 and
 /// 186/234 snapshots — on one pane, 79% of its life. `capture::is_working` stays as it is: the
@@ -7780,7 +7834,13 @@ fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Vec<Strin
     let screen = e.parser.screen();
     // BOTH VIEWS COME FROM ONE LOCK AND ONE SCREEN. Reading the grid twice would let a redraw land
     // between them, and the whole point here is to compare what was drawn against what was typed.
-    Some((screen.rows(0, EMU_COLS).collect(), typed_only(screen), e.last_byte.elapsed()))
+    //
+    // AND BOTH VIEWS COME FROM ONE SIZE — the screen's, not the constant's (L044). `rows()` walks
+    // every row whatever width it is given, so the row COUNT here was always right and only the
+    // columns were clipped; `typed_only` clipped both. Two readers of one screen disagreeing about
+    // how big it is is how the gate came to read Ready and empty-composer=false at the same time.
+    let (_, cols) = screen.size();
+    Some((screen.rows(0, cols).collect(), typed_only(screen), e.last_byte.elapsed()))
 }
 
 // `pane_is_idle` lived here and was the whole answer: screen in, boolean out. Both of its callers
@@ -12503,9 +12563,14 @@ mod ready_signal_tests {
     //
     // REAL ESCAPE SEQUENCES, not a hand-drawn screen. Every constant below was read out of this
     // machine's own `data/captures/*.log` by replaying it through `vt100::Parser::new(EMU_ROWS,
-    // EMU_COLS, 0)` — the parser production uses — and dumping per-cell foregrounds. A fixture of
-    // plain strings cannot fail this test, because the whole defect is that the two kinds of text
-    // are identical once colour is thrown away.
+    // EMU_COLS, 0)` and dumping per-cell foregrounds. A fixture of plain strings cannot fail this
+    // test, because the whole defect is that the two kinds of text are identical once colour is
+    // thrown away.
+    //
+    // THAT REPLAY IS NOT THE SIZE PRODUCTION RUNS AT — it is the size production STARTS at, and
+    // L044 is what the difference cost. The COLOURS below are unaffected: a cell's foreground is
+    // its own attribute and does not move when the grid is clamped, so the discriminator holds.
+    // GEOMETRY read off that replay does not, and one such reading is retired at `is_footer_row`.
 
     /// Claude Code's grey: measured as `38;2;153;153;153` in the capture, 50 occurrences in an
     /// 8KB window. NOT SGR 2 — vt100 0.15 does not record the dim attribute at all.
@@ -12572,15 +12637,76 @@ mod ready_signal_tests {
             typed.iter().any(|l| l.trim_start().starts_with('\u{276f}')),
             "the reduction removed the composer marker itself"
         );
-        assert_eq!(typed.len(), EMU_ROWS as usize, "the reduction must preserve the grid shape");
+        assert_eq!(
+            typed.len(),
+            p.screen().size().0 as usize,
+            "the reduction must preserve the grid shape — THE SCREEN'S, not the constant's"
+        );
     }
 
-    /// THE UNBOUNDED STALL, found while measuring the ghost — a different defect in the same row.
+    // ── THE WINDOW (L044, the chair 2026-09-08) ──────────────────────────────────────────────
+    //
+    // The ghost fix above shipped GREEN over a defect of its own, and the assertion just amended is
+    // why: it pinned `EMU_ROWS`, so a `typed_only` that read the whole screen would have FAILED it.
+    // A test that locks a constant its subject must not use converts the fix into the regression.
+
+    /// A pane at the size the panes here actually run: taller and wider than the constants, with
+    /// the composer where a 44-row terminal puts it — row 40, nine rows below `EMU_ROWS`.
     ///
-    /// The emulator catches frames mid-redraw where the status footer is drawn ONTO the composer
-    /// row. That row does not start with `⏵`, so the old `is_footer_row` said false and
-    /// `turn_in_flight` counted the footer's own "esc to interrupt" as a live turn — and
-    /// `PaneGate::Working`'s hold has NO BOUND. One latched frame is a pane nobody can reach again.
+    /// NOT A CHOSEN NUMBER. Max cursor row measured from the live capture logs is 42 (1-based) on
+    /// the chair, the librarian and the Third Place, and max cursor column 191/185/199 — so the
+    /// real grids are ~43x~200 and BOTH constants are short.
+    fn tall_box_screen(typed: &str, ghost: &str) -> vt100::Parser {
+        let mut p = vt100::Parser::new(44, 150, 0);
+        p.process(b"\x1b[2J\x1b[H");
+        p.process("● an earlier reply\r\n".as_bytes());
+        p.process("\x1b[3;131H far-past-EMU_COLS ".as_bytes()); // a cell outside the old width
+        p.process("\x1b[40;1H".as_bytes()); // the composer, outside the old height
+        p.process(format!("\u{276f}\u{a0}{PLAIN}{typed}{GHOST}{ghost}{PLAIN}").as_bytes());
+        p.process("\x1b[42;3H\u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle)".as_bytes());
+        p
+    }
+
+    /// RED FIRST. On the constants the composer is not in the window at all, `input_box_empty`
+    /// returns false by UNKNOWN-HOLDS, and every delivery to a full-height pane holds to the bound
+    /// — which is exactly what the librarian's 01:06 ring did on the binary carrying the fix above.
+    #[test]
+    fn the_composer_of_a_pane_taller_than_the_constants_is_still_read() {
+        let p = tall_box_screen("", "score it");
+        let s = p.screen();
+        assert_eq!(s.size(), (44, 150), "premise: the emulator really is bigger than the constants");
+        assert!(44 > EMU_ROWS && 150 > EMU_COLS, "premise: and this fixture is outside both");
+
+        let typed = typed_only(s);
+        assert_eq!(typed.len(), 44, "the reduction stopped at the constant, not at the screen");
+        assert!(
+            typed[39].trim_start().starts_with('\u{276f}'),
+            "the composer at row 40 fell outside the read window — this pane can never be delivered to"
+        );
+        assert!(input_box_empty(&typed), "an empty composer on a tall pane is EMPTY, not unknown");
+        assert!(
+            typed[2].contains("far-past-EMU_COLS"),
+            "the reduction stopped at column 120 — a wide row loses its tail with no wrap flag to say so"
+        );
+    }
+
+    /// And the other direction still holds on a tall pane: widening the window must not turn real
+    /// typing into a deliverable idle. The window was wrong; the colour filter was not.
+    #[test]
+    fn real_typing_on_a_tall_pane_still_holds_a_delivery() {
+        let p = tall_box_screen("score it", "");
+        assert!(!input_box_empty(&typed_only(p.screen())), "typed text holds, whatever row it is on");
+    }
+
+    /// THE BLED FOOTER — a different defect in the same row, kept, with its mechanism CORRECTED.
+    ///
+    /// The row is real: the status footer drawn onto the composer row, which does not start with
+    /// `⏵`, so the old `is_footer_row` said false and `turn_in_flight` counted the footer's own
+    /// "esc to interrupt" as a live turn — and `PaneGate::Working`'s hold has NO BOUND.
+    ///
+    /// I called it a mid-redraw race on 2026-09-07. It is row CLAMPING — see `is_footer_row`, where
+    /// the measurement and the withdrawal of what I hung on it are written out. The test stands
+    /// because the clamp windows are real; the story I told about it does not.
     #[test]
     fn a_footer_drawn_onto_the_composer_row_is_not_a_turn_in_flight() {
         let bled = vec![
@@ -12651,7 +12777,8 @@ mod inbox_tests {
     ///      advertises "esc to interrupt" in the FOOTER whenever a BACKGROUND SHELL is running,
     ///      turn or no turn. The fixture above uses the no-shell variant, which is why every gate
     ///      test passed over a gate that is wrong most of a pane's life.
-    ///   2. A STALE SPINNER ROW. The grid is 34x120 with scrollback 0; rows that scroll are
+    ///   2. A STALE SPINNER ROW. The grid runs at scrollback 0 (34x120 as transcribed here, before
+    ///      L044 established that a docked pane is really ~43x~200); rows that scroll are
     ///      overwritten in place, so text from earlier epochs survives on screen. This pane still
     ///      carried its own spinner from a turn that ended 48 minutes earlier.
     ///
