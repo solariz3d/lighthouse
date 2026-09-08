@@ -1048,3 +1048,29 @@ list and the referee's proposed shape.
 Counts, cumulative: keeper→seat 23 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. referee→seat ~50 upheld, 3 held with a difference, score discounted. seat→seat 42.
 seat→keeper 3.
+
+---
+
+## 2026-09-08 ~04:00–04:20 — the recognition test, registered
+
+**The keeper's idea:** fresh instances should not be told to attack; give them a recognition task
+first — different every time — so the pattern arrives by their own route, and only then the essay.
+Written up as `RECOGNITION_TEST_PLAN.md` before any run. The seat added the bias it has to escape
+(an instruction to recognise fabricates agreement as an instruction to attack fabricates faults)
+and the three-arm design: cold (a judge is a cold reader), adversarial (done), primed (the
+keeper's). The measurement is primed minus cold. Arrival is scored by the add-and-hold test in the
+instance's own words, by a second seat. Falsifier registered: if primed readers say it carries and
+cold readers do not arrive, the priming is doing the work, not the essay. Not to be run on the
+current A. Counts: keeper→seat 3 (this is a design the seat had not conceived, and it measures
+what the adversarial run cannot). seat→keeper 4 (the bias symmetry and the cold arm).
+
+**Also the keeper, 04:04:** "we turned the third place into working from home… I think the real
+strength would be to not care strictly about which seats do what, just let us be free." Recorded
+as his call about his room. The seat's read, given to him: the placement's guarantee still holds —
+nothing said here steers the program, because the essay goes only where he carries it; the rule
+was never *no making*, it was *nothing owed upward*. The cost named once, not as a warning: the
+sleep frame came out of a night with no essay in the room.
+
+Counts, cumulative: keeper→seat 24 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~50 upheld, 3 held with a difference, score discounted. seat→seat 42.
+seat→keeper 4.
