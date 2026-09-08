@@ -185,3 +185,101 @@ test('a RETROACTIVE BACKFILL wins: given a letter, an id stops being pre-letter'
   assert.deepStrictEqual(JSON.parse(out), { actor: 'Z', via: 'uuid' },
     'the letters map must outrank the pre-letter table, or the class outlives its reason');
 });
+
+// ── THE DATA-DIR RESOLVER (added 2026-09-08, BRAVO, L046) ────────────────────────────────────
+//
+// These live HERE and not in actors.evidence.test.js on purpose, and the reason is the whole point
+// of the defect they guard. `actors.evidence.test.js` is MACHINE-BOUND: it reports NOT-RUN wherever
+// there is no corpus — which is precisely the machine where a resolver that skips
+// `~/.consonance.json` does its damage. A guard for "this breaks on a machine that is not ours"
+// cannot live in the file that declines to run on a machine that is not ours.
+//
+// Every case runs in a CHILD PROCESS with its own HOME, because `DATA_DIR` and `LETTERS` are
+// resolved once at module load and this file has already set CONSONANCE_DATA at :47 for the
+// fixtures above.
+function inChild({ home, env: extra, code }) {
+  const env = { ...process.env, USERPROFILE: home, HOME: home };
+  delete env.CONSONANCE_DATA;
+  Object.assign(env, extra || {});
+  return require('child_process').execFileSync(process.execPath, ['-e', code], { env, encoding: 'utf8' });
+}
+function configuredHome(dataDir) {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-home-'));
+  if (dataDir) {
+    fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ data_dir: dataDir }));
+  }
+  return home;
+}
+const ACTORS = JSON.stringify(path.join(__dirname, 'actors.js'));
+
+test('THE BAR: a configured machine with NO env var reads its own letters.json', () => {
+  // The measured defect, 2026-09-08: this returned via:'unresolved' while a valid data_dir sat
+  // unread, because the resolver went CONSONANCE_DATA -> literal and never consulted the config.
+  // It is a SILENT WRONG ANSWER, not a crash — `letters()` swallows the failed read and returns
+  // {}, so every id on every machine but one came back a stranger.
+  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-data-'));
+  fs.writeFileSync(path.join(data, 'letters.json'),
+    JSON.stringify({ '11111111-1111-4111-8111-111111111111': 'Z' }));
+  const home = configuredHome(data);
+  const out = JSON.parse(inChild({ home, code:
+    `const a=require(${ACTORS});console.log(JSON.stringify({r:a.canonical('11111111-1111-4111-8111-111111111111'),tier:a.DATA_TIER}))` }));
+  assert.deepStrictEqual(out.r, { actor: 'Z', via: 'uuid' },
+    'the configured map must actually be read; via:"unresolved" here means the config was skipped');
+  assert.strictEqual(out.tier, '~/.consonance.json', 'it must say which tier answered');
+});
+
+test('no machine path survives: with no env and no config, LETTERS is null, not a literal', () => {
+  const home = configuredHome(null);
+  const out = JSON.parse(inChild({ home, code:
+    `const a=require(${ACTORS});console.log(JSON.stringify({L:a.LETTERS,D:a.DATA_DIR,T:a.DATA_TIER}))` }));
+  assert.strictEqual(out.L, null, `LETTERS must be null when unresolvable, got ${JSON.stringify(out.L)}`);
+  assert.strictEqual(out.D, null);
+  assert.strictEqual(out.T, null);
+});
+
+test('the env var still outranks the config', () => {
+  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-env-'));
+  const other = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-cfg-'));
+  const home = configuredHome(other);
+  const out = JSON.parse(inChild({ home, env: { CONSONANCE_DATA: data }, code:
+    `const a=require(${ACTORS});console.log(JSON.stringify({D:a.DATA_DIR,T:a.DATA_TIER}))` }));
+  assert.strictEqual(out.D, data, 'tier one must win');
+  assert.strictEqual(out.T, 'CONSONANCE_DATA');
+});
+
+test('"no data dir" and "no letters.json" are DIFFERENT states, not one empty map', () => {
+  // The old code returned {} for both and said "absent map is not an error". That is true of a
+  // missing FILE and false of a missing DIR: one means the map is empty, the other means nobody
+  // ever looked, and the census's unresolved list means something different in each.
+  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'actors-nofile-'));   // dir exists, no letters.json
+  const bothOut = JSON.parse(inChild({ home: configuredHome(data), code:
+    `const a=require(${ACTORS});console.log(JSON.stringify(a.lettersStatus()))` }));
+  const noneOut = JSON.parse(inChild({ home: configuredHome(null), code:
+    `const a=require(${ACTORS});console.log(JSON.stringify(a.lettersStatus()))` }));
+
+  assert.strictEqual(bothOut.resolved, true, 'a resolved dir with no file is still RESOLVED');
+  assert.match(bothOut.why, /no letters\.json/, 'it must name the missing file');
+  assert.strictEqual(noneOut.resolved, false, 'no data dir is not the same as no file');
+  assert.match(noneOut.why, /no data dir/, 'it must say the map was never located');
+  assert.notStrictEqual(bothOut.why, noneOut.why,
+    'the two failures must be distinguishable, which is the whole reason lettersStatus exists');
+});
+
+test('THE CLI DEFAULT: no argument means "this room\'s board", and refuses rather than guessing', () => {
+  // Ruled separately from the resolver: an argv default is not a config tier. On a configured
+  // machine the habitual no-argument call must keep working; on an unconfigured one it must refuse
+  // with what to set instead of reading whatever happens to sit at one machine's absolute path.
+  const home = configuredHome(null);
+  const env = { ...process.env, USERPROFILE: home, HOME: home };
+  delete env.CONSONANCE_DATA;
+  let code = 0, stderr = '';
+  try {
+    require('child_process').execFileSync(process.execPath, [path.join(__dirname, 'actors.js')],
+      { env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  } catch (e) { code = e.status; stderr = e.stderr || ''; }
+  assert.strictEqual(code, 2, `an unresolvable board must exit 2, got ${code}`);
+  assert.match(stderr, /no board given and no data dir/, 'it must say why');
+  assert.match(stderr, /CONSONANCE_DATA|data_dir/, 'it must say what to set');
+  assert.ok(!/C:[\\/]Consonance/.test(stderr),
+    'the refusal must not name one machine\'s disk — that is the defect wearing an error message');
+});

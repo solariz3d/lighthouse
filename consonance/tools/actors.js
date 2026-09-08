@@ -31,10 +31,62 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
-const LETTERS = process.env.CONSONANCE_DATA
-  ? path.join(process.env.CONSONANCE_DATA, 'letters.json')
-  : 'C:/Consonance/data/letters.json';
+/* ── THE DATA DIR ─────────────────────────────────────────────────────────────────────────────
+ *
+ * Until 2026-09-08 this was TWO tiers ending in a literal:
+ *
+ *     const LETTERS = process.env.CONSONANCE_DATA
+ *       ? path.join(process.env.CONSONANCE_DATA, 'letters.json')
+ *       : 'C:/Consonance/data/letters.json';
+ *
+ * and the missing middle tier is what made it more than a cosmetic path. `~/.consonance.json` was
+ * never consulted at all, so a CORRECTLY CONFIGURED machine with a real `data_dir` and no
+ * `CONSONANCE_DATA` got one machine's disk. Measured before the change, on a temp home with a
+ * valid config:
+ *
+ *     config data_dir    -> <tmp>/actors-data-JlcJYc
+ *     LETTERS            -> C:/Consonance/data/letters.json
+ *     canonical(a pane in the configured map) -> { via: 'unresolved' }
+ *
+ * THE FAILURE IS A SILENT WRONG ANSWER, NOT A CRASH. `letters()` swallows the failed read and
+ * returns `{}` — documented as "absent map is not an error" — so on any machine that is not this
+ * one, EVERY id falls through to `unresolved` and the census reports a board full of strangers.
+ * `actors.evidence.test.js` would go red with a message blaming the board for something the
+ * resolver did.
+ *
+ * WHY THIS SURVIVED: both sites were in `portable-paths.baseline.json`, so the ratchet was green
+ * over them by construction and reported them only under `--fatal`, as exempted. Same shape as
+ * `transcript-watch.js:89`, removed last lap — and this is the module whose own test file boasts
+ * at `:47` that it is "unlike them". The boast was in the file that still carried it.
+ *
+ * THE SHAPE IS THE PEER'S, NOT A NEW INVENTION. `chain-status.js:261-274` already resolves exactly
+ * this way in this same directory, and its comment already names this defect class: that it was
+ * copied from `lap-row.js:97`, "which ends in a hardcoded data-dir literal — grandfathered there
+ * by portable-paths' baseline". A third file agreeing is why this is the house shape and not my
+ * preference.
+ *
+ * NO THIRD-TIER LITERAL, AND NO THROW. This is a LIBRARY: `residue.js`, `tell-index.js` and both
+ * test files `require` it, so anything loud at import time is loud in four callers that have
+ * nothing to do with the problem. `LETTERS` becomes `null` and the loudness moves to the two
+ * places that can carry it — the CLI refuses with the reason, and `lettersStatus()` lets a test
+ * assert the difference between "no data dir" and "map absent", which is the distinction the old
+ * silent `{}` destroyed.
+ */
+function fromConfig(key) {
+  try {
+    const raw = fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, '');
+    const v = JSON.parse(raw);
+    const d = v && v[key] != null ? String(v[key]).trim() : '';
+    return d || null;
+  } catch (_) { return null; }
+}
+
+const DATA_DIR = (process.env.CONSONANCE_DATA || '').trim() || fromConfig('data_dir') || null;
+const DATA_TIER = (process.env.CONSONANCE_DATA || '').trim() ? 'CONSONANCE_DATA'
+  : (fromConfig('data_dir') ? '~/.consonance.json' : null);
+const LETTERS = DATA_DIR ? path.join(DATA_DIR, 'letters.json') : null;
 
 /* Historical names, each with the evidence that justifies it. A line here is a claim about
  * the record and carries its proof, so a later reader can overturn it rather than inherit it. */
@@ -256,14 +308,41 @@ const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering', 'gate', 'bli
   'main-tab/tree-assets']);
 
 let _letters = null;
+let _lettersWhy = null;         // why the map is empty, when it is — see lettersStatus()
 function letters() {
   if (_letters) return _letters;
+  if (LETTERS === null) {
+    // NOT the same state as an absent file, and conflating them is what the old code did. No data
+    // dir means the map was never LOOKED for; the resolver is off, and every id will come back
+    // unresolved for a reason that has nothing to do with the board.
+    _letters = {};
+    _lettersWhy = 'no data dir: CONSONANCE_DATA is unset and ~/.consonance.json has no data_dir, '
+      + 'so letters.json was never located — every id will read as unresolved';
+    return _letters;
+  }
   try {
     _letters = JSON.parse(fs.readFileSync(LETTERS, 'utf8'));
   } catch {
     _letters = {};              // absent map is not an error: nothing resolves, everything counts
+    _lettersWhy = 'no letters.json at ' + LETTERS + ' (resolved via ' + DATA_TIER + ')';
   }
   return _letters;
+}
+
+/** Whether the letters map was actually READ, and if not, why not.
+ *
+ *  Exists because `letters()` returns `{}` for two different failures and one success-shaped case,
+ *  and a caller cannot tell them apart from the value. The census's `unresolved` list means
+ *  something completely different depending on which one happened. */
+function lettersStatus() {
+  const map = letters();
+  return {
+    resolved: LETTERS !== null,
+    tier: DATA_TIER,
+    path: LETTERS,
+    read: Object.keys(map).length > 0,
+    why: _lettersWhy,
+  };
 }
 
 /** Resolve one board `pane` value to a canonical actor.
@@ -331,10 +410,32 @@ const sameActor = (a, b) => {
 };
 
 module.exports = { canonical, census, sameActor, ALIASES, NON_PANE, LETTERS,
-                   PRE_LETTER, LETTER_BIRTH, FIXED_MOUNTS };
+                   PRE_LETTER, LETTER_BIRTH, FIXED_MOUNTS,
+                   DATA_DIR, DATA_TIER, lettersStatus };
 
 if (require.main === module) {
-  const board = process.argv[2] || 'C:/Consonance/data/board.jsonl';
+  /* RULED SEPARATELY FROM THE RESOLVER ABOVE, because it is a different shape wearing the same
+   * string. `:37` was a config resolver that skipped a tier; this is an ARGV DEFAULT, and the
+   * question is not "which tier" but "what does no-argument MEAN".
+   *
+   * It means "the board this instrument is for" — not "a file at this absolute path". Those were
+   * the same sentence on one machine and only on one machine. So the default becomes the resolved
+   * data dir's board rather than a literal, which keeps the habitual no-argument invocation
+   * working wherever the room is configured, and refuses instead of reading a stranger's disk
+   * where it is not.
+   *
+   * A CLI may be loud where the library above may not: this is the process's own entry point, it
+   * has already decided to write to stdout, and nothing imports it. So the unresolvable case exits
+   * non-zero with what to set — which is the "degrade LOUDLY" that portable-paths' remediation text
+   * asks for, placed where it costs no caller anything. */
+  const board = process.argv[2] || (DATA_DIR ? path.join(DATA_DIR, 'board.jsonl') : null);
+  if (!board) {
+    console.error('actors: no board given and no data dir to find one in.\n'
+      + '  CONSONANCE_DATA is unset and ~/.consonance.json carries no data_dir.\n'
+      + '  Pass the board explicitly:  node consonance/tools/actors.js <board.jsonl>\n'
+      + '  or set CONSONANCE_DATA, or add data_dir to ~/.consonance.json.');
+    process.exit(2);
+  }
   const ids = [];
   for (const line of fs.readFileSync(board, 'utf8').split(/\r?\n/)) {
     if (!line.trim()) continue;

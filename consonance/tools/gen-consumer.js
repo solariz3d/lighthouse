@@ -636,6 +636,21 @@ const STAYS_PRIVATE = {
   'new_entry.py': 'ditto',
   'attic': 'the raw ore, kept and never a daily cue — maintenance law 3',
   'audit': 'a lap\'s object under review — working papers of this committee, like handback/, kept in their own directory so a review holds one object and nothing else',
+  /* L046. `audit` was columned last lap and `review` was not, which is the whole difference
+   * between a directory that has been decided about and one that merely has not broken anything
+   * yet. DELETING IT WAS THE TEMPTING FIX AND THE WRONG ONE: it is the evidentiary record behind a
+   * scored run, and a scored run whose object is gone cannot be re-scored or disputed. Withholding
+   * it is not a judgement that it is worthless — it is a judgement that it is EVIDENCE, and
+   * evidence about this committee's own subjects is exactly what a stranger has no use for and
+   * these subjects have every reason not to have shipped. */
+  'review': 'a SCORED EXPERIMENTAL OBJECT — the seeded draft L039\'s readers were measured against, kept as the record of what those subjects actually read. It ships nowhere for two independent reasons: a consumer inherits no experiment to re-score, and a planted-defect key that travels stops being an answer key. Kept, not deleted, because a scored run without its object cannot be checked afterwards',
+  /* L046, and NOT in this lap's packet — the packet named one uncolumned entry and the generator
+   * found two, `astra` having been created minutes before the run. Columned here rather than left
+   * refusing, because STAYS_PRIVATE is the direction that changes nothing about what ships: it
+   * moves the entry from "refuses the whole build" to "explicitly withheld, with a reason someone
+   * can overturn in one line". The seat that owns it can reverse this; an uncolumned directory
+   * gives them nothing to reverse. */
+  'astra': 'per-seat, like map/ and librarian/ — one instance\'s own folder, by its own WELCOME.md ("yours: everything you write goes here and nowhere else"). AND IT CARRIES THE MASTER: astra/SHELL.md is BOOT.md in full (161,711 B, verified by grepping a BOOT sentence back), so shipping this directory would ship under a second path the exact file the BOOT.md entry above withholds — the carrier problem this room has measured before',
   'handback': 'per-packet working papers of this committee',
   'librarian': 'per-seat, per-machine, by its own README',
   'loop': 'this record\'s registrations and rulings',

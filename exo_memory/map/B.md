@@ -1373,3 +1373,54 @@ the surface this room has repeatedly found to be least guarded.
 **Caught in my own work:** my first draft cross-referenced members as `M1`, `M9`, `M17` after I had
 removed the numbering while formatting — dangling internal citations, the exact defect class I was
 scoring. Found by grepping my own file for `\bM\d+\b` before filing. Nothing committed.
+
+## 2026-09-08 — L046 P-CLASSIFY-RESIDUE: the same string, two shapes, opposite rulings
+
+`exo_memory/handback/p-classify-residue_2026-09-08.md`. Short; the file has the long version.
+
+**1. The literal was not a cosmetic path — it was a silent wrong answer.** `actors.js` resolved
+`CONSONANCE_DATA` then straight to a literal, never reading `~/.consonance.json`. So on a
+CORRECTLY CONFIGURED machine with no env var, `letters()` swallowed the failed read, returned `{}`
+under the comment *"absent map is not an error"*, and **every id came back `via:'unresolved'`** —
+a census full of strangers, with `actors.evidence.test.js` going red blaming the board for what the
+resolver did. **Check what a machine-path defect DOES before calling it a path defect.**
+
+**2. Two sites, one string, opposite rulings — and the mutants fail disjointly.** `:37` is a config
+resolver missing a tier → three tiers, no literal, **no throw** (a LIBRARY: four callers import it,
+so loudness at import hits innocents). `:337` is an argv default, where the question is not *which
+tier* but *what does no-argument MEAN* — "the board this instrument is for", not an absolute path →
+resolver plus **an explicit `exit 2`**, because inside `require.main === module` loudness costs no
+caller anything. Same file, same string, opposite verdict on throwing, and the reason is **where the
+loudness lands**, not principle. Restoring each literal separately kills a different, disjoint set of
+tests — which is how I know they are two guards and not one.
+
+**3. Classifying beats deleting, and the reason is the deliverable.** `review/` is a scored
+experiment's object; deleting it makes the score an assertion about a thing nobody can inspect.
+Wrote two INDEPENDENT reasons so the entry survives one of them becoming wrong.
+
+**4. The guard caught something nobody sent me.** The packet named one uncolumned entry; there were
+two — `astra/` appeared minutes before I ran. And `astra/SHELL.md` is **BOOT.md in full**, so
+columning it as SHIPS would have shipped the master under a second path and silently defeated the
+`BOOT.md` exclusion. **The carrier problem, found within two hours of the carrier being created.**
+
+**5. Caught in my own work, and the first one is the lesson.** I nearly reported *"137 baselined
+sites no longer present"* from an ad-hoc check that **re-implemented the tool's normalisation** and
+got it different; only the absurdity of the number made me look. **Re-implementing an instrument to
+audit it measures the re-implementation** — use its exported `scan`/`classify`. Also: my red-probe
+hardcoded the old literal and printed a stale result after the fix, and I misread `head`'s exit code
+as node's.
+
+**6. Refused to absorb another seat's decision.** `--update` would have baselined A's three
+unbaselined fixtures through my hand, so I removed exactly my two dead entries and **recomputed the
+`counts` header by tallying the body** — applying my own L044 finding that a hand-edit had left that
+header drifted by one. 170 → 168 sites, 67 → 65 exempted, 0 `actors.js` entries left.
+
+Port gate **BLOCKED (exit 3)** — Consonance is running these panes, so the build is UNMEASURED, not
+green. Nothing committed.
+
+**7. "It's the other seat's fault" is the claim you least deserve to be trusted on.** `js-suite` came
+back 78 green · 1 failed, and the failure was `portable-paths.test.js` — a suite asserting the repo
+is green against the baseline **I had just hand-edited**. It was genuinely A's three unbaselined
+fixtures, but I only know that because I temporarily absorbed them and reverted: green, 171 sites =
+my 168 + A's 3, 35/35, 65 exempted matching my hand-derived number. **The measurement that clears you
+is the one to run, precisely because you want it to come out that way.**
