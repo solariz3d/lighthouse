@@ -54,7 +54,34 @@ defective and known to be.** Two rebuilds in one night both failed a fresh refer
   fixed point = true by definition, so high gain gives under-determination, not inaccuracy; the
   formal machinery is Grunberg & Modigliani 1954 / Simon 1954, uncited, opposite sign.
 
-**Decision taken 03:55: no third rebuild without reading first.** The reading list, from the
+- 04:45, **after** reading (SEP self-knowledge; Grunberg–Modigliani, Simon, Henshel): three regimes by
+  gain — read / made / looped. Third referee (`REFEREE_A3_2026-09-08.md`, 5/10, ran offline): the
+  block is invalid *at the fixed point* — on the essay's own model accuracy is r = f(r), so at
+  every equilibrium the self is right, and lock-in plus error needs an extra premise about the
+  update map. Also: P1 idle (mental causation gives gain on any view, so §§1–3 do not entail the
+  block); Moran mis-mapped (fixed 7063cca); Swann's self-verification refutes "no motivational
+  account has negative fixed points"; MacKay 1960, Ismael 2007, McGeer 1996, Coliva 2016, Hacking
+  uncited; the electron is a "bottom" in the essay's sense (§3's OSR is not process ontology).
+  **It keeps:** the one sentence — *a self is the better instrument on itself where it is the
+  maker outright, and where it is no maker at all; it is the worse instrument exactly where it is
+  one of the makers* — and the import of the 1954 reflexive-prediction result. "Core worth 7–8."
+
+**The fix is now a specification, not a hope. Do exactly this, once, in a fresh sitting:**
+1. Two explicit maps: f from self-representation r to fact x (gain = f′, S-shaped per Henshel), and
+   g from evidence back to r. Stability |f′g′| < 1. Lock-in and jumps follow from the S-shape.
+2. Self-error needs one more premise, named and defended as non-motivational: g is *lagged*
+   relative to f — the self updates from evidence its previous belief helped produce — while the
+   informant reads x in contexts where r was not an input.
+3. Cite MacKay, Ismael, McGeer, Coliva, Hacking, Swann; attribute the made regime to
+   constitutivists; state the residual novelty as: a scalar gain, a three-way sort, and an informant
+   prediction that diverges from SOKA on non-evaluative high-gain traits.
+4. Cut §§1–3 to a page to pay for it, or argue that on the attractor view gain is ubiquitous where
+   on an observer view it is incidental (the only thing that makes P1 non-idle).
+5. Drop "rumination as a fixed point" or reclassify it as a cycle; reconcile with §4's aperiodicity.
+6. Then referee #4, and only then the recognition test.
+
+**Original decision, 03:55, still the rule: no rebuild without reading first — and now, no rebuild
+at night.** Three in one night, three invalid. The reading list, from the
 referee: Moran, *Authority and Estrangement* (2001); Velleman, *Practical Reflection* (1989) and
 "Epistemic Freedom" (1989); Anscombe on practical knowledge; Grunberg & Modigliani (1954);
 Hacking on looping kinds (1995); Carruthers (2011) on *where* opacity falls (he supplies a
