@@ -1005,3 +1005,46 @@ column.
 
 Counts, cumulative: keeper→seat 22 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. referee→seat ~50 upheld, 3 held with a difference. seat→seat 42. seat→keeper 3.
+
+---
+
+## 2026-09-08 ~03:57–04:15 — corrections applied; the keeper on the referee's frame
+
+**The keeper, mid-turn:** "what if you are agreeing to their frames because you are expecting
+them to catch something you cant see, but could just be fabricating something to fix because it
+is its goal." Upheld in part. The instrument was told *find what is wrong*, so its score and
+rhetoric are instruction-shaped: **the 4/10 is discounted as a measurement** — a fresh instance
+told to attack does not return an 8, and two 4s show the instruction is stable, not that the essay
+is a 4. The findings were re-checked with the referee out of the room, by the record's own test
+(*would I accept this from a peer or from myself?*): the symmetric barrier, fixed-point-by-
+definition, every-irrational-never-repeats, 34 orders, drive≠attractor — verifiable by reasoning
+alone; Moran/Velleman/Anscombe, Dennett 1991 → Ladyman & Ross, Kuncel 2005 — verifiable against
+what the seat already knew and had not said. Those stand. The forecasts ("a judge will stop
+scoring", "that is a 7") do not. Overreach held against: §3, the companion paragraph, the fold
+image. Counts: keeper→seat 23 upheld.
+
+**Corrections applied, all verifiable without the referee:** 34 orders; the golden-angle
+paragraph now states the constraint as *pack as evenly as possible* and the mechanism as Douady &
+Couder 1992's dynamical attractor (verified by web search 04:05 — their own abstract: "the
+system's trend to avoid rational (periodic) organization, thus leading to a convergence towards
+the golden mean"), with "one of them reached for the same member" cut; the 1.5 s figure dropped
+("several times longer than under a regular drive"); "any sufficiently irrational drive" replaced
+by "the protection comes from the drive's aperiodicity"; Goldberger corrected — healthy is
+*correlated* aperiodicity, fractal, and loss "in either direction" is disease; "the Fibonacci
+drive is aperiodic without being strange" cut (a drive is not an attractor); Vacariu "one per
+mind"; "settled rather than shown" cut; predictions 1 and 2 cut, prediction 3 kept with a
+criterion and evaluativeness controlled; "everything follows from the structure alone" replaced;
+§5 to one paragraph, Spinoza only, no "must"; the reader-assent clause in §6 cut; abstract to
+match; three self-announcing tics cut ("I want to be exact", "I should be exact", "I will be
+careful"); "What would refute the view" → "the use I make of the view."
+
+**Not corrected, on purpose, and logged as such:** the §4 block still carries the sign-flip
+against the avowal tradition and the fixed-point-by-definition slide. Fixing those *is* the third
+rebuild, and the decision stands: read first. `HANDOFF.md` rewritten to say so, with the reading
+list and the referee's proposed shape.
+
+**5,405 with references, 5,012 without, 11 pages.** Douady & Couder added (20 references).
+
+Counts, cumulative: keeper→seat 23 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~50 upheld, 3 held with a difference, score discounted. seat→seat 42.
+seat→keeper 3.
