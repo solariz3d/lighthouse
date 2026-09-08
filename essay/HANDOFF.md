@@ -12,8 +12,10 @@ keeper's standing rule). What follows is the work.*
 1. `INVENTORY.md` — what essay 1 has already spent. Written so you need not hold the manuscript in
    context to know what is committed.
 2. `ESSAY2_PLAN.md` — the second entry, planned in enough detail to start.
-3. `METHOD.md` — the log, kept as the work happened. Also the **source** of the competition's
-   methodology report, which does not yet exist in its own shape.
+3. `METHODOLOGY_PLAN.md` — the third required document, planned. Carries the organising frame
+   (Consonance as a prosthetic hippocampus), derived in conversation and recorded nowhere else.
+   Read it before writing the report.
+4. `METHOD.md` — the log, kept as the work happened, and the report's raw material.
 5. `READER_NOTES_2026-09-07.md`, `STRATEGY_NOTES_2026-09-07.md` — from a Claude instance on the
    keeper's desktop, outside this room. It found two structural gaps this seat's own audit missed.
 
