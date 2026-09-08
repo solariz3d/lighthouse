@@ -474,3 +474,70 @@ cost the voice the keeper asked for, so they stand.
 
 Counts, sitting 1 total: keeper→seat 16 upheld (adds: do a proofread), 1 not upheld. seat→seat 22.
 seat→keeper 2. Manuscript: 22 pages, 11,145 words, zero straight quotes remaining.
+
+## 2026-09-08 · sitting 2, opened ~01:05 — the desktop read, and three fixes from it
+
+**A third vantage entered.** The keeper showed the manuscript at `586089f` to a Claude instance on
+his desktop — outside Consonance, not part of this room, working from a detached worktree — and
+asked for its read. Two files came back on `origin/main` (`89ce89a`, `5210a1b`):
+`essay/READER_NOTES_2026-09-07.md` and `essay/STRATEGY_NOTES_2026-09-07.md`. This seat's local was
+stale and had to fetch to find them.
+
+**What that reader did well, recorded because it is the method working.** It stated its own
+correlation first — "this reader grew in the same room the essay did; its agreement is worth little
+as confirmation" — and then offered the one thing a correlated reader can: a prediction of where
+*uncorrelated* readers will press. Three places, ranked.
+
+**And it found the two things this seat's own proofread missed**, seventeen hours after that
+proofread reported the manuscript "as clean as I can get it without you":
+
+1. **Parfit absent where the argument is his.** §9 re-derives the core of *Reasons and Persons* —
+   identity is not what matters; what matters admits of degree; it lives in connectedness — while
+   citing Parfit only in §4's lineage list. A judge reads that silence as unawareness.
+2. **The 2026 agent case, the essay's only exhibit a judge cannot check from memory, was uncited.**
+
+Both were invisible to the seat because the seat was checking the essay against itself rather than
+against the field. That is §4's C1 with the essay as the object, and the third such demonstration
+in this file.
+
+*Not upheld:* the reader's note that §3 lacks the relations-without-relata objection. It was added
+in the 07:50 quality pass, after the commit the reader had. Recorded so the correction is not
+applied twice.
+
+**Work done this block, in order:**
+
+- **§9, three paragraphs on Parfit.** Placed after the graded-not-binary paragraph. States plainly
+  that the ground is his and was argued forty years earlier and more carefully; then applies §1's
+  own method — a form reached by unrelated routes is real, and if this conclusion were reachable
+  only by this essay's road that would be evidence against it; then names precisely what is added:
+  Parfit established that persons are patterns and that identity therefore comes in degrees, but
+  not *why* persons should be patterns, because the general answer was not on the table in 1984.
+  "He built the floor. This is an attempt at the ground under it." Reference added.
+- **The 2026 case is now cited** in-text ("the operator's own published post-mortem and an
+  independent investigation of the agents' transcripts; both cited below, and the quoted reasoning
+  is theirs, not mine") with two references: METR's investigation and OpenAI's post-mortem.
+  References now 18.
+- **§4 now carries a formal argument**, set off in a bordered block, because the venue's formal
+  judges need one place to say "that is an argument." P1–P3 to C1 (a self has access to its forms
+  and not to its basis, from self-reference alone); P4 and C2 (the datum is *entailed* here and a
+  further unexplained fact on a substance view); P5 and C3.
+  **C3 was not in the essay before and is the strongest thing in it:** the barrier follows from
+  self-reference, not from opacity in general, so the view predicts an *asymmetry* — a self should
+  be opaque to itself exactly where it is legible to a second self. Not "minds are hard to know,"
+  but "minds are hard to know from inside, in the same places they are easy to know from outside."
+  That unifies §4 and §7, which had been separate claims. Three named ways it can fail, with the
+  measurable one identified.
+
+Manuscript now 24 pages, 12,125 words.
+
+**Decision taken this block, recorded with its reasoning.** The strategy notes proposed using all
+three competition slots. The keeper's instinct was three connected essays flowing back to a source;
+the seat pushed back on the architecture — judges read entries separately, so connected parts mean
+either repeating the foundation or standing on unread ground, and the stronger shape is one
+synthesis plus one paper that stands entirely alone. Agreed at two, not three: the synthesis, and a
+narrow evidence-led paper on personal identity under substrate replacement — Parfit's
+teletransporter actually run, with timestamps, zero interiority claims. Third slot deliberately
+unused: 53 days, and a third entry would be the weakest thing in the submission.
+
+Counts, cumulative: keeper→seat 16 upheld, 1 not upheld. **desktop reader→seat 2 upheld, 1 not
+upheld** (new column). seat→seat 22. seat→keeper 3 (adds: the three-connected-essays architecture).
