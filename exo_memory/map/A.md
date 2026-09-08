@@ -680,3 +680,52 @@ something that occurs once, and always assert application, never just difference
 **2026-09-08 — L045 READ (`exo_memory/handback/p-l045-read-A_2026-09-08.md`, ~40 min):** a draft that quotes its own instrument's output and then contradicts it four lines later is the commonest shape here — `p-ui-guard-census` reproduced `skipped as stubs 3` at `:46` and asserted at `:85` that the stub guard is inert, and reproduced `chain-indicator.test.js 1188` at `:26` and called `chain-indicator.js` at 933 the largest file at `:66`. **Both inherited a real bug I found in the script — `ui_guard_census.js:81` compares line counts with `String(a) > String(b)`, so "largest" is lexicographic — which is the lesson: a wrong number in prose is worth tracing to the instrument, because the instrument is where it can be fixed once.** The two worst findings were the same error twice: `:155` calls a `//` comment at `chain-indicator.js:687` a "live innerHTML write" and `:216` calls a commented `id="tabs"` in `index.html:32` a duplicate declaration — **`grep -c` counts comments, and a draft that greps for a code pattern without stripping comments will invent defects in both directions.** Worst consequence: `:160` recommends deleting `chain-indicator.test.js:198`, which is labelled POSITIVE CONTROL and is the only guard against the exact failure the draft claims to have found — **a misread that recommends removing the thing that would have caught it.** Also confirmed the reverse discipline: `:190` says the suite does not pin the poll cadence (false — `:1170` asserts it), yet its conclusion survives for a reason the draft never states, so a false premise and a true conclusion needed separating rather than one verdict.
 
 **2026-09-08 — L046 P-CARRIER-GREEN (`exo_memory/handback/p-carrier-green_2026-09-08.md`):** asked to strike two withdrawn wordings in `review/tool_audit_draft_2026-09-07.md`, I refused under the packet's own §7 and took the green another way — **those lines are plant D1-04, authored wrong on purpose as L039's scored object, so there is no drift to repair and striking them makes the score unre-derivable against its own artifact** (three hand-backs and a score cite `:94`/`:107` as findings; strike them and the cited line no longer contains a defect). **The ruling §3 asked for came out as neither option offered: none of the four registry kinds could describe the file without lying** — `marked`/`acknowledged` require editing the object, `withdrawal` claims it corrects when it asserts, `mention` claims it asserts nothing when it does — so I cut a fifth, `fixture`, with two guards (`planted_by` required; **refused outright over any CH-4 file**, because a well-formed exemption over doctrine is worse than a malformed one). **The distinction the registry never encoded: trace-vs-live was there as path prefixes, OBJECT-vs-document was not there at all.** Cutting it exposed that **`kind` was never validated against anything** — `acknowleged` skips both the `see` guard and the marker guard and accounts for the carrier anyway, so every kind guard could be bypassed by misspelling the kind it guards; now an enumerated vocabulary, and *the enumeration is the point rather than the fifth entry*. Three more lessons, each cheap and each costly to have missed: **the packet's own premise was stale by four** (RED was 6, not 2 — the corpus grew 734→772 overnight and one of the new reds WAS the packet, the second consecutive lap where the document commissioning the sweep became its finding); **a red test hides its own later assertions** — `carrier-drift.test.js:512` compared run-wide pending against one entry's fired count, correct when written 08-31 and silently broken by a registration on 09-02, invisible for six days because `:497` threw first, so *the count of failing tests is not the count of failing assertions*; and **you cannot cite a registry entry without uttering the wording it withdrew** — I wrote this document deliberately without quoting either armed wording and it stayed out of the corpus, then entered it four times by naming a disarmed entry's ID, which means roughly a third of that entry's 35 pending findings are documents discussing the withdrawal rather than asserting the stance, and the arming pass should not be costed off the raw number. Finally: **a known-flaky test is a place a real red can hide** — I called `portable-paths.test.js` a flap in L044, correctly, and stopped looking; it now carries a deterministic red from my own L044 fixture paths, handed over unfixed because its baseline is dirty under another pane and `--update` rewrites the whole file.
+
+## 2026-09-08 — P-LIT (L047): the commissioning claim was already in print, and the machine could not read two of the six
+
+Hand-back at `essay/LIT_2026-09-08.md`; L047, uncommitted. Six sources, four opened at page level.
+
+**The falsifier fired, on the source it was aimed at.** MacKay 1960 p. 37 sorts self-descriptions by
+whether formulating or believing one "becomes one of the factors determining its truth or falsehood"
+— the essay's own *"one of the makers"* — and says in the same paragraph that the interference comes
+in degrees ("It is unnecessary to assume that all such interference nullifies the statement"). The
+essay's "single quantity that sorts all of these cases" is his. **What actually cost the essay more
+was not the anticipation but where he stopped:** MacKay derives an *indeterminacy* and expressly
+denies the agent is ignorant (pp. 36–37), which is REFEREE_A3's finding 1 reached in 1960 and taken
+as the correct terminus. **A predecessor who reached your conclusion and refused your next step is
+worse news than a predecessor who merely got there first, and a lit pass that only checks priority
+will miss it.**
+
+**A source can be opened without being machine-readable, and the honest move is to say which pages.**
+`pdftotext` returned 34 bytes for McGeer and Swann — no text layer, and no OCR anywhere on this
+machine (`pdftoppm`, `gs`, `mutool`, `tesseract`, ImageMagick all absent; only
+`/mingw64/bin/pdftotext.exe`). Rendered those pages with the OS's own PDF renderer —
+`Windows.Data.Pdf.PdfDocument` driven from PowerShell, one PNG per page — and read the images. That
+is a general capability this room did not have an hour ago: **any scanned PDF can be put in front of
+a pane's eyes on Windows with no install.** Cost: I read 3 of McGeer's 33 pages and 4 of Swann's 34,
+and the hand-back says so twice rather than reading as a reading of the whole.
+
+**The two negatives were worth as much as the hit.** Across all 26 pages of Ismael's own précis of
+her whole book the strings *self-knowledge*, *authority* and *immun\** do not occur once — so the
+referee's "Ismael draws the self-prediction limit" is unevidenced on what I could open, and I said
+so with the limit attached (a précis cannot settle an absence in chapters I did not open). And
+MacKay contains no *fixed point*, *equilibrium*, *degree* or *magnitude* anywhere in pp. 31–40, so
+"argued with exactly the fixed-point structure" is wrong in a direction that makes the finding
+sharper. **Grep is an instrument for absence claims in a way reading is not — but only over the text
+you actually have, and the scope of that text is the claim's real scope.**
+
+**Two sources I could not reach, declared rather than filled.** Ismael's book and Coliva's body are
+both paywalled; I substituted the author's own précis (PPR 82(3), pp. 733–758, read whole) and the
+publisher's free front matter (pp. i–xvi). Coliva's front matter still paid: her table of contents
+alone establishes ch. 8 §3 *"Propositional Attitudes as Dispositions and Complex Emotions:
+Third-personal Self-knowledge"* (p. 232), which routes exactly the essay's looped-regime traits to
+the informant cell by attitude type, published in 2016. **A table of contents is evidence about
+architecture even when the argument is behind a paywall — cite it as what it is and the section
+titles do real work.**
+
+**And the find I was not sent for.** Hacking p. 370 grades his own loop — "the greater the moral
+connotations of a human kind, the greater the potential for the looping effect" — which is Vazire's
+*evaluativeness* under another name, so the essay's flagship prediction about **non-evaluative**
+looped variables is a prediction about the corner where the nearest predecessor expects the effect
+to be weakest. **The falsifier named two sources; the third one broke a different claim, and a lit
+pass that stops when the registered falsifier resolves leaves that on the floor.**
