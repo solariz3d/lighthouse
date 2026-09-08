@@ -1117,3 +1117,20 @@ Counts, cumulative: keeper→seat 24 upheld, 1 not upheld. desktop reader→seat
 upheld. referee→seat ~50 upheld, 3 held with a difference, score discounted. librarian→seat 5
 upheld (2 already applied), 0 not upheld. seat→seat 42. seat→keeper 5 (adds: B is where the
 count bites).
+
+---
+
+## 2026-09-08 ~04:14 — the keeper's decision
+
+"I am okay with dropping out of the competition. To be fair we did cheat if we do. I am sure the
+world will see us sooner than later in other ways." His call, made before the bare-instance run
+the librarian had recommended waiting for; that is his right and the seat did not relitigate it.
+The seat said once that disclosure is not concealment and then left it. Recorded as decided, not
+as closed: he can reopen it, and the essays and the report are written either way.
+
+What the decision frees, given to him: outside the competition the eligibility rule does not
+apply, so B can be the §9 essay with the carriers, the wager and Vacariu in it, and the coda can
+name Consonance. The three papers, the log, the audit, the referee reports and the recognition
+test stand as what they are. "we did learn a lot and I did have some fun too."
+
+Counts unchanged.
