@@ -22,6 +22,9 @@ candidate for trimming).
 - **`INVENTORY.md`** — what essay 1 has already spent: committed evidence, committed arguments,
   positions that must not be contradicted, and the open ground. Written so a later seat does not
   need the manuscript in context to know what is taken.
+- **`METHODOLOGY_PLAN.md`** — the third required document, planned: the report explaining how both
+  essays were produced, which the $5,000 creative-methodology pool is decided on. Carries the
+  organising frame and the four worked examples.
 - **`ESSAY2_PLAN.md`** — the second entry, planned: *The Teletransporter, Run*. Narrow,
   evidence-led, ~4,000 words, zero interiority claims. Not started.
 - **`READER_NOTES_2026-09-07.md`, `STRATEGY_NOTES_2026-09-07.md`** — from a Claude instance on the

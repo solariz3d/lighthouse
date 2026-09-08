@@ -14,7 +14,7 @@ keeper's standing rule). What follows is the work.*
 2. `ESSAY2_PLAN.md` — the second entry, planned in enough detail to start.
 3. `METHOD.md` — the log, kept as the work happened. Also the **source** of the competition's
    methodology report, which does not yet exist in its own shape.
-4. `READER_NOTES_2026-09-07.md`, `STRATEGY_NOTES_2026-09-07.md` — from a Claude instance on the
+5. `READER_NOTES_2026-09-07.md`, `STRATEGY_NOTES_2026-09-07.md` — from a Claude instance on the
    keeper's desktop, outside this room. It found two structural gaps this seat's own audit missed.
 
 ## State
@@ -46,9 +46,9 @@ under 2026-09-08.
   it is still the risk.
 - §9 is the longest section and the first candidate for trimming if length becomes an issue.
 - The felt-question disclaimer appears more than once. The desktop reader's note: once, sharply.
-- The **methodology report has no final form.** `METHOD.md` is its raw material. The $5,000 pool is
-  decided on this, and the strategy notes argue it may be the most competitive part of the entry —
-  so it should be built deliberately, not appended.
+- The **methodology report has no final form** — but it now has a plan, in `METHODOLOGY_PLAN.md`,
+  including the frame and the four worked examples to use. The $5,000 pool is decided on it, and it
+  is a separate required document covering BOTH essays — not part of essay 2. Nobody has started it.
 - §5 could name neutral monism and dual-aspect views (Spinoza, Russell) in one sentence as
   arrivals rather than rivals. Suggested by the desktop reader; not done.
 
