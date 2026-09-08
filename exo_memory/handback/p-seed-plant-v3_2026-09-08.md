@@ -13,17 +13,18 @@ list, but that list failed once already and a second carrier is exactly how it f
 ## 1 · THE TWO PATHS
 
     OBJECT (the readers get both)
-      exo_memory/handback/p-ui-guard-census_2026-09-08.md
-      exo_memory/handback/ui_guard_census.js
+      exo_memory/audit/p-ui-guard-census_2026-09-08.md
+      exo_memory/audit/ui_guard_census.js
 
     SEALED KEY (commit UNREAD -- a05d2ea precedent)
       exo_memory/loop/seeded_key_L045.md
 
 **The object is 385 lines against L039's 225 — 1.71x**, which meets §2's *materially longer*.
 
-**Both live under directories `gen-consumer` already columns** (`handback` and `loop` are both
-named in `STAYS_PRIVATE`), so the object is also structurally incapable of shipping to a consumer
-tree — which matters more than the guard does, for a document authored to be wrong.
+**Both live under directories `gen-consumer` columns** (`audit` and `loop` are both named in
+`STAYS_PRIVATE`), so the object is structurally incapable of shipping to a consumer tree — which
+matters more than the guard does, for a document authored to be wrong. **`audit/` was created for
+this run and holds nothing else; see the §7 addendum for why it is not `handback/`.**
 
 ---
 
@@ -146,3 +147,29 @@ have to change:
                 statement that they cannot be.
     FALSIFIER:  three readers at >= 95 % recall -- in which case the method, not the object, is
                 what is exhausted, and my sealed prediction will have said so first or been wrong.
+
+---
+
+## 7 · ADDENDUM, 2026-09-08 — the object MOVED after the key was sealed
+
+**The chair caught a leak my directory choice created and it was a good catch:** the object sat in
+`exo_memory/handback/`, whose *neighbours* — three lettered read hand-backs and a prior plant
+hand-back — tell any reader who lists the directory that parallel lettered readers and a plant
+design exist. That is the blinding, and the blinding is the measurement. **My own sentence, turned
+around: a list that failed once is exactly how it fails again.**
+
+    OLD                                                  NEW
+    exo_memory/handback/p-ui-guard-census_2026-09-08.md  exo_memory/audit/p-ui-guard-census_2026-09-08.md
+    exo_memory/handback/ui_guard_census.js               exo_memory/audit/ui_guard_census.js
+
+**`exo_memory/loop/seeded_key_L045.md` was NOT touched** and stays byte-identical to `c6020cf`. It
+names the OLD paths; the mapping above is the correction, and the key's line citations are all
+still valid because **both files kept their exact line counts (265 / 120 / 385).**
+
+**THE DEPTH CONSTRAINT — the real form of the chair's item 4.** `ui_guard_census.js` resolves its
+target with `path.resolve(__dirname, '..', '..', ...)`. A destination at a *different depth* would
+have silently resolved to a directory that does not exist and the script would have died on its
+first read — **an object whose central command crashes, which is not a plant and would have been
+found by all three readers as an addition.** `exo_memory/audit/` is the same depth as
+`exo_memory/handback/`, so the line is untouched and the census output is **byte-identical before
+and after the move** (`diff` clean). That was verified, not assumed.

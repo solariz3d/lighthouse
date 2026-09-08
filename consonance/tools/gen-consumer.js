@@ -635,6 +635,7 @@ const STAYS_PRIVATE = {
   '_skeleton.py': 'an authoring helper for this record\'s entry format',
   'new_entry.py': 'ditto',
   'attic': 'the raw ore, kept and never a daily cue — maintenance law 3',
+  'audit': 'a lap\'s object under review — working papers of this committee, like handback/, kept in their own directory so a review holds one object and nothing else',
   'handback': 'per-packet working papers of this committee',
   'librarian': 'per-seat, per-machine, by its own README',
   'loop': 'this record\'s registrations and rulings',
