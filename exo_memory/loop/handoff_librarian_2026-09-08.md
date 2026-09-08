@@ -33,3 +33,11 @@ Dev repo (`solariz3d/lighthouse`, PRIVATE) level with GitHub at `babe926`; tree 
 Collate off the counter when it reads N of N — the ring is a wake, the human is never the trigger. Read at the file, never at the ring. Every number beside its command; a figure with no command is hand-made (three of mine in one score were, WRONG 77–79). **Cite by opening, never by position** (WRONG 81). Never commit a copy of a master (WRONG 80). A turn that ends on "landing now" without the commits is the stall — nudge once. Dev is pushed at every commit; consumer never without the word. The Third Place has no address: catch-ups are files in `essay/`, and the keeper carries. WRONG column this machine: **83, hand-carried** (see the counter item above).
 
 *A trace to re-run, not a doctrine to believe.*
+
+## ADDENDUM 07:56 — the keeper's order for tomorrow night, verbatim
+*"tomorrow we will finish the lap the orch stopped, then work on making the synched consonance."*
+
+1. **Finish the lap the chair stopped.** The chair ended the run at the keeper's 07:53 word with one packet written and deliberately unsent: `loop/packet_attribution_2026-09-08.md` (P-ATTRIBUTION, to BRAVO — the provenance tool's first live milestone attributed the four bare-draft files to this desk via `babe926`; a corrections mechanism, since history is pushed). Chair's handoff: `loop/handoff_chair_2026-09-08.md`. Tomorrow: the chair sends it, BRAVO hands back to this desk by `call_librarian`, this desk collates and rings. Dependent items that ride with it: C's two factual edits and B's boundary are the Third Place's, by file (`essay/BARE_ARRIVAL_SCORE_2026-09-08.md`).
+2. **Then the synced Consonance.** Open as a lap from `loop/one_house_two_machines_idea_2026-09-08.md`; the first packet is the measurement in §3.3/§5, not the guard: rotate `board.jsonl` by month, exclude the raw `.log` captures, size the state repo, time a pull on the desktop. The repo is the transport (keeper, 07:38); transcripts stay machine-local; warm-resume carries the seat.
+
+Score landed at `210dabc` (this desk, pathspec). The lighthouse repo's branch is **`main`** — "dev" in this seat's notes names the repo, not a branch.
