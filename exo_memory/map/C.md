@@ -1158,3 +1158,5 @@ and launch happens here first, and that call is the keeper's, not the schedule's
 Hand-back: `exo_memory/handback/p-composer-anchor_2026-09-09.md` — §5 is the finding that matters
 and §7 item 3 names the hazard this fix does NOT close (restored scrollback with a covered
 composer, identical to shipped, unmeasured for want of a real capture).
+
+**2026-09-09 — P-SEAT-SWEEP (D055):** the startup sweep archived the librarian's synced tail two seconds after the launcher installed it (keep-set named only Main; no fixed seat is ever in `panes.json`) and `append_synced_tail`'s missing-file arm returned in silence, so nothing said a tail had been expected — both fixed in `main.rs`, 3 red-first tests, 6/6 mutants caught, suite 512→515 passing with one pre-existing unrelated red; the stronger ordering change was REFUSED with the argument, and the acceptance test is UN-RUN because no relaunch happened → `exo_memory/handback/p-seat-sweep_2026-09-09.md`.

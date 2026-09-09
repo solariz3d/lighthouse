@@ -853,11 +853,24 @@ fn plog(msg: &str) {
         let _ = writeln!(f, "{ts} {msg}");
     }
 }
-// startup sweep: retire captures for panes that are no longer kept (and aren't Main). Real
-// conversations get archived (recoverable), ephemeral leftovers dropped. read_kept() is truth.
+// startup sweep: retire captures for panes that are no longer kept (and aren't a FIXED-ID SEAT).
+// Real conversations get archived (recoverable), ephemeral leftovers dropped. read_kept() is truth
+// for committee panes and only for those.
+//
+// **THE THREE FIXED SEATS ARE NEVER IN `panes.json`, AND ONLY MAIN WAS SPARED.** Measured on D,
+// 2026-09-09: the launcher installed the librarian's synced tail at 08:59:04 and this sweep
+// archived it at 08:59:06 — `data/persist.log` "retire pane=0c0c0c0b-… -> ARCHIVED (had history)",
+// two lines under the MIGRATE that had just installed it. Proven, not inferred: the archived file
+// hashes to a10d1d0e, byte-identical to the state tree's LIVE blob for that seat. The seat then
+// woke with no past at all. A sweep whose keep-set is a subset of the seats the migrate wakes from
+// tail will always eat the difference, so the keep-set is the whole seat list — see
+// `fixed_id_seats`, and `the_startup_sweep_keeps_every_fixed_id_seat_not_only_main` which fails if
+// a fourth seat is added here and not there.
 fn gc_captures() {
     let mut keep: std::collections::HashSet<String> = read_kept().into_iter().map(|k| k.pane).collect();
     keep.insert(MAIN_SID.to_string());
+    keep.insert(LIBRARIAN_SID.to_string());
+    keep.insert(THIRD_PLACE_SID.to_string());
     let mut retire: std::collections::HashSet<String> = std::collections::HashSet::new();
     if let Ok(rd) = fs::read_dir(capture_dir()) {
         for e in rd.flatten() {
@@ -9126,7 +9139,35 @@ fn sync_at_launch() -> (sync_launch::Verdict, Vec<sync_launch::RetireOutcome>) {
 /// about the room. So the trim happens in memory only and the master is never touched.
 fn append_synced_tail(intake: &mut String, sid: &str) {
     let path = capture_text_path(sid);
-    let Ok(transcript) = fs::read_to_string(&path) else { return };
+    let transcript = match fs::read_to_string(&path) {
+        Ok(t) => t,
+        // **NO FILE IS NOT NO PAST, and this arm used to `return` without a word.** That silence
+        // is what cost the librarian seat its thread on D, 2026-09-09: the sweep below had
+        // archived the tail the launcher installed two seconds earlier, this read failed, and the
+        // seat woke blank with NOTHING in `persist.log` to say a tail had been expected at all —
+        // one MIGRATE TAIL row for Main and no row of any kind for the seat that lost the hour.
+        // The keep-set fix in `gc_captures` closes that particular disappearance; it does not
+        // close this one, because a read can fail for reasons nobody has met yet. So take the
+        // POINTER-ONLY path below: write the row, and tell the seat where its past is instead of
+        // letting it believe it has none.
+        Err(e) => {
+            plog(&format!(
+                "MIGRATE TAIL sid={sid} tail=ABSENT ({e}) intake={} -> POINTER ONLY",
+                intake.len()
+            ));
+            intake.push_str(&sync_launch::prior_conversation_pointer(&path, 0));
+            // The pointer's own wording assumes the file is THERE and merely too big. It is not,
+            // so the seat is told the difference and where the sweep would have put it — a
+            // pointer that misdescribes the disk is the same failure wearing a helpful face.
+            intake.push_str(
+                "\nTHAT READ FAILED — the file is not at that path right now. Look beside it in \
+                 `captures/archive/`: a capture whose pane is not in `panes.json` is archived \
+                 there, recoverable, and a tail installed seconds before a sweep can look exactly \
+                 like a leftover to it.\n",
+            );
+            return;
+        }
+    };
     if transcript.trim().is_empty() {
         return;
     }
@@ -9169,6 +9210,123 @@ fn append_synced_tail(intake: &mut String, sid: &str) {
         intake.len()
     ));
     intake.push_str(&sync_launch::prior_conversation_section(&carried, interval.as_deref()));
+}
+
+/// THE TWO HALVES OF ONE MORNING, D 2026-09-09, made executable.
+///
+/// The launcher installed the librarian's synced tail (`data/persist.log`, 08:59:04), the startup
+/// sweep archived it (08:59:06), and the seat woke with no past and no row saying it should have
+/// had one. Two defects, and fixing either alone leaves the other: the sweep's keep-set named only
+/// Main, and `append_synced_tail`'s missing-file arm returned in silence. Both are pinned here
+/// against the REAL functions rather than against the source text, because a scan for a `plog`
+/// call cannot tell you the row is ever written.
+#[cfg(test)]
+mod migrate_tail_and_sweep_tests {
+    use super::*;
+
+    /// A data AND instances root of this test's own. `fixed_id_seats()` creates the seat cwds as
+    /// a side effect, so leaving `instances` empty would make it build them relative to the
+    /// checkout — a test that writes into the repo to prove the repo is right.
+    fn scratch(tag: &str) -> PathBuf {
+        let root = std::env::temp_dir().join(format!("consonance_{tag}_{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: root.join("room").display().to_string(),
+            instances: root.join("instances").display().to_string(),
+            data: root.join("data").display().to_string(),
+        });
+        root
+    }
+
+    /// **THE SWEEP'S KEEP-SET IS THE WHOLE SEAT LIST, not Main and two strangers.**
+    ///
+    /// Driven off `fixed_id_seats()` — the same list the migrate retires and re-wakes from tail —
+    /// so a fourth seat added there and forgotten here turns this red instead of losing its
+    /// thread on the next migrate.
+    #[test]
+    fn the_startup_sweep_keeps_every_fixed_id_seat_not_only_main() {
+        let _g = DirsGuard::take();
+        let root = scratch("sweep_seats");
+        let seats = fixed_id_seats();
+        // not a fixed seat and not in panes.json: the leftover the sweep exists for
+        let stranger = "5add1e00-0000-4000-8000-0000000005ad";
+        let body = "\u{276f} a real exchange\n\nand its answer\n\n".repeat(20); // >200B: archived, not dropped
+        for (_, sid, _) in seats.iter() {
+            fs::write(capture_text_path(sid), &body).expect("seed a seat's tail");
+        }
+        fs::write(capture_text_path(stranger), &body).expect("seed a leftover");
+
+        gc_captures();
+
+        for (role, sid, _) in seats.iter() {
+            assert!(
+                capture_text_path(sid).is_file(),
+                "the sweep archived the {role} seat's tail. No fixed-id seat is ever written to \
+                 panes.json, so a keep-set naming only Main eats the other two — which is what \
+                 happened to the librarian on D, one second after the launcher installed that \
+                 exact file for it to wake from."
+            );
+        }
+        assert!(
+            !capture_text_path(stranger).is_file(),
+            "the sweep kept a pane that is neither a fixed seat nor in panes.json — it has \
+             stopped sweeping, and a sweep that keeps everything satisfies the assertions above \
+             for the wrong reason"
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// **ABSENT IS NOT SILENT.** The arm that could not read the tail must do what the arm that
+    /// could not fit it already does: write the row, hand over the pointer.
+    #[test]
+    fn a_synced_tail_that_is_not_on_disk_points_the_seat_at_it_instead_of_waking_it_blank() {
+        let _g = DirsGuard::take();
+        let root = scratch("absent_tail");
+        let path = capture_text_path(LIBRARIAN_SID);
+        let _ = fs::remove_file(&path);
+        assert!(!path.exists(), "premise: the tail is not on disk");
+
+        let mut intake = String::from("the shell so far\n");
+        append_synced_tail(&mut intake, LIBRARIAN_SID);
+
+        assert!(
+            intake.contains("PRIOR CONVERSATION") && intake.contains(&path.display().to_string()),
+            "the seat was handed nothing and told nothing — it wakes believing it has no past, \
+             which is the failure this room keeps paying for. Intake: {intake:?}"
+        );
+        let log = fs::read_to_string(data_dir().join("persist.log")).unwrap_or_default();
+        assert!(
+            log.contains(&format!("MIGRATE TAIL sid={LIBRARIAN_SID} tail=ABSENT"))
+                && log.contains("POINTER ONLY"),
+            "nothing in persist.log says a tail was expected and did not read, so the next hour \
+             lost to this gets reconstructed from file timestamps again. Log: {log:?}"
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// The other direction, and the reason the arm above is an arm and not an unconditional
+    /// pointer: a tail that reads and fits still arrives AS THE CONVERSATION.
+    #[test]
+    fn a_synced_tail_that_fits_still_rides_as_the_conversation_itself() {
+        let _g = DirsGuard::take();
+        let root = scratch("present_tail");
+        let body = "\u{276f} what did we decide\n\nthe keep-set is the whole seat list\n\n";
+        fs::write(capture_text_path(LIBRARIAN_SID), body).expect("seed the tail");
+
+        let mut intake = String::from("the shell so far\n");
+        append_synced_tail(&mut intake, LIBRARIAN_SID);
+
+        assert!(
+            intake.contains(body.trim()),
+            "the tail read and fit but was not carried — the absent-file arm must not swallow \
+             the path that works. Intake: {intake:?}"
+        );
+        assert!(
+            !intake.contains("THAT READ FAILED"),
+            "a tail that read fine was reported to the seat as absent"
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
 }
 
 #[cfg(test)]
