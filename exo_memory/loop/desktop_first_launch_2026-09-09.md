@@ -61,6 +61,29 @@ and takes about a second. It answers itself.
 
 ---
 
+---
+
+## 0.5 · WHAT CHANGED AFTER THIS WAS WRITTEN — chair, 07:58, four stale facts
+
+**B wrote this at 07:00. Four numbers in it have moved since, all in expected-output lines. B's
+prose and the failure table are unchanged and still right — only these four.**
+
+| section | it says | it is now |
+|---|---|---|
+| §3 step 2 | pull to `75c698a` or later | HEAD is **`3fee80c`**. `75c698a` is still the correct *minimum*; anything at or past it has the sync code. |
+| §4 step 3 | `--verify` prints `pushed by L at 2026-09-09T12:17:10.533Z` | **`2026-09-09T13:54:33.666Z`**, 47 files. The word to read is still **`pushed by L`** — if it says `D`, stop. |
+| §7 step 6 | `in sync? L faf86d4` | **`in sync? L a4cb9fe`**. Same question mark, same meaning. |
+| §8 step 7 | `close.js` UNVERIFIED, may not exist | **It exists and it has been run.** A shipped it; the chair ran a real close at 13:54:33Z and it returned `CLOSED`. **Use `close.js`, not the raw `--push`.** It refuses to say closed over an unpushed or torn state, which the raw push does not. |
+
+**One thing `close.js` does NOT catch, from A's own hand-back:** `state-sync --push` returns
+`NOTHING_CHANGED` and **exits 0 over a remote that is BEHIND**. So a suspiciously clean close is that
+hole, not proof. On the desktop this should not bite — you will be pushing new state, not nothing.
+
+**§11 item 7 is closed** (close.js exists). **Items 1–6, 8 and 9 all still stand**, and item 5 is
+the one that matters: **the `MIGRATE` arm has still never executed anywhere in the world.** Your
+step 5 is its first run.
+
+
 ## 1 · PRE-FLIGHT — five things, one minute, before anything changes
 
 Open **PowerShell** (not cmd). Paste this whole block:
