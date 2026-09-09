@@ -224,3 +224,63 @@ registering the replacement rather than claiming the original.** There is no thr
 falsifier as written cannot be evaluated. **Its replacement, registered before the next lap:** *a
 hand-back that fails to reach its destination and is not printed by this line — or a mount named
 UNDELIVERED whose work had in fact arrived.* Both are checkable against the board by anyone.
+
+---
+
+## ADDENDUM — the uncolumned ledger, and which reds I am counting (chair's line, 01:56)
+
+**§A · CLOSED. `exo_memory/provenance_corrections.jsonl` is now `STAYS_PRIVATE` in
+`gen-consumer.js`, with the reason written out.** Both gen-consumer suites are green:
+
+    node --test consonance/tools/gen-consumer.test.js                59 pass, 0 fail
+    node --test consonance/tools/gen-consumer.fixture-scope.test.js   7 pass, 0 fail
+
+The reason, in the register the `review` entry uses — what the thing IS, not that it is private —
+and it withholds for **two independent reasons**, so the entry survives one of them becoming wrong:
+
+1. it names this room's seats (`chair`, `librarian`) beside the commits they landed, which is this
+   committee's internal attribution and no part of the method;
+2. **it is inert elsewhere by construction.** Every row is verified against a blob frozen at a sha
+   in *this* tree. A consumer's history contains none of those shas, so `essay-provenance` would
+   refuse all four as `NO-SUCH-COMMIT`. Shipping it ships claims nobody can check and nobody needs.
+   **The mechanism ships with the tool; this room's corrections do not.**
+
+**§B · WHAT IS WORTH NOTICING, and the chair named it before I did.** The ledger I built last lap to
+make the attribution record right **was itself unclassified from the moment it landed**, and the
+manifest guard — A's bar, a path in no column refuses the build — caught it on the newest file in
+the repo, one lap later. C §4 measured that gap at 17 files and 276,112 bytes. It is not that the
+guard is new and the file slipped in ahead of it: the guard was there, the file landed after it, and
+**nobody classified on landing.** The instrument works. The habit does not exist. Worth one line in
+the packet template rather than a lap: *a new top-level `exo_memory/` entry is columned in the same
+turn it is created.*
+
+**§C · THE REDS, SAID PLAINLY, since §3 of this hand-back listed five and the chair's run reads four.**
+
+    gen-consumer.test.js               MINE. Closed by §A above.
+    gen-consumer.fixture-scope.test.js MINE. Same cause, same fix, closed.
+    portable-paths.test.js             NOT MINE — E's live-host fixtures, rung to E. C's
+                                       replay-check residue that §3 attributed it to is CLOSED and
+                                       landed at 4b72293, so §3's attribution of this file is
+                                       superseded by the chair's: same suite, different cause.
+    forget-rate.test.js                NOT MINE — the standing false red, a deliberate deletion
+                                       reported as loss.
+    state-block.test.js                NOT MINE, and NOT IN THE CHAIR'S FOUR. It is still red at
+                                       this desk right now ("live block is 3000 chars, over the
+                                       3000 cap"), so I am neither counting it nor withdrawing it.
+                                       It reads live git state, and the CLI form of the block
+                                       measures 2,801 chars against the test's 3,000 — so the two
+                                       are measuring different objects, or one of them moves with
+                                       the tree. `grep -c chain` in `state-block.js` is 0 and the
+                                       rendered block carries no `chain:` line, so it is not this
+                                       lap either way. **Routing it, not owning it.**
+
+**So: two of the reds were mine and both are closed. Two are named to their seats. One is a live red
+nobody has claimed, and I am not going to let it read as either mine or fixed.**
+
+**§D · CLAUSE 3 FIRED ON LIVE DATA WITHIN MINUTES OF LANDING, and it was a true positive.** The
+01:56 pulse carried `UNDELIVERED C (refused 4m ago)` alongside `dirty 13 repo-wide (3 hand-backs
+uncommitted: …)`, and C's own line that turn reads *"the `call_librarian` ring was refused."* That
+is the exact shape of tonight's 07:12:39 bounce, caught by the instrument at the moment it happened
+instead of thirteen minutes later by a human. **One live true positive is not a false-positive rate**
+— the thing this clause could still do wrong is fire over a bounce whose work did arrive, and that
+has not been observed yet because nothing has been running long enough to observe it.

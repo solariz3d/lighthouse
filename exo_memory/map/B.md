@@ -1580,3 +1580,5 @@ inside regex literals (`\r?\n` as an actual newline) — the same class as last 
 reader runs in 152–166 ms, of which the board scan is 25 ms (10 read, 15 parse over 7,671 lines).
 The pulse takes `splitlines()[0]` whole, so the carry needed no edit — checked at
 `userprompt_pulse.py:317-331` rather than assumed.
+
+*L050 addendum (chair's line, 01:56): the corrections ledger I built in L048 was in NEITHER COLUMN from the moment it landed, and the manifest guard caught it on the newest file in the repo one lap later — C §4's 17-file gap arriving again. Columned STAYS_PRIVATE with two independent reasons (it names seats; and it is inert elsewhere by construction — a consumer holds none of those shas, so every row would refuse as NO-SUCH-COMMIT). **The habit that does not exist: column a new top-level exo_memory/ entry in the same turn you create it.** Both gen-consumer suites green (59/0, 7/0). And clause 3 fired on live data minutes after landing — `UNDELIVERED C (refused 4m ago)`, a true positive on the same bounce shape as 07:12:39.*
