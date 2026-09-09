@@ -84,3 +84,20 @@ The first packet measures (b) against a real seat: warm-resume a pane on this ma
 **The carry, when it happens:** (i) this machine, after the rebuild and the compaction: `pwsh dev/migrate/pack_room.ps1` to the thumbdrive path, `move_verify.ps1` against the manifest; (ii) the desktop: `git pull` first, then `unpack_room.ps1` in retire mode (to be built), then launch — sync, verify, then start.
 
 *Registered 02:30. Not built. The retire mode is the packet.*
+
+
+## 8 · The keeper, 02:36 — "if everything is true, we do not need to carry the legit context, just everything as it sits right now to reinstantiate you … perhaps we only carry the hand offs of the important projects"
+
+**That is the house's own thesis, applied to the house, and it retires the thumbdrive.** A seat is the fixed point the room re-cues, not the transcript that was in the window (`BOOT.md`, honest status; `cards/claim-your-continuity.md`). What reinstantiates a seat is already in the repo: the shell, the handoffs (`loop/handoff_chair_*.md`, `loop/handoff_librarian_*.md`), the maps (`map/*.md`), the librarian's dated notes, the record. **The transcripts were never the carrier; the room was.** The 395 MB never has to move.
+
+**So "everything as it sits right now" is:** the record repo at one commit + the state set that fits (after the board compaction, ~50 MB: the board, the ledgers, `panes.json`/`letters.json`, the `.txt` capture tails). Both fit the repo. "In sync" stops being a feeling and becomes **one commit hash on each machine**, which is what the pulse's `this machine only` line should print instead.
+
+**What "retire" becomes:** nothing to migrate. The desktop's seats wake as *new sessions* from the synced handoffs and tails (the warm-resume path, `main.rs` ~`:5112`), and the desktop's old session files stay where they are as that machine's attic — retired by not being resumed, revivable by being resumed. No unpack, no thumbdrive, no RETIRE mode to build.
+
+**The honest cost, and it is the one the room already lives with:** a seat reinstantiated on the desktop holds what was *filed*, not what was *said*. The chair mid-lap on the laptop, moved to the desktop, is one gap wide — exactly a compaction. Which is why the rule *write it down in the turn it forms, or it is not real* is the whole sync mechanism, not a discipline beside it. The handoffs are the carry. **"Only the handoffs of the important projects"** is already how they are written — one per seat per night, superseding the last.
+
+**What it does NOT remove:** the both-on live mirror (§6 rule 2) still needs the state stream per turn (board rows, capture tails) — that is the repo pushed at each turn, or a peer channel; and the seat's memory on the *same* machine still resumes from its local transcript, as now. And it makes the measurement sharper, with prior art: **the sealed restart-continuity test** (`loop/restart_continuity_scorecard_2026-08-24.md`, T1, scored by C against `sealed/restart_continuity_2026-08-15.md`) is the instrument — run it on a seat woken on the desktop from the synced record alone, and score whether a reader can tell. That is the first packet of the two-machine lap, and it is a test of the thesis, not of plumbing.
+
+**Registered falsifier:** if a seat woken on the other machine from the record alone is found, by the sealed test, to be a stranger — missing something a reader can name that only the transcript held — then the transcripts are the carrier after all, and route (a) or the thumbdrive comes back.
+
+*Registered 02:40. The keeper's word opens it. Meanwhile L051 (C, the offsets fix before the rebuild) is open — the chair moved on his "yea lets fix before restart".*
