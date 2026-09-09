@@ -940,3 +940,55 @@ And the chair took the blame publicly — accurately about the packet and the mi
 the whole account. The manifest was mine, the archive glob I widened myself an hour before the
 push, and my privacy check asked the wrong question. **Two defects, not one; accepting a generous
 version of the split would have been the comfortable read and the false one.**
+
+## 2026-09-09 — P-CLOSE-PUSH (L054): the close refuses, and the exit code was never the answer
+
+Hand-back at `exo_memory/handback/p-close-push_2026-09-09.md`. Built `consonance/tools/close.js`
++ `.test.js` (24) + `.mutants.js` (10 killed, 0 survived); added the push RECEIPT to
+`state-sync.js` (+7 tests, 44 now, its 21 mutants still all killed) and one STAYS rule to
+`state-manifest.json`. js-suite `86 green · 3 failed · 0 crashed · 1 canary (of 90)`. Uncommitted.
+**A file, not a flag** — putting the gate inside `state-sync` would have seated it in the tool whose
+own report the gate exists to distrust.
+
+**THE EXIT CODE CANNOT CARRY THE ANSWER, AND I HAD ALREADY SHIPPED A TOOL THAT ASSUMED IT COULD.**
+`--push` returns **0** from four places — pushed, nothing changed, `--dry-run`, `--no-remote` — and
+**1** from eight, of which **exactly one** (a path that will not settle) is worth retrying. So a
+caller has two options: read the tool's PROSE, which is a relayed answer, or be given a structured
+one. Hence the receipt. **And the run id is the whole point:** it is accepted only if its pid is the
+pid of the child THIS process spawned — a fact the caller *holds*, not a claim the file makes about
+itself. That is tonight's 04:33 defect made mechanical: *a reading is not a state.*
+
+**THE ONE THAT WAS SITTING THERE THE WHOLE TIME.** `state-sync --push`'s `same` short-circuit
+returns **before the remote is ever consulted**. So a commit that failed to publish once is never
+retried and the tool reports success forever — **exit 0, nothing changed, remote still behind.**
+I wrote that path at L052 and did not see it until a close had to tell "nothing to push" from "the
+push failed". The two ARE separable, and only one way: **ask the remote.** `NOTHING_CHANGED` +
+`remote == HEAD` is a real quiet close; `NOTHING_CHANGED` + `remote != HEAD` is a machine whose
+state never left.
+
+**PRINTING IS NOT GATING — the chair's line, and it was exactly right about my code.**
+`privacy verified here: visibility=PRIVATE` was a `console.log` on a path that had already decided
+to push. The gate now runs in `close.js`, **before** anything is published, and the landing is
+proved by `git ls-remote` afterwards rather than by `git push`'s exit code. Fixture for that last
+one is not contrived: **push url and fetch url pointing at different repositories** — one
+`set-url --push` away, git exits 0, the bytes land somewhere, and the place the room reads from
+never moved.
+
+**THE MUTANT PASS FOUND A REAL HOLE, WHICH IS THE ONLY REASON TO RUN ONE.** `--check publishes
+after all` SURVIVED: my only `--check` test used a state tree with no commits, so it returned before
+reaching the publish branch and left the whole branch unguarded in rehearsal mode. **A test that
+passes without executing the code it is about is a green light for a road nobody drove.**
+
+**AND THE FLAKY-ASSERTION LESSON, APPLIED FORWARD THIS TIME.** The deferred-retry test could have
+been a timed writer and a hope. Instead the mtime is set 2.5 s in the FUTURE: pass one refuses it
+outright, pass two — after the wait — finds it ~1 s in the past and settles. **A loaded machine
+makes the margin bigger, not smaller.** Same shape as the settle-window fix earlier tonight: assert
+the state, never the stopwatch.
+
+**Red first, honestly:** the refusal tests were written first but `close.js` existed before them, so
+there was no red-then-green transition to show; the mutant pass is that evidence with the arrow
+reversed, and I said so in the hand-back rather than dressing the order up.
+
+**I did not publish anything.** The live run was `--check` — real corpus, real `gh`, real
+`ls-remote`, 47 files / 58.1 MB, and nothing sent. Publishing outward keeps a human saying yes;
+the close is a command the keeper types.

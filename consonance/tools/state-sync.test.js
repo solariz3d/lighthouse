@@ -50,6 +50,7 @@ const MIN_MANIFEST = {
     // caught their absence here as UNPLACED, which is the checker doing exactly its job on the
     // tool that writes them.
     { glob: 'state-sync.status.json', class: 'STAYS', why: 'per-machine as-of view' },
+    { glob: 'state-sync.push.json', class: 'STAYS', why: 'the receipt of THIS machine\'s last push' },
     { glob: 'sync-completion.json', class: 'STAYS', why: 'did THIS machine verify' },
     { glob: 'attic', class: 'STAYS', why: 'holds displaced bytes' },
     { glob: 'attic/pre-sync-*', class: 'STAYS', why: 'one backup per install' },
@@ -605,6 +606,72 @@ test('state-manifest.js still runs as a CLI after being made requirable', () => 
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   assert.ok(r.includes('TRAVELS ='), r);
+});
+
+// ═══ the receipt — what a CALLER can gate on ═══════════════════════════════════════════════
+//
+// The exit code cannot carry this. 0 comes back from pushed, nothing-changed, --dry-run and
+// --no-remote; 1 comes back from eight refusals of which exactly one is worth retrying. A caller
+// that has to tell those apart either reads this tool's prose — a relayed answer — or reads a
+// receipt. These tests are about the receipt being SPECIFIC, because a receipt that says only
+// "failed" leaves the caller exactly where the exit code did.
+
+const receipt = (w) => JSON.parse(fs.readFileSync(path.join(w.data, M.RECEIPT_NAME), 'utf8'));
+
+test('the receipt names the pid of the process that wrote it, inside its run id', () => {
+  const w = world({ 'board.jsonl': 'x\n' });
+  run(w, ['--push', '--no-remote']);
+  const r = receipt(w);
+  assert.strictEqual(typeof r.pid, 'number');
+  assert.ok(r.run_id.startsWith(r.pid + '-'), 'run_id must carry the pid: ' + r.run_id);
+  assert.ok(Date.parse(r.at) > 0, 'and a timestamp');
+});
+
+test('a committed-but-unpushed set is LOCAL_ONLY, not PUSHED', () => {
+  const w = world({ 'board.jsonl': 'x\n' });
+  const rr = run(w, ['--push', '--no-remote']);
+  assert.strictEqual(rr.code, 0, both(rr));
+  assert.strictEqual(receipt(w).outcome, 'LOCAL_ONLY');
+});
+
+test('a second push with nothing changed is NOTHING_CHANGED — the other exit-0', () => {
+  const w = world({ 'board.jsonl': 'x\n' });
+  run(w, ['--push', '--no-remote']);
+  run(w, ['--push', '--no-remote']);
+  assert.strictEqual(receipt(w).outcome, 'NOTHING_CHANGED');
+});
+
+test('an unsettled path is DEFERRED_UNSETTLED and NAMES the paths, so a caller can retry that one case', () => {
+  const w = world({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail' });
+  const soon = new Date(Date.now() + 3600 * 1000);
+  fs.utimesSync(path.join(w.data, 'captures', 'A.txt'), soon, soon);
+  run(w, ['--push', '--no-remote']);
+  const r = receipt(w);
+  assert.strictEqual(r.outcome, 'DEFERRED_UNSETTLED');
+  assert.deepStrictEqual(r.paths, ['captures/A.txt']);
+});
+
+test('an unplaced path is REFUSED_UNPLACED, which is NOT retryable and must not read like the one that is', () => {
+  const w = world({ 'board.jsonl': 'x\n', 'a-path-nobody-ruled.json': '{}' });
+  run(w, ['--push', '--no-remote']);
+  const r = receipt(w);
+  assert.strictEqual(r.outcome, 'REFUSED_UNPLACED');
+  assert.deepStrictEqual(r.paths, ['a-path-nobody-ruled.json']);
+});
+
+test('a refused-because-unverifiable remote is REFUSED_PRIVACY and carries the reading', () => {
+  const w = world({ 'board.jsonl': 'x\n' });
+  const rr = run(w, ['--push']);
+  assert.strictEqual(rr.code, 1, both(rr));
+  const r = receipt(w);
+  assert.strictEqual(r.outcome, 'REFUSED_PRIVACY');
+  assert.strictEqual(r.privacy.state, 'unknown', 'a local-path remote is not a private github repo');
+});
+
+test('--dry-run is DRY_RUN in the receipt, so a caller cannot mistake a rehearsal for a close', () => {
+  const w = world({ 'board.jsonl': 'x\n' });
+  run(w, ['--push', '--dry-run']);
+  assert.strictEqual(receipt(w).outcome, 'DRY_RUN');
 });
 
 console.log('');

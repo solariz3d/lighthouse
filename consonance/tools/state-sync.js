@@ -108,6 +108,18 @@ const SETTLE_MS = 150;
 const INDEX_NAME = 'state-set.json';
 const STATUS_NAME = 'state-sync.status.json';
 const COMPLETION_NAME = 'sync-completion.json';
+const RECEIPT_NAME = 'state-sync.push.json';
+
+/**
+ * THIS PROCESS, named so a caller can prove a receipt is about the run it just started.
+ *
+ * Tonight's failure, twice in one hour: a reading taken at 04:05 was reported at 04:33 as though it
+ * were current, and "I re-checked" was written into a ring when no check had run. Both are one
+ * defect — a READING treated as a STATE. A receipt with no run identity is that defect with a file
+ * behind it: a caller finds `outcome: "PUSHED"` on disk and cannot tell whether this run wrote it
+ * or last night's did. The pid is checkable by whoever SPAWNED the process, and needs no clock.
+ */
+const RUN_ID = `${process.pid}-${Date.now()}`;
 
 // ── corpus resolution ────────────────────────────────────────────────────────────────────────
 // Same law as state-manifest.js and portable-paths: env, then this machine's config, then REFUSE.
@@ -353,6 +365,31 @@ function writeStatus(DATA, STATE) {
   return status;
 }
 
+/**
+ * What actually happened on this push, in a form a caller can GATE on.
+ *
+ * WHY THIS EXISTS AND WHY AN EXIT CODE WILL NOT DO. `--push` returns 0 from four different places
+ * — pushed, nothing changed, --dry-run, --no-remote — and 1 from eight, of which exactly one (a
+ * path that will not settle) is worth retrying and the rest are not. So the exit code cannot answer
+ * either question a CLOSE has to ask: did the state actually reach the remote, and is this failure
+ * one to wait out or one to stop on. The only alternative is for the caller to read this tool's
+ * PROSE, which is a relayed answer — the thing this room keeps being wrong about.
+ *
+ * Written on EVERY termination of the push that got far enough to know where the data dir is. A
+ * failure to write it is swallowed, because a caller that finds no receipt for its own run must
+ * refuse, and refusing is the safe direction. STAYS in the manifest: a per-machine record of a
+ * per-machine act, and a travelled copy would tell the desktop the laptop's push was its own.
+ */
+function writeReceipt(DATA, o) {
+  if (!DATA) return;
+  try {
+    fs.writeFileSync(
+      path.join(DATA, RECEIPT_NAME),
+      JSON.stringify({ version: 1, run_id: RUN_ID, pid: process.pid, at: new Date().toISOString(), machine: machineTag(), ...o }, null, 2) + '\n'
+    );
+  } catch (_) { /* the caller refuses on a missing receipt; that is the safe way for this to fail */ }
+}
+
 // ── the state tree's own settings ────────────────────────────────────────────────────────────
 
 /**
@@ -386,30 +423,33 @@ function cmdPush(args) {
   const noRemote = args.includes('--no-remote');
   const DATA = dataDir();
   const STATE = stateDir();
+  // Every exit below goes through this, so a caller can gate on WHAT HAPPENED rather than on an
+  // exit code that four different outcomes share. See writeReceipt.
+  const done = (rc, outcome, extra) => { writeReceipt(DATA, { outcome, rc, state_dir: STATE, data_dir: DATA, ...(extra || {}) }); return rc; };
   if (!DATA) return refuse('no corpus declared — CONSONANCE_DATA unset and ~/.consonance.json has no data_dir', 2);
   if (!fs.existsSync(DATA)) return refuse(`data dir does not exist: ${DATA}`, 2);
-  if (!fs.existsSync(path.join(STATE, '.git'))) return refuse(`state tree is not a git repository: ${STATE}`, 2);
+  if (!fs.existsSync(path.join(STATE, '.git'))) return done(refuse(`state tree is not a git repository: ${STATE}`, 2), 'NO_STATE_TREE', { why: `${STATE} is not a git repository` });
 
   const m = loadManifest();
   if (m.errors.length) {
-    return refuse(
+    return done(refuse(
       'CLASS ERROR in the manifest — nothing is classified, so nothing is pushed:\n  ' + m.errors.join('\n  '), 1
-    );
+    ), 'REFUSED_MANIFEST', { why: m.errors.join('; ') });
   }
 
   const c = classify(DATA, m);
   if (c.violations.length) {
-    return refuse(
+    return done(refuse(
       'FORBIDDEN PATH PRESENT under the data root. Its existence here is the fault, not its column:\n' +
         c.violations.map((v) => `  ${v.rel}\n    ${v.why}`).join('\n'), 1
-    );
+    ), 'REFUSED_FORBIDDEN', { paths: c.violations.map((v) => v.rel) });
   }
   if (c.unplaced.length) {
-    return refuse(
+    return done(refuse(
       `${c.unplaced.length} path(s) match no rule. Each would travel or fail to travel by accident:\n` +
         c.unplaced.map((p) => '  ' + p).join('\n') +
         '\n  Rule them in consonance/state-manifest.json, then push.', 1
-    );
+    ), 'REFUSED_UNPLACED', { paths: c.unplaced });
   }
 
   // THE CAP, CHECKED BEFORE GIT IS TOUCHED AT ALL. A push that gets as far as the server and is
@@ -417,12 +457,12 @@ function cmdPush(args) {
   // delivered one — which is the exact confusion this whole packet is against.
   const over = c.travels.filter((t) => t.bytes > FILE_CAP);
   if (over.length) {
-    return refuse(
+    return done(refuse(
       'OVER GITHUB\'S 100 MB PER-FILE HARD LIMIT — refusing before touching git:\n' +
         over.map((t) => `  ${t.rel}  ${t.bytes} bytes (${mb(t.bytes)})  — cap is ${FILE_CAP}`).join('\n') +
         '\n  This is not a warning. The server rejects the push, and a half-delivered set at the\n' +
         '  destination reads exactly like a whole one. Compact first (P-BOARD-COMPACT), then push.', 1
-    );
+    ), 'REFUSED_CAP', { paths: over.map((t) => t.rel) });
   }
 
   // ── the copy, per class, with the gate ──
@@ -451,14 +491,14 @@ function cmdPush(args) {
   // that is complete except for a capture tail is precisely a seat that wakes as a stranger while
   // every other check reads green.
   if (refused.length) {
-    return refuse(
+    return done(refuse(
       `${refused.length} path(s) would not come back STABLE after ${STABLE_TRIES} attempts — the app is\n` +
         '  rewriting them right now, and a torn capture is indistinguishable from a good one at the\n' +
         '  destination. Nothing was pushed:\n' +
         refused.map((r) => `  ${r.rel}${r.err ? '  (last error ' + r.err + ')' : ''}`).join('\n') +
         '\n  Retry between turns. If a path never settles, say so — that is the quiescent-moment\n' +
         '  finding, and it changes the push CADENCE, not this tool.', 1
-    );
+    ), 'DEFERRED_UNSETTLED', { paths: refused.map((r) => r.rel), tries: STABLE_TRIES });
   }
 
   const total = files.reduce((n, f) => n + f.bytes, 0);
@@ -469,7 +509,7 @@ function cmdPush(args) {
     console.log(`  ${c.walked} paths walked · ${files.length} TRAVELS files · ${total} bytes (${mb(total)})`);
     console.log(`  stable-read attempts, max: ${attemptsMax}`);
     console.log('  nothing written, nothing committed, nothing pushed.');
-    return 0;
+    return done(0, 'DRY_RUN', { files: files.length, bytes: total });
   }
 
   // NOTHING CHANGED IS DECIDED ON CONTENT, NOT ON THE CLOCK.
@@ -490,7 +530,11 @@ function cmdPush(args) {
     console.log(`state-sync --push · ${tag} · nothing changed since ${h.ok ? h.out : '?'} — no commit made.`);
     const st0 = writeStatus(DATA, STATE);
     printHeads(st0);
-    return 0;
+    // NOTHING CHANGED IS NOT THE SAME CLAIM AS NOTHING IS OWED. This path never consults the
+    // remote, so a commit that failed to push yesterday is still unpushed and this still exits 0.
+    // The receipt says only that no commit was made HERE; whether the remote HAS it is a question
+    // for the remote, and close.js asks it rather than inferring it from this line.
+    return done(0, 'NOTHING_CHANGED', { head: h.ok ? h.out : null, files: files.length, bytes: total });
   }
 
   // ── the index: what the other machine checks itself against ──
@@ -521,10 +565,10 @@ function cmdPush(args) {
   // shared nobody will remember to add the pathspec.
   const paths = ['data', INDEX_NAME, `machines/${tag}.json`, ...extra];
   const addR = gitTry(STATE, ['add', '--', ...paths]);
-  if (!addR.ok) return refuse(`git add failed in the state tree: ${addR.err}`, 1);
+  if (!addR.ok) return done(refuse(`git add failed in the state tree: ${addR.err}`, 1), 'GIT_FAILED', { stage: 'add', why: addR.err });
 
   const staged = gitTry(STATE, ['diff', '--cached', '--name-only', '--', ...paths]);
-  if (!staged.ok) return refuse(`git diff --cached failed: ${staged.err}`, 1);
+  if (!staged.ok) return done(refuse(`git diff --cached failed: ${staged.err}`, 1), 'GIT_FAILED', { stage: 'diff --cached', why: staged.err });
   const changed = staged.out ? staged.out.split('\n').filter(Boolean) : [];
 
   let head = gitTry(STATE, ['rev-parse', '--short', 'HEAD']);
@@ -532,7 +576,7 @@ function cmdPush(args) {
     console.log(`state-sync --push · ${tag} · nothing changed since ${head.out} — no commit made.`);
     const st = writeStatus(DATA, STATE);
     printHeads(st);
-    return 0;
+    return done(0, 'NOTHING_CHANGED', { head: head.out, files: files.length, bytes: total });
   }
 
   const msg =
@@ -542,7 +586,7 @@ function cmdPush(args) {
     `both of those were measured to fail silently (state-sync.js header).\n\n` +
     `Written by the pane A seat on ${tag}.\n`;
   const commit = gitTry(STATE, ['-c', 'core.autocrlf=false', 'commit', '-m', msg, '--', ...paths]);
-  if (!commit.ok) return refuse(`git commit failed in the state tree: ${commit.err}`, 1);
+  if (!commit.ok) return done(refuse(`git commit failed in the state tree: ${commit.err}`, 1), 'GIT_FAILED', { stage: 'commit', why: commit.err });
   head = gitTry(STATE, ['rev-parse', '--short', 'HEAD']);
 
   console.log(`state-sync --push · ${tag} · committed ${head.ok ? head.out : '?'} · ${changed.length} path(s) · ${mb(total)}`);
@@ -551,7 +595,7 @@ function cmdPush(args) {
     console.log('  --no-remote: committed locally, NOT pushed. The other machine cannot see this yet.');
     const st = writeStatus(DATA, STATE);
     printHeads(st);
-    return 0;
+    return done(0, 'LOCAL_ONLY', { head: head.ok ? head.out : null, files: files.length, bytes: total, changed: changed.length });
   }
 
   // ── privacy, verified here and not accepted from anyone ──
@@ -565,7 +609,7 @@ function cmdPush(args) {
     console.error('  then re-run --push. Failing closed is deliberate: from here, a private repo and');
     console.error('  a repo nobody could ask about read identically, and this one carries the board.');
     writeStatus(DATA, STATE);
-    return 1;
+    return done(1, 'REFUSED_PRIVACY', { privacy: priv, head: head.ok ? head.out : null });
   }
   console.log(`  privacy verified here: ${priv.repo} ${priv.why}`);
 
@@ -575,12 +619,12 @@ function cmdPush(args) {
     console.error('');
     console.error(`  PUSH FAILED — the commit stands locally, the remote does not have it: ${push.err}`);
     writeStatus(DATA, STATE);
-    return 1;
+    return done(1, 'PUSH_FAILED', { why: push.err, privacy: priv, head: head.ok ? head.out : null });
   }
   console.log(`  pushed to origin/${branch.ok ? branch.out : 'main'}`);
   const st = writeStatus(DATA, STATE);
   printHeads(st);
-  return 0;
+  return done(0, 'PUSHED', { head: head.ok ? head.out : null, files: files.length, bytes: total, privacy: priv, branch: branch.ok ? branch.out : null });
 }
 
 // ── verify ───────────────────────────────────────────────────────────────────────────────────
@@ -865,6 +909,6 @@ function main() {
 if (require.main === module) main();
 module.exports = {
   stableRead, sha256, classify, loadManifest, verifyTree, installTree,
-  machineHeads, machineTag, stateDir, dataDir, ensureTreeSettings, remotePrivacy,
-  FILE_CAP, STABLE_TRIES, SETTLE_MS, INDEX_NAME, STATUS_NAME, COMPLETION_NAME,
+  machineHeads, machineTag, stateDir, dataDir, ensureTreeSettings, remotePrivacy, writeStatus, gitTry,
+  FILE_CAP, STABLE_TRIES, SETTLE_MS, INDEX_NAME, STATUS_NAME, COMPLETION_NAME, RECEIPT_NAME,
 };
