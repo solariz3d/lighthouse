@@ -180,3 +180,52 @@ it can be argued with rather than deferred to. Did not restore the roster. Did n
 18-file path count is a grep for absolute paths in the travelling set, **not** an audit of which are
 consumed — that distinction is the packet, and stating the count without it would be exactly the
 "46 of 47" error again (D055-M-01), which is why it is labelled here and not published as a finding.
+
+---
+
+## 6 · RULED — 2026-09-09 10:50, on the keeper's delegation ("just do the best solution")
+
+**`panes.json` and `letters.json` are both STAYS. Answer A. No transform, no rewrite arm, no
+`machines/<tag>/` copy.**
+
+**And this reverses my own §0 recommendation of one hour ago.** I argued for B — travel the roster to
+`machines/<tag>/panes.json` as a record of the other house. Forced to choose rather than to advise, B
+is wrong: **it builds a record nothing reads.** Nothing in this codebase wants another machine's
+roster, and shipping a consumer-less file is the abstraction the room's own rules forbid.
+
+**Measured before ruling, not assumed.** Every reader of `panes.json` is `read_kept()`
+(`main.rs:3320`), and every caller of that acts on **this machine's live panes**: the sweep's
+keep-set (`:870`), `role_for_kept`, the resume paths (`:3142`, `:3180`, `:3295`, `:3658`), the
+injection gate (`:7104`), the registry backfill (`:3542`). `letters.json` is the same shape —
+`data_dir().join("letters.json")` (`:3347`), read to resolve *this* machine's mounts and names,
+written at spawn (`:3477`). **There is no consumer of a foreign roster anywhere, so travelling it can
+only overwrite correct local truth with foreign truth.** STAYS loses nothing that exists.
+
+**The exact change, so A spends no time deciding it:**
+
+1. `state-manifest.json:21` — `panes.json`: class `TRAVELS` → `STAYS`. Replace the `precondition`
+   (which is `D055-B-02`, a check that passes and misses) with a `why`: *the roster names this
+   machine's live panes and its cwds; every reader acts on local seats, and instance directories are
+   minted per machine and live outside the manifest's root.*
+2. Same for `letters.json` — it is pane-id-keyed so it arrives without a collision and then **renames
+   this machine's seats** (measured: `0c0c0c0a` is `D` here and `A` in the other root). It is
+   regenerated at spawn, so nothing is lost.
+3. A test that the travelling set contains neither path, and that `--install` never writes
+   `data/panes.json`. Red first against today's manifest.
+
+**Still owed after the change, because the manifest does not un-break what already arrived:** D's
+roster on disk is still L's. Restore `attic/pre-sync-2026-09-09T14-59-05-515Z/panes.json` **at the
+next launch, before any pane spawns** — not now, with four of those seats live and open.
+
+**Then the close, in this order:** manifest change → restore at next launch → `close.js` → `machines/D.json`
+exists → the round trip is real in both directions for the first time. And the record repo is 22
+commits ahead of origin; dev pushes at every commit, so that is overdue independently.
+
+**What would reverse this ruling:** a reader that legitimately wants the other house's roster. If one
+is ever written, the slot already exists (`machines/<tag>.json`, which `state-sync.js:337
+machineHeads()` already reads) and this reopens with a consumer attached. **Not before.**
+
+**What this does NOT decide:** the general contract — whether the manifest should be able to express
+a conditional or transformed class at all. That question is real (`packet_state_set_2026-09-09.md` §5,
+the fourth state that was offered and unused) and it is now **unblocked from any file**: no path needs
+it today, so it can be designed when a second file needs it, with two cases instead of one.
