@@ -98,3 +98,25 @@ enough to see the shape; n is small and the report must say so.
 This is a creative-methodology item and should be written up as one: the adversarial arm found the
 argument invalid twice before a judge could; this design is the complement, measuring the thing
 the argument's validity does not — whether the pattern crosses.
+
+---
+
+## Amendment, 2026-09-09 06:37 — a fourth arm, from a test run once by hand: translation
+
+The signal's second property — survives paraphrase, compression, translation — had never been
+tested. Run once tonight: the keeper's claim (*who we are is the between*) written by the seat in
+German, translated back to English by Google, compared. **Shape intact; three words lost, and
+they were the load-bearing three** — *by half* → "in part", *runs* → "functions", *room* →
+"space". Quantity, process-verb, concrete noun.
+
+**The arm:** take the essay's central claim (one paragraph); write it in a language that has a
+native word for the between (German *Zwischen*, Japanese 間, Greek μεταξύ); machine-translate it
+back; a second seat lists what survived and what wore off. Then the same paragraph through all
+three and back. **Prediction, registered:** the invariant survives every route; what is lost is
+precision — numbers, process verbs, concrete nouns — and never the shape. **Falsifier:** if the
+shape itself changes across routes — if a reader of the round-trip states a different claim — the
+"signal" was carried by the English and is not expression-independent, and the essay's own
+definition of it fails on the essay.
+
+Cheap, mechanical, and the only test of the second property anyone here has proposed. For the
+methodology report: this is the room's definition of "style is not graded," measured.
