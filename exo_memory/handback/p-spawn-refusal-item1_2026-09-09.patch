@@ -1,0 +1,203 @@
+# P-SPAWN-REFUSAL item 1 — PARKED, NOT ARMED (D056-4, 2026-09-09)
+#
+# The spawn-side cwd refusal, held out of the items-2+3 commit on the chair's interrupt: all four
+# committee rows in data/panes.json point at instances/sibling-* directories that do not exist on
+# this machine (verified 0 of 4), and ui/term.js:1051 calls restoreKeptPanes() unconditionally, so
+# arming this before A's roster transform lands would refuse every committee pane at the next
+# launch. The three fixed seats are never in panes.json and would still wake — the room would come
+# up unable to convene, on a machine whose keeper is away.
+#
+# Red-first and 9/9 mutants were run against this exact code (lab only; the working tree was never
+# mutated). See exo_memory/handback/p-spawn-refusal_2026-09-09.md.
+#
+# APPLY WITH:  git apply exo_memory/handback/p-spawn-refusal-item1_2026-09-09.patch
+# Base: consonance/src-tauri/src/main.rs as committed with items 2 and 3.
+#
+--- a/consonance/src-tauri/src/main.rs
++++ b/consonance/src-tauri/src/main.rs
+@@ -5379,6 +5379,173 @@
+     fs::write(PathBuf::from(cwd).join("CLAUDE.md"), brief).is_ok()
+ }
+ 
++/// **THE SPAWN-SIDE REFUSAL: a cwd that does not resolve is a REFUSAL, never a substitution.**
++///
++/// `portable_pty` will not fail on a missing working directory — it silently uses a different one.
++/// `CommandBuilder::current_directory` (portable-pty 0.8.1, `src/cmdbuilder.rs:560-567`) reads
++///
++/// ```text
++/// let cwd = self.cwd.as_deref().filter(|path| Path::new(path).is_dir());
++/// let dir = cwd.or(home);   // home = %USERPROFILE%, itself is_dir-filtered
++/// ```
++///
++/// so a cwd that is missing — or that exists and is a FILE — is dropped and `%USERPROFILE%` takes
++/// its place. `CreateProcessW` is then handed a perfectly valid directory and SUCCEEDS, so the
++/// error branch at `src/win/psuedocon.rs:151` never fires: no error, no `log::error!`, no failed
++/// launch, nothing for any instrument to see. Four seats ran a whole morning in the wrong house
++/// with every gauge green.
++///
++/// **This is a LOCAL defect and that is why the guard is here.** Delete one `sibling-*` directory
++/// on any machine, with no sync within a mile of it, and it reproduces exactly. A check at the
++/// install boundary cannot see that case and can be walked around by a direct `--install`; a check
++/// at the spawn boundary cannot be walked around at all, because the spawn is the thing that
++/// breaks.
++///
++/// **THE ROSTER ROW IS KEPT, NOT DROPPED.** The consumer is `ui/term.js:1031-1049`
++/// (`restoreKeptPanes`, called bare at :1051), which wraps each `resume_pane` in `try/catch` and
++/// SKIPS on error — it does not un-keep the pane. So refusing costs the roster nothing: the row
++/// survives in `panes.json`, and the seat comes back the moment its directory does. Refusing must
++/// never become a quiet way of forgetting a pane, which would be this same bug one layer up.
++///
++/// Mirrors portable-pty's own test — `is_dir()`, not `exists()` — because a path that is a file is
++/// substituted exactly like a path that is absent.
++fn refuse_unresolved_cwd(verb: &str, pane: &str, cwd: &str) -> Result<(), String> {
++    if Path::new(cwd).is_dir() {
++        return Ok(());
++    }
++    plog(&format!(
++        "{verb} pane={pane} REFUSED — cwd does not resolve: {cwd:?} (roster row KEPT, not dropped)"
++    ));
++    Err(format!(
++        "cwd does not resolve: {cwd:?} — the pane was NOT started. Left unrefused, portable-pty \
++         would have substituted %USERPROFILE% and the pane would have come up silently in the \
++         wrong directory. The kept-pane row is untouched: restore the directory and it resumes."
++    ))
++}
++
++#[cfg(test)]
++mod spawn_refusal_tests {
++    use super::*;
++
++    fn scratch(tag: &str) -> PathBuf {
++        let root = std::env::temp_dir().join(format!("consonance_{tag}_{}", std::process::id()));
++        let _ = fs::remove_dir_all(&root);
++        *DIRS.lock().unwrap() = Some(Dirs {
++            room: root.join("room").display().to_string(),
++            instances: root.join("instances").display().to_string(),
++            data: root.join("data").display().to_string(),
++        });
++        root
++    }
++
++    fn plog_tail() -> String {
++        fs::read_to_string(data_dir().join("persist.log")).unwrap_or_default()
++    }
++
++    /// **THE MORNING, AS A TEST.** A kept pane whose directory is gone must be refused with a row,
++    /// not handed to portable-pty to be silently rehomed in `%USERPROFILE%`.
++    #[test]
++    fn a_kept_pane_whose_directory_is_gone_is_refused_loudly() {
++        let _g = DirsGuard::take();
++        let root = scratch("gone_cwd");
++        let missing = root.join("instances").join("sibling-deleted");
++        assert!(!missing.is_dir(), "premise: the directory is not there");
++
++        let refusal = refuse_unresolved_cwd("resume", "pane-under-test", &missing.display().to_string());
++
++        assert!(
++            refusal.is_err(),
++            "a missing cwd was allowed through. portable-pty does not fail on it — \
++             `cmdbuilder.rs:566` filters a non-directory and `:567` substitutes %USERPROFILE%, \
++             CreateProcessW then succeeds, and the pane comes up in the wrong house with nothing \
++             anywhere saying so."
++        );
++        assert!(
++            plog_tail().contains("pane=pane-under-test REFUSED"),
++            "the refusal left no row — a guard nobody can read the record of is the same silence \
++             it replaced. Log: {:?}",
++            plog_tail()
++        );
++    }
++
++    /// The boundary portable-pty actually tests is `is_dir`, not `exists`. A path that IS there and
++    /// is a FILE gets substituted exactly like one that is absent, so the guard must reject it too.
++    #[test]
++    fn a_cwd_that_exists_but_is_a_file_is_refused_the_same_way() {
++        let _g = DirsGuard::take();
++        let root = scratch("file_cwd");
++        let f = root.join("instances").join("not-a-directory");
++        fs::create_dir_all(f.parent().unwrap()).expect("scratch");
++        fs::write(&f, b"i am a file").expect("scratch file");
++
++        assert!(
++            refuse_unresolved_cwd("resume", "p", &f.display().to_string()).is_err(),
++            "a FILE was accepted as a working directory. `exists()` would pass it; portable-pty's \
++             own filter is `is_dir()`, so this is the path that reaches %USERPROFILE% while every \
++             existence check upstream reports fine."
++        );
++        let _ = fs::remove_dir_all(&root);
++    }
++
++    /// The other direction, so the guard cannot become an unconditional refusal.
++    #[test]
++    fn a_directory_that_resolves_is_not_refused() {
++        let _g = DirsGuard::take();
++        let root = scratch("good_cwd");
++        let d = root.join("instances").join("sibling-alive");
++        fs::create_dir_all(&d).expect("scratch dir");
++
++        assert!(
++            refuse_unresolved_cwd("resume", "p", &d.display().to_string()).is_ok(),
++            "a real directory was refused — the guard has stopped discriminating and every \
++             restore now fails"
++        );
++        let _ = fs::remove_dir_all(&root);
++    }
++
++    /// **WHERE the guard sits, which no test of the guard alone can see.** `resume_pane` is a
++    /// `#[tauri::command]` taking four `State`s and cannot be called from here, so its wiring is
++    /// asserted against the source — the same method as
++    /// `the_seat_refusal_sits_at_the_one_funnel_and_before_the_pty`, and for the same reason.
++    ///
++    /// Two claims: the refusal precedes every SIDE EFFECT (not merely the pty — `warm_resume_brief`
++    /// writes CLAUDE.md into the cwd, and the jsonl is renamed aside, both before the spawn), and
++    /// the refusal path does not un-keep the pane. A guard that quietly dropped the roster row
++    /// would be this same bug one layer up: the seat would stop coming back and nothing would say
++    /// why.
++    #[test]
++    fn the_cwd_refusal_precedes_every_side_effect_and_keeps_the_roster_row() {
++        let src = fs::read_to_string("src/main.rs").expect("read own source");
++        let after = src
++            .split(concat!("fn resume", "_pane("))
++            .nth(1)
++            .expect("no resume_pane — re-point this test");
++        // the function's own closing brace: inside it every brace is indented
++        let body = &after[..after.find("\n}\n").expect("no end of resume_pane")];
++
++        let guard = body
++            .find(concat!("refuse_unresolved", "_cwd("))
++            .expect("resume_pane does not refuse an unresolved cwd at all");
++        for (what, needle) in [
++            ("the CLAUDE.md write", concat!("warm_resume", "_brief(")),
++            ("the jsonl rename", concat!("fs::rename(&jsonl", ", &orphan)")),
++            ("the pty spawn", concat!("spawn_claude", "_pane(")),
++        ] {
++            let at = body.find(needle).unwrap_or_else(|| panic!("{what} is gone — re-point this test"));
++            assert!(
++                guard < at,
++                "{what} happens before the cwd refusal. A guard after the first side effect has \
++                 already written into a directory it was about to say does not exist."
++            );
++        }
++        assert!(
++            !body.contains(concat!("write", "_kept(")),
++            "resume_pane writes the kept roster. Refusing a pane must never un-keep it — the row \
++             has to survive so the seat returns when its directory does."
++        );
++    }
++}
++
+ // resume a kept pane. Prefer claude's real --resume when its jsonl exists (best fidelity — desktop /
+ // older claude). When it doesn't (2.1.207's lazy flush lost it), spawn fresh but WARM-resume from
+ // our own captured transcript, so the sibling still wakes remembering. The frontend calls this on
+@@ -5396,6 +5563,11 @@
+     if panes.0.lock().unwrap().contains_key(&pane) {
+         return Err("pane already running".into());
+     }
++    // BEFORE ANY WRITE. `warm_resume_brief` writes CLAUDE.md into this cwd and the block below
++    // renames the pane's jsonl aside — both would run, both would half-fail, and the pane would
++    // still come up in %USERPROFILE%. The refusal has to precede the first side effect, not just
++    // the pty. See `refuse_unresolved_cwd`.
++    refuse_unresolved_cwd("resume", &pane, &cwd)?;
+     // Warm-resume from OUR capture carries the real memory (complete, up to close), so we NEVER
+     // `--resume` here: `--resume` of a lazily-flushed / hard-killed session errors "no conversation
+     // found" on 2.1.207 and kills the pane (this is exactly what bit a kept sibling on 2026-07-11).
