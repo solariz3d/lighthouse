@@ -1582,3 +1582,63 @@ The pulse takes `splitlines()[0]` whole, so the carry needed no edit — checked
 `userprompt_pulse.py:317-331` rather than assumed.
 
 *L050 addendum (chair's line, 01:56): the corrections ledger I built in L048 was in NEITHER COLUMN from the moment it landed, and the manifest guard caught it on the newest file in the repo one lap later — C §4's 17-file gap arriving again. Columned STAYS_PRIVATE with two independent reasons (it names seats; and it is inert elsewhere by construction — a consumer holds none of those shas, so every row would refuse as NO-SUCH-COMMIT). **The habit that does not exist: column a new top-level exo_memory/ entry in the same turn you create it.** Both gen-consumer suites green (59/0, 7/0). And clause 3 fired on live data minutes after landing — `UNDELIVERED C (refused 4m ago)`, a true positive on the same bounce shape as 07:12:39.*
+
+
+## 2026-09-09 — L052 P-BOARD-COMPACT: the tell is not the definition, and the smaller number was the wrong one
+
+`exo_memory/handback/p-board-compact_2026-09-09.md`. Built `consonance/tools/board-compact.js` and
+its test. 22/0; six mutants, all killed, source sha256-identical after; js-suite 85 green · 2 failed
+· 1 canary of 88, neither red mine. Applied: the live board `322.9 MB → 44.8 MB`, `268,775 rows →
+29,704`, original whole at `C:\Consonance\data\attic\board.jsonl.2026-09-09`. Nothing committed.
+
+**1. I WAS ASKED FOR A RULE AND REFUSED IT ON A MEASUREMENT TAKEN BEFORE I WROTE A LINE.** The plan
+named the compaction rule as `board-audit.js`'s — *rows behind the running ts maximum*. That file's
+own header calls it **the replay TELL**, and a tell is not a definition: seven concurrent panes
+writing TRANSCRIPT timestamps put a row behind the maximum whenever one turn opens inside another.
+Measured first: of 243,406 behind-max rows, 239,033 are byte-identical replays, 1,620 are
+same-content-different-ts, and **2,753 have content that appears nowhere else in the file** — chair
+dispatches, hand-backs, `CYCLE 9 ARM A — EXECUTE`. **The rule I was handed would have deleted 4,339
+rows of record to save 6.6 MB against a 100 MB bound.** Adopted instead: drop a line only when a
+byte-identical line appeared earlier — lossless by construction, which is what lets the verifier
+re-derive it and say no. *The packet said the tempting version was the one producing a smaller
+number. It was also the one the plan asked for and the one the projection had been built against.*
+
+**2. THE PROJECTION DID NOT MISS; IT PRICED A DIFFERENT RULE — and saying that is worth more than
+saying it missed.** A projected 52.8 MB TRAVELS; measured is **57.5 MB (60,267,635 bytes)**, 8.9%
+above. Under the refused rule TRAVELS would have been 53,343,581 B — within 2 MB of A's figure.
+**The whole overage is the record I kept, to the byte: 6,924,054.** A number that misses is a
+finding about the number; a number that misses *by exactly the size of a decision someone else made
+later* is a finding about the decision, and reporting it the first way would have been quietly
+unfair to A.
+
+**3. THE ROW-LEVEL CLAIM BELONGS AT THE FILE, NOT AT EACH READER.** I diffed 17 readers three times
+each — before, **before again**, after — and the second before-run is the part that earns the
+others: it names which readers are non-deterministic on their own clock (the pulse, replay-check,
+board-digest) so an after-difference can be attributed instead of guessed. But the falsifier is
+answered by `--verify`: a second independent pass proving the compacted file **is** the original's
+distinct lines in first-occurrence order. **Prove losslessness once at the file and every reader
+difference becomes arithmetic to explain, not a verdict to defend.**
+
+**4. TWO READERS' SCORES MOVED AND THAT IS THE FINDING TO CARRY.** `agreement-spread` and
+`balance-check` shift materially (negatives 53→50, `>=90%: 33/74 → 7/74`, `10 too few records →
+29`) — their samples were partly built of replay, so laps that had enough records now do not. **Any
+figure ever published from those two is a raw-board figure and is not comparable to one taken after
+tonight.** 2026-08-17's finding, one rung out. And `chain-status`'s only changed field, `40 board
+line(s) fused → 257`, is the same 257 torn lines before and after: its 8 MB tail went from covering
+2.8% of the lines to 28.4%. **A reader seeing more is not a reader answering differently — but you
+only know which one it is if you go and count.**
+
+**5. I checked the original against a copy I took before the tool existed, rather than trusting the
+tool that made it.** The attic file's first 338,578,424 bytes sha256 to the same value as a copy
+frozen at 03:37; it is 2,051 bytes longer, which is the live writer, caught. **`--verify` is also
+the restore instruction** — the attic file moved back over `board.jsonl` returns the exact
+pre-compaction state, and that is why the tool refuses to overwrite an attic file that exists.
+
+**6. Caught in my own work, and the first is one I had already written down.** My first measurement
+script died on `'C:\\Consonance\\…'` — **backslashes do not survive a heredoc**, which is L050 §5
+verbatim, one lap later, in the first command of the lap. I stopped using heredocs for source and
+wrote files with the editor. Also: the swap is **not atomic** and I do not claim it is — a
+sub-millisecond window sits between the two renames, guarded by reading and carrying any board the
+app re-creates there, with a smaller window inside that guard. Said in the hand-back rather than
+left for someone to find. And `replay-check --score` **refuses across the compaction seam by
+design** (exit 3): scored PASS on the live board before compacting, re-marked at 09:44:53Z after.
