@@ -95,7 +95,6 @@ function fixture(tag) {
     env: {
       ...process.env,
       CONSONANCE_BOARD: board,
-      CONSONANCE_MARK: undefined,
       CONSONANCE_REPLAY_MARK: path.join(root, 'mark.json'),
       CONSONANCE_PROJECTS: path.join(root, 'projects'),
     },
@@ -154,4 +153,66 @@ test('transcripts() keys by session id, which is what the board calls a pane', (
   assert.deepStrictEqual(Object.keys(t), ['sid-a']);
   assert.strictEqual(t['sid-a'].lines, 3);
   fs.rmSync(f.root, { recursive: true, force: true });
+});
+
+/* ---- path resolution. The order IS the fix, so it is tested as a value, not as a spawn ---- */
+
+const { resolve } = require('./replay-check.js');
+const nocfg = () => null;
+const DATA = path.join(os.tmpdir(), 'rc-data');
+const CFG = path.join(os.tmpdir(), 'rc-cfg');
+
+test('a per-file env var wins over the data dir', () => {
+  const r = resolve({ CONSONANCE_DATA: DATA, CONSONANCE_BOARD: '/elsewhere/b.jsonl' }, nocfg);
+  assert.strictEqual(r.board, '/elsewhere/b.jsonl');
+  assert.strictEqual(r.mark, path.join(DATA, 'replay-check.mark.json'), 'the other still resolves');
+});
+
+test('CONSONANCE_DATA wins over the config file', () => {
+  assert.strictEqual(resolve({ CONSONANCE_DATA: DATA }, () => CFG).dataDir, DATA);
+});
+
+test('data_dir from ~/.consonance.json is used when no env var is set', () => {
+  assert.strictEqual(resolve({}, (k) => (k === 'data_dir' ? CFG : null)).dataDir, CFG);
+});
+
+test('NO FATAL DEFAULT: nothing resolved means null, never a guessed path', () => {
+  // The whole point. A default here makes the tool report a number about a machine it never
+  // opened — the failure it exists to catch, rebuilt one level up.
+  const r = resolve({}, nocfg);
+  assert.strictEqual(r.dataDir, null);
+  assert.strictEqual(r.board, null);
+  assert.strictEqual(r.mark, null);
+});
+
+test('an empty or whitespace env var does not count as a resolution', () => {
+  assert.strictEqual(resolve({ CONSONANCE_DATA: '   ' }, nocfg).dataDir, null);
+});
+
+test('the mark lands at the data-dir root, under the name the state manifest reserves', () => {
+  // state-manifest.json classifies `replay-check.mark.json` at the data-dir root as STAYS, and
+  // records that the path is this tool's. Renaming it here silently breaks that entry.
+  assert.strictEqual(resolve({ CONSONANCE_DATA: DATA }, nocfg).mark,
+    path.join(DATA, 'replay-check.mark.json'));
+});
+
+test('the transcripts root is not the data dir — it is Claude Code layout under the home', () => {
+  const r = resolve({ CONSONANCE_DATA: DATA }, nocfg);
+  assert.strictEqual(r.projects, path.join(os.homedir(), '.claude', 'projects'));
+});
+
+test('CLI: with nothing resolvable it refuses loudly and reports NO measurement', () => {
+  const home = path.join(os.tmpdir(), `rc-nohome-${process.pid}`);
+  fs.rmSync(home, { recursive: true, force: true });
+  fs.mkdirSync(home, { recursive: true });
+  const env = { ...process.env, USERPROFILE: home, HOME: home };
+  for (const k of Object.keys(env)) if (k.startsWith('CONSONANCE_')) delete env[k];
+  let code = 0, out = '';
+  try { out = execFileSync(process.execPath, [TOOL, '--score'], { env, encoding: 'utf8' }); }
+  catch (e) { code = e.status; out = (e.stdout || '') + (e.stderr || ''); }
+  assert.strictEqual(code, 4, out);
+  assert.match(out, /cannot locate the board or the mark/);
+  assert.match(out, /CONSONANCE_DATA/, 'it must name what it looked for, not just fail');
+  assert.doesNotMatch(out, /PASS|FAIL|rows added/, 'a refusal must not read as a measurement');
+  fs.rmSync(home, { recursive: true, force: true });
 });

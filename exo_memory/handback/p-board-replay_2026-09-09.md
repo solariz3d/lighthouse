@@ -241,3 +241,129 @@ file exists.* It has fired 39 times, most recently tonight at 00:13, with the fi
 **Nothing committed.** Dirty and mine: `consonance/src-tauri/src/main.rs`,
 `consonance/tools/replay-check.js`, `consonance/tools/replay-check.test.js`, this file,
 `exo_memory/map/C.md`.
+
+---
+
+# ADDENDUM — 2026-09-09 ~01:30. The portable-paths residue on `replay-check.js`.
+
+**RULING: the resolver, not the baseline.** Both sites are closed. The chair leaned this way and
+was right; the reason below is mine and it is not quite the reason offered.
+
+## A · The chair's mechanism is wrong in a way worth keeping, and the conclusion survives it
+
+The relay said a hardcoded literal *"would fail SILENTLY, reading an absent board as a clean
+board."* **Not on this code.** `--mark` and `--score` both open with `fs.statSync(BOARD).size`; an
+absent board throws ENOENT with the path in the message and node exits non-zero. That failure is
+loud, and I am not going to accept a reason for a change I have just checked and found false.
+
+**The real hazard is worse, and it is the one that makes the change necessary.** It is not an
+absent board but a board that EXISTS at the hardcoded path and is not the live one — a second
+checkout, a restored backup, a machine that keeps the layout but points `data_dir` elsewhere. Then
+`--score` reads a file nobody is writing, sees nothing added, and prints **PASS**. A dead board
+reads as a fixed writer. That is not merely a wrong number; it is this instrument's verdict
+inverted, in the direction that closes the investigation.
+
+**And it is not hypothetical in kind. The stale twin is on this machine:**
+
+    ls -la C:\Users\zackn\.consonance\board.jsonl   ->  190,012 bytes, 2026-07-27
+    wc -l  < C:\Users\zackn\.consonance\board.jsonl ->  212 rows
+
+212 rows in the DEFAULT data dir, six weeks cold — **written there by the very defect this hand-back
+is about**, `main.rs` resolving a data path before `set_dirs`. So the shape is already on disk: one
+board written where the app looks and another where it does not. A detector for *a file written at
+one path and read at another* cannot itself carry a literal path. That is my own finding rebuilt
+inside the instrument that catches it, which is the chair's argument — arriving through a different
+door, and holding.
+
+The decisive practical point neither of us said: **this landed in the two-machine lap.** A
+one-machine literal here is not a style question, it is the failure the lap exists to prevent.
+
+## B · What changed
+
+`consonance/tools/replay-check.js:65-90`. Resolution order, per-file env → `CONSONANCE_DATA` →
+`data_dir` from `~/.consonance.json` → **nothing**:
+
+    const dataDir = pick('CONSONANCE_DATA') || cfg('data_dir') || null;
+    board: pick('CONSONANCE_BOARD') || under('board.jsonl'),
+    mark:  pick('CONSONANCE_REPLAY_MARK') || under('replay-check.mark.json'),
+
+`chain-status.js:252` and `:261-274` are the authority for both the order and the no-fatal-default
+instruction; copied rather than imported, the way that file copies `lap-row.js`, and **named in the
+header so the copy is auditable** — the same reason its own comment gives.
+
+**Degrading loudly means something specific for a tool whose job is to print a number.** Unresolved
+now exits **4** and prints what it looked for, in order, on stderr — and prints nothing that could
+be read as a measurement. That is asserted, not just intended: the test greps the output for
+`PASS|FAIL|rows added` and fails if any appears.
+
+`CONSONANCE_PROJECTS` was never flagged and stays `homedir()/.claude/projects` — Claude Code's own
+layout, portable by shape, and deliberately NOT under `data_dir`. Said in a comment so the next
+reader does not "fix" it into the data dir and quietly break the bound.
+
+## C · A's manifest — the reservation is honoured, nothing is owed back
+
+`state-manifest.json:82` classifies `replay-check.mark.json` at the **data-dir root** as STAYS, with
+the reservation *"the path is C's, from replay-check.js:36. If C renames it this rule must follow."*
+
+**I have not renamed it.** `path.join(dataDir, 'replay-check.mark.json')` puts it exactly where the
+manifest says it lives, on every machine instead of on one. A's glob stays valid and no follow-up is
+owed. There is a test asserting that name against that root, and it says why in-line, so a future
+rename fails here first instead of at the manifest checker.
+
+A's reasoning for STAYS is also right on the merits and worth confirming from this side: a mark
+names this machine's board **and** its transcripts, and transcripts do not travel — a mark taken on
+one machine and scored on the other is the compaction seam, one machine over. The tool already
+refuses that seam; it would not have caught this one.
+
+## D · Verification
+
+    node consonance/tools/portable-paths.js | grep -c 'replay-check'      ->  0
+    node --test consonance/tools/replay-check.test.js                     ->  20 tests, 20 pass
+
+Eight new tests, all on the resolution order, because **the order IS the fix and an untestable fix
+for a path defect is not a fix**: per-file env beats the data dir; `CONSONANCE_DATA` beats the
+config; the config is used when no env is set; whitespace is not a resolution; **nothing resolved
+gives null and never a guessed path**; the mark lands at the data-dir root under the manifest's
+name; the transcripts root is not the data dir; and the CLI refuses with exit 4 naming what it
+looked for. The last one spawns with `USERPROFILE`/`HOME` pointed at an empty directory and every
+`CONSONANCE_*` stripped, so it exercises the real unresolved path rather than a mocked one.
+
+## E · js-suite is STILL RED, and none of the three causes is mine
+
+Reported rather than fixed — I own `replay-check.js` and its test, and quietly editing two other
+seats' landed files to green a board is the move this room does not make.
+
+1. **`portable-paths.js` — 5 sites, all `consonance/tools/live-host.test.js:313-319` (E's).** Every
+   one classified **BENIGN-TEST**: fixture constants passed to `identityHazard` to test its
+   comparison, including a deliberate near-miss (`C:\Consonance\database\id.json` must NOT match
+   `C:\Consonance\data`). Those literals are the test's subject matter; resolving them would delete
+   the case. This is exactly what the guard's own instruction covers — *"if the site is genuinely
+   benign (a fixture, a test constant), run `--update` and let the baseline diff carry the
+   argument."* Someone who owns that file should run it.
+2. **`portable-paths.test.js`** is red because of (1) — it asserts the guard is green. One cause,
+   two rows.
+3. **`gen-consumer.test.js` + `gen-consumer.fixture-scope.test.js`** — *"1 exo_memory/ entr(ies) are
+   in neither column"*. Identified rather than guessed at: read `MANIFEST` and `STAYS_PRIVATE` out
+   of `gen-consumer.js`, list `exo_memory/`, and take the top-level entries in neither. Exactly one
+   comes back:
+
+       exo_memory/provenance_corrections.jsonl
+
+   **B's corrections ledger, landed tonight.** No manifest rule reaches it and `STAYS_PRIVATE` does
+   not name it. Not a defect in B's work; a new top-level file in `exo_memory/` needs a column, and
+   this is the guard doing its job on the first run after one appeared. B or the chair decides which
+   column and writes the reason beside it. (`exo_memory/review/` is untracked but IS named in
+   `STAYS_PRIVATE`, so it is not this.)
+
+**So the two rows the chair opened on my file are closed, and the board's remaining red is three
+rows across two other seats' work, each with a named owner and a named next command.**
+
+## F · Correction I made to myself, again
+
+I nearly wrote this addendum accepting *"reads an absent board as a clean board"* verbatim, because
+it flatters the change I was already going to make and it arrived from the chair. It is wrong, and
+`statSync` says so in one line. **A reason that points at the right conclusion is still a reason,
+and it can still be false.** Both mechanisms are stated above so the record carries the true one.
+
+**Nothing committed.** Dirty and mine: `consonance/tools/replay-check.js`,
+`consonance/tools/replay-check.test.js`, this file.

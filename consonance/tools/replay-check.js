@@ -23,18 +23,71 @@
  *   ... quit, relaunch, wait past the 20s backfill window ...
  *   node consonance/tools/replay-check.js --score     # prints PASS/FAIL and every input
  *
- * Env: CONSONANCE_BOARD, CONSONANCE_REPLAY_MARK, CONSONANCE_PROJECTS. Read-only except for the
- * mark file. It REFUSES to score across a compaction (a board smaller than at the mark), since
- * the two are then not the same corpus and a verdict across that seam is arithmetic on sand.
+ * Read-only except for the mark file. It REFUSES to score across a compaction (a board smaller
+ * than at the mark), since the two are then not the same corpus and a verdict across that seam
+ * is arithmetic on sand.
+ *
+ * WHERE THE FILES ARE, and why there is no default (2026-09-09, second pass — portable-paths
+ * read this file RED at the two lines that used to be here, and it was right).
+ *
+ * The first version hardcoded one machine's data dir. Its failure on any other machine is not
+ * the one you would guess, so both are stated: an ABSENT board throws ENOENT out of statSync
+ * and is loud, no argument. The dangerous case is a board that EXISTS at the hardcoded path and
+ * is not the live one — a second checkout, a restored backup, a machine that keeps the layout
+ * but points data_dir elsewhere. Then the tool scores a live relaunch against a board nobody is
+ * writing, sees nothing added, and prints PASS. A dead board reads as a fixed writer, which is
+ * the exact inversion this instrument exists to prevent.
+ *
+ * That is not hypothetical in kind. There is a stale twin of the board on this very machine, in
+ * the DEFAULT data dir, 212 rows, last written 2026-07-27 — produced by the defect this tool
+ * was built for (main.rs resolving a data path before set_dirs). A detector for "a file written
+ * at one path and read at another" cannot itself carry a literal path; that is the same bug
+ * rebuilt inside the instrument that catches it. And the lap this landed in is the two-machine
+ * lap, where a one-machine literal is not a style question.
+ *
+ * So: resolution order is CONSONANCE_BOARD / CONSONANCE_REPLAY_MARK / CONSONANCE_PROJECTS, then
+ * CONSONANCE_DATA, then data_dir from ~/.consonance.json, then NOTHING. No fatal default. If it
+ * cannot resolve, it says what it looked for and exits non-zero rather than inventing a path and
+ * reporting a number about a machine it never opened — chain-status.js:261-274 is the authority
+ * for this order and for that instruction; it is copied rather than imported, the way that file
+ * copies lap-row.js, and named here so the copy is auditable.
+ *
+ * The mark file's name and its home are fixed by the state manifest, which classifies
+ * `replay-check.mark.json` at the data-dir root as STAYS (a mark names this machine's board AND
+ * its transcripts, and transcripts do not travel). Renaming it breaks that entry — the manifest
+ * records the reservation.
  */
 'use strict';
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const BOARD = process.env.CONSONANCE_BOARD || 'C:\\Consonance\\data\\board.jsonl';
-const MARK = process.env.CONSONANCE_REPLAY_MARK || 'C:\\Consonance\\data\\replay-check.mark.json';
-const PROJECTS = process.env.CONSONANCE_PROJECTS || path.join(os.homedir(), '.claude', 'projects');
+/* ~/.consonance.json, the app's own config. Order and shape copied from chain-status.js:252. */
+function fromConfig(key) {
+  try {
+    const raw = fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, '');
+    const v = JSON.parse(raw);
+    const d = v && v[key] != null ? String(v[key]).trim() : '';
+    return d || null;
+  } catch (_) { return null; }
+}
+
+/* Pure over its inputs so the resolution order is testable without a config file or a spawn —
+ * the order IS the fix, and an untestable fix for a path defect is not a fix. */
+function resolve(env = process.env, cfg = fromConfig) {
+  const pick = (k) => (env[k] || '').trim() || null;
+  const dataDir = pick('CONSONANCE_DATA') || cfg('data_dir') || null;
+  const under = (name) => (dataDir ? path.join(dataDir, name) : null);
+  return {
+    dataDir,
+    board: pick('CONSONANCE_BOARD') || under('board.jsonl'),
+    mark: pick('CONSONANCE_REPLAY_MARK') || under('replay-check.mark.json'),
+    // Not data_dir: this is Claude Code's own layout under the user's home, portable by shape.
+    projects: pick('CONSONANCE_PROJECTS') || path.join(os.homedir(), '.claude', 'projects'),
+  };
+}
+
+const { board: BOARD, mark: MARK, projects: PROJECTS } = resolve();
 
 /* Complete lines only — a torn final line has not been handed to any reader yet. Pure. */
 function countLines(buf) {
@@ -108,10 +161,23 @@ function verdict(added, boundTotal) {
   return { pass: added <= boundTotal, added, bound: boundTotal, excess: Math.max(0, added - boundTotal) };
 }
 
-module.exports = { countLines, transcripts, bound, splitAdded, verdict, BOARD, MARK, PROJECTS };
+module.exports = { countLines, transcripts, bound, splitAdded, verdict, resolve, BOARD, MARK, PROJECTS };
 
 if (require.main === module) {
   const mode = process.argv[2];
+
+  // Degrade LOUDLY. The alternative — a default — makes this tool report a number about a
+  // machine it never opened, which is the failure it was built to catch. Exit 4, name what was
+  // looked for, print nothing that could be mistaken for a measurement.
+  if (!BOARD || !MARK) {
+    console.error('replay-check: cannot locate the board or the mark, so there is nothing to');
+    console.error('measure and no default worth guessing. Looked for, in order:');
+    console.error('  CONSONANCE_BOARD / CONSONANCE_REPLAY_MARK   (unset)');
+    console.error('  CONSONANCE_DATA                             (unset)');
+    console.error(`  data_dir in ${path.join(os.homedir(), '.consonance.json')}   (absent or empty)`);
+    process.exit(4);
+  }
+
   const boardBytes = fs.statSync(BOARD).size;
 
   if (mode === '--mark') {
