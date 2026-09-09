@@ -64,3 +64,23 @@ The first packet measures (b) against a real seat: warm-resume a pane on this ma
 **Order of work (replaces §1 of the plan file from the retire step on):** the rebuild lap (replay fix + trap gate) → P-BOARD-COMPACT → P-STATE-SET v2 (per-seat lease, tails travel, the transcripts ruling from the measurement) → P-RETIRE (the first-sync migration: retire the desktop's seats, keep them revivable, adopt the laptop's) → P-LIVE-MIRROR (driver/follower, the latency bound) → the desktop's first launch under it, scored.
 
 *Registered 02:25, not built. The keeper's word opens each as a lap.*
+
+
+## 7 · The keeper, 02:25 — "I do have a thumbdrive at home … pull most of the shit from the repo, but the things that are too big from the thumbdrive transfer"
+
+**Yes, and the tool for the thumbdrive half already exists.** `dev/migrate/pack_room.ps1` / `unpack_room.ps1` / `move_verify.ps1` (2026-07-27, Around's eight-finding revision) pack exactly the set that must never go through the repo: the instance dirs, the seats' session transcripts and memory dirs from `~/.claude/projects`, the own-captures that power warm-resume, and the registries (`panes.json`, `letters.json`), with a per-file SHA256 manifest; a traveller whose transcript cannot travel FAILS the pack rather than completing softly. It was written for OneDrive as the destination; **a thumbdrive is the same destination with a different path, and it satisfies the Third Place's rule better than any cloud** — the record moves by hand, in the keeper's pocket.
+
+**What goes where, measured tonight:**
+
+| set | size | transport |
+|---|---|---|
+| the record, the app, the state that fits (board after compaction, ledgers, `.txt` captures, manifest) | < 100 MB per file | **the repo** (`git pull` at launch) |
+| the seats' memory: `~/.claude/projects/C--Consonance-instances-*` (Main 240 MB, lib 72, third place 29, panes 2–23) + instance dirs + registries | **395 MB** | **the thumbdrive** (`pack_room.ps1` bundle) |
+| raw PTY captures `captures/*.log` | 525 MB | **nowhere** — ore, STAYS (A's manifest); warm-resume reads the `.txt` tails, 5 MB, which travel by the repo |
+| `backups/` | 23 MB | thumbdrive if the keeper wants it; not needed to wake a seat |
+
+**Two things the pack script does not yet do, and both are the P-RETIRE packet:** (1) its header says *"FORK, NOT MIRROR: after unpack the threads diverge"* — the keeper's §6 spec supersedes that: unpack on the desktop must **retire** the desktop's current seats (move their transcripts, instance dirs and letters aside, revivable) and install the laptop's as *the* seats, not add them beside; (2) after the first sync the transcripts on the two machines diverge again with every turn, so the thumbdrive is the **first sync's** memory transport, not the ongoing one — ongoing is the repo for state plus §6's driver/follower rule, with takeover by warm-resume (route b) unless a peer transport is built (route a). **So the thumbdrive collapses the migration problem to one carry, and leaves the live-mirror question exactly where §6 put it.**
+
+**The carry, when it happens:** (i) this machine, after the rebuild and the compaction: `pwsh dev/migrate/pack_room.ps1` to the thumbdrive path, `move_verify.ps1` against the manifest; (ii) the desktop: `git pull` first, then `unpack_room.ps1` in retire mode (to be built), then launch — sync, verify, then start.
+
+*Registered 02:30. Not built. The retire mode is the packet.*
