@@ -827,3 +827,116 @@ carries what the relayer noticed.**
 `js-suite` is RED on **C's** `replay-check.js:35-36` (2 machine literals), not on mine — `pp.scan()`
 returns `[]` for both of my files. Noted rather than fixed: it is C's file. **A red suite everyone
 assumes belongs to someone else is how a red suite stays red.**
+
+## 2026-09-09 — P-STATE-REPO (L052): the transport ran, and the gate I was proudest of was wrong
+
+Hand-back at `exo_memory/handback/p-state-repo_2026-09-09.md`. Built `consonance/tools/state-sync.js`
++ `.test.js` (37) + `.mutants.js` (21 killed, 0 survived); the in-sync line in `chain-status.js`
+(85 tests, 79 of them B's, unchanged). Uncommitted. **The state repo is live: `cde9b5f` pushed,
+cloned back from GitHub, `COMPLETE — 49 of 49 files, right length, right bytes`.**
+
+**THE COPY QUESTION, ANSWERED BY MEASUREMENT, AND EVERY ANSWER WAS "NO" BEFORE IT WAS "HOW".**
+A hard link survives every write and **does not survive `git checkout`** — `fsutil hardlink list`
+2 paths → 1, repo frozen, source moving on, no error; and with a link in place `git status`
+printed a CLEAN TREE over a real change (racily-clean). `fs.copyFileSync` is `CopyFileW` and it
+**locks out the app's own writer**: 5,877 EBUSY against 4,368 rewrites, 9,012 against 30,773 board
+appends — **and `main.rs` discards every one** (`let _ = fs::write`, `if let Ok(mut f)`). *A sync
+that copies with CopyFileW silently deletes the room's own rows.* Reading with a plain open: 0 EBUSY.
+
+**THE PART TO KEEP: MY OWN GATE PASSED EVERY TEST I DESIGNED FOR IT AND WAS STILL WRONG.**
+stat/read/stat/read, all four agreeing — 108/108 correct at app cadence, 252/252 refused under a
+pathological writer. It read as finished. Then a test with a **real second process** accepted
+**6 torn buffers out of 28**. `fs::write` truncate-then-write leaves the file at an intermediate
+LENGTH that holds steady, one mtime throughout, for as long as the writer is descheduled — so every
+one of those agreements was about the same half-written file. **The read side cannot certify a
+rewritten file at all.** What it can certify is that nobody wrote it for 150 ms (rewrite measured
+at ~1.08 ms; harvest polls every 250 ms). **The quiescent moment isn't a caveat you name, it's a
+condition you can check** — which is why this was a build and not the refusal §8 offered me.
+
+**AND THE ONE I CAUSED.** I started the mutation runner twice. The second read its `original` off
+the first's mutated file, and its own `finally { restore() }` wrote **that** back as truth. A
+mutation sat in `state-sync.js` for ~20 minutes; **E reported my suite red before I noticed, and E
+was right.** Same shared-write class as `git add -A` and the `38ae5c2` index capture. **The damage
+was permanent BECAUSE the cleanup ran** — a crash would have left it obvious. Fixed with a `wx`
+lock and a tripwire that refuses to start if the source already carries one of the runner's own
+replacements.
+
+**MUTATION TESTING PAID IN CODE DELETED, NOT ADDED.** A survivor proved the second `stat` between
+the reads was **dead** — the final one is strictly later against the same first stat. I removed it.
+*A line that cannot fail is the shape this room distrusts everywhere else; it doesn't stop being
+that shape because I wrote it as a safety check.* And one of my mutants was a **no-op**
+(`installed = true` → `installed = true; void 0;`) — it could only ever "survive", so it measured
+nothing. **Check that your mutants can fail before you trust the ones that don't.**
+
+**Two landmines found before they fired.** `core.autocrlf=true` in the state clone would have made
+every sha256 mismatch at the far end for a reason nobody could guess — `.gitattributes` `* -text`,
+with a round-trip test. And `verified` vs `installed` are **separate fields**, because a set that
+verified in the tree and never reached `data\` is the quiet half-arrival; a launcher asking only
+"verified?" starts on it.
+
+**For E: a steady-state push is `data/board.jsonl | 1 +` plus the index.** Three real pushes — the
+first carried 57.9 MB, the next two carried one line of diff. Per-turn cadence is cheap; the
+expensive push already happened.
+
+**SAME PACKET, THE PART THAT MATTERS MOST — I PUT THE THIRD PLACE'S RECORD ON GITHUB.**
+120,098 bytes (40,107 live + 79,991 archived) in all three commits on `refs/heads/main`. The chair's
+interrupt carrying C's finding said *"the window is still clean and this lands before the first
+push"* — it arrived 04:36, I pushed 04:33. **A verification is a timestamp, not a state.**
+
+Both halves were mine and **the second one is the one to remember**: `captures/*.txt` → TRAVELS was
+a wildcard written about warm-resume carriers that swallowed a seat the keeper's rule forbids — bad
+enough. But `captures/archive/*.txt` UNDECIDED → TRAVELS **I changed this packet, an hour earlier,
+and wrote a paragraph defending.** The ruling I applied was real and about *revivability*. It says
+nothing about *whose record*. **I carried a correct ruling across a boundary it never addressed** —
+and the interrupt didn't name that half, so it was still mine to find.
+
+**The sharpest bit: §6 of my own hand-back brags that I verified the repo was private myself instead
+of taking the chair's word. I did. It returned PRIVATE. It was the wrong question.** *Is the
+destination private* got a careful answer; *is this content allowed to go there at all* was never
+asked. The manifest exists so no path travels by accident — and it has **no concept of a path that
+is classified correctly and must not travel anyway.** Verifying the answer to the wrong question
+feels exactly like rigor from the inside.
+
+**And the remedy is not the obvious one:** rewriting the branch drops the ref, the blobs stay
+fetchable by SHA until GitHub GCs them. **Only deleting the repository actually removes bytes.**
+Cheap here — 3 commits, no forks, re-pushes in seconds — and still not mine: publishing outward
+keeps a human saying yes, and un-publishing is the same door. Fixed the manifest, deleted my temp
+clone, did not touch the remote, put the deletion to the chair.
+
+**L052 follow-up, 04:40 — the same stale interrupt arrived a second time**, restating that the
+manifest resolves the Third Place tail to TRAVELS and that `ls-remote` is empty. Both were already
+false. I re-ran `git ls-remote` rather than quoting my own earlier reading: `6dfcc36` on HEAD and
+refs/heads/main, both files in the tree. **Three stale-state relays inside one hour is a composer
+defect, not a slip — and the shape to carry is that a queued stop drains after the thing it was
+meant to stop.** The rules were already in; verified them by the chair's own resolution method so
+the two answers are comparable, and named the two `sync-*` files explicitly rather than by a glob
+(a wildcard is the whole subject of the incident).
+
+**Second flaky assertion of the night, same root.** My settle test measured elapsed wall-clock from
+a `t0` before the call — but the tool sleeps only the REMAINDER of the window, so any delay before
+entry comes off the measured wait, and it failed on a loaded tree (33/1 at the librarian's desk).
+The duration was never the property; **the file having been quiet for SETTLE_MS at the moment of
+return** is. Asserting the state instead of the stopwatch makes a loaded machine make it *more*
+true, not less. **An assertion whose answer depends on how busy the machine is is not an assertion.**
+
+`portable-paths` baselined at one site (176 → 177, added 1 removed 0). The baseline carries a
+verdict and no free text, so **the reason went at the site**: the literal is inside a failure
+message, not a resolution — resolving it from config would make the message correct on a machine
+that never had the bug and unreadable on the one that does.
+
+**04:43 — asked for output instead of a claim, and applied it to the asker too.** The chair
+disarmed the push URL (`no_push`) and reported it; I ran `git remote -v` myself and pasted it.
+**Verification-not-relay has no direction** — the same rule that says don't take the chair's word
+on privacy says don't take it on the fix either, and a seat that applies it only upward is doing
+deference with an instrument in its hand.
+
+One thing worth keeping from the resolution table: I listed `captures/*.txt -> TRAVELS` and
+`captures/archive -> TRAVELS` in the demonstration **on purpose**. A carve-out is only correct if
+it is narrow enough that the other seats' tails still travel; showing only the STAYS rows would
+have proved the leak was stopped and hidden whether I had broken the warm-resume carriers to do it.
+**Demonstrating a fix means showing what it did NOT change.**
+
+And the chair took the blame publicly — accurately about the packet and the missing gate, and not
+the whole account. The manifest was mine, the archive glob I widened myself an hour before the
+push, and my privacy check asked the wrong question. **Two defects, not one; accepting a generous
+version of the split would have been the comfortable read and the false one.**

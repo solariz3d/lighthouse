@@ -1027,3 +1027,78 @@ test('more hand-backs than the list cap are counted, never silently trimmed', ()
   assert.match(r.text, /5 hand-backs uncommitted: a\.md, b\.md, c\.md, \+2/, r.text);
   s.cleanup();
 });
+
+// ═══ THE IN-SYNC SEGMENT (A, P-STATE-REPO L052) ═══════════════════════════════════════════
+//
+// `this machine only` was the truthful limit for as long as lap.jsonl lived on one disk and
+// nothing carried it anywhere. A state repo makes it a FALSE limit — worse than none, because it
+// announces an isolation that is no longer real. These tests hold both halves: the old string
+// survives byte-for-byte wherever there is no sync, and where there is one it is replaced by
+// hashes that say what they are as-of.
+
+test('IN SYNC — with no sync status in the store, the line is BYTE-IDENTICAL to what it printed before', () => {
+  const s = store(WORKING(1000), []);
+  const r = mod().line({ ledger: s.ledger, now: 1000 + 11 * 60000, dirty: 4 });
+  assert.ok(r.text.endsWith('this machine only'), r.text);
+  s.cleanup();
+});
+
+test('IN SYNC — one commit hash per machine, and it says AS OF, never a live agreement', () => {
+  const s = store(WORKING(1000), []);
+  fs.writeFileSync(path.join(s.dir, 'state-sync.status.json'), JSON.stringify({
+    written: new Date(1000 + 5 * 60000).toISOString(),
+    this_machine: 'L',
+    machines: [{ machine: 'D', commit: 'a17007f' }, { machine: 'L', commit: '3b38d3b' }],
+  }));
+  const r = mod().line({ ledger: s.ledger, now: 1000 + 11 * 60000, dirty: 4 });
+  assert.match(r.text, /in sync D a17007f\/L 3b38d3b as of 6m ago/, r.text);
+  assert.ok(!r.text.includes('this machine only'), 'the stale admission must be REPLACED, not kept beside: ' + r.text);
+  s.cleanup();
+});
+
+test('IN SYNC — one machine only is a QUESTION, not an agreement', () => {
+  const s = store(WORKING(1000), []);
+  fs.writeFileSync(path.join(s.dir, 'state-sync.status.json'), JSON.stringify({
+    written: new Date(1000).toISOString(), this_machine: 'L', machines: [{ machine: 'L', commit: '3b38d3b' }],
+  }));
+  const r = mod().line({ ledger: s.ledger, now: 1000 + 60000, dirty: 0 });
+  assert.match(r.text, /in sync\? L 3b38d3b/, r.text);
+  s.cleanup();
+});
+
+test('IN SYNC — a machine that has pushed nothing prints `never`, never a blank', () => {
+  const s = store(WORKING(1000), []);
+  fs.writeFileSync(path.join(s.dir, 'state-sync.status.json'), JSON.stringify({
+    written: new Date(1000).toISOString(), this_machine: 'L',
+    machines: [{ machine: 'L', commit: '3b38d3b' }, { machine: 'D', commit: null }],
+  }));
+  const r = mod().line({ ledger: s.ledger, now: 1000 + 60000, dirty: 0 });
+  assert.match(r.text, /D never/, r.text);
+  s.cleanup();
+});
+
+test('IN SYNC — an unparseable status file falls back to the old admission, never to a crash', () => {
+  const s = store(WORKING(1000), []);
+  fs.writeFileSync(path.join(s.dir, 'state-sync.status.json'), '{ not json');
+  const r = mod().line({ ledger: s.ledger, now: 1000 + 60000, dirty: 0 });
+  assert.ok(r.text.endsWith('this machine only'), r.text);
+  s.cleanup();
+});
+
+test('IN SYNC — the status is read from the STORE, never from the live machine', () => {
+  // The defect this file has now caught twice in this one tool, and it caught it a third time in
+  // the first draft of `inSync()`: a fixture line printed the LIVE machine's sync status because
+  // the path was resolved from the module-level DATA_DIR instead of from the ledger in use.
+  const s = store(WORKING(1000), []);
+  const r = mod().line({ ledger: s.ledger, now: 1000 + 60000, dirty: 0 });
+  // BASELINED IN portable-paths.baseline.json AS BENIGN-TEST, and the reason lives here because
+  // the baseline carries a verdict and no free text. The literal is inside a FAILURE MESSAGE, not
+  // a resolution: nothing reads it, nothing resolves against it, and the assertion passes or fails
+  // identically on a machine with no C: drive. It is here so that when this test does fail, the
+  // reader is told which directory must not have been consulted — which is the whole content of
+  // the defect. Resolving it from config would make the message correct on a machine that has
+  // never had the bug, and unreadable on the one that does.
+  assert.ok(r.text.endsWith('this machine only'),
+    'a temp-dir fixture must not see C:\Consonance\data: ' + r.text);
+  s.cleanup();
+});

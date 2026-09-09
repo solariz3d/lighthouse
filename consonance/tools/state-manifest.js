@@ -222,4 +222,10 @@ function main() {
   process.exit(0);
 }
 
-main();
+// EXPORTED so state-sync.js classifies with THIS file's rules and THIS file's glob
+// semantics rather than a second copy of them. Two implementations of one rule set is how a
+// transport and its checker come to disagree while both report green — the failure this whole
+// manifest exists to make loud. The CLI behaviour above is unchanged: main() still runs when this
+// file is the entry point, and its 25 tests are the proof of that.
+if (require.main === module) main();
+module.exports = { globToRe, walk, dataDir, MANIFEST, VALID_CLASSES: ['TRAVELS', 'STAYS', 'REGENERATES', 'UNDECIDED'] };

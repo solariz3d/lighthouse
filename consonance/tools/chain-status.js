@@ -369,6 +369,44 @@ const DATA_DIR = process.env.CONSONANCE_DATA || fromConfig('data_dir') || null;
 const LEDGER = process.env.LAP_LEDGER || (DATA_DIR ? path.join(DATA_DIR, 'lap.jsonl') : null);
 const BOARD = process.env.CONSONANCE_BOARD || (DATA_DIR ? path.join(DATA_DIR, 'board.jsonl') : null);
 const LETTERS = process.env.CONSONANCE_LETTERS || (DATA_DIR ? path.join(DATA_DIR, 'letters.json') : null);
+const SYNC_STATUS_ENV = process.env.CONSONANCE_SYNC_STATUS || null;
+
+/**
+ * The in-sync segment: one commit hash per machine, or the old admission when there is no sync.
+ *
+ * `this machine only` was accurate for as long as `lap.jsonl` lived on one disk and nothing
+ * carried it anywhere — and it was printed in every measurement this room reported all night. It
+ * stops being the honest answer the moment a state repo exists, so it is REPLACED rather than
+ * kept beside: a line that says "this machine only" while a sync is running is a worse limit than
+ * no limit at all.
+ *
+ * READ FROM A FILE, NEVER FROM GIT. This runs from the pulse hook on every prompt in every seat,
+ * and a `git log` per machine per prompt is a subprocess tax on the one line everyone reads.
+ * `state-sync.js` writes the hashes when it pushes or pulls; this reads them.
+ *
+ * WHAT IT CANNOT SEE, and why the wording says `as of`: the file records the other machine's head
+ * AS OF THIS MACHINE'S LAST SYNC. A desktop that pushed one second ago is invisible here until
+ * this machine pulls. Printing a bare pair of hashes would read as a live agreement it never
+ * checked — the same false green `this machine only` was invented to avoid.
+ *
+ * RESOLVED BESIDE THE LEDGER IN USE, never from the module-level DATA_DIR — the rule already
+ * written above the board's resolution, and the first version of this function broke it: driven
+ * by a temp-dir fixture it read the LIVE machine's sync status and printed a real sync into a
+ * fixture line. Caught by chain-status.test.js's byte-identical assertion on the first run, which
+ * is the second time that test has caught exactly this defect in exactly this file.
+ */
+function inSync(store, now = Date.now()) {
+  const p = SYNC_STATUS_ENV || (store ? path.join(store, 'state-sync.status.json') : null);
+  if (!p) return 'this machine only';
+  let st;
+  try { st = JSON.parse(fs.readFileSync(p, 'utf8')); } catch (_) { return 'this machine only'; }
+  const ms = Array.isArray(st.machines) ? st.machines.filter((m) => m && m.machine) : [];
+  if (!ms.length) return 'state repo, no machine has pushed';
+  const seen = ms.map((m) => m.machine + ' ' + (m.commit || 'never')).join('/');
+  const at = Date.parse(st.written || '');
+  const asOf = Number.isFinite(at) ? ' as of ' + ago(now - at) + ' ago' : '';
+  return (ms.length === 1 ? 'in sync? ' : 'in sync ') + seen + asOf;
+}
 /* board.jsonl is 185 MB and grows forever; this runs from the pulse hook on every prompt in every
  * seat, so only a tail is read. The size is not a threshold on the CLAIM — it is a read budget, and
  * whether it reached far enough is CHECKED against the anchor rather than hoped for. Same tail
@@ -949,7 +987,7 @@ function line(opts = {}) {
   // board_push stays visible from the one line everyone reads, instead of vanishing into a repair.
   if (col && col.fused) parts.push(col.fused + ' board line(s) fused, rows recovered');
 
-  parts.push('this machine only');
+  parts.push(inSync(path.dirname(opts.ledger || LEDGER || '.'), now));
   // Only where a work-leg claim was actually made: a healthy lap's line stays byte-identical to what
   // it printed before this section existed. `rows only` is the limit belonging to THIS claim \u2014 that
   // `unwitnessed` is a fact about the ledger and not about the panes.
