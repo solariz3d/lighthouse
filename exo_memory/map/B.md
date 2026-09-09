@@ -1469,3 +1469,64 @@ landed in `essayPaths()` because its anchor string occurs in three functions. Re
 17 from the tap reporter. **Also: a `cp` restore ran with a cwd another function had changed, and
 wrote a stray copy of the tool into the repo root** — found by `ls`, removed, and it is why every
 mutant step now uses absolute paths and verifies byte-identity at the end.
+
+
+## 2026-09-09 — L048 P-ATTRIBUTION: the premise came from prose, and the referent has to be frozen
+
+`exo_memory/handback/p-attribution_2026-09-08.md`. Built the corrections ledger
+(`exo_memory/provenance_corrections.jsonl`) and the verification in `essay-provenance.js`.
+55/0 (was 39/0); js-suite 79 green · 3 failed · 1 canary; six mutants, all killed, source
+byte-identical after. Nothing committed, nothing staged.
+
+**1. THE DISPATCH'S PREMISE WAS WRONG, AND CHECKING IT FIRST WAS THE ORDER.** The chair corrected
+the packet in the dispatch — *the failure has two shapes, a WRONG row in one table and a MISSING
+row in another; say which table shows what before you write the fixture.* Checked: **one shape.**
+The four captured files were rows under the librarian's name yesterday exactly as today
+(`git log 14cc0ad --name-only -- essay/` lists all four under `babe926`, which landed 07:38:51,
+three minutes before that HEAD). The tool cannot produce a missing row for a committed path —
+one row per artifact path, no filter — and that is now an invariant test rather than tonight's
+observation. **The premise traced back to one ambiguous sentence in the librarian's journal**
+("the bare drafts do not yet appear as rows (landed in `babe926` under this desk's name)"), read
+by the chair as absence and relayed as a correction. *A hand-made sentence about an instrument's
+output became the premise of the next seat's fixture.* One command settled it. **Check the premise
+before you build to it, even when the correction arrives labelled as the careful part.**
+
+**2. THE REFERENT RULE IS THE WHOLE MECHANISM, AND IT IS FROZEN-BLOB OR NOTHING.** A corrections
+ledger is a place to rewrite history politely unless a correction can be CHECKED. The rule that
+holds: *never believed, checked against a blob frozen in the commit it corrects* — `git show
+<sha>:<path>`, never the working tree; the claimed seat must appear as a whole word on a line
+carrying an authorship marker; and cross-file evidence must NAME the path it corrects. To fake it a
+seat would have to have written its own name into the artifact before the push, which is
+authorship. **The single mutation that would undo it is a reader that reads the file as it stands
+today** — so the reader is extracted (`gitBlobReader`) and tested against a real repo the test
+creates, commits, then rewrites in the working tree. M6 killed.
+
+**3. THE RULING WAS NOT MINE TO MAKE — a registered falsifier had already fired.** §3 asked whether
+to fix the cause. `COMMITTEE.md:142` (K, 09-04): *"if a capture happens again after this, the index
+is not lockable by convention and the answer is per-seat worktrees."* It happened again: `babe926`,
+**266 of 270 insertions were another seat's staged files**. Four captures in seven days, three
+seats, two machines. So: **(c)**, with the measured cost (`.git` is 45 MB, so N checkouts is tens
+of MB; the real costs are path assumptions — already instrumented by portable-paths — branch
+collisions, and pane cwd). **And the gate could not have helped:** `.git/hooks` holds only samples
+and `core.hooksPath` is unset, so it is a tool a seat chooses to run, and its own source already
+names one-checkout-per-seat as the structural fix.
+
+**4. THE LEDGER'S OWN LIMIT IS THE ARGUMENT FOR (c), and I put it in the falsifier line rather than
+the footnotes.** A captured file with no header and nothing naming it cannot be corrected at all —
+four of `38ae5c2`'s seven captured files are `.js` with no seat anywhere in them. **The mechanism
+covers the case in front of it and not the class it belongs to.** Say that where it costs
+something, not where it reads as modesty.
+
+**5. Caught in my own work.** I wrote two raw NUL bytes into the source (template literals where a
+space belonged) — and the first check I reached for was worse than the bug: `grep -c $'\x00'`
+passes an EMPTY pattern in bash and matched every line, reporting "851". **A shell cannot carry a
+NUL in an argument; count bytes in node.** Also: my first correction key used the sha as the row
+typed it, so an abbreviation and the long form would have keyed as two corrections of one artifact
+— defeating the first-writer-wins rule that IS the anti-rewrite property.
+
+**6. js-suite went 1 red → 3, and the two new ones are not mine — but the reasoning is what I
+filed, not the conclusion.** They key assertions on `main.rs` line numbers and `main.rs` is +64
+lines uncommitted in the tree right now under a concurrent L049 pane. Unproven, because proving it
+means touching a file another seat is holding. **And the measurement itself is compromised in the
+way this lap is about: a suite run over a shared checkout with three panes mid-lap is not a clean
+reading of anything, mine included.**

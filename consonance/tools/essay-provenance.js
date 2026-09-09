@@ -60,6 +60,8 @@
 //   LAP-ONLY                  a baton moved over a path nothing else mentions
 //   ON-DISK-NOT-COMMITTED     the path EXISTS in the working tree and git cannot see it yet:
 //                             not-yet-recorded, which is neither done nor never-started
+//   SEAT-CORRECTED            the commit body is wrong about who landed this file, and a verified
+//                             correction says so. The commit's own name is NOT replaced (2026-09-08)
 //
 // THE SPLIT BETWEEN THE TWO UNLOGGED CASES IS THE WHOLE POINT OF THIS FILE. essay/METHOD.md
 // belongs to one seat and no other seat may write it. So a librarian landing a read into essay/
@@ -105,6 +107,7 @@ const { execFileSync } = require('child_process');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const DEFAULT_PREFIX = 'essay/';
+const CORRECTIONS_FILE = 'exo_memory/provenance_corrections.jsonl';
 const LOG_FILE = 'METHOD.md';
 
 const normPrefix = (x) => {
@@ -289,6 +292,129 @@ function readLap(file, prefix) {
   return out;
 }
 
+/* ── SOURCE 5: THE CORRECTIONS LEDGER ─────────────────────────────────────────────────────────
+ *
+ * THE CASE, 2026-09-08. `babe926` is a librarian commit about the two-machine idea. It also
+ * carried four files the CHAIR had staged and not yet committed — the two bare essay drafts and
+ * their prompts, 266 of its 270 insertions. This tool reads the seat from the commit body, so it
+ * attributed four chair artifacts to the librarian, correctly reading a record that is wrong.
+ * `babe926` is pushed. It cannot be amended and must not be, so the only repair available is a
+ * SECOND record this tool reads.
+ *
+ * A LEDGER THAT CAN BE WRITTEN BY HAND IS A PLACE TO REWRITE HISTORY POLITELY, and the packet's
+ * standing permission was to refuse if no referent rule could be found that a motivated seat
+ * cannot satisfy with a plausible pointer. There is one, and it is the only reason this exists:
+ *
+ *     A CORRECTION IS NEVER BELIEVED. IT IS CHECKED AGAINST A BLOB FROZEN IN THE COMMIT IT
+ *     CORRECTS.
+ *
+ * Four conditions, all machine-checked, all against objects nobody can now rewrite:
+ *
+ *   1 the sha must be a commit this tool already read, and its diff must contain the corrected
+ *     PATH — so a correction cannot reach a commit it does not name;
+ *   2 the EVIDENCE must be readable at that sha (`git show <sha>:<evidence>`) — the content as it
+ *     stood when the commit landed, not as it stands today;
+ *   3 that blob's HEADER must carry the claimed seat on a line that also carries an authorship
+ *     marker (`SEAT:`, `placed here by`, `written by`, …). Not "the word appears somewhere";
+ *   4 when the evidence is a DIFFERENT file from the one being corrected, its header must NAME
+ *     the corrected path — which is how the two prompt files are reachable at all: they carry no
+ *     header of their own, and the drafts' headers name them.
+ *
+ * WHY THAT CANNOT BE FAKED AFTER THE FACT: to steal an artifact a seat would have to have written
+ * its own name into the artifact's header BEFORE the commit was pushed, which is indistinguishable
+ * from having authored it. WHAT IT DOES NOT DO, and this is the limit, printed rather than buried:
+ * it authenticates a correction against the FROZEN RECORD, not against the world. A header that
+ * was already false when it was written is inherited, not caught. And a file with no header and
+ * nothing naming it — a .pdf, a .png — is UNREACHABLE by correction, which is the right way for
+ * this to fail: closed, and out loud.
+ *
+ * FIRST VERIFIED CORRECTION WINS. A later row over the same (sha, path) is refused as CONFLICTING
+ * and printed, never applied. Otherwise the ledger is last-writer-wins, which is the thing the
+ * permission-to-refuse was about.
+ *
+ * The file is JSONL like the board and the lap ledger, with one deviation: lines beginning `#` are
+ * skipped, because this is the only one of the five sources written by a hand rather than a
+ * machine, and the format has to be legible where it is written. One row:
+ *
+ *   {"sha","path","seat","evidence"?,"by","at","note"?}
+ */
+const HEADER_BYTES = 4096;
+const correctionKey = (full, p) => String(full) + ' ' + String(p);
+const AUTHORSHIP = /(^|[^A-Za-z])(SEAT\s*:|written by|placed here by|placed by|spawned by|filed by|authored by|committed by)/i;
+
+function readCorrections(file) {
+  const out = [];
+  let n = 0;
+  for (const line of fs.readFileSync(file, 'utf8').split(/\r?\n/)) {
+    const t = line.trim();
+    if (!t || t.startsWith('#')) continue;
+    n++;
+    try { out.push(JSON.parse(t)); } catch (_) { out.push({ __malformed: t.slice(0, 80) }); }
+  }
+  return { rows: out, lines: n };
+}
+
+// THE ONE DOOR TO GIT FOR EVIDENCE, and it reads the blob AS OF THE SHA — `git show <sha>:<path>`
+// — never the working tree. That is the whole property: the working copy of a header can be edited
+// by anyone tonight, and the blob at a pushed commit cannot. Extracted and exported so the suite can
+// test it against a real repository rather than assert it about a comment.
+function gitBlobReader(repoRoot) {
+  return (sha, file) => {
+    try {
+      return execFileSync('git', ['show', `${sha}:${file}`],
+        { cwd: repoRoot, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    } catch (_) { return null; }
+  };
+}
+
+function wholeWord(hay, needle) {
+  const esc = String(needle).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(^|[^A-Za-z0-9_-])${esc}([^A-Za-z0-9_-]|$)`, 'i').test(hay);
+}
+
+// Returns { ok, reason, line, evidence }. `readBlob(sha, path)` is the ONLY door to git here and
+// is injected, so the test suite verifies the rule rather than a re-implementation of it. Absent a
+// reader every correction is refused: an unverifiable correction and a verified one must never
+// produce the same output, which is the silent-absence failure this room keeps re-finding.
+function verifyCorrection(row, { commits = [], readBlob = null } = {}) {
+  if (row && row.__malformed) return { ok: false, reason: `MALFORMED-ROW: ${row.__malformed}` };
+  for (const k of ['sha', 'path', 'seat', 'by', 'at']) {
+    if (!row || typeof row[k] !== 'string' || !row[k].trim()) return { ok: false, reason: `MISSING-FIELD: ${k}` };
+  }
+  const commit = commits.find((c) => shaMatch(row.sha, c.sha) || shaMatch(row.sha, c.full));
+  if (!commit) return { ok: false, reason: 'NO-SUCH-COMMIT' };
+  if (!commit.paths.includes(row.path)) return { ok: false, reason: 'PATH-NOT-IN-COMMIT' };
+  const evidence = (row.evidence && String(row.evidence).trim()) || row.path;
+  if (typeof readBlob !== 'function') return { ok: false, reason: 'NO-EVIDENCE-READER' };
+  let blob;
+  try { blob = readBlob(commit.full || commit.sha, evidence); } catch (_) { blob = null; }
+  if (typeof blob !== 'string' || !blob) return { ok: false, reason: `EVIDENCE-NOT-READABLE AT ${row.sha}:${evidence}` };
+  const head = blob.slice(0, HEADER_BYTES);
+  const line = head.split(/\r?\n/).find((l) => AUTHORSHIP.test(l) && wholeWord(l, row.seat));
+  if (!line) return { ok: false, reason: `NO-SEAT-IN-EVIDENCE: "${row.seat}" on no authorship line in ${evidence}` };
+  if (evidence !== row.path && head.indexOf(row.path) === -1) {
+    return { ok: false, reason: `EVIDENCE-DOES-NOT-NAME-PATH: ${evidence} never names ${row.path}` };
+  }
+  return { ok: true, reason: null, line: line.trim(), evidence, commit };
+}
+
+// Verified in ledger order, and the key is the COMMIT'S OWN full sha rather than what the row
+// typed, so an abbreviated and a full form of one sha cannot stand as two corrections of one
+// artifact. The first row to pass owns that key; anything later over the same artifact is refused
+// as CONFLICTING rather than believed, which is what keeps this from being last-writer-wins.
+function verifyCorrections(rows, ctx) {
+  const applied = new Map();
+  const refused = [];
+  for (const row of rows || []) {
+    const v = verifyCorrection(row, ctx);
+    if (!v.ok) { refused.push({ row, reason: v.reason }); continue; }
+    const key = correctionKey(v.commit.full, row.path);
+    if (applied.has(key)) { refused.push({ row, reason: 'CONFLICTING — an earlier verified correction already stands' }); continue; }
+    applied.set(key, { ...row, evidence: v.evidence, line: v.line });
+  }
+  return { applied, refused };
+}
+
 /* ── PROSE NAMES A PATH LOOSELY, AND THE RESOLUTION IS RULED RATHER THAN GUESSED ──────────────
  *
  * The board has no structured path field, so every board path is prose, and prose abbreviates:
@@ -341,7 +467,8 @@ function shaMatch(a, b) {
   return s.length >= 7 && l.startsWith(s);
 }
 
-function reconcile({ commits = [], method = [], board = [], lap = [], available = {}, prefix, onDisk } = {}) {
+function reconcile({ commits = [], method = [], board = [], lap = [], available = {}, prefix, onDisk,
+  corrections = [], readBlob = null } = {}) {
   // A prefix without its slash makes `p + LOG_FILE` read `essayMETHOD.md`, which matches nothing and
   // would report every artifact unlogged — a silent wrong answer rather than an error.
   const p = normPrefix(prefix);
@@ -354,6 +481,9 @@ function reconcile({ commits = [], method = [], board = [], lap = [], available 
   const unread = Object.keys(have).filter((k) => !have[k]);
 
   const keeper = methodKeeper(commits, p);
+  // Verified HERE, never taken pre-verified from a caller: a corrections ledger whose checking is
+  // somebody else's job is a corrections ledger with no checking.
+  const corr = verifyCorrections(corrections, { commits, readBlob });
   const entriesBySha = new Map();
   for (const e of method) {
     if (!e.sha) continue;
@@ -394,6 +524,7 @@ function reconcile({ commits = [], method = [], board = [], lap = [], available 
   const lapPathHits = new Set(have.lap ? lap.flatMap((r) => r.paths) : []);
 
   const landed = [];
+  const usedCorrections = new Set();
   for (const c of commits) {
     const entries = entriesBySha.get(c.sha) || [];
     const logText = entries.length ? fmtLog(entries) : null;
@@ -420,6 +551,7 @@ function reconcile({ commits = [], method = [], board = [], lap = [], available 
     const base = {
       date: c.date, ts: c.ts, sha: c.sha, full: c.full, subject: c.subject,
       seat, seatNamed: Boolean(c.seatLine), session: c.session,
+      seatFrom: null, corrected: null,
     };
 
     if (!artifacts.length) {
@@ -439,6 +571,11 @@ function reconcile({ commits = [], method = [], board = [], lap = [], available 
       let log;
       let red = false;
       let owed = false;
+      // THE CORRECTION IS ADDITIVE, NEVER A REPLACEMENT. `seatFrom` keeps what the commit body
+      // said and the row carries SEAT-CORRECTED, because a table that quietly prints the right
+      // answer teaches nobody that a capture happened, and the capture is the thing worth seeing.
+      const fix = corr.applied.get(correctionKey(c.full, f));
+      if (fix) usedCorrections.add(correctionKey(c.full, f));
       if (entries.length) {
         ruling = 'LOGGED';
         log = logText;
@@ -453,7 +590,17 @@ function reconcile({ commits = [], method = [], board = [], lap = [], available 
         log = 'NO LOG ENTRY';
         red = true;
       }
-      landed.push({ ...base, path: f, log, rulings: [ruling, ...axesFor(f)], red, owed });
+      landed.push({
+        ...base,
+        path: f,
+        seat: fix ? fix.seat : seat,
+        seatFrom: fix ? seat : null,
+        corrected: fix ? { by: fix.by, at: fix.at, evidence: fix.evidence, line: fix.line, note: fix.note || null } : null,
+        log,
+        rulings: [ruling, ...axesFor(f), ...(fix ? ['SEAT-CORRECTED'] : [])],
+        red,
+        owed,
+      });
     }
   }
 
@@ -529,10 +676,29 @@ function reconcile({ commits = [], method = [], board = [], lap = [], available 
     board_mentions_ambiguous: resolution.ambiguous,
     board_mentions_unresolved: resolution.unresolved,
     lap_note_mentions: have.lap ? lap.reduce((n, r) => n + (r.noteMentions || []).length, 0) : 0,
+    corrections_offered: (corrections || []).length,
+    corrections_applied: usedCorrections.size,
+    corrections_refused: corr.refused.length,
+    // A correction can verify and still reach no row — METHOD.md itself is in a commit's paths
+    // and produces no artifact row. Counted rather than assumed to be zero.
+    corrections_verified_unused: corr.applied.size - usedCorrections.size,
   };
 
   return {
     landed, signals, counts, keeper, unread, ambiguous,
+    corrections: {
+      // Read back off the ROWS, so what the corrections section prints and what table 1 prints
+      // cannot drift apart into two accounts of one correction.
+      applied: landed.filter((r) => r.corrected).map((r) => ({
+        sha: r.sha, path: r.path, seat: r.seat, seatFrom: r.seatFrom,
+        by: r.corrected.by, at: r.corrected.at,
+        evidence: r.corrected.evidence, line: r.corrected.line, note: r.corrected.note,
+      })),
+      verifiedUnused: [...corr.applied.entries()]
+        .filter(([k]) => !usedCorrections.has(k))
+        .map(([, v]) => v),
+      refused: corr.refused,
+    },
     unmeasured: commits.length === 0,
   };
 }
@@ -571,7 +737,10 @@ function render(out, opts) {
       lastSha = r.sha;
     }
     const paint = r.red ? C.red : (r.owed ? C.amber : (s) => s);
-    L.push(`${pad(r.date, 11)}${pad(r.seat, 18)}${pad(r.path, 42)}${paint(pad(r.log, 46))}${r.rulings.join(' ')}`);
+    // Both names, always, when a correction stands. The wrong one is not overwritten here or in
+    // --json; it is the evidence that the capture happened.
+    const who = r.seatFrom ? `${r.seatFrom}->${r.seat}` : r.seat;
+    L.push(`${pad(r.date, 11)}${pad(who, 18)}${pad(r.path, 42)}${paint(pad(r.log, 46))}${r.rulings.join(' ')}`);
   }
   L.push('');
 
@@ -590,6 +759,30 @@ function render(out, opts) {
   }
   L.push('');
 
+  const corr = out.corrections || { applied: [], refused: [], verifiedUnused: [] };
+  if (corr.applied.length || corr.refused.length || corr.verifiedUnused.length) {
+    L.push('CORRECTIONS — the commit body is wrong about who landed a file, and the artifact frozen');
+    L.push('in that same commit says so. Nothing here overrides silently: table 1 prints both names.');
+    L.push('A correction is CHECKED, never believed — the seat must appear on an authorship line in');
+    L.push('the evidence blob AS IT STOOD at that sha, which pushed history cannot rewrite.');
+    L.push(`${pad('SHA', 9)}${pad('PATH', 42)}${pad('COMMIT SAID -> TRUE SEAT', 26)}${pad('BY', 18)}AT`);
+    L.push('-'.repeat(150));
+    for (const a of corr.applied) {
+      L.push(`${pad(a.sha, 9)}${pad(a.path, 42)}${pad(`${a.seatFrom || '?'} -> ${a.seat}`, 26)}${pad(a.by, 18)}${a.at}`);
+      L.push(`         evidence ${a.sha}:${a.evidence}`);
+      L.push(`         "${a.line}"`);
+      if (a.note) L.push(`         note: ${a.note}`);
+    }
+    for (const u of corr.verifiedUnused) {
+      L.push(C.amber(`${pad(u.sha, 9)}${pad(u.path, 42)}VERIFIED BUT MATCHED NO ROW`));
+    }
+    for (const r of corr.refused) {
+      const row = r.row || {};
+      L.push(C.red(`${pad(row.sha || '?', 9)}${pad(row.path || '?', 42)}REFUSED: ${r.reason}`));
+    }
+    L.push('');
+  }
+
   const c = out.counts;
   L.push('COUNTS');
   L.push(`  commits touching the prefix          ${c.commits}`);
@@ -603,6 +796,8 @@ function render(out, opts) {
   L.push(`  BOARD-NO-COMMIT                      ${c.board_no_commit}`);
   L.push(`  ON-DISK-NOT-COMMITTED                ${c.on_disk_not_committed}`);
   L.push(`  LAP-ONLY                             ${c.lap_only}`);
+  L.push(`  corrections offered / applied        ${c.corrections_offered} / ${c.corrections_applied}`);
+  L.push(`  corrections REFUSED                  ${c.corrections_refused}`);
   L.push(`  METHOD entries / owned by a commit   ${c.method_entries} / ${c.method_entries_owned}`);
   L.push(`  commits naming a seat in the body    ${c.seat_named} of ${c.commits}`);
   L.push(`  commits carrying a session trailer   ${c.session_named} of ${c.commits}`);
@@ -641,6 +836,12 @@ function blindness(ctx) {
     '6 ARRIVAL NAMES   a board row\'s mount is the RECEIVER on an arriving message. The row\'s',
     '  THE RECEIVER    EXISTENCE cannot be suppressed by the sender; its ATTRIBUTION to the sender',
     '                  is a text prefix the sender types, and is prose like any other.',
+    '7 MERGE COMMITS   git shows no file names for a merge, so an artifact introduced BY a merge',
+    '                  would land in no row at all — the one way this table can drop a committed',
+    `                  file. Live now: ${ctx.merges} merge commits touch the prefix.`,
+    '8 A CORRECTION    corrections change the SEAT column only. The log-entry ruling is keyed to the',
+    '  IS SEAT-ONLY    COMMITTING thread, so a correction naming the log-keeping thread would',
+    `                  leave the row saying the entry is owed elsewhere. On file now: ${ctx.corrections}.`,
   ];
 }
 
@@ -700,8 +901,28 @@ async function main(argv) {
       .split(String.fromCharCode(10)).map((x) => x.trim()).filter(Boolean);
   } catch (_) { onDisk = []; }
 
+  // THE FIFTH LEDGER, and the only hand-written one. Absent, the run is not "clean": it is a run
+  // with no corrections on file, and the counts say so with a zero rather than by omission.
+  const corrFile = path.join(REPO_ROOT, CORRECTIONS_FILE);
+  let corrections = [];
+  let corrLines = 0;
+  let corrOk = true;
+  try {
+    const got = readCorrections(corrFile);
+    corrections = got.rows;
+    corrLines = got.lines;
+  } catch (_) { corrOk = false; }
+
+  const readBlob = gitBlobReader(REPO_ROOT);
+
+  let merges = 0;
+  try {
+    merges = execFileSync('git', ['log', '--merges', '--pretty=format:%h', '--', opts.prefix],
+      { cwd: REPO_ROOT, encoding: 'utf8' }).split(String.fromCharCode(10)).filter((x) => x.trim()).length;
+  } catch (_) { merges = -1; }
+
   const out = reconcile({
-    commits, method, board, lap, prefix: opts.prefix, onDisk,
+    commits, method, board, lap, prefix: opts.prefix, onDisk, corrections, readBlob,
     available: { board: boardOk, lap: lapOk, method: methodOk },
   });
   const blindLock = path.join(DATA_DIR, 'blind.lock');
@@ -713,13 +934,17 @@ async function main(argv) {
     commits: out.counts.commits,
     dropped,
     boardRaw: boardRaw.length,
+    merges: merges === -1 ? 'UNCOUNTED' : merges,
+    corrections: out.counts.corrections_applied + ' applied, ' + out.counts.corrections_refused + ' refused',
   });
   out.sources = {
     git: { ok: true, root: REPO_ROOT, commits: commits.length },
     method: { ok: methodOk, file: methodFile, entries: method.length },
     board: { ok: boardOk, file: boardFile, rows: board.length, dropped },
     lap: { ok: lapOk, file: lapFile, rows: lap.length },
+    corrections: { ok: corrOk, file: corrFile, rows: corrLines },
   };
+  if (!corrOk) console.error(`corrections ledger unreadable at ${corrFile} — no correction can apply`);
 
   if (opts.json) console.log(JSON.stringify(out, null, 2));
   else console.log(render(out, opts));
@@ -729,7 +954,8 @@ async function main(argv) {
 module.exports = {
   reconcile, parseMethod, shortShas, essayPaths, dedupeBoard, methodKeeper, normPrefix,
   readCommits, readMethodOwners, readBoard, readLap, render, blindness, shaMatch, resolveMention,
-  REPO_ROOT, DATA_DIR,
+  readCorrections, verifyCorrection, verifyCorrections, correctionKey, gitBlobReader,
+  REPO_ROOT, DATA_DIR, CORRECTIONS_FILE,
 };
 
 if (require.main === module) {

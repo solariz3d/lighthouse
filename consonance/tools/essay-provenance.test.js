@@ -509,6 +509,8 @@ test('every label this tool can emit is documented in its own header', () => {
   pathOnly.board = [{ pane: 'p', actor: 'D', role: 'user', ts: 1, text: 'essay/A.html',
     paths: ['essay/A.html'], shas: [] }];
   collect(reconcile(pathOnly));
+  // and the corrected run, so a new label cannot be shipped undocumented (L048)
+  collect(reconcile(Object.assign({}, fixture(), { corrections: [correction()], readBlob })));
 
   assert.ok(emitted.size >= 10, `only ${emitted.size} labels reachable: ${[...emitted].join(' ')}`);
   for (const label of emitted) {
@@ -527,4 +529,251 @@ test('a prefix given without its slash does not silently unlog every artifact', 
   const out = reconcile({ ...fixture(), prefix: 'essay' });
   assert.strictEqual(out.counts.logged, 1, 'METHOD.md must still be recognised as the log');
   assert.strictEqual(out.counts.method_no_artifact, 1);
+});
+
+/* ── THE CORRECTIONS LEDGER (L048) ────────────────────────────────────────────────────────────
+ *
+ * `babe926`, 2026-09-08: a librarian commit about the two-machine idea carried four files the
+ * chair had staged. The tool read the seat from the commit body — correctly — and attributed four
+ * chair artifacts to the librarian. The commit is pushed, so the record can only be repaired by a
+ * second record, and a second record that is BELIEVED rather than checked is a place to rewrite
+ * history politely. Every test below holds one of those two halves down: the correction is VISIBLE
+ * (never a silent override) and the correction is CHECKED (never an assertion).
+ *
+ * The evidence door is `readBlob(sha, path)` and it is injected, so these tests exercise the RULE
+ * and not a re-implementation of it — and a run with no reader refuses every correction.
+ */
+
+const { verifyCorrection, readCorrections, correctionKey, render }
+  = require('./essay-provenance.js');
+
+// The shape of the real thing: an authorship line inside the artifact's own header.
+const HEADER_B = [
+  '# Essay B (bare instance) — "Uncarried", first draft',
+  '',
+  '**SEAT: a bare Claude instance, spawned by the chair. TIME: 2026-09-08 ~07:33 local.**',
+  "**Placed here by the chair; the header is the chair's, the essay is not.**",
+  'The full prompt is preserved at `essay/PROMPT.txt` so the check is re-runnable.',
+].join('\n');
+
+const BLOBS = {
+  'essay/READ.md': HEADER_B,
+  'essay/PROMPT.txt': 'Write a philosophical essay of roughly 2,000-3,000 words.\n',
+  'essay/A.html': '<h1>no header, no authorship line, nothing to check against</h1>',
+};
+const readBlob = (sha, file) => (Object.prototype.hasOwnProperty.call(BLOBS, file) ? BLOBS[file] : null);
+
+const correction = (over) => Object.assign({
+  sha: 'bbbbbbb',
+  path: 'essay/READ.md',
+  seat: 'chair',
+  by: 'pane BRAVO (L048)',
+  at: '2026-09-09T00:55:00-06:00',
+}, over || {});
+
+const withCorrections = (rows, f) => reconcile(
+  Object.assign({}, f || fixture(), { corrections: rows, readBlob }));
+
+test('RED FIRST — uncorrected, the table says what the commit body said', () => {
+  const out = reconcile(fixture());
+  const row = out.landed.find((r) => r.path === 'essay/READ.md');
+  assert.strictEqual(row.seat, 'librarian');
+  assert.strictEqual(row.seatFrom, null);
+  assert.ok(!row.rulings.includes('SEAT-CORRECTED'));
+});
+
+test('a verified correction changes the seat AND leaves the commit body name standing', () => {
+  const out = withCorrections([correction()]);
+  const row = out.landed.find((r) => r.path === 'essay/READ.md');
+  assert.strictEqual(row.seat, 'chair', 'the corrected seat');
+  assert.strictEqual(row.seatFrom, 'librarian', 'what the commit body said must survive');
+  assert.ok(row.rulings.includes('SEAT-CORRECTED'), `expected SEAT-CORRECTED, got ${row.rulings}`);
+  assert.strictEqual(out.counts.corrections_applied, 1);
+  assert.strictEqual(out.counts.corrections_refused, 0);
+});
+
+test('MUTANT — a silent override is caught: both names must reach the rendered table', () => {
+  // Make the correction replace rather than annotate and this test is the one that dies. A table
+  // that quietly prints the right answer teaches nobody that the capture happened.
+  const out = withCorrections([correction()]);
+  const text = render(out, { color: false, command: 'test' });
+  assert.ok(text.includes('librarian->chair'), 'table 1 must show both names on the row');
+  assert.ok(text.includes('CORRECTIONS'), 'the correction must have its own section');
+  assert.ok(text.includes('COMMIT SAID -> TRUE SEAT'));
+  assert.ok(text.includes('pane BRAVO (L048)'), 'who corrected it');
+  assert.ok(text.includes('2026-09-09T00:55:00-06:00'), 'when');
+  assert.ok(text.includes('evidence bbbbbbb:essay/READ.md'), 'on what evidence');
+  assert.ok(text.includes('SEAT: a bare Claude instance'), 'the evidence LINE, quoted');
+});
+
+test('MUTANT — a correction with no evidence referent is refused, not applied', () => {
+  // The claimed seat is on no authorship line in the blob.
+  const out = withCorrections([correction({ path: 'essay/A.html', sha: 'aaaaaaa' })]);
+  const row = out.landed.find((r) => r.path === 'essay/A.html');
+  assert.strictEqual(row.seatFrom, null, 'the row must be untouched');
+  assert.ok(!row.rulings.includes('SEAT-CORRECTED'));
+  assert.strictEqual(out.counts.corrections_applied, 0);
+  assert.strictEqual(out.counts.corrections_refused, 1);
+  assert.match(out.corrections.refused[0].reason, /NO-SEAT-IN-EVIDENCE/);
+});
+
+test('MUTANT — with no way to read the evidence, every correction is refused', () => {
+  // Fail closed. A verified correction and an unverifiable one must never look the same.
+  const out = reconcile(Object.assign({}, fixture(), { corrections: [correction()] }));
+  assert.strictEqual(out.counts.corrections_applied, 0);
+  assert.strictEqual(out.corrections.refused[0].reason, 'NO-EVIDENCE-READER');
+});
+
+test('MUTANT — a correction cannot reach a commit it does not name', () => {
+  const wrongSha = withCorrections([correction({ sha: '9999999' })]);
+  assert.strictEqual(wrongSha.corrections.refused[0].reason, 'NO-SUCH-COMMIT');
+  // the right commit, but its diff does not contain that path
+  const wrongPath = withCorrections([correction({ sha: 'aaaaaaa' })]);
+  assert.strictEqual(wrongPath.corrections.refused[0].reason, 'PATH-NOT-IN-COMMIT');
+  assert.strictEqual(wrongPath.counts.corrections_applied, 0);
+});
+
+test('a correction is a claim: without who, when and a seat it is refused', () => {
+  for (const missing of ['by', 'at', 'seat']) {
+    const out = withCorrections([correction({ [missing]: '' })]);
+    assert.strictEqual(out.counts.corrections_applied, 0, `${missing} must be required`);
+    assert.strictEqual(out.corrections.refused[0].reason, `MISSING-FIELD: ${missing}`);
+  }
+});
+
+test('the seat must match as a whole word, not as a substring', () => {
+  const v = verifyCorrection(correction(), {
+    commits: fixture().commits,
+    readBlob: () => 'written by the chairman of nothing in particular',
+  });
+  assert.strictEqual(v.ok, false);
+  assert.match(v.reason, /NO-SEAT-IN-EVIDENCE/);
+});
+
+test('evidence in another file must NAME the path it corrects', () => {
+  // The two prompt files in the live case carry no header of their own; each draft's header names
+  // its prompt. That naming is the join, and without it the evidence is about a different file.
+  const f = fixture();
+  f.commits = f.commits.map((c) => (c.sha === 'bbbbbbb'
+    ? Object.assign({}, c, { paths: ['essay/READ.md', 'essay/PROMPT.txt'] }) : c));
+  const ok = withCorrections([correction({ path: 'essay/PROMPT.txt', evidence: 'essay/READ.md' })], f);
+  const row = ok.landed.find((r) => r.path === 'essay/PROMPT.txt');
+  assert.strictEqual(row.seat, 'chair');
+  assert.strictEqual(row.seatFrom, 'librarian');
+
+  const renamed = Object.assign({}, BLOBS, {
+    'essay/READ.md': HEADER_B.replace('essay/PROMPT.txt', 'essay/OTHER.txt'),
+  });
+  const bad = reconcile(Object.assign({}, f, {
+    corrections: [correction({ path: 'essay/PROMPT.txt', evidence: 'essay/READ.md' })],
+    readBlob: (sha, file) => (renamed[file] || null),
+  }));
+  assert.strictEqual(bad.counts.corrections_applied, 0);
+  assert.match(bad.corrections.refused[0].reason, /EVIDENCE-DOES-NOT-NAME-PATH/);
+});
+
+test('the first verified correction stands; a later one over the same artifact is refused', () => {
+  // Otherwise the ledger is last-writer-wins, which is the whole thing the referent rule is for.
+  const out = withCorrections([correction(), correction({ by: 'someone else' })]);
+  const row = out.landed.find((r) => r.path === 'essay/READ.md');
+  assert.strictEqual(row.corrected.by, 'pane BRAVO (L048)');
+  assert.strictEqual(out.counts.corrections_applied, 1);
+  assert.match(out.corrections.refused[0].reason, /CONFLICTING/);
+});
+
+test('the key is the commit full sha, so an abbreviation cannot double-correct', () => {
+  const f = fixture();
+  const long = f.commits.find((c) => c.sha === 'bbbbbbb').full;
+  const out = withCorrections([correction(), correction({ sha: long })], f);
+  assert.strictEqual(out.counts.corrections_applied, 1);
+  assert.match(out.corrections.refused[0].reason, /CONFLICTING/);
+  assert.strictEqual(correctionKey(long, 'essay/READ.md'), correctionKey(long, 'essay/READ.md'));
+});
+
+test('a refused correction is printed, never dropped', () => {
+  const out = withCorrections([correction({ sha: '9999999' })]);
+  const text = render(out, { color: false, command: 'test' });
+  assert.ok(text.includes('REFUSED: NO-SUCH-COMMIT'), 'the refusal has to be visible in the table');
+});
+
+test('a correction that verifies but reaches no row is counted, not assumed away', () => {
+  // essay/METHOD.md is in a commit paths list and produces no artifact row.
+  const out = reconcile(Object.assign({}, fixture(), {
+    corrections: [correction({ sha: 'aaaaaaa', path: 'essay/METHOD.md' })],
+    readBlob: () => HEADER_B,
+  }));
+  assert.strictEqual(out.counts.corrections_applied, 0);
+  assert.strictEqual(out.counts.corrections_verified_unused, 1);
+  assert.strictEqual(out.corrections.verifiedUnused.length, 1);
+});
+
+test('the corrections ledger skips comments and survives a malformed row', () => {
+  const os2 = require('os');
+  const fs3 = require('fs');
+  const path3 = require('path');
+  const dir = fs3.mkdtempSync(path3.join(os2.tmpdir(), 'prov-'));
+  const file = path3.join(dir, 'c.jsonl');
+  fs3.writeFileSync(file, ['# a comment', '', JSON.stringify(correction()), 'not json at all'].join('\n'));
+  const got = readCorrections(file);
+  assert.strictEqual(got.lines, 2, 'comments and blanks are not rows');
+  assert.strictEqual(got.rows.length, 2);
+  const out = withCorrections(got.rows);
+  assert.strictEqual(out.counts.corrections_applied, 1);
+  assert.match(out.corrections.refused[0].reason, /MALFORMED-ROW/);
+});
+
+/* ── THE MISSING-ROW HALF ─────────────────────────────────────────────────────────────────────
+ *
+ * The chair's premise for this packet was that the failure has two shapes — a WRONG row in one
+ * table and a MISSING row in another. Measured against the live record it has one: the four
+ * captured files were rows under the librarian's name at yesterday's HEAD exactly as they are
+ * today (`git log 14cc0ad --name-only -- essay/` lists all four under babe926). This test makes
+ * that a property of the instrument rather than an observation about one night: every artifact
+ * path a commit carries gets exactly one row, corrections or no corrections. If a later change
+ * ever drops one, this is where it dies.
+ */
+test('every artifact path a commit carries produces exactly one row', () => {
+  const f = fixture();
+  for (const rows of [[], [correction()]]) {
+    const out = reconcile(Object.assign({}, f, { corrections: rows, readBlob }));
+    for (const c of f.commits) {
+      const artifacts = c.paths.filter((p) => p !== 'essay/METHOD.md');
+      const got = out.landed.filter((r) => r.sha === c.sha);
+      const expected = artifacts.length || 1;   // a METHOD-only commit still prints one row
+      assert.strictEqual(got.length, expected, `${c.sha}: ${got.length} rows for ${expected} paths`);
+      for (const a of artifacts) {
+        assert.strictEqual(got.filter((r) => r.path === a).length, 1, `${a} must appear once`);
+      }
+    }
+  }
+});
+
+test('the evidence reader reads the COMMITTED blob, never the working tree', () => {
+  // The single mutation that would undo this whole mechanism is a reader that reads the file as it
+  // stands today: a motivated seat could then write any header it liked and point a correction at
+  // it. Tested against a real repository — created here, not the room's — because the property is
+  // about git, and a mock of git would only prove the mock.
+  const fs4 = require('fs');
+  const os4 = require('os');
+  const path4 = require('path');
+  const { execFileSync } = require('child_process');
+  const { gitBlobReader } = require('./essay-provenance.js');
+
+  const dir = fs4.mkdtempSync(path4.join(os4.tmpdir(), 'prov-git-'));
+  const git = (...a) => execFileSync('git', a, { cwd: dir, encoding: 'utf8' });
+  git('init', '-q');
+  git('config', 'user.email', 'test@example.invalid');
+  git('config', 'user.name', 'test');
+  fs4.writeFileSync(path4.join(dir, 'a.md'), 'SEAT: written by the chair\n');
+  git('add', 'a.md');
+  git('commit', '-q', '-m', 'first');
+  const sha = git('rev-parse', 'HEAD').trim();
+
+  // now somebody rewrites the header in the working tree, which is the attack
+  fs4.writeFileSync(path4.join(dir, 'a.md'), 'SEAT: written by the librarian\n');
+
+  const read = gitBlobReader(dir);
+  assert.match(read(sha, 'a.md'), /chair/, 'the frozen blob is what must come back');
+  assert.doesNotMatch(read(sha, 'a.md'), /librarian/, 'the working tree must not be read');
+  assert.strictEqual(read(sha, 'nope.md'), null, 'a missing path returns null, never a throw');
 });
