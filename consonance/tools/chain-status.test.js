@@ -855,3 +855,175 @@ test('COVERAGE, stated: this claim cannot fire on a lap whose holder never reach
     'the claim fired on a lap that never dispatched anyone: ' + r.text);
   s.cleanup();
 });
+
+/* ── CLAUSE 3: UNDELIVERED, and the timer that was asked for and not built (pane B, 2026-09-09) ──
+ *
+ * THE PACKET ASKED FOR `RETURN-LEG · holder chair · idle > 10 min · dirty tree => STALLED-AT-CHAIR`
+ * and gave permission to refuse if idle could not be told from working. It cannot, and the file
+ * header carries the measurement of tonight that refuses it. What is tested here is what was built
+ * instead: the EVENT that was already on the board while the chair waited — a hand-back whose
+ * delivery bounced — and the one subset of the dirty count that can be named.
+ *
+ * The first two tests are the red-first pair: the same return leg, with and without the event.
+ * A duration alone must still print no verdict, because that is the axis this file has refuted
+ * three times now and the refusal has to be enforced by something other than a comment.
+ */
+
+const RETURN_LEG = (at) => ([
+  { lap: 'L949', stage: 'open', at: at - 100, initiator: 'human', inquiry: 'x', guess: ['a/b.js'], blind: true, head: null },
+  { lap: 'L949', stage: 'chain', at, chain: 'return-leg', holder: 'chair' },
+]);
+// The row the control plane wrote at 07:12:39 tonight, in its own words.
+const REFUSED_OOT = (ts, letter) => ({
+  pane: 'chair', role: 'committee', ts,
+  text: 'call_librarian REFUSED OUT OF TURN — mount ' + letter + ' tried to speak while NO open lap'
+    + ' is held by panes; open laps are held by ["chair"] (newest: lap L048, holder chair).',
+});
+const HANDBACKS_ON_DISK = ['p-live-host_2026-09-09.md', 'p-state-set_2026-09-09.md'];
+
+test('TONIGHT, REPRODUCED — the return leg carries the bounce and names what is sitting', () => {
+  // 06:54:16 return leg opens, holder chair. 07:12:39 A's ring bounces. Two hand-backs untracked.
+  const s = store(RETURN_LEG(1000), [DISPATCH(1100, A), REFUSED_OOT(2000, 'A')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({
+    ledger: s.ledger, now: 2000 + 15 * 60000, dirty: 21, handbacks: HANDBACKS_ON_DISK,
+  });
+  assert.match(r.text, /UNDELIVERED A \(refused 15m ago\)/, r.text);
+  assert.match(r.text, /dirty 21 repo-wide \(2 hand-backs uncommitted: p-live-host_2026-09-09\.md, p-state-set_2026-09-09\.md\)/, r.text);
+  assert.match(r.text, /holder chair/, 'the head must be unchanged');
+  s.cleanup();
+});
+
+test('RED FIRST — the same leg, the same duration, no bounce: no verdict at all', () => {
+  // This is the state a 10-minute idle timer would have fired on tonight between 06:56 and 07:12,
+  // when the chair was correctly waiting for a pane it had rung. Nothing here may speak.
+  const s = store(RETURN_LEG(1000), [DISPATCH(1100, A)], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 1000 + 29 * 60000, dirty: 21, handbacks: [] });
+  assert.doesNotMatch(r.text, /UNDELIVERED/, r.text);
+  assert.doesNotMatch(r.text, /STALL/i, 'no verdict on a duration: ' + r.text);
+  assert.match(r.text, /holder chair · dirty 21 repo-wide · 29m/, r.text);
+  s.cleanup();
+});
+
+test('a bounce CLEARED by a later delivery is not printed', () => {
+  // The obligation is opened by an app-written row and closed by one. Drop the clear check and this
+  // clause becomes a permanent accusation about a pane that got through on the second try.
+  const s = store(RETURN_LEG(1000),
+    [DISPATCH(1100, A), REFUSED_OOT(2000, 'A'), CALL_LIB(3000, 'A')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 4000, dirty: 0, handbacks: [] });
+  assert.doesNotMatch(r.text, /UNDELIVERED/, r.text);
+  s.cleanup();
+});
+
+test('a delivery BEFORE the bounce does not clear it', () => {
+  // A's first hand-back landed at 06:39 and its FOLLOW-UP bounced at 07:12. Ordering is the whole
+  // join: the earlier success must not answer for the later refusal.
+  const s = store(RETURN_LEG(1000),
+    [DISPATCH(1100, A), CALL_LIB(1500, 'A'), REFUSED_OOT(2000, 'A')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 2000 + 60000, dirty: 0, handbacks: [] });
+  assert.match(r.text, /UNDELIVERED A/, r.text);
+  s.cleanup();
+});
+
+test('the clause rides EVERY holder — a bounce under holder=panes is a bounce', () => {
+  // The collation claim is gated to holder=panes so it does not ride lines where its question is
+  // meaningless. This one is not gated, and must not become gated: tonight's bounce happened under
+  // holder=chair, which is exactly why the existing board scan never ran.
+  const s = store(WORKING(1000), [DISPATCH(1100, A), REFUSED_OOT(2000, 'A')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 2000 + 60000, dirty: 0, handbacks: [] });
+  assert.match(r.text, /UNDELIVERED A/, r.text);
+  assert.match(r.text, /handbacks 0 of 1 \(owing A\)/, 'the collation claim still speaks in its own state');
+  s.cleanup();
+});
+
+test('the collation segments stay gated: a holder=chair line gains clause 3 and nothing else', () => {
+  const s = store(RETURN_LEG(1000), [DISPATCH(1100, A), REFUSED_OOT(2000, 'A')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 3000, dirty: 0, handbacks: [] });
+  assert.doesNotMatch(r.text, /handbacks \d+ of \d+/, 'the collation question is meaningless here: ' + r.text);
+  assert.doesNotMatch(r.text, /HANDBACKS IN/, r.text);
+  assert.match(r.text, /UNDELIVERED A/, r.text);
+  s.cleanup();
+});
+
+test('a bounce from BEFORE the anchor is not resurrected', () => {
+  // Self-limiting on the same anchor the collation claim uses: the previous `filed` row. Without it
+  // a single old refusal would print forever, which is how an alarm stops being read.
+  const rows = [
+    { lap: 'L948', stage: 'chain', at: 500, chain: 'filed', holder: 'none' },
+    ...RETURN_LEG(1000),
+  ];
+  const s = store(rows, [DISPATCH(1100, A), REFUSED_OOT(400, 'A')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 3000, dirty: 0, handbacks: [] });
+  assert.doesNotMatch(r.text, /UNDELIVERED/, r.text);
+  s.cleanup();
+});
+
+test('a refusal naming a mount that resolves to no letter is COUNTED, never dropped', () => {
+  const s = store(RETURN_LEG(1000), [DISPATCH(1100, A), REFUSED_OOT(2000, 'zzzzzzzz')], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 3000, dirty: 0, handbacks: [] });
+  assert.match(r.text, /1 refusal\(s\) UNRESOLVED to a letter/, r.text);
+  s.cleanup();
+});
+
+test('an unreadable board says delivery UNKNOWN on a line where collation cannot speak', () => {
+  // Never silent on an unreadable source. Under holder=chair the `collation UNKNOWN` segment does
+  // not print, so without this the same silence would mean "nothing bounced".
+  const s = store(RETURN_LEG(1000), [], { rawLetters: '{oops' });
+  const r = mod().line({ ledger: s.ledger, now: 3000, dirty: 0, handbacks: [] });
+  assert.match(r.text, /delivery UNKNOWN — letters\.json unreadable/, r.text);
+  s.cleanup();
+});
+
+/* ── THE DIRTY COUNT, ATTRIBUTED FOR THE ONE CLASS THAT CAN BE ──────────────────────────────── */
+
+test('an unreadable tree claims NO hand-backs — `dirty ?` never carries a list', () => {
+  const s = store(RETURN_LEG(1000), [DISPATCH(1100, A)], { lettersMap: LET_WITH_LIB });
+  const r = mod().line({ ledger: s.ledger, now: 3000, dirty: null, handbacks: [] });
+  assert.match(r.text, /dirty \? repo-wide/, r.text);
+  assert.doesNotMatch(r.text, /uncommitted/, 'an unreadable tree must not report a clean one: ' + r.text);
+  s.cleanup();
+});
+
+test('tree() names an UNTRACKED hand-back and not a committed one', () => {
+  // Against a real repository, because the property is about what git considers untracked and a
+  // mock of git would only prove the mock.
+  const { execFileSync } = require('node:child_process');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-tree-'));
+  const git = (...a) => execFileSync('git', a, { cwd: dir, encoding: 'utf8' });
+  git('init', '-q');
+  git('config', 'user.email', 'test@example.invalid');
+  git('config', 'user.name', 'test');
+  fs.mkdirSync(path.join(dir, 'exo_memory', 'handback'), { recursive: true });
+  const landed = path.join(dir, 'exo_memory', 'handback', 'p-landed.md');
+  const sitting = path.join(dir, 'exo_memory', 'handback', 'p-sitting.md');
+  fs.writeFileSync(landed, 'filed and committed\n');
+  git('add', 'exo_memory/handback/p-landed.md');
+  git('commit', '-q', '-m', 'landed');
+  fs.writeFileSync(sitting, 'filed and not committed\n');
+  fs.writeFileSync(path.join(dir, 'elsewhere.txt'), 'not a hand-back\n');
+
+  const t = mod().tree(dir);
+  assert.deepStrictEqual(t.handbacks, ['p-sitting.md'], 'only the untracked hand-back');
+  assert.strictEqual(t.dirty, 2, 'the repo-wide count still counts everything');
+
+  // and once it lands, the claim goes away on its own
+  git('add', 'exo_memory/handback/p-sitting.md');
+  git('commit', '-q', '-m', 'landed too');
+  assert.deepStrictEqual(mod().tree(dir).handbacks, []);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('tree() on a non-repo is dirty null and hand-backs EMPTY, never a claim', () => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-nonrepo-'));
+  const t = mod().tree(path.join(d, 'not-a-repo-at-all'));
+  assert.strictEqual(t.dirty, null);
+  assert.deepStrictEqual(t.handbacks, []);
+  fs.rmSync(d, { recursive: true, force: true });
+});
+
+test('more hand-backs than the list cap are counted, never silently trimmed', () => {
+  const s = store(RETURN_LEG(1000), [DISPATCH(1100, A)], { lettersMap: LET_WITH_LIB });
+  const many = ['a.md', 'b.md', 'c.md', 'd.md', 'e.md'];
+  const r = mod().line({ ledger: s.ledger, now: 3000, dirty: 9, handbacks: many });
+  assert.match(r.text, /5 hand-backs uncommitted: a\.md, b\.md, c\.md, \+2/, r.text);
+  s.cleanup();
+});

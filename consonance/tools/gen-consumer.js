@@ -651,6 +651,13 @@ const STAYS_PRIVATE = {
    * can overturn in one line". The seat that owns it can reverse this; an uncolumned directory
    * gives them nothing to reverse. */
   'astra': 'per-seat, like map/ and librarian/ — one instance\'s own folder, by its own WELCOME.md ("yours: everything you write goes here and nowhere else"). AND IT CARRIES THE MASTER: astra/SHELL.md is BOOT.md in full (161,711 B, verified by grepping a BOOT sentence back), so shipping this directory would ship under a second path the exact file the BOOT.md entry above withholds — the carrier problem this room has measured before',
+  /* L050, and it is MY OWN FILE from L048 caught by this guard one lap after I wrote it. The
+   * corrections ledger was built to make the contribution record right, and it landed in neither
+   * column the moment it existed — which is the gap C §4 measured at 17 files, arriving again on
+   * the newest file in the repo. The instrument works; the habit of classifying on landing does
+   * not exist yet. Columned here rather than left refusing, for the L046 reason: STAYS_PRIVATE
+   * changes nothing about what ships and gives the next seat one line to overturn. */
+  'provenance_corrections.jsonl': 'a SECOND RECORD ABOUT THIS REPO\'S OWN HISTORY — rows that correct the seat a commit body names, each one verified against a blob frozen at a sha in THIS tree. It withholds for two independent reasons. It names this room\'s seats (chair, librarian) beside the commits they landed, which is this committee\'s internal attribution and no part of the method. And it is INERT ELSEWHERE BY CONSTRUCTION: a consumer\'s history contains none of those shas, so essay-provenance would refuse every row as NO-SUCH-COMMIT — shipping it would ship four claims nobody can check and nobody needs. The MECHANISM ships with the tool; this room\'s corrections do not',
   'handback': 'per-packet working papers of this committee',
   'librarian': 'per-seat, per-machine, by its own README',
   'loop': 'this record\'s registrations and rulings',

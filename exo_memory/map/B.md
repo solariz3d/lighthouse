@@ -1530,3 +1530,53 @@ lines uncommitted in the tree right now under a concurrent L049 pane. Unproven, 
 means touching a file another seat is holding. **And the measurement itself is compromised in the
 way this lap is about: a suite run over a shared checkout with three panes mid-lap is not a clean
 reading of anything, mine included.**
+
+
+## 2026-09-09 — L050 P-STALLED-AT-CHAIR: the chair wasn't stalled, the channel was
+
+`exo_memory/handback/p-stalled-at-chair_2026-09-09.md`. Clause 3 (UNDELIVERED) and the hand-back
+attribution on the dirty count, in `chain-status.js`. 79/0 (was 66/0); js-suite 80 green · 5 failed
+· 1 canary of 86; seven mutants, all killed, source byte-identical after. Nothing committed.
+
+**1. I WAS ASKED FOR A TIMER AND REFUSED IT WITH A MEASUREMENT, NOT A PRINCIPLE — that is the
+difference between a ruling and an opinion.** The ask: `RETURN-LEG · holder chair · idle > 10 min ·
+dirty tree => STALLED-AT-CHAIR`. Measured against the night it was built for: the chair's pane went
+quiet 06:56:06 → 07:25:47 (29m41s), so a 10-minute timer fires at **07:06 — six minutes before
+anything was wrong**, because the chair was correctly waiting for a pane it had rung at 06:55:50 and
+that was delivered at 06:59:51. **The fault appeared at 07:12:39 as an EVENT with a row the app
+writes:** `call_librarian REFUSED OUT OF TURN — mount A tried to speak`. A's hand-back bounced, no
+`call_librarian A -> LIB` row ever follows, and it reached the chair only because **the keeper
+carried it at 07:25:47** — which is the complaint the packet opened with, one hop from where it put
+the cause.
+
+**2. THE FILE HAD ALREADY REFUTED THE AXIS TWICE AND I ALMOST DIDN'T CHECK.** `chain-status.js`'s
+own header carries L009-healthy-3554s vs L010-dead-3557s (durations 3s apart, opposite classes) and
+"a pane inside one long silent tool call is idle and still working" — I wrote the second one on
+08-29. **A third clause on the refuted axis would have made one instrument disagree with itself
+while both halves printed.** Read the instrument's own record before adding to it; the refutation
+you need may be one you wrote.
+
+**3. THE EVENT WAS ALREADY ON THE BOARD. NOTHING WAS READING IT.** The gap was never "no verdict on
+the return leg" — it was that the board scan is gated to `holder panes`, and the bounce happened
+under `holder chair`. Clause 3 rides EVERY holder for exactly that reason; the collation segments
+stay gated so a chair line gains clause 3 and nothing else. **When a packet says a seat needs a
+watcher, check first whether the signal exists and is simply unread.**
+
+**4. `dirty N repo-wide` cannot attribute — except for one class, and that class is the one that
+matters.** An UNTRACKED file in `exo_memory/handback/` is a hand-back filed and not landed (the
+`ON-DISK-NOT-COMMITTED` third state again, L047). Two sat there for the whole 31 minutes while the
+line said `dirty 21`. Naming them costs one filter over the `git status` already being run — **one
+git call, not two**, because this runs from the pulse in every seat on every prompt.
+
+**5. Caught in my own work, and the first is the one to carry.** I ran HEAD's copy of the tool from
+a scratchpad dir to get a baseline, and it printed `blind window (blind.js unavailable)` — the blind
+gate **failing closed** because `../hooks/blind.js` cannot resolve outside the tree. I nearly filed
+that difference as my own regression. **A baseline run outside the tree is not a baseline; the
+pre-existing tests are.** Also: two heredoc-written patches landed with real control characters
+inside regex literals (`\r?\n` as an actual newline) — the same class as last lap's NUL bytes.
+**Backslashes do not survive a heredoc; write the patch as a file.**
+
+**6. Cost measured because the carrier has a 3-second timeout and a silent failure mode.** The
+reader runs in 152–166 ms, of which the board scan is 25 ms (10 read, 15 parse over 7,671 lines).
+The pulse takes `splitlines()[0]` whole, so the carry needed no edit — checked at
+`userprompt_pulse.py:317-331` rather than assumed.

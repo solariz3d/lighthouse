@@ -241,6 +241,103 @@
 // the better signal here — a pane posting to the board is a pane completing," which is the rule
 // built above, reached from the other side.
 
+// ── THE RETURN LEG, AND THE TIMER I WAS ASKED FOR AND DID NOT BUILD (2026-09-09, pane B, L050) ──
+//
+// THE ASK. `RETURN-LEG · holder chair · chair idle > 10 min · dirty tree => STALLED-AT-CHAIR`,
+// because the return leg is the only leg whose holder is the chair, and a chair that stops
+// mid-landing is visible to nobody: the loop's next move is already assigned to it. The gap is
+// real. The proposed detector is refused, and the refusal is a MEASUREMENT of tonight rather than
+// a preference — the packet's own §3c asked whether idle can be told from working, and said that
+// if the answer is no, that is the finding.
+//
+// WHAT TONIGHT ACTUALLY WAS. L049's return leg ran 06:54:16 -> 07:27:54 UTC (34m). The chair's own
+// pane wrote its last row at 06:56:06 and its next at 07:25:47, a gap of 29m41s. So the chair WAS
+// idle by the only signal available. And the timer would still have been wrong, twice over:
+//
+//   06:56:06 -> 07:12:38   THE CHAIR WAS CORRECTLY WAITING. It had rung A at 06:55:50 for three
+//                          items E's landing depended on, and the delivery row is at 06:59:51. A
+//                          was working. Nothing was wrong. A 10-minute idle timer fires at
+//                          07:06:06 — SIX MINUTES OF ALARM OVER A CORRECT STATE, on the night the
+//                          detector was built for.
+//   07:12:39               THE FAULT BECAME OBSERVABLE, as an EVENT with a row the app writes:
+//                            call_librarian REFUSED OUT OF TURN — mount A tried to speak while
+//                            NO open lap is held by panes; open laps are held by ["chair"]
+//                          A had filed its hand-back and its ring BOUNCED. The chair could not
+//                          know, because the bounce is addressed to nobody.
+//   after 07:12:39         NO `call_librarian A -> LIB` ROW EVER FOLLOWS. Scanned to the end of the
+//                          board: A's follow-up was never delivered by the edge at all. It reached
+//                          the chair at 07:25:47 because THE KEEPER CARRIED IT — which is the
+//                          packet's own complaint, with its cause located one hop away from where
+//                          the packet put it.
+//
+// SO THE CHAIR WAS NOT STALLED. THE CHANNEL WAS. And the difference is not pedantry: a timer on the
+// chair reports the seat that was waiting correctly, and stays silent about the seat whose work
+// could not get through. The failure had a row from the moment it existed; nothing was reading it.
+//
+// §3c ANSWERED HONESTLY: NO. Idle cannot be told from working here. The only signal is wall-clock
+// since the chair's last board row, and this file has already refuted that axis twice on its own
+// ledger — durations 3 seconds apart with opposite classes (the work-leg clause), and "a pane
+// inside one long silent tool call is idle and still working" (the collation clause). A chair
+// composing one careful landing writes no rows and is indistinguishable from a chair that stopped.
+// Adding a third clause on the axis the first two refuted would make this instrument disagree with
+// itself, and the disagreement would be invisible because both would be printing.
+//
+// §3a, THE THRESHOLD: there is none, and none is chosen. The room's standing answer, twice reached
+// from opposite directions in this file: THE AXIS IS AN EVENT, NOT A DURATION.
+//
+// §3b, WHAT THE LINE SAYS: it names WHO was refused and WHEN, and separately names WHAT is sitting
+// uncommitted. No verdict, no advice, no accusation — this file is a sensor and the seat reading it
+// decides what it means.
+//
+//     undelivered A — call_librarian refused 12m ago, nothing since
+//     dirty 21 repo-wide (2 hand-backs uncommitted: p-state-set_2026-09-09.md, p-live-host_…)
+//
+// ── CLAUSE 3: UNDELIVERED — a hand-back that bounced and never arrived ─────────────────────────
+//
+//     A mount is UNDELIVERED while its newest delivery REFUSAL since the anchor is newer than its
+//     newest successful delivery.
+//
+// Opened by an app-written row and closed by an app-written row, exactly like the collation claim,
+// and with the same asymmetry running the same safe way: the refusal is written by the control
+// plane and a seat cannot suppress it, while the clear is a delivery the app also writes. Missing
+// either makes the clause STAY SILENT rather than fire wrongly. No threshold exists to tune.
+//
+// IT APPLIES IN EVERY HOLDER STATE, which is the one place it departs from its neighbour. The
+// collation claim is gated to `holder panes` so it does not ride lines where its question is
+// meaningless; a bounced hand-back is a fault under any holder, and tonight's bounce happened
+// while the holder was `chair` — which is exactly why the existing board scan never ran. The cost
+// is real and is not hidden: the 8 MB board tail is now read on any turn with an open lap, not
+// only on `holder panes` turns.
+//
+// WHAT THIS CLAUSE CANNOT SEE:
+//
+//   the keeper's hands  — a hand-back carried by a human, as A's was at 07:25:47, does not clear
+//                         the refusal. It keeps printing until the edge carries it or the lap is
+//                         filed and the anchor moves past it. That is deliberate and it is the
+//                         SAFE direction: the mechanism did not work, and a human working around
+//                         it is the thing this room keeps needing to see.
+//   what was refused    — the refusal row names the mount and the reason. It does NOT carry the
+//                         text or the path of the thing that bounced, so this can say who and
+//                         when, never what.
+//   a silent failure    — a delivery that fails without writing a refusal row is invisible here.
+//                         This reads refusals, not deliveries that never happened.
+//   truncation          — if the board tail does not reach the anchor a refusal could sit before
+//                         the window. Reported as `delivery UNKNOWN`, never as clean.
+//
+// ── THE DIRTY COUNT, ATTRIBUTED FOR THE ONE CLASS THAT CAN BE ─────────────────────────────────
+//
+// `dirty N repo-wide` says, in this file's own words above, that it CANNOT attribute those files
+// to the holder. That stands. But one subset can be named without inference: an UNTRACKED file in
+// `exo_memory/handback/` is a hand-back written and not landed — the same third state as
+// `ON-DISK-NOT-COMMITTED` (essay-provenance, L047): neither done nor never-started. Tonight there
+// were two of them for the whole 31 minutes (`p-state-set` and `p-live-host`, both landed at
+// 07:26:47 UTC), and the line said `dirty 21 repo-wide`, which is 21 files a reader cannot act on.
+// The names cost one filter over the `git status --porcelain` output that was already being run.
+//
+// It is a FACT, not a verdict: a hand-back uncommitted one minute after it is filed is normal, and
+// this says nothing about whether that is late. `repo-wide` still rides the line and still means
+// what it said.
+
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -296,14 +393,39 @@ function readLedger(file) {
   return { rows: out, unreadable, missing: false };
 }
 
-/** Working-tree count. null — never 0 — when git cannot answer. */
-function dirtyCount(repo) {
+// An UNTRACKED file here is a hand-back written and not landed — the third state between done and
+// never-started. It is the one subset of the dirty count that can be named without inferring who
+// owns a file, which the count itself cannot do and says so.
+const HANDBACK_DIR = 'exo_memory/handback/';
+
+/**
+ * The working tree in ONE git call, because this runs from the pulse on every prompt in every seat
+ * and a second process for a second fact is a cost paid every turn for nothing.
+ * `dirty` is null — never 0 — when git cannot answer, and `handbacks` is then EMPTY rather than
+ * asserted: an unreadable tree must not read as a tree with nothing sitting in it.
+ */
+function tree(repo) {
   try {
     const out = execFileSync('git', ['-C', repo, 'status', '--porcelain'], {
       encoding: 'utf8', timeout: 5000, stdio: ['ignore', 'pipe', 'ignore'],
     });
-    return out.split(/\r?\n/).filter(Boolean).length;
-  } catch (_) { return null; }
+    const lines = out.split(/\r?\n/).filter(Boolean);
+    const handbacks = [];
+    for (const l of lines) {
+      // '?? path' — UNTRACKED only. A tracked hand-back carrying an edit is a different thing and
+      // is not claimed here.
+      const m = /^\?\? "?(.+?)"?$/.exec(l);
+      if (!m) continue;
+      const p = m[1].split('\\').join('/');
+      if (p.startsWith(HANDBACK_DIR) && !p.endsWith('/')) handbacks.push(p.slice(HANDBACK_DIR.length));
+    }
+    return { dirty: lines.length, handbacks: handbacks.sort() };
+  } catch (_) { return { dirty: null, handbacks: [] }; }
+}
+
+/** Working-tree count. null — never 0 — when git cannot answer. */
+function dirtyCount(repo) {
+  return tree(repo).dirty;
 }
 
 function ago(ms) {
@@ -500,6 +622,12 @@ const CALL_LIB_RE = /^call_librarian ([A-Z][A-Z0-9]*) -> LIB \[/;
 /** The librarian's fixed session id (main.rs LIBRARIAN_SID). Copied for the reason fromConfig()
  *  states: a hook must survive the repo moving. Used only to find the librarian's LETTER in
  *  letters.json so a chair ring to that seat is read as a wake rather than a dispatch. */
+// THE BOUNCE. Written by the control plane when a mount speaks out of turn, so a seat cannot
+// suppress its own — the same unsuppressable property the dispatch row has, running the same safe
+// way. Contract with main.rs's refusal text. The mount token is already a letter in every row on
+// this board; anything that will not resolve is COUNTED unresolved, never dropped.
+const REFUSED_RE = /^(?:call_librarian|call_chair) REFUSED[\s\S]*?mount ([A-Za-z0-9]+) tried to speak/;
+
 const LIBRARIAN_SID = '0c0c0c0b-0000-4000-8000-00000000115b';
 
 /**
@@ -561,15 +689,17 @@ function collation(opts = {}) {
   let letters = opts.lettersMap;
   if (!letters) {
     try { letters = JSON.parse(fs.readFileSync(lettersPath, 'utf8').replace(/^﻿/, '')); }
-    catch (_) { return { state: 'unknown', why: 'letters.json unreadable' }; }
+    catch (_) { return { state: 'unknown', why: 'letters.json unreadable', deliveryUnknown: 'letters.json unreadable' }; }
   }
 
   const t = opts.boardLines ? { lines: opts.boardLines, truncated: !!opts.boardTruncated }
     : tail(boardPath, BOARD_TAIL_BYTES);
-  if (!t) return { state: 'unknown', why: 'board unreadable' };
+  if (!t) return { state: 'unknown', why: 'board unreadable', deliveryUnknown: 'board unreadable' };
 
   const dispatched = new Map();   // letter -> newest dispatch ts
   const posted = new Map();       // letter -> newest committee post ts
+  const refused = new Map();      // letter -> newest delivery-refusal ts (clause 3)
+  let refusedUnresolved = 0;
   let unresolved = 0;
   let unconfirmed = 0;
   let earliest = Infinity;
@@ -597,6 +727,17 @@ function collation(opts = {}) {
     if (!e || e.role !== 'committee' || !e.ts) continue;
     if (e.ts < earliest) earliest = e.ts;
     if (e.ts > now) continue;
+    // CLAUSE 3, and it is read BEFORE the dispatch join because a refusal row is the chair's own
+    // traffic and would otherwise be skipped below with the rest of it.
+    const rf = REFUSED_RE.exec(String(e.text || ''));
+    if (rf) {
+      if (e.ts > anchor) {
+        const L = /^[A-Z]$/.test(rf[1]) ? rf[1] : toLetter(rf[1], letters);
+        if (!L) refusedUnresolved++;
+        else if (e.ts > (refused.get(L) || 0)) refused.set(L, e.ts);
+      }
+      continue;
+    }
     const m = DISPATCH_RE.exec(String(e.text || ''));
     if (m) {
       if (e.ts <= anchor) continue;
@@ -623,21 +764,34 @@ function collation(opts = {}) {
     if (L && e.ts > (posted.get(L) || 0)) posted.set(L, e.ts);
   }
 
+  /* CLAUSE 3's verdict, computed before the collation returns so it can ride EVERY one of them.
+   * A mount is undelivered while its newest refusal is newer than its newest successful delivery.
+   * `posted` already holds that delivery for both routes — the `call_librarian X -> LIB` audit row
+   * and the older bare committee post — so the clear condition is the existing join, not a new one. */
+  const undelivered = [];
+  for (const [L, at] of refused) {
+    const ok = posted.get(L) || 0;
+    if (at > ok) undelivered.push({ letter: L, at });
+  }
+  undelivered.sort((a, b) => a.letter.localeCompare(b.letter));
+  const c3 = { undelivered, refusedUnresolved };
+
   // THE TRUNCATION CHECK, and it is the whole reason the tail is allowed to be a tail. If the bytes
   // read do not reach back past the anchor, a dispatch could sit before the window and be invisible
   // — which would understate M and could turn an owing round into a false 'all-in'.
   if (unreadable) {
     return { state: 'unknown', why: unreadable + ' board line(s) unreadable', unreadable, fused,
-      examined: dispatched.size };
+      examined: dispatched.size, ...c3, deliveryUnknown: unreadable + ' board line(s) unreadable' };
   }
   if (t.truncated && earliest !== Infinity && earliest > anchor) {
-    return { state: 'unknown', why: 'board tail did not reach the anchor', examined: dispatched.size, fused };
+    return { state: 'unknown', why: 'board tail did not reach the anchor', examined: dispatched.size, fused,
+      ...c3, deliveryUnknown: 'board tail did not reach the anchor' };
   }
   if (unresolved) {
     return { state: 'unknown', why: unresolved + ' dispatch target(s) unresolved to a letter',
-      examined: dispatched.size, unresolved, fused };
+      examined: dispatched.size, unresolved, fused, ...c3 };
   }
-  if (!dispatched.size) return { state: 'n/a', why: 'no dispatches since the anchor', fused };
+  if (!dispatched.size) return { state: 'n/a', why: 'no dispatches since the anchor', fused, ...c3 };
 
   const owing = [];
   let allIn = 0;
@@ -649,9 +803,9 @@ function collation(opts = {}) {
   const examined = dispatched.size;
   const round = [...dispatched.keys()].sort();
   if (owing.length) {
-    return { state: 'owing', examined, round, owing: owing.sort(), in: examined - owing.length, unconfirmed, fused };
+    return { state: 'owing', examined, round, owing: owing.sort(), in: examined - owing.length, unconfirmed, fused, ...c3 };
   }
-  return { state: 'all-in', examined, round, in: examined, allIn, unconfirmed, fused };
+  return { state: 'all-in', examined, round, in: examined, allIn, unconfirmed, fused, ...c3 };
 }
 
 function line(opts = {}) {
@@ -717,8 +871,13 @@ function line(opts = {}) {
   // the same applicability cut carrier-drift.js makes for CH-4 over a tree with no roots, and for
   // the same reason: a tool must not report a defect against its own test harness. A board that
   // EXISTS and cannot be read is the other case entirely, and that one is loud.
+  // CLAUSE 3 CHANGES WHEN THIS RUNS, and that is the one real cost of it. The collation claim is
+  // gated to `holder panes`; a bounced hand-back is a fault under ANY holder, and tonight's bounce
+  // happened while the holder was `chair`, which is exactly why this scan never ran. So the scan is
+  // gated on there being an open lap, and the collation SEGMENTS stay gated on the holder — the
+  // `holder chair` line gains clause 3 and nothing else.
   let col = null;
-  if (head && head.holder === 'panes' && !headUnwitnessed) {
+  if (head) {
     const store = path.dirname(opts.ledger || LEDGER || '.');
     const board = opts.board !== undefined ? opts.board : path.join(store, 'board.jsonl');
     const letters = opts.letters !== undefined ? opts.letters : path.join(store, 'letters.json');
@@ -728,9 +887,24 @@ function line(opts = {}) {
     else if (!board || !fs.existsSync(board)) col = { state: 'n/a', why: 'no board.jsonl in ' + store };
     else col = collation({ now, anchor: prevFiled ? prevFiled.at : 0, board, letters });
   }
+  // The collation question is meaningless when the panes are not the holder; clause 3's is not.
+  const showCollation = Boolean(head && head.holder === 'panes' && !headUnwitnessed);
 
-  const d = opts.dirty !== undefined ? opts.dirty : dirtyCount(opts.repo || REPO);
-  parts.push('dirty ' + (d === null ? '?' : d) + ' repo-wide');
+  const t = (opts.dirty !== undefined || opts.handbacks !== undefined)
+    ? { dirty: opts.dirty !== undefined ? opts.dirty : null,
+        handbacks: opts.handbacks !== undefined ? opts.handbacks : [] }
+    : tree(opts.repo || REPO);
+  const d = t.dirty;
+  let dirtyPart = 'dirty ' + (d === null ? '?' : d) + ' repo-wide';
+  // The one subset of that count that can be NAMED. Never a verdict: a hand-back uncommitted a
+  // minute after it is filed is normal, and this says only that it is sitting there.
+  if (t.handbacks && t.handbacks.length) {
+    dirtyPart += ' (' + t.handbacks.length + ' hand-back' + (t.handbacks.length === 1 ? '' : 's')
+      + ' uncommitted: '
+      + t.handbacks.slice(0, LIST_CAP).join(', ')
+      + (t.handbacks.length > LIST_CAP ? ', +' + (t.handbacks.length - LIST_CAP) : '') + ')';
+  }
+  parts.push(dirtyPart);
   if (head && head.at) parts.push(ago(now - head.at));
   if (open.length > 1) parts.push('+' + (open.length - 1) + ' more open');
   if (led.unreadable) parts.push(led.unreadable + ' unreadable');
@@ -751,11 +925,22 @@ function line(opts = {}) {
   }
   // The universe rides the claim, and the UNKNOWN rides it too. Never silent on an unreadable
   // source: silence here reads as "nobody owes", which is the state the claim exists to announce.
-  if (col && col.state === 'unknown') {
+  // CLAUSE 3 RIDES EVERY HOLDER. Printed before the collation segments because a hand-back that
+  // could not be delivered outranks the question of who has handed back.
+  if (col && col.undelivered && col.undelivered.length) {
+    parts.push('UNDELIVERED ' + col.undelivered.map(u => u.letter + ' (refused ' + ago(now - u.at) + ' ago)').join(', '));
+  }
+  if (col && col.refusedUnresolved) {
+    parts.push(col.refusedUnresolved + ' refusal(s) UNRESOLVED to a letter');
+  }
+  if (col && col.deliveryUnknown) {
+    parts.push('delivery UNKNOWN — ' + col.deliveryUnknown);
+  }
+  if (showCollation && col && col.state === 'unknown') {
     parts.push('collation UNKNOWN — ' + col.why);
-  } else if (col && col.state === 'owing') {
+  } else if (showCollation && col && col.state === 'owing') {
     parts.push('handbacks ' + col.in + ' of ' + col.examined + ' (owing ' + col.owing.join(',') + ')');
-  } else if (col && col.state === 'all-in') {
+  } else if (showCollation && col && col.state === 'all-in') {
     parts.push('HANDBACKS IN, NOT COLLATED — ' + col.examined + ' of ' + col.examined +
       ' (' + col.round.join(',') + '), last ' + ago(now - col.allIn) + ' ago');
   }
@@ -843,6 +1028,7 @@ function main(argv, out = console.log, err = console.error) {
 if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
-  line, openLaps, chainLaps, unwitnessed, readLedger, dirtyCount, ago, main, collation, toLetter, tail, replay,
-  LEDGER, REPO, BOARD, LETTERS, WORK_ATTESTING, WINDOW, LIST_CAP, BOARD_TAIL_BYTES, DISPATCH_RE, parseBoardLine,
+  line, openLaps, chainLaps, unwitnessed, readLedger, dirtyCount, tree, ago, main, collation, toLetter, tail, replay,
+  LEDGER, REPO, BOARD, LETTERS, WORK_ATTESTING, WINDOW, LIST_CAP, BOARD_TAIL_BYTES, DISPATCH_RE, REFUSED_RE,
+  HANDBACK_DIR, parseBoardLine,
 };
