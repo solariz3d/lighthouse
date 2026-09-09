@@ -812,3 +812,4 @@ the wrong figure was published.*
 - 02:25 The keeper's sync spec registered (idea file §6): retire not overwrite; live mirror = one driver per seat + followers; catch-up at launch. Retired panes revivable by design → archive tails travel. The seat-memory question (240 MB transcripts vs warm-resume takeover) is the first measurement.
 - 02:30 Thumbdrive = first-sync transport for the 395 MB of seat memory; pack_room.ps1 already packs that set (prior art, dev/migrate/). Missing: unpack in RETIRE mode. Idea file §7.
 - 02:40 The thumbdrive retired by the thesis: reinstantiate from the record, not the transcript; sync = same commit; the sealed restart-continuity test is the first packet. Idea file §8.
+- 02:55 L051 lands: the offsets read moved after set_dirs, enumeration verified, 13/13; mark taken; prediction: first launch resumes; score before compact. Class items: seed_* before set_dirs; Main sid → two transcripts, offsets keyed on sid alone.
