@@ -1642,3 +1642,22 @@ sub-millisecond window sits between the two renames, guarded by reading and carr
 app re-creates there, with a smaller window inside that guard. Said in the hand-back rather than
 left for someone to find. And `replay-check --score` **refuses across the compaction seam by
 design** (exit 3): scored PASS on the live board before compacting, re-marked at 09:44:53Z after.
+
+## 2026-09-09 — L054 P-DESKTOP-RUNBOOK: transcribing a plan is not writing a runbook
+
+`exo_memory/handback/p-desktop-runbook_2026-09-09.md` · deliverable
+`exo_memory/loop/desktop_first_launch_2026-09-09.md`. Nothing committed. **Two of the plan's own
+seven steps were wrong and I only found it by opening the source instead of copying the step.** §4's
+stated reason — a 300 MB board is refused at the first push — does not bite on the successful path:
+`attic/pre-sync-*` is STAYS (`state-manifest.json:91`) and `installTree` replaces `board.jsonl`
+outright, so the desktop's board is never the file the push carries; the step survives only because
+the *unsuccessful* path is the one he cannot identify in advance, so it became look-first
+(`board-compact.js` dry run, 0.359 s) instead of act-first. And §6's *"chain-status prints two
+hashes"* is false at that moment — `machineHeads` reads `machines/<tag>.json` and only `L.json`
+exists until the desktop's own push — which would have had a tired man read a correct state as a
+failure with nobody awake to ask. That is the packet's registered falsifier, sitting inside the
+plan. **Also found while reading for the verdict names, and reported rather than omitted:**
+`READ-ONLY` is unreachable in this build — nothing writes `sync-promotion.open` (5 hits, all in
+`sync_launch.rs`, the only writer a test at `:968`) and `installTree` has no non-zero return, so a
+half-written data dir presents as `LOCAL HOUSE`, the exact chimera that verdict exists to prevent.
+**The lesson to carry: a plan is a claim about a system, and the system is one Read away.**
