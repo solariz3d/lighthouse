@@ -1768,6 +1768,70 @@ mod offset_tests {
         assert!(line.contains("stays confounded"), "must not imply a repair: {line}");
     }
 
+    /// **THE WRITER, found 2026-09-09 (L049). RED UNTIL THE ORDER IN `main` IS FIXED —
+    /// deliberately, and it is not a broken test.**
+    ///
+    /// The backfill decision is an ARGUMENT to `.manage(TailerOffsets(...))`, which Rust
+    /// evaluates while the Builder is being constructed. `set_dirs(&get_state())` runs inside
+    /// `.setup()`, which the runtime calls afterwards. So `offsets_path()` at the decision
+    /// resolves through `DIRS == None` to `default_data()` — the home directory's `.consonance`
+    /// — while every `save_offsets` runs on a tailer thread after setup and writes to the
+    /// CONFIGURED data dir. The file is written faithfully to one path and its existence is
+    /// tested at another. `BACKFILL_ACTIVE` is therefore true and the loaded map empty on
+    /// EVERY launch: `resume_offset(None, ..)` returns 0 and every pane re-reads its whole
+    /// transcript. Measured on the board: 39 `backfill` rows, each announcing itself as the
+    /// first launch under persisted offsets and each promising "ONE TIME".
+    ///
+    /// The comment on the `set_dirs` line already states the rule the line above it breaks:
+    /// *"resolve configurable dirs before anything reads them"*.
+    ///
+    /// The fix: manage an empty map at build time, and do the store + `load_offsets()` inside
+    /// `.setup()` AFTER `set_dirs`. Nothing else in this module changes — every other test in
+    /// it passes today, which is exactly why this survived: `resume_offset` is correct, and it
+    /// was never the thing that was wrong.
+    #[test]
+    fn the_backfill_decision_must_be_made_after_the_configured_dirs_resolve() {
+        // Half one — the mechanism. This half is GREEN, and it is what makes half two a defect
+        // rather than a style note: the two moments resolve two different files.
+        let _serial = DirsGuard::take();
+        assert_eq!(
+            offsets_path(),
+            PathBuf::from(default_data()).join("tailer-offsets.json"),
+            "with DIRS unset — the state the Builder is in — the path is the DEFAULT data dir"
+        );
+        let configured =
+            std::env::temp_dir().join(format!("consonance_offsets_dir_{}", std::process::id()));
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: String::new(),
+            instances: String::new(),
+            data: configured.display().to_string(),
+        });
+        assert_eq!(offsets_path(), configured.join("tailer-offsets.json"));
+        assert_ne!(
+            PathBuf::from(default_data()).join("tailer-offsets.json"),
+            configured.join("tailer-offsets.json"),
+            "a read before set_dirs and a write after it are two different files"
+        );
+        let _ = fs::remove_dir_all(&configured);
+
+        // Half two — the pin. The defect IS an evaluation order, so no test of a pure function
+        // can see it and none of the six in this module ever did; the source is the only place
+        // it is visible. The needles are assembled by `concat!` so THIS test's own text cannot
+        // satisfy the scan — the hazard carried by the other source-reading test in this file,
+        // where the literal it searches for is the literal it is written with.
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let decision = concat!("BACKFILL_ACTIVE", ".store(");
+        let resolve = concat!("set_dirs(&", "get_state());");
+        let line_of = |needle: &str| {
+            src.lines()
+                .position(|l| l.contains(needle) && !l.trim_start().starts_with("//"))
+        };
+        let at_decision = line_of(decision).expect("no backfill decision — re-point this test");
+        let at_resolve = line_of(resolve).expect("no set_dirs call — re-point this test");
+        let why = format!("the backfill decision is made at line {} but the configured dirs are not resolved until line {}. It therefore asks the DEFAULT data dir whether a file exists that is only ever written to the CONFIGURED one, loads an empty map, and every pane reads its transcript from the top — on every launch, not once.", at_decision + 1, at_resolve + 1);
+        assert!(at_resolve < at_decision, "{why}");
+    }
+
     #[test]
     fn the_belt_is_bounded_and_forgets_oldest_first() {
         let mut s = SeenTurns { order: VecDeque::new(), set: HashSet::new() };

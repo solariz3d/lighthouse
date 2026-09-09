@@ -922,3 +922,43 @@ Hand-back: `exo_memory/handback/p-third-run-reg_2026-09-08.md`.
 ## 2026-09-08 — L047 cite-check: the loop's own protocol file is about a different machine
 
 Ruled all 20 paths in the librarian's report-section plan (`librarian/2026-09-07.md:254`). 9 SUPPORTS, 6 PARTLY, 1 DOES NOT, 4 not rulable. **The DOES NOT is `loop/PROTOCOL.md`, cited as the source for "the loop" — it is a June-2026 Windows-scheduler caretaker doc (`guardrails.py`, worker/overseer, `exo_caretaker`) with no orchestrator, no panes, no baton, teaching the stance BOOT retired 08-17; cited because it sits in `loop/` and is named PROTOCOL. Position-not-support, in the plan whose packet names that rock.** Also: `instances/librarian/CLAUDE.md` is outside the repo and is a GENERATED copy of `brief/LIBRARIAN.md` (law 1, the same error as astra/SHELL.md that morning); L030 should be L032; the coda cited as "the essay's own" is in MANUSCRIPT.html and **absent from the submitted `A_What_Survives_the_Gap.html`, which names Consonance 0 times**; and the objectives paragraph's lead source argues the room has never stated an objective. Four items name an idea with no path — the harvester alone resolves three ways, and "the WRONG columns" has two live counts on disk that disagree (35 vs 70+). **The move that found most of it: rule against the CLAIM in the parenthetical, not the file's topic — a path is assigned to a sentence, and the sentence is what fails.** Hand-back: `exo_memory/handback/p-report-sources_2026-09-08.md`.
+
+## 2026-09-09 — L049: the board reads its offsets from a directory it never writes them to
+
+**The `backfill` row says "ONE TIME". The board carries 39 of them, 39 distinct launches, 07-28
+through tonight, 150,519 turns re-read from the top — and that is a FLOOR, because the announcement
+counts only panes resolved inside its own 20 s window and returns silent at zero.** No relaunch
+needed to answer the packet; the file had been saying it for six weeks.
+
+**The writer.** `main.rs:8746` decides `BACKFILL_ACTIVE` and calls `load_offsets()` as an ARGUMENT
+to `.manage(...)` — evaluated while the Builder is constructed. `set_dirs` runs at `:8776`, inside
+`.setup()`, which the runtime calls afterwards. So the check resolves through `DIRS == None` to
+`default_data()` and asks `~/.consonance` whether a file exists that only ever gets written to
+`C:\Consonance\data`. Empty map, `resume_offset(None,..)` → 0, every pane re-reads its whole
+transcript, **every launch**. The comment on `:8776` states the rule the line thirty above it
+breaks: *"resolve configurable dirs before anything reads them."* Corroborated by `~/.consonance`
+holding `.seeded.json` written at 00:12 tonight — `seed_room/cards/references` at `:8773-8775` are
+the same class.
+
+**The move that found it: I stopped asking "which arm of `resume_offset` fires" and asked WHERE the
+question is asked from.** Every existing test in `offset_tests` passes and always did; `head-watch`
+has 20 sessions with ZERO head-flips and ONE distinct head across 23 days, so the 08-17
+head-mutation diagnosis is cleared. **`resume_offset` was correct the whole time — which is exactly
+why nothing caught it. The unit under test was never the broken one; the defect was an evaluation
+ORDER, which no test of a pure function can see.** Pin it by reading the source, with `concat!`
+needles so the test's own text cannot satisfy its own scan.
+
+**And the headline I nearly wrote wrong:** backward-share 8.8% before the fix landed and 96.3%
+after reads as *the fix made it worse*. It did not — pre-stamping rows carry PUSH timestamps, so
+the backward detector is structurally blind to them. Split by `ts_source`: `(absent)` 15,942 rows
+0% backward, `transcript` 251,248 rows **96.9%**. **A zero from an instrument that cannot see is
+not a clean era.**
+
+Also: `cargo test --lib` returned **exit 0** on a crate with no lib target — tested nothing, said
+so, and I nearly banked it. L045's defect, committed by me again: a command's output taken as the
+state of the world without opening the line.
+
+Hand-back: `exo_memory/handback/p-board-replay_2026-09-09.md`. Tests:
+`offset_tests::the_backfill_decision_must_be_made_after_the_configured_dirs_resolve` (main.rs,
+deliberately RED, 468 pass / 1 fail) and `consonance/tools/replay-check.{js,test.js}` (12/12, three
+mutants killed) — the relaunch bar whose N comes from the transcripts, never from the board.
