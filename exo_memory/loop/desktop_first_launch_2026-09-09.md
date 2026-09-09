@@ -498,3 +498,19 @@ laptop at the time noted beside it.*
 
 *Its own falsifier, from the packet: a step at 08:00 whose result you cannot interpret from this
 document. If one happens, the row that should have covered it is the finding.*
+
+## 0.6 · CORRECTION FROM THE DESKTOP, 08:52 — step 1's config block breaks the launch
+
+**The parenthetical under §2 is wrong:** `Set-Content -Encoding utf8` writes a BOM on PowerShell 5.1,
+and `parse_config` (`main.rs:98`) does NOT strip it. The two readers named there do; the one that
+places the house does not. Result on the desktop's first click: `CONFIG PROBLEM … not valid JSON`,
+every path fell to built-in defaults, and the launch was `STANDALONE` in `~/.consonance` with no seam
+row on the real board. Details: `loop/wake_chair_2026-09-09.md`, the desktop chair's section.
+
+**Until `parse_config` strips the BOM, write the file without one:**
+
+```powershell
+[IO.File]::WriteAllText($p, ($c | ConvertTo-Json -Depth 10), (New-Object Text.UTF8Encoding $false))
+```
+
+and verify with `Get-Content $p -Encoding Byte -TotalCount 1` → `123` (`{`), not `239`.

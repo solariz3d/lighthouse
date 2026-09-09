@@ -36,3 +36,43 @@ Record repo **level with `origin/main` at `9f86b36`**, tree clean. State repo `s
 The keeper follows `loop/desktop_first_launch_2026-09-09.md` top to bottom. Machine tag D (never L). The seam row must say **MIGRATE**. The chair that wakes there is a new session woken from the synced tail and this record; its transcript here stays here.
 
 *Librarian, 07:50. Master: `librarian/2026-09-09.md`. Handoff: `loop/handoff_librarian_2026-09-09.md`.*
+
+## DESKTOP CHAIR, 08:52 — the first click opened the wrong house, and why (appended, not rewritten)
+
+**Steps 1–3 were done on the desktop before 08:38** (tag `D` in env and config; `C:\Consonance\state`
+cloned at `a4cb9fe`; `--verify` → `COMPLETE — 47 of 47`, `pushed by L at 2026-09-09T13:54:33.666Z`).
+The shortcut was then clicked at 08:45:33. **No seam row was posted, no `sync-pull.log`, no
+`sync-completion.json`, no attic.** The only trace was in the DEFAULT data dir:
+
+    ~/.consonance/persist.log:  1788965133 SYNC AT LAUNCH STANDALONE — state-sync.js is not on disk
+    ~/.consonance.log (×4):     CONFIG PROBLEM in C:\Users\nname\.consonance.json: not valid JSON
+                                (expected value at line 1 column 1) — those settings fall back to
+                                built-in defaults, which CHANGES WHERE YOUR INSTANCES LIVE.
+
+**Cause, by the bytes:** `head -c 4 ~/.consonance.json` → `ef bb bf 7b`. The runbook's step-1 config
+block writes with `Set-Content -Encoding utf8`, which on PowerShell 5.1 prepends a BOM, and the
+runbook says *"That is safe: both readers strip it — `state-sync.js:157` and `main.rs`'s
+`machine_identity`."* Both of those DO strip it (`main.rs:9013`). **`parse_config` (`main.rs:98`)
+does not** — plain `serde_json::from_str(s)` — and `parse_config` is the reader that decides
+`data_dir`, `instances_dir` and `room_path`. So the machine tag survived, and the house did not:
+data dir → `~/.consonance`, instances → `~/claude-instances`, room path → empty → `repo_root()` →
+`None` → `ToolAbsent` → STANDALONE. The chair that woke was the retired July lineage in
+`~/claude-instances/main` (its own pulse read *"dark 44 days"*), with no committee seats. The
+retire rule could not fire because from inside that house there was nothing foreign.
+
+**Three other readers in the same file strip the BOM with the comment "a BOM has silently killed a
+JSON parse in this repo twice" (`main.rs:1489`, `sync_launch.rs:553/575/598`). This is the third.**
+
+**Repair, 08:51:** the BOM stripped from `~/.consonance.json` (backup at
+`~/.consonance.json.bak-bom-20260909`, content otherwise byte-identical; verified by `cmp`). Raw
+`JSON.parse` fails before and passes after. `node` is on the system PATH, `gh` is logged in,
+`git -C C:\Consonance\state fetch --dry-run` exits 0, `BOOT.md` exists at the configured room path.
+**The binary was left as the laptop built it** — no code change ahead of the MIGRATE arm's first run.
+
+**Owed, not done here:** one line in `parse_config` (`s.trim_start_matches('\u{feff}')`) with a test,
+and the runbook's step-1 claim corrected (§0.6 appended there). A packet, not a chair edit mid-launch.
+
+**Also on this desktop, untouched by any of the above:** the record repo is 5 commits ahead of
+`origin/main` (4 desktop LIBRARIAN/D012 commits of 09-06 plus the 08:37 merge) and carries 3
+modified files + 1 uncommitted hand-back (`handback/p-d012-windowed_2026-09-06.md`, pane K). The
+launch installs the DATA dir, not the repo; these stay where they are.
