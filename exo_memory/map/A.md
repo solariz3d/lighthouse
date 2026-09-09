@@ -992,3 +992,15 @@ reversed, and I said so in the hand-back rather than dressing the order up.
 **I did not publish anything.** The live run was `--check` — real corpus, real `gh`, real
 `ls-remote`, 47 files / 58.1 MB, and nothing sent. Publishing outward keeps a human saying yes;
 the close is a command the keeper types.
+
+## 2026-09-09 — P-INSTALL-NAMES (L055): the install count was the tool's own words
+
+Hand-back at `exo_memory/handback/p-install-names_2026-09-09.md`. `--install` now reconciles the
+verified index against the DATA DIR it wrote into and names every difference by path; a shortfall
+exits 1 and records `installed:false` with `missing[]`. `state-sync.test.js` 44 -> 54 (red first:
+44/10), mutants 21 -> 32, **32 killed / 0 survived / 0 not-applied**. **`46` was never a missing
+file** — the tail hashed identical to the state tree's live blob, so the install landed all 47 and
+the count was omitting one already-identical skip; and the log's own line order proves
+`gc_captures()` cannot run until `state-sync` has exited, so **this change could not have caught
+that morning**, which is said in the hand-back rather than around. `--push`'s NOTHING_CHANGED hole:
+judged a separate packet and left. Nothing was run against the live data dir.

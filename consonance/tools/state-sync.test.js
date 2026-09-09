@@ -536,6 +536,151 @@ test('install does not touch a file that is already identical', () => {
   assert.ok(!fs.existsSync(path.join(w.dataD, 'attic')), 'nothing was displaced, so no backup dir');
 });
 
+// ═══ the reconciliation — P-INSTALL-NAMES (L055) ══════════════════════════════════════════
+//
+// WHAT THESE ARE MEASURING, stated once. `installTree` returns how many times it called
+// writeFileSync. That is a claim about THIS PROCESS, and on 2026-09-09 it printed
+// `installed 46 file(s)` over a set of 47 and named none of them; the launch reported success
+// and a seat woke from a tail that was not there. The reconciliation may take nothing from the
+// install. It walks the INDEX — the thing the caller holds — and asks the DATA DIR.
+
+/** A machine D that has pulled and installed: the reconciliation's actual subject. */
+function installedD(files) {
+  const w = twoMachines(files);
+  const r = runD(w, ['--pull', '--install']);
+  assert.strictEqual(r.code, 0, both(r));
+  return w;
+}
+
+/** verifyTree's answer for D's state tree — the same input cmdPull hands the reconciliation. */
+const verifiedD = (w) => M.verifyTree(w.stateD);
+
+/** gc_captures(), in one line: a second process that takes the file away under the install. */
+function deleter(target) {
+  const script = `const fs=require('fs');const p=${JSON.stringify(target)};const end=Date.now()+6000;`
+    + `while(Date.now()<end){try{fs.unlinkSync(p)}catch(e){}}`;
+  return spawn(process.execPath, ['-e', script], { stdio: 'ignore' });
+}
+
+test('reconcileInstall reports the whole set present when the data dir holds it', () => {
+  const w = installedD({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail' });
+  const rec = M.reconcileInstall(w.dataD, verifiedD(w));
+  assert.strictEqual(rec.ok, true, JSON.stringify(rec.missing));
+  assert.strictEqual(rec.claimed, 2);
+  assert.strictEqual(rec.present, 2);
+  assert.deepStrictEqual(rec.missing, []);
+});
+
+test('reconcileInstall NAMES BY PATH a file the data dir does not hold — a count names nothing', () => {
+  const w = installedD({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail' });
+  fs.unlinkSync(path.join(w.dataD, 'captures', 'A.txt'));
+  const rec = M.reconcileInstall(w.dataD, verifiedD(w));
+  assert.strictEqual(rec.ok, false);
+  assert.strictEqual(rec.missing.length, 1);
+  assert.strictEqual(rec.missing[0].path, 'captures/A.txt', 'the PATH is the deliverable');
+  assert.strictEqual(rec.missing[0].kind, 'ABSENT');
+  assert.strictEqual(rec.present, 1);
+  assert.ok(rec.missing[0].where.includes(w.dataD), 'it says where it looked, on THIS machine');
+});
+
+test('reconcileInstall reads the destination, so an install that reported success cannot cover for it', () => {
+  // The install's own count is 2-and-correct here. The data dir is not. If the reconciliation
+  // took the count, this would pass green — which is exactly the morning being fixed.
+  const w = installedD({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail' });
+  fs.unlinkSync(path.join(w.dataD, 'board.jsonl'));
+  const rec = M.reconcileInstall(w.dataD, verifiedD(w));
+  assert.strictEqual(rec.ok, false, 'the destination is short and only the destination can say so');
+  assert.strictEqual(rec.missing[0].path, 'board.jsonl');
+});
+
+test('reconcileInstall distinguishes a SHORT file at the destination from an absent one', () => {
+  const w = installedD({ 'board.jsonl': 'row one\nrow two\n' });
+  fs.writeFileSync(path.join(w.dataD, 'board.jsonl'), 'row one\n');
+  const rec = M.reconcileInstall(w.dataD, verifiedD(w));
+  assert.strictEqual(rec.missing.length, 1);
+  assert.strictEqual(rec.missing[0].kind, 'SIZE');
+  assert.ok(rec.missing[0].found.includes('8 bytes'), rec.missing[0].found);
+  assert.ok(rec.missing[0].note.includes('SHORT'), rec.missing[0].note);
+});
+
+test('reconcileInstall catches right-length-wrong-bytes at the destination', () => {
+  const w = installedD({ 'board.jsonl': 'row\n' });
+  fs.writeFileSync(path.join(w.dataD, 'board.jsonl'), 'ROW\n');
+  const rec = M.reconcileInstall(w.dataD, verifiedD(w));
+  assert.strictEqual(rec.missing.length, 1);
+  assert.strictEqual(rec.missing[0].kind, 'CONTENT');
+  assert.ok(rec.missing[0].expected.startsWith('sha256 '), rec.missing[0].expected);
+});
+
+test('reconcileInstall names a directory standing where a file should be, rather than crashing', () => {
+  const w = installedD({ 'board.jsonl': 'row\n' });
+  fs.unlinkSync(path.join(w.dataD, 'board.jsonl'));
+  fs.mkdirSync(path.join(w.dataD, 'board.jsonl'));
+  const rec = M.reconcileInstall(w.dataD, verifiedD(w));
+  assert.strictEqual(rec.missing.length, 1);
+  assert.strictEqual(rec.missing[0].kind, 'ABSENT');
+  assert.ok(rec.missing[0].found.includes('directory'), rec.missing[0].found);
+});
+
+test('installTree accounts for EVERY index file: wrote + skipped is the whole set', () => {
+  // `installed 46 file(s)` was unreadable because the run never said what the 47th was. It was
+  // either written, or skipped as already-identical — and the record could not tell you which,
+  // so a benign skip and a file that never arrived printed the same number.
+  const w = twoMachines({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail', 'letters.json': '{}' });
+  fs.mkdirSync(path.join(w.dataD, 'captures'), { recursive: true });
+  fs.writeFileSync(path.join(w.dataD, 'captures', 'A.txt'), 'tail'); // already identical
+  execFileSync('git', ['-C', w.stateD, 'fetch', '-q', 'origin']);
+  execFileSync('git', ['-C', w.stateD, 'merge', '-q', '--ff-only', 'origin/main']);
+  const v = M.verifyTree(w.stateD);
+  const r = M.installTree(w.dataD, w.stateD, v);
+  assert.strictEqual(r.wrote, 2);
+  assert.strictEqual(r.skipped, 1, 'the already-identical file is COUNTED, not silently dropped');
+  assert.strictEqual(r.wrote + r.skipped, v.index.files.length, 'every claimed file is accounted for');
+});
+
+test('--pull --install prints RECONCILED with a count it read from the data dir, and records it', () => {
+  const w = twoMachines({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail' });
+  const r = runD(w, ['--pull', '--install']);
+  assert.strictEqual(r.code, 0, both(r));
+  assert.ok(/RECONCILED — 2 of 2/.test(both(r)), both(r));
+  assert.ok(/already identical/.test(both(r)), 'the skip count is printed so the arithmetic closes');
+  const c = JSON.parse(fs.readFileSync(path.join(w.dataD, M.COMPLETION_NAME), 'utf8'));
+  assert.strictEqual(c.reconciled, true);
+  assert.strictEqual(c.reconciled_files, 2);
+  assert.deepStrictEqual(c.missing, []);
+});
+
+test('--pull --install EXITS NON-ZERO and names the path when the data dir loses a file under it', () => {
+  // THE ONLY WAY TO BE SHORT, and it is the incident. `installTree` converges: every index file
+  // is written or skipped-as-identical, so a run that does not throw always leaves the whole set
+  // on disk. A shortfall therefore takes ANOTHER PROCESS — which is what happened at 14:59:06Z on
+  // 2026-09-09, when gc_captures() renamed the librarian's tail away 0.17 s before this tool
+  // wrote `installed: true`. This second process IS gc_captures.
+  const w = twoMachines({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail' });
+  const child = deleter(path.join(w.dataD, 'captures', 'A.txt'));
+  let r;
+  try { r = runD(w, ['--pull', '--install']); }
+  finally { try { child.kill(); } catch (_) { /* already gone */ } }
+  assert.strictEqual(r.code, 1, 'a set that did not land must not exit 0: ' + both(r));
+  assert.ok(both(r).includes('SHORTFALL'), both(r));
+  assert.ok(both(r).includes('captures/A.txt'), 'THE PATH, not the count: ' + both(r));
+  assert.ok(both(r).includes('ABSENT'), both(r));
+});
+
+test('a shortfall records installed:false and the missing paths, so the launcher reads a refusal', () => {
+  const w = twoMachines({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail' });
+  const child = deleter(path.join(w.dataD, 'captures', 'A.txt'));
+  try { runD(w, ['--pull', '--install']); }
+  finally { try { child.kill(); } catch (_) { /* already gone */ } }
+  const c = JSON.parse(fs.readFileSync(path.join(w.dataD, M.COMPLETION_NAME), 'utf8'));
+  assert.strictEqual(c.verified, true, 'the TREE was whole — that claim stands and is not withdrawn');
+  assert.strictEqual(c.installed, false, "C's schema: installed means the set reached the data dir");
+  assert.strictEqual(c.reconciled, false);
+  assert.strictEqual(c.stage, 'install');
+  assert.deepStrictEqual(c.missing.map((m) => m.path), ['captures/A.txt']);
+  assert.ok(c.why.includes('captures/A.txt'), 'the reason carries the path to the board row: ' + c.why);
+});
+
 test('pull REFUSES a non-fast-forward and records the stage it stopped at', () => {
   const w = twoMachines({ 'board.jsonl': 'row\n' });
   // D commits something of its own, so its history diverges from the remote's next commit

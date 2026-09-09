@@ -781,18 +781,54 @@ function cmdPull(args) {
 
   let installed = false;
   let installedInto = null;
+  let rec = null;
+  let counts = {};
   if (doInstall) {
     const r = installTree(DATA, STATE, v);
     if (r.rc !== 0) {
       writeCompletion(DATA, STATE, {
-        verified: true, installed: false, stage: 'install', why: r.why, failures: [],
-        head: head.ok ? head.out : null,
+        verified: true, installed: false, reconciled: false, stage: 'install', why: r.why, failures: [],
+        missing: [], head: head.ok ? head.out : null,
       });
       return r.rc;
     }
+    counts = { installed_files: r.wrote, skipped_identical: r.skipped, displaced_files: r.displaced };
+    console.log(`  installed ${r.wrote} file(s) into ${DATA}; ${r.skipped} already identical; ${r.displaced} displaced file(s) kept at ${r.backup || '(none)'}`);
+
+    // AND NOW THE ONLY LINE THAT IS ENTITLED TO SAY THE SET ARRIVED. Everything above is this
+    // process describing its own actions; reconcileInstall reads the destination. See its header.
+    rec = reconcileInstall(DATA, v);
+    reportReconcile(rec);
+    if (!rec.ok) {
+      // EXIT 1, AND `installed: false`.
+      //
+      // The competing option was to print loudly and exit 0 on the grounds that a launcher reading
+      // sync-completion.json can already refuse. It is refused for three reasons. (1) The launcher
+      // is not the only caller — a shell, a hook, a runbook step and every `&&` read the exit code
+      // and read nothing else, and exit 0 over a set that did not arrive is the exact shape of the
+      // morning this was written for: "the launch reported success". (2) This file is fail-closed
+      // everywhere else it can be wrong about arrival (REFUSING TO PUSH on unconfirmed privacy;
+      // exit 1 on an INCOMPLETE tree); a loud-but-zero path here would be a second, weaker standard
+      // for the same class of fact. (3) Redundancy is the point, not the objection: the exit code
+      // and the record are two independent refusals, and the failure being fixed is precisely one
+      // channel being trusted alone.
+      //
+      // `installed: false` is C's vocabulary, not a new field — sync_launch.rs documents
+      // `stage: "install"` with `installed: false` as "the data dir was PARTLY written", which is
+      // exactly true here. The partial write is NOT undone: the bytes that landed are correct and
+      // what they displaced is in the attic. This says the SET did not arrive, not that nothing did.
+      writeCompletion(DATA, STATE, {
+        verified: true, installed: false, reconciled: false, stage: 'install',
+        why: shortfallWhy(rec), failures: rec.missing, missing: rec.missing,
+        reconciled_files: rec.present, reconciled_at: rec.read_at, ...counts,
+        head: head.ok ? head.out : null, files: v.checked, bytes: v.index.totals.bytes,
+        pushed_by: v.index.machine, pushed_at: v.index.at,
+      });
+      writeStatus(DATA, STATE);
+      return 1;
+    }
     installed = true;
     installedInto = DATA;
-    console.log(`  installed ${r.wrote} file(s) into ${DATA}; ${r.displaced} displaced file(s) kept at ${r.backup || '(none)'}`);
   } else {
     console.log('');
     console.log('  VERIFIED BUT NOT INSTALLED. The state is in the tree, not in the data dir.');
@@ -803,6 +839,13 @@ function cmdPull(args) {
 
   writeCompletion(DATA, STATE, {
     verified: true, installed, installed_into: installedInto, stage: 'done', why: null,
+    // `null`, not `false`, when no install was attempted: nothing was reconciled because nothing
+    // was landed, and a reader must not be able to mistake "not asked" for "asked and short".
+    reconciled: rec ? rec.ok : null,
+    reconciled_files: rec ? rec.present : null,
+    reconciled_at: rec ? rec.read_at : null,
+    missing: rec ? rec.missing : [],
+    ...counts,
     failures: [], head: head.ok ? head.out : null, files: v.checked, bytes: v.index.totals.bytes,
     pushed_by: v.index.machine, pushed_at: v.index.at,
   });
@@ -824,6 +867,7 @@ function installTree(DATA, STATE, v) {
   const backup = path.join(DATA, 'attic', `pre-sync-${stamp}`);
   let wrote = 0;
   let displaced = 0;
+  let skipped = 0;
   let madeBackup = false;
   for (const f of v.index.files) {
     const src = path.join(destRoot, f.path.split('/').join(path.sep));
@@ -831,7 +875,10 @@ function installTree(DATA, STATE, v) {
     let cur = null;
     try { cur = fs.readFileSync(dst); } catch (_) { /* nothing there */ }
     if (cur) {
-      if (sha256(cur) === f.sha256) continue; // already identical; touching it would only churn mtimes
+      // ALREADY IDENTICAL IS COUNTED, NOT DROPPED. `wrote` alone made a benign skip and a file
+      // that never arrived print the same smaller number — which is how `installed 46 file(s)`
+      // over a set of 47 read as a mystery on 2026-09-09 instead of as arithmetic that closes.
+      if (sha256(cur) === f.sha256) { skipped++; continue; } // touching it would only churn mtimes
       const b = path.join(backup, f.path.split('/').join(path.sep));
       fs.mkdirSync(path.dirname(b), { recursive: true });
       fs.writeFileSync(b, cur);
@@ -842,7 +889,120 @@ function installTree(DATA, STATE, v) {
     fs.writeFileSync(dst, fs.readFileSync(src));
     wrote++;
   }
-  return { rc: 0, wrote, displaced, backup: madeBackup ? backup : null, why: null };
+  return { rc: 0, wrote, displaced, skipped, backup: madeBackup ? backup : null, why: null };
+}
+
+/**
+ * Ask the DATA DIR what it holds, and NAME the difference from what verified.
+ *
+ * WHY THIS EXISTS, verbatim from the morning it was written. `--install` printed
+ *
+ *     COMPLETE — 47 of 47 files present, right length, right bytes.
+ *     installed 46 file(s) into C:\Consonance\data; 16 displaced file(s) kept at …
+ *
+ * and the line did not name the one. It was `data/captures/0c0c0c0b-…-115b.txt`, the librarian
+ * seat's own capture tail, and that seat then woke with no past at all. Nobody could act on `46`,
+ * because 46 names nothing; the launch reported success.
+ *
+ * THE DEFECT IS NOT THE MISSING FILE. It is that `installed 46 file(s) into <DATA>` is a claim
+ * ABOUT THE DATA DIR taken from the tool's own bookkeeping — `wrote` counts calls to
+ * `fs.writeFileSync` and nothing else. It cannot see a file skipped as already-identical (present
+ * and correct), and it cannot see a file removed after the write by anything else on the machine.
+ * Both print as a smaller number and neither prints as a path.
+ *
+ * So this function takes NOTHING from `installTree`. It walks the INDEX — the artefact the caller
+ * holds and can re-derive — and stats and hashes each path AT THE DESTINATION. Same rule as
+ * close.js: a reading is not a state, and the only thing entitled to say what the data dir holds
+ * is the data dir.
+ *
+ * Its vocabulary is verifyTree's on purpose (ABSENT / SIZE / CONTENT): whoever can read one report
+ * at 8am on the other machine can read this one, and the two are about the two different places a
+ * set can go wrong — the tree, and the dir the app actually opens.
+ *
+ * WHAT IT DOES NOT CLAIM. It is a reading taken at one instant, and a process that removes a file
+ * AFTER it returns leaves it green. That is not hypothetical: it is precisely what happened here
+ * (gc_captures() renamed the tail away at 14:59:06.000Z; this tool wrote `installed: true` at
+ * 14:59:06.172Z). A reading cannot be a lock. What it changes is that the record now says what was
+ * read, when, and which paths — so the next investigation starts from evidence and not from 46.
+ */
+function reconcileInstall(DATA, v) {
+  const missing = [];
+  for (const f of v.index.files) {
+    const p = path.join(DATA, f.path.split('/').join(path.sep));
+    const expectedShort = `${f.bytes} bytes, sha256 ${f.sha256.slice(0, 12)}…`;
+    let st;
+    try { st = fs.statSync(p); } catch (_) {
+      missing.push({
+        path: f.path, kind: 'ABSENT', expected: expectedShort,
+        found: 'no such file in the data dir', where: p,
+      });
+      continue;
+    }
+    if (!st.isFile()) {
+      missing.push({
+        path: f.path, kind: 'ABSENT', expected: expectedShort,
+        found: 'a directory stands here, not a file', where: p,
+      });
+      continue;
+    }
+    if (st.size !== f.bytes) {
+      missing.push({
+        path: f.path, kind: 'SIZE', expected: `${f.bytes} bytes`, found: `${st.size} bytes`, where: p,
+        note: st.size < f.bytes ? 'SHORT — a truncated landing, not a stale one' : 'LONGER than the verified file',
+      });
+      continue;
+    }
+    let got;
+    try { got = sha256(fs.readFileSync(p)); } catch (e) {
+      missing.push({
+        path: f.path, kind: 'UNREADABLE', expected: expectedShort,
+        found: `right length, but this machine cannot read it: ${e.message}`, where: p,
+      });
+      continue;
+    }
+    if (got !== f.sha256) {
+      missing.push({
+        path: f.path, kind: 'CONTENT', expected: `sha256 ${f.sha256}`, found: `sha256 ${got}`, where: p,
+        note: 'right length, wrong bytes — something on THIS machine rewrote it after the install',
+      });
+    }
+  }
+  return {
+    ok: missing.length === 0, missing,
+    claimed: v.index.files.length, present: v.index.files.length - missing.length,
+    read_at: new Date().toISOString(), data_dir: DATA,
+  };
+}
+
+/** The `why` that rides to C's board row: short enough for one line, and it carries PATHS. */
+function shortfallWhy(rec) {
+  const named = rec.missing.map((m) => `${m.kind} ${m.path}`);
+  return `${rec.missing.length} of ${rec.claimed} verified file(s) are not in the data dir: `
+    + named.slice(0, 3).join('; ')
+    + (named.length > 3 ? `; and ${named.length - 3} more (all of them under missing[])` : '');
+}
+
+function reportReconcile(rec) {
+  if (rec.ok) {
+    console.log(`  RECONCILED — ${rec.present} of ${rec.claimed} verified file(s) are in ${rec.data_dir}, right length, right bytes.`);
+    return 0;
+  }
+  console.error('');
+  console.error(`  SHORTFALL — the tree verified ${rec.claimed} file(s); ${rec.data_dir} holds ${rec.present}. Each difference, BY NAME:`);
+  for (const m of rec.missing) {
+    console.error(`    ${m.kind.padEnd(10)} ${m.path}`);
+    console.error(`             at:       ${m.where}`);
+    console.error(`             expected: ${m.expected}`);
+    console.error(`             found:    ${m.found}`);
+    if (m.note) console.error(`             note:     ${m.note}`);
+  }
+  console.error('');
+  console.error('  A COUNT IS NOT ACTIONABLE AND A PATH IS. Do not wake a seat from this set: the bytes');
+  console.error('  are still in the state tree and every path above is recoverable from it —');
+  console.error('      git -C <state tree> show origin/main:data/<path>');
+  console.error(`  ${COMPLETION_NAME} records installed:false with these paths under \`missing\`, and the`);
+  console.error('  exit code is 1, so a caller that reads only the exit code still refuses.');
+  return 1;
 }
 
 /**
@@ -908,7 +1068,7 @@ function main() {
 
 if (require.main === module) main();
 module.exports = {
-  stableRead, sha256, classify, loadManifest, verifyTree, installTree,
+  stableRead, sha256, classify, loadManifest, verifyTree, installTree, reconcileInstall,
   machineHeads, machineTag, stateDir, dataDir, ensureTreeSettings, remotePrivacy, writeStatus, gitTry,
   FILE_CAP, STABLE_TRIES, SETTLE_MS, INDEX_NAME, STATUS_NAME, COMPLETION_NAME, RECEIPT_NAME,
 };

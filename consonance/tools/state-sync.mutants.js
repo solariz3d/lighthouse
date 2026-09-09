@@ -77,6 +77,36 @@ const MUTANTS = [
     "const entry = { path: t.rel, bytes: r.buf.length, sha256: 'x'.repeat(64), attempts: r.attempts };"],
   ['STAYS and REGENERATES travel too', "if (r.class === 'TRAVELS' && p.kind === 'file')", "if (p.kind === 'file')"],
   ['nothing-changed is decided on the clock, so every push commits', 'if (same) {', 'if (false) {'],
+
+  // ── the reconciliation (P-INSTALL-NAMES, L055) ──
+  // Every one of these is a way for `--install` to say a set arrived when it did not, which is the
+  // sentence that was actually printed on 2026-09-09 and believed.
+  ['the reconciliation is not run at all — the install\'s own count stands as the claim',
+    '    rec = reconcileInstall(DATA, v);',
+    '    rec = { ok: r.wrote + r.skipped === v.index.files.length, missing: [], claimed: v.index.files.length, present: r.wrote + r.skipped, read_at: null, data_dir: DATA };'],
+  ['a shortfall prints loudly and exits 0 anyway — the option this packet refused',
+    '    if (!rec.ok) {', '    if (false) {'],
+  ['the reconciliation always says ok', '    ok: missing.length === 0, missing,', '    ok: true, missing,'],
+  ['`present` is taken from the claim rather than from what was read at the destination',
+    '    claimed: v.index.files.length, present: v.index.files.length - missing.length,',
+    '    claimed: v.index.files.length, present: v.index.files.length,'],
+  ['a truncated file at the destination is accepted',
+    "    if (st.size !== f.bytes) {\n      missing.push({\n        path: f.path, kind: 'SIZE',",
+    "    if (false) {\n      missing.push({\n        path: f.path, kind: 'SIZE',"],
+  ['right-length-wrong-bytes at the destination is accepted',
+    "    if (got !== f.sha256) {\n      missing.push({\n        path: f.path, kind: 'CONTENT',",
+    "    if (false) {\n      missing.push({\n        path: f.path, kind: 'CONTENT',"],
+  ['a directory standing where a file should be is accepted', '    if (!st.isFile()) {', '    if (false) {'],
+  ['already-identical files are not counted, so `installed N` stays unreadable',
+    '      if (sha256(cur) === f.sha256) { skipped++; continue; }',
+    '      if (sha256(cur) === f.sha256) { continue; }'],
+  ['the record carries the shortfall but not the paths, so the launcher gets a count again',
+    '        why: shortfallWhy(rec), failures: rec.missing, missing: rec.missing,',
+    '        why: shortfallWhy(rec), failures: rec.missing, missing: [],'],
+  ['the shortfall reason names no path', "    + named.slice(0, 3).join('; ')", "    + ''"],
+  ['the report prints the kind but not the path — 46 all over again',
+    '    console.error(`    ${m.kind.padEnd(10)} ${m.path}`);',
+    '    console.error(`    ${m.kind.padEnd(10)}`);'],
 ];
 
 function restore() { fs.writeFileSync(SRC, original); }
