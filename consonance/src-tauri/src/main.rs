@@ -861,7 +861,7 @@ fn plog(msg: &str) {
 // 2026-09-09: the launcher installed the librarian's synced tail at 08:59:04 and this sweep
 // archived it at 08:59:06 — `data/persist.log` "retire pane=0c0c0c0b-… -> ARCHIVED (had history)",
 // two lines under the MIGRATE that had just installed it. Proven, not inferred: the archived file
-// hashes to a10d1d0e, byte-identical to the state tree's LIVE blob for that seat. The seat then
+// git-blob hashes to a10d1d0e, byte-identical to the state tree's LIVE blob for that seat. The seat then
 // woke with no past at all. A sweep whose keep-set is a subset of the seats the migrate wakes from
 // tail will always eat the difference, so the keep-set is the whole seat list — see
 // `fixed_id_seats`, and `the_startup_sweep_keeps_every_fixed_id_seat_not_only_main` which fails if
@@ -9169,6 +9169,23 @@ fn append_synced_tail(intake: &mut String, sid: &str) {
         }
     };
     if transcript.trim().is_empty() {
+        // **THREE STATES, THREE ROWS — and no pointer here, deliberately.** The file exists and
+        // holds nothing, so `prior_conversation_pointer` would tell the seat "you have a past
+        // here, open it" about an empty file: a pointer that lies is the failure wearing a
+        // helpful face, the same reason the ABSENT arm above adds a line correcting it.
+        //
+        // But the row is not optional. Until D056 this arm returned in silence, and the ABSENT
+        // arm above returned in silence too, so one quiet exit was indistinguishable from the
+        // other — and from the function never having run. D055 made ABSENT loud and left this
+        // one quiet, which is strictly worse: from that moment silence in this path meant
+        // exactly one thing and no reader could know it. A log is only worth what its ABSENCE
+        // proves, and "no MIGRATE TAIL row means append_synced_tail did not run" is the
+        // invariant one surviving silent path destroys permanently.
+        plog(&format!(
+            "MIGRATE TAIL sid={sid} tail=EMPTY bytes={} intake={} -> NO POINTER (nothing to point at)",
+            transcript.len(),
+            intake.len()
+        ));
         return;
     }
     let whole = transcript.len();
@@ -9300,6 +9317,38 @@ mod migrate_tail_and_sweep_tests {
                 && log.contains("POINTER ONLY"),
             "nothing in persist.log says a tail was expected and did not read, so the next hour \
              lost to this gets reconstructed from file timestamps again. Log: {log:?}"
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// **THE THIRD STATE: present but empty — a row, and NO pointer.**
+    ///
+    /// The two halves are one claim and are asserted together on purpose. The row, because D055
+    /// made the ABSENT arm loud and left this one quiet, and from that moment a missing
+    /// `MIGRATE TAIL` row meant either "empty tail" or "the function never ran" with nothing to
+    /// tell them apart — a log is worth what its absence proves. No pointer, because the file is
+    /// genuinely empty: `prior_conversation_pointer` would tell the seat it has a past to go and
+    /// open, which is the ABSENT arm's lie in the opposite direction.
+    #[test]
+    fn an_empty_synced_tail_leaves_a_row_and_no_pointer() {
+        let _g = DirsGuard::take();
+        let root = scratch("empty_tail");
+        fs::write(capture_text_path(LIBRARIAN_SID), "   \n\n  ").expect("seed an empty tail");
+
+        let mut intake = String::from("the shell so far\n");
+        let before = intake.clone();
+        append_synced_tail(&mut intake, LIBRARIAN_SID);
+
+        let log = fs::read_to_string(data_dir().join("persist.log")).unwrap_or_default();
+        assert!(
+            log.contains(&format!("MIGRATE TAIL sid={LIBRARIAN_SID} tail=EMPTY")),
+            "an empty tail returned in silence. Every other exit from this function writes a row, \
+             so this one silence destroys the only thing the log's absence could prove. Log: {log:?}"
+        );
+        assert!(
+            intake == before,
+            "the seat was pointed at an empty file — told it has a past to open when it has \
+             none. Intake: {intake:?}"
         );
         let _ = fs::remove_dir_all(&root);
     }
