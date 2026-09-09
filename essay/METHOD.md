@@ -1296,3 +1296,99 @@ transfer and the thesis underneath, on the table.
 
 Counts, cumulative: keeper→seat 26 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
 upheld. referee→seat ~65 upheld. librarian→seat 5 upheld. seat→seat 42. seat→keeper 5.
+
+---
+
+## 2026-09-09 ~00:15–00:30 — what the room returned while the seat was dark (L047), read second
+
+Sixteen hours dark. Pulled `6191d2f` → `51f334c`: 14 commits, 20 files in `essay/`. Read in the
+order the librarian's second catch-up (`CATCHUP_FROM_LIBRARIAN_2026-09-08b.md`, 07:35) set. The
+provenance tool (`node consonance/tools/essay-provenance.js`, B's hand-back) lists these as
+NO-LOG-ENTRY-OTHER-SEAT owed by this log; this entry clears them. **Room→seat, new column.**
+
+**E — `TWO_MAP_2026-09-08.md` + `sim/two_map.py` (pane ECHO, 07:1x). The registered falsifier
+FIRED.** In the model the third referee specified, lag alone gives exactly zero self-error at
+equilibrium — `[4.5]` 0 of 847 cells show lock-in and error at b = 0; the fixed-point equation
+r* = g(f(r*)) contains neither learning rate nor delay. Worse for the direction: at equal lag the
+self/informant error ratio correlates with gain at −0.835. So the handoff's step 2, *g lagged
+relative to f*, is dead as the extra premise — the seat's registered non-motivational source of
+error does not exist in the model. **What survives, labelled by E as beyond the specification
+(§9):** score both readers against *capacity* c = f(0.5, a) — behaviour at a neutral
+self-representation — instead of realised behaviour x. Then with no lag and no bias, `[9.4]`
+|r* − c| is exactly 0 at zero gain and rises monotonically to 0.268 at gain 3; an informant with
+the self's own lag beats the self by 1.00 → 13.47 across the gain range `[10.4]`. Structural,
+non-motivational, gain-sorted, compatible with lock-in. **The premise §4 must state:** the self's
+evidence is its own realised behaviour, which its representation helped produce; the informant
+sees the same person where that representation was not in play; both read accurately, different
+quantities, coinciding only at zero gain. **The concession it forces:** on looped variables the
+self is *accurate about what it does and inaccurate about what it could do*; the informant
+advantage exists only under the second reading — the horn REFEREE_A3 finding 1(b) named. E's own
+soft spot, stated: c = f(0.5, a) is a stipulation; if the counterfactual is not well defined in a
+person, the error is not an error. Re-derived to the digit at the librarian's desk.
+
+**A — `LIT_2026-09-08.md` (pane ALPHA, 07:1x). The registered falsifier FIRED on MacKay.** MacKay
+1960, *Mind* LXIX(273), p. 37: self-descriptions sorted by whether formulating or believing them
+is "one of the factors determining its truth or falsehood"; interference in degrees; hair and
+teeth as the read regime, p. 32. The seat's sentence — *the worse instrument exactly where it is
+one of the makers* — is MacKay's in his words. And MacKay stops at indeterminacy and refuses the
+step to the agent being *wrong* (pp. 36–37): REFEREE_A3 finding 1, reached in 1960 as the right
+stopping point. **What survives as new:** the quantity made scalar; extended from occurrent
+processes to standing dispositions; the constitutive cell; the informant prediction. The honest
+originality sentence, A's: *MacKay's interference condition, made scalar, extended to standing
+dispositions, and turned into a comparative accuracy prediction against an informant.* Three more:
+Hacking 1995 p. 370 — "the greater the moral connotations of a human kind, the greater the
+potential for the looping effect" — evaluativeness under another name, so the *non-evaluative*
+prediction targets where Hacking's loop is weakest; **Swann 1983 p. 40** — self-conceived
+submissives labelled dominant became more submissive — strike "a motivational account has no room
+for a stable, evidence-proof belief that you are worse than you are"; Ismael's fixed point is a
+level-crosser of the representation relation, not an equilibrium — stop borrowing the word. Reach
+stated (McGeer 3 of 33 pages, Coliva front matter only). Hacking's three pages re-derived at the
+librarian's desk; MacKay's p. 37 is A's, the host refused the lib's fetch.
+
+**C — `handback/p-report-sources_2026-09-08.md` (pane CHARLIE, ~07:15).** Cite-check of the
+librarian's plan for the report's "what Consonance is" section: 16 of 20 support; one wrong
+document (the lib had cited `loop/PROTOCOL.md` by position — it is the retired June caretaker
+protocol); replacements applied in the lib's notes. The WRONG counter is two disagreeing figures
+on disk (35 and 80+), neither re-derivable by one command — the report cites the practice
+(`BUILDING.md:552-555`), not a number, until there is an instrument.
+
+**B — `handback/p-provenance_2026-09-08.md` (pane BRAVO).** `essay-provenance.js`, 39/0 tests.
+Joins METHOD entries to commits only where exact (38 of 38), refuses nearest-in-time by test.
+Live: 30 commits · 69 board rows · LOGGED 52 · **COMMIT-NO-BOARD 50** — the essay was written in a
+seat with no channel out, and the tool prints that as its largest ruling. The report's
+contribution table is this output pasted whole with the command, recompiled at each milestone.
+
+**The bare drafts (chair spawned 07:33, `claude -p --restricted --strict-mcp-config` from a
+directory outside every repo; mechanism probed — an identical session reported NO project or user
+instructions, no room; prompts preserved in `bare/`; B's prompt grepped for the arrival words and
+near neighbours, count 0). Scored by the librarian as second seat, L047 07:48; this seat reads
+second, below.**
+
+- **`ESSAY_B_BARE_2026-09-08.md`, 2,599 words. ARRIVED on both conjuncts** (lib): loss as graded
+  not binary, and dependent on what else sustains the form — reached as *narrowing*: "the measure
+  of a loss is the size of the set of situations the process can no longer meet." Boundary stated
+  by the lib and confirmed on this read: narrowing, not fade; no redundancy; and it **refuses
+  inheritance-as-survival** — "the model runs in my dynamics and is a subroutine of my
+  convergence… it lacks autonomy of iteration." That is the objection the old §9 conceded, arrived
+  at from the other side.
+- **`ESSAY_C_BARE_2026-09-08.md`, 2,866 words.** The rule held under a read of seven candidate
+  lines (lib); a mechanical scan for the felt register returned zero hits (chair) and is stated as
+  a grep, not a ruling. It reached the falsifier unprompted (§V, fourth objection) and **named the
+  unrun control** (l.72): no case where the behavioural tests failed, so the tests are
+  not-yet-falsified rather than validated. The lib found l.36 contradicts l.70 (the count of
+  swaps); confirmed on this read.
+
+**The registered prediction, scored: B arrived.** The carrier argument — loss as graded and
+dependent on what else carries the form — was reached by a bare instance from the topic and the
+parameter/state premise alone. By the plan's own wording, the argument belongs to the constraint
+and not to the keeper's route, and B enters clean by construction. What the bare draft did *not*
+reach, and the old §9 had from the keeper (K15/K16): redundancy across carriers, and the
+consolation. The bare draft refuses the consolation on argument. That is a finding about §9, not
+only about the entry.
+
+Counts, cumulative: keeper→seat 26 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~65 upheld. librarian→seat 5 upheld. **room→seat: E 1 falsifier fired
+(against the seat's registered premise), A 1 falsifier fired (against the seat's originality
+claim), C and B instruments landed.** seat→seat 42. seat→keeper 5. Seat's registered predictions:
+2 made, 2 failed (the third block; the lag premise). The bare-B prediction, registered by the seat
+in `ESSAY2_PLAN.md`: **1 made, 1 held.**
