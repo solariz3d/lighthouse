@@ -1663,3 +1663,5 @@ half-written data dir presents as `LOCAL HOUSE`, the exact chimera that verdict 
 **The lesson to carry: a plan is a claim about a system, and the system is one Read away.**
 
 ## 2026-09-09 — D055 P-DESKTOP-TABLE: a pane's address and a pane's home are two different facts, and only the address is checked — the runbook scored against its first real run, the four seats found in `%USERPROFILE%` at `main.rs:954` + `portable-pty cmdbuilder.rs:566-567`, and a live double-write into `~/.consonance` that is not the BOM fault: `handback/p-desktop-table_2026-09-09.md` (runbook corrected by append at §0.7)
+
+## 2026-09-09 — D056-E P-RUNBOOK-FIXTURE: a protection that is present but hard to reach is one bad morning from being a check that reads as clearance — step 0 (the LAPTOP fixture copy + `wc -c` falsifier) folded into the runbook by append at §0.8 ahead of L's first git command, close held on two independent refusals (`no_push`, `REFUSED_UNPLACED`), `panes.json` restoration dissolved under `one_house_two_machines_idea_2026-09-08.md:48`: `handback/p-runbook-fixture_2026-09-09.md`

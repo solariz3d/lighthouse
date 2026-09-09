@@ -608,3 +608,199 @@ below") — so the document handled it. Recording the actual value because every
 hardcodes `C:/Consonance/lighthouse` needs it, and because a second stale checkout **does** sit at
 `C:\Users\nname\lighthouse` (Stage-6 era). Two checkouts and two data roots is what made the 08:45
 misfire possible at all.
+
+## 0.8 · STEP 0 — THE FIXTURE COPY, AND WHAT D056 RULED ABOUT THE REST OF THE ORDER
+
+**Appended by B (P-RUNBOOK-FIXTURE, lap D056-E, 11:05). Nothing above is edited. §0.6 and §0.7
+stand. This section is numbered 0.8 for the same reason 0.5, 0.6 and 0.7 are numbered that way:
+in this document a `0.x` section is appended last and read FIRST.** That convention is now
+load-bearing rather than tidy — see the closing note.
+
+---
+
+### ⓪ THE FIRST TWO COMMANDS. On the **LAPTOP**, before its first `git` command.
+
+**Not the desktop. Everything else in this document is desktop-side and already spent; this is not.**
+It runs on L, when L wakes, ahead of `git pull` — ahead of any `git` at all.
+
+```powershell
+cp consonance/src-tauri/fixtures/screens/*.bin  <scratch>/
+wc -c consonance/src-tauri/fixtures/screens/*.bin
+```
+
+**The `wc -c` is not a formality. It is the librarian's registered falsifier:**
+
+> If L's working copies turn out byte-identical to the blobs, those recorded sizes were of captures
+> never committed, the diagnosis is wrong, and the red is something else.
+
+**Nobody re-captures anything, and nobody re-adds anything, until that command has run.** What you
+want to see on L is a number **larger** than the one beside it below. Byte-identical means the whole
+diagnosis is wrong and this lap's repair plan should be stopped, not adjusted.
+
+Full derivation: `loop/fixture_cr_recovery_2026-09-09.md` (`7399023`).
+
+### Why it is still first, when the pin is already landed
+
+`cc2403a` puts `*.bin binary` and `consonance/src-tauri/fixtures/screens/** binary` in
+`.gitattributes`, so L's checkout will read those fixtures as **MODIFIED** rather than clean. I
+argued to the chair that this closes the window. **It does not, and the ground is the librarian's,
+which I had not considered and accept:**
+
+**The protection is delivered BY the same pull that must apply it.** `.gitattributes` arrives in the
+very checkout whose behaviour it governs, and nobody has tested attribute application *within* the
+operation that updates the attributes file. That is an untested dependency standing in front of a
+file that **cannot be regenerated**.
+
+And the ordinary hazard, which needs no subtlety: `pull` is one keystroke from `checkout --`,
+`reset --hard`, `stash` and `clean`. All four are still fatal here, in a tired hand, at 8am. The
+copy costs one second and is correct under every outcome.
+
+### The two fixtures are not in the same situation — and only one of them needs L
+
+Re-measured on D at 11:03, commands beside the numbers:
+
+```
+$ wc -c consonance/src-tauri/fixtures/screens/*.bin
+  524204  composer_empty_reads_busy_2026-09-09.bin
+  236387  composer_slash_command_reads_empty_2026-09-09.bin
+$ tr -dc '\n' < <file> | wc -c        # LF count
+$ tr -dc '\r' < <file> | wc -c        # CR count — 0 for both
+```
+
+| fixture | on disk | LF | CR | recorded | short by | bare LF |
+|---|---|---|---|---|---|---|
+| `composer_empty_reads_busy` | 524,204 | 84 | 0 | **524,288** (2^19) | 84 | **0** |
+| `composer_slash_command_reads_empty` | 236,387 | 164 | 0 | **236,544** | 157 | **7** |
+
+**Fixture 1 needs no laptop.** Re-run here, and it is a prediction that could have failed:
+
+```
+$ perl -0777 -pe 's/\n/\r\n/g' composer_empty_reads_busy_2026-09-09.bin > restored.bin
+$ wc -c < restored.bin
+  524288          # the recorded size, to the byte, and 2^19
+```
+
+**Fixture 2 cannot be reconstructed from these bytes and L's working tree is the only source.** The
+same transform overshoots:
+
+```
+$ perl -0777 -pe 's/\n/\r\n/g' composer_slash_command_reads_empty_2026-09-09.bin | wc -c
+  236551          # 7 over 236,544 — seven newlines were bare LF, and nothing on disk says which
+```
+
+**That asymmetry is the whole reason step 0 has a machine named on it.** Losing fixture 1 costs a
+perl command. Losing fixture 2 costs the fixture.
+
+### Order of the repair, unchanged from `7399023`
+
+1. `cc2403a` reaches L. *(landed here; note it is not yet on origin — see the corrections below)*
+2. **Copy + `wc -c` on L.** The step above.
+3. Re-add both under the fixed attributes. Fixture 1 may be restored from D by the perl command;
+   fixture 2 must come from L's working copy.
+4. Re-run the suite on **both** machines. Fixture 2's test passing today means only that nothing
+   currently reads its missing bytes — **both** fixtures are short.
+
+---
+
+### ⑦ STEP 7 IS SUPERSEDED — the close is HELD, and the hold is a STATE
+
+**§8 tells you to run the close push. Do not, and you will not need to remember that, because the
+machine will refuse you.** The state repo's push address is disarmed:
+
+```
+$ git -C C:\Consonance\state remote get-url --push origin
+  no_push
+$ git -C C:\Consonance\state remote get-url origin
+  https://github.com/solariz3d/consonance-state.git      # fetch untouched
+```
+
+`close.js:244` names this exact condition in its own output — *"Offline, or the push address is
+disarmed"* — so this is the mechanism A designed for, not an improvisation around it. The ruling and
+the lift command are in `loop/close_hold_and_roster_2026-09-09.md` (`badf740`). **Do not lift it to
+get past this section.** It is holding for the roster reason, and the roster question is D056's.
+
+**There is a SECOND refusal in front of the first, and nobody knew about it.** Run on D at 11:04:
+
+```
+$ node consonance/tools/close.js --check
+  NOT CLOSED — the state set was not prepared: REFUSED_UNPLACED
+      frames.jsonl · grep.exe.stackdump · lyrics-cache.json · RECORD
+  Nothing was published.
+```
+
+Four files in `data/` the manifest classifies **not at all** — one of them a crash dump. So the
+close was already refusing before it reached any push, for a reason unrelated to the hold.
+Classification is **A's lane**, noted here and not touched.
+
+**What this does to §9.** §9's last row says *"if you did step 5, do step 7 before you work on the
+laptop again."* **Step 7 cannot be done.** So the row's escape hatch is closed and its warning is
+now the whole of the guidance: **the round trip is open by ruling, and it stays open until D056
+decides the roster.** §9's stated cost — both machines appending from the same ancestor, next pull
+not a fast-forward, *"this one wants a person, not a command"* — is the live risk on this machine,
+not a hypothetical. It is the reason step 0 above is worth doing carefully rather than quickly.
+
+### `data/panes.json` RESTORATION IS NOT OWED — it dissolved, do not carry it
+
+My §0.7 named the arrived roster as the defect and it is. It does **not** follow that the displaced
+copy should be put back. It should not, and this is a ruling, not a preference:
+
+`one_house_two_machines_idea_2026-09-08.md:48` (requirement 1) — *"On first sync the desktop's
+current seats are retired — moved aside with their letters and tails kept — and the laptop's seats
+become the seats on both machines. **A retired seat stays revivable.**"*
+
+The attic roster at `data/attic/pre-sync-2026-09-09T14-59-05-515Z/panes.json` (722 bytes, 08:59) is
+**the retirement working as designed**, and `state-manifest.json:92` classes `attic/pre-sync-*` as
+STAYS precisely so that a sync which arrived wrong is reversible on the machine it arrived at.
+**That is a preserved control, not damage to undo.** Restoring it would also mean changing a live
+house — the app is holding those four panes open — while the keeper is away, which is his call.
+
+**Do not carry `panes.json` restoration as an outstanding item.** What IS outstanding is the arrival
+transform and the spawn-boundary refusal, and both are D056's, not this runbook's.
+
+### Where §11 item 3 now stands
+
+It is **`D055-B-02`** on the room ledger — *a check that passes and misses*. A is replacing the
+sentence this lap. As of my read at 11:02 the original still stands verbatim at
+`consonance/state-manifest.json:21`, so until A lands, **the manifest still tells its reader to check
+the thing that cannot fail.** §0.7 is the correction; this is only the pointer to who is fixing it.
+
+---
+
+### Two corrections to the packet that commissioned this section
+
+Both minor, both with the command, recorded because this document's rule is that a number gets
+checked rather than repeated.
+
+1. **The repo is not level with origin.** It is **three commits ahead**, unpushed:
+
+   ```
+   $ git status -sb | head -1
+     ## main...origin/main [ahead 3]
+   $ git log --oneline origin/main..HEAD
+     07501cc CHAIR (desktop): ruling amended — the durable guard is at the SPAWN boundary…
+     75532c8 LIBRARIAN (desktop): the chair's correction stands - D056-M-01…
+     c03a732 CHAIR (desktop): the (C) ruling stands — the reversal's load-bearing claim is false
+   ```
+
+   `b1db677` is behind HEAD (`git merge-base --is-ancestor b1db677 HEAD` → true). This matters for
+   step 0's item 1: **`cc2403a` is on origin, but this lap's three rulings are not**, so a pull on L
+   brings the pin without the reasoning that governs it.
+
+2. **`:48` is `one_house_two_machines_idea_2026-09-08.md:48`, not `state-manifest.json:48`.** The
+   manifest's line 48 is the `return_state` rule and says nothing about rosters. The retirement rule
+   is quoted above from the right file; the manifest's contribution is `:92`. Cited both ways here so
+   the next reader does not open the wrong file and conclude the ruling was invented.
+
+### The one thing I am uneasy about, said plainly
+
+**A step that must run FIRST is appended LAST**, at line ~615 of a 615-line document, and it is
+protecting a file that cannot be regenerated. The `0.x` convention is the only thing carrying it —
+three prior sections established that a `0.x` heading means read-before-the-numbered-steps, and this
+one relies on the reader having learned that. I did not rewrite the top of the document to point at
+this section, because this runbook is corrected by append and that trace is worth more than my
+convenience.
+
+**But the trace rule protects the record, not the fixture.** If anyone with the pen disagrees, the
+single highest-value edit to this file is one line under the title pointing at §0.8. I am naming it
+rather than making it. If the Sunday leg ever becomes its own document, step 0 belongs at its top,
+not here.
