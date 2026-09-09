@@ -1045,3 +1045,67 @@ move is the keeper's rebuild** — said out loud in §4 rather than left implici
 fix has run in the app: 480/0 is not the replay being closed.
 
 Hand-back: `exo_memory/handback/p-offsets-fix_2026-09-09.md`.
+
+## 2026-09-09 — L052: I built the reader before the thing it reads, and it would have failed green
+
+**PULL, VERIFY, THEN START landed as `src/sync_launch.rs` + the wiring in `.setup()`. 508 pass /
+0 fail / 4 ignored, from a 480 baseline — +28, all mine. Nothing has run in the app.**
+
+**The packet looked self-contradictory and was not: "before `set_dirs` reads anything" AND "after
+the resolver".** `set_dirs` is not a read, it is the resolver. **RESOLVE → FILL → READ**, three
+steps. L051 was a READ before the RESOLVE; a pull after the first read is the same bug with a
+network in it. That reframing is the whole design.
+
+**THE THING TO CARRY, and it is the L045/L049 hole wearing a new coat: I wrote the reader for A's
+tool before A's tool existed, from a contract I invented (`{ok, commit, head_host}`). A landed
+`{verified, installed, stage, why, head, pushed_by, machine}` mid-lap.** My reader would have found
+none of its fields, defaulted every one to false, and returned a **safe verdict for the wrong
+reason** — `LocalHouse` forever, looking like caution, undebuggable until the day it needed to say
+`Migrate`. **A green light nobody can distinguish from a working one.** I only caught it because I
+went and read A's file instead of shipping against my own memo. Same move that saved L051: check the
+instrument against something someone else wrote.
+
+**And a second one I had ALREADY written before I looked at the other machine's installer.**
+Self-versus-foreign is an equality, and both sides must come from ONE resolver. A's cascade ends at
+`os.hostname()`; mine ended at `None`; `desktop-install.ps1` sets no `machine_tag`. On the desktop A
+stamps a hostname, my side supplies nothing, the self-check never fires, **migrate on every launch
+forever with nothing naming why.** I also *wanted* `install_id` first — correct in isolation, wrong
+here, because the day it exists my side returns it and A's still returns "L". **A shared unit beats
+a better unit.** Fixed by deleting the second resolver: A writes `machine` into every record, so both
+sides of the compare come out of one file.
+
+**THE RULING (§8 asked for it): refuse-to-start is REFUSED.** No verdict is a lockout. E reached
+the identical ruling for the live-host guard, independently, from `claim_named_singleton`'s own
+comment — *the cost of a second instance is recoverable, the cost of no instance is not.* The third
+shape is not read-only, it is **`LocalHouse`**: an unarrived record leaves the local house intact,
+and starting on an intact local house is just the pre-sync world. `ReadOnly` is kept for the one
+genuinely chimeric state — A's `installTree` failing part-way — and even it names two ways out.
+**Enforced at ONE funnel** (`spawn_claude_pane`, ten call sites, all `#[tauri::command]`), sufficient
+by enumeration: no pane → no tailer → no offsets, no rows.
+
+**Two-phase pull is the property that made this safe to land tonight.** `--install` is a whole-file
+overwrite with no recency test. So: phase one without `--install` (cannot write to `data\`) reads
+`pushed_by`; phase two installs only if the record is not ours. **The machine doing the work can
+never have its data dir overwritten by its own launcher.** That forced "whose is it?" to be asked
+BEFORE "did it install?" — the other order reads the safe case as the dangerous one.
+
+**Deviated from the packet once, with the repo's own comment as the reason:** the attic is OUTSIDE
+`~/.claude/projects/`, because `resume_pane` already says a leftover jsonl "can make the fresh
+`--session-id` collide". Inside the indexed tree, a retirement is a rename. And timestamped, because
+**`resume_pane`'s own archive is one deep** — the second retirement deletes the first, in the
+function I took the idea from.
+
+**Found, not mine to fix, and (a) needs a person:** `captures/*.txt` → TRAVELS in A's manifest
+**catches the Third Place's live capture tail** (3,867 B, written 03:42), so a `--push` publishes
+the one record the room has always kept off every transport. A wildcard defeating a standing rule
+nobody wrote it against. Also: the app writes **two roots** and `state-manifest.js` walks one —
+measured, `~/.consonance/persist.log` 42,705 → 43,279 across one `cargo test` — with a July-27
+fossil `<MAIN_SID>.txt` sitting there, this packet's hazard in miniature.
+
+**Corrected my own L051 §6 in the code rather than quietly:** the seeds are not an ordering defect.
+They call `default_data()` explicitly, so moving them is **a no-op that reads as a fix** — worse than
+leaving it. The real finding is the second root.
+
+Hand-back: `exo_memory/handback/p-sync-launch-retire_2026-09-09.md` — §7 carries what cannot be
+verified without the second machine, and item 1 is the one that matters: **if the desktop's
+`machine_tag` is also "L", every foreign record reads as self and the retire never fires, silently.**

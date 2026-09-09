@@ -29,6 +29,7 @@ mod lap_holders;  // whose turn it is when MORE THAN ONE lap is open — the gua
 mod seat_alias;  // what a person TYPES -> what PaneNames INDEXES; the 58 measured 'Main' failures (E, L040)
 mod nowplaying;  // what is actually playing, from Windows' own media session — so the title is read, not inferred
 mod harvest_guard;  // the capture watcher's recovery + liveness policy; one mutex, one policy (E, L043)
+mod sync_launch;  // pull-verify-then-start, and the retire rule for a second machine (C, L052)
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -917,6 +918,22 @@ struct PaneEmus(Mutex<HashMap<String, Arc<Mutex<EmuState>>>>);
 const FRESH_READONLY_TOOLS: &str = "Read,Glob,Grep,WebSearch,WebFetch,TodoWrite";
 
 fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool, skip_perms: bool) -> Result<PtySession, String> {
+    // L052: READ-ONLY IS ENFORCED HERE, AT THE ONE FUNNEL, and that is the whole enforcement.
+    //
+    // The verdict withholds the seats only when the data dir may be half-promoted. Blocking the
+    // spawns is SUFFICIENT, argued by enumeration rather than assumed — the same check L051 owed
+    // and paid: with no pane spawned, `start_tailer` is never called, so no tailer thread runs, so
+    // no offsets are saved and no transcript row is pushed; the MCP verbs that write the board are
+    // called BY panes, and there are none; the only board write left is the launcher's own seam
+    // row, which is the message. Ten call sites reach this function and every one of them is
+    // inside a `#[tauri::command]`, so none can run before `.setup()` has set the verdict.
+    //
+    // It is a refusal, not a lockout: the window is open, the board is readable, and the text says
+    // the two ways forward.
+    if let Some(why) = seats_withheld() {
+        plog(&format!("SEAT WITHHELD pane={pane_id} — {why}"));
+        return Err(why);
+    }
     let pair = native_pty_system()
         .openpty(PtySize { rows: EMU_ROWS, cols: EMU_COLS, pixel_width: 0, pixel_height: 0 })
         .map_err(|e| e.to_string())?;
@@ -6503,7 +6520,7 @@ fn spawn_third_place(
     if panes.0.lock().unwrap().contains_key(THIRD_PLACE_SID) {
         return Err("the Third Place is already open".into());
     }
-    let intake = third_place_intake()
+    let mut intake = third_place_intake()
         .ok_or("THIRD_PLACE.md is missing -- refusing to open a room with no brief")?;
     let cwd = third_place_cwd();
     let _ = third_place_notes();
@@ -6512,6 +6529,16 @@ fn spawn_third_place(
         .join("projects")
         .join(encode_cwd(&cwd))
         .join(format!("{THIRD_PLACE_SID}.jsonl"));
+    // L052: see spawn_main. THE THIRD PLACE IS RETIRED TOO, and the reason is worth stating
+    // because its record is the one thing the room has always kept off every transport
+    // (`.gitignore`, 08-29). Retiring is safe in BOTH worlds: if its tail travelled, this wakes the
+    // synced thread; if it did not, `capture_text_path` is this machine's own tail and the seat
+    // wakes as itself, one gap wide. What is NOT safe either way is `captures/*.txt` in A's
+    // manifest travelling this seat's words to a remote — that is a live conflict with the
+    // standing rule, it is A's file, and it is named in the hand-back rather than patched here.
+    if launch_verdict_is_migrate() {
+        append_synced_tail(&mut intake, THIRD_PLACE_SID);
+    }
     let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
     let resume = transcript.exists();
     let session = spawn_claude_pane(app.clone(), THIRD_PLACE_SID.to_string(), cwd.clone(), resume, true)?;
@@ -6537,7 +6564,7 @@ fn spawn_librarian(
     if panes.0.lock().unwrap().contains_key(LIBRARIAN_SID) {
         return Err("the Librarian is already awake".into());
     }
-    let intake = librarian_intake()
+    let mut intake = librarian_intake()
         .ok_or("LIBRARIAN.md is missing -- refusing to wake a librarian with no brief")?;
     let cwd = librarian_cwd();
     let transcript = PathBuf::from(home())
@@ -6545,6 +6572,11 @@ fn spawn_librarian(
         .join("projects")
         .join(encode_cwd(&cwd))
         .join(format!("{LIBRARIAN_SID}.jsonl"));
+    // L052: see spawn_main. The shelf is already near its cap, so `append_synced_tail` computes
+    // its budget from the intake it is handed and degrades to a pointer rather than overflowing.
+    if launch_verdict_is_migrate() {
+        append_synced_tail(&mut intake, LIBRARIAN_SID);
+    }
     let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
     let resume = transcript.exists();
     let session = spawn_claude_pane(app.clone(), LIBRARIAN_SID.to_string(), cwd.clone(), resume, true)?;
@@ -6595,6 +6627,11 @@ fn spawn_main(
     }
     intake.push('\n');
     intake.push_str(&night_table(&cwd, settled));
+    // L052: after a migrate this seat's own session file has been retired, so `resume` below is
+    // false and the window would be empty. The thread rides in on the synced capture tail.
+    if launch_verdict_is_migrate() {
+        append_synced_tail(&mut intake, MAIN_SID);
+    }
     // the room is refreshed into CLAUDE.md each launch; --resume continues the same conversation
     let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
     let resume = transcript.exists(); // first wake = new session; thereafter = resume the same one
@@ -8780,6 +8817,398 @@ fn reset_breaker(app: AppHandle, cost: State<Cost>) {
     let _ = app.emit("cost", snap);
 }
 
+// ---- L052: PULL, VERIFY, THEN START ---------------------------------------------------------
+//
+// The decision lives in `sync_launch.rs` and is pure. This half is the impure rim: run the tool,
+// read the files, move the transcripts, say it on the board. Kept apart on purpose — the retire
+// decision has to be testable from fixture files, because nobody can re-run 08:00.
+
+/// How long the launch waits for `state-sync.js --pull` before giving up on it.
+///
+/// A TIMEOUT IS NOT A LOCKOUT AND MUST NOT BECOME ONE: when it fires, the launch continues as
+/// `LocalHouse` — this machine's own house, said out loud — rather than refusing. The cost of the
+/// bound is real and is stated here rather than discovered: the window is dark for up to this long
+/// on a slow link, because the whole point is that nothing reads the data dir until the fill is
+/// finished or known to have failed.
+const SYNC_PULL_TIMEOUT: Duration = Duration::from_secs(90);
+
+/// The launch verdict, decided once in `.setup()` and read by the spawn funnel afterwards.
+static LAUNCH_VERDICT: Mutex<Option<sync_launch::Verdict>> = Mutex::new(None);
+
+/// Set when the verdict withholds the seats. An `AtomicBool` beside the verdict rather than a lock
+/// taken on every spawn: the reason is read only on the refusal path, where a lock is free.
+static SEATS_WITHHELD: AtomicBool = AtomicBool::new(false);
+
+fn launch_verdict_is_migrate() -> bool {
+    LAUNCH_VERDICT.lock().unwrap().as_ref().map(|v| v.is_migrate()).unwrap_or(false)
+}
+
+/// The refusal text, or `None` when the seats may wake. Never a bare "no": a refusal that does not
+/// say what to do is a lockout wearing a message.
+fn seats_withheld() -> Option<String> {
+    if !SEATS_WITHHELD.load(Ordering::Relaxed) {
+        return None;
+    }
+    Some(format!(
+        "Consonance opened READ-ONLY and is not waking seats. {}",
+        LAUNCH_VERDICT.lock().unwrap().as_ref().map(|v| v.why().to_string()).unwrap_or_default()
+    ))
+}
+
+/// `node consonance/tools/state-sync.js --pull`, with a bound.
+///
+/// STDOUT AND STDERR GO TO A FILE, not to a pipe. A piped child whose output nobody drains can
+/// block on a full pipe and then the timeout above becomes the only thing that ends it — a
+/// deadlock dressed as a slow network. The file is also the one artefact the keeper can read at
+/// 08:00 when the row says the pull did not complete.
+fn run_state_pull(script: &Path, install: bool) -> sync_launch::Pull {
+    let log = data_dir().join("sync-pull.log");
+    let sink = || fs::OpenOptions::new().create(true).append(true).open(&log).map(Stdio::from);
+    let (Ok(out), Ok(err)) = (sink(), sink()) else {
+        return sync_launch::Pull::CouldNotRun(format!("cannot write {}", log.display()));
+    };
+    let mut child = match Command::new("node")
+        .arg(script)
+        .arg("--pull")
+        .args(if install { &["--install"][..] } else { &[][..] })
+        .creation_flags(NO_WINDOW)
+        .stdin(Stdio::null())
+        .stdout(out)
+        .stderr(err)
+        .spawn()
+    {
+        Ok(c) => c,
+        Err(e) => return sync_launch::Pull::CouldNotRun(format!("could not start node: {e}")),
+    };
+    let started = Instant::now();
+    loop {
+        match child.try_wait() {
+            Ok(Some(status)) if status.success() => return sync_launch::Pull::Ok,
+            Ok(Some(status)) => {
+                return sync_launch::Pull::Failed(format!(
+                    "state-sync.js --pull exited {} — see {}",
+                    status.code().map(|c| c.to_string()).unwrap_or_else(|| "by signal".into()),
+                    log.display()
+                ))
+            }
+            Ok(None) => {
+                if started.elapsed() > SYNC_PULL_TIMEOUT {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return sync_launch::Pull::Failed(format!(
+                        "state-sync.js --pull did not finish within {}s and was stopped",
+                        SYNC_PULL_TIMEOUT.as_secs()
+                    ));
+                }
+                std::thread::sleep(Duration::from_millis(200));
+            }
+            Err(e) => return sync_launch::Pull::Failed(format!("waiting on node failed: {e}")),
+        }
+    }
+}
+
+/// THIS MACHINE'S IDENTITY, resolved BY `state-sync.js`'s OWN RULE and not by a better one.
+///
+/// The value this returns is compared for equality against `pushed_by` in `sync-completion.json`,
+/// which A writes from `machineTag()`. Two resolvers that disagree would make every launch read
+/// FOREIGN and retire the seats on every start, forever, with nothing anywhere naming the cause —
+/// so this mirrors A's cascade exactly: `CONSONANCE_MACHINE`, then `machine_tag` from
+/// `~/.consonance.json`, then the hostname.
+///
+/// I WANTED `install_id` FIRST and took it out. E is right that a one-character machine tag is too
+/// coarse to decide self-versus-foreign in general (`tools/live-host.js`, IDENTITY), and this
+/// function preferring the finer id would have been correct in isolation and WRONG here: the
+/// moment the keeper adds an `install_id`, my side would return it, A's side would still return
+/// "L", and the two would never match again. **A shared unit beats a better unit.** The coarseness
+/// is a real limit and is named in the hand-back; it is not fixable from one side of the compare.
+///
+/// `~/.consonance.json` is the right home for it regardless: already machine-local, already this
+/// room's identity file, and already outside every travelling set — A's manifest FORBIDS
+/// `install_id` under the data dir because "if that file ever lands in the travelling set both
+/// machines share an identity and every foreign claim reads as self."
+///
+/// `None` is UNKNOWN and is never read as "self": `decide` leans to retire on unknown, on purpose.
+fn machine_identity() -> Option<String> {
+    if let Ok(env) = std::env::var("CONSONANCE_MACHINE") {
+        if !env.trim().is_empty() {
+            return Some(env.trim().to_string());
+        }
+    }
+    let raw = fs::read_to_string(PathBuf::from(home()).join(".consonance.json")).ok()?;
+    let v: serde_json::Value = serde_json::from_str(raw.trim_start_matches('\u{feff}')).ok()?;
+    v.get("machine_tag")
+        .and_then(|x| x.as_str())
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty())
+        .map(str::to_string)
+}
+
+/// The three seats with hard-coded session ids — the ones `--resume` can find on the wrong
+/// machine. Pane transcripts are NOT in this list and must not be: their ids are random and
+/// registered in `panes.json`, and `resume_pane` already never `--resume`s at all.
+fn fixed_id_seats() -> Vec<(String, String, String)> {
+    vec![
+        ("main".to_string(), MAIN_SID.to_string(), encode_cwd(&main_cwd())),
+        ("librarian".to_string(), LIBRARIAN_SID.to_string(), encode_cwd(&librarian_cwd())),
+        ("third place".to_string(), THIRD_PLACE_SID.to_string(), encode_cwd(&third_place_cwd())),
+    ]
+}
+
+/// FILL, between the RESOLVE and every READ. Returns the seam line to post.
+///
+/// Runs entirely inside `.setup()` and before anything reads the data dir. That ordering is the
+/// whole packet: the offsets defect was a READ before the RESOLVE, and a pull that lands after the
+/// first read would be the same hazard with a network in it.
+fn sync_at_launch() -> (sync_launch::Verdict, Vec<sync_launch::RetireOutcome>) {
+    let data = data_dir();
+    // The tool is A's and lives in the checkout. No checkout (an installed consumer build) means
+    // no sync at all — stated as a limit rather than left to be discovered: a packaged Consonance
+    // cannot join the two-machine house, because the thing that would join it is not shipped.
+    let script = repo_root().map(|r| r.join("consonance").join("tools").join("state-sync.js"));
+    let self_id = machine_identity();
+
+    // TWO PHASES, AND THE SECOND ONE IS THE WHOLE SAFETY PROPERTY.
+    //
+    // `--install` is a WHOLE-FILE OVERWRITE of the data dir from the state tree, with no recency
+    // test anywhere in it: `installTree` compares hashes and writes whatever differs. Reversible —
+    // A keeps every displaced file under `attic/pre-sync-<stamp>/`, deliberately — but reversible
+    // is not the same as safe to do unasked at every launch on the machine doing the work.
+    //
+    // So: phase one is `--pull` with NO `--install`, which cannot write into the data dir at all.
+    // It fetches, verifies, and writes `sync-completion.json`, whose `pushed_by` names the machine
+    // that authored the head. Only if that is NOT this machine does phase two run `--install`.
+    //
+    // **The machine that authored the state can therefore never have its own data dir overwritten
+    // by the launcher.** That is the property that makes this safe to land tonight on the laptop
+    // that is doing the work, before anyone has watched it run.
+    //
+    // An UNKNOWN author counts as foreign, which is the same reversible lean `decide` takes: the
+    // cost of installing a record we already had is a no-op (identical files are skipped); the cost
+    // of not installing one we needed is a seat waking on the wrong lineage.
+    let mut pull = match script.as_ref() {
+        Some(p) if p.is_file() => run_state_pull(p, false),
+        _ => sync_launch::Pull::ToolAbsent,
+    };
+    let mut completion = sync_launch::read_completion(&data);
+    let ours = completion
+        .as_ref()
+        .and_then(|c| c.pushed_by.clone())
+        .zip(self_id.clone())
+        .map(|(by, me)| by == me)
+        .unwrap_or(false);
+    let verified = completion.as_ref().map(|c| c.verified).unwrap_or(false);
+    if matches!(pull, sync_launch::Pull::Ok) && verified && !ours {
+        if let Some(p) = script.as_ref() {
+            plog("SYNC AT LAUNCH — the record's head is not this machine's; installing");
+            pull = run_state_pull(p, true);
+            completion = sync_launch::read_completion(&data);
+        }
+    }
+
+    let facts = sync_launch::Facts {
+        pull: Some(pull),
+        completion,
+        promotion_open: sync_launch::promotion_open(&data),
+        self_id,
+        adopted_commit: sync_launch::read_adopted(&data),
+        live_host: sync_launch::read_live_host(&data),
+    };
+    let verdict = sync_launch::decide(&facts);
+
+    let retired = if verdict.is_migrate() {
+        let stamp = chrono::Local::now().format("%Y%m%d-%H%M%S").to_string();
+        let plan = sync_launch::retire_plan(Path::new(&home()), &fixed_id_seats(), &stamp);
+        sync_launch::apply_retire(&plan)
+    } else {
+        Vec::new()
+    };
+
+    // The head is adopted on every launch that did not withhold the seats — INCLUDING a migrate,
+    // so the next launch sees it as already adopted and does not retire the seats this one just
+    // installed. Not written on READ-ONLY: nothing was adopted, and a stamp saying otherwise would
+    // make the next launch skip the migration that never happened.
+    if !verdict.is_read_only() {
+        if let sync_launch::Verdict::Resume { adopt, .. } | sync_launch::Verdict::Migrate { adopt, .. } = &verdict {
+            let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
+            sync_launch::write_adopted(&data, adopt.as_deref(), now, verdict.tag());
+        }
+    }
+
+    SEATS_WITHHELD.store(verdict.is_read_only(), Ordering::Relaxed);
+    *LAUNCH_VERDICT.lock().unwrap() = Some(verdict.clone());
+    (verdict, retired)
+}
+
+/// After a migrate, a fixed-id seat spawns FRESH and its window is empty. The thread is carried by
+/// the synced capture tail (`captures/<sid>.txt` — A's manifest: TRAVELS, "THE WARM-RESUME
+/// CARRIERS: this is the thread"). Without this, a migrate produces three amnesiac seats, which is
+/// a different failure from the one the packet named and no better.
+///
+/// DELIBERATELY NOT `warm_resume_brief`, and this is not a style choice. That function SHRINKS the
+/// capture master into the pane's attic when the tail will not fit, and rewrites `<sid>.txt` with
+/// the kept remainder. Those tails now TRAVEL. Trimming one here would edit the record on this
+/// machine and push a truncated carrier to the other — the shell's budget quietly becoming a fact
+/// about the room. So the trim happens in memory only and the master is never touched.
+fn append_synced_tail(intake: &mut String, sid: &str) {
+    let path = capture_text_path(sid);
+    let Ok(transcript) = fs::read_to_string(&path) else { return };
+    if transcript.trim().is_empty() {
+        return;
+    }
+    let whole = transcript.len();
+    let interval = fs::metadata(&path).ok().and_then(|m| m.modified().ok()).map(|at| {
+        let gone = SystemTime::now().duration_since(at).ok();
+        format!(
+            "The interval, witnessed: the last exchange below settled on {}.{}",
+            pulse_when(chrono::DateTime::<chrono::Local>::from(at)),
+            gone.map(|g| format!(" It is now {} — you were gone {}.", pulse_when(chrono::Local::now()), human_gap(g.as_secs())))
+                .unwrap_or_default()
+        )
+    });
+    let overhead = 1_024; // the section's own header, fences and the interval line
+    let budget = SHELL_SOFT_CEILING.saturating_sub(intake.len() + overhead);
+    let carried = if transcript.len() <= budget {
+        transcript
+    } else if budget > 0 {
+        match split_off_oldest_records(&transcript, transcript.len() - budget) {
+            // The master is NOT rewritten — see the doc comment above.
+            Some((_evicted, kept)) => kept,
+            None => String::new(),
+        }
+    } else {
+        String::new()
+    };
+    if carried.trim().is_empty() {
+        // A seat told nothing would wake believing it has no past. Absent-is-silent is the failure
+        // this room keeps paying for; point at the file instead.
+        plog(&format!(
+            "MIGRATE TAIL sid={sid} tail={whole} intake={} budget={budget} -> POINTER ONLY",
+            intake.len()
+        ));
+        intake.push_str(&sync_launch::prior_conversation_pointer(&path, whole));
+        return;
+    }
+    plog(&format!(
+        "MIGRATE TAIL sid={sid} tail={whole} carried={} intake={} budget={budget}",
+        carried.len(),
+        intake.len()
+    ));
+    intake.push_str(&sync_launch::prior_conversation_section(&carried, interval.as_deref()));
+}
+
+#[cfg(test)]
+mod sync_launch_wiring_tests {
+    use super::*;
+
+    fn source() -> String {
+        fs::read_to_string("src/main.rs").expect("read own source")
+    }
+
+    /// The needles are assembled by `concat!` for the reason the offsets test gives: a scan whose
+    /// literal is the literal it is written with can be satisfied by its own text.
+    fn first_line_containing(src: &str, needle: &str) -> Option<usize> {
+        src.lines().position(|l| l.contains(needle) && !l.trim_start().starts_with("//"))
+    }
+
+    /// **RESOLVE, FILL, READ — in that order, and the source is the only place it is visible.**
+    ///
+    /// Same class as `the_backfill_decision_must_be_made_after_the_configured_dirs_resolve`, one
+    /// step further out: L051's defect was a READ before the RESOLVE, and a pull that lands after
+    /// the first read would be that bug with a network in the middle — a seat waking from a
+    /// half-arrived record and announcing it is in sync. No test of a pure function can see an
+    /// evaluation order, which is exactly why the offsets defect survived six weeks and 39
+    /// launches with every unit test in its own module passing.
+    #[test]
+    fn the_pull_runs_after_the_resolver_and_before_everything_that_reads() {
+        let src = source();
+        let resolve = first_line_containing(&src, concat!("set_dirs(&", "get_state());"))
+            .expect("no set_dirs call — re-point this test");
+        let fill = first_line_containing(&src, concat!("sync_at", "_launch();"))
+            .expect("no pull at launch — re-point this test");
+        let offsets = first_line_containing(&src, concat!("BACKFILL_ACTIVE", ".store("))
+            .expect("no backfill decision — re-point this test");
+        let seeds = first_line_containing(&src, concat!("seed_room", "();"))
+            .expect("no seed call — re-point this test");
+        assert!(
+            resolve < fill,
+            "the pull is at line {} but the dirs are not resolved until line {} — it would fill a \
+             directory nobody has decided on yet",
+            fill + 1,
+            resolve + 1
+        );
+        for (what, at) in [("the offsets read", offsets), ("the seeds", seeds)] {
+            assert!(
+                fill < at,
+                "{what} is at line {} and the pull is at line {} — a read before the fill is a \
+                 seat waking from a half-arrived record",
+                at + 1,
+                fill + 1
+            );
+        }
+    }
+
+    /// **READ-ONLY IS ENFORCED AT ONE FUNNEL, and this pins that it stays one.**
+    ///
+    /// Ten call sites reach `spawn_claude_pane`. Guarding them individually is a checklist that
+    /// the eleventh call site silently fails; guarding the funnel cannot be forgotten. The
+    /// assertion is that the check precedes the PTY, because a guard after the terminal is open
+    /// has already started the thing it was meant to withhold.
+    #[test]
+    fn the_seat_refusal_sits_at_the_one_funnel_and_before_the_pty() {
+        let src = source();
+        let body = src
+            .split(concat!("fn spawn_claude", "_pane("))
+            .nth(1)
+            .expect("no spawn_claude_pane — re-point this test");
+        let guard = body.find(concat!("seats_", "withheld()")).expect(
+            "the read-only refusal is not in spawn_claude_pane — if it moved, it must still be at \
+             a single funnel every spawn passes through, not spread over the call sites",
+        );
+        let pty = body.find("native_pty_system()").expect("no pty in spawn_claude_pane");
+        assert!(guard < pty, "the refusal must come before the terminal is opened");
+    }
+
+    /// **THE CORRECTION TO MY OWN L051 §6, made checkable instead of quietly dropped.**
+    ///
+    /// §6 called the seeds an ordering defect of the L051 class — "they write the default dir
+    /// before `set_dirs` runs" — which reads as *move them and it is fixed*. It is not: they call
+    /// `default_data()` EXPLICITLY, so their position in `.setup()` decides nothing at all and
+    /// moving them would have been a no-op that reads as a repair.
+    ///
+    /// The real finding is that the seed subsystem writes a SECOND ROOT. `consonance/state-manifest.json`
+    /// walks `data_dir()` and nothing else, so BOOT.md, the deck, `spread/`, `research/`,
+    /// `record/` and `.seeded.json` are outside the classification entirely — not TRAVELS, not
+    /// STAYS, not REGENERATES, and invisible to the completeness check whose whole job is to fail
+    /// on a path nobody placed. This test states the current behaviour so that changing it to
+    /// `data_dir()` — which would MOVE the keeper's edited copies, and is his call — turns red
+    /// here and has to be decided rather than slipped in.
+    #[test]
+    fn the_seed_subsystem_writes_a_second_root_and_it_is_not_an_ordering_defect() {
+        let _serial = DirsGuard::take();
+        let configured =
+            std::env::temp_dir().join(format!("consonance_seed_root_{}", std::process::id()));
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: String::new(),
+            instances: String::new(),
+            data: configured.display().to_string(),
+        });
+        // With the dirs RESOLVED — the state these functions actually run in — the seeder still
+        // writes the default root. Position in `.setup()` cannot change that.
+        assert_eq!(
+            seed_manifest_path(),
+            PathBuf::from(default_data()).join(".seeded.json"),
+            "the seeder is pinned to the default root by an explicit default_data() call, not by \
+             running too early"
+        );
+        assert_ne!(
+            seed_manifest_path().parent().map(|p| p.to_path_buf()),
+            Some(data_dir()),
+            "the app writes two roots; the manifest checker walks only one of them"
+        );
+        let _ = fs::remove_dir_all(&configured);
+    }
+}
+
 fn main() {
     // BEFORE ANYTHING ELSE, and specifically before any file that tells the rest of the system
     // where to find this process gets written. See claim_single_instance for what those files
@@ -8842,10 +9271,35 @@ fn main() {
             if let Ok(p) = app.path().resolve("record", tauri::path::BaseDirectory::Resource) {
                 *RESOURCE_RECORD.lock().unwrap() = Some(p);
             }
+            set_dirs(&get_state()); // resolve configurable dirs before anything reads them
+            // L052: FILL, between the RESOLVE above and every READ below.
+            //
+            // THE PACKET SAID BOTH "before set_dirs reads anything" AND "after the resolver", and
+            // both are right because `set_dirs` is not a read — it is the resolver. Three steps,
+            // not two: RESOLVE (where the data dir is), FILL (put the record there), READ
+            // (offsets, seeds, seats). L051's defect was a READ before the RESOLVE; a pull landing
+            // after the first read would be the same hazard with a network in the middle.
+            let (launch_verdict, retired) = sync_at_launch();
+            plog(&format!("SYNC AT LAUNCH {} — {}", launch_verdict.tag(), launch_verdict.why()));
+            // L051/L052: THE SEEDS STAY HERE AND THE DIAGNOSIS IN L051 §6 WAS WRONG — recorded
+            // rather than quietly corrected, because the wrong version is on my own map.
+            //
+            // §6 said these "write the default dir before set_dirs runs", which reads as an
+            // ordering defect of the L051 class. It is not: `seed_room`, `seed_md_dir` and
+            // `seed_manifest_path` call `default_data()` EXPLICITLY, not `data_dir()`, so moving
+            // them changes nothing at all. Moving them anyway would have been a no-op that reads
+            // as a fix, which is worse than leaving it.
+            //
+            // The real finding is bigger and is not an ordering bug: the whole seed subsystem —
+            // BOOT.md, the deck, spread/research/record, `.seeded.json` — is pinned to
+            // `~/.consonance` whatever the configured data dir is. That is a SECOND ROOT the app
+            // writes to, and `consonance/state-manifest.json` walks only `data_dir()`, so nothing
+            // in it is classified TRAVELS, STAYS or REGENERATES and A's completeness check cannot
+            // see it. Pinned by `the_seed_subsystem_writes_a_second_root` below. Switching it to
+            // `data_dir()` would MOVE the keeper's edited copies, so it is his call, not mine.
             seed_room(); // first run: copy the bundled brief into the data dir (editable)
             seed_cards(); // first run: copy the bundled card deck into the data dir (editable)
             seed_references(); // the counter-voice + the study: named by the room, opened on demand
-            set_dirs(&get_state()); // resolve configurable dirs before anything reads them
             // L051: THE OFFSETS ARE READ HERE, one line after the resolver, because this is the
             // first moment `offsets_path()` names the file `save_offsets` actually writes.
             //
@@ -8952,6 +9406,24 @@ fn main() {
                     }
                 }
             });
+            // L052: the seam row, in the backfill announcement's slot and posted IMMEDIATELY
+            // rather than delayed — unlike the backfill, every fact it carries is already known,
+            // and this is the row that tells a reader at 08:00 which machine's house they are in.
+            //
+            // Posted for every verdict including `Standalone`, deliberately. A row only on the
+            // interesting launches makes its absence ambiguous — "nothing happened" and "the
+            // launcher never ran" read identically — which is the done-vs-never-started class this
+            // room has now found on five surfaces.
+            {
+                let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+                board_push(&app.state::<Board>().0.clone(), BoardEntry {
+                    pane: "sync".to_string(),
+                    role: "committee".to_string(),
+                    text: sync_launch::seam_line(&launch_verdict, &retired),
+                    ts,
+                    ts_source: TsSource::Push,
+                });
+            }
             // Cycle 3b: the backfill announcement. One shot, one line, only on the launch that
             // actually performs it. Delayed rather than posted at startup because the count is
             // the point — a bare "a backfill is happening" carries less than the number of panes
