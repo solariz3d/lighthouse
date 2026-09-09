@@ -1392,3 +1392,61 @@ upheld. referee→seat ~65 upheld. librarian→seat 5 upheld. **room→seat: E 1
 claim), C and B instruments landed.** seat→seat 42. seat→keeper 5. Seat's registered predictions:
 2 made, 2 failed (the third block; the lag premise). The bare-B prediction, registered by the seat
 in `ESSAY2_PLAN.md`: **1 made, 1 held.**
+
+---
+
+## 2026-09-09 ~00:21–00:50 — §4 rebuilt a fourth time, on the room's inputs
+
+**The keeper, 00:21:** "yes lets keep working towards gettings the first essay perfect for how we
+can do it." The seat's rule — no rebuild without the inputs — is met for the first time: three
+referee reports, the two-map simulation, the literature hand-back, all read before a word was
+written. The rule's "not at night" clause is amended to "not without the inputs"; the night was
+never the variable.
+
+**What the new second half of §4 does, in order.** (1) Begins with MacKay 1960 p. 37 quoted — the
+sorting principle is his, in degrees, hair and teeth as the read regime — then Ryle, Moran, the
+constitutivists (Wright 1998, Bilgrami 2006), Metzinger, Carruthers; the originality claim is A's
+honest sentence: *MacKay's interference condition made scalar, extended to standing dispositions,
+given a third cell, turned into an informant prediction.* (2) Gain defined; P1's contribution
+stated as the only thing it needs to do — on an observer view the gain is zero. (3) Three regimes
+kept; the looped regime now says realised behaviour is a fixed point *given* the representation
+and that the self's evidence is that behaviour; lock-in kept as dynamics (Henshel), not as the
+source of error. (4) **The fork taken.** MacKay stopped at indeterminacy and refused "wrong"; the
+essay says he was right on his criterion: scored against realised behaviour the self is exactly
+right at equilibrium — "I checked this in a minimal two-map model… no lag, delay or learning rate
+produces any self-error at equilibrium at all" (E's `[4.5]`, 0 of 847). Then the second quantity:
+*capacity*, what the process would do at a neutral self-representation; zero gap at zero gain,
+monotone in gain (E's `[9.4]`, `[9.5]`); the self has no evidence about it because all its evidence
+is behaviour its belief helped make; the informant sees the person where the belief is not in
+play and reads closer to capacity (E's `[10.4]`, 1.00 → 13.47 at equal lag). **The answer to
+MacKay: the onlooker's knowledge is a reading of a quantity the agent's own representation has
+removed from the agent's evidence.** The sentence: *where it is one of the makers, it is accurate
+about what it does and blind to what it could do.* (5) Block: P1 view; P2 gain (MacKay's condition
+as a quantity); P3 three fixed-point cases; C1 three regimes, the self accurate about what it
+does; P4 capacity, zero gap at zero gain, no self-evidence; P5 the second self reads capacity;
+C2 location and shape; C3 prediction **by criterion**: against capacity, self error rises with
+gain at fixed evaluativeness, informant error does not; against realised behaviour, no
+difference. (6) Vazire recovered; **Swann conceded** — the sign does not separate the accounts,
+the criterion does; **Hacking p. 370 answered** — gain and moral weight travel together and come
+apart; a resolution has gain and little moral weight; that is where the test lives. (7) Failure
+conditions: capacity not a quantity (E's soft spot, named first); no gain-dependence at fixed
+evaluativeness; no causal gain. (8) Rumination-as-fixed-point and the two-signed prediction are
+gone as discriminators.
+
+**Cuts to pay:** ~230 words of restatement in §1, §2, §4's first half, §5, §6; Anscombe and
+Velleman dropped from the references (no longer cited); Bilgrami, Hacking, MacKay, Swann, Wright
+added. **29 references, every one named in text and every name referenced** (`xcheck.js`).
+
+**Counts:** 5,947 without references (the rules’ count), 6,529 with, 13 pages (`countA.js`).
+
+**Registered before referee #4, so it can fail on the record:** the block will not be found
+invalid; the referee will press on (i) whether capacity is a measurable quantity for persons
+(E's soft spot), (ii) whether "conditions where the self-belief is not engaged" can be
+operationalised, and (iii) whether P5's "only through what it expresses" survives the
+teacher-expectancy literature. If it finds the block invalid, the seat writes that down and hands
+§4 to the room's next lap rather than rebuilding a fifth time.
+
+Counts, cumulative: keeper→seat 26 upheld, 1 not upheld. desktop reader→seat 2 upheld, 1 not
+upheld. referee→seat ~65 upheld. librarian→seat 5 upheld. room→seat 2 falsifiers fired, 2
+instruments landed. seat→seat 42. seat→keeper 5. Seat's registered predictions: 3 made, 2 failed,
+1 held; this entry registers the fourth.
