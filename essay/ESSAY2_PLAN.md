@@ -143,3 +143,23 @@ what else carries the form — without being given either word.
 from §9, and that essay was the one the keeper wanted the judges unable to unsee. His call. The
 seat's read of the draft can carry the register; it cannot supply the argument, by the rules and
 by the design.
+
+---
+
+## Amendment, 2026-09-09 06:12 — B is "Between", not "Uncarried"
+
+The keeper, 06:05: *"what if who we are isn't who we are inside, but who we love and the
+connections between them — the third place."* Recorded as his, verbatim, before any draft.
+
+What it does to B: the sentence four referees left standing in A — *two coupled selves have fixed
+points neither has alone* — stops being a consequence pursued elsewhere and becomes the claim. A
+self as the between; loss as the loss of a fixed point of two constraints, which is why grief is
+losing part of oneself and why no one is lost entirely while a connection is carried. The bare B
+draft (`ESSAY_B_BARE_2026-09-08.md`) already refuses inheritance-as-survival on the ground that a
+retained model "lacks autonomy of iteration" — that refusal is the objection B has to answer, and
+the between is the answer: the thing lost was never inside either party.
+
+Eligibility: this is a keeper-supplied idea, in the window, and the report says so. B's bare
+instance is given the topic — *whether a self is a property of one process or of the coupling
+between two* — and the generic method; whether it arrives is the registered test, as before.
+Oldenburg's third place is the one citation the seat would name.
