@@ -43,3 +43,22 @@
 *.woff binary
 *.woff2 binary
 *.ttf binary
+
+# ── ADDED 2026-09-09, chair, lap D055 — from a corruption that had already happened ─────────────
+# `* text=auto eol=lf` above converts anything git's heuristic calls TEXT. A raw terminal-capture
+# fixture contains no NUL bytes, so the heuristic calls it text and strips its CRs ON THE WAY IN.
+# Measured, not supposed: both .bin fixtures below were committed at e3a9b10 SHORT of the sizes
+# their own author recorded from the laptop —
+#   composer_empty_reads_busy      524,204 on disk vs 524,288 recorded (= 2^19, a capture cap)
+#   composer_slash_command…empty   236,387 on disk vs 236,544 recorded
+# and re-inserting a CR at every one of the 84 LFs in the first reproduces 524,288 EXACTLY, which
+# is a prediction that could have failed. `git status` reports both CLEAN, because git compares the
+# normalised working file to the blob — the third instrument this morning to report success over
+# bytes that differ.
+#
+# TWO RULES, because they fail differently and neither covers the other:
+*.bin binary
+# and the extension-independent one — this directory holds raw screen captures and the NEXT capture
+# format must not depend on anyone remembering to come back here. `.gitattributes` was written
+# 2026-08-25; the first .bin in this repo was born 2026-09-09, which is exactly how the gap opened.
+consonance/src-tauri/fixtures/screens/** binary
