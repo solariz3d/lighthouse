@@ -819,6 +819,302 @@ test('--dry-run is DRY_RUN in the receipt, so a caller cannot mistake a rehearsa
   assert.strictEqual(receipt(w).outcome, 'DRY_RUN');
 });
 
+const manifestMod = require(path.join(__dirname, 'state-manifest.js'));
+
+// ═══ the arriving roster — D056-1 ═════════════════════════════════════════════════════════
+//
+// TWO ASSERTION CLASSES, AND THEY DO NOT INVERT INTO EACH OTHER. The librarian's §6(3) said so
+// and it is right: "the travelling set contains panes.json" is a STATIC claim about the manifest,
+// answerable with no disk and no install; "installTree never writes a cwd that does not resolve
+// here" is a DYNAMIC claim about behaviour and needs a fixture whose arriving cwds cannot resolve.
+// Writing the second as a negation of the first is how a suite comes to assert nothing twice.
+//
+// THE MEASURED CASE, which every dynamic test below is shaped from: the migrate landed a roster
+// of 4 rows, 0 of 4 cwds resolving, over a local roster of 5 rows, 5 of 5 resolving — and the two
+// id sets are DISJOINT, so nothing the destination held could supply a cwd for anything that
+// arrived. Every row had to be minted. That is the first-sync case and it is the hard one.
+
+const ROSTER_MANIFEST = JSON.parse(JSON.stringify(MIN_MANIFEST));
+ROSTER_MANIFEST.rules.unshift({
+  glob: 'panes.json', class: 'TRAVELS', on_arrival: 'roster-cwds',
+  why: 'the kept roster — ids and labels adopted, cwds re-resolved on arrival',
+});
+ROSTER_MANIFEST.out_of_root = [{
+  ref: 'panes.json:cwd', points_at: 'instances_dir/sibling-<id>', class: 'UNDECIDED',
+  decided_by: 'a test fixture', handled_by: 'roster-cwds',
+}];
+
+/** A world whose manifest travels the roster, plus an instances root for this machine. */
+function rosterWorld(files, rows) {
+  const w = world({ ...(files || {}), 'panes.json': JSON.stringify(rows || [], null, 2) }, ROSTER_MANIFEST);
+  w.instances = path.join(w.dir, 'instances');
+  fs.mkdirSync(w.instances, { recursive: true });
+  return w;
+}
+
+/** L pushes `rows`; D arrives holding `localRows`, whose dirs exist here and L's do not. */
+function twoRosters(lRows, localRows) {
+  const w = rosterWorld({ 'board.jsonl': 'row\n' }, lRows);
+  const pr = run(w, ['--push', '--no-remote']);
+  assert.strictEqual(pr.code, 0, both(pr));
+  execFileSync('git', ['-C', w.state, 'push', '-q', '-u', 'origin', 'main']);
+  const d = path.join(w.dir, 'stateD');
+  execFileSync('git', ['clone', '-q', w.bare, d]);
+  for (const [k, v] of [['user.email', 't@t'], ['user.name', 't']]) execFileSync('git', ['-C', d, 'config', k, v]);
+  const dataD = path.join(w.dir, 'dataD');
+  fs.mkdirSync(dataD, { recursive: true });
+  const instD = path.join(w.dir, 'instancesD');
+  fs.mkdirSync(instD, { recursive: true });
+  // D's own roster, and its dirs REALLY EXIST — the 5-of-5 control from the attic
+  for (const r of localRows || []) fs.mkdirSync(r.cwd, { recursive: true });
+  if (localRows) fs.writeFileSync(path.join(dataD, 'panes.json'), JSON.stringify(localRows, null, 2));
+  return { ...w, stateD: d, dataD, instD };
+}
+
+const runRoster = (w, args) =>
+  run({ ...w, state: w.stateD, data: w.dataD }, args,
+    { CONSONANCE_MACHINE: 'TESTD', CONSONANCE_INSTANCES: w.instD });
+
+const roster = (dir) => JSON.parse(fs.readFileSync(path.join(dir, 'panes.json'), 'utf8'));
+const L_ROWS = [
+  { pane: '6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f', cwd: 'C:\\Consonance\\instances\\sibling-3d57124e', label: '✦ brief' },
+  { pane: '0845a868-38f2-4cc2-b45a-431e0c088fb1', cwd: 'C:\\Consonance\\instances\\sibling-0845a868', label: '✦ Around' },
+];
+
+// ── STATIC: claims about the manifest, no disk, no install ──────────────────────────────────
+
+test('the travelling set CONTAINS panes.json — the ruling is (C) adopt, and a silent flip to STAYS is caught here', () => {
+  const m = M.loadManifest();
+  assert.deepStrictEqual(m.errors, [], 'the shipped manifest must have no class errors: ' + m.errors.join('; '));
+  const r = m.rules.find((r) => r.glob === 'panes.json');
+  assert.ok(r, 'panes.json has no rule at all');
+  assert.strictEqual(r.class, 'TRAVELS',
+    'one_house_two_machines_idea:48 — the laptop\'s seats become the seats on both machines');
+});
+
+test('panes.json names an arrival transform, and state-sync implements the one it names', () => {
+  const r = M.loadManifest().rules.find((r) => r.glob === 'panes.json');
+  assert.strictEqual(r.on_arrival, 'roster-cwds');
+  assert.ok(M.ARRIVAL_TRANSFORMS[r.on_arrival], 'the manifest names a transform nothing implements');
+  assert.strictEqual(r.precondition, undefined,
+    'a precondition is prose. D055-B-02 passed and missed; the condition must be a transform that runs');
+});
+
+test('NO rule anywhere carries a `precondition` — a condition that cannot fail reads as clearance', () => {
+  const withPrecondition = M.loadManifest().rules.filter((r) => r.precondition);
+  assert.deepStrictEqual(withPrecondition.map((r) => r.glob), [],
+    'these carry prose where a mechanism is required');
+});
+
+test('a rule naming an UNIMPLEMENTED transform is a CLASS ERROR, not a comment', () => {
+  const bad = { rules: [{ glob: 'x', class: 'TRAVELS', on_arrival: 'no-such-transform', why: 'x' }] };
+  const errs = manifestMod.classErrorsFor(bad);
+  assert.ok(errs.some((e) => /no-such-transform/.test(e) && /not implemented/.test(e)), JSON.stringify(errs));
+});
+
+test('an arrival transform on a rule that does not TRAVEL is a class error — a transform nothing runs', () => {
+  const bad = { rules: [{ glob: 'x', class: 'STAYS', on_arrival: 'roster-cwds', why: 'x' }] };
+  const errs = manifestMod.classErrorsFor(bad);
+  assert.ok(errs.some((e) => /STAYS/.test(e) && /on_arrival/.test(e)), JSON.stringify(errs));
+});
+
+test('a transformed rule must declare what it points at OUTSIDE the root, in the fourth state', () => {
+  // B's §0.7 criterion, made mechanical: panes.json is the only TRAVELS file pointing outside its
+  // own transported tree, and the thing it points at is classified nowhere. Now it must be.
+  const bad = { rules: [{ glob: 'panes.json', class: 'TRAVELS', on_arrival: 'roster-cwds', why: 'x' }] };
+  assert.ok(manifestMod.classErrorsFor(bad).some((e) => /out_of_root/.test(e)),
+    'a transform with no declared out-of-root target must fail');
+  const undecidedNoDecider = {
+    rules: [{ glob: 'panes.json', class: 'TRAVELS', on_arrival: 'roster-cwds', why: 'x' }],
+    out_of_root: [{ ref: 'panes.json:cwd', points_at: 'i/s', class: 'UNDECIDED', handled_by: 'roster-cwds' }],
+  };
+  assert.ok(manifestMod.classErrorsFor(undecidedNoDecider).some((e) => /decided_by/.test(e)),
+    'UNDECIDED with no decider is just an omission — §5\'s own words');
+});
+
+test('the shipped manifest declares its out-of-root target and it is UNDECIDED with a decider', () => {
+  const man = M.loadManifest().man;
+  const e = (man.out_of_root || []).find((e) => e.ref === 'panes.json:cwd');
+  assert.ok(e, 'panes.json:cwd points outside data_dir and must say so');
+  assert.strictEqual(e.class, 'UNDECIDED');
+  assert.ok(e.decided_by && e.decided_by.length > 20, 'and here is what would decide it');
+});
+
+test('state-sync and the manifest module agree on which transforms exist', () => {
+  assert.deepStrictEqual(Object.keys(M.ARRIVAL_TRANSFORMS).sort(), [...manifestMod.VALID_ARRIVAL].sort(),
+    'two lists that can drift are one list nobody checks');
+});
+
+// ── DYNAMIC: claims about installTree's behaviour at a real destination ─────────────────────
+
+test('installTree NEVER writes a cwd that does not resolve here — 0 of 2 arrive resolvable, 2 of 2 land resolvable', () => {
+  const w = twoRosters(L_ROWS, null);
+  // THE PRECONDITION IS ABOUT THE FIXTURE, NOT ABOUT THIS MACHINE'S DISK — and the first version
+  // of this line got that wrong. It asserted `!fs.existsSync(r.cwd)` on the real
+  // `C:\Consonance\instances\...` strings, so the test's verdict depended on what happened to be
+  // on the live desktop; it went red the moment something outside this suite created one of those
+  // directories. That is precisely the failure this file's own header warns about — a suite whose
+  // universe is the one machine it was written on. The real strings stay as INPUT because they are
+  // the measured shape of the migrate, and the transform never reuses an arriving cwd anyway; the
+  // property being asserted is that none of them resolves under the destination's own root.
+  for (const r of L_ROWS) {
+    assert.ok(!M.underRoot(r.cwd, w.instD),
+      'precondition: an arriving cwd must not already sit under this machine\'s instances root');
+  }
+  const res = runRoster(w, ['--pull', '--install']);
+  assert.strictEqual(res.code, 0, both(res));
+  const out = roster(w.dataD);
+  assert.strictEqual(out.length, 2);
+  for (const row of out) {
+    assert.ok(fs.existsSync(row.cwd), `cwd does not resolve at the destination: ${row.cwd}`);
+    assert.ok(fs.statSync(row.cwd).isDirectory(), row.cwd);
+    assert.ok(row.cwd.startsWith(w.instD), `outside this machine's instances root: ${row.cwd}`);
+  }
+});
+
+test('the ids and labels are ADOPTED verbatim; only the cwd is re-resolved', () => {
+  const w = twoRosters(L_ROWS, null);
+  runRoster(w, ['--pull', '--install']);
+  const out = roster(w.dataD);
+  assert.deepStrictEqual(out.map((r) => r.pane), L_ROWS.map((r) => r.pane), 'the ids key the capture tails');
+  assert.deepStrictEqual(out.map((r) => r.label), L_ROWS.map((r) => r.label));
+  for (const row of out) assert.ok(!row.cwd.includes('sibling-3d57124e'), 'a foreign cwd survived: ' + row.cwd);
+});
+
+test('a pane id the destination HAS seen keeps the local dir it already had', () => {
+  const w = twoRosters(L_ROWS, null);
+  const mine = path.join(w.instD, 'sibling-alreadyhere');
+  fs.mkdirSync(mine, { recursive: true });
+  fs.writeFileSync(path.join(w.dataD, 'panes.json'),
+    JSON.stringify([{ pane: L_ROWS[0].pane, cwd: mine, label: 'local label' }], null, 2));
+  runRoster(w, ['--pull', '--install']);
+  const out = roster(w.dataD);
+  const kept = out.find((r) => r.pane === L_ROWS[0].pane);
+  assert.strictEqual(kept.cwd, mine, 'the destination\'s own record of which local dir held this id');
+  assert.strictEqual(kept.label, L_ROWS[0].label, 'the LABEL is adopted from the source, the cwd is not');
+});
+
+test('a pane id never seen here is minted a fresh local dir, and the directory EXISTS', () => {
+  const w = twoRosters(L_ROWS, null);
+  runRoster(w, ['--pull', '--install']);
+  for (const row of roster(w.dataD)) {
+    assert.ok(fs.existsSync(row.cwd), row.cwd);
+    assert.ok(/[\\/]sibling-/.test(row.cwd), 'minted dirs are siblings so role_for_kept resumes them as committee');
+  }
+});
+
+test('the transform is IDEMPOTENT — a second install mints nothing and moves nothing', () => {
+  const w = twoRosters(L_ROWS, null);
+  runRoster(w, ['--pull', '--install']);
+  const first = roster(w.dataD);
+  const dirsAfterFirst = fs.readdirSync(w.instD).sort();
+  const r2 = runRoster(w, ['--pull', '--install']);
+  assert.strictEqual(r2.code, 0, both(r2));
+  assert.deepStrictEqual(roster(w.dataD), first, 'a re-install must converge, not re-mint');
+  assert.deepStrictEqual(fs.readdirSync(w.instD).sort(), dirsAfterFirst, 'no orphan dirs on the second run');
+});
+
+test('the arrived set REPLACES — a destination-only row is retired, not unioned', () => {
+  // The ruling, and it is deliberate: one_house_two_machines_idea:48. Replacement converges where
+  // union doubles the roster every round trip. The retired row's tail is still in captures/archive,
+  // which is what "revivable" means. Asserted so a later union cannot arrive unnoticed.
+  const localOnly = { pane: '46d3d352-36af-4947-9c40-78515a92c0c0', cwd: null, label: '✦ mine' };
+  const w = twoRosters(L_ROWS, null);
+  localOnly.cwd = path.join(w.instD, 'sibling-46d3d352');
+  fs.mkdirSync(localOnly.cwd, { recursive: true });
+  fs.writeFileSync(path.join(w.dataD, 'panes.json'), JSON.stringify([localOnly], null, 2));
+  runRoster(w, ['--pull', '--install']);
+  const ids = roster(w.dataD).map((r) => r.pane);
+  assert.deepStrictEqual(ids, L_ROWS.map((r) => r.pane), 'replacement, not union: ' + JSON.stringify(ids));
+});
+
+test('every row carries a `home` naming where the seat was born', () => {
+  const w = twoRosters(L_ROWS, null);
+  runRoster(w, ['--pull', '--install']);
+  for (const row of roster(w.dataD)) {
+    assert.strictEqual(row.home, 'TESTL', 'these seats were born on L and the row should say so');
+  }
+});
+
+test('a transformed file is NOT reported as a shortfall just because its bytes differ from the index', () => {
+  // The reconciliation added in L055 hashes the destination against the index. A transformed file
+  // is SUPPOSED to differ, so without this the roster would fail reconciliation on every install.
+  const w = twoRosters(L_ROWS, null);
+  const res = runRoster(w, ['--pull', '--install']);
+  assert.strictEqual(res.code, 0, both(res));
+  assert.ok(/RECONCILED/.test(both(res)), both(res));
+  const c = JSON.parse(fs.readFileSync(path.join(w.dataD, M.COMPLETION_NAME), 'utf8'));
+  assert.strictEqual(c.reconciled, true);
+  assert.deepStrictEqual(c.missing, []);
+});
+
+test('a transformed file whose POSTCONDITION fails is a shortfall, named by path', () => {
+  // Reconciliation of a transformed path is not a sha compare — it re-derives the property at the
+  // destination. Break the property and it must still be caught, or the transform is unguarded.
+  const w = twoRosters(L_ROWS, null);
+  runRoster(w, ['--pull', '--install']);
+  const out = roster(w.dataD);
+  fs.rmSync(out[0].cwd, { recursive: true, force: true }); // the dir the roster promises
+  const v = M.verifyTree(w.stateD);
+  const rec = M.reconcileInstall(w.dataD, v, { instances: w.instD, state: w.stateD });
+  assert.strictEqual(rec.ok, false, 'a roster naming a dir that is gone must not reconcile');
+  const m = rec.missing.find((m) => m.path === 'panes.json');
+  assert.ok(m, JSON.stringify(rec.missing));
+  assert.strictEqual(m.kind, 'TRANSFORM');
+  assert.ok(m.found.includes(out[0].cwd), 'it names the cwd that does not resolve: ' + m.found);
+});
+
+
+// ── the four the mutation pass found unwatched ──────────────────────────────────────────────
+// Each of these exists because a mutant SURVIVED: the behaviour was implemented, argued for in a
+// comment, and guarded by nothing. Three are postconditions I wrote and never tested; the fourth
+// is the checker guard that is the whole point of the packet, where I had tested that the shipped
+// manifest is clean — a fact about today's file — instead of testing that a dirty one is REFUSED.
+
+test('the checker REFUSES a rule carrying a `precondition` — the guard, not just today\'s clean manifest', () => {
+  const bad = { rules: [{ glob: 'x', class: 'TRAVELS', why: 'x', precondition: 'both machines resolve the same instances_dir' }] };
+  const errs = manifestMod.classErrorsFor(bad);
+  assert.ok(errs.some((e) => /precondition/.test(e) && /CANNOT FAIL/.test(e)),
+    'a condition written as prose must be refused by the checker: ' + JSON.stringify(errs));
+});
+
+test('the postcondition catches a destination roster that WILL NOT PARSE — read_kept() reads that as zero panes', () => {
+  // E's F1, and the reason this check is first in rosterVerify. An unparseable roster is not a
+  // broken roster to main.rs — `from_str().ok().unwrap_or_default()` makes it an EMPTY one, and
+  // gc_captures() builds its keep-set from that call. Garbling this file archives the whole house.
+  const w = twoRosters(L_ROWS, null);
+  assert.strictEqual(runRoster(w, ['--pull', '--install']).code, 0);
+  fs.writeFileSync(path.join(w.dataD, 'panes.json'), '[{"pane": broken');
+  const rec = M.reconcileInstall(w.dataD, M.verifyTree(w.stateD), { instances: w.instD, state: w.stateD });
+  assert.strictEqual(rec.ok, false, 'an unparseable roster must not reconcile');
+  const m = rec.missing.find((m) => m.path === 'panes.json');
+  assert.ok(m && m.kind === 'TRANSFORM', JSON.stringify(rec.missing));
+  assert.ok(/ZERO kept panes/.test(m.found), 'the report must say what it costs: ' + m.found);
+});
+
+test('the postcondition catches a destination roster whose ids are not the arriving set', () => {
+  const w = twoRosters(L_ROWS, null);
+  assert.strictEqual(runRoster(w, ['--pull', '--install']).code, 0);
+  const out = roster(w.dataD);
+  out.pop(); // one adopted seat silently dropped, the rest still perfectly valid
+  fs.writeFileSync(path.join(w.dataD, 'panes.json'), JSON.stringify(out, null, 2));
+  const rec = M.reconcileInstall(w.dataD, M.verifyTree(w.stateD), { instances: w.instD, state: w.stateD });
+  const m = rec.missing.find((m) => m.path === 'panes.json');
+  assert.ok(m && /adopted ids are not the arriving set/.test(m.found), JSON.stringify(rec.missing));
+});
+
+test('a transform that REFUSES stops the install, says so, and writes no roster', () => {
+  const w = twoRosters([{ pane: '', cwd: 'C:\\elsewhere\\sibling-x', label: '✦ nameless' }], null);
+  const r = runRoster(w, ['--pull', '--install']);
+  assert.notStrictEqual(r.code, 0, 'a roster the transform refuses must not be installed: ' + both(r));
+  assert.ok(both(r).includes('INSTALL REFUSED'), 'a refusal that prints nothing is a bare exit code: ' + both(r));
+  assert.ok(both(r).includes('panes.json'), both(r));
+  assert.ok(!fs.existsSync(path.join(w.dataD, 'panes.json')),
+    'no roster may be written when the transform refused to produce one');
+  const c = JSON.parse(fs.readFileSync(path.join(w.dataD, M.COMPLETION_NAME), 'utf8'));
+  assert.strictEqual(c.installed, false);
+  assert.ok(c.why.includes('panes.json'), c.why);
+});
 console.log('');
 console.log(`state-sync.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

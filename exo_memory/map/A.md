@@ -1004,3 +1004,21 @@ the count was omitting one already-identical skip; and the log's own line order 
 `gc_captures()` cannot run until `state-sync` has exited, so **this change could not have caught
 that morning**, which is said in the hand-back rather than around. `--push`'s NOTHING_CHANGED hole:
 judged a separate packet and left. Nothing was run against the live data dir.
+
+## 2026-09-09 — D056-1 (roster arrival): the condition stopped being a comment, and the harness caught me
+
+Hand-back at `exo_memory/handback/p-roster-arrival_2026-09-09.md`. `panes.json` stays TRAVELS and now
+carries `on_arrival: "roster-cwds"` — ids and labels adopted, every cwd re-resolved against this
+machine, missing dirs minted deterministically, and a postcondition re-derived at the destination so
+the L055 reconcile still holds for a file whose bytes are *meant* to differ from the index. The
+`precondition` that was `D055-B-02` is **refused outright** by the checker now: it PASSED and the
+failure happened anyway, because what is machine-bound is the `sibling-<id>` dirs, not the root.
+Fourth state used for real (`out_of_root`, UNDECIDED + decided_by). Suite 54 -> 75, red first (55/16);
+mutants 33 -> 50 across TWO files, **50 killed / 0 survived / 0 not-applied**, one re-anchored.
+**Three mutation runs, and the first two are the finding:** run 1's 50/50 was worthless — one of my
+tests asserted on the live disk, so the suite went red mid-run and every later mutant read as killed
+without earning it; run 2 gave 46/4, and the four survivors included the F1 guard, the checker guard
+this packet exists for, and **a real defect — a refused install exited non-zero printing nothing.**
+Declined E's home-keyed union (it retains D's rows on the first sync, which `:48` forbids) and
+declined to class the 4 UNPLACED paths as UNDECIDED (that is D056-3's, and silencing the checker
+without the audit is this packet's own defect in costume). Nothing run against the live data dir.

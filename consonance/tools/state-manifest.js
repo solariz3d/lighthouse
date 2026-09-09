@@ -105,17 +105,9 @@ function main() {
   const rules = man.rules.map((r, i) => ({ ...r, i, re: globToRe(r.glob), hits: 0, bytes: 0 }));
 
   // Class errors in the manifest itself, checked before it is used to classify anything.
-  const classErrors = [];
+  // One implementation, shared with state-sync.js — see classErrorsFor.
   const VALID = new Set(['TRAVELS', 'STAYS', 'REGENERATES', 'UNDECIDED']);
-  for (const r of rules) {
-    if (!VALID.has(r.class)) classErrors.push(`${r.glob}: class '${r.class}' is not one of ${[...VALID].join(', ')}`);
-    if (r.class === 'REGENERATES' && !(r.regenerated_by && r.regenerated_when)) {
-      classErrors.push(`${r.glob}: REGENERATES without regenerated_by AND regenerated_when — that is a path being lost, and it must say so in those words`);
-    }
-    if (r.class === 'UNDECIDED' && !r.decided_by) {
-      classErrors.push(`${r.glob}: UNDECIDED without decided_by — an undecided with no decider is just an omission`);
-    }
-  }
+  const classErrors = classErrorsFor(man);
 
   // A BROKEN MANIFEST CLASSIFIES NOTHING, so report and stop before walking.
   //
@@ -222,10 +214,83 @@ function main() {
   process.exit(0);
 }
 
+/**
+ * The arrival transforms a rule is allowed to name. `state-sync.js` implements them and asserts
+ * that its registry and this list are the same set; a name here with no implementation, or an
+ * implementation with no name here, is a test failure rather than a surprise at install time.
+ */
+const VALID_ARRIVAL = ['roster-cwds'];
+
+/**
+ * Every way the manifest can be wrong ABOUT ITSELF, in one place.
+ *
+ * WHY THIS IS A FUNCTION AND NOT A LOOP IN main(). `state-sync.js` had its own copy of these
+ * checks — three of the four, drifting quietly — and this file's whole reason for exporting
+ * `globToRe` was that two implementations of one rule set is how a transport and its checker come
+ * to disagree while both report green. The validation was the last piece still duplicated.
+ *
+ * AND THE NEW ONES ARE THE POINT OF D056-1. `panes.json` travelled with its condition written as
+ * `precondition`: prose beside the rule saying the entry is wrong if the two machines resolve
+ * different instance dirs. **A COMMENT CANNOT FAIL.** It read as clearance, it was scored as
+ * checked, and the sentence was false in a way it could not express anyway — what is machine-bound
+ * is not the root, it is the `sibling-<id>` dirs minted inside it. So:
+ *
+ *   - `precondition` is REFUSED outright. A condition on a class must be a mechanism.
+ *   - `on_arrival` names a transform that must EXIST, and must be on a rule that actually travels.
+ *   - a rule that transforms must declare what it points at OUTSIDE the root — B's §0.7 criterion
+ *     made mechanical: `panes.json` is the only TRAVELS file pointing outside its own transported
+ *     tree, and the thing it points at was classified nowhere.
+ *   - that out-of-root target may honestly be UNDECIDED (`packet_state_set_2026-09-09.md` §5's
+ *     fourth state), but an undecided with no decider is just an omission and is refused too.
+ */
+function classErrorsFor(man) {
+  const errs = [];
+  const VALID = new Set(['TRAVELS', 'STAYS', 'REGENERATES', 'UNDECIDED']);
+  const outOfRoot = man.out_of_root || [];
+  for (const r of man.rules || []) {
+    if (!VALID.has(r.class)) errs.push(`${r.glob}: class '${r.class}' is not one of ${[...VALID].join(', ')}`);
+    if (r.class === 'REGENERATES' && !(r.regenerated_by && r.regenerated_when)) {
+      errs.push(`${r.glob}: REGENERATES without regenerated_by AND regenerated_when — that is a path being lost, and it must say so in those words`);
+    }
+    if (r.class === 'UNDECIDED' && !r.decided_by) {
+      errs.push(`${r.glob}: UNDECIDED without decided_by — an undecided with no decider is just an omission`);
+    }
+    if (r.precondition) {
+      errs.push(`${r.glob}: a 'precondition' is prose and CANNOT FAIL (D055-B-02 passed and missed). State the condition as an 'on_arrival' transform, or class the path UNDECIDED with a decided_by.`);
+    }
+    if (r.on_arrival) {
+      if (!VALID_ARRIVAL.includes(r.on_arrival)) {
+        errs.push(`${r.glob}: on_arrival '${r.on_arrival}' is not implemented — one of ${VALID_ARRIVAL.join(', ')}`);
+      }
+      if (r.class !== 'TRAVELS') {
+        errs.push(`${r.glob}: on_arrival on a ${r.class} rule — a transform on a file that never arrives is a transform nothing runs`);
+      }
+      if (!outOfRoot.some((e) => e.handled_by === r.on_arrival)) {
+        errs.push(`${r.glob}: on_arrival '${r.on_arrival}' with no out_of_root entry naming it — a rule that transforms is a rule that points somewhere this manifest's root does not cover, and that target must be declared`);
+      }
+    }
+  }
+  for (const e of outOfRoot) {
+    if (!e.ref || !e.points_at) errs.push(`out_of_root: an entry needs both 'ref' and 'points_at'`);
+    if (!VALID.has(e.class)) errs.push(`out_of_root ${e.ref}: class '${e.class}' is not one of ${[...VALID].join(', ')}`);
+    if (e.class === 'UNDECIDED' && !e.decided_by) {
+      errs.push(`out_of_root ${e.ref}: UNDECIDED without decided_by — an undecided with no decider is just an omission`);
+    }
+    if (e.handled_by && !VALID_ARRIVAL.includes(e.handled_by)) {
+      errs.push(`out_of_root ${e.ref}: handled_by '${e.handled_by}' is not an implemented transform`);
+    }
+  }
+  return errs;
+}
+
 // EXPORTED so state-sync.js classifies with THIS file's rules and THIS file's glob
 // semantics rather than a second copy of them. Two implementations of one rule set is how a
 // transport and its checker come to disagree while both report green — the failure this whole
 // manifest exists to make loud. The CLI behaviour above is unchanged: main() still runs when this
 // file is the entry point, and its 25 tests are the proof of that.
 if (require.main === module) main();
-module.exports = { globToRe, walk, dataDir, MANIFEST, VALID_CLASSES: ['TRAVELS', 'STAYS', 'REGENERATES', 'UNDECIDED'] };
+module.exports = {
+  globToRe, walk, dataDir, MANIFEST, classErrorsFor,
+  VALID_CLASSES: ['TRAVELS', 'STAYS', 'REGENERATES', 'UNDECIDED'],
+  VALID_ARRIVAL,
+};

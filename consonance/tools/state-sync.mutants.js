@@ -18,8 +18,17 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const SRC = path.join(__dirname, 'state-sync.js');
+const CHECKER = path.join(__dirname, 'state-manifest.js');
 const SUITE = path.join(__dirname, 'state-sync.test.js');
 const LOCK = path.join(__dirname, '.state-sync.mutants.lock');
+
+// TWO TARGETS, ADDED D056-1. The manifest's own validation moved into `state-manifest.js`
+// (`classErrorsFor`) so the checker and the transport could not drift, and the new guards there —
+// a rule may not carry a `precondition`, an `on_arrival` must name a transform that exists, a
+// transform must declare what it points at outside the root — are the mechanism that replaced a
+// comment. Leaving them unmutated would have measured everything about this packet except the
+// part it exists for. A mutant names its file; the default is state-sync.js.
+const FILES = { 'state-sync.js': SRC, 'state-manifest.js': CHECKER };
 
 // A LOCK, BECAUSE THIS FILE ALREADY DAMAGED THE SOURCE ONCE (2026-09-09, A).
 //
@@ -97,9 +106,14 @@ const MUTANTS = [
     "    if (got !== f.sha256) {\n      missing.push({\n        path: f.path, kind: 'CONTENT',",
     "    if (false) {\n      missing.push({\n        path: f.path, kind: 'CONTENT',"],
   ['a directory standing where a file should be is accepted', '    if (!st.isFile()) {', '    if (false) {'],
+  // Re-anchored D056-1: `installTree` now compares the destination against `want` (the bytes this
+  // machine is entitled to, transformed or not) rather than against the index hash, because a
+  // transformed file is supposed to differ from the index. The guard is the same one; the line it
+  // lives on changed, and a mutant left pointing at the old line would have reported NOT-APPLIED,
+  // which proves nothing about a behaviour that is still there.
   ['already-identical files are not counted, so `installed N` stays unreadable',
-    '      if (sha256(cur) === f.sha256) { skipped++; continue; }',
-    '      if (sha256(cur) === f.sha256) { continue; }'],
+    '      if (cur.equals(want)) { skipped++; continue; }',
+    '      if (cur.equals(want)) { continue; }'],
   ['the record carries the shortfall but not the paths, so the launcher gets a count again',
     '        why: shortfallWhy(rec), failures: rec.missing, missing: rec.missing,',
     '        why: shortfallWhy(rec), failures: rec.missing, missing: [],'],
@@ -107,20 +121,78 @@ const MUTANTS = [
   ['the report prints the kind but not the path — 46 all over again',
     '    console.error(`    ${m.kind.padEnd(10)} ${m.path}`);',
     '    console.error(`    ${m.kind.padEnd(10)}`);'],
+
+  // ── the arriving roster (D056-1) ──
+  // Every one of these is a way for the migrate to land a roster that spawns four seats into a
+  // directory that is not there, which is what happened on 2026-09-09 and cost four seats with no
+  // log line. The last five are in the CHECKER, because the guard this packet replaced a comment
+  // with is only worth what its own failure modes are worth.
+  ['no arrival transform runs at all — the roster arrives as a copy, which is the bug',
+    '    const t = transformFor(f.path, ctx.rules);', '    const t = null;'],
+  ['the foreign cwd is adopted verbatim — 0 of 4 resolve, exactly as measured',
+    "    let cwd = was && typeof was.cwd === 'string' && underRoot(was.cwd, ctx.instances) ? was.cwd : null;",
+    "    let cwd = typeof r.cwd === 'string' ? r.cwd : null;"],
+  ['the destination\'s own record is ignored, so every install re-mints and nothing converges',
+    "    let cwd = was && typeof was.cwd === 'string' && underRoot(was.cwd, ctx.instances) ? was.cwd : null;",
+    '    let cwd = null;'],
+  ['the roster promises directories that are never created',
+    '        if (row && row.cwd) fs.mkdirSync(row.cwd, { recursive: true });',
+    '        void row;'],
+  ['the minted dir is not a sibling, so role_for_kept resumes the seat as human',
+    '    const cand = path.join(root, `sibling-${flat.slice(0, n)}`);',
+    '    const cand = path.join(root, `kept-${flat.slice(0, n)}`);'],
+  ['the transform UNIONS instead of replacing — the roster doubles every round trip',
+    "    buf: Buffer.from(JSON.stringify(rows, null, 2) + '\\n', 'utf8'),",
+    "    buf: Buffer.from(JSON.stringify(rows.concat(prior.filter((p) => p && !arrivedIds.has(p.pane))), null, 2) + '\\n', 'utf8'),"],
+  ['an absent home defaults to THIS machine — E\'s F4 residual, and it doubles the roster',
+    '    const home = r.home || (was && was.home) || ctx.pushedBy;',
+    '    const home = machineTag();'],
+  ['the label is dropped, so an adopted seat comes back unnamed',
+    "    const row = { pane: r.pane, cwd, label: typeof r.label === 'string' ? r.label : '' };",
+    "    const row = { pane: r.pane, cwd, label: '' };"],
+  ['a transformed path is never reconciled — the transform is unguarded after it runs',
+    '    if (t && t.verify) {', '    if (false) {'],
+  ['the postcondition accepts a roster that will not parse — read_kept() reads that as ZERO panes',
+    '  const d = readJsonArray(destBuf);\n  if (d.err) {',
+    '  const d = readJsonArray(destBuf);\n  if (false) {'],
+  ['the postcondition accepts a cwd that does not resolve',
+    '      return { ok: false, why: `${r.pane}: cwd does not resolve on this machine: ${r.cwd}` };',
+    '      st = { isDirectory: () => true };'],
+  ['the postcondition does not check that the adopted ids are the arriving set',
+    '  if (got.length !== want.length || want.some((p, i) => got[i] !== p)) {', '  if (false) {'],
+  ['a transform that REFUSES is installed anyway',
+    '      if (r.err) {', '      if (false) {'],
+
+  ['the checker tolerates a `precondition` — the comment that cannot fail, kept',
+    '    if (r.precondition) {', '    if (false) {', 'state-manifest.js'],
+  ['the checker tolerates an on_arrival nothing implements',
+    '      if (!VALID_ARRIVAL.includes(r.on_arrival)) {', '      if (false) {', 'state-manifest.js'],
+  ['the checker tolerates a transform on a rule that never arrives',
+    "      if (r.class !== 'TRAVELS') {", '      if (false) {', 'state-manifest.js'],
+  ['the checker tolerates a transform that declares no out-of-root target',
+    '      if (!outOfRoot.some((e) => e.handled_by === r.on_arrival)) {', '      if (false) {', 'state-manifest.js'],
+  ['the checker tolerates an UNDECIDED out-of-root target with no decider — an omission with a label',
+    "    if (e.class === 'UNDECIDED' && !e.decided_by) {", '    if (false) {', 'state-manifest.js'],
 ];
 
-function restore() { fs.writeFileSync(SRC, original); }
+/** Every target's pristine bytes, read once, before anything is written. */
+const ORIGINALS = { 'state-sync.js': original, 'state-manifest.js': fs.readFileSync(CHECKER, 'utf8') };
+const fileOf = (m) => m[3] || 'state-sync.js';
+
+function restore() {
+  for (const [name, p] of Object.entries(FILES)) fs.writeFileSync(p, ORIGINALS[name]);
+}
 process.on('SIGINT', () => { restore(); unlock(); process.exit(130); });
 
 // THE TRIPWIRE ON `original` ITSELF. If the source we just read already carries one of our own
 // replacements, a previous pass did not clean up, `original` is not original, and restoring it
 // would make yesterday's mutation permanent — which is exactly what happened once.
-const alreadyMutated = MUTANTS.filter(([, , to]) => original.includes(to));
+const alreadyMutated = MUTANTS.filter((m) => ORIGINALS[fileOf(m)].includes(m[2]));
 if (alreadyMutated.length) {
   restore.skip = true;
   console.error('state-sync.mutants: THE SOURCE ALREADY CARRIES A MUTATION — refusing to run.');
-  for (const [name, , to] of alreadyMutated) console.error(`  ${name}\n    found in state-sync.js: ${to}`);
-  console.error('  Restore state-sync.js from git before running this again. Restoring from here');
+  for (const m of alreadyMutated) console.error(`  ${m[0]}\n    found in ${fileOf(m)}: ${m[2]}`);
+  console.error('  Restore the file from git before running this again. Restoring from here');
   console.error('  would write the mutation back as the truth.');
   unlock();
   process.exit(2);
@@ -129,17 +201,21 @@ if (alreadyMutated.length) {
 let killed = 0;
 const survivors = [];
 try {
-  for (const [name, from, to] of MUTANTS) {
-    if (!original.includes(from)) {
-      survivors.push(`${name}  — MUTATION DID NOT APPLY: the anchor is gone from the source, so this defect is unguarded and unmeasured`);
-      console.log(`  ????  ${name}  (anchor missing)`);
+  for (const m of MUTANTS) {
+    const [name, from, to] = m;
+    const file = fileOf(m);
+    const src = ORIGINALS[file];
+    if (!src.includes(from)) {
+      survivors.push(`${name}  — MUTATION DID NOT APPLY: the anchor is gone from ${file}, so this defect is unguarded and unmeasured`);
+      console.log(`  ????  ${name}  (anchor missing in ${file})`);
       continue;
     }
-    fs.writeFileSync(SRC, original.replace(from, to));
+    fs.writeFileSync(FILES[file], src.replace(from, to));
     let red = false;
     try {
       execFileSync(process.execPath, [SUITE], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8' });
     } catch (_) { red = true; }
+    fs.writeFileSync(FILES[file], src); // put this target back before the next mutant picks another
     if (red) { killed++; console.log(`  killed  ${name}`); }
     else { survivors.push(name); console.log(`  SURVIVED  ${name}`); }
   }

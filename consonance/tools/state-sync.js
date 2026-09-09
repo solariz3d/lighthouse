@@ -142,6 +142,26 @@ function stateDir() {
 }
 
 /**
+ * Where THIS machine mints its instance directories.
+ *
+ * Resolved the same way `main.rs` resolves it (`instances_root()`, :753) and in the same order as
+ * everything else here: env, then this machine's config, then the same literal default the app
+ * falls back to. It is deliberately NOT read from the arriving set — an instances root taken from
+ * the other machine's files is exactly the defect this packet exists to remove.
+ */
+function instancesRoot() {
+  const env = (process.env.CONSONANCE_INSTANCES || '').trim();
+  if (env) return env;
+  try {
+    const cfg = JSON.parse(
+      fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, '')
+    );
+    if (cfg.instances_dir && String(cfg.instances_dir).trim()) return String(cfg.instances_dir).trim();
+  } catch (_) { /* fall through */ }
+  return path.join(os.homedir(), 'claude-instances');
+}
+
+/**
  * This machine's name, for the per-machine rows.
  *
  * `machine_tag` from ~/.consonance.json when it is there, the hostname otherwise. NEVER
@@ -243,15 +263,12 @@ const sha256 = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
 
 function loadManifest() {
   const man = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8').replace(/^\ufeff/, ''));
-  const VALID = new Set(manifestMod.VALID_CLASSES);
-  const errors = [];
-  for (const r of man.rules) {
-    if (!VALID.has(r.class)) errors.push(`${r.glob}: class '${r.class}' is not valid`);
-    if (r.class === 'REGENERATES' && !(r.regenerated_by && r.regenerated_when)) {
-      errors.push(`${r.glob}: REGENERATES without regenerated_by AND regenerated_when`);
-    }
-    if (r.class === 'UNDECIDED' && !r.decided_by) errors.push(`${r.glob}: UNDECIDED without decided_by`);
-  }
+  // ONE IMPLEMENTATION OF THE RULE SET, and this was the last piece still duplicated. This
+  // function used to carry its own copy of three of the four checks; a fourth added to the checker
+  // would have been silently absent here, so the transport and its checker could disagree about
+  // whether the manifest is valid while both printed green \u2014 the exact failure this file's
+  // exported `globToRe` already exists to prevent.
+  const errors = manifestMod.classErrorsFor(man);
   return {
     man,
     errors,
@@ -786,10 +803,18 @@ function cmdPull(args) {
   if (doInstall) {
     const r = installTree(DATA, STATE, v);
     if (r.rc !== 0) {
+      // IT SAYS SO. Until D056-1 this branch exited non-zero and printed NOTHING — the record
+      // carried `why` and the operator at the terminal got a bare exit code, which is the same
+      // shape as the morning that started all of this. Found by a surviving mutant: nothing could
+      // tell a refused install from a silent one, because there was nothing to read.
+      console.error('');
+      console.error(`  INSTALL REFUSED — nothing further was written: ${r.why}`);
+      console.error(`  ${r.wrote} file(s) had already landed before the refusal; ${COMPLETION_NAME} records installed:false.`);
       writeCompletion(DATA, STATE, {
         verified: true, installed: false, reconciled: false, stage: 'install', why: r.why, failures: [],
-        missing: [], head: head.ok ? head.out : null,
+        missing: [], installed_files: r.wrote, head: head.ok ? head.out : null,
       });
+      writeStatus(DATA, STATE);
       return r.rc;
     }
     counts = { installed_files: r.wrote, skipped_identical: r.skipped, displaced_files: r.displaced };
@@ -854,6 +879,219 @@ function cmdPull(args) {
   return 0;
 }
 
+// ── arrival transforms ───────────────────────────────────────────────────────────────────────
+
+/**
+ * A TRAVELS file may declare `on_arrival: "<name>"`, and the installer applies that transform
+ * before the bytes reach the data dir.
+ *
+ * WHY THE CONTRACT EXISTS AT ALL, and it is the finding under the finding. `panes.json` travelled
+ * with its condition written as a `precondition` — prose beside the rule saying the entry is wrong
+ * if the two machines resolve different instance dirs. **A comment cannot fail.** It read as
+ * clearance, it was scored as checked, and it was false in a way it could not have expressed: the
+ * check PASSES here (both machines resolve `C:\Consonance\instances`) and the migrate still landed
+ * a roster where 0 of 4 cwds resolved, because what is machine-bound is not the root — it is the
+ * `sibling-<id>` directories minted inside it. The manifest had no way to say "TRAVELS, conditional
+ * on a transform", so the condition became a comment. Now it is a name that is validated, dispatched
+ * and reconciled, and a rule naming a transform nothing implements is a CLASS ERROR.
+ *
+ * WHY AT THE INSTALL BOUNDARY. `--install` is callable and IS called directly — B's runbook step, a
+ * shell, a hook. A repair living in the launcher would let the installer land a wrong file that only
+ * the launcher repairs, so every other caller gets the broken roster: a gate that exists and is not
+ * on the path, which is this file's own §4 shape from L055.
+ *
+ * Each transform is a pair, and the second half is not optional:
+ *   apply(srcBuf, ctx)            -> { buf } | { err }
+ *   verify(destBuf, srcBuf, ctx)  -> { ok, why }
+ * `verify` is what the reconciliation runs INSTEAD of the sha compare, because a transformed file
+ * is supposed to differ from the index. It re-derives the property at the destination rather than
+ * trusting that `apply` ran — same law as reconcileInstall itself.
+ */
+const ARRIVAL_TRANSFORMS = {
+  'roster-cwds': { apply: rosterApply, verify: rosterVerify },
+};
+
+const ROSTER_NAME = 'panes.json';
+
+function underRoot(p, root) {
+  const a = path.resolve(p).toLowerCase();
+  const b = path.resolve(root).toLowerCase();
+  return a === b || a.startsWith(b.endsWith(path.sep) ? b : b + path.sep);
+}
+
+function readJsonArray(buf) {
+  try {
+    const v = JSON.parse(buf.toString('utf8').replace(/^﻿/, ''));
+    return Array.isArray(v) ? { rows: v } : { err: 'not a JSON array' };
+  } catch (e) { return { err: e.message }; }
+}
+
+/**
+ * Mint this machine's directory for a pane, deterministically.
+ *
+ * DETERMINISTIC, AND THAT IS THE REQUIREMENT RATHER THAN A PREFERENCE. `main.rs`'s
+ * `prepare_sibling_dir` names a dir from a FRESH uuid, which is right at birth and wrong here: a
+ * random name would mint a new directory on every `--install` and orphan the previous one, so the
+ * install would stop converging — and `--install` being re-runnable is what the whole reconcile
+ * contract rests on. Naming from the pane id gives the same answer every time.
+ *
+ * `sibling-` is not decoration: `role_for_kept` decides a resumed pane is committee rather than
+ * human by its cwd sitting under the instances root, so a dir minted anywhere else brings the seat
+ * back as the wrong kind of thing.
+ *
+ * The dir is left EMPTY on purpose. `warm_resume_brief` (main.rs:5379) writes the seat's CLAUDE.md
+ * from its own travelled capture tail at resume, so the intake is rebuilt from the thread rather
+ * than shipped stale — but it writes with `fs::write`, which cannot create a missing parent, so the
+ * directory itself must exist before the pane resumes. That is the whole reason this mints at all.
+ */
+function mintSiblingDir(root, pane, taken) {
+  const flat = pane.replace(/-/g, '');
+  for (const n of [8, 12, 16, 32]) {
+    const cand = path.join(root, `sibling-${flat.slice(0, n)}`);
+    if (!taken.has(cand.toLowerCase())) return cand;
+  }
+  return path.join(root, `sibling-${flat}`);
+}
+
+/**
+ * THE ROSTER TRANSFORM. Adopt the ids and the labels; never the cwds.
+ *
+ * The ruling is the keeper's, verbatim (`one_house_two_machines_idea_2026-09-08.md:48`): *"the
+ * laptop's seats become the seats on both machines"*, committee panes named explicitly. So the pane
+ * ids are adopted — they key the capture tails, which are the thread — and the labels with them.
+ *
+ * The cwd is re-resolved against THIS machine, in one of two ways and no third:
+ *   - the destination's own record. The roster already on disk here says which local directory held
+ *     this id last time. (The copy `installTree` displaces into `attic/` is the same bytes; this
+ *     reads the live file, so it does not depend on a backup having been made.)
+ *   - a minted directory, for an id this machine has never seen.
+ * On the FIRST sync the second arm does all the work: the two id sets were measured DISJOINT
+ * (4 arrived, 5 local, no overlap), so nothing the destination held could supply a cwd for anything
+ * that arrived. The first arm is what makes every LATER sync stable.
+ *
+ * REPLACEMENT, NOT UNION, and it is the standing ruling rather than my preference. A row the
+ * destination holds and the arriving set does not is retired — which under `:48` is the design
+ * executing ("a retired seat stays revivable"; its tail is in `captures/archive/`). E's D056-2
+ * argues for a home-keyed union instead and its reasoning is good, but union RETAINS the
+ * destination's rows on the first sync, which is the thing `:48` explicitly forbids. That is not
+ * mine to overturn inside this packet. **What is mine is that a retirement must not be silent** —
+ * E's F3 residual, that replacement cannot tell retire-by-design from retire-by-direction-of-sync
+ * — so every dropped row is returned by name and printed.
+ *
+ * `home` is RECORDED AND NOT CONSUMED, deliberately, on two independent grounds:
+ *   - E's F4 residual: an absent home must never default to THIS machine. If it did, D would claim
+ *     L's rows as home=D while L keeps them as home=L, and the round trip doubles the roster — the
+ *     exact failure union is accused of. So home is taken from the arriving row, else from the
+ *     destination's prior record of that pane, else from the INDEX's pusher (the machine that
+ *     wrote the set, which on a first adopt is by construction where those seats live). Never from
+ *     `machineTag()`.
+ *   - `KeptPane` (main.rs:3309) has three fields, so the first `write_kept()` after launch ERASES
+ *     this field. A transform that decided anything by reading `home` would be deciding on a value
+ *     that vanishes. This one decides by POSITION — arrived rows versus the destination's prior
+ *     rows — which cannot be erased. See the hand-back: persisting `home` needs C's struct.
+ */
+function rosterApply(srcBuf, ctx) {
+  const a = readJsonArray(srcBuf);
+  if (a.err) return { err: `the arriving roster will not parse (${a.err}) — refusing to write a roster nobody can read` };
+
+  let prior = [];
+  try {
+    const p = readJsonArray(fs.readFileSync(path.join(ctx.DATA, ROSTER_NAME)));
+    if (!p.err) prior = p.rows;
+  } catch (_) { /* first arrival here, or nothing on disk */ }
+  const priorByPane = new Map(prior.filter((r) => r && typeof r.pane === 'string').map((r) => [r.pane, r]));
+
+  const taken = new Set();
+  const rows = [];
+  const minted = [];
+  for (const r of a.rows) {
+    if (!r || typeof r.pane !== 'string' || !r.pane.trim()) {
+      return { err: 'the arriving roster has a row with no pane id — refusing to guess which seat it is' };
+    }
+    const was = priorByPane.get(r.pane);
+    let cwd = was && typeof was.cwd === 'string' && underRoot(was.cwd, ctx.instances) ? was.cwd : null;
+    if (!cwd || taken.has(path.resolve(cwd).toLowerCase())) {
+      cwd = mintSiblingDir(ctx.instances, r.pane, taken);
+      minted.push(cwd);
+    }
+    taken.add(path.resolve(cwd).toLowerCase());
+    const row = { pane: r.pane, cwd, label: typeof r.label === 'string' ? r.label : '' };
+    const home = r.home || (was && was.home) || ctx.pushedBy;
+    if (home) row.home = home;
+    rows.push(row);
+  }
+
+  const arrivedIds = new Set(rows.map((r) => r.pane));
+  const retired = prior.filter((r) => r && r.pane && !arrivedIds.has(r.pane)).map((r) => r.pane);
+  return {
+    buf: Buffer.from(JSON.stringify(rows, null, 2) + '\n', 'utf8'),
+    minted, retired, adopted: rows.length,
+  };
+}
+
+/**
+ * The postcondition, re-derived at the destination.
+ *
+ * AND THE FIRST CHECK IS THE IMPORTANT ONE. `read_kept()` (main.rs:3320) is
+ * `from_str(&s).ok().unwrap_or_default()` — an unparseable roster is INDISTINGUISHABLE FROM AN
+ * EMPTY ONE to every caller, and `gc_captures()` builds its keep-set from that call, so a roster
+ * this transform garbled would not read as a broken roster: it would read as zero kept panes and
+ * archive every committee tail in the house. That reader is E's D056-2 F1, and the librarian found
+ * it already cost a visible failure on 2026-08-15 (`journal/2026-08-17.md:95`) with the writing
+ * half fixed and the swallowing half left. This arrival path is about to become its second writer.
+ * Fixing `read_kept()` is C's; refusing to be the writer that feeds it garbage is mine, and it is
+ * this line.
+ */
+function rosterVerify(destBuf, srcBuf, ctx) {
+  const d = readJsonArray(destBuf);
+  if (d.err) {
+    return { ok: false, why: `the roster at the destination will not parse (${d.err}). read_kept() reads that as ZERO kept panes, not as an error, and gc_captures() would archive every tail.` };
+  }
+  const s = readJsonArray(srcBuf);
+  if (s.err) return { ok: false, why: `the arriving roster will not parse (${s.err})` };
+
+  const want = s.rows.filter((r) => r && r.pane).map((r) => r.pane);
+  const got = d.rows.map((r) => (r && r.pane) || '(no pane id)');
+  if (got.length !== want.length || want.some((p, i) => got[i] !== p)) {
+    return { ok: false, why: `the adopted ids are not the arriving set — wanted [${want.join(', ')}], found [${got.join(', ')}]` };
+  }
+  for (const r of d.rows) {
+    if (typeof r.cwd !== 'string' || !r.cwd) return { ok: false, why: `${r.pane}: no cwd at the destination` };
+    if (!underRoot(r.cwd, ctx.instances)) {
+      return { ok: false, why: `${r.pane}: cwd is not under this machine's instances root (${ctx.instances}): ${r.cwd}` };
+    }
+    let st;
+    try { st = fs.statSync(r.cwd); } catch (_) {
+      return { ok: false, why: `${r.pane}: cwd does not resolve on this machine: ${r.cwd}` };
+    }
+    if (!st.isDirectory()) return { ok: false, why: `${r.pane}: cwd is not a directory: ${r.cwd}` };
+  }
+  return { ok: true, why: null };
+}
+
+/** The context every transform is handed. Resolved HERE, never from the arriving set. */
+function arrivalCtx(DATA, STATE, v, over) {
+  const o = over || {};
+  let rules = o.rules;
+  if (!rules) {
+    const m = loadManifest();
+    if (m.errors.length) return { err: m.errors };
+    rules = m.rules;
+  }
+  return {
+    DATA, rules,
+    state: o.state || STATE,
+    instances: o.instances || instancesRoot(),
+    pushedBy: o.pushedBy || (v && v.index && v.index.machine) || null,
+  };
+}
+
+/** The transform a path must go through on arrival, or null. First match wins, as classify does. */
+function transformFor(rel, rules) {
+  const r = (rules || []).find((r) => r.re.test(rel));
+  return r && r.on_arrival ? { name: r.on_arrival, ...ARRIVAL_TRANSFORMS[r.on_arrival] } : null;
+}
+
 /**
  * Write the verified tree into the data dir, keeping whatever it displaces.
  *
@@ -861,7 +1099,12 @@ function cmdPull(args) {
  * board and tails are the only copy of what happened here, and a sync that arrives wrong must be
  * reversible on the machine it arrived at — otherwise the first bad sync is permanent on both.
  */
-function installTree(DATA, STATE, v) {
+function installTree(DATA, STATE, v, over) {
+  const ctx = arrivalCtx(DATA, STATE, v, over);
+  if (ctx.err) {
+    return { rc: 1, wrote: 0, displaced: 0, skipped: 0, backup: null, notes: [],
+      why: `the manifest has class errors, so nothing can be classified or transformed: ${ctx.err.join('; ')}` };
+  }
   const destRoot = path.join(STATE, 'data');
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   const backup = path.join(DATA, 'attic', `pre-sync-${stamp}`);
@@ -869,16 +1112,51 @@ function installTree(DATA, STATE, v) {
   let displaced = 0;
   let skipped = 0;
   let madeBackup = false;
+  const notes = [];
   for (const f of v.index.files) {
     const src = path.join(destRoot, f.path.split('/').join(path.sep));
     const dst = path.join(DATA, f.path.split('/').join(path.sep));
+
+    // THE TRANSFORM RUNS BEFORE THE COMPARE, and that ordering is not cosmetic: comparing the
+    // destination against the UNtransformed bytes would rewrite the file on every install and
+    // report it as changed forever, because a transformed file is supposed to differ from what
+    // arrived. `want` is what this machine is entitled to have on disk.
+    const t = transformFor(f.path, ctx.rules);
+    let want;
+    if (t) {
+      if (!t.apply) {
+        return { rc: 1, wrote, displaced, skipped, backup: madeBackup ? backup : null, notes,
+          why: `${f.path}: the manifest names arrival transform '${t.name}' and nothing implements it` };
+      }
+      const r = t.apply(fs.readFileSync(src), ctx);
+      if (r.err) {
+        return { rc: 1, wrote, displaced, skipped, backup: madeBackup ? backup : null, notes,
+          why: `${f.path}: the '${t.name}' arrival transform refused — ${r.err}` };
+      }
+      want = r.buf;
+      // EVERY directory the roster promises is made to exist HERE, before anything reads the file:
+      // a cwd naming a directory that is not there is not this machine's roster. It walks the
+      // OUTPUT rather than just the newly-minted ones on purpose — a dir recorded last time and
+      // deleted since is the same defect arriving by a different door, and `mkdir -p` on one that
+      // already exists costs nothing and keeps the install idempotent.
+      for (const row of readJsonArray(want).rows || []) {
+        if (row && row.cwd) fs.mkdirSync(row.cwd, { recursive: true });
+      }
+      notes.push({
+        path: f.path, transform: t.name,
+        adopted: r.adopted, minted: (r.minted || []).length, retired: r.retired || [],
+      });
+    } else {
+      want = fs.readFileSync(src);
+    }
+
     let cur = null;
     try { cur = fs.readFileSync(dst); } catch (_) { /* nothing there */ }
     if (cur) {
       // ALREADY IDENTICAL IS COUNTED, NOT DROPPED. `wrote` alone made a benign skip and a file
       // that never arrived print the same smaller number — which is how `installed 46 file(s)`
       // over a set of 47 read as a mystery on 2026-09-09 instead of as arithmetic that closes.
-      if (sha256(cur) === f.sha256) { skipped++; continue; } // touching it would only churn mtimes
+      if (cur.equals(want)) { skipped++; continue; } // touching it would only churn mtimes
       const b = path.join(backup, f.path.split('/').join(path.sep));
       fs.mkdirSync(path.dirname(b), { recursive: true });
       fs.writeFileSync(b, cur);
@@ -886,10 +1164,10 @@ function installTree(DATA, STATE, v) {
       displaced++;
     }
     fs.mkdirSync(path.dirname(dst), { recursive: true });
-    fs.writeFileSync(dst, fs.readFileSync(src));
+    fs.writeFileSync(dst, want);
     wrote++;
   }
-  return { rc: 0, wrote, displaced, skipped, backup: madeBackup ? backup : null, why: null };
+  return { rc: 0, wrote, displaced, skipped, notes, backup: madeBackup ? backup : null, why: null };
 }
 
 /**
@@ -925,11 +1203,44 @@ function installTree(DATA, STATE, v) {
  * 14:59:06.172Z). A reading cannot be a lock. What it changes is that the record now says what was
  * read, when, and which paths — so the next investigation starts from evidence and not from 46.
  */
-function reconcileInstall(DATA, v) {
+function reconcileInstall(DATA, v, over) {
   const missing = [];
+  const ctx = arrivalCtx(DATA, (over && over.state) || stateDir(), v, over);
+  const rules = ctx.err ? [] : ctx.rules;
   for (const f of v.index.files) {
     const p = path.join(DATA, f.path.split('/').join(path.sep));
     const expectedShort = `${f.bytes} bytes, sha256 ${f.sha256.slice(0, 12)}…`;
+
+    // A TRANSFORMED PATH IS NOT RECONCILED BY ITS HASH, because it is SUPPOSED to differ from the
+    // index — the whole point of the transform is that the bytes this machine should hold are not
+    // the bytes that arrived. Hashing it would fail the roster on every single install. So the
+    // claim is re-derived instead: the transform's own postcondition, run against the destination.
+    // That keeps the L055 law intact — the answer still comes from reading the destination, never
+    // from the tool's record of having run.
+    const t = transformFor(f.path, rules);
+    if (t && t.verify) {
+      let destBuf, srcBuf;
+      try { destBuf = fs.readFileSync(p); } catch (_) {
+        missing.push({ path: f.path, kind: 'ABSENT', expected: expectedShort,
+          found: 'no such file in the data dir', where: p });
+        continue;
+      }
+      try { srcBuf = fs.readFileSync(path.join(ctx.state, 'data', f.path.split('/').join(path.sep))); }
+      catch (e) {
+        missing.push({ path: f.path, kind: 'TRANSFORM', expected: `the '${t.name}' postcondition`,
+          found: `the arriving copy could not be re-read from the state tree: ${e.message}`, where: p });
+        continue;
+      }
+      const r = t.verify(destBuf, srcBuf, ctx);
+      if (!r.ok) {
+        missing.push({ path: f.path, kind: 'TRANSFORM',
+          expected: `the '${t.name}' arrival transform's postcondition`,
+          found: r.why, where: p,
+          note: 'the bytes are allowed to differ from the index here; the PROPERTY is not' });
+      }
+      continue;
+    }
+
     let st;
     try { st = fs.statSync(p); } catch (_) {
       missing.push({
@@ -1069,6 +1380,7 @@ function main() {
 if (require.main === module) main();
 module.exports = {
   stableRead, sha256, classify, loadManifest, verifyTree, installTree, reconcileInstall,
+  ARRIVAL_TRANSFORMS, instancesRoot, transformFor, underRoot, mintSiblingDir,
   machineHeads, machineTag, stateDir, dataDir, ensureTreeSettings, remotePrivacy, writeStatus, gitTry,
   FILE_CAP, STABLE_TRIES, SETTLE_MS, INDEX_NAME, STATUS_NAME, COMPLETION_NAME, RECEIPT_NAME,
 };
