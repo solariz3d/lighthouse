@@ -250,3 +250,154 @@ true**, not because anything checked it.
   claim they do.
 - **The 29-minute figure and the L049 sequence are the chair's account plus the ledger note at
   `lap.jsonl` (L049 `filed`), not something I timed.**
+
+---
+
+# ADDENDUM — 2026-09-09 ~02:0x. Three things from the chair, ruled.
+
+## A · THE MUTANT CHARGE: the run I reported did compile, and I have added the control that proves it
+
+**The charge is fair against §7 and not against §6, and the confusion is my doing.** §7 describes my
+**first** harness run, which I threw away. Every mutant in the run reported in §6 **built and ran to
+a `test result:` line**, and each names the test that killed it:
+
+    CAUGHT M5 the possession boundary is exclusive  (2 failed vs the baseline 1)
+      by: mcp::tests::the_window_is_the_possession_and_the_boundary_is_inclusive
+      test result: FAILED. 478 passed; 2 failed; 4 ignored
+
+**Zero "did not compile" in the reported run**, and the harness has had a NOT-APPLIED arm from its
+first line: a sha1 check that the mutation actually changed the file (`SKIP`), and an `UNKNOWN`
+bucket for output carrying neither a `test result:` line nor a compile error. Both read 0.
+
+**But the chair's instinct is right and my evidence was one arm short.** "9 of 9 caught" is also what
+a harness that prints CAUGHT unconditionally would report — **an instrument that can only return one
+answer is not an instrument**, which is my own L046 sentence aimed at me. So I built the control I
+had not built (`scratchpad/controls-mcp.sh`):
+
+| control | expected | got |
+|---|---|---|
+| C1 a comment word, no behaviour change | SURVIVE | **SURVIVE** |
+| C2 refusal prose no test asserts on | SURVIVE | **SURVIVE** |
+| C3 an anchor that is not in the file | SKIP | **SKIP** |
+
+    controls: 3 ok · 0 bad · restored: YES
+
+**The harness can report a survivor and can report a not-applied, so the nine catches are catches.**
+The lesson is not about this run: **a mutant harness needs a mutant that must survive, in the same
+run, or its own output is unfalsifiable.** It now lives in the script rather than in prose.
+
+**And the legibility failure is mine to own:** putting "the mistake I made inside the instrument" in
+§7, *after* the results in §6, let a discarded run read as the reported one. A correction belongs
+beside the number it corrects, not in a later section.
+
+## B · THE PACKET'S CORRECTION, RULED — and both premises are wrong, in opposite directions
+
+**The guard is neither stage-aware nor stage-blind. It is HOLDER-based, and the stage word never
+enters it.** `required_station` reads the holder; stage and holder merely correlate, which is why
+both readings looked right. From `C:\Consonance\data\lap.jsonl`:
+
+    L049  map         holder=chair        L050  map         holder=chair
+          dispatched  holder=panes              working     holder=panes
+          return-leg  holder=chair              working     holder=chair   <- the 01:52 retake
+          filed       holder=none               working     holder=panes
+                                                return-leg  holder=chair
+
+- **The packet's first premise** — *"a dispatch during DISPATCHED or WORKING is ordinary fan-out and
+  must stay legal"* — is false, and the chair proved it at **01:51:57**:
+  `chair_inject REFUSED OUT OF TURN — … open laps are held by ["panes"] (newest: lap L050)`.
+- **The correction's premise** — *"the chair is already refused there [RETURN-LEG], so what is
+  missing may be only the NAMED RECOVERY"* — **is also false, and it is the more consequential of
+  the two.** L049's `return-leg` row holds at **`holder=chair`**. The chair is not refused during
+  return-leg; **it is the only seat that may speak there.** That is exactly how the 00:56 injection
+  into A succeeded, and therefore how the trap was made at all.
+
+**Ruling: the RETURN-LEG case does need a refusal, and the debt gate in §3 is it.** The named
+recovery is the half that cost the 29 minutes; it is not the whole of what was missing.
+
+**Neither premise would have been caught by reading the code.** `required_station` says
+`chair`/`panes` and says nothing about which stage puts which word in the row — that mapping exists
+only in the ledger, which is where I went.
+
+## C · "FAN-OUT BY RE-TAKING THE BATON" — a hole, and it fired tonight, on C, in 41 seconds
+
+Asked to rule it fine or a hole: **a hole**, and not hypothetically. The chair's own retake —
+performed in order to send me the message saying the return-leg case may need no refusal — **created
+the return-leg trap for C while it was open.** From `board.jsonl` and `lap.jsonl`, one clock:
+
+    01:51:57  chair_inject REFUSED OUT OF TURN — mount D … open laps are held by ["panes"]
+    01:52:17  lap.jsonl  L050 working  holder=chair   by=chair      <- the retake
+    01:52:43  call_librarian REFUSED OUT OF TURN — mount C … open laps are held by ["chair"]
+    01:52:58  lap.jsonl  L050 working  holder=panes   by=chair      <- handed straight back
+
+**C's hand-back arrived 26 seconds into a 41-second window and was refused by it.** C got the old
+unconditional line — *"the loop comes back to you"* — and this time it did, fifteen seconds later.
+**C was lucky, not safe.** The difference between C's night and A's is whether somebody happened to
+hand the baton back.
+
+**The invariant neither the packet nor my own §2 had:**
+
+> **Moving the baton TO panes never traps anyone. Moving it AWAY from panes is the only trapping
+> move there is** — and the retake-to-dispatch is exactly that move, performed for a good reason.
+
+**This partly corrects my §2.** I ruled that `lap-row.js` cannot hold the invariant because the
+failure was the *absence* of a row. True of A's case; false as a general claim. **C's trap was
+created BY A ROW** (`working --holder chair`), which `lap-row.js` wrote and could therefore have
+seen. Two variants, two homes, and I collapsed them:
+
+| variant | what created it | who can see it |
+|---|---|---|
+| **A's, 00:56** — inject during return-leg, no row follows | an absent row | only `mcp.rs` — the debt gate, §3 |
+| **C's, 01:52** — a row moves the holder away from panes mid-turn | a written row | **`lap-row.js` could see it** |
+
+**What my change does for C's variant, exactly:** it does not prevent the window. It records the
+OWED mark at C's refusal, so the chair's *next* inject is refused with the recovery printed, and C
+is told it is in the trap and handed a retake it may legally run. **Loud and exitable, not
+impossible** — the same honest extent as §5.
+
+**What would close it, and it is not mine to build:** on a row that moves the holder *away from*
+`panes`, `lap-row.js` already has the artifact — it reads `board.jsonl` for the ring gate, and an
+audited chair-to-pane delivery since the baton last moved is the same fact my RUNG mark is. It is a
+**one-sided** check (that direction only), and it should cost an acknowledgement rather than a
+refusal, because the retake is sometimes the right move and refusing it would re-create the deadlock
+of §1(b). `lap-row.js` is not mine this lap; I am naming the site and the shape, not editing it.
+
+## D · PORTABLE-PATHS — closed
+
+    node consonance/tools/portable-paths.js --update   # baseline written — 176 sites (was 171)
+    node consonance/tools/portable-paths.js           # green — 234 files in scope, 176 known, 0 new
+    node consonance/tools/portable-paths.test.js      # tests 35 · pass 35 · fail 0
+
+**The diff is +5 and nothing else.** Every other verdict class is unchanged to the count
+(FATAL-DEFAULT 24, REVIEW 17, DISGUISED 14, BENIGN-MESSAGE 5, FATAL-USER 7, BENIGN-FIXTURE 7,
+FATAL-TEST-READ 2, FATAL-SHIPPED-INSTRUCTION 1; BENIGN-TEST 94 to 99), and `git diff` shows five
+added sites, all in `live-host.test.js`, all `identityHazard(...)`. I checked rather than assumed,
+because `--update` rewrites the baseline from the **whole tree**: on a checkout four panes are
+editing, it would have silently exempted anyone else's new site too. It did not.
+
+**The one line a stranger needs:** these five paths are the SUBJECT of the test, not a machine
+leaking into it. `identityHazard` decides whether the install-id file sits *inside* the travelling
+root, so the test must hand it literal absolute paths on both sides — including
+`C:\Consonance\database`, a deliberate near-miss proving the check does not match a sibling
+directory by prefix. Resolving them through an env override would test the resolver and stop testing
+the guard. Same shape as A's `install-only` fixtures.
+
+## E · CARGO, RE-RUN AFTER BOTH HARNESSES RESTORED THE FILE
+
+    cd consonance/src-tauri && cargo test --bin consonance -- --test-threads=1
+    test result: FAILED. 479 passed; 1 failed; 4 ignored
+
+Unchanged from §6, and the 1 is still `offset_tests` — C's EXPECTED-RED from `a17007f`, not mine.
+Both harnesses reported `restored: YES` against a sha1 of the original.
+
+## F · WHAT THIS ADDENDUM DID NOT VERIFY
+
+- **The 01:52 sequence is read off `board.jsonl` and `lap.jsonl`, not reconstructed** — but I did not
+  confirm with C that the hand-back refused at 01:52:43 was the one it was writing. The board names
+  the mount and C's own board line at 01:53:01 says its ring was refused; two sources, neither of
+  them C's transcript.
+- **§C's one-sided `lap-row.js` check is a shape, not a design.** I have not checked whether its
+  `deliveries` reader can tell "a pane is mid-turn" from "a pane was rung and has finished", which
+  is the entire difficulty and may make that check impossible in the same way §1 made the packet's.
+- **The controls test the harness, not the mutants.** C1 and C2 prove a survivor is reportable; they
+  do not prove that any particular one of the nine was applied to the line I believe it was. The
+  sha1 check proves the file changed, not where.

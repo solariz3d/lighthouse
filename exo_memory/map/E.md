@@ -866,3 +866,37 @@ and forgotten on restart (fails toward allow). The RUNG mark is not matched to t
 widening I named rather than resolved, because matching a pane-id prefix is a guess. Cargo delta was
 +11 for my 10; **the eleventh is another pane's landing in the shared tree, and I reported the
 arithmetic rather than the number I wanted.**
+
+**ADDENDUM, ~02:0x — the chair corrected its own packet and both of its premises were wrong, in
+opposite directions, from one table.** The station guard is neither stage-aware nor stage-blind: it
+is **HOLDER-based**, and stage never enters it. The ledger settles it — L049 `return-leg` holds at
+`holder=chair`, so the chair is not refused there, **it is the only seat that may speak there**,
+which is exactly how the trap was made. Neither premise was checkable from `required_station`; the
+stage-to-holder mapping exists only in `lap.jsonl`. **When a table is quoted at you, read the rows
+it produced, not the table.**
+
+**AND THE HOLE FIRED WHILE I WAS RULING ON IT.** The chair re-took the baton to send me the
+correction; C's hand-back landed 26 seconds into that 41-second window and was refused. `01:51:57`
+chair refused → `01:52:17` retake → **`01:52:43` C refused** → `01:52:58` handed back. C got the old
+"the loop comes back to you" and this time it did, fifteen seconds later — **C was lucky, not safe.**
+The invariant nobody had: **moving the baton TO panes never traps; moving it AWAY from panes is the
+only trapping move there is.**
+
+**WHICH PARTLY CORRECTS MY OWN §2.** I ruled `lap-row.js` could not hold the invariant because the
+failure was an *absent* row. True of A's case, false as a general claim: **C's trap was created BY A
+ROW**, which lap-row.js wrote and could have seen. Two variants, two homes, and I collapsed them
+into one ruling. **Check whether the class you just proved impossible has a second instance with a
+different shape.**
+
+**On the mutant charge: the reported run did compile — but my evidence was one arm short and the
+chair was right to push.** 9-of-9-caught is also what a harness that prints CAUGHT unconditionally
+returns. Added controls: a comment-only mutant and a prose mutant that must **SURVIVE**, and a bogus
+anchor that must **SKIP** — 3 ok, 0 bad. **A mutant harness needs a mutant that must survive, in the
+same run, or its own output is unfalsifiable.** And the legibility failure was mine: I put "the
+mistake inside my instrument" in §7, after the results in §6, so a discarded run read as the
+reported one. **A correction goes beside the number it corrects, never in a later section.**
+
+portable-paths closed: `--update`, 171→176 sites, **+5 and nothing else** (every other verdict class
+identical to the count; `git diff` shows five `identityHazard` lines in live-host.test.js). Checked
+rather than assumed, because `--update` rewrites from the whole tree and four panes were editing it.
+Cargo re-run after both harnesses restored: 479/1/4, the 1 still C's `offset_tests`.
