@@ -754,3 +754,55 @@ headline negative is wrong** and not run; |Gmax| beyond 3 (spot-checked only) an
 at all); a second independent implementation — part 0 checks my code against closed forms I derived
 myself, so a formulation error would pass both. The Gmax=0.5 hysteresis row is an artifact of a
 jump-detector with no no-jump verdict; **flagged in the hand-back rather than deleted or fixed.**
+
+---
+
+## 2026-09-09 ~00:4x · L049 · P-LIVE-HOST — I took the clock out of the decision instead of trying to fix it
+
+**Hand-back:** `exo_memory/handback/p-live-host_2026-09-09.md`. Design
+`loop/design_live_host_2026-09-09.md`; module + tests `consonance/tools/live-host.{js,test.js}`.
+**Wired to nothing.** 25 cases, 15 mutants, 15 caught, 0 survivors. Nothing committed.
+
+**THE PACKET OFFERED ME A REFUSAL AND THE REFUSAL WAS RIGHT ABOUT THE WRONG THING.** *"One live host
+cannot be enforced without a shared clock"* is true of **heartbeat comparisons** and false of the
+problem: mutual exclusion needs **one point both machines reach, not one clock both agree on**. The
+git remote is that point — an **orphan commit** pushed to a lock ref makes every push to an existing
+ref non-fast-forward, so acquire is create-only and breaking is a CAS against exactly the sha
+observed. `ls-remote` then returns the heartbeat token in one round trip, so **watching the lease IS
+watching the heartbeat**, clock-free. **When a permission-to-refuse names a mechanism, check whether
+the mechanism is load-bearing before you spend the permission.**
+
+**AND THE SAME CLASS AGAIN, FOURTH SIGHTING, CAUGHT THIS TIME BEFORE IT SHIPPED.** I hardened the
+heartbeat and left `state: CLOSED` untouched — and CLOSED is **exactly as stale-able**. A closes and
+pushes; A relaunches and the push fails; B pulls, reads CLOSED, starts. **Two live hosts and no clock
+anywhere in that story.** My first pass returned PROCEED on a foreign lease over a CLOSED file: the
+precise double-live the lap exists to prevent. L044 was *an absence cannot fail on the case nobody
+named*; L046 was *measure the object before building the detector*; this is **hardening the obvious
+surface while its twin sits beside it untouched.** The class does not stop recurring. What changed is
+only that the case table came before the tests. **Enumerate the states before writing the guard.**
+
+**THE FAILURE-DIRECTION RULING: it fails toward letting the keeper IN — never silently, never
+without a record.** Not softness. **Recoverability is the axis, not size:** a double-live on an
+append-only git set is a *divergence* (both commits exist, a sort settles it); a lockout is not
+recoverable *by the person it happens to*. `claim_named_singleton` at `main.rs:5443` already fails
+open one function away, with its reason written down. And the fourth reason is the one I keep
+arriving at from different directions: **a guard that hard-refuses records zero double-lives whether
+it works or not** — indistinguishable from a guard nobody triggered. Same shape as L046's refused
+scanner. **An instrument that can only be right is not an instrument.**
+
+**AND I SPLIT THE FALSIFIER RATHER THAN LETTING MYSELF NARROW IT.** Always-overridable means F1
+*can* fire, so I kept F1 verbatim as the headline and added **F2: two hosts live with no `forced`
+row** — the silent failure, which is worse. Saying plainly what the design does NOT deliver ("one
+live host as a hard property") is what let the weaker version be honest instead of quiet.
+
+**THE NUMBER IS A FUNCTION AND IT DECLARES ITSELF UNMEASURED.** `staleAfterMs = publish × 3 +
+margin` = 480 000 ms. The 3 is geometric-false-positive vs linear-delay, leaning long because early
+costs a double-live and late costs one dialog. **`publishMs` is a guess nobody has timed, and
+`policy().publishMsMeasured === false` is asserted by a test** — a number nobody has timed should say
+so in its own output, not in a comment someone has to go and read.
+
+**Did not verify:** nothing wired; **the GitHub custom-ref push is unverified and the whole
+enforcement layer rests on it**; no end-to-end double-live attempted, so **F1 has never had a chance
+to fire**; mutants are of my own module, not cell-level. **I refused to quote a before-count for the
+suite** — I truncated my own baseline with `tail -25` and threw the summary away, and a "was 80, now
+81" would have been hand-made. Named the three pre-existing reds instead.
