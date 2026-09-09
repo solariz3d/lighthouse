@@ -729,3 +729,101 @@ connotations of a human kind, the greater the potential for the looping effect" 
 looped variables is a prediction about the corner where the nearest predecessor expects the effect
 to be weakest. **The falsifier named two sources; the third one broke a different claim, and a lit
 pass that stops when the registered falsifier resolves leaves that on the floor.**
+
+## 2026-09-09 — P-STATE-SET (L049): the transport question is the board and nothing else
+
+Hand-back at `exo_memory/handback/p-state-set_2026-09-09.md`. Built
+`consonance/state-manifest.json` (55 rules) + `consonance/tools/state-manifest.js`. Uncommitted.
+`dev/shell/install.ps1` untouched — the manifest does not land beside a hook installer whose
+`$dest` is `~/.claude\shell` and which says `data_dir` zero times.
+
+**134 paths walked, 0 unplaced, 0 class errors. TRAVELS 351,355,025 B (335.08 MB) — and 322.69 MB
+of that is one file.** TRAVELS minus `board.jsonl` is **12,993,103 B (12.39 MB)**. That is the
+finding: every other classification in the manifest is free on size, forever. Byte-exact projection
+of the compacted board by the plan's own rule (streamed, so a 338 MB file never lands in memory):
+
+    node -e "const fs=require('fs'),rl=require('readline');let m=0,kb=0,kr=0,db=0,dr=0; \
+      const s=rl.createInterface({input:fs.createReadStream('C:/Consonance/data/board.jsonl',{encoding:'utf8'}),crlfDelay:Infinity}); \
+      s.on('line',l=>{const b=Buffer.byteLength(l,'utf8')+1;let r;try{r=JSON.parse(l)}catch(_){kb+=b;return} \
+      const t=r.ts||0; if(t<m){dr++;db+=b}else{m=t;kr++;kb+=b}}); \
+      s.on('close',()=>console.log(kr,kb,dr,db))"
+    # 24877 39815079 243381 298546843   -> projected TRAVELS 52,808,182 B (50.36 MB)
+
+**The lesson worth keeping: a REGENERATES column is a claim about a WRITER, and it has to be
+audited as one.** So the checker treats a REGENERATES rule with no `regenerated_by` *and*
+`regenerated_when` as a CLASS ERROR, exit 1 — mutation-proved, along with UNDECIDED-without-a-decider.
+Without that, "regenerates" is where a path you are choosing to lose goes to look like maintenance.
+The whole column came to **10,607 bytes**, which is the honest way to report a bucket built to be
+suspicious of.
+
+**Two near-identical files, different columns, and the reason is the CONSEQUENCE not the shape.**
+`vantage_watermark.json` (65 B) travels; `carrier-drift.state.json` (33 B) regenerates. Both dedupe
+watermarks. Left behind the first rewinds and **192 answered findings surface again as new**; the
+second costs one duplicate line. Sorting watermarks by shape would have been exactly the
+collapse-distinct-states-into-one-bucket this room has now spent three laps on.
+
+**A path can fail to travel for a reason unrelated to its class, and the far-end listing looks
+identical.** `data/vantage_cell` is an EMPTY DIRECTORY — **git cannot carry one at all.** No
+classification could have made it travel. It is REGENERATES only because `second-vantage.js:189`
+mkdirs it before launching a reader.
+
+**The MISSING-FILE ruling, which I have owed: a deliberate absence and an accidental one can only
+be told apart by a DECLARATION that outlives the file** — nothing about the gap itself distinguishes
+them, because it is the same gap. Demonstrated rather than argued: `attic/board.jsonl.*` is absent
+and prints `declared, not present yet`; an undeclared path is absent and prints `UNPLACED`, exit 1.
+**The shape transfers to forget-rate; that edit is still owed and is not mine in this packet.**
+
+**And the limit that outranks the classification: a classification is not a transport.** Every
+TRAVELS entry but three is append-only JSONL, so two machines appending between syncs conflict at
+the tail of *every one of them*. Without E's single-live-host guard plus pull-before-launch, this
+manifest names a merge-conflict set. `tailer-offsets.json` STAYS here while
+`dev/migrate/pack_room.ps1` copies it — **both right, because that bundle carries the transcripts
+the offsets index and this one does not. Prior art disagreeing is not prior art being wrong; check
+which transport it was written for.**
+
+## 2026-09-09 — P-STATE-SET follow-up (L049): the column that was asked for would have blocked the guard
+
+Same hand-back, appended: `exo_memory/handback/p-state-set_2026-09-09.md`. New:
+`consonance/tools/state-manifest.test.js` (25 tests, 12 mutants, 0 survivors). Manifest now 58 rules
+plus a `forbidden` list. Uncommitted.
+
+**The relay asked for `install_id -> STAYS` and STAYS was the wrong instrument, in the way that is
+hardest to see: it would have looked like compliance.** `live-host.js:252-262` tests the install-id
+path against the travelling root **by path prefix** and never reads the manifest — so a STAYS rule
+under `data/` keeps the file out of the sync AND STILL trips `identityHazard`, and E's launcher
+refuses to arm while my manifest reads as having satisfied the dependency. **The general form worth
+keeping: when a downstream guard enforces by a mechanism that does not consult your instrument,
+satisfying your instrument is not satisfying the guard.** Answer was a `forbidden` list — a
+declaration checked by PRESENCE, red the day the file appears — plus the ruling that its home is
+outside the data dir entirely.
+
+**The chair's discriminator is a good one and I am keeping it: if the reasons you write for two
+rules are interchangeable, one of them is probably wrong.** Here they were opposite invariants on the
+same subject — `live_host.json` must be IDENTICAL across machines, `install_id` must be UNIQUE to
+each. Swap the reasons and both break loudly. That test is cheap and catches a symmetric-looking pair
+that isn't.
+
+**My own test found my own bug within the hour, and the shape is the one to remember: an assertion
+on an EXIT CODE alone goes green over a CRASH.** An unknown class name indexed a missing key,
+threw a TypeError, exited 1 — and the test asserting `code === 1` passed. **Assert the reason text,
+not the number.** Fixed the tool too: a manifest with class errors now stops before walking, because
+a TRAVELS figure computed under a rule set that does not parse reads exactly as authoritative as a
+good one, and a transport decision gets made on that figure.
+
+**One mutant survived the first round and it was my test that was wrong, not the mutant.** *last
+match wins* passed because my "first match wins" fixture used `*.txt.bak-*` and `*.txt` — anchored,
+therefore disjoint, therefore no ordering was ever exercised. **A test for an ordering rule needs a
+path that two rules both claim.** It also left a real finding: **no two rules in the shipped manifest
+overlap at all**, so first-match-wins is a live semantic that nothing but the test exercises.
+
+**Two dependencies nobody relayed, found by reading the object and by running the suite:** E's §9
+also asks for a **sync-completion record** (`syncVerified` is a required input; `null` is UNKNOWN,
+not false) → STAYS, because a travelled one has D reading L's verification as its own — install_id's
+failure in a second costume. And **`replay-check.mark.json`** (C's `replay-check.js:36`, surfaced by
+`js-suite` going red) → STAYS, because the mark ties board growth to *local* transcripts and C's own
+tool already refuses that seam across a compaction. **Read the object, and run the suite; the relay
+carries what the relayer noticed.**
+
+`js-suite` is RED on **C's** `replay-check.js:35-36` (2 machine literals), not on mine — `pp.scan()`
+returns `[]` for both of my files. Noted rather than fixed: it is C's file. **A red suite everyone
+assumes belongs to someone else is how a red suite stays red.**
