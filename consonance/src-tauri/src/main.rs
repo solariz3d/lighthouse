@@ -12689,10 +12689,114 @@ mod ready_signal_tests {
         }
     }
 
+    /// THE REAL SCREEN, and the defect it carries. L050, 2026-09-09.
+    ///
+    /// The fixture is 32,768 bytes of RAW PTY OUTPUT taken from the librarian pane's own capture
+    /// log, ending at byte 1,794,048 — a frame chosen by scanning the log, not composed. It is
+    /// committee routing text and shell lines, nothing private. Replayed at 43x201, the size the
+    /// docked panes actually run (the separator rule measures 201 columns in this machine's live
+    /// captures; at 202 the repaint visibly tears, which is how the width was established rather
+    /// than assumed).
+    ///
+    /// WHAT IT PROVES, and every clause was measured before it was written:
+    ///
+    ///   · The composer on that frame is EMPTY. The rendered grid's last prompt row is a bare
+    ///     `❯` with nothing after it.
+    ///   · `typed_only` DELETES THAT ROW ENTIRELY. Claude Code draws the composer marker
+    ///     `ESC[38;2;80;80;80m` on `ESC[48;2;55;55;55m` — Rgb(80,80,80), NOT Default — whenever
+    ///     the composer is in its dimmed state. The reduction keeps Default cells only, so the
+    ///     marker goes with the chrome.
+    ///   · `input_box_empty` then finds NO prompt row at all and returns false by its own
+    ///     UNKNOWN-HOLDS rule. A pane whose composer is empty reads BUSY.
+    ///
+    /// With `PaneGate::Ready` — which comes from the pane's OWN STAMP, not from this screen —
+    /// `drain_decision` takes `bounded(box_empty, SignalOutranked)` and holds the full 240 s.
+    /// That is the board's *"the pane's own signal said ready; its composer never cleared"*.
+    ///
+    /// THIS IS THE FAILURE `the_prompt_marker_survives_the_reduction` WAS WRITTEN TO PREVENT, in
+    /// its own words: *"if it were not [Default], blanking non-default cells would delete the
+    /// marker, `input_box_empty` would find no prompt row, and `None => false` would call every
+    /// pane busy forever."* It could not catch it because `box_screen` paints the marker Default
+    /// by construction — the test pinned the model of the screen, not the screen. Third time in
+    /// this file (L044's row window, L044's footer, this).
+    ///
+    /// NOT ESTABLISHED HERE, and stated so nobody quotes this test for more than it did: that
+    /// this frame is what forced tonight's six deliveries. Sampling the same logs pre-update
+    /// shows the same blanking, so it is NOT new tonight, and the update row is NOT the cause —
+    /// it is drawn `ESC[38;2;78;186;101m` (green) and the reduction already strips it.
+    #[test]
+    fn a_real_empty_composer_reads_busy_because_the_marker_is_not_default() {
+        let data = fs::read("fixtures/screens/composer_empty_reads_busy_2026-09-09.bin")
+            .expect("the real-screen fixture");
+        let mut p = vt100::Parser::new(43, 201, 0);
+        p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 201).collect();
+        let typed = typed_only(p.screen());
+
+        let at = rendered
+            .iter()
+            .rposition(|l| capture::is_empty_box(l) || capture::is_prompt(l))
+            .expect("premise: the rendered screen HAS a composer row");
+        assert!(
+            capture::is_empty_box(&rendered[at]),
+            "premise: the composer on this real frame is empty — row {at} is {:?}",
+            rendered[at].trim_end()
+        );
+
+        assert!(
+            typed[at].trim().is_empty(),
+            "the marker did not survive the reduction on a real screen — row {at} reduced to {:?}",
+            typed[at].trim_end()
+        );
+        assert!(
+            !typed.iter().any(|l| capture::is_empty_box(l) || capture::is_prompt(l)),
+            "no prompt row survives anywhere, which is why input_box_empty falls to None => false"
+        );
+
+        assert!(input_box_empty(&rendered), "the truth: this composer is empty");
+        assert!(
+            !input_box_empty(&typed),
+            "THE DEFECT: the gate reads an empty composer as occupied and holds to the 240 s bound"
+        );
+    }
+
+    /// THE ACCEPTANCE TEST FOR THE FIX — deliberately `#[ignore]`d, and it must stay that way
+    /// until a predicate exists that can pass it WITHOUT the unsafe shortcut.
+    ///
+    /// THE SHORTCUT, AND WHY IT IS REFUSED. The obvious repair is "keep the `❯` whatever colour
+    /// it is drawn in". It passes this test and it is not safe. Once the marker survives at any
+    /// colour, a row reading `❯ <grey text>` reduces to `❯` alone and reports EMPTY — and a
+    /// drawn autocomplete prediction and a greyed prompt row carrying the keeper's own words are
+    /// *the same row* to a colour test. Both are non-Default text after a non-Default marker.
+    /// Today they are told apart only by accident: the marker's colour hides the whole row, so
+    /// `None => false` holds. Removing that accident without replacing it trades a four-minute
+    /// hold for splicing the keeper mid-sentence, which is not recoverable, and the packet that
+    /// commissioned this named that as grounds to stop.
+    ///
+    /// WHAT WOULD EARN IT, from the same real screens: the composer is not "the last `❯` row",
+    /// it is "the `❯` row BELOW THE SEPARATOR RULE" — the full-width `────` in Rgb(136,136,136)
+    /// that Claude Code draws directly above the composer (row 38 with the composer at 39 on the
+    /// fixture above). That is a STRUCTURAL anchor rather than a colour one, so it survives a
+    /// recolour, and it separates scrollback prompt rows from the composer by construction
+    /// rather than by hue. It needs its own fixtures and its own mutants — a packet, not a patch.
+    #[test]
+    #[ignore = "acceptance test for the composer fix; see the doc comment before un-ignoring"]
+    fn an_empty_composer_must_read_empty_whatever_colour_the_marker_is_drawn_in() {
+        let data = fs::read("fixtures/screens/composer_empty_reads_busy_2026-09-09.bin")
+            .expect("the real-screen fixture");
+        let mut p = vt100::Parser::new(43, 201, 0);
+        p.process(&data);
+        assert!(
+            input_box_empty(&typed_only(p.screen())),
+            "a ready pane with an empty composer must be delivered to, not held for 240 s"
+        );
+    }
+
     /// The reduction must not eat the composer itself. `❯` is Default in the capture; if it were
     /// not, blanking non-default cells would delete the marker, `input_box_empty` would find no
     /// prompt row, and `None => false` would call every pane busy forever — a worse stall than the
     /// one being fixed, and silent.
+
     #[test]
     fn the_prompt_marker_survives_the_reduction() {
         let p = box_screen("", "score it");

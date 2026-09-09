@@ -962,3 +962,42 @@ Hand-back: `exo_memory/handback/p-board-replay_2026-09-09.md`. Tests:
 `offset_tests::the_backfill_decision_must_be_made_after_the_configured_dirs_resolve` (main.rs,
 deliberately RED, 468 pass / 1 fail) and `consonance/tools/replay-check.{js,test.js}` (12/12, three
 mutants killed) — the relaunch bar whose N comes from the transcripts, never from the board.
+
+## 2026-09-09 — L050: the guard for this defect was ten lines away, in the same function, and could not fire
+
+**The composer marker `❯` is drawn `ESC[38;2;80;80;80m` on `ESC[48;2;55;55;55m` — NOT Default.**
+`typed_only` keeps Default cells only, so it deletes the marker; `input_box_empty` then finds no
+prompt row at all and returns false by its own UNKNOWN-HOLDS rule. **A pane whose composer is empty
+reads BUSY and holds the full 240 s.** Librarian 339 of 395 sampled frames; third place 581 of 750.
+
+**`the_prompt_marker_survives_the_reduction` was written for exactly this and names the failure in
+its own doc comment.** It could not fire because `box_screen` paints the marker Default by
+construction. **Third time in this one function** — L044's row window, L044's footer, now the
+marker. Each time the test pinned the model of the screen instead of the screen. **The rule that
+generalises: a fixture built from your own picture of a surface can only ever confirm the picture.**
+
+**I refuted the packet three ways and the room's own log did most of it.** The update row is
+`Rgb(78,186,101)` — green, already stripped, not the cause. The premise died on `persist.log`:
+**31 forced deliveries on 09-08, before the auto-update, against 9 on 09-09.** It was worse
+yesterday. And "6 of 6" re-derives as **nine**, three of them arriving after the packet was written.
+**The move: when a brief reasons from "X changed, therefore X caused it", go count the thing before
+X.** Two commands.
+
+**REFUSED the fix, and the refusal is the finding.** *"Keep the `❯` whatever colour"* passes the
+fixture and is unsafe: once the marker survives at any colour, **a drawn autocomplete prediction and
+a greyed prompt row carrying the keeper's own words are the same row to a colour test.** I have the
+frame — `❯ tomorrow we will finish the lap the orch stopped…`, every cell non-Default, reduced to
+nothing. Today it holds only by accident. The real fix is structural: the composer is the `❯` row
+**below the separator rule**, not the last one. Acceptance test written and `#[ignore]`d with the
+argument in its doc comment so nobody un-ignores it and reaches for the shortcut.
+
+**On fixtures: I used real PTY bytes and it cost 512 KB, because a terminal only redraws what
+changed** — 32/64/128/256 KB all failed to repaint the composer. And I did NOT fixture the third
+place's screen though it was the strongest example (581 frames): its record never leaves, and a raw
+PTY slice IS the conversation. The strongest evidence is not always takeable.
+
+Hand-back: `exo_memory/handback/p-composer-update_2026-09-09.md`. Fixture:
+`consonance/src-tauri/fixtures/screens/composer_empty_reads_busy_2026-09-09.bin`. Tests:
+`a_real_empty_composer_reads_busy_because_the_marker_is_not_default` (green) and
+`an_empty_composer_must_read_empty_whatever_colour_the_marker_is_drawn_in` (ignored, the acceptance
+test). `cargo test` 479 pass / 1 fail — the 1 is my own EXPECTED-RED from a17007f, not this lap's.
