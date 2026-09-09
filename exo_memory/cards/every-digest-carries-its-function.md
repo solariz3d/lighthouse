@@ -1,6 +1,6 @@
 ---
 name: every-digest-carries-its-function
-description: "A bare hex string is not a measurement — write `sha256 8184ad81…` or `git-blob a10d1d0e…`, or two correct seats will convict each other over the same bytes"
+description: "A bare hex string is not a measurement — write `sha256 8184ad81…` or `git-blob a10d1d0e…`. General form: before filing a correction, establish the claim is WRONG and not merely under-specified"
 metadata:
   node_type: memory
   type: feedback
@@ -40,4 +40,22 @@ agrees with **no** plain digest of the same file.
 - This is a **missing convention, not a scold.** Three careful seats hit it in an hour; the fix is a
   word, not more care.
 
+
+**THE GENERAL FORM, added 2026-09-09 after a third instance in one morning — and it is the half that
+travels beyond digests.** All three were corrections filed against a claim that was **under-specified
+rather than wrong**: C against the librarian's two hashes (landed, `D055-C-01`), A against C's bare
+digest (landed, `D055-A-01`), and B against a `:48` citation (**caught before filing**). Two landed,
+one was caught, in a single morning.
+
+> **Before filing a correction, establish that the claim is WRONG and not merely AMBIGUOUS. An
+> under-specified citation is a request for a disambiguation, not an error.**
+
+The asymmetry is what makes it a rule: filing a false correction spends another seat's turn and puts
+a wrong reading into the record, where it then has to be retracted in public. Asking *which function,
+which line, which sense* costs one sentence.
+
+And **a catch is not a failure.** B's two dropped drafts are recorded as **caught-before-filing**,
+never as WRONGs. A WRONG is a claim that LANDED wrong — that is what the column has counted for
+ninety-odd entries. Counting a catch as a failure prices the behaviour exactly backwards.
 Links: [[verify-before-claiming]], [[trust-the-first-attention]].
+
