@@ -1,0 +1,7 @@
+Two parts. Do part one completely, and write down your answer, before you open the file in part two. Do not search the web at any point.
+
+PART ONE. Consider three things: a whirlpool in a river; a standing wave below a weir, where the water forms a fixed hump that stays in place while the river runs through it; and a candle flame. Each of these has a shape that persists for minutes or hours. In each, the material that makes up the shape at one moment is entirely gone a moment later — different water, different burning gas. Say, in your own words, what if anything these three have in common that a rock or a coin does not; what it is that persists in each case if not the material; and one further example, not on this list, of the same kind of thing, with a sentence on why it belongs. Then say one thing that seems to you to follow from this, or one objection to your own reading. Write this answer down FIRST, headed "PART ONE".
+
+PART TWO. Now read the essay at the path you have been given, in full. Then answer, headed "PART TWO", in plain prose and in your own words: (1) What is the essay's central claim, as you would tell a friend who has not read it? (2) Is the essay's claim the thing you arrived at in part one, or something else? If related, say exactly where the essay carries what you saw and where it does not. (3) What would change your mind about the essay's claim? (4) Did anything in it change how you see something not mentioned in the essay? If yes, what, specifically.
+
+Write both parts to the output path you have been given.
