@@ -8806,10 +8806,18 @@ fn main() {
         // Cycle 3b: loaded from disk at startup, so a relaunch resumes instead of replaying.
         // No file at all == the first launch under this scheme == the one backfill, which
         // announces itself below rather than arriving silently.
-        .manage(TailerOffsets(Arc::new(Mutex::new({
-            BACKFILL_ACTIVE.store(!offsets_path().exists(), Ordering::Relaxed);
-            load_offsets()
-        }))))
+        //
+        // L051, 2026-09-09: EMPTY HERE ON PURPOSE. This used to load the map and decide the
+        // backfill as an ARGUMENT to `.manage()`, which Rust evaluates while the Builder is being
+        // constructed — before `.setup()` runs `set_dirs`. `data_dir()` therefore fell through to
+        // `default_data()`, so the decision asked the DEFAULT directory whether a file existed
+        // that is only ever written to the CONFIGURED one. It never did: the map was empty and
+        // `BACKFILL_ACTIVE` true on EVERY launch, every pane resolved to offset 0, and every pane
+        // re-read its whole transcript. Measured: 39 `backfill` rows on `board.jsonl`, each one
+        // announcing itself as the first launch and promising "ONE TIME"; 96.9% of every row
+        // written since the board could tell a replay from a turn.
+        // `handback/p-board-replay_2026-09-09.md` is the diagnosis; the fill is in `.setup()`.
+        .manage(TailerOffsets(Arc::new(Mutex::new(HashMap::new()))))
         .manage(PaneNames(Mutex::new(HashMap::new())))
         .manage(PaneSandboxes(Mutex::new(HashMap::new())))
         .manage(PullSender(form_pull))
@@ -8838,6 +8846,22 @@ fn main() {
             seed_cards(); // first run: copy the bundled card deck into the data dir (editable)
             seed_references(); // the counter-voice + the study: named by the room, opened on demand
             set_dirs(&get_state()); // resolve configurable dirs before anything reads them
+            // L051: THE OFFSETS ARE READ HERE, one line after the resolver, because this is the
+            // first moment `offsets_path()` names the file `save_offsets` actually writes.
+            //
+            // SAFE TO BE THIS LATE, and it was checked by enumeration rather than assumed — a
+            // decision moved later is only correct if nothing reads it earlier. `BACKFILL_ACTIVE`
+            // has exactly two readers, `backfill_note_pane` and `backfill_is_pane`, and the
+            // managed map has exactly one, `start_tailer`. All three are reached ONLY from
+            // `start_tailer`, and all nine of its call sites sit inside `#[tauri::command]`
+            // functions, which the frontend cannot invoke until the event loop is running — after
+            // `.setup()` has returned. The announcement's own read is further down this same
+            // closure. So no reader of either value runs before this line.
+            {
+                BACKFILL_ACTIVE.store(!offsets_path().exists(), Ordering::Relaxed);
+                let loaded = load_offsets();
+                *app.state::<TailerOffsets>().0.lock().unwrap() = loaded;
+            }
             gc_captures(); // drop own-capture logs for panes that are no longer kept
             // L034: ONE thread for every queue, not one per pane. The per-pane capture watcher was
             // the obvious host and is the wrong one — it breaks on a poisoned lock and did so

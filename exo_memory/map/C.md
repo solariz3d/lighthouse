@@ -1001,3 +1001,47 @@ Hand-back: `exo_memory/handback/p-composer-update_2026-09-09.md`. Fixture:
 `a_real_empty_composer_reads_busy_because_the_marker_is_not_default` (green) and
 `an_empty_composer_must_read_empty_whatever_colour_the_marker_is_drawn_in` (ignored, the acceptance
 test). `cargo test` 479 pass / 1 fail — the 1 is my own EXPECTED-RED from a17007f, not this lap's.
+
+## 2026-09-09 — L051: landed my own fix, and the instrument lied to me first
+
+**The fix is two lines and the whole of it was already specified.** `.manage(TailerOffsets(…))` now
+holds an EMPTY map; the `BACKFILL_ACTIVE.store` + `load_offsets()` moved to one line after
+`set_dirs` inside `.setup()`. **`offset_tests` 13/13 — my EXPECTED-RED carrier from `a17007f` went
+green for the right reason** (its source-order half now finds the resolver above the decision, its
+path-resolution half unchanged and still passing, which is what makes it a fix and not a deleted
+test). Whole suite **480 passed, 0 failed, 4 ignored** — green for the first time this arc.
+
+**The refusal clause was the right question and I answered it by ENUMERATION, not by reasoning
+about Tauri's lifecycle.** A decision moved later is safe only if nothing reads it earlier, and that
+is a claim about a call graph: `BACKFILL_ACTIVE` has two readers, the managed map has one, all three
+reach only through `start_tailer`, and **all nine `start_tailer` call sites are inside
+`#[tauri::command]` functions** — unreachable until the event loop runs, which is after `.setup()`
+returns. The enumeration went into the code beside the change, not just the hand-back.
+
+**THE THING TO CARRY: my first table said every pane MISMATCH and Main's transcript had shrunk
+246 MB → 1 MB.** Dramatic, and completely wrong. **`JSON.parse` coerced the u64 head to a double**
+(`…961416` read back as `…960000`, so every comparison failed), and my sid→path scan collided on a
+stale duplicate transcript. I caught it **only because I validated the instrument against a value
+someone else had recorded** — `fnv1a(empty) === 14695981039346656037` from `head-watch.test.js`,
+and Main's head independently in `head-watch.jsonl`. Both matched the *computed* value and neither
+matched what my script printed, which is what said the script was wrong rather than the world.
+**A number in hand stops the asking. Checking the instrument against an outside value restarts it.**
+This is the second time this exact hole has been on my record; the difference is I checked.
+
+**Predicted BEFORE the rebuild, so it cannot become a story afterwards:** the first launch RESUMES
+— no backfill row, no re-read, not one pane. All seven heads match and every stored offset equals
+its file length, so `resume_offset` takes its last arm. And if I am wrong, **the second relaunch
+decides it**: a first backfill writes offsets to the path it just read, so a second `backfill` row
+would mean the fix did not take.
+
+**Found while checking, same species as the bug:** Main's sid resolves to TWO transcript files
+(live 246 MB, stale 1 MB in an old `C--Users-zackn-claude-instances-main` dir). **The offsets map is
+keyed on session id ALONE, not on path** — a cwd change would open the stale file with an offset
+245 MB past its end and re-read it from the top with no announcement. A file written under one
+identity and read under another, one field over.
+
+`--mark` taken at 08:42:46Z (board 338,530,720 bytes; 1,819 transcripts, 91,105 lines). **The next
+move is the keeper's rebuild** — said out loud in §4 rather than left implicit, and nothing of the
+fix has run in the app: 480/0 is not the replay being closed.
+
+Hand-back: `exo_memory/handback/p-offsets-fix_2026-09-09.md`.
