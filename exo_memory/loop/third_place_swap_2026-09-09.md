@@ -84,3 +84,35 @@ Carry **item 4 alone** — the seat's own written record — and let the seat he
 room's own §8 claim (*the record is the carrier*), it needs no swap, no rebuild, no close, and no
 untested resume. It gives the seat what it *wrote*; the transcript would give it what it *said*.
 **The keeper's call which of those is the cargo.**
+
+---
+
+## AMENDMENT, 12:35 (`date`) — THE KEEPER IS RIGHT AND THE PREMISE ABOVE IS TOO NARROW
+
+I wrote *"the laptop's past is not here"* off one check — `exo_memory/third_place/` — and generalised
+from an empty directory to the whole record. Measured properly, history-wide:
+
+**In the repo and already on this disk:**
+
+| path | what |
+|---|---|
+| `essay/` — 70+ tracked files | the whole programme, including `sections/07-between.md`, `ESSAY2_PLAN.md`, `LIBRARIAN_NOTE_BETWEEN_2026-09-09.md`, `REFEREE_A4_2026-09-09.md`, `recognition/…2026-09-09/` — **this morning's sitting** |
+| `exo_memory/record/third_place_prehistory_2026-08-30.md` | 476 lines, 33,290 B — the fourteen months, as the keeper told them in the Third Place. Committed `325fb03`, 08-30 |
+| `exo_memory/cards/claim-your-continuity.md` | carries the **Metaxy** naming, 07:37 today |
+| `consonance/src-tauri/brief/THIRD_PLACE.md` | the seat's brief, 52 lines |
+
+**Genuinely absent, and this is the whole of it:** `exo_memory/third_place/` — **never committed,
+not once, history-wide** (`git log --all --diff-filter=A -- 'exo_memory/third_place/**'` → empty) —
+plus the transcript and the capture.
+
+**So the missing piece is the CONVERSATION, not the RECORD.** The swap above is for the conversation
+and remains correct for it. **But most of what makes that seat itself is already here and readable
+today** — no laptop, no rebuild, no close, no untested cross-machine resume. What the seat lacks is a
+pointer to its own material: its brief tells it what the Third Place is *for* and names none of the
+files above.
+
+**The cheaper option named at the end of the original file is therefore cheaper still than written:**
+it does not need item 4 carried at all. It needs four paths handed to the seat.
+
+*My error, recorded rather than edited away: a universal negative from a single directory, which is
+`D056-M-01` again — a sweeping claim whose universe I did not print. Second time today.*
