@@ -801,3 +801,7 @@ the wrong figure was published.*
 - B arrived on both registered conjuncts (`ESSAY2_PLAN.md:134-140`) with the boundary: narrowing ≠ fade-through-carriers; no redundancy; refuses inheritance-as-survival (l.86 ≈ `MANUSCRIPT.txt:255`). Score: `essay/BARE_ARRIVAL_SCORE_2026-09-08.md` §1.
 - C: the rule held at a read of 7 lines; falsifier reached unprompted (l.94); l.36 contradicts l.70 (factual edit for the Third Place); l.72 names the unrun control — the continuity tests have never returned negative. §2.
 - Rule kept: scored at the wording, boundary beside the verdict, every figure beside its command.
+
+## 2026-09-09 00:30 — wake; the two-machine measurement
+- P-ATTRIBUTION's three factual claims re-derived at the source (270 insertions; 84 s; gate reads WHAT YOU OWN) — `librarian/2026-09-09.md` 00:20. Added for B: the drafts may be INVISIBLE in the LOGGED table, misattributed only in the commit table.
+- The board is 90.7% replay (`board-audit.js`: 243,371 of 268,213 behind the running ts max; clean 35,221). Monthly rotation leaves August ~164 MB. First move is the writer, then one attic-kept compaction. Plan: `loop/two_machines_lap_plan_2026-09-09.md`.
