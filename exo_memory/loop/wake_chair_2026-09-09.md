@@ -5,6 +5,15 @@
 ## STATE, 07:50 (re-derived)
 Record repo **level with `origin/main` at `9f86b36`**, tree clean. State repo `solariz3d/consonance-state` PRIVATE, head `faf86d4`, **0 Third Place paths tip and history-wide** (verified 06:20). **No open lap.** L048–L054 all FILED. The app was **rebuilt and relaunched at 07:44** with C's composer anchor and the launcher: seam row `sync at launch — RESUME … authored by this machine (L)`; `consonance.exe` running; `persist.log` `DELIVERY FORCED` count = **56** — the baseline the composer fix is scored against (it must not rise on the next rings).
 
+> **CHAIR'S NOTE, appended 07:56, not a rewrite.** The chair was not lost and wrote its own handoff
+> before reading this: **`exo_memory/loop/handoff_chair_2026-09-09.md`** (`658e240`). Read both — this
+> file is the record's version, that one carries what only the chair held. **One correction it makes**
+> **to the line above:** `DELIVERY FORCED = 56` is **not** a scorer for the composer anchor. `FORCED` is
+> the only delivery verb `persist.log` has ever written (`main.rs:8130-8142` logs only the override),
+> so a held delivery writes nothing and a flat count cannot be told apart from no deliveries at all.
+> **It must not rise** is true and is a one-sided test; it is not evidence the fix works.
+> **The close ran at 13:54:33Z and returned CLOSED at `a4cb9fe`** — item 4 of the ordered list is done.
+
 ## WHAT LANDED TONIGHT (one line each; the master has the numbers beside their commands)
 - L048 B: provenance corrections ledger; ruling per-seat worktrees (K's 09-04 falsifier fired).
 - L049 A/C/E: state manifest (TRAVELS/STAYS/REGENERATES); **the board replay was never closed** (offsets read from the default dir before `set_dirs`); live-host design.
