@@ -13,7 +13,7 @@ const assert = require('node:assert');
 const test = require('node:test');
 const fs = require('node:fs');
 const path = require('node:path');
-const { corpusSize, review, mdFiles, intakeCap,
+const { corpusSize, review, mdFiles, intakeCap, ageDaysMap,
         CARRY_TIERS, INDEX_TIERS, EXCLUDED_PREFIXES, MAIN_RS } = require('./corpus-age.js');
 
 /* Reads `order` out of corpus_shelf_at() and returns { carry: [...], index: [...] } by the CARRY
@@ -150,4 +150,47 @@ test('--apply moves and manifests; it never deletes', () => {
 test('--apply refuses to clobber a name already in attic', () => {
   const src = fs.readFileSync(path.join(__dirname, 'corpus-age.js'), 'utf8');
   assert.match(src, /name taken in attic/, 'a colliding filename must be skipped, not overwritten');
+});
+
+/* ADDED 2026-09-07 (BRAVO, L043). The age lookup went from one `git log` PER FILE to one per
+ * DIRECTORY -- 1,443 subprocess spawns to 3, and 137.7 s of test runtime to under a second.
+ * That is a change to HOW the answer is fetched, so the property to hold is that the answer is
+ * the same one. This test asks git the old way for a sample and requires the batch to agree.
+ *
+ * It costs ~0.5 s (5 spawns) on purpose: a rewrite justified by a speed number needs a guard
+ * that would go red if the speed came from returning something else. */
+test('the batched age map returns exactly what the per-file git log returned', () => {
+  const { execFileSync } = require('node:child_process');
+  const REPO = path.resolve(__dirname, '..', '..');
+  const ages = ageDaysMap('loop');
+  assert.ok(ages instanceof Map, 'ageDaysMap must return a Map');
+  assert.ok(ages.size > 0, 'fixture broken: no file under loop/ has a commit, so agreement is vacuous');
+
+  const sample = [...ages.keys()].slice(0, 5);
+  assert.strictEqual(sample.length, 5, 'need five committed files to compare against');
+  for (const rel of sample) {
+    const out = execFileSync('git', ['log', '-1', '--format=%ad', '--date=format:%s', '--', rel],
+      { cwd: REPO, encoding: 'utf8' }).trim();
+    const expected = Math.floor((Date.now() / 1000 - parseInt(out, 10)) / 86400);
+    assert.strictEqual(ages.get(rel), expected,
+      `batched age disagrees with per-file git log for ${rel}`);
+  }
+});
+
+test('a file with no commits is absent from the age map, not aged zero', () => {
+  // The old ageDays() returned null for an uncommitted file and `stale` stayed false, so it was
+  // never proposed. An absent key must reproduce that, because the alternative -- treating
+  // "unknown" as "0 days" or as "very old" -- silently changes what gets proposed for ARCHIVE.
+  const ages = ageDaysMap('loop');
+  const untracked = 'exo_memory/loop/' + 'no-such-file-' + Date.now() + '.md';
+  assert.strictEqual(ages.has(untracked), false, 'an uncommitted path must not appear in the map');
+  assert.strictEqual(ages.get(untracked), undefined, 'and must not resolve to a number');
+});
+
+test('every value in the age map is a non-negative integer number of days', () => {
+  const ages = ageDaysMap('loop');
+  for (const [rel, days] of ages) {
+    assert.ok(Number.isInteger(days), `${rel} has a non-integer age: ${days}`);
+    assert.ok(days >= 0, `${rel} has a negative age: ${days} — a timestamp parsed wrong`);
+  }
 });

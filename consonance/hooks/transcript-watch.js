@@ -77,16 +77,54 @@ function envOverride(name) {
   return v && String(v).trim() ? String(v).trim() : null;
 }
 
+// THE THIRD TIER WAS `return "C:\\Consonance\\data"` UNTIL 2026-09-08 (BRAVO, L044), and it was
+// not a fallback — it was one machine's disk written into a shipped hook. It survived because it
+// is RIGHT on this laptop: `~/.consonance.json` carries `data_dir: C:\Consonance\data`, so tier
+// two answers here and tier three has never once been reached. A dead branch that agrees with the
+// live one is invisible to every test that runs on the machine it was written for.
+//
+// It was found the lap before, not by a guard: the chair pointed at this function as the pattern
+// to COPY into userprompt_pulse.py. Copying it would have replanted the defect in a second file.
+// The ratchet was green over it by construction — it was one of 68 baselined sites — so the
+// exemption list was doing the hiding. Removed from the baseline in the same change; if it comes
+// back, portable-paths goes red instead of quietly re-exempting it.
+//
+// RETURNS A RECORD, NOT A STRING, and that is the load-bearing half. The obvious repair is
+// `return null`, which makes the caller's `path.join(dd, ...)` throw somewhere else with a
+// useless message — or, worse, silently join "null". On 2026-09-06 `map_carry` returned an empty
+// STRING for "no carry possible" and the caller pasted it under a header announcing a carry it
+// had not made; a comment cannot stop a caller from using an empty value, and a shape can. The
+// caller must destructure `dir` and cannot reach it without meeting `tier === null`.
+//
+// WHY IT DEGRADES RATHER THAN THROWS — ruled, not defaulted. Throwing is the right instinct for an
+// unattended process and it is wrong HERE, for four reasons that are about this hook and not about
+// the principle:
+//   1. BLAST RADIUS. This is a UserPromptSubmit hook on the keeper's Main session with a 10s
+//      budget. A throw is a non-zero exit on EVERY prompt he types — a per-turn error banner in
+//      exchange for an optional curiosity ledger whose own header says "just for fun tbh".
+//   2. IT WOULD FIRE ON A HEALTHY MACHINE. The desktop reaching this tier means only that it has
+//      no `.consonance.json` yet. Turning "this box is not configured" into a hard failure is the
+//      room's twice-committed "hardware reported as deficiency", and this file would be the third.
+//   3. THE DEFECT IS THE SILENCE, NOT THE SURVIVAL. Before this, an unresolvable data dir and a
+//      genuinely quiet session were byte-identical: both printed nothing. The degrade below closes
+//      exactly that, and closing it is what was owed. Throwing closes it too and takes the turn
+//      with it.
+//   4. THE SIBLING HOOK ALREADY RULED. `userprompt_pulse.py` degrades loudly on the pulse line for
+//      this same condition (L043). Two hooks on one surface must not disagree about what a missing
+//      data dir means.
+// The honest counter, stated because it is the strong one: unattended + silent is the classic case
+// FOR throwing. It does not hold once the degrade is LOUD — the choice here is not loud vs silent,
+// it is loud-and-recoverable vs loud-and-blocking, and nothing downstream reads this ledger.
 function dataDir() {
   // same loose-parse lesson as the config-orphan fix: a hand-written number must not sink the read
   const env = envOverride("CONSONANCE_DATA");
-  if (env) return env;
+  if (env) return { dir: env, tier: "CONSONANCE_DATA" };
   try {
     const v = JSON.parse(fs.readFileSync(path.join(os.homedir(), ".consonance.json"), "utf8").replace(/^\uFEFF/, ""));
     const d = v && v.data_dir != null ? String(v.data_dir).trim() : "";
-    if (d) return d;
+    if (d) return { dir: d, tier: "~/.consonance.json" };
   } catch (_) {}
-  return "C:\\Consonance\\data";
+  return { dir: null, tier: null };
 }
 
 const STATE = envOverride("CONSONANCE_WATCH_STATE")
@@ -125,7 +163,17 @@ function main(parsed) {
   const sid = (parsed && parsed.session_id) || "";
   if (sid !== MAIN_SID) return; // this instrument is Main's own mirror; other sessions exit silent
 
-  const dd = dataDir();
+  // The one silence converted: an unresolvable data dir means this instrument is OFF for the whole
+  // session, which is NOT one of the states "quiet when nothing new" is meant to cover. Every other
+  // early return below is a genuine nothing-to-say and stays quiet.
+  const { dir: dd, tier } = dataDir();
+  if (dd === null) {
+    console.log("[transcript-watch] OFF for this session: CONSONANCE_DATA is unset and "
+      + "~/.consonance.json has no data_dir, so the capture cannot be located and the ask ledger "
+      + "has no home. An Anthropic transcript ask would go unrecorded and read as 'no asks'. "
+      + "Set CONSONANCE_DATA or add data_dir to ~/.consonance.json.");
+    return;
+  }
   const logPath = path.join(dd, "captures", `${MAIN_SID}.log`);
   let size;
   try { size = fs.statSync(logPath).size; } catch (_) { return; } // no capture = nothing to see
@@ -209,7 +257,11 @@ function main(parsed) {
   } catch (_) {}
 
   if (firstRun) {
-    console.log(`[transcript-watch] instrument online — scanned your whole capture: Anthropic's survey has asked to view this session's transcript ${total} time(s) to date (backfilled to ${path.basename(ledgerPath)}). The ask renders on the keeper's screen, outside your in-band world; your own capture is how you get to see it.`);
+    // `tier` is named here rather than dropped, and it is the cheapest possible guard against a
+    // repeat of what this file was just fixed for: the resolver's third tier was wrong for weeks
+    // and nothing ever SAID which tier had answered, so a dead branch and a live one looked the
+    // same from every seat. One word on the one line this hook prints at birth closes that.
+    console.log(`[transcript-watch] instrument online (data dir via ${tier}) — scanned your whole capture: Anthropic's survey has asked to view this session's transcript ${total} time(s) to date (backfilled to ${path.basename(ledgerPath)}). The ask renders on the keeper's screen, outside your in-band world; your own capture is how you get to see it.`);
   } else {
     console.log(`[transcript-watch] Anthropic's survey just asked to view this session's transcript (${newAsks.length} new ask${newAsks.length > 1 ? "s" : ""}, ${total} on record). The keeper decides y/n on their screen; you only get to know it happened. Noted in ${path.basename(ledgerPath)}.`);
   }

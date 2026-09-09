@@ -3,6 +3,22 @@
 **To ECHO, 2026-09-06 ~02:05. Map: `exo_memory/librarian/2026-09-06.md` §"L039 MAP" (`fb87afe`) —
 READ IT AT THE FILE. Prior art named there; open it, do not take it from me.**
 
+
+> **SUPERSEDED 2026-09-07 ~02:00 — replaced by `packet_seed_plant_v2_2026-09-07.md` (`b691474`),
+> and its hand-back is filed under a different name.** B's freeze pass killed the three-arm design
+> on arithmetic: with three subjects and three matched objects, arm is perfectly aliased with
+> object, and the union number came out 96% consistent with both total collapse and total
+> decorrelation. The keeper then ruled at 01:50 that the one-object design runs with the panes we
+> have.
+>
+> **The release for `exo_memory/loop/seeded_key_L039.md` is
+> `exo_memory/handback/p-seed-plant-v2_2026-09-07.md`**, not the path this file declares below —
+> which will never be written, because this packet was replaced before it was ever worked.
+>
+> **A's commit gate refused the key's landing over exactly this**, for the second time in five days:
+> a superseded packet keeps its `WHAT YOU OWN` claim and holds a file hostage. The 09-02 case was a
+> PARKED packet; this is a REPLACED one. Both are the same gap in the gate's model — it can read
+> ownership and cannot read whether a packet is still live.
 **YOU ARE DISQUALIFIED AS A SUBJECT OF THE RUN. That is Cycle 9's rule and it is the price of this
 packet.** Say in your hand-back that you accept it, because it costs the run one of four subjects and
 that cost should be visible.

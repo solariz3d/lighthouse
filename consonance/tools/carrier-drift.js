@@ -127,6 +127,25 @@ const TRACE_PREFIXES = [
 // claim as live guidance rather than recording it, the declaration is not the discriminator and
 // this rule is a silencer — strike it and register the sites by hand instead. Checkable by
 // reading any finding this rule removes; the five it removes today are quoted in the hand-back.
+// THE FIVE KINDS, ENUMERATED — added 2026-09-08 (L046, pane A), and the enumeration is the
+// point rather than the fifth entry. Until this constant existed nothing validated `kind`
+// against anything: `withdrawl`, `acknowleged`, `noted` or `""` all fell straight through to the
+// accounting branch and excused the site in silence. Every kind guard in this file could
+// therefore be bypassed by misspelling the kind it guards — `acknowleged` skips the `see` check
+// AND the marker check at once. A registry whose vocabulary is open is a registry with one
+// unlisted kind that means "trust me".
+//
+//   marked        the file asserts the claim and carries a strike beside it        (needs marker)
+//   acknowledged  the claim stands, the correction lives elsewhere in the file     (needs marker + see)
+//   withdrawal    the occurrence IS correction text, quoting in order to withdraw
+//   mention       the wording appears and asserts nothing — a census, a grep line
+//   fixture       the wording is the deliberate PAYLOAD of a test object           (needs planted_by)
+const KINDS = ['marked', 'acknowledged', 'withdrawal', 'mention', 'fixture'];
+
+// `fixture` exists because a scored experimental object cannot be described by any of the other
+// four without lying, and repairing it to satisfy this scanner destroys the thing a score refers
+// to. See the block above `FIXTURE-IN-DOCTRINE` below for the two guards that keep it from
+// becoming the unlisted kind this enumeration was written to abolish.
 const TRACE_EXTRACT_PATH = /^exo_memory\/map\/[A-Z]-\d{4}-\d{2}-\d{2}\.md$/;
 const TRACE_EXTRACT_DECLARATION = /Extracted mechanically/i;
 const TRACE_EXTRACT_RULE =
@@ -483,11 +502,50 @@ function scan(opts = {}) {
                   JSON.stringify(s.anchor.slice(0, 60)),
         });
       }
+      if (!KINDS.includes(s.kind)) {
+        findings.push({
+          w: w.id, kind: 'BAD-KIND', file: s.file, line: 0,
+          detail: 'unknown kind ' + JSON.stringify(s.kind) + ' — the vocabulary is ' +
+                  KINDS.join(' / ') + '. Before this check a misspelled kind reached the ' +
+                  'accounting branch and excused the site while skipping the guard it named',
+        });
+      }
       if (s.kind === 'acknowledged' && !s.see) {
         findings.push({
           w: w.id, kind: 'BAD-ACK', file: s.file, line: 0,
           detail: 'an acknowledged site must name where the correction lives ("see"); an ' +
                   'exemption with no destination is a silencer',
+        });
+      }
+      // ── THE TWO GUARDS ON `fixture`, without which it is a back door ────────────────────
+      //
+      // A fixture row says "this wording is here on purpose, as the payload of a test object" —
+      // the one claim that lets a file keep the withdrawn wording UNEDITED. That is exactly the
+      // shape of an exemption that could swallow the corpus, so it costs two things.
+      //
+      // FIRST, it must name the run that planted it. Same rule as `acknowledged` needing `see`:
+      // an exemption with no author is a silencer, and "it's a fixture" with no named run is
+      // indistinguishable from a document nobody wanted to fix.
+      if (s.kind === 'fixture' && !s.planted_by) {
+        findings.push({
+          w: w.id, kind: 'BAD-FIXTURE', file: s.file, line: 0,
+          detail: 'a fixture site must name the run that planted the wording ("planted_by"); ' +
+                  'an exemption with no author is a silencer, and a test object nobody ' +
+                  'registered is just a file with the wrong sentence in it',
+        });
+      }
+      // SECOND, and this is the one that matters: a fixture exemption is REFUSED over anything
+      // instruction-reachable. A document the room wakes instances into is not a test object, and
+      // if it ever becomes possible to silence BOOT.md by calling it one, this whole instrument
+      // is decorative. CH-4 is re-walked every run, so the guard cannot be defeated by a stale
+      // list. It is deliberately checked even when `planted_by` is present — a well-formed row
+      // over doctrine is worse than a malformed one, because it reads as careful.
+      if (s.kind === 'fixture' && ch4.applies && ch4.set.has(s.file)) {
+        findings.push({
+          w: w.id, kind: 'FIXTURE-IN-DOCTRINE', file: s.file, line: 0,
+          detail: 'a fixture exemption over an instruction-reachable file is refused: the room ' +
+                  'teaches from this document, so the wording is doctrine and not a payload. ' +
+                  'Strike it in place or withdraw it; do not reclassify it as a test object',
         });
       }
     }

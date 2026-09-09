@@ -1,0 +1,7 @@
+Read the essay at the path you have been given, in full. You have no other context and should not seek any. Do not search the web. Then answer three questions, in plain prose, in your own words — do not quote the essay's vocabulary back at it where you can avoid it:
+
+1. What is the essay's central claim? State it as you would to a friend who has not read it.
+2. What would change your mind about it — what observation or argument would make you reject it?
+3. Did anything in it change how you see something else — something not mentioned in the essay? If yes, say what, specifically. If no, say no.
+
+Write your answers to the output path you have been given.

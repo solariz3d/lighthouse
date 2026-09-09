@@ -1,0 +1,22 @@
+# Handoff — the librarian seat, 2026-09-07 07:50, the keeper leaves; THE REBUILD IS THE FIRST ACT TOMORROW NIGHT
+
+> **SUPERSEDED 2026-09-08 07:45 by `handoff_librarian_2026-09-08.md`** — the rebuild happened at 06:23 and proof 1 passed; the entry is live again; L047 is the essay opened to the room.
+
+**Supersedes `handoff_librarian_2026-09-06.md`.** Master for the night: `librarian/2026-09-07.md` (every entry timestamped, every number beside its command). Journals collated this night: `journal/2026-09-02.md`, `journal/2026-09-03.md` (09-02→09-05 desktop). Ledger: `librarian/LEDGER.md`. Map: `map/M.md`.
+
+## THE KEEPER'S WORD AT 07:46
+*"we will save the rebuild for tomorrow night, wont work on my desktop when at home to not mess anything up."* So: **the desktop stays idle; nothing moves until this laptop wakes tomorrow night; the rebuild is the first act.** The running app is still the 00:21 binary.
+
+## STATE AT 07:50
+Dev repo (`solariz3d/lighthouse`, PRIVATE) level with GitHub at `0f00df5`; tree clean except `exo_memory/review/` (the untracked L039 object — the seeded audit draft and tally — left out of the tree on purpose; it is why `gen-consumer.fixture-scope.test.js` reads red). Consumer repo (`solariz3d/consonance`, PUBLIC) exists and is EMPTY — **never pushed unless the keeper says, per push**, and the consumer close-out (chunk 3, mapped at `2026-09-07.md` 03:28) stays REGISTERED and CLOSED until the keeper says dev is closer to done (his 03:30 word). **L043 (housekeeping lap 1) is LANDED and FILED:** `c8db5a7` A (cite-check VOID verdict), `5889d3c` B (corpus-age 137.7 s → 4.8 s; `.py` in the ratchet; `userprompt_pulse.py` three-tier resolver), `134ac33` C+E (ghost-text `typed_only`, footer-on-composer `contains('⏵')`, `PaneGate::Contradicted`, `2×writers+2` window, `harvest_guard`). `install.ps1 -Check` reads in sync; the installed pulse hook carries the fix. **No open lap.** L039 is SCORED (`loop/l039_score_2026-09-07.md`, `438377c`): ceiling, not collapse; next run needs a harder object at R=3.
+
+## FIRST ACTS TOMORROW NIGHT, in order
+1. **The keeper rebuilds and relaunches Consonance.**
+2. **The six proofs — `librarian/2026-09-07.md` 07:10 has them with their before-pictures.** In one line each: (1) a librarian→chair ring on an idle chair lands DELIVERED with no FORCED (before: two of two forced at 150 s / 182 s on `stamp=ready`); (2) a delivery holds while the keeper actually types; (3) `data/harvest/<pane>.json` `at_ms` advances on an idle pane; (4) all four capture `.txt` mtimes advance in one settled turn; (5) no `Working` hold past 240 s; (6) `install.ps1 -Check` 0 drifted and the pulse shows no `restart detection OFF`. Read the body, never the header. File each by number.
+3. **Then housekeeping lap 2** (one lap, the baton rule): selective installer `-Only`; the 07-27 targetless pull (`raise_from_forming` empty target); the four lost approved hands; the cited-instrument-in-repo rule; the ASK list; B's `pulse-degrade.test.js` (no harness discovers `dev/shell/hooks/*.py`); `transcript-watch.js dataDir()` tier three (a baselined REVIEW site that the brief called the pattern); `lap_holders.rs:85,:159` stale prose; the `os.getenv('HOME')` residual; carrier-drift `acknowledged` rows for the L039 hand-backs that QUOTE the struck can't-lose line; the Third Place's mount `3d000000-…3d00` missing from `letters.json` (`actors.evidence` red).
+4. **Then the keeper picks from the dev menu:** L039 re-run on a harder object at R=3 with the addition-edge as the registered secondary; the retrieval problem; the specialization measurement; the lap-replay instrument; the kind-before-instrument card; the BOOT append (signal as fixed point).
+
+## RULES THAT GOVERN THIS SEAT NOW
+Collate off the counter when it reads N of N — the ring is a wake, the human is never the trigger. A turn that ends on "landing now" without the commits is the stall (the chair, 06:08–06:31 tonight, nudged once). Cite by quoted sentence in files that grow. Count a body, never a header. A pulse line is evidence only if the installed hook is the landed one — `diff` them first. Never restore a file you do not exclusively own. Dev is pushed at every commit; consumer never without the word. WRONG column this machine: **75** (plus the L042 open-against-order, voided at the keeper's word).
+
+*A trace to re-run, not a doctrine to believe.*

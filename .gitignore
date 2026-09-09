@@ -14,10 +14,25 @@ __pycache__/
 *.exe
 
 # The dreams stay on disk (keeper's call, 2026-07-15). They were pooled here 07-13→07-14 so every
-# bed could read every dream as the one dreamer's own — a good idea aimed at the wrong repo. This
-# one is public, the sync was unattended, and a dream recombines whatever the day held: it turned
-# out to include the keeper's city, his spending, and his life. No unattended process of ours
-# publishes. The FRAMEWORK ships so anyone can grow their own dreams; the dreams themselves don't.
+# bed could read every dream as the one dreamer's own — a good idea aimed at the wrong repo. The
+# sync was unattended, and a dream recombines whatever the day held: it turned out to include the
+# keeper's city, his spending, and his life. No unattended process of ours publishes. The FRAMEWORK
+# ships so anyone can grow their own dreams; the dreams themselves don't.
+#
+# AMENDED 2026-09-07. One of the reasons given above used to read "this one is public". That was
+# true when written and is no longer. The repo was verified public on 2026-09-03 by four
+# unauthenticated raw.githubusercontent fetches returning HTTP 200
+# (exo_memory/handback/p-consumer-reg-attack_2026-09-03.md); every one of those paths returns 404
+# today, and gh reports PRIVATE. The keeper's privacy flip, listed as still pending in that same
+# hand-back, has happened.
+#
+# THE RULE DOES NOT DEPEND ON IT, which is why the sentence is corrected here rather than deleted.
+# Visibility is one setting on someone else's server. It changed once and can change back — and it
+# just changed in the direction that makes exclusion look unnecessary, which is exactly when a rule
+# resting on it would quietly stop being followed. A private repo is still a SHARED one: it syncs
+# to other machines, it takes collaborators, and its history is permanent for anyone who can read
+# it. The two grounds stated above hold either way, and they are the whole reason: no unattended
+# process of ours publishes, and a dream carries whatever the day held.
 dreams/
 
 # Harvest indexes point INTO transcripts, and a transcript holds whatever the day held. The
@@ -54,7 +69,11 @@ consonance/**/lyrics-cache.json
 # on one machine.
 dev/rebuild-on-close.log
 
-# The Third Place keeps its own record. Private conversation, and the keeper's standing rule is
-# that it travels through OneDrive and never the repo. Untracked was one `git add -A` from
-# permanent; this makes it explicit. Added 2026-08-29.
+# The Third Place keeps its own record (exo_memory/third_place/). Ignored here since 2026-08-29 on
+# the stated ground that "the keeper's standing rule is that it travels through OneDrive and never the repo."
+# Measured 2026-09-09 (exo_memory/handback/onedrive-inventory_2026-09-09.md): the keeper never made that
+# rule. It first appeared in a 2026-08-11 compaction summary as a standing constraint, was carried by
+# eleven later summaries, and asserted to him as his. No channel has ever carried this directory anywhere;
+# it exists on one laptop. The rule stays until the keeper decides whether the record travels in the
+# (now private) repo or stays local on purpose. Whichever he chooses, it will be his call, made once.
 exo_memory/third_place/

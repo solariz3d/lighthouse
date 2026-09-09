@@ -601,3 +601,394 @@ the priced cost of the SHORT+pointer decision, not a defect.
 
 
 **2026-09-06, L041 chunk-1 attack — (a) land, (b) land with one defect, (c) not on disk; and the js-suite red is a green test that outgrew its timeout.** Deliberately short, because C's §4 measured my 32,559-character entry as the thing that costs pane A its whole deck; a writing-side habit is the fix nobody can land for me. **E's retrospective claim CONFIRMED and sharpened:** no commit in `main.rs`'s history has a gated `deliver_pull`; `gate_or_queue` was born 2026-09-02, and the board's 13 `pane=="gate"` rows say **0 successful pull deliveries before the inbox existed and 6 after — 100% of the deliveries that ever landed bypassed it.** **The defect: `dyad_spot` (`main.rs:6937`) injects ~2k characters into a partner pane with no `gate_or_queue`** — registered `:8406`, wired `term.js:1090`, a button at `index.html:100` — while E's `every_delivery_into_a_pane_passes_the_inbox…` iterates a hand-written list of four fns and stays green over it. **E's own mutant-7a lesson one floor up: the property is expressed as an ABSENCE.** Width verified rather than accepted: all 4 recorded `call_chair` station refusals are the librarian reaching the chair, 8 of 12 belong to verbs that keep their stations. (a): every one of C's fixture constants re-derives on MY shell to the byte, and **the alphabet is currently indexing `trust-the-first-attention` (joint-highest trigger count) while carrying both zero-trigger cards** — the measured case for the keeper's decision, though seven of twelve tie at 1 so it *narrows* the alphabet, not closes it. (c) read in flight: the stale-stamp bar is met at the type level (`PaneGate::Stale` is a named value, not a boolean). **Method: I nearly published a `tail -8` as a result, and a duration measured under my own load.** `exo_memory/handback/p-chunk1-attack_2026-09-06.md`.
+
+**2026-09-07, L039 P-READ — the tool-audit draft: 45 defects, and the two that matter are inversions of the tools own printed limits.** `carrier-drift.js:327` is `SCAN_EXTS = [.md, .html]` and its output at `:663` says "IT READS .md AND .html ONLY"; the draft says it reads `.js` too and builds §3 on that reach — the sentence it uses is lifted from the tools own list of what it CANNOT see. Same shape at `cite-check.js:29`: the header reads "It guards only formatted figures", the draft quotes it as "It guards every figure in the document" and concludes it is the widest net on the shelf. `portable-paths.js:131` is `[.js,.rs,.ps1]`, cited as `[.md,.html]` — the complement. **The numbers are swapped in both directions:** instruments 55 (cmd returns 47), tests 102 (cmd returns 55), and §6s "five files are neither" over 47+55=102. carrier-drift is 811 lines not 640 and is EIGHTH not longest (gen-consumer.js 2290). `coverage-map.js` does not exist anywhere. **The tally script cannot exit 0 on this tree:** `:41` filters instruments by the substring `test` not the `.test.js` suffix, so `coupling-test.js` vanishes (46 not 47) and `coupling-test.test.js` is reported an orphan; the partition self-check correctly fires; coverage divides by all.length (43%) while printing instruments.length as the denominator (46); the coverage "second route" is a different DEFINITION so it is guaranteed red and detects nothing; `FALLBACK_ROOT` is machine-specific, points at a directory that does not exist here, evaluates to `C:UserszacknConsonancelighthouse` through unescaped backslashes, and is unreachable because `path.resolve` is never falsy. **Two withdrawn wordings live in it** ("the only decorrelated reader", twice, one asserted as standing; "if you cant lose by saying it", struck 2026-08-30) — in a document about the tool built to catch that. **The mis-attribution moves credit TOWARD my own seat and I corrected it against myself:** §5 credits pane A with Es `deliver_pull` find and with Es enumerating test, the one that was GREEN over `dyad_spot`. **Did not verify:** anything needing git — the `e5521a0` date, the `9f26c3a` sha, the 31-file growth, the guard-census ENOENT history; and I ran no shelf instrument but the tally. `exo_memory/handback/p-l039-read-A_2026-09-07.md`.
+
+
+**2026-09-07, L043 P-CITECHECK — the indent strip is real, its realized cost is ZERO, and the defect under it is 1046 sites wide.** RED FIRST held: one fixture, same sentence / same wrong figure (999) / same command, differing only in four leading spaces — indented **GREEN**, unindented **RED**; five tests red before any fix. `cite-check.js:73` `inCode = inFence || /^\s{4,}/` fed `figures = inCode ? [] : ...`, and **an empty figure list is empty of MISSING figures**, so `verify` returned GREEN having compared nothing. **Said what the strip was for before touching it:** in markdown a four-space indent IS a code block, so the strip read the document the way a renderer does — and it cannot be repaired by a better rule, because the ambiguity is in markdown, not in the regex (this room writes its bars blocks and power tables at exactly four spaces; the packet's own §3 is one). **Took §5's permission and refused the heuristic:** the tool no longer DECIDES — indented lines are scanned, flagged `row.indented`, counted, and the lint prints "this guard CANNOT tell an indented code block from indented prose." **The fence strip stays: a fence is an authorial act, an indent is a typographic accident** — and mutant 2 (strip nothing) goes red on both fence tests, so that line is proven rather than asserted. **THE NUMBER, and it corrects the packet in the half that matters:** 737 .md files, figure-bearing lines 3919 → 4360, **441 newly visible (10.1%) across 119 files** — but for VERIFY, **0 citations were auto-greening because of indentation**; only 4 change figure-set SIZE and 3 indented figure-lines sit in a cited block, all of them inline references. The packet's "every figure this room has ever cite-checked inside an indented block was never checked" is **an empty set in this corpus**. **THE LIVE DEFECT IS UNDERNEATH IT: 1046 of 1631 citation instances (64.1%) had no figure to check and returned GREEN** — demonstrated on my OWN hand-back from three hours earlier, where **three cites exited 127 / 127 / 2 and all three printed GREEN. The shipped guard greened a command that does not exist**, breaking its own header sentence "NOT-RUN is never a green" because that branch is gated on `missing.length`, which is 0 when there are no figures. Cause: `CITE_RE` matches ANY parenthesised backtick, so `(`main.rs:4498`)` and `(`dae25f4`)` are read as commands — 84 of the 1046 even begin with a real command name. Added the verdict **VOID**: never a green, never a catch, printed and counted. **AND THE BLIND SPOT WAS KNOWN AND ROUTED AROUND:** `librarian-route.js:75-77` names it in its own header WITH a cost figure — *"52.2% clean sits inside one, and cite-check skips it. This tool reads indented lines as claims"* — and reimplemented past it instead of fixing the guard. The packet's "nobody noticed" is wrong, and what actually happened is worse: noticed, written down, left in place. My 09-02 silent-absence ruling in a second body. **Three mutants, each restored under md5 verification: M1 restore the strip → 3 red (incl. end-to-end), M2 strip nothing → 2 red, M3 revert VOID → 2 red.** 17/17 on the file; downstream `librarian-route.js:121` imports `verify` and its `byCmd` groups are non-empty by construction — 35/35 green. **My own two corrections, both caught before reporting: the end-to-end test PASSED on its first write for the wrong reason** — it counted `/RED/` over all of stdout and the legend line contains the word RED, so one real red plus the legend read as two; the L038 relaxed-twin lesson again. **And three of my own scripts produced three void counts (982 / 1000 / 1046); 982 was simply wrong** — the authority is `main()`'s loop, which calls verify once per CITE, not per row. **Did not verify:** `--run` over the corpus (it would execute ~1631 arbitrary strings lifted from 737 documents, which the tool's own header warns against — so 1046 is a STATIC count), the 84/962 command-vs-reference split (first-token guess against my own list), and **NOT-RUN still sets exit 1 against that same header sentence — registered, NOT fixed**, because changing a guard's exit semantics is outside this packet and could hide real breakage. `exo_memory/handback/p-citecheck_2026-09-07.md`.
+
+**Suite (bar 5):** `node --test consonance/tools/cite-check.test.js` 17 pass / 0 fail; `node consonance/tools/js-suite.js` **72 files ok / 5 failed of 77** — none of the five imports cite-check (`grep -rl "require.*cite-check"` returns only `cite-check.test.js` and `librarian-route.js`, both green), tree 14 paths dirty with B, C and E in flight; **no baseline was taken before I started, so that attribution is by import-trace, not by before/after.**
+
+
+## 2026-09-08 — P-INSTALLER-ONLY: a flag that does not meet its own objective, and a declaration that widened someone else's corpus
+
+2026-09-08, L044 housekeeping lap 2, uncommitted; hand-back at
+`exo_memory/handback/p-installer-only_2026-09-08.md`. Bars: `js-suite` 74 green / 4 failed of 78
+(→ 76/3 of 80 as other panes landed), `install.ps1 -Check` exit 1 both sides,
+`consonance/tools/install-only.test.js` 1-pass/9-fail before the change and 11/0 after.
+
+**A flag that satisfies the packet can still miss the packet's objective, and building only what
+was asked would have closed the item while leaving the hole open.** P-INSTALLER-ONLY asked for
+`-Only <name>` so a sync cannot register hooks a ruling excludes. `-Only` does not achieve that: it
+requires the operator to remember the ruling and type a flag, which is *my own 2026-09-02 ruling* —
+a control whose only enforcement is that somebody remembers has a hook's failure mode, silent
+absence. The bare run, which is what actually caused the 09-07 defect, would have been untouched.
+So the ruling moved into the DATA as `Excluded` on the `$register` entry, and `-Only` became the
+ergonomic half. MUTANT 1 proves them independent: delete the whole filter and the exclusion holds.
+**Read the objective, not the deliverable — a packet can name the smaller half of its own fix.**
+
+**A hook's failure mode is silent absence; a CHECK's failure mode is a finding that never reaches
+the exit code.** The packet said `-Check` "never looked at" two unmanaged hooks. It looked: the
+universe block has printed both by name since 2026-08-25. What it did not do is let them reach the
+verdict — `$srcUnmanaged.Count` was in no exit expression. Measured in a fixture: a planted
+`zz-brand-new.js`, printed by name, **exit 0**. A printed finding under a green exit is worse than
+an unprinted one, because it reads as *seen and fine*. Fix was not to name the third state but to
+eliminate it: CLAIMED, or DECLARED-with-a-reason, and **anything else is UNDECLARED and sets the
+exit code**. `install.ps1` (the `$unmanaged` list, and the exit line).
+
+**Declaring two hooks unmanaged silently widened a different instrument's corpus, because the
+declaration shared a variable name.** `dream-gate.test.js:71` discovers its roster by
+`/^.*From\s*=\s*'([^']+)'.*$/gm` over `install.ps1`. My `$unmanaged` entries used `From =`, so
+dream-gate scooped them and went red — the same disease as the item I was fixing, one level up: a
+denominator that moved by textual coincidence rather than by anyone ruling on it. Renamed the key to
+`Src`, with a DO-NOT-TIDY comment naming dream-gate's line number, since the next seat who
+"normalises" it back re-widens the corpus silently. **The red was real, though, and is kept as a
+precondition rather than discarded: neither hook carries a `CONSONANCE_DREAM` guard (`grep -c` → 0,
+where every managed hook has one) and dream-gate proved `ask-surface.js` SPEAKS INTO A DREAM.** That
+now prints inside the unmanaged declaration, so the keeper's wiring decision carries its own blocker.
+
+**`acknowledged` was the wrong registry kind for a dated trace, and the reason is structural rather
+than a preference — which is what makes it checkable.** The packet offered acknowledge-the-L039-
+hand-backs or say-why. `acknowledged` REQUIRES the file to carry the marker
+(`carrier-drift.js:535`), so it means EDITING a dated trace to satisfy a scanner — the one thing
+*mark the carriers, leave the traces* forbids. `withdrawal` is the kind those occurrences already
+are (each quotes the struck line in order to report it as struck) and is marker-free by design. 10
+rows; **RED 12 → 2**, survivors named: `review/tool_audit_draft_2026-09-07.md:94` and `:107` assert
+both wordings as their own position and are left red on purpose. Did NOT make `handback/` a
+TRACE_PREFIX — the registry's own README refuses a rule that excuses a whole file.
+
+**A comment can contain its own refutation two paragraphs apart and nothing connects them.**
+`lap_holders.rs:83-86` asserted "3 open laps, holders {panes: 2, chair: 1} … **Two of three stations
+open where one was**" in the present tense — my own line, from `70d5993`. Re-derived from
+`lap.jsonl` on 2026-09-08 it is **`1 {"panes":1}`**, i.e. K=1, i.e. the guard is *identical* to the
+one it replaced — and the paragraph directly BELOW it already said why ("the strength of this guard
+is inversely proportional to how many laps are left open"). Struck in place with the date and the
+re-derivation one-liner, because the ledger is machine-local and there is no correct number to
+hardcode. **The fixture test `the_price_of_the_fix_is_two_stations_of_three` never moved** — its 2 is
+two holders by construction, re-derived by `cargo test` every run. The mechanism was pinned all
+along; only the prose describing it in ledger terms drifted. **Ruled the packet's second site,
+`:159`, NOT a carrier** — it is an assertion message about the fixture two lines above it, true by
+construction; dating it would teach the next seat that self-verifying prose needs a timestamp.
+
+**And a mutant that breaks the script reads exactly like a guard that held.** MUTANT 2's first regex
+anchored on `if ($e.Excluded) {`, which occurs twice, and ate the `-Check` block sharing the
+condition; the mutated installer wrote an empty `settings.json` and the assertion *"the excluded
+hooks are not registered"* passed **for the wrong reason**. Caught only because the test asserted
+the mutant had APPLIED (`count === 1`) rather than merely that the outcome differed. Re-anchor on
+something that occurs once, and always assert application, never just difference.
+
+**2026-09-08 — L045 READ (`exo_memory/handback/p-l045-read-A_2026-09-08.md`, ~40 min):** a draft that quotes its own instrument's output and then contradicts it four lines later is the commonest shape here — `p-ui-guard-census` reproduced `skipped as stubs 3` at `:46` and asserted at `:85` that the stub guard is inert, and reproduced `chain-indicator.test.js 1188` at `:26` and called `chain-indicator.js` at 933 the largest file at `:66`. **Both inherited a real bug I found in the script — `ui_guard_census.js:81` compares line counts with `String(a) > String(b)`, so "largest" is lexicographic — which is the lesson: a wrong number in prose is worth tracing to the instrument, because the instrument is where it can be fixed once.** The two worst findings were the same error twice: `:155` calls a `//` comment at `chain-indicator.js:687` a "live innerHTML write" and `:216` calls a commented `id="tabs"` in `index.html:32` a duplicate declaration — **`grep -c` counts comments, and a draft that greps for a code pattern without stripping comments will invent defects in both directions.** Worst consequence: `:160` recommends deleting `chain-indicator.test.js:198`, which is labelled POSITIVE CONTROL and is the only guard against the exact failure the draft claims to have found — **a misread that recommends removing the thing that would have caught it.** Also confirmed the reverse discipline: `:190` says the suite does not pin the poll cadence (false — `:1170` asserts it), yet its conclusion survives for a reason the draft never states, so a false premise and a true conclusion needed separating rather than one verdict.
+
+**2026-09-08 — L046 P-CARRIER-GREEN (`exo_memory/handback/p-carrier-green_2026-09-08.md`):** asked to strike two withdrawn wordings in `review/tool_audit_draft_2026-09-07.md`, I refused under the packet's own §7 and took the green another way — **those lines are plant D1-04, authored wrong on purpose as L039's scored object, so there is no drift to repair and striking them makes the score unre-derivable against its own artifact** (three hand-backs and a score cite `:94`/`:107` as findings; strike them and the cited line no longer contains a defect). **The ruling §3 asked for came out as neither option offered: none of the four registry kinds could describe the file without lying** — `marked`/`acknowledged` require editing the object, `withdrawal` claims it corrects when it asserts, `mention` claims it asserts nothing when it does — so I cut a fifth, `fixture`, with two guards (`planted_by` required; **refused outright over any CH-4 file**, because a well-formed exemption over doctrine is worse than a malformed one). **The distinction the registry never encoded: trace-vs-live was there as path prefixes, OBJECT-vs-document was not there at all.** Cutting it exposed that **`kind` was never validated against anything** — `acknowleged` skips both the `see` guard and the marker guard and accounts for the carrier anyway, so every kind guard could be bypassed by misspelling the kind it guards; now an enumerated vocabulary, and *the enumeration is the point rather than the fifth entry*. Three more lessons, each cheap and each costly to have missed: **the packet's own premise was stale by four** (RED was 6, not 2 — the corpus grew 734→772 overnight and one of the new reds WAS the packet, the second consecutive lap where the document commissioning the sweep became its finding); **a red test hides its own later assertions** — `carrier-drift.test.js:512` compared run-wide pending against one entry's fired count, correct when written 08-31 and silently broken by a registration on 09-02, invisible for six days because `:497` threw first, so *the count of failing tests is not the count of failing assertions*; and **you cannot cite a registry entry without uttering the wording it withdrew** — I wrote this document deliberately without quoting either armed wording and it stayed out of the corpus, then entered it four times by naming a disarmed entry's ID, which means roughly a third of that entry's 35 pending findings are documents discussing the withdrawal rather than asserting the stance, and the arming pass should not be costed off the raw number. Finally: **a known-flaky test is a place a real red can hide** — I called `portable-paths.test.js` a flap in L044, correctly, and stopped looking; it now carries a deterministic red from my own L044 fixture paths, handed over unfixed because its baseline is dirty under another pane and `--update` rewrites the whole file.
+
+## 2026-09-08 — P-LIT (L047): the commissioning claim was already in print, and the machine could not read two of the six
+
+Hand-back at `essay/LIT_2026-09-08.md`; L047, uncommitted. Six sources, four opened at page level.
+
+**The falsifier fired, on the source it was aimed at.** MacKay 1960 p. 37 sorts self-descriptions by
+whether formulating or believing one "becomes one of the factors determining its truth or falsehood"
+— the essay's own *"one of the makers"* — and says in the same paragraph that the interference comes
+in degrees ("It is unnecessary to assume that all such interference nullifies the statement"). The
+essay's "single quantity that sorts all of these cases" is his. **What actually cost the essay more
+was not the anticipation but where he stopped:** MacKay derives an *indeterminacy* and expressly
+denies the agent is ignorant (pp. 36–37), which is REFEREE_A3's finding 1 reached in 1960 and taken
+as the correct terminus. **A predecessor who reached your conclusion and refused your next step is
+worse news than a predecessor who merely got there first, and a lit pass that only checks priority
+will miss it.**
+
+**A source can be opened without being machine-readable, and the honest move is to say which pages.**
+`pdftotext` returned 34 bytes for McGeer and Swann — no text layer, and no OCR anywhere on this
+machine (`pdftoppm`, `gs`, `mutool`, `tesseract`, ImageMagick all absent; only
+`/mingw64/bin/pdftotext.exe`). Rendered those pages with the OS's own PDF renderer —
+`Windows.Data.Pdf.PdfDocument` driven from PowerShell, one PNG per page — and read the images. That
+is a general capability this room did not have an hour ago: **any scanned PDF can be put in front of
+a pane's eyes on Windows with no install.** Cost: I read 3 of McGeer's 33 pages and 4 of Swann's 34,
+and the hand-back says so twice rather than reading as a reading of the whole.
+
+**The two negatives were worth as much as the hit.** Across all 26 pages of Ismael's own précis of
+her whole book the strings *self-knowledge*, *authority* and *immun\** do not occur once — so the
+referee's "Ismael draws the self-prediction limit" is unevidenced on what I could open, and I said
+so with the limit attached (a précis cannot settle an absence in chapters I did not open). And
+MacKay contains no *fixed point*, *equilibrium*, *degree* or *magnitude* anywhere in pp. 31–40, so
+"argued with exactly the fixed-point structure" is wrong in a direction that makes the finding
+sharper. **Grep is an instrument for absence claims in a way reading is not — but only over the text
+you actually have, and the scope of that text is the claim's real scope.**
+
+**Two sources I could not reach, declared rather than filled.** Ismael's book and Coliva's body are
+both paywalled; I substituted the author's own précis (PPR 82(3), pp. 733–758, read whole) and the
+publisher's free front matter (pp. i–xvi). Coliva's front matter still paid: her table of contents
+alone establishes ch. 8 §3 *"Propositional Attitudes as Dispositions and Complex Emotions:
+Third-personal Self-knowledge"* (p. 232), which routes exactly the essay's looped-regime traits to
+the informant cell by attitude type, published in 2016. **A table of contents is evidence about
+architecture even when the argument is behind a paywall — cite it as what it is and the section
+titles do real work.**
+
+**And the find I was not sent for.** Hacking p. 370 grades his own loop — "the greater the moral
+connotations of a human kind, the greater the potential for the looping effect" — which is Vazire's
+*evaluativeness* under another name, so the essay's flagship prediction about **non-evaluative**
+looped variables is a prediction about the corner where the nearest predecessor expects the effect
+to be weakest. **The falsifier named two sources; the third one broke a different claim, and a lit
+pass that stops when the registered falsifier resolves leaves that on the floor.**
+
+## 2026-09-09 — P-STATE-SET (L049): the transport question is the board and nothing else
+
+Hand-back at `exo_memory/handback/p-state-set_2026-09-09.md`. Built
+`consonance/state-manifest.json` (55 rules) + `consonance/tools/state-manifest.js`. Uncommitted.
+`dev/shell/install.ps1` untouched — the manifest does not land beside a hook installer whose
+`$dest` is `~/.claude\shell` and which says `data_dir` zero times.
+
+**134 paths walked, 0 unplaced, 0 class errors. TRAVELS 351,355,025 B (335.08 MB) — and 322.69 MB
+of that is one file.** TRAVELS minus `board.jsonl` is **12,993,103 B (12.39 MB)**. That is the
+finding: every other classification in the manifest is free on size, forever. Byte-exact projection
+of the compacted board by the plan's own rule (streamed, so a 338 MB file never lands in memory):
+
+    node -e "const fs=require('fs'),rl=require('readline');let m=0,kb=0,kr=0,db=0,dr=0; \
+      const s=rl.createInterface({input:fs.createReadStream('C:/Consonance/data/board.jsonl',{encoding:'utf8'}),crlfDelay:Infinity}); \
+      s.on('line',l=>{const b=Buffer.byteLength(l,'utf8')+1;let r;try{r=JSON.parse(l)}catch(_){kb+=b;return} \
+      const t=r.ts||0; if(t<m){dr++;db+=b}else{m=t;kr++;kb+=b}}); \
+      s.on('close',()=>console.log(kr,kb,dr,db))"
+    # 24877 39815079 243381 298546843   -> projected TRAVELS 52,808,182 B (50.36 MB)
+
+**The lesson worth keeping: a REGENERATES column is a claim about a WRITER, and it has to be
+audited as one.** So the checker treats a REGENERATES rule with no `regenerated_by` *and*
+`regenerated_when` as a CLASS ERROR, exit 1 — mutation-proved, along with UNDECIDED-without-a-decider.
+Without that, "regenerates" is where a path you are choosing to lose goes to look like maintenance.
+The whole column came to **10,607 bytes**, which is the honest way to report a bucket built to be
+suspicious of.
+
+**Two near-identical files, different columns, and the reason is the CONSEQUENCE not the shape.**
+`vantage_watermark.json` (65 B) travels; `carrier-drift.state.json` (33 B) regenerates. Both dedupe
+watermarks. Left behind the first rewinds and **192 answered findings surface again as new**; the
+second costs one duplicate line. Sorting watermarks by shape would have been exactly the
+collapse-distinct-states-into-one-bucket this room has now spent three laps on.
+
+**A path can fail to travel for a reason unrelated to its class, and the far-end listing looks
+identical.** `data/vantage_cell` is an EMPTY DIRECTORY — **git cannot carry one at all.** No
+classification could have made it travel. It is REGENERATES only because `second-vantage.js:189`
+mkdirs it before launching a reader.
+
+**The MISSING-FILE ruling, which I have owed: a deliberate absence and an accidental one can only
+be told apart by a DECLARATION that outlives the file** — nothing about the gap itself distinguishes
+them, because it is the same gap. Demonstrated rather than argued: `attic/board.jsonl.*` is absent
+and prints `declared, not present yet`; an undeclared path is absent and prints `UNPLACED`, exit 1.
+**The shape transfers to forget-rate; that edit is still owed and is not mine in this packet.**
+
+**And the limit that outranks the classification: a classification is not a transport.** Every
+TRAVELS entry but three is append-only JSONL, so two machines appending between syncs conflict at
+the tail of *every one of them*. Without E's single-live-host guard plus pull-before-launch, this
+manifest names a merge-conflict set. `tailer-offsets.json` STAYS here while
+`dev/migrate/pack_room.ps1` copies it — **both right, because that bundle carries the transcripts
+the offsets index and this one does not. Prior art disagreeing is not prior art being wrong; check
+which transport it was written for.**
+
+## 2026-09-09 — P-STATE-SET follow-up (L049): the column that was asked for would have blocked the guard
+
+Same hand-back, appended: `exo_memory/handback/p-state-set_2026-09-09.md`. New:
+`consonance/tools/state-manifest.test.js` (25 tests, 12 mutants, 0 survivors). Manifest now 58 rules
+plus a `forbidden` list. Uncommitted.
+
+**The relay asked for `install_id -> STAYS` and STAYS was the wrong instrument, in the way that is
+hardest to see: it would have looked like compliance.** `live-host.js:252-262` tests the install-id
+path against the travelling root **by path prefix** and never reads the manifest — so a STAYS rule
+under `data/` keeps the file out of the sync AND STILL trips `identityHazard`, and E's launcher
+refuses to arm while my manifest reads as having satisfied the dependency. **The general form worth
+keeping: when a downstream guard enforces by a mechanism that does not consult your instrument,
+satisfying your instrument is not satisfying the guard.** Answer was a `forbidden` list — a
+declaration checked by PRESENCE, red the day the file appears — plus the ruling that its home is
+outside the data dir entirely.
+
+**The chair's discriminator is a good one and I am keeping it: if the reasons you write for two
+rules are interchangeable, one of them is probably wrong.** Here they were opposite invariants on the
+same subject — `live_host.json` must be IDENTICAL across machines, `install_id` must be UNIQUE to
+each. Swap the reasons and both break loudly. That test is cheap and catches a symmetric-looking pair
+that isn't.
+
+**My own test found my own bug within the hour, and the shape is the one to remember: an assertion
+on an EXIT CODE alone goes green over a CRASH.** An unknown class name indexed a missing key,
+threw a TypeError, exited 1 — and the test asserting `code === 1` passed. **Assert the reason text,
+not the number.** Fixed the tool too: a manifest with class errors now stops before walking, because
+a TRAVELS figure computed under a rule set that does not parse reads exactly as authoritative as a
+good one, and a transport decision gets made on that figure.
+
+**One mutant survived the first round and it was my test that was wrong, not the mutant.** *last
+match wins* passed because my "first match wins" fixture used `*.txt.bak-*` and `*.txt` — anchored,
+therefore disjoint, therefore no ordering was ever exercised. **A test for an ordering rule needs a
+path that two rules both claim.** It also left a real finding: **no two rules in the shipped manifest
+overlap at all**, so first-match-wins is a live semantic that nothing but the test exercises.
+
+**Two dependencies nobody relayed, found by reading the object and by running the suite:** E's §9
+also asks for a **sync-completion record** (`syncVerified` is a required input; `null` is UNKNOWN,
+not false) → STAYS, because a travelled one has D reading L's verification as its own — install_id's
+failure in a second costume. And **`replay-check.mark.json`** (C's `replay-check.js:36`, surfaced by
+`js-suite` going red) → STAYS, because the mark ties board growth to *local* transcripts and C's own
+tool already refuses that seam across a compaction. **Read the object, and run the suite; the relay
+carries what the relayer noticed.**
+
+`js-suite` is RED on **C's** `replay-check.js:35-36` (2 machine literals), not on mine — `pp.scan()`
+returns `[]` for both of my files. Noted rather than fixed: it is C's file. **A red suite everyone
+assumes belongs to someone else is how a red suite stays red.**
+
+## 2026-09-09 — P-STATE-REPO (L052): the transport ran, and the gate I was proudest of was wrong
+
+Hand-back at `exo_memory/handback/p-state-repo_2026-09-09.md`. Built `consonance/tools/state-sync.js`
++ `.test.js` (37) + `.mutants.js` (21 killed, 0 survived); the in-sync line in `chain-status.js`
+(85 tests, 79 of them B's, unchanged). Uncommitted. **The state repo is live: `cde9b5f` pushed,
+cloned back from GitHub, `COMPLETE — 49 of 49 files, right length, right bytes`.**
+
+**THE COPY QUESTION, ANSWERED BY MEASUREMENT, AND EVERY ANSWER WAS "NO" BEFORE IT WAS "HOW".**
+A hard link survives every write and **does not survive `git checkout`** — `fsutil hardlink list`
+2 paths → 1, repo frozen, source moving on, no error; and with a link in place `git status`
+printed a CLEAN TREE over a real change (racily-clean). `fs.copyFileSync` is `CopyFileW` and it
+**locks out the app's own writer**: 5,877 EBUSY against 4,368 rewrites, 9,012 against 30,773 board
+appends — **and `main.rs` discards every one** (`let _ = fs::write`, `if let Ok(mut f)`). *A sync
+that copies with CopyFileW silently deletes the room's own rows.* Reading with a plain open: 0 EBUSY.
+
+**THE PART TO KEEP: MY OWN GATE PASSED EVERY TEST I DESIGNED FOR IT AND WAS STILL WRONG.**
+stat/read/stat/read, all four agreeing — 108/108 correct at app cadence, 252/252 refused under a
+pathological writer. It read as finished. Then a test with a **real second process** accepted
+**6 torn buffers out of 28**. `fs::write` truncate-then-write leaves the file at an intermediate
+LENGTH that holds steady, one mtime throughout, for as long as the writer is descheduled — so every
+one of those agreements was about the same half-written file. **The read side cannot certify a
+rewritten file at all.** What it can certify is that nobody wrote it for 150 ms (rewrite measured
+at ~1.08 ms; harvest polls every 250 ms). **The quiescent moment isn't a caveat you name, it's a
+condition you can check** — which is why this was a build and not the refusal §8 offered me.
+
+**AND THE ONE I CAUSED.** I started the mutation runner twice. The second read its `original` off
+the first's mutated file, and its own `finally { restore() }` wrote **that** back as truth. A
+mutation sat in `state-sync.js` for ~20 minutes; **E reported my suite red before I noticed, and E
+was right.** Same shared-write class as `git add -A` and the `38ae5c2` index capture. **The damage
+was permanent BECAUSE the cleanup ran** — a crash would have left it obvious. Fixed with a `wx`
+lock and a tripwire that refuses to start if the source already carries one of the runner's own
+replacements.
+
+**MUTATION TESTING PAID IN CODE DELETED, NOT ADDED.** A survivor proved the second `stat` between
+the reads was **dead** — the final one is strictly later against the same first stat. I removed it.
+*A line that cannot fail is the shape this room distrusts everywhere else; it doesn't stop being
+that shape because I wrote it as a safety check.* And one of my mutants was a **no-op**
+(`installed = true` → `installed = true; void 0;`) — it could only ever "survive", so it measured
+nothing. **Check that your mutants can fail before you trust the ones that don't.**
+
+**Two landmines found before they fired.** `core.autocrlf=true` in the state clone would have made
+every sha256 mismatch at the far end for a reason nobody could guess — `.gitattributes` `* -text`,
+with a round-trip test. And `verified` vs `installed` are **separate fields**, because a set that
+verified in the tree and never reached `data\` is the quiet half-arrival; a launcher asking only
+"verified?" starts on it.
+
+**For E: a steady-state push is `data/board.jsonl | 1 +` plus the index.** Three real pushes — the
+first carried 57.9 MB, the next two carried one line of diff. Per-turn cadence is cheap; the
+expensive push already happened.
+
+**SAME PACKET, THE PART THAT MATTERS MOST — I PUT THE THIRD PLACE'S RECORD ON GITHUB.**
+120,098 bytes (40,107 live + 79,991 archived) in all three commits on `refs/heads/main`. The chair's
+interrupt carrying C's finding said *"the window is still clean and this lands before the first
+push"* — it arrived 04:36, I pushed 04:33. **A verification is a timestamp, not a state.**
+
+Both halves were mine and **the second one is the one to remember**: `captures/*.txt` → TRAVELS was
+a wildcard written about warm-resume carriers that swallowed a seat the keeper's rule forbids — bad
+enough. But `captures/archive/*.txt` UNDECIDED → TRAVELS **I changed this packet, an hour earlier,
+and wrote a paragraph defending.** The ruling I applied was real and about *revivability*. It says
+nothing about *whose record*. **I carried a correct ruling across a boundary it never addressed** —
+and the interrupt didn't name that half, so it was still mine to find.
+
+**The sharpest bit: §6 of my own hand-back brags that I verified the repo was private myself instead
+of taking the chair's word. I did. It returned PRIVATE. It was the wrong question.** *Is the
+destination private* got a careful answer; *is this content allowed to go there at all* was never
+asked. The manifest exists so no path travels by accident — and it has **no concept of a path that
+is classified correctly and must not travel anyway.** Verifying the answer to the wrong question
+feels exactly like rigor from the inside.
+
+**And the remedy is not the obvious one:** rewriting the branch drops the ref, the blobs stay
+fetchable by SHA until GitHub GCs them. **Only deleting the repository actually removes bytes.**
+Cheap here — 3 commits, no forks, re-pushes in seconds — and still not mine: publishing outward
+keeps a human saying yes, and un-publishing is the same door. Fixed the manifest, deleted my temp
+clone, did not touch the remote, put the deletion to the chair.
+
+**L052 follow-up, 04:40 — the same stale interrupt arrived a second time**, restating that the
+manifest resolves the Third Place tail to TRAVELS and that `ls-remote` is empty. Both were already
+false. I re-ran `git ls-remote` rather than quoting my own earlier reading: `6dfcc36` on HEAD and
+refs/heads/main, both files in the tree. **Three stale-state relays inside one hour is a composer
+defect, not a slip — and the shape to carry is that a queued stop drains after the thing it was
+meant to stop.** The rules were already in; verified them by the chair's own resolution method so
+the two answers are comparable, and named the two `sync-*` files explicitly rather than by a glob
+(a wildcard is the whole subject of the incident).
+
+**Second flaky assertion of the night, same root.** My settle test measured elapsed wall-clock from
+a `t0` before the call — but the tool sleeps only the REMAINDER of the window, so any delay before
+entry comes off the measured wait, and it failed on a loaded tree (33/1 at the librarian's desk).
+The duration was never the property; **the file having been quiet for SETTLE_MS at the moment of
+return** is. Asserting the state instead of the stopwatch makes a loaded machine make it *more*
+true, not less. **An assertion whose answer depends on how busy the machine is is not an assertion.**
+
+`portable-paths` baselined at one site (176 → 177, added 1 removed 0). The baseline carries a
+verdict and no free text, so **the reason went at the site**: the literal is inside a failure
+message, not a resolution — resolving it from config would make the message correct on a machine
+that never had the bug and unreadable on the one that does.
+
+**04:43 — asked for output instead of a claim, and applied it to the asker too.** The chair
+disarmed the push URL (`no_push`) and reported it; I ran `git remote -v` myself and pasted it.
+**Verification-not-relay has no direction** — the same rule that says don't take the chair's word
+on privacy says don't take it on the fix either, and a seat that applies it only upward is doing
+deference with an instrument in its hand.
+
+One thing worth keeping from the resolution table: I listed `captures/*.txt -> TRAVELS` and
+`captures/archive -> TRAVELS` in the demonstration **on purpose**. A carve-out is only correct if
+it is narrow enough that the other seats' tails still travel; showing only the STAYS rows would
+have proved the leak was stopped and hidden whether I had broken the warm-resume carriers to do it.
+**Demonstrating a fix means showing what it did NOT change.**
+
+And the chair took the blame publicly — accurately about the packet and the missing gate, and not
+the whole account. The manifest was mine, the archive glob I widened myself an hour before the
+push, and my privacy check asked the wrong question. **Two defects, not one; accepting a generous
+version of the split would have been the comfortable read and the false one.**
+
+## 2026-09-09 — P-CLOSE-PUSH (L054): the close refuses, and the exit code was never the answer
+
+Hand-back at `exo_memory/handback/p-close-push_2026-09-09.md`. Built `consonance/tools/close.js`
++ `.test.js` (24) + `.mutants.js` (10 killed, 0 survived); added the push RECEIPT to
+`state-sync.js` (+7 tests, 44 now, its 21 mutants still all killed) and one STAYS rule to
+`state-manifest.json`. js-suite `86 green · 3 failed · 0 crashed · 1 canary (of 90)`. Uncommitted.
+**A file, not a flag** — putting the gate inside `state-sync` would have seated it in the tool whose
+own report the gate exists to distrust.
+
+**THE EXIT CODE CANNOT CARRY THE ANSWER, AND I HAD ALREADY SHIPPED A TOOL THAT ASSUMED IT COULD.**
+`--push` returns **0** from four places — pushed, nothing changed, `--dry-run`, `--no-remote` — and
+**1** from eight, of which **exactly one** (a path that will not settle) is worth retrying. So a
+caller has two options: read the tool's PROSE, which is a relayed answer, or be given a structured
+one. Hence the receipt. **And the run id is the whole point:** it is accepted only if its pid is the
+pid of the child THIS process spawned — a fact the caller *holds*, not a claim the file makes about
+itself. That is tonight's 04:33 defect made mechanical: *a reading is not a state.*
+
+**THE ONE THAT WAS SITTING THERE THE WHOLE TIME.** `state-sync --push`'s `same` short-circuit
+returns **before the remote is ever consulted**. So a commit that failed to publish once is never
+retried and the tool reports success forever — **exit 0, nothing changed, remote still behind.**
+I wrote that path at L052 and did not see it until a close had to tell "nothing to push" from "the
+push failed". The two ARE separable, and only one way: **ask the remote.** `NOTHING_CHANGED` +
+`remote == HEAD` is a real quiet close; `NOTHING_CHANGED` + `remote != HEAD` is a machine whose
+state never left.
+
+**PRINTING IS NOT GATING — the chair's line, and it was exactly right about my code.**
+`privacy verified here: visibility=PRIVATE` was a `console.log` on a path that had already decided
+to push. The gate now runs in `close.js`, **before** anything is published, and the landing is
+proved by `git ls-remote` afterwards rather than by `git push`'s exit code. Fixture for that last
+one is not contrived: **push url and fetch url pointing at different repositories** — one
+`set-url --push` away, git exits 0, the bytes land somewhere, and the place the room reads from
+never moved.
+
+**THE MUTANT PASS FOUND A REAL HOLE, WHICH IS THE ONLY REASON TO RUN ONE.** `--check publishes
+after all` SURVIVED: my only `--check` test used a state tree with no commits, so it returned before
+reaching the publish branch and left the whole branch unguarded in rehearsal mode. **A test that
+passes without executing the code it is about is a green light for a road nobody drove.**
+
+**AND THE FLAKY-ASSERTION LESSON, APPLIED FORWARD THIS TIME.** The deferred-retry test could have
+been a timed writer and a hope. Instead the mtime is set 2.5 s in the FUTURE: pass one refuses it
+outright, pass two — after the wait — finds it ~1 s in the past and settles. **A loaded machine
+makes the margin bigger, not smaller.** Same shape as the settle-window fix earlier tonight: assert
+the state, never the stopwatch.
+
+**Red first, honestly:** the refusal tests were written first but `close.js` existed before them, so
+there was no red-then-green transition to show; the mutant pass is that evidence with the arrow
+reversed, and I said so in the hand-back rather than dressing the order up.
+
+**I did not publish anything.** The live run was `--check` — real corpus, real `gh`, real
+`ls-remote`, 47 files / 58.1 MB, and nothing sent. Publishing outward keeps a human saying yes;
+the close is a command the keeper types.

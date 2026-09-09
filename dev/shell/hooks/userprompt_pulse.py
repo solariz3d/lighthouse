@@ -146,6 +146,48 @@ except Exception:
 # FAILS SILENT AND OPEN, like everything above: no stdin, no transcript, no ledger -> no line, never
 # a broken pulse. That silence is a stated limit, not coverage -- a seat whose transcript_path is
 # not supplied gets no compaction line and looks identical to one that did not compact.
+
+# THE DATA DIR, RESOLVED THE WAY THE PEER HOOKS DO -- 2026-09-07, BRAVO, L043.
+#
+# WHAT WAS HERE. `os.environ.get("CONSONANCE_DATA", r"C:\Consonance\data")` -- tier one, then a
+# hard-coded literal, inside a try/except that swallowed everything. The .py scope extension to
+# portable-paths landed the same night and this was the first real site it found.
+#
+# AND IT WAS NOT A FALLBACK, IT WAS THE LIVE PATH. On this machine CONSONANCE_DATA is unset
+# (`echo $CONSONANCE_DATA` -> empty) and ~/.consonance.json DOES carry `data_dir`. So tier one
+# missed, there was no tier two, and the literal is what resolved -- every prompt, on the only
+# machine that runs this. It was right only because the literal happened to match the config, and
+# a config change would have moved the data dir while this hook kept reading the old one silently.
+#
+# WHAT IT DOES NOW: env, then ~/.consonance.json `data_dir`, then NOTHING -- and the pulse says so.
+#
+# DELIBERATELY NOT MATCHING THE PEER'S THIRD TIER, and this is the one place I depart from the
+# instruction to match `transcript-watch.js dataDir()`. Its tiers one and two are copied exactly.
+# Its third tier is `return "C:\\Consonance\\data";` -- the same defect, and it sits in
+# portable-paths.baseline.json as a REVIEW site of its own. The guard's printed advice says "then
+# degrade LOUDLY"; the file it points at as the shape does not do that yet. Copying the shape
+# whole would have reproduced the defect I was sent to remove, so tiers one and two are the peer
+# pattern and tier three is the advice.
+def _consonance_data_dir():
+    """(path, tier) or (None, None). Never raises: this hook must not break the pulse."""
+    try:
+        _e = (os.environ.get("CONSONANCE_DATA") or "").strip()
+        if _e:
+            return _e, "env"
+    except Exception:
+        pass
+    try:
+        _cfg = os.path.join(os.path.expanduser("~"), ".consonance.json")
+        with open(_cfg, "r", encoding="utf-8-sig") as _f:
+            _v = json.load(_f)
+        _d = str((_v or {}).get("data_dir") or "").strip()
+        if _d:
+            return _d, "config"
+    except Exception:
+        pass
+    return None, None
+
+
 row10_part = ""
 try:
     import sys
@@ -176,24 +218,48 @@ try:
                 except Exception:
                     continue
         state["transcript_offset"] = _size
+    # LOUD DEGRADE, and it is loud in the one place this seat cannot miss: the pulse line it
+    # reads every turn. The block's header says it fails silent and open for no stdin, no
+    # transcript, no ledger -- three states where there is genuinely nothing to say. An
+    # UNRESOLVABLE DATA DIR is not one of those. It means restart detection is off for the whole
+    # session and the old code reported that identically to "no restart happened".
+    _degraded = None
     if prev is not None and _crossed is None:
-        _hw = os.path.join(os.environ.get("CONSONANCE_DATA", r"C:\Consonance\data"), "head-watch.jsonl")
-        try:
-            with open(_hw, "r", encoding="utf-8") as _f:
-                for _line in _f:
-                    try:
-                        _row = json.loads(_line)
-                    except Exception:
-                        continue
-                    if _row.get("event") == "start":
-                        _ts = datetime.fromisoformat(str(_row["ts"]).replace("Z", "+00:00"))
-                        if _ts > prev:
-                            _crossed = "restart"
-        except Exception:
-            pass
+        _dd, _tier = _consonance_data_dir()
+        if _dd is None:
+            _degraded = ("restart detection OFF: CONSONANCE_DATA unset and ~/.consonance.json"
+                         " has no data_dir")
+        else:
+            _hw = os.path.join(_dd, "head-watch.jsonl")
+            try:
+                with open(_hw, "r", encoding="utf-8") as _f:
+                    for _line in _f:
+                        try:
+                            _row = json.loads(_line)
+                        except Exception:
+                            continue
+                        if _row.get("event") == "start":
+                            _ts = datetime.fromisoformat(str(_row["ts"]).replace("Z", "+00:00"))
+                            if _ts > prev:
+                                _crossed = "restart"
+            except FileNotFoundError:
+                # Same class, one layer in: the dir resolved and the ledger is not there, so the
+                # detector cannot fire. Named rather than swallowed -- an absent ledger read
+                # exactly like "no restart" before.
+                _degraded = "restart detection OFF: no head-watch.jsonl under the " + _tier + " data dir"
+            except Exception:
+                # A malformed or unreadable ledger. Kept quiet on purpose: the per-row parse
+                # already skips junk, and this is the block's stated fail-open case.
+                pass
     if _crossed:
         row10_part = (f" · this gap crosses a {_crossed} -> open exo_memory/cards/claim-your-continuity.md"
                       " before claiming or denying continuity")
+    elif _degraded:
+        # A compaction may still have been detected above without the ledger; only say the
+        # detector is off when it actually had nothing to answer with.
+        # No "[pulse]" prefix here: the whole line already opens with it, and the first draft of
+        # this printed "[pulse] ... · [pulse] restart detection OFF".
+        row10_part = f" · {_degraded}"
 except Exception:
     row10_part = ""
 # --- end ROW 10 ---------------------------------------------------------------

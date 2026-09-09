@@ -43,6 +43,145 @@ fn refusal_should_post(verb: &str, now: u64) -> Option<u32> {
     }
 }
 
+// ── THE RETURN-LEG TRAP ────────────────────────────────────────────────────────────────────────
+//
+// L050. On 2026-09-09 the chair held RETURN-LEG on L049 and injected a follow-up into pane A. A did
+// the work and COULD NOT TELL ANYONE: its `call_librarian` was refused OUT OF TURN, correctly,
+// because `required_station` puts that verb at `panes` and the baton was at `chair`. The chair
+// waited 29 minutes for a wake the rules forbid.
+//
+// WHY THE OBVIOUS GATE IS NOT HERE, and this is a proof rather than a preference.
+//
+//   `chair_inject` requires holder == chair. `call_librarian` requires holder == panes. With one
+//   open lap those are mutually exclusive, so EVERY chair_inject — the correct fan-out at dispatch
+//   and the follow-up that traps a pane alike — necessarily happens while its target cannot
+//   answer. At the instant of the call the two cases are the SAME LEDGER STATE. A pre-condition
+//   cannot separate states that are identical.
+//
+//   And requiring a `--holder panes` row to PRECEDE the inject inverts `lap-row.js`'s own ring
+//   gate, whose rule is "ring first, write the row second": that row needs an audited chair->pane
+//   delivery since the baton last moved, which is the very call being refused. It deadlocks, and
+//   it deadlocks precisely in the state it exists to catch — firing `lap-row.js`'s registered
+//   falsifier ("if any seat is found genuinely stuck behind this gate with no legal move").
+//
+// SO THE ENFORCEMENT MOVES TO THE FIRST MOMENT THE TRAP IS DISCRIMINABLE, which is the pane's
+// refused hand-back. That moment leaves a mark, and the marks below are the whole mechanism:
+//
+//   RUNG   a chair_inject succeeded  ->  a pane was woken
+//   OWED   a call_librarian was refused by the station gate  ->  a pane finished and cannot speak
+//
+// A mark counts only while it is NEWER than the baton's last move — the window is the POSSESSION,
+// not a clock, copied from `lap-row.js`'s ring gate so there is no second definition to drift and
+// no threshold to tune. **The marks therefore clear themselves the moment the recovery row lands**,
+// with no bookkeeping anywhere: the thing that fixes the state is the thing that erases the flag.
+//
+// THIS IS DONE-VS-NEVER-STARTED ON A NEW SURFACE. "The loop has not come back yet" and "the loop is
+// never coming back" are the same silence to a waiting pane, and the old refusal told it the first
+// one unconditionally — *"The loop comes back to you; do not queue, do not retry in a spin."* In the
+// trap that sentence is FALSE, and A obeyed it for 29 minutes. The RUNG mark is the artifact that
+// separates them, and it is written by the act itself rather than inferred by the reader.
+
+/// The marks the loop leaves in this process. Same shape as `REFUSALS` above, for the same reason:
+/// this is in-memory and per-run by design. A restart forgets, and forgetting is safe here — a
+/// forgotten mark can only fail toward ALLOW, which is the direction a stalled loop needs.
+static LOOP_MARKS: Mutex<Option<LoopMarks>> = Mutex::new(None);
+
+#[derive(Default, Clone)]
+struct LoopMarks {
+    /// When the chair last successfully woke a pane, and what it addressed.
+    rung_at: u64,
+    rung_target: String,
+    /// When a pane last had a hand-back refused by the station gate, and which mount.
+    owed_at: u64,
+    owed_by: String,
+}
+
+fn marks() -> LoopMarks {
+    LOOP_MARKS.lock().unwrap().get_or_insert_with(LoopMarks::default).clone()
+}
+
+fn mark_rung(target: &str, now: u64) {
+    let mut g = LOOP_MARKS.lock().unwrap();
+    let m = g.get_or_insert_with(LoopMarks::default);
+    m.rung_at = now;
+    m.rung_target = target.to_string();
+}
+
+fn mark_owed(who: &str, now: u64) {
+    let mut g = LOOP_MARKS.lock().unwrap();
+    let m = g.get_or_insert_with(LoopMarks::default);
+    m.owed_at = now;
+    m.owed_by = who.to_string();
+}
+
+/// PURE. Does a mark still stand, or has the baton moved past it?
+///
+/// `baton_at` is the `at` of the newest chain row across all OPEN laps — the moment the baton last
+/// moved anywhere — which is what `chain_state()` already returns. NONE means no open lap, and
+/// **no open lap means nothing is gated**, the same cut `station_allows` makes and for the same
+/// reason: freestyle is not the loop.
+///
+/// A mark of 0 is "never happened" and is not a very old mark. That distinction is the whole point
+/// of this file today, so it is written as its own arm rather than left to arithmetic.
+fn mark_stands(baton_at: Option<u64>, mark_at: u64) -> bool {
+    if mark_at == 0 {
+        return false;
+    }
+    match baton_at {
+        Some(b) => mark_at >= b,
+        None => false,
+    }
+}
+
+/// The recovery, spelled out. Both refusals below print a command, because a refusal that does not
+/// name its recovery just moves the stall one step earlier — the rule this whole packet is about.
+fn move_baton_cmd(lap: &str, by: &str) -> String {
+    format!("node consonance/tools/lap-row.js --stage {lap} working --holder panes --by {by}")
+}
+
+/// PURE. The chair's refusal when a hand-back is owed and undeliverable. `None` when no debt
+/// stands, which is every ordinary inject including the whole fan-out at dispatch.
+fn owed_refusal_text(baton_at: Option<u64>, m: &LoopMarks, lap: &str) -> Option<String> {
+    if !mark_stands(baton_at, m.owed_at) {
+        return None;
+    }
+    Some(format!(
+        "refused: A HAND-BACK IS OWED AND CANNOT BE DELIVERED — {who} finished work and its \
+         call_librarian was refused OUT OF TURN, because the baton is at the chair and \
+         call_librarian requires panes. Nothing more renders into a room where the last seat you \
+         woke cannot answer. Move the baton, then re-send:\n  {cmd}\nThe ring that row's gate wants \
+         is the inject you already sent, so it is legal now; this refusal clears itself when the \
+         row lands, because the mark is only read against the baton's last move. (Posted to the \
+         board.)",
+        who = if m.owed_by.is_empty() { "a pane" } else { m.owed_by.as_str() },
+        cmd = move_baton_cmd(lap, "chair"),
+    ))
+}
+
+/// PURE. Which silence a refused hand-back is in. See `out_of_turn_handback_message` for the why.
+fn handback_refusal_text(baton_at: Option<u64>, m: &LoopMarks, lap: &str) -> String {
+    let base = "refused: OUT OF TURN — a lap is open and the panes are not the holder (the attempt \
+                was posted to the board).";
+    if !mark_stands(baton_at, m.rung_at) {
+        return format!("{base} The loop comes back to you; do not queue, do not retry in a spin.");
+    }
+    format!(
+        "{base}\n\nTHIS IS THE RETURN-LEG TRAP, NOT AN ORDINARY WAIT. The chair woke a pane \
+         ({target}) since the baton last moved and no row has moved it to panes, so THE LOOP IS \
+         NOT COMING BACK ON ITS OWN and waiting will not end. Do not spin. Two ways out, either of \
+         which makes your next call land:\n\
+         \n  the chair moves it:  {chair_cmd}\
+         \n  or you take it:      {pane_cmd}\n\n\
+         The second is always legal — `--by` equal to `--holder` is a RETAKE, which lap-row.js \
+         allows with no ring — and it is the move the station guard's own no-wedge argument has \
+         always rested on. Write your hand-back to its file first; then move the baton, then call \
+         again.",
+        target = if m.rung_target.is_empty() { "unnamed" } else { m.rung_target.as_str() },
+        chair_cmd = move_baton_cmd(lap, "chair"),
+        pane_cmd = move_baton_cmd(lap, "panes"),
+    )
+}
+
 /// A committee member raising its hand. Routed to the chair's gate (Stage 7); never acts.
 #[derive(Clone, serde::Serialize)]
 pub struct PullRequest {
@@ -331,9 +470,34 @@ impl ConsonanceMcp {
                 "refused: OUT OF TURN — a lap is open and the chair is not the holder (the attempt was posted to the board). Nothing renders into a working pane; wait for the loop, or move the baton with lap-row.js if it is stuck.",
             )]));
         }
+        // THE DEBT GATE (L050). Deliberately AFTER the station gate and narrower than it: nothing
+        // more renders into a room where somebody who already finished cannot speak. It fires only
+        // on the state the station table makes discriminable — a hand-back refused since the baton
+        // last moved — and never on the first inject of a possession, which is provably identical
+        // to a correct fan-out. It cannot wedge the loop: the chair holds the baton here, and the
+        // ring the row-gate wants is the inject that created the debt, so the printed row is legal
+        // the moment it is read.
+        if let Some(msg) = self.owed_handback_refusal() {
+            return Ok(CallToolResult::success(vec![Content::text(msg)]));
+        }
         let (tx, rx) = tokio::sync::oneshot::channel();
-        let out = self.send_chair(ChairCmd::Inject { target, text, reply: tx }, rx).await;
+        let out = self.send_chair(ChairCmd::Inject { target: target.clone(), text, reply: tx }, rx).await;
+        // The RUNG mark: written by the act, so a waiting pane can be told which silence it is in.
+        // Stamped whatever the actuator reported, because a delivery that FAILED still means the
+        // chair believes it woke someone, and the refusal it produces downstream is the same one.
+        mark_rung(&target, now_ms());
         Ok(CallToolResult::success(vec![Content::text(out)]))
+    }
+
+    /// Is a hand-back owed that the loop's own rules forbid delivering? Returns the refusal, with
+    /// its recovery, or None.
+    ///
+    /// The two facts are read from different places on purpose: the MARK is this process's memory
+    /// of a refusal it issued, and the BATON is the ledger any seat can read and edit. Neither can
+    /// silently outlive the other — the ledger clears the mark, and only the ledger can.
+    fn owed_handback_refusal(&self) -> Option<String> {
+        let st = crate::chain_state();
+        owed_refusal_text(st.at, &marks(), st.lap.as_deref().unwrap_or("<lap>"))
     }
 
     #[tool(description = "LIBRARIAN VERB (mount-gated, the librarian seat only): deliver a message into the MAIN ORCHESTRATOR's pane — the one seat this verb can reach. There is no target argument: it addresses Main or nothing. Use it to hand back a finished map or plan instead of raising a hand and waiting for a human to click. Every use and every refusal is audited to the board, and the system marks the message \"[librarian:LIB]\" so the orchestrator is never unsure whether the librarian or the human is speaking. Panes: this is not your tool — use raise_pull.")]
@@ -516,15 +680,48 @@ impl ConsonanceMcp {
             )]));
         }
         if !self.auth_station("call_librarian") {
-            return Ok(CallToolResult::success(vec![Content::text(
-                "refused: OUT OF TURN — a lap is open and the panes are not the holder (the attempt was posted to the board). The loop comes back to you; do not queue, do not retry in a spin.",
-            )]));
+            // The OWED mark, written before the message is composed: a pane only calls this verb
+            // when it has something to hand back, so the call itself is the evidence that work is
+            // finished and undeliverable. That is what `chair_inject` reads.
+            let who = self.identity.clone().unwrap_or_else(|| "a pane".to_string());
+            mark_owed(&who, now_ms());
+            return Ok(CallToolResult::success(vec![Content::text(self.out_of_turn_handback_message())]));
         }
+        // Delivering clears nothing by hand: the mark is read against the baton, and the baton had
+        // to have moved for this line to be reachable at all.
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self
             .send_chair(ChairCmd::CallLibrarian { from: self.identity.clone(), text, reply: tx }, rx)
             .await;
         Ok(CallToolResult::success(vec![Content::text(out)]))
+    }
+
+    /// WHICH SILENCE THIS IS — the two absences a refused hand-back can mean, told apart by an
+    /// artifact rather than by a guess.
+    ///
+    ///   NOT YET   the loop has simply not come round. The chair has woken nobody since the baton
+    ///             last moved, so waiting is correct and the old wording is kept unchanged.
+    ///   NOT EVER  the chair rang a pane during this possession and no row followed the ring. The
+    ///             loop is NOT coming back on its own, and telling this pane to wait — which is
+    ///             what this verb did before L050 — is telling it something false. A did exactly
+    ///             that for 29 minutes on 2026-09-09.
+    ///
+    /// The second branch prints TWO recoveries, and the pane's own is the load-bearing one: the
+    /// station guard's no-wedge argument has always rested on `lap-row.js` being a CLI any seat can
+    /// run, and `--by panes --holder panes` is a RETAKE, which that file's ring gate allows
+    /// unconditionally. **So a trapped pane has always had a legal way out and was never told it**
+    /// — the command was printed on the BOARD LINE, which is the one place the trapped seat is not
+    /// reading. Naming a recovery where the stuck party cannot see it is not naming it.
+    ///
+    /// KNOWN WIDENING, stated rather than found later: the RUNG mark is not matched to the CALLER.
+    /// If the chair rang pane B and pane A calls, A is told it is in the trap. It is — in that
+    /// state the baton is at the chair with a pane woken, and A's hand-back is undeliverable for
+    /// the same reason and clears by the same row. Matching a `target` (a letter, or a pane-id
+    /// prefix) to a mount identity would mean resolving a prefix, and an unresolved prefix is a
+    /// guess; the gate is built so it never has to make one.
+    fn out_of_turn_handback_message(&self) -> String {
+        let st = crate::chain_state();
+        handback_refusal_text(st.at, &marks(), st.lap.as_deref().unwrap_or("<lap>"))
     }
 
     #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): set the board phase. \"quiet\" = panes may post but see only their own lines and the chair's, so independent work stays independent; \"open\" = the shared board is back and peers can catch each other. Acting verb — audited to the board, and every pane is TOLD it is in quiet phase and how much is withheld. HONEST LIMIT: this filters read_board only. data/board.jsonl stays plain-readable by any pane with a shell, so quiet is a DISCIPLINE aid and not isolation — do not design a cycle that depends on it as a boundary.")]
@@ -1059,6 +1256,188 @@ mod tests {
         let b = body_of("async fn call_librarian(");
         assert!(b.contains("auth_station(\"call_librarian\")"),
             "a hand-back landing mid-turn is the failure that produced this rule");
+    }
+
+    // ── L050 · THE RETURN-LEG TRAP ────────────────────────────────────────────────────────────
+    //
+    // Every test below is PURE: no ledger, no board, no disk, no clock. `chain_state()` is read at
+    // exactly two call sites and both are one-line wrappers over the functions tested here, so a
+    // machine's own `lap.jsonl` can never decide a verdict in this suite — the machine-bound class
+    // (`loop/machine_bound_class_2026-08-25.md`) was born from a test that read the real corpus.
+
+    const BATON: u64 = 1_000_000;
+
+    fn marks_at(owed_at: u64, rung_at: u64) -> LoopMarks {
+        LoopMarks {
+            rung_at,
+            rung_target: "A".to_string(),
+            owed_at,
+            owed_by: "A".to_string(),
+        }
+    }
+
+    /// RED FIRST. The state the chair created on 2026-09-09: a pane finished, its hand-back was
+    /// refused out of turn, and the chair sent MORE work into the same closed room. That must be
+    /// refused, and the refusal must NAME THE RECOVERY — a refusal that does not just moves the
+    /// stall one step earlier, which is the whole rule this packet is about.
+    #[test]
+    fn red_first_an_owed_hand_back_refuses_the_next_inject_and_names_the_recovery() {
+        let out = owed_refusal_text(Some(BATON), &marks_at(BATON + 5, 0), "L049")
+            .expect("a hand-back owed since the baton last moved must refuse the next inject");
+        assert!(out.starts_with("refused:"), "it must read as a refusal: {out}");
+        assert!(
+            out.contains("node consonance/tools/lap-row.js --stage L049 working --holder panes --by chair"),
+            "the refusal must print the command that clears it, with the real lap id: {out}"
+        );
+        assert!(out.contains('A'), "it must name who is owed, so the chair knows which pane is stuck");
+    }
+
+    /// THE MUTANT THAT MATTERS MOST — refuse everywhere and this goes red. This gate is for the
+    /// closed-room state ONLY. The fan-out at dispatch is three or four injects into panes that
+    /// cannot answer yet, and that is the loop working; it must stay legal or the room stops.
+    #[test]
+    fn an_ordinary_fan_out_is_not_touched() {
+        assert_eq!(owed_refusal_text(Some(BATON), &marks_at(0, 0), "L050"), None,
+            "no debt at all — this is every first inject of every possession, and the correct \
+             fan-out is indistinguishable from the trap at this instant");
+        assert_eq!(owed_refusal_text(Some(BATON), &marks_at(BATON - 1, 0), "L050"), None,
+            "a debt from BEFORE the baton last moved was already settled by the row that moved it");
+        assert_eq!(owed_refusal_text(Some(BATON), &marks_at(0, BATON + 5), "L050"), None,
+            "a RUNG mark is not a debt — waking a pane is the loop, not the trap");
+    }
+
+    /// DONE VS NEVER-STARTED, at the smallest possible scale and the reason it is its own arm.
+    /// `0` is "this never happened", not "this happened at the epoch". Read as a timestamp it is
+    /// older than every baton and would clear itself silently; read as an absence it says so.
+    #[test]
+    fn a_mark_that_never_happened_is_not_a_very_old_mark() {
+        assert!(!mark_stands(Some(BATON), 0), "an absent mark must not be read as a stale one");
+        assert!(!mark_stands(Some(0), 0), "not even against a zero baton");
+        assert!(!mark_stands(None, 0));
+        assert!(mark_stands(Some(BATON), BATON + 1), "a real mark after the baton stands");
+    }
+
+    /// The same cut `station_allows` makes: NO OPEN LAP MEANS NOTHING IS GATED. Freestyle is not
+    /// the loop, and a guard that fires when there is no loop to protect is a guard that teaches
+    /// seats to route around it.
+    #[test]
+    fn no_open_lap_gates_nothing() {
+        assert!(!mark_stands(None, BATON + 5), "with no baton there is no possession to be inside of");
+        assert_eq!(owed_refusal_text(None, &marks_at(BATON + 5, BATON + 5), "L050"), None);
+        assert!(
+            handback_refusal_text(None, &marks_at(0, BATON + 5), "L050").contains("comes back to you"),
+            "with no open lap the old wording stands — there is no trap to name"
+        );
+    }
+
+    /// THE WINDOW IS THE POSSESSION, NOT A CLOCK — the rule is copied from `lap-row.js`'s ring
+    /// gate rather than re-invented, so there is no second definition to drift and no threshold
+    /// constant to defend. The boundary is inclusive: a mark stamped in the same millisecond as
+    /// the row is inside the possession the row opened.
+    #[test]
+    fn the_window_is_the_possession_and_the_boundary_is_inclusive() {
+        assert!(!mark_stands(Some(BATON), BATON - 1), "one ms before the row is the previous possession");
+        assert!(mark_stands(Some(BATON), BATON), "the boundary is inclusive");
+        assert!(mark_stands(Some(BATON), BATON + 1));
+    }
+
+    /// THE TWO SILENCES, told apart by an ARTIFACT rather than by a guess. Before L050 this verb
+    /// told every refused pane "The loop comes back to you" — true in one case and FALSE in the
+    /// other, and A obeyed the false one for 29 minutes.
+    #[test]
+    fn the_two_silences_are_told_apart_and_only_one_says_wait() {
+        let not_yet = handback_refusal_text(Some(BATON), &marks_at(0, 0), "L049");
+        assert!(not_yet.contains("The loop comes back to you"),
+            "with nobody rung this possession, waiting is correct and the old wording is kept");
+        assert!(!not_yet.contains("NOT COMING BACK"));
+
+        let trapped = handback_refusal_text(Some(BATON), &marks_at(0, BATON + 5), "L049");
+        assert!(trapped.contains("NOT COMING BACK ON ITS OWN"),
+            "a pane rung during this possession with the baton still at the chair must be told \
+             the loop is not returning — telling it to wait is telling it something false");
+        assert!(!trapped.contains("The loop comes back to you"),
+            "the two messages must not both be true at once");
+    }
+
+    /// THE PANE'S OWN WAY OUT, which has always existed and was never told to the pane that needed
+    /// it. `--by` equal to `--holder` is a RETAKE, which lap-row.js allows with no ring, so a
+    /// trapped seat can always move the baton itself. The command was printed on the BOARD line —
+    /// the one place the trapped seat is not reading. Naming a recovery where the stuck party
+    /// cannot see it is not naming it.
+    #[test]
+    fn the_trapped_pane_is_handed_its_own_legal_exit() {
+        let t = handback_refusal_text(Some(BATON), &marks_at(0, BATON + 5), "L049");
+        assert!(t.contains("--stage L049 working --holder panes --by panes"),
+            "the pane must be given the retake it may legally write itself: {t}");
+        assert!(t.contains("--stage L049 working --holder panes --by chair"),
+            "and the chair's own move, because either one clears it");
+        assert!(t.contains("RETAKE"), "the reason the pane's move is legal must travel with it, or \
+             the next seat will not believe it may run it");
+    }
+
+    /// Neither refusal may ever be a bare no. Both arms, checked together, so a future edit that
+    /// keeps one and drops the other cannot pass.
+    #[test]
+    fn every_refusal_this_gate_adds_prints_a_runnable_command() {
+        let mut checked = 0;
+        for text in [
+            owed_refusal_text(Some(BATON), &marks_at(BATON + 1, 0), "L049").unwrap(),
+            handback_refusal_text(Some(BATON), &marks_at(0, BATON + 1), "L049"),
+        ] {
+            assert!(text.contains("node consonance/tools/lap-row.js --stage L049 "),
+                "a refusal with no runnable recovery just moves the stall one step earlier: {text}");
+            checked += 1;
+        }
+        assert_eq!(checked, 2, "both refusal arms must be exercised");
+    }
+
+    /// THE PROOF THIS GATE'S PLACEMENT RESTS ON, pinned so it cannot be quietly falsified.
+    ///
+    /// With ONE open lap, `chair_inject` (holder chair) and `call_librarian` (holder panes) can
+    /// never both be legal. So every chair_inject — the correct fan-out and the trapping follow-up
+    /// alike — necessarily happens while its target cannot answer, and at that instant the two are
+    /// the same state. That is why there is no pre-condition on `chair_inject` that separates
+    /// them, and why the gate above fires on the pane's refused hand-back instead.
+    #[test]
+    fn with_one_open_lap_the_chair_and_the_panes_can_never_both_speak() {
+        for holder in ["chair", "panes", "librarian", "none", "anything-else"] {
+            let h = vec![holder.to_string()];
+            let inject = ConsonanceMcp::station_allows("chair_inject", true, &h);
+            let handback = ConsonanceMcp::station_allows("call_librarian", true, &h);
+            assert!(!(inject && handback),
+                "holder {holder:?} let the chair speak AND a pane hand back on one open lap — if \
+                 that is ever true, a pre-condition on chair_inject CAN separate the fan-out from \
+                 the trap, and this gate belongs at that site instead");
+        }
+        // And the documented price, stated the other way: with two open laps carrying both
+        // stations, both verbs are open at once. That is `lap_holders`' known cost, not a defect
+        // here — but it is the one configuration in which the impossibility above does not hold.
+        let both = vec!["chair".to_string(), "panes".to_string()];
+        assert!(ConsonanceMcp::station_allows("chair_inject", true, &both));
+        assert!(ConsonanceMcp::station_allows("call_librarian", true, &both));
+    }
+
+    /// WIRING. The pure functions above are worth nothing if the verbs do not call them — the
+    /// `call_chair` exemption's own lesson, one screen up: a guard that is called and cannot
+    /// change the answer reads as present from every angle except a careful one.
+    #[test]
+    fn the_trap_gate_is_wired_into_both_verbs() {
+        let inject = body_of("async fn chair_inject(");
+        assert!(inject.contains("owed_handback_refusal()"),
+            "chair_inject must consult the debt gate, or the room stays closed");
+        assert!(inject.contains("mark_rung("),
+            "chair_inject must leave the RUNG mark — it is the artifact that tells the two \
+             silences apart, and nothing else writes it");
+
+        let handback = body_of("async fn call_librarian(");
+        assert!(handback.contains("mark_owed("),
+            "the refused hand-back must leave the OWED mark — it is the only moment the trap is \
+             discriminable, and an unrecorded one is a trap nobody can see");
+        assert!(handback.contains("out_of_turn_handback_message()"),
+            "the refusal must go through the branching message, not a literal");
+        assert!(!handback.contains("The loop comes back to you"),
+            "the unconditional wording must be GONE from this body, not merely shadowed: it is \
+             false in the trap, and a seat read it and waited 29 minutes");
     }
 
     /// SUPERSEDED, 2026-09-06, and kept as a named replacement rather than deleted so the

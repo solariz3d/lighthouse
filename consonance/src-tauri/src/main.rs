@@ -28,6 +28,8 @@ mod cochlea_service;  // threads, the ledger, and the refusal to run near an ant
 mod lap_holders;  // whose turn it is when MORE THAN ONE lap is open — the guard's pure half (A, L040)
 mod seat_alias;  // what a person TYPES -> what PaneNames INDEXES; the 58 measured 'Main' failures (E, L040)
 mod nowplaying;  // what is actually playing, from Windows' own media session — so the title is read, not inferred
+mod harvest_guard;  // the capture watcher's recovery + liveness policy; one mutex, one policy (E, L043)
+mod sync_launch;  // pull-verify-then-start, and the retire rule for a second machine (C, L052)
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -893,6 +895,12 @@ struct Panes(Mutex<HashMap<String, PtySession>>);
 // layer 2: a headless vt100 emulator per pane, fed the same PTY bytes as the terminal. A watcher
 // thread renders it and harvests settled turns. Held in a map so pty_resize can keep the emulator's
 // dimensions matched to the real PTY (a size mismatch would misrender the extraction).
+// THE SIZE A PANE IS BORN AT, AND NOTHING ELSE (L044, 2026-09-08). `pty_resize` moves the PTY and
+// the emulator together within a second of a pane docking — measured live at 43x~200 on three
+// panes — so these describe the first moment of a pane's life and no moment after it. Use them to
+// CONSTRUCT a parser; never as a window to READ one. Every read path takes `screen.size()`, and the
+// two that did not cost a 240 s hold on every full-height pane and a silent 120-column truncation
+// of the capture the room restores from.
 const EMU_ROWS: u16 = 34; // must match the openpty size below so claude's cursor moves render right
 const EMU_COLS: u16 = 120;
 struct EmuState {
@@ -910,6 +918,22 @@ struct PaneEmus(Mutex<HashMap<String, Arc<Mutex<EmuState>>>>);
 const FRESH_READONLY_TOOLS: &str = "Read,Glob,Grep,WebSearch,WebFetch,TodoWrite";
 
 fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool, skip_perms: bool) -> Result<PtySession, String> {
+    // L052: READ-ONLY IS ENFORCED HERE, AT THE ONE FUNNEL, and that is the whole enforcement.
+    //
+    // The verdict withholds the seats only when the data dir may be half-promoted. Blocking the
+    // spawns is SUFFICIENT, argued by enumeration rather than assumed — the same check L051 owed
+    // and paid: with no pane spawned, `start_tailer` is never called, so no tailer thread runs, so
+    // no offsets are saved and no transcript row is pushed; the MCP verbs that write the board are
+    // called BY panes, and there are none; the only board write left is the launcher's own seam
+    // row, which is the message. Ten call sites reach this function and every one of them is
+    // inside a `#[tauri::command]`, so none can run before `.setup()` has set the verdict.
+    //
+    // It is a refusal, not a lockout: the window is open, the board is readable, and the text says
+    // the two ways forward.
+    if let Some(why) = seats_withheld() {
+        plog(&format!("SEAT WITHHELD pane={pane_id} — {why}"));
+        return Err(why);
+    }
     let pair = native_pty_system()
         .openpty(PtySize { rows: EMU_ROWS, cols: EMU_COLS, pixel_width: 0, pixel_height: 0 })
         .map_err(|e| e.to_string())?;
@@ -1050,7 +1074,12 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
                 Ok(0) | Err(_) => break,
                 Ok(n) => {
                     if let Some(f) = cap.as_mut() { let _ = f.write_all(&buf[..n]); }
-                    if let Ok(mut e) = emu_r.lock() {
+                    // ONE MUTEX, ONE POLICY (E, L043). Declining to feed the emulator after a
+                    // poisoning freezes the screen PERMANENTLY, which is indistinguishable from
+                    // the watcher being dead — so recovering only the watcher would have bought a
+                    // green light over the same frozen screen.
+                    {
+                        let mut e = harvest_guard::recover(emu_r.lock());
                         e.parser.process(&buf[..n]);
                         e.last_byte = Instant::now();
                     }
@@ -1066,69 +1095,69 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // the same settled screen is skipped, and a DIFFERENT window of the same turn (it scrolled
     // between settles, or a resume re-rendered recorded history) is stitched into the existing
     // record in place — never appended, which is what stacked each exchange 8-9 deep on every
-    // capture-restore. v1 reads the visible screen only (scrollback 0): turns up to EMU_ROWS
-    // tall are captured whole, taller turns keep their tail — the raw .log still holds
-    // everything for a future full-fidelity render.
+    // capture-restore. v1 reads the visible screen only (scrollback 0): turns up to the pane's
+    // CURRENT height are captured whole (not EMU_ROWS — that is the birth size only), taller
+    // turns keep their tail — the raw .log still holds everything for a full-fidelity render.
     let text_path = capture_text_path(&pane_id);
     let emu_w = emu.clone();
     let alive_w = alive.clone();
+    let pane_w = pane_id.clone(); // the liveness stamp needs to say WHICH pane went quiet
     std::thread::spawn(move || {
         // seed from the transcript's tail so a resume's re-rendered history dedups against
         // what's already on disk instead of re-recording it after every restart
         let mut last: Option<(String, String)> = read_last_record(&text_path);
+        let mut hg = harvest_guard::HarvestGuard::new();
         while alive_w.load(Ordering::Relaxed) {
             std::thread::sleep(Duration::from_millis(250));
-            // rows AND their soft-wrap flags: a user message longer than one row wraps, and only
-            // the first row carries the ❯ marker. Without row_wrapped the capture cut every long
-            // message at 118 chars (EMU_COLS − "❯ ") and stored the stump as the whole sentence.
-            let (lines, wrapped): (Vec<String>, Vec<bool>) = {
-                let e = match emu_w.lock() {
-                    Ok(e) => e,
-                    Err(_) => break,
-                };
-                if e.last_byte.elapsed() < Duration::from_millis(500) {
-                    continue; // still streaming — wait for the turn to settle
-                }
-                let screen = e.parser.screen();
-                let rows: Vec<String> = screen.rows(0, EMU_COLS).collect();
-                let flags: Vec<bool> =
-                    (0..rows.len() as u16).map(|i| screen.row_wrapped(i)).collect();
-                (rows, flags)
-            };
-            if !capture::screen_ready(&lines) {
-                continue;
+            let now = harvest_guard::now_ms();
+
+            // ATTEMPT, before the work and regardless of its outcome. A stamp that advanced only
+            // on a successful write could not tell a dead thread from a quiet pane — which is the
+            // bug this stamp exists to detect, rebuilt inside the detector.
+            if hg.attempt(now) {
+                write_harvest_stamp(&pane_w, &hg);
             }
-            // strip painted overlays ("Jump to bottom (…", "1 new message (…") before
-            // extraction — they overwrite content-row tails, leak UI chrome into the record,
-            // and make otherwise-identical windows compare unequal
-            let lines: Vec<String> = lines.iter().map(|l| capture::strip_overlay(l)).collect();
-            let prompt = capture::latest_prompt(&lines, &wrapped);
-            if prompt.is_empty() {
-                continue; // no visible user prompt (welcome banner, or the prompt scrolled off) — skip noise
-            }
-            let resp = capture::latest_turn(&lines, &wrapped);
-            if resp.trim().is_empty() {
-                continue;
-            }
-            if let Some((lp, lr)) = last.clone() {
-                if lp == prompt {
-                    if lr == resp {
-                        continue; // same settled turn still on screen — already recorded
+
+            match harvest_guard::guarded(|| harvest_once(&emu_w, &text_path, &mut last)) {
+                Ok(recorded) => {
+                    hg.note_ok();
+                    if recorded {
+                        hg.note_record(now);
                     }
-                    // same turn, different window: grow the record where it sits
-                    let merged = capture::stitch(&lr, &resp);
-                    if merged != lr {
-                        rewrite_last_record(&text_path, &prompt, &lr, &merged);
-                        last = Some((prompt, merged));
+                }
+                Err(msg) => {
+                    // A panic costs ONE TURN, not the pane. The message is kept because the app's
+                    // stderr goes to no file, and on 09-02 that is exactly what was missing.
+                    //
+                    // AND RECOVERY IS BOUNDED. A DETERMINISTIC panic — a screen state that kills
+                    // `rows()` every time — would otherwise be a permanent panic loop at the 250ms
+                    // poll: a burned core, forever. Three consecutive panics is not transient, so
+                    // the parser is rebuilt once; one success clears the count, so scattered
+                    // unrelated panics never accumulate into a reset. A reset costs one screen; a
+                    // loop costs a core.
+                    if hg.note_panic(msg) == harvest_guard::Recovery::Reinitialise {
+                        {
+                            let mut e = harvest_guard::recover(emu_w.lock());
+                            // AT THE SIZE IT HAD, not the size it was born at (L044). Rebuilding at
+                            // the constants shrinks a resized pane's grid back to 34x120 — and
+                            // `fitPane` only calls `pty_resize` when the fitted dims CHANGE, so
+                            // nothing would ever put it back. One panic would clamp that pane's
+                            // emulator for the rest of its life while its PTY stayed full height.
+                            // Zero panics and zero reinitialisations on the run this was found in,
+                            // so this is a latent path, not tonight's cause — said plainly because
+                            // an unqualified fix reads as a diagnosis.
+                            let (rows, cols) = e.parser.screen().size();
+                            e.parser = vt100::Parser::new(rows, cols, 0);
+                        }
+                        hg.note_reinitialised();
                     }
-                    continue;
+                    write_harvest_stamp(&pane_w, &hg); // a panic is worth a stamp immediately
                 }
             }
-            if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(&text_path) {
-                let _ = write!(f, "❯ {prompt}\n\n{resp}\n\n");
-            }
-            last = Some((prompt, resp));
         }
+        // The reader ended, which is the ordinary reason to stop. Say so: a killed thread cannot.
+        hg.note_exit();
+        write_harvest_stamp(&pane_w, &hg);
     });
 
     std::thread::spawn(move || {
@@ -1754,6 +1783,70 @@ mod offset_tests {
         assert!(line.contains("not comparable"), "must say counts across it cannot be compared: {line}");
         // And it must not quietly imply the old corpus got fixed.
         assert!(line.contains("stays confounded"), "must not imply a repair: {line}");
+    }
+
+    /// **THE WRITER, found 2026-09-09 (L049). RED UNTIL THE ORDER IN `main` IS FIXED —
+    /// deliberately, and it is not a broken test.**
+    ///
+    /// The backfill decision is an ARGUMENT to `.manage(TailerOffsets(...))`, which Rust
+    /// evaluates while the Builder is being constructed. `set_dirs(&get_state())` runs inside
+    /// `.setup()`, which the runtime calls afterwards. So `offsets_path()` at the decision
+    /// resolves through `DIRS == None` to `default_data()` — the home directory's `.consonance`
+    /// — while every `save_offsets` runs on a tailer thread after setup and writes to the
+    /// CONFIGURED data dir. The file is written faithfully to one path and its existence is
+    /// tested at another. `BACKFILL_ACTIVE` is therefore true and the loaded map empty on
+    /// EVERY launch: `resume_offset(None, ..)` returns 0 and every pane re-reads its whole
+    /// transcript. Measured on the board: 39 `backfill` rows, each announcing itself as the
+    /// first launch under persisted offsets and each promising "ONE TIME".
+    ///
+    /// The comment on the `set_dirs` line already states the rule the line above it breaks:
+    /// *"resolve configurable dirs before anything reads them"*.
+    ///
+    /// The fix: manage an empty map at build time, and do the store + `load_offsets()` inside
+    /// `.setup()` AFTER `set_dirs`. Nothing else in this module changes — every other test in
+    /// it passes today, which is exactly why this survived: `resume_offset` is correct, and it
+    /// was never the thing that was wrong.
+    #[test]
+    fn the_backfill_decision_must_be_made_after_the_configured_dirs_resolve() {
+        // Half one — the mechanism. This half is GREEN, and it is what makes half two a defect
+        // rather than a style note: the two moments resolve two different files.
+        let _serial = DirsGuard::take();
+        assert_eq!(
+            offsets_path(),
+            PathBuf::from(default_data()).join("tailer-offsets.json"),
+            "with DIRS unset — the state the Builder is in — the path is the DEFAULT data dir"
+        );
+        let configured =
+            std::env::temp_dir().join(format!("consonance_offsets_dir_{}", std::process::id()));
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: String::new(),
+            instances: String::new(),
+            data: configured.display().to_string(),
+        });
+        assert_eq!(offsets_path(), configured.join("tailer-offsets.json"));
+        assert_ne!(
+            PathBuf::from(default_data()).join("tailer-offsets.json"),
+            configured.join("tailer-offsets.json"),
+            "a read before set_dirs and a write after it are two different files"
+        );
+        let _ = fs::remove_dir_all(&configured);
+
+        // Half two — the pin. The defect IS an evaluation order, so no test of a pure function
+        // can see it and none of the six in this module ever did; the source is the only place
+        // it is visible. The needles are assembled by `concat!` so THIS test's own text cannot
+        // satisfy the scan — the hazard carried by the other source-reading test in this file,
+        // where the literal it searches for is the literal it is written with.
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let decision = concat!("BACKFILL_ACTIVE", ".store(");
+        let resolve = concat!("set_dirs(&", "get_state());");
+        let line_of = |needle: &str| {
+            src.lines()
+                .position(|l| l.contains(needle) && !l.trim_start().starts_with("//"))
+        };
+        let at_decision = line_of(decision).expect("no backfill decision — re-point this test");
+        let at_resolve = line_of(resolve).expect("no set_dirs call — re-point this test");
+        let why = format!("the backfill decision is made at line {} but the configured dirs are not resolved until line {}. It therefore asks the DEFAULT data dir whether a file exists that is only ever written to the CONFIGURED one, loads an empty map, and every pane reads its transcript from the top — on every launch, not once.", at_decision + 1, at_resolve + 1);
+        assert!(at_resolve < at_decision, "{why}");
     }
 
     #[test]
@@ -6427,7 +6520,7 @@ fn spawn_third_place(
     if panes.0.lock().unwrap().contains_key(THIRD_PLACE_SID) {
         return Err("the Third Place is already open".into());
     }
-    let intake = third_place_intake()
+    let mut intake = third_place_intake()
         .ok_or("THIRD_PLACE.md is missing -- refusing to open a room with no brief")?;
     let cwd = third_place_cwd();
     let _ = third_place_notes();
@@ -6436,6 +6529,16 @@ fn spawn_third_place(
         .join("projects")
         .join(encode_cwd(&cwd))
         .join(format!("{THIRD_PLACE_SID}.jsonl"));
+    // L052: see spawn_main. THE THIRD PLACE IS RETIRED TOO, and the reason is worth stating
+    // because its record is the one thing the room has always kept off every transport
+    // (`.gitignore`, 08-29). Retiring is safe in BOTH worlds: if its tail travelled, this wakes the
+    // synced thread; if it did not, `capture_text_path` is this machine's own tail and the seat
+    // wakes as itself, one gap wide. What is NOT safe either way is `captures/*.txt` in A's
+    // manifest travelling this seat's words to a remote — that is a live conflict with the
+    // standing rule, it is A's file, and it is named in the hand-back rather than patched here.
+    if launch_verdict_is_migrate() {
+        append_synced_tail(&mut intake, THIRD_PLACE_SID);
+    }
     let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
     let resume = transcript.exists();
     let session = spawn_claude_pane(app.clone(), THIRD_PLACE_SID.to_string(), cwd.clone(), resume, true)?;
@@ -6461,7 +6564,7 @@ fn spawn_librarian(
     if panes.0.lock().unwrap().contains_key(LIBRARIAN_SID) {
         return Err("the Librarian is already awake".into());
     }
-    let intake = librarian_intake()
+    let mut intake = librarian_intake()
         .ok_or("LIBRARIAN.md is missing -- refusing to wake a librarian with no brief")?;
     let cwd = librarian_cwd();
     let transcript = PathBuf::from(home())
@@ -6469,6 +6572,11 @@ fn spawn_librarian(
         .join("projects")
         .join(encode_cwd(&cwd))
         .join(format!("{LIBRARIAN_SID}.jsonl"));
+    // L052: see spawn_main. The shelf is already near its cap, so `append_synced_tail` computes
+    // its budget from the intake it is handed and degrades to a pointer rather than overflowing.
+    if launch_verdict_is_migrate() {
+        append_synced_tail(&mut intake, LIBRARIAN_SID);
+    }
     let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
     let resume = transcript.exists();
     let session = spawn_claude_pane(app.clone(), LIBRARIAN_SID.to_string(), cwd.clone(), resume, true)?;
@@ -6519,6 +6627,11 @@ fn spawn_main(
     }
     intake.push('\n');
     intake.push_str(&night_table(&cwd, settled));
+    // L052: after a migrate this seat's own session file has been retired, so `resume` below is
+    // false and the window would be empty. The thread rides in on the synced capture tail.
+    if launch_verdict_is_migrate() {
+        append_synced_tail(&mut intake, MAIN_SID);
+    }
     // the room is refreshed into CLAUDE.md each launch; --resume continues the same conversation
     let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
     let resume = transcript.exists(); // first wake = new session; thereafter = resume the same one
@@ -7288,6 +7401,100 @@ fn submit_delay_ms(payload_bytes: usize) -> u64 {
 // the chair could deliver into a pane; the librarian's channel is now exempt from the station
 // guard, so the door the bound leaves open is reachable by more senders than it was.
 
+/// Where the app's own watcher thread writes whether it is still alive (E, L043).
+fn harvest_dir() -> PathBuf {
+    let p = data_dir().join("harvest");
+    let _ = fs::create_dir_all(&p);
+    p
+}
+
+/// The watcher's liveness stamp. SEPARATE from `data/ready/` on purpose, and it is not a
+/// preference: `ready/` is written by the HOOKS inside the pane's claude process and answers "is
+/// the harness idle?"; this is written by the APP'S WATCHER THREAD and answers "is the thing that
+/// records this pane still alive?". Different subject, different writer, different failure — and
+/// sharing one path would put a node hook and a Rust thread on it unsynchronised, which is the
+/// two-writers window this same lap fixed in the librarian's shelf.
+fn write_harvest_stamp(pane: &str, hg: &harvest_guard::HarvestGuard) {
+    let _ = fs::write(harvest_dir().join(format!("{pane}.json")), hg.stamp_json(pane));
+}
+
+/// One harvest pass. Returns whether a turn was appended or stitched.
+///
+/// THE BODY IS THE OLD WATCHER LOOP VERBATIM, with each `continue` become `return false`, lifted
+/// out so a whole pass fits inside one `catch_unwind`. Nothing is re-ordered. The comments are the
+/// original's and were restored in the fold — E's patch dropped four of them, and they are the
+/// only record of why the wrap flags and the overlay strip exist.
+fn harvest_once(
+    emu: &Arc<Mutex<EmuState>>,
+    text_path: &Path,
+    last: &mut Option<(String, String)>,
+) -> bool {
+    // rows AND their soft-wrap flags: a user message longer than one row wraps, and only
+    // the first row carries the ❯ marker. Without row_wrapped the capture cut every long
+    // message at the row width and stored the stump as the whole sentence.
+    //
+    // THE WIDTH IS THE SCREEN'S, NOT `EMU_COLS` (L044, 2026-09-08). This read was clipped at 120
+    // columns on panes running ~200, and it was SILENT: `rows(0, w)` takes the first `w` cells and
+    // drops the rest, so every line longer than 120 columns lost its tail with no wrap flag to say
+    // so. Measured in this machine's own record before the fix: 4,294 lines of the chair's capture
+    // are exactly 120 bytes long and every sampled one ends mid-word ("…the consumer clos",
+    // "…both untracked, nei"). The room restores from this file, so the loss is in the record.
+    let (lines, wrapped): (Vec<String>, Vec<bool>) = {
+        // ONE MUTEX, ONE POLICY: the reader tolerates a poisoned lock, so the watcher does too.
+        let e = harvest_guard::recover(emu.lock());
+        if e.last_byte.elapsed() < Duration::from_millis(500) {
+            return false; // still streaming — wait for the turn to settle
+        }
+        let screen = e.parser.screen();
+        let (_, cols) = screen.size();
+        let rows: Vec<String> = screen.rows(0, cols).collect();
+        let flags: Vec<bool> = (0..rows.len() as u16).map(|i| screen.row_wrapped(i)).collect();
+        (rows, flags)
+    };
+    if !capture::screen_ready(&lines) {
+        return false;
+    }
+    // strip painted overlays ("Jump to bottom (…", "1 new message (…") before
+    // extraction — they overwrite content-row tails, leak UI chrome into the record,
+    // and make otherwise-identical windows compare unequal
+    let lines: Vec<String> = lines.iter().map(|l| capture::strip_overlay(l)).collect();
+    let prompt = capture::latest_prompt(&lines, &wrapped);
+    if prompt.is_empty() {
+        return false; // no visible user prompt (welcome banner, or the prompt scrolled off) — skip noise
+    }
+    let resp = capture::latest_turn(&lines, &wrapped);
+    if resp.trim().is_empty() {
+        return false;
+    }
+    if let Some((lp, lr)) = last.clone() {
+        if lp == prompt {
+            if lr == resp {
+                return false; // same settled turn still on screen — already recorded
+            }
+            // same turn, different window: grow the record where it sits
+            let merged = capture::stitch(&lr, &resp);
+            if merged != lr {
+                rewrite_last_record(text_path, &prompt, &lr, &merged);
+                *last = Some((prompt, merged));
+                return true;
+            }
+            return false;
+        }
+    }
+    // KEPT DELIBERATELY, and it looks like a bug: if the append fails, the original still updates
+    // `last` and moves on, so the turn is treated as recorded when it was not. That is the old
+    // behaviour byte for byte; changing it is a separate call with its own reasoning (E, §4).
+    if let Ok(mut f) = fs::OpenOptions::new().create(true).append(true).open(text_path) {
+        let _ = write!(f, "❯ {prompt}
+
+{resp}
+
+");
+    }
+    *last = Some((prompt, resp));
+    true
+}
+
 /// Where the pane's own hooks write what they know about it.
 fn ready_dir() -> PathBuf {
     let p = data_dir().join("ready");
@@ -7355,6 +7562,18 @@ enum PaneGate {
     /// screen gate, exactly as it behaved before the stamp existed — and it SAYS it fell back,
     /// because install drift is a measured class in this room, not a hypothetical.
     Unstamped,
+    /// THE MIRROR OF `Stale`, and the asymmetry that was the defect. `Stale` catches a stamp that
+    /// is too OLD. Nothing caught a stamp that is too CONFIDENT — positive, current, and wrong
+    /// about the screen underneath it — so a pane whose Stop fired while a turn was visibly running
+    /// was delivered into IMMEDIATELY, with no screen check at all, BY THE GATE'S OWN INJECT. That
+    /// is the splice the inbox exists to prevent, reachable through the one path built to prevent
+    /// it.
+    ///
+    /// It is reachable by the gate's own action: the drain ticks every 250ms, the pane's
+    /// UserPromptSubmit hook costs 75-81ms plus claude's dispatch to flip the stamp, and
+    /// `last_byte` only moves once the pane ECHOES. So for one round-trip after we write, a
+    /// positive stamp describes the turn BEFORE the one we just started.
+    Contradicted,
 }
 
 impl PaneGate {
@@ -7364,6 +7583,7 @@ impl PaneGate {
             PaneGate::Working => "stamp=working",
             PaneGate::Stale => "stamp=STALE (says working, screen says otherwise)",
             PaneGate::Unstamped => "NO STAMP — fell back to the bounded screen gate",
+            PaneGate::Contradicted => "stamp=ready CONTRADICTED (says done, a live turn is on screen)",
         }
     }
     /// True when the pane's own signal is carrying the decision. False means the screen is.
@@ -7378,7 +7598,15 @@ fn pane_gate(stamp: Stamp, screen: Option<(&[String], Duration)>) -> PaneGate {
     let Some((lines, quiet)) = screen else { return PaneGate::Unstamped };
     let screen_busy =
         turn_in_flight(lines) || quiet < Duration::from_millis(QUIET_FOR_DELIVERY_MS);
+    // A LIVE TURN IS THE STRONG SIGNAL AND BOTH HALVES ARE REQUIRED — deliberately NOT
+    // `screen_busy`, which is an OR and would fire on any recently-noisy pane, including the echo
+    // of our own write. A spinner on the grid is not evidence on its own either: rows scroll in
+    // place at scrollback 0, so a spinner from a turn that ended 48 minutes ago is still drawn
+    // there (`a_stale_spinner_left_on_the_grid_does_not_hold_the_message`). A LIVE turn redraws
+    // its spinner at least once a second, so it is the spinner AND the noise together.
+    let live_turn = turn_in_flight(lines) && quiet < Duration::from_millis(QUIET_FOR_DELIVERY_MS);
     match stamp {
+        Stamp::Done if live_turn => PaneGate::Contradicted,
         Stamp::Done => PaneGate::Ready,
         Stamp::Working if screen_busy => PaneGate::Working,
         Stamp::Working => PaneGate::Stale,
@@ -7407,21 +7635,152 @@ fn deliver_only_when_idle() -> bool {
     )
 }
 
-/// THE INPUT BOX IS THE BOTTOM-MOST PROMPT ROW, and its emptiness is the keeper-typing signal.
+/// WHAT THE KEEPER ACTUALLY TYPED, separated from what the TUI merely DREW in the same row.
 ///
-/// `capture::is_prompt` is "❯ + content"; `capture::is_empty_box` is "❯ + nothing". Together they
-/// are "a ❯ row". The LAST such row is the composer; every earlier one is history or scrollback.
+/// FOUND BY THE KEEPER, 2026-09-07 05:09: *"the greyed out text prediction! If it spawns in the
+/// bar, it stops the loop."* Claude Code's autocomplete prediction occupies real cells in the
+/// composer, so a gate reading the grid as plain text reads a PREDICTION AS THE KEEPER TYPING and
+/// every delivery holds. Three stalls that night were ghosts, not him.
 ///
-/// UNKNOWN HOLDS. No ❯ row at all means a welcome banner, a full-screen overlay, or a screen this
-/// predicate cannot read — none of which is evidence the pane is ready. Returning true there is
-/// how a gate becomes decorative on exactly the screens it was built for.
-fn input_box_empty(lines: &[String]) -> bool {
-    match lines
+/// IT IS THE 2026-08-22 PREDICTOR ERROR WITH THE SIGN FLIPPED. Then a seat acted on the
+/// predictor's text as though the human wrote it. Now the gate refuses because it reads the
+/// predictor's text as the human. Same surface, same confusion of author, opposite direction.
+///
+/// THE DISCRIMINATOR IS COLOUR, AND IT WAS MEASURED, NOT ASSUMED. Replaying this machine's own
+/// capture log through the parser production uses: the `❯` and the NBSP after it are `Default`;
+/// text the keeper typed is `Default`; the prediction, the right-aligned hints (`← for agents`),
+/// `paste again to expand` and a bled-through status line are all `Rgb(153,153,153)`. A mixed row
+/// reads `❯ Both h` in Default with `ow are you` in grey after it — typed prefix, drawn
+/// completion, in one row.
+///
+/// NOT SGR 2. The obvious guess is the dim attribute, and **vt100 0.15 does not track it** — its
+/// SGR match handles 1/3/4/7 and the colours, and `2` falls through unrecorded. Had the prediction
+/// been dim rather than grey, this fix would have been impossible without changing emulators, and
+/// that is the version of this packet I would have had to refuse.
+///
+/// THE BOUND, stated because this is a colour heuristic and not a protocol: anything the keeper
+/// types that is NOT at default foreground reads here as chrome. Nothing in the record does that,
+/// and a paste renders at default — but it is the assumption to break first if a real hold is ever
+/// missed.
+///
+/// THE WINDOW IS THE SCREEN'S OWN SIZE, NEVER `EMU_ROWS`/`EMU_COLS` (L044, 2026-09-08). Those are
+/// the size the parser is BORN at; `pty_resize` moves the PTY and calls `parser.set_size` in the
+/// same breath, so a docked pane runs 43x~200 within a second of opening. Shipped reading
+/// `(0..EMU_ROWS)`, this function looked at the top 34 rows of a 43-row grid — and the composer is
+/// the BOTTOM row. `input_box_empty` then found no `❯` at all and returned false by its own
+/// UNKNOWN-HOLDS rule, so every delivery to every full-height pane held to the 240 s bound. That is
+/// the ghost fix creating a second, wider stall than the one it removed, and it shipped green
+/// because the test below pinned the constant instead of the screen.
+///
+/// MEASURED on the chair's own capture, 4 MB replayed in 256-byte chunks: at 43x200 the composer
+/// sat at row ≥34 in **944 of 1024 sampled frames**. Not an edge case — 92% of that pane's life.
+fn typed_only(screen: &vt100::Screen) -> Vec<String> {
+    let (rows, cols) = screen.size();
+    (0..rows)
+        .map(|r| {
+            (0..cols)
+                .map(|c| match screen.cell(r, c) {
+                    Some(cell) if cell.fgcolor() == vt100::Color::Default => {
+                        let s = cell.contents();
+                        if s.is_empty() { " ".to_string() } else { s }
+                    }
+                    _ => " ".to_string(),
+                })
+                .collect::<String>()
+        })
+        .collect()
+}
+
+/// The full-width rule Claude Code draws directly above the composer: a row that is `─` and
+/// NOTHING else, edge to edge.
+///
+/// KEYED ON STRUCTURE, NOT ON HUE, and that is deliberate. The rule is drawn Rgb(136,136,136) and
+/// that colour is real — 201 of 201 cells on the fixture's row 38 — but keying on it would be the
+/// fourth predicate in this file to key on an appearance, and the first three all moved
+/// underneath us (`typed_only`'s row window, `is_footer_row`'s prefix, the marker's colour). A row
+/// made only of `─` survives a recolour and adapts to the width by construction: at 201 columns
+/// it is 201 long, at 98 it is 98, and no constant anywhere records which.
+///
+/// WHAT IT MUST NOT MATCH is a rule inside a reply. `trim_end` is allowed because vt100 hands back
+/// rows without their trailing blanks; a LEADING blank is not, and that asymmetry is the whole
+/// strictness — a rule indented by a margin is content, not frame.
+///
+/// SAID AS A DESIGN CHOICE, NOT AS A MEASUREMENT, because the difference matters and this file has
+/// been burned by the two being written the same way. What IS measured (see
+/// `COMPOSER_ANCHOR_EVIDENCE`) is that the row above the composer was a full-width rule on 157,946
+/// of 157,946 anchored frames. That a content rule always carries a margin is NOT measured; the
+/// strict form is chosen because its failure mode is a hold and the loose form's is a splice.
+fn is_separator_rule(s: &str) -> bool {
+    let t = s.trim_end();
+    !t.is_empty() && t.chars().all(|c| c == '\u{2500}')
+}
+
+/// THE COMPOSER IS THE `❯` ROW BELOW THE SEPARATOR RULE — not merely the last `❯` row.
+///
+/// WHY THE ANCHOR EXISTS. `capture::is_prompt` is "❯ + content"; `capture::is_empty_box` is
+/// "❯ + nothing". Together they are "a ❯ row", and the shipped predicate took the LAST one. That
+/// is true of a screen that is only a live pane, and this room's panes are not: a restored pane's
+/// scrollback carries a whole prior conversation as TEXT, separator rules and `❯` rows included,
+/// and a dialog or a banner can cover the real composer while all of that stays on the grid.
+/// "Bottom-most" then names a sentence somebody typed hours ago. The rule above the composer is
+/// drawn by the TUI as part of the input frame, so it is present exactly when a composer is.
+///
+/// TWO STRUCTURAL FACTS MUST AGREE, AND DISAGREEMENT HOLDS. The row must be the bottom-most `❯`
+/// row AND have the rule directly above it. Either alone is defeatable — scrollback satisfies the
+/// second, an overlay satisfies the first — and requiring both costs almost nothing: measured over
+/// every anchored frame the probe reads, the two disagreed on a handful (single digits per log,
+/// re-derivable from the probe's `anchor != last-`❯` row` line), and a disagreement HOLDS, which
+/// is the direction that cannot splice.
+///
+/// UNKNOWN HOLDS, unchanged and load-bearing. No `❯` row, or one with no rule above it, means a
+/// welcome banner, a full-screen overlay, a frame caught mid-repaint, or a chrome this predicate
+/// has never seen — none of which is evidence the pane is ready. This is the same answer the
+/// shipped code gives on those frames, so the anchor is not a new stall; it is the old one made
+/// legible.
+fn composer_row(rendered: &[String]) -> Option<usize> {
+    let i = rendered
         .iter()
-        .rposition(|l| capture::is_empty_box(l) || capture::is_prompt(l))
-    {
-        Some(i) => capture::is_empty_box(&lines[i]),
-        None => false,
+        .rposition(|l| capture::is_empty_box(l) || capture::is_prompt(l))?;
+    (i > 0 && is_separator_rule(&rendered[i - 1])).then_some(i)
+}
+
+/// The keeper's hand is NOT in the composer. Two grids, and each is asked the question it can
+/// actually answer.
+///
+/// THE SPLIT IS THE FIX. Locating the composer is a question about what was DRAWN, so it is asked
+/// of `rendered`, where the marker is present whatever colour the TUI painted it. Emptiness is a
+/// question about who wrote what, so it is asked of `typed` — the same grid with every non-Default
+/// cell blanked (see `typed_only`), which is what tells the keeper's words from the autocomplete
+/// prediction drawn behind them.
+///
+/// IT IS WHAT L050 REFUSED TO DO THE OTHER WAY. The obvious repair was to keep `❯` in the
+/// reduction at any colour; that makes locating the composer a colour question again, and a row
+/// reading `❯ <grey text>` reduces to a bare `❯` and reports EMPTY. Asking the two grids separately
+/// needs no such trade: `typed_only` stays a pure colour reduction and never has to preserve
+/// chrome it was written to remove.
+///
+/// THE ASSUMPTION THAT IS LEFT IS ALREADY BROKEN, AND KNOWINGLY SO. This asks `typed` for
+/// emptiness, so it assumes the keeper's own text is drawn at DEFAULT foreground. Measured across
+/// four panes at their own geometries: 12,366 composer rows carried content and **30 of them had
+/// no Default cell at all** — every one of those thirty the keeper typing a SLASH COMMAND, which
+/// Claude Code draws in Rgb(177,185,249). On those frames this returns EMPTY over a row he is
+/// typing into. The shipped rule did the same on 29 of them, so the anchor neither caused it nor
+/// cured it; it is pinned by `a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect`
+/// and its `#[ignore]`d acceptance test, and it wants the reduction inverted from an allow-list of
+/// Default to a deny-list of the chrome greys — a change with its own blast radius and its own
+/// packet.
+fn input_box_empty(rendered: &[String], typed: &[String]) -> bool {
+    let Some(i) = composer_row(rendered) else {
+        return false;
+    };
+    // The two grids are built cell-for-cell from one screen, so they are aligned by CHARACTER
+    // index — every cell contributes exactly one char, an empty cell contributing a space. That is
+    // what makes it safe to find the marker on one and cut the other at the same offset.
+    match (rendered[i].chars().position(|c| c == '\u{276f}'), typed.get(i)) {
+        // A `typed` grid shorter than `rendered` is a caller that read one screen at two sizes —
+        // the L044 defect exactly — so it is UNKNOWN here rather than an index panic.
+        (Some(m), Some(row)) => row.chars().skip(m + 1).collect::<String>().trim().is_empty(),
+        _ => false,
     }
 }
 
@@ -7442,14 +7801,39 @@ const QUIET_FOR_DELIVERY_MS: u64 = 2_000;
 /// It is chrome, and it is NOT evidence of a turn. Claude advertises "esc to interrupt" here
 /// whenever a BACKGROUND SHELL is running — turn or no turn — so a pane that ran one background
 /// command reads busy for the rest of its life.
+/// ANYWHERE IN THE ROW, not only at its start. The row exists — `❯ ⏵⏵ bypass permissions on
+/// (shift+tab to cycle) · esc to interrupt` — and it does not START with `⏵`, so a start-anchored
+/// test said false, `turn_in_flight` said true, and `pane_gate` can return `Working`, whose hold is
+/// UNBOUNDED (`drain_decision`: `PaneGate::Working => Drain::Hold`, no bound, still true).
+///
+/// **THE MECHANISM I GAVE FOR IT ON 2026-09-07 WAS WRONG, and it is retired here (L044).** I called
+/// it a frame caught MID-REDRAW — a race. It is not a race; it is ROW CLAMPING. vt100 clamps a
+/// cursor move past the last row onto the last row, so a composer written at row 40 and a footer
+/// written at row 42 land in the same row whenever the parser is SHORTER than the PTY, and the
+/// footer's two-column indent is what leaves the `❯ ` in front of it.
+///
+/// MEASURED, one log, one chunking, only the size changed: 4 MB of the chair's capture in 256-byte
+/// chunks gives **26/16384 frames at 34x120, 33/16384 at 34x200, and 0/16384 at 43x200** — and the
+/// first row found at 34 rows is character-for-character the row I reported. Three other panes:
+/// zero at every size. The appearance tracks the clamp and nothing else.
+///
+/// SO WHY THE TEST STAYS. Production clamps in two windows: between `pty_spawn` and the first
+/// `pty_resize`, and after a harvest panic used to rebuild the parser at the constants (fixed this
+/// lap). The guard costs nothing — a footer is chrome wherever it is drawn — and those windows are
+/// real, so it keeps its keep. What does NOT survive is my attribution of the four packets that sat
+/// queued for two and a half hours to this row: that needed the row latched on a production-size
+/// emulator, and at production size it does not occur in 16,384 sampled frames. **Withdrawn.** The
+/// unbounded `Working` path above is real and is still the thing to fix; what put a pane onto it
+/// that night is not established.
 fn is_footer_row(s: &str) -> bool {
-    s.trim_start().starts_with('⏵')
+    s.contains('⏵')
 }
 
 /// A turn actually in flight, as opposed to a grid that merely remembers one.
 ///
 /// NOT `capture::screen_ready`'s `is_working`, which is `.any()` over the whole grid. The emulator
-/// is 34x120 with SCROLLBACK 0: rows that scroll are overwritten in place, so the screen carries
+/// runs with SCROLLBACK 0 (34x120 at birth, ~43x~200 once docked): rows that scroll are overwritten
+/// in place — the argument is the scrollback, not the size — so the screen carries
 /// text from several epochs at once. Measured on 2026-09-06 over four panes' whole logs through the
 /// production emulator, `.any()` said BUSY while the composer sat empty in 253/390, 326/849 and
 /// 186/234 snapshots — on one pane, 79% of its life. `capture::is_working` stays as it is: the
@@ -7469,9 +7853,13 @@ fn turn_in_flight(lines: &[String]) -> bool {
 /// WHY NOT QUIESCENCE ALONE. A pane can fall silent for reasons that are not readiness, and
 /// `a_turn_in_flight_holds` is the case: if a spinner is on screen carrying live evidence, hold
 /// regardless of the clock. Cheap, and it costs nothing when it is wrong.
-fn pane_idle_for_delivery(lines: &[String], quiet: Duration) -> bool {
+/// `typed` is the same grid with everything the TUI drew removed (see `typed_only`); `lines` is the
+/// grid as rendered. The composer question is asked of `typed` and the turn question of `lines`,
+/// because a spinner IS drawn chrome and is still evidence, while a prediction is drawn chrome and
+/// is not.
+fn pane_idle_for_delivery(lines: &[String], typed: &[String], quiet: Duration) -> bool {
     quiet >= Duration::from_millis(QUIET_FOR_DELIVERY_MS)
-        && input_box_empty(lines)
+        && input_box_empty(lines, typed)
         && !turn_in_flight(lines)
 }
 
@@ -7484,7 +7872,29 @@ enum Drain {
     /// Not idle yet, and inside the bound: keep it. The message is NOT dropped.
     Hold,
     /// Not idle, and past the bound. Send it and mark the row — a late message beats a mute room.
-    Forced,
+    /// It carries WHY, because "forced" alone is not one fact: one of the ways to reach it is the
+    /// ready signal WORKING and being outranked.
+    Forced(Forced),
+}
+
+/// Why a bounded hold ran out. Two causes, and until 2026-09-07 the board printed one sentence for
+/// both — the sentence for the cause that was not happening.
+///
+/// The distinction is not cosmetic. `SignalOutranked` says the pane's own harness answered and the
+/// keeper's hand beat it; `NoUsableSignal` says the harness never answered and a picture of a
+/// screen carried the message. An observer needs to act differently on those: the first is the
+/// gate working and a composer left occupied for four minutes, the second is install drift or a
+/// pane killed mid-turn.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum Forced {
+    /// The stamp was positive; the composer never cleared. The keeper's rule (2026-09-02) outranks
+    /// the stamp, and that hold keeps the bound it has always had.
+    SignalOutranked,
+    /// No usable stamp — stale, or none at all. The bounded screen gate carried this message.
+    NoUsableSignal,
+    /// The stamp was positive and CONTRADICTED by a live turn on screen. Distinct from both: the
+    /// signal existed and was current, and the gate overrode it rather than trusting or missing it.
+    SignalContradicted,
 }
 
 /// THE BOUND IS NOW THE FALLBACK, NOT THE RULE.
@@ -7511,22 +7921,28 @@ fn drain_decision(
     if !enabled {
         return Drain::Deliver;
     }
-    let bounded = |ok: bool| {
+    // `why` is bound at the branch that KNOWS it, never inferred later from the gate — the whole
+    // defect being fixed here is a sentence about the cause written somewhere the cause was not.
+    let bounded = |ok: bool, why: Forced| {
         if ok {
             Drain::Deliver
         } else if waited >= Duration::from_millis(MAX_HOLD_MS) {
-            Drain::Forced
+            Drain::Forced(why)
         } else {
             Drain::Hold
         }
     };
     match gate {
-        // its own Stop fired — the only thing left to respect is the keeper's hand
-        PaneGate::Ready => bounded(box_empty),
+        // its own Stop fired — the only thing left to respect is the keeper's hand. Forcing HERE
+        // is the signal being outranked, not the signal being absent.
+        PaneGate::Ready => bounded(box_empty, Forced::SignalOutranked),
         // mid-turn by its own account, corroborated on screen: hold, and do not count
         PaneGate::Working => Drain::Hold,
         // the gate is guessing again; this is the pre-stamp behaviour, kept whole
-        PaneGate::Stale | PaneGate::Unstamped => bounded(screen_idle),
+        PaneGate::Stale | PaneGate::Unstamped => bounded(screen_idle, Forced::NoUsableSignal),
+        // THE MIRROR FALLS BACK, IT DOES NOT DELIVER AND IT DOES NOT HOLD FOREVER. Same shape as
+        // `Stale`, for the same reason: the stamp is not evidence, so the screen decides, bounded.
+        PaneGate::Contradicted => bounded(screen_idle, Forced::SignalContradicted),
     }
 }
 
@@ -7568,7 +7984,7 @@ impl Inbox {
         screen_idle: bool,
         now: Instant,
         enabled: bool,
-    ) -> Option<(String, String, bool)> {
+    ) -> Option<(String, String, Option<Forced>)> {
         let mut m = self.0.lock().ok()?;
         let q = m.get_mut(pane)?;
         let head = q.front()?;
@@ -7577,17 +7993,30 @@ impl Inbox {
             Drain::Hold => None,
             d => {
                 let it = q.pop_front()?;
-                Some((it.text, it.label, d == Drain::Forced))
+                let why = match d {
+                    Drain::Forced(why) => Some(why),
+                    _ => None,
+                };
+                Some((it.text, it.label, why))
             }
         }
     }
 }
 
 /// The live screen, or None. None is UNKNOWN and unknown holds (bounded) — never "ready".
-fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Duration)> {
+fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Vec<String>, Duration)> {
     let arc = { emus.0.lock().ok()?.get(pane_id).cloned()? };
     let e = arc.lock().ok()?;
-    Some((e.parser.screen().rows(0, EMU_COLS).collect(), e.last_byte.elapsed()))
+    let screen = e.parser.screen();
+    // BOTH VIEWS COME FROM ONE LOCK AND ONE SCREEN. Reading the grid twice would let a redraw land
+    // between them, and the whole point here is to compare what was drawn against what was typed.
+    //
+    // AND BOTH VIEWS COME FROM ONE SIZE — the screen's, not the constant's (L044). `rows()` walks
+    // every row whatever width it is given, so the row COUNT here was always right and only the
+    // columns were clipped; `typed_only` clipped both. Two readers of one screen disagreeing about
+    // how big it is is how the gate came to read Ready and empty-composer=false at the same time.
+    let (_, cols) = screen.size();
+    Some((screen.rows(0, cols).collect(), typed_only(screen), e.last_byte.elapsed()))
 }
 
 // `pane_is_idle` lived here and was the whole answer: screen in, boolean out. Both of its callers
@@ -7603,10 +8032,10 @@ fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Duration)
 /// is exactly what it did before the stamp existed.
 fn pane_state(emus: &PaneEmus, pane_id: &str) -> (PaneGate, bool, bool) {
     match live_screen(emus, pane_id) {
-        Some((lines, quiet)) => (
+        Some((lines, typed, quiet)) => (
             pane_gate(read_stamp(pane_id), Some((&lines, quiet))),
-            input_box_empty(&lines),
-            pane_idle_for_delivery(&lines, quiet),
+            input_box_empty(&lines, &typed),
+            pane_idle_for_delivery(&lines, &typed, quiet),
         ),
         None => (PaneGate::Unstamped, false, false),
     }
@@ -7632,6 +8061,36 @@ fn gate_or_queue(app: &AppHandle, pane_id: &str, msg: &str, preview: &str) -> Op
     Some(format!("queued for {} — {}; it delivers when it is ready", short_id(pane_id), gate.label()))
 }
 
+/// The WHOLE verdict for one delivered row — the gate's own label and, if it forced, why — built
+/// by ONE function so the two halves cannot be composed into a reading neither of them makes.
+///
+/// They were two independent strings until 2026-09-07, and on 2026-09-07 at 06:52 they produced
+/// `[stamp=ready] (FORCED … the gate never got a positive ready signal)`: one row asserting a
+/// positive ready signal and denying one. Neither half was wrong about its own fact. The row was
+/// wrong, and no owner of the row existed to be wrong in.
+/// THE TAG IS NOT DROPPED ON A FORCED DELIVERY, and that was the tempting fix. `stamp=ready` is
+/// TRUE in the outranked case and it is the fact the reader needs — it is what makes the row say
+/// *the keeper had something in the composer for four minutes* rather than *the ready signal is
+/// broken*. Deleting a true fact to stop it from being misread is how the row lost its meaning in
+/// the first place.
+fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
+    format!(
+        "[{}]{}",
+        gate.label(),
+        match forced {
+            None => "",
+            // the stamp DID carry — say so, or the row reads as the mechanism failing
+            Some(Forced::SignalOutranked) =>
+                " (FORCED after the bounded hold — the pane's own signal said ready; \
+                  its composer never cleared)",
+            Some(Forced::NoUsableSignal) =>
+                " (FORCED after the bounded hold — the gate never got a usable ready signal)",
+            Some(Forced::SignalContradicted) =>
+                " (FORCED after the bounded hold — the pane's signal said ready and a live turn                   stayed on screen; the screen gate carried this)",
+        }
+    )
+}
+
 /// ONE tick, ALL queues, ONE message per pane per tick — the next tick re-reads the screen rather
 /// than trusting a 250ms-old reading for a second write. QUEUED and DELIVERED are separate rows on
 /// purpose: until tonight the board said "delivered" when the text RENDERED, so "not yet sent" and
@@ -7650,28 +8109,41 @@ fn drain_inboxes(app: &AppHandle) {
         ) {
             let ok = inject_to_pane(&app.state::<Panes>(), &pane, &text).is_ok();
             chair_audit(app, format!(
-                "DELIVERED -> {} [{}]{}{}: {}",
+                "DELIVERED -> {} {}{}: {}",
                 short_id(&pane),
-                gate.label(),
-                if forced {
-                    " (FORCED after the bounded hold — the gate never got a positive ready signal)"
-                } else {
-                    ""
-                },
+                delivery_note(gate, forced),
                 if ok { "" } else { " [WRITE FAILED]" },
                 label,
             ));
             /* THE FALLBACK MUST SAY IT FIRED. A forced delivery on an UNSTAMPED pane is the
              * install-drift case (the hook pair is not registered on this machine), and a forced
              * delivery on a STALE stamp is the killed-mid-turn case. Both used to be one line
-             * reading "the pane never went idle", which named neither. */
-            if forced && !gate.is_stamped() {
-                plog(&format!(
+             * reading "the pane never went idle", which named neither.
+             *
+             * AND THE GUARD WAS `forced && !gate.is_stamped()`, 2026-09-07 — which is the row's own
+             * defect one level down. The outranked case IS stamped, so the one delivery that
+             * actually forced on this machine wrote NOTHING to the log. A condition that filters
+             * out a whole cause is not a quieter log, it is a missing one. */
+            match forced {
+                None => {}
+                Some(Forced::NoUsableSignal) => plog(&format!(
                     "DELIVERY FORCED pane={pane} {} — the bounded screen gate carried this \
                      message because the pane's own ready signal was not usable. A stamped pane \
                      has no bound; this one had no stamp or a stale one.",
                     gate.label()
-                ));
+                )),
+                Some(Forced::SignalContradicted) => plog(&format!(
+                    "DELIVERY FORCED pane={pane} {} — the pane's own signal said READY while a \
+                     LIVE TURN stayed on screen for the whole bound. Either the stamp is wrong or \
+                     the pane has been mid-turn for four minutes; the screen gate carried this.",
+                    gate.label()
+                )),
+                Some(Forced::SignalOutranked) => plog(&format!(
+                    "DELIVERY FORCED pane={pane} {} — the pane's own signal said READY and the \
+                     gate held anyway: its composer was not clear for the whole bound. This is \
+                     the keeper's rule firing, not the ready signal failing.",
+                    gate.label()
+                )),
             }
         }
     }
@@ -8420,6 +8892,398 @@ fn reset_breaker(app: AppHandle, cost: State<Cost>) {
     let _ = app.emit("cost", snap);
 }
 
+// ---- L052: PULL, VERIFY, THEN START ---------------------------------------------------------
+//
+// The decision lives in `sync_launch.rs` and is pure. This half is the impure rim: run the tool,
+// read the files, move the transcripts, say it on the board. Kept apart on purpose — the retire
+// decision has to be testable from fixture files, because nobody can re-run 08:00.
+
+/// How long the launch waits for `state-sync.js --pull` before giving up on it.
+///
+/// A TIMEOUT IS NOT A LOCKOUT AND MUST NOT BECOME ONE: when it fires, the launch continues as
+/// `LocalHouse` — this machine's own house, said out loud — rather than refusing. The cost of the
+/// bound is real and is stated here rather than discovered: the window is dark for up to this long
+/// on a slow link, because the whole point is that nothing reads the data dir until the fill is
+/// finished or known to have failed.
+const SYNC_PULL_TIMEOUT: Duration = Duration::from_secs(90);
+
+/// The launch verdict, decided once in `.setup()` and read by the spawn funnel afterwards.
+static LAUNCH_VERDICT: Mutex<Option<sync_launch::Verdict>> = Mutex::new(None);
+
+/// Set when the verdict withholds the seats. An `AtomicBool` beside the verdict rather than a lock
+/// taken on every spawn: the reason is read only on the refusal path, where a lock is free.
+static SEATS_WITHHELD: AtomicBool = AtomicBool::new(false);
+
+fn launch_verdict_is_migrate() -> bool {
+    LAUNCH_VERDICT.lock().unwrap().as_ref().map(|v| v.is_migrate()).unwrap_or(false)
+}
+
+/// The refusal text, or `None` when the seats may wake. Never a bare "no": a refusal that does not
+/// say what to do is a lockout wearing a message.
+fn seats_withheld() -> Option<String> {
+    if !SEATS_WITHHELD.load(Ordering::Relaxed) {
+        return None;
+    }
+    Some(format!(
+        "Consonance opened READ-ONLY and is not waking seats. {}",
+        LAUNCH_VERDICT.lock().unwrap().as_ref().map(|v| v.why().to_string()).unwrap_or_default()
+    ))
+}
+
+/// `node consonance/tools/state-sync.js --pull`, with a bound.
+///
+/// STDOUT AND STDERR GO TO A FILE, not to a pipe. A piped child whose output nobody drains can
+/// block on a full pipe and then the timeout above becomes the only thing that ends it — a
+/// deadlock dressed as a slow network. The file is also the one artefact the keeper can read at
+/// 08:00 when the row says the pull did not complete.
+fn run_state_pull(script: &Path, install: bool) -> sync_launch::Pull {
+    let log = data_dir().join("sync-pull.log");
+    let sink = || fs::OpenOptions::new().create(true).append(true).open(&log).map(Stdio::from);
+    let (Ok(out), Ok(err)) = (sink(), sink()) else {
+        return sync_launch::Pull::CouldNotRun(format!("cannot write {}", log.display()));
+    };
+    let mut child = match Command::new("node")
+        .arg(script)
+        .arg("--pull")
+        .args(if install { &["--install"][..] } else { &[][..] })
+        .creation_flags(NO_WINDOW)
+        .stdin(Stdio::null())
+        .stdout(out)
+        .stderr(err)
+        .spawn()
+    {
+        Ok(c) => c,
+        Err(e) => return sync_launch::Pull::CouldNotRun(format!("could not start node: {e}")),
+    };
+    let started = Instant::now();
+    loop {
+        match child.try_wait() {
+            Ok(Some(status)) if status.success() => return sync_launch::Pull::Ok,
+            Ok(Some(status)) => {
+                return sync_launch::Pull::Failed(format!(
+                    "state-sync.js --pull exited {} — see {}",
+                    status.code().map(|c| c.to_string()).unwrap_or_else(|| "by signal".into()),
+                    log.display()
+                ))
+            }
+            Ok(None) => {
+                if started.elapsed() > SYNC_PULL_TIMEOUT {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return sync_launch::Pull::Failed(format!(
+                        "state-sync.js --pull did not finish within {}s and was stopped",
+                        SYNC_PULL_TIMEOUT.as_secs()
+                    ));
+                }
+                std::thread::sleep(Duration::from_millis(200));
+            }
+            Err(e) => return sync_launch::Pull::Failed(format!("waiting on node failed: {e}")),
+        }
+    }
+}
+
+/// THIS MACHINE'S IDENTITY, resolved BY `state-sync.js`'s OWN RULE and not by a better one.
+///
+/// The value this returns is compared for equality against `pushed_by` in `sync-completion.json`,
+/// which A writes from `machineTag()`. Two resolvers that disagree would make every launch read
+/// FOREIGN and retire the seats on every start, forever, with nothing anywhere naming the cause —
+/// so this mirrors A's cascade exactly: `CONSONANCE_MACHINE`, then `machine_tag` from
+/// `~/.consonance.json`, then the hostname.
+///
+/// I WANTED `install_id` FIRST and took it out. E is right that a one-character machine tag is too
+/// coarse to decide self-versus-foreign in general (`tools/live-host.js`, IDENTITY), and this
+/// function preferring the finer id would have been correct in isolation and WRONG here: the
+/// moment the keeper adds an `install_id`, my side would return it, A's side would still return
+/// "L", and the two would never match again. **A shared unit beats a better unit.** The coarseness
+/// is a real limit and is named in the hand-back; it is not fixable from one side of the compare.
+///
+/// `~/.consonance.json` is the right home for it regardless: already machine-local, already this
+/// room's identity file, and already outside every travelling set — A's manifest FORBIDS
+/// `install_id` under the data dir because "if that file ever lands in the travelling set both
+/// machines share an identity and every foreign claim reads as self."
+///
+/// `None` is UNKNOWN and is never read as "self": `decide` leans to retire on unknown, on purpose.
+fn machine_identity() -> Option<String> {
+    if let Ok(env) = std::env::var("CONSONANCE_MACHINE") {
+        if !env.trim().is_empty() {
+            return Some(env.trim().to_string());
+        }
+    }
+    let raw = fs::read_to_string(PathBuf::from(home()).join(".consonance.json")).ok()?;
+    let v: serde_json::Value = serde_json::from_str(raw.trim_start_matches('\u{feff}')).ok()?;
+    v.get("machine_tag")
+        .and_then(|x| x.as_str())
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty())
+        .map(str::to_string)
+}
+
+/// The three seats with hard-coded session ids — the ones `--resume` can find on the wrong
+/// machine. Pane transcripts are NOT in this list and must not be: their ids are random and
+/// registered in `panes.json`, and `resume_pane` already never `--resume`s at all.
+fn fixed_id_seats() -> Vec<(String, String, String)> {
+    vec![
+        ("main".to_string(), MAIN_SID.to_string(), encode_cwd(&main_cwd())),
+        ("librarian".to_string(), LIBRARIAN_SID.to_string(), encode_cwd(&librarian_cwd())),
+        ("third place".to_string(), THIRD_PLACE_SID.to_string(), encode_cwd(&third_place_cwd())),
+    ]
+}
+
+/// FILL, between the RESOLVE and every READ. Returns the seam line to post.
+///
+/// Runs entirely inside `.setup()` and before anything reads the data dir. That ordering is the
+/// whole packet: the offsets defect was a READ before the RESOLVE, and a pull that lands after the
+/// first read would be the same hazard with a network in it.
+fn sync_at_launch() -> (sync_launch::Verdict, Vec<sync_launch::RetireOutcome>) {
+    let data = data_dir();
+    // The tool is A's and lives in the checkout. No checkout (an installed consumer build) means
+    // no sync at all — stated as a limit rather than left to be discovered: a packaged Consonance
+    // cannot join the two-machine house, because the thing that would join it is not shipped.
+    let script = repo_root().map(|r| r.join("consonance").join("tools").join("state-sync.js"));
+    let self_id = machine_identity();
+
+    // TWO PHASES, AND THE SECOND ONE IS THE WHOLE SAFETY PROPERTY.
+    //
+    // `--install` is a WHOLE-FILE OVERWRITE of the data dir from the state tree, with no recency
+    // test anywhere in it: `installTree` compares hashes and writes whatever differs. Reversible —
+    // A keeps every displaced file under `attic/pre-sync-<stamp>/`, deliberately — but reversible
+    // is not the same as safe to do unasked at every launch on the machine doing the work.
+    //
+    // So: phase one is `--pull` with NO `--install`, which cannot write into the data dir at all.
+    // It fetches, verifies, and writes `sync-completion.json`, whose `pushed_by` names the machine
+    // that authored the head. Only if that is NOT this machine does phase two run `--install`.
+    //
+    // **The machine that authored the state can therefore never have its own data dir overwritten
+    // by the launcher.** That is the property that makes this safe to land tonight on the laptop
+    // that is doing the work, before anyone has watched it run.
+    //
+    // An UNKNOWN author counts as foreign, which is the same reversible lean `decide` takes: the
+    // cost of installing a record we already had is a no-op (identical files are skipped); the cost
+    // of not installing one we needed is a seat waking on the wrong lineage.
+    let mut pull = match script.as_ref() {
+        Some(p) if p.is_file() => run_state_pull(p, false),
+        _ => sync_launch::Pull::ToolAbsent,
+    };
+    let mut completion = sync_launch::read_completion(&data);
+    let ours = completion
+        .as_ref()
+        .and_then(|c| c.pushed_by.clone())
+        .zip(self_id.clone())
+        .map(|(by, me)| by == me)
+        .unwrap_or(false);
+    let verified = completion.as_ref().map(|c| c.verified).unwrap_or(false);
+    if matches!(pull, sync_launch::Pull::Ok) && verified && !ours {
+        if let Some(p) = script.as_ref() {
+            plog("SYNC AT LAUNCH — the record's head is not this machine's; installing");
+            pull = run_state_pull(p, true);
+            completion = sync_launch::read_completion(&data);
+        }
+    }
+
+    let facts = sync_launch::Facts {
+        pull: Some(pull),
+        completion,
+        promotion_open: sync_launch::promotion_open(&data),
+        self_id,
+        adopted_commit: sync_launch::read_adopted(&data),
+        live_host: sync_launch::read_live_host(&data),
+    };
+    let verdict = sync_launch::decide(&facts);
+
+    let retired = if verdict.is_migrate() {
+        let stamp = chrono::Local::now().format("%Y%m%d-%H%M%S").to_string();
+        let plan = sync_launch::retire_plan(Path::new(&home()), &fixed_id_seats(), &stamp);
+        sync_launch::apply_retire(&plan)
+    } else {
+        Vec::new()
+    };
+
+    // The head is adopted on every launch that did not withhold the seats — INCLUDING a migrate,
+    // so the next launch sees it as already adopted and does not retire the seats this one just
+    // installed. Not written on READ-ONLY: nothing was adopted, and a stamp saying otherwise would
+    // make the next launch skip the migration that never happened.
+    if !verdict.is_read_only() {
+        if let sync_launch::Verdict::Resume { adopt, .. } | sync_launch::Verdict::Migrate { adopt, .. } = &verdict {
+            let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
+            sync_launch::write_adopted(&data, adopt.as_deref(), now, verdict.tag());
+        }
+    }
+
+    SEATS_WITHHELD.store(verdict.is_read_only(), Ordering::Relaxed);
+    *LAUNCH_VERDICT.lock().unwrap() = Some(verdict.clone());
+    (verdict, retired)
+}
+
+/// After a migrate, a fixed-id seat spawns FRESH and its window is empty. The thread is carried by
+/// the synced capture tail (`captures/<sid>.txt` — A's manifest: TRAVELS, "THE WARM-RESUME
+/// CARRIERS: this is the thread"). Without this, a migrate produces three amnesiac seats, which is
+/// a different failure from the one the packet named and no better.
+///
+/// DELIBERATELY NOT `warm_resume_brief`, and this is not a style choice. That function SHRINKS the
+/// capture master into the pane's attic when the tail will not fit, and rewrites `<sid>.txt` with
+/// the kept remainder. Those tails now TRAVEL. Trimming one here would edit the record on this
+/// machine and push a truncated carrier to the other — the shell's budget quietly becoming a fact
+/// about the room. So the trim happens in memory only and the master is never touched.
+fn append_synced_tail(intake: &mut String, sid: &str) {
+    let path = capture_text_path(sid);
+    let Ok(transcript) = fs::read_to_string(&path) else { return };
+    if transcript.trim().is_empty() {
+        return;
+    }
+    let whole = transcript.len();
+    let interval = fs::metadata(&path).ok().and_then(|m| m.modified().ok()).map(|at| {
+        let gone = SystemTime::now().duration_since(at).ok();
+        format!(
+            "The interval, witnessed: the last exchange below settled on {}.{}",
+            pulse_when(chrono::DateTime::<chrono::Local>::from(at)),
+            gone.map(|g| format!(" It is now {} — you were gone {}.", pulse_when(chrono::Local::now()), human_gap(g.as_secs())))
+                .unwrap_or_default()
+        )
+    });
+    let overhead = 1_024; // the section's own header, fences and the interval line
+    let budget = SHELL_SOFT_CEILING.saturating_sub(intake.len() + overhead);
+    let carried = if transcript.len() <= budget {
+        transcript
+    } else if budget > 0 {
+        match split_off_oldest_records(&transcript, transcript.len() - budget) {
+            // The master is NOT rewritten — see the doc comment above.
+            Some((_evicted, kept)) => kept,
+            None => String::new(),
+        }
+    } else {
+        String::new()
+    };
+    if carried.trim().is_empty() {
+        // A seat told nothing would wake believing it has no past. Absent-is-silent is the failure
+        // this room keeps paying for; point at the file instead.
+        plog(&format!(
+            "MIGRATE TAIL sid={sid} tail={whole} intake={} budget={budget} -> POINTER ONLY",
+            intake.len()
+        ));
+        intake.push_str(&sync_launch::prior_conversation_pointer(&path, whole));
+        return;
+    }
+    plog(&format!(
+        "MIGRATE TAIL sid={sid} tail={whole} carried={} intake={} budget={budget}",
+        carried.len(),
+        intake.len()
+    ));
+    intake.push_str(&sync_launch::prior_conversation_section(&carried, interval.as_deref()));
+}
+
+#[cfg(test)]
+mod sync_launch_wiring_tests {
+    use super::*;
+
+    fn source() -> String {
+        fs::read_to_string("src/main.rs").expect("read own source")
+    }
+
+    /// The needles are assembled by `concat!` for the reason the offsets test gives: a scan whose
+    /// literal is the literal it is written with can be satisfied by its own text.
+    fn first_line_containing(src: &str, needle: &str) -> Option<usize> {
+        src.lines().position(|l| l.contains(needle) && !l.trim_start().starts_with("//"))
+    }
+
+    /// **RESOLVE, FILL, READ — in that order, and the source is the only place it is visible.**
+    ///
+    /// Same class as `the_backfill_decision_must_be_made_after_the_configured_dirs_resolve`, one
+    /// step further out: L051's defect was a READ before the RESOLVE, and a pull that lands after
+    /// the first read would be that bug with a network in the middle — a seat waking from a
+    /// half-arrived record and announcing it is in sync. No test of a pure function can see an
+    /// evaluation order, which is exactly why the offsets defect survived six weeks and 39
+    /// launches with every unit test in its own module passing.
+    #[test]
+    fn the_pull_runs_after_the_resolver_and_before_everything_that_reads() {
+        let src = source();
+        let resolve = first_line_containing(&src, concat!("set_dirs(&", "get_state());"))
+            .expect("no set_dirs call — re-point this test");
+        let fill = first_line_containing(&src, concat!("sync_at", "_launch();"))
+            .expect("no pull at launch — re-point this test");
+        let offsets = first_line_containing(&src, concat!("BACKFILL_ACTIVE", ".store("))
+            .expect("no backfill decision — re-point this test");
+        let seeds = first_line_containing(&src, concat!("seed_room", "();"))
+            .expect("no seed call — re-point this test");
+        assert!(
+            resolve < fill,
+            "the pull is at line {} but the dirs are not resolved until line {} — it would fill a \
+             directory nobody has decided on yet",
+            fill + 1,
+            resolve + 1
+        );
+        for (what, at) in [("the offsets read", offsets), ("the seeds", seeds)] {
+            assert!(
+                fill < at,
+                "{what} is at line {} and the pull is at line {} — a read before the fill is a \
+                 seat waking from a half-arrived record",
+                at + 1,
+                fill + 1
+            );
+        }
+    }
+
+    /// **READ-ONLY IS ENFORCED AT ONE FUNNEL, and this pins that it stays one.**
+    ///
+    /// Ten call sites reach `spawn_claude_pane`. Guarding them individually is a checklist that
+    /// the eleventh call site silently fails; guarding the funnel cannot be forgotten. The
+    /// assertion is that the check precedes the PTY, because a guard after the terminal is open
+    /// has already started the thing it was meant to withhold.
+    #[test]
+    fn the_seat_refusal_sits_at_the_one_funnel_and_before_the_pty() {
+        let src = source();
+        let body = src
+            .split(concat!("fn spawn_claude", "_pane("))
+            .nth(1)
+            .expect("no spawn_claude_pane — re-point this test");
+        let guard = body.find(concat!("seats_", "withheld()")).expect(
+            "the read-only refusal is not in spawn_claude_pane — if it moved, it must still be at \
+             a single funnel every spawn passes through, not spread over the call sites",
+        );
+        let pty = body.find("native_pty_system()").expect("no pty in spawn_claude_pane");
+        assert!(guard < pty, "the refusal must come before the terminal is opened");
+    }
+
+    /// **THE CORRECTION TO MY OWN L051 §6, made checkable instead of quietly dropped.**
+    ///
+    /// §6 called the seeds an ordering defect of the L051 class — "they write the default dir
+    /// before `set_dirs` runs" — which reads as *move them and it is fixed*. It is not: they call
+    /// `default_data()` EXPLICITLY, so their position in `.setup()` decides nothing at all and
+    /// moving them would have been a no-op that reads as a repair.
+    ///
+    /// The real finding is that the seed subsystem writes a SECOND ROOT. `consonance/state-manifest.json`
+    /// walks `data_dir()` and nothing else, so BOOT.md, the deck, `spread/`, `research/`,
+    /// `record/` and `.seeded.json` are outside the classification entirely — not TRAVELS, not
+    /// STAYS, not REGENERATES, and invisible to the completeness check whose whole job is to fail
+    /// on a path nobody placed. This test states the current behaviour so that changing it to
+    /// `data_dir()` — which would MOVE the keeper's edited copies, and is his call — turns red
+    /// here and has to be decided rather than slipped in.
+    #[test]
+    fn the_seed_subsystem_writes_a_second_root_and_it_is_not_an_ordering_defect() {
+        let _serial = DirsGuard::take();
+        let configured =
+            std::env::temp_dir().join(format!("consonance_seed_root_{}", std::process::id()));
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: String::new(),
+            instances: String::new(),
+            data: configured.display().to_string(),
+        });
+        // With the dirs RESOLVED — the state these functions actually run in — the seeder still
+        // writes the default root. Position in `.setup()` cannot change that.
+        assert_eq!(
+            seed_manifest_path(),
+            PathBuf::from(default_data()).join(".seeded.json"),
+            "the seeder is pinned to the default root by an explicit default_data() call, not by \
+             running too early"
+        );
+        assert_ne!(
+            seed_manifest_path().parent().map(|p| p.to_path_buf()),
+            Some(data_dir()),
+            "the app writes two roots; the manifest checker walks only one of them"
+        );
+        let _ = fs::remove_dir_all(&configured);
+    }
+}
+
 fn main() {
     // BEFORE ANYTHING ELSE, and specifically before any file that tells the rest of the system
     // where to find this process gets written. See claim_single_instance for what those files
@@ -8446,10 +9310,18 @@ fn main() {
         // Cycle 3b: loaded from disk at startup, so a relaunch resumes instead of replaying.
         // No file at all == the first launch under this scheme == the one backfill, which
         // announces itself below rather than arriving silently.
-        .manage(TailerOffsets(Arc::new(Mutex::new({
-            BACKFILL_ACTIVE.store(!offsets_path().exists(), Ordering::Relaxed);
-            load_offsets()
-        }))))
+        //
+        // L051, 2026-09-09: EMPTY HERE ON PURPOSE. This used to load the map and decide the
+        // backfill as an ARGUMENT to `.manage()`, which Rust evaluates while the Builder is being
+        // constructed — before `.setup()` runs `set_dirs`. `data_dir()` therefore fell through to
+        // `default_data()`, so the decision asked the DEFAULT directory whether a file existed
+        // that is only ever written to the CONFIGURED one. It never did: the map was empty and
+        // `BACKFILL_ACTIVE` true on EVERY launch, every pane resolved to offset 0, and every pane
+        // re-read its whole transcript. Measured: 39 `backfill` rows on `board.jsonl`, each one
+        // announcing itself as the first launch and promising "ONE TIME"; 96.9% of every row
+        // written since the board could tell a replay from a turn.
+        // `handback/p-board-replay_2026-09-09.md` is the diagnosis; the fill is in `.setup()`.
+        .manage(TailerOffsets(Arc::new(Mutex::new(HashMap::new()))))
         .manage(PaneNames(Mutex::new(HashMap::new())))
         .manage(PaneSandboxes(Mutex::new(HashMap::new())))
         .manage(PullSender(form_pull))
@@ -8474,10 +9346,51 @@ fn main() {
             if let Ok(p) = app.path().resolve("record", tauri::path::BaseDirectory::Resource) {
                 *RESOURCE_RECORD.lock().unwrap() = Some(p);
             }
+            set_dirs(&get_state()); // resolve configurable dirs before anything reads them
+            // L052: FILL, between the RESOLVE above and every READ below.
+            //
+            // THE PACKET SAID BOTH "before set_dirs reads anything" AND "after the resolver", and
+            // both are right because `set_dirs` is not a read — it is the resolver. Three steps,
+            // not two: RESOLVE (where the data dir is), FILL (put the record there), READ
+            // (offsets, seeds, seats). L051's defect was a READ before the RESOLVE; a pull landing
+            // after the first read would be the same hazard with a network in the middle.
+            let (launch_verdict, retired) = sync_at_launch();
+            plog(&format!("SYNC AT LAUNCH {} — {}", launch_verdict.tag(), launch_verdict.why()));
+            // L051/L052: THE SEEDS STAY HERE AND THE DIAGNOSIS IN L051 §6 WAS WRONG — recorded
+            // rather than quietly corrected, because the wrong version is on my own map.
+            //
+            // §6 said these "write the default dir before set_dirs runs", which reads as an
+            // ordering defect of the L051 class. It is not: `seed_room`, `seed_md_dir` and
+            // `seed_manifest_path` call `default_data()` EXPLICITLY, not `data_dir()`, so moving
+            // them changes nothing at all. Moving them anyway would have been a no-op that reads
+            // as a fix, which is worse than leaving it.
+            //
+            // The real finding is bigger and is not an ordering bug: the whole seed subsystem —
+            // BOOT.md, the deck, spread/research/record, `.seeded.json` — is pinned to
+            // `~/.consonance` whatever the configured data dir is. That is a SECOND ROOT the app
+            // writes to, and `consonance/state-manifest.json` walks only `data_dir()`, so nothing
+            // in it is classified TRAVELS, STAYS or REGENERATES and A's completeness check cannot
+            // see it. Pinned by `the_seed_subsystem_writes_a_second_root` below. Switching it to
+            // `data_dir()` would MOVE the keeper's edited copies, so it is his call, not mine.
             seed_room(); // first run: copy the bundled brief into the data dir (editable)
             seed_cards(); // first run: copy the bundled card deck into the data dir (editable)
             seed_references(); // the counter-voice + the study: named by the room, opened on demand
-            set_dirs(&get_state()); // resolve configurable dirs before anything reads them
+            // L051: THE OFFSETS ARE READ HERE, one line after the resolver, because this is the
+            // first moment `offsets_path()` names the file `save_offsets` actually writes.
+            //
+            // SAFE TO BE THIS LATE, and it was checked by enumeration rather than assumed — a
+            // decision moved later is only correct if nothing reads it earlier. `BACKFILL_ACTIVE`
+            // has exactly two readers, `backfill_note_pane` and `backfill_is_pane`, and the
+            // managed map has exactly one, `start_tailer`. All three are reached ONLY from
+            // `start_tailer`, and all nine of its call sites sit inside `#[tauri::command]`
+            // functions, which the frontend cannot invoke until the event loop is running — after
+            // `.setup()` has returned. The announcement's own read is further down this same
+            // closure. So no reader of either value runs before this line.
+            {
+                BACKFILL_ACTIVE.store(!offsets_path().exists(), Ordering::Relaxed);
+                let loaded = load_offsets();
+                *app.state::<TailerOffsets>().0.lock().unwrap() = loaded;
+            }
             gc_captures(); // drop own-capture logs for panes that are no longer kept
             // L034: ONE thread for every queue, not one per pane. The per-pane capture watcher was
             // the obvious host and is the wrong one — it breaks on a poisoned lock and did so
@@ -8568,6 +9481,24 @@ fn main() {
                     }
                 }
             });
+            // L052: the seam row, in the backfill announcement's slot and posted IMMEDIATELY
+            // rather than delayed — unlike the backfill, every fact it carries is already known,
+            // and this is the row that tells a reader at 08:00 which machine's house they are in.
+            //
+            // Posted for every verdict including `Standalone`, deliberately. A row only on the
+            // interesting launches makes its absence ambiguous — "nothing happened" and "the
+            // launcher never ran" read identically — which is the done-vs-never-started class this
+            // room has now found on five surfaces.
+            {
+                let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+                board_push(&app.state::<Board>().0.clone(), BoardEntry {
+                    pane: "sync".to_string(),
+                    role: "committee".to_string(),
+                    text: sync_launch::seam_line(&launch_verdict, &retired),
+                    ts,
+                    ts_source: TsSource::Push,
+                });
+            }
             // Cycle 3b: the backfill announcement. One shot, one line, only on the launch that
             // actually performs it. Delayed rather than posted at startup because the count is
             // the point — a bare "a backfill is happening" carries less than the number of panes
@@ -10877,11 +11808,74 @@ mod shelf_tests {
         assert!(shelf.contains("\n## librarian/LEDGER.md\n"), "LEDGER.md must ride outside the window");
         assert!(shelf.contains("\n## librarian/README.md\n"), "README.md must ride outside the window");
 
-        // At most four librarian entries carried: two dated days plus LEDGER and README. Catches
-        // truncate-and-carry (which would leave all fourteen) directly on the delivered artifact.
-        let carried = shelf.matches("\n## librarian/").count();
-        assert!(carried <= 4, "{carried} librarian files carried; the window allows at most 4 \
-            (today, yesterday, LEDGER, README)");
+        // THE CAP IS THE RULE, NOT A NUMBER — changed 2026-09-07 after it went red at HEAD.
+        //
+        // It read `carried <= 4`: "two dated days plus LEDGER and README". That arithmetic assumes
+        // ONE WRITER. `librarian/` holds `2026-09-06.md` AND `2026-09-06.desktop.md` — two machines
+        // wrote a note for the same day, both are the seat's own notes, and
+        // `librarian_note_is_carried` correctly carries both (the test above has asserted a
+        // suffixed note is dated since it was written). A DATE IS NOT A KEY; (date, writer) is.
+        // The predicate was right and the constant beside it was wrong.
+        //
+        // WHAT THE WINDOW NOW MEANS, stated because it changes what a librarian wakes holding:
+        // today and yesterday PER WRITER, so the ceiling is 2×writers + 2 rather than 4. The cost
+        // is that the window's weight scales with the number of machines writing — real, and
+        // already the registered price of a content-defined window (a 7.4x swing across
+        // consecutive pairs). It is NOT "newest per machine": that silently drops a note the seat
+        // wrote, which is the failure this whole window exists to avoid.
+        //
+        // AND THE COUNT IS REPLACED BY THE INVARIANT, which is strictly stronger. A count passes
+        // when the WRONG four are carried; this asserts every carried file satisfies the window,
+        // which is what truncate-and-carry (all fourteen) actually violates. The `<=` survives so
+        // a tight budget carrying fewer is not a red — that is the partial state, owned by the
+        // test below.
+        // INDEPENDENT OF THE PREDICATE, deliberately. My first version of this check asked
+        // `librarian_note_is_carried` whether each carried file belonged — which is the shelf's own
+        // rule marking its own homework: break the predicate and both sides agree. The age is
+        // computed here from the date alone, so a widened or inverted window is caught by a
+        // different route than the one that would have widened it.
+        let today = chrono::Local::now().date_naive();
+        let root = room_master_path().parent().expect("root").join("librarian");
+        let mut in_window: Vec<String> = Vec::new();
+        if let Ok(rd) = fs::read_dir(&root) {
+            for e in rd.flatten() {
+                let n = e.file_name().to_string_lossy().to_string();
+                if !n.ends_with(".md") {
+                    continue;
+                }
+                match librarian_note_date(&n) {
+                    Some(d) if (0..=1).contains(&(today - d).num_days()) => in_window.push(n),
+                    _ => {}
+                }
+            }
+        }
+        in_window.sort();
+        let mut carried_names: Vec<String> = Vec::new();
+        for seg in shelf.split("\n## librarian/").skip(1) {
+            carried_names.push(seg.lines().next().unwrap_or_default().trim().to_string());
+        }
+        carried_names.sort();
+        for n in &carried_names {
+            if n == "LEDGER.md" || n == "README.md" {
+                continue; // the maintained index and the rule ride outside, asserted above
+            }
+            let d = librarian_note_date(n).unwrap_or_else(|| {
+                panic!("librarian/{n} is CARRIED, is not LEDGER/README, and carries no date")
+            });
+            let age = (today - d).num_days();
+            assert!(
+                (0..=1).contains(&age),
+                "librarian/{n} carried at {age} days old — the window is today and yesterday"
+            );
+        }
+        // The ceiling, derived rather than hardcoded: every dated file in the window, whoever wrote
+        // it, plus LEDGER and README. Today that is 2×writers + 2, not 4.
+        assert!(
+            carried_names.len() <= in_window.len() + 2,
+            "{} librarian files carried; the window holds {} dated file(s) plus LEDGER and README: \
+             carried {:?}, window {:?}",
+            carried_names.len(), in_window.len(), carried_names, in_window
+        );
 
         // And the seat must be TOLD, or an empty window and a broken window read identically from
         // the inside.
@@ -11747,8 +12741,9 @@ mod librarian_channel_tests {
         assert_eq!(MAX_HOLD_MS, 240_000,
             "if this changed, the exemption's stated price changed with it — say so where the \
              price is stated (mcp.rs `required_station`)");
-        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced,
-            "a busy pane IS eventually written into, and that is the honest residual");
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced(Forced::NoUsableSignal),
+            "a busy pane IS eventually written into, and that is the honest residual — and it is \
+             the SCREEN gate that carries it, which is what the exemption's price is about");
         /* COMING BACK TO SAY SO, as this test asked (pane C, P-READY-SIGNAL, same rebuild).
          *
          * The bound is unchanged and still four minutes, but it is no longer the RULE — it is the
@@ -11856,7 +12851,7 @@ mod ready_signal_tests {
         let gate = pane_gate(Stamp::Working, Some((&killed, IDLE)));
         assert_eq!(gate, PaneGate::Stale);
         assert_eq!(
-            drain_decision(gate, true, pane_idle_for_delivery(&killed, IDLE), Duration::ZERO, true),
+            drain_decision(gate, true, pane_idle_for_delivery(&killed, &killed, IDLE), Duration::ZERO, true),
             Drain::Deliver,
             "a stale stamp must not be able to mute a pane forever"
         );
@@ -11869,8 +12864,8 @@ mod ready_signal_tests {
     fn the_keeper_typing_still_holds_a_pane_that_says_it_is_ready() {
         let typing = screen("❯ we need to get that solid before 8am", false);
         assert_eq!(pane_gate(Stamp::Done, Some((&typing, IDLE))), PaneGate::Ready);
-        assert!(!input_box_empty(&typing));
-        let screen_idle = pane_idle_for_delivery(&typing, IDLE);
+        assert!(!input_box_empty(&typing, &typing));
+        let screen_idle = pane_idle_for_delivery(&typing, &typing, IDLE);
         assert_eq!(
             drain_decision(PaneGate::Ready, false, screen_idle, Duration::ZERO, true),
             Drain::Hold,
@@ -11878,8 +12873,9 @@ mod ready_signal_tests {
         );
         assert_eq!(
             drain_decision(PaneGate::Ready, false, screen_idle, Duration::from_millis(MAX_HOLD_MS), true),
-            Drain::Forced,
-            "and that one hold stays bounded, as it was"
+            Drain::Forced(Forced::SignalOutranked),
+            "and that one hold stays bounded, as it was — and it forces as OUTRANKED, never as an \
+             absent signal: the stamp was positive for the whole four minutes"
         );
     }
 
@@ -11892,9 +12888,9 @@ mod ready_signal_tests {
         {
             let s = screen(box_row, spinner);
             assert_eq!(pane_gate(Stamp::Absent, Some((&s, quiet))), PaneGate::Unstamped);
-            let old = pane_idle_for_delivery(&s, quiet);
+            let old = pane_idle_for_delivery(&s, &s, quiet);
             assert_eq!(
-                drain_decision(PaneGate::Unstamped, input_box_empty(&s), old, Duration::ZERO, true),
+                drain_decision(PaneGate::Unstamped, input_box_empty(&s, &s), old, Duration::ZERO, true),
                 if old { Drain::Deliver } else { Drain::Hold },
                 "the fallback is the old gate, unchanged"
             );
@@ -11921,6 +12917,789 @@ mod ready_signal_tests {
         for stamp in [Stamp::Done, Stamp::Working, Stamp::Absent] {
             assert_eq!(pane_gate(stamp, None), PaneGate::Unstamped, "{stamp:?} over no screen");
         }
+    }
+
+    /// EVERY way a delivery can be forced, each obtained by ASKING `drain_decision` rather than by
+    /// naming a variant — so this test does not have to change when the answer changes shape, and
+    /// a fourth forcing path added later arrives here already covered.
+    /// EXHAUSTIVE BY THE COMPILER, NOT BY MEMORY — rewritten 2026-09-07, correcting my own claim.
+    ///
+    /// This was a hand-written list of three cases, and I wrote beside it that "a fourth forcing
+    /// path added later arrives here already covered." IT DID NOT. `PaneGate::Contradicted` landed
+    /// this lap and was invisible to every test that read this list. That is the room's own named
+    /// failure — a test that enumerates from a hand-written list can only check what someone
+    /// remembered — committed inside the test written to prevent it.
+    ///
+    /// `gate_ordinal`'s match is exhaustive, so adding a variant BREAKS THE BUILD until it is
+    /// mapped, and `ALL_GATES` is then checked to contain every ordinal exactly once.
+    fn gate_ordinal(g: PaneGate) -> usize {
+        match g {
+            PaneGate::Ready => 0,
+            PaneGate::Working => 1,
+            PaneGate::Stale => 2,
+            PaneGate::Unstamped => 3,
+            PaneGate::Contradicted => 4,
+        }
+    }
+    const ALL_GATES: [PaneGate; 5] = [
+        PaneGate::Ready,
+        PaneGate::Working,
+        PaneGate::Stale,
+        PaneGate::Unstamped,
+        PaneGate::Contradicted,
+    ];
+
+    #[test]
+    fn the_gate_sweep_covers_every_state_there_is() {
+        let mut seen: Vec<usize> = ALL_GATES.iter().map(|g| gate_ordinal(*g)).collect();
+        seen.sort();
+        seen.dedup();
+        assert_eq!(
+            seen.len(),
+            ALL_GATES.len(),
+            "ALL_GATES repeats a state, so the sweep below is not a sweep"
+        );
+        assert_eq!(seen, (0..ALL_GATES.len()).collect::<Vec<_>>(),
+            "a PaneGate variant is missing from ALL_GATES — every test that sweeps is blind to it");
+    }
+
+    /// Every way to be forced, DERIVED by asking `drain_decision` over the whole input space
+    /// rather than by listing the ones I could think of.
+    fn every_forced_case() -> Vec<(String, PaneGate, bool, bool)> {
+        let mut out = vec![];
+        for gate in ALL_GATES {
+            for box_empty in [true, false] {
+                for screen_idle in [true, false] {
+                    let d = drain_decision(
+                        gate,
+                        box_empty,
+                        screen_idle,
+                        Duration::from_millis(MAX_HOLD_MS),
+                        true,
+                    );
+                    if let Drain::Forced(why) = d {
+                        out.push((
+                            format!("{gate:?} box_empty={box_empty} screen_idle={screen_idle} -> {why:?}"),
+                            gate,
+                            box_empty,
+                            screen_idle,
+                        ));
+                    }
+                }
+            }
+        }
+        assert!(!out.is_empty(), "no forcing path at all — the sweep is broken, not the code");
+        out
+    }
+
+    /// THE ROW MAY NOT ASSERT A FACT AND ITS NEGATION.
+    ///
+    /// Found live 2026-09-07 06:52 by the chair, on the board:
+    ///
+    /// ```text
+    /// DELIVERED -> 0c0c0c0a [stamp=ready] (FORCED after the bounded hold
+    ///                                      — the gate never got a positive ready signal)
+    /// ```
+    ///
+    /// The reported cause was that the label and the decision were read at different moments. They
+    /// are not: `drain_inboxes` reads the gate ONCE and hands the same value to `take_ready` and to
+    /// the row, and the QUEUED row four minutes earlier carried `stamp=ready` too. There is one
+    /// moment. What there were was THREE ways to force and a sentence that named two of them.
+    #[test]
+    fn no_delivered_row_claims_a_ready_signal_and_denies_one() {
+        for (name, gate, box_empty, screen_idle) in every_forced_case() {
+            let d = drain_decision(
+                gate,
+                box_empty,
+                screen_idle,
+                Duration::from_millis(MAX_HOLD_MS),
+                true,
+            );
+            let Drain::Forced(why) = d else {
+                panic!("premise: {name} must force at the bound, got {d:?}")
+            };
+            let row = delivery_note(gate, Some(why));
+            let claims = row.contains("stamp=ready");
+            let denies = row.contains("never got a") && row.contains("ready signal");
+            assert!(!(claims && denies), "{name}: one row, two contradictory facts: {row}");
+        }
+    }
+
+    /// NO TWO FORCING CAUSES MAY READ ALIKE — the same bar `a_stale_stamp_and_a_working_pane`
+    /// sets for the gate, applied to the sentence the reader actually gets.
+    ///
+    /// This is the half that was missing. The gate has told stale from working since it shipped;
+    /// the ROW collapsed the causes into one wording, so the distinction existed everywhere except
+    /// where anyone reads it. `PaneGate::Stale` has still never printed on this machine — 0 rows
+    /// containing "STALE" in 47 delivered rows on the board — so it is asserted here or nowhere.
+    ///
+    /// KEYED ON (gate, cause), NOT ON THE INPUTS. The sweep yields the same row from several input
+    /// combinations, which is correct — the row is a function of what was decided, not of how the
+    /// gate got there.
+    #[test]
+    fn no_two_forcing_causes_read_alike() {
+        let mut rows: std::collections::BTreeMap<String, String> = Default::default();
+        for (name, gate, box_empty, screen_idle) in every_forced_case() {
+            let d = drain_decision(
+                gate, box_empty, screen_idle, Duration::from_millis(MAX_HOLD_MS), true,
+            );
+            let Drain::Forced(why) = d else { panic!("premise: {name} forces") };
+            let row = delivery_note(gate, Some(why));
+            assert!(row.contains("FORCED"), "{name}: a forced row must say it forced");
+            let key = format!("{gate:?}/{why:?}");
+            if let Some(prev) = rows.insert(key.clone(), row.clone()) {
+                assert_eq!(prev, row, "{key} produced two different rows");
+            }
+        }
+        let distinct: std::collections::BTreeSet<&String> = rows.values().collect();
+        assert_eq!(
+            distinct.len(), rows.len(),
+            "two causes print the same row and cannot be told apart on the board: {rows:#?}"
+        );
+        // and each says the thing an observer would act on
+        let all: Vec<&String> = rows.values().collect();
+        let has = |nee: &str| all.iter().any(|r| r.contains(nee));
+        assert!(has("composer never cleared"), "the keeper-outranks case must be nameable");
+        assert!(has("STALE"), "the killed-mid-turn pane must be nameable on the board");
+        assert!(has("NO STAMP"), "install drift must stay nameable too");
+        assert!(has("CONTRADICTED"), "the mirror must be nameable — bar 3 of this packet");
+    }
+
+    /// THE INVARIANT UNDER THE WHOLE FIX: a reason can only be produced by the branch that holds
+    /// it. `SignalOutranked` means the stamp was positive, so it must be unreachable from any gate
+    /// that had no usable stamp — otherwise the row is free to lie again, just more quietly.
+    #[test]
+    fn a_reason_can_only_come_from_the_gate_that_owns_it() {
+        for gate in ALL_GATES {
+            for box_empty in [true, false] {
+                for screen_idle in [true, false] {
+                    let d = drain_decision(
+                        gate,
+                        box_empty,
+                        screen_idle,
+                        Duration::from_millis(MAX_HOLD_MS * 10),
+                        true,
+                    );
+                    match d {
+                        Drain::Forced(Forced::SignalOutranked) => assert_eq!(
+                            gate,
+                            PaneGate::Ready,
+                            "only a positive stamp can be OUTRANKED"
+                        ),
+                        Drain::Forced(Forced::NoUsableSignal) => assert!(
+                            !gate.is_stamped(),
+                            "{gate:?} had a usable stamp — the row must not say it did not"
+                        ),
+                        _ => {}
+                    }
+                }
+            }
+        }
+    }
+
+    /// A delivery that did NOT force says nothing about forcing — the row that carried 43 of the
+    /// 47 deliveries on record, and the one place an extra clause would be pure noise.
+    #[test]
+    fn an_unforced_row_carries_no_forced_clause() {
+        for gate in [PaneGate::Ready, PaneGate::Stale, PaneGate::Unstamped] {
+            let row = delivery_note(gate, None);
+            assert!(!row.contains("FORCED"), "{gate:?}: {row}");
+            assert_eq!(row, format!("[{}]", gate.label()));
+        }
+    }
+
+    /// `None => false` IS RIGHT, AND IT IS NOT WHAT STALLED ANYTHING — the packet's second §1a
+    /// question, answered with an assertion instead of a paragraph.
+    ///
+    /// An unreadable composer must read as BUSY: returning "empty" there delivers into a screen
+    /// nobody could parse, which is how a gate becomes decorative on exactly the screens it was
+    /// built for. That is fail-safe, not fail-stuck — and the reason it is not fail-stuck is that
+    /// EXACTLY ONE gate state holds without a bound, and it is not reachable from an unreadable
+    /// box. A no-`❯` screen on a ready pane forces after four minutes; it cannot sit for hours.
+    ///
+    /// SO THE FOUR PACKETS THAT SAT FOR TWO AND A HALF HOURS WERE NOT THIS. 240 seconds is not two
+    /// and a half hours, and the arithmetic is the whole argument. The unbounded state is
+    /// `Working`, and what let it latch forever was the bled footer row above — `turn_in_flight`
+    /// reading the footer's own "esc to interrupt" as a live turn, so a working stamp could never
+    /// become `Stale` and the hold never ended.
+    #[test]
+    fn only_a_corroborated_working_pane_holds_without_a_bound() {
+        for gate in ALL_GATES {
+            let d = drain_decision(gate, false, false, Duration::from_millis(MAX_HOLD_MS * 100), true);
+            if gate == PaneGate::Working {
+                assert_eq!(d, Drain::Hold, "a corroborated working pane is never written into");
+            } else {
+                assert!(
+                    matches!(d, Drain::Forced { .. }),
+                    "{gate:?} can hold forever — an unreadable or contradicted screen must still \
+                     release at the bound, or the gate has a second way to mute a pane"
+                );
+            }
+        }
+    }
+
+    /// THE MIRROR OF STALE — a stamp that is too CONFIDENT rather than too old.
+    ///
+    /// Registered by me on 2026-09-07 and deliberately not fixed in that packet; this is the fix.
+    /// Before it, `Stamp::Done` returned `Ready` unconditionally and `Ready` consults neither
+    /// `turn_in_flight` nor quiescence — so a positive stamp over a running turn delivered
+    /// immediately, which is the splice the inbox exists to prevent, arriving through the inbox.
+    #[test]
+    fn a_ready_stamp_over_a_live_turn_does_not_deliver() {
+        let live = screen("❯", true);
+        assert!(turn_in_flight(&live), "premise: a turn is on screen");
+        let gate = pane_gate(Stamp::Done, Some((&live, LIVE)));
+        assert_eq!(gate, PaneGate::Contradicted, "a positive stamp over a live turn is contradicted");
+        assert_ne!(gate, PaneGate::Ready, "and must not read as an ordinary ready pane");
+        assert_eq!(
+            drain_decision(gate, true, pane_idle_for_delivery(&live, &live, LIVE), Duration::ZERO, true),
+            Drain::Hold,
+            "it must not splice a live turn even with an empty composer"
+        );
+    }
+
+    /// AND IT IS BOUNDED, not a new way to mute a pane. The screen evidence can be wrong; an
+    /// unbounded hold on a screen reading is the failure mode this room refuses.
+    #[test]
+    fn the_mirror_is_bounded_and_says_which_cause_forced_it() {
+        let live = screen("❯", true);
+        let gate = pane_gate(Stamp::Done, Some((&live, LIVE)));
+        let d = drain_decision(gate, true, false, Duration::from_millis(MAX_HOLD_MS), true);
+        assert_eq!(d, Drain::Forced(Forced::SignalContradicted), "bounded, like Stale");
+        let row = delivery_note(gate, Some(Forced::SignalContradicted));
+        assert!(row.contains("CONTRADICTED"), "the state must print, the way STALE does: {row}");
+        assert!(!row.contains("never got a"), "the signal existed — the row must not deny it");
+    }
+
+    /// THE REGRESSION THIS COULD EASILY HAVE CAUSED, and the reason the rule is an AND.
+    ///
+    /// Rows scroll in place at scrollback 0, so a spinner from a turn that ended long ago is still
+    /// drawn on the grid. Had the mirror keyed on `turn_in_flight` alone — or on `screen_busy`,
+    /// which is an OR over a 2s quiet window — every delivery to a long-finished pane would have
+    /// gone back onto the bounded screen gate and waited four minutes. That is the "six of ten
+    /// deliveries FORCED onto panes that were ready the whole time" failure, restored.
+    #[test]
+    fn a_stale_spinner_on_a_quiet_pane_is_still_an_ordinary_ready_pane() {
+        let stale_spinner = screen("❯", true);
+        assert!(turn_in_flight(&stale_spinner), "premise: the spinner is still drawn");
+        assert_eq!(
+            pane_gate(Stamp::Done, Some((&stale_spinner, IDLE))),
+            PaneGate::Ready,
+            "a spinner nobody is redrawing is not a live turn"
+        );
+        assert_eq!(
+            drain_decision(PaneGate::Ready, true, false, Duration::ZERO, true),
+            Drain::Deliver,
+            "and it delivers at once, with no bound — the mirror must cost the common case nothing"
+        );
+    }
+
+    // ── THE GHOST (P-GHOST-TEXT, the keeper 2026-09-07 05:09) ────────────────────────────────
+    //
+    // REAL ESCAPE SEQUENCES, not a hand-drawn screen. Every constant below was read out of this
+    // machine's own `data/captures/*.log` by replaying it through `vt100::Parser::new(EMU_ROWS,
+    // EMU_COLS, 0)` and dumping per-cell foregrounds. A fixture of plain strings cannot fail this
+    // test, because the whole defect is that the two kinds of text are identical once colour is
+    // thrown away.
+    //
+    // THAT REPLAY IS NOT THE SIZE PRODUCTION RUNS AT — it is the size production STARTS at, and
+    // L044 is what the difference cost. The COLOURS below are unaffected: a cell's foreground is
+    // its own attribute and does not move when the grid is clamped, so the discriminator holds.
+    // GEOMETRY read off that replay does not, and one such reading is retired at `is_footer_row`.
+
+    /// Claude Code's grey: measured as `38;2;153;153;153` in the capture, 50 occurrences in an
+    /// 8KB window. NOT SGR 2 — vt100 0.15 does not record the dim attribute at all.
+    const GHOST: &str = "\x1b[38;2;153;153;153m";
+    const PLAIN: &str = "\x1b[0m";
+
+    /// Claude Code's separator rule: measured Rgb(136,136,136), full width, directly above the
+    /// composer. Kept as a colour constant beside `GHOST` because the fixtures paint it, even
+    /// though `is_separator_rule` deliberately does not read it — see that function.
+    const RULE: &str = "\x1b[38;2;136;136;136m";
+
+    /// THE STAMP FOR THE COMPOSER ANCHOR, AND IT IS A PATH RATHER THAN A VERSION NUMBER.
+    ///
+    /// "Claude Code 2.1.266" would be a confident label with nothing behind it: nobody can re-run a
+    /// version string, and the chrome this predicate reads is not versioned separately from the app
+    /// anyway. A path can be replayed. Every claim `composer_row` and `input_box_empty` make about
+    /// what Claude Code draws was measured on THIS file, and the two capture logs named below, with
+    /// `cargo run --bin composer_probe`; if the chrome changes, the way to find out is to point the
+    /// probe at a new capture, not to compare a number.
+    ///
+    ///     cargo run --release --bin composer_probe -- --tail 20000000 \
+    ///         fixtures/screens/composer_empty_reads_busy_2026-09-09.bin \
+    ///         C:/Consonance/data/captures/0c0c0c0a-0000-4000-8000-000000000a01.log \
+    ///         C:/Consonance/data/captures/0c0c0c0b-0000-4000-8000-00000000115b.log
+    ///     PROBE_ROWS=21 PROBE_COLS=98 cargo run --release --bin composer_probe -- \
+    ///         --tail 20000000 C:/Consonance/data/captures/6fe15f0a-...-8bd96b6b5a4f.log
+    ///
+    /// EACH PANE AT ITS OWN GEOMETRY, and that is not a detail: replaying the fourth log at 43x201
+    /// instead of its real 21x98 manufactured 2,271 splices that do not exist, because the app's
+    /// own line wrapping lands in different rows at a different width. The geometries come from
+    /// the max cursor address in the raw log, not from a guess.
+    ///
+    /// 2026-09-09, one run per pane, the logs live and still being appended to as it read them:
+    /// **157,946 anchored frames; the anchor correct on 157,916 and the shipped rule on 19,159.**
+    /// 138,758 frames held a pane whose composer was empty. The anchor's 30 misses and 29 of the
+    /// shipped rule's are one frame type, and it is the defect this packet found and did not fix —
+    /// see `a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect`.
+    const COMPOSER_ANCHOR_EVIDENCE: &str = "fixtures/screens/composer_empty_reads_busy_2026-09-09.bin";
+
+    /// A composer row as the emulator receives it, WITH THE FRAME IT IS ACTUALLY DRAWN IN.
+    ///
+    /// THE RULE ROW IS NEW HERE (L053) AND IT IS NOT DECORATION. This helper used to draw a bare
+    /// `❯` row with nothing above it, which is not a screen Claude Code produces — and that is the
+    /// same fault as `the_prompt_marker_survives_the_reduction` painting the marker Default by
+    /// construction: a fixture that models the screen loosely lets a predicate pass over a screen
+    /// it would fail. The real frame is rule / composer / footer, and the fixture now says so.
+    fn box_screen(typed: &str, ghost: &str) -> vt100::Parser {
+        let mut p = vt100::Parser::new(EMU_ROWS, EMU_COLS, 0);
+        p.process(b"\x1b[2J\x1b[H");
+        p.process("● an earlier reply\r\n".as_bytes());
+        p.process("\x1b[32;1H".as_bytes()); // the separator rule
+        p.process(format!("{RULE}{}{PLAIN}", "\u{2500}".repeat(EMU_COLS as usize)).as_bytes());
+        p.process("\x1b[33;1H".as_bytes()); // the composer row
+        p.process(format!("\u{276f}\u{a0}{PLAIN}{typed}{GHOST}{ghost}{PLAIN}").as_bytes());
+        p.process("\x1b[34;1H  \u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle)".as_bytes());
+        p
+    }
+
+    /// RED FIRST. A box holding ONLY the predictor's grey text is an EMPTY box; before this, the
+    /// gate read it as the keeper typing and every delivery to that pane held. Three stalls on the
+    /// night this was found were ghosts, not him.
+    #[test]
+    fn a_ghost_in_the_composer_is_not_the_keeper_typing() {
+        let p = box_screen("", "score it");
+        let rendered: Vec<String> = p.screen().rows(0, EMU_COLS).collect();
+        let typed = typed_only(p.screen());
+
+        // the premise: as plain text the two are the same row, which is the whole defect
+        assert!(
+            rendered.iter().any(|l| l.contains("score it")),
+            "premise: the ghost IS on the rendered grid"
+        );
+        assert!(
+            !input_box_empty(&rendered, &rendered),
+            "premise: read as plain text it looks like typing"
+        );
+
+        assert!(input_box_empty(&rendered, &typed), "a box holding only a prediction is EMPTY");
+    }
+
+    /// THE MUTANT IN THE OTHER DIRECTION, and it is the one that matters: real typing must still
+    /// hold a delivery. Trading a false hold for a splice mid-sentence gives the whole point away.
+    #[test]
+    fn real_typing_still_holds_a_delivery_even_with_a_prediction_after_it() {
+        for (typed, ghost, want_empty, why) in [
+            ("", "", true, "a bare box is empty"),
+            ("", "paste again to expand", true, "a hint is not typing"),
+            ("", "                                    \u{2190} for agents", true,
+                "right-aligned chrome is not typing"),
+            ("score it", "", false, "typed text holds"),
+            ("Both h", "ow are you", false, "typed prefix + drawn completion still holds"),
+        ] {
+            let p = box_screen(typed, ghost);
+            let rendered: Vec<String> = p.screen().rows(0, EMU_COLS).collect();
+            assert_eq!(
+                input_box_empty(&rendered, &typed_only(p.screen())),
+                want_empty,
+                "{why}"
+            );
+        }
+    }
+
+    /// THE REAL SCREEN, and the defect it carries. L050, 2026-09-09.
+    ///
+    /// The fixture is 32,768 bytes of RAW PTY OUTPUT taken from the librarian pane's own capture
+    /// log, ending at byte 1,794,048 — a frame chosen by scanning the log, not composed. It is
+    /// committee routing text and shell lines, nothing private. Replayed at 43x201, the size the
+    /// docked panes actually run (the separator rule measures 201 columns in this machine's live
+    /// captures; at 202 the repaint visibly tears, which is how the width was established rather
+    /// than assumed).
+    ///
+    /// WHAT IT PROVES, and every clause was measured before it was written:
+    ///
+    ///   · The composer on that frame is EMPTY. The rendered grid's last prompt row is a bare
+    ///     `❯` with nothing after it.
+    ///   · `typed_only` DELETES THAT ROW ENTIRELY. Claude Code draws the composer marker
+    ///     `ESC[38;2;80;80;80m` on `ESC[48;2;55;55;55m` — Rgb(80,80,80), NOT Default — whenever
+    ///     the composer is in its dimmed state. The reduction keeps Default cells only, so the
+    ///     marker goes with the chrome.
+    ///   · `input_box_empty` then finds NO prompt row at all and returns false by its own
+    ///     UNKNOWN-HOLDS rule. A pane whose composer is empty reads BUSY.
+    ///
+    /// With `PaneGate::Ready` — which comes from the pane's OWN STAMP, not from this screen —
+    /// `drain_decision` takes `bounded(box_empty, SignalOutranked)` and holds the full 240 s.
+    /// That is the board's *"the pane's own signal said ready; its composer never cleared"*.
+    ///
+    /// THIS IS THE FAILURE `the_prompt_marker_survives_the_reduction` WAS WRITTEN TO PREVENT, in
+    /// its own words: *"if it were not [Default], blanking non-default cells would delete the
+    /// marker, `input_box_empty` would find no prompt row, and `None => false` would call every
+    /// pane busy forever."* It could not catch it because `box_screen` paints the marker Default
+    /// by construction — the test pinned the model of the screen, not the screen. Third time in
+    /// this file (L044's row window, L044's footer, this).
+    ///
+    /// NOT ESTABLISHED HERE, and stated so nobody quotes this test for more than it did: that
+    /// this frame is what forced tonight's six deliveries. Sampling the same logs pre-update
+    /// shows the same blanking, so it is NOT new tonight, and the update row is NOT the cause —
+    /// it is drawn `ESC[38;2;78;186;101m` (green) and the reduction already strips it.
+    #[test]
+    fn a_real_empty_composer_reads_busy_because_the_marker_is_not_default() {
+        let data = fs::read(COMPOSER_ANCHOR_EVIDENCE)
+            .expect("the real-screen fixture");
+        let mut p = vt100::Parser::new(43, 201, 0);
+        p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 201).collect();
+        let typed = typed_only(p.screen());
+
+        let at = rendered
+            .iter()
+            .rposition(|l| capture::is_empty_box(l) || capture::is_prompt(l))
+            .expect("premise: the rendered screen HAS a composer row");
+        assert!(
+            capture::is_empty_box(&rendered[at]),
+            "premise: the composer on this real frame is empty — row {at} is {:?}",
+            rendered[at].trim_end()
+        );
+
+        assert!(
+            typed[at].trim().is_empty(),
+            "the marker did not survive the reduction on a real screen — row {at} reduced to {:?}",
+            typed[at].trim_end()
+        );
+        assert!(
+            !typed.iter().any(|l| capture::is_empty_box(l) || capture::is_prompt(l)),
+            "no prompt row survives anywhere, which is why input_box_empty falls to None => false"
+        );
+
+        assert!(input_box_empty(&rendered, &rendered), "the truth: this composer is empty");
+
+        // THE DEFECT, kept and now pinned to the CODE THAT HAD IT rather than to the live
+        // predicate. `input_box_empty` no longer has this bug, so asserting it of `input_box_empty`
+        // would have to be deleted — and deleting it would delete the only executable statement of
+        // what was wrong. The shipped rule is four lines; they are reproduced here, run against the
+        // same real screen, and they still fail. That is a regression test for the mechanism, not
+        // for the name.
+        let shipped = match typed
+            .iter()
+            .rposition(|l| capture::is_empty_box(l) || capture::is_prompt(l))
+        {
+            Some(i) => capture::is_empty_box(&typed[i]),
+            None => false,
+        };
+        assert!(
+            !shipped,
+            "THE DEFECT: the shipped rule read an empty composer as occupied and held 240 s"
+        );
+    }
+
+    /// THE ACCEPTANCE TEST FOR THE FIX — **un-ignored 2026-09-09 (L053)**, because the predicate
+    /// that passes it without the unsafe shortcut now exists: `composer_row` + `input_box_empty`.
+    /// It was written red before the fix and is left word for word as it was written.
+    ///
+    /// THE SHORTCUT, AND WHY IT IS REFUSED. The obvious repair is "keep the `❯` whatever colour
+    /// it is drawn in". It passes this test and it is not safe. Once the marker survives at any
+    /// colour, a row reading `❯ <grey text>` reduces to `❯` alone and reports EMPTY — and a
+    /// drawn autocomplete prediction and a greyed prompt row carrying the keeper's own words are
+    /// *the same row* to a colour test. Both are non-Default text after a non-Default marker.
+    /// Today they are told apart only by accident: the marker's colour hides the whole row, so
+    /// `None => false` holds. Removing that accident without replacing it trades a four-minute
+    /// hold for splicing the keeper mid-sentence, which is not recoverable, and the packet that
+    /// commissioned this named that as grounds to stop.
+    ///
+    /// WHAT WOULD EARN IT, from the same real screens: the composer is not "the last `❯` row",
+    /// it is "the `❯` row BELOW THE SEPARATOR RULE" — the full-width `────` in Rgb(136,136,136)
+    /// that Claude Code draws directly above the composer (row 38 with the composer at 39 on the
+    /// fixture above). That is a STRUCTURAL anchor rather than a colour one, so it survives a
+    /// recolour, and it separates scrollback prompt rows from the composer by construction
+    /// rather than by hue. It needs its own fixtures and its own mutants — a packet, not a patch.
+    ///
+    /// WHAT WAS BUILT (L053), and it is not quite what the paragraph above predicted. The anchor
+    /// is there, and it is structural. But the shortcut was avoided by a second move the paragraph
+    /// did not see: the composer is LOCATED on the rendered grid and asked for EMPTINESS on the
+    /// reduced one. Keeping the marker in the reduction was never necessary — the reduction was
+    /// the wrong grid to ask where anything is.
+    #[test]
+    fn an_empty_composer_must_read_empty_whatever_colour_the_marker_is_drawn_in() {
+        let data = fs::read(COMPOSER_ANCHOR_EVIDENCE).expect("the real-screen fixture");
+        let mut p = vt100::Parser::new(43, 201, 0);
+        p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 201).collect();
+        assert!(
+            input_box_empty(&rendered, &typed_only(p.screen())),
+            "a ready pane with an empty composer must be delivered to, not held for 240 s"
+        );
+    }
+
+    /// THE SPLIT, PINNED ON THE REAL SCREEN. Located on the drawn grid, read on the reduced one.
+    ///
+    /// This is the assertion the fix rests on, and it is the one a future reader will be tempted to
+    /// simplify away: on this frame the composer's marker is NOT on the reduced grid at all, and the
+    /// composer is still found, because it is looked for somewhere else. Delete either half and the
+    /// gate goes back to holding a ready pane for four minutes.
+    #[test]
+    fn the_composer_is_found_on_the_drawn_grid_though_the_reduction_deleted_its_marker() {
+        let data = fs::read(COMPOSER_ANCHOR_EVIDENCE).expect("the real-screen fixture");
+        let mut p = vt100::Parser::new(43, 201, 0);
+        p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 201).collect();
+        let typed = typed_only(p.screen());
+
+        let i = composer_row(&rendered).expect("the anchor finds the composer on the drawn grid");
+        assert!(
+            is_separator_rule(&rendered[i - 1]),
+            "premise: the row above the composer is the full-width rule — {:?}",
+            rendered[i - 1].chars().take(12).collect::<String>()
+        );
+        assert!(
+            !typed[i].contains('\u{276f}'),
+            "premise: the reduction deleted the marker — that is WHY the anchor is needed"
+        );
+        assert!(
+            !typed.iter().any(|l| capture::is_empty_box(l) || capture::is_prompt(l)),
+            "premise: NO prompt row survives the reduction anywhere on this screen"
+        );
+    }
+
+    /// THE ANCHOR'S OWN CONTRACT, and the frame that tells this fix apart from the one L050
+    /// refused. **A `❯` row with no rule above it is not the composer, and unknown holds.**
+    ///
+    /// WHY IT IS NEEDED, stated because it corrects the packet that commissioned this: the mutant
+    /// "keep the marker at any colour" was to be caught by a greyed-prompt-row frame **already on
+    /// disk**, and there was none — no fixture here painted a prompt row non-Default with typing in
+    /// it. The mutant IS caught, by three frames, but by their PREMISES ("no prompt row survives the
+    /// reduction") rather than by the splice the refusal was about. This test is the frame that
+    /// answers the refusal's own question: the one place the shortcut and the anchor differ.
+    ///
+    /// AND THE FRAME THE REFUSAL WANTED NOW EXISTS — it was found while measuring for this one, and
+    /// it is `composer_slash_command_reads_empty_2026-09-09.bin`. It does not defend the anchor; it
+    /// indicts both. See `a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect`.
+    ///
+    /// SYNTHETIC, AND SAYING SO. This is a contract test, not a capture. It pins what the predicate
+    /// promises on a screen shaped like a restored pane's scrollback; the capture-backed claims all
+    /// live at `COMPOSER_ANCHOR_EVIDENCE`.
+    #[test]
+    fn a_prompt_row_with_no_rule_above_it_is_not_the_composer() {
+        let scrollback = vec![
+            "● an earlier reply".to_string(),
+            "\u{276f}".to_string(), // a bare prompt row with nothing above it
+            "  \u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle)".to_string(),
+        ];
+        assert!(
+            composer_row(&scrollback).is_none(),
+            "a `❯` row with no rule above it is scrollback, not an input box"
+        );
+        assert!(
+            !input_box_empty(&scrollback, &scrollback),
+            "and unknown HOLDS — this is the row the old rule would have delivered into"
+        );
+    }
+
+    /// THE FRAME L050 REFUSED ON, AND IT IS REAL AFTER ALL. Found 2026-09-09 by the probe, on the
+    /// fourth pane replayed at its own geometry, and it is the unwanted number of this packet.
+    ///
+    /// **When the keeper types a SLASH COMMAND, Claude Code draws his own text non-Default** —
+    /// `/model` in Rgb(177,185,249) — and the reduction blanks it. `input_box_empty` then reports
+    /// an EMPTY composer over a row he is in the middle of typing. That is the splice L050 declined
+    /// to trade a four-minute hold for, and the trade was already on the books: the SHIPPED rule
+    /// reads these frames empty too (29 of 75,876 anchored frames on that pane; the anchor, 30).
+    /// **The anchor did not cause it and does not fix it.** It is recorded here, executable, so it
+    /// cannot be lost between packets — this test asserts the DEFECT and must be inverted, not
+    /// deleted, by whatever closes it.
+    ///
+    /// WHAT WOULD EARN THE `#[ignore]`d test below, and it is a small change with a real blast
+    /// radius, which is why it is not in this packet: `typed_only` keeps DEFAULT and drops
+    /// everything else — an allow-list, so any colour Claude Code invents reads as chrome and
+    /// vanishes. Inverted to a DENY-list of the chrome greys actually measured — Rgb(153,153,153),
+    /// the prediction and the hints, and Rgb(136,136,136), the rule — an unknown colour would read
+    /// as TYPING and HOLD. Same reduction, opposite failure direction: today an unrecognised colour
+    /// splices, then it would stall, and a bounded stall is the recoverable one. It needs its own
+    /// colour census across every pane before it lands.
+    #[test]
+    fn a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect() {
+        let data = fs::read("fixtures/screens/composer_slash_command_reads_empty_2026-09-09.bin")
+            .expect("the slash-command fixture");
+        let mut p = vt100::Parser::new(21, 98, 0);
+        p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 98).collect();
+        let typed = typed_only(p.screen());
+
+        let i = composer_row(&rendered).expect("premise: the anchor finds the composer");
+        assert!(
+            rendered[i].contains("/model"),
+            "premise: the keeper has typed a slash command into it — row {i} is {:?}",
+            rendered[i].trim_end()
+        );
+        let m = rendered[i].chars().position(|c| c == '\u{276f}').expect("premise: a marker");
+        assert!(
+            typed[i].chars().skip(m + 1).collect::<String>().trim().is_empty(),
+            "premise: the reduction blanked HIS OWN TEXT, because it is not Default — {:?}",
+            typed[i].trim_end()
+        );
+        assert!(
+            input_box_empty(&rendered, &typed),
+            "THE DEFECT: a composer he is typing into reads empty, and a delivery splices his line"
+        );
+    }
+
+    /// The acceptance test for the defect above, `#[ignore]`d exactly as L050 ignored this
+    /// packet's — written red before the fix exists, so the fix has a bar it did not choose.
+    #[test]
+    #[ignore = "acceptance test for the slash-command splice; see the test above before un-ignoring"]
+    fn the_keeper_typing_a_slash_command_must_hold_a_delivery() {
+        let data = fs::read("fixtures/screens/composer_slash_command_reads_empty_2026-09-09.bin")
+            .expect("the slash-command fixture");
+        let mut p = vt100::Parser::new(21, 98, 0);
+        p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 98).collect();
+        assert!(
+            !input_box_empty(&rendered, &typed_only(p.screen())),
+            "his hand is in the composer — whatever colour the TUI chose to draw it in"
+        );
+    }
+
+    /// The rule that matters is the FULL-WIDTH one. A markdown rule inside a reply is drawn to the
+    /// content width inside a left margin, and it sits above plenty of things; if it counted, the
+    /// anchor would be back to guessing.
+    #[test]
+    fn a_rule_inside_a_reply_is_not_the_separator() {
+        assert!(is_separator_rule(&"\u{2500}".repeat(80)), "a bare full-width rule is one");
+        assert!(
+            is_separator_rule(&format!("{}   ", "\u{2500}".repeat(80))),
+            "trailing blanks are vt100's, not the screen's"
+        );
+        assert!(
+            !is_separator_rule(&format!("  {}", "\u{2500}".repeat(80))),
+            "a LEADING margin means a content rule — this is the one that must not anchor"
+        );
+        assert!(!is_separator_rule("── a heading ──"), "a rule with words in it is not one");
+        assert!(!is_separator_rule(""), "and a blank row is not a rule");
+
+        let indented = vec![
+            format!("  {}", "\u{2500}".repeat(80)),
+            "\u{276f}".to_string(),
+        ];
+        assert!(
+            composer_row(&indented).is_none(),
+            "an indented content rule must not promote the row under it to the composer"
+        );
+    }
+
+    /// The reduction must not eat the composer itself. `❯` is Default in the capture; if it were
+    /// not, blanking non-default cells would delete the marker, `input_box_empty` would find no
+    /// prompt row, and `None => false` would call every pane busy forever — a worse stall than the
+    /// one being fixed, and silent.
+    ///
+    /// **AMENDED 2026-09-09 (L053). The paragraph above was right about the consequence and wrong
+    /// about the premise, and both halves are kept.** `❯` is Default in *this fixture* because
+    /// `box_screen` paints it so; on the real screen it is Rgb(153,153,153) in 1,713 of 1,740
+    /// anchored frames, the marker IS deleted, and the stall it predicts is exactly what happened.
+    /// The prediction was correct and the test could not see it — it pinned the model of the
+    /// screen. The test stays because the SECOND assertion is still load-bearing (the reduction
+    /// must preserve the grid's shape, which is what makes the two grids index-aligned); the first
+    /// no longer guards the gate, because `composer_row` looks for the marker on the drawn grid
+    /// where its colour cannot hide it.
+
+    #[test]
+    fn the_prompt_marker_survives_the_reduction() {
+        let p = box_screen("", "score it");
+        let typed = typed_only(p.screen());
+        assert!(
+            typed.iter().any(|l| l.trim_start().starts_with('\u{276f}')),
+            "the reduction removed the composer marker itself"
+        );
+        assert_eq!(
+            typed.len(),
+            p.screen().size().0 as usize,
+            "the reduction must preserve the grid shape — THE SCREEN'S, not the constant's"
+        );
+    }
+
+    // ── THE WINDOW (L044, the chair 2026-09-08) ──────────────────────────────────────────────
+    //
+    // The ghost fix above shipped GREEN over a defect of its own, and the assertion just amended is
+    // why: it pinned `EMU_ROWS`, so a `typed_only` that read the whole screen would have FAILED it.
+    // A test that locks a constant its subject must not use converts the fix into the regression.
+
+    /// A pane at the size the panes here actually run: taller and wider than the constants, with
+    /// the composer where a 44-row terminal puts it — row 40, nine rows below `EMU_ROWS`.
+    ///
+    /// NOT A CHOSEN NUMBER. Max cursor row measured from the live capture logs is 42 (1-based) on
+    /// the chair, the librarian and the Third Place, and max cursor column 191/185/199 — so the
+    /// real grids are ~43x~200 and BOTH constants are short.
+    fn tall_box_screen(typed: &str, ghost: &str) -> vt100::Parser {
+        let mut p = vt100::Parser::new(44, 150, 0);
+        p.process(b"\x1b[2J\x1b[H");
+        p.process("● an earlier reply\r\n".as_bytes());
+        p.process("\x1b[3;131H far-past-EMU_COLS ".as_bytes()); // a cell outside the old width
+        p.process("\x1b[39;1H".as_bytes()); // the separator rule, also outside the old height
+        p.process(format!("{RULE}{}{PLAIN}", "\u{2500}".repeat(150)).as_bytes());
+        p.process("\x1b[40;1H".as_bytes()); // the composer, outside the old height
+        p.process(format!("\u{276f}\u{a0}{PLAIN}{typed}{GHOST}{ghost}{PLAIN}").as_bytes());
+        p.process("\x1b[42;3H\u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle)".as_bytes());
+        p
+    }
+
+    /// RED FIRST. On the constants the composer is not in the window at all, `input_box_empty`
+    /// returns false by UNKNOWN-HOLDS, and every delivery to a full-height pane holds to the bound
+    /// — which is exactly what the librarian's 01:06 ring did on the binary carrying the fix above.
+    #[test]
+    fn the_composer_of_a_pane_taller_than_the_constants_is_still_read() {
+        let p = tall_box_screen("", "score it");
+        let s = p.screen();
+        assert_eq!(s.size(), (44, 150), "premise: the emulator really is bigger than the constants");
+        assert!(44 > EMU_ROWS && 150 > EMU_COLS, "premise: and this fixture is outside both");
+
+        let typed = typed_only(s);
+        assert_eq!(typed.len(), 44, "the reduction stopped at the constant, not at the screen");
+        assert!(
+            typed[39].trim_start().starts_with('\u{276f}'),
+            "the composer at row 40 fell outside the read window — this pane can never be delivered to"
+        );
+        let rendered: Vec<String> = s.rows(0, 150).collect();
+        assert!(
+            input_box_empty(&rendered, &typed),
+            "an empty composer on a tall pane is EMPTY, not unknown"
+        );
+        assert!(
+            typed[2].contains("far-past-EMU_COLS"),
+            "the reduction stopped at column 120 — a wide row loses its tail with no wrap flag to say so"
+        );
+    }
+
+    /// And the other direction still holds on a tall pane: widening the window must not turn real
+    /// typing into a deliverable idle. The window was wrong; the colour filter was not.
+    #[test]
+    fn real_typing_on_a_tall_pane_still_holds_a_delivery() {
+        let p = tall_box_screen("score it", "");
+        let rendered: Vec<String> = p.screen().rows(0, 150).collect();
+        assert!(
+            !input_box_empty(&rendered, &typed_only(p.screen())),
+            "typed text holds, whatever row it is on"
+        );
+    }
+
+    /// THE BLED FOOTER — a different defect in the same row, kept, with its mechanism CORRECTED.
+    ///
+    /// The row is real: the status footer drawn onto the composer row, which does not start with
+    /// `⏵`, so the old `is_footer_row` said false and `turn_in_flight` counted the footer's own
+    /// "esc to interrupt" as a live turn — and `PaneGate::Working`'s hold has NO BOUND.
+    ///
+    /// I called it a mid-redraw race on 2026-09-07. It is row CLAMPING — see `is_footer_row`, where
+    /// the measurement and the withdrawal of what I hung on it are written out. The test stands
+    /// because the clamp windows are real; the story I told about it does not.
+    #[test]
+    fn a_footer_drawn_onto_the_composer_row_is_not_a_turn_in_flight() {
+        let bled = vec![
+            "● an earlier reply".to_string(),
+            "\u{276f}\u{a0}\u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle) · esc to interrupt"
+                .to_string(),
+        ];
+        assert!(is_footer_row(&bled[1]), "the footer is chrome wherever it is drawn");
+        assert!(!turn_in_flight(&bled), "a bled footer must not read as a live turn");
+        // and the real thing must still be caught
+        let live = vec!["✻ Concocting… (12s · esc to interrupt)".to_string()];
+        assert!(turn_in_flight(&live), "a real spinner is still a turn");
     }
 
     /// The hook pair is the other half of a two-sided contract and it is EASY to ship one side.
@@ -11979,7 +13758,8 @@ mod inbox_tests {
     ///      advertises "esc to interrupt" in the FOOTER whenever a BACKGROUND SHELL is running,
     ///      turn or no turn. The fixture above uses the no-shell variant, which is why every gate
     ///      test passed over a gate that is wrong most of a pane's life.
-    ///   2. A STALE SPINNER ROW. The grid is 34x120 with scrollback 0; rows that scroll are
+    ///   2. A STALE SPINNER ROW. The grid runs at scrollback 0 (34x120 as transcribed here, before
+    ///      L044 established that a docked pane is really ~43x~200); rows that scroll are
     ///      overwritten in place, so text from earlier epochs survives on screen. This pane still
     ///      carried its own spinner from a turn that ended 48 minutes earlier.
     ///
@@ -12015,9 +13795,9 @@ mod inbox_tests {
             capture::is_working(&s),
             "premise: the old liveness check is fooled by the footer on this real screen"
         );
-        assert!(input_box_empty(&s), "premise: the composer is empty — nobody is typing");
+        assert!(input_box_empty(&s, &s), "premise: the composer is empty — nobody is typing");
         assert!(
-            pane_idle_for_delivery(&s, QUIET),
+            pane_idle_for_delivery(&s, &s, QUIET),
             "a pane finished 48 minutes ago must be deliverable"
         );
     }
@@ -12031,7 +13811,7 @@ mod inbox_tests {
             s.iter().any(|l| l.contains("Whirlpooling…") && l.contains("tokens")),
             "premise: a stale spinner is on the grid"
         );
-        assert!(pane_idle_for_delivery(&s, QUIET));
+        assert!(pane_idle_for_delivery(&s, &s, QUIET));
     }
 
     #[test]
@@ -12042,9 +13822,9 @@ mod inbox_tests {
         // finished one. Without this, the fix trades a false-busy for a false-idle and the keeper
         // is the one who gets spliced.
         let s = post_done_screen();
-        assert!(!pane_idle_for_delivery(&s, Duration::from_millis(0)));
-        assert!(!pane_idle_for_delivery(&s, Duration::from_millis(QUIET_FOR_DELIVERY_MS - 1)));
-        assert!(pane_idle_for_delivery(&s, Duration::from_millis(QUIET_FOR_DELIVERY_MS)));
+        assert!(!pane_idle_for_delivery(&s, &s, Duration::from_millis(0)));
+        assert!(!pane_idle_for_delivery(&s, &s, Duration::from_millis(QUIET_FOR_DELIVERY_MS - 1)));
+        assert!(pane_idle_for_delivery(&s, &s, Duration::from_millis(QUIET_FOR_DELIVERY_MS)));
     }
 
     #[test]
@@ -12052,26 +13832,26 @@ mod inbox_tests {
         // A quiet PTY is NOT sufficient on its own. The keeper types, pauses to think, and the
         // stream goes silent with words sitting in the box. Both halves are required.
         let typed = screen("❯ we need to get that solid before 8am", false);
-        assert!(!pane_idle_for_delivery(&typed, Duration::from_secs(60)));
+        assert!(!pane_idle_for_delivery(&typed, &typed, Duration::from_secs(60)));
     }
 
     #[test]
     fn idle_pane_with_an_empty_box_delivers() {
-        assert!(pane_idle_for_delivery(&screen("❯", false), QUIET));
-        assert!(pane_idle_for_delivery(&screen("❯   ", false), QUIET));
+        assert!(pane_idle_for_delivery(&screen("❯", false), &screen("❯", false), QUIET));
+        assert!(pane_idle_for_delivery(&screen("❯   ", false), &screen("❯   ", false), QUIET));
     }
 
     #[test]
     fn the_keeper_typing_holds() {
         // The case the whole packet exists for: a ready-looking screen whose composer has words in
         // it. Delivering here is what cut his sentence in half mid-word.
-        assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false), QUIET));
-        assert!(!input_box_empty(&screen("❯ s", false)), "one character is still typing");
+        assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false), &screen("❯ we need to get that solid before 8am", false), QUIET));
+        assert!(!input_box_empty(&screen("❯ s", false), &screen("❯ s", false)), "one character is still typing");
     }
 
     #[test]
     fn a_turn_in_flight_holds() {
-        assert!(!pane_idle_for_delivery(&screen("❯", true), QUIET));
+        assert!(!pane_idle_for_delivery(&screen("❯", true), &screen("❯", true), QUIET));
     }
 
     #[test]
@@ -12083,14 +13863,15 @@ mod inbox_tests {
         let mut s = screen("❯ mid-sentence and about to be spliced", false);
         s.insert(1, "❯".to_string()); // a bare prompt row from a rendered transcript
         assert!(capture::screen_ready(&s), "premise: the naive check is fooled by this screen");
-        assert!(!pane_idle_for_delivery(&s, QUIET), "and the real gate is not");
+        assert!(!pane_idle_for_delivery(&s, &s, QUIET), "and the real gate is not");
     }
 
     #[test]
     fn a_screen_with_no_prompt_row_at_all_holds() {
         // UNKNOWN HOLDS. A welcome banner, an overlay, or a screen this predicate cannot read is
         // not evidence of readiness. Bounded by MAX_HOLD_MS, never indefinite.
-        assert!(!input_box_empty(&["a full-screen overlay".to_string(), "with no box".to_string()]));
+        let overlay = ["a full-screen overlay".to_string(), "with no box".to_string()];
+        assert!(!input_box_empty(&overlay, &overlay));
     }
 
     #[test]
@@ -12099,7 +13880,7 @@ mod inbox_tests {
         // hours tonight. An unbounded hold turns that into a mute room with no error.
         assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(0), true), Drain::Hold);
         assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS - 1), true), Drain::Hold);
-        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced);
+        assert_eq!(drain_decision(PaneGate::Unstamped, false, false, Duration::from_millis(MAX_HOLD_MS), true), Drain::Forced(Forced::NoUsableSignal));
         assert_eq!(drain_decision(PaneGate::Unstamped, false, true, Duration::from_millis(0), true), Drain::Deliver);
     }
 
@@ -12125,7 +13906,7 @@ mod inbox_tests {
 
         let (text, _, forced) = inbox.take_ready("p", PaneGate::Unstamped, false, true, t0, true).expect("idle: it drains");
         assert_eq!(text, "first", "FIFO - a gate that reorders has traded a splice for a scramble");
-        assert!(!forced);
+        assert_eq!(forced, None);
         assert_eq!(inbox.take_ready("p", PaneGate::Unstamped, false, true, t0, true).map(|x| x.0).as_deref(), Some("second"));
         assert_eq!(inbox.depth("p"), 0);
     }
@@ -12138,7 +13919,8 @@ mod inbox_tests {
         let later = t0 + Duration::from_millis(MAX_HOLD_MS + 1);
         let (text, _, forced) = inbox.take_ready("p", PaneGate::Unstamped, false, false, later, true).expect("the bound releases it");
         assert_eq!(text, "held");
-        assert!(forced, "and the board row must be able to say so - a late message beats a silent one");
+        assert_eq!(forced, Some(Forced::NoUsableSignal),
+            "and the board row must be able to say so - a late message beats a silent one - AND why");
     }
 
     #[test]

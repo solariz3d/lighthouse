@@ -12,6 +12,27 @@
 #   pwsh dev/shell/install.ps1            # sync files + register hooks
 #   pwsh dev/shell/install.ps1 -Check     # report drift only, change nothing
 #   pwsh dev/shell/install.ps1 -NoRegister  # files only, print the block instead
+#   pwsh dev/shell/install.ps1 -Only userprompt_pulse.py   # ONE entry: sync it, wire it, nothing else
+#
+# -- 2026-09-08: -Only, AND WHY IT IS THE SMALLER HALF OF THE FIX (L044, pane A) ---------------
+#
+# CAUSED, not discovered. On 2026-09-07 the chair ran this script to sync ONE drifted file. It
+# registers all-or-nothing, so the same run re-registered hooks\stop.js, l2-overseer.js and
+# l3-overseer.js -- against the keeper's ruling of 2026-09-06 06:55 (READY PAIR ONLY,
+# exo_memory/librarian/2026-09-06.md:603), which was on disk at the time. Removing them again by
+# hand then deleted ready-stop.js by SUBSTRING COLLISION (`ready-stop.js` contains `stop.js`),
+# noticed and restored from ~/.claude/settings.json.bak-20260907-063417.
+#
+# THE RULING WAS PROSE AND THIS SCRIPT WAS DATA, SO THE SCRIPT WON. `-Only` alone does not fix
+# that: it still requires whoever runs the installer to remember the ruling and type the flag,
+# which is a control with a hook's failure mode -- silent absence. So the ruling moves INTO the
+# data as `Excluded` on a $register entry, and a BARE run honours it. -Only is the ergonomics;
+# Excluded is the control. Neither ever unregisters anything: an excluded hook found live is
+# reported by -Check as EXCLUDED BUT LIVE and left alone, because this script has never removed a
+# registration and the machine it cannot see may have a reason.
+#
+# -Only IS REFUSED WITH -Check ON PURPOSE. -Check is a report, and a report over a subset reads
+# exactly like a report over the whole. Restrict the ACTION, never the AUDIT.
 #
 # ── 2026-08-17: WHY THIS NOW EDITS settings.json, REVERSING A DELIBERATE REFUSAL ────────────
 #
@@ -46,7 +67,7 @@
 # content conflict to settle — only a path one.
 
 [CmdletBinding()]
-param([switch]$Check, [switch]$NoRegister)
+param([switch]$Check, [switch]$NoRegister, [string[]]$Only)
 
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)   # …/lighthouse
@@ -166,9 +187,22 @@ $register = @(
   @{ Event = 'UserPromptSubmit'; Rel = 'userprompt_pulse.py';         Runner = 'py';
      Conflicts = @('userprompt-submit.js') }
   @{ Event = 'UserPromptSubmit'; Rel = 'findings-return.js';          Runner = 'node' }
-  @{ Event = 'Stop';             Rel = 'hooks\stop.js';               Runner = 'node' }
-  @{ Event = 'Stop';             Rel = 'hooks\l2-overseer.js';        Runner = 'node' }
-  @{ Event = 'Stop';             Rel = 'hooks\l3-overseer.js';        Runner = 'node' }
+  # EXCLUDED BY A KEEPER RULING, 2026-09-06 06:55 (exo_memory/librarian/2026-09-06.md:603):
+  # "READY PAIR ONLY -- the three passengers stay unregistered". The entries STAY HERE rather than
+  # being deleted, because deleting them loses the ruling: a seat reading a manifest with no
+  # stop.js line cannot tell "decided against" from "nobody got to it", and would re-add it. An
+  # `Excluded` entry is never registered by any run, bare or -Only, and -Check reports one that is
+  # live anyway as EXCLUDED BUT LIVE rather than quietly removing it -- this script does not
+  # unregister, and the desktop, which cannot be seen from here, may legitimately run
+  # l3-overseer.js (the 2026-08-17 note in this header: it writes the arc-perceptions the keeper
+  # reads every turn). Whether the ruling was meant to reach that machine is the keeper's to say;
+  # a red that names the conflict is the honest form of not knowing.
+  @{ Event = 'Stop';             Rel = 'hooks\stop.js';               Runner = 'node';
+     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)' }
+  @{ Event = 'Stop';             Rel = 'hooks\l2-overseer.js';        Runner = 'node';
+     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)' }
+  @{ Event = 'Stop';             Rel = 'hooks\l3-overseer.js';        Runner = 'node';
+     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)' }
   @{ Event = 'Stop';             Rel = 'sourced-stop.js';             Runner = 'node' }
   # The ready stamp's two halves. A manifest entry is not a registration — that lesson is written
   # twenty lines below in this same file, dated 2026-08-18, about two hooks that shipped and never
@@ -196,6 +230,79 @@ $register = @(
   @{ Event = 'Stop';             Rel = 'carrier-drift-watch.js';      Runner = 'node' }
 )
 
+# DELIBERATELY UNMANAGED -- the THIRD STATE, named. A file in a manifest source directory that is
+# on no $files entry used to be printed as UNMANAGED and counted toward nothing: not drifted, not
+# in sync, not red. Unseen. That is the shape of the js-suite self-test failure (an instrument
+# reporting health over a set that excludes the thing) and of this script's own 2026-08-17
+# measurement (nine hooks running that no repository contained, under a clean bill of health).
+#
+# So there are now two states and no third: a source file is either CLAIMED by a manifest entry, or
+# DECLARED here with a reason. Anything else is UNDECLARED and sets the exit code. A hook added
+# tomorrow turns -Check red until somebody rules on it, which is the point -- the ruling is cheap
+# and the silence is not.
+#
+# DECLARING A FILE UNMANAGED IS NOT A JUDGEMENT THAT IT SHOULD NEVER RUN. It records that nobody
+# has ruled yet, in a place -Check prints, so the question survives the seat that noticed it. Both
+# entries below are live-intended hooks with headers, tests and an argument for wiring; what
+# neither has is a decision, and whether a fresh install should wire a hook is the keeper's call
+# (the precedent is loop/absent_hooks_ruling_2026-08-25.md, which ruled eleven files DO NOT INSTALL
+# in writing rather than by omission).
+#
+# THE KEY IS `Src` AND NOT `From`, AND THAT IS LOAD-BEARING -- DO NOT TIDY IT. Written as `From =`
+# it is scooped up by consonance/hooks/dream-gate.test.js, whose roster is discovered by the regex
+# /^.*From\s*=\s*'([^']+)'.*$/gm over THIS FILE (dream-gate.test.js:71). Declaring these two hooks
+# with that key silently widened another instrument's corpus as a side effect of an edit here --
+# which is the exact disease this block exists to cure, one level up: a denominator that moved
+# because of a textual coincidence rather than because anyone ruled on it. Widening dream-gate's
+# roster to cover unmanaged hooks may well be right; it is a decision for whoever owns that file,
+# made on purpose, not a consequence of a variable name.
+$unmanaged = @(
+  @{ Src = 'consonance\hooks\ask-surface.js';
+     Why  = 'UserPromptSubmit surface for unread ASK questions. Built and unwired; wiring a third hook onto that event is a keeper decision, not an installer default. No ruling yet. PRECONDITION, measured 2026-09-08: it carries NO CONSONANCE_DREAM guard (grep -c -> 0, where every managed hook has one) and dream-gate proved it SPEAKS INTO A DREAM. Wiring it before that guard exists ships a hook the dream runner cannot switch off.' }
+  @{ Src = 'consonance\hooks\baton-wake-stop.js';
+     Why  = 'Stop hook that BLOCKS to wake the outgoing seat. sourced-stop.js refused a gate on this same event in writing; a blocking hook is the keeper call this one has not had. No ruling yet. PRECONDITION, measured 2026-09-08: NO CONSONANCE_DREAM guard either (grep -c -> 0). A blocking hook the dream runner cannot switch off is the worst member of that class.' }
+  @{ Src = 'consonance\hooks\live-mirror-stop.js';
+     Why  = 'Stop hook of the per-seat live mirror (L052, pane E). It reaches a NETWORK REMOTE every turn and moves the lease that decides which machine may drive a seat, so registering it is a keeper decision twice over: it publishes outward on its own (journal 2026-07-28 -- committing is not publishing, a human stays awake saying yes), and its measured state round trip is 4760ms against the keeper''s 5000ms bound at a ZERO poll interval, so wiring it does not yet deliver what it is for (consonance/tools/live-host.js roundTrip). The lease half alone is sound and proved end-to-end against the real remote; the state half is default-OFF behind CONSONANCE_MIRROR_STATE=1. It DOES carry a CONSONANCE_DREAM guard, unlike the two above. No ruling yet -- see exo_memory/handback/p-live-mirror_2026-09-09.md.' }
+)
+
+# MUTANT-ANCHOR: THE FILTER. -Only narrows what this run ACTS on and nothing else. The universe and
+# registration reports below keep reading $files and $register -- the FULL sets -- so a restricted
+# run cannot print a smaller denominator and read as a whole one.
+#
+# THIS IS A FILTER ON THE INPUT, NOT A BRANCH IN THE WRITER, and that is the answer to the standing
+# objection that a selective installer half-registers. There is still exactly one registration loop
+# and it still runs to completion; it is handed fewer items. A partial installer that silently
+# half-registers would be worse than an honestly blunt one, and this is not one.
+$syncFiles = $files
+$regEntries = $register
+if ($Only) {
+  if ($Check) {
+    Write-Host "-Only cannot be combined with -Check." -ForegroundColor Red
+    Write-Host "  -Check is a report, and a report over a subset reads exactly like a report over the whole." -ForegroundColor Red
+    Write-Host "  Restrict the action, never the audit. Run -Check bare, then -Only to act." -ForegroundColor Red
+    exit 1
+  }
+  $wanted = @{}
+  foreach ($n in $Only) { foreach ($p in ($n -split ',')) { if ($p.Trim()) { $wanted[$p.Trim().ToLower()] = $false } } }
+  $syncFiles  = @($files    | Where-Object { $wanted.ContainsKey((Split-Path -Leaf $_.To).ToLower()) })
+  $regEntries = @($register | Where-Object { $wanted.ContainsKey((Split-Path -Leaf $_.Rel).ToLower()) })
+  foreach ($f in $syncFiles)  { $wanted[(Split-Path -Leaf $f.To).ToLower()] = $true }
+  foreach ($e in $regEntries) { $wanted[(Split-Path -Leaf $e.Rel).ToLower()] = $true }
+  # A NAME NOBODY CARRIES IS A REFUSAL, NOT AN EMPTY RUN. A typo that silently syncs nothing is the
+  # exact failure this flag exists to prevent, one level down: a control reporting success over a
+  # set of zero.
+  $missed = @($wanted.Keys | Where-Object { -not $wanted[$_] })
+  if ($missed.Count) {
+    Write-Host "-Only: no manifest or registration entry is named:" -ForegroundColor Red
+    foreach ($m in $missed) { Write-Host ("    {0}" -f $m) -ForegroundColor Red }
+    Write-Host "  Names match the exact leaf, case-insensitively -- never as a substring." -ForegroundColor Red
+    Write-Host "  Run -Check to see the manifest, or -NoRegister to print the registration list." -ForegroundColor Red
+    exit 1
+  }
+  Write-Host ("-Only: {0} of {1} manifest entr(ies), {2} of {3} registration entr(ies). EVERYTHING ELSE IS UNTOUCHED, NOT VERIFIED." -f $syncFiles.Count, $files.Count, $regEntries.Count, $register.Count) -ForegroundColor Cyan
+}
+# MUTANT-ANCHOR: END
+
 if (-not (Test-Path $dest)) {
   if ($Check) { Write-Host "MISSING dir  $dest" -ForegroundColor Yellow }
   else { New-Item -ItemType Directory -Force -Path $dest | Out-Null; Write-Host "created $dest" }
@@ -204,7 +311,7 @@ if (-not (Test-Path $dest)) {
 $drift  = 0   # exists at the destination and the bytes differ
 $absent = 0   # not at the destination at all - a different fact, and it used to print as drift
 $held   = 0
-foreach ($f in $files) {
+foreach ($f in $syncFiles) {
   $src = Join-Path $repo $f.From
   $dst = Join-Path $dest $f.To
 
@@ -305,10 +412,14 @@ foreach ($f in $files) {
   $d = Split-Path -Parent $f.From
   if ($d -and ($srcDirs -notcontains $d)) { $srcDirs += $d }
 }
+$umDecl = @{}
+foreach ($u in $unmanaged) { $umDecl[$u.Src.ToLower()] = $u.Why }
+
 $srcSeen = 0
 $srcSkipped = 0
 $srcClaimed = 0
 $srcUnmanaged = @()
+$srcUndeclared = @()
 foreach ($d in $srcDirs) {
   $full = Join-Path $repo $d
   if (-not (Test-Path $full)) { continue }
@@ -320,7 +431,8 @@ foreach ($d in $srcDirs) {
     }
     $rel = Join-Path $d $file.Name
     if ($mfFrom.ContainsKey($rel.ToLower())) { $srcClaimed++ }
-    else { $srcUnmanaged += $rel }
+    elseif ($umDecl.ContainsKey($rel.ToLower())) { $srcUnmanaged += $rel }
+    else { $srcUndeclared += $rel }
   }
 }
 
@@ -353,8 +465,13 @@ Write-Host ("  manifest      {0,4} entr(ies)   the denominator; a file absent fr
 Write-Host ("  repo sources  {0,4} file(s) under {1}" -f $srcSeen, ($srcDirs -join ', '))
 Write-Host ("                {0,4} skipped     rule: *.test.js, *.md, *.bak*" -f $srcSkipped)
 Write-Host ("                {0,4} claimed by a manifest entry" -f $srcClaimed)
-Write-Host ("                {0,4} UNMANAGED   in the repo, installable, on no manifest entry" -f $srcUnmanaged.Count) -ForegroundColor $(if ($srcUnmanaged.Count) { 'Yellow' } else { 'DarkGray' })
-foreach ($u in $srcUnmanaged) { Write-Host ("                     {0}" -f $u) -ForegroundColor Yellow }
+Write-Host ("                {0,4} DECLARED UNMANAGED   installable, deliberately not installed; the reason prints below" -f $srcUnmanaged.Count) -ForegroundColor DarkGray
+foreach ($u in $srcUnmanaged) {
+  Write-Host ("                     {0}" -f $u) -ForegroundColor DarkGray
+  Write-Host ("                       why: {0}" -f $umDecl[$u.ToLower()]) -ForegroundColor DarkGray
+}
+Write-Host ("                {0,4} UNDECLARED  installable, on no manifest entry AND on no unmanaged declaration -- nobody has ruled" -f $srcUndeclared.Count) -ForegroundColor $(if ($srcUndeclared.Count) { 'Yellow' } else { 'DarkGray' })
+foreach ($u in $srcUndeclared) { Write-Host ("                     {0}" -f $u) -ForegroundColor Yellow }
 Write-Host ("  destination   {0,4} file(s) under {1}" -f $dstSeen, $dest)
 Write-Host ("                {0,4} skipped     rule: *.json, *.jsonl, *.log, *.md, *.txt, *.bak*  (runtime state, not code)" -f $dstState)
 Write-Host ("                {0,4} claimed at the exact path the manifest names" -f $dstClaimed)
@@ -432,9 +549,23 @@ if ($Check) {
   $notWired = @()
   $notDeclared = @()
   $conflicts = @()
+  # AN EXCLUDED ENTRY IS NOT A DEFECT WHEN IT IS UNREGISTERED -- THAT IS THE RULING WORKING, and
+  # reporting it as DECLARED, NOT REGISTERED is a false red that trains the reader to skip the
+  # list. It IS a defect when the hook is live anyway, and nothing said so before: a hand
+  # registration against a standing ruling was invisible to this check. So the two states swap
+  # places. Before this change the three passengers printed as three reds and a re-registration of
+  # them printed as zero; after it, zero and one respectively.
+  $excludedLive = @()
+  $excludedHeld = @()
   if (-not $regUnknown) {
     foreach ($e in $register) {
-      if (-not $liveLeaf.ContainsKey((Split-Path -Leaf $e.Rel).ToLower())) {
+      $lf = (Split-Path -Leaf $e.Rel).ToLower()
+      if ($e.Excluded) {
+        if ($liveLeaf.ContainsKey($lf)) { $excludedLive += ("{0,-16} {1}   {2}`n                       live as: {3}" -f $e.Event, $e.Rel, $e.Excluded, $liveLeaf[$lf]) }
+        else { $excludedHeld += ("{0,-16} {1}   {2}" -f $e.Event, $e.Rel, $e.Excluded) }
+        continue
+      }
+      if (-not $liveLeaf.ContainsKey($lf)) {
         $notWired += ("{0,-16} {1}" -f $e.Event, $e.Rel)
       }
     }
@@ -470,6 +601,12 @@ if ($Check) {
     foreach ($n in $notWired) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
     Write-Host ("                {0,3} REGISTERED, NOT DECLARED   runs here; a fresh install copies it and wires nothing" -f $notDeclared.Count) -ForegroundColor $(if ($notDeclared.Count) { 'Yellow' } else { 'DarkGray' })
     foreach ($n in $notDeclared) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
+    Write-Host ("                {0,3} EXCLUDED BY RULING, correctly absent   declared here so the decision survives the seat that made it" -f $excludedHeld.Count) -ForegroundColor DarkGray
+    foreach ($n in $excludedHeld) { Write-Host ("                     {0}" -f $n) -ForegroundColor DarkGray }
+    if ($excludedLive.Count) {
+      Write-Host ("                {0,3} EXCLUDED BUT LIVE   a ruling says do not register this and it is registered here. This script does not unregister; resolve by hand." -f $excludedLive.Count) -ForegroundColor Magenta
+      foreach ($n in $excludedLive) { Write-Host ("                     {0}" -f $n) -ForegroundColor Magenta }
+    }
     if ($conflicts.Count) {
       Write-Host ("                {0,3} CONFLICT   two implementations of one hook live on one event; a bare run adds nothing here, but resolve it by hand" -f $conflicts.Count) -ForegroundColor Magenta
       foreach ($n in $conflicts) { Write-Host ("                     {0}" -f $n) -ForegroundColor Magenta }
@@ -486,8 +623,14 @@ if ($Check) {
   else { Write-Host "`n$drift file(s) drifted (installed copy differs). Re-run without -Check to sync." -ForegroundColor Yellow }
   # The exit code now covers registration too, and deliberately does NOT move on UNKNOWN:
   # an unreadable authority is a refusal to answer, not a finding.
-  $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count
-  exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0) { 0 } else { 1 }))
+  # UNDECLARED IS IN THE EXIT CODE AND UNMANAGED NEVER WAS. Until 2026-09-08 the universe block
+  # printed installable-but-unlisted files and the exit expression did not read the count, so
+  # -Check could exit 0 with a hook it had never looked at named three lines above the verdict --
+  # measured, not argued: ask-surface.js and baton-wake-stop.js sat there while the file loop
+  # reported everything green. A finding that does not reach the exit code is a finding nobody
+  # reads.
+  $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count + $excludedLive.Count
+  exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0 -and $srcUndeclared.Count -eq 0) { 0 } else { 1 }))
 }
 
 $node = (Get-Command node -ErrorAction SilentlyContinue).Source
@@ -547,7 +690,10 @@ function Test-SameHook($command, $entry) {
 
 if ($NoRegister) {
   Write-Host "`nFiles are in sync. -NoRegister given; would have registered:" -ForegroundColor Cyan
-  foreach ($e in $register) { Write-Host ("  {0,-17} {1}" -f $e.Event, (New-HookCommand $e)) -ForegroundColor DarkGray }
+  foreach ($e in $regEntries) {
+    if ($e.Excluded) { Write-Host ("  {0,-17} {1}   SKIPPED -- {2}" -f $e.Event, (Split-Path -Leaf $e.Rel), $e.Excluded) -ForegroundColor Magenta; continue }
+    Write-Host ("  {0,-17} {1}" -f $e.Event, (New-HookCommand $e)) -ForegroundColor DarkGray
+  }
   Write-Host "`nRe-run without -NoRegister to apply." -ForegroundColor Cyan
   exit 0
 }
@@ -566,10 +712,19 @@ catch { Write-Host "`nsettings.json DOES NOT PARSE — changing nothing. Fix it 
 
 if (-not $settings.hooks) { $settings | Add-Member -NotePropertyName hooks -NotePropertyValue ([pscustomobject]@{}) -Force }
 
-$added = 0; $repointed = 0; $already = 0; $refused = 0
+$added = 0; $repointed = 0; $already = 0; $refused = 0; $skipped = 0
 $changes = @()
 
-foreach ($e in $register) {
+foreach ($e in $regEntries) {
+  # THE RULING, ENFORCED IN THE DATA. Before anything else in this loop: no event is created, no
+  # group is normalised, no registration is compared. An excluded entry is inert here and the run
+  # SAYS so -- skipping silently would be indistinguishable from the entry not existing, which is
+  # the failure mode this whole change is about.
+  if ($e.Excluded) {
+    Write-Host ("  EXCLUDED {0,-17} {1}   {2}" -f $e.Event, (Split-Path -Leaf $e.Rel), $e.Excluded) -ForegroundColor Magenta
+    $skipped++
+    continue
+  }
   $want = New-HookCommand $e
   $ev   = $e.Event
 
@@ -651,7 +806,7 @@ foreach ($e in $register) {
 
 if ($added -eq 0 -and $repointed -eq 0) {
   if ($refused -gt 0) { Write-Host "`nregistration: nothing changed; $already hook(s) verified, $refused REFUSED above (a conflicting implementation is live). Not 'correct' until the refusal is resolved by hand." -ForegroundColor Magenta }
-  else { Write-Host "`nregistration: already correct ($already hook(s) verified, nothing changed)." -ForegroundColor Green }
+  else { Write-Host "`nregistration: already correct ($already hook(s) verified, $skipped excluded by ruling, nothing changed)." -ForegroundColor Green }
 } else {
   $bak = "$settingsPath.bak-$(Get-Date -Format yyyyMMdd-HHmmss)"
   Copy-Item $settingsPath $bak -Force
@@ -686,7 +841,7 @@ if ($added -eq 0 -and $repointed -eq 0) {
 
   Write-Host "`nregistration:" -ForegroundColor Green
   $changes | ForEach-Object { Write-Host $_ -ForegroundColor Green }
-  Write-Host ("  {0} added, {1} re-pointed, {2} already correct" -f $added, $repointed, $already) -ForegroundColor Green
+  Write-Host ("  {0} added, {1} re-pointed, {2} already correct, {3} EXCLUDED by ruling" -f $added, $repointed, $already, $skipped) -ForegroundColor Green
   Write-Host ("  backup: {0}" -f $bak) -ForegroundColor DarkGray
 }
 

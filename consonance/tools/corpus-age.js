@@ -147,17 +147,51 @@ function referenceBlob(skipDir) {
   return blob;
 }
 
-function ageDays(rel) {
-  const out = sh('git', ['log', '-1', '--format=%ad', '--date=format:%s', '--', rel]);
-  if (!out || !out.trim()) return null;
-  const then = parseInt(out.trim(), 10);
-  if (!Number.isFinite(then)) return null;
-  return Math.floor((Date.now() / 1000 - then) / 86400);
+/* ONE `git log` FOR THE DIRECTORY, not one per file.
+ *
+ * WHAT THIS REPLACED AND WHY IT IS NOT A TUNING CHANGE. Until 2026-09-07 this was
+ * `ageDays(rel)` -- `git log -1 --format=%ad --date=format:%s -- <rel>`, called once per file
+ * inside review(). Measured on this machine: 102 ms per spawn (`20 per-file git log spawns:
+ * 2048 ms`), 481 files under loop/, so 49.3 s for ONE review(). The test calls review() three
+ * times, which was 137.7 s of a 137.7 s test -- `duration_ms 137679.4943`, of which the two
+ * review-driven cases were 92,065.9 ms and 45,511.4 ms and every other case totalled ~26 ms.
+ * The cost was never the corpus BYTES; it was 1,443 subprocess spawns, and it grew by three
+ * spawns for every file added to loop/. One batched call over the same pathspec: 0.170 s.
+ *
+ * NOT AN INDEX, deliberately. There is no cache file, nothing to invalidate, and nothing that
+ * can read fresh while being stale -- git is still the only source and it is still consulted on
+ * every run. The single thing that changed is how many processes it takes to ask.
+ *
+ * THE LIMIT, stated because it is real: `--name-only` prints nothing for a merge commit, so on
+ * a repo with merges a file whose last touch was a merge would read as never-committed (null
+ * days -> never proposed, the safe direction). This repo has none -- `git log --merges --oneline
+ * | wc -l` -> 0 -- but that is a property of the history, not of this function, and it is the
+ * thing to re-check if that ever stops being true.
+ *
+ * `%at` is the author date in epoch seconds, which is exactly what `%ad --date=format:%s` was. */
+function ageDaysMap(dir) {
+  const pathspec = dir ? 'exo_memory/' + dir : 'exo_memory';
+  const out = sh('git', ['-c', 'core.quotepath=false', 'log', '--format=%at', '--name-only',
+                         '--', pathspec]);
+  if (out === null) return null;
+  const now = Date.now() / 1000;
+  const ages = new Map();
+  let ts = null;
+  for (const line of out.split('\n')) {
+    const s = line.trim();
+    if (!s) continue;
+    if (/^\d{9,12}$/.test(s)) { ts = parseInt(s, 10); continue; }
+    /* Newest first, so the FIRST sighting of a path is its last commit -- same answer `-1` gave. */
+    if (ts !== null && !ages.has(s)) ages.set(s, Math.floor((now - ts) / 86400));
+  }
+  return ages;
 }
 
 function review(dir, minDays) {
   const blob = referenceBlob(dir);
   if (blob === null) return { failed: 'git ls-files did not run here' };
+  const ages = ageDaysMap(dir);
+  if (ages === null) return { failed: 'git log did not run here' };
   const rows = [];
   for (const f of mdFiles(dir)) {
     const base = f.name.replace(/\.md$/, '');
@@ -171,7 +205,7 @@ function review(dir, minDays) {
      * an overcount for those files. Match the relative path too -- that is how a nested file
      * would actually be cited. */
     const referenced = blob.includes(f.rel) || blob.includes(f.name) || blob.includes(base);
-    const days = ageDays(rel);
+    const days = ages.has(rel) ? ages.get(rel) : null;
     const stale = days !== null && days >= minDays;
     rows.push({ ...f, rel, referenced, days, propose: !referenced && stale });
   }
@@ -272,4 +306,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { corpusSize, review, mdFiles, intakeCap, CARRY_TIERS, INDEX_TIERS, EXCLUDED_PREFIXES, MAIN_RS };
+module.exports = { corpusSize, review, mdFiles, intakeCap, ageDaysMap, CARRY_TIERS, INDEX_TIERS, EXCLUDED_PREFIXES, MAIN_RS };

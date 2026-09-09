@@ -1,0 +1,33 @@
+# provenance_corrections.jsonl — read by consonance/tools/essay-provenance.js
+#
+# A commit's body is prose, and prose can be wrong about what the commit did. When a commit is
+# already pushed it cannot be amended, so the only repair is a second record. This is it.
+#
+# NOTHING HERE IS BELIEVED. Every row is checked against a blob FROZEN IN THE COMMIT IT CORRECTS
+# (`git show <sha>:<evidence>`), and a row that does not pass is printed as REFUSED, never dropped:
+#   1  <sha> must be a commit the tool read, and its diff must contain <path>
+#   2  <evidence> must be readable at that sha
+#   3  the evidence's header must carry <seat> on a line that also carries an authorship marker
+#      (SEAT:, placed here by, written by, spawned by, filed by, authored by, committed by)
+#   4  if <evidence> is a different file from <path>, its header must NAME <path>
+# The first verified row for a (commit, path) stands; a later one is REFUSED as CONFLICTING. So a
+# correction can only ever redirect attribution to what the artifact itself said when it landed —
+# it cannot be satisfied after the fact by a plausible-looking pointer.
+#
+# WHAT THIS DOES NOT DO: it authenticates against the frozen record, not against the world. A
+# header that was false when it was written is inherited, not caught. A file with no header and
+# nothing naming it cannot be corrected at all — that failure is closed and printed.
+#
+# Fields: sha, path, seat, evidence (optional, defaults to path), by, at, note (optional).
+# Lines beginning with # are skipped. Append only; never edit a row that has stood.
+#
+# ── 2026-09-08, babe926 ───────────────────────────────────────────────────────────────────────
+# The librarian's commit, messaged about the two-machine idea, carried four files the chair had
+# staged and not yet committed (266 of its 270 insertions). WRONG 84, the librarian's own entry at
+# exo_memory/librarian/2026-09-07.md 07:48. The commit is pushed and is not being rewritten.
+# The two prompt files carry no header of their own; each draft's header names its prompt, which is
+# why they are reachable at all — and why a .pdf or a .png in the same position would not be.
+{"sha":"babe926","path":"essay/ESSAY_B_BARE_2026-09-08.md","seat":"chair","by":"pane BRAVO (L048)","at":"2026-09-09T00:55:00-06:00","note":"Placed by the chair; written by a bare instance the chair spawned. The header states both; this column names the seat that LANDED the file."}
+{"sha":"babe926","path":"essay/ESSAY_C_BARE_2026-09-08.md","seat":"chair","by":"pane BRAVO (L048)","at":"2026-09-09T00:55:00-06:00","note":"Placed by the chair; written by a bare instance the chair spawned. The header states both; this column names the seat that LANDED the file."}
+{"sha":"babe926","path":"essay/bare/prompt_B_2026-09-08.txt","seat":"chair","evidence":"essay/ESSAY_B_BARE_2026-09-08.md","by":"pane BRAVO (L048)","at":"2026-09-09T00:55:00-06:00","note":"The prompt has no header; the draft it produced names it and names the chair."}
+{"sha":"babe926","path":"essay/bare/prompt_C_2026-09-08.txt","seat":"chair","evidence":"essay/ESSAY_C_BARE_2026-09-08.md","by":"pane BRAVO (L048)","at":"2026-09-09T00:55:00-06:00","note":"The prompt has no header; the draft it produced names it and names the chair."}

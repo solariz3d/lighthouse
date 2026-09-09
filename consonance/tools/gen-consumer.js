@@ -635,6 +635,29 @@ const STAYS_PRIVATE = {
   '_skeleton.py': 'an authoring helper for this record\'s entry format',
   'new_entry.py': 'ditto',
   'attic': 'the raw ore, kept and never a daily cue — maintenance law 3',
+  'audit': 'a lap\'s object under review — working papers of this committee, like handback/, kept in their own directory so a review holds one object and nothing else',
+  /* L046. `audit` was columned last lap and `review` was not, which is the whole difference
+   * between a directory that has been decided about and one that merely has not broken anything
+   * yet. DELETING IT WAS THE TEMPTING FIX AND THE WRONG ONE: it is the evidentiary record behind a
+   * scored run, and a scored run whose object is gone cannot be re-scored or disputed. Withholding
+   * it is not a judgement that it is worthless — it is a judgement that it is EVIDENCE, and
+   * evidence about this committee's own subjects is exactly what a stranger has no use for and
+   * these subjects have every reason not to have shipped. */
+  'review': 'a SCORED EXPERIMENTAL OBJECT — the seeded draft L039\'s readers were measured against, kept as the record of what those subjects actually read. It ships nowhere for two independent reasons: a consumer inherits no experiment to re-score, and a planted-defect key that travels stops being an answer key. Kept, not deleted, because a scored run without its object cannot be checked afterwards',
+  /* L046, and NOT in this lap's packet — the packet named one uncolumned entry and the generator
+   * found two, `astra` having been created minutes before the run. Columned here rather than left
+   * refusing, because STAYS_PRIVATE is the direction that changes nothing about what ships: it
+   * moves the entry from "refuses the whole build" to "explicitly withheld, with a reason someone
+   * can overturn in one line". The seat that owns it can reverse this; an uncolumned directory
+   * gives them nothing to reverse. */
+  'astra': 'per-seat, like map/ and librarian/ — one instance\'s own folder, by its own WELCOME.md ("yours: everything you write goes here and nowhere else"). AND IT CARRIES THE MASTER: astra/SHELL.md is BOOT.md in full (161,711 B, verified by grepping a BOOT sentence back), so shipping this directory would ship under a second path the exact file the BOOT.md entry above withholds — the carrier problem this room has measured before',
+  /* L050, and it is MY OWN FILE from L048 caught by this guard one lap after I wrote it. The
+   * corrections ledger was built to make the contribution record right, and it landed in neither
+   * column the moment it existed — which is the gap C §4 measured at 17 files, arriving again on
+   * the newest file in the repo. The instrument works; the habit of classifying on landing does
+   * not exist yet. Columned here rather than left refusing, for the L046 reason: STAYS_PRIVATE
+   * changes nothing about what ships and gives the next seat one line to overturn. */
+  'provenance_corrections.jsonl': 'a SECOND RECORD ABOUT THIS REPO\'S OWN HISTORY — rows that correct the seat a commit body names, each one verified against a blob frozen at a sha in THIS tree. It withholds for two independent reasons. It names this room\'s seats (chair, librarian) beside the commits they landed, which is this committee\'s internal attribution and no part of the method. And it is INERT ELSEWHERE BY CONSTRUCTION: a consumer\'s history contains none of those shas, so essay-provenance would refuse every row as NO-SUCH-COMMIT — shipping it would ship four claims nobody can check and nobody needs. The MECHANISM ships with the tool; this room\'s corrections do not',
   'handback': 'per-packet working papers of this committee',
   'librarian': 'per-seat, per-machine, by its own README',
   'loop': 'this record\'s registrations and rulings',

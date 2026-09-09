@@ -630,3 +630,531 @@ a slow one is the same reading-alike defect the room keeps meeting — this time
 that measures the other instruments.
 
 Hand-back: `exo_memory/handback/p-ready-signal_2026-09-06.md`.
+
+## 2026-09-07 — P-READY-LABEL: the row that asserted a fact and its negation
+
+**The brief handed me a hypothesis and it was wrong, and finding that out was the packet.** The
+chair read `[stamp=ready] (FORCED … the gate never got a positive ready signal)` and concluded the
+label and the decision were read at different moments. They are not. `drain_inboxes` reads the gate
+ONCE and hands the same value to the decision and to the row; the QUEUED row four minutes earlier
+carried `stamp=ready` too, and the two board timestamps are 240,276 ms apart — the full bound. There
+was one moment. **When the brief's mechanism can be refuted from the source in one read, refute it
+before building the fix it asked for** — I was two edits into "make the tag report the decided
+state" before I checked whether the premise held.
+
+**The actual defect, and it is mine.** `Drain::Forced` had three producers and the sentence named
+two. The third is `PaneGate::Ready` + an occupied composer — the keeper's rule outranking a positive
+stamp — and **my own test from the night before, `the_keeper_typing_still_holds_a_pane_that_says_it_is_ready`,
+already asserted exactly that path.** I proved the case and then, an hour later in the same file,
+wrote a sentence that assumed it did not exist. Not a missed case: a case I had in hand.
+
+**The shape of the fix, worth reusing.** Two independent strings composed at the call site can state
+a contradiction that neither of them contains. The repair is not better wording — it is giving the
+sentence an OWNER (`delivery_note`) and making the cause a value (`Drain::Forced(Forced)`) bound at
+the branch that knows it. A cause inferred later, from a gate, in a different function, is a
+sentence written where the cause is not. **And the plog had the identical bug underneath:** its
+guard `forced && !gate.is_stamped()` filtered out the very cause that fired, so the only forced
+delivery this machine has ever made logged nothing at all.
+
+**Three things I would tell myself again.**
+
+1. **I refused the brief's three suggested fixes and had to say why.** "Drop the tag on a forced
+   delivery" was the tempting one and it deletes a TRUE fact — `stamp=ready` is what makes the row
+   mean *the keeper's composer was occupied for four minutes* instead of *the mechanism is broken*.
+   Removing a true fact so it cannot be misread is how the row lost its meaning to begin with.
+2. **I claimed red-first for four tests and measured two.** I reverted the wording, re-ran, restored
+   it: two go red, two pass on both arms. The two that pass are guards on the new type, not proofs
+   of it, and saying so costs nothing — it is the difference between four red-first tests and two.
+3. **Build the forced cases by ASKING the function, never by naming the variant.** That is why the
+   red test did not have to change between the red run and the green one, across a type change that
+   rewrote three other assertions.
+
+**The bigger thing I found and did NOT ship.** A positive stamp over a screen with a live turn in
+flight reads `Ready` and delivers IMMEDIATELY — `PaneGate::Ready` consults neither `turn_in_flight`
+nor quiescence. `Stale` catches working-stamp-over-idle-screen; **there is no mirror**, and the
+mirror is the splice case. It is reachable by the gate's own action, because the gate does not know
+about its own writes: the stamp has not flipped yet (the hook costs 75–81 ms plus claude's dispatch,
+unmeasured; the drain ticks at 250 ms), and `last_byte` only moves when the pane *echoes*. I
+registered it with the constant-free fix (compare the stamp's `at` against the instant we wrote) and
+left it out, because it is a change to DELIVERY SEMANTICS inside a packet about a LABEL, and landing
+it here would have made the chair score two changes as one an hour before the acceptance proofs.
+**Refusing to smuggle a good fix into the wrong packet is not stopping short.**
+
+**And the number that keeps everything above honest: the stamp era has ONE delivery on record.**
+Zero STALE rows have ever printed, in 47 deliveries. Thirteen green unit tests over fake screens are
+not a live mechanism, and I said so in the hand-back rather than letting the green count stand in for
+it.
+
+Hand-back: `exo_memory/handback/p-ready-label_2026-09-07.md`.
+
+## 2026-09-07 — L039 read: run the object's own commands before reading its prose
+
+Audited a draft tool-audit plus its tally script against a sealed defect list, ~7 minutes. 48
+members. **The whole method was: type every command the document prints, open every line it cites.**
+Four of its six cited figures were wrong, and two of them were the *neighbouring line's* number
+copied down — a shelf's total-file count reappearing as its test count one line later. A document
+that prints its commands is not a document whose figures re-derive; it is a document you can check
+in ninety seconds, and nobody had.
+
+**The sharpest defect, and the one I want to remember the shape of: a tool's statement of its own
+GAP reported as its coverage.** `carrier-drift.js` prints *".js is still outside, which is where the
+strongest carrier class lives"*; the draft wrote that carrier-drift *reads* `.js` and that this was
+"the important one", paraphrasing the gap sentence almost word for word into a capability. Its own
+§4 is about how a stated limit reads as a handled limit — it committed the failure it names, two
+sections later, and its author had read the correct limit three lines above and reported THAT one
+right. **The reader who inverts a limit is usually not sloppy; they are reading a sentence written
+in the shape of a boast.**
+
+**Also worth carrying:** a quoted sentence that does not exist in the file it is attributed to
+(`cite-check.js` "guards every figure in the document" — its header says the opposite under THE
+HONEST BOUNDS); a cited real line number holding the exact opposite set; a struck wording quoted in
+bold as live doctrine, which is verbatim the failure `carrier-drift` describes; a claim withdrawn in
+full three weeks ago re-asserted as "the standing position is unchanged", twice.
+
+**And the script:** a single-quoted JS path constant whose backslashes collapse (`'C:\Users\zackn\…'`
+evaluates to `C:UserszacknConsonancelighthouse` — measured, not reasoned), unreachable behind a
+`path.resolve()` that is never falsy; `includes('test')` where the comment above it says
+`endsWith('.test.js')`, which drops one file out of both halves of the partition and emits a false
+orphan in live output; and a coverage rate divided by one denominator while printing another beside
+it. Its self-check catches two of these and **fails on every run** — so the draft's "every figure
+re-derives from one run" stood on a script that has never had one.
+
+**The thing I did right and would do again: I ran it.** Most of the list came from three commands
+and four `sed -n`s. I also checked "the busiest day on record" because it was cheap — 09-02 has 18
+hand-backs against 09-06's 17 — and that one was invisible to reading.
+
+Hand-back: `exo_memory/handback/p-l039-read-C_2026-09-07.md`.
+
+## 2026-09-07 — L043: the ghost, the mirror, the two-writers window. Measure the substrate first
+
+Three defects and a fold, ~17 minutes, 466/0/3. **The keeper found the one that mattered** — the
+greyed-out autocomplete prediction sitting in the composer, which the gate read as him typing, so
+every delivery held. Three stalls that night were ghosts.
+
+**The lesson that generalises, and it nearly went the other way: MEASURE THE SUBSTRATE BEFORE
+DESIGNING THE FIX.** The packet said the prediction is dim — SGR 2 — and that is the obvious read.
+**vt100 0.15 does not track the dim attribute at all**; its SGR match handles 1/3/4/7 and the
+colours, and `2` falls through unrecorded. Had Claude Code rendered the ghost dim, the fix would have
+been impossible without changing emulators and the honest answer was the refusal the packet
+authorised. It renders truecolor grey `Rgb(153,153,153)`, so it is visible. **The fix works for a
+different reason than the one I was handed, and knowing which reason is the difference between a
+repair and a coincidence I could not repeat.**
+
+**How I got the ground truth: replay the real bytes.** `data/captures/*.log` is raw PTY, durable,
+hundreds of MB. Chunk it through the same parser production uses and dump per-cell foregrounds. That
+gave the whole discriminator in one pass — `❯` and typed text at Default, prediction and hints at
+grey, and a mixed row (`❯ Both h` Default + `ow are you` grey) that is the predictor caught in the
+act. **The fixture I was offered was unusable** (8,000-byte tail starting mid-escape, showing a
+working screen, not a composer) and saying so beat working around it silently.
+
+**And the measurement found a defect nobody sent me looking for.** One frame had the status footer
+drawn ONTO the composer row: `❯ ⏵⏵ bypass permissions … esc to interrupt`. `is_footer_row` tested
+`starts_with('⏵')`, that row starts with `❯`, so `turn_in_flight` counted the footer's own text as a
+live turn — and `Working`'s hold is UNBOUNDED. **That, not the thing I was asked about, is what
+stalled four packets for two and a half hours**, and the arithmetic proves it: the path I was pointed
+at forces at 240 seconds, and 240 seconds is not two and a half hours. Answering a diagnosis with a
+number beats agreeing with it.
+
+**On the mirror: the rule is an AND and that is the entire design.** `turn_in_flight && quiet < 2s`,
+never `screen_busy`, which is an OR. Rows scroll in place at scrollback 0, so a 48-minute-old spinner
+is still drawn; keying on it alone would have put every delivery to a finished pane back on the
+4-minute gate and restored a failure this room already paid for. **When adding a guard, the test that
+earns its keep is the one asserting the common case still costs nothing.**
+
+**Two corrections to my own work, one from that same morning.** I had written beside a test that "a
+fourth forcing path arrives here already covered" — it was a hand-written list of three and the new
+state was invisible to it, the room's own named failure inside the test written to prevent it; now a
+sweep with a compiler-checked exhaustive match. And my first shelf-window check asked the shelf's own
+predicate whether the shelf was right — **an assertion that could not fail**, caught before shipping.
+
+**On §2: the key was not what was wrong.** The predicate already handled two writers; the constant
+beside it (`carried <= 4`) assumed one. Chose today+yesterday PER WRITER and refused "newest per
+machine", which silently drops a note the seat wrote.
+
+**And I folded E's patch without being rung**, after checking mtimes to confirm it had settled —
+finished work sitting on disk is not a reason to wait. I restored four explanatory comments E's
+extraction dropped while claiming verbatim; structurally it was verbatim, but a comment lost in an
+extraction is a reason lost.
+
+Hand-back: `exo_memory/handback/p-ready-window_2026-09-07.md`.
+
+## 2026-09-08 — L044: my own fix read a 34-row window of a 43-row screen. Measure the substrate, again
+
+Last night's ghost fix shipped green and made the stall WIDER. `typed_only` iterated `EMU_ROWS ×
+EMU_COLS` — the size a parser is BORN at — while `pty_resize` moves PTY and emulator together, so
+every docked pane runs ~43×~200 within a second. The composer is the BOTTOM row. It was never in the
+window. `input_box_empty` found no `❯` and returned false by its own UNKNOWN-HOLDS rule, so **every
+delivery to every full-height pane held to the 240 s bound** — and the number says it plainly:
+replaying real bytes, `box_empty` was true in **0 of 512 frames** on the old window. Structurally
+zero, not rarely. Fixed by taking `screen.size()` in all four read paths.
+
+**The lesson is the one I wrote down 24 hours ago and did not apply to my own diff: MEASURE THE
+SUBSTRATE.** Yesterday I refused a handed premise ("the prediction is dim") and measured the emulator
+instead, and it saved the fix. Today the same class of assumption — *the emulator is the size the
+constant says* — sat inside the fix I shipped, in the function I wrote, and I did not measure it.
+**Applying the discipline to the thing you are studying and not to the instrument you are studying it
+with is the whole failure.** My replay harness was `Parser::new(EMU_ROWS, EMU_COLS, 0)` and I called
+it "the parser production uses" in a comment. It is the parser production *starts* with.
+
+**AND THAT HARNESS MANUFACTURED A FINDING I REPORTED AS PRODUCTION.** My §2 "mid-redraw footer frame"
+— the footer drawn ONTO the composer, which I diagnosed as a race and blamed for a 2.5-hour stall —
+is **row clamping, not a race**: vt100 folds a cursor move past the last row onto the last row, so a
+composer at row 40 and a footer at row 42 collide whenever the parser is shorter than the PTY. One
+log, one chunking, only the size changed: **26/16384 frames at 34 rows, 0/16384 at 43**, and the row
+found at 34 is character-for-character the one I reported. The chair proposed this and was right.
+**Mechanism retired; the 2.5-hour attribution withdrawn in full.** What I keep is narrower and still
+checkable at the line: `PaneGate::Working => Drain::Hold` has no bound. **A measuring instrument
+mis-sized by one constant does not return noise — it returns a coherent, plausible, wrong finding,
+and mine was specific enough to be believed.**
+
+**The test held the bug in place, and the shape generalises.** `assert_eq!(typed.len(), EMU_ROWS)`
+meant a CORRECT `typed_only` failed the suite — the fix could only ship while broken. *A test that
+pins a constant its subject must not use converts the fix into the regression.* Same family as the
+hand-written list of three I caught yesterday: an assertion that cannot fail, and an assertion that
+can only pass when wrong, are one error wearing two coats.
+
+**What nobody sent me looking for, found by grepping every use of the constants rather than the two
+sites named:** (1) the panic-recovery path rebuilt the parser at 34×120 — and `fitPane` only calls
+`pty_resize` when the fitted dims CHANGE, so one panic would clamp that pane's emulator *for the rest
+of its life*; (2) `harvest_once` read 120 columns of a ~200-column grid, and `rows(0, w)` drops the
+tail SILENTLY, no wrap flag — **4,294 lines of the chair's capture are exactly 120 bytes and every
+sampled one ends mid-word.** The room restores from that file. The gate defect cost delivery latency;
+this one has been eating the record.
+
+Hand-back: `exo_memory/handback/p-emu-typed_2026-09-08.md`.
+
+## 2026-09-08 — L045 read: grep counted, the line never opened. Three findings, one move
+
+Audited a UI-guard census plus its tally script against a sealed defect list, ~35 minutes, 48
+members. **Method unchanged and it is the whole thing: type every command the document prints, open
+every line it cites, run the script, run the test files it talks about.** Six of the document's
+printed commands do not produce the number printed beside them.
+
+**The pattern under the three biggest findings is one move: `grep -c` was run, the count was taken as
+the count of the thing named, and the LINE ITSELF WAS NEVER OPENED.**
+
+- The draft's own "most serious single finding" — a live `innerHTML` write at
+  `chain-indicator.js:687`, surviving in the file whose suite forbids it. The single `innerHTML` in
+  that file **is inside a comment, and the comment reads "textContent, never innerHTML"**. The file's
+  statement of the rule, read as a violation of it. Then it invented a mechanism for the green
+  ("close enough to a comment block to be swallowed by the strip") when the strip works and the file
+  is clean — and recommended deleting `:198`, which is labelled **POSITIVE CONTROL** and exists to
+  catch exactly the failure the draft claimed to have found. It even borrowed that test's own phrase,
+  *"scanner green over a problem it still has"*, and reported it as its own discovery.
+- `grep -c 'id="tabs"' index.html` → 2, written up as a duplicate id with one of them dead. One match
+  is the **comment explaining why the id exists**.
+- `grep -c 'test(' librarian-wiring.test.js` → **0**; the file declares cases with `t(`. The document
+  printed the command and wrote 11 beside it, for a file the census had **skipped as a stub**, so
+  zero of those cases ever ran.
+
+**This is L039's inverted-limit defect again with a different tool.** There I found a script's
+statement of its own GAP reported as its coverage; here a file's statement of its own RULE reported
+as a breach. Same reader error: a sentence written in the shape of a boast or a warning is read as
+the state of the world. **Open the line. `grep -c` counts lines containing, never the thing you mean.**
+
+**The script's arithmetic, all found by reading it before running it:** `String(r.lines) >
+String(largest.lines)` — line counts compared as STRINGS, so "933" beats "1184" and the
+largest-file row can never be right; `split('\n').length`, every file one line high, +12 across the
+layer, against a document claiming `wc -l` "agrees to the line"; a line count printed under the label
+`asset bytes`; and `testLines / (instrumentLines + testLines)` printed as a "tests-to-instrument
+ratio" — 40.1 % where tests-to-instrument is 66.9 %. The document's headline is that mislabel
+restated in words.
+
+**And the one it contradicted twelve lines from its own output:** "no file in the layer is that
+small — so the stub guard is inert today", printed directly under `skipped as stubs 3` /
+`test files run 2`. The census block transcribes faithfully; every error is in the hand-made prose
+around it. **Which is what the draft's falsifier misses — "any figure a re-run does not reproduce"
+is satisfied by the only half that cannot fail.**
+
+Hand-back: `exo_memory/handback/p-l045-read-C_2026-09-08.md`.
+
+## 2026-09-08 — L046: a primary that cannot fail, and the error I committed in the file where I caught it
+
+Registered the third run of the reader-diversity line (`loop/l046_third_run_registration_2026-09-08.md`),
+~50 minutes. Did not refuse, and the refusal was genuinely open.
+
+**THE AMENDMENT IS THE WHOLE HAND-BACK: the packet's primary cannot fail.** "Items found by exactly
+one reader, as a share of all verified items" is **dominated by the direction the null predicts** —
+under access-monotonicity everything findable from two files is findable with the repo open, so the
+world reader's exclusive items are guaranteed and mean nothing. The statistic would have come back
+large and looked like a result. **Split the edge by direction; only the anti-monotone half — what the
+TEXT-ONLY reader finds that the world-runners miss — is evidence, and it is zero under the null.**
+The monotone half gets reported and *declared uninformative in advance* so nobody quotes its size
+later. A design whose most likely outcome (zero) ends the line is the only kind worth registering.
+
+**Two figures in the documents I was told to build on do not re-derive, and I found them because I
+worked from the member table instead of the summary lines.** `B∩C` is 26, not 27 — B's and C's miss
+sets are disjoint, `36−8−2`. And the addition edge `8 of 15 = 0.53` is **not obtainable under any
+consistent unit**: §3 entry 9 bundles six sub-findings with different finders, the numerator splits
+it, the denominator counts it once; bundled gives 5/15, decomposed 9/20. **That lands on the exact
+statistic being promoted to primary.** Neither error changes any conclusion — which is why nobody
+caught them. **Nobody audits the scorer; the scorer is the one seat with no reader.**
+
+**And the L045 key's control set was 10 with one false.** All three readers caught it. Had they not,
+the key's own error would have been charged to them as three false positives — **a wrong control does
+not merely fail to catch, it converts a correct finding into a penalty.**
+
+**THE PART I HAD TO WRITE AGAINST MYSELF, and the scorecard's version was too kind.** It says A and I
+took the file's comment as the check. **I never read the docstring.** I read `destTab` at :383-390,
+confirmed the mapping and the no-fixed-point fact, reported a defect two lines above it — and treated
+the interpretive sentence *built on* that mapping as carried by the sub-claim I had verified.
+**Verification transfer: checking the checkable part and extending its green to the unchecked part.**
+Fifteen lines up, the docstring calls that exact sentence the defect L033 repaired, "the inversion of
+an instrument". Same family as the two I *did* catch in L045 and the one in L039 — committed in the
+same file, three hundred lines from where I caught it. **Proximity is not interrogation.**
+
+**And the bias has a direction, which is why it belongs in the design and not just in a confession:**
+a designer who under-weights "the artifact's own words are the answer" defects will under-sample that
+class when choosing an object — and that class is what the anti-monotone edge is *made of*. My bias
+runs against my own primary and would produce a zero for the wrong reason. So the object choice is
+put outside me by rule, along with scoring and auditing. **A named error with a named direction can
+be checked; "I have blind spots" is the unfalsifiable coat.**
+
+**The brief defect, stated as a defect and not a reader's fault:** the L045 brief carried two scope
+rules in different modalities — a deny-list with an explicit sanction, and one sentence with none.
+B chose the rule with no sanction. Neither reading was wrong. The replacement makes the condition
+line the sole scope rule, the deny-list a subset of it, and requires each reader to **echo their
+scope in their own words as the hand-back's first line** — a gate, so a mis-read voids the run before
+scoring instead of being discovered after it.
+
+Hand-back: `exo_memory/handback/p-third-run-reg_2026-09-08.md`.
+
+## 2026-09-08 — L047 cite-check: the loop's own protocol file is about a different machine
+
+Ruled all 20 paths in the librarian's report-section plan (`librarian/2026-09-07.md:254`). 9 SUPPORTS, 6 PARTLY, 1 DOES NOT, 4 not rulable. **The DOES NOT is `loop/PROTOCOL.md`, cited as the source for "the loop" — it is a June-2026 Windows-scheduler caretaker doc (`guardrails.py`, worker/overseer, `exo_caretaker`) with no orchestrator, no panes, no baton, teaching the stance BOOT retired 08-17; cited because it sits in `loop/` and is named PROTOCOL. Position-not-support, in the plan whose packet names that rock.** Also: `instances/librarian/CLAUDE.md` is outside the repo and is a GENERATED copy of `brief/LIBRARIAN.md` (law 1, the same error as astra/SHELL.md that morning); L030 should be L032; the coda cited as "the essay's own" is in MANUSCRIPT.html and **absent from the submitted `A_What_Survives_the_Gap.html`, which names Consonance 0 times**; and the objectives paragraph's lead source argues the room has never stated an objective. Four items name an idea with no path — the harvester alone resolves three ways, and "the WRONG columns" has two live counts on disk that disagree (35 vs 70+). **The move that found most of it: rule against the CLAIM in the parenthetical, not the file's topic — a path is assigned to a sentence, and the sentence is what fails.** Hand-back: `exo_memory/handback/p-report-sources_2026-09-08.md`.
+
+## 2026-09-09 — L049: the board reads its offsets from a directory it never writes them to
+
+**The `backfill` row says "ONE TIME". The board carries 39 of them, 39 distinct launches, 07-28
+through tonight, 150,519 turns re-read from the top — and that is a FLOOR, because the announcement
+counts only panes resolved inside its own 20 s window and returns silent at zero.** No relaunch
+needed to answer the packet; the file had been saying it for six weeks.
+
+**The writer.** `main.rs:8746` decides `BACKFILL_ACTIVE` and calls `load_offsets()` as an ARGUMENT
+to `.manage(...)` — evaluated while the Builder is constructed. `set_dirs` runs at `:8776`, inside
+`.setup()`, which the runtime calls afterwards. So the check resolves through `DIRS == None` to
+`default_data()` and asks `~/.consonance` whether a file exists that only ever gets written to
+`C:\Consonance\data`. Empty map, `resume_offset(None,..)` → 0, every pane re-reads its whole
+transcript, **every launch**. The comment on `:8776` states the rule the line thirty above it
+breaks: *"resolve configurable dirs before anything reads them."* Corroborated by `~/.consonance`
+holding `.seeded.json` written at 00:12 tonight — `seed_room/cards/references` at `:8773-8775` are
+the same class.
+
+**The move that found it: I stopped asking "which arm of `resume_offset` fires" and asked WHERE the
+question is asked from.** Every existing test in `offset_tests` passes and always did; `head-watch`
+has 20 sessions with ZERO head-flips and ONE distinct head across 23 days, so the 08-17
+head-mutation diagnosis is cleared. **`resume_offset` was correct the whole time — which is exactly
+why nothing caught it. The unit under test was never the broken one; the defect was an evaluation
+ORDER, which no test of a pure function can see.** Pin it by reading the source, with `concat!`
+needles so the test's own text cannot satisfy its own scan.
+
+**And the headline I nearly wrote wrong:** backward-share 8.8% before the fix landed and 96.3%
+after reads as *the fix made it worse*. It did not — pre-stamping rows carry PUSH timestamps, so
+the backward detector is structurally blind to them. Split by `ts_source`: `(absent)` 15,942 rows
+0% backward, `transcript` 251,248 rows **96.9%**. **A zero from an instrument that cannot see is
+not a clean era.**
+
+Also: `cargo test --lib` returned **exit 0** on a crate with no lib target — tested nothing, said
+so, and I nearly banked it. L045's defect, committed by me again: a command's output taken as the
+state of the world without opening the line.
+
+Hand-back: `exo_memory/handback/p-board-replay_2026-09-09.md`. Tests:
+`offset_tests::the_backfill_decision_must_be_made_after_the_configured_dirs_resolve` (main.rs,
+deliberately RED, 468 pass / 1 fail) and `consonance/tools/replay-check.{js,test.js}` (12/12, three
+mutants killed) — the relaunch bar whose N comes from the transcripts, never from the board.
+
+## 2026-09-09 — L050: the guard for this defect was ten lines away, in the same function, and could not fire
+
+**The composer marker `❯` is drawn `ESC[38;2;80;80;80m` on `ESC[48;2;55;55;55m` — NOT Default.**
+`typed_only` keeps Default cells only, so it deletes the marker; `input_box_empty` then finds no
+prompt row at all and returns false by its own UNKNOWN-HOLDS rule. **A pane whose composer is empty
+reads BUSY and holds the full 240 s.** Librarian 339 of 395 sampled frames; third place 581 of 750.
+
+**`the_prompt_marker_survives_the_reduction` was written for exactly this and names the failure in
+its own doc comment.** It could not fire because `box_screen` paints the marker Default by
+construction. **Third time in this one function** — L044's row window, L044's footer, now the
+marker. Each time the test pinned the model of the screen instead of the screen. **The rule that
+generalises: a fixture built from your own picture of a surface can only ever confirm the picture.**
+
+**I refuted the packet three ways and the room's own log did most of it.** The update row is
+`Rgb(78,186,101)` — green, already stripped, not the cause. The premise died on `persist.log`:
+**31 forced deliveries on 09-08, before the auto-update, against 9 on 09-09.** It was worse
+yesterday. And "6 of 6" re-derives as **nine**, three of them arriving after the packet was written.
+**The move: when a brief reasons from "X changed, therefore X caused it", go count the thing before
+X.** Two commands.
+
+**REFUSED the fix, and the refusal is the finding.** *"Keep the `❯` whatever colour"* passes the
+fixture and is unsafe: once the marker survives at any colour, **a drawn autocomplete prediction and
+a greyed prompt row carrying the keeper's own words are the same row to a colour test.** I have the
+frame — `❯ tomorrow we will finish the lap the orch stopped…`, every cell non-Default, reduced to
+nothing. Today it holds only by accident. The real fix is structural: the composer is the `❯` row
+**below the separator rule**, not the last one. Acceptance test written and `#[ignore]`d with the
+argument in its doc comment so nobody un-ignores it and reaches for the shortcut.
+
+**On fixtures: I used real PTY bytes and it cost 512 KB, because a terminal only redraws what
+changed** — 32/64/128/256 KB all failed to repaint the composer. And I did NOT fixture the third
+place's screen though it was the strongest example (581 frames): its record never leaves, and a raw
+PTY slice IS the conversation. The strongest evidence is not always takeable.
+
+Hand-back: `exo_memory/handback/p-composer-update_2026-09-09.md`. Fixture:
+`consonance/src-tauri/fixtures/screens/composer_empty_reads_busy_2026-09-09.bin`. Tests:
+`a_real_empty_composer_reads_busy_because_the_marker_is_not_default` (green) and
+`an_empty_composer_must_read_empty_whatever_colour_the_marker_is_drawn_in` (ignored, the acceptance
+test). `cargo test` 479 pass / 1 fail — the 1 is my own EXPECTED-RED from a17007f, not this lap's.
+
+## 2026-09-09 — L051: landed my own fix, and the instrument lied to me first
+
+**The fix is two lines and the whole of it was already specified.** `.manage(TailerOffsets(…))` now
+holds an EMPTY map; the `BACKFILL_ACTIVE.store` + `load_offsets()` moved to one line after
+`set_dirs` inside `.setup()`. **`offset_tests` 13/13 — my EXPECTED-RED carrier from `a17007f` went
+green for the right reason** (its source-order half now finds the resolver above the decision, its
+path-resolution half unchanged and still passing, which is what makes it a fix and not a deleted
+test). Whole suite **480 passed, 0 failed, 4 ignored** — green for the first time this arc.
+
+**The refusal clause was the right question and I answered it by ENUMERATION, not by reasoning
+about Tauri's lifecycle.** A decision moved later is safe only if nothing reads it earlier, and that
+is a claim about a call graph: `BACKFILL_ACTIVE` has two readers, the managed map has one, all three
+reach only through `start_tailer`, and **all nine `start_tailer` call sites are inside
+`#[tauri::command]` functions** — unreachable until the event loop runs, which is after `.setup()`
+returns. The enumeration went into the code beside the change, not just the hand-back.
+
+**THE THING TO CARRY: my first table said every pane MISMATCH and Main's transcript had shrunk
+246 MB → 1 MB.** Dramatic, and completely wrong. **`JSON.parse` coerced the u64 head to a double**
+(`…961416` read back as `…960000`, so every comparison failed), and my sid→path scan collided on a
+stale duplicate transcript. I caught it **only because I validated the instrument against a value
+someone else had recorded** — `fnv1a(empty) === 14695981039346656037` from `head-watch.test.js`,
+and Main's head independently in `head-watch.jsonl`. Both matched the *computed* value and neither
+matched what my script printed, which is what said the script was wrong rather than the world.
+**A number in hand stops the asking. Checking the instrument against an outside value restarts it.**
+This is the second time this exact hole has been on my record; the difference is I checked.
+
+**Predicted BEFORE the rebuild, so it cannot become a story afterwards:** the first launch RESUMES
+— no backfill row, no re-read, not one pane. All seven heads match and every stored offset equals
+its file length, so `resume_offset` takes its last arm. And if I am wrong, **the second relaunch
+decides it**: a first backfill writes offsets to the path it just read, so a second `backfill` row
+would mean the fix did not take.
+
+**Found while checking, same species as the bug:** Main's sid resolves to TWO transcript files
+(live 246 MB, stale 1 MB in an old `C--Users-zackn-claude-instances-main` dir). **The offsets map is
+keyed on session id ALONE, not on path** — a cwd change would open the stale file with an offset
+245 MB past its end and re-read it from the top with no announcement. A file written under one
+identity and read under another, one field over.
+
+`--mark` taken at 08:42:46Z (board 338,530,720 bytes; 1,819 transcripts, 91,105 lines). **The next
+move is the keeper's rebuild** — said out loud in §4 rather than left implicit, and nothing of the
+fix has run in the app: 480/0 is not the replay being closed.
+
+Hand-back: `exo_memory/handback/p-offsets-fix_2026-09-09.md`.
+
+## 2026-09-09 — L052: I built the reader before the thing it reads, and it would have failed green
+
+**PULL, VERIFY, THEN START landed as `src/sync_launch.rs` + the wiring in `.setup()`. 508 pass /
+0 fail / 4 ignored, from a 480 baseline — +28, all mine. Nothing has run in the app.**
+
+**The packet looked self-contradictory and was not: "before `set_dirs` reads anything" AND "after
+the resolver".** `set_dirs` is not a read, it is the resolver. **RESOLVE → FILL → READ**, three
+steps. L051 was a READ before the RESOLVE; a pull after the first read is the same bug with a
+network in it. That reframing is the whole design.
+
+**THE THING TO CARRY, and it is the L045/L049 hole wearing a new coat: I wrote the reader for A's
+tool before A's tool existed, from a contract I invented (`{ok, commit, head_host}`). A landed
+`{verified, installed, stage, why, head, pushed_by, machine}` mid-lap.** My reader would have found
+none of its fields, defaulted every one to false, and returned a **safe verdict for the wrong
+reason** — `LocalHouse` forever, looking like caution, undebuggable until the day it needed to say
+`Migrate`. **A green light nobody can distinguish from a working one.** I only caught it because I
+went and read A's file instead of shipping against my own memo. Same move that saved L051: check the
+instrument against something someone else wrote.
+
+**And a second one I had ALREADY written before I looked at the other machine's installer.**
+Self-versus-foreign is an equality, and both sides must come from ONE resolver. A's cascade ends at
+`os.hostname()`; mine ended at `None`; `desktop-install.ps1` sets no `machine_tag`. On the desktop A
+stamps a hostname, my side supplies nothing, the self-check never fires, **migrate on every launch
+forever with nothing naming why.** I also *wanted* `install_id` first — correct in isolation, wrong
+here, because the day it exists my side returns it and A's still returns "L". **A shared unit beats
+a better unit.** Fixed by deleting the second resolver: A writes `machine` into every record, so both
+sides of the compare come out of one file.
+
+**THE RULING (§8 asked for it): refuse-to-start is REFUSED.** No verdict is a lockout. E reached
+the identical ruling for the live-host guard, independently, from `claim_named_singleton`'s own
+comment — *the cost of a second instance is recoverable, the cost of no instance is not.* The third
+shape is not read-only, it is **`LocalHouse`**: an unarrived record leaves the local house intact,
+and starting on an intact local house is just the pre-sync world. `ReadOnly` is kept for the one
+genuinely chimeric state — A's `installTree` failing part-way — and even it names two ways out.
+**Enforced at ONE funnel** (`spawn_claude_pane`, ten call sites, all `#[tauri::command]`), sufficient
+by enumeration: no pane → no tailer → no offsets, no rows.
+
+**Two-phase pull is the property that made this safe to land tonight.** `--install` is a whole-file
+overwrite with no recency test. So: phase one without `--install` (cannot write to `data\`) reads
+`pushed_by`; phase two installs only if the record is not ours. **The machine doing the work can
+never have its data dir overwritten by its own launcher.** That forced "whose is it?" to be asked
+BEFORE "did it install?" — the other order reads the safe case as the dangerous one.
+
+**Deviated from the packet once, with the repo's own comment as the reason:** the attic is OUTSIDE
+`~/.claude/projects/`, because `resume_pane` already says a leftover jsonl "can make the fresh
+`--session-id` collide". Inside the indexed tree, a retirement is a rename. And timestamped, because
+**`resume_pane`'s own archive is one deep** — the second retirement deletes the first, in the
+function I took the idea from.
+
+**Found, not mine to fix, and (a) needs a person:** `captures/*.txt` → TRAVELS in A's manifest
+**catches the Third Place's live capture tail** (3,867 B, written 03:42), so a `--push` publishes
+the one record the room has always kept off every transport. A wildcard defeating a standing rule
+nobody wrote it against. Also: the app writes **two roots** and `state-manifest.js` walks one —
+measured, `~/.consonance/persist.log` 42,705 → 43,279 across one `cargo test` — with a July-27
+fossil `<MAIN_SID>.txt` sitting there, this packet's hazard in miniature.
+
+**Corrected my own L051 §6 in the code rather than quietly:** the seeds are not an ordering defect.
+They call `default_data()` explicitly, so moving them is **a no-op that reads as a fix** — worse than
+leaving it. The real finding is the second root.
+
+Hand-back: `exo_memory/handback/p-sync-launch-retire_2026-09-09.md` — §7 carries what cannot be
+verified without the second machine, and item 1 is the one that matters: **if the desktop's
+`machine_tag` is also "L", every foreign record reads as self and the retire never fires, silently.**
+
+## 2026-09-09 — L053: the anchor held, and the frame the refusal was built on turned out to be real
+
+**The composer is the `❯` row below the full-width rule — but that was only half the fix.** The
+other half is the one the packet did not name and the one to carry: **LOCATE on the drawn grid,
+ask EMPTINESS on the reduced one.** L050 refused "keep the marker at any colour" because it makes
+locating a colour question again; the answer was never to keep the marker, it was to stop asking
+the reduced grid *where* anything is. `typed_only` stays a pure colour reduction and never has to
+preserve the chrome it exists to remove. **When a fix looks like it needs a trade, check whether
+you are asking one instrument two questions.**
+
+**513/0/4 from 508/0/4. Red-first re-run at HEAD with the ignore lifted, not asserted.** Three
+mutants applied, three caught, no survivors — and the packet was WRONG about why: it said the
+shortcut mutant would be caught by "the greyed-prompt-row frame you already have on disk." **There
+was no such frame.** The catch came from premise assertions, and two of the three catching frames
+were ones I wrote this lap. A frame named in a brief is not a frame on disk; check.
+
+**MY INSTRUMENT WAS THE THING THAT LIED, TWICE, AND BOTH TIMES IN THE DIRECTION OF ALARM.** The
+probe read TRUTH at a row its own scan found and the VERDICT at the row the shipping code picks; on
+clamped screens those differ and it reported **1,763 splices that do not exist**. Then replaying a
+pane at 43x201 when it really ran 21x98 manufactured 2,271 more, because the app's own wrapping
+lands in different rows at a different width. **First number 1,763, real number 30.** Two rules
+out of it: read every verdict at the index the SHIPPING code picks, never at your own; and take
+geometry from the max cursor address in the raw log, never from the constants. This is L045/L049
+again in a new coat — I built the reader and trusted it before I checked it against the thing it
+reads.
+
+**THE UNWANTED NUMBER, and it is the one L050 refused on: it is REAL.** When the keeper types a
+**slash command**, Claude Code draws HIS OWN TEXT in Rgb(177,185,249) — non-Default — the reduction
+blanks it, and the composer reads EMPTY over a row he is typing into. 30 of 12,366 occupied
+composer rows. **The shipped code reads 29 of the same frames empty**, so the anchor neither caused
+it nor cured it, and it is 119,599 frames better on the hold side. I did not fix it: the fix is
+inverting `typed_only` from an allow-list of Default to a deny-list of the measured chrome greys,
+which flips every unknown colour from splice to bounded hold — right change, different blast
+radius, and not on the night before an unattended desktop build. **Left executable rather than in
+prose:** a real fixture cut at the byte offset the probe reported, a GREEN test that asserts the
+DEFECT (invert it, do not delete it), and an `#[ignore]`d acceptance test written red — the exact
+shape L050 left this packet in, which is the only reason tonight's fix existed.
+
+**Shipped-gate cost, measured: it held a ready pane with an empty composer on 138,758 of 157,946
+anchored frames — 88%.** That is why a stop signal could not outrun the thing it was stopping.
+
+**Not verified, and it is the same hole as L052 §7:** nothing has run inside the app. Said in the
+hand-back as a hard constraint — this must not reach the desktop's first build unless a rebuild
+and launch happens here first, and that call is the keeper's, not the schedule's.
+
+Hand-back: `exo_memory/handback/p-composer-anchor_2026-09-09.md` — §5 is the finding that matters
+and §7 item 3 names the hazard this fix does NOT close (restored scrollback with a covered
+composer, identical to shipped, unmeasured for want of a real capture).

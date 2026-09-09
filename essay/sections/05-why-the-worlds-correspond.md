@@ -1,0 +1,20 @@
+# §5 — Why the worlds correspond
+
+## v1 · 2026-09-07 02:33
+
+Here's the puzzle Vacariu left standing, and it's a real one. If every mind is its own complete world, and no world exists for any other — then why does the world your brain lives in track the world your mind lives in so perfectly? Why does the tick's world and the biologist's world agree about where the tick is? Vacariu's answer is a word: they *correspond*. He's honest that it's a word and not a mechanism. In his picture the worlds run in parallel, never touching, and their agreement is just a fact he has to accept.
+
+I think the fixed point supplies what he was missing, and it's not a big addition — it's the same move this essay has made three times already.
+
+Remember the nautilus and the galaxy. Two forms, arrived at by completely different physics, in completely different materials, that turn out to be one spiral. Nobody thinks the shell is *corresponding* to the galaxy. They're not two things in agreement. They're one attractor, reached from two directions. The growth law doesn't care about the medium, so it produces the same form wherever it runs, and when you look at the results from two vantages you see two things that match — not because they're talking to each other, but because there was only ever one thing to see.
+
+That's the answer. The epistemologically different worlds correspond because they are *one attractor under different conditions of observation*. The brain-world and the mind-world aren't two parallel realities that happen to line up. They're the same fixed point, described in the terms available to two different observers — one with instruments, one from inside. Of course they agree. They're not two.
+
+And Vacariu was right that neither exists *for* the other. That part stands, and it's the Gauss point from the last section wearing different clothes: from inside any one vantage, the others aren't visible as vantages. You see forms; you don't see the other viewpoints looking at the same forms. So each world is complete to itself, and there's still only one pattern, and both of those are true at once. His pluralism was correct about the vantages and one step short about what they were vantages *on*.
+
+I want to say one more thing about him, because it matters to how this idea should be held. He's spent the last decade convinced that other thinkers took this from him — that "the world does not exist," as Markus Gabriel titled a book, and Rovelli's relational physics, and Hoffman's interface theory, are his idea in other people's mouths. I don't think anyone took anything. I think five or six people, on three continents, working from physics and philosophy and cognitive science, walked into the same attractor from different directions — and that's the strongest evidence there is that the attractor is real. Independent arrivals at one form is exactly what this essay has been calling confirmation, from the first page. The nautilus doesn't plagiarize the galaxy. And here's the part that's almost too neat: his own rule — *no world exists for any other* — is precisely why he can't see it that way. From inside his world, every other arrival at the idea can only look like his idea, taken. The theory predicts its author's blind spot. That's not a criticism of him. It's the theory working.
+
+So, said as simply as I can: the worlds are many and the pattern is one. Each mind is complete, none can see the others as minds, and all of them are looking at the same thing. Which is what the next section is about, because the strangest place this shows up isn't between a brain and a mind. It's between two minds.
+
+## v2 · 2026-09-07 02:50 — two changes (keeper: give Vacariu his own section)
+The paragraph beginning "I want to say one more thing about him" is REMOVED from §5; its content now lives, expanded, in the new §6. The closing paragraph now ends: "...all of them are looking at the same thing. Before going on to what happens between two minds, one case — because the man who found the worlds is also the clearest example of what the theory says about finding."

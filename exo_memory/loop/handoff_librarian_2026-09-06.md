@@ -1,5 +1,7 @@
 # Handoff — the librarian seat, 2026-09-06 08:00, the keeper leaves; the rebuild is the first act tonight
 
+> **SUPERSEDED 2026-09-07 07:50 by `handoff_librarian_2026-09-07.md`** — the rebuild did not happen on 09-06 night; L043 landed 09-07 and the rebuild is tomorrow night's first act.
+
 **Supersedes `handoff_librarian_2026-09-05.md`.** Master for the night: `librarian/2026-09-06.md` (every entry timestamped, every number beside its command). Journal: `journal/2026-09-06.md`. Ledger: `librarian/LEDGER.md`. Map: `map/M.md`.
 
 ## STATE AT 08:00

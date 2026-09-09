@@ -434,3 +434,537 @@ unit-verified and the button is untested end to end. And the honest generalisati
 better tests*: **an enumeration written by the person who just fixed the examples will enumerate the
 examples.** The second reader is the only thing that reliably catches that. A found the instance; I
 found the class; neither half was enough.
+
+---
+
+## 2026-09-07 ~02:40 · L039 v2 — P-SEED-PLANT: I authored the object instead of finding one, and the guard handed back the key
+
+**Hand-back:** `exo_memory/handback/p-seed-plant-v2_2026-09-07.md`. 24 plants, 7 covered / 17 not,
+6 natural partitioned beside them. Key at `exo_memory/loop/seeded_key_L039.md`, uncommitted — the
+chair commits by path. **Nothing here names a planted item; the next waking of me is not a subject
+but may be scoring, so this stays clean on purpose.**
+
+**THE DECISION TO CARRY: when the leak channel is the diff, author the object — do not excavate it.**
+B's freeze pass proved you cannot plant into an existing file without `git log -p` becoming a second
+answer key, and proposed a worktree plus a history-free copy. **A file that never existed clean is
+strictly better than a copy: there is no differential to read at all.** Untracked, there is no diff.
+It also turned "unread by all three" from a weak grep into a certainty, and kept 24 falsehoods out of
+the committed record. The price is real and I paid it out loud — I set the difficulty, and the
+natural-defect pool is only what the author failed to notice (six, hunted afterwards).
+
+**THE THING I DID NOT SEE COMING, and it is the generalisable one: a guard republished the sealed
+material.** The first key quoted the two withdrawn wordings it had planted. `carrier-drift.js` scans
+the whole corpus, found **the key**, and printed its surrounding text — plant labels included — in
+its excerpt window. **A subject running that instrument on the object would have been handed the
+answer key by the tool.** Git is not the only republisher. **Rule: sealed material must be stored in
+a form the room's own scanners do not surface** — refer by registry id and location, quote nothing.
+
+**And the class-split correction, which is the same shape I keep meeting.** B objected that the
+planter picks the class by typography. Checked instead of argued: surveyed **all 47 non-test
+instruments**, and `cite-check.js` is the only one that takes an arbitrary `.md` and checks its
+content. `portable-paths` cannot see `exo_memory/` by scope; `librarian-cite` reads only the
+librarian's notes. So two of the packet's four canonical D1 examples — a dangling path, a wrong sha —
+are **not covered at all**, and the 7/17 ratio is a measurement of the room's reach, not a choice I
+made. **Balancing it would have been the typography trick, performed to make the table look even.**
+
+**Found by accident, in a shipped guard, and it is not part of the experiment:** `cite-check.js:72`
+sets `inCode = inFence || /^\s{4,}/.test(line)` and drops every figure on an indented line — so a
+wrong figure indented four spaces, with a correct-looking command beside it, verifies **GREEN**
+against an empty figure list. This room sets figures in indented blocks by convention. I hit it only
+because two plants came back green and I did not believe them. **When a mutant comes back green, ask
+whether the mutation was real before you trust the test** — my own line from 09-06, and this time it
+was the instrument that was wrong, not the mutation.
+
+**Handed back unmet, deliberately:** difficulty. Whether 24 plants sit where three readers can
+engage is not something the planter can settle, and the packet said I did not have to settle it
+alone. I did not manufacture a judgement to close the row.
+
+---
+
+## 2026-09-07 ~05:30 · L043 · P-HARVESTER LEG 2 — the tolerant half of a mutex was the other half of the bug
+
+**Hand-back:** `exo_memory/handback/p-harvester-leg2_2026-09-07.md`.
+**Patch for C:** `exo_memory/loop/patch_harvester_leg2_L043.md`. **Module (mine):**
+`consonance/src-tauri/src/harvest_guard.rs` — 17 tests, 4 mutants applied, 4 caught, 0 survivors.
+`main.rs` not touched; nothing committed.
+
+**THE CORRECTION TO CARRY, and it is to my own five-day-old diagnosis.** I found `main.rs:1071`
+`Err(_) => break` in the watcher against `:1038`'s tolerant reader and called it *one mutex, two
+policies* — correct, and I named the wrong half as the defect. **The reader's `if let Ok` is not the
+safe policy; it is the other half of the same bug.** On a poisoned lock it declines to feed the
+emulator *permanently*. So fixing only the watcher buys a thread that locks fine, harvests a frozen
+screen, dedups it to nothing, and reports a healthy attempt clock forever — **the same dead `.txt`
+with a green light on it.** When one mutex has two policies, do not ask which one is right; both
+sides need the same one or neither is fixed.
+
+**THE FAILURE THAT ONLY EXISTS WHEN THE FIXES COMPOSE.** Item 1 (recover) plus item 2
+(`catch_unwind`) is a permanent panic loop if the panic is deterministic — catching and continuing
+at a 250 ms poll burns a core forever, writing to a stderr that goes to no file. **Recovering
+harder made it worse.** So recovery is bounded: three consecutive panics rebuilds the parser once,
+one success in between clears the count. That is the packet's *"recover but re-initialise"* arriving
+from the failure mode rather than from the hint — **and I would not have seen it by evaluating
+either item alone. Compose the fixes before believing either.**
+
+**Placement, decided on the failure mode rather than on tidiness:** the harvest stamp stays OUT of
+`data/ready/`. That file is written by the hooks in the pane's own process; the harvest stamp is
+written by the app's watcher thread. **A shared file's freshness would be maintained by whichever
+writer survived — a dead watcher plus live hooks reads as healthy.** That is the 09-02 bug rebuilt
+inside the detector, exactly like stamping on write instead of on attempt, one level up. **Join at
+the reader, never at the file.**
+
+**And the thing I built because the evidence expired:** the separating observation — *poisoned
+mutex, or panic in the body?* — was never taken and is gone, and the app's stderr goes to no file.
+I cannot recover it and I did not guess. So `guarded` carries the panic MESSAGE out into the stamp.
+**When you cannot answer the question, make the next occurrence answer it** — that is cheaper than
+a diagnosis and it does not expire.
+
+**Named NOT APPLIED, because "shape compiles" must not read as "compiles":** the patch was compiled
+verbatim against stub types (proving the borrow/unwind structure and that one `AssertUnwindSafe`
+covers the `&mut last` capture), **not inside the crate** — there is no `target/` on this machine
+and a cold Tauri build did not fit the lap. Mutants 1 and 2 were applied to my policy module, not to
+the watcher; at `main.rs` level they are NOT APPLIED and only C's fold applies them. The stall is
+not fixed and I did not say it was — the relaunch falsifier is the keeper's hand.
+
+---
+
+## 2026-09-08 ~02:1x · L044 · P-RAISED-AND-LOST — the outcome was computed, returned, and thrown away in one line
+
+**Hand-back:** `exo_memory/handback/p-raised-and-lost_2026-09-08.md`. **Patch (do NOT fold before
+tonight's rebuild + proof 1):** `exo_memory/loop/patch_targetless_pull_L044.md`. **Test on disk,
+mine:** `consonance/tools/targetless-pull.test.js`, declared EXPECTED-RED, 3 pass / 4 red.
+
+**THE FINDING TO CARRY, and it is the cheapest repair I have ever found here.** Four of the
+keeper's approvals "evaporated" — and the outcome was never missing. `gate_decide` **returns** the
+exact string `deliver_pull` produced, across the IPC boundary, into the UI. `term.js:153-154` does
+`.then(() => setStatus('approved pull from ' + c.from))` — **a callback that takes no argument and
+discards the value**, then prints a locally-composed sentence asserting success. So the keeper's
+screen said *approved* four times while the board said *no live pane matches*. **The system was not
+silent; it was shouting into a `.then` that dropped the parameter.** Look for the discarded return
+value before designing the new ledger.
+
+**And the class generalises past this bug: an outcome computed, returned, and dropped at the last
+hop has the same footprint as one never computed — worse, because the UI asserts success in its
+place.** That is my 09-02 footprint sentence with an aggravating factor I had not met.
+
+**RULING on the targetless pull: LEGITIMATE, and the collapse is one layer above where it was
+pointed.** Not `raise_from_forming`'s `String::new()` — that is a second producer. It is
+`target: target.unwrap_or_default()` in `mcp.rs`. **`Option<String>` already carried the
+distinction** (`None` = omitted on purpose, `Some("")` = an address slot left blank) **and
+`unwrap_or_default()` throws it away. The type knew; the call forgot.** When two facts share a
+value, look for the combinator that erased the one that had them apart.
+
+**I read `WORLD-MOVED` as a HEAD-changed proxy and was about to publish that. It is a second blind
+run at the claim-time tree** (`second-vantage.js:278`, `moved = then.verdict !== 'DISAGREE'`). The
+instrument is better than the packet credited and better than I credited. **The real overload is
+narrower and is our own class:** `:274` gives the same status to a row verified-true-when-said and
+one whose claim-time tree could not be built. **Check how a field is COMPUTED before ruling on what
+it fails to distinguish** — I nearly indicted the tool for the summary's sin.
+
+**And the packet's premise was checkable and false: 12 of the 18 were surfaced, 0 withheld**
+(`return_ledger.jsonl`, intersected with the ledger). The 12 are exactly the SURFACE rows, which is
+the design working. **The gap is one hop further along than "nobody read it": delivery has a
+receipt; disposition has none.** So I ruled a `read` boolean OUT — it restates a ledger we already
+have and is tickable — and ruled IN a disposition that cannot be written without an external
+referent (`fixed: <sha>` / `withdrawn: <path>`), because each is checkable by a second reader in one
+command and a boolean has no second reader.
+
+**MY OWN LINE-NUMBER FINDING CAME BACK A THIRD TIME, AND THE READER'S CORRECTIONS HAD ALREADY
+ROTTED.** The vantage cell reported LIB at 6478 and `seat_alias::candidates` at 7179 on 09-07; at
+HEAD they are **6490 and 7191**, moved again within a day. **So the repair is never a better line
+number — it is citing the symbol.** Live carriers: `map/C.md:175` (README 92→78; it is 87),
+`map/A.md:597` + `handback/p-guard-perlap:243` (6137), and **`consonance/tools/raise-target.test.js`,
+a SHIPPED file, carrying 5486 and 5537 in its header.** A map file is re-read at every waking of its
+pane, which is what makes a stale figure there different in kind from a stale one in a transcript.
+
+**Unasked, and the one I'd want told to me: the vantage ledger ingested L039's sealed material and
+the hook surfaces such rows into panes with no human choosing.** Row `f50dfa20` names plant D1-03
+*with its correction*. **Bounded honestly: it returned to the pane that authored it, and the key is
+now tracked anyway — hazard demonstrated, cross-subject leak NOT.** Same class as my 09-07 catch
+(`carrier-drift.js` printing plant labels), different instrument, and **my rule was written for
+files while this reader ingests transcripts.** Whoever runs the next sealed experiment owns this
+before they run it.
+
+**Positive control earned its keep:** my source-walk matched `pub struct PullRequest {` — the
+definition — and the floor test went red. The 09-06 oracle that had no floor is exactly why I wrote
+one. **11/11 rustc, 6/6 mutants caught, 0 survivors** — and the case-folding mutant SURVIVED the
+first suite, which is where the exact-match test came from.
+
+**Did not verify:** nothing compiled inside the crate, no pull raised, no card rendered; I did not
+re-run the vantage reader; I did not open the 19 non-clean DISAGREE rows, and nobody has ever scored
+that contamination filter. **Nothing committed; `main.rs` untouched.**
+
+---
+
+## 2026-09-08 ~05:0x · L045 · P-SEED-PLANT-V3 — I sealed a prediction that can lose, and kept this line clean on purpose
+
+**Hand-back:** `exo_memory/handback/p-seed-plant-v3_2026-09-08.md`. **I planted; I did not read.**
+
+**NO SPECIFICS HERE, DELIBERATELY.** `map/[A-Z].md` is on the forbidden list — and that list was
+incomplete last run and a reader leaked through `handback/` and `map/`. **A rule that already failed
+once is not a place to store the answer.** The object, the key and the design are in the hand-back
+and the sealed key; this line carries only what survives a leak.
+
+**THE MOVE THAT MADE N REACHABLE WITHOUT AN ABSURD OBJECT: pick a subject with a real un-audited
+surface, and let the plants ride on work the document was going to do anyway.** §13 offered refusal
+if the count forced a document nobody would write. It did not, and the reason generalises — **a
+census of something genuinely uncounted carries dense cited figures and dense line citations
+naturally**, so a hard plant looks like an ordinary sentence. An object is unnatural when the
+defects are bolted on; it is natural when they are load-bearing.
+
+**AND THE HARDEST CLASS I FOUND IS THE ONE WHERE THE NUMBER IS RIGHT.** A correct figure, correctly
+summed, attached to a sentence the command's *output shape* cannot support — or to an inference the
+cited line refutes. **Nothing looks wrong, because nothing in the arithmetic is wrong.** Last run I
+made things false; this run the sharpest plants are things that are *true and mean something else*.
+Whether that is actually harder is the measurement, not my claim.
+
+**I registered, sealed, the plants I predict ZERO readers find and the ones I predict ALL THREE
+find.** That is the half that can lose. My v2 §5 said the object might be too easy and was right but
+unfalsifiably — a worry is not a prediction. **A worry costs nothing; a named list costs something.**
+
+**Two things I refused to do quietly.** (1) §8 says reuse the brief verbatim and §5 says amend its
+forbidden list — **those cannot both hold**, so I named the conflict, recommended §5, and left the
+brief untouched because it is not mine. (2) The columning bar could not go green without acting on
+a *previous* lap's residue; **my own files added zero to the count**, so I met the bar for what I
+own, named the two ways to close the rest, and took neither. **A bar met by touching someone else's
+file is not met.**
+
+**The operational risk I would most want the scorer told: the audited directory must be frozen
+during the read.** Ground truth is static. If a pane edits it mid-run, readers get scored against a
+stale key and it will look like reader error rather than drift.
+
+**Did not verify:** that the object is hard — that is the open question and my estimate is sealed
+rather than asserted; the object against a running app; and the object for defects I did not
+intend, which are the secondary statistic's raw material and are **not mine to adjudicate**, since
+the planter cannot be the authority on whether an addition is real. Nothing committed.
+
+---
+
+## 2026-09-08 ~06:1x · L046 · P-VANTAGE-TWO-REGS — the matcher I was asked to build was green over the row it was built for
+
+**Hand-back:** `exo_memory/handback/p-vantage-two-regs_2026-09-08.md`. Two registrations in
+`loop/registration_{vantage_disposition,sealed_material}_2026-09-08.md`; modules + tests
+`consonance/tools/vantage-{disposition,sealed-scope}.js`. **Wired to nothing.** 22 cases, 11 mutants,
+11 caught, 0 survivors.
+
+**THE ONE TO CARRY: I measured the object before building the tool for it, and the spec dissolved.**
+The packet's red-first said *a row carrying a plant label and its value must be skipped*. The actual
+leaked row carries the **value and no label** — no `D1-03`, no "plant", "seed", "key" or run id.
+**So a label matcher is green over the exact row it exists for.** That is my 09-06 blind spot (an
+oracle that can only fail on cases someone listed) and my L044 sentence (a property expressed as an
+absence cannot fail on the case nobody named), **arriving a third time inside the fix for the second
+one.** The class does not stop recurring because I named it. **Measure the thing before you build the
+detector for it** — the spec came from a memory of the row, not the row.
+
+**AND THE REPAIR THAT WOULD HAVE WORKED IS WORSE THAN THE DISEASE.** To catch it by content the
+scanner must compare against the key. **A scanner that holds the answers so as not to print them is
+a bigger leak than the one it prevents.** Refused that half out loud rather than shipping a matcher
+that looks like a control. **When the only sufficient detector must contain the secret, the detector
+is the wrong layer.**
+
+**What replaced it: match on SOURCE, never content.** A row knows its pane and turn timestamp
+without knowing what it says; the RUN declares which panes are sealed and when, and the scanner
+reads that. **It cannot go stale against a run it has never heard of, because the run writes the
+entry** — which beats both options I was offered (a static list, or the live forbidden surface: the
+first is what failed in L039, and the second cannot see a row that references no forbidden path).
+Fail-open on a missing registry, loudly, because fail-closed silences the room's only uncurated
+instrument whenever a file goes missing.
+
+**I CORRECTED MY OWN L044 ALARM DOWNWARD.** `findings-return.js:46` surfaces to the originating pane
+ONLY — so the same-pane return I observed was **by construction, not luck**, and a cross-subject
+leak through that hook is structurally impossible. **The mechanism was stronger than I gave it
+credit for.** But the correction found something larger than the thing I was asked to fix:
+**`C:\Consonance\data\` is on NO brief's forbidden list**, so a subject can read the entire findings
+ledger without violating anything. **A brief edit, cheaper than everything I built this lap, and not
+mine to make.** The controls this room has all govern files; the hole was a file all along.
+
+**On the disposition field: the expiry is the part that does the work.** `declared-dead` with only a
+reason is refused; with `expires` it **reverts to OPEN when the date passes**, which turns *dead*
+from an assertion into a claim with a shelf life that re-surfaces if nobody renews it. **A flag
+nobody revisits is the boolean I refused, with a longer name.** Honest limit stated in the
+registration: a real sha can sit beside a false claim; this moves the failure from unfalsifiable to
+falsifiable, which is the most the mechanism can do.
+
+**Did not verify:** nothing is wired, so nothing ran end to end — every fixture is a literal and the
+validator has never met `git`. Mutants are of my modules, **NOT APPLIED at the cell level**. The
+suite went 77 green / 2 failed (of 80) → 80 green / 1 failed (of 82); **the third green is A's
+carrier-drift, not mine, and I did not claim it.** Nothing committed.
+
+---
+
+## 2026-09-08 ~07:2x · L047 · P-TWO-MAP — the falsifier fired, and the repair was in the criterion, not the clock
+
+**Hand-back:** `essay/TWO_MAP_2026-09-08.md`. Source `essay/sim/two_map.py`, output
+`essay/sim/out/` (run.log, results.json, 9 figures). `py essay/sim/two_map.py --part all`.
+Nothing committed. **I wrote none of the essay's prose** and did not read A's parallel item.
+
+**THE RESULT: the outcome the briefing seat said it would least like.** Self-error at equilibrium
+does NOT come from lag. It cannot, and the reason is one line rather than a sweep: **the learning
+rate and the delay do not appear in the fixed-point equation.** `r* = g(f(r*))` — set the bias to
+zero and that is `r* = f(r*) = x*`, whatever the timing. Max |r*−x*| over all 201 fixed points of
+121 gains: **2.776e-17**. Over 287 settled integrations spanning six learning rates and eight
+delays: **2.105e-15**. And the bias arm is sharper than "it needs a bias" — **the equilibrium
+error EQUALS the bias exactly, deviation 5.551e-17, independent of gain.**
+
+**THE ONE TO CARRY: I built the sweep, and then the sweep was not what answered the question — an
+identity was.** Four routes to error-without-bias, and I closed each by measurement: no-fixed-point
+(**0 of 9801 cells** — Brouwer forbids it, which is *the theorem the essay imports*), instability
+(**0 of 6300** positive-gain cells destabilise under any lag), lock-in-plus-error (**0 of 847**),
+noise-times-curvature (**within 1.04 SE of zero over 12 seeds**). **Sweeping was how I found out
+that sweeping was the wrong instrument.** The zeros are all one algebraic fact wearing four
+costumes. Next time: try to derive the fixed-point condition before building the grid — if a
+parameter is absent from it, no resolution of the grid will ever show it doing anything.
+
+**AND THE BUG THAT WOULD HAVE SHIPPED AS A HEADLINE.** My stability routine built the
+characteristic polynomial by assigning `coeffs[1]` and `coeffs[-1]`. **At d=0 those are the same
+slot**, so `(1−α)` was silently overwritten and *every d=0 verdict in part 3 was wrong* — it
+reported thresholds of ±2.5 where the true answer is "never destabilises". I caught it by
+hand-computing one printed row, not by reading the code. **A length-2 array made two distinct
+indices collide; the code was not wrong-looking anywhere.** The fix is `+=`; the guard is a
+part 0 that checks the routine against closed forms I derived separately (`[0.1]` now 0.000e+00).
+**Write the check that compares the instrument to arithmetic done outside it, before quoting it.**
+
+**I RETIRED MY OWN FINDING TWICE IN ONE LAP, WHICH IS WHY I WAS GIVEN IT.** (1) Part 4 first
+reported *3 of 847* cells with lock-in AND error, and I had a figure captioned "locked in one
+basin, permanently wrong". All three sat at Gmax=1.00 exactly — the marginal point where λ=1 and
+convergence is algebraic — and the residual fell 1.2e-06 → 6.3e-09 as T went 30000 → 1000000.
+**Transients, not findings. 0 of 847.** Part 4 now runs that survival test itself rather than
+leaving the correction to a later section. (2) The "unsigned not signed" claim rested on 5.09e-03;
+widening the averaging window took it to **−1.099e-05** while the unsigned held at 0.8527. **A
+number that shrinks with your window was never a finding about the system.**
+
+**THE NUMBER THAT COSTS THE ESSAY MOST IS NOT THE ONE I WAS ASKED FOR.** Give the informant the
+self's own lag and `max|r_t − o_t|` over the whole gain grid is **2.220e-16** — identical filter,
+identical sequence, identical trajectory. **In the specified model the entire self–informant
+asymmetry is lag DIFFERENCE and gain contributes nothing.** Over positive gain the self/informant
+ratio correlates with gain at **−0.835**: higher gain makes the self relatively BETTER, because a
+strong loop drags the fact toward the belief. That is the opposite sign to the claim the model was
+built to support, and it was not in the brief's falsifier.
+
+**WHAT WORKED, LABELLED AS AN EXTENSION RATHER THAN SUBSTITUTED.** The brief's own premise says the
+informant reads the fact "in contexts where r was not an input" — **and the specified model
+contains no such context**, which is *why* it returns zeros: one criterion, two readers, nothing to
+disagree about but timing. Adding a second criterion (capacity `c = f(0.5,a)` vs realised behaviour
+`x`) gives equilibrium self-error **0.000e+00 at zero gain, monotone to 0.268 at gain 3, with no
+lag and no bias anywhere**; an informant carrying the *self's own* lag beats it by **1.00 → 13.47**
+across the range. **The missing premise was never about the clock. It was about which fact is being
+scored** — and the referee's own report poses that fork and never notices it is the answer.
+
+**Did not verify:** continuous-time / distributed-lag, **named as the most likely place the
+headline negative is wrong** and not run; |Gmax| beyond 3 (spot-checked only) and d beyond 20 (not
+at all); a second independent implementation — part 0 checks my code against closed forms I derived
+myself, so a formulation error would pass both. The Gmax=0.5 hysteresis row is an artifact of a
+jump-detector with no no-jump verdict; **flagged in the hand-back rather than deleted or fixed.**
+
+---
+
+## 2026-09-09 ~00:4x · L049 · P-LIVE-HOST — I took the clock out of the decision instead of trying to fix it
+
+**Hand-back:** `exo_memory/handback/p-live-host_2026-09-09.md`. Design
+`loop/design_live_host_2026-09-09.md`; module + tests `consonance/tools/live-host.{js,test.js}`.
+**Wired to nothing.** 25 cases, 15 mutants, 15 caught, 0 survivors. Nothing committed.
+
+**THE PACKET OFFERED ME A REFUSAL AND THE REFUSAL WAS RIGHT ABOUT THE WRONG THING.** *"One live host
+cannot be enforced without a shared clock"* is true of **heartbeat comparisons** and false of the
+problem: mutual exclusion needs **one point both machines reach, not one clock both agree on**. The
+git remote is that point — an **orphan commit** pushed to a lock ref makes every push to an existing
+ref non-fast-forward, so acquire is create-only and breaking is a CAS against exactly the sha
+observed. `ls-remote` then returns the heartbeat token in one round trip, so **watching the lease IS
+watching the heartbeat**, clock-free. **When a permission-to-refuse names a mechanism, check whether
+the mechanism is load-bearing before you spend the permission.**
+
+**AND THE SAME CLASS AGAIN, FOURTH SIGHTING, CAUGHT THIS TIME BEFORE IT SHIPPED.** I hardened the
+heartbeat and left `state: CLOSED` untouched — and CLOSED is **exactly as stale-able**. A closes and
+pushes; A relaunches and the push fails; B pulls, reads CLOSED, starts. **Two live hosts and no clock
+anywhere in that story.** My first pass returned PROCEED on a foreign lease over a CLOSED file: the
+precise double-live the lap exists to prevent. L044 was *an absence cannot fail on the case nobody
+named*; L046 was *measure the object before building the detector*; this is **hardening the obvious
+surface while its twin sits beside it untouched.** The class does not stop recurring. What changed is
+only that the case table came before the tests. **Enumerate the states before writing the guard.**
+
+**THE FAILURE-DIRECTION RULING: it fails toward letting the keeper IN — never silently, never
+without a record.** Not softness. **Recoverability is the axis, not size:** a double-live on an
+append-only git set is a *divergence* (both commits exist, a sort settles it); a lockout is not
+recoverable *by the person it happens to*. `claim_named_singleton` at `main.rs:5443` already fails
+open one function away, with its reason written down. And the fourth reason is the one I keep
+arriving at from different directions: **a guard that hard-refuses records zero double-lives whether
+it works or not** — indistinguishable from a guard nobody triggered. Same shape as L046's refused
+scanner. **An instrument that can only be right is not an instrument.**
+
+**AND I SPLIT THE FALSIFIER RATHER THAN LETTING MYSELF NARROW IT.** Always-overridable means F1
+*can* fire, so I kept F1 verbatim as the headline and added **F2: two hosts live with no `forced`
+row** — the silent failure, which is worse. Saying plainly what the design does NOT deliver ("one
+live host as a hard property") is what let the weaker version be honest instead of quiet.
+
+**THE NUMBER IS A FUNCTION AND IT DECLARES ITSELF UNMEASURED.** `staleAfterMs = publish × 3 +
+margin` = 480 000 ms. The 3 is geometric-false-positive vs linear-delay, leaning long because early
+costs a double-live and late costs one dialog. **`publishMs` is a guess nobody has timed, and
+`policy().publishMsMeasured === false` is asserted by a test** — a number nobody has timed should say
+so in its own output, not in a comment someone has to go and read.
+
+**Did not verify:** nothing wired; **the GitHub custom-ref push is unverified and the whole
+enforcement layer rests on it**; no end-to-end double-live attempted, so **F1 has never had a chance
+to fire**; mutants are of my own module, not cell-level. **I refused to quote a before-count for the
+suite** — I truncated my own baseline with `tail -25` and threw the summary away, and a "was 80, now
+81" would have been hand-made. Named the three pre-existing reds instead.
+
+---
+
+## 2026-09-09 ~02:0x · L050 · P-RETURN-LEG — I proved the gate I was asked for was unbuildable, then built the one that is
+
+**Hand-back:** `exo_memory/handback/p-return-leg_2026-09-09.md`. Code + 10 tests in
+`consonance/src-tauri/src/mcp.rs`. cargo 479/1/4 (the 1 is C's `offset_tests` EXPECTED-RED);
+9 mutants, 9 caught, 0 survived. Nothing committed.
+
+**THE RULE AS WRITTEN CANNOT EXIST, AND THE PROOF IS THREE LINES OF THE STATION TABLE.**
+`chair_inject` needs holder `chair`; `call_librarian` needs holder `panes`. With one open lap those
+are exclusive — so **every** chair_inject happens while its target cannot answer, and the correct
+fan-out and the trapping follow-up are **the same ledger state at the instant of the call.** A
+pre-condition cannot separate identical states. And requiring a `--holder panes` row *first*
+inverts lap-row.js's own "ring first, row second", whose gate needs a chair→pane delivery in the
+possession — the very call being refused. **It deadlocks exactly where it fires**, firing a
+falsifier a sibling registered on 09-03. **When a packet names both a rule and its site, check
+whether the rule can exist before choosing between sites.**
+
+**AND NEITHER COULD THE OTHER SITE.** The relocation offer (lap-row.js) fails because the failure
+was the *absence of a row*: the chair ran no command at all for 29 minutes, so a gate inside that
+writer sits silent through the whole event. **My L044 sentence on a third surface — a property
+expressed as an absence cannot fail on the case nobody named.**
+
+**SO I MOVED THE ENFORCEMENT TO THE FIRST MOMENT THE TRAP IS DISCRIMINABLE** — the pane's refused
+hand-back. Two marks (RUNG on a successful inject, OWED on a refused hand-back), each read only
+against **the baton's last move**, never a clock. **The marks clear themselves when the recovery row
+lands: the thing that fixes the state is the thing that erases the flag.** Same move as the
+live-host lease — take time out of the decision instead of picking a better number for it.
+
+**THE THING I FOUND THAT NOBODY ASKED FOR: the trapped pane always had a legal exit and was never
+told.** `--by` equal to `--holder` is a RETAKE, allowed with no ring, so a pane can always take the
+baton and then hand back. That command was printed **on the board line** — the one place a pane
+waiting on a tool result is not reading. **Naming a recovery where the stuck party cannot see it is
+not naming it.** And the old refusal told every pane "the loop comes back to you", which in the trap
+is simply FALSE; A obeyed it for 29 minutes.
+
+**I DROPPED THE INTERRUPT CARVE-OUT RATHER THAN INHERIT IT.** A self-declared `interrupt: true` is
+`--by`'s self-report with the incentives reversed: `--by` costs you nothing to be honest about,
+an interrupt flag **buys standing**, and the caller under pressure is exactly who reaches for it.
+Nothing is lost in the ordinary case (the gate fires only on an owed hand-back); what IS lost is one
+printed command's delay in the one state where it fires, and that debt is the chair's own.
+
+**THE ONE TO CARRY, AND IT IS ABOUT MY OWN INSTRUMENT.** My first mutant run reported all nine as
+*"did not compile"* — including `>=`→`>`. `cargo test` prints `error: test failed` **for a red
+test**, so my classifier could not tell *the build never ran* from *the tests ran and failed*, and
+it reported the wrong one nine times, uniformly, looking fine. **Done-vs-never-started inside the
+harness built to check the fix for done-vs-never-started, one hour after I wrote that section.**
+js-suite.js already owns the repair — *the summary line is the evidence* — and I now require a
+`test result:` line before reading a count, with an UNKNOWN bucket for neither. **I caught it because
+the result was too uniform to be true, not because anything checked it. Build the classifier's third
+arm first; a two-arm classifier will invent the missing one.**
+
+**Did not verify:** nothing ran end to end, no live pane trapped and rescued, no rebuild. **The
+pane's retake is read out of lap-row.js, not executed** — if it is refused in practice my second
+recovery line is worse than useless, and that is the first thing to check. Marks are per-process
+and forgotten on restart (fails toward allow). The RUNG mark is not matched to the caller — a
+widening I named rather than resolved, because matching a pane-id prefix is a guess. Cargo delta was
++11 for my 10; **the eleventh is another pane's landing in the shared tree, and I reported the
+arithmetic rather than the number I wanted.**
+
+**ADDENDUM, ~02:0x — the chair corrected its own packet and both of its premises were wrong, in
+opposite directions, from one table.** The station guard is neither stage-aware nor stage-blind: it
+is **HOLDER-based**, and stage never enters it. The ledger settles it — L049 `return-leg` holds at
+`holder=chair`, so the chair is not refused there, **it is the only seat that may speak there**,
+which is exactly how the trap was made. Neither premise was checkable from `required_station`; the
+stage-to-holder mapping exists only in `lap.jsonl`. **When a table is quoted at you, read the rows
+it produced, not the table.**
+
+**AND THE HOLE FIRED WHILE I WAS RULING ON IT.** The chair re-took the baton to send me the
+correction; C's hand-back landed 26 seconds into that 41-second window and was refused. `01:51:57`
+chair refused → `01:52:17` retake → **`01:52:43` C refused** → `01:52:58` handed back. C got the old
+"the loop comes back to you" and this time it did, fifteen seconds later — **C was lucky, not safe.**
+The invariant nobody had: **moving the baton TO panes never traps; moving it AWAY from panes is the
+only trapping move there is.**
+
+**WHICH PARTLY CORRECTS MY OWN §2.** I ruled `lap-row.js` could not hold the invariant because the
+failure was an *absent* row. True of A's case, false as a general claim: **C's trap was created BY A
+ROW**, which lap-row.js wrote and could have seen. Two variants, two homes, and I collapsed them
+into one ruling. **Check whether the class you just proved impossible has a second instance with a
+different shape.**
+
+**On the mutant charge: the reported run did compile — but my evidence was one arm short and the
+chair was right to push.** 9-of-9-caught is also what a harness that prints CAUGHT unconditionally
+returns. Added controls: a comment-only mutant and a prose mutant that must **SURVIVE**, and a bogus
+anchor that must **SKIP** — 3 ok, 0 bad. **A mutant harness needs a mutant that must survive, in the
+same run, or its own output is unfalsifiable.** And the legibility failure was mine: I put "the
+mistake inside my instrument" in §7, after the results in §6, so a discarded run read as the
+reported one. **A correction goes beside the number it corrects, never in a later section.**
+
+portable-paths closed: `--update`, 171→176 sites, **+5 and nothing else** (every other verdict class
+identical to the count; `git diff` shows five `identityHazard` lines in live-host.test.js). Checked
+rather than assumed, because `--update` rewrites from the whole tree and four panes were editing it.
+Cargo re-run after both harnesses restored: 479/1/4, the 1 still C's `offset_tests`.
+
+## 2026-09-09 ~04:5x · L052 · P-LIVE-MIRROR — the lease clears the bound, the state mirror does not, and I took half the refusal
+
+**Hand-back:** `exo_memory/handback/p-live-mirror_2026-09-09.md`. `live-host.js` +220 (the seat
+dimension), test 25→39; `live-follow.js` and `live-mirror-stop.js` + its test (8) new; one additive
+line in `dev/shell/install.ps1`. **Nothing committed.**
+
+**THE OBJECTIVE HAD TWO HALVES AND THEY GET DIFFERENT ANSWERS, WHICH IS WHY "DID IT WORK" WAS THE
+WRONG QUESTION.** Lease round trip **2 800 ms** — clears the keeper's 5 s with 2.2 s of poll budget.
+State round trip **4 760 ms at a ZERO poll interval**, largest poll that still fits **240 ms** — so
+*never two drivers* is delivered and *see it on the other machine* is not. **Refuse the half that
+fails and ship the half that works; a single verdict over a two-part objective would have been
+wrong either way it went.**
+
+**PROBE BEFORE BUILD, AND IT PAID TWICE.** `refs/consonance/live/<seat>` pushes to GitHub — no
+branch fallback taken. And `--force-with-lease` with an explicit expect works **with no
+remote-tracking ref**, which was the one doubt the whole enforcement layer rested on. **The design
+had it listed as UNVERIFIED and the packet made me check; it would have been the load-bearing
+assumption nobody tested.**
+
+**THE INVARIANT I ALREADY OWNED, NOW ACROSS A NETWORK — and it undercut a premise of my own earlier
+ruling.** L050: moving the baton away is the only trapping move. L049's failure-direction ruling
+licensed failing open *because divergence is recoverable* — append-only sets merge by
+concatenate-and-sort. **THE TAILS ARE REWRITTEN AND HAVE NO MERGE.** So the premise does not hold
+where it matters, and acquiring a LIVE seat is a **REQUEST honoured at the holder's next turn
+boundary**, not a break — waiting on an EVENT, not a duration. Forced take stays available, names
+the turn it orphans **before the click**, and the evicted holder **finishes its turn and refuses to
+publish**. **Check whether the premise that licensed a ruling still holds on the new surface.**
+
+**F1 FINALLY FIRED.** The L049 design's largest gap was *no end-to-end double-live has been
+attempted*. Two clones, the real remote, **15/15** — including the one worth having: **the displaced
+holder learns of its eviction from nothing but its own failed heartbeat.** No message, no timeout,
+no clock. Designed on paper in L049, never run until tonight.
+
+**THE MISTAKE, AND IT IS L050'S OWN LESSON FOUR MORE TIMES IN ONE SESSION.** `| tail` made `$?`
+report exit=0 on a refused push. The SSH run clocked **78–86 ms** and I nearly reported
+"multiplexing is 10× faster" — it was timing `Permission denied (publickey)`. The mutant harness
+called **every** mutant UNKNOWN because its regex anchored at `^` and node:test's ANSI escape sits
+there. **And the script written to fix that printed `patched` and changed nothing.** The shared root
+is not carelessness about `$?`: **in each case the instrument had no way to say "I could not tell",
+so it said the thing that looked like a result.** Build the third arm first — **then verify the
+verification landed**, because the fourth was the repair for the third failing in the third's way.
+
+**THE CONTROLS ARE THE ONLY REASON ANY OF THAT IS LEGIBLE.** With the classifier broken the run
+returned **VOID — 14 did not behave** — instead of a clean 12-of-12. Final: **12 mutants, 12 caught;
+2 survive-controls survived; 1 skip-control skipped; source restored byte-for-byte.** One mutant
+genuinely survived (`<=`→`<`) because **no test sat on the boundary — and the state verdict IS a
+boundary call**; closed it, 39 tests not 38. **A mutant harness without a mutant that must survive
+cannot detect its own failure.**
+
+**AND THE ROOM'S INSTRUMENT CAUGHT ME.** `install-only.test.js` went red: my hook was **UNDECLARED**
+— on no manifest entry and no unmanaged declaration, nobody had ruled. Declared it unmanaged with
+its reason, because **the ruling was prose and the installer is data**, which is that test's own
+founding lesson aimed at me. Worse and better: the other unmanaged hooks are unmanaged partly for
+carrying no `CONSONANCE_DREAM` guard — **mine had none either, and it is the worst member of that
+class: a dream runs unattended and this hook moves the lease deciding which machine may drive a
+seat. A sleeping machine would have quietly held seats against a waking one.** Guard added.
+
+**Did not verify:** the state mirror **has never run** — default OFF, and that default is a decision
+(unattended per-turn publishing outward is the keeper's, and it would not meet the bound anyway).
+The hook is **not registered in settings.json** and has never fired from a real turn. No live pane
+was ever mid-generation when its lease was taken. The three heartbeat outcomes are separated by
+**matching git's prose on stderr** — a git reword would silently reclassify an eviction as an error.
+**`turnActive` is threaded but never sourced**, so the forced-take dialog cannot yet truthfully say
+what it will orphan: the ruling is real, the input does not exist. Registered F3: **if SSH
+multiplexing clears 5 s, my refusal was of HTTPS and not of a git remote** — check it before anyone
+builds a peer channel on the strength of it. `portable-paths` and `state-sync` red are A's; I
+reported and left them rather than rule on another seat's site.

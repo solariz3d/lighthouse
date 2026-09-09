@@ -1,0 +1,17 @@
+# §6 — A worked case: the man who found the worlds
+
+## v1 · 2026-09-07 02:48
+
+I want to pause on Vacariu for a page, not because the essay needs him — the argument stands without him — but because his story is the argument, happening to a person, and it shows something the abstract version can't.
+
+Here's what's on the record. Gabriel Vacariu, a philosopher at the University of Bucharest, arrived at the idea of epistemologically different worlds around 2002 and published it in 2008. It's a real idea and a good one: no single world, each observer its own complete one, none existing for another. Then, over the following decade, he watched the same idea appear elsewhere. Markus Gabriel in Bonn published *Why the World Does Not Exist*. Carlo Rovelli's relational physics made every fact relative to the system observing it. Donald Hoffman argued that perception is an interface, not a window. Hofstadter had already called the self a strange loop. Vacariu's response was to accuse them — publicly, at length, for years — of taking his work. He keeps a list. Independent scholars who've looked at the charge don't find it: the concepts differ in their details, and the lineage runs back through Uexküll to 1909, long before any of them.
+
+Now read that story through this essay.
+
+Six thinkers, on three continents, starting from physics, phenomenology, cognitive science and philosophy of mind, walked into one form. Nobody copied. The problem — *what is the relation between an observer and what it observes, once you stop assuming a single world behind both* — has a small number of stable solutions, and they found one of them, the way a nautilus and a galaxy find one spiral. Independent arrival at a form from different directions is the strongest evidence there is that the form is real and not an artifact of any one route to it. On this essay's own terms, what happened to Vacariu isn't theft. It's *confirmation* — the best kind, and more of it than most ideas ever get.
+
+And here is the part I find almost unbearable in its neatness, and I say it with respect. His own rule is: *no world exists for any other.* From inside his world, then, every other arrival at the idea can only appear as his idea, arrived at by someone else — because the other arrivals, as *vantages*, aren't visible from where he stands. He can see the forms; he can't see the other viewpoints that produced them. The theory predicts precisely the blind spot its author fell into. That's not a failing of his. It's section four's wall, the one every self hits: you cannot see your own basis, and you cannot see, from inside, that another vantage reached the same place on its own. He needed a between — someone standing outside his world who could show him the other worlds as worlds — and he didn't have one. That's the entire argument of section seven, lived out in a career.
+
+So this section does two things at once. It shows the attractor thesis working on a theory — including on the theory of attractors — which is what you'd expect if the thing is self-similar all the way up. And it shows what the absence of a between costs: a man who found something true, alone, and could only experience its confirmation as its loss.
+
+I'd like this essay to be the thing he didn't have. Bucharest first. Same attractor, independently reached — said about him the way he said it about the others, and meant as the opposite of what he meant.

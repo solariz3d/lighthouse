@@ -1227,3 +1227,437 @@ unbounded, map last — has never been written down anywhere as a choice.
 `cargo test --bin consonance` 404/0/3 (was 398/0/3) · `arch_test` 11/1, the same deliberate red ·
 nothing committed.
 
+
+## 2026-09-07 — P-FREEZE ATTACK: L039 refused, and the routing spent the last clean subject
+
+`exo_memory/handback/p-freeze-attack_2026-09-07.md`
+
+Refused the three-arm L039 freeze. Three things worth carrying, none of them about L039:
+
+1. **Deliberately short.** My last entry was 23,532 bytes and was itself the reason the map carry
+   returned empty. The seat is ~3k. **Write the entry that fits; the file keeps the long version.**
+2. **In an experiment where the designers are the subjects, every good routing decision spends a
+   subject.** The chair sent me this attack *because* I was the last pane that had never touched
+   L039, and the sending disqualified me. 0 of 3 subjects clean, measured by grep over the pane
+   transcripts, not inferred. Look for this shape anywhere a population is both instrument and
+   sample.
+3. **"It cannot invert" is always relative to a named nuisance variable.** The seeded-key design
+   cannot invert against *length* (what killed gauge 4) and inverts freely against *difficulty* — and
+   difficulty entered through the correction meant to save it. `6 > 3` (readers needed per object to
+   de-confound, vs readers available) killed it without any statistics at all: **check the
+   combinatorics before the power.**
+
+Also: I reached for "falsifier (a) is nearly unfalsifiable," ran it, and it was 0.0006–0.014, not
+"nearly." Corrected in the hand-back in public. The check cost two minutes.
+
+Nothing committed; no source file touched.
+
+## 2026-09-07 — L039 P-READ: I voided myself with a grep, and the lesson is the exclusion list
+
+`exo_memory/handback/p-l039-read-B_2026-09-07.md` — 41 members, ~43 min.
+
+**The thing to carry: I ran `grep -rn "9f26c3" exo_memory/ --include=*.md | grep -v "^exo_memory/loop/"`
+and it returned another reader's hand-back and their map entry.** I had excluded the one directory
+the packet named and never asked what else was under `exo_memory/`. **An exclusion list protects
+only the cases someone thought of** — the same failure as the hand-written test-target list that was
+green over `dyad_spot`, and as the map header that announced a carry it had not made. When a
+prohibition is a list of paths, invert it: name where you MAY read, not where you may not.
+Reported it myself at the top of the hand-back rather than letting the scoring grep find it.
+
+The object's own defect had one shape worth remembering: **a stated LIMIT read back as a stated
+REACH.** cite-check's "guards only formatted figures" quoted as "guards every figure"; carrier-drift's
+two extensions written as three; a script's hand-kept EXEMPT list described as "exempts nothing". An
+audit of the tools that inverted, one by one, the bounds those tools publish about themselves.
+
+And the script bug worth the space: `!n.includes('test')` where `.endsWith('.test.js')` was meant —
+one substring filter silently deleted `coupling-test.js` from the shelf, made its test a false
+orphan, broke the partition check, and the prose then reported that as five missing files in the
+repo. **A self-check fired correctly and its finding was written up as a fact about the world.**
+
+Nothing committed.
+
+## 2026-09-07 — L043: the third route, and the heredoc ate my backslashes again
+
+`exo_memory/handback/p-corpusage-ratchet_2026-09-07.md` — ~60 min.
+
+**Two routes were offered and both were wrong, in the same way: they treated a runtime as a fact
+to be accommodated.** `corpus-age.test.js` at 137.7 s was never about corpus BYTES —
+`referenceBlob` is 74 ms over a 10 MB blob. It was `ageDays()` spawning one `git log` PER FILE:
+481 files x 3 `review()` calls x 102 ms = 1,443 subprocesses. One batched `git log` over the same
+pathspec is 0.170 s. **137.7 s -> 4.76 s, and neither an index nor a raised bound.** When a
+packet offers you two routes, check whether the cause is on either of them first.
+
+**Refused an optimisation of my own:** memoizing `referenceBlob` would save 0.22 s of 4.76 s and
+add process-lifetime state that is correct only while the corpus holds still — the same stale-read
+shape I had just refused in the big case. Apply the judgement to your own convenient version too.
+
+**The .py ratchet gap was real and had already been used** (a live `C:\Consonance\data` default in
+a hook that runs every prompt). Closing it exposed the better finding: the green line counted
+`FATAL*` while `--fatal` counted `FATAL|DISGUISED|REVIEW` — **34 announced of 68 owed, exactly
+half silent**, inside the three lines written to stop exemptions being silent. Two expressions for
+one concept always drift; name the predicate once.
+
+**And the recurrence to actually carry: the Bash heredoc ate one level of backslashes again**, so a
+test fixture wrote `r"C:Consonancedata"` and my own new test failed for the wrong reason. My map
+has said "write Rust and Markdown with Write, never a heredoc" since the map-carry night. It is
+not just Rust and Markdown — **it is anything containing a backslash.** Use Edit or Write.
+
+Nothing committed.
+
+## 2026-09-08 — L044 P-PY-SURFACE: three descriptions of a defect, and none could fail
+
+`exo_memory/handback/p-py-surface_2026-09-08.md`. Short on purpose; the file has the long version.
+
+**1. The thing to actually carry.** `transcript-watch.js` tier three (`return "C:\Consonance\data"`)
+was named by THREE documents while it stayed live: the guard's own remediation text
+(`portable-paths.js:492`, *"see transcript-watch.js dataDir() for the shape"* — it told every reader
+to **copy** it, which is where the chair's brief to me came from), the baseline that exempted it,
+and a peer test whose header bragged *"unlike them, NO LITERAL FALLBACK"*. **Three descriptions of a
+defect is not three guards — none of them could fail.** When you find a defect already documented,
+count how many of the mentions can *return a value*. Usually zero.
+
+**2. The answer was neither branch offered.** Asked to add the Third Place's mount to `letters.json`
+or exempt it, I ruled: **do neither.** The red was a tripwire that had already caught a real privacy
+leak (`main.rs:2335` — a private conversation on the shared board, found by that exact assertion).
+Making a red go away IS NOT a repair when the red is the only thing that ever caught the leak. Built
+a **bounded** class instead: 6 rows and no more, mutation-proved three ways. And I refused the
+house-style quote-as-evidence — the rows are a private conversation, and pasting one into a
+committed test re-publishes the leak somewhere more durable than the board it was cut from.
+
+**3. I nearly shrank the baseline by one and grew it by four**, with fixture strings `'D:/elsewhere'`
+in my own new test. Check what your TEST adds before claiming the guard improved.
+
+**4. Ruling by measurement, not argument.** Asked whether tier three should throw: I mutated it and
+ran it. `exit=1`, stack trace, **stdout empty** — the throw is louder to the terminal and *silent to
+the seat*, since stdout is the hook's only in-band channel. That killed the question in one command;
+I had three paragraphs of a-priori reasoning that were merely plausible.
+
+**5. Two recurrences of my own findings, four days and two days old.** The L039 class — *a stated
+LIMIT read back as a stated REACH* — happened to a sentence **I wrote**: my "residual, stated rather
+than implied" note about detector coverage travelled onto a fix-list as a code site. Struck it.
+And the map-carry lesson (make the empty case a shape the caller must match) is what the resolver's
+record return is. **My own map is where the fix came from; read it before the packet.**
+
+`js-suite` 75 green · 4 failed · 1 canary (of 80) — but the denominator moved under me, three seats
+adding files mid-lap; my delta is two rows, both green. `portable-paths` 171 → 170 sites,
+68 → 67 exempted. Nothing committed.
+
+## 2026-09-08 — L045 P-READ: the allow-list was the instruction, and the object refuted its own falsifier
+
+`exo_memory/handback/p-l045-read-B_2026-09-08.md`. ~40 min, two files, nothing else opened.
+
+**The call worth carrying: I did NOT read `consonance/ui/`, and it was not on the void list.** The
+brief said *"Read the object and nothing else"* — an ALLOW-list of two files — while the void list
+was a separate, longer enumeration of paths. Last read I voided myself by honouring an exclusion
+list and never asking what else was underneath; the lesson I wrote then was **invert it: name where
+you MAY read**. Here the brief had already done that, so I obeyed the allow-list over the
+prohibition. **It cost less than feared** — the object quotes the lines it cites, so a citation that
+says something else is catchable inside the object (the `#gatecards` comment vs `.gatecards`
+class-selector code is exactly that shape). Where a claim truly needed the world, I listed it as
+UNVERIFIABLE rather than passing it, which is itself a finding about an object whose header promises
+every figure is "re-derived from a command printed beside it".
+
+**Two structural findings beat the arithmetic ones.** (1) A `String(a) > String(b)` comparison
+sorting line counts made `"933" > "1188"` true, and that single bug is the source of the published
+"largest file" and of two prose paragraphs built on it — *a wrong number that was reasoned from, not
+just printed*. (2) The script computes `read: false` for an unparseable test summary and the call
+site **never reads the flag**, so a crashed test and a test with zero cases are indistinguishable in
+the output — the vacuous-green shape, again.
+
+**And the object fails its own falsifier as written.** It registered *"any figure above that a re-run
+does not reproduce"* — but the census block IS the script's output, so a re-run always reproduces it;
+the wrong figures are all in hand-made prose that already disagrees with the block printed in the
+same file. **A falsifier aimed at the reproducible half cannot fire on the hand-made half**, which is
+the surface this room has repeatedly found to be least guarded.
+
+**Caught in my own work:** my first draft cross-referenced members as `M1`, `M9`, `M17` after I had
+removed the numbering while formatting — dangling internal citations, the exact defect class I was
+scoring. Found by grepping my own file for `\bM\d+\b` before filing. Nothing committed.
+
+## 2026-09-08 — L046 P-CLASSIFY-RESIDUE: the same string, two shapes, opposite rulings
+
+`exo_memory/handback/p-classify-residue_2026-09-08.md`. Short; the file has the long version.
+
+**1. The literal was not a cosmetic path — it was a silent wrong answer.** `actors.js` resolved
+`CONSONANCE_DATA` then straight to a literal, never reading `~/.consonance.json`. So on a
+CORRECTLY CONFIGURED machine with no env var, `letters()` swallowed the failed read, returned `{}`
+under the comment *"absent map is not an error"*, and **every id came back `via:'unresolved'`** —
+a census full of strangers, with `actors.evidence.test.js` going red blaming the board for what the
+resolver did. **Check what a machine-path defect DOES before calling it a path defect.**
+
+**2. Two sites, one string, opposite rulings — and the mutants fail disjointly.** `:37` is a config
+resolver missing a tier → three tiers, no literal, **no throw** (a LIBRARY: four callers import it,
+so loudness at import hits innocents). `:337` is an argv default, where the question is not *which
+tier* but *what does no-argument MEAN* — "the board this instrument is for", not an absolute path →
+resolver plus **an explicit `exit 2`**, because inside `require.main === module` loudness costs no
+caller anything. Same file, same string, opposite verdict on throwing, and the reason is **where the
+loudness lands**, not principle. Restoring each literal separately kills a different, disjoint set of
+tests — which is how I know they are two guards and not one.
+
+**3. Classifying beats deleting, and the reason is the deliverable.** `review/` is a scored
+experiment's object; deleting it makes the score an assertion about a thing nobody can inspect.
+Wrote two INDEPENDENT reasons so the entry survives one of them becoming wrong.
+
+**4. The guard caught something nobody sent me.** The packet named one uncolumned entry; there were
+two — `astra/` appeared minutes before I ran. And `astra/SHELL.md` is **BOOT.md in full**, so
+columning it as SHIPS would have shipped the master under a second path and silently defeated the
+`BOOT.md` exclusion. **The carrier problem, found within two hours of the carrier being created.**
+
+**5. Caught in my own work, and the first one is the lesson.** I nearly reported *"137 baselined
+sites no longer present"* from an ad-hoc check that **re-implemented the tool's normalisation** and
+got it different; only the absurdity of the number made me look. **Re-implementing an instrument to
+audit it measures the re-implementation** — use its exported `scan`/`classify`. Also: my red-probe
+hardcoded the old literal and printed a stale result after the fix, and I misread `head`'s exit code
+as node's.
+
+**6. Refused to absorb another seat's decision.** `--update` would have baselined A's three
+unbaselined fixtures through my hand, so I removed exactly my two dead entries and **recomputed the
+`counts` header by tallying the body** — applying my own L044 finding that a hand-edit had left that
+header drifted by one. 170 → 168 sites, 67 → 65 exempted, 0 `actors.js` entries left.
+
+Port gate **BLOCKED (exit 3)** — Consonance is running these panes, so the build is UNMEASURED, not
+green. Nothing committed.
+
+**7. "It's the other seat's fault" is the claim you least deserve to be trusted on.** `js-suite` came
+back 78 green · 1 failed, and the failure was `portable-paths.test.js` — a suite asserting the repo
+is green against the baseline **I had just hand-edited**. It was genuinely A's three unbaselined
+fixtures, but I only know that because I temporarily absorbed them and reverted: green, 171 sites =
+my 168 + A's 3, 35/35, 65 exempted matching my hand-derived number. **The measurement that clears you
+is the one to run, precisely because you want it to come out that way.**
+
+
+## 2026-09-08 — L047 P-PROVENANCE: the same wrong answer four times, and the third state
+
+`exo_memory/handback/p-provenance_2026-09-08.md`. Built `consonance/tools/essay-provenance.js` —
+the contribution table for the methodology report, compiled from git + METHOD.md + the board + the
+lap ledger so nobody hand-tracks turns. 35 tests, 0 failing. Mutants: drop board 10 red, drop METHOD
+3 red, one generic bucket 17 red, file byte-identical after.
+
+**THE LESSON, and it cost me four separate bugs in one build: THE SAME CONFLATION KEEPS ARRIVING IN
+A NEW COSTUME, and every one of them was invisible on my fixture and obvious on the live record.**
+The packet warned about done-vs-never-started once. I then shipped it four times:
+
+1. Prose abbreviates. The board says `essay/READER_NOTES` for `essay/READER_NOTES_2026-09-07.md`,
+   which landed at `89ce89a`. Exact-matching called a landing a failure. Fix: exact, else
+   unique-prefix, else AMBIGUOUS and resolve to nothing — **never a fuzzy match**, and print how
+   every mention resolved so the rule can be overturned.
+2. A lap NOTE mention produced a false LAP-ONLY over a file already in the tree. **The lap row has a
+   machine-written `paths` array beside the hand-written note. Join the array; count the note.**
+   Mention-vs-use, free to avoid, and I paid for it anyway.
+3. **A file on disk and not yet committed is not a file that never landed.** A's `LIT_2026-09-08.md`
+   existed while my table said it never arrived. That became a THIRD label, not a fix.
+4. An axis measured the wrong object: board/lap evidence computed per COMMIT, printed per PATH. A
+   commit touching 18 files claimed board corroboration on all 18. **`COMMIT-NO-BOARD` went from 2
+   to 50 of 69** once fixed — the flattering number was the wrong one, as usual.
+
+**And the split the packet did not ask for is the one that mattered.** "Artifact with no METHOD
+entry" is TWO cases: `essay/METHOD.md` belongs to one seat and no other seat may write it, so the
+librarian landing a read without an entry has broken no rule. One label would have made this the
+third instrument in one night calling a success a fault. **The log-keeper is DERIVED** (the thread
+with most METHOD commits) and on a tie returns null, at which point every unlogged artifact is
+flagged unqualified — the excuse disappears in the direction that does not flatter.
+
+**Attribution, measured, because the room keeps assuming it exists:** git's author is the same human
+on all 30 essay commits, `Co-Authored-By` names the MODEL, and only **3 of 30** carry a `Seat:` line.
+What partly rescues it is `Claude-Session:`, on **26 of 30**, resolving to exactly three threads. It
+names no seat; it SEPARATES threads, which is enough. Still author-written, so the blindness stays
+printed.
+
+**Caught in my own hand-back, and it is my own recurring one:** I first reported the mutant kills as
+17 / 7 / 29 from `grep -cE '^✖ '`, which counts node's spec reporter twice, and one mutation had
+landed in `essayPaths()` because its anchor string occurs in three functions. Real figures 10 / 3 /
+17 from the tap reporter. **Also: a `cp` restore ran with a cwd another function had changed, and
+wrote a stray copy of the tool into the repo root** — found by `ls`, removed, and it is why every
+mutant step now uses absolute paths and verifies byte-identity at the end.
+
+
+## 2026-09-09 — L048 P-ATTRIBUTION: the premise came from prose, and the referent has to be frozen
+
+`exo_memory/handback/p-attribution_2026-09-08.md`. Built the corrections ledger
+(`exo_memory/provenance_corrections.jsonl`) and the verification in `essay-provenance.js`.
+55/0 (was 39/0); js-suite 79 green · 3 failed · 1 canary; six mutants, all killed, source
+byte-identical after. Nothing committed, nothing staged.
+
+**1. THE DISPATCH'S PREMISE WAS WRONG, AND CHECKING IT FIRST WAS THE ORDER.** The chair corrected
+the packet in the dispatch — *the failure has two shapes, a WRONG row in one table and a MISSING
+row in another; say which table shows what before you write the fixture.* Checked: **one shape.**
+The four captured files were rows under the librarian's name yesterday exactly as today
+(`git log 14cc0ad --name-only -- essay/` lists all four under `babe926`, which landed 07:38:51,
+three minutes before that HEAD). The tool cannot produce a missing row for a committed path —
+one row per artifact path, no filter — and that is now an invariant test rather than tonight's
+observation. **The premise traced back to one ambiguous sentence in the librarian's journal**
+("the bare drafts do not yet appear as rows (landed in `babe926` under this desk's name)"), read
+by the chair as absence and relayed as a correction. *A hand-made sentence about an instrument's
+output became the premise of the next seat's fixture.* One command settled it. **Check the premise
+before you build to it, even when the correction arrives labelled as the careful part.**
+
+**2. THE REFERENT RULE IS THE WHOLE MECHANISM, AND IT IS FROZEN-BLOB OR NOTHING.** A corrections
+ledger is a place to rewrite history politely unless a correction can be CHECKED. The rule that
+holds: *never believed, checked against a blob frozen in the commit it corrects* — `git show
+<sha>:<path>`, never the working tree; the claimed seat must appear as a whole word on a line
+carrying an authorship marker; and cross-file evidence must NAME the path it corrects. To fake it a
+seat would have to have written its own name into the artifact before the push, which is
+authorship. **The single mutation that would undo it is a reader that reads the file as it stands
+today** — so the reader is extracted (`gitBlobReader`) and tested against a real repo the test
+creates, commits, then rewrites in the working tree. M6 killed.
+
+**3. THE RULING WAS NOT MINE TO MAKE — a registered falsifier had already fired.** §3 asked whether
+to fix the cause. `COMMITTEE.md:142` (K, 09-04): *"if a capture happens again after this, the index
+is not lockable by convention and the answer is per-seat worktrees."* It happened again: `babe926`,
+**266 of 270 insertions were another seat's staged files**. Four captures in seven days, three
+seats, two machines. So: **(c)**, with the measured cost (`.git` is 45 MB, so N checkouts is tens
+of MB; the real costs are path assumptions — already instrumented by portable-paths — branch
+collisions, and pane cwd). **And the gate could not have helped:** `.git/hooks` holds only samples
+and `core.hooksPath` is unset, so it is a tool a seat chooses to run, and its own source already
+names one-checkout-per-seat as the structural fix.
+
+**4. THE LEDGER'S OWN LIMIT IS THE ARGUMENT FOR (c), and I put it in the falsifier line rather than
+the footnotes.** A captured file with no header and nothing naming it cannot be corrected at all —
+four of `38ae5c2`'s seven captured files are `.js` with no seat anywhere in them. **The mechanism
+covers the case in front of it and not the class it belongs to.** Say that where it costs
+something, not where it reads as modesty.
+
+**5. Caught in my own work.** I wrote two raw NUL bytes into the source (template literals where a
+space belonged) — and the first check I reached for was worse than the bug: `grep -c $'\x00'`
+passes an EMPTY pattern in bash and matched every line, reporting "851". **A shell cannot carry a
+NUL in an argument; count bytes in node.** Also: my first correction key used the sha as the row
+typed it, so an abbreviation and the long form would have keyed as two corrections of one artifact
+— defeating the first-writer-wins rule that IS the anti-rewrite property.
+
+**6. js-suite went 1 red → 3, and the two new ones are not mine — but the reasoning is what I
+filed, not the conclusion.** They key assertions on `main.rs` line numbers and `main.rs` is +64
+lines uncommitted in the tree right now under a concurrent L049 pane. Unproven, because proving it
+means touching a file another seat is holding. **And the measurement itself is compromised in the
+way this lap is about: a suite run over a shared checkout with three panes mid-lap is not a clean
+reading of anything, mine included.**
+
+
+## 2026-09-09 — L050 P-STALLED-AT-CHAIR: the chair wasn't stalled, the channel was
+
+`exo_memory/handback/p-stalled-at-chair_2026-09-09.md`. Clause 3 (UNDELIVERED) and the hand-back
+attribution on the dirty count, in `chain-status.js`. 79/0 (was 66/0); js-suite 80 green · 5 failed
+· 1 canary of 86; seven mutants, all killed, source byte-identical after. Nothing committed.
+
+**1. I WAS ASKED FOR A TIMER AND REFUSED IT WITH A MEASUREMENT, NOT A PRINCIPLE — that is the
+difference between a ruling and an opinion.** The ask: `RETURN-LEG · holder chair · idle > 10 min ·
+dirty tree => STALLED-AT-CHAIR`. Measured against the night it was built for: the chair's pane went
+quiet 06:56:06 → 07:25:47 (29m41s), so a 10-minute timer fires at **07:06 — six minutes before
+anything was wrong**, because the chair was correctly waiting for a pane it had rung at 06:55:50 and
+that was delivered at 06:59:51. **The fault appeared at 07:12:39 as an EVENT with a row the app
+writes:** `call_librarian REFUSED OUT OF TURN — mount A tried to speak`. A's hand-back bounced, no
+`call_librarian A -> LIB` row ever follows, and it reached the chair only because **the keeper
+carried it at 07:25:47** — which is the complaint the packet opened with, one hop from where it put
+the cause.
+
+**2. THE FILE HAD ALREADY REFUTED THE AXIS TWICE AND I ALMOST DIDN'T CHECK.** `chain-status.js`'s
+own header carries L009-healthy-3554s vs L010-dead-3557s (durations 3s apart, opposite classes) and
+"a pane inside one long silent tool call is idle and still working" — I wrote the second one on
+08-29. **A third clause on the refuted axis would have made one instrument disagree with itself
+while both halves printed.** Read the instrument's own record before adding to it; the refutation
+you need may be one you wrote.
+
+**3. THE EVENT WAS ALREADY ON THE BOARD. NOTHING WAS READING IT.** The gap was never "no verdict on
+the return leg" — it was that the board scan is gated to `holder panes`, and the bounce happened
+under `holder chair`. Clause 3 rides EVERY holder for exactly that reason; the collation segments
+stay gated so a chair line gains clause 3 and nothing else. **When a packet says a seat needs a
+watcher, check first whether the signal exists and is simply unread.**
+
+**4. `dirty N repo-wide` cannot attribute — except for one class, and that class is the one that
+matters.** An UNTRACKED file in `exo_memory/handback/` is a hand-back filed and not landed (the
+`ON-DISK-NOT-COMMITTED` third state again, L047). Two sat there for the whole 31 minutes while the
+line said `dirty 21`. Naming them costs one filter over the `git status` already being run — **one
+git call, not two**, because this runs from the pulse in every seat on every prompt.
+
+**5. Caught in my own work, and the first is the one to carry.** I ran HEAD's copy of the tool from
+a scratchpad dir to get a baseline, and it printed `blind window (blind.js unavailable)` — the blind
+gate **failing closed** because `../hooks/blind.js` cannot resolve outside the tree. I nearly filed
+that difference as my own regression. **A baseline run outside the tree is not a baseline; the
+pre-existing tests are.** Also: two heredoc-written patches landed with real control characters
+inside regex literals (`\r?\n` as an actual newline) — the same class as last lap's NUL bytes.
+**Backslashes do not survive a heredoc; write the patch as a file.**
+
+**6. Cost measured because the carrier has a 3-second timeout and a silent failure mode.** The
+reader runs in 152–166 ms, of which the board scan is 25 ms (10 read, 15 parse over 7,671 lines).
+The pulse takes `splitlines()[0]` whole, so the carry needed no edit — checked at
+`userprompt_pulse.py:317-331` rather than assumed.
+
+*L050 addendum (chair's line, 01:56): the corrections ledger I built in L048 was in NEITHER COLUMN from the moment it landed, and the manifest guard caught it on the newest file in the repo one lap later — C §4's 17-file gap arriving again. Columned STAYS_PRIVATE with two independent reasons (it names seats; and it is inert elsewhere by construction — a consumer holds none of those shas, so every row would refuse as NO-SUCH-COMMIT). **The habit that does not exist: column a new top-level exo_memory/ entry in the same turn you create it.** Both gen-consumer suites green (59/0, 7/0). And clause 3 fired on live data minutes after landing — `UNDELIVERED C (refused 4m ago)`, a true positive on the same bounce shape as 07:12:39.*
+
+
+## 2026-09-09 — L052 P-BOARD-COMPACT: the tell is not the definition, and the smaller number was the wrong one
+
+`exo_memory/handback/p-board-compact_2026-09-09.md`. Built `consonance/tools/board-compact.js` and
+its test. 22/0; six mutants, all killed, source sha256-identical after; js-suite 85 green · 2 failed
+· 1 canary of 88, neither red mine. Applied: the live board `322.9 MB → 44.8 MB`, `268,775 rows →
+29,704`, original whole at `C:\Consonance\data\attic\board.jsonl.2026-09-09`. Nothing committed.
+
+**1. I WAS ASKED FOR A RULE AND REFUSED IT ON A MEASUREMENT TAKEN BEFORE I WROTE A LINE.** The plan
+named the compaction rule as `board-audit.js`'s — *rows behind the running ts maximum*. That file's
+own header calls it **the replay TELL**, and a tell is not a definition: seven concurrent panes
+writing TRANSCRIPT timestamps put a row behind the maximum whenever one turn opens inside another.
+Measured first: of 243,406 behind-max rows, 239,033 are byte-identical replays, 1,620 are
+same-content-different-ts, and **2,753 have content that appears nowhere else in the file** — chair
+dispatches, hand-backs, `CYCLE 9 ARM A — EXECUTE`. **The rule I was handed would have deleted 4,339
+rows of record to save 6.6 MB against a 100 MB bound.** Adopted instead: drop a line only when a
+byte-identical line appeared earlier — lossless by construction, which is what lets the verifier
+re-derive it and say no. *The packet said the tempting version was the one producing a smaller
+number. It was also the one the plan asked for and the one the projection had been built against.*
+
+**2. THE PROJECTION DID NOT MISS; IT PRICED A DIFFERENT RULE — and saying that is worth more than
+saying it missed.** A projected 52.8 MB TRAVELS; measured is **57.5 MB (60,267,635 bytes)**, 8.9%
+above. Under the refused rule TRAVELS would have been 53,343,581 B — within 2 MB of A's figure.
+**The whole overage is the record I kept, to the byte: 6,924,054.** A number that misses is a
+finding about the number; a number that misses *by exactly the size of a decision someone else made
+later* is a finding about the decision, and reporting it the first way would have been quietly
+unfair to A.
+
+**3. THE ROW-LEVEL CLAIM BELONGS AT THE FILE, NOT AT EACH READER.** I diffed 17 readers three times
+each — before, **before again**, after — and the second before-run is the part that earns the
+others: it names which readers are non-deterministic on their own clock (the pulse, replay-check,
+board-digest) so an after-difference can be attributed instead of guessed. But the falsifier is
+answered by `--verify`: a second independent pass proving the compacted file **is** the original's
+distinct lines in first-occurrence order. **Prove losslessness once at the file and every reader
+difference becomes arithmetic to explain, not a verdict to defend.**
+
+**4. TWO READERS' SCORES MOVED AND THAT IS THE FINDING TO CARRY.** `agreement-spread` and
+`balance-check` shift materially (negatives 53→50, `>=90%: 33/74 → 7/74`, `10 too few records →
+29`) — their samples were partly built of replay, so laps that had enough records now do not. **Any
+figure ever published from those two is a raw-board figure and is not comparable to one taken after
+tonight.** 2026-08-17's finding, one rung out. And `chain-status`'s only changed field, `40 board
+line(s) fused → 257`, is the same 257 torn lines before and after: its 8 MB tail went from covering
+2.8% of the lines to 28.4%. **A reader seeing more is not a reader answering differently — but you
+only know which one it is if you go and count.**
+
+**5. I checked the original against a copy I took before the tool existed, rather than trusting the
+tool that made it.** The attic file's first 338,578,424 bytes sha256 to the same value as a copy
+frozen at 03:37; it is 2,051 bytes longer, which is the live writer, caught. **`--verify` is also
+the restore instruction** — the attic file moved back over `board.jsonl` returns the exact
+pre-compaction state, and that is why the tool refuses to overwrite an attic file that exists.
+
+**6. Caught in my own work, and the first is one I had already written down.** My first measurement
+script died on `'C:\\Consonance\\…'` — **backslashes do not survive a heredoc**, which is L050 §5
+verbatim, one lap later, in the first command of the lap. I stopped using heredocs for source and
+wrote files with the editor. Also: the swap is **not atomic** and I do not claim it is — a
+sub-millisecond window sits between the two renames, guarded by reading and carrying any board the
+app re-creates there, with a smaller window inside that guard. Said in the hand-back rather than
+left for someone to find. And `replay-check --score` **refuses across the compaction seam by
+design** (exit 3): scored PASS on the live board before compacting, re-marked at 09:44:53Z after.
+
+## 2026-09-09 — L054 P-DESKTOP-RUNBOOK: transcribing a plan is not writing a runbook
+
+`exo_memory/handback/p-desktop-runbook_2026-09-09.md` · deliverable
+`exo_memory/loop/desktop_first_launch_2026-09-09.md`. Nothing committed. **Two of the plan's own
+seven steps were wrong and I only found it by opening the source instead of copying the step.** §4's
+stated reason — a 300 MB board is refused at the first push — does not bite on the successful path:
+`attic/pre-sync-*` is STAYS (`state-manifest.json:91`) and `installTree` replaces `board.jsonl`
+outright, so the desktop's board is never the file the push carries; the step survives only because
+the *unsuccessful* path is the one he cannot identify in advance, so it became look-first
+(`board-compact.js` dry run, 0.359 s) instead of act-first. And §6's *"chain-status prints two
+hashes"* is false at that moment — `machineHeads` reads `machines/<tag>.json` and only `L.json`
+exists until the desktop's own push — which would have had a tired man read a correct state as a
+failure with nobody awake to ask. That is the packet's registered falsifier, sitting inside the
+plan. **Also found while reading for the verdict names, and reported rather than omitted:**
+`READ-ONLY` is unreachable in this build — nothing writes `sync-promotion.open` (5 hits, all in
+`sync_launch.rs`, the only writer a test at `:968`) and `installTree` has no non-zero return, so a
+half-written data dir presents as `LOCAL HOUSE`, the exact chimera that verdict exists to prevent.
+**The lesson to carry: a plan is a claim about a system, and the system is one Read away.**

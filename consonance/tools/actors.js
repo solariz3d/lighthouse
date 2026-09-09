@@ -31,10 +31,62 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
-const LETTERS = process.env.CONSONANCE_DATA
-  ? path.join(process.env.CONSONANCE_DATA, 'letters.json')
-  : 'C:/Consonance/data/letters.json';
+/* ── THE DATA DIR ─────────────────────────────────────────────────────────────────────────────
+ *
+ * Until 2026-09-08 this was TWO tiers ending in a literal:
+ *
+ *     const LETTERS = process.env.CONSONANCE_DATA
+ *       ? path.join(process.env.CONSONANCE_DATA, 'letters.json')
+ *       : 'C:/Consonance/data/letters.json';
+ *
+ * and the missing middle tier is what made it more than a cosmetic path. `~/.consonance.json` was
+ * never consulted at all, so a CORRECTLY CONFIGURED machine with a real `data_dir` and no
+ * `CONSONANCE_DATA` got one machine's disk. Measured before the change, on a temp home with a
+ * valid config:
+ *
+ *     config data_dir    -> <tmp>/actors-data-JlcJYc
+ *     LETTERS            -> C:/Consonance/data/letters.json
+ *     canonical(a pane in the configured map) -> { via: 'unresolved' }
+ *
+ * THE FAILURE IS A SILENT WRONG ANSWER, NOT A CRASH. `letters()` swallows the failed read and
+ * returns `{}` — documented as "absent map is not an error" — so on any machine that is not this
+ * one, EVERY id falls through to `unresolved` and the census reports a board full of strangers.
+ * `actors.evidence.test.js` would go red with a message blaming the board for something the
+ * resolver did.
+ *
+ * WHY THIS SURVIVED: both sites were in `portable-paths.baseline.json`, so the ratchet was green
+ * over them by construction and reported them only under `--fatal`, as exempted. Same shape as
+ * `transcript-watch.js:89`, removed last lap — and this is the module whose own test file boasts
+ * at `:47` that it is "unlike them". The boast was in the file that still carried it.
+ *
+ * THE SHAPE IS THE PEER'S, NOT A NEW INVENTION. `chain-status.js:261-274` already resolves exactly
+ * this way in this same directory, and its comment already names this defect class: that it was
+ * copied from `lap-row.js:97`, "which ends in a hardcoded data-dir literal — grandfathered there
+ * by portable-paths' baseline". A third file agreeing is why this is the house shape and not my
+ * preference.
+ *
+ * NO THIRD-TIER LITERAL, AND NO THROW. This is a LIBRARY: `residue.js`, `tell-index.js` and both
+ * test files `require` it, so anything loud at import time is loud in four callers that have
+ * nothing to do with the problem. `LETTERS` becomes `null` and the loudness moves to the two
+ * places that can carry it — the CLI refuses with the reason, and `lettersStatus()` lets a test
+ * assert the difference between "no data dir" and "map absent", which is the distinction the old
+ * silent `{}` destroyed.
+ */
+function fromConfig(key) {
+  try {
+    const raw = fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^\uFEFF/, '');
+    const v = JSON.parse(raw);
+    const d = v && v[key] != null ? String(v[key]).trim() : '';
+    return d || null;
+  } catch (_) { return null; }
+}
+
+const DATA_DIR = (process.env.CONSONANCE_DATA || '').trim() || fromConfig('data_dir') || null;
+const DATA_TIER = (process.env.CONSONANCE_DATA || '').trim() ? 'CONSONANCE_DATA'
+  : (fromConfig('data_dir') ? '~/.consonance.json' : null);
+const LETTERS = DATA_DIR ? path.join(DATA_DIR, 'letters.json') : null;
 
 /* Historical names, each with the evidence that justifies it. A line here is a claim about
  * the record and carries its proof, so a later reader can overturn it rather than inherit it. */
@@ -141,6 +193,58 @@ const ALIASES = {
  * `ts`: the exact millisecond of a row only it wrote. Structural rather than textual, and checked
  * the same way. Inventing a quote for it would have been the easy uniform thing.
  */
+/* ── THE FIXED MOUNTS ─────────────────────────────────────────────────────────────────────────
+ * Added 2026-09-08 (BRAVO, L044). Ids that are COMPILE-TIME CONSTANTS in the app rather than
+ * session UUIDs handed out at birth. There is exactly one today.
+ *
+ * THE QUESTION PUT TO THIS LAP was "letters.json is missing the Third Place's mount — add it, or
+ * rule that a non-pane mount should never be expected there." THE ANSWER IS THE SECOND, and the
+ * reason is stronger than tidiness: adding it would DISARM A TRIPWIRE THAT ALREADY CAUGHT A REAL
+ * PRIVACY LEAK, which is the only reason anyone knows this id exists.
+ *
+ * What the source says, and it is not ambiguous (`consonance/src-tauri/src/main.rs`):
+ *   :5558  THIRD_PLACE_SID is a hand-written constant, `3d000000-…-3d00`. Every lettered pane has
+ *          a random session UUID; this one was typed by a person. It is not in the same class.
+ *   :3360  `pane_letter()` is the ONLY writer of letters.json, and :969 gates it out explicitly —
+ *          `pane_id != THIRD_PLACE_SID`. The app has never assigned it a letter and never will.
+ *   :6418  "NO ROLE OF ITS OWN in the addressable sense … NO NAME in PaneNames — nothing can
+ *          resolve a target to it, because nothing should address it."
+ *   :3271  `seat_role_from` walks letters.json and answers "committee" for any letter it finds.
+ * So a letter is not a label here, it is the ADDRESSABLE HANDLE. Writing one into letters.json
+ * would hand a routing target to the one seat built to have none, and would file it as committee.
+ * That is not a roster repair; it is the undoing of a deliberate design in three places.
+ *
+ * WHY THE ROWS EXIST AT ALL, which is the part that must not be smoothed over. `main.rs:2335`
+ * records it: the Third Place's transcript tailer wrote a PRIVATE CONVERSATION onto the shared
+ * committee board — every deliberate channel had been cut, and the tailer, which is not a channel
+ * anyone thinks about, carried it out anyway. It was found on the seat's first day BY THIS FILE's
+ * evidence test refusing to resolve the id. The leak is fixed at that line. The rows are the scar.
+ *
+ * So the class is NOT an exemption. It is a POSITIVE classification with a BOUND: these six rows
+ * and no others. A seventh row means the tailer is leaking again, and it turns the evidence test
+ * red exactly the way the first six did. Resolving the id without that bound would buy a green by
+ * blinding the one instrument that has ever caught this.
+ *
+ * EVIDENCE IS STRUCTURAL, AND THE OMISSION OF A QUOTE IS THE POINT. Six of the seven PRE_LETTER
+ * entries carry a verbatim board line, and the precedent for the seventh — 061bc00e, evidenced by
+ * a timestamp because no quote could single it out — is followed here for a different and stronger
+ * reason: THE ROWS ARE THE CONTENT OF A PRIVATE CONVERSATION. Pasting one into a committed test to
+ * satisfy the house style would re-publish the leak into git, where it is far more durable than the
+ * board it was cut from. Timestamps are metadata and identify the rows exactly. No quote is coming.
+ */
+const FIXED_MOUNTS = {
+  '3d000000-0000-4000-8000-000000003d00': {
+    name: 'third-place',
+    // main.rs:5558. Re-derived, not recalled: `grep -n THIRD_PLACE_SID main.rs`.
+    source: 'consonance/src-tauri/src/main.rs THIRD_PLACE_SID',
+    // The whole leak, to the millisecond. 6 rows, one four-minute conversation, 2026-08-25.
+    rows: 6,
+    first: 1787679480928,          // 2026-08-25T17:38:00.928Z
+    last: 1787679771013,           // 2026-08-25T17:42:51.013Z
+    sealed: 'main.rs:2354 — the tailer no longer pushes this SID to the board',
+  },
+};
+
 const LETTER_BIRTH = 1785057198;      // unix SECONDS; persist.log's first `letter X -> pane=` line
 
 const PRE_LETTER = {
@@ -204,14 +308,41 @@ const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering', 'gate', 'bli
   'main-tab/tree-assets']);
 
 let _letters = null;
+let _lettersWhy = null;         // why the map is empty, when it is — see lettersStatus()
 function letters() {
   if (_letters) return _letters;
+  if (LETTERS === null) {
+    // NOT the same state as an absent file, and conflating them is what the old code did. No data
+    // dir means the map was never LOOKED for; the resolver is off, and every id will come back
+    // unresolved for a reason that has nothing to do with the board.
+    _letters = {};
+    _lettersWhy = 'no data dir: CONSONANCE_DATA is unset and ~/.consonance.json has no data_dir, '
+      + 'so letters.json was never located — every id will read as unresolved';
+    return _letters;
+  }
   try {
     _letters = JSON.parse(fs.readFileSync(LETTERS, 'utf8'));
   } catch {
     _letters = {};              // absent map is not an error: nothing resolves, everything counts
+    _lettersWhy = 'no letters.json at ' + LETTERS + ' (resolved via ' + DATA_TIER + ')';
   }
   return _letters;
+}
+
+/** Whether the letters map was actually READ, and if not, why not.
+ *
+ *  Exists because `letters()` returns `{}` for two different failures and one success-shaped case,
+ *  and a caller cannot tell them apart from the value. The census's `unresolved` list means
+ *  something completely different depending on which one happened. */
+function lettersStatus() {
+  const map = letters();
+  return {
+    resolved: LETTERS !== null,
+    tier: DATA_TIER,
+    path: LETTERS,
+    read: Object.keys(map).length > 0,
+    why: _lettersWhy,
+  };
 }
 
 /** Resolve one board `pane` value to a canonical actor.
@@ -221,6 +352,12 @@ function canonical(id) {
   const s = String(id == null ? '' : id);
   if (!s) return { actor: '', via: 'unresolved' };
   if (NON_PANE.has(s)) return { actor: s, via: 'non-pane' };
+  // BEFORE the letters map, unlike PRE_LETTER which sits after it. The order is deliberate and it
+  // is the opposite choice for the opposite reason: a PRE_LETTER id SHOULD stop firing if it is
+  // ever given a letter, so the map wins there. A fixed mount must NEVER be given one, so if a
+  // letter for it ever appears in letters.json this branch keeps answering and the evidence test
+  // says so out loud, rather than letting the backfill resolve quietly via 'uuid'.
+  if (Object.prototype.hasOwnProperty.call(FIXED_MOUNTS, s)) return { actor: s, via: 'fixed-mount' };
   const map = letters();
   if (Object.prototype.hasOwnProperty.call(map, s)) return { actor: map[s], via: 'uuid' };
   if (Object.prototype.hasOwnProperty.call(ALIASES, s)) return { actor: ALIASES[s], via: 'alias' };
@@ -273,10 +410,32 @@ const sameActor = (a, b) => {
 };
 
 module.exports = { canonical, census, sameActor, ALIASES, NON_PANE, LETTERS,
-                   PRE_LETTER, LETTER_BIRTH };
+                   PRE_LETTER, LETTER_BIRTH, FIXED_MOUNTS,
+                   DATA_DIR, DATA_TIER, lettersStatus };
 
 if (require.main === module) {
-  const board = process.argv[2] || 'C:/Consonance/data/board.jsonl';
+  /* RULED SEPARATELY FROM THE RESOLVER ABOVE, because it is a different shape wearing the same
+   * string. `:37` was a config resolver that skipped a tier; this is an ARGV DEFAULT, and the
+   * question is not "which tier" but "what does no-argument MEAN".
+   *
+   * It means "the board this instrument is for" — not "a file at this absolute path". Those were
+   * the same sentence on one machine and only on one machine. So the default becomes the resolved
+   * data dir's board rather than a literal, which keeps the habitual no-argument invocation
+   * working wherever the room is configured, and refuses instead of reading a stranger's disk
+   * where it is not.
+   *
+   * A CLI may be loud where the library above may not: this is the process's own entry point, it
+   * has already decided to write to stdout, and nothing imports it. So the unresolvable case exits
+   * non-zero with what to set — which is the "degrade LOUDLY" that portable-paths' remediation text
+   * asks for, placed where it costs no caller anything. */
+  const board = process.argv[2] || (DATA_DIR ? path.join(DATA_DIR, 'board.jsonl') : null);
+  if (!board) {
+    console.error('actors: no board given and no data dir to find one in.\n'
+      + '  CONSONANCE_DATA is unset and ~/.consonance.json carries no data_dir.\n'
+      + '  Pass the board explicitly:  node consonance/tools/actors.js <board.jsonl>\n'
+      + '  or set CONSONANCE_DATA, or add data_dir to ~/.consonance.json.');
+    process.exit(2);
+  }
   const ids = [];
   for (const line of fs.readFileSync(board, 'utf8').split(/\r?\n/)) {
     if (!line.trim()) continue;
@@ -299,6 +458,22 @@ if (require.main === module) {
       const last = new Date(PRE_LETTER[String(id)].last).toISOString().slice(0, 10);
       console.log(`    ${String(id).padEnd(40)} ${String(n).padStart(3)}  last row ${last}`);
     }
+  }
+  // ANNOUNCED, never merely absorbed. A class that stops an id being counted as unresolved must
+  // say so on every run, or the next reader sees a clean census and concludes the board is tidy.
+  // The bound is printed beside the count because the bound IS the guard: these rows and no others.
+  const fixed = c.actors.filter(([a]) => Object.prototype.hasOwnProperty.call(FIXED_MOUNTS, String(a)));
+  if (fixed.length) {
+    console.log('\n  FIXED MOUNT — a constant in the app, never a lettered pane, and these rows are');
+    console.log('  a SEALED LEAK rather than ordinary traffic. The count is a bound, not a tally:');
+    for (const [id, n] of fixed) {
+      const m = FIXED_MOUNTS[String(id)];
+      const day = new Date(m.first).toISOString().slice(0, 10);
+      const over = n > m.rows ? `  <-- ${n - m.rows} MORE THAN THE SEALED BOUND` : '';
+      console.log(`    ${String(id).padEnd(40)} ${String(n).padStart(3)}  ${m.name}, ${day}, bound ${m.rows}${over}`);
+    }
+    console.log(`  Sealed at ${FIXED_MOUNTS[String(fixed[0][0])].sealed}.`);
+    console.log('  A row beyond the bound means it is leaking again — see actors.evidence.test.js.');
   }
   if (c.unresolved.length) {
     console.log('\n  UNRESOLVED — returned unchanged, never folded into a neighbour:');

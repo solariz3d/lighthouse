@@ -28,6 +28,15 @@
 // THE HONEST BOUNDS, stated up front:
 //   1. It guards only formatted figures. A figure written outside the format is invisible to it
 //      — the same bound gen-brief has (it guards the generator's output, not hand edits).
+//   1b. IT CANNOT TELL AN INDENTED CODE BLOCK FROM INDENTED PROSE, and neither can markdown —
+//      a 4-space indent is a code block by the spec and a bars-block, power table or shelf figure
+//      by this room's convention, with no difference in the text. Until 2026-09-07 it resolved
+//      that ambiguity by dropping every indented line (`/^\s{4,}/`), which made a wrong figure
+//      inside an indented block verify GREEN: 441 figure-bearing lines across 119 of 737 .md
+//      files were outside the lint's own denominator and read as checked. It now SCANS them and
+//      FLAGS them (`row.indented`) rather than deciding: the count is printed, the classification
+//      is the reader's. A FENCED block is still skipped — a fence is an authorial act, an indent
+//      is a typographic accident.
 //   2. A GREEN means the figure appears in the command's CURRENT output — not that the command
 //      answers the question the sentence asks. `find -newermt` ran clean on 2026-08-15 and could
 //      not distinguish the two hypotheses it was quoted for. Before trusting a diagnostic, state
@@ -36,6 +45,13 @@
 //      The LINT is figures-only, deliberately: the state-claim class measured ~50% metaphor
 //      ("the argument is clean") on a 18-hit sample of the Main transcript, 2026-08-15, and a
 //      lint at 50% precision is a nag, not an instrument.
+//
+//   4. A CITATION WITH NOTHING TO CHECK IS VOID, NOT GREEN. Added 2026-09-07 with 1b, and it is
+//      the wider half: GREEN was the default whenever the figure set came back empty, so the
+//      verdict could not lose. Measured over the corpus, 1046 citation sites have no figure in
+//      their paragraph — most of them because CITE_RE matches ANY parenthesised backticked span,
+//      so (`main.rs:4498`) and (`dae25f4`) are read as commands. Those now report VOID. VOID is
+//      never a green and never a catch; it is printed and counted so the number is visible.
 //
 // VERIFY runs the cited commands. They are shell commands from a document you are asking to
 // re-derive — read the doc before --run on a file you did not write.
@@ -70,9 +86,13 @@ function scanFile(text) {
     if (!line.trim()) { block++; return; }
     const cites = [...line.matchAll(CITE_RE)].map(m => m[1]);
     const stripped = line.replace(CITE_RE, ' ');            // figures inside a citation are args, not claims
-    const inCode = inFence || /^\s{4,}/.test(line);
-    const figures = inCode ? [] : [...stripped.matchAll(FIGURE_RE)].map(m => m[0].trim());
-    if (figures.length || cites.length) rows.push({ n: i + 1, block, line, figures, cites });
+    // A FENCE is an authorial act — the writer marked this as output, so it is not a prose claim.
+    // An INDENT is not: markdown reads /^\s{4,}/ as a code block and this room writes its bars,
+    // power tables and shelf figures there. The strip that conflated the two is gone; indented
+    // lines are scanned and FLAGGED, and nothing here decides which kind they are.
+    const indented = /^\s{4,}/.test(line);
+    const figures = inFence ? [] : [...stripped.matchAll(FIGURE_RE)].map(m => m[0].trim());
+    if (figures.length || cites.length) rows.push({ n: i + 1, block, line, figures, cites, indented });
   });
   const citedBlocks = new Set(rows.filter(r => r.cites.length).map(r => r.block));
   rows.forEach(r => { r.blockCited = citedBlocks.has(r.block); });
@@ -89,9 +109,13 @@ function findBash() {
   return null;
 }
 
-// GREEN / RED / NOT-RUN, never conflated. A non-zero exit that still printed output is judged by
-// content and the exit code reported beside it — grep -c exits 1 on zero matches and that zero
-// may be exactly the figure claimed.
+// GREEN / RED / VOID / NOT-RUN, never conflated. A non-zero exit that still printed output is
+// judged by content and the exit code reported beside it — grep -c exits 1 on zero matches and
+// that zero may be exactly the figure claimed.
+//
+// VOID is the verdict when there is no checkable figure. It used to be GREEN, which is a verdict
+// that cannot lose: the command ran, nothing was compared, and the report said the figure held.
+// Like NOT-RUN it is never a green and never a catch.
 function verify(cmd, figures, cwd) {
   const bash = findBash();
   const r = bash
@@ -99,7 +123,9 @@ function verify(cmd, figures, cwd) {
     : spawnSync(cmd, { cwd, encoding: 'utf8', timeout: 30000, shell: true });
   if (r.error || r.stdout == null) return { verdict: 'NOT-RUN', detail: String(r.error || 'no output') };
   const out = (r.stdout + '\n' + (r.stderr || '')).replace(/,(?=\d)/g, '');
-  const missing = figures.map(num).filter(Boolean)
+  const wanted = figures.map(num).filter(Boolean);
+  if (!wanted.length) return { verdict: 'VOID', detail: `no figure to check (exit ${r.status})` };
+  const missing = wanted
     .filter(f => !new RegExp(`(?:^|[^\\d.])${f.replace('.', '\\.')}(?:[^\\d]|$)`).test(out));
   if (r.status !== 0 && missing.length) return { verdict: 'NOT-RUN', detail: `exit ${r.status}: ${out.trim().slice(0, 120)}` };
   return missing.length
@@ -119,8 +145,16 @@ function main(argv) {
   const uncited = rows.filter(r => r.figures.length && !r.blockCited);
   const total = cited.length + uncited.length;
 
+  const indented = rows.filter(r => r.figures.length && r.indented);
+
   console.log(`cite-check — ${path.basename(file)}`);
-  console.log(`  ${total} figure-bearing lines · ${cited.length} in a paragraph with a command · ${uncited.length} not\n`);
+  console.log(`  ${total} figure-bearing lines · ${cited.length} in a paragraph with a command · ${uncited.length} not`);
+  if (indented.length) {
+    console.log(`  ${indented.length} of them sit in a 4-space-indented block. This guard CANNOT tell an`);
+    console.log(`  indented code block from indented prose — markdown does not either — so it counts`);
+    console.log(`  them and declines to classify them. Read those lines yourself.`);
+  }
+  console.log('');
   if (uncited.length) {
     console.log('  uncited (a fact about the line, not an accusation):');
     for (const r of uncited.slice(0, 20))
@@ -129,18 +163,24 @@ function main(argv) {
   }
 
   let failed = 0;
+  let voids = 0;
   if (run) {
-    console.log('\n  verify (GREEN figure-in-output / RED ran-but-absent / NOT-RUN could-not-execute):');
+    console.log('\n  verify (GREEN figure-in-output / RED ran-but-absent / VOID nothing-to-check / NOT-RUN could-not-execute):');
     for (const r of rows.filter(x => x.cites.length)) for (const cmd of r.cites) {
       const figures = r.figures.length ? r.figures
         : rows.filter(x => x.block === r.block && x.figures.length).flatMap(x => x.figures);
       const v = verify(cmd, figures, cwd);
-      if (v.verdict !== 'GREEN') failed++;
+      if (v.verdict === 'VOID') voids++;
+      else if (v.verdict !== 'GREEN') failed++;
       console.log(`    L${String(r.n).padStart(4)}  ${v.verdict.padEnd(7)} \`${cmd.slice(0, 60)}\``);
       if (v.verdict !== 'GREEN') console.log(`           ${v.detail}`);
     }
     console.log(`\n  A GREEN means the figure appears in the command's current output — not that the`);
     console.log(`  command can distinguish the hypotheses the sentence is about (find-newermt, 2026-08-15).`);
+    if (voids) {
+      console.log(`  ${voids} VOID: a parenthesised backtick with no figure in its paragraph. Not a green.`);
+      console.log(`  CITE_RE matches any (\`...\`) span, so an inline path or sha is read as a command here.`);
+    }
   }
   return run && failed ? 1 : 0;
 }

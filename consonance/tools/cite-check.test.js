@@ -82,3 +82,59 @@ test('mutation: the shipped ~43 KB error goes RED against the real byte count', 
   assert.strictEqual(verify(cmd, ['50,514 bytes'], tmp).verdict, 'GREEN');
   fs.rmSync(tmp, { recursive: true, force: true });
 });
+
+// ── L043 · the indented false-green ───────────────────────────────────────────────────────────
+// Written RED against the shipped tool: scanFile dropped every line matching /^\s{4,}/ before the
+// figure scan, so a wrong figure inside an indented block verified GREEN. The strip conflated two
+// things markdown itself cannot separate — an indented CODE block and this room's indented PROSE
+// (bars blocks, power tables, shelf figures). See the hand-back for why the fence strip stays and
+// this one goes.
+
+test('lint: an indented figure is scanned, not dropped', () => {
+  const rows = scanFile('intro\n\n    The suite has 267 tests passing.\n');
+  const withFig = rows.filter(r => r.figures.length);
+  assert.strictEqual(withFig.length, 1);
+  assert.match(withFig[0].figures[0], /267 tests/);
+});
+
+test('lint: an indented figure line is FLAGGED indented — the guard cannot tell prose from code', () => {
+  const rows = scanFile('    12 instances total\nnot indented: 12 instances total\n');
+  const withFig = rows.filter(r => r.figures.length);
+  assert.strictEqual(withFig.length, 2);
+  assert.strictEqual(withFig[0].indented, true);
+  assert.strictEqual(withFig[1].indented, false);
+});
+
+test('lint: a FENCED block is still output, not a prose claim (the strip that stays)', () => {
+  const rows = scanFile('```\n    12 instances total\n```\n');
+  assert.strictEqual(rows.filter(r => r.figures.length).length, 0);
+});
+
+test('verify: a citation with NO figure to check is VOID — never GREEN', () => {
+  const v = verify(`"${NODE}" -e "console.log(42)"`, [], os.tmpdir());
+  assert.strictEqual(v.verdict, 'VOID');
+});
+
+test('verify: VOID is not a green even when the command succeeds and prints numbers', () => {
+  const v = verify(`"${NODE}" -e "console.log(1,2,3)"`, ['not-a-figure'], os.tmpdir());
+  assert.strictEqual(v.verdict, 'VOID');
+});
+
+test('END TO END: the same wrong figure goes RED indented and RED unindented', () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'cite-indent-'));
+  const f = path.join(tmp, 'fixture.md');
+  const cmd = '`node -e "console.log(42)"`';
+  fs.writeFileSync(f,
+    '# fixture\n\n' +
+    '    The suite has 999 tests passing (' + cmd + ').\n\n' +
+    'Unindented: the suite has 999 tests passing (' + cmd + ').\n');
+  const r = require('child_process').spawnSync(NODE,
+    [path.join(__dirname, 'cite-check.js'), f, '--run', '--cwd', tmp],
+    { encoding: 'utf8' });
+  // count the VERDICT COLUMN only — the legend line above the table also contains the word RED,
+  // and matching /RED/ over the whole of stdout passes on one real red plus the legend.
+  const reds = (r.stdout.match(/^\s+L\s*\d+\s+RED\b/gm) || []).length;
+  assert.strictEqual(reds, 2, 'both citations must go RED — got:\n' + r.stdout);
+  assert.strictEqual(r.status, 1);
+  fs.rmSync(tmp, { recursive: true, force: true });
+});
