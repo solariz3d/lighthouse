@@ -69,7 +69,11 @@ consonance/**/lyrics-cache.json
 # on one machine.
 dev/rebuild-on-close.log
 
-# The Third Place keeps its own record. Private conversation, and the keeper's standing rule is
-# that it travels through OneDrive and never the repo. Untracked was one `git add -A` from
-# permanent; this makes it explicit. Added 2026-08-29.
+# The Third Place keeps its own record (exo_memory/third_place/). Ignored here since 2026-08-29 on
+# the stated ground that "the keeper's standing rule is that it travels through OneDrive and never the repo."
+# Measured 2026-09-09 (exo_memory/handback/onedrive-inventory_2026-09-09.md): the keeper never made that
+# rule. It first appeared in a 2026-08-11 compaction summary as a standing constraint, was carried by
+# eleven later summaries, and asserted to him as his. No channel has ever carried this directory anywhere;
+# it exists on one laptop. The rule stays until the keeper decides whether the record travels in the
+# (now private) repo or stays local on purpose. Whichever he chooses, it will be his call, made once.
 exo_memory/third_place/

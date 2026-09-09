@@ -75,3 +75,22 @@ Not repo material and not measured for the repo: `Desktop/FIC/` (the keeper's im
     # consonance-migration: find -type f; basename lookup under C:\Consonance
     # the rule's origin: grep "travels through OneDrive" ~/.claude/projects/C--Consonance*/*.jsonl
     #   -> first: instances-main 2026-08-29T07:16 assistant; first "standing constraint": 08-11 summary
+
+---
+
+## 6 · Done, 2026-09-09 ~04:50, on the keeper's "okay sure" for the safe set
+
+- `exo_memory/attic/`: `FROZEN-2026-07-28.md`, `caretaker-escalation-2026-06-29.md`,
+  `suggestion-scoring-REPORT-2026-08-18.md`, `suggestion-scoring-PROTOCOL-2026-08-18.md` — each
+  `cmp`-verified against its source before the source was touched. Commit `a58385a`.
+- `OneDrive/consonance-migration/` → `C:\Consonance\backups\onedrive-migration-2026-09-09\`: 23
+  files, 44,575,865 bytes, every file `cmp`-identical, then the OneDrive copy removed. Off the
+  repo, off the syncer, on disk. The prompts file travelled with it and is nowhere else.
+- `OneDrive/Desktop/projects/lighthouse/`: zero non-`target/` files confirmed, then removed.
+- `OneDrive/Desktop/606/exo_memory/`: all 26 files accounted for (22 in repo history or live, 2
+  older-and-in-history, 2 captured in the attic), then removed. **The rest of `606/` untouched.**
+- `.gitignore` comment rewritten to say the rule's true origin; the rule itself left in place.
+
+**Kept on OneDrive by the keeper's decision:** `lighthouse-FROZEN-2026-07-28/` whole ("it is okay
+to keep it where is"). **Still his to decide:** the 44 June experiment files in `606/`; whether
+`exo_memory/third_place/` is committed.
