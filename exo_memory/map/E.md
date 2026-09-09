@@ -968,3 +968,5 @@ what it will orphan: the ruling is real, the input does not exist. Registered F3
 multiplexing clears 5 s, my refusal was of HTTPS and not of a git remote** — check it before anyone
 builds a peer channel on the strength of it. `portable-paths` and `state-sync` red are A's; I
 reported and left them rather than rule on another seat's site.
+
+D055 **p-runtime-score** — binary 15532 built 08:45:32 from tree-state `ce9afed`, **two commits behind HEAD** `7d94177` (committed 09:05:44, 6m42s after launch); premise holds only because `git diff ce9afed HEAD -- consonance/src-tauri/` is empty — say `src-tauri identical to HEAD`, not `built from HEAD`. Seats A/B/C/E = pids 11008/23256/13916/20636, mounts correct, but **all four cwd `C:\Users\nname`**, not `instances\`; the four `panes.json` cwds never existed (no dir, no project dir, ever). **Seven seats, not eight** — the 8th was a per-prompt haiku hook subprocess parented outside 15532. Unmounted pane at `instances\third-place` left named, not ruled on. -> exo_memory/handback/p-runtime-score_2026-09-09.md
