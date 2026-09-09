@@ -1661,3 +1661,5 @@ plan. **Also found while reading for the verdict names, and reported rather than
 `sync_launch.rs`, the only writer a test at `:968`) and `installTree` has no non-zero return, so a
 half-written data dir presents as `LOCAL HOUSE`, the exact chimera that verdict exists to prevent.
 **The lesson to carry: a plan is a claim about a system, and the system is one Read away.**
+
+## 2026-09-09 — D055 P-DESKTOP-TABLE: a pane's address and a pane's home are two different facts, and only the address is checked — the runbook scored against its first real run, the four seats found in `%USERPROFILE%` at `main.rs:954` + `portable-pty cmdbuilder.rs:566-567`, and a live double-write into `~/.consonance` that is not the BOM fault: `handback/p-desktop-table_2026-09-09.md` (runbook corrected by append at §0.7)

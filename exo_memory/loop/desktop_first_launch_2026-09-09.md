@@ -514,3 +514,97 @@ row on the real board. Details: `loop/wake_chair_2026-09-09.md`, the desktop cha
 ```
 
 and verify with `Get-Content $p -Encoding Byte -TotalCount 1` → `123` (`{`), not `239`.
+
+## 0.7 · CORRECTION FROM THE DESKTOP, 09:20 — the seats are in the wrong house and the runbook's own guard could not see it
+
+**Appended by B (P-DESKTOP-TABLE, lap D055) scoring this document against its first real run.
+Nothing above is edited. §0.6 stands.**
+
+**THE RUNBOOK'S REGISTERED FALSIFIER FIRED.** The closing line asks for *"a step at 08:00 whose
+result you cannot interpret from this document."* Step 5 produced one. The seam row said **MIGRATE**
+— §10's success row, the one that says *go to step 6* — and the seats woke in the wrong directory
+anyway. **No row in the failure table covers a successful MIGRATE with broken seating**, because
+every row is keyed off the seam verdict and the seam verdict was correct.
+
+### §11 item 3 was the right hazard, named on the wrong variable
+
+Item 3 (and `state-manifest.json:21`, same sentence) says `panes.json` *"travels correctly only if
+both machines resolve the same `instances_dir`."* **Both machines resolve the same `instances_dir`
+— `C:\Consonance\instances` — and it still did not travel correctly.** The prescribed check
+("Check `instances_dir` in the pre-flight output before you launch") compares two equal values,
+passes, and misses this entirely.
+
+The real precondition is not that the two machines agree on the root. It is that **the cwds
+`panes.json` names EXIST on the destination** — and they cannot be made to, because the manifest's
+`root` is `data_dir` (`state-manifest.json:5`) and instance directories live outside it. Nothing in
+the manifest carries or creates them. `panes.json` is the only TRAVELS file that points outside its
+own transported tree, and the thing it points at is classified nowhere.
+
+Measured here: all four cwds in `panes.json` are absent (`ls C:\Consonance\instances` — no
+`sibling-3d57124e`, `-5bf9d657`, `-0845a868`, `-07b8a48f`).
+
+### Where the seats actually went, and why nothing said so
+
+**`C:\Users\nname`** — the value of `%USERPROFILE%`. All four, measured from each transcript's own
+`cwd` field and from the project slug that holds them (`C--Users-nname`).
+
+    main.rs:954                cmd.cwd(&cwd)               <- the panes.json path, handed over
+    cmdbuilder.rs:566          .filter(|path| Path::new(path).is_dir())   <- NOT a dir -> None
+    cmdbuilder.rs:567          let dir = cwd.or(home);     <- home = %USERPROFILE%
+
+(`portable-pty-0.8.1`, pinned in `Cargo.lock:2540`.) A cwd that does not exist is **silently
+dropped and replaced by the home directory.** `CreateProcessW` is then handed a valid directory, so
+the error path at `psuedocon.rs:151` never fires. There is no error, no log line, and no failed
+launch. This is the same shape as §0's two silent killers and it deserves a third entry beside them.
+
+### What it costs — already paid, and the log records it as something benign
+
+The Rust side keeps using the *string* from `panes.json`, so everything that only tests the string
+still works. `role_for_kept` (`main.rs:2530`) and `is_managed_cwd` (`:3677`) are pure prefix tests;
+both return committee/managed for a path that is not there. **That is why `chair_inject` still
+reaches A and C** — the roster is a string and the string is fine.
+
+But the brief write is not a string test:
+
+    main.rs:5210  warm_resume_brief   passes is_managed_cwd, reads the installed capture,
+                                      assembles the full brief, logs MAP CARRY
+    main.rs:5379  fs::write(PathBuf::from(cwd).join("CLAUDE.md"), brief).is_ok()
+
+`fs::write` does not create parent directories. The directory does not exist. The write fails, and
+**that boolean is the `warmed=` field in the resume line.** `data/persist.log` lines 316–326:
+
+    MAP CARRY pane=12fb81f6-… master=125293 reserve=8000 allowance=8684 carried=7113 tier=newest
+    resume    pane=12fb81f6-… warmed=false jsonl_existed=false -> fresh
+
+Four times. **The map was built and thrown away, and `warmed=false` reads exactly like "no capture
+to warm from."** Each seat woke in `C:\Users\nname`, which has no `CLAUDE.md` at all — only the
+global `~\.claude\CLAUDE.md`, 7,574 bytes. A correctly seated pane carries 123,162
+(`instances\sibling-181f513d\CLAUDE.md`). **Not a different map. No map.**
+
+### The check that would have caught it, for the next machine
+
+Add to §1 pre-flight, after the resolver probe, and again after step 5:
+
+```powershell
+# every cwd the roster names must EXIST, or the pane silently lands in %USERPROFILE%
+(Get-Content C:\Consonance\data\panes.json -Raw | ConvertFrom-Json) |
+  ForEach-Object { "{0}  {1}" -f (Test-Path $_.cwd), $_.cwd }
+```
+
+Every line must start `True`. And after the launch, the one that is not fooled by a string:
+
+```powershell
+Select-String -Path C:\Consonance\data\persist.log -Pattern 'warmed=false' | Select-Object -Last 6
+```
+
+**`warmed=false` on a seat that had a capture installed is the tell**, and it is the tell for this
+whole class — a brief that was assembled and could not be written.
+
+### Also true on this machine, and it makes §1 wrong as literally written
+
+The repo is at **`C:\Users\nname\Desktop\lighthouse`**, not `C:\Consonance\lighthouse`. §1's
+`Test-Path` prints `False` and its own table catches that ("find it and substitute it everywhere
+below") — so the document handled it. Recording the actual value because every command above that
+hardcodes `C:/Consonance/lighthouse` needs it, and because a second stale checkout **does** sit at
+`C:\Users\nname\lighthouse` (Stage-6 era). Two checkouts and two data roots is what made the 08:45
+misfire possible at all.
