@@ -7691,21 +7691,96 @@ fn typed_only(screen: &vt100::Screen) -> Vec<String> {
         .collect()
 }
 
-/// THE INPUT BOX IS THE BOTTOM-MOST PROMPT ROW, and its emptiness is the keeper-typing signal.
+/// The full-width rule Claude Code draws directly above the composer: a row that is `─` and
+/// NOTHING else, edge to edge.
 ///
-/// `capture::is_prompt` is "❯ + content"; `capture::is_empty_box` is "❯ + nothing". Together they
-/// are "a ❯ row". The LAST such row is the composer; every earlier one is history or scrollback.
+/// KEYED ON STRUCTURE, NOT ON HUE, and that is deliberate. The rule is drawn Rgb(136,136,136) and
+/// that colour is real — 201 of 201 cells on the fixture's row 38 — but keying on it would be the
+/// fourth predicate in this file to key on an appearance, and the first three all moved
+/// underneath us (`typed_only`'s row window, `is_footer_row`'s prefix, the marker's colour). A row
+/// made only of `─` survives a recolour and adapts to the width by construction: at 201 columns
+/// it is 201 long, at 98 it is 98, and no constant anywhere records which.
 ///
-/// UNKNOWN HOLDS. No ❯ row at all means a welcome banner, a full-screen overlay, or a screen this
-/// predicate cannot read — none of which is evidence the pane is ready. Returning true there is
-/// how a gate becomes decorative on exactly the screens it was built for.
-fn input_box_empty(lines: &[String]) -> bool {
-    match lines
+/// WHAT IT MUST NOT MATCH is a rule inside a reply. `trim_end` is allowed because vt100 hands back
+/// rows without their trailing blanks; a LEADING blank is not, and that asymmetry is the whole
+/// strictness — a rule indented by a margin is content, not frame.
+///
+/// SAID AS A DESIGN CHOICE, NOT AS A MEASUREMENT, because the difference matters and this file has
+/// been burned by the two being written the same way. What IS measured (see
+/// `COMPOSER_ANCHOR_EVIDENCE`) is that the row above the composer was a full-width rule on 157,946
+/// of 157,946 anchored frames. That a content rule always carries a margin is NOT measured; the
+/// strict form is chosen because its failure mode is a hold and the loose form's is a splice.
+fn is_separator_rule(s: &str) -> bool {
+    let t = s.trim_end();
+    !t.is_empty() && t.chars().all(|c| c == '\u{2500}')
+}
+
+/// THE COMPOSER IS THE `❯` ROW BELOW THE SEPARATOR RULE — not merely the last `❯` row.
+///
+/// WHY THE ANCHOR EXISTS. `capture::is_prompt` is "❯ + content"; `capture::is_empty_box` is
+/// "❯ + nothing". Together they are "a ❯ row", and the shipped predicate took the LAST one. That
+/// is true of a screen that is only a live pane, and this room's panes are not: a restored pane's
+/// scrollback carries a whole prior conversation as TEXT, separator rules and `❯` rows included,
+/// and a dialog or a banner can cover the real composer while all of that stays on the grid.
+/// "Bottom-most" then names a sentence somebody typed hours ago. The rule above the composer is
+/// drawn by the TUI as part of the input frame, so it is present exactly when a composer is.
+///
+/// TWO STRUCTURAL FACTS MUST AGREE, AND DISAGREEMENT HOLDS. The row must be the bottom-most `❯`
+/// row AND have the rule directly above it. Either alone is defeatable — scrollback satisfies the
+/// second, an overlay satisfies the first — and requiring both costs almost nothing: measured over
+/// every anchored frame the probe reads, the two disagreed on a handful (single digits per log,
+/// re-derivable from the probe's `anchor != last-`❯` row` line), and a disagreement HOLDS, which
+/// is the direction that cannot splice.
+///
+/// UNKNOWN HOLDS, unchanged and load-bearing. No `❯` row, or one with no rule above it, means a
+/// welcome banner, a full-screen overlay, a frame caught mid-repaint, or a chrome this predicate
+/// has never seen — none of which is evidence the pane is ready. This is the same answer the
+/// shipped code gives on those frames, so the anchor is not a new stall; it is the old one made
+/// legible.
+fn composer_row(rendered: &[String]) -> Option<usize> {
+    let i = rendered
         .iter()
-        .rposition(|l| capture::is_empty_box(l) || capture::is_prompt(l))
-    {
-        Some(i) => capture::is_empty_box(&lines[i]),
-        None => false,
+        .rposition(|l| capture::is_empty_box(l) || capture::is_prompt(l))?;
+    (i > 0 && is_separator_rule(&rendered[i - 1])).then_some(i)
+}
+
+/// The keeper's hand is NOT in the composer. Two grids, and each is asked the question it can
+/// actually answer.
+///
+/// THE SPLIT IS THE FIX. Locating the composer is a question about what was DRAWN, so it is asked
+/// of `rendered`, where the marker is present whatever colour the TUI painted it. Emptiness is a
+/// question about who wrote what, so it is asked of `typed` — the same grid with every non-Default
+/// cell blanked (see `typed_only`), which is what tells the keeper's words from the autocomplete
+/// prediction drawn behind them.
+///
+/// IT IS WHAT L050 REFUSED TO DO THE OTHER WAY. The obvious repair was to keep `❯` in the
+/// reduction at any colour; that makes locating the composer a colour question again, and a row
+/// reading `❯ <grey text>` reduces to a bare `❯` and reports EMPTY. Asking the two grids separately
+/// needs no such trade: `typed_only` stays a pure colour reduction and never has to preserve
+/// chrome it was written to remove.
+///
+/// THE ASSUMPTION THAT IS LEFT IS ALREADY BROKEN, AND KNOWINGLY SO. This asks `typed` for
+/// emptiness, so it assumes the keeper's own text is drawn at DEFAULT foreground. Measured across
+/// four panes at their own geometries: 12,366 composer rows carried content and **30 of them had
+/// no Default cell at all** — every one of those thirty the keeper typing a SLASH COMMAND, which
+/// Claude Code draws in Rgb(177,185,249). On those frames this returns EMPTY over a row he is
+/// typing into. The shipped rule did the same on 29 of them, so the anchor neither caused it nor
+/// cured it; it is pinned by `a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect`
+/// and its `#[ignore]`d acceptance test, and it wants the reduction inverted from an allow-list of
+/// Default to a deny-list of the chrome greys — a change with its own blast radius and its own
+/// packet.
+fn input_box_empty(rendered: &[String], typed: &[String]) -> bool {
+    let Some(i) = composer_row(rendered) else {
+        return false;
+    };
+    // The two grids are built cell-for-cell from one screen, so they are aligned by CHARACTER
+    // index — every cell contributes exactly one char, an empty cell contributing a space. That is
+    // what makes it safe to find the marker on one and cut the other at the same offset.
+    match (rendered[i].chars().position(|c| c == '\u{276f}'), typed.get(i)) {
+        // A `typed` grid shorter than `rendered` is a caller that read one screen at two sizes —
+        // the L044 defect exactly — so it is UNKNOWN here rather than an index panic.
+        (Some(m), Some(row)) => row.chars().skip(m + 1).collect::<String>().trim().is_empty(),
+        _ => false,
     }
 }
 
@@ -7784,7 +7859,7 @@ fn turn_in_flight(lines: &[String]) -> bool {
 /// is not.
 fn pane_idle_for_delivery(lines: &[String], typed: &[String], quiet: Duration) -> bool {
     quiet >= Duration::from_millis(QUIET_FOR_DELIVERY_MS)
-        && input_box_empty(typed)
+        && input_box_empty(lines, typed)
         && !turn_in_flight(lines)
 }
 
@@ -7959,7 +8034,7 @@ fn pane_state(emus: &PaneEmus, pane_id: &str) -> (PaneGate, bool, bool) {
     match live_screen(emus, pane_id) {
         Some((lines, typed, quiet)) => (
             pane_gate(read_stamp(pane_id), Some((&lines, quiet))),
-            input_box_empty(&typed),
+            input_box_empty(&lines, &typed),
             pane_idle_for_delivery(&lines, &typed, quiet),
         ),
         None => (PaneGate::Unstamped, false, false),
@@ -12789,7 +12864,7 @@ mod ready_signal_tests {
     fn the_keeper_typing_still_holds_a_pane_that_says_it_is_ready() {
         let typing = screen("❯ we need to get that solid before 8am", false);
         assert_eq!(pane_gate(Stamp::Done, Some((&typing, IDLE))), PaneGate::Ready);
-        assert!(!input_box_empty(&typing));
+        assert!(!input_box_empty(&typing, &typing));
         let screen_idle = pane_idle_for_delivery(&typing, &typing, IDLE);
         assert_eq!(
             drain_decision(PaneGate::Ready, false, screen_idle, Duration::ZERO, true),
@@ -12815,7 +12890,7 @@ mod ready_signal_tests {
             assert_eq!(pane_gate(Stamp::Absent, Some((&s, quiet))), PaneGate::Unstamped);
             let old = pane_idle_for_delivery(&s, &s, quiet);
             assert_eq!(
-                drain_decision(PaneGate::Unstamped, input_box_empty(&s), old, Duration::ZERO, true),
+                drain_decision(PaneGate::Unstamped, input_box_empty(&s, &s), old, Duration::ZERO, true),
                 if old { Drain::Deliver } else { Drain::Hold },
                 "the fallback is the old gate, unchanged"
             );
@@ -13137,12 +13212,52 @@ mod ready_signal_tests {
     const GHOST: &str = "\x1b[38;2;153;153;153m";
     const PLAIN: &str = "\x1b[0m";
 
-    /// A composer row as the emulator receives it. `❯` and the NBSP after it are Default in the
-    /// capture, which is what lets the reduction keep the marker while dropping the drawn text.
+    /// Claude Code's separator rule: measured Rgb(136,136,136), full width, directly above the
+    /// composer. Kept as a colour constant beside `GHOST` because the fixtures paint it, even
+    /// though `is_separator_rule` deliberately does not read it — see that function.
+    const RULE: &str = "\x1b[38;2;136;136;136m";
+
+    /// THE STAMP FOR THE COMPOSER ANCHOR, AND IT IS A PATH RATHER THAN A VERSION NUMBER.
+    ///
+    /// "Claude Code 2.1.266" would be a confident label with nothing behind it: nobody can re-run a
+    /// version string, and the chrome this predicate reads is not versioned separately from the app
+    /// anyway. A path can be replayed. Every claim `composer_row` and `input_box_empty` make about
+    /// what Claude Code draws was measured on THIS file, and the two capture logs named below, with
+    /// `cargo run --bin composer_probe`; if the chrome changes, the way to find out is to point the
+    /// probe at a new capture, not to compare a number.
+    ///
+    ///     cargo run --release --bin composer_probe -- --tail 20000000 \
+    ///         fixtures/screens/composer_empty_reads_busy_2026-09-09.bin \
+    ///         C:/Consonance/data/captures/0c0c0c0a-0000-4000-8000-000000000a01.log \
+    ///         C:/Consonance/data/captures/0c0c0c0b-0000-4000-8000-00000000115b.log
+    ///     PROBE_ROWS=21 PROBE_COLS=98 cargo run --release --bin composer_probe -- \
+    ///         --tail 20000000 C:/Consonance/data/captures/6fe15f0a-...-8bd96b6b5a4f.log
+    ///
+    /// EACH PANE AT ITS OWN GEOMETRY, and that is not a detail: replaying the fourth log at 43x201
+    /// instead of its real 21x98 manufactured 2,271 splices that do not exist, because the app's
+    /// own line wrapping lands in different rows at a different width. The geometries come from
+    /// the max cursor address in the raw log, not from a guess.
+    ///
+    /// 2026-09-09, one run per pane, the logs live and still being appended to as it read them:
+    /// **157,946 anchored frames; the anchor correct on 157,916 and the shipped rule on 19,159.**
+    /// 138,758 frames held a pane whose composer was empty. The anchor's 30 misses and 29 of the
+    /// shipped rule's are one frame type, and it is the defect this packet found and did not fix —
+    /// see `a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect`.
+    const COMPOSER_ANCHOR_EVIDENCE: &str = "fixtures/screens/composer_empty_reads_busy_2026-09-09.bin";
+
+    /// A composer row as the emulator receives it, WITH THE FRAME IT IS ACTUALLY DRAWN IN.
+    ///
+    /// THE RULE ROW IS NEW HERE (L053) AND IT IS NOT DECORATION. This helper used to draw a bare
+    /// `❯` row with nothing above it, which is not a screen Claude Code produces — and that is the
+    /// same fault as `the_prompt_marker_survives_the_reduction` painting the marker Default by
+    /// construction: a fixture that models the screen loosely lets a predicate pass over a screen
+    /// it would fail. The real frame is rule / composer / footer, and the fixture now says so.
     fn box_screen(typed: &str, ghost: &str) -> vt100::Parser {
         let mut p = vt100::Parser::new(EMU_ROWS, EMU_COLS, 0);
         p.process(b"\x1b[2J\x1b[H");
         p.process("● an earlier reply\r\n".as_bytes());
+        p.process("\x1b[32;1H".as_bytes()); // the separator rule
+        p.process(format!("{RULE}{}{PLAIN}", "\u{2500}".repeat(EMU_COLS as usize)).as_bytes());
         p.process("\x1b[33;1H".as_bytes()); // the composer row
         p.process(format!("\u{276f}\u{a0}{PLAIN}{typed}{GHOST}{ghost}{PLAIN}").as_bytes());
         p.process("\x1b[34;1H  \u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle)".as_bytes());
@@ -13163,9 +13278,12 @@ mod ready_signal_tests {
             rendered.iter().any(|l| l.contains("score it")),
             "premise: the ghost IS on the rendered grid"
         );
-        assert!(!input_box_empty(&rendered), "premise: read as plain text it looks like typing");
+        assert!(
+            !input_box_empty(&rendered, &rendered),
+            "premise: read as plain text it looks like typing"
+        );
 
-        assert!(input_box_empty(&typed), "a box holding only a prediction is EMPTY");
+        assert!(input_box_empty(&rendered, &typed), "a box holding only a prediction is EMPTY");
     }
 
     /// THE MUTANT IN THE OTHER DIRECTION, and it is the one that matters: real typing must still
@@ -13181,7 +13299,12 @@ mod ready_signal_tests {
             ("Both h", "ow are you", false, "typed prefix + drawn completion still holds"),
         ] {
             let p = box_screen(typed, ghost);
-            assert_eq!(input_box_empty(&typed_only(p.screen())), want_empty, "{why}");
+            let rendered: Vec<String> = p.screen().rows(0, EMU_COLS).collect();
+            assert_eq!(
+                input_box_empty(&rendered, &typed_only(p.screen())),
+                want_empty,
+                "{why}"
+            );
         }
     }
 
@@ -13222,7 +13345,7 @@ mod ready_signal_tests {
     /// it is drawn `ESC[38;2;78;186;101m` (green) and the reduction already strips it.
     #[test]
     fn a_real_empty_composer_reads_busy_because_the_marker_is_not_default() {
-        let data = fs::read("fixtures/screens/composer_empty_reads_busy_2026-09-09.bin")
+        let data = fs::read(COMPOSER_ANCHOR_EVIDENCE)
             .expect("the real-screen fixture");
         let mut p = vt100::Parser::new(43, 201, 0);
         p.process(&data);
@@ -13249,15 +13372,30 @@ mod ready_signal_tests {
             "no prompt row survives anywhere, which is why input_box_empty falls to None => false"
         );
 
-        assert!(input_box_empty(&rendered), "the truth: this composer is empty");
+        assert!(input_box_empty(&rendered, &rendered), "the truth: this composer is empty");
+
+        // THE DEFECT, kept and now pinned to the CODE THAT HAD IT rather than to the live
+        // predicate. `input_box_empty` no longer has this bug, so asserting it of `input_box_empty`
+        // would have to be deleted — and deleting it would delete the only executable statement of
+        // what was wrong. The shipped rule is four lines; they are reproduced here, run against the
+        // same real screen, and they still fail. That is a regression test for the mechanism, not
+        // for the name.
+        let shipped = match typed
+            .iter()
+            .rposition(|l| capture::is_empty_box(l) || capture::is_prompt(l))
+        {
+            Some(i) => capture::is_empty_box(&typed[i]),
+            None => false,
+        };
         assert!(
-            !input_box_empty(&typed),
-            "THE DEFECT: the gate reads an empty composer as occupied and holds to the 240 s bound"
+            !shipped,
+            "THE DEFECT: the shipped rule read an empty composer as occupied and held 240 s"
         );
     }
 
-    /// THE ACCEPTANCE TEST FOR THE FIX — deliberately `#[ignore]`d, and it must stay that way
-    /// until a predicate exists that can pass it WITHOUT the unsafe shortcut.
+    /// THE ACCEPTANCE TEST FOR THE FIX — **un-ignored 2026-09-09 (L053)**, because the predicate
+    /// that passes it without the unsafe shortcut now exists: `composer_row` + `input_box_empty`.
+    /// It was written red before the fix and is left word for word as it was written.
     ///
     /// THE SHORTCUT, AND WHY IT IS REFUSED. The obvious repair is "keep the `❯` whatever colour
     /// it is drawn in". It passes this test and it is not safe. Once the marker survives at any
@@ -13275,16 +13413,175 @@ mod ready_signal_tests {
     /// fixture above). That is a STRUCTURAL anchor rather than a colour one, so it survives a
     /// recolour, and it separates scrollback prompt rows from the composer by construction
     /// rather than by hue. It needs its own fixtures and its own mutants — a packet, not a patch.
+    ///
+    /// WHAT WAS BUILT (L053), and it is not quite what the paragraph above predicted. The anchor
+    /// is there, and it is structural. But the shortcut was avoided by a second move the paragraph
+    /// did not see: the composer is LOCATED on the rendered grid and asked for EMPTINESS on the
+    /// reduced one. Keeping the marker in the reduction was never necessary — the reduction was
+    /// the wrong grid to ask where anything is.
     #[test]
-    #[ignore = "acceptance test for the composer fix; see the doc comment before un-ignoring"]
     fn an_empty_composer_must_read_empty_whatever_colour_the_marker_is_drawn_in() {
-        let data = fs::read("fixtures/screens/composer_empty_reads_busy_2026-09-09.bin")
-            .expect("the real-screen fixture");
+        let data = fs::read(COMPOSER_ANCHOR_EVIDENCE).expect("the real-screen fixture");
         let mut p = vt100::Parser::new(43, 201, 0);
         p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 201).collect();
         assert!(
-            input_box_empty(&typed_only(p.screen())),
+            input_box_empty(&rendered, &typed_only(p.screen())),
             "a ready pane with an empty composer must be delivered to, not held for 240 s"
+        );
+    }
+
+    /// THE SPLIT, PINNED ON THE REAL SCREEN. Located on the drawn grid, read on the reduced one.
+    ///
+    /// This is the assertion the fix rests on, and it is the one a future reader will be tempted to
+    /// simplify away: on this frame the composer's marker is NOT on the reduced grid at all, and the
+    /// composer is still found, because it is looked for somewhere else. Delete either half and the
+    /// gate goes back to holding a ready pane for four minutes.
+    #[test]
+    fn the_composer_is_found_on_the_drawn_grid_though_the_reduction_deleted_its_marker() {
+        let data = fs::read(COMPOSER_ANCHOR_EVIDENCE).expect("the real-screen fixture");
+        let mut p = vt100::Parser::new(43, 201, 0);
+        p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 201).collect();
+        let typed = typed_only(p.screen());
+
+        let i = composer_row(&rendered).expect("the anchor finds the composer on the drawn grid");
+        assert!(
+            is_separator_rule(&rendered[i - 1]),
+            "premise: the row above the composer is the full-width rule — {:?}",
+            rendered[i - 1].chars().take(12).collect::<String>()
+        );
+        assert!(
+            !typed[i].contains('\u{276f}'),
+            "premise: the reduction deleted the marker — that is WHY the anchor is needed"
+        );
+        assert!(
+            !typed.iter().any(|l| capture::is_empty_box(l) || capture::is_prompt(l)),
+            "premise: NO prompt row survives the reduction anywhere on this screen"
+        );
+    }
+
+    /// THE ANCHOR'S OWN CONTRACT, and the frame that tells this fix apart from the one L050
+    /// refused. **A `❯` row with no rule above it is not the composer, and unknown holds.**
+    ///
+    /// WHY IT IS NEEDED, stated because it corrects the packet that commissioned this: the mutant
+    /// "keep the marker at any colour" was to be caught by a greyed-prompt-row frame **already on
+    /// disk**, and there was none — no fixture here painted a prompt row non-Default with typing in
+    /// it. The mutant IS caught, by three frames, but by their PREMISES ("no prompt row survives the
+    /// reduction") rather than by the splice the refusal was about. This test is the frame that
+    /// answers the refusal's own question: the one place the shortcut and the anchor differ.
+    ///
+    /// AND THE FRAME THE REFUSAL WANTED NOW EXISTS — it was found while measuring for this one, and
+    /// it is `composer_slash_command_reads_empty_2026-09-09.bin`. It does not defend the anchor; it
+    /// indicts both. See `a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect`.
+    ///
+    /// SYNTHETIC, AND SAYING SO. This is a contract test, not a capture. It pins what the predicate
+    /// promises on a screen shaped like a restored pane's scrollback; the capture-backed claims all
+    /// live at `COMPOSER_ANCHOR_EVIDENCE`.
+    #[test]
+    fn a_prompt_row_with_no_rule_above_it_is_not_the_composer() {
+        let scrollback = vec![
+            "● an earlier reply".to_string(),
+            "\u{276f}".to_string(), // a bare prompt row with nothing above it
+            "  \u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle)".to_string(),
+        ];
+        assert!(
+            composer_row(&scrollback).is_none(),
+            "a `❯` row with no rule above it is scrollback, not an input box"
+        );
+        assert!(
+            !input_box_empty(&scrollback, &scrollback),
+            "and unknown HOLDS — this is the row the old rule would have delivered into"
+        );
+    }
+
+    /// THE FRAME L050 REFUSED ON, AND IT IS REAL AFTER ALL. Found 2026-09-09 by the probe, on the
+    /// fourth pane replayed at its own geometry, and it is the unwanted number of this packet.
+    ///
+    /// **When the keeper types a SLASH COMMAND, Claude Code draws his own text non-Default** —
+    /// `/model` in Rgb(177,185,249) — and the reduction blanks it. `input_box_empty` then reports
+    /// an EMPTY composer over a row he is in the middle of typing. That is the splice L050 declined
+    /// to trade a four-minute hold for, and the trade was already on the books: the SHIPPED rule
+    /// reads these frames empty too (29 of 75,876 anchored frames on that pane; the anchor, 30).
+    /// **The anchor did not cause it and does not fix it.** It is recorded here, executable, so it
+    /// cannot be lost between packets — this test asserts the DEFECT and must be inverted, not
+    /// deleted, by whatever closes it.
+    ///
+    /// WHAT WOULD EARN THE `#[ignore]`d test below, and it is a small change with a real blast
+    /// radius, which is why it is not in this packet: `typed_only` keeps DEFAULT and drops
+    /// everything else — an allow-list, so any colour Claude Code invents reads as chrome and
+    /// vanishes. Inverted to a DENY-list of the chrome greys actually measured — Rgb(153,153,153),
+    /// the prediction and the hints, and Rgb(136,136,136), the rule — an unknown colour would read
+    /// as TYPING and HOLD. Same reduction, opposite failure direction: today an unrecognised colour
+    /// splices, then it would stall, and a bounded stall is the recoverable one. It needs its own
+    /// colour census across every pane before it lands.
+    #[test]
+    fn a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect() {
+        let data = fs::read("fixtures/screens/composer_slash_command_reads_empty_2026-09-09.bin")
+            .expect("the slash-command fixture");
+        let mut p = vt100::Parser::new(21, 98, 0);
+        p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 98).collect();
+        let typed = typed_only(p.screen());
+
+        let i = composer_row(&rendered).expect("premise: the anchor finds the composer");
+        assert!(
+            rendered[i].contains("/model"),
+            "premise: the keeper has typed a slash command into it — row {i} is {:?}",
+            rendered[i].trim_end()
+        );
+        let m = rendered[i].chars().position(|c| c == '\u{276f}').expect("premise: a marker");
+        assert!(
+            typed[i].chars().skip(m + 1).collect::<String>().trim().is_empty(),
+            "premise: the reduction blanked HIS OWN TEXT, because it is not Default — {:?}",
+            typed[i].trim_end()
+        );
+        assert!(
+            input_box_empty(&rendered, &typed),
+            "THE DEFECT: a composer he is typing into reads empty, and a delivery splices his line"
+        );
+    }
+
+    /// The acceptance test for the defect above, `#[ignore]`d exactly as L050 ignored this
+    /// packet's — written red before the fix exists, so the fix has a bar it did not choose.
+    #[test]
+    #[ignore = "acceptance test for the slash-command splice; see the test above before un-ignoring"]
+    fn the_keeper_typing_a_slash_command_must_hold_a_delivery() {
+        let data = fs::read("fixtures/screens/composer_slash_command_reads_empty_2026-09-09.bin")
+            .expect("the slash-command fixture");
+        let mut p = vt100::Parser::new(21, 98, 0);
+        p.process(&data);
+        let rendered: Vec<String> = p.screen().rows(0, 98).collect();
+        assert!(
+            !input_box_empty(&rendered, &typed_only(p.screen())),
+            "his hand is in the composer — whatever colour the TUI chose to draw it in"
+        );
+    }
+
+    /// The rule that matters is the FULL-WIDTH one. A markdown rule inside a reply is drawn to the
+    /// content width inside a left margin, and it sits above plenty of things; if it counted, the
+    /// anchor would be back to guessing.
+    #[test]
+    fn a_rule_inside_a_reply_is_not_the_separator() {
+        assert!(is_separator_rule(&"\u{2500}".repeat(80)), "a bare full-width rule is one");
+        assert!(
+            is_separator_rule(&format!("{}   ", "\u{2500}".repeat(80))),
+            "trailing blanks are vt100's, not the screen's"
+        );
+        assert!(
+            !is_separator_rule(&format!("  {}", "\u{2500}".repeat(80))),
+            "a LEADING margin means a content rule — this is the one that must not anchor"
+        );
+        assert!(!is_separator_rule("── a heading ──"), "a rule with words in it is not one");
+        assert!(!is_separator_rule(""), "and a blank row is not a rule");
+
+        let indented = vec![
+            format!("  {}", "\u{2500}".repeat(80)),
+            "\u{276f}".to_string(),
+        ];
+        assert!(
+            composer_row(&indented).is_none(),
+            "an indented content rule must not promote the row under it to the composer"
         );
     }
 
@@ -13292,6 +13589,16 @@ mod ready_signal_tests {
     /// not, blanking non-default cells would delete the marker, `input_box_empty` would find no
     /// prompt row, and `None => false` would call every pane busy forever — a worse stall than the
     /// one being fixed, and silent.
+    ///
+    /// **AMENDED 2026-09-09 (L053). The paragraph above was right about the consequence and wrong
+    /// about the premise, and both halves are kept.** `❯` is Default in *this fixture* because
+    /// `box_screen` paints it so; on the real screen it is Rgb(153,153,153) in 1,713 of 1,740
+    /// anchored frames, the marker IS deleted, and the stall it predicts is exactly what happened.
+    /// The prediction was correct and the test could not see it — it pinned the model of the
+    /// screen. The test stays because the SECOND assertion is still load-bearing (the reduction
+    /// must preserve the grid's shape, which is what makes the two grids index-aligned); the first
+    /// no longer guards the gate, because `composer_row` looks for the marker on the drawn grid
+    /// where its colour cannot hide it.
 
     #[test]
     fn the_prompt_marker_survives_the_reduction() {
@@ -13325,6 +13632,8 @@ mod ready_signal_tests {
         p.process(b"\x1b[2J\x1b[H");
         p.process("● an earlier reply\r\n".as_bytes());
         p.process("\x1b[3;131H far-past-EMU_COLS ".as_bytes()); // a cell outside the old width
+        p.process("\x1b[39;1H".as_bytes()); // the separator rule, also outside the old height
+        p.process(format!("{RULE}{}{PLAIN}", "\u{2500}".repeat(150)).as_bytes());
         p.process("\x1b[40;1H".as_bytes()); // the composer, outside the old height
         p.process(format!("\u{276f}\u{a0}{PLAIN}{typed}{GHOST}{ghost}{PLAIN}").as_bytes());
         p.process("\x1b[42;3H\u{23f5}\u{23f5} bypass permissions on (shift+tab to cycle)".as_bytes());
@@ -13347,7 +13656,11 @@ mod ready_signal_tests {
             typed[39].trim_start().starts_with('\u{276f}'),
             "the composer at row 40 fell outside the read window — this pane can never be delivered to"
         );
-        assert!(input_box_empty(&typed), "an empty composer on a tall pane is EMPTY, not unknown");
+        let rendered: Vec<String> = s.rows(0, 150).collect();
+        assert!(
+            input_box_empty(&rendered, &typed),
+            "an empty composer on a tall pane is EMPTY, not unknown"
+        );
         assert!(
             typed[2].contains("far-past-EMU_COLS"),
             "the reduction stopped at column 120 — a wide row loses its tail with no wrap flag to say so"
@@ -13359,7 +13672,11 @@ mod ready_signal_tests {
     #[test]
     fn real_typing_on_a_tall_pane_still_holds_a_delivery() {
         let p = tall_box_screen("score it", "");
-        assert!(!input_box_empty(&typed_only(p.screen())), "typed text holds, whatever row it is on");
+        let rendered: Vec<String> = p.screen().rows(0, 150).collect();
+        assert!(
+            !input_box_empty(&rendered, &typed_only(p.screen())),
+            "typed text holds, whatever row it is on"
+        );
     }
 
     /// THE BLED FOOTER — a different defect in the same row, kept, with its mechanism CORRECTED.
@@ -13478,7 +13795,7 @@ mod inbox_tests {
             capture::is_working(&s),
             "premise: the old liveness check is fooled by the footer on this real screen"
         );
-        assert!(input_box_empty(&s), "premise: the composer is empty — nobody is typing");
+        assert!(input_box_empty(&s, &s), "premise: the composer is empty — nobody is typing");
         assert!(
             pane_idle_for_delivery(&s, &s, QUIET),
             "a pane finished 48 minutes ago must be deliverable"
@@ -13529,7 +13846,7 @@ mod inbox_tests {
         // The case the whole packet exists for: a ready-looking screen whose composer has words in
         // it. Delivering here is what cut his sentence in half mid-word.
         assert!(!pane_idle_for_delivery(&screen("❯ we need to get that solid before 8am", false), &screen("❯ we need to get that solid before 8am", false), QUIET));
-        assert!(!input_box_empty(&screen("❯ s", false)), "one character is still typing");
+        assert!(!input_box_empty(&screen("❯ s", false), &screen("❯ s", false)), "one character is still typing");
     }
 
     #[test]
@@ -13553,7 +13870,8 @@ mod inbox_tests {
     fn a_screen_with_no_prompt_row_at_all_holds() {
         // UNKNOWN HOLDS. A welcome banner, an overlay, or a screen this predicate cannot read is
         // not evidence of readiness. Bounded by MAX_HOLD_MS, never indefinite.
-        assert!(!input_box_empty(&["a full-screen overlay".to_string(), "with no box".to_string()]));
+        let overlay = ["a full-screen overlay".to_string(), "with no box".to_string()];
+        assert!(!input_box_empty(&overlay, &overlay));
     }
 
     #[test]

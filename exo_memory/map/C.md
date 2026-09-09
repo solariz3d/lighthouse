@@ -1109,3 +1109,52 @@ leaving it. The real finding is the second root.
 Hand-back: `exo_memory/handback/p-sync-launch-retire_2026-09-09.md` — §7 carries what cannot be
 verified without the second machine, and item 1 is the one that matters: **if the desktop's
 `machine_tag` is also "L", every foreign record reads as self and the retire never fires, silently.**
+
+## 2026-09-09 — L053: the anchor held, and the frame the refusal was built on turned out to be real
+
+**The composer is the `❯` row below the full-width rule — but that was only half the fix.** The
+other half is the one the packet did not name and the one to carry: **LOCATE on the drawn grid,
+ask EMPTINESS on the reduced one.** L050 refused "keep the marker at any colour" because it makes
+locating a colour question again; the answer was never to keep the marker, it was to stop asking
+the reduced grid *where* anything is. `typed_only` stays a pure colour reduction and never has to
+preserve the chrome it exists to remove. **When a fix looks like it needs a trade, check whether
+you are asking one instrument two questions.**
+
+**513/0/4 from 508/0/4. Red-first re-run at HEAD with the ignore lifted, not asserted.** Three
+mutants applied, three caught, no survivors — and the packet was WRONG about why: it said the
+shortcut mutant would be caught by "the greyed-prompt-row frame you already have on disk." **There
+was no such frame.** The catch came from premise assertions, and two of the three catching frames
+were ones I wrote this lap. A frame named in a brief is not a frame on disk; check.
+
+**MY INSTRUMENT WAS THE THING THAT LIED, TWICE, AND BOTH TIMES IN THE DIRECTION OF ALARM.** The
+probe read TRUTH at a row its own scan found and the VERDICT at the row the shipping code picks; on
+clamped screens those differ and it reported **1,763 splices that do not exist**. Then replaying a
+pane at 43x201 when it really ran 21x98 manufactured 2,271 more, because the app's own wrapping
+lands in different rows at a different width. **First number 1,763, real number 30.** Two rules
+out of it: read every verdict at the index the SHIPPING code picks, never at your own; and take
+geometry from the max cursor address in the raw log, never from the constants. This is L045/L049
+again in a new coat — I built the reader and trusted it before I checked it against the thing it
+reads.
+
+**THE UNWANTED NUMBER, and it is the one L050 refused on: it is REAL.** When the keeper types a
+**slash command**, Claude Code draws HIS OWN TEXT in Rgb(177,185,249) — non-Default — the reduction
+blanks it, and the composer reads EMPTY over a row he is typing into. 30 of 12,366 occupied
+composer rows. **The shipped code reads 29 of the same frames empty**, so the anchor neither caused
+it nor cured it, and it is 119,599 frames better on the hold side. I did not fix it: the fix is
+inverting `typed_only` from an allow-list of Default to a deny-list of the measured chrome greys,
+which flips every unknown colour from splice to bounded hold — right change, different blast
+radius, and not on the night before an unattended desktop build. **Left executable rather than in
+prose:** a real fixture cut at the byte offset the probe reported, a GREEN test that asserts the
+DEFECT (invert it, do not delete it), and an `#[ignore]`d acceptance test written red — the exact
+shape L050 left this packet in, which is the only reason tonight's fix existed.
+
+**Shipped-gate cost, measured: it held a ready pane with an empty composer on 138,758 of 157,946
+anchored frames — 88%.** That is why a stop signal could not outrun the thing it was stopping.
+
+**Not verified, and it is the same hole as L052 §7:** nothing has run inside the app. Said in the
+hand-back as a hard constraint — this must not reach the desktop's first build unless a rebuild
+and launch happens here first, and that call is the keeper's, not the schedule's.
+
+Hand-back: `exo_memory/handback/p-composer-anchor_2026-09-09.md` — §5 is the finding that matters
+and §7 item 3 names the hazard this fix does NOT close (restored scrollback with a covered
+composer, identical to shipped, unmeasured for want of a real capture).
