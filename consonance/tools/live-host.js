@@ -542,3 +542,229 @@ module.exports = {
   policy, staleAfterMs, whose, identityHazard, absenceClass, liveness, wallClockAge,
   decide, forcedRecord,
 };
+
+// =================================================================================================
+// L052 · P-LIVE-MIRROR — THE UNIT CHANGED FROM MACHINE TO SEAT, AND WHAT THAT COSTS
+// =================================================================================================
+//
+// Everything above decides ONE lease for ONE machine. The keeper's spec needs one per SEAT
+// (`refs/consonance/live/<seat>`), because both machines are on at once and a follower takes over a
+// single seat by being typed into. The decision itself transfers unchanged — decide() is
+// indifferent to what the lease is ABOUT — so what follows is the seat dimension and nothing else.
+//
+// THE PART THAT DID NOT TRANSFER is section 3 below. A machine lease is taken at LAUNCH, when
+// nothing is in flight. A seat lease can be taken MID-TURN, because the other machine has a
+// keyboard and a human at it. The machine design had no opinion about that and needed one.
+
+// -------------------------------------------------------------------------------------------------
+// 1 · THE REF NAME — an allowlist, not an escape
+//
+// `git push origin <sha>:refs/consonance/live/<seat>` interpolates a seat name into a ref. Probed
+// against the real remote (2026-09-09): git refuses a traversal itself — `refs/consonance/live/
+// ../../heads/main` dies at "fatal: invalid refspec", and `git check-ref-format` exits 1. So the
+// traversal is NOT the live hazard, and a guard written against it would be guarding a closed door.
+//
+// What check-ref-format ACCEPTS and this does not: a seat named `-x`. That is a valid ref component
+// and a git OPTION at the argv boundary. An allowlist closes the class instead of the instance.
+
+const SEAT_RE = /^[A-Za-z][A-Za-z0-9_]{0,31}$/;
+const LEASE_NS = 'refs/consonance/live';
+
+function seatHazard(seat) {
+  if (typeof seat !== 'string' || seat === '') {
+    return 'seat name is empty: a lease ref cannot be formed';
+  }
+  if (!SEAT_RE.test(seat)) {
+    return `seat name ${JSON.stringify(seat)} is not [A-Za-z][A-Za-z0-9_]{0,31}: refused rather than escaped`;
+  }
+  return null;
+}
+
+/** The lease ref for one seat. Throws rather than returning a malformed ref — this reaches argv. */
+function leaseRef(seat) {
+  const bad = seatHazard(seat);
+  if (bad) throw new Error(`leaseRef: ${bad}`);
+  return `${LEASE_NS}/${seat}`;
+}
+
+// -------------------------------------------------------------------------------------------------
+// 2 · THE MEASURED BOUND — in code, so it re-derives instead of being quoted
+//
+// The keeper named these BEFORE anything existed to measure, which is the only reason they mean
+// anything: <= 5 s internet, <= 1 s LAN.
+//
+// MEASURED 2026-09-09 ~03:35, this laptop -> github.com over HTTPS, against the real state repo.
+// Each figure is the median of a run whose command is printed in the hand-back:
+//
+//   lease push (orphan commit, no content)            ~1 800 ms   (n=8)
+//   lease read (`git ls-remote` one ref)              ~1 000 ms   (n=8)
+//   state push (4.7 MB tail rewritten + board rows)   ~2 500 ms   (n=6)
+//   state fetch (the same delta, at the follower)     ~2 160 ms   (n=1)
+//   checkout                                            ~100 ms   (n=1)
+//
+// Two round trips fall out of those and they do NOT get the same answer:
+//
+//   LEASE  = push + read              ~2 800 ms   fits, with ~2.2 s left for a poll interval
+//   STATE  = push + fetch + checkout  ~4 790 ms   fits ONLY at a zero poll interval
+//
+// The state figure is a FLOOR, measured with the follower polling in a tight loop — not a system
+// anybody would run, and one that would hammer the remote. Any real poll interval adds on top and
+// breaks the bound. That is the refusal, and it is a function rather than a sentence so that a
+// later reader can re-run it against better numbers instead of believing mine.
+
+const BOUND_INTERNET_MS = 5_000;
+const BOUND_LAN_MS = 1_000;
+
+const MEASURED = Object.freeze({
+  at: '2026-09-09T09:35Z',
+  transport: 'https',
+  leasePushMs: 1_800,
+  leaseReadMs: 1_000,
+  statePushMs: 2_500,
+  stateFetchMs: 2_160,
+  checkoutMs: 100,
+  note: 'medians, this laptop -> github.com over HTTPS. SSH is UNMEASURED: no key is configured '
+    + 'on this machine, so the one optimisation that could change the state verdict is untested.',
+});
+
+/**
+ * Does a round trip fit the bound once the poll interval is counted?
+ * Returns { kind, bound, floorMs, worstMs, headroomMs, fits }.
+ */
+function roundTrip(kind, pollMs, m = MEASURED, bound = BOUND_INTERNET_MS) {
+  if (kind !== 'lease' && kind !== 'state') throw new Error(`roundTrip: unknown kind ${kind}`);
+  const floorMs = kind === 'lease'
+    ? m.leasePushMs + m.leaseReadMs
+    : m.statePushMs + m.stateFetchMs + m.checkoutMs;
+  const worstMs = floorMs + (Number.isFinite(pollMs) ? pollMs : 0);
+  return Object.freeze({ kind, bound, floorMs, worstMs, headroomMs: bound - worstMs, fits: worstMs <= bound });
+}
+
+/** The largest poll interval that still fits. <= 0 means the bound is unreachable at any cadence. */
+function maxPollMs(kind, m = MEASURED, bound = BOUND_INTERNET_MS) {
+  return roundTrip(kind, 0, m, bound).headroomMs;
+}
+
+// -------------------------------------------------------------------------------------------------
+// 3 · HANDOFF — what happens to a seat that is mid-turn when its lease is taken
+//
+// THIS IS AN INVARIANT I ALREADY OWN, NOW ACROSS A NETWORK. L050: *moving the baton TO panes never
+// traps anyone; moving it AWAY is the only trapping move there is.* A follower acquiring a live
+// seat's lease is exactly moving it away — and the trapped party is now on another machine,
+// mid-generation, with its own human watching it.
+//
+// WHAT MAKES THIS WORSE THAN THE ONE-MACHINE CASE IS A PROPERTY OF THE DATA, NOT THE PROTOCOL. The
+// board and the ledgers are APPEND-ONLY, and two hosts' appends merge by concatenate-and-sort —
+// that recoverability is the load-bearing premise of the failure-direction ruling above. THE TAILS
+// ARE REWRITTEN. A rewritten file has no merge; one host's version replaces the other's. So an
+// evicted mid-turn seat can lose exactly one thing, and it is the transcript tail of the turn it
+// was in the middle of. The premise that licensed failing open does not hold for the tails.
+//
+// THEREFORE ACQUIRING A *LIVE* SEAT IS NOT A BREAK BY DEFAULT. It is a REQUEST, honoured by the
+// holder at its next turn boundary. That takes the clock out of the decision the same way the lease
+// did: the follower waits for an EVENT — the turn ending — not for a duration nobody can calibrate.
+// A holder that is dead rather than busy stops advancing its token, and the stale path above
+// already covers that with no new mechanism.
+//
+// AND THE KEEPER CAN STILL TAKE IT. Failing toward letting the human in is not weakened here:
+// TAKE_FORCED exists and is one confirmation away. What it may never be is SILENT, and what the
+// dialog must say BEFORE the click is which turn it is about to orphan.
+
+const HANDOFF = Object.freeze({
+  ACQUIRE_FREE: 'ACQUIRE_FREE',   // nobody holds it
+  RECLAIM_SELF: 'RECLAIM_SELF',   // already ours
+  REQUEST: 'REQUEST',             // holder is live: queued, honoured at its turn boundary
+  TAKE_STALE: 'TAKE_STALE',       // holder stopped advancing under our own observation
+  TAKE_FORCED: 'TAKE_FORCED',     // the human overrides a live holder; orphans a turn
+});
+
+/**
+ * What acquiring THIS seat means right now.
+ *
+ * input = { seat, selfId, lease, liveness, turnActive, forced }
+ *   lease       { holder } | null (free) | 'UNAVAILABLE' (remote unreachable)
+ *   liveness    one of LIVENESS.*, from liveness() against this seat's own observation
+ *   turnActive  whether the HOLDER reports a turn in flight, from its published beat
+ *   forced      the human confirmed a take
+ */
+function handoff(input) {
+  const bad = seatHazard(input.seat);
+  if (bad) throw new Error(`handoff: ${bad}`);
+  const lease = input.lease;
+
+  // Offline, a seat lease cannot be ACQUIRED, only asserted — and asserting one is how two drivers
+  // happen. This is the one branch that refuses, and it refuses to publish rather than to work.
+  if (lease === 'UNAVAILABLE') {
+    return Object.freeze({
+      action: null, enforced: false, blocked: true, orphans: null,
+      reason: 'the remote is unreachable: this seat cannot be acquired, only claimed locally, '
+        + 'and a locally-claimed seat is exactly how two drivers happen',
+    });
+  }
+  if (lease === null || lease === undefined) {
+    return Object.freeze({ action: HANDOFF.ACQUIRE_FREE, enforced: true, blocked: false,
+      orphans: null, reason: `no host holds ${input.seat}` });
+  }
+  const holder = lease.holder;
+  if (holder && holder === input.selfId) {
+    return Object.freeze({ action: HANDOFF.RECLAIM_SELF, enforced: true, blocked: false,
+      orphans: null, reason: `${input.seat} is already this host's` });
+  }
+  if (input.liveness === LIVENESS.UNCHANGED) {
+    return Object.freeze({ action: HANDOFF.TAKE_STALE, enforced: true, blocked: false,
+      orphans: null,
+      reason: `${input.seat}'s holder stopped advancing under this machine's own observation` });
+  }
+  if (input.forced === true) {
+    return Object.freeze({ action: HANDOFF.TAKE_FORCED, enforced: true, blocked: false,
+      // Named so the dialog can say it before the click, not the log after it.
+      orphans: input.turnActive === true ? 'a turn in flight on the other host' : null,
+      reason: `the human took ${input.seat} from a live holder` });
+  }
+  return Object.freeze({
+    action: HANDOFF.REQUEST, enforced: true, blocked: false, orphans: null,
+    reason: input.liveness === LIVENESS.UNOBSERVED
+      ? `${input.seat}'s holder has not been watched long enough to call it stale; requested rather than taken`
+      : `${input.seat}'s holder is live; the handoff is honoured at its next turn boundary`,
+  });
+}
+
+/**
+ * The EVICTED HOLDER's side — what a seat does when it learns from its own failed
+ * force-with-lease that it no longer holds its lease. Three moves, one defensible:
+ *
+ *   (a) abort the turn        destroys work that cannot be regenerated.  REFUSED.
+ *   (b) finish, do not push   work survives locally, divergence named.   TAKEN.
+ *   (c) finish and push       two drivers, silently.                     THE FAILURE THIS LAP IS FOR.
+ *
+ * (b) is the failure-direction ruling turned around: that one fails toward letting the human IN,
+ * this one fails toward not DESTROYING what he already has. Same principle, other end of the turn.
+ */
+function evicted({ seat, turnActive }) {
+  const bad = seatHazard(seat);
+  if (bad) throw new Error(`evicted: ${bad}`);
+  return Object.freeze({
+    finishTurn: true,   // never (a): an in-flight turn is not regenerable
+    push: false,        // never (c): the lease is what licenses publication
+    quarantine: turnActive === true,
+    reason: turnActive === true
+      ? `${seat} was taken by another host mid-turn: this turn completes locally and is NOT published`
+      : `${seat} was taken by another host: this host stops publishing it`,
+    // An eviction that leaves no row is indistinguishable from one that never happened — F2 on a
+    // new surface.
+    row: Object.freeze({ kind: 'evicted', seat, turnActive: turnActive === true }),
+  });
+}
+
+module.exports.SEAT_RE = SEAT_RE;
+module.exports.LEASE_NS = LEASE_NS;
+module.exports.BOUND_INTERNET_MS = BOUND_INTERNET_MS;
+module.exports.BOUND_LAN_MS = BOUND_LAN_MS;
+module.exports.MEASURED = MEASURED;
+module.exports.HANDOFF = HANDOFF;
+module.exports.seatHazard = seatHazard;
+module.exports.leaseRef = leaseRef;
+module.exports.roundTrip = roundTrip;
+module.exports.maxPollMs = maxPollMs;
+module.exports.handoff = handoff;
+module.exports.evicted = evicted;

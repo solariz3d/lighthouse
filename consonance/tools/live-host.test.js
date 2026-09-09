@@ -392,3 +392,146 @@ test('the default policy is used when none is passed, and 8 minutes is what it m
     observation: null, nowLocalMs: T0 });
   assert.match(d.reason, /480000ms/, 'the default threshold must be the derived 8 minutes');
 });
+
+// =================================================================================================
+// L052 · P-LIVE-MIRROR — the seat dimension, the measured bound, and the handoff
+// =================================================================================================
+//
+// Same discipline as above: every input is a literal, nothing here touches fs, git, a clock or a
+// network. The REAL remote was exercised separately by an end-to-end script whose output is quoted
+// in the hand-back; these are the bars the pure decisions have to clear.
+
+test('a seat name that is a git OPTION at the argv boundary is refused, not escaped', () => {
+  // check-ref-format ACCEPTS `-x` — it is a valid ref component. It is `git push`'s argv that it is
+  // dangerous in. This is the case the allowlist exists for; the traversal case git blocks itself.
+  assert.ok(H.seatHazard('-x'), '`-x` must be refused');
+  assert.ok(H.seatHazard('--upload-pack=evil'), 'an option-shaped seat must be refused');
+  assert.ok(H.seatHazard('../../heads/main'), 'a traversal must be refused here too, not only by git');
+  assert.ok(H.seatHazard(''), 'empty must be refused');
+  assert.ok(H.seatHazard('9lives'), 'a seat must start with a letter');
+  assert.ok(H.seatHazard('a'.repeat(33)), 'an over-long seat must be refused');
+  assert.strictEqual(H.seatHazard('E'), null);
+  assert.strictEqual(H.seatHazard('MAIN'), null);
+  assert.strictEqual(H.seatHazard('third_place'), null);
+});
+
+test('leaseRef THROWS on a bad seat rather than returning a malformed ref', () => {
+  // Returning a string here would put it on a command line. Throwing is the only safe failure.
+  assert.throws(() => H.leaseRef('-x'), /refused rather than escaped/);
+  assert.throws(() => H.leaseRef(''), /cannot be formed/);
+  assert.strictEqual(H.leaseRef('E'), 'refs/consonance/live/E');
+});
+
+test('the measured bound: the LEASE round trip fits and the STATE round trip does not', () => {
+  // The keeper named 5 s before anything existed to measure, which is the only reason this test
+  // can mean anything. These numbers were measured 2026-09-09 against the real remote.
+  const lease = H.roundTrip('lease', 1500);
+  assert.ok(lease.fits, `the lease round trip must fit: ${JSON.stringify(lease)}`);
+
+  const state = H.roundTrip('state', 1500);
+  assert.strictEqual(state.fits, false, 'the state round trip does NOT fit at a realistic poll');
+
+  // And the sharp form: the state mirror has almost no poll budget at all.
+  assert.ok(H.maxPollMs('state') < 500,
+    `the state mirror must be recorded as having under half a second of poll budget, got ${H.maxPollMs('state')}`);
+  assert.ok(H.maxPollMs('lease') > 1500,
+    `the lease must have room for a realistic poll, got ${H.maxPollMs('lease')}`);
+});
+
+test('the bound is a comparison against the KEEPER\'s number, not against whatever we measured', () => {
+  // Guards the failure where someone "fixes" a red bound by moving the bound.
+  assert.strictEqual(H.BOUND_INTERNET_MS, 5000);
+  assert.strictEqual(H.BOUND_LAN_MS, 1000);
+  // Nothing measured may be silently absent: a missing figure must not read as zero cost.
+  for (const k of ['leasePushMs', 'leaseReadMs', 'statePushMs', 'stateFetchMs', 'checkoutMs']) {
+    assert.ok(Number.isFinite(H.MEASURED[k]) && H.MEASURED[k] > 0, `${k} must be a real measurement`);
+  }
+  assert.match(H.MEASURED.note, /ssh is UNMEASURED/i,
+    'the untested alternative must be carried in the record, not only in the hand-back');
+});
+
+// ── THE HANDOFF ────────────────────────────────────────────────────────────────────────────────
+
+const seatIn = (o) => ({ seat: 'E', selfId: SELF, lease: { holder: OTHER },
+  liveness: H.LIVENESS.ADVANCING, turnActive: false, forced: false, ...o });
+
+test('a free seat is acquired, and one we already hold is reclaimed', () => {
+  assert.strictEqual(H.handoff(seatIn({ lease: null })).action, H.HANDOFF.ACQUIRE_FREE);
+  assert.strictEqual(H.handoff(seatIn({ lease: { holder: SELF } })).action, H.HANDOFF.RECLAIM_SELF);
+});
+
+test('a holder that stopped advancing under OUR OWN observation may be taken', () => {
+  const r = H.handoff(seatIn({ liveness: H.LIVENESS.UNCHANGED }));
+  assert.strictEqual(r.action, H.HANDOFF.TAKE_STALE);
+  assert.match(r.reason, /own observation/, 'the reason must say whose clock decided');
+});
+
+test('THE INVARIANT — a LIVE foreign holder is never broken except by an explicit human force', () => {
+  // L050, across a network: moving the baton TO panes never traps anyone; moving it AWAY is the
+  // only trapping move there is. This is that, as a property over the whole non-forced input space.
+  const livelike = [H.LIVENESS.ADVANCING, H.LIVENESS.UNOBSERVED, H.LIVENESS.NEVER_STARTED];
+  for (const live of livelike) {
+    for (const turnActive of [true, false, null]) {
+      const r = H.handoff(seatIn({ liveness: live, turnActive, forced: false }));
+      assert.notStrictEqual(r.action, H.HANDOFF.TAKE_FORCED,
+        `unforced take on liveness=${live}`);
+      assert.notStrictEqual(r.action, H.HANDOFF.TAKE_STALE,
+        `a non-UNCHANGED holder must never be taken as stale (liveness=${live})`);
+    }
+  }
+});
+
+test('a forced take must NAME the turn it orphans, before the click and not in the log after', () => {
+  const r = H.handoff(seatIn({ forced: true, turnActive: true }));
+  assert.strictEqual(r.action, H.HANDOFF.TAKE_FORCED);
+  assert.ok(r.orphans, 'a forced take over a live turn that does not say what it destroys is the silent failure');
+  // And it must NOT invent a casualty when there is no turn in flight.
+  assert.strictEqual(H.handoff(seatIn({ forced: true, turnActive: false })).orphans, null);
+});
+
+test('offline, a seat is BLOCKED rather than claimed — an asserted lease is how two drivers happen', () => {
+  const r = H.handoff(seatIn({ lease: 'UNAVAILABLE' }));
+  assert.strictEqual(r.blocked, true);
+  assert.strictEqual(r.enforced, false, 'nothing is enforced when the remote cannot be reached');
+  assert.strictEqual(r.action, null, 'no action may be named for a lease that could not be read');
+});
+
+test('handoff refuses a bad seat name at the door', () => {
+  assert.throws(() => H.handoff(seatIn({ seat: '-x' })), /refused rather than escaped/);
+});
+
+// ── THE EVICTED HOLDER ─────────────────────────────────────────────────────────────────────────
+
+test('an evicted holder finishes its turn, never publishes it, and says which of the two it did', () => {
+  const mid = H.evicted({ seat: 'E', turnActive: true });
+  assert.strictEqual(mid.finishTurn, true, 'aborting destroys work that cannot be regenerated');
+  assert.strictEqual(mid.push, false, 'publishing without the lease IS the double-driver failure');
+  assert.strictEqual(mid.quarantine, true);
+  assert.match(mid.reason, /NOT published/);
+
+  const idle = H.evicted({ seat: 'E', turnActive: false });
+  assert.strictEqual(idle.push, false, 'an idle evicted holder still may not publish');
+  assert.strictEqual(idle.quarantine, false, 'nothing is quarantined when nothing was in flight');
+});
+
+test('every eviction leaves a row — one that leaves none is indistinguishable from none happening', () => {
+  const r = H.evicted({ seat: 'E', turnActive: true });
+  assert.ok(r.row && r.row.kind === 'evicted' && r.row.seat === 'E');
+  assert.strictEqual(r.row.turnActive, true);
+  assert.ok(Object.isFrozen(r) && Object.isFrozen(r.row), 'a record a caller can edit is not a record');
+});
+
+test('evicted refuses a bad seat name too', () => {
+  assert.throws(() => H.evicted({ seat: '../x', turnActive: true }), /refused/);
+});
+
+test('the bound is INCLUSIVE: a round trip landing exactly ON it still fits', () => {
+  // Added because a mutant SURVIVED (`<=` -> `<`): no test sat on the boundary, so the difference
+  // between "at the bound" and "over it" was unmeasured. It matters here more than anywhere —
+  // the state mirror's entire verdict is a boundary call against the keeper's 5 s.
+  const exact = H.roundTrip('state', H.maxPollMs('state'));
+  assert.strictEqual(exact.worstMs, H.BOUND_INTERNET_MS, 'this poll should land exactly on the bound');
+  assert.strictEqual(exact.fits, true, 'exactly at the bound is within the bound');
+  assert.strictEqual(H.roundTrip('state', H.maxPollMs('state') + 1).fits, false,
+    'one millisecond over the bound is over the bound');
+});

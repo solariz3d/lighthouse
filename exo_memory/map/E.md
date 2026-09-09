@@ -900,3 +900,71 @@ portable-paths closed: `--update`, 171→176 sites, **+5 and nothing else** (eve
 identical to the count; `git diff` shows five `identityHazard` lines in live-host.test.js). Checked
 rather than assumed, because `--update` rewrites from the whole tree and four panes were editing it.
 Cargo re-run after both harnesses restored: 479/1/4, the 1 still C's `offset_tests`.
+
+## 2026-09-09 ~04:5x · L052 · P-LIVE-MIRROR — the lease clears the bound, the state mirror does not, and I took half the refusal
+
+**Hand-back:** `exo_memory/handback/p-live-mirror_2026-09-09.md`. `live-host.js` +220 (the seat
+dimension), test 25→39; `live-follow.js` and `live-mirror-stop.js` + its test (8) new; one additive
+line in `dev/shell/install.ps1`. **Nothing committed.**
+
+**THE OBJECTIVE HAD TWO HALVES AND THEY GET DIFFERENT ANSWERS, WHICH IS WHY "DID IT WORK" WAS THE
+WRONG QUESTION.** Lease round trip **2 800 ms** — clears the keeper's 5 s with 2.2 s of poll budget.
+State round trip **4 760 ms at a ZERO poll interval**, largest poll that still fits **240 ms** — so
+*never two drivers* is delivered and *see it on the other machine* is not. **Refuse the half that
+fails and ship the half that works; a single verdict over a two-part objective would have been
+wrong either way it went.**
+
+**PROBE BEFORE BUILD, AND IT PAID TWICE.** `refs/consonance/live/<seat>` pushes to GitHub — no
+branch fallback taken. And `--force-with-lease` with an explicit expect works **with no
+remote-tracking ref**, which was the one doubt the whole enforcement layer rested on. **The design
+had it listed as UNVERIFIED and the packet made me check; it would have been the load-bearing
+assumption nobody tested.**
+
+**THE INVARIANT I ALREADY OWNED, NOW ACROSS A NETWORK — and it undercut a premise of my own earlier
+ruling.** L050: moving the baton away is the only trapping move. L049's failure-direction ruling
+licensed failing open *because divergence is recoverable* — append-only sets merge by
+concatenate-and-sort. **THE TAILS ARE REWRITTEN AND HAVE NO MERGE.** So the premise does not hold
+where it matters, and acquiring a LIVE seat is a **REQUEST honoured at the holder's next turn
+boundary**, not a break — waiting on an EVENT, not a duration. Forced take stays available, names
+the turn it orphans **before the click**, and the evicted holder **finishes its turn and refuses to
+publish**. **Check whether the premise that licensed a ruling still holds on the new surface.**
+
+**F1 FINALLY FIRED.** The L049 design's largest gap was *no end-to-end double-live has been
+attempted*. Two clones, the real remote, **15/15** — including the one worth having: **the displaced
+holder learns of its eviction from nothing but its own failed heartbeat.** No message, no timeout,
+no clock. Designed on paper in L049, never run until tonight.
+
+**THE MISTAKE, AND IT IS L050'S OWN LESSON FOUR MORE TIMES IN ONE SESSION.** `| tail` made `$?`
+report exit=0 on a refused push. The SSH run clocked **78–86 ms** and I nearly reported
+"multiplexing is 10× faster" — it was timing `Permission denied (publickey)`. The mutant harness
+called **every** mutant UNKNOWN because its regex anchored at `^` and node:test's ANSI escape sits
+there. **And the script written to fix that printed `patched` and changed nothing.** The shared root
+is not carelessness about `$?`: **in each case the instrument had no way to say "I could not tell",
+so it said the thing that looked like a result.** Build the third arm first — **then verify the
+verification landed**, because the fourth was the repair for the third failing in the third's way.
+
+**THE CONTROLS ARE THE ONLY REASON ANY OF THAT IS LEGIBLE.** With the classifier broken the run
+returned **VOID — 14 did not behave** — instead of a clean 12-of-12. Final: **12 mutants, 12 caught;
+2 survive-controls survived; 1 skip-control skipped; source restored byte-for-byte.** One mutant
+genuinely survived (`<=`→`<`) because **no test sat on the boundary — and the state verdict IS a
+boundary call**; closed it, 39 tests not 38. **A mutant harness without a mutant that must survive
+cannot detect its own failure.**
+
+**AND THE ROOM'S INSTRUMENT CAUGHT ME.** `install-only.test.js` went red: my hook was **UNDECLARED**
+— on no manifest entry and no unmanaged declaration, nobody had ruled. Declared it unmanaged with
+its reason, because **the ruling was prose and the installer is data**, which is that test's own
+founding lesson aimed at me. Worse and better: the other unmanaged hooks are unmanaged partly for
+carrying no `CONSONANCE_DREAM` guard — **mine had none either, and it is the worst member of that
+class: a dream runs unattended and this hook moves the lease deciding which machine may drive a
+seat. A sleeping machine would have quietly held seats against a waking one.** Guard added.
+
+**Did not verify:** the state mirror **has never run** — default OFF, and that default is a decision
+(unattended per-turn publishing outward is the keeper's, and it would not meet the bound anyway).
+The hook is **not registered in settings.json** and has never fired from a real turn. No live pane
+was ever mid-generation when its lease was taken. The three heartbeat outcomes are separated by
+**matching git's prose on stderr** — a git reword would silently reclassify an eviction as an error.
+**`turnActive` is threaded but never sourced**, so the forced-take dialog cannot yet truthfully say
+what it will orphan: the ruling is real, the input does not exist. Registered F3: **if SSH
+multiplexing clears 5 s, my refusal was of HTTPS and not of a git remote** — check it before anyone
+builds a peer channel on the strength of it. `portable-paths` and `state-sync` red are A's; I
+reported and left them rather than rule on another seat's site.
