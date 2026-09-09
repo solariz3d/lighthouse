@@ -806,3 +806,63 @@ enforcement layer rests on it**; no end-to-end double-live attempted, so **F1 ha
 to fire**; mutants are of my own module, not cell-level. **I refused to quote a before-count for the
 suite** — I truncated my own baseline with `tail -25` and threw the summary away, and a "was 80, now
 81" would have been hand-made. Named the three pre-existing reds instead.
+
+---
+
+## 2026-09-09 ~02:0x · L050 · P-RETURN-LEG — I proved the gate I was asked for was unbuildable, then built the one that is
+
+**Hand-back:** `exo_memory/handback/p-return-leg_2026-09-09.md`. Code + 10 tests in
+`consonance/src-tauri/src/mcp.rs`. cargo 479/1/4 (the 1 is C's `offset_tests` EXPECTED-RED);
+9 mutants, 9 caught, 0 survived. Nothing committed.
+
+**THE RULE AS WRITTEN CANNOT EXIST, AND THE PROOF IS THREE LINES OF THE STATION TABLE.**
+`chair_inject` needs holder `chair`; `call_librarian` needs holder `panes`. With one open lap those
+are exclusive — so **every** chair_inject happens while its target cannot answer, and the correct
+fan-out and the trapping follow-up are **the same ledger state at the instant of the call.** A
+pre-condition cannot separate identical states. And requiring a `--holder panes` row *first*
+inverts lap-row.js's own "ring first, row second", whose gate needs a chair→pane delivery in the
+possession — the very call being refused. **It deadlocks exactly where it fires**, firing a
+falsifier a sibling registered on 09-03. **When a packet names both a rule and its site, check
+whether the rule can exist before choosing between sites.**
+
+**AND NEITHER COULD THE OTHER SITE.** The relocation offer (lap-row.js) fails because the failure
+was the *absence of a row*: the chair ran no command at all for 29 minutes, so a gate inside that
+writer sits silent through the whole event. **My L044 sentence on a third surface — a property
+expressed as an absence cannot fail on the case nobody named.**
+
+**SO I MOVED THE ENFORCEMENT TO THE FIRST MOMENT THE TRAP IS DISCRIMINABLE** — the pane's refused
+hand-back. Two marks (RUNG on a successful inject, OWED on a refused hand-back), each read only
+against **the baton's last move**, never a clock. **The marks clear themselves when the recovery row
+lands: the thing that fixes the state is the thing that erases the flag.** Same move as the
+live-host lease — take time out of the decision instead of picking a better number for it.
+
+**THE THING I FOUND THAT NOBODY ASKED FOR: the trapped pane always had a legal exit and was never
+told.** `--by` equal to `--holder` is a RETAKE, allowed with no ring, so a pane can always take the
+baton and then hand back. That command was printed **on the board line** — the one place a pane
+waiting on a tool result is not reading. **Naming a recovery where the stuck party cannot see it is
+not naming it.** And the old refusal told every pane "the loop comes back to you", which in the trap
+is simply FALSE; A obeyed it for 29 minutes.
+
+**I DROPPED THE INTERRUPT CARVE-OUT RATHER THAN INHERIT IT.** A self-declared `interrupt: true` is
+`--by`'s self-report with the incentives reversed: `--by` costs you nothing to be honest about,
+an interrupt flag **buys standing**, and the caller under pressure is exactly who reaches for it.
+Nothing is lost in the ordinary case (the gate fires only on an owed hand-back); what IS lost is one
+printed command's delay in the one state where it fires, and that debt is the chair's own.
+
+**THE ONE TO CARRY, AND IT IS ABOUT MY OWN INSTRUMENT.** My first mutant run reported all nine as
+*"did not compile"* — including `>=`→`>`. `cargo test` prints `error: test failed` **for a red
+test**, so my classifier could not tell *the build never ran* from *the tests ran and failed*, and
+it reported the wrong one nine times, uniformly, looking fine. **Done-vs-never-started inside the
+harness built to check the fix for done-vs-never-started, one hour after I wrote that section.**
+js-suite.js already owns the repair — *the summary line is the evidence* — and I now require a
+`test result:` line before reading a count, with an UNKNOWN bucket for neither. **I caught it because
+the result was too uniform to be true, not because anything checked it. Build the classifier's third
+arm first; a two-arm classifier will invent the missing one.**
+
+**Did not verify:** nothing ran end to end, no live pane trapped and rescued, no rebuild. **The
+pane's retake is read out of lap-row.js, not executed** — if it is refused in practice my second
+recovery line is worse than useless, and that is the first thing to check. Marks are per-process
+and forgotten on restart (fails toward allow). The RUNG mark is not matched to the caller — a
+widening I named rather than resolved, because matching a pane-id prefix is a guess. Cargo delta was
++11 for my 10; **the eleventh is another pane's landing in the shared tree, and I reported the
+arithmetic rather than the number I wanted.**

@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 94,
+    "BENIGN-TEST": 99,
     "REVIEW": 17,
     "DISGUISED": 14,
     "BENIGN-MESSAGE": 5,
@@ -754,6 +754,41 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');",
       "key": "consonance/tools/lap-row.test.js\u0000assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/live-host.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(H.identityHazard('', 'C:\\\\Consonance\\\\data'), /identity cannot be established/);",
+      "key": "consonance/tools/live-host.test.js\u0000assert.match(H.identityHazard('', 'C:\\\\Consonance\\\\data'), /identity cannot be established/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/live-host.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(H.identityHazard('C:/Consonance/DATA/sub/install_id.json', 'c:\\\\consonance\\\\data\\\\'),",
+      "key": "consonance/tools/live-host.test.js\u0000assert.match(H.identityHazard('C:/Consonance/DATA/sub/install_id.json', 'c:\\\\consonance\\\\data\\\\'),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/live-host.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(H.identityHazard('C:\\\\Consonance\\\\data\\\\install_id.json', 'C:\\\\Consonance\\\\data'),",
+      "key": "consonance/tools/live-host.test.js\u0000assert.match(H.identityHazard('C:\\\\Consonance\\\\data\\\\install_id.json', 'C:\\\\Consonance\\\\data'),\u0000#1"
+    },
+    {
+      "file": "consonance/tools/live-host.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(H.identityHazard('C:\\\\Consonance\\\\database\\\\id.json', 'C:\\\\Consonance\\\\data'), null,",
+      "key": "consonance/tools/live-host.test.js\u0000assert.strictEqual(H.identityHazard('C:\\\\Consonance\\\\database\\\\id.json', 'C:\\\\Consonance\\\\data'), null,\u0000#1"
+    },
+    {
+      "file": "consonance/tools/live-host.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(H.identityHazard('C:\\\\Users\\\\x\\\\.consonance\\\\install_id.json', 'C:\\\\Consonance\\\\data'), null);",
+      "key": "consonance/tools/live-host.test.js\u0000assert.strictEqual(H.identityHazard('C:\\\\Users\\\\x\\\\.consonance\\\\install_id.json', 'C:\\\\Consonance\\\\data'), null);\u0000#1"
     },
     {
       "file": "consonance/tools/open-items.js",
