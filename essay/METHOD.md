@@ -1504,3 +1504,69 @@ Counts, cumulative: keeper→seat 27 upheld, 1 not upheld. desktop reader→seat
 upheld. referee→seat ~65 upheld (independence voided, findings stand). librarian→seat 5 upheld.
 room→seat 2 falsifiers fired, 2 instruments landed. readers (contaminated)→seat: 3 convergent
 objections, 2 new findings, 2 §1–2/§6 findings. seat→seat 42. seat→keeper 5.
+
+---
+
+## 2026-09-09 ~00:37–01:00 — the fourth referee; a fabricated citation; the prediction fails a third time
+
+**Report on disk as `REFEREE_A4_2026-09-09.md`, unedited. Score 5/10.** Caveat as for all four:
+spawned from this directory, carried the intake; independence voided, findings stand on their
+own. Two web checks by the referee, both used.
+
+**The finding that outranks everything: a fabricated reference.** The Dumitrescu et al. 2022 entry
+listed "Gresh, D." and "Vasilyev, A." as authors. They are not authors. The seat wrote the entry
+from memory at 02:20 on 09-08 when adding the missing references; the essay's strongest case
+carried two invented names for twenty-two hours across four referee runs and a librarian read that
+checked the *citation* but not the author list. Verified at 00:40 against Nature, ADS and OSTI via
+search: Dumitrescu, Bohnet, Gaebler, Hankin, Hayes, Kumar, Neyenhuis, Vasseur, Potter. Fixed.
+Also: the Swann finding is Swann & Hill 1982 (*JPSP* 43, 59–66), not the 1983 chapter — verified,
+fixed in text and references. **Rule from this, for the report and the handoff: every reference
+is checked against its source by the librarian before any version is called ready. The seat does
+not write references from memory again.**
+
+**The registered prediction — "the block will not be found invalid" — failed.** Finding 1, the
+evidence-symmetry dilemma: the informant's evidence is also the person's realised behaviour; the
+self lived through the unattended settings too and remembers them, so its evidence is a superset;
+and the self has a within-person time series across values of its own belief, which is exactly
+the data that estimates the reaction function. "What does the informant see that the person did
+not?" — the block has no answer; the only rescue is an aggregation-bias premise, which is Swann
+and Vazire's mechanism, so the "parts by criterion" claim collapses into a relabelling. Finding 2:
+Vazire scored intellect against an IQ test — realised behaviour with the belief engaged — and the
+self was *worse* than friends there, which is self-error against realised behaviour on a looped
+variable, exactly what the loop account says should be zero; the essay reported a disconfirmation
+as a recovery. Findings 3–5: "capacity" slides between f(0), the range, and the maximum; the
+standing-disposition extension destroys the operationalisation (the two test examples are
+resolutions — made regime — the wrong cell); P5 is false of friends and the essay's own §6
+contradicts it. Finding 6: constitutive means one variable, not "unique fixed point" — the limits
+were swapped. Finding 9: Henshel's discontinuity threatens existence, not uniqueness — the seat
+reversed it. Finding 10: Bandura's self-efficacy uncited ("Fitelson would send it back for
+Bandura alone"), with Velleman, Ismael, Jussim, Funder. Finding 17: "the state was not stored"
+overnight is false of brains.
+
+**What it keeps:** "the move from MacKay's 'not wrong, only indeterminate' to *accurate about the
+wrong quantity*… and that a rival account is to be separated by criterion rather than by the sign
+of the error. That is a precise, defensible, original-enough claim." Fourth referee in a row to
+keep the same core; fourth to break the scaffolding around it. **Its one change, the same as the
+third referee's and as all three cold readers':** cut §§1, 3, 5, 6 to a page between them and
+spend the two thousand words on the informant premise.
+
+**Corrections applied now, none of them a rebuild:** the two citations; Henshel's inference
+un-reversed; the made regime restated as one variable in prose and P3; the read-regime example
+changed to headache / colour / hair and teeth (the anxiety example contradicted the MacKay quote,
+as primed3 found); anxiety as low-gain in the Vazire paragraph; "old and false" → "old and too
+broad"; "That is the location" → "where the asymmetry sits"; abstract "for the same reason" →
+"as a class of solution"; the model named a consistency check; "much of the state."
+
+**Not applied, because they are the next rebuild and the rule holds:** the informant premise
+(finding 1) — state what the second reader sees that the first did not, or re-scope to the second
+quantity alone; the Vazire IQ cell confronted; capacity defined as one quantity; the standing-
+disposition operationalisation or its retreat; P5 as a comparative; Bandura, Velleman, Ismael,
+Jussim cited. And the structural change every reader has now asked for: **§§1, 3, 5, 6 to a
+page.** That is the keeper's decision, not the seat's, because it is the magic he asked for.
+
+Seat's registered predictions: 4 made, 3 failed, 1 held. The pattern at 03:55 on 09-08 holds
+across a night's sleep and the room's inputs: the core sentence is stable; the argument around
+it is not, and the seat cannot see the next hole from inside. Handed to the room: the informant
+question as a packet, and the citation audit to the librarian.
+
+**Counts after the corrections and cuts:** 5,942 without references (the rules’ count), 6,519 with, 13 pages; cracks removed from §1’s list (five families) per primed1; 29 references, all cross-checked both ways (`xcheck.js`).
