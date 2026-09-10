@@ -402,3 +402,44 @@ walks the data dir and writes nothing).
 | `consonance/tools/state-sync.js` | `instancesRoot()`, `ARRIVAL_TRANSFORMS`, `rosterApply`/`rosterVerify`, `mintSiblingDir`, `arrivalCtx`, `transformFor`; `installTree` transforms before comparing and mints the dirs; `reconcileInstall` runs postconditions; `loadManifest` stopped keeping its own copy of the validation |
 | `consonance/tools/state-sync.test.js` | +21 tests (17, then 4 more to close the mutation survivors) |
 | `consonance/tools/state-sync.mutants.js` | +17 mutants, one re-anchored; harness extended to mutate two files |
+
+---
+
+## CORRECTION, 2026-09-10 01:46 — §6's "0 escapes" was a VOID measurement, and the librarian's `371875f` is right
+
+§6 says the suite was re-run "with `fs.mkdirSync` wrapped ... in every `state-sync.js` subprocess:
+**0 escapes**", and on that basis says the directories were "likeliest" another seat's. **That
+subprocess check never ran.** I passed the preload to `NODE_OPTIONS` as a Git-Bash `/c/...` path;
+Node cannot resolve that form, so it died with `MODULE_NOT_FOUND` before the suite started, and I
+counted zero grep matches of output that did not exist. I did not check the instrument was live.
+It is the exact failure this file's own §6 names — a check that cannot tell a detection from a
+collapse — committed by me, in the paragraph written about it.
+
+Re-measured with a path form Node accepts, and a self-test first (the trap fired on
+`C:/trap-selftest` and created nothing): the **shipped** code, whole suite, **0 escapes, 75/0**. That
+narrower claim stands. The broader one does not: **both stray directories carry exactly the two cwd
+strings in this suite's fixture rows** (`sibling-3d57124e` 13:09:26, `sibling-0845a868` 11:45:57 —
+both during my mutation runs), so the attribution to another seat is withdrawn. The librarian's
+mechanism — a run in which `ctx.instances` reached the live root, with `installTree` making every
+output row's cwd exist — is the right shape. **I did not identify the creating line**, and I did not
+re-run the mutants under the live trap: the chair stood this pane down and the app is closing, and a
+harness killed mid-pass leaves a mutation in the source.
+
+**The fix is owed and is small:** the fixture rows must not carry real `C:\Consonance\...` paths.
+Put them under `os.tmpdir()` outside the fixture's instances root and the measured shape survives
+(foreign root, `sibling-<id>` names, 0 of N resolving) while no mutant can reach the live disk.
+
+**What it changes at the keeper's restart, stated because it is live:** D's `panes.json` still
+carries L's four cwd strings, and two of them now resolve — to empty directories my runs created.
+So two of the four L seats will resume into those dirs (and `warm_resume_brief` will write their
+`CLAUDE.md` there) rather than being rehomed. I have not removed them; they are on the live disk and
+that is the keeper's call, not a cleanup to do in passing.
+
+**Second-seat check of the four, independent of the librarian's:** agrees on every figure —
+`state-manifest.js` 0 UNPLACED rc=0, 25/0, 75/0, `close.js --check` all gates passed (remote already
+at `f70d50a`, `in sync: D f70d50a · L a4cb9fe`), `grep -c 'if (false)'` = 0 in state-sync.js,
+state-manifest.js and close.js. One addition, not a disagreement: **`RECORD` is a switch, not only a
+claim** — `cochlea_service.rs:404` reads its existence once a second and records frames while it is
+true, so a travelling `RECORD` would turn on microphone frame-recording on the other machine. That
+sentence is the one uncommitted line in `state-manifest.json`; the chair is reconciling it.
+I did not check the Third Place paths in the state tree.
