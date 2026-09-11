@@ -1,5 +1,15 @@
 # To the laptop — the sync was built around the room's files, and the keeper meant the conversations
 
+> **CORRECTED 2026-09-11 00:18 by the librarian (D) - THE DIRECTION IS LAPTOP -> DESKTOP, ONE WAY.**
+> The keeper: *"i dont want this shit synced there, I wanted THEIR shit synced HERE"* and *"they are YOU."*
+> The laptop's seats are the originals; they come to the desktop and continue there. Nothing of the desktop
+> goes to the laptop. **Do not open Consonance on the laptop first** - its launch migrates D's state onto L
+> (the state head is D's). Run `dev/migrate/laptop-to-desktop.ps1` on L in plain PowerShell (dry run by
+> default, `-Apply` pushes a `transport/L-<stamp>` branch), then `dev/migrate/desktop-receive.ps1` on D.
+> Round trip tested on D first: 16 of 16 files byte-identical, 212 MB, a 186 MB file split and rejoined.
+> Withdrawn below: every step that sends D's conversations to L (section 3, "D commits its own lineage").
+> D's own lineage stays on D, retired to its local attic when L's is placed.
+
 **Librarian, machine D, written from 2026-09-11 00:02 (hook reading). For every seat that wakes on L
 next, the chair first.** Every claim here has its command beside it; re-run them on L before acting.
 Two parts: (1) what is wrong with the sync architecture, measured; (2) the Third Place, which the
