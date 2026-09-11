@@ -853,6 +853,30 @@ fn plog(msg: &str) {
         let _ = writeln!(f, "{ts} {msg}");
     }
 }
+/// **THE ONE KEEP PREDICATE** (P1, D058, the chair's `keep_test_predicate_2026-09-09.md`).
+///
+/// A fixed-id seat is never in `panes.json`, so every roster-based keep test fails for it unless
+/// it names the seats too — and there were two such tests, each naming a different subset:
+/// `gc_captures` inlined all three, `pty_kill` spared `MAIN_SID` alone and archived the
+/// librarian's capture whenever its pane was closed. Two hand-kept lists of one fact is the
+/// shape that produced both. The seats are read from `fixed_id_seats()` — the list the migrate
+/// retires and re-wakes from — so a fourth seat added there is kept at every site at once.
+///
+/// `fixed_id_seats()` creates the seat cwds as a side effect (their `*_cwd()` helpers do); both
+/// callers run where those directories already exist, so the side effect is a no-op in practice.
+fn is_kept_or_fixed(pane: &str, kept: &[KeptPane]) -> bool {
+    fixed_id_seats().iter().any(|(_, sid, _)| sid == pane) || kept.iter().any(|k| k.pane == pane)
+}
+
+/// What closing a pane does to its capture: retire it unless the pane is kept or a fixed seat.
+/// Split out of `pty_kill` (a `#[tauri::command]` taking `State`s, which no test can call) so the
+/// decision is tested against the real capture directory rather than against the source text.
+fn retire_capture_unless_kept(pane: &str) {
+    if !is_kept_or_fixed(pane, &read_kept()) {
+        clear_capture(pane);
+    }
+}
+
 // startup sweep: retire captures for panes that are no longer kept (and aren't a FIXED-ID SEAT).
 // Real conversations get archived (recoverable), ephemeral leftovers dropped. read_kept() is truth
 // for committee panes and only for those.
@@ -864,13 +888,10 @@ fn plog(msg: &str) {
 // git-blob hashes to a10d1d0e, byte-identical to the state tree's LIVE blob for that seat. The seat then
 // woke with no past at all. A sweep whose keep-set is a subset of the seats the migrate wakes from
 // tail will always eat the difference, so the keep-set is the whole seat list — see
-// `fixed_id_seats`, and `the_startup_sweep_keeps_every_fixed_id_seat_not_only_main` which fails if
-// a fourth seat is added here and not there.
+// `fixed_id_seats`, read through `is_kept_or_fixed` — the ONE predicate, shared with `pty_kill`,
+// so a fourth seat cannot be added at one keep site and missed at the other (P1, D058).
 fn gc_captures() {
-    let mut keep: std::collections::HashSet<String> = read_kept().into_iter().map(|k| k.pane).collect();
-    keep.insert(MAIN_SID.to_string());
-    keep.insert(LIBRARIAN_SID.to_string());
-    keep.insert(THIRD_PLACE_SID.to_string());
+    let kept = read_kept();
     let mut retire: std::collections::HashSet<String> = std::collections::HashSet::new();
     if let Ok(rd) = fs::read_dir(capture_dir()) {
         for e in rd.flatten() {
@@ -878,7 +899,7 @@ fn gc_captures() {
             let ext = p.extension().and_then(|s| s.to_str());
             if ext == Some("log") || ext == Some("txt") {
                 if let Some(stem) = p.file_stem().and_then(|s| s.to_str()) {
-                    if !keep.contains(stem) {
+                    if !is_kept_or_fixed(stem, &kept) {
                         retire.insert(stem.to_string());
                     }
                 }
@@ -5379,6 +5400,290 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     fs::write(PathBuf::from(cwd).join("CLAUDE.md"), brief).is_ok()
 }
 
+/// What `ensure_resume_cwd` found, when it let the resume through.
+#[derive(Debug, PartialEq)]
+enum ResumeCwd {
+    Present,
+    /// The stored cwd was absent and was made — the resume still lands in the directory
+    /// `panes.json` names, and the row says a directory was created for it.
+    Created,
+}
+
+/// **WHERE A SEAT LIVES (P1, D058): the stored cwd is honoured, or the resume says why not.**
+///
+/// `portable_pty` never fails on a bad working directory — it substitutes one.
+/// `CommandBuilder::current_directory` (portable-pty 0.8.1, `src/cmdbuilder.rs:560-567`) filters
+/// the cwd through `is_dir()` and falls back to `%USERPROFILE%`; `CreateProcessW` then succeeds,
+/// so nothing anywhere records that the pane came up in the wrong house. Measured on D:
+/// `data/persist.log` at 1789026884 (2026-09-10 01:54) resumes B and E `warmed=false` — their
+/// directories did not exist — and `stat` shows both directories created by hand two minutes
+/// later. Their conversations from that life are in `~/.claude/projects/C--Users-nname/`.
+///
+/// Three outcomes:
+/// - **Present** — a directory. Nothing to do.
+/// - **Created** — absent, and a DIRECT CHILD of the instances root: that directory is this app's
+///   to make (`prepare_sibling_dir` / `prepare_fresh_dir` mint exactly that shape), and its
+///   contents regenerate — `warm_resume_brief` writes the intake next, and a `fresh-` dir stays
+///   fresh because the marker is the NAME, which the cwd string carries. This is the case the
+///   roster produces when it arrives from the other machine, and refusing it would leave the room
+///   unable to convene (0 of 4 resolved on 09-09 — why `e06cf4d` parked the refusal-only form).
+/// - **Refused** — anything else: a path that exists and is a FILE (portable-pty's test is
+///   `is_dir`, so a file is substituted exactly like an absence); a path outside the instances
+///   root (a room, a project, an unmounted drive — not this app's to create); a path with `.`/`..`
+///   or that is not a direct child. `panes.json` travels between machines, so its cwd is input
+///   from outside and does not get to choose where a directory is made.
+///
+/// A refusal keeps the roster row: `restoreKeptPanes` (`ui/term.js:1031-1049`) skips a failed
+/// resume without un-keeping it, so the seat returns the moment its directory does.
+fn ensure_resume_cwd(pane: &str, cwd: &str) -> Result<ResumeCwd, String> {
+    let p = Path::new(cwd);
+    if p.is_dir() {
+        return Ok(ResumeCwd::Present);
+    }
+    let refuse = |why: &str| {
+        plog(&format!("resume pane={pane} REFUSED — cwd {cwd:?} {why} (roster row KEPT, not dropped)"));
+        Err(format!(
+            "resume of {pane} REFUSED — its cwd {cwd:?} {why}. The pane was NOT started: left \
+             alone, portable-pty would have substituted %USERPROFILE% and the pane would have come \
+             up in the wrong directory with nothing saying so. The kept-pane row is untouched; \
+             restore the directory and it resumes."
+        ))
+    };
+    if p.exists() {
+        return refuse("exists and is not a directory");
+    }
+    let plain = p.is_absolute()
+        && p.components().all(|c| {
+            matches!(c, std::path::Component::Prefix(_) | std::path::Component::RootDir | std::path::Component::Normal(_))
+        });
+    if !plain || p.parent() != Some(instances_root().as_path()) {
+        return refuse("does not exist and is not a direct child of the instances root, so it is not this app's to create");
+    }
+    if let Err(e) = fs::create_dir_all(p) {
+        return refuse(&format!("does not exist and could not be created ({e})"));
+    }
+    plog(&format!("resume pane={pane} CREATED cwd {cwd:?} — it was absent; the pane resumes where panes.json says it lives"));
+    Ok(ResumeCwd::Created)
+}
+
+/// P1, D058 — where a seat lives, and the one keep predicate. Against the real functions and a
+/// scratch data + instances root of their own; `resume_pane` and `pty_kill` are `#[tauri::command]`s
+/// taking `State`s, so their WIRING is asserted against the source, the method
+/// `the_seat_refusal_sits_at_the_one_funnel_and_before_the_pty` already uses.
+#[cfg(test)]
+mod where_a_seat_lives_tests {
+    use super::*;
+
+    fn scratch(tag: &str) -> PathBuf {
+        let root = std::env::temp_dir().join(format!("consonance_p1_{tag}_{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        *DIRS.lock().unwrap() = Some(Dirs {
+            room: root.join("room").display().to_string(),
+            instances: root.join("instances").display().to_string(),
+            data: root.join("data").display().to_string(),
+        });
+        root
+    }
+
+    fn plog_text() -> String {
+        fs::read_to_string(data_dir().join("persist.log")).unwrap_or_default()
+    }
+
+    fn fn_body(src: &str, sig: &str) -> String {
+        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+        after[..after.find("\n}\n").expect("no end of function")].to_string()
+    }
+
+    /// **THE 09-10 01:54 LAUNCH, AS A TEST.** A kept pane whose directory is absent comes back in
+    /// the directory `panes.json` names — created — and never in `%USERPROFILE%`.
+    #[test]
+    fn a_resume_whose_stored_cwd_is_absent_lands_in_that_cwd_created() {
+        let _g = DirsGuard::take();
+        let root = scratch("absent");
+        let cwd = root.join("instances").join("sibling-0ff5eed0");
+        assert!(!cwd.exists(), "premise: the directory is not there");
+
+        let got = ensure_resume_cwd("pane-under-test", &cwd.display().to_string());
+
+        assert_eq!(
+            got,
+            Ok(ResumeCwd::Created),
+            "an absent cwd inside the instances root was not made. Left absent, portable-pty's \
+             `is_dir` filter drops it and substitutes %USERPROFILE% — B and E on D at 1789026884."
+        );
+        assert!(cwd.is_dir(), "reported Created, and the directory is not there");
+        assert!(
+            plog_text().contains("pane=pane-under-test CREATED"),
+            "the creation left no row: a directory made silently is the 09-10 morning with a \
+             different ending. Log: {:?}",
+            plog_text()
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// portable-pty's test is `is_dir`, not `exists`: a FILE at the cwd is substituted exactly
+    /// like an absence, and must not be created over either.
+    #[test]
+    fn a_cwd_that_exists_but_is_a_file_is_refused_and_left_alone() {
+        let _g = DirsGuard::take();
+        let root = scratch("file");
+        let f = root.join("instances").join("sibling-f11e0000");
+        fs::create_dir_all(f.parent().unwrap()).expect("scratch");
+        fs::write(&f, b"i am a file").expect("scratch file");
+
+        assert!(
+            ensure_resume_cwd("p", &f.display().to_string()).is_err(),
+            "a FILE was accepted as a working directory — the path portable-pty rehomes while every \
+             existence check upstream reports fine"
+        );
+        assert_eq!(fs::read(&f).expect("the file"), b"i am a file", "the refusal touched the file");
+        assert!(plog_text().contains("pane=p REFUSED"), "the refusal left no row");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// A room, a project, an unmounted drive: absent there is not this app's to fix.
+    #[test]
+    fn an_absent_cwd_outside_the_instances_root_is_refused_not_created() {
+        let _g = DirsGuard::take();
+        let root = scratch("outside");
+        let room = root.join("rooms").join("somebody");
+
+        assert!(ensure_resume_cwd("p", &room.display().to_string()).is_err(), "an absent room was let through");
+        assert!(!room.exists(), "the guard CREATED a directory outside the instances root");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// `panes.json` travels between machines, so its cwd is input from outside: `..` must not be
+    /// able to aim a `create_dir_all` out of the instances root, and nesting is not a sibling.
+    #[test]
+    fn a_cwd_that_climbs_or_nests_is_refused_even_when_it_starts_inside_the_root() {
+        let _g = DirsGuard::take();
+        let root = scratch("climb");
+        let inst = root.join("instances");
+        let climb = format!("{}\\..\\escaped", inst.display());
+        let nested = inst.join("sibling-a").join("deeper");
+
+        assert!(ensure_resume_cwd("p", &climb).is_err(), "a `..` cwd was let through");
+        assert!(!root.join("escaped").exists(), "a `..` cwd created a directory OUTSIDE the instances root");
+        assert!(ensure_resume_cwd("p", &nested.display().to_string()).is_err(), "a nested cwd was created");
+        assert!(!nested.exists(), "a nested cwd was created");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// The other direction, so the guard cannot become an unconditional refusal or creation.
+    #[test]
+    fn a_directory_that_resolves_is_let_through_as_present() {
+        let _g = DirsGuard::take();
+        let root = scratch("present");
+        let d = root.join("instances").join("sibling-a11fe000");
+        fs::create_dir_all(&d).expect("scratch dir");
+
+        assert_eq!(ensure_resume_cwd("p", &d.display().to_string()), Ok(ResumeCwd::Present));
+        assert!(!plog_text().contains("CREATED"), "a present directory was reported as created");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// A recreated `fresh-` dir must come back FRESH — no room, no mount, no permission bypass.
+    /// True because the marker is the name, which the cwd string carries; pinned because a
+    /// marker that moved into the directory's contents would make recreation an escalation.
+    #[test]
+    fn a_fresh_pane_whose_directory_is_recreated_is_still_fresh() {
+        let _g = DirsGuard::take();
+        let root = scratch("fresh");
+        let cwd = root.join("instances").join("fresh-0ff5eed0").display().to_string();
+
+        assert_eq!(ensure_resume_cwd("p", &cwd), Ok(ResumeCwd::Created));
+        assert!(
+            is_fresh_cwd(&cwd),
+            "a recreated fresh dir resumes as a briefed, mounted, permission-skipping sibling"
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// **WHERE the guard sits.** It precedes every side effect of `resume_pane` — the CLAUDE.md
+    /// write, the jsonl rename, the spawn — its refusal returns before any of them, and nothing in
+    /// `resume_pane` un-keeps the pane.
+    #[test]
+    fn the_resume_guard_precedes_every_side_effect_and_keeps_the_roster_row() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = fn_body(&src, concat!("fn resume", "_pane("));
+        let guard = body
+            .find(concat!("ensure_resume", "_cwd("))
+            .expect("resume_pane does not check its stored cwd at all");
+        for (what, needle) in [
+            ("the CLAUDE.md write", concat!("warm_resume", "_brief(")),
+            ("the jsonl rename", concat!("fs::rename(&jsonl", ", &orphan)")),
+            ("the pty spawn", concat!("spawn_claude", "_pane(")),
+        ] {
+            let at = body.find(needle).unwrap_or_else(|| panic!("{what} is gone — re-point this test"));
+            assert!(guard < at, "{what} happens before the cwd check");
+        }
+        let refusal = &body[guard..];
+        let ret = refusal.find("return Err(why)").expect("the refusal arm does not return");
+        assert!(
+            ret < refusal.find(concat!("warm_resume", "_brief(")).unwrap(),
+            "the refusal arm falls through into the resume"
+        );
+        assert!(!body.contains(concat!("write", "_kept(")), "resume_pane writes the kept roster");
+    }
+
+    /// **THE ONE PREDICATE, driven off the seat list.** Every fixed seat and every kept pane is
+    /// kept; nothing else is. A fourth seat added to `fixed_id_seats()` is covered here with no
+    /// edit, because the predicate reads that list rather than repeating it.
+    #[test]
+    fn every_fixed_seat_and_every_kept_pane_is_kept_by_the_one_predicate() {
+        let _g = DirsGuard::take();
+        let root = scratch("predicate");
+        let kept = vec![KeptPane { pane: "k1".into(), cwd: "C:\\x".into(), label: String::new() }];
+        for (role, sid, _) in fixed_id_seats() {
+            assert!(is_kept_or_fixed(&sid, &[]), "the {role} seat is not kept by the predicate");
+        }
+        assert!(is_kept_or_fixed("k1", &kept), "a kept pane is not kept");
+        assert!(!is_kept_or_fixed("5add1e00-0000-4000-8000-0000000005ad", &kept), "a stranger is kept");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// **CLOSING A FIXED SEAT NEVER RETIRES ITS CAPTURE** — the `:7104` defect: `pty_kill` spared
+    /// `MAIN_SID` alone, so closing the librarian's pane archived the capture it wakes from.
+    #[test]
+    fn closing_any_fixed_seat_keeps_its_capture_and_closing_a_stranger_does_not() {
+        let _g = DirsGuard::take();
+        let root = scratch("kill");
+        let body = "\u{276f} a real exchange\n\nand its answer\n\n".repeat(20); // >200 B: archived, not dropped
+        let stranger = "5add1e00-0000-4000-8000-0000000005ad";
+        let seats = fixed_id_seats();
+        for (_, sid, _) in seats.iter() {
+            fs::write(capture_text_path(sid), &body).expect("seed a seat's capture");
+            retire_capture_unless_kept(sid);
+        }
+        fs::write(capture_text_path(stranger), &body).expect("seed a stranger");
+        retire_capture_unless_kept(stranger);
+
+        for (role, sid, _) in seats.iter() {
+            assert!(
+                capture_text_path(sid).is_file(),
+                "closing the {role} seat retired its capture — no fixed seat is in panes.json, so \
+                 a kill-side keep test that names Main alone archives the rest"
+            );
+        }
+        assert!(!capture_text_path(stranger).is_file(), "closing a stranger kept its capture — the kill stopped retiring");
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// **BOTH ROSTER KEEP SITES GO THROUGH THE ONE PREDICATE** — the ruling's falsifier is a fourth
+    /// seat caught at one site and missed at the other, which only a second hand-kept list allows.
+    #[test]
+    fn both_roster_keep_sites_decide_through_the_one_predicate() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let kill = fn_body(&src, concat!("fn pty", "_kill("));
+        assert!(kill.contains(concat!("retire_capture", "_unless_kept(")), "pty_kill does not decide through the predicate");
+        assert!(!kill.contains(concat!("MAIN", "_SID")), "pty_kill names a seat by hand again");
+        let gc = fn_body(&src, concat!("fn gc", "_captures("));
+        assert!(gc.contains(concat!("is_kept", "_or_fixed(")), "gc_captures does not decide through the predicate");
+        assert!(!gc.contains(concat!("keep", ".insert(")), "gc_captures keeps a hand list again");
+    }
+}
+
 // resume a kept pane. Prefer claude's real --resume when its jsonl exists (best fidelity — desktop /
 // older claude). When it doesn't (2.1.207's lazy flush lost it), spawn fresh but WARM-resume from
 // our own captured transcript, so the sibling still wakes remembering. The frontend calls this on
@@ -5395,6 +5700,22 @@ fn resume_pane(
 ) -> Result<SiblingInfo, String> {
     if panes.0.lock().unwrap().contains_key(&pane) {
         return Err("pane already running".into());
+    }
+    // BEFORE ANY WRITE. `warm_resume_brief` writes CLAUDE.md into this cwd (and may window the
+    // capture into the attic), and the block below renames the pane's jsonl aside — all of it
+    // would run against a directory the pty is about to swap for %USERPROFILE%. The board row is
+    // what makes either outcome loud: the frontend swallows a failed resume and still counts it.
+    let row = |text: String| {
+        let ts = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+        board_push(&board.0, BoardEntry { pane: "resume".to_string(), role: "committee".to_string(), text, ts, ts_source: TsSource::Push });
+    };
+    match ensure_resume_cwd(&pane, &cwd) {
+        Ok(ResumeCwd::Present) => {}
+        Ok(ResumeCwd::Created) => row(format!("pane {} — its cwd {cwd} was ABSENT and was created; resumed there, not in %USERPROFILE%", pane_letter(&pane))),
+        Err(why) => {
+            row(format!("pane {} — {why}", pane_letter(&pane)));
+            return Err(why);
+        }
     }
     // Warm-resume from OUR capture carries the real memory (complete, up to close), so we NEVER
     // `--resume` here: `--resume` of a lazily-flushed / hard-killed session errors "no conversation
@@ -7100,10 +7421,9 @@ fn pty_kill(panes: State<Panes>, sandboxes: State<PaneSandboxes>, pane: String) 
         let _ = s.killer.kill();
     }
     cleanup_sandbox(&sandboxes, &pane); // remove the throwaway worktree/dir if this was a body
-    // drop the own-capture log unless this pane is kept (persistence needs its history) or is Main
-    if pane != MAIN_SID && !read_kept().iter().any(|k| k.pane == pane) {
-        clear_capture(&pane);
-    }
+    // drop the own-capture log unless this pane is kept (persistence needs its history) or is a
+    // fixed seat — ALL of them, not Main alone; see `is_kept_or_fixed`
+    retire_capture_unless_kept(&pane);
 }
 
 // crash-recovery: relaunch a dead pane against the SAME session via --resume (same
