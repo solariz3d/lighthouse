@@ -55,3 +55,5 @@ The laptop is the far end with nothing live. When the keeper is next at the lapt
 **(3) P4's "the app already listens" overstated the prior art.** Checked: `mcp.rs:1525` binds `127.0.0.1:0` — loopback, random port. A LAN turn stream is a NEW network-facing listener carrying the conversations; bars before any design: authenticated, bound only to the interface the keeper chooses (LAN or his mesh), never `0.0.0.0` unauthenticated. The candidate order in §2 P4 stands; the sentence that made it sound cheap does not. WRONG 98.
 
 **What survives unchanged:** the three measurements, P3 as built, the two decisions as the keeper's, the first real test (D → L, §2.5 on L), and the refusals in §5. **Corrected order:** P1 (D058, running) → P2 on git with fixed-offset chunks (keys on the slug) → P3 and P4 after decision 1.
+
+*Correction, 02:25: the "02:55" in the heading above is wrong; this amendment landed at 02:21:26 (`7aef6e9`). Typed, not read from a clock.*
