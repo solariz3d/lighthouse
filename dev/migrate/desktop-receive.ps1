@@ -61,6 +61,7 @@ foreach ($row in $rows) {
     if ($gotSize -eq $size -and $gotSha -eq $sha) { $ok++; $bytes += $size; Say ('  ok    {0,12:N0}  {1}' -f $size, $rel) 'Green' }
     else { $bad++; Say ('  BAD   {0}  (laptop {1} B {2}; here {3} B {4})' -f $rel, $size, $sha.Substring(0, 12), $gotSize, $gotSha.Substring(0, 12)) 'Red' }
 }
+Copy-Item -LiteralPath (Join-Path $raw 'MANIFEST.tsv') -Destination (Join-Path $Out 'MANIFEST.tsv')   # desktop-place.ps1 re-checks against it
 Remove-Item -LiteralPath $raw -Recurse -Force
 
 Say ''
