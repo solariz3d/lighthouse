@@ -137,6 +137,24 @@ if (-not $Apply) { Say ''; Say 'DRY RUN - nothing was changed. Close Consonance,
 if (-not $IgnoreRunning -and (Get-Process -Name consonance -ErrorAction SilentlyContinue)) { Say 'Consonance is running. Close it first. Nothing was changed.' 'Red'; exit 1 }
 if (-not $headOk) { Say "The state head was not pushed by $ThisMachine, so the next launch would MIGRATE and retire the placed seats. Nothing was changed." 'Red'; exit 1 }
 
+# ---- pre-flight: every file this will move must be free BEFORE anything moves ----------------------
+# When Consonance closes, its seats' claude processes can hold their transcripts open for a few seconds.
+# A move that fails half-way would leave one seat moved and another not, so wait until every source is
+# free (up to 90 s), and change nothing if one never frees.
+function Is-Free($f) { try { $h = [IO.File]::Open($f, 'Open', 'ReadWrite', 'None'); $h.Dispose(); return $true } catch { return $false } }
+# A seat only opens its transcript for the instant it writes, so a free file does NOT prove the seat is
+# gone (measured 2026-09-11: the live librarian's transcript read free with the seat running). The real
+# guard is the seat process itself: claude.exe --resume <sid>, a child of consonance.exe.
+$sidList = @($plan | Where-Object { $_.Kind -eq 'place' -and $_.Rel -like '*.jsonl' } | ForEach-Object { (Split-Path $_.Dst -Leaf) -replace '\.jsonl$', '' } | Sort-Object -Unique)
+function Seat-Procs { @(Get-CimInstance Win32_Process -Filter "Name='claude.exe'" | Where-Object { $cl = [string]$_.CommandLine; @($sidList | Where-Object { $cl.Contains($_) }).Count -gt 0 } | ForEach-Object { "claude.exe pid $($_.ProcessId)" }) }
+$busy = @()
+for ($try = 0; $try -lt 90; $try++) {
+    $busy = @(Seat-Procs) + @($plan | Where-Object { $_.Kind -eq 'retire-D' -and -not (Is-Free $_.Src) } | ForEach-Object { $_.Src })
+    if ($busy.Count -eq 0) { break }
+    if ($try -eq 0) { Say 'Waiting for the seats to let go of their files...' 'Yellow' }
+    Start-Sleep -Seconds 1
+}
+if ($busy.Count) { Say ("Still in use after 90 s, so nothing was changed: {0}" -f ($busy -join ', ')) 'Red'; exit 1 }
 # ---- apply: every move first, then every placement, then verify ---------------------------------
 foreach ($p in ($plan | Where-Object { $_.Kind -eq 'mkdir' })) { New-Item -ItemType Directory -Force -Path $p.Dst | Out-Null }
 foreach ($p in ($plan | Where-Object { $_.Kind -in 'retire-D', 'backup' })) {
