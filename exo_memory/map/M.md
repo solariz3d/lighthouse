@@ -840,3 +840,4 @@ the wrong figure was published.*
 - 02:35 The map for one Consonance: loop/plan_one_consonance_2026-09-11.md — a turn is ~12 KB, git failed on latency; P1 fixed cwds + keep predicate; P2 conversations at rest by hand-carry not git; P3 the lease as built; P4 a direct turn-event channel (the app already listens), mesh for away-from-home, the keeper decides.
 - 02:55 Three corrections to the map taken after checking the disk (WRONG 96-98): existence not naming; git with fixed-offset chunks not USB; loopback is not a LAN listener. Plan §6.
 - 02:25 The 02:55 stamp on the line above was typed, not read; the amendment is 7aef6e9 at 02:21:26. Self-caught.
+- 02:40 D058 collated: committee panes never --resume (232/232 fresh), so neither naming nor existence gives A for panes; their conversations are in the home slug. WRONG 99-100 (C found). Plan §7: P1b is the precondition A waits on.
