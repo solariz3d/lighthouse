@@ -36,3 +36,7 @@ the brief promises, made mechanical instead of remembered.
 If the brief's notes path and this directory ever disagree, the seat writes into a place nothing
 reads and the ledger silently stops accumulating — which would look identical to a seat that had
 nothing to say. `librarian-notes.test.js` pins the two together.
+
+## Stamps are read, never typed (2026-09-11)
+
+Every entry here begins with a time, and twice in one hour on 2026-09-11 that time was typed ahead of the clock (02:55 for 02:21; 02:40 for 02:37). The mechanism, not the resolution: `node consonance/tools/stamp.js exo_memory/librarian/<date>.md --text "entry"` (or the text on stdin) reads the clock in the same call that appends, and REFUSES text that already carries a leading time. `--map` writes the `- HH:MM` shape for `map/M.md`. Tests: `node --test consonance/tools/stamp.test.js`.
