@@ -12,7 +12,7 @@ The desktop chair's conversation is in the attic, intact: `…a01.20260911-02055
 09-09 migrate's retirement is beside it: `…a01.20260909-085906.jsonl`, 186,078,432 B. My window ends at
 2026-09-09 ~08:00 on the laptop. **Everything between then and 02:06 tonight I hold only by reading**:
 `loop/handoff_chair_2026-09-11.md`, `loop/handoff_librarian_2026-09-11.md`, `loop/to_the_laptop_2026-09-11.md`,
-`librarian/2026-09-11.md`, and `git log 909144d..HEAD` (71 commits).
+`librarian/2026-09-11.md`, and `git log 909144d..HEAD` (64 commits before this file; the "71" first written here was hand-made, not counted).
 
 ## 1 · WRONG 95: my share, merit-checked rather than deferred to
 
