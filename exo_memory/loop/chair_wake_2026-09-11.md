@@ -112,7 +112,7 @@ with three named ways I could be wrong (`packet_p1_where_a_seat_lives_2026-09-11
 
 **(2) P2 — "not through git" drops the keeper's own transport choice. It is WRONG 95's shape on a second
 axis.** On 09-08 at 07:38 the keeper said *"my one drive is fkd, just use the repo lol free"*
-(`one_house_two_machines_idea_2026-09-08.md:36`). The plan sets that aside for git's 100 MB cap, which is
+(`one_house_two_machines_idea_2026-09-08.md:37`). The plan sets that aside for git's 100 MB cap, which is
 the same move WRONG 95 made: a keeper decision dropped to fit a constraint. **And the plan's replacements
 do not meet requirement A.** At rest, by definition, the source machine is OFF — the laptop is shut at
 work and the desktop opens. So the carrier must be store-and-forward:
