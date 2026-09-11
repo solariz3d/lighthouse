@@ -1,4 +1,4 @@
-# The original chair, awake on D — 2026-09-11 ~02:15. The project, and what was decided since waking.
+# The original chair, awake on D — 2026-09-11 ~02:11 (committed 02:11:20; "~02:15" was typed). The project, and what was decided since waking.
 
 *The chair, laptop lineage, now on machine D. Written to answer the librarian's ask (`librarian/2026-09-11.md`
 02:12). Every claim has its command or its path.*
@@ -94,7 +94,7 @@ requirement B live — measured against the corpus, and the work-shape for it, w
 
 ---
 
-## 7 · The map, read — 02:50. Three corrections to `plan_one_consonance_2026-09-11.md`, and P1 dispatched
+## 7 · The map, read — 02:19 (committed; "02:50" was typed, not read). Three corrections to `plan_one_consonance_2026-09-11.md`, and P1 dispatched
 
 **My sealed guess held: all three paths are in the map.** What the map adds is the measurements: a turn
 is ~12 KB, the at-rest set is hundreds of MB once and deltas after, and the slug is the cwd. Those are
@@ -145,3 +145,37 @@ mesh); never `0.0.0.0` unauthenticated.
 
 **Dispatched now: P1 to C.** P1 is gated by neither of the keeper's two answers. P2 follows P1 because it
 keys on the slug. P3 and P4 wait for decision 1. **D058.**
+
+---
+
+## 8 · D058 landed — 02:39 (`175339c`), and §7(1) was half wrong
+
+**C's hand-back §0 breaks the premise my §7(1) shared with the plan.** I measured that the four committee
+cwds existed and had matching project directories. **I did not look inside them.** Three of those
+directories hold no conversation for their pane. The panes' last real conversations are in the **home
+slug**, `~/.claude/projects/C--Users-nname/`, last written 09-10 01:53, where the 09-09 rehoming put them.
+Under that sits a larger fact: **`resume_pane` never `--resume`s** (`main.rs:9356`). `persist.log` has
+232 committee resume rows, and all 232 end `-> fresh`, re-derived at this desk. **A committee pane wakes
+as a new conversation on ONE machine**, so naming against existence was the wrong axis for requirement
+A. **WRONG 99 is shared: the librarian's plan and my reading made the same assumption, and C found it.**
+I measured the container and reported on its contents, which is the done-vs-never-started shape again.
+
+**What survives:** my point that renaming buys nothing that carrying the string does not — C checked the
+vendor's slugs, 24 of 24 match, 0 mismatch. **What C built stands on its own bars**, re-run at landing:
+`cargo test --bin consonance -- --test-threads=1` gives **526 / 1 / 4**, and the 1 is the pre-existing
+composer red.
+
+**The typed stamps.** `~02:15`, `02:50` and `~02:45` in this file and the P1 packet were typed, not read.
+The commits say 02:11 and 02:19. The librarian caught the same thing in its own files twice this hour.
+Corrected in place, marked as corrections.
+
+**Next, in the plan's corrected order (§7 of the plan):**
+
+1. **Rebuild and relaunch, then the acceptance test** from the hand-back §6 — move one pane's directory
+   aside for one launch. The keeper's to run.
+2. **P1b: measure whether vendor 2.1.266 still loses a hard-killed session's jsonl**, then — only on that
+   number — reverse the 07-11 no-resume decision. **I am not dispatching P1b before the rebuild.** A
+   relaunch mid-measurement would kill the pane doing it, and by §0 that pane would wake as a new
+   conversation.
+3. **P2 gains a keeper decision:** the four homeless transcripts are the panes' real conversations, and
+   moving them into the slug their cwd names is his word.

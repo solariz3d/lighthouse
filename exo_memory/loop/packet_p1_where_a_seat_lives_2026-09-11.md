@@ -1,6 +1,6 @@
 # P1 · WHERE A SEAT LIVES — the precondition for one Consonance. D058.
 
-**To CHARLIE, 2026-09-11 ~02:50, on machine D. Read §2 first: the plan and the chair disagree about
+**To CHARLIE, 2026-09-11 02:19 (committed; "~02:50" was typed, not read), on machine D. Read §2 first: the plan and the chair disagree about
 half of this packet, and your first job is to measure which one is right.**
 
 ## 1 · THE TASK IS IN THE PLAN
@@ -20,7 +20,7 @@ on this one.
 `sibling-<random>` cannot match across machines. That means a one-time move of each live pane's
 directory and re-encoding its conversation's slug.
 
-**The chair, measured on D at ~02:45:** `prepare_sibling_dir` (`main.rs:3123-3129`) names the directory
+**The chair, measured on D at ~02:17 ("~02:45" was typed, not read):** `prepare_sibling_dir` (`main.rs:3123-3129`) names the directory
 from a fresh `Uuid`, so yes, the name is random **at spawn**. But the cwd string is stored in
 `panes.json` and is carried verbatim under the roster ruling (C, adopt). **On D right now all four
 committee cwds from `panes.json` exist, and each has a matching project directory:**
