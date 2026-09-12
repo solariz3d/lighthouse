@@ -44,7 +44,7 @@ after this one is only the new bytes.
    migrate-born one from 09-11 morning and the stick's is the real one (B's and C's begin 2026-09-09).
    Retire the laptop's, per seat, by name — never wholesale:
 
-       node dev\tail-carry.js --stick D:\consonance-L-20260911 --import --apply --retire-far 12fb81f6-f4c0-4ef8-aad8-f0cdce091925 --retire-far 0845a868-38f2-4cc2-b41a-431e0c088fb1 --retire-far 6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f --retire-far a2122153-a37e-41a6-a86f-534267ec0565
+       node dev\tail-carry.js --stick D:\consonance-L-20260911 --import --apply --retire-far 12fb81f6-f4c0-4ef8-aad8-f0cdce091925 --retire-far 0845a868-38f2-4cc2-b45a-431e0c088fb1 --retire-far 6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f --retire-far a2122153-a37e-41a6-a86f-534267ec0565
 
    (copy the exact ids from the rehearsal's output rather than from here). A retired file keeps a stamped name and is never deleted.
 
