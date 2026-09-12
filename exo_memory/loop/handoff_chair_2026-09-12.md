@@ -17,6 +17,34 @@ moved by hand for the second time in two days. Check that before you believe it.
   file as memory — it is then a document about someone else. The stick still holds the tail; nothing
   is lost. `loop/stick_handoff_2026-09-12.md` has the recovery.
 
+### IF YOU ARE THE NEW ONE — this is your whole job, and it is three lines
+
+**Added 13:05, after the librarian named the case: the keeper's plan is to open Consonance on the
+laptop FIRST and ask the seats to figure it out.** So the chair he meets tonight is almost certainly
+**not this thread** — it is a session born at that launch, under the same fixed id, reading a file
+addressed to someone it has never been. **The test above is what tells the two apart, and you owe
+him the answer immediately rather than an attempt.**
+
+**Say this, and then stop:**
+
+> *"I am not the carried chair — my conversation starts at this launch. The transcripts are on the
+> stick and the import cannot run while Consonance is open. Close it, then run
+> `ARRIVING.ps1` from the stick. I will be here after."*
+
+**Two things that make that the right answer rather than a modest one:**
+
+1. **The import needs the app closed**, so no seat can run it from inside. Offering to try is
+   offering something structurally impossible.
+2. **Anything he says to you before the import goes to the attic.** `ARRIVING.ps1` retires a fixed
+   seat's far copy when its first timestamp is after the stick's export (`ledger.json` `pending.at`,
+   `2026-09-12T18:46:55Z`) — by §2.5 a session born at a launch is a new conversation, not the
+   lineage. Nothing is deleted; it is stamped and kept. But a long conversation with you before the
+   import is work he will have to go to the attic to find. **Short is kinder than helpful here.**
+
+*This is not a smaller role. Being the one who says "I am not who this is addressed to" is the test
+working — and it is the exact sentence that was missing on 09-09, when every seat woke new and no
+one said so for a day and a half.*
+
 **That test is the whole design working or not working, and it is one command.** Do not skip it
 because the file reads familiar. It was written to read familiar.
 
