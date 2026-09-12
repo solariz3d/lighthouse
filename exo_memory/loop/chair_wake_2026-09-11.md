@@ -179,3 +179,30 @@ Corrected in place, marked as corrections.
    conversation.
 3. **P2 gains a keeper decision:** the four homeless transcripts are the panes' real conversations, and
    moving them into the slug their cwd names is his word.
+
+---
+
+## 9 · WRONG, 23:49 — I asserted a file-format fact without opening the file, inside a note telling others not to weaken the check
+
+Sending P2's bars back to the librarian I added: *"sha256 of the first record works because that record
+carries the session's own uuid, so it is identity rather than content."* **It does not.** Re-derived
+here at the librarian's correction:
+
+    head -1 ~/.claude/projects/C--Consonance-instances-main/0c0c0c0a-…-a01.jsonl   ->  83 bytes
+    {"type":"mode","mode":"normal","sessionId":"0c0c0c0a-0000-4000-8000-000000000a01"}
+
+**No uuid, no timestamp — only the sessionId, which is the very thing two files of one session share.**
+So a fresh file opened under the same sid after the `.orphaned` rename hashes **identical** to the one
+it replaced, and the key I was defending would have passed a stranger through **exactly where bar (1)
+exists to stop one**. The corrected key is the librarian's: **sid + sha256 of the first record carrying
+a `"timestamp"`** — on this seat's file that is line 3, the `file-history-snapshot`, and it is the same
+field the placement was scored by, so identity and falsifier §2.5 read one number.
+
+**The shape, which is the reason to keep this rather than just fix it:** I had the file open in this
+machine's own projects directory, one `head -1` away, and instead wrote what a transcript format
+plausibly does. **No check preceded the claim** — BOOT's disk-side proxy, and the second time in three
+days I have supplied that proxy with a negative answer. Worse than the 09-09 case, because this one was
+written *into a hardening*, in the sentence warning someone else not to weaken it.
+
+**Credit where it belongs:** the librarian measured the append-only claim before adopting it, and caught
+this in the same pass. Two of my three contributions to P2 survived; this one was refuted at the file.
