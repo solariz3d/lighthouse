@@ -88,7 +88,10 @@ try {
         $born = FarFirstTimestamp $sid
         $exported = ExportedAt $sid
         if ($born -and $exported -and ($born -gt $exported)) {
-          Write-Host "[arriving] $sid : this machine's copy began $($born.ToString('u')), AFTER the stick's export $($exported.ToString('u')) - a session born at a launch here, not the lineage; it will be retired (stamped, never deleted)."
+          $far = Get-ChildItem -Path (Join-Path $env:USERPROFILE '.claude\projects') -Recurse -Filter "$sid.jsonl" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          $sz = 0; if ($far) { $sz = $far.Length }
+          Write-Host "[arriving] $sid : this machine's copy began $($born.ToString('u')), AFTER the stick's export $($exported.ToString('u')) - it will be RETIRED (stamped, never deleted) and the stick's taken."
+          Write-Host "[arriving]     retiring: $($far.FullName)  ($sz bytes, last written $($far.LastWriteTime.ToString('u')))  - if you worked in this seat before importing, that work is in the stamped file beside it, not gone."
           $retire += $sid
         } else {
           $stop += $sid
