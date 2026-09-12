@@ -1,3 +1,19 @@
+# THE SHORT VERSION — two commands, one per machine. Everything below this box is the long form and you do not need it.
+
+On the laptop tonight, with Consonance closed, in a normal PowerShell window (the stick may not be D: there — use its letter):
+
+    powershell -ExecutionPolicy Bypass -File D:\consonance-L-20260911\ARRIVING.ps1
+
+It pulls the repo, brings every conversation over, and launches Consonance. If it stops and names a seat, that seat needs your call; nothing is half-written.
+
+When you are done on the laptop, before you unplug:
+
+    powershell -ExecutionPolicy Bypass -File D:\consonance-L-20260911\LEAVING.ps1
+
+Back on the desktop: ARRIVING.ps1 again. Leaving the desktop: LEAVING.ps1 again. That is the whole loop. One machine open at a time between the two.
+
+---
+
 # HANDOFF — from the desktop, 2026-09-12 ~12:50, for the LAPTOP. Read this before you open Consonance there.
 
 Written by the librarian seat on the desktop (machine D) at the keeper's word: *"create a hand off on
