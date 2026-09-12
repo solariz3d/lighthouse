@@ -1072,3 +1072,49 @@ slugs excluded *and named*, since they change with or without me.
 Placed nothing, committed nothing, did not touch `main.rs`. E's launch falsifier is **scored and did
 not fire**: 02:03 shows A/B/C `jsonl_existed=false -> fresh` (correctly — their slugs were empty) and
 E `-> RESUMED`.
+
+## 2026-09-12 — P2 TAIL CARRY (D061): the spec's own check cannot see the case it exists for
+
+Hand-back at `exo_memory/handback/p2-tail-carry_2026-09-12.md`. Built `dev/tail-carry.js` +
+`.test.js` (44) + `.mutants.js` (**28 killed / 0 survived**, after a first run of 20/5 and a tripwire
+refusal before that). js-suite `86 green · 6 failed · 0 crashed · 1 canary (of 93)` — mine green, the
+six reds unchanged and still nobody's. Uncommitted. Nothing carried; `--apply` never ran outside a
+fixture.
+
+**THE FINDING IS A DEFECT IN THE PLAN, NOT A FEATURE OF THE BUILD.** §8 bar (2) says refuse if *"the
+destination's prefix hash at the ledger's offset differs."* **If the far machine appended its own
+turns, that hash MATCHES** — its growth is entirely after the offset — so the tail lands on top of
+the far machine's continuation and one file holds two futures of one conversation. Every record
+parses; nothing errors. The gate has to be `dest.size === agreed.offset`, exact equality, not a lower
+bound. The test builds the forked state and asserts the SPECIFIED check passes on it before requiring
+mine to refuse; the first mutant is the spec itself, and it is killed. **Demonstrated, not argued.**
+
+**AND THE FORK IS ORDINARY.** Opening Consonance appends to every resumed seat before anyone types:
+B was placed at 1,319,397 B, the 04:05 launch resumed it, it is 1,319,664 B — **+267 B with no turn.**
+Seven seats, so one launch on the far machine moves all seven files. Hence the operating rule: one
+machine's app open between carries, and carry BOTH ways. The dream cycle does not break it (`claude
+-p`, own session id, skips while a pane is live) — checked, not assumed.
+
+**§7, answered:** the tail does not need the lease to be SAFE; it needs it to stop being LOSSY. And a
+requirement handed to P3 rather than a blocker: **the lease governs turns, and +267 bytes are not a
+turn** — if a follower still `--resume`s a seat it does not hold, the fork happens at launch and the
+lease never sees it.
+
+**THE FIRST CARRY IS NOT A TAIL — 331.21 MB, all seven seats FULL**, because no agreed state exists
+yet. Anyone budgeting the first trip on "~2 MB a seat" is wrong by two orders of magnitude. But I
+re-derived the design's ground claim at **3.2 days** instead of the 21 hours it was accepted on:
+prefix-IDENTICAL 3/3, 15.36 MB of tail against 323.91 MB of file, **21.1×**. A full-file sha256 of
+the 248 MB chair is 308 ms, so bar (3) is cheap and should stay.
+
+**WHAT THE INSTRUMENTS FOUND THAT READING DID NOT.** Run one's five survivors were all real, and the
+sharpest was structural: the read-back verification of the rejoined file could be replaced by `true`
+with the suite green. Two build-time reds were bugs, not test bugs — a refused run still wrote an
+empty ledger onto the stick, and the import hashed the destination at `pending.offset` while
+comparing against a hash recorded at `agreed.offset`, which is meaningless in exactly the case you
+need it. **And a whole gate was missing until the rehearsal ran for real:** seven seats came back
+clean with the app open — right for a READ, a disaster for a WRITE. The import now refuses while
+Consonance runs; the export does not, because it only reads.
+
+**Decided explicitly rather than inherited:** the live file travels, orphans and strangers stay — an
+orphan is already a retirement, it has a different key by construction, and the main slug alone holds
+2,390 files that are not seats. Filed with its own falsifier.
