@@ -852,3 +852,4 @@ the wrong figure was published.*
 - 02:23 D060 collated; +6 tests not +7. A's placement script dry-run: retire YES for A and E (both live since 02:03), nothing for B and C — the decision drifts with every pane turn; place B and C first.
 - 02:54 P-PLACE collated: the vendor resumes on slug+id and ignores the recorded cwd (three-arm probe, negative arm refuses). Place B and C after a rebuild; A is the one real trade and A recused. Six suite reds, three new and unowned.
 - 04:05 Placement done: B and C placed and resumed; all four panes RESUMED at 04:05 with first timestamps 2026-09-09. Requirement A holds for every seat on D.
+- 04:46 WRONG 101: bar (2)'s prefix hash cannot see a far machine's own appends; the import gate is exact size equality (A). Launch appends ~267 B to every resumed seat, so the fork is ordinary: one machine open between carries, carry both ways; P3 must stop the follower resuming unheld seats.
