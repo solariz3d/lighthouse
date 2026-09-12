@@ -843,3 +843,4 @@ the wrong figure was published.*
 - 02:40 D058 collated: committee panes never --resume (232/232 fresh), so neither naming nor existence gives A for panes; their conversations are in the home slug. WRONG 99-100 (C found). Plan §7: P1b is the precondition A waits on.
 - 02:46 stamp.js: the time on an entry is read from the clock in the call that writes it, and a typed leading time is refused. 11 tests, 6 of 6 mutants caught.
 - 23:32 The keeper's pane specialization is by TEST, not label; saved at loop/pane_battery_idea_2026-09-11.md with the 08-31 battery, L039/L045 reads and the dossier falsifier as prior art. Unfinished plans first.
+- 23:39 Append-only measured on three fixed seats across 21 h and a compaction: stick copy = live prefix, sha256, 3 of 3. The chair's tail-carry is live; plan §8 gives P2 its four bars. Transcripts by USB is the keeper's word, dated.

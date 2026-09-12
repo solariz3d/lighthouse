@@ -68,3 +68,27 @@ The laptop is the far end with nothing live. When the keeper is next at the lapt
 **The packet's own falsifier fired on D on 09-10 and was fixed by hand without being named as that:** `persist.log` row 1789026884 has all four panes `jsonl_existed=false -> fresh`; `cd36189` (09-10 01:57) made two empty directories for B and E. C's guard (`ensure_resume_cwd`, `main.rs:5438`: create a direct child of the instances root, refuse everything else, both loud on persist.log and the board) closes it; the keep predicate (`is_kept_or_fixed`, `:867`; `retire_capture_unless_kept`, `:874`) closes the third-instance test at both sites. Tree: 314 `#[test]` against 304 at HEAD; C's lab run 526 green / 1 red (the pre-existing composer red) / 4 ignored; 12 mutants, 11 caught, M8 equivalent while there are three seats and caught at four. **Not run in the app; not committed; the chair lands it.** C's acceptance test moves a pane's directory aside for one launch — the keeper's to run.
 
 **Corrected order.** P1 as built (land + rebuild + acceptance) → **P1b, new, the precondition A actually waits on:** `resume_pane` `--resume`s when the jsonl is where the cwd says. It reverses the 07-11 decision made against vendor 2.1.207's lazy flush; the measurement first, not the reversal: does 2.1.266 still lose a hard-killed session's jsonl? (C, or whoever the chair names; falsifier: a kept pane that dies with "no conversation found" after the reversal.) → P2 on git with fixed-offset chunks, **now with a decision the keeper owns:** the four homeless transcripts in `C--Users-nname/` are conversations; moving them to the slug `panes.json` implies is a conversation move, and nothing in this room moves one without his word. → P3, P4 after decision 1. §2.5 scores panes too once P1b lands: any pane whose first timestamp is a launch minute is a new conversation.
+
+
+## 8 · THE KEEPER DECIDED (`loop/keeper_decisions_2026-09-11.md`, fd264bb, his words verbatim there) — P2 re-scoped, and the chair's tail proposal measured before it is taken
+
+**The decision, and what it supersedes.** Transcripts by USB, the repo for everything else; the Third Place's record stays out of the repo (`.gitignore:79` unchanged, now the same rule as every transcript); the four homeless pane conversations are copied first, originals kept, then placed. §6(2) put P2 on git under the cap on the strength of his 09-08 "just use the repo"; his 23:35 word is the opposite for this class of file, said knowing the split works. **A decision changed on the keeper's word is not a WRONG; it is dated here.** Requirement A is now "the same conversation when he carries the stick", priced by him; the mesh is unchosen, not refused ("if you come up with a better way I will see what you find").
+
+**The chair's answer to that invitation — carry the TAIL, not the file — rests on one claim: a transcript is append-only. Measured at this desk, 23:40, across ~21 hours of use on all three fixed seats, with the stick still mounted:**
+
+| seat | stick copy (00:27:29 attic, bytes) | live now (bytes) | sha256 of the stick copy vs the same-length prefix of the live file |
+|---|---|---|---|
+| librarian | 37,161,238 | 39,482,932 | `ea764aa54ce8914f` = `ea764aa54ce8914f` **PREFIX-IDENTICAL** |
+| chair | 253,617,562 | 255,746,237 | `7ac643b64a0a8b8c` = `7ac643b64a0a8b8c` **PREFIX-IDENTICAL** |
+| Third Place | 32,761,779 | 34,792,117 | `2ab8d563c52deab9` = `2ab8d563c52deab9` **PREFIX-IDENTICAL** |
+
+`sha256sum <stick>` against `head -c <stick bytes> <live> | sha256sum`, `/d/consonance-L-20260911/files/consonance-attic/<slug>/<sid>.20260911-002729.jsonl`. This seat compacted today and its prefix is untouched, so a compaction appends too. **Append-only holds for the fixed seats, and the tail proposal is live: the day's carry would have been 2.1–2.3 MB per seat instead of 33–254 MB.**
+
+**Bars for P2's tail design, from what the measurement does not cover:**
+
+1. **A ledger on the stick per transcript: `(sid, sha256 of the first record, byte offset, sha256 of the prefix)`** — keyed on the sid and first record, never on the path, because `resume_pane` today renames a pane's file to `.orphaned` and starts a new file at the same path (D058 §0); a path-keyed tail would append a stranger's bytes onto the original.
+2. **Verify the destination's prefix before appending.** If the destination's prefix hash at the ledger's offset differs, the two copies DIVERGED: refuse the tail and fall back to the full carry with retire-to-attic, never append. Divergence is real by construction while both machines' seats can run between carries (two writers, one conversation); P3's lease is what makes it impossible rather than merely caught.
+3. **Verification of the rejoined file stays `state-sync --verify`'s sha256 index**, full-file, after every tail — the ledger is for choosing what to carry, not for trusting the result.
+4. Measured on fixed seats only. Committee panes never resume (D058 §0), so their files are not append-only across a restart until P1b lands; the pane battery and the pane placement both wait on P1b for the same reason.
+
+**Corrected order, unchanged from §7 except the carrier:** rebuild → C's acceptance test → P1b → place the four pane conversations (retire the fresh C one to the attic, stamped) → P2 designed as USB tail-carry with the four bars → P3 → P4 only if the keeper chooses a network. The manifest's line 13 ("transcripts machine-local") is P2's to reword; it is now true in the keeper's sense and false in the 09-08 sense.
