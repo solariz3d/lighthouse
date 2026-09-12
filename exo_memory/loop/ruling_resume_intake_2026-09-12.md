@@ -48,8 +48,24 @@ default:** the first resumed pane reads a stale 116 KB brief with a false headin
 misleading and wasteful; it is not destructive, and it does not touch a transcript. **So the rebuild
 goes first** — E's launch falsifier needs it — **and this is the next packet, not a blocker.**
 
-    FALSIFIER: a resumed pane whose CLAUDE.md still contains "the underlying session could not be
-               resumed". Checkable with one grep in that pane's cwd after the first resume.
+    ~~FALSIFIER: a resumed pane whose CLAUDE.md still contains "the underlying session could not be
+               resumed". Checkable with one grep in that pane's cwd after the first resume.~~
+
+**STRUCK 2026-09-12 03:05, dated in place. It fires on its own quotations.** On the 02:59 launch the
+rewrite worked — and this check read **2** in A's cwd and **4** in E's. Every occurrence is a
+QUOTATION: the pane's own map and hand-back text are carried into the intake, and E's map line
+literally contains `grep -c 'could not be resumed'`. **The moment the room writes about a check, the
+check's own search string is in the file it searches.** That is the 2026-08-17 `js-suite` shape, where
+the EXPECTED-RED marker matched anywhere in a file's bytes and its own test file necessarily quoted it.
+
+    FALSIFIER (corrected): a resumed pane whose CLAUDE.md still contains the HEADING SENTENCE,
+               "Consonance restored this pane from its own capture" (main.rs:5366) — not the
+               fragment. Measured at the 02:59 launch: A 0, E 0 (resumed, 108,047 / 108,651 B);
+               B 1, C 1 (fresh, 116,937 / 124,198 B). The rewrite passed on its first real launch.
+
+*Found independently and within a minute of each other by the chair and the librarian, from the same
+two greps. Neither read the other first; the commit at `6129599` and the librarian's appended master
+entry carry it from both desks.*
 
 **Owner: not the chair. A small follow-on packet (P1c) for the seat that holds this code.**
 
