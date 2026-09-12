@@ -850,3 +850,4 @@ the wrong figure was published.*
 - 02:05 First committee-pane resume: E RESUMED at 02:03:57 into its 00:30 conversation (first timestamp predates launch). A/B/C fresh because idle panes never got a transcript file — not the falsifier.
 - 02:09 The go (plan §10): P1c sites and bars supplied; placement table — E's homeless file is three days older than its live resumed conversation, so placing E retires today's work; recommend A/B/C only. Third Place last.
 - 02:23 D060 collated; +6 tests not +7. A's placement script dry-run: retire YES for A and E (both live since 02:03), nothing for B and C — the decision drifts with every pane turn; place B and C first.
+- 02:54 P-PLACE collated: the vendor resumes on slug+id and ignores the recorded cwd (three-arm probe, negative arm refuses). Place B and C after a rebuild; A is the one real trade and A recused. Six suite reds, three new and unowned.
