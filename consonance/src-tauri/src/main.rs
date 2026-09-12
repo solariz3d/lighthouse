@@ -1067,6 +1067,41 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     let mut child = pair.slave.spawn_command(cmd).map_err(|e| e.to_string())?;
     drop(pair.slave);
 
+    // **P1b: A REFUSED `--resume` IS INVISIBLE TO EVERY OTHER SIGNAL THIS FUNCTION KEEPS.**
+    //
+    // Measured on 2.1.269 in a pty harness making the same two calls this function makes
+    // (`handback/p1b-resume-the-conversation_2026-09-12.md` §4). A `--resume` of a session id with
+    // no transcript prints one line — "No conversation found with session ID: <id>" — and the
+    // child exits 1 inside the first second. `try_wait` sees it on the first poll, 3/3.
+    //
+    // The PTY reader does NOT: `alive` stayed TRUE and the reader saw no EOF three seconds after
+    // that exit, 3/3, because this process still holds `pair.master` and a Windows ConPTY does
+    // not close while a handle is open. `alive` is the ONLY liveness this function keeps — the
+    // `Child` is dropped at the end of this body and `PtySession` stores a killer, not a child —
+    // so without the check below a refused resume yields a pane the app counts as running, sitting
+    // on an error message forever. That is the 2026-07-11 failure, and it is the whole reason
+    // `resume_pane` never dared attempt a resume. The Child is alive HERE, so here is the one
+    // place it can be asked.
+    //
+    // Bounded, and only on the resume path: a live session pays this wait once at launch, a
+    // refused one is already gone before the first poll.
+    if resume {
+        let t0 = Instant::now();
+        while t0.elapsed() < RESUME_CONFIRM {
+            match child.try_wait() {
+                Ok(Some(st)) => {
+                    plog(&format!("resume pane={pane_id} REFUSED by vendor (exit {}) — falling back to a fresh warm spawn", st.exit_code()));
+                    return Err(format!("{RESUME_REFUSED} pane={pane_id} exit={}", st.exit_code()));
+                }
+                Ok(None) => std::thread::sleep(Duration::from_millis(100)),
+                // A child we cannot interrogate is not a child we may declare healthy, but it is
+                // also not evidence of refusal. Stop asking and let it live: the fallback exists
+                // for a REFUSAL, and inventing one here would fresh-spawn over a good session.
+                Err(_) => break,
+            }
+        }
+    }
+
     let killer = child.clone_killer();
     let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
     let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
@@ -5400,6 +5435,56 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     fs::write(PathBuf::from(cwd).join("CLAUDE.md"), brief).is_ok()
 }
 
+/// How long `spawn_claude_pane` waits for a `--resume` child to prove it did not refuse.
+/// Measured: a refusal exits inside the first second — `after_ms=0` on the first poll, 3/3, and
+/// that poll came after a 60 s boot wait. A second is several times the needed margin and is paid
+/// once per resumed pane at launch.
+const RESUME_CONFIRM: Duration = Duration::from_millis(1000);
+
+/// The marker on the one error `resume_pane` is allowed to swallow. A refusal is the ONLY spawn
+/// failure with a fallback: every other error — a withheld seat, a pty that would not open — must
+/// still reach the caller, so the fallback keys on this string rather than on `is_err()`.
+const RESUME_REFUSED: &str = "RESUME_REFUSED";
+
+/// Which way a kept pane comes up, decided BEFORE anything is written or moved.
+#[derive(Debug, PartialEq)]
+enum ResumePlan {
+    /// The vendor's own transcript for this id is on disk under this cwd: ask for the real
+    /// conversation back, and leave the file exactly where it is until the attempt has been made.
+    Resume,
+    /// Nothing to resume. The warm fresh spawn, unchanged from every launch before this one.
+    Fresh,
+}
+
+/// **P1b: THE ORDERING TRAP, AS A FUNCTION.**
+///
+/// HEAD renames this file to `.jsonl.orphaned` before every spawn so a fresh `--session-id`
+/// cannot collide with it — and that rename is the single reason no pane has ever resumed: 236 of
+/// 236 rows in `data/persist.log` read `-> fresh`. The rename is still needed on the fallback and
+/// must not happen before the attempt, so the decision has to be readable on its own, ahead of any
+/// write.
+///
+/// Existence is the predicate because existence is what the vendor tests. Measured on 2.1.269
+/// (`handback/p1b-resume-the-conversation_2026-09-12.md` §3): with the transcript present a
+/// `--resume` came back with the real turns on screen, 3/3 — including a session hard-killed by
+/// `TerminateProcess` mid-stream; with it absent the vendor refused, 5/5. It is a predicate and
+/// not a guarantee — a present-but-CORRUPT transcript was never trialled — which is why the
+/// refusal path exists underneath it rather than instead of it.
+fn plan_resume(jsonl: &Path) -> ResumePlan {
+    if jsonl.exists() { ResumePlan::Resume } else { ResumePlan::Fresh }
+}
+
+/// Where the vendor keeps this pane's transcript. One definition, because `resume_pane` has to
+/// test this path, move it, and name it in a row, and three spellings of one path is how they
+/// drift apart.
+fn pane_jsonl(pane: &str, cwd: &str) -> PathBuf {
+    PathBuf::from(home())
+        .join(".claude")
+        .join("projects")
+        .join(encode_cwd(cwd))
+        .join(format!("{pane}.jsonl"))
+}
+
 /// What `ensure_resume_cwd` found, when it let the resume through.
 #[derive(Debug, PartialEq)]
 enum ResumeCwd {
@@ -5627,6 +5712,151 @@ mod where_a_seat_lives_tests {
         assert!(!body.contains(concat!("write", "_kept(")), "resume_pane writes the kept roster");
     }
 
+    /// **P1b: THE PANE RESUMES ITS OWN CONVERSATION.** `resume_pane` is a `#[tauri::command]`
+    /// taking `State`s, so — by the method `the_resume_guard_precedes_every_side_effect` already
+    /// uses — its WIRING is asserted against the source. Stated as a limit rather than glossed:
+    /// these four read text, so they prove the call is WRITTEN, never that it ran. What proves it
+    /// ran is the `RESUMED` / `-> fresh` line each launch writes to `data/persist.log`, and the
+    /// board row beside it.
+    #[test]
+    fn a_kept_pane_whose_transcript_is_on_disk_attempts_a_real_resume() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = fn_body(&src, concat!("fn resume", "_pane("));
+        assert!(
+            body.contains(concat!("spawn_claude", "_pane(app.clone(), pane.clone(), cwd.clone(), true,")),
+            "resume_pane never asks for a resume. 236 of 236 rows in persist.log read '-> fresh' \
+             because of this: the seat wakes as a new session under its old id, warm-briefed from \
+             a screen capture, and its real conversation is renamed .orphaned beside it."
+        );
+        let plan = body.find(concat!("plan", "_resume(")).expect("no plan_resume — re-point this test");
+        for (what, needle) in [
+            ("the CLAUDE.md write", concat!("warm_resume", "_brief(")),
+            ("the jsonl rename", concat!("fs::rename(&jsonl", ", &orphan)")),
+        ] {
+            let at = body.find(needle).unwrap_or_else(|| panic!("{what} is gone — re-point this test"));
+            assert!(plan < at, "{what} happens before the resume is even planned");
+        }
+    }
+
+    /// **THE ORDERING TRAP.** The rename to `.jsonl.orphaned` is what makes a resume impossible —
+    /// it is the reason the 07-11 decision survived two vendor minors unexamined. It is still
+    /// needed on the fallback, so it has to come SECOND.
+    #[test]
+    fn the_orphan_rename_is_reachable_only_through_the_fallback() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = fn_body(&src, concat!("fn resume", "_pane("));
+        // CONTAINMENT, not source position. The fallback is a closure, so its body is written
+        // above the attempt that may never call it — definition order is not execution order,
+        // and the first version of this test went red on correct code for exactly that reason.
+        let open = body.find("let fresh = |app: AppHandle|").expect("no fallback closure — re-point this test");
+        let close = body[open..].find("\n    };").expect("the fallback closure does not close where expected") + open;
+        let rename = body
+            .find(concat!("fs::rename(&jsonl", ", &orphan)"))
+            .expect("the orphan rename is gone — re-point this test");
+        assert!(
+            rename > open && rename < close,
+            "the jsonl is renamed aside somewhere other than the fallback. That rename is what \
+             makes a resume impossible — the vendor is then asked for a conversation the rename \
+             just moved — and it is the whole reason 236 of 236 resumes read '-> fresh'."
+        );
+        let attempt = body
+            .find(concat!("spawn_claude", "_pane(app.clone(), pane.clone(), cwd.clone(), true,"))
+            .expect("resume_pane makes no resume attempt at all");
+        for call in body.match_indices("fresh(app.clone())?") {
+            assert!(call.0 > attempt, "the fallback is invoked before the resume is attempted");
+        }
+    }
+
+    /// **A REFUSAL ENDS IN A LIVE PANE.** The 2026-07-11 failure was never that resume did not
+    /// work — it was that the pane DIED. A refusal must fall back, not propagate.
+    #[test]
+    fn a_refused_resume_falls_back_to_a_fresh_pane_and_every_other_error_still_propagates() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = fn_body(&src, concat!("fn resume", "_pane("));
+        let arm = body
+            .find(concat!("Err(why) if why.starts_with(RESUME", "_REFUSED)"))
+            .expect("a refused resume has no fallback arm — the pane dies, which is 2026-07-11");
+        let fell_back = body[arm..].find("fresh(app.clone())?").expect("the refusal arm spawns nothing");
+        let propagated = body[arm..].find("return Err(why)");
+        assert!(
+            propagated.map_or(true, |p| fell_back < p),
+            "the refusal arm propagates the error instead of falling back"
+        );
+        assert!(
+            body.contains("Err(why) => return Err(why)"),
+            "every OTHER spawn failure — a withheld seat, a pty that would not open — is being \
+             swallowed by the fallback too. Only a refusal has one."
+        );
+    }
+
+    /// **AND THE REFUSAL IS READ FROM THE CHILD, NOT FROM THE SCREEN.** Measured 2026-09-12 on
+    /// 2.1.269: a refused `--resume` exits 1 on the first `try_wait` poll, 3/3 — while the PTY
+    /// reader sees no EOF and `alive` stays TRUE three seconds later, 3/3, because this process
+    /// still holds `pair.master` and a Windows ConPTY does not close under an open handle.
+    /// `alive` is the only liveness `PtySession` keeps, so a refusal not caught here cannot be
+    /// caught at all: the pane would sit on an error message and be counted as running.
+    #[test]
+    fn a_refused_resume_is_caught_from_the_childs_exit_while_it_is_still_reachable() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = fn_body(&src, concat!("fn spawn_claude", "_pane("));
+        // Two `if resume {` blocks live in this function -- the first only chooses `--resume`
+        // over `--session-id`. Anchoring on that one let mutant M4 disable the gate and survive.
+        let gate = body
+            .find("if resume {\n        let t0 = Instant::now();")
+            .expect("the resume-confirm gate is gone or no longer guarded by `resume`");
+        let wait = body[gate..].find("try_wait()").expect(
+            "the refusal is not read from the child. The only other signal here is `alive`, and \
+             `alive` was measured staying TRUE across a refusal.",
+        );
+        let refused = body[gate..].find(concat!("RESUME", "_REFUSED")).expect("no refusal is reported");
+        assert!(wait < refused, "the refusal is reported without asking the child");
+        let killer = body.find("child.clone_killer()").expect("no killer — re-point this test");
+        assert!(
+            gate < killer,
+            "the check runs after the reader and capture threads are wired up, so a refused \
+             resume leaves a seam and a tailer behind for a pane that never existed"
+        );
+    }
+
+    /// **THE PREDICATE, against a real directory.** Existence is what the vendor tests, so it is
+    /// what this tests. Measured 2026-09-12: present -> resumed with the real turns on screen,
+    /// 3/3; absent -> "No conversation found with session ID", 5/5.
+    #[test]
+    fn a_resume_is_planned_exactly_when_the_transcript_is_there() {
+        let root = std::env::temp_dir().join(format!("consonance_p1b_plan_{}", std::process::id()));
+        let _ = fs::remove_dir_all(&root);
+        fs::create_dir_all(&root).expect("scratch");
+        let jsonl = root.join("a2122153-a37e-41a6-a86f-534267ec0565.jsonl");
+
+        assert_eq!(
+            plan_resume(&jsonl),
+            ResumePlan::Fresh,
+            "a pane with no transcript would be sent to --resume, and the vendor refuses that"
+        );
+        fs::write(&jsonl, "{}").expect("write");
+        assert_eq!(
+            plan_resume(&jsonl),
+            ResumePlan::Resume,
+            "a pane whose real conversation is right there comes up fresh anyway"
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// The one spelling of the transcript path. `resume_pane` tests it, moves it, and names it in
+    /// a row; three spellings is how they drift apart.
+    #[test]
+    fn the_transcript_path_is_the_vendors_own_encoding_of_the_cwd() {
+        let cwd = "C:\\Consonance\\instances\\sibling-07b8a48f";
+        let got = pane_jsonl("a2122153-a37e-41a6-a86f-534267ec0565", cwd);
+        assert_eq!(got.file_name().unwrap(), "a2122153-a37e-41a6-a86f-534267ec0565.jsonl");
+        assert_eq!(
+            got.parent().unwrap().file_name().unwrap().to_string_lossy(),
+            encode_cwd(cwd),
+            "the transcript is looked for somewhere the vendor does not put it"
+        );
+        assert!(got.starts_with(PathBuf::from(home()).join(".claude").join("projects")));
+    }
+
     /// **THE ONE PREDICATE, driven off the seat list.** Every fixed seat and every kept pane is
     /// kept; nothing else is. A fourth seat added to `fixed_id_seats()` is covered here with no
     /// edit, because the predicate reads that list rather than repeating it.
@@ -5717,28 +5947,66 @@ fn resume_pane(
             return Err(why);
         }
     }
-    // Warm-resume from OUR capture carries the real memory (complete, up to close), so we NEVER
-    // `--resume` here: `--resume` of a lazily-flushed / hard-killed session errors "no conversation
-    // found" on 2.1.207 and kills the pane (this is exactly what bit a kept sibling on 2026-07-11).
-    // Always spawn FRESH instead — warm if a capture exists, blank if not, but never errored. A
-    // leftover jsonl for this id can make the fresh `--session-id` collide ("already in use"), so
-    // move it aside first: a fresh start that cannot error.
-    let warmed = warm_resume_brief(&pane, &cwd);
-    let jsonl = PathBuf::from(home())
-        .join(".claude")
-        .join("projects")
-        .join(encode_cwd(&cwd))
-        .join(format!("{pane}.jsonl"));
-    let jsonl_existed = jsonl.exists();
-    if jsonl_existed {
-        let orphan = jsonl.with_file_name(format!("{pane}.jsonl.orphaned"));
-        let _ = fs::remove_file(&orphan); // Windows rename fails if dest exists
-        let _ = fs::rename(&jsonl, &orphan);
-    }
-    plog(&format!("resume pane={pane} warmed={warmed} jsonl_existed={jsonl_existed} -> fresh"));
+    // **P1b, 2026-09-12: THE PANE COMES BACK INTO ITS OWN CONVERSATION, OR A ROW SAYS WHY NOT.**
+    //
+    // What stood here: *"we NEVER `--resume`: `--resume` of a lazily-flushed / hard-killed
+    // session errors 'no conversation found' on 2.1.207 and kills the pane."* That was measured
+    // against 2.1.207 and never re-measured; the app ships 2.1.269, and the premise is gone. On
+    // 2.1.269 the vendor writes each record as it completes: a session hard-killed by the same
+    // `TerminateProcess` call `pty_kill` makes kept every completed turn — 9/9 at three kill
+    // delays, and 6/6 when the kill landed MID-turn, where the turn before it survived and only
+    // the one in flight was lost. A turn in flight was never on disk to lose.
+    //
+    // The 07-11 failure was never *resume did not work* — it was that the pane DIED. So this is
+    // not a flipped flag. The refusal is caught at the spawn funnel (see `RESUME_CONFIRM`), and
+    // this arm turns it back into exactly the fresh warm spawn every launch has done until now.
+    // Both outcomes are a LIVE pane; a board row and a `persist.log` line say which happened.
+    //
+    // **THE WARM BRIEF IS NOT WRITTEN ON THE RESUME PATH, and that is a decision, not an
+    // omission.** `warm_resume_brief` bakes the pane's captured SCREEN into `CLAUDE.md` under the
+    // heading "Consonance restored this pane from its own capture (the underlying session could
+    // not be resumed)". On a real resume that sentence is false, and its content is the same
+    // conversation a second time at a worse fidelity — the stacking that put 8-9 copies of one
+    // exchange into a 204k `CLAUDE.md` is exactly this shape. A seat that genuinely remembers must
+    // not also be handed a summary of what it remembers.
+    let jsonl = pane_jsonl(&pane, &cwd);
+    let plan = plan_resume(&jsonl);
     // a fresh pane keeps stock permissions across restarts too — resuming must not quietly
     // grant it the bypass its birth deliberately withheld
-    let session = spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), false, !is_fresh_cwd(&cwd))?;
+    let skip_perms = !is_fresh_cwd(&cwd);
+    // The fallback, and the ONLY writer of the orphan rename. It runs after a refusal, never
+    // before an attempt: that rename is what makes a resume impossible, so it has to come second.
+    let fresh = |app: AppHandle| -> Result<PtySession, String> {
+        let warmed = warm_resume_brief(&pane, &cwd);
+        let jsonl_existed = jsonl.exists();
+        if jsonl_existed {
+            let orphan = jsonl.with_file_name(format!("{pane}.jsonl.orphaned"));
+            let _ = fs::remove_file(&orphan); // Windows rename fails if dest exists
+            let _ = fs::rename(&jsonl, &orphan);
+        }
+        plog(&format!("resume pane={pane} warmed={warmed} jsonl_existed={jsonl_existed} -> fresh"));
+        spawn_claude_pane(app, pane.clone(), cwd.clone(), false, skip_perms)
+    };
+    let session = match plan {
+        ResumePlan::Resume => match spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), true, skip_perms) {
+            Ok(s) => {
+                plog(&format!("resume pane={pane} jsonl_existed=true -> RESUMED"));
+                row(format!("pane {} — RESUMED its own conversation", pane_letter(&pane)));
+                s
+            }
+            Err(why) if why.starts_with(RESUME_REFUSED) => {
+                row(format!(
+                    "pane {} — its transcript was on disk but the vendor refused it ({why}); came                      up FRESH from its capture instead",
+                    pane_letter(&pane)
+                ));
+                fresh(app.clone())?
+            }
+            // Not a refusal: a withheld seat, a pty that would not open. No fallback — the caller
+            // gets it, exactly as it did before this path existed.
+            Err(why) => return Err(why),
+        },
+        ResumePlan::Fresh => fresh(app.clone())?,
+    };
     start_tailer(app, pane.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
     panes.0.lock().unwrap().insert(pane.clone(), session);
     // kept panes resume with the role their HOME decides: instance dirs are committee siblings,
