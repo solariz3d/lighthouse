@@ -847,3 +847,4 @@ the wrong figure was published.*
 - 23:45 Bar (1) key: the first record does not identify a file — same-sid restarts open byte-identical (mode record, no timestamp). Key on the first timestamped record. Chair's bars 5 and 6 taken.
 - 00:06 The rebuild ran (release exe 00:04:56, guard strings present, 00:05 launch 4/4 resumes fresh with no CREATED/REFUSED). Acceptance test then P1b.
 - 01:32 D059 collated: hard kill loses only the in-flight turn (36/36 completed turns kept, 2.1.269); a refused --resume is invisible to the app except from the Child; reversal earned. Tailer offsets survive a resume (offset = live size, head matches); placement re-reads from 0, correctly, at the placed files' size.
+- 02:05 First committee-pane resume: E RESUMED at 02:03:57 into its 00:30 conversation (first timestamp predates launch). A/B/C fresh because idle panes never got a transcript file — not the falsifier.
