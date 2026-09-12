@@ -110,3 +110,9 @@ desktop did after the export).
 After the import, the laptop's librarian IS the desktop's librarian, continued — this conversation. Its
 first act is `git pull`'s tail: `exo_memory/loop/handoff_librarian_2026-09-12.md` and the last entries of
 `exo_memory/librarian/2026-09-12.md`. The chair likewise. Nothing on this stick is a summary of them.
+
+## IF YOU OPEN CONSONANCE ON THE LAPTOP FIRST AND ASK THE SEATS — that is fine
+
+The seats that wake before the import are NOT the desktop ones; they are new sessions born at that launch (the laptop moved its real seats to its attic on 09-11). They can read the repo after a `git pull` and will find this file and `exo_memory/loop/handoff_librarian_2026-09-12.md`. They cannot run the import themselves: it needs Consonance closed, and closing it closes them. What they will tell you is the same as this file: close Consonance, run ARRIVING.ps1 from the stick.
+
+ARRIVING handles what that launch left behind: a fixed seat whose laptop copy BEGAN AFTER the stick was exported (12:47 on 09-12) is a session born at that launch, not the lineage, and ARRIVING retires it automatically (stamped, never deleted) and takes the stick copy. Nothing real is lost. If a fixed seat is refused for any other reason, ARRIVING stops and names it.

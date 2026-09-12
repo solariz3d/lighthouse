@@ -37,6 +37,12 @@ Push-Location $repo
 try {
   Write-Host "[arriving] git pull ..."
   & git pull --ff-only | Out-Host
+  if ($LASTEXITCODE -ne 0) {
+    # a push from the other machine can land mid-pull; one retry covers the race seen on D at 12:55
+    Start-Sleep -Seconds 5
+    & git pull --ff-only | Out-Host
+    if ($LASTEXITCODE -ne 0) { Write-Host "[arriving] git pull FAILED twice - the room's files here are stale. Continuing with the carry, because the conversations matter more; tell the librarian seat to sort the pull out." }
+  }
   if (-not (Test-Path 'dev\tail-carry.js')) { Write-Host "[arriving] dev\tail-carry.js is not in this repo after the pull - stop and ask"; exit 2 }
 
   # 2. rehearse
@@ -44,7 +50,32 @@ try {
   $lines = & node 'dev\tail-carry.js' '--stick' $stick '--import' | ForEach-Object { $_ }
   $lines | Out-Host
 
-  # 3. read the verdicts: a REFUSED row followed by a 'DIFFERENT conversation' reason
+  # 3. read the verdicts: a REFUSED row followed by a 'DIFFERENT conversation' reason.
+  #    A pane's copy is retired without asking (the stick's is the real one). A FIXED seat's copy is
+  #    retired only if it was BORN AFTER the stick's export - i.e. this machine's Consonance was
+  #    opened before ARRIVING ran and started a fresh session under the seat's id. A conversation
+  #    that began after the export cannot be the older lineage; by the room's own test (a first
+  #    timestamp at a launch minute) it is a new conversation, and stepping it aside loses nothing
+  #    real. Any other fixed-seat refusal STOPS: that is a decision, not a step.
+  $ledger = $null
+  $ledgerPath = Join-Path $stick 'consonance-tails\ledger.json'
+  if (Test-Path $ledgerPath) { $ledger = Get-Content $ledgerPath -Raw | ConvertFrom-Json }
+  function FarFirstTimestamp([string]$sid) {
+    $root = Join-Path $env:USERPROFILE '.claude\projects'
+    $f = Get-ChildItem -Path $root -Recurse -Filter "$sid.jsonl" -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+    if (-not $f) { return $null }
+    $fs = [System.IO.File]::OpenRead($f.FullName)
+    try { $buf = New-Object byte[] 400000; $n = $fs.Read($buf, 0, $buf.Length) } finally { $fs.Close() }
+    $text = [System.Text.Encoding]::UTF8.GetString($buf, 0, $n)
+    $m = [regex]::Match($text, '"timestamp":"([^"]+)"')
+    if ($m.Success) { return [datetime]::Parse($m.Groups[1].Value).ToUniversalTime() } else { return $null }
+  }
+  function ExportedAt([string]$sid) {
+    if (-not $ledger) { return $null }
+    $seat = $ledger.seats.$sid
+    if ($seat -and $seat.pending -and $seat.pending.at) { return [datetime]::Parse($seat.pending.at).ToUniversalTime() }
+    return $null
+  }
   $retire = @(); $stop = @()
   for ($i = 0; $i -lt $lines.Count; $i++) {
     $m = [regex]::Match($lines[$i], '^\s*REFUSED\s+\S.*?\s([0-9a-f]{8}-[0-9a-f-]{27})\s*$')
@@ -53,7 +84,16 @@ try {
     $why = ''
     if ($i + 1 -lt $lines.Count) { $why = $lines[$i + 1] }
     if ($why -match 'DIFFERENT conversation') {
-      if ($fixed -contains $sid) { $stop += $sid } else { $retire += $sid }
+      if ($fixed -contains $sid) {
+        $born = FarFirstTimestamp $sid
+        $exported = ExportedAt $sid
+        if ($born -and $exported -and ($born -gt $exported)) {
+          Write-Host "[arriving] $sid : this machine's copy began $($born.ToString('u')), AFTER the stick's export $($exported.ToString('u')) - a session born at a launch here, not the lineage; it will be retired (stamped, never deleted)."
+          $retire += $sid
+        } else {
+          $stop += $sid
+        }
+      } else { $retire += $sid }
     } else {
       $stop += $sid
     }
