@@ -848,3 +848,4 @@ the wrong figure was published.*
 - 00:06 The rebuild ran (release exe 00:04:56, guard strings present, 00:05 launch 4/4 resumes fresh with no CREATED/REFUSED). Acceptance test then P1b.
 - 01:32 D059 collated: hard kill loses only the in-flight turn (36/36 completed turns kept, 2.1.269); a refused --resume is invisible to the app except from the Child; reversal earned. Tailer offsets survive a resume (offset = live size, head matches); placement re-reads from 0, correctly, at the placed files' size.
 - 02:05 First committee-pane resume: E RESUMED at 02:03:57 into its 00:30 conversation (first timestamp predates launch). A/B/C fresh because idle panes never got a transcript file — not the falsifier.
+- 02:09 The go (plan §10): P1c sites and bars supplied; placement table — E's homeless file is three days older than its live resumed conversation, so placing E retires today's work; recommend A/B/C only. Third Place last.

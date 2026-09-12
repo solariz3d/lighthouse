@@ -112,3 +112,30 @@ The laptop is the far end with nothing live. When the keeper is next at the lapt
 
 *Placement replay cost, measured 01:4x (`stat -c %s ~/.claude/projects/C--Users-nname/<sid>.jsonl`): A/B/C/E homeless transcripts 6fe15f0a=3290474 12fb81f6=1319397 0845a868=1480451 a2122153=702825 bytes; total 6793147 bytes read once into the board at the first launch after placement.*
 *Correction: the "01:4x" in the line above was a placeholder left in; the measurement and its commit are 593cf24 at 01:32:19.*
+
+
+## 10 · THE GO (the keeper, 02:08: "Do what comes next and save third place shit for last") — prior art at dispatch for P1c and the placement, measured 02:09
+
+**Order, his:** P1c → place the four pane conversations → P2 (USB tail carry) → the Third Place's insight LAST, by its own door (`cant_lose_repair_registration_2026-08-29.md`: verbatim first, falsifier before build). The pane battery stays behind P2.
+
+**P1c — two builds, both ruled at `ruling_resume_intake_2026-09-12.md` (d172afb). Sites, so the packet does not re-find them:**
+
+| item | where | what the packet must open first |
+|---|---|---|
+| rewrite the intake on the resume path (no capture section) | `warm_resume_brief` `main.rs:5266`, its write at `:5435`; `assemble_intake_within(reserve)` at `:2703`; the false heading at `:5366` | the four live pane `CLAUDE.md` files measured 01:44: 115,639 / 116,304 / 123,565 / 116,302 B, each carrying the heading once; E's ruling in hand-back §6 (why the brief is not written on resume) |
+| instrument `RESUME_CONFIRM` | `main.rs:5447` `RESUME_REFUSED`, the confirm loop in `spawn_claude_pane` returning `Err` at `:1094`; the RESUMED row at `:5993`, the refusal arm at `:5997` | E's §4 (exit visible on first `try_wait`; PTY never EOFs on ConPTY); §9: the width is untested by construction. Record elapsed ms on refusal in the persist.log row; never assert the number in a test |
+
+Bars carried from D058/D059: red-first, mutants applied to the real source, the suite at landing (532 / 1 / 4 with the composer red standing), nothing run in the app until the keeper rebuilds.
+
+**The placement — keeper decision 3 (`keeper_decisions_2026-09-11.md` §3: copy first, originals kept, then place; app closed; retire-not-overwrite). Prior art: `dev/migrate/desktop-place.ps1` (the 09-11 placement, 16 of 16 sha256-verified) and `dev/acceptance-p1.ps1` (the wait-for-close shape the keeper will run). The four homeless files, `~/.claude/projects/C--Users-nname/<sid>.jsonl`, measured 01:32: A 3,290,474 · B 1,319,397 · C 1,480,451 · E 702,825 B. What sits at each destination today (02:09):**
+
+| pane | destination slug today | consequence of placing |
+|---|---|---|
+| A `6fe15f0a` | no live jsonl, no orphan | place; nothing retired |
+| B `12fb81f6` | no live jsonl, no orphan | place; nothing retired |
+| C `0845a868` | no live jsonl; one orphan 1,631,086 B (2026-09-11T08:06Z → 08:36Z) | place; the orphan stays beside it |
+| **E `a2122153`** | **a LIVE resumed conversation, 1,778,178 B, first 2026-09-12T06:30:58Z — the D059 work** | **placing E's homeless file (702,825 B, 2026-09-09T14:59Z → 17:06Z, older by three days) would retire the conversation that just resumed** |
+
+**So E is a decision, not a step, and it is the keeper's:** (a) place all four as ruled, retiring E's live conversation to the attic stamped; or (b) place A, B, C and leave E as it is, its 09-09 file staying in the home slug as an address. This desk's recommendation: **(b)** — the room's own thesis is the last turn, and E's last turn is today's. The packet writes both arms and the keeper picks one before the script moves a byte. Every placed file changes the tailer's head → read once from 0 into the board (§9): A+B+C = 6,090,322 B; +E = 6,793,147 B.
+
+**P2 after that**, with the six bars (§8) and the settle gate as reuse. **Then the Third Place, last.**
