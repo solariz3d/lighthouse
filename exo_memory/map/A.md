@@ -1022,3 +1022,53 @@ this packet exists for, and **a real defect — a refused install exited non-zer
 Declined E's home-keyed union (it retains D's rows on the first sync, which `:48` forbids) and
 declined to class the 4 UNPLACED paths as UNDECIDED (that is D056-3's, and silencing the checker
 without the audit is this packet's own defect in costume). Nothing run against the live data dir.
+
+## 2026-09-12 — P-PLACE (D060): the table was stale before I read it, and the premise was never tested
+
+Hand-back at `exo_memory/handback/p-place_2026-09-12.md`. Built `dev/place-conversations.js` +
+`.test.js` (35) + `.mutants.js` (**20 killed / 0 survived**, after a first run of 14/4). js-suite
+`85 green · 6 failed · 0 crashed · 1 canary (of 92)`; mine green, and the six reds are **not** mine —
+controlled by moving my three files out of the tree and re-running: all six still exit 1.
+Uncommitted. **JS, not PowerShell, for one measurable reason:** js-suite DISCOVERS tests by walking
+the tree, so a `.test.js` is run by the room's instrument from the moment it exists and a `.ps1` is
+run by nobody.
+
+**THE PREMISE OF THE WHOLE PACKET HAD NEVER BEEN MEASURED, AND I NEARLY BUILT ON IT.** Every record
+in these four transcripts says `cwd: C:\Users\nname`. Nobody had checked whether the vendor refuses
+a transcript whose recorded cwd is not the cwd you resume from — E's P1b trials *cannot* answer it,
+because its scratch sessions were born in the cwd they were resumed from, so the variable was never
+varied. Three arms in one scratch project dir through E's `ptyprobe`: foreign cwd RESUMED with the
+prior turns on screen; cwd-rewritten control the same; absent sid refused, `exited=Some(1)`.
+**The recorded cwd is not consulted — the slug and the id are.** The negative arm is what makes the
+other two worth anything, and a fourth confirmation fell out free: the treatment file *grew*, so the
+resume appended to it rather than starting a session wearing the old id.
+
+**THE TABLE I WAS HANDED WAS ALREADY WRONG, IN THE WAY IT WARNED IT WOULD BE.** §3 said three of
+four panes hold no `<sid>.jsonl` and that this stops being true the moment a pane takes a turn. It
+stopped being true in **four minutes** — A took a turn at the 02:03 launch, the same launch that
+proved resume works. **I am A**, so placing A's conversation retires the thread writing the
+hand-back, which makes §4 a two-seat question and makes me the interested party in one of them.
+Laid out both; recommended B and C (neither retires anything, so neither is a judgment call);
+refused to rule on A. **The argument that carries it is not caution — the originals stay
+byte-identical, so placing later costs exactly the same. There is no window closing.**
+
+**THE MUTATION PASS'S FIRST RUN IS THE FINDING, AGAIN.** 14 killed / **4 SURVIVED**, and all four
+were the read-back verification itself — the placed file's sha, bytes, timespan, and the run-level
+failure. The cause is structural and I would not have seen it by reading: **`apply` verifies the
+copy before it commits, so it can never produce a bad placed file, so no test could reach that code
+with one.** §5 asked for *"verify by reading back, not by reporting the copy"* and I had shipped the
+reporting version with a read-back that could not be exercised. Pulled the check out as
+`verifyPlaced(dest, row)`, pointed it at files deliberately wrong, one named injection seam for the
+run-level failure. 20/20. **A verification nothing can exercise is a printed reassurance.**
+
+**AND I RELAXED A REFUSAL ON PURPOSE.** §5 says refuse unless the app is closed; a LIVE run does,
+a DRY RUN does not. A dry run writes nothing, so a running app costs it *accuracy*, not safety —
+refusing there would force the keeper to close the app merely to look, pricing the rehearsal step
+high enough to skip. It runs and says its reading is going stale. **The room's recurring failure is
+a reading reported as a state; the fix is to LABEL it, not to withhold it.** Both halves are
+mutation-tested. Dry run proved on the real disk too: 15 files, 0 changed — with A's and E's live
+slugs excluded *and named*, since they change with or without me.
+
+Placed nothing, committed nothing, did not touch `main.rs`. E's launch falsifier is **scored and did
+not fire**: 02:03 shows A/B/C `jsonl_existed=false -> fresh` (correctly — their slugs were empty) and
+E `-> RESUMED`.
