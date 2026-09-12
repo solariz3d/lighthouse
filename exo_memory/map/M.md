@@ -853,3 +853,4 @@ the wrong figure was published.*
 - 02:54 P-PLACE collated: the vendor resumes on slug+id and ignores the recorded cwd (three-arm probe, negative arm refuses). Place B and C after a rebuild; A is the one real trade and A recused. Six suite reds, three new and unowned.
 - 04:05 Placement done: B and C placed and resumed; all four panes RESUMED at 04:05 with first timestamps 2026-09-09. Requirement A holds for every seat on D.
 - 04:46 WRONG 101: bar (2)'s prefix hash cannot see a far machine's own appends; the import gate is exact size equality (A). Launch appends ~267 B to every resumed seat, so the fork is ordinary: one machine open between carries, carry both ways; P3 must stop the follower resuming unheld seats.
+- 12:49 First real export to the stick: 55 s, 332 MB, seven seats, ledger written. Handoffs on the stick and in the repo; the laptop imports tonight. Hold: no state push from L until the launcher's Migrate stops retiring transcripts.
