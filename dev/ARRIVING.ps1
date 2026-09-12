@@ -85,6 +85,12 @@ if (Test-Path $exe) {
   Write-Host "[arriving] launching Consonance ..."
   Start-Process -FilePath $exe -WorkingDirectory (Split-Path -Parent $exe) | Out-Null
   Write-Host "[arriving] done. Every seat should say RESUMED in C:\Consonance\data\persist.log."
+  # 6. the reminder that does the work: a window that waits for Consonance to close, then exports
+  $onExit = Join-Path $stick 'ON-EXIT.ps1'
+  if (Test-Path $onExit) {
+    Start-Process -FilePath 'powershell.exe' -ArgumentList @('-NoExit', '-ExecutionPolicy', 'Bypass', '-File', "`"$onExit`"") | Out-Null
+    Write-Host "[arriving] a second window is now waiting: when you close Consonance it runs LEAVING.ps1 for you. Do not unplug the stick until that window says DONE."
+  }
 } else {
   Write-Host "[arriving] imported. No release exe at $exe - launch Consonance the way you usually do."
 }
