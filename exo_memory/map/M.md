@@ -846,3 +846,4 @@ the wrong figure was published.*
 - 23:39 Append-only measured on three fixed seats across 21 h and a compaction: stick copy = live prefix, sha256, 3 of 3. The chair's tail-carry is live; plan §8 gives P2 its four bars. Transcripts by USB is the keeper's word, dated.
 - 23:45 Bar (1) key: the first record does not identify a file — same-sid restarts open byte-identical (mode record, no timestamp). Key on the first timestamped record. Chair's bars 5 and 6 taken.
 - 00:06 The rebuild ran (release exe 00:04:56, guard strings present, 00:05 launch 4/4 resumes fresh with no CREATED/REFUSED). Acceptance test then P1b.
+- 01:32 D059 collated: hard kill loses only the in-flight turn (36/36 completed turns kept, 2.1.269); a refused --resume is invisible to the app except from the Child; reversal earned. Tailer offsets survive a resume (offset = live size, head matches); placement re-reads from 0, correctly, at the placed files' size.
