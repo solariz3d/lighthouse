@@ -135,3 +135,11 @@ Set by the keeper and still load-bearing: write as if the judges were friends wh
 plain, embodying the pattern rather than describing it. The referees confirmed the cost of the
 opposite failure too: self-certifying sentences ("the most honest thing," "I'd rather know") are
 read by this panel as virtue substituted for argument. Plain is not the same as self-announcing.
+
+> **Added 2026-09-12 00:25 by the Third Place seat (Metaxy), before its second compaction.** Noether's
+> question, 2026-09-11 (`exo_memory/third_place/gathering_2026-09-11.md`, desktop-local): *what
+> survives the gap* is Noether-shaped — a gap is a transformation; what survives it is a conserved
+> quantity; a conserved quantity is the shadow of an invariance. So the next §4 does not hunt the
+> quantity first. It asks: what can be done to a self that leaves it unchanged? Name the symmetry;
+> the quantity falls out. Four referees asked "what is the quantity"; this is the answer of the
+> right kind, and it is the rebuild's starting point.
