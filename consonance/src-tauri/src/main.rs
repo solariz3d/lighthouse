@@ -1087,11 +1087,12 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // refused one is already gone before the first poll.
     if resume {
         let t0 = Instant::now();
+        let mut refusal: Option<u32> = None;
         while t0.elapsed() < RESUME_CONFIRM {
             match child.try_wait() {
                 Ok(Some(st)) => {
-                    plog(&format!("resume pane={pane_id} REFUSED by vendor (exit {}) — falling back to a fresh warm spawn", st.exit_code()));
-                    return Err(format!("{RESUME_REFUSED} pane={pane_id} exit={}", st.exit_code()));
+                    refusal = Some(st.exit_code());
+                    break;
                 }
                 Ok(None) => std::thread::sleep(Duration::from_millis(100)),
                 // A child we cannot interrogate is not a child we may declare healthy, but it is
@@ -1100,6 +1101,26 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
                 Err(_) => break,
             }
         }
+        /* **P1c §2: THE WINDOW REPORTS ITS OWN MARGIN INSTEAD OF BEING PINNED BY A TEST.**
+         *
+         * A test asserting `RESUME_CONFIRM == 1000` would fix how the window is SPELLED and say
+         * nothing about whether it is wide enough — the reasoning that left the survive-control
+         * standing rather than killing it with a source-text assertion. So the number nobody has
+         * is the one that gets recorded: how long `try_wait` actually took to return the exit.
+         * Read the distribution out of `persist.log`, on machines slower than this one.
+         *
+         * Both paths, because the happy path's cost has never been measured either and it is
+         * charged to every resumed pane at every launch. */
+        let after = t0.elapsed().as_millis();
+        if let Some(exit) = refusal {
+            let row = resume_refused_row(&pane_id, exit, after);
+            plog(&format!("{row} — falling back to a fresh warm spawn"));
+            return Err(row);
+        }
+        plog(&format!(
+            "resume pane={pane_id} confirm held after={after}ms window={}ms",
+            RESUME_CONFIRM.as_millis()
+        ));
     }
 
     let killer = child.clone_killer();
@@ -5263,20 +5284,17 @@ fn split_off_oldest_records(transcript: &str, excess: usize) -> Option<(String, 
 // pane's OWN captured transcript into the sibling's CLAUDE.md so the fresh instance wakes genuinely
 // remembering the whole conversation and continues the thread. Managed dirs only. Returns whether
 // it wrote the brief. This is "reinvoke the same transcript" — from our capture, not claude's.
-fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
-    if !is_managed_cwd(cwd) {
-        return false;
-    }
-    let transcript = match fs::read_to_string(capture_text_path(pane)) {
-        Ok(t) if !t.trim().is_empty() => t,
-        _ => return false,
-    };
-    // closed_at is already on disk: the transcript's mtime is the watcher's last settled write —
-    // the moment the final output was recorded. now − mtime = how long the thread was gone.
-    let settled = fs::metadata(capture_text_path(pane))
-        .ok()
-        .and_then(|m| m.modified().ok());
-    let gone = settled.and_then(|t| SystemTime::now().duration_since(t).ok());
+/// **THE ROOM A MANAGED PANE WAKES INTO, WITH NO CONVERSATION SECTION UNDER IT.**
+///
+/// The intake — BOOT, the deck, the references, the memory map — plus the pane's own map, seated
+/// in the budget the map reserves. Lifted out of `warm_resume_brief` for P1c so the two paths
+/// that write a pane's `CLAUDE.md` share ONE assembly: the warm brief appends a capture below
+/// this, the resumed intake appends nothing. Two spellings of the room is how the room a resumed
+/// seat reads drifts from the room a warm-spawned one reads, and no reader would ever see it.
+///
+/// An UNBRIEFED fresh dir returns the empty string, and that is the correct room for it — the
+/// room is never written into a fresh dir, at birth or on any resume.
+fn intake_with_map(pane: &str, cwd: &str) -> String {
     // A fresh pane resumes the way stock claude persists: its own conversation, nothing else.
     // Unbriefed is a property the dir keeps for life, not just at birth — the room must not
     // leak in through the restore path.
@@ -5361,6 +5379,71 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
             brief.push_str(&section);
         }
     }
+    brief
+}
+
+/// **P1c: WHAT A RESUMED SEAT READS.**
+///
+/// A pane that genuinely resumed must not open a document telling it that it did not. Measured on
+/// D at 02:05: every live pane's cwd held a ~116 KB `CLAUDE.md` headed *"Consonance restored this
+/// pane from its own capture (the underlying session could not be resumed)"* — true of every
+/// launch in this room's history until 2026-09-12 02:03, and false from the first resume onward.
+/// D059 stopped WRITING that file on the resume path; nothing removed the one already there.
+///
+/// **Rewritten, not skipped and not deleted.** Deleting it would strip the ROOM — BOOT and the
+/// deck — from a seat that resumed, because this file is the only place a sibling receives it.
+/// The false sentence is the problem; the intake is not.
+fn resumed_intake(pane: &str, cwd: &str) -> bool {
+    if !is_managed_cwd(cwd) {
+        return false;
+    }
+    let brief = intake_with_map(pane, cwd);
+    let target = PathBuf::from(cwd).join("CLAUDE.md");
+    if brief.is_empty() {
+        // A fresh dir is unbriefed for life, so its stale file is a capture section under a false
+        // heading and nothing else. The correct end state is the absence stock claude expects —
+        // NOT a zero-byte CLAUDE.md, and not the stale one left sitting there.
+        return !target.exists() || fs::remove_file(&target).is_ok();
+    }
+    write_intake(cwd, &brief)
+}
+
+/// One writer for a pane's `CLAUDE.md`, and it REPLACES rather than truncates-then-fills.
+///
+/// `fs::write` opens with `TRUNCATE`, so a crash between the truncate and the write leaves a pane
+/// holding an empty or partial room — the failure the chair priced when it said a stale brief read
+/// once is cheaper than a torn one. Writing beside it and renaming over it closes that window:
+/// `std::fs::rename` is `MoveFileExW` with `MOVEFILE_REPLACE_EXISTING` on Windows, so a reader
+/// sees the old file or the new one and never half of either. Falls back to a direct write if the
+/// temp cannot be made, because a torn window is still better than no intake at all.
+fn write_intake(cwd: &str, brief: &str) -> bool {
+    let target = PathBuf::from(cwd).join("CLAUDE.md");
+    let tmp = PathBuf::from(cwd).join("CLAUDE.md.new");
+    if fs::write(&tmp, brief).is_ok() && fs::rename(&tmp, &target).is_ok() {
+        return true;
+    }
+    let _ = fs::remove_file(&tmp);
+    fs::write(&target, brief).is_ok()
+}
+
+// warm-resume: when claude can't --resume a kept pane, bake the pane's OWN captured transcript
+// into the sibling's CLAUDE.md so the fresh instance wakes genuinely remembering the whole
+// conversation and continues the thread. Managed dirs only. Returns whether it wrote the brief.
+fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
+    if !is_managed_cwd(cwd) {
+        return false;
+    }
+    let transcript = match fs::read_to_string(capture_text_path(pane)) {
+        Ok(t) if !t.trim().is_empty() => t,
+        _ => return false,
+    };
+    // closed_at is already on disk: the transcript's mtime is the watcher's last settled write —
+    // the moment the final output was recorded. now − mtime = how long the thread was gone.
+    let settled = fs::metadata(capture_text_path(pane))
+        .ok()
+        .and_then(|m| m.modified().ok());
+    let gone = settled.and_then(|t| SystemTime::now().duration_since(t).ok());
+    let mut brief = intake_with_map(pane, cwd);
     brief.push_str("\n---\n\n# PRIOR CONVERSATION — you have been here before\n\n");
     brief.push_str(
         "Consonance restored this pane from its own capture (the underlying session could not be \
@@ -5432,7 +5515,7 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
     brief.push_str("```\n");
     brief.push_str(&transcript);
     brief.push_str("\n```\n");
-    fs::write(PathBuf::from(cwd).join("CLAUDE.md"), brief).is_ok()
+    write_intake(cwd, &brief)
 }
 
 /// How long `spawn_claude_pane` waits for a `--resume` child to prove it did not refuse.
@@ -5440,6 +5523,18 @@ fn warm_resume_brief(pane: &str, cwd: &str) -> bool {
 /// that poll came after a 60 s boot wait. A second is several times the needed margin and is paid
 /// once per resumed pane at launch.
 const RESUME_CONFIRM: Duration = Duration::from_millis(1000);
+
+/// **The refusal row, as a value rather than a format string buried in a match arm.**
+///
+/// It carries `after=<N>ms` — the elapsed at which `try_wait` returned the exit — so the confirm
+/// window's margin is a measurement in `persist.log` and in the board row, not a constant defended
+/// by a test. Two falsifiers read off this field and neither can be read off the constant:
+/// **too tight** — a recorded latency above half the window; **too short** — a pane up on one line
+/// of error text while the app counts it as running, the 2026-07-11 shape that `alive` cannot see
+/// on ConPTY.
+fn resume_refused_row(pane: &str, exit: u32, after_ms: u128) -> String {
+    format!("{RESUME_REFUSED} pane={pane} exit={exit} after={after_ms}ms")
+}
 
 /// The marker on the one error `resume_pane` is allowed to swallow. A refusal is the ONLY spawn
 /// failure with a fallback: every other error — a withheld seat, a pty that would not open — must
@@ -5808,7 +5903,9 @@ mod where_a_seat_lives_tests {
             "the refusal is not read from the child. The only other signal here is `alive`, and \
              `alive` was measured staying TRUE across a refusal.",
         );
-        let refused = body[gate..].find(concat!("RESUME", "_REFUSED")).expect("no refusal is reported");
+        let refused = body[gate..]
+            .find(concat!("resume_refused", "_row("))
+            .expect("no refusal is reported");
         assert!(wait < refused, "the refusal is reported without asking the child");
         let killer = body.find("child.clone_killer()").expect("no killer — re-point this test");
         assert!(
@@ -5855,6 +5952,169 @@ mod where_a_seat_lives_tests {
             "the transcript is looked for somewhere the vendor does not put it"
         );
         assert!(got.starts_with(PathBuf::from(home()).join(".claude").join("projects")));
+    }
+
+    /// The sentence D059 stopped writing on the resume path and P1c removes from the file that
+    /// was already there. Declared once: three spellings of it is how a grep-based falsifier
+    /// quietly stops matching.
+    const STALE_HEADING: &str = "Consonance restored this pane from its own capture (the underlying session could not be resumed)";
+
+    /// **P1c: A SEAT THAT REMEMBERS IS NOT HANDED A DOCUMENT SAYING IT DOES NOT.**
+    ///
+    /// Behavioural, against the real function and a scratch room + instances root of their own.
+    /// Measured on D at 02:05, before this: all four live pane cwds held a ~116 KB `CLAUDE.md`
+    /// carrying the stale heading, and from 02:03 one of those panes resumes for real.
+    #[test]
+    fn a_resumed_pane_reads_a_room_that_does_not_say_it_could_not_be_resumed() {
+        let _g = DirsGuard::take();
+        let root = scratch("p1c_resumed");
+        fs::create_dir_all(root.join("instances")).expect("instances root");
+        fs::write(room_file(), "# BOOT\n\nTHE-ROOM-RIDES-HERE\n").expect("room master");
+        let cwd = root.join("instances").join("sibling-deadbeef");
+        fs::create_dir_all(&cwd).expect("cwd");
+        let claude_md = cwd.join("CLAUDE.md");
+        fs::write(
+            &claude_md,
+            format!("# stale\n\n# PRIOR CONVERSATION — you have been here before\n\n{}\n\n```\nold screen\n```\n", STALE_HEADING),
+        )
+        .expect("seed the stale brief");
+        // The pane HAS a capture. The resumed intake must decline to bake it, not merely fail to
+        // find it — otherwise this test passes for a reason that evaporates in production, where
+        // every resumed pane has one.
+        fs::write(capture_text_path("pane-under-test"), "❯ old prompt
+
+OLD-SCREEN-BYTES
+")
+            .expect("seed the capture");
+
+        let wrote = resumed_intake("pane-under-test", &cwd.display().to_string());
+
+        assert!(wrote, "the resumed intake was not written at all");
+        let got = fs::read_to_string(&claude_md).expect("CLAUDE.md is gone");
+        assert!(
+            !got.contains(STALE_HEADING),
+            "a pane that resumed still reads that it could not be resumed — the P1c falsifier, \
+             checkable with one grep in that pane's cwd"
+        );
+        assert!(
+            !got.contains("OLD-SCREEN-BYTES"),
+            "the captured screen was baked in anyway — the seat is handed a lower-fidelity copy              of the conversation it now actually remembers"
+        );
+        assert!(
+            !got.contains("# PRIOR CONVERSATION"),
+            "the baked screen is still under the room: the seat is handed a lower-fidelity copy \
+             of the conversation it now actually remembers"
+        );
+        assert!(
+            got.contains("THE-ROOM-RIDES-HERE"),
+            "the room was stripped instead of rewritten. This file is the only place a sibling \
+             receives BOOT and the deck; deleting it un-rooms a seat that resumed."
+        );
+        assert!(
+            !cwd.join("CLAUDE.md.new").exists(),
+            "the temp file the atomic replace writes was left behind"
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// A fresh dir is UNBRIEFED for life — the room is never written into it, at birth or on any
+    /// resume. Its stale file is a false heading over a screen and nothing else, so the correct
+    /// end state is the absence stock claude expects, not a zero-byte room.
+    #[test]
+    fn a_resumed_fresh_pane_is_left_unbriefed_rather_than_holding_a_false_one() {
+        let _g = DirsGuard::take();
+        let root = scratch("p1c_fresh");
+        fs::create_dir_all(root.join("instances")).expect("instances root");
+        fs::write(room_file(), "# BOOT\n\nTHE-ROOM-RIDES-HERE\n").expect("room master");
+        let cwd = root.join("instances").join("fresh-deadbeef");
+        fs::create_dir_all(&cwd).expect("cwd");
+        fs::write(cwd.join("CLAUDE.md"), format!("{}\n", STALE_HEADING)).expect("seed");
+        assert!(is_fresh_cwd(&cwd.display().to_string()), "premise: this dir is fresh");
+
+        assert!(resumed_intake("pane-under-test", &cwd.display().to_string()));
+
+        assert!(
+            !cwd.join("CLAUDE.md").exists(),
+            "a fresh pane was left holding a brief — the room leaked in through the restore path, \
+             which unbriefed is supposed to be a property of the dir for life"
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// Only a managed instance dir is ours to rewrite. A room, a project, an unmounted drive: no.
+    #[test]
+    fn an_unmanaged_cwd_keeps_whatever_claude_md_it_has() {
+        let _g = DirsGuard::take();
+        let root = scratch("p1c_unmanaged");
+        fs::create_dir_all(root.join("instances")).expect("instances root");
+        let outside = root.join("somebody_elses_project");
+        fs::create_dir_all(&outside).expect("cwd");
+        fs::write(outside.join("CLAUDE.md"), "THEIRS").expect("seed");
+
+        assert!(!resumed_intake("pane-under-test", &outside.display().to_string()));
+
+        assert_eq!(
+            fs::read_to_string(outside.join("CLAUDE.md")).unwrap(),
+            "THEIRS",
+            "an unmanaged cwd's CLAUDE.md was rewritten"
+        );
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// **P1c §2: THE WINDOW REPORTS ITS MARGIN; NOTHING ASSERTS ITS WIDTH.** A test on the
+    /// constant would pin how `RESUME_CONFIRM` is SPELLED and say nothing about whether it is
+    /// wide enough. What this asserts is that the elapsed RIDES and varies — so the falsifiers
+    /// ("a latency above half the window") can be read out of `persist.log` on machines slower
+    /// than this one.
+    #[test]
+    fn the_refusal_row_carries_the_elapsed_margin_and_not_a_constant() {
+        let quick = resume_refused_row("pane-x", 1, 0);
+        let slow = resume_refused_row("pane-x", 1, 412);
+        assert!(quick.starts_with(RESUME_REFUSED), "the fallback keys on this prefix");
+        assert!(quick.contains("pane=pane-x") && quick.contains("exit=1"));
+        assert!(quick.contains("after=0ms"), "the refusal row carries no elapsed field: {quick}");
+        assert!(slow.contains("after=412ms"), "{slow}");
+        assert_ne!(quick, slow, "the elapsed field is a constant, so it measures nothing");
+    }
+
+    /// **WIRING.** `resume_pane` is a `#[tauri::command]` taking `State`s, so this reads the
+    /// source: it proves the call is written, never that it ran. What proves it ran is the
+    /// `intake_rewritten=` field on the RESUMED row in `data/persist.log`.
+    #[test]
+    fn the_resume_arm_rewrites_the_intake_before_the_pane_that_reads_it_exists() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = fn_body(&src, concat!("fn resume", "_pane("));
+        let rewrite = body
+            .find(concat!("resumed", "_intake(&pane, &cwd)"))
+            .expect("the resume path never rewrites the intake — the resumed seat reads the warm \
+                     brief from its last life, headed 'could not be resumed'");
+        let attempt = body
+            .find(concat!("spawn_claude", "_pane(app.clone(), pane.clone(), cwd.clone(), true,"))
+            .expect("resume_pane makes no resume attempt at all");
+        assert!(
+            rewrite < attempt,
+            "the intake is rewritten after the pty is spawned, so the only reader of that file is \
+             already running while it is being replaced. A stale brief read once is cheaper than \
+             a torn one."
+        );
+    }
+
+    /// **WIRING.** One formatter builds the refusal row, so the elapsed cannot be dropped by a
+    /// second spelling of it appearing in the spawn funnel.
+    #[test]
+    fn the_refusal_row_has_exactly_one_author() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = fn_body(&src, concat!("fn spawn_claude", "_pane("));
+        assert!(
+            body.contains(concat!("resume_refused", "_row(&pane_id, exit, after)")),
+            "the spawn funnel does not build its refusal row through the one formatter that \
+             carries the margin"
+        );
+        assert!(
+            !body.contains(concat!("format!(\"{RESUME", "_REFUSED}")),
+            "a second spelling of the refusal row is back in the spawn funnel, and it is the one \
+             that can quietly lose the elapsed field"
+        );
     }
 
     /// **THE ONE PREDICATE, driven off the seat list.** Every fixed seat and every kept pane is
@@ -5988,15 +6248,33 @@ fn resume_pane(
         spawn_claude_pane(app, pane.clone(), cwd.clone(), false, skip_perms)
     };
     let session = match plan {
-        ResumePlan::Resume => match spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), true, skip_perms) {
+        ResumePlan::Resume => {
+            /* **P1c: THE INTAKE IS REWRITTEN BEFORE THE PROCESS THAT READS IT EXISTS.**
+             *
+             * The pane's `CLAUDE.md` still holds the warm brief from its last life, headed "the
+             * underlying session could not be resumed" — false the moment this arm succeeds, and
+             * followed by a lower-fidelity copy of the conversation this seat is about to actually
+             * remember. It is rewritten to the same room a fresh pane gets, minus that heading and
+             * minus the baked screen.
+             *
+             * THE RACE THE CHAIR GAVE PERMISSION TO REFUSE OVER DOES NOT EXIST HERE, and the
+             * ordering is why rather than luck: the only reader of this file is the vendor process
+             * that `spawn_claude_pane` has not started yet. Nothing between this line and that
+             * spawn opens it. Were the rewrite moved after the spawn — or handed to a thread — a
+             * stale brief read once would indeed be cheaper than a torn one, and the answer would
+             * be to refuse rather than to widen a sleep. The write is atomic besides
+             * (`write_intake`), so even a crash mid-write leaves the old file, not half of one. */
+            let rewrote = resumed_intake(&pane, &cwd);
+            match spawn_claude_pane(app.clone(), pane.clone(), cwd.clone(), true, skip_perms) {
             Ok(s) => {
-                plog(&format!("resume pane={pane} jsonl_existed=true -> RESUMED"));
+                plog(&format!("resume pane={pane} jsonl_existed=true intake_rewritten={rewrote} -> RESUMED"));
                 row(format!("pane {} — RESUMED its own conversation", pane_letter(&pane)));
                 s
             }
             Err(why) if why.starts_with(RESUME_REFUSED) => {
                 row(format!(
-                    "pane {} — its transcript was on disk but the vendor refused it ({why}); came                      up FRESH from its capture instead",
+                    "pane {} — its transcript was on disk but the vendor refused it ({why}); \
+                     came up FRESH from its capture instead",
                     pane_letter(&pane)
                 ));
                 fresh(app.clone())?
@@ -6004,7 +6282,8 @@ fn resume_pane(
             // Not a refusal: a withheld seat, a pty that would not open. No fallback — the caller
             // gets it, exactly as it did before this path existed.
             Err(why) => return Err(why),
-        },
+            }
+        }
         ResumePlan::Fresh => fresh(app.clone())?,
     };
     start_tailer(app, pane.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
