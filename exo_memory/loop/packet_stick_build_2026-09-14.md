@@ -191,7 +191,7 @@ different image — pid reuse on Windows is real.
 
     at the app's exit:
         stick-apply.started.json live          -> stand down (a hand-off is not a session end); exit quietly
-        no stick found by the §3 rule          -> NO WINDOW, no export, exit quietly — byte-identical to today
+        no stick found by the §3 rule          -> NO WINDOW, no export, exit quietly, no row (see THE NO-STICK BAR, RESTATED)
         a stick found                          -> take the ledger lock; export; rewrite the MANIFEST;
                                                   a VISIBLE window until DONE or NOT DONE, by name
 
@@ -204,7 +204,33 @@ other does not have:
     <root>/consonance-transfer/MANIFEST.json                                   -> <root>
     <root>/consonance-L-20260911/consonance-tails/ledger.json   (tonight's)    -> <root>/consonance-L-20260911
     markers in two different first-level folders                               -> AMBIGUOUS, both named
+    a marker at <root> AND a marker in a first-level folder of the same volume -> AMBIGUOUS, both named   (added ~03:30)
     <root>/a/b/consonance-tails/ledger.json   (two levels down)                -> NO STICK
+
+**THE NO-STICK BAR, RESTATED — ruled ~03:30 after E's second narrow §6 stop** (`handback/p-stick-build-E_2026-09-14.md`,
+"§6 RING, SECOND AND NARROWER"). **Defect E-6, the chair's:** the 03:05 ruling (one waiter on EVERY launch) contradicted
+this same packet's no-stick bar — "spawns nothing" (:128), "Spawn nothing" (:134), "byte-identical to today" (:236) —
+and E's 02:55 resume message ("no process"). Both cannot be built. **Reading (i) is ruled.**
+
+**Why (i).** The bar's measured cause was E-2: a verifier spawned per volume per launch, 57–67 ms each. "No process"
+was aimed at the STICK LOOK. The waiter exists because the keeper plugs the stick in at the END of a session; reading
+(ii) would need a volume-arrival watch inside the app to keep a property whose purpose was never that watch, and trades
+away the export he asked for. So, replacing "byte-identical to today" wherever it appears in §3–§5:
+
+    a launch with no stick:
+      the look at the stick   stats only — spawns nothing, logs nothing, withholds nothing          (unchanged)
+      persist.log             the same rows as before the module                                   (the registered
+                                                                                                    falsifier, unchanged)
+      seats                   the same seats spawn, the same way
+      processes               EXACTLY ONE added: the ruled waiter, detached — at most one live, by its lock
+      files                   EXACTLY ONE added: <data_dir>/stick-waiter.lock, removed at the waiter's exit
+                              (a hard kill leaves it; the next launch takes it over by the live-pid-and-image rule)
+      at the app's exit       no stick found -> the waiter exits with no window, no export, no row
+
+**E's no-stick test pins exactly the table above**, with the waiter's start as the one permitted spawn — not "no
+process". **A's `dev/stick-waiter.js` must accept the ruled argv** (`--data --app-pid --app-image`, no `--stick`): as it
+stands it parses only `--stick` and exits 2 on anything else (E's reading of `:129`), which would be a failing process
+on every launch. That change is A's.
 
 **The verifier** (A's one implementation):
 
@@ -233,7 +259,7 @@ machines' binaries.
     ECHO    consonance/src-tauri/src/main.rs, sync_launch.rs, consonance/ui/*
             Arrive in sync_at_launch (verify-set, rehearse, withhold); the SETUP WINDOW after the intro;
             the handoff (§2) and the relaunch read; the "stick is behind this machine" notice;
-            THE NO-STICK TEST — a launch with no stick is byte-identical to today, red-first
+            THE NO-STICK TEST — a launch with no stick matches THE NO-STICK BAR, RESTATED (§3, ~03:30), red-first
 
     ALPHA   dev/stick-apply.js (new), dev/stick-waiter.js (new, ruled 03:05 in §3), dev/tail-carry.js, dev/*.test.js
             the applier (§2); --verify-set (§3); Leave writes the transfer set and the generated HANDOFF;
