@@ -253,7 +253,9 @@ const MUTANTS = [
   ['the row stops saying the ledger advanced (b258fc2)',
     '            advanced: d.ok === true },', '            advanced: false },'],
   ['an ALREADY_APPLIED seat is settled without re-verifying the file',
-    '      const ok = size === pend.toOffset && full === pend.fullSha;', '      const ok = true;'],
+    // P-DIVERGED re-anchor: D-1 rewrote the settle's check to cover APPLIED_AND_GREW, and the old anchor went missing
+    // (NOT APPLIED in the 90-mutant run on D, 2026-09-14). Same defect, the new line.
+    '      const ok = (grew ? fileSize > pend.toOffset : fileSize === pend.toOffset) && full === pend.fullSha;', '      const ok = true;'],
 
   // ── E-3 ──
   ['E-3 UNDONE: no export records the incoming conversation\'s first timestamp',
