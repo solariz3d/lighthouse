@@ -769,7 +769,7 @@ test('the rehearsal shows the byte count that makes the tail worth having', () =
 // CHANGED 2026-09-14 (L059 §3 re-rule at 60e1ccf): +carriedFirstTimestamp on every row (E-3) and +staleLock at
 // the top (A-3, "a row naming the stale lock"). Additive; these lists still pin the exact shape.
 const FIELDS = ['seat', 'sid', 'kind', 'verdict', 'reason', 'why', 'stops', 'carries', 'bytes', 'offset',
-  'toOffset', 'path', 'localSize', 'localFirstTimestamp', 'carriedFirstTimestamp', 'exportedAt', 'exportedFrom', 'retirable', 'result'];
+  'toOffset', 'path', 'localSize', 'localFirstTimestamp', 'carriedFirstTimestamp', 'exportedAt', 'exportedFrom', 'retirable', 'takeable', 'ownBytes', 'result'];
 const TOP = ['tool', 'contract', 'mode', 'apply', 'machine', 'stick', 'code', 'outcome', 'why', 'rows', 'receipt', 'staleLock'];
 
 /** Run main with --json against a fixture machine; return the parsed object, the raw streams, the code. */
@@ -797,8 +797,11 @@ function wellFormed(obj) {
     if (r.reason !== null) assert.ok(T.REASONS.includes(r.reason), `unknown reason ${r.reason}`);
     assert.strictEqual(r.stops, T.STOPS.includes(r.verdict));
     assert.strictEqual(typeof r.bytes, 'number');
-    if (!r.carries) assert.strictEqual(r.bytes, 0, 'a seat that does not carry carries 0 bytes');
+    // P-DIVERGED D-7: the one exception — a DIVERGED row names the stick's tail it would take.
+    if (!r.carries && r.verdict !== 'DIVERGED') assert.strictEqual(r.bytes, 0, 'a seat that does not carry carries 0 bytes');
     if (r.retirable !== null) assert.strictEqual(r.reason, 'OTHER_CONVERSATION');
+    if (r.takeable !== null) assert.deepStrictEqual([r.takeable, r.verdict], [true, 'DIVERGED'], 'takeable is non-null exactly on DIVERGED');
+    if (r.ownBytes !== null) assert.ok(['DIVERGED', 'RETIRE_THEN_APPEND', 'APPLIED_AND_GREW'].includes(r.verdict), `ownBytes on ${r.verdict}`);
   }
   assert.doesNotMatch(JSON.stringify(obj), /"type":"Buffer"/, 'the carried bytes must never cross the process boundary');
 }
@@ -850,6 +853,9 @@ test('--json: every IMPORT verdict path emits one well-formed object', () => {
   r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // ALREADY_APPLIED
   write(w.L, v1 + turns(SID, ['2026-09-12T09:00:00.000Z'], 'l'));
   r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // DIVERGED
+  r = J(w.L, ['--stick', w.stick, '--import', '--take-stick', SID]); wellFormed(r.obj); seen.add(Jrow(r).verdict); // RETIRE_THEN_APPEND
+  write(w.L, v2 + turns(SID, ['2026-09-14T11:00:00.000Z'], 'l'));
+  r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // APPLIED_AND_GREW
   // REFUSED and RETIRE_THEN_FULL on a fresh world, where the tail is whole
   w = world();
   write(w.D, v1); write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));
@@ -859,7 +865,7 @@ test('--json: every IMPORT verdict path emits one well-formed object', () => {
   r = J(w.L, ['--stick', w.stick, '--import', '--retire-far', SID, '--apply']); wellFormed(r.obj);
   assert.match(Jrow(r).result.aside, /consonance-attic/, 'result.aside names the attic address');
   assert.deepStrictEqual([...seen].sort(),
-    ['ALREADY_APPLIED', 'APPEND', 'DIVERGED', 'FULL', 'INTERRUPTED', 'NOTHING_PENDING', 'OURS', 'REFUSED', 'REPAIR', 'RETIRE_THEN_FULL']);
+    ['ALREADY_APPLIED', 'APPEND', 'APPLIED_AND_GREW', 'DIVERGED', 'FULL', 'INTERRUPTED', 'NOTHING_PENDING', 'OURS', 'REFUSED', 'REPAIR', 'RETIRE_THEN_APPEND', 'RETIRE_THEN_FULL']);
 });
 
 test('--json: stderr carries the human lines, stdout carries none of them', () => {
@@ -1501,6 +1507,288 @@ test('the CLI --help names both directions and --apply', () => {
   assert.match(out, /--export\|--import/);
   assert.match(out, /--apply/);
   assert.match(out, /--repair <sid>/);
+});
+
+// ══ P-DIVERGED (L058, third use) — §2.1-2.4 as re-ruled by §2.8, pane A ══════════════════════════
+
+/**
+ * A TRUE FORK, the shape the keeper's 871ad66 choice is about: both machines hold v1 as agreed, then D takes
+ * turns and exports them, and L — the importing machine — took different turns of its own on the same prefix.
+ */
+function forked() {
+  const w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  write(w.D, v1);
+  go(w.D, 'export', { apply: true });
+  go(w.L, 'import', { apply: true });
+  const dPart = turns(SID, ['2026-09-12T04:20:00.000Z', '2026-09-12T04:21:00.000Z'], 'd');
+  const lPart = turns(SID, ['2026-09-12T09:00:00.000Z'], 'l');
+  write(w.D, v1 + dPart);
+  write(w.L, v1 + lPart);
+  go(w.D, 'export', { apply: true });
+  return { w, v1, dPart, lPart };
+}
+
+test('P-DIVERGED 2.1: --take-stick is parsed beside --retire-far and --repair, and --help names it', () => {
+  const f = forked();
+  const r = J(f.w.L, ['--stick', f.w.stick, '--import', '--take-stick', SID]);
+  assert.strictEqual(Jrow(r).verdict, 'RETIRE_THEN_APPEND', r.stderr);
+  const out = execFileSync(process.execPath, [TOOL, '--help'], { encoding: 'utf8' });
+  assert.match(out, /--take-stick <sid>/);
+});
+
+test('P-DIVERGED 2.2: a DIVERGED seat named with --take-stick becomes RETIRE_THEN_APPEND, and the rehearsal writes nothing', () => {
+  const f = forked();
+  assert.strictEqual(Jrow(J(f.w.L, ['--stick', f.w.stick, '--import'])).verdict, 'DIVERGED', 'the fixture is a real fork');
+  const before = snapshot(f.w.dir);
+  const r = J(f.w.L, ['--stick', f.w.stick, '--import', '--take-stick', SID]);
+  wellFormed(r.obj);
+  const row = Jrow(r);
+  assert.deepStrictEqual([row.verdict, row.stops, row.carries, row.bytes], ['RETIRE_THEN_APPEND', false, true, Buffer.byteLength(f.dPart)]);
+  assert.deepStrictEqual(snapshot(f.w.dir), before, 'a rehearsal of a take writes nothing — not the attic, not the seat');
+});
+
+test('P-DIVERGED 2.3: the take copies this machine\'s WHOLE file to the attic, truncates to the shared prefix, appends, and verifies whole', () => {
+  const f = forked();
+  const pend = T.readLedger(f.w.stick).seats[SID].pending;
+  const r = J(f.w.L, ['--stick', f.w.stick, '--import', '--take-stick', SID, '--apply']);
+  wellFormed(r.obj);
+  const row = Jrow(r);
+  assert.strictEqual(r.obj.outcome, 'CARRIED', r.stderr);
+  assert.strictEqual(fs.readFileSync(f.w.L.dest, 'utf8'), f.v1 + f.dPart, 'the seat continues as the stick\'s future');
+  assert.strictEqual(fs.statSync(f.w.L.dest).size, pend.toOffset);
+  assert.strictEqual(T.hashRange(f.w.L.dest, 0, pend.toOffset), pend.fullSha);
+  const kept = inAttic(f.w.L, 'take-stick');
+  assert.strictEqual(kept.length, 1, `one take-stick file in the attic; found ${kept.join(', ')}`);
+  assert.strictEqual(fs.readFileSync(path.join(atticDir(f.w.L), kept[0]), 'utf8'), f.v1 + f.lPart,
+    'the attic holds this machine\'s WHOLE pre-truncate file, shared prefix included');
+  assert.strictEqual(row.result.aside, path.join(atticDir(f.w.L), kept[0]));
+  assert.deepStrictEqual([row.result.ok, row.result.advanced], [true, true]);
+  assert.deepStrictEqual(besideLive(f.w.L), [], 'nothing left beside the live transcript');
+  const e = T.readLedger(f.w.stick).seats[SID];
+  assert.deepStrictEqual([e.pending, e.agreed.offset, e.agreed.prefixSha], [null, pend.toOffset, pend.fullSha]);
+  assert.strictEqual(Jrow(J(f.w.L, ['--stick', f.w.stick, '--import'])).verdict, 'NOTHING_PENDING', 'falsifier (i): not DIVERGED after the take');
+});
+
+test('P-DIVERGED 2.3: a take that is verified goes on the carried receipt, and the manifest is rewritten with the ledger', () => {
+  const f = forked();
+  J(f.w.L, ['--stick', f.w.stick, '--import', '--take-stick', SID, '--apply']);
+  const rec = JSON.parse(fs.readFileSync(T.carriedPath(f.w.L.projectsRoot), 'utf8'));
+  assert.ok(rec.seats[SID], 'the launch must keep the seat it was just handed');
+  assert.strictEqual(V(f.w.L, f.w.stick).code, 0);
+});
+
+test('P-DIVERGED 2.3: a take whose attic copy does not read back equal truncates NOTHING — the fork stays whole, the run FAILS', () => {
+  const f = forked();
+  // The tool shares this process's `fs`; the copy is made short for this one call, then restored.
+  const real = fs.copyFileSync;
+  fs.copyFileSync = (a, b) => { real(a, b); fs.truncateSync(b, 10); };
+  let r;
+  try { r = J(f.w.L, ['--stick', f.w.stick, '--import', '--take-stick', SID, '--apply']); }
+  finally { fs.copyFileSync = real; }
+  const row = Jrow(r);
+  assert.deepStrictEqual([r.obj.outcome, row.result.ok], ['FAILED', false], r.stderr);
+  assert.match(row.result.why, /did not read back equal/);
+  assert.strictEqual(fs.readFileSync(f.w.L.dest, 'utf8'), f.v1 + f.lPart, 'this machine\'s future is untouched');
+  assert.ok(T.readLedger(f.w.stick).seats[SID].pending, 'nothing agreed');
+});
+
+test('P-DIVERGED 2.2: --take-stick on a seat that is NOT DIVERGED leaves its verdict unchanged, and takes nothing', () => {
+  // APPEND
+  let w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  write(w.D, v1); go(w.D, 'export', { apply: true }); go(w.L, 'import', { apply: true });
+  const v2 = v1 + turns(SID, ['2026-09-12T04:20:00.000Z', '2026-09-12T04:21:00.000Z'], 'd');
+  write(w.D, v2); go(w.D, 'export', { apply: true });
+  assert.strictEqual(Jrow(J(w.L, ['--stick', w.stick, '--import', '--take-stick', SID])).verdict, 'APPEND');
+  // INTERRUPTED — named for a take, it stays INTERRUPTED and --apply writes nothing to it
+  const half = v1.length + Math.floor((v2.length - v1.length) / 2);
+  write(w.L, v2.slice(0, half));
+  const r = J(w.L, ['--stick', w.stick, '--import', '--take-stick', SID, '--apply']);
+  assert.strictEqual(Jrow(r).verdict, 'INTERRUPTED');
+  assert.strictEqual(fs.readFileSync(w.L.dest, 'utf8'), v2.slice(0, half));
+  assert.strictEqual(inAttic(w.L, 'take-stick').length, 0);
+  // REFUSED OTHER_CONVERSATION
+  w = world();
+  write(w.D, v1); write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const o = Jrow(J(w.L, ['--stick', w.stick, '--import', '--take-stick', SID, '--apply']));
+  assert.deepStrictEqual([o.verdict, o.reason], ['REFUSED', 'OTHER_CONVERSATION']);
+  assert.strictEqual(inAttic(w.L, 'take-stick').length, 0);
+});
+
+test('P-DIVERGED 2.4: takeable and ownBytes — true and this machine\'s own bytes on DIVERGED; null elsewhere', () => {
+  const f = forked();
+  const pend = T.readLedger(f.w.stick).seats[SID].pending;
+  const d = Jrow(J(f.w.L, ['--stick', f.w.stick, '--import']));
+  assert.deepStrictEqual([d.verdict, d.takeable, d.ownBytes], ['DIVERGED', true, Buffer.byteLength(f.lPart)]);
+  assert.strictEqual(d.ownBytes, fs.statSync(f.w.L.dest).size - pend.offset);
+  // D-7: a DIVERGED row names the stick's tail it would take, so the window has both counts
+  assert.deepStrictEqual([d.carries, d.bytes], [false, pend.bytes]);
+  const t = Jrow(J(f.w.L, ['--stick', f.w.stick, '--import', '--take-stick', SID]));
+  assert.deepStrictEqual([t.takeable, t.ownBytes], [null, Buffer.byteLength(f.lPart)]);
+  const e = Jrow(J(f.w.D, ['--stick', f.w.stick, '--export']));
+  assert.deepStrictEqual([e.takeable, e.ownBytes], [null, null], 'export rows carry neither');
+  const ours = Jrow(J(f.w.D, ['--stick', f.w.stick, '--import']));
+  assert.deepStrictEqual([ours.verdict, ours.takeable, ours.ownBytes], ['OURS', null, null]);
+});
+
+test('P-DIVERGED D-7: RETIRE_THEN_APPEND is in CARRIES.import, and nothing that is not a take joined it', () => {
+  assert.deepStrictEqual(T.CARRIES.import, ['APPEND', 'FULL', 'REPAIR', 'RETIRE_THEN_FULL', 'RETIRE_THEN_APPEND']);
+});
+
+/** C's probe case B, as a delta: L holds exactly the carried tail on the agreed prefix, the ledger still pending. */
+function killedAfterDeltaAppend() {
+  const w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  write(w.D, v1); go(w.D, 'export', { apply: true }); go(w.L, 'import', { apply: true });
+  const v2 = v1 + turns(SID, ['2026-09-12T04:20:00.000Z', '2026-09-12T04:21:00.000Z'], 'd');
+  write(w.D, v2); go(w.D, 'export', { apply: true });
+  write(w.L, v2);                                   // the append landed; the ledger write did not
+  return { w, v1, v2, own: turns(SID, ['2026-09-14T11:00:00.000Z'], 'l') };
+}
+
+test('P-DIVERGED D-1: the carried tail already here AND this machine grew past it reads APPLIED_AND_GREW, not DIVERGED', () => {
+  const k = killedAfterDeltaAppend();
+  assert.strictEqual(Jrow(J(k.w.L, ['--stick', k.w.stick, '--import'])).verdict, 'ALREADY_APPLIED', 'before growth');
+  write(k.w.L, k.v2 + k.own);
+  const r = J(k.w.L, ['--stick', k.w.stick, '--import']);
+  wellFormed(r.obj);
+  const row = Jrow(r);
+  assert.deepStrictEqual([row.verdict, row.stops, row.carries, row.takeable, row.ownBytes],
+    ['APPLIED_AND_GREW', false, false, null, Buffer.byteLength(k.own)]);
+  assert.strictEqual(r.obj.code, 0, 'not a stop');
+});
+
+test('P-DIVERGED D-1: APPLIED_AND_GREW SETTLES under --apply — agreed at the tail\'s end, pending cleared, the seat\'s file untouched', () => {
+  const k = killedAfterDeltaAppend();
+  write(k.w.L, k.v2 + k.own);
+  const pend = T.readLedger(k.w.stick).seats[SID].pending;
+  const fileBefore = fs.readFileSync(k.w.L.dest);
+  const r = J(k.w.L, ['--stick', k.w.stick, '--import', '--apply']);
+  const row = Jrow(r);
+  assert.strictEqual(r.obj.outcome, 'CARRIED', r.stderr);
+  assert.deepStrictEqual([row.result.ok, row.result.advanced], [true, true]);
+  assert.ok(fs.readFileSync(k.w.L.dest).equals(fileBefore), 'nothing is written to the seat\'s file');
+  const e = T.readLedger(k.w.stick).seats[SID];
+  assert.deepStrictEqual([e.pending, e.agreed.offset, e.agreed.prefixSha], [null, pend.toOffset, pend.fullSha]);
+  assert.strictEqual(inAttic(k.w.L, 'take-stick').length, 0);
+  // this machine's later turns now export as an ordinary TAIL from the tail's end
+  const x = Jrow(J(k.w.L, ['--stick', k.w.stick, '--export']));
+  assert.deepStrictEqual([x.verdict, x.offset, x.bytes], ['TAIL', pend.toOffset, Buffer.byteLength(k.own)]);
+});
+
+test('P-DIVERGED D-1: --take-stick named on APPLIED_AND_GREW does not truncate this machine\'s later turns', () => {
+  const k = killedAfterDeltaAppend();
+  write(k.w.L, k.v2 + k.own);
+  const row = Jrow(J(k.w.L, ['--stick', k.w.stick, '--import', '--take-stick', SID, '--apply']));
+  assert.strictEqual(row.verdict, 'APPLIED_AND_GREW');
+  assert.strictEqual(fs.readFileSync(k.w.L.dest, 'utf8'), k.v2 + k.own);
+});
+
+test('P-DIVERGED D-1: a file whose carried span changed between the plan and the apply is NOT settled', () => {
+  const k = killedAfterDeltaAppend();
+  write(k.w.L, k.v2 + k.own);
+  const plan = T.planImport({ stick: k.w.stick, machine: 'L', projectsRoot: k.w.L.projectsRoot, instancesRoot: k.w.L.instancesRoot, panesPath: k.w.L.panesPath });
+  assert.strictEqual(plan.rows.find((x) => x.sid === SID).verdict, 'APPLIED_AND_GREW');
+  const buf = fs.readFileSync(k.w.L.dest); buf[k.v1.length + 5] ^= 1; fs.writeFileSync(k.w.L.dest, buf);
+  const done = T.applyImport(plan, Date.now());
+  assert.strictEqual(done.find((x) => x.row.sid === SID).ok, false);
+  assert.ok(T.readLedger(k.w.stick).seats[SID].pending, 'nothing settled over a file that moved');
+});
+
+test('P-DIVERGED D-1: a real fork one byte longer than the tail is still DIVERGED — the new verdict needs the whole sha', () => {
+  const k = killedAfterDeltaAppend();
+  const forkedLong = k.v1 + turns(SID, ['2026-09-12T09:00:00.000Z', '2026-09-12T09:01:00.000Z', '2026-09-12T09:02:00.000Z'], 'l');
+  assert.ok(forkedLong.length > k.v2.length, 'the fixture must be longer than the carried file');
+  write(k.w.L, forkedLong);
+  assert.strictEqual(Jrow(J(k.w.L, ['--stick', k.w.stick, '--import'])).verdict, 'DIVERGED');
+});
+
+// ── the three debts, each red-first ──
+
+test('P-DIVERGED debt (a): a NOTHING_PENDING row reads this machine\'s file — localSize and localFirstTimestamp are not null', () => {
+  const w = world();
+  write(w.L, conversation(SID, ['2026-09-10T01:02:03.004Z']));
+  const row = Jrow(J(w.L, ['--stick', w.stick, '--import']));
+  assert.deepStrictEqual([row.verdict, row.localSize, row.localFirstTimestamp],
+    ['NOTHING_PENDING', fs.statSync(w.L.dest).size, '2026-09-10T01:02:03.004Z']);
+});
+
+test('P-DIVERGED debt (a): an OURS row reads this machine\'s file too (the reopen after this machine\'s own export)', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-10T01:02:03.004Z']));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const row = Jrow(J(w.D, ['--stick', w.stick, '--import']));
+  assert.deepStrictEqual([row.verdict, row.localFirstTimestamp], ['OURS', '2026-09-10T01:02:03.004Z']);
+});
+
+test('P-DIVERGED debt (a): with no file here, NOTHING_PENDING still reports null — never a guessed 0', () => {
+  const w = world();
+  const row = Jrow(J(w.L, ['--stick', w.stick, '--import']));
+  assert.deepStrictEqual([row.verdict, row.localSize, row.localFirstTimestamp], ['NOTHING_PENDING', null, null]);
+});
+
+test('P-DIVERGED debt (b): right after this machine\'s own FULL export, its export rehearsal carries nothing', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const r = J(w.D, ['--stick', w.stick, '--export']);
+  const row = Jrow(r);
+  assert.deepStrictEqual([row.verdict, row.carries, row.bytes], ['UP_TO_DATE', false, 0], r.stderr);
+  assert.strictEqual(r.obj.outcome, 'NOTHING_TO_DO', 'the reopen must not read "the stick does not have your last session"');
+});
+
+test('P-DIVERGED debt (b): right after this machine\'s own DELTA export, its export rehearsal carries nothing', () => {
+  const w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  write(w.D, v1); J(w.D, ['--stick', w.stick, '--export', '--apply']); J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  write(w.D, v1 + turns(SID, ['2026-09-12T04:20:00.000Z'], 'd'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const row = Jrow(J(w.D, ['--stick', w.stick, '--export']));
+  assert.deepStrictEqual([row.verdict, row.carries], ['UP_TO_DATE', false]);
+});
+
+test('P-DIVERGED debt (b): rewritten at the SAME size after its own export, the file is not "already on the stick" — the sha decides', () => {
+  const w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  write(w.D, v1); J(w.D, ['--stick', w.stick, '--export', '--apply']); J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  const v2 = v1 + turns(SID, ['2026-09-12T04:20:00.000Z'], 'd');
+  write(w.D, v2); J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  write(w.D, v1 + turns(SID, ['2026-09-12T04:20:00.000Z'], 'x'));     // same length, different bytes after the agreed state
+  assert.strictEqual(fs.statSync(w.D.dest).size, v2.length, 'the fixture must keep the length');
+  const row = Jrow(J(w.D, ['--stick', w.stick, '--export']));
+  assert.deepStrictEqual([row.verdict, row.offset], ['TAIL', v1.length]);
+});
+
+test('P-DIVERGED debt (b): grown past its own pending tail, the export re-carries from the AGREED state and the far import lands whole', () => {
+  const w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  write(w.D, v1); J(w.D, ['--stick', w.stick, '--export', '--apply']); J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  const v2 = v1 + turns(SID, ['2026-09-12T04:20:00.000Z'], 'd');
+  write(w.D, v2); J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const v3 = v2 + turns(SID, ['2026-09-12T05:00:00.000Z'], 'e');
+  write(w.D, v3);
+  const x = Jrow(J(w.D, ['--stick', w.stick, '--export', '--apply']));
+  assert.deepStrictEqual([x.verdict, x.offset, x.toOffset], ['TAIL', v1.length, v3.length],
+    'the far machine has not imported the first tail, so the new one starts where it agrees: the agreed state');
+  const imp = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.strictEqual(Jrow(imp).verdict, 'APPEND', imp.stderr);
+  assert.strictEqual(fs.readFileSync(w.L.dest, 'utf8'), v3);
+});
+
+test('P-DIVERGED debt (c): the HANDOFF for a DELTA does not promise APPEND — it says when it is APPEND and when DIVERGED', () => {
+  const w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  write(w.D, v1); J(w.D, ['--stick', w.stick, '--export', '--apply']); J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  write(w.D, v1 + turns(SID, ['2026-09-12T04:20:00.000Z'], 'd'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const text = T.renderHandoff(T.readLedger(w.stick));
+  assert.doesNotMatch(text, /expected at the far end: APPEND \(a tail on the agreed state\)/);
+  assert.match(text, /expected at the far end: APPEND if that machine has written nothing of its own to this seat since the agreed state/);
+  assert.match(text, /DIVERGED if it has — the keeper chooses there/);
+  assert.match(T.renderHandoff({ seats: { [SID]: { seat: 'x', pending: { offset: 0, toOffset: 5, bytes: 5, from: 'D', at: '2026-09-12T00:00:00.000Z', tailFile: 't', tailSha: 's' } } } }),
+    /expected at the far end: FULL/, 'a whole conversation is still FULL');
 });
 
 console.log(`\n  ${pass} passed, ${fail} failed`);

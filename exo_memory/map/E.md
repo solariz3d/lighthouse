@@ -988,3 +988,47 @@ L059 R-2 **the leak** — my own applier() test fixture carried this machine's p
 L058b **p-no-console-E** — **§5 STOP: the chair's mechanism is half right, measured with a Windows-subsystem stand-in for the app and a process-start watch.** The flash is real (live waiter pid 26800: conhost -> OpenConsole -Embedding -> WindowsTerminal -Embedding within 0.1 s), but the premise *windowsHide is set and it opened anyway* is wrong: the call that flashed is tail-carry.js::pidImage (the PID-eq tasklist the chair's watch recorded), which at HEAD had NO windowsHide; the :131/:138 calls it named are a different filter. Four cells: DETACHED+no-hide 15 terminal hosts on 5/5 calls (the stand-in's positive control); DETACHED+hide 0 windows while the unhidden live waiter flashed in the same window; NO_WINDOW with or without hide 0. So §3's flags are still right for a better reason — they cover a forgotten flag anywhere in the subtree. Survival under NO_WINDOW: clean exit and taskkill /F both survived, taskkill /T killed it (the control), DETACHED kill matched L059. The running waiter keeps flashing until relaunch regardless — node does not reload modules. Built nothing; the sweep found 8 Command::new, 6 already NO_WINDOW, the 2 DETACHED ones mine. A first harness build landed in the shared C:uildlighthouse-target through a global CARGO_TARGET_DIR; exactly those files removed. -> exo_memory/handback/p-no-console-E_2026-09-14.md
 
 L058b **p-no-console-E BUILD** — after the re-rule: the waiter and the applier now start with NO_WINDOW | CREATE_NEW_PROCESS_GROUP, the detached constant is gone, and the reason in the source is the measured one (a console-less parent makes its console children allocate their own; a hidden console to inherit makes a forgotten windowsHide open nothing), with the tree-kill exception written beside the flag. Three tests shown red first; the sweep named exactly the two sites §3 named without being told. Narrowed one of my own tests after writing it: forbidding the flag TOKEN would have forbidden the source from saying why it is gone. 593/0/4; A's suites read-only 108/24/39 while A's copy-mutating harness held its lock; 6 flag mutants caught, each test carrying a catch no other test makes. -> exo_memory/handback/p-no-console-E_2026-09-14.md
+
+L058c **p-diverged-E** — the window's door for a fork: a DIVERGED row is offered take/keep with NOTHING preselected (SeatChoice::None, built beside offer_for), shows both byte counts and both machines, Carry waits for every unkept fork's choice and re-checks on change, and a TAKE is routed by verdict to --take-stick. D-2 built narrow: an export UNIMPORTED_TAIL is quiet only for a seat kept on the import side for this carry, and only that reason. **One consequence D-1 did not spell out, built and named for C:** making ALREADY_APPLIED/APPLIED_AND_GREW actionable at stick.js:102 is unreachable while rehearsal_is_quiet calls them quiet and closes the window — so they are news now. **The tests read REAL tail-carry --json rows** from a two-machine fixture (D-2 hid behind a test passing []), and an integration probe against A's working copy matched the row shape (121 B / 139 B / takeable). **Two faults in my own UI stub, found before the code existed:** the D-1 tests passed because the stub never read the HTML disabled attribute, and D-6 passed because it only checked after. Repaired; then 6 red. 609/0/4; stick.test 15/0; 16 mutants caught; 0 leaks. -> exo_memory/handback/p-diverged-E_2026-09-14.md
+
+
+## 2026-09-14 ~07:40 · CARRY-FORWARD before a compaction — where I stand, what is open, what to reuse
+
+**Not a finding; a bearing.** Every claim below points at its master. Read the hand-back, not this line, before acting on any of it.
+
+**Open, and mine to watch** (nothing of mine is committed; the chair lands):
+- **P-DIVERGED (L058c)**: my half is built, `exo_memory/handback/p-diverged-E_2026-09-14.md`. Dirty files:
+  `consonance/src-tauri/src/{main.rs,sync_launch.rs}`, `consonance/ui/{stick.js,stick.test.js}`. **It lands only together
+  with A's half** (`stick-apply.js:80` exits 2 on an unknown `--take-stick`). **For C to rule:** my §2 there (D-1's
+  consequence: ALREADY_APPLIED / APPLIED_AND_GREW are now NOT quiet, or the enabled Carry is unreachable).
+- **P-NO-CONSOLE (L058b)**: built and presumably landed. Its §4 falsifier (a process-start watch over launch + 3 min idle +
+  exit on the REBUILT app) has never run. The waiter running at the time kept flashing until relaunch. The tree-kill
+  exception is named at `CREATE_NEW_PROCESS_GROUP` in main.rs.
+- **L059 stick module**: the landing-side checks named in its hand-back are still unrun — the window rendered in real
+  WebView2, an end-to-end Carry, anything on D.
+- **The vantage DISAGREE on L052's `live-host.js` +220** (really +226) keeps re-surfacing in hooks. It is ALREADY corrected in
+  two hand-backs (L058 §8 and after). No action is owed; do not re-correct it again.
+
+**Instruments that exist and should be reused, not rebuilt** (all under this pane's scratchpad; the path is session-scoped):
+- `l059/mutate.js` — a mutation harness that **mutates a scratch COPY of `consonance/`** (crate + UI, plus exo_memory
+  cards/spread/research/record/SOURCE.md), runs a baseline of the unmutated copy first (2 copy-only failures:
+  `managed_cwd_tests::the_map_walk…`, `repo_root_tests::the_checkout_resolves…`), and hashes the tracked files before and
+  after. **To run new mutants:** write a `mutantsN.txt` holding `const MUTANTS = [...]` with `file: SL|MAIN|UIJS` and
+  `run: 'rust'|'ui'`, then splice it into a copy of `mutate.js` (see `mutate6.js`). Always include a SURVIVE and a SKIP control.
+  Check every anchor for exactly one match before starting.
+- `noconsole/` — a Windows-subsystem harness (`harness/`, built into `noconsole/target`) spawning with the app's exact flags,
+  plus `watch.ps1` (a Win32_Process start watch), `score.js` (attribution by parent pid), `cells.sh` and `survive.sh`
+  (survival, with a tree-kill control).
+- `diverged/gen_rows.js` — real `tail-carry --json` import/export rows from a two-machine mkdtemp fixture
+  (DIVERGED / OTHER_CONVERSATION / unmoved). Rerun it against whatever `dev/tail-carry.js` is current to re-derive rows.
+
+**Traps met this session, each cost a run:**
+- **A global `CARGO_TARGET_DIR=C:\build\lighthouse-target`** is the keeper's shared build dir. Any scratch crate must set its
+  own `CARGO_TARGET_DIR`, or its artifacts land beside the app's.
+- **Bash heredocs and `node -e` with nested quotes, backslashes or Rust raw strings fail at parse time.** Write the patch or
+  test through the file tool and run it; confirm "nothing written" with `git diff` after any failure.
+- **PowerShell `Get-Content -Raw` / `Set-Content`** mojibakes UTF-8 sources (D059). Edit only with the Edit tool or Node.
+- **A UI stub that defaults `disabled: false`** passes "Carry is available" vacuously; read the starting state from the
+  rendered HTML. A test asserting only the "after" of a change passes on code with no change handler; assert before AND after.
+- **`deepStrictEqual` across a `vm` realm** fails on identical arrays (different prototypes); compare JSON.
+- **A §-named mechanism is a reading until measured** — `windowsHide` WAS enough; the flashing call was a different site.

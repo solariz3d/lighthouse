@@ -170,7 +170,7 @@ const REASONS = [
 /** Verdicts whose seat does not carry and needs a decision. `run` and `toJson` both read this. */
 const STOPS = ['REFUSED', 'DIVERGED', 'INTERRUPTED', 'ABSENT_HERE'];
 /** Verdicts that move bytes, per direction. */
-const CARRIES = { export: ['TAIL', 'FULL'], import: ['APPEND', 'FULL', 'REPAIR', 'RETIRE_THEN_FULL'] };
+const CARRIES = { export: ['TAIL', 'FULL'], import: ['APPEND', 'FULL', 'REPAIR', 'RETIRE_THEN_FULL', 'RETIRE_THEN_APPEND'] };
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────
 // THE TRANSFER SET AND THE LEDGER LOCK — P-STICK-BUILD (L059) §3 as RE-RULED at 60e1ccf, pane A.
@@ -301,7 +301,12 @@ function renderHandoff(led) {
   if (!pending.length) L.push('Nothing. Every seat the ledger knows is at its agreed state on both machines.');
   for (const s of pending) {
     const e = led.seats[s], p = e.pending;
-    const expect = p.offset === 0 ? 'FULL (the whole conversation)' : 'APPEND (a tail on the agreed state)';
+    // P-DIVERGED debt (c): this file is written from the ledger on the EXPORTING machine, which cannot see the far one.
+    // A delta lands as APPEND only if the far copy is still exactly the agreed state; if that machine took turns of its
+    // own since, the import reads DIVERGED and the keeper chooses. Say both, rather than promise the one we cannot see.
+    const expect = p.offset === 0
+      ? 'FULL (the whole conversation)'
+      : 'APPEND if that machine has written nothing of its own to this seat since the agreed state; DIVERGED if it has — the keeper chooses there';
     L.push(`- **${e.seat || '(unnamed seat)'}** \`${s}\` — from ${p.from}, bytes ${p.offset}..${p.toOffset} (${p.bytes} B), exported ${p.at}`);
     L.push(`  - the conversation began ${e.firstTimestamp || 'unknown (this ledger never recorded it)'}; expected at the far end: ${expect}`);
     L.push(`  - tail file \`consonance-tails/${p.tailFile}\`, sha256 \`${p.tailSha}\``);
@@ -667,6 +672,19 @@ function planExport(o) {
       rows.push(row); continue;
     }
 
+    // P-DIVERGED debt (b): THIS machine's own pending tail is what the stick holds. If the file is still exactly what
+    // that export wrote — its length and its whole sha — the stick already has this machine's last session, and a
+    // rehearsal that said TAIL/FULL here is the reopen's false "the stick does not have your last session". A file that
+    // has GROWN (or changed) since falls through unchanged: the far machine has imported nothing yet, so the new tail
+    // re-carries from the agreed state (or whole), replacing the pending record, and the far end still lands it whole.
+    if (entry && entry.pending && entry.pending.from === machine && entry.key === k.key &&
+        row.size === entry.pending.toOffset && hashRange(src, 0, row.size) === entry.pending.fullSha) {
+      row.verdict = 'UP_TO_DATE';
+      row.offset = entry.pending.toOffset;
+      row.why = `the stick already holds this machine's last session for this seat (exported ${entry.pending.at}, ${entry.pending.offset}..${entry.pending.toOffset}), not yet imported on the other machine`;
+      rows.push(row); continue;
+    }
+
     if (!entry || !entry.agreed) {
       row.verdict = 'FULL';
       row.offset = 0;
@@ -766,21 +784,33 @@ function planImport(o) {
   const projectsRoot = o.projectsRoot || path.join(os.homedir(), '.claude', 'projects');
   const retireFar = new Set(o.retireFar || []);
   const repair = new Set(o.repair || []);
+  const takeStick = new Set(o.takeStick || []);
   const s = seats(o);
   if (!s.seats) return { ok: false, code: 2, why: s.why, rows: [] };
   const led = readLedger(stick);
   const rows = [];
 
+  // P-DIVERGED debt (a): a row that stops before the destination is judged still says what THIS machine holds.
+  // Until now NOTHING_PENDING and OURS were pushed before the file was read, so every such row carried
+  // localSize: null and localFirstTimestamp: null, and the window showed "this machine's conversation began:
+  // unknown" for seats whose files were right there. A read only: no settle wait, and no verdict depends on it.
+  const readHere = (row) => {
+    try { row.size = fs.statSync(row.dest).size; } catch (_) { return; }
+    const k = conversationKey(row.dest);
+    if (k.key) { row.key = k.key; row.keyLine = k.line; }
+  };
+
   for (const seat of s.seats) {
     const entry = led.seats[seat.sid];
     const dest = place.paneJsonl(projectsRoot, seat.cwd, seat.sid);
     const row = { ...seat, dest, entry, verdict: null, why: null, tail: null };
-    if (!entry || !entry.pending) { row.verdict = 'NOTHING_PENDING'; rows.push(row); continue; }
+    if (!entry || !entry.pending) { row.verdict = 'NOTHING_PENDING'; readHere(row); rows.push(row); continue; }
     const pend = entry.pending;
     row.pending = pend;
     if (pend.from === machine) {
       row.verdict = 'OURS';
       row.why = `this tail was exported BY this machine (${machine}); it is for the other one`;
+      readHere(row);
       rows.push(row); continue;
     }
     const tailPath = path.join(stick, LEDGER_DIR, pend.tailFile);
@@ -899,8 +929,24 @@ function planImport(o) {
           : `an earlier carry stopped after ${extra} of ${row.tail.length} tail bytes. Repair it by name: --repair ${seat.sid}`;
         rows.push(row); continue;
       }
+      // P-DIVERGED D-1 (§2.8): the WHOLE carried file is already here and this machine went on from it. Not a fork:
+      // the tail landed (an applier killed after its append, before its ledger write) and the seat then took later
+      // turns. `isPrefixOfTail` above cannot see it — the extra is the whole tail PLUS more — so until now it fell
+      // through to DIVERGED, and a take would have truncated this machine's genuinely later turns into the attic.
+      // Told apart by the whole-span sha the exporter recorded, never by length alone.
+      if (size > pend.toOffset && hashRange(dest, 0, pend.toOffset) === pend.fullSha) {
+        row.verdict = 'APPLIED_AND_GREW';
+        row.why = `the carried tail is already here, whole and verified, and this machine has written ${size - pend.toOffset} bytes after it; --apply advances the ledger to agree at ${pend.toOffset}, and those later bytes then export as an ordinary tail`;
+        rows.push(row); continue;
+      }
+      // §2.2: the keeper's word turns a fork into a take. Only a row that WOULD be DIVERGED — nothing above it.
+      if (takeStick.has(seat.sid)) {
+        row.verdict = 'RETIRE_THEN_APPEND';
+        row.why = `taking the stick's future for this seat, named on the command line: this machine's whole file (${size} B, ${extra} of its own past the shared prefix) is copied to the attic, the seat is truncated to the shared ${pend.offset} B, and the carried tail is appended and verified whole`;
+        rows.push(row); continue;
+      }
       row.verdict = 'DIVERGED';
-      row.why = `this machine has written ${extra} bytes of its OWN since the last carry, on top of the same prefix. Two futures of one conversation cannot be concatenated. Nothing is lost — but which one continues is a decision, not a merge.`;
+      row.why = `this machine has written ${extra} bytes of its OWN since the last carry, on top of the same prefix. Two futures of one conversation cannot be concatenated. Nothing is lost — but which one continues is a decision, not a merge. To continue from the stick's, name it: --take-stick ${seat.sid} (this machine's file goes to the attic, whole).`;
       rows.push(row); continue;
     }
 
@@ -943,7 +989,7 @@ function writeCarried(projectsRoot, entries, now) {
 function applyImport(plan, now) {
   const { stick, led } = plan;
   const done = [];
-  const DOES = ['APPEND', 'FULL', 'REPAIR', 'RETIRE_THEN_FULL'];
+  const DOES = ['APPEND', 'FULL', 'REPAIR', 'RETIRE_THEN_FULL', 'RETIRE_THEN_APPEND'];
   // ALREADY_APPLIED is SETTLED under --apply: the ledger is brought into agreement with a file that already
   // holds every tail byte and hashes whole to the exporter's record. Until L059 it wrote nothing, and that
   // is a permanent wedge: an import hard-killed after its append but before its ledger write leaves the
@@ -951,22 +997,26 @@ function applyImport(plan, now) {
   // of that seat refuses UNIMPORTED_TAIL (so its later turns never reach the other machine), and the
   // launch's carried receipt never names it. The ledger lock closes the CONCURRENT lost update; this closes
   // the killed one. Found at the L059 §6 stop; built because Call 1's "correct by construction" needs it.
-  const SETTLES = ['ALREADY_APPLIED'];
+  // P-DIVERGED D-1: APPLIED_AND_GREW settles the same way, at the carried span's end rather than the file's.
+  const SETTLES = ['ALREADY_APPLIED', 'APPLIED_AND_GREW'];
   if (!plan.rows.some((r) => DOES.includes(r.verdict) || SETTLES.includes(r.verdict))) return done;   // writes nothing
   for (const row of plan.rows) {
     if (SETTLES.includes(row.verdict)) {
       const pend = row.pending;
-      // Re-verified now, not trusted from the plan: the file must still be the whole carried conversation.
-      const size = fs.statSync(row.dest).size;
-      const full = hashRange(row.dest, 0, size);
-      const ok = size === pend.toOffset && full === pend.fullSha;
+      // Re-verified now, not trusted from the plan: the file must still hold the whole carried conversation —
+      // exactly it (ALREADY_APPLIED), or exactly it followed by this machine's later bytes (APPLIED_AND_GREW).
+      const fileSize = fs.statSync(row.dest).size;
+      const grew = row.verdict === 'APPLIED_AND_GREW';
+      const size = grew ? pend.toOffset : fileSize;
+      const full = fileSize >= size ? hashRange(row.dest, 0, size) : '';
+      const ok = (grew ? fileSize > pend.toOffset : fileSize === pend.toOffset) && full === pend.fullSha;
       if (ok) {
         const entry = led.seats[row.sid];
         entry.agreed = { offset: size, prefixSha: full, at: new Date(now).toISOString() };
         entry.pending = null;
       }
       done.push({ row, ok, size, full, asideTo: null, settled: true,
-        why: ok ? null : `the file changed between the rehearsal and the apply (${size} B / ${full.slice(0, 16)}…); the pending tail is left in place` });
+        why: ok ? null : `the file changed between the rehearsal and the apply (${fileSize} B / ${String(full).slice(0, 16)}…); the pending tail is left in place` });
       continue;
     }
     if (!DOES.includes(row.verdict)) continue;
@@ -986,6 +1036,23 @@ function applyImport(plan, now) {
       asideTo = atticPath(plan.projectsRoot, slug, row.sid, 'pre-truncate', now);
       fs.mkdirSync(path.dirname(asideTo), { recursive: true });
       fs.copyFileSync(row.dest, asideTo);
+      fs.truncateSync(row.dest, pend.offset);
+    }
+    if (row.verdict === 'RETIRE_THEN_APPEND') {
+      // P-DIVERGED §2.3 — the keeper's TAKE THE STICK'S. REPAIR's mechanism, started by the keeper's word: this
+      // machine's WHOLE file (shared prefix included) is copied to the one retirement address, then the seat is
+      // truncated to the shared prefix and the carried tail appended. A copy, never a rename: the prefix stays in
+      // place. The copy is read back before the truncate — the truncate is the one step that destroys this
+      // machine's future, so it waits for proof that the future is somewhere else, whole.
+      asideTo = atticPath(plan.projectsRoot, slug, row.sid, 'take-stick', now);
+      fs.mkdirSync(path.dirname(asideTo), { recursive: true });
+      fs.copyFileSync(row.dest, asideTo);
+      const liveSize = fs.statSync(row.dest).size;
+      if (fs.statSync(asideTo).size !== liveSize || hashRange(asideTo, 0, liveSize) !== hashRange(row.dest, 0, liveSize)) {
+        done.push({ row, ok: false, size: liveSize, full: null, asideTo,
+          why: `the attic copy did not read back equal to this machine's file; nothing was truncated and the seat is exactly as it was (${asideTo})` });
+        continue;
+      }
       fs.truncateSync(row.dest, pend.offset);
     }
 
@@ -1125,6 +1192,7 @@ function carryPlanned(o, k) {
       if (r.pending) out(`                   tail ${r.pending.offset}..${r.pending.toOffset} (${mb(r.pending.bytes)}) from ${r.pending.from}`);
       if (r.verdict === 'APPEND') { out(`                   this machine is at ${r.size} B = the agreed state; appending leaves ${r.pending.toOffset} B`); carry += r.tail.length; }
       if (r.verdict === 'FULL') { out(`                   this machine has no file; the tail IS the conversation`); carry += r.tail.length; }
+      if (r.verdict === 'RETIRE_THEN_APPEND') { out(`                   this machine's ${r.size} B go to the attic whole; the seat continues from the shared ${r.pending.offset} B to ${r.pending.toOffset} B`); carry += r.tail.length; }
     }
     if (r.why) for (const line of String(r.why).match(/.{1,96}(\s|$)/g) || [r.why]) out(`                   ${line.trim()}`);
     // INTERRUPTED was missing from this list until 2026-09-14, so a rehearsal over an interrupted
@@ -1191,7 +1259,8 @@ function lineTimestamp(line) {
  *   stops                      true for REFUSED, DIVERGED, INTERRUPTED, ABSENT_HERE: this seat will
  *                              not carry and needs a decision
  *   carries                    true when this seat moves bytes (or, in a rehearsal, would)
- *   bytes                      bytes this seat carries; 0 when it does not
+ *   bytes                      bytes this seat carries; 0 when it does not — EXCEPT a DIVERGED import row, where it
+ *                              is the stick's tail for the seat, the size of the future a take would bring (P-DIVERGED D-7)
  *   offset, toOffset           the byte span of the tail, or null when there is none to name
  *   path                       this machine's transcript for the seat: the source on export, the
  *                              destination on import
@@ -1203,7 +1272,10 @@ function lineTimestamp(line) {
  *   exportedAt, exportedFrom   import only: when and by which machine the pending tail was exported
  *   retirable                  import OTHER_CONVERSATION only: whether --retire-far would take it.
  *                              null on every other row.
- *   result                     --apply only, and only for a seat that was written — or, since L059, an
+ *   takeable                   import only: true on a DIVERGED row — --take-stick would take it; null otherwise (P-DIVERGED §2.4)
+ *   ownBytes                   import only: the bytes THIS machine wrote of its own — past the shared prefix on DIVERGED
+ *                              and RETIRE_THEN_APPEND, past the carried span on APPLIED_AND_GREW; null otherwise
+ *   result                    --apply only, and only for a seat that was written — or, since L059, an
  *                              ALREADY_APPLIED seat whose ledger was ADVANCED (its file untouched):
  *                              { ok, why, size, sha256, aside, tailFile, advanced }
  *                              advanced = the agreed state was recorded for this seat by this run (import
@@ -1224,6 +1296,16 @@ function toJson(res, o) {
     let bytes = 0, offset = null, toOffset = null;
     if (mode === 'export' && carries) { bytes = r.bytes; offset = r.offset; toOffset = r.size; }
     if (mode === 'import' && pend) { offset = pend.offset; toOffset = pend.toOffset; if (carries) bytes = r.tail.length; }
+    // P-DIVERGED D-7: a DIVERGED row names the tail the stick would give it, so the window can show both futures'
+    // sizes. It still carries nothing (`carries` false) — this is the one row where bytes is not "bytes moved".
+    if (mode === 'import' && pend && r.verdict === 'DIVERGED') bytes = typeof pend.bytes === 'number' ? pend.bytes : pend.toOffset - pend.offset;
+    // §2.4: ownBytes — what THIS machine wrote of its own. Past the shared prefix for a fork or a take; past the
+    // carried span for a seat that already holds it and went on (D-1).
+    let ownBytes = null;
+    if (mode === 'import' && pend && typeof r.size === 'number') {
+      if (r.verdict === 'DIVERGED' || r.verdict === 'RETIRE_THEN_APPEND') ownBytes = r.size - pend.offset;
+      if (r.verdict === 'APPLIED_AND_GREW') ownBytes = r.size - pend.toOffset;
+    }
     const d = bySid.get(r.sid);
     return {
       seat: r.seat,
@@ -1244,6 +1326,8 @@ function toJson(res, o) {
       exportedAt: pend ? (pend.at || null) : null,
       exportedFrom: pend ? (pend.from || null) : null,
       retirable: mode === 'import' && r.verdict === 'REFUSED' && r.reason === 'OTHER_CONVERSATION' ? !!r.retirable : null,
+      takeable: mode === 'import' && r.verdict === 'DIVERGED' ? true : null,
+      ownBytes,
       result: !d ? null : mode === 'export'
         ? { ok: d.ok, why: d.why || null, size: d.ok ? d.row.size : null, sha256: d.fullSha || null, aside: null, tailFile: d.name || null, advanced: false }
         : { ok: d.ok, why: d.why || null, size: typeof d.size === 'number' ? d.size : null, sha256: d.full || null, aside: d.asideTo || null, tailFile: null,
@@ -1285,7 +1369,7 @@ function main(argv, io, fixture) {
   // privacy check and place-conversations.js's injected apply. It carries the fixture machine's roots
   // and `appRunning` so the real argument parsing and the real stdout discipline can be exercised
   // against a fake machine. The CLI never passes it; there is no flag and no environment variable.
-  const o = Object.assign({ mode: null, stick: null, apply: false, retireFar: [], repair: [], json, out: human }, fixture || {});
+  const o = Object.assign({ mode: null, stick: null, apply: false, retireFar: [], repair: [], takeStick: [], json, out: human }, fixture || {});
   // --verify-set has its own object (§3 as re-ruled), found by a pre-scan for the same reason --json is:
   // a bad argument or a crash must still produce the shape the caller asked for.
   const verifying = argv.includes('--verify-set');
@@ -1312,8 +1396,9 @@ function main(argv, io, fixture) {
     else if (a === '--verify-set') o.verifySet = true;
     else if (a === '--retire-far') o.retireFar.push(argv[++i]);
     else if (a === '--repair') o.repair.push(argv[++i]);
+    else if (a === '--take-stick') o.takeStick.push(argv[++i]);
     else if (a === '--help' || a === '-h') {
-      io.stdout('node dev/tail-carry.js --stick <path> (--export|--import) [--apply] [--repair <sid>] [--retire-far <sid>] [--json]\n' +
+      io.stdout('node dev/tail-carry.js --stick <path> (--export|--import) [--apply] [--repair <sid>] [--retire-far <sid>] [--take-stick <sid>] [--json]\n' +
                 'node dev/tail-carry.js --stick <path> --verify-set [--json]\n');
       return 0;
     } else {
