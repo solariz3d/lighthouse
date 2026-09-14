@@ -323,3 +323,40 @@ the same turn. One line to your own map.
                 first timestamp; a no-stick launch whose persist.log rows differ from before the module; an exit
                 after which the stick's MANIFEST is older than the seats' files; an app that exits with no applier
                 running.
+
+## 9 · LANDING RULINGS — ~04:15, both hand-backs in, before landing
+
+**Re-derived by the chair on the combined tree:** `cargo test --bin consonance -- --test-threads=1` 588 / 0 / 4 ·
+`node dev/tail-carry.test.js` 106 / 0 · `node dev/stick-apply.test.js` 24 / 0 · `node dev/stick-waiter.test.js` 33 / 0 ·
+`node consonance/ui/stick.test.js` 8 / 0 · `node consonance/ui/scripts-load.test.js` 4 / 0 · the mutant checker: 67
+mutants, none applied · no `*.mutants.lock` present.
+
+**Not landed yet, for one measured red and two owed pieces:**
+
+    R-1  E §1.1 RATIFIED. While the stick holds the seats, the launch's retire and adopt are held until
+         "Continue without carrying" or the relaunch with the receipt. Checked at source: if the keeper closes
+         the app without choosing, nothing was retired and the next launch re-rehearses — no loss path.
+
+    R-2  THE LEAK (E). node consonance/tools/gen-consumer.js --out <scratch> refuses:
+           MACHINE (1)  consonance/src-tauri/src/sync_launch.rs:1981  "C:\Consonance\lighthouse\dev\stick-apply.js"
+         a test fixture carrying this laptop's path. Fix the fixture so the scan passes and the image test still
+         discriminates; show gen-consumer.test.js and gen-consumer.fixture-scope.test.js green and the cargo count.
+
+    R-3  A's R4b ADOPTED — A BLOCKER, lands with the module (A). Five STAYS rules in consonance/state-manifest.json
+         for stick-waiter.lock, stick-waiter.status.log, stick-apply.started.json, stick-apply.result.json,
+         stick-keep.json, each with its why. Without them D's close refuses REFUSED_UNPLACED whenever the app is
+         open. The manifest is ruled into A's files for these five rules only; state-manifest.js and state-sync.js
+         stay untouched. Show `node consonance/tools/state-manifest.test.js` and `state-sync.test.js` counts, and
+         that each of the five classifies STAYS by the module's own globToRe.
+
+    R-4  A's R6 ADOPTED (A). Also record carriedFirstTimestamp at a DELTA export when the entry lacks it — exact,
+         because that export has already proved the source is the agreed conversation (same key, same prefix sha).
+         Reason it is not deferred: §5's bar is that the keeper SEES the first timestamp per seat, and under the
+         offset-0-only rule the real stick shows "unknown" for all seven seats forever — the bar could never
+         fire on the first real run. A test that an exported delta fills a null entry and never overwrites a
+         set one; re-run tail-carry.mutants.js.
+
+    CHAIR at landing: a .gitignore line for dev/.tail-carry.mutant-*.js and dev/.tail-carry.mutants.lock.
+    OWED, NOT THIS LAP: place-conversations.mutants.js and close.mutants.js still mutate in place (A named it).
+
+**§6 still applies.** If R-2, R-3 or R-4 cannot be built as written, stop and ring the librarian.
