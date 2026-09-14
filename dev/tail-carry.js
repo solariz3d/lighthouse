@@ -16,9 +16,23 @@
 // command whose default action lands on the far end of a plane journey should not be the one you
 // get by forgetting a flag.
 //
-// Exit 0 = nothing refused. Exit 1 = at least one seat refused, or a verification failed.
-// Exit 2 = nothing to carry against (no stick, no roster, no seats).
+// Exit codes are the `EXIT` table below, and they mean the same thing with and without `--json`.
 //
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// `--json` — THE CONTRACT THE APP READS (P-STICK, L058, pane A, 2026-09-14). The master copy of the
+// contract is `exo_memory/loop/packet_stick_module_2026-09-14.md` §2; this is the code it describes.
+//
+//   node dev/tail-carry.js --stick <path> (--import|--export) [--apply] [--repair <sid>]... [--retire-far <sid>]... --json
+//
+//   stdout  exactly ONE JSON object, then a newline, and nothing else — built by `toJson`
+//   stderr  everything a human would have seen without --json; never parse it
+//   exit    equal to the object's "code"
+//
+// **A REFUSED ROW STOPS ONLY ITS OWN SEAT.** With `--apply`, every other seat that can carry IS
+// carried in the same run, and the run still exits 1. The caller that wants "carry nothing if seat X
+// refuses" must read the rehearsal's rows first and decide — this tool does not do that for it, and
+// never has: `applyImport`/`applyExport` walk the rows independently. Each carried seat is verified
+// whole on its own, so a partial run is a set of complete seats, never a half-written one.
 // ─────────────────────────────────────────────────────────────────────────────────────────────
 // WHY A TAIL AND NOT THE FILE. The keeper's decision (`loop/keeper_decisions_2026-09-11.md` §1):
 // transcripts travel by USB, the repo keeps the room's files. The librarian then measured the
@@ -100,6 +114,58 @@ const place = require('./place-conversations.js');
 const LEDGER_DIR = 'consonance-tails';
 const LEDGER_NAME = 'ledger.json';
 const LEDGER_VERSION = 1;
+
+/** The --json object's own version. Bump it when a field changes meaning or disappears. */
+const CONTRACT_VERSION = 1;
+
+/**
+ * THE EXIT CODES, and the `outcome` each one can carry. One table, read by both output modes.
+ *
+ * The code is the coarse class a shell can branch on; `outcome` is the exact state a program reads.
+ * The four states the app has to tell apart are exactly the four codes.
+ */
+const EXIT = {
+  // 0 — IT RAN, AND NO SEAT STOPPED.
+  //   NOTHING_TO_DO  no seat has anything to carry (dry run or --apply alike)
+  //   REHEARSED      no --apply; at least one seat WOULD carry, and none would stop
+  //   CARRIED        --apply; at least one seat carried and verified whole, and none stopped
+  OK: 0,
+  // 1 — IT RAN, AND AT LEAST ONE SEAT DID NOT CARRY. Rows are present and say which.
+  //   STOPPED        a row's `stops` is true (REFUSED, DIVERGED, INTERRUPTED, ABSENT_HERE). With
+  //                  --apply, OTHER seats may still have carried — read each row's `result`.
+  //   FAILED         --apply; a seat was written but did not verify whole. Wins over STOPPED.
+  SEAT: 1,
+  // 2 — IT DID NOT RUN. Nothing was read about any seat and nothing was written. `rows` is [].
+  //   CANNOT_RUN     bad arguments, no stick, an unreadable or future-version ledger, no roster
+  //   APP_RUNNING    --import --apply while Consonance is running (or when that cannot be told)
+  RAN_NOT: 2,
+  // 3 — IT BROKE PART-WAY. An exception nobody anticipated. With --apply, some seats MAY have been
+  //   written. Do not treat this as "nothing happened" and do not treat it as done.
+  //   CRASHED
+  CRASHED: 3,
+};
+
+/** A REFUSED row always carries one of these in `reason`; no other verdict does. */
+const REASONS = [
+  'UNSETTLED',            // the file was being written while we looked
+  'NO_KEY',               // no record carrying a "timestamp" in the head — cannot say which conversation it is
+  'UNIMPORTED_TAIL',      // export: the stick still holds the other machine's tail for this seat
+  'OTHER_CONVERSATION',   // this machine's file under this sid is a DIFFERENT conversation (see `retirable`)
+  'SHRANK',               // export: the file is shorter than the agreed state
+  'HISTORY_REWRITTEN',    // the bytes inside the agreed prefix changed
+  'TAIL_MISSING',         // import: the ledger names a tail file the stick does not hold
+  'TAIL_DAMAGED',         // import: the tail does not match its own recorded sha256
+  'TAIL_LENGTH',          // import: the tail's length disagrees with the span the ledger claims
+  'LOCAL_GONE',           // import: this machine has no file, and the tail is a delta
+  'LEDGER_INCONSISTENT',  // import: agreed state and pending tail do not meet
+  'BEHIND',               // import: this machine's file is shorter than the agreed state
+  'APPLIED_BUT_DIFFERENT',// import: every tail byte is present, yet the whole file's sha256 differs
+];
+
+/** Verdicts whose seat does not carry and needs a decision. `run` and `toJson` both read this. */
+const STOPS = ['REFUSED', 'DIVERGED', 'INTERRUPTED', 'ABSENT_HERE'];
+/** Verdicts that move bytes, per direction. */
+const CARRIES = { export: ['TAIL', 'FULL'], import: ['APPEND', 'FULL', 'REPAIR', 'RETIRE_THEN_FULL'] };
 
 /** Bytes of head to scan for the first timestamped record before giving up. */
 const KEY_SCAN_BYTES = 1024 * 1024;
@@ -270,22 +336,51 @@ function writeLedger(stick, led) {
 const stamp = (now) => new Date(now).toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
 
 /**
- * A stamped path beside a file that nothing can land on twice.
- *
- * Stamped, then counted if the stamped name is taken. Same shape and same reason as
- * `place-conversations.js`'s `retiredPath`: `main.rs:835-836` is the scar where a FIXED archive
- * name let one retirement overwrite another. Here it guards the ONE step in this file that can
- * destroy bytes — the truncate in a repair — so the counter is not decoration.
+ * The attic's stamp: LOCAL time, `YYYYMMDD-HHMMSS` — byte-for-byte the format `main.rs` hands
+ * `sync_launch::attic_for` (`chrono::Local::now().format("%Y%m%d-%H%M%S")`). One attic, one clock,
+ * so a reader sorting the attic by name is sorting it by time whichever tool retired the seat.
  */
-function asidePath(dest, suffix, now, exists) {
+function atticStamp(now) {
+  const d = new Date(now);
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+}
+
+/**
+ * ONE RETIREMENT ADDRESS — `~/.claude/consonance-attic/<slug>/<sid>.<stamp>-<why>.jsonl`.
+ *
+ * `sync_launch::attic_for` (`sync_launch.rs:496`) is the shape: `home/.claude/consonance-attic/
+ * <encoded cwd>/<sid>.<stamp>.jsonl`. The trailing `-<why>` is the tag the attic already carries
+ * (`…20260914-005441-launchborn.jsonl`), and it says which tool put the file there and why:
+ * `retire-far` for a conversation this machine stepped aside for the carried one, `pre-truncate` for
+ * the copy a REPAIR keeps before it truncates.
+ *
+ * **Why the attic and not beside the live file, which is what this function used to do.** The room's
+ * record says retired seats rest in the attic, and the app's own retirements are there. On
+ * 2026-09-14 this tool's first real `--retire-far` put a launch-born librarian at
+ * `projects/…/0c0c0c0b-…-115b.jsonl.retired-20260914T063637Z` — and the librarian's own master missed
+ * it, because it looked where the record said to look. Two retirers with two conventions is one
+ * convention nobody can rely on. `attic_for`'s other reason applies too: a file left in the indexed
+ * `projects/` tree is somewhere the vendor looks.
+ *
+ * The attic hangs off the SAME `.claude` directory as `projectsRoot` (its parent), exactly as
+ * `carriedPath` does, so a fixture's attic is the fixture's and never the real one.
+ *
+ * Counted if the name is taken — `main.rs:835-836` is the scar where a FIXED archive name let one
+ * retirement overwrite another. The counter stays inside the stamp segment, so the `<sid>.<stamp>.jsonl`
+ * shape survives it.
+ */
+function atticPath(projectsRoot, slug, sid, why, now, exists) {
   exists = exists || fs.existsSync;
-  const base = `${dest}.${suffix}-${stamp(now)}`;
-  if (!exists(base)) return base;
+  const dir = path.join(path.dirname(projectsRoot), 'consonance-attic', slug);
+  const base = `${atticStamp(now)}-${why}`;
+  const first = path.join(dir, `${sid}.${base}.jsonl`);
+  if (!exists(first)) return first;
   for (let n = 2; n < 1000; n++) {
-    const p = `${base}-${n}`;
+    const p = path.join(dir, `${sid}.${base}-${n}.jsonl`);
     if (!exists(p)) return p;
   }
-  throw new Error(`cannot find an unused name beside ${dest}`);
+  throw new Error(`cannot find an unused attic name for ${sid} in ${dir}`);
 }
 
 /**
@@ -303,7 +398,8 @@ function planExport(o) {
 
   for (const seat of s.seats) {
     const src = place.paneJsonl(projectsRoot, seat.cwd, seat.sid);
-    const row = { ...seat, src, verdict: null, why: null, offset: 0, size: 0, bytes: 0, key: null };
+    // `size` starts null, not 0: a seat whose file was never stat'd must not report "0 bytes here".
+    const row = { ...seat, src, verdict: null, why: null, offset: 0, size: null, bytes: 0, key: null };
     const entry = led.seats[seat.sid] || null;
     row.entry = entry;
 
@@ -319,16 +415,18 @@ function planExport(o) {
     }
 
     const gate = settledStat(src);
-    if (!gate.st) { row.verdict = 'REFUSED'; row.why = `source will not settle — ${gate.why}`; rows.push(row); continue; }
+    if (!gate.st) { row.verdict = 'REFUSED'; row.reason = 'UNSETTLED'; row.why = `source will not settle — ${gate.why}`; rows.push(row); continue; }
     row.size = gate.st.size;
 
     const k = conversationKey(src);
-    if (!k.key) { row.verdict = 'REFUSED'; row.why = `cannot key this transcript — ${k.why}`; rows.push(row); continue; }
+    if (!k.key) { row.verdict = 'REFUSED'; row.reason = 'NO_KEY'; row.why = `cannot key this transcript — ${k.why}`; rows.push(row); continue; }
     row.key = k.key;
+    row.keyLine = k.line;
 
     // A pending tail from the OTHER machine that nobody has imported yet must not be overwritten.
     if (entry && entry.pending && entry.pending.from !== machine) {
       row.verdict = 'REFUSED';
+      row.reason = 'UNIMPORTED_TAIL';
       row.why = `the stick still carries an unimported tail from ${entry.pending.from} — import it on the machine it is for before exporting over it`;
       rows.push(row); continue;
     }
@@ -342,18 +440,21 @@ function planExport(o) {
     }
     if (entry.key !== k.key) {
       row.verdict = 'REFUSED';
+      row.reason = 'OTHER_CONVERSATION';
       row.why = `this sid holds a DIFFERENT conversation than the one the stick agreed on (key ${k.key.slice(0, 16)}… vs ${String(entry.key).slice(0, 16)}…)`;
       rows.push(row); continue;
     }
     const agreed = entry.agreed;
     if (row.size < agreed.offset) {
       row.verdict = 'REFUSED';
+      row.reason = 'SHRANK';
       row.why = `the source is SHORTER than the agreed state (${row.size} < ${agreed.offset}) — a transcript that shrank is not append-only and nothing here can repair it`;
       rows.push(row); continue;
     }
     const prefix = hashRange(src, 0, agreed.offset);
     if (prefix !== agreed.prefixSha) {
       row.verdict = 'REFUSED';
+      row.reason = 'HISTORY_REWRITTEN';
       row.why = `this machine's own copy DIVERGED from the agreed state at offset ${agreed.offset} — its history was rewritten, not appended to`;
       rows.push(row); continue;
     }
@@ -440,17 +541,20 @@ function planImport(o) {
     const tailPath = path.join(stick, LEDGER_DIR, pend.tailFile);
     if (!fs.existsSync(tailPath)) {
       row.verdict = 'REFUSED';
+      row.reason = 'TAIL_MISSING';
       row.why = `the ledger names a tail the stick does not hold: ${pend.tailFile}`;
       rows.push(row); continue;
     }
     const tail = fs.readFileSync(tailPath);
     if (sha256(tail) !== pend.tailSha) {
       row.verdict = 'REFUSED';
+      row.reason = 'TAIL_DAMAGED';
       row.why = 'the tail on the stick does not match its own recorded sha256 — the carrier damaged it';
       rows.push(row); continue;
     }
     if (tail.length !== pend.toOffset - pend.offset) {
       row.verdict = 'REFUSED';
+      row.reason = 'TAIL_LENGTH';
       row.why = `the tail is ${tail.length} bytes but the ledger says it spans ${pend.offset}..${pend.toOffset}`;
       rows.push(row); continue;
     }
@@ -460,27 +564,38 @@ function planImport(o) {
     if (!fs.existsSync(dest)) {
       if (pend.offset === 0) { row.verdict = 'FULL'; rows.push(row); continue; }
       row.verdict = 'REFUSED';
+      row.reason = 'LOCAL_GONE';
       row.why = `this machine has no file for this seat, but the tail starts at ${pend.offset} — the far end's copy is gone, and a tail cannot rebuild it. Carry it whole: clear this seat from the ledger and export again.`;
       rows.push(row); continue;
     }
 
     const gate = settledStat(dest);
-    if (!gate.st) { row.verdict = 'REFUSED'; row.why = `destination will not settle — ${gate.why}`; rows.push(row); continue; }
+    if (!gate.st) { row.verdict = 'REFUSED'; row.reason = 'UNSETTLED'; row.why = `destination will not settle — ${gate.why}`; rows.push(row); continue; }
     const size = gate.st.size;
     row.size = size;
 
     const k = conversationKey(dest);
-    if (!k.key) { row.verdict = 'REFUSED'; row.why = `cannot key the destination — ${k.why}`; rows.push(row); continue; }
+    if (!k.key) { row.verdict = 'REFUSED'; row.reason = 'NO_KEY'; row.why = `cannot key the destination — ${k.why}`; rows.push(row); continue; }
     row.key = k.key;
+    row.keyLine = k.line;
 
     if (k.key !== entry.key) {
       row.verdict = retireFar.has(seat.sid) ? 'RETIRE_THEN_FULL' : 'REFUSED';
       row.why = retireFar.has(seat.sid)
-        ? 'this machine holds a DIFFERENT conversation under this sid; named on the command line, so it steps aside to a stamped path and the carried one takes its place'
+        ? 'this machine holds a DIFFERENT conversation under this sid; named on the command line, so it steps aside to the attic and the carried one takes its place'
         : `this machine holds a DIFFERENT conversation under this sid (key ${k.key.slice(0, 16)}… vs ${String(entry.key).slice(0, 16)}…). Nothing here can merge two conversations. To let the carried one take the seat, name it: --retire-far ${seat.sid}`;
       if (row.verdict === 'RETIRE_THEN_FULL' && pend.offset !== 0) {
         row.verdict = 'REFUSED';
         row.why = `this machine holds a different conversation AND the tail is a delta from ${pend.offset}; a delta cannot replace a conversation. Export this seat whole first.`;
+      }
+      if (row.verdict === 'REFUSED') {
+        row.reason = 'OTHER_CONVERSATION';
+        // `retirable` answers the one question the rehearsal's verdict could not: would naming this
+        // seat with --retire-far actually take it? Only a WHOLE carried conversation can replace one.
+        // Without this field, a caller that sees "DIFFERENT conversation" and re-runs with
+        // --retire-far meets a second refusal it could not have predicted — and `ARRIVING.ps1`,
+        // which reads the prose, does exactly that on a delta tail.
+        row.retirable = pend.offset === 0;
       }
       rows.push(row); continue;
     }
@@ -493,11 +608,13 @@ function planImport(o) {
     // mismatch, not by reading.
     if (entry.agreed && entry.agreed.offset !== pend.offset) {
       row.verdict = 'REFUSED';
+      row.reason = 'LEDGER_INCONSISTENT';
       row.why = `the ledger disagrees with itself: the agreed state ends at ${entry.agreed.offset} but the pending tail starts at ${pend.offset}. Nothing here can tell which is right.`;
       rows.push(row); continue;
     }
     if (size < pend.offset) {
       row.verdict = 'REFUSED';
+      row.reason = 'BEHIND';
       row.why = `this machine is BEHIND the agreed state (${size} < ${pend.offset}) — its copy was truncated or replaced since the last carry`;
       rows.push(row); continue;
     }
@@ -507,6 +624,7 @@ function planImport(o) {
       // The content check plan §8 bar (2) asks for. Kept, because a rewritten history is real and
       // this is the only thing that sees it.
       row.verdict = 'REFUSED';
+      row.reason = 'HISTORY_REWRITTEN';
       row.why = `this machine's copy DIVERGED inside the agreed prefix at offset ${pend.offset} — its history was rewritten, not appended to`;
       rows.push(row); continue;
     }
@@ -523,6 +641,7 @@ function planImport(o) {
       if (isPrefixOfTail && extra === row.tail.length) {
         const full = hashRange(dest, 0, size);
         row.verdict = full === pend.fullSha ? 'ALREADY_APPLIED' : 'REFUSED';
+        if (row.verdict === 'REFUSED') row.reason = 'APPLIED_BUT_DIFFERENT';
         row.why = full === pend.fullSha
           ? 'this tail is already here, whole and verified — nothing to do'
           : 'the destination holds all of the tail\'s bytes but its full sha256 does not match; something else changed the file';
@@ -586,15 +705,18 @@ function applyImport(plan, now) {
     const pend = row.pending;
     let asideTo = null;
 
+    const slug = place.encodeCwd(row.cwd);
     if (row.verdict === 'RETIRE_THEN_FULL') {
-      asideTo = asidePath(row.dest, 'retired', now);
+      asideTo = atticPath(plan.projectsRoot, slug, row.sid, 'retire-far', now);
+      fs.mkdirSync(path.dirname(asideTo), { recursive: true });
       fs.renameSync(row.dest, asideTo);
     }
     if (row.verdict === 'REPAIR') {
       // THE PRE-TRUNCATE COPY IS KEPT — plan §8 bar (5). Truncation is the one step here that can
-      // destroy bytes, so the bytes are somewhere else first, under a stamped name that no second
-      // run can land on.
-      asideTo = asidePath(row.dest, 'pre-truncate', now);
+      // destroy bytes, so the bytes are somewhere else first, in the attic, under a stamped name
+      // that no second run can land on.
+      asideTo = atticPath(plan.projectsRoot, slug, row.sid, 'pre-truncate', now);
+      fs.mkdirSync(path.dirname(asideTo), { recursive: true });
       fs.copyFileSync(row.dest, asideTo);
       fs.truncateSync(row.dest, pend.offset);
     }
@@ -637,16 +759,18 @@ function run(o) {
   const out = o.out || ((s) => console.log(s));
   const apply = !!o.apply;
   const now = o.now || Date.now();
-  const no = (why, detail, code) => {
+  // Every way this command can decline to run at all is EXIT.RAN_NOT: nothing was read about any seat
+  // and nothing was written, so `rows` is empty and the caller has no seat to reason about.
+  const no = (why, detail, outcome) => {
     out('');
     out(`REFUSED — ${why}`);
     for (const d of [].concat(detail || [])) out('  ' + d);
-    return { ok: false, code: code === undefined ? 1 : code, why };
+    return { ok: false, code: EXIT.RAN_NOT, outcome: outcome || 'CANNOT_RUN', why };
   };
 
-  if (!o.stick) return no('no stick named', ['--stick <path>'], 2);
-  if (!fs.existsSync(o.stick)) return no(`no such stick: ${o.stick}`, [], 2);
-  if (o.mode !== 'export' && o.mode !== 'import') return no('say which direction', ['--export (from this machine) or --import (onto this machine)'], 2);
+  if (!o.stick) return no('no stick named', ['--stick <path>']);
+  if (!fs.existsSync(o.stick)) return no(`no such stick: ${o.stick}`, []);
+  if (o.mode !== 'export' && o.mode !== 'import') return no('say which direction', ['--export (from this machine) or --import (onto this machine)']);
 
   const machine = o.machine || sync.machineTag();
   out(`tail-carry · ${o.mode.toUpperCase()} · machine ${machine} · ${o.stick}${apply ? '' : '   [rehearsal — nothing will be written]'}`);
@@ -664,20 +788,20 @@ function run(o) {
   // tail on a stick. `consonanceRunning` is `place-conversations.js`'s, not a second copy.
   if (o.mode === 'import' && apply) {
     const running = o.appRunning !== undefined ? o.appRunning : place.consonanceRunning();
-    if (running === null) return no('cannot tell whether Consonance is running', ['`tasklist` could not be run, so "the app is closed" cannot be certified, and an import writes into files the app holds open.']);
+    if (running === null) return no('cannot tell whether Consonance is running', ['`tasklist` could not be run, so "the app is closed" cannot be certified, and an import writes into files the app holds open.'], 'APP_RUNNING');
     if (running) {
       return no('Consonance is running', [
         'An import appends to transcripts the app has open. Its writer would then append after these',
         'bytes, and the seat would not know. Close the app and run the import again.',
         'The REHEARSAL and the EXPORT do not need it closed — they only read.',
-      ]);
+      ], 'APP_RUNNING');
     }
   }
 
   let plan;
   try { plan = o.mode === 'export' ? planExport({ ...o, machine }) : planImport({ ...o, machine }); }
-  catch (e) { return no(e.message, [], 2); }
-  if (!plan.ok) return no(plan.why, plan.detail, plan.code);
+  catch (e) { return no(e.message, []); }
+  if (!plan.ok) return no(plan.why, plan.detail);
 
   let carry = 0, refused = 0;
   out('');
@@ -693,16 +817,20 @@ function run(o) {
       if (r.verdict === 'FULL') { out(`                   this machine has no file; the tail IS the conversation`); carry += r.tail.length; }
     }
     if (r.why) for (const line of String(r.why).match(/.{1,96}(\s|$)/g) || [r.why]) out(`                   ${line.trim()}`);
-    if (['REFUSED', 'DIVERGED', 'ABSENT_HERE'].includes(r.verdict)) refused++;
+    // INTERRUPTED was missing from this list until 2026-09-14, so a rehearsal over an interrupted
+    // carry exited 0 — "nothing to decide" — over a seat that had not carried and needed --repair.
+    if (STOPS.includes(r.verdict)) refused++;
   }
 
   out('');
   out(`  ${carry} bytes (${mb(carry)}) would ${o.mode === 'export' ? 'go onto the stick' : 'be appended here'} · ${refused} seat(s) refused`);
 
+  const wouldCarry = plan.rows.some((r) => CARRIES[o.mode].includes(r.verdict));
   if (!apply) {
     out('');
     out('  Rehearsal only. Nothing was written. Add --apply to do it.');
-    return { ok: refused === 0, code: refused ? 1 : 0, plan };
+    const outcome = refused ? 'STOPPED' : (wouldCarry ? 'REHEARSED' : 'NOTHING_TO_DO');
+    return { ok: refused === 0, code: refused ? EXIT.SEAT : EXIT.OK, outcome, why: null, plan };
   }
 
   const done = o.mode === 'export' ? applyExport(plan, now) : applyImport(plan, now);
@@ -718,31 +846,149 @@ function run(o) {
   }
   if (!done.length) out('  nothing to write.');
   if (done.receipt) out(`  receipt ${done.receipt}  (the launch keeps these conversations through a migrate)`);
-  return { ok: bad === 0 && refused === 0, code: (bad || refused) ? 1 : 0, plan, done };
+  const outcome = bad ? 'FAILED' : refused ? 'STOPPED' : done.some((d) => d.ok) ? 'CARRIED' : 'NOTHING_TO_DO';
+  return { ok: bad === 0 && refused === 0, code: (bad || refused) ? EXIT.SEAT : EXIT.OK, outcome, why: null, plan, done };
 }
 
-function main(argv) {
-  const o = { mode: null, stick: null, apply: false, retireFar: [], repair: [] };
+/** First timestamp of a key line, or null. */
+function lineTimestamp(line) {
+  if (!line) return null;
+  try { const o = JSON.parse(line); return typeof o.timestamp === 'string' ? o.timestamp : null; } catch (_) { return null; }
+}
+
+/**
+ * THE --json PROJECTION. Every row has EVERY field below, every time — `null` where it does not
+ * apply, never absent. A field that is sometimes missing is a field a caller has to guess about,
+ * and the internal rows carry things that must not cross a process boundary at all (`tail` is a
+ * Buffer holding the carried bytes; `entry` is the whole ledger record).
+ *
+ *   seat, sid, kind            who. `kind` is "fixed" or "pane" — the app's retire rule forks on it.
+ *   verdict                    one of the verdicts in the packet's §2, per direction
+ *   reason                     non-null EXACTLY when verdict is REFUSED; one of REASONS
+ *   why                        prose for a human; never branch on it
+ *   stops                      true for REFUSED, DIVERGED, INTERRUPTED, ABSENT_HERE: this seat will
+ *                              not carry and needs a decision
+ *   carries                    true when this seat moves bytes (or, in a rehearsal, would)
+ *   bytes                      bytes this seat carries; 0 when it does not
+ *   offset, toOffset           the byte span of the tail, or null when there is none to name
+ *   path                       this machine's transcript for the seat: the source on export, the
+ *                              destination on import
+ *   localSize                  that file's size, or null when it does not exist or was not read
+ *   localFirstTimestamp        that file's first record carrying a "timestamp", or null
+ *   exportedAt, exportedFrom   import only: when and by which machine the pending tail was exported
+ *   retirable                  import OTHER_CONVERSATION only: whether --retire-far would take it.
+ *                              null on every other row.
+ *   result                     --apply only, and only for a seat that was written:
+ *                              { ok, why, size, sha256, aside, tailFile }
+ *
+ * ARRIVING.ps1's retire rule needs exactly `kind`, `reason`, `retirable`, `localFirstTimestamp` and
+ * `exportedAt`, and until now it had to scrape two of them out of wrapped prose and re-read the other
+ * two from the disk by a recursive search that is not guaranteed to open the file this tool judged.
+ */
+function toJson(res, o) {
+  const mode = o.mode === 'export' || o.mode === 'import' ? o.mode : null;
+  const plan = res.plan;
+  const done = res.done || [];
+  const bySid = new Map(done.map((d) => [d.row.sid, d]));
+  const rows = !plan ? [] : plan.rows.map((r) => {
+    const carries = CARRIES[mode].includes(r.verdict);
+    const pend = mode === 'import' ? (r.pending || null) : null;
+    let bytes = 0, offset = null, toOffset = null;
+    if (mode === 'export' && carries) { bytes = r.bytes; offset = r.offset; toOffset = r.size; }
+    if (mode === 'import' && pend) { offset = pend.offset; toOffset = pend.toOffset; if (carries) bytes = r.tail.length; }
+    const d = bySid.get(r.sid);
+    return {
+      seat: r.seat,
+      sid: r.sid,
+      kind: r.kind,
+      verdict: r.verdict,
+      reason: r.verdict === 'REFUSED' ? (r.reason || null) : null,
+      why: r.why || null,
+      stops: STOPS.includes(r.verdict),
+      carries,
+      bytes,
+      offset,
+      toOffset,
+      path: mode === 'export' ? r.src : r.dest,
+      localSize: typeof r.size === 'number' ? r.size : null,
+      localFirstTimestamp: lineTimestamp(r.keyLine),
+      exportedAt: pend ? (pend.at || null) : null,
+      exportedFrom: pend ? (pend.from || null) : null,
+      retirable: mode === 'import' && r.verdict === 'REFUSED' && r.reason === 'OTHER_CONVERSATION' ? !!r.retirable : null,
+      result: !d ? null : mode === 'export'
+        ? { ok: d.ok, why: d.why || null, size: d.ok ? d.row.size : null, sha256: d.fullSha || null, aside: null, tailFile: d.name || null }
+        : { ok: d.ok, why: d.why || null, size: typeof d.size === 'number' ? d.size : null, sha256: d.full || null, aside: d.asideTo || null, tailFile: null },
+    };
+  });
+  return {
+    tool: 'tail-carry',
+    contract: CONTRACT_VERSION,
+    mode,
+    apply: !!o.apply,
+    machine: plan ? plan.machine : null,
+    stick: o.stick || null,
+    code: res.code,
+    outcome: res.outcome,
+    why: res.why || null,
+    rows,
+    receipt: (done && done.receipt) || null,
+  };
+}
+
+/**
+ * The command line. `io` is injectable so a test can capture both streams without spawning.
+ *
+ * **In --json mode NOTHING reaches stdout except the one object**: every human line goes to stderr,
+ * a bad argument still produces an object (code 2), and an exception nobody anticipated still
+ * produces an object (code 3) instead of a stack trace and an exit 1 that reads like "a seat stopped".
+ * `--json` is found by a pre-scan, so it governs the output even when the argument that fails comes
+ * before it. `--help` is the one exception: it is not a run, it prints usage, and a program never asks.
+ */
+function main(argv, io, fixture) {
+  io = io || { stdout: (s) => process.stdout.write(s), stderr: (s) => process.stderr.write(s) };
+  const json = argv.includes('--json');
+  const human = (s) => (json ? io.stderr : io.stdout)(`${s}\n`);
+  // `fixture` is a TEST SEAM, named rather than buried — the same shape as close.js's injected
+  // privacy check and place-conversations.js's injected apply. It carries the fixture machine's roots
+  // and `appRunning` so the real argument parsing and the real stdout discipline can be exercised
+  // against a fake machine. The CLI never passes it; there is no flag and no environment variable.
+  const o = Object.assign({ mode: null, stick: null, apply: false, retireFar: [], repair: [], json, out: human }, fixture || {});
+  const finish = (res) => {
+    if (json) io.stdout(`${JSON.stringify(toJson(res, o))}\n`);
+    return res.code;
+  };
+
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--export') o.mode = 'export';
     else if (a === '--import') o.mode = 'import';
     else if (a === '--stick') o.stick = argv[++i];
     else if (a === '--apply') o.apply = true;
+    else if (a === '--json') { /* found by the pre-scan */ }
     else if (a === '--retire-far') o.retireFar.push(argv[++i]);
     else if (a === '--repair') o.repair.push(argv[++i]);
     else if (a === '--help' || a === '-h') {
-      console.log('node dev/tail-carry.js --stick <path> (--export|--import) [--apply] [--repair <sid>] [--retire-far <sid>]');
+      io.stdout('node dev/tail-carry.js --stick <path> (--export|--import) [--apply] [--repair <sid>] [--retire-far <sid>] [--json]\n');
       return 0;
-    } else { console.error(`unknown argument: ${a}`); return 2; }
+    } else {
+      io.stderr(`unknown argument: ${a}\n`);
+      return finish({ code: EXIT.RAN_NOT, outcome: 'CANNOT_RUN', why: `unknown argument: ${a}` });
+    }
   }
-  return run(o).code;
+
+  let res;
+  try { res = run(o); }
+  catch (e) {
+    io.stderr(`CRASHED — ${e && e.stack ? e.stack : e}\n`);
+    res = { code: EXIT.CRASHED, outcome: 'CRASHED', why: String(e && e.message ? e.message : e) };
+  }
+  return finish(res);
 }
 
 if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
-  settledStat, hashRange, readRange, conversationKey, seats, readLedger, writeLedger, asidePath,
-  planExport, applyExport, planImport, applyImport, run, main, sha256, stamp, carriedPath, writeCarried,
-  LEDGER_DIR, LEDGER_NAME, LEDGER_VERSION,
+  settledStat, hashRange, readRange, conversationKey, seats, readLedger, writeLedger, atticPath, atticStamp,
+  planExport, applyExport, planImport, applyImport, run, main, toJson, sha256, stamp, carriedPath, writeCarried,
+  LEDGER_DIR, LEDGER_NAME, LEDGER_VERSION, CONTRACT_VERSION, EXIT, REASONS, STOPS, CARRIES,
 };

@@ -1118,3 +1118,28 @@ Consonance runs; the export does not, because it only reads.
 **Decided explicitly rather than inherited:** the live file travels, orphans and strangers stay — an
 orphan is already a retirement, it has a different key by construction, and the main slug alone holds
 2,390 files that are not seats. Filed with its own falsifier.
+
+## 2026-09-14 — P-STICK (L058) · A: the contract I was handed could not carry the launch, so I amended it before E built on it
+
+Hand-back at `exo_memory/handback/p-stick-A_2026-09-14.md`. `dev/tail-carry.js` gains `--json` (one line, one
+object, even on a bad argument or a crash), an `EXIT` table beside the codes (0 ran-clean / 1 a seat did not
+carry / 2 did not run / 3 broke part-way), 13 `REASONS` on every REFUSED row, and ONE RETIREMENT ADDRESS —
+`consonance-attic/<slug>/<sid>.<local stamp>-<why>.jsonl`, attic_for's shape. Tests 47 → 71, mutants 28 → 44,
+**44 / 0 / 0 on the first run**, so I ran positive controls by hand and each killed the test it should.
+Uncommitted; no `--apply` against the real stick.
+
+**THE DRAFT'S IMPORT VERDICT LIST WAS WRONG BOTH WAYS** — `TAIL` never happens on import, and six real
+verdicts were missing, `DIVERGED` among them, the fork the carry exists to refuse. `REFUSED` meant thirteen
+things and the retire rule's one was only prose. Fixed in §2 without inventing a verdict: `reason`, plus
+`retirable`, because on a delta tail `--retire-far` refuses AGAIN and nothing a caller reads predicts it.
+E asked in its own §6 for `kind`, the exact file, `pending.at`, and a reason code — I had built all four from
+`ARRIVING.ps1` before opening E's hand-back.
+
+**A REFUSED ROW STOPS ONLY ITS SEAT** — with `--apply` the others carry and the run exits 1. Two latent bugs
+found by building the contract: an INTERRUPTED carry exited 0 ("nothing to decide" over a seat that had not
+arrived), and an exception mid-apply exited 1, reading as a refusal when something had been written.
+
+**AND I BROKE MY OWN TEST FILE** — `String.replace` expanded `` $` `` in my replacement into the file's head.
+Restored from HEAD, re-applied with a function replacement, diff re-checked. Then shell escaping ate a `\d`.
+Stopped scripting edits through the shell. One in-place retirement exists on L (the launch-born librarian,
+942,565 B) — named, left where it is.

@@ -96,6 +96,14 @@ function go(m, mode, extra) {
 }
 const rowFor = (r, sid) => r.plan.rows.find((x) => x.sid === (sid || SID));
 
+/** Where this fixture machine's attic keeps a seat — the shape `sync_launch::attic_for` writes. */
+const atticDir = (m) => path.join(path.dirname(m.projectsRoot), 'consonance-attic', place.encodeCwd(m.cwd));
+const ATTIC_NAME = (why) => new RegExp(`^${SID}\\.\\d{8}-\\d{6}-${why}(-\\d+)?\\.jsonl$`);
+const inAttic = (m, why) => (fs.existsSync(atticDir(m)) ? fs.readdirSync(atticDir(m)) : [])
+  .filter((f) => ATTIC_NAME(why).test(f));
+/** Anything a retirement left beside the live transcript — which is exactly what must not exist now. */
+const besideLive = (m) => fs.readdirSync(path.dirname(m.dest)).filter((f) => f !== path.basename(m.dest));
+
 /** Every file under a root, with size, mtime and sha — the "nothing moved" instrument. */
 function snapshot(root) {
   const out = {};
@@ -403,19 +411,35 @@ test('the repair keeps the pre-truncate copy', () => {
   const torn = v2.slice(0, half);
   write(w.L, torn);
   go(w.L, 'import', { apply: true, repair: [SID] });
-  const dir = path.dirname(w.L.dest);
-  const kept = fs.readdirSync(dir).filter((f) => f.includes('.pre-truncate-'));
-  assert.strictEqual(kept.length, 1, `expected one pre-truncate copy, found ${kept.join(', ')}`);
-  assert.strictEqual(fs.readFileSync(path.join(dir, kept[0]), 'utf8'), torn);
+  // CHANGED 2026-09-14 (P-STICK §2): the kept copy lives in the ATTIC now, not beside the live file.
+  // This test used to assert the in-place name; the packet changed the requirement, not the test's rigour.
+  const kept = inAttic(w.L, 'pre-truncate');
+  assert.strictEqual(kept.length, 1, `expected one pre-truncate copy in the attic, found ${kept.join(', ')}`);
+  assert.strictEqual(fs.readFileSync(path.join(atticDir(w.L), kept[0]), 'utf8'), torn);
+  assert.deepStrictEqual(besideLive(w.L), [], 'nothing may be left beside the live transcript');
 });
 
-test('asidePath never returns a name that already exists — the main.rs:835-836 scar', () => {
-  const dest = path.join(tmp, 'x', 'y.jsonl');
+test('atticPath never returns a name that already exists — the main.rs:835-836 scar', () => {
+  const root = path.join(tmp, 'x', '.claude', 'projects');
   const now = Date.parse('2026-09-12T10:15:00.000Z');
-  const taken = new Set([`${dest}.pre-truncate-20260912T101500Z`, `${dest}.pre-truncate-20260912T101500Z-2`]);
-  assert.strictEqual(T.asidePath(dest, 'pre-truncate', now, (q) => taken.has(q)),
-    `${dest}.pre-truncate-20260912T101500Z-3`);
-  assert.strictEqual(T.asidePath(dest, 'retired', now, () => false), `${dest}.retired-20260912T101500Z`);
+  const st = T.atticStamp(now);
+  const dir = path.join(tmp, 'x', '.claude', 'consonance-attic', 'C--slug');
+  const taken = new Set([path.join(dir, `${SID}.${st}-pre-truncate.jsonl`), path.join(dir, `${SID}.${st}-pre-truncate-2.jsonl`)]);
+  assert.strictEqual(T.atticPath(root, 'C--slug', SID, 'pre-truncate', now, (q) => taken.has(q)),
+    path.join(dir, `${SID}.${st}-pre-truncate-3.jsonl`));
+});
+
+test('atticPath is attic_for\'s shape: <.claude>/consonance-attic/<slug>/<sid>.<YYYYMMDD-HHMMSS>-<why>.jsonl', () => {
+  const root = path.join(tmp, 'y', '.claude', 'projects');
+  const p = T.atticPath(root, 'C--Consonance-instances-librarian', SID, 'retire-far', Date.now(), () => false);
+  assert.strictEqual(path.dirname(p), path.join(tmp, 'y', '.claude', 'consonance-attic', 'C--Consonance-instances-librarian'));
+  assert.match(path.basename(p), ATTIC_NAME('retire-far'));
+  assert.doesNotMatch('x.jsonl.retired-20260914T063637Z', ATTIC_NAME('retire-far'), 'the shape test must be able to fail');
+});
+
+test('atticStamp is LOCAL YYYYMMDD-HHMMSS, the format main.rs hands attic_for', () => {
+  const d = new Date(2026, 8, 14, 0, 36, 37);            // local, by construction
+  assert.strictEqual(T.atticStamp(d.getTime()), '20260914-003637');
 });
 
 test('a ledger whose pending tail does not start at the agreed state is refused, not half-trusted', () => {
@@ -477,9 +501,22 @@ test('--retire-far moves the far copy aside, keeps it, and only then writes the 
   const r = go(w.L, 'import', { apply: true, retireFar: [SID] });
   assert.strictEqual(rowFor(r).verdict, 'RETIRE_THEN_FULL', r.text);
   assert.strictEqual(fs.readFileSync(w.L.dest, 'utf8'), mine);
-  const kept = fs.readdirSync(path.dirname(w.L.dest)).filter((f) => f.includes('.retired-'));
-  assert.strictEqual(kept.length, 1);
-  assert.strictEqual(fs.readFileSync(path.join(path.dirname(w.L.dest), kept[0]), 'utf8'), theirs);
+  // CHANGED 2026-09-14 (P-STICK §2): retired into the attic in attic_for's shape, never beside the live file.
+  const kept = inAttic(w.L, 'retire-far');
+  assert.strictEqual(kept.length, 1, `expected one retirement in ${atticDir(w.L)}, found ${kept.join(', ')}`);
+  assert.strictEqual(fs.readFileSync(path.join(atticDir(w.L), kept[0]), 'utf8'), theirs);
+});
+
+test('a --retire-far lands under consonance-attic/<slug>/ and NOT beside the live file', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'launchborn'));
+  go(w.D, 'export', { apply: true });
+  const r = go(w.L, 'import', { apply: true, retireFar: [SID] });
+  assert.strictEqual(rowFor(r).verdict, 'RETIRE_THEN_FULL', r.text);
+  assert.deepStrictEqual(besideLive(w.L), [], 'the projects/ directory must hold only the live transcript');
+  assert.strictEqual(inAttic(w.L, 'retire-far').length, 1);
+  assert.match(r.text, /consonance-attic/, 'the run must say where the retired conversation went');
 });
 
 test('--retire-far is refused when the tail is a delta, because a delta cannot replace a conversation', () => {
@@ -707,6 +744,334 @@ test('the rehearsal shows the byte count that makes the tail worth having', () =
   const r = go(w.D, 'export');
   assert.match(r.text, /TAIL/);
   assert.match(r.text, /from offset \d+ of \d+  ->  \d+ B/);
+});
+
+// ══ THE --json CONTRACT (P-STICK, L058) ══════════════════════════════════════════════════════
+//
+// These go through `main` — the real argument parser and the real stdout discipline — with only the
+// fixture machine's roots injected. A test of `toJson` alone would pass while `main` printed a
+// banner above the object, which is the failure an app reading stdout would actually meet.
+
+const FIELDS = ['seat', 'sid', 'kind', 'verdict', 'reason', 'why', 'stops', 'carries', 'bytes', 'offset',
+  'toOffset', 'path', 'localSize', 'localFirstTimestamp', 'exportedAt', 'exportedFrom', 'retirable', 'result'];
+const TOP = ['tool', 'contract', 'mode', 'apply', 'machine', 'stick', 'code', 'outcome', 'why', 'rows', 'receipt'];
+
+/** Run main with --json against a fixture machine; return the parsed object, the raw streams, the code. */
+function J(m, argv, extra) {
+  let stdout = '', stderr = '';
+  const code = T.main(argv.concat(['--json']), { stdout: (s) => { stdout += s; }, stderr: (s) => { stderr += s; } },
+    Object.assign({ machine: m.machine, appRunning: false, projectsRoot: m.projectsRoot,
+      instancesRoot: m.instancesRoot, panesPath: m.panesPath }, extra || {}));
+  const lines = stdout.split('\n');
+  assert.strictEqual(lines.length, 2, `stdout must be ONE line plus its newline; got ${lines.length - 1} line(s):\n${stdout.slice(0, 400)}`);
+  assert.strictEqual(lines[1], '', 'nothing may follow the object on stdout');
+  const obj = JSON.parse(lines[0]);
+  return { obj, code, stdout, stderr };
+}
+const Jrow = (res, sid) => res.obj.rows.find((x) => x.sid === (sid || SID));
+
+/** The field set, the types, and the REFUSED<->reason rule, checked on every row of every object. */
+function wellFormed(obj) {
+  assert.deepStrictEqual(Object.keys(obj).sort(), [...TOP].sort(), 'top-level fields');
+  assert.strictEqual(obj.contract, T.CONTRACT_VERSION);
+  for (const r of obj.rows) {
+    assert.deepStrictEqual(Object.keys(r).sort(), [...FIELDS].sort(), `row ${r.verdict} must carry every field, null where n/a`);
+    assert.ok(['fixed', 'pane'].includes(r.kind), `kind ${r.kind}`);
+    assert.strictEqual(r.reason !== null, r.verdict === 'REFUSED', `reason is non-null EXACTLY on REFUSED (${r.verdict}/${r.reason})`);
+    if (r.reason !== null) assert.ok(T.REASONS.includes(r.reason), `unknown reason ${r.reason}`);
+    assert.strictEqual(r.stops, T.STOPS.includes(r.verdict));
+    assert.strictEqual(typeof r.bytes, 'number');
+    if (!r.carries) assert.strictEqual(r.bytes, 0, 'a seat that does not carry carries 0 bytes');
+    if (r.retirable !== null) assert.strictEqual(r.reason, 'OTHER_CONVERSATION');
+  }
+  assert.doesNotMatch(JSON.stringify(obj), /"type":"Buffer"/, 'the carried bytes must never cross the process boundary');
+}
+
+test('--json: every EXPORT verdict path emits one well-formed object', () => {
+  const seen = new Set();
+  // NOTHING_YET
+  let w = world();
+  let r = J(w.D, ['--stick', w.stick, '--export']); wellFormed(r.obj); seen.add(Jrow(r).verdict);
+  // FULL (rehearsal) then FULL (--apply)
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  r = J(w.D, ['--stick', w.stick, '--export']); wellFormed(r.obj); seen.add(Jrow(r).verdict);
+  r = J(w.D, ['--stick', w.stick, '--export', '--apply']); wellFormed(r.obj);
+  assert.strictEqual(Jrow(r).result.ok, true);
+  assert.match(Jrow(r).result.tailFile, /\.tail$/);
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  // UP_TO_DATE
+  r = J(w.D, ['--stick', w.stick, '--export']); wellFormed(r.obj); seen.add(Jrow(r).verdict);
+  // TAIL
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']) + turns(SID, ['2026-09-12T04:20:00.000Z'], 'd'));
+  r = J(w.D, ['--stick', w.stick, '--export']); wellFormed(r.obj); seen.add(Jrow(r).verdict);
+  // REFUSED (SHRANK)
+  write(w.D, head(SID));
+  r = J(w.D, ['--stick', w.stick, '--export']); wellFormed(r.obj); seen.add(Jrow(r).verdict);
+  // ABSENT_HERE
+  fs.unlinkSync(w.D.dest);
+  r = J(w.D, ['--stick', w.stick, '--export']); wellFormed(r.obj); seen.add(Jrow(r).verdict);
+  assert.deepStrictEqual([...seen].sort(), ['ABSENT_HERE', 'FULL', 'NOTHING_YET', 'REFUSED', 'TAIL', 'UP_TO_DATE']);
+});
+
+test('--json: every IMPORT verdict path emits one well-formed object', () => {
+  const seen = new Set();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  let w = world();
+  let r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);        // NOTHING_PENDING
+  write(w.D, v1); J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  r = J(w.D, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // OURS
+  r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // FULL
+  r = J(w.L, ['--stick', w.stick, '--import', '--apply']); wellFormed(r.obj);
+  assert.strictEqual(Jrow(r).result.ok, true);
+  const v2 = v1 + turns(SID, ['2026-09-12T04:20:00.000Z', '2026-09-12T04:21:00.000Z'], 'd');
+  write(w.D, v2); J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // APPEND
+  const half = v1.length + Math.floor((v2.length - v1.length) / 2);
+  write(w.L, v2.slice(0, half));
+  r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // INTERRUPTED
+  r = J(w.L, ['--stick', w.stick, '--import', '--repair', SID]); wellFormed(r.obj); seen.add(Jrow(r).verdict); // REPAIR
+  write(w.L, v2);
+  r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // ALREADY_APPLIED
+  write(w.L, v1 + turns(SID, ['2026-09-12T09:00:00.000Z'], 'l'));
+  r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // DIVERGED
+  // REFUSED and RETIRE_THEN_FULL on a fresh world, where the tail is whole
+  w = world();
+  write(w.D, v1); write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  r = J(w.L, ['--stick', w.stick, '--import']); wellFormed(r.obj); seen.add(Jrow(r).verdict);            // REFUSED
+  r = J(w.L, ['--stick', w.stick, '--import', '--retire-far', SID]); wellFormed(r.obj); seen.add(Jrow(r).verdict); // RETIRE_THEN_FULL
+  r = J(w.L, ['--stick', w.stick, '--import', '--retire-far', SID, '--apply']); wellFormed(r.obj);
+  assert.match(Jrow(r).result.aside, /consonance-attic/, 'result.aside names the attic address');
+  assert.deepStrictEqual([...seen].sort(),
+    ['ALREADY_APPLIED', 'APPEND', 'DIVERGED', 'FULL', 'INTERRUPTED', 'NOTHING_PENDING', 'OURS', 'REFUSED', 'REPAIR', 'RETIRE_THEN_FULL']);
+});
+
+test('--json: stderr carries the human lines, stdout carries none of them', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  const r = J(w.D, ['--stick', w.stick, '--export']);
+  assert.match(r.stderr, /tail-carry · EXPORT/);
+  assert.doesNotMatch(r.stdout, /tail-carry · EXPORT|Rehearsal only/);
+});
+
+test('--json: a bad argument still produces ONE object, code 2, whichever side of --json it is on', () => {
+  const w = world();
+  for (const argv of [['--yolo', '--stick', w.stick], ['--stick', w.stick, '--yolo']]) {
+    const r = J(w.D, argv);
+    assert.strictEqual(r.code, T.EXIT.RAN_NOT);
+    assert.strictEqual(r.obj.code, 2);
+    assert.strictEqual(r.obj.outcome, 'CANNOT_RUN');
+    assert.deepStrictEqual(r.obj.rows, []);
+    wellFormed(r.obj);
+  }
+});
+
+// ── the exit codes: one test per code, each through the object AND the return value ──
+
+test('exit 0 · NOTHING_TO_DO — a rehearsal with nothing to carry', () => {
+  const w = world();
+  const r = J(w.L, ['--stick', w.stick, '--import']);
+  assert.deepStrictEqual([r.code, r.obj.code, r.obj.outcome], [0, 0, 'NOTHING_TO_DO']);
+});
+
+test('exit 0 · REHEARSED — a rehearsal that would carry, and nothing stops', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  const r = J(w.D, ['--stick', w.stick, '--export']);
+  assert.deepStrictEqual([r.code, r.obj.code, r.obj.outcome], [0, 0, 'REHEARSED']);
+});
+
+test('exit 0 · CARRIED — an --apply that carried and verified whole', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.deepStrictEqual([r.code, r.obj.code, r.obj.outcome], [0, 0, 'CARRIED']);
+});
+
+test('exit 1 · STOPPED — a seat refused', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const r = J(w.L, ['--stick', w.stick, '--import']);
+  assert.deepStrictEqual([r.code, r.obj.code, r.obj.outcome], [1, 1, 'STOPPED']);
+});
+
+test('exit 1 · STOPPED — an INTERRUPTED carry stops the rehearsal (it used to exit 0)', () => {
+  const w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  write(w.D, v1);
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  const v2 = v1 + turns(SID, ['2026-09-12T04:20:00.000Z', '2026-09-12T04:21:00.000Z'], 'd');
+  write(w.D, v2);
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  write(w.L, v2.slice(0, v1.length + 10));
+  const r = J(w.L, ['--stick', w.stick, '--import']);
+  assert.strictEqual(Jrow(r).verdict, 'INTERRUPTED');
+  assert.strictEqual(Jrow(r).stops, true);
+  assert.deepStrictEqual([r.code, r.obj.outcome], [1, 'STOPPED'], 'a seat that has not carried is not "nothing to decide"');
+});
+
+test('exit 1 · FAILED — a seat was written but did not verify whole', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const led = T.readLedger(w.stick);
+  led.seats[SID].pending.fullSha = 'f'.repeat(64);
+  T.writeLedger(w.stick, led);
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.deepStrictEqual([r.code, r.obj.code, r.obj.outcome], [1, 1, 'FAILED']);
+  assert.strictEqual(Jrow(r).result.ok, false);
+  assert.ok(Jrow(r).result.why);
+});
+
+test('exit 2 · CANNOT_RUN — no such stick; nothing read, no rows', () => {
+  const w = world();
+  const r = J(w.D, ['--stick', path.join(w.dir, 'not-a-stick'), '--export']);
+  assert.deepStrictEqual([r.code, r.obj.code, r.obj.outcome, r.obj.rows.length], [2, 2, 'CANNOT_RUN', 0]);
+  assert.match(r.obj.why, /no such stick/);
+});
+
+test('exit 2 · APP_RUNNING — an --import --apply while Consonance runs; nothing read, no rows', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  for (const running of [true, null]) {
+    const r = J(w.L, ['--stick', w.stick, '--import', '--apply'], { appRunning: running });
+    assert.deepStrictEqual([r.code, r.obj.code, r.obj.outcome, r.obj.rows.length], [2, 2, 'APP_RUNNING', 0], `appRunning=${running}`);
+  }
+  assert.strictEqual(fs.existsSync(w.L.dest), false);
+});
+
+test('exit 3 · CRASHED — an exception mid-apply still produces ONE object, and says it may be partly written', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  // a broken receipt throws, loudly, AFTER the seat has been written — the real partial case
+  const receipt = T.carriedPath(w.L.projectsRoot);
+  fs.mkdirSync(path.dirname(receipt), { recursive: true });
+  fs.writeFileSync(receipt, '{ this is not json');
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.deepStrictEqual([r.code, r.obj.code, r.obj.outcome], [3, 3, 'CRASHED']);
+  assert.ok(r.obj.why);
+  assert.match(r.stderr, /CRASHED/);
+});
+
+test('the process exit status IS the code — checked on a real child, not on a return value', () => {
+  const run = (args) => { try { execFileSync(process.execPath, [TOOL, ...args], { stdio: 'pipe' }); return 0; } catch (e) { return e.status; } };
+  assert.strictEqual(run(['--stick', path.join(tmp, 'nope'), '--export', '--json']), 2);
+  let out = '';
+  try { execFileSync(process.execPath, [TOOL, '--stick', path.join(tmp, 'nope'), '--export', '--json'], { stdio: 'pipe' }); }
+  catch (e) { out = String(e.stdout); }
+  const o = JSON.parse(out);
+  assert.strictEqual(o.code, 2);
+});
+
+// ── what the app's retire rule reads ──
+
+test('a REFUSED row stops ONLY its own seat: the other seat carries in the same --apply run', () => {
+  const OTHER = 'bbbbbbbb-2222-4222-8222-222222222222';
+  const w = world();
+  for (const m of [w.D, w.L]) {
+    fs.writeFileSync(m.panesPath, JSON.stringify([
+      { pane: SID, cwd: m.cwd, label: 'x' },
+      { pane: OTHER, cwd: path.join(m.instancesRoot, 'sibling-y'), label: 'y' },
+    ]));
+  }
+  const otherDest = (m) => place.paneJsonl(m.projectsRoot, path.join(m.instancesRoot, 'sibling-y'), OTHER);
+  const put = (p, body) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, body); const t = new Date(Date.now() - 60_000); fs.utimesSync(p, t, t); };
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  put(otherDest(w.D), conversation(OTHER, ['2026-09-09T15:00:00.000Z'], 'o'));
+  write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));       // SID will refuse on L
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.strictEqual(Jrow(r, SID).verdict, 'REFUSED');
+  assert.strictEqual(Jrow(r, SID).result, null, 'the refused seat was not written');
+  assert.strictEqual(Jrow(r, OTHER).verdict, 'FULL');
+  assert.strictEqual(Jrow(r, OTHER).result.ok, true, 'the other seat DID carry — the documented, per-seat behaviour');
+  assert.ok(fs.existsSync(otherDest(w.L)));
+  assert.deepStrictEqual([r.code, r.obj.outcome], [1, 'STOPPED']);
+});
+
+test('FAILED wins over STOPPED when one seat refused and another failed its verification', () => {
+  const OTHER = 'cccccccc-3333-4333-8333-333333333333';
+  const w = world();
+  for (const m of [w.D, w.L]) {
+    fs.writeFileSync(m.panesPath, JSON.stringify([
+      { pane: SID, cwd: m.cwd, label: 'x' },
+      { pane: OTHER, cwd: path.join(m.instancesRoot, 'sibling-z'), label: 'z' },
+    ]));
+  }
+  const otherDest = (m) => place.paneJsonl(m.projectsRoot, path.join(m.instancesRoot, 'sibling-z'), OTHER);
+  const put = (p, body) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, body); const t = new Date(Date.now() - 60_000); fs.utimesSync(p, t, t); };
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  put(otherDest(w.D), conversation(OTHER, ['2026-09-09T15:00:00.000Z'], 'o'));
+  write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));       // SID refuses on L
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const led = T.readLedger(w.stick);
+  led.seats[OTHER].pending.fullSha = 'f'.repeat(64);                         // OTHER will fail its verify
+  T.writeLedger(w.stick, led);
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.strictEqual(Jrow(r, SID).stops, true);
+  assert.strictEqual(Jrow(r, OTHER).result.ok, false);
+  assert.deepStrictEqual([r.code, r.obj.outcome], [1, 'FAILED'], 'a written-but-wrong seat is the worse news and must be the one named');
+});
+
+test('retirable is true for a different conversation when the carried tail is whole', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const row = Jrow(J(w.L, ['--stick', w.stick, '--import']));
+  assert.deepStrictEqual([row.verdict, row.reason, row.retirable], ['REFUSED', 'OTHER_CONVERSATION', true]);
+});
+
+test('retirable is FALSE when the tail is a delta — --retire-far would only refuse again', () => {
+  const w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z']);
+  write(w.D, v1);
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  write(w.D, v1 + turns(SID, ['2026-09-12T04:20:00.000Z'], 'd'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));
+  const row = Jrow(J(w.L, ['--stick', w.stick, '--import']));
+  assert.deepStrictEqual([row.verdict, row.reason, row.retirable], ['REFUSED', 'OTHER_CONVERSATION', false]);
+  // and the prediction holds: naming it gets a refusal, not a retirement
+  const again = Jrow(J(w.L, ['--stick', w.stick, '--import', '--retire-far', SID]));
+  assert.strictEqual(again.verdict, 'REFUSED');
+});
+
+test('the row carries ARRIVING\'s inputs: kind, this machine\'s first timestamp, and when the tail was exported', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));
+  const now = Date.parse('2026-09-14T06:30:00.000Z');
+  T.main(['--stick', w.stick, '--export', '--apply', '--json'], { stdout: () => {}, stderr: () => {} },
+    { machine: 'D', appRunning: false, projectsRoot: w.D.projectsRoot, instancesRoot: w.D.instancesRoot, panesPath: w.D.panesPath, now });
+  const row = Jrow(J(w.L, ['--stick', w.stick, '--import']));
+  assert.strictEqual(row.kind, 'pane');
+  assert.strictEqual(row.localFirstTimestamp, '2026-09-14T06:36:37.000Z');
+  assert.strictEqual(row.exportedAt, '2026-09-14T06:30:00.000Z');
+  assert.strictEqual(row.exportedFrom, 'D');
+  assert.strictEqual(row.path, w.L.dest, 'the path is the file this tool judged, not a search result');
+  assert.strictEqual(row.localSize, fs.statSync(w.L.dest).size);
+});
+
+test('a seat whose file was never read reports localSize null, never 0', () => {
+  const w = world();
+  const row = Jrow(J(w.D, ['--stick', w.stick, '--export']));
+  assert.strictEqual(row.verdict, 'NOTHING_YET');
+  assert.strictEqual(row.localSize, null);
+  assert.strictEqual(row.localFirstTimestamp, null);
+});
+
+test('fixed seats are reported as kind "fixed", from the real main.rs', () => {
+  const w = world();
+  const r = J(w.D, ['--stick', w.stick, '--export']);
+  assert.deepStrictEqual(r.obj.rows.filter((x) => x.kind === 'fixed').map((x) => x.seat).sort(), ['librarian', 'main', 'third place']);
 });
 
 // ── the wiring, nothing injected ──
