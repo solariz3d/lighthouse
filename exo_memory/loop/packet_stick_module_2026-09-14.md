@@ -41,17 +41,111 @@ to change, say so in your hand-back.
 `tail-carry.js` already builds structured rows and throws them away as prose. **The contract is those
 rows, serialized.**
 
-    node dev/tail-carry.js --stick <path> (--import|--export) [--apply] --json
+> **AMENDED BY ALPHA, 2026-09-14, before ECHO builds — the block below replaces the chair's first
+> draft, which is kept as a trace at the end of this section.** Three things in the draft could not
+> honestly carry the contract, each checked against `dev/tail-carry.js` rather than argued:
+>
+> 1. **The import verdict list was wrong in both directions.** `TAIL` never occurs on import (it is an
+>    export verdict), and **six real import verdicts were missing**: `APPEND`, `ALREADY_APPLIED`,
+>    `INTERRUPTED`, `REPAIR`, `RETIRE_THEN_FULL`, `DIVERGED`. `DIVERGED` is the fork this whole carry
+>    exists to refuse; a switch built on the draft would have met it as an unknown value.
+> 2. **`REFUSED` means thirteen different things,** and the one your §3 rule forks on — *a different
+>    conversation under this sid* — was only in prose. Worse, the prose could not say whether
+>    `--retire-far` would work: on a delta tail it refuses AGAIN, and `ARRIVING.ps1` cannot see that
+>    coming. **No new verdicts** — instead every REFUSED row carries a stable `reason`, and the
+>    different-conversation one carries `retirable`.
+> 3. **"The rows, serialized" cannot be literal.** The internal rows hold the carried bytes as a
+>    Buffer (248 MB on the chair's first carry) and the whole ledger record, and several fields exist
+>    only on some paths. The contract is a fixed projection: **every field on every row, `null` where
+>    it does not apply, never absent.**
 
-    stdout:  exactly one JSON object, and nothing else on stdout
-             { "mode": "import"|"export", "apply": bool, "code": <int>,
-               "rows": [ { "seat": <name>, "sid": <uuid>, "verdict": <VERDICT>, "why": <string|null>, ... } ] }
-    stderr:  free text, for humans; the app never parses it
+    node dev/tail-carry.js --stick <path> (--import|--export) [--apply] [--repair <sid>]... [--retire-far <sid>]... --json
+
+    stdout:  exactly ONE line: one JSON object, then "\n", and nothing else — even on a bad argument
+             (code 2) and even on an unanticipated exception (code 3)
+    stderr:  everything a human would have seen; the app never parses it
     exit:    equal to "code"
 
-    VERDICTS, as they already exist in the source — no new ones without saying so:
-      import:  FULL · TAIL · OURS · NOTHING_PENDING · REFUSED
-      export:  FULL · TAIL · UP_TO_DATE · NOTHING_YET · ABSENT_HERE · REFUSED
+    {
+      "tool": "tail-carry", "contract": 1,
+      "mode": "import"|"export"|null,   "apply": bool,   "machine": <tag>|null,   "stick": <path>|null,
+      "code": 0|1|2|3,   "outcome": <OUTCOME>,   "why": <string|null>,
+      "rows": [ ROW, ... ],             // [] whenever code is 2 or 3-before-planning
+      "receipt": <path>|null            // import --apply: the carried receipt the launch reads
+    }
+
+    ROW — all eighteen fields, always:
+      seat                 "main" | "librarian" | "third place" | "pane <label>"
+      sid                  uuid
+      kind                 "fixed" | "pane"                      ← §3's retire rule forks on this
+      verdict              VERDICT (below)
+      reason               REASON when verdict is REFUSED; null on every other verdict
+      why                  prose for a human; never branch on it
+      stops                true for REFUSED · DIVERGED · INTERRUPTED · ABSENT_HERE
+      carries              true when this seat moves bytes (in a rehearsal: would)
+      bytes                bytes carried; 0 when carries is false
+      offset, toOffset     byte span of the tail; null when there is none
+      path                 THIS machine's transcript for the seat — the export's source, the import's
+                           destination. The file this tool judged, not a search result.
+      localSize            that file's size; null if absent or never read
+      localFirstTimestamp  that file's first record carrying "timestamp"; null if absent or unread
+      exportedAt           import: when the pending tail was exported; else null
+      exportedFrom         import: the machine tag that exported it; else null
+      retirable            import with reason OTHER_CONVERSATION only: would --retire-far take it?
+                           true iff the carried tail is the WHOLE conversation. null on every other row.
+      result               --apply, and only for a seat that was written:
+                             { ok, why, size, sha256, aside, tailFile }
+                           aside  = the attic path a retire or repair copy went to, else null
+                           null on every row that was not written
+
+    VERDICTS — all of them, as they exist in the source. No new verdicts were added.
+      export:  TAIL · FULL · UP_TO_DATE · NOTHING_YET · ABSENT_HERE · REFUSED
+      import:  APPEND · FULL · ALREADY_APPLIED · NOTHING_PENDING · OURS
+               · RETIRE_THEN_FULL   (only when --retire-far named the seat and the tail is whole)
+               · REPAIR             (only when --repair named the seat)
+               · INTERRUPTED        (an earlier carry stopped part-way; needs --repair <sid>)
+               · DIVERGED           (this machine wrote its own turns since the last carry — the fork)
+               · REFUSED
+
+    REASONS — a REFUSED row always has exactly one:
+      UNSETTLED            the file was being written while it was read
+      NO_KEY               no "timestamp" record in the head: cannot tell which conversation it is
+      OTHER_CONVERSATION   this machine's file under this sid is a different conversation → see `retirable`
+      HISTORY_REWRITTEN    bytes inside the agreed prefix changed
+      SHRANK               export: shorter than the agreed state
+      UNIMPORTED_TAIL      export: the stick still holds the other machine's tail for this seat
+      TAIL_MISSING         import: the ledger names a tail file the stick does not hold
+      TAIL_DAMAGED         import: the tail fails its own sha256
+      TAIL_LENGTH          import: the tail's length disagrees with the span the ledger claims
+      LOCAL_GONE           import: no file here, and the tail is a delta
+      LEDGER_INCONSISTENT  import: the agreed state and the pending tail do not meet
+      BEHIND               import: this file is shorter than the agreed state
+      APPLIED_BUT_DIFFERENT import: every tail byte is present, yet the file's sha256 differs
+
+    EXIT CODES and OUTCOMES — the master is the `EXIT` table in dev/tail-carry.js; this mirrors it:
+      0  it ran; no seat stopped      NOTHING_TO_DO · REHEARSED (would carry) · CARRIED (--apply, verified)
+      1  it ran; ≥1 seat did not carry   STOPPED (a row's stops is true) · FAILED (written, did not verify;
+                                        FAILED is named when both happened)
+      2  it did not run; nothing read, nothing written, rows []   CANNOT_RUN · APP_RUNNING
+      3  it broke part-way; with --apply some seats MAY be written   CRASHED
+
+**Answering the two things the draft asked of A, plainly:**
+
+- **A REFUSED row stops ONLY ITS OWN SEAT.** With `--apply`, every other seat that can carry is carried
+  in the same run — each verified whole on its own — and the run exits 1 / `STOPPED`. **The tool does not
+  do "carry nothing if a fixed seat refuses" for you.** E's §3.3 order is therefore load-bearing: read the
+  rehearsal's rows, decide, and only then spawn `--apply` — and treat a code-1 `--apply` as "read each
+  row's `result`", never as "nothing happened".
+- **The race that order leaves open, named:** `--apply` re-plans from the disk. A fixed seat that was
+  clean in the rehearsal can refuse in the `--apply` a moment later (the app itself appending, for one).
+  The other seats still carry. Nothing is corrupted — every carried seat verified whole — but the launch
+  must read the `--apply` object's rows too, not only the rehearsal's.
+
+> *Trace — the chair's first draft of this block, superseded above; kept so the correction is legible:*
+>
+>     VERDICTS, as they already exist in the source — no new ones without saying so:
+>       import:  FULL · TAIL · OURS · NOTHING_PENDING · REFUSED
+>       export:  FULL · TAIL · UP_TO_DATE · NOTHING_YET · ABSENT_HERE · REFUSED
 
 **Two things A owes the contract, because the app cannot work them out from outside:**
 
@@ -195,6 +289,8 @@ with that path in the same turn. One line to your own map.
 
 ## 10 · ~~RULINGS AFTER E's HALF — the chair, 01:45 (`0783e45`)~~ — **HELD. NOT IN FORCE. DO NOT BUILD AGAINST ANYTHING BELOW.**
 
+> **SUPERSEDED 02:40 by `loop/packet_stick_build_2026-09-14.md` §1**, ruled after both halves landed (`0783e45`, `59e65f6`) and with the keeper's two refinements in hand. Call 1 below is **reversed** there (the setup is the app's, after the intro, not a hidden opener); Call 2 **survives with its trigger moved to launch**, because a kill runs no handler on this machine. Kept struck as a trace.
+>
 > **HELD at the keeper's word, 01:42, relayed by the librarian, and marked here at 01:46.** *"HOLD the two
 > design calls … until A rings."* His reason, which is right: **A was still building while E's half was
 > collated and acted on around it.** The line — the loop may only move ahead of a pane when the pane's work
