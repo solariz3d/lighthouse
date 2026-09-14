@@ -182,3 +182,106 @@ that.
       nc_standin.ps1      CreateProcessW with E's flags
       nc_children.js      the real children          nc_marks.jsonl   their step marks
       nc_analyse.js       the scoring (read §3's corrections before trusting its falsifier line)
+
+---
+
+# §9 · AFTER THE RE-RULE (5190f73, repaired 04bc6b5) — two notices, named Consonance. Built and measured, ~06:20
+
+The chair's §1 block rules my three warts: (1) two notices, START "don't pull it yet" and END DONE / NOT DONE; (2) name
+it Consonance if possible without a new dependency, or say it can't be done; (3) click-to-open-the-log stays unverified.
+**All three are answered below. Nothing new is installed or required. The keeper's veto is still open.**
+
+## 9.1 · WHAT CHANGED (dev/stick-waiter.js, dev/stick-waiter.test.js — uncommitted)
+
+- **Two notices.** `exportWithNotice` raises `Saving to the stick — don't pull it yet.` with the folder, and the line
+  *A second notice will say DONE or NOT DONE*. It is raised ONCE, after the stick is found and before the first
+  export attempt, so LEDGER_LOCKED retries do not repeat it. The DONE / NOT DONE notice follows. AMBIGUOUS exports
+  nothing, so it raises only the NOT DONE. No-stick and stand-down raise nothing. Both notices go through one `raise()`,
+  so a failure of either writes the status file and costs nothing.
+- **One tag for both** (`Tag 'stick'`, `Group 'consonance'`). The end notice REPLACES the start notice in the
+  notification centre, so a stale "don't pull it yet" cannot sit beside a DONE.
+- **Named Consonance, with no new dependency.** Before `Show`, `TOAST_PS` writes the per-user registration Windows reads
+  for an unpackaged app's toast name and icon: `HKCU\Software\Classes\AppUserModelId\com.solariz3d.consonance`, with
+  `DisplayName = Consonance` and `IconUri = <repo>\consonance\src-tauri\icons\128x128.png` (only if the file exists).
+  It then shows under that id. The id is `tauri.conf.json`'s `identifier`, and a test pins that match. The mechanism is
+  Microsoft's documented one for unpackaged apps
+  (https://learn.microsoft.com/en-us/windows/apps/develop/notifications/app-notifications/send-local-toast-other-apps);
+  two other apps on this machine (Lenovo, Razer) already use it. **What this adds to the keeper's machine:** two string
+  values under HKCU, rewritten idempotently at every notice.
+  Removal: `Remove-Item 'HKCU:\Software\Classes\AppUserModelId\com.solariz3d.consonance'`.
+- **Header comment corrected.** It claimed "an unregistered Consonance id is silently dropped by Windows". I wrote that
+  and never checked it. Measured (9.3), an unregistered id's toast still lands in History, and the difference is
+  elsewhere. The comment now states what was measured.
+- **Tests.** The old ONE STICK and NOT DONE tests encoded the one-notice rule the chair has now re-ruled, so they were
+  updated. They now require the start notice to be up BEFORE the export and the end notice after. The retry test
+  requires `['Saving', 'DONE']`. The failed-notice test requires both failures written. New tests cover:
+  registration before Show, under tauri.conf's id, with DisplayName Consonance and no PowerShell id; that the icon
+  exists; and the tag.
+
+## 9.2 · COUNTS AND MUTANTS
+
+    node dev/stick-waiter.test.js         41 passed, 0 failed
+    node dev/stick-apply.test.js          24 passed, 0 failed     (file unchanged since §5)
+    node dev/tail-carry.test.js          108 passed, 0 failed     (unchanged since §5; tail-carry.mutants 69/69 stands)
+    node dev/place-conversations.test.js  35 passed, 0 failed     (unchanged since §5)
+    node consonance/tools/js-suite.js     91 green · 4 failed · 0 crashed · 0 silent · 1 canary (of 96) — the same four.
+                                          portable-paths' only mentions of my file names are E's sync_launch.rs:2003/2005
+
+    node scratchpad/ctrl_noconsole.js     pre-flight dev/stick-waiter.test.js: 41 passed, 0 failed
+                                          20 applied · 20 caught · 0 survived · 0 NOT APPLIED
+      the 12 from §4 that still apply (the "notice at START" mutant is now the rule, so it is inverted below), plus:
+      no start notice (4 red) · start notice after the export · a start notice per LEDGER_LOCKED retry · a start notice
+      on AMBIGUOUS · back to PowerShell's id · id drifts from tauri.conf.json · registration dropped · no tag
+
+**Correction to my own harness, caught this lap.** The first 20-mutant run reported 20/20, and every kill was false.
+The new "sent as Consonance" test was red in EVERY mutant, because the scratch replica had no `tauri.conf.json` and no
+icon. The runner had no green pre-flight, so a test that was red anyway counted as a catch. I fixed it: the replica now
+carries both files, and the runner refuses to score any mutant unless the unmutated suite is all green. The 20/20 above
+comes from the fixed run. **§4's 13/13 ran without a pre-flight.** Every kill it reports names a specific test, and none
+of those tests was red on the real files then (39/0), so I have no reason to think it false. But it was unguarded, and
+the 20-run supersedes it.
+
+## 9.3 · MEASURED — two real notices under E's flags, no terminal, named Consonance, the second replaces the first
+
+First the probe (`scratchpad/nc_name_probe.ps1`), which answers whether naming is possible at all. I registered the id
+and showed one labelled test notice under it, then did the same with an UNREGISTERED id as the control.
+- Both ids got `History` count 1, so **History does not discriminate** a named sender from an unnamed one. My §3 use of
+  History proved acceptance only.
+- The discriminator: `HKCU\…\Notifications\Settings\<id>`, Windows' sender record. It **was created for the registered
+  id and NOT for the unregistered one.**
+- I took one screenshot of the lower-right screen quarter while the probe notice should have been up. It showed a
+  full-screen app and **no banner**, so the banner was suppressed or out of frame. **No visual confirmation of the
+  name.** I deleted the image and took no more; this is the keeper's screen.
+- Then I removed the probe's registration, sender record and history, so the real run started from nothing.
+
+Then the real run. `scratchpad/nc_watch.ps1` ran 200 s, 06:14:34 → 06:17:54, as PROC + WIN
+(`scratchpad/nc_watch2.jsonl`, scored by `nc_analyse2.js 9140`). The same stand-in (`CreateProcessW`,
+`CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP`, pid 9140, exit 0) ran the same real children. The waiter now raised BOTH
+notices through the real `notify`, bodies relabelled as tests. The step marks show `notify1` ("Saving to the stick —
+don't pull it yet.") before the stubbed export and `notify2` (DONE) after.
+
+    stand-in children seen by PROC:  tasklist PID eq 33816 · powershell (WMI) · powershell -WindowStyle Hidden ×2 (the two
+                                     notices; the registration script is visible in their argv) · tasklist IMAGENAME
+    OpenConsole / WindowsTerminal starts, whole machine, 200 s:  6 = 3 pairs at 06:15:28, 06:16:28, 06:17:29 (parent 2272)
+      …between 06:14:34 and 06:15:28 — the span holding the whole stand-in run (06:14:55.06–06:14:56.41):  0
+    newly visible windows, 200 s:  6 = the same 3 marks (Terminal + PseudoConsoleWindow)   …in that span:  0
+    live waiter 26800 still running (checked at watch start): the positive control, 3 of 3 caught by both instruments
+
+    after the run:
+      HKCU\Software\Classes\AppUserModelId\com.solariz3d.consonance   DisplayName "Consonance", IconUri <repo>\consonance\src-tauri\icons\128x128.png
+                                                                      — written by the waiter's own TOAST_PS; the key was absent before
+      Notifications\Settings\com.solariz3d.consonance                 present (Windows took it as a sender)
+      History under the id after TWO shows with one tag               1 — tag=stick group=consonance, "notice 2 of 2"
+                                                                      → the end notice REPLACED the start notice
+
+Afterwards I removed the registration, the sender record and the history entry (`reg=False sender=False history=0`),
+so the machine is as I found it. The keeper's first real close writes them again.
+
+## 9.4 · STILL NOT VERIFIED
+
+- **That the banner reads "Consonance" with the icon.** The registry and the sender record say Windows has the name. No
+  eye has seen a banner, mine included (the screenshot caught none).
+- **Click-to-open-the-log**, as the chair ruled. It stays unverified until the keeper's close.
+- **With banners suppressed** (full screen, Do Not Disturb), whether either notice still reaches the notification
+  centre where the keeper would look. The screenshot suggests banners can be suppressed on this machine right now.
+- Everything in §7 still stands: nothing through the app, the relaunch's SW_HIDE, `--apply`, D.
