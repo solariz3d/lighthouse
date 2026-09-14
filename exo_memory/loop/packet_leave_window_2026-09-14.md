@@ -103,6 +103,67 @@ So no seat writes during the export.
 screen in the `#stick-setup` family (`index.html:22`, `stick.js`, `app.css:607`). No second OS window unless E
 measures a reason and says so. Consonance-styled, no console.
 
+**2.7 · RE-RULED ~11:45 after B's first read** (`handback/p-leave-read-B_2026-09-14.md`; re-derived by the librarian).
+**§5 fired, and every defect is the chair's.** The chair checked `main.rs:920-926`, `:1077-1084`, `:10423-10427`,
+`stick-waiter.js:76-79`, `:270-292`, and portable-pty-0.8.1 `win/mod.rs:71-78` at source. **Where this block
+conflicts with §2.1–2.6, build this block.**
+
+    D-1  §2.2 step 1 has nothing to wait on. PtySession is {writer, master, killer} (main.rs:922-925) with no pid; the
+         Child is dropped (:1080); reader EOF does not fire on exit (:1077-1079). And portable-pty's
+         WinChildKiller::kill returns Err on a SUCCESSFUL TerminateProcess and Ok on failure (win/mod.rs:71-78), so
+         nothing may read the killer's result as "ended".
+         RULED (E): keep the child's pid in PtySession at spawn (child.process_id(), read before the Child is dropped),
+           at every spawn site. Step 1 waits on the pids: a pid is ended when the process is gone or runs another
+           image. The killer's return value is never read as evidence.
+
+    D-2  Steps 1 and 4 contradict. The grow guard (tail-carry.js:739-748) catches a write between the plan stat and
+         the post-read stat. It does not catch a live seat that writes nothing in that window and writes afterwards.
+         So "export anyway, the guard refuses it" can read DONE: F1, as the section is written.
+         RULED (E): DONE requires ALL of: every seat's pid ended within the bound, tail-carry exit 0, and no row stops.
+           A seat alive at the bound is NOT_DONE and named. The export still runs for the others.
+
+    D-3  Case c plus 2.4 cannot hold with F2. An app killed after LEAVE_STARTED leaves its tail-carry running and
+         holding the lock (run_carry_json starts it with NO_WINDOW only). Today's export path retries LEDGER_LOCKED
+         every 5 s for 60 s (stick-waiter.js:78-79), so the waiter would write the ledger a second time once the
+         orphan finishes.
+         RULED, B's option (ii) (A): in case c the waiter reads the holder pid from consonance-tails/ledger.lock, waits
+           until that pid is not live, and only then runs today's export. An orphan that finished leaves nothing to
+           carry (A's debt (b): an own pending that equals the file carries nothing). An orphan that died leaves the
+           export to be done.
+           F2 IS RE-WORDED: "A close at which the Leave's tail-carry and the waiter's tail-carry each CHANGE the
+           ledger, or change it concurrently."
+
+    D-4  The launch-time cleanup can delete LEAVE_RESULT before the old waiter's next 2,000 ms poll reads it. That
+         turns case b into case d, and the fallback exports while the relaunched seats wake (B's §8 through the
+         fallback, and F2).
+         RULED: THE WAITER OWNS REMOVAL (A). It removes a LEAVE_RESULT or LEAVE_STARTED only after acting on it: case
+           b after standing down, case c after its export. The app's launch-time cleanup (E) removes LEAVE_* files
+           only when <data_dir>/stick-waiter.lock names no live holder AND the named app pid is not live, and it runs
+           after set_dirs (L051). "The waiter never deletes it" in 2.3 b is struck.
+
+    D-7  2.1's "image": "consonance" never matches on the Rust side, whose vocabulary is p.name() (main.rs:10425) and
+         APP_IMAGE "consonance.exe" (sync_launch.rs:1219).
+         RULED: "image": "consonance.exe" in both files. A's comparison lower-cases and strips ".exe" on BOTH sides
+           before comparing (pidImage's shape, tail-carry.js:219). The waiter matches the LEAVE files by pid == the
+           watched app pid first; the image is a second check.
+
+    D-9  Case b's stand-down returns before the adoption block (stick-waiter.js:275-277 against :286-289), so a
+         relaunch inside one poll leaves the new session with no waiter.
+         RULED (A): cases a and b run the adoption check (step 4) before returning. A new app pid means adopt and
+           keep waiting.
+
+    D-5  The single-instance mutex fails OPEN on an error (main.rs:6404-6407).
+         RULED: 2.5 is scoped. The Leave closes B's §8 race whenever the mutex was claimed. It is not a guarantee
+           against a failed claim, and F4 is scored only on a launch whose claim succeeded.
+
+    D-6  A Windows shutdown runs no Leave; tao handles only WM_CLOSE. The waiter dies with it.
+         RULED: named, not built. No falsifier is scored by shutting down. The next launch's "the stick does not have
+           your last session" notice is what covers it.
+
+    FIGURE: 2.2 step 3's timeout comment cites the first carry as 348,026,190 B written in 55 s (2f7233c;
+    librarian/2026-09-12.md:35, :47). The chair's 348,007,682 B was the rehearsal total. WRONG 107 is the
+    librarian's, repeated by the chair.
+
 ## 3 · THE SPLIT — neither of you edits the other's files
 
     ECHO    consonance/src-tauri/src/main.rs, sync_launch.rs, consonance/ui/* (+ tests)
