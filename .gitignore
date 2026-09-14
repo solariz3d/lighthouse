@@ -69,14 +69,9 @@ consonance/**/lyrics-cache.json
 # on one machine.
 dev/rebuild-on-close.log
 
-# The Third Place keeps its own record (exo_memory/third_place/). Ignored here since 2026-08-29 on
-# the stated ground that "the keeper's standing rule is that it travels through OneDrive and never the repo."
-# Measured 2026-09-09 (exo_memory/handback/onedrive-inventory_2026-09-09.md): the keeper never made that
-# rule. It first appeared in a 2026-08-11 compaction summary as a standing constraint, was carried by
-# eleven later summaries, and asserted to him as his. No channel has ever carried this directory anywhere;
-# it exists on one laptop. The rule stays until the keeper decides whether the record travels in the
-# (now private) repo or stays local on purpose. Whichever he chooses, it will be his call, made once.
-exo_memory/third_place/
+# The Third Place record (exo_memory/third_place/) travels in the repo since 2026-09-14, at the keeper's word
+# ("all third place journals should be accessible to the LIB or rest of consonance"). It was ignored
+# 2026-08-29 -> 2026-09-14 on a rule he never made (see handback/onedrive-inventory_2026-09-09.md).
 
 # The tail-carry mutation harness writes its mutants into a COPY beside the source and holds a lock while it
 # runs (L059: a killed run here runs no cleanup, so the copy and the lock can outlive it). Neither is ever staged.
