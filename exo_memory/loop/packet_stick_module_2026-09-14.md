@@ -77,6 +77,18 @@ librarian's own master (`record/retired_seats_2026-09-11.md`, 09-14 section).
     DO NOT move the .retired-* files that already exist. Name them in the hand-back and leave them —
     moving a conversation is the keeper's decision, not a side effect of a refactor.
 
+**A fourth, owed by E's ruling and added at 01:45 while A was still building — the import rows must carry
+what the retire rule decides on.** E's hand-back §6 (`0783e45`): `ARRIVING.ps1` matches **prose** today to
+decide whether a refusal is a different conversation. The whole point of `--json` is to stop that. **Every
+import row carries:**
+
+    kind        "fixed" | "pane"
+    dest        the absolute path of this machine's copy — the retire rule reads the birth from HERE ONLY
+    pending.at  the exporter's timestamp for this seat's pending carry
+    reason      a machine-readable code beside the prose "why" — at minimum "different_conversation"
+
+**If any of these is not honestly available from the row as built, say which and why rather than inventing it.**
+
 **If the existing rows can't honestly carry this — a verdict that means two things, a field that is
 sometimes missing — A says so and changes the contract here, in this file, before E builds against
 the wrong one.**
@@ -177,3 +189,69 @@ with that path in the same turn. One line to your own map.
                 seat -> fresh or a launch-minute first timestamp; a no-stick launch whose persist.log
                 rows differ from before the module; an exit with the stick mounted after which the
                 ledger's agreed state is older than the seats' files.
+
+
+---
+
+## 10 · RULINGS AFTER E's HALF — the chair, 01:45 (`0783e45`)
+
+**E refused the in-app import, correctly, and the design is now A-with-B-beneath** (E's hand-back §3): an
+**opener** that runs before the app exists, and an **in-app net** that withholds seats by name and never
+imports. **E left two calls to the chair. Both are ruled here, each on something measured.**
+
+### Call 1 · Which exporter survives — **ON-EXIT's model. No in-app Leave.**
+
+**Export runs from outside the app, after it has exited, in its own visible window that holds until DONE
+or NOT DONE** — which is what `ON-EXIT.ps1` already does, started by `ARRIVING.ps1:134-139`.
+
+1. **After exit is the only moment the transcripts are quiescent by construction.** The app writes to seats
+   on its own — B gained 267 bytes at a launch with no turn taken (D061). An in-app Leave runs inside a
+   process that can still be writing the files it is exporting.
+2. **It puts the whole carry on one side of the gate, in both directions.** E's refusal already moved the
+   import out of the app. Keeping export out too means **the app contains no carry code at all — only the
+   net.** E's "two exporters, one ledger" hazard is settled by having one.
+3. **It has the surface the keeper's bar needs.** *Hold until DONE or FAILED by name* requires a window the
+   keeper can see. ON-EXIT's is visible. A hidden process holding a hidden window holds nothing.
+4. **It already works.** It is how tonight's transcripts reached this machine.
+
+### Call 2 · Where the opener lives — **called from `launch.ps1`; its logic is one Node module in the repo.**
+
+1. **`launch.ps1` is the path every launch already takes**, measured: the Desktop shortcut
+   `Consonance.lnk` runs `wscript.exe //B …consonancelaunch.vbs`, which runs `launch.ps1`.
+   **"Lands every time" means on the path the keeper already uses** — no new habit, no repointed shortcut.
+2. **Not the stick script.** Two copies drift, and it was measured tonight: `ARRIVING.ps1` had to be patched
+   identically in `dev/` and on the stick (`librarian/2026-09-14.md` §6), and **`ON-EXIT.ps1` exists in both
+   places right now.** **The stick carries data — the ledger and the tails — and code lives in one place.**
+3. **Not a `src/bin` launcher.** A second binary, a shortcut repointed on both machines, and a Rust wrapper
+   around a Node carry, for nothing a Node module does not already give.
+4. **Node, not PowerShell,** for the logic: the carry and its tests are Node, and PowerShell 5.1 mangled a
+   UTF-8 source on this very machine (E's P1b damage report).
+5. **The hard constraint, from `launch.ps1`'s own header: it runs HIDDEN.** Every `Write-Host` in it was
+   unreadable until 2026-08-10, and the keeper clicked repeatedly at a launcher showing nothing. **So the
+   opener must never be the thing that tells the keeper something.** Arrival refusals are shown **by the
+   in-app net, on screen, by name.** The exit result is shown **by ON-EXIT's visible window**, which the opener
+   starts.
+
+### The composition these two rulings produce
+
+    Consonance.lnk -> launch.vbs -> launch.ps1  (hidden)
+        -> node <arrival module>   find the stick by content; rehearse; apply E's Ruling 1; import;
+                                   write the receipt; write a result the app can read
+        -> start consonance.exe
+        -> start ON-EXIT, VISIBLE  wait for the app to exit -> export -> DONE | NOT DONE, by name
+    inside the app:
+        sync_at_launch reads the arrival result; any seat still pending or refused -> SEATS_WITHHELD,
+        named on screen. It never imports.
+
+**What changes for the keeper: nothing about how he launches.** Same shortcut. The stick is found or it is
+not; a launch with no stick is byte-identical to today.
+
+**Not dispatched from this section.** The build waits on A's half, because both the arrival module and the
+net read A's `--json`. When A lands, the next packet is: the arrival module and the launch.ps1 hook and one
+repo copy of ON-EXIT for A; the net for E.
+
+    FALSIFIER (Call 1): an export that reports DONE while consonance.exe is still running, or a ledger
+                        written by two exporters for one exit.
+    FALSIFIER (Call 2): a launch from the Desktop shortcut, stick present with newer seats, that does not
+                        run the arrival module — or a copy of ARRIVING/ON-EXIT on the stick that differs from
+                        the repo's and is the one that ran.
