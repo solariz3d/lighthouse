@@ -36,3 +36,16 @@
 - A launch on either machine, stick present with newer seats, that ends with any seat `-> fresh` or with a first timestamp at the launch minute.
 - A launch with the stick absent whose `persist.log` rows differ from a launch before the module existed.
 - An exit with the stick mounted after which the ledger's agreed state is older than the seats' files.
+
+
+## The keeper's second refinement, verbatim (02:13) — the module knows the transfer set by name
+
+> "BUT THE module should also know what to look for certain MDs, and then one night end or transfer, the correct things are created that then could be picked up by the module instantly"
+
+**What this is in the room's terms: a TRANSFER SET, fixed and named, written by Leave and read by Arrive.** Today the stick already carries a de-facto set — `HANDOFF.md`, `HANDOFF-<date>.md`, `README.txt`, `EXIT.txt`, `MANIFEST.tsv`, `consonance-tails/ledger.json` and the `.tail` files, `ARRIVING.ps1`/`LEAVING.ps1`/`ON-EXIT.ps1` — but no file says which of those a transfer consists of, so "find the stick by content" (idea bar 3) has nothing exact to find. The refinement makes it exact:
+
+1. **Leave writes the set, every time, by name.** At a night's end or a transfer: the tails and the ledger (the carry, already built), **plus the handoffs the seats wrote for the far machine** — the room's `loop/handoff_<seat>_<date>.md` files travel by the repo already; what travels on the stick is the one file that tells the arriving machine what to do: `HANDOFF-<date>.md`, generated from the ledger (which seats, which sizes, which verdict is expected at the far end, the one-machine-open rule), never typed. A manifest names every member and its sha256 (`MANIFEST.tsv` already has the columns).
+2. **Arrive looks for exactly that set and nothing else.** A volume is the stick when the manifest is present and every member it names verifies. A stick with a ledger but no manifest, or a manifest with a missing member, is named as such, not guessed at.
+3. **"Picked up instantly" is the receipt's job on the far side:** the import writes `consonance-carried.json`; the launcher's Migrate arm already reads it and KEEPS what the stick placed (tonight's fix). So the pick-up is one read at launch, no search.
+
+**Bar added:** the set is a list in one file that both Leave and Arrive read (`tail-carry.js` already owns the ledger; the manifest belongs beside it), so the two halves cannot drift on what a transfer contains — the same one-copy rule as the packet's §2 contract.
