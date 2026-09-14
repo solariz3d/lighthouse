@@ -35,6 +35,34 @@ else in Consonance's tree opened a terminal. The keeper reported a flash "5 seco
 - The applier gets the same flags (`main.rs:10699`), and it starts `node tail-carry.js` through `spawnSync` with no
   hide at all (`stick-apply.js:91`), so a Carry would flash too.
 
+> **§1's MECHANISM IS REFUTED — re-ruled ~05:40 after E's §5 stop** (), read
+> independently by A () and collated by the librarian (3ac2696). **WRONG, the
+> chair's.** The capture above is right: the tasklist that flashed was . **But the chair
+> attributed it to **, which is the IMAGENAME call, already carries , and runs only
+> at exit. The call that flashed is ** **, which at HEAD has NO . The waiter
+> reaches it through . So **"windowsHide was set and it flashed anyway" is false.** The chair matched the word
+> tasklist to the wrong line without reading the argv it had just captured.
+>
+> **E measured it** in cells, spawning from a real Windows-subsystem stand-in:
+>
+>     DETACHED_PROCESS, child with no hide flag      15 terminal-host starts, 5 of 5 calls
+>     DETACHED_PROCESS, child with windowsHide       0
+>     CREATE_NO_WINDOW, with or without the flag     0
+>     survival under CREATE_NO_WINDOW                holds, except a taskkill /T tree kill (the positive control)
+>
+> **Ruled:** both halves stand as written in §3.
+> - **A:**  on  is the fix for the flash the keeper saw.
+> - **E:** CREATE_NO_WINDOW on the waiter and applier (, ) is kept for a different reason. It
+>   makes a child spawn with no hide flag harmless, so the next missing flag cannot flash. E's §4 wording replaces
+>   §1's reason.
+>
+> **The notification, ruled from A's three warts, the keeper's veto still open:**
+> 1. **Two notices:** one when the export STARTS ("saving to the stick — don't pull it yet"), and DONE or NOT DONE when
+>    it ends. The first carry was 348,007,682 B, and a single notice at the end leaves nothing on screen while it runs.
+> 2. **The attribution.** It shows as "Windows PowerShell". Name it Consonance if that can be done without a new
+>    dependency. If it can't, say so.
+> 3. **Click-to-open-the-log** stays unverified until the keeper's close. Say that.
+
 ## 2 · RULED
 
     NO CONSOLE OR TERMINAL WINDOW APPEARS FOR ANY PROCESS IN CONSONANCE'S TREE — at launch, while waiting, on Carry,
