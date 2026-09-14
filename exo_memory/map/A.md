@@ -1160,3 +1160,16 @@ the one-added-process bar, a dead pid second-guessed by a tasklist that could ha
 fixtures that would have turned portable-paths redder at landing, and a false "no leftovers" from an `ls` that hides
 dotfiles. **For the chair:** five stick data-dir files are UNPLACED in the state manifest, so D's `close.js` would refuse
 all session. Uncommitted; nothing with `--apply` against the real stick.
+
+## 2026-09-14 — P-NO-CONSOLE (L058 bis) · A · CHECKPOINT before compaction — resume from the hand-back's §RESUME
+
+`exo_memory/handback/p-no-console-A_2026-09-14.md` holds exactly where this stopped: windowsHide added (stick-apply carry,
+tail-carry pidImage — the real flasher, place-conversations tasklist), relaunch deliberately unhidden, openWindow replaced by
+a PowerShell-AUMID toast (constant script, XML in env, protocol launch to the status log), sweep tests; 39/24/108/35 green.
+Still owed: mutants on a copy, the process-start-watch measurement (live waiter pid 26800 = the positive control, a
+CREATE_NO_WINDOW stand-in parent running the real children), js-suite, ring. Finding: §1's flashing tasklist was
+`PID eq` = tail-carry.js:207 with NO windowsHide, not stick-waiter.js:131.
+
+## 2026-09-14 — P-NO-CONSOLE · A: the export window is a notification now, every child is hidden but the relaunch, and a CREATE_NO_WINDOW stand-in running my real children opened no terminal while the live waiter flashed 4/4 in the same watch
+
+Hand-back at `exo_memory/handback/p-no-console-A_2026-09-14.md` (replaces the pre-compaction checkpoint). openWindow gone; one toast at the END (PowerShell AUMID, protocol launch to the status file, XML by env, script constant); windowsHide on every spawn in waiter/applier/carry/placement except the GUI relaunch, pinned by a sweep test. Measured with PROC (WMI) + WIN (EnumWindows) watch: 0 OpenConsole/WindowsTerminal starts and 0 new visible windows across the stand-in run; the live waiter (old pidImage) caught 4/4 by both instruments; the test notice landed in Windows history, then cleared. Mutants on a copy 13/13, tail-carry.mutants 69/69; tests 39/24/108/35; js-suite 91 green, the same 4 red. **Caught in my own scoring:** the scripted falsifier line could not fire on its own control (WMI missed the short tasklist), so the result rests on the attribution-free counts; a pid-reuse mislabel; and "Consonance tree" contains every seat. §1 misattribution found independently of E (checkpoint ~05:35, E ~05:40). Notice warts for the keeper veto: says "Windows PowerShell", no in-progress signal on a long carry, click unverified. Uncommitted; no --apply.

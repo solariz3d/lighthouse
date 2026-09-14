@@ -88,12 +88,19 @@ function parseArgs(argv) {
 
 /** The real carry: tail-carry.js as a child, its one stdout object parsed. */
 function defaultCarry(stick, forward, tailCarryPath) {
+  // windowsHide (P-NO-CONSOLE): node is a console program. Started by a parent with no console of its own, it would
+  // be given a NEW one, and Windows 11 hands a new console to Windows Terminal — a real window. windowsHide makes
+  // libuv pass CREATE_NO_WINDOW (no stdio here is inherited), so the child's console is created without a window.
   const r = spawnSync(process.execPath, [tailCarryPath, '--stick', stick, '--import', '--json', '--apply', ...forward],
-    { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+    { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, windowsHide: true });
   return { status: r.status, stdout: r.stdout || '', stderr: r.stderr || '', error: r.error || null };
 }
 
 function defaultRelaunch(exe) {
+  // THE ONE SPAWN WITHOUT windowsHide, deliberately. consonance.exe is a GUI-subsystem program
+  // (main.rs:1, windows_subsystem = "windows"): it never allocates a console, so there is nothing to hide — and
+  // windowsHide also sets SW_HIDE in its startup info, which a GUI program may honour on its first window. Hiding
+  // the relaunched app is the one outcome worse than a flash: the keeper would see nothing at all.
   const child = spawn(exe, [], { cwd: path.dirname(exe), detached: true, stdio: 'ignore' });
   child.on('error', () => {});
   child.unref();

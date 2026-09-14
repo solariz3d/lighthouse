@@ -204,7 +204,10 @@ const SELF_IMAGE = path.basename(process.execPath).replace(/\.exe$/i, '').toLowe
 function pidImage(pid) {
   if (!Number.isInteger(pid) || pid <= 0) return null;
   let out;
-  try { out = require('child_process').execFileSync('tasklist', ['/FI', `PID eq ${pid}`, '/FO', 'CSV', '/NH'], { encoding: 'utf8' }); }
+  // windowsHide (P-NO-CONSOLE): THIS is the tasklist the keeper saw flash once a minute — `PID eq <pid>`, called by the
+  // exit waiter's image check, which runs with no console of its own. Without the flag Windows gave it a new console,
+  // and Windows Terminal drew it.
+  try { out = require('child_process').execFileSync('tasklist', ['/FI', `PID eq ${pid}`, '/FO', 'CSV', '/NH'], { encoding: 'utf8', windowsHide: true }); }
   catch (_) { return undefined; }
   const m = out.match(/^"([^"]+)","(\d+)"/m);
   if (!m || Number(m[2]) !== pid) return null;

@@ -4,7 +4,7 @@
 // ruled at 11d9eb5 and ddf5a76, pane A, 2026-09-14. `dev/ON-EXIT.ps1`, absorbed; the stick scripts keep working.
 //
 //   node dev/stick-waiter.js --data <data_dir> --app-pid <pid> --app-image consonance.exe     (the app starts this)
-//   node dev/stick-waiter.js --view <status file>                                            (the window it opens)
+//   node dev/stick-waiter.js --view <status file>          (by hand only — NOTHING starts this; see THE NOTICE below)
 //
 // **There is no --stick.** The keeper's leaving gesture is plugging the stick in at the END of a session — usually
 // after launch — so the waiter finds the stick at the moment it exports, by §3's rule: the volume root and one folder
@@ -21,25 +21,38 @@
 //   3  at the app's exit:
 //        stick-apply.started.json names a live applier  -> STAND DOWN: exit quietly. A hand-off is not a session end;
 //                                                          the relaunched app starts its own waiter.
-//        no stick found by the §3 rule                  -> NO WINDOW, no export, no row. Quietly.
-//        more than one stick folder                     -> a window, NOT DONE, every folder named; nothing exported
-//        one stick folder                               -> a window; tail-carry --export --json --apply (which takes
-//                                                          the ledger lock and rewrites the MANIFEST); DONE / NOT DONE
+//        no stick found by the §3 rule                  -> no notice, no export, no row. Quietly.
+//        more than one stick folder                     -> a notice: NOT DONE, every folder named; nothing exported
+//        one stick folder                               -> a notice "saving — don't pull it yet"; tail-carry --export
+//                                                          --json --apply (which takes the ledger lock and rewrites the
+//                                                          MANIFEST); then a second notice, DONE / NOT DONE
 //   4  before exiting, if the app is ALREADY RUNNING AGAIN under a new pid — a close and reopen inside one poll —
 //      adopt that pid and keep waiting. That launch's own waiter found this one's lock live and started none; without
 //      the adoption, the new session would end with nothing watching it.
 //
-// **THE WINDOW.** The app starts this detached, with no console of its own, and a process cannot give itself one. So
-// at export time it opens a new console with `cmd /c start`, running this same file in `--view` mode on a status file,
-// and writes every line there. The window follows the file, prints DONE or NOT DONE by name, and holds for Enter.
-// **The export does not depend on the window:** if the window cannot be opened, the export still runs and the status
-// file says the window failed — the stick is never left behind because a console did not appear.
+// **THE NOTICE — P-NO-CONSOLE, 2026-09-14, replacing the export window.** The keeper, 05:23: *"there should never be
+// an intrusive terminal windows ever popping up for consonance."* The console this file used to open at export was
+// exactly that, so it is gone, and so is every other way this process can produce one:
+//   · every child is started with windowsHide — libuv then passes CREATE_NO_WINDOW, so a console child of this
+//     (console-less) process gets a console with no window, instead of a new one Windows Terminal draws;
+//   · an export raises two Windows NOTIFICATIONS — not a window, not a console — through a hidden PowerShell, with the
+//     text handed over in an environment variable so nothing in it is parsed: one as it STARTS ("don't pull it yet" —
+//     the chair's re-rule of §1, 5190f73: a first carry of 348 MB left nothing on screen while it ran), and DONE or
+//     NOT DONE when it ends. Both carry one tag, so the second REPLACES the first in the notification centre and a
+//     stale "don't pull it yet" never outlives the DONE.
+// The notices say "Consonance": the script registers the app's own identifier (tauri.conf.json's, com.solariz3d.
+// consonance) under HKCU\Software\Classes\AppUserModelId with DisplayName and IconUri — the registration Windows reads
+// for an unpackaged app — before showing. Measured 2026-09-14: an id registered this way gets a sender record under
+// Notifications\Settings when shown; an unregistered one does not. Clicking a notice opens the status log through a
+// file: link — never an app. If a notice cannot be shown, the status file still says so and NOTHING opens instead.
+// `--view` stays as a command the keeper can run by hand; nothing starts it.
 //
 // **Leave writes to the STICK and never to the state repo.** No close.js, no git, no push.
 
 const fs = require('fs');
 const path = require('path');
-const { spawn, spawnSync, execFileSync } = require('child_process');
+const { spawnSync, execFileSync } = require('child_process');
+const { pathToFileURL } = require('url');
 
 const carry = require('./tail-carry.js');
 const apply = require('./stick-apply.js');
@@ -139,17 +152,53 @@ function defaultExport(stick, tailCarryPath) {
   return { status: r.status, stdout: r.stdout || '', stderr: r.stderr || '', error: r.error || null };
 }
 
+/** The app's own identifier (tauri.conf.json "identifier"), registered for notices as "Consonance". A test pins the match. */
+const APP_ID = 'com.solariz3d.consonance';
+/** One tag for both notices of an export, so DONE / NOT DONE replaces "don't pull it yet" instead of sitting beside it. */
+const TOAST_TAG = 'stick';
+const TOAST_GROUP = 'consonance';
+const ICON = path.join(__dirname, '..', 'consonance', 'src-tauri', 'icons', '128x128.png');
+
 /**
- * Open a visible console following the status file. A path cmd.exe could misread is refused rather than quoted
- * around — Windows paths cannot contain `"`, and `& | < > ^ %` are the characters `start` would act on.
+ * The script is a CONSTANT: nothing the stick, a path or a seat name contains is ever spliced into it. The notice's text
+ * arrives as XML in CONSONANCE_TOAST_XML, built by toastXml with every value escaped; the icon path in
+ * CONSONANCE_TOAST_ICON. It first (re)writes the per-user registration that makes Windows name the sender "Consonance" —
+ * two string values under HKCU, idempotent, removable with one Remove-Item.
  */
-function openWindow(statusPath) {
-  const parts = [process.execPath, path.join(__dirname, SCRIPT), statusPath];
-  if (parts.some((p) => /["&|<>^%]/.test(p))) throw new Error(`a path cmd.exe could misread: ${parts.find((p) => /["&|<>^%]/.test(p))}`);
-  const line = `start "Consonance - the stick" "${parts[0]}" "${parts[1]}" --view "${parts[2]}"`;
-  const child = spawn('cmd.exe', ['/d', '/s', '/c', line], { detached: true, stdio: 'ignore', windowsVerbatimArguments: true });
-  child.on('error', () => {});
-  child.unref();
+const TOAST_PS = [
+  "$ErrorActionPreference = 'Stop'",
+  `$k = 'HKCU:\\Software\\Classes\\AppUserModelId\\${APP_ID}'`,
+  'New-Item -Path $k -Force | Out-Null',
+  "New-ItemProperty -Path $k -Name DisplayName -Value 'Consonance' -PropertyType String -Force | Out-Null",
+  'if ($env:CONSONANCE_TOAST_ICON -and (Test-Path -LiteralPath $env:CONSONANCE_TOAST_ICON)) { New-ItemProperty -Path $k -Name IconUri -Value $env:CONSONANCE_TOAST_ICON -PropertyType String -Force | Out-Null }',
+  '[void][Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]',
+  '[void][Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom.XmlDocument, ContentType = WindowsRuntime]',
+  '$x = New-Object Windows.Data.Xml.Dom.XmlDocument',
+  '$x.LoadXml($env:CONSONANCE_TOAST_XML)',
+  '$t = New-Object Windows.UI.Notifications.ToastNotification $x',
+  `$t.Tag = '${TOAST_TAG}'`,
+  `$t.Group = '${TOAST_GROUP}'`,
+  `[Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('${APP_ID}').Show($t)`,
+].join('; ');
+
+const xmlEscape = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]));
+
+/**
+ * The notice as toast XML. activationType="protocol" with a file: launch target is load-bearing: a notice with no launch
+ * target activates the app it is attributed to, and that app is PowerShell — a click would open a PowerShell window.
+ */
+function toastXml(title, body, statusPath) {
+  return `<toast activationType="protocol" launch="${xmlEscape(pathToFileURL(statusPath).href)}">` +
+    `<visual><binding template="ToastGeneric"><text>${xmlEscape(title)}</text><text>${xmlEscape(body)}</text></binding></visual>` +
+    '</toast>';
+}
+
+/** Raise the notice. Throws on failure; the caller writes that to the status file and opens nothing. */
+function notify(title, body, statusPath) {
+  execFileSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-WindowStyle', 'Hidden', '-Command', TOAST_PS], {
+    env: { ...process.env, CONSONANCE_TOAST_XML: toastXml(title, body, statusPath), CONSONANCE_TOAST_ICON: ICON },
+    stdio: 'ignore', windowsHide: true, timeout: 30000,
+  });
 }
 
 function parseArgs(argv) {
@@ -174,7 +223,7 @@ function parseArgs(argv) {
 
 /**
  * The waiter. Every side effect is injectable; the CLI passes none. Returns
- * { code, outcome, exports, windows } — `outcome` names which exit rule ran last.
+ * { code, outcome, exports, notices } — `outcome` names which exit rule ran last.
  */
 function runWaiter(argv, inject) {
   const k = Object.assign({
@@ -187,7 +236,7 @@ function runWaiter(argv, inject) {
     now: () => Date.now(),
     tailCarryPath: path.join(__dirname, 'tail-carry.js'),
     exportCarry: null,
-    openWindow,
+    notify,
     log: () => {},
     pollMs: POLL_MS, lockedRetryMs: LOCKED_RETRY_MS, lockedRetryForMs: LOCKED_RETRY_FOR_MS,
     maxPolls: Infinity,
@@ -195,10 +244,10 @@ function runWaiter(argv, inject) {
   const runExport = k.exportCarry || ((stick) => defaultExport(stick, k.tailCarryPath));
 
   const parsed = parseArgs(argv);
-  if (parsed.error) { k.log(`[stick-waiter] ${parsed.error}`); return { code: 2, outcome: 'BAD_ARGUMENTS', exports: 0, windows: 0 }; }
+  if (parsed.error) { k.log(`[stick-waiter] ${parsed.error}`); return { code: 2, outcome: 'BAD_ARGUMENTS', exports: 0, notices: 0 }; }
   const o = parsed.o;
   const app = { pid: o.appPid, image: imageName(o.appImage) };
-  const tally = { exports: 0, windows: 0 };
+  const tally = { exports: 0, notices: 0 };
 
   // ── 1 · one waiter per data dir ──
   const lockPath = path.join(o.data, LOCK);
@@ -231,7 +280,7 @@ function runWaiter(argv, inject) {
       if (find.kind === 'none') {
         last = { code: 0, outcome: 'NO_STICK' };
       } else {
-        last = exportWithWindow(find, o.data, k, runExport, tally);
+        last = exportWithNotice(find, o.data, k, runExport, tally);
       }
 
       // ── 4 · a close and reopen inside one poll: adopt the new session ──
@@ -261,22 +310,29 @@ function takeLock(p, k) {
   return { ok: false };
 }
 
-/** A stick was found: open the window, export (or refuse by name), write DONE / NOT DONE, and hand back the result. */
-function exportWithWindow(find, dataDir, k, runExport, tally) {
+/**
+ * A stick was found: raise "don't pull it yet", export (or refuse by name), write DONE / NOT DONE, raise the closing
+ * notice, and hand back the result. AMBIGUOUS exports nothing, so it raises only the closing NOT DONE.
+ */
+function exportWithNotice(find, dataDir, k, runExport, tally) {
   const statusPath = path.join(dataDir, STATUS);
   fs.writeFileSync(statusPath, '');
   const say = (s) => { try { fs.appendFileSync(statusPath, `${s}\n`); } catch (_) {} };
+  const raise = (body) => {
+    try { k.notify('Consonance — the stick', body, statusPath); tally.notices++; }
+    catch (e) { say(`(the notification could not be shown: ${e && e.message ? e.message : e} — nothing opens instead; this file is the record)`); }
+  };
   const finish = (code, outcome, lines) => {
     say('');
     for (const l of lines) say(l);
+    // The notice carries the first line (DONE / NOT DONE and the reason) and, for a refusal, the named detail after it.
+    raise(code === 0 ? lines[0] : lines.slice(0, 4).join('\n'));
     say(`${END} ${code} ${code === 0 ? 'DONE' : 'NOT DONE'} ${outcome}`);
     return { code, outcome };
   };
 
   say('CONSONANCE CLOSED. Copying every seat onto the stick.');
-  say('Do NOT unplug the stick until this window says DONE.');
-  try { k.openWindow(statusPath); tally.windows++; }
-  catch (e) { say(`(the window could not be opened: ${e.message} — the export runs anyway; this file is its record)`); }
+  say('Do NOT unplug the stick until the notice says DONE.');
 
   if (find.kind === 'many') {
     return finish(2, 'AMBIGUOUS', ['NOT DONE — more than one stick folder is plugged in, and none was picked:',
@@ -285,6 +341,8 @@ function exportWithWindow(find, dataDir, k, runExport, tally) {
   }
 
   say(`the stick: ${find.folder}   (${find.layout} layout)`);
+  // Once, before the first attempt — a busy ledger's retries are one export to the keeper, not several.
+  raise(`Saving to the stick — don't pull it yet.\n${find.folder}\nA second notice will say DONE or NOT DONE.`);
   const giveUpAt = k.now() + k.lockedRetryForMs;
   for (let attempt = 1; ; attempt++) {
     const r = runExport(find.folder);
@@ -350,4 +408,4 @@ if (require.main === module) {
   process.exit(runWaiter(argv).code);
 }
 
-module.exports = { runWaiter, runView, findStick, layoutAt, parseVolumeList, parseArgs, pidAnswers, LOCK, STATUS, END, IMAGE_EVERY_POLLS };
+module.exports = { runWaiter, runView, findStick, layoutAt, parseVolumeList, parseArgs, pidAnswers, toastXml, notify, TOAST_PS, APP_ID, TOAST_TAG, ICON, LOCK, STATUS, END, IMAGE_EVERY_POLLS };

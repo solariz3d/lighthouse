@@ -1,13 +1,17 @@
 // stick-waiter.test.js — run with: node dev/stick-waiter.test.js
 //
 // WHAT THIS GUARDS. The waiter runs on EVERY launch and does its work after the only surface the keeper has is gone.
-// Its failures are all silent: exporting on a hand-off (racing the applier), exporting — or opening a window — when
+// Its failures are all silent: exporting on a hand-off (racing the applier), exporting — or raising a notice — when
 // no stick is plugged in (the no-stick bar), never exporting when one is, and a find rule that disagrees with the
 // app's. So: the §3 six-case table is pinned EXACTLY (the Rust suite tests the same six, and neither may add a case),
 // and each exit rule from "WHAT THE WAITER RUNS" has its own test.
 //
-// The app-alive probe is an injected image lookup, the export and the window are injected, and the volume roots are
+// The app-alive probe is an injected image lookup, the export and the notice are injected, and the volume roots are
 // temp directories — so nothing here touches a real drive, a real app, or the screen.
+//
+// P-NO-CONSOLE (2026-09-14): the export window is gone. What this file now also guards is that NOTHING in the waiter or
+// the applier can put a console window on the screen — a static sweep over every child_process call, and the notice's
+// own shape (no launch of the PowerShell app on click, no text spliced into a script).
 
 const assert = require('assert');
 const fs = require('fs');
@@ -84,12 +88,12 @@ test('the volume list keeps drive-letter lines only, as roots, sorted', () => {
 // ══ the waiter ══════════════════════════════════════════════════════════════════════════════════════════════════
 
 const APP = 4100;
-/** A world: a data dir, a scripted app lifetime (image per probe), injected volumes, export and window. */
+/** A world: a data dir, a scripted app lifetime (image per probe), injected volumes, export and notice. */
 function world(opts) {
   opts = opts || {};
   const data = path.join(tmp, `data${++seq}`);
   fs.mkdirSync(data, { recursive: true });
-  const w = { data, exports: [], windows: [], sleeps: 0, roots: opts.roots || [], imageCalls: 0, answerCalls: 0 };
+  const w = { data, exports: [], notices: [], sleeps: 0, roots: opts.roots || [], imageCalls: 0, answerCalls: 0 };
   // A scripted lifetime per watched pid: one entry per POLL (advanced by the pid check), each the image that pid runs
   // then — null = dead, undefined = the image cannot be told. The image lookup reads the CURRENT entry, never advances.
   const lives = Object.assign({ [APP]: [...(opts.life || ['consonance', null])] }, opts.lives || {});
@@ -112,7 +116,7 @@ function world(opts) {
     sleep: () => { w.sleeps++; },
     now: (() => { let t = Date.parse('2026-09-14T10:00:00.000Z'); return () => (t += 1000); })(),
     exportCarry: (stick) => { w.exports.push(stick); return (opts.exports || []).shift() || { stdout: JSON.stringify({ code: 0, outcome: 'CARRIED', rows: [{ result: { ok: true } }] }) + '\n' }; },
-    openWindow: (p) => { if (opts.windowFails) throw new Error('no console'); w.windows.push(p); },
+    notify: (title, body, statusPath) => { if (opts.noticeFails) throw new Error('notifications are off'); w.notices.push({ title, body, statusPath }); },
     maxPolls: 50,
   }, opts.inject || {});
   w.argv = ['--data', data, '--app-pid', String(APP), '--app-image', 'consonance.exe'];
@@ -182,13 +186,13 @@ test('"cannot tell" what the pid runs is waited out as alive, never taken as gon
 
 // ── the exit rules ──
 
-test('STAND DOWN: stick-apply.started.json names a live applier -> exit quietly, no find, no window, no export', () => {
+test('STAND DOWN: stick-apply.started.json names a live applier -> exit quietly, no find, no notice, no export', () => {
   const w = world({ roots: [stickVolume()], live: { 4242: 'node' } });
   put(path.join(w.data, A.STARTED), JSON.stringify({ pid: 4242, image: 'node', script: 'stick-apply.js', at: 'x', stick: 'x' }));
   let looked = false;
   w.inject.volumeRoots = () => { looked = true; return w.roots; };
   const r = go(w);
-  assert.deepStrictEqual([r.code, r.outcome, looked, w.windows.length, w.exports.length], [0, 'STOOD_DOWN', false, 0, 0]);
+  assert.deepStrictEqual([r.code, r.outcome, looked, w.notices.length, w.exports.length], [0, 'STOOD_DOWN', false, 0, 0]);
 });
 
 test('a handshake naming a DEAD applier is not a hand-off: the exit is real', () => {
@@ -198,22 +202,29 @@ test('a handshake naming a DEAD applier is not a hand-off: the exit is real', ()
   assert.strictEqual(w.exports.length, 1);
 });
 
-test('NO STICK at exit: no window, no export, no status file, no row — exit quietly', () => {
+test('NO STICK at exit: no notice, no export, no status file, no row — exit quietly', () => {
   const v = volume();
   const w = world({ roots: [v] });
   const before = fs.readdirSync(w.data).sort();
   const r = go(w);
-  assert.deepStrictEqual([r.code, r.outcome, w.windows.length, w.exports.length, w.status()], [0, 'NO_STICK', 0, 0, null]);
+  assert.deepStrictEqual([r.code, r.outcome, w.notices.length, w.exports.length, w.status()], [0, 'NO_STICK', 0, 0, null]);
   assert.deepStrictEqual(fs.readdirSync(w.data).sort(), before, 'the lock is gone again and nothing else was written');
 });
 
-test('ONE STICK at exit: a window opens, the export runs against THAT folder, and the status ends DONE', () => {
+test('ONE STICK at exit: "don\'t pull it yet" BEFORE the export, DONE after it, and the status ends DONE', () => {
   const v = stickVolume();
   const w = world({ roots: [v] });
+  let exportsWhenFirstNotice = null;
+  const notify = w.inject.notify;
+  w.inject.notify = (t, b, p) => { if (exportsWhenFirstNotice === null) exportsWhenFirstNotice = w.exports.length; notify(t, b, p); };
   const r = go(w);
   assert.deepStrictEqual(w.exports, [path.join(v, 'consonance-L-20260911')], 'the folder, never the volume');
-  assert.strictEqual(w.windows.length, 1);
-  assert.strictEqual(w.windows[0], path.join(w.data, W.STATUS));
+  assert.strictEqual(w.notices.length, 2, 'two notices (re-rule 5190f73): one as it starts, one as it ends');
+  assert.strictEqual(exportsWhenFirstNotice, 0, 'the first notice is up before the export begins');
+  assert.match(w.notices[0].body, /^Saving to the stick — don't pull it yet\./);
+  assert.ok(w.notices[0].body.includes(path.join(v, 'consonance-L-20260911')), 'it names the stick folder');
+  assert.match(w.notices[1].body, /^DONE \(CARRIED\) — 1 seat\(s\) written to the stick\. You can unplug it now\.$/);
+  for (const n of w.notices) assert.strictEqual(n.statusPath, path.join(w.data, W.STATUS));
   assert.deepStrictEqual([r.code, r.outcome], [0, 'CARRIED']);
   assert.match(w.status(), /@@END 0 DONE CARRIED/);
 });
@@ -229,23 +240,110 @@ test('the stick is found at EXIT, not at launch — plugged in during the sessio
   assert.deepStrictEqual(w.exports, [v]);
 });
 
-test('AMBIGUOUS at exit: a window, NOT DONE naming every folder, nothing exported', () => {
+test('AMBIGUOUS at exit: a notice, NOT DONE naming every folder, nothing exported', () => {
   const v = volume();
   put(path.join(v, 'a', 'consonance-tails', 'ledger.json'));
   put(path.join(v, 'b', 'consonance-tails', 'ledger.json'));
   const w = world({ roots: [v] });
   const r = go(w);
-  assert.deepStrictEqual([r.outcome, w.exports.length, w.windows.length], ['AMBIGUOUS', 0, 1]);
+  assert.deepStrictEqual([r.outcome, w.exports.length, w.notices.length], ['AMBIGUOUS', 0, 1]);
+  assert.match(w.notices[0].body, /^NOT DONE — more than one stick folder/);
+  assert.ok(w.notices[0].body.includes(path.join(v, 'a')) && w.notices[0].body.includes(path.join(v, 'b')), 'the notice names the folders');
   assert.match(w.status(), new RegExp(path.join(v, 'a').replace(/\\/g, '\\\\')));
   assert.match(w.status(), new RegExp(path.join(v, 'b').replace(/\\/g, '\\\\')));
   assert.match(w.status(), /@@END 2 NOT DONE AMBIGUOUS/);
 });
 
-test('a window that cannot open does not cost the export — the status file records why', () => {
-  const w = world({ roots: [stickVolume()], windowFails: true });
+test('a notice that cannot be shown does not cost the export — the status file says so, and nothing opens instead', () => {
+  const w = world({ roots: [stickVolume()], noticeFails: true });
   const r = go(w);
-  assert.deepStrictEqual([r.code, w.exports.length], [0, 1]);
-  assert.match(w.status(), /the window could not be opened: no console — the export runs anyway/);
+  assert.deepStrictEqual([r.code, w.exports.length, w.notices.length], [0, 1, 0]);
+  assert.strictEqual((w.status().match(/the notification could not be shown: notifications are off — nothing opens instead/g) || []).length, 2,
+    'both failures are written — the start one does not stop the export, the end one does not stop DONE');
+  assert.match(w.status(), /@@END 0 DONE CARRIED/);
+});
+
+test('a NOT DONE notice carries the reason and the stopped seats, not only the verdict', () => {
+  const rows = [{ seat: 'librarian', sid: '0c0c0c0b-x', verdict: 'REFUSED', reason: 'UNIMPORTED_TAIL', stops: true, result: null }];
+  const w = world({ roots: [stickVolume()], exports: [{ stdout: JSON.stringify({ code: 1, outcome: 'STOPPED', why: null, rows }) + '\n' }] });
+  go(w);
+  assert.strictEqual(w.notices.length, 2);
+  assert.match(w.notices[1].body, /NOT DONE — exit 1, STOPPED\./);
+  assert.match(w.notices[1].body, /librarian 0c0c0c0b-x: REFUSED \(UNIMPORTED_TAIL\)/);
+});
+
+// ── P-NO-CONSOLE: nothing the waiter or the applier starts can draw a console window ──
+
+test('the notice is protocol-activated to the status file — a click never opens the PowerShell app', () => {
+  const xml = W.toastXml('Consonance — the stick', 'DONE', path.join(tmp, 'stick-waiter.status.log'));
+  assert.match(xml, /^<toast activationType="protocol" launch="file:\/\/\//);
+  assert.match(xml, /stick-waiter\.status\.log"/);
+});
+
+test('the notice escapes every value it carries — a folder named with & < > " \' cannot break or inject into it', () => {
+  const nasty = 'D&D <stick> "x" \'y\'';
+  const xml = W.toastXml(nasty, nasty, path.join(tmp, 'a&b', 'stick-waiter.status.log'));
+  // Every value lands in exactly one of two places: the launch attribute, or a <text> element. Neither may hold a raw
+  // special character once the five entities are taken out.
+  const values = [xml.match(/launch="([^"]*)"/)[1], ...[...xml.matchAll(/<text>([^<]*)<\/text>/g)].map((m) => m[1])];
+  assert.strictEqual(values.length, 3, 'one launch target and two text elements');
+  for (const v of values) assert.doesNotMatch(v.replace(/&(amp|lt|gt|quot|apos);/g, ''), /[<>"'&]/, `raw special character in ${v}`);
+  assert.ok(xml.includes('D&amp;D &lt;stick&gt; &quot;x&quot; &apos;y&apos;'));
+});
+
+test('the PowerShell script is a constant: nothing from a stick, a path or a seat is spliced into it', () => {
+  assert.doesNotMatch(W.TOAST_PS, /\$\{/, 'no template holes');
+  assert.match(W.TOAST_PS, /\$env:CONSONANCE_TOAST_XML/, 'the text arrives by environment variable');
+});
+
+test('the notices are sent as Consonance: the app\'s own identifier, registered with DisplayName Consonance before Show', () => {
+  const conf = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'consonance', 'src-tauri', 'tauri.conf.json'), 'utf8'));
+  assert.strictEqual(W.APP_ID, conf.identifier, 'the id is tauri.conf.json\'s — one app, one name, if the app ever sends its own');
+  const ps = W.TOAST_PS;
+  const reg = ps.indexOf(`HKCU:\\Software\\Classes\\AppUserModelId\\${W.APP_ID}`);
+  const show = ps.indexOf(`CreateToastNotifier('${W.APP_ID}').Show($t)`);
+  assert.ok(reg >= 0 && show > reg, 'registered under HKCU, then shown under the same id');
+  assert.match(ps, /-Name DisplayName -Value 'Consonance'/);
+  assert.doesNotMatch(ps, /WindowsPowerShell/, 'no longer attributed to PowerShell');
+  assert.ok(fs.existsSync(W.ICON), `the icon the registration points at exists: ${W.ICON}`);
+});
+
+test('both notices of an export carry ONE tag, so DONE replaces "don\'t pull it yet" instead of sitting beside it', () => {
+  assert.match(W.TOAST_PS, new RegExp(`\\$t\\.Tag = '${W.TOAST_TAG}'`));
+  assert.match(W.TOAST_PS, /\$t\.Group = '[a-z]+'/);
+});
+
+test('SWEEP: every child_process call in the waiter, the applier and the carry passes windowsHide: true — one named exception', () => {
+  const files = ['stick-waiter.js', 'stick-apply.js', 'tail-carry.js', 'place-conversations.js'];
+  const calls = [];
+  for (const f of files) {
+    const src = fs.readFileSync(path.join(__dirname, f), 'utf8');
+    const re = /\b(spawnSync|spawn|execFileSync|execFile|execSync|exec)\(/g;
+    let m;
+    while ((m = re.exec(src))) {
+      // the call's text up to its closing paren at depth 0
+      let depth = 0, i = m.index + m[0].length - 1, end = -1;
+      for (; i < src.length; i++) { const c = src[i]; if (c === '(') depth++; else if (c === ')') { depth--; if (depth === 0) { end = i; break; } } }
+      const text = src.slice(m.index, end + 1);
+      const line = src.slice(0, m.index).split('\n').length;
+      calls.push({ f, line, text, hidden: /windowsHide:\s*true/.test(text) });
+    }
+  }
+  assert.ok(calls.length >= 8, `the sweep found only ${calls.length} calls — it is not seeing the files`);
+  const unhidden = calls.filter((c) => !c.hidden);
+  // THE ONE EXCEPTION: relaunching consonance.exe — a GUI-subsystem program that allocates no console, where SW_HIDE
+  // could start the app itself hidden (stick-apply.js, defaultRelaunch).
+  const listing = unhidden.map((c) => `  ${c.f}:${c.line} ${c.text.replace(/\s+/g, ' ')}`).join('\n');
+  assert.strictEqual(unhidden.length, 1, `expected exactly the relaunch unhidden; found:\n${listing}`);
+  assert.strictEqual(unhidden[0].f, 'stick-apply.js', listing);
+  assert.match(unhidden[0].text, /^spawn\(exe, \[\]/, listing);
+});
+
+test('SWEEP: no path in the waiter can open a console window on purpose — no "start", no cmd.exe, no --view launched', () => {
+  const src = fs.readFileSync(path.join(__dirname, 'stick-waiter.js'), 'utf8').split('\n').filter((l) => !/^\s*(\/\/|\*)/.test(l)).join('\n');
+  assert.doesNotMatch(src, /cmd\.exe/);
+  assert.doesNotMatch(src, /['"`]start\b/);
+  assert.doesNotMatch(src, /openWindow/);
 });
 
 test('NOT DONE names the seats that stopped', () => {
@@ -262,6 +360,7 @@ test('LEDGER_LOCKED is retried, every attempt written, then the export lands', (
   const r = go(w);
   assert.deepStrictEqual([w.exports.length, r.code], [3, 0]);
   assert.strictEqual((w.status().match(/ledger is busy/g) || []).length, 2);
+  assert.deepStrictEqual(w.notices.map((n) => n.body.split(' ')[0]), ['Saving', 'DONE'], 'three attempts are ONE export to the keeper: one start notice, one end');
 });
 
 test('an export that prints no object is NOT DONE, code 3', () => {

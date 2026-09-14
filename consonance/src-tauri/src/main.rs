@@ -10388,8 +10388,17 @@ const APPLY_HANDSHAKE_POLLS: u32 = 100;
 const APPLY_HANDSHAKE_POLL: Duration = Duration::from_millis(100);
 /// A rehearsal hashes whole transcripts (262 MB for Main on L). Generous, and still a bound.
 const STICK_REHEARSAL_TIMEOUT: Duration = Duration::from_secs(300);
-/// Win32 process-creation flags for an applier that must outlive this process. No console window.
-const DETACHED_PROCESS: u32 = 0x0000_0008;
+/// The second half of the flags the waiter and the applier are started with, `NO_WINDOW | CREATE_NEW_PROCESS_GROUP`.
+/// Their own process group means the app's exit sends them no console control event, so they outlive it.
+///
+/// **Not `DETACHED_PROCESS`, and why (P-NO-CONSOLE, measured on L 2026-09-14 —
+/// `handback/p-no-console-E_2026-09-14.md`):** a console-less parent makes every console program it starts
+/// allocate a console of its own, and one started without `windowsHide` is drawn by Windows Terminal — 15
+/// terminal-host starts on 5 of 5 calls. `NO_WINDOW` gives the child a HIDDEN console that its own children
+/// inherit, so a forgotten flag anywhere in the subtree (tail-carry, place-conversations, powershell, cmd) opens
+/// nothing: 0 of 5. Survival measured the same day: a clean exit and `taskkill /F` of the parent both left the
+/// child running. **The exception, named:** a TREE kill (`taskkill /F /T` on the app) takes the child down under
+/// either flag set — nothing in Consonance does one, but a keeper or a script that does would stop the export too.
 const CREATE_NEW_PROCESS_GROUP: u32 = 0x0000_0200;
 
 /// Every mounted volume, as the OS lists them — FIXED and REMOVABLE only, never a network share, never
@@ -10546,14 +10555,14 @@ fn run_carry_json(args: &[&str], timeout: Duration) -> Result<serde_json::Value,
 }
 
 /// **§3 (11d9eb5, restated ~03:30): the app starts the exit waiter on EVERY launch, stick or no stick.**
-/// The ONE process a no-stick launch adds, and the only one: detached, so it outlives this app and notices
-/// it gone however it went — a close, a crash, or a kill that runs no handler (§1, measured). Single-instance
-/// is the WAITER's own lock (`stick-waiter.lock`), not this function's.
+/// The ONE process a no-stick launch adds, and the only one: in its own process group, so it outlives this app
+/// and notices it gone however it went — a close, a crash, or a kill that runs no handler (§1, measured).
+/// Single-instance is the WAITER's own lock (`stick-waiter.lock`), not this function's.
 ///
 /// **No persist.log row when it starts** — the no-stick bar keeps a launch's rows as they were. A row only when
 /// node will not run, because a waiter that silently never started is the failure Call 2 exists to prevent.
-/// `DETACHED_PROCESS` gives it no console: waiting should be unobtrusive, and the visible window at export
-/// time is the waiter's to open (A).
+/// **No window, ever** (P-NO-CONSOLE): started with a hidden console its children inherit — see
+/// `CREATE_NEW_PROCESS_GROUP` for the measurement, and for the one exit it does not survive (a tree kill).
 fn start_exit_waiter() {
     let Some(script) = repo_root().map(|r| r.join("dev").join("stick-waiter.js")).filter(|p| p.is_file()) else {
         plog("STICK WAITER not started — dev/stick-waiter.js is not on disk in this checkout; nothing will export to a stick when this app exits");
@@ -10564,7 +10573,7 @@ fn start_exit_waiter() {
         .arg(&script)
         .args(sync_launch::waiter_args(&data, std::process::id()))
         .env("CONSONANCE_DATA", &data)
-        .creation_flags(DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP)
+        .creation_flags(NO_WINDOW | CREATE_NEW_PROCESS_GROUP)
         .stdin(Stdio::null())
         .stdout(Stdio::null())
         .stderr(Stdio::null())
@@ -10696,7 +10705,9 @@ async fn stick_start_applier(
         // The handshake is written into the data dir of the applier and read from the one this app uses:
         // the same by construction.
         .env("CONSONANCE_DATA", &data)
-        .creation_flags(DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP)
+        // No window, ever (P-NO-CONSOLE): a hidden console the applier's own children inherit, and its own
+        // process group so it outlives the exit it waits for. See CREATE_NEW_PROCESS_GROUP for the measurement.
+        .creation_flags(NO_WINDOW | CREATE_NEW_PROCESS_GROUP)
         .stdin(Stdio::null())
         .stdout(Stdio::null())
         .stderr(Stdio::null())
@@ -15521,5 +15532,95 @@ mod inbox_tests {
         assert!(inbox.take_ready("never-seen", PaneGate::Unstamped, false, true, Instant::now(), true).is_none());
         assert_eq!(inbox.depth("never-seen"), 0);
         assert!(inbox.panes().is_empty());
+    }
+}
+
+/// **P-NO-CONSOLE — no terminal window ever opens for any process Consonance starts.**
+///
+/// Measured on L, 2026-09-14 (`handback/p-no-console-E_2026-09-14.md` §2): a parent started with
+/// `DETACHED_PROCESS` has no console, so every console program it launches allocates one of its own, and one
+/// launched without `windowsHide` is drawn by Windows Terminal — 15 terminal-host starts on 5 of 5 calls. Under
+/// `CREATE_NO_WINDOW` the child gets a HIDDEN console its own children inherit, and the same unhidden call
+/// opened nothing (0 of 5), while the child still outlived the app through a clean exit and through
+/// `taskkill /F`. So every spawn here carries `NO_WINDOW`, and none is detached.
+#[cfg(test)]
+mod no_console_tests {
+    use std::fs;
+
+    /// Each `Command::new` in `file`, as the text from that call to the first `.spawn()`, `.status()` or
+    /// `.output()` after it — the whole builder, including a `let mut cmd = …; … cmd.creation_flags(…)` split
+    /// across statements.
+    fn builders(file: &str) -> Vec<(usize, String)> {
+        let src = fs::read_to_string(file).unwrap_or_else(|e| panic!("read {file}: {e}"));
+        let needle = concat!("Command", "::new(");
+        let mut out = Vec::new();
+        let mut from = 0;
+        while let Some(i) = src[from..].find(needle).map(|i| from + i) {
+            let rest = &src[i..];
+            let end = [concat!(".spa", "wn()"), concat!(".sta", "tus()"), concat!(".out", "put()")]
+                .iter()
+                .filter_map(|t| rest.find(t))
+                .min()
+                .unwrap_or_else(|| panic!("{file}: a Command::new at byte {i} is never spawned — re-point this test"));
+            let line = src[..i].matches('\n').count() + 1;
+            out.push((line, rest[..end].to_string()));
+            from = i + needle.len();
+        }
+        out
+    }
+
+    /// **The sweep.** Every builder in both files passes `NO_WINDOW` (or `CREATE_NO_WINDOW`) to `creation_flags`.
+    /// The count floor is this test's own positive control: a pattern that matched nothing would pass vacuously,
+    /// and eight is how many spawn sites these two files had when this was written.
+    #[test]
+    fn every_process_the_app_starts_is_started_with_no_window() {
+        let mut all = Vec::new();
+        for file in ["src/main.rs", "src/sync_launch.rs"] {
+            for (line, b) in builders(file) {
+                all.push((file, line, b));
+            }
+        }
+        assert!(all.len() >= 8, "found {} spawn sites; the sweep is not reading the source it claims to", all.len());
+        let bare: Vec<String> = all
+            .iter()
+            .filter(|(_, _, b)| {
+                let flags = b.split(concat!(".creation", "_flags(")).nth(1).map(|f| f.split(')').next().unwrap_or(""));
+                !flags.map_or(false, |f| f.contains("NO_WINDOW"))
+            })
+            .map(|(file, line, _)| format!("{file}:{line}"))
+            .collect();
+        assert!(bare.is_empty(), "these spawns carry no NO_WINDOW and can open a terminal window: {bare:?}");
+    }
+
+    /// **No detached spawn, anywhere in either file.** A detached parent is what makes a forgotten `windowsHide` in
+    /// any child become a visible window. The flag may still be NAMED in a comment that says why it is gone; it
+    /// may not be defined, and no spawn may pass it.
+    #[test]
+    fn no_process_is_started_detached() {
+        let detached = concat!("DETACHED", "_PROCESS");
+        for file in ["src/main.rs", "src/sync_launch.rs"] {
+            let src = fs::read_to_string(file).unwrap();
+            assert!(!src.contains(&format!("const {detached}")), "{file} defines the detached-process flag again");
+            for (line, b) in builders(file) {
+                let flags = b.split(concat!(".creation", "_flags(")).nth(1).map(|f| f.split(')').next().unwrap_or("").to_string());
+                assert!(!flags.map_or(false, |f| f.contains(detached)), "{file}:{line} starts a process detached");
+            }
+        }
+    }
+
+    /// The waiter and the applier, exactly: a hidden console AND their own process group, so the app's exit
+    /// sends them no console control event and they outlive it (§3 of the hand-back: clean exit and `taskkill /F`
+    /// both survived; only a tree kill reaches them).
+    #[test]
+    fn the_waiter_and_the_applier_get_a_hidden_console_and_their_own_process_group() {
+        let src = fs::read_to_string("src/main.rs").unwrap();
+        for sig in [concat!("fn start_exit", "_waiter("), concat!("async fn stick_start", "_applier(")] {
+            let body = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+            let body = &body[..body.find("\n}\n").expect("no end of function")];
+            assert!(
+                body.contains(concat!(".creation_flags(NO_WINDOW | CREATE_NEW", "_PROCESS_GROUP)")),
+                "{sig} does not start its child with NO_WINDOW | CREATE_NEW_PROCESS_GROUP"
+            );
+        }
     }
 }

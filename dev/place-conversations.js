@@ -165,7 +165,9 @@ function timespan(buf) {
 /** Is Consonance up? Injectable, because no test may depend on whether the keeper has it open. */
 function consonanceRunning() {
   try {
-    const out = execFileSync('tasklist', ['/FI', 'IMAGENAME eq consonance.exe', '/NH'], { encoding: 'utf8' });
+    // windowsHide (P-NO-CONSOLE): tail-carry's import gate calls this from the applier, a process started with no
+    // console; a console child of such a process gets a Windows Terminal window unless it is told not to.
+    const out = execFileSync('tasklist', ['/FI', 'IMAGENAME eq consonance.exe', '/NH'], { encoding: 'utf8', windowsHide: true });
     return /consonance\.exe/i.test(out);
   } catch (e) {
     // An unanswerable question is not a "no". If we cannot tell whether the app is up, the honest
