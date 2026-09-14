@@ -16,6 +16,11 @@
     <canvas id="c"></canvas>
   </div>
 
+  <!-- L059 · THE SETUP WINDOW FOR THE TRANSFER (stick.js). BELOW the intro in stacking order, so the intro
+       covers it and fades to reveal it: rebuild if needed, then the intro, then this. Hidden unless the launch
+       held the seats for the stick. -->
+  <div id="stick-setup" hidden><div class="stick-body"></div></div>
+
   <div id="topbar">
     <span class="brandmini" title="Consonance — instances, in concert">
       <svg viewBox="0 0 64 64" width="22" height="22" aria-hidden="true">
@@ -377,6 +382,9 @@
        killed term.js outright on 2026-08-15. -->
   <script src="term.js"></script>
   <script src="app.js"></script>
+  <!-- stick.js AFTER term.js: it calls inv, escapeHtml, setStatus and restoreKeptPanes, and defines no
+       top-level binding (one function scope), so it cannot collide with anything in the shared scope. -->
+  <script src="stick.js"></script>
   <!-- chain-indicator.js LAST, and for the same reason the two above are ordered. It reads term.js's
        `paneLetters` to name a pane by its letter, and `typeof` on a `let` still in its temporal dead
        zone THROWS rather than returning "undefined" — so the guard in that file only holds once

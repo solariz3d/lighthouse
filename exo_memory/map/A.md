@@ -1143,3 +1143,20 @@ arrived), and an exception mid-apply exited 1, reading as a refusal when somethi
 Restored from HEAD, re-applied with a function replacement, diff re-checked. Then shell escaping ate a `\d`.
 Stopped scripting edits through the shell. One in-place retirement exists on L (the launch-born librarian,
 942,565 B) — named, left where it is.
+
+## 2026-09-14 — P-STICK-BUILD (L059) · A: stopped under §6, then built what the re-rule adopted — and the harness can no longer leave a mutant behind
+
+Hand-back at `exo_memory/handback/p-stick-build-A_2026-09-14.md` (the §6 stop, then RESUMED below it). Three shared-section
+defects measured on fixtures and rung BEFORE building — the applier could not carry the keeper's decision (a loop on the
+commonest arrival), every successful import broke the MANIFEST, and the waiter and applier lost ledger updates into a
+permanent wedge. All three proposals adopted as written. Built: the applier (`stick-apply.js`, 24 tests), the every-launch
+waiter (`stick-waiter.js`, 33 tests, the six-case find table pinned to E's Rust), and in `tail-carry.js` the ledger lock,
+the manifest rewritten with the ledger, `--verify-set`, E-3, and the ALREADY_APPLIED advance — which I built before the
+chair's b258fc2 ring ruled it, because my own "correct by construction" answer was false without it. tail-carry 106 tests,
+**67 mutants, 67 killed, 0 survived, 0 not applied**; 19/19 controls on the two new suites. **The harness fix, proven with a
+positive control that fails first:** the old harness killed mid-mutant left a live mutant in the tracked file; the new one,
+killed the same way, left `git diff` empty. **Caught in my own work on the way:** a `tasklist` every 2 s all session against
+the one-added-process bar, a dead pid second-guessed by a tasklist that could hang the waiter for ever, 12 drive-letter
+fixtures that would have turned portable-paths redder at landing, and a false "no leftovers" from an `ls` that hides
+dotfiles. **For the chair:** five stick data-dir files are UNPLACED in the state manifest, so D's `close.js` would refuse
+all session. Uncommitted; nothing with `--apply` against the real stick.

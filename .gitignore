@@ -77,3 +77,8 @@ dev/rebuild-on-close.log
 # it exists on one laptop. The rule stays until the keeper decides whether the record travels in the
 # (now private) repo or stays local on purpose. Whichever he chooses, it will be his call, made once.
 exo_memory/third_place/
+
+# The tail-carry mutation harness writes its mutants into a COPY beside the source and holds a lock while it
+# runs (L059: a killed run here runs no cleanup, so the copy and the lock can outlive it). Neither is ever staged.
+dev/.tail-carry.mutant-*.js
+dev/.tail-carry.mutants.lock

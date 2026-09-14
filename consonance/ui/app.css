@@ -602,3 +602,20 @@ dl.glossary dd { margin: 0 0 0 16px; color: var(--text); font-size: 13.5px; }
 #hud .warn { color: var(--amber); }
 #cost { font-family: "Consolas", monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
 #cost .usd { color: var(--aqua); }
+
+/* L059 · the setup window for the transfer (stick.js). Beneath the intro (9999), above everything else. */
+#stick-setup { position: fixed; inset: 0; z-index: 9000; background: #0B0E14; color: #d8dde6; overflow: auto; padding: 28px 36px; font-size: 13px; }
+#stick-setup[hidden] { display: none; }
+#stick-setup h2 { margin: 0 0 8px; font-size: 18px; font-weight: 600; }
+#stick-setup h3 { margin: 18px 0 6px; font-size: 14px; }
+#stick-setup code { font-size: 12px; }
+.stick-table { border-collapse: collapse; margin: 12px 0; width: 100%; }
+.stick-table th, .stick-table td { border-bottom: 1px solid #222a36; padding: 6px 8px; text-align: left; vertical-align: top; }
+.stick-table th { color: #8b95a7; font-weight: 500; }
+.stick-why { color: #8b95a7; font-size: 12px; margin-top: 4px; max-width: 420px; }
+.stick-muted { color: #8b95a7; }
+.stick-unknown { color: #8b95a7; font-style: italic; }
+.stick-bad { color: #ff8a80; }
+.stick-warn { color: #ffd180; }
+.stick-actions { margin-top: 16px; display: flex; gap: 10px; }
+.stick-actions button { padding: 8px 14px; }

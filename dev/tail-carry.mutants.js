@@ -24,18 +24,57 @@ const SRC = path.join(__dirname, 'tail-carry.js');
 const SUITE = path.join(__dirname, 'tail-carry.test.js');
 const LOCK = path.join(__dirname, '.tail-carry.mutants.lock');
 
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// THE TRACKED SOURCE IS NEVER WRITTEN. (L059 §5, pane A, 2026-09-14.)
+//
+// This harness used to write each mutant INTO tail-carry.js and restore it in a `finally` and a SIGINT
+// handler. That protects nothing a kill can reach: measured on L tonight, SIGTERM, SIGINT and
+// `taskkill /F` from another process run no handler at all — not even `exit`. A run killed mid-mutant
+// therefore leaves the mutant in the tracked file, and it happened: a timed-out background run left
+// "a run that did not run exits 1" live in tail-carry.js at 02:02, found by the chair before landing.
+// Third instance of one defect (lap-row.js 09-06, state-sync.js and tail-carry.js tonight).
+//
+// So each mutant is written into a COPY beside the real file — `.tail-carry.mutant-<pid>.js`, in this
+// directory so every relative require and the main.rs lookup resolve exactly as they do for the real
+// file — and the suite is pointed at the copy through TAIL_CARRY_UNDER_TEST. A kill at any instant
+// leaves, at worst, an untracked copy and a lock naming a dead pid. The next run sweeps both. There is
+// no restore step, because there is nothing to restore.
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+const COPY = path.join(__dirname, `.tail-carry.mutant-${process.pid}.js`);
+const COPY_RE = /^\.tail-carry\.mutant-(\d+)\.js$/;
+
+/** Is this pid a live process? `kill(pid, 0)` sends nothing; it only asks. EPERM means alive. */
+function alive(pid) {
+  try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; }
+}
+
+// A LOCK LEFT BY A KILLED RUN IS NOW THE EXPECTED CASE, not an anomaly — a kill runs no handler, so it
+// never unlocks. A live holder still refuses this run. A dead holder's lock is taken over, and it is
+// safe to take over for one reason only: the tracked source is re-checked against every mutant below
+// before anything runs, and this harness cannot have written it.
 try {
   fs.writeFileSync(LOCK, `${process.pid} ${new Date().toISOString()}\n`, { flag: 'wx' });
 } catch (e) {
-  console.error(`tail-carry.mutants: another run holds ${LOCK}`);
-  console.error('  Refusing to start. Check tail-carry.js against git BEFORE deleting the lock.');
-  process.exit(2);
+  const holder = parseInt(String(fs.readFileSync(LOCK, 'utf8')).split(/\s/)[0], 10);
+  if (Number.isInteger(holder) && alive(holder)) {
+    console.error(`tail-carry.mutants: a live run (pid ${holder}) holds ${LOCK} — refusing to start.`);
+    process.exit(2);
+  }
+  console.error(`tail-carry.mutants: taking over a lock left by pid ${holder}, which is not running (a killed run).`);
+  fs.writeFileSync(LOCK, `${process.pid} ${new Date().toISOString()}\n`);
+}
+
+for (const f of fs.readdirSync(__dirname)) {
+  const m = f.match(COPY_RE);
+  if (m && Number(m[1]) !== process.pid && !alive(Number(m[1]))) {
+    fs.unlinkSync(path.join(__dirname, f));
+    console.error(`tail-carry.mutants: swept a copy left by killed run pid ${m[1]}: ${f}`);
+  }
 }
 
 const original = fs.readFileSync(SRC, 'utf8');
 function unlock() { try { fs.unlinkSync(LOCK); } catch (_) {} }
-function restore() { fs.writeFileSync(SRC, original); }
-process.on('SIGINT', () => { restore(); unlock(); process.exit(130); });
+function dropCopy() { try { fs.unlinkSync(COPY); } catch (_) {} }
 
 const MUTANTS = [
   // ── the design ──
@@ -155,6 +194,80 @@ const MUTANTS = [
     '    if (false) return { st: null, why: 1 };'],
   ['the rehearsal writes after all', '  if (!apply) {', '  if (false) {'],
 
+  // ── L059 §3 as re-ruled: A-2, the transfer set rewritten with the ledger ──
+  ['A-2 UNDONE: the import rewrites the ledger but not the manifest — every arrival reads mismatched',
+    '  done.transfer = writeTransferSet(stick, led, plan.machine);    // A-2: the import rewrites the manifest too',
+    '  // mutant: import does not rewrite the manifest'],
+  ['the export writes no transfer set at all',
+    '  done.transfer = writeTransferSet(stick, led, machine);         // A-2: same step, after the ledger',
+    '  // mutant: export writes no transfer set'],
+  ['the manifest leaves out the pending tails',
+    '  for (const s of Object.keys(led.seats).sort()) { const p = led.seats[s].pending; if (p && p.tailFile) rels.push(`${LEDGER_DIR}/${p.tailFile}`); }',
+    '  void 0; // mutant: no tail members'],
+  ['the HANDOFF reads something other than the ledger, so the same ledger renders different bytes',
+    "  L.push(`Ledger as of ${at || 'no carry recorded'}. This file is rewritten every time the ledger is written.`);",
+    '  L.push(`Ledger as of ${Math.random()}. This file is rewritten every time the ledger is written.`);'],
+  ['a hand-written HANDOFF at the generated name is not checked before the seats are written',
+    '    if (foreignHandoff(target)) {', '    if (false) {'],
+
+  // ── A-3: one lock, every writer ──
+  ['A-3 UNDONE: a writing run takes no ledger lock',
+    '  const lock = apply ? takeLedgerLock(o.stick, { now, imageOf: o.imageOf }) : null;', '  const lock = null;'],
+  ['a rehearsal takes the lock too, so a held lock blocks reading',
+    '  const lock = apply ? takeLedgerLock(o.stick, { now, imageOf: o.imageOf }) : null;',
+    '  const lock = true ? takeLedgerLock(o.stick, { now, imageOf: o.imageOf }) : null;'],
+  ['a LIVE holder of the ledger lock is taken over as if it were stale',
+    '      if (holderLive(held, o.imageOf)) {', '      if (false) {'],
+  ['a holder that cannot be checked is treated as DEAD, letting a second writer through',
+    '  if (img === undefined) return true;                                  // cannot tell: treat as alive',
+    '  if (img === undefined) return false;'],
+  ['pid reuse by another image counts as the live holder',
+    "  return img !== null && img === String(rec.image || '').toLowerCase();", '  return img !== null;'],
+  ['the ledger lock is never released', '    if (lock) lock.release();', '    void lock;'],
+  ['a stale lock is taken over silently — staleLock is not reported',
+    '    res.staleLock = lock && lock.stale ? lock.stale : null;', '    res.staleLock = null;'],
+  ['the lock\'s directory is left behind by a run that carried nothing',
+    '        if (madeDir) { try { fs.rmdirSync(dir); } catch (_) { /* not empty: something was carried */ } }',
+    '        void madeDir;'],
+
+  // ── --verify-set ──
+  ['the OLDER layout (tonight\'s real stick) is not a stick',
+    "    if (fs.existsSync(ledgerPath(stick))) { res.code = 0; res.layout = 'older'; return res; }",
+    "    if (false) { res.code = 0; res.layout = 'older'; return res; }"],
+  ['a member is checked by size only, so same-size different bytes verify',
+    '    if (size !== m.bytes || hashRange(abs, 0, size) !== m.sha256) res.mismatched.push(rel);',
+    '    if (size !== m.bytes) res.mismatched.push(rel);'],
+  ['extra files fail the set, though tails are kept by design',
+    '  res.code = res.missing.length || res.mismatched.length ? 1 : 0;',
+    '  res.code = res.missing.length || res.mismatched.length || res.extra.length ? 1 : 0;'],
+  ['a member path that escapes the stick is followed',
+    '    if (!rel || (abs !== root && !abs.startsWith(root + path.sep))) { res.mismatched.push(rel); continue; }',
+    '    if (!rel) { res.mismatched.push(rel); continue; }'],
+  ['--verify-set silently combines with --import or --export',
+    "    if (o.mode) return no('--verify-set is a reading on its own; it does not combine with --import or --export', []);",
+    '    void 0; // mutant: combines'],
+
+  // ── the killed import ──
+  ['THE WEDGE: ALREADY_APPLIED is left unsettled, so a killed import blocks that seat\'s exports for good',
+    '    if (SETTLES.includes(row.verdict)) {', '    if (false) {'],
+  ['the row stops saying the ledger advanced (b258fc2)',
+    '            advanced: d.ok === true },', '            advanced: false },'],
+  ['an ALREADY_APPLIED seat is settled without re-verifying the file',
+    '      const ok = size === pend.toOffset && full === pend.fullSha;', '      const ok = true;'],
+
+  // ── E-3 ──
+  ['E-3 UNDONE: no export records the incoming conversation\'s first timestamp',
+    '    if (row.offset === 0 || !entry.firstTimestamp) entry.firstTimestamp = lineTimestamp(row.keyLine);', '    void 0; // mutant: no firstTimestamp'],
+  ['R-4 UNDONE: a delta never fills a missing first timestamp — the real stick reads "unknown" for ever',
+    '    if (row.offset === 0 || !entry.firstTimestamp) entry.firstTimestamp = lineTimestamp(row.keyLine);',
+    '    if (row.offset === 0) entry.firstTimestamp = lineTimestamp(row.keyLine);'],
+  ['R-4 broken the other way: a delta overwrites a first timestamp that is set',
+    '    if (row.offset === 0 || !entry.firstTimestamp) entry.firstTimestamp = lineTimestamp(row.keyLine);',
+    '    if (true) entry.firstTimestamp = lineTimestamp(row.keyLine);'],
+  ['the import row reports this machine\'s first timestamp as the carried one',
+    '      carriedFirstTimestamp: r.entry && r.entry.firstTimestamp ? r.entry.firstTimestamp : null,',
+    '      carriedFirstTimestamp: lineTimestamp(r.keyLine),'],
+
   // ── the roster ──
   ['a seat main.rs no longer declares is silently dropped from the carry',
     '    if (!sid || !dir) return { seats: null, why: `${rs} no longer declares the ${name} seat where this tool reads it (sid:${!!sid} dir:${!!dir})` };',
@@ -169,33 +282,62 @@ if (alreadyMutated.length) {
   process.exit(2);
 }
 
+/** Run the suite against whatever is in COPY right now. true = the suite went red. */
+function suiteRedOnCopy() {
+  try {
+    execFileSync(process.execPath, [SUITE], {
+      stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8',
+      env: { ...process.env, TAIL_CARRY_UNDER_TEST: COPY },
+    });
+    return false;
+  } catch (_) { return true; }
+}
+
 let killed = 0;
+let notApplied = 0;
 const survivors = [];
 try {
-  for (const [name, from, to] of MUTANTS) {
-    const hits = original.split(from).length - 1;
-    if (hits !== 1) {
-      survivors.push(`${name}  — MUTATION DID NOT APPLY (${hits} matches): the anchor is gone or ambiguous, so this defect is unguarded and unmeasured`);
-      console.log(`  ????  ${name}  (anchor ${hits === 0 ? 'missing' : 'ambiguous'})`);
-      continue;
+  // PRE-FLIGHT: the unmutated copy must be GREEN. If the suite is red for any other reason — a broken
+  // seam, a missing file, a red test — every mutant below would read as "killed" without earning it.
+  // That exact false 50/50 happened on 2026-09-09 (map/A.md, D056-1 run 1).
+  fs.writeFileSync(COPY, original);
+  if (suiteRedOnCopy()) {
+    console.error('tail-carry.mutants: the suite is RED against an UNMUTATED copy — no mutant can be scored. Fix that first.');
+    process.exitCode = 2;
+  } else {
+    for (const [name, from, to] of MUTANTS) {
+      const hits = original.split(from).length - 1;
+      if (hits !== 1) {
+        notApplied++;
+        survivors.push(`${name}  — MUTATION DID NOT APPLY (${hits} matches): the anchor is gone or ambiguous, so this defect is unguarded and unmeasured`);
+        console.log(`  ????  ${name}  (anchor ${hits === 0 ? 'missing' : 'ambiguous'})`);
+        continue;
+      }
+      // A FUNCTION replacement, never a string: a string replacement expands `$&`, `` $` `` and `$'`
+      // inside the mutant text, which corrupted a test file in this lap (map/A.md, 2026-09-14).
+      fs.writeFileSync(COPY, original.replace(from, () => to));
+      if (suiteRedOnCopy()) { killed++; console.log(`  killed  ${name}`); }
+      else { survivors.push(name); console.log(`  SURVIVED  ${name}`); }
     }
-    fs.writeFileSync(SRC, original.replace(from, to));
-    let red = false;
-    try { execFileSync(process.execPath, [SUITE], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8' }); }
-    catch (_) { red = true; }
-    if (red) { killed++; console.log(`  killed  ${name}`); }
-    else { survivors.push(name); console.log(`  SURVIVED  ${name}`); }
   }
 } finally {
-  restore();
+  dropCopy();
   unlock();
+}
+if (process.exitCode === 2) process.exit(2);
+
+// The tracked file must be byte-identical to what this run read. This harness never writes it, so a
+// difference here is ANOTHER writer — the case that bit tonight — and it is reported, never "restored".
+if (fs.readFileSync(SRC, 'utf8') !== original) {
+  console.error('tail-carry.mutants: tail-carry.js CHANGED DURING THIS RUN, and not by this harness. Check git diff before trusting any count above.');
+  process.exitCode = 3;
 }
 
 console.log('');
-console.log(`tail-carry.mutants.js: ${killed} killed, ${survivors.length} survived, ${MUTANTS.length} total`);
+console.log(`tail-carry.mutants.js: ${killed} killed, ${survivors.length - notApplied} survived, ${notApplied} not applied, ${MUTANTS.length} total`);
 if (survivors.length) {
   console.log('');
   console.log('  A SURVIVOR IS A BEHAVIOUR NOTHING WATCHES:');
   for (const s of survivors) console.log(`    ${s}`);
 }
-process.exit(survivors.length ? 1 : 0);
+process.exit(process.exitCode === 3 ? 3 : survivors.length ? 1 : 0);

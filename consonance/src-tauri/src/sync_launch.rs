@@ -751,6 +751,470 @@ pub fn prior_conversation_pointer(path: &Path, bytes: usize) -> String {
     )
 }
 
+// ─────────────────────────────────────────────────────────────────────────────────────────────────
+// THE STICK AT LAUNCH — L059, pane E. `exo_memory/loop/packet_stick_build_2026-09-14.md`, §2 and §3
+// as re-ruled at 60e1ccf / b258fc2.
+//
+// WHAT THIS PART IS, AND WHAT IT REFUSES TO BE. Everything below is pure or `stat`-only. **Nothing
+// here starts a process.** That is not a style choice: E-2 measured that asking A's verifier about
+// every volume costs a node process (57–67 ms, measured on L) per volume on EVERY launch, stick or no
+// stick — a launch that passes "same persist.log rows" while no longer being today's launch. So the
+// launch only looks; the setup window, after the intro, is what runs the verifier and the rehearsal.
+//
+// AND THE IMPORT NEVER RUNS IN THIS PROCESS. The carry's import gate matches the image name
+// `consonance.exe`, which exists from process creation (E, L058 §1, measured). The one write is handed
+// to A's applier, which waits for this process to be gone (§2).
+// ─────────────────────────────────────────────────────────────────────────────────────────────────
+
+/// `<folder>/consonance-transfer/MANIFEST.json` — the manifested layout.
+pub const STICK_MANIFEST: [&str; 2] = ["consonance-transfer", "MANIFEST.json"];
+/// `<folder>/consonance-tails/ledger.json` — the older layout, which is tonight's real stick.
+pub const STICK_LEDGER: [&str; 2] = ["consonance-tails", "ledger.json"];
+/// Written by A's applier before anything else (§2); read at launch for the single-applier guard (E-1).
+pub const APPLY_STARTED: &str = "stick-apply.started.json";
+/// Written by A's applier after the import; shown by the relaunched app, deleted only after showing.
+pub const APPLY_RESULT: &str = "stick-apply.result.json";
+/// THIS APP'S OWN record of a keeper's "keep this machine's" choice. Read and written by the app
+/// alone — never by the applier or the carry — so it is not part of any shared contract. It exists
+/// because §2 says neither choice re-shows the window for that seat, and a KEEP forwards nothing, so
+/// the next rehearsal still refuses that seat: without a record of the choice it would ask again.
+pub const STICK_KEEP: &str = "stick-keep.json";
+
+/// How long after a launch row a conversation's first record may land and still read as launch-born.
+/// **One measured sample, stated as one:** tonight's launch-born librarian on L began 18.7 s after the
+/// `SYNC AT LAUNCH` row at 1789367339 (first record `2026-09-14T06:29:17.726Z`). Fixed seats wake from
+/// a BUTTON, so a slower keeper lands later. That is why this only chooses a DEFAULT and never retires
+/// anything — a late click reads as "not launch-born", which defaults to KEEP, the safe direction.
+pub const LAUNCH_BORN_WINDOW_SECS: i64 = 120;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum StickLayout {
+    Manifest,
+    Older,
+}
+
+impl StickLayout {
+    pub fn tag(&self) -> &'static str {
+        match self {
+            StickLayout::Manifest => "manifest",
+            StickLayout::Older => "older",
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct StickFolder {
+    pub folder: PathBuf,
+    pub layout: StickLayout,
+}
+
+/// §3, "where the stick is".
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum StickFind {
+    /// No marker anywhere. Spawn nothing, log nothing, withhold nothing.
+    None,
+    /// Exactly one folder. That FOLDER is the stick; the verifier is handed the folder, not the volume.
+    One(StickFolder),
+    /// More than one. Every one is named and none is picked; the keeper chooses in the window.
+    Many(Vec<StickFolder>),
+}
+
+fn layout_at(dir: &Path) -> Option<StickLayout> {
+    if dir.join(STICK_MANIFEST[0]).join(STICK_MANIFEST[1]).is_file() {
+        Some(StickLayout::Manifest)
+    } else if dir.join(STICK_LEDGER[0]).join(STICK_LEDGER[1]).is_file() {
+        Some(StickLayout::Older)
+    } else {
+        None
+    }
+}
+
+/// **§3: the volume root AND one folder level down, by `stat` alone.** E-5 is why it is two levels:
+/// the real stick keeps everything in `D:\consonance-L-20260911\`, so a root-only look reads tonight's
+/// stick as no stick at all.
+///
+/// A child that is a symlink or junction is not followed (`DirEntry::file_type` does not follow them),
+/// which keeps `C:\Documents and Settings` and its kind from turning a two-level look into a walk.
+/// An unreadable root or child is skipped: a volume we cannot list is not a stick we can carry from.
+pub fn find_stick(volume_roots: &[PathBuf]) -> StickFind {
+    let mut found = Vec::new();
+    for root in volume_roots {
+        if let Some(layout) = layout_at(root) {
+            found.push(StickFolder { folder: root.clone(), layout });
+        }
+        let Ok(entries) = std::fs::read_dir(root) else { continue };
+        let mut kids: Vec<PathBuf> = entries
+            .flatten()
+            .filter(|e| e.file_type().map(|t| t.is_dir()).unwrap_or(false))
+            .map(|e| e.path())
+            .collect();
+        kids.sort();
+        for kid in kids {
+            if let Some(layout) = layout_at(&kid) {
+                found.push(StickFolder { folder: kid, layout });
+            }
+        }
+    }
+    match found.len() {
+        0 => StickFind::None,
+        1 => StickFind::One(found.remove(0)),
+        _ => StickFind::Many(found),
+    }
+}
+
+/// What the launch can know about a process from its pid, without starting one.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ProcInfo {
+    pub name: String,
+    pub cmd: Vec<String>,
+}
+
+/// §2, "a launch that finds `stick-apply.started.json`" (E-1).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Handshake {
+    Absent,
+    /// A live applier. Start none; offer only Close.
+    Live { pid: u32, stick: Option<String> },
+    /// Named, then treated as absent.
+    Stale { why: String },
+}
+
+/// A pid is the applier only if its image is node AND one of its arguments NAMES `stick-apply.js` — the
+/// file name exactly, after either separator. The image alone is not enough: any node process — this
+/// app's own tools included — would pass. A suffix is not enough either: `ends_with("stick-apply.js")`,
+/// which this first shipped with, also accepted `not-stick-apply.js` and made the separator
+/// normalization beside it decorative (found at L059 R-2, moving the test fixture off this machine's path).
+pub fn is_applier(p: &ProcInfo) -> bool {
+    let name = p.name.to_ascii_lowercase();
+    (name == "node" || name == "node.exe")
+        && p.cmd.iter().any(|a| a.replace('\\', "/").rsplit('/').next() == Some("stick-apply.js"))
+}
+
+/// Reads the handshake. `probe` answers "what is running under this pid", or `None` for nothing.
+///
+/// **A pid alive with a different image is STALE, not live.** Windows reuses pids, and a handshake
+/// left by an applier killed from outside — which on this machine runs no cleanup (§1, measured by
+/// the chair) — outlives its process. Treating any live pid as the applier would leave every later
+/// launch saying "a transfer is waiting" forever, which is E's Q1 condition 2.
+pub fn read_handshake(data_dir: &Path, probe: &dyn Fn(u32) -> Option<ProcInfo>) -> Handshake {
+    let path = data_dir.join(APPLY_STARTED);
+    let raw = match std::fs::read_to_string(&path) {
+        Ok(r) => r,
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Handshake::Absent,
+        Err(e) => return Handshake::Stale { why: format!("{APPLY_STARTED} exists but cannot be read ({e})") },
+    };
+    let v: serde_json::Value = match serde_json::from_str(raw.trim_start_matches('\u{feff}')) {
+        Ok(v) => v,
+        Err(e) => return Handshake::Stale { why: format!("{APPLY_STARTED} is not JSON ({e})") },
+    };
+    let Some(pid) = v.get("pid").and_then(|x| x.as_u64()).filter(|p| *p <= u32::MAX as u64) else {
+        return Handshake::Stale { why: format!("{APPLY_STARTED} names no pid") };
+    };
+    let pid = pid as u32;
+    let stick = v.get("stick").and_then(|x| x.as_str()).map(str::to_string);
+    match probe(pid) {
+        None => Handshake::Stale { why: format!("the applier it names (pid {pid}) is not running") },
+        Some(p) if is_applier(&p) => Handshake::Live { pid, stick },
+        Some(p) => Handshake::Stale {
+            why: format!("pid {pid} is alive but is `{}`, not the applier — a reused pid", p.name),
+        },
+    }
+}
+
+/// Every launch on this machine, as unix seconds, from its own `persist.log`. One row per launch:
+/// `<unix> SYNC AT LAUNCH <TAG> — <why>`, written by `.setup()` after the verdict.
+pub fn launch_times(persist_log: &str) -> Vec<i64> {
+    const TAGS: [&str; 5] = ["STANDALONE", "RESUME", "MIGRATE", "LOCAL HOUSE", "READ-ONLY"];
+    persist_log
+        .lines()
+        .filter_map(|line| {
+            let (stamp, rest) = line.split_once(' ')?;
+            let rest = rest.strip_prefix("SYNC AT LAUNCH ")?;
+            if !TAGS.iter().any(|t| rest.starts_with(&format!("{t} —"))) {
+                return None;
+            }
+            stamp.parse::<i64>().ok()
+        })
+        .collect()
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SeatChoice {
+    Take,
+    Keep,
+}
+
+impl SeatChoice {
+    pub fn tag(&self) -> &'static str {
+        match self {
+            SeatChoice::Take => "take",
+            SeatChoice::Keep => "keep",
+        }
+    }
+}
+
+/// What the window offers for one `OTHER_CONVERSATION` seat.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ChoiceOffer {
+    /// false when `--retire-far` could not take the seat (the stick holds a delta, not a conversation)
+    pub take_offered: bool,
+    pub default: SeatChoice,
+    pub why: String,
+}
+
+fn unix_of(ts: &str) -> Option<i64> {
+    chrono::DateTime::parse_from_rfc3339(ts).ok().map(|d| d.timestamp())
+}
+
+/// **E-4: ruling 1, living in the window.** Only the DEFAULT is decided here; the keeper's click is the
+/// decision, and it rides the handshake as `--retire-far` (§2). Nothing is retired by this function.
+///
+///   not retirable                    TAKE not offered — a delta cannot replace a conversation
+///   a pane                           default TAKE — the stick's copy is the carried one
+///   a fixed seat, launch-born        default TAKE — began after the export (b) AND within
+///                                    LAUNCH_BORN_WINDOW_SECS of a launch on THIS machine's clock (c)
+///   any other fixed seat             default KEEP — somebody's lineage until the keeper says otherwise
+///
+/// (a) — the birth read from the exact file the carry compared — is satisfied upstream: the row's
+/// `localFirstTimestamp` is taken from that row's `path` by the tool. (b) crosses two clocks (the export
+/// time is the other machine's); (c) is one clock. Both must hold, because each admits a case the other
+/// catches (L058 §4.2).
+pub fn offer_for(
+    kind: &str,
+    retirable: bool,
+    local_first: Option<&str>,
+    exported_at: Option<&str>,
+    launches: &[i64],
+) -> ChoiceOffer {
+    if !retirable {
+        return ChoiceOffer {
+            take_offered: false,
+            default: SeatChoice::Keep,
+            why: "the stick holds only a delta for this seat, and a delta cannot replace a whole \
+                  conversation. Export this seat whole on the other machine, then carry again."
+                .to_string(),
+        };
+    }
+    if kind != "fixed" {
+        return ChoiceOffer {
+            take_offered: true,
+            default: SeatChoice::Take,
+            why: "a pane: the stick's copy is the carried one. This machine's goes to the attic, never deleted."
+                .to_string(),
+        };
+    }
+    let (Some(born_s), Some(exp_s)) = (local_first, exported_at) else {
+        return ChoiceOffer {
+            take_offered: true,
+            default: SeatChoice::Keep,
+            why: "when this machine's conversation began, or when the stick's was exported, is not \
+                  recorded — so nothing is preselected for a fixed seat."
+                .to_string(),
+        };
+    };
+    let (Some(born), Some(exp)) = (unix_of(born_s), unix_of(exp_s)) else {
+        return ChoiceOffer {
+            take_offered: true,
+            default: SeatChoice::Keep,
+            why: format!("a timestamp does not parse ({born_s} / {exp_s}) — nothing is preselected for a fixed seat."),
+        };
+    };
+    let launch = launches.iter().copied().filter(|&l| born >= l && born - l <= LAUNCH_BORN_WINDOW_SECS).max();
+    match (born > exp, launch) {
+        (true, Some(l)) => ChoiceOffer {
+            take_offered: true,
+            default: SeatChoice::Take,
+            why: format!(
+                "this machine's conversation began {born_s}, after the stick's export {exp_s}, and {}s \
+                 after a launch here — a launch-born conversation, which cannot be the lineage.",
+                born - l
+            ),
+        },
+        (after, _) => ChoiceOffer {
+            take_offered: true,
+            default: SeatChoice::Keep,
+            why: format!(
+                "this machine's conversation began {born_s}, {} the stick's export {exp_s}, and not within \
+                 {LAUNCH_BORN_WINDOW_SECS}s of a launch here — it may be somebody's lineage. Taking the \
+                 stick's retires it to the attic; that is yours to choose.",
+                if after { "after" } else { "before" }
+            ),
+        },
+    }
+}
+
+/// Has the keeper already chosen KEEP for this seat's carry? Keyed by the carry's export time, so the
+/// SAME carry is not asked about twice and a NEW carry for that seat asks again.
+pub fn is_kept(keep_json: &str, sid: &str, exported_at: &str) -> bool {
+    serde_json::from_str::<serde_json::Value>(keep_json.trim_start_matches('\u{feff}'))
+        .ok()
+        .and_then(|v| v.get(sid).and_then(|x| x.as_str()).map(|s| s == exported_at))
+        .unwrap_or(false)
+}
+
+/// Returns the keep record with `sid` set to this carry. An unreadable record is replaced, not merged:
+/// the worst it costs is asking about a seat again.
+pub fn record_keep(keep_json: &str, sid: &str, exported_at: &str) -> String {
+    let mut v = serde_json::from_str::<serde_json::Value>(keep_json.trim_start_matches('\u{feff}'))
+        .ok()
+        .filter(|v| v.is_object())
+        .unwrap_or_else(|| serde_json::json!({}));
+    v[sid] = serde_json::Value::String(exported_at.to_string());
+    serde_json::to_string_pretty(&v).unwrap_or_else(|_| "{}".to_string())
+}
+
+/// What the launch found, before any seat and before any process.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Arrival {
+    pub stick: StickFind,
+    pub handshake: Handshake,
+    pub result_present: bool,
+}
+
+impl Arrival {
+    /// Seats wait for the setup window when there is anything for it to show.
+    pub fn withhold(&self) -> bool {
+        !matches!(self.stick, StickFind::None)
+            || matches!(self.handshake, Handshake::Live { .. })
+            || self.result_present
+    }
+
+    /// The rows this launch writes to `persist.log`. **EMPTY on a launch with no stick, no handshake
+    /// and no result** — which is the no-stick bar: a launch before this module wrote none of these.
+    pub fn log_lines(&self) -> Vec<String> {
+        let mut out = Vec::new();
+        match &self.stick {
+            StickFind::None => {}
+            StickFind::One(f) => out.push(format!(
+                "STICK FOUND {} layout={} — seats wait for the setup window",
+                f.folder.display(),
+                f.layout.tag()
+            )),
+            StickFind::Many(fs) => out.push(format!(
+                "STICK FOUND {} folders, none picked: {} — the keeper chooses in the setup window",
+                fs.len(),
+                fs.iter().map(|f| f.folder.display().to_string()).collect::<Vec<_>>().join(" | ")
+            )),
+        }
+        match &self.handshake {
+            Handshake::Absent => {}
+            Handshake::Live { pid, .. } => out.push(format!(
+                "STICK APPLIER WAITING pid={pid} — a transfer is waiting for this window to close; no second applier is started"
+            )),
+            Handshake::Stale { why } => out.push(format!("STICK STALE HANDSHAKE — {why}; treated as absent")),
+        }
+        if self.result_present {
+            out.push(format!("STICK RESULT {APPLY_RESULT} present — shown in the setup window before any seat"));
+        }
+        out
+    }
+}
+
+/// The launch's whole look at the stick: `stat`s and one small file read. No process, no write.
+pub fn arrive(volume_roots: &[PathBuf], data_dir: &Path, probe: &dyn Fn(u32) -> Option<ProcInfo>) -> Arrival {
+    Arrival {
+        stick: find_stick(volume_roots),
+        handshake: read_handshake(data_dir, probe),
+        result_present: data_dir.join(APPLY_RESULT).is_file(),
+    }
+}
+
+/// How the wait for the applier's handshake ended (§2).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum HandshakeWait {
+    /// `stick-apply.started.json` names THIS child's pid, and that pid is the applier. Only this may exit the app.
+    Started,
+    /// The child exited before writing it — the transfer did not start, and the app stays open.
+    ChildExited(Option<i32>),
+    /// Nothing proved it started within the window — the app stays open and says so.
+    TimedOut,
+}
+
+/// §2: *"waits up to 10 s for that file with that pid alive … Absent → does NOT exit."*
+///
+/// The clock is the loop count, not the wall: `polls` × one injected `sleep`, so the timeout path is a
+/// test and not a ten-second wait. **A handshake naming a DIFFERENT pid does not count** — a stale file
+/// from an earlier applier must never read as this one having started.
+pub fn await_handshake(
+    data_dir: &Path,
+    child_pid: u32,
+    polls: u32,
+    child_exit: &mut dyn FnMut() -> Option<Option<i32>>,
+    probe: &dyn Fn(u32) -> Option<ProcInfo>,
+    sleep: &mut dyn FnMut(),
+) -> HandshakeWait {
+    for _ in 0..polls {
+        if let Handshake::Live { pid, .. } = read_handshake(data_dir, probe) {
+            if pid == child_pid {
+                return HandshakeWait::Started;
+            }
+        }
+        if let Some(code) = child_exit() {
+            return HandshakeWait::ChildExited(code);
+        }
+        sleep();
+    }
+    HandshakeWait::TimedOut
+}
+
+/// May the setup window close on its own and let the seats spawn? Only when a rehearsal has NOTHING
+/// for the keeper to see: the set verifies, nothing carries or stops on import (a stop on a seat the
+/// keeper already chose to KEEP for this same carry is not news), and the stick is not behind this
+/// machine (no export row would carry). Anything else — including a verifier or rehearsal that
+/// returned no contract at all — keeps the window open, where it is named.
+pub fn rehearsal_is_quiet(
+    verify: &serde_json::Value,
+    import: &serde_json::Value,
+    export: &serde_json::Value,
+    keep_json: &str,
+) -> bool {
+    let code = |v: &serde_json::Value| v.get("code").and_then(|c| c.as_i64());
+    if code(verify) != Some(0) {
+        return false;
+    }
+    if !matches!(code(import), Some(0) | Some(1)) || !matches!(code(export), Some(0) | Some(1)) {
+        return false;
+    }
+    let rows = |v: &serde_json::Value| v.get("rows").and_then(|r| r.as_array()).cloned().unwrap_or_default();
+    let flag = |r: &serde_json::Value, k: &str| r.get(k).and_then(|x| x.as_bool()).unwrap_or(false);
+    let text = |r: &serde_json::Value, k: &str| r.get(k).and_then(|x| x.as_str()).unwrap_or("").to_string();
+    for r in rows(import) {
+        if flag(&r, "carries") {
+            return false;
+        }
+        if flag(&r, "stops") {
+            let kept = text(&r, "reason") == "OTHER_CONVERSATION"
+                && is_kept(keep_json, &text(&r, "sid"), &text(&r, "exportedAt"));
+            if !kept {
+                return false;
+            }
+        }
+    }
+    !rows(export).iter().any(|r| flag(r, "carries") || flag(r, "stops"))
+}
+
+
+/// The image the waiter is told to watch. §3 (11d9eb5) names it literally, and every build of this repo
+/// produces `consonance.exe`, so it is the literal and not the running file's name.
+pub const APP_IMAGE: &str = "consonance.exe";
+
+/// **§3, "WHAT THE WAITER RUNS" (11d9eb5):** `node dev/stick-waiter.js --data <data_dir> --app-pid <pid>
+/// --app-image consonance.exe`. **No `--stick`**: the keeper plugs the stick in at the END of a session, so
+/// the waiter finds it when it exports, not at launch. Returned as the args after the script path, so a test
+/// can pin the shape without starting anything.
+pub fn waiter_args(data_dir: &Path, app_pid: u32) -> Vec<String> {
+    vec![
+        "--data".to_string(),
+        data_dir.display().to_string(),
+        "--app-pid".to_string(),
+        app_pid.to_string(),
+        "--app-image".to_string(),
+        APP_IMAGE.to_string(),
+    ]
+}
+
+// END OF THE STICK AT LAUNCH
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1365,5 +1829,470 @@ mod tests {
         assert!(s.contains("Do not re-greet, summarize, or announce that you were restored"));
         assert!(s.contains("retired (moved aside, revivable), not deleted"));
         assert!(s.contains("❯ hi"));
+    }
+}
+
+/// L059, pane E — the stick at launch. Behavioural against real temp directories, plus two wiring
+/// assertions where a behaviour cannot be observed from inside a test (a process that was NOT started).
+#[cfg(test)]
+mod stick_tests {
+    use super::*;
+    use std::fs;
+
+    fn scratch(tag: &str) -> PathBuf {
+        let d = std::env::temp_dir().join(format!("consonance_l059_{tag}_{}", std::process::id()));
+        let _ = fs::remove_dir_all(&d);
+        fs::create_dir_all(&d).unwrap();
+        d
+    }
+
+    fn put(p: &Path, body: &str) {
+        fs::create_dir_all(p.parent().unwrap()).unwrap();
+        fs::write(p, body).unwrap();
+    }
+
+    fn nothing_runs(_: u32) -> Option<ProcInfo> {
+        None
+    }
+
+    // ── THE NO-STICK BAR ────────────────────────────────────────────────────────────────────────
+
+    /// **THE NO-STICK TEST — against THE NO-STICK BAR, RESTATED (§3, ~03:30).** Two volumes that look like
+    /// a working machine (ordinary folders, a `HANDOFF.md` with nothing beside it, a `consonance-tails/` with
+    /// no ledger in it), no handshake, no result. The launch look must find NO stick, write NO persist.log
+    /// row and withhold NO seat. The bar's one permitted spawn, the exit waiter, is pinned separately in
+    /// main.rs (`the_exit_waiter_is_started_on_every_launch_and_logs_only_when_it_cannot_start`).
+    #[test]
+    fn a_launch_with_no_stick_writes_no_row_and_withholds_no_seat() {
+        let c = scratch("nostick_c");
+        let d = scratch("nostick_d");
+        let data = scratch("nostick_data");
+        fs::create_dir_all(c.join("Users").join("someone")).unwrap();
+        fs::create_dir_all(c.join("Windows")).unwrap();
+        put(&d.join("photos").join("HANDOFF.md"), "a handoff with no ledger beside it is not a stick");
+        fs::create_dir_all(d.join("backup").join("consonance-tails")).unwrap();
+
+        let a = arrive(&[c.clone(), d.clone()], &data, &nothing_runs);
+
+        assert_eq!(a.stick, StickFind::None, "a launch with no stick found one");
+        assert!(a.log_lines().is_empty(), "a no-stick launch writes rows a launch before the module did not: {:?}", a.log_lines());
+        assert!(!a.withhold(), "a no-stick launch withholds the seats");
+        for p in [c, d, data] {
+            let _ = fs::remove_dir_all(p);
+        }
+    }
+
+    /// **AND IT WRITES NO FILE.** THE NO-STICK BAR, RESTATED allows a no-stick launch exactly one new file,
+    /// the waiter's own `stick-waiter.lock`, and that is the waiter's to write. The launch look adds none:
+    /// the volumes and the data dir hold exactly the same entries after it as before.
+    #[test]
+    fn a_launch_with_no_stick_writes_no_file() {
+        let c = scratch("nofile_c");
+        let data = scratch("nofile_data");
+        fs::create_dir_all(c.join("Users")).unwrap();
+        put(&data.join("persist.log"), "1789367339 SYNC AT LAUNCH RESUME — fine
+");
+        let listing = |d: &Path| -> Vec<String> {
+            let mut v: Vec<String> = fs::read_dir(d).unwrap().flatten().map(|e| e.file_name().to_string_lossy().to_string()).collect();
+            v.sort();
+            v
+        };
+        let (c0, d0) = (listing(&c), listing(&data));
+
+        let _ = arrive(&[c.clone()], &data, &nothing_runs);
+
+        assert_eq!((listing(&c), listing(&data)), (c0, d0), "the launch look left a file behind on a launch with no stick");
+        for p in [c, data] {
+            let _ = fs::remove_dir_all(p);
+        }
+    }
+
+    /// **AND IT STARTS NO PROCESS** — which no assertion inside a test can observe, so it is pinned at
+    /// the source: nothing the launch calls may start one. E-2's measurement is why this matters: a
+    /// verifier asked about every volume passes the rows bar above and still costs every launch a node
+    /// process per volume.
+    #[test]
+    fn the_launch_look_at_the_stick_starts_no_process() {
+        let src = fs::read_to_string("src/sync_launch.rs").expect("read own source");
+        let start = src.find("// THE STICK AT LAUNCH").expect("the stick block is gone — re-point this test");
+        let end = src[start..].find("// END OF THE STICK AT LAUNCH").map(|e| start + e).expect("the end marker is gone — re-point this test");
+        let block = &src[start..end];
+        for needle in [concat!("Command", "::new"), concat!(".spawn", "("), concat!("process::", "Command")] {
+            assert!(!block.contains(needle), "the launch-time stick code starts a process (`{needle}`)");
+        }
+    }
+
+    // ── §3: WHERE THE STICK IS ─────────────────────────────────────────────────────────────────
+    //
+    // These mirror §3's ONE find table row for row, and add no row it does not have (the table's own rule:
+    // the same rule lives in A's Node waiter, and two copies drift on the case only one of them tests).
+    // Row 1, no marker, is the no-stick test above.
+
+    /// **E-5, as a test: tonight's real stick keeps everything one folder down.** The folder, not the
+    /// volume, is the stick.
+    #[test]
+    fn the_real_sticks_shape_is_found_one_folder_down_as_the_older_layout() {
+        let d = scratch("realshape");
+        let folder = d.join("consonance-L-20260911");
+        put(&folder.join("consonance-tails").join("ledger.json"), "{}");
+        put(&folder.join("HANDOFF.md"), "x");
+
+        assert_eq!(
+            find_stick(&[d.clone()]),
+            StickFind::One(StickFolder { folder: folder.clone(), layout: StickLayout::Older }),
+            "the real stick's layout (a ledger one folder down, no MANIFEST) is not found"
+        );
+        let _ = fs::remove_dir_all(d);
+    }
+
+    #[test]
+    fn a_manifest_at_the_volume_root_is_the_manifested_layout() {
+        let d = scratch("rootmanifest");
+        put(&d.join("consonance-transfer").join("MANIFEST.json"), "{}");
+        assert_eq!(find_stick(&[d.clone()]), StickFind::One(StickFolder { folder: d.clone(), layout: StickLayout::Manifest }));
+        let _ = fs::remove_dir_all(d);
+    }
+
+    /// Two folders: every one named, none picked.
+    #[test]
+    fn two_stick_folders_are_both_named_and_neither_is_picked() {
+        let d = scratch("many");
+        put(&d.join("a").join("consonance-tails").join("ledger.json"), "{}");
+        put(&d.join("b").join("consonance-transfer").join("MANIFEST.json"), "{}");
+        match find_stick(&[d.clone()]) {
+            StickFind::Many(fs_) => assert_eq!(fs_.len(), 2, "not every folder was named"),
+            other => panic!("two stick folders were resolved to {other:?} — one was picked for the keeper"),
+        }
+        let _ = fs::remove_dir_all(d);
+    }
+
+    /// Two levels down is not the stick — the look is the root and ONE folder, as §3 rules.
+    #[test]
+    fn a_marker_two_folders_down_is_not_found() {
+        let d = scratch("deep");
+        put(&d.join("a").join("b").join("consonance-tails").join("ledger.json"), "{}");
+        assert_eq!(find_stick(&[d.clone()]), StickFind::None, "the look went deeper than one folder");
+        let _ = fs::remove_dir_all(d);
+    }
+
+    // ── §2: THE HANDSHAKE (E-1) ─────────────────────────────────────────────────────────────────
+
+    fn applier(pid: u32) -> impl Fn(u32) -> Option<ProcInfo> {
+        move |p| {
+            (p == pid).then(|| ProcInfo {
+                name: "node.exe".to_string(),
+                // Machine-neutral: the consumer scan refused this machine's absolute path here (L059 R-2).
+                // A BACKSLASH on purpose — the name check splits on '/' after normalizing separators, so this
+                // fixture only reads as the applier if that normalization is really there.
+                cmd: vec!["node".into(), "dev\\stick-apply.js".into(), "--stick".into()],
+            })
+        }
+    }
+
+    #[test]
+    fn no_handshake_file_is_absent() {
+        let data = scratch("hs_absent");
+        assert_eq!(read_handshake(&data, &nothing_runs), Handshake::Absent);
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// A live applier: the launch starts no second one. The seats wait, and the window offers Close.
+    #[test]
+    fn a_live_applier_is_live_and_withholds_the_seats() {
+        let data = scratch("hs_live");
+        put(&data.join(APPLY_STARTED), r#"{"pid":4242,"image":"node","script":"stick-apply.js","at":"x","stick":"D:\\s"}"#);
+        let a = arrive(&[], &data, &applier(4242));
+        assert_eq!(a.handshake, Handshake::Live { pid: 4242, stick: Some("D:\\s".to_string()) });
+        assert!(a.withhold(), "a launch with an applier waiting would spawn seats and could start a second applier");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn a_handshake_whose_pid_is_dead_is_stale_and_does_not_withhold() {
+        let data = scratch("hs_dead");
+        put(&data.join(APPLY_STARTED), r#"{"pid":4242}"#);
+        let a = arrive(&[], &data, &nothing_runs);
+        assert!(matches!(a.handshake, Handshake::Stale { .. }), "a dead applier reads as {:?}", a.handshake);
+        assert!(!a.withhold(), "a stale handshake is treated as absent, and absent withholds nothing");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// **PID REUSE.** The pid is alive, but it is somebody else's process.
+    #[test]
+    fn a_handshake_whose_pid_was_reused_by_another_image_is_stale() {
+        let data = scratch("hs_reuse");
+        put(&data.join(APPLY_STARTED), r#"{"pid":4242}"#);
+        let other = |p: u32| (p == 4242).then(|| ProcInfo { name: "chrome.exe".into(), cmd: vec!["chrome".into()] });
+        assert!(matches!(read_handshake(&data, &other), Handshake::Stale { .. }), "a reused pid reads as the applier");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// Node alone is not the applier — the app's own tools are node too.
+    #[test]
+    fn a_node_process_that_is_not_the_applier_is_stale() {
+        let data = scratch("hs_othernode");
+        put(&data.join(APPLY_STARTED), r#"{"pid":4242}"#);
+        let other = |p: u32| (p == 4242).then(|| ProcInfo { name: "node.exe".into(), cmd: vec!["node".into(), "dev/tail-carry.js".into()] });
+        assert!(matches!(read_handshake(&data, &other), Handshake::Stale { .. }));
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// **The IMAGE half, on its own.** Every other stale case also fails the script check, so none of them
+    /// would notice the image test going missing. Here the argument names the applier's script exactly and
+    /// only the image is wrong — an editor with the file open.
+    #[test]
+    fn a_process_that_is_not_node_is_stale_even_when_it_names_the_applier_script() {
+        let data = scratch("hs_notnode");
+        put(&data.join(APPLY_STARTED), r#"{"pid":4242}"#);
+        let editor = |p: u32| (p == 4242).then(|| ProcInfo { name: "notepad.exe".into(), cmd: vec!["notepad".into(), "dev\\stick-apply.js".into()] });
+        assert!(matches!(read_handshake(&data, &editor), Handshake::Stale { .. }), "a non-node process holding the script's name reads as the applier");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// A script whose name merely ENDS in `stick-apply.js` is not the applier.
+    #[test]
+    fn a_node_process_running_a_lookalike_script_name_is_stale() {
+        let data = scratch("hs_lookalike");
+        put(&data.join(APPLY_STARTED), r#"{"pid":4242}"#);
+        let other = |p: u32| (p == 4242).then(|| ProcInfo { name: "node.exe".into(), cmd: vec!["node".into(), "dev\\not-stick-apply.js".into()] });
+        assert!(matches!(read_handshake(&data, &other), Handshake::Stale { .. }), "a lookalike script name reads as the applier");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn an_unparseable_handshake_is_stale_not_absent() {
+        let data = scratch("hs_junk");
+        put(&data.join(APPLY_STARTED), "not json");
+        assert!(matches!(read_handshake(&data, &nothing_runs), Handshake::Stale { .. }));
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn a_result_waiting_to_be_shown_withholds_the_seats() {
+        let data = scratch("result");
+        put(&data.join(APPLY_RESULT), "{}");
+        assert!(arrive(&[], &data, &nothing_runs).withhold(), "the relaunched app spawns seats before showing what the apply did");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    // ── E-4: THE FIXED-SEAT RULE, AS A DEFAULT ─────────────────────────────────────────────────────
+
+    const LAUNCH: i64 = 1789367339; // L, 2026-09-14 06:28:59Z — the real launch row
+    const BORN_18S: &str = "2026-09-14T06:29:17.726Z"; // the real launch-born librarian, 18.7 s later
+    const EXPORTED_BEFORE: &str = "2026-09-12T18:00:00.000Z";
+
+    #[test]
+    fn a_pane_defaults_to_the_sticks_copy() {
+        let o = offer_for("pane", true, Some("2026-01-01T00:00:00Z"), Some(EXPORTED_BEFORE), &[]);
+        assert_eq!((o.take_offered, o.default), (true, SeatChoice::Take));
+    }
+
+    /// **The real case.** Tonight's launch-born librarian defaults to TAKE.
+    #[test]
+    fn a_fixed_seat_born_after_the_export_and_at_a_launch_defaults_to_take() {
+        let o = offer_for("fixed", true, Some(BORN_18S), Some(EXPORTED_BEFORE), &[LAUNCH]);
+        assert_eq!(o.default, SeatChoice::Take, "{}", o.why);
+    }
+
+    /// **The lineage.** A fixed seat that began before the export is never preselected for retirement.
+    #[test]
+    fn a_fixed_seat_born_before_the_export_defaults_to_keep() {
+        let o = offer_for("fixed", true, Some("2026-08-15T03:00:00Z"), Some(EXPORTED_BEFORE), &[1786762800]);
+        assert_eq!(o.default, SeatChoice::Keep, "a lineage conversation is preselected for retirement: {}", o.why);
+    }
+
+    /// Condition (c) on its own: after the export by the other machine's clock, but nowhere near a
+    /// launch on this one — the skew case (L058 §4.2) and the button pressed late alike.
+    #[test]
+    fn a_fixed_seat_after_the_export_but_not_at_a_launch_defaults_to_keep() {
+        let o = offer_for("fixed", true, Some(BORN_18S), Some(EXPORTED_BEFORE), &[LAUNCH - 3600]);
+        assert_eq!(o.default, SeatChoice::Keep, "{}", o.why);
+    }
+
+    /// Condition (b) on its own: at a launch here, but before the export.
+    #[test]
+    fn a_fixed_seat_at_a_launch_but_before_the_export_defaults_to_keep() {
+        let o = offer_for("fixed", true, Some(BORN_18S), Some("2026-09-14T07:00:00Z"), &[LAUNCH]);
+        assert_eq!(o.default, SeatChoice::Keep, "{}", o.why);
+    }
+
+    #[test]
+    fn a_fixed_seat_with_no_recorded_times_defaults_to_keep() {
+        assert_eq!(offer_for("fixed", true, None, Some(EXPORTED_BEFORE), &[LAUNCH]).default, SeatChoice::Keep);
+        assert_eq!(offer_for("fixed", true, Some(BORN_18S), None, &[LAUNCH]).default, SeatChoice::Keep);
+        assert_eq!(offer_for("fixed", true, Some("yesterday"), Some(EXPORTED_BEFORE), &[LAUNCH]).default, SeatChoice::Keep);
+    }
+
+    /// A delta cannot replace a conversation, so TAKE is not offered at all — for either kind.
+    #[test]
+    fn take_is_not_offered_when_the_stick_holds_only_a_delta() {
+        for kind in ["pane", "fixed"] {
+            let o = offer_for(kind, false, Some(BORN_18S), Some(EXPORTED_BEFORE), &[LAUNCH]);
+            assert!(!o.take_offered, "{kind}: TAKE offered on a delta, which the applier would then refuse");
+        }
+    }
+
+    #[test]
+    fn launch_times_reads_one_row_per_launch_and_nothing_else() {
+        let log = "1789367337 SYNC AT LAUNCH — the record's head is not this machine's; installing\n\
+                   1789367339 SYNC AT LAUNCH MIGRATE — the record's head was authored by D\n\
+                   1789367339 resume pane=6fe15f0a jsonl_existed=false -> fresh\n\
+                   1789368914 SYNC AT LAUNCH RESUME — fine\n";
+        assert_eq!(launch_times(log), vec![1789367339, 1789368914]);
+    }
+
+    // ── §2: NEITHER CHOICE RE-SHOWS THE WINDOW ─────────────────────────────────────────────────────
+
+    #[test]
+    fn a_kept_seat_is_not_asked_about_again_for_the_same_carry() {
+        let rec = record_keep("", "sid-1", "2026-09-14T01:00:00Z");
+        assert!(is_kept(&rec, "sid-1", "2026-09-14T01:00:00Z"), "the keeper's KEEP was not remembered");
+    }
+
+    #[test]
+    fn a_new_carry_for_a_kept_seat_is_asked_about_again() {
+        let rec = record_keep("", "sid-1", "2026-09-14T01:00:00Z");
+        assert!(!is_kept(&rec, "sid-1", "2026-09-15T01:00:00Z"), "a KEEP silently swallowed a later carry");
+    }
+
+    #[test]
+    fn a_keep_record_keeps_other_seats() {
+        let rec = record_keep(&record_keep("", "a", "t1"), "b", "t2");
+        assert!(is_kept(&rec, "a", "t1") && is_kept(&rec, "b", "t2"));
+    }
+
+    #[test]
+    fn an_unreadable_keep_record_keeps_nothing_and_is_replaced() {
+        assert!(!is_kept("not json", "a", "t1"));
+        assert!(is_kept(&record_keep("not json", "a", "t1"), "a", "t1"));
+    }
+
+    // ── §2: THE APP DOES NOT EXIT UNTIL THE APPLIER HAS STARTED ─────────────────────────────────────
+
+    /// **The bar.** The handshake never appears: the wait ends TimedOut, never Started — and the app
+    /// exits only on Started (`the_app_exits_only_when_the_applier_has_started`, in main.rs).
+    #[test]
+    fn the_wait_never_reports_started_when_the_handshake_never_appears() {
+        let data = scratch("wait_never");
+        let mut sleeps = 0;
+        let got = await_handshake(&data, 777, 100, &mut || None, &applier(777), &mut || sleeps += 1);
+        assert_eq!(got, HandshakeWait::TimedOut);
+        assert_eq!(sleeps, 100, "the wait gave up before its whole window");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn the_handshake_of_this_child_is_started() {
+        let data = scratch("wait_ok");
+        put(&data.join(APPLY_STARTED), r#"{"pid":777}"#);
+        assert_eq!(await_handshake(&data, 777, 100, &mut || None, &applier(777), &mut || {}), HandshakeWait::Started);
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// A handshake left by an EARLIER applier is not this one starting.
+    #[test]
+    fn a_handshake_naming_another_pid_does_not_count() {
+        let data = scratch("wait_otherpid");
+        put(&data.join(APPLY_STARTED), r#"{"pid":555}"#);
+        let both = |p: u32| applier(555)(p).or_else(|| applier(777)(p));
+        assert_eq!(await_handshake(&data, 777, 5, &mut || None, &both, &mut || {}), HandshakeWait::TimedOut);
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn a_child_that_dies_before_the_handshake_is_named_at_once() {
+        let data = scratch("wait_died");
+        let mut sleeps = 0;
+        let got = await_handshake(&data, 777, 100, &mut || Some(Some(2)), &nothing_runs, &mut || sleeps += 1);
+        assert_eq!(got, HandshakeWait::ChildExited(Some(2)));
+        assert_eq!(sleeps, 0, "a child already gone was waited on for the whole window");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    // ── WHEN THE WINDOW MAY CLOSE ON ITS OWN ───────────────────────────────────────────────────────
+
+    fn js(s: &str) -> serde_json::Value {
+        serde_json::from_str(s).unwrap()
+    }
+
+    #[test]
+    fn a_rehearsal_with_nothing_to_carry_is_quiet() {
+        let i = js(r#"{"code":0,"rows":[{"sid":"a","carries":false,"stops":false}]}"#);
+        let e = js(r#"{"code":0,"rows":[{"sid":"a","carries":false,"stops":false}]}"#);
+        assert!(rehearsal_is_quiet(&js(r#"{"code":0}"#), &i, &e, ""));
+    }
+
+    #[test]
+    fn a_seat_that_would_carry_is_not_quiet() {
+        let i = js(r#"{"code":0,"rows":[{"sid":"a","carries":true,"stops":false}]}"#);
+        assert!(!rehearsal_is_quiet(&js(r#"{"code":0}"#), &i, &js(r#"{"code":0,"rows":[]}"#), ""));
+    }
+
+    /// Call 2's last case: the stick does not have this machine's last session.
+    #[test]
+    fn a_stick_behind_this_machine_is_not_quiet() {
+        let e = js(r#"{"code":0,"rows":[{"sid":"a","carries":true}]}"#);
+        assert!(!rehearsal_is_quiet(&js(r#"{"code":0}"#), &js(r#"{"code":0,"rows":[]}"#), &e, ""));
+    }
+
+    #[test]
+    fn a_set_that_does_not_verify_is_not_quiet() {
+        assert!(!rehearsal_is_quiet(&js(r#"{"code":1}"#), &js(r#"{"code":0,"rows":[]}"#), &js(r#"{"code":0,"rows":[]}"#), ""));
+    }
+
+    /// A verifier that returned no contract (A's `--verify-set` not on disk yet) is not quiet: it is named.
+    #[test]
+    fn a_verifier_that_returned_nothing_is_not_quiet() {
+        assert!(!rehearsal_is_quiet(&js(r#"{}"#), &js(r#"{"code":0,"rows":[]}"#), &js(r#"{"code":0,"rows":[]}"#), ""));
+    }
+
+    #[test]
+    fn a_refused_seat_the_keeper_already_kept_for_this_carry_is_quiet() {
+        let i = js(r#"{"code":1,"rows":[{"sid":"a","carries":false,"stops":true,"reason":"OTHER_CONVERSATION","exportedAt":"t1"}]}"#);
+        let e = js(r#"{"code":0,"rows":[]}"#);
+        assert!(rehearsal_is_quiet(&js(r#"{"code":0}"#), &i, &e, &record_keep("", "a", "t1")));
+        assert!(!rehearsal_is_quiet(&js(r#"{"code":0}"#), &i, &e, ""), "an unkept refusal was waved through");
+    }
+
+    /// A seat that stopped for any OTHER reason is never quieted by a KEEP.
+    #[test]
+    fn a_keep_does_not_quiet_a_refusal_of_another_kind() {
+        let i = js(r#"{"code":1,"rows":[{"sid":"a","carries":false,"stops":true,"reason":"HISTORY_REWRITTEN","exportedAt":"t1"}]}"#);
+        assert!(!rehearsal_is_quiet(&js(r#"{"code":0}"#), &i, &js(r#"{"code":0,"rows":[]}"#), &record_keep("", "a", "t1")));
+    }
+
+    /// LEDGER_LOCKED and "could not run" are exit 2; an interrupted apply is 3. Neither is quiet.
+    #[test]
+    fn a_rehearsal_that_could_not_run_or_crashed_part_way_is_not_quiet() {
+        for c in [2, 3] {
+            let i = js(&format!(r#"{{"code":{c},"rows":[]}}"#));
+            assert!(!rehearsal_is_quiet(&js(r#"{"code":0}"#), &i, &js(r#"{"code":0,"rows":[]}"#), ""), "import code {c}");
+        }
+    }
+
+    /// §3's find table, the row added at ~03:30: a marker at the volume root AND another in a first-level
+    /// folder of the same volume -> AMBIGUOUS, both named.
+    #[test]
+    fn a_marker_at_the_root_and_another_one_folder_down_are_both_named() {
+        let d = scratch("rootandchild");
+        put(&d.join("consonance-transfer").join("MANIFEST.json"), "{}");
+        put(&d.join("consonance-L-20260911").join("consonance-tails").join("ledger.json"), "{}");
+        match find_stick(&[d.clone()]) {
+            StickFind::Many(fs_) => {
+                let names: Vec<PathBuf> = fs_.into_iter().map(|f| f.folder).collect();
+                assert!(names.contains(&d) && names.contains(&d.join("consonance-L-20260911")), "not both named: {names:?}");
+            }
+            other => panic!("a root marker and a first-level marker resolved to {other:?} — one was picked for the keeper"),
+        }
+        let _ = fs::remove_dir_all(d);
+    }
+
+    /// **The waiter's argv, exactly as ruled** — and no `--stick`, which would fix a path at launch and skip
+    /// the export on the exit where the keeper plugged the stick in late.
+    #[test]
+    fn the_waiter_is_told_the_data_dir_the_app_pid_and_the_app_image_and_no_stick() {
+        let args = waiter_args(Path::new("C:\\Consonance\\data"), 23900);
+        assert_eq!(args, vec!["--data", "C:\\Consonance\\data", "--app-pid", "23900", "--app-image", "consonance.exe"]);
+        assert!(!args.iter().any(|a| a == "--stick"), "the waiter was handed a stick path fixed at launch");
     }
 }

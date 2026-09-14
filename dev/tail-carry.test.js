@@ -23,7 +23,21 @@ const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
-const TOOL = path.join(__dirname, 'tail-carry.js');
+// THE ONE SEAM, AND IT BELONGS TO THE MUTATION HARNESS. `tail-carry.mutants.js` writes each mutant into
+// a COPY beside the real file and points this suite at the copy through TAIL_CARRY_UNDER_TEST, so no run
+// — killed or not — ever writes the tracked source (L059 §5: on this machine a kill runs no handler, so a
+// restore-on-signal protects nothing). The copy must sit in THIS directory: the tool resolves
+// `./place-conversations.js`, `../consonance/tools/state-sync.js` and main.rs relative to itself, and a
+// copy anywhere else would test different code. Refused loudly otherwise; unset, nothing changes.
+const TOOL = (() => {
+  const u = process.env.TAIL_CARRY_UNDER_TEST;
+  if (!u) return path.join(__dirname, 'tail-carry.js');
+  const p = path.resolve(u);
+  if (path.dirname(p) !== __dirname || !fs.existsSync(p)) {
+    throw new Error(`TAIL_CARRY_UNDER_TEST must name an existing file in ${__dirname}; got ${u}`);
+  }
+  return p;
+})();
 const T = require(TOOL);
 const sync = require(path.join(__dirname, '..', 'consonance', 'tools', 'state-sync.js'));
 const place = require(path.join(__dirname, 'place-conversations.js'));
@@ -752,9 +766,11 @@ test('the rehearsal shows the byte count that makes the tail worth having', () =
 // fixture machine's roots injected. A test of `toJson` alone would pass while `main` printed a
 // banner above the object, which is the failure an app reading stdout would actually meet.
 
+// CHANGED 2026-09-14 (L059 §3 re-rule at 60e1ccf): +carriedFirstTimestamp on every row (E-3) and +staleLock at
+// the top (A-3, "a row naming the stale lock"). Additive; these lists still pin the exact shape.
 const FIELDS = ['seat', 'sid', 'kind', 'verdict', 'reason', 'why', 'stops', 'carries', 'bytes', 'offset',
-  'toOffset', 'path', 'localSize', 'localFirstTimestamp', 'exportedAt', 'exportedFrom', 'retirable', 'result'];
-const TOP = ['tool', 'contract', 'mode', 'apply', 'machine', 'stick', 'code', 'outcome', 'why', 'rows', 'receipt'];
+  'toOffset', 'path', 'localSize', 'localFirstTimestamp', 'carriedFirstTimestamp', 'exportedAt', 'exportedFrom', 'retirable', 'result'];
+const TOP = ['tool', 'contract', 'mode', 'apply', 'machine', 'stick', 'code', 'outcome', 'why', 'rows', 'receipt', 'staleLock'];
 
 /** Run main with --json against a fixture machine; return the parsed object, the raw streams, the code. */
 function J(m, argv, extra) {
@@ -1072,6 +1088,396 @@ test('fixed seats are reported as kind "fixed", from the real main.rs', () => {
   const w = world();
   const r = J(w.D, ['--stick', w.stick, '--export']);
   assert.deepStrictEqual(r.obj.rows.filter((x) => x.kind === 'fixed').map((x) => x.seat).sort(), ['librarian', 'main', 'third place']);
+});
+
+// ══ L059 §3 AS RE-RULED — the transfer set, the verifier, the lock ═══════════════════════════════
+
+const VERIFY_TOP = ['tool', 'contract', 'mode', 'stick', 'code', 'layout', 'missing', 'mismatched', 'extra', 'why'];
+function V(m, stick) {
+  const r = J(m, ['--stick', stick, '--verify-set']);
+  assert.deepStrictEqual(Object.keys(r.obj).sort(), [...VERIFY_TOP].sort(), 'verify-set top-level fields');
+  assert.strictEqual(r.code, r.obj.code, 'exit equals code');
+  return r.obj;
+}
+/** One carried seat: D exports it with --apply, which writes the ledger, the HANDOFF and the MANIFEST. */
+function carried() {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z', '2026-09-09T17:06:33.328Z']));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  return w;
+}
+const manifestOf = (w) => JSON.parse(fs.readFileSync(path.join(w.stick, T.TRANSFER_DIR, T.MANIFEST_NAME), 'utf8'));
+
+test('--verify-set · code 0 "manifest": an export writes a set that verifies', () => {
+  const w = carried();
+  const v = V(w.D, w.stick);
+  assert.deepStrictEqual([v.code, v.layout, v.missing, v.mismatched], [0, 'manifest', [], []]);
+  const names = manifestOf(w).members.map((x) => x.path);
+  assert.ok(names.includes('consonance-tails/ledger.json'));
+  assert.ok(names.some((x) => /^consonance-tails\/.+\.tail$/.test(x)), 'the pending tail is a member');
+  assert.ok(names.some((x) => /^HANDOFF-\d{4}-\d{2}-\d{2}\.md$/.test(x)), 'the generated HANDOFF is a member');
+});
+
+test('--verify-set · code 1: a MISSING member is named', () => {
+  const w = carried();
+  const tail = manifestOf(w).members.find((x) => x.path.endsWith('.tail')).path;
+  fs.unlinkSync(path.join(w.stick, ...tail.split('/')));
+  const v = V(w.D, w.stick);
+  assert.deepStrictEqual([v.code, v.layout, v.missing, v.mismatched], [1, 'manifest', [tail], []]);
+});
+
+test('--verify-set · code 1: a MISMATCHED member is named — same size, different bytes', () => {
+  const w = carried();
+  const tail = manifestOf(w).members.find((x) => x.path.endsWith('.tail')).path;
+  const p = path.join(w.stick, ...tail.split('/'));
+  const b = fs.readFileSync(p); b[5] ^= 0xff; fs.writeFileSync(p, b);
+  const v = V(w.D, w.stick);
+  assert.deepStrictEqual([v.code, v.missing, v.mismatched], [1, [], [tail]]);
+});
+
+test('--verify-set · code 0 "older": a ledger and no MANIFEST IS a stick (tonight\'s real stick)', () => {
+  const w = carried();
+  fs.rmSync(path.join(w.stick, T.TRANSFER_DIR), { recursive: true });
+  const v = V(w.D, w.stick);
+  assert.deepStrictEqual([v.code, v.layout, v.missing, v.mismatched], [0, 'older', [], []]);
+});
+
+test('--verify-set · code 2: no marker at all is not a stick, and says so', () => {
+  const w = world();
+  const v = V(w.D, w.stick);
+  assert.deepStrictEqual([v.code, v.layout], [2, null]);
+  assert.match(v.why, /no stick marker/);
+});
+
+test('--verify-set · code 2: an unreadable MANIFEST cannot be verified, and is not guessed at', () => {
+  const w = carried();
+  fs.writeFileSync(path.join(w.stick, T.TRANSFER_DIR, T.MANIFEST_NAME), '{ nope');
+  const v = V(w.D, w.stick);
+  assert.strictEqual(v.code, 2);
+  assert.match(v.why, /not readable JSON/);
+});
+
+test('--verify-set · extra is informational: an old tail the manifest no longer names is listed, code stays 0', () => {
+  const w = carried();
+  fs.writeFileSync(path.join(w.stick, T.LEDGER_DIR, 'old-carry.tail'), 'kept, never deleted');
+  const v = V(w.D, w.stick);
+  assert.deepStrictEqual([v.code, v.extra], [0, ['consonance-tails/old-carry.tail']]);
+});
+
+test('--verify-set · a member path that escapes the stick is mismatched, never read', () => {
+  const w = carried();
+  const man = manifestOf(w);
+  man.members.push({ path: '../outside.txt', bytes: 1, sha256: 'x' });
+  fs.writeFileSync(path.join(w.stick, T.TRANSFER_DIR, T.MANIFEST_NAME), JSON.stringify(man));
+  const v = V(w.D, w.stick);
+  assert.deepStrictEqual([v.code, v.mismatched], [1, ['../outside.txt']]);
+});
+
+test('--verify-set writes nothing', () => {
+  const w = carried();
+  const before = snapshot(w.stick);
+  V(w.D, w.stick);
+  assert.deepStrictEqual(snapshot(w.stick), before);
+});
+
+test('--verify-set refuses to combine with --import or --export', () => {
+  const w = carried();
+  const r = J(w.D, ['--stick', w.stick, '--verify-set', '--import']);
+  assert.strictEqual(r.obj.code, 2);
+});
+
+// ── A-2: the success path leaves a set that verifies ──
+
+test('A-2: after a successful IMPORT the manifest still verifies — the defect measured at 85a665e is closed', () => {
+  const w = carried();
+  const before = manifestOf(w).members.find((x) => x.path === 'consonance-tails/ledger.json').sha256;
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.strictEqual(r.obj.outcome, 'CARRIED', r.stderr);
+  const after = manifestOf(w).members.find((x) => x.path === 'consonance-tails/ledger.json').sha256;
+  assert.notStrictEqual(after, before, 'the import did rewrite the ledger — the fixture reaches the case');
+  assert.deepStrictEqual([V(w.L, w.stick).code, V(w.L, w.stick).mismatched], [0, []], 'and the manifest moved with it');
+});
+
+test('A-2: the manifest names only tails the ledger still names as pending', () => {
+  const w = carried();
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.deepStrictEqual(manifestOf(w).members.filter((x) => x.path.endsWith('.tail')), [], 'imported: nothing pending, no tail member');
+  assert.strictEqual(V(w.L, w.stick).extra.length, 1, 'the carried tail is kept on the stick, as extra');
+});
+
+// ── the generated HANDOFF ──
+
+test('the HANDOFF is deterministic from the ledger: same ledger, same bytes, same name', () => {
+  const w = carried();
+  const led = T.readLedger(w.stick);
+  const copy = JSON.parse(JSON.stringify(led));
+  assert.strictEqual(T.renderHandoff(led), T.renderHandoff(copy));
+  assert.strictEqual(T.handoffName(led), T.handoffName(copy));
+  // and it does not read the clock: rendering again later changes nothing
+  const first = T.renderHandoff(led);
+  const later = T.renderHandoff(JSON.parse(JSON.stringify(led)));
+  assert.strictEqual(first, later);
+});
+
+test('the HANDOFF on the stick is exactly renderHandoff(the ledger on the stick)', () => {
+  const w = carried();
+  const led = T.readLedger(w.stick);
+  const onStick = fs.readFileSync(path.join(w.stick, T.handoffName(led)), 'utf8');
+  assert.strictEqual(onStick, T.renderHandoff(led));
+  assert.strictEqual(onStick.split('\n')[0], T.GENERATED_MARK);
+});
+
+test('the HANDOFF names the seat, its bytes, the incoming first timestamp and the one-machine-open rule', () => {
+  const w = carried();
+  const text = T.renderHandoff(T.readLedger(w.stick));
+  assert.match(text, new RegExp(SID));
+  assert.match(text, /began 2026-09-09T14:59:19\.013Z/);
+  assert.match(text, /expected at the far end: FULL/);
+  assert.match(text, /Consonance may be open on exactly one machine/);
+});
+
+test('a HANDOFF a PERSON wrote at the generated name stops the carry before any seat is written', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  const now = Date.parse('2026-09-12T10:00:00.000Z');
+  fs.writeFileSync(path.join(w.stick, 'HANDOFF-2026-09-12.md'), '# typed by the librarian\n');
+  const before = snapshot(w.stick);
+  const r = J(w.D, ['--stick', w.stick, '--export', '--apply'], { now });
+  assert.deepStrictEqual([r.obj.code, r.obj.outcome], [2, 'CANNOT_RUN']);
+  assert.match(r.obj.why, /written by a person/);
+  assert.deepStrictEqual(snapshot(w.stick), before, 'no tail, no ledger, no manifest — and the typed file untouched');
+});
+
+// ── E-3: the incoming conversation's first timestamp ──
+
+test('E-3: a full export records carriedFirstTimestamp; the import row carries it', () => {
+  const w = carried();
+  assert.strictEqual(T.readLedger(w.stick).seats[SID].firstTimestamp, '2026-09-09T14:59:19.013Z');
+  const row = Jrow(J(w.L, ['--stick', w.stick, '--import']));
+  assert.strictEqual(row.carriedFirstTimestamp, '2026-09-09T14:59:19.013Z');
+});
+
+test('E-3: a later DELTA export keeps the first timestamp the full carry recorded', () => {
+  const w = carried();
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z', '2026-09-09T17:06:33.328Z']) + turns(SID, ['2026-09-14T04:00:00.000Z'], 'd'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const e = T.readLedger(w.stick).seats[SID];
+  assert.ok(e.pending.offset > 0, 'the fixture reaches a delta');
+  assert.strictEqual(e.firstTimestamp, '2026-09-09T14:59:19.013Z');
+});
+
+test('R-4: a DELTA export fills a first timestamp the entry lacks — tonight\'s real stick is not "unknown" for ever', () => {
+  const w = carried();
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  const led = T.readLedger(w.stick);
+  delete led.seats[SID].firstTimestamp;               // a ledger written before E-3
+  T.writeLedger(w.stick, led);
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z', '2026-09-09T17:06:33.328Z']) + turns(SID, ['2026-09-14T04:00:00.000Z'], 'd'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const e = T.readLedger(w.stick).seats[SID];
+  assert.ok(e.pending.offset > 0, 'the fixture reaches a delta, not a full carry');
+  assert.strictEqual(e.firstTimestamp, '2026-09-09T14:59:19.013Z');
+  assert.strictEqual(Jrow(J(w.L, ['--stick', w.stick, '--import'])).carriedFirstTimestamp, '2026-09-09T14:59:19.013Z');
+});
+
+test('R-4: a DELTA export never overwrites a first timestamp that is already set', () => {
+  const w = carried();
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  const led = T.readLedger(w.stick);
+  led.seats[SID].firstTimestamp = '2026-01-01T00:00:00.000Z';   // set, and deliberately NOT the source's own
+  T.writeLedger(w.stick, led);
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z', '2026-09-09T17:06:33.328Z']) + turns(SID, ['2026-09-14T04:00:00.000Z'], 'd'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  const e = T.readLedger(w.stick).seats[SID];
+  assert.ok(e.pending.offset > 0);
+  assert.strictEqual(e.firstTimestamp, '2026-01-01T00:00:00.000Z', 'a set value is never replaced by a delta');
+});
+
+test('E-3: a ledger that never recorded it gives null — "unknown", never guessed', () => {
+  const w = carried();
+  const led = T.readLedger(w.stick);
+  delete led.seats[SID].firstTimestamp;
+  T.writeLedger(w.stick, led);
+  assert.strictEqual(Jrow(J(w.L, ['--stick', w.stick, '--import'])).carriedFirstTimestamp, null);
+});
+
+// ── the killed import: ALREADY_APPLIED is settled, or the seat wedges for good ──
+
+/** The state a hard kill leaves: the tail bytes are in the destination, the ledger still says pending. */
+function killedAfterAppend() {
+  const w = carried();
+  const led = T.readLedger(w.stick);
+  const tail = fs.readFileSync(path.join(w.stick, T.LEDGER_DIR, led.seats[SID].pending.tailFile));
+  write(w.L, tail.toString('utf8'));          // offset 0: the tail IS the conversation
+  return w;
+}
+
+test('b258fc2: ONE import heals the wedged ledger — pending cleared, agreed recorded, and the row says it advanced', () => {
+  const w = killedAfterAppend();
+  // the wedge, confirmed before the heal: pending on the stick, the tail already whole here
+  assert.ok(T.readLedger(w.stick).seats[SID].pending, 'the fixture builds the wedged ledger');
+  assert.strictEqual(Jrow(J(w.L, ['--stick', w.stick, '--import'])).verdict, 'ALREADY_APPLIED', 'and a rehearsal reads it clean');
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.strictEqual(Jrow(r).verdict, 'ALREADY_APPLIED');
+  assert.strictEqual(r.obj.outcome, 'CARRIED', r.stderr);
+  const e = T.readLedger(w.stick).seats[SID];
+  assert.strictEqual(e.pending, null, 'the pending tail must be cleared');
+  assert.strictEqual(e.agreed.offset, fs.statSync(w.L.dest).size);
+  assert.strictEqual(e.agreed.prefixSha, T.hashRange(w.L.dest, 0, fs.statSync(w.L.dest).size));
+  assert.strictEqual(Jrow(r).result.ok, true);
+  assert.strictEqual(Jrow(r).result.advanced, true, 'the row must say the ledger advanced');
+  assert.match(r.stderr, /advanced .* the ledger ADVANCED to agree/);
+});
+
+test('b258fc2: APPLIED_BUT_DIFFERENT stays a refusal under --apply — nothing advanced, pending kept', () => {
+  const w = killedAfterAppend();
+  // same length, different bytes: every tail byte "present" by size, the whole-file sha wrong
+  const led = T.readLedger(w.stick);
+  led.seats[SID].pending.fullSha = 'f'.repeat(64);
+  T.writeLedger(w.stick, led);
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  const row = Jrow(r);
+  assert.deepStrictEqual([row.verdict, row.reason, row.result], ['REFUSED', 'APPLIED_BUT_DIFFERENT', null]);
+  assert.ok(T.readLedger(w.stick).seats[SID].pending, 'a refusal advances nothing');
+  assert.strictEqual(r.obj.code, 1);
+});
+
+test('result.advanced is true on an ordinary carried import and false on every export', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  const exp = J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  assert.strictEqual(Jrow(exp).result.advanced, false);
+  const imp = J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.strictEqual(Jrow(imp).result.advanced, true);
+});
+
+test('after the settle, this machine can EXPORT that seat again — the wedge is gone', () => {
+  const w = killedAfterAppend();
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  fs.appendFileSync(w.L.dest, turns(SID, ['2026-09-14T11:00:00.000Z'], 'l'));
+  const old = new Date(Date.now() - 60_000); fs.utimesSync(w.L.dest, old, old);
+  const r = J(w.L, ['--stick', w.stick, '--export']);
+  assert.strictEqual(Jrow(r).verdict, 'TAIL', 'not REFUSED UNIMPORTED_TAIL');
+});
+
+test('the settle puts the seat on the carried receipt, so the launch keeps it', () => {
+  const w = killedAfterAppend();
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  const rec = JSON.parse(fs.readFileSync(T.carriedPath(w.L.projectsRoot), 'utf8'));
+  assert.ok(rec.seats[SID], 'the receipt must name the settled seat');
+});
+
+test('the settle rewrites the manifest with the ledger (A-2 on this path too)', () => {
+  const w = killedAfterAppend();
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.strictEqual(V(w.L, w.stick).code, 0);
+});
+
+test('a REHEARSAL over ALREADY_APPLIED still writes nothing', () => {
+  const w = killedAfterAppend();
+  const before = snapshot(w.dir);
+  J(w.L, ['--stick', w.stick, '--import']);
+  assert.deepStrictEqual(snapshot(w.dir), before);
+});
+
+test('a file that changed between the plan and the apply is NOT settled, and the pending tail stays', () => {
+  const w = killedAfterAppend();
+  const plan = T.planImport({ stick: w.stick, machine: 'L', projectsRoot: w.L.projectsRoot, instancesRoot: w.L.instancesRoot, panesPath: w.L.panesPath });
+  assert.strictEqual(plan.rows.find((x) => x.sid === SID).verdict, 'ALREADY_APPLIED');
+  fs.appendFileSync(w.L.dest, 'x');
+  const done = T.applyImport(plan, Date.now());
+  const d = done.find((x) => x.row.sid === SID);
+  assert.strictEqual(d.ok, false);
+  assert.match(d.why, /changed between the rehearsal and the apply/);
+  assert.ok(T.readLedger(w.stick).seats[SID].pending, 'nothing settled over a file that moved');
+});
+
+// ── A-3: one lock, every writer ──
+
+const lockPath = (w) => path.join(w.stick, T.LEDGER_DIR, T.LOCK_NAME);
+function plantLock(w, rec) { fs.mkdirSync(path.join(w.stick, T.LEDGER_DIR), { recursive: true }); fs.writeFileSync(lockPath(w), JSON.stringify(rec)); }
+
+test('A-3: a LIVE holder of the named image refuses the write — exit 2, LEDGER_LOCKED, nothing written', () => {
+  const w = carried();
+  plantLock(w, { pid: 424242, image: 'node', script: 'stick-waiter.js', at: '2026-09-14T08:00:00.000Z' });
+  const before = snapshot(w.stick);
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply'], { imageOf: () => 'node' });
+  assert.deepStrictEqual([r.code, r.obj.code, r.obj.outcome, r.obj.rows.length], [2, 2, 'LEDGER_LOCKED', 0]);
+  assert.match(r.obj.why, /pid 424242/);
+  assert.deepStrictEqual(snapshot(w.stick), before, 'refused means refused: the lock, the ledger and every tail untouched');
+  assert.strictEqual(fs.existsSync(w.L.dest), false);
+});
+
+test('A-3: when the holder cannot be checked (tasklist fails), it is treated as LIVE — never let a second writer through', () => {
+  const w = carried();
+  plantLock(w, { pid: 424242, image: 'node', script: 'x', at: 'x' });
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply'], { imageOf: () => undefined });
+  assert.strictEqual(r.obj.outcome, 'LEDGER_LOCKED');
+});
+
+test('A-3: a DEAD holder\'s lock is taken over, the run carries, and staleLock names whose it was', () => {
+  const w = carried();
+  plantLock(w, { pid: 424242, image: 'node', script: 'stick-apply.js', at: '2026-09-14T08:00:00.000Z' });
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply'], { imageOf: () => null });
+  assert.strictEqual(r.obj.outcome, 'CARRIED', r.stderr);
+  assert.deepStrictEqual(r.obj.staleLock, { pid: 424242, image: 'node', script: 'stick-apply.js', at: '2026-09-14T08:00:00.000Z' });
+  assert.match(r.stderr, /took over a STALE ledger lock: pid 424242/);
+});
+
+test('A-3: a pid now running a DIFFERENT image (pid reuse) is a stale lock, not a live one', () => {
+  const w = carried();
+  plantLock(w, { pid: 424242, image: 'node', script: 'stick-apply.js', at: 'x' });
+  const r = J(w.L, ['--stick', w.stick, '--import', '--apply'], { imageOf: () => 'explorer' });
+  assert.strictEqual(r.obj.outcome, 'CARRIED', r.stderr);
+  assert.strictEqual(r.obj.staleLock.pid, 424242);
+});
+
+test('A-3: the lock is released when the run ends — carried, refused or crashed', () => {
+  let w = carried();
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.strictEqual(fs.existsSync(lockPath(w)), false, 'after CARRIED');
+  w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  write(w.L, conversation(SID, ['2026-09-14T06:36:37.000Z'], 'own'));
+  J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  J(w.L, ['--stick', w.stick, '--import', '--apply']);
+  assert.strictEqual(fs.existsSync(lockPath(w)), false, 'after STOPPED');
+  w = carried();
+  const receipt = T.carriedPath(w.L.projectsRoot);
+  fs.mkdirSync(path.dirname(receipt), { recursive: true });
+  fs.writeFileSync(receipt, '{ broken');
+  assert.strictEqual(J(w.L, ['--stick', w.stick, '--import', '--apply']).obj.outcome, 'CRASHED');
+  assert.strictEqual(fs.existsSync(lockPath(w)), false, 'after CRASHED');
+});
+
+test('A-3: a rehearsal takes no lock — a held lock does not block reading', () => {
+  const w = carried();
+  plantLock(w, { pid: 424242, image: 'node', script: 'x', at: 'x' });
+  const r = J(w.L, ['--stick', w.stick, '--import'], { imageOf: () => 'node' });
+  assert.strictEqual(r.obj.outcome, 'REHEARSED');
+  assert.ok(fs.existsSync(lockPath(w)), 'and it did not touch the holder\'s lock');
+});
+
+test('A-3: an export with nothing to carry still writes nothing — the lock\'s directory goes with it', () => {
+  const w = world();
+  const r = J(w.D, ['--stick', w.stick, '--export', '--apply']);
+  assert.strictEqual(r.obj.outcome, 'NOTHING_TO_DO');
+  assert.strictEqual(fs.existsSync(path.join(w.stick, T.LEDGER_DIR)), false);
+});
+
+test('A-3: the lost update that wedged a seat cannot happen — the second writer is refused while the first holds the lock', () => {
+  // The interleaving measured at the §6 stop: the waiter planned an export, the applier imported, the waiter
+  // wrote the ledger it had read. Under the lock the second writer never plans at all.
+  const w = carried();
+  // The first writer is a planted lock naming another live node process, so the refusal cannot come from
+  // the same-process shortcut in holderLive — it has to come from the image check.
+  plantLock(w, { pid: 424242, image: 'node', script: 'stick-apply.js', at: '2026-09-14T09:00:00.000Z' });
+  const first = { release: () => fs.unlinkSync(lockPath(w)) };
+  const second = J(w.L, ['--stick', w.stick, '--export', '--apply'], { imageOf: () => 'node' });
+  assert.strictEqual(second.obj.outcome, 'LEDGER_LOCKED');
+  first.release();
+  assert.strictEqual(fs.existsSync(lockPath(w)), false);
 });
 
 // ── the wiring, nothing injected ──

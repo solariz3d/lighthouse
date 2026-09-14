@@ -9973,42 +9973,34 @@ fn sync_at_launch() -> (sync_launch::Verdict, Vec<sync_launch::RetireOutcome>) {
     };
     let verdict = sync_launch::decide(&facts);
 
-    let retired = if verdict.is_migrate() {
-        let stamp = chrono::Local::now().format("%Y%m%d-%H%M%S").to_string();
-        let home_dir = home();
-        // The stick's receipt: a fixed seat whose conversation the stick placed is the synced
-        // lineage already and is kept (L, 2026-09-14: three placed seats retired a minute after
-        // ARRIVING landed them). Unreadable is SAID, and then nothing is exempt — the old behaviour.
-        let carried = match sync_launch::read_carried(&sync_launch::carried_receipt_path(Path::new(&home_dir))) {
-            Ok(m) => m,
-            Err(e) => {
-                plog(&format!("CARRIED RECEIPT unreadable ({e}) — no fixed seat is exempt from the retire"));
-                HashMap::new()
-            }
-        };
-        let plan = sync_launch::retire_plan(Path::new(&home_dir), &fixed_id_seats(), &stamp);
-        let out = sync_launch::apply_retire(&plan, &carried);
-        for r in &out {
-            let what = if r.kept_carried { "KEPT (the stick placed it)" } else if r.moved { "RETIRED" } else if r.error.is_some() { "RETIRE FAILED" } else { "none here" };
-            plog(&format!("MIGRATE SEAT {} {} {}", r.seat, what, r.from.display()));
-        }
-        out
-    } else {
+    // L059 · ARRIVE. The launch LOOKS for the stick — `stat`s and one small read, no process (E-2) — and
+    // if there is anything for the setup window to show, it HOLDS: no seat spawns, no seat transcript is
+    // retired and no head is adopted until the keeper has seen it. The import that may follow runs in A's
+    // applier after this process is gone, so the retire must not run first and remove the very file a
+    // carried delta appends to. A launch that finds no stick, no handshake and no result writes no row
+    // here and runs `launch_effects` exactly as before (`a_launch_with_no_stick_writes_no_row_and_withholds_no_seat`).
+    let arrival = sync_launch::arrive(&volume_roots(), &data, &proc_info);
+    for line in arrival.log_lines() {
+        plog(&line);
+    }
+    if matches!(arrival.handshake, sync_launch::Handshake::Stale { .. }) {
+        // Named above, then treated as absent (§2, E-1).
+        let _ = fs::remove_file(data.join(sync_launch::APPLY_STARTED));
+    }
+    let hold_for_stick = arrival.withhold();
+    let retired = if hold_for_stick {
+        plog(&format!(
+            "SYNC AT LAUNCH effects HELD for the stick — {} is decided, but no seat transcript is retired and no head adopted until the setup window releases the seats",
+            verdict.tag()
+        ));
+        STICK_DEFERRED.store(true, Ordering::Relaxed);
         Vec::new()
+    } else {
+        launch_effects(&verdict)
     };
 
-    // The head is adopted on every launch that did not withhold the seats — INCLUDING a migrate,
-    // so the next launch sees it as already adopted and does not retire the seats this one just
-    // installed. Not written on READ-ONLY: nothing was adopted, and a stamp saying otherwise would
-    // make the next launch skip the migration that never happened.
-    if !verdict.is_read_only() {
-        if let sync_launch::Verdict::Resume { adopt, .. } | sync_launch::Verdict::Migrate { adopt, .. } = &verdict {
-            let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
-            sync_launch::write_adopted(&data, adopt.as_deref(), now, verdict.tag());
-        }
-    }
-
-    SEATS_WITHHELD.store(verdict.is_read_only(), Ordering::Relaxed);
+    SEATS_WITHHELD.store(verdict.is_read_only() || hold_for_stick, Ordering::Relaxed);
+    *STICK_ARRIVAL.lock().unwrap() = Some(arrival);
     *LAUNCH_VERDICT.lock().unwrap() = Some(verdict.clone());
     (verdict, retired)
 }
@@ -10377,6 +10369,510 @@ mod sync_launch_wiring_tests {
     }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────────────────────────
+// THE STICK — the launcher's half. L059, pane E. `loop/packet_stick_build_2026-09-14.md` §2, §3, §4.
+//
+// The launch only LOOKS (`sync_launch::arrive`: stats, one small read, no process). Everything that
+// runs a process runs from the setup window, after the intro, off the thread that paints it. The one
+// write this process cannot do — the import, whose gate matches `consonance.exe` from process creation
+// (L058) — is handed to A's applier, which waits for this process to be gone.
+// ─────────────────────────────────────────────────────────────────────────────────────────────────
+
+/// What the launch found about the stick, decided once in `.setup()` and read by the setup window.
+static STICK_ARRIVAL: Mutex<Option<sync_launch::Arrival>> = Mutex::new(None);
+/// The launch's retire/adopt effects were HELD because the stick needed the keeper first.
+static STICK_DEFERRED: AtomicBool = AtomicBool::new(false);
+
+/// §2: the app waits up to 10 s for the applier's handshake. 100 polls of 100 ms.
+const APPLY_HANDSHAKE_POLLS: u32 = 100;
+const APPLY_HANDSHAKE_POLL: Duration = Duration::from_millis(100);
+/// A rehearsal hashes whole transcripts (262 MB for Main on L). Generous, and still a bound.
+const STICK_REHEARSAL_TIMEOUT: Duration = Duration::from_secs(300);
+/// Win32 process-creation flags for an applier that must outlive this process. No console window.
+const DETACHED_PROCESS: u32 = 0x0000_0008;
+const CREATE_NEW_PROCESS_GROUP: u32 = 0x0000_0200;
+
+/// Every mounted volume, as the OS lists them — FIXED and REMOVABLE only, never a network share, never
+/// a guessed drive letter (§3: "drive letters are never used"). `sysinfo` is already a dependency; it
+/// enumerates with `FindFirstVolumeW` and filters by `GetDriveTypeW`, so this starts no process.
+fn volume_roots() -> Vec<PathBuf> {
+    let disks = sysinfo::Disks::new_with_refreshed_list();
+    let mut roots: Vec<PathBuf> = disks.list().iter().map(|d| d.mount_point().to_path_buf()).collect();
+    roots.sort();
+    roots.dedup();
+    roots
+}
+
+/// What runs under a pid, for the handshake's image check (E-1). `None` when nothing does.
+fn proc_info(pid: u32) -> Option<sync_launch::ProcInfo> {
+    use sysinfo::{Pid, ProcessRefreshKind, System, UpdateKind};
+    let mut sys = System::new();
+    let spid = Pid::from_u32(pid);
+    if !sys.refresh_process_specifics(spid, ProcessRefreshKind::new().with_cmd(UpdateKind::Always)) {
+        return None;
+    }
+    sys.process(spid).map(|p| sync_launch::ProcInfo { name: p.name().to_string(), cmd: p.cmd().to_vec() })
+}
+
+/// A session id, exactly: 8-4-4-4-12 hex. The window's choices are input from a webview and become
+/// argv for another process, so they are checked here and nowhere later.
+fn is_sid(s: &str) -> bool {
+    s.len() == 36
+        && s.chars().enumerate().all(|(i, c)| if [8, 13, 18, 23].contains(&i) { c == '-' } else { c.is_ascii_hexdigit() })
+}
+
+/// Only a folder THIS launch found may be named by the window. A path from the webview is not trusted
+/// to choose what the carry reads or what the applier writes from.
+fn checked_stick_folder(folder: &str) -> Result<PathBuf, String> {
+    let found: Vec<PathBuf> = match STICK_ARRIVAL.lock().unwrap().as_ref().map(|a| a.stick.clone()) {
+        Some(sync_launch::StickFind::One(f)) => vec![f.folder],
+        Some(sync_launch::StickFind::Many(fs_)) => fs_.into_iter().map(|f| f.folder).collect(),
+        _ => Vec::new(),
+    };
+    found
+        .into_iter()
+        .find(|f| f.display().to_string() == folder)
+        .ok_or_else(|| format!("{folder:?} is not a stick folder this launch found — nothing was read"))
+}
+
+#[derive(Deserialize)]
+struct KeepPick {
+    sid: String,
+    exported_at: String,
+}
+
+fn record_keeps(keep: &[KeepPick]) -> Result<(), String> {
+    if keep.is_empty() {
+        return Ok(());
+    }
+    let path = data_dir().join(sync_launch::STICK_KEEP);
+    let mut rec = fs::read_to_string(&path).unwrap_or_default();
+    for k in keep {
+        rec = sync_launch::record_keep(&rec, &k.sid, &k.exported_at);
+    }
+    fs::write(&path, rec).map_err(|e| format!("could not record the seats kept on this machine ({e})"))
+}
+
+/// The retire and the adopt a launch verdict carries — lifted out of `sync_at_launch` UNCHANGED, so a
+/// launch that did not hold for the stick runs exactly the code it ran before, and a launch that did
+/// runs the same code later, from `stick_release`, with whatever the applier's import left behind.
+fn launch_effects(verdict: &sync_launch::Verdict) -> Vec<sync_launch::RetireOutcome> {
+    let data = data_dir();
+    let retired = if verdict.is_migrate() {
+        let stamp = chrono::Local::now().format("%Y%m%d-%H%M%S").to_string();
+        let home_dir = home();
+        // The stick's receipt: a fixed seat whose conversation the stick placed is the synced
+        // lineage already and is kept (L, 2026-09-14: three placed seats retired a minute after
+        // ARRIVING landed them). Unreadable is SAID, and then nothing is exempt — the old behaviour.
+        let carried = match sync_launch::read_carried(&sync_launch::carried_receipt_path(Path::new(&home_dir))) {
+            Ok(m) => m,
+            Err(e) => {
+                plog(&format!("CARRIED RECEIPT unreadable ({e}) — no fixed seat is exempt from the retire"));
+                HashMap::new()
+            }
+        };
+        let plan = sync_launch::retire_plan(Path::new(&home_dir), &fixed_id_seats(), &stamp);
+        let out = sync_launch::apply_retire(&plan, &carried);
+        for r in &out {
+            let what = if r.kept_carried { "KEPT (the stick placed it)" } else if r.moved { "RETIRED" } else if r.error.is_some() { "RETIRE FAILED" } else { "none here" };
+            plog(&format!("MIGRATE SEAT {} {} {}", r.seat, what, r.from.display()));
+        }
+        out
+    } else {
+        Vec::new()
+    };
+
+    // The head is adopted on every launch that did not withhold the seats — INCLUDING a migrate,
+    // so the next launch sees it as already adopted and does not retire the seats this one just
+    // installed. Not written on READ-ONLY: nothing was adopted, and a stamp saying otherwise would
+    // make the next launch skip the migration that never happened.
+    if !verdict.is_read_only() {
+        if let sync_launch::Verdict::Resume { adopt, .. } | sync_launch::Verdict::Migrate { adopt, .. } = verdict {
+            let now = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
+            sync_launch::write_adopted(&data, adopt.as_deref(), now, verdict.tag());
+        }
+    }
+    retired
+}
+
+/// Runs A's carry with `--json` and returns its one object (A's contract: exactly one object on stdout,
+/// free text on stderr, which the app never reads). Blocking — called only off the paint thread.
+fn run_carry_json(args: &[&str], timeout: Duration) -> Result<serde_json::Value, String> {
+    let script = repo_root()
+        .map(|r| r.join("dev").join("tail-carry.js"))
+        .filter(|p| p.is_file())
+        .ok_or("dev/tail-carry.js is not on disk in this checkout, so the stick cannot be read by this build")?;
+    let mut child = Command::new("node")
+        .arg(&script)
+        .args(args)
+        // The carry reads the roster from its data dir. Handed the one this app uses, so the two cannot
+        // disagree about which seats exist (the resolver in A honours CONSONANCE_DATA before ~/.consonance.json).
+        .env("CONSONANCE_DATA", data_dir())
+        .creation_flags(NO_WINDOW)
+        .stdin(Stdio::null())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+        .map_err(|e| format!("could not start node ({e})"))?;
+    // Read stdout on its own thread: a rehearsal's JSON can outgrow a pipe buffer, and a child blocked
+    // on a full pipe never exits, which would read here as a timeout.
+    let mut out = child.stdout.take().ok_or("node started without a stdout")?;
+    let reader = std::thread::spawn(move || {
+        let mut s = String::new();
+        let _ = out.read_to_string(&mut s);
+        s
+    });
+    let started = Instant::now();
+    let status = loop {
+        match child.try_wait() {
+            Ok(Some(st)) => break st,
+            Ok(None) if started.elapsed() > timeout => {
+                let _ = child.kill();
+                let _ = child.wait();
+                return Err(format!("the carry did not finish within {}s and was stopped", timeout.as_secs()));
+            }
+            Ok(None) => std::thread::sleep(Duration::from_millis(100)),
+            Err(e) => return Err(format!("waiting on node failed ({e})")),
+        }
+    };
+    let text = reader.join().unwrap_or_default();
+    serde_json::from_str::<serde_json::Value>(text.trim()).map_err(|_| {
+        format!(
+            "the carry exited {} without its JSON contract on stdout{}",
+            status.code().map(|c| c.to_string()).unwrap_or_else(|| "by signal".into()),
+            if text.trim().is_empty() { String::new() } else { format!(" ({} bytes that are not one JSON object)", text.trim().len()) }
+        )
+    })
+}
+
+/// **§3 (11d9eb5, restated ~03:30): the app starts the exit waiter on EVERY launch, stick or no stick.**
+/// The ONE process a no-stick launch adds, and the only one: detached, so it outlives this app and notices
+/// it gone however it went — a close, a crash, or a kill that runs no handler (§1, measured). Single-instance
+/// is the WAITER's own lock (`stick-waiter.lock`), not this function's.
+///
+/// **No persist.log row when it starts** — the no-stick bar keeps a launch's rows as they were. A row only when
+/// node will not run, because a waiter that silently never started is the failure Call 2 exists to prevent.
+/// `DETACHED_PROCESS` gives it no console: waiting should be unobtrusive, and the visible window at export
+/// time is the waiter's to open (A).
+fn start_exit_waiter() {
+    let Some(script) = repo_root().map(|r| r.join("dev").join("stick-waiter.js")).filter(|p| p.is_file()) else {
+        plog("STICK WAITER not started — dev/stick-waiter.js is not on disk in this checkout; nothing will export to a stick when this app exits");
+        return;
+    };
+    let data = data_dir();
+    let spawned = Command::new("node")
+        .arg(&script)
+        .args(sync_launch::waiter_args(&data, std::process::id()))
+        .env("CONSONANCE_DATA", &data)
+        .creation_flags(DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP)
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn();
+    if let Err(e) = spawned {
+        plog(&format!("STICK WAITER not started — node would not run ({e}); nothing will export to a stick when this app exits"));
+    }
+}
+
+/// What the setup window opens on. Cheap: no process, one small file read.
+#[tauri::command]
+fn stick_state() -> serde_json::Value {
+    let data = data_dir();
+    let arrival = STICK_ARRIVAL.lock().unwrap().clone();
+    let verdict_read_only = LAUNCH_VERDICT.lock().unwrap().as_ref().map(|v| v.is_read_only()).unwrap_or(false);
+    let folders = |fs_: Vec<sync_launch::StickFolder>| {
+        fs_.into_iter().map(|f| serde_json::json!({ "folder": f.folder.display().to_string(), "layout": f.layout.tag() })).collect::<Vec<_>>()
+    };
+    let (stick, found) = match arrival.as_ref().map(|a| a.stick.clone()) {
+        Some(sync_launch::StickFind::One(f)) => ("one", folders(vec![f])),
+        Some(sync_launch::StickFind::Many(fs_)) => ("many", folders(fs_)),
+        _ => ("none", Vec::new()),
+    };
+    let handshake = match arrival.as_ref().map(|a| a.handshake.clone()) {
+        Some(sync_launch::Handshake::Live { pid, stick }) => serde_json::json!({ "state": "live", "pid": pid, "stick": stick }),
+        Some(sync_launch::Handshake::Stale { why }) => serde_json::json!({ "state": "stale", "why": why }),
+        _ => serde_json::json!({ "state": "absent" }),
+    };
+    let result = fs::read_to_string(data.join(sync_launch::APPLY_RESULT)).ok().map(|raw| {
+        serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}'))
+            .unwrap_or_else(|e| serde_json::json!({ "unreadable": e.to_string() }))
+    });
+    serde_json::json!({
+        "held": arrival.as_ref().map(|a| a.withhold()).unwrap_or(false),
+        "read_only": verdict_read_only,
+        "stick": stick,
+        "folders": found,
+        "handshake": handshake,
+        "result": result,
+        "applier_on_disk": repo_root().map(|r| r.join("dev").join("stick-apply.js").is_file()).unwrap_or(false),
+    })
+}
+
+/// Rehearse the carry for one folder: the verifier, the import rehearsal, and the export rehearsal
+/// (Call 2's last case — is the stick behind this machine). Nothing is written by any of the three.
+#[tauri::command]
+async fn stick_rehearse(folder: String) -> Result<serde_json::Value, String> {
+    let folder = checked_stick_folder(&folder)?;
+    tauri::async_runtime::spawn_blocking(move || stick_rehearse_blocking(&folder))
+        .await
+        .map_err(|e| format!("the rehearsal thread failed ({e})"))
+}
+
+fn stick_rehearse_blocking(folder: &Path) -> serde_json::Value {
+    let f = folder.display().to_string();
+    let or_named = |r: Result<serde_json::Value, String>| r.unwrap_or_else(|why| serde_json::json!({ "code": null, "unavailable": why }));
+    let verify = or_named(run_carry_json(&["--stick", &f, "--verify-set", "--json"], STICK_REHEARSAL_TIMEOUT));
+    let import = or_named(run_carry_json(&["--stick", &f, "--import", "--json"], STICK_REHEARSAL_TIMEOUT));
+    let export = or_named(run_carry_json(&["--stick", &f, "--export", "--json"], STICK_REHEARSAL_TIMEOUT));
+    let data = data_dir();
+    let keep = fs::read_to_string(data.join(sync_launch::STICK_KEEP)).unwrap_or_default();
+    let launches = sync_launch::launch_times(&fs::read_to_string(data.join("persist.log")).unwrap_or_default());
+    let text = |r: &serde_json::Value, k: &str| r.get(k).and_then(|x| x.as_str()).map(str::to_string);
+    let mut offers = serde_json::Map::new();
+    for r in import.get("rows").and_then(|x| x.as_array()).cloned().unwrap_or_default() {
+        if text(&r, "reason").as_deref() != Some("OTHER_CONVERSATION") {
+            continue;
+        }
+        let (Some(sid), kind) = (text(&r, "sid"), text(&r, "kind").unwrap_or_default()) else { continue };
+        let exported = text(&r, "exportedAt");
+        let o = sync_launch::offer_for(
+            &kind,
+            r.get("retirable").and_then(|x| x.as_bool()).unwrap_or(false),
+            text(&r, "localFirstTimestamp").as_deref(),
+            exported.as_deref(),
+            &launches,
+        );
+        let kept = exported.as_deref().map(|e| sync_launch::is_kept(&keep, &sid, e)).unwrap_or(false);
+        offers.insert(sid, serde_json::json!({ "take_offered": o.take_offered, "default": o.default.tag(), "why": o.why, "kept": kept }));
+    }
+    let quiet = sync_launch::rehearsal_is_quiet(&verify, &import, &export, &keep);
+    let code = |v: &serde_json::Value| v.get("code").map(|c| c.to_string()).unwrap_or_else(|| "none".into());
+    plog(&format!("STICK REHEARSED {f} quiet={quiet} verify={} import={} export={}", code(&verify), code(&import), code(&export)));
+    serde_json::json!({ "folder": f, "verify": verify, "import": import, "export": export, "offers": offers, "quiet": quiet })
+}
+
+/// **CONFIRM.** Hand the one write to A's applier with the keeper's decisions, wait for its handshake
+/// off the paint thread, and exit ONLY when it has started (§2). Every other ending leaves the app open
+/// with the reason by name.
+// snake_case on the wire, explicitly: Tauri 2 otherwise expects camelCase (`retireFar`) from the webview.
+// Pinned so the name the window sends is the name written here, not a convention remembered.
+#[tauri::command(rename_all = "snake_case")]
+async fn stick_start_applier(
+    app: AppHandle,
+    folder: String,
+    retire_far: Vec<String>,
+    repair: Vec<String>,
+    keep: Vec<KeepPick>,
+) -> Result<(), String> {
+    let folder = checked_stick_folder(&folder)?;
+    if let Some(bad) = retire_far.iter().chain(repair.iter()).chain(keep.iter().map(|k| &k.sid)).find(|s| !is_sid(s)) {
+        return Err(format!("{bad:?} is not a session id — nothing was started"));
+    }
+    let data = data_dir();
+    // E-1: never a second applier.
+    if let sync_launch::Handshake::Live { pid, .. } = sync_launch::read_handshake(&data, &proc_info) {
+        return Err(format!("a transfer is already waiting (pid {pid}) — a second one is not started"));
+    }
+    let script = repo_root()
+        .map(|r| r.join("dev").join("stick-apply.js"))
+        .filter(|p| p.is_file())
+        .ok_or("dev/stick-apply.js is not on disk in this checkout — nothing was started, and Consonance stays open")?;
+    let exe = std::env::current_exe()
+        .map_err(|e| format!("cannot name this app's own executable ({e}), so the applier could not relaunch it — nothing was started"))?;
+    record_keeps(&keep)?;
+    // Not live (checked above), so any file here is a stale one and must not be mistaken for the new
+    // applier's handshake.
+    let _ = fs::remove_file(data.join(sync_launch::APPLY_STARTED));
+
+    let mut cmd = Command::new("node");
+    cmd.arg(&script).arg("--stick").arg(&folder).arg("--relaunch").arg(&exe);
+    for s in &retire_far {
+        cmd.arg("--retire-far").arg(s);
+    }
+    for s in &repair {
+        cmd.arg("--repair").arg(s);
+    }
+    let mut child = cmd
+        // The handshake is written into the data dir of the applier and read from the one this app uses:
+        // the same by construction.
+        .env("CONSONANCE_DATA", &data)
+        .creation_flags(DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP)
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn()
+        .map_err(|e| format!("the transfer could not start: node would not run ({e}). Consonance stays open."))?;
+    let pid = child.id();
+    plog(&format!(
+        "STICK APPLIER started pid={pid} stick={} retire_far=[{}] repair=[{}] kept=[{}]",
+        folder.display(),
+        retire_far.join(","),
+        repair.join(","),
+        keep.iter().map(|k| k.sid.as_str()).collect::<Vec<_>>().join(",")
+    ));
+
+    let wait_dir = data.clone();
+    let outcome = tauri::async_runtime::spawn_blocking(move || {
+        let outcome = {
+            let mut exited = || child.try_wait().ok().flatten().map(|s| s.code());
+            sync_launch::await_handshake(&wait_dir, pid, APPLY_HANDSHAKE_POLLS, &mut exited, &proc_info, &mut || {
+                std::thread::sleep(APPLY_HANDSHAKE_POLL)
+            })
+        };
+        // A child that never proved it started is stopped, so "nothing was started" stays true.
+        if outcome == sync_launch::HandshakeWait::TimedOut {
+            let _ = child.kill();
+            let _ = child.wait();
+        }
+        outcome
+    })
+    .await
+    .map_err(|e| format!("the handshake wait failed ({e}) — Consonance stays open"))?;
+
+    match outcome {
+        sync_launch::HandshakeWait::Started => {
+            plog(&format!("STICK APPLIER handshake pid={pid} — exiting so it can import"));
+            app.exit(0);
+            Ok(())
+        }
+        sync_launch::HandshakeWait::ChildExited(code) => {
+            let why = format!(
+                "the transfer could not start: the applier exited ({}) before it said it had started. Nothing was written, and Consonance stays open.",
+                code.map(|c| c.to_string()).unwrap_or_else(|| "no code".into())
+            );
+            plog(&format!("STICK APPLIER {why}"));
+            Err(why)
+        }
+        sync_launch::HandshakeWait::TimedOut => {
+            let why = format!(
+                "the transfer could not start: no handshake from the applier within {} s. It was stopped; nothing was written, and Consonance stays open.",
+                APPLY_HANDSHAKE_POLLS as u64 * APPLY_HANDSHAKE_POLL.as_millis() as u64 / 1000
+            );
+            plog(&format!("STICK APPLIER {why}"));
+            Err(why)
+        }
+    }
+}
+
+/// **CONTINUE WITHOUT CARRYING** (or the window closing on a quiet rehearsal): record the KEEPs, run
+/// the launch effects that were held for the stick, and let the seats spawn.
+#[tauri::command]
+fn stick_release(keep: Vec<KeepPick>) -> Result<serde_json::Value, String> {
+    if let Some(bad) = keep.iter().map(|k| &k.sid).find(|s| !is_sid(s)) {
+        return Err(format!("{bad:?} is not a session id — the seats stay held"));
+    }
+    if let sync_launch::Handshake::Live { pid, .. } = sync_launch::read_handshake(&data_dir(), &proc_info) {
+        return Err(format!("a transfer is waiting for this window to close (pid {pid}) — the seats stay held until it has run"));
+    }
+    record_keeps(&keep)?;
+    let verdict = LAUNCH_VERDICT.lock().unwrap().clone();
+    let mut retired = Vec::new();
+    if STICK_DEFERRED.swap(false, Ordering::SeqCst) {
+        if let Some(v) = &verdict {
+            plog(&format!("SYNC AT LAUNCH effects RELEASED — {} runs now, after the setup window", v.tag()));
+            retired = launch_effects(v)
+                .iter()
+                .map(|r| serde_json::json!({ "seat": r.seat, "moved": r.moved, "kept_carried": r.kept_carried }))
+                .collect();
+        }
+    }
+    let read_only = verdict.as_ref().map(|v| v.is_read_only()).unwrap_or(false);
+    SEATS_WITHHELD.store(read_only, Ordering::Relaxed);
+    plog(&format!("STICK RELEASED the seats — {} kept on this machine for this carry", keep.len()));
+    Ok(serde_json::json!({ "read_only": read_only, "retired": retired }))
+}
+
+/// The relaunched app deletes the applier's result only after the window has shown it (§2).
+#[tauri::command]
+fn stick_ack_result() -> Result<(), String> {
+    match fs::remove_file(data_dir().join(sync_launch::APPLY_RESULT)) {
+        Ok(()) => Ok(()),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
+        Err(e) => Err(format!("could not clear the shown result ({e})")),
+    }
+}
+
+/// The only offer while an applier waits (E-1): close, so it can run.
+#[tauri::command]
+fn stick_close_app(app: AppHandle) {
+    plog("STICK CLOSE — the keeper closed Consonance so the waiting transfer can run");
+    app.exit(0);
+}
+
+#[cfg(test)]
+mod stick_wiring_tests {
+    use super::*;
+
+    fn body_of(src: &str, sig: &str) -> String {
+        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+        after[..after.find("\n}\n").expect("no end of function")].to_string()
+    }
+
+    /// **§2's bar, at the one place it can be read.** `app.exit` appears once in the confirm path, and
+    /// only inside the arm for a handshake that proved THIS applier started. A timeout, a child that
+    /// died, a missing script or a bad sid all return with the app open.
+    #[test]
+    fn the_app_exits_only_when_the_applier_has_started() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = body_of(&src, concat!("async fn stick_start", "_applier("));
+        assert_eq!(body.matches(concat!("app.", "exit(")).count(), 1, "the confirm path can exit in more than one place");
+        let started = body.find(concat!("HandshakeWait::", "Started =>")).expect("no Started arm");
+        let exit = body.find(concat!("app.", "exit(")).unwrap();
+        let next_arm = body.find(concat!("HandshakeWait::", "ChildExited(code) =>")).expect("no ChildExited arm");
+        assert!(started < exit && exit < next_arm, "the app exits outside the arm for a started applier");
+    }
+
+    /// A launch that holds for the stick runs no retire and adopts no head until the window releases —
+    /// and a launch that does not hold runs exactly the effects it ran before this module.
+    #[test]
+    fn the_launch_effects_run_only_when_the_stick_does_not_hold_the_seats() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = body_of(&src, concat!("fn sync_at", "_launch("));
+        let hold = body.find(concat!("if hold_for", "_stick {")).expect("the launch no longer asks whether the stick holds it");
+        let effects = body.find(concat!("launch_effects(", "&verdict)")).expect("the launch no longer runs its effects");
+        assert!(hold < effects, "the effects run before the stick is asked");
+        assert!(
+            body.contains(concat!("SEATS_WITHHELD.store(verdict.is_read_only() || hold_for", "_stick")),
+            "the seats are not held for the stick, or no longer held for READ-ONLY"
+        );
+        assert!(!body.contains(concat!("apply_", "retire(")), "a second copy of the retire lives in sync_at_launch again");
+    }
+
+    /// The launch starts neither the carry nor the applier. Only the window does.
+    #[test]
+    fn the_launch_starts_no_carry_and_no_applier() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let body = body_of(&src, concat!("fn sync_at", "_launch("));
+        for needle in [concat!("tail-", "carry"), concat!("stick-", "apply"), concat!("run_carry", "_json")] {
+            assert!(!body.contains(needle), "the launch itself reaches for `{needle}`");
+        }
+    }
+
+    /// **The one permitted spawn of a no-stick launch.** The waiter is started from `.setup()` exactly once,
+    /// on the line after the launch decision and inside no branch — so a stick, a handshake or a verdict
+    /// can never be the reason it did not start.
+    #[test]
+    fn the_exit_waiter_is_started_on_every_launch_and_logs_only_when_it_cannot_start() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        let call = concat!("            start_exit", "_waiter();\n");
+        assert_eq!(src.matches(concat!("start_exit", "_waiter();")).count(), 1, "the waiter is started from more than one place, or none");
+        let decided = src.find(concat!("let (launch_verdict, retired) = sync_at", "_launch();\n")).expect("no launch decision in setup");
+        let at = src.find(call).expect("the waiter start is not a statement of its own at setup's indentation");
+        assert!(at > decided && src[decided..at].lines().count() <= 3, "the waiter start drifted away from the launch decision, into a branch or after one");
+        let body = body_of(&src, concat!("fn start_exit", "_waiter("));
+        assert!(!body.contains(concat!("\"STICK WAITER ", "started")), "a started waiter writes a row, and a no-stick launch's rows must stay as they were");
+        assert!(!body.contains(concat!("--sti", "ck")), "the waiter is handed a stick path fixed at launch");
+    }
+
+    #[test]
+    fn a_session_id_is_exactly_the_uuid_shape() {
+        assert!(is_sid("0c0c0c0b-0000-4000-8000-00000000115b"));
+        for bad in ["", "0c0c0c0b", "0c0c0c0b-0000-4000-8000-00000000115b ", "--apply", "0c0c0c0b-0000-4000-8000-00000000115g", "0c0c0c0b_0000-4000-8000-00000000115b"] {
+            assert!(!is_sid(bad), "{bad:?} passed as a session id and would become argv for the applier");
+        }
+    }
+}
+
 fn main() {
     // BEFORE ANYTHING ELSE, and specifically before any file that tells the rest of the system
     // where to find this process gets written. See claim_single_instance for what those files
@@ -10448,6 +10944,8 @@ fn main() {
             // (offsets, seeds, seats). L051's defect was a READ before the RESOLVE; a pull landing
             // after the first read would be the same hazard with a network in the middle.
             let (launch_verdict, retired) = sync_at_launch();
+            // L059 §3: on EVERY launch, and unconditionally — never inside a branch about the stick.
+            start_exit_waiter();
             plog(&format!("SYNC AT LAUNCH {} — {}", launch_verdict.tag(), launch_verdict.why()));
             // L051/L052: THE SEEDS STAY HERE AND THE DIAGNOSIS IN L051 §6 WAS WRONG — recorded
             // rather than quietly corrected, because the wrong version is on my own map.
@@ -10814,7 +11312,8 @@ fn main() {
             spawn_third_place,
             set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
             pane_scrollback,
-            audio_sources, audio_start, audio_stop, audio_status, audio_snapshot
+            audio_sources, audio_start, audio_stop, audio_status, audio_snapshot,
+            stick_state, stick_rehearse, stick_start_applier, stick_release, stick_ack_result, stick_close_app
         ])
         // No graceful-shutdown delay on close: `/exit` doesn't reliably flush an interactive claude
         // (proven), the own-capture log persists every chunk as it arrives, and real `--resume` works
