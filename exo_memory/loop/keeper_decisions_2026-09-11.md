@@ -90,3 +90,25 @@ continue? The other is archived, never deleted."
 - The tool has no flag that takes a DIVERGED row.
 - D's copies for those two seats go to the attic; nothing is deleted.
 - **D must not launch with the stick until that lands, and D must `git pull` first. `launch.ps1` has no git call.**
+
+## AMENDMENTS, 2026-09-14 ~09:00, on D — two carriers in this file had gone stale
+
+**§2 above is SUPERSEDED, and read it only as a dated trace.** The Third Place record now travels in the repo. The
+keeper's words, verbatim, as user turns in the Third Place conversation:
+
+> 2026-09-14T13:52:53Z — "brooo, all third place journals should be accessible to the LIB or rest of consonance"
+> 2026-09-14T13:55:05Z — "i made it public so my friend could see it earlier, no one is looking for it or knows it exists so who cares tbh"
+
+Landed by the Third Place seat at `76d37dc` (L's fifteen files) and `108746b` (D's half). **`solariz3d/lighthouse`
+is PUBLIC** (`gh repo view solariz3d/lighthouse --json visibility` -> PUBLIC). `BUILDING.md`'s 09-06 line calling
+this repository private is stale too, and it is the next carrier to amend.
+
+**The 05:58 decision below (§ WHICH FUTURE CONTINUES) named two seats; the take covered SEVEN.** On D at 08:41 the
+keeper chose TAKE for all seven seats in the setup window: `STICK APPLIER pid=3052 take_stick=[all seven]` in D's
+`persist.log`. The window preselects nothing on a DIVERGED row and Carry requires a choice on every one, so each
+seat's take is his word for that seat. Scored by the librarian and by C's second read
+(`handback/p-diverged-read2-C_2026-09-14.md`):
+- 7 of 7 D copies in the attic as `<sid>.20260914-084111-take-stick.jsonl`;
+- 7 of 7 prefix shas matching the ledger;
+- 0 fresh seats;
+- the attic copy of main hashes identical, as whole files, to the stray `.tail.writing-25288` on the stick.
