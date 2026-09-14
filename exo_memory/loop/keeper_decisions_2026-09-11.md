@@ -68,3 +68,25 @@ earlier is not wrong, just inert.
 *Registered so this file can be shown wrong: if the placement happens before P1b lands and a pane then
 wakes into its real conversation anyway, the chair's reading of `resume_pane` is wrong and §3(2) should
 say so.*
+
+## 2026-09-14 ~05:58, on L — WHICH FUTURE CONTINUES for main and the librarian
+
+**Asked:** "When the stick reaches the desktop, main and the librarian each have two continuations: the desktop's few
+minutes from 09-12 (12:53-12:57), or this laptop's whole night including the stick module work. Which should
+continue? The other is archived, never deleted."
+
+**The keeper's answer, verbatim: "The laptop's (Recommended)".**
+
+**What it rests on:**
+- B and C's preflight reads, collated at e6627cf.
+- Measured by the chair: L's chair file and D's interrupted export (`D:\consonance-L-20260911\consonance-tails\
+  0c0c0c0a-….0-260898687.tail.writing-25288`) first differ at byte **260,427,746**. L's next record is a
+  bridge-session record; D's is a turn.
+- The librarian's D master (`librarian/2026-09-12.md:47`) records D's growth after the 12:47 export: chair
+  +213,510 B, librarian +398,974 B.
+
+**What it does NOT yet have: a mechanism.**
+- The import verdict is DIVERGED, and the window offers choices only for OTHER_CONVERSATION (`main.rs:10642`).
+- The tool has no flag that takes a DIVERGED row.
+- D's copies for those two seats go to the attic; nothing is deleted.
+- **D must not launch with the stick until that lands, and D must `git pull` first. `launch.ps1` has no git call.**
