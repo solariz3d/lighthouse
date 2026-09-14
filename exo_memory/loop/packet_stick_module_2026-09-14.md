@@ -1,4 +1,4 @@
-# P-STICK · THE STICK AS A LAUNCH VERDICT — Arrive and Leave, inside the app. D062.
+# P-STICK · THE STICK AS A LAUNCH VERDICT — Arrive and Leave, inside the app. L058 (the laptop names its laps L; "D062" was typed from the desktop's numbering).
 
 **To ECHO and ALPHA, 2026-09-14 ~01:10, on machine L. One packet, two owners, split at a subprocess
 boundary. §2 is the contract you both build to — there is exactly one copy of it, here.**
@@ -14,7 +14,7 @@ the prior art and the falsifiers — **read it at the file first**):
 
 And 01:01 tonight: *"go ahead and have the orch dispatch the stick module."*
 
-**What it stands on, landed by the chair before this dispatch:** the carried receipt, built tonight on
+**What it stands on, landed by the chair before this dispatch, at `9fc0a71`:** the carried receipt, built tonight on
 L by a launch-born librarian seat and retired by its own restore — `tail-carry.js` writes
 `~/.claude/consonance-carried.json` on import; `sync_launch.rs::read_carried` and `apply_retire` keep a
 transcript whose first timestamped record matches it. **That fix is why the 00:55 launch printed
