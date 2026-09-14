@@ -193,7 +193,22 @@ with that path in the same turn. One line to your own map.
 
 ---
 
-## 10 · RULINGS AFTER E's HALF — the chair, 01:45 (`0783e45`)
+## 10 · ~~RULINGS AFTER E's HALF — the chair, 01:45 (`0783e45`)~~ — **HELD. NOT IN FORCE. DO NOT BUILD AGAINST ANYTHING BELOW.**
+
+> **HELD at the keeper's word, 01:42, relayed by the librarian, and marked here at 01:46.** *"HOLD the two
+> design calls … until A rings."* His reason, which is right: **A was still building while E's half was
+> collated and acted on around it.** The line — the loop may only move ahead of a pane when the pane's work
+> does not hinge on what moves — cannot be judged from outside the pane's context, so the rule is
+> structural: **anything that touches a shared section of a packet is, by construction, something the other
+> half's build hinges on.** E's half changed §2 and §3. So this section was written too early, by the chair,
+> and **it stays here as a trace, struck, rather than being deleted** — so that nobody who already read it is
+> left holding a ruling that silently disappeared.
+>
+> **ALPHA: the only change from E's half that applies to you is the four fields added to §2.** Nothing in
+> this section does. Build §2 as it now stands; §10 is re-opened, with your hand-back beside E's, after you
+> ring. **Both halves land together.**
+
+
 
 **E refused the in-app import, correctly, and the design is now A-with-B-beneath** (E's hand-back §3): an
 **opener** that runs before the app exists, and an **in-app net** that withholds seats by name and never
