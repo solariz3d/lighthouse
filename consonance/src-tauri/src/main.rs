@@ -9807,9 +9807,11 @@ fn seats_withheld() -> Option<String> {
     if !SEATS_WITHHELD.load(Ordering::Relaxed) {
         return None;
     }
-    Some(format!(
-        "Consonance opened READ-ONLY and is not waking seats. {}",
-        LAUNCH_VERDICT.lock().unwrap().as_ref().map(|v| v.why().to_string()).unwrap_or_default()
+    // The flag has two reasons (READ-ONLY, or the stick holding the seats for its window) and the line says which.
+    let verdict = LAUNCH_VERDICT.lock().unwrap().clone();
+    Some(sync_launch::withheld_line(
+        verdict.as_ref().map(|v| v.is_read_only()).unwrap_or(false),
+        &verdict.as_ref().map(|v| v.why().to_string()).unwrap_or_default(),
     ))
 }
 
@@ -10636,24 +10638,9 @@ fn stick_rehearse_blocking(folder: &Path) -> serde_json::Value {
     let data = data_dir();
     let keep = fs::read_to_string(data.join(sync_launch::STICK_KEEP)).unwrap_or_default();
     let launches = sync_launch::launch_times(&fs::read_to_string(data.join("persist.log")).unwrap_or_default());
-    let text = |r: &serde_json::Value, k: &str| r.get(k).and_then(|x| x.as_str()).map(str::to_string);
-    let mut offers = serde_json::Map::new();
-    for r in import.get("rows").and_then(|x| x.as_array()).cloned().unwrap_or_default() {
-        if text(&r, "reason").as_deref() != Some("OTHER_CONVERSATION") {
-            continue;
-        }
-        let (Some(sid), kind) = (text(&r, "sid"), text(&r, "kind").unwrap_or_default()) else { continue };
-        let exported = text(&r, "exportedAt");
-        let o = sync_launch::offer_for(
-            &kind,
-            r.get("retirable").and_then(|x| x.as_bool()).unwrap_or(false),
-            text(&r, "localFirstTimestamp").as_deref(),
-            exported.as_deref(),
-            &launches,
-        );
-        let kept = exported.as_deref().map(|e| sync_launch::is_kept(&keep, &sid, e)).unwrap_or(false);
-        offers.insert(sid, serde_json::json!({ "take_offered": o.take_offered, "default": o.default.tag(), "why": o.why, "kept": kept }));
-    }
+    // P-DIVERGED: one function builds the offers — OTHER_CONVERSATION through offer_for, DIVERGED beside it — so the
+    // rows the window gets are the rows `sync_launch::diverged_tests` checks against real tail-carry output.
+    let offers = sync_launch::offers_for_rows(&import, &keep, &launches);
     let quiet = sync_launch::rehearsal_is_quiet(&verify, &import, &export, &keep);
     let code = |v: &serde_json::Value| v.get("code").map(|c| c.to_string()).unwrap_or_else(|| "none".into());
     plog(&format!("STICK REHEARSED {f} quiet={quiet} verify={} import={} export={}", code(&verify), code(&import), code(&export)));
@@ -10670,11 +10657,14 @@ async fn stick_start_applier(
     app: AppHandle,
     folder: String,
     retire_far: Vec<String>,
+    // P-DIVERGED §2.6: TAKE THE STICK'S on a DIVERGED seat. A different flag from --retire-far because it acts on a
+    // different verdict: --retire-far is ignored for a fork, which would make a confirmed TAKE a Carry that takes nothing.
+    take_stick: Vec<String>,
     repair: Vec<String>,
     keep: Vec<KeepPick>,
 ) -> Result<(), String> {
     let folder = checked_stick_folder(&folder)?;
-    if let Some(bad) = retire_far.iter().chain(repair.iter()).chain(keep.iter().map(|k| &k.sid)).find(|s| !is_sid(s)) {
+    if let Some(bad) = retire_far.iter().chain(take_stick.iter()).chain(repair.iter()).chain(keep.iter().map(|k| &k.sid)).find(|s| !is_sid(s)) {
         return Err(format!("{bad:?} is not a session id — nothing was started"));
     }
     let data = data_dir();
@@ -10698,6 +10688,9 @@ async fn stick_start_applier(
     for s in &retire_far {
         cmd.arg("--retire-far").arg(s);
     }
+    for s in &take_stick {
+        cmd.arg("--take-stick").arg(s);
+    }
     for s in &repair {
         cmd.arg("--repair").arg(s);
     }
@@ -10715,9 +10708,10 @@ async fn stick_start_applier(
         .map_err(|e| format!("the transfer could not start: node would not run ({e}). Consonance stays open."))?;
     let pid = child.id();
     plog(&format!(
-        "STICK APPLIER started pid={pid} stick={} retire_far=[{}] repair=[{}] kept=[{}]",
+        "STICK APPLIER started pid={pid} stick={} retire_far=[{}] take_stick=[{}] repair=[{}] kept=[{}]",
         folder.display(),
         retire_far.join(","),
+        take_stick.join(","),
         repair.join(","),
         keep.iter().map(|k| k.sid.as_str()).collect::<Vec<_>>().join(",")
     ));
@@ -15622,5 +15616,45 @@ mod no_console_tests {
                 "{sig} does not start its child with NO_WINDOW | CREATE_NEW_PROCESS_GROUP"
             );
         }
+    }
+}
+
+/// **P-DIVERGED — the app's wiring.** These command functions take a Tauri `AppHandle` and spawn node, so their
+/// wiring is asserted against the source; what each one decides is tested behaviourally in
+/// `sync_launch::diverged_tests`.
+#[cfg(test)]
+mod diverged_wiring_tests {
+    use std::fs;
+
+    fn body_of(src: &str, sig: &str) -> String {
+        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+        after[..after.find("\n}\n").expect("no end of function")].to_string()
+    }
+
+    /// §2.6: TAKE on a DIVERGED seat reaches the applier as `--take-stick <sid>`, and its sids are checked as the
+    /// other decisions' are before they become argv.
+    #[test]
+    fn a_take_on_a_diverged_seat_is_forwarded_as_take_stick_and_its_sids_are_checked() {
+        let src = fs::read_to_string("src/main.rs").unwrap();
+        let body = body_of(&src, concat!("async fn stick_start", "_applier("));
+        assert!(body.contains(concat!("take_stick", ": Vec<String>")) || src.contains(concat!("take_stick", ": Vec<String>,")), "stick_start_applier takes no take_stick");
+        assert!(body.contains(concat!("cmd.arg(\"--take-", "stick\").arg(s)")), "a TAKE on a DIVERGED seat never reaches the applier");
+        assert!(body.contains(concat!(".chain(take", "_stick.iter())")), "take_stick sids become argv without is_sid");
+    }
+
+    /// The offers are built by the one function the behavioural tests exercise, not by a second copy inline.
+    #[test]
+    fn the_rehearsal_builds_its_offers_through_offers_for_rows() {
+        let src = fs::read_to_string("src/main.rs").unwrap();
+        let body = body_of(&src, concat!("fn stick_rehearse", "_blocking("));
+        assert!(body.contains(concat!("sync_launch::offers_for", "_rows(")), "the rehearsal builds its offers inline again");
+    }
+
+    /// (e) The withheld-seat line is chosen by the one formatter that knows a stick hold from READ-ONLY.
+    #[test]
+    fn the_withheld_seat_line_says_why_the_seats_are_withheld() {
+        let src = fs::read_to_string("src/main.rs").unwrap();
+        let body = body_of(&src, concat!("fn seats", "_withheld("));
+        assert!(body.contains(concat!("sync_launch::withheld", "_line(")), "a stick hold still reads READ-ONLY");
     }
 }

@@ -29,6 +29,13 @@
   /** One row's first timestamp, or "unknown" — never guessed (§3, E-3). */
   function when(ts) { return ts ? E(ts) : '<span class="stick-unknown">unknown</span>'; }
 
+  /** P-DIVERGED §2.5: a fork shows both continuations — how much each machine wrote after the shared prefix, and
+   *  which machine each is. A count the tool did not give reads "unknown", never a guess. */
+  function divergedBytes(r, here) {
+    const n = (b) => (b == null ? '<span class="stick-unknown">unknown</span>' : `${E(b)} B`);
+    return `the stick (from ${E(r.exportedFrom || 'unknown')}): ${n(r.bytes)}<br>this machine (${E(here || 'unknown')}): ${n(r.ownBytes)} of its own`;
+  }
+
   async function release(keep) {
     try {
       await inv('stick_release', { keep });
@@ -90,16 +97,19 @@
       <tr data-sid="${E(r.sid)}" data-exported="${E(r.exportedAt || '')}" data-verdict="${E(r.verdict)}">
         <td>${E(r.seat)}</td><td>${E(r.kind)}</td>
         <td>${E(r.verdict)}${r.reason ? `<br><span class="stick-muted">${E(r.reason)}</span>` : ''}</td>
-        <td>${r.bytes ? E(r.bytes) + ' B' : ''}</td>
+        <td>${r.verdict === 'DIVERGED' ? divergedBytes(r, imp.machine) : (r.bytes ? E(r.bytes) + ' B' : '')}</td>
         <td>${when(r.localFirstTimestamp)}</td>
         <td>${when(r.carriedFirstTimestamp)}</td>
         <td>${r.verdict === 'INTERRUPTED' ? `<label><input type="checkbox" class="stick-repair"> repair</label>` : choiceCell(r, offers[r.sid])}
             ${r.why && !offers[r.sid] ? `<div class="stick-why">${E(r.why)}</div>` : ''}</td>
       </tr>`).join('');
     const behind = (exp.rows || []).filter((r) => r.carries);
-    // Carry only when the applier would change something: a seat that carries, a choice to make, or a
-    // repair to offer. Otherwise Carry would close and reopen Consonance for nothing.
-    const actionable = (imp.rows || []).some((r) => r.carries || offers[r.sid] || r.verdict === 'INTERRUPTED');
+    // Carry only when the applier would change something: a seat that carries, a choice to make, a repair to
+    // offer, or a ledger to heal. Otherwise Carry would close and reopen Consonance for nothing.
+    // P-DIVERGED D-1: ALREADY_APPLIED and APPLIED_AND_GREW carry nothing and stop nothing, but a Carry is what
+    // advances their ledger — without them here the heal could never be started from this window.
+    const HEALS = ['ALREADY_APPLIED', 'APPLIED_AND_GREW'];
+    const actionable = (imp.rows || []).some((r) => r.carries || offers[r.sid] || r.verdict === 'INTERRUPTED' || HEALS.includes(r.verdict));
     say(`
       <h2>Transfer from the stick</h2>
       <p class="stick-muted"><code>${E(reh.folder)}</code></p>
@@ -122,25 +132,37 @@
       <p id="stick-msg"></p>`);
 
     const picks = () => {
-      const retire_far = [], keep = [], repair = [];
+      const retire_far = [], take_stick = [], keep = [], repair = [];
       for (const tr of body.querySelectorAll('tr[data-sid]')) {
         const sid = tr.dataset.sid;
         const chosen = tr.querySelector('input[type=radio]:checked');
-        if (chosen && chosen.value === 'take') retire_far.push(sid);
+        // P-DIVERGED D-5: a TAKE is routed by the row's verdict. --retire-far is ignored for a fork, so sending a
+        // DIVERGED take as retire_far would be a confirmed choice the applier silently never carries out.
+        if (chosen && chosen.value === 'take') (tr.dataset.verdict === 'DIVERGED' ? take_stick : retire_far).push(sid);
         if (chosen && chosen.value === 'keep') keep.push({ sid, exported_at: tr.dataset.exported });
         const rep = tr.querySelector('.stick-repair');
         if (rep && rep.checked) repair.push(sid);
       }
-      return { retire_far, keep, repair };
+      return { retire_far, take_stick, keep, repair };
     };
     const msg = (html) => { const m = body.querySelector('#stick-msg'); if (m) m.innerHTML = html; };
+    // §2.5: Carry stays disabled until every DIVERGED seat not already kept has an explicit choice — nothing is
+    // chosen for the keeper there. D-6: re-evaluated on every change, not only when the table is drawn.
+    const complete = () => [...body.querySelectorAll('tr[data-sid]')]
+      .filter((tr) => tr.dataset.verdict === 'DIVERGED' && !(offers[tr.dataset.sid] && offers[tr.dataset.sid].kept))
+      .every((tr) => !!tr.querySelector('input[type=radio]:checked'));
+    const update = () => {
+      body.querySelector('#stick-carry').disabled = !(state.applier_on_disk && !imp.unavailable && actionable && complete());
+    };
+    update();
+    body.addEventListener('change', update);
 
     body.querySelector('#stick-carry').onclick = async () => {
       const p = picks();
       msg('Starting the transfer — Consonance closes once the applier has said it started.');
       for (const b of body.querySelectorAll('button')) b.disabled = true;
       try {
-        await inv('stick_start_applier', { folder: reh.folder, retire_far: p.retire_far, repair: p.repair, keep: p.keep });
+        await inv('stick_start_applier', { folder: reh.folder, retire_far: p.retire_far, take_stick: p.take_stick, repair: p.repair, keep: p.keep });
       } catch (e) {
         // §2: absent handshake -> does NOT exit; the reason, by name, and the window stays.
         msg(`<span class="stick-bad">${E(e)}</span>`);

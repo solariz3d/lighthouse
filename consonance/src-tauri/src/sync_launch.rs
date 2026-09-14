@@ -942,6 +942,9 @@ pub fn launch_times(persist_log: &str) -> Vec<i64> {
 pub enum SeatChoice {
     Take,
     Keep,
+    /// **P-DIVERGED D-4: nothing preselected.** On a DIVERGED seat both files are the lineage, so the window
+    /// preselects neither and Carry waits until the keeper has chosen.
+    None,
 }
 
 impl SeatChoice {
@@ -949,6 +952,7 @@ impl SeatChoice {
         match self {
             SeatChoice::Take => "take",
             SeatChoice::Keep => "keep",
+            SeatChoice::None => "none",
         }
     }
 }
@@ -1178,19 +1182,35 @@ pub fn rehearsal_is_quiet(
     let rows = |v: &serde_json::Value| v.get("rows").and_then(|r| r.as_array()).cloned().unwrap_or_default();
     let flag = |r: &serde_json::Value, k: &str| r.get(k).and_then(|x| x.as_bool()).unwrap_or(false);
     let text = |r: &serde_json::Value, k: &str| r.get(k).and_then(|x| x.as_str()).unwrap_or("").to_string();
+    // The seats the keeper already chose to KEEP for THIS carry: the ones whose stop is not news on either side.
+    let mut kept_sids: Vec<String> = Vec::new();
     for r in rows(import) {
         if flag(&r, "carries") {
             return false;
         }
+        // **P-DIVERGED D-1, E's half.** A ledger a killed applier left un-advanced reads ALREADY_APPLIED or
+        // APPLIED_AND_GREW: nothing carries and nothing stops, but the heal runs only from Carry. A window that
+        // closed itself here would leave the ledger wedged — so these are news.
+        if matches!(text(&r, "verdict").as_str(), "ALREADY_APPLIED" | "APPLIED_AND_GREW") {
+            return false;
+        }
         if flag(&r, "stops") {
-            let kept = text(&r, "reason") == "OTHER_CONVERSATION"
-                && is_kept(keep_json, &text(&r, "sid"), &text(&r, "exportedAt"));
+            // §2.6: a DIVERGED seat the keeper kept is recorded exactly as an OTHER_CONVERSATION keep, and read the same.
+            let choosable = text(&r, "reason") == "OTHER_CONVERSATION" || text(&r, "verdict") == "DIVERGED";
+            let kept = choosable && is_kept(keep_json, &text(&r, "sid"), &text(&r, "exportedAt"));
             if !kept {
                 return false;
             }
+            kept_sids.push(text(&r, "sid"));
         }
     }
-    !rows(export).iter().any(|r| flag(r, "carries") || flag(r, "stops"))
+    // **P-DIVERGED D-2.** Keeping this machine's conversation leaves the other machine's tail untaken, so this same
+    // machine's export refuses UNIMPORTED_TAIL for that seat. The keeper chose that knowingly; re-opening the window
+    // on every launch for it is noise. ONLY that reason, and ONLY for a seat kept on the import side for this carry.
+    !rows(export).iter().any(|r| {
+        let known = flag(r, "stops") && text(r, "reason") == "UNIMPORTED_TAIL" && kept_sids.contains(&text(r, "sid"));
+        (flag(r, "carries") || flag(r, "stops")) && !known
+    })
 }
 
 
@@ -1211,6 +1231,76 @@ pub fn waiter_args(data_dir: &Path, app_pid: u32) -> Vec<String> {
         "--app-image".to_string(),
         APP_IMAGE.to_string(),
     ]
+}
+
+/// **P-DIVERGED D-3: the offer for a DIVERGED seat — built beside `offer_for`, not through it.** `offer_for`'s
+/// retirable gate answers "can --retire-far take this?", which is the wrong question for a fork (`retirable` is null
+/// on DIVERGED rows, and --retire-far ignores them). A fork is taken by `--take-stick`, always possible, and chosen by
+/// nobody but the keeper: `take_offered: true`, `default: None`.
+///
+/// `own_bytes` and `tail_bytes` are the row's `ownBytes` and `bytes` (A's §2.4 / D-7); `this_machine` is the import
+/// result's `machine` and `from` its `exportedFrom`. Any of them missing reads "unknown", never a guess.
+pub fn diverged_offer(own_bytes: Option<u64>, tail_bytes: Option<u64>, this_machine: Option<&str>, from: Option<&str>) -> ChoiceOffer {
+    let n = |b: Option<u64>| b.map(|b| format!("{b} B")).unwrap_or_else(|| "an unknown number of bytes".to_string());
+    let here = this_machine.unwrap_or("this machine");
+    let there = from.unwrap_or("the other machine");
+    ChoiceOffer {
+        take_offered: true,
+        default: SeatChoice::None,
+        why: format!(
+            "Two futures of one conversation: {here} wrote {} of its own after the last carry, and {there} wrote {}. \
+             TAKE THE STICK'S: {here}'s whole file goes to the attic, and {there}'s continuation takes the seat. \
+             KEEP THIS MACHINE'S: {there}'s tail for this seat is not carried, and until it is taken {here}'s later \
+             turns for this seat will not export (UNIMPORTED_TAIL). Nothing is chosen for you.",
+            n(own_bytes),
+            n(tail_bytes)
+        ),
+    }
+}
+
+/// The window's offers for one import rehearsal, keyed by sid — every seat that needs the keeper's choice, and no
+/// other. OTHER_CONVERSATION goes through `offer_for` (ruling 1's defaults); DIVERGED through `diverged_offer`. Each
+/// offer says whether the keeper already chose KEEP for this carry.
+pub fn offers_for_rows(import: &serde_json::Value, keep_json: &str, launches: &[i64]) -> serde_json::Map<String, serde_json::Value> {
+    let text = |r: &serde_json::Value, k: &str| r.get(k).and_then(|x| x.as_str()).map(str::to_string);
+    let this_machine = text(import, "machine");
+    let mut offers = serde_json::Map::new();
+    for r in import.get("rows").and_then(|x| x.as_array()).cloned().unwrap_or_default() {
+        let Some(sid) = text(&r, "sid") else { continue };
+        let exported = text(&r, "exportedAt");
+        let o = if text(&r, "reason").as_deref() == Some("OTHER_CONVERSATION") {
+            offer_for(
+                &text(&r, "kind").unwrap_or_default(),
+                r.get("retirable").and_then(|x| x.as_bool()).unwrap_or(false),
+                text(&r, "localFirstTimestamp").as_deref(),
+                exported.as_deref(),
+                launches,
+            )
+        } else if text(&r, "verdict").as_deref() == Some("DIVERGED") {
+            diverged_offer(
+                r.get("ownBytes").and_then(|x| x.as_u64()),
+                r.get("bytes").and_then(|x| x.as_u64()),
+                this_machine.as_deref(),
+                text(&r, "exportedFrom").as_deref(),
+            )
+        } else {
+            continue;
+        };
+        let kept = exported.as_deref().map(|e| is_kept(keep_json, &sid, e)).unwrap_or(false);
+        offers.insert(sid, serde_json::json!({ "take_offered": o.take_offered, "default": o.default.tag(), "why": o.why, "kept": kept }));
+    }
+    offers
+}
+
+/// **P-DIVERGED (e): why the seats are not waking.** The spawn funnel refuses on one flag for two reasons, and it said
+/// READ-ONLY for both — so a stick hold sent the keeper looking for a half-promoted data dir that was never there.
+pub fn withheld_line(read_only: bool, verdict_why: &str) -> String {
+    if read_only {
+        format!("Consonance opened READ-ONLY and is not waking seats. {verdict_why}")
+    } else {
+        "The seats are waiting for the transfer window: they wake when you carry, or continue without carrying."
+            .to_string()
+    }
 }
 
 // END OF THE STICK AT LAUNCH
@@ -2294,5 +2384,151 @@ mod stick_tests {
         let args = waiter_args(Path::new("C:\\Consonance\\data"), 23900);
         assert_eq!(args, vec!["--data", "C:\\Consonance\\data", "--app-pid", "23900", "--app-image", "consonance.exe"]);
         assert!(!args.iter().any(|a| a == "--stick"), "the waiter was handed a stick path fixed at launch");
+    }
+}
+
+
+/// **P-DIVERGED (L058, third use) — the window's half: a door for two futures of one conversation.**
+/// `exo_memory/loop/packet_diverged_2026-09-14.md` §2.5, §2.6, §2.8 D-1..D-6.
+///
+/// The rows below are REAL: `dev/tail-carry.js` at 6dbdae9, unmodified, run with `--json` on a mkdtemp fixture of
+/// two machines (`scratchpad/diverged/gen_rows.js` in pane E's hand-back). Seat aaaaaaaa forked (D exported a tail, L
+/// wrote its own), bbbbbbbb holds another conversation on L, cccccccc is unmoved. Only the `path` fields — temp
+/// directories — were stripped. A test built on hand-written rows is how D-2 hid: the test before it passed `[]`.
+#[cfg(test)]
+mod diverged_tests {
+    use super::*;
+
+    const REAL: &str = r#"{"import":{"code":1,"machine":"L","rows":[{"seat":"pane a","sid":"aaaaaaaa-1111-4111-8111-111111111111","kind":"pane","verdict":"DIVERGED","reason":null,"why":"this machine has written 139 bytes of its OWN since the last carry, on top of the same prefix. Two futures of one conversation cannot be concatenated. Nothing is lost — but which one continues is a decision, not a merge.","stops":true,"carries":false,"bytes":0,"offset":154,"toOffset":275,"localSize":293,"localFirstTimestamp":"2026-09-10T10:00:00.000Z","carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":"2026-09-14T13:11:00.693Z","exportedFrom":"D","retirable":null,"result":null},{"seat":"pane b","sid":"bbbbbbbb-2222-4222-8222-222222222222","kind":"pane","verdict":"REFUSED","reason":"OTHER_CONVERSATION","why":"this machine holds a DIFFERENT conversation under this sid (key 47519714924aba9e… vs 925b1f31c04ac5f5…). Nothing here can merge two conversations. To let the carried one take the seat, name it: --retire-far bbbbbbbb-2222-4222-8222-222222222222","stops":true,"carries":false,"bytes":0,"offset":154,"toOffset":273,"localSize":136,"localFirstTimestamp":"2026-09-13T08:00:00.000Z","carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":"2026-09-14T13:11:00.693Z","exportedFrom":"D","retirable":false,"result":null},{"seat":"pane c","sid":"cccccccc-3333-4333-8333-333333333333","kind":"pane","verdict":"NOTHING_PENDING","reason":null,"why":null,"stops":false,"carries":false,"bytes":0,"offset":null,"toOffset":null,"localSize":null,"localFirstTimestamp":null,"carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":null,"exportedFrom":null,"retirable":null,"result":null}]},"export":{"code":1,"machine":"L","rows":[{"seat":"pane a","sid":"aaaaaaaa-1111-4111-8111-111111111111","kind":"pane","verdict":"REFUSED","reason":"UNIMPORTED_TAIL","why":"the stick still carries an unimported tail from D — import it on the machine it is for before exporting over it","stops":true,"carries":false,"bytes":0,"offset":null,"toOffset":null,"localSize":293,"localFirstTimestamp":"2026-09-10T10:00:00.000Z","carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":null,"exportedFrom":null,"retirable":null,"result":null},{"seat":"pane b","sid":"bbbbbbbb-2222-4222-8222-222222222222","kind":"pane","verdict":"REFUSED","reason":"UNIMPORTED_TAIL","why":"the stick still carries an unimported tail from D — import it on the machine it is for before exporting over it","stops":true,"carries":false,"bytes":0,"offset":null,"toOffset":null,"localSize":136,"localFirstTimestamp":"2026-09-13T08:00:00.000Z","carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":null,"exportedFrom":null,"retirable":null,"result":null},{"seat":"pane c","sid":"cccccccc-3333-4333-8333-333333333333","kind":"pane","verdict":"UP_TO_DATE","reason":null,"why":null,"stops":false,"carries":false,"bytes":0,"offset":null,"toOffset":null,"localSize":154,"localFirstTimestamp":"2026-09-10T10:00:00.000Z","carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":null,"exportedFrom":null,"retirable":null,"result":null}]}}"#;
+    const FORK: &str = "aaaaaaaa-1111-4111-8111-111111111111";
+    const OTHER: &str = "bbbbbbbb-2222-4222-8222-222222222222";
+    const STILL: &str = "cccccccc-3333-4333-8333-333333333333";
+
+    fn real() -> (serde_json::Value, serde_json::Value) {
+        let v: serde_json::Value = serde_json::from_str(REAL).unwrap();
+        (v["import"].clone(), v["export"].clone())
+    }
+    fn exported_at(import: &serde_json::Value, sid: &str) -> String {
+        import["rows"].as_array().unwrap().iter().find(|r| r["sid"] == sid).unwrap()["exportedAt"].as_str().unwrap().to_string()
+    }
+    fn verified() -> serde_json::Value {
+        serde_json::json!({ "code": 0, "layout": "manifest" })
+    }
+
+    // ── §2.5 · D-3 · D-4: the offer on a DIVERGED row ───────────────────────────────────────────────
+
+    /// Both files are the lineage, so nothing is preselected — for any kind.
+    #[test]
+    fn a_diverged_row_is_offered_take_with_nothing_preselected() {
+        let (import, _) = real();
+        let offers = offers_for_rows(&import, "", &[]);
+        assert_eq!(offers[FORK]["take_offered"], true, "a forked seat is offered no door");
+        assert_eq!(offers[FORK]["default"], "none", "a choice between two lineages was made for the keeper");
+    }
+
+    /// The offer says what each choice does to the seat, in the keeper's terms.
+    #[test]
+    fn a_diverged_offer_names_what_take_and_keep_each_do() {
+        let (import, _) = real();
+        let why = offers_for_rows(&import, "", &[])[FORK]["why"].as_str().unwrap().to_string();
+        assert!(why.contains("attic") && why.contains("will not export"), "the choices are not named: {why}");
+    }
+
+    /// The DIVERGED branch sits beside offer_for and does not take its rows: OTHER_CONVERSATION still gets offer_for.
+    #[test]
+    fn an_other_conversation_row_is_still_offered_through_offer_for() {
+        let (import, _) = real();
+        let row = import["rows"].as_array().unwrap().iter().find(|r| r["sid"] == OTHER).unwrap().clone();
+        let through = offer_for("pane", row["retirable"].as_bool().unwrap_or(false), row["localFirstTimestamp"].as_str(), row["exportedAt"].as_str(), &[]);
+        assert_eq!(offers_for_rows(&import, "", &[])[OTHER]["default"], through.default.tag());
+    }
+
+    #[test]
+    fn a_row_that_needs_no_choice_is_offered_nothing() {
+        let (import, _) = real();
+        assert!(offers_for_rows(&import, "", &[]).get(STILL).is_none(), "an unmoved seat was offered a choice");
+    }
+
+    #[test]
+    fn a_kept_diverged_row_says_so() {
+        let (import, _) = real();
+        let keep = record_keep("", FORK, &exported_at(&import, FORK));
+        assert_eq!(offers_for_rows(&import, &keep, &[])[FORK]["kept"], true);
+    }
+
+    // ── §2.6 · D-2: a KEEP is quiet, measured with the export rows it really produces ───────────────
+
+    /// **D-2.** Both stopped seats kept for this carry: the window stays closed, although the same machine's export
+    /// refuses UNIMPORTED_TAIL for both of them.
+    #[test]
+    fn kept_seats_are_quiet_although_their_export_refuses_unimported_tail() {
+        let (import, export) = real();
+        let keep = record_keep(&record_keep("", FORK, &exported_at(&import, FORK)), OTHER, &exported_at(&import, OTHER));
+        assert!(rehearsal_is_quiet(&verified(), &import, &export, &keep), "a KEEP re-opens the window on every launch");
+    }
+
+    /// The fork not kept: that is still news.
+    #[test]
+    fn an_unkept_fork_is_not_quiet() {
+        let (import, export) = real();
+        let keep = record_keep("", OTHER, &exported_at(&import, OTHER));
+        assert!(!rehearsal_is_quiet(&verified(), &import, &export, &keep));
+    }
+
+    /// A keep for an EARLIER carry of the same seat does not quiet this one.
+    #[test]
+    fn a_keep_for_an_earlier_carry_does_not_quiet_this_one() {
+        let (import, export) = real();
+        let keep = record_keep(&record_keep("", FORK, "2026-09-01T00:00:00.000Z"), OTHER, &exported_at(&import, OTHER));
+        assert!(!rehearsal_is_quiet(&verified(), &import, &export, &keep));
+    }
+
+    /// UNIMPORTED_TAIL on the export side is ignored only for a sid kept on the import side — not for any seat.
+    #[test]
+    fn an_unimported_tail_for_a_seat_nobody_kept_is_still_news() {
+        let (import, mut export) = real();
+        let keep = record_keep(&record_keep("", FORK, &exported_at(&import, FORK)), OTHER, &exported_at(&import, OTHER));
+        let still = export["rows"].as_array_mut().unwrap().iter_mut().find(|r| r["sid"] == STILL).unwrap();
+        still["verdict"] = "REFUSED".into();
+        still["reason"] = "UNIMPORTED_TAIL".into();
+        still["stops"] = true.into();
+        assert!(!rehearsal_is_quiet(&verified(), &import, &export, &keep), "an export stop was waved through for a seat that was never kept");
+    }
+
+    /// D-2 is narrow in its REASON too: a kept seat whose export stops for anything but UNIMPORTED_TAIL is still news.
+    /// (The real fork row, its reason changed — the one field this test is about.)
+    #[test]
+    fn a_kept_seats_export_stop_of_another_reason_is_still_news() {
+        let (import, mut export) = real();
+        let keep = record_keep(&record_keep("", FORK, &exported_at(&import, FORK)), OTHER, &exported_at(&import, OTHER));
+        let fork = export["rows"].as_array_mut().unwrap().iter_mut().find(|r| r["sid"] == FORK).unwrap();
+        fork["reason"] = "HISTORY_REWRITTEN".into();
+        assert!(!rehearsal_is_quiet(&verified(), &import, &export, &keep), "a KEEP silenced an export stop it was never about");
+    }
+
+    /// **D-1, the half that makes E's Carry reachable.** A ledger a killed applier left un-advanced reads
+    /// ALREADY_APPLIED or APPLIED_AND_GREW: nothing carries, nothing stops — and the heal only runs from Carry, so the
+    /// window must not close itself on it.
+    #[test]
+    fn a_seat_whose_ledger_still_needs_healing_is_not_quiet() {
+        for verdict in ["ALREADY_APPLIED", "APPLIED_AND_GREW"] {
+            let import = serde_json::json!({ "code": 0, "rows": [{ "sid": FORK, "verdict": verdict, "carries": false, "stops": false }] });
+            let export = serde_json::json!({ "code": 0, "rows": [] });
+            assert!(!rehearsal_is_quiet(&verified(), &import, &export, ""), "{verdict} closed the window before the heal could run");
+        }
+    }
+
+    // ── (e) the withheld-seat line ─────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_read_only_launch_says_read_only() {
+        assert!(withheld_line(true, "the data dir may be half-promoted").contains("READ-ONLY"));
+    }
+
+    /// A stick hold is not READ-ONLY, and saying so sent the keeper looking for a broken data dir.
+    #[test]
+    fn a_stick_hold_says_the_seats_are_waiting_for_the_transfer_window() {
+        let line = withheld_line(false, "");
+        assert!(line.contains("transfer window") && !line.contains("READ-ONLY"), "{line}");
     }
 }

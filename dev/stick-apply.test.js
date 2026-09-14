@@ -181,6 +181,22 @@ test('forwards the keeper\'s --retire-far and --repair VERBATIM, in order, and a
   assert.deepStrictEqual(resultOf(w).forwarded, ['--retire-far', 'aaaa-1', '--repair', 'bbbb-2', '--retire-far', 'cccc-3']);
 });
 
+test('P-DIVERGED 2.6: forwards the keeper\'s --take-stick VERBATIM and in order among the others', () => {
+  const w = world();
+  const c = standIn(obj(0, 'CARRIED'), 0);
+  go(w, ['--take-stick', 'aaaa-1', '--retire-far', 'bbbb-2', '--take-stick', 'cccc-3'], c);
+  assert.deepStrictEqual(c.argv(), ['--stick', STICK, '--import', '--json', '--apply',
+    '--take-stick', 'aaaa-1', '--retire-far', 'bbbb-2', '--take-stick', 'cccc-3']);
+  assert.deepStrictEqual(resultOf(w).forwarded, ['--take-stick', 'aaaa-1', '--retire-far', 'bbbb-2', '--take-stick', 'cccc-3']);
+});
+
+test('P-DIVERGED LANDING: --take-stick is an argument the applier knows — it starts, writes its handshake, and carries', () => {
+  const w = world();
+  const c = standIn(obj(0, 'CARRIED'), 0);
+  const r = go(w, ['--take-stick', 'aaaa-1'], c);
+  assert.strictEqual(r.startedWritten, true, 'an unknown flag would exit 2 with no handshake — the Carry that never starts');
+});
+
 test('with no decisions, the carry is called with no retire or repair flags at all', () => {
   const w = world();
   const c = standIn(obj(1, 'STOPPED'), 1);
@@ -204,6 +220,7 @@ for (const [label, argv] of [
   ['a relative --relaunch', ['--stick', STICK, '--relaunch', 'consonance.exe']],
   ['an unknown argument', ['--stick', STICK, '--relaunch', EXE, '--decide-for-me']],
   ['--retire-far with no sid', ['--stick', STICK, '--relaunch', EXE, '--retire-far']],
+  ['--take-stick with no sid', ['--stick', STICK, '--relaunch', EXE, '--take-stick']],
 ]) {
   test(`refuses to start on ${label}: exit 2, no handshake, no carry, no relaunch`, () => {
     const w = world();

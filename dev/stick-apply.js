@@ -2,7 +2,7 @@
 'use strict';
 // stick-apply.js — the applier. P-STICK-BUILD (L059) §2 as RE-RULED at 60e1ccf, pane A, 2026-09-14.
 //
-//   node dev/stick-apply.js --stick <FOLDER> --relaunch <absolute consonance.exe> [--retire-far <sid>]... [--repair <sid>]...
+//   node dev/stick-apply.js --stick <FOLDER> --relaunch <absolute consonance.exe> [--retire-far <sid>]... [--repair <sid>]... [--take-stick <sid>]...
 //
 // Started by the app after the keeper confirms in the setup window. It has no window and it never tells
 // the keeper anything — the relaunched app re-rehearses and shows the real state. Its whole job, in order:
@@ -76,7 +76,8 @@ function parseArgs(argv) {
     try {
       if (a === '--stick') o.stick = val();
       else if (a === '--relaunch') o.relaunch = val();
-      else if (a === '--retire-far' || a === '--repair') o.forward.push(a, val());
+      // --take-stick (P-DIVERGED §2.6): the keeper's TAKE THE STICK'S on a DIVERGED seat — forwarded like the others.
+      else if (a === '--retire-far' || a === '--repair' || a === '--take-stick') o.forward.push(a, val());
       else return { error: `unknown argument: ${a}` };
     } catch (e) { return { error: e.message }; }
   }
