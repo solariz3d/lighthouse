@@ -543,7 +543,36 @@ function planImport(o) {
     row.verdict = 'APPEND';
     rows.push(row);
   }
-  return { ok: true, code: 0, rows, led, machine, stick };
+  return { ok: true, code: 0, rows, led, machine, stick, projectsRoot };
+}
+
+/**
+ * THE RECEIPT THE LAUNCH READS: `<projectsRoot>/../consonance-carried.json` (`~/.claude/` by default).
+ *
+ * Found 2026-09-14 on L: this import placed all seven seats, then the launch saw a state head
+ * authored by D, took MIGRATE, and retired the three fixed seats it had just been handed. The launch
+ * decides from the state repo and never saw what the stick did. This file tells it: per sid, the
+ * first timestamped record of the conversation placed here (`sync_launch::read_carried` in the app).
+ * Merged, never replaced — a seat carried last week stays carried. Written tmp-then-rename.
+ */
+function carriedPath(projectsRoot) {
+  return path.join(path.dirname(projectsRoot), 'consonance-carried.json');
+}
+
+function writeCarried(projectsRoot, entries, now) {
+  if (!entries.length) return null;
+  const p = carriedPath(projectsRoot);
+  let rec = { version: 1, seats: {} };
+  if (fs.existsSync(p)) {
+    rec = JSON.parse(fs.readFileSync(p, 'utf8').replace(/^﻿/, ''));   // a broken receipt throws, loudly
+    if (!rec.seats || typeof rec.seats !== 'object') throw new Error(`receipt has no seats map: ${p}`);
+  }
+  for (const e of entries) rec.seats[e.sid] = { seat: e.seat, line: e.line, size: e.size, from: e.from, at: new Date(now).toISOString() };
+  const tmp = `${p}.tmp-${process.pid}`;
+  fs.mkdirSync(path.dirname(p), { recursive: true });
+  fs.writeFileSync(tmp, JSON.stringify(rec, null, 2));
+  fs.renameSync(tmp, p);
+  return p;
 }
 
 /** Append the tails that planImport cleared. */
@@ -588,6 +617,14 @@ function applyImport(plan, now) {
       why: ok ? null : `the rejoined file is ${size} B / ${full.slice(0, 16)}… and the ledger expects ${pend.toOffset} B / ${String(pend.fullSha).slice(0, 16)}…` });
   }
   writeLedger(stick, led);
+  // Only verified-whole seats go on the receipt: a failed rejoin must not be exempt from the retire.
+  const receipt = [];
+  for (const d of done) {
+    if (!d.ok) continue;
+    const k = conversationKey(d.row.dest);
+    if (k.key) receipt.push({ sid: d.row.sid, seat: d.row.seat, line: k.line, size: d.size, from: d.row.pending.from });
+  }
+  if (plan.projectsRoot) done.receipt = writeCarried(plan.projectsRoot, receipt, now);
   return done;
 }
 
@@ -680,6 +717,7 @@ function run(o) {
     }
   }
   if (!done.length) out('  nothing to write.');
+  if (done.receipt) out(`  receipt ${done.receipt}  (the launch keeps these conversations through a migrate)`);
   return { ok: bad === 0 && refused === 0, code: (bad || refused) ? 1 : 0, plan, done };
 }
 
@@ -705,6 +743,6 @@ if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
   settledStat, hashRange, readRange, conversationKey, seats, readLedger, writeLedger, asidePath,
-  planExport, applyExport, planImport, applyImport, run, main, sha256, stamp,
+  planExport, applyExport, planImport, applyImport, run, main, sha256, stamp, carriedPath, writeCarried,
   LEDGER_DIR, LEDGER_NAME, LEDGER_VERSION,
 };

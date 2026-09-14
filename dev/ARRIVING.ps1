@@ -82,7 +82,10 @@ try {
     if (-not $m.Success) { continue }
     $sid = $m.Groups[1].Value
     $why = ''
-    if ($i + 1 -lt $lines.Count) { $why = $lines[$i + 1] }
+    # the reason is not on the next line: tail-carry prints 'tail 0..N from X' first, then the reason,
+    # wrapped. Read every indented line under this row (found on L, 2026-09-14: the next-line read
+    # STOPPED a launch-born librarian that this script exists to retire).
+    for ($j = $i + 1; $j -lt $lines.Count -and $lines[$j] -match '^\s{6,}\S'; $j++) { $why += ' ' + $lines[$j].Trim() }
     if ($why -match 'DIFFERENT conversation') {
       if ($fixed -contains $sid) {
         $born = FarFirstTimestamp $sid

@@ -264,6 +264,41 @@ test('the carry runs BOTH ways: L exports its own turns back and D appends them'
   assert.strictEqual(fs.readFileSync(w.D.dest, 'utf8'), v2);
 });
 
+// ── the receipt the launch reads (L, 2026-09-14: placed seats retired by a migrate a minute later) ──
+
+test('an import leaves a receipt naming the conversation it placed, beside the projects root', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-06-30T05:00:00.000Z', '2026-09-12T12:00:00.000Z']));
+  go(w.D, 'export', { apply: true });
+  const r = go(w.L, 'import', { apply: true });
+  const p = T.carriedPath(w.L.projectsRoot);
+  assert.strictEqual(path.dirname(p), path.dirname(w.L.projectsRoot), 'the receipt must sit where the app looks: ~/.claude/');
+  const rec = JSON.parse(fs.readFileSync(p, 'utf8'));
+  assert.strictEqual(rec.seats[SID].line, T.conversationKey(w.L.dest).line, r.text);
+  assert.strictEqual(rec.seats[SID].from, 'D');
+});
+
+test('a refused import writes no receipt, so nothing it did not place is exempt from the retire', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-06-30T05:00:00.000Z']));
+  go(w.D, 'export', { apply: true });
+  write(w.L, conversation(SID, ['2026-09-11T00:27:29.000Z']));   // a different conversation under the sid
+  const r = go(w.L, 'import', { apply: true });
+  assert.strictEqual(rowFor(r).verdict, 'REFUSED', r.text);
+  assert.ok(!fs.existsSync(T.carriedPath(w.L.projectsRoot)), 'a refused seat must not be on the receipt');
+});
+
+test('the receipt merges: a second carry keeps the seats the first one placed', () => {
+  const w = world();
+  const p = T.carriedPath(w.L.projectsRoot);
+  T.writeCarried(w.L.projectsRoot, [{ sid: 'bbbbbbbb-2222', seat: 'main', line: '{"timestamp":"x"}', size: 1, from: 'D' }], Date.now());
+  write(w.D, conversation(SID, ['2026-06-30T05:00:00.000Z']));
+  go(w.D, 'export', { apply: true });
+  go(w.L, 'import', { apply: true });
+  const rec = JSON.parse(fs.readFileSync(p, 'utf8'));
+  assert.ok(rec.seats['bbbbbbbb-2222'] && rec.seats[SID]);
+});
+
 test('a second import of the same tail is a no-op, not a second append', () => {
   const w = world();
   write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));

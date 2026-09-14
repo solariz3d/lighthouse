@@ -7417,7 +7417,8 @@ fn spawn_third_place(
     // wakes as itself, one gap wide. What is NOT safe either way is `captures/*.txt` in A's
     // manifest travelling this seat's words to a remote — that is a live conflict with the
     // standing rule, it is A's file, and it is named in the hand-back rather than patched here.
-    if launch_verdict_is_migrate() {
+    // A kept (stick-placed) transcript resumes, so it gets no "your thread is on disk" pointer.
+    if launch_verdict_is_migrate() && !transcript.exists() {
         append_synced_tail(&mut intake, THIRD_PLACE_SID);
     }
     let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
@@ -7455,7 +7456,8 @@ fn spawn_librarian(
         .join(format!("{LIBRARIAN_SID}.jsonl"));
     // L052: see spawn_main. The shelf is already near its cap, so `append_synced_tail` computes
     // its budget from the intake it is handed and degrades to a pointer rather than overflowing.
-    if launch_verdict_is_migrate() {
+    // A kept (stick-placed) transcript resumes, so it gets no "your thread is on disk" pointer.
+    if launch_verdict_is_migrate() && !transcript.exists() {
         append_synced_tail(&mut intake, LIBRARIAN_SID);
     }
     let _ = fs::write(PathBuf::from(&cwd).join("CLAUDE.md"), intake);
@@ -7510,7 +7512,8 @@ fn spawn_main(
     intake.push_str(&night_table(&cwd, settled));
     // L052: after a migrate this seat's own session file has been retired, so `resume` below is
     // false and the window would be empty. The thread rides in on the synced capture tail.
-    if launch_verdict_is_migrate() {
+    // A kept (stick-placed) transcript resumes, so it gets no "your thread is on disk" pointer.
+    if launch_verdict_is_migrate() && !transcript.exists() {
         append_synced_tail(&mut intake, MAIN_SID);
     }
     // the room is refreshed into CLAUDE.md each launch; --resume continues the same conversation
@@ -9972,8 +9975,24 @@ fn sync_at_launch() -> (sync_launch::Verdict, Vec<sync_launch::RetireOutcome>) {
 
     let retired = if verdict.is_migrate() {
         let stamp = chrono::Local::now().format("%Y%m%d-%H%M%S").to_string();
-        let plan = sync_launch::retire_plan(Path::new(&home()), &fixed_id_seats(), &stamp);
-        sync_launch::apply_retire(&plan)
+        let home_dir = home();
+        // The stick's receipt: a fixed seat whose conversation the stick placed is the synced
+        // lineage already and is kept (L, 2026-09-14: three placed seats retired a minute after
+        // ARRIVING landed them). Unreadable is SAID, and then nothing is exempt — the old behaviour.
+        let carried = match sync_launch::read_carried(&sync_launch::carried_receipt_path(Path::new(&home_dir))) {
+            Ok(m) => m,
+            Err(e) => {
+                plog(&format!("CARRIED RECEIPT unreadable ({e}) — no fixed seat is exempt from the retire"));
+                HashMap::new()
+            }
+        };
+        let plan = sync_launch::retire_plan(Path::new(&home_dir), &fixed_id_seats(), &stamp);
+        let out = sync_launch::apply_retire(&plan, &carried);
+        for r in &out {
+            let what = if r.kept_carried { "KEPT (the stick placed it)" } else if r.moved { "RETIRED" } else if r.error.is_some() { "RETIRE FAILED" } else { "none here" };
+            plog(&format!("MIGRATE SEAT {} {} {}", r.seat, what, r.from.display()));
+        }
+        out
     } else {
         Vec::new()
     };

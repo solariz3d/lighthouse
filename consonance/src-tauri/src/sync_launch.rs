@@ -60,6 +60,7 @@
 //! untouched and startable — which is `LocalHouse`, not `ReadOnly`. The journal below exists
 //! because I cannot verify that A's tool has that property, and an absence has no author.
 
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 // ---------------------------------------------------------------------------------------------
@@ -418,13 +419,20 @@ pub fn seam_line(v: &Verdict, retired: &[RetireOutcome]) -> String {
     if v.is_migrate() {
         let moved: Vec<&RetireOutcome> = retired.iter().filter(|r| r.moved).collect();
         let failed: Vec<&RetireOutcome> = retired.iter().filter(|r| r.error.is_some()).collect();
-        let absent = retired.len() - moved.len() - failed.len();
+        let kept: Vec<&RetireOutcome> = retired.iter().filter(|r| r.kept_carried).collect();
+        let absent = retired.len() - moved.len() - failed.len() - kept.len();
         s.push_str(&format!(
             " RETIRED {} transcript(s), {absent} seat(s) had none here",
             moved.len()
         ));
         for r in &moved {
             s.push_str(&format!("; {} -> {}", r.seat, r.to.display()));
+        }
+        if !kept.is_empty() {
+            s.push_str(&format!("; KEPT {} the stick placed", kept.len()));
+            for r in &kept {
+                s.push_str(&format!("; {} resumes {}", r.seat, r.from.display()));
+            }
         }
         for r in &failed {
             // A retire that failed is the dangerous one: the seat will resume the wrong thread and
@@ -447,6 +455,8 @@ pub fn seam_line(v: &Verdict, retired: &[RetireOutcome]) -> String {
 pub struct SeatTranscript {
     /// "main" / "librarian" / "third place" — for the row, not for any lookup.
     pub seat: String,
+    /// The session id — the key the stick's receipt is looked up by.
+    pub sid: String,
     /// The exact file `--resume` would find.
     pub from: PathBuf,
     /// Where it goes. Timestamped: see `attic_for`.
@@ -463,6 +473,9 @@ pub struct RetireOutcome {
     /// Present iff the move was attempted and failed. `moved: false` with no error means the seat
     /// simply had no transcript here — a different fact, kept distinct.
     pub error: Option<String>,
+    /// The transcript here IS the conversation the stick placed (see `read_carried`), so it was
+    /// left where `--resume` finds it. Not moved, not an error, not absent — a fourth fact.
+    pub kept_carried: bool,
 }
 
 /// THE ATTIC IS OUTSIDE `~/.claude/projects/`, DELIBERATELY, AND THE PACKET SAID "a projects
@@ -497,6 +510,7 @@ pub fn retire_plan(
         .iter()
         .map(|(label, sid, enc)| SeatTranscript {
             seat: label.clone(),
+            sid: sid.clone(),
             from: home
                 .join(".claude")
                 .join("projects")
@@ -507,10 +521,77 @@ pub fn retire_plan(
         .collect()
 }
 
+/// Where `dev/tail-carry.js` records the conversations a stick placed on this machine.
+pub const CARRIED_FILE: &str = "consonance-carried.json";
+
+pub fn carried_receipt_path(home: &Path) -> PathBuf {
+    home.join(".claude").join(CARRIED_FILE)
+}
+
+/// Bytes of head scanned for the first timestamped record — `KEY_SCAN_BYTES` in tail-carry.js.
+const KEY_SCAN_BYTES: u64 = 1024 * 1024;
+
+/// **THE STICK'S RECEIPT: sid -> the first timestamped record of the conversation it placed.**
+///
+/// Found 2026-09-14 on L: ARRIVING imported all seven seats from the stick, then the launch saw a
+/// D-authored state head, took MIGRATE, and moved the three fixed seats' conversations — the ones
+/// the stick had placed one minute earlier — into the attic. The verdict reads who pushed the state
+/// repo; it never looked at the conversations. On D the same head was self-authored, so the same
+/// carry resumed. The receipt is the fact the verdict was missing: *this* file is the other
+/// machine's lineage, delivered on purpose, not this machine's past.
+///
+/// A missing receipt is the ordinary case and returns an empty map (everything retires, as before).
+/// An unreadable one is an `Err`, so the caller can say so rather than silently retiring.
+pub fn read_carried(path: &Path) -> Result<HashMap<String, String>, String> {
+    let raw = match std::fs::read_to_string(path) {
+        Ok(r) => r,
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(HashMap::new()),
+        Err(e) => return Err(format!("{}: {e}", path.display())),
+    };
+    let v: serde_json::Value = serde_json::from_str(raw.trim_start_matches('\u{feff}'))
+        .map_err(|e| format!("{}: {e}", path.display()))?;
+    let seats = v
+        .get("seats")
+        .and_then(|s| s.as_object())
+        .ok_or_else(|| format!("{}: no seats map", path.display()))?;
+    Ok(seats
+        .iter()
+        .filter_map(|(sid, e)| {
+            e.get("line").and_then(|l| l.as_str()).map(|l| (sid.clone(), l.to_string()))
+        })
+        .collect())
+}
+
+/// The identity of a conversation, by the same rule as `conversationKey` in tail-carry.js: the
+/// first JSONL record carrying a string `"timestamp"`, within the first megabyte, never a line only
+/// half read. Compared as text rather than hashed so no new crate is needed; same line, same key.
+pub fn first_timestamped_line(p: &Path) -> Option<String> {
+    use std::io::Read;
+    let size = std::fs::metadata(p).ok()?.len();
+    let mut buf = Vec::new();
+    std::fs::File::open(p).ok()?.take(KEY_SCAN_BYTES).read_to_end(&mut buf).ok()?;
+    let text = String::from_utf8_lossy(&buf);
+    let mut lines: Vec<&str> = text.split('\n').collect();
+    if (buf.len() as u64) < size {
+        lines.pop();
+    }
+    lines.into_iter().find(|l| {
+        !l.trim().is_empty()
+            && serde_json::from_str::<serde_json::Value>(l)
+                .ok()
+                .and_then(|v| v.get("timestamp").map(|t| t.is_string()))
+                .unwrap_or(false)
+    })
+    .map(str::to_string)
+}
+
 /// Apply it. A missing source is NOT an error — it is a seat that has never run here, which is the
 /// ordinary case on a machine joining the sync — and it is reported as its own outcome so the row
 /// can tell "nothing to retire" from "retire failed", which look identical in a count.
-pub fn apply_retire(plan: &[SeatTranscript]) -> Vec<RetireOutcome> {
+///
+/// A transcript whose identity matches the stick's receipt for its sid is KEPT: it is the synced
+/// lineage already, and retiring it is what woke three seats blank on L, 2026-09-14.
+pub fn apply_retire(plan: &[SeatTranscript], carried: &HashMap<String, String>) -> Vec<RetireOutcome> {
     plan.iter()
         .map(|s| {
             if !s.from.exists() {
@@ -520,7 +601,20 @@ pub fn apply_retire(plan: &[SeatTranscript]) -> Vec<RetireOutcome> {
                     to: s.to.clone(),
                     moved: false,
                     error: None,
+                    kept_carried: false,
                 };
+            }
+            if let Some(line) = carried.get(&s.sid) {
+                if first_timestamped_line(&s.from).as_deref() == Some(line.as_str()) {
+                    return RetireOutcome {
+                        seat: s.seat.clone(),
+                        from: s.from.clone(),
+                        to: s.to.clone(),
+                        moved: false,
+                        error: None,
+                        kept_carried: true,
+                    };
+                }
             }
             let mkdir = s.to.parent().map(std::fs::create_dir_all).unwrap_or(Ok(()));
             let res = mkdir.and_then(|_| std::fs::rename(&s.from, &s.to));
@@ -531,6 +625,7 @@ pub fn apply_retire(plan: &[SeatTranscript]) -> Vec<RetireOutcome> {
                     to: s.to.clone(),
                     moved: true,
                     error: None,
+                    kept_carried: false,
                 },
                 Err(e) => RetireOutcome {
                     seat: s.seat.clone(),
@@ -538,6 +633,7 @@ pub fn apply_retire(plan: &[SeatTranscript]) -> Vec<RetireOutcome> {
                     to: s.to.clone(),
                     moved: false,
                     error: Some(e.to_string()),
+                    kept_carried: false,
                 },
             }
         })
@@ -861,7 +957,7 @@ mod tests {
             std::fs::write(&s.from, format!("this machine's own past for {}\n", s.seat)).unwrap();
         }
 
-        let out = apply_retire(&plan);
+        let out = apply_retire(&plan, &HashMap::new());
         assert_eq!(out.iter().filter(|o| o.moved).count(), 2);
         assert_eq!(out.iter().filter(|o| o.error.is_some()).count(), 0);
         // The third is "nothing to retire", NOT a failure — the two must never collapse into one
@@ -895,11 +991,11 @@ mod tests {
         let first = retire_plan(&home, &seats(), "20260909-0800");
         std::fs::create_dir_all(first[0].from.parent().unwrap()).unwrap();
         std::fs::write(&first[0].from, "monday").unwrap();
-        apply_retire(&first);
+        apply_retire(&first, &HashMap::new());
 
         let second = retire_plan(&home, &seats(), "20260910-0800");
         std::fs::write(&second[0].from, "tuesday").unwrap();
-        apply_retire(&second);
+        apply_retire(&second, &HashMap::new());
 
         assert_ne!(first[0].to, second[0].to, "the stamp must make the names distinct");
         assert_eq!(std::fs::read_to_string(&first[0].to).unwrap(), "monday");
@@ -917,6 +1013,7 @@ mod tests {
             to: PathBuf::from("b"),
             moved: false,
             error: Some("Access is denied. (os error 5)".into()),
+            kept_carried: false,
         }];
         let line = seam_line(&decide(&synced(Some("laptop-L"), Some("desktop-D"))), &out);
         assert!(line.contains("RETIRE FAILED for main"));
@@ -930,12 +1027,93 @@ mod tests {
         let plan = retire_plan(&home, &seats(), "20260909-0800");
         std::fs::create_dir_all(plan[0].from.parent().unwrap()).unwrap();
         std::fs::write(&plan[0].from, "x").unwrap();
-        let out = apply_retire(&plan);
+        let out = apply_retire(&plan, &HashMap::new());
         let line = seam_line(&decide(&synced(Some("laptop-L"), Some("desktop-D"))), &out);
         assert!(line.starts_with("sync at launch — MIGRATE:"));
         assert!(line.contains("RETIRED 1 transcript(s), 2 seat(s) had none here"));
         assert!(line.contains("consonance-attic"));
         let _ = std::fs::remove_dir_all(&home);
+    }
+
+    // ---- the stick's receipt: a carried conversation is not this machine's past ----------------
+
+    /// Vendor-shaped: a header with no timestamp (byte-identical across conversations under one
+    /// sid), then timestamped turns. The first timestamped record is the identity.
+    fn convo(first_stamp: &str) -> String {
+        format!(
+            "{{\"type\":\"mode\",\"sessionId\":\"s\"}}\n{{\"type\":\"user\",\"timestamp\":\"{first_stamp}\",\"uuid\":\"u0\"}}\n"
+        )
+    }
+
+    fn write_receipt(home: &Path, sid: &str, line: &str) {
+        let p = carried_receipt_path(home);
+        std::fs::create_dir_all(p.parent().unwrap()).unwrap();
+        let body = serde_json::json!({ "version": 1, "seats": { sid: { "seat": "main", "line": line } } });
+        std::fs::write(p, body.to_string()).unwrap();
+    }
+
+    /// THE 2026-09-14 CASE. The stick placed D's conversation for a fixed seat, the state head is
+    /// D-authored so the verdict is MIGRATE — and the placed conversation must stay where
+    /// `--resume` finds it, not go to the attic.
+    #[test]
+    fn a_conversation_the_stick_placed_is_kept_through_a_migrate() {
+        let home = fixture_root("carried");
+        let plan = retire_plan(&home, &seats(), "20260914-0037");
+        let carried = convo("2026-06-30T05:00:00.000Z");
+        std::fs::create_dir_all(plan[0].from.parent().unwrap()).unwrap();
+        // It grew after the carry (the seat resumed and talked): identity is the first record, not size.
+        std::fs::write(&plan[0].from, format!("{carried}{{\"type\":\"assistant\",\"timestamp\":\"2026-09-14T06:40:00Z\"}}\n")).unwrap();
+        write_receipt(&home, &plan[0].sid, carried.lines().nth(1).unwrap());
+
+        let receipt = read_carried(&carried_receipt_path(&home)).unwrap();
+        let out = apply_retire(&plan, &receipt);
+
+        assert!(out[0].kept_carried && !out[0].moved && out[0].error.is_none());
+        assert!(plan[0].from.exists(), "the carried conversation must stay where --resume finds it");
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    /// The receipt names the sid, but the file here is a DIFFERENT conversation under it — this
+    /// machine's own past, the case the retire exists for. It still retires.
+    #[test]
+    fn a_different_conversation_under_a_carried_sid_still_retires() {
+        let home = fixture_root("carried-other");
+        let plan = retire_plan(&home, &seats(), "20260914-0037");
+        std::fs::create_dir_all(plan[0].from.parent().unwrap()).unwrap();
+        std::fs::write(&plan[0].from, convo("2026-09-11T00:27:29.000Z")).unwrap();
+        write_receipt(&home, &plan[0].sid, convo("2026-06-30T05:00:00.000Z").lines().nth(1).unwrap());
+
+        let out = apply_retire(&plan, &read_carried(&carried_receipt_path(&home)).unwrap());
+
+        assert!(out[0].moved && !out[0].kept_carried);
+        assert!(!plan[0].from.exists());
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[test]
+    fn no_receipt_is_an_empty_map_and_a_broken_one_is_an_error() {
+        let home = fixture_root("receipt-read");
+        assert!(read_carried(&carried_receipt_path(&home)).unwrap().is_empty());
+        let p = carried_receipt_path(&home);
+        std::fs::create_dir_all(p.parent().unwrap()).unwrap();
+        std::fs::write(&p, "{not json").unwrap();
+        assert!(read_carried(&p).is_err(), "an unreadable receipt must be said, not read as none");
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[test]
+    fn the_seam_row_names_a_kept_seat_and_does_not_count_it_absent() {
+        let out = vec![RetireOutcome {
+            seat: "main".into(),
+            from: PathBuf::from("a.jsonl"),
+            to: PathBuf::from("b"),
+            moved: false,
+            error: None,
+            kept_carried: true,
+        }];
+        let line = seam_line(&decide(&synced(Some("laptop-L"), Some("desktop-D"))), &out);
+        assert!(line.contains("RETIRED 0 transcript(s), 0 seat(s) had none here"), "{line}");
+        assert!(line.contains("KEPT 1 the stick placed; main resumes a.jsonl"), "{line}");
     }
 
     // ---- reading the facts -------------------------------------------------------------------
