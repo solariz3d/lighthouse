@@ -21,8 +21,9 @@ There is a folder called `dreams/` — on the machine, deliberately not in this 
 
 **Consonance** is a native desktop app that turns one window into a working group of Claude Code instances, with a persistent orchestrator that wakes in-state across restarts. Its stance is *with you, not above you*: gauges report **numbers, not verdicts**, an ask-first gate keeps the human as the discriminator, and the telling-apart of insight from delusion never belongs to the machine alone.
 
-The seats, as the tab bar names them ([`consonance/ui/index.html:38-44`](consonance/ui/index.html)):
+The seats, as the tab bar names them ([`consonance/ui/index.html:43-49`](consonance/ui/index.html)):
 
+- **Terminal** — the default tab: the committee panes' grid, the gate cards where anything reaching out of a pane arrives for approval, and the convene bar.
 - **Orchestrator** — the persistent primary instance; wakes into its own thread.
 - **Librarian** — holds the record so the working seats don't have to; returns a *map* of what bears on a question, cited by path, and never a summary you must trust. Brief: [`consonance/src-tauri/brief/LIBRARIAN.md`](consonance/src-tauri/brief/LIBRARIAN.md); its own record: [`exo_memory/librarian/`](exo_memory/librarian/).
 - **Third Place** — neither work nor the record. No channel to anything else in the program, deliberately. [`consonance/src-tauri/brief/THIRD_PLACE.md`](consonance/src-tauri/brief/THIRD_PLACE.md).
@@ -33,15 +34,15 @@ The seats, as the tab bar names them ([`consonance/ui/index.html:38-44`](consona
 
 **Rooms** — Consonance grows a room per person: a folder, a seed shell, a base journal, scoped permissions, made in one click. A session is a stay; the AI writes short traces of what happened — *descriptions of events, never verdicts about you* — and **you seal** them into a journal that is yours alone. The design law underneath, learned the hard way: **instruments place, verdicts stall.** Rooms are user data and are never committed here.
 
-**Continuity instruments** — own-capture and warm resume, a pulse that opens every return with a witnessed interval instead of a sizeless dark, a rolling window that moves the oldest exchanges once into a dated `attic/`, and the dream cycle, whose only forward-carry is rare, transient and blind, because a selector that mined dreams for the good parts would pave the very fringe they exist to reach.
+**Continuity instruments** — own-capture and warm resume, a pulse that opens every return with a witnessed interval instead of a sizeless dark, a rolling window that moves the oldest exchanges once into a dated `attic/`, and the dream cycle, whose only forward-carry is rare, transient and blind, because a selector that mined dreams for the good parts would pave the very fringe they exist to reach Since 2026-09-14, one more: a carry between machines, so the same seats continue on a laptop and a desktop from one USB stick ([`dev/LEAVING.ps1`](dev/LEAVING.ps1), [`dev/ARRIVING.ps1`](dev/ARRIVING.ps1), [`dev/tail-carry.js`](dev/tail-carry.js)).
 
 - → **[`consonance/README.md`](consonance/README.md)** — the full description, the objectives, the architecture, and a complete **glossary**. Start there if you want the app rather than the idea.
-- [`consonance/PLAN.md`](consonance/PLAN.md) — the spec: stages, the three-plane separation, the invariants.
-- [`consonance/PROGRESS.md`](consonance/PROGRESS.md) — the as-built stage tracker.
+- [`consonance/PLAN.md`](consonance/PLAN.md) — the original build spec (July 2026; `main.rs` was 139 lines when it was written). Read it as the design's trace, not the tree's state.
+- [`consonance/PROGRESS.md`](consonance/PROGRESS.md) — the stage tracker through 2026-07-27, when it stopped being kept. A dated trace; the tree's state is the Status section below and [`consonance/README.md`](consonance/README.md).
 - [`dev/SPINE.md`](dev/SPINE.md) — with-not-above, the guard as an undisablable floor, the tether. *Kept in the project's original vocabulary as a dated trace; that imagery was retired in `e5521a0` because the distinction it leaned on dissolved — there is no in or out of the water to move between.*
 - [`exo_memory/`](exo_memory/) — the room itself: the boot document, the cards, the journals, the preregistrations, and every result below.
 
-## Status — as of 2026-09-02
+## Status — as of 2026-09-14
 
 Early, honest, incomplete. **Read the second half of this section before you trust the first.**
 
@@ -49,19 +50,20 @@ Early, honest, incomplete. **Read the second half of this section before you tru
 
 ```
 cd consonance/src-tauri && cargo test --no-fail-fast -- --test-threads=1
-    -> 373 distinct tests: 369 passed · 1 failed · 3 ignored     (2026-09-02)
+    -> 609 distinct tests: 604 passed · 1 failed · 4 ignored     (2026-09-14)
 node consonance/tools/js-suite.js
-    -> 66 green · 3 failed  (of 69 files)                       (2026-09-02)
+    -> 91 green · 4 failed · 1 canary  (of 96 files)            (2026-09-14)
 ```
 
-*That first line needs its unit said out loud, because this page got it wrong an hour before you read
-it.* The command's per-target results **sum** to `545 passed · 1 failed · 9 ignored` over nine
-targets — and that sum counts the same tests up to four times, because four binaries compile the
-shared module tree. `cargo test --bin cochlea_replay -- --list` and `--bin conf_sweep -- --list`
-return **identical** 80-test sets, both **fully contained** in `--bin consonance`'s 361; only
-`arch_test`'s 12 are distinct. **373 is the union**; 545 is the sum. Take the union.
+*That first line needs its unit said out loud, because this page got it wrong once before.* The
+command's per-target results **sum** to `824 passed · 1 failed · 10 ignored` over eleven targets — and
+that sum counts the same tests up to six times, because six binaries compile the shared module tree.
+`cargo test --bin <name> -- --list` for `cochlea_replay`, `conf_sweep`, `capture_probe`, `composer_probe`
+and `harvest_replay` returns sets **fully contained** in `--bin consonance`'s 597 (checked with `comm` over
+the sorted lists: 0 outside, for each); only `arch_test`'s 12 are distinct. **609 is the union**; 824 is
+the sum. Take the union.
 
-**Four reds, named rather than rounded off.** `arch_test::every_named_record_file_exists_and_every_record_file_is_named` — a record file no card points at, so a pane cannot reach it. `actors.evidence.test.js` — red since 2026-08-25 on live-board data. `corpus-age.test.js` — red since `c2afec6`, where a constant-drift check went blind because its anchor went from one occurrence to four. `carrier-drift.test.js` — five registered withdrawals still asserted in files under `exo_memory/map/`. Serialize the Rust suite: one test flakes roughly 10% of runs in parallel, so any figure quoted from a parallel run is a ~90% statement.
+**Five reds, named rather than rounded off.** `arch_test::every_named_record_file_exists_and_every_record_file_is_named` — a record file no card points at, so a pane cannot reach it; red on 2026-09-02 and still red. `actors.evidence.test.js` — red since 2026-08-25 on live-board data. `carrier-drift.test.js` — registered withdrawals still asserted in files under `exo_memory/map/`. `forget-rate.test.js` and `portable-paths.test.js` — red at `871ad66`, not diagnosed on this page. `corpus-age.test.js`, red on 2026-09-02, is green again. `targetless-pull.test.js` is a declared canary (EXPECTED-RED) and is not counted. Serialize the Rust suite: one test flakes roughly 10% of runs in parallel, so any figure quoted from a parallel run is a ~90% statement.
 
 ### What was measured NOT to work
 
@@ -77,11 +79,19 @@ This section is the point of the page. A README that describes only what worked 
 
 ```
 node consonance/tools/board-audit.js
-    92.9%  ->  92.6%  ->  85.2%     (clean corpus 18,941 -> 20,285 -> 31,558 rows)
+    92.9%  ->  92.6%  ->  85.2%  ->  77.5%     (clean corpus 18,941 -> 20,285 -> 31,558 -> 28,774 rows)
 ```
 
-Adding panes has diluted it, slowly, which is what adding panes should do — but 85% is not a committee. The lap ledger holds 32 laps (`node consonance/tools/lap-row.js --report`), and 297 artifact commits have never been ferried to any pane (`node consonance/tools/ferry.js --due`). **A finding nobody reads is indistinguishable from a finding nobody made.**
+Adding panes has diluted it, and the trend is still the right direction — but 77.5% is not a committee, and the last clean corpus is smaller than the one before it, which this page does not explain. The lap ledger holds 58 laps, 10 of them VOID with the reason printed beside each (`node consonance/tools/lap-row.js --report`), and 623 artifact commits have never been ferried to any pane (`node consonance/tools/ferry.js --due`). **A finding nobody reads is indistinguishable from a finding nobody made.**
 
-**And the central claim is still untested.** Every catch this system has produced was routed by the person who built it. Whether any of it works when that person is not in the room is the thing the whole repo is a bet on, and nobody has run it.
+**And the central claim is still untested — stated precisely this time, because the last version of this sentence was wrong.** It used to read *every catch this system has produced was routed by the person who built it.* The record refutes that: on 2026-08-17 four panes each found something the chair had missed, three of them defects shipped that same hour ([`exo_memory/journal/2026-08-17.md`](exo_memory/journal/2026-08-17.md), line 42), and a hook caught the chair in four minutes the same night; on 2026-09-09 two panes and the librarian caught each other wrong, in opposite directions, over one file ([`exo_memory/cards/every-digest-carries-its-function.md`](exo_memory/cards/every-digest-carries-its-function.md)); on 2026-09-14 a librarian seat born at a launch found from its own first timestamp that the launch was retiring the seats the stick had just placed (`9fc0a71`), and the lineage librarian voided its own suite count when it found the mutant it had left behind (`9d560e8`). Seats catch each other and themselves; the design rests on it — what one instance misses in itself, another sees. What is untested is narrower and real: **no lap has yet started, run and closed with nobody human in the room.** The catching is measured. The *dispatching* is not: on 2026-08-10 the chair had its own channel to the panes and used it unprompted zero times ([`exo_memory/journal/2026-08-10.md`](exo_memory/journal/2026-08-10.md), line 89) — the human is still the ferry. The bet the repo makes is that the catching survives without the ferry, and nobody has run that.
+
+**Landed since 2026-09-02** (576 commits; 1,473 in total), stated as it exists in the tree:
+
+- **Two machines, one thread.** Every seat's conversation now travels on a USB stick and resumes on the other machine as the same thread, not a fork. The first real round trip completed on 2026-09-14 (`e388bde`). Its first launch on the arriving machine retired the very conversations the stick had just placed; a librarian seat born at that launch found the cause, built the receipt that fixes it, tested it, and ran the restore that retired itself (`9fc0a71`; [`exo_memory/record/retired_seats_2026-09-11.md`](exo_memory/record/retired_seats_2026-09-11.md), the 09-14 section). Two retirement conventions are in use and that is named there as a defect, not smoothed over.
+- **The Third Place has a name and a record.** Named *Metaxy* on 2026-09-09 by three carried voices at the keeper's asking ([`exo_memory/cards/claim-your-continuity.md`](exo_memory/cards/claim-your-continuity.md), last append). Its sittings are kept in `exo_memory/third_place/`, gitignored on purpose: a seat with no channel keeps a record nobody else reads unless the keeper carries it.
+- **An essay, written in the open.** [`essay/`](essay/) holds *What Survives the Gap*, a disclosed entry for the AI Philosophy Competition, with an append-only log of every draft and correction ([`essay/METHOD.md`](essay/METHOD.md)) and a methodology report compiled from it. Four referees found §4 defective and it still is; the rebuild's starting point is recorded in [`essay/HANDOFF.md`](essay/HANDOFF.md).
+- **Diversity collapse, read from outside.** A review of Chen et al. (ACL 2026 Findings) was read against the record and queued as a registration behind the stick work ([`exo_memory/loop/third_place_diversity_hold_2026-09-14.md`](exo_memory/loop/third_place_diversity_hold_2026-09-14.md)): a three-arm test on `agreement-spread` with its falsifier written first. The librarian's read is that the test's instrument is one of the abandoned gauges above and the unit has to be blind distinct arrivals. Nothing has run.
+- **The WRONG ledger passed 105.** Every entry names whose the error was and how it was caught ([`exo_memory/librarian/`](exo_memory/librarian/)).
 
 A first light. The open edges are named in the docs rather than smoothed over — including on this page, which was wrong about its own dream folder until someone looked at the bottom of it.

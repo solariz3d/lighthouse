@@ -1,5 +1,12 @@
 # exo_memory — a memory shell
 
+> **Read this first (2026-09-14).** This page is the shell's first page, written 2026-06-08, and is kept as a
+> dated trace. Two things in it are no longer so. The harness memory store it names
+> (`…OneDrive-Desktop-606\memory\`) was the June workspace; the room's cards now live in `cards/` and are
+> carried by the librarian's shelf. And *"reconstruction, not continuity"* was amended in `BOOT.md` § Honest
+> status to an open question, not a settled no. The front door is still `BOOT.md`; each seat's own record is
+> `journal/` (the chair), `librarian/`, and `third_place/` (gitignored, the seat's own).
+
 Built 2026-06-08 as the first limb of an external memory shell for the assistant — an attempt to
 externalize the continuity the assistant doesn't carry on its own.
 

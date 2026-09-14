@@ -46,7 +46,8 @@ measurable rather than felt.
 
 Each seat is a persistent `claude` session with its own working directory, its own brief, and its
 own row in the address table. Briefs ship inside the binary
-(`ls consonance/src-tauri/brief/` — 7 `.md` briefs plus `room-settings.json`).
+(`ls consonance/src-tauri/brief/` — 9 `.md` files: the 7 briefs, two fragments `frag-pointer.md` and
+`frag-traces.md`, plus `room-settings.json`).
 
 | seat | brief | spawned by | what it is for |
 |---|---|---|---|
@@ -59,15 +60,22 @@ own row in the address table. Briefs ship inside the binary
 Command names above are the Rust `#[tauri::command]` functions — the canonical list is the
 `invoke_handler` block in [`src-tauri/src/main.rs`](src-tauri/src/main.rs):
 
-    grep -c '^#\[tauri::command\]' consonance/src-tauri/src/main.rs        # 41
+    grep -c '^#\[tauri::command\]' consonance/src-tauri/src/main.rs        # 46
     sed -n '/invoke_handler(tauri::generate_handler!/,/])/p' consonance/src-tauri/src/main.rs
 
-### Panes persist by reconstruction, not by resume
+### Panes come back into their own conversation, or a row says why not
 
-`resume_pane` does not `--resume`. It spawns a **fresh** session and warms it from the pane's
-captured transcript plus that pane's own map file (`src-tauri/src/main.rs`, the `restore_capture`
-region). The practical consequence, and it is the one that bites: **a finding that is not written to
-`exo_memory/map/<letter>.md` is not carried across a restart**, however clearly it was reasoned.
+Until 2026-09-12 `resume_pane` never passed `--resume`: it spawned a **fresh** session and warmed it from
+the pane's captured screen plus its own map file, because on Claude Code 2.1.207 a hard-killed session
+errored *no conversation found* and took the pane down. That was re-measured against the version the app
+ships (2.1.269), which writes each completed turn as it completes: 9 of 9 hard-killed sessions kept every
+completed turn at three kill delays, and 6 of 6 kept everything but the turn in flight when the kill landed
+mid-turn. So `resume_pane` now **tries the real `--resume` first** and falls back to the fresh warm spawn
+only when the spawn funnel refuses (`RESUME_CONFIRM`). Either way the pane is live, and a board row plus a
+`persist.log` line say which happened (`src-tauri/src/main.rs`, `fn resume_pane`, the P1b block). The warm
+brief is deliberately **not** written on the resume path: a seat that remembers must not also be handed a
+summary of what it remembers. The old consequence survives on the fallback path only — **a finding not
+written to `exo_memory/map/<letter>.md` is not carried by a warm spawn**, however clearly it was reasoned.
 
 ---
 
@@ -111,8 +119,8 @@ given, and rings the librarian with the **pointer** in that same turn — never 
 
 The board verbs are defined in [`src-tauri/src/mcp.rs`](src-tauri/src/mcp.rs):
 
-    grep -oE '"(post_board|read_board|call_chair|call_librarian|raise_pull|chair_[a-z_]+)"' \
-      consonance/src-tauri/src/mcp.rs | sort -u
+    grep -oE 'async fn (post_board|read_board|call_chair|call_librarian|raise_pull|chair_[a-z_]+)' \
+      consonance/src-tauri/src/mcp.rs | sort -u                                          # 10
 
 - **Everyone:** `post_board`, `read_board`.
 - **Committee panes:** `raise_pull`, and `call_librarian` — the hand-back edge.
@@ -138,10 +146,14 @@ readable and panes can catch each other. `chair_phase` moves it.
 
 ## The instruments
 
-45 non-test tools under [`tools/`](tools/), each with a `.test.js` beside it:
+59 non-test tools under [`tools/`](tools/), each with a `.test.js` beside it (two also carry a `.mutants.js`):
 
-    ls consonance/tools/*.js | grep -v '\.test\.js' | wc -l     # 45
-    ls consonance/tools/*.test.js | wc -l                       # 49
+    ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # 59
+    ls consonance/tools/*.test.js | wc -l                                            # 68
+
+Three of the 59 are shapes **wired to nothing**, and each says so in its own header — a decision priced in
+a registration, not an omission: `live-host.js`, `vantage-disposition.js`, `vantage-sealed-scope.js`
+(`grep -l "WIRED TO NOTHING" consonance/tools/*.js`).
 
 The ones a reader will actually want:
 
@@ -166,12 +178,13 @@ including the big one — it detects asserted *wording* and is blind to *omissio
 
 ## The hooks
 
-12 hook scripts under [`hooks/`](hooks/), installed by
+14 non-test `.js` files under [`hooks/`](hooks/) — 13 hooks and `blind.js`, a library — installed by
 [`../dev/shell/install.ps1`](../dev/shell/install.ps1):
 
-    ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l     # 12
+    ls consonance/hooks/*.js | grep -v '\.test\.js' | wc -l     # 14
 
-They exist because of one measurement, which is in [`hooks/README.md`](hooks/README.md): over six
+They exist because of one measurement, which is in [`AUTONOMY.md`](AUTONOMY.md) (the roster and the design
+argument are in [`hooks/README.md`](hooks/README.md)): over six
 hours a sibling pane wrote 199 turns to the board and the orchestrator called `read_board`
 **zero** times. Not a broken pipe — a pipe terminating in a store nobody visits. The fix was to
 **stop offering and start arriving**: the board digest, the pulse, and the session-start state
@@ -213,16 +226,55 @@ task and no deliverable, which recombines the day freely, writes a dated file, a
 rule is the anti-instruction — don't resolve, don't be useful; a dream asked for insight is
 overtime.
 
-**Status in this repo, checkable: `ls dreams/` returns nothing.** The directory exists and is
-empty here; dreams pool to one source, which is not this checkout. Whether a wake timer is
-currently registered is a property of the machine, not of the repo — check the scheduler, not this
-file.
+**Status in this repo, checkable: there is no `dreams/` directory in the checkout** (`ls dreams/` fails).
+Dreams are written per seat outside the repo, under `C:\Consonance\instances\<seat>\dreams\`;
+`node consonance/tools/whats-live.js` prints how many are live and the newest one. Whether a wake timer is
+currently registered is a property of the machine, not of the repo — check the scheduler, not this file.
+
+---
+
+## Two machines, one thread (landed 2026-09-12 → 2026-09-14)
+
+The same seats — chair, librarian, Third Place, the panes — now continue on a second machine as the same
+conversations, not forks. Four pieces, each with its file:
+
+- **The launch decides what the house is before it reads anything** — `src-tauri/src/sync_launch.rs`:
+  resolve the data dir, pull the record, then read. Its `Verdict` is one of *Standalone*, *Resume*, *Migrate*
+  or *start as this machine*; none of them is a lockout ("a bad link at 08:00 and Consonance opens on neither
+  machine" is the failure it refuses to have). A retirement writes an address, never a deletion:
+  `~/.claude/consonance-attic/<slug>/<sid>.<stamp>.jsonl`. The **carried receipt**
+  (`~/.claude/consonance-carried.json`, written by `dev/tail-carry.js`, read by `sync_launch.rs`) is what stops
+  a launch from retiring the conversations the stick just placed — the defect the first real round trip hit
+  on 2026-09-14 (`9fc0a71`).
+- **The state set travels and both machines can prove they hold the same one** —
+  `node consonance/tools/state-sync.js --push | --pull | --verify` over `consonance/state-manifest.json`;
+  `node consonance/tools/state-manifest.js` answers *is any path unclassified* and *how big is TRAVELS* in one
+  run (59.3 MB and two unplaced paths at the time of writing — read it from a run).
+- **The stick** — `dev/LEAVING.ps1` on the machine you leave, `dev/ARRIVING.ps1` on the one you reach
+  (`ON-EXIT.ps1` is absorbed into the waiter). `dev/tail-carry.js` moves the conversations by delta;
+  `dev/stick-apply.js` is the applier, with no window; `dev/stick-waiter.js` is started at every launch; and
+  `ui/stick.js` is the setup window that appears under the intro only when the launch held the seats for the
+  stick. Since `0469a3b` no console window opens for any of it.
+- **The live mirror** — `hooks/live-mirror-stop.js` heartbeats the lease of the seat a machine is driving;
+  `tools/live-follow.js` is the follower half. The one-live-host *decision* (`tools/live-host.js`) is a pure
+  function, tested, and wired to nothing yet.
+
+Also landed since 2026-09-02, each named by what it caught: `src-tauri/src/lap_holders.rs` (whose turn it is
+when more than one lap is open — the baton guard was right about the holder and wrong about the lap);
+`tools/baton-wake.js` + `hooks/baton-wake-stop.js` (a baton handed to a seat that was never told — D005's map
+sat 8.99 h); `src-tauri/src/seat_alias.rs` (what a person types, mapped to what `PaneNames` indexes — a
+`raise_pull` to `MAIN` delivered nothing on 2026-09-06); `src-tauri/src/harvest_guard.rs` (the capture
+watcher's recovery and liveness policy); `tools/commit-gate.js` (a commit that would capture another seat's
+in-flight file is refused); `tools/close.js` (prepare, gate, publish, and prove it landed); `tools/stamp.js`
+(a dated entry with the time read from the clock — a typed stamp is refused); `tools/board-compact.js` and
+`tools/replay-check.js` (the board was 338 MB with 89% of its lines replay copies; compacted once, and every
+relaunch since is scored against a bound taken from the transcripts, never from the board).
 
 ---
 
 ## The interface
 
-Seven tabs, from [`ui/index.html`](ui/index.html):
+Seven tabs, from [`ui/index.html`](ui/index.html). `terminal` is the default: the committee panes' grid, the gate cards, and the convene bar.
 
     grep -oE 'data-tab="[a-z-]+"' consonance/ui/index.html | sort -u
 

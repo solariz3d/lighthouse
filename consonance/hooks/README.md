@@ -19,7 +19,7 @@ and never verdicts, never blocks a turn, and always exits 0.
 
 ## The roster
 
-Thirteen non-test `.js` files live here. Each line quotes that file's **own header**, so the
+Fourteen non-test `.js` files live here. Each line quotes that file's **own header**, so the
 description cannot drift from the code without someone editing the code:
 
 | file | what it is |
@@ -33,6 +33,7 @@ description cannot drift from the code without someone editing the code:
 | `dream-watch.js` | *"UserPromptSubmit hook. One line when the dream cycle has stopped dreaming; silent when it hasn't."* |
 | `ferry-watch.js` | *"surface a FRESH un-ferried artifact, and nothing else."* |
 | `findings-return.js` | *"surfaces unread, audited DISAGREEs from the findings ledger to the ORIGINATING pane at its next real user turn. Surfaces, never hauls."* |
+| `live-mirror-stop.js` | *"the Stop hook of the per-seat live mirror. L052, P-LIVE-MIRROR, pane E."* |
 | `precompact-preserve.js` | *"shape what a compaction summary keeps."* |
 | `sessionstart-state.js` | *"put the room's current state in front of an instance that just lost it."* |
 | `sourced-stop.js` | *"a Stop-hook SENSOR: one ledger row per turn, no gate, no output."* |
