@@ -79,6 +79,55 @@ turns a REFUSED, INTERRUPTED or APPEND row into a take. That case gets a test.
 machine can export again. Tonight's choice is TAKE on D, so KEEP's export consequence is shown in the window and
 left for a later lap.
 
+**2.8 · RE-RULED ~07:15 after C's first read** (`handback/p-diverged-read-C_2026-09-14.md`; re-derived by the
+librarian, 2373417; the chair checked `:172`, `:885`, `sync_launch.rs:942-945` and `stick.js:78-82/102/130` at
+source). **Two lines of §2 were wrong and five were under-specified, all the chair's. They are defects D-1 to D-7.
+A and E build this block where it conflicts with §2.1–2.7.**
+
+    D-1  WRONG (§2.2/2.4). A seat whose carried tail is ALREADY here, and which then grew on this machine, reads
+         DIVERGED today: :885 `extra <= row.tail.length` fails when the extra is the whole tail plus more.
+         C's probe on the real tool: 557 B -> ALREADY_APPLIED; 675 B -> DIVERGED, stops true.
+         §2.2 as written would truncate this machine's genuinely LATER turns into the attic.
+         RULED (A): before :902, when size > pend.toOffset AND hashRange(dest, 0, pend.toOffset) === pend.fullSha
+           -> verdict APPLIED_AND_GREW. It SETTLES under --apply exactly as ALREADY_APPLIED does (:957-969):
+           agreed = {offset: pend.toOffset, prefixSha: pend.fullSha}, pending = null; nothing written to the seat's
+           file; not takeable; ownBytes = size - pend.toOffset. It is not a stop. A test with C's probe shape.
+         RULED (E): ALREADY_APPLIED and APPLIED_AND_GREW make Carry actionable (stick.js:102). Both heal the ledger,
+           and today the window disables Carry for them, so the L059 heal never runs from the window.
+
+    D-2  WRONG (§2.6). "A kept DIVERGED stop is quiet" cannot hold. The same machine's export rehearsal refuses
+         UNIMPORTED_TAIL for that seat (tail-carry.js:662-667), and rehearsal_is_quiet is false on any export stop
+         (sync_launch.rs:1193). So the window would reopen on every launch after a KEEP. That is already true for a
+         kept OTHER_CONVERSATION today; the test at :2250-2256 passes export rows [] and never met it.
+         RULED (E): rehearsal_is_quiet also ignores an export row whose reason is UNIMPORTED_TAIL for a sid kept
+           for THIS carry (the same is_kept(keep, sid, exportedAt) the import side uses, with exportedAt taken from
+           the import row for that sid). The keeper chose knowingly; re-showing the window is noise. A test with
+           real export rows.
+
+    D-3  The DIVERGED offer does not go through offer_for. Its retirable gate (sync_launch.rs:989-996) returns
+         take_offered:false and default Keep, and retirable is null on DIVERGED rows.
+         RULED (E): a DIVERGED row gets {take_offered: true, default: none}, built beside offer_for, not through it.
+
+    D-4  SeatChoice has no "nothing preselected" (sync_launch.rs:942-945), and stick.js:81 checks KEEP when take is
+         not offered.
+         RULED (E): add SeatChoice::None, tag "none". stick.js checks neither radio when default is "none".
+
+    D-5  stick.js:130 sends every take as retire_far, which :828 ignores for a DIVERGED row. That makes falsifier (i)
+         fire by construction.
+         RULED (E): the pick is routed by the row's verdict (data-verdict on the tr). DIVERGED -> take_stick;
+           OTHER_CONVERSATION -> retire_far.
+
+    D-6  "Carry disabled until every DIVERGED row has a choice" needs a re-check when a radio changes, not only at
+         render.
+         RULED (E): an input listener re-evaluates actionable-and-complete.
+
+    D-7  RETIRE_THEN_APPEND must be listed in CARRIES.import (:172), or its row says carries:false. And `bytes` is
+         null on DIVERGED rows today, so the window has nothing to show.
+         RULED (A): add it to CARRIES.import; a DIVERGED row carries bytes = pend.bytes (the tail's length).
+
+    LANDING: stick-apply.js:80 exits 2 with no handshake on an unknown flag, so E's --take-stick without A's parser
+    is a Carry that never starts. Both halves land together (as L059).
+
 ## 3 · THE SPLIT — neither of you edits the other's files
 
     ALPHA   dev/tail-carry.js, dev/stick-apply.js, consonance/state-manifest.json (one rule, below), dev/*.test.js
