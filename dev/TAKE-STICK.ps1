@@ -1,18 +1,17 @@
-# TAKE-STICK.ps1 - "revert to the laptop's path": make THIS machine's seats the stick's continuation.
+# TAKE-STICK.ps1 - "revert to the laptop's path": every seat on THIS machine becomes the stick's continuation.
 #
-# For every seat the stick has a pending tail for, this machine's own continuation since the
-# agreed point is RETIRED (the whole file copied to the attic first, stamped, never deleted), the
-# file is cut back to exactly the agreed point, and then the normal import appends the stick's
-# tail and hashes the rejoined file whole against the other machine's record. Then Consonance
-# is launched. That is the DIVERGED door (P-DIVERGED, take-the-stick) done as a keeper script
-# with the already-landed carry tool, for the keeper's decision at 871ad66: the laptop wins.
+# For each seat the carry tool reads as DIVERGED (this machine and the stick share a prefix and then
+# continued differently), the tool's own door is used: --take-stick <sid>. The tool copies this
+# machine's whole file to the attic (stamped, never deleted), cuts the seat back to the shared
+# prefix, appends the stick's tail, and hashes the rejoined file whole against the other machine's
+# record. Seats that merely APPEND are appended as usual. Then Consonance is launched, with the
+# on-exit window that refreshes the stick when you close it.
 #
 #   powershell -ExecutionPolicy Bypass -File <stick>\TAKE-STICK.ps1            # do it (Consonance CLOSED)
 #   powershell -ExecutionPolicy Bypass -File <stick>\TAKE-STICK.ps1 -DryRun    # show the plan, touch nothing
 #
-# Refuses while Consonance runs. Refuses a seat whose live file is SHORTER than the agreed point
-# (nothing to cut; something else is wrong). Never deletes. If the import's whole-file hash fails,
-# the pre-cut copy is in the attic and its path is printed.
+# This is the keeper's decision at 871ad66 ("the laptop's wins") carried out with the door landed at
+# 862509f (P-DIVERGED, both halves). Nothing here truncates a file by hand.
 
 param([switch]$DryRun)
 $ErrorActionPreference = 'Stop'
@@ -23,64 +22,49 @@ if (-not $repo) { Write-Host "[take-stick] no lighthouse repo with dev\tail-carr
 function AppRunning { [bool](Get-Process -Name consonance -ErrorAction SilentlyContinue) }
 if ((AppRunning) -and (-not $DryRun)) { Write-Host "[take-stick] Consonance is running. Close it, then run this again."; exit 2 }
 
-$ledgerPath = Join-Path $stick 'consonance-tails\ledger.json'
-if (-not (Test-Path $ledgerPath)) { Write-Host "[take-stick] no consonance-tails\ledger.json on this stick"; exit 2 }
-$ledger = Get-Content $ledgerPath -Raw | ConvertFrom-Json
-$projects = Join-Path $env:USERPROFILE '.claude\projects'
-$atticRoot = Join-Path $env:USERPROFILE '.claude\consonance-attic'
-$stamp = (Get-Date).ToUniversalTime().ToString('yyyyMMdd-HHmmss') + 'Z-branch-retired-to-take-stick'
-
-Write-Host "[take-stick] repo  $repo"
-Write-Host "[take-stick] stick $stick"
-$plan = @()
-foreach ($p in $ledger.seats.PSObject.Properties) {
-  $sid = $p.Name; $seat = $p.Value
-  if (-not $seat.pending) { continue }
-  if (-not $seat.agreed) { Write-Host "[take-stick] $sid ($($seat.seat)): pending but nothing agreed - a first carry, not a fork; the normal import handles it"; continue }
-  $agreed = [int64]$seat.agreed.offset
-  $f = Get-ChildItem -Path $projects -Recurse -Filter "$sid.jsonl" -ErrorAction SilentlyContinue | Where-Object { $_.Directory.Name -ne 'C--Users-nname' } | Sort-Object LastWriteTime -Descending | Select-Object -First 1
-  if (-not $f) { Write-Host "[take-stick] $sid ($($seat.seat)): no live file here - the normal import handles it"; continue }
-  $size = $f.Length
-  if ($size -lt $agreed) { Write-Host "[take-stick] REFUSED $sid ($($seat.seat)): live file $size B is SHORTER than the agreed $agreed B - nothing to cut, something else is wrong"; exit 1 }
-  $slug = $f.Directory.Name
-  $attic = Join-Path (Join-Path $atticRoot $slug) "$sid.$stamp.jsonl"
-  $plan += [pscustomobject]@{ sid = $sid; seat = $seat.seat; file = $f.FullName; size = $size; agreed = $agreed; cut = ($size - $agreed); attic = $attic }
-}
-foreach ($x in $plan) {
-  Write-Host ("[take-stick] {0,-14} {1}  live {2} B  agreed {3} B  -> retire the last {4} B to`n               {5}" -f $x.seat, $x.sid, $x.size, $x.agreed, $x.cut, $x.attic)
-}
-if ($plan.Count -eq 0) { Write-Host "[take-stick] nothing to cut on this machine." }
-if ($DryRun) {
-  Write-Host "[take-stick] dry run - nothing touched. The carry tool's own rehearsal (will read DIVERGED until the cut is made):"
-  Push-Location $repo; try { & node 'dev\tail-carry.js' '--stick' $stick '--import' | Out-Host } finally { Pop-Location }
-  exit 0
-}
-
-# 1. retire this machine's continuation: copy whole to the attic, verify the copy, then cut
-foreach ($x in $plan) {
-  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $x.attic) | Out-Null
-  Copy-Item -LiteralPath $x.file -Destination $x.attic
-  $a = (Get-FileHash -LiteralPath $x.file -Algorithm SHA256).Hash; $b = (Get-FileHash -LiteralPath $x.attic -Algorithm SHA256).Hash
-  if ($a -ne $b) { Write-Host "[take-stick] the attic copy of $($x.seat) does not match its source - STOP, nothing cut"; exit 1 }
-  $fs = [System.IO.File]::Open($x.file, [System.IO.FileMode]::Open, [System.IO.FileAccess]::ReadWrite, [System.IO.FileShare]::None)
-  try { $fs.SetLength($x.agreed) } finally { $fs.Close() }
-  Write-Host "[take-stick] $($x.seat): kept whole at $($x.attic); cut to $($x.agreed) B"
-}
-
-# 2. the normal import appends the stick's tails and verifies every rejoined file whole
 Push-Location $repo
 try {
-  Write-Host "[take-stick] importing ..."
-  & node 'dev\tail-carry.js' '--stick' $stick '--import' '--apply' | Out-Host
-  $code = $LASTEXITCODE
-} finally { Pop-Location }
-if ($code -ne 0) {
-  Write-Host "[take-stick] the carry tool did not finish clean (exit $code). Every pre-cut file is whole in the attic:"
-  $plan | ForEach-Object { Write-Host "    $($_.attic)" }
-  exit $code
-}
+  $help = & node 'dev\tail-carry.js' '--help' 2>&1 | Out-String
+  if ($help -notmatch 'take-stick') { Write-Host "[take-stick] this checkout's carry tool has no --take-stick door - git pull (or merge the stick's files\repo-carry bundle) first"; exit 2 }
 
-# 3. launch
+  Write-Host "[take-stick] repo  $repo"
+  Write-Host "[take-stick] stick $stick"
+  Write-Host "[take-stick] rehearsing the import (writes nothing) ..."
+  $lines = & node 'dev\tail-carry.js' '--stick' $stick '--import' | ForEach-Object { $_ }
+  $lines | Out-Host
+
+  $take = @(); $stop = @()
+  foreach ($ln in $lines) {
+    $m = [regex]::Match($ln, '^\s*([A-Z_]+)\s+\S.*?\s([0-9a-f]{8}-[0-9a-f-]{27})\s*$')
+    if (-not $m.Success) { continue }
+    $verdict = $m.Groups[1].Value; $sid = $m.Groups[2].Value
+    if ($verdict -eq 'DIVERGED') { $take += $sid }
+    elseif ($verdict -in @('REFUSED', 'INTERRUPTED', 'ABSENT_HERE')) { $stop += $sid }
+  }
+  if ($stop.Count -gt 0) {
+    Write-Host "[take-stick] STOP - these seats are not a fork and need a decision, not this script:"
+    $stop | ForEach-Object { Write-Host "    $_" }
+    exit 1
+  }
+  if ($take.Count -gt 0) {
+    Write-Host "[take-stick] DIVERGED here, will take the stick's (this machine's file goes to the attic whole, stamped, never deleted):"
+    $take | ForEach-Object { Write-Host "    $_" }
+  } else { Write-Host "[take-stick] nothing diverged; a plain import is enough." }
+
+  $args = @('dev\tail-carry.js', '--stick', $stick, '--import')
+  foreach ($sid in $take) { $args += @('--take-stick', $sid) }
+  if ($DryRun) {
+    Write-Host "[take-stick] dry run - rehearsing with the door, nothing written:"
+    & node @args | Out-Host
+    exit 0
+  }
+  $args += '--apply'
+  Write-Host "[take-stick] importing ..."
+  & node @args | Out-Host
+  $code = $LASTEXITCODE
+  if ($code -ne 0) { Write-Host "[take-stick] the carry tool did not finish clean (exit $code). Read the lines above; anything retired is whole in ~\.claude\consonance-attic."; exit $code }
+} finally { Pop-Location }
+
 $exe = Join-Path $repo 'consonance\src-tauri\target\release\consonance.exe'
 if (Test-Path $exe) {
   Start-Process -FilePath $exe -WorkingDirectory (Split-Path -Parent $exe) | Out-Null
