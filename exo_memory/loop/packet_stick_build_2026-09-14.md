@@ -169,6 +169,43 @@ app is the one process present on every path: the shortcut, a direct start, and 
 instance by its own `<data_dir>/stick-waiter.lock` under the same live-pid-and-image rule: a live waiter means start
 none.
 
+**WHAT THE WAITER RUNS, AND WHO OWNS IT — ruled 03:05 after E's narrow §6 stop** (`handback/p-stick-build-E_2026-09-14.md`,
+RESUMED section). The 02:55 re-rule said WHO starts the waiter and not WHAT it runs, and §4 named no script. E refused
+to guess a command line it would then be building against — correctly.
+
+    the app starts, at launch, detached, on EVERY launch (stick present or not):
+        node dev/stick-waiter.js --data <data_dir> --app-pid <pid> --app-image consonance.exe
+
+    OWNER: ALPHA. It wraps the export and the ledger lock. dev/stick-waiter.js is added to ALPHA's files in §4.
+
+**One change from E's proposal, with the reason: there is NO `--stick`.** E proposed `--stick <FOLDER>` from launch.
+**The keeper's leaving gesture is plugging the stick in at the END of a session** — *"one night end or transfer, the
+correct things are created"* — which is usually after launch. A stick path fixed at launch silently skips the export on
+exactly that exit, and a waiter started only when a stick was present at launch never runs for it at all. **So the
+waiter starts on every launch and finds the stick at the moment it exports**, by this section's rule — the volume root
+and one folder down, either marker. `ON-EXIT.ps1` could use `$PSScriptRoot` because it lives ON the stick; an in-repo
+waiter cannot.
+
+**E's `--app-pid` is kept, tightened by E's own E-1 rule:** the app is gone when the pid is dead **or** alive under a
+different image — pid reuse on Windows is real.
+
+    at the app's exit:
+        stick-apply.started.json live          -> stand down (a hand-off is not a session end); exit quietly
+        no stick found by the §3 rule          -> NO WINDOW, no export, exit quietly — byte-identical to today
+        a stick found                          -> take the ledger lock; export; rewrite the MANIFEST;
+                                                  a VISIBLE window until DONE or NOT DONE, by name
+
+**The find rule now exists in two languages — Rust `stat` in the app (E), Node in the waiter (A) — and two copies of a
+rule is this room's oldest drift.** So §3 carries ONE table both suites test against, and neither may add a case the
+other does not have:
+
+    volume layout                                                              -> expected
+    no marker anywhere                                                         -> NO STICK
+    <root>/consonance-transfer/MANIFEST.json                                   -> <root>
+    <root>/consonance-L-20260911/consonance-tails/ledger.json   (tonight's)    -> <root>/consonance-L-20260911
+    markers in two different first-level folders                               -> AMBIGUOUS, both named
+    <root>/a/b/consonance-tails/ledger.json   (two levels down)                -> NO STICK
+
 **The verifier** (A's one implementation):
 
     node dev/tail-carry.js --stick <FOLDER> --verify-set --json
@@ -198,9 +235,9 @@ machines' binaries.
             the handoff (§2) and the relaunch read; the "stick is behind this machine" notice;
             THE NO-STICK TEST — a launch with no stick is byte-identical to today, red-first
 
-    ALPHA   dev/stick-apply.js (new), dev/tail-carry.js, dev/ON-EXIT absorbed into the repo, dev/*.test.js
+    ALPHA   dev/stick-apply.js (new), dev/stick-waiter.js (new, ruled 03:05 in §3), dev/tail-carry.js, dev/*.test.js
             the applier (§2); --verify-set (§3); Leave writes the transfer set and the generated HANDOFF;
-            the exit waiter started at launch (Call 2);
+            the exit waiter — the command and its exit rules are in §3, "WHAT THE WAITER RUNS";
             AND the mutation harness mutates a COPY, never the tracked source — see §5
 
 **Neither of you edits the other's files.**
