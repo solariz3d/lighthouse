@@ -145,6 +145,23 @@ ledger and its manifest, carrying `{ pid, image, script, at }`.
     lock held by a live pid of the named image   -> refuse: exit 2, reason LEDGER_LOCKED — never wait silently
     lock whose pid is dead or a different image  -> taken over, with a row naming the stale lock
 
+**And a wedge the lock did not prevent must heal itself — the ALREADY_APPLIED advance** (A-3's second half;
+E's condition 1 on the chair's Q1; missed in the 02:55 re-rule and added at 03:00, before either pane had built
+against §3). **Measured in the landed code:** when the import finds a tail already present and its full sha256
+matching, it records `ALREADY_APPLIED` and **writes nothing** (`tail-carry.js:643`), so `pending` stays true. A
+ledger left `pending: true` by a writer killed mid-step — which the lock cannot prevent, because on this machine a
+killed process runs no cleanup — is then permanent: import says ALREADY_APPLIED and does nothing, export refuses
+`UNIMPORTED_TAIL`, and **every rehearsal reads clean.** So:
+
+    ALREADY_APPLIED (bytes present, full sha256 matches the pending carry)
+        -> under the ledger lock, advance the ledger exactly as a successful apply would:
+           pending cleared, the agreed state recorded, the MANIFEST rewritten in the same step
+        -> the row says it advanced, so the healing is visible, not silent
+    APPLIED_BUT_DIFFERENT stays a REFUSAL — bytes present but the sha differs is not healable by bookkeeping
+
+**This is what makes a hard-killed applier acceptable** (§1, Call 1): the next launch's rehearsal heals the ledger
+instead of reading a wedge as clean.
+
 **And the waiter stands down** while `stick-apply.started.json` is live — a hand-off exit is not a session end.
 
 **Who starts the waiter — the second handshake, now written down.** **The app**, at launch, detached, because the
