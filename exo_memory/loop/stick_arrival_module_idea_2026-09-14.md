@@ -51,3 +51,14 @@
 **Bar added:** the set is a list in one file that both Leave and Arrive read (`tail-carry.js` already owns the ledger; the manifest belongs beside it), so the two halves cannot drift on what a transfer contains — the same one-copy rule as the packet's §2 contract.
 
 *Correction, 02:26: the header says "00:5x"; that was a placeholder never replaced. The file was created at e388bde, 00:59:07, and this section at 9d560e8, 02:26:00. Typed, not read.*
+
+
+## The keeper's third refinement, verbatim (06:41, after the first real close-and-reopen) — Leave shows a Consonance window, not a terminal and not a toast
+
+> "could we do like an actual tauri window or something that looks like consonance as the terminal window that tells you its okay to remove stick after close?"
+
+**This is the "Leave" paragraph above, built as first written:** "show the result and refuse to be dismissed until it is DONE or FAILED by name — ON-EXIT's behaviour, inside the app." L059 moved Leave into a detached waiter (`dev/stick-waiter.js`) with a console window; L058b replaced the console with a Windows notification at the chair's ruling, "open to the keeper's veto". This is the veto. The shape that satisfies it: the app itself stays up as one small Consonance-styled window after the seats have closed, runs `tail-carry --export --json --apply` (export only reads, and the seats' ptys are closed by then — bar 2 holds), shows DONE / NOT DONE by name with the stick's folder, and exits on the keeper's click. The waiter remains as the fallback for a hard kill only; its notices become the fallback's voice.
+
+**What he saw tonight that prompted it:** the export at 06:40 ran under the waiter loaded at 05:14, the pre-L058b code, so the console window was the old `openWindow`. The notices and the Consonance-named registration have not run for real yet (registry key absent after the close). Librarian's score: `librarian/2026-09-14.md`, the 06:4x entry.
+
+**And his read on the resize, verbatim:** "i think i figured out the panes and seat resizing bug happens when you do not transfer the transcripts since they are already here." Consistent with the chair's read (seats wake in view after the setup window hides); not yet separable from "window shown at all" — both tonight's launches were Continue launches. Two cells unrun: a no-stick launch, and a real Carry.
