@@ -76,53 +76,103 @@ again and the setup window re-rehearses the real state. Say in your hand-back wh
 rehearsal would carry TAIL rows), the setup window says so before seats spawn: *the stick does not have your
 last session.*
 
-## 2 · SHARED SECTION — the app ↔ applier handshake. Complete now; changed only per §6.
+## 2 · SHARED SECTION — the app ↔ applier handshake. **RE-RULED 02:55 after §6 fired. Build THIS.**
 
-    the app starts:   node dev/stick-apply.js --stick <path> --relaunch <absolute path of consonance.exe>
-    the applier writes, BEFORE doing anything else:
-                      <data_dir>/stick-apply.started.json   { "pid": <int>, "at": <ISO>, "stick": <path> }
-    the app:          waits up to 10 s for that file with that pid alive; if absent, does NOT exit — it
-                      shows "the transfer could not start" in the setup window, by name, and stays open
-    the applier:      waits until no consonance.exe is running (the same check the import gate uses)
-                      runs  node dev/tail-carry.js --stick <path> --import --json --apply
-                      writes <data_dir>/stick-apply.result.json   { "code": <0|1|2|3>, "rows": [...], "at": <ISO> }
-                      removes stick-apply.started.json
-                      relaunches <consonance.exe>, whatever the code was
-    the relaunched app: reads stick-apply.result.json if present, re-rehearses, and shows the result in the
-                      setup window if anything is left. It deletes the result file only after showing it.
+> **§6 fired on L059 and worked: both panes stopped before building, independently, and wrote why**
+> (`handback/p-stick-build-A_2026-09-14.md`, `handback/p-stick-build-E_2026-09-14.md`; reproduced by the
+> librarian and re-checked at source by the chair). **The text first dispatched is at `85a665e`.** Every defect
+> below was in the chair's sections, found by the panes building against them:
+>
+> | id | found by | defect in the dispatched §2/§3 | where |
+> |---|---|---|---|
+> | A-1 | A | the applier command could not carry a decision; `--retire-far` only comes from argv, so the commonest arrival loops: confirm → REFUSED → relaunch → the same window, forever | `tail-carry.js:522`, `:583` |
+> | A-2 | A | the ledger was a MANIFEST member "written by Leave", but every carried IMPORT rewrites it — so the success path shows a mismatched member | `:741` |
+> | A-3 | A | two unlocked read-modify-write writers of `ledger.json` (waiter, applier); a lost update wedges permanently, with every rehearsal clean | no lock in the tool; `:643` |
+> | E-1 | E | no single-applier guard: a keeper who double-clicks while the applier waits starts a second importer | §2 silent |
+> | E-2 | E | "ask the verifier for every volume" spawns ~2 node processes (57–67 ms each, measured) on every no-stick launch | §3 |
+> | E-3 | E | the window's identity bar needs the INCOMING conversation's first timestamp; no row carries it | `toJson`, `:888-935` |
+> | E-4 | E | the fixed-seat retire rule lives in no process; it belongs to the window, and only works once A-1 is fixed | `:598` |
+> | E-5 | E | **the real stick keeps everything one folder down**, so a root-only marker reads tonight's stick as NO stick | measured on `D:\` |
 
-**Exit code 3 (crashed part-way, seats may be written) relaunches too** — the re-rehearsal is what shows the
-keeper which seats are half-carried, using A's `INTERRUPTED` / `--repair` rows.
+    the app starts:     node dev/stick-apply.js --stick <FOLDER> --relaunch <absolute consonance.exe>
+                          [--retire-far <sid>]... [--repair <sid>]...
+                        the flags are THE KEEPER'S DECISIONS from the setup window, forwarded verbatim.
+                        THE APPLIER DECIDES NOTHING.                                            (A-1, E-4)
 
-## 3 · SHARED SECTION — THE TRANSFER SET, by name. One list, one file, both halves read it.
+    the applier writes, before anything else:
+                        <data_dir>/stick-apply.started.json   { "pid", "image": "node", "script": "stick-apply.js", "at", "stick" }
+    the app:            waits up to 10 s for that file with that pid alive — OFF the thread that paints the
+                        setup window. Absent -> does NOT exit; shows "the transfer could not start", by name.
+    the applier:        waits until no consonance.exe is running
+                        runs  node dev/tail-carry.js --stick <FOLDER> --import --json --apply <the forwarded flags>
+                        writes <data_dir>/stick-apply.result.json { "code", "rows", "at" }
+                        removes stick-apply.started.json; relaunches consonance.exe on every code 0-3
 
-**The keeper's second refinement made exact.** Today the stick carries a de-facto set and no file says which of
-those a transfer IS, so "find the stick by content" had nothing exact to find.
+**A launch that finds `stick-apply.started.json`** (E-1):
 
-    <stick>/consonance-transfer/MANIFEST.json      the one list — written by Leave, read by Arrive
-        { "format": 1, "writtenBy": "<machine tag>", "at": <ISO>,
-          "members": [ { "path": <relative>, "bytes": <int>, "sha256": <hex> } ... ] }
-    the members, every transfer:
-        consonance-tails/ledger.json
-        consonance-tails/<every .tail file the ledger names>
-        HANDOFF-<YYYY-MM-DD>.md        GENERATED from the ledger at export, never typed: which seats, which
-                                       sizes, the verdict expected at the far end, and the one-machine-open rule
+    pid alive AND its image is node running stick-apply.js   -> "a transfer is waiting for this window to close";
+                                                                start NO applier; offer only Close
+    pid dead, or alive with a different image (pid reuse)    -> named as a STALE HANDSHAKE, then treated as absent
 
-    A volume IS the stick  <=>  consonance-transfer/MANIFEST.json exists AND every member it names exists with
-                                its bytes and sha256.
-    A MANIFEST with a missing or mismatched member is NAMED as that, in the setup window, member by member.
-    A volume with a ledger and no MANIFEST is NOT the stick — named as "an older stick layout", never guessed.
+**THE LOOP HAS AN EXIT, by construction** (A-1). For each seat the rehearsal refuses as `OTHER_CONVERSATION`,
+the window offers exactly two choices, applying the fixed-seat rule (E-4 — ruling 1 as E tightened it):
 
-**One implementation of the verifier, A's, and the app calls it:**
+    TAKE THE STICK'S    -> --retire-far <sid> is forwarded; this machine's copy goes to the attic
+    KEEP THIS MACHINE'S -> nothing is forwarded for that seat; it is not carried; it resumes as it is here
 
-    node dev/tail-carry.js --stick <path> --verify-set --json
-        -> { "code": 0|1|2, "stick": <bool>, "missing": [...], "mismatched": [...], "extra": [...] }
+**Neither choice re-shows the window for that seat.** A seat that still refuses AT APPLY (the re-plan race) stops
+only itself (A's contract) — the relaunched app spawns every other seat and names the one left.
 
-**Drive letters are never used.** The app enumerates volumes and asks the verifier.
+## 3 · SHARED SECTION — THE TRANSFER SET, by name. **RE-RULED 02:55. Build THIS.**
 
-**What does NOT change:** `ARRIVING.ps1`, `LEAVING.ps1` and `ON-EXIT.ps1` on the stick and in `dev/` **keep
-working until this module is built into BOTH machines' binaries** — the next trip to D has to land. Retiring
-the stick scripts is a later step, and it is the keeper's.
+**Where the stick is** (E-5, E-2). The app `stat`s — it spawns nothing — for either marker at the **volume root
+and ONE folder level down**:
+
+    consonance-transfer/MANIFEST.json     the manifested layout (new)
+    consonance-tails/ledger.json          the older layout (tonight's real stick, one folder down)
+
+    no marker anywhere        -> NO STICK. Spawn nothing, log nothing, withhold nothing.   <- the no-stick test
+    exactly one folder        -> that FOLDER is the stick; the verifier is handed the folder, never the volume
+    more than one folder      -> name every one; pick none; the keeper chooses in the window
+
+**The one writer rewrites the manifest with the ledger** (A-2). Every process that writes
+`consonance-tails/ledger.json` — import and export alike — rewrites `consonance-transfer/MANIFEST.json` in the same
+locked step, tmp-then-rename, after the ledger. The manifest is never stale on a success path.
+
+**One lock, every writer** (A-3). `consonance-tails/ledger.lock`, created `wx`, held across read-modify-write of the
+ledger and its manifest, carrying `{ pid, image, script, at }`.
+
+    lock held by a live pid of the named image   -> refuse: exit 2, reason LEDGER_LOCKED — never wait silently
+    lock whose pid is dead or a different image  -> taken over, with a row naming the stale lock
+
+**And the waiter stands down** while `stick-apply.started.json` is live — a hand-off exit is not a session end.
+
+**Who starts the waiter — the second handshake, now written down.** **The app**, at launch, detached, because the
+app is the one process present on every path: the shortcut, a direct start, and the applier's relaunch. Single
+instance by its own `<data_dir>/stick-waiter.lock` under the same live-pid-and-image rule: a live waiter means start
+none.
+
+**The verifier** (A's one implementation):
+
+    node dev/tail-carry.js --stick <FOLDER> --verify-set --json
+      -> { "code": 0|1|2, "layout": "manifest"|"older"|null,
+           "missing": [...], "mismatched": [...], "extra": [...] }
+
+    code 0   the set verifies (layout manifest), OR the older layout (ledger, no MANIFEST) — IT IS A STICK
+    code 1   a MANIFEST names a member that is missing or mismatched — named, member by member
+    code 2   could not run
+    extra    informational only, NEVER a failure: files under consonance-tails/ the manifest does not name.
+             Tails are kept, so extras are expected.
+
+**The older layout is carried, not refused** — tonight's real stick must still land. The next Leave writes its
+manifest.
+
+**Owed in the landed contract** (E-3): `carriedFirstTimestamp` per seat, taken at export when the tail starts at offset
+0 and stored in the ledger; null where an older ledger never recorded it, shown in the window as *unknown*, never
+guessed.
+
+**What does NOT change:** `ARRIVING.ps1`, `LEAVING.ps1` and `ON-EXIT.ps1` keep working until this module is in BOTH
+machines' binaries.
 
 ## 4 · THE SPLIT
 
