@@ -35,13 +35,13 @@ else in Consonance's tree opened a terminal. The keeper reported a flash "5 seco
 - The applier gets the same flags (`main.rs:10699`), and it starts `node tail-carry.js` through `spawnSync` with no
   hide at all (`stick-apply.js:91`), so a Carry would flash too.
 
-> **§1's MECHANISM IS REFUTED — re-ruled ~05:40 after E's §5 stop** (), read
-> independently by A () and collated by the librarian (3ac2696). **WRONG, the
-> chair's.** The capture above is right: the tasklist that flashed was . **But the chair
-> attributed it to **, which is the IMAGENAME call, already carries , and runs only
-> at exit. The call that flashed is ** **, which at HEAD has NO . The waiter
-> reaches it through . So **"windowsHide was set and it flashed anyway" is false.** The chair matched the word
-> tasklist to the wrong line without reading the argv it had just captured.
+> **§1's MECHANISM IS REFUTED — re-ruled ~05:40 after E's §5 stop** (`handback/p-no-console-E_2026-09-14.md`), read
+> independently by A (`handback/p-no-console-A_2026-09-14.md`) and collated by the librarian (3ac2696). **WRONG, the
+> chair's.** The capture above is right: the tasklist that flashed was `tasklist /FI "PID eq 33816"`. **But the chair
+> attributed it to `stick-waiter.js:131`**, which is the IMAGENAME call, already carries `windowsHide: true`, and runs
+> only at exit. The call that flashed is **`tail-carry.js:207` `pidImage`**, which at HEAD has NO `windowsHide`. The
+> waiter reaches it through `holderLive`. So **"windowsHide was set and it flashed anyway" is false.** The chair matched
+> the word tasklist to the wrong line without reading the argv it had just captured.
 >
 > **E measured it** in cells, spawning from a real Windows-subsystem stand-in:
 >
@@ -51,8 +51,8 @@ else in Consonance's tree opened a terminal. The keeper reported a flash "5 seco
 >     survival under CREATE_NO_WINDOW                holds, except a taskkill /T tree kill (the positive control)
 >
 > **Ruled:** both halves stand as written in §3.
-> - **A:**  on  is the fix for the flash the keeper saw.
-> - **E:** CREATE_NO_WINDOW on the waiter and applier (, ) is kept for a different reason. It
+> - **A:** `windowsHide` on `tail-carry.js:207` is the fix for the flash the keeper saw.
+> - **E:** CREATE_NO_WINDOW on the waiter and applier (`main.rs:10567`, `:10699`) is kept for a different reason. It
 >   makes a child spawn with no hide flag harmless, so the next missing flag cannot flash. E's §4 wording replaces
 >   §1's reason.
 >
