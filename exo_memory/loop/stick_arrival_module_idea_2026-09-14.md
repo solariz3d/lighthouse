@@ -49,3 +49,5 @@
 3. **"Picked up instantly" is the receipt's job on the far side:** the import writes `consonance-carried.json`; the launcher's Migrate arm already reads it and KEEPS what the stick placed (tonight's fix). So the pick-up is one read at launch, no search.
 
 **Bar added:** the set is a list in one file that both Leave and Arrive read (`tail-carry.js` already owns the ledger; the manifest belongs beside it), so the two halves cannot drift on what a transfer contains — the same one-copy rule as the packet's §2 contract.
+
+*Correction, 02:26: the header says "00:5x"; that was a placeholder never replaced. The file was created at e388bde, 00:59:07, and this section at 9d560e8, 02:26:00. Typed, not read.*
