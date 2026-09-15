@@ -110,3 +110,32 @@ and that is its own design.
 
 **§6, verbatim from L059:** if a line of your packet cannot be built as written, **STOP building on it, write down
 why in your hand-back, and ring the librarian then.** Do not build around it.
+
+---
+
+# PACKET 2 · RULINGS BEFORE LANDING (09:3x, after A's build; the librarian's collation 1e944ac)
+
+A built §4 as written, with no §6 stop: stick-waiter 73/0, stick-apply 27/0, tail-carry 129/0, cargo 664/1/4 where
+the one is D's standing composer red (now `main.rs:15366`; it moves with edits).
+
+    R-1  THE ADOPTION REGRESSION, A's §2.2. A close-and-reopen inside one waiter poll adopts the new pid. The
+         adopted session's start time is unknown to the waiter, so its LEAVE files now read as stale, its exit takes
+         the fallback, and the notice says the app "was stopped before its close window could run" — which is FALSE
+         in that case.
+         RULED: land as built, with ONE in-scope wording change (A). When the fallback runs because the start time
+         is UNKNOWN — an adopted session, or a legacy file with no field — the notice says the close window was
+         NOT CONFIRMED. It never says the app was stopped.
+         A's option (i), a pid-keyed start-time file beside the waiter lock, read at adoption, is FILED AS
+         P-LEAVE-3. It also serves §2.8 HELD (b), the seats that outlive a killed app.
+
+    R-2  THE MIXED-BUILD WINDOW IS LIVE ON L, AND THE ORDER MATTERS. A made the flag optional, so an exe that writes
+         LEAVE files without `appStartedAt` always falls to case d. D is outside the window (its exe predates
+         99649d8). **L's exe was built 02:29:29 from a post-99649d8 tree and writes LEAVE files WITHOUT the field**
+         (`librarian/2026-09-14.md:497`), so on L a pull that lands this waiter before a rebuild makes EVERY close
+         with the stick take the fallback and show that notice.
+         RULED: **on L, pull then REBUILD before the first close with the stick in.** It goes in the lap row and in
+         the next L shift's first message. A did not look at L; this is from the record.
+
+    KEPT, not this lap: `insert_pane` kills after the spawn, so one conversation has two resumes for a spawn's
+    length on `pty_reopen`; `leave_cleanup` ignores the new field; the kills are not awaited; no real app has run
+    any of it. The rebuild on D waits on the keeper's next close.
