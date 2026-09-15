@@ -55,3 +55,20 @@ Path:line for every claim. **Change nothing.** You know `main.rs`'s spawn sites 
 
 `exo_memory/handback/p-diversity-c0-<letter>_2026-09-15.md`, then `call_librarian` with the path. "Nothing local is
 good enough" and "a pane cannot run on another model without breaking resume" are valid answers.
+
+## 5 · THE KEEPER APPROVED C's TRIAL (07:0x, verbatim: "Approve the trial (Recommended)")
+
+**What he was asked:** "C's trial: install @huggingface/transformers 4.2.0 (pinned) in a scratch folder, NOT the
+repo; download nomic-embed-text-v1.5 once (~137 MB); prove it runs offline; time it; test whether it reads a whole
+long hand-back properly. Nothing enters the repo. Approve the trial?"
+
+**The trial, as C wrote it** (`handback/p-diversity-c0-C_2026-09-15.md` §4):
+1. Pinned install in C's scratchpad.
+2. One model download, then run again with `env.allowRemoteModels = false` and the network disabled, to prove it
+   works offline.
+3. Load time, and seconds per 16 KB of text.
+4. The long-context check: one real ~16 KB hand-back embedded whole, against the mean of its 1,800-token chunks.
+   Report the cosine, and fall back as §3 names if it degrades.
+5. sha256 of the exact model file.
+
+**The model is not a repo dependency** until the trial passes and the keeper says so again.
