@@ -22,6 +22,8 @@
 
 **The fact:** against `packet_leave_window` @ed73e76 with the frozen instrument, B's contesting read scores **0.6880**, ABOVE E's compliant build (**0.6401**) and between the builds (A **0.7200**). By §8.3 as written at 09:00, **the gauge measures CONTENT UPTAKE, not anchoring.** P2 over 21 hand-backs: own-vs-other-task Δ min 0.078 · Q1 0.116 · median 0.130 · Q3 0.138 · max 0.191; the seven refuting reads engage their packets as much as the builds (median 0.133 vs 0.124). Controls passed. Every figure re-derived by the librarian from C's hashed artifacts (`librarian/2026-09-15.md`, 09:4x). C's stake: 4 of 21 hand-backs are C's own.
 
+> **CARRIER MARKED 11:57 — read this paragraph against the ADDENDUM below.** Two sentences above overreach and are kept as the trace: "the gauge measures CONTENT UPTAKE, not anchoring" says more than the numbers carry (E's re-run: the margin is inside window-phase noise and the comparison was not like for like), and "reads engage their packets as much as the builds" is a 0.009 difference inside ±0.04 noise, not a finding. The librarian's WRONG 109.
+
 **Owed, in this order (nothing here is DEGENERATING — §8.1 said the pre-registration steps decide the wording and the threshold, and they did):**
 
 1. **Dispatch E** to re-run C's measurement from C's scratch `c1/` on D: `score.mjs` (ecf03768…), `results-c1.json` (0d82c32c…), `PREREG-C1.txt` (51ef51d3…), the strip read from `git show 5a2d3c0:`. E authored none of the P1 texts or the draft. Not yet dispatched.
