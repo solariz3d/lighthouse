@@ -256,3 +256,25 @@ place and keep going, and do not build around it.
 
 `exo_memory/handback/p-leave-<letter>_2026-09-14.md` (B: `p-leave-read-B_…`), then `call_librarian` with the path in
 the same turn. One line to your own map. Do not commit; both halves land together.
+
+## 10 · BEFORE THE FIRST REAL LEAVE — the stick's ledger was corrupt on the media, and was repaired at the keeper's word
+
+**2026-09-15 02:28:** the close ran on the old waiter, before the Leave build, and refused: NOT DONE, exit 2,
+CANNOT_RUN, "Unexpected non-whitespace character after JSON at position 412". Found by the librarian (c8f2b42) and
+re-checked by the chair at source:
+- `D:\consonance-L-20260911\consonance-tails\ledger.json` (2,992 B) held MANIFEST.json's 412 bytes at its head, then
+  100 NUL bytes to byte 512. The rest was the ledger's own content.
+- Both files carry the 00:19 import's mtimes. The cause is unmeasured, which is why the stick is now suspect.
+
+**The repair, at the keeper's word (02:40, "Repair it (Recommended)"):**
+- The librarian rebuilt the lost first sector: main's entry and the head of the librarian's entry.
+- The rebuilt file is 2,992 B, and its sha256 `baadc38d…` is **equal to the manifest's own recorded sha** for
+  `consonance-tails/ledger.json`. It parses, and it is byte-identical to the stick's copy from byte 512 onward.
+- The damaged file was copied beside it as `ledger.json.corrupt-20260915T084005` (nothing deleted), then the rebuild
+  was written tmp, fsync, rename.
+- `node dev/tail-carry.js --stick D:/consonance-L-20260911 --verify-set --json` -> code 0, layout manifest, missing 0,
+  mismatched 0.
+- `--export --json` (rehearsal) -> code 0, seven TAIL rows.
+
+The running exe was built at 02:29, after 99649d8 landed at 01:58, so the next close with the stick in is the first
+real Leave.
