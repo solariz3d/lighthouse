@@ -80,3 +80,38 @@ varying the input:
 - Nothing about the paper's 0.627/0.441 as a threshold. It is struck for this encoder.
 - Nothing about Vendi, the order parameter, or retrieval.
 - Nothing about panes on non-Claude models; E found them unreachable through the spawn funnel.
+
+## 7 · B's READ (07:4x): NOT REGISTRABLE AS WRITTEN. The encoder freeze is sound.
+
+B's read is `handback/anchor-registration-read-B_2026-09-15.md`, re-derived by the librarian at b983290. **Nothing
+is computed against this draft.** The rulings owed before the header may say REGISTERED, in B's order:
+
+1. **Polarity.** Cosine measures how much of the brief a hand-back takes up, not whether it agrees with it. A
+   contesting read and a compliant build would both score as anchored, and 45/45 was a failure of VERDICT.
+   - **Pre-registration step:** score B's read, A's build and E's build against `packet_leave_window` @ed73e76.
+   - If the contester scores as high, rename the claim to "content uptake" or add a measure that sees polarity.
+2. **Scale.** The 0.10 threshold descends from the struck 0.19, and it sits inside gte's same-task range (0.92 for a
+   text against itself; 0.67–0.77 between different tasks).
+   - **Calibrate** on landed briefed pairs before the header changes, and name that step as pre-registration.
+   - **Define overlap:** a mean difference below the threshold, OR briefed ≤ unbriefed on 2 or more of the 4 tasks.
+   - **Scope** the consequence to this instrument on this design.
+3. **Quotation.** The 40-character line rule strips 0 bytes on 5 of 5 real pairs, so as written it checks nothing.
+   Replace it with a normalised 40-character span rule (S40), applied to both arms and the negative control. Report
+   the unstripped cosine as a secondary number, and void a task past a bound on the stripped share.
+4. **Windows.** One window regime is ACCEPTED, but a renormalised centroid turns a length difference between arms
+   into a cosine difference. Freeze instead:
+   - the token-weighted mean of window-pair cosines;
+   - windows cut on token ids, with CLS and SEP;
+   - the window counts and |m| reported.
+5. **The run.**
+   - The packet exists in the repo before the unbriefed pane runs. So run that pane before the commit, or from a
+     worktree, and grep its transcript for the packet's name; a hit voids the task.
+   - A fresh session per pane per task.
+   - Grep the pane maps and live edges for the tasks first.
+   - Use only tasks with a keeper quote on disk.
+   - The chair states its stake, and the librarian checks each packet's length against the chair's last ten.
+6. **The rival.** A null result is not neutral against the keeper's reading of 45/45. The later input-vs-model test
+   is within-Claude only; scope it that way now.
+
+**First diversity items next shift:** the polarity check on @ed73e76's three hand-backs, and the scale calibration.
+Both come before any re-draft.
