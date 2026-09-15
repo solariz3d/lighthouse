@@ -25,7 +25,31 @@ const os = require('os');
 const path = require('path');
 const { execFileSync, spawn } = require('child_process');
 
-const TOOL = path.join(__dirname, 'state-sync.js');
+// THE TWO SEAMS, AND THEY BELONG TO THE MUTATION HARNESS (P-HARNESS, pane A, 2026-09-15). `state-sync.mutants.js`
+// writes each mutant into a COPY beside the real file and points this suite at it, so no run, killed or not, ever
+// writes a tracked source (a kill on this machine runs no handler, L059 §1). Unset, nothing changes.
+//
+// MEASURED LOAD PATHS, because a copy only one path sees is a mutant the other path never ran:
+//   state-sync.js      require(TOOL) · the spawned `node TOOL` CLI (run()) · the source text read by the
+//                      "borrowed, not copied" test — all three through TOOL, so STATE_SYNC_UNDER_TEST covers them.
+//   state-manifest.js  require(MANIFEST) (the classErrorsFor / VALID_ARRIVAL tests) · the spawned `node MANIFEST`
+//                      CLI — both through MANIFEST, so STATE_MANIFEST_UNDER_TEST covers them —
+//                      AND state-sync.js's own `require('./state-manifest.js')`, which no pointer in this file
+//                      reaches (rewriting it in the state-sync copy would fail the "borrowed, not copied" text check
+//                      below, a false kill). A manifest mutant witnessed ONLY through that third path reads SURVIVED,
+//                      never killed; the harness says so.
+// Each copy must sit in THIS directory: both tools resolve their siblings and REPO relative to themselves.
+function underTest(envName, file) {
+  const u = process.env[envName];
+  if (!u) return path.join(__dirname, file);
+  const p = path.resolve(u);
+  if (path.dirname(p) !== __dirname || !fs.existsSync(p)) {
+    throw new Error(`${envName} must name an existing file in ${__dirname}; got ${u}`);
+  }
+  return p;
+}
+const TOOL = underTest('STATE_SYNC_UNDER_TEST', 'state-sync.js');
+const MANIFEST = underTest('STATE_MANIFEST_UNDER_TEST', 'state-manifest.js');
 const M = require(TOOL);
 let pass = 0, fail = 0;
 
@@ -746,7 +770,7 @@ test('state-sync classifies with the manifest module, so the two cannot drift ap
 
 test('state-manifest.js still runs as a CLI after being made requirable', () => {
   const w = world({ 'board.jsonl': 'x\n' });
-  const r = execFileSync(process.execPath, [path.join(__dirname, 'state-manifest.js')], {
+  const r = execFileSync(process.execPath, [MANIFEST], {
     encoding: 'utf8', env: { ...process.env, CONSONANCE_DATA: w.data, STATE_MANIFEST: w.manPath },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
@@ -819,7 +843,7 @@ test('--dry-run is DRY_RUN in the receipt, so a caller cannot mistake a rehearsa
   assert.strictEqual(receipt(w).outcome, 'DRY_RUN');
 });
 
-const manifestMod = require(path.join(__dirname, 'state-manifest.js'));
+const manifestMod = require(MANIFEST);
 
 // ═══ the arriving roster — D056-1 ═════════════════════════════════════════════════════════
 //

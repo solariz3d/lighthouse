@@ -24,7 +24,21 @@ const os = require('os');
 const path = require('path');
 const { execFileSync, spawn } = require('child_process');
 
-const TOOL = path.join(__dirname, 'close.js');
+// THE ONE SEAM, AND IT BELONGS TO THE MUTATION HARNESS (P-HARNESS, pane A, 2026-09-15). `close.mutants.js`
+// writes each mutant into a COPY beside the real file and points this suite at it through CLOSE_UNDER_TEST,
+// so no run, killed or not, ever writes the tracked close.js (a kill on this machine runs no handler, L059 §1).
+// Measured load paths of close.js in this suite: `require(TOOL)` below and the spawned `node TOOL` CLI; both go
+// through TOOL, so the copy is what both run. The copy must sit in THIS directory, because close.js resolves
+// `./state-sync.js` and spawns `<dirname>/state-sync.js`. Refused loudly otherwise; unset, nothing changes.
+const TOOL = (() => {
+  const u = process.env.CLOSE_UNDER_TEST;
+  if (!u) return path.join(__dirname, 'close.js');
+  const p = path.resolve(u);
+  if (path.dirname(p) !== __dirname || !fs.existsSync(p)) {
+    throw new Error(`CLOSE_UNDER_TEST must name an existing file in ${__dirname}; got ${u}`);
+  }
+  return p;
+})();
 const C = require(TOOL);
 const M = require(path.join(__dirname, 'state-sync.js'));
 

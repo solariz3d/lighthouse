@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 'use strict';
-// tail-carry.mutants.js — run with: node dev/tail-carry.mutants.js
+// tail-carry.mutants.js — run with: node dev/tail-carry.mutants.js [--only <id>]
+//
+//   --only <id>   run exactly one mutant; <id> is the number printed before each mutant (1-based, list order)
 //
 // A GREEN SUITE IS A CLAIM ABOUT THE TESTS, NOT ABOUT THE CODE. This breaks one guard at a time
 // and requires `tail-carry.test.js` to go RED for each break. A mutant that SURVIVES is a behaviour
@@ -42,6 +44,23 @@ const LOCK = path.join(__dirname, '.tail-carry.mutants.lock');
 // ─────────────────────────────────────────────────────────────────────────────────────────────
 const COPY = path.join(__dirname, `.tail-carry.mutant-${process.pid}.js`);
 const COPY_RE = /^\.tail-carry\.mutant-(\d+)\.js$/;
+
+/**
+ * --only <id> (P-HARNESS, 2026-09-15): run exactly one mutant. <id> is the number printed before each mutant
+ * (1-based, list order). Parsed BEFORE the lock, so a bad argument leaves nothing behind.
+ */
+function parseOnly(argv) {
+  // The ONLY argument this harness takes is one --only <id>. Anything else — a repeated --only, a typo such as
+  // --onyl, a stray word — is refused, because an ignored argument runs a different set of mutants than the one
+  // asked for and says nothing (found 2026-09-15: `--only 3 --only 4` silently ran #3 alone).
+  if (argv.length === 0) return { only: null };
+  if (argv[0] !== '--only' || argv.length > 2) return { error: `the only argument is one --only <id>; got: ${argv.join(' ')}` };
+  const v = argv[1];
+  if (v === undefined || !/^\d+$/.test(v)) return { error: `--only needs a mutant id (a positive integer); got ${v === undefined ? 'nothing' : v}` };
+  return { only: Number(v) };
+}
+const onlyArg = parseOnly(process.argv.slice(2));
+if (onlyArg.error) { console.error(`tail-carry.mutants: ${onlyArg.error}`); process.exit(2); }
 
 /** Is this pid a live process? `kill(pid, 0)` sends nothing; it only asks. EPERM means alive. */
 function alive(pid) {
@@ -341,6 +360,15 @@ const MUTANTS = [
     "      : 'APPEND (a tail on the agreed state)';"],
 ];
 
+// --only is checked against the list BEFORE anything runs: an id outside it is a refusal, never a run of zero
+// mutants reported as clean.
+if (onlyArg.only !== null && (onlyArg.only < 1 || onlyArg.only > MUTANTS.length)) {
+  console.error(`tail-carry.mutants: --only ${onlyArg.only} is not a mutant; ids are 1..${MUTANTS.length}.`);
+  unlock();
+  process.exit(2);
+}
+const selected = MUTANTS.map((m, i) => [i + 1, ...m]).filter(([id]) => onlyArg.only === null || id === onlyArg.only);
+
 const alreadyMutated = MUTANTS.filter(([, , to]) => original.includes(to));
 if (alreadyMutated.length) {
   console.error('tail-carry.mutants: THE SOURCE ALREADY CARRIES A MUTATION — refusing to run.');
@@ -372,19 +400,19 @@ try {
     console.error('tail-carry.mutants: the suite is RED against an UNMUTATED copy — no mutant can be scored. Fix that first.');
     process.exitCode = 2;
   } else {
-    for (const [name, from, to] of MUTANTS) {
+    for (const [id, name, from, to] of selected) {
       const hits = original.split(from).length - 1;
       if (hits !== 1) {
         notApplied++;
-        survivors.push(`${name}  — MUTATION DID NOT APPLY (${hits} matches): the anchor is gone or ambiguous, so this defect is unguarded and unmeasured`);
-        console.log(`  ????  ${name}  (anchor ${hits === 0 ? 'missing' : 'ambiguous'})`);
+        survivors.push(`#${id} ${name}  — MUTATION DID NOT APPLY (${hits} matches): the anchor is gone or ambiguous, so this defect is unguarded and unmeasured`);
+        console.log(`  ????  #${id} ${name}  (NOT APPLIED: anchor ${hits === 0 ? 'missing' : 'ambiguous'})`);
         continue;
       }
       // A FUNCTION replacement, never a string: a string replacement expands `$&`, `` $` `` and `$'`
       // inside the mutant text, which corrupted a test file in this lap (map/A.md, 2026-09-14).
       fs.writeFileSync(COPY, original.replace(from, () => to));
-      if (suiteRedOnCopy()) { killed++; console.log(`  killed  ${name}`); }
-      else { survivors.push(name); console.log(`  SURVIVED  ${name}`); }
+      if (suiteRedOnCopy()) { killed++; console.log(`  killed  #${id} ${name}`); }
+      else { survivors.push(`#${id} ${name}`); console.log(`  SURVIVED  #${id} ${name}`); }
     }
   }
 } finally {
@@ -401,7 +429,7 @@ if (fs.readFileSync(SRC, 'utf8') !== original) {
 }
 
 console.log('');
-console.log(`tail-carry.mutants.js: ${killed} killed, ${survivors.length - notApplied} survived, ${notApplied} not applied, ${MUTANTS.length} total`);
+console.log(`tail-carry.mutants.js: ${killed} killed, ${survivors.length - notApplied} survived, ${notApplied} not applied, ${selected.length} run of ${MUTANTS.length} total${onlyArg.only !== null ? ` (--only ${onlyArg.only})` : ''}`);
 if (survivors.length) {
   console.log('');
   console.log('  A SURVIVOR IS A BEHAVIOUR NOTHING WATCHES:');

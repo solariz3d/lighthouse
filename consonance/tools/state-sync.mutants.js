@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 'use strict';
-// state-sync.mutants.js — run with: node state-sync.mutants.js
+// state-sync.mutants.js — run with: node state-sync.mutants.js [--only <id>]
+//
+//   --only <id>   run exactly one mutant; <id> is the number printed before each mutant (1-based, list order)
 //
 // A GREEN SUITE IS A CLAIM ABOUT THE TESTS, NOT ABOUT THE CODE. This file makes the claim
 // checkable: it breaks state-sync.js one guard at a time and requires state-sync.test.js to go
@@ -11,7 +13,10 @@
 // Each mutation is a real defect someone could plausibly write, not a syntax scramble: a guard
 // inverted, a comparison weakened, a refusal downgraded to a warning.
 //
-// The source is restored from an in-memory copy at the end and on any throw, including SIGINT.
+// THE TRACKED SOURCES ARE NEVER WRITTEN (P-HARNESS, pane A, 2026-09-15). This file used to write each
+// mutant into state-sync.js or state-manifest.js and restore from memory at the end and on SIGINT. A kill
+// from outside runs no handler on this machine, and on 2026-09-15 00:42–01:20 a run left `void b` live in
+// the tracked state-sync.js (pid 21068). See THE COPIES below.
 
 const fs = require('fs');
 const path = require('path');
@@ -30,33 +35,79 @@ const LOCK = path.join(__dirname, '.state-sync.mutants.lock');
 // part it exists for. A mutant names its file; the default is state-sync.js.
 const FILES = { 'state-sync.js': SRC, 'state-manifest.js': CHECKER };
 
-// A LOCK, BECAUSE THIS FILE ALREADY DAMAGED THE SOURCE ONCE (2026-09-09, A).
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// THE COPIES — the pattern of dev/tail-carry.mutants.js (L059 §5).
 //
-// Two runs overlapped. The second read its `original` off a file the first had already mutated,
-// and its own `finally { restore() }` then wrote THAT back as the truth — so a mutation survived
-// the pass, the suite went red for the rest of the night, and another seat reported the redness as
-// mine before I noticed. The defect was permanent precisely because the repair step ran.
+// Each mutant is written into a COPY of its target beside the real file — `.state-sync.mutant-<pid>.js`
+// or `.state-manifest.mutant-<pid>.js`, in this directory so every sibling require and the REPO root resolve
+// exactly as they do for the real file — and state-sync.test.js is pointed at that copy through
+// STATE_SYNC_UNDER_TEST or STATE_MANIFEST_UNDER_TEST. A kill at any instant leaves, at worst, an untracked
+// copy and a lock naming a dead pid; the next run sweeps both. There is no restore step.
 //
-// This is the shared-write class the room has now measured three times (`git add -A` capturing
-// another seat's file; `git commit` taking the shared index at 38ae5c2). Same shape, one file over:
-// a tool that mutates a path nobody else is expected to be holding, with nothing enforcing it.
+// THE ONE LOAD PATH NO POINTER REACHES, measured before the pointers were placed (state-sync.test.js header):
+// the tracked state-sync.js's own `require('./state-manifest.js')`. A state-manifest.js mutant is run through
+// the suite's direct require and its spawned CLI, but NOT through state-sync.js. Rewriting that require in the
+// state-sync COPY would reach it, but state-sync.test.js asserts the source holds the literal
+// `require('./state-manifest.js')`, so every manifest mutant would become a false kill (B's read, 2026-09-15).
+// So a manifest mutant whose only witness is
+// that internal path reads SURVIVED (loudly), never killed. All five manifest guards are tested through the
+// suite's direct `classErrorsFor` calls today.
 //
-// `wx` fails if the lock exists — no check-then-create window. A stale lock after a crash must be
-// removed BY HAND and the source checked against git first, because a crash is exactly the case
-// where the restore did not run.
+// A LOCK, because this file damaged the source through an overlap once (2026-09-09, A): the second run read
+// its `original` off a file the first had mutated and restored THAT. Copies remove the damage, and the lock
+// still keeps two runs from measuring against each other. A lock left by a KILLED run is the expected case
+// now (a kill never unlocks): a live holder refuses, a dead holder's lock is taken over.
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+const COPIES = {
+  'state-sync.js': path.join(__dirname, `.state-sync.mutant-${process.pid}.js`),
+  'state-manifest.js': path.join(__dirname, `.state-manifest.mutant-${process.pid}.js`),
+};
+const POINTER = { 'state-sync.js': 'STATE_SYNC_UNDER_TEST', 'state-manifest.js': 'STATE_MANIFEST_UNDER_TEST' };
+const COPY_RE = /^\.(state-sync|state-manifest)\.mutant-(\d+)\.js$/;
+
+/** Is this pid a live process? `kill(pid, 0)` sends nothing; it only asks. EPERM means alive. */
+function alive(pid) {
+  try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; }
+}
+
+/** --only <id>: parsed BEFORE the lock, so a bad argument leaves nothing behind. */
+function parseOnly(argv) {
+  // The ONLY argument this harness takes is one --only <id>. Anything else — a repeated --only, a typo such as
+  // --onyl, a stray word — is refused, because an ignored argument runs a different set of mutants than the one
+  // asked for and says nothing (found 2026-09-15: `--only 3 --only 4` silently ran #3 alone).
+  if (argv.length === 0) return { only: null };
+  if (argv[0] !== '--only' || argv.length > 2) return { error: `the only argument is one --only <id>; got: ${argv.join(' ')}` };
+  const v = argv[1];
+  if (v === undefined || !/^\d+$/.test(v)) return { error: `--only needs a mutant id (a positive integer); got ${v === undefined ? 'nothing' : v}` };
+  return { only: Number(v) };
+}
+const onlyArg = parseOnly(process.argv.slice(2));
+if (onlyArg.error) { console.error(`state-sync.mutants: ${onlyArg.error}`); process.exit(2); }
+
 try {
   fs.writeFileSync(LOCK, `${process.pid} ${new Date().toISOString()}\n`, { flag: 'wx' });
 } catch (e) {
-  console.error(`state-sync.mutants: another run holds ${LOCK}`);
-  console.error('  Refusing to start. A second run reads its "original" from the first run\'s');
-  console.error('  MUTATED source and then restores that as the truth — measured, 2026-09-09.');
-  console.error('  If no run is live, check state-sync.js against git BEFORE deleting the lock.');
-  process.exit(2);
+  const holder = parseInt(String(fs.readFileSync(LOCK, 'utf8')).split(/\s/)[0], 10);
+  if (Number.isInteger(holder) && alive(holder)) {
+    console.error(`state-sync.mutants: a live run (pid ${holder}) holds ${LOCK} — refusing to start.`);
+    process.exit(2);
+  }
+  console.error(`state-sync.mutants: taking over a lock left by pid ${holder}, which is not running (a killed run).`);
+  fs.writeFileSync(LOCK, `${process.pid} ${new Date().toISOString()}\n`);
+}
+
+for (const f of fs.readdirSync(__dirname)) {
+  const m = f.match(COPY_RE);
+  if (m && Number(m[2]) !== process.pid && !alive(Number(m[2]))) {
+    fs.unlinkSync(path.join(__dirname, f));
+    console.error(`state-sync.mutants: swept a copy left by killed run pid ${m[2]}: ${f}`);
+  }
 }
 
 const original = fs.readFileSync(SRC, 'utf8');
 
 function unlock() { try { fs.unlinkSync(LOCK); } catch (_) { /* already gone */ } }
+function dropCopies() { for (const p of Object.values(COPIES)) { try { fs.unlinkSync(p); } catch (_) { /* already gone */ } } }
 
 const MUTANTS = [
   ['quiescence gate never fires', 'if (age < settleMs) {', 'if (false && age < settleMs) {'],
@@ -179,57 +230,90 @@ const MUTANTS = [
 const ORIGINALS = { 'state-sync.js': original, 'state-manifest.js': fs.readFileSync(CHECKER, 'utf8') };
 const fileOf = (m) => m[3] || 'state-sync.js';
 
-function restore() {
-  for (const [name, p] of Object.entries(FILES)) fs.writeFileSync(p, ORIGINALS[name]);
-}
-process.on('SIGINT', () => { restore(); unlock(); process.exit(130); });
-
-// THE TRIPWIRE ON `original` ITSELF. If the source we just read already carries one of our own
-// replacements, a previous pass did not clean up, `original` is not original, and restoring it
-// would make yesterday's mutation permanent — which is exactly what happened once.
-const alreadyMutated = MUTANTS.filter((m) => ORIGINALS[fileOf(m)].includes(m[2]));
-if (alreadyMutated.length) {
-  restore.skip = true;
-  console.error('state-sync.mutants: THE SOURCE ALREADY CARRIES A MUTATION — refusing to run.');
-  for (const m of alreadyMutated) console.error(`  ${m[0]}\n    found in ${fileOf(m)}: ${m[2]}`);
-  console.error('  Restore the file from git before running this again. Restoring from here');
-  console.error('  would write the mutation back as the truth.');
+// --only is checked against the list BEFORE anything runs: an id outside it is a refusal, never a run of
+// zero mutants reported as clean.
+if (onlyArg.only !== null && (onlyArg.only < 1 || onlyArg.only > MUTANTS.length)) {
+  console.error(`state-sync.mutants: --only ${onlyArg.only} is not a mutant; ids are 1..${MUTANTS.length}.`);
   unlock();
   process.exit(2);
 }
 
+// THE TRIPWIRE ON `original` ITSELF. If a tracked source already carries one of our own replacements,
+// someone left a mutation in it (an older in-place run, or another writer). This harness no longer writes
+// either file, so it cannot repair that — it refuses, and names what it found.
+const alreadyMutated = MUTANTS.filter((m) => ORIGINALS[fileOf(m)].includes(m[2]));
+if (alreadyMutated.length) {
+  console.error('state-sync.mutants: THE SOURCE ALREADY CARRIES A MUTATION — refusing to run.');
+  for (const m of alreadyMutated) console.error(`  ${m[0]}\n    found in ${fileOf(m)}: ${m[2]}`);
+  console.error('  Restore the file from git before running this again.');
+  unlock();
+  process.exit(2);
+}
+
+/** Run the suite with BOTH pointers on their copies. true = the suite went red. */
+function suiteRedOnCopies() {
+  try {
+    execFileSync(process.execPath, [SUITE], {
+      stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8',
+      env: { ...process.env, [POINTER['state-sync.js']]: COPIES['state-sync.js'], [POINTER['state-manifest.js']]: COPIES['state-manifest.js'] },
+    });
+    return false;
+  } catch (_) { return true; }
+}
+
 let killed = 0;
+let notApplied = 0;
 const survivors = [];
+const selected = MUTANTS.map((m, i) => [i + 1, m]).filter(([id]) => onlyArg.only === null || id === onlyArg.only);
 try {
-  for (const m of MUTANTS) {
-    const [name, from, to] = m;
-    const file = fileOf(m);
-    const src = ORIGINALS[file];
-    if (!src.includes(from)) {
-      survivors.push(`${name}  — MUTATION DID NOT APPLY: the anchor is gone from ${file}, so this defect is unguarded and unmeasured`);
-      console.log(`  ????  ${name}  (anchor missing in ${file})`);
-      continue;
+  // PRE-FLIGHT: both unmutated copies, both pointers set, and the suite must be GREEN. If it is red for any
+  // other reason, every mutant below would read as "killed" without earning it (the false 50/50, 2026-09-09).
+  for (const f of Object.keys(COPIES)) fs.writeFileSync(COPIES[f], ORIGINALS[f]);
+  if (suiteRedOnCopies()) {
+    console.error('state-sync.mutants: the suite is RED against UNMUTATED copies — no mutant can be scored. Fix that first.');
+    process.exitCode = 2;
+  } else {
+    for (const [id, m] of selected) {
+      const [name, from, to] = m;
+      const file = fileOf(m);
+      const src = ORIGINALS[file];
+      const hits = src.split(from).length - 1;
+      if (hits === 0) {
+        notApplied++;
+        survivors.push(`#${id} ${name}  — MUTATION DID NOT APPLY: the anchor is gone from ${file}, so this defect is unguarded and unmeasured`);
+        console.log(`  ????  #${id} ${name}  (NOT APPLIED: anchor missing in ${file})`);
+        continue;
+      }
+      // Kept from the in-place harness, and said out loud: an anchor that occurs more than once mutates its FIRST
+      // occurrence (three of this list's anchors do, measured 2026-09-15). The port keeps that measurement.
+      const note = hits > 1 ? `  (first of ${hits} matches in ${file})` : '';
+      // One mutant, one copy: the OTHER copy is reset to its original before every run.
+      for (const f of Object.keys(COPIES)) fs.writeFileSync(COPIES[f], f === file ? src.replace(from, () => to) : ORIGINALS[f]);
+      if (suiteRedOnCopies()) { killed++; console.log(`  killed  #${id} ${name}${note}`); }
+      else { survivors.push(`#${id} ${name}${note}`); console.log(`  SURVIVED  #${id} ${name}${note}`); }
     }
-    fs.writeFileSync(FILES[file], src.replace(from, to));
-    let red = false;
-    try {
-      execFileSync(process.execPath, [SUITE], { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8' });
-    } catch (_) { red = true; }
-    fs.writeFileSync(FILES[file], src); // put this target back before the next mutant picks another
-    if (red) { killed++; console.log(`  killed  ${name}`); }
-    else { survivors.push(name); console.log(`  SURVIVED  ${name}`); }
   }
 } finally {
-  restore();
+  dropCopies();
   unlock();
+}
+if (process.exitCode === 2) process.exit(2);
+
+// Both tracked files must be byte-identical to what this run read. This harness never writes them, so a
+// difference is ANOTHER writer — reported, never "restored".
+for (const [name, p] of Object.entries(FILES)) {
+  if (fs.readFileSync(p, 'utf8') !== ORIGINALS[name]) {
+    console.error(`state-sync.mutants: ${name} CHANGED DURING THIS RUN, and not by this harness. Check git diff before trusting any count above.`);
+    process.exitCode = 3;
+  }
 }
 
 console.log('');
-console.log(`state-sync.mutants.js: ${killed} killed, ${survivors.length} survived, ${MUTANTS.length} total`);
+console.log(`state-sync.mutants.js: ${killed} killed, ${survivors.length - notApplied} survived, ${notApplied} not applied, ${selected.length} run of ${MUTANTS.length} total${onlyArg.only !== null ? ` (--only ${onlyArg.only})` : ''}`);
 if (survivors.length) {
   console.log('');
   console.log('  A SURVIVOR IS A BEHAVIOUR NOTHING WATCHES. Each of these can be broken and the suite');
   console.log('  still reports green:');
   for (const s of survivors) console.log(`    ${s}`);
 }
-process.exit(survivors.length ? 1 : 0);
+process.exit(process.exitCode === 3 ? 3 : survivors.length ? 1 : 0);

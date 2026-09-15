@@ -77,3 +77,10 @@ dev/rebuild-on-close.log
 # runs (L059: a killed run here runs no cleanup, so the copy and the lock can outlive it). Neither is ever staged.
 dev/.tail-carry.mutant-*.js
 dev/.tail-carry.mutants.lock
+# P-HARNESS (2026-09-15): close.mutants.js and state-sync.mutants.js write their mutants into copies beside
+# their sources the same way, for the same reason.
+consonance/tools/.close.mutant-*.js
+consonance/tools/.close.mutants.lock
+consonance/tools/.state-sync.mutant-*.js
+consonance/tools/.state-manifest.mutant-*.js
+consonance/tools/.state-sync.mutants.lock

@@ -88,3 +88,27 @@ librarian's, carried into this packet by the chair). The line in §2 stands as w
 - The single largest item is the vendor's file-history snapshot: 114,574,171 B, 41% of the chair's file.
 
 **Which lever to pull is the keeper's, and building it is its own lap.**
+
+## 8 · LANDED, AND WHAT IS HELD FOR P-HARNESS-2
+
+**Landed at the commit that carries this section.**
+- F1, F2 and F3 held on both ported harnesses, on the lap's own evidence:
+  - `state-sync.mutants.js`: 50 killed, 0 survived, 0 not applied; a 2,040 s watch saw tracked files dirty 0 times.
+  - `close.mutants.js`: 10 of 10.
+  - A real kill on each harness left the tracked sources clean, and the next run swept the copies.
+- **Changed after B's read:** only the `--only` argument check, where a repeated or malformed `--only` now refuses.
+  That is B's own minor (1). The chair read the diff: the same parse, before the lock, in all three harnesses.
+  `node <harness> --only 3 --only 4` exits 2 in all three.
+- Suites re-run by the chair: close.test.js 24/0, state-sync.test.js 75/0, tail-carry.test.js 129/0. No copy and no
+  lock is left in `dev/` or `consonance/tools/`, and the tracked close.js, state-sync.js and state-manifest.js are
+  unchanged.
+
+**HELD, not built (B's read, collated at 692012d):**
+- (a) **Coverage change.** The manifest load path through `state-sync.js:84`: the in-place harness exposed a mutant
+  to all 96 loads, and the copy reaches only the two pointed paths. It costs nothing today. The fix is the resolution
+  hook A named.
+- (b) **Order-dependent first match.** Anchors #11–#13 are first-match inside `verifyTree` (`:678`/`:685`/`:695`),
+  right today and order-dependent tomorrow. The fix is to print the matched line, or assert the enclosing function.
+
+**§2 closes as a record.** No design is owed. The keeper withdrew the balloon concern at 05:56: "i think the
+ballooning context was a visual error".
