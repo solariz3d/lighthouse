@@ -394,6 +394,205 @@ test('a close and REOPEN inside one poll: the new app pid is adopted, and its ex
   assert.strictEqual(w.exports.length, 2, 'one export for the session that closed, one for the reopened session');
 });
 
+// ══ P-LEAVE (D063) — §2.3 a-d as re-ruled at §2.7: the app saves at close; the waiter is the FALLBACK ══════════════
+
+const leaveFile = (w, name, rec) => put(path.join(w.data, name), JSON.stringify(Object.assign({ pid: APP, image: 'consonance.exe', at: '2026-09-14T11:50:00.000Z' }, rec || {})));
+const exists = (w, name) => fs.existsSync(path.join(w.data, name));
+const STICK_FOLDER = (v) => path.join(v, 'consonance-L-20260911');
+const plantLedgerLock = (v, rec) => put(path.join(STICK_FOLDER(v), 'consonance-tails', 'ledger.lock'), JSON.stringify(Object.assign({ image: 'node', script: 'tail-carry.js', at: 'x' }, rec)));
+
+test('P-LEAVE 2.1: the two LEAVE file names are the ruled ones — and equal the app\'s constants when sync_launch.rs has them', () => {
+  assert.deepStrictEqual([W.LEAVE_STARTED, W.LEAVE_RESULT], ['stick-leave.started.json', 'stick-leave.result.json']);
+  const rs = fs.readFileSync(path.join(__dirname, '..', 'consonance', 'src-tauri', 'src', 'sync_launch.rs'), 'utf8');
+  for (const [name, value] of [['LEAVE_STARTED', W.LEAVE_STARTED], ['LEAVE_RESULT', W.LEAVE_RESULT]]) {
+    const m = rs.match(new RegExp(`\\b${name}\\s*:\\s*&str\\s*=\\s*"([^"]+)"`));
+    // Both halves land together: until E's constant exists this checks the JS side only, and says so.
+    if (m) assert.strictEqual(m[1], value, `${name} disagrees with sync_launch.rs`);
+    else console.log(`       (sync_launch.rs has no ${name} yet — the cross-check is pending E's half)`);
+  }
+});
+
+test('P-LEAVE case b: a LEAVE_RESULT for the watched pid -> stand down: no find, no notice, no export — whatever its outcome', () => {
+  for (const outcome of ['DONE', 'NOT_DONE']) {
+    const w = world({ roots: [stickVolume()] });
+    leaveFile(w, W.LEAVE_RESULT, { outcome, code: outcome === 'DONE' ? 0 : 1, rows: [] });
+    let looked = false;
+    w.inject.volumeRoots = () => { looked = true; return w.roots; };
+    const r = go(w);
+    assert.deepStrictEqual([r.code, r.outcome, looked, w.notices.length, w.exports.length], [0, 'STOOD_DOWN_LEAVE', false, 0, 0], outcome);
+  }
+});
+
+test('P-LEAVE D-4: the waiter removes the LEAVE_RESULT it stood down on (and a same-pid LEAVE_STARTED beside it) — AFTER acting', () => {
+  const w = world({ roots: [stickVolume()] });
+  leaveFile(w, W.LEAVE_RESULT, { outcome: 'DONE', code: 0, rows: [] });
+  leaveFile(w, W.LEAVE_STARTED);
+  let presentWhenDeciding = null;
+  w.inject.pidsOf = () => { presentWhenDeciding = exists(w, W.LEAVE_RESULT); return []; };
+  go(w);
+  assert.deepStrictEqual([exists(w, W.LEAVE_RESULT), exists(w, W.LEAVE_STARTED)], [false, false]);
+  assert.strictEqual(presentWhenDeciding, false, 'removed once acted on, before the adoption check hands over');
+});
+
+test('P-LEAVE D-9: case b runs the adoption check before returning — a relaunch inside one poll is adopted and watched', () => {
+  const w = world({ roots: [stickVolume()], lives: { 4999: ['consonance', null] } });
+  leaveFile(w, W.LEAVE_RESULT, { outcome: 'DONE', code: 0, rows: [] });
+  let round = 0;
+  w.inject.pidsOf = () => (++round === 1 ? [4999] : []);
+  const r = go(w);
+  assert.strictEqual(w.exports.length, 1, 'the adopted session\'s own exit (no LEAVE files for 4999) is the fallback export');
+  assert.strictEqual(r.outcome, 'CARRIED');
+});
+
+test('P-LEAVE D-9: case a (a live applier) runs the adoption check before returning too', () => {
+  const w = world({ roots: [stickVolume()], live: { 4242: 'node' }, lives: { 4999: ['consonance', null] } });
+  put(path.join(w.data, A.STARTED), JSON.stringify({ pid: 4242, image: 'node', script: 'stick-apply.js', at: 'x', stick: 'x' }));
+  let round = 0;
+  w.inject.pidsOf = () => (++round === 1 ? [4999] : []);
+  const watched = [];
+  const answers = w.inject.pidAnswers;
+  w.inject.pidAnswers = (pid) => { watched.push(pid); return answers(pid); };
+  const r = go(w);
+  assert.ok(watched.includes(4999), `the relaunched app (4999) is adopted and polled; polled: ${[...new Set(watched)].join(', ')}`);
+  assert.strictEqual(round, 2, 'and at 4999\'s own exit the adoption check runs again');
+  assert.strictEqual(r.outcome, 'STOOD_DOWN');
+});
+
+test('P-LEAVE case c: LEAVE_STARTED with no LEAVE_RESULT -> WAIT while the ledger.lock holder is live, THEN export once', () => {
+  const v = stickVolume();
+  // the orphan tail-carry, pid 5100: alive for three polls, then gone
+  const w = world({ roots: [v], lives: { 5100: ['node', 'node', 'node', null] } });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  plantLedgerLock(v, { pid: 5100 });
+  let holderAtExport = 'not exported';
+  const exp = w.inject.exportCarry;
+  w.inject.exportCarry = (s) => { holderAtExport = w.inject.pidAnswers(5100); return exp(s); };
+  const r = go(w);
+  assert.strictEqual(w.exports.length, 1, 'one export, after the wait — never a retry race with the orphan');
+  assert.strictEqual(holderAtExport, false, 'the export starts only once the holder pid is not live');
+  assert.ok(w.sleeps >= 3, `waited across the holder's polls (slept ${w.sleeps})`);
+  assert.strictEqual(r.outcome, 'CARRIED');
+});
+
+test('P-LEAVE case c: the fallback notices say the app stopped DURING its save, and name "fallback"', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v] });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  go(w);
+  assert.strictEqual(w.notices.length, 2);
+  for (const n of w.notices) assert.match(n.title, /fallback/i);
+  assert.match(w.notices[0].body, /stopped during its own save/);
+  assert.match(w.status(), /fallback/i);
+});
+
+test('P-LEAVE D-4: case c removes LEAVE_STARTED only AFTER its export', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v] });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  let presentAtExport = null;
+  const exp = w.inject.exportCarry;
+  w.inject.exportCarry = (s) => { presentAtExport = exists(w, W.LEAVE_STARTED); return exp(s); };
+  go(w);
+  assert.deepStrictEqual([presentAtExport, exists(w, W.LEAVE_STARTED)], [true, false]);
+});
+
+test('P-LEAVE D-4: the removal never takes a NEWER app\'s LEAVE file written while the fallback export ran', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v] });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  const exp = w.inject.exportCarry;
+  // mid-export, a relaunched app (pid 4999) begins its own Leave and writes the same name
+  w.inject.exportCarry = (s) => { leaveFile(w, W.LEAVE_STARTED, { pid: 4999, stick: STICK_FOLDER(v) }); return exp(s); };
+  go(w);
+  assert.strictEqual(JSON.parse(fs.readFileSync(path.join(w.data, W.LEAVE_STARTED), 'utf8')).pid, 4999, 'the newer file stays');
+});
+
+test('P-LEAVE case c: no ledger.lock, or one naming a DEAD pid -> nothing to wait on, export at once', () => {
+  for (const plant of [false, true]) {
+    const v = stickVolume();
+    const w = world({ roots: [v], life: [null] });            // the app already gone: every sleep below is the case-c wait
+    leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+    if (plant) plantLedgerLock(v, { pid: 5222 });      // no life scripted for 5222: it does not answer
+    go(w);
+    assert.deepStrictEqual([w.exports.length, w.sleeps], [1, 0], plant ? 'dead holder' : 'no lock');
+  }
+});
+
+test('P-LEAVE case c: a holder whose image cannot be told is waited on as live — never exported past', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v], lives: { 5100: [undefined] } });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  plantLedgerLock(v, { pid: 5100 });
+  const r = go(w);
+  assert.deepStrictEqual([w.exports.length, r.outcome], [0, 'GAVE_UP']);
+  assert.strictEqual(exists(w, W.LEAVE_STARTED), true, 'not acted on, so not removed');
+});
+
+test('P-LEAVE case c: a lock holder that is a live pid under ANOTHER image is not the orphan — export at once', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v], lives: { 5100: ['explorer'] } });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  plantLedgerLock(v, { pid: 5100 });
+  go(w);
+  assert.strictEqual(w.exports.length, 1);
+});
+
+test('P-LEAVE case d: neither LEAVE file -> today\'s path, and its notices name "fallback"', () => {
+  const w = world({ roots: [stickVolume()] });
+  const r = go(w);
+  assert.deepStrictEqual([w.exports.length, r.outcome], [1, 'CARRIED']);
+  for (const n of w.notices) assert.match(n.title, /fallback/i);
+  assert.match(w.notices[0].body, /without saving to the stick itself/);
+});
+
+test('P-LEAVE case d, no stick: still quiet — no notice, no status file', () => {
+  const w = world();
+  const r = go(w);
+  assert.deepStrictEqual([r.outcome, w.notices.length, w.status()], ['NO_STICK', 0, null]);
+});
+
+test('P-LEAVE STALE: LEAVE files naming a DIFFERENT pid are ignored — case d runs — and the waiter does NOT remove them', () => {
+  const w = world({ roots: [stickVolume()], life: [null] });
+  leaveFile(w, W.LEAVE_RESULT, { pid: 3999, outcome: 'DONE', code: 0, rows: [] });
+  leaveFile(w, W.LEAVE_STARTED, { pid: 3999 });
+  const r = go(w);
+  assert.deepStrictEqual([w.exports.length, r.outcome, w.sleeps], [1, 'CARRIED', 0], 'not a stand-down and not a wait');
+  assert.deepStrictEqual([exists(w, W.LEAVE_RESULT), exists(w, W.LEAVE_STARTED)], [true, true], 'the app removes stale files, not the waiter');
+});
+
+test('P-LEAVE D-7: the image compares lower-cased with ".exe" stripped on BOTH sides; the pid decides first', () => {
+  for (const image of ['consonance.exe', 'CONSONANCE.EXE', 'consonance', 'Consonance.Exe']) {
+    const w = world({ roots: [stickVolume()] });
+    leaveFile(w, W.LEAVE_RESULT, { image, outcome: 'DONE', code: 0, rows: [] });
+    assert.strictEqual(go(w).outcome, 'STOOD_DOWN_LEAVE', image);
+  }
+  const w = world({ roots: [stickVolume()] });
+  w.argv = ['--data', w.data, '--app-pid', String(APP), '--app-image', 'CONSONANCE.exe'];
+  leaveFile(w, W.LEAVE_RESULT, { outcome: 'DONE', code: 0, rows: [] });
+  assert.strictEqual(go(w).outcome, 'STOOD_DOWN_LEAVE', 'the argv side is normalised too');
+  const x = world({ roots: [stickVolume()] });
+  leaveFile(x, W.LEAVE_RESULT, { image: 'node', outcome: 'DONE', code: 0, rows: [] });
+  assert.strictEqual(go(x).outcome, 'CARRIED', 'the right pid under another image is not this app\'s Leave');
+});
+
+test('P-LEAVE: a LEAVE_RESULT beats a LEAVE_STARTED for the same pid — the Leave finished, so no fallback', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v], life: [null], lives: { 5100: ['node'] } });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  leaveFile(w, W.LEAVE_RESULT, { outcome: 'DONE', code: 0, rows: [] });
+  plantLedgerLock(v, { pid: 5100 });
+  const r = go(w);
+  assert.deepStrictEqual([r.outcome, w.exports.length, w.sleeps], ['STOOD_DOWN_LEAVE', 0, 0]);
+});
+
+test('P-LEAVE: a live applier (case a) is checked before any LEAVE file', () => {
+  const w = world({ roots: [stickVolume()], live: { 4242: 'node' } });
+  put(path.join(w.data, A.STARTED), JSON.stringify({ pid: 4242, image: 'node', script: 'stick-apply.js', at: 'x', stick: 'x' }));
+  leaveFile(w, W.LEAVE_RESULT, { outcome: 'DONE', code: 0, rows: [] });
+  assert.strictEqual(go(w).outcome, 'STOOD_DOWN');
+  assert.strictEqual(exists(w, W.LEAVE_RESULT), true, 'case a acts on no LEAVE file, so it removes none');
+});
+
 test('the real pid check, no injection: this process answers; a pid that exited does not', () => {
   assert.strictEqual(W.pidAnswers(process.pid), true);
   const child = require('child_process').spawnSync(process.execPath, ['-e', '0']);
