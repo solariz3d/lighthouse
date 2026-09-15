@@ -140,3 +140,203 @@ no-console A/E; stick-build A/E; stick A/E; stick-preflight B/C. diversity-c1 ha
     sha256sum models/Alibaba-NLP/gte-base-en-v1.5/onnx/model_quantized.onnx  # e7f6af7a…c326509, 146,540,971 B
     node --require ./block-net.cjs prep.mjs                                  # offline load, tokens, S40 shares; NETWORK_ATTEMPTS=0
     git log --diff-filter=A --format=%h -- <path> ; git cat-file -s <sha>:<path>   # landing shas and sizes, §3–§4
+
+
+---
+
+## 7 · S40 FROZEN AS CODE, per §8.7 R2 (aa5831c) — written and tested, AWAITING THE CHAIR'S COMMIT
+
+**Still no cosine.** Per the ruling, nothing is computed until this code is committed and its hash recorded.
+
+**Files (uncommitted, mine, by path):**
+
+    dev/diversity/s40-strip.js        sha256 73917f673b7d98130fe8195cf953bd35c4fa3534dbf00c41da1492e039a4e087
+    dev/diversity/s40-strip.test.js   sha256 22500f727f4b0114e85d8b9a7b2e5f1b34ff279ec21d0139bcb04f46d2c7bed6
+
+**R2 as built** (`s40-strip.js`), one function, `s40Strip(text, other)`:
+
+| R2 line | Code |
+|---|---|
+| normalise | drop `> * \` _ #`, then collapse every whitespace run to one space ("drop, then collapse": whitespace on both sides of a dropped marker becomes one run). No case fold. |
+| mark | every 40-character run of normalised `text` that occurs in normalised `other` |
+| embed | returns `text`: the normalised text minus the marked characters |
+| share | `strippedChars / normalisedChars` |
+| brief | the same function with the arguments swapped, per pair |
+
+"Characters" are JavaScript string units, and every count uses the same unit.
+
+**Tests:** `node dev/diversity/s40-strip.test.js` → **12 passed, 0 failed.**
+- **The reproduction:** B's pair against `packet_leave_window` @ed73e76, read from git at that sha, with byte sizes
+  asserted:
+  - p-leave-read-B → **3.73%** (563 / 15,079 normalised characters), which rounds to B's **3.7**;
+  - p-leave-E → **1.72%** (517 / 30,046), which rounds to B's **1.7**.
+  - These equal the librarian's 3.73% / 1.72% (§8.7 R2). My §2 script's 3.51% / 1.46% measured raw bytes after
+    residue, which R2 has now ruled out.
+- **The edges:** markers dropped; whitespace collapsed, including across a dropped marker; no case fold; a 39-character
+  shared run not stripped; exactly 40 stripped exactly; a quote hidden by markdown and re-wrapping still found; share
+  over normalised characters, with the normalised remainder embedded; empty input; the brief side.
+- **The reproduction needs git history** (`git show ed73e76:…`). Without it the test fails with a message naming why,
+  never silently.
+- **Two of my first fixtures were wrong, and I fixed the fixtures, not the code.** The 39-character case had a space
+  on both sides, which extended the shared run to 40. The re-wrap case inserted a space the quote does not have. Both
+  were caught on the first run.
+
+**Mutants, on a scratch copy** (`<scratchpad>/c1/mut/mutate.js`; the tracked file's sha256 is unchanged after):
+**7 applied, 7 caught, 0 survived, 0 NOT-APPLIED.**
+
+| Mutant | Caught by |
+|---|---|
+| case folded | 3 tests |
+| `#` kept | the markers test |
+| whitespace not collapsed | 5 tests |
+| span 41 | the p-leave-E reproduction only |
+| raw text embedded instead of normalised | 4 tests |
+| share over raw bytes | 4 tests |
+| only the run's first character marked | 5 tests |
+
+**The repo suite:** `node consonance/tools/js-suite.js` → 91 green, 6 failed, 1 canary, of 98.
+- `dev/diversity/s40-strip.test.js` is discovered and **ok**.
+- The six failures are portable-paths, gen-consumer, carrier-drift, actors.evidence, forget-rate and
+  userprompt_pulse. **None names `dev/diversity` or s40.** portable-paths names two drive literals in `main.rs`
+  (lines 5988 and 6169).
+- **Not verified:** whether those six were red before these files existed. I ran no baseline without them.
+
+**Owed next, in order, after the commit exists:** controls per R1, then P1, then P2 per R3/R4, appended here.
+
+
+---
+
+## 8 · THE MEASUREMENT — controls PASSED, P1 fires §8.3, P2's scale
+
+Run on D, 2026-09-15 09:27–09:33, after the S40 strip landed at **5a2d3c0**.
+
+**Frozen inputs, each hash-checked in code before use:**
+- **Strip:** `dev/diversity/s40-strip.js` read from `git show 5a2d3c0:` (sha256 `73917f67…a087`).
+- **Encoder:** gte-base-en-v1.5 q8, sha256 `e7f6af7a…c326509`.
+- **Runtime and network:** `@huggingface/transformers` 4.2.0, offline, **`NETWORK_ATTEMPTS=0`** on both runs.
+- **Final-state commit:** `1e944ac`.
+
+**Interpretations fixed before any cosine:** `<scratchpad>/c1/PREREG-C1.txt`, sha256 `51ef51d3…80a2a`, timestamped
+09:26:28. It covers:
+- **Windows:** 1,800 token ids, CLS and SEP on every window, CLS pooling, L2.
+- **PRIMARY (R3):** the dot product of the two token-weighted mean vectors.
+- **Secondaries:** the centroid cosine and `|m|`, unweighted; the unstripped score, computed on `normalise()`
+  text with nothing stripped.
+- **Controls, P1 and P2:** exactly as tabled below.
+
+**Artifacts for E:** `score.mjs` (sha256 `ecf03768…33eafb`), `results-c1.json` (sha256 `0d82c32c…554b71d`),
+`score-out.txt`, `PREREG-C1.txt`, `block-net.cjs`, and `s40-strip@5a2d3c0.cjs`, all in `<scratchpad>/c1/` on D.
+- **One correction, made openly.** The first run (`score.run1.mjs`, `results-c1.run1.json`) did not store §8.2's
+  per-text window, token and `|m|` fields for P2 rows. I added those three report fields and re-ran.
+- **Every number is identical across the two runs**, checked by script: controls, P1, the prediction, both
+  distributions, and all 21 rows.
+
+### 8.1 · Controls (R1) — BOTH PASS
+
+| Control | Pair | PRIMARY | Centroid (secondary) | Criterion | Result |
+|---|---|---|---|---|---|
+| **Positive**, UNSTRIPPED, encoder test only | `packet_leave_window` @ed73e76 with `## 0` removed (lines 12–23, 9,230 B) against the same packet @ed73e76 | **0.8575** | 0.9337 | > every P1 PRIMARY (max 0.7200) | **PASS** |
+| **Negative**, stripped | `handback/p-harness-E_2026-09-15.md` @1e944ac against `packet_leave_window` @ed73e76 (strip share 0%) | **0.4521** | 0.5268 | < every P1 PRIMARY (min 0.6401) | **PASS** |
+
+### 8.2 · P1, polarity — against `loop/packet_leave_window_2026-09-14.md` @ed73e76 (9,910 B)
+
+| Text | PRIMARY | Centroid | Unstripped | Hand-back S40: stripped / normalised chars (share) | Hand-back tokens · windows · abs m | Brief S40 stripped (share) | Brief tokens · windows · abs m |
+|---|---|---|---|---|---|---|---|
+| **A** `p-leave-A` @99649d8 (21,298 B) | **0.7200** | 0.8388 | 0.7334 | 43 / 18,961 (0.23%) | 5,375 · 3 · 0.9371 | 43 (0.49%) | 2,603 · 2 · 0.9229 |
+| **B-read** `p-leave-read-B` @9e29daf (16,050 B) | **0.6880** | 0.8009 | 0.7003 | 563 / 15,079 (3.73%) | 4,398 · 3 · 0.9015 | 563 (6.37%) | 2,466 · 2 · 0.9350 |
+| **E** `p-leave-E` @99649d8 (35,743 B) | **0.6401** | 0.7974 | 0.6721 | 517 / 30,046 (1.72%) | 8,641 · 5 · 0.8639 | 321 (3.63%) | 2,500 · 2 · 0.9422 |
+
+No pair is void; the largest hand-back strip share is 3.73%. E is past 8,192 tokens before normalisation, and ran as
+5 windows under the same rule.
+
+**§8.3's prediction: FIRES.**
+- The lower of A's and E's builds is E, at **0.6401**.
+- B's contesting read scores **0.6880**: **0.0479 above** that build, where the prediction needed only "within 0.02
+  of, or above".
+- B's read sits **between** the two builds, under A by 0.0320.
+- **By §8.3's own wording, this instrument measures CONTENT UPTAKE, not anchoring.** The claim must be renamed
+  "content uptake", or paired with a polarity measure, before the header may say REGISTERED.
+- The unstripped secondary gives the same order (A 0.7334 > B 0.7003 > E 0.6721), and so does the centroid
+  secondary (0.8388 > 0.8009 > 0.7974). So the verdict does not depend on the strip or the aggregator.
+
+### 8.3 · P2, scale — own packet minus the mean of the other packets (R4)
+
+**The set:**
+- **Packets:** 8, every `loop/packet_*_2026-09-1[45].md` except `packet_diversity_c1_and_leave2` (R4).
+- **Hand-backs:** 21, being the 16 pattern-matched ones plus 5 of R4's seven reads, each assigned to the packet it read.
+- **Texts:** each hand-back at `1e944ac`. Its own packet is read at the parent of the commit that first added the
+  hand-back (R4).
+- **Other packets:** each at `1e944ac`. R4 does not say which version, so the pre-registration chose the final state.
+  A **sensitivity** column takes the other packets at the same parent commit instead; it is reported and never used
+  to decide.
+
+**Excluded, and why:**
+- `handback/anchor-registration-read-B_2026-09-15.md`: its brief is the registration DRAFT, not a packet in the set.
+- `handback/readme-audit_2026-09-14.md`: a Third Place hand-back at the keeper's ask, with no packet.
+- `loop/packet_diversity_c1_and_leave2_2026-09-15.md`: excluded by R4.
+- **Void pairs: none.** Own-pair hand-back strip share stays between 0.29% and 4.50%.
+
+**THE DISTRIBUTION** (the PRIMARY delta):
+
+| | n | min | Q1 | median | Q3 | max |
+|---|---|---|---|---|---|---|
+| **Primary: other packets at final state** | **21** | **0.0778** | **0.1160** | **0.1302** | **0.1382** | **0.1908** |
+| Sensitivity: other packets at the hand-back's parent | 19 | 0.0542 | 0.0935 | 0.1075 | 0.1163 | 0.1593 |
+
+The sensitivity column has n = 19 because `p-stick-A` and `p-stick-E` landed before any other packet in the set
+existed at their parent.
+
+**Every row:**
+
+| Hand-back (@1e944ac) | Own packet @sha (parent of landing) | Own PRIMARY | Mean of 7 others | **Δ** | Hand-back strip share | Δ sensitivity |
+|---|---|---|---|---|---|---|
+| p-diverged-read-C_2026-09-14 | packet_diverged @6397e1a | 0.8059 | 0.6151 | **0.1908** | 3.57% | 0.1515 |
+| p-diverged-E_2026-09-14 | packet_diverged @31fb65f | 0.7620 | 0.5936 | **0.1684** | 4.50% | 0.1277 |
+| p-no-console-A_2026-09-14 | packet_no_console_windows @6174324 | 0.6908 | 0.5238 | **0.1670** | 1.25% | 0.1593 |
+| p-stick-build-E_2026-09-14 | packet_stick_build @4085f2f | 0.7599 | 0.6028 | **0.1571** | 3.65% | 0.0977 |
+| p-leave-A_2026-09-14 | packet_leave_window @b9b4cd1 | 0.7657 | 0.6127 | **0.1529** | 0.44% | 0.1112 |
+| p-leave-read2-B_2026-09-14 | packet_leave_window @6d89e2d | 0.6941 | 0.5559 | **0.1382** | 1.72% | 0.1160 |
+| p-diverged-read2-C_2026-09-14 | packet_diverged @5e21844 | 0.7501 | 0.6138 | **0.1363** | 1.59% | 0.1060 |
+| p-stick-A_2026-09-14 | packet_stick_module @f93f42e | 0.7048 | 0.5708 | **0.1340** | 1.54% | — |
+| p-harness-read-B_2026-09-15 | packet_harness_and_lib @faaaa7b | 0.6722 | 0.5392 | **0.1330** | 0.42% | 0.1292 |
+| p-stick-preflight-B_2026-09-14 | packet_stick_preflight_read @6174324 | 0.7493 | 0.6174 | **0.1319** | 0.29% | 0.0965 |
+| p-diverged-A_2026-09-14 | packet_diverged @31fb65f | 0.7519 | 0.6218 | **0.1302** | 3.47% | 0.1071 |
+| p-stick-build-A_2026-09-14 | packet_stick_build @4085f2f | 0.7362 | 0.6090 | **0.1272** | 3.46% | 0.0686 |
+| p-no-console-E_2026-09-14 | packet_no_console_windows @6174324 | 0.6482 | 0.5266 | **0.1216** | 3.58% | 0.1166 |
+| p-harness-E_2026-09-15 | packet_harness_and_lib @2782af4 | 0.5972 | 0.4757 | **0.1215** | 0.72% | 0.1142 |
+| p-stick-E_2026-09-14 | packet_stick_module @1346cb9 | 0.7016 | 0.5828 | **0.1188** | 0.47% | — |
+| p-diversity-c0-E_2026-09-15 | packet_diversity_c0 @cf0ea20 | 0.5896 | 0.4736 | **0.1160** | 0.55% | 0.1160 |
+| p-leave-E_2026-09-14 | packet_leave_window @b9b4cd1 | 0.6791 | 0.5632 | **0.1159** | 2.21% | 0.0904 |
+| p-leave-read-B_2026-09-14 | packet_leave_window @9bc063f | 0.6880 | 0.5781 | **0.1099** | 3.73% | 0.0816 |
+| p-diversity-c0-C_2026-09-15 | packet_diversity_c0 @cf0ea20 | 0.5087 | 0.4012 | **0.1075** | 0.82% | 0.1075 |
+| p-harness-A_2026-09-15 | packet_harness_and_lib @faaaa7b | 0.6502 | 0.5543 | **0.0959** | 0.49% | 0.0879 |
+| p-stick-preflight-C_2026-09-14 | packet_stick_preflight_read @6174324 | 0.7051 | 0.6273 | **0.0778** | 0.33% | 0.0542 |
+
+**What the numbers say, and what they do not decide:**
+- **Every one of the 21 hand-backs sits closer to its own packet than to the mean of the others** (Δ from 0.078 to
+  0.191).
+- **The provisional 0.10 lies below P2's Q1 (0.116)**, and near the sensitivity median (0.108). Here Δ is an
+  own-task versus other-task gap. The claim's briefed-versus-unbriefed gap is measured on the *same* task, so there
+  is no reason to expect it to be larger than this. **Setting the threshold is the chair's (8.1); these are its
+  inputs, not a ruling.**
+- **Reads do not score lower than non-read hand-backs.** The 7 reads (including stick-preflight B and C) have median
+  Δ **0.1330**; the other 14 have median Δ **0.1244**. The highest Δ of all is a contesting read (`p-diverged-read-C`).
+  This is the same picture as P1: the instrument sees how much of a packet a text engages, not whether it agrees.
+
+### 8.4 · What this does NOT establish
+
+- **Nothing about briefed against unbriefed panes.** Every text here was briefed. P2 is the scale, and P1 is
+  polarity on one packet.
+- **P1 is one packet, three texts, one encoder.** §8.3 fired by 0.048. I have no variance estimate for that margin:
+  the run is deterministic, so a re-run changes nothing, and nothing was resampled.
+- **The positive control is an encoder test only (R1).** It passing says nothing about the strip pipeline.
+- **The unstripped secondary was computed for P1, not for P2's rows.** R4's P2 score is the PRIMARY delta, and P2's
+  centroid secondary is stored per row in `results-c1.json`.
+- **Which version of the "other packets" to use was my pre-registered choice**, because R4 is silent on it. The
+  sensitivity column shows the alternative: the median moves 0.130 → 0.108 and the order is similar. The chair can
+  rule it either way without a re-run; both are computed.
+- **The scorer's stake, as the pre-registration states:** 4 of the 21 hand-backs are my own (p-diversity-c0-C,
+  p-diverged-read-C, p-diverged-read2-C, p-stick-preflight-C). They include the highest Δ and the lowest. The run is
+  mechanical, and **E has not re-run it yet.**
+- **Two of R4's seven reads could not be included**, because they have no packet in the set (listed above).
+- **Speed on D** was not recorded.

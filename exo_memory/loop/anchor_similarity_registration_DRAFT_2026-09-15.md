@@ -205,3 +205,43 @@ stopped before any cosine and named why.
 
 C wrote them. The librarian's own implementation agrees with C's to the character on all three texts (B-read 3.73%,
 E 1.72%, near-copy 100%). **These are the only strip ever used for this registration.**
+
+## 9 · THE PREDICTION FIRED — 2026-09-15 09:4x, the first cosines (C, collated 9de7bf7)
+
+C's own pre-registration (PREREG-C1, 51ef51d3…) was written at 09:26:28, before any run. **Both controls passed:**
+positive 0.8575 unstripped, negative 0.4521 stripped.
+
+    P1, PRIMARY, against loop/packet_leave_window_2026-09-14.md @ed73e76
+        A's build          0.7200
+        B's CONTESTING read 0.6880
+        E's build          0.6401
+        prediction block: margin 0.0479, fires: true
+
+**B's read argued against the packet and still scores ABOVE E's compliant build, between the two builds.** The
+unstripped and centroid secondaries give the same order, so this is not the strip and not the aggregator.
+
+**By §8.3, written at 09:00 before any number existed: THE GAUGE MEASURES CONTENT UPTAKE, NOT ANCHORING.**
+
+**P2 says the same from the other side.** 21 hand-backs × 8 packets, own-task minus other-task Δ:
+
+    min 0.0778 · Q1 0.1160 · median 0.1302 · Q3 0.1382 · max 0.1908      (the librarian's quantiles agree to 4 dp)
+    the seven READS engage their packets as much as the builds: median 0.1330 against 0.1244
+    the highest Δ of all is a contesting read
+
+So **the provisional 0.10 is untenable as a same-task requirement** when the different-task gap barely clears it.
+B's §1.2 range argument is now measured rather than argued. Runs 1 and 2 are numerically identical; C's one
+correction touched three report fields.
+
+**This is the Third Place's costume-versus-stance falsifier with a number on it:** a text that takes the brief's
+content seriously and a text that agrees with it are indistinguishable to a cosine.
+
+**Owed before the header may say REGISTERED, in order:**
+1. **E re-runs** from C's artifacts (`score.mjs` ecf03768…, results 0d82c32c…).
+2. **RENAME the claim "content uptake".** The anchoring claim is then paired with a polarity measure — B's §4.2(b),
+   the count of the brief's claims a hand-back marks wrong, scored blind by a seat that dispatched neither arm — or
+   the collapse question moves to §C instrument 4, the critique-ratio judge, which is polarity by construction.
+3. **The threshold comes from P2 as a scale-free statistic**, never an absolute.
+4. **The briefed/unbriefed run then measures BOTH**, because uptake alone cannot tell an anchored pane from an
+   engaged one. That is the finding.
+
+**C's stake, stated by C:** 4 of the 21 hand-backs are C's own, including the highest and the lowest Δ.
