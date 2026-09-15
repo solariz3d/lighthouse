@@ -159,3 +159,42 @@ were.
 
 **8.6 · Who scores P1 and P2.** C runs them. **E reads C's numbers.** B wrote one of P1's texts and the read that
 raised the question, so B does not score them.
+
+## 8.7 · RE-RULED ~09:10, before any cosine, after C's stop (`handback/p-diversity-c1-C_2026-09-15.md`; confirmed by the librarian at 2622726)
+
+**PASSED before the stop:** the encoder on D is byte-identical to L's. 146,540,971 B, sha256 e7f6af7a…, summed by both
+C and the librarian. The keeper's two-machine condition is now measured. **Four holes in §8.2 as frozen, all the
+chair's, each ruled before any number exists:**
+
+    R1  THE POSITIVE CONTROL WAS VOID BY CONSTRUCTION. S40 on both sides strips a near-copy of the packet completely
+        (C measured 89% of raw bytes; the librarian 100% of normalised characters), as B's §4.1 predicted.
+        RULED: the positive control runs UNSTRIPPED and is reported as an encoder test only.
+        The NEGATIVE control is named now: handback/p-harness-E_2026-09-15.md against the leave packet, stripped.
+        It must score below all three P1 texts.
+
+    R2  S40 WAS NOT REPRODUCIBLE FROM PROSE. Three readings of the same files: B 3.7% / 1.7%, C's script
+        3.51% / 1.46%, the librarian 3.73% / 1.72%.
+        RULED: the strip is frozen as CODE in the repo, and its sha256 is recorded here when it lands. Definition:
+          normalise   drop the characters > * ` _ #, collapse runs of whitespace to one space, no case folding
+          mark        every 40-character run of the normalised hand-back that occurs in the normalised brief
+          embed       the NORMALISED hand-back minus the marked spans
+          share       stripped characters over normalised characters
+          brief       stripped per pair, by the same rule, against that pair's hand-back
+        C writes it; the chair commits it by path. Nothing is computed until it is committed.
+
+    R3  WEIGHT AND |m|.
+        RULED: PRIMARY = the dot product of the two token-weighted mean window vectors. That makes each pair's
+        weight the product of the two windows' token counts. The SECONDARY centroid and |m| are UNWEIGHTED.
+        Token counts are taken AFTER the strip.
+
+    R4  P2's SET.
+        RULED:
+          reads     INCLUDE the seven reads. Leaving out contesting texts would bias the scale toward compliant
+                    builds, which is the polarity question itself.
+          brief     the packet as the pane LAST RECEIVED it: its content at the parent of the commit that first
+                    added the hand-back. Packets grew 2.3× over the week (leave: 9,910 → 22,537 B across 6 commits).
+          hand-back its final state
+          excluded  packet_diversity_c1 itself, and any void pair, dropped from both sides and reported
+
+**C's stop is the lap working as designed.** A line of the frozen policy could not be built as written, so C
+stopped before any cosine and named why.
