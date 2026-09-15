@@ -164,6 +164,30 @@ conflicts with §2.1–2.6, build this block.**
     librarian/2026-09-12.md:35, :47). The chair's 348,007,682 B was the rehearsal total. WRONG 107 is the
     librarian's, repeated by the chair.
 
+**2.8 · RULED ~00:40 on L, after A's hand-back** (`handback/p-leave-A_2026-09-14.md`; collated at c6134ab). **E is
+still building, so only what touches A's file alone is ruled now. The rest is HELD for the follow-up.**
+
+    R-1  THE WAITER'S CASE-c WAIT IS BOUNDED (A). As ruled at 9e29daf it was unbounded: a hung orphan, or a holder
+         whose image cannot be read, kept the waiter waiting forever while it held stick-waiter.lock. A relaunched
+         app's waiter then exits ALREADY_WAITING, and if the orphan finishes during the new session, the fallback
+         exports while that session's seats write. That is B's §8 through case c.
+         RULED: waitForLeaveCarry waits at most 660 s (LEAVE_EXPORT_TIMEOUT's 600 s plus a 60 s margin; the waiter's
+           own constant, with that sentence beside it). At the bound: no export, NOT DONE naming the holder pid in the
+           fallback notice and the status log; LEAVE_STARTED is left in place; the adoption check (D-9) runs before
+           returning. Add a test at the bound and a mutant that removes it.
+
+    HELD for P-LEAVE-2, the packet after this lap lands. Each changes a file both halves read, or is minor, and E is
+    mid-build (the keeper's HOLD):
+      (a) B's D-8 PID REUSE. A surviving LEAVE_RESULT from session 1 makes a hard-killed session 2 with the same pid
+          read case b and export nothing. Only a session start time can tell them apart: an `appStartedAt` field in
+          both files, written by the app.
+      (b) THE SEATS OUTLIVE A KILLED APP BY MINUTES. Measured from the stick's tail files after D's close
+          (librarian/2026-09-14.md, 00:24 entry): three export passes at 23:39, 23:40 and 23:41. So the fallback
+          (cases c and d) can save while orphaned seats still write. The fix needs the app to write its seat pids
+          where the waiter can read them.
+      (c) Minor: tasklist every 2 s during the case-c wait; a stick unplugged after the app died goes silent,
+          with no NOT DONE.
+
 ## 3 · THE SPLIT — neither of you edits the other's files
 
     ECHO    consonance/src-tauri/src/main.rs, sync_launch.rs, consonance/ui/* (+ tests)
