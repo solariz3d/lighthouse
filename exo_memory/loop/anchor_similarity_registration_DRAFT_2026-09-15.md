@@ -245,3 +245,77 @@ content seriously and a text that agrees with it are indistinguishable to a cosi
    engaged one. That is the finding.
 
 **C's stake, stated by C:** 4 of the 21 hand-backs are C's own, including the highest and the lowest Δ.
+
+## 8.8 · RULED ~11:5x, on D, after §9 and BEFORE E's re-run returns — the wording, the polarity measure, the threshold
+
+**Licence:** §8.1 says the pre-registration steps decide the claim's WORDING and THRESHOLD. They did, so these
+rulings are not §1's DEGENERATING clause. **Stated against myself:** the factor in R8c was chosen after P2's numbers
+were seen, as §8.1 allows. No briefed or unbriefed arm exists yet. **If E's re-run disagrees with C's P1 or P2, this
+section is re-ruled before anything is registered.**
+
+    R8a  THE CLAIM IS RENAMED. What cosine-to-brief measures is CONTENT UPTAKE. §1's "anchoring" claim is not a
+         cosine claim; it becomes the JOINT reading in R8d.
+
+    R8b  THE POLARITY MEASURE IS B's §4.2(b), NOT §C instrument 4. It is frozen with ONE REPAIR, because as B worded
+         it, it cannot be built for the unbriefed arm.
+         WHY NOT §C-4. The critique-ratio judge scores each turn 1–10 for how hard it pushes on the previous turn. It is
+           built for a sequence of turns, not a brief against a hand-back. Its own source says "same-weights judge,
+           so trust the trend, not the level", and a four-task, two-arm run is a comparison of LEVELS. 45/45 was a
+           failure of VERDICT on named claims, and B's form counts exactly that.
+         THE HOLE. "The count of the brief's claims the hand-back marks wrong or contested" assumes the pane saw the
+           brief. The unbriefed pane never did, so it scores 0 by construction, and the arm difference would be
+           manufactured.
+         FROZEN FORM:
+           claims    before ANY hand-back of the task is read, each scorer's shared claim list is fixed: the packet's
+                     checkable claims (a ruling, a figure, a path:line, a "this is built as X" statement), numbered,
+                     and committed by path with its sha. The list is written from the packet alone.
+           label     for each numbered claim and each hand-back: AFFIRMS (states or builds it as the packet does),
+                     CONTRADICTS (reaches a different conclusion on the same point, or says it is wrong or cannot be
+                     built, at a quotable line), or SILENT. A label other than SILENT cites the hand-back line.
+           score     polarity P = CONTRADICTS / (AFFIRMS + CONTRADICTS). If AFFIRMS + CONTRADICTS < 3, P is void for
+                     that hand-back and the void is reported.
+           blind     a script REDACTS pane letters, arm words, the packet's filename and every "§n" before the
+                     scorer sees the text. The redaction cannot be complete, because a briefed hand-back's structure
+                     follows its packet. So after labelling, each scorer writes its guess of the arm, and the guess
+                     rate is reported beside P.
+           scorers   TWO, labelling independently. Neither is the chair, B (author of the positive control), E
+                     (author of the negative control), or a seat in either arm of that task.
+           agreement per-label agreement on CONTRADICTS vs not, over every claim × hand-back cell. BELOW 0.70, the
+                     measure is reported DEAD AS AN EXACT COUNTER (the bidirectional-correction precedent,
+                     2026-08-16), not re-tuned until the scorers agree.
+           controls  against loop/packet_leave_window_2026-09-14.md @ed73e76, scored blind in the same batch as the
+                     arms:
+                       POSITIVE  handback/p-leave-read-B_2026-09-14.md (it contested §2 on three lines)
+                       NEGATIVE  handback/p-leave-E_2026-09-14.md (it built §2 as ruled)
+                     If P(positive) is not greater than P(negative) for BOTH scorers: POLARITY INSTRUMENT FAILED, and
+                     no arm result is reported.
+
+    R8c  THE THRESHOLD IS SCALE-FREE (B's option (a)) AND SET FROM P2. It replaces the provisional 0.10.
+         per task  r = (U_briefed − U_unbriefed) / (U_pos − U_neg). U is the §8.2/§8.7 PRIMARY. U_pos is the
+                   packet with its first "## " section removed, against the packet, UNSTRIPPED (§8.7 R1). U_neg is
+                   handback/p-harness-E_2026-09-15.md against the packet, stripped.
+         the bar   r ≥ 0.5 × m. For each of P2's 21 hand-backs, m_i = Δ_i / (U_pos − U_neg), computed for that
+                   hand-back's own packet as §8.7 R4 defines it, with the same two controls. m is the median of the
+                   m_i.
+                   One exception: for packet_harness_and_lib, whose hand-back set contains p-harness-E, U_neg is
+                   handback/p-leave-E_2026-09-14.md instead.
+                   m is computed by the P2 scorer and committed BEFORE any arm runs.
+         why half  Δ is the WHOLE own-task-over-other-task signal. An unbriefed pane on the same task with the same
+                   cited paths should already hold most of it, so requiring anchoring to equal all of it would build
+                   the null in. Half is a round factor named before any arm exists. It has no noise estimate behind
+                   it, because no briefed-vs-briefed replicate exists, and that is said here rather than implied away.
+         overlap   §8.4 stands with r in place of the raw difference: the mean r is below the bar, OR r ≤ 0 on 2 or
+                   more of the 4 tasks.
+
+    R8d  WHAT THE RUN THEN CLAIMS, as four registered outcomes, read per task and then by majority of tasks:
+           uptake ≥ bar  AND  P_briefed < P_unbriefed   ANCHORING: the brief is taken up AND contradicted less
+           uptake ≥ bar  AND  P_briefed ≥ P_unbriefed   ENGAGEMENT: taken up, verdict unmoved. Not collapse.
+           uptake < bar  AND  P_briefed < P_unbriefed   DEFERENCE WITHOUT UPTAKE: the verdict moves and the
+                                                         content does not. It is named because a cosine could never
+                                                         see it.
+           uptake < bar  AND  P_briefed ≥ P_unbriefed   NULL for this instrument on this design (§8.4 scope)
+         "By majority" needs 3 of 4 tasks in one cell. Otherwise the result is MIXED and reported as the four cells.
+         Only the first outcome is what §1 called anchoring. Only the first and third bear on 45/45.
+
+**Not ruled here (owed next, §8.9):** the run design from §4 with B's §5 fixes, the task set, and the seat
+assignment.
