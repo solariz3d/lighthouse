@@ -1,5 +1,7 @@
 # P-DIVERGED · ALPHA — the take, the grown seat that is not a fork, and the three debts. Built red-first; no §5 stop
 
+## RESUMED ON D, 08:47–09:40 — step 3 done: see §4. Steps 1–2 re-run by me on D: tail-carry 129/0, stick-apply 27/0 (files clean at HEAD 111c49f). One file changed on D: dev/tail-carry.mutants.js (one anchor re-pointed, §4), uncommitted.
+
 ## RESUME — paused 07:55 on L at the keeper's word ("pause your work to be picked up on desktop")
 
 **Built and green; one measurement is owed.** The code, the tests and this hand-back are complete. Waking on D:
@@ -118,17 +120,38 @@ row): an unknown --take-stick exits 2 with no handshake.
     node consonance/tools/state-manifest.test.js        25 passed, 0 failed
     node consonance/tools/state-sync.test.js            75 passed, 0 failed
     node dev/stick-waiter.test.js                       41 passed, 0 failed
-    node consonance/tools/js-suite.js                   NOT RUN this lap (stopped for the machine transfer, §RESUME)
+    node consonance/tools/js-suite.js                   RUN ON D, 09:36, after the mutation run (no mutant copy in dev/):
+                                                        89 green · 6 failed · 0 crashed · 0 silent · 1 canary (of 96).
+                                                        All five of mine ok inside it (tail-carry, stick-apply, stick-waiter,
+                                                        place-conversations, state-manifest). The six failed:
+                                                        actors.evidence, carrier-drift, forget-rate, portable-paths
+                                                        (the same four as L), plus two new on D, neither mine:
+                                                        gen-consumer ("STAYS_PRIVATE names exo_memory/review, which is not
+                                                        there" — that directory was untracked on L and did not travel) and
+                                                        dev/shell/hooks/userprompt_pulse.test.js (5 pulse-hook cases).
+                                                        portable-paths' output names none of dev/tail-carry*, stick-*,
+                                                        place-conversations*.
 
-    node dev/tail-carry.mutants.js                      INCOMPLETE — STOPPED at 07:54 for the keeper's transfer to D:
-                                                        62 killed · 0 survived · 0 not applied, of 90. Pre-flight was
-                                                        green. **The 28 not scored include ALL 21 NEW mutants below**:
-                                                        the harness runs them after the 69 standing ones. So nothing in
-                                                        this lap's code is mutation-measured yet. The 62 are standing
-                                                        mutants, re-killed against the changed tool.
-                                                        Leftovers removed by hand after the stop
-                                                        (dev/.tail-carry.mutant-29472.js, dev/.tail-carry.mutants.lock);
-                                                        `node dev/tail-carry.test.js` then 129 / 0 on the tracked file.
+    node dev/tail-carry.mutants.js                      RUN ON D to completion, 08:47–09:33 (the L run was stopped at 62/90):
+                                                        **89 killed · 0 survived · 1 NOT APPLIED · 90 total.** Pre-flight
+                                                        green. **All 21 new mutants killed.**
+                                                        THE ONE NOT APPLIED IS MINE TO OWN: the standing mutant "an
+                                                        ALREADY_APPLIED seat is settled without re-verifying the file".
+                                                        Its anchor was the settle check `const ok = size === pend.toOffset
+                                                        && full === pend.fullSha;`, and D-1 rewrote that exact line to
+                                                        cover APPLIED_AND_GREW. So from my build until this run, the
+                                                        re-verify had no measured guard. L's 62/90 never reached it.
+                                                        Fixed: re-anchored in dev/tail-carry.mutants.js to the new line,
+                                                        same replacement (`const ok = true;`), and scored alone with the
+                                                        harness's own mechanism (copy in dev/, TAIL_CARRY_UNDER_TEST, green
+                                                        pre-flight, copy removed, tracked source unchanged:
+                                                        scratchpad/one_mutant.js) → **killed** by "a file that changed
+                                                        between the plan and the apply is NOT settled…" and "P-DIVERGED
+                                                        D-1: a file whose carried span changed…". So: 90/90 killed, with
+                                                        one of them scored by a single-mutant re-run, not by the full
+                                                        harness pass. The full 90 have not been re-run end to end since
+                                                        the re-anchor.
+                                                        No leftovers: `ls -a dev | grep mutant-` → 0.
       (its own copy and green pre-flight; the 69 standing mutants plus 21 new)
       the 21 new: take without being named · INTERRUPTED named-for-take taken · the take appends without truncating
       (two futures concatenated) · the take keeps no attic copy · the attic copy not read back · the copy filed under
