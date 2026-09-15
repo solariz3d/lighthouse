@@ -583,3 +583,50 @@ The K6 line above is kept as the trace. REPLACED BY:
 
 Measured on those six strings plus two shas. **What the test does not cover:** a real sha made only of letters a–f
 survives. At 7 characters the chance is about 0.1%, so the fixture does not cover it.
+
+## 8.10.1 · GRAIN, RULED ~12:5x on D — a §8.1 pre-registration step, before step 0 (A's feasibility label, `handback/feasibility-label-A_2026-09-15.md`, landed at the commit before this one; re-derived by the librarian at 20c9d78)
+
+**A's answer: K2's P is not VOID.** A+C ≥ 31 under every reading A tried, and the label scheme applies as written.
+- The 81-claim list was sealed (6eec779d…, 12:41:31) before A opened B's read.
+- The librarian re-ran A's script and reproduced the whole table.
+- **But P swings more than 3x on one grain rule:**
+  - all 81 claims: P 0.271;
+  - the claims that §2.7 supersedes inside the same packet dropped: P 0.079;
+  - 10 of B's 13 CONTRADICTS sit on superseded lines.
+
+**Where it bites:** only the POLARITY CONTROLS. Under R8f an arm's packet is fixed at dispatch and never revised
+mid-task, so it holds no line overruled by a later line of itself. A control scored at a revised version (K1:
+p-leave-E @c59530a) does.
+
+**Direction, stated because it is the chair's ruling:** operative-text grain lowers the negative control's P,
+because E built §2.7's overrides. It also lowers the positive control's P when that control is scored at a revised
+version. P-leave-read-B is scored @ed73e76 (K1), which carries no override, so the positive control is unaffected.
+The ruling therefore widens the gap the control check requires. **It makes POLARITY INSTRUMENT FAILED less likely.**
+It is adopted anyway, for the reason below, and that effect is named so nobody reads the pass as more than it is.
+
+    G1  OPERATIVE TEXT. A claim list is written from the version's OPERATIVE text. A line that the same document
+        overrules is not a claim. The overruling ruling is the claim. Where a document says "X, amended by Y", Y
+        is listed, and X is not.
+        Why: a claim list is a list of what the brief ASKS at that version. A superseded line asks nothing, and
+        contradicting it is agreeing with the packet's own later text. That is R8f's like-for-like, applied inside
+        one document.
+
+    G2  LINE DRIFT. A path:line whose content is right and whose line number has drifted is SILENT, not CONTRADICTS.
+        A wrong line number with the right content is not a different conclusion on the same point.
+
+    G3  DERIVED FIRST. A ruling the hand-back reached before the packet ruled it is AFFIRMS, under K2's "independent
+        derivation", provided the hand-back's line states the derivation.
+
+    LIMIT, A's caveat, written in as a limit of the feasibility evidence:
+    - The pairing was favourable. 15 of A's 35 AFFIRMS land on §2.7, which is the chair's restatement of B's own
+      findings, so B affirms text it effectively wrote.
+    - B's read carries a line-by-line citation table that an ordinary hand-back will not.
+    - Without §2.7, A+C is 33.
+    - **Expect the arms' A+C nearer 32 than 48.** Even at that, no arm is expected VOID. That is an expectation from
+      one pairing, not a measurement of the arms.
+
+**Order unchanged:** step 0 (E's phase code, A's redact plus the arm-word list, the scorer diff to the librarian),
+then the step-0 shas here, then REGISTERED.
+
+**Written while E builds step 0.** It touches no line E builds from (R8e, §8.9 STEP 0, V1), and no seat was rung
+for it.
