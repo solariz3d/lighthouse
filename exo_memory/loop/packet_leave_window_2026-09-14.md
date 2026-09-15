@@ -278,3 +278,25 @@ re-checked by the chair at source:
 
 The running exe was built at 02:29, after 99649d8 landed at 01:58, so the next close with the stick in is the first
 real Leave.
+
+## 11 · THE FIRST REAL LEAVE — scored from disk, 2026-09-15 05:12
+
+The keeper closed with the stick in at 05:12:24. Scored by the librarian (`librarian/2026-09-14.md`, 05:15 entry,
+2e35fff). The chair read the persist.log rows itself:
+
+    1789470744 LEAVE SEATS 7 killed, 0 still running after 212 ms
+    1789470744 LEAVE SAVING to D:\consonance-L-20260911
+    1789470754 LEAVE DONE code=0 — saved                   (10 s; 12,053,526 B over seven tails, the librarian's sum)
+    1789470756 LEAVE CLOSE — the keeper closed Consonance from the Leave screen
+
+The relaunch rehearsal was quiet: verify 0, import 0, export 0. All seven seats RESUMED.
+
+| falsifier | result | how it was checked |
+|---|---|---|
+| F1 | did not fire | 7 of 7 range-hashes of the local file over [offset, toOffset) equal the ledger's tailSha, and the first bytes past toOffset are the relaunch's bridge-session line (the librarian) |
+| F2 | did not fire | one ledger write, with every pending.at = 11:12:24.229Z; the old waiter stood down (its status log is untouched since 02:28) |
+| F3 | NOT SCORED | the chair's hidden watch ran 01:58–03:58 and ended before this close. The keeper's eyes are the only witness |
+| F4 | NOT EXERCISED | no relaunch during the Leave |
+
+**The first save Consonance made itself went DONE on its first real run.** The ledger repair (§10) held through it:
+`--verify-set` code 0 afterwards.
