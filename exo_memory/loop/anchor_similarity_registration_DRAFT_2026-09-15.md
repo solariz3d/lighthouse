@@ -566,3 +566,20 @@ They did not cancel, and the chair's design contained all three.
 2. A's feasibility label.
 3. Step 0's instruments land with their shas: phase (E), redact plus the arm-word list (A), and the scorer diff.
 4. REGISTERED.
+
+**8.10 K6 CORRECTED ~12:5x, by the chair, before any seat read it.** The sha pattern above was run with `node -e`
+before ringing, and it FAILED in two directions:
+- **It missed a full sha256.** The 64-character model hash survived, because {7,40} and \b cannot both hold on 64
+  characters.
+- **It ate English words made only of the letters a–f** ("defaced").
+
+The K6 line above is kept as the trace. REPLACED BY:
+
+          shas       /\b(?=[0-9a-f]*[a-f])(?=[0-9a-f]*[0-9])[0-9a-f]{7,64}\b/i. A match needs at least one letter a–f
+                     AND at least one digit. Abbreviated shas written as "<hex>…<hex>" are removed whole, by
+                     /\b[0-9a-f]{4,}…[0-9a-f]{4,}\b/i.
+          fixture    adds: "e7f6af7a…6509" and the full 64-character model sha are removed; "defaced", "effaced",
+                     "348026190" and "1757000000" survive.
+
+Measured on those six strings plus two shas. **What the test does not cover:** a real sha made only of letters a–f
+survives. At 7 characters the chance is about 0.1%, so the fixture does not cover it.
