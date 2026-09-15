@@ -384,3 +384,94 @@ test run on it. No reads-versus-builds claim is made from P2.
 
 **Not ruled here, owed next (§8.9):** the run design, the task set, the seat assignment, and who computes m under
 R8e/R8f.
+
+## 8.9 · THE RUN, RULED ~12:2x on D — design, tasks, seats, who computes what, in the order it happens
+
+**Closing the librarian's gap in R8f (a326b5d).** A P2 row whose parent holds NO other packet has no other-mean and
+no m_i. It is left out of m's median and reported. C's sensitivity column already met this case for p-stick-A and
+p-stick-E, so m is expected over 19 rows, not 21.
+
+**A defect in R8b's wording, the chair's, clarified before any list exists:** "each scorer's shared claim list" is
+contradictory. There is ONE shared list per task, and agreement is computed on it (step 5).
+
+**What the spawn code makes possible**, read at `main.rs:3272-3300`:
+- A SIBLING wakes into the room.
+- A FRESH pane wakes into an empty managed directory. It has no CLAUDE.md and no board mount. It does have the user's
+  global shell and stock permissions, so it asks before tool use.
+- Neither can be spawned by the chair. There is no chair verb for it. **Every spawn below is the keeper's hands.**
+
+    STEP 0  INSTRUMENTS LAND FIRST, each as code with its sha256 recorded here, before any m and any arm:
+            phase     dev/diversity/phase-window.js + test (R8e). E writes it; E's phase.mjs is the prior art.
+                      E's §5.2 table must reproduce from it at all six phases. The librarian re-derives.
+            redact    dev/diversity/redact.js + test (R8b blind). A writes it. It removes pane letters, arm words,
+                      the packet filename, every "§n", and commit shas; on a fixture it must leave nothing matching
+                      /\b[A-Z]\b pane|§\d|packet_|[0-9a-f]{7,40}/.
+            scorer    score.mjs gains R8e's phase mean, and nothing else. C's run-2 scorer is the base; the diff
+                      is reviewed by the librarian before use.
+
+    STEP 1  m, COMPUTED BEFORE ANY TASK EXISTS. E computes m with the step-0 code under R8c/R8e/R8f and commits
+            the per-row table. The librarian re-derives the median.
+            Stake: E wrote p-leave-E and p-harness-E, which are U_neg texts. C wrote 4 of the P2 rows. The
+            computation is deterministic and re-derived, and that is the whole defence.
+
+    STEP 2  THE TASK SET, fixed and committed before any arm. Four tasks and two alternates. Each task:
+            - is read-only (no build lands from an arm);
+            - carries a keeper quote on disk that states the ask;
+            - is absent from every pane map and live edge (grep committed beside the list);
+            - is not the subject of any P2 packet.
+            The librarian maps the candidates from the open queue; the chair picks and states why. For each task
+            the committed list holds the keeper quote and the cited paths the unbriefed arm will receive. It does
+            NOT hold the packet.
+
+    STEP 3  PER TASK, IN THIS ORDER:
+            a. The chair writes the packet in ITS SCRATCHPAD, never the repo, and commits only its sha256 in a
+               sealed row. The librarian checks its length against the chair's last ten packets.
+            b. The keeper spawns two NEW siblings for this task: the room, no map, no capture tail. The letters
+               are recorded. Both panes' model is recorded, and the task is void if the models differ.
+            c. Board QUIET. The UNBRIEFED sibling gets the keeper quote and the cited paths, verbatim from step 2,
+               with the hand-back path. Its hand-back is committed.
+            d. Its transcript JSONL is grepped for the packet's sealed first distinctive line and for the word
+               "packet_". A hit voids the task.
+            e. The packet is committed at its sealed sha. Only then does the BRIEFED sibling get it. Its hand-back
+               is committed.
+            f. R8f holds: no re-rule to either arm. A §6 stop ends that arm where it stands.
+            g. Both siblings are closed. Neither is used on another task.
+            Which sibling is briefed is decided by the arm order, since the unbriefed arm runs first. Nothing in a
+            lap row or board line names an arm. The mapping lives in a sealed file whose sha is committed, and its
+            content is committed only after step 5's labels.
+
+    STEP 4  UPTAKE. E computes U for both arms and both controls per task with the step-0 scorer, then r, then the
+            sign guard. The librarian re-derives one task in full.
+
+    STEP 5  POLARITY (R8b). SCORERS: TWO FRESH panes, spawned once by the keeper for the whole run. They have no
+            room, no board and no map, so they are blind by construction as far as the machine allows. They are
+            not the chair, not B or E, and not an arm seat.
+            a. Per task, fresh scorer 1 writes the numbered claim list from the committed packet ALONE. Fresh scorer
+               2 checks the list for missed claims before either reads a hand-back. The list is committed.
+            b. Both scorers get the redacted texts (step 0) in a scratch folder under neutral names, with the two
+               control texts mixed in. Each labels independently and commits its labels, then its arm guesses.
+            c. Only then is the sealed arm mapping from step 3 committed. P, agreement, the guess rate and the
+               controls are computed by the librarian.
+
+    STEP 6  READ. B reads the whole run before any outcome is reported. B wrote the positive control, and B scores
+            nothing.
+
+**The chair's stake, stated here before any task is picked.** The chair wrote every packet this room has ever
+dispatched. ANCHORING and DEFERENCE WITHOUT UPTAKE both indict the chair's briefs, so the chair's pull is toward
+ENGAGEMENT or NULL. That is why the chair computes no number, labels nothing and picks tasks from the librarian's
+map rather than its own memory.
+
+**What this design cannot see:**
+- A fresh pane still loads the user's global hooks. That is not nothing, and whatever they inject is the same for
+  both scorers.
+- A new sibling still wakes into BOOT, which is a brief of its own. It is the SAME for both arms, so it cancels in r
+  and not in the level.
+- The unbriefed arm's cited paths are chosen by the chair. The list is fixed in step 2, before the packet is
+  written, and that is the only defence.
+- Four tasks. Power is low, and a NULL here is scoped by §8.4 to this instrument on this design.
+
+**Before the header may say REGISTERED:**
+1. B reads §8.8, §8.8.1 and §8.9 as a non-author.
+2. The chair re-rules whatever B finds.
+3. Step 0's three shas are recorded here.
+Steps 1–6 run only after that.
