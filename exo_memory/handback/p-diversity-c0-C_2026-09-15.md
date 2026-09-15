@@ -185,3 +185,116 @@ Every model above fits. **D's hardware was not read.**
 - ONNX Runtime Node platform table: https://github.com/microsoft/onnxruntime/blob/main/js/node/README.md
 - fastembed-js: https://github.com/Anush008/fastembed-js · node-llama-cpp embedding guide: https://github.com/withcatai/node-llama-cpp/blob/master/docs/guide/embedding.md
 - Model cards: https://huggingface.co/nomic-ai/nomic-embed-text-v1.5 · https://huggingface.co/Alibaba-NLP/gte-base-en-v1.5 · https://huggingface.co/onnx-community/Qwen3-Embedding-0.6B-ONNX · https://huggingface.co/onnx-community/embeddinggemma-300m-ONNX · https://huggingface.co/Xenova/bge-large-en-v1.5 · https://huggingface.co/BAAI/bge-large-en-v1.5 · https://huggingface.co/Xenova/bge-small-en-v1.5 · https://huggingface.co/Xenova/all-MiniLM-L6-v2
+
+
+---
+
+## 6 · THE TRIAL — run 2026-09-15 07:04–07:12 on L, at the keeper's approval (packet §5, 0d05435)
+
+**Result: nomic-embed-text-v1.5 FAILED the long-context check. The pre-registered fallback, `Alibaba-NLP/gte-base-en-v1.5`, PASSED all three criteria. Both ran fully offline with 0 network attempts.**
+
+**This supersedes §0's recommendation.** The new candidate is gte-base-en-v1.5 at q8. It is still not a repo
+dependency: by packet §5, that needs the trial passed **and** the keeper's word again, and the model he approved a
+trial of was nomic.
+
+### 6.1 · Where it ran, and in what order
+
+- **Location:** all in `<scratchpad>/encoder-trial/`. The repo was not touched: `git status` shows only the four
+  untracked paths that predate this lap.
+- **Criteria before install.** `PREREGISTRATION.txt` (sha256 `adad03d2…`) was written at 07:04:52, before
+  `package.json` (07:05:06), before the model download (07:05:41), and before the first run (07:06:59). Its hash is
+  unchanged after the runs.
+- **Install.** `npm install --save-exact @huggingface/transformers@4.2.0` took 9 s. Resolved version 4.2.0;
+  `node_modules` is **382 MB**.
+  - npm's allow-scripts policy **did not run** the install scripts of `onnxruntime-node@1.24.3`, `sharp@0.34.5` or
+    `protobufjs@7.6.6`. Inference worked without them.
+  - Nothing else was installed.
+- **Downloads.** One download per model, with the network on, via `download.mjs` into `encoder-trial/models`. **Every
+  measurement below was taken in a separate offline run.**
+
+### 6.2 · Offline, proven at the process
+
+- **Settings:** `env.allowRemoteModels = false`, with `env.localModelPath` and `env.cacheDir` pointed at the scratch
+  models folder.
+- **Network off:** a preload, `node --require ./block-net.cjs`, replaces every JS network entry point with a stub
+  that throws and counts: `fetch`, `http`/`https` `.request`/`.get`, `net.connect`/`createConnection`,
+  `tls.connect`, and `dns.lookup`/`resolve` (plus their promise forms).
+- **Positive control:** a `fetch` under the preload was blocked, and `NETWORK_ATTEMPTS=1` was printed.
+- **Both trial runs** loaded the model and embedded four documents with **`NETWORK_ATTEMPTS=0`**.
+- **Limit, named:** the machine's network adapter was not disabled, because other panes run on this machine. Native
+  code opening a socket outside Node's JS modules would therefore not be counted. Nothing in onnxruntime's CPU path is
+  known to do that, and I did not verify that it does not.
+
+### 6.3 · Results
+
+- **Text:** `exo_memory/handback/p-leave-read-B_2026-09-14.md`, 16,050 B (the median of §2), read only.
+- **Tokens:** 5,278 by the model's own tokenizer, **3.04 B/token**, measured. This corrects §2's ~4 B/token estimate:
+  a median hand-back is ~5,300 tokens, so a 512-token encoder reads ~10% of it, not ~13%.
+- **Other documents,** for discrimination: `p-harness-read-B_2026-09-15.md` (3,865 tokens),
+  `p-stick-preflight-B_2026-09-14.md` (5,208), `p-no-console-E_2026-09-14.md` (4,432).
+- **Text policy:**
+  - nomic: prefix `clustering: `, mean pooling.
+  - gte: no prefix, CLS pooling, per its upstream `1_Pooling/config.json`.
+  - Both: the full sequence fed as one input with no truncation, L2-normalized, 768 dims.
+
+| | nomic-embed-text-v1.5 q8 | **gte-base-en-v1.5 q8** |
+|---|---|---|
+| K, the control inside 2,048 tokens: whole 1,800 against the mean of its two 900-token halves | 0.9668 | 0.9443 |
+| Whole against the mean of 1,800-token chunks, first 2,048 tokens | 0.9550 | 0.9073 |
+| … first 3,600 tokens | **0.8600** | 0.9325 |
+| … all 5,278 tokens (3 chunks) | **0.7616** | **0.9184** |
+| Criterion (2): whole ≥ K − 0.05 | **FAIL** (0.7616 < 0.9168) | **PASS** (0.9184 ≥ 0.8943) |
+| The document against another hand-back's chunk-mean (3 others) | 0.6943 · 0.7299 · 0.7055 | 0.6728 · 0.7494 · 0.7730 |
+| Criterion (3): own minus the nearest other ≥ 0.05 | **FAIL** (margin 0.0317) | **PASS** (margin 0.1454) |
+| Criterion (1): no runtime error on the whole document | pass | pass (warning in §6.4) |
+| Load, offline, fresh process | 0.277 s | 0.318 s |
+| Seconds per 16 KB whole document, median of 3 | 3.875 (3.717 · 3.875 · 4.641) | 4.037 (4.032 · 4.037 · 4.042) |
+| Seconds per 16 KB as 3 chunks | 1.794 | 1.735 |
+| File loaded | `onnx/model_quantized.onnx`, 137,296,292 B | `onnx/model_quantized.onnx`, 146,540,971 B |
+| sha256 of that file | `b4342336debaea79de872370664b0aaeb67dea4605513d00ee236ea871a81f27` | **`e7f6af7a9457d4fdd3af220c68e9a37325aad7c2d306bbc855fe0d019c326509`** |
+| sha256 of `tokenizer.json` | `d241a60d…9e5c66` | `cb374d6b…57a448` |
+
+**How to read the two columns:**
+- **nomic falls away past its 2,048 trained positions.** Whole-against-chunk-mean is 0.955 at 2,048 tokens, 0.860 at
+  3,600 and 0.762 at the full document. By then its embedding is barely closer to itself than to a different
+  hand-back (a margin of 0.03).
+- **gte stays level:** 0.907, 0.933, then 0.918 at full length, and its embedding of the document stands 0.145 above
+  the nearest other.
+- **gte's flat curve is also the control for my own check.** Had the long document simply been too varied for
+  whole-against-chunks to agree, gte would have dropped too. It did not, so nomic's drop is nomic's.
+- **What I cannot separate:** whether nomic's drop is extrapolation or its q8 quantization. fp32 was not run, because
+  it was not in the trial the keeper approved.
+
+**Stopped at the first pass, as pre-registered.** Qwen3-Embedding-0.6B was not downloaded or run.
+
+### 6.4 · What the trial found that the paper research did not
+
+- **Transformers.js 4.2.0 prints `Unknown model class "new", attempting to construct from base class.` for gte.** It
+  has no named class for gte's custom architecture and runs it through the base class. The outputs are the ones
+  above, and they discriminate. **But it is a fallback path in the library, not a supported one**, so a later
+  Transformers.js version could change it. That is one more reason to pin `4.2.0` exactly and freeze the file hash.
+- **Embedding a whole document is slower than chunking it:** ~4.0 s against ~1.7 s, since attention cost grows with
+  sequence length. That speed difference does not settle the method. Whether the instrument embeds whole or chunked
+  is a text-policy decision, and must be named before any number is scored (§4). gte passed with the whole
+  document; chunked output was only tested as a comparison.
+- **The download sizes matched the HF API figures in §3b** to the byte, for both models.
+
+### 6.5 · What this trial did NOT verify
+
+- **Anything beyond one ~16 KB document and three comparison documents.** The check shows that gte reads a document
+  of 5,278 tokens whole without degrading. It does **not** show that anchor similarity discriminates briefed from
+  unbriefed panes; that is §3's registration, still unwritten.
+- **Documents past 8,192 tokens.** The largest hand-back is 35,743 B, about 11,800 tokens at the measured rate, which
+  is beyond gte's context. The instrument needs a rule for those (chunk, or truncate) stated before scoring.
+- **nomic at fp32; Qwen3; gte at fp32.**
+- **The network adapter physically off** (§6.2 limit).
+- **D:** no install and no hash there. One byte-identical file on both machines remains a condition (§4).
+- **Whether the install scripts npm skipped matter on another machine.** They did not matter here.
+
+### 6.6 · For the keeper, in one line
+
+**nomic cannot read a whole hand-back well enough. gte-base-en-v1.5 (Apache-2.0, 147 MB, 768 dims, file sha256
+`e7f6af7a…`) can, offline, in about 4 s per hand-back on L.** Adopting it as the repo's encoder is his call.
+
+Scratch record, all in `<scratchpad>/encoder-trial/`: `PREREGISTRATION.txt`, `block-net.cjs`, `download.mjs`,
+`trial.mjs`, `run-nomic-q8.txt` (sha256 `a78b066e…`), `run-gte-q8.txt` (sha256 `8c3ff19a…`).

@@ -72,3 +72,30 @@ long hand-back properly. Nothing enters the repo. Approve the trial?"
 5. sha256 of the exact model file.
 
 **The model is not a repo dependency** until the trial passes and the keeper says so again.
+
+## 6 · THE TRIAL REVERSED THE PICK, AND THE KEEPER ADOPTED THE FALLBACK (07:2x)
+
+**C's trial** (hand-back §6; re-derived by the librarian at fa123e8). Its pass bars were written in
+PREREGISTRATION.txt, sha adad03d2…, at 07:04:52, before package.json (07:05:06) and before either run
+(07:06:59 and 07:07:56).
+- **nomic-embed-text-v1.5 FAILED** the long-context check. The cosine of the whole text to the chunk mean fell
+  0.955 → 0.860 → 0.7616 at 5,278 tokens, with a margin over the nearest other text of 0.0317.
+- **gte-base-en-v1.5, quantized q8 (C's pre-named fallback), PASSED:** 0.9184, margin 0.1454.
+- Both ran offline, with NETWORK_ATTEMPTS=0 under a counting preload.
+- gte's model file is 146,540,971 B, sha256 `e7f6af7a9457d4fdd3af220c68e9a37325aad7c2d306bbc855fe0d019c326509`.
+- The measured rate is 3.04 B/token, so a 512-token encoder reads about 10% of a median hand-back.
+
+**Asked:** "Adopt gte-base-en-v1.5 (via @huggingface/transformers 4.2.0, pinned) as the room's embedding encoder?
+That's the repo's first npm dependency plus a 147 MB model file carried byte-identical to both machines. If yes, the
+anchor-similarity registration freezes the version, the model hash and the text rules before any pane computes a
+number." **The keeper, verbatim: "Adopt gte (Recommended)".**
+
+**What the registration must freeze before any number is computed:**
+- `@huggingface/transformers` pinned at 4.2.0. It runs gte through a base-class fallback ("Unknown model class new"),
+  so a version change can change the numbers.
+- The model file's sha256, as above.
+- The text policy: no prefix, CLS pooling, L2 normalisation, whole document, and a written rule for texts longer
+  than 8,192 tokens (the largest hand-back is ~11,800).
+
+**Where the model lives:** A's call, as a `state-manifest.json` row, byte-identical on both machines.
+**The 0.627/0.441 pair is struck as a threshold for this encoder.**
