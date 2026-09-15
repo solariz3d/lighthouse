@@ -528,6 +528,52 @@ test('P-LEAVE case c: a holder whose image cannot be told is waited on as live �
   assert.strictEqual(exists(w, W.LEAVE_STARTED), true, 'not acted on, so not removed');
 });
 
+test('P-LEAVE §2.8 R-1: the case-c wait is bounded at 660 s — LEAVE_EXPORT_TIMEOUT\'s 600 s plus a 60 s margin', () => {
+  assert.strictEqual(W.LEAVE_CARRY_WAIT_MS, 660 * 1000);
+});
+
+test('P-LEAVE §2.8 R-1: AT THE BOUND — no export, NOT DONE naming the holder pid in the notice and the log, LEAVE_STARTED kept, adoption checked', () => {
+  const v = stickVolume();
+  // a holder that never lets go; the injected clock moves 1 s per reading, so a 10 s bound is reached in a few polls
+  const w = world({ roots: [v], life: [null], lives: { 5100: ['node'] }, inject: { leaveCarryWaitMs: 10 * 1000 } });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  plantLedgerLock(v, { pid: 5100 });
+  let adoptionChecked = false;
+  w.inject.pidsOf = () => { adoptionChecked = true; return []; };
+  const r = go(w);
+  assert.deepStrictEqual([r.outcome, w.exports.length], ['LEAVE_CARRY_TIMEOUT', 0], 'never exports past a live holder');
+  assert.strictEqual(w.notices.length, 1, 'one notice: NOT DONE (nothing was saved, so no "don\'t pull it yet")');
+  assert.match(w.notices[0].title, /fallback/i);
+  assert.match(w.notices[0].body, /^NOT DONE/);
+  assert.match(w.notices[0].body, /pid 5100/);
+  assert.match(w.status(), /NOT DONE/);
+  assert.match(w.status(), /pid 5100/);
+  assert.match(w.status(), /@@END \d+ NOT DONE LEAVE_CARRY_TIMEOUT/);
+  assert.strictEqual(exists(w, W.LEAVE_STARTED), true, 'LEAVE_STARTED is left in place');
+  assert.strictEqual(adoptionChecked, true, 'the adoption check (D-9) runs before returning');
+  assert.ok(w.sleeps < 50, `stopped at the bound, not at the poll budget (slept ${w.sleeps})`);
+});
+
+test('P-LEAVE §2.8 R-1: at the bound, a relaunched app is adopted and watched', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v], life: [null], lives: { 5100: ['node'], 4999: ['consonance', null] }, inject: { leaveCarryWaitMs: 10 * 1000 } });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  plantLedgerLock(v, { pid: 5100 });
+  let round = 0;
+  w.inject.pidsOf = () => (++round === 1 ? [4999] : []);
+  go(w);
+  assert.strictEqual(round, 2, 'adopted 4999, and checked again at its exit');
+});
+
+test('P-LEAVE §2.8 R-1: a holder that lets go BEFORE the bound is still waited out and exported after', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v], life: [null], lives: { 5100: ['node', 'node', null] }, inject: { leaveCarryWaitMs: 60 * 1000 } });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  plantLedgerLock(v, { pid: 5100 });
+  const r = go(w);
+  assert.deepStrictEqual([r.outcome, w.exports.length], ['CARRIED', 1]);
+});
+
 test('P-LEAVE case c: a lock holder that is a live pid under ANOTHER image is not the orphan — export at once', () => {
   const v = stickVolume();
   const w = world({ roots: [v], lives: { 5100: ['explorer'] } });

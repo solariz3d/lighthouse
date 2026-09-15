@@ -21,6 +21,11 @@
        held the seats for the stick. -->
   <div id="stick-setup" hidden><div class="stick-body"></div></div>
 
+  <!-- P-LEAVE · THE CLOSE WINDOW (leave.js). ABOVE everything, the intro included: the seats are already ended when it
+       shows, and it must be what the keeper sees until it says the stick can come out. Hidden unless a close found a
+       stick. -->
+  <div id="leave" hidden><div class="stick-body"></div></div>
+
   <div id="topbar">
     <span class="brandmini" title="Consonance — instances, in concert">
       <svg viewBox="0 0 64 64" width="22" height="22" aria-hidden="true">
@@ -385,6 +390,8 @@
   <!-- stick.js AFTER term.js: it calls inv, escapeHtml, setStatus and restoreKeptPanes, and defines no
        top-level binding (one function scope), so it cannot collide with anything in the shared scope. -->
   <script src="stick.js"></script>
+  <!-- leave.js AFTER term.js for the same reason: it calls inv and escapeHtml, in one function scope. -->
+  <script src="leave.js"></script>
   <!-- chain-indicator.js LAST, and for the same reason the two above are ordered. It reads term.js's
        `paneLetters` to name a pane by its letter, and `typeof` on a `let` still in its temporal dead
        zone THROWS rather than returning "undefined" — so the guard in that file only holds once

@@ -1032,3 +1032,14 @@ L058c **p-diverged-E** — the window's door for a fork: a DIVERGED row is offer
   rendered HTML. A test asserting only the "after" of a change passes on code with no change handler; assert before AND after.
 - **`deepStrictEqual` across a `vm` realm** fails on identical arrays (different prototypes); compare JSON.
 - **A §-named mechanism is a reading until measured** — `windowsHide` WAS enough; the flashing call was a different site.
+
+## 2026-09-15 ~01:30 · P-LEAVE (D063) E half built on L → `exo_memory/handback/p-leave-E_2026-09-14.md`
+The close window: seats killed, dropped and waited on through a PROCESS-LIST probe, then the stick save, DONE/NOT DONE,
+the launch cleanup as ruled. **The finding to carry:** sysinfo's `refresh_process_specifics` (`proc_info`) opens the
+pid, so an exited process still referenced by a handle (its killer, or a busy seat's orphaned bash) reads RUNNING
+forever: 38/38 never ended in 30 s while tasklist listed 0/38. `refresh_pids_specifics` (`proc_listed`) read 63/63 ended
+in 26.5–129.9 ms on L. The kill result was inverted 111/111. Bound 5 s. Harness `scratchpad/leave/teardown/` +
+`score.js`; rows `gen_leave_rows.js`; mutants `l059/mutate7.js`/`mutate8.js` 33/33. D-8 held (§2.8), not built.
+
+## 2026-09-15 ~01:45 · P-LEAVE §2.9 (c59530a) built → appendix of `exo_memory/handback/p-leave-E_2026-09-14.md`
+B2-1: an in-flight spawn count (enter_flight raises the count BEFORE reading LEAVE_PHASE; the Flight drop is the decrement; insert_pane releases it after the Panes insert, 10/10 sites); leave_run waits for it up to 10 s, then drains, and a count above zero is NOT DONE. B2-2: proc_listed lists the app's own pid in the same enumeration; absent means CANNOT TELL (alive in the wait, keep in the cleanup). 658/0/4; mutants 13/13, but Y6 SURVIVED first: **a test whose inputs are all the same failure cannot tell which guard held.**

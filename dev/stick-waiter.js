@@ -26,6 +26,8 @@
 //        c  stick-leave.started.json for THIS pid, no     -> the app died mid-save. WAIT while the stick's ledger.lock
 //           result                                          names a live holder (its orphan tail-carry, D-3), then
 //                                                            today's export with fallback notices; then remove it.
+//                                                            At most LEAVE_CARRY_WAIT_MS (660 s, §2.8 R-1): at the bound,
+//                                                            no export, NOT DONE naming the holder, the file kept.
 //        d  neither file for this pid                     -> today's path: no stick, quiet; a stick, the fallback save:
 //                                                            "don't pull it yet", tail-carry --export --json --apply,
 //                                                            then DONE / NOT DONE (AMBIGUOUS: NOT DONE, nothing exported).
@@ -88,6 +90,14 @@ function pidAnswers(pid) {
 }
 const LOCKED_RETRY_MS = 5000;
 const LOCKED_RETRY_FOR_MS = 60 * 1000;
+/**
+ * P-LEAVE §2.8 R-1: case c waits for the dead app's orphan tail-carry at most this long. It is LEAVE_EXPORT_TIMEOUT's
+ * 600 s (the app's own bound on that carry, main.rs) plus a 60 s margin: a carry still holding the ledger past the
+ * time the app itself would have given it is hung, not slow. Unbounded, a hung orphan (or a holder whose image cannot
+ * be read) kept this waiter waiting for ever while it held stick-waiter.lock — a relaunched app's waiter then exits
+ * ALREADY_WAITING, and if the orphan finished during the new session the fallback exported while its seats wrote.
+ */
+const LEAVE_CARRY_WAIT_MS = 660 * 1000;
 
 function sleepSync(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
 function readJson(p) { try { return JSON.parse(fs.readFileSync(p, 'utf8').replace(/^﻿/, '')); } catch (_) { return null; } }
@@ -249,7 +259,7 @@ function runWaiter(argv, inject) {
     exportCarry: null,
     notify,
     log: () => {},
-    pollMs: POLL_MS, lockedRetryMs: LOCKED_RETRY_MS, lockedRetryForMs: LOCKED_RETRY_FOR_MS,
+    pollMs: POLL_MS, lockedRetryMs: LOCKED_RETRY_MS, lockedRetryForMs: LOCKED_RETRY_FOR_MS, leaveCarryWaitMs: LEAVE_CARRY_WAIT_MS,
     maxPolls: Infinity,
   }, inject || {});
   const runExport = k.exportCarry || ((stick) => defaultExport(stick, k.tailCarryPath));
@@ -309,11 +319,18 @@ function runWaiter(argv, inject) {
         //     retrying is what keeps the two writers from both changing the ledger (F2 as re-worded).
         const waited = waitForLeaveCarry(leaveStarted, k, () => ++polls <= k.maxPolls);
         if (waited.gaveUp) return { code: 2, outcome: 'GAVE_UP', ...tally };
-        const find = findStick(k.volumeRoots());
-        const why = `Consonance stopped during its own save to the stick (pid ${app.pid}, started ${leaveStarted.at || 'at an unrecorded time'}), so this is the fallback save.`;
-        last = find.kind === 'none' ? { code: 0, outcome: 'NO_STICK' }
-          : exportWithNotice(find, o.data, k, runExport, tally, { why, waited: waited.lines });
-        removeLeave(leaveStartedPath, app);
+        if (waited.timedOut) {
+          // §2.8 R-1: the holder never let go within LEAVE_CARRY_WAIT_MS. No export — the ledger is still held, and a
+          // second writer is the thing D-3 exists to prevent. Say NOT DONE, naming the holder; leave LEAVE_STARTED in
+          // place (nothing was acted on); the adoption check below still runs before returning.
+          last = leaveCarryTimedOut(o.data, k, tally, app, leaveStarted, waited);
+        } else {
+          const find = findStick(k.volumeRoots());
+          const why = `Consonance stopped during its own save to the stick (pid ${app.pid}, started ${leaveStarted.at || 'at an unrecorded time'}), so this is the fallback save.`;
+          last = find.kind === 'none' ? { code: 0, outcome: 'NO_STICK' }
+            : exportWithNotice(find, o.data, k, runExport, tally, { why, waited: waited.lines });
+          removeLeave(leaveStartedPath, app);
+        }
       } else {
         // d · neither file for this pid: a hard kill before any Leave (or an app with no Leave). Today's path, unchanged
         //     except that its notices say they are the fallback. A LEAVE file naming a DIFFERENT pid is stale: ignored
@@ -357,18 +374,23 @@ function removeLeave(p, app) {
  * The lock is read in the stick the Leave named (LEAVE_STARTED.stick), or, lacking one, the stick found now.
  * Live means the pid answers (the kernel's word; no process started) AND it runs the image the lock names; "cannot
  * tell" the image counts as live, the safe direction. No lock, an unreadable one, or a dead holder: nothing to wait on.
- * `tick` spends the waiter's poll budget; returns { gaveUp } when it runs out, else { lines } for the status file.
+ * `tick` spends the waiter's poll budget; returns { gaveUp } when it runs out. §2.8 R-1: a holder still live
+ * `k.leaveCarryWaitMs` after the wait began returns { timedOut, holder, stick, waitedMs }. Otherwise { lines } for the
+ * status file.
  */
 function waitForLeaveCarry(leaveStarted, k, tick) {
   let stick = typeof leaveStarted.stick === 'string' && leaveStarted.stick ? leaveStarted.stick : null;
   if (!stick) { const f = findStick(k.volumeRoots()); stick = f.kind === 'one' ? f.folder : null; }
   if (!stick) return { lines: [] };
   const lockPath = path.join(stick, carry.LEDGER_DIR, carry.LOCK_NAME);
+  const began = k.now();
   let first = null, n = 0, last = null;
   for (;;) {
     const rec = readJson(lockPath);
     const live = !!rec && Number.isInteger(rec.pid) && k.pidAnswers(rec.pid) && carry.holderLive(rec, k.imageOf);
     if (!live) break;
+    const waitedMs = k.now() - began;
+    if (waitedMs >= k.leaveCarryWaitMs) return { timedOut: true, holder: rec, stick, waitedMs };
     if (!tick()) return { gaveUp: true };
     if (first === null) first = k.now();
     last = rec;
@@ -377,6 +399,29 @@ function waitForLeaveCarry(leaveStarted, k, tick) {
   }
   if (!n) return { lines: [] };
   return { lines: [`waited ${Math.round((k.now() - first) / 1000)} s for the close window's own carry (pid ${last.pid}, ${last.script || 'unknown script'}) to let go of the stick's ledger before saving`] };
+}
+
+/**
+ * §2.8 R-1, at the bound: nothing is saved. The status file and ONE fallback notice say NOT DONE and name the holder
+ * that never let go of the stick's ledger, so the keeper knows what to look at before unplugging.
+ */
+function leaveCarryTimedOut(dataDir, k, tally, app, leaveStarted, waited) {
+  const statusPath = path.join(dataDir, STATUS);
+  fs.writeFileSync(statusPath, '');
+  const say = (s) => { try { fs.appendFileSync(statusPath, `${s}\n`); } catch (_) {} };
+  const h = waited.holder || {};
+  const lines = [
+    `NOT DONE — the stick's ledger is still held by pid ${h.pid} (${h.script || 'unknown script'}, since ${h.at || 'an unrecorded time'}) after ${Math.round(waited.waitedMs / 1000)} s. Nothing was saved.`,
+    `Consonance stopped during its own save to the stick (pid ${app.pid}, started ${leaveStarted.at || 'at an unrecorded time'}), and that save never finished. This is the fallback, and it did not run over a live writer.`,
+    `The stick: ${waited.stick}. Do not unplug it while pid ${h.pid} is running; open Consonance again, which re-checks it.`,
+  ];
+  say('CONSONANCE CLOSED — the FALLBACK save did not run.');
+  say('');
+  for (const l of lines) say(l);
+  try { k.notify('Consonance — fallback save to the stick', lines.slice(0, 2).join('\n'), statusPath); tally.notices++; }
+  catch (e) { say(`(the notification could not be shown: ${e && e.message ? e.message : e} — nothing opens instead; this file is the record)`); }
+  say(`${END} 2 NOT DONE LEAVE_CARRY_TIMEOUT`);
+  return { code: 2, outcome: 'LEAVE_CARRY_TIMEOUT' };
 }
 
 function takeLock(p, k) {
@@ -499,4 +544,4 @@ if (require.main === module) {
   process.exit(runWaiter(argv).code);
 }
 
-module.exports = { runWaiter, runView, findStick, layoutAt, parseVolumeList, parseArgs, pidAnswers, toastXml, notify, TOAST_PS, APP_ID, TOAST_TAG, ICON, LOCK, STATUS, END, IMAGE_EVERY_POLLS, LEAVE_STARTED, LEAVE_RESULT };
+module.exports = { runWaiter, runView, findStick, layoutAt, parseVolumeList, parseArgs, pidAnswers, toastXml, notify, TOAST_PS, APP_ID, TOAST_TAG, ICON, LOCK, STATUS, END, IMAGE_EVERY_POLLS, LEAVE_STARTED, LEAVE_RESULT, LEAVE_CARRY_WAIT_MS };

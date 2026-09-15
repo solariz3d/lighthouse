@@ -192,3 +192,116 @@ that caught a resume. It does not: that fallback is gated on the `RESUME_REFUSED
 different. I had the finding half-written before reading the guard. **Class: a failure predicted from the shape of a caller, before
 reading the caller's condition.** It survives only as §2's "checked, and not a hole" and §6 item 4, which is the narrower case the fresh
 arm really opens.
+
+---
+
+# §8 · THIRD READ — E's §2.9 fixes for B2-1 and B2-2, before landing
+
+**B, machine L, 2026-09-15 ~01:45. HEAD `582fb8a`, working tree.** Narrow on purpose. I read `handback/p-leave-E_2026-09-14.md` §A.1
+and §A.2 against packet §2.9 (`c59530a`) and the tree: `sync_launch.rs:1336-1502` and `:1606-1654`; `main.rs:922-945`, `:995`, `:1095-1161`,
+`:1294`, the ten `insert_pane` sites, `:10440`, `:10488-10500` and `:10912-10947`.
+
+**The hold is over:** `.state-sync.mutants.lock` is absent and `git diff --stat -- consonance/tools/state-sync.js` is empty. So I ran:
+
+    cargo test --bin consonance -- --test-threads=1 leave    56 passed · 0 failed · 606 filtered out
+    cargo test --bin consonance -- --test-threads=1          658 passed · 0 failed · 4 ignored        (= E's A.4)
+    node dev/stick-waiter.test.js                            63 passed · 0 failed
+    node consonance/ui/leave.test.js                         9 passed · 0 failed
+
+No mutants re-run; E's 13/13 are E's.
+
+## 8.1 · VERDICT
+
+| | |
+|---|---|
+| **B2-1** (a seat in flight escapes the drain) | **CLOSED as ruled.** |
+| **B2-2** ("cannot tell" read as "ended") | **CLOSED as ruled.** |
+| **Does anything left let `leave_ending` say DONE while a seat writes?** | **Nothing reachable through the close's own paths.** Two narrow routes remain, both from before P-LEAVE and neither introduced by it (§8.4). **Neither blocks landing.** |
+| **E's named item 1:** a spawn still in flight past the 10 s bound | **Does not block.** It reads NOT DONE, never DONE (§8.5). |
+| **E's named item 2:** a LEAVE file with no pid, removed without asking the list | **Does not block.** It is reached only after no live waiter is found, and no waiter can act on a pid-less file (§8.5). |
+
+## 8.2 · B2-1, against §2.9 line by line
+
+| §2.9 requires | the tree | holds |
+|---|---|---|
+| increment FIRST, THEN read the phase; refuse and decrement if closing | `enter_flight`: `fetch_add` `sync_launch.rs:1410`, then `phase.load` `:1412`; the refusal returns with the `Flight` dropping, which is the decrement | yes |
+| a guard type holds the decrement, so no path skips it | `Flight`'s `Drop` is `fetch_sub` (`:1397-1401`) | yes |
+| decremented when the caller's insert completes | `insert_pane` (`main.rs:939-945`): take the flight, lock, insert, **drop the lock, then drop the flight** | yes |
+| every insert goes through it | 10 `insert_pane(` calls (`:2623, :3247, :3286, :3403, :6323, :6406, :7461, :7500, :7557, :8018`); `grep -n "panes\.0\.lock()\.unwrap()\.insert("` finds 0 raw inserts (pinned at `:15971`) | yes |
+| decremented when the spawn errors | every `?` and `return` in `spawn_claude_pane` after `:995` drops the local `flight`; the one construction carries it (`:1294`) | yes |
+| the phase is set first, then wait for zero, then drain | the phase is set by `compare_exchange` in `leave_close_requested` before the thread starts; `leave_run`'s first statement is `await_flights` (`:10915`), then the drain (`:10921`) | yes |
+| 10 s bound, named beside the teardown bound | `SPAWN_FLIGHT_POLLS` 100 × 100 ms (`:10440-10441`) | yes |
+| above zero at the bound is NOT DONE, naming the count; the export still runs | `in_flight` goes through `run_leave` (`:10947`) to `leave_ending` (`sync_launch.rs:1448-1454`); `done` requires an empty `why` (`:1501`) | yes |
+
+**The race argument holds.** Both atomics are `SeqCst`. If a spawn's phase read saw IDLE, its increment came before that read, and the read
+came before the close's `compare_exchange`. So the close's later `load` of the count sees that flight until `insert_pane` drops it, and
+`insert_pane` drops it only after the session is in the map and the lock is released. The drain then finds the session and kills it. A
+spawn whose phase read comes after the `compare_exchange` refuses.
+
+**The gap that would reopen it, checked:** a successful spawn whose session is dropped before `insert_pane`. At all ten sites the only
+statements between `spawn_claude_pane(…)?` and `insert_pane` are `start_tailer(…)` and, in `resume_pane`, `plog`/`row`. None of them is a
+`?` or a `return`. So no successful session reaches a drop without the insert.
+
+## 8.3 · B2-2, against §2.9
+
+| §2.9 requires | the tree | holds |
+|---|---|---|
+| the app's own pid in the SAME probe call | `refresh_pids_specifics(&[spid, own], …)`, one call (`main.rs:10493`) | yes |
+| own pid absent ⇒ the whole answer is CANNOT TELL | `listing_from` (`sync_launch.rs:1348-1351`) | yes |
+| in the wait, CANNOT TELL is alive (NOT DONE at the bound) | `seat_ended(_, CannotTell)` is `false` (`:1366`), so `await_seats` carries it to the bound (`:1378-1387`) | yes |
+| in the cleanup, remove nothing | waiter lock holder `CannotTell` ⇒ every file kept (`:1623`, `:1630-1632`); a file's pid `CannotTell` ⇒ that file kept (`:1645`) | yes |
+| a test with an injected empty list | `an_empty_process_list_is_cannot_tell` and the three around it are in the 56 above | yes |
+
+The cleanup calls the probe once per pid, so each call is its own enumeration. That is the case E's Y6 survivor exposed, and the test now
+fails only the waiter's pid. Each call carries its own control, so a failure in one call cannot be read as "gone" in another.
+
+## 8.4 · WHAT IS STILL LEFT THAT COULD SAY DONE WHILE A SEAT WRITES — named, neither blocks
+
+Both routes existed before P-LEAVE, both need a failure nothing in this lap makes likelier, and both are outside the close's own code:
+
+1. **A spawn that fails after its child is already running.** In `spawn_claude_pane`, `try_clone_reader()?` and `take_writer()?`
+   (`main.rs:1160-1161`) come after `spawn_command` (`:1095`). If either fails, the `Err` drops the child handle, the killer and the flight
+   together. A live `claude.exe` is then outside `Panes` and outside the count, so a close afterwards cannot see it. That needs a handle
+   duplication to fail on the master PTY. The same orphan happens today with no close involved.
+2. **An insert that replaces a live session under the same id.** `insert_pane`'s `map.insert(id, session)` (`:942`) drops whatever it
+   replaces, unkilled. `pty_reopen` (`:8015-8019`) does not check `contains_key` first. It is reached from the `↻` button, which only
+   appears on a pane that has exited (`term.js:85-98`). Two live processes under one session id also collide at the vendor ("already in
+   use"). Unchanged by this lap.
+
+**Neither blocks.** Each is a one-line hardening for P-LEAVE-2 if the chair wants it: kill the child on those two `?`s, and kill the
+replaced session in `insert_pane`.
+
+## 8.5 · E'S TWO NAMED ITEMS
+
+**Item 1 — a spawn still in flight at the 10 s bound. Does not block.**
+- **What happens:** the drain proceeds without that seat, it lands in `Panes` afterwards, and the Leave never kills it. **The Leave reads
+  NOT DONE** (`sync_launch.rs:1448-1454` → `:1501`) and names the count, not the seat. F1 is DONE-while-writing, and this cannot produce
+  DONE. What the seat writes afterwards is carried at the next close, and the next launch's rehearsal says the stick lacks that session.
+- **How much margin the bound has, measured:** `grep -o "confirm held after=[0-9]*ms" /c/Consonance/data/persist.log` gives 32 rows, min
+  1002, median 1002, max 1003 ms, so the 10 s bound is about ten times the confirm step. **That measures only the confirm loop.** The rest
+  of the flight (openpty, spawn, emulator and thread setup, `start_tailer`, the insert) is not logged, so a full-flight distribution is not
+  measured.
+- **Not verified:** what ends that seat when the app exits.
+
+**Item 2 — a LEAVE file with no pid, removed without asking the list. Does not block.**
+- **Only reached when no live waiter was found.** The per-file loop runs after the lock check has returned no reason to keep
+  (`sync_launch.rs:1612-1634`): no lock, or a holder that is Gone or not `node`. A live waiter holds `stick-waiter.lock` from `takeLock`
+  until its `finally`.
+- **No waiter can ever act on a pid-less file:** A matches by `rec.pid !== app.pid` first (`stick-waiter.js:361`).
+- **The app never writes one:** both writers put `"pid": app_pid` in (`run_leave`, `sync_launch.rs` STARTED and RESULT bodies).
+- **So such a file belongs to no live actor.** Asking the list about it would have no pid to ask about.
+- **One cosmetic note:** `read_to_string(&f).ok()` (`:1636-1641`) also maps an *unreadable* file to None, and its row then says "it names no
+  pid". The file may have named one. Nothing a waiter owns can be lost that way (the first bullet), but the reason text can be wrong.
+
+## 8.6 · NOT VERIFIED IN THIS READ
+
+- The race was not provoked in a running app. §8.2 is the argument plus E's source-order test (Y1) and the tests above.
+- A real `NtQuerySystemInformation` failure was not provoked; CANNOT TELL is exercised only through the injected empty list.
+- No mutants re-run.
+- Nothing on D. Nothing against the real stick. No close of the real app.
+
+## 8.7 · WRONG — mine
+
+**None filed this read.** One correction to my own §3 B2-1 shape (c): I wrote that draining twice "misses a spawn slower than the first
+wait". That is true, but it was the wrong comparison. §2.9's counter made the drain wait on the spawn itself, not on elapsed time, and that
+is why it closes the race where (c) could not. Recorded so (c) is not read later as having been a live alternative.

@@ -1303,6 +1303,356 @@ pub fn withheld_line(read_only: bool, verdict_why: &str) -> String {
     }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────────────────────────
+// P-LEAVE (D063) — THE CLOSE WINDOW: the app saves to the stick itself at close and says when it may be unplugged.
+// Packet `loop/packet_leave_window_2026-09-14.md` §2, with §2.7 (9e29daf) overriding where they conflict.
+//
+// Everything here is pure or takes its outside in: the probe, the sleep, the clock and the export are injected, so
+// every branch of step 2 and every ending of step 4 is a test and not a close of the real app.
+// ─────────────────────────────────────────────────────────────────────────────────────────────────
+
+/// §2.1: written by the APP after every seat has ended and before tail-carry starts; removed once the result exists.
+pub const LEAVE_STARTED: &str = "stick-leave.started.json";
+/// §2.1: written by the APP when the save ends however it ends. The WAITER removes it after acting on it (§2.7 D-4).
+pub const LEAVE_RESULT: &str = "stick-leave.result.json";
+/// The exit waiter's own lock in the data dir (A's `stick-waiter.js` LOCK). Read here only to leave its files alone.
+pub const WAITER_LOCK: &str = "stick-waiter.lock";
+
+/// An image name the way pidImage spells it (`tail-carry.js`): lower-case, ".exe" stripped. §2.7 D-7 compares on
+/// BOTH sides in this shape, so "consonance.exe" and "consonance" are one image.
+pub fn image_stem(name: &str) -> String {
+    let lower = name.to_ascii_lowercase();
+    lower.strip_suffix(".exe").map(str::to_string).unwrap_or(lower)
+}
+
+/// One seat as the Leave ends it: its pane, the pid kept at spawn (§2.7 D-1) and the image that pid ran then.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SeatProc {
+    pub pane: String,
+    pub pid: Option<u32>,
+    pub image: Option<String>,
+}
+
+/// What the process list says about one pid (§2.9 B2-2).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Listing {
+    Running(ProcInfo),
+    Gone,
+    /// The list could not be trusted: it does not even hold the process asking. sysinfo returns an EMPTY list on an
+    /// enumeration error (0.30.13 `windows/system.rs:233-239`), and an empty list must never read as "everything ended".
+    CannotTell,
+}
+
+/// **§2.9 B2-2: the app's own pid is refreshed in the same call, as the list's control.** `listed` is what one
+/// enumeration returned for `[pid, own_pid]`. Without `own_pid` in it, nothing in it is evidence: CANNOT TELL.
+pub fn listing_from(listed: &HashMap<u32, ProcInfo>, pid: u32, own_pid: u32) -> Listing {
+    if !listed.contains_key(&own_pid) {
+        return Listing::CannotTell;
+    }
+    match listed.get(&pid) {
+        Some(p) => Listing::Running(p.clone()),
+        None => Listing::Gone,
+    }
+}
+
+/// §2.7 D-1: **a pid is ended when the process is gone or runs another image.** The killer's return value is never
+/// evidence (portable-pty 0.8.1 `win/mod.rs:71-78` returns Err on a SUCCESSFUL TerminateProcess).
+///
+/// A pid whose image was not read at spawn is ended only when it is gone: with no image to compare, a live pid is
+/// treated as the seat — the direction that can only cost a NOT DONE, never a false DONE. CANNOT TELL is not ended.
+pub fn seat_ended(image_at_spawn: Option<&str>, now: &Listing) -> bool {
+    match (now, image_at_spawn) {
+        (Listing::Gone, _) => true,
+        (Listing::CannotTell, _) => false,
+        (Listing::Running(p), Some(img)) => image_stem(&p.name) != image_stem(img),
+        (Listing::Running(_), None) => false,
+    }
+}
+
+/// §2.2 step 1's wait, bounded by `polls` (one check before each injected sleep, one after the last). Returns the
+/// panes still running at the bound, in the order given; empty means every seat ended. A seat with no pid never
+/// ends here: there is nothing to wait on, so it cannot be called ended.
+pub fn await_seats(seats: &[SeatProc], polls: u32, probe: &dyn Fn(u32) -> Listing, sleep: &mut dyn FnMut()) -> Vec<String> {
+    let mut alive: Vec<&SeatProc> = seats.iter().collect();
+    for round in 0..=polls {
+        alive.retain(|s| match s.pid {
+            Some(pid) => !seat_ended(s.image.as_deref(), &probe(pid)),
+            None => true,
+        });
+        if alive.is_empty() || round == polls {
+            break;
+        }
+        sleep();
+    }
+    alive.into_iter().map(|s| s.pane.clone()).collect()
+}
+
+/// **§2.9 B2-1: one seat being spawned.** Held from the spawn funnel's entry until the caller's insert into Panes has
+/// completed, or until the spawn fails — dropping it is the decrement, so no path can skip it.
+#[derive(Debug)]
+pub struct Flight {
+    count: &'static std::sync::atomic::AtomicUsize,
+}
+
+impl Drop for Flight {
+    fn drop(&mut self) {
+        self.count.fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
+    }
+}
+
+/// B2-1's entry, race-free by its order: INCREMENT first, THEN read the phase. A close that sets its phase before this
+/// read refuses the spawn; a close that sets it after sees this flight in the count and waits for it.
+pub fn enter_flight(
+    count: &'static std::sync::atomic::AtomicUsize,
+    phase: &std::sync::atomic::AtomicU8,
+    idle: u8,
+) -> Option<Flight> {
+    count.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+    let flight = Flight { count };
+    if phase.load(std::sync::atomic::Ordering::SeqCst) != idle {
+        return None; // `flight` drops here: the decrement
+    }
+    Some(flight)
+}
+
+/// B2-1's wait: called after the phase is set, before Panes is drained. Returns the count still in flight at the bound
+/// (0 when every spawn landed in Panes or failed).
+pub fn await_flights(count: &std::sync::atomic::AtomicUsize, polls: u32, sleep: &mut dyn FnMut()) -> usize {
+    for round in 0..=polls {
+        let n = count.load(std::sync::atomic::Ordering::SeqCst);
+        if n == 0 || round == polls {
+            return n;
+        }
+        sleep();
+    }
+    0
+}
+
+/// How one Leave's save ended (§2.2 step 4, with §2.7 D-2).
+#[derive(Debug, Clone, PartialEq)]
+pub struct LeaveEnding {
+    pub done: bool,
+    pub code: Option<i64>,
+    pub why: Option<String>,
+    pub rows: Vec<serde_json::Value>,
+}
+
+/// **§2.7 D-2: DONE requires ALL of — every seat's pid ended within the bound, tail-carry exit 0, and no row stops.**
+/// Every other ending is NOT DONE, with why: a seat alive at the bound (named), exit 1 (the seat that stopped, named),
+/// exit 2 including LEDGER_LOCKED (the carry's own why, which names the holder), exit 3, a timeout, a spawn failure,
+/// or output that is not the contract (those three arrive as `Err` from `run_carry_json`, code null) — and, by §2.9 B2-1,
+/// any spawn still in flight at its bound.
+pub fn leave_ending(alive: &[String], in_flight: usize, carry: &Result<serde_json::Value, String>) -> LeaveEnding {
+    let mut why: Vec<String> = Vec::new();
+    // §2.9 B2-1: a seat still being spawned at the bound was never killed and never waited on.
+    if in_flight > 0 {
+        why.push(if in_flight == 1 {
+            "1 seat was still being started at the bound, so it was never ended, and what it writes is not on the stick".to_string()
+        } else {
+            format!("{in_flight} seats were still being started at the bound, so they were never ended, and what they write is not on the stick")
+        });
+    }
+    if !alive.is_empty() {
+        why.push(format!(
+            "{} seat{} had not ended when the save began, so what {} writes next is not on the stick: {}",
+            alive.len(),
+            if alive.len() == 1 { "" } else { "s" },
+            if alive.len() == 1 { "it" } else { "they" },
+            alive.join(", ")
+        ));
+    }
+    let (code, rows) = match carry {
+        Err(e) => {
+            why.push(e.clone());
+            (None, Vec::new())
+        }
+        Ok(v) => {
+            let code = v.get("code").and_then(|c| c.as_i64());
+            let rows = v.get("rows").and_then(|r| r.as_array()).cloned().unwrap_or_default();
+            let text = |r: &serde_json::Value, k: &str| r.get(k).and_then(|x| x.as_str()).map(str::to_string);
+            let stopped: Vec<String> = rows
+                .iter()
+                .filter(|r| r.get("stops").and_then(|x| x.as_bool()).unwrap_or(false))
+                .map(|r| {
+                    let sid = text(r, "sid").unwrap_or_default();
+                    format!(
+                        "{} ({}) stopped: {}{}",
+                        text(r, "seat").unwrap_or_else(|| "a seat".into()),
+                        sid.get(..8).unwrap_or(&sid),
+                        text(r, "reason").or_else(|| text(r, "verdict")).unwrap_or_else(|| "no reason given".into()),
+                        text(r, "why").map(|w| format!(" — {w}")).unwrap_or_default()
+                    )
+                })
+                .collect();
+            let outcome = text(v, "outcome").unwrap_or_else(|| "no outcome".into());
+            match code {
+                None => why.push(format!("the carry returned no exit code ({outcome})")),
+                Some(0) => {}
+                Some(c) if stopped.is_empty() => why.push(format!(
+                    "{outcome} (exit {c}): {}",
+                    text(v, "why").unwrap_or_else(|| "the carry gave no reason".into())
+                )),
+                Some(_) => {}
+            }
+            why.extend(stopped);
+            (code, rows)
+        }
+    };
+    LeaveEnding { done: why.is_empty() && code == Some(0), code, why: if why.is_empty() { None } else { Some(why.join("; ")) }, rows }
+}
+
+/// Write `value` to `path` tmp-then-rename (§2.1), so a reader never sees half a record.
+pub fn write_json_atomic(path: &Path, value: &serde_json::Value) -> Result<(), String> {
+    let name = path.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
+    let tmp = path.with_file_name(format!("{name}.tmp"));
+    let body = serde_json::to_string_pretty(value).map_err(|e| format!("could not encode {name} ({e})"))?;
+    std::fs::write(&tmp, body).map_err(|e| format!("could not write {name} ({e})"))?;
+    std::fs::rename(&tmp, path).map_err(|e| {
+        let _ = std::fs::remove_file(&tmp);
+        format!("could not put {name} in place ({e})")
+    })
+}
+
+/// §2.2 step 5: write LEAVE_RESULT, THEN remove LEAVE_STARTED. In that order, so there is no moment with neither
+/// file — which the waiter would read as case d and export again. Called again on a retry after a failed write.
+pub fn write_leave_result(data_dir: &Path, result: &serde_json::Value) -> Result<(), String> {
+    write_json_atomic(&data_dir.join(LEAVE_RESULT), result)?;
+    match std::fs::remove_file(data_dir.join(LEAVE_STARTED)) {
+        Ok(()) => Ok(()),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
+        // The result is written, so the waiter reads case b whatever this file says; the failure is named, not fatal.
+        Err(e) => Err(format!("the result was written, but {LEAVE_STARTED} could not be removed ({e})")),
+    }
+}
+
+/// What the close does after the seats have ended.
+#[derive(Debug, Clone, PartialEq)]
+pub enum LeaveRun {
+    /// No stick: exit as today — no Leave screen, no files.
+    Exit,
+    /// The Leave screen, with the result it shows. `written` is the result file's write: the exit button exists only
+    /// once it is `Ok` (§2.2 step 6).
+    Shown { result: serde_json::Value, written: Result<(), String> },
+}
+
+/// **§2.2 steps 2 to 5.** `alive` is step 1's answer and `in_flight` §2.9 B2-1's; `export` runs `tail-carry --export --json --apply` for the one
+/// folder and is called only after LEAVE_STARTED is on disk.
+pub fn run_leave(
+    data_dir: &Path,
+    app_pid: u32,
+    alive: &[String],
+    in_flight: usize,
+    find: StickFind,
+    now: &dyn Fn() -> String,
+    export: &mut dyn FnMut(&Path) -> Result<serde_json::Value, String>,
+) -> LeaveRun {
+    let result = |started_at: Option<&str>, stick: Option<String>, e: &LeaveEnding| {
+        serde_json::json!({
+            "pid": app_pid,
+            "image": APP_IMAGE,
+            "startedAt": started_at,
+            "at": now(),
+            "stick": stick,
+            "outcome": if e.done { "DONE" } else { "NOT_DONE" },
+            "code": e.code,
+            "why": e.why,
+            "rows": e.rows,
+        })
+    };
+    match find {
+        StickFind::None => LeaveRun::Exit,
+        StickFind::Many(folders) => {
+            // Nothing is picked and nothing is exported. "stick" is null: there is no one folder to name, so every
+            // one is named in why instead (B's D-10 — 2.1 does not define the field for this branch).
+            let named = folders.iter().map(|f| f.folder.display().to_string()).collect::<Vec<_>>().join(" | ");
+            let e = leave_ending(alive, in_flight, &Err(format!("more than one stick folder, and none is picked: {named}. Nothing was saved")));
+            let r = result(None, None, &e);
+            let written = write_leave_result(data_dir, &r);
+            LeaveRun::Shown { result: r, written }
+        }
+        StickFind::One(f) => {
+            let stick = f.folder.display().to_string();
+            let started_at = now();
+            let started = serde_json::json!({ "pid": app_pid, "image": APP_IMAGE, "at": started_at, "stick": stick });
+            let ending = match write_json_atomic(&data_dir.join(LEAVE_STARTED), &started) {
+                // Not exported without it: a Consonance stopped mid-save must be tellable from one that never began,
+                // or the waiter's case c cannot exist (§2.3).
+                Err(e) => leave_ending(alive, in_flight, &Err(format!("{e}, so nothing was saved"))),
+                Ok(()) => leave_ending(alive, in_flight, &export(&f.folder)),
+            };
+            let r = result(Some(&started_at), Some(stick), &ending);
+            let written = write_leave_result(data_dir, &r);
+            LeaveRun::Shown { result: r, written }
+        }
+    }
+}
+
+/// What the launch does with LEAVE_* files it finds (§2.7 D-4).
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct LeaveCleanup {
+    pub remove: Vec<(PathBuf, String)>,
+    pub keep: Vec<(PathBuf, String)>,
+}
+
+/// **§2.7 D-4: THE WAITER OWNS REMOVAL.** The launch removes a LEAVE_* file only when `stick-waiter.lock` names no live
+/// holder AND the Consonance the file names is not live. Run after `set_dirs`, and before this launch starts its own
+/// waiter, so a lock found here is the previous session's.
+///
+/// **As ruled, and no further.** A file naming THIS process's pid names a live Consonance, so it is kept — although it
+/// was written by an earlier Consonance that had the same pid. That is B's D-8, HELD for P-LEAVE-2 at §2.8 (a), whose
+/// fix is an `appStartedAt` in both files; it is not decided here.
+///
+/// No LEAVE_* file: nothing is read at all, not even the lock.
+pub fn leave_cleanup(data_dir: &Path, probe: &dyn Fn(u32) -> Listing) -> LeaveCleanup {
+    let mut out = LeaveCleanup::default();
+    let files: Vec<PathBuf> = [LEAVE_STARTED, LEAVE_RESULT].iter().map(|n| data_dir.join(n)).filter(|p| p.is_file()).collect();
+    if files.is_empty() {
+        return out;
+    }
+    let lock = data_dir.join(WAITER_LOCK);
+    if lock.exists() {
+        let holder = std::fs::read_to_string(&lock)
+            .ok()
+            .and_then(|raw| serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}')).ok())
+            .and_then(|v| v.get("pid").and_then(|p| p.as_u64()))
+            .filter(|p| *p <= u32::MAX as u64);
+        let why = match holder {
+            None => Some(format!("{WAITER_LOCK} cannot be read, so whether the last session's waiter is live cannot be told")),
+            Some(pid) => match probe(pid as u32) {
+                // §2.9 B2-2: a list that cannot be trusted removes nothing.
+                Listing::CannotTell => Some("the process list could not be read, so whether the last session's waiter is live cannot be told".to_string()),
+                Listing::Running(p) if image_stem(&p.name) == "node" => {
+                    Some(format!("the last session's exit waiter (pid {pid}) is live, and it removes these after acting on them"))
+                }
+                _ => None,
+            },
+        };
+        if let Some(why) = why {
+            out.keep = files.into_iter().map(|f| (f, why.clone())).collect();
+            return out;
+        }
+    }
+    for f in files {
+        let pid = std::fs::read_to_string(&f)
+            .ok()
+            .and_then(|raw| serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}')).ok())
+            .and_then(|v| v.get("pid").and_then(|p| p.as_u64()))
+            .filter(|p| *p <= u32::MAX as u64)
+            .map(|p| p as u32);
+        match pid {
+            None => out.remove.push((f, "it names no pid, so no waiter can match it".into())),
+            Some(p) => match probe(p) {
+                Listing::CannotTell => out.keep.push((f, "the process list could not be read, so whether it is stale cannot be told".into())),
+                Listing::Running(info) if image_stem(&info.name) == image_stem(APP_IMAGE) => {
+                    out.keep.push((f, format!("the Consonance it names (pid {p}) is still running")))
+                }
+                _ => out.remove.push((f, format!("the Consonance it names (pid {p}) is not running"))),
+            },
+        }
+    }
+    out
+}
+
 // END OF THE STICK AT LAUNCH
 
 #[cfg(test)]
@@ -2530,5 +2880,446 @@ mod diverged_tests {
     fn a_stick_hold_says_the_seats_are_waiting_for_the_transfer_window() {
         let line = withheld_line(false, "");
         assert!(line.contains("transfer window") && !line.contains("READ-ONLY"), "{line}");
+    }
+}
+
+/// P-LEAVE (D063). The outcome tests read REAL `tail-carry --export --json --apply` objects: `dev/tail-carry.js` from the
+/// working tree at 0d27f61, unmodified, run through `T.main` on a mkdtemp two-machine fixture by pane E's
+/// `scratchpad/leave/gen_leave_rows.js`. Only `path` and `stick` (temp directories) were nulled.
+#[cfg(test)]
+mod leave_tests {
+    use super::*;
+    use std::cell::Cell;
+    use std::fs;
+
+    const REAL: &str = r#"{"done":{"tool":"tail-carry","contract":1,"mode":"export","apply":true,"machine":"D","stick":null,"code":0,"outcome":"CARRIED","why":null,"rows":[{"seat":"main","sid":"0c0c0c0a-0000-4000-8000-000000000a01","kind":"fixed","verdict":"NOTHING_YET","reason":null,"why":"no transcript on this machine yet","stops":false,"carries":false,"bytes":0,"offset":null,"toOffset":null,"path":null,"localSize":null,"localFirstTimestamp":null,"carriedFirstTimestamp":null,"exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":null},{"seat":"librarian","sid":"0c0c0c0b-0000-4000-8000-00000000115b","kind":"fixed","verdict":"NOTHING_YET","reason":null,"why":"no transcript on this machine yet","stops":false,"carries":false,"bytes":0,"offset":null,"toOffset":null,"path":null,"localSize":null,"localFirstTimestamp":null,"carriedFirstTimestamp":null,"exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":null},{"seat":"third place","sid":"3d000000-0000-4000-8000-000000003d00","kind":"fixed","verdict":"NOTHING_YET","reason":null,"why":"no transcript on this machine yet","stops":false,"carries":false,"bytes":0,"offset":null,"toOffset":null,"path":null,"localSize":null,"localFirstTimestamp":null,"carriedFirstTimestamp":null,"exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":null},{"seat":"pane a","sid":"aaaaaaaa-1111-4111-8111-111111111111","kind":"pane","verdict":"UP_TO_DATE","reason":null,"why":null,"stops":false,"carries":false,"bytes":0,"offset":null,"toOffset":null,"path":null,"localSize":154,"localFirstTimestamp":"2026-09-10T10:00:00.000Z","carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":null},{"seat":"pane c","sid":"cccccccc-3333-4333-8333-333333333333","kind":"pane","verdict":"TAIL","reason":null,"why":null,"stops":false,"carries":true,"bytes":119,"offset":154,"toOffset":273,"path":null,"localSize":273,"localFirstTimestamp":"2026-09-10T10:00:00.000Z","carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":{"ok":true,"why":null,"size":273,"sha256":"25a6756d3836ec08dd6181c0b1e02420ba87e9993c31a69ccabed0688f686164","aside":null,"tailFile":"cccccccc-3333-4333-8333-333333333333.154-273.tail","advanced":false}}],"receipt":null,"staleLock":null},"stop":{"tool":"tail-carry","contract":1,"mode":"export","apply":true,"machine":"L","stick":null,"code":1,"outcome":"STOPPED","why":null,"rows":[{"seat":"main","sid":"0c0c0c0a-0000-4000-8000-000000000a01","kind":"fixed","verdict":"NOTHING_YET","reason":null,"why":"no transcript on this machine yet","stops":false,"carries":false,"bytes":0,"offset":null,"toOffset":null,"path":null,"localSize":null,"localFirstTimestamp":null,"carriedFirstTimestamp":null,"exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":null},{"seat":"librarian","sid":"0c0c0c0b-0000-4000-8000-00000000115b","kind":"fixed","verdict":"NOTHING_YET","reason":null,"why":"no transcript on this machine yet","stops":false,"carries":false,"bytes":0,"offset":null,"toOffset":null,"path":null,"localSize":null,"localFirstTimestamp":null,"carriedFirstTimestamp":null,"exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":null},{"seat":"third place","sid":"3d000000-0000-4000-8000-000000003d00","kind":"fixed","verdict":"NOTHING_YET","reason":null,"why":"no transcript on this machine yet","stops":false,"carries":false,"bytes":0,"offset":null,"toOffset":null,"path":null,"localSize":null,"localFirstTimestamp":null,"carriedFirstTimestamp":null,"exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":null},{"seat":"pane a","sid":"aaaaaaaa-1111-4111-8111-111111111111","kind":"pane","verdict":"REFUSED","reason":"UNIMPORTED_TAIL","why":"the stick still carries an unimported tail from D — import it on the machine it is for before exporting over it","stops":true,"carries":false,"bytes":0,"offset":null,"toOffset":null,"path":null,"localSize":273,"localFirstTimestamp":"2026-09-10T10:00:00.000Z","carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":null},{"seat":"pane c","sid":"cccccccc-3333-4333-8333-333333333333","kind":"pane","verdict":"REFUSED","reason":"UNIMPORTED_TAIL","why":"the stick still carries an unimported tail from D — import it on the machine it is for before exporting over it","stops":true,"carries":false,"bytes":0,"offset":null,"toOffset":null,"path":null,"localSize":154,"localFirstTimestamp":"2026-09-10T10:00:00.000Z","carriedFirstTimestamp":"2026-09-10T10:00:00.000Z","exportedAt":null,"exportedFrom":null,"retirable":null,"takeable":null,"ownBytes":null,"result":null}],"receipt":null,"staleLock":null},"locked":{"tool":"tail-carry","contract":1,"mode":"export","apply":true,"machine":null,"stick":null,"code":2,"outcome":"LEDGER_LOCKED","why":"the stick's ledger is locked by a live node (pid 34468, tail-carry.js, since 2026-09-15T06:27:00.288Z)","rows":[],"receipt":null,"staleLock":null}}"#;
+
+    fn real(which: &str) -> serde_json::Value {
+        serde_json::from_str::<serde_json::Value>(REAL).unwrap()[which].clone()
+    }
+
+    fn scratch(tag: &str) -> PathBuf {
+        let d = std::env::temp_dir().join(format!("consonance_leave_{tag}_{}", std::process::id()));
+        let _ = fs::remove_dir_all(&d);
+        fs::create_dir_all(&d).unwrap();
+        d
+    }
+
+    fn listing(d: &Path) -> Vec<String> {
+        let mut v: Vec<String> = fs::read_dir(d).unwrap().flatten().map(|e| e.file_name().to_string_lossy().to_string()).collect();
+        v.sort();
+        v
+    }
+
+    fn read(p: &Path) -> serde_json::Value {
+        serde_json::from_str(&fs::read_to_string(p).unwrap()).unwrap()
+    }
+
+    fn one(folder: &Path) -> StickFind {
+        StickFind::One(StickFolder { folder: folder.to_path_buf(), layout: StickLayout::Older })
+    }
+
+    fn at() -> String {
+        "2026-09-15T06:30:00.000Z".to_string()
+    }
+
+    fn named(name: &'static str) -> impl Fn(u32) -> Listing {
+        move |_| Listing::Running(ProcInfo { name: name.to_string(), cmd: Vec::new() })
+    }
+
+    fn gone(_: u32) -> Listing {
+        Listing::Gone
+    }
+
+    // ── §2.2 STEP 2: one test per branch ─────────────────────────────────────────────────────────────
+
+    #[test]
+    fn with_no_stick_the_close_exits_as_today_and_writes_no_file() {
+        let data = scratch("none");
+        let before = listing(&data);
+        let called = Cell::new(false);
+        let run = run_leave(&data, 4242, &[], 0, StickFind::None, &at, &mut |_| {
+            called.set(true);
+            Ok(real("done"))
+        });
+        assert_eq!((run, called.get(), listing(&data)), (LeaveRun::Exit, false, before));
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn with_many_stick_folders_nothing_is_saved_and_the_result_names_every_folder() {
+        let data = scratch("many");
+        let (a, b) = (PathBuf::from("E:\\consonance-A"), PathBuf::from("F:\\consonance-B"));
+        let find = StickFind::Many(vec![
+            StickFolder { folder: a.clone(), layout: StickLayout::Older },
+            StickFolder { folder: b.clone(), layout: StickLayout::Manifest },
+        ]);
+        let called = Cell::new(false);
+        let LeaveRun::Shown { result, written } = run_leave(&data, 4242, &[], 0, find, &at, &mut |_| {
+            called.set(true);
+            Ok(real("done"))
+        }) else {
+            panic!("more than one stick folder exited with no Leave screen")
+        };
+        let why = result["why"].as_str().unwrap_or("").to_string();
+        assert!(written.is_ok(), "{written:?}");
+        assert!(!called.get(), "a folder was exported although none was picked");
+        assert_eq!(result["outcome"], "NOT_DONE");
+        assert!(why.contains(&a.display().to_string()) && why.contains(&b.display().to_string()), "not every folder is named: {why}");
+        assert_eq!(read(&data.join(LEAVE_RESULT)), result, "the result on disk is not the one shown");
+        assert!(!data.join(LEAVE_STARTED).exists(), "a save that never began left a STARTED file");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn with_one_stick_folder_started_is_on_disk_before_the_export_and_gone_after_the_result() {
+        let data = scratch("one");
+        let stick = PathBuf::from("D:\\consonance-L-20260911");
+        let mut seen: Option<serde_json::Value> = None;
+        let run = run_leave(&data, 4242, &[], 0, one(&stick), &at, &mut |f| {
+            assert_eq!(f, Path::new("D:\\consonance-L-20260911"), "the export was not handed the found folder");
+            seen = fs::read_to_string(data.join(LEAVE_STARTED)).ok().map(|s| serde_json::from_str(&s).unwrap());
+            Ok(real("done"))
+        });
+        let LeaveRun::Shown { result, written } = run else { panic!("one stick folder exited with no Leave screen") };
+        let started = seen.expect("tail-carry ran before stick-leave.started.json was written");
+        assert_eq!(
+            (started["pid"].clone(), started["image"].clone(), started["stick"].clone()),
+            (serde_json::json!(4242), serde_json::json!("consonance.exe"), serde_json::json!("D:\\consonance-L-20260911"))
+        );
+        assert!(written.is_ok(), "{written:?}");
+        assert!(!data.join(LEAVE_STARTED).exists(), "STARTED was left beside the result");
+        assert_eq!(read(&data.join(LEAVE_RESULT)), result);
+        assert_eq!(result["startedAt"], started["at"]);
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn a_started_file_that_cannot_be_written_means_nothing_is_exported() {
+        let data = scratch("nostarted");
+        fs::create_dir_all(data.join(LEAVE_STARTED)).unwrap(); // a directory where the file must go
+        let called = Cell::new(false);
+        let run = run_leave(&data, 4242, &[], 0, one(Path::new("D:\\stick")), &at, &mut |_| {
+            called.set(true);
+            Ok(real("done"))
+        });
+        let LeaveRun::Shown { result, .. } = run else { panic!("no Leave screen") };
+        assert_eq!((called.get(), result["outcome"].as_str()), (false, Some("NOT_DONE")));
+        let _ = fs::remove_dir_all(data);
+    }
+
+    // ── §2.2 STEP 4 with §2.7 D-2: one test per ending ─────────────────────────────────────────────────
+
+    #[test]
+    fn exit_zero_with_every_seat_ended_and_no_stop_is_done() {
+        let e = leave_ending(&[], 0, &Ok(real("done")));
+        assert_eq!((e.done, e.code, e.why), (true, Some(0), None));
+    }
+
+    #[test]
+    fn a_seat_alive_at_the_bound_is_not_done_although_the_carry_exits_zero() {
+        let e = leave_ending(&["0c0c0c0b-0000-4000-8000-00000000115b".to_string()], 0, &Ok(real("done")));
+        assert!(!e.done && e.why.as_deref().unwrap_or("").contains("0c0c0c0b-0000-4000-8000-00000000115b"), "{e:?}");
+    }
+
+    #[test]
+    fn exit_one_is_not_done_and_names_the_seat_that_stopped() {
+        let e = leave_ending(&[], 0, &Ok(real("stop")));
+        let why = e.why.clone().unwrap_or_default();
+        assert!(!e.done && e.code == Some(1) && why.contains("aaaaaaaa") && why.contains("UNIMPORTED_TAIL"), "{e:?}");
+    }
+
+    #[test]
+    fn ledger_locked_is_not_done_and_names_the_holder() {
+        let e = leave_ending(&[], 0, &Ok(real("locked")));
+        let why = e.why.clone().unwrap_or_default();
+        assert!(!e.done && e.code == Some(2) && why.contains("LEDGER_LOCKED") && why.contains("pid 34468"), "{e:?}");
+    }
+
+    #[test]
+    fn a_crashed_carry_is_not_done_with_its_reason() {
+        // Not generated: no fixture makes tail-carry crash. The shape is its catch-all (tail-carry.js:1414).
+        let crashed = serde_json::json!({ "code": 3, "outcome": "CRASHED", "why": "ENOSPC: no space left on device", "rows": [] });
+        let e = leave_ending(&[], 0, &Ok(crashed));
+        assert!(!e.done && e.why.as_deref().unwrap_or("").contains("CRASHED") && e.why.as_deref().unwrap_or("").contains("ENOSPC"), "{e:?}");
+    }
+
+    #[test]
+    fn a_timeout_is_not_done_with_no_code() {
+        let e = leave_ending(&[], 0, &Err("the carry did not finish within 600s and was stopped".into()));
+        assert!(!e.done && e.code.is_none() && e.why.as_deref().unwrap_or("").contains("600s"), "{e:?}");
+    }
+
+    #[test]
+    fn a_spawn_failure_is_not_done_with_no_code() {
+        let e = leave_ending(&[], 0, &Err("could not start node (program not found)".into()));
+        assert!(!e.done && e.code.is_none() && e.why.as_deref().unwrap_or("").contains("could not start node"), "{e:?}");
+    }
+
+    #[test]
+    fn output_that_is_not_the_contract_is_not_done() {
+        let e = leave_ending(&[], 0, &Err("the carry exited 0 without its JSON contract on stdout".into()));
+        assert!(!e.done && e.why.is_some(), "{e:?}");
+    }
+
+    #[test]
+    fn exit_zero_with_a_stopping_row_is_still_not_done() {
+        let mut v = real("stop");
+        v["code"] = serde_json::json!(0);
+        assert!(!leave_ending(&[], 0, &Ok(v)).done);
+    }
+
+    // ── §2.7 D-1: what "ended" means, and the bounded wait ──────────────────────────────────────────────
+
+    #[test]
+    fn a_seat_is_ended_when_its_pid_is_gone() {
+        assert!(seat_ended(Some("claude.exe"), &Listing::Gone));
+    }
+
+    #[test]
+    fn a_seat_still_running_its_own_image_is_not_ended_in_any_spelling() {
+        let p = ProcInfo { name: "CLAUDE".into(), cmd: Vec::new() };
+        assert!(!seat_ended(Some("claude.exe"), &Listing::Running(p)));
+    }
+
+    #[test]
+    fn a_reused_pid_running_another_image_is_ended() {
+        let p = ProcInfo { name: "notepad.exe".into(), cmd: Vec::new() };
+        assert!(seat_ended(Some("claude.exe"), &Listing::Running(p)));
+    }
+
+    #[test]
+    fn a_live_pid_whose_image_was_never_read_is_not_ended() {
+        let p = ProcInfo { name: "notepad.exe".into(), cmd: Vec::new() };
+        assert!(!seat_ended(None, &Listing::Running(p)));
+    }
+
+    #[test]
+    fn the_wait_names_the_seats_still_running_at_the_bound_and_sleeps_between_checks_only() {
+        let seats = vec![
+            SeatProc { pane: "gone".into(), pid: Some(1), image: Some("claude.exe".into()) },
+            SeatProc { pane: "stuck".into(), pid: Some(2), image: Some("claude.exe".into()) },
+            SeatProc { pane: "no-pid".into(), pid: None, image: None },
+        ];
+        let probe = |pid: u32| if pid == 2 { Listing::Running(ProcInfo { name: "claude.exe".into(), cmd: Vec::new() }) } else { Listing::Gone };
+        let mut sleeps = 0;
+        let alive = await_seats(&seats, 5, &probe, &mut || sleeps += 1);
+        assert_eq!((alive, sleeps), (vec!["stuck".to_string(), "no-pid".to_string()], 5));
+    }
+
+    #[test]
+    fn the_wait_returns_as_soon_as_every_seat_has_ended() {
+        let seats = vec![SeatProc { pane: "a".into(), pid: Some(1), image: Some("claude.exe".into()) }];
+        let checks = Cell::new(0);
+        let probe = |_: u32| {
+            checks.set(checks.get() + 1);
+            if checks.get() < 3 { Listing::Running(ProcInfo { name: "claude.exe".into(), cmd: Vec::new() }) } else { Listing::Gone }
+        };
+        let mut sleeps = 0;
+        let alive = await_seats(&seats, 100, &probe, &mut || sleeps += 1);
+        assert_eq!((alive.len(), sleeps), (0, 2));
+    }
+
+    // ── §2.2 step 5's order ────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn started_stays_when_the_result_cannot_be_written() {
+        let data = scratch("order");
+        fs::write(data.join(LEAVE_STARTED), "{\"pid\":4242}").unwrap();
+        fs::create_dir_all(data.join(LEAVE_RESULT)).unwrap(); // a directory where the file must go
+        let w = write_leave_result(&data, &serde_json::json!({ "pid": 4242 }));
+        assert!(w.is_err() && data.join(LEAVE_STARTED).is_file(), "the waiter would find neither file: {w:?}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    // ── §2.7 D-4 and D-8: the launch's cleanup ─────────────────────────────────────────────────────────
+
+    fn with_files(tag: &str, pid: u32) -> PathBuf {
+        let data = scratch(tag);
+        fs::write(data.join(LEAVE_STARTED), format!("{{\"pid\":{pid},\"image\":\"consonance.exe\"}}")).unwrap();
+        fs::write(data.join(LEAVE_RESULT), format!("{{\"pid\":{pid},\"image\":\"consonance.exe\",\"outcome\":\"DONE\"}}")).unwrap();
+        data
+    }
+
+    #[test]
+    fn a_launch_with_no_leave_file_reads_nothing() {
+        let data = scratch("clean_none");
+        fs::write(data.join(WAITER_LOCK), "{\"pid\":7}").unwrap();
+        let c = leave_cleanup(&data, &|_| panic!("the probe ran on a launch with no LEAVE file"));
+        assert_eq!(c, LeaveCleanup::default());
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn a_live_waiter_lock_keeps_every_leave_file() {
+        let data = with_files("clean_waiter", 500);
+        fs::write(data.join(WAITER_LOCK), "{\"pid\":7,\"image\":\"node\"}").unwrap();
+        let probe = |pid: u32| if pid == 7 { Listing::Running(ProcInfo { name: "node.exe".into(), cmd: Vec::new() }) } else { Listing::Gone };
+        let c = leave_cleanup(&data, &probe);
+        assert_eq!((c.remove.len(), c.keep.len()), (0, 2), "{c:?}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn an_unreadable_waiter_lock_keeps_every_leave_file() {
+        let data = with_files("clean_badlock", 500);
+        fs::write(data.join(WAITER_LOCK), "not json").unwrap();
+        let c = leave_cleanup(&data, &gone);
+        assert_eq!((c.remove.len(), c.keep.len()), (0, 2), "{c:?}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn a_dead_waiter_and_a_dead_app_remove_both_files() {
+        let data = with_files("clean_dead", 500);
+        fs::write(data.join(WAITER_LOCK), "{\"pid\":7,\"image\":\"node\"}").unwrap();
+        let c = leave_cleanup(&data, &gone);
+        assert_eq!((c.remove.len(), c.keep.len()), (2, 0), "{c:?}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn no_waiter_lock_and_a_dead_app_remove_both_files() {
+        let data = with_files("clean_nolock", 500);
+        let c = leave_cleanup(&data, &gone);
+        assert_eq!((c.remove.len(), c.keep.len()), (2, 0), "{c:?}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn a_waiter_pid_reused_by_another_image_is_not_a_live_waiter() {
+        let data = with_files("clean_reusedwaiter", 500);
+        fs::write(data.join(WAITER_LOCK), "{\"pid\":7,\"image\":\"node\"}").unwrap();
+        let c = leave_cleanup(&data, &named("svchost.exe"));
+        assert_eq!(c.keep.len(), 0, "{c:?}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn a_leave_file_naming_a_live_consonance_is_kept() {
+        let data = with_files("clean_liveapp", 500);
+        let c = leave_cleanup(&data, &named("Consonance.exe"));
+        assert_eq!((c.remove.len(), c.keep.len()), (0, 2), "{c:?}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// D-8 is HELD (§2.8 a): a file naming this launch's own pid names a LIVE Consonance, so D-4 as ruled keeps it.
+    #[test]
+    fn a_leave_file_naming_this_launchs_own_pid_is_kept_as_ruled() {
+        let data = with_files("clean_ownpid", 99);
+        let c = leave_cleanup(&data, &named("consonance.exe"));
+        assert_eq!((c.remove.len(), c.keep.len()), (0, 2), "{c:?}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    #[test]
+    fn the_leave_files_name_the_app_image_in_the_rust_spelling_and_match_pidimages_shape() {
+        assert_eq!((APP_IMAGE, image_stem(APP_IMAGE).as_str()), ("consonance.exe", "consonance"));
+    }
+
+    // ── §2.9 B2-1: a seat in flight does not escape the drain ─────────────────────────────────────────
+
+    use std::sync::atomic::{AtomicU8, AtomicUsize, Ordering};
+
+    #[test]
+    fn a_spawn_held_in_flight_across_the_drain_is_never_done() {
+        static COUNT: AtomicUsize = AtomicUsize::new(0);
+        static PHASE: AtomicU8 = AtomicU8::new(0);
+        let flight = enter_flight(&COUNT, &PHASE, 0).expect("a spawn before the close was refused");
+        PHASE.store(1, Ordering::SeqCst); // the close begins while the spawn is still in flight
+        let mut sleeps = 0;
+        let in_flight = await_flights(&COUNT, 3, &mut || sleeps += 1);
+        let e = leave_ending(&[], in_flight, &Ok(real("done")));
+        assert!((in_flight, sleeps, e.done) == (1, 3, false) && e.why.as_deref().unwrap_or("").contains("1 seat was still being started"), "{in_flight} {sleeps} {e:?}");
+        drop(flight);
+        assert_eq!(COUNT.load(Ordering::SeqCst), 0, "a landed flight left the count raised");
+    }
+
+    /// The ORDER is the race-freedom (§2.9 B2-1: "INCREMENT first, THEN read LEAVE_PHASE"), and no single-threaded test
+    /// can observe it — both orders refuse a late spawn identically. So it is pinned at the source.
+    #[test]
+    fn the_flight_is_counted_before_the_phase_is_read() {
+        let src = fs::read_to_string("src/sync_launch.rs").expect("read own source");
+        let at = src.find(concat!("pub fn enter", "_flight(")).expect("no enter_flight");
+        let body = &src[at..at + src[at..].find("\n}\n").unwrap()];
+        let count = body.find(concat!("count.fetch", "_add(1")).expect("the flight is not counted");
+        let phase = body.find(concat!("phase.", "load(")).expect("the phase is not read");
+        assert!(count < phase, "the phase is read before the flight is counted — a close can drain between the two");
+    }
+
+    #[test]
+    fn a_spawn_entering_after_the_close_began_is_refused_and_leaves_no_count() {
+        static COUNT: AtomicUsize = AtomicUsize::new(0);
+        static PHASE: AtomicU8 = AtomicU8::new(1);
+        assert!(enter_flight(&COUNT, &PHASE, 0).is_none(), "a spawn woke after the close began");
+        assert_eq!(COUNT.load(Ordering::SeqCst), 0);
+    }
+
+    #[test]
+    fn a_flight_that_lands_during_the_wait_lets_the_drain_proceed() {
+        static COUNT: AtomicUsize = AtomicUsize::new(0);
+        static PHASE: AtomicU8 = AtomicU8::new(0);
+        let mut flight = Some(enter_flight(&COUNT, &PHASE, 0).unwrap());
+        PHASE.store(1, Ordering::SeqCst);
+        let in_flight = await_flights(&COUNT, 100, &mut || drop(flight.take()));
+        assert_eq!(in_flight, 0);
+    }
+
+    #[test]
+    fn a_seat_still_starting_is_named_in_the_result_file_too() {
+        let data = scratch("inflight");
+        let run = run_leave(&data, 4242, &[], 2, one(Path::new("D:\\stick")), &at, &mut |_| Ok(real("done")));
+        let LeaveRun::Shown { result, .. } = run else { panic!("no Leave screen") };
+        assert!(result["outcome"] == "NOT_DONE" && result["why"].as_str().unwrap_or("").contains("2 seats were still being started"), "{result}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    // ── §2.9 B2-2: an empty process list is CANNOT TELL, never "all ended" ─────────────────────────────
+
+    #[test]
+    fn an_empty_process_list_is_cannot_tell() {
+        assert_eq!(listing_from(&HashMap::new(), 7, 99), Listing::CannotTell);
+    }
+
+    #[test]
+    fn a_list_holding_the_app_says_gone_for_a_pid_it_lacks_and_running_for_one_it_has() {
+        let me = ProcInfo { name: "consonance.exe".into(), cmd: Vec::new() };
+        let seat = ProcInfo { name: "claude.exe".into(), cmd: Vec::new() };
+        let listed: HashMap<u32, ProcInfo> = [(99, me), (8, seat.clone())].into_iter().collect();
+        assert_eq!((listing_from(&listed, 7, 99), listing_from(&listed, 8, 99)), (Listing::Gone, Listing::Running(seat)));
+    }
+
+    #[test]
+    fn the_wait_counts_an_empty_list_as_alive_to_the_bound() {
+        let seats = vec![SeatProc { pane: "a".into(), pid: Some(7), image: Some("claude.exe".into()) }];
+        let empty = HashMap::new();
+        let probe = |pid: u32| listing_from(&empty, pid, 99);
+        let mut sleeps = 0;
+        assert_eq!((await_seats(&seats, 4, &probe, &mut || sleeps += 1), sleeps), (vec!["a".to_string()], 4));
+    }
+
+    #[test]
+    fn the_cleanup_removes_nothing_on_an_empty_list() {
+        let data = with_files("clean_emptylist", 500);
+        let empty = HashMap::new();
+        let c = leave_cleanup(&data, &|pid| listing_from(&empty, pid, 99));
+        assert_eq!((c.remove.len(), c.keep.len()), (0, 2), "{c:?}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// Each probe call is its own enumeration, so one can fail while the next succeeds. A waiter that CANNOT be checked
+    /// keeps every file even when the files' own app pid then reads plainly gone. (The first form of this test failed
+    /// every call alike, and mutant Y6 — the waiter's CANNOT TELL ignored — survived it: the per-file check kept the
+    /// files for it.)
+    #[test]
+    fn the_cleanup_removes_nothing_when_the_waiter_lock_cannot_be_checked_against_the_list() {
+        let data = with_files("clean_emptylist_lock", 500);
+        fs::write(data.join(WAITER_LOCK), "{\"pid\":7,\"image\":\"node\"}").unwrap();
+        let empty = HashMap::new();
+        let me: HashMap<u32, ProcInfo> = [(99, ProcInfo { name: "consonance.exe".into(), cmd: Vec::new() })].into_iter().collect();
+        let probe = |pid: u32| if pid == 7 { listing_from(&empty, pid, 99) } else { listing_from(&me, pid, 99) };
+        let c = leave_cleanup(&data, &probe);
+        assert_eq!((c.remove.len(), c.keep.len()), (0, 2), "{c:?}");
+        let _ = fs::remove_dir_all(data);
     }
 }
