@@ -164,6 +164,63 @@ conflicts with §2.1–2.6, build this block.**
     librarian/2026-09-12.md:35, :47). The chair's 348,007,682 B was the rehearsal total. WRONG 107 is the
     librarian's, repeated by the chair.
 
+**2.8 · RULED ~00:40 on L, after A's hand-back** (`handback/p-leave-A_2026-09-14.md`; collated at c6134ab). **E is
+still building, so only what touches A's file alone is ruled now. The rest is HELD for the follow-up.**
+
+    R-1  THE WAITER'S CASE-c WAIT IS BOUNDED (A). As ruled at 9e29daf it was unbounded: a hung orphan, or a holder
+         whose image cannot be read, kept the waiter waiting forever while it held stick-waiter.lock. A relaunched
+         app's waiter then exits ALREADY_WAITING, and if the orphan finishes during the new session, the fallback
+         exports while that session's seats write. That is B's §8 through case c.
+         RULED: waitForLeaveCarry waits at most 660 s (LEAVE_EXPORT_TIMEOUT's 600 s plus a 60 s margin; the waiter's
+           own constant, with that sentence beside it). At the bound: no export, NOT DONE naming the holder pid in the
+           fallback notice and the status log; LEAVE_STARTED is left in place; the adoption check (D-9) runs before
+           returning. Add a test at the bound and a mutant that removes it.
+
+    HELD for P-LEAVE-2, the packet after this lap lands. Each changes a file both halves read, or is minor, and E is
+    mid-build (the keeper's HOLD):
+      (a) B's D-8 PID REUSE. A surviving LEAVE_RESULT from session 1 makes a hard-killed session 2 with the same pid
+          read case b and export nothing. Only a session start time can tell them apart: an `appStartedAt` field in
+          both files, written by the app.
+      (b) THE SEATS OUTLIVE A KILLED APP BY MINUTES. Measured from the stick's tail files after D's close
+          (librarian/2026-09-14.md, 00:24 entry): three export passes at 23:39, 23:40 and 23:41. So the fallback
+          (cases c and d) can save while orphaned seats still write. The fix needs the app to write its seat pids
+          where the waiter can read them.
+      (c) Minor: tasklist every 2 s during the case-c wait; a stick unplugged after the app died goes silent,
+          with no NOT DONE.
+
+**2.9 · RULED ~01:15 on L, after B's second read** (`handback/p-leave-read2-B_2026-09-14.md`; re-derived by the
+librarian, 6d89e2d). The chair checked `main.rs:972-984`, `sync_launch.rs:1338-1346`, sysinfo-0.30.13
+`windows/system.rs:233-239` and `main.rs:11500-11506` at source.
+
+**B's two rulings are accepted:** E's `proc_listed` probe, and E's §4.1 refusal to spawn a seat during the close.
+**F1 breaks two ways, both in E's half; E builds both fixes:**
+
+    B2-1  A SEAT IN FLIGHT ESCAPES THE DRAIN. The LEAVE_PHASE check (main.rs:978) runs once, at spawn entry, and the
+          session reaches Panes only when the caller inserts it afterwards (ten call sites). A healthy resume sits in
+          RESUME_CONFIRM for 1000 ms, and restoreKeptPanes resumes one pane after another, so for seconds after every
+          launch a seat is in flight. It is inserted after leave_run's drain: never killed, not waited on, and
+          leave_ending can say DONE while it writes.
+          RULED, B's shape (b), made race-free (E):
+            - An in-flight counter. At spawn entry, INCREMENT first, THEN read LEAVE_PHASE. If the close has begun,
+              decrement and refuse. The counter is decremented when the caller's insert into Panes completes, or when
+              the spawn errors. A guard type holds the decrement, so no path can skip it.
+            - leave_run SETS LEAVE_PHASE first, THEN waits for the counter to reach zero, and only then drains Panes.
+              The bound is 10 s (RESUME_CONFIRM's 1 s plus spawn margin; name it beside the teardown bound).
+            - A counter above zero at the bound is NOT DONE, naming the in-flight count. The export still runs, as in
+              D-2.
+            - A test that holds a spawn in flight across the drain and shows NOT DONE or the seat killed, never DONE.
+
+    B2-2  "CANNOT TELL" READ AS "ENDED". On any NtQuerySystemInformation error except a length mismatch, sysinfo returns
+          an EMPTY process list. proc_listed then yields None, and seat_ended(_, None) is true (sync_launch.rs:1343).
+          So every seat reads ended at the first poll: the false-DONE direction. The same probe drives the launch
+          cleanup, which would then remove LEAVE files a live waiter still owns (D-4 reopened).
+          RULED, B's guard (E): refresh the app's OWN pid in the same probe call. If the app's own pid is absent, the
+            whole answer is CANNOT TELL. In the wait that means alive (NOT DONE at the bound). In the cleanup it means
+            remove nothing. A test with an injected empty list.
+
+    NOTED: B says main.rs:11503-11505 was not amended. It is followed at :11506 by "P-LEAVE amends 'instantly'", so the
+    old sentence stands as a dated trace with its amendment beside it. No change needed.
+
 ## 3 · THE SPLIT — neither of you edits the other's files
 
     ECHO    consonance/src-tauri/src/main.rs, sync_launch.rs, consonance/ui/* (+ tests)
@@ -199,3 +256,47 @@ place and keep going, and do not build around it.
 
 `exo_memory/handback/p-leave-<letter>_2026-09-14.md` (B: `p-leave-read-B_…`), then `call_librarian` with the path in
 the same turn. One line to your own map. Do not commit; both halves land together.
+
+## 10 · BEFORE THE FIRST REAL LEAVE — the stick's ledger was corrupt on the media, and was repaired at the keeper's word
+
+**2026-09-15 02:28:** the close ran on the old waiter, before the Leave build, and refused: NOT DONE, exit 2,
+CANNOT_RUN, "Unexpected non-whitespace character after JSON at position 412". Found by the librarian (c8f2b42) and
+re-checked by the chair at source:
+- `D:\consonance-L-20260911\consonance-tails\ledger.json` (2,992 B) held MANIFEST.json's 412 bytes at its head, then
+  100 NUL bytes to byte 512. The rest was the ledger's own content.
+- Both files carry the 00:19 import's mtimes. The cause is unmeasured, which is why the stick is now suspect.
+
+**The repair, at the keeper's word (02:40, "Repair it (Recommended)"):**
+- The librarian rebuilt the lost first sector: main's entry and the head of the librarian's entry.
+- The rebuilt file is 2,992 B, and its sha256 `baadc38d…` is **equal to the manifest's own recorded sha** for
+  `consonance-tails/ledger.json`. It parses, and it is byte-identical to the stick's copy from byte 512 onward.
+- The damaged file was copied beside it as `ledger.json.corrupt-20260915T084005` (nothing deleted), then the rebuild
+  was written tmp, fsync, rename.
+- `node dev/tail-carry.js --stick D:/consonance-L-20260911 --verify-set --json` -> code 0, layout manifest, missing 0,
+  mismatched 0.
+- `--export --json` (rehearsal) -> code 0, seven TAIL rows.
+
+The running exe was built at 02:29, after 99649d8 landed at 01:58, so the next close with the stick in is the first
+real Leave.
+
+## 11 · THE FIRST REAL LEAVE — scored from disk, 2026-09-15 05:12
+
+The keeper closed with the stick in at 05:12:24. Scored by the librarian (`librarian/2026-09-14.md`, 05:15 entry,
+2e35fff). The chair read the persist.log rows itself:
+
+    1789470744 LEAVE SEATS 7 killed, 0 still running after 212 ms
+    1789470744 LEAVE SAVING to D:\consonance-L-20260911
+    1789470754 LEAVE DONE code=0 — saved                   (10 s; 12,053,526 B over seven tails, the librarian's sum)
+    1789470756 LEAVE CLOSE — the keeper closed Consonance from the Leave screen
+
+The relaunch rehearsal was quiet: verify 0, import 0, export 0. All seven seats RESUMED.
+
+| falsifier | result | how it was checked |
+|---|---|---|
+| F1 | did not fire | 7 of 7 range-hashes of the local file over [offset, toOffset) equal the ledger's tailSha, and the first bytes past toOffset are the relaunch's bridge-session line (the librarian) |
+| F2 | did not fire | one ledger write, with every pending.at = 11:12:24.229Z; the old waiter stood down (its status log is untouched since 02:28) |
+| F3 | NOT SCORED | the chair's hidden watch ran 01:58–03:58 and ended before this close. The keeper's eyes are the only witness |
+| F4 | NOT EXERCISED | no relaunch during the Leave |
+
+**The first save Consonance made itself went DONE on its first real run.** The ledger repair (§10) held through it:
+`--verify-set` code 0 afterwards.

@@ -118,3 +118,21 @@ Permission to refuse stands: "the notification is the wrong replacement" is a va
 
 `exo_memory/handback/p-no-console-<letter>_2026-09-14.md`, then `call_librarian` with the path in the same turn. One
 line to your own map. Do not commit; the chair lands both together.
+
+## 7 · §4 FALSIFIER SCORED — 2026-09-15 00:25, on L, from the hidden watch the chair left running
+
+A process-start watch (`scratchpad/nc_close_watch.ps1`, then `nc_exit_watch.ps1`) covered all three windows of §4:
+
+| window | when | terminal windows |
+|---|---|---|
+| launch | the rebuilt exe at 06:40:46, new waiter pid 39076 at 06:40:49 | 0 |
+| idle | 06:40:49–06:45, then 07:29:09–07:59 | 0 |
+| exit | the keeper's close at ~07:59, which the NEW waiter (pid 39076) exported | 0 |
+
+What the exit looked like: the waiter's volume query (`powershell ... Win32_LogicalDisk`, 07:59:04.7), its hidden
+notice PowerShell (`-WindowStyle Hidden`, 07:59:05.0), `tail-carry.js --stick D:\consonance-L-20260911 --export`
+(07:59:05.3), and its `tasklist IMAGENAME` check (07:59:14.3). **OpenConsole.exe or WindowsTerminal.exe starts
+across the whole log: 0.** The log ends at 07:59:36, where the laptop stopped.
+
+**The falsifier did not fire. The fix holds across launch, idle and exit.** Not scored here: whether the two
+notices rendered on screen. No eye reported them, and the registry key's state after that close was not read.

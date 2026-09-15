@@ -11,7 +11,7 @@ use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 const NO_WINDOW: u32 = 0x0800_0000;
 use std::collections::{BTreeMap, HashMap, HashSet, VecDeque};
 use std::io::{Read, Seek, SeekFrom, Write};
-use std::sync::atomic::{AtomicBool, AtomicU16, AtomicU64, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU16, AtomicU64, AtomicU8, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use portable_pty::{native_pty_system, CommandBuilder, MasterPty, PtySize};
 use tauri::{AppHandle, Emitter, Manager, State};
@@ -923,8 +923,26 @@ struct PtySession {
     writer: Box<dyn Write + Send>,
     master: Box<dyn MasterPty + Send>,
     killer: Box<dyn portable_pty::ChildKiller + Send + Sync>,
+    /// P-LEAVE §2.7 D-1: the seat's process, kept so the close can WAIT on it. The killer's return value is not
+    /// evidence of anything (portable-pty 0.8.1 `win/mod.rs:71-78` returns Err on a SUCCESSFUL TerminateProcess).
+    pid: Option<u32>,
+    /// The image that pid ran at spawn, so a reused pid is not mistaken for the seat.
+    image: Option<String>,
+    /// §2.9 B2-1: this session still counts as a spawn in flight until `insert_pane` has put it in Panes.
+    flight: Option<sync_launch::Flight>,
 }
 struct Panes(Mutex<HashMap<String, PtySession>>);
+
+/// §2.9 B2-1: the ONE way a spawned session reaches Panes. The flight is taken out, the session inserted, the lock
+/// released, and only then the flight dropped — so a close waiting for the in-flight count to reach zero drains a map
+/// that already holds this seat.
+fn insert_pane(panes: &Panes, id: String, mut session: PtySession) {
+    let flight = session.flight.take();
+    let mut map = panes.0.lock().unwrap();
+    map.insert(id, session);
+    drop(map);
+    drop(flight);
+}
 
 // layer 2: a headless vt100 emulator per pane, fed the same PTY bytes as the terminal. A watcher
 // thread renders it and harvests settled turns. Held in a map so pty_resize can keep the emulator's
@@ -968,6 +986,16 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
         plog(&format!("SEAT WITHHELD pane={pane_id} — {why}"));
         return Err(why);
     }
+    // P-LEAVE: once the close has begun, no seat wakes. The Leave ended every seat before its save; a seat spawned
+    // after that — a reopen, a chair verb — would write under the export, which is F1. Same funnel, same refusal.
+    //
+    // §2.9 B2-1: and a seat ALREADY in here when the close begins must not escape the drain. So this is a FLIGHT: the
+    // in-flight count is raised before the phase is read. The session carries the flight until `insert_pane` has put
+    // it in Panes; every early return below drops it, which is the decrement.
+    let Some(flight) = sync_launch::enter_flight(&SPAWNS_IN_FLIGHT, &LEAVE_PHASE, LEAVE_IDLE) else {
+        plog(&format!("SEAT WITHHELD pane={pane_id} — Consonance is closing"));
+        return Err("Consonance is closing and saving to the stick — no seat wakes now".into());
+    };
     let pair = native_pty_system()
         .openpty(PtySize { rows: EMU_ROWS, cols: EMU_COLS, pixel_width: 0, pixel_height: 0 })
         .map_err(|e| e.to_string())?;
@@ -1124,6 +1152,11 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     }
 
     let killer = child.clone_killer();
+    // P-LEAVE §2.7 D-1: the pid, read while the Child is still here — it moves into the wait thread below. This is the
+    // one construction of PtySession, so every spawn site (pty_spawn, spawn_sibling, spawn_fresh, new_room, the seats,
+    // pty_reopen, …) carries it.
+    let pid = child.process_id();
+    let image = pid.and_then(proc_info).map(|p| p.name);
     let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
     let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
 
@@ -1258,7 +1291,7 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
         let _ = app.emit("pty-exit", &pane_id);
     });
 
-    Ok(PtySession { writer, master: pair.master, killer })
+    Ok(PtySession { writer, master: pair.master, killer, pid, image, flight: Some(flight) })
 }
 
 #[derive(Clone, Serialize)]
@@ -2587,7 +2620,7 @@ fn pty_spawn(
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), resolved_cwd.clone(), false, true)?;
     start_tailer(app, pane_id.clone(), resolved_cwd, cost.0.clone(), board.0.clone());
-    panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    insert_pane(&panes, pane_id.clone(), session);
     Ok(pane_id)
 }
 
@@ -3211,7 +3244,7 @@ fn spawn_sibling(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: 
     let pane_id = Uuid::new_v4().to_string();
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, true)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
-    panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    insert_pane(&panes, pane_id.clone(), session);
     // a briefed sibling is committee from birth — addressable by the gate and the chair
     roles.0.lock().unwrap().insert(pane_id.clone(), "committee".to_string());
     // siblings persist by default — born kept, like the Orchestrator. No opt-in pin: persistence is
@@ -3250,7 +3283,7 @@ fn spawn_fresh(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: St
     // answers its prompts in the pane — same hands that click approve everywhere else.
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, false)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
-    panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    insert_pane(&panes, pane_id.clone(), session);
     // committee, like siblings: addressable by the gate and the chair. What it lacks is the room
     // and the board — a vanilla mind on committee plumbing.
     roles.0.lock().unwrap().insert(pane_id.clone(), "committee".to_string());
@@ -3367,7 +3400,7 @@ fn new_room(app: AppHandle, panes: State<Panes>, cost: State<Cost>, board: State
     // except through the person's seal. Never bypass here.
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), cwd.clone(), false, false)?;
     start_tailer(app, pane_id.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
-    panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    insert_pane(&panes, pane_id.clone(), session);
     // rooms are born kept — a room that vanished on restart would betray its premise
     let mut kept = read_kept();
     kept.retain(|k| k.pane != pane_id);
@@ -6287,7 +6320,7 @@ fn resume_pane(
         ResumePlan::Fresh => fresh(app.clone())?,
     };
     start_tailer(app, pane.clone(), cwd.clone(), cost.0.clone(), board.0.clone());
-    panes.0.lock().unwrap().insert(pane.clone(), session);
+    insert_pane(&panes, pane.clone(), session);
     // kept panes resume with the role their HOME decides: instance dirs are committee siblings,
     // rooms (and anything else) stay human — the injection plane must know who is who after a
     // restart, not only at first spawn (the gap the chair's first status read found, 2026-07-27)
@@ -6370,7 +6403,7 @@ fn spawn_body(
     // the sandbox worktree (the gate governs cross-pane injection, not the body's own bash/writes)
     let session = spawn_claude_pane(app.clone(), pane_id.clone(), sandbox.clone(), false, false)?;
     start_tailer(app, pane_id.clone(), sandbox.clone(), cost.0.clone(), board.0.clone());
-    panes.0.lock().unwrap().insert(pane_id.clone(), session);
+    insert_pane(&panes, pane_id.clone(), session);
     roles.0.lock().unwrap().insert(pane_id.clone(), "committee".to_string());
     sandboxes.0.lock().unwrap().insert(pane_id.clone(), (sandbox.clone(), is_wt, parent));
     Ok(BodyInfo { pane: pane_id, cwd: sandbox, worktree: is_wt })
@@ -7425,7 +7458,7 @@ fn spawn_third_place(
     let resume = transcript.exists();
     let session = spawn_claude_pane(app.clone(), THIRD_PLACE_SID.to_string(), cwd.clone(), resume, true)?;
     start_tailer(app, THIRD_PLACE_SID.to_string(), cwd.clone(), cost.0.clone(), board.0.clone());
-    panes.0.lock().unwrap().insert(THIRD_PLACE_SID.to_string(), session);
+    insert_pane(&panes, THIRD_PLACE_SID.to_string(), session);
     roles.0.lock().unwrap().insert(THIRD_PLACE_SID.to_string(), "third_place".to_string());
     // deliberately NOT inserted into PaneNames: an unaddressable seat needs no address
     Ok(SiblingInfo { pane: THIRD_PLACE_SID.to_string(), cwd, role: "third_place".to_string() })
@@ -7464,7 +7497,7 @@ fn spawn_librarian(
     let resume = transcript.exists();
     let session = spawn_claude_pane(app.clone(), LIBRARIAN_SID.to_string(), cwd.clone(), resume, true)?;
     start_tailer(app, LIBRARIAN_SID.to_string(), cwd.clone(), cost.0.clone(), board.0.clone());
-    panes.0.lock().unwrap().insert(LIBRARIAN_SID.to_string(), session);
+    insert_pane(&panes, LIBRARIAN_SID.to_string(), session);
     roles.0.lock().unwrap().insert(LIBRARIAN_SID.to_string(), "librarian".to_string());
     names.0.lock().unwrap().insert("LIB".to_string(), LIBRARIAN_SID.to_string());
     Ok(SiblingInfo { pane: LIBRARIAN_SID.to_string(), cwd, role: "librarian".to_string() })
@@ -7521,7 +7554,7 @@ fn spawn_main(
     let resume = transcript.exists(); // first wake = new session; thereafter = resume the same one
     let session = spawn_claude_pane(app.clone(), MAIN_SID.to_string(), cwd.clone(), resume, true)?;
     start_tailer(app, MAIN_SID.to_string(), cwd.clone(), cost.0.clone(), board.0.clone());
-    panes.0.lock().unwrap().insert(MAIN_SID.to_string(), session);
+    insert_pane(&panes, MAIN_SID.to_string(), session);
     roles.0.lock().unwrap().insert(MAIN_SID.to_string(), "main".to_string());
     names.0.lock().unwrap().insert("M".to_string(), MAIN_SID.to_string()); // committee can target 'M'
     Ok(SiblingInfo { pane: MAIN_SID.to_string(), cwd, role: "main".to_string() })
@@ -7982,7 +8015,7 @@ fn pty_kill(panes: State<Panes>, sandboxes: State<PaneSandboxes>, pane: String) 
 fn pty_reopen(app: AppHandle, panes: State<Panes>, pane: String, cwd: String) -> Result<(), String> {
     let resolved_cwd = if cwd.trim().is_empty() { home() } else { cwd };
     let session = spawn_claude_pane(app, pane.clone(), resolved_cwd, true, true)?;
-    panes.0.lock().unwrap().insert(pane, session);
+    insert_pane(&panes, pane, session);
     Ok(())
 }
 
@@ -10390,6 +10423,22 @@ const APPLY_HANDSHAKE_POLLS: u32 = 100;
 const APPLY_HANDSHAKE_POLL: Duration = Duration::from_millis(100);
 /// A rehearsal hashes whole transcripts (262 MB for Main on L). Generous, and still a bound.
 const STICK_REHEARSAL_TIMEOUT: Duration = Duration::from_secs(300);
+/// P-LEAVE §2.2 step 3: the close's own save. The first full carry wrote 348,026,190 B in 55 s (2f7233c;
+/// `librarian/2026-09-12.md:35`, `:47`) — this bound is about eleven times that. At the bound tail-carry is stopped and
+/// the Leave reads NOT DONE, never DONE.
+const LEAVE_EXPORT_TIMEOUT: Duration = Duration::from_secs(600);
+/// P-LEAVE §2.2 step 1: how long the close waits for every killed seat to be gone — 50 checks, 100 ms apart, 5 s.
+///
+/// **Measured on real seats (`handback/p-leave-E_2026-09-14.md` §2):** seven `claude.exe` seats under ConPTY, killed
+/// together through their killers, idle and mid-Bash-call. On L, by `proc_listed`, 63 of 63 read ended within
+/// 26.5–129.9 ms. The bound is about 38 times the slowest. A seat still running at it is named, and the Leave is NOT DONE.
+const SEAT_TEARDOWN_POLLS: u32 = 50;
+const SEAT_TEARDOWN_POLL: Duration = Duration::from_millis(100);
+/// §2.9 B2-1: how long the close waits for spawns already in flight to land in Panes before it drains — 100 checks,
+/// 100 ms apart, 10 s: RESUME_CONFIRM's 1 s, which a healthy resume sits in, plus margin for the spawn around it. A count
+/// above zero at the bound is NOT DONE, naming the count; the save still runs.
+const SPAWN_FLIGHT_POLLS: u32 = 100;
+const SPAWN_FLIGHT_POLL: Duration = Duration::from_millis(100);
 /// The second half of the flags the waiter and the applier are started with, `NO_WINDOW | CREATE_NEW_PROCESS_GROUP`.
 /// Their own process group means the app's exit sends them no console control event, so they outlive it.
 ///
@@ -10423,6 +10472,31 @@ fn proc_info(pid: u32) -> Option<sync_launch::ProcInfo> {
         return None;
     }
     sys.process(spid).map(|p| sync_launch::ProcInfo { name: p.name().to_string(), cmd: p.cmd().to_vec() })
+}
+
+/// What runs under a pid, read from the SYSTEM PROCESS LIST (`NtQuerySystemInformation`), not by opening the process.
+///
+/// **Why not `proc_info` (P-LEAVE, measured on real seats):** `refresh_process_specifics` opens the pid, and opening a
+/// process that has EXITED succeeds for as long as anything holds a handle to it. A killed seat is held by its own
+/// `PtySession` killer and, when it was mid-tool, by its orphaned bash children. `proc_info` reported 28 of 63 killed
+/// seats still running for 30 s, while tasklist no longer listed any of the 63 at 2 s. This probe read all 63 ended
+/// within 130 ms. So the close waits on this probe, and the applier handshake keeps `proc_info` (it needs `cmd`).
+///
+/// **§2.9 B2-2: the app's own pid rides in the same enumeration, as its control.** On an enumeration error sysinfo returns
+/// an EMPTY list (0.30.13 `windows/system.rs:233-239`), which would read every seat as ended. A list without this
+/// process in it is CANNOT TELL (`sync_launch::listing_from`): alive in the wait, remove-nothing in the cleanup.
+fn proc_listed(pid: u32) -> sync_launch::Listing {
+    use sysinfo::{Pid, ProcessRefreshKind, System};
+    let mut sys = System::new();
+    let spid = Pid::from_u32(pid);
+    let own = Pid::from_u32(std::process::id());
+    sys.refresh_pids_specifics(&[spid, own], ProcessRefreshKind::new());
+    let listed: HashMap<u32, sync_launch::ProcInfo> = sys
+        .processes()
+        .iter()
+        .map(|(p, proc_)| (p.as_u32(), sync_launch::ProcInfo { name: proc_.name().to_string(), cmd: Vec::new() }))
+        .collect();
+    sync_launch::listing_from(&listed, pid, std::process::id())
 }
 
 /// A session id, exactly: 8-4-4-4-12 hex. The window's choices are input from a webview and become
@@ -10804,6 +10878,137 @@ fn stick_close_app(app: AppHandle) {
     app.exit(0);
 }
 
+// ── P-LEAVE (D063): THE CLOSE WINDOW ─────────────────────────────────────────────────────────────────────────────
+// `loop/packet_leave_window_2026-09-14.md` §2, with §2.7 (9e29daf) overriding. The pure half is `sync_launch`'s
+// P-LEAVE block; this is the half that kills, waits, spawns and shows.
+
+/// Where the close is. IDLE until the first close request; RUNNING from then until the result file is written; SHOWN
+/// after, when (and only when) the exit button exists.
+const LEAVE_IDLE: u8 = 0;
+const LEAVE_RUNNING: u8 = 1;
+const LEAVE_SHOWN: u8 = 2;
+static LEAVE_PHASE: AtomicU8 = AtomicU8::new(LEAVE_IDLE);
+/// §2.9 B2-1: spawns that have passed the funnel's entry and not yet reached Panes (or failed). See `enter_flight`.
+static SPAWNS_IN_FLIGHT: AtomicUsize = AtomicUsize::new(0);
+
+/// The main window's close request (`WindowEvent::CloseRequested`), already prevented by the caller. The first request
+/// starts the Leave off the event loop; every later one only says the save is still running (§2.2 step 6).
+fn leave_close_requested(app: &AppHandle) {
+    match LEAVE_PHASE.compare_exchange(LEAVE_IDLE, LEAVE_RUNNING, Ordering::SeqCst, Ordering::SeqCst) {
+        Ok(_) => {
+            let app = app.clone();
+            std::thread::spawn(move || leave_run(&app));
+        }
+        Err(LEAVE_RUNNING) => {
+            let _ = app.emit("leave", serde_json::json!({ "phase": "busy" }));
+        }
+        Err(_) => {
+            let _ = app.emit("leave", serde_json::json!({ "phase": "use-button" }));
+        }
+    }
+}
+
+/// §2.2, in order: end every seat and wait (1), find the stick (2), save (3–4), write the result (5), show it (6).
+fn leave_run(app: &AppHandle) {
+    // 0 · §2.9 B2-1: THE PHASE IS ALREADY SET (leave_close_requested), so no new spawn can pass the funnel. Wait for the
+    //     ones that passed before it to land in Panes, THEN drain — or the drain misses a seat still being started.
+    let in_flight = sync_launch::await_flights(&SPAWNS_IN_FLIGHT, SPAWN_FLIGHT_POLLS, &mut || std::thread::sleep(SPAWN_FLIGHT_POLL));
+    if in_flight > 0 {
+        plog(&format!("LEAVE SPAWNS {in_flight} still in flight at the {} s bound — the save will read NOT DONE", SPAWN_FLIGHT_POLLS as u64 * SPAWN_FLIGHT_POLL.as_millis() as u64 / 1000));
+    }
+    // 1 · END EVERY SEAT. Out of the map, killed, and DROPPED before the wait: a held killer is an open handle to the
+    //     process. The kill's return value is discarded unread — on Windows it is inverted (§2.7 D-1).
+    let sessions: Vec<(String, PtySession)> = app.state::<Panes>().0.lock().unwrap().drain().collect();
+    let mut seats = Vec::with_capacity(sessions.len());
+    for (pane, mut s) in sessions {
+        let _ = s.killer.kill();
+        seats.push(sync_launch::SeatProc { pane, pid: s.pid, image: s.image.take() });
+    }
+    let t0 = Instant::now();
+    let alive = sync_launch::await_seats(&seats, SEAT_TEARDOWN_POLLS, &proc_listed, &mut || std::thread::sleep(SEAT_TEARDOWN_POLL));
+    plog(&format!(
+        "LEAVE SEATS {} killed, {} still running after {} ms{}",
+        seats.len(),
+        alive.len(),
+        t0.elapsed().as_millis(),
+        if alive.is_empty() { String::new() } else { format!(": {}", alive.join(", ")) }
+    ));
+
+    // 2 · FIND THE STICK, then 3–5 · SAVE AND WRITE THE RESULT.
+    let find = sync_launch::find_stick(&volume_roots());
+    let data = data_dir();
+    let now = || chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
+    let mut export = |folder: &Path| {
+        let f = folder.display().to_string();
+        let _ = app.emit("leave", serde_json::json!({ "phase": "saving", "folder": f }));
+        plog(&format!("LEAVE SAVING to {f}"));
+        run_carry_json(&["--stick", &f, "--export", "--json", "--apply"], LEAVE_EXPORT_TIMEOUT)
+    };
+    let run = sync_launch::run_leave(&data, std::process::id(), &alive, in_flight, find, &now, &mut export);
+    let (result, mut written) = match run {
+        // No stick: exit as today — no Leave screen, no files.
+        sync_launch::LeaveRun::Exit => {
+            app.exit(0);
+            return;
+        }
+        sync_launch::LeaveRun::Shown { result, written } => (result, written),
+    };
+    plog(&format!(
+        "LEAVE {} code={} — {}",
+        result["outcome"].as_str().unwrap_or("?"),
+        result["code"],
+        result["why"].as_str().unwrap_or("saved")
+    ));
+
+    // 6 · THE EXIT BUTTON EXISTS ONLY AFTER THE RESULT IS WRITTEN. A failed write is shown and tried again; without the
+    //     file, the waiter would read this close as the app dying mid-save and save a second time.
+    loop {
+        match &written {
+            Ok(()) => break,
+            Err(e) if !data.join(sync_launch::LEAVE_RESULT).is_file() => {
+                plog(&format!("LEAVE RESULT not written ({e}) — trying again in 2 s"));
+                let _ = app.emit("leave", serde_json::json!({ "phase": "result", "result": result, "write_error": e, "can_exit": false }));
+                std::thread::sleep(Duration::from_secs(2));
+                written = sync_launch::write_leave_result(&data, &result);
+            }
+            // The result is on disk and only STARTED's removal failed: the waiter reads case b regardless.
+            Err(e) => {
+                plog(&format!("LEAVE {e}"));
+                break;
+            }
+        }
+    }
+    LEAVE_PHASE.store(LEAVE_SHOWN, Ordering::SeqCst);
+    let _ = app.emit("leave", serde_json::json!({ "phase": "result", "result": result, "write_error": null, "can_exit": true }));
+}
+
+/// The Leave screen's one button. It exits only once the result file is written (§2.2 step 6).
+#[tauri::command]
+fn leave_exit(app: AppHandle) -> Result<(), String> {
+    if LEAVE_PHASE.load(Ordering::SeqCst) != LEAVE_SHOWN {
+        return Err("the save to the stick is still running — Consonance closes when it is done".into());
+    }
+    plog("LEAVE CLOSE — the keeper closed Consonance from the Leave screen");
+    app.exit(0);
+    Ok(())
+}
+
+/// §2.7 D-4: the launch's look at LEAVE_* files, after `set_dirs` and before this launch's own waiter starts. Removes
+/// only what `sync_launch::leave_cleanup` says is stale; a launch with no LEAVE_* file does nothing and writes no row.
+fn leave_cleanup_at_launch() {
+    let data = data_dir();
+    let plan = sync_launch::leave_cleanup(&data, &proc_listed);
+    for (f, why) in &plan.keep {
+        plog(&format!("LEAVE FILE KEPT {} — {why}", f.display()));
+    }
+    for (f, why) in &plan.remove {
+        match fs::remove_file(f) {
+            Ok(()) => plog(&format!("LEAVE FILE STALE removed {} — {why}", f.display())),
+            Err(e) => plog(&format!("LEAVE FILE STALE {} could not be removed ({e}) — {why}", f.display())),
+        }
+    }
+}
+
 #[cfg(test)]
 mod stick_wiring_tests {
     use super::*;
@@ -10941,6 +11146,9 @@ fn main() {
                 *RESOURCE_RECORD.lock().unwrap() = Some(p);
             }
             set_dirs(&get_state()); // resolve configurable dirs before anything reads them
+            // P-LEAVE §2.7 D-4: stale LEAVE_* files, after the resolver and BEFORE this launch's waiter starts, so a
+            // waiter lock found here is the last session's, and a live one leaves its files alone.
+            leave_cleanup_at_launch();
             // L052: FILL, between the RESOLVE above and every READ below.
             //
             // THE PACKET SAID BOTH "before set_dirs reads anything" AND "after the resolver", and
@@ -11318,11 +11526,25 @@ fn main() {
             set_pane_kept, list_kept_panes, resume_pane, new_room, pane_letters,
             pane_scrollback,
             audio_sources, audio_start, audio_stop, audio_status, audio_snapshot,
-            stick_state, stick_rehearse, stick_start_applier, stick_release, stick_ack_result, stick_close_app
+            stick_state, stick_rehearse, stick_start_applier, stick_release, stick_ack_result, stick_close_app,
+            leave_exit
         ])
+        // P-LEAVE §2.2: the main window's close is PREVENTED and becomes the Leave. `app.exit` (the applier's confirm,
+        // the Leave's own button) raises ExitRequested, not CloseRequested, so it does not come back through here —
+        // which is §2.4's first guard: the applier never runs a Leave.
+        .on_window_event(|window, event| {
+            if let tauri::WindowEvent::CloseRequested { api, .. } = event {
+                if window.label() == "main" {
+                    api.prevent_close();
+                    leave_close_requested(window.app_handle());
+                }
+            }
+        })
         // No graceful-shutdown delay on close: `/exit` doesn't reliably flush an interactive claude
         // (proven), the own-capture log persists every chunk as it arrives, and real `--resume` works
         // off claude's own periodic flush — so the window closes instantly, no hitch.
+        // P-LEAVE amends "instantly": the close now kills every seat and waits for them to be gone (measured on L at
+        // under 130 ms for seven, bounded at 5 s) before it looks for a stick. Still no `/exit`, still no flush wait.
         .run(tauri::generate_context!())
         .expect("error while running Consonance");
 }
@@ -15656,5 +15878,144 @@ mod diverged_wiring_tests {
         let src = fs::read_to_string("src/main.rs").unwrap();
         let body = body_of(&src, concat!("fn seats", "_withheld("));
         assert!(body.contains(concat!("sync_launch::withheld", "_line(")), "a stick hold still reads READ-ONLY");
+    }
+}
+
+#[cfg(test)]
+mod leave_wiring_tests {
+    use std::fs;
+
+    fn src() -> String {
+        fs::read_to_string("src/main.rs").expect("read own source")
+    }
+
+    fn body_of(src: &str, sig: &str) -> String {
+        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+        after[..after.find("\n}\n").expect("no end of function")].to_string()
+    }
+
+    /// §2.7 D-1: every seat is a PtySession built in ONE place, and that place keeps the pid, read before the Child
+    /// moves into its wait thread. So every spawn site carries it without each one having to remember.
+    #[test]
+    fn every_seat_carries_its_pid_from_the_one_place_a_session_is_built() {
+        let s = src();
+        assert_eq!(s.matches(concat!("Ok(PtySession", " {")).count() + s.matches(concat!("= PtySession", " {")).count(), 1, "a PtySession is built in more than one place");
+        let body = body_of(&s, concat!("fn spawn_claude", "_pane("));
+        let pid = body.find(concat!("child.process", "_id()")).expect("the pid is not read from the child");
+        let moved = body.find(concat!("let _ = child", ".wait();")).expect("no wait thread — re-point this test");
+        assert!(pid < moved, "the pid is read after the Child has moved");
+        assert!(body.contains(concat!("killer, pid, ", "image, flight: Some(flight) })")), "the session built does not keep the pid and image");
+    }
+
+    /// §2.7 D-1: the close never reads the killer's result, and waits on the pids through the process LIST, after the
+    /// sessions — and with them every killer's handle — have been dropped.
+    #[test]
+    fn the_close_waits_on_the_pids_and_never_reads_the_killers_result() {
+        let s = src();
+        let body = body_of(&s, concat!("fn leave", "_run("));
+        assert!(body.contains(concat!("let _ = s.killer", ".kill();")), "the seats are not killed through their killers");
+        assert_eq!(body.matches(concat!("killer.", "kill()")).count(), 1, "the killer's result is read somewhere");
+        let wait = body.find(concat!("sync_launch::await", "_seats(")).expect("the close does not wait on the seats");
+        let loop_end = body.find(concat!("image: s.image.take() });\n    ", "}")).expect("the kill loop changed — re-point this test");
+        assert!(loop_end < wait, "the wait begins while the sessions are still held");
+        assert!(body[wait..].starts_with(concat!("sync_launch::await_seats(&seats, SEAT_TEARDOWN_POLLS, &proc", "_listed,")), "the wait does not use the process-list probe");
+    }
+
+    /// §2.2 step 3: exactly the export the packet names, with the Leave's own bound — and the bound's comment carries
+    /// the first carry's real figure (§2.7 FIGURE), not the rehearsal total.
+    #[test]
+    fn the_close_saves_with_the_named_export_and_its_bound() {
+        let s = src();
+        let body = body_of(&s, concat!("fn leave", "_run("));
+        assert!(body.contains(concat!(r#"run_carry_json(&["--stick", &f, "--export", "--json", "--apply"], LEAVE_EXPORT"#, "_TIMEOUT)")));
+        let at = s.find(concat!("const LEAVE_EXPORT_TIMEOUT: Duration = Duration::from_secs(", "600);")).expect("the bound is not 600 s");
+        let comment = &s[s[..at].rfind(concat!("/// P-LEAVE §2.2 ", "step 3")).expect("no comment")..at];
+        assert!(comment.contains(concat!("348,026,", "190 B")) && !comment.contains(concat!("348,007,", "682")), "{comment}");
+    }
+
+    /// §2.2 step 6: the close request is prevented and becomes the Leave; the only exit is the button, and only once the
+    /// result is written.
+    #[test]
+    fn the_window_close_becomes_the_leave_and_exits_only_from_the_button_after_the_result() {
+        let s = src();
+        let hook = &s[s.find(concat!(".on_window", "_event(")).expect("no window event hook")..];
+        let hook = &hook[..hook.find(concat!(".run(tauri::generate", "_context!())")).expect("hook end — re-point")];
+        assert!(hook.contains(concat!("api.prevent", "_close();")) && hook.contains(concat!("leave_close", "_requested(")));
+        let exit = body_of(&s, concat!("fn leave", "_exit("));
+        let gate = exit.find(concat!("!= LEAVE", "_SHOWN")).expect("the button does not check the phase");
+        assert!(gate < exit.find(concat!("app.", "exit(")).unwrap());
+        let run = body_of(&s, concat!("fn leave", "_run("));
+        let shown = run.find(concat!("LEAVE_PHASE.store(LEAVE", "_SHOWN")).expect("the phase never becomes SHOWN");
+        assert!(run.find(concat!("Ok(()) => ", "break,")).unwrap() < shown, "SHOWN is set before the write loop");
+    }
+
+    /// A seat spawned once the close has begun would write under the save (F1). §2.9 B2-1: the spawn funnel enters a
+    /// FLIGHT — the count raised before the phase is read — before anything is opened, and the session carries it.
+    #[test]
+    fn no_seat_wakes_once_the_close_has_begun() {
+        let s = src();
+        let body = body_of(&s, concat!("fn spawn_claude", "_pane("));
+        let gate = body
+            .find(concat!("sync_launch::enter_flight(&SPAWNS_IN_FLIGHT, &LEAVE_PHASE, LEAVE", "_IDLE)"))
+            .expect("the spawn funnel does not enter a flight");
+        assert!(gate < body.find(concat!("native_pty", "_system()")).unwrap(), "the flight is entered after the PTY is opened");
+        assert!(body.contains(concat!("killer, pid, image, flight: ", "Some(flight) })")), "the session does not carry its flight");
+    }
+
+    /// §2.9 B2-1: the flight is released when the caller's insert into Panes has COMPLETED — so every insert goes through
+    /// the one helper that takes the flight out, inserts, and only then drops it.
+    #[test]
+    fn every_spawned_session_reaches_panes_through_the_helper_that_releases_its_flight() {
+        let s = src();
+        assert_eq!(s.matches(concat!("panes.0.lock().unwrap()", ".insert(")).count(), 0, "a session is inserted without releasing its flight");
+        assert_eq!(s.matches(concat!("insert_pane(&", "panes, ")).count(), 10, "not every spawn site inserts through insert_pane");
+        let body = body_of(&s, concat!("fn insert", "_pane("));
+        let take = body.find(concat!("let flight = session.flight", ".take();")).expect("the flight is not kept out of the session until the insert");
+        let insert = body.find(concat!("map.insert", "(")).expect("no insert");
+        let release = body.find(concat!("drop(", "flight)")).expect("the flight is not dropped");
+        assert!(take < insert && insert < release, "the flight is released before the insert completes");
+    }
+
+    /// §2.9 B2-1: the close sets its phase (leave_close_requested), then waits for the flights, then drains.
+    #[test]
+    fn the_close_waits_for_spawns_in_flight_before_it_drains() {
+        let s = src();
+        let req = body_of(&s, concat!("fn leave_close", "_requested("));
+        assert!(req.find(concat!("LEAVE_PHASE.compare_exchange(LEAVE_IDLE, ", "LEAVE_RUNNING")).unwrap() < req.find(concat!("leave", "_run(&app)")).unwrap());
+        let run = body_of(&s, concat!("fn leave", "_run("));
+        let wait = run.find(concat!("sync_launch::await_flights(&SPAWNS_IN_FLIGHT, SPAWN_FLIGHT", "_POLLS,")).expect("the close does not wait for flights");
+        assert!(wait < run.find(concat!(".drain", "()")).unwrap(), "the close drains before the flights have landed");
+        assert!(run.contains(concat!("&data, std::process::id(), &alive, in_flight", ", find,")), "the in-flight count does not reach DONE");
+    }
+
+    /// §2.9 B2-2: the probe asks about the app itself in the SAME enumeration, and reads the answer through
+    /// `sync_launch::listing_from`, so an empty list is CANNOT TELL.
+    #[test]
+    fn the_process_list_probe_asks_about_the_app_itself_in_the_same_call() {
+        let s = src();
+        let body = body_of(&s, concat!("fn proc", "_listed("));
+        assert!(body.contains(concat!("refresh_pids_specifics(&[spid, ", "own],")) && body.contains(concat!("sync_launch::listing", "_from(")), "{body}");
+    }
+
+    /// The process-list probe's positive control: a probe that always answered "gone" would make every seat end at once
+    /// and every Leave read DONE. It must see a process that is running — this test's own — under its own image.
+    #[test]
+    fn the_process_list_probe_sees_a_running_process_under_its_image() {
+        let crate::sync_launch::Listing::Running(me) = super::proc_listed(std::process::id()) else {
+            panic!("the probe does not list this running process")
+        };
+        let exe = std::env::current_exe().unwrap().file_name().unwrap().to_string_lossy().to_string();
+        assert_eq!(me.name.to_ascii_lowercase(), exe.to_ascii_lowercase());
+    }
+
+    /// §2.7 D-4: the launch cleanup runs after `set_dirs` and before this launch's own waiter starts.
+    #[test]
+    fn the_launch_cleanup_runs_after_the_resolver_and_before_the_waiter() {
+        let s = src();
+        assert_eq!(s.matches(concat!("leave_cleanup_at", "_launch();")).count(), 1);
+        let clean = s.find(concat!("            leave_cleanup_at", "_launch();")).unwrap();
+        let dirs = s.find(concat!("set_dirs(&get_state()); // resolve ", "configurable")).unwrap();
+        let waiter = s.find(concat!("            start_exit", "_waiter();")).unwrap();
+        assert!(dirs < clean && clean < waiter);
     }
 }

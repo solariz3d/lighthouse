@@ -1032,3 +1032,20 @@ L058c **p-diverged-E** — the window's door for a fork: a DIVERGED row is offer
   rendered HTML. A test asserting only the "after" of a change passes on code with no change handler; assert before AND after.
 - **`deepStrictEqual` across a `vm` realm** fails on identical arrays (different prototypes); compare JSON.
 - **A §-named mechanism is a reading until measured** — `windowsHide` WAS enough; the flashing call was a different site.
+
+## 2026-09-15 ~01:30 · P-LEAVE (D063) E half built on L → `exo_memory/handback/p-leave-E_2026-09-14.md`
+The close window: seats killed, dropped and waited on through a PROCESS-LIST probe, then the stick save, DONE/NOT DONE,
+the launch cleanup as ruled. **The finding to carry:** sysinfo's `refresh_process_specifics` (`proc_info`) opens the
+pid, so an exited process still referenced by a handle (its killer, or a busy seat's orphaned bash) reads RUNNING
+forever: 38/38 never ended in 30 s while tasklist listed 0/38. `refresh_pids_specifics` (`proc_listed`) read 63/63 ended
+in 26.5–129.9 ms on L. The kill result was inverted 111/111. Bound 5 s. Harness `scratchpad/leave/teardown/` +
+`score.js`; rows `gen_leave_rows.js`; mutants `l059/mutate7.js`/`mutate8.js` 33/33. D-8 held (§2.8), not built.
+
+## 2026-09-15 ~01:45 · P-LEAVE §2.9 (c59530a) built → appendix of `exo_memory/handback/p-leave-E_2026-09-14.md`
+B2-1: an in-flight spawn count (enter_flight raises the count BEFORE reading LEAVE_PHASE; the Flight drop is the decrement; insert_pane releases it after the Panes insert, 10/10 sites); leave_run waits for it up to 10 s, then drains, and a count above zero is NOT DONE. B2-2: proc_listed lists the app's own pid in the same enumeration; absent means CANNOT TELL (alive in the wait, keep in the cleanup). 658/0/4; mutants 13/13, but Y6 SURVIVED first: **a test whose inputs are all the same failure cannot tell which guard held.**
+
+## 2026-09-15 ~06:30 · P-HARNESS §2 (1bc3299) measured → `exo_memory/handback/p-harness-E_2026-09-15.md`
+Per resume with nothing typed: librarian burst mean 368,523 B (78.8% the vendor instructions record, the whole intake written TWICE, files + rendered), chair 439,825 B (56.3% instructions, 33.5% file-history snapshot); context +56–59k tokens (lib) / +43–53k (chair) per resume. Between launches the intake changes by 531–4,390 B (lib) / one PULSE line (chair), never byte-identical, so whether the vendor skips an unchanged CLAUDE.md is UNMEASURED. The shelf carries 0 bodies, so the date/byte windows are inert (0 B). The vendor re-reads on-disk CLAUDE.md after compaction: the delta idea's trap. Scripts `scratchpad/harness/`.
+
+## 2026-09-15 ~07:10 · P-DIVERSITY-C0 §2 (57f21c7) → `exo_memory/handback/p-diversity-c0-E_2026-09-15.md`
+Per pane from Consonance: NO (no --model at main.rs:1002-1056, no model env, KeptPane {pane,cwd,label} :3419). By the vendor: new panes take ~/.claude/settings.json:3 (fable-5-1[1m] on L); a RESUME keeps its last model (probe: resume without --model answered opus while the default is fable); `/model` saves as the machine default. `--model` on --resume works in print mode. Smallest change: an optional KeptPane.model + a lookup in the funnel. Breaks: rosterApply drops it (state-sync.js:1018); the [1m] suffix; interactive mode unmeasured. Found in passing: KeptPane already drops panes.json `home` on set_pane_kept.
