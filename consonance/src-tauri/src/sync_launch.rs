@@ -1222,7 +1222,11 @@ pub const APP_IMAGE: &str = "consonance.exe";
 /// --app-image consonance.exe`. **No `--stick`**: the keeper plugs the stick in at the END of a session, so
 /// the waiter finds it when it exports, not at launch. Returned as the args after the script path, so a test
 /// can pin the shape without starting anything.
-pub fn waiter_args(data_dir: &Path, app_pid: u32) -> Vec<String> {
+///
+/// **P-LEAVE-2 (a), B's D-8:** and `--app-started-at <ISO>`, this session's own recorded start time, beside the
+/// pid. A pid is reused by Windows; a pid and the moment its Consonance started are not, so the waiter matches a
+/// LEAVE file only when both equal what it is given here.
+pub fn waiter_args(data_dir: &Path, app_pid: u32, app_started_at: &str) -> Vec<String> {
     vec![
         "--data".to_string(),
         data_dir.display().to_string(),
@@ -1230,7 +1234,30 @@ pub fn waiter_args(data_dir: &Path, app_pid: u32) -> Vec<String> {
         app_pid.to_string(),
         "--app-image".to_string(),
         APP_IMAGE.to_string(),
+        "--app-started-at".to_string(),
+        app_started_at.to_string(),
     ]
+}
+
+/// **P-LEAVE-2 (b) 1, B's read2 §8.4 item 1: a spawn that fails after its child is running ends that child.**
+/// `spawn_claude_pane`'s `try_clone_reader()?` and `take_writer()?` run after `spawn_command`; an `Err` there used to
+/// drop the child, the killer and the flight together, leaving a live `claude.exe` outside Panes and outside the
+/// count the close waits on. `kill` is called on `Err` only, before the error returns. Its result is not read: the
+/// portable-pty 0.8.1 killer reports it backwards (§2.7 D-1).
+pub fn or_kill<T, E: std::fmt::Display>(r: Result<T, E>, kill: &mut dyn FnMut()) -> Result<T, String> {
+    r.map_err(|e| {
+        kill();
+        e.to_string()
+    })
+}
+
+/// **P-LEAVE-2 (b) 2, B's read2 §8.4 item 2: a live session that a pane id's insert replaces is ended, not dropped.**
+/// `insert_pane` passes `map.insert`'s return here. `Some` is the session the map held under that id (reachable from
+/// `pty_reopen`, which does not check first): it is killed. `None` kills nothing.
+pub fn kill_replaced<V>(replaced: Option<V>, kill: &mut dyn FnMut(&mut V)) {
+    if let Some(mut old) = replaced {
+        kill(&mut old);
+    }
 }
 
 /// **P-DIVERGED D-3: the offer for a DIVERGED seat — built beside `offer_for`, not through it.** `offer_for`'s
@@ -1537,12 +1564,16 @@ pub enum LeaveRun {
 
 /// **§2.2 steps 2 to 5.** `alive` is step 1's answer and `in_flight` §2.9 B2-1's; `export` runs `tail-carry --export --json --apply` for the one
 /// folder and is called only after LEAVE_STARTED is on disk.
+///
+/// **P-LEAVE-2 (a):** `app_started_at` is this session's recorded start time, the same string its waiter was given,
+/// written as `appStartedAt` in BOTH files. Not `startedAt`, which the result already uses for when the Leave began.
 pub fn run_leave(
     data_dir: &Path,
     app_pid: u32,
     alive: &[String],
     in_flight: usize,
     find: StickFind,
+    app_started_at: &str,
     now: &dyn Fn() -> String,
     export: &mut dyn FnMut(&Path) -> Result<serde_json::Value, String>,
 ) -> LeaveRun {
@@ -1550,6 +1581,7 @@ pub fn run_leave(
         serde_json::json!({
             "pid": app_pid,
             "image": APP_IMAGE,
+            "appStartedAt": app_started_at,
             "startedAt": started_at,
             "at": now(),
             "stick": stick,
@@ -1573,7 +1605,7 @@ pub fn run_leave(
         StickFind::One(f) => {
             let stick = f.folder.display().to_string();
             let started_at = now();
-            let started = serde_json::json!({ "pid": app_pid, "image": APP_IMAGE, "at": started_at, "stick": stick });
+            let started = serde_json::json!({ "pid": app_pid, "image": APP_IMAGE, "appStartedAt": app_started_at, "at": started_at, "stick": stick });
             let ending = match write_json_atomic(&data_dir.join(LEAVE_STARTED), &started) {
                 // Not exported without it: a Consonance stopped mid-save must be tellable from one that never began,
                 // or the waiter's case c cannot exist (§2.3).
@@ -1599,8 +1631,9 @@ pub struct LeaveCleanup {
 /// waiter, so a lock found here is the previous session's.
 ///
 /// **As ruled, and no further.** A file naming THIS process's pid names a live Consonance, so it is kept — although it
-/// was written by an earlier Consonance that had the same pid. That is B's D-8, HELD for P-LEAVE-2 at §2.8 (a), whose
-/// fix is an `appStartedAt` in both files; it is not decided here.
+/// was written by an earlier Consonance that had the same pid. B's D-8 is built for the WAITER by P-LEAVE-2 (a): both
+/// files now carry `appStartedAt`, and the waiter matches on the pid AND it. This cleanup does not read the field —
+/// P-LEAVE-2 did not rule it here — so such a file is still kept, and the waiter that owns it reads it as stale.
 ///
 /// No LEAVE_* file: nothing is read at all, not even the lock.
 pub fn leave_cleanup(data_dir: &Path, probe: &dyn Fn(u32) -> Listing) -> LeaveCleanup {
@@ -2731,8 +2764,12 @@ mod stick_tests {
     /// the export on the exit where the keeper plugged the stick in late.
     #[test]
     fn the_waiter_is_told_the_data_dir_the_app_pid_and_the_app_image_and_no_stick() {
-        let args = waiter_args(Path::new("C:\\Consonance\\data"), 23900);
-        assert_eq!(args, vec!["--data", "C:\\Consonance\\data", "--app-pid", "23900", "--app-image", "consonance.exe"]);
+        // P-LEAVE-2 (a) extends the ruled argv by `--app-started-at <ISO>` (B's D-8): the expected vec changed with it.
+        let args = waiter_args(Path::new("C:\\Consonance\\data"), 23900, "2026-09-15T05:40:12.345Z");
+        assert_eq!(
+            args,
+            vec!["--data", "C:\\Consonance\\data", "--app-pid", "23900", "--app-image", "consonance.exe", "--app-started-at", "2026-09-15T05:40:12.345Z"]
+        );
         assert!(!args.iter().any(|a| a == "--stick"), "the waiter was handed a stick path fixed at launch");
     }
 }
@@ -2919,6 +2956,69 @@ mod leave_tests {
         StickFind::One(StickFolder { folder: folder.to_path_buf(), layout: StickLayout::Older })
     }
 
+    /// This session's recorded start time, as `main` hands it to the waiter and to the Leave (P-LEAVE-2 a).
+    const APP_T: &str = "2026-09-15T05:40:12.345Z";
+
+    /// **P-LEAVE-2 (a), B's D-8:** the file the waiter reads in case c carries the session's start time, so a
+    /// session 1 file is never read as session 2's when Windows gives session 2 the same pid.
+    #[test]
+    fn the_started_file_carries_this_sessions_start_time() {
+        let data = scratch("appstarted_s");
+        let mut seen: Option<serde_json::Value> = None;
+        let _ = run_leave(&data, 4242, &[], 0, one(Path::new("D:\\stick")), APP_T, &at, &mut |_| {
+            seen = fs::read_to_string(data.join(LEAVE_STARTED)).ok().map(|s| serde_json::from_str(&s).unwrap());
+            Ok(real("done"))
+        });
+        let started = seen.expect("no STARTED file during the export");
+        assert_eq!(started["appStartedAt"], serde_json::json!(APP_T), "LEAVE_STARTED does not carry appStartedAt: {started}");
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// Case b's file, on BOTH branches that write one: the one folder, and the several folders nothing is picked from.
+    #[test]
+    fn the_result_file_carries_this_sessions_start_time_on_every_branch_that_writes_one() {
+        let data = scratch("appstarted_r");
+        let many = StickFind::Many(vec![
+            StickFolder { folder: PathBuf::from("E:\\a"), layout: StickLayout::Older },
+            StickFolder { folder: PathBuf::from("F:\\b"), layout: StickLayout::Older },
+        ]);
+        for find in [one(Path::new("D:\\stick")), many] {
+            let LeaveRun::Shown { result, written } = run_leave(&data, 4242, &[], 0, find, APP_T, &at, &mut |_| Ok(real("done"))) else {
+                panic!("no Leave screen")
+            };
+            assert!(written.is_ok(), "{written:?}");
+            assert_eq!(result["appStartedAt"], serde_json::json!(APP_T), "the result shown does not carry appStartedAt: {result}");
+            assert_eq!(read(&data.join(LEAVE_RESULT))["appStartedAt"], serde_json::json!(APP_T), "the result on disk does not");
+            // Not written INTO startedAt, which already means when the Leave began.
+            assert_ne!(result["startedAt"], serde_json::json!(APP_T));
+        }
+        let _ = fs::remove_dir_all(data);
+    }
+
+    /// **P-LEAVE-2 (b) 1:** the error returns AND the child is killed, exactly once; an `Ok` kills nothing.
+    #[test]
+    fn a_spawn_step_that_fails_after_the_child_runs_kills_the_child_and_returns_the_error() {
+        let mut kills = 0;
+        let r: Result<u8, String> = or_kill(Err::<u8, _>("no reader"), &mut || kills += 1);
+        assert_eq!((r, kills), (Err("no reader".to_string()), 1), "a failed step left its child running");
+        let mut kills = 0;
+        let r = or_kill(Ok::<u8, &str>(7), &mut || kills += 1);
+        assert_eq!((r, kills), (Ok(7), 0), "a step that worked killed its child");
+    }
+
+    /// **P-LEAVE-2 (b) 2:** through a real map — the session the id held is killed, the new one is not, and a fresh id
+    /// kills nothing.
+    #[test]
+    fn an_insert_that_replaces_a_session_kills_the_one_it_replaces_and_not_the_new_one() {
+        let mut map: std::collections::HashMap<String, (&str, u32)> = std::collections::HashMap::new();
+        let mut killed: Vec<&str> = Vec::new();
+        kill_replaced(map.insert("p1".into(), ("first", 0)), &mut |s: &mut (&str, u32)| killed.push(s.0));
+        assert!(killed.is_empty(), "a fresh pane id killed something: {killed:?}");
+        kill_replaced(map.insert("p1".into(), ("second", 0)), &mut |s: &mut (&str, u32)| killed.push(s.0));
+        assert_eq!(killed, vec!["first"], "the replaced session was not the one killed");
+        assert_eq!(map["p1"].0, "second");
+    }
+
     fn at() -> String {
         "2026-09-15T06:30:00.000Z".to_string()
     }
@@ -2938,7 +3038,7 @@ mod leave_tests {
         let data = scratch("none");
         let before = listing(&data);
         let called = Cell::new(false);
-        let run = run_leave(&data, 4242, &[], 0, StickFind::None, &at, &mut |_| {
+        let run = run_leave(&data, 4242, &[], 0, StickFind::None, APP_T, &at, &mut |_| {
             called.set(true);
             Ok(real("done"))
         });
@@ -2955,7 +3055,7 @@ mod leave_tests {
             StickFolder { folder: b.clone(), layout: StickLayout::Manifest },
         ]);
         let called = Cell::new(false);
-        let LeaveRun::Shown { result, written } = run_leave(&data, 4242, &[], 0, find, &at, &mut |_| {
+        let LeaveRun::Shown { result, written } = run_leave(&data, 4242, &[], 0, find, APP_T, &at, &mut |_| {
             called.set(true);
             Ok(real("done"))
         }) else {
@@ -2976,7 +3076,7 @@ mod leave_tests {
         let data = scratch("one");
         let stick = PathBuf::from("D:\\consonance-L-20260911");
         let mut seen: Option<serde_json::Value> = None;
-        let run = run_leave(&data, 4242, &[], 0, one(&stick), &at, &mut |f| {
+        let run = run_leave(&data, 4242, &[], 0, one(&stick), APP_T, &at, &mut |f| {
             assert_eq!(f, Path::new("D:\\consonance-L-20260911"), "the export was not handed the found folder");
             seen = fs::read_to_string(data.join(LEAVE_STARTED)).ok().map(|s| serde_json::from_str(&s).unwrap());
             Ok(real("done"))
@@ -2999,7 +3099,7 @@ mod leave_tests {
         let data = scratch("nostarted");
         fs::create_dir_all(data.join(LEAVE_STARTED)).unwrap(); // a directory where the file must go
         let called = Cell::new(false);
-        let run = run_leave(&data, 4242, &[], 0, one(Path::new("D:\\stick")), &at, &mut |_| {
+        let run = run_leave(&data, 4242, &[], 0, one(Path::new("D:\\stick")), APP_T, &at, &mut |_| {
             called.set(true);
             Ok(real("done"))
         });
@@ -3203,7 +3303,8 @@ mod leave_tests {
         let _ = fs::remove_dir_all(data);
     }
 
-    /// D-8 is HELD (§2.8 a): a file naming this launch's own pid names a LIVE Consonance, so D-4 as ruled keeps it.
+    /// D-8 (§2.8 a) is built for the waiter by P-LEAVE-2, not for this cleanup: a file naming this launch's own pid names
+    /// a LIVE Consonance, so D-4 as ruled still keeps it.
     #[test]
     fn a_leave_file_naming_this_launchs_own_pid_is_kept_as_ruled() {
         let data = with_files("clean_ownpid", 99);
@@ -3268,7 +3369,7 @@ mod leave_tests {
     #[test]
     fn a_seat_still_starting_is_named_in_the_result_file_too() {
         let data = scratch("inflight");
-        let run = run_leave(&data, 4242, &[], 2, one(Path::new("D:\\stick")), &at, &mut |_| Ok(real("done")));
+        let run = run_leave(&data, 4242, &[], 2, one(Path::new("D:\\stick")), APP_T, &at, &mut |_| Ok(real("done")));
         let LeaveRun::Shown { result, .. } = run else { panic!("no Leave screen") };
         assert!(result["outcome"] == "NOT_DONE" && result["why"].as_str().unwrap_or("").contains("2 seats were still being started"), "{result}");
         let _ = fs::remove_dir_all(data);

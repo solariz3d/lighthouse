@@ -88,6 +88,8 @@ test('the volume list keeps drive-letter lines only, as roots, sorted', () => {
 // ══ the waiter ══════════════════════════════════════════════════════════════════════════════════════════════════
 
 const APP = 4100;
+/** P-LEAVE-2 (a) D-8: the watched session's start time, as the app records it and passes in --app-started-at. */
+const STARTED = '2026-09-15T08:00:00.000Z';
 /** A world: a data dir, a scripted app lifetime (image per probe), injected volumes, export and notice. */
 function world(opts) {
   opts = opts || {};
@@ -119,7 +121,7 @@ function world(opts) {
     notify: (title, body, statusPath) => { if (opts.noticeFails) throw new Error('notifications are off'); w.notices.push({ title, body, statusPath }); },
     maxPolls: 50,
   }, opts.inject || {});
-  w.argv = ['--data', data, '--app-pid', String(APP), '--app-image', 'consonance.exe'];
+  w.argv = ['--data', data, '--app-pid', String(APP), '--app-image', 'consonance.exe', '--app-started-at', STARTED];
   w.status = () => { try { return fs.readFileSync(path.join(data, W.STATUS), 'utf8'); } catch (_) { return null; } };
   return w;
 }
@@ -396,7 +398,7 @@ test('a close and REOPEN inside one poll: the new app pid is adopted, and its ex
 
 // ══ P-LEAVE (D063) — §2.3 a-d as re-ruled at §2.7: the app saves at close; the waiter is the FALLBACK ══════════════
 
-const leaveFile = (w, name, rec) => put(path.join(w.data, name), JSON.stringify(Object.assign({ pid: APP, image: 'consonance.exe', at: '2026-09-14T11:50:00.000Z' }, rec || {})));
+const leaveFile = (w, name, rec) => put(path.join(w.data, name), JSON.stringify(Object.assign({ pid: APP, image: 'consonance.exe', appStartedAt: STARTED, at: '2026-09-14T11:50:00.000Z' }, rec || {})));
 const exists = (w, name) => fs.existsSync(path.join(w.data, name));
 const STICK_FOLDER = (v) => path.join(v, 'consonance-L-20260911');
 const plantLedgerLock = (v, rec) => put(path.join(STICK_FOLDER(v), 'consonance-tails', 'ledger.lock'), JSON.stringify(Object.assign({ image: 'node', script: 'tail-carry.js', at: 'x' }, rec)));
@@ -588,7 +590,7 @@ test('P-LEAVE case d: neither LEAVE file -> today\'s path, and its notices name 
   const r = go(w);
   assert.deepStrictEqual([w.exports.length, r.outcome], [1, 'CARRIED']);
   for (const n of w.notices) assert.match(n.title, /fallback/i);
-  assert.match(w.notices[0].body, /without saving to the stick itself/);
+  assert.match(w.notices[0].body, /Consonance closed without a close record for this session, so this is the fallback save\./);
 });
 
 test('P-LEAVE case d, no stick: still quiet — no notice, no status file', () => {
@@ -613,7 +615,7 @@ test('P-LEAVE D-7: the image compares lower-cased with ".exe" stripped on BOTH s
     assert.strictEqual(go(w).outcome, 'STOOD_DOWN_LEAVE', image);
   }
   const w = world({ roots: [stickVolume()] });
-  w.argv = ['--data', w.data, '--app-pid', String(APP), '--app-image', 'CONSONANCE.exe'];
+  w.argv = ['--data', w.data, '--app-pid', String(APP), '--app-image', 'CONSONANCE.exe', '--app-started-at', STARTED];
   leaveFile(w, W.LEAVE_RESULT, { outcome: 'DONE', code: 0, rows: [] });
   assert.strictEqual(go(w).outcome, 'STOOD_DOWN_LEAVE', 'the argv side is normalised too');
   const x = world({ roots: [stickVolume()] });
@@ -637,6 +639,132 @@ test('P-LEAVE: a live applier (case a) is checked before any LEAVE file', () => 
   leaveFile(w, W.LEAVE_RESULT, { outcome: 'DONE', code: 0, rows: [] });
   assert.strictEqual(go(w).outcome, 'STOOD_DOWN');
   assert.strictEqual(exists(w, W.LEAVE_RESULT), true, 'case a acts on no LEAVE file, so it removes none');
+});
+
+// ══ P-LEAVE-2 §1 (a) — B's D-8, pid reuse: a LEAVE file matches on pid AND the session's start time ═══════════════════
+
+// R-1 (ed0d60a): a fallback taken because the start time is UNKNOWN says the close window was NOT CONFIRMED — never
+// that the app was stopped, which is false for an adopted session or an older build whose own Leave may have finished.
+const saysNotConfirmed = (w, label) => {
+  const last = w.notices.slice(-2);
+  assert.strictEqual(last.length, 2, `${label}: two notices`);
+  assert.ok(last.some((n) => /NOT CONFIRMED/.test(n.body)), `${label}: no notice says NOT CONFIRMED: ${JSON.stringify(last)}`);
+  for (const n of last) assert.doesNotMatch(n.body, /stopped/i, `${label}: a notice says the app was stopped`);
+  assert.match(w.status(), /NOT CONFIRMED/, `${label}: the status log does not say NOT CONFIRMED`);
+  assert.doesNotMatch(w.status(), /stopped/i, `${label}: the status log says the app was stopped`);
+};
+// …and a start time KNOWN on both sides that differs is not unknown: this session has no close record of its own, and
+// the notice says exactly that. R-3 (c7d277e): never WHY — "stopped" is false where no stick was found at close, or
+// where case a missed an applier hand-off.
+const saysNoRecord = (w, label) => {
+  assert.match(w.notices[0].body, /Consonance closed without a close record for this session, so this is the fallback save\./, `${label}: ${w.notices[0].body}`);
+  assert.doesNotMatch(w.notices[0].body, /stopped/i, label);
+  assert.doesNotMatch(w.status(), /NOT CONFIRMED/, label);
+};
+
+test('P-LEAVE-2 D-8: a surviving session-1 LEAVE_RESULT with the SAME pid and a DIFFERENT start time is NOT case b — the fallback runs', () => {
+  const w = world({ roots: [stickVolume()] });
+  leaveFile(w, W.LEAVE_RESULT, { appStartedAt: '2026-09-14T22:00:00.000Z', outcome: 'DONE', code: 0, rows: [] });
+  const r = go(w);
+  assert.deepStrictEqual([r.outcome, w.exports.length], ['CARRIED', 1], 'a hard-killed session 2 with a reused pid exported nothing');
+  assert.strictEqual(exists(w, W.LEAVE_RESULT), true, 'another session\'s file is not this waiter\'s to remove');
+  saysNoRecord(w, 'a known, different start time');
+});
+
+test('P-LEAVE-2 D-8: the SAME pid and the SAME start time IS case b', () => {
+  const w = world({ roots: [stickVolume()] });
+  leaveFile(w, W.LEAVE_RESULT, { appStartedAt: STARTED, outcome: 'DONE', code: 0, rows: [] });
+  assert.deepStrictEqual([go(w).outcome, w.exports.length], ['STOOD_DOWN_LEAVE', 0]);
+});
+
+test('P-LEAVE-2 D-8: a session-1 LEAVE_STARTED with the same pid and another start time is NOT case c — no wait on its lock', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v], life: [null], lives: { 5100: ['node'] } });
+  leaveFile(w, W.LEAVE_STARTED, { appStartedAt: '2026-09-14T22:00:00.000Z', stick: STICK_FOLDER(v) });
+  plantLedgerLock(v, { pid: 5100 });
+  const r = go(w);
+  assert.deepStrictEqual([r.outcome, w.sleeps, exists(w, W.LEAVE_STARTED)], ['CARRIED', 0, true]);
+  saysNoRecord(w, 'a known, different start time on LEAVE_STARTED');
+});
+
+test('P-LEAVE-2 D-8: a LEGACY LEAVE file with no appStartedAt (the old build) is stale, never a match', () => {
+  for (const name of [W.LEAVE_RESULT, W.LEAVE_STARTED]) {
+    const w = world({ roots: [stickVolume()], life: [null] });
+    put(path.join(w.data, name), JSON.stringify({ pid: APP, image: 'consonance.exe', at: 'x', outcome: 'DONE', code: 0, rows: [] }));
+    const r = go(w);
+    assert.deepStrictEqual([r.outcome, w.exports.length, w.sleeps, exists(w, name)], ['CARRIED', 1, 0, true], name);
+    saysNotConfirmed(w, `legacy ${name}`);
+  }
+});
+
+test('P-LEAVE-2 D-8: a waiter started WITHOUT --app-started-at (an app of the old build) still waits and falls back, and matches no LEAVE file', () => {
+  const w = world({ roots: [stickVolume()] });
+  w.argv = ['--data', w.data, '--app-pid', String(APP), '--app-image', 'consonance.exe'];
+  leaveFile(w, W.LEAVE_RESULT, { outcome: 'DONE', code: 0, rows: [] });
+  const r = go(w);
+  assert.deepStrictEqual([r.code, r.outcome, w.exports.length], [0, 'CARRIED', 1], 'an unknown start time must never count as a match');
+  saysNotConfirmed(w, 'no --app-started-at');
+});
+
+test('P-LEAVE-2 D-8: an unknown start time on BOTH sides (no flag, and a file whose appStartedAt is null) is still no match', () => {
+  const w = world({ roots: [stickVolume()] });
+  w.argv = ['--data', w.data, '--app-pid', String(APP), '--app-image', 'consonance.exe'];
+  leaveFile(w, W.LEAVE_RESULT, { outcome: 'DONE', code: 0, rows: [], appStartedAt: null });
+  const r = go(w);
+  assert.deepStrictEqual([r.outcome, w.exports.length, exists(w, W.LEAVE_RESULT)], ['CARRIED', 1, true], 'two unknowns matched each other');
+  saysNotConfirmed(w, 'null on both sides');
+});
+
+test('P-LEAVE-2 D-8: the removal never takes a newer session\'s file with the SAME pid and another start time, written during the export', () => {
+  const v = stickVolume();
+  const w = world({ roots: [v] });
+  leaveFile(w, W.LEAVE_STARTED, { stick: STICK_FOLDER(v) });
+  const exp = w.inject.exportCarry;
+  w.inject.exportCarry = (s) => { leaveFile(w, W.LEAVE_STARTED, { appStartedAt: '2026-09-15T09:00:00.000Z', stick: STICK_FOLDER(v) }); return exp(s); };
+  go(w);
+  assert.ok(exists(w, W.LEAVE_STARTED), 'a reused-pid session\'s own LEAVE_STARTED was removed as this session\'s');
+});
+
+test('P-LEAVE-2 D-8: --app-started-at with no value is refused like every other argument', () => {
+  const w = world();
+  assert.strictEqual(W.runWaiter([...w.argv.slice(0, -1)], w.inject).code, 2);
+});
+
+test('P-LEAVE-2 D-8: an ADOPTED session\'s start time is unknown to this waiter, so its LEAVE files are stale — named, not guessed', () => {
+  const w = world({ roots: [stickVolume()], lives: { 4999: ['consonance', null] } });
+  let round = 0;
+  w.inject.pidsOf = () => {
+    round++;
+    // session 4999's Leave finished during its life — but this waiter never learned 4999's start time
+    if (round === 1) leaveFile(w, W.LEAVE_RESULT, { pid: 4999, appStartedAt: STARTED, outcome: 'DONE', code: 0, rows: [] });
+    return round === 1 ? [4999] : [];
+  };
+  go(w);
+  assert.strictEqual(w.exports.length, 2, 'the adopted session\'s exit is the fallback, even over its own DONE (its start time is not the first session\'s)');
+  // R-1 / R-3: the FIRST session left no close record, and its notice says only that; the adopted one's is NOT CONFIRMED.
+  assert.match(w.notices[0].body, /Consonance closed without a close record for this session, so this is the fallback save\./, 'the first session\'s own exit');
+  saysNotConfirmed(w, 'the adopted session');
+});
+
+test('P-LEAVE-2 R-1: an adopted session killed MID-save (its LEAVE_STARTED, start time unknown here) is NOT CONFIRMED too, never "stopped during its own save"', () => {
+  const w = world({ roots: [stickVolume()], lives: { 4999: ['consonance', null] } });
+  let round = 0;
+  w.inject.pidsOf = () => {
+    round++;
+    if (round === 1) leaveFile(w, W.LEAVE_STARTED, { pid: 4999, appStartedAt: STARTED, stick: 'x' });
+    return round === 1 ? [4999] : [];
+  };
+  go(w);
+  assert.strictEqual(w.exports.length, 2);
+  saysNotConfirmed(w, 'the adopted session, mid-save');
+});
+
+test('P-LEAVE-2 D-8: the app passes --app-started-at to the waiter and writes appStartedAt in both LEAVE files (sync_launch.rs)', () => {
+  const rs = fs.readFileSync(path.join(__dirname, '..', 'consonance', 'src-tauri', 'src', 'sync_launch.rs'), 'utf8');
+  const args = rs.slice(rs.indexOf('pub fn waiter_args('), rs.indexOf('pub fn waiter_args(') + 1200);
+  assert.match(args, /"--app-started-at"/, 'waiter_args does not pass the start time');
+  const leave = rs.slice(rs.indexOf('pub fn run_leave('), rs.indexOf('pub fn run_leave(') + 3000);
+  assert.ok((leave.match(/"appStartedAt"/g) || []).length >= 2, 'run_leave does not write appStartedAt into both files');
 });
 
 test('the real pid check, no injection: this process answers; a pid that exited does not', () => {

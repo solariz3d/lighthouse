@@ -3,7 +3,8 @@
 // stick-waiter.js — Leave, as a waiter started at EVERY launch. P-STICK-BUILD (L059) §3 "WHAT THE WAITER RUNS",
 // ruled at 11d9eb5 and ddf5a76, pane A, 2026-09-14. `dev/ON-EXIT.ps1`, absorbed; the stick scripts keep working.
 //
-//   node dev/stick-waiter.js --data <data_dir> --app-pid <pid> --app-image consonance.exe     (the app starts this)
+//   node dev/stick-waiter.js --data <data_dir> --app-pid <pid> --app-image consonance.exe --app-started-at <ISO>
+//                                                                                          (the app starts this)
 //   node dev/stick-waiter.js --view <status file>          (by hand only — NOTHING starts this; see THE NOTICE below)
 //
 // **There is no --stick.** The keeper's leaving gesture is plugging the stick in at the END of a session — usually
@@ -31,8 +32,11 @@
 //        d  neither file for this pid                     -> today's path: no stick, quiet; a stick, the fallback save:
 //                                                            "don't pull it yet", tail-carry --export --json --apply,
 //                                                            then DONE / NOT DONE (AMBIGUOUS: NOT DONE, nothing exported).
-//      "For this pid": the pid first, then the image, lower-cased with ".exe" stripped on both sides (D-7). A LEAVE file
-//      naming any other pid is stale — ignored here, removed by the app's launch-time cleanup.
+//      "For this pid": the pid first, then the image, lower-cased with ".exe" stripped on both sides (D-7), then — P-LEAVE-2
+//      (a), B's D-8 — the session's start time: the file's appStartedAt must equal --app-started-at. A pid is reused, so a
+//      session-1 file surviving into session 2 under the same pid is not session 2's. A file with no appStartedAt (the
+//      old build), or a waiter that was not told its session's start time, matches nothing. A LEAVE file that does not
+//      match is stale — ignored here, removed by the app's launch-time cleanup.
 //   4  before exiting — after ANY of a-d (D-9) — if the app is ALREADY RUNNING AGAIN under a new pid (a close and
 //      reopen inside one poll), adopt that pid and keep waiting. That launch's own waiter found this one's lock live and
 //      started none; without the adoption, the new session would end with nothing watching it.
@@ -223,7 +227,7 @@ function notify(title, body, statusPath) {
 }
 
 function parseArgs(argv) {
-  const o = { data: null, appPid: null, appImage: null, view: null };
+  const o = { data: null, appPid: null, appImage: null, appStartedAt: null, view: null };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i], v = argv[i + 1];
     const need = () => { if (v === undefined || v.startsWith('--')) throw new Error(`${a} needs a value`); i++; return v; };
@@ -231,6 +235,9 @@ function parseArgs(argv) {
       if (a === '--data') o.data = need();
       else if (a === '--app-pid') { const n = Number(need()); if (!Number.isInteger(n) || n <= 0) return { error: `--app-pid must be a positive integer, got ${v}` }; o.appPid = n; }
       else if (a === '--app-image') o.appImage = need();
+      // P-LEAVE-2 (a): optional, so an app of the build before it still gets a waiter — whose LEAVE files then match
+      // nothing (see leaveFor). Given without a value, it is refused like every other argument.
+      else if (a === '--app-started-at') o.appStartedAt = need();
       else if (a === '--view') o.view = need();
       else return { error: `unknown argument: ${a}` };
     } catch (e) { return { error: e.message }; }
@@ -267,7 +274,7 @@ function runWaiter(argv, inject) {
   const parsed = parseArgs(argv);
   if (parsed.error) { k.log(`[stick-waiter] ${parsed.error}`); return { code: 2, outcome: 'BAD_ARGUMENTS', exports: 0, notices: 0 }; }
   const o = parsed.o;
-  const app = { pid: o.appPid, image: imageName(o.appImage) };
+  const app = { pid: o.appPid, image: imageName(o.appImage), startedAt: o.appStartedAt };
   const tally = { exports: 0, notices: 0 };
 
   // ── 1 · one waiter per data dir ──
@@ -334,9 +341,18 @@ function runWaiter(argv, inject) {
       } else {
         // d · neither file for this pid: a hard kill before any Leave (or an app with no Leave). Today's path, unchanged
         //     except that its notices say they are the fallback. A LEAVE file naming a DIFFERENT pid is stale: ignored
-        //     here and left for the app's launch-time cleanup.
+        //     here and left for the app's launch-time cleanup. So is one naming this pid under another appStartedAt, or
+        //     none (P-LEAVE-2 a) — see leaveFor.
         const find = findStick(k.volumeRoots());
-        const why = 'Consonance closed without saving to the stick itself (it was stopped before its close window could run), so this is the fallback save.';
+        // R-1 (ed0d60a): a LEAVE file for this pid whose start time is UNKNOWN on either side (an adopted session, a
+        // waiter not told it, or a file from an older build) may be this session's own finished or interrupted Leave.
+        // That is not a stop, so it is never called one: the close window was NOT CONFIRMED.
+        const unknown = startTimeUnknown(leaveResultPath, app) || startTimeUnknown(leaveStartedPath, app);
+        const why = unknown
+          ? `Consonance's close window was NOT CONFIRMED: a close record names pid ${app.pid}, but ${unknown}, so it cannot be told as this session's. This is the fallback save.`
+          // R-3 (c7d277e, B's wording): no claim about WHY there is no record. It is also reached by a close that ran and
+          // found no stick before the waiter found one, and by an applier hand-off that case a missed.
+          : 'Consonance closed without a close record for this session, so this is the fallback save.';
         last = find.kind === 'none' ? { code: 0, outcome: 'NO_STICK' }
           : exportWithNotice(find, o.data, k, runExport, tally, { why, waited: [] });
       }
@@ -345,6 +361,11 @@ function runWaiter(argv, inject) {
       const again = (k.pidsOf(o.appImage) || []).filter((p) => p !== app.pid);
       if (!again.length) return { ...last, ...tally };
       app.pid = Math.max(...again);
+      // P-LEAVE-2 (a): THIS waiter was told the FIRST session's start time, never the adopted one's, and nothing tells it.
+      // Unknown, so the adopted session's LEAVE files match nothing (stale): its exit is the fallback even after its own
+      // DONE. The safe direction for D-8 — a reused pid can never stand this waiter down — at the cost of a second export
+      // (which carries nothing when the Leave already saved: tail-carry's own-pending UP_TO_DATE).
+      app.startedAt = null;
     }
   } finally {
     lock.release();
@@ -360,13 +381,29 @@ function leaveFor(p, app) {
   const rec = readJson(p);
   if (!rec || rec.pid !== app.pid) return null;
   if (imageName(rec.image) !== app.image) return null;
+  // P-LEAVE-2 (a), B's D-8: the pid AND the session's start time. Missing on either side is never a match.
+  if (typeof app.startedAt !== 'string' || typeof rec.appStartedAt !== 'string' || rec.appStartedAt !== app.startedAt) return null;
   return rec;
+}
+
+/**
+ * R-1 (ed0d60a): why the LEAVE record at `p` — same pid, same image — could not be matched for want of a start time,
+ * or null when it is not that case (no record, another pid or image, or both start times known). A known start time
+ * that DIFFERS is not unknown: that file is another session's, and this one wrote none.
+ */
+function startTimeUnknown(p, app) {
+  const rec = readJson(p);
+  if (!rec || rec.pid !== app.pid || imageName(rec.image) !== app.image) return null;
+  if (typeof app.startedAt !== 'string') return 'this waiter does not know the session\'s start time (an adopted session, or an app that did not pass it)';
+  if (typeof rec.appStartedAt !== 'string') return 'the record carries no start time (written by an older build)';
+  return null;
 }
 
 /** Remove a LEAVE file after acting on it — only if it still names the pid acted on (never a newer app's file). */
 function removeLeave(p, app) {
   const cur = readJson(p);
-  if (cur && cur.pid === app.pid) { try { fs.unlinkSync(p); } catch (_) { /* gone already */ } }
+  // P-LEAVE-2 (a): the same session, pid AND start time — a newer app with a reused pid writing the same name is not it.
+  if (cur && cur.pid === app.pid && cur.appStartedAt === app.startedAt) { try { fs.unlinkSync(p); } catch (_) { /* gone already */ } }
 }
 
 /**

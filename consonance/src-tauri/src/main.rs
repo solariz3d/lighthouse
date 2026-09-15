@@ -939,7 +939,10 @@ struct Panes(Mutex<HashMap<String, PtySession>>);
 fn insert_pane(panes: &Panes, id: String, mut session: PtySession) {
     let flight = session.flight.take();
     let mut map = panes.0.lock().unwrap();
-    map.insert(id, session);
+    // P-LEAVE-2 (b) 2: a live session already under this id (pty_reopen does not check) is killed, not dropped unkilled.
+    sync_launch::kill_replaced(map.insert(id, session), &mut |old: &mut PtySession| {
+        let _ = old.killer.kill();
+    });
     drop(map);
     drop(flight);
 }
@@ -1157,8 +1160,14 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // pty_reopen, …) carries it.
     let pid = child.process_id();
     let image = pid.and_then(proc_info).map(|p| p.name);
-    let mut reader = pair.master.try_clone_reader().map_err(|e| e.to_string())?;
-    let writer = pair.master.take_writer().map_err(|e| e.to_string())?;
+    // P-LEAVE-2 (b) 1: the child is running from here on, so a step that fails ends it before the Err returns — never a
+    // live claude.exe outside Panes and outside the count the close waits on. The kill's result is not read (D-1).
+    let mut reader = sync_launch::or_kill(pair.master.try_clone_reader(), &mut || {
+        let _ = child.kill();
+    })?;
+    let writer = sync_launch::or_kill(pair.master.take_writer(), &mut || {
+        let _ = child.kill();
+    })?;
 
     let app_r = app.clone();
     let id_r = pane_id.clone();
@@ -10639,6 +10648,15 @@ fn run_carry_json(args: &[&str], timeout: Duration) -> Result<serde_json::Value,
 /// node will not run, because a waiter that silently never started is the failure Call 2 exists to prevent.
 /// **No window, ever** (P-NO-CONSOLE): started with a hidden console its children inherit — see
 /// `CREATE_NEW_PROCESS_GROUP` for the measurement, and for the one exit it does not survive (a tree kill).
+/// **P-LEAVE-2 (a), B's D-8: this session's start time, ISO in UTC to the millisecond.** Recorded ONCE, at the top of
+/// `main`, and the same string is the waiter's `--app-started-at` and both LEAVE files' `appStartedAt`. Windows reuses a
+/// pid; it cannot reuse a pid for a process that started at the same millisecond as the one that held it before.
+static APP_STARTED_AT: std::sync::OnceLock<String> = std::sync::OnceLock::new();
+
+fn app_started_at() -> &'static str {
+    APP_STARTED_AT.get_or_init(|| chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true))
+}
+
 fn start_exit_waiter() {
     let Some(script) = repo_root().map(|r| r.join("dev").join("stick-waiter.js")).filter(|p| p.is_file()) else {
         plog("STICK WAITER not started — dev/stick-waiter.js is not on disk in this checkout; nothing will export to a stick when this app exits");
@@ -10647,7 +10665,7 @@ fn start_exit_waiter() {
     let data = data_dir();
     let spawned = Command::new("node")
         .arg(&script)
-        .args(sync_launch::waiter_args(&data, std::process::id()))
+        .args(sync_launch::waiter_args(&data, std::process::id(), app_started_at()))
         .env("CONSONANCE_DATA", &data)
         .creation_flags(NO_WINDOW | CREATE_NEW_PROCESS_GROUP)
         .stdin(Stdio::null())
@@ -10944,7 +10962,7 @@ fn leave_run(app: &AppHandle) {
         plog(&format!("LEAVE SAVING to {f}"));
         run_carry_json(&["--stick", &f, "--export", "--json", "--apply"], LEAVE_EXPORT_TIMEOUT)
     };
-    let run = sync_launch::run_leave(&data, std::process::id(), &alive, in_flight, find, &now, &mut export);
+    let run = sync_launch::run_leave(&data, std::process::id(), &alive, in_flight, find, app_started_at(), &now, &mut export);
     let (result, mut written) = match run {
         // No stick: exit as today — no Leave screen, no files.
         sync_launch::LeaveRun::Exit => {
@@ -11091,6 +11109,8 @@ fn main() {
         warn_second_instance();
         return;
     }
+    // P-LEAVE-2 (a): the session's start time, recorded here and nowhere later — see APP_STARTED_AT.
+    let _ = app_started_at();
     // Stage 7a/7b: the pull queue. pull_tx → the MCP control plane (bodies' raise_pull);
     // form_pull → the forming step (the 7b fallback puller). The consumer surfaces both.
     let (pull_tx, pull_rx) = tokio::sync::mpsc::unbounded_channel::<mcp::PullRequest>();
@@ -15905,6 +15925,44 @@ mod leave_wiring_tests {
         let moved = body.find(concat!("let _ = child", ".wait();")).expect("no wait thread — re-point this test");
         assert!(pid < moved, "the pid is read after the Child has moved");
         assert!(body.contains(concat!("killer, pid, ", "image, flight: Some(flight) })")), "the session built does not keep the pid and image");
+    }
+
+    /// **P-LEAVE-2 (a), B's D-8:** ONE start time, recorded once at the top of `main`, and the same string reaches the
+    /// waiter's argv and both LEAVE files — so what the waiter compares is what the Leave wrote.
+    #[test]
+    fn the_sessions_start_time_is_recorded_once_at_launch_and_reaches_the_waiter_and_the_leave() {
+        let s = src();
+        let main = body_of(&s, concat!("\nfn ma", "in() {"));
+        let rec = main.find(concat!("let _ = app_started", "_at();")).expect("the start time is not recorded in main");
+        assert!(rec < main.find(concat!("tauri::Builder::", "default()")).unwrap(), "the start time is recorded after the app is built");
+        assert!(body_of(&s, concat!("fn start_exit", "_waiter(")).contains(concat!("sync_launch::waiter_args(&data, std::process::id(), ", "app_started_at()))")), "the waiter is not told the start time");
+        assert!(body_of(&s, concat!("fn leave", "_run(")).contains(concat!("in_flight, find, ", "app_started_at(), &now,")), "the Leave does not write the start time");
+        let acc = body_of(&s, concat!("fn app_started", "_at() -> &'static str {"));
+        assert!(acc.contains(concat!("APP_STARTED_AT.get", "_or_init(")), "the start time is not a once-set value");
+    }
+
+    /// **P-LEAVE-2 (b) 1:** both spawn steps after `spawn_command` go through `or_kill` with a closure that kills the
+    /// child, and neither is left as a bare `?`.
+    #[test]
+    fn a_spawn_that_fails_after_its_child_runs_kills_that_child() {
+        let s = src();
+        let body = body_of(&s, concat!("fn spawn_claude", "_pane("));
+        let spawned = body.find(concat!("pair.slave.spawn", "_command(cmd)")).expect("no spawn — re-point this test");
+        for step in [concat!("sync_launch::or_kill(pair.master.try_clone", "_reader(), &mut || {"), concat!("sync_launch::or_kill(pair.master.take", "_writer(), &mut || {")] {
+            let at = body.find(step).unwrap_or_else(|| panic!("not through or_kill: {step}"));
+            assert!(spawned < at, "{step} is before the spawn");
+            assert!(body[at..].split('\n').take(3).collect::<String>().contains(concat!("child.", "kill()")), "{step} does not kill the child");
+        }
+        assert!(!body.contains(concat!("try_clone_reader().map_err", "(|e| e.to_string())?")) && !body.contains(concat!("take_writer().map_err", "(|e| e.to_string())?")), "a bare ? is still there");
+    }
+
+    /// **P-LEAVE-2 (b) 2:** what `map.insert` replaces reaches `kill_replaced`, whose closure kills that session.
+    #[test]
+    fn insert_pane_kills_a_live_session_it_replaces() {
+        let s = src();
+        let body = body_of(&s, concat!("fn insert", "_pane("));
+        let at = body.find(concat!("sync_launch::kill_replaced(map.insert(id, session), &mut |", "old: &mut PtySession| {")).expect("the replaced session is dropped unkilled");
+        assert!(body[at..].split('\n').take(3).collect::<String>().contains(concat!("old.killer.", "kill()")), "the closure does not kill the replaced session");
     }
 
     /// §2.7 D-1: the close never reads the killer's result, and waits on the pids through the process LIST, after the
