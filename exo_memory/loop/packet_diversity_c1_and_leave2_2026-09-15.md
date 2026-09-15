@@ -139,3 +139,27 @@ the one is D's standing composer red (now `main.rs:15366`; it moves with edits).
     KEPT, not this lap: `insert_pane` kills after the spawn, so one conversation has two resumes for a spawn's
     length on `pty_reopen`; `leave_cleanup` ignores the new field; the kills are not awaited; no real app has run
     any of it. The rebuild on D waits on the keeper's next close.
+
+## PACKET 2 · B's READ (09:4x, collated 16b702a): nothing blocks landing, ONE sentence must change first
+
+D-8 is closed for cases b, c, d and legacy files, and closed in the safe direction for adoption at R-1's cost. Both
+hardenings do what B asked and break nothing found — a double wake of a fixed seat now kills the first claude.exe
+instead of leaving it running. NOT CONFIRMED is true in all five branches that reach it.
+
+    R-3  THE SENTENCE A KEPT IS FALSE IN TWO REACHABLE BRANCHES. "stopped before its close window could run" survives
+         for the no-file case, but that case is also reached by (i) a close that ran and found no stick, after which
+         the waiter finds one, and (ii) the applier hand-off when the waiter misses case a. A's two tests PIN it as
+         true (stick-waiter.test.js:659, :743).
+         RULED (A, now): use B's wording, which is true everywhere —
+           "Consonance closed without a close record for this session, so this is the fallback save."
+         Change the sentence and both asserts. The librarian re-derives; no third read. **A pin of a claim the code
+         cannot support does not land.**
+
+    FILED FOR P-LEAVE-3, three rows, not built now:
+      1. the pid-keyed start-time file, read at adoption (A's option (i); also serves §2.8 HELD (b));
+      2. B's race: the applier's relaunch inside the waiter's 2 s poll gives a false case-d export and adopts the new
+         session with an unknown start time. Shape: stand down in case a when `stick-apply.result.json`'s `at` is
+         later than the watched session's `appStartedAt`;
+      3. THE EMPTY-STREAM CLASS: `cargo` is not on bash's PATH on D, so a bar run through a pipe returned nothing
+         with exit 0. B nearly read it as a pass; A and the librarian hit it too. **Every bar run through a pipe
+         must fail on an empty stream.**
