@@ -1,0 +1,38 @@
+# arm-words.txt — the R8b arm-word list (loop/anchor_similarity_registration_DRAFT_2026-09-15.md §8.10 K6).
+# One entry per line: the word, then " # ", then why it is here. Matched whole-word and case-insensitive by
+# dev/diversity/redact.js. A change to this file is a change to the blind; its sha256 is recorded at step 0.
+#
+# THE RULE FOR AN ENTRY: the word exists in one arm's text and not the other's BY CONSTRUCTION of step 3 (the briefed
+# sibling is handed a packet written by the chair; the unbriefed one gets the keeper quote and the cited paths), or it
+# is the run's own name for an arm. A word that merely tends to differ is NOT listed: that is what the guess rate
+# measures, and listing it would cost claims.
+#
+# CONSIDERED AND LEFT OFF (with why):
+#   ruling, ruled, re-rule  a ruling is a claim TYPE in R8b; removing the word strips the claim a label cites
+#   control, controls       "control plane", "the lock is the second guard"-style use is everywhere; and the controls
+#                           are old texts a scorer can place by date anyway (named in the hand-back)
+#   keeper, quote           both arms receive the keeper quote (step 3c, 3e)
+#   hand-back, handback     both arms write one
+#   lap, D063, L059         lap ids place the CONTROLS in time; an arm's lap id is not known before step 3. Named as a
+#                           residual in the hand-back, not listed
+#   anchor, anchoring       "anchor" is ordinary in mutant-harness text ("the anchor was orphaned"); a false hit costs more
+#   uptake, polarity, deference   study vocabulary; a sibling with no map has no route to it, and "deference" is a
+#                           room-card word both arms wake into
+#   task                    both arms get one
+#   orch                    the room's short form, but also a substring-free word in no hand-back I found; left off
+#                           rather than guessed at
+
+briefed # the arm's own name in R8b
+unbriefed # the arm's own name in R8b
+un-briefed # a spelling of the same
+brief # the room's other name for the packet ("the brief"); the briefed arm cites it
+briefs # inflection of brief
+briefing # inflection of brief
+packet # what only the briefed arm is handed (step 3e); step 3d voids an unbriefed task whose transcript has "packet_"
+packets # inflection of packet
+chair # the packet's author and the signer of its dispatch; a briefed hand-back answers the chair's rulings by name
+orchestrator # the chair's other name in BUILDING.md and the committee card
+arm # the run's word for the condition
+arms # inflection of arm
+dispatch # how a packet reaches a pane ("dispatched to")
+dispatched # inflection of dispatch
