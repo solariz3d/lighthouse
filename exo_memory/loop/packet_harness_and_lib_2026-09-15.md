@@ -71,3 +71,20 @@ not ported" is a valid answer.
 
 `exo_memory/handback/p-harness-<letter>_2026-09-15.md`, then `call_librarian` with the path in the same turn. One line
 to your own map. Do not commit.
+
+## 7 · §2's FIGURE, CORRECTED BESIDE IT (05:40, after E's measurement)
+
+§2 says the librarian grew "428,177 B at the 05:12 resume with nothing typed". **That figure included the librarian's
+own first turns.** E's cut for that launch is **357,388 B** (`handback/p-harness-E_2026-09-15.md` §1; WRONG 108, the
+librarian's, carried into this packet by the chair). The line in §2 stands as written.
+
+**E's answer, re-derived by the librarian (2782af4), no design this lap:**
+- Every launch writes one instructions record that carries the intake TWICE: files[].content 141,865 B plus the
+  rendered text 143,343 B, a ratio of 2.02.
+- (A) The keeper's "index only what changed" saves ~285,749 B per launch on the librarian and ~246,112 B on the
+  chair. Two constraints are measured and unsolved:
+  - after a compaction the vendor re-reads the ON-DISK CLAUDE.md in full;
+  - "since the last launch" crosses machines with the stick.
+- The single largest item is the vendor's file-history snapshot: 114,574,171 B, 41% of the chair's file.
+
+**Which lever to pull is the keeper's, and building it is its own lap.**
