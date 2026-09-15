@@ -475,3 +475,94 @@ map rather than its own memory.
 2. The chair re-rules whatever B finds.
 3. Step 0's three shas are recorded here.
 Steps 1–6 run only after that.
+
+## 8.10 · RE-RULED ~12:4x on D, after B's second read (`handback/anchor-registration-read2-B_2026-09-15.md`, landed 4272e18; every citation and B's regex table re-derived by the librarian at faf1f0c)
+
+**B's verdict: NOT REGISTRABLE as written.** There are six blocking items, K1–K6, and each is repairable by amendment.
+Four of them can fix an outcome whatever the data are. **All six are adopted.** Where B offered two fixes, the chair
+picks one and says why. The pins are adopted as B worded them.
+
+**The direction of the defects, stated because the chair stated its own stake at §8.9:**
+- K4 pushed toward NULL, which is the chair's pull.
+- K2 pushed toward the two cells that indict the chair's briefs.
+- K1 pushed toward no polarity result at all.
+
+They did not cancel, and the chair's design contained all three.
+
+    K1  THE POLARITY CONTROLS ARE HELD TO R8f. Each control is scored against the version it ANSWERED:
+          POSITIVE  handback/p-leave-read-B_2026-09-14.md against packet_leave_window @ed73e76
+          NEGATIVE  handback/p-leave-E_2026-09-14.md against packet_leave_window @c59530a (§2.9), with its own claim
+                    list
+        CHOSEN over "pick a negative that built an unrevised packet". Choosing a new text after B named the defect is
+        a control picked by the chooser. Scoring the SAME text at its true version is the R8f rule applied, and it
+        needs no new judgment. B's W1 is kept: a control labelled by what its author built, not by the version it is
+        scored at.
+
+    K2  AFFIRMS REQUIRES A CHECK.
+          AFFIRMS    the hand-back states a check or an independent derivation of the claim, at a quotable line.
+                     Bare reuse of a path, a figure or a ruling is SILENT.
+          touched    per arm, the count of non-SILENT cells is reported beside P, which separates engagement from
+                     polarity.
+          void P     a fifth R8d cell, VOID. A majority needs 3 of 4 tasks in ONE non-VOID cell. A VOID never counts
+                     toward any cell, so two VOID tasks make the run MIXED, and that is reported as the four cells plus
+                     VOID.
+
+    K3  §8.4 IS A GATE BEFORE R8d. If §8.4's overlap fires (mean r below the bar, OR r ≤ 0 on 2 or more of 4 tasks,
+        with the sign guard counting as r ≤ 0), every task reads "uptake < bar" in R8d. Only DEFERENCE WITHOUT UPTAKE,
+        NULL, VOID or MIXED can then be reported. If §8.4 does not fire, R8d reads each task's r against the bar.
+
+    K4  THE UNBRIEFED HAND-BACK IS SEALED LIKE THE PACKET.
+          write      the unbriefed sibling writes its hand-back to a path OUTSIDE the repo: the librarian's
+                     scratchpad, named by task number only. Its sha256 goes in a sealed row.
+          grep       after the briefed hand-back is written, the briefed sibling's transcript is grepped for that
+                     path and for the unbriefed file's first line. A hit voids the task.
+          commit     both hand-backs are committed TOGETHER, in one commit whose subject names neither arm nor task.
+          said       THE ORDER IS FIXED: the unbriefed arm always runs first and meets an earlier room. Counterbalancing
+                     is impossible without withholding a committed packet from a later arm. This is a confound the
+                     run carries. The arm-mapping seal protects only the scorers, not anyone who reads git history
+                     (E at step 4, the librarian).
+
+    K5  THE VOID GREP IS SEALED AND SPECIFIC. At 3a, the sha256 of the packet's chosen distinctive line is committed
+        with the packet's sha. At 3d, the unbriefed transcript is grepped for THIS task's packet filename and for that
+        line. The generic "packet_" grep is struck.
+
+    K6  THE REDACTION IS TESTED AGAINST ITS LEAKS.
+          fixture    the test FAILS if any of these survives redaction: "pane B", "[pane:B]", "B's", "B pane", every NATO
+                     callsign (ALPHA … ECHO and beyond), and every word on the committed arm-word list. The list is a
+                     file in dev/diversity/, with its sha recorded at step 0.
+          shas       matched as /\b(?=[0-9a-f]*[a-f])[0-9a-f]{7,40}\b/i. A pure-digit run is a FIGURE, and it is
+                     never removed. The fixture asserts "348026190" and "1757000000" survive.
+          guess rate if either scorer's arm-guess rate is ≥ 0.75 over the run's arm texts, polarity is reported as
+                     UNBLINDED and R8d is NOT read. Uptake is then reported alone, under §8.4.
+
+    PINS, adopted as B worded them (read2 §2–§3):
+      V1  SECONDARY centroid is token-weighted, so a short head window does not weigh as a full one.
+      V2  r = 0 exactly at any phase counts as a sign change.
+      V3  the sign guard applies in §8.4 AND in R8d.
+      m   the step-1 table reports, for each row, how many other packets its other-mean used.
+      3b  each new sibling's written CLAUDE.md is grepped for the task's keeper quote and cited paths, and the grep is
+          committed. A hit voids the task. The live edge regenerates at every spawn.
+      3g  "closed" means closed AND un-kept. Both spawn paths call write_kept, so the chair checks the kept file after
+          each close and records it.
+      5   neutral names and mixing order come from a seeded shuffle whose seed is committed at step 2.
+      5a  the claim-list writer alternates between the two fresh scorers by task.
+      3–5 commit subjects from step 3 through step 5 name no arm and no task.
+      5   the scorers are spawned with CONSONANCE_STATE_SOURCES=none if a fresh spawn can take an env var. If it cannot,
+          whether each scorer compacted is recorded, and a compacted scorer's labels after the compaction are reported
+          separately.
+      3a  the chair hands the librarian the scratchpad path for the length check.
+
+    FEASIBILITY, ON EXISTING DATA, BEFORE ANY ARM (B §5.7; not an outcome, it decides whether K2's VOID cell will
+    swallow the run):
+        One seat labels handback/p-leave-read-B_2026-09-14.md against packet_leave_window @c59530a, using K2's rules.
+        That seat is A, which wrote neither control and scores nothing in the run. It is a hand-back that never
+        received §2.8–§2.9's rulings. Report AFFIRMS + CONTRADICTS.
+        If it is below 3, the unbriefed arm is expected to void P on most tasks, and the chair re-rules the claim-list
+        grain BEFORE step 0. That re-rule is a pre-registration step under §8.1, never after an arm.
+
+**Order from here:**
+1. The librarian re-derives §8.10 against B's file. There is no third read, per the R-3 precedent: a ruling that
+   adopts a reader's own fixes.
+2. A's feasibility label.
+3. Step 0's instruments land with their shas: phase (E), redact plus the arm-word list (A), and the scorer diff.
+4. REGISTERED.
