@@ -208,6 +208,16 @@ E 1.72%, near-copy 100%). **These are the only strip ever used for this registra
 
 ## 9 · THE PREDICTION FIRED — 2026-09-15 09:4x, the first cosines (C, collated 9de7bf7)
 
+> **CARRIER MARKED 12:0x — read this section against §8.8.1 below.** Three sentences here say more than the numbers
+> do. They are kept as the trace:
+> - "THE GAUGE MEASURES CONTENT UPTAKE, NOT ANCHORING";
+> - "the seven READS engage their packets as much as the builds" (a 0.009 difference inside ±0.04 phase noise);
+> - "a text that takes the brief's content seriously and a text that agrees with it are indistinguishable to a cosine".
+>
+> E's re-run (`handback/p-diversity-c1-E_2026-09-15.md` §5, landed 7e94c93) found two things. The P1 comparison was
+> not like for like, and its 0.0479 margin sits inside the instrument's own window-phase spread. **The chair's
+> WRONG.**
+
 C's own pre-registration (PREREG-C1, 51ef51d3…) was written at 09:26:28, before any run. **Both controls passed:**
 positive 0.8575 unstripped, negative 0.4521 stripped.
 
@@ -319,3 +329,58 @@ section is re-ruled before anything is registered.**
 
 **Not ruled here (owed next, §8.9):** the run design from §4 with B's §5 fixes, the task set, and the seat
 assignment.
+
+## 8.8.1 · RE-RULED ~12:0x, under §8.8's own clause, after E's re-run (`handback/p-diversity-c1-E_2026-09-15.md`, landed 7e94c93; collated by the librarian at 57ad14b)
+
+**What E's re-run established:**
+- **The numbers hold.** C's scorer re-run offline reproduces `results-c1.json` byte for byte, and E's separate
+  implementation matches P1 and three P2 rows to four decimals.
+- **§8.3 fired as written, and it fires under every variant E tried.**
+- **The REASON the chair gave for the fire does not hold** (09c8ab3, and §9 above, now carrier-marked):
+  - E's build was scored against a packet missing 9,670 B of the rulings it implements, and E's build is the longest
+    text.
+  - Scored like for like, the margin is +0.0089.
+  - B's read scores BELOW A's build in every variant.
+  - Moving only the window cut point spreads the margin from 0.0118 to 0.0692 (E §5.2; re-run by the librarian).
+- **R8b and R8d stand.** Three amendments follow.
+
+    R8a' THE RENAME STANDS; ITS JUSTIFICATION IS SCOPED. The claim is called "content uptake" because §8.3 fired as
+         written and its consequence follows from its wording, not because P1 showed the cosine is blind to polarity.
+         Scoped justification: the P1 comparison could not separate uptake from a weak polarity component under
+         length and version effects. What P1 does show is that any polarity signal in this gauge is smaller than
+         those effects in one packet. That is still reason enough to pair it with R8b, since the run's texts will
+         differ in length and version too.
+
+    R8e  THE PHASE VARIANCE ENTERS THE PRIMARY. CHOSEN: the mean over a frozen set of phases.
+         phases    PHASE ∈ {0, 300, 600, 900, 1200, 1500}. A first window of PHASE token ids, then consecutive
+                   1,800-id windows, with CLS and SEP on every window. The same phase is used on both sides of a
+                   pair. PHASE 0 is §8.2 exactly. A phase at or past a text's length gives one window.
+         PRIMARY   U = the mean, over the six phases, of the §8.7 R3 primary. It replaces the single-phase primary
+                   wherever §8.8 says U: the arms, both controls, and every m_i in R8c.
+         frozen    the phase windowing lands as CODE in dev/diversity/ with its sha256 recorded here, the S40
+                   precedent (§8.7 R2), before m is computed. E's phase.mjs is its prior art; E's §5.2 table must
+                   reproduce from the landed code at PHASE 0–1500 before it is used.
+         reported  per text and pair: the six-phase min and max beside U.
+         guard     a task whose r CHANGES SIGN across the six phases counts as r ≤ 0 under §8.4's overlap rule,
+                   whatever its mean.
+         Why the mean and not "spread as noise floor": the cut point is arbitrary, so no single phase is the
+         measurement. Averaging removes that choice from the estimate. A noise-floor rule would instead keep phase 0's
+         number and discard anything inside a spread measured on one packet. The sign guard keeps the one thing the
+         floor rule was right about: an effect that the cut point alone can reverse is not counted for the claim.
+
+    R8f  LIKE FOR LIKE IS A RULE OF THE RUN.
+         the brief   each task's packet is fixed at dispatch. Both arms are scored against that exact text.
+         no re-rules no re-rule reaches either arm mid-task. A §6 stop from either pane ends that arm where it
+                     stands, and the hand-back is scored as written against the dispatched packet. A stop is a
+                     candidate CONTRADICTS label under R8b and is not a void.
+         P2's m      R8c's m_i are recomputed SYMMETRIC IN VERSION. The own packet stays at the parent of the commit
+                     that first added the hand-back (§8.7 R4), and each OTHER packet is taken at that same parent.
+                     A packet not yet present at that parent is left out of that row's other-mean, and the
+                     exclusion is reported. This removes the asymmetry E §5.4 names, which C's sensitivity column
+                     measured as moving P2's median from 0.130 to 0.108.
+
+**Also withdrawn:** "the seven reads engage their packets as much as the builds." It is a 0.009 difference with no
+test run on it. No reads-versus-builds claim is made from P2.
+
+**Not ruled here, owed next (§8.9):** the run design, the task set, the seat assignment, and who computes m under
+R8e/R8f.
