@@ -309,17 +309,46 @@ const MUTANTS = [
       '  out(``'),
   },
 
+  /* ── THE WINDOWED FALSIFIER (2026-09-06, the chair's ruling) ──────────────────────────
+   *
+   * The two mutants below are re-pointed from D011, where they guarded a reading PRINTED BESIDE the
+   * falsifier. That reading is the falsifier now, so the mutants say what they actually break.
+   *
+   * THE ONE THAT MATTERS IS THE REGRESSION, not the deletion: an all-time count is what the chair
+   * ruled out, it is what the file shipped with for ten days, and it fails in the direction nothing
+   * else here can see - it reads GREEN on a ledger where the practice has stopped. A mutant that
+   * makes a check silently pass is worth more than one that makes it crash. */
   {
-    /* The one-shot finding, guarded. The registered falsifier reads the WHOLE ledger, so the single
-     * opened row of 2026-09-06 silences it forever; the windowed reading printed beside it is the
-     * only thing that can still see a lapse. Delete it and the report reads exactly as a room that
-     * kept the practice - which is the shape this whole lap is about. */
-    name: 'FALSIFIER: the windowed reading stops printing, so the one-shot silence looks like compliance',
+    name: 'FALSIFIER: the window is emptied, so the check can never fire at all',
     apply: s => s.replace('  const recent = L.slice(-WINDOW);', '  const recent = [];'),
   },
   {
-    name: 'FALSIFIER: the windowed reading reads the whole ledger too, and is a second copy of the one-shot',
+    name: 'FALSIFIER: the window becomes the whole ledger again - the all-time form the ruling replaced',
     apply: s => s.replace('  const recent = L.slice(-WINDOW);', '  const recent = L.slice();'),
+  },
+  {
+    /* THE REVERTED CHAIR EDIT, INVERTED. The window is still computed and still printed; only the
+     * FIRE CONDITION reads all-time. Everything a reader sees is right except whether it goes red -
+     * which is the exact shape of the defect this lap removed, and the reason the fix had to be in
+     * the condition rather than in the line that reports it. */
+    name: 'FALSIFIER: the window is printed but the FIRE CONDITION reads all-time (green while the practice is dead)',
+    apply: s => s.replace('  if (recent.length >= WINDOW && recentOpened === 0) {',
+      '  if (recent.length >= WINDOW && allTimeOpened === 0) {'),
+  },
+  {
+    name: 'FALSIFIER: the all-time count stops riding along, so a windowed red loses the context that explains it',
+    apply: s => s.replace('(${allTimeOpened} all-time, over ${L.length} laps).`);', '`);'),
+  },
+  {
+    /* A red is a LEAD once the opened-row gate exists: a mapped lap cannot reach dispatched/filed
+     * without an opened row, so the only route left runs through laps the gate cannot reach. Drop
+     * the sentence and the next reader has to rediscover the gate to interpret the number. */
+    name: 'FALSIFIER: a red stops naming the only route left to it',
+    apply: s => s.replace("    out('  SINCE THE OPENED-ROW GATE SHIPPED there is one route left to a red: laps the gate cannot reach -');", "    out('');"),
+  },
+  {
+    name: 'FALSIFIER: the windowed form stops printing what it cannot see (the limits survive only in the source)',
+    apply: s => s.replace("  out('  (ii) A PARTIAL LAPSE. One opened row anywhere in the window reads exactly like ten. It measures');", "  out('');"),
   },
 ];
 

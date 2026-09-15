@@ -1152,35 +1152,59 @@ function report(last, out = console.log) {
 
   // ---- this tool's own falsifier
   out('');
-  out(`THIS TOOL'S OWN FALSIFIER - if ${WINDOW} laps pass and no row has an opened field, the third stage is theatre.`);
-  const withOpened = L.filter(l => l.hasOpened).length;
-  if (L.length >= WINDOW && withOpened === 0) {
-    out(`  FIRES. ${L.length} laps, 0 with an opened stage. This is a two-column measurement wearing three,`);
-    out('  and the opened column should be removed or the practice repaired rather than the number kept for the look of it.');
-  } else {
-    out(`  ${withOpened} of ${L.length} laps carry an opened stage. ${L.length < WINDOW ? `Window not full (${WINDOW}).` : 'Does not fire.'}`);
-  }
-  /* THIS FALSIFIER IS A ONE-SHOT, and saying so is the point of the two lines below.
+  /* WINDOWED 2026-09-06, and the arithmetic below IS the registered falsifier now.
    *
-   * It reads `withOpened === 0` over the WHOLE ledger, so the single opened row written by hand on
-   * 2026-09-06 (D011, five paths) disarms it PERMANENTLY: `L.length` only grows and `withOpened`
-   * never returns to zero, so no future lapse - however long - can ever fire it again. A guard that
-   * one row silences for the life of the ledger is theatre pointing the other way from the theatre
-   * it was registered to catch.
+   * THE RULING IS THE CHAIR'S: `exo_memory/loop/ruling_windowed_falsifier_2026-09-06.md`. The
+   * implementation is here because the seat that rules is not the seat that re-points the test
+   * which was pinning the defect - the chair edited this arithmetic directly first and took the
+   * suite from 113/113 to 112/113 on exactly that test, then reverted. A green light turned off is
+   * not a fix, and the two halves are deliberately in different hands.
    *
-   * THE REGISTERED ARITHMETIC IS DELIBERATELY NOT CHANGED. The sentence above is the falsifier as
-   * written when this tool shipped, and re-basing a registered falsifier on a different denominator
-   * is a decision to be made in the open, not a repair to slip in beside a gate. So the windowed
-   * reading - the one that can fire twice - is PRINTED beside it and named as not-yet-registered.
-   * Whoever rules on it has both numbers in front of them.
+   * WHAT WAS WRONG WITH THE FORM THIS REPLACES. It counted `hasOpened` over the WHOLE ledger, so
+   * ONE opened row set the count above zero FOREVER: `L.length` only grows and `withOpened` never
+   * returns to zero. D011 wrote that row on the morning of 2026-09-06, which means the registered
+   * form could never have fired again on this ledger whatever anyone did afterwards. A check that
+   * cannot go red is unassailable, and unassailable is the shape this room distrusts by rule.
+   * The thing it was built to catch - the practice lapsing AFTER the opened-row gate ships - was
+   * precisely the thing the all-time form could not see.
    *
-   * Found while building the opened-row gate, by asking what would catch the practice lapsing AFTER
-   * the gate ships. The answer at HEAD was: nothing. */
+   * AND THE PROSE ALREADY SAID `WINDOW`. The registered sentence has read "if 10 laps pass and no
+   * row has an opened field" since the tool shipped; the code read the whole ledger. The sentence
+   * is ambiguous enough that this is not quite a bug report - both readings fit the words - but
+   * the windowed one is at least as faithful to it, and it is the only one that can fire twice.
+   *
+   * THE ALL-TIME COUNT IS NOT DELETED, it is demoted to context on the same line. A number that
+   * quietly disappears is the same failure as one quietly counted (the void stage's own rule). */
+  out(`THIS TOOL'S OWN FALSIFIER - if the last ${WINDOW} laps carry no opened row at all, the third stage is theatre.`);
   const recent = L.slice(-WINDOW);
   const recentOpened = recent.filter((l) => l.hasOpened).length;
-  out(`  NOT REGISTERED, printed beside it: over the LAST ${recent.length} lap(s), ${recentOpened} carry an opened stage.`);
-  out('  The line above reads the whole ledger, so ONE opened row disarms it permanently - it can never');
-  out('  fire again on this ledger whatever happens next. This windowed reading is the form that can.');
+  const allTimeOpened = L.filter((l) => l.hasOpened).length;
+  if (recent.length >= WINDOW && recentOpened === 0) {
+    out(`  FIRES. 0 of the last ${WINDOW} laps carry an opened stage (${allTimeOpened} all-time, over ${L.length} laps).`);
+    out('  The opened column should be removed or the practice repaired rather than the number kept for the look of it.');
+    /* WHERE TO LOOK, which is new information as of the opened-row gate. A mapped lap can no longer
+     * reach `dispatched` or `filed` without an opened row, so a red here can only come from laps the
+     * gate cannot reach: one with no map row (the ring laps are the live case - four of the first
+     * eleven), or one that never wrote a gated row at all. Naming the route turns a red from a
+     * reproach into a lead. */
+    out('  SINCE THE OPENED-ROW GATE SHIPPED there is one route left to a red: laps the gate cannot reach -');
+    out('  a lap with NO MAP ROW, or one that never wrote a dispatched/filed row. Look there first.');
+  } else {
+    out(`  ${recentOpened} of the last ${recent.length} lap(s) carry an opened stage ` +
+      `(${allTimeOpened} all-time, over ${L.length} laps). ` +
+      (recent.length < WINDOW ? `Window not full (${WINDOW}).` : 'Does not fire.'));
+  }
+  /* WHAT THE WINDOWED FORM CANNOT SEE, printed with it rather than filed in a header - the rule the
+   * rest of this report already follows. These are not reasons to prefer the all-time form; that one
+   * had every limit below AND could not fire. */
+  out(`  WINDOWED to the last ${WINDOW} laps so it can go red AGAIN; the all-time form it replaced could not,`);
+  out('  because one opened row raised its count above zero permanently. What this still cannot see:');
+  out(`  (i) TIME. The window is ${WINDOW} LAPS and never a duration. Consecutive laps on this ledger have`);
+  out('      opened 0.4 h and 139.8 h apart - a 350x spread - so the same window has spanned hours and weeks.');
+  out('  (ii) A PARTIAL LAPSE. One opened row anywhere in the window reads exactly like ten. It measures');
+  out('      whether the practice DIED, never whether it is being kept.');
+  out('  (iii) EXCLUDED and VOID laps still occupy a window slot here, unlike every total above. Left as it');
+  out('      was rather than changed blind: no lap on this ledger is excluded, so no live number tells them apart.');
 
   // ---- the limits, printed WITH the number rather than filed in a header
   out('');
@@ -1197,7 +1221,8 @@ function report(last, out = console.log) {
   out('     it would file every historical lap as TAMPERED. A lap relabelled lib after a missed seal reads');
   out('     here as a legitimate direct entry - and since 2026-09-02 so does one relabelled ring, which is');
   out('     a NEW hole this field\'s third value opened and is named here rather than defended.');
-  return { laps: L.length, scored: scored.length, excluded: bad.length, voided: voided.length, answered, withOpened };
+  return { laps: L.length, scored: scored.length, excluded: bad.length, voided: voided.length, answered,
+    withOpened: allTimeOpened, recentOpened, window: recent.length };
 }
 
 // ---------------------------------------------------------------- cli

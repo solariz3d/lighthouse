@@ -321,7 +321,11 @@ test('falsifier 1: reports a running count while the window is not full, never a
   cleanup();
 });
 
-test("falsifier: this tool's own fires at ten laps with no opened stage", () => {
+test("falsifier: this tool's own fires when the last ten laps carry no opened stage", () => {
+  /* RE-POINTED 2026-09-06 with the windowed ruling: the message names the WINDOW rather than the
+   * whole ledger, and it now names where to look. Since the opened-row gate shipped, a mapped lap
+   * cannot reach dispatched/filed without an opened row, so a red can only come from a lap the gate
+   * cannot reach - which is a lead, not just a reproach, and belongs in the output. */
   const { mod, cleanup } = fixture();
   for (let i = 1; i <= 10; i++) {
     mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q' + i, guess: ['a' + i + '.md'], now: i * 10 });
@@ -329,7 +333,10 @@ test("falsifier: this tool's own fires at ten laps with no opened stage", () => 
   }
   const out = [];
   mod.report(0, s => out.push(s));
-  assert.match(out.join('\n'), /FIRES\. 10 laps, 0 with an opened stage/);
+  const text = out.join('\n');
+  assert.match(text, /FIRES\. 0 of the last 10 laps carry an opened stage \(0 all-time, over 10 laps\)/);
+  assert.match(text, /a lap with NO MAP ROW, or one that never wrote a dispatched\/filed row/,
+    'a red must name the only route left to it, or the next reader has to rediscover the gate');
   cleanup();
 });
 
@@ -342,7 +349,12 @@ test("falsifier: this tool's own does NOT fire once an opened stage exists", () 
   mod.opened('L001', ['b1.md'], 999);
   const out = [];
   mod.report(0, s => out.push(s));
-  assert.doesNotMatch(out.join('\n'), /FIRES\. 10 laps/);
+  const text = out.join('\n');
+  /* TIGHTENED 2026-09-06. `doesNotMatch(/FIRES. 10 laps/)` passed against ANY output that lacked
+   * that exact string - including a report that printed nothing at all for this falsifier. With
+   * ten laps the window IS the whole ledger, so this case is unchanged by the windowing and the
+   * assertion can afford to name what it expects to see. */
+  assert.match(text, /1 of the last 10 lap\(s\) carry an opened stage \(1 all-time, over 10 laps\)\. Does not fire\./);
   cleanup();
 });
 
@@ -1693,13 +1705,21 @@ test('OPENED-GATE: the usage names it, so a seat meets the rule before the refus
   fx.cleanup();
 });
 
-test('FALSIFIER: this tool\'s own is a ONE-SHOT - one opened row disarms it forever, and the windowed reading says so', () => {
-  /* FOUND BY ASKING WHAT WOULD CATCH THE PRACTICE LAPSING AFTER THIS GATE SHIPS. The answer at
-   * HEAD was nothing: the falsifier reads `withOpened === 0` over the WHOLE ledger, so the single
-   * row written by hand on 2026-09-06 silences it for the life of the ledger - eleven laps could
-   * pass with nothing opened and it would still print "does not fire". The registered arithmetic
-   * is left exactly as it was; what this asserts is that the reading which CAN fire twice is
-   * printed beside it and named as not-yet-registered. */
+test('FALSIFIER: WINDOWED - an opened row OUTSIDE the last ten laps no longer disarms it', () => {
+  /* RE-POINTED 2026-09-06, and the history matters more than the assertion.
+   *
+   * THIS TEST USED TO PIN THE DEFECT. Written on D011, it asserted `doesNotMatch(/FIRES. 11 laps/)`
+   * with the message "one row disarms the registered form - that is the defect, not a pass" - a
+   * deliberate red light held green, because the arithmetic was a registered falsifier and the
+   * ruling was not this pane's to make. The chair then adopted the windowed form by editing the
+   * arithmetic alone, which took the suite to 112/113 on exactly this test and was reverted. That
+   * failure was the test working: changing what a check computes without re-pointing the test that
+   * describes it is a green light turned off, not a fix.
+   *
+   * SO IT NOW PINS THE CONTRACT INSTEAD OF THE DEFECT, and the case it pins is the one the whole
+   * ruling turns on: a ledger whose ONLY opened row is older than the window. Under the all-time
+   * form that ledger is green forever - it is the live ledger's exact shape from D011 onward.
+   * Under this one it is red. */
   const { mod, cleanup } = fixture();
   for (let i = 1; i <= 11; i++) {
     mod.open({ initiator: 'chair', entry: 'orch', inquiry: 'q' + i, guess: ['a.md'], now: i * 10 });
@@ -1707,15 +1727,44 @@ test('FALSIFIER: this tool\'s own is a ONE-SHOT - one opened row disarms it fore
   }
   let out = [];
   mod.report(0, s => out.push(s));
-  assert.match(out.join('\n'), /FIRES\. 11 laps, 0 with an opened stage/, 'control: this is the state the chair published from');
+  assert.match(out.join('\n'), /FIRES\. 0 of the last 10 laps carry an opened stage \(0 all-time, over 11 laps\)/,
+    'control: eleven laps, nothing opened');
 
+  // The row that used to buy permanent silence. L001 is the OLDEST lap, so it falls out of a
+  // ten-lap window over eleven laps - and the falsifier must survive it.
   mod.opened('L001', ['b.md'], 999);
   out = [];
   mod.report(0, s => out.push(s));
-  const text = out.join('\n');
-  assert.doesNotMatch(text, /FIRES\. 11 laps/, 'one row disarms the registered form - that is the defect, not a pass');
-  assert.match(text, /over the LAST 10 lap\(s\), 0 carry an opened stage/,
-    'the windowed reading must still show the lapse the all-time form can no longer see');
-  assert.match(text, /ONE opened row disarms it permanently/, 'and the limit must be printed, not left in the source');
+  let text = out.join('\n');
+  assert.match(text, /FIRES\. 0 of the last 10 laps carry an opened stage \(1 all-time, over 11 laps\)/,
+    'THE RULING\'S OWN FALSIFIER: if this cannot go red with an opened row in history, the window was not the defect');
+  assert.match(text, /WINDOWED to the last 10 laps so it can go red AGAIN/);
+
+  // LIMIT (ii), asserted rather than only printed: one row INSIDE the window silences it for that
+  // window. Bounded, not permanent - but it means this measures whether the practice DIED, never
+  // whether it is being kept, and a reader who does not know that will over-read a green.
+  mod.opened('L011', ['b.md'], 1000);
+  out = [];
+  mod.report(0, s => out.push(s));
+  text = out.join('\n');
+  assert.match(text, /1 of the last 10 lap\(s\) carry an opened stage \(2 all-time, over 11 laps\)\. Does not fire\./);
+  assert.match(text, /One opened row anywhere in the window reads exactly like ten/,
+    'the limit must ride with the number, not sit in the source');
   cleanup();
+});
+
+test('FALSIFIER: WINDOWED - the ruling\'s construction, driven through the CLI on a built ledger', () => {
+  /* THE RULING REGISTERED ITS OWN FALSIFIER IN COMMAND FORM: "checkable by constructing a ledger of
+   * WINDOW laps with no opened row and running --report". Run through the CLI rather than the
+   * module, because that is the surface a seat actually types and the one the ruling names. */
+  const fx = fixture();
+  const WINDOW = require('./lap-row.js').WINDOW;
+  for (let i = 1; i <= WINDOW; i++) {
+    fs.appendFileSync(fx.ledger, JSON.stringify({ lap: 'L0' + String(i).padStart(2, '0'), stage: 'open', at: i * 10, initiator: 'chair', entry: 'ring', inquiry: 'q', guess: ['a.md'] }) + '\n');
+  }
+  const r = cli(['--report'], fx.ledger);
+  assert.strictEqual(r.code, 0);
+  assert.match(r.stdout, new RegExp('FIRES\\. 0 of the last ' + WINDOW + ' laps carry an opened stage'),
+    'the ruling bought nothing if this construction cannot go red');
+  fx.cleanup();
 });
