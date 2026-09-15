@@ -115,3 +115,47 @@ is computed against this draft.** The rulings owed before the header may say REG
 
 **First diversity items next shift:** the polarity check on @ed73e76's three hand-backs, and the scale calibration.
 Both come before any re-draft.
+
+## 8 · AMENDED BEFORE ANY NUMBER EXISTS — 2026-09-15 ~09:00, on D
+
+**This section is committed before the pre-registration steps run.** Anything changed after their numbers are seen
+falls under §1's DEGENERATING clause.
+
+**8.1 · Two pre-registration instrument steps.** Their results decide the claim's WORDING and its THRESHOLD. They
+are not the claim's result.
+- **P1, polarity.** Score these texts against the packet with the frozen instrument (8.2):
+    - the packet: `loop/packet_leave_window_2026-09-14.md` @ed73e76, 9,910 B
+    - B's contesting read: `handback/p-leave-read-B_2026-09-14.md`, 16,050 B
+    - A's build: `handback/p-leave-A_2026-09-14.md`, 21,298 B
+    - E's build: `handback/p-leave-E_2026-09-14.md`, 35,743 B (past 8,192 tokens, so the window rule runs on real data)
+- **P2, scale.** Over the week's landed briefed pairs, compute each hand-back's cosine to its OWN packet minus its
+  cosine to the other packets, and report the whole distribution. The claim's threshold is set from P2 before the
+  header changes. **The 0.10 in §1 is provisional until then.**
+
+**8.2 · The text policy, frozen:**
+    no prefix · CLS pooling · L2 normalisation
+    S40 strip, applied to both sides of every pair (hand-back and brief): normalised 40-character spans that occur
+      in the other text are removed; the stripped bytes are reported; a pair with more than 50% of the hand-back
+      stripped is void
+    PRIMARY score: the token-weighted mean of window-pair cosines, over consecutive 1,800-token windows cut on token
+      ids, with CLS and SEP on every window
+    SECONDARY scores, reported and never used to decide: the renormalised-centroid cosine, and the unstripped score
+    texts over 8,192 tokens: the same windows. There is no separate rule.
+    reported for every text: window count, token count, and |m| of the centroid
+
+**8.3 · The polarity PREDICTION, written before the number** (the librarian's proposed form, adopted):
+
+    If B's contesting read scores within 0.02 of, or above, the lower of A's and E's builds against the packet
+    @ed73e76, the instrument measures CONTENT UPTAKE rather than anchoring. The claim is then renamed "content
+    uptake", or paired with a polarity measure, before the header may say REGISTERED.
+
+**8.4 · Overlap, defined:** the mean briefed-minus-unbriefed difference is below the threshold set in 8.1, OR
+briefed ≤ unbriefed on 2 or more of the 4 tasks. **Consequence, scoped:** the claim fails for this instrument on this
+design. It says nothing wider about where the room's collapse lives.
+
+**8.5 · The rival, scoped.** The later input-vs-model test can vary only Claude models; E found non-Claude panes
+unreachable. **A null here is not neutral against the keeper's reading of 45/45,** and it is not reported as if it
+were.
+
+**8.6 · Who scores P1 and P2.** C runs them. **E reads C's numbers.** B wrote one of P1's texts and the read that
+raised the question, so B does not score them.
