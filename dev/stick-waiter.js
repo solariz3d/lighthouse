@@ -18,17 +18,22 @@
 // In order:
 //   1  take <data_dir>/stick-waiter.lock — a LIVE holder (pid alive under image node) means exit quietly: at most one
 //   2  wait while the app is alive. GONE means its pid is dead OR alive under another image — pid reuse is real (E-1)
-//   3  at the app's exit:
-//        stick-apply.started.json names a live applier  -> STAND DOWN: exit quietly. A hand-off is not a session end;
-//                                                          the relaunched app starts its own waiter.
-//        no stick found by the §3 rule                  -> no notice, no export, no row. Quietly.
-//        more than one stick folder                     -> a notice: NOT DONE, every folder named; nothing exported
-//        one stick folder                               -> a notice "saving — don't pull it yet"; tail-carry --export
-//                                                          --json --apply (which takes the ledger lock and rewrites the
-//                                                          MANIFEST); then a second notice, DONE / NOT DONE
-//   4  before exiting, if the app is ALREADY RUNNING AGAIN under a new pid — a close and reopen inside one poll —
-//      adopt that pid and keep waiting. That launch's own waiter found this one's lock live and started none; without
-//      the adoption, the new session would end with nothing watching it.
+//   3  at the app's exit — P-LEAVE (D063) §2.3 a-d as re-ruled §2.7. The APP now saves to the stick itself at close and
+//      shows DONE / NOT DONE in its own window; everything this waiter saves is the FALLBACK. In this order:
+//        a  stick-apply.started.json names a live applier -> STAND DOWN. A hand-off is not a session end.
+//        b  stick-leave.result.json for THIS app pid      -> STAND DOWN, whatever its outcome (the keeper saw it). Then
+//                                                            remove it (D-4: the waiter owns removal, after acting).
+//        c  stick-leave.started.json for THIS pid, no     -> the app died mid-save. WAIT while the stick's ledger.lock
+//           result                                          names a live holder (its orphan tail-carry, D-3), then
+//                                                            today's export with fallback notices; then remove it.
+//        d  neither file for this pid                     -> today's path: no stick, quiet; a stick, the fallback save:
+//                                                            "don't pull it yet", tail-carry --export --json --apply,
+//                                                            then DONE / NOT DONE (AMBIGUOUS: NOT DONE, nothing exported).
+//      "For this pid": the pid first, then the image, lower-cased with ".exe" stripped on both sides (D-7). A LEAVE file
+//      naming any other pid is stale — ignored here, removed by the app's launch-time cleanup.
+//   4  before exiting — after ANY of a-d (D-9) — if the app is ALREADY RUNNING AGAIN under a new pid (a close and
+//      reopen inside one poll), adopt that pid and keep waiting. That launch's own waiter found this one's lock live and
+//      started none; without the adoption, the new session would end with nothing watching it.
 //
 // **THE NOTICE — P-NO-CONSOLE, 2026-09-14, replacing the export window.** The keeper, 05:23: *"there should never be
 // an intrusive terminal windows ever popping up for consonance."* The console this file used to open at export was
@@ -59,6 +64,12 @@ const apply = require('./stick-apply.js');
 
 const LOCK = 'stick-waiter.lock';
 const STATUS = 'stick-waiter.status.log';
+/**
+ * P-LEAVE (D063) §2.1 as re-ruled §2.7: the app's own save at close. `sync_launch.rs` names them beside APPLY_STARTED
+ * (E's); a test cross-checks the two spellings. Both carry { pid: <the app's pid>, image: "consonance.exe", … }.
+ */
+const LEAVE_STARTED = 'stick-leave.started.json';
+const LEAVE_RESULT = 'stick-leave.result.json';
 const SCRIPT = 'stick-waiter.js';
 const END = '@@END';
 const POLL_MS = 2000;
@@ -271,16 +282,46 @@ function runWaiter(argv, inject) {
         k.sleep(k.pollMs);
       }
 
-      // ── 3 · the app's exit ──
+      // ── 3 · the app's exit — P-LEAVE §2.3 a-d, as re-ruled at §2.7. The APP saves to the stick itself at close and
+      //        shows DONE / NOT DONE in its own window; this waiter is the FALLBACK for a close that did not finish. ──
       const started = readJson(path.join(o.data, apply.STARTED));
+      const leaveResultPath = path.join(o.data, LEAVE_RESULT);
+      const leaveStartedPath = path.join(o.data, LEAVE_STARTED);
+      const leaveResult = leaveFor(leaveResultPath, app);
+      const leaveStarted = leaveFor(leaveStartedPath, app);
       if (started && started.script === 'stick-apply.js' && carry.holderLive(started, k.imageOf)) {
-        return { code: 0, outcome: 'STOOD_DOWN', ...tally };
-      }
-      const find = findStick(k.volumeRoots());
-      if (find.kind === 'none') {
-        last = { code: 0, outcome: 'NO_STICK' };
+        // a · a hand-off to the applier. Not a session end: the relaunched app starts its own waiter. (D-9: the
+        //     adoption check below still runs before this returns.)
+        last = { code: 0, outcome: 'STOOD_DOWN' };
+      } else if (leaveResult) {
+        // b · the app's Leave FINISHED for this pid: the keeper saw DONE or NOT DONE by name. Stand down whatever the
+        //     outcome. D-4: this waiter owns the removal, and removes only after acting — the app's launch-time cleanup
+        //     will not touch a LEAVE file while this waiter's lock is live, so a relaunch inside one poll cannot turn
+        //     b into d. A same-pid LEAVE_STARTED beside it (the app died between its two writes) is spent too.
+        last = { code: 0, outcome: 'STOOD_DOWN_LEAVE' };
+        removeLeave(leaveResultPath, app);
+        if (leaveStarted) removeLeave(leaveStartedPath, app);
+      } else if (leaveStarted) {
+        // c · THE APP DIED MID-LEAVE. Its tail-carry was started with NO_WINDOW only and outlives the app, holding the
+        //     stick's ledger lock. D-3 (B's option ii): wait until that holder pid is not live, THEN run today's export.
+        //     An orphan that finished leaves nothing to carry (its own pending equals the file — P-DIVERGED debt b), so
+        //     the ledger is not written twice; an orphan that died leaves the export to be done. Waiting instead of
+        //     retrying is what keeps the two writers from both changing the ledger (F2 as re-worded).
+        const waited = waitForLeaveCarry(leaveStarted, k, () => ++polls <= k.maxPolls);
+        if (waited.gaveUp) return { code: 2, outcome: 'GAVE_UP', ...tally };
+        const find = findStick(k.volumeRoots());
+        const why = `Consonance stopped during its own save to the stick (pid ${app.pid}, started ${leaveStarted.at || 'at an unrecorded time'}), so this is the fallback save.`;
+        last = find.kind === 'none' ? { code: 0, outcome: 'NO_STICK' }
+          : exportWithNotice(find, o.data, k, runExport, tally, { why, waited: waited.lines });
+        removeLeave(leaveStartedPath, app);
       } else {
-        last = exportWithNotice(find, o.data, k, runExport, tally);
+        // d · neither file for this pid: a hard kill before any Leave (or an app with no Leave). Today's path, unchanged
+        //     except that its notices say they are the fallback. A LEAVE file naming a DIFFERENT pid is stale: ignored
+        //     here and left for the app's launch-time cleanup.
+        const find = findStick(k.volumeRoots());
+        const why = 'Consonance closed without saving to the stick itself (it was stopped before its close window could run), so this is the fallback save.';
+        last = find.kind === 'none' ? { code: 0, outcome: 'NO_STICK' }
+          : exportWithNotice(find, o.data, k, runExport, tally, { why, waited: [] });
       }
 
       // ── 4 · a close and reopen inside one poll: adopt the new session ──
@@ -291,6 +332,51 @@ function runWaiter(argv, inject) {
   } finally {
     lock.release();
   }
+}
+
+/**
+ * The LEAVE record at `p` for the app THIS waiter watched, or null. D-7: the pid decides first; the image is a second
+ * check, compared lower-cased with ".exe" stripped on BOTH sides (pidImage's shape), because the app writes
+ * "consonance.exe" and the argv may say either. A record for any other pid is stale and is not this waiter's to act on.
+ */
+function leaveFor(p, app) {
+  const rec = readJson(p);
+  if (!rec || rec.pid !== app.pid) return null;
+  if (imageName(rec.image) !== app.image) return null;
+  return rec;
+}
+
+/** Remove a LEAVE file after acting on it — only if it still names the pid acted on (never a newer app's file). */
+function removeLeave(p, app) {
+  const cur = readJson(p);
+  if (cur && cur.pid === app.pid) { try { fs.unlinkSync(p); } catch (_) { /* gone already */ } }
+}
+
+/**
+ * D-3: in case c, wait while the stick's ledger lock names a LIVE holder — the killed app's orphan tail-carry.
+ * The lock is read in the stick the Leave named (LEAVE_STARTED.stick), or, lacking one, the stick found now.
+ * Live means the pid answers (the kernel's word; no process started) AND it runs the image the lock names; "cannot
+ * tell" the image counts as live, the safe direction. No lock, an unreadable one, or a dead holder: nothing to wait on.
+ * `tick` spends the waiter's poll budget; returns { gaveUp } when it runs out, else { lines } for the status file.
+ */
+function waitForLeaveCarry(leaveStarted, k, tick) {
+  let stick = typeof leaveStarted.stick === 'string' && leaveStarted.stick ? leaveStarted.stick : null;
+  if (!stick) { const f = findStick(k.volumeRoots()); stick = f.kind === 'one' ? f.folder : null; }
+  if (!stick) return { lines: [] };
+  const lockPath = path.join(stick, carry.LEDGER_DIR, carry.LOCK_NAME);
+  let first = null, n = 0, last = null;
+  for (;;) {
+    const rec = readJson(lockPath);
+    const live = !!rec && Number.isInteger(rec.pid) && k.pidAnswers(rec.pid) && carry.holderLive(rec, k.imageOf);
+    if (!live) break;
+    if (!tick()) return { gaveUp: true };
+    if (first === null) first = k.now();
+    last = rec;
+    n++;
+    k.sleep(k.pollMs);
+  }
+  if (!n) return { lines: [] };
+  return { lines: [`waited ${Math.round((k.now() - first) / 1000)} s for the close window's own carry (pid ${last.pid}, ${last.script || 'unknown script'}) to let go of the stick's ledger before saving`] };
 }
 
 function takeLock(p, k) {
@@ -314,12 +400,15 @@ function takeLock(p, k) {
  * A stick was found: raise "don't pull it yet", export (or refuse by name), write DONE / NOT DONE, raise the closing
  * notice, and hand back the result. AMBIGUOUS exports nothing, so it raises only the closing NOT DONE.
  */
-function exportWithNotice(find, dataDir, k, runExport, tally) {
+function exportWithNotice(find, dataDir, k, runExport, tally, fallback) {
   const statusPath = path.join(dataDir, STATUS);
   fs.writeFileSync(statusPath, '');
   const say = (s) => { try { fs.appendFileSync(statusPath, `${s}\n`); } catch (_) {} };
+  // P-LEAVE: every save this waiter makes is the FALLBACK — the app's own close window is the primary. Both notices
+  // say so in their title, and the first says why.
+  const fb = fallback || { why: 'This is the fallback save.', waited: [] };
   const raise = (body) => {
-    try { k.notify('Consonance — the stick', body, statusPath); tally.notices++; }
+    try { k.notify('Consonance — fallback save to the stick', body, statusPath); tally.notices++; }
     catch (e) { say(`(the notification could not be shown: ${e && e.message ? e.message : e} — nothing opens instead; this file is the record)`); }
   };
   const finish = (code, outcome, lines) => {
@@ -331,7 +420,9 @@ function exportWithNotice(find, dataDir, k, runExport, tally) {
     return { code, outcome };
   };
 
-  say('CONSONANCE CLOSED. Copying every seat onto the stick.');
+  say('CONSONANCE CLOSED. Copying every seat onto the stick — the FALLBACK save.');
+  say(fb.why);
+  for (const l of fb.waited || []) say(l);
   say('Do NOT unplug the stick until the notice says DONE.');
 
   if (find.kind === 'many') {
@@ -342,7 +433,7 @@ function exportWithNotice(find, dataDir, k, runExport, tally) {
 
   say(`the stick: ${find.folder}   (${find.layout} layout)`);
   // Once, before the first attempt — a busy ledger's retries are one export to the keeper, not several.
-  raise(`Saving to the stick — don't pull it yet.\n${find.folder}\nA second notice will say DONE or NOT DONE.`);
+  raise(`Saving to the stick — don't pull it yet.\n${find.folder}\n${fb.why}\nA second notice will say DONE or NOT DONE.`);
   const giveUpAt = k.now() + k.lockedRetryForMs;
   for (let attempt = 1; ; attempt++) {
     const r = runExport(find.folder);
@@ -408,4 +499,4 @@ if (require.main === module) {
   process.exit(runWaiter(argv).code);
 }
 
-module.exports = { runWaiter, runView, findStick, layoutAt, parseVolumeList, parseArgs, pidAnswers, toastXml, notify, TOAST_PS, APP_ID, TOAST_TAG, ICON, LOCK, STATUS, END, IMAGE_EVERY_POLLS };
+module.exports = { runWaiter, runView, findStick, layoutAt, parseVolumeList, parseArgs, pidAnswers, toastXml, notify, TOAST_PS, APP_ID, TOAST_TAG, ICON, LOCK, STATUS, END, IMAGE_EVERY_POLLS, LEAVE_STARTED, LEAVE_RESULT };
