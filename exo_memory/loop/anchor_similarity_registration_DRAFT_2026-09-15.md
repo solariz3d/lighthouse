@@ -198,3 +198,10 @@ chair's, each ruled before any number exists:**
 
 **C's stop is the lap working as designed.** A line of the frozen policy could not be built as written, so C
 stopped before any cosine and named why.
+
+**8.7 R2, LANDED at the commit that carries this line:**
+- `dev/diversity/s40-strip.js`, sha256 `73917f673b7d98130fe8195cf953bd35c4fa3534dbf00c41da1492e039a4e087`
+- `dev/diversity/s40-strip.test.js`, sha256 `22500f727f4b0114e85d8b9a7b2e5f1b34ff279ec21d0139bcb04f46d2c7bed6`
+
+C wrote them. The librarian's own implementation agrees with C's to the character on all three texts (B-read 3.73%,
+E 1.72%, near-copy 100%). **These are the only strip ever used for this registration.**
