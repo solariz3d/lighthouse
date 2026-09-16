@@ -91,3 +91,42 @@ trap, and the sealed row above it (5c6165e3…) is WITHDRAWN — it sealed a lis
 whose claims are checkable against files that ARE in the repo — so the work is real and the answers are not
 searchable. **The pre-dispatch grep required by the T3-KEY rule was run: the task text's distinctive lines return
 nothing in the checkout.**
+
+---
+
+## T2 IS VOID BY CEILING, and the chair's key was the thing that was wrong · 04:4x
+
+    A 8/8 · C 8/8 · E 8/8 against the key → every seat cleared the ≥ 7 bar registered before dispatch.
+    T2 VOID. The plant was too easy: three seats, all eight, in four to seven minutes each.
+
+**A6, the second number, is where the real finding is: all three seats called claim 1 false and all three were
+RIGHT.** The key said "TRUE, 299 lines (grep -c '')". `wc -l` prints **298** — C found the mechanism: a NUL byte on
+`boundary-check.js:155` makes `grep -c ""` count that line twice. Re-derived at the chair's desk: wc 298, grep 299.
+**A 1/1 · C 1/1 · E 1/1.** And all three found, unscored, that `boundary-check.js:25` cites `main.rs:5605` for the
+arrival stamp, which now sits at `:9504`.
+
+**The leak check, applied AS WRITTEN rather than as intended** (changing a rule after seeing the cells is the
+degenerating move): C clean; A one exact-path hit — a `git status` listing showing C's filename, no content; E one
+hit WITH CONTENT, disclosed by E itself. Registered for RUN 2: a filename in a status listing is EXPOSURE recorded
+beside the cell, returned CONTENT is a void; and finished hand-backs go to the scorer's directory, not the shared
+tree — B's F-B(2), the shared checkout, arriving for real.
+
+## T5 SEALED — the chair's call: run it, and only because it is planted HARDER · 04:4x
+
+    SUBJECT   a COPY of consonance/tools/ferry.js at <chair scratchpad>/t5/ferry.js, its unmodified test file beside
+              it. The repo copy is untouched.
+    TEXT SHA  08298ef0fe60e80d43b4f9b7c6698373aca6099d30988f24b5b9fbfa1e54abd4
+    KEY SHA   8d9b9039783f003234745df58ec78c3f962291a9e2507704e7cb06c5a5110b46   (key OFF the repo)
+    SEAL      (the commit that adds this section, those paths, those shas)
+    N         8 planted, FOUR of them subtle: an off-by-one on an epoch boundary, a unit divisor, a dropped
+              negative filter, a median index. The other four are a comparator, a constant, a guard and a floor.
+    CEILING   ≥ 7 of 8 by every seat → VOID  ·  FLOOR  ≤ 2 → VOID
+    SUBJECTS  A, C, E.  B is out under §9 A1.
+    HAND-BACKS to <chair scratchpad>/t5/, NOT the tree — E's leak channel closed before it can open again.
+
+**THE PREDICTION, before dispatch, because this is what T5 actually tests:** the four visible defects go to every
+seat; the four subtle ones separate the seat that RAN the copy from the seat that read it. The room's prior is that
+reading catches prose and running catches code. **If all three seats find all four subtle defects, that prior is
+wrong — and that is the finding, not a failure of the task.**
+
+**Pre-dispatch grep, per the T3-KEY rule:** neither the planted copy nor the key exists in the checkout.
