@@ -246,3 +246,23 @@ is already running.
 **Landing order:** row 4 lands after R4-1..R4-5 are built and B re-reads the two blocking ones. Row 5 waits on the
 keeper. The launcher rebuilds when sources are newer, so anything landed before the keeper's next launch is in the
 exe he closes with — which is exactly why B1 and B2 land first.
+
+### R5-2 · ROW 5 SETTLED, 2026-09-16 01:2x — option 2 stands, with AC-only added, and the chair's own instruction to A corrected
+
+**The keeper picked FULL SESSION HOLD, AS BUILT** (the prompt, 01:1x), and the librarian's collation
+(`librarian/2026-09-16.md` 01:17, 7eb1e97) shows the record already decided it: row 5 holds while
+`seats + Leave running > 0` (main.rs:11172-11186 at 544ddd1), which is the session, which is what the keeper asked
+for at 22:17 on 09-15. **The question should not have been asked** — see the keeper's rule, same commit.
+
+Two facts kept beside the pick, neither of them an argument against it:
+- the 09-15 event was an Update RESTART. Row 4 addresses it; row 5 would not have prevented it.
+- on L, an unplugged session with seats live now drains the battery.
+
+    R5-2  HOLD ONLY ON AC. `GetSystemPowerStatus().ACLineStatus == 1`, re-evaluated when the power source changes,
+          so unplugging RELEASES the hold and plugging in re-takes it while seats are live.
+          WHY: it is the same premise `dream_cycle.ps1:2` already runs on ("AC only"), it costs the keeper nothing
+          on D, and it removes the one harm he did not ask for — a laptop held awake on battery until it dies.
+          **THIS CORRECTS THE CHAIR'S OWN DISPATCH.** The 01:1x inject to A said "do not condition it on AC". That
+          instruction is WITHDRAWN and replaced by this row. The rest of that dispatch stands: row 5's hold is not
+          softened, is not conditioned on anything else, and no string may imply it can stop an Update restart.
+          It lands in A's rebuild pass, which B1 and B2 already force.
