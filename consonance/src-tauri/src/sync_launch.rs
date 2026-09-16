@@ -1239,6 +1239,16 @@ pub fn waiter_args(data_dir: &Path, app_pid: u32, app_started_at: &str) -> Vec<S
     ]
 }
 
+/// **P-LEAVE-3 ROW 5: should the keep-awake hold change?** `held` is what this process believes it holds, `seats`
+/// the number of live seats. Pure, so the rule is tested without Windows: the OS call is the only part that is not.
+pub fn keep_awake_transition(held: bool, seats: usize) -> Option<bool> {
+    match (held, seats > 0) {
+        (false, true) => Some(true),
+        (true, false) => Some(false),
+        _ => None,
+    }
+}
+
 /// **P-LEAVE-2 (b) 1, B's read2 §8.4 item 1: a spawn that fails after its child is running ends that child.**
 /// `spawn_claude_pane`'s `try_clone_reader()?` and `take_writer()?` run after `spawn_command`; an `Err` there used to
 /// drop the child, the killer and the flight together, leaving a live `claude.exe` outside Panes and outside the
@@ -2954,6 +2964,17 @@ mod leave_tests {
 
     fn one(folder: &Path) -> StickFind {
         StickFind::One(StickFolder { folder: folder.to_path_buf(), layout: StickLayout::Older })
+    }
+
+    /// **P-LEAVE-3 ROW 5:** the keep-awake thread asks this before it touches the OS, so the decision is testable
+    /// without Windows. Some(true) = take the hold, Some(false) = release it, None = nothing to do.
+    #[test]
+    fn the_keep_awake_hold_is_taken_when_a_seat_lives_and_released_when_the_last_one_ends() {
+        assert_eq!(keep_awake_transition(false, 0), None, "no seats and no hold: nothing to do");
+        assert_eq!(keep_awake_transition(false, 1), Some(true), "the first seat takes the hold");
+        assert_eq!(keep_awake_transition(true, 7), None, "already held");
+        assert_eq!(keep_awake_transition(true, 0), Some(false), "the last seat ending releases it");
+        assert_eq!(keep_awake_transition(false, 3), Some(true), "a hold that was lost is taken again");
     }
 
     /// This session's recorded start time, as `main` hands it to the waiter and to the Leave (P-LEAVE-2 a).
