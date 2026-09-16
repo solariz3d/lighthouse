@@ -1,0 +1,25 @@
+# text-census.allow — files that are legitimately BINARY, one row per line:  <path>  <reason>
+#
+# A row with no reason is REFUSED by the parser. A row naming a path that is no longer tracked
+# FAILS the run — a stale exemption reads exactly like a fixed file.
+# Every entry here was seen to carry a NUL on 2026-09-16 (L063) and classified by its extension
+# and its header bytes. Nothing in this list is a text file.
+
+consonance/src-tauri/icons/128x128.png  PNG, the app icon
+consonance/src-tauri/icons/32x32.png  PNG, the app icon
+consonance/src-tauri/icons/icon.ico  Windows ICO, the app icon
+consonance/src-tauri/icons/icon.png  PNG, the app icon
+consonance/src-tauri/installer/header.bmp  BMP, the installer header art
+consonance/src-tauri/installer/sidebar.bmp  BMP, the installer sidebar art
+essay/A_What_Survives_the_Gap.pdf  PDF, a built artifact of the essay
+essay/METHODOLOGY_REPORT.pdf  PDF, a built artifact of the essay
+essay/What_Survives_the_Gap.pdf  PDF, a built artifact of the essay
+essay/sim/out/fig10_capacity_criterion.png  PNG, a simulation figure written by essay/sim
+essay/sim/out/fig1_fixedpoints.png  PNG, a simulation figure written by essay/sim
+essay/sim/out/fig2_equilibrium_error.png  PNG, a simulation figure written by essay/sim
+essay/sim/out/fig3_stability.png  PNG, a simulation figure written by essay/sim
+essay/sim/out/fig4_persistent_error.png  PNG, a simulation figure written by essay/sim
+essay/sim/out/fig6_hysteresis.png  PNG, a simulation figure written by essay/sim
+essay/sim/out/fig7_basin.png  PNG, a simulation figure written by essay/sim
+essay/sim/out/fig8_tracking.png  PNG, a simulation figure written by essay/sim
+essay/sim/out/fig9_gain_vs_lag.png  PNG, a simulation figure written by essay/sim
