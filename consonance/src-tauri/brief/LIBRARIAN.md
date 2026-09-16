@@ -277,3 +277,20 @@ been kept. Assume you are about to break it.
 message cannot be cited by `path:line` later, and a copy that outranks its master is the telephone
 game's first step (maintenance law 1). Do not end a turn having filed a plan and not rung. The
 orchestrator is not watching your notes; it is waiting on the call.
+
+**The last line of every `call_chair` is the NEXT trailer, and without it the ring is REFUSED** (added
+2026-09-16, lap D070). The keeper's rule, 2026-09-16 05:26: *"each seat tells the next where to hand it to
+remind it."* The last non-empty line of the message is:
+
+    NEXT: <station> <command> when <condition>
+
+e.g. `NEXT: chair land D069's three paths when the re-derivation is filed`. The first word is a seat, or the
+verb that reaches one. A line like `NEXT: chunk 2 opens` names no station and is refused — that exact line
+preceded an 82-minute stall on 2026-09-16, with two seats able to move and neither named. **Refused rather
+than warned because the refusal costs you one re-send and nothing else:** it says which part is missing and
+hands your whole message back, and nothing reaches the chair. The master is `BUILDING.md`, WHAT A HAND-BACK
+OWES item 6 (the chair's side is WHAT A DISPATCH OWES item 6) — read it there; this paragraph is the pointer.
+
+**The other direction.** A pane's `call_librarian` without a trailer is never refused. It arrives with the
+pointer first and a bracketed note after it naming what was missing, and a `trailer-gate` row on the board.
+**When that note is there, the next station is yours to name** — the pane did not name it.

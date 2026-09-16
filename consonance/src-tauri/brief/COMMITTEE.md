@@ -222,6 +222,20 @@ lets a summary through; on 2026-09-01 three calls met the brief and broke the ve
 the seat that wrote this paragraph. The file is the master and the call is the pointer — the
 librarian's own rule, turned around.
 
+**The last line of the call: the NEXT trailer** (added 2026-09-16, lap D070). The keeper's rule, 2026-09-16
+05:26: *"each seat tells the next where to hand it to remind it."* End every `call_librarian` with one line,
+and make it the last:
+
+    NEXT: <station> <command> when <condition>
+
+e.g. `NEXT: librarian collate the chunk when all four hand-backs are in`. The first word is a seat, or the
+verb that reaches one. **A call without it is delivered with a warning, never refused — and warned does not
+mean optional:** a refused call to the librarian discards the pointer it carries (`mcp.rs`, the out-of-turn
+arm of `call_librarian`), so refusing a hand-back over its last line would destroy the hand-back, and the gate
+is built never to do that. The warning is a `trailer-gate` row on the board, counted by seat, and it leaves the
+librarian to guess a station you were the one placed to name. The master is `BUILDING.md`, WHAT A HAND-BACK
+OWES item 6 (the dispatch side is WHAT A DISPATCH OWES item 6) — read it there; this is the pointer.
+
 > **AMENDED 2026-08-26.** *"Do not commit; the chair commits with attribution"* above is superseded by
 > the amendment at the **Nothing committed** bullet — name your paths, say who wrote it in the body,
 > never push. Marked here rather than restated, for the reason this very paragraph gives: two copies of
