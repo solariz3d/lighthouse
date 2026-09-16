@@ -57,3 +57,29 @@ result and is scored as one.
 
 Pull, then REBUILD, then close with the stick in. The chair does not build. RETIRE, NEVER OVERWRITE. Nothing is
 pushed to the consumer repo without his word, for that push.
+
+---
+
+## ADDED 07:5x — L065, the launcher never pulls, and the block did NOT ship
+
+**The keeper's question, 07:4x:** why does the first launch at home always run the old build?
+
+**The answer, at source:** `consonance/launch.ps1` never pulls. No `git pull`, no `fetch`, anywhere in it — the only
+fetch in the tree is `state-sync.js:767` and that is the STATE repo, not lighthouse. The launcher decides to rebuild
+by comparing the exe's mtime against `src-tauri/src`, `ui` and `tauri.conf.json` (:107-141); at home those sources
+are stale until he pulls, so launch one opens the old exe, the pull lands after, and launch two rebuilds. **The
+rebuild logic was never broken. The pull was never part of launching.**
+
+**A HELD THE BLOCK, correctly, and `launch.ps1` is byte-identical to HEAD.** Its timeout wrapper
+(`Start-Process` + `WaitForExit` + `.ExitCode`) misreports git's exit code while `git fetch` itself exits 0 — so
+the block could not be proven safe inside the clock, and the packet's rule was that an unprovable block does not
+ship. **A seat refusing to ship its own feature on the deadline it was given is the packet working.**
+
+**FOR D, ~10 minutes:** fix the wrapper so git's real exit code is read, then prove the four cases — clean tree and
+no-op; dirty tracked file skips with the notice; origin ahead and clean fast-forwards; **A's fourth case, origin
+ahead AND a dirty tracked file**. Then B reads it, then it lands in `launch.ps1`. Nothing about this is urgent
+enough to ship unread: the cost of the bug is one extra restart, the cost of a bad launch block is an app that
+will not open on either machine.
+
+**Tonight's way home is the librarian's stick script** — `D:\consonance-L-20260911\PULL-THEN-LAUNCH.ps1`, dry-run
+exit 0 on L, calling git directly and not sharing A's wrapper defect.
