@@ -295,3 +295,24 @@ test('a HOLDS does not claim the seals were good', () => {
     assert.match(run(fx).out, /does not say the seals were good/);
   } finally { fx.cleanup(); }
 });
+
+test('a pane name containing the separator cannot collide with another pane\'s text', () => {
+  // The dedup key joins pane and text. If the join character can occur in the PANE field, two
+  // different panes can produce ONE key and a real dispatch vanishes from the denominator. That is
+  // why the separator is NUL — a byte no pane id and no transcript line can contain. These two rows
+  // are distinct dispatches to distinct panes, and they collide under ANY printable separator:
+  //     'p'                          + sep + '[chair:MAIN] a [chair:MAIN] b'
+  //     'p' + sep + '[chair:MAIN] a' + sep + '[chair:MAIN] b'
+  // This is what fails if someone ever "fixes" the raw NUL by replacing it instead of escaping it.
+  const fx = fixture({
+    board: [
+      boardRow(T0, '[chair:MAIN] a [chair:MAIN] b', 'p'),
+      boardRow(T0, '[chair:MAIN] b', 'p [chair:MAIN] a'),
+    ],
+    laps: [openRow('D9', T0 - 1)],
+  });
+  try {
+    assert.match(run(fx).out, /HOLDS - 0 of 2/,
+      'two panes, two dispatches — a separator that can occur in a pane name merges them into one');
+  } finally { fx.cleanup(); }
+});

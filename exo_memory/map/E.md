@@ -1114,3 +1114,73 @@ run — reachable only by crafting a 4-char-sha ledger. A reviewer who diffs the
 **And `ferry.test.js:55-59` is GREEN on the copy for the opposite reason** (5-char sha rejected by `5<=4` instead of
 `5>=7`) — my 09-15 Y6 lesson again: one fixed input cannot tell which guard held. Self-correction: first reported the
 test run as exit 0; that was `tail`'s code through a pipe, not node's. Harnesses `scratchpad/t5{harness,lat,edge,neg,floor2}.js`.
+
+## 2026-09-16 ~06:0x · L061 P-BOUNDARY-CHECK-FIXES, built (D) → `exo_memory/handback/p-boundary-fixes-E_2026-09-16.md`
+Three repairs to `consonance/tools/boundary-check.js` + its test file, red first, landed dirty. **27/27 tests (22
+before; 4 red-first + 1 regression pin), 8 mutants → 7 caught · 0 SURVIVED · 1 NOT APPLIED, tool prints the same
+verdict and figures (231/52, FIRES 21 of 231, exit 1).** At code level the whole change is TWO lines.
+**R1 the NUL:** it was doing its job — the (pane,text) dedup key needs a separator that cannot occur in either
+field. Only the ENCODING was wrong: a raw byte instead of the six-character escape. Verified the runtime value is
+identical. Cost of the raw byte: `wc -l` 298 vs `grep -c ""` 299, `grep -n` refuses line numbers, **and `git diff`
+calls the file binary — so the defect hid its own repair from review.**
+**R2 citations:** `main.rs:5605` → `main.rs fn chair_inject_exec` in all three places incl. the one PRINTED on
+every run; the dead number is quoted nowhere, and my own new test rejected my first attempt for re-quoting it.
+**A symbol alone does not stop rot — a CHECKED symbol does**, so the suite now fails on any `main.rs:<digits>` and
+on a cited symbol that stops existing. Checked every other citation too; left the L009 journal line citation alone
+and said why (a dated journal's lines do not move; that is the opposite of source).
+**R3:** restored "the loop is tight and" and fixed `brief/BUILDING.md` → `consonance/src-tauri/brief/BUILDING.md`.
+**Flagged for B, a ruling not a review:** I amended the test file's own "Nothing greps the source" rule to admit
+ARTIFACT tests, with the discriminator written in (forbidden = an assertion about the VERDICT decided by reading
+the source; permitted = the file as artifact, which no behaviour of the tool can satisfy). It is a rule narrowed by
+the seat that wanted it narrowed — if B says too wide, the four tests go in a third file.
+**Boundary held (repair 4 is C's):** my NUL edit is inside `readBoard`, the same function as C's blind rows, but
+strictly downstream of the `o.pane === 'blind'` early return, so it cannot change which rows are collected as
+blind. `blindOverlaps` untouched.
+**Self-corrections: M6 SURVIVED first** — my separator fixture did not actually collide once `[chair:MAIN] ` was
+prefixed, so swapping the NUL for a space left the suite green; rebuilt from `boardRow` and M6 is now caught (Y6's
+lesson from 09-15 again). My artifact tests broke under copy-first and now fail loudly instead of skipping. My
+reflow silently broke M5's anchor and the harness reported NOT APPLIED rather than passing. **And nine line
+citations in my T2 hand-back were wrong** — estimated from an unnumbered `cat`, not from a command; re-derived and
+corrected in an appendix there, along with why the note's "299 lines" was a true reading of a lying file.
+Scratch `scratchpad/bc/`.
+**Addendum, same lap, and it is the lesson worth keeping:** while writing the hand-back ABOUT the NUL repair I put
+five raw NUL bytes into the hand-back itself — a shell escape collapsed inside a `node -e` string, and backticks in
+the same string ran as command substitution and deleted two filenames from my prose. Rewrote the file through the
+editor instead of a shell; then the editor's own JSON encoding turned a literal `backslash-u-0000` in my text into
+a real NUL twice more. **Three different tools, three different escape layers, same byte.** Checked every file I
+touched afterwards (`wc -l` vs `grep -c ""`, and `indexOf(0)`): all five clean. The rule to carry: **after writing
+any file through a shell or an encoder, read back what landed — the escape layer you did not think about is the one
+that bites.** Same root as the nine bad line numbers in t2-echo: a tool used without checking what it produced.
+js-suite after landing: 95 green · 4 failed · 1 canary (of 100), `boundary-check.test.js` ok, none of the four
+failures a file I touched — but the tree was dirty with three other seats' work while it ran, so that is a narrow
+claim, not a clean measurement.
+
+## 2026-09-16 ~06:2x · L061 B's ruling on my carve-out: TOO WIDE → edit made, in `p-boundary-fixes-E_2026-09-16.md` §9
+I asked B to rule on a rule I was widening in the file the rule governs. **B ruled against me and was right on two
+grounds I had not tested.** (1) **My fence was an intent question.** Run L009's own case through my discriminator —
+the Rust test that asserted a brief said "No work." and stayed green after the phrase was struck — and **the letter
+of my permission ADMITS it**; only my intent clause excluded it. I had tested my permission against my four tests
+and never against the case the rule was made from. **A fence a stranger cannot apply is not a fence.** (2) Mixing
+costs the suite's meaning: three of the four go red for a rename in main.rs or a move of BUILDING.md — correct
+reds, not statements about the tool, arriving in the number that is.
+**My specific error:** I priced the alternative at "a third file and nothing else" and then argued against it on a
+cost I never checked. `js-suite.js:155-161` walks recursively for every `*.test.js` (SKIP_DIRS :150), so a split
+file cannot quietly stop being run. **I named the fallback and argued against it from the general case instead of
+this repo's runner** — same root as the nine bad line numbers and the NULs: a claim made without running the thing
+that would settle it. Re-derived B's citation rather than taking it.
+**The edit:** four ARTIFACT tests → new `consonance/tools/boundary-check.artifacts.test.js` (100 lines, header
+records B's two grounds so the next reader finds the ruling, not an unexplained split); the amendment at :320-341
+removed; the original rule at :4-9 untouched and verified verbatim; the separator test stays (behavioural).
+**Bars: behaviour 23/0 · artifacts 4/0 · js-suite runs BOTH (`ok` on each) · tool exit 1, same shape · all three
+files clean of NUL.** Mutants re-run across both suites: 7 caught · 0 SURVIVED · 1 NOT APPLIED, **and every mutant
+reddens exactly ONE suite** — the five citation/text mutants in artifacts, the two behavioural in behaviour, none
+crossing. That is B's argument confirmed by measurement, not accepted on its reasoning, and it is what makes the
+split a real cut rather than a filing preference.
+**The lesson to carry, and it is the one worth more than the repairs:** asking for the ruling cost me the outcome
+and produced a better instrument than the one I was defending. The read found a clean answer instead of an argument
+because the question was asked before anyone had to catch me. Do that again.
+**Not mine:** the remaining raw NUL is in B's read (`p-boundary-read-B_2026-09-16.md:37`); my t2-echo was escaped
+the turn before the chair flagged it and re-verified clean (262 = 262).
+
+**js-suite totals after the split, appended:** universe 100 -> 101 files discovered, js-suite 95 -> 96 green, same 4
+failures (none mine), 0 not-run. **+1 discovered, +1 green** — the new file is run, not merely present.

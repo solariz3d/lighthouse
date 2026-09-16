@@ -2,10 +2,10 @@
 'use strict';
 // boundary-check.js — did work leave the room without a sealed guess?
 //
-// THE OBJECT. `brief/BUILDING.md`'s chain-vs-freestyle cut says: chain when something un-revisable
-// is about to reach a seat that will act on it blind; freestyle when nothing is handed off. The
-// harm the cut risks is MISCLASSIFICATION AT THE BOUNDARY — a dispatch called freestyle — not the
-// total collapse its first falsifier tested for.
+// THE OBJECT. `consonance/src-tauri/brief/BUILDING.md`'s chain-vs-freestyle cut says: chain
+// when something un-revisable is about to reach a seat that will act on it blind; freestyle when
+// the loop is tight and nothing is handed off. The harm the cut risks is MISCLASSIFICATION AT THE
+// BOUNDARY — a dispatch called freestyle — not the total collapse its first falsifier tested for.
 //
 // WHY THE FIRST ONE COULD NOT WORK, because this tool is its replacement and inherits the lesson.
 // It read: "if three consecutive cycles produce no lap row, the freestyle clause has eaten the
@@ -23,10 +23,19 @@
 //      was D001, the lap convened to attack it.
 //
 // THE INVERSION THIS TOOL IS BUILT ON. The denominator is written by a machine when the text
-// ARRIVES IN THE RECEIVING PANE — `main.rs:5605` stamps `[chair:MAIN]` onto every chair dispatch
-// and `board_push` mirrors the receiving transcript into `data/board.jsonl`. The sending seat
-// cannot suppress that row: it exists because the dispatch happened, not because anyone chose to
-// record it. The numerator is `lap.jsonl`, which IS self-reported — but here under-reporting makes
+// ARRIVES IN THE RECEIVING PANE — `main.rs fn chair_inject_exec` stamps `[chair:MAIN]` onto every
+// chair dispatch, and `main.rs fn board_push` mirrors the receiving transcript into
+// `data/board.jsonl`. The sending seat cannot suppress that row: it exists because the dispatch
+// happened, not because anyone chose to record it.
+//
+// BOTH ARE NAMED AS SYMBOLS, NEVER AS LINES, and the dead line number is not preserved here
+// either. A line number named this stamp correctly until the stamp moved inside main.rs; the
+// citation then pointed at unrelated code in three places in this file and was PRINTED on every
+// run, so a reader following the tool's own output to check its central warrant landed nowhere
+// (found by three seats independently, L061 2026-09-16). Resolve either symbol with:
+//   grep -n 'fn chair_inject_exec' consonance/src-tauri/src/main.rs
+// and boundary-check.test.js fails if either symbol stops existing, or if a line citation
+// returns to this file. The numerator is `lap.jsonl`, which IS self-reported — but here under-reporting makes
 // the check FIRE rather than pass. That asymmetry is the whole repair:
 //
 //     the old check:  no lap row -> reads GREEN   (absence accepted)
@@ -85,8 +94,8 @@ const BOARD = process.env.BOARD_LEDGER || (DATA_DIR && path.join(DATA_DIR, 'boar
 // against a rule that did not exist, so that is the default floor of the window.
 const CLAUSE_LANDED = '2026-08-26T06:15:07Z';
 
-// Rows whose text begins with the app's own chair stamp. Applied in main.rs:5605 by the backend,
-// so a sending seat cannot omit it.
+// Rows whose text begins with the app's own chair stamp. Applied in `main.rs fn chair_inject_exec`
+// by the backend, so a sending seat cannot omit it.
 const CHAIR = /^\s*\[chair:/;
 
 const EXIT = { HOLDS: 0, FIRES: 1, UNMEASURED: 2 };
@@ -152,7 +161,7 @@ function readBoard(file, sinceMs) {
       if (!CHAIR.test(o.text)) return;
       if (!(o.ts >= sinceMs)) return;
       raw++;
-      const key = o.pane + ' ' + o.text;
+      const key = o.pane + '\u0000' + o.text;
       if (!arrivals.has(key)) arrivals.set(key, { ts: o.ts, pane: String(o.pane || ''), text: o.text });
       else if (o.ts < arrivals.get(key).ts) arrivals.get(key).ts = o.ts;
     });
@@ -253,7 +262,7 @@ async function main(argv) {
   for (const a of board.arrivals) if (!coveringLap(laps, a.ts)) unsealed.push(a);
 
   say(`DENOMINATOR  ${N} chair dispatch(es) rendered in a receiving pane`);
-  say(`             written by main.rs:5605 + board_push when the text ARRIVED, not by the sender.`);
+  say(`             written by main.rs fn chair_inject_exec + board_push when the text ARRIVED, not by the sender.`);
   if (board.raw !== N) say(`             ${board.raw} raw rows deduped to ${N} on (pane, text) - the board replays transcripts.`);
   say(`NUMERATOR    ${laps.length} lap(s) carrying a sealed guess${lap.missing ? '  (LEDGER ABSENT)' : ''}`);
   if (lap.unreadable) say(`             ${lap.unreadable} lap line(s) UNREADABLE - counted, not filtered.`);
