@@ -1055,3 +1055,17 @@ C's hashes match; C's scorer re-run offline reproduces results-c1.json byte for 
 
 ## 2026-09-15 ~13:10 · D064 STEP 0, the phase instrument (D) → `exo_memory/handback/step0-phase-E_2026-09-15.md`
 `dev/diversity/phase-window.js` sha256 ba98d635…2cb5 + test 2950fbd4…782d (13/0; red 10/3 on a stub; mutants 15 applied/15 caught/0 NOT APPLIED on a copy). THE BAR met: E §5.2 at six phases 18/18 and the librarian's U (0.7328/0.6866/0.6497) to 4 dp, from the scorer diff `scratchpad/c1read/c1/score-step0.diff` (ecacc774…1a4a) whose run keeps C's 641 fields unchanged. Named edge: an empty text is refused (R8e's two clauses disagree at 0 ids). Diff readings (U verdicts beside C's, V1 per phase + mean, gate still phase 0) await the librarian.
+
+## 2026-09-16 ~04:0x · P-BATTERY-BLIND, the pane-blind design (D) → `exo_memory/handback/p-battery-blind-E_2026-09-16.md`
+Design only; no pane scored. **VERDICT: names blindable, AUTHOR not.** redact.js (cb3f3ea1…, re-hashed MATCH) already
+takes the filename letter, `map/X.md`, `(E)` and callsigns — three of those are A's additions past K6's spec. Needs new
+rules: sibling/instance stems (17 hits/13 files), uuid middles (13/11), scratchpad paths (113/30), lower-case callsigns
+(31/11). **Cannot be removed: the letter A (--letters throws; R8h is unobeyable here), length rank, and the hand-back
+contract itself — "I wrote/I built" 131 hits in 37 of 42 files, and 11 of 42 texts carry a stem `ls|grep` resolves to
+one author.** Gate: 0.625 (= 0.75's above-chance fraction moved from binary to 4-way; P(chance) 1.1e-4 at n=24) plus a
+linkage ARI; seals are (commit, path, sha) triples — **the battery's own sealed prediction sha 8bf0b5ee… no longer
+matches its file at HEAD (d1546db edited it); it verifies only via `git show 0a54c5a:`.** Clicks: 12 spawns + 36–84
+approvals, unmeasured until one fresh pane is asked to read three files.
+**I WAS WRONG about house style:** same-brief l039/l045, redacted, function-word classifier 3/6 (chance 2/6, p=0.32),
+2 of 18 markers rank consistently — below chance. The channel is LENGTH, which I normalised away: order B A C in both
+briefs on bytes, words and lines. Scripts `scratchpad/{leakcensus,style,markers}.js`.
