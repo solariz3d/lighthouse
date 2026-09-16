@@ -198,3 +198,51 @@ later it fired, on the machine, with the stick in. The scope ruling is the error
            can veto a forced Windows Update restart. This prevents IDLE SLEEP and nothing else. The one control that
            stops tonight's cause is a Windows policy on the keeper's machine (NoAutoRebootWithLoggedOnUsers; active
            hours are 23:00–17:00, so 17:00–23:00 is the restart window), and it is his to set.
+
+## P-LEAVE-3 ROWS 4–5 · B's READ AND THE CHAIR'S RULINGS — 2026-09-16 01:1x, on L (`handback/p-leave3-read-B_2026-09-16.md`, landed at the commit before this one; the librarian's collation 8ccb11a)
+
+**B's verdict: NOT AS WRITTEN.** The Win32 shape is right, the fast Leave really is the same Leave (one `fn leave_run`,
+pinned by a test), and the bounds are the constants A names. What is not safe is the interaction with the close that
+is already running.
+
+    R4-1  B1, BLOCKING. An OS session end DURING the keeper's own close exits the process at 20 s, mid-export
+          (main.rs:11085-11093, :11101-11109 at 544ddd1).
+          RULED: a session end that arrives while a NORMAL Leave is in flight does not start a second Leave and does
+          not exit on the shutdown bound. It joins the running one, and the block is held until that Leave finishes
+          or its own bound cuts it. A close already under way is the case this feature exists to protect, not to
+          interrupt.
+
+    R4-2  B2, BLOCKING. The "bounded" fast Leave contains an unbounded retry loop at step 6 (main.rs:11006-11021): if
+          stick-leave.result.json cannot be written, WM_LEAVE_DONE is never posted, the block reason is never
+          destroyed, and the app holds the shutdown until Windows forces it.
+          RULED: LeaveBounds gets a deadline for step 6. NORMAL keeps today's behaviour. On the shutdown path the
+          loop exits at the bound and the Leave proceeds to release the block. **Bounded end to end is the one
+          property this path exists to have.**
+
+    R4-3  B3. WM_ENDSESSION is answered without chaining, and tao handles it (tao-0.35.3 event_loop.rs:2384-2392).
+          RULED: chain it, as B wrote — one line.
+
+    R4-4  B4, the chair's ruling with B's number. L's three real closes exported in 10 s, 11 s and 18 s
+          (`persist.log`, LEAVE SAVING → LEAVE DONE). The newest used 90% of the 20 s shutdown bound and the three
+          are rising.
+          RULED: the export bound on the shutdown path becomes 30 s. The comment at main.rs:10918-10922 carries
+          L's three measured closes instead of the 55 s first carry, and says that a cut export still writes
+          NOT_DONE and keeps LEAVE_STARTED — which is the designed guarantee and is why this is a bound and not a
+          promise. **Re-read the bound when any ordinary close exceeds 60% of it.** A stray `.writing-<pid>` on the
+          stick after a cut carry is a named cost, not a blocker (it broke neither `--verify-set` nor the next
+          export on L).
+
+    R4-5  B6. A 0 return from SetThreadExecutionState is read as failure; if a success can return 0 the hold is
+          never released.
+          RULED: make it safe without needing the answer — release unconditionally on the path that set it.
+
+    R5-1  B5 IS THE KEEPER'S, NOT THE CHAIR'S, AND IT WAS NOT IN A's HAND-BACK.
+          `ES_CONTINUOUS | ES_SYSTEM_REQUIRED` holds the idle timer that `dev/dream/dream_cycle.ps1:2-3` is built
+          on — the machine wakes, dreams once, and Windows returns it to sleep on that timer. Seats are restored
+          KEPT at every launch, so the hold is on for the whole session. Dreaming still fires; the RETURNING TO
+          SLEEP is what stops. On L it holds on battery too. An explicit sleep — the lid, or choosing Sleep — is
+          unaffected. **Put to the keeper with those sentences; row 5 does not land until he rules.**
+
+**Landing order:** row 4 lands after R4-1..R4-5 are built and B re-reads the two blocking ones. Row 5 waits on the
+keeper. The launcher rebuilds when sources are newer, so anything landed before the keeper's next launch is in the
+exe he closes with — which is exactly why B1 and B2 land first.
