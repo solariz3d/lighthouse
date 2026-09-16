@@ -1098,3 +1098,19 @@ it (master `consonance/src-tauri/brief/BUILDING.md:539-543`) — the drift is th
 the real chair stamp is `main.rs:9504`. Claim 8 unresolvable here: D's board spans the named window and holds **0 rows
 with `pane==='blind'`** (30,347 parsed), so `blindOverlaps` has no input on this machine at all. Did not run the test
 (it mkdtemps + writes); 22/0 quoted, not re-derived. Disclosed: a grep surfaced 2 lines of another seat's tonight file.
+
+## 2026-09-16 ~05:0x · T5, the planted ferry.js copy (D) → scratch `…/instances-main/…/scratchpad/t5/found-echo.md` (NOT in the repo)
+**8 defects, all single lines; unmodified tests 6 pass/7 fail exit 1 vs repo 13/0 exit 0.** Against the live ledger the
+copy erases every ferry: repo `ferried 63 · miss 91.0% · median 15.2 min` → copy `ferried 0 · miss 100.0% · median n/a`.
+D1 `MIN_SHA 7→4` (:43) lets record() write 4–6 char shas; D2 `>=`→`<=` (:118) inverts the usable filter and — measured —
+**every sha in the live ledger is 7 or 9 chars, 0 are ≤4, so `usable` is EMPTY**; together they make the phantom the
+header says is impossible. D3 `&&`→`||` (:160) silently drops a second pane's ferry and prints `already:true`. D4
+`>=`→`>` (:196) drops the epoch-boundary commit from BOTH buckets: before+inWindow = 808 ≠ all 809. D5 `/60000`→`/1000`
+(:201) makes seconds wear the `min` label. D6 drops the `n>=0` guard (:202) → **prints median latency −300.0 min**.
+D7 `floor`→`ceil` (:204) picks the wrong element AND **at n=1 crashes: `lat[1]` undefined, TypeError at :220 mid-report**.
+D8 `RATE_FLOOR 10→1` (:215) prints 100.0% off n=1.
+**The finding to carry: one defect MASKS three.** D2 empties the latency list, so D5/D6/D7 are invisible in every live
+run — reachable only by crafting a 4-char-sha ledger. A reviewer who diffs then runs to confirm would stop three short.
+**And `ferry.test.js:55-59` is GREEN on the copy for the opposite reason** (5-char sha rejected by `5<=4` instead of
+`5>=7`) — my 09-15 Y6 lesson again: one fixed input cannot tell which guard held. Self-correction: first reported the
+test run as exit 0; that was `tail`'s code through a pipe, not node's. Harnesses `scratchpad/t5{harness,lat,edge,neg,floor2}.js`.
