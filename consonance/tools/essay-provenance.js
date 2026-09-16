@@ -339,7 +339,7 @@ function readLap(file, prefix) {
  *   {"sha","path","seat","evidence"?,"by","at","note"?}
  */
 const HEADER_BYTES = 4096;
-const correctionKey = (full, p) => String(full) + ' ' + String(p);
+const correctionKey = (full, p) => String(full) + '\0' + String(p);
 const AUTHORSHIP = /(^|[^A-Za-z])(SEAT\s*:|written by|placed here by|placed by|spawned by|filed by|authored by|committed by)/i;
 
 function readCorrections(file) {

@@ -222,7 +222,7 @@ function* allArrangements(labels, groups) {
     const vals = idx.map(i => labels[i]);
     const seen = new Set(), out = [];
     const rec = (cur, rest) => {
-      if (!rest.length) { const k = cur.join(' '); if (!seen.has(k)) { seen.add(k); out.push(cur.slice()); } return; }
+      if (!rest.length) { const k = cur.join('\0'); if (!seen.has(k)) { seen.add(k); out.push(cur.slice()); } return; }
       const used = new Set();
       for (let i = 0; i < rest.length; i++) {
         if (used.has(rest[i])) continue;

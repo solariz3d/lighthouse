@@ -65,7 +65,13 @@
       <tr><td>${E(r.seat)}</td><td>${E(r.verdict)}</td><td>${E(r.reason || '')}</td>
           <td>${r.result ? (r.result.ok ? 'written' : 'NOT written: ' + E(r.result.why)) : ''}</td></tr>`).join('');
     const code = { 0: 'done', 1: 'a seat refused', 2: 'could not run', 3: 'crashed part-way — seats may be half-carried' }[result.code];
+    // D067: the result's own words. `why` is the one sentence that says what to do next — for APP_RUNNING it names the
+    // pid holding the transfer and the command that ends it — and it used to be written to disk and shown to nobody.
+    // Both lines are omitted when the field is absent, so an older result file renders exactly as before.
+    const outcome = result.outcome ? `<p>Outcome: <b>${E(result.outcome)}</b></p>` : '';
+    const why = result.why ? `<p${result.code === 0 ? '' : ' class="stick-bad"'}>${E(result.why)}</p>` : '';
     return `<section><h3>The last transfer — exit ${E(result.code)} (${E(code || 'unknown code')}), ${E(result.at || '')}</h3>
+      ${outcome}${why}
       <table class="stick-table"><tr><th>seat</th><th>verdict</th><th>reason</th><th>result</th></tr>${rows}</table>
       <p>What is still left is shown below, read again from the stick and this machine as they are now.</p></section>`;
   }

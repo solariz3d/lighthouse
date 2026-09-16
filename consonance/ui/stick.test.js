@@ -255,6 +255,50 @@ test('§2.6: KEEP on a DIVERGED row is recorded as a keep for this carry when th
   assert.strictEqual(JSON.stringify(keep), JSON.stringify([{ sid: FORK, exported_at: '2026-09-14T13:11:00.693Z' }]));
 });
 
+// ── P-NUL-REPAIRS (2), D067: the last transfer's WHY and OUTCOME reach the screen ──────────────────────────────────
+// renderResult printed the exit code, the per-seat rows and the time, and never `why` or `outcome`. So a transfer
+// refused because a windowless Consonance was holding it — whose `why` names that pid and the command that ends it
+// (dev/stick-apply.js, APP_RUNNING) — showed the keeper "exit 2 (could not run)" over an EMPTY table, and the one
+// sentence that said what to do was written to disk and read by nobody.
+const refused = {
+  code: 2, outcome: 'APP_RUNNING', rows: [], at: '2026-09-16T14:52:00Z',
+  why: 'Consonance (pid 4242) had no window for 30 s — it is not the app you can see. End that process (taskkill /PID 4242 /F), then start the transfer again.',
+};
+const resultOnly = (result) => ({ held: true, stick: 'none', result });
+
+test('D067: a refused transfer shows its WHY — the pid and the command — inside the last-transfer section', async () => {
+  const r = await run({ stick_state: resultOnly(refused), stick_ack_result: null, stick_release: { read_only: false, retired: [] } });
+  const html = r.body.innerHTML;
+  // The SHAPE, not the token: the reason must sit inside the section that describes the last transfer, so a copy of
+  // the pid printed somewhere else on the page (or in a later section) does not satisfy it.
+  const section = html.match(/<section><h3>The last transfer[\s\S]*?<\/section>/);
+  assert.ok(section, 'no last-transfer section rendered');
+  assert.ok(section[0].includes('pid 4242') && section[0].includes('taskkill /PID 4242 /F'),
+    `the refusal reason never reached the screen:\n${section[0]}`);
+});
+
+test('D067: the OUTCOME is shown, so APP_RUNNING is told apart from a crash that shares no exit code', async () => {
+  const r = await run({ stick_state: resultOnly(refused), stick_ack_result: null, stick_release: { read_only: false, retired: [] } });
+  const section = r.body.innerHTML.match(/<section><h3>The last transfer[\s\S]*?<\/section>/)[0];
+  assert.ok(section.includes('APP_RUNNING'), `the outcome is missing from the section:\n${section}`);
+});
+
+test('D067: WHY is ESCAPED — a result file cannot put markup on the keeper\'s screen', async () => {
+  const hostile = { ...refused, why: '<img src=x onerror=alert(1)> & <b>bold</b>', outcome: '<i>X</i>' };
+  const r = await run({ stick_state: resultOnly(hostile), stick_ack_result: null, stick_release: { read_only: false, retired: [] } });
+  const html = r.body.innerHTML;
+  assert.ok(!html.includes('<img') && !html.includes('<b>bold') && !html.includes('<i>X'), 'raw markup from the result file was rendered');
+  assert.ok(html.includes('&lt;img') && html.includes('&amp;'), 'the reason was dropped instead of escaped');
+});
+
+test('D067: an OLDER result with no why and no outcome renders neither — no empty line, no "null", no "undefined"', async () => {
+  const older = { code: 0, rows: [], at: '2026-09-12T18:00:00Z' };
+  const r = await run({ stick_state: resultOnly(older), stick_ack_result: null, stick_release: { read_only: false, retired: [] } });
+  const section = r.body.innerHTML.match(/<section><h3>The last transfer[\s\S]*?<\/section>/)[0];
+  assert.ok(!/null|undefined/.test(section), `a missing field printed as a word:\n${section}`);
+  assert.ok(!/<p[^>]*>\s*<\/p>/.test(section) && !/Outcome/.test(section), `an empty reason or outcome line was rendered:\n${section}`);
+});
+
 Promise.all(pending).then(() => {
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);

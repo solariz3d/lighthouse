@@ -1791,5 +1791,398 @@ test('P-DIVERGED debt (c): the HANDOFF for a DELTA does not promise APPEND — i
     /expected at the far end: FULL/, 'a whole conversation is still FULL');
 });
 
+
+// ── D067 P-CARRY-EXCLUDE: a directory carry that leaves build output behind, BY SIGNATURE ──
+//
+// The 312 MB (408 MB allocated on the exFAT stick) that rode to work on 09-14 was a Cargo `target/`
+// inside a pane's scratch folder, copied by hand. These tests pin the rule that would have left it:
+// a directory is excluded because it SAYS it is a cache (CACHEDIR.TAG, first 43 octets exact) or an
+// installed dependency tree (a package manager's own marker inside node_modules) — never because of
+// its NAME. A folder that merely shares the name is carried, and flagged so a person can look.
+
+function dirWorld() {
+  const root = path.join(tmp, 'dir' + (++seq));
+  const src = path.join(root, 'scratch');
+  const put = (rel, body) => {
+    const p = path.join(src, ...rel.split('/'));
+    fs.mkdirSync(path.dirname(p), { recursive: true });
+    fs.writeFileSync(p, body);
+    return p;
+  };
+  return { root, src, dest: path.join(root, 'on-stick', 'scratch'), put };
+}
+const TAG = 'Signature: 8a477f597d28d172789f06886806bc55\n# a cache directory tag\n';
+
+test('carry-dir: a directory carrying a valid CACHEDIR.TAG is excluded WHATEVER its name, with its entries and bytes counted', () => {
+  const d = dirWorld();
+  d.put('cell.jsonl', 'kept\n');
+  d.put('build-out/CACHEDIR.TAG', TAG);
+  d.put('build-out/release/app.exe', 'x'.repeat(1000));
+  d.put('build-out/release/deps/a.rlib', 'y'.repeat(500));
+  const p = T.planDirCarry(d.src);
+  assert.deepStrictEqual(p.files.map((f) => f.rel), ['cell.jsonl'], 'only the real work is carried');
+  assert.strictEqual(p.excluded.length, 1);
+  assert.strictEqual(p.excluded[0].rel, 'build-out');
+  assert.match(p.excluded[0].reason, /CACHEDIR\.TAG/);
+  // entries: the excluded root and everything beneath it — build-out, CACHEDIR.TAG, release, app.exe, deps, a.rlib
+  assert.strictEqual(p.excluded[0].entries, 6);
+  assert.strictEqual(p.excluded[0].bytes, TAG.length + 1000 + 500);
+  assert.strictEqual(p.excludedEntries, 6);
+  assert.strictEqual(p.excludedBytes, TAG.length + 1500);
+});
+
+test('carry-dir: THE NAMED RISK — a folder called target with no tag is CARRIED, and flagged, not excluded', () => {
+  const d = dirWorld();
+  d.put('target/my-notes.md', 'real work that happens to live in a folder called target\n');
+  const p = T.planDirCarry(d.src);
+  assert.deepStrictEqual(p.files.map((f) => f.rel), ['target/my-notes.md'], 'the name alone must never exclude');
+  assert.strictEqual(p.excluded.length, 0);
+  assert.deepStrictEqual(p.suspects.map((s) => s.rel), ['target'], 'but a person is told to look');
+});
+
+test('carry-dir: a CACHEDIR.TAG that does not BEGIN with the 43-octet signature does not exclude', () => {
+  const d = dirWorld();
+  d.put('target/CACHEDIR.TAG', ' ' + TAG);            // one leading space: the spec says no characters before the S
+  d.put('target/keep.txt', 'k');
+  d.put('other/CACHEDIR.TAG', 'Signature: 8a477f597d28d172789f06886806bc5');   // one octet short
+  d.put('other/keep.txt', 'k');
+  const p = T.planDirCarry(d.src);
+  assert.strictEqual(p.excluded.length, 0, JSON.stringify(p.excluded));
+  assert.ok(p.files.some((f) => f.rel === 'target/keep.txt'));
+  assert.ok(p.files.some((f) => f.rel === 'other/keep.txt'));
+});
+
+test('carry-dir: node_modules is excluded only with a package-manager marker inside; without one it is carried and flagged', () => {
+  const d = dirWorld();
+  d.put('a/node_modules/.package-lock.json', '{}');
+  d.put('a/node_modules/left-pad/index.js', 'module.exports=1');
+  d.put('b/node_modules/handwritten.js', 'real');
+  const p = T.planDirCarry(d.src);
+  assert.deepStrictEqual(p.excluded.map((e) => e.rel), ['a/node_modules']);
+  assert.match(p.excluded[0].reason, /\.package-lock\.json/);
+  assert.ok(p.files.some((f) => f.rel === 'b/node_modules/handwritten.js'), 'no marker: carried');
+  assert.deepStrictEqual(p.suspects.map((s) => s.rel), ['b/node_modules']);
+});
+
+test('carry-dir: the summary line is exact, and it prints when NOTHING was excluded — a rule nobody can see firing is silent', () => {
+  const d = dirWorld();
+  d.put('only.txt', 'abc');
+  const p = T.planDirCarry(d.src);
+  assert.strictEqual(p.line, 'excluded 0 entries, 0 bytes');
+  const d2 = dirWorld();
+  d2.put('t/CACHEDIR.TAG', TAG);
+  assert.strictEqual(T.planDirCarry(d2.src).line, `excluded 2 entries, ${TAG.length} bytes`);
+  const q = quiet();
+  const r = T.run({ out: q.out, carryDir: d2.src, to: d2.dest });
+  assert.ok(q.lines.includes(`excluded 2 entries, ${TAG.length} bytes`), q.text());
+  assert.strictEqual(r.code, 0);
+});
+
+test('carry-dir: an excluded directory nested deep inside is still excluded, and nothing beneath it is listed', () => {
+  const d = dirWorld();
+  d.put('logs/run.txt', 'l');
+  d.put('seatcwd/proj/target/CACHEDIR.TAG', TAG);
+  d.put('seatcwd/proj/target/debug/huge.bin', 'z'.repeat(2048));
+  d.put('seatcwd/proj/src/main.rs', 'fn main(){}');
+  const p = T.planDirCarry(d.src);
+  assert.deepStrictEqual(p.excluded.map((e) => e.rel), ['seatcwd/proj/target']);
+  assert.deepStrictEqual(p.files.map((f) => f.rel).sort(), ['logs/run.txt', 'seatcwd/proj/src/main.rs']);
+  assert.ok(!p.files.some((f) => f.rel.startsWith('seatcwd/proj/target/')));
+});
+
+test('carry-dir: without --apply it is a rehearsal — the destination is not created', () => {
+  const d = dirWorld();
+  d.put('a.txt', 'a');
+  d.put('target/CACHEDIR.TAG', TAG);
+  const q = quiet();
+  const r = T.run({ out: q.out, carryDir: d.src, to: d.dest });
+  assert.strictEqual(r.outcome, 'REHEARSED');
+  assert.strictEqual(fs.existsSync(d.dest), false, 'a rehearsal wrote the destination');
+  assert.strictEqual(fs.existsSync(path.dirname(d.dest)), false, 'nor its parent');
+});
+
+test('carry-dir --apply copies the kept files byte for byte, none of the excluded ones, and leaves the source untouched', () => {
+  const d = dirWorld();
+  d.put('cellA.jsonl', '{"a":1}\n');
+  d.put('logs/x.log', 'log line\n');
+  d.put('target/CACHEDIR.TAG', TAG);
+  d.put('target/release/big.exe', 'q'.repeat(4096));
+  const before = snapshot(d.src);
+  const q = quiet();
+  const r = T.run({ out: q.out, carryDir: d.src, to: d.dest, apply: true });
+  assert.strictEqual(r.outcome, 'CARRIED', q.text());
+  assert.strictEqual(r.code, 0);
+  assert.strictEqual(fs.readFileSync(path.join(d.dest, 'cellA.jsonl'), 'utf8'), '{"a":1}\n');
+  assert.strictEqual(fs.readFileSync(path.join(d.dest, 'logs', 'x.log'), 'utf8'), 'log line\n');
+  assert.strictEqual(fs.existsSync(path.join(d.dest, 'target')), false, 'the excluded directory was carried');
+  assert.deepStrictEqual(snapshot(d.src), before, 'the source moved');
+});
+
+test('carry-dir --apply refuses when the destination already exists, and writes nothing into it', () => {
+  const d = dirWorld();
+  d.put('a.txt', 'a');
+  fs.mkdirSync(d.dest, { recursive: true });
+  fs.writeFileSync(path.join(d.dest, 'already.txt'), 'someone else');
+  const q = quiet();
+  const r = T.run({ out: q.out, carryDir: d.src, to: d.dest, apply: true });
+  assert.strictEqual(r.outcome, 'CANNOT_RUN', q.text());
+  assert.strictEqual(r.code, T.EXIT.RAN_NOT);
+  assert.match(r.why || '', /already exists/, 'refused, but not because the destination exists: ' + (r.why || ''));
+  assert.deepStrictEqual(fs.readdirSync(d.dest), ['already.txt']);
+});
+
+test('carry-dir on the CLI prints ONE json object naming the excluded roots and the suspects', () => {
+  const d = dirWorld();
+  d.put('a.txt', 'a');
+  d.put('target/CACHEDIR.TAG', TAG);
+  d.put('node_modules/mine.js', 'm');
+  const w = world();
+  const res = J(w.L, ['--carry-dir', d.src, '--to', d.dest]);
+  assert.strictEqual(res.code, 0, res.stderr);
+  assert.strictEqual(res.obj.mode, 'carry-dir');
+  assert.strictEqual(res.obj.outcome, 'REHEARSED');
+  assert.strictEqual(res.obj.excludedEntries, 2);
+  assert.deepStrictEqual(res.obj.excluded.map((e) => e.rel), ['target']);
+  assert.deepStrictEqual(res.obj.suspects.map((s) => s.rel), ['node_modules']);
+});
+
+// ── D067 P-PRUNE: tails below the agreed offset, LISTED first, deleted only on a second flag ──
+//
+// A tail file `<sid>.<from>-<to>.tail` whose `to` is at or below the ledger's agreed offset holds bytes
+// both machines already agree on. The door lists them; it deletes only when handed back the DIGEST of
+// the listing a person read, so nothing is deleted that was not on the page they read. Everything that
+// is NOT a candidate is listed with its reason — silence about a file is the failure this room keeps
+// finding under rocks.
+
+/** Two rounds of D -> L, leaving two tails below agreed: exactly how the stick accumulated 81. */
+function agreedTwice() {
+  const w = world();
+  const v1 = conversation(SID, ['2026-09-09T14:59:19.013Z', '2026-09-09T17:06:33.328Z']);
+  write(w.D, v1);
+  go(w.D, 'export', { apply: true });
+  go(w.L, 'import', { apply: true });
+  const v2 = v1 + turns(SID, ['2026-09-12T04:20:00.000Z'], 'd');
+  write(w.D, v2);
+  go(w.D, 'export', { apply: true });
+  go(w.L, 'import', { apply: true });
+  return { w, v1, v2 };
+}
+const tailsDir = (w) => path.join(w.stick, T.LEDGER_DIR);
+const P = (m, extra) => { const q = quiet(); const r = T.run(Object.assign({ out: q.out, stick: m.stick, prune: true, machine: m.machine,
+  projectsRoot: m.projectsRoot, instancesRoot: m.instancesRoot, panesPath: m.panesPath }, extra || {})); r.text = q.text(); return r; };
+
+test('prune: after two agreed carries both tails are candidates, and the listing deletes NOTHING', () => {
+  const { w, v1, v2 } = agreedTwice();
+  const before = snapshot(w.stick);
+  const r = P(w.L);
+  assert.strictEqual(r.outcome, 'LISTED', r.text);
+  assert.strictEqual(r.code, 0);
+  assert.deepStrictEqual(r.prune.candidates.map((c) => c.name).sort(),
+    [`${SID}.0-${v1.length}.tail`, `${SID}.${v1.length}-${v2.length}.tail`].sort());
+  assert.strictEqual(r.prune.bytes, v2.length);
+  assert.match(r.prune.digest, /^[0-9a-f]{16}$/);
+  assert.deepStrictEqual(snapshot(w.stick), before, 'a listing changed the stick');
+});
+
+test('prune: the ledger, a torn .writing- file and a corrupt-ledger copy are never candidates, and each is LISTED with its reason', () => {
+  const { w, v1 } = agreedTwice();
+  fs.writeFileSync(path.join(tailsDir(w), `${SID}.0-${v1.length}.tail.writing-4242`), 'torn');
+  fs.writeFileSync(path.join(tailsDir(w), `${T.LEDGER_NAME}.corrupt-20260915T084005`), '{');
+  const r = P(w.L);
+  const names = r.prune.candidates.map((c) => c.name);
+  for (const n of [T.LEDGER_NAME, `${SID}.0-${v1.length}.tail.writing-4242`, `${T.LEDGER_NAME}.corrupt-20260915T084005`]) {
+    assert.ok(!names.includes(n), `${n} became a candidate`);
+    assert.ok(r.prune.notCandidates.some((x) => x.name === n && x.why), `${n} was not listed with a reason`);
+  }
+});
+
+test('prune: a tail ABOVE the agreed offset (a pending carry) is not a candidate', () => {
+  const { w, v2 } = agreedTwice();
+  write(w.D, v2 + turns(SID, ['2026-09-13T01:00:00.000Z'], 'e'));
+  go(w.D, 'export', { apply: true });                        // pending, not yet imported
+  const pend = T.readLedger(w.stick).seats[SID].pending;
+  assert.ok(pend && pend.tailFile, 'fixture: a pending tail exists');
+  const r = P(w.L);
+  assert.ok(!r.prune.candidates.some((c) => c.name === pend.tailFile), 'the pending tail was listed for deletion');
+  assert.ok(r.prune.notCandidates.some((x) => x.name === pend.tailFile));
+});
+
+test('prune: a tail for a seat the ledger does not know is not a candidate', () => {
+  const { w } = agreedTwice();
+  const stranger = 'bbbbbbbb-2222-4222-8222-222222222222';
+  fs.writeFileSync(path.join(tailsDir(w), `${stranger}.0-10.tail`), '0123456789');
+  const r = P(w.L);
+  assert.ok(!r.prune.candidates.some((c) => c.sid === stranger));
+  assert.ok(r.prune.notCandidates.some((x) => x.name === `${stranger}.0-10.tail` && /ledger/.test(x.why)));
+});
+
+test('prune: a below-agreed tail the transfer MANIFEST names is not a candidate', () => {
+  const { w, v1 } = agreedTwice();
+  const name = `${SID}.0-${v1.length}.tail`;
+  const dir = path.join(w.stick, T.TRANSFER_DIR);
+  fs.mkdirSync(dir, { recursive: true });
+  const abs = path.join(tailsDir(w), name);
+  fs.writeFileSync(path.join(dir, T.MANIFEST_NAME), JSON.stringify({ format: 1, members: [
+    { path: `${T.LEDGER_DIR}/${name}`, bytes: fs.statSync(abs).size, sha256: T.hashRange(abs, 0, fs.statSync(abs).size) }] }));
+  const r = P(w.L);
+  assert.ok(!r.prune.candidates.some((c) => c.name === name), 'a manifest member was listed for deletion');
+  assert.ok(r.prune.notCandidates.some((x) => x.name === name && /manifest/.test(x.why)));
+});
+
+test('prune: THIS machine must PROVE it holds the agreed bytes — a local transcript that disagrees makes its tails non-candidates', () => {
+  const { w, v2 } = agreedTwice();
+  write(w.L, 'X' + v2.slice(1));                               // same length, different first byte
+  const r = P(w.L);
+  assert.strictEqual(r.prune.candidates.length, 0, 'deleted bytes this machine cannot show it holds');
+  assert.ok(r.prune.notCandidates.every((x) => !/\.tail$/.test(x.name) || /cannot show|prefix/.test(x.why)), r.text);
+  const gone = world();                                        // and a machine with no transcript at all
+  const r2 = P(Object.assign({}, gone.L, { stick: w.stick }));
+  assert.strictEqual(r2.prune.candidates.length, 0);
+});
+
+test('prune --delete-listed <digest> deletes EXACTLY the listed candidates and nothing else on the stick', () => {
+  const { w } = agreedTwice();
+  fs.writeFileSync(path.join(tailsDir(w), 'unrelated.txt'), 'keep me');
+  const listed = P(w.L);
+  const keepBefore = Object.fromEntries(Object.entries(snapshot(w.stick))
+    .filter(([p]) => !listed.prune.candidates.some((c) => p.endsWith(path.sep + c.name))));
+  const r = P(w.L, { deleteListed: listed.prune.digest });
+  assert.strictEqual(r.outcome, 'PRUNED', r.text);
+  assert.strictEqual(r.code, 0);
+  for (const c of listed.prune.candidates) assert.strictEqual(fs.existsSync(path.join(tailsDir(w), c.name)), false, `${c.name} survived`);
+  assert.deepStrictEqual(snapshot(w.stick), keepBefore, 'something not on the listing changed');
+});
+
+test('prune --delete-listed with a digest that does not match the listing NOW refuses and deletes nothing', () => {
+  const { w } = agreedTwice();
+  const listed = P(w.L);
+  const before = snapshot(w.stick);
+  const r = P(w.L, { deleteListed: '0000000000000000' });
+  assert.strictEqual(r.outcome, 'LISTING_CHANGED', r.text);
+  assert.notStrictEqual(r.code, 0);
+  assert.deepStrictEqual(snapshot(w.stick), before);
+  assert.match(r.text, new RegExp(listed.prune.digest), 'the refusal names the digest of the listing as it stands');
+});
+
+test('prune: a new candidate appearing after the listing was read makes the old digest refuse', () => {
+  const { w, v2 } = agreedTwice();
+  const listed = P(w.L);
+  write(w.D, v2 + turns(SID, ['2026-09-13T01:00:00.000Z'], 'e'));
+  go(w.D, 'export', { apply: true });
+  go(w.L, 'import', { apply: true });                        // a third tail is now below agreed
+  const before = snapshot(w.stick);
+  const r = P(w.L, { deleteListed: listed.prune.digest });
+  assert.strictEqual(r.outcome, 'LISTING_CHANGED', r.text);
+  assert.deepStrictEqual(snapshot(w.stick), before, 'deleted against a listing nobody read');
+});
+
+test('prune refuses on an unreadable ledger and deletes nothing', () => {
+  const { w } = agreedTwice();
+  const listed = P(w.L);
+  fs.writeFileSync(path.join(tailsDir(w), T.LEDGER_NAME), '{ not json');
+  const before = snapshot(w.stick);
+  const r = P(w.L, { deleteListed: listed.prune.digest });
+  assert.strictEqual(r.outcome, 'CANNOT_RUN', r.text);
+  assert.strictEqual(r.code, T.EXIT.RAN_NOT);
+  assert.deepStrictEqual(snapshot(w.stick), before);
+});
+
+test('prune --delete-listed refuses while another live process holds the ledger lock', () => {
+  const { w } = agreedTwice();
+  const listed = P(w.L);
+  plantLock(w, { pid: 4242, image: 'node.exe', script: 'tail-carry.js', at: new Date().toISOString() });
+  const before = snapshot(w.stick);
+  const r = P(w.L, { deleteListed: listed.prune.digest, imageOf: () => 'node.exe' });
+  assert.notStrictEqual(r.outcome, 'PRUNED', r.text);
+  assert.deepStrictEqual(snapshot(w.stick), before);
+});
+
+test('prune on the CLI: --delete-listed ALONE does nothing, and the prune does not combine with --import, --export or --apply', () => {
+  const { w } = agreedTwice();
+  const listed = P(w.L);
+  const before = snapshot(w.stick);
+  for (const argv of [
+    ['--stick', w.stick, '--delete-listed', listed.prune.digest],
+    ['--stick', w.stick, '--prune-below-agreed', '--import', '--delete-listed', listed.prune.digest],
+    ['--stick', w.stick, '--prune-below-agreed', '--export'],
+    ['--stick', w.stick, '--prune-below-agreed', '--apply'],
+  ]) {
+    const res = J(w.L, argv);
+    assert.strictEqual(res.code, T.EXIT.RAN_NOT, `${argv.join(' ')} -> ${res.code}`);
+    assert.deepStrictEqual(snapshot(w.stick), before, `${argv.join(' ')} changed the stick`);
+  }
+  const ok = J(w.L, ['--stick', w.stick, '--prune-below-agreed']);
+  assert.strictEqual(ok.code, 0);
+  assert.strictEqual(ok.obj.mode, 'prune-below-agreed');
+  assert.strictEqual(ok.obj.digest, listed.prune.digest);
+});
+
+
+// ── D067, added AFTER the first mutant run — each test below exists because a named mutant survived it ──
+// (`handback/p-carry-exclude-C_2026-09-16.md` §4 has run 1's survivors; these close them.)
+
+test('carry-dir: at ZERO excluded the command itself still PRINTS the line (mutant #5 survived the plan-only check)', () => {
+  const d = dirWorld();
+  d.put('only.txt', 'abc');
+  const q = quiet();
+  T.run({ out: q.out, carryDir: d.src, to: d.dest });
+  assert.ok(q.lines.includes('excluded 0 entries, 0 bytes'), `the zero line was not printed:\n${q.text()}`);
+});
+
+test('prune: a tail ABOVE agreed that is NOT pending — the first of two exports before an import — is never a candidate (mutant #9: it would be deleted holding unagreed bytes)', () => {
+  const { w, v2 } = agreedTwice();
+  const v3 = v2 + turns(SID, ['2026-09-13T01:00:00.000Z'], 'e');
+  write(w.D, v3);
+  go(w.D, 'export', { apply: true });                        // pending: agreed -> v3
+  const first = T.readLedger(w.stick).seats[SID].pending.tailFile;
+  write(w.D, v3 + turns(SID, ['2026-09-13T02:00:00.000Z'], 'f'));
+  go(w.D, 'export', { apply: true });                        // the SAME machine again: pending replaced, `first` orphaned
+  const led = T.readLedger(w.stick).seats[SID];
+  assert.notStrictEqual(led.pending.tailFile, first, 'fixture: the second export replaced the pending tail');
+  assert.ok(fs.existsSync(path.join(tailsDir(w), first)), 'fixture: the first tail is still on the stick');
+  const r = P(w.L);
+  assert.ok(!r.prune.candidates.some((c) => c.name === first), 'an unagreed, un-pending tail was listed for deletion');
+  assert.ok(r.prune.notCandidates.some((x) => x.name === first && /above the agreed/.test(x.why)), r.text);
+});
+
+test('prune: a pending tail whose range sits AT OR BELOW agreed is never a candidate — a ledger no current writer produces, but a hand-repaired or corrupt one can (mutant #10)', () => {
+  const { w, v1 } = agreedTwice();
+  const name = `${SID}.0-${v1.length}.tail`;
+  const led = T.readLedger(w.stick);
+  led.seats[SID].pending = { from: 'D', offset: 0, toOffset: v1.length, tailFile: name, tailSha: 'x', fullSha: 'y', bytes: v1.length, at: new Date().toISOString() };
+  fs.writeFileSync(path.join(tailsDir(w), T.LEDGER_NAME), JSON.stringify(led, null, 2));
+  const r = P(w.L);
+  assert.ok(!r.prune.candidates.some((c) => c.name === name), 'a tail the ledger names as pending was listed for deletion');
+  assert.ok(r.prune.notCandidates.some((x) => x.name === name && /pending/.test(x.why)), r.text);
+});
+
+test('prune: a transcript SHORTER than the agreed offset keeps that seat\'s tails and the listing still runs (mutant #14: hashRange throws past EOF and would refuse the whole prune)', () => {
+  const { w, v2 } = agreedTwice();
+  write(w.L, v2.slice(0, 10));
+  const r = P(w.L);
+  assert.strictEqual(r.outcome, 'LISTED', r.text);
+  assert.strictEqual(r.prune.candidates.length, 0);
+  assert.ok(r.prune.notCandidates.some((x) => /\.tail$/.test(x.name) && /transcript is 10 B/.test(x.why)), r.text);
+});
+
+test('prune: a candidate that CHANGED SIZE since the listing was read makes the old digest refuse (the digest carries size)', () => {
+  const { w, v1 } = agreedTwice();
+  const listed = P(w.L);
+  fs.writeFileSync(path.join(tailsDir(w), `${SID}.0-${v1.length}.tail`), 'torn');
+  const before = snapshot(w.stick);
+  const r = P(w.L, { deleteListed: listed.prune.digest });
+  assert.strictEqual(r.outcome, 'LISTING_CHANGED', r.text);
+  assert.deepStrictEqual(snapshot(w.stick), before, 'deleted a file that was not the one read');
+});
+
+test('prune: --delete-listed on its own refuses BY ITS OWN RULE, not by an unrelated one', () => {
+  const { w } = agreedTwice();
+  const listed = P(w.L);
+  const q = quiet();
+  const r = T.run({ out: q.out, stick: w.stick, deleteListed: listed.prune.digest });
+  assert.strictEqual(r.code, T.EXIT.RAN_NOT);
+  assert.match(r.why || '', /does nothing on its own/, `refused, but for: ${r.why}`);
+});
+
 console.log(`\n  ${pass} passed, ${fail} failed`);
 if (fail) process.exit(1);

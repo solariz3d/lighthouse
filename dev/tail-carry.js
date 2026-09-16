@@ -1090,6 +1090,298 @@ function applyImport(plan, now) {
 
 const mb = (n) => `${(n / 1048576).toFixed(2)} MB`;
 
+// ── D067 P-CARRY-EXCLUDE — a directory carry that leaves build output behind, BY SIGNATURE ─────────────
+//
+// WHY THIS EXISTS. At 2026-09-14 23:36 a pane's untracked scratch folder rode to work as
+// `files/repo-carry/E-scratch-leave-2026-09-14/`, copied BY HAND (its README says so), and 311,754,634 B of
+// it — 407.8 MiB allocated on the stick's exFAT, whose clusters are 256 KiB — was Cargo's `target/`. Before
+// this door nothing in this repository carried a directory at all, so "exclude target/ from scratch carries"
+// had no carry to live in. This is that carry, and the rule inside it.
+//
+// THE RULE, AND THE RISK IT WAS BUILT AROUND. A directory is left behind because it SAYS what it is, never
+// because of what it is CALLED:
+//   · it holds a CACHEDIR.TAG whose FIRST 43 OCTETS are the Cache Directory Tagging signature. The spec
+//     (bford.info/cachedir) makes the name irrelevant and asks archivers to skip the whole tree;
+//     `tar --exclude-caches` is the prior art; cargo writes one into every target/ (the carried one reads
+//     "created by cargo"). A leading space, or one octet short, is not the signature.
+//   · or it is named node_modules AND holds a package manager's own marker: npm v7+'s hidden lockfile
+//     `.package-lock.json` (checked against npm's docs, D067); pnpm's `.modules.yaml`, yarn's
+//     `.yarn-integrity` and `.yarn-state.yml` (NOT checked against their docs — added because a missing
+//     marker only means junk rides, never that work is lost).
+// A folder merely CALLED target or node_modules is CARRIED and listed as a SUSPECT, so a person looks.
+//
+// WHAT THAT COSTS, both directions, stated rather than found later:
+//   · a Cargo target/ that has lost its tag is carried — junk rides, nothing is lost;
+//   · real work someone put a CACHEDIR.TAG into is NOT carried. It stays on the source (an exclusion only
+//     ever means "not copied"; this door deletes nothing) and its path and reason are printed.
+//   · a symbolic link is carried as the link itself (fs.cpSync's default) and never followed. Untested.
+
+const CACHEDIR_SIGNATURE = 'Signature: 8a477f597d28d172789f06886806bc55';
+const INSTALL_MARKERS = ['.package-lock.json', '.modules.yaml', '.yarn-integrity', '.yarn-state.yml'];
+const SUSPECT_NAMES = ['target', 'node_modules'];
+
+/** Why a directory is generated output, or null. Reads at most 43 bytes; a missing tag is not an error. */
+function generatedDirReason(abs, name) {
+  let fd = null;
+  try { fd = fs.openSync(path.join(abs, 'CACHEDIR.TAG'), 'r'); }
+  catch (e) { if (e.code !== 'ENOENT' && e.code !== 'ENOTDIR' && e.code !== 'EISDIR') throw e; }
+  if (fd !== null) {
+    try {
+      const b = Buffer.alloc(CACHEDIR_SIGNATURE.length);
+      const n = fs.readSync(fd, b, 0, b.length, 0);
+      if (n === b.length && b.toString('latin1') === CACHEDIR_SIGNATURE) {
+        return 'holds a CACHEDIR.TAG with the cache-directory signature';
+      }
+    } finally { fs.closeSync(fd); }
+  }
+  if (name === 'node_modules') {
+    for (const m of INSTALL_MARKERS) if (fs.existsSync(path.join(abs, m))) return `node_modules holding a package manager's marker (${m})`;
+  }
+  return null;
+}
+
+/** The excluded root and everything beneath it: entries (files AND directories, root counted) and apparent bytes. */
+function treeSize(abs) {
+  const st = fs.lstatSync(abs);
+  if (!st.isDirectory()) return { entries: 1, bytes: st.isFile() ? st.size : 0 };
+  let entries = 1, bytes = 0;
+  for (const name of fs.readdirSync(abs)) {
+    const s = treeSize(path.join(abs, name));
+    entries += s.entries; bytes += s.bytes;
+  }
+  return { entries, bytes };
+}
+
+/**
+ * What a directory carry WOULD copy. Pure over the filesystem it reads; writes nothing.
+ * `rel` paths use forward slashes. `line` is the one sentence that makes the rule visible, printed even at zero.
+ */
+function planDirCarry(src) {
+  const files = [], excluded = [], suspects = [];
+  const walk = (abs, rel) => {
+    for (const name of fs.readdirSync(abs).sort()) {
+      const a = path.join(abs, name);
+      const r = rel ? `${rel}/${name}` : name;
+      const st = fs.lstatSync(a);
+      if (st.isDirectory()) {
+        const reason = generatedDirReason(a, name);
+        if (reason) { const s = treeSize(a); excluded.push({ rel: r, reason, entries: s.entries, bytes: s.bytes }); continue; }
+        if (SUSPECT_NAMES.includes(name)) suspects.push({ rel: r, name });
+        walk(a, r);
+      } else {
+        files.push({ rel: r, bytes: st.isFile() ? st.size : 0 });
+      }
+    }
+  };
+  walk(src, '');
+  const excludedEntries = excluded.reduce((n, e) => n + e.entries, 0);
+  const excludedBytes = excluded.reduce((n, e) => n + e.bytes, 0);
+  return {
+    files, excluded, suspects, excludedEntries, excludedBytes,
+    keptBytes: files.reduce((n, f) => n + f.bytes, 0),
+    line: `excluded ${excludedEntries} entries, ${excludedBytes} bytes`,
+  };
+}
+
+/** Copy exactly the plan, refusing to write into anything that exists, then read every carried file back. */
+function applyDirCarry(src, dest, plan) {
+  const skip = new Set(plan.excluded.map((e) => path.resolve(src, ...e.rel.split('/'))));
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  fs.cpSync(src, dest, { recursive: true, errorOnExist: true, force: false, preserveTimestamps: true,
+    filter: (s) => !skip.has(path.resolve(s)) });
+  const mismatched = [];
+  for (const f of plan.files) {
+    const a = path.join(src, ...f.rel.split('/'));
+    const b = path.join(dest, ...f.rel.split('/'));
+    let bs = null;
+    try { bs = fs.lstatSync(b); } catch (e) { if (e.code !== 'ENOENT') throw e; }
+    if (!bs) { mismatched.push({ rel: f.rel, why: 'not written' }); continue; }
+    if (!bs.isFile()) continue;                                        // a link is carried as a link, not read through
+    const size = fs.statSync(a).size;
+    if (bs.size !== size || hashRange(a, 0, size) !== hashRange(b, 0, bs.size)) mismatched.push({ rel: f.rel, why: 'bytes differ' });
+  }
+  const present = planDirCarry(dest);
+  const extra = present.files.map((f) => f.rel).filter((r) => !plan.files.some((f) => f.rel === r));
+  for (const r of extra) mismatched.push({ rel: r, why: 'written but not in the plan' });
+  return { ok: mismatched.length === 0, mismatched, files: plan.files.length, bytes: plan.keptBytes };
+}
+
+function runCarryDir(o, out, no) {
+  if (!o.carryDir) return no('--carry-dir needs a source directory', ['--carry-dir <dir> --to <destination> [--apply]']);
+  if (o.mode || o.verifySet || o.prune || typeof o.deleteListed === 'string') {
+    return no('--carry-dir is its own command; it does not combine with --import, --export, --verify-set or the prune', []);
+  }
+  if (!o.to) return no('--carry-dir needs a destination', ['--to <destination>']);
+  let st = null;
+  try { st = fs.statSync(o.carryDir); } catch (e) { if (e.code !== 'ENOENT') throw e; }
+  if (!st || !st.isDirectory()) return no(`no such directory: ${o.carryDir}`, []);
+  const src = path.resolve(o.carryDir), dest = path.resolve(o.to);
+  if (dest === src || dest.startsWith(src + path.sep)) return no('the destination is inside the source', [dest]);
+  if (fs.existsSync(dest)) return no(`the destination already exists: ${dest} — this door never writes into anything already there`, []);
+
+  const plan = planDirCarry(src);
+  out(`tail-carry · CARRY-DIR · ${src} -> ${dest}${o.apply ? '' : '   [rehearsal — nothing will be written]'}`);
+  out(`  carries ${plan.files.length} file(s), ${plan.keptBytes} bytes`);
+  out(plan.line);
+  for (const e of plan.excluded) out(`  EXCLUDED  ${e.rel}/  ${e.entries} entries, ${e.bytes} bytes — ${e.reason}`);
+  for (const s of plan.suspects) out(`  SUSPECT   ${s.rel}/  named ${s.name} but carries no signature — CARRIED; check it is not a build directory`);
+  if (!o.apply) return { ok: true, code: EXIT.OK, outcome: 'REHEARSED', carry: plan };
+
+  const done = applyDirCarry(src, dest, plan);
+  if (!done.ok) {
+    out(`FAILED — ${done.mismatched.length} file(s) did not carry whole:`);
+    for (const m of done.mismatched) out(`  ${m.rel} — ${m.why}`);
+    return { ok: false, code: EXIT.SEAT, outcome: 'FAILED', why: 'the carried directory did not read back equal to the plan', carry: plan, carried: done };
+  }
+  out(`CARRIED — ${done.files} file(s), ${done.bytes} bytes, every one read back equal`);
+  return { ok: true, code: EXIT.OK, outcome: 'CARRIED', carry: plan, carried: done };
+}
+
+// ── D067 P-PRUNE — tails below the agreed offset: LISTED first, deleted only on a second, separate flag ─────
+//
+// WHY. A tail `<sid>.<from>-<to>.tail` whose `to` is at or below the ledger's agreed offset holds bytes both
+// machines already agree on, and import reads only `pending.tailFile` — so it is never read again. On
+// 2026-09-16 at 11:3x the stick held 81 of them, 559,094,957 B, every seat agreed and none pending.
+//
+// WHY IT IS STILL A DOOR AND NOT A HABIT. The stick's own ledger has been corrupt once
+// (`ledger.json.corrupt-20260915T084005`), and a wrong agreed offset would make a tail that is the ONLY copy
+// look redundant. So a candidate must pass all of:
+//   · its name is exactly `<sid>.<from>-<to>.tail` — torn `.writing-*` files, the ledger, its lock and any
+//     `.corrupt-*` copy are never judged by this rule, and each is LISTED with why it was left;
+//   · the ledger has an agreed offset for the sid, and `to` is at or below it — straddling or above is kept;
+//   · it is not the seat's pending tail, and not a member the transfer manifest names (writeTransferSet names
+//     pending tails there, and verify-set counts a missing member as a failure);
+//   · THIS MACHINE PROVES IT HOLDS THE AGREED BYTES: its own transcript for that sid is at least the agreed
+//     length and its first `agreed.offset` bytes hash to `agreed.prefixSha`. A seat this machine cannot
+//     show is never pruned from this machine, whatever the ledger says.
+//
+// AND IT DELETES ONLY WHAT A PERSON READ. The listing prints a digest of exactly its candidates (name and
+// size). `--delete-listed <digest>` takes the ledger lock, lists again, and deletes only when the new digest
+// equals the one handed back. A tail that appeared, vanished or changed size since the reading refuses the
+// whole run. `--apply` is the carry's word and never deletes; `--delete-listed` alone does nothing.
+
+const TAIL_RE = /^([0-9a-f-]{36})\.(\d+)-(\d+)\.tail$/;
+const DIGEST_RE = /^[0-9a-f]{16}$/;
+
+function planPrune(o) {
+  const stick = o.stick;
+  const led = readLedger(stick);                                       // throws on an unreadable ledger: refuse
+  const dir = path.join(stick, LEDGER_DIR);
+  const manifestNames = new Set();
+  const mp = path.join(stick, TRANSFER_DIR, MANIFEST_NAME);
+  if (fs.existsSync(mp)) {
+    const man = JSON.parse(fs.readFileSync(mp, 'utf8'));               // throws on an unreadable manifest: refuse
+    for (const m of (man.members || [])) manifestNames.add(String((m && m.path) || ''));
+  }
+  const s = seats(o);
+  if (!s.seats) throw new Error(`cannot resolve this machine's seats, so it can prove nothing: ${s.why}`);
+  const projectsRoot = o.projectsRoot || path.join(os.homedir(), '.claude', 'projects');
+
+  const proof = new Map();
+  const heldHere = (sid, agreed) => {
+    if (proof.has(sid)) return proof.get(sid);
+    let why = null;
+    const seat = s.seats.find((x) => x.sid === sid);
+    if (!seat) why = 'this machine cannot show it holds the agreed bytes: it has no seat for this conversation';
+    else {
+      const dest = place.paneJsonl(projectsRoot, seat.cwd, sid);
+      let size = null;
+      try { size = fs.statSync(dest).size; } catch (e) { if (e.code !== 'ENOENT') throw e; }
+      if (size === null) why = `this machine cannot show it holds the agreed bytes: no transcript at ${dest}`;
+      else if (size < agreed.offset) why = `this machine cannot show it holds the agreed bytes: its transcript is ${size} B, the agreed offset is ${agreed.offset} B`;
+      else if (hashRange(dest, 0, agreed.offset) !== agreed.prefixSha) why = `this machine cannot show it holds the agreed bytes: its first ${agreed.offset} B do not match the agreed prefix`;
+    }
+    proof.set(sid, why);
+    return why;
+  };
+
+  const candidates = [], notCandidates = [];
+  const names = fs.existsSync(dir) ? fs.readdirSync(dir).sort() : [];
+  for (const name of names) {
+    const st = fs.lstatSync(path.join(dir, name));
+    if (!st.isFile()) { notCandidates.push({ name, why: 'not a file', bytes: 0 }); continue; }
+    const m = name.match(TAIL_RE);
+    if (!m) {
+      const why = name === LEDGER_NAME ? 'the ledger itself'
+        : name === LOCK_NAME ? 'the ledger lock'
+        : /\.writing-\d+$/.test(name) ? 'a torn or in-progress write — not a finished tail, so not this rule\'s to judge'
+        : 'not a tail file';
+      notCandidates.push({ name, why, bytes: st.size });
+      continue;
+    }
+    const sid = m[1], from = Number(m[2]), to = Number(m[3]);
+    const entry = led.seats[sid];
+    let why = null;
+    if (!entry || !entry.agreed || typeof entry.agreed.offset !== 'number') why = 'the ledger has no agreed offset for this conversation';
+    else if (entry.pending && entry.pending.tailFile === name) why = 'the pending tail — a carry not yet taken';
+    else if (to > entry.agreed.offset) {
+      why = from < entry.agreed.offset ? `straddles the agreed offset ${entry.agreed.offset}` : `above the agreed offset ${entry.agreed.offset} — not yet agreed`;
+    } else if (manifestNames.has(`${LEDGER_DIR}/${name}`)) why = 'named by the transfer manifest';
+    else why = heldHere(sid, entry.agreed);
+    if (why) notCandidates.push({ name, why, bytes: st.size });
+    else candidates.push({ name, sid, from, to, bytes: st.size });
+  }
+  const digest = sha256(Buffer.from(candidates.map((c) => `${c.name}\t${c.bytes}`).join('\n'), 'utf8')).slice(0, 16);
+  return { candidates, notCandidates, bytes: candidates.reduce((n, c) => n + c.bytes, 0), digest };
+}
+
+function printPrune(out, p) {
+  out(`  ${p.candidates.length} tail(s) below the agreed offset and held here, ${p.bytes} bytes`);
+  for (const c of p.candidates) out(`  DELETABLE  ${c.name}  ${c.bytes} B`);
+  for (const x of p.notCandidates) out(`  KEPT       ${x.name}  — ${x.why}`);
+  out(`listing digest ${p.digest}`);
+}
+
+function runPrune(o, out, no) {
+  if (!o.stick) return no('no stick named', ['--stick <path>']);
+  if (!fs.existsSync(o.stick)) return no(`no such stick: ${o.stick}`, []);
+  if (o.mode || o.apply || o.verifySet || typeof o.carryDir === 'string') {
+    return no('--prune-below-agreed is its own command; it does not combine with --import, --export, --apply, --verify-set or --carry-dir',
+      ['it deletes only with --delete-listed <the digest its own listing printed>']);
+  }
+  const deleting = typeof o.deleteListed === 'string';
+  if (deleting && !DIGEST_RE.test(o.deleteListed)) return no(`not a listing digest: ${JSON.stringify(o.deleteListed)}`, ['run the listing first; it prints the digest']);
+  const machine = o.machine || sync.machineTag();
+  out(`tail-carry · PRUNE BELOW AGREED · machine ${machine} · ${o.stick}${deleting ? '' : '   [listing — nothing will be deleted]'}`);
+
+  if (!deleting) {
+    let p;
+    try { p = planPrune(o); } catch (e) { return no(`cannot list: ${e.message}`, []); }
+    printPrune(out, p);
+    out('to delete exactly this listing, after reading it:');
+    out(`  node dev/tail-carry.js --stick ${o.stick} --prune-below-agreed --delete-listed ${p.digest}`);
+    return { ok: true, code: EXIT.OK, outcome: 'LISTED', prune: p };
+  }
+
+  const lock = takeLedgerLock(o.stick, { now: o.now, imageOf: o.imageOf });
+  if (!lock.ok) {
+    const h = lock.holder || {};
+    return no(`another run holds the ledger (pid ${h.pid}, ${h.image || h.why || 'unknown image'}) — nothing deleted`, []);
+  }
+  try {
+    let p;
+    try { p = planPrune(o); } catch (e) { return no(`cannot list: ${e.message} — nothing deleted`, []); }
+    if (p.digest !== o.deleteListed) {
+      printPrune(out, p);
+      const why = `the listing changed since it was read: you handed back ${o.deleteListed}, it is now ${p.digest} — nothing deleted; read the listing again`;
+      out(`REFUSED — ${why}`);
+      return { ok: false, code: EXIT.RAN_NOT, outcome: 'LISTING_CHANGED', why, prune: p };
+    }
+    const deleted = [];
+    for (const c of p.candidates) {
+      try { fs.unlinkSync(path.join(o.stick, LEDGER_DIR, c.name)); deleted.push(c); }
+      catch (e) {
+        out(`FAILED — deleting ${c.name}: ${e.code || e.message}. ${deleted.length} of ${p.candidates.length} were deleted before it; the rest are untouched.`);
+        return { ok: false, code: EXIT.SEAT, outcome: 'FAILED', why: `could not delete ${c.name}: ${e.code || e.message}`, prune: p, deleted };
+      }
+    }
+    out(`PRUNED — ${deleted.length} tail(s), ${deleted.reduce((n, c) => n + c.bytes, 0)} bytes, exactly the listing ${p.digest}`);
+    return { ok: true, code: EXIT.OK, outcome: 'PRUNED', prune: p, deleted };
+  } finally {
+    lock.release();
+  }
+}
+
 function run(o) {
   o = o || {};
   const out = o.out || ((s) => console.log(s));
@@ -1104,6 +1396,10 @@ function run(o) {
     return { ok: false, code: EXIT.RAN_NOT, outcome: outcome || 'CANNOT_RUN', why };
   };
 
+  // D067: the two new doors are their own commands and are decided before any carry direction is.
+  if (typeof o.carryDir === 'string') return runCarryDir(o, out, no);
+  if (o.prune) return runPrune(o, out, no);
+  if (typeof o.deleteListed === 'string') return no('--delete-listed does nothing on its own', ['--prune-below-agreed --delete-listed <digest> — list first, read it, then hand back its digest']);
   if (o.verifySet) {
     if (o.mode) return no('--verify-set is a reading on its own; it does not combine with --import or --export', []);
     const v = verifySet(o.stick);
@@ -1369,7 +1665,7 @@ function main(argv, io, fixture) {
   // privacy check and place-conversations.js's injected apply. It carries the fixture machine's roots
   // and `appRunning` so the real argument parsing and the real stdout discipline can be exercised
   // against a fake machine. The CLI never passes it; there is no flag and no environment variable.
-  const o = Object.assign({ mode: null, stick: null, apply: false, retireFar: [], repair: [], takeStick: [], json, out: human }, fixture || {});
+  const o = Object.assign({ mode: null, stick: null, apply: false, retireFar: [], repair: [], takeStick: [], carryDir: null, to: null, prune: false, deleteListed: null, json, out: human }, fixture || {});
   // --verify-set has its own object (§3 as re-ruled), found by a pre-scan for the same reason --json is:
   // a bad argument or a crash must still produce the shape the caller asked for.
   const verifying = argv.includes('--verify-set');
@@ -1379,6 +1675,23 @@ function main(argv, io, fixture) {
       io.stdout(`${JSON.stringify({
         tool: 'tail-carry', contract: CONTRACT_VERSION, mode: 'verify-set', stick: o.stick || null,
         code: res.code, layout: v.layout, missing: v.missing, mismatched: v.mismatched, extra: v.extra, why: res.why || v.why || null,
+      })}\n`);
+    } else if (json && typeof o.carryDir === 'string') {
+      const c = res.carry || null;
+      io.stdout(`${JSON.stringify({
+        tool: 'tail-carry', contract: CONTRACT_VERSION, mode: 'carry-dir', src: o.carryDir, to: o.to || null,
+        code: res.code, outcome: res.outcome, why: res.why || null,
+        files: c ? c.files.length : 0, keptBytes: c ? c.keptBytes : 0,
+        excludedEntries: c ? c.excludedEntries : 0, excludedBytes: c ? c.excludedBytes : 0, line: c ? c.line : null,
+        excluded: c ? c.excluded : [], suspects: c ? c.suspects : [], carried: res.carried || null,
+      })}\n`);
+    } else if (json && o.prune) {
+      const p = res.prune || null;
+      io.stdout(`${JSON.stringify({
+        tool: 'tail-carry', contract: CONTRACT_VERSION, mode: 'prune-below-agreed', stick: o.stick || null,
+        code: res.code, outcome: res.outcome, why: res.why || null,
+        digest: p ? p.digest : null, bytes: p ? p.bytes : 0,
+        candidates: p ? p.candidates : [], notCandidates: p ? p.notCandidates : [], deleted: res.deleted || [],
       })}\n`);
     } else if (json) {
       io.stdout(`${JSON.stringify(toJson(res, o))}\n`);
@@ -1397,9 +1710,15 @@ function main(argv, io, fixture) {
     else if (a === '--retire-far') o.retireFar.push(argv[++i]);
     else if (a === '--repair') o.repair.push(argv[++i]);
     else if (a === '--take-stick') o.takeStick.push(argv[++i]);
+    else if (a === '--carry-dir') o.carryDir = argv[++i] || '';
+    else if (a === '--to') o.to = argv[++i] || '';
+    else if (a === '--prune-below-agreed') o.prune = true;
+    else if (a === '--delete-listed') o.deleteListed = argv[++i] || '';
     else if (a === '--help' || a === '-h') {
       io.stdout('node dev/tail-carry.js --stick <path> (--export|--import) [--apply] [--repair <sid>] [--retire-far <sid>] [--take-stick <sid>] [--json]\n' +
-                'node dev/tail-carry.js --stick <path> --verify-set [--json]\n');
+                'node dev/tail-carry.js --stick <path> --verify-set [--json]\n' +
+                'node dev/tail-carry.js --carry-dir <dir> --to <destination> [--apply] [--json]\n' +
+                'node dev/tail-carry.js --stick <path> --prune-below-agreed [--delete-listed <digest>] [--json]\n');
       return 0;
     } else {
       io.stderr(`unknown argument: ${a}\n`);
@@ -1424,4 +1743,5 @@ module.exports = {
   LEDGER_DIR, LEDGER_NAME, LEDGER_VERSION, CONTRACT_VERSION, EXIT, REASONS, STOPS, CARRIES,
   TRANSFER_DIR, MANIFEST_NAME, LOCK_NAME, GENERATED_MARK, pidImage, holderLive, takeLedgerLock, ledgerMaxAt,
   handoffName, handoffAfter, renderHandoff, writeTransferSet, verifySet, foreignHandoff,
+  CACHEDIR_SIGNATURE, INSTALL_MARKERS, planDirCarry, applyDirCarry, planPrune,
 };
