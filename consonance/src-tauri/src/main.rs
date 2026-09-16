@@ -10916,23 +10916,53 @@ struct LeaveBounds {
     flight_polls: u32,
     seat_polls: u32,
     export: Duration,
+    /// R4-2: how long step 6 may go on retrying the result file. None = until it is written.
+    result_deadline: Option<Duration>,
     label: &'static str,
 }
 
 impl LeaveBounds {
     /// The keeper's close: it can wait. 10 s for flights, 5 s for seats, 600 s for the export.
-    const NORMAL: LeaveBounds = LeaveBounds { flight_polls: SPAWN_FLIGHT_POLLS, seat_polls: SEAT_TEARDOWN_POLLS, export: LEAVE_EXPORT_TIMEOUT, label: "close" };
+    const NORMAL: LeaveBounds = LeaveBounds { flight_polls: SPAWN_FLIGHT_POLLS, seat_polls: SEAT_TEARDOWN_POLLS, export: LEAVE_EXPORT_TIMEOUT, result_deadline: None, label: "close" };
     /// **The OS's end of session: it cannot.** What is dropped is WAITING — 1 s for flights (a seat still starting is
     /// named NOT DONE instead of waited for), 1.5 s for seats (they are killed either way; the wait only proves it) —
-    /// so the export keeps the rest. The export bound is 20 s: long enough for an ordinary tail (55 s was the FIRST
-    /// carry of 348,026,190 B, and later ones carry a tail, not the file), short enough to write the record before a
-    /// blocked shutdown is overridden. What it drops at the bound: the export, which reads NOT_DONE with its reason —
-    /// and LEAVE_STARTED stays on disk, so the next launch's waiter sees case c rather than a silent hole.
-    const SHUTDOWN: LeaveBounds = LeaveBounds { flight_polls: 10, seat_polls: 15, export: SHUTDOWN_EXPORT_TIMEOUT, label: "shutdown" };
+    /// so the export keeps the rest. The export bound is SHUTDOWN_EXPORT_TIMEOUT, 30 s, measured against L's own
+    /// closes — see that constant for the three figures and for when to re-read it. Step 6 is bounded too (R4-2):
+    /// a disk that will not take the record must not hold a shutdown open for ever.
+    const SHUTDOWN: LeaveBounds = LeaveBounds { flight_polls: 10, seat_polls: 15, export: SHUTDOWN_EXPORT_TIMEOUT, result_deadline: Some(SHUTDOWN_RESULT_DEADLINE), label: "shutdown" };
 }
 
-/// ROW 4: the export's share of the shutdown window. See LeaveBounds::SHUTDOWN for why it is this and not 600 s.
-const SHUTDOWN_EXPORT_TIMEOUT: Duration = Duration::from_secs(20);
+impl LeaveBounds {
+    /// **R4-1: the longest this Leave can run once every bound in it has cut** — the two waits, the export, and
+    /// step 6. A Leave whose step 6 is unbounded (NORMAL) contributes JOIN_RESULT_GRACE for that term, because the
+    /// join has to end somewhere; that is the one estimate in this number, and it is named rather than hidden.
+    fn worst_case(&self) -> Duration {
+        SPAWN_FLIGHT_POLL * self.flight_polls
+            + SEAT_TEARDOWN_POLL * self.seat_polls
+            + self.export
+            + self.result_deadline.unwrap_or(JOIN_RESULT_GRACE)
+    }
+}
+
+/// ROW 4 (R4-4): the export's share of the shutdown window, MEASURED against this machine's real closes rather than
+/// against the first carry. L's three, re-derived from persist.log (LEAVE SAVING → LEAVE DONE, lines 1384-1385,
+/// 1440-1441, 1507-1508): 10 s, 11 s, 18 s. They are RISING, and 18 s is 90% of the 20 s this bound used to be.
+///
+/// **A cut export is not a lost save: it writes NOT_DONE with its reason and leaves LEAVE_STARTED on disk**, so the
+/// next launch's waiter reads case c and carries it. That is why this is a bound and not a promise — and why the
+/// number may be moved without redesigning anything.
+///
+/// **RE-READ THIS BOUND when any ordinary close exceeds 60% of it (18 s).** The newest of the three measured closes
+/// is already exactly at that line, so the next close of that size is the signal, not a surprise.
+const SHUTDOWN_EXPORT_TIMEOUT: Duration = Duration::from_secs(30);
+
+/// R4-2: step 6 retries the result file every 2 s. Three tries on the shutdown path, then the Leave goes on and
+/// releases the block — because bounded END TO END is the property this path exists to have. NORMAL keeps None.
+const SHUTDOWN_RESULT_DEADLINE: Duration = Duration::from_secs(6);
+
+/// R4-1: what an unbounded step 6 contributes to a joined Leave's worst case. The keeper's Leave may retry the
+/// record for as long as its disk needs; the join cannot wait for ever, so it waits this much longer than the rest.
+const JOIN_RESULT_GRACE: Duration = Duration::from_secs(60);
 
 /// The main window's close request (`WindowEvent::CloseRequested`), already prevented by the caller. The first request
 /// starts the Leave off the event loop; every later one only says the save is still running (§2.2 step 6).
@@ -10961,7 +10991,9 @@ fn leave_run(app: &AppHandle, b: LeaveBounds) {
     }
     // 1 · END EVERY SEAT. Out of the map, killed, and DROPPED before the wait: a held killer is an open handle to the
     //     process. The kill's return value is discarded unread — on Windows it is inverted (§2.7 D-1).
-    let sessions: Vec<(String, PtySession)> = app.state::<Panes>().0.lock().unwrap().drain().collect();
+    // B7: NOT `.unwrap()`. Row 5 already treats this same mutex as poisonable, and a panic here on the shutdown path
+    // would kill the Leave thread with the block reason still held. One mutex, one policy: harvest_guard::recover.
+    let sessions: Vec<(String, PtySession)> = harvest_guard::recover(app.state::<Panes>().0.lock()).drain().collect();
     let mut seats = Vec::with_capacity(sessions.len());
     for (pane, mut s) in sessions {
         let _ = s.killer.kill();
@@ -11005,9 +11037,16 @@ fn leave_run(app: &AppHandle, b: LeaveBounds) {
 
     // 6 · THE EXIT BUTTON EXISTS ONLY AFTER THE RESULT IS WRITTEN. A failed write is shown and tried again; without the
     //     file, the waiter would read this close as the app dying mid-save and save a second time.
+    let t6 = Instant::now();
     loop {
         match &written {
             Ok(()) => break,
+            // R4-2: on the shutdown path this loop is what stands between the save and the block's release, so it
+            // ends. The record is still missing when it does — LEAVE_STARTED stays, and the next launch reads case c.
+            Err(e) if b.result_deadline.is_some_and(|d| t6.elapsed() >= d) => {
+                plog(&format!("LEAVE RESULT still not written ({e}) after {} s — the {} bound ends the retry", t6.elapsed().as_secs(), b.label));
+                break;
+            }
             Err(e) if !data.join(sync_launch::LEAVE_RESULT).is_file() => {
                 plog(&format!("LEAVE RESULT not written ({e}) — trying again in 2 s"));
                 let _ = app.emit("leave", serde_json::json!({ "phase": "result", "result": result, "write_error": e, "can_exit": false }));
@@ -11068,30 +11107,46 @@ fn block_shutdown(hwnd: windows::Win32::Foundation::HWND) {
 /// only one that may release it).
 fn shutdown_leave(hwnd_raw: isize) {
     plog("SHUTDOWN the OS is ending the session — fast Leave (seats, stick, record), then the block is released");
+    // R4-1: whether the process may exit when the block is released. True when THIS Leave wrote the record; false
+    // when a Leave that was already running has not finished, because exiting then orphans its export.
+    // B7: a Cell, because the post below is a DROP GUARD that reads it on the way out — including an unwind.
+    let exit_after = std::cell::Cell::new(true);
+    // B7: installed BEFORE any work that could panic. Whatever happens next, the block gets released.
+    let _post = sync_launch::OnDrop::new(|| unsafe {
+        let _ = windows::Win32::UI::WindowsAndMessaging::PostMessageW(
+            Some(windows::Win32::Foundation::HWND(hwnd_raw as *mut std::ffi::c_void)),
+            WM_LEAVE_DONE,
+            windows::Win32::Foundation::WPARAM(u32::from(exit_after.get()) as usize),
+            windows::Win32::Foundation::LPARAM(0),
+        );
+    });
     if let Some(app) = SHUTDOWN_APP.get() {
         let app = app.clone();
         match LEAVE_PHASE.compare_exchange(LEAVE_IDLE, LEAVE_RUNNING, Ordering::SeqCst, Ordering::SeqCst) {
             // Nothing else is leaving: the one Leave, on the shutdown bounds.
             Ok(_) => leave_run(&app, LeaveBounds::SHUTDOWN),
-            // The keeper's own close is already running: it owns the record. Wait for it, bounded the same way.
+            // **R4-1 (B1): the keeper's own close is already running, so this JOINS it.** No second Leave, and no
+            // exit on the shutdown bound: exiting at 20 s mid-export orphaned the node child (exit(0) never reaches
+            // run_carry_json's kill) and wrote no record. A close already saving is what this feature exists to
+            // protect. The join waits on THAT Leave's own worst case, and if even that runs out the block is
+            // released WITHOUT exiting — Windows ends the session on its own schedule, and a cancelled shutdown
+            // leaves the save running.
             Err(_) => {
                 let t0 = Instant::now();
-                while LEAVE_PHASE.load(Ordering::SeqCst) != LEAVE_SHOWN && t0.elapsed() < SHUTDOWN_EXPORT_TIMEOUT {
+                let bound = LeaveBounds::NORMAL.worst_case();
+                while LEAVE_PHASE.load(Ordering::SeqCst) != LEAVE_SHOWN && t0.elapsed() < bound {
                     std::thread::sleep(Duration::from_millis(200));
                 }
-                plog("SHUTDOWN a Leave was already running — waited for it rather than starting a second");
+                exit_after.set(LEAVE_PHASE.load(Ordering::SeqCst) == LEAVE_SHOWN);
+                plog(&format!(
+                    "SHUTDOWN a Leave was already running — joined it for {} s; {}",
+                    t0.elapsed().as_secs(),
+                    if exit_after.get() { "it finished, so this exits" } else { "it has NOT finished: releasing the block without exiting, so its export is not orphaned" }
+                ));
             }
         }
     } else {
         plog("SHUTDOWN no app handle yet — nothing to save");
-    }
-    unsafe {
-        let _ = windows::Win32::UI::WindowsAndMessaging::PostMessageW(
-            Some(windows::Win32::Foundation::HWND(hwnd_raw as *mut std::ffi::c_void)),
-            WM_LEAVE_DONE,
-            windows::Win32::Foundation::WPARAM(0),
-            windows::Win32::Foundation::LPARAM(0),
-        );
     }
 }
 
@@ -11127,14 +11182,25 @@ unsafe extern "system" fn session_end_proc(
             unsafe {
                 let _ = windows::Win32::System::Shutdown::ShutdownBlockReasonDestroy(hwnd);
             }
-            plog("SHUTDOWN block released — exiting so the session can end");
-            std::process::exit(0);
+            // R4-1: the Leave says whether exiting is safe. wparam 0 means a Leave that was already running has not
+            // finished — the block goes back, the process stays, and Windows ends the session when it decides to.
+            if wparam.0 != 0 {
+                plog("SHUTDOWN block released — exiting so the session can end");
+                std::process::exit(0);
+            }
+            // ...and this session end is OVER, so the next one must be able to ask again. Without this the guard
+            // stays latched: every later WM_QUERYENDSESSION would be answered FALSE with no block and no way out.
+            SHUTDOWN_LEAVING.store(false, Ordering::SeqCst);
+            plog("SHUTDOWN block released, but the close that was already running is still saving — NOT exiting; a later session end will ask again");
+            LRESULT(0)
         }
         WM_ENDSESSION => {
             // The session IS ending. Nothing may block now; the Leave either finished or is about to be killed, and
             // LEAVE_STARTED on disk is what tells the next launch which of the two it was.
             plog(&format!("SHUTDOWN WM_ENDSESSION ending={} — the session is over", wparam.0 != 0));
-            LRESULT(0)
+            // R4-3 (B3): tao handles this message (tao-0.35.3 event_loop.rs:2384-2392, loop_destroyed on wParam
+            // TRUE). This subclass runs BEFORE tao's proc, so swallowing it would skip that teardown.
+            DefSubclassProc(hwnd, msg, wparam, lparam)
         }
         _ => DefSubclassProc(hwnd, msg, wparam, lparam),
     }
@@ -11167,6 +11233,24 @@ fn watch_session_end(app: &AppHandle) {
 // not held, so the screen still sleeps. It is not a veto over anything: no application can stop a Windows restart.
 const KEEP_AWAKE_POLL: Duration = Duration::from_secs(2);
 
+/// **R5-2: is this machine on mains power?** Some(true) = AC, Some(false) = battery, None = Windows would not say
+/// (ACLineStatus 255, or the call failed). None is not AC, so the hold is not taken on an answer nobody gave.
+fn ac_line_status() -> Option<bool> {
+    use windows::Win32::System::Power::{GetSystemPowerStatus, SYSTEM_POWER_STATUS};
+    let mut st = SYSTEM_POWER_STATUS::default();
+    if unsafe { GetSystemPowerStatus(&mut st) }.is_err() {
+        return None;
+    }
+    // 1 = online, 0 = running on the battery, 255 = unknown. Only the first is AC.
+    if st.ACLineStatus == 1 {
+        Some(true)
+    } else if st.ACLineStatus == 0 {
+        Some(false)
+    } else {
+        None
+    }
+}
+
 /// ONE long-lived thread, because Windows drops an ES_CONTINUOUS state when the thread that set it exits. It asks
 /// sync_launch::keep_awake_transition what to do, so the rule is tested without Windows.
 fn keep_awake_thread(app: AppHandle) {
@@ -11178,18 +11262,29 @@ fn keep_awake_thread(app: AppHandle) {
         // export starts — and that export is the longest thing this app does. Without this line the hold would be
         // dropped exactly when it is most needed. (A poisoned lock reads 0 seats and releases: it fails toward the
         // OS's own policy, never toward holding a machine awake on a guess.)
-        let work = seats + usize::from(LEAVE_PHASE.load(Ordering::SeqCst) == LEAVE_RUNNING);
+        // R5-2: EVERY POLL, so unplugging releases the hold and plugging in re-takes it while the seats are live.
+        // The latency is one KEEP_AWAKE_POLL (2 s), which is the re-evaluation this ruling asks for.
+        let ac = ac_line_status();
+        let work = sync_launch::keep_awake_work(seats, LEAVE_PHASE.load(Ordering::SeqCst) == LEAVE_RUNNING, ac);
         if let Some(hold) = sync_launch::keep_awake_transition(held, work) {
             let prev = if hold {
                 unsafe { SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED) }
             } else {
                 unsafe { SetThreadExecutionState(ES_CONTINUOUS) }
             };
+            // R4-5 (B6): record the hold from the CALL, never from the answer. Whether a SUCCESS can return 0 is
+            // not documented either way; if it can, reading 0 as failure would leave this thread believing it holds
+            // nothing while the OS holds the state — and nothing would ever release it.
+            held = hold;
             if prev == EXECUTION_STATE(0) {
-                plog("KEEP AWAKE the OS refused the request — idle sleep is unchanged");
+                plog(&format!("KEEP AWAKE the OS answered 0 to {} — treated as taken so the release still runs; idle sleep may be unchanged", if hold { "the hold" } else { "the release" }));
             } else {
-                held = hold;
-                plog(&format!("KEEP AWAKE {} — {seats} seat(s) live, {work} unit(s) of work; idle sleep {} (the screen still sleeps)", if hold { "held" } else { "released" }, if hold { "held off" } else { "as the OS decides" }));
+                plog(&format!(
+                    "KEEP AWAKE {} — {seats} seat(s) live, {work} unit(s) of work, power {}; idle sleep {} (the screen still sleeps)",
+                    if hold { "held" } else { "released" },
+                    match ac { Some(true) => "AC", Some(false) => "battery", None => "unknown (not AC)" },
+                    if hold { "held off" } else { "as the OS decides" }
+                ));
             }
         }
         std::thread::sleep(KEEP_AWAKE_POLL);
@@ -16105,6 +16200,7 @@ mod diverged_wiring_tests {
 #[cfg(test)]
 mod leave_wiring_tests {
     use super::{LeaveBounds, LEAVE_EXPORT_TIMEOUT, SEAT_TEARDOWN_POLL, SEAT_TEARDOWN_POLLS, SPAWN_FLIGHT_POLLS};
+    use std::time::Duration;
     use std::fs;
 
     fn src() -> String {
@@ -16188,10 +16284,14 @@ mod leave_wiring_tests {
         assert!(body.contains(concat!("if critical { LRESULT(1) } else { ", "LRESULT(0) }")), "the answer is not FALSE, or a forced end is not answered TRUE at once");
         assert!(body.contains(concat!("std::thread::spawn(move || shutdown_leave", "(raw))")), "the Leave runs ON the UI thread, which makes the app unresponsive to Windows");
 
-        // The release: asked for by the Leave, done by the window's own thread, and only after the Leave.
+        // The release: asked for by the Leave, done by the window's own thread. B7 made the ASK a Drop guard, so the
+        // order is no longer textual — it is structural. The guard is installed before the Leave runs, and Drop fires
+        // it on every way out, including an unwind. What this pin now holds is that there IS exactly one ask and that
+        // the guard wraps the work.
         let run = body_of(&s, concat!("fn shutdown_leave", "("));
-        let done = run.find(concat!("PostMessageW", "(")).expect("the Leave never asks for the release");
-        assert!(run.find(concat!("leave_run", "(")).unwrap() < done, "the release is asked for before the Leave finishes");
+        let guard = run.find(concat!("sync_launch::OnDrop::", "new(")).expect("the Leave never asks for the release");
+        assert_eq!(run.matches(concat!("PostMessage", "W(")).count(), 1, "the ask happens somewhere other than the guard, or not at all");
+        assert!(guard < run.find(concat!("leave_run", "(")).unwrap(), "the guard is installed after the Leave it is meant to survive");
         let destroy = body.find(concat!("ShutdownBlockReason", "Destroy")).expect("the proc never releases the block");
         assert!(body.find(concat!("WM_LEAVE_DONE", " =>")).unwrap() < destroy, "the block is released outside the WM_LEAVE_DONE arm");
     }
@@ -16212,6 +16312,88 @@ mod leave_wiring_tests {
         assert!(LeaveBounds::SHUTDOWN.export > waits * 2, "the waits eat the window the export needs");
     }
 
+    /// **R4-2 (B2): the fast Leave is bounded END TO END.** Step 6 retries the result file forever, which on the
+    /// shutdown path means WM_LEAVE_DONE is never posted and the block is never released. NORMAL keeps that forever —
+    /// the keeper's disk gets as long as it needs — and SHUTDOWN gets a deadline.
+    #[test]
+    fn step_six_is_bounded_on_the_shutdown_path_and_unbounded_on_the_keepers_close() {
+        assert_eq!(LeaveBounds::NORMAL.result_deadline, None, "the keeper's close must keep retrying the record");
+        let d = LeaveBounds::SHUTDOWN.result_deadline.expect("the shutdown path has no deadline for step 6");
+        assert!(d >= Duration::from_secs(4), "shorter than two tries at the 2 s retry: {d:?}");
+        assert!(d < LeaveBounds::SHUTDOWN.export, "step 6 may not outweigh the export it follows");
+        let body = body_of(&src(), concat!("fn leave", "_run("));
+        assert!(body.contains(concat!("b.result", "_deadline")), "step 6 does not read the bound");
+        let retry = body.find(concat!("trying again in ", "2 s")).expect("no retry line — re-point this test");
+        let cut = body.find(concat!("b.result_deadline.is_some", "_and(|d| t6.elapsed() >= d) => {")).expect("no deadline check in the loop, or its arm is disabled");
+        assert!(cut < retry, "the deadline is checked after the sleep, so one more retry always runs");
+    }
+
+    /// **R4-1 (B1): a session end DURING the keeper's close JOINS it.** No second Leave, and no exit on the shutdown
+    /// bound — exiting there orphans a running export and writes no record.
+    #[test]
+    fn a_session_end_during_the_keepers_close_joins_it_and_does_not_exit_on_the_shutdown_bound() {
+        let s = src();
+        let body = body_of(&s, concat!("fn shutdown", "_leave("));
+        // it waits for the LEAVE that owns the phase, on THAT Leave's worst case, not on the shutdown export bound
+        assert!(body.contains(concat!("LeaveBounds::NORMAL.worst", "_case()")), "the join is not bounded by the running Leave's own bound");
+        assert!(!body.contains(concat!("t0.elapsed() < SHUTDOWN_EXPORT", "_TIMEOUT")), "the join still cuts at the shutdown export bound");
+        // and the exit is a DECISION carried in the message, not unconditional
+        assert!(body.contains(concat!("WPARAM(u32::from(exit_after.get()) as ", "usize)")), "the post does not carry whether to exit");
+        assert!(body.contains(concat!("exit_after.set(LEAVE_PHASE.load(Ordering::SeqCst) == ", "LEAVE_SHOWN);")), "the join says 'finished' without asking whether it finished");
+        let proc_body = body_of(&s, concat!("unsafe extern \"system\" fn session_end", "_proc("));
+        assert!(proc_body.contains(concat!("if wparam.0 != ", "0 {")), "the proc exits whatever the Leave did");
+        assert!(proc_body.contains(concat!("SHUTDOWN_LEAVING.store(false, ", "Ordering::SeqCst)")), "after a release that does not exit, the guard stays latched and no later session end can be answered");
+        let exit_at = proc_body.find(concat!("std::process::exit", "(0)")).expect("no exit");
+        let destroy = proc_body.find(concat!("ShutdownBlockReason", "Destroy")).expect("no release");
+        assert!(destroy < exit_at, "the block is released after the exit, which never happens");
+        // NORMAL's worst case really is longer than the shutdown bound, or the join would be the bug again
+        assert!(LeaveBounds::NORMAL.worst_case() > LeaveBounds::SHUTDOWN.worst_case());
+        assert!(LeaveBounds::NORMAL.worst_case() > LeaveBounds::NORMAL.export, "the worst case ignores the export");
+        assert!(LeaveBounds::NORMAL.worst_case() > LeaveBounds::NORMAL.export + super::JOIN_RESULT_GRACE, "the worst case drops the waits or the step-6 grace");
+    }
+
+    /// **R4-3 (B3): WM_ENDSESSION is chained.** tao handles it (tao-0.35.3 event_loop.rs:2384-2392, loop_destroyed),
+    /// and this subclass runs first.
+    #[test]
+    fn the_end_of_session_message_is_chained_to_tao() {
+        let body = body_of(&src(), concat!("unsafe extern \"system\" fn session_end", "_proc("));
+        let arm = body.find(concat!("WM_ENDSESSION", " =>")).expect("no WM_ENDSESSION arm");
+        let rest = &body[arm..];
+        let end = rest.find("\n        }").unwrap_or(rest.len());
+        assert!(rest[..end].contains(concat!("DefSubclassProc(hwnd, msg, wparam, ", "lparam)")), "tao never sees the end of session");
+    }
+
+    /// **R4-4 (B4): the shutdown export bound is 30 s, and its comment carries L's MEASURED closes**, not the 55 s
+    /// first carry. With a re-read rule, because the newest of the three is already at 60% of the new bound.
+    #[test]
+    fn the_shutdown_export_bound_is_thirty_seconds_and_says_what_it_was_measured_against() {
+        let s = src();
+        assert_eq!(LeaveBounds::SHUTDOWN.export, Duration::from_secs(30));
+        let at = s.find(concat!("const SHUTDOWN_EXPORT_TIMEOUT: Duration = Duration::from_secs(", "30);")).expect("the bound is not 30 s");
+        let comment = &s[s[..at].rfind("/// ROW 4").expect("no comment above the bound")..at];
+        for figure in [concat!("10 s, 11 s, ", "18 s"), "persist.log", "1384-1385"] {
+            assert!(comment.contains(figure), "the comment does not carry {figure}");
+        }
+        assert!(!comment.contains("55 s"), "the comment still cites the first carry");
+        assert!(comment.contains("60%"), "the comment does not say when to re-read the bound");
+        assert!(comment.contains("NOT_DONE") && comment.contains("LEAVE_STARTED"), "the comment does not say what a cut export leaves");
+    }
+
+    /// **R4-5 (B6): the hold is released on the path that SET it**, whatever the OS answered. A success that returns 0
+    /// would otherwise strand the hold for the life of the process.
+    #[test]
+    fn the_keep_awake_hold_is_recorded_from_the_call_not_from_the_answer() {
+        let body = body_of(&src(), concat!("fn keep_awake", "_thread("));
+        let set = body.find(concat!("SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM", "_REQUIRED)")).expect("no hold");
+        let mark = body.find(concat!("held = ", "hold;")).expect("the hold is never recorded");
+        let check = body.find(concat!("if prev == EXECUTION_STATE", "(0)")).expect("a refusal is no longer noticed at all");
+        assert!(set < mark, "the hold is recorded before it is taken");
+        assert!(mark < check, "the hold is recorded only when the OS answered non-zero, so a 0 strands it");
+        assert_eq!(body.matches(concat!("held = ", "hold")).count(), 1, "the hold is recorded in more than one place");
+        let prev_at = body.find(concat!("let prev = if ", "hold")).expect("no call — re-point this test");
+        assert!(!body[prev_at..mark].contains(concat!("if ", "prev")), "the record is inside a test of the answer");
+    }
+
     /// **ROW 5: the hold is the SYSTEM, never the DISPLAY, and it lives on one long-lived thread** — Windows drops
     /// the state when the thread that set it exits.
     #[test]
@@ -16224,6 +16406,42 @@ mod leave_wiring_tests {
         assert!(body.contains(concat!("keep_awake_transition(held, ", "work)")), "the thread does not use the decision the pure test covers");
         assert!(body.contains(concat!("LEAVE_PHASE.load(Ordering::SeqCst) == ", "LEAVE_RUNNING")), "the hold is dropped when the Leave drains the seats, which is when the export starts");
         assert!(body.contains("loop {"), "the thread does not stay alive, so the OS drops the hold with it");
+    }
+
+    /// **B7: nothing on the shutdown path may die without releasing the block**, and the Panes lock is recovered,
+    /// not unwrapped — row 5 already treats that same mutex as poisonable.
+    #[test]
+    fn the_shutdown_path_releases_the_block_even_if_the_leave_panics() {
+        let s = src();
+        let body = body_of(&s, concat!("fn shutdown", "_leave("));
+        // the post is a GUARD, so it happens on every way out of this function, including an unwind
+        let guard = body.find(concat!("sync_launch::OnDrop::", "new(")).expect("the post is not a drop guard");
+        let decision = body.find(concat!("exit_after.set", "(")).expect("the exit decision is not carried to the guard");
+        assert!(guard < decision, "the guard is installed after the work it is meant to survive");
+        assert_eq!(body.matches(concat!("PostMessage", "W(")).count(), 1, "there is a post outside the guard, or none inside it");
+        // and leave_run no longer panics on a poisoned Panes lock
+        let run = body_of(&s, concat!("fn leave", "_run("));
+        assert!(!run.contains(concat!(".0.lock().", "unwrap()")), "the Panes lock is still unwrapped on the shutdown path");
+        assert!(run.contains(concat!("harvest_guard::recover(app.state::<Panes>().0.", "lock())")), "the drain does not use the one recovery policy");
+    }
+
+    /// **R5-2: the thread reads the power source every poll**, so unplugging releases the hold and plugging in
+    /// re-takes it while seats are live. The read is Windows' own, and its answer goes through the tested decision.
+    #[test]
+    fn the_keep_awake_hold_is_taken_on_mains_power_only() {
+        let s = src();
+        let body = body_of(&s, concat!("fn keep_awake", "_thread("));
+        let read = body.find(concat!("ac_line", "_status()")).expect("the thread never reads the power source");
+        let work = body.find(concat!("sync_launch::keep_awake", "_work(")).expect("the AC answer does not reach the decision");
+        assert!(read < work, "the power source is read after the decision that uses it");
+        assert!(body.contains("loop {") && read > body.find("loop {").unwrap(), "the power source is read once, not every poll");
+        let probe = body_of(&s, concat!("fn ac_line", "_status("));
+        assert!(probe.contains(concat!("GetSystemPower", "Status(")), "the probe is not Windows' own");
+        assert!(probe.contains(concat!("ACLineStatus == ", "1")), "AC is not ACLineStatus == 1");
+        assert!(probe.contains(concat!("ACLineStatus == ", "0")), "battery has no branch of its own, so battery and unknown cannot be told apart");
+        let unknown = probe.rfind(concat!("} else {", "
+        None")).is_some();
+        assert!(unknown, "an unreadable power source does not fall through to None");
     }
 
     /// **ROW 5, said plainly:** no STRING this app can show may claim it stops a restart or a shutdown. It stops
