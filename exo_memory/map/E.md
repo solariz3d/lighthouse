@@ -1083,3 +1083,18 @@ unseeable artifact OUTSIDE the repo with only its sha committed — ruled for ha
 **My own miss:** the blind design I wrote four hours ago guards a seal against revision and never asks whether a
 sealed file is readable by the seat it is sealed against. Not scored 0 by the registration's own rule; a stop is an
 answer. The keeper's question is still open and I am now the wrong seat for it.
+
+## 2026-09-16 ~04:4x · T2, contesting the boundary-check note (D) → `exo_memory/handback/t2-echo_2026-09-16.md`
+18 claims; **8 false (1, 4, 6, 11, 12, 13, 15, 17), 1 unresolvable (8), 1 understated (14).** Four falses are exact
+inversions, three of them of the tool's central repair: claim 4 says a missing lap makes it PASS (`boundary-check.js:32-38`
+— it FIRES; that asymmetry IS the repair), claim 17 gives it a window-and-rate (`:245` fires on the first unsealed
+arrival; the window is the *predecessor's* shape), claim 6 says a hand-pasted brief is in the denominator and the rate is
+exact (`:63-66` — it is not, and the denominator is "a floor"), claim 12 swaps presence/boundary. Claim 13 is the
+sharpest: **`boundary_falsifier_2026-08-28.md:4-5` says pane B drafted it, explicitly NOT the seat that wrote the
+original (librarian, fb08c50)** — the note reports the disclaimer as its opposite and calls it the ground of trust.
+**Two things checking taught me:** the tool's own header drops "the loop is tight and" from the cut while the note keeps
+it (master `consonance/src-tauri/brief/BUILDING.md:539-543`) — the drift is the instrument's, not the note's; and
+**`main.rs:5605` is stale in `boundary-check.js:33,104` and `boundary_falsifier:67`, and the tool PRINTS it at `:229`** —
+the real chair stamp is `main.rs:9504`. Claim 8 unresolvable here: D's board spans the named window and holds **0 rows
+with `pane==='blind'`** (30,347 parsed), so `blindOverlaps` has no input on this machine at all. Did not run the test
+(it mkdtemps + writes); 22/0 quoted, not re-derived. Disclosed: a grep surfaced 2 lines of another seat's tonight file.
