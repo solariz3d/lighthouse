@@ -52,10 +52,20 @@ test('POSITIVE CONTROL: an unrelated sha does NOT match', () => {
   assert.strictEqual(joined[0].ferry, null, 'an unrelated sha must not match');
 });
 
-test('a sha shorter than 7 is REFUSED, not matched loosely', () => {
-  withLedger([{ sha: 'cb0df', panes: ['C'], ferried_at: 1 }]);
-  const joined = joinAgainst([{ sha: FULL, at: 0, subject: 'x', files: ['exo_memory/loop/a.md'] }]);
-  assert.strictEqual(joined[0].ferry, null, 'under 7 chars collisions are real; refuse rather than guess');
+test('the sha-length rule is a FLOOR, not a window - 6 is refused and 7 matches', () => {
+  // REPAIRED 2026-09-16 (E's T5 finding). This test used to assert only that a FIVE-character sha
+  // does not match, and it was green whether the guard read `>= MIN_SHA` or its inversion
+  // `<= MIN_SHA`: both reject a 5. A test whose inputs are all the same failure cannot tell which
+  // guard held — the inversion was caught elsewhere, never here, while this test's NAME claimed it.
+  //
+  // Two inputs, one either side of the boundary, can tell them apart. This now fails if the
+  // comparison is inverted, if the floor moves, or if the rule becomes an upper bound.
+  withLedger([{ sha: FULL.slice(0, 6), panes: ['C'], ferried_at: 1 }]);
+  assert.strictEqual(joinAgainst([commit(FULL)])[0].ferry, null,
+    'under 7 chars collisions are real; refuse rather than guess');
+  withLedger([{ sha: FULL.slice(0, 7), panes: ['C'], ferried_at: 1 }]);
+  assert.ok(joinAgainst([commit(FULL)])[0].ferry,
+    'exactly 7 is INSIDE the floor and must match - or the guard is a window, not a floor');
 });
 
 test('a malformed ledger line is skipped, not fatal', () => {
@@ -188,6 +198,138 @@ test('a row with no panes at all is tolerated - the epoch row has none', () => {
   assert.deepStrictEqual(ferry.panesOf({ epoch: 1, note: 'x' }), []);
   assert.deepStrictEqual(ferry.panesOf({ sha: FULL, panes: 'C' }), ['C'], 'a bare string counts');
   assert.deepStrictEqual(ferry.panesOf({ sha: FULL, panes: ['C'] }), ['C']);
+});
+
+// ─── report(): the half of the tool that had no test at all ──────────────────────────────────────
+//
+// On 2026-09-16 eight single-line defects were planted in a copy of ferry.js. Three seats found all
+// eight by reading; THIS SUITE caught three. The five it could not see — the epoch boundary, the
+// latency divisor, the dropped negative-latency filter, the median index and the rate floor — all
+// live in report(), and `grep -c "report(" ferry.test.js` returned 0. Every one of them is a change
+// a real seat would have shipped, and the suite said green. (handback/t5-charlie_2026-09-16.md,
+// handback/t5-echo_2026-09-16.md, ea605f8.)
+//
+// WHY THESE BUILD A REAL REPOSITORY. report() takes its commits from `git log` inside FERRY_REPO
+// and nothing injects them; status() reads artifactCommits() from module scope. Exercising the
+// shipped path therefore needs a repository whose commit times we chose — the alternative was a
+// seam in ferry.js, and the tool is not this lap's file.
+//
+// Each test pins the SHAPE the value sits in — a boundary tested on both sides, a unit derived
+// from its own inputs, an invariant that holds whatever the numbers are — rather than the literal
+// text of a planted line.
+
+const T0 = 1700000000; // one fixed second; every time below is relative to it
+
+/** A throwaway repository with one artifact commit per given timestamp (seconds). Returns the shas. */
+function withRepo(atSecs) {
+  const dir = fs.mkdtempSync(path.join(tmp, 'repo-'));
+  const g = (args, env) => execFileSync('git', args,
+    { cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], env: { ...process.env, ...env } });
+  g(['init', '-q', '.']);
+  g(['config', 'user.email', 'ferry@test']);
+  g(['config', 'user.name', 'ferry test']);
+  fs.mkdirSync(path.join(dir, 'exo_memory', 'loop'), { recursive: true });
+  const shas = [];
+  atSecs.forEach((atSec, i) => {
+    const rel = `exo_memory/loop/a${i}.md`;
+    fs.writeFileSync(path.join(dir, rel), `artifact ${i}\n`);
+    g(['add', rel]);
+    const when = `@${atSec} +0000`;
+    g(['commit', '-q', '-m', `artifact ${i}`], { GIT_AUTHOR_DATE: when, GIT_COMMITTER_DATE: when });
+    shas.push(g(['rev-parse', 'HEAD']).trim());
+  });
+  process.env.FERRY_REPO = dir;
+  return shas;
+}
+
+/** report() prints. Capture the lines: the rate is PRINTED and never returned, so the only way to
+ *  assert it is to read what an operator reads — and a suite that lets it scroll past is a suite
+ *  that never checks it. */
+function quietReport() {
+  const lines = [];
+  const real = console.log;
+  console.log = (...a) => lines.push(a.join(' '));
+  try { return { r: ferry.report(), lines }; } finally { console.log = real; }
+}
+const epochRow = { epoch: T0 * 1000, note: 'fixture' };
+
+test('a commit AT the ledger epoch is inside the window, not before it', () => {
+  // The boundary instant is exactly what a strict `>` loses, and it is not a hypothetical: the
+  // epoch is taken FROM a ledger row, so the commit at the epoch is the first thing the instrument
+  // ever measures. Asserted as the split between measured and unmeasured, not as a literal.
+  const shas = withRepo([T0 - 3600, T0, T0 + 3600]);
+  withLedger([epochRow, { sha: shas[1], panes: ['A'], ferried_at: (T0 + 60) * 1000 }]);
+  const { r } = quietReport();
+  assert.strictEqual(r.total, 3);
+  assert.strictEqual(r.unmeasured, 1, 'only the commit BEFORE the epoch is unmeasured');
+  assert.strictEqual(r.window, 2, 'the commit AT the epoch belongs to the window it opens');
+});
+
+test('median latency is reported in MINUTES', () => {
+  // The unit is derived from the fixture's own inputs, so any divisor - seconds, hours - fails
+  // here, not just the one that was planted.
+  const [sha] = withRepo([T0]);
+  const ferriedAt = (T0 + 2 * 3600) * 1000;
+  withLedger([epochRow, { sha, panes: ['A'], ferried_at: ferriedAt }]);
+  const expected = (ferriedAt - T0 * 1000) / 60000;
+  assert.strictEqual(expected, 120, 'fixture sanity: two hours is 120 minutes');
+  assert.strictEqual(quietReport().r.median, expected, 'the latency unit is minutes');
+});
+
+test('a ferry stamped BEFORE its commit cannot move the median', () => {
+  // An artifact cannot be ferried before it exists; such a row is a clock skew or a typo, and the
+  // filter that drops it is one `&& n >= 0`. Pinned as an INVARIANT - the impossible sample makes
+  // no difference, whatever the other numbers are - rather than as an expected value.
+  const shas = withRepo([T0, T0, T0]);
+  const rows = [epochRow,
+    { sha: shas[0], panes: ['A'], ferried_at: (T0 + 10 * 60) * 1000 },
+    { sha: shas[1], panes: ['A'], ferried_at: (T0 + 20 * 60) * 1000 }];
+  withLedger(rows);
+  const clean = quietReport().r.median;
+  assert.ok(clean !== null, 'the fixture must produce a median at all');
+  withLedger([...rows, { sha: shas[2], panes: ['A'], ferried_at: (T0 - 60 * 60) * 1000 }]);
+  assert.strictEqual(quietReport().r.median, clean,
+    'a pre-dated ferry must be discarded, not ranked among the real ones');
+});
+
+test('the median is the MIDDLE latency, not the largest', () => {
+  const shas = withRepo([T0, T0, T0]);
+  withLedger([epochRow,
+    { sha: shas[0], panes: ['A'], ferried_at: (T0 + 10 * 60) * 1000 },
+    { sha: shas[1], panes: ['A'], ferried_at: (T0 + 20 * 60) * 1000 },
+    { sha: shas[2], panes: ['A'], ferried_at: (T0 + 90 * 60) * 1000 }]);
+  const { r } = quietReport();
+  assert.strictEqual(r.median, 20, 'three samples: the median is the second');
+  assert.ok(r.median < 90, 'an index one too high reports the SLOWEST ferry as the typical one');
+});
+
+test('ONE latency sample gives that sample, not undefined', () => {
+  // The same off-by-one that makes the median the maximum indexes past the end of a one-element
+  // array. `median` becomes undefined, the `median === null` guard does not catch it, and
+  // `median.toFixed(1)` throws - so the tool's DEFAULT invocation (no arguments runs report())
+  // dies with a stack trace on the first day exactly one artifact has been ferried.
+  const [sha] = withRepo([T0]);
+  withLedger([epochRow, { sha, panes: ['A'], ferried_at: (T0 + 7 * 60) * 1000 }]);
+  const { r, lines } = quietReport();
+  assert.strictEqual(r.median, 7, 'with one sample the median is that sample');
+  assert.ok(lines.some(l => /median latency\s+7\.0 min/.test(l)), 'and it must print, not throw');
+});
+
+test('the miss rate is withheld below its floor and printed at it', () => {
+  // A rate needs an n, and the floor is the whole guard: the tool has twice published a confident
+  // percentage off a denominator it could not have observed (97.2%, then 0.0% off n=3 - the same
+  // defect pointing the other way). Pinned on BOTH sides of the boundary, so lowering the floor
+  // and raising it both fail here.
+  const FLOOR = 10;
+  const rateLine = (n) => {
+    const shas = withRepo(Array.from({ length: n }, () => T0));
+    withLedger([epochRow, { sha: shas[0], panes: ['A'], ferried_at: (T0 + 60) * 1000 }]);
+    return quietReport().lines.find(l => l.startsWith('miss rate'));
+  };
+  const below = rateLine(FLOOR - 1);
+  const at = rateLine(FLOOR);
+  assert.ok(/n\/a/.test(below) && !/%/.test(below), `under the floor a rate must be withheld: ${below}`);
+  assert.ok(/%/.test(at), `at the floor the rate must be printed: ${at}`);
 });
 
 console.log(`\n${pass} passed, ${fail} failed`);
