@@ -1,6 +1,6 @@
 # THE CHAIR'S SEALED PREDICTION — the pane battery, before any pane runs
 
-**Written 2026-09-16 03:4x on L, by the chair, and committed before any task is dispatched.** Registration:
+**Written 2026-09-16 on L by the chair, COMMITTED 03:28:40 (0a54c5a), before any task was dispatched.** Registration:
 `loop/pane_battery_registration_2026-09-16.md` §4. **If this file's commit time is not before the first task's
 dispatch, the prediction is not sealed and the run is void.**
 
@@ -39,3 +39,11 @@ is therefore predicting the result it should least want to be trusted, and says 
 
 **The outcome the chair would most like, and must not steer toward:** one clear reversal on a task the chair thought
 it knew, which would make the battery worth the spend and make the dossier worth reading.
+
+---
+
+**TIMESTAMP CORRECTED 03:4x, the librarian's catch (9ee1fdb).** This file first said "written 03:4x" and the
+registration said "written 03:3x". Both were committed at **03:28:40**, in one commit, 0a54c5a. The seal holds —
+the commit precedes every dispatch, and the first ring went out after it — but a reader checking these files' own
+words would have been misled by up to fifteen minutes, **in the two documents whose entire point is being written
+BEFORE something.** The strings now carry the commit time. The prose-clock class, one more time.

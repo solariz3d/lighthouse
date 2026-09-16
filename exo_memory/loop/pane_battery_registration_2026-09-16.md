@@ -1,6 +1,6 @@
 # REGISTRATION · THE PANE BATTERY — six tasks, one brief, a sealed prediction
 
-**Written by the CHAIR on L, 2026-09-16 03:3x, as the design lap's P-BATTERY-REG. Nothing runs against a pane
+**Written by the CHAIR on L, 2026-09-16, committed 03:28:40, as the design lap's P-BATTERY-REG. Nothing runs against a pane
 tonight.** Plan: `loop/plan_pane_battery_2026-09-16.md` (8360b4c). Door: the keeper, 2026-09-11 23:31, verbatim —
 *"we arent telling a pane what they are good at, i think the plan was to create tests for each pane and see who
 excels in what"* — and his go at 03:20 tonight, *"lets do it."*
