@@ -39,3 +39,7 @@
 ## What is new here, and what is not
 
 Nothing above is a new instrument; the map's add is the ORDER: (1) commit the C1 artifacts (D-bound), (2) register C1 properly, (3) one mixed-model arm (§D1, E1c) — the only lever untouched, (4) then C2/C3/C5 in that order, each behind C1's encoder. The retrieval half of the keeper's sentence is not in this guide (the hold file says so); it lives in `research/the_retrieval_problem_outside.md` and the L019–L021 retriever line, and is a separate map.
+
+## ADDED 07:0x — the Third Place's SPINE supersedes this map as the ordered master
+
+The keeper, 06:56: "but it also did something more recent as well." It did: `exo_memory/third_place/SPINE_diversity_to_retrieval_2026-09-16.md` (03:58 tonight, 220 lines) — the paper → the room's numbers → the retrieval fix class with a status per item → six registered tests with their falsifiers verbatim → the order for the librarian (§8: finish T1 to REGISTERED and run it; T2's arm-(c) feasibility then register T2 citing L039/L045 as arm (a); T3 the seed test as the cheapest registered run; T5, T4, T6 after). That file is the master for this line; this map is a secondary reading whose only add is the "since tonight" column above (C1's artifacts are D-bound; C5's precondition is E's ack; "refuse, don't remind" confirmed twice by the loop's own mechanics; the mixed-model lever untouched). The retrieval half the keeper named is in the SPINE's §3, not here.
