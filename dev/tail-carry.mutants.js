@@ -18,6 +18,41 @@
 // run read its `original` off a first run's MUTATED file and its own `finally { restore() }` wrote
 // the mutation back as the truth. The damage was permanent BECAUSE the cleanup ran.
 
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// THREE RULES FOR ANY MUTANT LIST, L061 (pane A, from the P-LEAVE-3 laps of 2026-09-15/16). Two of
+// them this file ENFORCES; the first it cannot, and saying which is which is the point — a rule
+// nobody enforces is still worth having, but nobody may mistake its silence for a passing gate.
+//
+//   1. PIN THE SHAPE A VALUE SITS IN, NEVER THAT A TOKEN APPEARS.  ** NOT ENFORCED — A SENTENCE **
+//      A pin that reads for a token passes when the mutant leaves that token behind somewhere else.
+//      Four times in one lap: a guard disabled with "&& false" (the guard's own text was still
+//      found); a figure dropped from a list while the same figure survived in the sentence below it;
+//      an assignment moved inside a conditional (the search found the moved copy); a probe's
+//      fall-through changed while its error path still supplied the word the pin looked for.
+//      Pin the ARM, the ORDER or the COUNT — "X => {" rather than "X"; "a before b" rather than
+//      "both appear"; "occurs exactly once" rather than "occurs". THIS FILE CANNOT CHECK THAT FOR
+//      YOU: it is a property of the SUITE, not of the list, and a harness that could see it would
+//      be the suite. What it does instead is print the anchor and the replacement of every
+//      SURVIVOR, so the text that stayed is in front of the reader. That is an aid, not a gate.
+//
+//   2. AN ORPHANED ANCHOR IS LOUD, AND IT NAMES ITS ANCHOR.       ** ENFORCED — refuses, exit 2 **
+//      An edit that rewrites the line a mutant anchors on reports nothing until the next FULL run,
+//      and then only as one NOT APPLIED line among the counts. Twice in one lap that hid a defect
+//      nobody was measuring, and the second time it orphaned two rows at once. So the WHOLE list is
+//      audited BEFORE anything is mutated — including under --only, which is exactly how the
+//      staleness stayed invisible — and every orphaned anchor is printed with its text.
+//      THE COST, NAMED: a legitimate refactor of tail-carry.js now makes this harness REFUSE until
+//      its anchors are re-pointed. That is the intended trade. A stale list produces counts that
+//      read like measurements and are not.
+//
+//   3. THE LIST IS VALIDATED BEFORE USE.                          ** ENFORCED — refuses, exit 2 **
+//      A malformed row is not a typo, it is a silent re-interpretation: one row written with double
+//      quotes (an apostrophe in its name) was skipped by a bulk edit that added a column, so it
+//      destructured one field short and the runner read an ANCHOR as a FILENAME and died mid-run,
+//      after scoring three rows. Shape is checked here: three non-empty strings, and a replacement
+//      that differs from the anchor.
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
@@ -369,10 +404,50 @@ if (onlyArg.only !== null && (onlyArg.only < 1 || onlyArg.only > MUTANTS.length)
 }
 const selected = MUTANTS.map((m, i) => [i + 1, ...m]).filter(([id]) => onlyArg.only === null || id === onlyArg.only);
 
+// RULE 3 (L061): the list is validated before use. A row that is not three non-empty strings gets
+// destructured into whatever it has, and the run then mutates — or opens — something nobody named.
+const malformed = MUTANTS
+  .map((m, i) => [i + 1, m])
+  .filter(([, m]) => !Array.isArray(m) || m.length !== 3 || m.some(x => typeof x !== 'string' || x === '') || m[1] === m[2]);
+if (malformed.length) {
+  console.error('tail-carry.mutants: THE MUTANT LIST IS MALFORMED — refusing to run.');
+  for (const [id, m] of malformed) {
+    console.error(`  #${id}  ${Array.isArray(m) ? m.length : typeof m} field(s): ${JSON.stringify(m).slice(0, 120)}`);
+  }
+  console.error('  Every row is [name, anchor, replacement] — three non-empty strings, replacement != anchor.');
+  unlock();
+  process.exit(2);
+}
+
+// THE DIRTY-TREE CHECK RUNS BEFORE THE ANCHOR AUDIT, AND THE ORDER IS LOAD-BEARING (B, L061). A run
+// killed mid-mutant leaves the tracked source carrying a replacement. Its anchor then matches ZERO
+// times — so RULE 2 below would fire first and report an EDIT, and its advice is to re-point the
+// anchors onto the line as it now stands, which IS the mutated line. A seat that followed it would
+// write the mutation into the list as the new truth, and the next run would score it green. This
+// block knows what that tree actually is, and its remedy is the opposite one: restore the file.
 const alreadyMutated = MUTANTS.filter(([, , to]) => original.includes(to));
 if (alreadyMutated.length) {
   console.error('tail-carry.mutants: THE SOURCE ALREADY CARRIES A MUTATION — refusing to run.');
   for (const [name, , to] of alreadyMutated) console.error(`  ${name}\n    found: ${to}`);
+  unlock();
+  process.exit(2);
+}
+
+// RULE 2 (L061): every anchor in the WHOLE list is audited before anything is mutated — under --only
+// too, because a list audited only where it was run is how two orphans hid behind one another. An
+// anchor matching 0 times is gone; one matching more than once is ambiguous; either way the defect
+// that row names is UNGUARDED AND UNMEASURED, and no count from this run should be read.
+const orphaned = MUTANTS
+  .map((m, i) => [i + 1, m[0], m[1], original.split(m[1]).length - 1])
+  .filter(([, , , hits]) => hits !== 1);
+if (orphaned.length) {
+  console.error(`tail-carry.mutants: ${orphaned.length} ANCHOR(S) NO LONGER MATCH tail-carry.js EXACTLY ONCE — refusing to run.`);
+  console.error('  An edit rewrote the line these anchor on. Until they are re-pointed, the defects they');
+  console.error('  name are unguarded, and the counts under them would read like measurements.');
+  for (const [id, name, anchor, hits] of orphaned) {
+    console.error(`  #${id} ${name}`);
+    console.error(`      ${hits === 0 ? 'MISSING' : hits + ' MATCHES'} — anchor: ${JSON.stringify(anchor.length > 96 ? anchor.slice(0, 96) + '…' : anchor)}`);
+  }
   unlock();
   process.exit(2);
 }
@@ -412,7 +487,14 @@ try {
       // inside the mutant text, which corrupted a test file in this lap (map/A.md, 2026-09-14).
       fs.writeFileSync(COPY, original.replace(from, () => to));
       if (suiteRedOnCopy()) { killed++; console.log(`  killed  #${id} ${name}`); }
-      else { survivors.push(`#${id} ${name}`); console.log(`  SURVIVED  #${id} ${name}`); }
+      else {
+        // RULE 1's AID (L061), not a gate: a survivor prints the anchor and the replacement, so the
+        // text the suite kept passing on is in front of the reader. A pin that reads for a token
+        // rather than a shape is visible here and nowhere else in this output.
+        const short = (s) => JSON.stringify(s.length > 88 ? s.slice(0, 88) + '…' : s);
+        survivors.push(`#${id} ${name}\n        anchor: ${short(from)}\n        became: ${short(to)}`);
+        console.log(`  SURVIVED  #${id} ${name}`);
+      }
     }
   }
 } finally {

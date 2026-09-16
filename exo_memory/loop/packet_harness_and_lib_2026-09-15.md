@@ -112,3 +112,73 @@ librarian's, carried into this packet by the chair). The line in §2 stands as w
 
 **§2 closes as a record.** No design is owed. The keeper withdrew the balloon concern at 05:56: "i think the
 ballooning context was a visual error".
+
+---
+
+# §3 · THE MUTANT-LIST RULES — added 2026-09-16 (L061, pane A), from the P-LEAVE-3 laps
+
+*Three rules and one refinement, written for a stranger to apply. Each is labelled **GATE** (the harness refuses)
+or **SENTENCE** (only a reader enforces it). That labelling is the point: **a rule nobody enforces is still worth
+having, and its silence must never be read as a passing gate.** The carrier is `dev/tail-carry.mutants.js`; the
+same three apply to `consonance/tools/close.mutants.js` and `state-sync.mutants.js`, which were not edited tonight.*
+
+## R1 · PIN THE SHAPE A VALUE SITS IN, NEVER THAT A TOKEN APPEARS — **SENTENCE**
+
+A pin that reads for a token passes when the mutant leaves that token behind somewhere else. Four survivors in one
+lap, all this shape:
+
+| the mutant | why the pin still passed |
+|---|---|
+| a guard disabled with `&& false` | the pin searched for the guard's text, which was still there |
+| a figure dropped from a measured list | the same figure appeared in the sentence below it |
+| an assignment moved inside a conditional | the search found the moved copy and read the order as unchanged |
+| a probe's fall-through changed | its error path still returned the word the pin looked for |
+
+**Write instead:** the ARM (`X => {`, not `X`), the ORDER (`a` occurs before `b`), or the COUNT (`occurs exactly
+once`, not `occurs`). **Why this cannot be a gate:** it is a property of the SUITE, not of the list. A harness that
+could tell a shape-pin from a token-pin would have to understand what the test means, which is the suite's job. The
+harness now prints, for every SURVIVOR, that mutant’s own anchor and replacement — **the surviving MUTATION, never
+the pin that let it through.** The harness never sees a pin, so it cannot check one; it puts the changed text in
+front of the reader, who must then go and find the assertion that read it. An aid, and explicitly not a check.
+
+## R2 · AN ORPHANED ANCHOR IS LOUD, AND IT NAMES ITS ANCHOR — **GATE** (exit 2, before anything is mutated)
+
+An edit that rewrites the line a mutant anchors on reports **nothing** until the next FULL run, and then only as one
+`NOT APPLIED` line among the counts. It happened twice in one lap; the second time it orphaned two rows at once, and
+both were found only because a re-run happened for another reason.
+
+**Built:** the WHOLE list is audited before any mutation — **including under `--only`**, which is exactly how the
+staleness stayed invisible (a list audited only where it was run cannot see the row nobody asked for). Every orphan
+prints its id, its name, whether it is MISSING or AMBIGUOUS, and **the anchor text itself**.
+
+**The cost, named rather than discovered later:** a legitimate refactor now makes the harness REFUSE until its
+anchors are re-pointed. That is the trade — a stale list produces counts that read like measurements and are not.
+
+## R3 · THE LIST IS VALIDATED BEFORE USE — **GATE** (exit 2)
+
+A malformed row is not a typo, it is a silent re-interpretation. One row written with double quotes (an apostrophe
+in its name) was skipped by a bulk edit that added a column; it then destructured one field short, and the runner
+read an **anchor as a filename** and died mid-run, after scoring three rows. Every row is now checked for three
+non-empty strings with a replacement that differs from the anchor, and a bad row is named by index before anything
+runs.
+
+## R4 · THE LEAK CHECK: EXPOSURE IS NOT A VOID — **SENTENCE** (the reader applies it; `leak-check.sh` still exits 1 on either)
+
+A **filename** appearing in a status listing is EXPOSURE: the cell is scored, and the exposure is recorded beside
+it. Returned **content** — a quotation, a figure, a verdict read out of another seat's file — is a VOID. The two
+were one rule on 2026-09-16 and the rule as written voided a cell that had only ever seen a name. **The cut is what
+the seat could have LEARNED, not what it could have NAMED.** The rule is in `dev/diversity/leak-check.sh`'s header;
+the script was deliberately not changed tonight, so its exit 1 means "go look at which of the two this was", never
+"the cell is void".
+
+## What was measured before this landed
+
+```
+node dev/tail-carry.test.js                      129 passed · 0 failed   (unchanged by this lap)
+node dev/tail-carry.mutants.js --only 1          1 killed · 0 survived · 0 not applied
+node consonance/tools/close.mutants.js --only 1  1 killed · 0 survived · 0 not applied
+node consonance/tools/state-sync.mutants.js --only 1  1 killed · 0 survived · 0 not applied
+both gates, on a REPLICA of dev/ (tracked files hashed before and after, unchanged):
+  R2  a rewritten anchor, asked for with --only 5   -> exit 2, names #1 and prints its anchor text
+  R3  a row carrying two fields instead of three    -> exit 2, names #1 and prints the row
+```
