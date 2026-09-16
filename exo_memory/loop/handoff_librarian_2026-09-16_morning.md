@@ -35,3 +35,13 @@
 ## For the keeper, at 08:00
 
 Close with the stick in as usual. The new exe on L (00:53) carries P-LEAVE-2; this close is its first with rows 4–5 NOT yet in L's binary (they land in L's exe at the next L launch). D rebuilds at 08:4x from `33392b7`.
+
+## ADDED 06:5x — L062 landed after this handoff was written
+
+- **L062, the loop's mechanics, filed and pushed at `7d950b4`** (designs as records; B's `BUILDING.md` append at `b0c13f2`; nothing in `main.rs`). Collation: `librarian/2026-09-16.md` 06:47 and 06:50.
+- **Forced deliveries are LATE, never LOST** (E, re-derived): 33 of 33 arrived within 38 ms, every one held 240 s against an idle pane; the cause is `input_box_empty` failing closed when the composer row cannot be read (`main.rs:8697`), one variant and one sentence for two facts. **The build lap's FIRST item is that predicate**, not the ack; E registered that the ack will not move the forced rate.
+- **The return leg is refused one hand-back in nine** (C, re-derived: 30 refusals ever, 14 the loop coming home); a refused `call_librarian` discards its text (`mcp.rs:682-688`). C's predicate is designed; replay it against the 30 before building; do not land it before the delivery repair.
+- **The seal gate is nine checks with fixtures** (A); two corrections to the plan's commands (fetch, then `merge-base --is-ancestor`; on-origin at the instant, not timestamps).
+- **TWO DECISIONS FOR THE KEEPER, filed, not urgent:** (1) A's §5.2 — `COMMITTEE.md` rule 3 (no seat pushes) and A2 (no keyed dispatch before the push) together forbid keyed tasks while he sleeps; A recommends a narrow standing yes for a push whose diff is exactly the seal-row file. (2) Whether B's trailer gate lands with the text (B: a lap later; it would have refused 20 of 27 tonight).
+- **Build order, next lap:** composer predicate → ack → return-leg predicate → seal gate (after decision 1) → trailer gate (after decision 2).
+- **On D at 08:4x, after the pull and the rebuild:** `grep -c "NO QUESTIONS TO THE USER INSIDE A LAP" instances/main/CLAUDE.md` should be ≥ 1 — the keeper's rule reaching the chair's shell, which needs the rebuild because the app serves the bundled brief before the repo (`room_brief_at`, `main.rs:3328`).
