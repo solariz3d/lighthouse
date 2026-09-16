@@ -406,6 +406,8 @@ contradictory. There is ONE shared list per task, and agreement is computed on i
             redact    dev/diversity/redact.js + test (R8b blind). A writes it. It removes pane letters, arm words,
                       the packet filename, every "§n", and commit shas; on a fixture it must leave nothing matching
                       /\b[A-Z]\b pane|§\d|packet_|[0-9a-f]{7,40}/.
+                      > CARRIER MARKED (§8.11): this fixture regex is SUPERSEDED by §8.10 K6 and its correction.
+                      > It passes "pane B" and eats figures K6 says must survive. Kept as the trace.
             scorer    score.mjs gains R8e's phase mean, and nothing else. C's run-2 scorer is the base; the diff
                       is reviewed by the librarian before use.
 
@@ -630,3 +632,46 @@ then the step-0 shas here, then REGISTERED.
 
 **Written while E builds step 0.** It touches no line E builds from (R8e, §8.9 STEP 0, V1), and no seat was rung
 for it.
+
+## 8.11 · STEP 0 LANDED ~13:1x on D — the shas, and three rulings the build raised (`handback/step0-redact-A_2026-09-15.md` 9ad0e5e, `handback/step0-phase-E_2026-09-15.md` c1e5d20; both re-derived by the librarian at 7396cf2, and both tests re-run at the chair's desk: redact 28/0, phase 13/0)
+
+    dev/diversity/phase-window.js        ba98d63523530e60dc73ae7872104af8bb404d8cc24e459d9ade1913bbdc2cb5
+    dev/diversity/phase-window.test.js   2950fbd4022fd5e8b2c76d8c40022bce3393a51df362ecf7e38f5262a1a6782d
+    dev/diversity/redact.js              cb3f3ea1bdbbdd533b5bdacbbde95393d8dfe4ec9173126b6aad1fab74ed6d3d
+    dev/diversity/redact.test.js         1d5b0a20fdb0190db1ae87d0802c8296155189287553da5ad3d80fda065c8025
+    dev/diversity/arm-words.txt          59579593b3a9d7c9d810b6eeb6339c8af0f1ece16644b951db67c8445d25b91e
+
+**From E's step-0 run, recomputed by the librarian with its own code:** P1 on the six-phase U — A 0.7328 ·
+B-read 0.6866 · E 0.6497, margin +0.0369, positive at all six phases. Controls on U 0.8409 / 0.4548, both pass.
+P2 ΔU: n 21, median 0.1230. **So the rename does not rest on phase 0.** C's run-2 fields are unchanged at phase 0
+(0 of 641 changed, 626 U fields added).
+
+**STILL OWED before step 1: the scorer.** It lives only in E's scratch on D, which is the
+verified-it-existed-never-shipped class, and tonight's three reboots are the argument. It lands as
+`dev/diversity/score.mjs` with its node_modules and model paths taken by argument or env, with ONE change the
+librarian named: the control gate still decides on the phase-0 `pass`, and R8e makes U the primary for the controls
+too, so the gate reads `passU`. Both pass either way. Its sha is recorded here when it lands. **m is computed from
+the committed scorer, not the scratch one.**
+
+    R8g  BLINDNESS IS NOT ACHIEVABLE, AND THE RULE STANDS ANYWAY. A measured what survives redaction in a briefed
+         text: 25 ruling ids, 7 falsifier ids, 21 step locators — and, above all, "no redaction can blind polarity
+         to uptake", because a text that quotes the brief reads as briefed however it is scrubbed. A's expectation,
+         registered as an expectation: at least one scorer reaches a guess rate ≥ 0.75 and polarity reads UNBLINDED.
+         RULED: K6's 0.75 rule is NOT relaxed, and the id classes are NOT added to the redaction. Loosening a bar
+         because its author expects it to fire is fitting the instrument to pass, and removing claim locators would
+         cost the labels their citations (A measured 20 of 48 labels already touched by redaction, none destroyed).
+         WHAT POLARITY IS WORTH IF UNBLINDED, said now rather than after the number: P, the touched counts and the
+         agreement are reported as DESCRIPTIVE, with the guess rate beside them. R8d is not read. The run's
+         registered result is then UPTAKE alone under §8.4, and the run says so in its first line.
+         **So the likely registered outcome of this run is an uptake result with a descriptive polarity appendix.**
+         That is stated before the run because it changes what the run is worth, and the keeper is spending spawns
+         on it.
+
+    R8h  NO ARM AT LETTER A OR I (A's 3b recommendation). Redaction cannot remove a bare "A" or "I" without eating
+         the articles, so an arm seated at either letter leaks through its own prose. `pane_letter` never frees a
+         letter and `letters.json` holds A–M, so new seats take N onward and this holds by construction. It is
+         checked and recorded at 3b anyway, because "by construction" is how the room gets surprised.
+
+    R8i  AN EMPTY TEXT IS A VOID PAIR, NOT A READING (E's named edge: R8e's two clauses disagree at zero ids).
+         If either side of a pair is empty after the strip, the pair is VOID and reported, the same way a hand-back
+         stripped past 50% is. No cosine is computed from an empty window.
