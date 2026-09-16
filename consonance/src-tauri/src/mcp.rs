@@ -504,6 +504,21 @@ impl ConsonanceMcp {
             SealVerdict::Allow(Some(line)) => self.seal_audit(format!("chair_inject -> {target}: {line}")),
             SealVerdict::Allow(None) => {}
         }
+        // THE NEXT-TRAILER GATE (D069). LAST, after the seal gate: a keyed dispatch fails on its seal before its
+        // formatting, and a trailer refusal only ever fires on a dispatch that would otherwise have been sent. The
+        // refusal hands the message back whole (`trailer::refusal_text`). See `trailer_gate`.
+        let text = match trailer_gate(crate::trailer::Verb::ChairInject, &format!("chair_inject -> {target}"), &text) {
+            TrailerDecision::Deliver { text, audit } => {
+                if let Some(line) = audit {
+                    self.trailer_audit(line);
+                }
+                text
+            }
+            TrailerDecision::Refuse { reply, audit } => {
+                self.trailer_audit(audit);
+                return Ok(CallToolResult::success(vec![Content::text(reply)]));
+            }
+        };
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::Inject { target: target.clone(), text, reply: tx }, rx).await;
         // The RUNG mark: written by the act, so a waiting pane can be told which silence it is in.
@@ -536,6 +551,19 @@ impl ConsonanceMcp {
         });
     }
 
+    /// The NEXT-trailer gate's board line, for a refusal AND for a hand-back delivered with a warning — a warning that
+    /// reaches only the receiver's pane is a warning the room cannot count (D069). Its own pane name, because the
+    /// line may be about any seat's message, not the chair's.
+    fn trailer_audit(&self, text: String) {
+        board_push(&self.board, BoardEntry {
+            pane: "trailer-gate".to_string(),
+            role: "committee".to_string(),
+            text,
+            ts: now_ms(),
+            ts_source: crate::TsSource::Push,
+        });
+    }
+
     #[tool(description = "LIBRARIAN VERB (mount-gated, the librarian seat only): deliver a message into the MAIN ORCHESTRATOR's pane — the one seat this verb can reach. There is no target argument: it addresses Main or nothing. Use it to hand back a finished map or plan instead of raising a hand and waiting for a human to click. Every use and every refusal is audited to the board, and the system marks the message \"[librarian:LIB]\" so the orchestrator is never unsure whether the librarian or the human is speaking. Panes: this is not your tool — use raise_pull.")]
     async fn call_chair(
         &self,
@@ -552,6 +580,20 @@ impl ConsonanceMcp {
         // refusing. Deleting the call rather than leaving it inert is deliberate: a guard that
         // is called and cannot change the answer reads as present from every angle except a
         // careful one.
+        // THE NEXT-TRAILER GATE (D069): refused, because the librarian reads this reply in the same turn and the
+        // refusal carries its message back whole — a re-send, never a loss. See `trailer::policy`.
+        let text = match trailer_gate(crate::trailer::Verb::CallChair, "call_chair", &text) {
+            TrailerDecision::Deliver { text, audit } => {
+                if let Some(line) = audit {
+                    self.trailer_audit(line);
+                }
+                text
+            }
+            TrailerDecision::Refuse { reply, audit } => {
+                self.trailer_audit(audit);
+                return Ok(CallToolResult::success(vec![Content::text(reply)]));
+            }
+        };
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::CallChair { text, reply: tx }, rx).await;
         Ok(CallToolResult::success(vec![Content::text(out)]))
@@ -723,6 +765,24 @@ impl ConsonanceMcp {
             mark_owed(&who, now_ms());
             return Ok(CallToolResult::success(vec![Content::text(self.out_of_turn_handback_message())]));
         }
+        // THE NEXT-TRAILER GATE (D069): WARNED, NEVER REFUSED. A refused call_librarian discards its payload (the
+        // out-of-turn arm above returns canned text), so refusing a hand-back over its trailer would destroy the
+        // hand-back. The pointer is delivered first and unchanged, and the warning goes to the board so it is counted.
+        // The Refuse arm is unreachable under `trailer::policy`; it is written to deliver anyway, so a later policy
+        // change cannot turn this verb into the one that loses work.
+        let who = self.identity.clone().unwrap_or_else(|| "a pane".to_string());
+        let text = match trailer_gate(crate::trailer::Verb::CallLibrarian, &format!("call_librarian from {who}"), &text) {
+            TrailerDecision::Deliver { text, audit } => {
+                if let Some(line) = audit {
+                    self.trailer_audit(line);
+                }
+                text
+            }
+            TrailerDecision::Refuse { audit, .. } => {
+                self.trailer_audit(audit);
+                text
+            }
+        };
         // Delivering clears nothing by hand: the mark is read against the baton, and the baton had
         // to have moved for this line to be reachable at all.
         let (tx, rx) = tokio::sync::oneshot::channel();
@@ -2673,5 +2733,175 @@ mod seal_gate_tests {
         let seal = body.find("seal_gate_at(").expect("the seal gate is not called from chair_inject");
         let send = body.find("self.send_chair(").expect("the delivery");
         assert!(debt < seal && seal < send, "order must be debt gate < seal gate < delivery");
+    }
+}
+
+// ── THE NEXT-TRAILER GATE (P-TRAILER-GATE wiring, D069, pane B) ──────────────────────────────────────────────────
+// The check, the per-verb policy and the texts live in `trailer.rs` and are proven there. This is the ONE decision each
+// verb makes with them, as a pure function, so the three behaviours below are tested by calling it rather than by
+// reading source. The verbs only act on its answer: return the reply, or send the text, and post the audit line.
+
+/// What a verb does with its message after the trailer check.
+#[derive(Debug, PartialEq, Eq)]
+enum TrailerDecision {
+    /// Send `text` — unchanged, or with the warning appended. `audit`, when present, is the board line.
+    Deliver { text: String, audit: Option<String> },
+    /// Send nothing. Return `reply` to the caller (it carries the message back whole) and post `audit`.
+    Refuse { reply: String, audit: String },
+}
+
+/// Check `text`'s trailer and decide, on `trailer::policy(verb)`. A compliant message is delivered unchanged with no
+/// board line. `verb_name` is how the audit line names the call (e.g. `chair_inject -> B`, `call_librarian from A`).
+fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> TrailerDecision {
+    use crate::trailer::{check, delivered_with_warning, policy, refusal_text, Action};
+    let why = match check(text) {
+        Ok(_) => return TrailerDecision::Deliver { text: text.to_string(), audit: None },
+        Err(why) => why,
+    };
+    let reply = refusal_text(verb, why, text);
+    // The refusal's first line is "refused by the NEXT-trailer gate: <what is missing>." — reuse it, so the board and
+    // the seat are told the same thing in the same words.
+    let missing = reply
+        .lines()
+        .next()
+        .unwrap_or("")
+        .trim_start_matches("refused by the NEXT-trailer gate: ")
+        .trim_end_matches('.')
+        .to_string();
+    match policy(verb) {
+        Action::Refuse => TrailerDecision::Refuse { audit: format!("{verb_name} REFUSED BY THE NEXT-TRAILER GATE: {missing}"), reply },
+        Action::WarnAndDeliver => TrailerDecision::Deliver {
+            text: delivered_with_warning(text, why),
+            audit: Some(format!("{verb_name} DELIVERED WITHOUT A NEXT TRAILER: {missing}")),
+        },
+    }
+}
+
+#[cfg(test)]
+mod trailer_gate_tests {
+    use super::*;
+    use crate::trailer::{Verb, RULE_FILE};
+
+    /// This file's source, CRLF-normalised, cut at the method's closing brace (same rule as `tests::body_of`).
+    fn body_of(header: &str) -> String {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split(header).nth(1).unwrap_or_else(|| panic!("{header} moved — re-point this test")).to_string();
+        f.split("\n    }\n").next().unwrap_or(&f).to_string()
+    }
+
+    const WITH: &str = "Hand-back: exo_memory/handback/x.md\n\nNEXT: librarian collate it when all four are in";
+    // A's real ring from chunk 1, verbatim: a pointer and no trailer.
+    const WITHOUT: &str = "[pane:A] P-STICK-APPLIER-ZOMBIE (D066, chunk 1), on D. Pointer: exo_memory/handback/p-stick-zombie-A_2026-09-16.md";
+
+    // ── the three behaviours, by calling the decision ────────────────────────────────────────────────────────────
+
+    #[test]
+    fn chair_inject_without_a_trailer_is_refused_and_the_message_comes_back_whole() {
+        match trailer_gate(Verb::ChairInject, "chair_inject -> B", WITHOUT) {
+            TrailerDecision::Refuse { reply, audit } => {
+                assert!(reply.contains(WITHOUT), "the refused dispatch was not handed back: {reply}");
+                assert!(reply.contains("WHAT A DISPATCH OWES") && reply.contains(RULE_FILE), "{reply}");
+                assert!(audit.contains("chair_inject -> B") && audit.contains("REFUSED"), "{audit}");
+            }
+            other => panic!("a dispatch with no trailer was delivered: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn call_chair_without_a_trailer_is_refused_and_the_message_comes_back_whole() {
+        match trailer_gate(Verb::CallChair, "call_chair", WITHOUT) {
+            TrailerDecision::Refuse { reply, audit } => {
+                assert!(reply.contains(WITHOUT), "the refused ring was not handed back: {reply}");
+                assert!(reply.contains("WHAT A HAND-BACK OWES"), "{reply}");
+                assert!(audit.contains("call_chair") && audit.contains("REFUSED"), "{audit}");
+            }
+            other => panic!("a librarian ring with no trailer was delivered: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn call_librarian_without_a_trailer_is_delivered_pointer_first_with_a_board_warning() {
+        match trailer_gate(Verb::CallLibrarian, "call_librarian from A", WITHOUT) {
+            TrailerDecision::Deliver { text, audit: Some(line) } => {
+                assert!(text.starts_with(WITHOUT), "the pointer must arrive first and unchanged: {text}");
+                assert!(text.contains(RULE_FILE), "the receiver is not told the rule: {text}");
+                assert!(line.contains("call_librarian from A") && line.contains("WITHOUT A NEXT TRAILER"), "{line}");
+            }
+            TrailerDecision::Deliver { audit: None, .. } => {
+                panic!("delivered with no board line — a warning nobody sees is the silent-absence class")
+            }
+            TrailerDecision::Refuse { .. } => panic!("a hand-back was refused over its trailer — that destroys the hand-back"),
+        }
+    }
+
+    #[test]
+    fn every_verb_with_a_trailer_delivers_the_message_unchanged_and_posts_nothing() {
+        for verb in [Verb::ChairInject, Verb::CallChair, Verb::CallLibrarian] {
+            assert_eq!(
+                trailer_gate(verb, "v", WITH),
+                TrailerDecision::Deliver { text: WITH.to_string(), audit: None },
+                "{verb:?} altered or audited a compliant message"
+            );
+        }
+    }
+
+    #[test]
+    fn the_audit_line_names_what_was_missing() {
+        let TrailerDecision::Refuse { audit, .. } = trailer_gate(Verb::ChairInject, "chair_inject -> B", WITHOUT) else {
+            panic!("not refused")
+        };
+        assert!(audit.contains("has no NEXT: line"), "the board line does not say what was missing: {audit}");
+        let TrailerDecision::Deliver { audit: Some(warn), .. } = trailer_gate(Verb::CallLibrarian, "call_librarian", "x\nNEXT: chunk 2 opens") else {
+            panic!("not warned")
+        };
+        assert!(warn.contains("names no station"), "the warning does not say what was missing: {warn}");
+    }
+
+    // ── the wiring, pinned by position and by the arm, on A's precedent ──────────────────────────────────────────
+
+    #[test]
+    fn chair_inject_runs_the_trailer_gate_last_after_the_seal_gate_and_returns_on_refusal() {
+        let b = body_of("async fn chair_inject(");
+        let seal = b.find("match verdict {").expect("the seal gate's verdict");
+        let gate = b.find("trailer_gate(crate::trailer::Verb::ChairInject").expect("chair_inject does not run the trailer gate");
+        let send = b.find("self.send_chair(").expect("the delivery");
+        assert!(seal < gate && gate < send, "order must be seal gate < trailer gate < delivery");
+        let seg = &b[gate..send];
+        let refuse = seg.find("TrailerDecision::Refuse").expect("no refusal arm");
+        assert!(seg[refuse..].contains("return Ok("), "a refused dispatch is not returned before delivery");
+        assert!(seg[refuse..].contains("self.trailer_audit("), "a refused dispatch is not posted to the board");
+    }
+
+    #[test]
+    fn call_chair_runs_the_trailer_gate_before_delivery_and_returns_on_refusal() {
+        let b = body_of("async fn call_chair(");
+        let seat = b.find("auth_librarian(\"call_chair\")").expect("the seat check");
+        let gate = b.find("trailer_gate(crate::trailer::Verb::CallChair").expect("call_chair does not run the trailer gate");
+        let send = b.find("self.send_chair(").expect("the delivery");
+        assert!(seat < gate && gate < send, "order must be seat check < trailer gate < delivery");
+        let seg = &b[gate..send];
+        let refuse = seg.find("TrailerDecision::Refuse").expect("no refusal arm");
+        assert!(seg[refuse..].contains("return Ok("), "a refused ring is not returned before delivery");
+        assert!(seg[refuse..].contains("self.trailer_audit("), "a refused ring is not posted to the board");
+    }
+
+    #[test]
+    fn call_librarian_warns_after_the_out_of_turn_arm_and_can_never_refuse_on_a_trailer() {
+        let b = body_of("async fn call_librarian(");
+        let owed = b.find("mark_owed(&who, now_ms());").expect("the out-of-turn arm");
+        let gate = b.find("trailer_gate(crate::trailer::Verb::CallLibrarian").expect("call_librarian does not run the trailer gate");
+        // `.send_chair(ChairCmd::CallLibrarian`, not `self.send_chair(`: rustfmt breaks this call as `self` / `.send_chair(`
+        // across two lines here, so the one-line form never matches in this body.
+        let send = b.find(".send_chair(ChairCmd::CallLibrarian").expect("the delivery");
+        assert!(owed < gate && gate < send, "order must be out-of-turn arm < trailer gate < delivery");
+        let seg = &b[gate..send];
+        assert!(!seg.contains("return "), "the trailer gate can return from call_librarian — that would destroy a hand-back");
+        // The warning's board line must be in the DELIVER arm. The first version of this pin searched the whole
+        // segment for `self.trailer_audit(`, and the unreachable Refuse arm carries that token too — so deleting the
+        // warning's line left it green (mutant W7 SURVIVED, D069). Pin the arm, not the token.
+        let deliver = seg.find("TrailerDecision::Deliver").expect("no Deliver arm");
+        let refuse = seg.find("TrailerDecision::Refuse").expect("no Refuse arm");
+        assert!(deliver < refuse, "the Deliver arm is expected first");
+        assert!(seg[deliver..refuse].contains("self.trailer_audit("), "a warned hand-back is delivered but not posted to the board");
     }
 }

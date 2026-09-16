@@ -8,9 +8,9 @@
 //! NEXT: <station> <command> when <condition>
 //! ```
 //!
-//! STANDALONE ON PURPOSE. This file has no crate imports, so it is built and tested with
-//! `rustc --edition 2021 --test src/trailer.rs` and wired into `mcp.rs` with one `mod trailer;` later. Built D068 by
-//! pane B while A owned `mcp.rs`.
+//! STANDALONE ON PURPOSE. This file has no crate imports, so it still builds and tests alone with
+//! `rustc --edition 2021 --test src/trailer.rs`. Built D068 by pane B while A owned `mcp.rs`; WIRED D069 —
+//! `mod trailer;` in `main.rs`, and `mcp.rs`'s `trailer_gate` makes the per-verb decision the three verbs act on.
 
 /// Where a refused seat reads the rule. Named in every refusal and warning, so the rule travels with the refusal.
 pub const RULE_FILE: &str = "consonance/src-tauri/brief/BUILDING.md";
@@ -123,15 +123,18 @@ pub fn check(text: &str) -> Result<Trailer<'_>, Missing> {
 
 /// Which action each verb takes on a missing trailer.
 ///
-/// REFUSE the dispatch: the chair is the seat composing it, holds the text, reads the refusal at once, and is already
-/// the most compliant seat measured. DELIVER WITH A WARNING on both return legs: `call_librarian`'s out-of-turn
-/// refusal in `mcp.rs` returns canned text and drops `text` (C's finding), so refusing a ring for its trailer would
-/// lose the POINTER — and the librarian can route a pointer with no trailer, while nobody can route a trailer with no
+/// REFUSE where the sender reads the refusal in the same turn and gets its message back whole: `chair_inject` (the
+/// chair) and `call_chair` (the librarian). DELIVER WITH A WARNING on `call_librarian` only: its out-of-turn refusal in
+/// `mcp.rs` returns canned text and drops `text` (C's finding), so refusing a pane's hand-back for its trailer would
+/// lose the POINTER — the librarian can route a pointer with no trailer, and nobody can route a trailer with no
 /// pointer. Revisit only after a refusal on that edge carries its payload back.
+///
+/// D069: `call_chair` moved from WarnAndDeliver to Refuse at the chair's ruling. D068 grouped it with
+/// `call_librarian` as "a return leg", but the payload argument was only ever true of `call_librarian`.
 pub fn policy(verb: Verb) -> Action {
     match verb {
-        Verb::ChairInject => Action::Refuse,
-        Verb::CallChair | Verb::CallLibrarian => Action::WarnAndDeliver,
+        Verb::ChairInject | Verb::CallChair => Action::Refuse,
+        Verb::CallLibrarian => Action::WarnAndDeliver,
     }
 }
 
@@ -290,12 +293,21 @@ mod tests {
     }
 
     #[test]
-    fn the_return_leg_is_never_refused_for_a_missing_trailer() {
+    fn a_pane_hand_back_is_never_refused_for_a_missing_trailer() {
         // A refused hand-back loses its POINTER, not just its trailer (C, mcp.rs call_librarian's out-of-turn arm
         // returns canned text and drops `text`). The librarian can route a pointer with no trailer; nobody can route
         // a trailer with no pointer.
         assert_eq!(policy(Verb::CallLibrarian), Action::WarnAndDeliver);
-        assert_eq!(policy(Verb::CallChair), Action::WarnAndDeliver);
+    }
+
+    #[test]
+    fn the_librarians_ring_to_the_chair_is_refused() {
+        // CHANGED D069, at the chair's ruling, and the D068 version of this test was wrong for a reason on the record:
+        // it grouped call_chair with call_librarian as "a return leg", but the payload argument never applied to it.
+        // call_chair has no payload-dropping arm (its only other refusal is the seat check), the sender is the
+        // librarian reading its own tool result in the same turn, and `refusal_text` hands the message back whole.
+        // So a refusal here costs one re-send, not the message.
+        assert_eq!(policy(Verb::CallChair), Action::Refuse);
     }
 
     #[test]

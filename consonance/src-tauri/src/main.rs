@@ -18,6 +18,7 @@ use tauri::{AppHandle, Emitter, Manager, State};
 use uuid::Uuid;
 
 mod mcp;
+mod trailer;  // the NEXT-trailer check behind chair_inject / call_chair / call_librarian (B, D068-D069)
 mod gate;
 mod tether;
 mod capture;
