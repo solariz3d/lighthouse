@@ -23,3 +23,14 @@
 ## For the keeper, when he is back at a keyboard
 
 The Windows 11 Pro policy that stops a scheduled restart while he is logged in: `gpedit.msc` → Computer Configuration → Administrative Templates → Windows Components → Windows Update → Manage end user experience → "No auto-restart with logged on users for scheduled automatic updates installations" → Enabled. Active hours on D are 23:00–17:00; the restart fell in the 17:00–23:00 gap.
+
+---
+
+**CHAIR, 23:0x — A's P-LEAVE-3 rows 4 and 5 are NOT on main. They are on `held/p-leave3-2026-09-15` (544ddd1), pushed.**
+The keeper's word at 22:58 was "push and land", for the stated purpose "save all that as work on the repo for laptop
+to pull later at work". The branch serves that purpose; main does not serve it safely tonight, because L's order is
+pull, REBUILD, then close with the stick in — landing would compile UNREAD close-path code into the exe the keeper
+closes with, and the close is how the stick is written. **B reads it on L, then it lands on main.**
+Contents: the OS-shutdown handler (D-6, `ShutdownBlockReasonCreate` + a bounded fast Leave) and the keep-awake power
+request; main.rs +394, sync_launch.rs +21, three features on the already-compiled `windows` crate, no new dependency.
+A rebuilt its first ROW 4 attempt after reading the docs. The librarian has not re-derived it and B has not read it.
