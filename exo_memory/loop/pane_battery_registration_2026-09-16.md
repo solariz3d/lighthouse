@@ -29,7 +29,8 @@ and it is used here only to choose WHICH KINDS of work the battery contains — 
     cd exo_memory/handback
     for L in A B C E; do echo "$L $(ls | grep -Ec -- "-${L}_2026-09-(0[2-9]|1[0-6])")"; done
 
-    A 14 · B 11 · E 9 · C 7        (2026-09-16 03:3x, on L; 164 files in the directory in all)
+    A 14 · B 11 · E 9 · C 7        the CHAIR'S count, 2026-09-16, and it is a 29% SAMPLE — see §10 A7.
+                                   C'S CITABLE CENSUS, by header+map over 143 hand-backs: A 36 · B 35 · E 29 · C 28
 
 The plan's figures (A 11 · B 10 · E 9 · C 7) were taken before tonight's four hand-backs landed. **Both are right at
 their own moment; this one is the one these tasks were chosen against.**
@@ -209,3 +210,47 @@ work the tasks were chosen from.
 
 **Still DRAFT.** A1's replacement subjects, A5's ceilings and A6's second number are design work that has not been
 done. The run remains a separate lap on a fresh shift.
+
+## 10 · CORRECTED BY E AND C — 2026-09-16 04:0x (`handback/p-battery-blind-E_2026-09-16.md`, `handback/p-battery-cost-C_2026-09-16.md`, landed 67da110; re-derived by the librarian at 2f782fc)
+
+    A7  §1's CENSUS WAS A 29% SAMPLE, AND IT WAS THE CHAIR'S NUMBER. C attributed 143 hand-backs by header and map
+        agreeing (136 of 143) and found the letter-suffixed filenames are the SUFFIX ERA ONLY, since 09-14: 42 of
+        143. **The citable census is C's: A 36 · B 35 · E 29 · C 28.** The chair's A 14 · B 11 · E 9 · C 7 counted
+        a 29% tail of the record. It happens not to change which KINDS of work the tasks were chosen from — the
+        same five kinds appear — but the tasks were chosen against a sample, and §1 now says so rather than
+        reading as a census of the record.
+
+    A8  §4's SEAL IS A TRIPLE, AND THE CHAIR'S OWN §4 PROVED IT. E's S1: a seal is (commit, path, sha), never a
+        sha alone. §4 recorded 8bf0b5ee… — the file's content AT 0a54c5a — and the file at HEAD now hashes
+        differently, because d1546db corrected its timestamp line. A bare sha therefore fails to identify the
+        object it seals the moment the file is touched for any reason.
+        RULED: the seal is **(0a54c5a, loop/pane_battery_prediction_2026-09-16.md, 8bf0b5ee…)** — the prediction
+        AS COMMITTED BEFORE ANY DISPATCH — and the current file hashes ff1a17204b83b53544c6acdb14ab669e2c11469818b692c86a845a251a19abda. Both are recorded; the first is the
+        seal, the second is only where to read it today.
+
+    A9  THE BLIND IS PARTIAL, AND E's OWN EXPECTATION WAS WRONG IN THE UNWELCOME DIRECTION. Labels come out;
+        AUTHORSHIP does not — self-citation fires 131 times across 37 of 42 files, and 11 of 26 path fragments
+        resolve to one author with an `ls | grep`. E expected house STYLE to carry the identity; measured, style is
+        at chance and **LENGTH RANK survives** (B > A > C on both l039 and l045 briefs, n = 2). A re-letter to a
+        seeded W/X/Y/Z shuffle is required because the letter A cannot be blinded by `--letters` at all.
+        E's §6 states the consequence before any scorer exists, and it is adopted: if the guess gate fires, there
+        is NO comparative table; the four key-scored numbers survive and T4/T6 go descriptive.
+
+    A10 COST IS FLAT PER PANE, WHICH KILLS THE CHEAP VERSION OF THE QUESTION. C: 27–28 resumes each since 09-02 —
+        every launch wakes every seat, and `-> fresh` rows pay the intake too. A fifth pane costs ~5.75 MB per two
+        weeks WHETHER USED OR NOT, and must return 2.0–2.5 hand-backs a day to break even. So "does a pane pay for
+        itself" is not answered by how much it is used; it is answered by whether it is used at all.
+
+    A11 THE DOSSIER'S FALSIFIER IS CITED AND INERT, AND IT CONFIRMS §0's STAKE RATHER THAN CLEARING IT.
+        41 of 49 packets cite a dossier row — and over 09-03…09-13, **dispatch is statistically indistinguishable
+        from round-robin while being cited** (p = 0.344). The specialisation that does exist (B 6/7 contest work,
+        A 0/12, E 0/9) sits in 09-14…16, exactly when citation collapsed to 1 of 9 (p = 0.0001).
+        **The chair registered in §0 that this battery measures its own dispatch habit. That stake is now
+        confirmed by measurement rather than asserted:** during the period the chair was citing the record, the
+        record did not predict the dispatch.
+        C's primary classifier failed its own positive control and C fell back to a pre-registered secondary
+        BEFORE any p-value existed. Kept as written, because that order is what makes the number worth reading.
+
+**The librarian's own correction, kept here because the figure reached the keeper:** the "~549k tokens per launch"
+told to him at 01:07 double-counted E's ×2 carry. C's bound is ≤ 0.405 tokens per intake byte, so ≤ ~338k per full
+launch.
