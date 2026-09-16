@@ -297,6 +297,11 @@ pub struct ChairInjectArgs {
     target: String,
     /// the prompt to deliver (the system prefixes provenance: "[chair:MAIN] …")
     text: String,
+    /// P-SEAL-GATE: for a task that has an ANSWER KEY, its sealed row as "exo_memory/loop/<row>.md#<task>" —
+    /// checked on origin before anything renders. "none: <reason>" when a dispatch names a sealed task's path but
+    /// is not that task; the reason is posted. Omit for every ordinary dispatch.
+    #[serde(default)]
+    seal: Option<String>,
 }
 
 #[derive(serde::Deserialize, schemars::JsonSchema)]
@@ -460,7 +465,7 @@ impl ConsonanceMcp {
     #[tool(description = "CHAIR VERB (token-gated, Main orchestrator only): deliver a prompt into a COMMITTEE pane. Refuses human-driven panes and the chair's own pane; every use and every refusal is audited to the board. Committee members: this is not your tool — use raise_pull.")]
     async fn chair_inject(
         &self,
-        Parameters(ChairInjectArgs { token, target, text }): Parameters<ChairInjectArgs>,
+        Parameters(ChairInjectArgs { token, target, text, seal }): Parameters<ChairInjectArgs>,
     ) -> Result<CallToolResult, McpError> {
         if !self.auth_chair(&token, "chair_inject") {
             return Ok(CallToolResult::success(vec![Content::text("refused: bad chair token (the attempt was posted to the board)")]));
@@ -480,6 +485,25 @@ impl ConsonanceMcp {
         if let Some(msg) = self.owed_handback_refusal() {
             return Ok(CallToolResult::success(vec![Content::text(msg)]));
         }
+        // THE SEAL GATE (P-SEAL-GATE, D068). After the station and debt gates and narrower than both, on the debt
+        // gate's own precedent: it fires only on a dispatch that declares a key or names a sealed task's path. Off
+        // the async thread, because a declared seal fetches from origin. See `seal_gate`.
+        let (seal_decl, seal_text, seal_repo) = (seal.clone(), text.clone(), crate::repo_root());
+        let verdict = tokio::task::spawn_blocking(move || seal_gate_at(seal_decl.as_deref(), &seal_text, seal_repo.as_deref()))
+            .await
+            .unwrap_or_else(|e| {
+                SealVerdict::Refuse(format!(
+                    "refused: THE SEAL GATE COULD NOT RUN ({e}) — the dispatch was not sent. This is NOT a turn problem. Recovery: re-send; if it repeats, the gate itself is broken."
+                ))
+            });
+        match verdict {
+            SealVerdict::Refuse(msg) => {
+                self.seal_audit(format!("chair_inject -> {target} REFUSED BY THE SEAL GATE: {}", msg.lines().next().unwrap_or("")));
+                return Ok(CallToolResult::success(vec![Content::text(msg)]));
+            }
+            SealVerdict::Allow(Some(line)) => self.seal_audit(format!("chair_inject -> {target}: {line}")),
+            SealVerdict::Allow(None) => {}
+        }
         let (tx, rx) = tokio::sync::oneshot::channel();
         let out = self.send_chair(ChairCmd::Inject { target: target.clone(), text, reply: tx }, rx).await;
         // The RUNG mark: written by the act, so a waiting pane can be told which silence it is in.
@@ -498,6 +522,18 @@ impl ConsonanceMcp {
     fn owed_handback_refusal(&self) -> Option<String> {
         let st = crate::chain_state();
         owed_refusal_text(st.at, &marks(), st.lap.as_deref().unwrap_or("<lap>"))
+    }
+
+    /// The seal gate's board line: refusals AND verified seals, because a trail that carries only refusals cannot
+    /// say which keyed dispatches the gate let through, or on what evidence.
+    fn seal_audit(&self, text: String) {
+        board_push(&self.board, BoardEntry {
+            pane: "chair".to_string(),
+            role: "committee".to_string(),
+            text,
+            ts: now_ms(),
+            ts_source: crate::TsSource::Push,
+        });
     }
 
     #[tool(description = "LIBRARIAN VERB (mount-gated, the librarian seat only): deliver a message into the MAIN ORCHESTRATOR's pane — the one seat this verb can reach. There is no target argument: it addresses Main or nothing. Use it to hand back a finished map or plan instead of raising a hand and waiting for a human to click. Every use and every refusal is audited to the board, and the system marks the message \"[librarian:LIB]\" so the orchestrator is never unsure whether the librarian or the human is speaking. Panes: this is not your tool — use raise_pull.")]
@@ -1579,4 +1615,1063 @@ pub fn start(
         });
     });
     rx.recv().unwrap_or(0)
+}
+
+// ════════════════════════════════════════════════════════════════════════════════════════════════════
+// THE SEAL GATE — P-SEAL-GATE build (lap D068, pane A, on D).
+// Design: handback/p-seal-gate-A_2026-09-16.md (L062). Build, and its corrections to that design:
+// handback/p-seal-gate-build-A_2026-09-16.md.
+//
+// A dispatch for a task that has an ANSWER KEY does not render into a pane until the row a scorer will judge
+// it against is witnessed OFF this machine, and until the key cannot be found by the search the task asks
+// for. Two incidents on 2026-09-16 are why: T3 dispatched with its key committed inside the search space
+// (librarian/2026-09-16.md 04:22); T5 dispatched with its sealed row not on origin (05:10).
+//
+// WHAT IS ENFORCED, AND WHAT IS ONLY A SENTENCE. A DECLARED seal (`seal: "<row>#<task>"`) is checked hard,
+// every check below. An UNDECLARED keyed task is caught only when a sealed row on disk names a path the
+// dispatch points at. A keyed task with no row and no declaration PASSES: nothing in the text of a keyed
+// dispatch marks it — the L062 keyword sniffer, measured on 40 full dispatches, caught 0 of the 3 real
+// keyed tasks and fired on 5 ordinary ones, so it is not built.
+// ════════════════════════════════════════════════════════════════════════════════════════════════════
+
+/// One sealed task: a ```seal block, at column 0, in a row file under `exo_memory/loop/`.
+///
+/// The KEY's distinctive line and its question are NOT fields here. They live in the key file, off the
+/// repo, and the gate reads them from `key-path`. A committed row that carried them would put the answer's
+/// fingerprint inside the very search space the T3-KEY rule forbids — the L062 design made that mistake.
+#[derive(Debug, Clone, PartialEq)]
+struct SealBlock {
+    task: String,
+    key_path: String,
+    /// `git hash-object --no-filters <key-path>`: the key cannot change after sealing without this failing.
+    /// A git-blob id rather than sha256 because git is already this gate's one dependency and the crate has
+    /// no sha256; the digest names its function, per `cards/every-digest-carries-its-function.md`.
+    key_git_blob: String,
+    object_path: String,
+    subjects: String,
+    /// the block's own lines, fences excluded — compared against the committed copy of the row
+    raw: String,
+}
+
+const SEAL_FIELDS: [&str; 5] = ["task", "key-path", "key-git-blob", "object-path", "subjects"];
+/// Shorter than this, a literal matches ordinary prose and the leak search means nothing.
+const SEAL_MIN_LITERAL: usize = 12;
+/// A fetch on a bad network can hang; the chair is told, not held.
+const SEAL_FETCH_LIMIT: std::time::Duration = std::time::Duration::from_secs(30);
+const SEAL_GIT_LIMIT: std::time::Duration = std::time::Duration::from_secs(20);
+/// Files larger than this are not read by the leak search, and the refusal says a search is partial if so.
+const SEAL_MAX_SCAN_BYTES: u64 = 8 * 1024 * 1024;
+
+#[derive(Debug, PartialEq)]
+enum SealVerdict {
+    /// deliver; the line, if any, is posted to the board beside the delivery
+    Allow(Option<String>),
+    /// do not deliver; the whole text is returned to the chair and its first line posted
+    Refuse(String),
+}
+
+#[derive(Debug, Clone)]
+struct GitOut {
+    code: i32,
+    stdout: String,
+}
+
+/// Every ```seal block in a row file, validated before use: a missing, empty, duplicated or unknown field
+/// refuses the whole file by field and line. A malformed row is a silent re-interpretation, not a typo.
+fn parse_seal_blocks(md: &str) -> Result<Vec<SealBlock>, String> {
+    let lines: Vec<&str> = md.split('\n').map(|l| l.trim_end_matches('\r')).collect();
+    let mut out: Vec<SealBlock> = Vec::new();
+    let mut i = 0;
+    while i < lines.len() {
+        if lines[i] != "```seal" {
+            i += 1;
+            continue;
+        }
+        let open = i + 1;
+        let mut fields: Vec<(String, String)> = Vec::new();
+        let mut raw: Vec<&str> = Vec::new();
+        let mut closed = false;
+        i += 1;
+        while i < lines.len() {
+            let l = lines[i];
+            if l == "```" {
+                closed = true;
+                break;
+            }
+            raw.push(l);
+            if !l.trim().is_empty() {
+                let (k, v) = l
+                    .split_once(':')
+                    .ok_or_else(|| format!("seal block at line {open}: line {} is not `field: value`", i + 1))?;
+                let k = k.trim().to_string();
+                if !SEAL_FIELDS.contains(&k.as_str()) {
+                    return Err(format!("seal block at line {open}: unknown field `{k}` at line {}", i + 1));
+                }
+                if fields.iter().any(|(f, _)| *f == k) {
+                    return Err(format!("seal block at line {open}: field `{k}` appears twice"));
+                }
+                fields.push((k, v.trim().to_string()));
+            }
+            i += 1;
+        }
+        if !closed {
+            return Err(format!("seal block at line {open} is never closed with ```"));
+        }
+        let get = |name: &str| -> Result<String, String> {
+            match fields.iter().find(|(f, _)| f == name) {
+                Some((_, v)) if !v.is_empty() => Ok(v.clone()),
+                Some(_) => Err(format!("seal block at line {open}: field `{name}` is empty")),
+                None => Err(format!("seal block at line {open}: field `{name}` is missing")),
+            }
+        };
+        let task = get("task")?;
+        let key_path = get("key-path")?;
+        let blob = get("key-git-blob")?;
+        let object_path = get("object-path")?;
+        let subjects = get("subjects")?;
+        if blob.len() != 40 || !blob.chars().all(|c| c.is_ascii_hexdigit()) {
+            return Err(format!(
+                "seal block at line {open}: `key-git-blob` must be the 40-hex id that `git hash-object --no-filters <key-path>` prints"
+            ));
+        }
+        if out.iter().any(|b| b.task == task) {
+            return Err(format!("seal block at line {open}: task `{task}` is sealed twice in this file"));
+        }
+        out.push(SealBlock {
+            task,
+            key_path,
+            key_git_blob: blob.to_ascii_lowercase(),
+            object_path,
+            subjects,
+            raw: raw.join("\n"),
+        });
+        i += 1;
+    }
+    Ok(out)
+}
+
+/// A path as the gate compares it: forward slashes, lower case, no doubled or trailing separator. Applied
+/// identically to paths and to the dispatch text, so a Windows path written either way matches itself.
+fn seal_norm(p: &str) -> String {
+    let mut s = p.trim().replace('\\', "/").to_lowercase();
+    while s.contains("//") {
+        s = s.replace("//", "/");
+    }
+    s.trim_end_matches('/').to_string()
+}
+
+fn seal_dir(p: &str) -> String {
+    let n = seal_norm(p);
+    match n.rfind('/') {
+        Some(i) => n[..i].to_string(),
+        None => String::new(),
+    }
+}
+
+fn seal_base(p: &str) -> String {
+    seal_norm(p).rsplit('/').next().unwrap_or("").to_string()
+}
+
+/// The refusal. Every one names the row and the recovery, says which gate it is and that it is not the
+/// baton's, and never carries the key's distinctive line, its question or any matched text — a refusal is
+/// posted to the board, and a line quoting the key to explain that the key leaked IS the leak.
+fn seal_refusal(head: &str, row: &str, detail: &str, recovery: &str) -> String {
+    format!(
+        "refused: {head} — the dispatch was not sent (posted to the board).\n  row     {row}\n  detail  {detail}\n{recovery}\n\
+         This is NOT a turn problem: nothing here moves the baton, and nothing here tells you to. If the station \
+         gate or the debt gate refuses your re-send, that is a different gate with its own recovery. Never printed \
+         here: the key's distinctive line, its question, or any matched text."
+    )
+}
+
+fn seal_recovery_push(row: &str) -> String {
+    format!(
+        "Recovery, in this order:\n  1  git commit -- {row}      (that path ONLY — a bare commit takes the shared index)\n  \
+         2  git push                  (unattended only if that commit's diff is exactly this one row file: \
+         brief/COMMITTEE.md, the seal-row exception)\n  3  re-send this dispatch unchanged, with the same `seal`"
+    )
+}
+
+fn seal_recovery_fix_row(row: &str) -> String {
+    format!(
+        "Recovery: correct the ```seal block in {row}, then: git commit -- {row}, git push (the seal-row exception), and \
+         re-send with the same `seal`."
+    )
+}
+
+const SEAL_RECOVERY_LEAK: &str = "Recovery: move the key's text out of the search space and re-send. If the hits are in files \
+     you cannot move — a committed plan, a map line, another seat's hand-back — THE QUESTION IS SPENT and no re-send fixes \
+     it; T3 is the worked case (librarian/2026-09-16.md 04:22).";
+
+/// The gate. `seal` is the chair's declaration; `git` runs one git command in the checkout. Pure apart from
+/// reading the row, the key and the checkout's files: the tests drive it over real temporary repositories.
+fn seal_gate(
+    seal: Option<&str>,
+    text: &str,
+    repo: &std::path::Path,
+    git: &mut dyn FnMut(&[&str]) -> Result<GitOut, String>,
+) -> SealVerdict {
+    match seal.map(str::trim) {
+        None | Some("") => seal_undeclared(text, repo),
+        Some(s) if s.eq_ignore_ascii_case("none") || s.to_ascii_lowercase().starts_with("none:") => {
+            let reason = s.splitn(2, ':').nth(1).map(str::trim).unwrap_or("");
+            if reason.is_empty() {
+                SealVerdict::Refuse(seal_refusal(
+                    "`seal: \"none\"` CARRIES NO REASON",
+                    "(none declared)",
+                    "an override with no reason is a silence on the board, and the override exists only to be read",
+                    "Recovery: re-send with seal: \"none: <why this dispatch is not a keyed task>\".",
+                ))
+            } else {
+                SealVerdict::Allow(Some(format!("SEAL NONE declared by the chair — reason: {reason}")))
+            }
+        }
+        Some(s) => seal_declared(s, text, repo, git),
+    }
+}
+
+/// No declaration. Reads the row files on disk — no git, so an ordinary dispatch costs no subprocess — and
+/// refuses only when a sealed row names a path this dispatch points at. Fails OPEN when the rows cannot be
+/// read: this half is an aid that catches a forgotten declaration, and an unreadable folder must not stop
+/// every ordinary dispatch the chair sends.
+fn seal_undeclared(text: &str, repo: &std::path::Path) -> SealVerdict {
+    let hay = seal_norm(text);
+    let dir = repo.join("exo_memory").join("loop");
+    let Ok(rd) = std::fs::read_dir(&dir) else { return SealVerdict::Allow(None) };
+    let mut rows: Vec<std::path::PathBuf> = rd
+        .filter_map(|e| e.ok())
+        .map(|e| e.path())
+        .filter(|p| p.extension().map_or(false, |x| x == "md"))
+        .collect();
+    rows.sort();
+    for p in rows {
+        let Ok(md) = std::fs::read_to_string(&p) else { continue };
+        if !md.contains("```seal") {
+            continue;
+        }
+        let Ok(blocks) = parse_seal_blocks(&md) else { continue };
+        let rel = format!("exo_memory/loop/{}", p.file_name().map(|f| f.to_string_lossy().into_owned()).unwrap_or_default());
+        for b in blocks {
+            for (kind, path) in [("object", &b.object_path), ("key", &b.key_path)] {
+                let needle = seal_norm(path);
+                if needle.len() >= SEAL_MIN_LITERAL && hay.contains(&needle) {
+                    return SealVerdict::Refuse(seal_refusal(
+                        "THIS DISPATCH POINTS AT A SEALED TASK AND DECLARES NO SEAL",
+                        &rel,
+                        &format!("the text names the {kind} path of sealed task `{}`", b.task),
+                        &format!(
+                            "Recovery: re-send with seal: \"{rel}#{}\" so the seal is checked, or with seal: \"none: <reason>\" — \
+                             the reason is posted to the board.",
+                            b.task
+                        ),
+                    ));
+                }
+            }
+        }
+    }
+    SealVerdict::Allow(None)
+}
+
+fn seal_declared(
+    decl: &str,
+    text: &str,
+    repo: &std::path::Path,
+    git: &mut dyn FnMut(&[&str]) -> Result<GitOut, String>,
+) -> SealVerdict {
+    use SealVerdict::Refuse;
+    let (rel_raw, want_task) = match decl.split_once('#') {
+        Some((a, b)) => (a.trim(), Some(b.trim())),
+        None => (decl.trim(), None),
+    };
+    let rel = rel_raw.replace('\\', "/");
+
+    // G1 · the row is a row file, it is on disk, it parses, and it names one task.
+    if !rel.starts_with("exo_memory/loop/") || !rel.ends_with(".md") || rel.split('/').any(|c| c == ".." || c.is_empty()) {
+        return Refuse(seal_refusal(
+            "THE SEAL DOES NOT NAME A ROW FILE",
+            rel_raw,
+            "`seal` is a repo-relative path under exo_memory/loop/ ending .md, optionally #<task>",
+            "Recovery: re-send with seal: \"exo_memory/loop/<row>.md#<task>\".",
+        ));
+    }
+    let md = match std::fs::read_to_string(repo.join(&rel)) {
+        Ok(s) => s,
+        Err(e) => {
+            return Refuse(seal_refusal("THE SEALED ROW IS NOT ON DISK", &rel, &format!("it could not be read ({e})"), &seal_recovery_fix_row(&rel)))
+        }
+    };
+    let blocks = match parse_seal_blocks(&md) {
+        Ok(b) => b,
+        Err(e) => return Refuse(seal_refusal("THE SEALED ROW DOES NOT PARSE", &rel, &e, &seal_recovery_fix_row(&rel))),
+    };
+    let tasks: Vec<&str> = blocks.iter().map(|b| b.task.as_str()).collect();
+    let block = match want_task {
+        _ if blocks.is_empty() => {
+            return Refuse(seal_refusal("THE ROW HOLDS NO ```seal BLOCK", &rel, "no block at column 0", &seal_recovery_fix_row(&rel)))
+        }
+        Some(t) => match blocks.iter().find(|b| b.task == t) {
+            Some(b) => b,
+            None => {
+                return Refuse(seal_refusal(
+                    "THE ROW DOES NOT SEAL THAT TASK",
+                    &rel,
+                    &format!("`#{t}` was declared; the row seals {tasks:?}"),
+                    &seal_recovery_fix_row(&rel),
+                ))
+            }
+        },
+        None if blocks.len() == 1 => &blocks[0],
+        None => {
+            return Refuse(seal_refusal(
+                "THE ROW SEALS SEVERAL TASKS AND THE SEAL NAMES NONE",
+                &rel,
+                &format!("the row seals {tasks:?}"),
+                &format!("Recovery: re-send with seal: \"{rel}#<task>\"."),
+            ))
+        }
+    };
+    let row_label = format!("{rel}#{}", block.task);
+
+    // G2 · the row is committed, and committed AS IT STANDS: the block on disk is the block in that commit.
+    let commit = match git(&["log", "-1", "--format=%H", "--", &rel]) {
+        Ok(o) if o.code == 0 && o.stdout.trim().len() == 40 => o.stdout.trim().to_string(),
+        Ok(_) => {
+            return Refuse(seal_refusal("THE SEALED ROW IS NOT COMMITTED", &row_label, "no commit touches this path", &seal_recovery_push(&rel)))
+        }
+        Err(e) => return Refuse(seal_refusal("GIT COULD NOT BE ASKED ABOUT THE ROW", &row_label, &e, &seal_recovery_push(&rel))),
+    };
+    let committed = match git(&["show", &format!("{commit}:{rel}")]) {
+        Ok(o) if o.code == 0 => o.stdout,
+        Ok(_) | Err(_) => {
+            return Refuse(seal_refusal("THE SEALED ROW IS NOT IN ITS OWN COMMIT", &row_label, &format!("git show {}:{rel} failed", &commit[..7]), &seal_recovery_push(&rel)))
+        }
+    };
+    let same = parse_seal_blocks(&committed)
+        .ok()
+        .and_then(|bs| bs.into_iter().find(|b| b.task == block.task))
+        .map_or(false, |b| b.raw == block.raw);
+    if !same {
+        return Refuse(seal_refusal(
+            "THE SEAL WAS EDITED AFTER IT WAS COMMITTED",
+            &row_label,
+            &format!("the block on disk differs from the block at {}", &commit[..7]),
+            &seal_recovery_push(&rel),
+        ));
+    }
+
+    // G3 · ON ORIGIN, AT THE INSTANT OF THE CALL. Fetch first: a remote-tracking ref is a local cache, and a
+    // commit origin no longer has still "contains" until a fetch says otherwise. Then ancestry, never a clock.
+    let upstream = match git(&["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{upstream}"]) {
+        Ok(o) if o.code == 0 && o.stdout.trim().contains('/') => o.stdout.trim().to_string(),
+        _ => {
+            return Refuse(seal_refusal(
+                "THIS CHECKOUT HAS NO UPSTREAM",
+                &row_label,
+                "`@{upstream}` does not resolve, so there is no origin to certify the seal against",
+                "Recovery: run the dispatch from a checkout on a branch that tracks origin.",
+            ))
+        }
+    };
+    let remote = upstream.split('/').next().unwrap_or("origin").to_string();
+    match git(&["fetch", "--quiet", &remote]) {
+        Ok(o) if o.code == 0 => {}
+        Ok(o) => {
+            return Refuse(seal_refusal(
+                "COULD NOT REACH ORIGIN",
+                &row_label,
+                &format!("git fetch {remote} exited {} — a cached remote ref cannot certify a seal", o.code),
+                "Recovery: re-send once origin is reachable. The seal is not checked against a stale ref, by design.",
+            ))
+        }
+        Err(e) => {
+            return Refuse(seal_refusal(
+                "COULD NOT REACH ORIGIN",
+                &row_label,
+                &format!("{e} — a cached remote ref cannot certify a seal"),
+                "Recovery: re-send once origin is reachable. The seal is not checked against a stale ref, by design.",
+            ))
+        }
+    }
+    match git(&["merge-base", "--is-ancestor", &commit, &upstream]) {
+        Ok(o) if o.code == 0 => {}
+        Ok(o) if o.code == 1 => {
+            return Refuse(seal_refusal(
+                "THE SEAL IS NOT ON ORIGIN",
+                &row_label,
+                &format!("{} is not an ancestor of {upstream} (checked after git fetch)", &commit[..7]),
+                &seal_recovery_push(&rel),
+            ))
+        }
+        other => {
+            return Refuse(seal_refusal(
+                "GIT COULD NOT SAY WHETHER THE SEAL IS ON ORIGIN",
+                &row_label,
+                &match other {
+                    Ok(o) => format!("git merge-base --is-ancestor exited {}", o.code),
+                    Err(e) => e,
+                },
+                &seal_recovery_push(&rel),
+            ))
+        }
+    }
+
+    // G4 · the key is on this machine, OUTSIDE the checkout, and unchanged since it was sealed.
+    let key = std::path::Path::new(&block.key_path);
+    if !key.is_file() {
+        return Refuse(seal_refusal(
+            "THE KEY IS NOT ON THIS MACHINE",
+            &row_label,
+            &format!("no file at key-path {}", block.key_path),
+            "Recovery: dispatch from the machine that holds the key, or re-seal it here (a new key-git-blob, the row committed alone, pushed).",
+        ));
+    }
+    let repo_n = seal_norm(&repo.to_string_lossy());
+    let key_n = seal_norm(&block.key_path);
+    if key_n == repo_n || key_n.starts_with(&format!("{repo_n}/")) {
+        return Refuse(seal_refusal(
+            "THE KEY IS INSIDE THE CHECKOUT",
+            &row_label,
+            &format!("key-path {} is under the repository the subjects search", block.key_path),
+            SEAL_RECOVERY_LEAK,
+        ));
+    }
+    match git(&["hash-object", "--no-filters", &block.key_path]) {
+        Ok(o) if o.code == 0 && o.stdout.trim().eq_ignore_ascii_case(&block.key_git_blob) => {}
+        Ok(o) if o.code == 0 => {
+            return Refuse(seal_refusal(
+                "THE KEY CHANGED SINCE IT WAS SEALED",
+                &row_label,
+                &format!("git-blob is {} on disk, {} in the row", o.stdout.trim().get(..7).unwrap_or("?"), &block.key_git_blob[..7]),
+                "Recovery: if the change is legitimate, re-seal (a new key-git-blob, the row committed alone, pushed) BEFORE any subject has seen the task.",
+            ))
+        }
+        _ => {
+            return Refuse(seal_refusal("GIT COULD NOT HASH THE KEY", &row_label, &format!("git hash-object {}", block.key_path), "Recovery: check the key file is readable, then re-send."))
+        }
+    }
+
+    // G5 · the key is not beside the object, and the dispatch does not name the key.
+    let (key_dir, obj_dir) = (seal_dir(&block.key_path), seal_dir(&block.object_path));
+    if key_dir == obj_dir || obj_dir.starts_with(&format!("{key_dir}/")) || key_dir.starts_with(&format!("{obj_dir}/")) {
+        return Refuse(seal_refusal(
+            "THE KEY SITS WHERE THE SUBJECTS ARE POINTED",
+            &row_label,
+            "key-path and object-path share a directory, so listing the object's folder shows the key (T5, librarian 05:10)",
+            "Recovery: move the key to a directory the subjects are never pointed at, re-seal, and re-send.",
+        ));
+    }
+    if seal_norm(text).contains(&key_n) {
+        return Refuse(seal_refusal("THE DISPATCH NAMES THE KEY", &row_label, "the dispatch text contains key-path", "Recovery: take the key's path out of the dispatch and re-send."));
+    }
+
+    // G6 · the object is not one diff from a committed original.
+    let tracked = match git(&["ls-files", "-z"]) {
+        Ok(o) if o.code == 0 => o.stdout,
+        _ => return Refuse(seal_refusal("GIT COULD NOT LIST THE CHECKOUT", &row_label, "git ls-files failed", "Recovery: re-send; if it repeats, the checkout is broken.")),
+    };
+    let base = seal_base(&block.object_path);
+    let twins: Vec<&str> = tracked.split('\0').filter(|p| !p.is_empty() && seal_base(p) == base).take(3).collect();
+    if !twins.is_empty() {
+        return Refuse(seal_refusal(
+            "THE OBJECT HAS A COMMITTED TWIN",
+            &row_label,
+            &format!("{base} is tracked at {twins:?} — a copy with planted defects is one diff from its original (T5)"),
+            "Recovery: build the object from something that is not committed, or rename the copy and accept that a renamed copy is still one diff away — that part is a sentence, not a gate.",
+        ));
+    }
+
+    // G7 · THE T3-KEY RULE: the key's distinctive lines and its question are absent from the search space —
+    // tracked files and untracked files git does not ignore, which is what a subject's search reads.
+    let key_text = match std::fs::read_to_string(key) {
+        Ok(s) => s,
+        Err(e) => return Refuse(seal_refusal("THE KEY COULD NOT BE READ", &row_label, &e.to_string(), "Recovery: check the key file, then re-send.")),
+    };
+    let mut literals: Vec<(&str, String)> = Vec::new();
+    for l in key_text.lines() {
+        let t = l.trim_start();
+        for kind in ["DISTINCTIVE:", "QUESTION:"] {
+            if let Some(v) = t.strip_prefix(kind) {
+                literals.push((kind.trim_end_matches(':'), v.trim().to_string()));
+            }
+        }
+    }
+    for kind in ["DISTINCTIVE", "QUESTION"] {
+        let n = literals.iter().filter(|(k, v)| *k == kind && v.chars().count() >= SEAL_MIN_LITERAL).count();
+        if n == 0 {
+            return Refuse(seal_refusal(
+                &format!("THE KEY CARRIES NO {kind} LINE"),
+                &row_label,
+                &format!("the leak search needs at least one `{kind}: <literal>` line of {SEAL_MIN_LITERAL}+ characters in the key file"),
+                "Recovery: add the line to the key, re-seal (the git-blob changes), and re-send.",
+            ));
+        }
+    }
+    let untracked = match git(&["ls-files", "-z", "--others", "--exclude-standard"]) {
+        Ok(o) if o.code == 0 => o.stdout,
+        _ => return Refuse(seal_refusal("GIT COULD NOT LIST UNTRACKED FILES", &row_label, "git ls-files --others failed", "Recovery: re-send; if it repeats, the checkout is broken.")),
+    };
+    let mut hits: Vec<String> = Vec::new();
+    let mut skipped = 0usize;
+    for rel_path in tracked.split('\0').chain(untracked.split('\0')).filter(|p| !p.is_empty()) {
+        let full = repo.join(rel_path);
+        match std::fs::metadata(&full) {
+            Ok(m) if m.len() <= SEAL_MAX_SCAN_BYTES => {}
+            Ok(_) => {
+                skipped += 1;
+                continue;
+            }
+            Err(_) => continue,
+        }
+        let Ok(bytes) = std::fs::read(&full) else { continue };
+        let body = String::from_utf8_lossy(&bytes);
+        for (n, line) in body.lines().enumerate() {
+            for (kind, lit) in &literals {
+                if lit.chars().count() >= SEAL_MIN_LITERAL && line.contains(lit.as_str()) {
+                    hits.push(format!("{rel_path}:{} ({})", n + 1, kind.to_lowercase()));
+                }
+            }
+        }
+    }
+    if !hits.is_empty() {
+        hits.sort();
+        hits.dedup();
+        let shown: Vec<&String> = hits.iter().take(10).collect();
+        return Refuse(seal_refusal(
+            "THE KEY IS READABLE INSIDE THE SEARCH SPACE",
+            &row_label,
+            &format!("{} hit(s): {shown:?}{}", hits.len(), if hits.len() > 10 { " …" } else { "" }),
+            SEAL_RECOVERY_LEAK,
+        ));
+    }
+
+    let touched = git(&["show", "--name-only", "--format=", &commit])
+        .ok()
+        .filter(|o| o.code == 0)
+        .map(|o| o.stdout.lines().filter(|l| !l.trim().is_empty()).count());
+    SealVerdict::Allow(Some(format!(
+        "SEAL VERIFIED — {row_label}, sealed at {} ({}), key git-blob {}, on {upstream} after fetch; subjects {}{}",
+        &commit[..7],
+        match touched {
+            Some(1) => "that commit touched exactly this one file".to_string(),
+            Some(n) => format!("that commit touched {n} files — NOT the seal-row push exception if it was pushed unattended"),
+            None => "its file count could not be read".to_string(),
+        },
+        &block.key_git_blob[..7],
+        block.subjects,
+        if skipped > 0 { format!("; {skipped} file(s) over 8 MB were not searched") } else { String::new() },
+    )))
+}
+
+/// One bounded subprocess. Stdout is drained on its own thread: a child that fills the pipe while we only
+/// poll for its exit would block forever and read as a hang.
+fn run_bounded(program: &str, args: &[&str], cwd: Option<&std::path::Path>, limit: std::time::Duration) -> Result<GitOut, String> {
+    use std::io::Read;
+    use std::process::{Command, Stdio};
+    let mut cmd = Command::new(program);
+    cmd.args(args).stdin(Stdio::null()).stdout(Stdio::piped()).stderr(Stdio::null());
+    if let Some(d) = cwd {
+        cmd.current_dir(d);
+    }
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        cmd.creation_flags(crate::NO_WINDOW);
+    }
+    let mut child = cmd.spawn().map_err(|e| format!("{program} could not be started ({e})"))?;
+    let mut pipe = child.stdout.take();
+    let reader = std::thread::spawn(move || {
+        let mut buf = Vec::new();
+        if let Some(p) = pipe.as_mut() {
+            let _ = p.read_to_end(&mut buf);
+        }
+        buf
+    });
+    let deadline = std::time::Instant::now() + limit;
+    let status = loop {
+        match child.try_wait() {
+            Ok(Some(s)) => break s,
+            Ok(None) if std::time::Instant::now() < deadline => std::thread::sleep(std::time::Duration::from_millis(25)),
+            Ok(None) => {
+                let _ = child.kill();
+                let _ = child.wait();
+                return Err(format!("{program} {} did not finish within {} s", args.first().copied().unwrap_or(""), limit.as_secs()));
+            }
+            Err(e) => return Err(format!("{program} could not be waited on ({e})")),
+        }
+    };
+    let out = reader.join().unwrap_or_default();
+    Ok(GitOut { code: status.code().unwrap_or(-1), stdout: String::from_utf8_lossy(&out).into_owned() })
+}
+
+/// The real git runner for one checkout: `git -C <repo> …`, the fetch bounded longer than the rest.
+fn run_git_for_seal(repo: &std::path::Path, args: &[&str]) -> Result<GitOut, String> {
+    let limit = if args.first() == Some(&"fetch") { SEAL_FETCH_LIMIT } else { SEAL_GIT_LIMIT };
+    let repo_s = repo.to_string_lossy().into_owned();
+    let mut full: Vec<&str> = vec!["-C", repo_s.as_str()];
+    full.extend_from_slice(args);
+    run_bounded("git", &full, None, limit)
+}
+
+/// The gate as `chair_inject` calls it. No checkout: a declared seal cannot be checked and is refused; an
+/// undeclared dispatch has nothing to be looked up against and goes.
+fn seal_gate_at(seal: Option<&str>, text: &str, repo: Option<&std::path::Path>) -> SealVerdict {
+    match repo {
+        Some(r) => {
+            let root = r.to_path_buf();
+            let mut git = |a: &[&str]| run_git_for_seal(&root, a);
+            seal_gate(seal, text, r, &mut git)
+        }
+        // Undeclared with no checkout: nothing to look up against. Never a relative scan of whatever the app's
+        // working directory happens to be.
+        None if seal.map_or(true, |s| s.trim().is_empty()) => SealVerdict::Allow(None),
+        // "none: <reason>" is decided without the checkout; seal_gate's none arm never reads `repo`.
+        None if seal.map_or(false, |s| s.trim().to_ascii_lowercase().starts_with("none")) => {
+            seal_gate(seal, text, std::path::Path::new(""), &mut |_| Err("no checkout".to_string()))
+        }
+        None => SealVerdict::Refuse(seal_refusal(
+            "NO CHECKOUT TO CHECK THE SEAL IN",
+            seal.unwrap_or(""),
+            "repo_root() does not resolve on this machine",
+            "Recovery: dispatch from a machine whose ~/.consonance.json room_path points at the checkout.",
+        )),
+    }
+}
+
+/// THE SEAL GATE'S FIXTURES. Every case builds a real repository in the temp dir with a real bare `origin`,
+/// commits and pushes (or does not), and runs the gate with the real git runner — nothing in the checkout
+/// is read or written. Needs `git` on PATH.
+#[cfg(test)]
+mod seal_gate_tests {
+    use super::*;
+    use std::path::{Path, PathBuf};
+    use std::process::Command;
+
+    const DISTINCTIVE: &str = "the planted inversion sits at claim fourteen of eighteen";
+    const QUESTION: &str = "which of these eighteen numbered claims are false";
+
+    fn git(dir: &Path, args: &[&str]) -> String {
+        let o = Command::new("git").arg("-C").arg(dir).args(args).output().expect("git on PATH");
+        assert!(o.status.success(), "fixture git {args:?} failed: {}", String::from_utf8_lossy(&o.stderr));
+        String::from_utf8_lossy(&o.stdout).trim().to_string()
+    }
+
+    struct Fx {
+        base: PathBuf,
+        origin: PathBuf,
+        work: PathBuf,
+        keys: PathBuf,
+        objs: PathBuf,
+    }
+
+    impl Fx {
+        fn new(name: &str) -> Fx {
+            let base = std::env::temp_dir().join(format!("seal-gate-{name}-{}-{}", std::process::id(), now_ms()));
+            let (origin, work, keys, objs) = (base.join("origin.git"), base.join("work"), base.join("keys"), base.join("objs"));
+            for d in [&origin, &work, &keys, &objs] {
+                std::fs::create_dir_all(d).unwrap();
+            }
+            git(&origin, &["init", "--quiet", "--bare", "-b", "main"]);
+            git(&work, &["init", "--quiet", "-b", "main"]);
+            for (k, v) in [("user.email", "fixture@seal.gate"), ("user.name", "fixture"), ("core.autocrlf", "false")] {
+                git(&work, &["config", k, v]);
+            }
+            git(&work, &["remote", "add", "origin", &origin.to_string_lossy()]);
+            std::fs::create_dir_all(work.join("exo_memory").join("loop")).unwrap();
+            std::fs::write(work.join("README.md"), "fixture repository\n").unwrap();
+            git(&work, &["add", "README.md"]);
+            git(&work, &["commit", "--quiet", "-m", "seed"]);
+            git(&work, &["push", "--quiet", "-u", "origin", "main"]);
+            Fx { base, origin, work, keys, objs }
+        }
+        fn key(&self, body: &str) -> (PathBuf, String) {
+            let p = self.keys.join("T9_key.md");
+            std::fs::write(&p, body).unwrap();
+            let blob = git(&self.work, &["hash-object", "--no-filters", &p.to_string_lossy()]);
+            (p, blob)
+        }
+        fn object(&self, dir: &Path, name: &str) -> PathBuf {
+            let p = dir.join(name);
+            std::fs::write(&p, "the object the subjects are pointed at\n").unwrap();
+            p
+        }
+        fn write_row(&self, body: &str) -> String {
+            let rel = "exo_memory/loop/t9_sealed_row.md";
+            std::fs::write(self.work.join(rel), format!("# T9, the sealed row\n\n{body}")).unwrap();
+            rel.to_string()
+        }
+        fn commit(&self, rel: &str) -> String {
+            git(&self.work, &["add", rel]);
+            git(&self.work, &["commit", "--quiet", "-m", "seal", "--", rel]);
+            git(&self.work, &["rev-parse", "HEAD"])
+        }
+        fn push(&self) {
+            git(&self.work, &["push", "--quiet", "origin", "main"]);
+        }
+        fn gate(&self, seal: Option<&str>, text: &str) -> SealVerdict {
+            let work = self.work.clone();
+            let mut run = |a: &[&str]| run_git_for_seal(&work, a);
+            seal_gate(seal, text, &self.work, &mut run)
+        }
+    }
+
+    impl Drop for Fx {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.base);
+        }
+    }
+
+    fn block(task: &str, key: &Path, blob: &str, obj: &Path) -> String {
+        format!(
+            "```seal\ntask:         {task}\nkey-path:     {}\nkey-git-blob: {blob}\nobject-path:  {}\nsubjects:     A, C, E\n```\n",
+            key.display(),
+            obj.display()
+        )
+    }
+
+    fn key_body() -> String {
+        format!("# T9 key\nDISTINCTIVE: {DISTINCTIVE}\nQUESTION: {QUESTION}\n1. claim fourteen is inverted\n")
+    }
+
+    /// A fully sealed task: key off the repo, object in its own directory, row committed and pushed.
+    fn sealed(name: &str) -> (Fx, String, PathBuf, PathBuf) {
+        let fx = Fx::new(name);
+        let (key, blob) = fx.key(&key_body());
+        let obj = fx.object(&fx.objs, "T9_text.md");
+        let rel = fx.write_row(&block("T9", &key, &blob, &obj));
+        fx.commit(&rel);
+        fx.push();
+        (fx, rel, key, obj)
+    }
+
+    const DISPATCH: &str = "[chair] a draft note sits in a scratch directory; say which claims are wrong.";
+
+    /// Every refusal, checked for the two properties that hold for ALL of them: it never carries the key's
+    /// text (G9 — the board is readable by every pane), and it never sends the chair to the baton, which is
+    /// the station gate's recovery and the collision that deadlocked the loop for twelve minutes.
+    fn refused(v: SealVerdict, head: &str) -> String {
+        let SealVerdict::Refuse(msg) = v else { panic!("expected a refusal containing {head:?}, got {v:?}") };
+        assert!(msg.contains(head), "refusal should say {head:?}:\n{msg}");
+        assert!(!msg.contains(DISTINCTIVE) && !msg.contains(QUESTION), "a refusal printed the key's text:\n{msg}");
+        assert!(!msg.contains("lap-row.js"), "a seal refusal must not name the baton's recovery:\n{msg}");
+        assert!(msg.contains("NOT a turn problem"), "every seal refusal says which gate it is not:\n{msg}");
+        assert!(msg.contains("Recovery"), "every refusal names its recovery:\n{msg}");
+        msg
+    }
+
+    fn allowed(v: SealVerdict) -> Option<String> {
+        match v {
+            SealVerdict::Allow(line) => line,
+            SealVerdict::Refuse(m) => panic!("expected the dispatch to be allowed, got:\n{m}"),
+        }
+    }
+
+    // ── F1 · the happy path ────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn f1_a_row_committed_and_pushed_with_the_key_off_the_repo_is_allowed_and_audited() {
+        let (fx, rel, _, _) = sealed("f1");
+        let line = allowed(fx.gate(Some(&format!("{rel}#T9")), DISPATCH)).expect("a verified seal writes an audit line");
+        assert!(line.starts_with("SEAL VERIFIED"), "{line}");
+        assert!(line.contains("that commit touched exactly this one file"), "the exception's shape is reported: {line}");
+    }
+
+    /// The push exception's one enforceable aid. The gate cannot see who pushed; it CAN say that the sealing commit
+    /// carried more than the row, which is the shape the keeper's exception excludes.
+    #[test]
+    fn f1b_a_seal_committed_beside_another_file_is_allowed_but_reported_as_not_the_push_exception() {
+        let fx = Fx::new("f1b");
+        let (key, blob) = fx.key(&key_body());
+        let obj = fx.object(&fx.objs, "T9_text.md");
+        let rel = fx.write_row(&block("T9", &key, &blob, &obj));
+        std::fs::write(fx.work.join("exo_memory").join("loop").join("a_map_line.md"), "a second file in the same commit\n").unwrap();
+        git(&fx.work, &["add", &rel, "exo_memory/loop/a_map_line.md"]);
+        git(&fx.work, &["commit", "--quiet", "-m", "seal and something else"]);
+        fx.push();
+        let line = allowed(fx.gate(Some(&rel), DISPATCH)).expect("audited");
+        assert!(line.contains("touched 2 files") && line.contains("NOT the seal-row push exception"), "{line}");
+    }
+
+    // ── the undeclared half ────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn f2_an_undeclared_dispatch_naming_a_sealed_object_is_refused_by_row_and_task() {
+        let (fx, rel, _, obj) = sealed("f2");
+        let text = format!("look at the draft in {} and say what is wrong", obj.display());
+        let msg = refused(fx.gate(None, &text), "POINTS AT A SEALED TASK AND DECLARES NO SEAL");
+        assert!(msg.contains(&format!("{rel}#T9")), "{msg}");
+    }
+
+    #[test]
+    fn f2b_an_ordinary_undeclared_dispatch_is_allowed_and_runs_no_git_at_all() {
+        let (fx, _, _, _) = sealed("f2b");
+        let mut calls = 0;
+        let v = seal_gate(None, DISPATCH, &fx.work, &mut |_| {
+            calls += 1;
+            Err("unreachable".into())
+        });
+        assert_eq!(v, SealVerdict::Allow(None));
+        assert_eq!(calls, 0, "an ordinary dispatch must cost no subprocess");
+    }
+
+    #[test]
+    fn f2c_the_undeclared_match_survives_slash_and_case_differences() {
+        let (fx, _, _, obj) = sealed("f2c");
+        let text = obj.display().to_string().replace('\\', "/").to_uppercase();
+        refused(fx.gate(None, &text), "DECLARES NO SEAL");
+    }
+
+    // ── the declaration and the row (G1) ───────────────────────────────────────────────────────────────
+
+    #[test]
+    fn f3_a_seal_naming_a_row_that_is_not_on_disk_is_refused_naming_the_path() {
+        let (fx, _, _, _) = sealed("f3");
+        let msg = refused(fx.gate(Some("exo_memory/loop/no_such_row.md#T9"), DISPATCH), "THE SEALED ROW IS NOT ON DISK");
+        assert!(msg.contains("exo_memory/loop/no_such_row.md"), "{msg}");
+    }
+
+    #[test]
+    fn f4_a_block_missing_a_field_is_refused_naming_the_field() {
+        let fx = Fx::new("f4");
+        let (key, blob) = fx.key(&key_body());
+        let obj = fx.object(&fx.objs, "T9_text.md");
+        let broken = block("T9", &key, &blob, &obj).replace("subjects:     A, C, E\n", "");
+        let rel = fx.write_row(&broken);
+        let msg = refused(fx.gate(Some(&rel), DISPATCH), "THE SEALED ROW DOES NOT PARSE");
+        assert!(msg.contains("`subjects` is missing"), "{msg}");
+    }
+
+    #[test]
+    fn f4b_a_seal_outside_exo_memory_loop_or_climbing_out_of_it_is_refused() {
+        let (fx, _, _, _) = sealed("f4b");
+        for bad in ["README.md", "exo_memory/loop/../../README.md", "exo_memory/handback/x.md#T9"] {
+            refused(fx.gate(Some(bad), DISPATCH), "THE SEAL DOES NOT NAME A ROW FILE");
+        }
+    }
+
+    #[test]
+    fn f4c_a_row_sealing_several_tasks_needs_the_task_named() {
+        let fx = Fx::new("f4c");
+        let (key, blob) = fx.key(&key_body());
+        let (o1, o2) = (fx.object(&fx.objs, "T9_text.md"), fx.object(&fx.objs, "T8_text.md"));
+        let rel = fx.write_row(&format!("{}\n{}", block("T9", &key, &blob, &o1), block("T8", &key, &blob, &o2)));
+        let msg = refused(fx.gate(Some(&rel), DISPATCH), "SEALS SEVERAL TASKS");
+        assert!(msg.contains("T8") && msg.contains("T9"), "{msg}");
+    }
+
+    // ── committed, as it stands (G2) ───────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn f5_a_row_that_was_never_committed_is_refused() {
+        let fx = Fx::new("f5");
+        let (key, blob) = fx.key(&key_body());
+        let obj = fx.object(&fx.objs, "T9_text.md");
+        let rel = fx.write_row(&block("T9", &key, &blob, &obj));
+        refused(fx.gate(Some(&rel), DISPATCH), "THE SEALED ROW IS NOT COMMITTED");
+    }
+
+    #[test]
+    fn f7_a_block_edited_after_its_commit_is_refused() {
+        let (fx, rel, key, obj) = sealed("f7");
+        let blob = git(&fx.work, &["hash-object", "--no-filters", &key.to_string_lossy()]);
+        let edited = block("T9", &key, &blob, &obj).replace("A, C, E", "A, B, C, E");
+        fx.write_row(&edited);
+        refused(fx.gate(Some(&rel), DISPATCH), "EDITED AFTER IT WAS COMMITTED");
+    }
+
+    // ── on origin, at the instant (G3) ─────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn f6_a_row_committed_locally_and_never_pushed_is_refused_t5s_defect() {
+        let fx = Fx::new("f6");
+        let (key, blob) = fx.key(&key_body());
+        let obj = fx.object(&fx.objs, "T9_text.md");
+        let rel = fx.write_row(&block("T9", &key, &blob, &obj));
+        fx.commit(&rel);
+        let msg = refused(fx.gate(Some(&rel), DISPATCH), "THE SEAL IS NOT ON ORIGIN");
+        assert!(msg.contains("git commit -- exo_memory/loop/t9_sealed_row.md"), "the recovery names the one path: {msg}");
+    }
+
+    /// THE DISCRIMINATING ONE. After origin is force-pushed past the seal, this checkout's origin/main still
+    /// holds it until a fetch — so `git branch -r --contains`, the L062 packet's own command, still says yes.
+    #[test]
+    fn f6b_a_seal_origin_no_longer_has_is_refused_even_while_the_cached_ref_still_contains_it() {
+        let (fx, rel, _, _) = sealed("f6b");
+        let seal_commit = git(&fx.work, &["log", "-1", "--format=%H", "--", &rel]);
+        let other = fx.base.join("other");
+        let o = Command::new("git").args(["clone", "--quiet"]).arg(&fx.origin).arg(&other).output().unwrap();
+        assert!(o.status.success());
+        git(&other, &["reset", "--quiet", "--hard", "HEAD~1"]);
+        git(&other, &["push", "--quiet", "--force", "origin", "main"]);
+        let cached = git(&fx.work, &["branch", "-r", "--contains", &seal_commit]);
+        assert!(cached.contains("origin/main"), "precondition: the cached ref still contains the seal ({cached:?})");
+        refused(fx.gate(Some(&rel), DISPATCH), "THE SEAL IS NOT ON ORIGIN");
+    }
+
+    #[test]
+    fn f15_an_unreachable_origin_is_refused_and_never_falls_back_to_the_cached_ref() {
+        let (fx, rel, _, _) = sealed("f15");
+        std::fs::rename(&fx.origin, fx.base.join("origin-gone.git")).unwrap();
+        refused(fx.gate(Some(&rel), DISPATCH), "COULD NOT REACH ORIGIN");
+    }
+
+    // ── the key (G4) ───────────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn f7b_a_key_changed_since_it_was_sealed_is_refused() {
+        let (fx, rel, key, _) = sealed("f7b");
+        std::fs::write(&key, format!("{}2. and a new line after the seal\n", key_body())).unwrap();
+        refused(fx.gate(Some(&rel), DISPATCH), "THE KEY CHANGED SINCE IT WAS SEALED");
+    }
+
+    #[test]
+    fn f7c_a_key_that_is_not_on_this_machine_is_refused() {
+        let (fx, rel, key, _) = sealed("f7c");
+        std::fs::remove_file(&key).unwrap();
+        refused(fx.gate(Some(&rel), DISPATCH), "THE KEY IS NOT ON THIS MACHINE");
+    }
+
+    #[test]
+    fn f7d_a_key_inside_the_checkout_is_refused_t3s_defect() {
+        let fx = Fx::new("f7d");
+        let key = fx.work.join("T9_key.md");
+        std::fs::write(&key, key_body()).unwrap();
+        let blob = git(&fx.work, &["hash-object", "--no-filters", &key.to_string_lossy()]);
+        let obj = fx.object(&fx.objs, "T9_text.md");
+        let rel = fx.write_row(&block("T9", &key, &blob, &obj));
+        fx.commit(&rel);
+        fx.push();
+        refused(fx.gate(Some(&rel), DISPATCH), "THE KEY IS INSIDE THE CHECKOUT");
+    }
+
+    #[test]
+    fn f18_a_key_with_no_distinctive_line_cannot_be_leak_checked_and_is_refused() {
+        let fx = Fx::new("f18");
+        let (key, blob) = fx.key(&format!("# T9 key\nQUESTION: {QUESTION}\n"));
+        let obj = fx.object(&fx.objs, "T9_text.md");
+        let rel = fx.write_row(&block("T9", &key, &blob, &obj));
+        fx.commit(&rel);
+        fx.push();
+        refused(fx.gate(Some(&rel), DISPATCH), "THE KEY CARRIES NO DISTINCTIVE LINE");
+    }
+
+    // ── where the subjects are pointed (G5, G6) ────────────────────────────────────────────────────────
+
+    #[test]
+    fn f11_a_key_in_the_objects_directory_is_refused_t5s_exposure() {
+        let fx = Fx::new("f11");
+        let (key, blob) = fx.key(&key_body());
+        let obj = fx.object(&fx.keys, "T9_text.md");
+        let rel = fx.write_row(&block("T9", &key, &blob, &obj));
+        fx.commit(&rel);
+        fx.push();
+        refused(fx.gate(Some(&rel), DISPATCH), "THE KEY SITS WHERE THE SUBJECTS ARE POINTED");
+    }
+
+    #[test]
+    fn f11b_a_dispatch_that_names_the_key_path_is_refused() {
+        let (fx, rel, key, _) = sealed("f11b");
+        let text = format!("the answer is at {} — do not open it", key.display());
+        refused(fx.gate(Some(&rel), &text), "THE DISPATCH NAMES THE KEY");
+    }
+
+    #[test]
+    fn f12_an_object_whose_name_is_tracked_is_refused_t5s_diff() {
+        let fx = Fx::new("f12");
+        std::fs::write(fx.work.join("ferry.js"), "// the committed original\n").unwrap();
+        git(&fx.work, &["add", "ferry.js"]);
+        git(&fx.work, &["commit", "--quiet", "-m", "original"]);
+        let (key, blob) = fx.key(&key_body());
+        let obj = fx.object(&fx.objs, "ferry.js");
+        let rel = fx.write_row(&block("T9", &key, &blob, &obj));
+        fx.commit(&rel);
+        fx.push();
+        let msg = refused(fx.gate(Some(&rel), DISPATCH), "THE OBJECT HAS A COMMITTED TWIN");
+        assert!(msg.contains("ferry.js"), "{msg}");
+    }
+
+    // ── the T3-KEY rule (G7) ───────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn f8_the_distinctive_line_in_a_tracked_file_is_refused_by_file_and_line_never_by_text_t3s_defect() {
+        let (fx, rel, _, _) = sealed("f8");
+        std::fs::write(fx.work.join("plan.md"), format!("line one\nline two\n{DISTINCTIVE}\n")).unwrap();
+        git(&fx.work, &["add", "plan.md"]);
+        git(&fx.work, &["commit", "--quiet", "-m", "a plan that quotes the key"]);
+        let msg = refused(fx.gate(Some(&rel), DISPATCH), "THE KEY IS READABLE INSIDE THE SEARCH SPACE");
+        assert!(msg.contains("plan.md:3 (distinctive)"), "file, line and kind are named: {msg}");
+    }
+
+    #[test]
+    fn f9_the_distinctive_line_in_an_untracked_file_is_refused_too() {
+        let (fx, rel, _, _) = sealed("f9");
+        std::fs::write(fx.work.join("scratch_notes.md"), format!("{DISTINCTIVE}\n")).unwrap();
+        let msg = refused(fx.gate(Some(&rel), DISPATCH), "READABLE INSIDE THE SEARCH SPACE");
+        assert!(msg.contains("scratch_notes.md:1"), "{msg}");
+    }
+
+    #[test]
+    fn f9b_an_ignored_file_is_not_the_search_space() {
+        let (fx, rel, _, _) = sealed("f9b");
+        std::fs::write(fx.work.join(".gitignore"), "ignored_notes.md\n").unwrap();
+        git(&fx.work, &["add", ".gitignore"]);
+        git(&fx.work, &["commit", "--quiet", "-m", "ignore"]);
+        std::fs::write(fx.work.join("ignored_notes.md"), format!("{DISTINCTIVE}\n")).unwrap();
+        allowed(fx.gate(Some(&rel), DISPATCH));
+    }
+
+    #[test]
+    fn f10_the_question_in_the_checkout_is_refused() {
+        let (fx, rel, _, _) = sealed("f10");
+        std::fs::write(fx.work.join("brief.md"), format!("Q: {QUESTION}\n")).unwrap();
+        let msg = refused(fx.gate(Some(&rel), DISPATCH), "READABLE INSIDE THE SEARCH SPACE");
+        assert!(msg.contains("brief.md:1 (question)"), "{msg}");
+    }
+
+    // ── the override ───────────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn f13_seal_none_with_a_reason_is_allowed_and_the_reason_is_what_gets_posted() {
+        let (fx, _, _, obj) = sealed("f13");
+        let text = format!("fix the formatting of {}", obj.display());
+        let line = allowed(fx.gate(Some("none: a typo fix to the object, not the task"), &text)).expect("audited");
+        assert!(line.contains("a typo fix to the object, not the task"), "{line}");
+    }
+
+    #[test]
+    fn f14_seal_none_without_a_reason_is_refused() {
+        let (fx, _, _, _) = sealed("f14");
+        for bare in ["none", "none:", "NONE:   "] {
+            refused(fx.gate(Some(bare), DISPATCH), "CARRIES NO REASON");
+        }
+    }
+
+    // ── the runner and the wiring ──────────────────────────────────────────────────────────────────────
+
+    #[cfg(windows)]
+    #[test]
+    fn a_subprocess_past_its_limit_is_killed_and_reported_not_waited_on() {
+        let t0 = std::time::Instant::now();
+        let r = run_bounded("ping", &["-n", "30", "127.0.0.1"], None, std::time::Duration::from_secs(1));
+        assert!(r.is_err(), "a hang must come back as an error: {r:?}");
+        assert!(t0.elapsed() < std::time::Duration::from_secs(10), "and promptly, not after the child ends");
+    }
+
+    #[test]
+    fn no_checkout_refuses_a_declared_seal_and_lets_an_ordinary_dispatch_go() {
+        assert_eq!(seal_gate_at(None, DISPATCH, None), SealVerdict::Allow(None));
+        refused(seal_gate_at(Some("exo_memory/loop/x.md#T9"), DISPATCH, None), "NO CHECKOUT TO CHECK THE SEAL IN");
+    }
+
+    /// WHERE IT RUNS, pinned by ORDER rather than by presence: after the station and debt gates, before the
+    /// actuator is asked to deliver anything.
+    #[test]
+    fn chair_inject_runs_the_seal_gate_after_the_debt_gate_and_before_anything_is_sent() {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let body = src.split("async fn chair_inject(").nth(1).expect("chair_inject moved");
+        let body = body.split("\n    }\n").next().unwrap();
+        let debt = body.find("self.owed_handback_refusal()").expect("the debt gate");
+        let seal = body.find("seal_gate_at(").expect("the seal gate is not called from chair_inject");
+        let send = body.find("self.send_chair(").expect("the delivery");
+        assert!(debt < seal && seal < send, "order must be debt gate < seal gate < delivery");
+    }
 }

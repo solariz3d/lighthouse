@@ -146,6 +146,14 @@ transcript is running the experiment and reading the dial.
 > 3. **Nothing is pushed by a seat.** Publishing outward keeps a human awake saying yes
 >    (`journal/2026-07-28.md:189`). Committing is not publishing.
 >
+>    *THE SEAL-ROW EXCEPTION, 2026-09-16 — the keeper's YES (`exo_memory/loop/keeper_decisions_2026-09-16.md`).*
+>    The chair may push **unattended** a commit whose diff is **exactly one sealed-row file under
+>    `exo_memory/loop/`**, and nothing else: not a second file, and not other unpushed commits riding in the
+>    same push (`git log --name-only origin/main..HEAD` shows one commit, one path). It exists because a keyed
+>    task is refused dispatch until its row is on origin. The seal gate enforces *on origin*; it cannot see who
+>    pushed or whether anyone was awake, so the one-file shape is this sentence — the gate's audit line reports
+>    it after the fact.
+>
 > *Falsifier, registered before adoption:* if a commit after this date is found to have captured
 > another seat's in-flight file, rule 1 was insufficient and the seat-routing was doing work its stated
 > reason never named — reinstate it and say so. Checkable from git history.
