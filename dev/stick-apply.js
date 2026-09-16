@@ -35,10 +35,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const { spawn, spawnSync } = require('child_process');
+const { spawn, spawnSync, execFileSync } = require('child_process');
 
 const carry = require('./tail-carry.js');
-const place = require('./place-conversations.js');
 const sync = require('../consonance/tools/state-sync.js');
 
 const STARTED = 'stick-apply.started.json';
@@ -49,6 +48,73 @@ const SCRIPT = 'stick-apply.js';
 /** How long to wait for the app to exit before giving up: the app kills its panes on the way out. */
 const APP_EXIT_WAIT_MS = 10 * 60 * 1000;
 const POLL_MS = 1000;
+
+/**
+ * P-STICK-APPLIER-ZOMBIE (D066): how long EVERY running consonance.exe may be continuously windowless before the wait
+ * stops early and refuses, naming the pids.
+ *
+ * What bit, 2026-09-16 08:40-08:52: a windowless consonance.exe left by an earlier launch held the wait above for its
+ * full 600 s, twice, because the old probe (tasklist) could not tell it from the live app.
+ *
+ * REFUSE, NEVER "STALE". Treating a windowless process as gone would not even import: tail-carry's own gate
+ * (tail-carry.js:1137) runs tasklist again and refuses APP_RUNNING. The only way to import past it would be for this
+ * file to tell tail-carry the app is closed while a consonance.exe exists — which is exactly the thing the wait exists
+ * to prevent, decided by a process the keeper cannot see. So a windowless process shortens the WAIT; it never
+ * licenses the IMPORT, and this file kills nothing.
+ *
+ * WHY 30 s. The legitimate windowless consonance.exe is the one that started this applier: `app.exit(0)`
+ * (main.rs, stick_start_applier) destroys the window and then tears down, and the seats' kill is bounded at 5 s
+ * (P-LEAVE). 30 s is six times that bound. A slow-to-PAINT app is the other case the packet names, and it is not
+ * refused at all once it paints: the grace is continuous and a window resets it. The asymmetry that makes a short
+ * grace safe: too short costs a refused transfer the keeper retries; it can never cost an import under a live app.
+ *
+ * WHAT WOULD PROVE IT TOO SHORT: a result whose `app.windowless` names `app.parentPid` — the applier's own parent,
+ * refused while still exiting normally. The result records both so that is checkable from one file.
+ */
+const WINDOWLESS_GRACE_MS = 30 * 1000;
+
+/**
+ * The default probe's output, read so that anything which does not account for itself is "cannot tell" (null) and
+ * never "gone" ([]). Gone is the reading that lets an import run, so it needs positive evidence: an `OK <n>` line
+ * and exactly n rows of `<pid> <window handle>`.
+ */
+function parseProbe(stdout) {
+  const lines = String(stdout || '').split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  // String#match, not RegExp#exec: stick-waiter.test.js's SWEEP is a text scan that reads any call spelled exec,
+  // regex or not, as a child_process call. (This comment must not spell that call with its paren, for the same reason.)
+  const head = lines.length ? lines[0].match(/^OK (\d+)$/) : null;
+  if (!head) return null;
+  const rows = lines.slice(1);
+  if (rows.length !== Number(head[1])) return null;
+  const out = [];
+  for (const row of rows) {
+    const m = row.match(/^(\d+) (-?\d+)$/);
+    if (!m) return null;
+    out.push({ pid: Number(m[1]), alive: true, hasWindow: m[2] !== '0' });
+  }
+  return out;
+}
+
+/**
+ * Every running consonance.exe as { pid, alive, hasWindow }; [] when none; null when that cannot be told.
+ * `MainWindowHandle` is 0 for a process with no visible top-level window. Measured on D, 2026-09-16: the live app
+ * read `15380 1507894`, four windowless node.exe read handle 0, an absent name read `OK 0`, each in about 160 ms.
+ * `Get-Process` with no name and -ErrorAction Stop, filtered afterwards: a named Get-Process reports "not found" as an
+ * error, and silencing that error would also silence a real failure into an empty list — into "gone".
+ */
+function probeConsonance(run) {
+  const script = "$p = @(Get-Process -ErrorAction Stop | Where-Object { $_.ProcessName -eq 'consonance' }); " +
+    "'OK ' + $p.Count; foreach ($x in $p) { '{0} {1}' -f $x.Id, [int64]$x.MainWindowHandle }";
+  // `run` is the boundary the tests stand in for; the applier passes nothing and gets the real execFileSync.
+  const runner = typeof run === 'function' ? run : execFileSync;
+  try {
+    // windowsHide (P-NO-CONSOLE): this process has no console; a console child would get a Windows Terminal window.
+    return parseProbe(runner('powershell', ['-NoProfile', '-NonInteractive', '-Command', script],
+      { encoding: 'utf8', windowsHide: true, timeout: 15000 }));
+  } catch (_) {
+    return null;
+  }
+}
 
 function sleepSync(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
 
@@ -114,7 +180,9 @@ function defaultRelaunch(exe) {
 function runApplier(argv, inject) {
   const k = Object.assign({
     dataDir: undefined,
-    appRunning: () => place.consonanceRunning(),
+    appProbe: () => probeConsonance(),
+    windowlessGraceMs: WINDOWLESS_GRACE_MS,
+    ppid: process.ppid,
     sleep: sleepSync,
     now: () => Date.now(),
     pid: process.pid,
@@ -155,14 +223,40 @@ function runApplier(argv, inject) {
 
   let result;
   try {
-    // ── 2 · wait for the app to be gone ──
+    // ── 2 · wait for the app to be gone — or, if every consonance.exe has had no window for the grace, stop waiting ──
     const deadline = k.now() + k.appExitWaitMs;
-    let running = k.appRunning();
-    while (running !== false && k.now() < deadline) { k.sleep(k.pollMs); running = k.appRunning(); }
-    if (running !== false) {
-      result = { code: 2, outcome: 'APP_RUNNING', why: running === null
-        ? `could not tell whether Consonance had closed after ${Math.round(k.appExitWaitMs / 1000)} s; nothing was imported`
-        : `Consonance was still running after ${Math.round(k.appExitWaitMs / 1000)} s; nothing was imported`, rows: [] };
+    const windowlessSince = new Map();   // pid -> when this CONTINUOUS windowless stretch began
+    let seen = k.appProbe();
+    let ghosts = null;
+    for (;;) {
+      if (Array.isArray(seen) && seen.length === 0) break;
+      const t = k.now();
+      if (Array.isArray(seen)) {
+        const nowWindowless = new Set(seen.filter((p) => !p.hasWindow).map((p) => p.pid));
+        for (const pid of [...windowlessSince.keys()]) if (!nowWindowless.has(pid)) windowlessSince.delete(pid);
+        for (const pid of nowWindowless) if (!windowlessSince.has(pid)) windowlessSince.set(pid, t);
+        // Only when there is NO window anywhere: a windowed consonance.exe is the app the keeper can see. The grace is
+        // then read over the windowless pids alone, so this guard is the one that holds — not a NaN comparison.
+        if (nowWindowless.size === seen.length && [...nowWindowless].every((pid) => t - windowlessSince.get(pid) >= k.windowlessGraceMs)) {
+          ghosts = seen;
+          break;
+        }
+      }
+      if (t >= deadline) break;
+      k.sleep(k.pollMs);
+      seen = k.appProbe();
+    }
+    if (!(Array.isArray(seen) && seen.length === 0)) {
+      const pids = Array.isArray(seen) ? seen.map((p) => p.pid).sort((a, b) => a - b) : [];
+      const named = pids.length ? ` (pid ${pids.join(', ')})` : '';
+      const waited = `${Math.round(k.appExitWaitMs / 1000)} s`;
+      const why = ghosts
+        ? `Consonance${named} had no window for ${Math.round(k.windowlessGraceMs / 1000)} s — it is not the app you can see, so the transfer stopped waiting rather than wait ${waited} on it. Nothing was imported. End that process (Task Manager, or: taskkill /PID ${pids.join(' /PID ')} /F), then start the transfer again.`
+        : seen === null
+          ? `could not tell whether Consonance had closed after ${waited}; nothing was imported`
+          : `Consonance${named} was still running after ${waited}; nothing was imported`;
+      result = { code: 2, outcome: 'APP_RUNNING', why, rows: [],
+        app: { pids, windowless: ghosts ? pids : [], parentPid: k.ppid } };
     } else {
       // ── 3 · the carry, with the keeper's decisions and nothing else ──
       const r = runCarry(o.stick, o.forward);
@@ -198,4 +292,4 @@ function runApplier(argv, inject) {
 
 if (require.main === module) process.exit(runApplier(process.argv.slice(2)).code);
 
-module.exports = { runApplier, parseArgs, STARTED, RESULT, APP_EXIT_WAIT_MS };
+module.exports = { runApplier, parseArgs, parseProbe, probeConsonance, STARTED, RESULT, APP_EXIT_WAIT_MS, WINDOWLESS_GRACE_MS };

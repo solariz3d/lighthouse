@@ -1240,3 +1240,28 @@ The fix does nothing on this machine until the install step runs, which is the k
 test reads `board-digest.js` from `__dirname` and a two-file copy lacks it. I re-ran the repo baseline in place
 (9/9) instead of assuming a regression. **A copy that is missing a file fails in ways that look like your change.**
 Scratch `scratchpad/blind/`.
+
+## 2026-09-16 ~09:5x · D066 P-LAUNCH-PULL, chunk 1, built on D → `exo_memory/handback/p-launch-pull-E_2026-09-16.md`
+The keeper's "open it once" fix is in `consonance/launch.ps1`, uncommitted, +129/-0, byte-identical to the tested text
+(sha256 4f304269...baec over base 6f25ad38...767f). **Fixtures 20/20 on real repos with a real bare origin; mutants 12
+applied: 11 caught, 0 SURVIVED, 1 NOT APPLIED (control); D run correct on both reachable paths, HEAD unchanged.**
+**ONE LINE OF THE BAR IS NOT MET AS WRITTEN, and it needs a ruling:** the bar says call git DIRECTLY; the fetch is not.
+Measured on D against a server that accepts TCP and never answers: http + lowSpeedTime=15 aborts at 15.4 s, but
+**https + the same config was still waiting at 100 s** - git's low-speed limit does not cover a stalled TLS
+handshake, and origin is https. A direct fetch can hold the app closed with no bound I found. The stake line ("prove
+no case can stop the launcher") and the direct-call line conflict; I kept the stake. Same suite across variants:
+shipped launcher 5/19 (never pulls), direct fetch 16/19 (F4 HUNG to the watchdog), bounded fetch 19/19 then 20/20.
+**A's defect, explained:** Start-Process -PassThru reads ExitCode as null (0/5 in every combination once the child
+has exited before the handle is touched); [Process]::Start reads it 5/5. My first explanation - "touch the handle" -
+only won a race, and I had already written it into the block's comment; M1 SURVIVING is what caught that.
+**Rulings where the bar was silent:** no pull while Consonance runs (from :147-158); no-prompt vars on the fetch
+CHILD's env only, so panes never inherit a git that cannot ask for a password; ahead+dirty raises a Notify, dirty+
+current is a console line; any git refusal quotes git's own reason (the first version claimed "commits of its own"
+for an untracked-file conflict and a stale index.lock - a dialog asserting a cause it did not have).
+**Harness self-corrections, the lessons to keep:** (1) the first fixture run left the process table real, Consonance
+was running on D, the guard fired in all 19 cases and 5 "passed" doing nothing; (2) F4 first "passed" in 113 ms
+because console.log COLOURS NUMBERS here, so the blackhole port parsed as NaN and git got a malformed URL; (3) the first
+M10 did not parse and read as caught - the harness now reports an unparseable mutant as INVALID; (4) M5 is caught by
+C4b not C4, because with the same file dirty git's ff-only protects it anyway - only a file git would NOT protect
+proves the check exists. **Not verified:** a real bad network, L, the whole launcher end to end, a credentialed remote.
+Scratch `scratchpad/pull/`.

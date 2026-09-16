@@ -104,6 +104,135 @@ $exe = Join-Path $targetDir 'release\consonance.exe'
 # the code, not because of this file. Kept as a comment so the next reader sees the mitigation was
 # retired deliberately rather than lost.
 
+# --- PULL BEFORE THE REBUILD CHECK -- BEGIN ---------------------------------------------------
+# Why, in the keeper's words (2026-09-16 07:4x): "when I get home I have to open consonance and
+# always restart it for the newest build instead of just opening it once." The rebuild check
+# below compares the exe against the sources ON THIS DISK, and at the other machine those sources
+# are stale until someone pulls. So launch one opened the old exe, and launch two - after a pull
+# in between - rebuilt. The rebuild logic was never broken; the pull was missing.
+#
+# THE STAKE, and why this block is shaped the way it is: it runs on EVERY launch on BOTH machines.
+# A block that throws, exits or hangs is an app that will not open. So every path below ends in
+# `return`, the whole body is inside one try/catch, and nothing here calls `exit`.
+#
+# WHAT IT DOES, and the order matters:
+#   app already running    -> do nothing. The rebuild below cannot happen while the exe is locked,
+#                             and fast-forwarding files under a live session's seats is a change
+#                             nobody asked for. A click on a running app changes nothing here.
+#   no git, not a checkout -> one Notify; open what is here.
+#   not on main            -> a choice, not a failure: console line only, tree untouched.
+#   fetch fails / too slow -> one Notify; open what is here.
+#   origin not ahead       -> nothing to pull. If tracked files are dirty, say so on the console.
+#   origin ahead, DIRTY    -> NEVER merge over local changes. One Notify, because this is exactly
+#                             the stale build the block exists to prevent and he should know why.
+#   origin ahead, clean    -> fast-forward ONLY. Anything git refuses is refused, never merged, and
+#                             the dialog quotes git's own reason rather than guessing one.
+#
+# EVERY GIT CALL IS DIRECT AND READS $LASTEXITCODE - EXCEPT THE FETCH, AND HERE IS THE MEASUREMENT
+# THAT FORCED IT (E, D066, 2026-09-16, on D, git 2.40, against a local server that accepts TCP and
+# never answers - a hotel network's worst case):
+#     http  + http.lowSpeedTime=15  ->  git aborted at 15.4 s
+#     https + http.lowSpeedTime=15  ->  git STILL WAITING at 100 s, killed by the probe
+# The low-speed limit does not cover a stalled TLS handshake, and origin is https. A direct fetch can
+# therefore hold this launcher, and the app, closed indefinitely. So the fetch alone runs as a child
+# with a hard 20 s ceiling (a normal fetch here took 375-396 ms, three runs).
+#
+# THE WRAPPER THAT FAILED BEFORE, AND WHY THIS ONE DOES NOT. The first version (A, 2026-09-16, held)
+# used Start-Process -PassThru + WaitForExit(ms) + .ExitCode and read failure on every run while git
+# exited 0. Measured the same day on D against cmd.exe with a KNOWN exit code (3), five runs per
+# combination, the process given 300 ms to exit before anything touched it:
+#     Start-Process -PassThru   .ExitCode correct 0/5 in EVERY combination - handle touched or not,
+#                               second WaitForExit or not. It comes back $null, and `$null -ne 0` is
+#                               $true, so every run reads as a failure.
+#     [Process]::Start          .ExitCode correct 5/5 in every combination.
+# Touching .Handle only "works" with Start-Process if it wins a race against the child's exit; a fast
+# failure (an unresolvable host exits in well under 100 ms) loses it. [Process]::Start holds the
+# handle from creation, so there is no race to lose. That, not the handle, is the fix.
+#
+# NO PROMPT MAY BLOCK IT. launch.vbs runs this hidden, so a credential prompt would wait for a
+# keyboard nobody can see. GIT_TERMINAL_PROMPT=0 and GCM_INTERACTIVE=never are set on the FETCH
+# CHILD's own environment, never on this process: the app is started from this process below, and
+# every pane would otherwise inherit a git that can never ask for a password.
+function Update-FromOrigin($repo) {
+  $ErrorActionPreference = 'SilentlyContinue'   # function scope: a native stderr line never throws here
+  try {
+    if (Get-Process -Name 'consonance' -ErrorAction SilentlyContinue) {
+      Write-Host '  pull: Consonance is running - not touching the checkout.' -ForegroundColor DarkGray
+      return
+    }
+    $git = Get-Command 'git.exe' -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $git) {
+      Notify "Could not check for a newer version: git was not found on PATH.`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
+      return
+    }
+    $git = $git.Source
+    $repo = "$repo".TrimEnd('\')
+
+    $branch = & $git -C $repo rev-parse --abbrev-ref HEAD 2>$null
+    if ($LASTEXITCODE -ne 0) {
+      Notify "Could not check for a newer version: this folder is not a git checkout.`n  $repo`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
+      return
+    }
+    if ("$branch".Trim() -ne 'main') {
+      Write-Host "  pull: on '$("$branch".Trim())', not main - not pulling." -ForegroundColor DarkGray
+      return
+    }
+
+    $dirty = & $git -C $repo status --porcelain --untracked-files=no 2>$null
+    if ($LASTEXITCODE -ne 0) {
+      Notify "Could not check for a newer version: git status failed.`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
+      return
+    }
+
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = $git
+    $psi.Arguments = "-C `"$repo`" -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=15 fetch --quiet origin main"
+    $psi.UseShellExecute = $false
+    $psi.CreateNoWindow = $true
+    $psi.EnvironmentVariables['GIT_TERMINAL_PROMPT'] = '0'
+    $psi.EnvironmentVariables['GCM_INTERACTIVE'] = 'never'
+    $fetch = [System.Diagnostics.Process]::Start($psi)   # NOT Start-Process -PassThru - see above
+    if (-not $fetch.WaitForExit(20000)) {
+      & "$env:SystemRoot\System32\taskkill.exe" /PID $fetch.Id /T /F 2>$null | Out-Null
+      Notify "Checking for a newer version took more than 20 seconds (a slow or blocked network), so it was stopped.`n`nOpening what is on this disk." 'not updated - network too slow' 8 'Yellow'
+      return
+    }
+    $fetch.WaitForExit()
+    if ($fetch.ExitCode -ne 0) {
+      Notify "Could not reach origin to check for a newer version (offline, or the network blocked it).`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
+      return
+    }
+
+    $behind = & $git -C $repo rev-list --count 'HEAD..origin/main' 2>$null
+    if ($LASTEXITCODE -ne 0) {
+      Notify "Could not compare with origin/main.`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
+      return
+    }
+    $behind = [int]("$behind".Trim())
+
+    if ($behind -eq 0) {
+      if ($dirty) { Write-Host '  pull: already current; tracked files have local changes.' -ForegroundColor DarkGray }
+      return
+    }
+    if ($dirty) {
+      Notify "origin/main has $behind new commit(s), but files in this checkout have local changes, so NOT pulling - local work is never merged over.`n`nOpening what is on this disk, which is OLDER than origin." 'not updated - local changes' 12 'Yellow'
+      return
+    }
+
+    $why = & $git -C $repo merge --ff-only --quiet 'origin/main' 2>&1
+    if ($LASTEXITCODE -ne 0) {
+      $reason = (@($why) | ForEach-Object { "$_".Trim() } | Where-Object { $_ } | Select-Object -First 1)
+      Notify "origin/main has $behind new commit(s), but git refused to fast-forward to it, so nothing was merged or overwritten.`n`ngit said: $reason`n`nOpening what is on this disk." 'not updated' 12 'Yellow'
+      return
+    }
+    Write-Host "  pull: fast-forwarded $behind commit(s) from origin/main." -ForegroundColor Green
+  } catch {
+    Notify "The update check failed unexpectedly and was skipped.`n`n$($_.Exception.Message)`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
+  }
+}
+Update-FromOrigin $root
+# --- PULL BEFORE THE REBUILD CHECK -- END -----------------------------------------------------
+
 # --- Is the built exe already newer than every source file? -----------------------------------
 $sources = @(
   (Join-Path $root 'src-tauri\src'),

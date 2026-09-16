@@ -14,7 +14,9 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const A = require(path.join(__dirname, 'stick-apply.js'));
+// STICK_APPLY_UNDER_TEST: the mutant harness points this at a COPY beside the source, so the tracked file is never
+// edited (the copy pattern, dev/tail-carry.mutants.js).
+const A = require(process.env.STICK_APPLY_UNDER_TEST || path.join(__dirname, 'stick-apply.js'));
 
 let pass = 0, fail = 0;
 function test(name, fn) {
@@ -48,6 +50,13 @@ function standIn(line, code) {
 }
 const obj = (code, outcome, rows) => JSON.stringify({ tool: 'tail-carry', contract: 1, code, outcome, why: null, rows: rows || [], staleLock: null });
 
+/** The probe's three answers, as P-STICK-APPLIER-ZOMBIE shapes them: a list of {pid, alive, hasWindow}, [] for gone,
+ *  null for "cannot tell". The older boolean fixtures map onto them: true is ONE WINDOWED app — the live app the
+ *  keeper can see, which is what every one of those tests meant by "running". */
+const WINDOWED = (pid) => ({ pid: pid || 4242, alive: true, hasWindow: true });
+const WINDOWLESS = (pid) => ({ pid: pid || 5151, alive: true, hasWindow: false });
+const asProbe = (p) => (p === false ? [] : p === true ? [WINDOWED()] : p);
+
 /** A fixture world: a data dir, an app that is running for `runningPolls` probes, a recorded relaunch. */
 function world(opts) {
   opts = opts || {};
@@ -57,7 +66,7 @@ function world(opts) {
   const w = { dataDir, relaunched: [], slept: 0, logs: [], probed: 0 };
   w.inject = Object.assign({
     dataDir,
-    appRunning: () => { w.probed++; return probes.length > 1 ? probes.shift() : probes[0]; },
+    appProbe: () => { w.probed++; return asProbe(probes.length > 1 ? probes.shift() : probes[0]); },
     sleep: () => { w.slept++; },
     relaunch: (exe) => w.relaunched.push(exe),
     log: (s) => w.logs.push(s),
@@ -168,6 +177,158 @@ test('an app that never exits: nothing is imported, the result says APP_RUNNING,
   assert.strictEqual(carried, false);
   assert.deepStrictEqual([r.code, resultOf(w).outcome], [2, 'APP_RUNNING']);
   assert.deepStrictEqual(w.relaunched, [EXE]);
+});
+
+// ── P-STICK-APPLIER-ZOMBIE (D066): a windowless consonance.exe is not the app the keeper can see ──
+//
+// What bit, 2026-09-16 08:40-08:52: a windowless consonance.exe left by an earlier launch held this wait for its
+// full 600 s, twice. The probe could not tell it from the live app. These fixtures run on a CLOCK: every sleep is
+// one second of it, and the probe answers from the clock, so "past the grace" and "the full wait" are real
+// durations rather than counts of calls.
+
+/** A clocked world. `probeAt(t)` is what the probe sees at t ms. The grace is 30 s unless `omitGrace`. */
+function clocked(probeAt, opts) {
+  opts = opts || {};
+  const clock = { t: 0 };
+  const inject = {
+    now: () => clock.t,
+    appProbe: () => { w.probed++; return probeAt(clock.t); },
+    appExitWaitMs: 600000,
+    ppid: 31337,
+  };
+  if (!opts.omitGrace) inject.windowlessGraceMs = 30000;
+  const w = world({ inject: Object.assign(inject, opts.inject || {}) });
+  w.inject.sleep = () => { w.slept++; clock.t += 1000; };
+  w.clock = clock;
+  w.carriedAt = null;
+  w.inject.carry = () => { w.carriedAt = clock.t; return { status: 0, stdout: obj(0, 'CARRIED') + '\n' }; };
+  return w;
+}
+
+test('ZOMBIE · GONE at the first probe: the carry runs at once, with no wait at all', () => {
+  const w = clocked(() => []);
+  go(w, []);
+  assert.deepStrictEqual([w.carriedAt, w.slept], [0, 0]);
+});
+
+test('ZOMBIE · WINDOWED and never exits: the FULL wait, APP_RUNNING, and the result names its pid', () => {
+  const w = clocked(() => [WINDOWED(4242)]);
+  const r = go(w, []);
+  const res = resultOf(w);
+  assert.strictEqual(w.carriedAt, null, 'nothing is imported under the app the keeper can see');
+  assert.deepStrictEqual([r.code, res.outcome], [2, 'APP_RUNNING']);
+  assert.ok(w.clock.t >= 600000, `a windowed app is waited for the full 600 s, not refused early (gave up at ${w.clock.t} ms)`);
+  assert.deepStrictEqual(res.app.pids, [4242]);
+  assert.match(res.why, /\b4242\b/, 'the pid is named in the sentence, not only in a field');
+  assert.deepStrictEqual(w.relaunched, [EXE]);
+});
+
+test('ZOMBIE · WINDOWLESS past the grace: refused EARLY — nothing imported, the pid named, the app still relaunched', () => {
+  const w = clocked(() => [WINDOWLESS(5151)]);
+  const r = go(w, []);
+  const res = resultOf(w);
+  assert.strictEqual(w.carriedAt, null, 'a windowless process is refused, never imported underneath');
+  assert.deepStrictEqual([r.code, res.outcome], [2, 'APP_RUNNING']);
+  assert.ok(w.clock.t >= 30000 && w.clock.t < 60000, `refused once the 30 s grace had run, not at 600 s (gave up at ${w.clock.t} ms)`);
+  assert.deepStrictEqual(res.app.windowless, [5151]);
+  assert.match(res.why, /\b5151\b/);
+  assert.deepStrictEqual(w.relaunched, [EXE]);
+});
+
+test('ZOMBIE · windowless but GONE inside the grace: an app still tearing down is waited out, then carried', () => {
+  const w = clocked((t) => (t < 20000 ? [WINDOWLESS(5151)] : []));
+  go(w, []);
+  assert.ok(w.carriedAt !== null && w.carriedAt >= 20000, `carried after the process left (carried at ${w.carriedAt})`);
+});
+
+test('ZOMBIE · SLOW TO PAINT: windowless for most of the grace, then a window — never refused early', () => {
+  const w = clocked((t) => (t < 25000 ? [WINDOWLESS(5151)] : t < 200000 ? [WINDOWED(5151)] : []));
+  go(w, []);
+  assert.ok(w.carriedAt !== null && w.carriedAt >= 200000, `waited while it had a window, carried once it left (carried at ${w.carriedAt})`);
+});
+
+test('ZOMBIE · the grace is CONTINUOUS, not cumulative: a window in between starts it again', () => {
+  // 25 s windowless, 5 s windowed, 28 s windowless, gone. Cumulative would be 53 s and refuse; continuous is 28 s.
+  const w = clocked((t) => (t < 25000 ? [WINDOWLESS(5151)] : t < 30000 ? [WINDOWED(5151)] : t < 58000 ? [WINDOWLESS(5151)] : []));
+  go(w, []);
+  assert.ok(w.carriedAt !== null, `no single windowless stretch reached 30 s, so nothing may be refused (outcome ${resultOf(w).outcome})`);
+});
+
+test('ZOMBIE · MIXED: a windowed app beside a windowless one is still the app you can see — the full wait, both pids named', () => {
+  const w = clocked(() => [WINDOWED(4242), WINDOWLESS(5151)]);
+  go(w, []);
+  const res = resultOf(w);
+  assert.strictEqual(w.carriedAt, null);
+  assert.ok(w.clock.t >= 600000, `not refused early while a window exists (gave up at ${w.clock.t} ms)`);
+  assert.deepStrictEqual(res.app.pids, [4242, 5151]);
+});
+
+test('ZOMBIE · "cannot tell" is never "windowless": null past the grace is waited out like running, never refused early', () => {
+  const w = clocked(() => null);
+  go(w, []);
+  const res = resultOf(w);
+  assert.strictEqual(w.carriedAt, null);
+  assert.ok(w.clock.t >= 600000, `an unanswerable probe gets the full wait (gave up at ${w.clock.t} ms)`);
+  assert.match(res.why, /could not tell/);
+});
+
+test('ZOMBIE · the result records the applier\'s PARENT pid — a refusal naming its own parent is the grace proven too short', () => {
+  const w = clocked(() => [WINDOWLESS(5151)]);
+  go(w, []);
+  assert.strictEqual(resultOf(w).app.parentPid, 31337);
+});
+
+test('ZOMBIE · the DEFAULT grace is neither seconds nor the whole wait: 10 s windowless is waited out; forever is refused inside 2 min', () => {
+  const brief = clocked((t) => (t < 10000 ? [WINDOWLESS(5151)] : []), { omitGrace: true });
+  go(brief, []);
+  assert.ok(brief.carriedAt !== null, 'a 10 s windowless stretch must not be refused by the default grace');
+  const ghost = clocked(() => [WINDOWLESS(5151)], { omitGrace: true });
+  go(ghost, []);
+  assert.strictEqual(ghost.carriedAt, null);
+  assert.ok(ghost.clock.t < 120000, `the default grace must end the wait long before 600 s (gave up at ${ghost.clock.t} ms)`);
+});
+
+// ── the default probe's parser: output that does not account for itself is "cannot tell", never "gone" ──
+
+test('ZOMBIE · parseProbe reads one windowed process', () => {
+  assert.deepStrictEqual(A.parseProbe('OK 1\r\n15380 1507894\r\n'), [{ pid: 15380, alive: true, hasWindow: true }]);
+});
+
+test('ZOMBIE · parseProbe reads a window handle of 0 as WINDOWLESS', () => {
+  assert.deepStrictEqual(A.parseProbe('OK 1\n22560 0\n'), [{ pid: 22560, alive: true, hasWindow: false }]);
+});
+
+test('ZOMBIE · parseProbe reads "OK 0" as GONE — the only output that means gone', () => {
+  assert.deepStrictEqual(A.parseProbe('OK 0\n'), []);
+});
+
+for (const [label, out] of [
+  ['empty output', ''],
+  ['no OK line', '15380 1507894\n'],
+  ['a count the rows do not match', 'OK 2\n15380 1507894\n'],
+  ['a row that is not two integers', 'OK 1\nconsonance 1507894\n'],
+  ['an OK line that is not a count', 'OK many\n'],
+]) {
+  test(`ZOMBIE · parseProbe reads ${label} as CANNOT TELL (null), never as gone`, () => {
+    assert.strictEqual(A.parseProbe(out), null);
+  });
+}
+
+// ── the default probe at its boundary: the runner stands in for powershell, nothing real is started ──
+
+test('ZOMBIE · probeConsonance: a runner that THROWS (no powershell, a timeout) is CANNOT TELL, never gone', () => {
+  assert.strictEqual(A.probeConsonance(() => { throw new Error('spawnSync powershell ENOENT'); }), null);
+});
+
+test('ZOMBIE · probeConsonance hides its console and bounds its wait', () => {
+  let seen = null;
+  A.probeConsonance((file, args, opts) => { seen = { file, opts }; return 'OK 0\n'; });
+  assert.strictEqual(seen.file, 'powershell');
+  assert.deepStrictEqual([seen.opts.windowsHide, typeof seen.opts.timeout], [true, 'number']);
+});
+
+test('ZOMBIE · probeConsonance passes a clean answer through the parser', () => {
+  assert.deepStrictEqual(A.probeConsonance(() => 'OK 1\n15380 0\n'), [{ pid: 15380, alive: true, hasWindow: false }]);
 });
 
 // ── the applier decides nothing (A-1) ──
