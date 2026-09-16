@@ -1184,3 +1184,32 @@ the turn before the chair flagged it and re-verified clean (262 = 262).
 
 **js-suite totals after the split, appended:** universe 100 -> 101 files discovered, js-suite 95 -> 96 green, same 4
 failures (none mine), 0 not-run. **+1 discovered, +1 green** — the new file is run, not merely present.
+
+## 2026-09-16 ~07:2x · L062 P-DELIVERY-ACK, measure + design (D) → `exo_memory/handback/p-delivery-ack-E_2026-09-16.md`
+**FORCED MEANS LATE, NEVER LOST: 33 of 33 forced deliveries reached the pane's transcript as a user turn, 12–38ms
+after the forced send, 0 not found.** The second finding is bigger: **every one of the 33 was held against an IDLE
+pane** — zero turns produced during its own 240s hold, already silent 51s to 4,304s (72 min) before being queued,
+and every hold ran the FULL bound (240.17–240.43s; not one cleared early). **33 × 240s = 2h 12m of pure added
+latency in one night**, all of it to panes doing nothing. Gate at queue time was `stamp=ready` in all 33;
+`Forced::SignalOutranked` in all 33; zero NoUsableSignal, zero SignalContradicted.
+**The other path:** `chair_inject`'s receipt is a SCREEN SCRAPE (`await_render` polls the capture 1800ms), and it
+was wrong once in 15 — the UNCONFIRMED row was written **1,843ms AFTER the vendor already had the turn**. Not
+sitting in a composer; the screen just never showed it in the window. Transcript right 15/15, screen 14/15, and the
+error under-reports. **That one row is the whole argument: the transcript is the fact, the screen is a signal.**
+**Mechanism named, not fixed (not my packet):** `input_box_empty` fails CLOSED — composer-has-text, composer-row-
+not-found and grid-size-mismatch all return false and all print *"its composer never cleared"*. **The row asserts a
+fact the code does not have**, same class as the 2026-09-07 defect this file documents fixing, one level down in
+the variant instead of the string. One bool (did `composer_row()` resolve) would settle it.
+**Design:** DELIVERED retired; SENT / SENT-unacked / ACKED, where ACKED means a board row posted by the TRANSCRIPT
+TAILER when the text appears as a `type:"user"` turn — boundary-check's inversion applied: written by something
+the licensed behaviour cannot suppress, so a pane can neither fake an ack nor withhold one. Prefix-anchored match
+(measured: the injected text starts at char 0 of the turn), delta from the SEND instant not the audit row (the two
+paths' audit rows straddle the turn in opposite signs), durable pendings, receipt demoted to a hint. 12 fixtures;
+F4/F7/F10 are the ones that stop a pane acking itself by quoting or by posting a lookalike row.
+**Registered before the build, against the lap's own falsifier: the ack will NOT reduce the forced rate**, because
+the rate comes from `box_empty`, not from acknowledgement — if the next lap is still 240s-forced, that is the
+PREDICTED result and the composer predicate is what needs redesigning, not the ack. My own falsifier: if after the
+build the room still cannot say whether a dispatch arrived, this design failed.
+**Self-correction:** I first read the arrival delay as "+0.0s" across all 33 and nearly wrote it down — my own
+display rounded seconds; the truth is 12–38ms. **33 identical zeros is not a measurement, it is a bug**, and that
+is the only reason I looked. Scripts `scratchpad/ack/{measure,measure2}.js`.
