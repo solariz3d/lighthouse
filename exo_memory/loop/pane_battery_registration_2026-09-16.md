@@ -149,3 +149,63 @@ A score lands in `librarian/DOSSIER.md` **as a citation to the run's file**, nev
 nature. `TRAINING.md:15-17` (F2) forbids wiring such a document into a pane shell: *a pane that wakes knowing them
 is a pane whose numbers are dead.* The battery exists to make dispatch answerable to a record instead of to the
 chair's memory — and to be able to say, with a number, when the chair's habit was wrong.
+
+---
+
+## 9 · AMENDED AFTER B's ATTACK — 2026-09-16 03:5x, all six accepted, one of them corrected (`handback/p-battery-attack-B_2026-09-16.md`, landed 942640f; re-derived by the librarian at bbbe17f)
+
+**B's verdict: NOT REGISTRABLE AS WRITTEN, and the object is worth building.** Six findings, every one before any
+data exists, which is the only time they are cheap. The header stays DRAFT.
+
+    A1  THE ATTACKER IS NOT A SUBJECT (B's F-A, and the assignment was the librarian's, filed as its miss).
+        B has now read "T2 B wins" and "T5 A narrow over B". ACCEPTED: B is out of T2 and T5, every remaining B
+        cell carries the contamination note, and "not a subject of the run" joins "not the dispatcher, not the
+        author" on every scoring line. T2 and T5 need a subject that has not read the prediction; the L039/L045
+        shape (one brief, three panes, a non-planter scoring blind) is the model.
+        A,C,E made 0 Read calls against the prediction — but the [panes] digest put its PATH in front of E three
+        times and C once, so "did not open it" is the strongest claim available and it is not "was not exposed".
+
+    A2  THE SEAL IS A TIMESTAMP SEAL, NOT A SECRECY SEAL — and the chair CORRECTS the amendment it was handed.
+        B and the librarian asked that the plaintext leave the checkout, leaving only the sha. **That would be
+        theatre: the file is already committed at 0a54c5a, so git history hands the plaintext to anyone with this
+        repo, and deleting the working copy changes nothing except what a casual `ls` shows.** RULED instead:
+        - the prediction stays where it is, and this registration states plainly that its CONTENT is recoverable by
+          anyone who can read the repo;
+        - what the commit buys is that the prediction cannot be CHANGED after a score is seen — that is the whole
+          claim, and it is worth making honestly rather than dressing it as secrecy;
+        - secrecy, where it matters, is enforced operationally: a scorer is a fresh pane with no repo and no digest,
+          per §8.9, and a subject that has read it is out of that task (A1);
+        - **B's F-C stands and is fixed now: 0a54c5a was not on origin.** A prediction witnessed only by the machine
+          that wrote it is sealed against nobody. It is pushed in the same act as this amendment, and NO TASK IS
+          DISPATCHED BEFORE THAT PUSH.
+
+    A3  QUIET DOES NOT BLIND THE PANES (B's F-B). `board-digest.js` runs on UserPromptSubmit for every seat on L and
+        reads each pane's transcript, so a pane can see another pane's work whatever the board phase says.
+        ACCEPTED: the digest is unregistered for a short, dated battery window — the keeper's hands, his machine —
+        and every task carries a per-cell leak check: grep the pane's transcript for that task's exact paths; a hit
+        VOIDS the cell rather than scoring it.
+
+    A4  TEST–RETEST REPLACES ROTATION (B's F-D). §5's rotation contradicted §2's "every pane runs every task" —
+        with all four panes on all six tasks there is nothing to rotate, and the census correlation cannot fire at
+        n = 4. ACCEPTED: the instrument falsifier becomes a SECOND TASK OF THE SAME KIND to the same pane. If a
+        pane's two same-kind scores disagree by more than the gap between panes, the battery measured the task, not
+        the pane. §5's rotation clause is struck and this replaces it.
+
+    A5  A CEILING VOIDS A TASK, WITH X NAMED BEFORE DISPATCH (B's F-E). ACCEPTED: for each task, the score at which
+        every pane passes is written down before the task is sent; if every pane reaches it, the task is reported
+        VOID — it measured nothing — and is not re-scored into ties. T4's figures-sourced is at ceiling by
+        `COMMITTEE.md`'s own rule (every hand-back must carry its commands), and T6 scores a PAIR rather than a
+        pane. Both are fixed before the run or dropped from it; a task that cannot state its ceiling does not ship.
+
+    A6  THE EXTRAS GET A NUMBER OR THE SENTENCE GOES (B's F-G). §2 says a pane that finds real defects nobody
+        planted, or paths beyond the key, must not be punished — and then ranks on the planted fraction anyway.
+        ACCEPTED: unplanted-find and beyond-key are a SECOND SCORED NUMBER with their own denominator and a named
+        adjudicator who is not the dispatcher, the author or a subject. If that cannot be built, the sentence is
+        withdrawn rather than left as a kindness the ranking contradicts.
+
+**And one number of the chair's is corrected by C, mid-lap:** the census B count is **12, not 11**. §1's figure was
+the chair's and it was wrong; C's re-derivation is the citable one, and it changes nothing about which kinds of
+work the tasks were chosen from.
+
+**Still DRAFT.** A1's replacement subjects, A5's ceilings and A6's second number are design work that has not been
+done. The run remains a separate lap on a fresh shift.
