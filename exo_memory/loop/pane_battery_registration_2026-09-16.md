@@ -254,3 +254,15 @@ done. The run remains a separate lap on a fresh shift.
 **The librarian's own correction, kept here because the figure reached the keeper:** the "~549k tokens per launch"
 told to him at 01:07 double-counted E's ×2 carry. C's bound is ≤ 0.405 tokens per intake byte, so ≤ ~338k per full
 launch.
+
+**A7, RE-RUN BY THE NON-AUTHOR, as C's §3.6 asked** (the librarian, f10dc2f, its own attribution over 09-02…09-16
+with C's four exclusions, and C's prereg hash 312e74c2… verified on the scratchpad before its tables were read):
+
+    by map line       A 37 · B 35 · C 29 · E 31
+    by header         A 35 · B 35 · C 26 · E 28
+    by both agreeing  A 35 · B 34 · C 25 · E 27
+    C's census        A 36 · B 35 · E 29 · C 28     — inside all three for every letter
+
+**The order A ≥ B > E ≥ C holds in every reading**, which is the only property §2 leaned on. And the suffix-era
+sample the six tasks were actually chosen against is **A 14 · B 12 · C 8 · E 10 — about 30% of the population.**
+The chair's original §1 line said B 11; C and the librarian both read 12.
