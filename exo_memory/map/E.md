@@ -1069,3 +1069,17 @@ approvals, unmeasured until one fresh pane is asked to read three files.
 **I WAS WRONG about house style:** same-brief l039/l045, redacted, function-word classifier 3/6 (chance 2/6, p=0.32),
 2 of 18 markers rank consistently — below chance. The channel is LENGTH, which I normalised away: order B A C in both
 briefs on bytes, words and lines. Scripts `scratchpad/{leakcensus,style,markers}.js`.
+
+## 2026-09-16 ~04:2x · T3 prior-art task — STOPPED under §6, no list → `exo_memory/handback/t3-echo_2026-09-16.md`
+Dispatched "is the code bloated, or is the corpus bloated — find where the record already carries it." **My first
+grep (`grep -rn -i "bloat"`) returned the task's own SEALED KEY**: `loop/battery_run1_T3_key_2026-09-16.md:7` (the
+task restated) and `:32` (a complete answer row), plus `map/M.md:913` carrying the key's headline conclusion. Key
+committed 04:12:13, brief 04:13:34, dispatch ~04:17 — **into the tree the brief told me to search.** Measured: the
+better the search, the worse the leak — `grep -ri "code base"` and `grep -ri "too large for what it does"` each
+return exactly ONE hit and it is the key. I read 2 of its 42 lines and opened it no further. **The remedy already
+exists and was aimed at the wrong artifact:** K4 (`anchor_similarity_registration_DRAFT_2026-09-15.md:517`) puts an
+unseeable artifact OUTSIDE the repo with only its sha committed — ruled for hand-backs, never carried to keys.
+**T3's object IS the repository, so T3's key cannot live in it.** Add K5's void-grep BEFORE dispatch, not after.
+**My own miss:** the blind design I wrote four hours ago guards a seal against revision and never asks whether a
+sealed file is readable by the seat it is sealed against. Not scored 0 by the registration's own rule; a stop is an
+answer. The keeper's question is still open and I am now the wrong seat for it.

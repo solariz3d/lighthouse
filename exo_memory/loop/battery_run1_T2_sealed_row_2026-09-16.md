@@ -27,3 +27,37 @@ sent; if this row is not on origin before the first T2 delivery, the cell is voi
               A 04:17:46 · B 04:17:50 · C 04:17:55 · E 04:17:58   (the librarian's "~04:15" is corrected by these)
     So for T3 the exact-path half of the leak check runs over the whole window, and the digest-line half only from
     the first T3 hand-back's write time — 04:20:40 (t3-echo). T2 and T5 get both halves over their whole span.
+
+---
+
+## T3 IS VOID — ALL FOUR CELLS, 2026-09-16 04:2x. Recorded here because this row is what T2 is judged against.
+
+**Reason: the sealed answer key was READABLE INSIDE THE SEARCH SPACE of a task whose object is the repository.**
+
+E stopped under §6 rather than answering (`handback/t3-echo_2026-09-16.md`): its first grep for "bloat" returned
+`loop/battery_run1_T3_key_2026-09-16.md:7` and `:32`, the run plan's question line, and a map line carrying the
+key's headline conclusion. The librarian then checked the other three transcripts: the key path appears in A's once,
+B's twice, C's three times. **E's sharpest finding is that the BETTER the search — the keeper's exact words — the
+more surely it lands on the key and only the key.** A's hand-back already states the key's headline.
+
+    T3 RUN 1        VOID, all four cells, reason "key readable in the search space".
+                    NOT scored, NOT a ceiling, and not evidence about any seat.
+    E               recorded as a STOP under §6 — the correct answer to that question.
+    A               delivered-but-void.
+    B, C            stopped by the chair mid-task.
+
+**THE CHAIR'S SHARE, and it is not the smaller half.** The librarian wrote the key and committed it inside the repo;
+the chair PUSHED it, wrote the brief against it, and dispatched to four seats without running the one command that
+would have caught it. K5 already existed in the anchor draft — seal the distinctive line, grep for it, a hit voids
+BEFORE sending — and the chair carried K5 into that draft's own §8.10 and did not carry it here. **A rule this seat
+wrote eight hours earlier, not applied to the first task it shipped.**
+
+    T3-KEY RULE, REGISTERED NOW: a key for a task whose object is the repository lives OUTSIDE the repository; the
+    repo carries only the (commit, path, sha) row; and before dispatch the run greps the repo for the key's
+    distinctive line AND for the question's exact words. A hit voids the task before it is sent, not after.
+
+**T3 cannot be re-run on this question.** Its answer now sits in three committed files and in every pane's
+transcript. A re-run needs a new question and a key that never enters the checkout.
+
+**T2 and T5 are unaffected and proceed:** their objects are pointed at directly, and their defect lists live in the
+chair's scratchpad with only a sha committed — which is the T3-KEY rule, applied before it had a name.
