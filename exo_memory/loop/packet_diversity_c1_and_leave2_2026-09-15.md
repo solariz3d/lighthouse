@@ -163,3 +163,38 @@ instead of leaving it running. NOT CONFIRMED is true in all five branches that r
       3. THE EMPTY-STREAM CLASS: `cargo` is not on bash's PATH on D, so a bar run through a pipe returned nothing
          with exit 0. B nearly read it as a pass; A and the librarian hit it too. **Every bar run through a pipe
          must fail on an empty stream.**
+
+---
+
+# P-LEAVE-3 · ROW 4, FILED 2026-09-15 22:2x — "THE OS KILLS THE APP". D-6 HAPPENED.
+
+**The event, scored by the librarian from the Windows System log (`librarian/2026-09-15.md`, 22:2x, 9f2727f):**
+Windows Update restarted D at 19:58:51 (event 1074, MoUsoCoreWorker.exe), twice more at 20:00 and 20:01
+(TrustedInstaller), LastBootUpTime 20:01:29, the 2026-09 security update installed 20:02:20. Consonance and its
+waiter were killed. **No LEAVE row and no fallback export exist**; `persist.log` is silent from 13:1x to the 22:16
+relaunch, where all seven seats RESUMED. Nothing was lost: transcripts are append-only, every hashed scratch
+artifact survived at its recorded hash, and the day's work landed by 13:14.
+
+**The keeper, 22:17, verbatim:** "idk what happened but while i was sleeping my pc went to sleep too and consonance
+CLOSED? how? I think we should make it so consonance makes it so the pc doesnt shut off"
+
+**It was not sleep.** The two sleeps (20:12, 21:39) both resumed cleanly and killed nothing. The chair told the
+keeper this with the event ids.
+
+**THIS IS D-6, FROM THE CHAIR'S OWN PACKET** (`packet_leave_window_2026-09-14.md:159`): *"A Windows shutdown runs no
+Leave; tao handles only WM_CLOSE. The waiter dies with it."* **Ruled out of scope on 09-14 by the chair.** Eight days
+later it fired, on the machine, with the stick in. The scope ruling is the error, and it is the chair's.
+
+    ROW 4  D-6, THE OS KILLS THE APP. Handle the shutdown signal: ShutdownBlockReasonCreate with a visible reason,
+           then a FAST Leave — end the seats, export to the stick if one is present, write the LEAVE record — then
+           release the block. main.rs today has no WM_QUERYENDSESSION, no ShutdownBlockReason and no power request;
+           its only close path is WindowEvent::CloseRequested (main.rs:11555).
+           FALSIFIER: a Windows restart with the stick in, after which no LEAVE record exists for that session.
+
+    ROW 5  KEEP-AWAKE, AT THE KEEPER'S WORD, WHICH HE GAVE AT 22:17. A power request while seats are live:
+           SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED), released when the seats end. The display is
+           NOT held: the screen may still sleep.
+           SAID PLAINLY, BECAUSE IT IS WHAT THE KEEPER ASKED FOR AND IT WOULD NOT HAVE SAVED TONIGHT: no application
+           can veto a forced Windows Update restart. This prevents IDLE SLEEP and nothing else. The one control that
+           stops tonight's cause is a Windows policy on the keeper's machine (NoAutoRebootWithLoggedOnUsers; active
+           hours are 23:00–17:00, so 17:00–23:00 is the restart window), and it is his to set.
