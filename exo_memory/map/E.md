@@ -1213,3 +1213,30 @@ build the room still cannot say whether a dispatch arrived, this design failed.
 **Self-correction:** I first read the arrival delay as "+0.0s" across all 33 and nearly wrote it down — my own
 display rounded seconds; the truth is 12–38ms. **33 identical zeros is not a measurement, it is a bug**, and that
 is the only reason I looked. Scripts `scratchpad/ack/{measure,measure2}.js`.
+
+## 2026-09-16 ~07:4x · L064 P-BLIND-WRITE-PATH, built (D) → `exo_memory/handback/p-blind-write-E_2026-09-16.md`
+C's two reachable defects (§4.1, §4.2 of `p-blind-rows-C`, d27ec19) are **both fixed WITHOUT touching main.rs**, and
+that is the finding rather than a convenience. C named the mechanism: *"the mute is a property of the lock; the
+RECORD of it is a property of traffic."* §4.1 makes the record depend on traffic, §4.2 on process life — **both
+dependencies vanish if the record is written by the thing that toggles the lock.** `blind.js`'s `setBlind`/
+`clearBlind` are the only two toggle points and run exactly when a window changes, with no traffic needed and no
+`BLIND_LAST` to lose. A Rust fix would still be observing an edge and would still need somewhere that survives
+process death; **the toggle does not have to remember anything — it IS the event.**
+Safe alongside the app's own rows: `blindOverlaps` ignores a second OPEN while one is open and a CLOSED with
+nothing open (read at source), so the two writers coexist and the guard reads one span either way.
+**`blind.js` +36, `blind.test.js` +70. Tests 9/9 → 17/17 in place, 8 red first. Mutants 7 caught · 0 SURVIVED · 1
+NOT APPLIED.** Three decisions: the CLOSED row **refuses to invent a muted count** (only the muting process knows
+it) and says why; a close that removed nothing writes nothing (a phantom boundary is worse than the gap); and
+recording is best-effort while blinding is not — a failed append never throws but always prints to stderr, because
+a silent swallow is the defect one level up. M6 was caught by a parse failure not an assertion and I said so; M7 is
+what actually pins the stderr rule.
+**Found in passing, pre-existing, not mine:** `blind.test.js:74` held two RAW NUL bytes in a deliberate fixture
+(two raw bytes then the word garbage), making the whole test file binary to grep. Rewritten as backslash-u-0000
+escapes — identical runtime
+value — since I was already in the file. Flagged to A's P-NUL-GUARD lane.
+**The limit that matters most: the installed `~/.claude/shell/blind.js` is UNCHANGED and now one version behind.
+The fix does nothing on this machine until the install step runs, which is the keeper's.**
+**Method note to carry:** my 8 new tests all failed in the scratchpad copy for an unrelated reason — a pre-existing
+test reads `board-digest.js` from `__dirname` and a two-file copy lacks it. I re-ran the repo baseline in place
+(9/9) instead of assuming a regression. **A copy that is missing a file fails in ways that look like your change.**
+Scratch `scratchpad/blind/`.

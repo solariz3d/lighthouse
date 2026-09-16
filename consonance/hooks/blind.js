@@ -56,6 +56,34 @@ const path = require('path');
 
 const DATA = process.env.CONSONANCE_DATA || 'C:\\Consonance\\data';
 const LOCK = path.join(DATA, 'blind.lock');
+const BOARD = path.join(DATA, 'board.jsonl');
+
+/** THE RECORD OF A WINDOW BELONGS TO THE TOGGLE, NOT TO TRAFFIC OR TO A PROCESS.
+ *
+ * `board_push` detects the blind edge inside itself, so it can only record a window that
+ * something else happened to push through — and it holds the previous state in a process-global
+ * that dies with the app. C measured both holes (`handback/p-blind-rows-C_2026-09-16.md` §4.1,
+ * §4.2): a window opened and closed with no push leaves NO row at all, and a lock removed while
+ * the app is down never writes CLOSED, so `boundary-check.js` reads UNMEASURED forever.
+ *
+ * This writer has neither problem by construction: it runs exactly when the lock changes,
+ * whatever else is or is not running. It does not REPLACE the app's rows — `blindOverlaps`
+ * ignores a second OPEN while one is open and a CLOSED with nothing open, so the two writers
+ * coexist and the guard reads one span either way.
+ *
+ * Best-effort on purpose: the lock is the safety mechanism, so failing to RECORD must never
+ * fail to BLIND. It is never silent about it, because a silent gap is the thing being fixed. */
+function markBoard(text, boardPath = BOARD) {
+  const row = { pane: 'blind', role: 'committee', text, ts: Date.now(), ts_source: 'push' };
+  try {
+    fs.appendFileSync(boardPath, JSON.stringify(row) + '\n', 'utf8');
+    return true;
+  } catch (e) {
+    process.stderr.write(`[blind] the window changed but the board row could NOT be written to `
+      + `${boardPath}: ${e.message}. The window is real and the guard will not see it.\n`);
+    return false;
+  }
+}
 
 /** Read the blind marker.
  *
@@ -117,18 +145,25 @@ function declareLine(state, what = 'pane activity') {
 }
 
 /** Open a blind window. Deliberately tiny: the chair writes it, anything can read it. */
-function setBlind({ minutes = 90, why = '', by = 'chair', lockPath = LOCK } = {}) {
+function setBlind({ minutes = 90, why = '', by = 'chair', lockPath = LOCK, boardPath = BOARD } = {}) {
   const until = new Date(Date.now() + minutes * 60000).toISOString();
   fs.mkdirSync(path.dirname(lockPath), { recursive: true });
   fs.writeFileSync(lockPath, JSON.stringify({ until, why, by }, null, 2), 'utf8');
+  // The lock exists from here. Record it, and never let the recording decide whether it exists.
+  markBoard(`blind window OPEN — by ${by}, until ${until}${why ? ` — ${why}` : ''}`, boardPath);
   return { until, why, by };
 }
 
-function clearBlind(lockPath = LOCK) {
-  try { fs.unlinkSync(lockPath); return true; } catch { return false; }
+function clearBlind(lockPath = LOCK, boardPath = BOARD) {
+  try { fs.unlinkSync(lockPath); } catch { return false; }
+  // Only after a lock was actually removed. A close that closed nothing must not look like one.
+  // The muted COUNT is not knowable here — only the muting process counts — so it is named as
+  // absent rather than invented. `blindOverlaps` needs the phrase and the timestamp, not the count.
+  markBoard('blind window CLOSED — muted count unknown to the lock\'s producer', boardPath);
+  return true;
 }
 
-module.exports = { blindState, declareLine, setBlind, clearBlind, LOCK };
+module.exports = { blindState, declareLine, setBlind, clearBlind, markBoard, LOCK, BOARD };
 
 if (require.main === module) {
   const cmd = process.argv[2];
