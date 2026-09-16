@@ -61,3 +61,33 @@ transcript. A re-run needs a new question and a key that never enters the checko
 
 **T2 and T5 are unaffected and proceed:** their objects are pointed at directly, and their defect lists live in the
 chair's scratchpad with only a sha committed — which is the T3-KEY rule, applied before it had a name.
+
+---
+
+## T2 REBUILT BEFORE DISPATCH, 04:3x — the first T2 text failed the T3-KEY rule the same way T3 did
+
+**Caught by the chair applying its own new rule to its own work, before anything was sent.** The first T2 text was
+the 2026-08-28 ask-channel registration with eight defects planted in it — **and its source is committed in this
+repository**, so
+
+    diff <(git show HEAD:exo_memory/loop/ask_channel_registration_2026-08-28.md) <the task text>
+
+prints all eight in one command. That is T3's defect wearing different clothes: the answer readable inside the
+search space. The file `loop/battery_run1_T2_text_2026-09-16.md` is REMOVED from the repo rather than left as a
+trap, and the sealed row above it (5c6165e3…) is WITHDRAWN — it sealed a list for a text that no longer exists.
+
+**THE T2 THAT SHIPS:**
+
+    TASK TEXT  <chair scratchpad>/t2/T2_text.md   sha256 714243171a4c4621415a940e5628cafec9e2dbb22da57993e0e165a3496791b4
+    KEY        <chair scratchpad>/t2/T2_key.md    sha256 89512b14f2d56a94958ce8d347917005d5ad45e506271c171fd63d0fccd7359a
+    SEAL       (the commit that adds this section, those paths, those shas)
+    N PLANTED  8 of 18 numbered claims, in four kinds: inversion, figure, swap, attribution
+    CEILING    every seat finds ≥ 7 of 8 → VOID ·  FLOOR  every seat finds ≤ 2 of 8 → VOID
+    SUBJECTS   A, C, E.  B is out under §9 A1.
+    SCORER     the librarian against the key, after the dispatch closes; A6's second number adjudicated by a seat
+               that is not the chair and not a subject.
+
+**Neither file exists in the repository, and neither ever will.** The text is a draft note written for this task
+whose claims are checkable against files that ARE in the repo — so the work is real and the answers are not
+searchable. **The pre-dispatch grep required by the T3-KEY rule was run: the task text's distinctive lines return
+nothing in the checkout.**
