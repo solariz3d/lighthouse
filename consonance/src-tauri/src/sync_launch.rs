@@ -1239,6 +1239,53 @@ pub fn waiter_args(data_dir: &Path, app_pid: u32, app_started_at: &str) -> Vec<S
     ]
 }
 
+/// **P-LEAVE-3 ROW 5: should the keep-awake hold change?** `held` is what this process believes it holds, `seats`
+/// the number of live seats. Pure, so the rule is tested without Windows: the OS call is the only part that is not.
+/// **B7: run this on the way out, whatever the way out is.** Built for the one job of posting WM_LEAVE_DONE when the
+/// shutdown Leave ends — including when it ends by unwinding, which is the hole B found: the block reason outlives a
+/// dead thread and the shutdown hangs until Windows forces it.
+///
+/// **Why a guard and not `catch_unwind`, which this file uses three times elsewhere:**
+/// - it fires on EVERY exit, so "the post happens on every return path" stops being a property someone has to
+///   re-verify by reading each `return` — B had to read them all to close B1;
+/// - `catch_unwind` would need `AssertUnwindSafe` around a closure holding the `AppHandle`, which is a claim about
+///   that handle's state after a panic that nobody here can make;
+/// - it cannot be skipped by a later edit that adds a return, which is how this hole would come back.
+///
+/// It does NOT catch the panic: the thread still dies, and that is right — the guard's job is the block, not the Leave.
+pub struct OnDrop<F: FnMut()>(F);
+
+impl<F: FnMut()> OnDrop<F> {
+    pub fn new(f: F) -> Self {
+        OnDrop(f)
+    }
+}
+
+impl<F: FnMut()> Drop for OnDrop<F> {
+    fn drop(&mut self) {
+        (self.0)();
+    }
+}
+
+/// **P-LEAVE-3 R5-2: how many units of work are worth holding the machine awake for.** Seats, plus a running Leave
+/// (which drains the seats before it saves), and ONLY on mains power. On battery the answer is 0 however busy the app
+/// is: a laptop held awake until it dies is the one harm the keeper did not ask for, and dream_cycle.ps1:2 already
+/// runs on the same premise. Power that Windows will not report is NOT AC — it fails toward the OS's own policy.
+pub fn keep_awake_work(seats: usize, leave_running: bool, on_ac: Option<bool>) -> usize {
+    if on_ac != Some(true) {
+        return 0;
+    }
+    seats + usize::from(leave_running)
+}
+
+pub fn keep_awake_transition(held: bool, seats: usize) -> Option<bool> {
+    match (held, seats > 0) {
+        (false, true) => Some(true),
+        (true, false) => Some(false),
+        _ => None,
+    }
+}
+
 /// **P-LEAVE-2 (b) 1, B's read2 §8.4 item 1: a spawn that fails after its child is running ends that child.**
 /// `spawn_claude_pane`'s `try_clone_reader()?` and `take_writer()?` run after `spawn_command`; an `Err` there used to
 /// drop the child, the killer and the flight together, leaving a live `claude.exe` outside Panes and outside the
@@ -2954,6 +3001,75 @@ mod leave_tests {
 
     fn one(folder: &Path) -> StickFind {
         StickFind::One(StickFolder { folder: folder.to_path_buf(), layout: StickLayout::Older })
+    }
+
+    /// **B7: the guard runs on the way out, whatever the way out is.** A panic in the Leave thread must still post
+    /// WM_LEAVE_DONE, or the block reason outlives the thread and the shutdown hangs until Windows forces it.
+    #[test]
+    fn an_on_drop_guard_runs_once_on_a_normal_return_and_on_an_unwind() {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        static RAN: AtomicUsize = AtomicUsize::new(0);
+
+        // the ordinary way out
+        {
+            let _g = OnDrop::new(|| {
+                RAN.fetch_add(1, Ordering::SeqCst);
+            });
+        }
+        assert_eq!(RAN.load(Ordering::SeqCst), 1, "the guard did not run on a normal return");
+
+        // the way out B7 is about
+        let out = std::panic::catch_unwind(|| {
+            let _g = OnDrop::new(|| {
+                RAN.fetch_add(1, Ordering::SeqCst);
+            });
+            panic!("the Leave thread died");
+        });
+        assert!(out.is_err(), "the panic did not happen, so this proves nothing");
+        assert_eq!(RAN.load(Ordering::SeqCst), 2, "the guard did not run on an unwind — the block would never be released");
+    }
+
+    /// **B7: the mutex row 5 already treats as poisonable is not unwrapped on the shutdown path.** One mutex, one
+    /// policy: the same recovery the capture watcher uses (harvest_guard::recover).
+    #[test]
+    fn a_poisoned_panes_style_lock_is_recovered_rather_than_unwrapped() {
+        use std::collections::HashMap;
+        use std::sync::{Arc, Mutex};
+        let m: Arc<Mutex<HashMap<String, u8>>> = Arc::new(Mutex::new(HashMap::from([("pane a".to_string(), 1u8)])));
+        let m2 = m.clone();
+        // poison it exactly as a panic under the lock would
+        let _ = std::thread::spawn(move || {
+            let _g = m2.lock().unwrap();
+            panic!("a seat died under the lock");
+        })
+        .join();
+        assert!(m.lock().is_err(), "the lock is not poisoned, so this proves nothing");
+        let drained: Vec<(String, u8)> = crate::harvest_guard::recover(m.lock()).drain().collect();
+        assert_eq!(drained, vec![("pane a".to_string(), 1u8)], "the seats are lost when the lock is poisoned");
+    }
+
+    /// **R5-2: the hold is AC-only.** On battery there is no work to hold the machine awake for, whatever the seats
+    /// are doing — that is the one harm the keeper did not ask for. Unknown power is NOT AC: it fails toward the OS's
+    /// own policy, exactly as a poisoned Panes lock does.
+    #[test]
+    fn work_counts_only_while_the_machine_is_on_mains_power() {
+        assert_eq!(keep_awake_work(7, false, Some(true)), 7, "seven seats on AC are seven units of work");
+        assert_eq!(keep_awake_work(7, true, Some(true)), 8, "a running Leave is one more");
+        assert_eq!(keep_awake_work(0, true, Some(true)), 1, "the Leave alone still holds");
+        assert_eq!(keep_awake_work(7, true, Some(false)), 0, "on battery nothing holds the machine awake");
+        assert_eq!(keep_awake_work(7, true, None), 0, "power that cannot be read is not AC");
+        assert_eq!(keep_awake_work(0, false, Some(true)), 0, "idle on AC holds nothing");
+    }
+
+    /// **P-LEAVE-3 ROW 5:** the keep-awake thread asks this before it touches the OS, so the decision is testable
+    /// without Windows. Some(true) = take the hold, Some(false) = release it, None = nothing to do.
+    #[test]
+    fn the_keep_awake_hold_is_taken_when_a_seat_lives_and_released_when_the_last_one_ends() {
+        assert_eq!(keep_awake_transition(false, 0), None, "no seats and no hold: nothing to do");
+        assert_eq!(keep_awake_transition(false, 1), Some(true), "the first seat takes the hold");
+        assert_eq!(keep_awake_transition(true, 7), None, "already held");
+        assert_eq!(keep_awake_transition(true, 0), Some(false), "the last seat ending releases it");
+        assert_eq!(keep_awake_transition(false, 3), Some(true), "a hold that was lost is taken again");
     }
 
     /// This session's recorded start time, as `main` hands it to the waiter and to the Leave (P-LEAVE-2 a).
