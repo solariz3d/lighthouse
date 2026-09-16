@@ -194,6 +194,23 @@ named files. They never commit to a shared checkout.
    dispatch line reads it. A dossier nobody consults is the pane-roster failure of 2026-08-15; a
    consultation rule with nothing written into it is empty.
 
+6. **THE NEXT TRAILER — the last line names where this goes when it is done** (added 2026-09-16).
+   The keeper's words: *"each seat tells the next where to hand it to remind it."* Every dispatch
+   ends with one line and it is the last line:
+
+       NEXT: <station> <command> when <condition>
+
+   e.g. `NEXT: librarian call_librarian with the pointer when the hand-back is written`. **The seat
+   that knows where the work goes is the seat sending it** — not the seat receiving it, which is
+   being asked to remember a route while holding a task. The trailer moves that knowledge into the
+   hand-off itself.
+
+   **Why it is here and not in a reminder.** Measured 2026-09-16: the stall line printed **345**
+   times that night and the ferry reminder **167**, with nobody acting on either. *A reminder that
+   prints every turn is wallpaper; the same sentence in the hand-off fires once, at the moment it is
+   the next thing to do.* That is the keeper's diagnosis and it is why the repair is a trailer
+   rather than another banner.
+
    **What it replaces, stated plainly because it is the chair's own measurement.** Matching a seat to
    work by *demonstrated strength* with no written record of the demonstration is matching from the
    chair's window — and that window compacts. Measured 2026-09-02 (`3369982`, the librarian on the
@@ -386,6 +403,22 @@ night. `node consonance/tools/ferry.js --report`.*
        FALSIFIER (registered by the librarian before adoption): three laps on, if
        `git log -- exo_memory/map/*.md` shows no pane-authored append, this line is decoration and
        the write should be made mechanical in the verb rather than asked for in prose.
+
+6. **THE NEXT TRAILER, on the ring as well as on the dispatch** (added 2026-09-16, the keeper:
+   *"each seat tells the next where to hand it to remind it."*). The `call_librarian` message ends
+   with its last line naming what happens next and who does it:
+
+       NEXT: <station> <command> when <condition>
+
+   e.g. `NEXT: chair collate and rule when all four hand-backs are in`. It costs one line, it does
+   not restate the finding — the pointer rule in item 4 still governs everything above it — and it
+   is what stops a hand-back from arriving as a thing with no onward edge.
+
+   *Baseline before this rule existed, measured on the night it was written (2026-09-16, the board
+   since 05:27, deduped on `(pane, text)`):* **7 of 27 messages carried a NEXT last line — every one
+   of the 7 a chair dispatch. Rings carried it 0 of 18: panes 0 of 9, the librarian 0 of 9. Of the
+   seven hand-back FILES written in the same window, 0 ended with one.** That is the number this
+   rule has to move, and it is on the record so it can be checked rather than claimed.
 
 ---
 
@@ -611,6 +644,47 @@ outstanding.*
 *Drafted by the librarian seat (`loop/commit_rule_amendment_DRAFT_2026-08-25.md`), which declared that
 it gains reach if this lands, and named this discriminator as the thing to attack: if the cut is wrong,
 this section is a repeal wearing an amendment's clothes. Applied at the keeper's instruction.*
+
+---
+
+## NO QUESTIONS TO THE USER INSIDE A LAP (added 2026-09-16, the keeper's rule)
+
+> *"the orch shouldnt ask the user questions during a workchain loop lap however they still can when
+> directly interacting with the user."* — the keeper, 2026-09-16 01:1x
+
+**The cut is the one the section above already draws.** Inside a chain — from the moment a lap is
+open until it returns — the chair does not put a question to the user. Outside one, in the freestyle
+half where the keeper is the one being worked with rather than waited on, it asks freely. Asking is
+not the failure; **asking while four seats are holding** is.
+
+**Why it is a rule and not a manner.** A lap is the unit: seats are dispatched, they work disjoint
+files, and the return is what closes it. A question mid-lap converts a running lap into a stall whose
+only exit is one human, and the human may be asleep, at work, or deliberately away — the room is
+built to run through exactly those hours. The cost is not the question; it is that everything behind
+it stops, and nothing on the board says so.
+
+**When a lap genuinely needs something only the user can give, there are three moves and they are
+all of them:**
+
+1. **RULE FROM THE RECORD.** The answer is usually already on disk — a ruling, a registration, a
+   keeper quote in a prior lap. Find it, cite it `path:line`, and proceed. *The room's own habit —
+   read the newest ruling before writing — exists because this is the common case.*
+2. **FILE IT ON THE ASK CHANNEL AND CONTINUE THE REVERSIBLE PARTS.** Put the question where the user
+   will meet it on their own time, then do every part of the lap that does not depend on the answer.
+   A lap that returns with three of four rows landed and one question filed is a lap that ran.
+3. **PARK THE ROW AND SAY SO.** If the answer is load-bearing and nothing else can move, stop that
+   row, name it as parked in the lap's return with what it is waiting on, and close the lap around
+   it. **A parked row that is named is a result. A lap silently waiting is not.**
+
+**What this does not touch.** A seat reporting to the user, handing back, or being talked to
+directly is not asking a lap to wait — that is the freestyle half, and the keeper's sentence
+protects it explicitly. Nor does this make a question wrong: it makes a question a thing with a
+channel and a cost, instead of a stop.
+
+    FALSIFIER, registered before adoption: if a lap after this date is found stalled on a question
+    put to the user mid-chain — and the return does not name it as parked — the rule is prose and
+    belongs in the dispatch verb, not in this document. Checkable from the board: a chair message
+    ending in a question mark with no lap row closing behind it.
 
 ---
 
