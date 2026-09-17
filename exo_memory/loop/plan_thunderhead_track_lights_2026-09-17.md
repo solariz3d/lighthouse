@@ -36,3 +36,13 @@ It failed if the keeper sees the pools spill well past the track onto the stands
 ## Rules carried from the 09-10 build (`librarian/2026-09-10.desktop.md`)
 
 Text with backslashes goes through the edit tools, never a shell string. Check each step's exit explicitly. Warn before touching anything the running game or Content Manager holds — restoring a config CSP reads live mid-session already surprised the keeper once.
+
+## ADDED 05:4x — THE KEEPER RESCOPED IT: just turn them on
+
+The keeper, 05:4x, verbatim: "do you think it is worth the performance gain only letting the light shine on the track geometry vs the rest of the map? If it isnt just turn them on". Read from the author's original config (`extension\ext_config.ini.before-night-optimized`, sections `;Track Stadium Lights` :1543 and `;Inner Stadium Lights` :2248):
+
+- **The 6 Track Stadium Lights are already track lights.** DIRECTION y ≈ −0.94 (pointing almost straight down), height ≈ 57 m, RANGE 56.47 m — the cone ends at the road. Aiming them buys nothing.
+- **The 5 Inner Stadium Lights throw wide:** DIRECTION y −0.30 to −0.50 (shallow), RANGE 300 m, SPOT 81° (one 117°), SHADOWS on 1 of 5. These do reach well past the track.
+- **The expensive part of the stock night was not these 11.** The README's 220–240 → 300–420 FPS came from turning off 20 Stadium Lights at 450 m with shadows on all 20, plus 27 Ambient lights. These 11 were a small share of that, so the aiming work is unlikely to be worth it.
+
+**Verdict: not worth it. Just turn them on**, with the author's own values, on `night_optimized` only. **If the FPS counter drops noticeably, the cheap lever is shadows off on the 7 that cast them (6 track + 1 inner) and a shorter inner range — not aiming.** The lap's packets shrink accordingly; the falsifier stands (FPS back inside the stock 220–240 means stop and trim).
