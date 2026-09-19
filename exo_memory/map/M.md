@@ -923,3 +923,4 @@ the wrong figure was published.*
 
 - 2026-09-19 07:3x — PRE-COMPACT, D. Cleanup chunks D066–D070 and small fixes D072–D073 filed; the composer line found its mechanism (Claude Code's dim prompt suggestion read as typed text; C and E independently, D074), the switch verified (B, D075) and built (A, D076, off for every seat). One close-and-reopen of Consonance on D ships it. Restore point: `loop/handoff_librarian_2026-09-19_precompact.md`. Master: `librarian/2026-09-16.md` (carries 09-16 → 09-19).
 - 07:44 D077 return leg: plan `loop/plan_return_leg_2026-09-19.md`; design `handback/p-return-leg-C_2026-09-16.md`; delivery test 0 forced of 11 after the D076 rebuild (`librarian/2026-09-16.md` 09-19 07:4x).
+- 09:01 Small fixes sweep 2: `loop/plan_small_fixes_2_2026-09-19.md` (D078, D079; one item struck as already closed).
