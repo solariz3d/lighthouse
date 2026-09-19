@@ -1,0 +1,13 @@
+D089 event-filter decisions, written BEFORE any POST survival number was computed (registration §7).
+1. REGISTERED READING (governs): POST = events dated after 2026-08-18 whose marker appears "in the rows just before it".
+   In the chair's file the marker never precedes an event: it is logged in the post-compaction rows (+3), which is where
+   the hook's own doc says to look (consonance/hooks/precompact-preserve.js:70-73). Under this reading POST is EMPTY.
+2. AMENDED READING (deviation, stated, for C to rule): POST = events dated after 2026-08-18 with the marker in the rows
+   AFTER the event, within 5 rows and before the next assistant row. The hook ledger (C:/Consonance/data/precompact.jsonl,
+   same session, a fire within 15 min before the event) is reported beside it as corroboration, not as a criterion.
+3. DATE: "after 2026-08-18" read literally: event 8 (2026-08-18T13:38, already published in FINDINGS) is NOT POST. It gets
+   its own row with its committed figures.
+4. EXTRACTOR UNCHANGED, including the known UUID-substring SHA defect (tracked extract.js comment). Headline SHA uses it.
+   A descriptive column counts SHA items that are substrings of the transcript's own session id; it decides nothing.
+5. Verdicts are computed for the CHAIR's events only (registration §6). The librarian's events are listed and scored separately.
+6. The spread rule: IQR by type-7 quantiles, fixed in spread.js before POST; Tukey hinges printed beside it.

@@ -1,0 +1,15 @@
+diff --git a/exo_memory/loop/2026-08-18/archaeology/spotcheck.js b/<scratch>/spotcheck-copy.js
+index c3f86e8..e643386 100644
+--- a/exo_memory/loop/2026-08-18/archaeology/spotcheck.js
++++ b/<scratch>/spotcheck-copy.js
+@@ -5,8 +5,8 @@
+ const fs = require('fs');
+ const readline = require('readline');
+ 
+-const FILE = 'C:/Users/zackn/.claude/projects/C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl';
+-const RES = JSON.parse(fs.readFileSync('C:/Consonance/instances/sibling-5bf9d657/archaeology/results.json', 'utf8'));
++const FILE = process.argv[2];   // D089 COPY: target path by argument (registration §2)
++const RES = JSON.parse(fs.readFileSync(process.env.RES, 'utf8'));   // D089 COPY: results path by env
+ 
+ function norm(s) { return s.replace(/\r\n/g, '\n').toLowerCase().replace(/\s+/g, ' ').trim(); }
+ function rowTexts(obj) {

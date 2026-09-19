@@ -1,0 +1,13 @@
+diff --git a/exo_memory/loop/2026-08-18/archaeology/kwcheck.js b/<scratch>/kwcheck-copy.js
+index 6477f84..be32271 100644
+--- a/exo_memory/loop/2026-08-18/archaeology/kwcheck.js
++++ b/<scratch>/kwcheck-copy.js
+@@ -4,7 +4,7 @@
+ 'use strict';
+ const fs = require('fs');
+ const readline = require('readline');
+-const FILE = 'C:/Users/zackn/.claude/projects/C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl';
++const FILE = process.argv[2];   // D089 COPY: target path by argument (registration §2)
+ 
+ function rowTexts(obj) {
+   const msg = obj.message; if (!msg) return [];

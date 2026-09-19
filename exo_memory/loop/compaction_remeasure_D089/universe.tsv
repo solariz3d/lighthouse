@@ -1,0 +1,29 @@
+seat	n	ts	class	windowRows	summaryChars	trigger	preTokens	postTokens	markerBefore	markerAfter	ledgerFire	version	modelBefore	modelAfter	SHA	PATH	NUM	FLAG
+chair	1	2026-07-13T11:02:55.252Z	PRE	445	15795	manual	193050	5535	false	false		2.1.207	claude-opus-4-8	<synthetic>	1/1	2/4	0/0	0/2
+chair	2	2026-07-25T12:56:02.977Z	PRE	2493	22185	manual	971513	11082	false	false		2.1.220	claude-opus-5	claude-opus-5	2/12	9/23	0/25	0/15
+chair	3	2026-07-27T07:17:50.041Z	PRE	3293	29435	manual	955369	10715	false	false		2.1.220	claude-fable-5	claude-fable-5	6/28	26/61	5/71	1/9
+chair	4	2026-07-28T12:55:34.621Z	PRE	4334	17956	manual	998868	9126	false	false		2.1.220	claude-opus-5	claude-opus-5	3/61	26/43	2/30	0/37
+chair	5	2026-08-11T09:49:35.373Z	PRE	3127	18507	manual	986170	12517	false	false		2.1.227	claude-opus-5	claude-opus-5	5/58	12/61	6/61	7/130
+chair	6	2026-08-16T11:56:34.104Z	PRE	3427	18795	manual	983835	13296	false	false		2.1.233	claude-opus-5	claude-opus-5	6/39	13/72	13/80	2/116
+chair	7	2026-08-17T13:32:36.780Z	PRE	3464	20209	manual	969794	18660	false	false		2.1.233	claude-opus-5	claude-opus-5	2/45	22/61	4/55	4/91
+chair	8	2026-08-18T13:38:20.574Z	E8-DATED-08-18	3752	18262	manual	901970	18292	false	true	2026-08-18T13:36:20.516Z	2.1.234	claude-opus-5	claude-opus-5	21/29	15/45	21/48	8/109
+chair	9	2026-08-23T07:32:22.872Z	POST-AMENDED	3381	26856	manual	953162	22402	false	true	2026-08-23T07:30:04.129Z	2.1.241	claude-opus-5	claude-opus-5	19/26	25/72	21/98	10/77
+chair	10	2026-08-24T09:37:02.459Z	POST-AMENDED	3705	23381	manual	945786	19478	false	true	2026-08-24T09:34:32.392Z	2.1.241	claude-opus-5	claude-opus-5	7/38	28/69	12/72	6/64
+chair	11	2026-08-25T11:06:53.393Z	POST-AMENDED	4121	26734	manual	989469	22312	false	true	2026-08-25T11:03:49.118Z	2.1.245	claude-opus-5	claude-opus-5	13/50	38/84	10/40	0/56
+chair	12	2026-08-30T09:36:21.154Z	POST-AMENDED	4232	25758	manual	966474	19997	false	true	2026-08-30T09:33:23.079Z	2.1.251	claude-opus-5	claude-opus-5	15/48	16/69	8/39	5/57
+chair	13	2026-09-01T11:10:52.313Z	POST-AMENDED	4898	20861	manual	991134	18108	false	true	2026-09-01T11:08:36.153Z	2.1.252	claude-opus-5	claude-opus-5	10/68	17/105	23/146	5/133
+chair	14	2026-09-02T12:37:01.797Z	NO-MARKER	2959	19623	auto	999950	21474	false	false	2026-09-02T12:34:46.400Z	2.1.258	claude-opus-5	claude-opus-5	16/65	18/77	9/64	8/50
+chair	15	2026-09-08T07:25:43.110Z	NO-MARKER	3072	24781	auto	967475	22087	false	false	2026-09-08T07:22:26.460Z	2.1.263	claude-opus-5	claude-opus-5	8/84	45/109	5/49	7/58
+chair	16	2026-09-09T13:50:27.071Z	NO-MARKER	3003	21168	auto	968667	18624	false	false	2026-09-09T13:46:37.858Z	2.1.266	claude-opus-5	claude-opus-5	11/51	45/120	24/51	3/40
+chair	17	2026-09-14T09:07:21.450Z	POST-AMENDED	2267	27844	manual	963665	19155	false	true		2.1.270	claude-opus-5	claude-opus-5	29/42	36/73	16/25	0/12
+chair	18	2026-09-15T17:39:31.530Z	POST-AMENDED	2712	15834	manual	970561	14748	false	true	2026-09-15T17:36:55.819Z	2.1.272	<synthetic>	claude-opus-5	31/76	23/118	20/76	0/7
+chair	19	2026-09-19T04:34:36.139Z	NO-MARKER	3114	18466	auto	979513	16099	false	false	2026-09-19T04:33:06.190Z	2.1.278	claude-opus-5	claude-opus-5	67/170	32/145	23/64	5/40
+librarian	1	2026-09-02T13:43:39.073Z	NO-MARKER	3039	18674	auto	1000236	49579	false	false	2026-09-02T13:41:29.052Z	2.1.258	claude-fable-5-1	claude-fable-5-1	10/63	20/56	7/36	3/39
+librarian	2	2026-09-07T11:36:51.773Z	NO-MARKER	4627	21010	auto	969792	17619	false	false	2026-09-07T11:34:35.985Z	2.1.263	claude-fable-5-1	claude-fable-5-1	29/67	26/73	2/14	4/49
+librarian	3	2026-09-08T13:44:41.229Z	NO-MARKER	3082	22442	auto	967227	20997	false	false	2026-09-08T13:41:42.788Z	2.1.263	claude-fable-5-1	claude-fable-5-1	29/35	28/84	2/10	4/25
+librarian	4	2026-09-11T08:23:54.896Z	NO-MARKER	2572	16979	auto	971360	19323	false	false	2026-09-11T08:21:31.237Z	2.1.268	claude-fable-5-1	claude-fable-5-1	14/29	23/64	2/10	0/14
+librarian	5	2026-09-14T11:21:45.389Z	POST-AMENDED	2715	17195	manual	985408	53413	false	true		2.1.270	<synthetic>	claude-fable-5-1	16/24	25/39	4/14	1/17
+librarian	6	2026-09-15T08:43:11.790Z	NO-MARKER	2308	24634	auto	967298	16616	false	false		2.1.272	claude-fable-5-1	claude-fable-5-1	36/38	11/28	0/6	1/14
+librarian	7	2026-09-16T06:43:54.599Z	NO-MARKER	2799	21192	auto	975970	10581	false	false		2.1.272	claude-fable-5-1	claude-fable-5-1	53/60	10/29	0/10	2/32
+librarian	8	2026-09-16T13:00:28.753Z	NO-MARKER	3829	18818	auto	968235	19254	false	false		2.1.273	claude-fable-5-1	claude-fable-5-1	40/44	21/60	4/15	0/43
+librarian	9	2026-09-19T13:36:30.577Z	POST-AMENDED	3363	25987	manual	957408	15756	false	true	2026-09-19T13:34:26.225Z	2.1.277	claude-fable-5-1	claude-fable-5-1	24/28	34/80	12/25	2/9

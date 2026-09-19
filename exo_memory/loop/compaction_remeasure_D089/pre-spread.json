@@ -1,0 +1,81 @@
+{
+  "computedAt": "2026-09-19T19:38:13.856Z",
+  "source": "C:/Users/nname/AppData/Local/Temp/claude/C--Consonance-instances-sibling-5bf9d657/12fb81f6-f4c0-4ef8-aad8-f0cdce091925/scratchpad/compact/pre/results.json",
+  "classes": {
+    "sha": {
+      "pooled": "25/244",
+      "pooledRate": 0.1025,
+      "nEvents": 7,
+      "perEvent": [
+        1,
+        0.1667,
+        0.2143,
+        0.0492,
+        0.0862,
+        0.1538,
+        0.0444
+      ],
+      "q1": 0.0677,
+      "q3": 0.1905,
+      "IQR_type7": 0.1228,
+      "IQR_tukey": 0.1228,
+      "works_needs_POST_pooled_above": 0.2252
+    },
+    "path": {
+      "pooled": "110/325",
+      "pooledRate": 0.3385,
+      "nEvents": 7,
+      "perEvent": [
+        0.5,
+        0.3913,
+        0.4262,
+        0.6047,
+        0.1967,
+        0.1806,
+        0.3607
+      ],
+      "q1": 0.2787,
+      "q3": 0.4631,
+      "IQR_type7": 0.1844,
+      "IQR_tukey": 0.1844,
+      "works_needs_POST_pooled_above": 0.5229
+    },
+    "num": {
+      "pooled": "30/322",
+      "pooledRate": 0.0932,
+      "nEvents": 6,
+      "perEvent": [
+        0,
+        0.0704,
+        0.0667,
+        0.0984,
+        0.1625,
+        0.0727
+      ],
+      "q1": 0.0676,
+      "q3": 0.092,
+      "IQR_type7": 0.0243,
+      "IQR_tukey": 0.0317,
+      "works_needs_POST_pooled_above": 0.1175
+    },
+    "flag": {
+      "pooled": "14/400",
+      "pooledRate": 0.035,
+      "nEvents": 7,
+      "perEvent": [
+        0,
+        0,
+        0.1111,
+        0,
+        0.0538,
+        0.0172,
+        0.044
+      ],
+      "q1": 0,
+      "q3": 0.0489,
+      "IQR_type7": 0.0489,
+      "IQR_tukey": 0.0489,
+      "works_needs_POST_pooled_above": 0.0839
+    }
+  }
+}

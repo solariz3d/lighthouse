@@ -1,0 +1,40 @@
+diff --git a/exo_memory/loop/2026-08-18/archaeology/extract.js b/<scratch>/extract-copy.js
+index 96e450a..b731efe 100644
+--- a/exo_memory/loop/2026-08-18/archaeology/extract.js
++++ b/<scratch>/extract-copy.js
+@@ -4,8 +4,8 @@ const fs = require('fs');
+ const readline = require('readline');
+ const path = require('path');
+ 
+-const FILE = 'C:/Users/zackn/.claude/projects/C--Consonance-instances-main/0c0c0c0a-0000-4000-8000-000000000a01.jsonl';
+-const OUTDIR = __dirname;   // was a pane-scoped absolute path; results belong beside the instrument
++const FILE = process.argv[2];   // D089 COPY: target path by argument (registration §2)
++const OUTDIR = process.env.OUTDIR || __dirname;   // D089 COPY: never overwrite the tracked results.json   // was a pane-scoped absolute path; results belong beside the instrument
+ 
+ const EXPECTED_TS = ['2026-07-13T11:02', '2026-07-25T12:56', '2026-07-27T07:17',
+   '2026-07-28T12:55', '2026-08-11T09:49', '2026-08-16T11:56', '2026-08-17T13:32',
+@@ -144,14 +144,20 @@ async function main() {
+     }
+   }
+ 
++  // D089 COPY: the event filter by date (registration §2). Windows are cut on ALL events first, so a kept event's
++  // window is exactly what the unfiltered script would give it; only which events are REPORTED changes.
++  const keep = (ts) => (!process.env.BEFORE || ts < process.env.BEFORE) && (!process.env.AFTER || ts > process.env.AFTER);
++  const allEvents = events.splice(0, events.length); for (const e of allEvents) if (keep(e.ts)) events.push(e);
++  const EXPECTED_F = EXPECTED_TS.filter(keep);
+   // gate: exactly 7 events, timestamps match
+-  const gate = { count: events.length, timestamps: events.map(e => e.ts), expected: EXPECTED_TS, ok: true, notes: [] };
+-  if (events.length !== EXPECTED_TS.length) { gate.ok = false; gate.notes.push('event count != ' + EXPECTED_TS.length); }
++  const gate = { count: events.length, timestamps: events.map(e => e.ts), expected: EXPECTED_F, ok: true, notes: [] };
++  if (EXPECTED_F.length === 0) gate.notes.push('no expected list for this filter: the universe table is the gate (registration §3)');
++  else if (events.length !== EXPECTED_F.length) { gate.ok = false; gate.notes.push('event count != ' + EXPECTED_F.length); }
+   events.forEach((e, i) => {
+-    const exp = EXPECTED_TS[i];
++    const exp = EXPECTED_F[i];
+     if (exp && !(e.ts || '').startsWith(exp)) gate.notes.push(`event ${i + 1} ts ${e.ts} !~ ${exp}`);
+   });
+-  if (gate.notes.length) gate.ok = false;
++  if (gate.notes.some(n => !n.startsWith('no expected list'))) gate.ok = false;
+ 
+   const results = [];
+   for (const e of events) {
