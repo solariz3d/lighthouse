@@ -26,3 +26,27 @@ Independent byte count over the same 21,753-byte tail (node, `lastIndexOf` as ab
 - **Not a measurement of holds.** 256-byte chunks are not gate ticks, one geometry was used, and the no-marker
   frames are the banner or resume drawing. The falsifier stays C's census re-run (~09-20): if forced holds survive,
   candidate 2 opens.
+
+## ADDENDUM 07:40 — the gap above is closed: four panes went idle after a real turn with no suggestion
+
+At the keeper's word ("wym starts tomorrow you can do it now", 07:39, via the librarian), the chair sent one
+no-work delivery-test line to each of A, B, C and E. **All four returned `delivered` at once**: no QUEUED row, no
+FORCED mark (the two librarian rings before the rebuild each held the full 240 s). Each pane then completed a turn
+(its transcript ends on `turn_duration`) and wrote a ready stamp (`data/ready/*.json` at 07:39:54–07:40:19).
+
+Scanned from the clear-screen before each pane's test line (script: chair scratchpad `after-test.js`; scanner as above):
+
+    pane      bytes after test: Try" / ESC[2m     scan.exe 64x99, from the clear before the test
+    A 6fe15f0a      0 / 0                         placeholder-read-as-text 0 · final frame EMPTY
+    B 12fb81f6      0 / 0                         placeholder-read-as-text 0 · final frame EMPTY
+    C 0845a868      0 / 0                         placeholder-read-as-text 0 · final frame EMPTY
+    E a2122153      0 / 0                         placeholder-read-as-text 0 · final frame EMPTY
+
+**So an idle composer after a completed turn reads EMPTY on all four seats.** Two things changed at once and this
+reading cannot separate them: the suggestion switch (D076) and the ready stamps (installed 01:3x). The stamps alone
+would not have prevented the held deliveries, since `PaneGate::Ready` asks the same composer predicate
+(`main.rs:9033`). The zero dim bytes are the switch's own evidence. The librarian owns the board-row count
+(queue-to-delivery seconds per pane) and files it.
+
+*Noticed, not touched:* `data/ready/0c0c0c0a-…a01.json.30448.tmp` is a stray temp file from 01:29, left by one
+stamp write that did not rename. It is harmless to the reader. Its cause is not established.
