@@ -1,0 +1,14 @@
+{
+ "nonce": "1b63a35d9b93f753ed15424802fe50804a82925db0f8674d69aea44faa7efb35",
+ "map": {
+  "S01": "task1-intake",
+  "S02": "task2-intake",
+  "S03": "task2-seed",
+  "S04": "task1-seed",
+  "S05": "task1-cold",
+  "S06": "task2-cold",
+  "S07": "task3-intake",
+  "S08": "task3-seed",
+  "S09": "task3-cold"
+ }
+}

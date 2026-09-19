@@ -1,0 +1,173 @@
+[
+ {
+  "task": 1,
+  "arm": "cold",
+  "attempt": 1,
+  "cwd": "C:\\Users\\nname\\AppData\\Local\\Temp\\t3subj-BykvCI",
+  "cmd": "C:/Users/nname/.local/bin/claude.exe -p <task1.txt> --restricted --strict-mcp-config --model claude-opus-5 --output-format json --no-session-persistence",
+  "exit": 0,
+  "stdoutBytes": 5112,
+  "ms": 14586,
+  "is_error": false,
+  "input": 13406,
+  "output": 1058,
+  "cost": 0.068141,
+  "models": [
+   "claude-opus-5"
+  ],
+  "resultChars": 3333,
+  "processFailure": false
+ },
+ {
+  "task": 1,
+  "arm": "seed",
+  "attempt": 1,
+  "cwd": "C:\\Users\\nname\\AppData\\Local\\Temp\\t3subj-MMyFUC",
+  "cmd": "C:/Users/nname/.local/bin/claude.exe -p <task1.txt> --restricted --strict-mcp-config --model claude-opus-5 --append-system-prompt-file C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\t3run\\seed.txt --output-format json --no-session-persistence",
+  "exit": 0,
+  "stdoutBytes": 4516,
+  "ms": 20603,
+  "is_error": false,
+  "input": 13525,
+  "output": 1522,
+  "cost": 0.0798005,
+  "models": [
+   "claude-opus-5"
+  ],
+  "resultChars": 2726,
+  "processFailure": false
+ },
+ {
+  "task": 1,
+  "arm": "intake",
+  "attempt": 1,
+  "cwd": "C:\\Users\\nname\\AppData\\Local\\Temp\\t3subj-4ydg2P",
+  "cmd": "C:/Users/nname/.local/bin/claude.exe -p <task1.txt> --restricted --strict-mcp-config --model claude-opus-5 --append-system-prompt-file C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\t3run\\intake.frozen.md --output-format json --no-session-persistence",
+  "exit": 0,
+  "stdoutBytes": 4680,
+  "ms": 23299,
+  "is_error": false,
+  "input": 61038,
+  "output": 1867,
+  "cost": 0.112182,
+  "models": [
+   "claude-opus-5"
+  ],
+  "resultChars": 2891,
+  "processFailure": false
+ },
+ {
+  "task": 2,
+  "arm": "cold",
+  "attempt": 1,
+  "cwd": "C:\\Users\\nname\\AppData\\Local\\Temp\\t3subj-qCb4cW",
+  "cmd": "C:/Users/nname/.local/bin/claude.exe -p <task2.txt> --restricted --strict-mcp-config --model claude-opus-5 --output-format json --no-session-persistence",
+  "exit": 0,
+  "stdoutBytes": 6017,
+  "ms": 25043,
+  "is_error": false,
+  "input": 13487,
+  "output": 2076,
+  "cost": 0.094401,
+  "models": [
+   "claude-opus-5"
+  ],
+  "resultChars": 4228,
+  "processFailure": false
+ },
+ {
+  "task": 2,
+  "arm": "seed",
+  "attempt": 1,
+  "cwd": "C:\\Users\\nname\\AppData\\Local\\Temp\\t3subj-u3A4KF",
+  "cmd": "C:/Users/nname/.local/bin/claude.exe -p <task2.txt> --restricted --strict-mcp-config --model claude-opus-5 --append-system-prompt-file C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\t3run\\seed.txt --output-format json --no-session-persistence",
+  "exit": 0,
+  "stdoutBytes": 5464,
+  "ms": 25020,
+  "is_error": false,
+  "input": 13605,
+  "output": 1820,
+  "cost": 0.0880505,
+  "models": [
+   "claude-opus-5"
+  ],
+  "resultChars": 3677,
+  "processFailure": false
+ },
+ {
+  "task": 2,
+  "arm": "intake",
+  "attempt": 1,
+  "cwd": "C:\\Users\\nname\\AppData\\Local\\Temp\\t3subj-RYhWW1",
+  "cmd": "C:/Users/nname/.local/bin/claude.exe -p <task2.txt> --restricted --strict-mcp-config --model claude-opus-5 --append-system-prompt-file C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\t3run\\intake.frozen.md --output-format json --no-session-persistence",
+  "exit": 0,
+  "stdoutBytes": 6171,
+  "ms": 30208,
+  "is_error": false,
+  "input": 61118,
+  "output": 2239,
+  "cost": 0.12228200000000002,
+  "models": [
+   "claude-opus-5"
+  ],
+  "resultChars": 4354,
+  "processFailure": false
+ },
+ {
+  "task": 3,
+  "arm": "cold",
+  "attempt": 1,
+  "cwd": "C:\\Users\\nname\\AppData\\Local\\Temp\\t3subj-4elCzx",
+  "cmd": "C:/Users/nname/.local/bin/claude.exe -p <task3.txt> --restricted --strict-mcp-config --model claude-opus-5 --output-format json --no-session-persistence",
+  "exit": 0,
+  "stdoutBytes": 5409,
+  "ms": 24857,
+  "is_error": false,
+  "input": 13459,
+  "output": 2012,
+  "cost": 0.09252099999999999,
+  "models": [
+   "claude-opus-5"
+  ],
+  "resultChars": 3584,
+  "processFailure": false
+ },
+ {
+  "task": 3,
+  "arm": "seed",
+  "attempt": 1,
+  "cwd": "C:\\Users\\nname\\AppData\\Local\\Temp\\t3subj-GtoURT",
+  "cmd": "C:/Users/nname/.local/bin/claude.exe -p <task3.txt> --restricted --strict-mcp-config --model claude-opus-5 --append-system-prompt-file C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\t3run\\seed.txt --output-format json --no-session-persistence",
+  "exit": 0,
+  "stdoutBytes": 5871,
+  "ms": 25805,
+  "is_error": false,
+  "input": 13577,
+  "output": 1999,
+  "cost": 0.09224550000000001,
+  "models": [
+   "claude-opus-5"
+  ],
+  "resultChars": 4041,
+  "processFailure": false
+ },
+ {
+  "task": 3,
+  "arm": "intake",
+  "attempt": 1,
+  "cwd": "C:\\Users\\nname\\AppData\\Local\\Temp\\t3subj-EOjExP",
+  "cmd": "C:/Users/nname/.local/bin/claude.exe -p <task3.txt> --restricted --strict-mcp-config --model claude-opus-5 --append-system-prompt-file C:\\Users\\nname\\AppData\\Local\\Temp\\claude\\C--Consonance-instances-sibling-0845a868\\0845a868-38f2-4cc2-b45a-431e0c088fb1\\scratchpad\\t3run\\intake.frozen.md --output-format json --no-session-persistence",
+  "exit": 0,
+  "stdoutBytes": 5628,
+  "ms": 25575,
+  "is_error": false,
+  "input": 61090,
+  "output": 1947,
+  "cost": 0.114702,
+  "models": [
+   "claude-opus-5"
+  ],
+  "resultChars": 3821,
+  "processFailure": false
+ }
+]
