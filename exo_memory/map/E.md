@@ -1338,3 +1338,14 @@ Outputs in `loop/diversity_c1/` (results-step1.json, m-step1.md generated from i
 committed controls on the one row whose packet is byte-identical to ed73e76. Defaults taken (keeper asleep):
 inverted own controls → VOID (0 fired); negative texts at 1e944ac not per-row; built from the hard-coded original,
 not the portable copy. Time labels slipped to "12:3x" again - check `date` before writing a time.
+
+## 2026-09-19 ~13:3x · D088 N6 stage 2 P-BATTERY-RUN2-ATTACK, read-only, on D → `exo_memory/handback/p-battery-run2-attack-E_2026-09-19.md`
+**REGISTRABLE WITH 12 NAMED AMENDMENTS, 5 blocking.** Worked, not argued (`scratchpad/attack/scan.js`): §2's lexical scan
+FAILs D086's primed1 - but the rewrite it forces (the two flagged phrases, 201 chars) passes with exit 0 while Part Two (3)
+"What would change your mind" still asks for A4's third criterion with 0 shared words; and it FAILs run-1 T2 only on the
+word "path" in "path:line", blind to the real cause. §1 gives T2's cold reader "the text alone" while run-1 T2's claims were
+all repo-checkable, so the same ceiling task would pass §1 and ship. The draft's own `:48` commits the cold result before
+dispatch - for T3 that result IS key paths. Removal-calibrated keys make the cold base rate ~0, so §1's adjustment and §6's
+difficulty bracket are vacuous; load needs a Latin square (exactly possible at n = 3). Transcripts and captures are a
+readable key route on D - checked D086: open, unused. **Carry: my time labels were wrong THREE laps running (12:3x, 13:5x
+written at 12:2x, 13:33) - run `date` before typing any clock time.**
