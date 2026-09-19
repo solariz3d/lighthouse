@@ -46,3 +46,18 @@ G3 is owed the next time a session loads the rebuilt tool schema.
    it at 17:42. **Same class as this morning's 81-minute stall: a waiting state reported instead of a reading taken.**
    And the G5 re-send was needed at all only because **lap D064 had been left open by the chair since 09-15**, so C's
    first attempt hit the station gate as OUT OF TURN. D064 was parked at 13:1x with that reason recorded.
+
+## ADDENDUM 2026-09-18 23:3x — G3 RUN LIVE, HOLDS (the row at :15 is kept as the trace)
+
+The first session since the 09-16 13:12 rebuild loads the `seal` parameter on `chair_inject`. That is also when
+the chair ran G3, outside any lap, after D072 was filed. The keyed test dispatch went to C with
+`seal: exo_memory/loop/g3_live_check_nonexistent_2026-09-18.md#T-G3` and **no NEXT line**, and it came back:
+
+    refused: THE SEALED ROW IS NOT ON DISK — the dispatch was not sent (posted to the board).
+
+**The SEAL gate refused it, and the trailer gate never spoke.** That is the order the source gives (the refuse arm
+at `mcp.rs:500-503` returns before `trailer_gate(` at `:510`). **Tally: 8 of 8 live.**
+
+*What this does not cover:* the seal gate was exercised only for a row that is absent. A row that is present
+but wrong, and the `none: <reason>` path, were not run live here. Both are covered by `seal_gate_tests`
+(30/0 at D068), which is a test and not a live run.
