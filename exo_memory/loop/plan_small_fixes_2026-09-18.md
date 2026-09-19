@@ -29,3 +29,19 @@ The chunk-1 falsifier from 09-16: the first shortcut click on L after its pull m
 ## Falsifier for the plan
 
 If a ghost process next skips a pull and the keeper sees nothing, or a lap next sits unfiled past a day without the pulse naming it, the chunk described the symptom and is redone from the failing case before the bigger lines open.
+
+## ADDED 23:4x — chunk 1 filed (D072, 5838529; live G3 at f96b5c5, 8 of 8), the chair's two rulings, and chunk 2
+
+**Rulings (the chair, 23:4x):** C's sequence rule NOT BUILT — one labelled case, already named by the 24-hour STALE; falsifier: a lap under 24 h old next blocking a return leg as OUT OF TURN builds it. E's `main.rs:6515` finding YES, as chunk 2, one pane, text only.
+
+## Chunk 2 — the app's second-instance message stops asserting a window
+
+| pane | packet | what exists | the bar |
+|---|---|---|---|
+| A | **P-SECOND-INSTANCE-TEXT** | `fn warn_second_instance` (`consonance/src-tauri/src/main.rs:6507`, one caller at `:11401`); its body ends "Use the window you already have. To pick up new code, close it completely first, then launch once." E's finding (`handback/p-launch-ghost-E_2026-09-18.md` §3): with a windowless ghost there is no window, so after E's launcher dialog names the pid, the app's own dialog tells the keeper to use a window that does not exist. The function has no test; its text is built inline | TEXT ONLY, no probing: the message must be true in both cases without knowing which it is — if a Consonance window is visible, use it; if none is, a copy is running with no window, and the step is to end `consonance.exe` in Task Manager and launch once. The two-MCP-servers reason stays. The body moves into a small pure function so a test can pin it, red first: the text never asserts a window exists unconditionally, names Task Manager and `consonance.exe`, and keeps the reason. `cargo test --bin consonance` for the new test plus the `mcp::` and `brief` filters green; no other line of `main.rs` changes; ASCII only in the dialog text (the existing body is) |
+
+One pane, so the librarian's re-derivation is the non-author read. **It reaches the keeper only at the next rebuild** — his next close and reopen of Consonance on D; the chair says so in one sentence when the chunk files.
+
+## After chunk 2
+
+The small fixes are done except the L-launch falsifier, which waits for the laptop. The bigger lines open in the order above, the composer predicate first.
