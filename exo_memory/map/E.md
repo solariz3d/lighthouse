@@ -1317,3 +1317,13 @@ its own dir), a second byte copy of the strip under the name it loads, package f
 `"type":"module"` cannot flip the dir's CommonJS files. **Carry forward:** (1) text-census walks `git ls-files`, so
 its green says nothing about UNTRACKED new files - run it over a throwaway `GIT_INDEX_FILE` with `add -N`; (2) the
 bytes travel, the scorer does not - its repo path is hard-coded. Scratch `scratchpad/carry/`.
+
+## 2026-09-19 ~11:1x · D081 N1 P-SCORER-PORTABLE, unattended, on D → `exo_memory/handback/p-scorer-portable-E_2026-09-19.md`
+`dev/diversity/score-portable.mjs` = score.mjs with ONE line replaced: the repo root comes from LIGHTHOUSE_REPO, else
+the checkout the file sits in, else it THROWS (no fallback to the old D path). score.mjs 19c97ab5… untouched before
+and after. **Both run once each on D, concurrently: results 60c7d726… byte-identical to each other and to the
+registered result, stdout identical, NETWORK_ATTEMPTS=0, ~35.6 min each.** Test `score-portable.test.js`: 8 fast
+checks (the only-change proof restores the old line and must re-hash to 19c97ab5…) + `--run`; mutants 7/7 after
+M7 SURVIVED the first pass (a foreign git root was accepted - no check covered it). **Carry:** my D079 hand-back's
+`:27` for phase-window is `:28` - I counted a sed window from the wrong end, and the plan copied it. Questions not
+asked (keeper asleep), defaults taken: the var name, the portable file NOT registered, throw not fallback.
