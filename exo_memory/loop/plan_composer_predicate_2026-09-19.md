@@ -48,3 +48,13 @@ Order: candidate 1 is measured first because if it exists it is a settings line,
 ## Falsifier for lap 2
 
 After the chosen fix, deliveries to an idle pane showing (or formerly showing) a suggestion must land without a forced hold; C's census script re-run over the following day is the instrument. If the forced count does not fall, the suggestion was a correlate and not the cause.
+
+## ADDED 01:5x — candidate 1 EXISTS (B, D075), and the decision it leaves with the keeper
+
+B verified from documentation fetched that hour (copies with sha256 in B's scratchpad): setting `promptSuggestionEnabled` (any settings file) and env var `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false`, which takes precedence and needs Claude Code ≥ 2.1.238 (D runs 2.1.278). Live on throwaway sessions: unset, the idle composer ends HAS TEXT holding a suggestion; set to false, zero dim draws and the idle composer ends EMPTY under E's scanner.
+
+**Routes:** A — one `cmd.env(...)` line at the seat spawn (`main.rs`, beside `:1071`, where `TERM`, `FORCE_COLOR`, `CONSONANCE_PANE` are already set): seat-only, tested live, needs a rebuild. B — `promptSuggestionEnabled: false` in each seat's `.claude/settings.local.json`: no build, NOT tested live, and the instance folders are not git repos so project-scope pickup is unproven. C — user settings: rejected, it would switch the keeper's own sessions off too.
+
+**The keeper's decision (B §3):** either route also turns the suggestion off in MAIN, the one Consonance composer the keeper types in. The switch is per process and the process is the seat. His own 2026-09-07 words are in the source at the `typed_only` comment: "If it spawns in the bar, it stops the loop."
+
+**Recommended shape:** route A for every seat, Main included, in the same rebuild that is already owed for D073's dialog text; candidate 2 (see the dim) is then not built unless C's next-day census shows forced holds surviving.
