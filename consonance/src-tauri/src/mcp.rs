@@ -42,6 +42,18 @@ const REFUSED_ATTEMPT_MAX_CHARS: usize = 600;
 /// refusals by it (`plan_return_leg_2026-09-19.md`, the discriminator). A second row matching it would double every
 /// count. Line breaks become " | " so the NEXT trailer stays readable inside one row.
 fn refused_attempt_row(who: &str, text: &str) -> String {
+    refused_row_labelled("call_librarian REFUSED", who, text)
+}
+
+/// P-ADDRESS-REFUSAL-KEEPS-THE-POINTER (D078): the same kept payload for the ADDRESS-TABLE refusal one branch up, whose
+/// sentence "(the attempt was posted to the board)" was overstated exactly as the out-of-turn one was — `auth_address`'s
+/// own row records the mount and the seat, never the text. Its label carries the cause, so a reader can tell the two
+/// refusals apart, and like the other it never matches "REFUSED OUT OF TURN — mount".
+fn refused_address_row(who: &str, text: &str) -> String {
+    refused_row_labelled("call_librarian REFUSED (no address row)", who, text)
+}
+
+fn refused_row_labelled(label: &str, who: &str, text: &str) -> String {
     let flat = text.trim().replace("\r\n", "\n").replace('\n', " | ");
     let n = flat.chars().count();
     let kept = if n > REFUSED_ATTEMPT_MAX_CHARS {
@@ -50,7 +62,7 @@ fn refused_attempt_row(who: &str, text: &str) -> String {
     } else {
         flat
     };
-    format!("call_librarian REFUSED — the attempt, kept because a refused call is not delivered: mount {who} carried: {kept}")
+    format!("{label} — the attempt, kept because a refused call is not delivered: mount {who} carried: {kept}")
 }
 
 fn refusal_should_post(verb: &str, now: u64) -> Option<u32> {
@@ -777,6 +789,16 @@ impl ConsonanceMcp {
         Parameters(CallLibrarianArgs { text }): Parameters<CallLibrarianArgs>,
     ) -> Result<CallToolResult, McpError> {
         if !self.auth_address("call_librarian") {
+            // THE POINTER IS KEPT HERE TOO (D078), for the reason and on the terms of the out-of-turn branch below: every
+            // refusal, bounded, not through the one-a-minute throttle `auth_address` uses for its own row.
+            let who = self.identity.clone().unwrap_or_else(|| "unattributed".to_string());
+            board_push(&self.board, BoardEntry {
+                pane: "chair".to_string(),
+                role: "committee".to_string(),
+                text: refused_address_row(&who, &text),
+                ts: now_ms(),
+                ts_source: crate::TsSource::Push,
+            });
             return Ok(CallToolResult::success(vec![Content::text(
                 "refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)",
             )]));
@@ -3015,5 +3037,80 @@ mod refusal_pointer_tests {
         let branch = refusal_branch(&body);
         assert_eq!(body.matches("refused_attempt_row(").count(), 1, "the row is built outside the refusal branch too");
         assert!(branch.contains("refused_attempt_row("), "the one call site is not in the refusal branch");
+    }
+}
+
+/// P-ADDRESS-REFUSAL-KEEPS-THE-POINTER (D078): the address-table branch of `call_librarian` keeps the attempt too.
+#[cfg(test)]
+mod address_refusal_pointer_tests {
+    use super::*;
+
+    const POINTER: &str = "P-Y (D078). Pointer: exo_memory/handback/p-y-A_2026-09-19.md.\nNEXT: librarian re-derive when read";
+
+    fn call_librarian_body() -> String {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let body = src.split(concat!("async fn call_", "librarian(")).nth(1).expect("call_librarian moved");
+        body.split("\n    }\n").next().unwrap().to_string()
+    }
+
+    /// The address branch: from the address check to the end of the first `return` statement after it.
+    fn address_branch(body: &str) -> String {
+        let start = body.find(concat!("if !self.auth_address(\"call_", "librarian\") {")).expect("the address check moved");
+        let rest = &body[start..];
+        let ret = rest.find("return Ok(").expect("the address branch returns");
+        let end = ret + rest[ret..].find(");\n").expect("the return ends") + 2;
+        rest[..end].to_string()
+    }
+
+    #[test]
+    fn an_address_refusal_row_carries_the_pointer_the_mount_and_its_cause() {
+        let row = refused_address_row("M", POINTER);
+        assert!(row.contains("exo_memory/handback/p-y-A_2026-09-19.md"), "the pointer is not in the row: {row}");
+        assert!(row.contains("NEXT: librarian re-derive when read"), "the trailer is not in the row: {row}");
+        assert!(row.contains("mount M"), "the row does not name the mount: {row}");
+        assert!(row.contains("no address row"), "the row does not say why it was refused: {row}");
+        assert!(!row.contains('\n'), "a line break survived into the row: {row:?}");
+    }
+
+    /// Distinguishable in BOTH directions, and neither is counted as an out-of-turn refusal (C's discriminator).
+    #[test]
+    fn the_two_refusal_rows_are_told_apart_and_neither_reads_as_out_of_turn() {
+        let addr = refused_address_row("M", POINTER);
+        let turn = refused_attempt_row("M", POINTER);
+        assert!(!addr.starts_with("call_librarian REFUSED — the attempt"), "the address row reads as the out-of-turn row: {addr}");
+        assert!(!turn.contains("no address row"), "the out-of-turn row claims an address cause: {turn}");
+        for row in [&addr, &turn] {
+            assert!(!row.contains("REFUSED OUT OF TURN — mount"), "a kept-attempt row matches the refusal discriminator: {row}");
+        }
+    }
+
+    #[test]
+    fn an_address_refusal_row_is_bounded_like_the_other() {
+        let row = refused_address_row("M", &"é".repeat(REFUSED_ATTEMPT_MAX_CHARS + 10));
+        assert_eq!(row.chars().filter(|c| *c == 'é').count(), REFUSED_ATTEMPT_MAX_CHARS);
+        assert!(row.contains("+10"), "the row does not say what it dropped: {row}");
+    }
+
+    /// D077's row is unchanged by the refactor, byte for byte.
+    #[test]
+    fn the_out_of_turn_row_is_byte_identical_to_d077() {
+        assert_eq!(
+            refused_attempt_row("A", "p.md\nNEXT: x"),
+            "call_librarian REFUSED — the attempt, kept because a refused call is not delivered: mount A carried: p.md | NEXT: x"
+        );
+    }
+
+    /// WIRING: the address branch posts the row built from the call's own `text` before returning, and returns the same
+    /// literal as before.
+    #[test]
+    fn the_address_branch_posts_the_attempt_and_returns_the_same_text() {
+        let branch = address_branch(&call_librarian_body());
+        let post = branch.find("refused_address_row(&who, &text)").unwrap_or_else(|| panic!("the address branch does not keep the attempt:\n{branch}"));
+        let ret = branch.find("return Ok(").unwrap();
+        assert!(post < ret, "the attempt is posted after the branch has returned");
+        assert!(
+            branch.ends_with("return Ok(CallToolResult::success(vec![Content::text(\n                \"refused: no address row from this mount's seat to the librarian (the attempt was posted to the board)\",\n            )]));"),
+            "the refusal text returned to the pane changed:\n{branch}"
+        );
     }
 }

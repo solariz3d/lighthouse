@@ -688,6 +688,39 @@ channel and a cost, instead of a stop.
 
 ---
 
+## THE CHAIR DOES NOT BUILD INSIDE A LAP (added 2026-09-19, the keeper's rule of 2026-09-16)
+
+> *"the whole point of the orch and how they use their context isnt to actually build when the
+> workchain loop is going, IT CAN BUILD, but not when the loop is active, all of its token usage needs
+> to be spent orchestrating to the panes how to build the final product, not all built and landed in
+> the orch, but rather in the respective panes, which then comes right back to the lib upon being the
+> finished product to review."* — the keeper, 2026-09-16 07:29
+> (master: `exo_memory/librarian/2026-09-16.md`, the 07:30 entry "THE KEEPER'S RULE, 07:29")
+
+**Same cut as the section above.** From the moment a lap is open until it returns, the chair
+orchestrates and edits nothing: no file written, no repair made by hand, however small. Outside a lap
+it builds freely — *"IT CAN BUILD"* is half of the sentence.
+
+**What that means in practice:**
+
+- **A repair found inside a lap is a dispatch.** It goes to a pane, and the pane's hand-back comes to
+  the librarian for a read before it lands. This includes a one-byte fix and a repair the librarian's
+  own return asked for.
+- **A landing order names files to COMMIT, never files to EDIT.** If a return says "repair X", that
+  is a packet for a pane, not an instruction to the chair.
+
+**Why it is a rule and not a manner:** an edit the chair makes inside a lap is the one edit in the lap
+that nobody reads. On 2026-09-16 the chair repaired `map/C.md:1194` in L063 (`8dc82aa`) and escaped
+two NULs in L064 (`acdd6b1`), both on the librarian's landing orders, and neither repair came back to
+anyone. The librarian filed that as its own WRONG in the same entry.
+
+    FALSIFIER, registered before adoption: if a commit landed inside an open lap is found to carry an
+    edit no pane's hand-back names, and no librarian read covers it, this rule is prose and belongs in
+    a gate on the commit, not in this document. Checkable from git log against the lap rows in
+    lap.jsonl.
+
+---
+
 ## THE PORT RULE — dev is what we build and use; the consumer receives what works (added 2026-09-06, the keeper's standing workflow)
 
 **The keeper, verbatim, 2026-09-06 00:44:** *"we have the dev version which is the one we build and
