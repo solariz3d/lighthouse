@@ -410,9 +410,11 @@ const MUTANTS = [
   ['an I/O error counts as "unsupported": EIO on a directory flush is carried',
     "const DIR_FLUSH_UNSUPPORTED = ['EISDIR', 'EPERM', 'EACCES', 'ENOTSUP', 'EINVAL'];",
     "const DIR_FLUSH_UNSUPPORTED = ['EISDIR', 'EPERM', 'EACCES', 'ENOTSUP', 'EINVAL', 'EIO'];"],
+  // Re-pointed D082: the anchor matched twice once --carry-dir got its own NOT_FLUSHED return; the `why` makes it the
+  // export/import line again. Same line, same mutation.
   ['NOT_FLUSHED exits 0: every consumer would print DONE over a failed flush',
-    "    return { ok: false, code: EXIT.SEAT, outcome: 'NOT_FLUSHED',",
-    "    return { ok: true, code: EXIT.OK, outcome: 'NOT_FLUSHED',"],
+    "    return { ok: false, code: EXIT.SEAT, outcome: 'NOT_FLUSHED', why: `a flush to the stick failed:",
+    "    return { ok: true, code: EXIT.OK, outcome: 'NOT_FLUSHED', why: `a flush to the stick failed:"],
   ['the ledger bypasses the durable write',
     "  writeDurable(tmp, JSON.stringify(led, null, 2) + '\\n');",
     "  fs.writeFileSync(tmp, JSON.stringify(led, null, 2) + '\\n');"],
@@ -425,6 +427,38 @@ const MUTANTS = [
   ['the import\'s DIRECTORY flush is removed',
     '  done.flush = flushDirs([path.join(stick, LEDGER_DIR), path.join(stick, TRANSFER_DIR), stick]);   // D080, as the export',
     '  done.flush = [];   // D080, as the export'],
+
+  // ── D082 P-CARRY-DIR-FLUSH: --carry-dir says CARRIED only after the copy is on the device ──
+  // Scored in D082 through consonance/tools/mutant-harness.js (12/12 killed), kept here so the list is one list.
+  ['carry-dir: the per-file fsync is REMOVED from flushFile',
+    '    try { IO.fsync(fd, p); flushed = true; } catch', '    try { flushed = true; } catch'],
+  ['carry-dir: the per-file fsync error is SWALLOWED',
+    "    try { IO.fsync(fd, p); flushed = true; } catch (e) { throw flushFailed('could not flush', p, e); }",
+    '    try { IO.fsync(fd, p); flushed = true; } catch (e) { flushed = true; }'],
+  ['carry-dir: the copied files are never flushed', '    if (fs.lstatSync(b).isFile()) flushFile(b);', '    if (false) flushFile(b);'],
+  ['carry-dir: the copy\'s directories are never flushed',
+    '  const flush = flushDirs([...dirsUnder(dest), path.dirname(dest)]);', '  const flush = [];'],
+  ['carry-dir: the PARENT that received the copy is not flushed',
+    '  const flush = flushDirs([...dirsUnder(dest), path.dirname(dest)]);', '  const flush = flushDirs([...dirsUnder(dest)]);'],
+  ['carry-dir: only the top directory is flushed',
+    '  const flush = flushDirs([...dirsUnder(dest), path.dirname(dest)]);', '  const flush = flushDirs([dest, path.dirname(dest)]);'],
+  ['carry-dir: the read-only bit is NOT lifted before the flush',
+    "    try { fs.chmodSync(p, mode | 0o200); } catch (e) { throw flushFailed('could not make writable to flush', p, e); }",
+    '    /* not lifted */'],
+  ['carry-dir: the read-only bit is NOT restored after the flush',
+    "    try { fs.chmodSync(p, mode); } catch (e) { if (!failure) failure = flushFailed('flushed, but could not restore read-only on', p, e); }",
+    '    /* not restored */'],
+  ['carry-dir: NOT_FLUSHED exits 0',
+    "    return { ok: false, code: EXIT.SEAT, outcome: 'NOT_FLUSHED', why: `a flush to the destination failed:",
+    "    return { ok: true, code: EXIT.OK, outcome: 'NOT_FLUSHED', why: `a flush to the destination failed:"],
+  ['carry-dir: the FlushError is not caught (anonymous CRASHED)',
+    "    if (!(e instanceof FlushError)) throw e;\n    out(`NOT DONE — ${e.message}`);\n    out('  The copy may not",
+    "    throw e;\n    out(`NOT DONE — ${e.message}`);\n    out('  The copy may not"],
+  ['carry-dir: an unflushed directory is recorded but not said out loud',
+    "    if (f.result !== 'flushed') out(`  directory ${f.dir}: flush ${f.result} — the files in it were flushed; its entries were not confirmed`);\n  }\n  if (!done.ok) {",
+    '    void f;\n  }\n  if (!done.ok) {'],
+  ['carry-dir: the flush record does not reach the --json object',
+    'carried: res.carried || null, flush: res.flush || null,', 'carried: res.carried || null, flushGone: null,'],
 ];
 
 // --only is checked against the list BEFORE anything runs: an id outside it is a refusal, never a run of zero

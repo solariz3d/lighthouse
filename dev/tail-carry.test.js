@@ -2301,5 +2301,99 @@ test('flush: an import flushes the stick directories it rewrote, and an I/O erro
   assert.strictEqual(r.outcome, 'NOT_FLUSHED', r.text);
 });
 
+// ── D082 P-CARRY-DIR-FLUSH: --carry-dir says CARRIED only after the copy is on the device ──
+// The same bar as D080, for applyDirCarry's fs.cpSync (handback/p-flush-before-done-C_2026-09-19.md §5).
+
+/** A small tree with a nested directory and an EMPTY one, applied through the one seam. */
+function carryTree() {
+  const d = dirWorld();
+  d.put('a.jsonl', '{"a":1}\n');
+  d.put('logs/deep/x.log', 'log line\n');
+  fs.mkdirSync(path.join(d.src, 'empty'), { recursive: true });
+  return d;
+}
+const allDirs = (root) => {
+  const out = [root];
+  for (const e of fs.readdirSync(root, { withFileTypes: true })) if (e.isDirectory()) out.push(...allDirs(path.join(root, e.name)));
+  return out;
+};
+
+test('carry-dir flush: every file the carry copied is fsynced, at its place in the copy', () => {
+  const d = carryTree();
+  const spy = spyFsync();
+  const q = quiet();
+  const r = withFsync(spy.fn, () => T.run({ out: q.out, carryDir: d.src, to: d.dest, apply: true }));
+  assert.strictEqual(r.outcome, 'CARRIED', q.text());
+  const seen = spy.seen.map((p) => path.resolve(p));
+  for (const f of allFiles(d.dest)) assert.ok(seen.includes(path.resolve(f)), `copied but never flushed: ${path.relative(d.dest, f)}`);
+});
+
+test('carry-dir flush: every directory of the copy, and the parent that received it, is flushed and recorded', () => {
+  const d = carryTree();
+  const spy = spyFsync();
+  const q = quiet();
+  const r = withFsync(spy.fn, () => T.run({ out: q.out, carryDir: d.src, to: d.dest, apply: true }));
+  assert.strictEqual(r.outcome, 'CARRIED', q.text());
+  const want = [...allDirs(d.dest), path.dirname(d.dest)].map((x) => path.resolve(x));
+  const seen = spy.seen.map((p) => path.resolve(p));
+  for (const w of want) assert.ok(seen.includes(w), `directory not flushed: ${w}`);
+  assert.ok(Array.isArray(r.flush) && r.flush.length === want.length && r.flush.every((f) => f.result === 'flushed'), JSON.stringify(r.flush));
+});
+
+test('carry-dir flush: a failure at ANY single flush is NOT_FLUSHED, code 1 — never CARRIED', () => {
+  const probe = carryTree();
+  const spy = spyFsync();
+  withFsync(spy.fn, () => T.run({ out: quiet().out, carryDir: probe.src, to: probe.dest, apply: true }));
+  const n = spy.seen.length;
+  assert.ok(n >= 7, `a clean carry made only ${n} flushes`);
+  for (let k = 0; k < n; k++) {
+    const d = carryTree();
+    let i = 0;
+    const q = quiet();
+    const r = withFsync((fd, p) => { if (i++ === k) throw ioError('EIO'); return fs.fsyncSync(fd); },
+      () => T.run({ out: q.out, carryDir: d.src, to: d.dest, apply: true }));
+    assert.strictEqual(r.outcome, 'NOT_FLUSHED', `flush #${k + 1} of ${n} failed and the carry said ${r.outcome}: ${q.text()}`);
+    assert.strictEqual(r.code, T.EXIT.SEAT);
+    assert.match(r.why || '', /EIO/);
+    assert.match(q.text(), /NOT DONE/);
+  }
+});
+
+test('carry-dir flush: a READ-ONLY file is flushed AND still arrives read-only (the bit is lifted on the copy only, then put back)', () => {
+  const d = carryTree();
+  const ro = d.put('objects/ab/cdef', 'git object');
+  fs.chmodSync(ro, 0o444);
+  const spy = spyFsync();
+  const q = quiet();
+  let r;
+  try { r = withFsync(spy.fn, () => T.run({ out: q.out, carryDir: d.src, to: d.dest, apply: true })); }
+  finally { fs.chmodSync(ro, 0o644); }
+  assert.strictEqual(r.outcome, 'CARRIED', q.text());
+  const copy = path.join(d.dest, 'objects', 'ab', 'cdef');
+  assert.ok(spy.seen.map((p) => path.resolve(p)).includes(path.resolve(copy)), 'the read-only copy was not flushed');
+  assert.strictEqual(fs.statSync(copy).mode & 0o200, 0, 'the copy lost its read-only bit');
+  // Windows keeps only the read-only bit, so chmod 0o644 reads back as 0o666: assert writability, not an exact mode.
+  assert.notStrictEqual(fs.statSync(ro).mode & 0o200, 0, 'the test did not restore the source to writable');
+});
+
+test('carry-dir flush: directories that decline the flush are CARRIED and said out loud; the files were still flushed', () => {
+  const d = carryTree();
+  const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch (_) { return false; } };
+  const q = quiet();
+  const r = withFsync((fd, p) => { if (isDir(p)) throw ioError('ENOTSUP'); return fs.fsyncSync(fd); },
+    () => T.run({ out: q.out, carryDir: d.src, to: d.dest, apply: true }));
+  assert.strictEqual(r.outcome, 'CARRIED', q.text());
+  assert.ok(r.flush.length > 0 && r.flush.every((f) => /^unsupported \(ENOTSUP/.test(f.result)), JSON.stringify(r.flush));
+  assert.match(q.text(), /unsupported/);
+});
+
+test('carry-dir flush: the --json object carries the flush record', () => {
+  const d = carryTree();
+  const w = world();
+  const res = J(w.L, ['--carry-dir', d.src, '--to', d.dest, '--apply']);
+  assert.strictEqual(res.obj.outcome, 'CARRIED', res.stderr);
+  assert.ok(Array.isArray(res.obj.flush) && res.obj.flush.length > 0, JSON.stringify(res.obj.flush));
+});
+
 console.log(`\n  ${pass} passed, ${fail} failed`);
 if (fail) process.exit(1);

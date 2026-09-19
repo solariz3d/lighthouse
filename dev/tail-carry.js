@@ -1264,6 +1264,45 @@ function planDirCarry(src) {
   };
 }
 
+/**
+ * fsync one file that is ALREADY written (D082, --carry-dir: fs.cpSync wrote it). Needs write access, and cpSync
+ * carries the source's mode — measured on this machine (`scratchpad/flush/roprobe.js`): a 0444 copy gives EPERM
+ * for 'r' + fsync and EPERM at open for 'r+'; lifting the bit, flushing and restoring it works and leaves mtime
+ * unchanged. Git's object files are 0444, so a carried repo meets this. The bit is lifted on the COPY only and put
+ * back; a failure to lift, flush or restore is a FlushError. The first error wins — a restore failure never
+ * masks the flush failure that caused it.
+ */
+function flushFile(p) {
+  const mode = fs.statSync(p).mode & 0o777;
+  const readOnly = (mode & 0o200) === 0;
+  if (readOnly) {
+    try { fs.chmodSync(p, mode | 0o200); } catch (e) { throw flushFailed('could not make writable to flush', p, e); }
+  }
+  let failure = null;
+  try {
+    let fd;
+    try { fd = fs.openSync(p, 'r+'); } catch (e) { throw flushFailed('could not open to flush', p, e); }
+    let flushed = false;
+    try { IO.fsync(fd, p); flushed = true; } catch (e) { throw flushFailed('could not flush', p, e); }
+    finally { try { fs.closeSync(fd); } catch (e) { if (flushed) throw flushFailed('could not close after flushing', p, e); } }
+  } catch (e) { failure = e; }
+  if (readOnly) {
+    try { fs.chmodSync(p, mode); } catch (e) { if (!failure) failure = flushFailed('flushed, but could not restore read-only on', p, e); }
+  }
+  if (failure) throw failure;
+}
+
+/** Every directory at and under `root`, deepest first; links are not followed. */
+function dirsUnder(root) {
+  const out = [];
+  const walk = (d) => {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) if (e.isDirectory()) walk(path.join(d, e.name));
+    out.push(d);
+  };
+  walk(root);
+  return out;
+}
+
 /** Copy exactly the plan, refusing to write into anything that exists, then read every carried file back. */
 function applyDirCarry(src, dest, plan) {
   const skip = new Set(plan.excluded.map((e) => path.resolve(src, ...e.rel.split('/'))));
@@ -1284,7 +1323,15 @@ function applyDirCarry(src, dest, plan) {
   const present = planDirCarry(dest);
   const extra = present.files.map((f) => f.rel).filter((r) => !plan.files.some((f) => f.rel === r));
   for (const r of extra) mismatched.push({ rel: r, why: 'written but not in the plan' });
-  return { ok: mismatched.length === 0, mismatched, files: plan.files.length, bytes: plan.keptBytes };
+  if (mismatched.length) return { ok: false, mismatched, files: plan.files.length, bytes: plan.keptBytes, flush: null };
+  // D082: read back equal is the OS's copy; CARRIED waits for the device. Files first, then every directory of the
+  // copy deepest-first, then the parent that received the new entry. A FlushError leaves here for runCarryDir.
+  for (const f of plan.files) {
+    const b = path.join(dest, ...f.rel.split('/'));
+    if (fs.lstatSync(b).isFile()) flushFile(b);                    // a link is a directory entry: the dir flush covers it
+  }
+  const flush = flushDirs([...dirsUnder(dest), path.dirname(dest)]);
+  return { ok: true, mismatched, files: plan.files.length, bytes: plan.keptBytes, flush };
 }
 
 function runCarryDir(o, out, no) {
@@ -1308,14 +1355,25 @@ function runCarryDir(o, out, no) {
   for (const s of plan.suspects) out(`  SUSPECT   ${s.rel}/  named ${s.name} but carries no signature — CARRIED; check it is not a build directory`);
   if (!o.apply) return { ok: true, code: EXIT.OK, outcome: 'REHEARSED', carry: plan };
 
-  const done = applyDirCarry(src, dest, plan);
+  let done;
+  try {
+    done = applyDirCarry(src, dest, plan);
+  } catch (e) {
+    if (!(e instanceof FlushError)) throw e;
+    out(`NOT DONE — ${e.message}`);
+    out('  The copy may not be on the device. Do not unplug it as though this carried: remove the destination and run it again.');
+    return { ok: false, code: EXIT.SEAT, outcome: 'NOT_FLUSHED', why: `a flush to the destination failed: ${e.message}`, carry: plan };
+  }
+  for (const f of done.flush || []) {
+    if (f.result !== 'flushed') out(`  directory ${f.dir}: flush ${f.result} — the files in it were flushed; its entries were not confirmed`);
+  }
   if (!done.ok) {
     out(`FAILED — ${done.mismatched.length} file(s) did not carry whole:`);
     for (const m of done.mismatched) out(`  ${m.rel} — ${m.why}`);
     return { ok: false, code: EXIT.SEAT, outcome: 'FAILED', why: 'the carried directory did not read back equal to the plan', carry: plan, carried: done };
   }
   out(`CARRIED — ${done.files} file(s), ${done.bytes} bytes, every one read back equal`);
-  return { ok: true, code: EXIT.OK, outcome: 'CARRIED', carry: plan, carried: done };
+  return { ok: true, code: EXIT.OK, outcome: 'CARRIED', carry: plan, carried: done, flush: done.flush };
 }
 
 // ── D067 P-PRUNE — tails below the agreed offset: LISTED first, deleted only on a second, separate flag ─────
@@ -1779,7 +1837,7 @@ function main(argv, io, fixture) {
         code: res.code, outcome: res.outcome, why: res.why || null,
         files: c ? c.files.length : 0, keptBytes: c ? c.keptBytes : 0,
         excludedEntries: c ? c.excludedEntries : 0, excludedBytes: c ? c.excludedBytes : 0, line: c ? c.line : null,
-        excluded: c ? c.excluded : [], suspects: c ? c.suspects : [], carried: res.carried || null,
+        excluded: c ? c.excluded : [], suspects: c ? c.suspects : [], carried: res.carried || null, flush: res.flush || null,
       })}\n`);
     } else if (json && o.prune) {
       const p = res.prune || null;
