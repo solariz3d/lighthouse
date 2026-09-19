@@ -973,6 +973,70 @@ struct PaneEmus(Mutex<HashMap<String, Arc<Mutex<EmuState>>>>);
 /// fails if it happens.
 const FRESH_READONLY_TOOLS: &str = "Read,Glob,Grep,WebSearch,WebFetch,TodoWrite";
 
+/// P-SUGGESTION-OFF (D076): Claude Code's PROMPT SUGGESTIONS off, in every seat this app spawns.
+///
+/// The grey text the keeper found stalling the loop — *"the greyed out text prediction! If it spawns in the bar, it
+/// stops the loop"* (2026-09-07 05:09, quoted in `typed_only`'s doc) — is this feature: the startup `Try "..."` example
+/// and the after-response guess at the next prompt. Both are drawn in the composer, the gate reads an idle composer
+/// holding one as text, and the delivery holds. B found the switch at source and proved it live
+/// (`handback/p-suggestion-switch-B_2026-09-19.md` §2): with this variable `false` a throwaway session drew no dim
+/// text and its idle composer read EMPTY; unset, the same script ended holding a suggestion. The environment variable,
+/// not the `promptSuggestionEnabled` setting, because it takes precedence over every settings file and reaches only
+/// processes Consonance spawns — nothing the keeper starts from a terminal.
+///
+/// IT REACHES MAIN, and the keeper chose that knowing it: asked what is being turned off, "okay lets do it"
+/// (2026-09-19 02:2x, `librarian/2026-09-16.md` 02:25). Main is a spawned pane like any other.
+fn suppress_prompt_suggestions(cmd: &mut CommandBuilder) {
+    cmd.env("CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION", "false");
+}
+
+#[cfg(test)]
+mod suggestion_off_tests {
+    use super::*;
+
+    /// The variable, on a real `CommandBuilder`: `get_env` is portable-pty 0.8.1's own reader (`cmdbuilder.rs:322`).
+    /// The value is the one the docs name — `false` — and nothing looser.
+    #[test]
+    fn a_seat_command_carries_prompt_suggestions_off() {
+        let mut cmd = CommandBuilder::new("claude");
+        suppress_prompt_suggestions(&mut cmd);
+        assert_eq!(
+            cmd.get_env("CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION"),
+            Some(std::ffi::OsStr::new("false")),
+            "a seat must be spawned with prompt suggestions switched off"
+        );
+    }
+
+    /// WIRING, pinned by ORDER in the one funnel every seat passes through: the switch is applied to the command
+    /// BEFORE it is spawned, and nothing between the two clears the environment or sets the variable again.
+    /// The anchor is built with `concat!` because this test sits ABOVE the function it reads: a plain literal here is
+    /// the first match in the file, and the first run of this test passed against its own text with no wiring at all.
+    #[test]
+    fn the_seat_spawn_applies_it_before_the_command_is_spawned() {
+        let src = std::fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let body = src.split(concat!("fn spawn_claude_", "pane(app: AppHandle")).nth(1).expect("spawn_claude_pane moved");
+        let body = body.split("\n}\n").next().unwrap();
+        let call = body.find("suppress_prompt_suggestions(&mut cmd);").expect("the seat spawn never applies the switch");
+        let spawn = body.find("spawn_command(cmd)").expect("the spawn moved");
+        assert!(call < spawn, "the switch is applied after the command has already been spawned");
+        let between = &body[call..spawn];
+        assert!(!between.contains("env_clear"), "the environment is cleared after the switch is set");
+        assert!(!between.contains("CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION"), "the variable is set again after the switch");
+    }
+
+    /// D074's RESIDUE. A hold that ran out on a ready pane with NO readings recorded cannot say its composer "never
+    /// cleared": `SignalOutranked` is reached whenever the composer did not read empty, and that includes the gate not
+    /// finding the composer at all (`input_box_empty`'s unknown-holds rule). The row keeps the fact it has — the stamp
+    /// said ready — and says the rest was not recorded.
+    #[test]
+    fn an_outranked_hold_with_no_readings_claims_nothing_it_did_not_read() {
+        let row = delivery_note(PaneGate::Ready, Some(Forced::SignalOutranked));
+        assert!(!row.contains("never cleared"), "the row asserts a sighting it does not have: {row}");
+        assert!(row.contains("signal said ready"), "the stamp's fact must stay: {row}");
+        assert!(row.contains("no readings"), "the row must say its composer was not read: {row}");
+    }
+}
+
 fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool, skip_perms: bool) -> Result<PtySession, String> {
     // L052: READ-ONLY IS ENFORCED HERE, AT THE ONE FUNNEL, and that is the whole enforcement.
     //
@@ -1069,6 +1133,9 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     // whole night lived only in own-capture). Scrub the marker; assert persistence.
     cmd.env_remove("CLAUDE_CODE_CHILD_SESSION");
     cmd.env("CLAUDE_CODE_FORCE_SESSION_PERSIST", "1");
+    // No grey prompt suggestion in any seat's composer, Main included — the keeper's "If it spawns in the bar, it
+    // stops the loop" (2026-09-07), switched off per B's `handback/p-suggestion-switch-B_2026-09-19.md`. See the fn.
+    suppress_prompt_suggestions(&mut cmd);
     /* THE READY STAMP'S ADDRESS, passed rather than discovered. The pane's own Stop and
      * UserPromptSubmit hooks write `<ready dir>/<pane id>.json`, and the delivery gate reads it —
      * two sides of one contract, so BOTH sides have to agree on the name without a lookup table.
@@ -9220,9 +9287,10 @@ fn delivery_note_with(gate: PaneGate, forced: Option<Forced>, reads: Option<&Rea
     let clause = |r: Option<&Reads>| r.map(|r| format!("; composer: {}", reads_counts(r))).unwrap_or_default();
     let why = match (forced, reads) {
         (None, _) => String::new(),
-        // the stamp DID carry — say so, or the row reads as the mechanism failing
+        // the stamp DID carry — say so, or the row reads as the mechanism failing. With no readings recorded, say only
+        // that: the gate reaches this arm when the composer did not read empty, which includes not finding it (D076).
         (Some(Forced::SignalOutranked), None) => " (FORCED after the bounded hold — the pane's own signal said ready; \
-             its composer never cleared)"
+             its composer did not read empty, and no readings were recorded)"
             .to_string(),
         (Some(Forced::SignalOutranked), Some(r)) => format!(
             " (FORCED after the bounded hold — the pane's own signal said ready; {}; {})",
@@ -15484,7 +15552,7 @@ mod ready_signal_tests {
         // and each says the thing an observer would act on
         let all: Vec<&String> = rows.values().collect();
         let has = |nee: &str| all.iter().any(|r| r.contains(nee));
-        assert!(has("composer never cleared"), "the keeper-outranks case must be nameable");
+        assert!(has("composer did not read empty"), "the keeper-outranks case must be nameable");
         assert!(has("STALE"), "the killed-mid-turn pane must be nameable on the board");
         assert!(has("NO STAMP"), "install drift must stay nameable too");
         assert!(has("CONTRADICTED"), "the mirror must be nameable — bar 3 of this packet");
