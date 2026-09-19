@@ -579,11 +579,34 @@ function installedD(files) {
 /** verifyTree's answer for D's state tree — the same input cmdPull hands the reconciliation. */
 const verifiedD = (w) => M.verifyTree(w.stateD);
 
-/** gc_captures(), in one line: a second process that takes the file away under the install. */
+/**
+ * gc_captures(), in one line: a second process that takes the file away under the install.
+ *
+ * IT SIGNALS BEFORE IT IS TRUSTED (D083, B's `handback/p-six-reds-B_2026-09-19.md` §3). The old version was spawned and
+ * the install started at once; under load the child's Node start took longer than the whole install-and-verify, the file
+ * was never taken, the product correctly said `installed: true`, and these tests went red for a premise that never
+ * happened — 19 of 24 runs in B's load recipe, 15 of 24 in C's re-run. Now the child writes `ready` only after its loop
+ * has run one unlink pass, and deleter() does not return until that file exists. A child that never signals FAILS the
+ * test by name rather than letting it pass or fail on a race.
+ */
 function deleter(target) {
-  const script = `const fs=require('fs');const p=${JSON.stringify(target)};const end=Date.now()+6000;`
-    + `while(Date.now()<end){try{fs.unlinkSync(p)}catch(e){}}`;
-  return spawn(process.execPath, ['-e', script], { stdio: 'ignore' });
+  const ready = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'deleter-')), 'ready');
+  // 120 s is a SAFETY bound, not the window: the caller kills the child the moment the install returns. The old 6 s
+  // WAS the window, and under load the pull reached its write after it had closed (D083, C's re-run).
+  const script = `const fs=require('fs');const p=${JSON.stringify(target)};const end=Date.now()+120000;let told=false;`
+    + `while(Date.now()<end){try{fs.unlinkSync(p)}catch(e){}`
+    + `if(!told){fs.writeFileSync(${JSON.stringify(ready)},String(process.pid));told=true;}}`;
+  const child = spawn(process.execPath, ['-e', script], { stdio: 'ignore' });
+  // gc_captures RUNS concurrently with the install; a loop starved of CPU behind other work does not model it, and under
+  // load it missed the few-ms window between the install's write and its reconcile (D083: premise held, file survived).
+  try { os.setPriority(child.pid, os.constants.priority.PRIORITY_HIGH); } catch (_) { /* not permitted: the premise check below still speaks */ }
+  const nap = new Int32Array(new SharedArrayBuffer(4));
+  const deadline = Date.now() + 30000;
+  while (!fs.existsSync(ready)) {
+    if (Date.now() > deadline) { try { child.kill(); } catch (_) { /* gone */ } throw new Error(`the deleter never signalled ready in 30 s (${ready}) — the test's premise did not start`); }
+    Atomics.wait(nap, 0, 0, 5);                                     // sleep 5 ms without spinning: the child needs the CPU
+  }
+  return child;
 }
 
 test('reconcileInstall reports the whole set present when the data dir holds it', () => {
@@ -682,9 +705,10 @@ test('--pull --install EXITS NON-ZERO and names the path when the data dir loses
   // wrote `installed: true`. This second process IS gc_captures.
   const w = twoMachines({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail' });
   const child = deleter(path.join(w.dataD, 'captures', 'A.txt'));
-  let r;
-  try { r = runD(w, ['--pull', '--install']); }
+  let r, alive;
+  try { r = runD(w, ['--pull', '--install']); alive = child.exitCode === null && child.signalCode === null; }
   finally { try { child.kill(); } catch (_) { /* already gone */ } }
+  assert.ok(alive, 'PREMISE: the deleter must still be running when the install returns, or nothing was taken away');
   assert.strictEqual(r.code, 1, 'a set that did not land must not exit 0: ' + both(r));
   assert.ok(both(r).includes('SHORTFALL'), both(r));
   assert.ok(both(r).includes('captures/A.txt'), 'THE PATH, not the count: ' + both(r));
@@ -694,8 +718,10 @@ test('--pull --install EXITS NON-ZERO and names the path when the data dir loses
 test('a shortfall records installed:false and the missing paths, so the launcher reads a refusal', () => {
   const w = twoMachines({ 'board.jsonl': 'row\n', 'captures/A.txt': 'tail' });
   const child = deleter(path.join(w.dataD, 'captures', 'A.txt'));
-  try { runD(w, ['--pull', '--install']); }
+  let alive;
+  try { runD(w, ['--pull', '--install']); alive = child.exitCode === null && child.signalCode === null; }
   finally { try { child.kill(); } catch (_) { /* already gone */ } }
+  assert.ok(alive, 'PREMISE: the deleter must still be running when the install returns, or nothing was taken away');
   const c = JSON.parse(fs.readFileSync(path.join(w.dataD, M.COMPLETION_NAME), 'utf8'));
   assert.strictEqual(c.verified, true, 'the TREE was whole — that claim stands and is not withdrawn');
   assert.strictEqual(c.installed, false, "C's schema: installed means the set reached the data dir");

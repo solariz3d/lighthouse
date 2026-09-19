@@ -111,6 +111,92 @@ test('brace-counted cfg(test) regions cover the whole module and stop at its end
   assert.strictEqual(inTest.has(8), false, 'code after the module is live — the brace count closed');
 });
 
+// ── the brace counter reads Rust, not characters (D083, B's p-six-reds §2.6(b)) ────────────────
+// A `}` inside a string ended `mod where_a_seat_lives_tests` at main.rs:5785, and every test line after it was scored
+// as shipped code. The fixture below is main.rs:5782-5785 (at 5c97769) verbatim, inside a test module.
+const region = (lines) => G.rustTestLines(lines.join('\n'));
+
+test('THE LINE: a `}` inside a string literal does not close the test module (main.rs:5784, verbatim)', () => {
+  const inTest = region([
+    '#[cfg(test)]',                                                                                                  // 1
+    'mod where_a_seat_lives_tests {',                                                                                // 2
+    String.raw`    fn fn_body(src: &str, sig: &str) -> String {`,                                                    // 3
+    String.raw`        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));`, // 4
+    String.raw`        after[..after.find("\n}\n").expect("no end of function")].to_string()`,                          // 5
+    '    }',                                                                                                         // 6
+    '    let probe = 1;',                                                                                            // 7 (no path: a fixture must not add a site to the ratchet)
+    '}',                                                                                                             // 8
+    'fn live() {}',                                                                                                  // 9
+  ]);
+  assert.strictEqual(inTest.has(7), true, 'a line after the string\'s `}` is still inside the test module');
+  assert.strictEqual(inTest.has(8), true, 'the module\'s own closing brace is test code');
+  assert.strictEqual(inTest.has(9), false, 'code after the module is live');
+});
+
+test('char literals holding a brace are not braces; a lifetime is not a char literal', () => {
+  const inTest = region([
+    '#[cfg(test)]',                                   // 1
+    'mod t {',                                        // 2
+    "    fn f<'a>(s: &'a str) -> bool {",              // 3
+    "        s.ends_with('}') || s.starts_with('\\u{7d}') || s.contains('\\'')",  // 4 — net one `}` if chars are counted
+    "        let pair = ['\\u{7d}','}'];",           // 5 — misread the \u escape and its closing quote swallows ',', so the '}' counts
+    '    }',                                          // 6
+    '    fn g() {}',                                  // 7
+    '}',                                              // 8
+    'fn live() {}',                                   // 9
+  ]);
+  assert.strictEqual(inTest.has(7), true, 'the module is still open after the char literals');
+  assert.strictEqual(inTest.has(8), true);
+  assert.strictEqual(inTest.has(9), false, 'and it closes where it should — the lifetimes opened nothing');
+});
+
+test('raw strings holding a brace or a quote are not braces', () => {
+  const inTest = region([
+    '#[cfg(test)]',                                   // 1
+    'mod t {',                                        // 2
+    '    const A: &str = r#"}" and "}"#;',            // 3
+    '    const B: &str = r"}";',                      // 4
+    '    const C: &[u8] = br##"}"#}"##;',             // 5
+    '    fn g() {}',                                  // 6
+    '}',                                              // 7
+    'fn live() {}',                                   // 8
+  ]);
+  assert.strictEqual(inTest.has(6), true, 'the module is still open after the raw strings');
+  assert.strictEqual(inTest.has(8), false, 'and it closes where it should');
+});
+
+test('a string that spans lines keeps its brace to itself', () => {
+  const inTest = region([
+    '#[cfg(test)]',                                   // 1
+    'mod t {',                                        // 2
+    String.raw`    const E: &str = "say \"}\" twice";`,  // 3 — an escaped quote does not end the string
+    '    const A: &str = "first',                     // 4
+    '}',                                              // 5 — inside the string
+    '    last";',                                     // 6
+    '    fn g() {}',                                  // 7
+    '}',                                              // 8
+    'fn live() {}',                                   // 9
+  ]);
+  assert.strictEqual(inTest.has(7), true);
+  assert.strictEqual(inTest.has(9), false);
+});
+
+test('a quote or apostrophe in a comment opens no string, and a brace in a comment is not code', () => {
+  const inTest = region([
+    '#[cfg(test)]',                                   // 1
+    'mod t {',                                        // 2
+    "    // don't \"forget\" the }",                    // 3
+    '    /* a { that /* nests */ } */',               // 4
+    '    /* a lone } */',                             // 5 — an unbalanced brace in a block comment
+    '    fn g() {}',                                  // 6
+    '}',                                              // 7
+    'fn live() {}',                                   // 8
+  ]);
+  assert.strictEqual(inTest.has(6), true, 'the comment\'s } closed nothing');
+  assert.strictEqual(inTest.has(7), true);
+  assert.strictEqual(inTest.has(8), false, 'the comment\'s quote opened nothing that swallowed the close');
+});
+
 test('main.rs has no drive literal in LIVE code, and this is what proves it', () => {
   const src = fs.readFileSync(
     path.join(__dirname, '..', 'src-tauri', 'src', 'main.rs'), 'utf8');

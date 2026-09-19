@@ -113,7 +113,10 @@ function treeAt(rev) {
  * and demoted inside the same window — invisible to a START-vs-END set difference, and exactly the
  * shape a working forgetting organ would produce most often once it existed. */
 function lastBlob(p, to) {
-  const revs = gitq(['rev-list', to, '--', p]);
+  // --full-history (D083): without it, a merge TREESAME to its first parent for `p` — a line that never held the file —
+  // makes history simplification drop the path's whole history, and a departed file is counted at 0 bytes. B's
+  // handback/p-six-reds-B_2026-09-19.md §2.4: exo_memory/astra/SHELL.md, 0 B at HEAD, 161,665 B at e5e1eeb~1.
+  const revs = gitq(['rev-list', '--full-history', to, '--', p]);
   if (!revs || !revs.trim()) return null;
   for (const rev of revs.trim().split('\n').slice(0, 6)) {
     const out = gitq(['ls-tree', '-r', rev, '--', p]);

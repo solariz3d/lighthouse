@@ -202,6 +202,60 @@ test('an empty window reports nothing at all', () => {
   assert.ok(/FORGOTTEN\s+0 files/.test(out), 'a zero-length window found departures\n' + out);
 });
 
+// ---- D083: a departed file's BYTES survive a merge whose first parent never had it ---------------
+//
+// B found it (handback/p-six-reds-B_2026-09-19.md §2.4): `lastBlob` ran `git rev-list <to> -- <path>` without
+// --full-history. At a merge that is TREESAME to its first parent for that path — a line that never held the file —
+// history simplification follows only that parent, the path's whole history vanishes, lastBlob returns null, and the
+// departure is counted with 0 bytes (exo_memory/astra/SHELL.md: 0 B at HEAD, 161,665 B at e5e1eeb~1). The DIRECTORY log
+// that finds the departure still follows both parents (the side line touches exo_memory/ too), which is why the count
+// stayed right while the bytes went wrong. This fixture is that shape and nothing else.
+
+function mergeFixture() {
+  const repo = fs.mkdtempSync(path.join(tmp, 'merge-'));
+  git(repo, ['init', '-q']);
+  git(repo, ['config', 'user.email', 'fixture@test']);
+  git(repo, ['config', 'user.name', 'fixture']);
+  git(repo, ['checkout', '-q', '-b', 'main']);
+  write(repo, 'exo_memory/loop/keep.md', 'base\n');
+  git(repo, ['add', '-A']);
+  git(repo, ['commit', '-qm', 'base']);
+  const start = git(repo, ['rev-parse', 'HEAD']).trim();
+  git(repo, ['branch', 'side']);
+  // main: the file is born, then deleted — both inside the window.
+  write(repo, 'exo_memory/loop/gone.md', 'x'.repeat(1500) + '\n');   // 1,501 bytes
+  git(repo, ['add', '-A']);
+  git(repo, ['commit', '-qm', 'born on main']);
+  fs.unlinkSync(path.join(repo, 'exo_memory/loop/gone.md'));
+  // A SURVIVING change on main too, so the merge is NOT treesame for exo_memory/ as a whole and the directory log
+  // follows both parents, as it does in the real repo. Without it (the first draft) the directory log lost the file as
+  // well and the test went red for "not found" — a different defect shape from the one being fixed.
+  write(repo, 'exo_memory/loop/main-kept.md', 'survives on main\n');
+  git(repo, ['add', '-A']);
+  git(repo, ['commit', '-qm', 'deleted on main']);
+  // side: its own edit under exo_memory/, then it merges main — FIRST PARENT side, which never held gone.md.
+  git(repo, ['checkout', '-q', 'side']);
+  write(repo, 'exo_memory/loop/side.md', 'side work\n');
+  git(repo, ['add', '-A']);
+  git(repo, ['commit', '-qm', 'side work']);
+  git(repo, ['merge', '-q', '--no-ff', '--no-edit', 'main']);
+  const rs = path.join(repo, 'main.rs');
+  fs.writeFileSync(rs, 'if q.file_name().and_then(|x| x.to_str()) == Some("attic") { continue; }\n' +
+                       'q.extension().and_then(|x| x.to_str()) == Some("md")\n');
+  return { repo, start, rs };
+}
+
+test('a file deleted before a merge whose first parent never had it still reports its BYTES (not 0)', () => {
+  const M = mergeFixture();
+  // the fixture's premise, checked rather than assumed: plain rev-list loses the path, --full-history keeps it
+  assert.strictEqual(git(M.repo, ['rev-list', 'HEAD', '--', 'exo_memory/loop/gone.md']).trim(), '',
+                     'FIXTURE: history simplification no longer drops the path — the shape is not reproduced');
+  assert.notStrictEqual(git(M.repo, ['rev-list', '--full-history', 'HEAD', '--', 'exo_memory/loop/gone.md']).trim(), '');
+  const { out } = run(M.repo, ['--from', M.start, '--to', 'HEAD'], { FORGET_RATE_MAIN_RS: M.rs });
+  assert.ok(/DELETED\s+1/.test(out), 'the departure itself was not found\n' + out);
+  assert.ok(/FORGOTTEN\s+1 files \/ 1,501 bytes/.test(out), 'the departed bytes are wrong\n' + out);
+});
+
 // ---- the real corpus, pinned so a change breaks a test rather than a paragraph ------------------
 
 test('exo_memory/ has never lost a file from the reading path (all-time)', () => {

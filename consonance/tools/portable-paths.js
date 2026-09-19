@@ -250,6 +250,51 @@ function scan(text, skipComments = true) {
 // main.rs has 25 interleaved `#[cfg(test)]` blocks and every one of its 27 drive-literal hits is
 // inside one. Without this, the guard would report 27 false FATALs in the single most important
 // shipped file and be ignored by its second run. Brace-counted from the attribute's opening `{`.
+//
+// THE COUNT READS RUST, NOT CHARACTERS (D083). A `}` inside a string at main.rs:5784 — `find("\n}\n")` — closed
+// `mod where_a_seat_lives_tests` early, and every test line after it was scored as shipped code (B,
+// handback/p-six-reds-B_2026-09-19.md §2.6(b)). So braces are counted only in code: not in strings (which may span
+// lines and carry `\` escapes), raw strings (`r"…"`, `r#"…"#`, `br"…"`), char literals (`'}'`, `'\u{7d}'`), or
+// comments. Comments are not optional here: an apostrophe in `// don't` would otherwise open a char or string that
+// swallows the module's real close. A lone `'` that is not a char literal is a lifetime or a label, and opens nothing.
+// `st` carries the state across lines.
+function rustBraceScan(line, st, onBrace) {
+  let i = 0;
+  while (i < line.length) {
+    const c = line[i];
+    if (st.mode === 'str') {
+      if (c === '\\') { i += 2; continue; }
+      if (c === '"') st.mode = 'code';
+      i++;
+      continue;
+    }
+    if (st.mode === 'raw') {
+      if (c === '"' && line.startsWith('#'.repeat(st.hashes), i + 1)) { st.mode = 'code'; i += 1 + st.hashes; continue; }
+      i++;
+      continue;
+    }
+    if (st.mode === 'block') {
+      if (line.startsWith('/*', i)) { st.depth++; i += 2; continue; }
+      if (line.startsWith('*/', i)) { i += 2; if (--st.depth === 0) st.mode = 'code'; continue; }
+      i++;
+      continue;
+    }
+    if (line.startsWith('//', i)) break;
+    if (line.startsWith('/*', i)) { st.mode = 'block'; st.depth = 1; i += 2; continue; }
+    if (c === '"') { st.mode = 'str'; i++; continue; }
+    const raw = (c === 'r' || c === 'b') && !/[A-Za-z0-9_]/.test(line[i - 1] || '') ? /^b?r(#*)"/.exec(line.slice(i)) : null;
+    if (raw) { st.mode = 'raw'; st.hashes = raw[1].length; i += raw[0].length; continue; }
+    if (c === "'") {
+      const ch = /^'(?:\\(?:u\{[0-9A-Fa-f]{1,6}\}|x[0-9A-Fa-f]{2}|.)|[^\\'])'/u.exec(line.slice(i));
+      i += ch ? ch[0].length : 1;
+      continue;
+    }
+    if (c === '{') onBrace(1);
+    else if (c === '}') onBrace(-1);
+    i++;
+  }
+}
+
 function rustTestLines(text) {
   const lines = text.split(/\r?\n/);
   const inTest = new Set();
@@ -260,11 +305,9 @@ function rustTestLines(text) {
     if (j >= lines.length) continue;
     let depth = 0;
     let started = false;
+    const st = { mode: 'code', hashes: 0, depth: 0 };
     for (; j < lines.length; j++) {
-      for (const ch of lines[j]) {
-        if (ch === '{') { depth++; started = true; }
-        else if (ch === '}') depth--;
-      }
+      rustBraceScan(lines[j], st, (d) => { depth += d; if (d > 0) started = true; });
       inTest.add(j + 1);
       if (started && depth <= 0) break;
     }
