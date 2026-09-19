@@ -675,3 +675,40 @@ the committed scorer, not the scratch one.**
     R8i  AN EMPTY TEXT IS A VOID PAIR, NOT A READING (E's named edge: R8e's two clauses disagree at zero ids).
          If either side of a pair is empty after the strip, the pair is VOID and reported, the same way a hand-back
          stripped past 50% is. No cosine is computed from an empty window.
+
+## 8.12 · STEP 1 COMPUTED — 2026-09-19 ~13:1x on D, unattended run, lap D084 (landed 6843d61). READY TO REGISTER; NOT REGISTERED.
+
+*Appended by the chair outside the lap, at the librarian's landing order. The header above is deliberately NOT
+flipped: the run was unattended, and the keeper's word on R8g is outstanding (it is on his list in
+`loop/night_log_2026-09-19.md`).*
+
+**The scorer shas §8.11 promised and never recorded:**
+
+    dev/diversity/score.mjs                          19c97ab513f722d3b1d5084740d4ddea9206451046fd8ed15e02889743199e2a   the step-0 scorer, committed at D079 (5cd3164), UNMODIFIED
+    dev/diversity/score-step1.mjs                    5e84e9d90fd90ebb71e639604e4809bfd6a70c7f0b873c8c4740af819e442e59   step 1's scorer, a NEW file beside it
+    exo_memory/loop/diversity_c1/score-step1.diff    29e676b5a270f10338fcfab9e276eb12103a8b46310f53ae353f7cbb04c43146   the complete difference between the two
+    exo_memory/loop/diversity_c1/results-step1.json  fb34a8d0a34a85c22c7864abfa9d1861727cfe4ee566168d954c04f2b4936392   the per-row table
+
+**The instrument of record is `score.mjs` plus that diff**, and the diff is the only departure. Its two changes are
+the ones this document named: the control gate reads `passU` (§8.11), and m_i is computed per R8c with R8e's phase
+mean and R8f's symmetric-in-version rule. `dev/diversity/score-portable.mjs` (D081, 5602507) is a convenience that
+changes only how the repo root is found. It is NOT an instrument of this registration and nothing here cites it
+(the chair's ruling at N2, taking E's default).
+
+**m = 0.2952**, the median of m_i over **19** P2 hand-backs. Table: `exo_memory/loop/diversity_c1/m-step1.md` and
+`results-step1.json`.
+
+    re-derive:  node -e "const s=require('./exo_memory/loop/diversity_c1/results-step1.json').step1;const v=s.table.filter(x=>!x.void).map(x=>x.m_i).sort((a,b)=>a-b);console.log(v.length,v.length%2?v[(v.length-1)/2]:(v[v.length/2-1]+v[v.length/2])/2)"
+    (the chair ran the equivalent over `step1.table` at landing: 21 rows, 19 valid, 2 void, median 0.2952 = reported m)
+
+**Two rows VOID, reported and not dropped:** `p-stick-A` and `p-stick-E`. This is the :390 case: the row's parent
+holds no other packet, so there is no other-measure to subtract.
+
+**B's non-author read** (`handback/p-step1-read-B_2026-09-19.md`): m is computed as registered. On E's §6.2, whether
+the negative-control texts are meant at 1e944ac or at each row's parent, the text answers **reading A: the
+negative controls at their final state** (§8.7 R4, :196). The librarian checked that each negative text has exactly
+one commit, so the two readings coincide here and no version question remains.
+
+**What this does not settle:** R8g. At 0.75 blindness, polarity may read UNBLINDED, and then the run's registered
+result is uptake alone (see R8g above). That ruling is the keeper's, and so is spawning the two siblings per task
+that §8.9 needs. **Nothing in step 2 or later runs until the header says REGISTERED with a sha.**
