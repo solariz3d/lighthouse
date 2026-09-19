@@ -1,0 +1,5916 @@
+{
+  "run": "1e944ac",
+  "prereg": "51ef51d325d2d86260bb4e01f9d2b4b365b4688a2292f65157624f5ab4c80a2a",
+  "s40": "73917f673b7d98130fe8195cf953bd35c4fa3534dbf00c41da1492e039a4e087",
+  "encoder": "e7f6af7a9457d4fdd3af220c68e9a37325aad7c2d306bbc855fe0d019c326509",
+  "controls": {
+    "positive": {
+      "removedLines": "12-23",
+      "bytes": 9230,
+      "primary": 0.8575,
+      "centroid": 0.9337,
+      "pass": true,
+      "U": 0.8409,
+      "Umin": 0.793,
+      "Umax": 0.8772,
+      "centroidTW": 0.9494,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.8575,
+          "centroidTW": 0.9491
+        },
+        {
+          "phase": 300,
+          "primary": 0.793,
+          "centroidTW": 0.9321
+        },
+        {
+          "phase": 600,
+          "primary": 0.8068,
+          "centroidTW": 0.9324
+        },
+        {
+          "phase": 900,
+          "primary": 0.8772,
+          "centroidTW": 0.9573
+        },
+        {
+          "phase": 1200,
+          "primary": 0.8619,
+          "centroidTW": 0.9643
+        },
+        {
+          "phase": 1500,
+          "primary": 0.8491,
+          "centroidTW": 0.9614
+        }
+      ],
+      "passU": true
+    },
+    "negative": {
+      "path": "exo_memory/handback/p-harness-E_2026-09-15.md",
+      "sha": "1e944ac",
+      "primary": 0.4521,
+      "centroid": 0.5268,
+      "hbShare": 0,
+      "pass": true,
+      "U": 0.4548,
+      "Umin": 0.4391,
+      "Umax": 0.4734,
+      "centroidTW": 0.5369,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.4521,
+          "centroidTW": 0.5254
+        },
+        {
+          "phase": 300,
+          "primary": 0.4681,
+          "centroidTW": 0.5599
+        },
+        {
+          "phase": 600,
+          "primary": 0.4734,
+          "centroidTW": 0.5765
+        },
+        {
+          "phase": 900,
+          "primary": 0.4515,
+          "centroidTW": 0.5203
+        },
+        {
+          "phase": 1200,
+          "primary": 0.4391,
+          "centroidTW": 0.508
+        },
+        {
+          "phase": 1500,
+          "primary": 0.4446,
+          "centroidTW": 0.5314
+        }
+      ],
+      "passU": true
+    }
+  },
+  "p1": {
+    "B-read": {
+      "U": 0.6866,
+      "Umin": 0.6702,
+      "Umax": 0.7059,
+      "centroidTW": 0.823,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.688,
+          "centroidTW": 0.7986
+        },
+        {
+          "phase": 300,
+          "primary": 0.6923,
+          "centroidTW": 0.8536
+        },
+        {
+          "phase": 600,
+          "primary": 0.6702,
+          "centroidTW": 0.8197
+        },
+        {
+          "phase": 900,
+          "primary": 0.6881,
+          "centroidTW": 0.8036
+        },
+        {
+          "phase": 1200,
+          "primary": 0.7059,
+          "centroidTW": 0.8391
+        },
+        {
+          "phase": 1500,
+          "primary": 0.6753,
+          "centroidTW": 0.8236
+        }
+      ],
+      "path": "exo_memory/handback/p-leave-read-B_2026-09-14.md",
+      "sha": "9e29daf",
+      "bytes": 16050,
+      "void": false,
+      "primary": 0.688,
+      "centroid": 0.8009,
+      "unstripped": 0.7003,
+      "hb": {
+        "strippedChars": 563,
+        "normalisedChars": 15079,
+        "share": 0.0373,
+        "tokens": 4398,
+        "windows": 3,
+        "absM": 0.9015
+      },
+      "br": {
+        "strippedChars": 563,
+        "normalisedChars": 8840,
+        "share": 0.0637,
+        "tokens": 2466,
+        "windows": 2,
+        "absM": 0.935
+      }
+    },
+    "A": {
+      "U": 0.7328,
+      "Umin": 0.7112,
+      "Umax": 0.7471,
+      "centroidTW": 0.8439,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.72,
+          "centroidTW": 0.822
+        },
+        {
+          "phase": 300,
+          "primary": 0.7112,
+          "centroidTW": 0.8245
+        },
+        {
+          "phase": 600,
+          "primary": 0.7265,
+          "centroidTW": 0.854
+        },
+        {
+          "phase": 900,
+          "primary": 0.7471,
+          "centroidTW": 0.8477
+        },
+        {
+          "phase": 1200,
+          "primary": 0.7452,
+          "centroidTW": 0.861
+        },
+        {
+          "phase": 1500,
+          "primary": 0.7468,
+          "centroidTW": 0.8541
+        }
+      ],
+      "path": "exo_memory/handback/p-leave-A_2026-09-14.md",
+      "sha": "99649d8",
+      "bytes": 21298,
+      "void": false,
+      "primary": 0.72,
+      "centroid": 0.8388,
+      "unstripped": 0.7334,
+      "hb": {
+        "strippedChars": 43,
+        "normalisedChars": 18961,
+        "share": 0.0023,
+        "tokens": 5375,
+        "windows": 3,
+        "absM": 0.9371
+      },
+      "br": {
+        "strippedChars": 43,
+        "normalisedChars": 8840,
+        "share": 0.0049,
+        "tokens": 2603,
+        "windows": 2,
+        "absM": 0.9229
+      }
+    },
+    "E": {
+      "U": 0.6497,
+      "Umin": 0.6231,
+      "Umax": 0.6635,
+      "centroidTW": 0.7985,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.6401,
+          "centroidTW": 0.7764
+        },
+        {
+          "phase": 300,
+          "primary": 0.6231,
+          "centroidTW": 0.7745
+        },
+        {
+          "phase": 600,
+          "primary": 0.651,
+          "centroidTW": 0.8152
+        },
+        {
+          "phase": 900,
+          "primary": 0.6595,
+          "centroidTW": 0.7995
+        },
+        {
+          "phase": 1200,
+          "primary": 0.6611,
+          "centroidTW": 0.8133
+        },
+        {
+          "phase": 1500,
+          "primary": 0.6635,
+          "centroidTW": 0.812
+        }
+      ],
+      "path": "exo_memory/handback/p-leave-E_2026-09-14.md",
+      "sha": "99649d8",
+      "bytes": 35743,
+      "void": false,
+      "primary": 0.6401,
+      "centroid": 0.7974,
+      "unstripped": 0.6721,
+      "hb": {
+        "strippedChars": 517,
+        "normalisedChars": 30046,
+        "share": 0.0172,
+        "tokens": 8641,
+        "windows": 5,
+        "absM": 0.8639
+      },
+      "br": {
+        "strippedChars": 321,
+        "normalisedChars": 8840,
+        "share": 0.0363,
+        "tokens": 2500,
+        "windows": 2,
+        "absM": 0.9422
+      }
+    }
+  },
+  "p1_prediction": {
+    "B": 0.688,
+    "lowerOfAE": 0.6401,
+    "margin_B_minus_lower": 0.0479,
+    "fires": true
+  },
+  "p1_predictionU": {
+    "B": 0.6866,
+    "lowerOfAE": 0.6497,
+    "margin_B_minus_lower": 0.0369,
+    "fires": true
+  },
+  "p2": {
+    "rows": [
+      {
+        "step1": {
+          "otherPacketsAtParent": 4,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "11-23",
+          "Upos": {
+            "U": 0.8285,
+            "Umin": 0.801,
+            "Umax": 0.8534,
+            "centroidTW": 0.9606,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8534,
+                "centroidTW": 0.9633
+              },
+              {
+                "phase": 300,
+                "primary": 0.8422,
+                "centroidTW": 0.9607
+              },
+              {
+                "phase": 600,
+                "primary": 0.8282,
+                "centroidTW": 0.9602
+              },
+              {
+                "phase": 900,
+                "primary": 0.8193,
+                "centroidTW": 0.9602
+              },
+              {
+                "phase": 1200,
+                "primary": 0.801,
+                "centroidTW": 0.9523
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8267,
+                "centroidTW": 0.9671
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4726,
+            "Umin": 0.4566,
+            "Umax": 0.4891,
+            "centroidTW": 0.5582,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4659,
+                "centroidTW": 0.544
+              },
+              {
+                "phase": 300,
+                "primary": 0.4698,
+                "centroidTW": 0.5527
+              },
+              {
+                "phase": 600,
+                "primary": 0.4803,
+                "centroidTW": 0.5687
+              },
+              {
+                "phase": 900,
+                "primary": 0.4891,
+                "centroidTW": 0.5817
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4566,
+                "centroidTW": 0.5348
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4739,
+                "centroidTW": 0.5676
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.6305,
+          "deltaSymU": 0.1094,
+          "scale": 0.3559,
+          "m_i": 0.3075,
+          "m_i_raw": 0.30749192642871925
+        },
+        "handback": "exo_memory/handback/p-diverged-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "31fb65f",
+        "landedAt": "862509f",
+        "flag": null,
+        "own": 0.7519,
+        "ownCentroid": 0.8501,
+        "ownHbShare": 0.0347,
+        "ownHandbackText": {
+          "tokens": 4713,
+          "windows": 3,
+          "absM": 0.9159,
+          "strippedChars": 575,
+          "normalisedChars": 16570
+        },
+        "ownBriefText": {
+          "tokens": 3461,
+          "windows": 2,
+          "absM": 0.9543,
+          "strippedChars": 575,
+          "normalisedChars": 12352,
+          "share": 0.0466
+        },
+        "otherMean": 0.6218,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1302,
+        "sensitivity_otherMeanAtParent": 0.6449,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.1071,
+        "ownU": {
+          "U": 0.7399,
+          "Umin": 0.709,
+          "Umax": 0.7523,
+          "centroidTW": 0.8708,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7519,
+              "centroidTW": 0.8596
+            },
+            {
+              "phase": 300,
+              "primary": 0.709,
+              "centroidTW": 0.8376
+            },
+            {
+              "phase": 600,
+              "primary": 0.7386,
+              "centroidTW": 0.8901
+            },
+            {
+              "phase": 900,
+              "primary": 0.7422,
+              "centroidTW": 0.877
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7454,
+              "centroidTW": 0.8852
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7523,
+              "centroidTW": 0.8756
+            }
+          ]
+        },
+        "otherMeanU": 0.6097,
+        "deltaU": 0.1302
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 4,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "11-23",
+          "Upos": {
+            "U": 0.8285,
+            "Umin": 0.801,
+            "Umax": 0.8534,
+            "centroidTW": 0.9606,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8534,
+                "centroidTW": 0.9633
+              },
+              {
+                "phase": 300,
+                "primary": 0.8422,
+                "centroidTW": 0.9607
+              },
+              {
+                "phase": 600,
+                "primary": 0.8282,
+                "centroidTW": 0.9602
+              },
+              {
+                "phase": 900,
+                "primary": 0.8193,
+                "centroidTW": 0.9602
+              },
+              {
+                "phase": 1200,
+                "primary": 0.801,
+                "centroidTW": 0.9523
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8267,
+                "centroidTW": 0.9671
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4726,
+            "Umin": 0.4566,
+            "Umax": 0.4891,
+            "centroidTW": 0.5582,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4659,
+                "centroidTW": 0.544
+              },
+              {
+                "phase": 300,
+                "primary": 0.4698,
+                "centroidTW": 0.5527
+              },
+              {
+                "phase": 600,
+                "primary": 0.4803,
+                "centroidTW": 0.5687
+              },
+              {
+                "phase": 900,
+                "primary": 0.4891,
+                "centroidTW": 0.5817
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4566,
+                "centroidTW": 0.5348
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4739,
+                "centroidTW": 0.5676
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.6234,
+          "deltaSymU": 0.1051,
+          "scale": 0.3559,
+          "m_i": 0.2952,
+          "m_i_raw": 0.2952191298387275
+        },
+        "handback": "exo_memory/handback/p-diverged-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "31fb65f",
+        "landedAt": "862509f",
+        "flag": null,
+        "own": 0.762,
+        "ownCentroid": 0.8575,
+        "ownHbShare": 0.045,
+        "ownHandbackText": {
+          "tokens": 2645,
+          "windows": 2,
+          "absM": 0.9209,
+          "strippedChars": 436,
+          "normalisedChars": 9686
+        },
+        "ownBriefText": {
+          "tokens": 3547,
+          "windows": 2,
+          "absM": 0.9523,
+          "strippedChars": 380,
+          "normalisedChars": 12352,
+          "share": 0.0308
+        },
+        "otherMean": 0.5936,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1684,
+        "sensitivity_otherMeanAtParent": 0.6343,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.1277,
+        "ownU": {
+          "U": 0.7284,
+          "Umin": 0.6973,
+          "Umax": 0.762,
+          "centroidTW": 0.8432,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.762,
+              "centroidTW": 0.8589
+            },
+            {
+              "phase": 300,
+              "primary": 0.7548,
+              "centroidTW": 0.8689
+            },
+            {
+              "phase": 600,
+              "primary": 0.6973,
+              "centroidTW": 0.8103
+            },
+            {
+              "phase": 900,
+              "primary": 0.7219,
+              "centroidTW": 0.8412
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7165,
+              "centroidTW": 0.8351
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7181,
+              "centroidTW": 0.8452
+            }
+          ]
+        },
+        "otherMeanU": 0.5874,
+        "deltaU": 0.1411
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 4,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "11-23",
+          "Upos": {
+            "U": 0.8285,
+            "Umin": 0.801,
+            "Umax": 0.8534,
+            "centroidTW": 0.9606,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8534,
+                "centroidTW": 0.9633
+              },
+              {
+                "phase": 300,
+                "primary": 0.8422,
+                "centroidTW": 0.9607
+              },
+              {
+                "phase": 600,
+                "primary": 0.8282,
+                "centroidTW": 0.9602
+              },
+              {
+                "phase": 900,
+                "primary": 0.8193,
+                "centroidTW": 0.9602
+              },
+              {
+                "phase": 1200,
+                "primary": 0.801,
+                "centroidTW": 0.9523
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8267,
+                "centroidTW": 0.9671
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4726,
+            "Umin": 0.4566,
+            "Umax": 0.4891,
+            "centroidTW": 0.5582,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4659,
+                "centroidTW": 0.544
+              },
+              {
+                "phase": 300,
+                "primary": 0.4698,
+                "centroidTW": 0.5527
+              },
+              {
+                "phase": 600,
+                "primary": 0.4803,
+                "centroidTW": 0.5687
+              },
+              {
+                "phase": 900,
+                "primary": 0.4891,
+                "centroidTW": 0.5817
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4566,
+                "centroidTW": 0.5348
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4739,
+                "centroidTW": 0.5676
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.6403,
+          "deltaSymU": 0.1387,
+          "scale": 0.3559,
+          "m_i": 0.3897,
+          "m_i_raw": 0.3896649871398488
+        },
+        "handback": "exo_memory/handback/p-diverged-read-C_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "6397e1a",
+        "landedAt": "6dbdae9",
+        "flag": null,
+        "own": 0.8059,
+        "ownCentroid": 0.8875,
+        "ownHbShare": 0.0357,
+        "ownHandbackText": {
+          "tokens": 3006,
+          "windows": 2,
+          "absM": 0.9439,
+          "strippedChars": 366,
+          "normalisedChars": 10244
+        },
+        "ownBriefText": {
+          "tokens": 3507,
+          "windows": 2,
+          "absM": 0.9556,
+          "strippedChars": 419,
+          "normalisedChars": 12352,
+          "share": 0.0339
+        },
+        "otherMean": 0.6151,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1908,
+        "sensitivity_otherMeanAtParent": 0.6544,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.1515,
+        "ownU": {
+          "U": 0.779,
+          "Umin": 0.746,
+          "Umax": 0.8059,
+          "centroidTW": 0.8987,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8059,
+              "centroidTW": 0.8913
+            },
+            {
+              "phase": 300,
+              "primary": 0.746,
+              "centroidTW": 0.8625
+            },
+            {
+              "phase": 600,
+              "primary": 0.7741,
+              "centroidTW": 0.917
+            },
+            {
+              "phase": 900,
+              "primary": 0.7723,
+              "centroidTW": 0.9114
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7756,
+              "centroidTW": 0.9022
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8,
+              "centroidTW": 0.9079
+            }
+          ]
+        },
+        "otherMeanU": 0.6065,
+        "deltaU": 0.1725
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 4,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "11-23",
+          "Upos": {
+            "U": 0.8285,
+            "Umin": 0.801,
+            "Umax": 0.8534,
+            "centroidTW": 0.9606,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8534,
+                "centroidTW": 0.9633
+              },
+              {
+                "phase": 300,
+                "primary": 0.8422,
+                "centroidTW": 0.9607
+              },
+              {
+                "phase": 600,
+                "primary": 0.8282,
+                "centroidTW": 0.9602
+              },
+              {
+                "phase": 900,
+                "primary": 0.8193,
+                "centroidTW": 0.9602
+              },
+              {
+                "phase": 1200,
+                "primary": 0.801,
+                "centroidTW": 0.9523
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8267,
+                "centroidTW": 0.9671
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4726,
+            "Umin": 0.4566,
+            "Umax": 0.4891,
+            "centroidTW": 0.5582,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4659,
+                "centroidTW": 0.544
+              },
+              {
+                "phase": 300,
+                "primary": 0.4698,
+                "centroidTW": 0.5527
+              },
+              {
+                "phase": 600,
+                "primary": 0.4803,
+                "centroidTW": 0.5687
+              },
+              {
+                "phase": 900,
+                "primary": 0.4891,
+                "centroidTW": 0.5817
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4566,
+                "centroidTW": 0.5348
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4739,
+                "centroidTW": 0.5676
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.6404,
+          "deltaSymU": 0.0963,
+          "scale": 0.3559,
+          "m_i": 0.2707,
+          "m_i_raw": 0.2707472064606911
+        },
+        "handback": "exo_memory/handback/p-diverged-read2-C_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "5e21844",
+        "landedAt": "9f2ab75",
+        "flag": null,
+        "own": 0.7501,
+        "ownCentroid": 0.848,
+        "ownHbShare": 0.0159,
+        "ownHandbackText": {
+          "tokens": 3935,
+          "windows": 3,
+          "absM": 0.9004,
+          "strippedChars": 197,
+          "normalisedChars": 12395
+        },
+        "ownBriefText": {
+          "tokens": 3584,
+          "windows": 2,
+          "absM": 0.952,
+          "strippedChars": 148,
+          "normalisedChars": 12352,
+          "share": 0.012
+        },
+        "otherMean": 0.6138,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1363,
+        "sensitivity_otherMeanAtParent": 0.6441,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.106,
+        "ownU": {
+          "U": 0.7367,
+          "Umin": 0.6961,
+          "Umax": 0.7549,
+          "centroidTW": 0.8636,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7501,
+              "centroidTW": 0.852
+            },
+            {
+              "phase": 300,
+              "primary": 0.6961,
+              "centroidTW": 0.8105
+            },
+            {
+              "phase": 600,
+              "primary": 0.7487,
+              "centroidTW": 0.8758
+            },
+            {
+              "phase": 900,
+              "primary": 0.7549,
+              "centroidTW": 0.8929
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7354,
+              "centroidTW": 0.8722
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7351,
+              "centroidTW": 0.8781
+            }
+          ]
+        },
+        "otherMeanU": 0.6129,
+        "deltaU": 0.1239
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 7,
+          "absentAtParent": [],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "9-19",
+          "Upos": {
+            "U": 0.8548,
+            "Umin": 0.6857,
+            "Umax": 0.921,
+            "centroidTW": 0.9155,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.921,
+                "centroidTW": 0.921
+              },
+              {
+                "phase": 300,
+                "primary": 0.6857,
+                "centroidTW": 0.8884
+              },
+              {
+                "phase": 600,
+                "primary": 0.7826,
+                "centroidTW": 0.9235
+              },
+              {
+                "phase": 900,
+                "primary": 0.8973,
+                "centroidTW": 0.918
+              },
+              {
+                "phase": 1200,
+                "primary": 0.921,
+                "centroidTW": 0.921
+              },
+              {
+                "phase": 1500,
+                "primary": 0.921,
+                "centroidTW": 0.921
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4179,
+            "Umin": 0.3923,
+            "Umax": 0.4302,
+            "centroidTW": 0.478,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.423,
+                "centroidTW": 0.4636
+              },
+              {
+                "phase": 300,
+                "primary": 0.3923,
+                "centroidTW": 0.4834
+              },
+              {
+                "phase": 600,
+                "primary": 0.418,
+                "centroidTW": 0.5088
+              },
+              {
+                "phase": 900,
+                "primary": 0.4302,
+                "centroidTW": 0.484
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4188,
+                "centroidTW": 0.4556
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4252,
+                "centroidTW": 0.4723
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.3877,
+          "deltaSymU": 0.1139,
+          "scale": 0.4369,
+          "m_i": 0.2606,
+          "m_i_raw": 0.26062579727445684
+        },
+        "handback": "exo_memory/handback/p-diversity-c0-C_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diversity_c0_2026-09-15.md",
+        "ownSha": "cf0ea20",
+        "landedAt": "e53c71b",
+        "flag": null,
+        "own": 0.5087,
+        "ownCentroid": 0.5639,
+        "ownHbShare": 0.0082,
+        "ownHandbackText": {
+          "tokens": 6714,
+          "windows": 4,
+          "absM": 0.901,
+          "strippedChars": 169,
+          "normalisedChars": 20713
+        },
+        "ownBriefText": {
+          "tokens": 902,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 169,
+          "normalisedChars": 3417,
+          "share": 0.0495
+        },
+        "otherMean": 0.4012,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1075,
+        "sensitivity_otherMeanAtParent": 0.4012,
+        "sensitivity_nOthers": 7,
+        "sensitivity_delta": 0.1075,
+        "ownU": {
+          "U": 0.5015,
+          "Umin": 0.4709,
+          "Umax": 0.5171,
+          "centroidTW": 0.5799,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.5087,
+              "centroidTW": 0.5627
+            },
+            {
+              "phase": 300,
+              "primary": 0.4971,
+              "centroidTW": 0.6302
+            },
+            {
+              "phase": 600,
+              "primary": 0.4709,
+              "centroidTW": 0.5849
+            },
+            {
+              "phase": 900,
+              "primary": 0.5001,
+              "centroidTW": 0.5631
+            },
+            {
+              "phase": 1200,
+              "primary": 0.5171,
+              "centroidTW": 0.5754
+            },
+            {
+              "phase": 1500,
+              "primary": 0.5151,
+              "centroidTW": 0.5629
+            }
+          ]
+        },
+        "otherMeanU": 0.3877,
+        "deltaU": 0.1139
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 7,
+          "absentAtParent": [],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "9-19",
+          "Upos": {
+            "U": 0.8548,
+            "Umin": 0.6857,
+            "Umax": 0.921,
+            "centroidTW": 0.9155,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.921,
+                "centroidTW": 0.921
+              },
+              {
+                "phase": 300,
+                "primary": 0.6857,
+                "centroidTW": 0.8884
+              },
+              {
+                "phase": 600,
+                "primary": 0.7826,
+                "centroidTW": 0.9235
+              },
+              {
+                "phase": 900,
+                "primary": 0.8973,
+                "centroidTW": 0.918
+              },
+              {
+                "phase": 1200,
+                "primary": 0.921,
+                "centroidTW": 0.921
+              },
+              {
+                "phase": 1500,
+                "primary": 0.921,
+                "centroidTW": 0.921
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4179,
+            "Umin": 0.3923,
+            "Umax": 0.4302,
+            "centroidTW": 0.478,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.423,
+                "centroidTW": 0.4636
+              },
+              {
+                "phase": 300,
+                "primary": 0.3923,
+                "centroidTW": 0.4834
+              },
+              {
+                "phase": 600,
+                "primary": 0.418,
+                "centroidTW": 0.5088
+              },
+              {
+                "phase": 900,
+                "primary": 0.4302,
+                "centroidTW": 0.484
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4188,
+                "centroidTW": 0.4556
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4252,
+                "centroidTW": 0.4723
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.472,
+          "deltaSymU": 0.0948,
+          "scale": 0.4369,
+          "m_i": 0.2169,
+          "m_i_raw": 0.2169052945263392
+        },
+        "handback": "exo_memory/handback/p-diversity-c0-E_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diversity_c0_2026-09-15.md",
+        "ownSha": "cf0ea20",
+        "landedAt": "e53c71b",
+        "flag": null,
+        "own": 0.5896,
+        "ownCentroid": 0.6191,
+        "ownHbShare": 0.0055,
+        "ownHandbackText": {
+          "tokens": 3201,
+          "windows": 2,
+          "absM": 0.9507,
+          "strippedChars": 58,
+          "normalisedChars": 10552
+        },
+        "ownBriefText": {
+          "tokens": 924,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 58,
+          "normalisedChars": 3417,
+          "share": 0.017
+        },
+        "otherMean": 0.4736,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.116,
+        "sensitivity_otherMeanAtParent": 0.4736,
+        "sensitivity_nOthers": 7,
+        "sensitivity_delta": 0.116,
+        "ownU": {
+          "U": 0.5668,
+          "Umin": 0.5458,
+          "Umax": 0.5896,
+          "centroidTW": 0.6363,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.5896,
+              "centroidTW": 0.6196
+            },
+            {
+              "phase": 300,
+              "primary": 0.5458,
+              "centroidTW": 0.658
+            },
+            {
+              "phase": 600,
+              "primary": 0.5845,
+              "centroidTW": 0.7133
+            },
+            {
+              "phase": 900,
+              "primary": 0.5514,
+              "centroidTW": 0.6123
+            },
+            {
+              "phase": 1200,
+              "primary": 0.5501,
+              "centroidTW": 0.596
+            },
+            {
+              "phase": 1500,
+              "primary": 0.5792,
+              "centroidTW": 0.6186
+            }
+          ]
+        },
+        "otherMeanU": 0.472,
+        "deltaU": 0.0948
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 6,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-leave-E_2026-09-14.md",
+          "posRemovedLines": "7-18",
+          "Upos": {
+            "U": 0.8911,
+            "Umin": 0.8163,
+            "Umax": 0.9551,
+            "centroidTW": 0.9532,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.9551,
+                "centroidTW": 0.9551
+              },
+              {
+                "phase": 300,
+                "primary": 0.8857,
+                "centroidTW": 0.9515
+              },
+              {
+                "phase": 600,
+                "primary": 0.8163,
+                "centroidTW": 0.9352
+              },
+              {
+                "phase": 900,
+                "primary": 0.8586,
+                "centroidTW": 0.955
+              },
+              {
+                "phase": 1200,
+                "primary": 0.8816,
+                "centroidTW": 0.9629
+              },
+              {
+                "phase": 1500,
+                "primary": 0.9495,
+                "centroidTW": 0.9595
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.5433,
+            "Umin": 0.5244,
+            "Umax": 0.5672,
+            "centroidTW": 0.6454,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.5244,
+                "centroidTW": 0.5997
+              },
+              {
+                "phase": 300,
+                "primary": 0.5672,
+                "centroidTW": 0.6754
+              },
+              {
+                "phase": 600,
+                "primary": 0.5513,
+                "centroidTW": 0.6801
+              },
+              {
+                "phase": 900,
+                "primary": 0.5409,
+                "centroidTW": 0.6479
+              },
+              {
+                "phase": 1200,
+                "primary": 0.5438,
+                "centroidTW": 0.6494
+              },
+              {
+                "phase": 1500,
+                "primary": 0.5319,
+                "centroidTW": 0.6196
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.5429,
+          "deltaSymU": 0.1141,
+          "scale": 0.3479,
+          "m_i": 0.3279,
+          "m_i_raw": 0.3279298531272811
+        },
+        "handback": "exo_memory/handback/p-harness-A_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "faaaa7b",
+        "landedAt": "9ff51b4",
+        "flag": null,
+        "own": 0.6502,
+        "ownCentroid": 0.6895,
+        "ownHbShare": 0.0049,
+        "ownHandbackText": {
+          "tokens": 4826,
+          "windows": 3,
+          "absM": 0.9379,
+          "strippedChars": 83,
+          "normalisedChars": 16913
+        },
+        "ownBriefText": {
+          "tokens": 1515,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 83,
+          "normalisedChars": 5493,
+          "share": 0.0151
+        },
+        "otherMean": 0.5543,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.0959,
+        "sensitivity_otherMeanAtParent": 0.5623,
+        "sensitivity_nOthers": 6,
+        "sensitivity_delta": 0.0879,
+        "ownU": {
+          "U": 0.6569,
+          "Umin": 0.6346,
+          "Umax": 0.696,
+          "centroidTW": 0.7289,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6502,
+              "centroidTW": 0.6928
+            },
+            {
+              "phase": 300,
+              "primary": 0.696,
+              "centroidTW": 0.7642
+            },
+            {
+              "phase": 600,
+              "primary": 0.644,
+              "centroidTW": 0.7568
+            },
+            {
+              "phase": 900,
+              "primary": 0.6346,
+              "centroidTW": 0.7156
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6448,
+              "centroidTW": 0.7276
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6721,
+              "centroidTW": 0.7163
+            }
+          ]
+        },
+        "otherMeanU": 0.5353,
+        "deltaU": 0.1216
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 6,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-leave-E_2026-09-14.md",
+          "posRemovedLines": "7-18",
+          "Upos": {
+            "U": 0.893,
+            "Umin": 0.8159,
+            "Umax": 0.945,
+            "centroidTW": 0.9472,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.945,
+                "centroidTW": 0.945
+              },
+              {
+                "phase": 300,
+                "primary": 0.8741,
+                "centroidTW": 0.9518
+              },
+              {
+                "phase": 600,
+                "primary": 0.8159,
+                "centroidTW": 0.9539
+              },
+              {
+                "phase": 900,
+                "primary": 0.8437,
+                "centroidTW": 0.9393
+              },
+              {
+                "phase": 1200,
+                "primary": 0.9341,
+                "centroidTW": 0.9479
+              },
+              {
+                "phase": 1500,
+                "primary": 0.945,
+                "centroidTW": 0.945
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.5543,
+            "Umin": 0.5338,
+            "Umax": 0.5835,
+            "centroidTW": 0.6539,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.5395,
+                "centroidTW": 0.6169
+              },
+              {
+                "phase": 300,
+                "primary": 0.5835,
+                "centroidTW": 0.6987
+              },
+              {
+                "phase": 600,
+                "primary": 0.5732,
+                "centroidTW": 0.7001
+              },
+              {
+                "phase": 900,
+                "primary": 0.5338,
+                "centroidTW": 0.6495
+              },
+              {
+                "phase": 1200,
+                "primary": 0.5581,
+                "centroidTW": 0.6382
+              },
+              {
+                "phase": 1500,
+                "primary": 0.538,
+                "centroidTW": 0.6201
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.4728,
+          "deltaSymU": 0.1087,
+          "scale": 0.3386,
+          "m_i": 0.3209,
+          "m_i_raw": 0.3208700861227933
+        },
+        "handback": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "2782af4",
+        "landedAt": "04532bc",
+        "flag": null,
+        "own": 0.5972,
+        "ownCentroid": 0.6379,
+        "ownHbShare": 0.0072,
+        "ownHandbackText": {
+          "tokens": 4697,
+          "windows": 3,
+          "absM": 0.9234,
+          "strippedChars": 113,
+          "normalisedChars": 15726
+        },
+        "ownBriefText": {
+          "tokens": 1215,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 113,
+          "normalisedChars": 4422,
+          "share": 0.0256
+        },
+        "otherMean": 0.4757,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1215,
+        "sensitivity_otherMeanAtParent": 0.483,
+        "sensitivity_nOthers": 6,
+        "sensitivity_delta": 0.1142,
+        "ownU": {
+          "U": 0.5815,
+          "Umin": 0.5239,
+          "Umax": 0.6116,
+          "centroidTW": 0.6582,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.5972,
+              "centroidTW": 0.6461
+            },
+            {
+              "phase": 300,
+              "primary": 0.5782,
+              "centroidTW": 0.665
+            },
+            {
+              "phase": 600,
+              "primary": 0.5773,
+              "centroidTW": 0.6879
+            },
+            {
+              "phase": 900,
+              "primary": 0.5239,
+              "centroidTW": 0.6214
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6007,
+              "centroidTW": 0.6591
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6116,
+              "centroidTW": 0.6699
+            }
+          ]
+        },
+        "otherMeanU": 0.4676,
+        "deltaU": 0.1138
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 6,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-leave-E_2026-09-14.md",
+          "posRemovedLines": "7-18",
+          "Upos": {
+            "U": 0.8911,
+            "Umin": 0.8163,
+            "Umax": 0.9551,
+            "centroidTW": 0.9532,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.9551,
+                "centroidTW": 0.9551
+              },
+              {
+                "phase": 300,
+                "primary": 0.8857,
+                "centroidTW": 0.9515
+              },
+              {
+                "phase": 600,
+                "primary": 0.8163,
+                "centroidTW": 0.9352
+              },
+              {
+                "phase": 900,
+                "primary": 0.8586,
+                "centroidTW": 0.955
+              },
+              {
+                "phase": 1200,
+                "primary": 0.8816,
+                "centroidTW": 0.9629
+              },
+              {
+                "phase": 1500,
+                "primary": 0.9495,
+                "centroidTW": 0.9595
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.5433,
+            "Umin": 0.5244,
+            "Umax": 0.5672,
+            "centroidTW": 0.6454,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.5244,
+                "centroidTW": 0.5997
+              },
+              {
+                "phase": 300,
+                "primary": 0.5672,
+                "centroidTW": 0.6754
+              },
+              {
+                "phase": 600,
+                "primary": 0.5513,
+                "centroidTW": 0.6801
+              },
+              {
+                "phase": 900,
+                "primary": 0.5409,
+                "centroidTW": 0.6479
+              },
+              {
+                "phase": 1200,
+                "primary": 0.5438,
+                "centroidTW": 0.6494
+              },
+              {
+                "phase": 1500,
+                "primary": 0.5319,
+                "centroidTW": 0.6196
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.5263,
+          "deltaSymU": 0.1286,
+          "scale": 0.3479,
+          "m_i": 0.3698,
+          "m_i_raw": 0.36978019273061596
+        },
+        "handback": "exo_memory/handback/p-harness-read-B_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "faaaa7b",
+        "landedAt": "9ff51b4",
+        "flag": null,
+        "own": 0.6722,
+        "ownCentroid": 0.7224,
+        "ownHbShare": 0.0042,
+        "ownHandbackText": {
+          "tokens": 3321,
+          "windows": 2,
+          "absM": 0.9306,
+          "strippedChars": 47,
+          "normalisedChars": 11207
+        },
+        "ownBriefText": {
+          "tokens": 1524,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 47,
+          "normalisedChars": 5493,
+          "share": 0.0086
+        },
+        "otherMean": 0.5392,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.133,
+        "sensitivity_otherMeanAtParent": 0.543,
+        "sensitivity_nOthers": 6,
+        "sensitivity_delta": 0.1292,
+        "ownU": {
+          "U": 0.6549,
+          "Umin": 0.6227,
+          "Umax": 0.6934,
+          "centroidTW": 0.7394,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6722,
+              "centroidTW": 0.722
+            },
+            {
+              "phase": 300,
+              "primary": 0.6387,
+              "centroidTW": 0.7199
+            },
+            {
+              "phase": 600,
+              "primary": 0.6227,
+              "centroidTW": 0.749
+            },
+            {
+              "phase": 900,
+              "primary": 0.6611,
+              "centroidTW": 0.7647
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6415,
+              "centroidTW": 0.7355
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6934,
+              "centroidTW": 0.7455
+            }
+          ]
+        },
+        "otherMeanU": 0.5228,
+        "deltaU": 0.1321
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 5,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "12-23",
+          "Upos": {
+            "U": 0.7977,
+            "Umin": 0.7722,
+            "Umax": 0.8236,
+            "centroidTW": 0.9711,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8167,
+                "centroidTW": 0.9711
+              },
+              {
+                "phase": 300,
+                "primary": 0.7722,
+                "centroidTW": 0.9698
+              },
+              {
+                "phase": 600,
+                "primary": 0.7824,
+                "centroidTW": 0.9623
+              },
+              {
+                "phase": 900,
+                "primary": 0.7896,
+                "centroidTW": 0.9751
+              },
+              {
+                "phase": 1200,
+                "primary": 0.8015,
+                "centroidTW": 0.9731
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8236,
+                "centroidTW": 0.9755
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4778,
+            "Umin": 0.4562,
+            "Umax": 0.4929,
+            "centroidTW": 0.5841,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4872,
+                "centroidTW": 0.5842
+              },
+              {
+                "phase": 300,
+                "primary": 0.4877,
+                "centroidTW": 0.6075
+              },
+              {
+                "phase": 600,
+                "primary": 0.4775,
+                "centroidTW": 0.5863
+              },
+              {
+                "phase": 900,
+                "primary": 0.4651,
+                "centroidTW": 0.5731
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4562,
+                "centroidTW": 0.5486
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4929,
+                "centroidTW": 0.6048
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.6423,
+          "deltaSymU": 0.1111,
+          "scale": 0.3199,
+          "m_i": 0.3474,
+          "m_i_raw": 0.3473702579962012
+        },
+        "handback": "exo_memory/handback/p-leave-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "b9b4cd1",
+        "landedAt": "99649d8",
+        "flag": null,
+        "own": 0.7657,
+        "ownCentroid": 0.895,
+        "ownHbShare": 0.0044,
+        "ownHandbackText": {
+          "tokens": 5366,
+          "windows": 3,
+          "absM": 0.9393,
+          "strippedChars": 83,
+          "normalisedChars": 18961
+        },
+        "ownBriefText": {
+          "tokens": 5139,
+          "windows": 3,
+          "absM": 0.9091,
+          "strippedChars": 83,
+          "normalisedChars": 17574,
+          "share": 0.0047
+        },
+        "otherMean": 0.6127,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1529,
+        "sensitivity_otherMeanAtParent": 0.6544,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.1112,
+        "ownU": {
+          "U": 0.7534,
+          "Umin": 0.7338,
+          "Umax": 0.7715,
+          "centroidTW": 0.8999,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7657,
+              "centroidTW": 0.8962
+            },
+            {
+              "phase": 300,
+              "primary": 0.7338,
+              "centroidTW": 0.8933
+            },
+            {
+              "phase": 600,
+              "primary": 0.753,
+              "centroidTW": 0.8991
+            },
+            {
+              "phase": 900,
+              "primary": 0.7429,
+              "centroidTW": 0.8889
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7538,
+              "centroidTW": 0.9075
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7715,
+              "centroidTW": 0.9141
+            }
+          ]
+        },
+        "otherMeanU": 0.6019,
+        "deltaU": 0.1515
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 5,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "12-23",
+          "Upos": {
+            "U": 0.7977,
+            "Umin": 0.7722,
+            "Umax": 0.8236,
+            "centroidTW": 0.9711,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8167,
+                "centroidTW": 0.9711
+              },
+              {
+                "phase": 300,
+                "primary": 0.7722,
+                "centroidTW": 0.9698
+              },
+              {
+                "phase": 600,
+                "primary": 0.7824,
+                "centroidTW": 0.9623
+              },
+              {
+                "phase": 900,
+                "primary": 0.7896,
+                "centroidTW": 0.9751
+              },
+              {
+                "phase": 1200,
+                "primary": 0.8015,
+                "centroidTW": 0.9731
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8236,
+                "centroidTW": 0.9755
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4778,
+            "Umin": 0.4562,
+            "Umax": 0.4929,
+            "centroidTW": 0.5841,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4872,
+                "centroidTW": 0.5842
+              },
+              {
+                "phase": 300,
+                "primary": 0.4877,
+                "centroidTW": 0.6075
+              },
+              {
+                "phase": 600,
+                "primary": 0.4775,
+                "centroidTW": 0.5863
+              },
+              {
+                "phase": 900,
+                "primary": 0.4651,
+                "centroidTW": 0.5731
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4562,
+                "centroidTW": 0.5486
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4929,
+                "centroidTW": 0.6048
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.5903,
+          "deltaSymU": 0.0906,
+          "scale": 0.3199,
+          "m_i": 0.2831,
+          "m_i_raw": 0.28310082428321615
+        },
+        "handback": "exo_memory/handback/p-leave-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "b9b4cd1",
+        "landedAt": "99649d8",
+        "flag": null,
+        "own": 0.6791,
+        "ownCentroid": 0.8617,
+        "ownHbShare": 0.0221,
+        "ownHandbackText": {
+          "tokens": 8578,
+          "windows": 5,
+          "absM": 0.8602,
+          "strippedChars": 664,
+          "normalisedChars": 30046
+        },
+        "ownBriefText": {
+          "tokens": 4981,
+          "windows": 3,
+          "absM": 0.9166,
+          "strippedChars": 468,
+          "normalisedChars": 17574,
+          "share": 0.0266
+        },
+        "otherMean": 0.5632,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1159,
+        "sensitivity_otherMeanAtParent": 0.5887,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.0904,
+        "ownU": {
+          "U": 0.6809,
+          "Umin": 0.6578,
+          "Umax": 0.6988,
+          "centroidTW": 0.8645,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6791,
+              "centroidTW": 0.8589
+            },
+            {
+              "phase": 300,
+              "primary": 0.6578,
+              "centroidTW": 0.8568
+            },
+            {
+              "phase": 600,
+              "primary": 0.6776,
+              "centroidTW": 0.8757
+            },
+            {
+              "phase": 900,
+              "primary": 0.6837,
+              "centroidTW": 0.861
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6884,
+              "centroidTW": 0.8689
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6988,
+              "centroidTW": 0.8656
+            }
+          ]
+        },
+        "otherMeanU": 0.5666,
+        "deltaU": 0.1143
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 5,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "12-23",
+          "Upos": {
+            "U": 0.8409,
+            "Umin": 0.793,
+            "Umax": 0.8772,
+            "centroidTW": 0.9494,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8575,
+                "centroidTW": 0.9491
+              },
+              {
+                "phase": 300,
+                "primary": 0.793,
+                "centroidTW": 0.9321
+              },
+              {
+                "phase": 600,
+                "primary": 0.8068,
+                "centroidTW": 0.9324
+              },
+              {
+                "phase": 900,
+                "primary": 0.8772,
+                "centroidTW": 0.9573
+              },
+              {
+                "phase": 1200,
+                "primary": 0.8619,
+                "centroidTW": 0.9643
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8491,
+                "centroidTW": 0.9614
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4548,
+            "Umin": 0.4391,
+            "Umax": 0.4734,
+            "centroidTW": 0.5369,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4521,
+                "centroidTW": 0.5254
+              },
+              {
+                "phase": 300,
+                "primary": 0.4681,
+                "centroidTW": 0.5599
+              },
+              {
+                "phase": 600,
+                "primary": 0.4734,
+                "centroidTW": 0.5765
+              },
+              {
+                "phase": 900,
+                "primary": 0.4515,
+                "centroidTW": 0.5203
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4391,
+                "centroidTW": 0.508
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4446,
+                "centroidTW": 0.5314
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.6019,
+          "deltaSymU": 0.0847,
+          "scale": 0.3861,
+          "m_i": 0.2195,
+          "m_i_raw": 0.21947970348682608
+        },
+        "handback": "exo_memory/handback/p-leave-read-B_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "9bc063f",
+        "landedAt": "9e29daf",
+        "flag": null,
+        "own": 0.688,
+        "ownCentroid": 0.8009,
+        "ownHbShare": 0.0373,
+        "ownHandbackText": {
+          "tokens": 4398,
+          "windows": 3,
+          "absM": 0.9015,
+          "strippedChars": 563,
+          "normalisedChars": 15079
+        },
+        "ownBriefText": {
+          "tokens": 2466,
+          "windows": 2,
+          "absM": 0.935,
+          "strippedChars": 563,
+          "normalisedChars": 8840,
+          "share": 0.0637
+        },
+        "otherMean": 0.5781,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1099,
+        "sensitivity_otherMeanAtParent": 0.6064,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.0816,
+        "ownU": {
+          "U": 0.6866,
+          "Umin": 0.6702,
+          "Umax": 0.7059,
+          "centroidTW": 0.823,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.688,
+              "centroidTW": 0.7986
+            },
+            {
+              "phase": 300,
+              "primary": 0.6923,
+              "centroidTW": 0.8536
+            },
+            {
+              "phase": 600,
+              "primary": 0.6702,
+              "centroidTW": 0.8197
+            },
+            {
+              "phase": 900,
+              "primary": 0.6881,
+              "centroidTW": 0.8036
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7059,
+              "centroidTW": 0.8391
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6753,
+              "centroidTW": 0.8236
+            }
+          ]
+        },
+        "otherMeanU": 0.5718,
+        "deltaU": 0.1149
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 5,
+          "absentAtParent": [
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "12-23",
+          "Upos": {
+            "U": 0.8152,
+            "Umin": 0.7913,
+            "Umax": 0.8264,
+            "centroidTW": 0.9704,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8264,
+                "centroidTW": 0.9671
+              },
+              {
+                "phase": 300,
+                "primary": 0.7974,
+                "centroidTW": 0.9689
+              },
+              {
+                "phase": 600,
+                "primary": 0.7913,
+                "centroidTW": 0.9598
+              },
+              {
+                "phase": 900,
+                "primary": 0.8246,
+                "centroidTW": 0.9715
+              },
+              {
+                "phase": 1200,
+                "primary": 0.8251,
+                "centroidTW": 0.978
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8264,
+                "centroidTW": 0.9773
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4681,
+            "Umin": 0.4526,
+            "Umax": 0.476,
+            "centroidTW": 0.5659,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4738,
+                "centroidTW": 0.5642
+              },
+              {
+                "phase": 300,
+                "primary": 0.4742,
+                "centroidTW": 0.5807
+              },
+              {
+                "phase": 600,
+                "primary": 0.476,
+                "centroidTW": 0.5845
+              },
+              {
+                "phase": 900,
+                "primary": 0.4656,
+                "centroidTW": 0.5574
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4526,
+                "centroidTW": 0.5386
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4665,
+                "centroidTW": 0.57
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.5792,
+          "deltaSymU": 0.0993,
+          "scale": 0.3471,
+          "m_i": 0.2861,
+          "m_i_raw": 0.2861071907106589
+        },
+        "handback": "exo_memory/handback/p-leave-read2-B_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "6d89e2d",
+        "landedAt": "c59530a",
+        "flag": null,
+        "own": 0.6941,
+        "ownCentroid": 0.8269,
+        "ownHbShare": 0.0172,
+        "ownHandbackText": {
+          "tokens": 6764,
+          "windows": 4,
+          "absM": 0.9136,
+          "strippedChars": 398,
+          "normalisedChars": 23188
+        },
+        "ownBriefText": {
+          "tokens": 4347,
+          "windows": 3,
+          "absM": 0.9148,
+          "strippedChars": 349,
+          "normalisedChars": 15059,
+          "share": 0.0232
+        },
+        "otherMean": 0.5559,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1382,
+        "sensitivity_otherMeanAtParent": 0.5781,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.116,
+        "ownU": {
+          "U": 0.6785,
+          "Umin": 0.6463,
+          "Umax": 0.6941,
+          "centroidTW": 0.8189,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6941,
+              "centroidTW": 0.8241
+            },
+            {
+              "phase": 300,
+              "primary": 0.6463,
+              "centroidTW": 0.7943
+            },
+            {
+              "phase": 600,
+              "primary": 0.6654,
+              "centroidTW": 0.8142
+            },
+            {
+              "phase": 900,
+              "primary": 0.6913,
+              "centroidTW": 0.8299
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6865,
+              "centroidTW": 0.8309
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6873,
+              "centroidTW": 0.8202
+            }
+          ]
+        },
+        "otherMeanU": 0.5554,
+        "deltaU": 0.123
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 3,
+          "absentAtParent": [
+            "packet_diverged_2026-09-14.md",
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "5-14",
+          "Upos": {
+            "U": 0.8172,
+            "Umin": 0.7877,
+            "Umax": 0.8362,
+            "centroidTW": 0.9423,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8362,
+                "centroidTW": 0.9296
+              },
+              {
+                "phase": 300,
+                "primary": 0.8316,
+                "centroidTW": 0.9552
+              },
+              {
+                "phase": 600,
+                "primary": 0.8085,
+                "centroidTW": 0.9459
+              },
+              {
+                "phase": 900,
+                "primary": 0.7877,
+                "centroidTW": 0.9459
+              },
+              {
+                "phase": 1200,
+                "primary": 0.8188,
+                "centroidTW": 0.9405
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8205,
+                "centroidTW": 0.9366
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4611,
+            "Umin": 0.4529,
+            "Umax": 0.4795,
+            "centroidTW": 0.5499,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4795,
+                "centroidTW": 0.5589
+              },
+              {
+                "phase": 300,
+                "primary": 0.4664,
+                "centroidTW": 0.5615
+              },
+              {
+                "phase": 600,
+                "primary": 0.4529,
+                "centroidTW": 0.5496
+              },
+              {
+                "phase": 900,
+                "primary": 0.4533,
+                "centroidTW": 0.5522
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4554,
+                "centroidTW": 0.5292
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4589,
+                "centroidTW": 0.548
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.5392,
+          "deltaSymU": 0.1339,
+          "scale": 0.3561,
+          "m_i": 0.3759,
+          "m_i_raw": 0.37592104593470416
+        },
+        "handback": "exo_memory/handback/p-no-console-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_no_console_windows_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.6908,
+        "ownCentroid": 0.8545,
+        "ownHbShare": 0.0125,
+        "ownHandbackText": {
+          "tokens": 5790,
+          "windows": 4,
+          "absM": 0.8797,
+          "strippedChars": 264,
+          "normalisedChars": 21043
+        },
+        "ownBriefText": {
+          "tokens": 2159,
+          "windows": 2,
+          "absM": 0.8956,
+          "strippedChars": 223,
+          "normalisedChars": 7662,
+          "share": 0.0291
+        },
+        "otherMean": 0.5238,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.167,
+        "sensitivity_otherMeanAtParent": 0.5314,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.1593,
+        "ownU": {
+          "U": 0.6731,
+          "Umin": 0.6378,
+          "Umax": 0.6908,
+          "centroidTW": 0.8194,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6908,
+              "centroidTW": 0.8241
+            },
+            {
+              "phase": 300,
+              "primary": 0.6661,
+              "centroidTW": 0.8205
+            },
+            {
+              "phase": 600,
+              "primary": 0.6378,
+              "centroidTW": 0.7853
+            },
+            {
+              "phase": 900,
+              "primary": 0.689,
+              "centroidTW": 0.8442
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6732,
+              "centroidTW": 0.8177
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6815,
+              "centroidTW": 0.8243
+            }
+          ]
+        },
+        "otherMeanU": 0.5284,
+        "deltaU": 0.1447
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 3,
+          "absentAtParent": [
+            "packet_diverged_2026-09-14.md",
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "5-14",
+          "Upos": {
+            "U": 0.8172,
+            "Umin": 0.7877,
+            "Umax": 0.8362,
+            "centroidTW": 0.9423,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8362,
+                "centroidTW": 0.9296
+              },
+              {
+                "phase": 300,
+                "primary": 0.8316,
+                "centroidTW": 0.9552
+              },
+              {
+                "phase": 600,
+                "primary": 0.8085,
+                "centroidTW": 0.9459
+              },
+              {
+                "phase": 900,
+                "primary": 0.7877,
+                "centroidTW": 0.9459
+              },
+              {
+                "phase": 1200,
+                "primary": 0.8188,
+                "centroidTW": 0.9405
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8205,
+                "centroidTW": 0.9366
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4611,
+            "Umin": 0.4529,
+            "Umax": 0.4795,
+            "centroidTW": 0.5499,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4795,
+                "centroidTW": 0.5589
+              },
+              {
+                "phase": 300,
+                "primary": 0.4664,
+                "centroidTW": 0.5615
+              },
+              {
+                "phase": 600,
+                "primary": 0.4529,
+                "centroidTW": 0.5496
+              },
+              {
+                "phase": 900,
+                "primary": 0.4533,
+                "centroidTW": 0.5522
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4554,
+                "centroidTW": 0.5292
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4589,
+                "centroidTW": 0.548
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.5303,
+          "deltaSymU": 0.1394,
+          "scale": 0.3561,
+          "m_i": 0.3914,
+          "m_i_raw": 0.3913798515864388
+        },
+        "handback": "exo_memory/handback/p-no-console-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_no_console_windows_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.6482,
+        "ownCentroid": 0.771,
+        "ownHbShare": 0.0358,
+        "ownHandbackText": {
+          "tokens": 3879,
+          "windows": 3,
+          "absM": 0.8824,
+          "strippedChars": 516,
+          "normalisedChars": 14396
+        },
+        "ownBriefText": {
+          "tokens": 2121,
+          "windows": 2,
+          "absM": 0.8981,
+          "strippedChars": 351,
+          "normalisedChars": 7662,
+          "share": 0.0458
+        },
+        "otherMean": 0.5266,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1216,
+        "sensitivity_otherMeanAtParent": 0.5316,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.1166,
+        "ownU": {
+          "U": 0.6697,
+          "Umin": 0.6482,
+          "Umax": 0.6854,
+          "centroidTW": 0.8082,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6482,
+              "centroidTW": 0.7666
+            },
+            {
+              "phase": 300,
+              "primary": 0.6721,
+              "centroidTW": 0.7899
+            },
+            {
+              "phase": 600,
+              "primary": 0.6765,
+              "centroidTW": 0.8122
+            },
+            {
+              "phase": 900,
+              "primary": 0.6854,
+              "centroidTW": 0.8545
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6595,
+              "centroidTW": 0.807
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6766,
+              "centroidTW": 0.819
+            }
+          ]
+        },
+        "otherMeanU": 0.5189,
+        "deltaU": 0.1508
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 1,
+          "absentAtParent": [
+            "packet_diverged_2026-09-14.md",
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md",
+            "packet_no_console_windows_2026-09-14.md",
+            "packet_stick_preflight_read_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "7-19",
+          "Upos": {
+            "U": 0.779,
+            "Umin": 0.7546,
+            "Umax": 0.8032,
+            "centroidTW": 0.9765,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8032,
+                "centroidTW": 0.9783
+              },
+              {
+                "phase": 300,
+                "primary": 0.7706,
+                "centroidTW": 0.9762
+              },
+              {
+                "phase": 600,
+                "primary": 0.7546,
+                "centroidTW": 0.976
+              },
+              {
+                "phase": 900,
+                "primary": 0.7614,
+                "centroidTW": 0.9743
+              },
+              {
+                "phase": 1200,
+                "primary": 0.7896,
+                "centroidTW": 0.9732
+              },
+              {
+                "phase": 1500,
+                "primary": 0.7949,
+                "centroidTW": 0.9806
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4824,
+            "Umin": 0.454,
+            "Umax": 0.5099,
+            "centroidTW": 0.5966,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.491,
+                "centroidTW": 0.5959
+              },
+              {
+                "phase": 300,
+                "primary": 0.5099,
+                "centroidTW": 0.6328
+              },
+              {
+                "phase": 600,
+                "primary": 0.4817,
+                "centroidTW": 0.6035
+              },
+              {
+                "phase": 900,
+                "primary": 0.454,
+                "centroidTW": 0.5766
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4757,
+                "centroidTW": 0.5696
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4821,
+                "centroidTW": 0.6012
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.6544,
+          "deltaSymU": 0.0797,
+          "scale": 0.2966,
+          "m_i": 0.2687,
+          "m_i_raw": 0.2686613624417943
+        },
+        "handback": "exo_memory/handback/p-stick-build-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_build_2026-09-14.md",
+        "ownSha": "4085f2f",
+        "landedAt": "0405bd2",
+        "flag": null,
+        "own": 0.7362,
+        "ownCentroid": 0.9148,
+        "ownHbShare": 0.0346,
+        "ownHandbackText": {
+          "tokens": 8043,
+          "windows": 5,
+          "absM": 0.8941,
+          "strippedChars": 1085,
+          "normalisedChars": 31380
+        },
+        "ownBriefText": {
+          "tokens": 6235,
+          "windows": 4,
+          "absM": 0.9002,
+          "strippedChars": 944,
+          "normalisedChars": 23697,
+          "share": 0.0398
+        },
+        "otherMean": 0.609,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1272,
+        "sensitivity_otherMeanAtParent": 0.6677,
+        "sensitivity_nOthers": 1,
+        "sensitivity_delta": 0.0686,
+        "ownU": {
+          "U": 0.7341,
+          "Umin": 0.72,
+          "Umax": 0.7502,
+          "centroidTW": 0.9249,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7362,
+              "centroidTW": 0.9131
+            },
+            {
+              "phase": 300,
+              "primary": 0.7284,
+              "centroidTW": 0.9096
+            },
+            {
+              "phase": 600,
+              "primary": 0.72,
+              "centroidTW": 0.9206
+            },
+            {
+              "phase": 900,
+              "primary": 0.7457,
+              "centroidTW": 0.9444
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7502,
+              "centroidTW": 0.9423
+            },
+            {
+              "phase": 1500,
+              "primary": 0.724,
+              "centroidTW": 0.9195
+            }
+          ]
+        },
+        "otherMeanU": 0.6037,
+        "deltaU": 0.1304
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 1,
+          "absentAtParent": [
+            "packet_diverged_2026-09-14.md",
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md",
+            "packet_no_console_windows_2026-09-14.md",
+            "packet_stick_preflight_read_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "7-19",
+          "Upos": {
+            "U": 0.779,
+            "Umin": 0.7546,
+            "Umax": 0.8032,
+            "centroidTW": 0.9765,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8032,
+                "centroidTW": 0.9783
+              },
+              {
+                "phase": 300,
+                "primary": 0.7706,
+                "centroidTW": 0.9762
+              },
+              {
+                "phase": 600,
+                "primary": 0.7546,
+                "centroidTW": 0.976
+              },
+              {
+                "phase": 900,
+                "primary": 0.7614,
+                "centroidTW": 0.9743
+              },
+              {
+                "phase": 1200,
+                "primary": 0.7896,
+                "centroidTW": 0.9732
+              },
+              {
+                "phase": 1500,
+                "primary": 0.7949,
+                "centroidTW": 0.9806
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4824,
+            "Umin": 0.454,
+            "Umax": 0.5099,
+            "centroidTW": 0.5966,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.491,
+                "centroidTW": 0.5959
+              },
+              {
+                "phase": 300,
+                "primary": 0.5099,
+                "centroidTW": 0.6328
+              },
+              {
+                "phase": 600,
+                "primary": 0.4817,
+                "centroidTW": 0.6035
+              },
+              {
+                "phase": 900,
+                "primary": 0.454,
+                "centroidTW": 0.5766
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4757,
+                "centroidTW": 0.5696
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4821,
+                "centroidTW": 0.6012
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.6402,
+          "deltaSymU": 0.0906,
+          "scale": 0.2966,
+          "m_i": 0.3054,
+          "m_i_raw": 0.30542393542306434
+        },
+        "handback": "exo_memory/handback/p-stick-build-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_build_2026-09-14.md",
+        "ownSha": "4085f2f",
+        "landedAt": "0405bd2",
+        "flag": null,
+        "own": 0.7599,
+        "ownCentroid": 0.9231,
+        "ownHbShare": 0.0365,
+        "ownHandbackText": {
+          "tokens": 7330,
+          "windows": 5,
+          "absM": 0.842,
+          "strippedChars": 1010,
+          "normalisedChars": 27663
+        },
+        "ownBriefText": {
+          "tokens": 6248,
+          "windows": 4,
+          "absM": 0.9002,
+          "strippedChars": 915,
+          "normalisedChars": 23697,
+          "share": 0.0386
+        },
+        "otherMean": 0.6028,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1571,
+        "sensitivity_otherMeanAtParent": 0.6621,
+        "sensitivity_nOthers": 1,
+        "sensitivity_delta": 0.0977,
+        "ownU": {
+          "U": 0.7308,
+          "Umin": 0.6928,
+          "Umax": 0.7599,
+          "centroidTW": 0.929,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7599,
+              "centroidTW": 0.9434
+            },
+            {
+              "phase": 300,
+              "primary": 0.7501,
+              "centroidTW": 0.9388
+            },
+            {
+              "phase": 600,
+              "primary": 0.7215,
+              "centroidTW": 0.9276
+            },
+            {
+              "phase": 900,
+              "primary": 0.6928,
+              "centroidTW": 0.919
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7133,
+              "centroidTW": 0.9172
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7474,
+              "centroidTW": 0.9282
+            }
+          ]
+        },
+        "otherMeanU": 0.5916,
+        "deltaU": 0.1393
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 0,
+          "absentAtParent": [
+            "packet_diverged_2026-09-14.md",
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md",
+            "packet_no_console_windows_2026-09-14.md",
+            "packet_stick_build_2026-09-14.md",
+            "packet_stick_preflight_read_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "6-28",
+          "Upos": {
+            "U": 0.7824,
+            "Umin": 0.765,
+            "Umax": 0.8112,
+            "centroidTW": 0.9565,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8112,
+                "centroidTW": 0.9593
+              },
+              {
+                "phase": 300,
+                "primary": 0.7818,
+                "centroidTW": 0.9554
+              },
+              {
+                "phase": 600,
+                "primary": 0.7693,
+                "centroidTW": 0.9519
+              },
+              {
+                "phase": 900,
+                "primary": 0.7756,
+                "centroidTW": 0.9548
+              },
+              {
+                "phase": 1200,
+                "primary": 0.765,
+                "centroidTW": 0.9501
+              },
+              {
+                "phase": 1500,
+                "primary": 0.7914,
+                "centroidTW": 0.9673
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4844,
+            "Umin": 0.4785,
+            "Umax": 0.4932,
+            "centroidTW": 0.5916,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.4932,
+                "centroidTW": 0.5969
+              },
+              {
+                "phase": 300,
+                "primary": 0.4841,
+                "centroidTW": 0.5905
+              },
+              {
+                "phase": 600,
+                "primary": 0.4804,
+                "centroidTW": 0.5987
+              },
+              {
+                "phase": 900,
+                "primary": 0.4899,
+                "centroidTW": 0.5929
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4802,
+                "centroidTW": 0.5846
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4785,
+                "centroidTW": 0.5862
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": true,
+          "reason": "no other packet present at the parent (R8f gap-closing paragraph, :390)"
+        },
+        "handback": "exo_memory/handback/p-stick-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_module_2026-09-14.md",
+        "ownSha": "f93f42e",
+        "landedAt": "59e65f6",
+        "flag": null,
+        "own": 0.7048,
+        "ownCentroid": 0.8082,
+        "ownHbShare": 0.0154,
+        "ownHandbackText": {
+          "tokens": 3393,
+          "windows": 2,
+          "absM": 0.9349,
+          "strippedChars": 197,
+          "normalisedChars": 12810
+        },
+        "ownBriefText": {
+          "tokens": 4276,
+          "windows": 3,
+          "absM": 0.8946,
+          "strippedChars": 197,
+          "normalisedChars": 16626,
+          "share": 0.0118
+        },
+        "otherMean": 0.5708,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.134,
+        "sensitivity_otherMeanAtParent": null,
+        "sensitivity_nOthers": 0,
+        "sensitivity_delta": null,
+        "ownU": {
+          "U": 0.6731,
+          "Umin": 0.624,
+          "Umax": 0.7048,
+          "centroidTW": 0.8179,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7048,
+              "centroidTW": 0.8271
+            },
+            {
+              "phase": 300,
+              "primary": 0.6796,
+              "centroidTW": 0.8151
+            },
+            {
+              "phase": 600,
+              "primary": 0.66,
+              "centroidTW": 0.8251
+            },
+            {
+              "phase": 900,
+              "primary": 0.6678,
+              "centroidTW": 0.8214
+            },
+            {
+              "phase": 1200,
+              "primary": 0.624,
+              "centroidTW": 0.7896
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7021,
+              "centroidTW": 0.8289
+            }
+          ]
+        },
+        "otherMeanU": 0.556,
+        "deltaU": 0.1171
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 0,
+          "absentAtParent": [
+            "packet_diverged_2026-09-14.md",
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md",
+            "packet_no_console_windows_2026-09-14.md",
+            "packet_stick_build_2026-09-14.md",
+            "packet_stick_preflight_read_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "6-28",
+          "Upos": {
+            "U": 0.8136,
+            "Umin": 0.7822,
+            "Umax": 0.8423,
+            "centroidTW": 0.9413,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.8423,
+                "centroidTW": 0.9566
+              },
+              {
+                "phase": 300,
+                "primary": 0.7822,
+                "centroidTW": 0.9232
+              },
+              {
+                "phase": 600,
+                "primary": 0.7903,
+                "centroidTW": 0.9296
+              },
+              {
+                "phase": 900,
+                "primary": 0.8097,
+                "centroidTW": 0.9423
+              },
+              {
+                "phase": 1200,
+                "primary": 0.8306,
+                "centroidTW": 0.9482
+              },
+              {
+                "phase": 1500,
+                "primary": 0.8266,
+                "centroidTW": 0.948
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4972,
+            "Umin": 0.484,
+            "Umax": 0.505,
+            "centroidTW": 0.5901,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.505,
+                "centroidTW": 0.5925
+              },
+              {
+                "phase": 300,
+                "primary": 0.5044,
+                "centroidTW": 0.6055
+              },
+              {
+                "phase": 600,
+                "primary": 0.4938,
+                "centroidTW": 0.6023
+              },
+              {
+                "phase": 900,
+                "primary": 0.484,
+                "centroidTW": 0.582
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4914,
+                "centroidTW": 0.5635
+              },
+              {
+                "phase": 1500,
+                "primary": 0.5046,
+                "centroidTW": 0.5947
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": true,
+          "reason": "no other packet present at the parent (R8f gap-closing paragraph, :390)"
+        },
+        "handback": "exo_memory/handback/p-stick-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_module_2026-09-14.md",
+        "ownSha": "1346cb9",
+        "landedAt": "0783e45",
+        "flag": null,
+        "own": 0.7016,
+        "ownCentroid": 0.8317,
+        "ownHbShare": 0.0047,
+        "ownHandbackText": {
+          "tokens": 3575,
+          "windows": 2,
+          "absM": 0.9127,
+          "strippedChars": 62,
+          "normalisedChars": 13300
+        },
+        "ownBriefText": {
+          "tokens": 2798,
+          "windows": 2,
+          "absM": 0.926,
+          "strippedChars": 62,
+          "normalisedChars": 10776,
+          "share": 0.0058
+        },
+        "otherMean": 0.5828,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1188,
+        "sensitivity_otherMeanAtParent": null,
+        "sensitivity_nOthers": 0,
+        "sensitivity_delta": null,
+        "ownU": {
+          "U": 0.6792,
+          "Umin": 0.6569,
+          "Umax": 0.7016,
+          "centroidTW": 0.8191,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7016,
+              "centroidTW": 0.8245
+            },
+            {
+              "phase": 300,
+              "primary": 0.662,
+              "centroidTW": 0.8087
+            },
+            {
+              "phase": 600,
+              "primary": 0.6569,
+              "centroidTW": 0.8126
+            },
+            {
+              "phase": 900,
+              "primary": 0.6811,
+              "centroidTW": 0.8304
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6815,
+              "centroidTW": 0.814
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6919,
+              "centroidTW": 0.8244
+            }
+          ]
+        },
+        "otherMeanU": 0.5647,
+        "deltaU": 0.1145
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 3,
+          "absentAtParent": [
+            "packet_diverged_2026-09-14.md",
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "6-12",
+          "Upos": {
+            "U": 0.8828,
+            "Umin": 0.7946,
+            "Umax": 0.9467,
+            "centroidTW": 0.9386,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.9467,
+                "centroidTW": 0.9467
+              },
+              {
+                "phase": 300,
+                "primary": 0.7946,
+                "centroidTW": 0.9162
+              },
+              {
+                "phase": 600,
+                "primary": 0.7967,
+                "centroidTW": 0.9375
+              },
+              {
+                "phase": 900,
+                "primary": 0.8654,
+                "centroidTW": 0.9379
+              },
+              {
+                "phase": 1200,
+                "primary": 0.9467,
+                "centroidTW": 0.9467
+              },
+              {
+                "phase": 1500,
+                "primary": 0.9467,
+                "centroidTW": 0.9467
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4488,
+            "Umin": 0.4308,
+            "Umax": 0.468,
+            "centroidTW": 0.5109,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.468,
+                "centroidTW": 0.5128
+              },
+              {
+                "phase": 300,
+                "primary": 0.4609,
+                "centroidTW": 0.5436
+              },
+              {
+                "phase": 600,
+                "primary": 0.4308,
+                "centroidTW": 0.5168
+              },
+              {
+                "phase": 900,
+                "primary": 0.4356,
+                "centroidTW": 0.5056
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4497,
+                "centroidTW": 0.4893
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4479,
+                "centroidTW": 0.4976
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.6434,
+          "deltaSymU": 0.0728,
+          "scale": 0.434,
+          "m_i": 0.1679,
+          "m_i_raw": 0.1678642523434315
+        },
+        "handback": "exo_memory/handback/p-stick-preflight-B_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_preflight_read_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.7493,
+        "ownCentroid": 0.7961,
+        "ownHbShare": 0.0029,
+        "ownHandbackText": {
+          "tokens": 4468,
+          "windows": 3,
+          "absM": 0.9295,
+          "strippedChars": 41,
+          "normalisedChars": 13951
+        },
+        "ownBriefText": {
+          "tokens": 1096,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 41,
+          "normalisedChars": 3686,
+          "share": 0.0111
+        },
+        "otherMean": 0.6174,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1319,
+        "sensitivity_otherMeanAtParent": 0.6528,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.0965,
+        "ownU": {
+          "U": 0.7163,
+          "Umin": 0.6765,
+          "Umax": 0.7493,
+          "centroidTW": 0.7952,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7493,
+              "centroidTW": 0.8023
+            },
+            {
+              "phase": 300,
+              "primary": 0.726,
+              "centroidTW": 0.8307
+            },
+            {
+              "phase": 600,
+              "primary": 0.6765,
+              "centroidTW": 0.7828
+            },
+            {
+              "phase": 900,
+              "primary": 0.6968,
+              "centroidTW": 0.7942
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7226,
+              "centroidTW": 0.7794
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7263,
+              "centroidTW": 0.7817
+            }
+          ]
+        },
+        "otherMeanU": 0.6098,
+        "deltaU": 0.1065
+      },
+      {
+        "step1": {
+          "otherPacketsAtParent": 3,
+          "absentAtParent": [
+            "packet_diverged_2026-09-14.md",
+            "packet_diversity_c0_2026-09-15.md",
+            "packet_harness_and_lib_2026-09-15.md",
+            "packet_leave_window_2026-09-14.md"
+          ],
+          "voidAtParent": [],
+          "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+          "posRemovedLines": "6-12",
+          "Upos": {
+            "U": 0.8828,
+            "Umin": 0.7946,
+            "Umax": 0.9467,
+            "centroidTW": 0.9386,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.9467,
+                "centroidTW": 0.9467
+              },
+              {
+                "phase": 300,
+                "primary": 0.7946,
+                "centroidTW": 0.9162
+              },
+              {
+                "phase": 600,
+                "primary": 0.7967,
+                "centroidTW": 0.9375
+              },
+              {
+                "phase": 900,
+                "primary": 0.8654,
+                "centroidTW": 0.9379
+              },
+              {
+                "phase": 1200,
+                "primary": 0.9467,
+                "centroidTW": 0.9467
+              },
+              {
+                "phase": 1500,
+                "primary": 0.9467,
+                "centroidTW": 0.9467
+              }
+            ]
+          },
+          "Uneg": {
+            "U": 0.4488,
+            "Umin": 0.4308,
+            "Umax": 0.468,
+            "centroidTW": 0.5109,
+            "phases": [
+              {
+                "phase": 0,
+                "primary": 0.468,
+                "centroidTW": 0.5128
+              },
+              {
+                "phase": 300,
+                "primary": 0.4609,
+                "centroidTW": 0.5436
+              },
+              {
+                "phase": 600,
+                "primary": 0.4308,
+                "centroidTW": 0.5168
+              },
+              {
+                "phase": 900,
+                "primary": 0.4356,
+                "centroidTW": 0.5056
+              },
+              {
+                "phase": 1200,
+                "primary": 0.4497,
+                "centroidTW": 0.4893
+              },
+              {
+                "phase": 1500,
+                "primary": 0.4479,
+                "centroidTW": 0.4976
+              }
+            ]
+          },
+          "negShare": 0,
+          "void": false,
+          "otherMeanSymU": 0.615,
+          "deltaSymU": 0.048,
+          "scale": 0.434,
+          "m_i": 0.1107,
+          "m_i_raw": 0.11070275711755685
+        },
+        "handback": "exo_memory/handback/p-stick-preflight-C_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_preflight_read_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.7051,
+        "ownCentroid": 0.7685,
+        "ownHbShare": 0.0033,
+        "ownHandbackText": {
+          "tokens": 5008,
+          "windows": 3,
+          "absM": 0.9163,
+          "strippedChars": 55,
+          "normalisedChars": 16469
+        },
+        "ownBriefText": {
+          "tokens": 1084,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 55,
+          "normalisedChars": 3686,
+          "share": 0.0149
+        },
+        "otherMean": 0.6273,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.0778,
+        "sensitivity_otherMeanAtParent": 0.6509,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.0542,
+        "ownU": {
+          "U": 0.663,
+          "Umin": 0.6214,
+          "Umax": 0.7051,
+          "centroidTW": 0.7631,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7051,
+              "centroidTW": 0.7677
+            },
+            {
+              "phase": 300,
+              "primary": 0.6472,
+              "centroidTW": 0.7657
+            },
+            {
+              "phase": 600,
+              "primary": 0.6393,
+              "centroidTW": 0.7794
+            },
+            {
+              "phase": 900,
+              "primary": 0.6214,
+              "centroidTW": 0.7475
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6689,
+              "centroidTW": 0.7494
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6962,
+              "centroidTW": 0.769
+            }
+          ]
+        },
+        "otherMeanU": 0.5948,
+        "deltaU": 0.0682
+      }
+    ],
+    "distribution": {
+      "n": 21,
+      "min": 0.0778,
+      "q1": 0.116,
+      "median": 0.1302,
+      "q3": 0.1382,
+      "max": 0.1908
+    },
+    "excluded": [
+      {
+        "handback": "exo_memory/handback/anchor-registration-read-B_2026-09-15.md",
+        "why": "its brief is the registration DRAFT, not a packet in the set"
+      },
+      {
+        "handback": "exo_memory/handback/readme-audit_2026-09-14.md",
+        "why": "a Third Place hand-back at the keeper's ask; no packet"
+      },
+      {
+        "packet": "exo_memory/loop/packet_diversity_c1_and_leave2_2026-09-15.md",
+        "why": "R4: excluded (this measurement's own packet)"
+      }
+    ],
+    "sensitivity_distribution": {
+      "n": 19,
+      "min": 0.0542,
+      "q1": 0.0935,
+      "median": 0.1075,
+      "q3": 0.1163,
+      "max": 0.1593
+    },
+    "distributionU": {
+      "n": 21,
+      "min": 0.0682,
+      "q1": 0.1143,
+      "median": 0.123,
+      "q3": 0.1393,
+      "max": 0.1725
+    }
+  },
+  "step1": {
+    "rule": "R8c m_i = deltaSymU / (Upos - Uneg); R8e six-phase U; R8f others at the own packet's parent; m = median(m_i)",
+    "gate": {
+      "positivePassU": true,
+      "negativePassU": true
+    },
+    "m": 0.2952,
+    "n": 19,
+    "distribution": {
+      "min": 0.1107,
+      "q1": 0.2646,
+      "median": 0.2952,
+      "q3": 0.3377,
+      "max": 0.3914
+    },
+    "table": [
+      {
+        "handback": "exo_memory/handback/p-diverged-A_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "31fb65f",
+        "flag": null,
+        "ownU": 0.7399,
+        "otherPacketsAtParent": 4,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "11-23",
+        "Upos": {
+          "U": 0.8285,
+          "Umin": 0.801,
+          "Umax": 0.8534,
+          "centroidTW": 0.9606,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8534,
+              "centroidTW": 0.9633
+            },
+            {
+              "phase": 300,
+              "primary": 0.8422,
+              "centroidTW": 0.9607
+            },
+            {
+              "phase": 600,
+              "primary": 0.8282,
+              "centroidTW": 0.9602
+            },
+            {
+              "phase": 900,
+              "primary": 0.8193,
+              "centroidTW": 0.9602
+            },
+            {
+              "phase": 1200,
+              "primary": 0.801,
+              "centroidTW": 0.9523
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8267,
+              "centroidTW": 0.9671
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4726,
+          "Umin": 0.4566,
+          "Umax": 0.4891,
+          "centroidTW": 0.5582,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4659,
+              "centroidTW": 0.544
+            },
+            {
+              "phase": 300,
+              "primary": 0.4698,
+              "centroidTW": 0.5527
+            },
+            {
+              "phase": 600,
+              "primary": 0.4803,
+              "centroidTW": 0.5687
+            },
+            {
+              "phase": 900,
+              "primary": 0.4891,
+              "centroidTW": 0.5817
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4566,
+              "centroidTW": 0.5348
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4739,
+              "centroidTW": 0.5676
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.6305,
+        "deltaSymU": 0.1094,
+        "scale": 0.3559,
+        "m_i": 0.3075
+      },
+      {
+        "handback": "exo_memory/handback/p-diverged-E_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "31fb65f",
+        "flag": null,
+        "ownU": 0.7284,
+        "otherPacketsAtParent": 4,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "11-23",
+        "Upos": {
+          "U": 0.8285,
+          "Umin": 0.801,
+          "Umax": 0.8534,
+          "centroidTW": 0.9606,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8534,
+              "centroidTW": 0.9633
+            },
+            {
+              "phase": 300,
+              "primary": 0.8422,
+              "centroidTW": 0.9607
+            },
+            {
+              "phase": 600,
+              "primary": 0.8282,
+              "centroidTW": 0.9602
+            },
+            {
+              "phase": 900,
+              "primary": 0.8193,
+              "centroidTW": 0.9602
+            },
+            {
+              "phase": 1200,
+              "primary": 0.801,
+              "centroidTW": 0.9523
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8267,
+              "centroidTW": 0.9671
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4726,
+          "Umin": 0.4566,
+          "Umax": 0.4891,
+          "centroidTW": 0.5582,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4659,
+              "centroidTW": 0.544
+            },
+            {
+              "phase": 300,
+              "primary": 0.4698,
+              "centroidTW": 0.5527
+            },
+            {
+              "phase": 600,
+              "primary": 0.4803,
+              "centroidTW": 0.5687
+            },
+            {
+              "phase": 900,
+              "primary": 0.4891,
+              "centroidTW": 0.5817
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4566,
+              "centroidTW": 0.5348
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4739,
+              "centroidTW": 0.5676
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.6234,
+        "deltaSymU": 0.1051,
+        "scale": 0.3559,
+        "m_i": 0.2952
+      },
+      {
+        "handback": "exo_memory/handback/p-diverged-read-C_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "6397e1a",
+        "flag": null,
+        "ownU": 0.779,
+        "otherPacketsAtParent": 4,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "11-23",
+        "Upos": {
+          "U": 0.8285,
+          "Umin": 0.801,
+          "Umax": 0.8534,
+          "centroidTW": 0.9606,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8534,
+              "centroidTW": 0.9633
+            },
+            {
+              "phase": 300,
+              "primary": 0.8422,
+              "centroidTW": 0.9607
+            },
+            {
+              "phase": 600,
+              "primary": 0.8282,
+              "centroidTW": 0.9602
+            },
+            {
+              "phase": 900,
+              "primary": 0.8193,
+              "centroidTW": 0.9602
+            },
+            {
+              "phase": 1200,
+              "primary": 0.801,
+              "centroidTW": 0.9523
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8267,
+              "centroidTW": 0.9671
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4726,
+          "Umin": 0.4566,
+          "Umax": 0.4891,
+          "centroidTW": 0.5582,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4659,
+              "centroidTW": 0.544
+            },
+            {
+              "phase": 300,
+              "primary": 0.4698,
+              "centroidTW": 0.5527
+            },
+            {
+              "phase": 600,
+              "primary": 0.4803,
+              "centroidTW": 0.5687
+            },
+            {
+              "phase": 900,
+              "primary": 0.4891,
+              "centroidTW": 0.5817
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4566,
+              "centroidTW": 0.5348
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4739,
+              "centroidTW": 0.5676
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.6403,
+        "deltaSymU": 0.1387,
+        "scale": 0.3559,
+        "m_i": 0.3897
+      },
+      {
+        "handback": "exo_memory/handback/p-diverged-read2-C_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "5e21844",
+        "flag": null,
+        "ownU": 0.7367,
+        "otherPacketsAtParent": 4,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "11-23",
+        "Upos": {
+          "U": 0.8285,
+          "Umin": 0.801,
+          "Umax": 0.8534,
+          "centroidTW": 0.9606,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8534,
+              "centroidTW": 0.9633
+            },
+            {
+              "phase": 300,
+              "primary": 0.8422,
+              "centroidTW": 0.9607
+            },
+            {
+              "phase": 600,
+              "primary": 0.8282,
+              "centroidTW": 0.9602
+            },
+            {
+              "phase": 900,
+              "primary": 0.8193,
+              "centroidTW": 0.9602
+            },
+            {
+              "phase": 1200,
+              "primary": 0.801,
+              "centroidTW": 0.9523
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8267,
+              "centroidTW": 0.9671
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4726,
+          "Umin": 0.4566,
+          "Umax": 0.4891,
+          "centroidTW": 0.5582,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4659,
+              "centroidTW": 0.544
+            },
+            {
+              "phase": 300,
+              "primary": 0.4698,
+              "centroidTW": 0.5527
+            },
+            {
+              "phase": 600,
+              "primary": 0.4803,
+              "centroidTW": 0.5687
+            },
+            {
+              "phase": 900,
+              "primary": 0.4891,
+              "centroidTW": 0.5817
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4566,
+              "centroidTW": 0.5348
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4739,
+              "centroidTW": 0.5676
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.6404,
+        "deltaSymU": 0.0963,
+        "scale": 0.3559,
+        "m_i": 0.2707
+      },
+      {
+        "handback": "exo_memory/handback/p-diversity-c0-C_2026-09-15.md",
+        "ownPacket": "exo_memory/loop/packet_diversity_c0_2026-09-15.md",
+        "ownSha": "cf0ea20",
+        "flag": null,
+        "ownU": 0.5015,
+        "otherPacketsAtParent": 7,
+        "absentAtParent": [],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "9-19",
+        "Upos": {
+          "U": 0.8548,
+          "Umin": 0.6857,
+          "Umax": 0.921,
+          "centroidTW": 0.9155,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.921,
+              "centroidTW": 0.921
+            },
+            {
+              "phase": 300,
+              "primary": 0.6857,
+              "centroidTW": 0.8884
+            },
+            {
+              "phase": 600,
+              "primary": 0.7826,
+              "centroidTW": 0.9235
+            },
+            {
+              "phase": 900,
+              "primary": 0.8973,
+              "centroidTW": 0.918
+            },
+            {
+              "phase": 1200,
+              "primary": 0.921,
+              "centroidTW": 0.921
+            },
+            {
+              "phase": 1500,
+              "primary": 0.921,
+              "centroidTW": 0.921
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4179,
+          "Umin": 0.3923,
+          "Umax": 0.4302,
+          "centroidTW": 0.478,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.423,
+              "centroidTW": 0.4636
+            },
+            {
+              "phase": 300,
+              "primary": 0.3923,
+              "centroidTW": 0.4834
+            },
+            {
+              "phase": 600,
+              "primary": 0.418,
+              "centroidTW": 0.5088
+            },
+            {
+              "phase": 900,
+              "primary": 0.4302,
+              "centroidTW": 0.484
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4188,
+              "centroidTW": 0.4556
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4252,
+              "centroidTW": 0.4723
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.3877,
+        "deltaSymU": 0.1139,
+        "scale": 0.4369,
+        "m_i": 0.2606
+      },
+      {
+        "handback": "exo_memory/handback/p-diversity-c0-E_2026-09-15.md",
+        "ownPacket": "exo_memory/loop/packet_diversity_c0_2026-09-15.md",
+        "ownSha": "cf0ea20",
+        "flag": null,
+        "ownU": 0.5668,
+        "otherPacketsAtParent": 7,
+        "absentAtParent": [],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "9-19",
+        "Upos": {
+          "U": 0.8548,
+          "Umin": 0.6857,
+          "Umax": 0.921,
+          "centroidTW": 0.9155,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.921,
+              "centroidTW": 0.921
+            },
+            {
+              "phase": 300,
+              "primary": 0.6857,
+              "centroidTW": 0.8884
+            },
+            {
+              "phase": 600,
+              "primary": 0.7826,
+              "centroidTW": 0.9235
+            },
+            {
+              "phase": 900,
+              "primary": 0.8973,
+              "centroidTW": 0.918
+            },
+            {
+              "phase": 1200,
+              "primary": 0.921,
+              "centroidTW": 0.921
+            },
+            {
+              "phase": 1500,
+              "primary": 0.921,
+              "centroidTW": 0.921
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4179,
+          "Umin": 0.3923,
+          "Umax": 0.4302,
+          "centroidTW": 0.478,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.423,
+              "centroidTW": 0.4636
+            },
+            {
+              "phase": 300,
+              "primary": 0.3923,
+              "centroidTW": 0.4834
+            },
+            {
+              "phase": 600,
+              "primary": 0.418,
+              "centroidTW": 0.5088
+            },
+            {
+              "phase": 900,
+              "primary": 0.4302,
+              "centroidTW": 0.484
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4188,
+              "centroidTW": 0.4556
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4252,
+              "centroidTW": 0.4723
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.472,
+        "deltaSymU": 0.0948,
+        "scale": 0.4369,
+        "m_i": 0.2169
+      },
+      {
+        "handback": "exo_memory/handback/p-harness-A_2026-09-15.md",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "faaaa7b",
+        "flag": null,
+        "ownU": 0.6569,
+        "otherPacketsAtParent": 6,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-leave-E_2026-09-14.md",
+        "posRemovedLines": "7-18",
+        "Upos": {
+          "U": 0.8911,
+          "Umin": 0.8163,
+          "Umax": 0.9551,
+          "centroidTW": 0.9532,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.9551,
+              "centroidTW": 0.9551
+            },
+            {
+              "phase": 300,
+              "primary": 0.8857,
+              "centroidTW": 0.9515
+            },
+            {
+              "phase": 600,
+              "primary": 0.8163,
+              "centroidTW": 0.9352
+            },
+            {
+              "phase": 900,
+              "primary": 0.8586,
+              "centroidTW": 0.955
+            },
+            {
+              "phase": 1200,
+              "primary": 0.8816,
+              "centroidTW": 0.9629
+            },
+            {
+              "phase": 1500,
+              "primary": 0.9495,
+              "centroidTW": 0.9595
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.5433,
+          "Umin": 0.5244,
+          "Umax": 0.5672,
+          "centroidTW": 0.6454,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.5244,
+              "centroidTW": 0.5997
+            },
+            {
+              "phase": 300,
+              "primary": 0.5672,
+              "centroidTW": 0.6754
+            },
+            {
+              "phase": 600,
+              "primary": 0.5513,
+              "centroidTW": 0.6801
+            },
+            {
+              "phase": 900,
+              "primary": 0.5409,
+              "centroidTW": 0.6479
+            },
+            {
+              "phase": 1200,
+              "primary": 0.5438,
+              "centroidTW": 0.6494
+            },
+            {
+              "phase": 1500,
+              "primary": 0.5319,
+              "centroidTW": 0.6196
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.5429,
+        "deltaSymU": 0.1141,
+        "scale": 0.3479,
+        "m_i": 0.3279
+      },
+      {
+        "handback": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "2782af4",
+        "flag": null,
+        "ownU": 0.5815,
+        "otherPacketsAtParent": 6,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-leave-E_2026-09-14.md",
+        "posRemovedLines": "7-18",
+        "Upos": {
+          "U": 0.893,
+          "Umin": 0.8159,
+          "Umax": 0.945,
+          "centroidTW": 0.9472,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.945,
+              "centroidTW": 0.945
+            },
+            {
+              "phase": 300,
+              "primary": 0.8741,
+              "centroidTW": 0.9518
+            },
+            {
+              "phase": 600,
+              "primary": 0.8159,
+              "centroidTW": 0.9539
+            },
+            {
+              "phase": 900,
+              "primary": 0.8437,
+              "centroidTW": 0.9393
+            },
+            {
+              "phase": 1200,
+              "primary": 0.9341,
+              "centroidTW": 0.9479
+            },
+            {
+              "phase": 1500,
+              "primary": 0.945,
+              "centroidTW": 0.945
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.5543,
+          "Umin": 0.5338,
+          "Umax": 0.5835,
+          "centroidTW": 0.6539,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.5395,
+              "centroidTW": 0.6169
+            },
+            {
+              "phase": 300,
+              "primary": 0.5835,
+              "centroidTW": 0.6987
+            },
+            {
+              "phase": 600,
+              "primary": 0.5732,
+              "centroidTW": 0.7001
+            },
+            {
+              "phase": 900,
+              "primary": 0.5338,
+              "centroidTW": 0.6495
+            },
+            {
+              "phase": 1200,
+              "primary": 0.5581,
+              "centroidTW": 0.6382
+            },
+            {
+              "phase": 1500,
+              "primary": 0.538,
+              "centroidTW": 0.6201
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.4728,
+        "deltaSymU": 0.1087,
+        "scale": 0.3386,
+        "m_i": 0.3209
+      },
+      {
+        "handback": "exo_memory/handback/p-harness-read-B_2026-09-15.md",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "faaaa7b",
+        "flag": null,
+        "ownU": 0.6549,
+        "otherPacketsAtParent": 6,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-leave-E_2026-09-14.md",
+        "posRemovedLines": "7-18",
+        "Upos": {
+          "U": 0.8911,
+          "Umin": 0.8163,
+          "Umax": 0.9551,
+          "centroidTW": 0.9532,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.9551,
+              "centroidTW": 0.9551
+            },
+            {
+              "phase": 300,
+              "primary": 0.8857,
+              "centroidTW": 0.9515
+            },
+            {
+              "phase": 600,
+              "primary": 0.8163,
+              "centroidTW": 0.9352
+            },
+            {
+              "phase": 900,
+              "primary": 0.8586,
+              "centroidTW": 0.955
+            },
+            {
+              "phase": 1200,
+              "primary": 0.8816,
+              "centroidTW": 0.9629
+            },
+            {
+              "phase": 1500,
+              "primary": 0.9495,
+              "centroidTW": 0.9595
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.5433,
+          "Umin": 0.5244,
+          "Umax": 0.5672,
+          "centroidTW": 0.6454,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.5244,
+              "centroidTW": 0.5997
+            },
+            {
+              "phase": 300,
+              "primary": 0.5672,
+              "centroidTW": 0.6754
+            },
+            {
+              "phase": 600,
+              "primary": 0.5513,
+              "centroidTW": 0.6801
+            },
+            {
+              "phase": 900,
+              "primary": 0.5409,
+              "centroidTW": 0.6479
+            },
+            {
+              "phase": 1200,
+              "primary": 0.5438,
+              "centroidTW": 0.6494
+            },
+            {
+              "phase": 1500,
+              "primary": 0.5319,
+              "centroidTW": 0.6196
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.5263,
+        "deltaSymU": 0.1286,
+        "scale": 0.3479,
+        "m_i": 0.3698
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-A_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "b9b4cd1",
+        "flag": null,
+        "ownU": 0.7534,
+        "otherPacketsAtParent": 5,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "12-23",
+        "Upos": {
+          "U": 0.7977,
+          "Umin": 0.7722,
+          "Umax": 0.8236,
+          "centroidTW": 0.9711,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8167,
+              "centroidTW": 0.9711
+            },
+            {
+              "phase": 300,
+              "primary": 0.7722,
+              "centroidTW": 0.9698
+            },
+            {
+              "phase": 600,
+              "primary": 0.7824,
+              "centroidTW": 0.9623
+            },
+            {
+              "phase": 900,
+              "primary": 0.7896,
+              "centroidTW": 0.9751
+            },
+            {
+              "phase": 1200,
+              "primary": 0.8015,
+              "centroidTW": 0.9731
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8236,
+              "centroidTW": 0.9755
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4778,
+          "Umin": 0.4562,
+          "Umax": 0.4929,
+          "centroidTW": 0.5841,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4872,
+              "centroidTW": 0.5842
+            },
+            {
+              "phase": 300,
+              "primary": 0.4877,
+              "centroidTW": 0.6075
+            },
+            {
+              "phase": 600,
+              "primary": 0.4775,
+              "centroidTW": 0.5863
+            },
+            {
+              "phase": 900,
+              "primary": 0.4651,
+              "centroidTW": 0.5731
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4562,
+              "centroidTW": 0.5486
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4929,
+              "centroidTW": 0.6048
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.6423,
+        "deltaSymU": 0.1111,
+        "scale": 0.3199,
+        "m_i": 0.3474
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-E_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "b9b4cd1",
+        "flag": null,
+        "ownU": 0.6809,
+        "otherPacketsAtParent": 5,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "12-23",
+        "Upos": {
+          "U": 0.7977,
+          "Umin": 0.7722,
+          "Umax": 0.8236,
+          "centroidTW": 0.9711,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8167,
+              "centroidTW": 0.9711
+            },
+            {
+              "phase": 300,
+              "primary": 0.7722,
+              "centroidTW": 0.9698
+            },
+            {
+              "phase": 600,
+              "primary": 0.7824,
+              "centroidTW": 0.9623
+            },
+            {
+              "phase": 900,
+              "primary": 0.7896,
+              "centroidTW": 0.9751
+            },
+            {
+              "phase": 1200,
+              "primary": 0.8015,
+              "centroidTW": 0.9731
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8236,
+              "centroidTW": 0.9755
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4778,
+          "Umin": 0.4562,
+          "Umax": 0.4929,
+          "centroidTW": 0.5841,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4872,
+              "centroidTW": 0.5842
+            },
+            {
+              "phase": 300,
+              "primary": 0.4877,
+              "centroidTW": 0.6075
+            },
+            {
+              "phase": 600,
+              "primary": 0.4775,
+              "centroidTW": 0.5863
+            },
+            {
+              "phase": 900,
+              "primary": 0.4651,
+              "centroidTW": 0.5731
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4562,
+              "centroidTW": 0.5486
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4929,
+              "centroidTW": 0.6048
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.5903,
+        "deltaSymU": 0.0906,
+        "scale": 0.3199,
+        "m_i": 0.2831
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-read-B_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "9bc063f",
+        "flag": null,
+        "ownU": 0.6866,
+        "otherPacketsAtParent": 5,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "12-23",
+        "Upos": {
+          "U": 0.8409,
+          "Umin": 0.793,
+          "Umax": 0.8772,
+          "centroidTW": 0.9494,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8575,
+              "centroidTW": 0.9491
+            },
+            {
+              "phase": 300,
+              "primary": 0.793,
+              "centroidTW": 0.9321
+            },
+            {
+              "phase": 600,
+              "primary": 0.8068,
+              "centroidTW": 0.9324
+            },
+            {
+              "phase": 900,
+              "primary": 0.8772,
+              "centroidTW": 0.9573
+            },
+            {
+              "phase": 1200,
+              "primary": 0.8619,
+              "centroidTW": 0.9643
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8491,
+              "centroidTW": 0.9614
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4548,
+          "Umin": 0.4391,
+          "Umax": 0.4734,
+          "centroidTW": 0.5369,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4521,
+              "centroidTW": 0.5254
+            },
+            {
+              "phase": 300,
+              "primary": 0.4681,
+              "centroidTW": 0.5599
+            },
+            {
+              "phase": 600,
+              "primary": 0.4734,
+              "centroidTW": 0.5765
+            },
+            {
+              "phase": 900,
+              "primary": 0.4515,
+              "centroidTW": 0.5203
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4391,
+              "centroidTW": 0.508
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4446,
+              "centroidTW": 0.5314
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.6019,
+        "deltaSymU": 0.0847,
+        "scale": 0.3861,
+        "m_i": 0.2195
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-read2-B_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "6d89e2d",
+        "flag": null,
+        "ownU": 0.6785,
+        "otherPacketsAtParent": 5,
+        "absentAtParent": [
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "12-23",
+        "Upos": {
+          "U": 0.8152,
+          "Umin": 0.7913,
+          "Umax": 0.8264,
+          "centroidTW": 0.9704,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8264,
+              "centroidTW": 0.9671
+            },
+            {
+              "phase": 300,
+              "primary": 0.7974,
+              "centroidTW": 0.9689
+            },
+            {
+              "phase": 600,
+              "primary": 0.7913,
+              "centroidTW": 0.9598
+            },
+            {
+              "phase": 900,
+              "primary": 0.8246,
+              "centroidTW": 0.9715
+            },
+            {
+              "phase": 1200,
+              "primary": 0.8251,
+              "centroidTW": 0.978
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8264,
+              "centroidTW": 0.9773
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4681,
+          "Umin": 0.4526,
+          "Umax": 0.476,
+          "centroidTW": 0.5659,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4738,
+              "centroidTW": 0.5642
+            },
+            {
+              "phase": 300,
+              "primary": 0.4742,
+              "centroidTW": 0.5807
+            },
+            {
+              "phase": 600,
+              "primary": 0.476,
+              "centroidTW": 0.5845
+            },
+            {
+              "phase": 900,
+              "primary": 0.4656,
+              "centroidTW": 0.5574
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4526,
+              "centroidTW": 0.5386
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4665,
+              "centroidTW": 0.57
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.5792,
+        "deltaSymU": 0.0993,
+        "scale": 0.3471,
+        "m_i": 0.2861
+      },
+      {
+        "handback": "exo_memory/handback/p-no-console-A_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_no_console_windows_2026-09-14.md",
+        "ownSha": "6174324",
+        "flag": null,
+        "ownU": 0.6731,
+        "otherPacketsAtParent": 3,
+        "absentAtParent": [
+          "packet_diverged_2026-09-14.md",
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "5-14",
+        "Upos": {
+          "U": 0.8172,
+          "Umin": 0.7877,
+          "Umax": 0.8362,
+          "centroidTW": 0.9423,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8362,
+              "centroidTW": 0.9296
+            },
+            {
+              "phase": 300,
+              "primary": 0.8316,
+              "centroidTW": 0.9552
+            },
+            {
+              "phase": 600,
+              "primary": 0.8085,
+              "centroidTW": 0.9459
+            },
+            {
+              "phase": 900,
+              "primary": 0.7877,
+              "centroidTW": 0.9459
+            },
+            {
+              "phase": 1200,
+              "primary": 0.8188,
+              "centroidTW": 0.9405
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8205,
+              "centroidTW": 0.9366
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4611,
+          "Umin": 0.4529,
+          "Umax": 0.4795,
+          "centroidTW": 0.5499,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4795,
+              "centroidTW": 0.5589
+            },
+            {
+              "phase": 300,
+              "primary": 0.4664,
+              "centroidTW": 0.5615
+            },
+            {
+              "phase": 600,
+              "primary": 0.4529,
+              "centroidTW": 0.5496
+            },
+            {
+              "phase": 900,
+              "primary": 0.4533,
+              "centroidTW": 0.5522
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4554,
+              "centroidTW": 0.5292
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4589,
+              "centroidTW": 0.548
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.5392,
+        "deltaSymU": 0.1339,
+        "scale": 0.3561,
+        "m_i": 0.3759
+      },
+      {
+        "handback": "exo_memory/handback/p-no-console-E_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_no_console_windows_2026-09-14.md",
+        "ownSha": "6174324",
+        "flag": null,
+        "ownU": 0.6697,
+        "otherPacketsAtParent": 3,
+        "absentAtParent": [
+          "packet_diverged_2026-09-14.md",
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "5-14",
+        "Upos": {
+          "U": 0.8172,
+          "Umin": 0.7877,
+          "Umax": 0.8362,
+          "centroidTW": 0.9423,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8362,
+              "centroidTW": 0.9296
+            },
+            {
+              "phase": 300,
+              "primary": 0.8316,
+              "centroidTW": 0.9552
+            },
+            {
+              "phase": 600,
+              "primary": 0.8085,
+              "centroidTW": 0.9459
+            },
+            {
+              "phase": 900,
+              "primary": 0.7877,
+              "centroidTW": 0.9459
+            },
+            {
+              "phase": 1200,
+              "primary": 0.8188,
+              "centroidTW": 0.9405
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8205,
+              "centroidTW": 0.9366
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4611,
+          "Umin": 0.4529,
+          "Umax": 0.4795,
+          "centroidTW": 0.5499,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4795,
+              "centroidTW": 0.5589
+            },
+            {
+              "phase": 300,
+              "primary": 0.4664,
+              "centroidTW": 0.5615
+            },
+            {
+              "phase": 600,
+              "primary": 0.4529,
+              "centroidTW": 0.5496
+            },
+            {
+              "phase": 900,
+              "primary": 0.4533,
+              "centroidTW": 0.5522
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4554,
+              "centroidTW": 0.5292
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4589,
+              "centroidTW": 0.548
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.5303,
+        "deltaSymU": 0.1394,
+        "scale": 0.3561,
+        "m_i": 0.3914
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-build-A_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_stick_build_2026-09-14.md",
+        "ownSha": "4085f2f",
+        "flag": null,
+        "ownU": 0.7341,
+        "otherPacketsAtParent": 1,
+        "absentAtParent": [
+          "packet_diverged_2026-09-14.md",
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md",
+          "packet_no_console_windows_2026-09-14.md",
+          "packet_stick_preflight_read_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "7-19",
+        "Upos": {
+          "U": 0.779,
+          "Umin": 0.7546,
+          "Umax": 0.8032,
+          "centroidTW": 0.9765,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8032,
+              "centroidTW": 0.9783
+            },
+            {
+              "phase": 300,
+              "primary": 0.7706,
+              "centroidTW": 0.9762
+            },
+            {
+              "phase": 600,
+              "primary": 0.7546,
+              "centroidTW": 0.976
+            },
+            {
+              "phase": 900,
+              "primary": 0.7614,
+              "centroidTW": 0.9743
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7896,
+              "centroidTW": 0.9732
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7949,
+              "centroidTW": 0.9806
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4824,
+          "Umin": 0.454,
+          "Umax": 0.5099,
+          "centroidTW": 0.5966,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.491,
+              "centroidTW": 0.5959
+            },
+            {
+              "phase": 300,
+              "primary": 0.5099,
+              "centroidTW": 0.6328
+            },
+            {
+              "phase": 600,
+              "primary": 0.4817,
+              "centroidTW": 0.6035
+            },
+            {
+              "phase": 900,
+              "primary": 0.454,
+              "centroidTW": 0.5766
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4757,
+              "centroidTW": 0.5696
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4821,
+              "centroidTW": 0.6012
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.6544,
+        "deltaSymU": 0.0797,
+        "scale": 0.2966,
+        "m_i": 0.2687
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-build-E_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_stick_build_2026-09-14.md",
+        "ownSha": "4085f2f",
+        "flag": null,
+        "ownU": 0.7308,
+        "otherPacketsAtParent": 1,
+        "absentAtParent": [
+          "packet_diverged_2026-09-14.md",
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md",
+          "packet_no_console_windows_2026-09-14.md",
+          "packet_stick_preflight_read_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "7-19",
+        "Upos": {
+          "U": 0.779,
+          "Umin": 0.7546,
+          "Umax": 0.8032,
+          "centroidTW": 0.9765,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8032,
+              "centroidTW": 0.9783
+            },
+            {
+              "phase": 300,
+              "primary": 0.7706,
+              "centroidTW": 0.9762
+            },
+            {
+              "phase": 600,
+              "primary": 0.7546,
+              "centroidTW": 0.976
+            },
+            {
+              "phase": 900,
+              "primary": 0.7614,
+              "centroidTW": 0.9743
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7896,
+              "centroidTW": 0.9732
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7949,
+              "centroidTW": 0.9806
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4824,
+          "Umin": 0.454,
+          "Umax": 0.5099,
+          "centroidTW": 0.5966,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.491,
+              "centroidTW": 0.5959
+            },
+            {
+              "phase": 300,
+              "primary": 0.5099,
+              "centroidTW": 0.6328
+            },
+            {
+              "phase": 600,
+              "primary": 0.4817,
+              "centroidTW": 0.6035
+            },
+            {
+              "phase": 900,
+              "primary": 0.454,
+              "centroidTW": 0.5766
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4757,
+              "centroidTW": 0.5696
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4821,
+              "centroidTW": 0.6012
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.6402,
+        "deltaSymU": 0.0906,
+        "scale": 0.2966,
+        "m_i": 0.3054
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-A_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_stick_module_2026-09-14.md",
+        "ownSha": "f93f42e",
+        "flag": null,
+        "ownU": 0.6731,
+        "otherPacketsAtParent": 0,
+        "absentAtParent": [
+          "packet_diverged_2026-09-14.md",
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md",
+          "packet_no_console_windows_2026-09-14.md",
+          "packet_stick_build_2026-09-14.md",
+          "packet_stick_preflight_read_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "6-28",
+        "Upos": {
+          "U": 0.7824,
+          "Umin": 0.765,
+          "Umax": 0.8112,
+          "centroidTW": 0.9565,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8112,
+              "centroidTW": 0.9593
+            },
+            {
+              "phase": 300,
+              "primary": 0.7818,
+              "centroidTW": 0.9554
+            },
+            {
+              "phase": 600,
+              "primary": 0.7693,
+              "centroidTW": 0.9519
+            },
+            {
+              "phase": 900,
+              "primary": 0.7756,
+              "centroidTW": 0.9548
+            },
+            {
+              "phase": 1200,
+              "primary": 0.765,
+              "centroidTW": 0.9501
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7914,
+              "centroidTW": 0.9673
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4844,
+          "Umin": 0.4785,
+          "Umax": 0.4932,
+          "centroidTW": 0.5916,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.4932,
+              "centroidTW": 0.5969
+            },
+            {
+              "phase": 300,
+              "primary": 0.4841,
+              "centroidTW": 0.5905
+            },
+            {
+              "phase": 600,
+              "primary": 0.4804,
+              "centroidTW": 0.5987
+            },
+            {
+              "phase": 900,
+              "primary": 0.4899,
+              "centroidTW": 0.5929
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4802,
+              "centroidTW": 0.5846
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4785,
+              "centroidTW": 0.5862
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": true,
+        "reason": "no other packet present at the parent (R8f gap-closing paragraph, :390)"
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-E_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_stick_module_2026-09-14.md",
+        "ownSha": "1346cb9",
+        "flag": null,
+        "ownU": 0.6792,
+        "otherPacketsAtParent": 0,
+        "absentAtParent": [
+          "packet_diverged_2026-09-14.md",
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md",
+          "packet_no_console_windows_2026-09-14.md",
+          "packet_stick_build_2026-09-14.md",
+          "packet_stick_preflight_read_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "6-28",
+        "Upos": {
+          "U": 0.8136,
+          "Umin": 0.7822,
+          "Umax": 0.8423,
+          "centroidTW": 0.9413,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8423,
+              "centroidTW": 0.9566
+            },
+            {
+              "phase": 300,
+              "primary": 0.7822,
+              "centroidTW": 0.9232
+            },
+            {
+              "phase": 600,
+              "primary": 0.7903,
+              "centroidTW": 0.9296
+            },
+            {
+              "phase": 900,
+              "primary": 0.8097,
+              "centroidTW": 0.9423
+            },
+            {
+              "phase": 1200,
+              "primary": 0.8306,
+              "centroidTW": 0.9482
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8266,
+              "centroidTW": 0.948
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4972,
+          "Umin": 0.484,
+          "Umax": 0.505,
+          "centroidTW": 0.5901,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.505,
+              "centroidTW": 0.5925
+            },
+            {
+              "phase": 300,
+              "primary": 0.5044,
+              "centroidTW": 0.6055
+            },
+            {
+              "phase": 600,
+              "primary": 0.4938,
+              "centroidTW": 0.6023
+            },
+            {
+              "phase": 900,
+              "primary": 0.484,
+              "centroidTW": 0.582
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4914,
+              "centroidTW": 0.5635
+            },
+            {
+              "phase": 1500,
+              "primary": 0.5046,
+              "centroidTW": 0.5947
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": true,
+        "reason": "no other packet present at the parent (R8f gap-closing paragraph, :390)"
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-preflight-B_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_stick_preflight_read_2026-09-14.md",
+        "ownSha": "6174324",
+        "flag": null,
+        "ownU": 0.7163,
+        "otherPacketsAtParent": 3,
+        "absentAtParent": [
+          "packet_diverged_2026-09-14.md",
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "6-12",
+        "Upos": {
+          "U": 0.8828,
+          "Umin": 0.7946,
+          "Umax": 0.9467,
+          "centroidTW": 0.9386,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.9467,
+              "centroidTW": 0.9467
+            },
+            {
+              "phase": 300,
+              "primary": 0.7946,
+              "centroidTW": 0.9162
+            },
+            {
+              "phase": 600,
+              "primary": 0.7967,
+              "centroidTW": 0.9375
+            },
+            {
+              "phase": 900,
+              "primary": 0.8654,
+              "centroidTW": 0.9379
+            },
+            {
+              "phase": 1200,
+              "primary": 0.9467,
+              "centroidTW": 0.9467
+            },
+            {
+              "phase": 1500,
+              "primary": 0.9467,
+              "centroidTW": 0.9467
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4488,
+          "Umin": 0.4308,
+          "Umax": 0.468,
+          "centroidTW": 0.5109,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.468,
+              "centroidTW": 0.5128
+            },
+            {
+              "phase": 300,
+              "primary": 0.4609,
+              "centroidTW": 0.5436
+            },
+            {
+              "phase": 600,
+              "primary": 0.4308,
+              "centroidTW": 0.5168
+            },
+            {
+              "phase": 900,
+              "primary": 0.4356,
+              "centroidTW": 0.5056
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4497,
+              "centroidTW": 0.4893
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4479,
+              "centroidTW": 0.4976
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.6434,
+        "deltaSymU": 0.0728,
+        "scale": 0.434,
+        "m_i": 0.1679
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-preflight-C_2026-09-14.md",
+        "ownPacket": "exo_memory/loop/packet_stick_preflight_read_2026-09-14.md",
+        "ownSha": "6174324",
+        "flag": null,
+        "ownU": 0.663,
+        "otherPacketsAtParent": 3,
+        "absentAtParent": [
+          "packet_diverged_2026-09-14.md",
+          "packet_diversity_c0_2026-09-15.md",
+          "packet_harness_and_lib_2026-09-15.md",
+          "packet_leave_window_2026-09-14.md"
+        ],
+        "voidAtParent": [],
+        "negControl": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "posRemovedLines": "6-12",
+        "Upos": {
+          "U": 0.8828,
+          "Umin": 0.7946,
+          "Umax": 0.9467,
+          "centroidTW": 0.9386,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.9467,
+              "centroidTW": 0.9467
+            },
+            {
+              "phase": 300,
+              "primary": 0.7946,
+              "centroidTW": 0.9162
+            },
+            {
+              "phase": 600,
+              "primary": 0.7967,
+              "centroidTW": 0.9375
+            },
+            {
+              "phase": 900,
+              "primary": 0.8654,
+              "centroidTW": 0.9379
+            },
+            {
+              "phase": 1200,
+              "primary": 0.9467,
+              "centroidTW": 0.9467
+            },
+            {
+              "phase": 1500,
+              "primary": 0.9467,
+              "centroidTW": 0.9467
+            }
+          ]
+        },
+        "Uneg": {
+          "U": 0.4488,
+          "Umin": 0.4308,
+          "Umax": 0.468,
+          "centroidTW": 0.5109,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.468,
+              "centroidTW": 0.5128
+            },
+            {
+              "phase": 300,
+              "primary": 0.4609,
+              "centroidTW": 0.5436
+            },
+            {
+              "phase": 600,
+              "primary": 0.4308,
+              "centroidTW": 0.5168
+            },
+            {
+              "phase": 900,
+              "primary": 0.4356,
+              "centroidTW": 0.5056
+            },
+            {
+              "phase": 1200,
+              "primary": 0.4497,
+              "centroidTW": 0.4893
+            },
+            {
+              "phase": 1500,
+              "primary": 0.4479,
+              "centroidTW": 0.4976
+            }
+          ]
+        },
+        "negShare": 0,
+        "void": false,
+        "otherMeanSymU": 0.615,
+        "deltaSymU": 0.048,
+        "scale": 0.434,
+        "m_i": 0.1107
+      }
+    ],
+    "void": [
+      {
+        "handback": "exo_memory/handback/p-stick-A_2026-09-14.md",
+        "reason": "no other packet present at the parent (R8f gap-closing paragraph, :390)"
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-E_2026-09-14.md",
+        "reason": "no other packet present at the parent (R8f gap-closing paragraph, :390)"
+      }
+    ]
+  },
+  "verdict": "controls passed"
+}

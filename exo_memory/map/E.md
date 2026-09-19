@@ -1327,3 +1327,14 @@ checks (the only-change proof restores the old line and must re-hash to 19c97ab5
 M7 SURVIVED the first pass (a foreign git root was accepted - no check covered it). **Carry:** my D079 hand-back's
 `:27` for phase-window is `:28` - I counted a sed window from the wrong end, and the plan copied it. Questions not
 asked (keeper asleep), defaults taken: the var name, the portable file NOT registered, throw not fallback.
+
+## 2026-09-19 ~12:5x · D084 N2 stage 1 P-STEP1-M, unattended, on D → `exo_memory/handback/p-step1-m-E_2026-09-19.md`
+**m = 0.2952 over 19 rows** (min 0.1107 · Q1 0.2646 · Q3 0.3377 · max 0.3914), from the NEW `dev/diversity/score-step1.mjs`
+(5e84e9d9…; score.mjs 19c97ab5… untouched before and after): the gate reads passU (§8.11), and R8c's m_i on R8e's U
+with R8f's others-at-parent. One run, 17m19s, NETWORK_ATTEMPTS=0, results fb34a8d0…; p-stick-A/E VOID as :390 said.
+Outputs in `loop/diversity_c1/` (results-step1.json, m-step1.md generated from it, score-step1.diff 29e676b5…).
+**The check worth reusing:** strip the new blocks from the new output and it must equal the registered old output
+(it did) - that proves "only these changes" on DATA, not just on the diff. And the per-row controls reproduced P1's
+committed controls on the one row whose packet is byte-identical to ed73e76. Defaults taken (keeper asleep):
+inverted own controls → VOID (0 fired); negative texts at 1e944ac not per-row; built from the hard-coded original,
+not the portable copy. Time labels slipped to "12:3x" again - check `date` before writing a time.

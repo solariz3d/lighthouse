@@ -1,0 +1,112 @@
+diff --git a/dev/diversity/score.mjs b/dev/diversity/score-step1.mjs
+index fcb81f4..b9df3cc 100644
+--- a/dev/diversity/score.mjs
++++ b/dev/diversity/score-step1.mjs
+@@ -6,6 +6,15 @@
+ // Every field C's run wrote is still written, from phase 0, unchanged. The U fields are added beside them, and so are
+ // the U-based control, prediction and P2 verdicts R8e says U replaces. Output goes to results-step0.json.
+ // Run: node --require ./block-net.cjs score-step0.mjs   (writes results-step0.json; prints a summary)
++// STEP 1 DIFF (E, D084): the committed step-0 scorer (dev/diversity/score.mjs, sha256 19c97ab5…) plus exactly two things —
++//   (1) §8.11: the control gate reads passU (the six-phase U) instead of phase 0's pass;
++//   (2) R8c's m_i for each P2 row, on R8e's U, with R8f's symmetric-in-version other-mean (every OTHER packet at the
++//       own packet's parent; a packet absent there is left out and listed; a row with no other packet there has no
++//       m_i, per the gap-closing paragraph), the row's own positive control (its own packet minus its first "## "
++//       section, UNSTRIPPED) and negative control (p-harness-E against its own packet, stripped; p-leave-E for
++//       packet_harness_and_lib). m = the median of the m_i. VOID rows are reported, never dropped.
++// Every field step 0 wrote is still written. Output goes to results-step1.json.
++// Run: node --require ./block-net.cjs score-step1.mjs   (writes results-step1.json; prints a summary)
+ import { env, AutoTokenizer, AutoModel, Tensor } from '@huggingface/transformers';
+ import fs from 'node:fs';
+ import path from 'node:path';
+@@ -138,6 +147,18 @@ const s1 = lines.findIndex((l) => l.startsWith('## 1 '));
+ const nearCopy = [...lines.slice(0, s0), ...lines.slice(s1)].join('\n');
+ const pos = await scorePair(nearCopy, ANCHOR, { stripped: false });
+ const NEG_REL = 'exo_memory/handback/p-harness-E_2026-09-15.md';
++// STEP 1 (2): R8c's exception, and the positive control generalised: the first "## " section, to the next "## " line.
++const NEG_ALT_REL = 'exo_memory/handback/p-leave-E_2026-09-14.md';
++function firstSectionBounds(text) {
++  const L = text.split('\n');
++  const a = L.findIndex((l) => l.startsWith('## '));
++  if (a < 0) return null;
++  let b = L.findIndex((l, i) => i > a && l.startsWith('## '));
++  if (b < 0) b = L.length;
++  return { L, a, b };
++}
++function firstSectionRemoved(text) { const x = firstSectionBounds(text); return x ? [...x.L.slice(0, x.a), ...x.L.slice(x.b)].join('\n') : null; }
++function firstSectionLines(text) { const x = firstSectionBounds(text); return x ? `${x.a + 1}-${x.b}` : null; }
+ const neg = await scorePair(git(RUN, NEG_REL), ANCHOR);
+ const p1Primaries = Object.values(p1).map((r) => r.primary);
+ const posPass = !pos.void && p1Primaries.every((p) => pos.primary > p);
+@@ -155,9 +176,9 @@ results.p1 = Object.fromEntries(Object.entries(p1).map(([k, r]) => [k, {
+   hb: r.hb && { strippedChars: r.hb.strippedChars, normalisedChars: r.hb.normalisedChars, share: r4(r.hb.share), tokens: r.hb.tokens, windows: r.hb.windows, absM: r4(r.hb.absM) },
+   br: r.br && { strippedChars: r.br.strippedChars, normalisedChars: r.br.normalisedChars, share: r4(r.br.share), tokens: r.br.tokens, windows: r.br.windows, absM: r4(r.br.absM) },
+ }]));
+-if (!posPass || !negPass) {
++if (!results.controls.positive.passU || !results.controls.negative.passU) {   // STEP 1 (1): the gate reads U (§8.11)
+   results.verdict = 'INSTRUMENT FAILED';
+-  fs.writeFileSync(path.join(here, 'results-step0.json'), JSON.stringify(results, null, 2));
++  fs.writeFileSync(path.join(here, 'results-step1.json'), JSON.stringify(results, null, 2));
+   console.log(JSON.stringify({ verdict: results.verdict, controls: results.controls }, null, 2));
+   process.exit(0);
+ }
+@@ -192,17 +213,37 @@ for (const own of PACKETS) {
+     let ownText = gitTry(parent, own), ownSha = parent, flag = null;
+     if (ownText == null) { ownText = git(add, own); ownSha = add; flag = 'packet absent at parent; taken at first-add commit'; }
+     const ownScore = await scorePair(H, ownText);
+-    if (ownScore.void) { rows.push({ handback: rel, void: true, reason: 'own pair void', hbShare: r4(ownScore.hbShare) }); continue; }
++    if (ownScore.void) { rows.push({ handback: rel, void: true, reason: 'own pair void', hbShare: r4(ownScore.hbShare), step1: { void: true, reason: 'own pair void (R8i / strip > 50%)' } }); continue; }
+     const others = [], othersU = [], othersSens = [], voids = [];
++    const othersSymU = [], symAbsent = [], symVoids = [];   // STEP 1 (2): R8f, every other packet at the parent
+     for (const p of PACKETS) {
+       if (p === own) continue;
+       const s = await scorePair(H, finalPacket[p]);
+       if (s.void) voids.push(path.basename(p)); else { others.push(s.primary); othersU.push(s.U); }
+       const atParent = gitTry(parent, p);
+-      if (atParent != null) { const ss = await scorePair(H, atParent); if (!ss.void) othersSens.push(ss.primary); }
++      if (atParent == null) symAbsent.push(path.basename(p));
++      else { const ss = await scorePair(H, atParent); if (!ss.void) { othersSens.push(ss.primary); othersSymU.push(ss.U); } else symVoids.push(path.basename(p)); }
+     }
+     const mean = (a) => a.reduce((s, x) => s + x, 0) / a.length;
++    // STEP 1 (2): R8c's m_i = ΔU_sym / (U_pos − U_neg), all three on the six-phase U, all against the SAME own-packet text.
++    const posText = firstSectionRemoved(ownText);
++    const negRel = ownName === 'packet_harness_and_lib_2026-09-15' ? NEG_ALT_REL : NEG_REL;
++    const posC = posText == null ? null : await scorePair(posText, ownText, { stripped: false });
++    const negC = await scorePair(git(RUN, negRel), ownText);
++    const step1 = { otherPacketsAtParent: othersSymU.length, absentAtParent: symAbsent, voidAtParent: symVoids,
++      negControl: negRel, posRemovedLines: posText == null ? null : firstSectionLines(ownText),
++      Upos: posC && !posC.void ? u6(posC) : null, Uneg: !negC.void ? u6(negC) : null, negShare: r4(negC.hbShare ?? (negC.hb && negC.hb.share)) };
++    if (!othersSymU.length) Object.assign(step1, { void: true, reason: 'no other packet present at the parent (R8f gap-closing paragraph, :390)' });
++    else if (posC == null) Object.assign(step1, { void: true, reason: 'own packet has no "## " section to remove: no positive control' });
++    else if (posC.void) Object.assign(step1, { void: true, reason: 'positive control pair void (R8i)' });
++    else if (negC.void) Object.assign(step1, { void: true, reason: 'negative control pair void (strip > 50% or empty, R8i)' });
++    else if (!(posC.U > negC.U)) Object.assign(step1, { void: true, reason: 'the row\'s own controls invert (U_pos <= U_neg): no scale' });
++    else {
++      const dSym = ownScore.U - mean(othersSymU), scale = posC.U - negC.U;
++      Object.assign(step1, { void: false, otherMeanSymU: r4(mean(othersSymU)), deltaSymU: r4(dSym), scale: r4(scale), m_i: r4(dSym / scale), m_i_raw: dSym / scale });
++    }
+     rows.push({
++      step1,
+       handback: rel, handbackSha: RUN, ownPacket: own, ownSha, landedAt: add, flag,
+       own: r4(ownScore.primary), ownCentroid: r4(ownScore.centroid), ownHbShare: r4(ownScore.hb.share),
+       ownHandbackText: { tokens: ownScore.hb.tokens, windows: ownScore.hb.windows, absM: r4(ownScore.hb.absM), strippedChars: ownScore.hb.strippedChars, normalisedChars: ownScore.hb.normalisedChars },
+@@ -226,6 +267,18 @@ const sd = rows.filter((r) => !r.void && r.sensitivity_delta != null).map((r) =>
+ results.p2.sensitivity_distribution = sd.length ? { n: sd.length, min: r4(Math.min(...sd)), q1: r4(q(sd, 0.25)), median: r4(q(sd, 0.5)), q3: r4(q(sd, 0.75)), max: r4(Math.max(...sd)) } : null;
+ const du = rows.filter((r) => !r.void).map((r) => r.deltaU);
+ results.p2.distributionU = { n: du.length, min: r4(Math.min(...du)), q1: r4(q(du, 0.25)), median: r4(q(du, 0.5)), q3: r4(q(du, 0.75)), max: r4(Math.max(...du)) };
++// STEP 1 (2): m.
++const mRows = rows.filter((r) => r.step1 && !r.step1.void);
++const mi = mRows.map((r) => r.step1.m_i_raw);
++results.step1 = {
++  rule: 'R8c m_i = deltaSymU / (Upos - Uneg); R8e six-phase U; R8f others at the own packet\'s parent; m = median(m_i)',
++  gate: { positivePassU: results.controls.positive.passU, negativePassU: results.controls.negative.passU },
++  m: mi.length ? r4(q(mi, 0.5)) : null, n: mi.length,
++  distribution: mi.length ? { min: r4(Math.min(...mi)), q1: r4(q(mi, 0.25)), median: r4(q(mi, 0.5)), q3: r4(q(mi, 0.75)), max: r4(Math.max(...mi)) } : null,
++  table: rows.map((r) => ({ handback: r.handback, ownPacket: r.ownPacket || null, ownSha: r.ownSha || null, flag: r.flag || null,
++    ownU: r.ownU ? r.ownU.U : null, ...r.step1, m_i_raw: undefined })),
++  void: rows.filter((r) => !r.step1 || r.step1.void).map((r) => ({ handback: r.handback, reason: r.step1 ? r.step1.reason : 'no step1 block' })),
++};
+ results.verdict = 'controls passed';
+-fs.writeFileSync(path.join(here, 'results-step0.json'), JSON.stringify(results, null, 2));
+-console.log(JSON.stringify({ controls: results.controls, p1: results.p1, p1_prediction: results.p1_prediction, p1_predictionU: results.p1_predictionU, p2_distribution: results.p2.distribution, p2_distributionU: results.p2.distributionU, p2_sensitivity: results.p2.sensitivity_distribution }, null, 2));
++fs.writeFileSync(path.join(here, 'results-step1.json'), JSON.stringify(results, null, 2));
++console.log(JSON.stringify({ step1_m: results.step1.m, step1_n: results.step1.n, step1_distribution: results.step1.distribution, step1_void: results.step1.void, controls: results.controls, p1: results.p1, p1_prediction: results.p1_prediction, p1_predictionU: results.p1_predictionU, p2_distribution: results.p2.distribution, p2_distributionU: results.p2.distributionU, p2_sensitivity: results.p2.sensitivity_distribution }, null, 2));
