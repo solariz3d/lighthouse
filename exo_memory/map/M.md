@@ -925,3 +925,4 @@ the wrong figure was published.*
 - 07:44 D077 return leg: plan `loop/plan_return_leg_2026-09-19.md`; design `handback/p-return-leg-C_2026-09-16.md`; delivery test 0 forced of 11 after the D076 rebuild (`librarian/2026-09-16.md` 09-19 07:4x).
 - 09:01 Small fixes sweep 2: `loop/plan_small_fixes_2_2026-09-19.md` (D078, D079; one item struck as already closed).
 - 10:23 Unattended run (thesis run 3): plan `loop/plan_night_run_2026-09-19.md`, log `loop/night_log_2026-09-19.md`.
+- 13:01 T3 seed-vs-intake run: rules `loop/t3_run_registration_2026-09-19.md`; route `handback/p-t3-readiness-C_2026-09-19.md`; attack `handback/p-t3-attack-B_2026-09-19.md`. T1 READY TO REGISTER at m = 0.2952 (`loop/diversity_c1/m-step1.md`).
