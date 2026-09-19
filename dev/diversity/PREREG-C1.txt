@@ -1,0 +1,42 @@
+P-DIVERSITY-C1 · C · interpretations fixed BEFORE any cosine (machine D). Rules: draft §8.2 as re-ruled in §8.7 R1-R4
+(aa5831c); S40 = dev/diversity/s40-strip.js at 5a2d3c0, sha256 73917f67...a087, loaded from a git-show copy whose hash is
+checked before use. Encoder gte-base-en-v1.5 q8, sha256 e7f6af7a...c326509, @huggingface/transformers 4.2.0, offline.
+Run commit for "final state": 1e944ac.
+
+WINDOWS AND SCORES (§8.2 + R3)
+- A text to embed is s40Strip(text, other).text (R2), or normalise(text) when a score is UNSTRIPPED.
+- Tokenise with add_special_tokens=false; cut consecutive windows of 1,800 token ids; each window = [CLS] + ids + [SEP];
+  CLS pooling; L2-normalise -> unit vector v_i; t_i = the window's id count (without CLS/SEP).
+- PRIMARY = mw_H . mw_B, where mw = sum(t_i v_i) / sum(t_i)      (R3: dot of token-weighted mean vectors, no renormalising)
+- SECONDARY centroid = cos(mu_H, mu_B), mu = unweighted mean of v_i; |m| = |mu| (unweighted)   (R3)
+- SECONDARY unstripped = PRIMARY computed on normalise(H) and normalise(B) with nothing stripped.
+- VOID: a pair whose hand-back S40 share > 0.50.
+
+CONTROLS (R1) - run first; if either fails, report INSTRUMENT FAILED and compute nothing further.
+- POSITIVE (encoder test, UNSTRIPPED): H = packet_leave_window @ed73e76 with its first "## " section removed (the lines from
+  "## 0 · THE KEEPER, VERBATIM" up to, not including, "## 1 ·"); B = the same packet @ed73e76. Score = PRIMARY on
+  normalised unstripped texts. PASS iff it is > every P1 PRIMARY.
+- NEGATIVE: H = handback/p-harness-E_2026-09-15.md @1e944ac; B = packet_leave_window @ed73e76; S40 both sides.
+  PASS iff its PRIMARY < every P1 PRIMARY.
+  (The P1 PRIMARIES are computed to evaluate the controls; P1 is reported only if both controls pass.)
+
+P1 (§8.1): B = packet_leave_window @ed73e76. H in {p-leave-read-B @9e29daf, p-leave-A @99649d8, p-leave-E @99649d8}.
+§8.3 FIRES iff PRIMARY(B-read) >= min(PRIMARY(A), PRIMARY(E)) - 0.02.
+
+P2 (§8.1 + R4)
+- Packets: every exo_memory/loop/packet_*_2026-09-1[45].md except packet_diversity_c1_and_leave2 (8 packets).
+- Hand-backs: the files matching each packet's §HAND-BACK <letter> pattern (16), plus the reads R4 includes, each assigned to
+  the packet it read: p-leave-read-B, p-leave-read2-B -> packet_leave_window; p-diverged-read-C, p-diverged-read2-C ->
+  packet_diverged; p-harness-read-B -> packet_harness_and_lib.
+  EXCLUDED before computing, with reason: anchor-registration-read-B (its brief is the registration DRAFT, not a packet in the
+  set) and readme-audit (a Third Place hand-back at the keeper's ask; no packet). Both have no own packet to score against.
+- Hand-back text: its content @1e944ac (final state, R4).
+- OWN brief: its packet's content at the PARENT of the commit that first added the hand-back (R4). If the packet does not exist at
+  that parent, use it at the first-add commit itself and flag the row.
+- OTHER packets (R4 does not say which version): PRIMARY is taken against each other packet @1e944ac (final state). SENSITIVITY,
+  reported beside it and never used to decide: other packets at the same parent commit as the own brief, where they exist.
+- Row score = own PRIMARY - mean PRIMARY over the non-void other-packet pairs. A void own pair drops the row.
+- Report n, min, Q1, median, Q3, max, and every row with paths and shas.
+- Scorer's stake, stated: four P2 hand-backs are C's own (p-diversity-c0-C, p-diverged-read-C, p-diverged-read2-C,
+  p-stick-preflight-C). The instrument is mechanical; E re-runs.
+2026-09-15T09:26:28-06:00

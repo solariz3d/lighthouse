@@ -1,0 +1,1870 @@
+{
+  "run": "1e944ac",
+  "prereg": "51ef51d325d2d86260bb4e01f9d2b4b365b4688a2292f65157624f5ab4c80a2a",
+  "s40": "73917f673b7d98130fe8195cf953bd35c4fa3534dbf00c41da1492e039a4e087",
+  "encoder": "e7f6af7a9457d4fdd3af220c68e9a37325aad7c2d306bbc855fe0d019c326509",
+  "controls": {
+    "positive": {
+      "removedLines": "12-23",
+      "bytes": 9230,
+      "primary": 0.8575,
+      "centroid": 0.9337,
+      "pass": true,
+      "U": 0.8409,
+      "Umin": 0.793,
+      "Umax": 0.8772,
+      "centroidTW": 0.9494,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.8575,
+          "centroidTW": 0.9491
+        },
+        {
+          "phase": 300,
+          "primary": 0.793,
+          "centroidTW": 0.9321
+        },
+        {
+          "phase": 600,
+          "primary": 0.8068,
+          "centroidTW": 0.9324
+        },
+        {
+          "phase": 900,
+          "primary": 0.8772,
+          "centroidTW": 0.9573
+        },
+        {
+          "phase": 1200,
+          "primary": 0.8619,
+          "centroidTW": 0.9643
+        },
+        {
+          "phase": 1500,
+          "primary": 0.8491,
+          "centroidTW": 0.9614
+        }
+      ],
+      "passU": true
+    },
+    "negative": {
+      "path": "exo_memory/handback/p-harness-E_2026-09-15.md",
+      "sha": "1e944ac",
+      "primary": 0.4521,
+      "centroid": 0.5268,
+      "hbShare": 0,
+      "pass": true,
+      "U": 0.4548,
+      "Umin": 0.4391,
+      "Umax": 0.4734,
+      "centroidTW": 0.5369,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.4521,
+          "centroidTW": 0.5254
+        },
+        {
+          "phase": 300,
+          "primary": 0.4681,
+          "centroidTW": 0.5599
+        },
+        {
+          "phase": 600,
+          "primary": 0.4734,
+          "centroidTW": 0.5765
+        },
+        {
+          "phase": 900,
+          "primary": 0.4515,
+          "centroidTW": 0.5203
+        },
+        {
+          "phase": 1200,
+          "primary": 0.4391,
+          "centroidTW": 0.508
+        },
+        {
+          "phase": 1500,
+          "primary": 0.4446,
+          "centroidTW": 0.5314
+        }
+      ],
+      "passU": true
+    }
+  },
+  "p1": {
+    "B-read": {
+      "U": 0.6866,
+      "Umin": 0.6702,
+      "Umax": 0.7059,
+      "centroidTW": 0.823,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.688,
+          "centroidTW": 0.7986
+        },
+        {
+          "phase": 300,
+          "primary": 0.6923,
+          "centroidTW": 0.8536
+        },
+        {
+          "phase": 600,
+          "primary": 0.6702,
+          "centroidTW": 0.8197
+        },
+        {
+          "phase": 900,
+          "primary": 0.6881,
+          "centroidTW": 0.8036
+        },
+        {
+          "phase": 1200,
+          "primary": 0.7059,
+          "centroidTW": 0.8391
+        },
+        {
+          "phase": 1500,
+          "primary": 0.6753,
+          "centroidTW": 0.8236
+        }
+      ],
+      "path": "exo_memory/handback/p-leave-read-B_2026-09-14.md",
+      "sha": "9e29daf",
+      "bytes": 16050,
+      "void": false,
+      "primary": 0.688,
+      "centroid": 0.8009,
+      "unstripped": 0.7003,
+      "hb": {
+        "strippedChars": 563,
+        "normalisedChars": 15079,
+        "share": 0.0373,
+        "tokens": 4398,
+        "windows": 3,
+        "absM": 0.9015
+      },
+      "br": {
+        "strippedChars": 563,
+        "normalisedChars": 8840,
+        "share": 0.0637,
+        "tokens": 2466,
+        "windows": 2,
+        "absM": 0.935
+      }
+    },
+    "A": {
+      "U": 0.7328,
+      "Umin": 0.7112,
+      "Umax": 0.7471,
+      "centroidTW": 0.8439,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.72,
+          "centroidTW": 0.822
+        },
+        {
+          "phase": 300,
+          "primary": 0.7112,
+          "centroidTW": 0.8245
+        },
+        {
+          "phase": 600,
+          "primary": 0.7265,
+          "centroidTW": 0.854
+        },
+        {
+          "phase": 900,
+          "primary": 0.7471,
+          "centroidTW": 0.8477
+        },
+        {
+          "phase": 1200,
+          "primary": 0.7452,
+          "centroidTW": 0.861
+        },
+        {
+          "phase": 1500,
+          "primary": 0.7468,
+          "centroidTW": 0.8541
+        }
+      ],
+      "path": "exo_memory/handback/p-leave-A_2026-09-14.md",
+      "sha": "99649d8",
+      "bytes": 21298,
+      "void": false,
+      "primary": 0.72,
+      "centroid": 0.8388,
+      "unstripped": 0.7334,
+      "hb": {
+        "strippedChars": 43,
+        "normalisedChars": 18961,
+        "share": 0.0023,
+        "tokens": 5375,
+        "windows": 3,
+        "absM": 0.9371
+      },
+      "br": {
+        "strippedChars": 43,
+        "normalisedChars": 8840,
+        "share": 0.0049,
+        "tokens": 2603,
+        "windows": 2,
+        "absM": 0.9229
+      }
+    },
+    "E": {
+      "U": 0.6497,
+      "Umin": 0.6231,
+      "Umax": 0.6635,
+      "centroidTW": 0.7985,
+      "phases": [
+        {
+          "phase": 0,
+          "primary": 0.6401,
+          "centroidTW": 0.7764
+        },
+        {
+          "phase": 300,
+          "primary": 0.6231,
+          "centroidTW": 0.7745
+        },
+        {
+          "phase": 600,
+          "primary": 0.651,
+          "centroidTW": 0.8152
+        },
+        {
+          "phase": 900,
+          "primary": 0.6595,
+          "centroidTW": 0.7995
+        },
+        {
+          "phase": 1200,
+          "primary": 0.6611,
+          "centroidTW": 0.8133
+        },
+        {
+          "phase": 1500,
+          "primary": 0.6635,
+          "centroidTW": 0.812
+        }
+      ],
+      "path": "exo_memory/handback/p-leave-E_2026-09-14.md",
+      "sha": "99649d8",
+      "bytes": 35743,
+      "void": false,
+      "primary": 0.6401,
+      "centroid": 0.7974,
+      "unstripped": 0.6721,
+      "hb": {
+        "strippedChars": 517,
+        "normalisedChars": 30046,
+        "share": 0.0172,
+        "tokens": 8641,
+        "windows": 5,
+        "absM": 0.8639
+      },
+      "br": {
+        "strippedChars": 321,
+        "normalisedChars": 8840,
+        "share": 0.0363,
+        "tokens": 2500,
+        "windows": 2,
+        "absM": 0.9422
+      }
+    }
+  },
+  "p1_prediction": {
+    "B": 0.688,
+    "lowerOfAE": 0.6401,
+    "margin_B_minus_lower": 0.0479,
+    "fires": true
+  },
+  "p1_predictionU": {
+    "B": 0.6866,
+    "lowerOfAE": 0.6497,
+    "margin_B_minus_lower": 0.0369,
+    "fires": true
+  },
+  "p2": {
+    "rows": [
+      {
+        "handback": "exo_memory/handback/p-diverged-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "31fb65f",
+        "landedAt": "862509f",
+        "flag": null,
+        "own": 0.7519,
+        "ownCentroid": 0.8501,
+        "ownHbShare": 0.0347,
+        "ownHandbackText": {
+          "tokens": 4713,
+          "windows": 3,
+          "absM": 0.9159,
+          "strippedChars": 575,
+          "normalisedChars": 16570
+        },
+        "ownBriefText": {
+          "tokens": 3461,
+          "windows": 2,
+          "absM": 0.9543,
+          "strippedChars": 575,
+          "normalisedChars": 12352,
+          "share": 0.0466
+        },
+        "otherMean": 0.6218,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1302,
+        "sensitivity_otherMeanAtParent": 0.6449,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.1071,
+        "ownU": {
+          "U": 0.7399,
+          "Umin": 0.709,
+          "Umax": 0.7523,
+          "centroidTW": 0.8708,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7519,
+              "centroidTW": 0.8596
+            },
+            {
+              "phase": 300,
+              "primary": 0.709,
+              "centroidTW": 0.8376
+            },
+            {
+              "phase": 600,
+              "primary": 0.7386,
+              "centroidTW": 0.8901
+            },
+            {
+              "phase": 900,
+              "primary": 0.7422,
+              "centroidTW": 0.877
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7454,
+              "centroidTW": 0.8852
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7523,
+              "centroidTW": 0.8756
+            }
+          ]
+        },
+        "otherMeanU": 0.6097,
+        "deltaU": 0.1302
+      },
+      {
+        "handback": "exo_memory/handback/p-diverged-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "31fb65f",
+        "landedAt": "862509f",
+        "flag": null,
+        "own": 0.762,
+        "ownCentroid": 0.8575,
+        "ownHbShare": 0.045,
+        "ownHandbackText": {
+          "tokens": 2645,
+          "windows": 2,
+          "absM": 0.9209,
+          "strippedChars": 436,
+          "normalisedChars": 9686
+        },
+        "ownBriefText": {
+          "tokens": 3547,
+          "windows": 2,
+          "absM": 0.9523,
+          "strippedChars": 380,
+          "normalisedChars": 12352,
+          "share": 0.0308
+        },
+        "otherMean": 0.5936,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1684,
+        "sensitivity_otherMeanAtParent": 0.6343,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.1277,
+        "ownU": {
+          "U": 0.7284,
+          "Umin": 0.6973,
+          "Umax": 0.762,
+          "centroidTW": 0.8432,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.762,
+              "centroidTW": 0.8589
+            },
+            {
+              "phase": 300,
+              "primary": 0.7548,
+              "centroidTW": 0.8689
+            },
+            {
+              "phase": 600,
+              "primary": 0.6973,
+              "centroidTW": 0.8103
+            },
+            {
+              "phase": 900,
+              "primary": 0.7219,
+              "centroidTW": 0.8412
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7165,
+              "centroidTW": 0.8351
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7181,
+              "centroidTW": 0.8452
+            }
+          ]
+        },
+        "otherMeanU": 0.5874,
+        "deltaU": 0.1411
+      },
+      {
+        "handback": "exo_memory/handback/p-diverged-read-C_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "6397e1a",
+        "landedAt": "6dbdae9",
+        "flag": null,
+        "own": 0.8059,
+        "ownCentroid": 0.8875,
+        "ownHbShare": 0.0357,
+        "ownHandbackText": {
+          "tokens": 3006,
+          "windows": 2,
+          "absM": 0.9439,
+          "strippedChars": 366,
+          "normalisedChars": 10244
+        },
+        "ownBriefText": {
+          "tokens": 3507,
+          "windows": 2,
+          "absM": 0.9556,
+          "strippedChars": 419,
+          "normalisedChars": 12352,
+          "share": 0.0339
+        },
+        "otherMean": 0.6151,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1908,
+        "sensitivity_otherMeanAtParent": 0.6544,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.1515,
+        "ownU": {
+          "U": 0.779,
+          "Umin": 0.746,
+          "Umax": 0.8059,
+          "centroidTW": 0.8987,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.8059,
+              "centroidTW": 0.8913
+            },
+            {
+              "phase": 300,
+              "primary": 0.746,
+              "centroidTW": 0.8625
+            },
+            {
+              "phase": 600,
+              "primary": 0.7741,
+              "centroidTW": 0.917
+            },
+            {
+              "phase": 900,
+              "primary": 0.7723,
+              "centroidTW": 0.9114
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7756,
+              "centroidTW": 0.9022
+            },
+            {
+              "phase": 1500,
+              "primary": 0.8,
+              "centroidTW": 0.9079
+            }
+          ]
+        },
+        "otherMeanU": 0.6065,
+        "deltaU": 0.1725
+      },
+      {
+        "handback": "exo_memory/handback/p-diverged-read2-C_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "5e21844",
+        "landedAt": "9f2ab75",
+        "flag": null,
+        "own": 0.7501,
+        "ownCentroid": 0.848,
+        "ownHbShare": 0.0159,
+        "ownHandbackText": {
+          "tokens": 3935,
+          "windows": 3,
+          "absM": 0.9004,
+          "strippedChars": 197,
+          "normalisedChars": 12395
+        },
+        "ownBriefText": {
+          "tokens": 3584,
+          "windows": 2,
+          "absM": 0.952,
+          "strippedChars": 148,
+          "normalisedChars": 12352,
+          "share": 0.012
+        },
+        "otherMean": 0.6138,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1363,
+        "sensitivity_otherMeanAtParent": 0.6441,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.106,
+        "ownU": {
+          "U": 0.7367,
+          "Umin": 0.6961,
+          "Umax": 0.7549,
+          "centroidTW": 0.8636,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7501,
+              "centroidTW": 0.852
+            },
+            {
+              "phase": 300,
+              "primary": 0.6961,
+              "centroidTW": 0.8105
+            },
+            {
+              "phase": 600,
+              "primary": 0.7487,
+              "centroidTW": 0.8758
+            },
+            {
+              "phase": 900,
+              "primary": 0.7549,
+              "centroidTW": 0.8929
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7354,
+              "centroidTW": 0.8722
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7351,
+              "centroidTW": 0.8781
+            }
+          ]
+        },
+        "otherMeanU": 0.6129,
+        "deltaU": 0.1239
+      },
+      {
+        "handback": "exo_memory/handback/p-diversity-c0-C_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diversity_c0_2026-09-15.md",
+        "ownSha": "cf0ea20",
+        "landedAt": "e53c71b",
+        "flag": null,
+        "own": 0.5087,
+        "ownCentroid": 0.5639,
+        "ownHbShare": 0.0082,
+        "ownHandbackText": {
+          "tokens": 6714,
+          "windows": 4,
+          "absM": 0.901,
+          "strippedChars": 169,
+          "normalisedChars": 20713
+        },
+        "ownBriefText": {
+          "tokens": 902,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 169,
+          "normalisedChars": 3417,
+          "share": 0.0495
+        },
+        "otherMean": 0.4012,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1075,
+        "sensitivity_otherMeanAtParent": 0.4012,
+        "sensitivity_nOthers": 7,
+        "sensitivity_delta": 0.1075,
+        "ownU": {
+          "U": 0.5015,
+          "Umin": 0.4709,
+          "Umax": 0.5171,
+          "centroidTW": 0.5799,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.5087,
+              "centroidTW": 0.5627
+            },
+            {
+              "phase": 300,
+              "primary": 0.4971,
+              "centroidTW": 0.6302
+            },
+            {
+              "phase": 600,
+              "primary": 0.4709,
+              "centroidTW": 0.5849
+            },
+            {
+              "phase": 900,
+              "primary": 0.5001,
+              "centroidTW": 0.5631
+            },
+            {
+              "phase": 1200,
+              "primary": 0.5171,
+              "centroidTW": 0.5754
+            },
+            {
+              "phase": 1500,
+              "primary": 0.5151,
+              "centroidTW": 0.5629
+            }
+          ]
+        },
+        "otherMeanU": 0.3877,
+        "deltaU": 0.1139
+      },
+      {
+        "handback": "exo_memory/handback/p-diversity-c0-E_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diversity_c0_2026-09-15.md",
+        "ownSha": "cf0ea20",
+        "landedAt": "e53c71b",
+        "flag": null,
+        "own": 0.5896,
+        "ownCentroid": 0.6191,
+        "ownHbShare": 0.0055,
+        "ownHandbackText": {
+          "tokens": 3201,
+          "windows": 2,
+          "absM": 0.9507,
+          "strippedChars": 58,
+          "normalisedChars": 10552
+        },
+        "ownBriefText": {
+          "tokens": 924,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 58,
+          "normalisedChars": 3417,
+          "share": 0.017
+        },
+        "otherMean": 0.4736,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.116,
+        "sensitivity_otherMeanAtParent": 0.4736,
+        "sensitivity_nOthers": 7,
+        "sensitivity_delta": 0.116,
+        "ownU": {
+          "U": 0.5668,
+          "Umin": 0.5458,
+          "Umax": 0.5896,
+          "centroidTW": 0.6363,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.5896,
+              "centroidTW": 0.6196
+            },
+            {
+              "phase": 300,
+              "primary": 0.5458,
+              "centroidTW": 0.658
+            },
+            {
+              "phase": 600,
+              "primary": 0.5845,
+              "centroidTW": 0.7133
+            },
+            {
+              "phase": 900,
+              "primary": 0.5514,
+              "centroidTW": 0.6123
+            },
+            {
+              "phase": 1200,
+              "primary": 0.5501,
+              "centroidTW": 0.596
+            },
+            {
+              "phase": 1500,
+              "primary": 0.5792,
+              "centroidTW": 0.6186
+            }
+          ]
+        },
+        "otherMeanU": 0.472,
+        "deltaU": 0.0948
+      },
+      {
+        "handback": "exo_memory/handback/p-harness-A_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "faaaa7b",
+        "landedAt": "9ff51b4",
+        "flag": null,
+        "own": 0.6502,
+        "ownCentroid": 0.6895,
+        "ownHbShare": 0.0049,
+        "ownHandbackText": {
+          "tokens": 4826,
+          "windows": 3,
+          "absM": 0.9379,
+          "strippedChars": 83,
+          "normalisedChars": 16913
+        },
+        "ownBriefText": {
+          "tokens": 1515,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 83,
+          "normalisedChars": 5493,
+          "share": 0.0151
+        },
+        "otherMean": 0.5543,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.0959,
+        "sensitivity_otherMeanAtParent": 0.5623,
+        "sensitivity_nOthers": 6,
+        "sensitivity_delta": 0.0879,
+        "ownU": {
+          "U": 0.6569,
+          "Umin": 0.6346,
+          "Umax": 0.696,
+          "centroidTW": 0.7289,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6502,
+              "centroidTW": 0.6928
+            },
+            {
+              "phase": 300,
+              "primary": 0.696,
+              "centroidTW": 0.7642
+            },
+            {
+              "phase": 600,
+              "primary": 0.644,
+              "centroidTW": 0.7568
+            },
+            {
+              "phase": 900,
+              "primary": 0.6346,
+              "centroidTW": 0.7156
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6448,
+              "centroidTW": 0.7276
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6721,
+              "centroidTW": 0.7163
+            }
+          ]
+        },
+        "otherMeanU": 0.5353,
+        "deltaU": 0.1216
+      },
+      {
+        "handback": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "2782af4",
+        "landedAt": "04532bc",
+        "flag": null,
+        "own": 0.5972,
+        "ownCentroid": 0.6379,
+        "ownHbShare": 0.0072,
+        "ownHandbackText": {
+          "tokens": 4697,
+          "windows": 3,
+          "absM": 0.9234,
+          "strippedChars": 113,
+          "normalisedChars": 15726
+        },
+        "ownBriefText": {
+          "tokens": 1215,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 113,
+          "normalisedChars": 4422,
+          "share": 0.0256
+        },
+        "otherMean": 0.4757,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1215,
+        "sensitivity_otherMeanAtParent": 0.483,
+        "sensitivity_nOthers": 6,
+        "sensitivity_delta": 0.1142,
+        "ownU": {
+          "U": 0.5815,
+          "Umin": 0.5239,
+          "Umax": 0.6116,
+          "centroidTW": 0.6582,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.5972,
+              "centroidTW": 0.6461
+            },
+            {
+              "phase": 300,
+              "primary": 0.5782,
+              "centroidTW": 0.665
+            },
+            {
+              "phase": 600,
+              "primary": 0.5773,
+              "centroidTW": 0.6879
+            },
+            {
+              "phase": 900,
+              "primary": 0.5239,
+              "centroidTW": 0.6214
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6007,
+              "centroidTW": 0.6591
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6116,
+              "centroidTW": 0.6699
+            }
+          ]
+        },
+        "otherMeanU": 0.4676,
+        "deltaU": 0.1138
+      },
+      {
+        "handback": "exo_memory/handback/p-harness-read-B_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "faaaa7b",
+        "landedAt": "9ff51b4",
+        "flag": null,
+        "own": 0.6722,
+        "ownCentroid": 0.7224,
+        "ownHbShare": 0.0042,
+        "ownHandbackText": {
+          "tokens": 3321,
+          "windows": 2,
+          "absM": 0.9306,
+          "strippedChars": 47,
+          "normalisedChars": 11207
+        },
+        "ownBriefText": {
+          "tokens": 1524,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 47,
+          "normalisedChars": 5493,
+          "share": 0.0086
+        },
+        "otherMean": 0.5392,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.133,
+        "sensitivity_otherMeanAtParent": 0.543,
+        "sensitivity_nOthers": 6,
+        "sensitivity_delta": 0.1292,
+        "ownU": {
+          "U": 0.6549,
+          "Umin": 0.6227,
+          "Umax": 0.6934,
+          "centroidTW": 0.7394,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6722,
+              "centroidTW": 0.722
+            },
+            {
+              "phase": 300,
+              "primary": 0.6387,
+              "centroidTW": 0.7199
+            },
+            {
+              "phase": 600,
+              "primary": 0.6227,
+              "centroidTW": 0.749
+            },
+            {
+              "phase": 900,
+              "primary": 0.6611,
+              "centroidTW": 0.7647
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6415,
+              "centroidTW": 0.7355
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6934,
+              "centroidTW": 0.7455
+            }
+          ]
+        },
+        "otherMeanU": 0.5228,
+        "deltaU": 0.1321
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "b9b4cd1",
+        "landedAt": "99649d8",
+        "flag": null,
+        "own": 0.7657,
+        "ownCentroid": 0.895,
+        "ownHbShare": 0.0044,
+        "ownHandbackText": {
+          "tokens": 5366,
+          "windows": 3,
+          "absM": 0.9393,
+          "strippedChars": 83,
+          "normalisedChars": 18961
+        },
+        "ownBriefText": {
+          "tokens": 5139,
+          "windows": 3,
+          "absM": 0.9091,
+          "strippedChars": 83,
+          "normalisedChars": 17574,
+          "share": 0.0047
+        },
+        "otherMean": 0.6127,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1529,
+        "sensitivity_otherMeanAtParent": 0.6544,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.1112,
+        "ownU": {
+          "U": 0.7534,
+          "Umin": 0.7338,
+          "Umax": 0.7715,
+          "centroidTW": 0.8999,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7657,
+              "centroidTW": 0.8962
+            },
+            {
+              "phase": 300,
+              "primary": 0.7338,
+              "centroidTW": 0.8933
+            },
+            {
+              "phase": 600,
+              "primary": 0.753,
+              "centroidTW": 0.8991
+            },
+            {
+              "phase": 900,
+              "primary": 0.7429,
+              "centroidTW": 0.8889
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7538,
+              "centroidTW": 0.9075
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7715,
+              "centroidTW": 0.9141
+            }
+          ]
+        },
+        "otherMeanU": 0.6019,
+        "deltaU": 0.1515
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "b9b4cd1",
+        "landedAt": "99649d8",
+        "flag": null,
+        "own": 0.6791,
+        "ownCentroid": 0.8617,
+        "ownHbShare": 0.0221,
+        "ownHandbackText": {
+          "tokens": 8578,
+          "windows": 5,
+          "absM": 0.8602,
+          "strippedChars": 664,
+          "normalisedChars": 30046
+        },
+        "ownBriefText": {
+          "tokens": 4981,
+          "windows": 3,
+          "absM": 0.9166,
+          "strippedChars": 468,
+          "normalisedChars": 17574,
+          "share": 0.0266
+        },
+        "otherMean": 0.5632,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1159,
+        "sensitivity_otherMeanAtParent": 0.5887,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.0904,
+        "ownU": {
+          "U": 0.6809,
+          "Umin": 0.6578,
+          "Umax": 0.6988,
+          "centroidTW": 0.8645,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6791,
+              "centroidTW": 0.8589
+            },
+            {
+              "phase": 300,
+              "primary": 0.6578,
+              "centroidTW": 0.8568
+            },
+            {
+              "phase": 600,
+              "primary": 0.6776,
+              "centroidTW": 0.8757
+            },
+            {
+              "phase": 900,
+              "primary": 0.6837,
+              "centroidTW": 0.861
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6884,
+              "centroidTW": 0.8689
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6988,
+              "centroidTW": 0.8656
+            }
+          ]
+        },
+        "otherMeanU": 0.5666,
+        "deltaU": 0.1143
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-read-B_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "9bc063f",
+        "landedAt": "9e29daf",
+        "flag": null,
+        "own": 0.688,
+        "ownCentroid": 0.8009,
+        "ownHbShare": 0.0373,
+        "ownHandbackText": {
+          "tokens": 4398,
+          "windows": 3,
+          "absM": 0.9015,
+          "strippedChars": 563,
+          "normalisedChars": 15079
+        },
+        "ownBriefText": {
+          "tokens": 2466,
+          "windows": 2,
+          "absM": 0.935,
+          "strippedChars": 563,
+          "normalisedChars": 8840,
+          "share": 0.0637
+        },
+        "otherMean": 0.5781,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1099,
+        "sensitivity_otherMeanAtParent": 0.6064,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.0816,
+        "ownU": {
+          "U": 0.6866,
+          "Umin": 0.6702,
+          "Umax": 0.7059,
+          "centroidTW": 0.823,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.688,
+              "centroidTW": 0.7986
+            },
+            {
+              "phase": 300,
+              "primary": 0.6923,
+              "centroidTW": 0.8536
+            },
+            {
+              "phase": 600,
+              "primary": 0.6702,
+              "centroidTW": 0.8197
+            },
+            {
+              "phase": 900,
+              "primary": 0.6881,
+              "centroidTW": 0.8036
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7059,
+              "centroidTW": 0.8391
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6753,
+              "centroidTW": 0.8236
+            }
+          ]
+        },
+        "otherMeanU": 0.5718,
+        "deltaU": 0.1149
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-read2-B_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "6d89e2d",
+        "landedAt": "c59530a",
+        "flag": null,
+        "own": 0.6941,
+        "ownCentroid": 0.8269,
+        "ownHbShare": 0.0172,
+        "ownHandbackText": {
+          "tokens": 6764,
+          "windows": 4,
+          "absM": 0.9136,
+          "strippedChars": 398,
+          "normalisedChars": 23188
+        },
+        "ownBriefText": {
+          "tokens": 4347,
+          "windows": 3,
+          "absM": 0.9148,
+          "strippedChars": 349,
+          "normalisedChars": 15059,
+          "share": 0.0232
+        },
+        "otherMean": 0.5559,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1382,
+        "sensitivity_otherMeanAtParent": 0.5781,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.116,
+        "ownU": {
+          "U": 0.6785,
+          "Umin": 0.6463,
+          "Umax": 0.6941,
+          "centroidTW": 0.8189,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6941,
+              "centroidTW": 0.8241
+            },
+            {
+              "phase": 300,
+              "primary": 0.6463,
+              "centroidTW": 0.7943
+            },
+            {
+              "phase": 600,
+              "primary": 0.6654,
+              "centroidTW": 0.8142
+            },
+            {
+              "phase": 900,
+              "primary": 0.6913,
+              "centroidTW": 0.8299
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6865,
+              "centroidTW": 0.8309
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6873,
+              "centroidTW": 0.8202
+            }
+          ]
+        },
+        "otherMeanU": 0.5554,
+        "deltaU": 0.123
+      },
+      {
+        "handback": "exo_memory/handback/p-no-console-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_no_console_windows_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.6908,
+        "ownCentroid": 0.8545,
+        "ownHbShare": 0.0125,
+        "ownHandbackText": {
+          "tokens": 5790,
+          "windows": 4,
+          "absM": 0.8797,
+          "strippedChars": 264,
+          "normalisedChars": 21043
+        },
+        "ownBriefText": {
+          "tokens": 2159,
+          "windows": 2,
+          "absM": 0.8956,
+          "strippedChars": 223,
+          "normalisedChars": 7662,
+          "share": 0.0291
+        },
+        "otherMean": 0.5238,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.167,
+        "sensitivity_otherMeanAtParent": 0.5314,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.1593,
+        "ownU": {
+          "U": 0.6731,
+          "Umin": 0.6378,
+          "Umax": 0.6908,
+          "centroidTW": 0.8194,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6908,
+              "centroidTW": 0.8241
+            },
+            {
+              "phase": 300,
+              "primary": 0.6661,
+              "centroidTW": 0.8205
+            },
+            {
+              "phase": 600,
+              "primary": 0.6378,
+              "centroidTW": 0.7853
+            },
+            {
+              "phase": 900,
+              "primary": 0.689,
+              "centroidTW": 0.8442
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6732,
+              "centroidTW": 0.8177
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6815,
+              "centroidTW": 0.8243
+            }
+          ]
+        },
+        "otherMeanU": 0.5284,
+        "deltaU": 0.1447
+      },
+      {
+        "handback": "exo_memory/handback/p-no-console-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_no_console_windows_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.6482,
+        "ownCentroid": 0.771,
+        "ownHbShare": 0.0358,
+        "ownHandbackText": {
+          "tokens": 3879,
+          "windows": 3,
+          "absM": 0.8824,
+          "strippedChars": 516,
+          "normalisedChars": 14396
+        },
+        "ownBriefText": {
+          "tokens": 2121,
+          "windows": 2,
+          "absM": 0.8981,
+          "strippedChars": 351,
+          "normalisedChars": 7662,
+          "share": 0.0458
+        },
+        "otherMean": 0.5266,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1216,
+        "sensitivity_otherMeanAtParent": 0.5316,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.1166,
+        "ownU": {
+          "U": 0.6697,
+          "Umin": 0.6482,
+          "Umax": 0.6854,
+          "centroidTW": 0.8082,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.6482,
+              "centroidTW": 0.7666
+            },
+            {
+              "phase": 300,
+              "primary": 0.6721,
+              "centroidTW": 0.7899
+            },
+            {
+              "phase": 600,
+              "primary": 0.6765,
+              "centroidTW": 0.8122
+            },
+            {
+              "phase": 900,
+              "primary": 0.6854,
+              "centroidTW": 0.8545
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6595,
+              "centroidTW": 0.807
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6766,
+              "centroidTW": 0.819
+            }
+          ]
+        },
+        "otherMeanU": 0.5189,
+        "deltaU": 0.1508
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-build-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_build_2026-09-14.md",
+        "ownSha": "4085f2f",
+        "landedAt": "0405bd2",
+        "flag": null,
+        "own": 0.7362,
+        "ownCentroid": 0.9148,
+        "ownHbShare": 0.0346,
+        "ownHandbackText": {
+          "tokens": 8043,
+          "windows": 5,
+          "absM": 0.8941,
+          "strippedChars": 1085,
+          "normalisedChars": 31380
+        },
+        "ownBriefText": {
+          "tokens": 6235,
+          "windows": 4,
+          "absM": 0.9002,
+          "strippedChars": 944,
+          "normalisedChars": 23697,
+          "share": 0.0398
+        },
+        "otherMean": 0.609,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1272,
+        "sensitivity_otherMeanAtParent": 0.6677,
+        "sensitivity_nOthers": 1,
+        "sensitivity_delta": 0.0686,
+        "ownU": {
+          "U": 0.7341,
+          "Umin": 0.72,
+          "Umax": 0.7502,
+          "centroidTW": 0.9249,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7362,
+              "centroidTW": 0.9131
+            },
+            {
+              "phase": 300,
+              "primary": 0.7284,
+              "centroidTW": 0.9096
+            },
+            {
+              "phase": 600,
+              "primary": 0.72,
+              "centroidTW": 0.9206
+            },
+            {
+              "phase": 900,
+              "primary": 0.7457,
+              "centroidTW": 0.9444
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7502,
+              "centroidTW": 0.9423
+            },
+            {
+              "phase": 1500,
+              "primary": 0.724,
+              "centroidTW": 0.9195
+            }
+          ]
+        },
+        "otherMeanU": 0.6037,
+        "deltaU": 0.1304
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-build-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_build_2026-09-14.md",
+        "ownSha": "4085f2f",
+        "landedAt": "0405bd2",
+        "flag": null,
+        "own": 0.7599,
+        "ownCentroid": 0.9231,
+        "ownHbShare": 0.0365,
+        "ownHandbackText": {
+          "tokens": 7330,
+          "windows": 5,
+          "absM": 0.842,
+          "strippedChars": 1010,
+          "normalisedChars": 27663
+        },
+        "ownBriefText": {
+          "tokens": 6248,
+          "windows": 4,
+          "absM": 0.9002,
+          "strippedChars": 915,
+          "normalisedChars": 23697,
+          "share": 0.0386
+        },
+        "otherMean": 0.6028,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1571,
+        "sensitivity_otherMeanAtParent": 0.6621,
+        "sensitivity_nOthers": 1,
+        "sensitivity_delta": 0.0977,
+        "ownU": {
+          "U": 0.7308,
+          "Umin": 0.6928,
+          "Umax": 0.7599,
+          "centroidTW": 0.929,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7599,
+              "centroidTW": 0.9434
+            },
+            {
+              "phase": 300,
+              "primary": 0.7501,
+              "centroidTW": 0.9388
+            },
+            {
+              "phase": 600,
+              "primary": 0.7215,
+              "centroidTW": 0.9276
+            },
+            {
+              "phase": 900,
+              "primary": 0.6928,
+              "centroidTW": 0.919
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7133,
+              "centroidTW": 0.9172
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7474,
+              "centroidTW": 0.9282
+            }
+          ]
+        },
+        "otherMeanU": 0.5916,
+        "deltaU": 0.1393
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_module_2026-09-14.md",
+        "ownSha": "f93f42e",
+        "landedAt": "59e65f6",
+        "flag": null,
+        "own": 0.7048,
+        "ownCentroid": 0.8082,
+        "ownHbShare": 0.0154,
+        "ownHandbackText": {
+          "tokens": 3393,
+          "windows": 2,
+          "absM": 0.9349,
+          "strippedChars": 197,
+          "normalisedChars": 12810
+        },
+        "ownBriefText": {
+          "tokens": 4276,
+          "windows": 3,
+          "absM": 0.8946,
+          "strippedChars": 197,
+          "normalisedChars": 16626,
+          "share": 0.0118
+        },
+        "otherMean": 0.5708,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.134,
+        "sensitivity_otherMeanAtParent": null,
+        "sensitivity_nOthers": 0,
+        "sensitivity_delta": null,
+        "ownU": {
+          "U": 0.6731,
+          "Umin": 0.624,
+          "Umax": 0.7048,
+          "centroidTW": 0.8179,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7048,
+              "centroidTW": 0.8271
+            },
+            {
+              "phase": 300,
+              "primary": 0.6796,
+              "centroidTW": 0.8151
+            },
+            {
+              "phase": 600,
+              "primary": 0.66,
+              "centroidTW": 0.8251
+            },
+            {
+              "phase": 900,
+              "primary": 0.6678,
+              "centroidTW": 0.8214
+            },
+            {
+              "phase": 1200,
+              "primary": 0.624,
+              "centroidTW": 0.7896
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7021,
+              "centroidTW": 0.8289
+            }
+          ]
+        },
+        "otherMeanU": 0.556,
+        "deltaU": 0.1171
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_module_2026-09-14.md",
+        "ownSha": "1346cb9",
+        "landedAt": "0783e45",
+        "flag": null,
+        "own": 0.7016,
+        "ownCentroid": 0.8317,
+        "ownHbShare": 0.0047,
+        "ownHandbackText": {
+          "tokens": 3575,
+          "windows": 2,
+          "absM": 0.9127,
+          "strippedChars": 62,
+          "normalisedChars": 13300
+        },
+        "ownBriefText": {
+          "tokens": 2798,
+          "windows": 2,
+          "absM": 0.926,
+          "strippedChars": 62,
+          "normalisedChars": 10776,
+          "share": 0.0058
+        },
+        "otherMean": 0.5828,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1188,
+        "sensitivity_otherMeanAtParent": null,
+        "sensitivity_nOthers": 0,
+        "sensitivity_delta": null,
+        "ownU": {
+          "U": 0.6792,
+          "Umin": 0.6569,
+          "Umax": 0.7016,
+          "centroidTW": 0.8191,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7016,
+              "centroidTW": 0.8245
+            },
+            {
+              "phase": 300,
+              "primary": 0.662,
+              "centroidTW": 0.8087
+            },
+            {
+              "phase": 600,
+              "primary": 0.6569,
+              "centroidTW": 0.8126
+            },
+            {
+              "phase": 900,
+              "primary": 0.6811,
+              "centroidTW": 0.8304
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6815,
+              "centroidTW": 0.814
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6919,
+              "centroidTW": 0.8244
+            }
+          ]
+        },
+        "otherMeanU": 0.5647,
+        "deltaU": 0.1145
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-preflight-B_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_preflight_read_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.7493,
+        "ownCentroid": 0.7961,
+        "ownHbShare": 0.0029,
+        "ownHandbackText": {
+          "tokens": 4468,
+          "windows": 3,
+          "absM": 0.9295,
+          "strippedChars": 41,
+          "normalisedChars": 13951
+        },
+        "ownBriefText": {
+          "tokens": 1096,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 41,
+          "normalisedChars": 3686,
+          "share": 0.0111
+        },
+        "otherMean": 0.6174,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1319,
+        "sensitivity_otherMeanAtParent": 0.6528,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.0965,
+        "ownU": {
+          "U": 0.7163,
+          "Umin": 0.6765,
+          "Umax": 0.7493,
+          "centroidTW": 0.7952,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7493,
+              "centroidTW": 0.8023
+            },
+            {
+              "phase": 300,
+              "primary": 0.726,
+              "centroidTW": 0.8307
+            },
+            {
+              "phase": 600,
+              "primary": 0.6765,
+              "centroidTW": 0.7828
+            },
+            {
+              "phase": 900,
+              "primary": 0.6968,
+              "centroidTW": 0.7942
+            },
+            {
+              "phase": 1200,
+              "primary": 0.7226,
+              "centroidTW": 0.7794
+            },
+            {
+              "phase": 1500,
+              "primary": 0.7263,
+              "centroidTW": 0.7817
+            }
+          ]
+        },
+        "otherMeanU": 0.6098,
+        "deltaU": 0.1065
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-preflight-C_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_preflight_read_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.7051,
+        "ownCentroid": 0.7685,
+        "ownHbShare": 0.0033,
+        "ownHandbackText": {
+          "tokens": 5008,
+          "windows": 3,
+          "absM": 0.9163,
+          "strippedChars": 55,
+          "normalisedChars": 16469
+        },
+        "ownBriefText": {
+          "tokens": 1084,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 55,
+          "normalisedChars": 3686,
+          "share": 0.0149
+        },
+        "otherMean": 0.6273,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.0778,
+        "sensitivity_otherMeanAtParent": 0.6509,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.0542,
+        "ownU": {
+          "U": 0.663,
+          "Umin": 0.6214,
+          "Umax": 0.7051,
+          "centroidTW": 0.7631,
+          "phases": [
+            {
+              "phase": 0,
+              "primary": 0.7051,
+              "centroidTW": 0.7677
+            },
+            {
+              "phase": 300,
+              "primary": 0.6472,
+              "centroidTW": 0.7657
+            },
+            {
+              "phase": 600,
+              "primary": 0.6393,
+              "centroidTW": 0.7794
+            },
+            {
+              "phase": 900,
+              "primary": 0.6214,
+              "centroidTW": 0.7475
+            },
+            {
+              "phase": 1200,
+              "primary": 0.6689,
+              "centroidTW": 0.7494
+            },
+            {
+              "phase": 1500,
+              "primary": 0.6962,
+              "centroidTW": 0.769
+            }
+          ]
+        },
+        "otherMeanU": 0.5948,
+        "deltaU": 0.0682
+      }
+    ],
+    "distribution": {
+      "n": 21,
+      "min": 0.0778,
+      "q1": 0.116,
+      "median": 0.1302,
+      "q3": 0.1382,
+      "max": 0.1908
+    },
+    "excluded": [
+      {
+        "handback": "exo_memory/handback/anchor-registration-read-B_2026-09-15.md",
+        "why": "its brief is the registration DRAFT, not a packet in the set"
+      },
+      {
+        "handback": "exo_memory/handback/readme-audit_2026-09-14.md",
+        "why": "a Third Place hand-back at the keeper's ask; no packet"
+      },
+      {
+        "packet": "exo_memory/loop/packet_diversity_c1_and_leave2_2026-09-15.md",
+        "why": "R4: excluded (this measurement's own packet)"
+      }
+    ],
+    "sensitivity_distribution": {
+      "n": 19,
+      "min": 0.0542,
+      "q1": 0.0935,
+      "median": 0.1075,
+      "q3": 0.1163,
+      "max": 0.1593
+    },
+    "distributionU": {
+      "n": 21,
+      "min": 0.0682,
+      "q1": 0.1143,
+      "median": 0.123,
+      "q3": 0.1393,
+      "max": 0.1725
+    }
+  },
+  "verdict": "controls passed"
+}

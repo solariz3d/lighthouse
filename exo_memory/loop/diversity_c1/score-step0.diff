@@ -1,0 +1,139 @@
+--- score.mjs	2026-09-15 11:41:09.651963300 -0600
++++ score-step0.mjs	2026-09-15 12:44:01.691227500 -0600
+@@ -1,5 +1,11 @@
+ // P-DIVERSITY-C1 scoring — C. Implements PREREG-C1.txt (sha256 51ef51d3…) against draft §8.2 + §8.7 R1–R4.
+-// Run: node --require ./block-net.cjs score.mjs   (writes results-c1.json; prints a summary)
++// STEP 0 DIFF (E, D064): C's run-2 scorer (sha256 ecf03768…33eafb) plus exactly two things —
++//   (1) §8.8.1 R8e: U = the mean over the six frozen phases of the R3 PRIMARY, with the six-phase min and max, windows
++//       cut by dev/diversity/phase-window.js (hash-checked), the same phase on both sides of every pair;
++//   (2) §8.10 V1: the SECONDARY centroid token-weighted, reported per phase and as its six-phase mean.
++// Every field C's run wrote is still written, from phase 0, unchanged. The U fields are added beside them, and so are
++// the U-based control, prediction and P2 verdicts R8e says U replaces. Output goes to results-step0.json.
++// Run: node --require ./block-net.cjs score-step0.mjs   (writes results-step0.json; prints a summary)
+ import { env, AutoTokenizer, AutoModel, Tensor } from '@huggingface/transformers';
+ import fs from 'node:fs';
+ import path from 'node:path';
+@@ -18,6 +24,12 @@
+ if (sha256(fs.readFileSync(S40_PATH)) !== S40_SHA) throw new Error('s40-strip copy does not hash to the committed file');
+ const { normalise, s40Strip } = createRequire(import.meta.url)(S40_PATH);
+ 
++// ── STEP 0 (1): the frozen phase windowing, hash-checked before use ──
++const PW_PATH = path.join(REPO, 'dev/diversity/phase-window.js');
++const PW_SHA = 'ba98d63523530e60dc73ae7872104af8bb404d8cc24e459d9ade1913bbdc2cb5';
++if (sha256(fs.readFileSync(PW_PATH)) !== PW_SHA) throw new Error('phase-window.js does not hash to the step-0 file');
++const { PHASES, phaseWindows } = createRequire(import.meta.url)(PW_PATH);
++
+ // ── the frozen encoder, hash-checked before load ──
+ const MODELS = path.join(here, 'models');
+ const ONNX = path.join(MODELS, 'Alibaba-NLP/gte-base-en-v1.5/onnx/model_quantized.onnx');
+@@ -38,14 +50,15 @@
+ 
+ // ── embedding: consecutive 1,800-id windows, CLS+SEP each, CLS pooling, L2 ──
+ const cache = new Map();
+-async function embedText(text) {
+-  const key = sha256(text);
++async function embedText(text, phase = 0) {
++  const key = `${sha256(text)}:${phase}`;
+   if (cache.has(key)) return cache.get(key);
+   const ids = Array.from(tok(text, { add_special_tokens: false }).input_ids.data, Number);
+   const windows = [];
+-  for (let i = 0; i < ids.length; i += WIN) {
+-    const body = ids.slice(i, i + WIN);
+-    const seq = [CLS, ...body, SEP];
++  // STEP 0 (1): windows from phase-window.js; at phase 0 these are exactly C's (its test pins that, §8.2).
++  for (const w of phaseWindows(ids, phase, { cls: CLS, sep: SEP })) {
++    const body = w.ids.slice(1, -1);
++    const seq = w.ids;
+     const L = seq.length;
+     const out = await model({
+       input_ids: new Tensor('int64', BigInt64Array.from(seq.map(BigInt)), [1, L]),
+@@ -76,8 +89,23 @@
+   if (v || !hs.text.trim() || !bs.text.trim()) return { void: true, hbShare: hs.share, brShare: bs.share };
+   const eh = await embedText(hs.text), eb = await embedText(bs.text);
+   const mh = means(eh), mb = means(eb);
++  // STEP 0: every phase, the same phase on both sides. (1) R8e's U over the six PRIMARIES; (2) V1's token-weighted
++  // centroid, cos of the two token-weighted mean vectors, per phase and as its six-phase mean.
++  const phases = [];
++  for (const ph of PHASES) {
++    const ph_h = ph === 0 ? mh : means(await embedText(hs.text, ph));
++    const ph_b = ph === 0 ? mb : means(await embedText(bs.text, ph));
++    const p = dot(ph_h.mw, ph_b.mw);
++    phases.push({ phase: ph, primary: p, centroidTW: p / (Math.sqrt(dot(ph_h.mw, ph_h.mw)) * Math.sqrt(dot(ph_b.mw, ph_b.mw))) });
++  }
++  const mean6 = (k) => phases.reduce((s, x) => s + x[k], 0) / phases.length;
+   return {
+     void: false,
++    U: mean6('primary'),
++    Umin: Math.min(...phases.map((x) => x.primary)),
++    Umax: Math.max(...phases.map((x) => x.primary)),
++    centroidTW: mean6('centroidTW'),
++    phases,
+     primary: dot(mh.mw, mb.mw),
+     centroid: dot(mh.mu, mb.mu) / (mh.absMu * mb.absMu),
+     hb: { share: hs.share, strippedChars: hs.strippedChars, normalisedChars: hs.normalisedChars, tokens: eh.tokens, windows: eh.windows.length, absM: mh.absMu },
+@@ -114,23 +142,29 @@
+ const p1Primaries = Object.values(p1).map((r) => r.primary);
+ const posPass = !pos.void && p1Primaries.every((p) => pos.primary > p);
+ const negPass = !neg.void && p1Primaries.every((p) => neg.primary < p);
++// STEP 0: U beside every PRIMARY, and the controls read on U too (R8e: U replaces the primary for both controls).
++const u6 = (s) => ({ U: r4(s.U), Umin: r4(s.Umin), Umax: r4(s.Umax), centroidTW: r4(s.centroidTW), phases: s.phases.map((x) => ({ phase: x.phase, primary: r4(x.primary), centroidTW: r4(x.centroidTW) })) });
++const p1U = Object.values(p1).map((r) => r.U);
+ results.controls = {
+-  positive: { removedLines: `${s0 + 1}-${s1}`, bytes: Buffer.byteLength(nearCopy), primary: r4(pos.primary), centroid: r4(pos.centroid), pass: posPass },
+-  negative: { path: NEG_REL, sha: RUN, primary: r4(neg.primary), centroid: r4(neg.centroid), hbShare: r4(neg.hb && neg.hb.share), pass: negPass },
++  positive: { removedLines: `${s0 + 1}-${s1}`, bytes: Buffer.byteLength(nearCopy), primary: r4(pos.primary), centroid: r4(pos.centroid), pass: posPass, ...u6(pos), passU: !pos.void && p1U.every((u) => pos.U > u) },
++  negative: { path: NEG_REL, sha: RUN, primary: r4(neg.primary), centroid: r4(neg.centroid), hbShare: r4(neg.hb && neg.hb.share), pass: negPass, ...u6(neg), passU: !neg.void && p1U.every((u) => neg.U < u) },
+ };
+ results.p1 = Object.fromEntries(Object.entries(p1).map(([k, r]) => [k, {
++  ...u6(r),
+   path: r.path, sha: r.sha, bytes: r.bytes, void: r.void, primary: r4(r.primary), centroid: r4(r.centroid), unstripped: r4(r.unstripped),
+   hb: r.hb && { strippedChars: r.hb.strippedChars, normalisedChars: r.hb.normalisedChars, share: r4(r.hb.share), tokens: r.hb.tokens, windows: r.hb.windows, absM: r4(r.hb.absM) },
+   br: r.br && { strippedChars: r.br.strippedChars, normalisedChars: r.br.normalisedChars, share: r4(r.br.share), tokens: r.br.tokens, windows: r.br.windows, absM: r4(r.br.absM) },
+ }]));
+ if (!posPass || !negPass) {
+   results.verdict = 'INSTRUMENT FAILED';
+-  fs.writeFileSync(path.join(here, 'results-c1.json'), JSON.stringify(results, null, 2));
++  fs.writeFileSync(path.join(here, 'results-step0.json'), JSON.stringify(results, null, 2));
+   console.log(JSON.stringify({ verdict: results.verdict, controls: results.controls }, null, 2));
+   process.exit(0);
+ }
+ const lowerBuild = Math.min(p1.A.primary, p1.E.primary);
+ results.p1_prediction = { B: r4(p1['B-read'].primary), lowerOfAE: r4(lowerBuild), margin_B_minus_lower: r4(p1['B-read'].primary - lowerBuild), fires: p1['B-read'].primary >= lowerBuild - 0.02 };
++const lowerBuildU = Math.min(p1.A.U, p1.E.U);
++results.p1_predictionU = { B: r4(p1['B-read'].U), lowerOfAE: r4(lowerBuildU), margin_B_minus_lower: r4(p1['B-read'].U - lowerBuildU), fires: p1['B-read'].U >= lowerBuildU - 0.02 };
+ 
+ // ── P2 (R4) ──
+ const PACKETS = ['packet_diverged_2026-09-14', 'packet_diversity_c0_2026-09-15', 'packet_harness_and_lib_2026-09-15',
+@@ -159,11 +193,11 @@
+     if (ownText == null) { ownText = git(add, own); ownSha = add; flag = 'packet absent at parent; taken at first-add commit'; }
+     const ownScore = await scorePair(H, ownText);
+     if (ownScore.void) { rows.push({ handback: rel, void: true, reason: 'own pair void', hbShare: r4(ownScore.hbShare) }); continue; }
+-    const others = [], othersSens = [], voids = [];
++    const others = [], othersU = [], othersSens = [], voids = [];
+     for (const p of PACKETS) {
+       if (p === own) continue;
+       const s = await scorePair(H, finalPacket[p]);
+-      if (s.void) voids.push(path.basename(p)); else others.push(s.primary);
++      if (s.void) voids.push(path.basename(p)); else { others.push(s.primary); othersU.push(s.U); }
+       const atParent = gitTry(parent, p);
+       if (atParent != null) { const ss = await scorePair(H, atParent); if (!ss.void) othersSens.push(ss.primary); }
+     }
+@@ -177,6 +211,7 @@
+       delta: r4(ownScore.primary - mean(others)),
+       sensitivity_otherMeanAtParent: othersSens.length ? r4(mean(othersSens)) : null, sensitivity_nOthers: othersSens.length,
+       sensitivity_delta: othersSens.length ? r4(ownScore.primary - mean(othersSens)) : null,
++      ownU: u6(ownScore), otherMeanU: r4(mean(othersU)), deltaU: r4(ownScore.U - mean(othersU)),
+     });
+     process.stderr.write(`row ${rows.length}: ${hbName} delta=${rows[rows.length - 1].delta}\n`);
+   }
+@@ -189,6 +224,8 @@
+     { packet: 'exo_memory/loop/packet_diversity_c1_and_leave2_2026-09-15.md', why: 'R4: excluded (this measurement\'s own packet)' }] };
+ const sd = rows.filter((r) => !r.void && r.sensitivity_delta != null).map((r) => r.sensitivity_delta);
+ results.p2.sensitivity_distribution = sd.length ? { n: sd.length, min: r4(Math.min(...sd)), q1: r4(q(sd, 0.25)), median: r4(q(sd, 0.5)), q3: r4(q(sd, 0.75)), max: r4(Math.max(...sd)) } : null;
++const du = rows.filter((r) => !r.void).map((r) => r.deltaU);
++results.p2.distributionU = { n: du.length, min: r4(Math.min(...du)), q1: r4(q(du, 0.25)), median: r4(q(du, 0.5)), q3: r4(q(du, 0.75)), max: r4(Math.max(...du)) };
+ results.verdict = 'controls passed';
+-fs.writeFileSync(path.join(here, 'results-c1.json'), JSON.stringify(results, null, 2));
+-console.log(JSON.stringify({ controls: results.controls, p1: results.p1, p1_prediction: results.p1_prediction, p2_distribution: results.p2.distribution, p2_sensitivity: results.p2.sensitivity_distribution }, null, 2));
++fs.writeFileSync(path.join(here, 'results-step0.json'), JSON.stringify(results, null, 2));
++console.log(JSON.stringify({ controls: results.controls, p1: results.p1, p1_prediction: results.p1_prediction, p1_predictionU: results.p1_predictionU, p2_distribution: results.p2.distribution, p2_distributionU: results.p2.distributionU, p2_sensitivity: results.p2.sensitivity_distribution }, null, 2));

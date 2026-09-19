@@ -1,0 +1,194 @@
+// P-DIVERSITY-C1 scoring — C. Implements PREREG-C1.txt (sha256 51ef51d3…) against draft §8.2 + §8.7 R1–R4.
+// Run: node --require ./block-net.cjs score.mjs   (writes results-c1.json; prints a summary)
+import { env, AutoTokenizer, AutoModel, Tensor } from '@huggingface/transformers';
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+
+const here = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Za-z]:)/, '$1');
+const REPO = 'C:/Users/nname/Desktop/lighthouse';
+const RUN = '1e944ac';
+const sha256 = (b) => crypto.createHash('sha256').update(b).digest('hex');
+
+// ── the frozen strip, from its commit, hash-checked before use ──
+const S40_PATH = path.join(here, 's40-strip@5a2d3c0.cjs');
+const S40_SHA = '73917f673b7d98130fe8195cf953bd35c4fa3534dbf00c41da1492e039a4e087';
+if (sha256(fs.readFileSync(S40_PATH)) !== S40_SHA) throw new Error('s40-strip copy does not hash to the committed file');
+const { normalise, s40Strip } = createRequire(import.meta.url)(S40_PATH);
+
+// ── the frozen encoder, hash-checked before load ──
+const MODELS = path.join(here, 'models');
+const ONNX = path.join(MODELS, 'Alibaba-NLP/gte-base-en-v1.5/onnx/model_quantized.onnx');
+const ONNX_SHA = 'e7f6af7a9457d4fdd3af220c68e9a37325aad7c2d306bbc855fe0d019c326509';
+if (sha256(fs.readFileSync(ONNX)) !== ONNX_SHA) throw new Error('encoder file does not hash to the frozen model');
+env.allowRemoteModels = false; env.localModelPath = MODELS; env.cacheDir = MODELS;
+const ID = 'Alibaba-NLP/gte-base-en-v1.5';
+const tok = await AutoTokenizer.from_pretrained(ID);
+const model = await AutoModel.from_pretrained(ID, { dtype: 'q8' });
+const special = Array.from(tok('', { add_special_tokens: true }).input_ids.data, Number); // [CLS, SEP]
+const CLS = special[0], SEP = special[special.length - 1];
+const WIN = 1800;
+
+const git = (sha, rel) => execFileSync('git', ['-C', REPO, 'show', `${sha}:${rel}`], { encoding: 'utf8', maxBuffer: 64 << 20 });
+const gitTry = (sha, rel) => { try { return git(sha, rel); } catch { return null; } };
+const parentOf = (sha) => execFileSync('git', ['-C', REPO, 'rev-parse', '--short', `${sha}^`], { encoding: 'utf8' }).trim();
+const firstAdd = (rel) => execFileSync('git', ['-C', REPO, 'log', '--diff-filter=A', '--format=%h', '--', rel], { encoding: 'utf8' }).trim().split('\n').pop();
+
+// ── embedding: consecutive 1,800-id windows, CLS+SEP each, CLS pooling, L2 ──
+const cache = new Map();
+async function embedText(text) {
+  const key = sha256(text);
+  if (cache.has(key)) return cache.get(key);
+  const ids = Array.from(tok(text, { add_special_tokens: false }).input_ids.data, Number);
+  const windows = [];
+  for (let i = 0; i < ids.length; i += WIN) {
+    const body = ids.slice(i, i + WIN);
+    const seq = [CLS, ...body, SEP];
+    const L = seq.length;
+    const out = await model({
+      input_ids: new Tensor('int64', BigInt64Array.from(seq.map(BigInt)), [1, L]),
+      attention_mask: new Tensor('int64', new BigInt64Array(L).fill(1n), [1, L]),
+      token_type_ids: new Tensor('int64', new BigInt64Array(L), [1, L]),
+    });
+    const D = out.last_hidden_state.dims[2];
+    const v = Float64Array.from(out.last_hidden_state.data.slice(0, D));   // CLS = position 0
+    let n = 0; for (const x of v) n += x * x; n = Math.sqrt(n);
+    for (let d = 0; d < D; d++) v[d] /= n;
+    windows.push({ v, t: body.length });
+  }
+  const r = { tokens: ids.length, windows };
+  cache.set(key, r);
+  return r;
+}
+const dot = (a, b) => { let s = 0; for (let i = 0; i < a.length; i++) s += a[i] * b[i]; return s; };
+function means(e) {
+  const D = e.windows[0].v.length, mw = new Float64Array(D), mu = new Float64Array(D);
+  const T = e.windows.reduce((s, w) => s + w.t, 0);
+  for (const w of e.windows) for (let d = 0; d < D; d++) { mw[d] += w.t * w.v[d] / T; mu[d] += w.v[d] / e.windows.length; }
+  return { mw, mu, absMu: Math.sqrt(dot(mu, mu)) };
+}
+async function scorePair(H, B, { stripped = true } = {}) {
+  const hs = stripped ? s40Strip(H, B) : { text: normalise(H), share: 0, strippedChars: 0, normalisedChars: normalise(H).length };
+  const bs = stripped ? s40Strip(B, H) : { text: normalise(B), share: 0, strippedChars: 0, normalisedChars: normalise(B).length };
+  const v = hs.share > 0.5;
+  if (v || !hs.text.trim() || !bs.text.trim()) return { void: true, hbShare: hs.share, brShare: bs.share };
+  const eh = await embedText(hs.text), eb = await embedText(bs.text);
+  const mh = means(eh), mb = means(eb);
+  return {
+    void: false,
+    primary: dot(mh.mw, mb.mw),
+    centroid: dot(mh.mu, mb.mu) / (mh.absMu * mb.absMu),
+    hb: { share: hs.share, strippedChars: hs.strippedChars, normalisedChars: hs.normalisedChars, tokens: eh.tokens, windows: eh.windows.length, absM: mh.absMu },
+    br: { share: bs.share, strippedChars: bs.strippedChars, normalisedChars: bs.normalisedChars, tokens: eb.tokens, windows: eb.windows.length, absM: mb.absMu },
+  };
+}
+const r4 = (x) => (x == null ? null : +x.toFixed(4));
+const results = { run: RUN, prereg: sha256(fs.readFileSync(path.join(here, 'PREREG-C1.txt'))), s40: S40_SHA, encoder: ONNX_SHA };
+
+// ── P1 texts ──
+const LEAVE = 'exo_memory/loop/packet_leave_window_2026-09-14.md';
+const ANCHOR = git('ed73e76', LEAVE);
+const P1 = {
+  'B-read': { rel: 'exo_memory/handback/p-leave-read-B_2026-09-14.md', sha: '9e29daf' },
+  'A': { rel: 'exo_memory/handback/p-leave-A_2026-09-14.md', sha: '99649d8' },
+  'E': { rel: 'exo_memory/handback/p-leave-E_2026-09-14.md', sha: '99649d8' },
+};
+const p1 = {};
+for (const [k, x] of Object.entries(P1)) {
+  const H = git(x.sha, x.rel);
+  const s = await scorePair(H, ANCHOR);
+  const u = await scorePair(H, ANCHOR, { stripped: false });
+  p1[k] = { path: x.rel, sha: x.sha, bytes: Buffer.byteLength(H), ...s, unstripped: u.primary };
+}
+
+// ── controls (R1) ──
+const lines = ANCHOR.split('\n');
+const s0 = lines.findIndex((l) => l.startsWith('## 0 '));
+const s1 = lines.findIndex((l) => l.startsWith('## 1 '));
+const nearCopy = [...lines.slice(0, s0), ...lines.slice(s1)].join('\n');
+const pos = await scorePair(nearCopy, ANCHOR, { stripped: false });
+const NEG_REL = 'exo_memory/handback/p-harness-E_2026-09-15.md';
+const neg = await scorePair(git(RUN, NEG_REL), ANCHOR);
+const p1Primaries = Object.values(p1).map((r) => r.primary);
+const posPass = !pos.void && p1Primaries.every((p) => pos.primary > p);
+const negPass = !neg.void && p1Primaries.every((p) => neg.primary < p);
+results.controls = {
+  positive: { removedLines: `${s0 + 1}-${s1}`, bytes: Buffer.byteLength(nearCopy), primary: r4(pos.primary), centroid: r4(pos.centroid), pass: posPass },
+  negative: { path: NEG_REL, sha: RUN, primary: r4(neg.primary), centroid: r4(neg.centroid), hbShare: r4(neg.hb && neg.hb.share), pass: negPass },
+};
+results.p1 = Object.fromEntries(Object.entries(p1).map(([k, r]) => [k, {
+  path: r.path, sha: r.sha, bytes: r.bytes, void: r.void, primary: r4(r.primary), centroid: r4(r.centroid), unstripped: r4(r.unstripped),
+  hb: r.hb && { strippedChars: r.hb.strippedChars, normalisedChars: r.hb.normalisedChars, share: r4(r.hb.share), tokens: r.hb.tokens, windows: r.hb.windows, absM: r4(r.hb.absM) },
+  br: r.br && { strippedChars: r.br.strippedChars, normalisedChars: r.br.normalisedChars, share: r4(r.br.share), tokens: r.br.tokens, windows: r.br.windows, absM: r4(r.br.absM) },
+}]));
+if (!posPass || !negPass) {
+  results.verdict = 'INSTRUMENT FAILED';
+  fs.writeFileSync(path.join(here, 'results-c1.json'), JSON.stringify(results, null, 2));
+  console.log(JSON.stringify({ verdict: results.verdict, controls: results.controls }, null, 2));
+  process.exit(0);
+}
+const lowerBuild = Math.min(p1.A.primary, p1.E.primary);
+results.p1_prediction = { B: r4(p1['B-read'].primary), lowerOfAE: r4(lowerBuild), margin_B_minus_lower: r4(p1['B-read'].primary - lowerBuild), fires: p1['B-read'].primary >= lowerBuild - 0.02 };
+
+// ── P2 (R4) ──
+const PACKETS = ['packet_diverged_2026-09-14', 'packet_diversity_c0_2026-09-15', 'packet_harness_and_lib_2026-09-15',
+  'packet_leave_window_2026-09-14', 'packet_no_console_windows_2026-09-14', 'packet_stick_build_2026-09-14',
+  'packet_stick_module_2026-09-14', 'packet_stick_preflight_read_2026-09-14'].map((p) => `exo_memory/loop/${p}.md`);
+const HB = {
+  'packet_diverged_2026-09-14': ['p-diverged-A_2026-09-14', 'p-diverged-E_2026-09-14', 'p-diverged-read-C_2026-09-14', 'p-diverged-read2-C_2026-09-14'],
+  'packet_diversity_c0_2026-09-15': ['p-diversity-c0-C_2026-09-15', 'p-diversity-c0-E_2026-09-15'],
+  'packet_harness_and_lib_2026-09-15': ['p-harness-A_2026-09-15', 'p-harness-E_2026-09-15', 'p-harness-read-B_2026-09-15'],
+  'packet_leave_window_2026-09-14': ['p-leave-A_2026-09-14', 'p-leave-E_2026-09-14', 'p-leave-read-B_2026-09-14', 'p-leave-read2-B_2026-09-14'],
+  'packet_no_console_windows_2026-09-14': ['p-no-console-A_2026-09-14', 'p-no-console-E_2026-09-14'],
+  'packet_stick_build_2026-09-14': ['p-stick-build-A_2026-09-14', 'p-stick-build-E_2026-09-14'],
+  'packet_stick_module_2026-09-14': ['p-stick-A_2026-09-14', 'p-stick-E_2026-09-14'],
+  'packet_stick_preflight_read_2026-09-14': ['p-stick-preflight-B_2026-09-14', 'p-stick-preflight-C_2026-09-14'],
+};
+const finalPacket = Object.fromEntries(PACKETS.map((p) => [p, git(RUN, p)]));
+const rows = [];
+for (const own of PACKETS) {
+  const ownName = path.basename(own, '.md');
+  for (const hbName of HB[ownName]) {
+    const rel = `exo_memory/handback/${hbName}.md`;
+    const H = git(RUN, rel);
+    const add = firstAdd(rel);
+    const parent = parentOf(add);
+    let ownText = gitTry(parent, own), ownSha = parent, flag = null;
+    if (ownText == null) { ownText = git(add, own); ownSha = add; flag = 'packet absent at parent; taken at first-add commit'; }
+    const ownScore = await scorePair(H, ownText);
+    if (ownScore.void) { rows.push({ handback: rel, void: true, reason: 'own pair void', hbShare: r4(ownScore.hbShare) }); continue; }
+    const others = [], othersSens = [], voids = [];
+    for (const p of PACKETS) {
+      if (p === own) continue;
+      const s = await scorePair(H, finalPacket[p]);
+      if (s.void) voids.push(path.basename(p)); else others.push(s.primary);
+      const atParent = gitTry(parent, p);
+      if (atParent != null) { const ss = await scorePair(H, atParent); if (!ss.void) othersSens.push(ss.primary); }
+    }
+    const mean = (a) => a.reduce((s, x) => s + x, 0) / a.length;
+    rows.push({
+      handback: rel, handbackSha: RUN, ownPacket: own, ownSha, landedAt: add, flag,
+      own: r4(ownScore.primary), ownCentroid: r4(ownScore.centroid), ownHbShare: r4(ownScore.hb.share),
+      ownHandbackText: { tokens: ownScore.hb.tokens, windows: ownScore.hb.windows, absM: r4(ownScore.hb.absM), strippedChars: ownScore.hb.strippedChars, normalisedChars: ownScore.hb.normalisedChars },
+      ownBriefText: { tokens: ownScore.br.tokens, windows: ownScore.br.windows, absM: r4(ownScore.br.absM), strippedChars: ownScore.br.strippedChars, normalisedChars: ownScore.br.normalisedChars, share: r4(ownScore.br.share) },
+      otherMean: r4(mean(others)), nOthers: others.length, otherVoids: voids,
+      delta: r4(ownScore.primary - mean(others)),
+      sensitivity_otherMeanAtParent: othersSens.length ? r4(mean(othersSens)) : null, sensitivity_nOthers: othersSens.length,
+      sensitivity_delta: othersSens.length ? r4(ownScore.primary - mean(othersSens)) : null,
+    });
+    process.stderr.write(`row ${rows.length}: ${hbName} delta=${rows[rows.length - 1].delta}\n`);
+  }
+}
+const q = (a, p) => { const s = [...a].sort((x, y) => x - y); const i = (s.length - 1) * p; const lo = Math.floor(i), hi = Math.ceil(i); return s[lo] + (s[hi] - s[lo]) * (i - lo); };
+const deltas = rows.filter((r) => !r.void).map((r) => r.delta);
+results.p2 = { rows, distribution: { n: deltas.length, min: r4(Math.min(...deltas)), q1: r4(q(deltas, 0.25)), median: r4(q(deltas, 0.5)), q3: r4(q(deltas, 0.75)), max: r4(Math.max(...deltas)) },
+  excluded: [{ handback: 'exo_memory/handback/anchor-registration-read-B_2026-09-15.md', why: 'its brief is the registration DRAFT, not a packet in the set' },
+    { handback: 'exo_memory/handback/readme-audit_2026-09-14.md', why: 'a Third Place hand-back at the keeper\'s ask; no packet' },
+    { packet: 'exo_memory/loop/packet_diversity_c1_and_leave2_2026-09-15.md', why: 'R4: excluded (this measurement\'s own packet)' }] };
+const sd = rows.filter((r) => !r.void && r.sensitivity_delta != null).map((r) => r.sensitivity_delta);
+results.p2.sensitivity_distribution = sd.length ? { n: sd.length, min: r4(Math.min(...sd)), q1: r4(q(sd, 0.25)), median: r4(q(sd, 0.5)), q3: r4(q(sd, 0.75)), max: r4(Math.max(...sd)) } : null;
+results.verdict = 'controls passed';
+fs.writeFileSync(path.join(here, 'results-c1.json'), JSON.stringify(results, null, 2));
+console.log(JSON.stringify({ controls: results.controls, p1: results.p1, p1_prediction: results.p1_prediction, p2_distribution: results.p2.distribution, p2_sensitivity: results.p2.sensitivity_distribution }, null, 2));

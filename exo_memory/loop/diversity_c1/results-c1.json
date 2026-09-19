@@ -1,0 +1,834 @@
+{
+  "run": "1e944ac",
+  "prereg": "51ef51d325d2d86260bb4e01f9d2b4b365b4688a2292f65157624f5ab4c80a2a",
+  "s40": "73917f673b7d98130fe8195cf953bd35c4fa3534dbf00c41da1492e039a4e087",
+  "encoder": "e7f6af7a9457d4fdd3af220c68e9a37325aad7c2d306bbc855fe0d019c326509",
+  "controls": {
+    "positive": {
+      "removedLines": "12-23",
+      "bytes": 9230,
+      "primary": 0.8575,
+      "centroid": 0.9337,
+      "pass": true
+    },
+    "negative": {
+      "path": "exo_memory/handback/p-harness-E_2026-09-15.md",
+      "sha": "1e944ac",
+      "primary": 0.4521,
+      "centroid": 0.5268,
+      "hbShare": 0,
+      "pass": true
+    }
+  },
+  "p1": {
+    "B-read": {
+      "path": "exo_memory/handback/p-leave-read-B_2026-09-14.md",
+      "sha": "9e29daf",
+      "bytes": 16050,
+      "void": false,
+      "primary": 0.688,
+      "centroid": 0.8009,
+      "unstripped": 0.7003,
+      "hb": {
+        "strippedChars": 563,
+        "normalisedChars": 15079,
+        "share": 0.0373,
+        "tokens": 4398,
+        "windows": 3,
+        "absM": 0.9015
+      },
+      "br": {
+        "strippedChars": 563,
+        "normalisedChars": 8840,
+        "share": 0.0637,
+        "tokens": 2466,
+        "windows": 2,
+        "absM": 0.935
+      }
+    },
+    "A": {
+      "path": "exo_memory/handback/p-leave-A_2026-09-14.md",
+      "sha": "99649d8",
+      "bytes": 21298,
+      "void": false,
+      "primary": 0.72,
+      "centroid": 0.8388,
+      "unstripped": 0.7334,
+      "hb": {
+        "strippedChars": 43,
+        "normalisedChars": 18961,
+        "share": 0.0023,
+        "tokens": 5375,
+        "windows": 3,
+        "absM": 0.9371
+      },
+      "br": {
+        "strippedChars": 43,
+        "normalisedChars": 8840,
+        "share": 0.0049,
+        "tokens": 2603,
+        "windows": 2,
+        "absM": 0.9229
+      }
+    },
+    "E": {
+      "path": "exo_memory/handback/p-leave-E_2026-09-14.md",
+      "sha": "99649d8",
+      "bytes": 35743,
+      "void": false,
+      "primary": 0.6401,
+      "centroid": 0.7974,
+      "unstripped": 0.6721,
+      "hb": {
+        "strippedChars": 517,
+        "normalisedChars": 30046,
+        "share": 0.0172,
+        "tokens": 8641,
+        "windows": 5,
+        "absM": 0.8639
+      },
+      "br": {
+        "strippedChars": 321,
+        "normalisedChars": 8840,
+        "share": 0.0363,
+        "tokens": 2500,
+        "windows": 2,
+        "absM": 0.9422
+      }
+    }
+  },
+  "p1_prediction": {
+    "B": 0.688,
+    "lowerOfAE": 0.6401,
+    "margin_B_minus_lower": 0.0479,
+    "fires": true
+  },
+  "p2": {
+    "rows": [
+      {
+        "handback": "exo_memory/handback/p-diverged-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "31fb65f",
+        "landedAt": "862509f",
+        "flag": null,
+        "own": 0.7519,
+        "ownCentroid": 0.8501,
+        "ownHbShare": 0.0347,
+        "ownHandbackText": {
+          "tokens": 4713,
+          "windows": 3,
+          "absM": 0.9159,
+          "strippedChars": 575,
+          "normalisedChars": 16570
+        },
+        "ownBriefText": {
+          "tokens": 3461,
+          "windows": 2,
+          "absM": 0.9543,
+          "strippedChars": 575,
+          "normalisedChars": 12352,
+          "share": 0.0466
+        },
+        "otherMean": 0.6218,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1302,
+        "sensitivity_otherMeanAtParent": 0.6449,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.1071
+      },
+      {
+        "handback": "exo_memory/handback/p-diverged-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "31fb65f",
+        "landedAt": "862509f",
+        "flag": null,
+        "own": 0.762,
+        "ownCentroid": 0.8575,
+        "ownHbShare": 0.045,
+        "ownHandbackText": {
+          "tokens": 2645,
+          "windows": 2,
+          "absM": 0.9209,
+          "strippedChars": 436,
+          "normalisedChars": 9686
+        },
+        "ownBriefText": {
+          "tokens": 3547,
+          "windows": 2,
+          "absM": 0.9523,
+          "strippedChars": 380,
+          "normalisedChars": 12352,
+          "share": 0.0308
+        },
+        "otherMean": 0.5936,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1684,
+        "sensitivity_otherMeanAtParent": 0.6343,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.1277
+      },
+      {
+        "handback": "exo_memory/handback/p-diverged-read-C_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "6397e1a",
+        "landedAt": "6dbdae9",
+        "flag": null,
+        "own": 0.8059,
+        "ownCentroid": 0.8875,
+        "ownHbShare": 0.0357,
+        "ownHandbackText": {
+          "tokens": 3006,
+          "windows": 2,
+          "absM": 0.9439,
+          "strippedChars": 366,
+          "normalisedChars": 10244
+        },
+        "ownBriefText": {
+          "tokens": 3507,
+          "windows": 2,
+          "absM": 0.9556,
+          "strippedChars": 419,
+          "normalisedChars": 12352,
+          "share": 0.0339
+        },
+        "otherMean": 0.6151,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1908,
+        "sensitivity_otherMeanAtParent": 0.6544,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.1515
+      },
+      {
+        "handback": "exo_memory/handback/p-diverged-read2-C_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diverged_2026-09-14.md",
+        "ownSha": "5e21844",
+        "landedAt": "9f2ab75",
+        "flag": null,
+        "own": 0.7501,
+        "ownCentroid": 0.848,
+        "ownHbShare": 0.0159,
+        "ownHandbackText": {
+          "tokens": 3935,
+          "windows": 3,
+          "absM": 0.9004,
+          "strippedChars": 197,
+          "normalisedChars": 12395
+        },
+        "ownBriefText": {
+          "tokens": 3584,
+          "windows": 2,
+          "absM": 0.952,
+          "strippedChars": 148,
+          "normalisedChars": 12352,
+          "share": 0.012
+        },
+        "otherMean": 0.6138,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1363,
+        "sensitivity_otherMeanAtParent": 0.6441,
+        "sensitivity_nOthers": 4,
+        "sensitivity_delta": 0.106
+      },
+      {
+        "handback": "exo_memory/handback/p-diversity-c0-C_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diversity_c0_2026-09-15.md",
+        "ownSha": "cf0ea20",
+        "landedAt": "e53c71b",
+        "flag": null,
+        "own": 0.5087,
+        "ownCentroid": 0.5639,
+        "ownHbShare": 0.0082,
+        "ownHandbackText": {
+          "tokens": 6714,
+          "windows": 4,
+          "absM": 0.901,
+          "strippedChars": 169,
+          "normalisedChars": 20713
+        },
+        "ownBriefText": {
+          "tokens": 902,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 169,
+          "normalisedChars": 3417,
+          "share": 0.0495
+        },
+        "otherMean": 0.4012,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1075,
+        "sensitivity_otherMeanAtParent": 0.4012,
+        "sensitivity_nOthers": 7,
+        "sensitivity_delta": 0.1075
+      },
+      {
+        "handback": "exo_memory/handback/p-diversity-c0-E_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_diversity_c0_2026-09-15.md",
+        "ownSha": "cf0ea20",
+        "landedAt": "e53c71b",
+        "flag": null,
+        "own": 0.5896,
+        "ownCentroid": 0.6191,
+        "ownHbShare": 0.0055,
+        "ownHandbackText": {
+          "tokens": 3201,
+          "windows": 2,
+          "absM": 0.9507,
+          "strippedChars": 58,
+          "normalisedChars": 10552
+        },
+        "ownBriefText": {
+          "tokens": 924,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 58,
+          "normalisedChars": 3417,
+          "share": 0.017
+        },
+        "otherMean": 0.4736,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.116,
+        "sensitivity_otherMeanAtParent": 0.4736,
+        "sensitivity_nOthers": 7,
+        "sensitivity_delta": 0.116
+      },
+      {
+        "handback": "exo_memory/handback/p-harness-A_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "faaaa7b",
+        "landedAt": "9ff51b4",
+        "flag": null,
+        "own": 0.6502,
+        "ownCentroid": 0.6895,
+        "ownHbShare": 0.0049,
+        "ownHandbackText": {
+          "tokens": 4826,
+          "windows": 3,
+          "absM": 0.9379,
+          "strippedChars": 83,
+          "normalisedChars": 16913
+        },
+        "ownBriefText": {
+          "tokens": 1515,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 83,
+          "normalisedChars": 5493,
+          "share": 0.0151
+        },
+        "otherMean": 0.5543,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.0959,
+        "sensitivity_otherMeanAtParent": 0.5623,
+        "sensitivity_nOthers": 6,
+        "sensitivity_delta": 0.0879
+      },
+      {
+        "handback": "exo_memory/handback/p-harness-E_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "2782af4",
+        "landedAt": "04532bc",
+        "flag": null,
+        "own": 0.5972,
+        "ownCentroid": 0.6379,
+        "ownHbShare": 0.0072,
+        "ownHandbackText": {
+          "tokens": 4697,
+          "windows": 3,
+          "absM": 0.9234,
+          "strippedChars": 113,
+          "normalisedChars": 15726
+        },
+        "ownBriefText": {
+          "tokens": 1215,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 113,
+          "normalisedChars": 4422,
+          "share": 0.0256
+        },
+        "otherMean": 0.4757,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1215,
+        "sensitivity_otherMeanAtParent": 0.483,
+        "sensitivity_nOthers": 6,
+        "sensitivity_delta": 0.1142
+      },
+      {
+        "handback": "exo_memory/handback/p-harness-read-B_2026-09-15.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_harness_and_lib_2026-09-15.md",
+        "ownSha": "faaaa7b",
+        "landedAt": "9ff51b4",
+        "flag": null,
+        "own": 0.6722,
+        "ownCentroid": 0.7224,
+        "ownHbShare": 0.0042,
+        "ownHandbackText": {
+          "tokens": 3321,
+          "windows": 2,
+          "absM": 0.9306,
+          "strippedChars": 47,
+          "normalisedChars": 11207
+        },
+        "ownBriefText": {
+          "tokens": 1524,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 47,
+          "normalisedChars": 5493,
+          "share": 0.0086
+        },
+        "otherMean": 0.5392,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.133,
+        "sensitivity_otherMeanAtParent": 0.543,
+        "sensitivity_nOthers": 6,
+        "sensitivity_delta": 0.1292
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "b9b4cd1",
+        "landedAt": "99649d8",
+        "flag": null,
+        "own": 0.7657,
+        "ownCentroid": 0.895,
+        "ownHbShare": 0.0044,
+        "ownHandbackText": {
+          "tokens": 5366,
+          "windows": 3,
+          "absM": 0.9393,
+          "strippedChars": 83,
+          "normalisedChars": 18961
+        },
+        "ownBriefText": {
+          "tokens": 5139,
+          "windows": 3,
+          "absM": 0.9091,
+          "strippedChars": 83,
+          "normalisedChars": 17574,
+          "share": 0.0047
+        },
+        "otherMean": 0.6127,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1529,
+        "sensitivity_otherMeanAtParent": 0.6544,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.1112
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "b9b4cd1",
+        "landedAt": "99649d8",
+        "flag": null,
+        "own": 0.6791,
+        "ownCentroid": 0.8617,
+        "ownHbShare": 0.0221,
+        "ownHandbackText": {
+          "tokens": 8578,
+          "windows": 5,
+          "absM": 0.8602,
+          "strippedChars": 664,
+          "normalisedChars": 30046
+        },
+        "ownBriefText": {
+          "tokens": 4981,
+          "windows": 3,
+          "absM": 0.9166,
+          "strippedChars": 468,
+          "normalisedChars": 17574,
+          "share": 0.0266
+        },
+        "otherMean": 0.5632,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1159,
+        "sensitivity_otherMeanAtParent": 0.5887,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.0904
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-read-B_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "9bc063f",
+        "landedAt": "9e29daf",
+        "flag": null,
+        "own": 0.688,
+        "ownCentroid": 0.8009,
+        "ownHbShare": 0.0373,
+        "ownHandbackText": {
+          "tokens": 4398,
+          "windows": 3,
+          "absM": 0.9015,
+          "strippedChars": 563,
+          "normalisedChars": 15079
+        },
+        "ownBriefText": {
+          "tokens": 2466,
+          "windows": 2,
+          "absM": 0.935,
+          "strippedChars": 563,
+          "normalisedChars": 8840,
+          "share": 0.0637
+        },
+        "otherMean": 0.5781,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1099,
+        "sensitivity_otherMeanAtParent": 0.6064,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.0816
+      },
+      {
+        "handback": "exo_memory/handback/p-leave-read2-B_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_leave_window_2026-09-14.md",
+        "ownSha": "6d89e2d",
+        "landedAt": "c59530a",
+        "flag": null,
+        "own": 0.6941,
+        "ownCentroid": 0.8269,
+        "ownHbShare": 0.0172,
+        "ownHandbackText": {
+          "tokens": 6764,
+          "windows": 4,
+          "absM": 0.9136,
+          "strippedChars": 398,
+          "normalisedChars": 23188
+        },
+        "ownBriefText": {
+          "tokens": 4347,
+          "windows": 3,
+          "absM": 0.9148,
+          "strippedChars": 349,
+          "normalisedChars": 15059,
+          "share": 0.0232
+        },
+        "otherMean": 0.5559,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1382,
+        "sensitivity_otherMeanAtParent": 0.5781,
+        "sensitivity_nOthers": 5,
+        "sensitivity_delta": 0.116
+      },
+      {
+        "handback": "exo_memory/handback/p-no-console-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_no_console_windows_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.6908,
+        "ownCentroid": 0.8545,
+        "ownHbShare": 0.0125,
+        "ownHandbackText": {
+          "tokens": 5790,
+          "windows": 4,
+          "absM": 0.8797,
+          "strippedChars": 264,
+          "normalisedChars": 21043
+        },
+        "ownBriefText": {
+          "tokens": 2159,
+          "windows": 2,
+          "absM": 0.8956,
+          "strippedChars": 223,
+          "normalisedChars": 7662,
+          "share": 0.0291
+        },
+        "otherMean": 0.5238,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.167,
+        "sensitivity_otherMeanAtParent": 0.5314,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.1593
+      },
+      {
+        "handback": "exo_memory/handback/p-no-console-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_no_console_windows_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.6482,
+        "ownCentroid": 0.771,
+        "ownHbShare": 0.0358,
+        "ownHandbackText": {
+          "tokens": 3879,
+          "windows": 3,
+          "absM": 0.8824,
+          "strippedChars": 516,
+          "normalisedChars": 14396
+        },
+        "ownBriefText": {
+          "tokens": 2121,
+          "windows": 2,
+          "absM": 0.8981,
+          "strippedChars": 351,
+          "normalisedChars": 7662,
+          "share": 0.0458
+        },
+        "otherMean": 0.5266,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1216,
+        "sensitivity_otherMeanAtParent": 0.5316,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.1166
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-build-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_build_2026-09-14.md",
+        "ownSha": "4085f2f",
+        "landedAt": "0405bd2",
+        "flag": null,
+        "own": 0.7362,
+        "ownCentroid": 0.9148,
+        "ownHbShare": 0.0346,
+        "ownHandbackText": {
+          "tokens": 8043,
+          "windows": 5,
+          "absM": 0.8941,
+          "strippedChars": 1085,
+          "normalisedChars": 31380
+        },
+        "ownBriefText": {
+          "tokens": 6235,
+          "windows": 4,
+          "absM": 0.9002,
+          "strippedChars": 944,
+          "normalisedChars": 23697,
+          "share": 0.0398
+        },
+        "otherMean": 0.609,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1272,
+        "sensitivity_otherMeanAtParent": 0.6677,
+        "sensitivity_nOthers": 1,
+        "sensitivity_delta": 0.0686
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-build-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_build_2026-09-14.md",
+        "ownSha": "4085f2f",
+        "landedAt": "0405bd2",
+        "flag": null,
+        "own": 0.7599,
+        "ownCentroid": 0.9231,
+        "ownHbShare": 0.0365,
+        "ownHandbackText": {
+          "tokens": 7330,
+          "windows": 5,
+          "absM": 0.842,
+          "strippedChars": 1010,
+          "normalisedChars": 27663
+        },
+        "ownBriefText": {
+          "tokens": 6248,
+          "windows": 4,
+          "absM": 0.9002,
+          "strippedChars": 915,
+          "normalisedChars": 23697,
+          "share": 0.0386
+        },
+        "otherMean": 0.6028,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1571,
+        "sensitivity_otherMeanAtParent": 0.6621,
+        "sensitivity_nOthers": 1,
+        "sensitivity_delta": 0.0977
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-A_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_module_2026-09-14.md",
+        "ownSha": "f93f42e",
+        "landedAt": "59e65f6",
+        "flag": null,
+        "own": 0.7048,
+        "ownCentroid": 0.8082,
+        "ownHbShare": 0.0154,
+        "ownHandbackText": {
+          "tokens": 3393,
+          "windows": 2,
+          "absM": 0.9349,
+          "strippedChars": 197,
+          "normalisedChars": 12810
+        },
+        "ownBriefText": {
+          "tokens": 4276,
+          "windows": 3,
+          "absM": 0.8946,
+          "strippedChars": 197,
+          "normalisedChars": 16626,
+          "share": 0.0118
+        },
+        "otherMean": 0.5708,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.134,
+        "sensitivity_otherMeanAtParent": null,
+        "sensitivity_nOthers": 0,
+        "sensitivity_delta": null
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-E_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_module_2026-09-14.md",
+        "ownSha": "1346cb9",
+        "landedAt": "0783e45",
+        "flag": null,
+        "own": 0.7016,
+        "ownCentroid": 0.8317,
+        "ownHbShare": 0.0047,
+        "ownHandbackText": {
+          "tokens": 3575,
+          "windows": 2,
+          "absM": 0.9127,
+          "strippedChars": 62,
+          "normalisedChars": 13300
+        },
+        "ownBriefText": {
+          "tokens": 2798,
+          "windows": 2,
+          "absM": 0.926,
+          "strippedChars": 62,
+          "normalisedChars": 10776,
+          "share": 0.0058
+        },
+        "otherMean": 0.5828,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1188,
+        "sensitivity_otherMeanAtParent": null,
+        "sensitivity_nOthers": 0,
+        "sensitivity_delta": null
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-preflight-B_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_preflight_read_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.7493,
+        "ownCentroid": 0.7961,
+        "ownHbShare": 0.0029,
+        "ownHandbackText": {
+          "tokens": 4468,
+          "windows": 3,
+          "absM": 0.9295,
+          "strippedChars": 41,
+          "normalisedChars": 13951
+        },
+        "ownBriefText": {
+          "tokens": 1096,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 41,
+          "normalisedChars": 3686,
+          "share": 0.0111
+        },
+        "otherMean": 0.6174,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.1319,
+        "sensitivity_otherMeanAtParent": 0.6528,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.0965
+      },
+      {
+        "handback": "exo_memory/handback/p-stick-preflight-C_2026-09-14.md",
+        "handbackSha": "1e944ac",
+        "ownPacket": "exo_memory/loop/packet_stick_preflight_read_2026-09-14.md",
+        "ownSha": "6174324",
+        "landedAt": "0469a3b",
+        "flag": null,
+        "own": 0.7051,
+        "ownCentroid": 0.7685,
+        "ownHbShare": 0.0033,
+        "ownHandbackText": {
+          "tokens": 5008,
+          "windows": 3,
+          "absM": 0.9163,
+          "strippedChars": 55,
+          "normalisedChars": 16469
+        },
+        "ownBriefText": {
+          "tokens": 1084,
+          "windows": 1,
+          "absM": 1,
+          "strippedChars": 55,
+          "normalisedChars": 3686,
+          "share": 0.0149
+        },
+        "otherMean": 0.6273,
+        "nOthers": 7,
+        "otherVoids": [],
+        "delta": 0.0778,
+        "sensitivity_otherMeanAtParent": 0.6509,
+        "sensitivity_nOthers": 3,
+        "sensitivity_delta": 0.0542
+      }
+    ],
+    "distribution": {
+      "n": 21,
+      "min": 0.0778,
+      "q1": 0.116,
+      "median": 0.1302,
+      "q3": 0.1382,
+      "max": 0.1908
+    },
+    "excluded": [
+      {
+        "handback": "exo_memory/handback/anchor-registration-read-B_2026-09-15.md",
+        "why": "its brief is the registration DRAFT, not a packet in the set"
+      },
+      {
+        "handback": "exo_memory/handback/readme-audit_2026-09-14.md",
+        "why": "a Third Place hand-back at the keeper's ask; no packet"
+      },
+      {
+        "packet": "exo_memory/loop/packet_diversity_c1_and_leave2_2026-09-15.md",
+        "why": "R4: excluded (this measurement's own packet)"
+      }
+    ],
+    "sensitivity_distribution": {
+      "n": 19,
+      "min": 0.0542,
+      "q1": 0.0935,
+      "median": 0.1075,
+      "q3": 0.1163,
+      "max": 0.1593
+    }
+  },
+  "verdict": "controls passed"
+}

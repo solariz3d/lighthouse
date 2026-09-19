@@ -1305,3 +1305,15 @@ None by structure. (3) One `"Try \""` flipped the global quote parity a leave_wi
 into strings; fixed my side, the lexer's fragility flagged. (4) Replaying at the log's max cursor column (103) read
 99.96% of frames as no-row; the rule was 99 wide. **Geometry is read off the frame, never off the stream's maximum.**
 Scratch `scratchpad/{vtdump,tri,mut,fx}/`.
+
+## 2026-09-19 ~09:5x · D079 P-SCORER-INTO-THE-REPO, chunk 2, on D → `exo_memory/handback/p-scorer-into-repo-E_2026-09-19.md`
+The diversity instrument left the scratchpads: 10 files byte for byte (sha256 before = after, 7 of 7 = recorded),
+my step-0 scorer as `dev/diversity/score.mjs` (19c97ab5…), C's run-2 scorer, both results, the step-0 diff and a
+README into `loop/diversity_c1/`. **One run of the committed bytes reproduced results-step0.json 60c7d726…
+exactly** (stdout identical, NETWORK_ATTEMPTS=0; 34m36s vs 15m59s on 09-15, cause not measured). The encoder is
+NAMED external (147 MB, 4 files, shas in the README); download.mjs pinned no hub revision, so the scorer's own onnx
+hash check is the only pin. Placements forced by not editing a scorer: PREREG beside the scorer (it reads it from
+its own dir), a second byte copy of the strip under the name it loads, package files in `score-deps/` so their
+`"type":"module"` cannot flip the dir's CommonJS files. **Carry forward:** (1) text-census walks `git ls-files`, so
+its green says nothing about UNTRACKED new files - run it over a throwaway `GIT_INDEX_FILE` with `add -N`; (2) the
+bytes travel, the scorer does not - its repo path is hard-coded. Scratch `scratchpad/carry/`.
