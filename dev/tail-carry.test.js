@@ -770,7 +770,9 @@ test('the rehearsal shows the byte count that makes the tail worth having', () =
 // the top (A-3, "a row naming the stale lock"). Additive; these lists still pin the exact shape.
 const FIELDS = ['seat', 'sid', 'kind', 'verdict', 'reason', 'why', 'stops', 'carries', 'bytes', 'offset',
   'toOffset', 'path', 'localSize', 'localFirstTimestamp', 'carriedFirstTimestamp', 'exportedAt', 'exportedFrom', 'retirable', 'takeable', 'ownBytes', 'result'];
-const TOP = ['tool', 'contract', 'mode', 'apply', 'machine', 'stick', 'code', 'outcome', 'why', 'rows', 'receipt', 'staleLock'];
+// CHANGED 2026-09-19 (D080 P-FLUSH-BEFORE-DONE): +flush at the top — `[{ dir, result }]` after an --apply, else null.
+// Additive, by the same rule as staleLock; the list still pins the exact shape.
+const TOP = ['tool', 'contract', 'mode', 'apply', 'machine', 'stick', 'code', 'outcome', 'why', 'rows', 'receipt', 'staleLock', 'flush'];
 
 /** Run main with --json against a fixture machine; return the parsed object, the raw streams, the code. */
 function J(m, argv, extra) {
@@ -2182,6 +2184,121 @@ test('prune: --delete-listed on its own refuses BY ITS OWN RULE, not by an unrel
   const r = T.run({ out: q.out, stick: w.stick, deleteListed: listed.prune.digest });
   assert.strictEqual(r.code, T.EXIT.RAN_NOT);
   assert.match(r.why || '', /does nothing on its own/, `refused, but for: ${r.why}`);
+});
+
+// ── P-FLUSH-BEFORE-DONE (D080): DONE is said only after the stick has the bytes ──
+//
+// The case (handback/p-stick-fault-cause-C_2026-09-19.md §1, §6): on 09-14 a directory write to the stick was
+// still failing 53 s after the last write call had returned, and "DONE — you can unplug it now" was conditioned
+// on those calls returning. These drive the one seam, `T.IO.fsync(fd, path)`, and always put it back.
+
+/** Run `fn` with `T.IO.fsync` replaced; the real one is restored whatever happens. */
+function withFsync(fake, fn) {
+  const real = T.IO.fsync;
+  T.IO.fsync = fake;
+  try { return fn(); } finally { T.IO.fsync = real; }
+}
+/** A spy that records every path flushed and then flushes for real. */
+function spyFsync() {
+  const seen = [];
+  const real = T.IO.fsync;
+  return { seen, fn: (fd, p) => { seen.push(p); return real(fd, p); } };
+}
+const allFiles = (root) => Object.keys(snapshot(root));
+const ioError = (code) => Object.assign(new Error(`${code}: injected flush failure`), { code });
+
+test('flush: every file an export leaves on the stick was fsynced under its temp name before the rename', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z', '2026-09-09T17:06:33.328Z']));
+  const spy = spyFsync();
+  const r = withFsync(spy.fn, () => go(w.D, 'export', { apply: true }));
+  assert.strictEqual(r.outcome, 'CARRIED', r.text);
+  const files = allFiles(w.stick);
+  assert.ok(files.length >= 4, `expected ledger, tail, HANDOFF and MANIFEST; got ${files.map((f) => path.basename(f))}`);
+  for (const f of files) {
+    const flushedAsTemp = spy.seen.some((p) => typeof p === 'string' && p.startsWith(`${f}.writing-`));
+    assert.ok(flushedAsTemp, `${path.relative(w.stick, f)} reached the stick without a file flush; flushed: ${spy.seen.map((p) => path.relative(w.stick, p)).join(', ')}`);
+  }
+});
+
+test('flush: an export flushes every directory it wrote into, and says so in its result', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  const spy = spyFsync();
+  const r = withFsync(spy.fn, () => go(w.D, 'export', { apply: true }));
+  assert.strictEqual(r.outcome, 'CARRIED', r.text);
+  const want = [w.stick, path.join(w.stick, T.LEDGER_DIR), path.join(w.stick, T.TRANSFER_DIR)].map((d) => path.resolve(d));
+  for (const d of want) assert.ok(spy.seen.map((p) => path.resolve(p)).includes(d), `directory not flushed: ${d}`);
+  assert.ok(Array.isArray(r.flush) && r.flush.length === want.length, `result.flush: ${JSON.stringify(r.flush)}`);
+  for (const f of r.flush) assert.strictEqual(f.result, 'flushed', JSON.stringify(f));
+  assert.deepStrictEqual(T.toJson(r, { mode: 'export', apply: true, stick: w.stick }).flush, r.flush, 'the --json object must carry the flush record');
+});
+
+test('flush: a failure at ANY single flush of an export is a named NOT DONE (NOT_FLUSHED, code 1) — never CARRIED, never CRASHED', () => {
+  // Count the flushes a clean export makes, then fail each one in turn on a fresh world.
+  const probe = world();
+  write(probe.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  const spy = spyFsync();
+  withFsync(spy.fn, () => go(probe.D, 'export', { apply: true }));
+  const n = spy.seen.length;
+  assert.ok(n >= 7, `a clean export made only ${n} flushes`);
+  for (let k = 0; k < n; k++) {
+    const w = world();
+    write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+    let i = 0;
+    const r = withFsync((fd, p) => { if (i++ === k) throw ioError('EIO'); return fs.fsyncSync(fd); },
+      () => go(w.D, 'export', { apply: true }));
+    assert.strictEqual(r.outcome, 'NOT_FLUSHED', `flush #${k + 1} of ${n} failed and the export said ${r.outcome}: ${r.text}`);
+    assert.strictEqual(r.code, T.EXIT.SEAT, `flush #${k + 1}: code ${r.code}`);
+    assert.match(r.why || '', /EIO/, `flush #${k + 1}: the reason does not name the error: ${r.why}`);
+  }
+});
+
+test('flush: a directory that reports the flush UNSUPPORTED is carried and named as such; an I/O error on it is NOT DONE', () => {
+  const unsupported = world();
+  write(unsupported.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch (_) { return false; } };
+  let r = withFsync((fd, p) => { if (isDir(p)) throw ioError('ENOTSUP'); return fs.fsyncSync(fd); },
+    () => go(unsupported.D, 'export', { apply: true }));
+  assert.strictEqual(r.outcome, 'CARRIED', r.text);
+  assert.ok(r.flush.every((f) => /^unsupported \(ENOTSUP/.test(f.result)), JSON.stringify(r.flush));
+  assert.match(r.text, /unsupported/, 'an unflushed directory must be said out loud, not only recorded');
+
+  const broken = world();
+  write(broken.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  r = withFsync((fd, p) => { if (isDir(p)) throw ioError('EIO'); return fs.fsyncSync(fd); },
+    () => go(broken.D, 'export', { apply: true }));
+  assert.strictEqual(r.outcome, 'NOT_FLUSHED', r.text);
+});
+
+test('flush: an import whose ledger flush fails is a named NOT DONE, not CRASHED', () => {
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  assert.strictEqual(go(w.D, 'export', { apply: true }).outcome, 'CARRIED');
+  const ledgerTmp = path.join(w.stick, T.LEDGER_DIR, T.LEDGER_NAME + '.writing-');
+  const r = withFsync((fd, p) => { if (String(p).startsWith(ledgerTmp)) throw ioError('EIO'); return fs.fsyncSync(fd); },
+    () => go(w.L, 'import', { apply: true }));
+  assert.strictEqual(r.outcome, 'NOT_FLUSHED', r.text);
+  assert.strictEqual(r.code, T.EXIT.SEAT);
+});
+
+test('flush: an import flushes the stick directories it rewrote, and an I/O error there is a named NOT DONE (mutant #100)', () => {
+  const clean = world();
+  write(clean.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  assert.strictEqual(go(clean.D, 'export', { apply: true }).outcome, 'CARRIED');
+  const spy = spyFsync();
+  let r = withFsync(spy.fn, () => go(clean.L, 'import', { apply: true }));
+  assert.strictEqual(r.outcome, 'CARRIED', r.text);
+  for (const d of [clean.stick, path.join(clean.stick, T.LEDGER_DIR), path.join(clean.stick, T.TRANSFER_DIR)]) {
+    assert.ok(spy.seen.map((p) => path.resolve(p)).includes(path.resolve(d)), `import did not flush ${d}`);
+  }
+
+  const w = world();
+  write(w.D, conversation(SID, ['2026-09-09T14:59:19.013Z']));
+  assert.strictEqual(go(w.D, 'export', { apply: true }).outcome, 'CARRIED');
+  const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch (_) { return false; } };
+  r = withFsync((fd, p) => { if (isDir(p)) throw ioError('EIO'); return fs.fsyncSync(fd); }, () => go(w.L, 'import', { apply: true }));
+  assert.strictEqual(r.outcome, 'NOT_FLUSHED', r.text);
 });
 
 console.log(`\n  ${pass} passed, ${fail} failed`);

@@ -134,6 +134,8 @@ const EXIT = {
   //   STOPPED        a row's `stops` is true (REFUSED, DIVERGED, INTERRUPTED, ABSENT_HERE). With
   //                  --apply, OTHER seats may still have carried — read each row's `result`.
   //   FAILED         --apply; a seat was written but did not verify whole. Wins over STOPPED.
+  //   NOT_FLUSHED    --apply; a flush to the stick failed (D080), so what was written may not be on the device.
+  //                  `why` names the file or directory and the error. Nothing in the run is reported as carried.
   SEAT: 1,
   // 2 — IT DID NOT RUN. Nothing was read about any seat and nothing was written. `rows` is [].
   //   CANNOT_RUN     bad arguments, no stick, an unreadable or future-version ledger, no roster,
@@ -331,10 +333,86 @@ function foreignHandoff(p) {
   return head !== GENERATED_MARK;
 }
 
+/**
+ * DONE IS SAID ONLY AFTER THE STICK HAS THE BYTES (P-FLUSH-BEFORE-DONE, D080).
+ *
+ * The case, measured on D (`handback/p-stick-fault-cause-C_2026-09-19.md` §1, §6): on 09-14 the stick's metadata
+ * write was still failing 53 s after the last write call had returned, and "DONE — you can unplug it now" was
+ * conditioned on those calls returning. `writeFileSync` + `renameSync` returning means the OS has the bytes, not
+ * the device. So every file this tool puts on the stick is opened, written, fsynced and closed BEFORE its rename,
+ * and the directories an apply wrote into are flushed at its end. A flush that fails is a FlushError, which
+ * `run` turns into the named NOT DONE `NOT_FLUSHED` (exit 1) — never CARRIED, and not an anonymous CRASHED.
+ *
+ * THE DIRECTORY FLUSH, MEASURED rather than remembered (Node v24.14.1, Windows 10.0.26200, NTFS temp dir,
+ * `scratchpad/flush/dirprobe.js`): `openSync(dir, 'r')` opens but its fsync is EPERM; `openSync(dir, 'w')` is
+ * EISDIR; `openSync(dir, 'r+')` + `fsyncSync` SUCCEEDS. So directories are opened 'r+'. A filesystem that
+ * refuses a directory flush with one of DIR_FLUSH_UNSUPPORTED is REPORTED (the run still carries: the files in it
+ * were flushed, and refusing every carry on such a stick would be a lockout); any other error is a failed flush.
+ * exFAT itself — the stick — is NOT measured: that would mean writing to it.
+ *
+ * THE ONE SEAM: `IO.fsync(fd, path)` — the path rides along so a failure can be named and a test can see what
+ * was flushed. The CLI never replaces it; `tail-carry.test.js` does, and always puts it back.
+ */
+const IO = { fsync: (fd, p) => fs.fsyncSync(fd) };   // eslint-disable-line no-unused-vars
+const DIR_FLUSH_UNSUPPORTED = ['EISDIR', 'EPERM', 'EACCES', 'ENOTSUP', 'EINVAL'];
+
+class FlushError extends Error {}
+function flushFailed(what, p, e) {
+  const err = new FlushError(`${what} ${p} (${(e && (e.code || e.message)) || e})`);
+  err.path = p;
+  err.code = e && e.code;
+  return err;
+}
+
+/** Open, write, fsync, close — the caller renames. The close error is dropped ONLY when an earlier one is already on its way out. */
+function writeDurable(p, data) {
+  const fd = fs.openSync(p, 'w');
+  let flushed = false;
+  try {
+    fs.writeFileSync(fd, data);
+    try { IO.fsync(fd, p); } catch (e) { throw flushFailed('could not flush', p, e); }
+    flushed = true;
+  } finally {
+    try { fs.closeSync(fd); } catch (e) { if (flushed) throw flushFailed('could not close after flushing', p, e); }
+  }
+}
+
+/** 'flushed', or 'unsupported (<code>…)' when the filesystem declines; throws a FlushError on anything else. */
+function flushDir(dir) {
+  let fd;
+  try { fd = fs.openSync(dir, 'r+'); } catch (e) {
+    if (DIR_FLUSH_UNSUPPORTED.includes(e.code)) return `unsupported (${e.code} opening it)`;
+    throw flushFailed('could not open the directory to flush it:', dir, e);
+  }
+  let result;
+  try {
+    try { IO.fsync(fd, dir); result = 'flushed'; } catch (e) {
+      if (!DIR_FLUSH_UNSUPPORTED.includes(e.code)) throw flushFailed('could not flush the directory', dir, e);
+      result = `unsupported (${e.code})`;
+    }
+  } finally {
+    try { fs.closeSync(fd); } catch (e) { if (result) throw flushFailed('could not close the directory after flushing it:', dir, e); }
+  }
+  return result;
+}
+
+/** Flush each directory once, in the order given; the record goes into the run's result. */
+function flushDirs(dirs) {
+  const seen = new Set();
+  const out = [];
+  for (const d of dirs) {
+    const k = path.resolve(d);
+    if (seen.has(k) || !fs.existsSync(d)) continue;
+    seen.add(k);
+    out.push({ dir: d, result: flushDir(d) });
+  }
+  return out;
+}
+
 function writeAtomic(p, data) {
   fs.mkdirSync(path.dirname(p), { recursive: true });
   const tmp = `${p}.writing-${process.pid}`;
-  fs.writeFileSync(tmp, data);
+  writeDurable(tmp, data);
   fs.renameSync(tmp, p);
 }
 
@@ -570,7 +648,7 @@ function writeLedger(stick, led) {
   const dir = path.join(stick, LEDGER_DIR);
   fs.mkdirSync(dir, { recursive: true });
   const tmp = path.join(dir, `${LEDGER_NAME}.writing-${process.pid}`);
-  fs.writeFileSync(tmp, JSON.stringify(led, null, 2) + '\n');
+  writeDurable(tmp, JSON.stringify(led, null, 2) + '\n');
   fs.renameSync(tmp, ledgerPath(stick));
 }
 
@@ -746,7 +824,7 @@ function applyExport(plan, now) {
       done.push({ row, ok: false, why: `the source grew while it was being read (${row.size} -> ${after.size}); nothing was written for this seat` });
       continue;
     }
-    fs.writeFileSync(tmp, buf);
+    writeDurable(tmp, buf);
     fs.renameSync(tmp, path.join(dir, name));
 
     const tailSha = sha256(buf);
@@ -771,6 +849,8 @@ function applyExport(plan, now) {
   }
   writeLedger(stick, led);
   done.transfer = writeTransferSet(stick, led, machine);         // A-2: same step, after the ledger
+  // D080: the renames above live in these directories' entries; DONE waits for them too.
+  done.flush = flushDirs([dir, path.join(stick, TRANSFER_DIR), stick]);
   return done;
 }
 
@@ -1075,6 +1155,7 @@ function applyImport(plan, now) {
   }
   writeLedger(stick, led);
   done.transfer = writeTransferSet(stick, led, plan.machine);    // A-2: the import rewrites the manifest too
+  done.flush = flushDirs([path.join(stick, LEDGER_DIR), path.join(stick, TRANSFER_DIR), stick]);   // D080, as the export
   // Only verified-whole seats go on the receipt: a failed rejoin must not be exempt from the retire.
   const receipt = [];
   for (const d of done) {
@@ -1518,8 +1599,22 @@ function carryPlanned(o, k) {
       ]);
     }
   }
-  const done = o.mode === 'export' ? applyExport(plan, now) : applyImport(plan, now);
+  let done;
+  try {
+    done = o.mode === 'export' ? applyExport(plan, now) : applyImport(plan, now);
+  } catch (e) {
+    if (!(e instanceof FlushError)) throw e;
+    // D080: a named NOT DONE. What was written may not be on the device, so nothing here is reported as carried.
+    out('');
+    out(`  NOT DONE — ${e.message}`);
+    out('  The stick may not hold what was just written. Do not unplug it as though this carried: run it again, and on');
+    out('  the other machine check the set (--verify-set) before trusting it.');
+    return { ok: false, code: EXIT.SEAT, outcome: 'NOT_FLUSHED', why: `a flush to the stick failed: ${e.message}`, plan };
+  }
   out('');
+  for (const f of done.flush || []) {
+    if (f.result !== 'flushed') out(`  directory ${f.dir}: flush ${f.result} — the files in it were flushed; its entries were not confirmed`);
+  }
   let bad = 0;
   for (const d of done) {
     if (!d.ok) { bad++; out(`  FAILED  ${d.row.sid}  ${d.why}`); continue; }
@@ -1533,7 +1628,7 @@ function carryPlanned(o, k) {
   if (!done.length) out('  nothing to write.');
   if (done.receipt) out(`  receipt ${done.receipt}  (the launch keeps these conversations through a migrate)`);
   const outcome = bad ? 'FAILED' : refused ? 'STOPPED' : done.some((d) => d.ok) ? 'CARRIED' : 'NOTHING_TO_DO';
-  return { ok: bad === 0 && refused === 0, code: (bad || refused) ? EXIT.SEAT : EXIT.OK, outcome, why: null, plan, done };
+  return { ok: bad === 0 && refused === 0, code: (bad || refused) ? EXIT.SEAT : EXIT.OK, outcome, why: null, plan, done, flush: done.flush || null };
 }
 
 /** First timestamp of a key line, or null. */
@@ -1645,6 +1740,7 @@ function toJson(res, o) {
     rows,
     receipt: (done && done.receipt) || null,
     staleLock: res.staleLock || null,
+    flush: res.flush || null,                                    // D080: [{ dir, result }] after an --apply, else null
   };
 }
 
@@ -1743,5 +1839,5 @@ module.exports = {
   LEDGER_DIR, LEDGER_NAME, LEDGER_VERSION, CONTRACT_VERSION, EXIT, REASONS, STOPS, CARRIES,
   TRANSFER_DIR, MANIFEST_NAME, LOCK_NAME, GENERATED_MARK, pidImage, holderLive, takeLedgerLock, ledgerMaxAt,
   handoffName, handoffAfter, renderHandoff, writeTransferSet, verifySet, foreignHandoff,
-  CACHEDIR_SIGNATURE, INSTALL_MARKERS, planDirCarry, applyDirCarry, planPrune,
+  CACHEDIR_SIGNATURE, INSTALL_MARKERS, planDirCarry, applyDirCarry, planPrune, IO,
 };
