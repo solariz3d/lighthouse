@@ -29,6 +29,19 @@
 
 The two P-LEAVE-3 live tests (B's join/deadline checks, `handback/p-leave3-reread-B_2026-09-16.md` §3) need Consonance CLOSED and a test build with its own `CONSONANCE_DATA`. They wait for a moment the keeper picks; a bare-terminal runbook is A's (`handback/p-leave3-b7-A_2026-09-16.md`).
 
+## ADDED 09:2x — chunk 3, from C's D079 finding: DONE is said before the stick has the bytes
+
+C (`handback/p-stick-fault-cause-C_2026-09-19.md` §6), re-derived by me: `grep -c "fsync\|FlushFileBuffers"` = 0 in `dev/tail-carry.js`, `dev/stick-waiter.js`, `dev/stick-apply.js`; D's System log holds 8 `disk` events (id 11 ×4, 51 ×3, 153 ×1), all 09-14 23:40:31–23:42:35, a metadata write still failing 53 s after the last write call returned. "DONE — you can unplug it now" is conditioned on `writeFileSync`/`renameSync` returning, not on the data reaching the device.
+
+| pane | packet | what exists | the bar |
+|---|---|---|---|
+| C | **P-FLUSH-BEFORE-DONE** — `dev/tail-carry.js` only (13 write/rename/copy sites at 09:2x; C wrote `--carry-dir` and knows the file) | every file the export writes to the stick is opened, written, `fsyncSync`ed and closed before its rename; the containing directory is flushed where Windows allows it, and where it does not the hand-back says so from a measurement, not from memory | a flush that throws turns the export's result into a named NOT DONE reason; red-first fixtures with an injected failing `fsync` (no real stick is written in the lap — copies and a temp dir only); the existing 157 tests stay green; mutants on a copy: a removed flush and a swallowed flush error both go red; the cost measured (seconds added to an export of the current set on a temp dir) |
+| A | **P-LEAVE-SAYS-WHAT-THE-FLUSH-SAID** — read-only first: does the app's own Leave path (`main.rs`, P-LEAVE) and `dev/stick-waiter.js` reach DONE through `tail-carry.js`'s result, or do they have write sites of their own | the list of every site that can print DONE, each traced to the result it is conditioned on | if every DONE flows from `tail-carry.js`'s result, the hand-back says so with the lines and nothing is edited; if one does not, the smallest change that makes it, red-first. `stick-waiter.test.js` 74/0 and `stick-apply.test.js` 48/0 stay green |
+
+**The prune waits.** `loop/keeper_rulings_owed_2026-09-19.md` §2 recommended deleting the 81 agreed tails; after C's finding this seat's recommendation is to hold any optional write to this stick until L's log is read on Sunday (C §7) or the stick is replaced.
+
+**For Sunday on L:** C §7's six queries, first among them L's removal policy (`DeviceHotplug`), because a "better performance" policy loses cached writes on a DONE-then-unplug by design.
+
 ## Falsifier
 
 This sweep is decorative if the next "what is open" read finds an item here still open with no row saying why, or finds a third item that, like the blind-guard pair, was listed from a handoff and not from the disk.
