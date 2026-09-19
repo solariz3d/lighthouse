@@ -6507,22 +6507,109 @@ mod singleton_tests {
 fn warn_second_instance() {
     use windows::core::PCWSTR;
     use windows::Win32::UI::WindowsAndMessaging::{MessageBoxW, MB_ICONWARNING, MB_OK};
-    let body: Vec<u16> = "Consonance is already running.\n\n\
+    let (title, body) = second_instance_message();
+    let body: Vec<u16> = body.encode_utf16().chain(std::iter::once(0)).collect();
+    let title: Vec<u16> = title.encode_utf16().chain(std::iter::once(0)).collect();
+    unsafe {
+        MessageBoxW(None, PCWSTR(body.as_ptr()), PCWSTR(title.as_ptr()), MB_OK | MB_ICONWARNING);
+    }
+}
+
+/// The dialog's (title, body), pure so a test can hold it to the facts it may state.
+fn second_instance_message() -> (&'static str, &'static str) {
+    (
+        "Consonance - already running",
+        "Consonance is already running.\n\n\
         This second copy has stopped rather than starting, because two instances mean two MCP \
         servers. The second one overwrites the chair token and the port config and then the two \
         disagree about which server is live - that is what silently broke the chair verbs on \
         2026-07-28 and again on 2026-08-09.\n\n\
-        Use the window you already have. To pick up new code, close it completely first, then \
-        launch once."
-        .encode_utf16()
-        .chain(std::iter::once(0))
-        .collect();
-    let title: Vec<u16> = "Consonance - already running"
-        .encode_utf16()
-        .chain(std::iter::once(0))
-        .collect();
-    unsafe {
-        MessageBoxW(None, PCWSTR(body.as_ptr()), PCWSTR(title.as_ptr()), MB_OK | MB_ICONWARNING);
+        If a Consonance window is open, use that one. To pick up new code, close it completely \
+        first, then launch once.\n\n\
+        If no Consonance window is open, give it a minute - a copy that is starting up or \
+        closing down has no window yet. If none appears, a copy is running with no window: open \
+        Task Manager, end consonance.exe, then launch once.",
+    )
+}
+
+#[cfg(test)]
+mod second_instance_tests {
+    use super::second_instance_message;
+
+    /// The sentences of the body, split where a reader stops: after ". " or at a line break.
+    fn sentences(body: &str) -> Vec<String> {
+        body.split('\n')
+            .flat_map(|line| line.split(". "))
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty())
+            .collect()
+    }
+
+    /// THE DEFECT (D073, E's finding at the old `:6515`): the dialog told the keeper to "use the window you already
+    /// have" when the copy holding the lock can have NO window. The check cannot know which case it is in, so no
+    /// sentence may state a window as a fact: every sentence that mentions a window is conditional.
+    #[test]
+    fn no_sentence_asserts_that_a_window_exists() {
+        let (_, body) = second_instance_message();
+        for s in sentences(body) {
+            if s.to_lowercase().contains("window") {
+                assert!(s.starts_with("If "), "this sentence states a window as a fact: {s:?}");
+            }
+        }
+    }
+
+    /// The windowless case must be ACTIONABLE, not only acknowledged: the one paragraph that speaks of no window names
+    /// the tool and the process to end, so the step and its object sit together.
+    #[test]
+    fn the_windowless_case_names_task_manager_and_the_process() {
+        let (_, body) = second_instance_message();
+        let para = body
+            .split("\n\n")
+            .find(|p| p.contains("no Consonance window") || p.contains("no window"))
+            .unwrap_or_else(|| panic!("no paragraph addresses the case with no window:\n{body}"));
+        assert!(para.contains("Task Manager"), "the windowless case must name Task Manager:\n{para}");
+        assert!(para.contains("consonance.exe"), "the windowless case must name consonance.exe:\n{para}");
+    }
+
+    /// A copy that is starting up or closing down has no window YET. Ending consonance.exe then would kill a real
+    /// session, so the wait comes before the kill: pinned by ORDER in the windowless paragraph, not by the words.
+    #[test]
+    fn ending_the_process_comes_after_a_wait() {
+        let (_, body) = second_instance_message();
+        let para = body.split("\n\n").find(|p| p.contains("Task Manager")).expect("a paragraph names Task Manager");
+        let wait = para.find("minute").unwrap_or_else(|| panic!("no wait before the kill:\n{para}"));
+        let kill = para.find("end consonance.exe").unwrap_or_else(|| panic!("no step naming the process:\n{para}"));
+        assert!(wait < kill, "the kill is offered before the wait:\n{para}");
+    }
+
+    /// WIRING: the dialog shows THIS text. A second copy of the words inlined back into the MessageBox caller would
+    /// leave every test above green over a dialog nobody tests.
+    #[test]
+    fn the_dialog_shows_the_pinned_message() {
+        let src = std::fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let body = src.split("fn warn_second_instance() {").nth(1).expect("warn_second_instance moved");
+        let body = body.split("\n}\n").next().unwrap();
+        assert!(body.contains("second_instance_message()"), "the dialog does not use the pinned message");
+        assert!(!body.contains("already running"), "the dialog carries its own copy of the words again");
+    }
+
+    /// The reason stays: the dialog exists to explain WHY a second copy refuses, and that reason is the two MCP
+    /// servers overwriting each other's token and port.
+    #[test]
+    fn the_two_mcp_servers_reason_is_kept() {
+        let (_, body) = second_instance_message();
+        assert!(body.contains("two instances mean two MCP servers"), "the reason is gone:\n{body}");
+        assert!(body.contains("chair token") && body.contains("port config"), "the reason lost what it overwrites:\n{body}");
+    }
+
+    /// MessageBoxW renders what it is given, and the existing text is ASCII; a stray non-ASCII dash from an editor is
+    /// the easiest way for this dialog to grow a mojibake character.
+    #[test]
+    fn the_dialog_text_is_ascii() {
+        let (title, body) = second_instance_message();
+        assert!(title.is_ascii(), "title is not ASCII: {title:?}");
+        assert!(body.is_ascii(), "body is not ASCII: {:?}", body.chars().filter(|c| !c.is_ascii()).collect::<String>());
+        assert_eq!(title, "Consonance - already running", "the title is not part of this change");
     }
 }
 
