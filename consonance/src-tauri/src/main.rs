@@ -8782,18 +8782,100 @@ fn composer_row(rendered: &[String]) -> Option<usize> {
 /// and its `#[ignore]`d acceptance test, and it wants the reduction inverted from an allow-list of
 /// Default to a deny-list of the chrome greys — a change with its own blast radius and its own
 /// packet.
+///
+/// ONE BIT OF `composer_state` (D074). Everything above is still true of it; what changed is that
+/// its `false` is no longer the only answer anyone can get — see `Composer`.
 fn input_box_empty(rendered: &[String], typed: &[String]) -> bool {
+    composer_state(rendered, typed).is_empty()
+}
+
+/// What a composer reading WAS. `input_box_empty` answers one bit, and its `false` covered three
+/// different facts: text in the composer, no composer row found, and two grids that disagree on
+/// size. The gate may treat the last two exactly like the first — this type does not change a
+/// single decision — but a sentence about WHY a delivery held has to be able to tell them apart.
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum Composer {
+    Empty,
+    HasText,
+    Unreadable(Unreadable),
+}
+
+/// Why a composer could not be read. Each is UNKNOWN, and unknown holds (bounded).
+#[derive(Debug, PartialEq, Eq, Clone, Copy)]
+enum Unreadable {
+    /// `composer_row` found no `❯` row with the separator rule directly above it: a dialog covering
+    /// the composer, a welcome banner, a frame caught mid-repaint.
+    NoRow,
+    /// `rendered` found the composer and `typed` has no such row — one screen read at two sizes.
+    GridMismatch,
+    /// There was no screen to read: `live_screen` returned None (`pane_state`'s other arm).
+    NoScreen,
+}
+
+impl Composer {
+    /// The ONE place the three answers collapse back to the bit the gate decides on.
+    fn is_empty(self) -> bool {
+        self == Composer::Empty
+    }
+}
+
+/// The composer, read: empty, holding text, or UNREADABLE and why. `input_box_empty` is this
+/// collapsed to one bit, and every delivery decision is still made on that bit.
+fn composer_state(rendered: &[String], typed: &[String]) -> Composer {
     let Some(i) = composer_row(rendered) else {
-        return false;
+        return Composer::Unreadable(Unreadable::NoRow);
     };
     // The two grids are built cell-for-cell from one screen, so they are aligned by CHARACTER
     // index — every cell contributes exactly one char, an empty cell contributing a space. That is
     // what makes it safe to find the marker on one and cut the other at the same offset.
     match (rendered[i].chars().position(|c| c == '\u{276f}'), typed.get(i)) {
+        (Some(m), Some(row)) => {
+            if row.chars().skip(m + 1).collect::<String>().trim().is_empty() {
+                Composer::Empty
+            } else {
+                Composer::HasText
+            }
+        }
         // A `typed` grid shorter than `rendered` is a caller that read one screen at two sizes —
         // the L044 defect exactly — so it is UNKNOWN here rather than an index panic.
-        (Some(m), Some(row)) => row.chars().skip(m + 1).collect::<String>().trim().is_empty(),
-        _ => false,
+        (Some(_), None) => Composer::Unreadable(Unreadable::GridMismatch),
+        // UNREACHABLE TODAY: `composer_row` only returns a row `is_empty_box` or `is_prompt`
+        // accepted, and both require a leading marker. Kept UNKNOWN rather than a panic, and filed
+        // as what it would mean if those predicates ever loosened: no MARKED composer row.
+        (None, _) => Composer::Unreadable(Unreadable::NoRow),
+    }
+}
+
+/// Every composer reading taken while one message waited, and the last of them. A forced row's
+/// sentence is a claim about the WHOLE hold, so it is built from all of them — the reading at the
+/// moment the bound ran out is one tick of 240 seconds' worth.
+#[derive(Debug, Default, PartialEq, Eq, Clone, Copy)]
+struct Reads {
+    empty: u32,
+    text: u32,
+    no_row: u32,
+    grid_mismatch: u32,
+    no_screen: u32,
+    last: Option<Composer>,
+}
+
+impl Reads {
+    fn note(&mut self, c: Composer) {
+        let n = match c {
+            Composer::Empty => &mut self.empty,
+            Composer::HasText => &mut self.text,
+            Composer::Unreadable(Unreadable::NoRow) => &mut self.no_row,
+            Composer::Unreadable(Unreadable::GridMismatch) => &mut self.grid_mismatch,
+            Composer::Unreadable(Unreadable::NoScreen) => &mut self.no_screen,
+        };
+        *n = n.saturating_add(1);
+        self.last = Some(c);
+    }
+    fn unreadable(&self) -> u32 {
+        self.no_row.saturating_add(self.grid_mismatch).saturating_add(self.no_screen)
+    }
+    fn total(&self) -> u32 {
+        self.empty.saturating_add(self.text).saturating_add(self.unreadable())
     }
 }
 
@@ -8965,6 +9047,8 @@ struct Queued {
     /// For the board row only — never re-rendered into the pane.
     label: String,
     queued_at: Instant,
+    /// Every composer reading taken while THIS message waited — what its forced row is built from.
+    reads: Reads,
 }
 
 /// Per-pane FIFO. FIFO matters: two rings queued behind a busy pane must arrive in the order they
@@ -8978,7 +9062,7 @@ impl Inbox {
     fn push(&self, pane: &str, text: String, label: String, now: Instant) -> usize {
         let mut m = self.0.lock().unwrap();
         let q = m.entry(pane.to_string()).or_default();
-        q.push_back(Queued { text, label, queued_at: now });
+        q.push_back(Queued { text, label, queued_at: now, reads: Reads::default() });
         q.len()
     }
     fn depth(&self, pane: &str) -> usize {
@@ -8986,6 +9070,16 @@ impl Inbox {
     }
     fn panes(&self) -> Vec<String> {
         self.0.lock().map(|m| m.keys().cloned().collect()).unwrap_or_default()
+    }
+    /// Record one composer reading against every message waiting for this pane.
+    fn note_reading(&self, pane: &str, c: Composer) {
+        if let Ok(mut m) = self.0.lock() {
+            if let Some(q) = m.get_mut(pane) {
+                for it in q.iter_mut() {
+                    it.reads.note(c);
+                }
+            }
+        }
     }
     /// Take the head IF the decision says it may go. Returns the message and whether it was forced.
     /// Leaves the queue untouched on HOLD — bar 4: a queued message must never be lost.
@@ -8998,6 +9092,19 @@ impl Inbox {
         now: Instant,
         enabled: bool,
     ) -> Option<(String, String, Option<Forced>)> {
+        self.take_ready_read(pane, gate, box_empty, screen_idle, now, enabled)
+            .map(|(text, label, why, _)| (text, label, why))
+    }
+    /// `take_ready`, and the composer readings the message collected while it waited.
+    fn take_ready_read(
+        &self,
+        pane: &str,
+        gate: PaneGate,
+        box_empty: bool,
+        screen_idle: bool,
+        now: Instant,
+        enabled: bool,
+    ) -> Option<(String, String, Option<Forced>, Reads)> {
         let mut m = self.0.lock().ok()?;
         let q = m.get_mut(pane)?;
         let head = q.front()?;
@@ -9010,7 +9117,7 @@ impl Inbox {
                     Drain::Forced(why) => Some(why),
                     _ => None,
                 };
-                Some((it.text, it.label, why))
+                Some((it.text, it.label, why, it.reads))
             }
         }
     }
@@ -9043,14 +9150,22 @@ fn live_screen(emus: &PaneEmus, pane_id: &str) -> Option<(Vec<String>, Vec<Strin
 ///
 /// An unreadable emulator is `Unstamped` with both booleans false — unknown holds, bounded, which
 /// is exactly what it did before the stamp existed.
-fn pane_state(emus: &PaneEmus, pane_id: &str) -> (PaneGate, bool, bool) {
+///
+/// THE COMPOSER READING RIDES BESIDE THE BIT (D074), and the bit is derived from it here, once, so
+/// the two cannot disagree: the gate decides on `box_empty` exactly as before, and the reading is
+/// only ever used to say why.
+fn pane_state(emus: &PaneEmus, pane_id: &str) -> (PaneGate, bool, bool, Composer) {
     match live_screen(emus, pane_id) {
-        Some((lines, typed, quiet)) => (
-            pane_gate(read_stamp(pane_id), Some((&lines, quiet))),
-            input_box_empty(&lines, &typed),
-            pane_idle_for_delivery(&lines, &typed, quiet),
-        ),
-        None => (PaneGate::Unstamped, false, false),
+        Some((lines, typed, quiet)) => {
+            let composer = composer_state(&lines, &typed);
+            (
+                pane_gate(read_stamp(pane_id), Some((&lines, quiet))),
+                composer.is_empty(),
+                pane_idle_for_delivery(&lines, &typed, quiet),
+                composer,
+            )
+        }
+        None => (PaneGate::Unstamped, false, false, Composer::Unreadable(Unreadable::NoScreen)),
     }
 }
 
@@ -9058,7 +9173,7 @@ fn pane_state(emus: &PaneEmus, pane_id: &str) -> (PaneGate, bool, bool) {
 /// QUEUED and the caller must return that reply instead of writing; `None` means go ahead.
 fn gate_or_queue(app: &AppHandle, pane_id: &str, msg: &str, preview: &str) -> Option<String> {
     let enabled = deliver_only_when_idle();
-    let (gate, box_empty, screen_idle) = pane_state(&app.state::<PaneEmus>(), pane_id);
+    let (gate, box_empty, screen_idle, _) = pane_state(&app.state::<PaneEmus>(), pane_id);
     // waited = 0 at the door, so this can only ever say Deliver or Hold here
     if drain_decision(gate, box_empty, screen_idle, Duration::ZERO, enabled) == Drain::Deliver {
         return None;
@@ -9087,21 +9202,96 @@ fn gate_or_queue(app: &AppHandle, pane_id: &str, msg: &str, preview: &str) -> Op
 /// broken*. Deleting a true fact to stop it from being misread is how the row lost its meaning in
 /// the first place.
 fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
-    format!(
-        "[{}]{}",
-        gate.label(),
-        match forced {
-            None => "",
-            // the stamp DID carry — say so, or the row reads as the mechanism failing
-            Some(Forced::SignalOutranked) =>
-                " (FORCED after the bounded hold — the pane's own signal said ready; \
-                  its composer never cleared)",
-            Some(Forced::NoUsableSignal) =>
-                " (FORCED after the bounded hold — the gate never got a usable ready signal)",
-            Some(Forced::SignalContradicted) =>
-                " (FORCED after the bounded hold — the pane's signal said ready and a live turn                   stayed on screen; the screen gate carried this)",
-        }
-    )
+    delivery_note_with(gate, forced, None)
+}
+
+/// `delivery_note` with the composer readings the message collected while it waited (D074).
+///
+/// "ITS COMPOSER NEVER CLEARED" IS A CLAIM ABOUT WHAT WAS SEEN, and until this lap it was printed
+/// whenever a ready pane's hold ran out — including when the gate could not find the composer at
+/// all. With readings, a hold where every reading saw text says it NEVER READ CLEAR — "read", because
+/// a dim prompt suggestion also reads as text (vt100 0.15 drops SGR 2; pinned by
+/// `a_dim_placeholder_reads_as_text_and_this_is_a_defect`) and this row cannot tell it from the
+/// keeper typing. A hold the gate could not read says so, a mixed hold gives its counts, and the
+/// reading at the moment the bound ran out is named. No readings (or none recorded) prints what
+/// `delivery_note` always printed.
+fn delivery_note_with(gate: PaneGate, forced: Option<Forced>, reads: Option<&Reads>) -> String {
+    let reads = reads.filter(|r| r.total() > 0);
+    let clause = |r: Option<&Reads>| r.map(|r| format!("; composer: {}", reads_counts(r))).unwrap_or_default();
+    let why = match (forced, reads) {
+        (None, _) => String::new(),
+        // the stamp DID carry — say so, or the row reads as the mechanism failing
+        (Some(Forced::SignalOutranked), None) => " (FORCED after the bounded hold — the pane's own signal said ready; \
+             its composer never cleared)"
+            .to_string(),
+        (Some(Forced::SignalOutranked), Some(r)) => format!(
+            " (FORCED after the bounded hold — the pane's own signal said ready; {}; {})",
+            composer_verdict(r),
+            composer_at_bound(r)
+        ),
+        (Some(Forced::NoUsableSignal), r) => format!(
+            " (FORCED after the bounded hold — the gate never got a usable ready signal{})",
+            clause(r)
+        ),
+        (Some(Forced::SignalContradicted), r) => format!(
+            " (FORCED after the bounded hold — the pane's signal said ready and a live turn \
+             stayed on screen; the screen gate carried this{})",
+            clause(r)
+        ),
+    };
+    format!("[{}]{}", gate.label(), why)
+}
+
+/// What the readings of one hold add up to, said as a claim only when every reading agrees.
+fn composer_verdict(r: &Reads) -> String {
+    let n = r.total();
+    if n == 0 {
+        // `note_reading` skipped every tick (a poisoned lock): nothing was seen, so claim nothing
+        "its composer was never read".to_string()
+    } else if r.text == n {
+        format!("its composer never read clear — read as text on all {n} readings")
+    } else if r.unreadable() == n {
+        format!("its composer could not be read on any of {n} readings ({})", unreadable_counts(r))
+    } else {
+        format!("its composer did not read clear when the bound ran out — {}", reads_counts(r))
+    }
+}
+
+fn composer_at_bound(r: &Reads) -> String {
+    let at = match r.last {
+        Some(Composer::Empty) => "empty",
+        Some(Composer::HasText) => "text",
+        Some(Composer::Unreadable(Unreadable::NoRow)) => "could not be read (no composer row)",
+        Some(Composer::Unreadable(Unreadable::GridMismatch)) => "could not be read (grid mismatch)",
+        Some(Composer::Unreadable(Unreadable::NoScreen)) => "could not be read (no screen)",
+        None => "no reading",
+    };
+    format!("at the bound: {at}")
+}
+
+/// Every nonzero count, e.g. `read as text on 3, could not be read on 2 (no composer row on 2) of 5
+/// readings`. Zero counts are left out: a row lists what happened, not what did not.
+fn reads_counts(r: &Reads) -> String {
+    let mut parts = Vec::new();
+    if r.text > 0 {
+        parts.push(format!("read as text on {}", r.text));
+    }
+    if r.empty > 0 {
+        parts.push(format!("read empty on {}", r.empty));
+    }
+    if r.unreadable() > 0 {
+        parts.push(format!("could not be read on {} ({})", r.unreadable(), unreadable_counts(r)));
+    }
+    format!("{} of {} readings", parts.join(", "), r.total())
+}
+
+fn unreadable_counts(r: &Reads) -> String {
+    [(r.no_row, "no composer row"), (r.grid_mismatch, "grid mismatch"), (r.no_screen, "no screen")]
+        .iter()
+        .filter(|(n, _)| *n > 0)
+        .map(|(n, what)| format!("{what} on {n}"))
+        .collect::<Vec<_>>()
+        .join(", ")
 }
 
 /// ONE tick, ALL queues, ONE message per pane per tick — the next tick re-reads the screen rather
@@ -9111,8 +9301,9 @@ fn delivery_note(gate: PaneGate, forced: Option<Forced>) -> String {
 fn drain_inboxes(app: &AppHandle) {
     let enabled = deliver_only_when_idle();
     for pane in app.state::<Inbox>().panes() {
-        let (gate, box_empty, screen_idle) = pane_state(&app.state::<PaneEmus>(), &pane);
-        if let Some((text, label, forced)) = app.state::<Inbox>().take_ready(
+        let (gate, box_empty, screen_idle, composer) = pane_state(&app.state::<PaneEmus>(), &pane);
+        app.state::<Inbox>().note_reading(&pane, composer);
+        if let Some((text, label, forced, reads)) = app.state::<Inbox>().take_ready_read(
             &pane,
             gate,
             box_empty,
@@ -9124,7 +9315,7 @@ fn drain_inboxes(app: &AppHandle) {
             chair_audit(app, format!(
                 "DELIVERED -> {} {}{}: {}",
                 short_id(&pane),
-                delivery_note(gate, forced),
+                delivery_note_with(gate, forced, Some(&reads)),
                 if ok { "" } else { " [WRITE FAILED]" },
                 label,
             ));
@@ -9151,11 +9342,22 @@ fn drain_inboxes(app: &AppHandle) {
                      the pane has been mid-turn for four minutes; the screen gate carried this.",
                     gate.label()
                 )),
+                // "THE KEEPER'S RULE FIRING" IS NOT THIS LOG'S TO SAY. Text read in the composer may
+                // be his or a dim suggestion (see `delivery_note_with`); a composer the gate could
+                // not read is the predicate's unknown-holds rule. It says which it saw, no more.
                 Some(Forced::SignalOutranked) => plog(&format!(
                     "DELIVERY FORCED pane={pane} {} — the pane's own signal said READY and the \
-                     gate held anyway: its composer was not clear for the whole bound. This is \
-                     the keeper's rule firing, not the ready signal failing.",
-                    gate.label()
+                     gate held anyway: {}; {}. {}",
+                    gate.label(),
+                    composer_verdict(&reads),
+                    composer_at_bound(&reads),
+                    if reads.unreadable() == 0 {
+                        "The ready signal did not fail; the composer rule held it. Text read there \
+                         may be the keeper's or a dim prompt suggestion - the gate cannot tell."
+                    } else {
+                        "Where the composer could not be read, the hold is the gate's unknown-holds \
+                         rule, not the keeper's hand."
+                    }
                 )),
             }
         }
@@ -15951,6 +16153,406 @@ mod ready_signal_tests {
 //
 // FAKE SCREENS, never a live pane — bar 1. Each screen below is the shape the emulator actually
 // produces: a bottom input box between two rule lines, with the ⏵⏵ footer under it.
+#[cfg(test)]
+mod composer_tristate_tests {
+    //! P-COMPOSER-TRISTATE (D074, lap 1): `input_box_empty`'s one bit becomes three readings the
+    //! caller can see, with NO change to any delivery decision.
+    //!
+    //! EVERY SCREEN HERE IS A REAL ONE. Each fixture is a byte range cut from this machine's
+    //! `C:/Consonance/data/captures/*.log`, starting at a clear-screen (`ESC[2J`) so it replays the
+    //! same way wherever it is run. They were found by replaying whole logs in 256-byte chunks and
+    //! classifying every frame with these same predicates:
+    //!
+    //!   empty          12fb81f6-f4c0-4ef8-aad8-f0cdce091925.log  bytes 1057703..1058983
+    //!   trust dialog   12fb81f6-f4c0-4ef8-aad8-f0cdce091925.log  bytes      77..1357
+    //!   pasted text    0845a868-38f2-4cc2-b45a-431e0c088fb1.log  bytes 1571993..1583001
+    //!   placeholder    12fb81f6-f4c0-4ef8-aad8-f0cdce091925.log  bytes 1054947..1057217
+    //!
+    //! REPLAYED AT 43x99, and the width is read off the frames, not guessed: the separator rule on
+    //! each is at most 99 cells, and at 94 the placeholder frame tears. A width that is wrong for a
+    //! frame manufactures screens that never existed — L053's lesson, and the one thing that makes
+    //! `a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect` red on this machine.
+    //! That test is the known long-standing red. It is not touched here.
+    use super::*;
+
+    const ROWS: u16 = 43;
+    const COLS: u16 = 99;
+
+    fn replay(name: &str) -> (Vec<String>, Vec<String>) {
+        let data = fs::read(format!("fixtures/screens/{name}")).expect("the real-screen fixture");
+        let mut p = vt100::Parser::new(ROWS, COLS, 0);
+        p.process(&data);
+        (p.screen().rows(0, COLS).collect(), typed_only(p.screen()))
+    }
+
+    const EMPTY: &str = "composer_empty_2026-09-19.bin";
+    const DIALOG: &str = "composer_unreadable_trust_dialog_2026-09-19.bin";
+    const PASTE: &str = "composer_has_pasted_text_2026-09-19.bin";
+    const PLACEHOLDER: &str = "composer_placeholder_reads_as_text_2026-09-19.bin";
+
+    #[test]
+    fn a_real_empty_composer_reads_empty() {
+        let (r, t) = replay(EMPTY);
+        assert_eq!(composer_state(&r, &t), Composer::Empty);
+    }
+
+    #[test]
+    fn a_paste_waiting_in_the_composer_reads_has_text() {
+        let (r, t) = replay(PASTE);
+        let i = composer_row(&r).expect("premise: the anchor finds the composer");
+        assert!(r[i].contains("[Pasted text #1"), "premise: row {i} is {:?}", r[i].trim_end());
+        assert_eq!(composer_state(&r, &t), Composer::HasText);
+    }
+
+    /// THE CASE THE BOARD MISNAMED. A dialog covers the composer: there IS a `❯` row on screen,
+    /// and it has no separator rule above it, so `composer_row` refuses it. The gate cannot see the
+    /// composer at all — and until this lap the only sentence it had for that was "never cleared".
+    #[test]
+    fn a_dialog_over_the_composer_reads_unreadable_no_row() {
+        let (r, t) = replay(DIALOG);
+        assert!(r.iter().any(|l| l.contains("\u{276f} No, exit")), "premise: the trust dialog is up");
+        assert_eq!(composer_row(&r), None, "premise: composer_row returns None on this real screen");
+        assert_eq!(composer_state(&r, &t), Composer::Unreadable(Unreadable::NoRow));
+    }
+
+    #[test]
+    fn no_screen_rows_at_all_reads_unreadable_no_row() {
+        assert_eq!(composer_state(&[], &[]), Composer::Unreadable(Unreadable::NoRow));
+    }
+
+    /// Constructed, and it has to be: `live_screen` builds both grids from one screen at one size,
+    /// so no real capture can produce this. It is the L044 defect's shape, kept as UNKNOWN.
+    #[test]
+    fn two_grids_of_different_sizes_read_unreadable_grid_mismatch() {
+        let (r, t) = replay(EMPTY);
+        let i = composer_row(&r).expect("premise: the anchor finds the composer");
+        let short: Vec<String> = t[..i].to_vec();
+        assert_eq!(composer_state(&r, &short), Composer::Unreadable(Unreadable::GridMismatch));
+    }
+
+    /// FOUND IN THIS PACKET, NOT FIXED BY IT — the decision is not this lap's to change. A fresh
+    /// pane's empty composer shows Claude Code's suggestion, `Try "…"`, drawn `ESC[2m` (dim), and
+    /// vt100 0.15 does not record dim, so `typed_only` keeps it as if it were typed. This screen is
+    /// EMPTY and reads as TEXT. It pins the defect so a fix has to invert this, not delete it.
+    #[test]
+    fn a_dim_placeholder_reads_as_text_and_this_is_a_defect() {
+        let (r, t) = replay(PLACEHOLDER);
+        let i = composer_row(&r).expect("premise: the anchor finds the composer");
+        assert!(r[i].contains("Try") && r[i].contains("how do I log an error?"), "premise: the placeholder — row {i} is {:?}", r[i].trim_end());
+        assert_eq!(composer_state(&r, &t), Composer::HasText, "THE DEFECT: an empty composer reads as text");
+    }
+
+    /// THE ORACLE: `input_box_empty` exactly as it stood at 1ead762, before this lap, kept here
+    /// verbatim. `input_box_empty` is now DEFINED as `composer_state(..).is_empty()`, so comparing
+    /// those two would be a tautology that no mutant could ever fail — the first draft of the test
+    /// below did exactly that. The pre-lap body is the only independent statement of the old rule.
+    fn old_input_box_empty(rendered: &[String], typed: &[String]) -> bool {
+        let Some(i) = composer_row(rendered) else {
+            return false;
+        };
+        match (rendered[i].chars().position(|c| c == '\u{276f}'), typed.get(i)) {
+            (Some(m), Some(row)) => row.chars().skip(m + 1).collect::<String>().trim().is_empty(),
+            _ => false,
+        }
+    }
+
+    /// NO BEHAVIOUR CHANGE, ON EVERY SCREEN THIS FILE HAS. The gate decides on
+    /// `input_box_empty`'s bit; the tri-state must collapse to exactly the bit the PRE-LAP code
+    /// gave, including on the two older fixtures at their own geometries and on the known-red
+    /// slash screen.
+    #[test]
+    fn the_bit_the_gate_decides_on_is_unchanged_on_every_screen() {
+        let mut screens: Vec<(String, Vec<String>, Vec<String>)> = Vec::new();
+        for name in [EMPTY, DIALOG, PASTE, PLACEHOLDER] {
+            let (r, t) = replay(name);
+            screens.push((name.to_string(), r, t));
+        }
+        for (name, rows, cols) in [
+            ("composer_empty_reads_busy_2026-09-09.bin", 43u16, 201u16),
+            ("composer_slash_command_reads_empty_2026-09-09.bin", 21, 98),
+        ] {
+            let data = fs::read(format!("fixtures/screens/{name}")).expect("fixture");
+            let mut p = vt100::Parser::new(rows, cols, 0);
+            p.process(&data);
+            screens.push((name.to_string(), p.screen().rows(0, cols).collect(), typed_only(p.screen())));
+        }
+        let (r, t) = replay(EMPTY);
+        let i = composer_row(&r).unwrap();
+        screens.push(("grid mismatch".into(), r.clone(), t[..i].to_vec()));
+        screens.push(("rendered as typed".into(), r.clone(), r.clone()));
+        screens.push(("nothing".into(), vec![], vec![]));
+        for (name, r, t) in &screens {
+            let old = old_input_box_empty(r, t);
+            assert_eq!(input_box_empty(r, t), old, "{name}: input_box_empty changed its answer");
+            assert_eq!(
+                composer_state(r, t).is_empty(),
+                old,
+                "{name}: the tri-state collapsed to a different bit than the gate decided on before"
+            );
+        }
+        let kinds: std::collections::BTreeSet<String> =
+            screens.iter().map(|(_, r, t)| format!("{:?}", composer_state(r, t))).collect();
+        assert!(kinds.len() >= 3, "premise: the sweep covers empty, text and unreadable — {kinds:?}");
+    }
+
+    fn reads(of: &[Composer]) -> Reads {
+        let mut r = Reads::default();
+        for c in of {
+            r.note(*c);
+        }
+        r
+    }
+    const NO_ROW: Composer = Composer::Unreadable(Unreadable::NoRow);
+
+    #[test]
+    fn an_outranked_hold_the_gate_could_not_read_never_says_never_cleared() {
+        let row = delivery_note_with(PaneGate::Ready, Some(Forced::SignalOutranked), Some(&reads(&[NO_ROW; 4])));
+        assert!(row.contains("could not be read on any of 4 readings (no composer row on 4)"), "{row}");
+        assert!(!row.contains("never cleared"), "a composer nobody could see was not seen to stay full: {row}");
+    }
+
+    fn emus_with(pane: &str, fixture: &str) -> PaneEmus {
+        let data = fs::read(format!("fixtures/screens/{fixture}")).expect("fixture");
+        let mut parser = vt100::Parser::new(ROWS, COLS, 0);
+        parser.process(&data);
+        let mut m = HashMap::new();
+        m.insert(pane.to_string(), Arc::new(Mutex::new(EmuState { parser, last_byte: Instant::now() })));
+        PaneEmus(Mutex::new(m))
+    }
+
+    /// THE CALLER, not only the predicate: `pane_state` is what both delivery sites read, and the
+    /// bit it hands the gate must be the pre-lap bit while the reading rides beside it. A pane id
+    /// with no stamp file, so the gate is `Unstamped` and nothing on disk is touched.
+    #[test]
+    fn pane_state_hands_the_gate_the_old_bit_and_the_reading_beside_it() {
+        let pane = "d074-no-such-pane-never-stamped";
+        for (fixture, want) in [
+            (EMPTY, Composer::Empty),
+            (PASTE, Composer::HasText),
+            (DIALOG, Composer::Unreadable(Unreadable::NoRow)),
+            (PLACEHOLDER, Composer::HasText),
+        ] {
+            let emus = emus_with(pane, fixture);
+            let (gate, box_empty, _, composer) = pane_state(&emus, pane);
+            let (r, t) = replay(fixture);
+            assert_eq!(gate, PaneGate::Unstamped, "premise: {fixture}");
+            assert_eq!(composer, want, "{fixture}");
+            assert_eq!(box_empty, old_input_box_empty(&r, &t), "{fixture}: the gate's bit changed");
+        }
+    }
+
+    #[test]
+    fn a_pane_with_no_screen_reads_unreadable_no_screen_and_still_holds() {
+        let emus = PaneEmus(Mutex::new(HashMap::new()));
+        assert_eq!(
+            pane_state(&emus, "d074-absent"),
+            (PaneGate::Unstamped, false, false, Composer::Unreadable(Unreadable::NoScreen))
+        );
+    }
+
+    /// `drain_inboxes` needs an AppHandle, so its wiring is asserted by source shape, the way
+    /// `set_pane_name_delegates_to_the_guard_and_does_not_check_the_constant_itself` does: every
+    /// tick's reading is recorded BEFORE the take, and the row is built from the readings.
+    #[test]
+    fn drain_inboxes_records_each_reading_and_builds_the_row_from_them() {
+        let src = include_str!("main.rs");
+        let body = src
+            .split("fn drain_inboxes(")
+            .nth(1)
+            .and_then(|b| b.split("\nfn ").next())
+            .expect("drain_inboxes exists");
+        let note = body.find("note_reading(&pane, composer)").expect("each reading is recorded");
+        let take = body.find(".take_ready_read(").expect("the take returns the readings");
+        assert!(note < take, "the reading must be recorded before the message can leave");
+        assert!(body.contains("delivery_note_with(gate, forced, Some(&reads))"), "the row carries them");
+        assert!(!body.contains("delivery_note(gate"), "and not the reading-blind row");
+    }
+
+    #[test]
+    fn an_outranked_hold_with_text_throughout_says_it_never_read_clear() {
+        let row = delivery_note_with(
+            PaneGate::Ready,
+            Some(Forced::SignalOutranked),
+            Some(&reads(&[Composer::HasText; 4])),
+        );
+        assert!(row.contains("its composer never read clear — read as text on all 4 readings"), "{row}");
+        assert!(!row.contains("could not be read"), "{row}");
+    }
+
+    #[test]
+    fn a_mixed_hold_gives_its_counts_and_claims_neither_whole() {
+        let r = reads(&[Composer::HasText, NO_ROW, Composer::HasText, NO_ROW, Composer::HasText]);
+        let row = delivery_note_with(PaneGate::Ready, Some(Forced::SignalOutranked), Some(&r));
+        assert!(row.contains("read as text on 3"), "{row}");
+        assert!(row.contains("could not be read on 2"), "{row}");
+        assert!(row.contains("of 5 readings"), "{row}");
+        assert!(!row.contains("never cleared"), "{row}");
+    }
+
+    /// An empty reading during a hold is possible — the pane read clear while its gate was not
+    /// Ready — and a row that dropped it would overstate how full the composer stayed.
+    #[test]
+    fn empty_readings_are_counted_not_dropped() {
+        let r = reads(&[Composer::Empty, Composer::HasText, Composer::HasText]);
+        let row = delivery_note_with(PaneGate::Ready, Some(Forced::SignalOutranked), Some(&r));
+        assert!(row.contains("read as text on 2, read empty on 1 of 3 readings"), "{row}");
+        assert!(!row.contains("never read clear"), "it did read clear once: {row}");
+    }
+
+    #[test]
+    fn the_reading_at_the_bound_is_named() {
+        let r = reads(&[Composer::HasText, NO_ROW]);
+        let row = delivery_note_with(PaneGate::Ready, Some(Forced::SignalOutranked), Some(&r));
+        assert!(row.contains("at the bound: could not be read (no composer row)"), "{row}");
+    }
+
+    #[test]
+    fn the_composer_clause_rides_on_the_other_two_forced_rows() {
+        let r = reads(&[Composer::Unreadable(Unreadable::NoScreen); 3]);
+        for (gate, why) in [
+            (PaneGate::Unstamped, Forced::NoUsableSignal),
+            (PaneGate::Contradicted, Forced::SignalContradicted),
+        ] {
+            let row = delivery_note_with(gate, Some(why), Some(&r));
+            assert!(row.contains("composer: could not be read on 3 (no screen on 3) of 3 readings"), "{row}");
+        }
+    }
+
+    const GATES: [PaneGate; 5] =
+        [PaneGate::Ready, PaneGate::Working, PaneGate::Stale, PaneGate::Unstamped, PaneGate::Contradicted];
+    const WHYS: [Option<Forced>; 4] =
+        [None, Some(Forced::SignalOutranked), Some(Forced::NoUsableSignal), Some(Forced::SignalContradicted)];
+
+    /// With no readings, or none recorded, every row is the one the old function printed.
+    #[test]
+    fn with_no_readings_every_row_is_the_old_row() {
+        for gate in GATES {
+            for why in WHYS {
+                let old = delivery_note(gate, why);
+                assert_eq!(delivery_note_with(gate, why, None), old);
+                assert_eq!(delivery_note_with(gate, why, Some(&Reads::default())), old);
+            }
+        }
+    }
+
+    /// THE OLD ROW'S TWO INVARIANTS, NOW WITH READINGS. `no_delivered_row_claims_a_ready_signal_and_
+    /// denies_one` and `no_two_forcing_causes_read_alike` call `delivery_note`, which is the
+    /// no-readings arm — and production always passes readings now. So they are re-asserted here
+    /// over every reading mix, or they would guard a path the app no longer takes.
+    #[test]
+    fn the_old_row_invariants_hold_with_readings_too() {
+        let mixes: Vec<Reads> = vec![
+            reads(&[Composer::HasText; 3]),
+            reads(&[NO_ROW; 3]),
+            reads(&[Composer::HasText, NO_ROW]),
+            reads(&[Composer::Empty, Composer::HasText]),
+            reads(&[Composer::Unreadable(Unreadable::GridMismatch), Composer::Unreadable(Unreadable::NoScreen)]),
+        ];
+        for r in &mixes {
+            let mut rows = std::collections::BTreeMap::new();
+            for (gate, why) in [
+                (PaneGate::Ready, Forced::SignalOutranked),
+                (PaneGate::Stale, Forced::NoUsableSignal),
+                (PaneGate::Unstamped, Forced::NoUsableSignal),
+                (PaneGate::Contradicted, Forced::SignalContradicted),
+            ] {
+                let row = delivery_note_with(gate, Some(why), Some(r));
+                assert!(row.contains("FORCED"), "{row}");
+                let claims = row.contains("stamp=ready");
+                let denies = row.contains("never got a") && row.contains("ready signal");
+                assert!(!(claims && denies), "one row, two contradictory facts: {row}");
+                rows.insert(format!("{gate:?}/{why:?}"), row);
+            }
+            let distinct: std::collections::BTreeSet<&String> = rows.values().collect();
+            assert_eq!(distinct.len(), rows.len(), "two causes read alike under {r:?}: {rows:#?}");
+        }
+    }
+
+    /// A delivered row is ONE line on the board; a run of blanks inside it is a lost `\`
+    /// continuation, and one of the three forced rows carried nineteen of them.
+    #[test]
+    fn no_forced_row_has_a_run_of_blanks_in_it() {
+        for gate in GATES {
+            for why in WHYS {
+                for r in [None, Some(reads(&[Composer::HasText, NO_ROW]))] {
+                    let row = delivery_note_with(gate, why, r.as_ref());
+                    assert!(!row.contains("  "), "{gate:?}/{why:?}: {row:?}");
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn a_waiting_message_carries_every_reading_of_its_hold() {
+        let inbox = Inbox::new();
+        let t0 = Instant::now();
+        inbox.push("p", "msg".into(), "lbl".into(), t0);
+        for c in [NO_ROW, Composer::HasText, NO_ROW] {
+            inbox.note_reading("p", c);
+        }
+        let later = t0 + Duration::from_millis(MAX_HOLD_MS);
+        let (_, _, why, r) = inbox
+            .take_ready_read("p", PaneGate::Ready, false, false, later, true)
+            .expect("the bound releases it");
+        assert_eq!(why, Some(Forced::SignalOutranked));
+        assert_eq!((r.no_row, r.text, r.total(), r.last), (2, 1, 3, Some(NO_ROW)));
+    }
+
+    /// A reading is the pane's, so every message queued behind the head collects it too — the
+    /// second message's hold began when IT was queued, not when it reached the front.
+    #[test]
+    fn a_reading_reaches_every_message_waiting_for_that_pane_and_no_other() {
+        let inbox = Inbox::new();
+        let t0 = Instant::now();
+        inbox.push("p", "one".into(), "l".into(), t0);
+        inbox.push("p", "two".into(), "l".into(), t0);
+        inbox.push("q", "other".into(), "l".into(), t0);
+        inbox.note_reading("p", NO_ROW);
+        let now = t0 + Duration::from_millis(1);
+        let a = inbox.take_ready_read("p", PaneGate::Ready, true, true, now, true).unwrap().3;
+        let b = inbox.take_ready_read("p", PaneGate::Ready, true, true, now, true).unwrap().3;
+        let c = inbox.take_ready_read("q", PaneGate::Ready, true, true, now, true).unwrap().3;
+        assert_eq!((a.no_row, b.no_row, c.total()), (1, 1, 0));
+    }
+
+    #[test]
+    fn a_reading_for_a_pane_with_nothing_queued_is_dropped_quietly() {
+        let inbox = Inbox::new();
+        inbox.note_reading("nobody", Composer::HasText);
+        assert_eq!(inbox.depth("nobody"), 0);
+    }
+
+    /// NO BEHAVIOUR CHANGE, AT THE INBOX. `take_ready` is now a view of `take_ready_read`; this
+    /// sweeps every input the decision reads and requires the two to agree on every one.
+    #[test]
+    fn take_ready_read_decides_exactly_as_take_ready() {
+        let t0 = Instant::now();
+        let bound = Duration::from_millis(MAX_HOLD_MS);
+        let mut n = 0;
+        for gate in GATES {
+            for box_empty in [true, false] {
+                for idle in [true, false] {
+                    for waited in [Duration::ZERO, bound - Duration::from_millis(1), bound, bound * 2] {
+                        for enabled in [true, false] {
+                            let (a, b) = (Inbox::new(), Inbox::new());
+                            a.push("p", "m".into(), "l".into(), t0);
+                            b.push("p", "m".into(), "l".into(), t0);
+                            b.note_reading("p", NO_ROW);
+                            let x = a.take_ready("p", gate, box_empty, idle, t0 + waited, enabled);
+                            let y = b
+                                .take_ready_read("p", gate, box_empty, idle, t0 + waited, enabled)
+                                .map(|(t, l, w, _)| (t, l, w));
+                            assert_eq!(x, y, "{gate:?} box={box_empty} idle={idle} {waited:?} on={enabled}");
+                            n += 1;
+                        }
+                    }
+                }
+            }
+        }
+        assert_eq!(n, 5 * 2 * 2 * 4 * 2);
+    }
+}
+
 #[cfg(test)]
 mod inbox_tests {
     use super::*;
