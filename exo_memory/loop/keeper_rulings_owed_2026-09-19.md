@@ -2,6 +2,14 @@
 
 *From `loop/plan_small_fixes_2_2026-09-19.md`. Nothing below was changed; both commands ran in list mode.*
 
+## DECIDED 09:4x — the keeper delegated both: "do what you see is correct bc tbh i have no clue"
+
+What this seat did with that, and nothing more:
+1. **Synced the six drifted files**, files only: `install.ps1 -NoRegister -Only <the six>`. `-NoRegister` because `-Only` alone also WIRES an entry, and `userprompt_pulse.py` is declared but not registered on D — wiring it would have been a new hook, not a sync. `~/.claude/settings.json` sha256 `25c403fd…` before and after (unchanged); a copy kept at `settings.json.bak-librarian-20260919`; the installer kept a dated `.bak` of each replaced file. After: `-Check` reads 0 DRIFT; the five JS files pass `node --check`. `userprompt_pulse.py` could not be parse-checked — there is no Python on D, which is also why it is not registered here.
+2. **Left the 2 ABSENT and the 1 HOLD alone** — each changes behaviour or needs a two-sided read.
+3. **Left the three "excluded but live" hooks registered on D.** Read at source (`librarian/2026-09-06.md:603`), the 09-06 ruling was about what a NEW install adds ("the three passengers stay unregistered"), made on the laptop. D had them registered before that ruling; the L3 lines are the keeper's own Lighthouse layer. Removing them is a bigger act than the word given today covers. If he wants them gone he says so by name.
+4. **The stick prune: HOLD** (the 09:2x amendment below).
+
 ## 1 · The hooks installed on D are older than the repo's
 
 `powershell -File dev/shell/install.ps1 -Check` at 09:1x: 27 manifest entries — 18 ok, **6 DRIFT, 2 ABSENT, 1 HOLD**; 3 hooks EXCLUDED BUT LIVE.
