@@ -1102,3 +1102,190 @@ test('IN SYNC — the status is read from the STORE, never from the live machine
     'a temp-dir fixture must not see C:\Consonance\data: ' + r.text);
   s.cleanup();
 });
+
+// ---------------------------------------------------------------- D072 P-STALE-LAP: an unfiled lap older than a day
+//
+// THE CASE (`loop/live_checks_trailer_seal_2026-09-16.md:47-48`): lap D064 was left open by the chair from
+// 09-15 13:14:09 and was parked at 09-16 13:15:38. In between it held the station for `chair`, so at 13:15:10
+// C's `call_librarian` was REFUSED OUT OF TURN for a lap nobody was running.
+//
+// WHAT THE PULSE SAID AT THAT MOMENT, replayed with the code as it stood (hand-back §1):
+//   chain: D064 WORKING · holder chair · dirty 0 repo-wide · 24h · …
+// It NAMED the lap, its holder and its age. What it did not do is say anything was WRONG: that is the
+// exact shape of a healthy lap the chair is working. The segment below is the verdict that line lacked.
+//
+// D064's 29 real rows, copied from C:\Consonance\data\lap.jsonl on D (fields lap/stage/chain/holder/by/at
+// only — the notes are not read). The command that extracted them is in the hand-back. Frozen here because
+// this file's rule is that nothing reads C:\Consonance\data.
+const D064_ROWS = [
+  {"lap":"D064","stage":"open","at":1789484026622},
+  {"lap":"D064","stage":"void","by":"chair","at":1789484026747},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789484057608},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789484072221},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789484526102},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789484542278},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789485615995},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789485629679},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789486072076},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789486091497},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789486541838},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789486557060},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789487182986},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789487291352},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789487924243},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789494009527},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789494025741},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789495121529},
+  {"lap":"D064","stage":"chain","chain":"filed","holder":"librarian","by":"chair","at":1789495179149},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789495779935},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789495861891},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789496887849},
+  {"lap":"D064","stage":"chain","chain":"filed","holder":"librarian","by":"chair","at":1789496966697},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789497542237},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789497567824},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789498298390},
+  {"lap":"D064","stage":"chain","chain":"dispatched","holder":"panes","by":"chair","at":1789498316143},
+  {"lap":"D064","stage":"chain","chain":"working","holder":"chair","by":"chair","at":1789499649503},
+  {"lap":"D064","stage":"chain","chain":"filed","holder":"none","by":"chair","at":1789586138013},
+];
+const D064_PARK_AT = 1789586138013;                        // the `filed` row: PARKED, NOT COMPLETED, 09-16 13:15:38
+const D064_LAST_OPEN_AT = 1789499649503;                   // its newest row before that: 09-15 13:14:09
+const G5_REFUSED_AT = Date.parse('2026-09-16T19:15:10Z');  // C's call_librarian refused OUT OF TURN, 13:15:10 local
+const H = 3600 * 1000;
+const beforePark = () => D064_ROWS.filter(r => r.at < D064_PARK_AT);
+
+test('STALE, THE BAR: an open lap whose last row is older than 24 h is NAMED FIRST, with its id, holder and age', () => {
+  const fx = fixture([{ lap: 'L010', stage: 'chain', at: 10 * H, chain: 'working', holder: 'chair' }]);
+  const r = mod().line({ ledger: fx.ledger, now: 35 * H, dirty: 0, handbacks: [], collation: { state: 'n/a' } });
+  assert.ok(r.text, 'an open lap must produce a line');
+  assert.strictEqual(r.text.split('\n').length, 1, 'still ONE line: ' + JSON.stringify(r.text));
+  assert.match(r.text, /^STALE L010 25h \(holder chair\) · chain: L010 WORKING/, r.text);
+  fx.cleanup();
+});
+
+test('STALE, THE CITED CASE replayed at 13:15:10 on 09-16 — the moment C was refused — names D064 first', () => {
+  const fx = fixture(beforePark());
+  const r = mod().line({ ledger: fx.ledger, now: G5_REFUSED_AT, dirty: 0, handbacks: [], collation: { state: 'n/a' } });
+  assert.match(r.text, /^STALE D064 24h \(holder chair\) · /, r.text);
+  fx.cleanup();
+});
+
+test('STALE, the margin on the cited case: at 13:14:00 on 09-16 the 24 h rule is SILENT — it named D064 by 61 s', () => {
+  // Not a wish, a boundary pinned: this rule would have been silent over identical harm two minutes earlier.
+  const fx = fixture(beforePark());
+  const at1314 = Date.parse('2026-09-16T19:14:00Z');
+  const r = mod().line({ ledger: fx.ledger, now: at1314, dirty: 0, handbacks: [], collation: { state: 'n/a' } });
+  assert.doesNotMatch(r.text, /STALE/, r.text);
+  assert.match(r.text, /^chain: D064 WORKING · holder chair/, 'and the head reads exactly as a healthy lap does');
+  fx.cleanup();
+});
+
+test('STALE, once D064 is parked it is gone from the line entirely', () => {
+  const fx = fixture(D064_ROWS);
+  const r = mod().line({ ledger: fx.ledger, now: D064_PARK_AT + 1000, dirty: 0, handbacks: [], collation: { state: 'n/a' } });
+  assert.ok(!r.text || !/D064/.test(r.text), 'a filed lap must not be named: ' + r.text);
+  fx.cleanup();
+});
+
+test('STALE, the boundary is strict: at exactly 24 h a lap is not stale, one millisecond later it is', () => {
+  const fx = fixture([{ lap: 'L011', stage: 'chain', at: 0, chain: 'dispatched', holder: 'panes' }]);
+  const at = (now) => mod().line({ ledger: fx.ledger, now, dirty: 0, handbacks: [], collation: { state: 'n/a' } }).text;
+  assert.doesNotMatch(at(24 * H), /STALE/, 'exactly 24 h is not older than 24 h');
+  assert.match(at(24 * H + 1), /^STALE L011 24h \(holder panes\)/);
+  fx.cleanup();
+});
+
+test('STALE, the case the old line hid: a stale lap BEHIND a newer open lap is named, not folded into "+1 more open"', () => {
+  const fx = fixture([
+    { lap: 'L020', stage: 'chain', at: 0, chain: 'working', holder: 'chair' },
+    { lap: 'L021', stage: 'chain', at: 40 * H, chain: 'dispatched', holder: 'panes' },
+  ]);
+  const r = mod().line({ ledger: fx.ledger, now: 41 * H, dirty: 0, handbacks: [], collation: { state: 'n/a' } });
+  assert.match(r.text, /^STALE L020 41h \(holder chair\) · chain: L021 DISPATCHED/, r.text);
+  fx.cleanup();
+});
+
+test('STALE, a fresh lap prints no STALE segment, and a filed lap however old is never stale', () => {
+  const fx = fixture([
+    { lap: 'L030', stage: 'chain', at: 0, chain: 'working', holder: 'chair' },
+    { lap: 'L030', stage: 'chain', at: 1000, chain: 'filed', holder: 'librarian' },
+    { lap: 'L031', stage: 'chain', at: 99 * H, chain: 'working', holder: 'chair' },
+  ]);
+  const r = mod().line({ ledger: fx.ledger, now: 100 * H, dirty: 0, handbacks: [], collation: { state: 'n/a' } });
+  assert.doesNotMatch(r.text, /STALE/, r.text);
+  assert.match(r.text, /^chain: L031 WORKING/);
+  fx.cleanup();
+});
+
+test('STALE, age is measured from the lap\'s NEWEST row of any stage — a recent non-chain row keeps it alive', () => {
+  const fx = fixture([
+    { lap: 'L040', stage: 'chain', at: 0, chain: 'working', holder: 'chair' },
+    { lap: 'L040', stage: 'opened', at: 30 * H, paths: ['a/b.md'] },
+  ]);
+  const r = mod().line({ ledger: fx.ledger, now: 31 * H, dirty: 0, handbacks: [], collation: { state: 'n/a' } });
+  assert.doesNotMatch(r.text, /STALE/, 'a lap written to an hour ago is not abandoned: ' + r.text);
+  fx.cleanup();
+});
+
+test('STALE, several: oldest first, capped at the list cap with +N, one line', () => {
+  const rows = [0, 1, 2, 3, 4].map(i => ({ lap: 'L05' + i, stage: 'chain', at: i * H, chain: 'working', holder: 'chair' }));
+  const fx = fixture(rows);
+  const r = mod().line({ ledger: fx.ledger, now: 100 * H, dirty: 0, handbacks: [], collation: { state: 'n/a' } });
+  assert.strictEqual(r.text.split('\n').length, 1);
+  assert.match(r.text, /^STALE L050 100h \(holder chair\), L051 99h \(holder chair\), L052 98h \(holder chair\), \+2 · /, r.text);
+  fx.cleanup();
+});
+
+test('STALE, NEVER THROWS on a damaged ledger, and still names the stale lap it can age', () => {
+  const fx = fixture([
+    'not json at all',
+    'null',
+    { lap: 'L060', stage: 'chain', at: 0, chain: 'working', holder: 'chair' },
+    { lap: 'L061', stage: 'chain', at: 'yesterday', chain: 'working', holder: 'chair' },
+    { stage: 'chain', at: 0, chain: 'working', holder: 'chair' },
+    { lap: 'L062', stage: 'chain', at: 0, chain: 'working' },
+  ]);
+  let r;
+  assert.doesNotThrow(() => { r = mod().line({ ledger: fx.ledger, now: 50 * H, dirty: 0, handbacks: [], collation: { state: 'n/a' } }); });
+  assert.strictEqual(r.text.split('\n').length, 1);
+  assert.match(r.text, /STALE .*L060 50h \(holder chair\)/, r.text);
+  assert.match(r.text, /L062 50h \(holder \?\)/, 'a lap with no holder is named with the gap shown, not skipped: ' + r.text);
+  assert.doesNotMatch(r.text, /L061 [0-9]/, 'a lap with no usable timestamp is not given an invented age');
+  fx.cleanup();
+});
+
+test('STALE reaches STDOUT through the actual CLI — the only channel the pulse reads', () => {
+  const fx = fixture([{ lap: 'L070', stage: 'chain', at: Date.now() - 30 * H, chain: 'working', holder: 'chair' }]);
+  const r = run(READER, [], fx.ledger);
+  assert.strictEqual(r.code, 0, r.stderr);
+  assert.strictEqual(r.stderr, '');
+  assert.strictEqual(r.stdout.trim().split('\n').length, 1, r.stdout);
+  assert.match(r.stdout, /^STALE L070 30h \(holder chair\) · chain: L070 WORKING/);
+  fx.cleanup();
+});
+
+// ---- added AFTER the first mutant run: each test below exists because a named mutant survived (hand-back §4)
+
+test('STALE, a DAMAGED row that comes first must not hide a lap that is stale by its well-formed rows (mutant M10)', () => {
+  // Without the finite-timestamp guard the first row's `at` ('garbage') becomes the lap's newest, every later
+  // numeric comparison against it is false, the age is NaN, and a lap stale for two days reads as fine.
+  const fx = fixture([
+    { lap: 'L063', stage: 'chain', at: 'garbage', chain: 'working', holder: 'chair' },
+    { lap: 'L063', stage: 'chain', at: 0, chain: 'working', holder: 'chair' },
+  ]);
+  const r = mod().line({ ledger: fx.ledger, now: 48 * H, dirty: 0, handbacks: [], collation: { state: 'n/a' } });
+  assert.match(r.text, /^STALE L063 48h \(holder chair\)/, r.text);
+  fx.cleanup();
+});
+
+test('STALE, NEVER TAKES THE PULSE DOWN: a throw in the stale reader prints STALE UNKNOWN and the line still prints (mutant M11)', () => {
+  const fx = fixture([{ lap: 'L064', stage: 'chain', at: 0, chain: 'working', holder: 'chair' }]);
+  let r;
+  assert.doesNotThrow(() => {
+    r = mod().line({ ledger: fx.ledger, now: 48 * H, dirty: 0, handbacks: [], collation: { state: 'n/a' },
+      staleLaps: () => { throw new Error('boom'); } });
+  });
+  assert.strictEqual(r.text.split('\n').length, 1);
+  assert.match(r.text, /^STALE UNKNOWN — boom · chain: L064 WORKING/, r.text);
+  fx.cleanup();
+});

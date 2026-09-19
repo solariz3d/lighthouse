@@ -153,10 +153,103 @@ $exe = Join-Path $targetDir 'release\consonance.exe'
 # keyboard nobody can see. GIT_TERMINAL_PROMPT=0 and GCM_INTERACTIVE=never are set on the FETCH
 # CHILD's own environment, never on this process: the app is started from this process below, and
 # every pane would otherwise inherit a git that can never ask for a password.
+#
+# WHO HOLDS THE CHECKOUT - a windowed app, a windowless one, or nothing (D072, P-LAUNCH-GHOST).
+# The pull below is skipped whenever ANY consonance.exe runs, and that rule stays: the running exe reads the repo's
+# dev/tail-carry.js on its close path (main.rs, the `dev`/`tail-carry.js` join), so a pull under it hands its close a
+# carry script newer than itself - version skew on the one path that writes the stick (B, p-nul-repairs-B section 3).
+# What changed is how LOUD the skip is. A windowless consonance.exe left by a crash also counts as "running", and the
+# one line explaining the skip went to the console launch.vbs hides - so the keeper opened a stale build, launch
+# after launch, with nothing saying why. Now:
+#   none                        -> pull as before
+#   a window exists             -> skip quietly, as before (the keeper can see the app)
+#   windowless, under the grace -> skip quietly: an app that has just started has no window yet
+#   windowless, past the grace  -> wait up to GhostWaitSeconds for it to exit or paint; an app that was just CLOSED
+#                                  loses its window first and tears down after. Exits -> pull after all.
+#                                  Still windowless -> ONE Notify naming the pid(s).
+#   cannot tell                 -> skip, with one Notify: silence is the failure being fixed here
+# The grace is dev/stick-apply.js WINDOWLESS_GRACE_MS (30 s) - one number for one process, not a second one invented.
+# An age that cannot be read counts as PAST the grace, for the same reason "cannot tell" is loud.
+$script:GhostGraceSeconds = 30
+$script:GhostWaitSeconds = 10
+$script:ghostNotified = $false
+
+function Get-ConsonanceProcesses {
+  # @() = none, $null = cannot tell. Get-Process with NO name, filtered afterwards, as dev/stick-apply.js probeConsonance
+  # does: a named Get-Process reports "not found" as an error, and silencing that error would also silence a real
+  # failure into an empty list - into "none", the reading that lets a pull run under a live app.
+  try {
+    $all = @(Get-Process -ErrorAction Stop | Where-Object { $_.ProcessName -eq 'consonance' })
+  } catch { return $null }
+  $now = Get-Date
+  $out = @()
+  foreach ($p in $all) {
+    $age = $null
+    try { if ($p.StartTime) { $age = ($now - $p.StartTime).TotalSeconds } } catch { }
+    $handle = 0
+    try { $handle = [int64]$p.MainWindowHandle } catch { }
+    $out += [pscustomobject]@{ Id = $p.Id; HasWindow = ($handle -ne 0); AgeSeconds = $age }
+  }
+  return ,$out
+}
+
+function Test-GhostOnly($procs) {
+  if (-not $procs -or @($procs).Count -eq 0) { return $false }
+  foreach ($p in $procs) {
+    if ($p.HasWindow) { return $false }
+    if ($null -ne $p.AgeSeconds -and $p.AgeSeconds -lt $script:GhostGraceSeconds) { return $false }
+  }
+  return $true
+}
+
+function Resolve-ConsonanceHolder {
+  # State: none | windowed | starting | ghost | unknown, and the pids.
+  $procs = Get-ConsonanceProcesses
+  $deadline = $null
+  while ($true) {
+    if ($null -eq $procs) { return @{ State = 'unknown'; Pids = @() } }
+    if (@($procs).Count -eq 0) { return @{ State = 'none'; Pids = @() } }
+    $pids = @($procs | ForEach-Object { $_.Id })
+    if (-not (Test-GhostOnly $procs)) {
+      $state = if (@($procs | Where-Object { $_.HasWindow }).Count -gt 0) { 'windowed' } else { 'starting' }
+      return @{ State = $state; Pids = $pids }
+    }
+    if ($null -eq $deadline) { $deadline = (Get-Date).AddSeconds($script:GhostWaitSeconds) }
+    if ((Get-Date) -ge $deadline) { return @{ State = 'ghost'; Pids = $pids } }
+    Start-Sleep -Milliseconds 1000
+    $procs = Get-ConsonanceProcesses
+  }
+}
+
+# The rebuild branch's dialog (further down) told a windowless process's keeper "The window you have is running the
+# OLD build" - a window that does not exist. It asks here instead, so the two checks cannot disagree about what is
+# running, and a ghost the pull already announced is not announced twice in one click. $null means "say nothing".
+function Get-RunningNotice {
+  $procs = Get-ConsonanceProcesses
+  if ((Test-GhostOnly $procs)) {
+    if ($script:ghostNotified) { return $null }
+    $pids = (@($procs | ForEach-Object { $_.Id }) -join ', ')
+    return @{ Title = 'a Consonance with no window is running';
+      Text = "Your code changed, but a Consonance with NO WINDOW (pid $pids) is running and holds the exe, so the new build cannot be written.`n`nThere is no window to close. End consonance.exe in Task Manager, then click the shortcut once." }
+  }
+  return @{ Title = 'already running - still on the old build';
+    Text = "Your code changed, but Consonance is already open, and Windows locks a running exe so the new build cannot be written while it is up.`n`nThe window you have is running the OLD build. Close it completely, then click the shortcut once to get the latest.`n`nNOT opening a second copy: two instances means two MCP servers, which is what broke the chair verbs on 2026-07-28." }
+}
+
 function Update-FromOrigin($repo) {
   $ErrorActionPreference = 'SilentlyContinue'   # function scope: a native stderr line never throws here
   try {
-    if (Get-Process -Name 'consonance' -ErrorAction SilentlyContinue) {
+    $holder = Resolve-ConsonanceHolder
+    if ($holder.State -eq 'ghost') {
+      $script:ghostNotified = $true
+      Notify "A Consonance with no window (pid $($holder.Pids -join ', ')) is running, so the check for a newer version was skipped: pulling under it would hand its close a newer dev/tail-carry.js than the exe that calls it.`n`nEnd consonance.exe in Task Manager, then click the shortcut once." 'not updated - a Consonance with no window is running' 15 'Yellow'
+      return
+    }
+    if ($holder.State -eq 'unknown') {
+      Notify "Could not tell whether Consonance is already running, so the check for a newer version was skipped.`n`nOpening what is on this disk." 'not updated' 8 'Yellow'
+      return
+    }
+    if ($holder.State -ne 'none') {
       Write-Host '  pull: Consonance is running - not touching the checkout.' -ForegroundColor DarkGray
       return
     }
@@ -283,7 +376,10 @@ if ($running) {
   # bring it forward instead of duplicating it.
   $host.UI.RawUI.WindowTitle = 'Consonance - already running'
   try { (New-Object -ComObject WScript.Shell).AppActivate($running[0].Id) | Out-Null } catch { }
-  Notify "Your code changed, but Consonance is already open, and Windows locks a running exe so the new build cannot be written while it is up.`n`nThe window you have is running the OLD build. Close it completely, then click the shortcut once to get the latest.`n`nNOT opening a second copy: two instances means two MCP servers, which is what broke the chair verbs on 2026-07-28." 'already running - still on the old build' 12 'Yellow'
+  # D072: which dialog, if any, is Get-RunningNotice's call (inside the pull block above) - a windowless holder is
+  # not "the window you have", and a ghost the pull already named is not named twice in one click.
+  $notice = Get-RunningNotice
+  if ($notice) { Notify $notice.Text $notice.Title 12 'Yellow' }
   exit 0
 }
 
@@ -415,6 +511,9 @@ function Invoke-DreamAtClose($proc) {
     $proc.WaitForExit()
     # A relaunch during the same session would leave another instance running; dreaming while one
     # is up would trip the runner's own live-session guard anyway, so just stand down.
+    # D072: deliberately NOT under the windowed/windowless rule. Any consonance.exe - windowless or not - trips the
+    # dream runner's own live-session guard, so standing down here is what the runner would do anyway, and a dialog
+    # after the keeper has closed the app is noise nobody is watching for.
     if (@(Get-Process -Name 'consonance' -ErrorAction SilentlyContinue).Count -gt 0) { return }
 
     # A session too short to have a day in it has nothing to recombine. 20 minutes is a floor, not

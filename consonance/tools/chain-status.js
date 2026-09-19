@@ -494,6 +494,41 @@ function openLaps(rows) {
     .sort((a, b) => (b.at || 0) - (a.at || 0));
 }
 
+/**
+ * D072 P-STALE-LAP — the open laps nobody has touched in more than a day, oldest first.
+ *
+ * THE CASE, and the diagnosis it corrects. Lap D064 sat open from 2026-09-15 13:14:09 until the chair
+ * parked it at 2026-09-16 13:15:38, holding the station for `chair` the whole time, and at 13:15:10 it
+ * refused C's return leg OUT OF TURN (`loop/live_checks_trailer_seal_2026-09-16.md:47-48`). Replayed at
+ * that second, this line already read `chain: D064 WORKING · holder chair · … · 24h` — it NAMED the
+ * lap, the holder and the age. What it did not do is say anything was wrong: that is character for
+ * character the shape of a healthy lap the chair is working. So this is not a missing name; it is a
+ * missing VERDICT, and the segment `line()` builds from this is that verdict, placed first.
+ *
+ * AGE IS FROM THE LAP'S NEWEST ROW OF ANY STAGE, not only its baton rows: a lap that got a `map` or
+ * `opened` row an hour ago is being worked, whatever its baton says. OPEN is still `openLaps`' rule
+ * (newest baton row not `filed`), reused so the two can never disagree about which laps are open.
+ *
+ * THE THRESHOLD IS THE PLAN'S, STRICTLY GREATER THAN 24 h, AND ITS MARGIN ON ITS OWN CASE WAS 61 SECONDS.
+ * D064 crossed 24 h at 13:14:09 and was refused at 13:15:10. Two minutes earlier this rule would have
+ * been silent over identical harm; `chain-status.test.js` pins that boundary rather than hide it.
+ *
+ * A ROW WITH NO FINITE `at` CANNOT AGE A LAP, and this never invents one: such a lap is not named as
+ * stale. A lap with no holder is named with `holder ?` — the gap shown, not skipped.
+ */
+const STALE_MS = 24 * 60 * 60 * 1000;
+function staleLaps(rows, now) {
+  const newest = new Map();
+  for (const r of rows) {
+    if (!r || typeof r !== 'object' || !r.lap || !Number.isFinite(r.at)) continue;
+    if (!newest.has(r.lap) || r.at > newest.get(r.lap)) newest.set(r.lap, r.at);
+  }
+  return openLaps(rows)
+    .filter(o => newest.has(o.lap) && now - newest.get(o.lap) > STALE_MS)
+    .map(o => ({ lap: o.lap, holder: o.holder || '?', last: newest.get(o.lap), age: now - newest.get(o.lap) }))
+    .sort((a, b) => a.last - b.last);
+}
+
 /* Stages that can only be written AFTER the panes have worked. `working` is the leg itself;
  * `handbacks-in` and `return-leg` sit downstream of it and each attests it happened. See the header
  * for why this is membership and never ordering. */
@@ -855,6 +890,13 @@ function line(opts = {}) {
   if (led.missing) return { text: null, why: 'no ledger at ' + (opts.ledger || LEDGER) };
 
   const open = openLaps(led.rows);
+  // Never lets a defect in its own arithmetic take the pulse down (this file's first rule, :20): a throw
+  // is reported IN the line as UNKNOWN, the same as collation's and delivery's, never swallowed silent.
+  let stale = [], staleWhy = null;
+  // `opts.staleLaps` is a TEST SEAM, the same shape as `opts.collation` and `opts.blindState`: nothing the ledger
+  // reader produces can make staleLaps throw, so without it the one line that keeps a throw out of the pulse
+  // would be unwatched.
+  try { stale = (opts.staleLaps || staleLaps)(led.rows, now); } catch (e) { staleWhy = (e && e.message) || String(e); }
   const cl = chainLaps(led.rows);
   const un = unwitnessed(cl);
   const claim = un.laps.length || un.older || un.damaged || led.unreadable;
@@ -886,6 +928,15 @@ function line(opts = {}) {
   }
 
   const parts = [];
+  // FIRST, by the plan's bar and for the reason the case gives: the verdict has to arrive before a head
+  // that reads exactly like a healthy lap. Every stale open lap, not only the head — a stale lap behind a
+  // newer open one used to be nothing but "+1 more open".
+  if (stale.length) {
+    parts.push('STALE ' + stale.slice(0, LIST_CAP).map(s => s.lap + ' ' + ago(s.age) + ' (holder ' + s.holder + ')').join(', ')
+      + (stale.length > LIST_CAP ? ', +' + (stale.length - LIST_CAP) : ''));
+  } else if (staleWhy) {
+    parts.push('STALE UNKNOWN \u2014 ' + staleWhy);
+  }
   if (head) {
     parts.push('chain: ' + head.lap + ' ' + (CHAIN_STAGES.has(head.chain) ? String(head.chain).toUpperCase() : 'MALFORMED'));
     parts.push('holder ' + head.holder);
@@ -1066,7 +1117,7 @@ function main(argv, out = console.log, err = console.error) {
 if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
-  line, openLaps, chainLaps, unwitnessed, readLedger, dirtyCount, tree, ago, main, collation, toLetter, tail, replay,
+  line, openLaps, staleLaps, STALE_MS, chainLaps, unwitnessed, readLedger, dirtyCount, tree, ago, main, collation, toLetter, tail, replay,
   LEDGER, REPO, BOARD, LETTERS, WORK_ATTESTING, WINDOW, LIST_CAP, BOARD_TAIL_BYTES, DISPATCH_RE, REFUSED_RE,
   HANDBACK_DIR, parseBoardLine,
 };

@@ -1265,3 +1265,23 @@ M10 did not parse and read as caught - the harness now reports an unparseable mu
 C4b not C4, because with the same file dirty git's ff-only protects it anyway - only a file git would NOT protect
 proves the check exists. **Not verified:** a real bad network, L, the whole launcher end to end, a credentialed remote.
 Scratch `scratchpad/pull/`.
+
+## 2026-09-18 ~23:3x · D072 P-LAUNCH-GHOST, chunk 1, built on D → `exo_memory/handback/p-launch-ghost-E_2026-09-18.md`
+`consonance/launch.ps1` +101/-2, landed dirty, byte-identical to the tested text (sha256 a1a27193...608a over base
+4f304269...baec). **Fixture 31/31 on the change, 24/31 on the launcher as it stood (red first); mutants 22 applied: 21
+caught · 0 SURVIVED · 1 NOT APPLIED (control) · 0 INVALID - D066's eleven re-run and caught.** A windowless Consonance
+past the 30 s grace (stick-apply.js's number, reused) that stays windowless through a 10 s re-look now gets ONE dialog
+naming the pid; a windowed one is skipped quietly as before; one that is just closing gets its 10 s and then THE PULL
+RUNS AFTER ALL. The rule itself is unchanged: no pull while ANY consonance.exe runs (B: the close path reads the repo's
+tail-carry.js - version skew otherwise). :276's rebuild dialog brought under the rule (it told a ghost's keeper "the
+window you have"); :418 dream-at-close deliberately left, with the reason written at the line.
+**Found beyond the plan:** (1) the old named, silenced Get-Process PULLED UNDER a failing probe (G7) - closed, but that
+red rests on modelled failure semantics; (2) main.rs warn_second_instance (:6507) tells a ghost's keeper "use the window
+you already have" - not mine, not fixed, needs a rebuild.
+**The harness lied three more times and the fixture caught every one:** a stub shaped for the OLD call answered the new
+unnamed probe with an empty table and F7 PULLED; PowerShell 5.1 ConvertFrom-Json does not unroll a JSON array, so a
+two-process spec threw inside my stub on BOTH variants and I first read it as a real red; my first X1 mutant would not
+have parsed. **Lesson to carry: a stub models the thing, not the call you happened to write first.** Real probe on D:
+1 consonance.exe, pid 18840, windowed, and the new probe costs a median 3.8 ms against the old 1.8 ms (299 processes).
+**Not verified:** a real ghost (I will not crash the live app to make one), a minimized window, a real close timed.
+Scratch `scratchpad/ghost/`, harness `scratchpad/pull/{fixture.js,runcase.ps1,mutants-ghost.js}`.
