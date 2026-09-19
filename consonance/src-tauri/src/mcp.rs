@@ -29,6 +29,30 @@ const REFUSAL_WINDOW_MS: u64 = 60_000;
 /// Decide whether a refused chair attempt posts to the board: Some(absorbed_count) to post
 /// (carrying how many repeats were absorbed since the last posted line), None to stay quiet
 /// and count. First refusal for a verb always posts.
+/// P-REFUSAL-KEEPS-THE-POINTER (D077): how much of a refused `call_librarian`'s text the board keeps. A hand-back
+/// pointer is a path, a line naming the packet, and the NEXT trailer — tonight's rings run 250-450 characters. The bound
+/// exists so a pane pasting prose instead of a pointer cannot write an unbounded row into the durable trail.
+const REFUSED_ATTEMPT_MAX_CHARS: usize = 600;
+
+/// The board row that KEEPS a refused `call_librarian`'s payload (C, `handback/p-return-leg-C_2026-09-16.md` §2: the
+/// refusal branch never read `text`, so the one message class that leaves no copy was the loop's own return leg, and
+/// the refusal's own sentence "the attempt was posted to the board" was true of the attempt and not of what it carried).
+///
+/// The label is deliberately NOT "REFUSED OUT OF TURN — mount": that phrase is `auth_station`'s row and C's replay counts
+/// refusals by it (`plan_return_leg_2026-09-19.md`, the discriminator). A second row matching it would double every
+/// count. Line breaks become " | " so the NEXT trailer stays readable inside one row.
+fn refused_attempt_row(who: &str, text: &str) -> String {
+    let flat = text.trim().replace("\r\n", "\n").replace('\n', " | ");
+    let n = flat.chars().count();
+    let kept = if n > REFUSED_ATTEMPT_MAX_CHARS {
+        let head: String = flat.chars().take(REFUSED_ATTEMPT_MAX_CHARS).collect();
+        format!("{head} … [+{} chars not kept]", n - REFUSED_ATTEMPT_MAX_CHARS)
+    } else {
+        flat
+    };
+    format!("call_librarian REFUSED — the attempt, kept because a refused call is not delivered: mount {who} carried: {kept}")
+}
+
 fn refusal_should_post(verb: &str, now: u64) -> Option<u32> {
     let mut guard = REFUSALS.lock().unwrap();
     let map = guard.get_or_insert_with(HashMap::new);
@@ -763,6 +787,16 @@ impl ConsonanceMcp {
             // finished and undeliverable. That is what `chair_inject` reads.
             let who = self.identity.clone().unwrap_or_else(|| "a pane".to_string());
             mark_owed(&who, now_ms());
+            // THE POINTER IS KEPT (D077). Until this line the call's `text` was never read here, so a refused return leg
+            // left no copy. Posted on EVERY refusal, not through `refusal_should_post`: that throttle keeps one row per
+            // minute, and an absorbed refusal would lose exactly the pointer this row exists to keep. Bounded instead.
+            board_push(&self.board, BoardEntry {
+                pane: "chair".to_string(),
+                role: "committee".to_string(),
+                text: refused_attempt_row(&who, &text),
+                ts: now_ms(),
+                ts_source: crate::TsSource::Push,
+            });
             return Ok(CallToolResult::success(vec![Content::text(self.out_of_turn_handback_message())]));
         }
         // THE NEXT-TRAILER GATE (D069): WARNED, NEVER REFUSED. A refused call_librarian discards its payload (the
@@ -2903,5 +2937,83 @@ mod trailer_gate_tests {
         let refuse = seg.find("TrailerDecision::Refuse").expect("no Refuse arm");
         assert!(deliver < refuse, "the Deliver arm is expected first");
         assert!(seg[deliver..refuse].contains("self.trailer_audit("), "a warned hand-back is delivered but not posted to the board");
+    }
+}
+
+/// P-REFUSAL-KEEPS-THE-POINTER (D077). The row is tested as a pure function; its wiring into `call_librarian`'s refusal
+/// branch is pinned by source ORDER, because the branch needs a live chain state to reach.
+#[cfg(test)]
+mod refusal_pointer_tests {
+    use super::*;
+
+    const POINTER: &str = "P-X (D077). Pointer: exo_memory/handback/p-x-A_2026-09-19.md. Paths: mcp.rs.\nNEXT: librarian re-derive when read";
+
+    /// `call_librarian`'s body, from the real fn (the anchor is split with `concat!` so this test cannot find itself).
+    fn call_librarian_body() -> String {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let body = src.split(concat!("async fn call_", "librarian(")).nth(1).expect("call_librarian moved");
+        body.split("\n    }\n").next().unwrap().to_string()
+    }
+
+    /// The refusal branch: from the station check to the first `return` after it, inclusive of that line.
+    fn refusal_branch(body: &str) -> String {
+        let start = body.find(concat!("if !self.auth_station(\"call_", "librarian\") {")).expect("the station check moved");
+        let rest = &body[start..];
+        let ret = rest.find("return Ok(").expect("the refusal branch returns");
+        let end = ret + rest[ret..].find('\n').unwrap_or(rest.len() - ret);
+        rest[..end].to_string()
+    }
+
+    #[test]
+    fn a_refused_attempt_row_carries_the_pointer_and_the_mount() {
+        let row = refused_attempt_row("A", POINTER);
+        assert!(row.contains("exo_memory/handback/p-x-A_2026-09-19.md"), "the pointer is not in the row: {row}");
+        assert!(row.contains("NEXT: librarian re-derive when read"), "the trailer is not in the row: {row}");
+        assert!(row.contains("mount A"), "the row does not name the mount: {row}");
+        assert!(row.contains("call_librarian REFUSED"), "the row is not labelled as a refused attempt: {row}");
+        assert!(!row.contains('\n'), "a line break survived into the row: {row:?}");
+    }
+
+    /// The bound, on characters not bytes, so a multibyte pointer cannot be cut mid-character or overrun it.
+    #[test]
+    fn a_long_attempt_is_bounded_and_the_row_says_how_much_was_dropped() {
+        let long = "é".repeat(REFUSED_ATTEMPT_MAX_CHARS + 250);
+        let row = refused_attempt_row("A", &long);
+        let kept = row.chars().filter(|c| *c == 'é').count();
+        assert_eq!(kept, REFUSED_ATTEMPT_MAX_CHARS, "the row kept {kept} characters of the attempt");
+        assert!(row.contains("+250"), "the row does not say what it dropped: {row}");
+        let short = refused_attempt_row("A", "exo_memory/handback/x.md");
+        assert!(!short.contains("not kept"), "a short attempt is marked as cut: {short}");
+    }
+
+    /// C's replay counts refusals by `auth_station`'s phrase. This row must not look like one more refusal.
+    #[test]
+    fn the_row_is_not_counted_as_another_out_of_turn_refusal() {
+        let row = refused_attempt_row("A", POINTER);
+        assert!(!row.contains("REFUSED OUT OF TURN — mount"), "the row matches the refusal discriminator: {row}");
+    }
+
+    /// WIRING: the refusal branch posts the row built from the call's own `text`, BEFORE it returns — and returns exactly
+    /// what it returned before, so the pane's refusal text is unchanged.
+    #[test]
+    fn the_refusal_branch_posts_the_attempt_and_returns_the_same_text() {
+        let body = call_librarian_body();
+        let branch = refusal_branch(&body);
+        let post = branch.find("refused_attempt_row(&who, &text)").unwrap_or_else(|| panic!("the refusal branch does not keep the attempt:\n{branch}"));
+        let ret = branch.find("return Ok(").unwrap();
+        assert!(post < ret, "the attempt is posted after the branch has returned");
+        assert!(
+            branch.ends_with("return Ok(CallToolResult::success(vec![Content::text(self.out_of_turn_handback_message())]));"),
+            "the refusal text returned to the pane changed:\n{branch}"
+        );
+    }
+
+    /// An ADMITTED call is unchanged: the row is built in one place only, inside the refusal branch.
+    #[test]
+    fn an_admitted_call_does_not_post_the_row() {
+        let body = call_librarian_body();
+        let branch = refusal_branch(&body);
+        assert_eq!(body.matches("refused_attempt_row(").count(), 1, "the row is built outside the refusal branch too");
+        assert!(branch.contains("refused_attempt_row("), "the one call site is not in the refusal branch");
     }
 }
