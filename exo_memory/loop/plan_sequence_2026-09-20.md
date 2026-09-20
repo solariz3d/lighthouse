@@ -81,3 +81,45 @@ index line whether or not it is ever opened.
 
 **Standing until it lands:** this seat creates no new files under `exo_memory/`. Tonight's work appends to files
 that already exist.
+
+---
+
+## L062 — THE PACKET: give the INDEX tier a budget, the way the CARRY tier already has one
+
+**The tier table** (`main.rs:7263-7268`): CARRY is `cards · "" · record · memory · librarian · spread ·
+research`; INDEX is `map · journal · loop`, and **`loop` is already `newest_first: true`.** So the ordering the
+window needs exists; what is missing is a **cap on how many index lines `loop/` may spend.**
+
+**Measured now:** floor = head 84,924 + index 69,163 = **154,088** against a 150,000 cap, bodies 0.
+Indexed record = map 17 + journal 34 + **loop 416** files; `loop/` is ~80% of the index by bytes (~55,160 of
+69,163, at a measured ~132 bytes a line).
+
+**The fix, and it is the notes window one tier down.** Not a date cutoff — a date goes stale and needs re-tuning.
+**A byte budget for the index tier**, spent newest-first, with the remainder collapsed to ONE line naming what was
+dropped and the command that recovers it. Self-limiting forever.
+
+**The number is the PANE'S to choose, not mine, and the reason is a conflict of interest worth stating:** the seat
+that reads the index benefits from a bigger index. So the packet fixes the *requirement* and not the value —
+choose the budget so the test's printed **margin is at least 15% of the cap**, and put it beside
+`LIBRARIAN_INTAKE_LIMIT` as a named constant with the measurement in its comment.
+
+**What the header must say, because this exact code has been wrong here before.** `corpus_shelf_at` already
+distinguishes three reasons a path is absent — tier, budget, and excluded-by-name — and reports each. **A fourth
+now exists** and needs its own counter: *indexed-tier entries dropped by the index window.* The 2026-09-01 bug in
+this function (`9c6a131`) was that the header branched on what the rule WOULD carry rather than on what the budget
+DELIVERED, so it printed a window that did not happen. **Report the delivered set.**
+
+**Acceptance:**
+1. `shelf_tests::the_librarian_intake_fits_under_the_limit_it_must_obey` green, with the printed margin ≥ 15% of
+   the cap.
+2. A test that the collapsed line names the **count**, the **date range** and the **`ls` that recovers them** —
+   all three, each its own assertion. *(E's rule from L061: a refusal's two halves need two assertions.)*
+3. A test that the window is newest-first: the newest `loop/` file is always present by path.
+4. A test that the header's new counter reports the DELIVERED drop, not the rule's — the 09-01 shape, pinned.
+5. Mutants on the window and on the header counter, not only on the arithmetic.
+
+**Not in scope:** raising the limit (the assertion text forbids it), touching the CARRY tier, and touching
+`journal/` or `map/` — 34 and 17 files, together under 4,300 bytes, and not where the problem is.
+
+**Non-author note:** this seat is the subject of the shelf, not its author. I have named the requirement and the
+evidence; the value, the collapse wording and the code are the pane's.
