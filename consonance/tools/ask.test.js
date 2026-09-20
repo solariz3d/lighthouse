@@ -290,3 +290,70 @@ test('provenance gate, BOTH directions: path:line and a sha pass; a bare path, a
   assert.ok(!PRE.test(open[0].source), 'the old regex rejected a repo path:line — the over-fit this test replaced');
   assert.ok(PRE.test(open[1].source) && CHECKABLE_PROVENANCE.test(open[1].source), 'the original cron-log shape still passes');
 });
+
+/* ── 5. D091: a heading the tool cannot read is UNREADABLE, never absorbed upward ─────────────
+ *
+ * The store had a title with a comma in it — ASK-009, "(SIX, not eleven — corrected 2026-08-30)" —
+ * and HEAD_RE's title group was `[^,]+`. So the heading never started a block: ASK-009's Source,
+ * Question and Status were absorbed into ASK-008 above it, ASK-008 was displayed ANSWERED-in-store
+ * but OPEN-in-tool carrying ASK-009's question, and ASK-009 printed zero times. The header still
+ * said "0 unreadable" throughout, because the guard at ask.js:47 watches the STATUS line and the
+ * failure was in the HEADING: a guard with no input reads exactly like a guard finding nothing.
+ *
+ * Widening the title alone would parse ASK-009 and leave the class open for the next em-dash or
+ * bracket. Both halves are tested here: the parse, and the refusal to absorb. */
+
+test('D091 · a comma in the title does not break the heading', () => {
+  const st = A.parseStore(block('ASK-009', 'the board rows (SIX, not eleven — corrected 2026-08-30)', '2026-08-29', REAL_Q, 'OPEN'));
+  assert.strictEqual(st.unreadable.length, 0);
+  assert.strictEqual(st.asks.length, 1);
+  assert.strictEqual(st.asks[0].id, 'ASK-009');
+  assert.match(st.asks[0].goal, /SIX, not eleven/, 'the title must survive its own comma');
+});
+
+test('D091 · an unparsable heading is UNREADABLE and does not inherit the block above it', () => {
+  const st = A.parseStore(
+    block('ASK-008', 'cant_lose', '2026-08-29', REAL_Q, '[ANSWERED 2026-08-30 — the keeper said yes]') +
+    '\n### ASK-009 — no asked-date at all\n' +
+    '**Source:** somewhere:1\n**Question:** ' + REAL_Q + '\n**Status:** OPEN\n'
+  );
+  const eight = st.asks.find((a) => a.id === 'ASK-008');
+  assert.ok(eight, 'ASK-008 must still parse');
+  assert.strictEqual(eight.state, 'ANSWERED', 'ASK-008 must keep ITS OWN status, not inherit the one below');
+  assert.strictEqual(st.asks.length, 1, 'the unparsable heading must not become an ask');
+  assert.strictEqual(st.unreadable.length, 1, 'the unparsable heading must be COUNTED as unreadable');
+  // Pinned to the LABEL, not merely the word: the first version matched /heading/i, which the quoted
+  // line satisfied by itself, and mutant #8 survived it.
+  assert.match(st.unreadable[0].reason, /^unparsable heading: /, 'the reason must name WHICH half failed');
+  assert.match(st.unreadable[0].reason, /ASK-009 — no asked-date/, 'and must quote the line, so it can be found');
+  assert.strictEqual(st.unreadable[0].id, 'ASK-009', 'the id is on the page even when the rest is not');
+});
+
+test('D091 · the fenced block-format example is not an ask and not unreadable', () => {
+  const st = A.parseStore(
+    'Block format — keep the shape:\n\n```\n### ASK-00N — <goal>, asked YYYY-MM-DD\n' +
+    '**Source:** <path>:<line>\n**Question:** <one line, verbatim>\n**Status:** OPEN\n```\n\n' +
+    block('ASK-001', 'g', '2026-08-01', REAL_Q, 'OPEN')
+  );
+  assert.strictEqual(st.asks.length, 1, 'only the real ask counts');
+  assert.strictEqual(st.asks[0].id, 'ASK-001');
+  assert.strictEqual(st.unreadable.length, 0, 'the documented template must stay harmless');
+});
+
+test('D091 · on the shipped store, ASK-009 parses OPEN and ASK-008 keeps its own ANSWERED status', () => {
+  const st = A.load(A.STORE);
+  const nine = st.asks.find((a) => a.id === 'ASK-009');
+  const eight = st.asks.find((a) => a.id === 'ASK-008');
+  assert.ok(nine, 'ASK-009 must exist in the parsed store');
+  assert.strictEqual(nine.state, 'OPEN');
+  assert.ok(eight, 'ASK-008 must exist');
+  assert.strictEqual(eight.state, 'ANSWERED', 'ASK-008 is [ANSWERED 2026-08-30] in the store');
+  assert.notStrictEqual(eight.question, nine.question, 'ASK-008 must not be carrying ASK-009 question');
+  assert.ok(A.openAsks(st, Date.now()).some((a) => a.id === 'ASK-009'), 'ASK-009 must reach the open list');
+});
+
+test('D091 · an ordinary ### heading is not an ASK heading and is not unreadable', () => {
+  const st = A.parseStore('### How to add an ask\nsome prose\n\n' + block('ASK-001', 'g', '2026-08-01', REAL_Q, 'OPEN'));
+  assert.strictEqual(st.asks.length, 1);
+  assert.strictEqual(st.unreadable.length, 0, 'only ### ASK- headings are subject to the heading rule');
+});

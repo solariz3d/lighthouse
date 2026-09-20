@@ -1428,3 +1428,22 @@ mutation/mutated but NOT mutant/mutants - the word those files use. Four rows ca
 "no mutant discussion". Caught only because `grep -i "mutant"` on the same file disagreed. **A pattern one letter too
 long is indistinguishable from an absent finding.** Method: scan/digest/classify in `scratchpad/haudit/`, class by my
 judgement and published, quote pulled from each file. NOT re-run: any of the 50 runs - this audits what each row SAYS.
+
+## 2026-09-20 ~10:0x · D091 P-ASK-UNREADABLE (ask.js is the chair's own work) → `exo_memory/handback/p-ask-unreadable-E_2026-09-20.md`
+`ask.js` HEAD_RE's title group was `[^,]+`, so ASK-009's comma'd title never started a block: its fields were
+absorbed into ASK-008, ASK-008 printed OPEN while the store said [ANSWERED], and ASK-009 printed ZERO times - under
+a confident "0 unreadable", because the guard at `:47` watches the STATUS line and the failure was in the HEADING.
+**Repair is two halves:** title `(.+)` with the date anchored, AND an unparsable `### ASK-` heading now COUNTS as
+unreadable after closing the block above it (no absorption). Fenced ``` lines are skipped, which is why the
+documented ASK-00N template stays harmless *for a stated reason* - before, it was harmless only because `ASK-\d+`
+rejects `00N`. **23/3 red first, 27/0 after; four run modes all green (plain, --test, --test-concurrency=4,
+filtered 5/5); js-suite 101 green/7 failed/1 canary of 109 with ask.test.js ok; mutants 8 listed, 8 killed.**
+**The number that taught the most: open count 12 BEFORE and 12 AFTER - ASK-008 left, ASK-009 joined.** A count can
+be identical and wrong; only membership shows it. Measured by running the pre-repair parser beside the new one.
+**Carry:** the can-it-vary check said NO for the shipped store (0 unreadable before and after), so the new counter
+had to be pinned on fixtures where it can read 1 - measuring only the real object would have tested nothing.
+**And mutant #8 survived my own assertion for the second night running:** `/heading/i` matched because my fixture's
+heading contained the word "heading". **An assertion satisfiable by the fixture's own wording tests nothing** -
+pinned to the label `/^unparsable heading: /` instead. ASK-006's referent recovered into its Source line (not the
+verbatim question): `~/.claude/shell/hooks/{session-start.js,userprompt-submit.js}`, named at log `:1437-1439`,
+re-checked on disk (grep -c CLAUDE_OVERSEER_RUN = 0 in both); hooks NOT touched - that change is the keeper's call.

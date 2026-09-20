@@ -105,7 +105,7 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 > ASK-006 makes.
 
 ### ASK-006 — drift-watch, asked 2026-08-25
-**Source:** `~/.claude/shell/duration/drift-watch/system-cron.log:1444` (2026-08-25T15:47Z)
+**Source:** `~/.claude/shell/duration/drift-watch/system-cron.log:1444` (2026-08-25T15:47Z) — **"those two hooks" are named nine lines up, at `:1437-1439` of the same log, and recovered into this ask on 2026-09-20 (D091) because the referent lived only in the log: `~/.claude/shell/hooks/session-start.js` (guards only `CONSONANCE_DREAM`, at `:14`, and emits the L3 block at `:228`) and `~/.claude/shell/hooks/userprompt-submit.js` (no guard at all; emits it at `:168`). Re-checked on disk 2026-09-20: `grep -c CLAUDE_OVERSEER_RUN` is 0 in both. NOT `l2-overseer.js`/`l3-overseer.js`, which read the guard at `:109`/`:120` and set it for their workers.**
 **Question:** The fix is two lines — add the `CLAUDE_OVERSEER_RUN` guard those two hooks are missing. I didn't touch hooks: it changes what the overseers see, and 18 consecutive `quiet_spiral` verdicts are downstream of it. That streak begins at the exact moment you stopped typing on 08-23, and these feed the room's wake context. Your call.
 **Status:** OPEN
 

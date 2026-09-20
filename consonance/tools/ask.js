@@ -85,7 +85,20 @@ const DAY_MS = 86400000;
 /* One block per ask. The heading carries identity and provenance; Status carries state and is the
  * ONLY thing that closes an ask. Deliberately not YAML: the file is edited by hand, by a person
  * answering a question, and a format that punishes a stray colon would be cleared less often. */
-const HEAD_RE = /^###\s+(ASK-\d+)\s+—\s+([^,]+),\s+asked\s+(\d{4}-\d{2}-\d{2})\s*$/;
+/* The title group was `[^,]+` until 2026-09-20, so a title could not contain a comma — and ASK-009's
+ * did: "(SIX, not eleven — corrected 2026-08-30)". Its heading therefore never started a block, its
+ * three fields were absorbed into ASK-008 above it, ASK-008 printed OPEN while the store said
+ * [ANSWERED 2026-08-30] and carried ASK-009's question, and ASK-009 printed zero times. Greedy `.+`
+ * with the date anchored at the end takes the LAST ", asked <date>", so a title may now hold commas,
+ * em-dashes and brackets. */
+const HEAD_RE = /^###\s+(ASK-\d+)\s+—\s+(.+),\s+asked\s+(\d{4}-\d{2}-\d{2})\s*$/;
+/* Anything that MEANT to be a heading. Widening the title alone leaves the next unparsable heading
+ * silently absorbed, which is the defect rather than the regex. A line that starts an ASK heading and
+ * does not parse is UNREADABLE — what :47 already claims this tool does. */
+const ASK_HEAD_RE = /^###\s+(ASK-\S*)/;
+/* ```fenced``` blocks are documentation, not store. ASK.md carries the block-format example inside
+ * one, and it must stay harmless: an example is not an ask and is not an unreadable ask. */
+const FENCE_RE = /^\s*```/;
 const FIELD_RE = /^\*\*(Source|Question|Status):\*\*\s*([\s\S]*)$/;
 
 function parseStore(text) {
@@ -99,9 +112,20 @@ function parseStore(text) {
     else asks.push({ ...cur, state });
     cur = null;
   };
+  let inFence = false;
   for (const raw of String(text).split(/\r?\n/)) {
+    if (FENCE_RE.test(raw)) { inFence = !inFence; continue; }
+    if (inFence) continue;
     const h = raw.match(HEAD_RE);
     if (h) { push(); cur = { id: h[1], goal: h[2].trim(), asked: h[3], source: null, question: null, status: null }; continue; }
+    const bad = raw.match(ASK_HEAD_RE);
+    if (bad) {
+      /* Close the block above FIRST, or its fields keep collecting from a heading that failed —
+       * the absorption this repair exists to stop — then record the heading itself as unreadable. */
+      push();
+      unreadable.push({ id: /^ASK-\d+$/.test(bad[1]) ? bad[1] : null, reason: `unparsable heading: ${raw.trim()}` });
+      continue;
+    }
     if (!cur) continue;
     const f = raw.match(FIELD_RE);
     if (!f) continue;
