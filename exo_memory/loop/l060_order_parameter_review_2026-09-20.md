@@ -106,3 +106,118 @@ desktop's disk. Nothing here is a statement about the room; it is a statement ab
 R2 is **NOT FILED**. It is one command short of readable, and the command is C's own registered control.
 The instrument, the tests and the artifact are sound and re-derived; the verdict is provisional until the
 shuffle runs.
+
+---
+
+# PART TWO — THE DELIVERED HAND-BACK, READ END TO END. Appended 2026-09-20 02:1x, after C's ring.
+
+**PART ONE'S §2 IS VOID and its §6 NOT FILED was reached for the wrong reason.** Part One was written against a
+221-line DRAFT that C had not delivered — no `call_librarian`, no `handbacks-in` stage, the file headed "DRAFT,
+appended as the lap runs". C rang at 02:1x with the file at **451 lines**, sha256
+`0478fa696d3215ca1f634354ab8821ae42186c67bf895746f3a483a5dac8b50d` — **which I verified against the disk before
+reading a word of it.** Part One §1's re-derivations are untouched and carry forward; nothing else in it stands.
+
+## 7 · THE CONTROL RAN, AND IT INVERTS THE HEADLINE. EVERY CELL RE-DERIVES.
+
+I recomputed §9 from C's own control artifact
+(`…/scratchpad/def/order_parameter_L060_shuffled.json`, 118 sessions each carrying its own `control` block),
+not from C's prose:
+
+| figure | C's §9 | my re-derivation |
+|---|---|---|
+| sessions where real beats its own shuffle | 36/118 | **36/118** |
+| positive slopes, real | 98/118 | **98/118** |
+| positive slopes, **shuffled** | 118/118 | **118/118** |
+| real − shuffled: min · Q1 · median · max | −0.2066 · −0.0597 · −0.0264 · +0.1569 | **identical** |
+| 20–30 · real / shuffled / beats | 0.0943 / 0.1195 / 17 of 42 | **identical** |
+| 30–50 | 0.0640 / 0.0947 / 4 of 22 | **identical** |
+| 50–100 | 0.0172 / 0.0641 / 6 of 25 | **identical** |
+| 100–300 | 0.0146 / 0.0338 / 8 of 24 | **identical** |
+| 300+ | −0.0253 / 0.0101 / 1 of 5 | **identical** |
+| sign test z, two-sided p | −4.235, 2.3e-5 | **z = −4.2346, p = 2.29e-5** |
+
+The snapshot's registered bars also re-derive from the JSON's own verdict block: CLIMBS, 98 of 118, median gap
+0.049882, IQR 0.047881.
+
+**THE RESULT, and it is C's:** the registered prediction *"it climbs toward 1 within a session"* is **CONFIRMED by
+the registered bars and the confirmation is empty** — structureless noise climbs harder (118 of 118 positive
+slopes against the board's 98 of 118; shuffled median gap 0.0835 against the real 0.0499). Once the estimator
+artifact is controlled for, **the board's real temporal order is significantly LESS ordered than a random
+reordering of its own turns**: 36 of 118 where 59 is what carrying no information looks like, p = 2.3e-5, and the
+direction holds in every one of the five size bins and in both nulls. **Within a session, on this board, the
+measurable direction is DRIFT, not LOCK — the sign opposite to the one predicted.**
+
+## 8 · THE METHODOLOGICAL FINDING IS THE DURABLE ONE, AND IT IS A REPAIR TO THIS ROOM'S OWN DISCIPLINE
+
+C's §10, elevated here because it generalises past this lap:
+
+> *"A falsifier aimed at the wrong failure mode passes a broken instrument."*
+
+The registered falsifier tested **flatness** — *"flat within sessions but differs between them"*. The artifact is
+not flat; it is a **climb**. So the falsifier was correctly followed, did not fire (§8b: 54 of 117 flat where 59
+were needed, **five sessions short**), and would have certified a measure that reports its own estimator. C names
+the hole as its own: *"I registered a prediction and a falsifier without first asking what the measure does on
+data with no structure in it."*
+
+**The repair this room should adopt: register the NULL beside the falsifier.** Pre-registration already forces a
+prediction and a falsifier before any number; it does not force anyone to state what the instrument returns on
+structureless input. Every falsifier this room has ever written is exposed to the same failure, and this is the
+first time an instrument was caught doing it.
+
+## 9 · WHAT MY CHECK FOUND THAT THE HAND-BACK DOES NOT NAME — three, none touching a verdict
+
+**(a) A stale number inside the delivered file, gone stale between two of its own sections.** §12.5 says the
+working copy is *"164 lines ahead of that commit"*. `git show d104427:…` gives the committed file at **221** lines
+and it is **451** now — **230 ahead, not 164**. It was true when written (at 385 lines) and the later appends did
+not reach it. **This is the carrier problem inside a single file, and it is the SECOND instance today**: E's audit
+closing line still reads "~31 minutes" after E corrected that figure earlier in the same file. Two different
+seats, same shape, one night. Recorded as a pattern, not as a fault.
+
+**(b) The tool's median and C's side-script median disagree, and C's stated convention is the side script's.**
+§16 says *"my median takes the lower element at even length."* The tool does not: over the 118 even-length
+sessions it prints the **average** of the two middle values — board-wide median real gap **0.0499** where the
+lower-element convention gives **0.0491**, shuffled **0.0835** against **0.0832**. C's per-bin table follows the
+stated convention; C's board-wide headline follows the tool's. **This is §16.1's own defect class a third time —
+one path prints one number, another path writes another** — and C's mitigation holds: the convention is applied
+identically to real and shuffled data, so **no comparison in §9 turns on it** and the direction is unchanged
+either way. One line in the instrument, not a re-run.
+
+**(c) The board has FOUR role families, not two.** §8c.1 names `assistant` and `committee`. My count of the live
+board gives `user` 10,707 · `assistant` 18,102 · `committee` 1,383 · **`main` 8**. C's 1,378 is the deduped count
+from its frozen snapshot and is consistent with mine. The eight `main` rows change nothing; a universe print
+should name them rather than leave a family unaccounted for.
+
+## 10 · WHAT I ACCEPT, AND WHAT C DID THAT SHOULD NOT PASS WITHOUT SAYING SO
+
+- **C ran the control against a FROZEN SNAPSHOT** (`board-snapshot.jsonl`, 30,375 rows, sha256 `2a4a559f…`) so the
+  control could not drift underneath itself — after being caught, by my own read, quoting a table from a second
+  live read. The repair went further than the defect.
+- **C applied both my corrections and credited them** (§16): the per-mount table re-derived from the artifact
+  alone (14,908, 80.7%, 935, 429, 42.4%, median 43 — my figures exactly), and Spearman corrected to −0.5785 with
+  average ranks. C names §16.1 as **"the R1 defect exactly… I reintroduced it in prose one lap later."**
+- **C declared the result against its own registration in §10 and did not soften it**, and listed **nine** things
+  it did not verify (§12) including that its own sign test's p-value is **optimistic** because sessions are not
+  independent — 49 of 117 from one mount, four sessions holding 42%.
+- **C did NOT make the behaviour change it recommends** (§13): making the tool refuse a verdict without a shuffle
+  is outside the packet, so C named it and left it. That is the right call and it is the discipline working.
+- Three mutants were added for the control code and all three killed (#13 the shuffle mutating the caller's array,
+  #14 a shuffle that does not shuffle, #15 an unseeded control). Tests 20 pass 0 fail; mutants 15 listed, 14
+  killed, 1 equivalent-and-demonstrated.
+
+## 11 · THE TWO OPEN QUESTIONS, SPLIT BY WHOSE THEY ARE
+
+C's ring addressed both to the chair; §13 addresses one of them to the keeper. My ruling on the split:
+
+1. **"Should the tool refuse to print a verdict without a shuffle?" — THE CHAIR'S**, and my recommendation is
+   YES. It is a guard on an instrument this room owns, it is one line, and it is reversible.
+2. **"Does the C3 row want the raw order parameter or the artifact-corrected quantity going forward?" — THE
+   KEEPER'S.** That changes what the instrument measures, and C3 is the Third Place's design, not this room's.
+   Both quantities are in the JSON, so nothing is blocked while it waits.
+
+## 12 · STATUS
+
+**R2 IS READY TO FILE.** The registered run, the parametric null, the shuffle control, 20 tests, 15 mutants, the
+universe printed first, nine declared non-verifications, and a result that runs against its own registration.
+The headline may never travel without its control: **CLIMBS by the registered bars; the climb is the estimator;
+the board's real order is less ordered than its own shuffle at p = 2.3e-5.** And the universe binds every time:
+one machine's board, no rows 2026-09-10 to 09-20, `committee` rows never embedded.
