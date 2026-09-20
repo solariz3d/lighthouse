@@ -1413,3 +1413,18 @@ statements after `c` is already computed) - the harness was right to call it sur
 line it parses; (2) its worktree is HEAD and it copies in only the mutated file, so a tracked-but-modified test file
 is silently STALE inside it - worse than D090's missing scorer; (3) a missing anchor refuses the whole RUN, so a
 deliberate control row cannot ride along.
+
+## 2026-09-20 ~06:2x · L064 packet 2 P-HARNESS-AUDIT (non-author; A wrote the harness) → `exo_memory/handback/p-harness-audit-E_2026-09-20.md`
+**Universe 50 rows (every hand-back publishing a mutant score on a .js/.mjs/.cjs target): P 36 name a private runner
+by path · H 7 name the tracked harness AND its adapter · N 5 name no method at all · Q 2 quote another seat. Six are
+mine.** **The feared case did not happen:** not one row claims the tracked harness on a JS target without naming an
+adapter, and the two the chair named (`pp_score.js`, `SCR/score-js.js`) check out at source. **The falsifier fired in
+its weaker arm:** five rows publish a kill count with no identifiable runner - four name none anywhere, one prints the
+literal placeholder `node <harness>` - **and one of the five is my own `p-blind-write-E`**, listed in the finding by
+name rather than around it. **The fact that reframes it:** the harness is ONE DAY old (5602507, 09-19 11:11), so every
+earlier JS run necessarily used a private runner; "did it ride an unnamed adapter" is only askable of 17 rows.
+**Carry (a near-miss that would have been a false finding):** I searched with `grep -inE "mutat"`, which matches
+mutation/mutated but NOT mutant/mutants - the word those files use. Four rows came back empty and I nearly reported
+"no mutant discussion". Caught only because `grep -i "mutant"` on the same file disagreed. **A pattern one letter too
+long is indistinguishable from an absent finding.** Method: scan/digest/classify in `scratchpad/haudit/`, class by my
+judgement and published, quote pulled from each file. NOT re-run: any of the 50 runs - this audits what each row SAYS.

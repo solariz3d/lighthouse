@@ -170,6 +170,31 @@ const quantile = (a, p) => {
 };
 
 /**
+ * THE SAME-PANE-SAME-ERA CONTROL (L064), the one this tool's own §5.2 registered against its own result.
+ *
+ * The whole-board pool mixes every pane across 40 days, so a session can beat it for being one pane, on one
+ * night, about one thing. This holds pane and era fixed and destroys only session membership: draw N from the
+ * contributions the SAME pane made within +/-`eraHours` of this session's span, EXCLUDING the session's own —
+ * so it is never a self-comparison.
+ *
+ * Returns null when the era pool is smaller than N: that session is UNTESTABLE and must be reported as such,
+ * never counted as a pass or a fail. `fake` is the null: one extra draw from the same pool, which is
+ * era-typical by construction and should clear p95 about 5% of the time. `spread` is p95 - p05; at ~0 the pool
+ * cannot discriminate and the cell is vacuous however the comparison lands.
+ */
+function eraControl(pool, session, eraHours = 24, reps = POOL_REPS, seed = 20260920) {
+  const own = new Set(session.lines);
+  const lo = session.t0 - eraHours * 3600e3, hi = session.t1 + eraHours * 3600e3;
+  const era = pool.filter((p) => p.pane === session.pane && !own.has(p.line) && p.ts >= lo && p.ts <= hi);
+  if (era.length < session.n) return { eligible: false, eraPool: era.length, need: session.n };
+  const vecs = era.map((p) => p.v);
+  const c = poolControl(vecs, session.n, reps, seed + session.n);
+  const fake = poolControl(vecs, session.n, 1, seed + 977 + session.n);
+  return { eligible: true, eraPool: era.length, ...c, spread: c.p95 - c.p05, fakePhi: fake.median,
+    fakeBeats: fake.median > c.p95 };
+}
+
+/**
  * The registered reading, applied to the session set. The prediction under test
  * (c3_ruling_order_parameter_2026-09-20.md §5): phi sits AT OR BELOW its 1/sqrt(N) baseline.
  * The falsifier: materially ABOVE it while r-corrected says drift suspends BOTH readings.
@@ -225,6 +250,7 @@ async function main(argv) {
   const min = Number(arg('--min', String(MIN_CONTRIB))) || MIN_CONTRIB;
   const maxSessions = Number(arg('--max-sessions', '0')) || 0;
   const poolReps = Number(arg('--pool-reps', String(POOL_REPS))) || POOL_REPS;
+  const eraHours = Number(arg('--era-hours', '24')) || 24;
 
   // The universe, the session rule and the encoder all come from the tools that already own them: one copy each.
   const { readBoard, dedupeRows, universe } = require('./deference-unit.js');
@@ -249,23 +275,27 @@ async function main(argv) {
   console.log(`encoder: T1's — gte-base-en-v1.5 q8, onnx sha256 ${enc.onnxSha.slice(0, 16)}…, @huggingface/transformers ${enc.version}, remote fetching off\n`);
 
   const sessions = [];
-  const pool = [];
+  const pool = [];        // vectors only, for the whole-board control
+  const entries = [];     // the same vectors WITH pane and ts, for the same-era control
   let done = 0; const t0 = Date.now();
   for (const s of picked) {
     const vecs = [];
     for (const r of s.rows) vecs.push((await enc.embed(r.text)).v);
-    for (const v of vecs) pool.push(v);
+    for (let i = 0; i < vecs.length; i++) { pool.push(vecs[i]); entries.push({ pane: s.pane, ts: s.rows[i].ts, line: s.rows[i].line, v: vecs[i] }); }
     const p = phi(vecs), base = baseline(vecs.length);
     sessions.push({ pane: s.pane, from: new Date(s.rows[0].ts).toISOString(), to: new Date(s.rows[s.rows.length - 1].ts).toISOString(),
+      t0: s.rows[0].ts, t1: s.rows[s.rows.length - 1].ts, lines: s.rows.map((r) => r.line),
       n: vecs.length, phi: p, baseline: base, ratio: p / base, vectors: vecs });
     done++;
     if (done % 10 === 0 || done === picked.length) console.log(`  ${done}/${picked.length} sessions · ${((Date.now() - t0) / 1000).toFixed(0)}s`);
   }
 
-  // The distribution control needs the whole pool, so it runs after every session is embedded.
+  // Both distribution controls need the whole pool, so they run after every session is embedded.
   for (const s of sessions) {
     s.control = poolControl(pool, s.n, poolReps, seed + s.n);
     s.beatsPool = s.control ? s.phi > s.control.p95 : null;
+    s.era = eraControl(entries, s, eraHours, poolReps, seed);
+    s.beatsEra = s.era.eligible ? s.phi > s.era.p95 : null;
     delete s.vectors;
   }
   const verdict = classify(sessions);
@@ -276,6 +306,21 @@ async function main(argv) {
   for (const s of sessions.slice().sort((a, c) => c.ratio - a.ratio)) {
     console.log(`  ${String(s.pane).slice(0, 28).padEnd(28)} ${String(s.n).padStart(3)} | ${s.phi.toFixed(4)} |    ${s.baseline.toFixed(4)} | ${s.ratio.toFixed(3).padStart(5)} |   ${s.control ? s.control.p95.toFixed(4) : '  n/a '} | ${s.beatsPool ? 'YES' : 'no'}`);
   }
+  // THE SAME-PANE-SAME-ERA CONTROL (L064) — the control this tool's own §5.2 registered against its own result.
+  const elig = sessions.filter((s) => s.era.eligible);
+  const wasPassing = elig.filter((s) => s.beatsPool);
+  const survived = wasPassing.filter((s) => s.beatsEra).length;
+  const nullFires = elig.filter((s) => s.era.fakeBeats).length;
+  const vacuous = elig.filter((s) => s.era.spread < 1e-6).length;
+  console.log(`\nSAME-PANE-SAME-ERA CONTROL (±${eraHours}h, the session's own contributions excluded)`);
+  console.log(`  eligible (era pool >= N) ${elig.length}/${sessions.length} · UNTESTABLE ${sessions.length - elig.length} — era pool too small; never a pass or a fail`);
+  console.log(`  NULL: era-typical fake sessions clearing their own p95 ${nullFires}/${elig.length} (${(100 * nullFires / (elig.length || 1)).toFixed(1)}%; ~5% expected) · degenerate pools (p95-p05 < 1e-6) ${vacuous}`);
+  console.log(`  beat the WHOLE-BOARD p95 and eligible here: ${wasPassing.length} · of those, also beat their SAME-ERA p95: ${survived} (${(100 * survived / (wasPassing.length || 1)).toFixed(1)}%)`);
+  console.log('  pane                          N | era pool |    phi | era p95 | spread | beats era | beat board');
+  for (const s of elig.slice().sort((a, c) => (c.phi - c.era.p95) - (a.phi - a.era.p95))) {
+    console.log(`  ${String(s.pane).slice(0, 28).padEnd(28)} ${String(s.n).padStart(3)} | ${String(s.era.eraPool).padStart(8)} | ${s.phi.toFixed(4)} |  ${s.era.p95.toFixed(4)} | ${s.era.spread.toFixed(4)} | ${s.beatsEra ? 'YES' : 'no '}       | ${s.beatsPool ? 'yes' : 'no'}`);
+  }
+
   console.log(`\nVERDICT (registered before the run, §5 of the ruling): ${verdict.verdict}`);
   console.log(`  median ratio phi/(1/sqrt(N)) ${verdict.medianRatio.toFixed(3)} · Q1 ${verdict.q1Ratio.toFixed(3)} · Q3 ${verdict.q3Ratio.toFixed(3)} · min ${verdict.minRatio.toFixed(3)} · max ${verdict.maxRatio.toFixed(3)}`);
   console.log(`  sessions at or below the null ${verdict.sessionsAtOrBelowNull}/${verdict.sessions} · materially above (>${verdict.materialRatio}) ${verdict.sessionsAboveMaterial}/${verdict.sessions}`);
@@ -285,7 +330,8 @@ async function main(argv) {
     fs.writeFileSync(out, JSON.stringify({ tool: 'vicsek-phi', generated: new Date().toISOString(), board,
       universe: u, encoder: { id: 'Alibaba-NLP/gte-base-en-v1.5', dtype: 'q8', onnxSha: enc.onnxSha, transformers: enc.version },
       method: { formula: 'phi = |mean of unit vectors|', orderInvariant: true, controlIsDistributionNotOrder: true,
-        minContributions: min, poolReps, seed, nullForm: '1/sqrt(N) at the session\'s own N' },
+        minContributions: min, poolReps, seed, eraHours, nullForm: '1/sqrt(N) at the session\'s own N',
+        eraRule: 'same pane, ±eraHours of the session span, the session\'s own contributions excluded, drawn from the embedded set; eligible when the era pool >= N' },
       sessionsTotal: all.length, sessionsEligible: eligible.length, sessionsEmbedded: picked.length,
       poolSize: pool.length, verdict, sessions }, null, 1));
     console.log(`\nwritten to ${out}`);
@@ -293,6 +339,6 @@ async function main(argv) {
   return 0;
 }
 
-module.exports = { phi, unit, norm, baseline, baselineExact, dimFactor, lgamma, nullPhi, poolControl, classify, rng, randomUnit, printNullTable,
+module.exports = { phi, unit, norm, baseline, baselineExact, dimFactor, lgamma, nullPhi, eraControl, poolControl, classify, rng, randomUnit, printNullTable,
   MIN_CONTRIB, POOL_REPS, NULL_REPS };
 if (require.main === module) main(process.argv.slice(2)).then((c) => process.exit(c)).catch((e) => { console.error(e); process.exit(3); });

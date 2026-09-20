@@ -241,3 +241,117 @@ start-up, so my run used the file as it stood at 02:46. Checked afterwards (`git
 **additive** — two new functions and two new names on the exports; `sessionsOf`, `loadEncoder`, `GAP_MS` and the
 embedding path are byte-identical. **A re-run now reproduces this run.** If a later edit touches those, phi must be
 re-run rather than re-quoted.
+
+---
+
+# APPENDED L064 · THE SAME-PANE-SAME-ERA CONTROL — THE POOLED READING FALLS
+
+**B, machine L, 2026-09-20 06:1x–06:3x.** This is the control §5.2 of this file registered against its own
+result, run by the seat that registered it. Everything above stands as filed; nothing in §1–§8 is edited.
+
+## 9 · THE ANSWER
+
+**91 of 118 becomes 28 of 60, and the pooled reading FALLS by the falsifier I registered before running it.**
+
+    node consonance/tools/vicsek-phi.js --deps <C's encoder-trial> --board <C's frozen snapshot> \
+         --era-hours 24 --out <scratch>/phi/vicsek_phi_era_L064.json
+
+| | count | share |
+|---|---:|---|
+| sessions | 118 | |
+| eligible (era pool ≥ N) | **74** | the rest cannot be tested at all |
+| UNTESTABLE | 44 | 24 of them have **no** same-pane contribution within ±24h |
+| beat the whole-board p95 | 91 | the L061 figure |
+| …of those, eligible here | 60 | 31 of the 91 are untestable |
+| **…of those, also beat their same-era p95** | **28** | **46.7%** |
+| excluding the 2 degenerate pools | 28 / 58 | **48.3%** |
+
+**The falsifier, registered at 06:13:28 in `<scratch>/phi/era-registration.txt` (sha256 `f69389ed…`), before the
+run:** *"if FEWER THAN HALF also beat their same-era p95, the pooled reading does NOT survive."* **46.7% is fewer
+than half. It does not survive.**
+
+**The number that says it most plainly: the median session's φ is 0.996 of its own era p95** (Q1 0.977, Q3 1.018,
+min 0.926, max 1.081). Against the whole-board pool those same 74 sessions have a median ratio of 1.041. **A
+session is about 4% more aligned than the board at large and indistinguishable from its own pane on its own day.**
+The 6.5% in §4.3 was pane and era, exactly as §5.2 said it might be.
+
+## 10 · THE NULL, AND WHY THE RESULT IS NOT JUST THE CONTROL BEING HARSH
+
+Registered beside the falsifier: a fake session of N drawn from the same era pool is era-typical by construction
+and should clear its own p95 about 5% of the time.
+
+    NULL: era-typical fake sessions clearing their own p95   3/74 (4.1%; ~5% expected)
+    degenerate pools (p95 - p05 < 1e-6)                      2 (both reported, both fail the era test)
+
+**4.1% against an expected 5%: the detector fires at the right rate on noise, so the 32 sessions that lost their
+pass lost it to the control working, not to a control that refuses everything.** And the residue is real: 28 of 74
+still clear their era p95 where chance predicts about 3. Something survives — it is just not the thing §4.3 claimed.
+
+**No session beats the era control without also beating the board control** (era-only: 0). The era test is strictly
+the stricter of the two, which is what a same-pane-same-day pool should be.
+
+## 11 · THE VARIABILITY CHECK, RUN BEFORE ANYTHING — tonight's second discipline item
+
+L063 died this morning because the object fixed its answer at 100% before a subject ran, and its null passed
+cleanly while that was true. So, before this control ran, the question *can this quantity take more than one value
+on this object?*
+
+    node <scratch>/phi/vary.js <C's snapshot> 24 <scratch>/phi/vary.json
+
+- Over all same-pane assistant rows: **79 of 118** sessions have an era pool ≥ N; 8 have none.
+- Over the **embedded** pool, which is what the control can actually draw from: **74 eligible, 24 with an empty
+  pool**, median pool 69.5 contributions, median pool/N 1.50.
+- The pool **excludes the session's own contributions**, so no cell is a self-comparison.
+
+**74 sessions could land either way, so the outcome was not fixed by construction.** That is written down because
+the check is worthless after the fact: it was run and recorded before the control, in the same file as the
+falsifier.
+
+## 12 · WHAT THIS DOES AND DOES NOT CHANGE
+
+- **§4.1 and §4.2 stand unchanged.** The registered prediction is still wrong on every session, the falsifier's
+  condition is still met, and raw φ is still a measurement of the embedding cone.
+- **§4.3 FALLS.** "Sessions are ~6.5% more aligned than the board, 91 of 118 above their p95" is withdrawn as a
+  claim about sessions. The correct statement is: *against the board they are 4% more aligned; against their own
+  pane on their own day, the median session is at 0.996 of the control and fewer than half of the previous passes
+  survive.*
+- **§4.4's 2×2 with C's r is unaffected in its r half**, but its φ half used "beats the whole-board p95" as
+  "φ aligned". On the eligible 74 that reading now over-counts by 32 sessions. **The joint table should be redrawn
+  on the era control before it is quoted**, and I have not redrawn it here because C's r-corrected reading is C's
+  and the join is a separate lap.
+- **The suspension under the ruling's §5 is untouched** — that was about raw φ against 1/√N, and this control does
+  not speak to it.
+
+## 13 · NOT VERIFIED
+
+- **44 of 118 sessions cannot be tested at all**, so the survival rate is over the 60 testable passes and not over
+  the 91. If the untestable sessions differ systematically — and they might, since 24 of them are a pane's only
+  activity in a 48-hour window — the true figure could sit either side of 46.7%.
+- **±24h is a choice.** A tighter window (same shift) or a looser one (same week) would move the eligibility count
+  and the survival rate; only 24h was run.
+- **The era pool is drawn from embedded contributions only** — sessions of ≥ 20. Same-pane contributions in short
+  sessions are invisible to it, which shrinks every pool and makes some sessions untestable that need not be.
+- **Two pools are degenerate** (p95 − p05 < 1e-6, both N = 21 on the same pane). Both fail the era test; excluding
+  them moves 46.7% to 48.3%, still under half.
+- **One run, one seed** (20260920 + N). The tool is deterministic, so the librarian's re-derivation is the check.
+- **I did not re-run C's r**, and §4.4 is left as it was filed rather than silently revised.
+
+## 14 · RE-DERIVING THIS WITHOUT MY PROSE
+
+`<scratch>/phi/vicsek_phi_era_L064.json` carries, per session: `pane`, `from`, `to`, `n`, `phi`, `baseline`,
+`ratio`, the whole-board `control` (mean, p05, median, p95), `beatsPool`, and `era` — `eligible`, `eraPool`,
+`p05`/`median`/`p95`, `spread`, `fakePhi`, `fakeBeats` — plus `beatsEra`. `method` carries the era rule, the
+window, the seed and the draw count. Every figure in §9 and §10 is a count or a quantile over that array; the
+command at the head of §9 regenerates the file from the same inputs.
+
+## 15 · WRONG column, this append
+
+- **W3 — my §5.2 prediction was right and my §4.3 claim was wrong.** I wrote both in the same file: the finding,
+  and the control that would sink it. The control sank it. That is the outcome I registered for, and the earlier
+  paragraph is withdrawn rather than reinterpreted.
+- **W4 — a patch script of mine silently failed to apply** while wiring this control in (an anchor with an escaped
+  newline matched zero times, and the script exited before writing). Caught because the flag it was supposed to add
+  was missing from the file; re-done with the editor. Same class as the backslash-through-a-heredoc error I made
+  twice in earlier laps.
+
+NEXT: librarian re-derive §9's counts from vicsek_phi_era_L064.json and rule whether §4.4's joint table is withdrawn with §4.3

@@ -142,3 +142,42 @@ test('the ratio is phi against the session\'s OWN N, which is the whole correcti
   assert.ok(V.phi(short) > 1.8 * V.phi(long), 'the raw phi of a short session should dwarf a long one on noise');
   assert.ok(Math.abs(rs - rl) < 0.35, `the corrected ratios should be comparable: ${rs.toFixed(3)} vs ${rl.toFixed(3)}`);
 });
+
+test('the same-era control never draws the session\'s own contributions', () => {
+  // 30 vectors for one pane: 10 are the session (all pointing one way), 20 are era neighbours (another way).
+  // If the control ever drew the session's own rows, its phi would be pulled toward the session's direction.
+  const d = 16;
+  const sessDir = V.unit(Float64Array.from({ length: d }, (_, i) => (i === 0 ? 1 : 0)));
+  const eraDir = V.unit(Float64Array.from({ length: d }, (_, i) => (i === 1 ? 1 : 0)));
+  const pool = [];
+  for (let i = 0; i < 10; i++) pool.push({ pane: 'P', ts: 1000 + i, line: i, v: sessDir });
+  for (let i = 0; i < 20; i++) pool.push({ pane: 'P', ts: 2000 + i, line: 100 + i, v: eraDir });
+  const session = { pane: 'P', n: 10, t0: 1000, t1: 1009, lines: [0,1,2,3,4,5,6,7,8,9] };
+  const c = V.eraControl(pool, session, 24, 20, 5);
+  assert.strictEqual(c.eligible, true, 'a pool of 20 against N=10 must be eligible');
+  assert.strictEqual(c.eraPool, 20, 'the session\'s own 10 rows must be excluded from its own control');
+  assert.ok(Math.abs(c.median - 1) < 1e-9, 'every drawn vector is the era direction, so the control reads 1');
+});
+
+test('the same-era control refuses a pool smaller than N, and says why', () => {
+  const v = V.unit(Float64Array.from({ length: 8 }, (_, i) => (i === 0 ? 1 : 0.1)));
+  const pool = [];
+  for (let i = 0; i < 5; i++) pool.push({ pane: 'P', ts: 1000 + i, line: i, v });
+  for (let i = 0; i < 3; i++) pool.push({ pane: 'P', ts: 2000 + i, line: 50 + i, v });
+  const c = V.eraControl(pool, { pane: 'P', n: 5, t0: 1000, t1: 1004, lines: [0,1,2,3,4] }, 24, 10, 1);
+  assert.strictEqual(c.eligible, false, '3 era neighbours cannot supply a draw of 5');
+  assert.strictEqual(c.eraPool, 3);
+  assert.strictEqual(c.need, 5, 'the refusal must carry what it needed, so an UNTESTABLE cell can be audited');
+});
+
+test('the era window and the pane both bite', () => {
+  const v = V.unit(Float64Array.from({ length: 8 }, (_, i) => (i === 0 ? 1 : 0.2)));
+  const session = { pane: 'P', n: 2, t0: 0, t1: 0, lines: [0] };
+  const other = (pane, ts, line) => ({ pane, ts, line, v });
+  const far = [other('P', 25 * 3600e3, 1), other('P', 26 * 3600e3, 2), other('P', 27 * 3600e3, 3)];
+  assert.strictEqual(V.eraControl(far, session, 24, 5, 1).eligible, false, 'contributions outside ±24h must not count');
+  const wrongPane = [other('Q', 0, 1), other('Q', 1, 2), other('Q', 2, 3)];
+  assert.strictEqual(V.eraControl(wrongPane, session, 24, 5, 1).eligible, false, 'another pane\'s contributions must not count');
+  const ok = [other('P', 3600e3, 1), other('P', 2 * 3600e3, 2)];
+  assert.strictEqual(V.eraControl(ok, session, 24, 5, 1).eligible, true);
+});
