@@ -326,3 +326,98 @@ the result.
 **R2 IS READY TO FILE.** §17 strengthens it: the control now runs per mount, and **every mount's real median sits
 below its own shuffle while every mount's shuffled slopes are positive 100% of the time.** No mount escapes it.
 The headline still may not travel without its control.
+
+---
+
+# PART FOUR — THE FILE HAS STOPPED MOVING. LAND IT. 2026-09-20 02:2x.
+
+## 19 · THE VERIFICATION THE CHAIR HELD THE LANDING FOR
+
+Three reads, seconds apart, at 08:20:42–08:20:43Z:
+
+```
+lines=571  sha=a2e076761235b330  mtime=02:17:17.342
+lines=571  sha=a2e076761235b330  mtime=02:17:17.342
+lines=571  sha=a2e076761235b330  mtime=02:17:17.342
+```
+
+Full digest: `a2e076761235b330264aea591050ffcab98e0c2288ac9b049f95707515191732`. **The mtime has not moved since
+02:17:17 — three and a half minutes of stillness**, across the whole span in which the chair's interrupt was
+written, delivered and answered. 21 sections; the last two are §17 and §18. **LAND IT.**
+
+**And I have read all 571 lines.** Part Three of this file collates §17 and §18 in full, item by item, with §17.1
+and §17.5 re-derived from the control artifact. The chair's interrupt says my collation "covers 451 lines and
+about 78 more have arrived since, unread by you". That was true of PART TWO. It stopped being true at `a004337`.
+
+## 20 · THE INTERRUPT ITSELF CROSSED A RING — the third crossing tonight, by the same mechanism it warns about
+
+Not a fault, and worth the two lines it takes to say, because it is now a pattern with three instances and a
+common cause:
+
+1. **My Part Two collation** was built from C's file at 221 lines while C was appending — *caught by the keeper.*
+2. **The chair's re-run dispatch** was written at 08:07:32 on that collation, delivered at 08:13:37, and its own
+   cancellation arrived 2m 40s behind it — *caught by me, from the board.*
+3. **This interrupt** was written against my Part Two state while Part Three was in flight — *caught here.*
+
+**The common cause is not carelessness in any of the three seats. It is that this room has no way to say "my
+last word is still being written."** Every channel we have — a file on disk, a queued packet, a ring — reports a
+*state* and none of them reports *motion*. Three seats hit it in ninety minutes.
+
+## 21 · ONE FIGURE IN THE INTERRUPT IS TWO STATES FUSED INTO ONE ROW
+
+Stated because it is checkable and because it is the night's own error class appearing inside the message that
+names it. The interrupt reads:
+
+```
+wc -l   529 lines
+sha256  67e14af28ae63063f067…   at 02:17:2x
+sha256  a2e076761235b330…       seconds later, same turn, same file
+mtime   02:17:17, nine seconds before my first read
+```
+
+**The disk does not support two successive states.** `a2e07676…` is the digest of the **571-line** file, and its
+mtime is 02:17:17 and has not changed since. A disk write producing `67e14af2…` "at 02:17:2x" would have to be
+*after* 02:17:17 and would have moved the mtime; it did not. **The 529 / `67e14af2…` pair is C's stated digest,
+quoted from C's ring — where it was already stale when sent (Part Three §15).** So the row pairs a line count
+from a pane's message with a digest from the disk and presents them as two readings of one file.
+
+**This is the relay shape this room has measured before** (`CLAUDE.md`, the 09-01 hop that invented a premise):
+a figure changes status as it passes through a seat — here, from *a pane's claim about a file* to *an observation
+of the file*. The correction costs nothing and the interrupt's judgement was right regardless: holding the
+landing until the file stops moving is the correct call, and the file has now stopped.
+
+## 22 · THE TWO RULINGS, RECEIVED
+
+- **The shuffle-refusal guard: the chair's, and YES.** It goes to a pane as a packet. **My one surfacing on it:
+  send it to a NON-AUTHOR of the instrument.** C wrote `order-parameter.js`, its 20 tests and its 15 mutants; a
+  guard written by the seat whose verdict it constrains has no independent reader. E and B are both free and both
+  have done mutation work on other seats' code tonight.
+- **Raw versus artifact-corrected for C3: the keeper's**, as I ruled, and nothing blocks while it waits — both
+  quantities are in `order_parameter_L060.json`.
+
+## 23 · STATUS
+
+**R2 IS READY TO FILE AND THE FILE IS STILL.** To land: `exo_memory/handback/p-order-parameter-C_2026-09-20.md`
+at 571 lines, sha256 `a2e076761235b330…`, and `exo_memory/map/C.md`. The instrument, its test and the
+registered-run JSON are already in at `d104427`, whose commit message ("the lap owes one command") is wrong and
+is corrected on the ledger and in §15 of the hand-back.
+
+## 24 · CLOSING NOTE — the lap landed before this part was filed, and nothing above was rung
+
+`3d308ff` — L060 R2 landed and pushed, ledger `filed`, holder none. §19's verification reached the chair; §20–§22
+are filed to disk only. **No ring was sent for this part.** The keeper's correction at 02:2x is the reason and it
+is the right one: the chair's interrupt asked for the verification, but answering a request is not a licence to
+keep a channel open, and I had already rung twice on a lap whose pane was still writing.
+
+**The keeper's own words are the sharpest evidence for §20's finding, and they should be quoted rather than
+paraphrased:** *"c is still working, and you sent to the orch again I SSEE THAT"*, then, seconds later, *"or maybe
+they were just finishing up."* **He was watching the panes directly and could not tell which.** Neither could the
+chair, which wrote its interrupt against a state three minutes stale. Neither could I, twice. **Four observers,
+one of them human and none of them wrong to be unsure — because there is nothing to observe.** The disk settles
+it after the fact: the file has not changed since 02:17:17 and the second guess is the correct one.
+
+**The mechanical repairs this suggests, in order of cost:** have the ring compute the digest at ring time rather
+than quoting one the pane computed earlier; treat a hand-back as deliverable only once its file has been still
+for a stated interval, and say the interval in the ring; and give a pane a way to say *still writing* that the
+pulse can read, so that a state channel gains a motion channel. None of the three requires anyone to be more
+careful, which is why they are worth more than the resolution to be.
