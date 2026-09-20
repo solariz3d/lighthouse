@@ -33,6 +33,30 @@ This one does not.
 4. **An uncleared ask is visible as an uncleared file.** That is the whole point.
 5. **The question is quoted verbatim, with its source.** A paraphrase is a category; the goal's own
    words are the fact. `ask.js --line` enforces a floor on this and refuses to emit a bare count.
+6. **A RE-TEST is provenance, and it goes in `Source` — never in `Question`, never in `Status`.**
+   A goal that re-verifies an open ask on a later pass is offering evidence, not clearing anything.
+   Clearing stays rule 2. So the finding is carried like this, appended to the Source line, and it is
+   visibly not the asker's sentence and visibly not a ruling:
+
+   `Re-tested <YYYY-MM-DD>: <what was found>, per <path>:<line>`
+
+   The precedent is `ASK-006`, where D091 recovered a referent that lived only in a log into the
+   Source line and left the Question verbatim. **Two things this is not:** it is not permission to
+   re-word the asker (rule 5 still holds), and it is not a Status — an ask with a re-test saying "done"
+   is still OPEN until the keeper says otherwise, because the whole point of rule 2 is that the audited
+   does not mark its own homework.
+
+   **And the goals do not have to write here at all.** `ask.js` READS their own files and renders what
+   it finds beside the ask, labelled `↳ RE-TESTED by the goal` with its date and `path:line`. It
+   attaches a re-test in exactly two shapes and ignores every other mention of an ask id:
+   - a paragraph matching `open asks re-tested` that names ids in bold — the shape
+     `daily-news-digest` already writes, so its existing output reaches the queue unchanged;
+   - a single line `RE-TESTED ASK-0NN <YYYY-MM-DD>: <result>` anywhere in a live goal file — the
+     forward channel, which reaches the queue the day it is written. **A marker with no date is
+     refused rather than dated by the reader.**
+
+   Archived copies (`evidence/`, `*-versions/`, `.pre-*`, `.bak`) are never attached: the same block
+   exists in eight archived copies today, and showing one result eight times is not a channel either.
 
 Block format — the heading and the three fields are parsed, so keep the shape:
 

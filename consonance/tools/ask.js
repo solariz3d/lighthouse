@@ -268,6 +268,120 @@ function candidates(durationDir = DURATION_DIR) {
   return { rows: out, reachable: true };
 }
 
+/* ── re-test provenance (D092) ─────────────────────────────────────────────────────────────────
+ *
+ * THE PROBLEM THIS SOLVES, and it is a routing problem rather than a discipline one.
+ * `daily-news-digest` has been re-verifying the keeper's open asks on its own passes for weeks and
+ * writing the results into its own standing items, because its protocol correctly forbids it from
+ * editing the ASK store: clearing is the keeper's act, and a goal clearing its own ask is the audited
+ * marking its own homework. The consequence is that a correction which is dated, unambiguous and
+ * CORRECT cannot propagate — the only channel that would carry it is the one its author must not use.
+ * ASK-002 carried a stale evidence line for nine days that way.
+ *
+ * SO THE READER, NOT THE WRITER. This tool still never writes to the store (see :26). It READS the
+ * goals' own files at render time and shows what they found beside the ask, labelled with the file,
+ * the line and the date. Nothing about the ask changes: the Question stays the asker's words, and the
+ * Status stays the keeper's. A re-test is evidence offered to him, never a verdict on his behalf.
+ *
+ * TWO FORMS, and the narrowness is the whole design. A scanner that reads prose loosely turns every
+ * passing mention of an id into a verdict, and the live goal tree mentions ask ids constantly in
+ * routing notes and summaries.
+ *   (A) BLOCK  — an `ASK-\d+` inside a paragraph matching /open asks re-tested/i. This is the shape
+ *                the goal already writes, so its existing output is carried without asking it to change.
+ *   (B) MARKER — one line, `RE-TESTED ASK-0NN <YYYY-MM-DD>: <result>`. This is the forward channel: a
+ *                goal emits it on any pass and it reaches the queue that day. A marker with no date is
+ *                REFUSED rather than dated here, because an undated re-test read as fresh is exactly
+ *                the failure the channel exists to prevent.
+ *
+ * AND ONLY LIVE FILES. The same block exists in eight archived copies under evidence/ and in
+ * `.pre-*` siblings; attaching those would show one result many times over and age it wrongly.
+ */
+
+const RETEST_BLOCK_RE = /open asks re-tested/i;
+const RETEST_MARKER_RE = /^\s*RE-TESTED\s+(ASK-\d+)\s+(\d{4}-\d{2}-\d{2})\s*:\s*(.+?)\s*$/;
+const ASK_ID_RE = /\*\*(ASK-\d+)\*\*\s*(?:\((\d+)d\))?\s*:?\s*/g;
+const ARCHIVE_RE = /[\\/]evidence[\\/]|[-\\/]versions[\\/]|\.pre-|\.bak/i;
+const RETEST_EXT_RE = /\.(md|log|txt)$/i;
+
+/** Is this a file a goal is currently writing, rather than a copy of one it wrote before? */
+function isLiveGoalFile(p) { return RETEST_EXT_RE.test(p) && !ARCHIVE_RE.test(p); }
+
+/**
+ * The date a block-form re-test carries: the pass ENTRY it sits under, never a date mentioned in the
+ * prose beside it.
+ *
+ * The first version of this took the nearest ISO date at or above the line and dated the live block
+ * 2026-09-01 — a `<lastmod>` value quoted two sentences away — when its pass entry reads
+ * `- **2026-09-03T04:45:23Z — Pass 70.**`. Two days wrong in the direction of looking older. A
+ * re-test dated from whatever number happens to be nearby is worse than an undated one, because an
+ * undated one is refused and a mis-dated one is aged and believed. So the date must OPEN its line.
+ */
+const ENTRY_DATE_RE = /^\s*(?:[-*]\s*)?\**\s*(\d{4}-\d{2}-\d{2})T/;
+function blockDate(lines, idx) {
+  for (let i = idx; i >= 0 && i > idx - 200; i--) {
+    const m = lines[i].match(ENTRY_DATE_RE);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+/**
+ * Every re-test the goals have written, keyed by ask id. Read-only, and it never looks at the store.
+ * Returns { 'ASK-004': [{ file, line, date, result, form }] }.
+ */
+function retests(dir = DURATION_DIR) {
+  const out = {};
+  const add = (id, rec) => { (out[id] = out[id] || []).push(rec); };
+  const walk = (d) => {
+    let entries;
+    try { entries = fs.readdirSync(d, { withFileTypes: true }); } catch (_) { return; }
+    for (const e of entries) {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) { if (!ARCHIVE_RE.test(p + path.sep)) walk(p); continue; }
+      if (!isLiveGoalFile(p)) continue;
+      let text;
+      try { text = fs.readFileSync(p, 'utf8'); } catch (_) { continue; }
+      if (!/ASK-\d/.test(text)) continue;
+      const lines = text.split(/\r?\n/);
+      lines.forEach((raw, i) => {
+        const mk = raw.match(RETEST_MARKER_RE);
+        if (mk) { add(mk[1], { file: p, line: i + 1, date: mk[2], result: mk[3], form: 'marker' }); return; }
+        if (!RETEST_BLOCK_RE.test(raw)) return;
+        // Block form: split the paragraph at each bolded id and keep what that id's segment says.
+        const hits = [...raw.matchAll(ASK_ID_RE)];
+        hits.forEach((h, k) => {
+          const from = h.index + h[0].length;
+          const to = k + 1 < hits.length ? hits[k + 1].index : raw.length;
+          const result = raw.slice(from, to).replace(/\s+/g, ' ').replace(/^[—–-]\s*/, '').trim();
+          if (result) add(h[1], { file: p, line: i + 1, date: blockDate(lines, i), result, form: 'block',
+            ageAtWriting: h[2] ? Number(h[2]) : null });
+        });
+      });
+    }
+  };
+  walk(dir);
+  return out;
+}
+
+/**
+ * The provenance lines for one ask, or [] when it has none. Rendered so it cannot be misread as the
+ * asker's words or as a Status: it is indented under a RE-TESTED label, carries path:line and a date,
+ * and says plainly that the store is unchanged.
+ */
+function renderRetests(found, id, now = Date.now()) {
+  const recs = found[id];
+  if (!recs || !recs.length) return [];
+  const L = [];
+  for (const r of recs) {
+    const age = r.date ? ageDays(r.date, now) : null;
+    const when = r.date ? `${r.date}${age === null ? '' : ` (${age}d ago)`}` : 'undated';
+    L.push(`        ↳ RE-TESTED by the goal, ${when} — the store is unchanged; this is evidence, not a ruling`);
+    L.push(`          ${trimFact(r.result, 300)}`);
+    L.push(`          per ${path.relative(os.homedir(), r.file).replace(/\\/g, '/')}:${r.line}`);
+  }
+  return L;
+}
+
 /* ── reporting ──────────────────────────────────────────────────────────────────────────────── */
 
 function report(now = Date.now()) {
@@ -290,11 +404,14 @@ function report(now = Date.now()) {
   L.push('');
 
   if (open.length) {
-    L.push('OPEN — oldest first');
+    const rt = retests();
+    const carried = open.filter(a => rt[a.id]).length;
+    L.push(`OPEN — oldest first${carried ? ` · ${carried} carry a goal's re-test (evidence, never a ruling)` : ''}`);
     for (const a of open) {
       L.push(`  ${a.id}  ${a.age === null ? ' age?' : String(a.age).padStart(3) + 'd'}  ${a.goal}`);
       L.push(`        ${trimFact(a.question, 400)}`);
       if (a.source) L.push(`        source: ${a.source}`);
+      for (const l of renderRetests(rt, a.id, now)) L.push(l);
     }
     L.push('');
   }
@@ -347,6 +464,7 @@ if (require.main === module) process.exit(main());
 
 module.exports = {
   parseStore, classify, load, openAsks, ageDays, line, whySilent, trimFact,
+  retests, renderRetests, isLiveGoalFile,
   wiring, candidates, report, main,
   STORE, DURATION_DIR, MIN_FACT_CHARS, LINE_FACT_BUDGET, CANDIDATE_RE,
 };

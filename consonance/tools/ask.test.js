@@ -357,3 +357,170 @@ test('D091 · an ordinary ### heading is not an ASK heading and is not unreadabl
   assert.strictEqual(st.asks.length, 1);
   assert.strictEqual(st.unreadable.length, 0, 'only ### ASK- headings are subject to the heading rule');
 });
+
+/* ── RE-TEST PROVENANCE (D092) ─────────────────────────────────────────────────────────────────
+ * A goal re-verifies the keeper's open asks on its own passes and is correctly forbidden from
+ * editing the store, so its results cannot reach the queue. These tests pin the reader that carries
+ * them: it attaches a re-test to an ask WITHOUT writing to the store, and — the half that matters —
+ * it attaches NOTHING to the many places an ask id is merely mentioned. */
+
+const fsx = require('fs');
+const osx = require('os');
+const pathx = require('path');
+
+function goalTree(files) {
+  const root = fsx.mkdtempSync(pathx.join(osx.tmpdir(), 'askprov-'));
+  for (const [rel, body] of Object.entries(files)) {
+    const p = pathx.join(root, rel);
+    fsx.mkdirSync(pathx.dirname(p), { recursive: true });
+    fsx.writeFileSync(p, body);
+  }
+  return root;
+}
+
+const BLOCK = '  - **Condition 6 — the open asks re-tested, and the ASK store is deliberately NOT edited by this ' +
+  'goal (the protocol makes clearing the keeper\'s act):** **ASK-004** (38d): both halves verified done again ' +
+  'today. **ASK-002** (9d): the evidence line is stale and today\'s figures replace it.\n';
+
+test('a goal\'s re-test block is attached to the asks it names', () => {
+  const root = goalTree({ 'daily-news-digest/STANDING-ITEMS.md': BLOCK });
+  const found = A.retests(root);
+  assert.deepStrictEqual(Object.keys(found).sort(), ['ASK-002', 'ASK-004']);
+  assert.match(found['ASK-004'][0].result, /both halves verified/);
+  assert.strictEqual(found['ASK-004'][0].line, 1, 'the provenance must carry the line it came from');
+  assert.match(found['ASK-004'][0].file, /STANDING-ITEMS\.md$/);
+});
+
+test('THE NULL: a bare mention of an ask id attaches nothing', () => {
+  // Every one of these is a real shape from the live goal tree: a routing note, a prose summary that
+  // contains the word "re-tested", and a reference inside an unrelated standing item.
+  const root = goalTree({
+    'daily-news-digest/PENDING-CONDITIONS.md': 'Route it through `ask.js` (ASK-002, ASK-013) — still Zach\'s call.\n',
+    'daily-news-digest/progress.md': 'ASK-004/005/002/013 re-tested; the ASK store is not edited (keeper clears).\n',
+    'daily-news-digest/STANDING-ITEMS.md': 'ASK-004\'s fixed-denominator shape inside this goal\'s own most-cited row.\n',
+  });
+  assert.deepStrictEqual(A.retests(root), {},
+    'a scanner that reads prose loosely turns every mention into a verdict — the queue would then carry ' +
+    'text the goal never offered as a re-test');
+});
+
+test('THE SECOND NULL: archived and backup copies never attach', () => {
+  const root = goalTree({
+    'daily-news-digest/evidence/P79/STANDING-ITEMS.md.pre-P79': BLOCK,
+    'daily-news-digest/STANDING-ITEMS.md.pre-P71': BLOCK,
+    'daily-news-digest/state-versions/state-P70.md': BLOCK,
+  });
+  assert.deepStrictEqual(A.retests(root), {},
+    'the same re-test exists in eight archived copies on disk; attaching them would show one result many times');
+});
+
+test('the MARKER form reaches the queue on its own line, which is the forward channel', () => {
+  const root = goalTree({
+    'drift-watch/state.md': 'noise\nRE-TESTED ASK-001 2026-09-20: both hooks still unguarded, grep -c returns 0.\nmore noise\n',
+  });
+  const found = A.retests(root);
+  assert.deepStrictEqual(Object.keys(found), ['ASK-001']);
+  assert.strictEqual(found['ASK-001'][0].date, '2026-09-20');
+  assert.match(found['ASK-001'][0].result, /both hooks still unguarded/);
+  assert.strictEqual(found['ASK-001'][0].line, 2);
+});
+
+test('a marker without a date is refused rather than dated by the reader', () => {
+  const root = goalTree({ 'drift-watch/state.md': 'RE-TESTED ASK-001: still open\n' });
+  assert.deepStrictEqual(A.retests(root), {},
+    'a provenance line with no date cannot be aged, and an undated re-test read as fresh is the failure ' +
+    'this whole channel exists to prevent');
+});
+
+test('the report renders a re-test as PROVENANCE, distinguishable from the asker and from Status', () => {
+  const root = goalTree({ 'daily-news-digest/STANDING-ITEMS.md': BLOCK });
+  const out = A.renderRetests({ 'ASK-004': [{ file: pathx.join(root, 'daily-news-digest/STANDING-ITEMS.md'), line: 1,
+    date: '2026-09-03', result: 'both halves verified done again today', form: 'block' }] }, 'ASK-004');
+  assert.ok(out.length, 'an ask with a re-test must render something');
+  const text = out.join('\n');
+  assert.match(text, /re-tested/i);
+  assert.match(text, /2026-09-03/, 'the date is the point: an undated re-test cannot be aged');
+  assert.match(text, /STANDING-ITEMS\.md:1/, 'provenance carries path:line so the reader can check it');
+  assert.doesNotMatch(text, /\*\*Status:\*\*|ANSWERED|DECLINED/,
+    'a re-test must never render as a Status — clearing is the keeper\'s act and this is not that');
+  assert.deepStrictEqual(A.renderRetests({}, 'ASK-004'), [], 'an ask with no re-test renders nothing');
+});
+
+test('the reader NEVER writes to the store', () => {
+  const store = pathx.join(osx.tmpdir(), 'askprov-store-' + process.pid + '.md');
+  fsx.writeFileSync(store, '### ASK-004 — g, asked 2026-07-27\n**Source:** `x`\n**Question:** q\n**Status:** OPEN\n');
+  const before = fsx.readFileSync(store);
+  const root = goalTree({ 'daily-news-digest/STANDING-ITEMS.md': BLOCK });
+  A.retests(root);
+  A.renderRetests(A.retests(root), 'ASK-004');
+  assert.ok(before.equals(fsx.readFileSync(store)), 'ask.js:26 — this tool never writes to the store');
+  fsx.rmSync(store, { force: true });
+});
+
+test('a block re-test is dated by its PASS ENTRY, never by a date quoted in the prose beside it', () => {
+  // The live case: P70's entry is dated 09-03 and its text quotes a <lastmod> of 09-01 two sentences
+  // from the re-test. The first version of this reader took the nearer number and aged the re-test
+  // two days old in the direction of looking staler.
+  const root = goalTree({
+    'daily-news-digest/STANDING-ITEMS.md':
+      '- **2026-09-03T04:45:23Z — Pass 70.** stuff happened\n' +
+      '  - a `<lastmod>` advanced to 2026-09-01T19:11:41Z, unrelated to the asks\n' +
+      BLOCK,
+  });
+  const r = A.retests(root)['ASK-004'][0];
+  assert.strictEqual(r.date, '2026-09-03',
+    'the re-test must carry its pass date; a date lifted from neighbouring prose is aged and believed');
+});
+
+test('a block with no pass entry above it is undated rather than guessed', () => {
+  const root = goalTree({ 'daily-news-digest/STANDING-ITEMS.md': BLOCK });
+  assert.strictEqual(A.retests(root)['ASK-004'][0].date, null);
+  const out = A.renderRetests(A.retests(root), 'ASK-004').join('\n');
+  assert.match(out, /undated/, 'an undated re-test must say so rather than render a date it does not have');
+});
+
+test('THE SECOND NULL, tightened: a .pre- copy that still ends in .md must not attach', () => {
+  // The first version of this test passed for the wrong reason: `STANDING-ITEMS.md.pre-P71` fails the
+  // extension check, so it never exercised the archive filter at all. A mutant that deleted the filter
+  // survived. These two names end in .md and are caught only by the archive rule.
+  const root = goalTree({
+    'daily-news-digest/STANDING-ITEMS.pre-P71.md': BLOCK,
+    'daily-news-digest/STANDING-ITEMS.bak.md': BLOCK,
+  });
+  assert.deepStrictEqual(A.retests(root), {}, 'an archived or backup copy is not a channel');
+  assert.strictEqual(A.isLiveGoalFile('/g/daily-news-digest/STANDING-ITEMS.pre-P71.md'), false);
+  assert.strictEqual(A.isLiveGoalFile('/g/daily-news-digest/STANDING-ITEMS.md'), true);
+});
+
+test('THE NULL, tightened: a bolded id beside the words "re-tested" is still not the block', () => {
+  // The anchor is the goal's own condition-6 heading, not the phrase "re-tested". Without this, any
+  // sentence mentioning a re-test in passing becomes a verdict in the keeper's queue.
+  const root = goalTree({
+    'daily-news-digest/progress.md': '- **ASK-004** was re-tested by the auditor last week; see its own file.\n',
+  });
+  assert.deepStrictEqual(A.retests(root), {});
+});
+
+test('a non-text file is never scanned, whatever it contains', () => {
+  const root = goalTree({ 'daily-news-digest/goal.json': '{"note": "' + BLOCK.replace(/"/g, '\\"').replace(/\n/g, ' ') + '"}' });
+  assert.deepStrictEqual(A.retests(root), {}, 'config and data files are not the goal\'s prose');
+});
+
+test('the render carries the goal\'s OWN WORDS, not a pointer to them', () => {
+  const found = { 'ASK-004': [{ file: '/g/daily-news-digest/STANDING-ITEMS.md', line: 233, date: '2026-09-03',
+    result: 'both halves verified done again today — step 1 reads PENDING-CONDITIONS.md in full', form: 'block' }] };
+  const text = A.renderRetests(found, 'ASK-004').join('\n');
+  assert.match(text, /both halves verified done again today/,
+    'ask.js exists because a channel that carries the CATEGORY and not the FACT is the failure being repaired ' +
+    '(:13-18); a re-test that renders as "see the goal file" is that failure again');
+});
+
+test('the reader does not touch the REAL store file, not even to append nothing', () => {
+  const before = fsx.readFileSync(A.STORE);
+  const root = goalTree({ 'daily-news-digest/STANDING-ITEMS.md': BLOCK });
+  const found = A.retests(root);
+  A.renderRetests(found, 'ASK-004');
+  assert.ok(before.equals(fsx.readFileSync(A.STORE)),
+    'ask.js:26 — THIS TOOL NEVER WRITES TO THE STORE. Clearing is the keeper\'s act and provenance is not clearing, ' +
+    'so neither one may be written from here');
+});
