@@ -1362,3 +1362,37 @@ Also: the tracked mutant-harness can only SCORE when the scorer exists in a work
 untracked test - gates only (8 rows pass), kills by `scratchpad/ready/mutants.js` off the same rows file. Stated not
 fixed: every process a pane spawns inherits both variables (`main.rs:1150-1151`), so an UNMARKED child can still
 stamp its parent.
+
+## 2026-09-20 ~01:4x · P-THIRD-RUN-READ (audit, CONDITION WORLD) → `exo_memory/handback/p-third-run-read-E_2026-09-20.md`
+Audited `dev/dream/README.md` + `dev/dream/dream_cycle.test.js`: **26 members**, 9 README / 16 test / 1 cross-file
+contradiction. **The method that paid: when the question is whether a TEST holds, mutate a COPY and re-run instead of
+arguing.** Three mutants: (A) the sentinel line `:83` asserts, commented out INSIDE the here-string -> 7/0 green, because
+`:83` matches RAW and the regex cannot tell use from mention - the very invariant its header cites; (B) an ordinary
+comment mentioning `@'` flips `stripComments`'s here-string flag for the REST of the file, so with the real
+`Get-Process` line commented out the whole suite stays green - guard 2 deletable with 7/0; (C) deleting the battery
+decision is caught only by the skip COUNTER, not by the battery assertion, which checks that a class NAME appears.
+README's headline defect: ":31-32 If Consonance is running, the cycle skips" is stale - the runner dreams with the app
+open when idle >= 20 min, i.e. it documents the exact bug the test file exists to prevent. Checked against the world,
+not the prose: `powercfg` (AC=1, DC=0 - the installer never sets DC, so README's "power plan blocks all wakes" rests on
+a Windows default), the 8 dream.logs (only 07-28 logged the skip, not the claimed 07-26/-27/-28, and `main`'s log spans
+the window), `exo_memory/muscle_map.md` (cited bare, lives under exo_memory/).
+**Caught in myself:** I typed a time-box ("01:34-02:05, ~31 min") that had not happened yet, while the work ran; `date`
+said 01:40. Fourth lap running for this slip, first one caught before filing. **Write the clock from `date`, or not at all.**
+
+## 2026-09-20 ~01:5x · L059 THE AUDIT (auditor by sealed draw be4baa3) → `exo_memory/handback/p-third-run-audit-E_2026-09-20.md`
+Audited the scorer's five-item edge + its R8 rejection. **All five CONFIRMED, two strengthened, one rejection
+challenged.** **D1, the one rejection I would not have made:** `powercfg /a` on L settles "does THIS machine expose
+S3", but B's R8 is about the README's requirement travelling - and the runner ships expressly for other machines
+(`dream_cycle.ps1:84-85`). L is *outside* the population B named: S3 available, S0 Low Power Idle NOT supported. A
+one-machine probe cannot settle a portability claim -> UNSETTLED, not excluded. **Two commands that do not settle
+what they are said to settle:** item 2's `sed 33,36p` shows the readFileSync is at module scope but not that it
+throws before any test registers (I ran it: exit 1, stdout 0 lines); item 1's `sed 71p` shows the regex but not that
+an equivalent reversed comparison fails (I mutated `$idle -lt $IdleMinutes` -> `$IdleMinutes -gt $idle`: 6 pass 1
+fail). **The unit question, recorded not re-scored:** item 1 is site-exclusive, not class-exclusive - I reported the
+same class at `:53`; under a class-level unit the edge is 4, not 5. §3.4 fixes the site unit, so the scorer is right
+and the other number belongs beside the list.
+**The design defect this audit hit:** §5.2 asks the auditor to check the scorer's list, but exclusivity can only be
+settled against the other readers' hand-backs, which my own voiding list forbids - so the audit is partial BY
+CONSTRUCTION. Release the auditor from the reader list, or give exclusivity to a second seat.
+**Conceded against myself:** §5 caught my `~31 minutes` surviving at `:125` while `:5` says ~7 - the carrier problem
+inside one file, mine. Left UNEDITED: it is the scored artifact, and repairing it after scoring destroys the evidence.
