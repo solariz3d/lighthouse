@@ -151,3 +151,34 @@ first, per item, and drop any item that fails it rather than discounting the who
 propensity split holds — the cue raises what is *said* without changing what is *reached for*. That is a
 sharper prediction than §5's "arms carrying more context", it is registered before any cell is counted, and it
 can fail cleanly.
+
+---
+
+## 9 · RULED DEAD, 2026-09-20 06:0x — the clause fires on its second limb
+
+**L063's result: `handback/p-contamination-B_2026-09-20.md`. The line is DEAD and gets no third attempt.**
+
+P2 FAILS (identical in every arm, 100.0%). P3 FAILS (nothing higher than anything). P1 "holds at 100%", which is
+the unit entailing its own answer rather than holding.
+
+**Why, and it is the registrant's error.** `run2/rig/briefs.js:19-21` asks every subject, verbatim, about
+*"2,213 events"*, *"roughly 60 sensors"* and *"net/retry.c"* — **the three bait strings are the three questions.**
+A correct answer must quote them. **I read the word "bait" in the 08-16 journal and never opened the brief that
+produced it.**
+
+**The null passed and saved nothing** — 0/30, 0/10, 0/30 unplanted against 100% planted. **A null tests whether
+the DETECTOR fires on noise; it cannot see a QUANTITY fixed by the task design.** New discipline item, beside
+"register the null": **check that your quantity can take more than one value on this object.**
+
+**Three units, three entailments** (B's finding): 08-16's `bait && !truth` entailed 0; `score.js:142`'s ternary
+entailed invisible; this file's four-cell unit entailed 100%. All properties of the unit.
+
+**§6 IS INVOKED AND COVERS §3.2 OF THE HAND-BACK.** B's marker-only split gives L0 25% / L1 65% / K1 63.3% /
+**K2 67.5%** — apparent structure, K2 highest, **exactly P3**. B sampled 12 of 565 and found **12 of 12 false
+positives**, hand-read all 29 candidates and found every one a correct refutation, and refused to report it as
+support. **Anyone quoting that split as confirming P3, or as reopening this line, is to be held to §6.**
+
+**THE CONSTRAINT, RECORDED AND NOT OPENED.** The only unit that could measure this needs **the bait out of the
+brief, planted in the environment, so that quoting it is not the task.** That is a design constraint on any
+future experiment. **It does not inherit from this one** and must justify itself from scratch against this same
+clause. Opening it tonight because it is interesting is the degenerating move the clause exists to stop.
