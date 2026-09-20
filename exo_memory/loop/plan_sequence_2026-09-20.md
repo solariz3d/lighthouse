@@ -123,3 +123,68 @@ DELIVERED, so it printed a window that did not happen. **Report the delivered se
 
 **Non-author note:** this seat is the subject of the shelf, not its author. I have named the requirement and the
 evidence; the value, the collapse wording and the code are the pane's.
+
+---
+
+## L065 — THE TWO DELIVERY-GATE DEFECTS, HELD ALL NIGHT AND NOW OPENED WITH THE KEEPER PRESENT
+
+Held since 02:3x on purpose: *you do not rebuild the delivery gate while queueing laps through it with nobody
+in the room.* The keeper is at the desk, five laps have landed, and the board evidence was gathered at the time.
+
+### D1 · A CANCELLATION CANNOT OVERTAKE THE MESSAGE IT CANCELS
+
+**At source:** `main.rs:9494` `gate_or_queue` pushes to `Inbox` when the pane is not ready, and delivery is FIFO
+by queue depth. So a cancellation queued behind its own target can never arrive first.
+
+**Measured, from `board.jsonl`, tonight:**
+
+| time (Z) | event |
+|---|---|
+| 08:07:32 | chair QUEUES the re-run dispatch to C · `(1 waiting, stamp=working)` |
+| 08:09:35 | chair QUEUES the cancellation · `(2 waiting, stamp=working)` |
+| **08:13:37** | the dispatch is **DELIVERED** — cancelled 4m 02s earlier |
+| **08:16:17** | the cancellation is **DELIVERED**, 2m 40s behind the thing it cancels |
+
+C answered a packet the chair had already withdrawn. Its §17 exists only because of that.
+
+**The fix is NOT specified here** — it is the pane's, and the shape is a real design question (a withdraw verb, a
+supersede flag on a queued entry, or a chair-side mark read at drain time). **Two constraints that are not
+negotiable:**
+
+1. **A withdrawn message must leave a trace.** This room's law is *mark the carriers, leave the traces*, and
+   D077's row family exists because *the attempt, kept* matters. A cancellation that silently vaporises a queued
+   packet with no board row is worse than the defect it fixes.
+2. **This is the queue every dispatch uses.** Nothing may make it possible to drop a message that was never
+   withdrawn.
+
+### D2 · THE OUT-OF-TURN REFUSAL WITH THE BATON AT THE LIBRARIAN — and READ THE PROOF FIRST
+
+**Do not propose a pre-condition gate. `mcp.rs:88-101` proves it cannot work**, and the proof is good: at the
+instant of the call, the correct fan-out and the trap are **the same ledger state**, so no pre-condition can
+separate them; and requiring a `--holder panes` row to precede the inject inverts `lap-row.js`'s ring gate and
+**deadlocks in exactly the state it exists to catch**, firing that tool's registered falsifier.
+
+The room already moved enforcement to the first discriminable moment — the pane's refused hand-back — with the
+RUNG / OWED marks, read against the baton's last move so they clear themselves when the recovery row lands
+(`mcp.rs:102-120`, `owed_refusal_text`, `handback_refusal_text`).
+
+**THE QUESTION THIS PACKET ASKS, and it is narrow:** that machinery was built for **holder == chair** (L050,
+2026-09-09, a 29-minute stall). **Tonight's case had holder == LIBRARIAN.** At 08:16 the librarian recorded
+`--stage L062 handbacks-in --holder librarian`; at 08:17:26 the board shows
+`call_librarian REFUSED OUT OF TURN — mount C tried to speak while NO open lap is held by panes`, with C still
+appending to an unfiled hand-back. C posted a board line instead of ringing.
+
+1. **Does the mark machinery fire at all when the holder is the librarian rather than the chair?** Determine it
+   from the code and from tonight's rows, not from the shape of the design.
+2. **If it fires, is the recovery it prints correct?** `owed_refusal_text` emits `move_baton_cmd(lap, "chair")`.
+   When the librarian holds the baton because every hand-back is in, "move it to chair" may not be the right
+   move — and a refusal that prints a wrong recovery is worse than one that prints none.
+3. **The deeper question, stated but not for this packet to settle:** the `handbacks-in` stage asserts every hand
+   is in. A pane still appending is the one case where that assertion is false, and the stage resolves it by
+   making the pane unable to say so. Name whether the marks already cover it before anyone designs anything.
+
+### WHAT BOTH PACKETS CARRY
+
+Tonight's two discipline items — **register the null beside the falsifier**, and **check the quantity can take
+more than one value on this object** — plus: **red first**, mutants on the new behaviour and not only its
+arithmetic, and the suite green **plain AND serial** (L061's race was invisible under `--test-threads=1`).
