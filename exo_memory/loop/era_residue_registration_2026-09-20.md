@@ -66,3 +66,39 @@ the 44 untestable sessions, and whether ±24h is the right window.
 Nothing here spends a subject or an embedding pass. It is one script over an artifact that exists. **If it needed
 a run, it would not be worth it at this standing** — a post-hoc residue does not earn new compute until it has
 survived a free check.
+
+---
+
+## 6 · SCORED, 2026-09-20 07:4x — THE FALSIFIER DOES NOT FIRE AND THE NULL DOES
+
+Null computed first, as registered. One pass over `vicsek_phi_era_L064.json`, nothing else spent.
+
+| | n | mounts | largest mount's share | median N | days |
+|---|---:|---:|---:|---:|---:|
+| **the 28 that CLEARED** | 28 | 5 | **42.9%** | 41.5 | 13 |
+| the 46 that did NOT (the null) | 46 | 6 | 56.5% | 46.5 | 25 |
+| all 74 eligible (background) | 74 | 6 | 51.4% | 45.5 | 30 |
+
+**P1 HOLDS** — 5 of 6 mounts represented against a bar of 4, and the largest holds **42.9%**, under half.
+**P2 HOLDS** — median N 41.5 against the eligible median 45.5, ratio **0.91**, well inside the factor of two.
+**So the falsifier does NOT fire: the residue is not one mount's and it is not a short-session effect.**
+
+**AND THE REGISTERED NULL FIRES, which is the part that decides what this is worth.** The registration says:
+*"If the 28 and the 46 have indistinguishable mount and size distributions, then 'who they are' carries no
+information and P1 holding means nothing."* Tested rather than eyeballed — largest-mount share 12/28 against
+26/46, pooled 51.4%, **z = −1.141, two-sided p = 0.254.** Indistinguishable. Median N 41.5 against 46.5, a
+difference of five contributions. **The 28 are a background-shaped sample of the 74.**
+
+**THE VERDICT, and both halves are load-bearing.** The residue survived the check that would have explained it
+away — it is genuinely not a mount or a length artifact. **And naming its members told us nothing**, because its
+members look like everyone else's. Per §4, P1 holding is *"not a finding about the room — it is a licence to ask
+the next question"*, and that licence is all this earns.
+
+**What it does NOT earn:** promotion, a headline, or a sentence anywhere that reads *"28 of 74 sessions are more
+aligned than their own pane on their own day"* without the two clauses above attached.
+
+**The next question is B's, already named in its §13 and still unrun:** the **44 untestable sessions** — 24 of
+them a pane's only activity in a 48-hour window, which is a property of how that pane works and is plausibly
+correlated with everything this measures — and whether **±24h** is the right window at all, since only one width
+was ever run. **Neither is opened here.** This file's job was to stop a survivor from travelling on the standing
+of the claim it outlived, and that job is done.
