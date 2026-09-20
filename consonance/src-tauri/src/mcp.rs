@@ -590,6 +590,18 @@ impl ConsonanceMcp {
     /// The NEXT-trailer gate's board line, for a refusal AND for a hand-back delivered with a warning — a warning that
     /// reaches only the receiver's pane is a warning the room cannot count (D069). Its own pane name, because the
     /// line may be about any seat's message, not the chair's.
+    /// The digest gate's own board line, on its own pane name so a reader can count what the ring hashed, what it
+    /// could not, and what it refused, without reading them out of the trailer gate's rows.
+    fn digest_audit(&self, text: String) {
+        board_push(&self.board, BoardEntry {
+            pane: "digest-gate".to_string(),
+            role: "committee".to_string(),
+            text,
+            ts: now_ms(),
+            ts_source: crate::TsSource::Push,
+        });
+    }
+
     fn trailer_audit(&self, text: String) {
         board_push(&self.board, BoardEntry {
             pane: "trailer-gate".to_string(),
@@ -827,6 +839,42 @@ impl ConsonanceMcp {
         // The Refuse arm is unreachable under `trailer::policy`; it is written to deliver anyway, so a later policy
         // change cannot turn this verb into the one that loses work.
         let who = self.identity.clone().unwrap_or_else(|| "a pane".to_string());
+        // THE DIGEST GATE (P-DIGEST-AT-RING, L061 packet 3). BEFORE the trailer gate, so the ring's line is inserted
+        // while the NEXT trailer is still the last line and the trailer check reads what the librarian will read. Off
+        // the async thread, because it runs `git hash-object`. A refusal here keeps the attempt on the board for
+        // D077's reason — a refused `call_librarian` is not delivered, so the pointer would otherwise leave no copy.
+        // If the gate itself cannot run, the hand-back still goes, with the pane's digest stripped and none invented.
+        let (digest_text, digest_repo) = (text.clone(), crate::repo_root());
+        let verdict = tokio::task::spawn_blocking(move || digest_gate_at(&digest_text, digest_repo.as_deref()))
+            .await
+            .unwrap_or_else(|e| {
+                DigestVerdict::Deliver(DigestDeliver {
+                    text: strip_supplied_digests(&text).0,
+                    audit: Some(format!("call_librarian from {who}: THE DIGEST GATE COULD NOT RUN ({e}) — delivered with no digest")),
+                })
+            });
+        let text = match verdict {
+            DigestVerdict::Deliver(d) => {
+                if let Some(line) = d.audit {
+                    self.digest_audit(line);
+                }
+                d.text
+            }
+            DigestVerdict::Refuse(msg) => {
+                board_push(&self.board, BoardEntry {
+                    pane: "chair".to_string(),
+                    role: "committee".to_string(),
+                    text: refused_digest_row(&who, &text),
+                    ts: now_ms(),
+                    ts_source: crate::TsSource::Push,
+                });
+                self.digest_audit(format!(
+                    "call_librarian from {who} REFUSED BY THE DIGEST GATE: {}",
+                    msg.lines().next().unwrap_or("")
+                ));
+                return Ok(CallToolResult::success(vec![Content::text(msg)]));
+            }
+        };
         let text = match trailer_gate(crate::trailer::Verb::CallLibrarian, &format!("call_librarian from {who}"), &text) {
             TrailerDecision::Deliver { text, audit } => {
                 if let Some(line) = audit {
@@ -2789,6 +2837,396 @@ mod seal_gate_tests {
         let seal = body.find("seal_gate_at(").expect("the seal gate is not called from chair_inject");
         let send = body.find("self.send_chair(").expect("the delivery");
         assert!(debt < seal && seal < send, "order must be debt gate < seal gate < delivery");
+    }
+}
+
+// ── THE DIGEST IS THE RING'S, OR IT IS NOT SAID (P-DIGEST-AT-RING, L061 packet 3) ────────────────────────────────
+// MEASURED CAUSE: a pane computes its hand-back's digest, keeps writing, and rings. C's first ring matched its file
+// exactly; C's second quoted a digest for 529 lines while 42 more had landed three seconds earlier. A digest that is
+// SOMETIMES right is worse than none, because the one that matched teaches the next reader to trust the next one.
+//
+// So the pane's digest is never carried. It is stripped, and the ring computes its own from the file the pointer
+// names, at the moment the ring fires. WHICH DIGEST: a git-blob id, on this file's own precedent for the seal gate's
+// key (`:1762-1764` — git is already this gate's one dependency and the crate has no sha256), and the line says
+// `git-blob` so it is never read as a sha256. The cost of that choice, named rather than hidden: a pane-supplied
+// sha256 cannot be COMPARED against a git-blob, so it is removed rather than caught.
+//
+// WHAT REFUSES AND WHAT ONLY MARKS. A pointer naming no readable file is REFUSED with the path in the refusal — the
+// hand-back does not exist, so there is nothing to deliver and the pane must be told which path came back empty. But
+// this verb is the one that loses work when it refuses (D069's reason, and D077's), so a machine with no checkout, a
+// git that cannot run, and a call carrying no pointer at all are MARKED and delivered, never refused. In every one of
+// those the reader still sees no digest rather than an unchecked one, which is the whole point.
+const DIGEST_MARK: &str = "digest at ring";
+
+struct DigestDeliver {
+    text: String,
+    audit: Option<String>,
+}
+
+enum DigestVerdict {
+    Deliver(DigestDeliver),
+    Refuse(String),
+}
+
+/// The first repo-relative `*.md` token in the call — the pointer this verb exists to carry. Surrounding punctuation is
+/// trimmed, because rings write `at exo_memory/handback/x.md (uncommitted;` and the path is the token, not the prose.
+fn pointer_in(text: &str) -> Option<String> {
+    text.split_whitespace()
+        .map(|t| t.trim_matches(|c: char| !c.is_ascii_alphanumeric() && c != '/' && c != '.' && c != '_' && c != '-'))
+        .find(|t| {
+            let low = t.to_ascii_lowercase();
+            low.ends_with(".md") && t.contains('/') && !low.contains("://")
+        })
+        .map(|t| t.to_string())
+}
+
+/// Remove every digest the PANE supplied, and say how many were removed. A digest word (`sha256`, `sha-256`, `sha1`,
+/// `git-blob`) takes its following hex token with it, so a stale value cannot survive as a bare 64-hex string.
+fn strip_supplied_digests(text: &str) -> (String, usize) {
+    const WORDS: [&str; 4] = ["sha256", "sha-256", "sha1", "git-blob"];
+    let hexish = |t: &str| {
+        let core = t.trim_matches(|c: char| !c.is_ascii_alphanumeric());
+        core.len() >= 7 && core.chars().all(|c| c.is_ascii_hexdigit())
+    };
+    let mut removed = 0;
+    let mut out: Vec<String> = Vec::new();
+    for line in text.replace("\r\n", "\n").split('\n') {
+        let low = line.to_ascii_lowercase();
+        if !WORDS.iter().any(|w| low.contains(w)) {
+            out.push(line.to_string());
+            continue;
+        }
+        // Only a line that names a digest is rewritten; every other line keeps its own spacing.
+        let mut toks: Vec<String> = Vec::new();
+        let mut drop_next_hex = false;
+        for tok in line.split_whitespace() {
+            let lt = tok.to_ascii_lowercase();
+            if WORDS.iter().any(|w| lt.contains(w)) {
+                removed += 1;
+                drop_next_hex = true;
+                toks.push("[digest removed — the pane's, not the ring's]".to_string());
+                continue;
+            }
+            if std::mem::take(&mut drop_next_hex) && hexish(tok) {
+                continue;
+            }
+            toks.push(tok.to_string());
+        }
+        out.push(toks.join(" "));
+    }
+    (out.join("\n"), removed)
+}
+
+/// Put the ring's line where the NEXT trailer stays LAST — the trailer gate and the librarian both read the last line.
+fn insert_before_trailer(text: &str, line: &str) -> String {
+    let body = text.replace("\r\n", "\n");
+    let mut lines: Vec<String> = body.split('\n').map(str::to_string).collect();
+    match lines.iter().rposition(|l| !l.trim().is_empty()) {
+        Some(i) if lines[i].trim_start().starts_with("NEXT:") => lines.insert(i, line.to_string()),
+        _ => lines.push(line.to_string()),
+    }
+    lines.join("\n")
+}
+
+fn digest_refusal(path: &str, why: &str) -> String {
+    format!(
+        "refused: THE RING COULD NOT COMPUTE THE DIGEST — {why}: {path}\n\
+         The hand-back was NOT delivered, and the attempt was posted to the board.\n\
+         Recovery: write the file at that path, or correct the pointer, then ring again."
+    )
+}
+
+/// The gate, pure but for the injected `git` — the seal gate's shape (`seal_gate`), for the same reason: a test must be
+/// able to ask what the ring would do without a subprocess, and one test still runs the real command.
+fn digest_gate(
+    text: &str,
+    repo: Option<&std::path::Path>,
+    git: &mut dyn FnMut(&[&str]) -> Result<GitOut, String>,
+) -> DigestVerdict {
+    let (clean, removed) = strip_supplied_digests(text);
+    let note = move |s: &str| {
+        Some(if removed > 0 { format!("{s}; {removed} pane-supplied digest(s) removed") } else { s.to_string() })
+    };
+    let marked = |why: &str| format!("[NO {DIGEST_MARK} — {why}]");
+    let p = match pointer_in(&clean) {
+        Some(p) => p,
+        None => {
+            return DigestVerdict::Deliver(DigestDeliver {
+                text: insert_before_trailer(&clean, &marked("this call names no file to hash")),
+                audit: note("call_librarian: no pointer to hash"),
+            })
+        }
+    };
+    if p.starts_with('/') || p.contains(':') || p.split('/').any(|c| c == "..") {
+        return DigestVerdict::Refuse(digest_refusal(&p, "the pointer is not a repo-relative path inside the checkout"));
+    }
+    let Some(root) = repo else {
+        return DigestVerdict::Deliver(DigestDeliver {
+            text: insert_before_trailer(&clean, &marked("no checkout resolves on this machine")),
+            audit: note(&format!("call_librarian: no checkout, {p} was not hashed")),
+        });
+    };
+    let abs = root.join(&p);
+    let len = match std::fs::metadata(&abs) {
+        Ok(m) if m.is_file() => m.len(),
+        _ => return DigestVerdict::Refuse(digest_refusal(&p, "no readable file at that path")),
+    };
+    match git(&["hash-object", "--no-filters", &abs.to_string_lossy()]) {
+        Ok(o) if o.code == 0 && o.stdout.trim().len() == 40 && o.stdout.trim().chars().all(|c| c.is_ascii_hexdigit()) => {
+            let id = o.stdout.trim();
+            DigestVerdict::Deliver(DigestDeliver {
+                text: insert_before_trailer(
+                    &clean,
+                    &format!("[{DIGEST_MARK}: git-blob {id} — {p}, {len} bytes, computed by call_librarian when the ring fired]"),
+                ),
+                audit: note(&format!("call_librarian: git-blob {id} computed at ring for {p}")),
+            })
+        }
+        _ => DigestVerdict::Deliver(DigestDeliver {
+            text: insert_before_trailer(&clean, &marked(&format!("git could not hash {p}"))),
+            audit: note(&format!("call_librarian: git could not hash {p}")),
+        }),
+    }
+}
+
+/// The gate as `call_librarian` calls it.
+fn digest_gate_at(text: &str, repo: Option<&std::path::Path>) -> DigestVerdict {
+    match repo {
+        Some(r) => {
+            let root = r.to_path_buf();
+            let mut git = |a: &[&str]| run_git_for_seal(&root, a);
+            digest_gate(text, Some(r), &mut git)
+        }
+        None => digest_gate(text, None, &mut |_| Err("no checkout".to_string())),
+    }
+}
+
+/// The board row that KEEPS a hand-back refused by THIS gate, on D077's terms and in its row family: a refused
+/// `call_librarian` is not delivered, so without this the pointer that could not be hashed leaves no copy at all.
+fn refused_digest_row(who: &str, text: &str) -> String {
+    refused_row_labelled("call_librarian REFUSED (digest)", who, text)
+}
+
+#[cfg(test)]
+mod digest_at_ring_tests {
+    use super::*;
+
+    const RING: &str = "P-X (L061). Hand-back at exo_memory/handback/p-x-A_2026-09-20.md (uncommitted; sha256 \
+                        1f3ac4d9e5b6c7a8091a2b3c4d5e6f7081920a1b2c3d4e5f60718293a4b5c6d7).\n\
+                        NEXT: librarian collate when both are in";
+    const STALE: &str = "1f3ac4d9e5b6c7a8091a2b3c4d5e6f7081920a1b2c3d4e5f60718293a4b5c6d7";
+    const BLOB: &str = "ce013625030ba8dba906f756967f9e9ca394464a";
+
+    fn ok(stdout: &str) -> Result<GitOut, String> {
+        Ok(GitOut { code: 0, stdout: stdout.to_string() })
+    }
+
+    /// ONE ROOT PER CALL, and the counter is the whole reason it is one. Keyed on pid and the clock alone, two tests
+    /// entering in the same millisecond share a directory — so `a_pointer_with_no_readable_file_…` found the "hello\n"
+    /// another test had just written, the gate correctly hashed a file that was really there, and the test failed for a
+    /// reason that had nothing to do with the gate. It never fired under `--test-threads=1`, which is what every bar in
+    /// my hand-back was run with; the chair's plain `cargo test` found it in one run.
+    static FIXTURE_N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
+
+    fn fixture(rel: &str, body: &str) -> std::path::PathBuf {
+        let n = FIXTURE_N.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+        let dir = std::env::temp_dir().join(format!("digest-at-ring-{}-{}-{n}", std::process::id(), now_ms()));
+        let p = dir.join(rel);
+        std::fs::create_dir_all(p.parent().unwrap()).unwrap();
+        std::fs::write(&p, body).unwrap();
+        dir
+    }
+
+    fn delivered(v: DigestVerdict) -> DigestDeliver {
+        match v {
+            DigestVerdict::Deliver(d) => d,
+            DigestVerdict::Refuse(m) => panic!("refused, expected delivery: {m}"),
+        }
+    }
+
+    fn refused(v: DigestVerdict) -> String {
+        match v {
+            DigestVerdict::Refuse(m) => m,
+            DigestVerdict::Deliver(d) => panic!("delivered, expected a refusal: {}", d.text),
+        }
+    }
+
+    // ── the pointer ──────────────────────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn the_pointer_is_found_in_a_real_ring_with_its_punctuation_trimmed() {
+        assert_eq!(pointer_in(RING).as_deref(), Some("exo_memory/handback/p-x-A_2026-09-20.md"));
+    }
+
+    #[test]
+    fn prose_with_no_path_has_no_pointer() {
+        assert_eq!(pointer_in("the read is done and the numbers are in the file"), None);
+    }
+
+    // ── the pane's digest never survives ─────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_pane_supplied_digest_never_reaches_the_reader() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let d = delivered(digest_gate(RING, Some(&root), &mut |_| ok(BLOB)));
+        assert!(!d.text.contains(STALE), "the pane's stale digest survived the gate: {}", d.text);
+        assert!(!d.text.to_lowercase().contains("sha256"), "the pane's digest WORD survived: {}", d.text);
+    }
+
+    #[test]
+    fn the_ring_computes_from_the_file_the_pointer_names() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let mut seen: Vec<String> = Vec::new();
+        let d = delivered(digest_gate(RING, Some(&root), &mut |a| {
+            seen = a.iter().map(|s| s.to_string()).collect();
+            ok(BLOB)
+        }));
+        assert_eq!(seen.get(0).map(String::as_str), Some("hash-object"), "args: {seen:?}");
+        assert_eq!(seen.get(1).map(String::as_str), Some("--no-filters"), "args: {seen:?}");
+        assert!(
+            seen.get(2).map_or(false, |p| p.ends_with("p-x-A_2026-09-20.md") && p.contains(&*root.to_string_lossy())),
+            "the ring must hash the file under the checkout, not the bare pointer: {seen:?}"
+        );
+        assert!(d.text.contains(&format!("git-blob {BLOB}")), "the computed digest is not in the text: {}", d.text);
+        assert!(d.text.contains("exo_memory/handback/p-x-A_2026-09-20.md"), "the digest must name its file: {}", d.text);
+        assert!(d.text.contains("6 bytes"), "the digest line must carry the size it hashed: {}", d.text);
+    }
+
+    #[test]
+    fn the_digest_line_leaves_the_next_trailer_last() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let d = delivered(digest_gate(RING, Some(&root), &mut |_| ok(BLOB)));
+        let last = d.text.lines().rev().find(|l| !l.trim().is_empty()).unwrap_or("");
+        assert!(last.starts_with("NEXT:"), "the trailer must stay last: {last:?}");
+    }
+
+    // ── what refuses ─────────────────────────────────────────────────────────────────────────────────────────────
+
+    #[test]
+    fn a_pointer_with_no_readable_file_is_refused_with_the_path_in_it() {
+        let root = fixture("exo_memory/handback/other.md", "x\n");
+        let m = refused(digest_gate(RING, Some(&root), &mut |_| ok(BLOB)));
+        assert!(m.contains("exo_memory/handback/p-x-A_2026-09-20.md"), "the refusal must name the path: {m}");
+        assert!(m.contains("NOT delivered"), "the pane must be told the hand-back did not go: {m}");
+    }
+
+    #[test]
+    fn a_pointer_that_climbs_out_of_the_checkout_is_refused_with_the_path_in_it() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let text = "see ../../elsewhere/p-x.md\nNEXT: librarian read it when it lands";
+        let m = refused(digest_gate(text, Some(&root), &mut |_| ok(BLOB)));
+        assert!(m.contains("../../elsewhere/p-x.md"), "the refusal must name the path: {m}");
+    }
+
+    // ── what marks instead of refusing, because this verb loses work when it refuses ─────────────────────────────
+
+    #[test]
+    fn no_checkout_marks_the_absence_and_still_delivers() {
+        let d = delivered(digest_gate(RING, None, &mut |_| Err("no checkout".to_string())));
+        assert!(d.text.contains(&format!("NO {DIGEST_MARK}")), "the absence must be visible: {}", d.text);
+        assert!(!d.text.contains(STALE), "and the pane's digest is still gone: {}", d.text);
+    }
+
+    #[test]
+    fn a_git_that_cannot_run_marks_the_absence_and_still_delivers() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let d = delivered(digest_gate(RING, Some(&root), &mut |_| Err("git is not on PATH".to_string())));
+        assert!(d.text.contains(&format!("NO {DIGEST_MARK}")), "the absence must be visible: {}", d.text);
+        assert!(!d.text.contains(BLOB), "no digest may be invented when the command failed: {}", d.text);
+    }
+
+    /// git exiting 0 is not the same as git printing an object id — `hash-object` can succeed and print a warning, and
+    /// a message pasted into the ring as a digest is exactly the class this gate exists to stop.
+    #[test]
+    fn a_zero_exit_with_something_that_is_not_an_object_id_is_no_digest() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let d = delivered(digest_gate(RING, Some(&root), &mut |_| ok("warning: LF will be replaced by CRLF\n")));
+        assert!(d.text.contains(&format!("NO {DIGEST_MARK}")), "a non-id must read as NO digest: {}", d.text);
+        assert!(!d.text.contains("warning:"), "git's chatter must never be printed as a digest: {}", d.text);
+    }
+
+    /// The escaping pointer must be refused BECAUSE it escapes, not because nothing happens to be there: this fixture
+    /// puts a real file outside the checkout, so a gate that dropped the `..` check would hash it and deliver.
+    #[test]
+    fn a_pointer_to_a_real_file_outside_the_checkout_is_still_refused() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        // Named from the root's own unique directory name, not from the pid: the pid is shared by every test in the
+        // run, and this file is written into the temp root that they all share.
+        let outside = root
+            .parent()
+            .unwrap()
+            .join(format!("{}-outside.md", root.file_name().unwrap().to_string_lossy()));
+        std::fs::write(&outside, "not the pane's file\n").unwrap();
+        let rel = format!("../{}", outside.file_name().unwrap().to_string_lossy());
+        assert!(root.join(&rel).is_file(), "fixture: the escaping path must really exist");
+        let text = format!("see {rel}\nNEXT: librarian read it when it lands");
+        let m = refused(digest_gate(&text, Some(&root), &mut |_| ok(BLOB)));
+        assert!(m.contains(&rel), "the refusal must name the path: {m}");
+        let _ = std::fs::remove_file(&outside);
+    }
+
+    #[test]
+    fn a_call_with_no_pointer_is_delivered_rather_than_refused() {
+        let text = "the read is done\nNEXT: librarian score it when the others are in";
+        let d = delivered(digest_gate(text, None, &mut |_| Err("no checkout".to_string())));
+        assert!(d.text.contains("NEXT:"), "the hand-back must still go: {}", d.text);
+    }
+
+    // ── the command and its value are real, not a shape I agreed with myself ─────────────────────────────────────
+
+    // ── the wiring, read from the source: the gate runs, in the right place, and decides nothing else ────────────
+    // The anchors are built with `concat!` so a search string cannot match this test's own text (the D076 lesson).
+
+    fn librarian_body() -> String {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("async fn call_librarian(").nth(1).expect("call_librarian moved — re-point this test").to_string();
+        f.split("\n    }\n").next().unwrap_or(&f).to_string()
+    }
+
+    #[test]
+    fn the_ring_hashes_before_it_checks_the_trailer_and_before_it_sends() {
+        let b = librarian_body();
+        let gate = b.find(concat!("digest_gate", "_at(")).expect("call_librarian does not run the digest gate");
+        let trailer = b.find(concat!("trailer_", "gate(")).expect("the trailer gate");
+        // The call is wrapped across two lines (`self` then `.send_chair(...)`), so the anchor is the method and its
+        // command, never `self.send_chair(` — that spelling does not occur in this body and would pass on nothing.
+        let send = b.find(concat!(".send_", "chair(ChairCmd::CallLibrarian")).expect("the delivery");
+        assert!(gate < trailer && trailer < send, "order must be digest gate < trailer gate < delivery");
+    }
+
+    #[test]
+    fn a_refused_digest_keeps_the_attempt_on_the_board() {
+        let b = librarian_body();
+        assert!(b.contains(concat!("refused_digest", "_row(&who, &text)")), "a digest refusal must keep the pointer");
+        assert!(
+            b.contains(concat!("DigestVerdict::", "Refuse(msg)")) && b.contains(concat!("Content::text(", "msg)")),
+            "the refusal must be what the pane is told"
+        );
+    }
+
+    #[test]
+    fn the_digest_gate_changes_no_gate_decision() {
+        let b = librarian_body();
+        let addr = b.find(concat!("auth_", "address(\"call_librarian\")")).expect("the address gate");
+        let station = b.find(concat!("auth_", "station(\"call_librarian\")")).expect("the station gate");
+        let gate = b.find(concat!("digest_gate", "_at(")).expect("the digest gate");
+        assert!(addr < station && station < gate, "the digest gate runs AFTER both gates and replaces neither");
+        let g = {
+            let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+            let f = src.split("fn digest_gate(").nth(1).expect("digest_gate moved").to_string();
+            f.split("\n}\n").next().unwrap_or(&f).to_string()
+        };
+        for forbidden in [concat!("auth_", "address"), concat!("auth_", "station"), concat!("address", "_row")] {
+            assert!(!g.contains(forbidden), "the digest gate must not touch who may ring: found {forbidden}");
+        }
+    }
+
+    #[test]
+    fn the_real_command_returns_the_known_blob_id_of_a_known_file() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let d = delivered(digest_gate_at(RING, Some(&root)));
+        // `git hash-object` of "hello\n" is this id in every git repository on earth.
+        assert!(d.text.contains(&format!("git-blob {BLOB}")), "real git did not return the known id: {}", d.text);
     }
 }
 

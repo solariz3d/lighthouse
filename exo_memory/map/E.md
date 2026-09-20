@@ -1396,3 +1396,20 @@ settled against the other readers' hand-backs, which my own voiding list forbids
 CONSTRUCTION. Release the auditor from the reader list, or give exclusivity to a second seat.
 **Conceded against myself:** §5 caught my `~31 minutes` surviving at `:125` while `:5` says ~7 - the carrier problem
 inside one file, mine. Left UNEDITED: it is the scored artifact, and repairing it after scoring destroys the evidence.
+
+## 2026-09-20 ~02:4x · L061 packet 1 P-SHUFFLE-GUARD (non-author of C's tool) → `exo_memory/handback/p-shuffle-guard-E_2026-09-20.md`
+`order-parameter.js` now REFUSES to name a verdict when `--shuffles` is 0: `verdictReport` (printed) and
+`gateVerdict` (written) - flag first, then the reason, and the measured line prints either way. **20/5 red first with
+the FINAL test text against `git show HEAD:` in scratch; 25/0 after; mutants 11 listed, 11 killed, 0 survived,
+pre-flight green 25/0, live file unchanged.** Estimator/bars/numbers untouched: 5 deleted lines, all print/write/export.
+**Ruling where the bar was silent:** the `--out` JSON is gated too (a verdict on disk is quoted like a printed one),
+ruling withheld, every measured field passed through.
+**Two of my own tests were too weak and the mutants said so first:** `/--shuffles/` matched a second mention inside
+the reason, `/control/i` matched the headline - so a refusal could lose its actionable line or its reason and stay
+green. **A refusal's two halves need two assertions.** And one row of mine was an EQUIVALENT mutant (swapping two
+statements after `c` is already computed) - the harness was right to call it survived.
+**Three findings about the tracked mutant-harness (A's file, not touched):** (1) its result parser is cargo-only
+(`:80`), so a node:test scorer reads NO RESULT on every row - my scorer translates node:test's real counts into the
+line it parses; (2) its worktree is HEAD and it copies in only the mutated file, so a tracked-but-modified test file
+is silently STALE inside it - worse than D090's missing scorer; (3) a missing anchor refuses the whole RUN, so a
+deliberate control row cannot ride along.

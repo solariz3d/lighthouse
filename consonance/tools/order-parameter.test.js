@@ -166,3 +166,60 @@ test('a session that genuinely locks in beats its own shuffle; an i.i.d. one doe
   const real = quintileGap(orderCurve(v)), ctl = shuffleControl(v, 20, 5).gap;
   assert.ok(real < lockReal - lockCtl + ctl, `an i.i.d. session must not beat its shuffle the way a lock does: ${real} vs ${ctl}`);
 });
+
+/* ---- L061: THE SHUFFLE-REFUSAL GUARD ------------------------------------------------------------
+ * Last night this tool printed a verdict that passed its registered bars by 0.0022 while its own
+ * shuffle control — built, exported, tested, and defaulted to 0 — never ran, and C's i.i.d. measurement
+ * puts the estimator artifact near +0.09 in this board's regime (`loop/l060_order_parameter_review_2026-09-20.md`,
+ * `handback/p-order-parameter-C_2026-09-20.md` §9). The measurement is not what failed; naming a verdict
+ * without the control that could invert it is. The gate below is one line of behaviour: no control, no verdict.
+ * The numbers are untouched — the refusal is a gate, not a measurement. */
+const { verdictReport, gateVerdict } = require('./order-parameter.js');
+
+const ruled = () => classify([
+  { slope: 1, gap: 0.5, mean: 0.5, n: 10 }, { slope: 1, gap: 0.5, mean: 0.5, n: 10 },
+  { slope: 1, gap: 0.5, mean: 0.5, n: 10 }, { slope: 1, gap: 0.4, mean: 0.5, n: 10 },
+]);
+
+test('L061 · no shuffle control, no verdict: the ruling is withheld rather than printed', () => {
+  const v = ruled();
+  assert.ok(v.verdict === 'CLIMBS' || v.verdict === 'NEITHER', `premise: classify ruled ${v.verdict}`);
+  const out = verdictReport(v, 0);
+  assert.ok(!out.includes('VERDICT (registered bars)'), 'the verdict headline printed without its control');
+  assert.ok(!out.includes(v.verdict), `the verdict "${v.verdict}" was named without its control`);
+});
+
+test('L061 · the refusal names the flag and the reason, so a re-runner is told what to DO', () => {
+  const out = verdictReport(ruled(), 0);
+  // Both assertions below were WIDENED after mutants #6 and #7 survived them: /--shuffles/ alone was satisfied by a
+  // second mention of the flag inside the reason string, and /control/i by the word in the headline. A refusal owes
+  // the ACTIONABLE line and the REASON, so each is now pinned to its own sentence.
+  assert.match(out, /Re-run with --shuffles \d+/, 'the refusal must give the command that fixes it, with an n');
+  assert.match(out, /Why: .*shuffled order/, 'the refusal must carry its reason, not merely the word control');
+});
+
+test('L061 · with the control run, the verdict prints exactly as it did before the gate', () => {
+  const v = ruled();
+  const out = verdictReport(v, 20);
+  assert.match(out, /VERDICT \(registered bars\): /, 'the verdict headline must survive the gate');
+  assert.ok(out.includes(v.verdict) && out.includes(v.why), 'the ruling and its reason must survive the gate');
+  assert.ok(out.includes(v.medianQuintileGap.toFixed(4)), 'the measured numbers must survive the gate');
+});
+
+test('L061 · the withheld verdict keeps every measured number and withholds only the ruling', () => {
+  const v = ruled();
+  const g = gateVerdict(v, 0);
+  assert.notStrictEqual(g.verdict, v.verdict, 'the ruling must not survive into the written record');
+  for (const k of ['sessions', 'positiveSlopes', 'iqrOfSessionMeans', 'medianQuintileGap', 'meanOfSessionMeans']) {
+    assert.strictEqual(g[k], v[k], `${k} is a measurement and must be untouched by the gate`);
+  }
+  assert.strictEqual(gateVerdict(v, 20), v, 'with the control run the verdict passes through unchanged');
+});
+
+test('L061 · main routes BOTH the printed verdict and the written one through the gate', () => {
+  const src = require('node:fs').readFileSync(require('node:path').join(__dirname, 'order-parameter.js'), 'utf8');
+  const body = src.slice(src.indexOf('async function main('));
+  assert.match(body, /console\.log\(verdictReport\(/, 'the printed verdict must go through verdictReport');
+  assert.match(body, /verdict: gateVerdict\(/, 'the written verdict must go through gateVerdict');
+  assert.ok(!/console\.log\(`\nVERDICT \(registered bars\)/.test(body), 'no ungated verdict print may remain');
+});

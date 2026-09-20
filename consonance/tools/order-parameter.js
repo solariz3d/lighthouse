@@ -208,6 +208,44 @@ async function loadEncoder(deps) {
   return { embed, version, onnxSha: got };
 }
 
+/* ---- THE CONTROL GATE (L061) — no shuffle control, no verdict ---------------------------------
+ * Run 1 printed CLIMBS, passing its registered bars by 0.0022, while `--shuffles` sat at its default of 0 and the
+ * control this file exports was never called. The control is the only thing that separates a real within-session
+ * lock from the estimator's own climb, and C measured that artifact near +0.09 on i.i.d. vectors at this board's
+ * dispersion (`handback/p-order-parameter-C_2026-09-20.md` §9; the two tests above at `:142` and `:150` are it in
+ * miniature). A margin of 0.0022 against an artifact of that size is not a verdict; it is a number waiting for its
+ * control.
+ *
+ * So the gate is on the VERDICT and on nothing else. Every measurement still prints and is still written: the
+ * universe, the per-session curve, the slopes, the gaps, the IQR, the medians. What is withheld is the ruling —
+ * in the log AND in the JSON, because a verdict that escapes to disk is quoted later exactly as one that was
+ * printed. The estimator, the bars and every number are untouched; this decides nothing about the measurement and
+ * only refuses to name a result the run cannot yet support. */
+const WITHHELD = 'WITHHELD — the registered shuffle control did not run';
+const WITHHELD_WHY = 'the running-centroid estimator climbs on shuffled order too, so without the control a climb '
+  + 'cannot be told from the artifact; re-run with --shuffles to get a ruling';
+
+/** The verdict as it may be WRITTEN: the ruling withheld when the control did not run, every measured field kept. */
+function gateVerdict(verdict, shuffles) {
+  if (shuffles) return verdict;
+  return { ...verdict, verdict: WITHHELD, why: WITHHELD_WHY, controlRan: false };
+}
+
+/** The verdict as it may be PRINTED. Refusing, it names the flag first — a re-runner needs the next command, not
+ *  a complaint — and then prints the same measured line it would have printed anyway. */
+function verdictReport(verdict, shuffles) {
+  const measured = `  sessions ${verdict.sessions} · positive slopes ${verdict.positiveSlopes} · median quintile gap `
+    + `${verdict.medianQuintileGap?.toFixed(4)} · IQR of session means ${verdict.iqrOfSessionMeans?.toFixed(4)} · `
+    + `mean r ${verdict.meanOfSessionMeans?.toFixed(4)}`;
+  if (!shuffles) {
+    return `\nNO RULING — this run did not run its own control.\n`
+      + `  Re-run with --shuffles 20 (any n > 0) and the ruling prints.\n`
+      + `  Why: ${WITHHELD_WHY}.\n`
+      + `  The measurement below stands and is unchanged by this refusal:\n${measured}`;
+  }
+  return `\nVERDICT (registered bars): ${verdict.verdict}\n  ${verdict.why}\n${measured}`;
+}
+
 async function main(argv) {
   const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d; };
   const deps = arg('--deps', null);
@@ -254,19 +292,17 @@ async function main(argv) {
 SHUFFLE CONTROL (post-hoc, ${shuffles} shuffles/session): median real quintile gap ${med(real).toFixed(4)} vs shuffled ${med(sham).toFixed(4)} · sessions where real beats its own shuffle ${beats}/${results.length}`);
   }
   const verdict = classify(results.map((x) => ({ slope: x.slope, gap: x.gap, mean: x.mean, n: x.n })));
-  console.log(`\nVERDICT (registered bars): ${verdict.verdict}`);
-  console.log(`  ${verdict.why}`);
-  console.log(`  sessions ${verdict.sessions} · positive slopes ${verdict.positiveSlopes} · median quintile gap ${verdict.medianQuintileGap?.toFixed(4)} · IQR of session means ${verdict.iqrOfSessionMeans?.toFixed(4)} · mean r ${verdict.meanOfSessionMeans?.toFixed(4)}`);
+  console.log(verdictReport(verdict, shuffles));
   if (out) {
     fs.writeFileSync(out, JSON.stringify({ tool: 'order-parameter', generated: new Date().toISOString(), board,
       universe: u, encoder: { id: 'Alibaba-NLP/gte-base-en-v1.5', dtype: 'q8', onnxSha: enc.onnxSha, transformers: enc.version },
       method: { gapMs: GAP_MS, minContributions: min, window: WIN, pooling: 'CLS+L2, token-weighted across windows', contribution: 'assistant rows' },
       sessionsTotal: all.length, sessionsEligible: eligible.length, sessionsEmbedded: picked.length,
-      verdict, sessions: results }, null, 1));
+      verdict: gateVerdict(verdict, shuffles), sessions: results }, null, 1));
     console.log(`\nwritten to ${out}`);
   }
   return 0;
 }
 
-module.exports = { sessionsOf, orderCurve, slope, quintileGap, classify, shuffleControl, shuffled, rng, loadEncoder, checkEncoderFile, GAP_MS, MIN_CONTRIB };
+module.exports = { sessionsOf, orderCurve, slope, quintileGap, classify, shuffleControl, shuffled, rng, loadEncoder, checkEncoderFile, gateVerdict, verdictReport, GAP_MS, MIN_CONTRIB };
 if (require.main === module) main(process.argv.slice(2)).then((c) => process.exit(c)).catch((e) => { console.error(e); process.exit(3); });
