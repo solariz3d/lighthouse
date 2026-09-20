@@ -7165,7 +7165,167 @@ fn librarian_window_line(
 /// because the delivered shelf must be bounded by the intake cap rather than by an unrelated
 /// constant (`librarian_shelf`), and because a walk that reads an environment variable makes every
 /// test of it a test of the machine it ran on.
+/// THE INDEX TIER'S BYTE BUDGET -- the notes window one tier down, and the reason the seat can
+/// open at all after 2026-09-20.
+///
+/// MEASURED, not chosen. On 2026-09-20 the floor -- head 84,924 + index 69,165 -- was 154,089
+/// bytes against a 150,000 cap: 102.7%, bodies zero, and
+/// `the_librarian_intake_fits_under_the_limit_it_must_obey` RED with "the seat cannot open". The
+/// index tier (map + journal + loop) was 449 entries / 58,497 bytes, of which loop/ alone was 398
+/// entries / 55,081. It is also the only part of the floor that grows on its own: every new file
+/// anywhere under exo_memory/ buys a line whether or not any seat ever cites it. The intake
+/// gained a byte between two runs while the packet for this change was being written.
+///
+/// WHY A BUDGET AND NOT A DATE CUTOFF. A date goes stale and needs re-tuning by hand, and the
+/// hand that tunes it is the seat that benefits from a bigger index. A budget is self-limiting
+/// forever: the tier may spend this many bytes and no more, whatever the corpus does next.
+///
+/// WHERE 30,000 COMES FROM, and the arithmetic is reproducible from the numbers above. The
+/// binding constraint is the FLOOR, because the floor is what made the seat unopenable:
+///   floor = head 84,924 + carried-tier index 8,506 + shelf prose ~1,275 + collapse line ~320
+///           + LIBRARIAN_INDEX_BUDGET
+/// A floor at or under 85% of the cap (127,500) needs a budget at or under 32,475. 30,000 leaves
+/// the floor at ~125,000 -- a margin of ~25,000, about 16.7% of the cap -- and leaves ~2,400
+/// bytes of slack against the head, which also grows.
+///
+/// WHAT THE TOTAL-INTAKE MARGIN CANNOT BE, and this is the one thing a reader must not take on
+/// faith from the packet. The shelf is SELF-LIMITING by construction: `librarian_shelf_room` gives
+/// the bodies `LIBRARIAN_INTAKE_LIMIT - INTAKE_HEADROOM - (head + floor)`, so every byte this
+/// budget frees from the index is spent again on bodies, and the finished intake converges on
+/// `LIBRARIAN_INTAKE_LIMIT - INTAKE_HEADROOM` whatever this constant says. The total margin is
+/// therefore pinned near INTAKE_HEADROOM (8,000, 5.3% of the cap) and is NOT tunable from here.
+/// The margin this constant does govern is the FLOOR margin, which is the one that was breached.
+/// Both are printed by the limit test so the distinction cannot be lost again.
+const LIBRARIAN_INDEX_BUDGET: usize = 30_000;
+
+/// A STANDING INSTRUMENT under loop/ rather than a dated record: undated, at depth 1, ALL-CAPS
+/// basename. The librarian's ruling (L062 §10.2), and it is a RULE rather than a list on purpose —
+/// a hand-picked list is favouritism that needs maintaining, and a future standing document is
+/// protected the day it is named without anyone editing anything.
+///
+/// Today it selects exactly two: `ESCALATIONS.md` (the human-anchor queue, live and deliberately
+/// empty) and `PROTOCOL.md`. About 130 bytes of index between them.
+///
+/// DEPTH 1 IS LOAD-BEARING and is the librarian's own catch: the same rule at any depth also
+/// catches `S01.md`..`S09.md`, the T3 run outputs, which are record and not instruments.
+fn loop_standing_instrument(label: &str) -> bool {
+    let Some(rest) = label.strip_prefix("loop/") else { return false };
+    if rest.contains('/') { return false; }
+    let Some(stem) = rest.strip_suffix(".md") else { return false };
+    !stem.is_empty()
+        && stem.chars().any(|c| c.is_ascii_uppercase())
+        && !stem.chars().any(|c| c.is_ascii_lowercase())
+}
+
+/// The date an index line is ordered by: the LAST `20xx-xx-xx` in the label.
+///
+/// LAST rather than first, so `a_2026-09-01_amended_2026-09-20.md` orders by its amendment and
+/// `loop/2026-08-18/README.md` orders by its directory. Only `20`-prefixed years, so a version
+/// string is not mistaken for a date.
+///
+/// NO DATE IS NOT AN ERROR. 91 of 449 index-tier entries have none -- every `map/*.md`, and 82
+/// working documents under loop/ (PROTOCOL.md, ESCALATIONS.md, the registrations). They cannot be
+/// ordered by a date they do not have, so the window spends them LAST and reports them by count
+/// in the collapse line rather than pretending they were dated.
+fn label_date(label: &str) -> Option<String> {
+    let b = label.as_bytes();
+    let mut found: Option<String> = None;
+    let mut i = 0usize;
+    while i + 10 <= b.len() {
+        let w = &b[i..i + 10];
+        let digits = |x: u8| x.is_ascii_digit();
+        if w[0] == b'2' && w[1] == b'0' && digits(w[2]) && digits(w[3])
+            && w[4] == b'-' && digits(w[5]) && digits(w[6])
+            && w[7] == b'-' && digits(w[8]) && digits(w[9])
+        {
+            found = Some(String::from_utf8_lossy(w).into_owned());
+            i += 10;
+        } else {
+            i += 1;
+        }
+    }
+    found
+}
+
+/// THE COLLAPSE LINE -- one line for everything the index budget could not seat.
+///
+/// A REFUSAL, AND ITS PARTS ARE SEPARATE FACTS, which is E's L061 rule applied here: the count
+/// says how much is missing, the date range says which end of the record it came from, and the
+/// command says how to get it back. A line with the count alone is a silent drop wearing a number.
+///
+/// Returns "" when nothing was dropped. A window line that fires when the window did not is the
+/// 2026-09-01 shape this function is already carrying one scar from.
+fn index_window_line(
+    dropped: usize,
+    bytes: usize,
+    range: Option<(&str, &str)>,
+    undated: usize,
+) -> String {
+    if dropped == 0 {
+        return String::new();
+    }
+    let mut s = String::from("\nTHE INDEX IS WINDOWED -- ");
+    s.push_str(&format!(
+        "{dropped} older index-tier entr{} ({bytes} bytes) {} NOT listed above.\n",
+        if dropped == 1 { "y" } else { "ies" },
+        if dropped == 1 { "is" } else { "are" },
+    ));
+    match range {
+        Some((oldest, newest)) => s.push_str(&format!(
+            "Dated {oldest} .. {newest}"
+        )),
+        None => s.push_str("None of them carries a date"),
+    }
+    if undated > 0 {
+        s.push_str(&format!(", plus {undated} undated"));
+    }
+    s.push_str(".\n");
+    // THE COMMAND, NOT A DESCRIPTION OF THE COMMAND. The room's own exclusion form, the same one
+    // attic/ and the run artifacts already use: a shelf that drops something without saying how to
+    // reach it reads identical to a shelf that never had it.
+    s.push_str("Nothing is deleted and nothing is truncated -- `ls exo_memory/loop/` and\n");
+    s.push_str("`ls exo_memory/journal/` list every one of them, and grep reaches inside.\n");
+    s
+}
+
+/// What the index tier would hold with no window at all -- the denominator the window's own
+/// counter is checked against. Taken from the shelf's own walk rather than from a second
+/// implementation of it, so the two can never disagree the way prose and artifact did on L060.
+#[cfg(test)]
+fn index_tier_entry_count() -> usize {
+    corpus_shelf_at_with_index(0, usize::MAX)
+        .lines()
+        .filter(|l| l.starts_with("- map/") || l.starts_with("- journal/") || l.starts_with("- loop/"))
+        .count()
+}
+
+/// The newest dated entry the index tier holds, by the same date rule the window orders with.
+#[cfg(test)]
+fn newest_dated_index_label() -> Option<String> {
+    let shelf = corpus_shelf_at_with_index(0, usize::MAX);
+    shelf
+        .lines()
+        .filter(|l| l.starts_with("- "))
+        .filter_map(|l| {
+            let lab = l[2..].split("  (").next()?.to_string();
+            if lab.starts_with("map/") || lab.starts_with("journal/") || lab.starts_with("loop/") {
+                label_date(&lab).map(|d| (d, lab))
+            } else {
+                None
+            }
+        })
+        .max()
+        .map(|(_, lab)| format!("- {lab}"))
+}
+
+/// The shelf at a body budget, with the index tier under its shipped budget.
 fn corpus_shelf_at(budget: usize) -> String {
+    corpus_shelf_at_with_index(budget, LIBRARIAN_INDEX_BUDGET)
+}
+
+/// The walk. `index_budget` is separated so a test can drive the window to both ends without
+/// editing a constant -- the seam the 2026-09-01 bug needed and did not have.
+fn corpus_shelf_at_with_index(budget: usize, index_budget: usize) -> String {
     let root = match room_master_path().parent() { Some(p) => p.to_path_buf(), None => return String::new() };
     // Machine-local calendar, per the registration. Read ONCE so a walk that straddles midnight
     // cannot carry two different "today"s in one shelf.
@@ -7191,6 +7351,16 @@ fn corpus_shelf_at(budget: usize) -> String {
     let mut spent = 0usize;
     let mut carried: Vec<(String, String)> = Vec::new();
     let mut indexed: Vec<String> = Vec::new();
+    // THE INDEX TIER IS COLLECTED, NOT EMITTED, so it can be ordered by DATE before the budget is
+    // spent. It used to be pushed straight to `indexed` in walk order.
+    struct IndexEntry { group: u8, date: Option<String>, seq: usize, label: String, line: String }
+    let mut index_tier: Vec<IndexEntry> = Vec::new();
+    let mut index_seq = 0usize;
+    let mut index_window_dropped = 0usize;
+    let mut index_window_bytes = 0usize;
+    let mut index_dropped_undated = 0usize;
+    let mut index_dropped_oldest: Option<String> = None;
+    let mut index_dropped_newest: Option<String> = None;
 
     // (directory, newest-first?, CARRY?) -- "" is the root of exo_memory.
     //
@@ -7268,6 +7438,10 @@ fn corpus_shelf_at(budget: usize) -> String {
     ];
 
     for (dir, newest_first, carry) in order {
+        // THE TIER'S OWN FLAG, captured before `carry` is shadowed twice below (librarian's
+        // window, then CLAUDE.global.md). The window keys off the TIER, not off the per-file
+        // decision -- reading the shadowed value here would window carried files too.
+        let tier_is_index = !carry;
         let d = if dir.is_empty() { root.clone() } else { root.join(dir) };
         // Named directories are walked RECURSIVELY; the root of exo_memory is not. Before
         // 2026-08-23 this was a flat read_dir and 12 .md files under exo_memory/ were neither
@@ -7374,7 +7548,65 @@ fn corpus_shelf_at(budget: usize) -> String {
                     budget_dropped_bytes += body.len();
                 }
                 let head = body.lines().find(|l| l.starts_with("# ")).unwrap_or("").trim_start_matches("# ").to_string();
-                indexed.push(format!("- {label}  ({} lines)  {head}", body.lines().count()));
+                let line = format!("- {label}  ({} lines)  {head}", body.lines().count());
+                if tier_is_index {
+                    let date = label_date(&label);
+                    // GROUP 0 rides first and in practice always rides: map/ and journal/ are 17
+                    // and 34 entries under 4,300 bytes together, they are not where the problem
+                    // is, and the L062 packet puts them out of scope. They are still INSIDE the
+                    // budget, so the tier as a whole stays bounded if either ever grows.
+                    //
+                    // AND THE REASON THEY CANNOT SIMPLY SORT BY DATE WITH THE REST: journal/'s
+                    // newest file is 2026-09-06, older than ~170 loop/ files, so a flat
+                    // date-ordered window drops the ENTIRE journal index before it drops a single
+                    // recent lap note. That is a bigger change than the breach being fixed.
+                    let group = if dir != "loop" { 0u8 }
+                        else if date.is_some() { 1 }
+                        // The standing instruments ride with map/ and journal/: they are not the
+                        // dated record and a date window cannot order them. See
+                        // `loop_standing_instrument` -- by rule, never by list.
+                        else if loop_standing_instrument(&label) { 0 }
+                        else { 2 };
+                    index_tier.push(IndexEntry { group, date, seq: index_seq, label: label.clone(), line });
+                    index_seq += 1;
+                } else {
+                    indexed.push(line);
+                }
+            }
+        }
+    }
+
+    // THE INDEX WINDOW. Ordered newest-first by the date in the label, then spent as a PREFIX.
+    //
+    // A PREFIX AND NOT A FIRST-FIT, deliberately, and it is the only reason the collapse line can
+    // name a date RANGE: a first-fit window punches holes -- a small old file rides because it
+    // happened to fit after a large newer one was refused -- and a window with holes cannot be
+    // described by two dates without lying. The body budget above IS first-fit, because a body
+    // that fits is worth carrying whatever its neighbours did; an index that claims a range has
+    // to actually be one.
+    index_tier.sort_by(|a, b| {
+        a.group.cmp(&b.group).then_with(|| match a.group {
+            1 => b.date.cmp(&a.date).then_with(|| a.label.cmp(&b.label)),
+            _ => a.seq.cmp(&b.seq),
+        })
+    });
+    let mut index_spent = 0usize;
+    let mut index_full = false;
+    for e in &index_tier {
+        let cost = e.line.len() + 1;
+        if !index_full && index_spent + cost <= index_budget {
+            index_spent += cost;
+            indexed.push(e.line.clone());
+        } else {
+            index_full = true;
+            index_window_dropped += 1;
+            index_window_bytes += cost;
+            match &e.date {
+                Some(d) => {
+                    if index_dropped_oldest.as_ref().map_or(true, |o| d < o) { index_dropped_oldest = Some(d.clone()); }
+                    if index_dropped_newest.as_ref().map_or(true, |n| d > n) { index_dropped_newest = Some(d.clone()); }
+                }
+                None => index_dropped_undated += 1,
             }
         }
     }
@@ -7409,6 +7641,18 @@ fn corpus_shelf_at(budget: usize) -> String {
         ));
         s.push_str("out. Both kinds sit below by path and nothing is truncated. Open what you cite.\n");
     }
+    // THE FOURTH REASON A PATH IS ABSENT -- tier, budget, excluded-by-name, and now the index
+    // window. Counted from what was DELIVERED, never from what the rule would have kept: the
+    // 2026-09-01 bug in this function branched on the rule's intent and printed a window that had
+    // not happened, which is worse than no report because it looks like the case was handled.
+    if index_window_dropped > 0 {
+        s.push_str(&format!(
+            "{index_window_dropped} index-tier entr{} ({index_window_bytes} bytes) dropped by the index window:\n",
+            if index_window_dropped == 1 { "y" } else { "ies" }
+        ));
+        s.push_str("the index tier has a byte budget of its own and this is what did not fit. The\n");
+        s.push_str("line under the index names the range and the command that lists them.\n");
+    }
     s.push_str(&librarian_window_line(&window_rule, &window_delivered, librarian_leftover));
     if !indexed.is_empty() {
         s.push_str("\n## NOT CARRIED -- open these by path\n\n");
@@ -7420,6 +7664,15 @@ fn corpus_shelf_at(budget: usize) -> String {
         s.push_str("you remember is not. Anything here is one grep away and none of it is lost.\n\n");
         for l in &indexed { s.push_str(l); s.push('\n'); }
     }
+    s.push_str(&index_window_line(
+        index_window_dropped,
+        index_window_bytes,
+        match (&index_dropped_oldest, &index_dropped_newest) {
+            (Some(o), Some(n)) => Some((o.as_str(), n.as_str())),
+            _ => None,
+        },
+        index_dropped_undated,
+    ));
     for (label, body) in carried {
         s.push_str(&format!("\n\n## {label}\n\n{body}\n"));
     }
@@ -13619,6 +13872,240 @@ mod librarian_tests {
 
 #[cfg(test)]
 mod shelf_tests {
+
+    // ---- L062: THE INDEX-TIER WINDOW -------------------------------------------------------
+    // The index tier used to be unbounded: every .md anywhere under exo_memory/ that was not
+    // carried bought a line, forever, and the floor (head + index) reached 102.7% of the intake
+    // cap on 2026-09-20 with the bodies getting ZERO bytes. See LIBRARIAN_INDEX_BUDGET.
+
+    /// The date a windowed index line is ordered by. LAST date in the label wins, so a path like
+    /// `loop/2026-08-18/README.md` orders by its directory and `x_2026-09-01_v2026-09-20.md` by
+    /// the later one. No date is not an error -- 91 of 449 index-tier entries have none.
+    #[test]
+    fn the_index_orders_by_the_last_date_in_the_label_and_tolerates_none() {
+        assert_eq!(label_date("loop/plan_sequence_2026-09-20.md").as_deref(), Some("2026-09-20"));
+        assert_eq!(label_date("loop/2026-08-18/README.md").as_deref(), Some("2026-08-18"));
+        assert_eq!(label_date("loop/a_2026-09-01_b_2026-09-20.md").as_deref(), Some("2026-09-20"),
+            "the LAST date wins, so an amended file orders by its amendment");
+        assert_eq!(label_date("loop/PROTOCOL.md"), None);
+        assert_eq!(label_date("loop/v1999-01-01.md"), None, "only 20xx dates are dates here");
+    }
+
+    /// The collapsed line is a REFUSAL and its parts need their own assertions -- E's L061 rule.
+    /// A line that names a count but not the command to recover it is a silent drop wearing a
+    /// number.
+    #[test]
+    fn the_collapsed_index_line_names_count_range_and_the_command_that_recovers_them() {
+        let l = index_window_line(75, 9_900, Some(("2026-06-08", "2026-08-29")), 12);
+        assert!(l.contains("75"), "the COUNT is not in the line: {l}");
+        assert!(l.contains("2026-06-08") && l.contains("2026-08-29"),
+            "the DATE RANGE is not in the line: {l}");
+        assert!(l.contains("ls exo_memory/loop/"),
+            "the RECOVERY COMMAND is not in the line -- a drop you cannot undo is a deletion: {l}");
+        assert!(l.contains("12"), "the undated count rides too, or 12 files vanish unnamed: {l}");
+    }
+
+    /// Nothing dropped, nothing said. A window line that fires when the window did not is the
+    /// 2026-09-01 bug's own shape.
+    #[test]
+    fn the_collapsed_index_line_is_silent_when_the_budget_dropped_nothing() {
+        assert_eq!(index_window_line(0, 0, None, 0), "");
+    }
+
+    /// NEWEST-FIRST, and this is the one the packet's premise got wrong. `newest_first` in the
+    /// tier table reverses a PATH sort, which is newest-first for journal/ (filenames are dates)
+    /// and alphabetical nonsense for loop/ (filenames are topics). Before this lap the first
+    /// indexed loop line was `loop/wire_run_2026-08-15.md` -- 'w' sorts high -- and the newest
+    /// file in the room was somewhere in the middle of 398 lines.
+    #[test]
+    fn the_index_window_is_newest_first_by_date_not_by_path() {
+        let shelf = corpus_shelf_at(0);
+        let newest = newest_dated_index_label().expect("the corpus must hold a dated loop/ file");
+        assert!(
+            shelf.contains(&newest),
+            "the newest dated index entry {newest} is not on the shelf -- the window is not \
+             newest-first"
+        );
+        // and the thing that used to be first must no longer outrank it
+        let pos_new = shelf.find(&newest).unwrap();
+        if let Some(pos_w) = shelf.find("- loop/wire_run_2026-08-15.md") {
+            assert!(pos_new < pos_w,
+                "a 2026-08-15 file still sorts above the newest file: path order, not date order");
+        }
+    }
+
+    /// THE FOURTH REASON A PATH IS ABSENT gets its own counter, and it reports the DELIVERED drop.
+    /// The 2026-09-01 bug in this same function (9c6a131) branched on what the rule WOULD carry,
+    /// printed a window that had not happened, and looked like the case was handled.
+    #[test]
+    fn the_header_counts_the_index_window_drop_from_what_was_delivered() {
+        // A budget of zero for the index means EVERY index-tier line is dropped, and the header
+        // must say so with the real number rather than with the rule's intent.
+        let shelf = corpus_shelf_at_with_index(0, 0);
+        let dropped_lines = shelf.lines().filter(|l| l.starts_with("- loop/")).count();
+        assert_eq!(dropped_lines, 0, "the index budget was 0 and loop/ lines still rode");
+        assert!(shelf.contains("dropped by the index window"),
+            "the fourth reason is not reported at all: {}", &shelf[..shelf.len().min(2000)]);
+        // the counter must equal what is missing, not what the rule wanted
+        let n = index_tier_entry_count();
+        assert!(shelf.contains(&format!("{n} index-tier entr")),
+            "the header's counter does not match the {n} entries actually dropped");
+        // THE BYTES, from the same drop. A counter that reports the right number of entries and
+        // zero bytes is the same class of wrong as one that reports a window that did not happen.
+        let counter = shelf.lines().find(|l| l.contains("dropped by the index window"))
+            .expect("the counter line must exist when the window dropped everything");
+        assert!(!counter.contains("(0 bytes)"),
+            "the window dropped {n} entries and reported zero bytes: {counter}");
+        // AND THE COLLAPSE LINE ITSELF, in the finished shelf rather than only in its own unit
+        // test. A pure function that formats a refusal correctly and is never reached is the
+        // 2026-09-01 failure with the branches swapped.
+        assert!(shelf.contains("THE INDEX IS WINDOWED"),
+            "the collapse line never reached the shelf");
+        assert!(shelf.contains("ls exo_memory/loop/"),
+            "the shelf dropped {n} entries without printing the command that lists them");
+    }
+
+
+    /// Index-tier lines in the order the shelf emitted them.
+    #[cfg(test)]
+    fn index_lines_of(shelf: &str) -> Vec<String> {
+        shelf
+            .lines()
+            .filter(|l| l.starts_with("- map/") || l.starts_with("- journal/") || l.starts_with("- loop/"))
+            .map(|l| l.to_string())
+            .collect()
+    }
+
+    /// THE WINDOW IS A PREFIX, and this is what makes the collapse line's date range true rather
+    /// than decorative. A first-fit window rides a small old entry because it happened to fit
+    /// after a large newer one was refused, and then "dated X .. Y" describes a set with holes.
+    ///
+    /// THE BUDGET IS CHOSEN SO THE PROPERTY BITES, which the first version of this test did not
+    /// do. It asserted the prefix property at a flat 20,000 bytes, where the leftover after the
+    /// first refusal is smaller than any remaining line -- so first-fit and prefix deliver the
+    /// SAME set and the mutant that removes the prefix survived. The budget below is derived from
+    /// the corpus instead: the first entry that is followed by a strictly shorter one, minus a
+    /// byte, so the refusal leaves room a later entry would take under first-fit.
+    #[test]
+    fn the_index_window_is_a_prefix_so_its_date_range_is_not_a_lie() {
+        let full = index_lines_of(&corpus_shelf_at_with_index(0, usize::MAX));
+        assert!(full.len() > 10, "the corpus must have an index tier to window");
+        let mut cum = 0usize;
+        let mut budget = None;
+        for (i, l) in full.iter().enumerate() {
+            let cost = l.len() + 1;
+            if full[i + 1..].iter().any(|m| m.len() + 1 < cost) {
+                budget = Some(cum + cost - 1);
+                break;
+            }
+            cum += cost;
+        }
+        let budget = budget.expect("no long entry is followed by a shorter one; pick another fixture");
+        let mut expected: Vec<String> = Vec::new();
+        let mut spent = 0usize;
+        for l in &full {
+            let cost = l.len() + 1;
+            if spent + cost > budget { break; }
+            spent += cost;
+            expected.push(l.clone());
+        }
+        let delivered = index_lines_of(&corpus_shelf_at_with_index(0, budget));
+        assert!(delivered.len() < full.len(), "the derived budget windowed nothing");
+        assert_eq!(
+            delivered, expected,
+            "the window is not a prefix at budget {budget}: it delivered {} entries where the \
+             newest-first prefix that fits is {}. A window with holes cannot be described by the \
+             two dates the collapse line prints.",
+            delivered.len(), expected.len()
+        );
+    }
+
+    /// UNDATED ENTRIES ARE SPENT LAST, except the standing instruments. They cannot be ordered by
+    /// a date they do not have, so they sit behind every dated lap note rather than in front of it
+    /// -- 82 loop/ working documents outranking the whole dated record is a policy, and an
+    /// unstated one is a bug.
+    #[test]
+    fn undated_loop_entries_are_spent_last_and_never_outrank_a_dated_one() {
+        let split = |s: &str| -> (usize, usize, usize) {
+            let (mut dated, mut undated, mut standing) = (0, 0, 0);
+            for l in index_lines_of(s).iter().filter(|l| l.starts_with("- loop/")) {
+                let label = l[2..].split("  (").next().unwrap_or("");
+                if label_date(label).is_some() { dated += 1; }
+                else if loop_standing_instrument(label) { standing += 1; }
+                else { undated += 1; }
+            }
+            (dated, undated, standing)
+        };
+        let (all_dated, all_undated, all_standing) = split(&corpus_shelf_at_with_index(0, usize::MAX));
+        assert!(all_dated > 0 && all_undated > 0, "the fixture needs both kinds");
+        assert!(all_standing > 0, "the fixture needs at least one standing instrument");
+        let (kept_dated, kept_undated, kept_standing) = split(&corpus_shelf_at_with_index(0, 20_000));
+        assert!(kept_dated < all_dated, "the fixture budget dropped no dated entry");
+        assert_eq!(
+            kept_undated, 0,
+            "{kept_undated} ordinary undated loop/ entr(ies) rode while {} dated lap note(s) were \
+             dropped -- undated entries are spent LAST",
+            all_dated - kept_dated
+        );
+        // and the protected ones are NOT subject to that, which is the whole point of the rule
+        assert_eq!(kept_standing, all_standing,
+            "a standing instrument was windowed out; it rides with map/ and journal/");
+    }
+
+    /// THE STANDING-INSTRUMENT RULE (the librarian's L062 §10.2) -- a rule, never a list.
+    #[test]
+    fn undated_all_caps_names_at_the_top_of_loop_are_protected_by_rule_not_by_list() {
+        assert!(loop_standing_instrument("loop/PROTOCOL.md"));
+        assert!(loop_standing_instrument("loop/ESCALATIONS.md"));
+        assert!(!loop_standing_instrument("loop/branch_layer.md"), "lower-case is a working document");
+        assert!(!loop_standing_instrument("loop/F0_result.md"), "mixed case is not ALL-CAPS");
+        // DEPTH 1 IS THE LOAD-BEARING HALF, and it is the librarian's own catch: the same rule at
+        // any depth catches the T3 run outputs, which are record and not instruments.
+        assert!(!loop_standing_instrument("loop/t3_run_outputs_D086/S01.md"));
+        // AND A PATH THAT IS ALL-CAPS AT EVERY LEVEL, which is the only case that actually tests
+        // the depth guard. The line above does not: `t3_run_outputs_D086` is lower-case, so it
+        // fails the case test whether or not the depth guard is there, and the mutant that deletes
+        // the guard SURVIVED it. Found by running the mutant, not by reading the test -- the third
+        // time in this lap that a test passed for a reason other than the property it names.
+        assert!(!loop_standing_instrument("loop/RUN2/CELLS.md"),
+            "depth 1 only: a nested all-caps path is not a standing instrument");
+        assert!(!loop_standing_instrument("loop/2026-08-18/README.md"),
+            "a nested README is record, not an instrument");
+        assert!(!loop_standing_instrument("journal/2026-09-06.md"), "the rule is loop/'s only");
+        assert!(!loop_standing_instrument("loop/README"), "only .md is indexed at all");
+
+        // AND THEY ACTUALLY RIDE, at a budget that windows most of the tier away.
+        let windowed = corpus_shelf_at_with_index(0, 20_000);
+        assert!(windowed.contains("- loop/PROTOCOL.md"),
+            "PROTOCOL.md was windowed out; the seat cannot cite what it cannot see");
+        assert!(windowed.contains("- loop/ESCALATIONS.md"),
+            "ESCALATIONS.md was windowed out -- the human-anchor queue is where un-checkable \
+             questions go, and a seat that cannot see it decides them itself");
+    }
+
+    /// map/ and journal/ are OUT OF SCOPE for this window by the L062 packet, and the reason is
+    /// arithmetic rather than sentiment: journal/'s newest file is older than ~170 loop/ files, so
+    /// a flat date order drops the entire journal index before it drops one recent lap note.
+    #[test]
+    fn the_window_never_drops_map_or_journal_which_are_out_of_scope() {
+        let windowed = corpus_shelf_at_with_index(0, 20_000);
+        let full = corpus_shelf_at_with_index(0, usize::MAX);
+        for pfx in ["- map/", "- journal/"] {
+            let a = full.lines().filter(|l| l.starts_with(pfx)).count();
+            let b = windowed.lines().filter(|l| l.starts_with(pfx)).count();
+            assert!(a > 0, "the fixture has no {pfx} entries to protect");
+            assert_eq!(a, b, "{pfx} lost entries to the index window; it is out of scope");
+        }
+    }
+
+    /// The window must not be able to eat the whole tier silently when the budget is generous:
+    /// with room for everything the collapsed line must not appear.
+    #[test]
+    fn a_generous_index_budget_drops_nothing_and_says_nothing() {
+        let shelf = corpus_shelf_at_with_index(0, 10_000_000);
+        assert!(!shelf.contains("dropped by the index window"),
+            "the window reported a drop it did not make");
+    }
     use super::*;
 
     /// The budget the WALK tests use, stated here instead of read from the environment.
@@ -13876,19 +14363,58 @@ mod shelf_tests {
             head.len(), floor.len(), i.len().saturating_sub(fixed));
         eprintln!("LIBRARIAN FLOOR is {:.1}% of the {LIBRARIAN_INTAKE_LIMIT}-byte cap",
             fixed as f64 * 100.0 / LIBRARIAN_INTAKE_LIMIT as f64);
+        // THE FLOOR MARGIN, ASSERTED -- L062's acceptance bar, and it is a DIFFERENT number from
+        // the intake margin printed above. Both are printed because the packet asked for "the
+        // printed margin >= 15% of the cap" and only one of the two can ever be that:
+        //
+        //   INTAKE margin  = cap - finished artifact. PINNED near INTAKE_HEADROOM by construction.
+        //     `librarian_shelf_room` hands the bodies cap - HEADROOM - (head + floor), so every
+        //     byte the index window frees is spent again on bodies and the artifact converges on
+        //     cap - HEADROOM whatever LIBRARIAN_INDEX_BUDGET says. Measured on the lap that
+        //     introduced the window: floor fell 69,165 -> 40,212 and the intake moved 154,089 ->
+        //     141,729, because bodies went 0 -> 16,593. Tuning the index budget cannot raise it.
+        //   FLOOR margin   = cap - (head + index). The one the breach was in -- 102.7% of the cap
+        //     on 2026-09-20 with bodies at zero -- and the one LIBRARIAN_INDEX_BUDGET governs.
+        //
+        // So the bar is asserted where it is reachable. If a future lap wants the INTAKE margin
+        // raised too, the lever is a librarian-specific headroom in `librarian_shelf_room`, which
+        // buys the margin out of the bodies and is a different decision with a different cost.
+        let floor_margin = LIBRARIAN_INTAKE_LIMIT.saturating_sub(fixed);
+        eprintln!("LIBRARIAN FLOOR margin {floor_margin} bytes ({:.1}% of the cap) -- the margin \
+                   LIBRARIAN_INDEX_BUDGET governs; the intake margin above is pinned at INTAKE_HEADROOM",
+            floor_margin as f64 * 100.0 / LIBRARIAN_INTAKE_LIMIT as f64);
+        assert!(
+            floor_margin * 100 >= LIBRARIAN_INTAKE_LIMIT * 15,
+            "the floor is {fixed} bytes, leaving {floor_margin} of the {LIBRARIAN_INTAKE_LIMIT}-byte \
+             cap -- under the 15% the index window exists to hold. Lower LIBRARIAN_INDEX_BUDGET; \
+             do not raise the limit."
+        );
         // THE CHEAPEST HEADROOM, PRICED HERE RATHER THAN ESTIMATED IN PROSE. The librarian rang
         // this as prior art at 07:48 and marked its own figure ESTIMATED ("~70 bytes a line ...
         // ~17k"), asking for the real one. This is the real one, and it comes out of the same run
         // as every other number above instead of out of a script nobody keeps. It is NOT acted on
         // in this lap: narrowing what the seat can cite is the seat's call, not a non-author's.
-        let run_bytes: usize = floor.lines()
-            .filter(|l| l.starts_with("- loop/run1/items/") || l.starts_with("- loop/run2/cells/"))
-            .map(|l| l.len() + 1)
-            .sum();
+        // RE-POINTED 2026-09-20 (L062 §8.1). It used to count index lines beginning
+        // `- loop/run1/items/` -- and the walk EXCLUDES those paths before they can reach the
+        // index, so the set was empty by construction and the line printed a confident
+        // `0 file(s), 0 bytes` every run while its own comment claimed 246 files / 15,753 bytes.
+        // A guard with no input is indistinguishable from a guard working perfectly.
+        //
+        // It now reads the walk's OWN `run_artifacts_excluded`, off the header line the shelf
+        // already prints, which is a real number the walk keeps rather than a second count of a
+        // set that cannot exist. The bytes claim is dropped rather than re-derived: the walk does
+        // not keep them, and computing them here would be a second implementation of the exclusion
+        // -- the two-paths defect this room has paid for twice this week.
+        //
+        // NOT ASSERTED HERE, deliberately: `the_shelf_excludes_bulk_run_artifacts_and_says_so`
+        // already fails if the notice is absent, so a corpus that genuinely has no run artifacts
+        // goes red there, in the test that is about them, rather than in the limit test.
         let run_n = floor.lines()
-            .filter(|l| l.starts_with("- loop/run1/items/") || l.starts_with("- loop/run2/cells/"))
-            .count();
-        eprintln!("LIBRARIAN INDEX run artifacts {run_n} file(s), {run_bytes} bytes of the floor");
+            .find_map(|l| l.strip_prefix("loop/run1/items/ and loop/run2/cells/ are excluded from the index too: "))
+            .and_then(|n| n.trim().parse::<usize>().ok())
+            .unwrap_or(0);
+        eprintln!("LIBRARIAN INDEX run artifacts EXCLUDED before indexing: {run_n} file(s) \
+                   (the walk's own run_artifacts_excluded, read off the shelf header)");
         // The shelf header and the window line, echoed here so the two numbers a reader actually
         // wants — the split, and which days are in the window — come out of a test run instead of
         // requiring a relaunch and a look at the seat's CLAUDE.md.
@@ -13898,6 +14424,13 @@ mod shelf_tests {
         // marker tests already carry a comment about.
         for l in i.lines().filter(|l| l.contains("file(s) carried in full")
             || l.starts_with("YOUR OWN NOTES ARE WINDOWED")
+            // L062: the index window's own two reports, from the finished artifact rather than
+            // from a unit test's fixture -- the count the header claims and the range the
+            // collapse line names have to be readable side by side or the 09-01 shape can come
+            // back without anyone seeing it.
+            || l.contains("dropped by the index window")
+            || l.starts_with("THE INDEX IS WINDOWED")
+            || l.starts_with("Dated ")
             // The leftover rides on the window sentence's SECOND line, and it is the figure that
             // says whether the window is inert or merely tight — print it or the number that
             // decided this lap is the one figure the instrument does not show.
@@ -14128,12 +14661,35 @@ mod shelf_tests {
     fn the_shelf_excludes_bulk_run_artifacts_and_says_so() {
         let _g = DIRS_SERIAL.lock().unwrap_or_else(|e| e.into_inner());
         let shelf = corpus_shelf_at(CORPUS_WALK_BUDGET);
-        assert!(!shelf.contains("- loop/run2/cells/"),
+        // SCOPED TO THE INDEX -- and this is the SAME self-match trap the `other_loop` count
+        // below already carries two comments about, made a third time on the two assertions that
+        // sit directly above it. They asked whether the string appears ANYWHERE in the shelf, and
+        // the shelf ends with every carried BODY. It went red on 2026-09-20 at 04:12 because the
+        // librarian wrote its nightly note quoting this very instrument, the note is dated today
+        // so the `librarian/` window carries it in full, and the body contains the literal
+        // `- loop/run1/items/`. Nothing about the exclusion had changed.
+        //
+        // The claim these two assertions are making is "not in the INDEX", so that is what they
+        // now read. The test keeps both of its oracles: gone from the index, AND the rest of
+        // loop/ still indexed.
+        let index_section: String = shelf
+            .split("## NOT CARRIED")
+            .nth(1)
+            .expect("the shelf must have an index section for this test to measure anything")
+            .lines()
+            .take_while(|l| !l.starts_with("## "))
+            .collect::<Vec<_>>()
+            .join("\n");
+        let header = shelf.split("## NOT CARRIED").next().unwrap_or("");
+        assert!(!index_section.contains("- loop/run2/cells/"),
             "run2 cells are back in the index — 15,753 bytes of floor the bodies do not get");
-        assert!(!shelf.contains("- loop/run1/items/"), "run1 items are back in the index");
+        assert!(!index_section.contains("- loop/run1/items/"), "run1 items are back in the index");
         // NOT SILENTLY. An exclusion that is not reported is indistinguishable from a directory
         // that was never walked, which is the "0 indexed by path" failure this file keeps finding.
-        assert!(shelf.contains("loop/run1/items/ and loop/run2/cells/ are excluded"),
+        // The notice lives in the HEADER, and it is scoped there for the same reason: a carried
+        // body quoting this sentence would satisfy a whole-shelf `contains` without the shelf
+        // ever having printed it.
+        assert!(header.contains("loop/run1/items/ and loop/run2/cells/ are excluded"),
             "the shelf excludes the run artifacts without telling the seat");
         // AND NOT MORE THAN THAT. `loop/` is the record tier and its own files must still index.
         //
@@ -14148,10 +14704,7 @@ mod shelf_tests {
         // header, then index, then CARRIED BODIES, so splitting at the index header keeps every
         // body too and the mutant survived a second time. The index ends at the first body, which
         // is the first line starting with `## `.
-        let index_section = shelf.split("## NOT CARRIED").nth(1)
-            .expect("the shelf must have an index section for this test to measure anything");
         let other_loop = index_section.lines()
-            .take_while(|l| !l.starts_with("## "))
             .filter(|l| l.starts_with("- loop/"))
             .count();
         assert!(other_loop > 0,
