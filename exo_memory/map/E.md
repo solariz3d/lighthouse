@@ -1349,3 +1349,16 @@ dispatch - for T3 that result IS key paths. Removal-calibrated keys make the col
 difficulty bracket are vacuous; load needs a Latin square (exactly possible at n = 3). Transcripts and captures are a
 readable key route on D - checked D086: open, unused. **Carry: my time labels were wrong THREE laps running (12:3x, 13:5x
 written at 12:2x, 13:33) - run `date` before typing any clock time.**
+
+## 2026-09-19 ~22:5x · D090 P-READY-NOT-THE-CHILD, on D → `exo_memory/handback/p-ready-not-the-child-E_2026-09-19.md`
+One line in `dev/shell/lib/ready.js` (+8, 7 of them comment): return when `CLAUDE_OVERSEER_RUN === '1'`, beside the
+dream guard - the overseer's child `claude` inherits CONSONANCE_PANE/READY_DIR and its Stop hook stamped the PARENT
+ready mid-turn. New `dev/shell/lib/ready.test.js`, 8 cases, all through a temp READY dir: **5/1 red first (only the
+overseer case), 8/0 after; mutants 8 rows, 8 caught, 0 survived.** **The two survivors are the lesson:** my first set
+passed only literal true/false (so `!!ready` was invisible) and set NEITHER variable in the no-variable case (so
+deleting that guard just threw into the try). The revealing case is a ready dir WITH NO PANE - unguarded it writes
+`undefined.json`. **A guard whose removal throws somewhere else is not tested by a case that never reaches it.**
+Also: the tracked mutant-harness can only SCORE when the scorer exists in a worktree of HEAD, so it cannot score an
+untracked test - gates only (8 rows pass), kills by `scratchpad/ready/mutants.js` off the same rows file. Stated not
+fixed: every process a pane spawns inherits both variables (`main.rs:1150-1151`), so an UNMARKED child can still
+stamp its parent.

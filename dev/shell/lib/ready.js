@@ -36,6 +36,14 @@ const path = require('path');
 function stamp(ready, meta) {
   try {
     if (process.env.CONSONANCE_DREAM) return;
+    // NOT THE CHILD. The L2/L3 overseer hooks spawn a `claude` that inherits this seat's whole
+    // environment, CONSONANCE_PANE and CONSONANCE_READY_DIR with it, so the CHILD's Stop hook
+    // stamped the PARENT pane ready — in the middle of the parent's turn, with a session id that
+    // was not the parent's. Measured 2026-09-19 on the librarian's own stamp (`librarian/2026-09-16.md`,
+    // the AUDIT entry). The overseers already mark that child (`hooks/l3-overseer.js:142`,
+    // `hooks/l2-overseer.js:132`: CLAUDE_OVERSEER_RUN='1'), which is what this reads. A stamp is a
+    // pane's account of ITSELF; anything spawned inside a turn is not the pane and says nothing.
+    if (process.env.CLAUDE_OVERSEER_RUN === '1') return;
     // A pane Consonance did not spawn has neither variable. A terminal claude session must not be
     // writing readiness stamps about a pane that does not exist, and with no pane id there is no
     // key to write under anyway.
