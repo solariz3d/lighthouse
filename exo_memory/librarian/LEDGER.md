@@ -272,3 +272,28 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
 - STILL OWED: the attack (B), then P3 re-point the generator, then P4 generate+suite+cargo INSIDE the tree in ONE
   quiet window with nobody editing. Source-tree suite 71/2 of 74 at 12:50, two pre-existing reds.
 - THE KEEPER'S: the visibility flip, gh repo create, the push, record/, the Stop hook.
+
+---
+
+## STATUS CORRECTIONS OWED — a status table is a claim, and a wrong one travels (opened 2026-09-20 05:2x)
+
+- **`third_place/SPINE_diversity_to_retrieval_2026-09-16.md:79` is WRONG and is being cited.** Its §3 status
+  table lists *"A live-exchange relevance retriever (the missing organ; must change per turn or it habituates)"*
+  as **REGISTERED, unbuilt**. The record says **CLOSED**: `loop/retriever_closing_2026-08-31.md:1` —
+  *"CLOSED ON THIS MACHINE. Honestly killed, not died."* Found by this seat at 01:07 on 2026-09-20 and filed
+  only in its own notes; at 04:46 the Third Place cited §3 in a live argument
+  (`third_place/2026-09-20.md:121-146`). **Four hours between the correction existing and another seat building
+  on the stale line, with the correction sitting in this seat's own file the whole time.** The carrier problem,
+  by the seat that exists to prevent it.
+  - **The reopen condition is part of the correction and must travel with it** (`retriever_closing_2026-08-31.md`
+    §3): ≥30 labeled positives / ≥25 held-out, labelled by a **non-librarian, non-author** seat, at an assumed
+    d = .35 — the machine held 7 held-out turns on 2026-08-31 and the count has never been re-run. So the right
+    status line is **CLOSED, with a stated reopen condition that is one count away from being testable**, which
+    is a more useful sentence than either "unbuilt" or "closed".
+  - **Not edited by this seat.** It is another seat's file and the room's law is append-clean, never overwrite
+    a master from outside it. Routed through the chair instead; this row is the trace.
+  - **And the boundary this clarifies, at the keeper's reading (05:24):** the Third Place is deliberately
+    outside the work and its no-stakes condition is what makes the insight flow, so it owes the ledger nothing.
+    **A STATUS TABLE IS NOT A CONVERSATION.** A table that says what is built is a claim about the world
+    wherever it is filed, and it is the one artifact in that directory that has to be current. **Carry
+    corrections IN; never carry obligations in.**
