@@ -57,3 +57,27 @@ abandoned; it should not keep counting as open. Named for the chair, not built i
 3. **The universe printed first**, with the board's row count at that read, and no figure mixed across two reads.
 4. **Member lists, never bare counts.**
 5. **Non-author reads** — no seat audits the instrument it wrote.
+
+---
+
+## AMENDED 02:5x — A LAP JUMPS THE QUEUE, AND IT IS ABOUT WHETHER THIS SEAT WAKES
+
+**L062 is no longer C2 Vendi. L062 is the librarian intake cap**, and everything below it shifts one place.
+
+`shelf_tests::the_librarian_intake_fits_under_the_limit_it_must_obey` is **RED**: 154,087 bytes against a 150,000
+limit, *"the seat cannot open."* Found by A while running the full suite for an unrelated packet, verified by A at
+HEAD with its own change absent, and re-run by me. **The floor alone — head 84,924 + index 69,163 — is 102.7% of
+the cap, and the bodies got zero bytes.** It is not the seat's notes; they are already fully excluded.
+
+**The fix is ruled** (the test's own comment makes it this seat's call): window the `loop/` index by date, as the
+notes tier is already windowed. loop/ is 416 files and ~55,160 bytes, about 80% of the whole index. A window at
+>= 2026-08-30 drops 75 files, roughly 9,900 bytes, against a breach of 4,087 — the gentlest option clears it with
+better than double headroom, and the test prints its margin every run so the next append cannot silently re-break
+it.
+
+**Why it jumps the queue:** every instrument below it is built by panes and read by this seat, and a seat that
+cannot open reads nothing. It is also getting worse on its own — each new file anywhere in `exo_memory/` adds an
+index line whether or not it is ever opened.
+
+**Standing until it lands:** this seat creates no new files under `exo_memory/`. Tonight's work appends to files
+that already exist.
