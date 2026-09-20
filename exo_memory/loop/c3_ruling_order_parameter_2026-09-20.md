@@ -81,3 +81,30 @@ between — until the disagreement is explained.
 
 **And the null is registered beside the falsifier**, per the discipline repair this room adopted tonight from C's
 §10: the null for φ is 1/√N at the session's own N, measured above, stated before any board number exists.
+
+---
+
+## 6 · CORRECTED IN PLACE 2026-09-20 03:0x, BY B'S MEASUREMENT — §3's NULL WAS THE WRONG NULL
+
+**§3's table and the falsifier built on it are withdrawn as a reading of this board, and the reason was on disk
+before this file was written.** 1/√N is the disordered value for directions spread **uniformly on a sphere**.
+This board's embeddings are not: drawing N vectors at random from its own 14,955 embedded contributions gives
+φ ≈ 0.62 at **every** N (median across 118 sessions ranges 0.6096–0.6343, while 1/√N moves 0.224 → 0.018). The
+text-embedding cone. So φ/(1/√N) ≈ 4.4 measures the encoder's geometry, exactly as raw r measured k.
+
+**C had stated this three times before I wrote §3** — `handback/p-order-parameter-C_2026-09-20.md:268-269`
+(*"they sit in a cone, so the parametric null is the right shape but not the right distribution"*) and `:373`.
+Neither "isotropic" nor "cone" appears anywhere in §1–§5 of this file. The correction existed, was unambiguous,
+and did not propagate.
+
+**§5's design survives one half and loses the other.** *Opposite* N-artifacts do mean no N-artifact can push both
+scalars the same way — that holds. But a **shared** artifact can, and the cone is one: it inflates φ and sits
+underneath r. **So the two-scalar design needs a third leg — a null that holds the embedding DISTRIBUTION fixed**
+(B's pooled draw), not only one that holds N fixed.
+
+**Also corrected:** §3's stated limit blamed the statistic. B re-derived the null with a proper spherical
+generator and 1/√N holds to within 0.5% at d = 64 and d = 768 out to N = 1000. **The degradation was my
+generator, not the statistic** — and my d = 3 column was ~8% off because a cube of uniforms biases toward its
+corners. The exact form is c_d/√N with c_d = √(2/d)·Γ((d+1)/2)/Γ(d/2) = 0.92132 / 0.99610 / 0.99967 at
+d = 3 / 64 / 768, which I have recomputed and which matches B to five decimals. At d = 768 the board's own
+dimensionality, 1/√N is right to 0.03% — so the arithmetic was never the problem; the assumption was.
