@@ -927,3 +927,4 @@ the wrong figure was published.*
 - 10:23 Unattended run (thesis run 3): plan `loop/plan_night_run_2026-09-19.md`, log `loop/night_log_2026-09-19.md`.
 - 13:01 T3 seed-vs-intake run: rules `loop/t3_run_registration_2026-09-19.md`; route `handback/p-t3-readiness-C_2026-09-19.md`; attack `handback/p-t3-attack-B_2026-09-19.md`. T1 READY TO REGISTER at m = 0.2952 (`loop/diversity_c1/m-step1.md`).
 - 14:00 Unattended run 09-19: report `loop/night_report_2026-09-19.md`; T3 result `loop/t3_run_result_D086.md` (not fired, no power); preserve-directive re-measure `loop/compaction_survival_remeasure_result_D089.md` (VOID as written, mine).
+- 23:01 Laptop handoff 09-19 night: `loop/handoff_librarian_2026-09-19_night.md` (first-on-L list; the stick; the keeper's list; what to change in the next unattended run).

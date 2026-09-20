@@ -1,0 +1,31 @@
+# Handoff — the librarian seat, 2026-09-19 ~23:1x, DESKTOP (machine D), for the laptop shift that starts at 00:00
+
+*One lineage; this conversation travels on the stick. The master for 09-16 → 09-19 is `librarian/2026-09-16.md` (every 09-19 entry from 07:30 on). The day's two summaries: `loop/night_report_2026-09-19.md` (the unattended run, ten laps) and this file. At this writing `origin/main` carries everything through 95b5288 (D090); my last local commits (b518cfc, 4d80829, 8779664 and this file's) are rung to the chair to push before the close. The thread was NOT compacted tonight — 570k, the keeper's call and mine: a compaction keeps 6–8% of falsifiers (measured today, `loop/compaction_survival_remeasure_result_D089.md`). The first reply on L is a full uncached reload, about 1.4% of his weekly Fable by this morning's ratio.*
+
+## First on L, in this order
+
+1. **Pull, then ONE click on the shortcut.** It must open the newest build without a second click — the D066 launcher-pull falsifier, never yet read on L (`loop/plan_cleanup_chunks_2026-09-16.md`, the plan's falsifier). Say what happened either way.
+2. **L rebuilds from the pulled tree at that launch.** That rebuild ships to L what D still has NOT got live (D's exe is 07:37 today): D077 and D078 (a refused `call_librarian` keeps its pointer on the board; the keeper's chair-does-not-build rule in `BUILDING.md`), on top of D073/D076 from the morning. Proof line for the chair's shell on L after the rebuild: `grep -c "THE CHAIR DOES NOT BUILD INSIDE A LAP" C:/Consonance/instances/main/CLAUDE.md` → 1.
+3. **The ready-stamp fix is NOT on L.** D090 (95b5288): overseer sub-sessions were stamping a working seat as ready; `dev/shell/lib/ready.js` now ignores a child marked `CLAUDE_OVERSEER_RUN`. The installed copy is what runs: on L, `dev/shell/install.ps1 -NoRegister -Only ready.js`, settings.json sha the same before and after. Then read the librarian's own stamp mid-turn (`C:\Consonance\data\ready\<pane>.json`): `ready:false`, this seat's session. Check first whether L has the ready hooks registered at all (they were never installed on D until 09-19).
+4. **The memory directory does not travel.** Recreate on L: `never-hand-the-keeper-a-command` and `cold-start-reload-cost` (D has both; L has the first three only).
+5. **C's six log queries about the stick faults, on L** — `handback/p-stick-fault-cause-C_2026-09-19.md` §7. First: L's removal policy (`DeviceHotplug`); if L is set to "better performance", a DONE-then-unplug loses cached writes by design. Both named faults (09-15 00:19→02:28, 09-16 07:49) happened on L and are invisible from D.
+
+## The stick tonight
+
+D080's flush is live (a script, no rebuild) and was TESTED ON THE REAL STICK at 22:5x: a 60 MB export, exit 0 in 35 s, three directories "flushed", `--verify-set` code 0, 0 disk events (`librarian/2026-09-16.md`, the entry headed THE FLUSH, TESTED LIVE). The close on D re-exports from the same agreed offsets and supersedes those tails. **If a Leave ever says NOT DONE / NOT_FLUSHED it names the file or directory and the error code: the stick failed a write — do not unplug on trust.** L's first close with the flush is tomorrow morning's; L's exe and scripts get it from the pull. The prune of stale tails (now ~109 "extra") stays HELD until L's log is read or the stick is replaced.
+
+## The keeper's list — decisions and hands (full text: `loop/night_report_2026-09-19.md` §4)
+
+T1 READY TO REGISTER at m = 0.2952 (his word on R8g; his hands to spawn two siblings per task) · T2's registration: cite L039/L045 as arm (a) or re-run it by the restricted route; arm (c) is three tiers of one family · T3 needs a new registration with power (the prompts asked for the scored criteria; `loop/t3_run_result_D086.md` §5) · battery run 2: fold E's twelve amendments with a non-chair reader present, then the keys · a powered preserve-hook re-measure needs the hook OFF for a window · the three excluded-but-live overseer hooks on D are his to name — they also spawn a one-prompt session per turn (~125 during the run) · the two P-LEAVE-3 live tests need the app closed.
+
+## The unattended run — what to change next time (the keeper, 20:57: "laps done at 2pm, unfortunate, wanted to see how far u went while i slept")
+
+The ten-lap ceiling was mine and unread; laps took ~20 minutes, not ~45, and the room sat idle seven hours. **Next run: stop on a clock, a usage budget or two failed laps — not a lap count — with a standing queue of this seat's own REGISTERED experiments behind the task list.** Queued and not started: (1) does the preserve hook's test write to the live `precompact.jsonl` (16 rows with session ids `s1`/`?` appeared during the run, four per js-suite run — not verified); (2) the retrospective error-correlation read over L039/L045 and the D06x double reads (plan §4 N7). Every one of today's three voids had the same cause: **the instrument was not opened against the thing it measures before it was spent.** Open the hook, the prompt, the script first.
+
+## Found, not fixed (for a sweep)
+
+E's wider case of D090: `main.rs:1150-1151` sets `CONSONANCE_PANE`/`CONSONANCE_READY_DIR` on the pane's command, so ANY process a pane spawns inherits them — a plain `claude -p` from a pane's shell stamps its parent. A stale `…a01.json.30448.tmp` in D's ready dir. Four tracked mutant harnesses with the old whole-file check; A's tracked harness parses cargo only and scores against HEAD's tests. `forget-rate.js` `.slice(0, 6)` and the demotion misclassification; its stale pin. `portable-paths`' 35-site baseline (6 real path defects named by B). `actors.js` `NON_PANE` lacks `resume`, `sync`, `trailer-gate`. D's `%TEMP%` holds 17 leftover run directories, one a 2.8 GB build cache (`mutant-harness-d078-recheck`) — deleting is the keeper's word.
+
+## This seat's WRONG column today
+
+A packet that specified a fix on a pane's inference (the state-sync race; C refuted it by measurement). B's A4 adopted into T3's rules without reading the prompt it would score. D089 registered against a hook I had not opened. A re-derivation that matched no field names and printed "0.0000". Typed clock labels ahead of the real time all afternoon. Listing C's two blind-guard defects as open from a handoff when the disk showed them fixed. A ten-lap ceiling set where a clock belonged.
