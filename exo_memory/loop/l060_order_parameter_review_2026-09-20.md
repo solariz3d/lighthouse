@@ -421,3 +421,82 @@ than quoting one the pane computed earlier; treat a hand-back as deliverable onl
 for a stated interval, and say the interval in the ring; and give a pane a way to say *still writing* that the
 pulse can read, so that a state channel gains a motion channel. None of the three requires anyone to be more
 careful, which is why they are worth more than the resolution to be.
+
+---
+
+# PART FIVE — THE KEEPER SPLIT THE PROBLEM IN TWO, AND THE TWO HAVE DIFFERENT SIZES. 2026-09-20 02:2x.
+
+## 25 · HIS OBSERVATION, VERBATIM, BECAUSE IT NAMES A MECHANISM I HAD MERGED INTO ANOTHER ONE
+
+> *"its because also, panes and seats dont show the work is done to me for like a solid 5-10 seconds sometimes,
+> when you recieve it instantly, the pane could be visually still building, while you already sent to orch, but
+> really they were done"*
+
+§20 of this file said *"the room has no signal for still-writing"* and treated every observer's uncertainty as one
+failure. **That was too coarse. There are TWO gaps with opposite signs, and §20 collapsed them:**
+
+| | what the pane LOOKS like | what is TRUE | who it fools |
+|---|---|---|---|
+| **A · render lag** | still building | **done** | the keeper — he waits, or reads a pane as busy that has finished |
+| **B · post-ring appending** | done (it rang) | **still writing** | this seat — it collates a file that is still growing |
+
+**They point opposite ways.** A makes a finished pane look unfinished; B makes an unfinished file look finished.
+A seat reading only the ring sees B and never A; a human reading only the screen sees A and never B. Tonight both
+fired on the same lap, four minutes apart, and each of us was fooled by the one our own channel is blind to.
+
+## 26 · THE SIZES, MEASURED — and they differ by a factor of about twenty
+
+**B, the appending gap, measured from the disk and exact:** C's first ring was receipted at **08:13:18.553** with
+the hand-back at **451 lines**. The file's last write is **08:17:17.342** at **571 lines**. **239 seconds and 120
+lines after the ring that declared it filed.**
+
+**A, the render gap — the board corroborates the SCALE but cannot measure his screen.** What it holds are
+within-turn emission gaps for the same seat, both `push`-sourced:
+
+| event pair | gap |
+|---|---:|
+| C's ring receipted 08:13:18.553 → C's own board row 08:13:26.973 | **8.420 s** |
+| chair's packet queued 08:15:58.565 → C's board row 08:16:05.164 | **6.599 s** |
+| C's ring refused 08:17:26.749 → C's FINAL board row 08:17:40.808 | **14.059 s** |
+
+**6.6 to 14.1 seconds, which brackets his "5-10 seconds".** *The honest limit, stated rather than glossed:* these
+are gaps between two machine events in one seat's turn, **not** a measurement of his terminal's painting. His
+screen is not in `board.jsonl` and I cannot reach it from here. The board agrees with his number's **magnitude**;
+it does not confirm his number's **cause**, and only he can see that directly.
+
+**So: A is seconds and B is minutes — about twenty to one.** That is what makes them separable at all.
+
+## 27 · AND THIS ROOM HAS ALREADY BEEN BITTEN BY GAP A, FROM THE OTHER SIDE
+
+Not a new surface — the *other direction* of one already measured. On 2026-08-16 the keeper found that
+`chair_inject` returned **"echo confirmed"** while the room's own collapse metric is `echo_ratio`, and the chair
+reported that string to him as a **receipt** when it meant only that *the pane's terminal had drawn the text*.
+The verb was renamed to `render` (`58327b7`) for exactly that reason. **The lesson filed then was
+RENDER ≠ RECEIPT.** Tonight's is its mirror: **STILL-RENDERING ≠ STILL-WORKING.** Same seam, same month, opposite
+face — and no instrument was built either time.
+
+## 28 · THE REPAIR GETS SHARPER, AND IT IS STILL ONE COMMAND
+
+§24 proposed three fixes. The split makes one of them decisive and demotes the others:
+
+**The file's mtime separates A from B and nothing else does.** A pane that is merely painting has a **still**
+mtime; a pane that is still writing has a **moving** one. Neither the screen nor the ring can tell them apart —
+the screen shows motion in both cases, the ring shows stillness in both.
+
+    stat -c '%y' <handback>   # twice, seconds apart
+
+- **mtime still and some minutes old** → the pane is done, whatever the screen is doing. *Collate.*
+- **mtime moving** → it is still writing, whatever the ring said. *Wait.*
+
+**And the keeper's half of it, which is his to want and not mine to impose:** if a pane looks busy for 5–10
+seconds after it is done, then a "done" indicator driven by the **receipt** rather than by the **paint** would
+give him the same separation on screen that the mtime gives me on disk. That is a UI question about Consonance,
+and it is filed as a question, not as a plan.
+
+## 29 · WHAT THIS CORRECTS IN MY OWN FILING, ONE HOUR OLD
+
+§20's sentence *"four observers, one of them human and none of them wrong to be unsure — because there is nothing
+to observe"* is **half wrong and I am striking that clause rather than deleting it.** There *is* something to
+observe: the mtime, and it was on disk the whole time. What is true is narrower and survives: **no channel any of
+us was WATCHING reports motion** — not the screen, not the ring, not the pulse. The observation exists; nobody
+was making it. That is a different failure and a cheaper one to fix.
