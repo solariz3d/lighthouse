@@ -22,7 +22,7 @@
 
 **All five are PAGE-REVEALED — items lying on the page that both better-equipped readers walked past.** Not one required anything opened or run. The registration predicted every WORLD-exclusive item would be RUN-REVEALED and called a world-exclusive PAGE-REVEALED item the interesting cell; what turned up instead is five text-only-exclusive items, all PAGE-REVEALED.
 
-**One candidate examined and REJECTED, so the edge is not inflated:** B's R8 argued that the README's requirement of a machine sleeping in S3 may be unmeetable, since modern laptops often expose no S3 state. `powercfg /a` on this machine reports Standby (S3) AVAILABLE. B marked it unsure; it does not hold here and is excluded. B's R2, R6, R9, R12 and C2 overlap A's or E's items and are not exclusive.
+**One candidate examined and ~~REJECTED~~ — STRUCK, see §7 D1; it is UNSETTLED, not rejected:** B's R8 argued that the README's requirement of a machine sleeping in S3 may be unmeetable, since modern laptops often expose no S3 state. `powercfg /a` on this machine reports Standby (S3) AVAILABLE. B marked it unsure; it does not hold here and is excluded. B's R2, R6, R9, R12 and C2 overlap A's or E's items and are not exclusive.
 
 ## 2 · P2 FAILS AS STATED — and its inference does not follow, which is the more useful result
 
@@ -60,3 +60,29 @@ All three over-reported their own effort, and two caught it:
 ## 6 · What this run does NOT establish
 
 Nothing about recall: there are no plants and no denominator, by design. Nothing about half-collapse or arrangement. Nothing from a second object or a fourth run — F2 forbids both. **Nothing yet about the scorer's own reliability:** the auditor has not audited this list, and until E does, §5.2's disagreements-before-the-edge rule is unsatisfied and this file is provisional. **The scorer was handed one item in advance** — the README contradiction that §3.1 forced the chooser to name in order to show the object was readable at all. It appears in all three lists and in no edge, so it touches nothing here, but it is declared rather than left to be found.
+
+---
+
+## 7 · THE AUDIT, and what it changed — appended, nothing above rewritten except one strike
+
+Auditor E, by the sealed draw, `handback/p-third-run-audit-E_2026-09-20.md`. §5.2 puts disagreements ahead of the edge, so they are stated here before the edge is called final. **The scorer accepts every one of them.**
+
+**ACCEPTED — D1, and it is a correction of the scorer in the direction that ENLARGES the edge, made by the reader whose own read the edge counts against.** I rejected B's R8 because `powercfg /a` reports Standby (S3) available on this machine. E ran the same command, got the same result, and showed the inference does not follow: **B's claim is about the README's requirement travelling to other machines, and this machine is precisely outside the population B named** — it reports S3 available and S0 Low Power Idle *not* supported, i.e. the opposite of the modern-standby laptops the item is about. The runner ships expressly for other machines. **R8 is therefore UNSETTLED BY THIS COMMAND, not rejected**, and the sentence above is struck rather than deleted. It does not enter the verified edge, because unsettled is not verified; it is no longer disposed of either.
+
+**ACCEPTED — D2. My evidence column for item 2 was wrong.** `sed -n '33,36p'` shows the read at module scope: a location, not the consequence. The item's claim — that a missing script throws before any test registers, surfacing as a stack trace rather than a named failing guard — is a runtime claim, and E settled it by running the test in a directory holding only the test: **node exits 1, stdout is zero lines, stderr is ENOENT.** Zero lines of stdout is the proof no test registered. The item stands, on E's evidence rather than mine.
+
+**ACCEPTED — D4. Item 1 stands on a stronger footing than I gave it.** E mutated a copy to the equivalent reversed comparison and ran it: **6 pass, 1 fail**, the failure being the threshold test. Equivalent semantics, same property, test red.
+
+**ACCEPTED — D7. Item 3 stands on stronger evidence than reading.** `grep -cin "powered-off\|mine the dream\|never mine" dev/dream/dream_cycle.ps1` returns **0**: the two bullets correspond to no check in the runner at all.
+
+**ACCEPTED — D6. Item 4 is thin and is now published with its weakness:** the failure mode is loud, not silent, because `git pull` in a non-repo directory errors before the second line runs. The item is kept and qualified.
+
+**ACCEPTED — D5, AND IT CHANGES THE HEADLINE NUMBER, so it goes in the member list and not only here.** Item 1 is exclusive by the registered unit (§3.4: same site AND same wrong thing) — B's site is the operand order at `:71`, E's item 25 is the quoting at `:53`. **Same class, two sites.** Under a class-level unit the edge would be **four items, not five**. Because §3.4 exists precisely because L045's units moved after the fact, both numbers are published: **the anti-monotone edge is 5 by the registered unit and 4 under a class-level unit**, and no later quotation may give one without the other.
+
+**ACCEPTED — D3, recorded for any run 4: the registration has no cell for what this run produced.** §3.3 types ITEMS as RUN-REVEALED or PAGE-REVEALED. Item 2 is page-revealed — discovering it needs only the page — while its VERIFICATION required executing. "The item is page-revealed and its verification is run-revealed" has no category. A definitional gap, not an error.
+
+**ACCEPTED — D8. E concedes §5's finding against it and deliberately did not repair its own file**, because it is the scored artifact and repairing it after scoring would destroy the evidence the finding rests on. That is the right call and it is the same reason nothing above this section is rewritten.
+
+**THE DESIGN DEFECT THE AUDIT EXPOSED, and it is the most durable thing here.** §5.2 asks the auditor to check the scorer's list, but **the exclusivity half of every edge item — "found by B, found by neither A nor E" — can only be settled against A's and B's hand-backs, which the auditor's own condition forbids it to open.** E checked exclusivity against its own list, where all five are genuinely absent, and could check no further. **So §5.2's audit is only partly performable by the seat §5.2 names.** Any run 4 must either release the auditor from the reader condition once the reads are filed, or give exclusivity to a second seat. Until then, **the exclusivity of the five against A's list rests on the scorer alone and is unaudited.**
+
+**THE AUDITOR'S STAKE, in its own words and worth keeping:** E audited a list every item of which is a mark against its own read, and its incentive ran toward shrinking the edge. It confirmed all five, strengthened two, challenged the one rejection in the direction that would make the edge larger, and conceded the one finding against itself. That is the two-way correction this room measures for, arriving unprompted in the seat with the most reason to avoid it.
