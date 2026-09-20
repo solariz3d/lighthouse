@@ -9369,6 +9369,52 @@ struct Queued {
     queued_at: Instant,
     /// Every composer reading taken while THIS message waited — what its forced row is built from.
     reads: Reads,
+    /// WITHDRAWN: the chair cancelled this before the pane was ready for it. It is NOT removed
+    /// here -- it stays in the queue until the drain steps over it and writes the row that says
+    /// it never arrived. A cancellation that silently vaporises a queued packet is worse than the
+    /// defect it fixes (L065 D1, constraint 1).
+    withdrawn: bool,
+}
+
+/// THE DIRECTIVE, and it is deliberately hard to trip by accident.
+///
+/// `[[withdraw-queued N]]` as the WHOLE first line, N being the number of messages the chair
+/// believes are waiting for that pane. Returns `(N, the rest of the text)`; the directive line is
+/// stripped so the pane never sees it.
+///
+/// WHY THE WHOLE LINE AND NOT A SUBSTRING. A marker matched anywhere in a body is a marker any
+/// body can fire by QUOTING it -- which is the self-match trap that took
+/// `the_shelf_excludes_bulk_run_artifacts_and_says_so` red earlier tonight, in this same file,
+/// because a note quoted the string it was asserting about. This queue is the one EVERY dispatch
+/// uses, so the marker has to be unfireable by discussion of itself.
+///
+/// WHY THE COUNT IS REQUIRED, and it is the fail-closed half. The count must equal the pane's
+/// actual queue depth or NOTHING is withdrawn (see `chair_inject_exec`). So a directive written
+/// by mistake, or written against a queue that has moved since the chair last looked, withdraws
+/// nothing and says so -- it cannot delete a message the chair did not mean to delete.
+/// MAY THIS DIRECTIVE WITHDRAW? Pure, so the whole matrix is a unit test rather than a night of
+/// watching the board -- the same reason `drain_decision` and `station_allows` are pure.
+///
+/// The count the chair NAMED must equal the depth the queue actually has, and it must not be zero.
+/// Both halves are the fail-closed rule: a directive written by mistake, or written against a
+/// queue that moved since the chair last looked at it, withdraws NOTHING. Over-withdrawing loses a
+/// packet nobody cancelled, which is constraint 2 and outranks this whole fix; under-withdrawing
+/// costs one wasted lap and leaves a row saying exactly what happened.
+fn withdrawal_is_authorised(named: usize, depth: usize) -> bool {
+    named > 0 && named == depth
+}
+
+fn withdraw_directive(text: &str) -> Option<(usize, String)> {
+    let (first, rest) = match text.split_once('\n') {
+        Some((f, r)) => (f, r),
+        None => (text, ""),
+    };
+    let inner = first.strip_prefix("[[withdraw-queued ")?.strip_suffix("]]")?;
+    if inner.is_empty() || !inner.bytes().all(|b| b.is_ascii_digit()) {
+        return None;
+    }
+    let n: usize = inner.parse().ok()?;
+    Some((n, rest.to_string()))
 }
 
 /// Per-pane FIFO. FIFO matters: two rings queued behind a busy pane must arrive in the order they
@@ -9382,7 +9428,7 @@ impl Inbox {
     fn push(&self, pane: &str, text: String, label: String, now: Instant) -> usize {
         let mut m = self.0.lock().unwrap();
         let q = m.entry(pane.to_string()).or_default();
-        q.push_back(Queued { text, label, queued_at: now, reads: Reads::default() });
+        q.push_back(Queued { text, label, queued_at: now, reads: Reads::default(), withdrawn: false });
         q.len()
     }
     fn depth(&self, pane: &str) -> usize {
@@ -9401,6 +9447,45 @@ impl Inbox {
             }
         }
     }
+    /// Mark EVERY message currently queued for this pane as withdrawn, and report what was marked
+    /// so the caller can write a row per message. Nothing is removed: see `Queued::withdrawn`.
+    ///
+    /// Already-withdrawn entries are not reported again -- a row with a doubled count is the class
+    /// of wrongness this room keeps finding under rocks.
+    fn withdraw_all(&self, pane: &str, now: Instant) -> Vec<(String, Duration)> {
+        let mut out = Vec::new();
+        if let Ok(mut m) = self.0.lock() {
+            if let Some(q) = m.get_mut(pane) {
+                for it in q.iter_mut() {
+                    if !it.withdrawn {
+                        it.withdrawn = true;
+                        out.push((it.label.clone(), now.saturating_duration_since(it.queued_at)));
+                    }
+                }
+            }
+        }
+        out
+    }
+
+    /// Pop the head ONLY IF it is withdrawn, so the drain can report it and move on.
+    ///
+    /// GATE-INDEPENDENT ON PURPOSE, and it is safe precisely because nothing is written to the
+    /// pane: the gate exists to stop a WRITE landing mid-turn, and stepping over a message that
+    /// will never be written cannot splice anything. It is also what lets the cancellation itself
+    /// arrive without waiting behind the packet it cancels.
+    ///
+    /// AN UN-WITHDRAWN HEAD IS NEVER TOUCHED. That is constraint 2 and it outranks the fix: this
+    /// is the queue every dispatch uses.
+    fn take_withdrawn(&self, pane: &str, now: Instant) -> Option<(String, Duration)> {
+        let mut m = self.0.lock().ok()?;
+        let q = m.get_mut(pane)?;
+        if !q.front()?.withdrawn {
+            return None;
+        }
+        let it = q.pop_front()?;
+        Some((it.label, now.saturating_duration_since(it.queued_at)))
+    }
+
     /// Take the head IF the decision says it may go. Returns the message and whether it was forced.
     /// Leaves the queue untouched on HOLD — bar 4: a queued message must never be lost.
     fn take_ready(
@@ -9428,6 +9513,13 @@ impl Inbox {
         let mut m = self.0.lock().ok()?;
         let q = m.get_mut(pane)?;
         let head = q.front()?;
+        // DEFENCE IN DEPTH. `drain_inboxes` clears withdrawn heads before it ever gets here, so
+        // this is unreachable in the shipped path -- and it is the guard that makes "a withdrawn
+        // message cannot be delivered" a property of the INBOX rather than of one caller
+        // remembering to ask first. The drain is not the only thing that has ever called this.
+        if head.withdrawn {
+            return None;
+        }
         let waited = now.saturating_duration_since(head.queued_at);
         match drain_decision(gate, box_empty, screen_idle, waited, enabled) {
             Drain::Hold => None,
@@ -9622,6 +9714,21 @@ fn unreadable_counts(r: &Reads) -> String {
 fn drain_inboxes(app: &AppHandle) {
     let enabled = deliver_only_when_idle();
     for pane in app.state::<Inbox>().panes() {
+        // L065 D1: WITHDRAWN HEADS ARE STEPPED OVER FIRST, and each one leaves a row.
+        //
+        // BEFORE the gate is even read, because nothing here is written to the pane and the gate
+        // exists to stop a WRITE landing mid-turn. It is also what lets the cancellation behind
+        // them arrive at the next ready moment instead of queueing behind the packet it cancels.
+        //
+        // THE ROW IS THE POINT. `take_withdrawn` could have dropped these silently and the pane
+        // would have been correct; the record would not. Mark the carriers, leave the traces.
+        while let Some((label, waited)) = app.state::<Inbox>().take_withdrawn(&pane, Instant::now()) {
+            chair_audit(app, format!(
+                "WITHDRAWN NOT DELIVERED -> {} (queued {}s ago, cancelled before this pane was \
+                 ready for it): {}",
+                short_id(&pane), waited.as_secs(), label
+            ));
+        }
         let (gate, box_empty, screen_idle, composer) = pane_state(&app.state::<PaneEmus>(), &pane);
         app.state::<Inbox>().note_reading(&pane, composer);
         if let Some((text, label, forced, reads)) = app.state::<Inbox>().take_ready_read(
@@ -10110,6 +10217,44 @@ fn chair_inject_exec(app: &AppHandle, target: &str, text: &str) -> String {
         chair_audit(app, chair_inject_refusal_line(short_id(&tid), &chair_model, &e));
         return e;
     }
+    // L065 D1: THE WITHDRAWAL, BEFORE THIS MESSAGE IS QUEUED BEHIND THE ONE IT CANCELS.
+    //
+    // Measured 2026-09-20: dispatch QUEUED 08:07:32, its withdrawal QUEUED 08:09:35, dispatch
+    // DELIVERED 08:13:37 -- four minutes after it had been cancelled -- and the cancellation
+    // arrived 2m40s behind it. The queue is FIFO and FIFO is correct; what was missing is any way
+    // to say "this one is no longer wanted" that the queue could hear.
+    //
+    // FAIL-CLOSED ON THE WITHDRAWAL, FAIL-OPEN ON THE DELIVERY. If the count does not match the
+    // depth, NOTHING is withdrawn and the message is still delivered, with a row saying why. The
+    // two failure directions are deliberately opposite: over-withdrawing loses a packet nobody
+    // cancelled (constraint 2), under-withdrawing costs one wasted lap and leaves a row.
+    let text = match withdraw_directive(text) {
+        None => text.to_string(),
+        Some((n, rest)) => {
+            let depth = app.state::<Inbox>().depth(&tid);
+            if !withdrawal_is_authorised(n, depth) {
+                chair_audit(app, format!(
+                    "WITHDRAW REFUSED -> {}: the directive named {n} queued message(s) and {depth} \
+                     are waiting. NOTHING was withdrawn; this message is delivered as an ordinary one.",
+                    short_id(&tid)
+                ));
+                rest
+            } else {
+                let marked = app.state::<Inbox>().withdraw_all(&tid, Instant::now());
+                // ONE ROW PER MESSAGE, naming it. "2 withdrawn" tells a reader a number; the
+                // packet's own preview tells them WHICH lap was cancelled, which is the fact the
+                // record needs a week later.
+                for (label, waited) in &marked {
+                    chair_audit(app, format!(
+                        "WITHDRAWN -> {} (had waited {}s, never rendered): {}",
+                        short_id(&tid), waited.as_secs(), label
+                    ));
+                }
+                rest
+            }
+        }
+    };
+    let text = text.as_str();
     // provenance is marked by the SYSTEM, not the sender — a pane must never be unsure
     // whether the chair or the human is speaking to it
     let msg = format!("[chair:MAIN] {text}");
@@ -16989,6 +17134,53 @@ mod composer_tristate_tests {
         assert!(!body.contains("delivery_note(gate"), "and not the reading-blind row");
     }
 
+    /// THE DRAIN STEPS OVER WITHDRAWN HEADS BEFORE IT DELIVERS, and it writes a row for each.
+    ///
+    /// Source-level, like its neighbour above, because `drain_inboxes` takes an `AppHandle` and the
+    /// facts worth pinning here are ORDER and PRESENCE: the withdrawn sweep must precede the take
+    /// (otherwise the cancellation still queues behind the packet it cancels), and it must emit a
+    /// row (otherwise a withdrawn packet vanishes with no trace, which the packet calls worse than
+    /// the defect). The BEHAVIOUR of the sweep is unit-tested against `Inbox` directly.
+    #[test]
+    fn drain_inboxes_steps_over_withdrawn_heads_before_it_delivers_and_says_so() {
+        let src = include_str!("main.rs");
+        let body = src
+            .split("fn drain_inboxes(")
+            .nth(1)
+            .and_then(|b| b.split("\nfn ").next())
+            .expect("drain_inboxes exists");
+        let sweep = body.find(".take_withdrawn(").expect("the withdrawn sweep must exist");
+        let take = body.find(".take_ready_read(").expect("the delivery take must exist");
+        assert!(sweep < take,
+            "a withdrawn head is stepped over AFTER the delivery take, so the cancellation still \
+             queues behind the packet it cancels");
+        assert!(body.contains("WITHDRAWN NOT DELIVERED"),
+            "the sweep drops withdrawn packets with no board row -- worse than the defect");
+        // WHILE, not IF: two withdrawn packets must both be reported, not one per drain tick.
+        assert!(body.contains("while let Some((label, waited)) = app.state::<Inbox>().take_withdrawn("),
+            "only one withdrawn head is cleared per tick");
+    }
+
+    /// AND THE CHAIR'S SIDE WRITES ITS OWN ROW, including when it REFUSES to withdraw.
+    #[test]
+    fn the_chair_says_what_it_withdrew_and_says_when_it_withdrew_nothing() {
+        let src = include_str!("main.rs");
+        let body = src
+            .split("fn chair_inject_exec(")
+            .nth(1)
+            .and_then(|b| b.split("\nfn ").next())
+            .expect("chair_inject_exec exists");
+        assert!(body.contains("WITHDRAW REFUSED ->"),
+            "a directive whose count does not match the depth withdraws nothing SILENTLY");
+        assert!(body.contains("WITHDRAWN ->"), "the withdrawal itself leaves no row");
+        // the refusal must not also swallow the message
+        let refused = body.find("WITHDRAW REFUSED ->").expect("refusal row");
+        let gate = body.find("gate_or_queue(app, &tid, &msg, &preview)").expect("the delivery call");
+        assert!(refused < gate,
+            "the refusal is written after the message was already disposed of; a refused \
+             withdrawal must still deliver its own message");
+    }
+
     #[test]
     fn an_outranked_hold_with_text_throughout_says_it_never_read_clear() {
         let row = delivery_note_with(
@@ -17141,6 +17333,152 @@ mod composer_tristate_tests {
         let inbox = Inbox::new();
         inbox.note_reading("nobody", Composer::HasText);
         assert_eq!(inbox.depth("nobody"), 0);
+    }
+
+    // ---- L065 D1: A CANCELLATION CANNOT OVERTAKE THE MESSAGE IT CANCELS -------------------
+    //
+    // Measured, 2026-09-20: the chair queued a dispatch to C at 08:07:32, queued its withdrawal at
+    // 08:09:35, and the queue is FIFO -- so the dispatch was DELIVERED at 08:13:37, four minutes
+    // after it had been withdrawn, and the withdrawal arrived 2m40s behind the thing it cancelled.
+    // C answered a packet that no longer existed.
+
+    /// THE DIRECTIVE IS THE WHOLE FIRST LINE AND NOTHING ELSE.
+    ///
+    /// A marker that matches anywhere in a body is a marker any body can trip by QUOTING it --
+    /// which is exactly the self-match trap that took this file's run-artifact test red hours ago,
+    /// and this queue is the one every dispatch uses. So: first line, exact shape, count required.
+    #[test]
+    fn the_withdraw_directive_is_the_whole_first_line_and_nothing_else() {
+        let (n, rest) = withdraw_directive("[[withdraw-queued 2]]\nthe cancellation text")
+            .expect("the exact first line must parse");
+        assert_eq!(n, 2);
+        assert_eq!(rest, "the cancellation text", "the directive is stripped from what the pane sees");
+
+        // QUOTED, not issued. A message that TALKS about the directive must withdraw nothing.
+        assert!(withdraw_directive("here is how it works:\n[[withdraw-queued 2]]\nsee?").is_none(),
+            "a quoted directive on a later line withdrew messages");
+        assert!(withdraw_directive("  [[withdraw-queued 2]]").is_none(), "leading text is not the directive");
+        assert!(withdraw_directive("[[withdraw-queued 2]] and then some").is_none(),
+            "the directive must be the whole line, or a sentence containing it is a withdrawal");
+        assert!(withdraw_directive("[[withdraw-queued]]").is_none(), "the count is not optional");
+        assert!(withdraw_directive("[[withdraw-queued -1]]").is_none());
+        assert!(withdraw_directive("ordinary dispatch text").is_none());
+    }
+
+    /// FAIL-CLOSED, and the matrix is small enough to state whole.
+    ///
+    /// The count exists so that a directive can only ever withdraw what the chair was looking at.
+    /// A mismatch in EITHER direction withdraws nothing: fewer means the queue grew since the
+    /// chair read it, more means it drained, and in both cases the chair is cancelling something
+    /// other than what it thinks it is cancelling.
+    #[test]
+    fn a_withdrawal_is_authorised_only_when_its_count_matches_the_depth_exactly() {
+        assert!(withdrawal_is_authorised(1, 1));
+        assert!(withdrawal_is_authorised(2, 2));
+        assert!(!withdrawal_is_authorised(0, 0), "a zero directive withdraws nothing, not everything");
+        assert!(!withdrawal_is_authorised(0, 3), "zero named against a full queue is not a wildcard");
+        assert!(!withdrawal_is_authorised(2, 3), "the queue grew since the chair read it");
+        assert!(!withdrawal_is_authorised(3, 2), "the queue drained since the chair read it");
+        assert!(!withdrawal_is_authorised(1, 0), "nothing is waiting to withdraw");
+    }
+
+    /// THE PAIR: the null and the positive control on ONE object.
+    ///
+    /// Registered in the hand-back before this was written. An absence assertion alone cannot tell
+    /// a working withdrawal from a fixture that was never going to deliver anything, so the same
+    /// inbox, pane and message is observed delivering (no withdrawal) and not delivering
+    /// (withdrawn). If the first half stops being true this test is measuring nothing.
+    #[test]
+    fn a_withdrawn_message_does_not_reach_the_pane_and_an_unwithdrawn_one_does() {
+        let t0 = Instant::now();
+        let ready = |i: &Inbox| i.take_ready("p", PaneGate::Ready, true, true, t0, true);
+
+        // POSITIVE CONTROL — the quantity is TRUE on this object
+        let a = Inbox::new();
+        a.push("p", "the dispatch".into(), "dispatch".into(), t0);
+        assert!(ready(&a).is_some(), "the control never delivered; the null below would prove nothing");
+
+        // THE NULL — same object shape, withdrawn
+        let b = Inbox::new();
+        b.push("p", "the dispatch".into(), "dispatch".into(), t0);
+        let marked = b.withdraw_all("p", t0);
+        assert_eq!(marked.len(), 1, "withdraw_all did not mark the queued message");
+        assert!(ready(&b).is_none(), "a WITHDRAWN message was handed to the pane");
+    }
+
+    /// A WITHDRAWN MESSAGE IS NOT VAPORISED. The room's law is mark the carriers, leave the traces;
+    /// a cancellation that silently deletes a queued packet with no row is worse than the defect.
+    #[test]
+    fn withdrawing_never_removes_the_entry_so_it_can_still_be_reported() {
+        let t0 = Instant::now();
+        let i = Inbox::new();
+        i.push("p", "m".into(), "the withdrawn dispatch".into(), t0);
+        i.withdraw_all("p", t0);
+        assert_eq!(i.depth("p"), 1, "the entry was removed at withdrawal time and cannot be reported");
+        let (label, waited) = i
+            .take_withdrawn("p", t0 + Duration::from_secs(242))
+            .expect("the withdrawn entry must come back out to be reported");
+        assert_eq!(label, "the withdrawn dispatch", "the row cannot name what it stepped over");
+        assert_eq!(waited.as_secs(), 242, "the row cannot say how long it had been waiting");
+        assert_eq!(i.depth("p"), 0, "reported and gone");
+    }
+
+    /// THE FALSIFIER, AND IT OUTRANKS THE FIX. This is the queue every dispatch uses. If anything
+    /// added this lap can drop a message that was never withdrawn, the change is wrong.
+    #[test]
+    fn take_withdrawn_pops_only_a_withdrawn_head() {
+        let t0 = Instant::now();
+        let i = Inbox::new();
+        i.push("p", "m".into(), "an ordinary dispatch".into(), t0);
+        assert!(i.take_withdrawn("p", t0).is_none(), "an un-withdrawn message was popped");
+        assert_eq!(i.depth("p"), 1, "an un-withdrawn message was consumed");
+        // and it still delivers normally afterwards
+        assert!(i.take_ready("p", PaneGate::Ready, true, true, t0, true).is_some(),
+            "the un-withdrawn message stopped being deliverable");
+    }
+
+    /// FIFO SURVIVES. Stepping over a withdrawn head must not reorder what is behind it -- the
+    /// inbox traded a splice for an ordering guarantee and this change must not trade it back.
+    #[test]
+    fn stepping_over_a_withdrawn_head_does_not_reorder_what_is_behind_it() {
+        let t0 = Instant::now();
+        let i = Inbox::new();
+        i.push("p", "first".into(), "first".into(), t0);
+        i.withdraw_all("p", t0);
+        i.push("p", "second".into(), "second".into(), t0);
+        i.push("p", "third".into(), "third".into(), t0);
+        assert_eq!(i.take_withdrawn("p", t0).map(|(l, _)| l), Some("first".to_string()));
+        assert!(i.take_withdrawn("p", t0).is_none(), "the un-withdrawn tail was treated as withdrawn");
+        let got: Vec<String> = (0..2)
+            .filter_map(|_| i.take_ready("p", PaneGate::Ready, true, true, t0, true).map(|(t, _, _)| t))
+            .collect();
+        assert_eq!(got, vec!["second".to_string(), "third".to_string()], "FIFO broke");
+    }
+
+    /// WITHDRAWAL IS SCOPED TO THE PANE IT NAMES. The chair fans out to four seats; withdrawing
+    /// one seat's packet must not touch another's.
+    #[test]
+    fn withdrawing_one_pane_leaves_every_other_pane_untouched() {
+        let t0 = Instant::now();
+        let i = Inbox::new();
+        i.push("p", "m".into(), "p's dispatch".into(), t0);
+        i.push("q", "m".into(), "q's dispatch".into(), t0);
+        assert_eq!(i.withdraw_all("p", t0).len(), 1);
+        assert!(i.take_withdrawn("q", t0).is_none(), "another pane's message was withdrawn");
+        assert!(i.take_ready("q", PaneGate::Ready, true, true, t0, true).is_some(),
+            "another pane's message stopped delivering");
+    }
+
+    /// ALREADY WITHDRAWN IS NOT WITHDRAWN TWICE -- the count in the row would be wrong, and a row
+    /// with a wrong count is the thing this room keeps finding under rocks.
+    #[test]
+    fn withdrawing_twice_reports_the_second_time_as_nothing_new() {
+        let t0 = Instant::now();
+        let i = Inbox::new();
+        i.push("p", "m".into(), "l".into(), t0);
+        assert_eq!(i.withdraw_all("p", t0).len(), 1);
+        assert_eq!(i.withdraw_all("p", t0).len(), 0, "the same message was reported withdrawn twice");
+        assert_eq!(i.depth("p"), 1);
     }
 
     /// NO BEHAVIOUR CHANGE, AT THE INBOX. `take_ready` is now a view of `take_ready_read`; this

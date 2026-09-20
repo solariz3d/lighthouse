@@ -177,20 +177,47 @@ fn move_baton_cmd(lap: &str, by: &str) -> String {
 
 /// PURE. The chair's refusal when a hand-back is owed and undeliverable. `None` when no debt
 /// stands, which is every ordinary inject including the whole fan-out at dispatch.
-fn owed_refusal_text(baton_at: Option<u64>, m: &LoopMarks, lap: &str) -> Option<String> {
+fn owed_refusal_text(
+    baton_at: Option<u64>,
+    m: &LoopMarks,
+    lap: &str,
+    holders: &[String],
+    also_open: usize,
+) -> Option<String> {
     if !mark_stands(baton_at, m.owed_at) {
         return None;
     }
+    // WHERE THE BATON IS, READ RATHER THAN ASSERTED (L065 D2). This said "because the baton is at the chair", which
+    // was true of the state L050 was written in and was never checked — the function had no holder to check. On
+    // 2026-09-20 the holder was the LIBRARIAN when a pane's hand-back was refused, and a refusal that mis-states the
+    // state it is diagnosing is the same class of defect as one that prints no recovery at all.
+    let where_it_is = if holders.is_empty() {
+        "no open lap names a holder".to_string()
+    } else {
+        holders.join(", ")
+    };
+    // L040's defect in the one place its fix was not applied: this lap id is the NEWEST open lap, which with several
+    // laps open may be one the chair never rang on — and `--by chair` on that lap is refused by lap-row's ring gate.
+    let which_lap = if also_open > 0 {
+        format!(
+            "\n{also_open} other lap(s) are open, and {lap} is the NEWEST row's lap, not necessarily the one you \
+             rang on — move the lap you rang on, or that row's own ring gate will refuse it."
+        )
+    } else {
+        String::new()
+    };
     Some(format!(
         "refused: A HAND-BACK IS OWED AND CANNOT BE DELIVERED — {who} finished work and its \
-         call_librarian was refused OUT OF TURN, because the baton is at the chair and \
-         call_librarian requires panes. Nothing more renders into a room where the last seat you \
-         woke cannot answer. Move the baton, then re-send:\n  {cmd}\nThe ring that row's gate wants \
-         is the inject you already sent, so it is legal now; this refusal clears itself when the \
-         row lands, because the mark is only read against the baton's last move. (Posted to the \
-         board.)",
+         call_librarian was refused OUT OF TURN, because call_librarian requires the PANES to hold the baton and no \
+         open lap is held by them (the baton is at: {where_it_is}). Nothing more renders into a room where the last \
+         seat you woke cannot answer. Move the baton, then re-send:\n  {cmd}\n  or the pane takes it:  {pane_cmd}\n\
+         The second is a RETAKE — `--by` equal to `--holder` — which lap-row.js allows with no ring, so it lands even \
+         when the first is refused for want of one. The ring the first row's gate wants is the inject you already \
+         sent.{which_lap}\nThis refusal clears itself when a row lands, because the mark is only read against the \
+         baton's last move — including a row that does NOT open the panes. (Posted to the board.)",
         who = if m.owed_by.is_empty() { "a pane" } else { m.owed_by.as_str() },
         cmd = move_baton_cmd(lap, "chair"),
+        pane_cmd = move_baton_cmd(lap, "panes"),
     ))
 }
 
@@ -572,7 +599,7 @@ impl ConsonanceMcp {
     /// silently outlive the other — the ledger clears the mark, and only the ledger can.
     fn owed_handback_refusal(&self) -> Option<String> {
         let st = crate::chain_state();
-        owed_refusal_text(st.at, &marks(), st.lap.as_deref().unwrap_or("<lap>"))
+        owed_refusal_text(st.at, &marks(), st.lap.as_deref().unwrap_or("<lap>"), &crate::chain_holders(), st.also_open)
     }
 
     /// The seal gate's board line: refusals AND verified seals, because a trail that carries only refusals cannot
@@ -1482,7 +1509,7 @@ mod tests {
     /// stall one step earlier, which is the whole rule this packet is about.
     #[test]
     fn red_first_an_owed_hand_back_refuses_the_next_inject_and_names_the_recovery() {
-        let out = owed_refusal_text(Some(BATON), &marks_at(BATON + 5, 0), "L049")
+        let out = owed_refusal_text(Some(BATON), &marks_at(BATON + 5, 0), "L049", &[], 0)
             .expect("a hand-back owed since the baton last moved must refuse the next inject");
         assert!(out.starts_with("refused:"), "it must read as a refusal: {out}");
         assert!(
@@ -1497,12 +1524,12 @@ mod tests {
     /// cannot answer yet, and that is the loop working; it must stay legal or the room stops.
     #[test]
     fn an_ordinary_fan_out_is_not_touched() {
-        assert_eq!(owed_refusal_text(Some(BATON), &marks_at(0, 0), "L050"), None,
+        assert_eq!(owed_refusal_text(Some(BATON), &marks_at(0, 0), "L050", &[], 0), None,
             "no debt at all — this is every first inject of every possession, and the correct \
              fan-out is indistinguishable from the trap at this instant");
-        assert_eq!(owed_refusal_text(Some(BATON), &marks_at(BATON - 1, 0), "L050"), None,
+        assert_eq!(owed_refusal_text(Some(BATON), &marks_at(BATON - 1, 0), "L050", &[], 0), None,
             "a debt from BEFORE the baton last moved was already settled by the row that moved it");
-        assert_eq!(owed_refusal_text(Some(BATON), &marks_at(0, BATON + 5), "L050"), None,
+        assert_eq!(owed_refusal_text(Some(BATON), &marks_at(0, BATON + 5), "L050", &[], 0), None,
             "a RUNG mark is not a debt — waking a pane is the loop, not the trap");
     }
 
@@ -1523,7 +1550,7 @@ mod tests {
     #[test]
     fn no_open_lap_gates_nothing() {
         assert!(!mark_stands(None, BATON + 5), "with no baton there is no possession to be inside of");
-        assert_eq!(owed_refusal_text(None, &marks_at(BATON + 5, BATON + 5), "L050"), None);
+        assert_eq!(owed_refusal_text(None, &marks_at(BATON + 5, BATON + 5), "L050", &[], 0), None);
         assert!(
             handback_refusal_text(None, &marks_at(0, BATON + 5), "L050").contains("comes back to you"),
             "with no open lap the old wording stands — there is no trap to name"
@@ -1575,13 +1602,109 @@ mod tests {
              the next seat will not believe it may run it");
     }
 
+    // ── L065 D2: WHEN THE HOLDER IS THE LIBRARIAN ───────────────────────────────────────────────
+    // Measured on 2026-09-20: the librarian took L060 at 02:16:13 (`--holder librarian`), and at
+    // 02:17:26 mount C's call_librarian was refused OUT OF TURN while C was still appending to an
+    // unfiled hand-back. The mark machinery was built for holder == chair. These pin what it does
+    // when the holder is someone else, and the first two are FINDINGS pinned as tests, not repairs.
+
+    /// THE DEBT IS CLEARED BY ANY ROW, not only by the row that lets the pane speak. The design says
+    /// "the marks clear themselves the moment the recovery row lands"; the mechanism is
+    /// `mark_at >= baton_at`, and EVERY baton row moves `baton_at`. Tonight the chair moved L060
+    /// librarian -> chair at 02:17:37, eleven seconds after C's refusal: that row cleared the debt
+    /// and did not open the panes. Pinned so the next reader does not have to rediscover it.
+    #[test]
+    fn any_baton_row_clears_the_debt_even_one_that_does_not_open_the_panes() {
+        let owed = marks_at(BATON + 5, 0);
+        assert!(owed_refusal_text(Some(BATON), &owed, "L060", &["chair".into()], 0).is_some(),
+            "the debt stands while the baton has not moved past it");
+        assert_eq!(owed_refusal_text(Some(BATON + 6), &owed, "L060", &["chair".into()], 0), None,
+            "a LATER row clears the debt whatever it says — including librarian -> chair, which \
+             leaves the owed pane exactly as unable to speak as before");
+    }
+
+    /// THE PANE-FACING TEXT CANNOT SEE THE HOLDER. Its only discriminator is the RUNG mark, and with
+    /// one open lap a successful `chair_inject` requires holder == chair, so any RUNG mark
+    /// necessarily predates the row that made the librarian the holder — the trap branch is
+    /// unreachable in that shape and the pane is told "the loop comes back to you". That is what C
+    /// and one sibling both repeated on the board at 02:17:3x.
+    /// **If a later lap teaches this function the holder, change this test deliberately.**
+    #[test]
+    fn the_pane_facing_refusal_is_holder_blind_and_that_is_the_known_limit() {
+        let src = std::fs::read_to_string("src/mcp.rs").expect("read own source").replace("\r\n", "\n");
+        let f = src.split("fn handback_refusal_text(").nth(1).expect("moved — re-point this test");
+        // The SIGNATURE, not the body: the body prints `--holder panes` inside the retake it hands the pane, so a
+        // word-search there answers a different question (my first version of this test failed on exactly that).
+        let params = f.split(')').next().unwrap_or(f);
+        assert!(!params.contains("holder"), "this function decides on the RUNG mark alone; if it now takes the \
+             holder, the L065 finding is fixed and this test should be rewritten to say so: {params}");
+        // And the consequence, from the pure function: no mark combination the librarian's
+        // possession can produce reaches the trap branch.
+        let rung_before_the_row = handback_refusal_text(Some(BATON), &marks_at(0, BATON - 1), "L060");
+        assert!(rung_before_the_row.contains("The loop comes back to you"),
+            "a ring from the chair's possession is stale the moment the librarian's row lands");
+    }
+
+    /// THE QUANTITY TAKES MORE THAN ONE VALUE, checked before the finding above was claimed: with a
+    /// SECOND open lap still held by the chair, `chair_inject` is legal (L040: any holder), so a
+    /// RUNG mark CAN be stamped after the librarian's row and the trap branch does fire. The finding
+    /// is about the one-lap shape, not about the holder being the librarian as such.
+    #[test]
+    fn with_a_second_lap_held_by_the_chair_the_trap_branch_is_reachable() {
+        let t = handback_refusal_text(Some(BATON), &marks_at(0, BATON + 5), "L060");
+        assert!(t.contains("NOT COMING BACK ON ITS OWN"),
+            "a RUNG mark newer than the newest row reaches the trap branch whoever holds");
+    }
+
+    // ── the repair this lap makes: the chair-facing recovery stops asserting state it never read ──
+
+    /// It said "because the baton is at the chair". It never read the holder — the argument was
+    /// true of the state L050 was written in and asserted in every other.
+    #[test]
+    fn the_owed_refusal_says_where_the_baton_actually_is() {
+        let t = owed_refusal_text(Some(BATON), &marks_at(BATON + 5, 0), "L060", &["librarian".into()], 0).unwrap();
+        // The CLAUSE, not the word: "librarian" also occurs inside "call_librarian" two lines up, and a mutant that
+        // put the asserted "chair" back survived this test until the assertion was tightened to the rendered clause.
+        assert!(t.contains("the baton is at: librarian"), "the holder it read must appear: {t}");
+        assert!(!t.contains("the baton is at: chair") && !t.contains("the baton is at: the chair"),
+            "it must not name a holder it did not read: {t}");
+    }
+
+    #[test]
+    fn a_ledger_that_names_no_holder_is_said_rather_than_guessed() {
+        let t = owed_refusal_text(Some(BATON), &marks_at(BATON + 5, 0), "L060", &[], 0).unwrap();
+        assert!(t.contains("no open lap names a holder"), "an unknown holder must be said: {t}");
+    }
+
+    /// The chair's `--by chair` row needs a ring since the baton moved; the pane's retake never
+    /// does. The pane-facing text has carried both since L050 and this one carried only the first,
+    /// so a chair whose `--by chair` row was refused had nothing else printed to try.
+    #[test]
+    fn the_owed_refusal_also_prints_the_retake_that_needs_no_ring() {
+        let t = owed_refusal_text(Some(BATON), &marks_at(BATON + 5, 0), "L060", &["chair".into()], 0).unwrap();
+        assert!(t.contains("--stage L060 working --holder panes --by panes"), "the retake: {t}");
+        assert!(t.contains("RETAKE"), "and why it is legal: {t}");
+    }
+
+    /// L040's defect, in the one place its fix was not applied: this lap id is `chain_state().lap`,
+    /// the NEWEST open lap, which under several open laps may be a lap the chair never rang on —
+    /// and `--by chair` on that lap is refused by lap-row's own ring gate.
+    #[test]
+    fn the_owed_refusal_warns_when_the_lap_it_names_may_not_be_the_one_rung_on() {
+        let many = owed_refusal_text(Some(BATON), &marks_at(BATON + 5, 0), "L060", &["chair".into()], 3).unwrap();
+        assert!(many.contains("3 other"), "the reader must be told other laps are open: {many}");
+        assert!(many.contains("NEWEST"), "and that this id is the newest row's lap: {many}");
+        let one = owed_refusal_text(Some(BATON), &marks_at(BATON + 5, 0), "L060", &["chair".into()], 0).unwrap();
+        assert!(!one.contains("NEWEST"), "with one open lap there is nothing to warn about: {one}");
+    }
+
     /// Neither refusal may ever be a bare no. Both arms, checked together, so a future edit that
     /// keeps one and drops the other cannot pass.
     #[test]
     fn every_refusal_this_gate_adds_prints_a_runnable_command() {
         let mut checked = 0;
         for text in [
-            owed_refusal_text(Some(BATON), &marks_at(BATON + 1, 0), "L049").unwrap(),
+            owed_refusal_text(Some(BATON), &marks_at(BATON + 1, 0), "L049", &[], 0).unwrap(),
             handback_refusal_text(Some(BATON), &marks_at(0, BATON + 1), "L049"),
         ] {
             assert!(text.contains("node consonance/tools/lap-row.js --stage L049 "),
