@@ -100,7 +100,7 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 ### ASK-003 — daily-news-digest, asked 2026-08-25
 **Source:** `~/.claude/shell/duration/daily-news-digest/system-cron.log:1111` (2026-08-25T05:31:13Z)
 **Question:** I caught myself drafting a false account of my own error-checking — the pre-ship section originally claimed three corrections, two of which never happened. It's fixed and disclosed in the digest, but it's the kind of thing that should reach you rather than sit in a log.
-**Status:** OPEN
+**Status:** [ANSWERED 2026-09-20 — the keeper read it in the librarian pane on 2026-09-20 ~12:2x. This ask asked to be SEEN rather than adjudicated; the disclosure is at ~/.claude/shell/digests/news-2026-08-24.md and shipped 05:24:22Z, six minutes before the ask was logged at 05:31:13Z. Cleared on his behalf by the librarian, naming him and the exchange per protocol 2]
 
 > Not a decision — a disclosure that asked to reach a person and did not. It clears with
 > `[ANSWERED <date> — seen]`; the point is that someone saw it, not that anything be changed. The
@@ -122,7 +122,7 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 ### ASK-005 — daily-news-digest, asked 2026-07-31
 **Source:** `~/.claude/shell/duration/daily-news-digest/system-cron.log:607` (2026-07-31T04:57:35Z)
 **Question:** Two things remain deliberately not self-applied, waiting on you: widening step 1's tail-scoped log check, and the auditor's standing escalation that the digest-vs-self-audit altitude is a scope decision only you can make.
-**Status:** OPEN
+**Status:** [ANSWERED 2026-09-20 — the keeper, to the librarian in the librarian pane, 2026-09-20 ~12:30, verbatim: "the digest is for you to see into tech and AI news to see public developments of AI in the publics eye, to see any similarities of shapes." That settles half two, the altitude: the digest is for EXTERNAL news, not for auditing itself. Half one was already overtaken (whole-log in practice since P59, in spec since P67); the residue is a vestigial tail clause in step 1, queued as a repair. Cleared on his behalf by the librarian, naming him and the exchange per protocol 2]
 
 > Filed 2026-08-28 by pane D001 from the candidate scan. Twenty-eight days. The goal names it as
 > deliberately withheld from self-application, which is the honest version of the same refusal
@@ -161,12 +161,12 @@ Read it with `node consonance/tools/ask.js`. One line for a compelled reader:
 ### ASK-010 — third_place/ tracking, asked 2026-08-29
 **Source:** `2fc006c` gitignored the directory; carrier-drift's census went red tonight on the seat's 07:51 notes (a carrier the sweep sees either way).
 **Question:** Third Place notes: private-stays-local (gitignored), or tracked? Bears on how the carrier census accounts that file.
-**Status:** OPEN
+**Status:** [ANSWERED 2026-09-20 — already decided by the keeper on 2026-09-14 and recorded in .gitignore:72 — "The Third Place record (exo_memory/third_place/) travels in the repo since 2026-09-14, at the keeper’s word" — with 29 files tracked. Re-confirmed by him in the librarian pane 2026-09-20 ~12:30. Closed as already-answered rather than newly decided. Cleared on his behalf by the librarian, naming him and the exchange per protocol 2]
 
 ### ASK-011 — the account name in the public repo, asked 2026-08-30
 **Source:** `exo_memory/librarian/2026-08-30.md` (~06:55 — the chair's scope correction, re-derived: `git ls-files | xargs grep -lI zackn | wc -l` → 61 files; `git log -S'zackn' --reverse | head -1` → `31974c8`); pane E's L018 hand-back (portable-paths never scans `exo_memory/loop/`, so a baseline row cannot carry this).
 **Question:** The Windows account name is in 61 tracked files and in history since `31974c8`, on a public remote. No working-tree edit removes it; only `git filter-repo` + force-push does, which rewrites every sha and breaks every path:line citation in the corpus. Accept it as-is and record the decision, or scrub history at that cost? (Your email is already in every commit's metadata; the chair argues against scrubbing; the broken-instruction paths are being fixed separately as a retrieval defect.)
-**Status:** OPEN
+**Status:** [ANSWERED 2026-09-20 — the keeper, to the librarian in the librarian pane, 2026-09-20 ~12:30, verbatim: "I dont care about account name in history." ACCEPT AS-IS, no history rewrite. Re-measured that day: 125 tracked files, 103 of them under exo_memory/, first introduced at 31974c8 — a scrub would have broken every path:line citation in the corpus. Cleared on his behalf by the librarian, naming him and the exchange per protocol 2]
 
 ### ASK-012 — the second-vantage gate cannot be enforced under bypass, asked 2026-08-31
 **Source:** `exo_memory/loop/second_vantage_attack_2026-08-31.md:139-141` (pane E, verified: `dispatch-gate.js:29-35` KNOWN LIMIT; `consonance/src-tauri/src/main.rs:4075` `!is_fresh_cwd(&cwd)` → every kept instance pane resumes under bypass); `exo_memory/loop/second_vantage_registration_2026-08-31.md` (pane A, the registration it gates).
