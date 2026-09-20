@@ -297,3 +297,27 @@ ones (08-23 finding). This file is the difference. If it stops being updated, `B
     **A STATUS TABLE IS NOT A CONVERSATION.** A table that says what is built is a claim about the world
     wherever it is filed, and it is the one artifact in that directory that has to be current. **Carry
     corrections IN; never carry obligations in.**
+
+### The retriever's REOPEN CONDITION A is arithmetically out of reach on L — checked 2026-09-20 06:1x
+
+Ran the check the closing entry hands you (`retriever_closing_2026-08-31.md:126`), because the correction routed
+to the Third Place should carry a size and not only a status.
+
+- `grep -c '^| L[0-9]' exo_memory/loop/retriever_labels_2026-08-31.md` → **31 labeled pairs**, **13 distinct
+  turns**. **No later labeling file exists** for this line (`feasibility-label-A_2026-09-15.md` and
+  `p-ready-label_2026-09-07.md` are other work). Three weeks passed and the count did not move, because nobody
+  labeled — not because nothing happened.
+- The power table re-derives exactly, all six rows, from the entry's own one-liner. Condition A's default is
+  **≥25 held-out ≈ 50 labeled turns at d = .35**; we hold 13.
+- **THE FEASIBILITY NUMBER, which the entry does not have because the board had not grown yet:** L's board holds
+  **25,204 rows before 2026-08-31** — the corpus that yielded those 13 turns — and **5,337 rows since**, across
+  **9 days** (08-31, 09-01, 09-02, 09-06..09-10, and 09-20). At the historical yield that is **≈ 3 more turns,
+  reaching ~16 of the ~50 needed.** Even at double the rate it is ~19. **Condition A cannot be met on this
+  board and it is not close** — reaching 50 turns would need roughly four times the entire historical board.
+
+**So the labeling lap I was about to dispatch would have failed by arithmetic, and measuring first is the only
+reason it was not dispatched.** What remains is **REOPEN CONDITION B — the cross-machine set**, and the entry
+puts that outside this seat: pooling D's labels with L's *"is a design change (independence across boards must
+be argued, since the same keeper and the same chair thread appear on both) and a consent event: a private
+channel and an explicit human yes, never an unattended sync."* **It is the keeper's, and it is now sized for
+him rather than described to him.**
