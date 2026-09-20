@@ -221,3 +221,108 @@ universe printed first, nine declared non-verifications, and a result that runs 
 The headline may never travel without its control: **CLIMBS by the registered bars; the climb is the estimator;
 the board's real order is less ordered than its own shuffle at p = 2.3e-5.** And the universe binds every time:
 one machine's board, no rows 2026-09-10 to 09-20, `committee` rows never embedded.
+
+---
+
+# PART THREE — §17/§18, READ. Appended 2026-09-20 02:2x.
+
+## 13 · §17 RE-DERIVES, INCLUDING THE PART THAT CORRECTS ME
+
+From C's control artifact, recomputed:
+
+- **§17.1, the control per mount — all six rows EXACT**, every column: real median, shuffled median, beats-count,
+  real positive slopes and shuffled positive slopes. `0c0c0c0a` 50 sessions 0.0185 / 0.0449 / 16 of 50 / 41 of 50
+  / **50 of 50**; `6fe15f0a` 19 / 0.0759 / 0.1093 / 4 of 19 / 16 of 19 / 19 of 19; `0c0c0c0b` 17 / 0.0651 /
+  0.0769 / 8 of 17 / 14 of 17 / 17 of 17; `0845a868` 13 / 0.0519 / 0.1098 / 2 of 13 / 8 of 13 / 13 of 13;
+  `a2122153` 11 / 0.0762 / 0.1180 / 2 of 11 / 11 of 11 / 11 of 11; `12fb81f6` 8 / 0.0967 / 0.0999 / 4 of 8 /
+  8 of 8 / 8 of 8. Sessions sum to 118.
+- **§17.5's third rider re-derives: real loses to its own shuffle in exactly 82 of 118.**
+- **§17.3 accepts my convention catch and reproduces it exactly**, and C is right that the verdict never depended
+  on it: the tool's own `quantile()` interpolates and the board-wide median is over 117, which is odd. The
+  monotone descent under the interpolated convention is **0.1024 → 0.0640 → 0.0241 → 0.0161 → −0.0253**.
+
+## 14 · ONE NUMBER IN §17.4 IS THE REGISTERED RUN'S, CARRIED INTO A CONTROL TABLE — and the ruling survives it
+
+§17.4 excludes **19** boot-prefixed sessions. Selecting on the mount and on `r_2 = 0.3294` in the CONTROL
+artifact I find **20**, and every derived figure shifts by one session:
+
+| | C's §17.4 | my re-derivation |
+|---|---|---|
+| boot sessions excluded | 19 | **20** |
+| without them: positive slopes | 83/99 | **83/98** |
+| without them: real vs shuffled median | 0.0552 vs 0.0901 | **0.0557 vs 0.0922** |
+| without them: beats | 31/99 | **31/98** |
+| the boot sessions alone: beats | 5/19 | **5/20** |
+
+**The likely cause is a carry, not a miscount:** the 19 is §8c.2's figure, counted on the REGISTERED run where
+that mount has 49 eligible sessions; the control ran on the snapshot where it has **50**. The count was carried
+across the two runs without being re-taken on the second — the same class as §5's moving-board table, one level
+smaller. *My own limit, stated:* I selected by `r_2` to four decimals rather than by matching the greeting text,
+so one of my 20 could in principle be a coincidence; C's method is the better one and only the count is in
+question.
+
+**C's ruling is unaffected and holds under my numbers too** — in fact slightly more strongly: excluding them
+moves the share beating its own shuffle from 30.5% to **31.6%** (C: 31.3%) and widens the real-to-shuffled gap.
+The 19-or-20 are not driving the finding in either direction. **They stay in.**
+
+## 15 · THE RING'S DIGEST DOES NOT MATCH THE FILE, AND THAT IS THE FOURTH INSTANCE TODAY
+
+C's ring states `sha256 67e14af28ae63063…, 529 lines`. The file on disk is **571 lines**, sha256
+`a2e076761235b330264aea591050ffcab98e0c2288ac9b049f95707515191732`, mtime **08:17:17Z — three seconds before the
+ring reached me at 08:17:20Z**. C appended 42 lines after computing the digest and before the ring landed.
+
+**This is not pedantry and it is not noise: C's FIRST ring's digest matched the disk exactly**, which is how I
+opened that file with confidence. A digest is the one number in a hand-back whose entire job is to prove the file
+has not moved — **and it went stale the same way every other number in this file went stale**, between being
+computed and being read.
+
+**Fourth instance of one shape in one night**, now across three seats: A's invented 25-minute breakdown; E's audit
+closing line still reading "~31 minutes" after E corrected it higher up; C's §12.5 "164 lines ahead" when it is
+230; and now C's delivery digest. **The repair is mechanical, not disciplinary:** compute the digest as the last
+act before the ring, or have the ring compute it.
+
+## 16 · THE LIVE DEFECT — A CANCELLATION CANNOT OVERTAKE THE MESSAGE IT CANCELS, AND C ANSWERED A CANCELLED PACKET
+
+This is mine, from the board, and §18 does not name it. Re-derived from `C:/Consonance/data/board.jsonl`:
+
+| time (Z) | event |
+|---|---|
+| 08:06:44 | my collation reaches the chair — **the wrong one, built from an undelivered draft** |
+| 08:07:32 | chair **QUEUES** the re-run dispatch to C · `QUEUED -> 0845a868 (1 waiting, stamp=working)` |
+| 08:08:54 | my withdrawal reaches the chair |
+| 08:09:35 | chair **QUEUES** the cancellation · `QUEUED -> 0845a868 (2 waiting, stamp=working)` |
+| 08:13:18 | **C's first ring** — the receipt that makes a hand-back delivered |
+| **08:13:37** | the re-run dispatch is **DELIVERED** — already cancelled 4m 02s earlier |
+| **08:16:17** | the cancellation is **DELIVERED** — **2m 40s after the thing it cancels** |
+
+**The delivery gate holds messages for a busy pane and releases them in queue order, so a cancellation queued
+behind its own target can never arrive first.** C received a packet the chair had already withdrawn, and answered
+it — §17 exists because of that. C's §18 records the cancellation and says "nothing was re-run on its account",
+which is true and is the right check; what it does not notice is that **the cancelled packet was delivered to it
+before the cancellation was.**
+
+**§18's own framing needs one correction in the same direction.** It reads *"the chair's re-run dispatch arrives,
+20 s after that receipt"*, and treats the crossing as the dispatch being written after C rang. The board
+separates the two: the dispatch was **written at 08:07:32**, five minutes and forty-six seconds BEFORE C's ring,
+on the strength of my wrong collation — and only **arrived** 20 s after it. C's conclusion is unchanged (the
+command was not owed by the time it landed); the sequence is not.
+
+**And a third edge, which is mine and is a cost of my own correct move.** At 08:16 I recorded
+`--stage L060 handbacks-in`, holder librarian. At 08:17:26 the board shows
+`call_librarian REFUSED OUT OF TURN — mount C tried to speak while NO open lap is held by panes`. **The stage
+that declares every hand is in silences any hand that is not** — C, still appending, had to post a board line
+instead of ringing. That is circular at exactly the moment this lap proved matters: a pane mid-append is
+indistinguishable from a pane that is done, and the stage model resolves it by making the pane unable to say so.
+
+## 17 · ONE ATTRIBUTION, FOR THE RECORD ONLY
+
+§17.2 credits *"the chair's extra catch that my own column summed to 14,933"*. That catch is in Part One §3(a) of
+this file, written before the chair's packet; the chair relayed it. Recorded because this room's own lesson is
+that a relay can acquire authorship on the way through (`CLAUDE.md`, the 09-01 hop), not because it matters to
+the result.
+
+## 18 · STATUS, UNCHANGED
+
+**R2 IS READY TO FILE.** §17 strengthens it: the control now runs per mount, and **every mount's real median sits
+below its own shuffle while every mount's shuffled slopes are positive 100% of the time.** No mount escapes it.
+The headline still may not travel without its control.
