@@ -41,3 +41,9 @@ Read before anything else on the laptop. Sources: A's `handback/p-d100-rules-A_2
   work on L's disk — land it with L070 rather than fix it separately on D and collide.
 - On D, a lap handles the other two: `actors.evidence.test.js` (declared MACHINE-BOUND home=L, but it RUNS on D and fails
   on a LETTER_BIRTH-class value, actual 1784993504) and `userprompt_pulse.test.js` (needs Python; D has none).
+
+## 4 · ADDED 12:5x — Jev's key is on the stick
+The keeper asked for the Vercel AI Gateway key to travel so he does not re-type it. It is at
+`<stick>\secrets\AI_GATEWAY_API_KEY.txt` (D: `D:\consonance-L-20260911\secrets\`), with a README. **On L, first shift:** set it
+as the User environment variable `AI_GATEWAY_API_KEY` from that file, without printing it; confirm length 60 and prefix
+`vck_`. Never copy the `secrets` folder into the repo. Jev's model id is `typesafe-ai/jev` (the plan's appended notes).
