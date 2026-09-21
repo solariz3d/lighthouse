@@ -24,3 +24,15 @@ Read this first on waking, then the librarian's `loop/handoff_librarian_2026-09-
 - Register the null beside the falsifier; check the quantity can take more than one value on the object.
 - A verification that reproduces the author's command reproduces the author's blind spot — run plain and parallel.
 - Ask the instrument, not its name. Never land a file whose hash is still moving.
+
+## ADDENDUM 02:4x — state at the second compaction
+- L058 (2026-09-21, repo fixes; ledger reissued the id) FILED: 1a3b4fc R1 no defect (pipe artifact),
+  5c74b33 R2 js-suite summary, d925749 R3 ask.test re-pointed at a fixture. Suite 105 green / 4 red / 0 silent.
+- L059 (same reissue) IN FLIGHT, chunk R-B: E actors.evidence, B carrier-drift (B: review/ is NOT the cause),
+  C forget-rate. E and B handed back; C still owed. On return: land by named paths, one commit per packet,
+  with the reissued-id note. Then chunk R-C, portable-paths, one ruling per site.
+- The laptop's lap.jsonl stops at L054, so lap-row reissues ids already used yesterday. Note it in every
+  landing; the cause is an open question for later.
+- Install (chunks 1-3 of plan_install_score_remeasure_2026-09-21.md) is D work and waits on the keeper's yes.
+  It is FOUR files, not three: l2-overseer-worker.js is drifted too.
+- Chair token on L lives in C:\Consonance\instances\main\.chair-token — re-read after any relaunch.
