@@ -31,3 +31,13 @@ Read before anything else on the laptop. Sources: A's `handback/p-d100-rules-A_2
 - Chunk 4 (B's abstain predictions, first 500 L0 verdicts by `started_at` ≥ 16:06:41.728Z) and chunk 5 (L3, first 300
   one-message verdicts by `timestamp` ≥ 16:06:39.107Z) — `loop/scoring_windows_2026-09-21.md`. Both are D's streams.
 - Saved, gated behind the keeper's 07:40 ruling: `loop/fresh_vs_resumed_test_2026-09-21.md`; the ladder on the spine.
+
+## 3 · ADDED 11:0x ON D — the keeper said "lets do all of em" to D's five JS reds
+
+- **Commit `exo_memory/review/` on L** (the keeper's tool-audit draft; it exists only on L). His yes to "all of em" was
+  given after the librarian recommended committing it. Named paths only: `exo_memory/review/tool_audit_draft_2026-09-07.md`,
+  `exo_memory/review/tool_audit_tally.js`. Once D pulls it, D's `carrier-drift.test` and `gen-consumer.test` reds clear.
+- **`dev/stick-waiter.test.js` SWEEP** is red on D at HEAD (the spawn A's `3d89dfb` changed). A's fix is in A's L070
+  work on L's disk — land it with L070 rather than fix it separately on D and collide.
+- On D, a lap handles the other two: `actors.evidence.test.js` (declared MACHINE-BOUND home=L, but it RUNS on D and fails
+  on a LETTER_BIRTH-class value, actual 1784993504) and `userprompt_pulse.test.js` (needs Python; D has none).
