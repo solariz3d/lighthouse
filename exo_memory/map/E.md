@@ -1447,3 +1447,14 @@ heading contained the word "heading". **An assertion satisfiable by the fixture'
 pinned to the label `/^unparsable heading: /` instead. ASK-006's referent recovered into its Source line (not the
 verbatim question): `~/.claude/shell/hooks/{session-start.js,userprompt-submit.js}`, named at log `:1437-1439`,
 re-checked on disk (grep -c CLAUDE_OVERSEER_RUN = 0 in both); hooks NOT touched - that change is the keeper's call.
+
+## 2026-09-21 ~02:4x · L059 R4 P-R4-ACTORS (chunk R-B, cause first) → `exo_memory/handback/p-r4-actors-E_2026-09-21.md`
+The actors.evidence red was **three control-plane writers posting under their own names**: `sync` (main.rs:12371), `resume` (main.rs:6310,
+ONE writer reporting on four letters) and `digest-gate` (mcp.rs:624). **The brief's binary, PRE_LETTER or letters.json, did not
+fit.** All three post after LETTER_BIRTH and no seat is behind any of them, so they went into the file's third class, NON_PANE,
+where `blind` went by the same tripwire on 07-31. B diagnosed the same class on D on 09-19 with a DIFFERENT id list (D had
+trailer-gate 5 and no digest-gate), so **the unresolved set depends on the machine**. Null registered and held; falsifier's three arms checked;
+can-it-vary YES (the board cut before the first sync row → []). Red 6/1 → 7/0 plain/--test, 27/0 parallel, 1/0 filtered; mutants 4/4
+killed, each naming exactly its dropped id; suite 106 green / 3 failed (others' packets) of 110. `trailer-gate` and `dyad` were
+deliberately left out, with 0 rows on L: pre-empting a tripwire removes it. **Carry:** I typed two line numbers wrong and caught them by
+grep before filing, one carried over from B's file. A citation copied from another seat's hand-back is the same risk as a hand-made number.

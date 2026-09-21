@@ -304,8 +304,17 @@ const PRE_LETTER = {
  * main-tab scratchpad: treea..." -- so resolving it to a letter would invent an actor. It belongs
  * here rather than in ALIASES: the canary should stop counting it without anyone claiming it is
  * a pane. */
+// 'sync', 'resume' and 'digest-gate' joined 2026-09-21 (pane E, L059 R4), each caught by this assertion on L's board
+// and each a fixed string in the Rust, not a seat. 'sync' is the launch verdict, main.rs:12371, text built at
+// sync_launch.rs:418 ("sync at launch — RESUME: …"), first row 2026-09-09T11:12Z. 'resume' is main.rs:6310,
+// text at :6381 ("pane E — RESUMED its own conversation"); ONE writer posting about four different letters, so
+// folding it into any one of them would misattribute three of its rows. 'digest-gate' is mcp.rs:624, text at
+// mcp.rs:3105 ("call_librarian: git-blob … computed at ring"), landed 3e51292. None of the three has a model behind
+// it. 'trailer-gate' (mcp.rs:634) and 'dyad' (main.rs:8563) are writers of the same kind with NO rows on L's board
+// yet, and are deliberately NOT listed: this assertion finding them is how 'blind' was classified, and pre-empting
+// a tripwire that has not fired would remove it before it could.
 const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering', 'gate', 'blind',
-  'main-tab/tree-assets']);
+  'main-tab/tree-assets', 'sync', 'resume', 'digest-gate']);
 
 let _letters = null;
 let _lettersWhy = null;         // why the map is empty, when it is — see lettersStatus()
