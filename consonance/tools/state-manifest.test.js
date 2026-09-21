@@ -318,6 +318,36 @@ test('the shipped manifest places vantage_cell/mutants-run.log as STAYS', () => 
   assert.strictEqual(r.json.totals.TRAVELS.files, 0);
 });
 
+// D099: the second leftover in the cell. A blind-verifier reader (session 288d78a5, 2026-09-10 15:14Z on D) made a scratch
+// copy under ./_verify_refuse/consonance/tools/, cd'd into it, and its `rm -rf` failed "Device or resource busy" — its own
+// shell's cwd was inside the tree. The files went; three empty directories stayed, and blocked every close on D.
+function withVerifyRefuse(extra) {
+  const fx = fixture(extra || {}, SHIPPED());
+  fs.mkdirSync(path.join(fx.data, 'vantage_cell', '_verify_refuse', 'consonance', 'tools'), { recursive: true });
+  return fx;
+}
+
+test('D099: the shipped manifest places the empty _verify_refuse tree as STAYS', () => {
+  const r = runJson(withVerifyRefuse());
+  assert.strictEqual(r.code, 0, `the leftover must not refuse a close: unplaced ${JSON.stringify(r.json.unplaced)}`);
+  assert.strictEqual(r.json.totals.STAYS.paths, 3, 'all three directories, placed STAYS');
+  assert.strictEqual(r.json.totals.TRAVELS.paths, 0);
+});
+
+test('D099: a file a reader leaves inside _verify_refuse is STAYS too — the rule covers the tree it names', () => {
+  const r = runJson(withVerifyRefuse({ 'vantage_cell/_verify_refuse/consonance/tools/state-sync.js': 'x' }));
+  assert.strictEqual(r.code, 0, JSON.stringify(r.json.unplaced));
+  assert.strictEqual(r.json.totals.STAYS.files, 1);
+});
+
+test('D099: a DIFFERENT scratch directory in the cell is still UNPLACED — the rule names this tree, not the cell', () => {
+  const fx = withVerifyRefuse();
+  fs.mkdirSync(path.join(fx.data, 'vantage_cell', '_verify_other'), { recursive: true });
+  const r = run(fx);
+  assert.strictEqual(r.code, 1, 'the next leftover must still be loud');
+  assert.ok(r.out.includes('vantage_cell/_verify_other'));
+});
+
 test('any OTHER file left in vantage_cell is still UNPLACED — the rule is named, not a wildcard', () => {
   const fx = fixture({ 'vantage_cell/mutants-run.log': 'x', 'vantage_cell/something-else.txt': 'y' }, SHIPPED());
   const r = run(fx);
