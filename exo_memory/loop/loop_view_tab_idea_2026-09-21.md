@@ -40,3 +40,16 @@ existing per-process tap, unless he explicitly rules otherwise.
 4. **Signal Audio inside:** port its cosmic-web renderer into the tab as the background layer.
 
 Registered nothing; this is a build, not a test. Saved so the prior art travels with the idea.
+
+## ADDED ~11:31 — the keeper's second thought: Signal Audio inside Consonance, as an easter egg and a background
+
+> *"a funny easteregg not even rlly hidden in the settings, can make like the background of the panes SIGNAL AUDIO, and
+> then you can change it from 2D and 3D variants, even tweak it all like you can within signal audio, it is essentially
+> signal audio within consonance, can have its own full dedicated tab, or even become apart of the background of panes"*
+
+- **A settings toggle** (openly there, "not even really hidden") that turns Signal Audio on inside Consonance.
+- **Two places it can live:** its own full tab, and/or **behind the panes** as their background.
+- **2D and 3D variants**, and **the same tweak controls Signal Audio has**.
+- Things to measure when it is built, not reasons against it: terminal text must stay readable over a moving
+  background (a dim/blur layer behind each pane), and six live panes plus a 60 fps GL scene share one WebView — watch
+  frame time and CPU with the loop running.
