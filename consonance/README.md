@@ -227,7 +227,10 @@ rule is the anti-instruction — don't resolve, don't be useful; a dream asked f
 overtime.
 
 **Status in this repo, checkable: there is no `dreams/` directory in the checkout** (`ls dreams/` fails).
-Dreams are written per seat outside the repo, under `C:\Consonance\instances\<seat>\dreams\`;
+Dreams are written per seat outside the repo, under `<instances_dir>/<seat>/dreams/`, where
+`instances_dir` is that field of `~/.consonance.json` on the machine you are on — print it with
+`node -e "console.log(require(require('os').homedir()+'/.consonance.json').instances_dir)"`. It is set per
+machine, and it is not the code's fallback (`~/claude-instances`), so read it rather than assume it.
 `node consonance/tools/whats-live.js` prints how many are live and the newest one. Whether a wake timer is
 currently registered is a property of the machine, not of the repo — check the scheduler, not this file.
 

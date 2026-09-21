@@ -10,7 +10,7 @@
     "FATAL-USER": 7,
     "BENIGN-FIXTURE": 7,
     "FATAL-TEST-READ": 2,
-    "FATAL-SHIPPED-INSTRUCTION": 1
+    "FATAL-SHIPPED-INSTRUCTION": 2
   },
   "sites": [
     {
@@ -1251,6 +1251,14 @@
       "verdict": "BENIGN-MESSAGE",
       "text": "-Description \"second-vantage: takes claims from sourced-stop's ledger and spawns a FRESH claude -p per claim holding only the claim sentence and the repo root, to re-derive the value from the world. Findings: C:\\Consonance\\data\\vantage_findings.jsonl\" `",
       "key": "dev/vantage/install_vantage.ps1\u0000-Description \"second-vantage: takes claims from sourced-stop's ledger and spawns a FRESH claude -p per claim holding only the claim sentence and the repo root, to re-derive the value from the world. Findings: C:\\Consonance\\data\\vantage_findings.jsonl\" `\u0000#1"
+    },
+    {
+      "file": "exo_memory/record/retired_seats_2026-09-11.md",
+      "detector": "DRIVE",
+      "verdict": "FATAL-SHIPPED-INSTRUCTION",
+      "text": "Nine `sibling-*` project dirs on D (`ls -d ~/.claude/projects/C--Consonance-instances-sibling-*`), lettered in `C:\\Consonance\\data\\letters.json` (A, B, C, D, F, J, L, M …). They were not retired by the placement — committee panes are per-machine by their random cwds, which is the defect `to_the_laptop` §1 names (fixed names, not `sibling-<random>`, is part of the fix). Their maps are appended, one writer each, in `exo_memory/map/`.",
+      "key": "exo_memory/record/retired_seats_2026-09-11.md\u0000Nine `sibling-*` project dirs on D (`ls -d ~/.claude/projects/C--Consonance-instances-sibling-*`), lettered in `C:\\Consonance\\data\\letters.json` (A, B, C, D, F, J, L, M …). They were not retired by the placement — committee panes are per-machine by their random cwds, which is the defect `to_the_laptop` §1 names (fixed names, not `sibling-<random>`, is part of the fix). Their maps are appended, one writer each, in `exo_memory/map/`.\u0000#1",
+      "why": "L062 R-C3 (C, 2026-09-21), carrying A's argument (exo_memory/handback/p-l060-ch4-A_2026-09-21.md §2): the path resolves on both machines (letters.json exists under the same data dir on L and D), so the finding is about the line's FORM, not a wrong instruction. The file is a dated record master (librarian, 397e29c) and is CH-4 frozen (B, 043d78b), so it is not rewritten. Verdict left FATAL deliberately: exempted, NOT fixed. NOTE: --update rewrites every row from live sites as {file,detector,verdict,text,key} and will DROP this field."
     }
   ]
 }
