@@ -73,3 +73,31 @@ defaulting to `C:\Consonance\state`). Its own lap; the largest.
 R-A now (A, B, C one each). R-B when R-A is filed, or alongside if seats are free — files are disjoint.
 R-C last. **E is at "Prompt is too long"** and needs a fresh start from `map/E.md` before it can take work;
 that restart is the chair's, not a compact.
+
+---
+
+## CHUNK R-C, SHAPED — appended 03:1x, after L058–L060 (R-A, R-B, carrier-drift follow-on) landed
+
+`node consonance/tools/portable-paths.js` at HEAD after L060 → **exit 1, 41 unbaselined: 30 BENIGN-TEST ·
+4 FATAL-DEFAULT · 5 REVIEW · 2 FATAL-SHIPPED-INSTRUCTION.** The tool's own repair shape for code:
+*"env override, then ~/.consonance.json (data_dir / room_path / instances_dir), then degrade LOUDLY. See
+consonance/hooks/transcript-watch.js dataDir() for the shape."*
+
+- **R-C1 · the state/data defaults (code).** `consonance/hooks/live-mirror-stop.js` ×3 (FATAL-DEFAULT, :49-54),
+  `consonance/tools/live-follow.js:33` (FATAL-DEFAULT, `STATE_REPO`), `consonance/tools/state-sync.js:141` (REVIEW,
+  the same `C:\Consonance\state` default). One family, one resolver shape. Test first per site: unset env + no
+  config → loud refusal, not a silent `C:\` path. Note: live-mirror-stop is an UNREGISTERED hook by open keeper
+  decision; fixing its defaults is not registering it.
+- **R-C2 · the four analysis tools' `--board` defaults (code).** `order-parameter.js:253`, `vicsek-phi.js:248`,
+  `contamination.js`, `deference-unit.js` — all REVIEW, all `C:/Consonance/data/board.jsonl`. These are this week's
+  instruments; give them to a seat that authored none of the four. Bar: every recorded result command in their
+  hand-backs still reproduces its number with the resolved default (they are cited in results files).
+- **R-C3 · the two shipped instructions (prose).** `consonance/README.md:230` → the location written so a reader can
+  resolve it (the instances dir, not one checkout's `C:\`). `exo_memory/record/retired_seats_2026-09-11.md:62` is a
+  **dated record master** — no rewrite; a baseline row carrying A's argument (`handback/p-l060-ch4-A_2026-09-21.md`
+  §2: the path resolves on both machines, the class is about form), or a dated append. The record's writer decides.
+- **R-C4 · the 30 BENIGN-TEST sites → `--update`, LAST and alone.** Only after C1–C3 land, so the baseline diff
+  contains exactly the 30 test-file rows and nothing else. Bar: the diff is read and every added row is in a
+  `*.test.js` / `#[test]` context; any row that is not stops the update.
+
+C1, C2, C3 touch disjoint files and can run in parallel. C4 depends on all three.
