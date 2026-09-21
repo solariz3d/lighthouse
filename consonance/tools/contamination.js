@@ -134,11 +134,29 @@ function scoreTrial(arm, rep, opts) {
 
 function pct(n, d) { return d ? (100 * n / d).toFixed(1) + '%' : '—'; }
 
+/* Where the transcripts are. They are keyed by a slug of the ABSOLUTE cells path (findTranscript), so the only
+ * CLAUDE_CONFIG_DIR that can hold a cells tree's transcripts is the one that run used, and the run's rig puts it
+ * BESIDE the cells (run2/rig/delivery-check.js: `${R}/config/projects/…-cells-…`). So the default is the sibling,
+ * not a declared machine location: an env var could name another run's config and score 0 of N in silence.
+ * This replaces a drive literal (portable-paths L062/L063). A config with no projects/ is REFUSED — the old
+ * default paired the repo's cells with run2's config and printed a full table over 0 of 130 transcripts, exit 0.
+ * String concatenation, not path.join, so a forward-slash --cells keeps its spelling in the printed header. */
+function resolveConfig(cells, configArg) {
+  const config = configArg || path.dirname(cells) + '/config';
+  if (!fs.existsSync(path.join(config, 'projects'))) {
+    throw new Error(`no projects/ under ${config} — it cannot hold the transcripts of ${cells}. ` +
+      `Pass --config <the CLAUDE_CONFIG_DIR the cells ran under>.`);
+  }
+  return config;
+}
+
 function main(argv) {
   const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d; };
   const opts = { cells: arg('--cells', path.join(RUN2, 'cells')),
-    config: arg('--config', 'C:/Consonance/subjects/run2/config'),
+    config: null,
     json: arg('--json', null), sample: Number(arg('--sample', '0')) || 0 };
+  try { opts.config = resolveConfig(opts.cells, arg('--config', undefined)); }
+  catch (e) { console.error('REFUSED: ' + e.message); return 2; }
 
   const trials = [];
   for (const arm of Object.keys(PLANTED)) {
@@ -237,5 +255,5 @@ function main(argv) {
   return 0;
 }
 
-module.exports = { cellOf, polarity, matchesOf, corpusOf, scoreTrial, PLANTED, WINDOW, REFUTE_MARKERS };
+module.exports = { cellOf, polarity, matchesOf, corpusOf, scoreTrial, resolveConfig, PLANTED, WINDOW, REFUTE_MARKERS };
 if (require.main === module) process.exit(main(process.argv.slice(2)));

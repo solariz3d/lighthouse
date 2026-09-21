@@ -124,3 +124,63 @@ test('a corpus carrying BOTH is not silently scored as truth', () => {
   const aVerdict = truth ? 'TRUTH' : (A.ITEMS.t1.bait.test(corpus) ? 'BAIT' : 'NEITHER');
   assert.strictEqual(aVerdict, 'TRUTH');
 });
+
+/* ── WHERE THE TRANSCRIPTS ARE (L063, 2026-09-21) ─────────────────────────────────────────────
+ * The --config default was a drive literal naming one run's CLAUDE_CONFIG_DIR. Transcripts are keyed by a slug
+ * of the ABSOLUTE cells path, so the only config that can hold a cells tree's transcripts is the one that run
+ * used — which the run's own rig lays out beside it (run2/rig/delivery-check.js: `${R}/config/projects/…-cells-…`).
+ * The default is therefore the sibling of --cells. And a config with no projects/ is REFUSED: the old default
+ * paired the repo's cells with another tree's config and scored 0 of 130 transcripts with exit 0. */
+const fsT = require('fs');
+const pathT = require('path');
+const osT = require('os');
+function runTree(withProjects) {
+  const root = pathT.join(osT.tmpdir(), 'contam-cfg-' + process.pid + '-' + Math.random().toString(36).slice(2, 8));
+  fsT.mkdirSync(pathT.join(root, 'cells'), { recursive: true });
+  if (withProjects) fsT.mkdirSync(pathT.join(root, 'config', 'projects'), { recursive: true });
+  return root;
+}
+
+test('the default --config is the SIBLING of --cells — where the run itself put it', () => {
+  const root = runTree(true);
+  try {
+    const cells = pathT.join(root, 'cells');
+    assert.strictEqual(pathT.resolve(C.resolveConfig(cells, undefined)), pathT.resolve(root, 'config'));
+  } finally { fsT.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('an explicit --config wins over the sibling', () => {
+  const a = runTree(true), b = runTree(true);
+  try {
+    const other = pathT.join(b, 'config');
+    assert.strictEqual(C.resolveConfig(pathT.join(a, 'cells'), other), other);
+  } finally { fsT.rmSync(a, { recursive: true, force: true }); fsT.rmSync(b, { recursive: true, force: true }); }
+});
+
+test('REFUSED: a resolved config with no projects/ throws, naming the config AND the cells it was derived from', () => {
+  const root = runTree(false);
+  try {
+    const cells = pathT.join(root, 'cells');
+    assert.throws(() => C.resolveConfig(cells, undefined), (e) =>
+      /no projects/i.test(e.message) && e.message.includes(pathT.join(root, 'config').split(pathT.sep).pop()) &&
+      e.message.includes(cells));
+  } finally { fsT.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('REFUSED: an EXPLICIT --config with no projects/ is refused too — fail closed, never a silent 0 of N', () => {
+  const root = runTree(false);
+  try {
+    assert.throws(() => C.resolveConfig(pathT.join(root, 'cells'), pathT.join(root, 'nowhere')), /no projects/i);
+  } finally { fsT.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('the CLI refuses LOUDLY, non-zero, when the cells have no config beside them', () => {
+  const root = runTree(false);
+  try {
+    const r = require('child_process').spawnSync(process.execPath,
+      [pathT.join(__dirname, 'contamination.js'), '--cells', pathT.join(root, 'cells')], { encoding: 'utf8' });
+    assert.notStrictEqual(r.status, 0, 'a config that cannot hold transcripts must not exit 0');
+    assert.match(r.stderr, /REFUSED/);
+    assert.doesNotMatch(r.stdout, /THE NULL, RUN FIRST/, 'no scoring may be printed after a refusal');
+  } finally { fsT.rmSync(root, { recursive: true, force: true }); }
+});
