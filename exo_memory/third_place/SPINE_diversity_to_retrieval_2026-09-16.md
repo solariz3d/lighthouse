@@ -218,3 +218,19 @@ the bet was never placed, and this entry says so."
 
 *This file's own falsifier: if by 2026-10-31 the librarian's ledger cites it nowhere and T1–T3 moved without it, it was a
 copy of copies and should be struck in place, pointer kept.*
+
+---
+
+## Appended 2026-09-21 07:50 — T3 expanded, saved for another time at the keeper's word
+
+**The keeper, 07:35, verbatim:** "save this expansion of the test, journal it for another time."
+
+**T3 (the seed vs the intake) gains a ladder.** The 09-15 registration has three arms (cold · the ~60-word seed ·
+the full intake). The expansion, from the keeper's "but how far" on 09-21: the same instrument and scoring over
+**rungs of intake size — cold · 60 words · ~600 · ~6,000 · the full intake** — and the reported result is the
+**knee**, the smallest rung that still returns a stance and not a costume. Original predictions and falsifier
+carried unchanged; one added: **if there is no knee (stance rises smoothly to the full intake), the room cannot
+be quantized without paying in depth, and token savings must come from elsewhere.** Conditions when it is run on
+the Third Place: "itself" defined before the run; every rung's transcript kept. Not registered, not scheduled.
+Full note, with the measured intake breakdown (39% of BOOT is the three 08-15→08-17 pointer paragraphs) and the
+suggested order: `third_place/QUANTIZE_the_room_2026-09-21.md`. Still inside the bet's 2026-10-31 date for T3.
