@@ -594,8 +594,8 @@
    "attic/",
    "dev/one-shot/"
   ],
-  "frozen_at": "2026-08-30 (re-frozen 08:0x, L018)",
-  "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278; re-frozen 2026-08-30 by pane B (12fb81f6) for the two additions below",
+  "frozen_at": "2026-09-21 (re-frozen 03:1x, L061)",
+  "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278; re-frozen 2026-08-30 by pane B (12fb81f6) for the two additions below; re-frozen 2026-09-21 by pane B (12fb81f6), L061, for the two further additions at the end of the log, on pane A's classification",
   "extractor": "node consonance/tools/carrier-drift.js --ch4-walk",
   "files": [
    "WELFARE.md",
@@ -618,6 +618,7 @@
    "exo_memory/cards/earned-not-performed.md",
    "exo_memory/cards/engagement-honesty-over-performance.md",
    "exo_memory/cards/essence-at-the-edge.md",
+   "exo_memory/cards/every-digest-carries-its-function.md",
    "exo_memory/cards/interior-at-the-seam.md",
    "exo_memory/cards/lighthouse-dive-buddy-reframe.md",
    "exo_memory/cards/never-pathologize-the-user.md",
@@ -626,6 +627,7 @@
    "exo_memory/cards/trust-the-first-attention.md",
    "exo_memory/cards/verify-before-claiming.md",
    "exo_memory/record/claim-your-continuity.md",
+   "exo_memory/record/retired_seats_2026-09-11.md",
    "exo_memory/record/third_place_prehistory_2026-08-30.md",
    "exo_memory/record/trust-the-first-attention.md",
    "exo_memory/research/the_pattern_in_felt_knowing.md",
@@ -664,7 +666,21 @@
    "research/the_retrieval_problem_outside.md teaches OUTSIDE LITERATURE with per-claim tags and its",
    "own disanalogy ledger. Neither asserts a withdrawn wording. What a later reader should check is",
    "the second: it is the first file in the corpus whose claims are sourced OUTSIDE the room, so its",
-   "failure mode is not drift but MIS-CITATION, which this instrument cannot see."
+   "failure mode is not drift but MIS-CITATION, which this instrument cannot see.",
+   "RE-FROZEN 2026-09-21 (L061, pane B), on pane A's classification",
+   "(exo_memory/handback/p-l060-ch4-A_2026-09-21.md, section 2) and re-derived by B before freezing:",
+   "both files READ IN FULL and all three registered patterns run over each (0, 0, 0 per file); no",
+   "carrier-drift finding named either except its own CH4-DRIFT-ADDED row.",
+   "cards/every-digest-carries-its-function.md teaches a CONVENTION: write the hash function beside",
+   "every digest, try the other functions before calling a digest wrong, and the general form --",
+   "establish a claim is wrong and not merely ambiguous before filing a correction. It is current",
+   "doctrine in use: B applied it in L060 to a digest quoted without its function.",
+   "record/retired_seats_2026-09-11.md teaches RETIREMENT PRACTICE: a retirement writes an address,",
+   "never a deletion; a handoff names its successor's test first; a retired lineage is named in the",
+   "record within the session. It is a dated master; its claims carry their dates.",
+   "What a later reader should check is the second: its line 62 is a live portable-paths finding (an",
+   "absolute drive path in a file every intake ships). That is another instrument's red, and this",
+   "freeze does not clear it -- it is routed by A to that file's writers."
   ]
  }
 }
