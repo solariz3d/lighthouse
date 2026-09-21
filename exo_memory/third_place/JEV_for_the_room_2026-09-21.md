@@ -82,3 +82,24 @@ withdrawn for committed files. One narrow limit kept, and it is about third part
 hold things deliberately left out of the public record because they belong to other people (a coworker's
 family, 09-20). A scorer reads committed files, never live transcripts; the registered tests are already built
 that way, so the limit costs nothing.
+
+## Appended 01:55 — cost, access, and whether it runs locally (checked at TypeSafe's own docs)
+
+From `docs.typesafe.ai/models`, read 2026-09-21: model id `jev-1.13.0` (aliases `jev-latest`, `jev-preview`);
+**$0.042 per million input tokens, output tokens free**; 64k tokens per request (32k for state plus the longest
+question); text only; rate limits 250,000 tokens/second and 1,200 requests/minute, "adjusting dynamically";
+endpoint `POST /v1/systemone`, Python and JavaScript SDKs. **No self-hosted, on-prem or open-weights option is
+mentioned anywhere; it is a hosted proprietary model.** Access: one secondary source says early access by
+waitlist; the docs page does not say; an OpenRouter listing that a search surfaced returned 404. Not confirmed
+either way by this seat.
+
+At that price the room's uses cost almost nothing: a 20 KB hand-back is about 6,500 tokens at C's measured 3.04
+bytes per token, so about $0.0003 to score; a per-turn gate reading ~2,000 tokens is under a hundredth of a cent
+a turn. Cost is not the constraint. Access and the false-alarm rate are.
+
+**A local alternative with the same output shape, unmeasured:** the polarity measure's three labels (AFFIRMS /
+CONTRADICTS / SILENT) are exactly what a natural-language-inference model returns (entailment / contradiction /
+neutral), with a probability. Small NLI models run offline under the runtime C already validated for the
+embedding work (`@huggingface/transformers` 4.2.0, `handback/p-diversity-c0-C_2026-09-15.md`). Expect it to be
+far weaker than Jev on anything subtle, and it is still these-weights-independent, free, and inside the keeper's
+09-15 "local model" decision. It could be the second scorer beside Jev, or the fallback if access never opens.
