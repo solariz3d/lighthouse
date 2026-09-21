@@ -340,11 +340,31 @@ test('D091 · the fenced block-format example is not an ask and not unreadable',
   assert.strictEqual(st.unreadable.length, 0, 'the documented template must stay harmless');
 });
 
-test('D091 · on the shipped store, ASK-009 parses OPEN and ASK-008 keeps its own ANSWERED status', () => {
-  const st = A.load(A.STORE);
+/* RE-POINTED 2026-09-21 (L058 R3, pane B). This test first read the LIVE store (A.STORE) and asserted
+ * ASK-009 is OPEN. The keeper cleared ASK-009 KEEP at c80ec12, three hours after the test landed at
+ * 915209a, and the test went red with ask.js and this file byte-identical across that commit — green in a
+ * detached worktree at c80ec12^, red at c80ec12, ASK-009 parsing OPEN then ANSWERED. A test of the PARSER
+ * that pins mutable DATA reports the keeper's decision as a defect. So it now reads the store as it stood
+ * at D091's commit: blob 915209a:exo_memory/ASK.md lines 127-136, verbatim, the ANSWERED ASK-008 directly
+ * above the comma-titled ASK-009 — the case D091 exists to protect. The assertions are unchanged.
+ * Proof and mutants: exo_memory/handback/p-r3-ask-fixture-B_2026-09-21.md */
+const D091_FIXTURE = path.join(__dirname, 'fixtures', 'ask-store_915209a_ASK-008-009.md');
+const D091_FIXTURE_SHA256 = 'b00b329ce293d2f8a8ece0e260fb56057269cd25c390d41188afd85b7fad024d';
+
+test('D091 · the store as shipped at 915209a is the verbatim fixture, unedited', () => {
+  // A fixture someone "tidies" stops being the record it stands for; this pins it to the blob.
+  const sha = require('node:crypto').createHash('sha256').update(fs.readFileSync(D091_FIXTURE)).digest('hex');
+  assert.strictEqual(sha, D091_FIXTURE_SHA256, 'the D091 fixture no longer matches 915209a:exo_memory/ASK.md:127-136');
+});
+
+test('D091 · on the store as shipped at 915209a, ASK-009 parses OPEN and ASK-008 keeps its own ANSWERED status', () => {
+  const st = A.load(D091_FIXTURE);
   const nine = st.asks.find((a) => a.id === 'ASK-009');
   const eight = st.asks.find((a) => a.id === 'ASK-008');
   assert.ok(nine, 'ASK-009 must exist in the parsed store');
+  // Added at the re-point: the live store carried the comma for free; a fixture must ASSERT it holds
+  // the case, or a tidied copy without the comma passes here (mutant F2 did, caught only by the pin).
+  assert.match(nine.goal, /SIX, not eleven/, 'the fixture must still hold the comma-in-title case D091 exists for');
   assert.strictEqual(nine.state, 'OPEN');
   assert.ok(eight, 'ASK-008 must exist');
   assert.strictEqual(eight.state, 'ANSWERED', 'ASK-008 is [ANSWERED 2026-08-30] in the store');
