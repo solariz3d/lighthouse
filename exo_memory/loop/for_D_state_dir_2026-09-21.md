@@ -48,3 +48,6 @@ Then append one line under this file saying it is done, with the time, so the ne
 designed loud state, not a break; nothing is lost. Doing the steps above clears it. Note the two env names:
 `state-sync.js`/`close.js` read `CONSONANCE_STATE`, `live-follow.js`/`live-mirror-stop.js` read
 `CONSONANCE_STATE_REPO` — the `state_dir` key in `~/.consonance.json` satisfies all four, so prefer it over env.
+
+**Appended after L069:** the two env names are now ONE — `CONSONANCE_STATE`. `CONSONANCE_STATE_REPO` is retired
+(`handback/p-l069-envname-E_2026-09-21.md`). The `state_dir` key is still the thing to set on D.
