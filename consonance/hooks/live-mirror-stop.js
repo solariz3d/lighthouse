@@ -62,7 +62,8 @@ const envOr = (name, key) => (process.env[name] || '').trim() || configKey(key);
 const DATA_DIR = envOr('CONSONANCE_DATA', 'data_dir');
 const underData = (name) => (DATA_DIR ? path.join(DATA_DIR, name) : null);
 
-const STATE_REPO = envOr('CONSONANCE_STATE_REPO', 'state_dir');
+// ONE NAME (L069): CONSONANCE_STATE, as state-sync.js and close.js read it; CONSONANCE_STATE_REPO is retired.
+const STATE_REPO = envOr('CONSONANCE_STATE', 'state_dir');
 const LEDGER = (process.env.CONSONANCE_MIRROR_LEDGER || '').trim() || underData('live-mirror.jsonl');
 // Machine-local: our own last-pushed lease sha per seat. NEVER travels — it is the observation
 // that makes the clock-free reading possible, and a shared copy would make every host agree with
@@ -257,7 +258,7 @@ function main() {
   const seat = seatOf(input.cwd);
   if (!seat) { row({ kind: 'skip', reason: 'no usable seat name from cwd', cwd: input.cwd }); return; }
   if (!STATE_REPO) {
-    row({ kind: 'skip', seat, reason: 'no state repo declared: set state_dir in ~/.consonance.json or CONSONANCE_STATE_REPO' });
+    row({ kind: 'skip', seat, reason: 'no state repo declared: set state_dir in ~/.consonance.json or CONSONANCE_STATE' });
     return;
   }
   if (!OBS_DIR) {

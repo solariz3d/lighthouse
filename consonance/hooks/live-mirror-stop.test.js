@@ -164,6 +164,17 @@ test('R-C1: ~/.consonance.json state_dir and data_dir are honoured when env is a
   } finally { fs.rmSync(home, { recursive: true, force: true }); }
 });
 
+// ── L069 (pane E): ONE env name for the state dir — CONSONANCE_STATE, as state-sync.js and close.js read it ──
+test('L069: CONSONANCE_STATE wins over state_dir, and the retired CONSONANCE_STATE_REPO is not read', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-home-'));
+  try {
+    fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ state_dir: path.join(home, 'cfg') }));
+    assert.strictEqual(resolved(bareEnv(home, { CONSONANCE_STATE: path.join(home, 'env') })).s, path.join(home, 'env'));
+    assert.strictEqual(resolved(bareEnv(home, { CONSONANCE_STATE_REPO: path.join(home, 'old') })).s, path.join(home, 'cfg'),
+      'the retired name must not redirect the mirror away from what state-sync and close resolve');
+  } finally { fs.rmSync(home, { recursive: true, force: true }); }
+});
+
 test('R-C1: an undeclared state repo is a LOUD skip naming the fix, not a lease attempt', () => {
   const home = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-home-'));
   try {
@@ -181,6 +192,9 @@ test('R-C1: an undeclared state repo is a LOUD skip naming the fix, not a lease 
     assert.strictEqual(rows[0].kind, 'skip', 'no state repo declared must skip, never reach for git');
     assert.match(rows[0].reason, /no state repo declared/, 'the reason must say nothing was declared');
     assert.match(rows[0].reason, /state_dir/, 'the reason must name the setting that fixes it');
+    // L069: and the env name the rest of the state tools read, never the retired one.
+    assert.match(rows[0].reason, /\bCONSONANCE_STATE\b/, 'the reason must name CONSONANCE_STATE');
+    assert.doesNotMatch(rows[0].reason, /CONSONANCE_STATE_REPO/, 'the retired name reaches no tool');
     assert.doesNotMatch(rows[0].reason, /[A-Za-z]:[\\/]/, 'the reason must not name a guessed drive path');
   } finally { fs.rmSync(home, { recursive: true, force: true }); }
 });

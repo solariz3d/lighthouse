@@ -1495,3 +1495,8 @@ Ping text: one line, no NEXT. The trailer gate is MCP-only (mcp.rs:573/660/905),
 ## 2026-09-21 ~06:0x · L067 amendment (the keeper's 05:57 answer) → `exo_memory/handback/p-l067-keepwarm-E_2026-09-21.md` §9
 Keep-warm now pings only in the [50, 60) min window. It keeps warm and never warms, so a seat never used since launch is never pinged and §1's launch cost is gone. Human-driven panes are in, with the same Stop-stamp, empty-composer and never-mid-turn safety. Red 16/4 → green 20/0, crate 846/0/4, mutants 3/3 including the >= vs > boundary.
 Two of my new tests were green against the old code, and I said so. **Carry:** a window design has one silent failure mode, a seat that crosses 60 min unpinged, and nothing reports it yet.
+
+## 2026-09-21 ~06:3x · L069 packet 1 one env name → `exo_memory/handback/p-l069-envname-E_2026-09-21.md`
+CONSONANCE_STATE is now the one name; CONSONANCE_STATE_REPO is retired with NO alias. Grep found nothing outside the repo that sets it (~/.claude/shell, settings, config, User/Machine env, pane env: none). Only my own two L062 files read it.
+Red: hook 10/2, follow 3/3. Green: 12/0 and 6/0, parallel 18/0, filtered 3/0. Mutants 6/6, including both "silent alias" rows. A's close.test assertions stay TRUE unchanged; only two of A's comments are stale, and exact edits are proposed.
+**Carry:** the split was mine. R-C1 noted two names and left them. Noting a split instead of closing it is how the second name survives.

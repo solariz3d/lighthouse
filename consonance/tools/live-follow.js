@@ -32,8 +32,10 @@ const LH = require(path.join(__dirname, 'live-host.js'));
 
 // env, then ~/.consonance.json state_dir, then NULL — never a machine's literal path (L062 R-C1, pane E;
 // portable-paths FATAL-DEFAULT at this line). Same shape as transcript-watch.js dataDir().
+// ONE NAME (L069, pane E): CONSONANCE_STATE, as state-sync.js stateDir() and close.js read it. This read
+// CONSONANCE_STATE_REPO until L069; nothing outside the repo ever set that name, so it is retired, not aliased.
 function stateRepo() {
-  const env = (process.env.CONSONANCE_STATE_REPO || '').trim();
+  const env = (process.env.CONSONANCE_STATE || '').trim();
   if (env) return env;
   try {
     const v = JSON.parse(require('fs').readFileSync(path.join(require('os').homedir(), '.consonance.json'), 'utf8')
@@ -44,7 +46,7 @@ function stateRepo() {
   return null;
 }
 const STATE_REPO = stateRepo();
-const UNDECLARED = 'no state repo declared: set state_dir in ~/.consonance.json or CONSONANCE_STATE_REPO';
+const UNDECLARED = 'no state repo declared: set state_dir in ~/.consonance.json or CONSONANCE_STATE';
 const GIT_TIMEOUT_MS = 8_000;
 
 function git(args) {

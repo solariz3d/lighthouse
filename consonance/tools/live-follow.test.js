@@ -76,8 +76,31 @@ test('~/.consonance.json state_dir is honoured when env is absent, and env wins 
     const probe = `const f=require(${JSON.stringify(TOOL)});console.log(f.STATE_REPO);`;
     const fromCfg = execFileSync(process.execPath, ['-e', probe], { encoding: 'utf8', env: bareEnv(home) }).trim();
     assert.strictEqual(fromCfg, st);
+    // L069: the env name is CONSONANCE_STATE, the one state-sync.js and close.js read. This line set
+    // CONSONANCE_STATE_REPO until L069 — the name only this file and the mirror hook ever read.
     const fromEnv = execFileSync(process.execPath, ['-e', probe],
-      { encoding: 'utf8', env: bareEnv(home, { CONSONANCE_STATE_REPO: path.join(home, 'from-env') }) }).trim();
+      { encoding: 'utf8', env: bareEnv(home, { CONSONANCE_STATE: path.join(home, 'from-env') }) }).trim();
     assert.strictEqual(fromEnv, path.join(home, 'from-env'));
+  });
+});
+
+// ── L069 (pane E): ONE env name for the state dir ────────────────────────────────────────────────
+// state-sync.js and close.js read CONSONANCE_STATE; this file read CONSONANCE_STATE_REPO. One directory under two
+// names means setting the one a tool documents can silently redirect half the tools. Nothing outside the repo set
+// the old name (grep of ~/.claude/shell, settings, ~/.consonance.json, User/Machine env: none), so no alias.
+test('L069: the retired name CONSONANCE_STATE_REPO is not read — one directory has one name', () => {
+  withHome((home) => {
+    const probe = `const f=require(${JSON.stringify(TOOL)});console.log(String(f.STATE_REPO));`;
+    const out = execFileSync(process.execPath, ['-e', probe],
+      { encoding: 'utf8', env: bareEnv(home, { CONSONANCE_STATE_REPO: path.join(home, 'old-name') }) }).trim();
+    assert.strictEqual(out, 'null', 'a second name for the state dir is how the two halves of the mirror came to disagree');
+  });
+});
+
+test('L069: the refusal names CONSONANCE_STATE, the variable that now reaches this tool', () => {
+  withHome((home) => {
+    const r = run(['--status'], bareEnv(home));
+    assert.match(r.stderr, /\bCONSONANCE_STATE\b/);
+    assert.doesNotMatch(r.stderr, /CONSONANCE_STATE_REPO/, 'a refusal that names a variable nothing reads is a false recovery');
   });
 });
