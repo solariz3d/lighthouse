@@ -2991,16 +2991,33 @@ enum DigestVerdict {
     Refuse(String),
 }
 
-/// The first repo-relative `*.md` token in the call — the pointer this verb exists to carry. Surrounding punctuation is
-/// trimmed, because rings write `at exo_memory/handback/x.md (uncommitted;` and the path is the token, not the prose.
+/// Every repo-relative `*.md` token in the call, first appearance order, each once. Surrounding punctuation is
+/// trimmed, because rings write `at exo_memory/handback/x.md (uncommitted;` and the path is the token, not the prose —
+/// and so is a sentence's FULL STOP (L069): B's L060 ring wrote `filed: exo_memory/handback/p-l060-….md. Changed: …`,
+/// the old trim kept the `.` a path may contain, the token ended `.md.`, and the ring hashed the next `.md` instead.
+/// Only TRAILING dots go: a leading `./` is a path, and stripping it would turn the pointer into `/…`, which refuses.
+fn pointers_in(text: &str) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    for t in text.split_whitespace() {
+        let t = t
+            .trim_matches(|c: char| !c.is_ascii_alphanumeric() && c != '/' && c != '.' && c != '_' && c != '-')
+            .trim_end_matches('.');
+        let low = t.to_ascii_lowercase();
+        if low.ends_with(".md") && t.contains('/') && !low.contains("://") && !out.iter().any(|o| o == t) {
+            out.push(t.to_string());
+        }
+    }
+    out
+}
+
+/// THE pointer: the first `handback/` path the call names, else its first `*.md`. A ring names the hand-back AND often
+/// the files it changed — B's L060 ring named two of its own older hand-backs as changed files — and this verb exists
+/// to carry a hand-back, so a hand-back path outranks an earlier README. It is still a choice made from prose, so the
+/// digest line lists every OTHER path the call named as not hashed (`digest_gate`): a wrong pick is then visible on the
+/// line the reader checks, instead of certified in silence, which is what happened to L060.
 fn pointer_in(text: &str) -> Option<String> {
-    text.split_whitespace()
-        .map(|t| t.trim_matches(|c: char| !c.is_ascii_alphanumeric() && c != '/' && c != '.' && c != '_' && c != '-'))
-        .find(|t| {
-            let low = t.to_ascii_lowercase();
-            low.ends_with(".md") && t.contains('/') && !low.contains("://")
-        })
-        .map(|t| t.to_string())
+    let all = pointers_in(text);
+    all.iter().find(|p| p.contains("handback/")).or_else(|| all.first()).cloned()
 }
 
 /// Remove every digest the PANE supplied, and say how many were removed. A digest word (`sha256`, `sha-256`, `sha1`,
@@ -3097,10 +3114,16 @@ fn digest_gate(
     match git(&["hash-object", "--no-filters", &abs.to_string_lossy()]) {
         Ok(o) if o.code == 0 && o.stdout.trim().len() == 40 && o.stdout.trim().chars().all(|c| c.is_ascii_hexdigit()) => {
             let id = o.stdout.trim();
+            let others: Vec<String> = pointers_in(&clean).into_iter().filter(|o| *o != p).collect();
+            let also = if others.is_empty() {
+                String::new()
+            } else {
+                format!("; also named, not hashed: {}", others.join(", "))
+            };
             DigestVerdict::Deliver(DigestDeliver {
                 text: insert_before_trailer(
                     &clean,
-                    &format!("[{DIGEST_MARK}: git-blob {id} — {p}, {len} bytes, computed by call_librarian when the ring fired]"),
+                    &format!("[{DIGEST_MARK}: git-blob {id} — {p}, {len} bytes, computed by call_librarian when the ring fired{also}]"),
                 ),
                 audit: note(&format!("call_librarian: git-blob {id} computed at ring for {p}")),
             })
@@ -3184,6 +3207,95 @@ mod digest_at_ring_tests {
     #[test]
     fn prose_with_no_path_has_no_pointer() {
         assert_eq!(pointer_in("the read is done and the numbers are in the file"), None);
+    }
+
+    // ── L069: B's L060 ring was digested against the WRONG FILE ──────────────────────────────────────────────────
+    // B's ring as the librarian received it (board row 30708), with its ring line taken out and the one digest the
+    // gate stripped put back as a sha256 token of the same shape, so the whole gate runs over it. The hand-back is
+    // named FIRST, ending a sentence; the gate hashed p-six-reds-B (git-blob ae188c8f) because `pointer_in` kept that
+    // full stop, so `…_2026-09-21.md.` did not end in `.md` and the next `.md` token won.
+    const B_RING: &str = "[pane:B] L060 packet B (with its amendment) hand-back filed: \
+        exo_memory/handback/p-l060-carriers-B_2026-09-21.md. Changed: consonance/tools/carrier-drift.registry.json \
+        (+24 −0), exo_memory/handback/p-six-reds-B_2026-09-19.md and exo_memory/handback/p-ask001-abstain-B_2026-09-20.md \
+        (my own, reworded in place, line counts unchanged). E's two files, your two notes and the CH-4 pair untouched; \
+        nothing committed. Registration: <scratch>/l060/registration.txt, sha256 \
+        1f3ac4d9e5b6c7a8091a2b3c4d5e6f7081920a1b2c3d4e5f60718293a4b5c6d7 2026-09-21T08:58:00Z. Read §0 (the count at \
+        each step, with the command), §2 (the kind test on all four, including where I refused the ruling's kind and \
+        why), §4 (WRONG column).\n\
+        NEXT: librarian re-run §0's two commands and read §2's four kinds against the README, then chair commit the \
+        registry and my two hand-backs by named paths when they re-derive";
+    const B_HANDBACK: &str = "exo_memory/handback/p-l060-carriers-B_2026-09-21.md";
+
+    fn b_checkout() -> std::path::PathBuf {
+        let root = fixture(B_HANDBACK, "the delivered hand-back\n");
+        for p in ["exo_memory/handback/p-six-reds-B_2026-09-19.md", "exo_memory/handback/p-ask001-abstain-B_2026-09-20.md"] {
+            std::fs::create_dir_all(root.join(p).parent().unwrap()).unwrap();
+            std::fs::write(root.join(p), "an older hand-back, reworded\n").unwrap();
+        }
+        root
+    }
+
+    #[test]
+    fn a_pointer_ending_a_sentence_keeps_its_path_and_loses_the_full_stop() {
+        assert_eq!(
+            pointer_in("Hand-back filed: exo_memory/handback/p-x-A_2026-09-21.md. Changed nothing.").as_deref(),
+            Some("exo_memory/handback/p-x-A_2026-09-21.md")
+        );
+    }
+
+    #[test]
+    fn b_s_l060_ring_points_at_the_hand_back_it_delivered() {
+        assert_eq!(pointer_in(B_RING).as_deref(), Some(B_HANDBACK));
+    }
+
+    #[test]
+    fn b_s_l060_ring_is_digested_against_the_delivered_hand_back() {
+        let root = b_checkout();
+        let mut seen: Vec<String> = Vec::new();
+        let d = delivered(digest_gate(B_RING, Some(&root), &mut |a| {
+            seen = a.iter().map(|s| s.to_string()).collect();
+            ok(BLOB)
+        }));
+        assert!(seen.get(2).map_or(false, |p| p.ends_with("p-l060-carriers-B_2026-09-21.md")), "hashed the wrong file: {seen:?}");
+        let line = d.text.lines().find(|l| l.contains(DIGEST_MARK)).unwrap_or("");
+        assert!(line.contains(&format!("git-blob {BLOB} — {B_HANDBACK},")), "the digest line must name the hand-back: {line}");
+    }
+
+    #[test]
+    fn the_other_files_a_ring_names_are_listed_as_not_hashed() {
+        let root = b_checkout();
+        let d = delivered(digest_gate(B_RING, Some(&root), &mut |_| ok(BLOB)));
+        let line = d.text.lines().find(|l| l.contains(DIGEST_MARK)).unwrap_or("");
+        for other in ["exo_memory/handback/p-six-reds-B_2026-09-19.md", "exo_memory/handback/p-ask001-abstain-B_2026-09-20.md"] {
+            assert!(line.contains("not hashed: ") && line.contains(other), "{other} must be named as NOT hashed: {line}");
+        }
+    }
+
+    #[test]
+    fn a_handback_path_wins_over_an_earlier_changed_file() {
+        let ring = "Changed consonance/README.md and dev/NOTES.md; hand-back at exo_memory/handback/p-y-A_2026-09-21.md\nNEXT: x";
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-y-A_2026-09-21.md"));
+    }
+
+    #[test]
+    fn with_no_handback_path_the_first_md_is_still_the_pointer() {
+        assert_eq!(pointer_in("notes at exo_memory/loop/plan_x.md, and dev/y.md").as_deref(), Some("exo_memory/loop/plan_x.md"));
+    }
+
+    #[test]
+    fn a_path_the_ring_names_twice_is_listed_once() {
+        let root = fixture("exo_memory/handback/p-y-A_2026-09-21.md", "hello\n");
+        let ring = "hand-back at exo_memory/handback/p-y-A_2026-09-21.md; changed dev/NOTES.md, see dev/NOTES.md §2\nNEXT: x";
+        let d = delivered(digest_gate(ring, Some(&root), &mut |_| ok(BLOB)));
+        let line = d.text.lines().find(|l| l.contains(DIGEST_MARK)).unwrap_or("");
+        assert_eq!(line.matches("dev/NOTES.md").count(), 1, "one path, one mention on the digest line: {line}");
+    }
+
+    #[test]
+    fn a_ring_naming_one_file_says_nothing_about_others() {
+        let root = fixture("exo_memory/handback/p-x-A_2026-09-20.md", "hello\n");
+        let d = delivered(digest_gate(RING, Some(&root), &mut |_| ok(BLOB)));
+        assert!(!d.text.contains("not hashed"), "a single pointer must not grow a list: {}", d.text);
     }
 
     // ── the pane's digest never survives ─────────────────────────────────────────────────────────────────────────
