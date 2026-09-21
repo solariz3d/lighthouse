@@ -688,8 +688,16 @@ foreach ($c in @(Get-Command python.exe -All -ErrorAction SilentlyContinue)) {
   if ($c.Source -and $c.Source -notmatch '\\WindowsApps\\') { $py = $c.Source; break }
 }
 if (-not $py) {
+  # Newest BY VERSION, not by string (D101 follow-on, 2026-09-21). `Sort-Object FullName` put Python39
+  # above Python314. Same rule as userprompt_pulse.test.js:68-70 (pane A, 1c8760d), which found this and
+  # did not copy it: the dir name must be Python3<digits>, and no digits counts as 0 — so a 32-bit
+  # `Python312-32` is no longer a candidate, matching the test side. Pinned by install-only.test.js.
   $py = Get-ChildItem "$env:LOCALAPPDATA\Programs\Python\Python3*\python.exe" -ErrorAction SilentlyContinue |
-        Sort-Object FullName -Descending | Select-Object -First 1 -ExpandProperty FullName
+        Where-Object { $_.Directory.Name -match '^Python3(\d*)$' } |
+        Sort-Object @{ Expression = { $m = [regex]::Match($_.Directory.Name, '^Python3(\d*)$', 'IgnoreCase')
+                                      if ($m.Groups[1].Value) { [int]$m.Groups[1].Value } else { 0 } }
+                       Descending = $true } |
+        Select-Object -First 1 -ExpandProperty FullName
 }
 if (-not $py) { $py = '<path to python.exe — none found outside the Store stub>' }
 

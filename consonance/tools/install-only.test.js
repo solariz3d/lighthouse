@@ -85,9 +85,9 @@ function mkHome(hooks) {
 // CONSONANCE_MACHINE=D, and this harness passes process.env through, so without the pin the tests
 // below measured "whatever machine ran them": 11/0 on L, 8/3 in any seat on D. A neutral tag keeps
 // the machine-independent cases machine-independent; `machine` states a machine on purpose.
-function run(repo, home, args, machine) {
+function run(repo, home, args, machine, extraEnv) {
   const r = spawnSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', repo.script, ...(args || [])], {
-    encoding: 'utf8', env: { ...process.env, USERPROFILE: home, CONSONANCE_MACHINE: machine || 'TEST-NEUTRAL' }, timeout: 120000,
+    encoding: 'utf8', env: { ...process.env, USERPROFILE: home, CONSONANCE_MACHINE: machine || 'TEST-NEUTRAL', ...(extraEnv || {}) }, timeout: 120000,
   });
   return { code: r.status, out: (r.stdout || '') + (r.stderr || '') };
 }
@@ -304,6 +304,51 @@ test('ON D, stop.js live is STILL EXCLUDED BUT LIVE — the answer named the ove
   const r = run(repo, home, ['-Check'], 'D');
   assert.notStrictEqual(r.code, 0, 'stop.js live on D is still against a standing ruling:\n' + r.out);
   assert.ok(/EXCLUDED BUT LIVE/.test(r.out) && /stop\.js/.test(r.out), 'naming stop.js as the one contradiction:\n' + r.out);
+});
+
+// ── WHICH PYTHON (D101 follow-on, 2026-09-21). install.ps1 falls back to the newest
+// %LOCALAPPDATA%\Programs\Python\Python3*\python.exe when no real interpreter is on PATH. It sorted
+// FullName as a STRING, so Python39 beat Python314. Pane A found it fixing userprompt_pulse.test.js and
+// sorted by the numeric minor version there (1c8760d, :68-70) without copying the defect; these pin the
+// installer to the same rule: /^Python3(\d*)$/i, no digits counting as 0.
+// Hermetic: LOCALAPPDATA is a fixture tree of empty python.exe files (the installer only lists them),
+// and every PATH entry that names a real Python is removed so step 1 cannot answer first. The Store
+// stub under \WindowsApps\ may remain — the installer skips it by design.
+function pyFixture(dirs) {
+  const lad = path.join(tmp, 'lad' + (++seq));
+  for (const d of dirs) {
+    fs.mkdirSync(path.join(lad, 'Programs', 'Python', d), { recursive: true });
+    fs.writeFileSync(path.join(lad, 'Programs', 'Python', d, 'python.exe'), '');
+  }
+  const pathNoPy = (process.env.PATH || process.env.Path || '').split(';')
+    .filter((p) => p && !/python/i.test(p)).join(';');
+  return { LOCALAPPDATA: lad, PATH: pathNoPy, Path: pathNoPy };
+}
+function pulseCommand(home) {
+  return commands(home).find((c) => /userprompt_pulse\.py/i.test(c)) || '';
+}
+
+test('WHICH PYTHON: with Python39 and Python314 installed, the installer picks Python314 (numeric, not string)', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, ['-Only', 'userprompt_pulse.py'], null, pyFixture(['Python39', 'Python314']));
+  const cmd = pulseCommand(home);
+  assert.ok(/[\\/]Python314[\\/]python\.exe/i.test(cmd),
+    'the pulse must run under Python314, the newer: ' + (cmd || '(not registered)'));
+});
+
+test('WHICH PYTHON: a bare Python3 (no minor digits) counts as 0 and loses to Python39', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, ['-Only', 'userprompt_pulse.py'], null, pyFixture(['Python3', 'Python39']));
+  const cmd = pulseCommand(home);
+  assert.ok(/[\\/]Python39[\\/]python\.exe/i.test(cmd),
+    'Python39 must beat a digitless Python3: ' + (cmd || '(not registered)'));
+});
+
+test('WHICH PYTHON: a single install is still found — the sort changes the ORDER, never the reach', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, ['-Only', 'userprompt_pulse.py'], null, pyFixture(['Python312']));
+  assert.ok(/[\\/]Python312[\\/]python\.exe/i.test(pulseCommand(home)),
+    'one install must still be picked: ' + (pulseCommand(home) || '(not registered)'));
 });
 
 console.log(`\n${pass} passed, ${fail} failed`);
