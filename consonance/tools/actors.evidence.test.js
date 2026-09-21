@@ -123,12 +123,35 @@ function survey() {
              'one; this gate cannot tell those apart, which is what home= is for',
              seen: found.length, total: ids.length, letters: assignments };
   }
+  // THE LETTER HISTORY IS PER-MACHINE; THE BOARD NO LONGER IS (D101, 2026-09-21, pane B). The board
+  // question above stopped discriminating machines once boards were unioned across them: D's board
+  // carries all 7 pre-letter ids (first rows 2026-07-06..07-14) while D's persist.log is D's own
+  // history — `1784993504 letter A -> pane=1582ff09…`, not L's `1785057198 letter A -> pane=6fe15f0a…`.
+  // So the file ran on D and failed LETTER_BIRTH, a fact about a persist.log it was not reading.
+  // The key is actors.js's LETTER_BIRTH, from outside this file like PRE_LETTER, and it is the only
+  // exported fact about which letter history this is (actors.js's LETTERS is a path to the LOCAL
+  // letters.json, not a map). Computed exactly as the LETTER_BIRTH assertion computes it. This does
+  // not buy that assertion a pass: on home= a mismatch declines here, and js-suite reads a NOT-RUN on
+  // the home machine as a CLASS ERROR (rule f) — the suite still goes red where the constant lives.
+  const stamps = fs.readFileSync(persist, 'utf8').split(/\r?\n/)
+    .map((l) => /^(\d{9,12}) letter [A-Z] -> pane=\S+/.exec(l))
+    .filter(Boolean).map((m) => Number(m[1]));
+  const earliest = Math.min(...stamps);
+  if (earliest !== LETTER_BIRTH) {
+    // Observation, not interpretation (pane E's rule, above): a foreign letter history and a damaged
+    // one both read this way, and only home= can tell them apart.
+    return { ok: false, why: `persist.log under ${DATA} begins its letter history at ${earliest} ` +
+             `(${new Date(earliest * 1000).toISOString()}), not at actors.js's LETTER_BIRTH ${LETTER_BIRTH} ` +
+             `(${new Date(LETTER_BIRTH * 1000).toISOString()}). A different letter history OR a damaged one; ` +
+             'this gate cannot tell those apart, which is what home= is for',
+             seen: found.length, total: ids.length, letters: assignments };
+  }
   return { ok: true, why: '', seen: found.length, total: ids.length, letters: assignments };
 }
 
 const u = survey();
 const RULE = 'a board carrying every id in actors.js\'s PRE_LETTER table, plus a persist.log with ' +
-             'at least one letter assignment';
+             'at least one letter assignment whose earliest is actors.js\'s LETTER_BIRTH';
 console.log(`JS-SUITE: UNIVERSE ${DATA || '(no data_dir declared)'} — ${u.seen}/${u.total} pre-letter ids on the board · ` +
             `${u.letters} letter assignments in persist.log · rule: ${RULE}` +
             (MODE ? ` · JS_SUITE_UNIVERSE=${MODE}` : ''));
