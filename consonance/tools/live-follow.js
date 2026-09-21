@@ -30,10 +30,27 @@ const { execFileSync } = require('child_process');
 
 const LH = require(path.join(__dirname, 'live-host.js'));
 
-const STATE_REPO = process.env.CONSONANCE_STATE_REPO || 'C:\\Consonance\\state';
+// env, then ~/.consonance.json state_dir, then NULL — never a machine's literal path (L062 R-C1, pane E;
+// portable-paths FATAL-DEFAULT at this line). Same shape as transcript-watch.js dataDir().
+function stateRepo() {
+  const env = (process.env.CONSONANCE_STATE_REPO || '').trim();
+  if (env) return env;
+  try {
+    const v = JSON.parse(require('fs').readFileSync(path.join(require('os').homedir(), '.consonance.json'), 'utf8')
+      .replace(/^﻿/, ''));
+    const d = v && v.state_dir != null ? String(v.state_dir).trim() : '';
+    if (d) return d;
+  } catch (_) { /* unreadable config declares nothing */ }
+  return null;
+}
+const STATE_REPO = stateRepo();
+const UNDECLARED = 'no state repo declared: set state_dir in ~/.consonance.json or CONSONANCE_STATE_REPO';
 const GIT_TIMEOUT_MS = 8_000;
 
 function git(args) {
+  // With a null cwd git would run in whatever directory the CALLER is in — `push origin --delete`
+  // against the wrong repository. Refuse before the spawn.
+  if (!STATE_REPO) throw Object.assign(new Error(UNDECLARED), { stderr: '' });
   return execFileSync('git', args, {
     cwd: STATE_REPO, timeout: GIT_TIMEOUT_MS, encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -183,6 +200,11 @@ function main(argv) {
 
   if (has('--budget')) { console.log(budgetLine(pollMs)); return 0; }
 
+  if (!STATE_REPO && ['--status', '--acquire', '--release', '--watch'].some(has)) {
+    console.error(`REFUSED — ${UNDECLARED}. Nothing was read and nothing was sent.`);
+    return 2;
+  }
+
   if (has('--status')) {
     const s = status(selfId, pol);
     if (!s.ok) { console.error(`unreachable: ${s.err}\n${s.note}`); return 2; }
@@ -243,4 +265,4 @@ if (require.main === module) {
   if (rc !== null) process.exit(rc);
 }
 
-module.exports = { readLeases, foldObservation, seatLiveness, status, acquire, release, budgetLine, main };
+module.exports = { readLeases, foldObservation, seatLiveness, status, acquire, release, budgetLine, main, STATE_REPO };

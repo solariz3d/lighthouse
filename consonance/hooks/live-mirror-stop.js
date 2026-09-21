@@ -46,12 +46,28 @@ const { execFileSync } = require('child_process');
 
 const LH = require(path.join(__dirname, '..', 'tools', 'live-host.js'));
 
-const STATE_REPO = process.env.CONSONANCE_STATE_REPO || 'C:\\Consonance\\state';
-const LEDGER = process.env.CONSONANCE_MIRROR_LEDGER || 'C:\\Consonance\\data\\live-mirror.jsonl';
+// WHERE THINGS LIVE: env, then ~/.consonance.json, then NOTHING (L062 R-C1, pane E). These three were
+// literal C:\Consonance\… defaults — correct on the box that wrote them and silently another disk on
+// the next (portable-paths FATAL-DEFAULT). Same shape as transcript-watch.js dataDir(). A null here
+// is not an error to paper over: main() skips and says which setting is missing.
+function configKey(key) {
+  try {
+    const v = JSON.parse(fs.readFileSync(path.join(require('os').homedir(), '.consonance.json'), 'utf8')
+      .replace(/^\uFEFF/, ''));
+    const d = v && v[key] != null ? String(v[key]).trim() : '';
+    return d || null;
+  } catch (_) { return null; }
+}
+const envOr = (name, key) => (process.env[name] || '').trim() || configKey(key);
+const DATA_DIR = envOr('CONSONANCE_DATA', 'data_dir');
+const underData = (name) => (DATA_DIR ? path.join(DATA_DIR, name) : null);
+
+const STATE_REPO = envOr('CONSONANCE_STATE_REPO', 'state_dir');
+const LEDGER = (process.env.CONSONANCE_MIRROR_LEDGER || '').trim() || underData('live-mirror.jsonl');
 // Machine-local: our own last-pushed lease sha per seat. NEVER travels — it is the observation
 // that makes the clock-free reading possible, and a shared copy would make every host agree with
 // itself about a lease it does not hold.
-const OBS_DIR = process.env.CONSONANCE_MIRROR_OBS || 'C:\\Consonance\\data\\live-mirror';
+const OBS_DIR = (process.env.CONSONANCE_MIRROR_OBS || '').trim() || underData('live-mirror');
 
 // The harness kills a hook at 10 s. A network slow enough to hit this is a network the mirror is
 // not working over anyway, so the right move is to give up and say so rather than stall the turn.
@@ -84,6 +100,11 @@ const CONFIG = Object.freeze({
 });
 
 function row(obj) {
+  if (!LEDGER) {
+    // No ledger declared: stderr is the only place left to be loud, and a Stop hook must still exit 0.
+    try { process.stderr.write('live-mirror-stop: ' + JSON.stringify(obj) + ' (no ledger: set data_dir in ~/.consonance.json or CONSONANCE_MIRROR_LEDGER)\n'); } catch (_) {}
+    return;
+  }
   try {
     fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
     fs.appendFileSync(LEDGER, JSON.stringify({ ts: new Date().toISOString(), ...obj }) + '\n');
@@ -235,6 +256,14 @@ function main() {
 
   const seat = seatOf(input.cwd);
   if (!seat) { row({ kind: 'skip', reason: 'no usable seat name from cwd', cwd: input.cwd }); return; }
+  if (!STATE_REPO) {
+    row({ kind: 'skip', seat, reason: 'no state repo declared: set state_dir in ~/.consonance.json or CONSONANCE_STATE_REPO' });
+    return;
+  }
+  if (!OBS_DIR) {
+    row({ kind: 'skip', seat, reason: 'no observation dir declared: set data_dir in ~/.consonance.json or CONSONANCE_MIRROR_OBS' });
+    return;
+  }
   if (!fs.existsSync(path.join(STATE_REPO, '.git'))) {
     row({ kind: 'skip', seat, reason: `no state repo at ${STATE_REPO}` });
     return;

@@ -118,3 +118,69 @@ test('the state push is OFF by default, and the reason is recorded where it is r
     'the lease half is what prevents two drivers and must run');
   assert.match(HOOK.CONFIG.state.gatedOn, /keeper/i);
 });
+
+// ── L062 R-C1 (pane E): NO MACHINE PATH AS A DEFAULT ─────────────────────────────────────────────
+//
+// portable-paths flagged :49, :50 and :54 FATAL-DEFAULT: with nothing declared, the hook reached for
+// C:\Consonance\state and C:\Consonance\data — right on one box, silently somebody else's disk on the
+// next. The shape is the peer hooks' own (transcript-watch.js dataDir): env, then ~/.consonance.json,
+// then nothing — and "nothing" must be SAID, never papered over with a guess.
+//
+// The child gets an EMPTY home (so no ~/.consonance.json) and no CONSONANCE_* variables. And it gets
+// a PATH with no git on it: before this repair the hook would have found the real C:\Consonance\state
+// and beaten a real lease on the real remote from inside a test. With no git, the worst a regression
+// can do here is fail.
+function bareEnv(home, extra = {}) {
+  const env = {};
+  for (const [k, v] of Object.entries(process.env)) if (!/^CONSONANCE_/i.test(k)) env[k] = v;
+  env.USERPROFILE = home; env.HOME = home; env.PATH = home; env.Path = home;
+  return { ...env, ...extra };
+}
+function resolved(env) {
+  const hook = path.join(__dirname, 'live-mirror-stop.js');
+  const out = execFileSync(process.execPath, ['-e',
+    `const h=require(${JSON.stringify(hook)});console.log(JSON.stringify({s:h.STATE_REPO,l:h.LEDGER,o:h.OBS_DIR}));`],
+    { encoding: 'utf8', env });
+  return JSON.parse(out.trim().split('\n').pop());
+}
+
+test('R-C1: nothing declared -> no state repo, ledger or obs dir is invented', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-home-'));
+  try {
+    const r = resolved(bareEnv(home));
+    assert.deepStrictEqual(r, { s: null, l: null, o: null },
+      'with no env and no ~/.consonance.json the hook must resolve NOTHING; a literal drive-letter default is ' +
+      'another machine\'s disk the moment this file leaves the one it was written on');
+  } finally { fs.rmSync(home, { recursive: true, force: true }); }
+});
+
+test('R-C1: ~/.consonance.json state_dir and data_dir are honoured when env is absent', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-home-'));
+  try {
+    const st = path.join(home, 'st'), dd = path.join(home, 'dd');
+    fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ state_dir: st, data_dir: dd }));
+    const r = resolved(bareEnv(home));
+    assert.deepStrictEqual(r, { s: st, l: path.join(dd, 'live-mirror.jsonl'), o: path.join(dd, 'live-mirror') });
+  } finally { fs.rmSync(home, { recursive: true, force: true }); }
+});
+
+test('R-C1: an undeclared state repo is a LOUD skip naming the fix, not a lease attempt', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'mirror-home-'));
+  try {
+    const ledger = path.join(home, 'ledger.jsonl');
+    // The seat is given BOTH ways — stdin and the process cwd — because on Windows readStdin() never
+    // reads a piped fd 0 (fstat reports it as none of FIFO/file/socket/char), and the hook falls back to
+    // process.cwd(). Without the cwd this test passed or failed by where it was launched from.
+    const seatDir = path.join(home, 'sibling-E'); fs.mkdirSync(seatDir);
+    execFileSync(process.execPath, [path.join(__dirname, 'live-mirror-stop.js')], {
+      cwd: seatDir, encoding: 'utf8', input: JSON.stringify({ cwd: seatDir }),
+      env: bareEnv(home, { CONSONANCE_MIRROR_LEDGER: ledger }),
+    });
+    const rows = fs.readFileSync(ledger, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+    assert.strictEqual(rows.length, 1);
+    assert.strictEqual(rows[0].kind, 'skip', 'no state repo declared must skip, never reach for git');
+    assert.match(rows[0].reason, /no state repo declared/, 'the reason must say nothing was declared');
+    assert.match(rows[0].reason, /state_dir/, 'the reason must name the setting that fixes it');
+    assert.doesNotMatch(rows[0].reason, /[A-Za-z]:[\\/]/, 'the reason must not name a guessed drive path');
+  } finally { fs.rmSync(home, { recursive: true, force: true }); }
+});
