@@ -163,12 +163,18 @@ function defaultCarry(stick, forward, tailCarryPath) {
   return { status: r.status, stdout: r.stdout || '', stderr: r.stderr || '', error: r.error || null };
 }
 
-function defaultRelaunch(exe) {
+function defaultRelaunch(exe, spawnFn = spawn, env = process.env) {
   // THE ONE SPAWN WITHOUT windowsHide, deliberately. consonance.exe is a GUI-subsystem program
   // (main.rs:1, windows_subsystem = "windows"): it never allocates a console, so there is nothing to hide — and
   // windowsHide also sets SW_HIDE in its startup info, which a GUI program may honour on its first window. Hiding
   // the relaunched app is the one outcome worse than a flash: the keeper would see nothing at all.
-  const child = spawn(exe, [], { cwd: path.dirname(exe), detached: true, stdio: 'ignore' });
+  //
+  // AND WITHOUT CONSONANCE_DATA (L068, C's L066 §2.1). The app sets it for THIS process, as an instruction to the
+  // carry. Inherited by the relaunched app, it reached every claude -p the app spawns, and eight shell hooks read
+  // that name as their own home — the shell's digests/ and pulse/ landed in the data dir and refused every close.
+  // The app does not read it (no read in src-tauri, per C's grep). Dropped for the app only, never from `env`.
+  const { CONSONANCE_DATA: _forTheCarryOnly, ...appEnv } = env;
+  const child = spawnFn(exe, [], { cwd: path.dirname(exe), detached: true, stdio: 'ignore', env: appEnv });
   child.on('error', () => {});
   child.unref();
 }
@@ -292,4 +298,4 @@ function runApplier(argv, inject) {
 
 if (require.main === module) process.exit(runApplier(process.argv.slice(2)).code);
 
-module.exports = { runApplier, parseArgs, parseProbe, probeConsonance, STARTED, RESULT, APP_EXIT_WAIT_MS, WINDOWLESS_GRACE_MS };
+module.exports = { runApplier, defaultRelaunch, parseArgs, parseProbe, probeConsonance, STARTED, RESULT, APP_EXIT_WAIT_MS, WINDOWLESS_GRACE_MS };

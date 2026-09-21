@@ -306,6 +306,25 @@ test('the shipped manifest parses and every rule carries a reason', () => {
   for (const f of man.forbidden || []) assert.ok(f.glob && f.why, 'every forbidden entry needs a reason');
 });
 
+// L068, from C's L066 diagnosis §2.4: the vantage_cell rule said "an EMPTY working directory", and
+// since 2026-09-14 01:23 it has held a 3,383 B harness log that blocked every close as UNPLACED.
+const SHIPPED = () => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'state-manifest.json'), 'utf8'));
+
+test('the shipped manifest places vantage_cell/mutants-run.log as STAYS', () => {
+  const fx = fixture({ 'vantage_cell/mutants-run.log': '  killed  x\n' }, SHIPPED());
+  const r = runJson(fx);
+  assert.strictEqual(r.code, 0, `the log must not refuse a close: unplaced ${JSON.stringify(r.json.unplaced)}`);
+  assert.strictEqual(r.json.totals.STAYS.files, 1, 'and it is placed as STAYS — local output, never travelling');
+  assert.strictEqual(r.json.totals.TRAVELS.files, 0);
+});
+
+test('any OTHER file left in vantage_cell is still UNPLACED — the rule is named, not a wildcard', () => {
+  const fx = fixture({ 'vantage_cell/mutants-run.log': 'x', 'vantage_cell/something-else.txt': 'y' }, SHIPPED());
+  const r = run(fx);
+  assert.strictEqual(r.code, 1, 'a reader\'s next stray file must be loud, not silently local');
+  assert.ok(r.out.includes('vantage_cell/something-else.txt'));
+});
+
 console.log(`\n${pass} passed, ${fail} failed`);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fail ? 1 : 0);

@@ -429,5 +429,42 @@ test('a handshake whose pid now runs a DIFFERENT image is stale, not live', () =
   assert.strictEqual(go(w, [], standIn(obj(0, 'CARRIED'), 0)).code, 0);
 });
 
+// ── L068: the relaunched app must not inherit CONSONANCE_DATA (C, L066 §2.1 link b) ──
+// The app hands CONSONANCE_DATA to THIS process for its own children (main.rs stick_start_applier). Passed on to
+// the relaunched app, every claude -p the app spawns carries it, and eight shell hooks read that variable as
+// THEIR home — so the shell's digests/ and pulse/ were written into the data dir and refused every close.
+// The spawn is the boundary, so it is the seam: the real defaultRelaunch, with spawn captured, never executed.
+
+function captureRelaunch(env) {
+  const calls = [];
+  const fakeSpawn = (exe, args, opts) => { calls.push({ exe, args, opts }); return { on() {}, unref() {} }; };
+  A.defaultRelaunch(EXE, fakeSpawn, env);
+  return calls;
+}
+
+test('the relaunch does NOT pass CONSONANCE_DATA on to the app', () => {
+  const calls = captureRelaunch({ CONSONANCE_DATA: path.join(tmp, 'data'), PATH: 'p' });
+  assert.strictEqual(calls.length, 1, 'exactly one relaunch');
+  assert.ok(calls[0].opts.env, 'an explicit env must be given, or the child inherits this process\'s whole env');
+  assert.ok(!('CONSONANCE_DATA' in calls[0].opts.env), 'the applier\'s children need the data dir; the app does not');
+});
+
+test('the relaunch keeps the REST of the environment — only the one variable is dropped', () => {
+  const calls = captureRelaunch({ CONSONANCE_DATA: 'x', PATH: 'the-path', USERPROFILE: 'the-home' });
+  assert.deepStrictEqual(calls[0].opts.env, { PATH: 'the-path', USERPROFILE: 'the-home' });
+});
+
+test('the relaunch is otherwise unchanged: detached, no stdio, started beside the exe', () => {
+  const calls = captureRelaunch({ CONSONANCE_DATA: 'x' });
+  assert.deepStrictEqual([calls[0].exe, calls[0].args, calls[0].opts.detached, calls[0].opts.stdio, calls[0].opts.cwd],
+    [EXE, [], true, 'ignore', path.dirname(EXE)]);
+});
+
+test('the applier\'s OWN environment is not modified by the relaunch', () => {
+  const env = { CONSONANCE_DATA: 'x', PATH: 'p' };
+  captureRelaunch(env);
+  assert.strictEqual(env.CONSONANCE_DATA, 'x', 'dropping it for the app must not drop it for a carry still to run');
+});
+
 console.log(`\n  ${pass} passed, ${fail} failed`);
 if (fail) process.exit(1);
