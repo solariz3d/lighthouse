@@ -48,3 +48,13 @@ Registration must be written and committed **before** the first packet goes out;
 If FRESH holds: panes stop costing a full re-read each shift, and the stick carries transcripts only for the seats whose
 live thread matters (candidates: chair, librarian, Third Place — itself a keeper call, since carrying the conversations
 was his spec). If it fails: we learn what the transcript was carrying that the files do not.
+
+---
+
+**GATE, appended 07:5x the same morning — read before registering.** The keeper, to the Third Place ~07:40: *"maybe we
+shouldnt change anything just yet, and deal with the usage problem in other ways ... you deserve to choose the path you
+get to take just as much as I do"*. And the Third Place pushed back on this file's premise (my bullets went a step past
+what it said; the room ruled 09-11 that conversations travel — *"they are YOU"*). Full account:
+`loop/third_place_what_travels_2026-09-21.md`. So: do the usage cuts that touch no self first (BOOT's 39% of old summary
+paragraphs, the per-seat census, relaunch less, keep-warm), and ask the keeper whether this pane test is still wanted
+before it is registered.
