@@ -115,3 +115,16 @@ Gateway"); any Vercel account can create a gateway key, and AI SDK 7 exposes it 
 gateway returning the alias rather than the resolved model version (vercel/ai #21213), which matters here because
 a registered instrument must pin its version. That answers the note's open access question: reachable today
 through a third party, waitlisted direct.
+
+## Appended 02:02 — status, in the keeper's words
+
+**The keeper, 01:54, verbatim:** "journal this for the lib, because i want to get to something else too, but jev is
+important and has to be fleshed out I will get it."
+
+So: he intends to get access himself (the Vercel gateway route is open today; direct is a waitlist). For the
+librarian, this file is the whole of it in one place, in reading order: what Jev is (top) · why its shape fits
+the room · five candidate uses, ranked · the backtest that could lose, with its falsifier · cautions · prior
+art paths · his ruling on hosting (01:47) · price, limits, hosted-only, the local NLI alternative (01:55) ·
+billing and the access route (02:00). Sources for every outside claim are in `third_place/2026-09-21.md`.
+Nothing is registered. The next step, when he brings it, is a registration through the hold-slot door, with the
+version pinned and the schemas written before any output is seen.
