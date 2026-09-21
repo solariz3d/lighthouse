@@ -210,3 +210,52 @@ test('every case carries its three stamped rows, because a bare number is not th
     assert.ok(Number.isFinite(c[half].line), `${half} must name its board line`);
   }
 });
+
+// ── L062 R-C2: the --board default resolves like transcript-watch.js dataDir() ────────────────────────────────────
+// env CONSONANCE_DATA, then ~/.consonance.json data_dir, then a LOUD refusal — never one machine's C:\ path.
+// `home` is injected so no test ever reads or writes the real ~/.consonance.json.
+const fsT = require('fs'), osT = require('os'), pathT = require('path');
+const { spawnSync: spawnT } = require('child_process');
+const { boardDefault } = require('./deference-unit.js');
+const tmpT = (tag) => fsT.mkdtempSync(pathT.join(osT.tmpdir(), `rc2-${tag}-`));
+const oneRowBoard = (dir) => fsT.writeFileSync(pathT.join(dir, 'board.jsonl'),
+  JSON.stringify({ pane: 'P', role: 'assistant', text: 'one row', ts: Date.parse('2026-09-21T00:00:00Z') }) + '\n');
+
+test('R-C2: CONSONANCE_DATA is tier one and names its tier', () => {
+  const b = boardDefault({ CONSONANCE_DATA: '  /somewhere/data  ' }, tmpT('home'));
+  assert.deepStrictEqual(b, { file: pathT.join('/somewhere/data', 'board.jsonl'), tier: 'CONSONANCE_DATA' });
+});
+
+test('R-C2: with no env, ~/.consonance.json data_dir is tier two (a BOM does not sink the read)', () => {
+  const home = tmpT('home');
+  fsT.writeFileSync(pathT.join(home, '.consonance.json'), '\uFEFF' + JSON.stringify({ data_dir: '/other/data' }));
+  assert.deepStrictEqual(boardDefault({}, home), { file: pathT.join('/other/data', 'board.jsonl'), tier: '~/.consonance.json' });
+});
+
+test('R-C2: with neither, the default is null — never a hardcoded drive path', () => {
+  assert.strictEqual(boardDefault({ CONSONANCE_DATA: '   ' }, tmpT('home')), null);
+});
+
+test('R-C2: an unreadable config is the same as none — null, not a throw', () => {
+  const home = tmpT('home');
+  fsT.writeFileSync(pathT.join(home, '.consonance.json'), '{ not json');
+  assert.strictEqual(boardDefault({}, home), null);
+});
+
+const cliT = (file, args, env) => spawnT(process.execPath, [pathT.join(__dirname, file), ...args],
+  { encoding: 'utf8', env: Object.assign({}, process.env, env) });
+
+test('R-C2 CLI: with no --board, the tool reads the RESOLVED board and prints that file first', () => {
+  const data = tmpT('data'); oneRowBoard(data);
+  const r = cliT('deference-unit.js', [], { CONSONANCE_DATA: data });
+  assert.ok(r.stdout.includes(pathT.join(data, 'board.jsonl')), `the universe must name the resolved file:\n${r.stdout}${r.stderr}`);
+  assert.strictEqual(r.status, 0, r.stderr);
+});
+
+test('R-C2 CLI: with no --board and nothing to resolve, it REFUSES loudly and reads nothing', () => {
+  const home = tmpT('home');
+  const r = cliT('deference-unit.js', [], { CONSONANCE_DATA: '', USERPROFILE: home, HOME: home });
+  assert.notStrictEqual(r.status, 0, 'a tool that cannot locate its board must not exit 0');
+  assert.ok(/CONSONANCE_DATA/.test(r.stderr) && /\.consonance\.json/.test(r.stderr), `the refusal must name both tiers:\n${r.stderr}`);
+  assert.ok(!/rows,/.test(r.stdout), `nothing may be counted:\n${r.stdout}`);
+});

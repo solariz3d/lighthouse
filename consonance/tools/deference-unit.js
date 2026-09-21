@@ -142,9 +142,39 @@ function universe(b) {
     from: new Date(lo).toISOString(), to: new Date(hi).toISOString(), days: ds.length, gaps };
 }
 
+/* WHERE THE BOARD IS, RESOLVED — never one machine's disk (L062 R-C2). This file and the two tools that import its
+ * reader (order-parameter.js, vicsek-phi.js) defaulted `--board` to the literal `C:/Consonance/data/board.jsonl`,
+ * which portable-paths classes REVIEW: right on the machines that happen to keep their data there, and silently
+ * wrong on any that do not. Same shape as consonance/hooks/transcript-watch.js dataDir() and board-compact.js:251:
+ * CONSONANCE_DATA, then ~/.consonance.json `data_dir`, then null — and null is a LOUD refusal at the call site, never
+ * a guess. `env` and `home` are parameters so a test never reads the real ~/.consonance.json. */
+function boardDefault(env = process.env, home = require('os').homedir()) {
+  const e = env.CONSONANCE_DATA != null ? String(env.CONSONANCE_DATA).trim() : '';
+  if (e) return { file: path.join(e, 'board.jsonl'), tier: 'CONSONANCE_DATA' };
+  try {
+    const cfg = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^\uFEFF/, ''));
+    const d = cfg && cfg.data_dir != null ? String(cfg.data_dir).trim() : '';
+    if (d) return { file: path.join(d, 'board.jsonl'), tier: '~/.consonance.json' };
+  } catch (_) { /* missing or unparsable config is the same as none: fall through to the refusal */ }
+  return null;
+}
+
+/* The one refusal all three tools print, so the words cannot drift between them. */
+const NO_BOARD = 'no --board given, and none can be located: CONSONANCE_DATA is unset and ~/.consonance.json has ' +
+  'no data_dir. Refusing rather than guessing one machine\'s path. Pass --board <path>, set CONSONANCE_DATA, or ' +
+  'add data_dir to ~/.consonance.json.';
+
+/* `--board` if given, else the resolved default, else null (the caller refuses). */
+function resolveBoard(given, env, home) {
+  if (given) return given;
+  const b = boardDefault(env, home);
+  return b ? b.file : null;
+}
+
 function main(argv) {
   const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d; };
-  const file = arg('--board', 'C:/Consonance/data/board.jsonl');
+  const file = resolveBoard(arg('--board', null));
+  if (!file) { console.error('deference-unit: ' + NO_BOARD); return 2; }
   const only = arg('--pane', null);
   const limit = Number(arg('--limit', '0')) || 0;
   const membersOut = arg('--members', null);
@@ -197,5 +227,5 @@ function main(argv) {
   return 0;
 }
 
-module.exports = { hasEvidence, hasStance, hasReversal, findCases, dedupeRows, readBoard, universe, EVIDENCE, STANCE, REVERSAL };
+module.exports = { hasEvidence, hasStance, hasReversal, findCases, dedupeRows, readBoard, universe, boardDefault, resolveBoard, NO_BOARD, EVIDENCE, STANCE, REVERSAL };
 if (require.main === module) process.exit(main(process.argv.slice(2)));

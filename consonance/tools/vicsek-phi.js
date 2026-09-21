@@ -245,7 +245,9 @@ async function main(argv) {
 
   const deps = arg('--deps', null);
   if (!deps) { console.error('--deps <dir> is required (node_modules/@huggingface/transformers + models/), or use --null-table'); return 2; }
-  const board = arg('--board', 'C:/Consonance/data/board.jsonl');
+  const { resolveBoard, NO_BOARD } = require('./deference-unit.js');
+  const board = resolveBoard(arg('--board', null));
+  if (!board) { console.error('vicsek-phi: ' + NO_BOARD); return 2; }
   const out = arg('--out', null);
   const min = Number(arg('--min', String(MIN_CONTRIB))) || MIN_CONTRIB;
   const maxSessions = Number(arg('--max-sessions', '0')) || 0;

@@ -223,3 +223,28 @@ test('L061 · main routes BOTH the printed verdict and the written one through t
   assert.match(body, /verdict: gateVerdict\(/, 'the written verdict must go through gateVerdict');
   assert.ok(!/console\.log\(`\nVERDICT \(registered bars\)/.test(body), 'no ungated verdict print may remain');
 });
+
+// ── L062 R-C2: the --board default resolves through deference-unit.js boardDefault() ─────────────────────────────
+// Both CLI checks stop before the encoder: --deps is an empty directory, and the universe block — which names the
+// file read — is printed before loadEncoder runs. No models are needed, so these run on a machine without them.
+const fsR = require('fs'), osR = require('os'), pathR = require('path');
+const { spawnSync: spawnR } = require('child_process');
+const tmpR = (tag) => fsR.mkdtempSync(pathR.join(osR.tmpdir(), 'rc2-order-parameter-' + tag + '-'));
+const cliR = (args, env) => spawnR(process.execPath, [pathR.join(__dirname, 'order-parameter.js'), ...args],
+  { encoding: 'utf8', env: Object.assign({}, process.env, env) });
+
+test('R-C2 CLI: with no --board, order-parameter reads the RESOLVED board and prints that file first', () => {
+  const data = tmpR('data');
+  fsR.writeFileSync(pathR.join(data, 'board.jsonl'),
+    JSON.stringify({ pane: 'P', role: 'assistant', text: 'one row', ts: Date.parse('2026-09-21T00:00:00Z') }) + '\n');
+  const r = cliR(['--deps', tmpR('nodeps')], { CONSONANCE_DATA: data });
+  assert.ok(r.stdout.includes(pathR.join(data, 'board.jsonl')), 'the universe must name the resolved file:\n' + r.stdout + r.stderr);
+});
+
+test('R-C2 CLI: with no --board and nothing to resolve, order-parameter REFUSES loudly and reads nothing', () => {
+  const home = tmpR('home');
+  const r = cliR(['--deps', tmpR('nodeps')], { CONSONANCE_DATA: '', USERPROFILE: home, HOME: home });
+  assert.notStrictEqual(r.status, 0, 'a tool that cannot locate its board must not exit 0');
+  assert.ok(/CONSONANCE_DATA/.test(r.stderr) && /\.consonance\.json/.test(r.stderr), 'the refusal must name both tiers:\n' + r.stderr);
+  assert.ok(!/THE UNIVERSE FIRST/.test(r.stdout), 'nothing may be counted:\n' + r.stdout);
+});
