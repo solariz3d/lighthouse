@@ -243,7 +243,10 @@ function parseArgs(argv, env = process.env) {
   if (!['capture', 'shadow', 'report'].includes(cmd)) throw new Refusal('usage: jev-shadow.js capture|shadow|report --store <dir> [...] (see the header)');
   const a = { cmd, dry: false, store: env.JEV_SHADOW_STORE || null,
     shellDir: env.CONSONANCE_SHELL_DIR || path.join(os.homedir(), '.claude', 'shell'),
-    disciplineDir: env.JEV_SHADOW_DISCIPLINE || path.join(os.homedir(), 'Desktop', 'lighthouse') };
+    // THIS checkout's root, where METHOD.md and WELFARE.md live — not a per-machine literal (D104: the literal was red
+    // in portable-paths from f27b820 on; it names D's layout, and L's repo is elsewhere). discipline_sha256 records
+    // which file was read.
+    disciplineDir: env.JEV_SHADOW_DISCIPLINE || path.resolve(__dirname, '..', '..') };
   for (let i = 0; i < rest.length; i++) {
     const k = rest[i], v = rest[i + 1];
     if (k === '--dry') a.dry = true;

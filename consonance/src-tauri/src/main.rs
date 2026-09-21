@@ -11847,6 +11847,38 @@ fn start_exit_waiter() {
     }
 }
 
+/// The Jev shadow runner's arguments: the app's pid, because the runner lives exactly as long as this process.
+fn jev_shadow_args(app_pid: u32) -> Vec<String> {
+    vec!["--app-pid".to_string(), app_pid.to_string()]
+}
+
+/// D104: Jev as a SECOND judge beside the L0/L3 overseers, measured and never acted on. Started from the one place
+/// that already starts something on EVERY launch (beside the exit waiter), so it is not a service and not a scheduled
+/// task; `consonance/tools/jev-shadow-runner.js` exits by itself when this pid dies. It reads the gateway key itself,
+/// in-process, from the User environment — the app never holds or passes it — and it never touches the installed
+/// judges. A missing script or node is logged and skipped: a sidecar must never stop the app from opening.
+fn start_jev_shadow() {
+    let Some(script) = repo_root()
+        .map(|r| r.join("consonance").join("tools").join("jev-shadow-runner.js"))
+        .filter(|p| p.is_file())
+    else {
+        plog("JEV SHADOW not started — consonance/tools/jev-shadow-runner.js is not on disk in this checkout");
+        return;
+    };
+    let spawned = Command::new("node")
+        .arg(&script)
+        .args(jev_shadow_args(std::process::id()))
+        .env_remove("CONSONANCE_DATA")
+        .creation_flags(NO_WINDOW | CREATE_NEW_PROCESS_GROUP)
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn();
+    if let Err(e) = spawned {
+        plog(&format!("JEV SHADOW not started — node would not run ({e})"));
+    }
+}
+
 /// What the setup window opens on. Cheap: no process, one small file read.
 #[tauri::command]
 fn stick_state() -> serde_json::Value {
@@ -12645,6 +12677,7 @@ fn main() {
             let (launch_verdict, retired) = sync_at_launch();
             // L059 §3: on EVERY launch, and unconditionally — never inside a branch about the stick.
             start_exit_waiter();
+            start_jev_shadow();
             // P-LEAVE-3 ROW 4: the OS's end of session, which tao does not deliver. ROW 5: the keep-awake hold.
             let _ = SHUTDOWN_APP.set(app.handle().clone());
             watch_session_end(app.handle());
@@ -19081,5 +19114,45 @@ mod keep_warm_tests {
         let row = keep_warm_row("abcd1234", "committee", Duration::from_secs(55 * 60), Some(400_000), true);
         assert!(row.contains("55 min") && row.contains("400000"), "{row}");
         assert!(keep_warm_row("abcd1234", "committee", Duration::from_secs(60), None, false).contains("WRITE FAILED"));
+    }
+}
+
+#[cfg(test)]
+mod jev_shadow_start_tests {
+    use super::jev_shadow_args;
+
+    /// D104: the runner lives exactly as long as the app, so the one thing it must be told is the app's pid.
+    #[test]
+    fn the_runner_is_told_the_app_pid_and_nothing_else() {
+        assert_eq!(jev_shadow_args(4321), vec!["--app-pid".to_string(), "4321".to_string()]);
+    }
+
+    /// Wiring asserted by source shape, the way `drain_inboxes_records_each_reading_and_builds_the_row_from_them`
+    /// does it: the spawn needs a real process, and the facts worth pinning are PRESENCE and ORDER. On every launch,
+    /// right after the exit waiter (L059 §3 made that call unconditional); windowless; and the key and the data dir
+    /// are NEVER handed to it — the runner reads the key in-process itself, and CONSONANCE_DATA in a child's
+    /// environment is the collision D098 measured (507 overseer jobs stranded).
+    #[test]
+    fn the_app_starts_the_jev_shadow_runner_right_after_the_exit_waiter_and_hands_it_no_secrets() {
+        // Every needle is split with concat! so this test's own text never matches what it searches for — the
+        // neighbouring `the_exit_waiter_is_started_on_every_launch_...` counts the exit waiter's call statement in
+        // this whole file and requires exactly one. It went red twice on this test's drafts (D104): once on an unsplit
+        // needle, once on this very comment spelling the statement out.
+        let src = include_str!("main.rs");
+        assert!(
+            src.contains(concat!("start_exit", "_waiter();\n            start_jev", "_shadow();")),
+            "the runner is not started immediately after the exit waiter on every launch"
+        );
+        assert_eq!(src.matches(concat!("start_jev", "_shadow();")).count(), 1, "the runner is started from more than one place, or none");
+        let body = src
+            .split(concat!("fn start_jev", "_shadow("))
+            .nth(1)
+            .and_then(|b| b.split("\nfn ").next())
+            .expect("start_jev_shadow exists");
+        assert!(body.contains("\"jev-shadow-runner.js\""), "it does not start the runner file");
+        assert!(body.contains("jev_shadow_args(std::process::id())"), "it does not pass the app's own pid");
+        assert!(body.contains("NO_WINDOW | CREATE_NEW_PROCESS_GROUP"), "it would open a console window");
+        assert!(!body.contains("AI_GATEWAY_API_KEY"), "the key must never be handed to a child by the app");
+        assert!(!body.contains(".env(\"CONSONANCE_DATA\""), "CONSONANCE_DATA must not ride into this child (D098)");
     }
 }
