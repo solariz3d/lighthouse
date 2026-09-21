@@ -159,3 +159,20 @@ Neither Vercel page says "no waitlist" in so many words; that phrase is MarkTech
 the gateway, same price as direct, a smaller context (32k vs 64k direct); whether a fresh Vercel account can call
 it today is confirmed only by trying. Both doors cost nothing to knock on: join TypeSafe's waitlist, and try a
 gateway key.
+
+## Appended 02:25 — how it would live on two machines (the keeper's question; checked against the repo)
+
+The keeper: "why cant we get jev here on laptop, and also both on desktop? Idk how we can incorporate it if it
+doesnt go into the repo, perhaps the stick."
+
+Jev is not installed anywhere; it runs on the vendor's servers. What a machine needs is (a) a small calling
+script and the schemas, and (b) a key. **(a) goes in the repo like any other tool** and reaches both machines by
+`git pull`. **(b) must never go in the repo, because the repo is public** and a committed key is anyone's to
+spend. Checked: the project holds no secrets today (`.gitignore` has no key/env lines; no tool reads a credential);
+its per-machine pattern is environment variables (57 reads of `CONSONANCE_DATA`, etc.) and `~/.consonance.json`
+(fields: base, flags, instances, room_path, instances_dir, data_dir, ambient_*, machine_tag). Following that
+pattern, the key is one environment variable set once per machine (Vercel's SDK reads `AI_GATEWAY_API_KEY`), the
+same key on L and D. The stick is not needed: it exists to carry conversations, which change every night; a key
+is pasted once. **Unchecked, and to be checked before any key goes into `~/.consonance.json` instead:** whether
+the state sync or the stick copies that file anywhere shared. A tool that finds no key should refuse loudly, not
+skip silently.
