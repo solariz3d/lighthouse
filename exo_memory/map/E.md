@@ -1518,3 +1518,9 @@ Now activated_by_use = a turn-starting user prompt since launch that is not a to
 Missed-window report: one chair row per crossing at >= 60 min, naming the last skip reason.
 Red 22/4 → green 26/0; crate 865/0/4 (+5 mine, +4 A's uncommitted mcp.rs); mutants 9/9.
 **Carry:** fixtures that carry BOTH markers hide a mutant that removes one. Reading my own tests found it before the mutants did.
+
+## 2026-09-21 ~10:4x (D) · D100 reader cell out of the data dir → `exo_memory/handback/p-d100-vantagecell-E_2026-09-21.md`
+second-vantage's default cell is now <os tmpdir>/consonance/vantage_cell, and it is EMPTIED before every reader. A shared cell leaked one reader's scratch (the _verify_refuse state-sync copy) to the next. A cell that won't empty is a recorded refusal, never a launch. VANTAGE_CELL still overrides and is never emptied.
+Blindness was checked: there is no CLAUDE.md in either parent chain except the user-global one. The name keeps vantage_cell so the transcript folder still names a reader.
+Red 21/2 → green 24/0 in plain, --test, parallel and filtered; close --check exit 0 before and after; mutants 4/4, with 2 survivors predicted and explained.
+**Carry:** my tests first planted in the REAL cell, and the first sandbox put temp INSIDE the data dir, which would have failed the key test for my own reason. A sentinel in the real cell proves the fix. A test that must pass failing is how the heredoc SyntaxError red was caught. A's manifest rule becomes a legacy shelf; the exact text is proposed.
