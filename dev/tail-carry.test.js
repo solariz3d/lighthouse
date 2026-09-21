@@ -2395,5 +2395,58 @@ test('carry-dir flush: the --json object carries the flush record', () => {
   assert.ok(Array.isArray(res.obj.flush) && res.obj.flush.length > 0, JSON.stringify(res.obj.flush));
 });
 
+// ── L058 R1: THE OS EXIT CODE, READ FROM A REAL PROCESS ────────────────────────────────────────
+//
+// The shared exit path is already pinned above (:986 "the process exit status IS the code", :1493, :1500) — a
+// mutant forcing the OS exit to 0 dies against the old file too. What was NOT pinned is the two commands the
+// librarian reported on 09-20: `--verify-set` with no `--stick`, and `--verify-set` with `--carry-dir`. Two
+// mutants aimed at exactly those branches survive the 169 pre-existing tests and die here. These spawn the
+// real CLI (TOOL, so the mutation harness's copy is what runs) and read `status`.
+//
+// (An earlier draft of this comment claimed no test above reads the process exit code. It was wrong; the
+// mutant that would have proved it survived nothing. Corrected here rather than left for the next reader.)
+//
+// GREEN ON ARRIVAL, AND SAID SO. The packet asked for a failing test first. At eb1b121 both refusals
+// already exit 2 — measured plainly; the report of "exit 0" reproduces only when the output is read
+// through `| head` / `| tail`, whose own status is what `$?` then shows. There is no red to start from,
+// so these are pins against a regression that has not happened, and the mutants in the hand-back are
+// what show they are not vacuous.
+const { spawnSync } = require('child_process');
+const cli = (args) => spawnSync(process.execPath, [TOOL, ...args], { encoding: 'utf8', cwd: __dirname, windowsHide: true });
+
+test('R1 · the positive control: a success path exits 0 through the real process — without it, a 2 below proves nothing', () => {
+  const r = cli(['--help']);
+  assert.strictEqual(r.error, undefined, String(r.error));
+  assert.strictEqual(r.status, 0, `--help must exit 0; got ${r.status}\n${r.stderr}`);
+});
+
+test('R1 · --verify-set with no stick EXITS 2 — the process, not the text', () => {
+  const r = cli(['--verify-set']);
+  assert.match(r.stdout, /no such folder: null/, 'the refusal text is not the one this pins');
+  assert.strictEqual(r.status, 2,
+    `a refusal that exits ${r.status} reads as success to every caller that checks $?`);
+});
+
+test('R1 · --verify-set combined with --carry-dir EXITS 2 — the process, not the text', () => {
+  const src = fs.mkdtempSync(path.join(os.tmpdir(), 'tc-r1-'));
+  try {
+    const r = cli(['--verify-set', '--carry-dir', src]);
+    assert.match(r.stdout, /REFUSED — --carry-dir is its own command/, 'the refusal text is not the one this pins');
+    assert.strictEqual(r.status, 2,
+      `a refusal that exits ${r.status} reads as success to every caller that checks $?`);
+  } finally {
+    fs.rmSync(src, { recursive: true, force: true });
+  }
+});
+
+test('R1 · the in-process RETURN agrees with the printed code on a combine refusal — :1191 checks only the JSON field', () => {
+  // :1191 asserts r.obj.code, what the tool SAYS. This asserts r.code, what main RETURNS. A main that
+  // printed "code":2 and returned 0 passes :1191 and fails here. :1191 is left exactly as it was.
+  const w = carried();
+  const r = J(w.D, ['--stick', w.stick, '--verify-set', '--import']);
+  assert.strictEqual(r.obj.code, 2);
+  assert.strictEqual(r.code, 2, `main returned ${r.code} while printing code ${r.obj.code}`);
+});
+
 console.log(`\n  ${pass} passed, ${fail} failed`);
 if (fail) process.exit(1);
