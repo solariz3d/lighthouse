@@ -235,6 +235,8 @@ function runHook(abs, withGate) {
     ...process.env,
     CONSONANCE_INSTANCES: TMP_INSTANCES,
     CONSONANCE_DATA: dataDir,
+    // D098: the dev/shell hooks isolate through their own seam now; without this they write the real ~/.claude/shell.
+    CONSONANCE_SHELL_DIR: dataDir,
     CONSONANCE_WATCH_STATE: path.join(dataDir, 'watch-state.json'),
   };
   if (withGate) env.CONSONANCE_DREAM = '1';

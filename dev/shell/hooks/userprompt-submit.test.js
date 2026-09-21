@@ -13,7 +13,7 @@
 // CONTROL on the same fixture from a non-fresh cwd, which must SPEAK and must CHANGE the state file. If the
 // control goes quiet, the fresh test proves nothing and says so.
 //
-// Hermetic: CONSONANCE_DATA points the hook at a temp dir, so the real ~/.claude/shell is never read or written;
+// Hermetic: CONSONANCE_SHELL_DIR (D098; was CONSONANCE_DATA) points the hook at a temp dir, so the real ~/.claude/shell is never read or written;
 // the dream and overseer gates are unset so they cannot be what silences the hook.
 // Run: node dev/shell/hooks/userprompt-submit.test.js   (or via js-suite)
 'use strict';
@@ -38,7 +38,7 @@ function runHook(cwd) {
   const data = fs.mkdtempSync(path.join(os.tmpdir(), 'ups-d097-'));
   const statePath = path.join(data, 'userprompt_state.json');
   fs.writeFileSync(statePath, SEED);
-  const env = { ...process.env, CONSONANCE_DATA: data };
+  const env = { ...process.env, CONSONANCE_SHELL_DIR: data };
   delete env.CONSONANCE_DREAM;
   delete env.CLAUDE_OVERSEER_RUN;
   const payload = JSON.stringify({ session_id: 'd097-test', cwd, prompt: 'hello', hook_event_name: 'UserPromptSubmit' });

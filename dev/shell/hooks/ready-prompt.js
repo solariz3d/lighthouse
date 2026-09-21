@@ -10,7 +10,10 @@
 if (process.env.CONSONANCE_DREAM) process.exit(0);
 const path = require('path');
 const os = require('os');
-const SHELL_DIR = process.env.CONSONANCE_DATA || path.join(os.homedir(), '.claude', 'shell');
+// D098: its own seam, not CONSONANCE_DATA - under the leaked app env this require() looked for lib/ready.js
+// in the data dir, failed into the catch below, and the pane silently stopped stamping. The stamp's
+// LOCATION was never this variable: lib/ready.js writes to CONSONANCE_READY_DIR, which the app sets.
+const SHELL_DIR = process.env.CONSONANCE_SHELL_DIR || path.join(os.homedir(), '.claude', 'shell');
 
 try {
   const ready = require(path.join(SHELL_DIR, 'lib', 'ready.js'));
