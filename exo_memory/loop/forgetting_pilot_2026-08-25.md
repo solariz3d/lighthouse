@@ -456,3 +456,45 @@ of my own registration's clauses found unexecutable and two of its checks found 
 moved, nothing marked, nothing committed. The result I would defend first is §3's unwelcome half:
 the room now has two instruments agreeing that its forgetting organ has never once fired, and
 neither of them is an organ.*
+
+
+---
+
+## ADDENDUM 2026-09-21 — the falsifier stopped reading zero on 09-08 (pane C, L060; appended, nothing above edited)
+
+The last lines above say the re-aimed falsifier *"currently reads zero"* and that two instruments agree the
+forgetting organ *"has never once fired."* **Both were true on 2026-08-25. The first stopped being true on
+2026-09-08**, and nothing on the reading path recorded it until today. The text above is left exactly as written:
+it is a dated record and it was right on its date.
+
+**Two files have left the reading path since, both deliberately, each by a named commit that says why:**
+
+| file | bytes | deleted by | the commit's own reason |
+|---|---:|---|---|
+| `exo_memory/astra/SHELL.md` | 161,665 | `e5e1eeb` (09-08 06:14) | *"the Astra shell becomes a generator writing outside the repo — the committed copy was a carrier"* |
+| `exo_memory/loop/battery_run1_T2_text_2026-09-16.md` | 10,383 | `62a4f3a` (09-16 04:28) | *"the first T2 text is WITHDRAWN before dispatch — its source was committed, so one diff printed all eight defects"* |
+
+**The bracket, one command per row** — `node consonance/tools/forget-rate.js --to <rev>`, re-derived at HEAD
+`784b54d`:
+
+| `--to` | FORGOTTEN |
+|---|---|
+| `e5e1eeb^` | 0 files / 0 bytes |
+| `e5e1eeb` | **1 file / 161,665 bytes** — the step lands on the Astra deletion |
+| `62a4f3a^` | 1 file / 161,665 bytes |
+| `62a4f3a` | **2 files / 172,048 bytes** — the step lands on the T2 withdrawal |
+| `71cbe8f^` | 2 files / 172,048 bytes |
+| `71cbe8f` | **2 files / 172,048 bytes — unchanged across L062's intake cap** |
+
+Each file's deleting commit and size: `git log --all --diff-filter=D --format='%h %ad %s' -- <path>` and
+`git cat-file -s $(git rev-parse <commit>^:<path>)`.
+
+**What this is not.** It is not the forgetting organ firing. Both are hand deletions of defective artifacts — a
+stale committed copy and a contaminated test text — not stale knowledge decaying off the path. So registration 44
+(`journal/2026-08-24.md:179`, *"the corpus has never deleted anything"*) now has an outdated premise, and its
+falsifier — about a decay organ still unbuilt — is neither fired nor refuted by these two.
+
+**Where the acknowledgement now lives.** `consonance/tools/forget-rate.test.js` used to pin `FORGOTTEN 0 files`
+and told whoever saw it fire to update this file. It sat red from 09-08 to 09-21 with this file unchanged. The pin
+is now an `ACKNOWLEDGED_DEPARTURES` list, each entry naming its path, commit, bytes and reason (`b76c9c7`), so a
+third departure still fires. The full case is `exo_memory/handback/p-r6-forget-C_2026-09-21.md`.
