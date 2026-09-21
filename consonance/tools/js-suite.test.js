@@ -150,6 +150,55 @@ test('a summary counting ZERO passes is SILENT, not green', () => {
   assert.ok(/0 green/.test(r.out), 'vacuity in the correct format is still vacuity');
 });
 
+// L058 R2 (2026-09-21). THE MIDDLE-DOT SUMMARY. dev/shell/hooks/l2-overseer-worker.test.js:160 ends with
+// `N tests · P pass · F fail` (U+00B7 separators), and the runner filed that healthy file as SILENT — the fourth
+// time this runner has reported its own ignorance as a hole (see js-suite.js:190-205). These fixtures use the
+// exact byte form that file prints, so the test cannot pass on a looser shape than the one that shipped.
+const DOT = '·';
+const DOT_GREEN = `console.log("\\n18 tests ${DOT} 18 pass ${DOT} 0 fail");`;
+const DOT_FAILING = `console.log("\\n2 tests ${DOT} 1 pass ${DOT} 1 fail");process.exit(1);`;
+const DOT_ONLY_FAILS = `console.log("\\n1 tests ${DOT} 0 pass ${DOT} 1 fail");process.exit(1);`;
+const DOT_VACUOUS = `console.log("\\n0 tests ${DOT} 0 pass ${DOT} 0 fail");`;
+
+test('the middle-dot summary with passes is GREEN, not silent (L058 R2)', () => {
+  const r = run(tree({ 'a.test.js': DOT_GREEN }));
+  assert.ok(/1 green/.test(r.out), `"18 tests · 18 pass · 0 fail" is a completed run:\n${r.out}`);
+  assert.ok(/0 silent/.test(r.out), r.out);
+  assert.strictEqual(r.code, 0, 'a completed green run must not fail the suite');
+});
+
+test('the middle-dot summary with a failure is FAILED, not crashed', () => {
+  const r = run(tree({ 'a.test.js': DOT_FAILING }));
+  assert.ok(/1 failed/.test(r.out), r.out);
+  assert.ok(/0 crashed/.test(r.out), 'it reached its summary, so it is not a crash');
+});
+
+// The "0 passed, 1 failed" lesson (js-suite.js:211-213) in this form: zero passes with a failure is a run that
+// COMPLETED and failed. Only zero-and-zero is vacuous.
+test('the middle-dot summary with ZERO passes but a failure is FAILED, not silent', () => {
+  const r = run(tree({ 'a.test.js': DOT_ONLY_FAILS }));
+  assert.ok(/1 failed/.test(r.out), r.out);
+  assert.ok(/0 silent/.test(r.out), 'one test ran and failed — that is not vacuity');
+});
+
+// The rule SILENT exists for must survive the widening: the right format with nothing in it is still nothing.
+test('the middle-dot summary counting ZERO of everything is still SILENT', () => {
+  const r = run(tree({ 'a.test.js': DOT_VACUOUS }));
+  assert.ok(/1 silent/.test(r.out), `"0 tests · 0 pass · 0 fail" proves nothing ran:\n${r.out}`);
+  assert.ok(/0 green/.test(r.out), r.out);
+  assert.strictEqual(r.code, 1, 'SILENT must still fail the run');
+});
+
+// Widening what is recognised must stop at what was MEASURED (js-suite.js:200-204: "each shape here was read off
+// actual output"). The same words with a separator no file emits are not the summary that shipped, and a runner
+// that accepts them would read an arbitrary exit-0 line of prose as a completed run. Added after mutant #6 (the
+// separator loosened to any character) survived the first pass of this packet's mutants.
+test('the same words with an UNMEASURED separator are not a summary — still SILENT', () => {
+  const r = run(tree({ 'a.test.js': 'console.log("\\n18 tests, 18 pass, 0 fail");' }));
+  assert.ok(/1 silent/.test(r.out), `only the middle-dot form was measured; a comma form is not recognised:\n${r.out}`);
+  assert.ok(/0 green/.test(r.out), r.out);
+});
+
 test('a SILENT file fails the run — rule 2 holds per file, not just per tree', () => {
   const root = tree({ 'good.test.js': GREEN, 'quiet.test.js': NOSUMMARY });
   const r = run(root);

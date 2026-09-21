@@ -202,7 +202,11 @@ const stripAnsi = (s) => s.replace(/\x1b\[[0-9;]*m/g, '');
 // suites as SILENT. v2 still missed prompt-events.test.js, which runs 16 real assertions and ends
 // with a bare "16 passed". A runner reporting a hole that is really its own ignorance is worse
 // than no runner, so each shape here was read off actual output.
-const SUMMARY = /(\d+\s+passed,\s*\d+\s+failed)|(test result:)|(^\s*[ℹ#]\s*fail\s+\d+)|(^\s*\d+\s+passed\s*$)/im;
+// v3 (L058 R2, 2026-09-21): the FOURTH shape, `N tests · P pass · F fail` with U+00B7 separators, read off
+// dev/shell/hooks/l2-overseer-worker.test.js:160 — the one file that emits it, and the one where D095's abstain
+// schema lives, filed SILENT by this regex while printing "18 tests · 18 pass · 0 fail" run alone. Same failure
+// as v1 and v2, fourth time: the runner's ignorance reported as the test's vacuity.
+const SUMMARY = /(\d+\s+passed,\s*\d+\s+failed)|(test result:)|(^\s*[ℹ#]\s*fail\s+\d+)|(^\s*\d+\s+passed\s*$)|(\d+\s+tests\s*·\s*\d+\s+pass\s*·\s*\d+\s+fail)/im;
 
 // A SUMMARY THAT COUNTS ZERO PASSES IS NOT A COMPLETED RUN (pane A, 2026-08-17). "0 passed",
 // "0 passed, 0 failed" and "ℹ pass 0" all satisfy SUMMARY while proving nothing ran - which is the
@@ -212,7 +216,8 @@ const SUMMARY = /(\d+\s+passed,\s*\d+\s+failed)|(test result:)|(^\s*[ℹ#]\s*fai
 // swallowed "0 passed, 1 failed" — a genuinely completed run in which one test ran and failed —
 // reclassifying real failures as vacuous. Caught by this file's own canary test within a minute of
 // being written. Zero passes with a nonzero failure count is a RESULT; zero of both is a no-op.
-const VACUOUS = /(^\s*0\s+passed\s*$)|(\b0\s+passed,\s*0\s+failed)|(^\s*[ℹ#]\s*pass\s+0\s*$)/im;
+// The middle-dot form keeps the same rule: vacuous only when pass AND fail are both 0 (`0 pass · 1 fail` ran).
+const VACUOUS = /(^\s*0\s+passed\s*$)|(\b0\s+passed,\s*0\s+failed)|(^\s*[ℹ#]\s*pass\s+0\s*$)|(\b\d+\s+tests\s*·\s*0\s+pass\s*·\s*0\s+fail)/im;
 const VACUOUS_NODETEST = /^\s*[ℹ#]\s*fail\s+0\s*$/im;
 
 // ANCHORED, and this is a defect repair rather than a tidy-up. v1 matched the marker ANYWHERE in a
