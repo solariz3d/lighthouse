@@ -137,7 +137,16 @@ function runClose(o) {
   const checkOnly = !!o.checkOnly;
   const retryWaitMs = o.retryWaitMs === undefined ? RETRY_WAIT_MS : o.retryWaitMs;
   const DATA = o.data || sync.dataDir();
-  const STATE = o.state || sync.stateDir();
+  // THE STATE DIR IS RESOLVED, NEVER ASSUMED (L065; E's L062 R-C1 §4 step 3). This line was
+  // `o.state || sync.stateDir()` and went straight to `path.join(STATE, '.git')`, so a stateDir() that returns
+  // nothing threw `TypeError: The "path" argument must be of type string`, and one that throws escaped runClose.
+  // Both become reachable when stateDir() stops falling back to one machine's literal (state-sync.js:141). The throw
+  // is caught ONLY to be printed: its message rides in the refusal below, so nothing is swallowed.
+  let STATE = o.state || null, stateWhy = null;
+  if (!STATE) {
+    try { STATE = sync.stateDir() || null; } catch (e) { stateWhy = e && e.message ? e.message : String(e); }
+    if (STATE != null) STATE = String(STATE).trim() || null;
+  }
 
   const no = (why, detail, code) => {
     errOut('');
@@ -148,6 +157,13 @@ function runClose(o) {
 
   if (!DATA) return no('no corpus declared', ['CONSONANCE_DATA is unset and ~/.consonance.json has no data_dir.'], 2);
   if (!fs.existsSync(DATA)) return no(`the data dir does not exist: ${DATA}`, [], 2);
+  // Names what THIS tool reads (state-sync.js stateDir(): CONSONANCE_STATE, then state_dir). live-follow.js reads
+  // CONSONANCE_STATE_REPO instead, so its sentence would print a recovery that does nothing here.
+  if (!STATE) {
+    return no('no state repo declared', [
+      'Set state_dir in ~/.consonance.json, or set CONSONANCE_STATE. Nothing was prepared and nothing was sent.',
+    ].concat(stateWhy ? [`stateDir() said: ${stateWhy}`] : []), 2);
+  }
   if (!fs.existsSync(path.join(STATE, '.git'))) {
     return no(`the state tree is not a git repository: ${STATE}`,
       ['Clone it first, or set state_dir in ~/.consonance.json. Nothing was prepared and nothing was sent.'], 2);

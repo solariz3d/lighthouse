@@ -123,6 +123,85 @@ function committedNotPushed(w) {
 
 // ═══ THE REFUSALS — written first and run first, because they are the deliverable ═════════════
 
+// ── L065: A STATE DIR THAT RESOLVES TO NOTHING IS A NAMED REFUSAL, NEVER A TypeError ───────────────────────────────
+// E's L062 R-C1 §4 step 3. `runClose` took `o.state || sync.stateDir()` and went straight to
+// `path.join(STATE, '.git')`: a null there throws `TypeError: The "path" argument must be of type string`, and a
+// stateDir() that throws escapes runClose altogether. Today stateDir() still ends in a literal fallback
+// (state-sync.js:141), so neither can happen on a stock tree — they become reachable when that fallback goes (E's step
+// 4). These pin the behaviour for that day. The stub is IN-PROCESS on the one module close.js holds, and it is
+// restored in `finally`: no test here may reach the real stateDir(), which would hand back C:\Consonance\state.
+const SYNC = require(path.join(__dirname, 'state-sync.js'));
+function withStateDir(fake, fn) {
+  const real = SYNC.stateDir;
+  SYNC.stateDir = fake;
+  try { return fn(); } finally { SYNC.stateDir = real; }
+}
+function closeNoState(stateDirFake) {
+  const w = world({ 'board.jsonl': '{"x":1}\n' });
+  const lines = [];
+  let threw = null, r = null;
+  withStateDir(stateDirFake, () => {
+    try {
+      r = C.runClose({ data: w.data, privacy: PRIVATE, checkOnly: true, out: (s) => lines.push(s), err: (s) => lines.push(s) });
+    } catch (e) { threw = e; }
+  });
+  return { r, threw, text: lines.join('\n'), w };
+}
+
+test('L065: a state dir that resolves to NOTHING is a named refusal, not a TypeError', () => {
+  const { r, threw, text } = closeNoState(() => null);
+  assert.strictEqual(threw, null, `runClose must not throw: ${threw && threw.constructor.name + ': ' + threw.message}`);
+  assert.strictEqual(r.closed, false, 'nothing was closed');
+  assert.strictEqual(r.code, 2, 'the configuration refusal code, like the missing-corpus one');
+  assert.ok(/NOT CLOSED — no state repo declared/.test(text), `the refusal must say what is missing:\n${text}`);
+});
+
+test('L065: a stateDir() that THROWS is the same named refusal, and it carries the thrown reason', () => {
+  const { r, threw, text } = closeNoState(() => { throw new Error('PROBE-REASON'); });
+  assert.strictEqual(threw, null, `the throw must not escape runClose: ${threw && threw.message}`);
+  assert.strictEqual(r.code, 2);
+  assert.ok(/no state repo declared/.test(text), text);
+  assert.ok(/PROBE-REASON/.test(text), `the reason is reported, never swallowed:\n${text}`);
+});
+
+// The fix it names must be one that FIXES THIS TOOL. close.js resolves through state-sync.js stateDir(), which reads
+// CONSONANCE_STATE (state-sync.js:133). live-follow.js reads CONSONANCE_STATE_REPO — a different name — so copying
+// its sentence here would print a recovery that does nothing for close.
+test('L065: the refusal names what close.js actually reads — state_dir and CONSONANCE_STATE, not _REPO', () => {
+  const { text } = closeNoState(() => null);
+  assert.ok(/state_dir/.test(text) && /\.consonance\.json/.test(text), `must name the config key:\n${text}`);
+  assert.ok(/\bCONSONANCE_STATE\b/.test(text), `must name the variable close.js reads:\n${text}`);
+  assert.ok(!/CONSONANCE_STATE_REPO/.test(text), `CONSONANCE_STATE_REPO is live-follow's name and does not reach close.js:\n${text}`);
+});
+
+// state-sync.js:139 returns `cfg.state_dir` untrimmed, so `"state_dir": "  "` in ~/.consonance.json reaches here as a
+// blank string. Taken as a path it refuses with "not a git repository:   " — true and useless. It is an undeclared
+// state dir and must be named as one. (Added after mutant #6, "a blank stateDir() is taken as a path", survived.)
+test('L065: a BLANK state dir is the same named refusal, not a blank path', () => {
+  const { r, text } = closeNoState(() => '   ');
+  assert.strictEqual(r.code, 2);
+  assert.ok(/no state repo declared/.test(text), `a blank declaration is no declaration:\n${text}`);
+});
+
+test('L065: the state refusal fires before anything is prepared — no commit lands in the state tree', () => {
+  const { w } = closeNoState(() => null);
+  assert.strictEqual(log(w.state), '', 'the state clone must be untouched');
+});
+
+// The packet's own red condition, kept as a CONTROL: an empty home and no CONSONANCE_* vars refuses on the missing
+// corpus BEFORE the state is ever consulted. It was a clean refusal before this lap and must stay one.
+test('L065 control: an empty home with no CONSONANCE_* vars refuses on the corpus, with no stack trace', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'close-home-'));
+  const env = { ...process.env, USERPROFILE: home, HOME: home };
+  for (const k of Object.keys(env)) if (/^CONSONANCE_/.test(k)) delete env[k];
+  let code = 0, err = '';
+  try { execFileSync(process.execPath, [TOOL, '--check'], { env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); }
+  catch (e) { code = e.status; err = String(e.stderr || ''); }
+  assert.strictEqual(code, 2, `must exit 2, got ${code}:\n${err}`);
+  assert.ok(/no corpus declared/.test(err), err);
+  assert.ok(!/TypeError|\n\s+at /.test(err), `no stack may reach the user:\n${err}`);
+});
+
 test('A PUSH THAT FAILS IS NOT A CLOSE: it says NOT CLOSED and quotes git', () => {
   // The push address is disarmed exactly the way the chair disarmed the real one at 04:43
   // (`git remote set-url --push origin no_push`), so the remote stays READABLE and only the push
