@@ -409,19 +409,41 @@ function readBaseline() {
   }
 }
 
-function writeBaseline(sites) {
+// PRESERVE WHAT THIS TOOL DOES NOT GENERATE (L063, pane E). This used to rebuild every row from the
+// live sites as { file, detector, verdict, text, key }, so a field a seat wrote into a row (R-C3's `why`,
+// carrying A's argument) vanished on the next --update, and a hand-corrected verdict was reset to the
+// classifier's — against the header above, which says verdicts "may be hand-corrected in the baseline".
+// Found by C (handback/p-l062-rc3-C_2026-09-21.md:75-92), by reading this function.
+//
+// So a live site whose key is already in the prior baseline starts FROM ITS PRIOR ROW: every field the
+// tool does not generate is carried, and the prior verdict wins over today's classify(). The generated
+// identity fields (file, detector, text, key) are always today's — they are what makes it the same site.
+// A kept verdict that disagrees with the classifier is REPORTED, so a hand correction is never invisible
+// and a classifier improvement can still be seen and taken by hand.
+function writeBaseline(sites, prior) {
+  const before = new Map((prior || []).map((r) => [r.key, r]));
+  const report = { blessed: [], dropped: [], kept: [] };
+  const rows = sites.map((s) => {
+    const old = before.get(s.key);
+    if (!old) { report.blessed.push(s); return { file: s.file, detector: s.detector, verdict: s.verdict, text: s.text, key: s.key }; }
+    const verdict = old.verdict || s.verdict;
+    if (verdict !== s.verdict) report.kept.push({ site: s, verdict, classifier: s.verdict });
+    return { ...old, file: s.file, detector: s.detector, verdict, text: s.text, key: s.key };
+  });
+  const live = new Set(sites.map((s) => s.key));
+  for (const r of prior || []) if (!live.has(r.key)) report.dropped.push(r);
   const body = {
     _: 'Exemption list for portable-paths.js. Every entry is a site that EXISTS today. A site '
       + 'not listed here fails the guard. Removing a site from the code and re-running --update '
       + 'is always welcome; adding one requires a deliberate --update and shows up in the diff.',
     generated_by: 'node consonance/tools/portable-paths.js --update',
-    counts: tally(sites),
-    sites: sites
+    counts: tally(rows),
+    sites: rows
       .slice()
-      .sort((a, b) => (a.file === b.file ? a.key.localeCompare(b.key) : a.file.localeCompare(b.file)))
-      .map((s) => ({ file: s.file, detector: s.detector, verdict: s.verdict, text: s.text, key: s.key })),
+      .sort((a, b) => (a.file === b.file ? a.key.localeCompare(b.key) : a.file.localeCompare(b.file))),
   };
   fs.writeFileSync(BASELINE, JSON.stringify(body, null, 2) + '\n');
+  return { ...report, counts: body.counts };
 }
 
 function tally(sites) {
@@ -449,9 +471,16 @@ function main(argv) {
   const fatalOnly = argv.includes('--fatal');
 
   if (argv.includes('--update')) {
-    writeBaseline(sites);
-    console.log(`portable-paths: baseline written — ${sites.length} sites`);
-    console.log('  ' + JSON.stringify(tally(sites)));
+    // --update still blesses every unbaselined site at once: the fixture tests and the tool's own
+    // instruction ("run --update and let the baseline diff carry the argument") depend on it. What it no
+    // longer does is bless them INVISIBLY — each new site is named here, by verdict and file:line.
+    const r = writeBaseline(sites, readBaseline());
+    console.log(`portable-paths: baseline written — ${sites.length} sites · ${r.blessed.length} newly blessed`
+      + ` · ${r.dropped.length} dropped · ${r.kept.length} hand verdict(s) kept over the classifier`);
+    console.log('  ' + JSON.stringify(r.counts));    // the file's tally, kept verdicts included
+    for (const s of r.blessed) console.log(`  + ${s.verdict.padEnd(26)} ${s.file}:${s.line}`);
+    for (const s of r.dropped) console.log(`  - ${String(s.verdict).padEnd(26)} ${s.file}`);
+    for (const k of r.kept) console.log(`  = ${k.verdict.padEnd(26)} ${k.site.file}:${k.site.line}  (classifier says ${k.classifier})`);
     return 0;
   }
 

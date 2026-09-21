@@ -630,3 +630,67 @@ test('a baselined REVIEW site is ANNOUNCED on a green run — exempted must not 
 
   fs.rmSync(root, { recursive: true, force: true });
 });
+
+// ── L063 (pane E): --update PRESERVES what it does not generate ─────────────────────────────────
+//
+// C proved it by reading (handback/p-l062-rc3-C_2026-09-21.md:75-92): writeBaseline() rebuilt every
+// row as { file, detector, verdict, text, key } from the LIVE sites, so a hand-added field (R-C3 put
+// A's argument in a `why`) vanished on the next --update, and a hand-corrected verdict was reset —
+// against this tool's own header, which says verdicts "may be hand-corrected in the baseline". These
+// run against a temp fixture and a temp baseline, never the real one.
+//
+// The fixture plants ONE machine path, baselines it, then hand-edits the baseline the way a seat does.
+// The planted line is written once and shared: every copy of it in this file is a site of its own for
+// the real guard, so a second copy would be a second BENIGN-TEST row for nothing.
+const L063_PLANT = `const LEDGER = process.env.NOPE || 'C:\\\\Consonance\\\\data\\\\x.jsonl';\n`;
+function handEditedFixture() {
+  const root = fixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  const target = path.join(root, 'consonance', 'tools', 'clean.js');
+  fs.writeFileSync(target, fs.readFileSync(target, 'utf8') + L063_PLANT);
+  runGuard(root, baseline, ['--update']);
+  const j = JSON.parse(fs.readFileSync(baseline, 'utf8'));
+  const row = j.sites.find((s) => s.file === 'consonance/tools/clean.js');
+  assert.ok(row, 'fixture broken: the planted site was not baselined');
+  assert.strictEqual(row.verdict, 'FATAL-DEFAULT', 'fixture broken: the planted site must classify FATAL-DEFAULT');
+  return { root, baseline, j, row };
+}
+const rowAfterUpdate = (root, baseline) => {
+  runGuard(root, baseline, ['--update']);
+  return JSON.parse(fs.readFileSync(baseline, 'utf8')).sites.find((s) => s.file === 'consonance/tools/clean.js');
+};
+
+test('L063: a field the tool does not generate survives --update', () => {
+  const { root, baseline, j, row } = handEditedFixture();
+  row.why = 'the argument for this row, which lives nowhere else';
+  fs.writeFileSync(baseline, JSON.stringify(j, null, 2) + '\n');
+  const after = rowAfterUpdate(root, baseline);
+  assert.strictEqual(after.why, 'the argument for this row, which lives nowhere else',
+    '--update dropped a hand-added field: an argument written into the baseline must not be erased by the next run');
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('L063: a hand-corrected verdict survives --update', () => {
+  const { root, baseline, j, row } = handEditedFixture();
+  row.verdict = 'BENIGN-TEST';
+  fs.writeFileSync(baseline, JSON.stringify(j, null, 2) + '\n');
+  const after = rowAfterUpdate(root, baseline);
+  assert.strictEqual(after.verdict, 'BENIGN-TEST',
+    '--update reset a hand-corrected verdict to the classifier\'s; the header says verdicts may be hand-corrected');
+  fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('L063: --update NAMES each site it newly blesses, rather than only counting them', () => {
+  // The wholesale bless stays (see the hand-back for why), but a blessing nobody can see in the
+  // output is a blessing nobody reviewed. The new site must be named by file on the --update line.
+  const root = fixtureRepo();
+  const baseline = path.join(root, 'baseline.json');
+  runGuard(root, baseline, ['--update']);
+  const target = path.join(root, 'consonance', 'tools', 'clean.js');
+  fs.writeFileSync(target, fs.readFileSync(target, 'utf8') + L063_PLANT);
+  const upd = runGuard(root, baseline, ['--update']);
+  assert.match(upd.out, /1 newly blessed/, 'the --update summary must count the NEW sites separately:\n' + upd.out);
+  assert.match(upd.out, /\+ FATAL-DEFAULT\s+consonance\/tools\/clean\.js/,
+    'each newly blessed site must be named with its verdict and file:\n' + upd.out);
+  fs.rmSync(root, { recursive: true, force: true });
+});
