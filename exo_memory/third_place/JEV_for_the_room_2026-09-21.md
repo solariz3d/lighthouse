@@ -68,3 +68,17 @@ this note is struck in place. **Degenerating, named in advance:** editing a sche
 
 *This note's own falsifier: if the librarian finds the room already registered a non-Claude scorer and this seat
 did not know, the ranking above is redundant and only the backtest idea survives.*
+
+---
+
+## Appended 01:47 — the keeper rules on the hosting caution
+
+**The keeper, verbatim:** "i dont care about the room flowing through them, what are they going to do, take my
+shit who cares its free open source anyway."
+
+Taken as decided, consistent with his 09-14 decision to make the repo public: committed work-side text is
+already public, so sending it to a hosted scorer exposes nothing new. The "it is hosted" caution above is
+withdrawn for committed files. One narrow limit kept, and it is about third parties, not him: raw transcripts
+hold things deliberately left out of the public record because they belong to other people (a coworker's
+family, 09-20). A scorer reads committed files, never live transcripts; the registered tests are already built
+that way, so the limit costs nothing.
