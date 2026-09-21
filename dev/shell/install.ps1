@@ -197,12 +197,28 @@ $register = @(
   # l3-overseer.js (the 2026-08-17 note in this header: it writes the arc-perceptions the keeper
   # reads every turn). Whether the ruling was meant to reach that machine is the keeper's to say;
   # a red that names the conflict is the honest form of not knowing.
+  #
+  # ANSWERED FOR D, 2026-09-21 ~10:05 (the keeper, via the librarian; loop/install_D_2026-09-21.md:3):
+  # "yes to both" -- the overseers STAY LIVE ON D. The paragraph above is kept as the dated trace it
+  # is. Read at source, the 09-06 ruling is the LAPTOP lineage's (librarian/2026-09-06.md, not the
+  # .desktop master) and its words -- "the three passengers ... stay unregistered" -- describe a
+  # machine where they were unregistered; on D they had been live since June. Today's answer names D
+  # and only D, so the 09-06 exclusion STANDS everywhere else. Hence `LiveOn`, per entry, rather than
+  # deleting `Excluded`: deleting it would let a bare run on L REGISTER two overseers against the
+  # ruling that still governs L. `LiveOn` changes what -Check REPORTS on the named machine, never what
+  # any run REGISTERS -- an Excluded entry is still skipped by every write path. The machine is named
+  # by the room's one rule (consonance/tools/state-sync.js machineTag): CONSONANCE_MACHINE, else
+  # machine_tag in ~/.consonance.json, else the hostname.
+  # stop.js is NOT covered: it appends a session_stop event and is not an overseer, and the answer
+  # named the overseers. On D it still reports EXCLUDED BUT LIVE, which is the true, open state.
   @{ Event = 'Stop';             Rel = 'hooks\stop.js';               Runner = 'node';
      Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)' }
   @{ Event = 'Stop';             Rel = 'hooks\l2-overseer.js';        Runner = 'node';
-     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)' }
+     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)';
+     LiveOn = @('D'); LiveOnWhy = 'keeper 2026-09-21 ~10:05 - overseers stay live on D (loop/install_D_2026-09-21.md:3)' }
   @{ Event = 'Stop';             Rel = 'hooks\l3-overseer.js';        Runner = 'node';
-     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)' }
+     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)';
+     LiveOn = @('D'); LiveOnWhy = 'keeper 2026-09-21 ~10:05 - overseers stay live on D (loop/install_D_2026-09-21.md:3)' }
   @{ Event = 'Stop';             Rel = 'sourced-stop.js';             Runner = 'node' }
   # The ready stamp's two halves. A manifest entry is not a registration — that lesson is written
   # twenty lines below in this same file, dated 2026-08-18, about two hooks that shipped and never
@@ -557,11 +573,30 @@ if ($Check) {
   # them printed as zero; after it, zero and one respectively.
   $excludedLive = @()
   $excludedHeld = @()
+  # LiveOn (2026-09-21): an Excluded entry may carry a per-machine answer. On a machine it names, the
+  # hook being live is the RULED state, not a contradiction; being absent there is the new red, since
+  # the ruling says it should run and no write path will register an Excluded entry. The name comes
+  # from the room's one rule, the same as consonance/tools/state-sync.js machineTag().
+  $machineTag = ([string]$env:CONSONANCE_MACHINE).Trim()
+  if (-not $machineTag) {
+    try {
+      $cfgTag = ([IO.File]::ReadAllText((Join-Path $HOME '.consonance.json')).TrimStart([char]0xFEFF) | ConvertFrom-Json).machine_tag
+      if ($cfgTag) { $machineTag = [string]$cfgTag }
+    } catch { }
+  }
+  if (-not $machineTag) { $machineTag = [Environment]::MachineName }
+  $ruledLive = @()
+  $ruledLiveMissing = @()
   if (-not $regUnknown) {
     foreach ($e in $register) {
       $lf = (Split-Path -Leaf $e.Rel).ToLower()
       if ($e.Excluded) {
-        if ($liveLeaf.ContainsKey($lf)) { $excludedLive += ("{0,-16} {1}   {2}`n                       live as: {3}" -f $e.Event, $e.Rel, $e.Excluded, $liveLeaf[$lf]) }
+        $liveHere = $e.LiveOn -and (@($e.LiveOn) -contains $machineTag)
+        if ($liveHere) {
+          if ($liveLeaf.ContainsKey($lf)) { $ruledLive += ("{0,-16} {1}   {2}" -f $e.Event, $e.Rel, $e.LiveOnWhy) }
+          else { $ruledLiveMissing += ("{0,-16} {1}   {2}" -f $e.Event, $e.Rel, $e.LiveOnWhy) }
+        }
+        elseif ($liveLeaf.ContainsKey($lf)) { $excludedLive += ("{0,-16} {1}   {2}`n                       live as: {3}" -f $e.Event, $e.Rel, $e.Excluded, $liveLeaf[$lf]) }
         else { $excludedHeld += ("{0,-16} {1}   {2}" -f $e.Event, $e.Rel, $e.Excluded) }
         continue
       }
@@ -603,6 +638,14 @@ if ($Check) {
     foreach ($n in $notDeclared) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
     Write-Host ("                {0,3} EXCLUDED BY RULING, correctly absent   declared here so the decision survives the seat that made it" -f $excludedHeld.Count) -ForegroundColor DarkGray
     foreach ($n in $excludedHeld) { Write-Host ("                     {0}" -f $n) -ForegroundColor DarkGray }
+    if ($ruledLive.Count) {
+      Write-Host ("                {0,3} EXCLUDED ELSEWHERE, LIVE HERE BY RULING   this machine is '{1}'; the entry names it" -f $ruledLive.Count, $machineTag) -ForegroundColor Green
+      foreach ($n in $ruledLive) { Write-Host ("                     {0}" -f $n) -ForegroundColor DarkGray }
+    }
+    if ($ruledLiveMissing.Count) {
+      Write-Host ("                {0,3} RULED LIVE HERE, NOT REGISTERED   this machine is '{1}'; no run registers an Excluded entry -- wire it by hand" -f $ruledLiveMissing.Count, $machineTag) -ForegroundColor Yellow
+      foreach ($n in $ruledLiveMissing) { Write-Host ("                     {0}" -f $n) -ForegroundColor Yellow }
+    }
     if ($excludedLive.Count) {
       Write-Host ("                {0,3} EXCLUDED BUT LIVE   a ruling says do not register this and it is registered here. This script does not unregister; resolve by hand." -f $excludedLive.Count) -ForegroundColor Magenta
       foreach ($n in $excludedLive) { Write-Host ("                     {0}" -f $n) -ForegroundColor Magenta }
@@ -629,7 +672,7 @@ if ($Check) {
   # measured, not argued: ask-surface.js and baton-wake-stop.js sat there while the file loop
   # reported everything green. A finding that does not reach the exit code is a finding nobody
   # reads.
-  $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count + $excludedLive.Count
+  $regBad = $notWired.Count + $notDeclared.Count + $conflicts.Count + $excludedLive.Count + $ruledLiveMissing.Count
   exit ($(if ($drift -eq 0 -and $absent -eq 0 -and $regBad -eq 0 -and $srcUndeclared.Count -eq 0) { 0 } else { 1 }))
 }
 

@@ -79,9 +79,15 @@ function mkHome(hooks) {
   return home;
 }
 
-function run(repo, home, args) {
+// The MACHINE is pinned too (D099, 2026-09-21). install.ps1 names the machine by the room's one rule —
+// CONSONANCE_MACHINE, then ~/.consonance.json machine_tag, then the hostname — because an Excluded entry
+// may now carry a per-machine answer (`LiveOn`). Every seat the app launches on D carries
+// CONSONANCE_MACHINE=D, and this harness passes process.env through, so without the pin the tests
+// below measured "whatever machine ran them": 11/0 on L, 8/3 in any seat on D. A neutral tag keeps
+// the machine-independent cases machine-independent; `machine` states a machine on purpose.
+function run(repo, home, args, machine) {
   const r = spawnSync('powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', repo.script, ...(args || [])], {
-    encoding: 'utf8', env: { ...process.env, USERPROFILE: home }, timeout: 120000,
+    encoding: 'utf8', env: { ...process.env, USERPROFILE: home, CONSONANCE_MACHINE: machine || 'TEST-NEUTRAL' }, timeout: 120000,
   });
   return { code: r.status, out: (r.stdout || '') + (r.stderr || '') };
 }
@@ -257,6 +263,47 @@ test('an EXCLUDED hook that is live anyway is RED — the ruling is checked, not
   assert.notStrictEqual(r.code, 0, 'an excluded hook running anyway must not read green:\n' + r.out);
   assert.ok(/EXCLUDED BUT LIVE/.test(r.out), 'and must be named as that, not as an ordinary extra:\n' + r.out);
   assert.ok(/l3-overseer\.js/.test(r.out), 'naming the hook:\n' + r.out);
+});
+
+// ── MACHINE D, stated on purpose (D099). The keeper, 2026-09-21 ~10:05: "the overseers stay live on D"
+// (exo_memory/loop/install_D_2026-09-21.md:3). The 09-06 exclusion still governs every other machine,
+// which the pinned cases above keep asserting unchanged. stop.js is NOT covered by that answer.
+function liveStop(home, leaves) {
+  const s = settings(home);
+  s.hooks.Stop = [].concat(s.hooks.Stop || []);
+  if (!s.hooks.Stop.length) s.hooks.Stop.push({ hooks: [] });
+  s.hooks.Stop[0].hooks = [].concat(s.hooks.Stop[0].hooks || [])
+    .concat(leaves.map((l) => ({ type: 'command', command: '"node" "' + path.join(home, '.claude', 'shell', 'hooks', l) + '"' })));
+  fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s, null, 2));
+}
+
+test('ON D, both overseers live read LIVE HERE BY RULING, not EXCLUDED BUT LIVE, and -Check is GREEN', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, [], 'D');
+  liveStop(home, ['l2-overseer.js', 'l3-overseer.js']);
+  const r = run(repo, home, ['-Check'], 'D');
+  assert.strictEqual(r.code, 0, 'on D the ruled state must check clean:\n' + r.out);
+  assert.ok(/LIVE HERE BY RULING/.test(r.out), 'the ruled state must be named:\n' + r.out);
+  assert.ok(!/EXCLUDED BUT LIVE/.test(r.out), 'an overseer live on D is not a contradiction there:\n' + r.out);
+});
+
+test('ON D, an overseer ABSENT is RED: RULED LIVE HERE, NOT REGISTERED, since no run wires an Excluded entry', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, [], 'D');
+  const r = run(repo, home, ['-Check'], 'D');
+  assert.notStrictEqual(r.code, 0, 'a hook the keeper ruled live on D, missing on D, must not read green:\n' + r.out);
+  assert.ok(/RULED LIVE HERE, NOT REGISTERED/.test(r.out), 'and must say which state it is in:\n' + r.out);
+  assert.strictEqual(count(home, 'l2-overseer.js') + count(home, 'l3-overseer.js'), 0,
+    'and the bare run on D must still have registered NEITHER overseer — LiveOn never writes');
+});
+
+test('ON D, stop.js live is STILL EXCLUDED BUT LIVE — the answer named the overseers, not stop.js', () => {
+  const repo = mkRepo(), home = mkHome();
+  run(repo, home, [], 'D');
+  liveStop(home, ['l2-overseer.js', 'l3-overseer.js', 'stop.js']);
+  const r = run(repo, home, ['-Check'], 'D');
+  assert.notStrictEqual(r.code, 0, 'stop.js live on D is still against a standing ruling:\n' + r.out);
+  assert.ok(/EXCLUDED BUT LIVE/.test(r.out) && /stop\.js/.test(r.out), 'naming stop.js as the one contradiction:\n' + r.out);
 });
 
 console.log(`\n${pass} passed, ${fail} failed`);
