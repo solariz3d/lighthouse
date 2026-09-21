@@ -69,3 +69,19 @@ that. The measurement decides whether B is working, never whether it is wanted.
 
 B's rules stand unchanged: through `gate_or_queue`, never while a turn runs, never over a non-empty composer, a board
 row per ping, stops when the app closes, a per-seat off switch.
+
+## THE KEEPER'S TWO ANSWERS, 2026-09-21 ~05:57
+
+*"keep warm what is already warm, and then wait for each seat and pane to activate, then after that point its always
+on during that session, it could last all day"*
+
+1. **Launch: warm-only.** A seat is pinged only while its cache is still warm (its last request started under 60 min
+   ago). A seat nobody has used since launch is never pinged; its first real use pays the one re-read, and from then on
+   it stays warm for the rest of the session, however long. E's one comparison in `keep_warm_decision` (§1 of
+   `handback/p-l067-keepwarm-E_2026-09-21.md`).
+2. **Scope: "each seat and pane".** Read with his 05:28 ruling ("every pane that is active and seats as well"), this
+   includes human-driven panes — the `matches!` line E left for him flips. The same safety holds for them: only on a
+   Stop stamp, only with the composer exactly Empty, never mid-turn. Stated to him plainly so he can reverse it.
+
+Also from 05:55: **no rebuild or restart for this.** It lands in the tree and ships on his next natural close/open
+through the shortcut (launch.ps1 pulls, rebuilds if the source moved, opens; the app then arrives the stick).
