@@ -258,11 +258,47 @@ test('a file deleted before a merge whose first parent never had it still report
 
 // ---- the real corpus, pinned so a change breaks a test rather than a paragraph ------------------
 
-test('exo_memory/ has never lost a file from the reading path (all-time)', () => {
+// THE ACKNOWLEDGED DEPARTURES — L059 R6, 2026-09-21. This test used to pin `FORGOTTEN 0 files` against the
+// LIVE corpus, which was true when it was written (08-25) and stopped being true on 09-08 at e5e1eeb. It then
+// sat red for thirteen days, including through D083, which measured it red and deferred it by instruction
+// ("its repair needs the pilot file first"). Its own failure message named the procedure: when a departure
+// appears, acknowledge it. That step was never taken; this is it.
+//
+// EACH ENTRY IS A DELIBERATE DELETION BY A NAMED COMMIT WHOSE MESSAGE SAYS WHY. Measured, not asserted:
+// `forget-rate.js --to <rev>` steps 0 -> 1 exactly at e5e1eeb and 1 -> 2 exactly at 62a4f3a, and does not
+// move across 71cbe8f (L062) — see exo_memory/handback/p-r6-forget-C_2026-09-21.md §1.
+//
+// NOT WEAKER THAN WHAT IT REPLACES. The old pin fired on ANY departure; this fires on any departure NOT in the
+// list, AND on either listed one reappearing on the path, AND on a byte total that no longer matches. A third
+// deletion still turns this red. To add one here you must name its commit and its reason — which is the
+// acknowledgement the old message asked for and nobody wrote down.
+const ACKNOWLEDGED_DEPARTURES = [
+  // [path, deleting commit, bytes of its last blob, why it left — from the commit message]
+  ['exo_memory/astra/SHELL.md', 'e5e1eeb', 161665,
+   'the Astra shell became a generator writing outside the repo; the committed copy was a carrier'],
+  ['exo_memory/loop/battery_run1_T2_text_2026-09-16.md', '62a4f3a', 10383,
+   'the first T2 text was withdrawn before dispatch; its committed source exposed all eight planted defects'],
+];
+
+test('exo_memory/ has lost from the reading path ONLY the acknowledged departures (all-time)', () => {
   const r = spawnSync(process.execPath, [TOOL], { encoding: 'utf8' });
   const out = r.stdout || '';
-  assert.ok(/FORGOTTEN\s+0 files/.test(out),
-            'a departure appeared in the real corpus — update loop/forgetting_pilot_2026-08-25.md\n' + out);
+  const departures = (out.split('DEPARTURES')[1] || '');
+  const deletedBlock = (departures.split(/DELETED\s+\d+/)[1] || '').split('DEMOTED')[0];
+  const deleted = deletedBlock.split(/\r?\n/).map((x) => x.trim()).filter(Boolean).sort();
+  const expected = ACKNOWLEDGED_DEPARTURES.map((a) => a[0]).sort();
+  assert.deepStrictEqual(deleted, expected,
+    'the departures are not exactly the acknowledged ones — a new file left the reading path, or an acknowledged ' +
+    'one came back. If a new departure is deliberate, add it to ACKNOWLEDGED_DEPARTURES WITH its commit and ' +
+    'reason; if it is not, it is the forgetting this instrument exists to catch.\n' + out);
+  // THE TOOL FORMATS BYTES WITH toLocaleString() (forget-rate.js, the FORGOTTEN line), so "172,048" here is
+  // "172.048" or "172 048" on another locale. Compare DIGITS, or this test goes red on a machine for its locale.
+  const bytes = ACKNOWLEDGED_DEPARTURES.reduce((n, a) => n + a[2], 0);
+  const m = /FORGOTTEN\s+(\d+) files \/ ([^\n]*?) bytes/.exec(out);
+  assert.ok(m, 'no FORGOTTEN line in the tool output\n' + out);
+  assert.strictEqual(Number(m[1]), expected.length, `FORGOTTEN reads ${m[1]} files, not ${expected.length}\n` + out);
+  assert.strictEqual(Number(m[2].replace(/\D/g, '')), bytes,
+    `FORGOTTEN reads ${m[2]} bytes, not ${bytes} — the acknowledged set's size moved\n` + out);
   assert.ok(/RENAMED_SIMILAR\s+1/.test(out),
             'the de65698 card rename is no longer the single similarity-only departure\n' + out);
 });
