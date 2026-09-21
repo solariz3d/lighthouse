@@ -3015,9 +3015,50 @@ fn pointers_in(text: &str) -> Vec<String> {
 /// to carry a hand-back, so a hand-back path outranks an earlier README. It is still a choice made from prose, so the
 /// digest line lists every OTHER path the call named as not hashed (`digest_gate`): a wrong pick is then visible on the
 /// line the reader checks, instead of certified in silence, which is what happened to L060.
+///
+/// D098 — WHICH hand-back, when the ring names several. L069 took the FIRST, and named the case that beats it: a ring
+/// that names an OLDER hand-back before the one it delivers ("reworded …/old_09-19.md; hand-back …/new_09-21.md").
+/// The candidates are now ranked on what the ring's own text carries, and nothing else:
+///   1. a file whose name carries, as a whole segment, a lap id the ring's PROSE names (`D098 packet A` ↔ `p-d098-…`) —
+///      path tokens never enter that scan, or every candidate would match itself;
+///   2. then the latest `_YYYY-MM-DD` in the name;
+///   3. then the first named — the L069 rule, which is now only the tie-break.
+/// REFUSING when several are named was measured and rejected: of the 43 distinct digested rings on D's board, exactly
+/// ONE names more than one hand-back — B's L060, a correct ring — so the refusal rule's only effect on the real record
+/// would be one new refusal of a good ring. THE RESIDUAL, stated: same date and no lap id in either name leaves text
+/// with nothing to rank by, the first is hashed, and the digest line still lists the other as not hashed.
 fn pointer_in(text: &str) -> Option<String> {
     let all = pointers_in(text);
-    all.iter().find(|p| p.contains("handback/")).or_else(|| all.first()).cloned()
+    let hand: Vec<&String> = all.iter().filter(|p| p.contains("handback/")).collect();
+    if hand.is_empty() {
+        return all.first().cloned();
+    }
+    // A lap id is EXACTLY a letter L or D and three digits. That length also keeps every path token out of the scan (a
+    // path carries a `/` and `.md`, so it is never four characters) — a separate `/` filter here was dead code, found
+    // as an equivalent mutant.
+    let laps: Vec<String> = text
+        .split_whitespace()
+        .map(|t| t.trim_matches(|c: char| !c.is_ascii_alphanumeric()).to_ascii_lowercase())
+        .filter(|t| t.len() == 4 && (t.starts_with('l') || t.starts_with('d')) && t[1..].chars().all(|c| c.is_ascii_digit()))
+        .collect();
+    let name = |p: &str| p.rsplit('/').next().unwrap_or(p).to_ascii_lowercase();
+    let carries_lap = |p: &str| {
+        let n = name(p);
+        n.split(|c: char| !c.is_ascii_alphanumeric()).any(|seg| laps.iter().any(|l| l == seg))
+    };
+    let date = |p: &str| {
+        let n = name(p);
+        n.strip_suffix(".md")
+            .and_then(|s| s.rsplit('_').next())
+            .filter(|d| d.len() == 10 && d.as_bytes()[4] == b'-' && d.as_bytes()[7] == b'-')
+            .map(str::to_string)
+            .unwrap_or_default()
+    };
+    // max_by_key keeps the LAST of equal keys, so the index is negated to make ties go to the FIRST named.
+    hand.iter()
+        .enumerate()
+        .max_by_key(|(i, p)| (carries_lap(p), date(p), std::cmp::Reverse(*i)))
+        .map(|(_, p)| (*p).clone())
 }
 
 /// Remove every digest the PANE supplied, and say how many were removed. A digest word (`sha256`, `sha-256`, `sha1`,
@@ -3275,6 +3316,62 @@ mod digest_at_ring_tests {
     fn a_handback_path_wins_over_an_earlier_changed_file() {
         let ring = "Changed consonance/README.md and dev/NOTES.md; hand-back at exo_memory/handback/p-y-A_2026-09-21.md\nNEXT: x";
         assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-y-A_2026-09-21.md"));
+    }
+
+    // ── D098: an OLDER hand-back named BEFORE the delivered one — the case L069 §1 named and left unguarded ─────────
+
+    #[test]
+    fn an_older_hand_back_named_first_loses_to_the_newer_one_delivered() {
+        let ring = "Reworded exo_memory/handback/p-old-A_2026-09-19.md in place. \
+                    Hand-back: exo_memory/handback/p-new-A_2026-09-21.md\nNEXT: librarian read it";
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-new-A_2026-09-21.md"));
+    }
+
+    #[test]
+    fn on_the_same_date_the_hand_back_carrying_the_ring_s_own_lap_wins() {
+        let ring = "D098 packet A. Changed exo_memory/handback/p-l069-ringdigest-A_2026-09-21.md (its §1). \
+                    Hand-back exo_memory/handback/p-d098-ringdigest-A_2026-09-21.md\nNEXT: x";
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-d098-ringdigest-A_2026-09-21.md"));
+    }
+
+    #[test]
+    fn the_ring_s_own_lap_outranks_a_later_date() {
+        // A pane delivering yesterday's lap after midnight, naming a newer file it touched: the lap says which is the
+        // hand-back, and the date only breaks a tie the lap leaves.
+        let ring = "L070 packet 1. See exo_memory/handback/p-other-C_2026-09-22.md; \
+                    hand-back exo_memory/handback/p-l070-fastforward-A_2026-09-21.md\nNEXT: x";
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-l070-fastforward-A_2026-09-21.md"));
+    }
+
+    #[test]
+    fn a_four_letter_word_is_not_a_lap_id() {
+        // Found as a surviving mutant: without the digit check, `dead` (THE_DEAD_LAP.md is on disk) made p-dead a lap match.
+        let ring = "hand-back exo_memory/handback/p-y-A_2026-09-21.md; also touched exo_memory/handback/p-dead-A_2026-09-21.md, \
+                    the dead file\nNEXT: x";
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-y-A_2026-09-21.md"));
+    }
+
+    #[test]
+    fn a_lap_id_is_one_letter_and_three_digits_no_more() {
+        // Specification, pinned by a surviving mutant; no real ring has had this shape.
+        let ring = "hand-back exo_memory/handback/p-y-A_2026-09-21.md; see exo_memory/handback/p-l0601-A_2026-09-21.md, L0601\nNEXT: x";
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-y-A_2026-09-21.md"));
+    }
+
+    #[test]
+    fn a_lap_id_matches_a_whole_name_segment_not_a_substring() {
+        // Specification, pinned by a surviving mutant: `l069` is inside `l0695` and must not match it.
+        let ring = "L069 packet 2. Changed exo_memory/handback/p-l0695-x-A_2026-09-21.md; \
+                    hand-back exo_memory/handback/p-l069-y-A_2026-09-21.md\nNEXT: x";
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-l069-y-A_2026-09-21.md"));
+    }
+
+    #[test]
+    fn with_nothing_to_rank_by_the_first_handback_path_still_wins() {
+        // THE RESIDUAL, pinned so a change to it is visible: same date, no lap id in either name. Text cannot say which
+        // was delivered; the first is hashed and the other is listed on the digest line as not hashed.
+        let ring = "Reworded exo_memory/handback/p-x-A_2026-09-21.md; hand-back exo_memory/handback/p-y-A_2026-09-21.md";
+        assert_eq!(pointer_in(ring).as_deref(), Some("exo_memory/handback/p-x-A_2026-09-21.md"));
     }
 
     #[test]
