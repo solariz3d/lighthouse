@@ -53,3 +53,7 @@ Registered nothing; this is a build, not a test. Saved so the prior art travels 
 - Things to measure when it is built, not reasons against it: terminal text must stay readable over a moving
   background (a dim/blur layer behind each pane), and six live panes plus a 60 fps GL scene share one WebView — watch
   frame time and CPU with the loop running.
+- **ONE instance, not one per pane** (the keeper, ~11:35): *"it shouldnt be different instantiations of signal, but all
+  one overlayed over all of the panes, and then for the seats, its also just one for the background"*. So: a single
+  Signal scene spanning the whole pane grid (the panes are windows onto one canvas), and a single scene behind the seat
+  view. Also the cheap design — one renderer, one audio tap, instead of six.
