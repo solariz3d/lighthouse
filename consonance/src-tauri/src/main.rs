@@ -2524,6 +2524,10 @@ fn start_tailer(
         .join("projects")
         .join(encode_cwd(&cwd))
         .join(format!("{pane_id}.jsonl"));
+    // L067: keep-warm reads the last request's start from this same file; the path is built here once.
+    if let Ok(mut m) = app.state::<PaneTranscripts>().0.lock() {
+        m.insert(pane_id.clone(), path.clone());
+    }
     std::thread::spawn(move || {
         // Cycle 3b: resolved from the persisted map on the first sighting, not assumed to be 0.
         // Deferred until the file exists so the fingerprint is taken from the real transcript
@@ -9467,6 +9471,20 @@ impl Inbox {
         out
     }
 
+    /// Withdraw the TAIL of this pane's queue, and only if it carries `label` and is not already
+    /// withdrawn (L067 keep-warm). `withdraw_all` is the wrong tool for a sender cancelling its OWN
+    /// message: it would take every other seat's queued packet for that pane down with it. The tail is
+    /// the only place a message pushed a moment ago can be, since `push` appends under the same lock.
+    fn withdraw_tail_if(&self, pane: &str, label: &str) -> bool {
+        let Ok(mut m) = self.0.lock() else { return false };
+        let Some(it) = m.get_mut(pane).and_then(|q| q.back_mut()) else { return false };
+        if it.withdrawn || it.label != label {
+            return false;
+        }
+        it.withdrawn = true;
+        true
+    }
+
     /// Pop the head ONLY IF it is withdrawn, so the drain can report it and move on.
     ///
     /// GATE-INDEPENDENT ON PURPOSE, and it is safe precisely because nothing is written to the
@@ -10145,6 +10163,305 @@ fn await_render(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Rece
         }
     }
     Receipt::Unconfirmed
+}
+
+// ── KEEP-WARM (L067, pane E) ─────────────────────────────────────────────────────────────────────
+//
+// THE KEEPER, 2026-09-21 ~05:28 (`exo_memory/loop/plan_keep_warm_2026-09-21.md`): *"if consonance is
+// open, every pane that is active and seats as well need to ping themselves to keep the instances
+// alive"*. A seat idle past its prompt cache's one-hour TTL re-writes its whole conversation on its next
+// turn — measured at 603k-924k tokens of cache write per seat. One cache READ inside the hour costs a
+// twentieth of that (Opus) or an eightieth (Fable), and the TTL is counted "from the start of the
+// request" (Anthropic's prompt-caching docs), so a seat pinged before the hour runs out stays warm and
+// only an app restart re-reads it.
+//
+// THE RULES, all from the plan, none relaxed: a per-seat timer, only while the app is open (the thread
+// dies with the process); ping only when idle >= 50 min since the LAST REQUEST STARTED, AND the seat's
+// own Stop stamp says ready, AND its composer reads empty; through `gate_or_queue`, never a raw
+// `inject_to_pane`; a board row per ping; a per-seat off switch.
+//
+// WHERE THE SPEC AND THE GATE DISAGREED, and what this does about it (the hand-back argues it in full):
+// `gate_or_queue` QUEUES a message it cannot deliver now, and the drain FORCE-delivers a queued message
+// after `MAX_HOLD_MS` even over a composer that never read empty — and with the idle switch off it
+// delivers into a working seat outright. Both are right for a packet that must arrive; both are wrong for
+// a ping whose whole point is to be harmless. So keep-warm makes its OWN strict decision first (Stop stamp
+// only, composer exactly Empty, never the bounded screen fallback), still asks `gate_or_queue` before it
+// writes, and if the gate queues it anyway — the state moved between the two reads — withdraws its own
+// message at once. A withdrawal inside the same tick cannot be overtaken: forcing needs 240 s of waiting.
+
+/// Idle this long since the last request STARTED and the seat is pinged: the TTL is one hour from the
+/// start of the request, and ten minutes of margin covers a 60 s tick and a slow delivery.
+const KEEP_WARM_AFTER: Duration = Duration::from_secs(50 * 60);
+const KEEP_WARM_TICK: Duration = Duration::from_secs(60);
+/// The TTL itself. At or past it the cache is gone: keep-warm keeps warm, it never warms (the keeper, 05:57).
+const KEEP_WARM_COLD: Duration = Duration::from_secs(60 * 60);
+/// ONE LINE AND NO `NEXT:` TRAILER — deliberately. The trailer gate lives in `mod trailer` and is wired
+/// only into the MCP verbs (chair_inject / call_chair / call_librarian); `gate_or_queue` never consults it,
+/// so this app-side line is not refused for lacking one. And a trailer would be read by the receiving seat
+/// as a routing instruction — the one thing a ping must not carry, since its only permitted answer is `ok`.
+const KEEP_WARM_TEXT: &str = "[keep-warm, from the chair — not the keeper] Reply with exactly: ok";
+const KEEP_WARM_LABEL: &str = "keep-warm";
+/// How much of a transcript's end is read to find its last request. A final tool_result larger than this
+/// only makes the start found EARLIER (an older line bounds it), which pings early, never late.
+const KEEP_WARM_TAIL_BYTES: u64 = 4 << 20;
+
+/// Seats this app pinged, and when — so one that has not answered yet is not pinged again every tick.
+struct KeepWarmPinged(Mutex<HashMap<String, Instant>>);
+/// Each live pane's transcript, recorded by `start_tailer`, which is where the path is already built.
+struct PaneTranscripts(Mutex<HashMap<String, PathBuf>>);
+
+/// "2026-09-21T11:30:13.637Z" -> unix milliseconds, UTC only. Hand-rolled (days-from-civil) so the check
+/// that decides when a seat is pinged does not hang on a chrono feature this crate does not enable.
+fn iso_utc_ms(s: &str) -> Option<u64> {
+    let b = s.as_bytes();
+    if b.len() < 20 || b[4] != b'-' || b[7] != b'-' || b[10] != b'T' || b[13] != b':' || b[16] != b':' || !s.ends_with('Z') {
+        return None;
+    }
+    let num = |a: usize, z: usize| -> Option<i64> { s.get(a..z)?.parse::<i64>().ok() };
+    let (y, mo, d, h, mi, se) = (num(0, 4)?, num(5, 7)?, num(8, 10)?, num(11, 13)?, num(14, 16)?, num(17, 19)?);
+    if !(1..=12).contains(&mo) || !(1..=31).contains(&d) || h > 23 || mi > 59 || se > 60 {
+        return None;
+    }
+    let frac = &s[19..s.len() - 1];
+    let ms = if frac.is_empty() {
+        0
+    } else {
+        let f = frac.strip_prefix('.')?;
+        if f.is_empty() || !f.bytes().all(|c| c.is_ascii_digit()) {
+            return None;
+        }
+        let mut v: i64 = 0;
+        for i in 0..3 {
+            v = v * 10 + f.as_bytes().get(i).map_or(0, |c| (c - b'0') as i64);
+        }
+        v
+    };
+    let y2 = if mo <= 2 { y - 1 } else { y };
+    let era = if y2 >= 0 { y2 } else { y2 - 399 } / 400;
+    let yoe = y2 - era * 400;
+    let doy = (153 * ((mo + 9) % 12) + 2) / 5 + d - 1;
+    let doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;
+    let days = era * 146_097 + doe - 719_468;
+    u64::try_from((((days * 24 + h) * 60 + mi) * 60 + se) * 1000 + ms).ok()
+}
+
+/// The last API request a seat made: when it STARTED, and the context it carried.
+#[derive(Debug, PartialEq, Eq, Clone)]
+struct LastRequest {
+    started_ms: u64,
+    /// input + cache_read + cache_creation of that request, when the transcript recorded usage.
+    context: Option<u64>,
+}
+
+/// An assistant line's request id — one API request can write several assistant lines (thinking,
+/// text, tool_use), all carrying the same id.
+fn req_id(v: &serde_json::Value) -> Option<&str> {
+    if v.get("type")?.as_str()? != "assistant" {
+        return None;
+    }
+    v.get("requestId")?.as_str().filter(|s| !s.is_empty())
+}
+
+/// WHEN THE LAST REQUEST STARTED — established from the transcript, not assumed (L067).
+///
+/// Measured on a live transcript (this seat's own, 2026-09-21): every API request writes one or more
+/// `assistant` lines sharing a `requestId`, stamped when the RESPONSE lands; the line just before the
+/// first of them — the prompt, a `tool_result`, or an `attachment` — is stamped when the request was
+/// SENT. So the start is the timestamp of the last non-request line before the last request's run.
+/// That line can only be at or before the true start, so a seat is pinged EARLY, never late.
+///
+/// Neither ready stamp gives this: `stop` is when the turn ENDED (late by the whole last response) and
+/// `prompt` is the turn's FIRST request, and it is overwritten by `stop` anyway. Sidechain lines are a
+/// subagent's own requests on its own prefix, so they neither start nor end the seat's request.
+fn last_request(jsonl: &str) -> Option<LastRequest> {
+    let rows: Vec<serde_json::Value> = jsonl
+        .lines()
+        .filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok())
+        .filter(|v| v.get("isSidechain").and_then(|x| x.as_bool()) != Some(true))
+        .collect();
+    let last = rows.iter().rposition(|v| req_id(v).is_some())?;
+    let r = req_id(&rows[last])?;
+    let context = rows[last]
+        .get("message")
+        .and_then(|m| m.get("usage"))
+        .map(|u| {
+            ["input_tokens", "cache_read_input_tokens", "cache_creation_input_tokens"]
+                .iter()
+                .map(|k| u.get(*k).and_then(|x| x.as_u64()).unwrap_or(0))
+                .sum::<u64>()
+        })
+        .filter(|n| *n > 0);
+    rows[..last]
+        .iter()
+        .rev()
+        .filter(|v| req_id(v) != Some(r))
+        .find_map(|v| v.get("timestamp").and_then(|x| x.as_str()).and_then(iso_utc_ms))
+        .map(|started_ms| LastRequest { started_ms, context })
+}
+
+#[derive(Debug, PartialEq, Eq)]
+enum KeepWarm {
+    Ping,
+    Skip(&'static str),
+}
+
+/// THE WHOLE DECISION, pure, so every bar is a unit test rather than a night of watching panes.
+///
+/// STRICTER THAN THE DELIVERY GATE ON PURPOSE. `drain_decision` carries Stale/Unstamped/Contradicted
+/// seats on a bounded screen fallback and forces past the hold — right for a packet that must arrive.
+/// A ping has no such duty: if the seat's own Stop stamp does not say ready, or the composer does not
+/// read exactly Empty (text, or unreadable), the ping simply does not happen this tick.
+fn keep_warm_decision(
+    on: bool,
+    role: &str,
+    gate: PaneGate,
+    composer: Composer,
+    since_start: Option<Duration>,
+    since_ping: Option<Duration>,
+) -> KeepWarm {
+    if !on {
+        return KeepWarm::Skip("off for this seat (keep-warm-off.json)");
+    }
+    // THE KEEPER, 05:57: "each seat and pane" (and 05:28, "every pane that is active and seats as well"). A
+    // human-driven pane is IN, with exactly the safety every seat gets below — its own Stop stamp, a composer
+    // read exactly empty, never mid-turn. An unknown role is not a seat anybody named, and is left alone.
+    if !matches!(role, "main" | "librarian" | "third_place" | "committee" | "human") {
+        return KeepWarm::Skip("not a seat or pane role keep-warm knows");
+    }
+    if gate != PaneGate::Ready {
+        return KeepWarm::Skip("not idle by its own Stop stamp: a turn runs, or the signal is stale, absent or contradicted");
+    }
+    if composer != Composer::Empty {
+        return KeepWarm::Skip("composer not read empty: never over the keeper's typing");
+    }
+    let Some(s) = since_start else {
+        return KeepWarm::Skip("no request start established from its transcript");
+    };
+    if s < KEEP_WARM_AFTER {
+        return KeepWarm::Skip("warm: under 50 min since its last request started");
+    }
+    // THE KEEPER, 05:57: "keep warm what is already warm, and then wait for each seat and pane to activate".
+    // Past the one-hour TTL there is nothing left to keep warm, and a ping would be a full re-write for a seat
+    // nobody has spoken to — so a seat never used since launch is never pinged. Once it is used it stays in
+    // this window all session, because each ping is itself a request and restarts the clock.
+    if s >= KEEP_WARM_COLD {
+        return KeepWarm::Skip("cold: 60 min or more since its last request started; it waits to be activated");
+    }
+    if since_ping.is_some_and(|p| p < KEEP_WARM_AFTER) {
+        return KeepWarm::Skip("pinged under 50 min ago and not yet answered");
+    }
+    KeepWarm::Ping
+}
+
+/// The per-seat off switch: `<data_dir>/keep-warm-off.json`, a JSON list of pane ids, short ids or
+/// letters. Absent or blank switches nobody off. ANYTHING ELSE IS REFUSED (None) and the tick pings
+/// nobody: a malformed "off" read as "all on" would ping the very seat the keeper tried to stop.
+fn keep_warm_off(raw: &str) -> Option<HashSet<String>> {
+    if raw.trim().is_empty() {
+        return Some(HashSet::new());
+    }
+    let v: Vec<String> = serde_json::from_str(raw.trim_start_matches('\u{feff}')).ok()?;
+    Some(v.into_iter().map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect())
+}
+
+fn keep_warm_off_path() -> PathBuf {
+    data_dir().join("keep-warm-off.json")
+}
+
+/// The board row for one ping. THE THIRD PLACE'S ROW CARRIES NO NUMBERS: its record is kept off every
+/// transport (`.gitignore`, 08-29), and its idle time and context size on the shared committee board
+/// would be the seat's activity published by the thing keeping it warm.
+fn keep_warm_row(short: &str, role: &str, idle: Duration, context: Option<u64>, ok: bool) -> String {
+    let failed = if ok { "" } else { " [WRITE FAILED]" };
+    if role == "third_place" {
+        return format!("keep-warm -> the Third Place{failed} (its idle time and size stay off the shared board)");
+    }
+    let ctx = context.map_or_else(|| "context unknown".to_string(), |c| format!("context {c} tokens"));
+    format!(
+        "keep-warm -> {short} ({role}){failed} · {} min since its last request started · {ctx}",
+        idle.as_secs() / 60
+    )
+}
+
+/// The end of a file, from the first whole line inside the last `max` bytes.
+fn read_tail(path: &Path, max: u64) -> Option<String> {
+    use std::io::{Read, Seek, SeekFrom};
+    let mut f = fs::File::open(path).ok()?;
+    let len = f.metadata().ok()?.len();
+    let start = len.saturating_sub(max);
+    f.seek(SeekFrom::Start(start)).ok()?;
+    let mut buf = Vec::new();
+    f.read_to_end(&mut buf).ok()?;
+    let s = String::from_utf8_lossy(&buf).into_owned();
+    Some(if start > 0 { s.split_once('\n').map(|(_, r)| r.to_string()).unwrap_or_default() } else { s })
+}
+
+/// One pass over every live pane. Runs on its own thread every `KEEP_WARM_TICK`, started in setup,
+/// and ends when the app process does — "stops when the app closes" by construction, not by a flag.
+fn keep_warm_tick(app: &AppHandle) {
+    static REFUSED_SAID: AtomicBool = AtomicBool::new(false);
+    let off = match fs::read_to_string(keep_warm_off_path()) {
+        Ok(raw) => keep_warm_off(&raw),
+        Err(_) => Some(HashSet::new()),
+    };
+    let Some(off) = off else {
+        if !REFUSED_SAID.swap(true, Ordering::Relaxed) {
+            chair_audit(app, format!(
+                "keep-warm PAUSED for every seat: {} is not a JSON list of pane ids or letters, and a \
+                 switch that cannot be read is not read as 'all on'",
+                keep_warm_off_path().display()
+            ));
+        }
+        return;
+    };
+    REFUSED_SAID.store(false, Ordering::Relaxed);
+    let now_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    let ids: Vec<String> = app.state::<Panes>().0.lock().map(|m| m.keys().cloned().collect()).unwrap_or_default();
+    for pane in ids {
+        let role = app.state::<PaneRoles>().0.lock().ok().and_then(|m| m.get(&pane).cloned()).unwrap_or_else(|| "human".to_string());
+        let names: Vec<String> = app.state::<PaneNames>().0.lock()
+            .map(|m| m.iter().filter(|(_, id)| **id == pane).map(|(n, _)| n.clone()).collect())
+            .unwrap_or_default();
+        let on = !(off.contains(&pane) || off.contains(short_id(&pane)) || names.iter().any(|n| off.contains(n)));
+        let (gate, _, _, composer) = pane_state(&app.state::<PaneEmus>(), &pane);
+        // The transcript is read only for a seat that could be pinged — busy and typed-into seats are
+        // settled by the two cheap reads above.
+        let last = if on && gate == PaneGate::Ready && composer == Composer::Empty {
+            let path = app.state::<PaneTranscripts>().0.lock().ok().and_then(|m| m.get(&pane).cloned());
+            path.and_then(|p| read_tail(&p, KEEP_WARM_TAIL_BYTES)).and_then(|t| last_request(&t))
+        } else {
+            None
+        };
+        let since_start = last.as_ref().map(|l| Duration::from_millis(now_ms.saturating_sub(l.started_ms)));
+        let since_ping = app.state::<KeepWarmPinged>().0.lock().ok().and_then(|m| m.get(&pane).map(|t| t.elapsed()));
+        if keep_warm_decision(on, &role, gate, composer, since_start, since_ping) == KeepWarm::Ping {
+            keep_warm_send(app, &pane, &role, since_start.unwrap_or_default(), last.and_then(|l| l.context));
+        }
+    }
+}
+
+/// Ask the inbox, then write — or take back our own message if the inbox queued it.
+fn keep_warm_send(app: &AppHandle, pane: &str, role: &str, idle: Duration, context: Option<u64>) {
+    if gate_or_queue(app, pane, KEEP_WARM_TEXT, KEEP_WARM_LABEL).is_some() {
+        let pulled = app.state::<Inbox>().withdraw_tail_if(pane, KEEP_WARM_LABEL);
+        chair_audit(app, format!(
+            "keep-warm NOT SENT -> {}: the gate queued it (its state moved between two reads); {}",
+            short_id(pane),
+            if pulled {
+                "withdrawn at once, so it can never be force-delivered over the keeper's typing; the next tick retries"
+            } else {
+                "COULD NOT WITHDRAW it — the inbox tail was not this ping; read the inbox"
+            }
+        ));
+        return;
+    }
+    let ok = inject_to_pane(&app.state::<Panes>(), pane, KEEP_WARM_TEXT).is_ok();
+    if ok {
+        if let Ok(mut m) = app.state::<KeepWarmPinged>().0.lock() {
+            m.insert(pane.to_string(), Instant::now());
+        }
+    }
+    chair_audit(app, keep_warm_row(short_id(pane), role, idle, context, ok));
 }
 
 fn chair_audit(app: &AppHandle, text: String) {
@@ -12168,6 +12485,8 @@ fn main() {
         .manage(Panes(Mutex::new(HashMap::new())))
         .manage(PaneEmus(Mutex::new(HashMap::new())))
         .manage(Inbox::new())   // L034: the delivery queue — nothing lands in a busy pane
+        .manage(KeepWarmPinged(Mutex::new(HashMap::new())))   // L067: who keep-warm pinged, and when
+        .manage(PaneTranscripts(Mutex::new(HashMap::new())))  // L067: each live pane's transcript, from start_tailer
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
         .manage(PaneRoles(Mutex::new(HashMap::new())))
@@ -12277,6 +12596,16 @@ fn main() {
                 std::thread::spawn(move || loop {
                     std::thread::sleep(Duration::from_millis(250));
                     drain_inboxes(&h);
+                });
+            }
+            // L067 KEEP-WARM: its own thread, so a slow transcript read never delays a delivery, and
+            // a panic in one tick is caught rather than silently ending the loop (the L034 lesson —
+            // a thread that can die without a word is a feature that stops without a word).
+            {
+                let h = app.handle().clone();
+                std::thread::spawn(move || loop {
+                    std::thread::sleep(KEEP_WARM_TICK);
+                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| keep_warm_tick(&h)));
                 });
             }
             // Stage 7a: shared MCP control plane + the pull queue. The Stage-7 gate will
@@ -18316,5 +18645,218 @@ mod leave_wiring_tests {
         let dirs = s.find(concat!("set_dirs(&get_state()); // resolve ", "configurable")).unwrap();
         let waiter = s.find(concat!("            start_exit", "_waiter();")).unwrap();
         assert!(dirs < clean && clean < waiter);
+    }
+}
+
+// ── L067 keep-warm (pane E): the three bars the packet named, red before and green after ─────────────
+#[cfg(test)]
+mod keep_warm_tests {
+    use super::*;
+
+    const MIN: u64 = 60_000;
+    fn min(n: u64) -> Option<Duration> {
+        Some(Duration::from_millis(n * MIN))
+    }
+    /// An idle, empty-composer, committee seat 55 minutes after its last request started — the one
+    /// case that must ping. Every skip test changes exactly one thing from this.
+    fn ping_case() -> KeepWarm {
+        keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), None)
+    }
+
+    #[test]
+    fn the_one_case_that_pings() {
+        assert_eq!(ping_case(), KeepWarm::Ping);
+    }
+
+    // BAR 1 — a busy seat is skipped. Every non-Ready gate, including the ones the DELIVERY gate
+    // would carry on its bounded screen fallback: keep-warm never guesses that a seat is idle.
+    #[test]
+    fn a_busy_seat_is_skipped() {
+        for g in [PaneGate::Working, PaneGate::Stale, PaneGate::Unstamped, PaneGate::Contradicted] {
+            assert!(
+                matches!(keep_warm_decision(true, "committee", g, Composer::Empty, min(55), None), KeepWarm::Skip(_)),
+                "{g:?} must never be pinged: a ping into a running turn is the splice the inbox exists to prevent"
+            );
+        }
+    }
+
+    // BAR 2 — a non-empty composer is skipped, and so is one the gate cannot read.
+    #[test]
+    fn a_non_empty_composer_is_skipped() {
+        for c in [Composer::HasText, Composer::Unreadable(Unreadable::NoRow),
+                  Composer::Unreadable(Unreadable::GridMismatch), Composer::Unreadable(Unreadable::NoScreen)] {
+            assert!(
+                matches!(keep_warm_decision(true, "committee", PaneGate::Ready, c, min(55), None), KeepWarm::Skip(_)),
+                "{c:?} must never be pinged: never over the keeper's typing, and unknown is not empty"
+            );
+        }
+    }
+
+    // BAR 3 — the timer measures from the START of the last request. The fixture is a real transcript's
+    // shape (entries copied in form from this seat's own .jsonl): the prompt lands at 10:00:00, the
+    // request it triggers streams for nine minutes, and its assistant lines are stamped 10:09. The TTL
+    // started at 10:00, so at 10:50 the seat is 50 minutes idle — measured from the response it would
+    // read 41 and wait, and the cache would die at 11:00 before the next tick that thinks it is due.
+    const TRANSCRIPT: &str = concat!(
+        r#"{"type":"user","timestamp":"2026-09-21T09:40:00.000Z","message":{"role":"user","content":"earlier"}}"#, "\n",
+        r#"{"type":"assistant","requestId":"req_OLD","timestamp":"2026-09-21T09:40:05.000Z","message":{"usage":{"input_tokens":3,"cache_read_input_tokens":1000,"cache_creation_input_tokens":10}}}"#, "\n",
+        r#"{"type":"user","timestamp":"2026-09-21T10:00:00.000Z","message":{"role":"user","content":[{"type":"tool_result"}]}}"#, "\n",
+        r#"{"type":"attachment","timestamp":"2026-09-21T10:00:00.004Z"}"#, "\n",
+        r#"{"type":"assistant","requestId":"req_LAST","timestamp":"2026-09-21T10:09:00.000Z","message":{"usage":{"input_tokens":5,"cache_read_input_tokens":354505,"cache_creation_input_tokens":3407}}}"#, "\n",
+        r#"{"type":"assistant","requestId":"req_LAST","timestamp":"2026-09-21T10:09:00.300Z","message":{"usage":{"input_tokens":5,"cache_read_input_tokens":354505,"cache_creation_input_tokens":3407}}}"#, "\n",
+        r#"{"type":"last-prompt"}"#, "\n",
+        r#"{"type":"mode"}"#, "\n",
+    );
+
+    #[test]
+    fn the_timer_measures_from_the_start_of_the_last_request() {
+        let r = last_request(TRANSCRIPT).expect("the fixture has a last request");
+        assert_eq!(r.started_ms, iso_utc_ms("2026-09-21T10:00:00.004Z").unwrap(),
+            "the last request STARTED when the line before its first assistant line was written — the \
+             attachment at 10:00:00.004 — not when its response was stamped (10:09)");
+        let at_1050 = iso_utc_ms("2026-09-21T10:50:00.004Z").unwrap();
+        let idle = Duration::from_millis(at_1050 - r.started_ms);
+        assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, Some(idle), None),
+            KeepWarm::Ping, "50 minutes after the request STARTED is due, whatever the response time");
+    }
+
+    #[test]
+    fn the_last_request_carries_its_context_size() {
+        assert_eq!(last_request(TRANSCRIPT).unwrap().context, Some(5 + 354_505 + 3_407));
+    }
+
+    #[test]
+    fn a_sidechain_request_is_not_the_seats_own() {
+        // A subagent's request warms a different prefix; it must not make the seat look fresh.
+        let t = format!("{TRANSCRIPT}{}\n{}\n",
+            r#"{"type":"user","isSidechain":true,"timestamp":"2026-09-21T10:40:00.000Z"}"#,
+            r#"{"type":"assistant","isSidechain":true,"requestId":"req_SIDE","timestamp":"2026-09-21T10:40:02.000Z"}"#);
+        assert_eq!(last_request(&t).unwrap().started_ms, iso_utc_ms("2026-09-21T10:00:00.004Z").unwrap());
+    }
+
+    #[test]
+    fn a_transcript_with_no_request_establishes_nothing() {
+        assert_eq!(last_request(r#"{"type":"user","timestamp":"2026-09-21T10:00:00.000Z"}"#), None);
+        assert_eq!(last_request(""), None);
+        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, None, None),
+            KeepWarm::Skip(_)), "no established start is never a reason to ping");
+    }
+
+    #[test]
+    fn under_fifty_minutes_is_warm_and_is_skipped() {
+        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(49), None),
+            KeepWarm::Skip(_)));
+        assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(50), None), KeepWarm::Ping);
+    }
+
+    #[test]
+    fn a_seat_pinged_recently_is_not_pinged_again() {
+        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), min(3)),
+            KeepWarm::Skip(_)), "a ping not yet answered must not be repeated every tick");
+    }
+
+    #[test]
+    // AMENDED 2026-09-21 05:58 (L067 amendment): this test first pinned human-driven panes as SKIPPED, the
+    // question left open for the keeper. He answered at 05:57 ("each seat and pane"; 05:28 "every pane that
+    // is active and seats as well"), so the off switch stays pinned here and the human half moved to the two
+    // tests below, which keep every safety a committee seat gets.
+    fn the_off_switch_is_skipped_and_every_live_seat_is_in_scope() {
+        assert!(matches!(keep_warm_decision(false, "committee", PaneGate::Ready, Composer::Empty, min(55), None),
+            KeepWarm::Skip(_)));
+        for seat in ["main", "librarian", "third_place", "committee", "human"] {
+            assert_eq!(keep_warm_decision(true, seat, PaneGate::Ready, Composer::Empty, min(55), None), KeepWarm::Ping,
+                "{seat} is in scope: the keeper, 05:57, 'each seat and pane'");
+        }
+    }
+
+    // ── L067 AMENDMENT, the keeper 05:57: "keep warm what is already warm, and then wait for each seat and
+    // pane to activate, then after that point its always on during that session" ─────────────────────────
+
+    #[test]
+    fn a_seat_never_used_since_launch_is_never_pinged() {
+        // Resumed at launch, last request hours ago: its cache is already gone, and warming it would be a full
+        // re-write for a seat nobody has spoken to. The Third Place read 183 min idle tonight.
+        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(183), None),
+            KeepWarm::Skip(_)), "a cold seat waits to be activated; keep-warm never warms it");
+    }
+
+    #[test]
+    fn a_seat_at_sixty_minutes_or_more_is_skipped() {
+        for m in [60, 61, 90] {
+            assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(m), None),
+                KeepWarm::Skip(_)), "{m} min: the one-hour TTL has run out, so there is nothing left to keep warm");
+        }
+    }
+
+    #[test]
+    fn a_seat_in_the_fifty_to_sixty_window_is_pinged() {
+        for m in [50, 55, 59] {
+            assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(m), None),
+                KeepWarm::Ping, "{m} min: still warm and due");
+        }
+    }
+
+    #[test]
+    fn a_human_driven_pane_with_text_in_its_composer_is_skipped() {
+        assert!(matches!(keep_warm_decision(true, "human", PaneGate::Ready, Composer::HasText, min(55), None),
+            KeepWarm::Skip(_)), "the keeper's own pane: never over his typing");
+        assert!(matches!(keep_warm_decision(true, "human", PaneGate::Working, Composer::Empty, min(55), None),
+            KeepWarm::Skip(_)), "the keeper's own pane: never mid-turn");
+    }
+
+    #[test]
+    fn a_human_driven_pane_idle_and_empty_is_pinged() {
+        assert_eq!(keep_warm_decision(true, "human", PaneGate::Ready, Composer::Empty, min(55), None), KeepWarm::Ping);
+    }
+
+    #[test]
+    fn iso_parses_to_the_board_s_own_milliseconds() {
+        // pane E's L062 ring row: "ts":1789983315792, rendered 2026-09-21T09:35:15.792Z by node.
+        assert_eq!(iso_utc_ms("2026-09-21T09:35:15.792Z"), Some(1_789_983_315_792));
+        assert_eq!(iso_utc_ms("2024-02-29T00:00:00Z"), Some(1_709_164_800_000));
+        assert_eq!(iso_utc_ms("2026-09-21T09:35:15.792+02:00"), None, "UTC only; an offset is refused, not guessed");
+        assert_eq!(iso_utc_ms("not a time"), None);
+    }
+
+    #[test]
+    fn the_off_file_is_a_list_and_anything_else_is_refused() {
+        let s = keep_warm_off(r#"["A", "0c0c0c0b-0000-4000-8000-00000000115b"]"#).expect("a list parses");
+        assert!(s.contains("A") && s.contains("0c0c0c0b-0000-4000-8000-00000000115b"));
+        assert_eq!(keep_warm_off("  ").map(|s| s.len()), Some(0), "an empty file switches nobody off");
+        assert_eq!(keep_warm_off(r#"{"A": true}"#), None, "a malformed switch is refused, never read as 'all on'");
+    }
+
+    #[test]
+    fn withdrawing_its_own_ping_touches_nothing_else() {
+        let ib = Inbox::new();
+        let t0 = Instant::now();
+        ib.push("p", "a packet".into(), "dispatch".into(), t0);
+        ib.push("p", KEEP_WARM_TEXT.into(), KEEP_WARM_LABEL.into(), t0);
+        assert!(ib.withdraw_tail_if("p", KEEP_WARM_LABEL));
+        assert!(!ib.withdraw_tail_if("p", KEEP_WARM_LABEL), "already withdrawn is not withdrawn twice");
+        let m = ib.0.lock().unwrap();
+        let q = m.get("p").unwrap();
+        assert!(!q[0].withdrawn, "the other seat's queued packet must survive");
+        assert!(q[1].withdrawn);
+        drop(m);
+        let ib2 = Inbox::new();
+        ib2.push("p", "a packet".into(), "dispatch".into(), t0);
+        assert!(!ib2.withdraw_tail_if("p", KEEP_WARM_LABEL), "a tail that is not a keep-warm is never withdrawn");
+    }
+
+    #[test]
+    fn the_ping_carries_no_next_trailer_and_asks_only_for_ok() {
+        assert!(!KEEP_WARM_TEXT.contains('\n') && !KEEP_WARM_TEXT.contains("NEXT:"));
+        assert!(KEEP_WARM_TEXT.ends_with("Reply with exactly: ok"));
+        assert!(KEEP_WARM_TEXT.contains("not the keeper"));
+    }
+
+    #[test]
+    fn the_third_place_row_carries_no_numbers() {
+        let row = keep_warm_row("3d000000", "third_place", Duration::from_secs(55 * 60), Some(400_000), true);
+        assert!(!row.contains("400") && !row.contains("55"), "the private seat's size and idle stay off the shared board: {row}");
+        let row = keep_warm_row("abcd1234", "committee", Duration::from_secs(55 * 60), Some(400_000), true);
+        assert!(row.contains("55 min") && row.contains("400000"), "{row}");
+        assert!(keep_warm_row("abcd1234", "committee", Duration::from_secs(60), None, false).contains("WRITE FAILED"));
     }
 }
