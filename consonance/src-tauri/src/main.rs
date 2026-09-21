@@ -10193,8 +10193,6 @@ fn await_render(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Rece
 /// start of the request, and ten minutes of margin covers a 60 s tick and a slow delivery.
 const KEEP_WARM_AFTER: Duration = Duration::from_secs(50 * 60);
 const KEEP_WARM_TICK: Duration = Duration::from_secs(60);
-/// The TTL itself. At or past it the cache is gone: keep-warm keeps warm, it never warms (the keeper, 05:57).
-const KEEP_WARM_COLD: Duration = Duration::from_secs(60 * 60);
 /// ONE LINE AND NO `NEXT:` TRAILER — deliberately. The trailer gate lives in `mod trailer` and is wired
 /// only into the MCP verbs (chair_inject / call_chair / call_librarian); `gate_or_queue` never consults it,
 /// so this app-side line is not refused for lacking one. And a trailer would be read by the receiving seat
@@ -10318,6 +10316,7 @@ fn keep_warm_decision(
     composer: Composer,
     since_start: Option<Duration>,
     since_ping: Option<Duration>,
+    activated: bool,
 ) -> KeepWarm {
     if !on {
         return KeepWarm::Skip("off for this seat (keep-warm-off.json)");
@@ -10337,20 +10336,33 @@ fn keep_warm_decision(
     let Some(s) = since_start else {
         return KeepWarm::Skip("no request start established from its transcript");
     };
+    // THE KEEPER, 05:57: "wait for each seat and pane to activate, then after that point its always on during
+    // that session". ACTIVATION IS A FACT ABOUT THIS SESSION — a request since the app started — and never about
+    // how recent the last request was. L067's amendment translated it as "last request under 60 min", which
+    // abandoned an activated seat for the rest of the session the first time a ping was missed; the keeper,
+    // 07:33: "shouldnt it have been kept warm since it was working this session" (L070). So: a seat that has not
+    // spoken since launch waits, however recent its pre-launch request; a seat that has is pinged at >= 50 min
+    // idle, with no ceiling. Past the TTL that ping is a full re-write — the price of "always on", which he chose.
+    if !activated {
+        return KeepWarm::Skip("not activated this session: no request since the app started; it waits to be spoken to");
+    }
     if s < KEEP_WARM_AFTER {
         return KeepWarm::Skip("warm: under 50 min since its last request started");
-    }
-    // THE KEEPER, 05:57: "keep warm what is already warm, and then wait for each seat and pane to activate".
-    // Past the one-hour TTL there is nothing left to keep warm, and a ping would be a full re-write for a seat
-    // nobody has spoken to — so a seat never used since launch is never pinged. Once it is used it stays in
-    // this window all session, because each ping is itself a request and restarts the clock.
-    if s >= KEEP_WARM_COLD {
-        return KeepWarm::Skip("cold: 60 min or more since its last request started; it waits to be activated");
     }
     if since_ping.is_some_and(|p| p < KEEP_WARM_AFTER) {
         return KeepWarm::Skip("pinged under 50 min ago and not yet answered");
     }
     KeepWarm::Ping
+}
+
+/// Has this seat made a request since the app started? That is what "activated this session" means (L070).
+///
+/// The start is `app_started_at()`, recorded once in `main` for the Leave (P-LEAVE-2), so both features read one
+/// clock. The request start is `last_request`'s earliest bound; a seat that spoke after launch can only be dated
+/// at or after launch by it. EITHER SIDE UNKNOWN IS "NOT ACTIVATED": an unreadable start time must not turn into
+/// "every seat is activated" and ping every cold seat — the failure mode the keeper ruled out at 05:57.
+fn activated_this_session(app_start_ms: Option<u64>, last: Option<&LastRequest>) -> bool {
+    matches!((app_start_ms, last), (Some(s), Some(l)) if l.started_ms >= s)
 }
 
 /// The per-seat off switch: `<data_dir>/keep-warm-off.json`, a JSON list of pane ids, short ids or
@@ -10434,7 +10446,8 @@ fn keep_warm_tick(app: &AppHandle) {
         };
         let since_start = last.as_ref().map(|l| Duration::from_millis(now_ms.saturating_sub(l.started_ms)));
         let since_ping = app.state::<KeepWarmPinged>().0.lock().ok().and_then(|m| m.get(&pane).map(|t| t.elapsed()));
-        if keep_warm_decision(on, &role, gate, composer, since_start, since_ping) == KeepWarm::Ping {
+        let activated = activated_this_session(iso_utc_ms(app_started_at()), last.as_ref());
+        if keep_warm_decision(on, &role, gate, composer, since_start, since_ping, activated) == KeepWarm::Ping {
             keep_warm_send(app, &pane, &role, since_start.unwrap_or_default(), last.and_then(|l| l.context));
         }
     }
@@ -18660,7 +18673,7 @@ mod keep_warm_tests {
     /// An idle, empty-composer, committee seat 55 minutes after its last request started — the one
     /// case that must ping. Every skip test changes exactly one thing from this.
     fn ping_case() -> KeepWarm {
-        keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), None)
+        keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), None, true)
     }
 
     #[test]
@@ -18674,7 +18687,7 @@ mod keep_warm_tests {
     fn a_busy_seat_is_skipped() {
         for g in [PaneGate::Working, PaneGate::Stale, PaneGate::Unstamped, PaneGate::Contradicted] {
             assert!(
-                matches!(keep_warm_decision(true, "committee", g, Composer::Empty, min(55), None), KeepWarm::Skip(_)),
+                matches!(keep_warm_decision(true, "committee", g, Composer::Empty, min(55), None, true), KeepWarm::Skip(_)),
                 "{g:?} must never be pinged: a ping into a running turn is the splice the inbox exists to prevent"
             );
         }
@@ -18686,7 +18699,7 @@ mod keep_warm_tests {
         for c in [Composer::HasText, Composer::Unreadable(Unreadable::NoRow),
                   Composer::Unreadable(Unreadable::GridMismatch), Composer::Unreadable(Unreadable::NoScreen)] {
             assert!(
-                matches!(keep_warm_decision(true, "committee", PaneGate::Ready, c, min(55), None), KeepWarm::Skip(_)),
+                matches!(keep_warm_decision(true, "committee", PaneGate::Ready, c, min(55), None, true), KeepWarm::Skip(_)),
                 "{c:?} must never be pinged: never over the keeper's typing, and unknown is not empty"
             );
         }
@@ -18716,7 +18729,7 @@ mod keep_warm_tests {
              attachment at 10:00:00.004 — not when its response was stamped (10:09)");
         let at_1050 = iso_utc_ms("2026-09-21T10:50:00.004Z").unwrap();
         let idle = Duration::from_millis(at_1050 - r.started_ms);
-        assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, Some(idle), None),
+        assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, Some(idle), None, true),
             KeepWarm::Ping, "50 minutes after the request STARTED is due, whatever the response time");
     }
 
@@ -18738,20 +18751,20 @@ mod keep_warm_tests {
     fn a_transcript_with_no_request_establishes_nothing() {
         assert_eq!(last_request(r#"{"type":"user","timestamp":"2026-09-21T10:00:00.000Z"}"#), None);
         assert_eq!(last_request(""), None);
-        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, None, None),
+        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, None, None, true),
             KeepWarm::Skip(_)), "no established start is never a reason to ping");
     }
 
     #[test]
     fn under_fifty_minutes_is_warm_and_is_skipped() {
-        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(49), None),
+        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(49), None, true),
             KeepWarm::Skip(_)));
-        assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(50), None), KeepWarm::Ping);
+        assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(50), None, true), KeepWarm::Ping);
     }
 
     #[test]
     fn a_seat_pinged_recently_is_not_pinged_again() {
-        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), min(3)),
+        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), min(3), true),
             KeepWarm::Skip(_)), "a ping not yet answered must not be repeated every tick");
     }
 
@@ -18761,10 +18774,10 @@ mod keep_warm_tests {
     // is active and seats as well"), so the off switch stays pinned here and the human half moved to the two
     // tests below, which keep every safety a committee seat gets.
     fn the_off_switch_is_skipped_and_every_live_seat_is_in_scope() {
-        assert!(matches!(keep_warm_decision(false, "committee", PaneGate::Ready, Composer::Empty, min(55), None),
+        assert!(matches!(keep_warm_decision(false, "committee", PaneGate::Ready, Composer::Empty, min(55), None, true),
             KeepWarm::Skip(_)));
         for seat in ["main", "librarian", "third_place", "committee", "human"] {
-            assert_eq!(keep_warm_decision(true, seat, PaneGate::Ready, Composer::Empty, min(55), None), KeepWarm::Ping,
+            assert_eq!(keep_warm_decision(true, seat, PaneGate::Ready, Composer::Empty, min(55), None, true), KeepWarm::Ping,
                 "{seat} is in scope: the keeper, 05:57, 'each seat and pane'");
         }
     }
@@ -18772,41 +18785,62 @@ mod keep_warm_tests {
     // ── L067 AMENDMENT, the keeper 05:57: "keep warm what is already warm, and then wait for each seat and
     // pane to activate, then after that point its always on during that session" ─────────────────────────
 
+    // ── L070 (pane E): THE RULE WAS MISTRANSLATED, and these replace the two tests that encoded it ──────────
+    //
+    // The keeper, 05:57: "wait for each seat and pane to activate, then after that point its always on during
+    // that session". L067's amendment read that as "last request under 60 min" and pinned it in two tests —
+    // `a_seat_never_used_since_launch_is_never_pinged` modelled NEVER-USED as IDLE-183-MIN, and
+    // `a_seat_at_sixty_minutes_or_more_is_skipped` skipped any seat past the TTL. Both are verifiably wrong under
+    // the rule as spoken: an activated seat that misses one ping is abandoned for the rest of the session. The
+    // keeper, 07:33: "shouldnt it have been kept warm since it was working this session". Activation is a fact
+    // about THIS SESSION, never about how recent the last request was.
+
     #[test]
-    fn a_seat_never_used_since_launch_is_never_pinged() {
-        // Resumed at launch, last request hours ago: its cache is already gone, and warming it would be a full
-        // re-write for a seat nobody has spoken to. The Third Place read 183 min idle tonight.
-        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(183), None),
-            KeepWarm::Skip(_)), "a cold seat waits to be activated; keep-warm never warms it");
+    fn a_seat_never_used_since_launch_is_not_pinged_even_inside_the_window() {
+        // Its last request predates the launch. 55 min is inside the old window, and it still waits.
+        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), None, false),
+            KeepWarm::Skip(_)), "a seat not activated this session waits to be activated, however recent its last request");
     }
 
     #[test]
-    fn a_seat_at_sixty_minutes_or_more_is_skipped() {
-        for m in [60, 61, 90] {
-            assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(m), None),
-                KeepWarm::Skip(_)), "{m} min: the one-hour TTL has run out, so there is nothing left to keep warm");
+    fn a_seat_activated_this_session_is_pinged_however_long_it_has_been_idle() {
+        for m in [60, 90, 183] {
+            assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(m), None, true),
+                KeepWarm::Ping, "{m} min: activated this session means always on, even after a missed ping");
         }
+    }
+
+    #[test]
+    fn activation_is_a_request_since_the_app_started() {
+        let start = iso_utc_ms("2026-09-21T06:50:30.000Z");
+        let at = |t: &str| LastRequest { started_ms: iso_utc_ms(t).unwrap(), context: None };
+        assert!(activated_this_session(start, Some(&at("2026-09-21T07:10:00.000Z"))), "a request after launch activates");
+        assert!(!activated_this_session(start, Some(&at("2026-09-21T06:40:00.000Z"))),
+            "a request from before launch does not: resuming a seat is not activating it");
+        assert!(!activated_this_session(start, None), "no request found is not activation");
+        assert!(!activated_this_session(None, Some(&at("2026-09-21T07:10:00.000Z"))),
+            "an unreadable start time activates nobody — the failure must not ping every cold seat");
     }
 
     #[test]
     fn a_seat_in_the_fifty_to_sixty_window_is_pinged() {
         for m in [50, 55, 59] {
-            assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(m), None),
+            assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(m), None, true),
                 KeepWarm::Ping, "{m} min: still warm and due");
         }
     }
 
     #[test]
     fn a_human_driven_pane_with_text_in_its_composer_is_skipped() {
-        assert!(matches!(keep_warm_decision(true, "human", PaneGate::Ready, Composer::HasText, min(55), None),
+        assert!(matches!(keep_warm_decision(true, "human", PaneGate::Ready, Composer::HasText, min(55), None, true),
             KeepWarm::Skip(_)), "the keeper's own pane: never over his typing");
-        assert!(matches!(keep_warm_decision(true, "human", PaneGate::Working, Composer::Empty, min(55), None),
+        assert!(matches!(keep_warm_decision(true, "human", PaneGate::Working, Composer::Empty, min(55), None, true),
             KeepWarm::Skip(_)), "the keeper's own pane: never mid-turn");
     }
 
     #[test]
     fn a_human_driven_pane_idle_and_empty_is_pinged() {
-        assert_eq!(keep_warm_decision(true, "human", PaneGate::Ready, Composer::Empty, min(55), None), KeepWarm::Ping);
+        assert_eq!(keep_warm_decision(true, "human", PaneGate::Ready, Composer::Empty, min(55), None, true), KeepWarm::Ping);
     }
 
     #[test]

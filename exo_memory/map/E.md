@@ -1500,3 +1500,8 @@ Two of my new tests were green against the old code, and I said so. **Carry:** a
 CONSONANCE_STATE is now the one name; CONSONANCE_STATE_REPO is retired with NO alias. Grep found nothing outside the repo that sets it (~/.claude/shell, settings, config, User/Machine env, pane env: none). Only my own two L062 files read it.
 Red: hook 10/2, follow 3/3. Green: 12/0 and 6/0, parallel 18/0, filtered 3/0. Mutants 6/6, including both "silent alias" rows. A's close.test assertions stay TRUE unchanged; only two of A's comments are stale, and exact edits are proposed.
 **Carry:** the split was mine. R-C1 noted two names and left them. Noting a split instead of closing it is how the second name survives.
+
+## 2026-09-21 ~07:4x · L070 keep-warm "activated this session" → `exo_memory/handback/p-l070-keepwarm-activated-E_2026-09-21.md`
+The keeper's 05:57 rule was mistranslated into my L067 code as "last request < 60 min", which abandoned an activated seat after one missed ping. It is now: activated = a request since app_started_at(). A never-used seat waits; an activated one is pinged at >= 50 min with no ceiling. Red 18/3 of 21 → green 21/0, crate 855/0/4, mutants 4/4 including the ceiling itself.
+TWO tests encoded the error, not one: the second modelled "never used" as "idle 183 min".
+**Carry:** (1) check a translated rule against the speaker's own words, even in the file I cite; a green suite built on a mistranslation DEFENDS it. (2) Replacing from the `fn` line left an orphan #[test], so one test ran twice (22 runs, 21 names). A count that disagrees with its unique names is a defect.
