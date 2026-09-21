@@ -128,3 +128,22 @@ art paths · his ruling on hosting (01:47) · price, limits, hosted-only, the lo
 billing and the access route (02:00). Sources for every outside claim are in `third_place/2026-09-21.md`.
 Nothing is registered. The next step, when he brings it, is a registration through the hold-slot door, with the
 version pinned and the schemas written before any output is seen.
+
+## Appended 02:15 — the keeper's order: Jev first
+
+**The keeper, verbatim:** "i think jev is more important to figure out first." Agreed, and the order is also
+forced: the LoRA experiment (`LORA_record_as_carrier_2026-09-21.md`) needs a costume-vs-stance scorer, which is
+this note's use #1. Jev is upstream of it.
+
+**The smallest honest sequence, as this seat sees it (for the librarian to take or leave):**
+0. *Smoke test, on throwaway text that is in no test set:* once he has a gateway key, one call, to learn what
+   the request and the typed answer actually look like and whether the version can be pinned. Seeing output here
+   spends nothing, because none of it is scored.
+1. *Freeze before looking:* pick two or three failure classes crisp enough to label, write each as a schema,
+   and fix the two sets (turns where the error is known to have landed; matched clean turns) by path and sha.
+   Candidates, all with human-adjudicated instances on disk: **a figure stated with no command beside it**
+   (BOOT's prose-gap section; `sourced` is the regex baseline to beat); **"landed/shipped" claimed with no check
+   run** (the verified-it-existed-never-verified-it-shipped class, journal 08-15/16/17); **an ending offered that
+   nobody asked for** (`cards/never-pathologize-the-user.md`).
+2. *Run once, report hit rate and false-alarm rate with the universe printed,* a human oracle on a sample. The
+   falsifier and the degenerating clause are already written above.

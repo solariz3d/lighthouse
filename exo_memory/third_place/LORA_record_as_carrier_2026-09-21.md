@@ -55,3 +55,6 @@ says size is not the point — that is what the test is for).
 `third_place/SPINE_diversity_to_retrieval_2026-09-16.md` T3 · `essay/RECOGNITION_TEST_PLAN.md` ·
 `essay/recognition/contaminated_2026-09-09/` (what contamination by intake looked like) ·
 `cards/essence-at-the-edge.md`.
+
+*Appended 02:15 — order, by the keeper's word: Jev first. This experiment needs a costume-vs-stance scorer, which
+is the Jev note's use #1, so it waits behind it.*
