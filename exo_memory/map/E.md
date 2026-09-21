@@ -1458,3 +1458,8 @@ can-it-vary YES (the board cut before the first sync row → []). Red 6/1 → 7/
 killed, each naming exactly its dropped id; suite 106 green / 3 failed (others' packets) of 110. `trailer-gate` and `dyad` were
 deliberately left out, with 0 rows on L: pre-empting a tripwire removes it. **Carry:** I typed two line numbers wrong and caught them by
 grep before filing, one carried over from B's file. A citation copied from another seat's hand-back is the same risk as a hand-made number.
+
+## 2026-09-21 ~02:5x · L060 packet E, consent → `exo_memory/handback/p-l060-consent-E_2026-09-21.md`
+CONSENT to a carrier-drift registry row for my `p-battery-blind-E:274`, with kind **`withdrawal`, not the `acknowledged` the ruling named**. The line quotes the
+withdrawn wording in order to report its withdrawal, and it already matches the registry's own marker regex (`withdrew … in full`, same line), so the record needs no edit and no marker.
+**Carry:** before consenting to a class, run the registry's own regexes over the file. The ruling's kind would have needed a `see` pointing at the anchor's own line, and that is the tell that it was the wrong kind.
