@@ -30,3 +30,9 @@ S_pre as registered, re-derived by me before the install: last 300 one-message v
 The librarian, non-author of both. Precondition check first (chunk 1's registered failure): guard probe 0 B with the flag
 — passed ×2 in the install record; post-install L0 verdict carries `determinable` — passed. Scoring runs when each window
 fills (≈ B: at the L0 rate; L3: ≈ 10 days at 210 one-message verdicts a week) — waits, not laps.
+
+**Known limit, appended 10:2x from C's D098 (`handback/p-d098-dataseam-C_2026-09-21.md` §0.5) — NOT a change to either
+window.** From 09-14 14:42 to 09-20 23:31 local, sessions that carried the leaked CONSONANCE_DATA queued their L2/L3 jobs
+where no worker ran (210 + 297 stranded). So the pre-install verdicts in the real ledgers come only from sessions that
+did NOT carry the leak. E's S_pre (last 300 one-message verdicts before install, 72.3%) is scored as registered; this
+selection is reported beside the ruling as a limit on what S_pre sampled, never used to re-choose it.
