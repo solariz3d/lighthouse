@@ -310,11 +310,15 @@ const PRE_LETTER = {
 // text at :6381 ("pane E — RESUMED its own conversation"); ONE writer posting about four different letters, so
 // folding it into any one of them would misattribute three of its rows. 'digest-gate' is mcp.rs:624, text at
 // mcp.rs:3105 ("call_librarian: git-blob … computed at ring"), landed 3e51292. None of the three has a model behind
-// it. 'trailer-gate' (mcp.rs:634) and 'dyad' (main.rs:8563) are writers of the same kind with NO rows on L's board
-// yet, and are deliberately NOT listed: this assertion finding them is how 'blind' was classified, and pre-empting
-// a tripwire that has not fired would remove it before it could.
+// it. 'trailer-gate' and 'dyad' (main.rs:8563) were writers of the same kind with NO rows on L's board yet, and were
+// deliberately NOT listed: this assertion finding them is how 'blind' was classified, and pre-empting a tripwire that
+// has not fired would remove it before it could.
+// 'trailer-gate' joined 2026-09-21 (pane E, L064) when that tripwire FIRED, as the line above said it would. It is the
+// NEXT-trailer gate, mcp.rs:634 (trailer_audit), text at mcp.rs:3392 ("{verb} DELIVERED WITHOUT A NEXT TRAILER: …"),
+// landed 8e8d1bd (D069, 09-16). Its first row on L, 2026-09-21T09:35:15Z, audits a call_librarian FROM pane E — so
+// it writes ABOUT a pane, like 'resume', and is none of them. 'dyad' stays unlisted: still 0 rows on L.
 const NON_PANE = new Set(['chair', 'backfill', 'blackbox-steering', 'gate', 'blind',
-  'main-tab/tree-assets', 'sync', 'resume', 'digest-gate']);
+  'main-tab/tree-assets', 'sync', 'resume', 'digest-gate', 'trailer-gate']);
 
 let _letters = null;
 let _lettersWhy = null;         // why the map is empty, when it is — see lettersStatus()

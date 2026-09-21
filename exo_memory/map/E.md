@@ -1475,3 +1475,7 @@ C's reading was proven by running it: --update DROPPED a hand-added `why` and RE
 writeBaseline now starts each surviving row from its PRIOR row, and the prior verdict wins. It prints every kept disagreement, every newly blessed site (+) and every dropped row (-).
 **My call: --update keeps blessing wholesale** (12 test bootstraps and the tool's own "let the diff carry the argument" depend on it) **but never invisibly again.** The failure was that the old output named nothing, so there was nothing to review.
 **Carry:** a test of a path guard adds sites to that guard. Hoist the planted literal to ONE constant (key = file+text+occurrence). And the R4 prediction came true: trailer-gate posted on L and actors.evidence is red on it, and the fix is the same one-word NON_PANE addition.
+
+## 2026-09-21 ~03:5x · L064 'trailer-gate' into NON_PANE → `exo_memory/handback/p-l064-trailergate-E_2026-09-21.md`
+Confirmed at source: trailer-gate is the NEXT-trailer gate (mcp.rs:634 trailer_audit, text mcp.rs:3392, landed 8e8d1bd), one row on L. Added to NON_PANE in the R4 form. Evidence test 6/1 → 7/0, actors.test 20/0 both sides, parallel 27/0, mutant 1/1 on a copy. dyad is still unlisted (0 rows).
+**The row that fired it was MY OWN R-C1 ring:** "NEXT: … before collating" has no `when`, and the gate caught its author's own seat one lap after I predicted the tripwire. Every trailer ends `when <condition>`, and "before" is not "when".
