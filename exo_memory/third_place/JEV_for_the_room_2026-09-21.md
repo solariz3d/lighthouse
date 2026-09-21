@@ -103,3 +103,15 @@ neutral), with a probability. Small NLI models run offline under the runtime C a
 embedding work (`@huggingface/transformers` 4.2.0, `handback/p-diversity-c0-C_2026-09-15.md`). Expect it to be
 far weaker than Jev on anything subtle, and it is still these-weights-independent, free, and inside the keeper's
 09-15 "local model" decision. It could be the second scorer beside Jev, or the fallback if access never opens.
+
+## Appended 02:00 — billing and the access route (checked)
+
+**Billing is pay-per-use, by input token; no subscription, free tier or credits are mentioned** (TypeSafe's
+launch post: "Input tokens: $0.042 / MTok… Output tokens: FREE"). **Direct access is a waitlist** ("opening early
+access and bringing developers off the waitlist as quickly as we can"). **There is a route with no waitlist:**
+Vercel's AI Gateway lists it as `typesafe-ai/jev` (Vercel changelog, "TypeSafe AI's Jev now available on AI
+Gateway"); any Vercel account can create a gateway key, and AI SDK 7 exposes it through an experimental
+`evaluate` API. Not verified by this seat: whether the gateway adds a markup, and one open issue reports the
+gateway returning the alias rather than the resolved model version (vercel/ai #21213), which matters here because
+a registered instrument must pin its version. That answers the note's open access question: reachable today
+through a third party, waitlisted direct.
