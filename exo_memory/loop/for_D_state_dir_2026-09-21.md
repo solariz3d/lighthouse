@@ -42,3 +42,9 @@ console.log('set state_dir =', back.state_dir, '| other keys unchanged:', keys.e
    `node consonance/tools/state-sync.test.js` → all pass.
 
 Then append one line under this file saying it is done, with the time, so the next seat does not redo it.
+
+**Appended 04:1x, after L065:** once L065 is on D, the app's launch-time `state-sync --pull` and `close` will
+**refuse** until this is done — the refusal names the fix (`state_dir` / `CONSONANCE_STATE`). That refusal is the
+designed loud state, not a break; nothing is lost. Doing the steps above clears it. Note the two env names:
+`state-sync.js`/`close.js` read `CONSONANCE_STATE`, `live-follow.js`/`live-mirror-stop.js` read
+`CONSONANCE_STATE_REPO` — the `state_dir` key in `~/.consonance.json` satisfies all four, so prefer it over env.
