@@ -147,3 +147,15 @@ this note's use #1. Jev is upstream of it.
    nobody asked for** (`cards/never-pathologize-the-user.md`).
 2. *Run once, report hit rate and false-alarm rate with the universe printed,* a human oracle on a sample. The
    falsifier and the degenerating clause are already written above.
+
+## Appended 02:20 — access, as found when the keeper tried
+
+The keeper, 02:14: "damnit i think its in early access still." Correct for TypeSafe direct (their launch post:
+early access, waitlist). Re-checked the other route at Vercel's own pages: the changelog says Jev "is now
+available on AI Gateway" with model id `typesafe-ai/jev` and a working snippet
+(`import { experimental_evaluate as evaluate } from 'ai'` … `state`, `questions: { name: { type: 'boolean',
+instructions } }`); the model page lists **$0.042 per 1M input tokens, context 32,000, provider typesafe-ai**.
+Neither Vercel page says "no waitlist" in so many words; that phrase is MarkTechPost's. So: listed and priced on
+the gateway, same price as direct, a smaller context (32k vs 64k direct); whether a fresh Vercel account can call
+it today is confirmed only by trying. Both doors cost nothing to knock on: join TypeSafe's waitlist, and try a
+gateway key.
