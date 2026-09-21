@@ -1165,6 +1165,61 @@ test('a transform that REFUSES stops the install, says so, and writes no roster'
   assert.strictEqual(c.installed, false);
   assert.ok(c.why.includes('panes.json'), c.why);
 });
+// ── L065 (pane E): no machine path as the state dir's default, and nobody resolves one they do not need ──
+//
+// portable-paths flagged :141 REVIEW: with nothing declared, stateDir() returned one machine's literal state
+// path — right on the box that wrote it, somebody else's disk on the next. L062 R-C1 proved the refusal on a
+// scratch copy and HELD it, because six reconcileInstall tests resolved the state dir eagerly through
+// arrivalCtx while never reading it. These run in a child with an EMPTY home (no ~/.consonance.json) and no
+// CONSONANCE_* variables, so the machine's own config cannot answer for the code.
+function l065Env(home, extra = {}) {
+  const env = {};
+  for (const [k, v] of Object.entries(process.env)) if (!/^CONSONANCE_/i.test(k)) env[k] = v;
+  env.USERPROFILE = home; env.HOME = home;
+  return { ...env, ...extra };
+}
+function l065Child(home, body, extra) {
+  const out = execFileSync(process.execPath, ['-e',
+    `const s=require(${JSON.stringify(TOOL)});try{console.log(JSON.stringify({ok:(${body})}))}catch(e){console.log(JSON.stringify({threw:e.message}))}`],
+    { encoding: 'utf8', env: l065Env(home, extra) });
+  return JSON.parse(out.trim().split('\n').pop());
+}
+function l065Home(fn) {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'l065-home-'));
+  try { return fn(home); } finally { fs.rmSync(home, { recursive: true, force: true }); }
+}
+
+test('L065: nothing declared -> stateDir() REFUSES and names state_dir, never a guessed drive path', () => {
+  l065Home((home) => {
+    const r = l065Child(home, 's.stateDir()');
+    assert.ok(r.threw, 'with no env and no config stateDir() must refuse, not return a path: ' + JSON.stringify(r));
+    assert.ok(/no state dir declared/.test(r.threw), 'the refusal must say nothing was declared: ' + r.threw);
+    assert.ok(/state_dir/.test(r.threw), 'the refusal must name the setting that fixes it: ' + r.threw);
+  });
+});
+
+test('L065: ~/.consonance.json state_dir resolves, and CONSONANCE_STATE wins over it', () => {
+  l065Home((home) => {
+    fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ state_dir: path.join(home, 'cfg') }));
+    assert.strictEqual(l065Child(home, 's.stateDir()').ok, path.join(home, 'cfg'));
+    assert.strictEqual(l065Child(home, 's.stateDir()', { CONSONANCE_STATE: path.join(home, 'env') }).ok,
+      path.join(home, 'env'));
+  });
+});
+
+test('L065: an ordinary install reconciles with NO state dir declared — only a transformed path needs one', () => {
+  l065Home((home) => {
+    const data = path.join(home, 'data'); fs.mkdirSync(data);
+    const body = 'an ordinary file with no arrival transform\n';
+    fs.writeFileSync(path.join(data, 'plain.txt'), body);
+    const sha = require('crypto').createHash('sha256').update(body).digest('hex');
+    const v = { index: { files: [{ path: 'plain.txt', bytes: Buffer.byteLength(body), sha256: sha }] } };
+    const r = l065Child(home, `s.reconcileInstall(${JSON.stringify(data)}, ${JSON.stringify(v)}, { instances: ${JSON.stringify(home)} }).missing`);
+    assert.ok(!r.threw, 'reconcileInstall must not resolve a state dir it never reads: ' + r.threw);
+    assert.deepStrictEqual(r.ok, [], 'the whole set is present, so nothing is missing: ' + JSON.stringify(r.ok));
+  });
+});
+
 console.log('');
 console.log(`state-sync.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

@@ -138,7 +138,10 @@ function stateDir() {
     );
     if (cfg.state_dir) return cfg.state_dir;
   } catch (_) { /* fall through */ }
-  return 'C:\\Consonance\\state';
+  // No literal fallback (L065, pane E; portable-paths REVIEW at this line). A machine's own path returned
+  // as everybody's default is another machine's disk the moment this file leaves the box that wrote it.
+  throw new Error('no state dir declared: set state_dir in ~/.consonance.json or CONSONANCE_STATE. '
+    + 'Nothing was read and nothing was sent.');
 }
 
 /**
@@ -1205,7 +1208,11 @@ function installTree(DATA, STATE, v, over) {
  */
 function reconcileInstall(DATA, v, over) {
   const missing = [];
-  const ctx = arrivalCtx(DATA, (over && over.state) || stateDir(), v, over);
+  // The state dir is resolved LAZILY, and only by the one branch that reads it (a transformed path's
+  // arriving copy, below). Resolving it up front made every reconcile — including ones with no
+  // transformed path at all — depend on stateDir(), so a machine with no state_dir declared could not
+  // reconcile an ordinary install (L065, pane E; found as six red reconcileInstall tests in L062 R-C1 §3).
+  const ctx = arrivalCtx(DATA, (over && over.state) || null, v, over);
   const rules = ctx.err ? [] : ctx.rules;
   for (const f of v.index.files) {
     const p = path.join(DATA, f.path.split('/').join(path.sep));
@@ -1225,7 +1232,7 @@ function reconcileInstall(DATA, v, over) {
           found: 'no such file in the data dir', where: p });
         continue;
       }
-      try { srcBuf = fs.readFileSync(path.join(ctx.state, 'data', f.path.split('/').join(path.sep))); }
+      try { srcBuf = fs.readFileSync(path.join(ctx.state || stateDir(), 'data', f.path.split('/').join(path.sep))); }
       catch (e) {
         missing.push({ path: f.path, kind: 'TRANSFORM', expected: `the '${t.name}' postcondition`,
           found: `the arriving copy could not be re-read from the state tree: ${e.message}`, where: p });

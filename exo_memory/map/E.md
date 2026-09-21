@@ -1479,3 +1479,8 @@ writeBaseline now starts each surviving row from its PRIOR row, and the prior ve
 ## 2026-09-21 ~03:5x · L064 'trailer-gate' into NON_PANE → `exo_memory/handback/p-l064-trailergate-E_2026-09-21.md`
 Confirmed at source: trailer-gate is the NEXT-trailer gate (mcp.rs:634 trailer_audit, text mcp.rs:3392, landed 8e8d1bd), one row on L. Added to NON_PANE in the R4 form. Evidence test 6/1 → 7/0, actors.test 20/0 both sides, parallel 27/0, mutant 1/1 on a copy. dyad is still unlisted (0 rows).
 **The row that fired it was MY OWN R-C1 ring:** "NEXT: … before collating" has no `when`, and the gate caught its author's own seat one lap after I predicted the tripwire. Every trailer ends `when <condition>`, and "before" is not "when".
+
+## 2026-09-21 ~04:1x · L065 state-sync.js:141 (steps 2 and 4 of my own R-C1 order) → `exo_memory/handback/p-l065-statesync-E_2026-09-21.md`
+Step 2: arrivalCtx no longer resolves the state dir eagerly (only the transformed branch reads it, lazily). Step 4: :141 now throws a refusal naming state_dir, and its test moved into state-sync.test.js (red 77/1, green 78/0). Mutants 5/5. **The whole js-suite is green on L: 110/0 of 111.** portable-paths is green at 0 new, exit 0, and its test is 43/0.
+**The prediction held, but only after I made it falsifiable:** L's new state_dir makes the six reconcileInstall tests pass either way. Under a D-like home (L's config minus state_dir), with step 2 reverted it reads 71/7 (the same six plus mine), and with it 78/0.
+**Carry:** a prediction about a machine-dependent failure must name the machine state that can make it fail. Also, `cd X && a & b` puts the cd into a's subshell. Use absolute paths when backgrounding. D still needs state_dir before this commit reaches it.
