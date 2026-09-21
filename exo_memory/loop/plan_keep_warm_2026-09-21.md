@@ -53,3 +53,19 @@ efficient from that point"*.
 The restart re-read stays. The candidates, all separately measured before adoption: panes start fresh from their maps
 each shift instead of resuming 600–900k threads (the keeper's call — carrying the conversations was his spec); wake a
 seat only when it is spoken to; compact a pane near its window, not near a break (`memory/cold-start-reload-cost.md`).
+
+---
+
+## THE KEEPER'S RULING, 2026-09-21 ~05:28 — build it now, every live seat and pane
+
+*"we must implement this at all costs, if consonance is open, every pane that is active and seats as well need to
+ping themselves to keep the instances alive"*
+
+So the order changes: **CHUNK B is dispatched now, not after T.** Scope is every live seat — the chair, the
+librarian, the Third Place — and every active pane, for as long as the app is open. **T still runs tonight, in
+parallel, and becomes B's acceptance check rather than its gate:** if the falsifier fires (a ping inside the hour
+still rebuilds most of the cache), B is not abandoned — the next packet finds what invalidates the prefix and fixes
+that. The measurement decides whether B is working, never whether it is wanted.
+
+B's rules stand unchanged: through `gate_or_queue`, never while a turn runs, never over a non-empty composer, a board
+row per ping, stops when the app closes, a per-seat off switch.
