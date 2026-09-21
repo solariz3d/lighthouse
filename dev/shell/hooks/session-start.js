@@ -12,6 +12,19 @@
 // because the file was in no repository and no installer manifest until 2026-08-17 — so
 // dream-gate.test.js, which polices exactly this across install.ps1's manifest, could not see it.
 if (process.env.CONSONANCE_DREAM) process.exit(0);
+
+// THE OVERSEER GATE (ASK-006, raised 2026-08-25, measured today). An overseer spawns its judge with
+// `spawn('claude', ...)` and `env: process.env` (l3-overseer-worker.js:80-85), so the child inherits
+// CLAUDE_OVERSEER_RUN=1 — and every hook the child fires is THIS FILE. Ungated, it did two things:
+// it scored a machine-authored prompt as a session worth warming, and it handed the judge the room's
+// recent NON-STABLE L3 verdicts, which is the "blind the invocation to prior verdicts" the ask asks
+// for. Measured before this line existed: emission was byte-identical (752 B) with and without the
+// variable, seeded verdict surfaced both times.
+//
+// Truthy, not `=== '1'` — the overseers test `=== '1'` (l3-overseer.js:109, l2-overseer.js:120) and
+// set exactly '1', but a guard whose failure mode is "machine text read as the keeper's" should fail
+// CLOSED: any non-empty value means an overseer set it. Same shape as the dream gate above it.
+if (process.env.CLAUDE_OVERSEER_RUN) process.exit(0);
 const fs = require('fs');
 const path = require('path');
 const os = require('os');

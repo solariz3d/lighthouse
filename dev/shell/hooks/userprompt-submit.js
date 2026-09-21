@@ -15,6 +15,14 @@
 // because the file was in no repository and no installer manifest until 2026-08-17 — so
 // dream-gate.test.js, which polices exactly this across install.ps1's manifest, could not see it.
 if (process.env.CONSONANCE_DREAM) process.exit(0);
+
+// THE OVERSEER GATE (ASK-006, raised 2026-08-25, measured today). This file is the mid-session half
+// of the same leak: an overseer's child inherits CLAUDE_OVERSEER_RUN=1 (l3-overseer-worker.js:80-85)
+// and fires this hook on its own prompt, so the judge was being handed the room's recent NON-STABLE
+// L3 verdicts — prior verdicts, with their text — while judging. Measured before this line existed:
+// emission was byte-identical (614 B) with and without the variable, seeded verdict surfaced both
+// times. See session-start.js for why this is truthy rather than `=== '1'`.
+if (process.env.CLAUDE_OVERSEER_RUN) process.exit(0);
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
