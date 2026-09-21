@@ -110,7 +110,7 @@ $files = @(
   # A/B-ing them live does not work either: both write the same state file, so running one
   # consumes what the other would have surfaced. The first attempt at that test produced a clean
   # 898-vs-117-byte result that meant nothing.
-  @{ From = 'dev\shell\hooks\userprompt-submit.js';      To = 'hooks\userprompt-submit.js'; Hold = $true }
+  @{ From = 'dev\shell\hooks\userprompt-submit.js';      To = 'hooks\userprompt-submit.js' }
   @{ From = 'dev\shell\hooks\stop.js';                   To = 'hooks\stop.js' }
   @{ From = 'dev\shell\hooks\session-end.js';            To = 'hooks\session-end.js' }
   @{ From = 'dev\shell\hooks\precompact.js';             To = 'hooks\precompact.js' }

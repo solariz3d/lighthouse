@@ -284,6 +284,11 @@ function buildContext(notices) {
 
 function main() {
   const meta = safeParseJSON(safeReadStdin());
+  // Fresh panes (Consonance's unbriefed spawn type) get no interval narration
+  // and no L3 — a stock claude hears nothing between turns. Returning before
+  // readState also leaves the surfaced-notice state untouched, so a fresh pane
+  // can't swallow notices meant for the rooms. See lib/fresh-guard.js.
+  if (require('../lib/fresh-guard.js').isFreshCwd(meta && meta.cwd)) return;
   const state = readState();
   const notices = getNewL3Notices(state);
 
