@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 100,
+    "BENIGN-TEST": 131,
     "REVIEW": 17,
     "DISGUISED": 14,
     "BENIGN-MESSAGE": 5,
@@ -430,6 +430,13 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "let cwd = \"C:\\\\Consonance\\\\instances\\\\sibling-07b8a48f\";",
+      "key": "consonance/src-tauri/src/main.rs\u0000let cwd = \"C:\\\\Consonance\\\\instances\\\\sibling-07b8a48f\";\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "let inst = Path::new(r\"C:\\Consonance\\instances\");",
       "key": "consonance/src-tauri/src/main.rs\u0000let inst = Path::new(r\"C:\\Consonance\\instances\");\u0000#1"
     },
@@ -458,6 +465,13 @@
       "file": "consonance/src-tauri/src/main.rs",
       "detector": "DRIVE",
       "verdict": "BENIGN-TEST",
+      "text": "let kept = vec![KeptPane { pane: \"k1\".into(), cwd: \"C:\\\\x\".into(), label: String::new() }];",
+      "key": "consonance/src-tauri/src/main.rs\u0000let kept = vec![KeptPane { pane: \"k1\".into(), cwd: \"C:\\\\x\".into(), label: String::new() }];\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
       "text": "repo_root_from_room_path(r\"D:\\somewhere\\else\\checkout\\exo_memory\\BOOT.md\"),",
       "key": "consonance/src-tauri/src/main.rs\u0000repo_root_from_room_path(r\"D:\\somewhere\\else\\checkout\\exo_memory\\BOOT.md\"),\u0000#1"
     },
@@ -467,6 +481,132 @@
       "verdict": "BENIGN-TEST",
       "text": "Some(PathBuf::from(r\"D:\\somewhere\\else\\checkout\"))",
       "key": "consonance/src-tauri/src/main.rs\u0000Some(PathBuf::from(r\"D:\\somewhere\\else\\checkout\"))\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "\"data_dir\": \"C:\\\\Consonance\\\\data\",",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000\"data_dir\": \"C:\\\\Consonance\\\\data\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "\"state_dir\": \"C:\\\\Consonance\\\\state\",",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000\"state_dir\": \"C:\\\\Consonance\\\\state\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "\"verified\":true,\"installed\":true,\"installed_into\":\"C:\\\\Consonance\\\\data\",",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000\"verified\":true,\"installed\":true,\"installed_into\":\"C:\\\\Consonance\\\\data\",\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "(serde_json::json!(4242), serde_json::json!(\"consonance.exe\"), serde_json::json!(\"D:\\\\consonance-L-20260911\"))",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000(serde_json::json!(4242), serde_json::json!(\"consonance.exe\"), serde_json::json!(\"D:\\\\consonance-L-20260911\"))\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(a.handshake, Handshake::Live { pid: 4242, stick: Some(\"D:\\\\s\".to_string()) });",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000assert_eq!(a.handshake, Handshake::Live { pid: 4242, stick: Some(\"D:\\\\s\".to_string()) });\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert_eq!(f, Path::new(\"D:\\\\consonance-L-20260911\"), \"the export was not handed the found folder\");",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000assert_eq!(f, Path::new(\"D:\\\\consonance-L-20260911\"), \"the export was not handed the found folder\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "for find in [one(Path::new(\"D:\\\\stick\")), many] {",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000for find in [one(Path::new(\"D:\\\\stick\")), many] {\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let _ = run_leave(&data, 4242, &[], 0, one(Path::new(\"D:\\\\stick\")), APP_T, &at, &mut |_| {",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000let _ = run_leave(&data, 4242, &[], 0, one(Path::new(\"D:\\\\stick\")), APP_T, &at, &mut |_| {\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let (a, b) = (PathBuf::from(\"E:\\\\consonance-A\"), PathBuf::from(\"F:\\\\consonance-B\"));",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000let (a, b) = (PathBuf::from(\"E:\\\\consonance-A\"), PathBuf::from(\"F:\\\\consonance-B\"));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let args = waiter_args(Path::new(\"C:\\\\Consonance\\\\data\"), 23900, \"2026-09-15T05:40:12.345Z\");",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000let args = waiter_args(Path::new(\"C:\\\\Consonance\\\\data\"), 23900, \"2026-09-15T05:40:12.345Z\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let p = PathBuf::from(\"C:\\\\Consonance\\\\data\\\\captures\\\\main.txt\");",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000let p = PathBuf::from(\"C:\\\\Consonance\\\\data\\\\captures\\\\main.txt\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let run = run_leave(&data, 4242, &[], 0, one(Path::new(\"D:\\\\stick\")), APP_T, &at, &mut |_| {",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000let run = run_leave(&data, 4242, &[], 0, one(Path::new(\"D:\\\\stick\")), APP_T, &at, &mut |_| {\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let run = run_leave(&data, 4242, &[], 2, one(Path::new(\"D:\\\\stick\")), APP_T, &at, &mut |_| Ok(real(\"done\")));",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000let run = run_leave(&data, 4242, &[], 2, one(Path::new(\"D:\\\\stick\")), APP_T, &at, &mut |_| Ok(real(\"done\")));\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let stick = PathBuf::from(\"D:\\\\consonance-L-20260911\");",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000let stick = PathBuf::from(\"D:\\\\consonance-L-20260911\");\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "put(&data.join(APPLY_STARTED), r#\"{\"pid\":4242,\"image\":\"node\",\"script\":\"stick-apply.js\",\"at\":\"x\",\"stick\":\"D:\\\\s\"}\"#);",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000put(&data.join(APPLY_STARTED), r#\"{\"pid\":4242,\"image\":\"node\",\"script\":\"stick-apply.js\",\"at\":\"x\",\"stick\":\"D:\\\\s\"}\"#);\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "StickFolder { folder: PathBuf::from(\"E:\\\\a\"), layout: StickLayout::Older },",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000StickFolder { folder: PathBuf::from(\"E:\\\\a\"), layout: StickLayout::Older },\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "StickFolder { folder: PathBuf::from(\"F:\\\\b\"), layout: StickLayout::Older },",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000StickFolder { folder: PathBuf::from(\"F:\\\\b\"), layout: StickLayout::Older },\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/sync_launch.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "vec![\"--data\", \"C:\\\\Consonance\\\\data\", \"--app-pid\", \"23900\", \"--app-image\", \"consonance.exe\", \"--app-started-at\", \"2026-09-15T05:40:12.345Z\"]",
+      "key": "consonance/src-tauri/src/sync_launch.rs\u0000vec![\"--data\", \"C:\\\\Consonance\\\\data\", \"--app-pid\", \"23900\", \"--app-image\", \"consonance.exe\", \"--app-started-at\", \"2026-09-15T05:40:12.345Z\"]\u0000#1"
     },
     {
       "file": "consonance/tools/agreement-spread.js",
@@ -761,6 +901,13 @@
       "verdict": "BENIGN-TEST",
       "text": "assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');",
       "key": "consonance/tools/lap-row.test.js\u0000assert.strictEqual(mod.normPath('C:\\\\Consonance\\\\lighthouse\\\\consonance\\\\tools\\\\ferry.js'), 'consonance/tools/ferry.js');\u0000#1"
+    },
+    {
+      "file": "consonance/tools/live-follow.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "test('nothing declared -> --status REFUSES and names the setting, rather than reading a guessed C:\\\\ path', () => {",
+      "key": "consonance/tools/live-follow.test.js\u0000test('nothing declared -> --status REFUSES and names the setting, rather than reading a guessed C:\\\\ path', () => {\u0000#1"
     },
     {
       "file": "consonance/tools/live-host.test.js",
@@ -1113,6 +1260,27 @@
       "key": "consonance/tools/second-vantage.test.js\u0000paths: ['x.md'], heads: { 'c:/consonance/lighthouse': 'abc1234' },\u0000#2"
     },
     {
+      "file": "consonance/tools/stamp.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(fs.readFileSync(f, 'utf8'), /^- \\d\\d:\\d\\d it's a line with an apostrophe\\n$/m);",
+      "key": "consonance/tools/stamp.test.js\u0000assert.match(fs.readFileSync(f, 'utf8'), /^- \\d\\d:\\d\\d it's a line with an apostrophe\\n$/m);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/stamp.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(out, /## \\d\\d:\\d\\d — from the cli/);",
+      "key": "consonance/tools/stamp.test.js\u0000assert.match(out, /## \\d\\d:\\d\\d — from the cli/);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/stamp.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const m = fs.readFileSync(f, 'utf8').match(/^## (\\d\\d:\\d\\d) — from the cli$/m);",
+      "key": "consonance/tools/stamp.test.js\u0000const m = fs.readFileSync(f, 'utf8').match(/^## (\\d\\d:\\d\\d) — from the cli$/m);\u0000#1"
+    },
+    {
       "file": "consonance/tools/state-block.js",
       "detector": "DRIVE",
       "verdict": "REVIEW",
@@ -1132,6 +1300,27 @@
       "verdict": "REVIEW",
       "text": "return { title: 'live', cmd: 'tail -1 C:\\\\Consonance\\\\data\\\\head-watch.jsonl', lines };",
       "key": "consonance/tools/state-block.js\u0000return { title: 'live', cmd: 'tail -1 C:\\\\Consonance\\\\data\\\\head-watch.jsonl', lines };\u0000#1"
+    },
+    {
+      "file": "consonance/tools/state-sync.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pane: '0845a868-38f2-4cc2-b45a-431e0c088fb1', cwd: 'C:\\\\Consonance\\\\instances\\\\sibling-0845a868', label: '✦ Around' },",
+      "key": "consonance/tools/state-sync.test.js\u0000{ pane: '0845a868-38f2-4cc2-b45a-431e0c088fb1', cwd: 'C:\\\\Consonance\\\\instances\\\\sibling-0845a868', label: '✦ Around' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/state-sync.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "{ pane: '6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f', cwd: 'C:\\\\Consonance\\\\instances\\\\sibling-3d57124e', label: '✦ brief' },",
+      "key": "consonance/tools/state-sync.test.js\u0000{ pane: '6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f', cwd: 'C:\\\\Consonance\\\\instances\\\\sibling-3d57124e', label: '✦ brief' },\u0000#1"
+    },
+    {
+      "file": "consonance/tools/state-sync.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const w = twoRosters([{ pane: '', cwd: 'C:\\\\elsewhere\\\\sibling-x', label: '✦ nameless' }], null);",
+      "key": "consonance/tools/state-sync.test.js\u0000const w = twoRosters([{ pane: '', cwd: 'C:\\\\elsewhere\\\\sibling-x', label: '✦ nameless' }], null);\u0000#1"
     },
     {
       "file": "consonance/tools/swell-head.js",
@@ -1181,6 +1370,20 @@
       "verdict": "REVIEW",
       "text": "const INSTANCES = 'C:/Consonance/instances';",
       "key": "consonance/tools/whats-live.js\u0000const INSTANCES = 'C:/Consonance/instances';\u0000#1"
+    },
+    {
+      "file": "consonance/ui/leave.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const FOLDER = 'D:\\\\consonance-L-20260911';",
+      "key": "consonance/ui/leave.test.js\u0000const FOLDER = 'D:\\\\consonance-L-20260911';\u0000#1"
+    },
+    {
+      "file": "consonance/ui/stick.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const FOLDER = 'D:\\\\consonance-L-20260911';",
+      "key": "consonance/ui/stick.test.js\u0000const FOLDER = 'D:\\\\consonance-L-20260911';\u0000#1"
     },
     {
       "file": "desktop-install.ps1",
@@ -1244,6 +1447,20 @@
       "verdict": "DISGUISED",
       "text": "const LIGHTHOUSE_WELFARE = path.join(os.homedir(), 'Desktop', 'lighthouse', 'WELFARE.md');",
       "key": "dev/shell/hooks/l3-overseer-worker.js\u0000const LIGHTHOUSE_WELFARE = path.join(os.homedir(), 'Desktop', 'lighthouse', 'WELFARE.md');\u0000#1"
+    },
+    {
+      "file": "dev/shell/lib/ready.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "stamp(true, { session_id: 's-1', cwd: 'C:/repo' });",
+      "key": "dev/shell/lib/ready.test.js\u0000stamp(true, { session_id: 's-1', cwd: 'C:/repo' });\u0000#1"
+    },
+    {
+      "file": "dev/shell/lib/ready.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "stamp(true, { session_id: 'the-child-session', cwd: 'C:/anywhere' });",
+      "key": "dev/shell/lib/ready.test.js\u0000stamp(true, { session_id: 'the-child-session', cwd: 'C:/anywhere' });\u0000#1"
     },
     {
       "file": "dev/vantage/install_vantage.ps1",
