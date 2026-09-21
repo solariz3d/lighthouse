@@ -36,3 +36,11 @@ MIGRATEs and install REPLACED append-only files; a close now would publish L's l
 The eight hooks' CONSONANCE_DATA seam (two ready-* may need it); L's four drifted installed hooks (with chunk 1);
 the ring digest's remaining unguarded case (older hand-back named first); keep-warm's missed-window report; the
 keeper's own: ASK-007, `exo_memory/review/`.
+
+**CORRECTION, 07:4x, to the HOLD above — it was worded too wide, my error.** Closing Consonance normally and turning the
+laptop off is SAFE. The app's Leave writes the conversations to the STICK and never to the state repo:
+`dev/stick-waiter.js:61` — *"Leave writes to the STICK and never to the state repo. No close.js, no git, no push."*
+The HOLD is on **`node consonance/tools/close.js` (a real close, the state-repo publish)** only — a separate command
+nobody runs as routine (the state repo's head is still D's 09-10 publish). Note for the next L launch: it MIGRATEs again
+and replaces L's lap.jsonl with D's 09-10 copy, as every L launch has; A's TRAVELS fix is in `state-sync.js` (a script,
+run fresh at each launch, no rebuild needed), so it protects the ledger from the first launch after it lands.
