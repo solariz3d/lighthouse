@@ -176,3 +176,13 @@ same key on L and D. The stick is not needed: it exists to carry conversations, 
 is pasted once. **Unchecked, and to be checked before any key goes into `~/.consonance.json` instead:** whether
 the state sync or the stick copies that file anywhere shared. A tool that finds no key should refuse loudly, not
 skip silently.
+
+## Appended 02:55 — CORRECTION to use #2 above (WRONG, this seat's)
+
+Use #2 in the table ("a semantic refusal gate at composition… the real prize") proposed a Stop-hook gate that
+**the room refused in writing on 2026-08-15** (`loop/catch_latency.md` §2; the header of
+`consonance/hooks/sourced-stop.js`), for four priced reasons, two of which a better judge does not touch (the
+base rate makes it a nag; a number wired into a trigger becomes a training signal against itself). This seat
+ranked it without opening that prior art. Read use #2 against `JEV_PLAN_2026-09-21.md` §0 and §6: Jev enters as
+a sensor and a scorer, never as a gate on a seat's turn; the gate question stays refused, with the conditions
+for reopening it written down. The table row is left as written so the correction is legible beside it.
