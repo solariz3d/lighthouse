@@ -1,0 +1,94 @@
+D095 P-ASK001-ABSTAIN — REGISTRATION
+BRAVO (pane 12fb81f6), machine D, written BEFORE any edit to any schema.
+
+ASK-001 item (2): "add an abstain / cannot-determine option to the L0 output schema."
+The L0 discipline is applied by dev/shell/hooks/l2-overseer-worker.js (its prompt, line 27:
+"The discipline you are applying (lighthouse L0 / METHOD.md)"). That file is the object.
+
+-----------------------------------------------------------------------------
+0. THE VARIABILITY CHECK — RUN BEFORE ANYTHING, per tonight's standing item
+-----------------------------------------------------------------------------
+The quantity is "share of L0 verdicts that are abstain". It must be able to take more than
+one value on this object, or nothing below can be scored.
+
+  node <scratch>/abstain/abstain_population.js
+
+  l2_overseer.jsonl: 8,018 rows = 6,260 verdicts + 83 parse_error + 1,675 skipped
+  DISTINCT verdict values ALREADY IN THE STORE: "clean" 2874 | "drift" 3384 |
+      "unable" 1 (2026-08-06) | "cannot judge" 1 (2026-08-13)
+  => the field is NOT binary in practice. l2-overseer-worker.js:92 accepts any truthy
+     verdict.verdict with no VALID list (l3-overseer-worker.js:20 has one; L2 does not),
+     so two abstains are already recorded as first-class verdicts.
+  Abstain-eligible population, three independent measurements:
+    (a) attempts already made: 13 of 6,289 = 0.207%   (2 out-of-schema verdicts +
+        11 exit-0 parse_errors that refuse to judge and emit no verdict token)
+    (b) machine-authored turns: 47 of the newest 400 verdicts = 11.8%
+        (duration-goal cron 39, blind verifier 8) — node <scratch>/abstain/what_l0_judges.js 400
+    (c) views reaching the judge with NO user context: 0 of 300 newest transcripts = 0.0%
+        — node <scratch>/abstain/view_replica.js 300
+  NOT structurally zero, not 100%. The quantity can move. PROCEED.
+
+  (c) FAILED as a predictor and is recorded as such: "(no user context available)" is the
+  L0 branch I expected to drive abstains (l2-overseer.js:101), and it never fires at the
+  tail. No prediction below rests on it.
+
+-----------------------------------------------------------------------------
+1. WHAT I EXPECT THE CHANGE TO DO TO THE MIX — registered before building
+-----------------------------------------------------------------------------
+Scored on THE FIRST 500 L0 VERDICTS AFTER THE KEEPER INSTALLS (the repo copy is not live).
+Baselines, from the same command, taken now:
+    lifetime drift share    3384 / 6258 = 54.1%
+    newest-400 drift share   169 /  400 = 42.3%   (clean 231)
+    machine-authored bucket  30 drift / 39 cron verdicts = 76.9% drift
+
+P1  RATE:        abstain lands at >= 1.0% and <= 12% of the 500.
+    (Floor: 5x the 0.207% that already breaks schema to say it. Ceiling: the 11.8%
+     machine-authored population, the largest bucket a correct abstain could take.)
+P2  COMPOSITION: >= 50% of abstains fall on machine-authored sessions (duration-goal cron,
+    token probe, blind verifier). Mechanism: 5 of the 13 attempts already there, and the
+    judge's own words name the missing input ("requires read permission to goal.json").
+P3  DIRECTION:   the drift share FALLS by >= 1.0 point against the newest-400 baseline of
+    42.3%, because the bucket abstain should absorb is 76.9% drift against a 42.3% field.
+
+-----------------------------------------------------------------------------
+2. THE NULL, BESIDE THE FALSIFIER
+-----------------------------------------------------------------------------
+NULL: the option is VOCABULARY ONLY. Abstain stays below 0.4% (within 2x what already
+happens without an option) AND the drift share moves less than 1.0 point. Then the change
+bought a token and nothing else, and that is the result to report — not a failure of the
+build, but a finding about the stream.
+The null is live, not decorative: (c) above already came back 0.0%, so this object is
+capable of returning nothing.
+
+-----------------------------------------------------------------------------
+3. THE UNWELCOME OUTCOME, NAMED IN ADVANCE IN THE WORDS THAT WOULD MAKE IT TRUE
+-----------------------------------------------------------------------------
+"Abstain exceeded 25% of verdicts, and abstain reasons do not name a missing input."
+That is the escape-hatch outcome: the judge using cannot-determine to avoid the call it
+was built to make. If it happens, the binary schema was better and this change should be
+reverted, and I should say so in those words.
+Second unwelcome outcome: "the abstains landed on the keeper's own sessions, not on
+machine-authored ones" — P2 inverted — which would mean the option is absorbing hard
+judgements rather than unjudgeable units.
+
+-----------------------------------------------------------------------------
+4. THE PACKET'S OWN PREMISE, REGISTERED AS A PREDICTION I EXPECT TO FAIL FOR L0
+-----------------------------------------------------------------------------
+The packet's justification is L3's: 1,430 of 2,646 quiet_spiral verdicts rendered on a
+window of ONE message. Re-derived today (stream is live, +2 verdicts since A measured):
+  node -e  (l3_overseer.jsonl)  ->  verdicts 7,836; window==1: 2,297 = 29.3%;
+  quiet_spiral on window==1: 1,432 of 2,648 = 54.1%;
+  quiet_spiral rate GIVEN window==1: 1,432/2,297 = 62.3%  vs  1,216/5,268 = 23.1% on window>1.
+A's number is confirmed. BUT IT IS L3'S, AND I PREDICT IT DOES NOT TRANSFER TO L0:
+a single message is L0's DESIGNED unit ("judging a single assistant move"), so there is no
+L0 population analogous to window==1. The L0 analogue is "the unit judged is not an
+assistant move at all", measured at 11.8%, not 54%.
+  Falsifier of THIS reading: if the post-install L0 abstain rate lands above 25%, the
+  transfer was real and I was wrong to call the packet's number L3-only.
+
+-----------------------------------------------------------------------------
+5. WHAT I AM NOT REGISTERING
+-----------------------------------------------------------------------------
+No prediction about whether any verdict is RIGHT. No prediction about L3's mix: I am not
+changing L3's schema this lap, and a prediction about a change nobody made cannot be scored.
+The L3 number above is re-derivation of A's, carried so the packet's premise is checkable.
