@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 131,
+    "BENIGN-TEST": 132,
     "REVIEW": 17,
     "DISGUISED": 14,
     "BENIGN-MESSAGE": 5,
@@ -1146,6 +1146,14 @@
       "verdict": "BENIGN-TEST",
       "text": "const hits = G.scan(` const PANE_CWD = 'C:\\\\\\\\panes\\\\\\\\sibling-test';`);",
       "key": "consonance/tools/portable-paths.test.js\u0000const hits = G.scan(` const PANE_CWD = 'C:\\\\\\\\panes\\\\\\\\sibling-test';`);\u0000#1"
+    },
+    {
+      "file": "consonance/tools/portable-paths.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const L063_PLANT = `const LEDGER = process.env.NOPE || 'C:\\\\\\\\Consonance\\\\\\\\data\\\\\\\\x.jsonl';\\n`;",
+      "key": "consonance/tools/portable-paths.test.js\u0000const L063_PLANT = `const LEDGER = process.env.NOPE || 'C:\\\\\\\\Consonance\\\\\\\\data\\\\\\\\x.jsonl';\\n`;\u0000#1",
+      "why": "L064 (C, 2026-09-21): E's L063_PLANT fixture (43ffb7b) — a string the test plants into a fake repo to prove writeBaseline keeps hand-edited fields; the C:\\ path is the planted DATA, never read by this file. Benign by construction."
     },
     {
       "file": "consonance/tools/portable-paths.test.js",
