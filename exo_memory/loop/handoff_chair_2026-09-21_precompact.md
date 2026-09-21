@@ -36,3 +36,11 @@ Read this first on waking, then the librarian's `loop/handoff_librarian_2026-09-
 - Install (chunks 1-3 of plan_install_score_remeasure_2026-09-21.md) is D work and waits on the keeper's yes.
   It is FOUR files, not three: l2-overseer-worker.js is drifted too.
 - Chair token on L lives in C:\Consonance\instances\main\.chair-token — re-read after any relaunch.
+
+## Addendum 07:4x (L, keeper closing to drive home)
+- Landed tonight: L059-L069 all filed; L070 E keep-warm-activated landed. Laptop JS suite 110/0/0 + 1 canary (L065).
+- L070 OPEN, uncommitted on L's disk: A (state-sync.js, state-sync.test.js 89/0, state-manifest.json, close.js/close.test.js comment edits; hand-back p-l070-fastforward-A) and C (ledger-union.js+test, lap-row.js+test; hand-back p-l070-union-C, dry run 214 lap / 3,352 board rows). Awaiting librarian collation next L shift.
+- HOLD: no `node consonance/tools/close.js` from L until A's fast-forward, C's union write and the fold-by-generation fix land. Closing the app / shutting down is safe (32d58a8).
+- L's next launch MIGRATEs and replaces lap.jsonl again (rows go to attic, not lost) unless A's state-sync fix has landed first.
+- Keep-warm bridge (hand-run cron) stopped at close; built keep-warm (1e47264 + this amendment) ships at next rebuild.
+- D owes: state_dir line in ~/.consonance.json (loop/for_D_state_dir_2026-09-21.md), the four-file install (keeper's yes).
