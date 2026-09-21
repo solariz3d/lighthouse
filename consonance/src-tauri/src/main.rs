@@ -14145,6 +14145,32 @@ mod committee_brief_tests {
         );
     }
 
+    /// D096: the other three seats. Main, the Third Place and the librarian paste the master
+    /// WHOLE -- none of them ever went through `split_pointer_tail` -- so until the tail left the
+    /// master itself, every one of them woke carrying 25,368 B of dated journal summary the panes
+    /// had not carried since 38fd239. Asserted at delivery, for the reason the test above gives.
+    /// A seat whose brief does not resolve returns None and has nothing to assert.
+    #[test]
+    fn no_seat_that_pastes_the_master_whole_wakes_carrying_the_dated_tail() {
+        let _g = DirsGuard::take();
+        set_dirs(&get_state());
+        for (seat, intake) in [
+            ("main", Some(main_intake())),
+            ("third place", third_place_intake()),
+            ("librarian", librarian_intake()),
+        ] {
+            let Some(intake) = intake else { continue };
+            assert!(
+                !intake.contains("**Previous:** journal/"),
+                "the {seat} intake still carries the master's dated **Previous:** pointer paragraph"
+            );
+            assert!(
+                !intake.contains("*Superseded pointer, kept for the through-line:*"),
+                "the {seat} intake still carries the master's superseded pointer paragraph"
+            );
+        }
+    }
+
     /// §10.9 of the window registration, as a check rather than a sentence: EVERY path the intake
     /// emits must resolve at assembly. Not theoretical -- measured 2026-09-01, 40 of the topic
     /// map's 52 lines named a document that does not exist, in every shell assembled that day,
