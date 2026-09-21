@@ -101,7 +101,7 @@ more than one reason, so the class is given **per failing assertion**.
 |---|---|---|---|
 | CH4-DRIFT-ADDED | `exo_memory/cards/every-digest-carries-its-function.md` | CORPUS DRIFT, stale frozen list | added `f6e7b1f` 09-09, after the freeze |
 | CH4-DRIFT-ADDED | `exo_memory/record/retired_seats_2026-09-11.md` | CORPUS DRIFT, stale frozen list | added `397e29c` 09-11 |
-| UNACCOUNTED | `exo_memory/handback/p-battery-blind-E_2026-09-16.md:274` | CORPUS DRIFT, a new carrier quoting the withdrawn "only DECORRELATED" wording | added `67da110` 09-16 |
+| UNACCOUNTED | `exo_memory/handback/p-battery-blind-E_2026-09-16.md:274` | CORPUS DRIFT, a new carrier quoting the wording withdrawn at `journal/2026-08-16.md:722-726` | added `67da110` 09-16 |
 | UNACCOUNTED | `exo_memory/librarian/2026-09-14.md:125` | CORPUS DRIFT, a new carrier quoting the struck "can't lose" wording | `e388bde` 09-14 |
 | MISSING-FILE ×2 | `exo_memory/review/tool_audit_draft_2026-09-07.md` (registry rows at `carrier-drift.registry.json:210`, `:432`) | **MACHINE-BOUND** | never in git on any branch (`git log --all -- <path>` empty); `exo_memory/review/` does not exist on D. The registry was built over a working tree that held an untracked file, presumably L's |
 
@@ -259,3 +259,6 @@ main.rs.**
    Carrying it moves an answer key, which is exactly what its column says not to do.
 
 NEXT: librarian collate the six classes into per-class repair packets when D082 closes
+
+> **REWORDED 2026-09-21 (L060, by B, the author).** Line 104 named a withdrawn wording by quoting it; it now points at
+> where the wording was withdrawn. Same line, no line moved. Why: `exo_memory/handback/p-l060-carriers-B_2026-09-21.md`.

@@ -218,6 +218,24 @@
      "anchor": "-07.md:107 asserts \"the only decorrelated reader\" **These were co",
      "kind": "mention",
      "why": "the L046 packet quoting the wording to NAME the site it is asking to be ruled on -- a target list, asserting nothing. Same class as the two rows for p-installer-only_2026-09-08.md registered the night before, and the same recursion: the document commissioning the sweep became one of its findings. Registered 2026-09-08 by the pane the packet was addressed to; the chair wrote the carrier."
+    },
+    {
+     "file": "exo_memory/handback/p-battery-blind-E_2026-09-16.md",
+     "anchor": "rew *\"the keeper is the only DECORRELATED reader\"* **in full**, n",
+     "kind": "withdrawal",
+     "why": "E's battery hand-back recording that a pane withdrew the claim IN FULL (journal/2026-08-16.md:722-726) and using that withdrawal as precedent for a stricter rule. The occurrence tells the reader the claim is withdrawn, so it is correction text, not an assertion. Same phrasing as the BOOT amendment row already filed as withdrawal. Kind argued by E, who consented to this row (exo_memory/handback/p-l060-consent-E_2026-09-21.md), and judged independently by B against the README (L060). The record is a dated master and is not edited."
+    },
+    {
+     "file": "exo_memory/handback/p-l060-consent-E_2026-09-21.md",
+     "anchor": "ew \\*\"the keeper is the only DECORRELATED reader\"\\* \\*\\*in full\\*",
+     "kind": "mention",
+     "why": "E's L060 consent quoting its own p-battery-blind-E:274 in order to argue which KIND that carrier is. A classification argument about another document, asserting nothing. Same class as the librarian's census-of-carriers rows. Added at the chair's L060 amendment; E's file is not edited."
+    },
+    {
+     "file": "exo_memory/librarian/2026-09-20.md",
+     "anchor": "quoting the withdrawn *\"only DECORRELATED reader\"* wording. **AND",
+     "kind": "mention",
+     "why": "the librarian's D095 collation naming B's hand-back as one of the unaccounted carriers. A census of a carrier, asserting nothing: the correction lives in the journal, not in this line. NOT `acknowledged`, although the librarian's ruling (librarian/2026-09-21.md, 02:54, routing (2)) proposed it: the README defines acknowledged as a claim deliberately LEFT STANDING, and this line does not stand it. The librarian consented to a row and asked for this kind test (the chair's L060 amendment). No marker added: the dated master is not edited."
     }
    ]
   },
@@ -434,6 +452,12 @@
      "kind": "fixture",
      "planted_by": "exo_memory/loop/l039_read_brief_2026-09-07.md",
      "why": "L039's SCORED EXPERIMENTAL SUBJECT, and this line is part of plant D1-04 -- the object carries the withdrawn wording ON PURPOSE, authored wrong so readers could be measured on finding it (librarian/2026-09-07.md:89 names the plant). RULED 2026-09-08 (L046, pane A): the packet asked for a strike in place and the strike is REFUSED here under its own section 7. This file did not DRIFT; nothing propagated into it, so there is no propagation failure to repair. Striking it would make the score unre-derivable against its own object: three read hand-backs and the score cite :94 and :107 as findings, and a reader checking whether a defect was correctly flagged would open a line that no longer contains one. `marked` and `acknowledged` were both unavailable for the same reason as the L044 ruling one level up -- they REQUIRE the file to carry a marker, i.e. they require editing the object; `withdrawal` would be a lie because the line asserts rather than corrects; `mention` would be a lie because inside the fiction of the object it does assert. The registry could express the truth about this file in NO way at all, which is why the kind exists."
+    },
+    {
+     "file": "exo_memory/librarian/2026-09-14.md",
+     "anchor": "sk: BOOT struck 'if you can't lose by saying it, suspect it' on 08-3",
+     "kind": "withdrawal",
+     "why": "the librarian's 01:23 entry recording that BOOT struck the wording on 08-30, and giving the ASK-008 repair in the same sentence. The occurrence IS correction text. The marker (ASK-008) is on the same line. NOT `acknowledged`, although the librarian's ruling proposed it (librarian/2026-09-21.md, 02:54, routing (2)): nothing here is left standing. The librarian consented to a row; the dated master is not edited (L060, B)."
     }
    ]
   },

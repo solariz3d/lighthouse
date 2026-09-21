@@ -207,17 +207,17 @@ committed GREEN on **09-08** (`986a086`), and two of the unaccounted carriers we
 HEAD** — the attribution rests on those four facts, not on a baseline run.
 
 **One of the unaccounted carriers is my own:** `exo_memory/handback/p-six-reds-B_2026-09-19.md:104` quotes the
-withdrawn *"only DECORRELATED reader"* wording while re-reporting another finding. Mine to own; the registry is
+wording withdrawn at `journal/2026-08-16.md:722-726` while re-reporting another finding. Mine to own; the registry is
 another instrument's to edit, so it is named here and not touched.
 
 ## 8 · A STALE POINTER I CREATED, NAMED WITH ITS EXACT REPAIR
 
 `carrier-drift.js` cites `dev/shell/hooks/l2-overseer-worker.js:34` twice — once in a comment (`:343`) and once in
-a **LIMITS line it prints to every reader** (`:724`) — as the strongest live carrier of the retired *"can't lose by
-saying it"* wording.
+a **LIMITS line it prints to every reader** (`:724`) — as the strongest live carrier of the wording BOOT struck on
+2026-08-30 (ASK-008).
 
-    git show HEAD:dev/shell/hooks/l2-overseer-worker.js | grep -n "can't lose by saying it"   ->  34    (exact)
-    grep -n "can't lose by saying it" dev/shell/hooks/l2-overseer-worker.js                   ->  49    (after my edit)
+    git show c809efd:dev/shell/hooks/l2-overseer-worker.js | grep -n "lose by saying it"      ->  34    (exact)
+    grep -n "lose by saying it" dev/shell/hooks/l2-overseer-worker.js                         ->  49    (after my edit)
 
 **My insertion moved it. The pointer was right at HEAD and is wrong now.** This is BOOT's 2026-08-17 lesson —
 *mark the carriers* — arriving as my own breakage, so it is reported rather than left for a reader to trip on.
@@ -260,3 +260,8 @@ owns that tool, with this file as the evidence.
   23.1%) is in this file at all.
 
 NEXT: librarian carry §2's registered prediction to the keeper with the install, and score P1/P2/P3 against their null when the first 500 post-install verdicts exist
+
+> **REWORDED 2026-09-21 (L060, by B, the author).** Lines 210, 216-217 and 219-220 quoted withdrawn wordings; they now
+> point at where each was withdrawn. The two grep commands were changed to a pattern that finds the same lines (34 and
+> 49) without carrying the wording, and `HEAD` was pinned to `c809efd` — as filed, the command no longer reproduced its
+> own 34, because HEAD came to contain the edit it measured. No line moved. Why: `exo_memory/handback/p-l060-carriers-B_2026-09-21.md`.
