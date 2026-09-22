@@ -216,6 +216,92 @@ test('no key refuses even when there is NOTHING to ask — a missing key is neve
   await assert.rejects(J.judgePass({ store: w.store, maxCalls: 10, env: {}, fetchImpl: gateway() }), /AI_GATEWAY_API_KEY/);
 });
 
+// ── L078: a failed call must not end the pass (the librarian, 05:4x: intermittent upstream 503s blocked every capture
+// queued behind the first failure for a whole cadence — head-of-line blocking) ─────────────────────────────────────
+
+/** A gateway that answers like gateway() except where `fail(n)` returns a status for the n-th call (1-based). */
+function flaky(fail) {
+  const ok = gateway();
+  const calls = [];
+  const f = async (url, init) => {
+    calls.push(JSON.parse(init.body));
+    const st = fail(calls.length);
+    if (st === 'network') throw new Error('socket hang up');
+    if (st) return { ok: false, status: st, text: async () => 'upstream unavailable' };
+    return ok(url, init);
+  };
+  f.calls = calls;
+  return f;
+}
+/** Two finished turns in two seats, captured at distinct times, so the four items have a fixed order. */
+function fourItems() {
+  const w = world();
+  transcript(w, PANE, [u('q one'), a('first answer')]);
+  J.capturePass(O(w, { now: () => new Date('2026-09-22T11:00:00.000Z') }));
+  transcript(w, MAIN, [u('q two'), a('second answer')], 'C--main');
+  J.capturePass(O(w, { now: () => new Date('2026-09-22T11:00:01.000Z') }));
+  return w;
+}
+const KEYED = { AI_GATEWAY_API_KEY: KEY };
+
+test('a 503 on item 2 of 4 does NOT end the pass: items 1, 3 and 4 are asked in that same pass', async () => {
+  const w = fourItems();
+  const g = flaky((n) => (n === 2 ? 503 : null));
+  const r = await J.judgePass({ store: w.store, maxCalls: 10, env: KEYED, fetchImpl: g });
+  assert.strictEqual(g.calls.length, 4, 'every item was tried');
+  assert.strictEqual(r.asked, 3, JSON.stringify(r));
+  assert.strictEqual(r.failed.length, 1);
+  assert.strictEqual(rowsOf(w).length, 3, 'only the answered items have rows');
+});
+
+test('the failed item is retried on the NEXT pass, asked once it succeeds — and no answered item is ever re-sent', async () => {
+  const w = fourItems();
+  const g1 = flaky((n) => (n === 2 ? 503 : null));
+  const r1 = await J.judgePass({ store: w.store, maxCalls: 10, env: KEYED, fetchImpl: g1 });
+  const failedPrompt = g1.calls[1].state;
+  const g2 = flaky(() => null);
+  const r2 = await J.judgePass({ store: w.store, maxCalls: 10, env: KEYED, fetchImpl: g2 });
+  assert.strictEqual(g2.calls.length, 1, 'only the failed item is sent again');
+  assert.strictEqual(g2.calls[0].state, failedPrompt, 'and it is the one that failed');
+  assert.strictEqual(r2.asked, 1);
+  assert.strictEqual(rowsOf(w).length, 4);
+  const g3 = flaky(() => null);
+  await J.judgePass({ store: w.store, maxCalls: 10, env: KEYED, fetchImpl: g3 });
+  assert.strictEqual(g3.calls.length, 0, 'nothing answered is ever asked again');
+  assert.ok(r1.failed[0].key.includes(':'), 'the failure names the item');
+});
+
+test('a failed call consumes NO daily cap: it writes no ledger row, and callsToday counts only answered calls', async () => {
+  const w = fourItems();
+  await J.judgePass({ store: w.store, maxCalls: 10, env: KEYED, fetchImpl: flaky((n) => (n === 2 ? 503 : null)), now: () => new Date() });
+  assert.strictEqual(J.callsToday(w.store), 3);
+});
+
+test('a NETWORK failure and a 429 are skipped the same way as a 503', async () => {
+  const w = fourItems();
+  const g = flaky((n) => (n === 1 ? 'network' : n === 3 ? 429 : null));
+  const r = await J.judgePass({ store: w.store, maxCalls: 10, env: KEYED, fetchImpl: g });
+  assert.strictEqual(g.calls.length, 4);
+  assert.strictEqual(r.asked, 2);
+  assert.deepStrictEqual(r.failed.map((x) => x.status), ['network', 429]);
+});
+
+test('an AUTH failure (401) still ENDS the pass — it would fail every item the same way', async () => {
+  const w = fourItems();
+  const g = flaky((n) => (n === 1 ? 401 : null));
+  await assert.rejects(J.judgePass({ store: w.store, maxCalls: 10, env: KEYED, fetchImpl: g }), /HTTP 401/);
+  assert.strictEqual(g.calls.length, 1, 'no further calls after an auth failure');
+});
+
+test('the failure report carries the item key and the status, never the prompt text', async () => {
+  const w = fourItems();
+  const g = flaky((n) => (n === 2 ? 503 : null));
+  const r = await J.judgePass({ store: w.store, maxCalls: 10, env: KEYED, fetchImpl: g });
+  const text = JSON.stringify(r.failed);
+  assert.match(text, /503/);
+  assert.ok(!text.includes('first answer') && !text.includes('the method') && !text.includes('upstream unavailable'), text);
+});
+
 test('the per-pass cap holds: 3 finished turns, maxCalls 2 → exactly 2 calls', async () => {
   const w = world();
   transcript(w, PANE, [u('q'), a('one')]);

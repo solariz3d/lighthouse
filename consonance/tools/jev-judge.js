@@ -214,6 +214,7 @@ async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globa
   eligible.sort((x, y) => String(x.c.captured_at).localeCompare(String(y.c.captured_at)) || x.level.localeCompare(y.level));
   const batch = eligible.slice(0, maxCalls);
   let asked = 0, refused = 0;
+  const failed = [];
   for (const { c, level } of batch) {
     const prompt = c[level].prompt;
     const base = { ts: now().toISOString(), judge: 'jev', unverified: true, level, session_id: c.session_id, seat: c.seat,
@@ -230,13 +231,35 @@ async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globa
         refused++;
         continue;
       }
-      throw err;
+      // L078 — A FAILED CALL IS SKIPPED, NOT A STOP. Intermittent upstream 503s ended the whole pass, so every capture
+      // queued behind the first failure waited a full cadence (the librarian, 05:4x). A failure that is about THIS CALL
+      // — 5xx, 429, a network failure, an answer that does not fit the schema — is skipped; the item gets NO row (the
+      // `done` set is built from every row, so a row would retire it), so it is retried first on the next pass, and it
+      // consumes no daily cap (the cap counts `ok` rows). A failure that would hit EVERY call the same way — another
+      // 4xx: a bad key, a refused request — still ends the pass. The report carries the item key and the status only,
+      // never the error body (it can echo input), the prompt, or the key.
+      const status = transientStatus(err);
+      if (status === null) throw err;
+      failed.push({ key: `${c.session_id}:${c.turn_uuid}:${level}`, level, status });
+      continue;
     }
     asked++;
     fs.appendFileSync(ledgerPath, JSON.stringify({ ...base, status: 'ok', jev: r.answers, model: r.model, usage: r.usage,
       cost: r.cost, generationId: r.generationId, ms: r.ms }) + '\n');
   }
-  return { asked, refused, remaining: eligible.length - batch.length, captures: caps.length };
+  return { asked, refused, failed, remaining: eligible.length - batch.length, captures: caps.length };
+}
+
+/**
+ * The status of a failure that is about ONE call, or null when it would fail every call (and so must end the pass).
+ * jev-ask puts the HTTP status only in the message ("gateway returned HTTP 503: …", jev-ask.js:181).
+ */
+function transientStatus(err) {
+  if (!(err instanceof jev.GatewayError)) return null;
+  const m = /HTTP (\d{3})/.exec(err.message);
+  if (!m) return /request failed before a response/.test(err.message) ? 'network' : 'bad-answer';
+  const code = Number(m[1]);
+  return code >= 500 || code === 429 ? code : null;
 }
 
 /** OK rows today in this module's ledger — the runner adds them to the shadow's, so ONE daily cap covers both modes. */

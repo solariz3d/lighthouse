@@ -202,6 +202,23 @@ function judgeWorld(f) {
 const judged = (f) => { try { return fs.readFileSync(path.join(f.store, 'jev_judge.jsonl'), 'utf8').split('\n').filter(Boolean).map(JSON.parse); } catch { return []; } };
 const jopts = (f, jw) => ({ repo: jw.repo, dataDir: jw.data, projectsDir: jw.projects, disciplineDir: f.disc });
 
+test('L078: a failed judge call is LOGGED once per item (key + status), the pass goes on, and the runner keeps running', async () => {
+  const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
+  const ok = gateway();
+  let n = 0;
+  const g = async (url, init) => (++n === 1 ? { ok: false, status: 503, text: async () => 'upstream unavailable' } : ok(url, init));
+  try {
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), fetchImpl: g }));
+    await waitFor(() => judged(f).length >= 2);                  // the failed item came back on a later cadence
+    const lines = log(f).split('\n').filter((l) => /judge: item .* failed/.test(l));
+    assert.ok(lines.length >= 1, log(f));
+    assert.match(lines[0], /seat-1:a1:l[23] failed \(503\)/, lines[0]);
+    for (const bad of ['upstream unavailable', 'answer 1', 'question 1', 'method']) assert.ok(!log(f).includes(bad), `the log carried "${bad}"`);
+    assert.doesNotMatch(log(f), /stopped:/);
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
 test('JUDGE MODE runs inside the runner: a seat\'s finished turn is judged into jev_judge.jsonl, L2 and L3', async () => {
   const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
   try {

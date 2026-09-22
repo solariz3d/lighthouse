@@ -265,9 +265,15 @@ async function run(o) {
         const rest = b.judgeLeft;
         if (rest <= 0) { logCap(b, 'judge'); return; }
         return judgeMod.judgePass({ store, maxCalls: Math.min(cfg.maxCalls, rest), env, fetchImpl: cfg.fetchImpl })
-          .then((r) => log(r.asked || r.refused
-            ? `judge: asked ${r.asked}, refused ${r.refused}, remaining ${r.remaining}`
-            : `judge: nothing new to judge (${r.captures} turns captured so far)`))
+          .then((r) => {
+            // L078: a failed call no longer ends the pass. One line per failed item — its key and status, never the
+            // error body, the prompt or the key — and it is retried first on the next cadence.
+            for (const x of r.failed || []) log(`judge: item ${x.key} failed (${x.status}) — skipped, retried next cadence`);
+            const nFail = (r.failed || []).length;
+            log(r.asked || r.refused || nFail
+              ? `judge: asked ${r.asked}, refused ${r.refused}, failed ${nFail}, remaining ${r.remaining}`
+              : `judge: nothing new to judge (${r.captures} turns captured so far)`);
+          })
           .catch((e) => { if (e instanceof Refusal) judgeFailed(e); else log(`judge error (next cadence retries): ${e.message}`); });
       })
       .finally(() => { shadowBusy = false; });
