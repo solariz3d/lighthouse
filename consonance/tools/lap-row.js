@@ -509,6 +509,86 @@ function recordMax(tag) {
   return max;
 }
 
+/* EVERY LAP ID THE RECORD HOLDS FOR THIS TAG, not just the highest (2026-09-22). The floor guard needs the SET to
+ * tell its two causes apart, and `recordMax` only ever returned the top. Same anchored rule as recordMax: an id
+ * counts only at the START of a subject, because mid-subject text is prose. */
+function recordIds(tag) {
+  let out;
+  try {
+    out = execFileSync('git', ['-C', REPO, 'log', '--all', '--format=%s'],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+  } catch (e) {
+    throw new Error(`cannot read the record of lap ids: git log failed in ${REPO} ` +
+      `(${String(e.message).split('\n')[0]}). Refusing to mint blind.`);
+  }
+  const re = new RegExp(`^${tag}(\\d{3,})(?![0-9])`, 'gm');
+  const ids = new Set();
+  for (const m of out.matchAll(re)) ids.add(Number(m[1]));
+  return ids;
+}
+
+/* THE ATTIC COPIES BESIDE THIS LEDGER, oldest first. A sync install that replaced the ledger left the rows it
+ * displaced in `attic/pre-sync-<stamp>/lap.jsonl`; these are the only places a lost row can still be. Searched, and
+ * NAMED in whatever the guard says next — a diagnosis the reader cannot check is one they have to trust. */
+function atticLedgers() {
+  const dir = path.join(path.dirname(LEDGER), 'attic');
+  let entries = [];
+  try { entries = fs.readdirSync(dir).filter((d) => d.startsWith('pre-sync-')).sort(); } catch (_) { return []; }
+  return entries.map((d) => path.join(dir, d, 'lap.jsonl')).filter((p) => { try { return fs.statSync(p).isFile(); } catch (_) { return false; } });
+}
+
+/**
+ * Every lap id each attic copy holds: Map<id, [copies]>, and the list of copies searched.
+ *
+ * It reads ALL ids, not only the ones the record names, and that is the whole correction. My first build asked
+ * "is a RECORD id in a copy?", which would have missed the case that matters most: an attic copy holding a row the
+ * ledger lacks that no commit subject ever mentioned. That is a lost row whether or not git knows its name, and it
+ * is exactly the check the librarian ran tonight — "no id is missing from the ledger that any attic copy holds".
+ */
+function atticHolders() {
+  const copies = atticLedgers();
+  const held = new Map();
+  for (const p of copies) {
+    let text = '';
+    try { text = fs.readFileSync(p, 'utf8'); } catch (_) { continue; }
+    for (const line of text.split('\n')) {
+      if (!line.trim()) continue;
+      let o; try { o = JSON.parse(line); } catch (_) { continue; }
+      if (o && o.lap) held.set(String(o.lap), [...(held.get(String(o.lap)) || []), p]);
+    }
+  }
+  return { held, copies };
+}
+
+/**
+ * THE FLOOR GUARD'S DIAGNOSIS (2026-09-22, the two-cause repair).
+ *
+ * The ledger ending below the record has TWO causes, and until tonight this guard knew only one. It told every
+ * reader the ledger had been replaced at a sync install and its rows were in `attic/pre-sync-*` — a true story in
+ * L069's case and a false one in tonight's, where a commit subject named D118 for work that minted no row. The
+ * ledger had lost nothing; the instruction sent the reader to restore rows that never existed.
+ *
+ *   (a) SOME MISSING ID IS IN AN ATTIC COPY  -> rows really were lost. Refuse, and say which copy holds what.
+ *       If ANY id is held, (a) wins: minting over ids a copy still holds would bury the evidence of the loss.
+ *   (b) NO COPY HOLDS ANY OF THEM            -> named in a subject and never minted, or voided. Mint record+1,
+ *       skip the named ids, and put the skip IN THE ROW so the ledger explains itself later.
+ *
+ * Either way the evidence is named: the missing ids, and every copy searched. The point is not that the guard is
+ * right — it is that the next reader can check whether it is.
+ */
+function floorDiagnosis(tag, ledgerRows, rec) {
+  const have = new Set(ledgerRows.map((r) => String(r.lap || '')));
+  const { held, copies } = atticHolders();
+  // (a)'s evidence: any id an attic copy holds and the ledger does not, for THIS tag. Independent of the record,
+  // because a lost row is lost whether or not a commit ever named it.
+  const lost = [...held.keys()].filter((id) => id[0] === tag && !have.has(id)).sort();
+  // (b)'s evidence: ids the RECORD names, at or below the top, that the ledger lacks and no copy holds.
+  const neverMinted = [...recordIds(tag)].filter((n) => n <= rec && !have.has(tag + String(n).padStart(3, '0')))
+    .sort((a, b) => a - b).map((n) => tag + String(n).padStart(3, '0')).filter((id) => !held.has(id));
+  const searched = copies.length ? copies.map((p) => path.basename(path.dirname(p))).join(', ') : '(none on this machine)';
+  return { held, copies, lost, neverMinted, searched, cause: lost.length ? 'lost-rows' : 'never-minted' };
+}
+
 // ---------------------------------------------------------------- the three writes
 
 function open({ initiator, entry, inquiry, guess, blind, now }) {
@@ -531,19 +611,40 @@ function open({ initiator, entry, inquiry, guess, blind, now }) {
     throw new Error('--guess is required. If the orchestrator genuinely has no prior, pass --guess none');
   }
   const all = rows();
-  const lap = mintId(all);
+  let lap = mintId(all);
   const rec = recordMax(lap[0]);
+  let skipped = null, skippedWhy = null;
   if (Number(lap.slice(1)) <= rec) {
     const top = lap[0] + String(rec).padStart(3, '0');
-    throw new Error(`refusing to mint ${lap}: the record already reaches ${top} (a git commit subject ` +
-      `in ${REPO}), but the ledger ${LEDGER} ends below it. The ledger was most likely replaced by an ` +
-      `older copy at a sync install (L069); its missing rows are in attic/pre-sync-*/lap.jsonl. ` +
-      `Restore them - never mint over the record.`);
+    const d = floorDiagnosis(lap[0], all, rec);
+    if (d.cause === 'lost-rows') {
+      // (a) UNCHANGED IN EFFECT, NOT IN EVIDENCE. The old message asserted this cause; this one shows its work.
+      const where = d.lost.map((id) => `${id} (in ${d.held.get(id).map((p) => path.basename(path.dirname(p))).join(', ')})`).join('; ');
+      throw new Error(`refusing to mint ${lap}: the record reaches ${top} (a git commit subject in ${REPO}) and the ` +
+        `ledger ${LEDGER} ends below it. ROWS WERE LOST: ${d.lost.length} id(s) the record holds are missing from the ` +
+        `ledger AND still present in an attic copy - ${where}.` +
+        (d.neverMinted.length ? ` (${d.neverMinted.join(', ')} are missing from every copy too, so those were named but never minted - but a lost row outranks them.)` : '') +
+        ` Copies searched: ${d.searched}. Restore the rows - never mint over the record.`);
+    }
+    // (b) THE RECORD RAN AHEAD OF A LEDGER THAT LOST NOTHING. Mint above the named id rather than reissue it: an id
+    // that appears in a commit subject has been used as a name, whatever the ledger says, and reusing it makes two
+    // different laps answer to one id. The skip goes in the ROW, not only in this message, because a message is read
+    // once and the ledger is read forever.
+    skipped = d.neverMinted;
+    skippedWhy = `named in a git commit subject in ${REPO} but never minted, and held by none of the attic copies ` +
+      `searched (${d.searched}); the ledger lost nothing, so the id is skipped rather than reissued`;
+    lap = lap[0] + String(rec + 1).padStart(3, '0');
+    console.error(`lap-row: the record reaches ${top} and the ledger ends below it, but NO attic copy holds ` +
+      `${d.neverMinted.join(', ')} - so nothing was lost. Copies searched: ${d.searched}. ` +
+      `Minting ${lap} and recording ${d.neverMinted.join(', ')} as skipped.`);
   }
   const g = (guess.length === 1 && normPath(guess[0]) === 'none') ? [] : guess;
   const row = append({
     lap, stage: 'open', at: now, initiator, entry, inquiry: String(inquiry).trim(),
     guess: g, blind: blind === true ? true : null, head: headSha(),
+    // Only present when the floor guard skipped an id, so an ordinary row is unchanged and a reader who meets
+    // `skipped` knows something happened that is worth the sentence beside it.
+    ...(skipped && skipped.length ? { skipped, skipped_why: skippedWhy } : {}),
   });
   // CHECKED AFTER THE WRITE, not before. Two panes opening a lap at once both read the same
   // ledger, so both mint the same id, and a pre-write check against that same snapshot cannot
@@ -1380,6 +1481,7 @@ if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
   normPath, isBroad, sealOf, rows, laps, open, map, opened, chain, voidLap, report, mintId, main,
+  floorDiagnosis, recordIds, atticLedgers,   // read-only: the floor guard's evidence, so a reader can check the diagnosis without minting
   deliveryStation, gateVerdict, verbFor, gateContext, stationOfPaneCwd,
   LEDGER, RATE_FLOOR, WINDOW, COMMIT_WINDOW, INITIATORS, ENTRIES, STATIONS, CHAIN_STAGES, FRESH_MAP_FLOOR_S,
   OPENED_GATED_STAGES,

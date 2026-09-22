@@ -1755,12 +1755,18 @@ const ledgerTo = (f, n) => fs.writeFileSync(f.ledger, Array.from({ length: n }, 
   JSON.stringify({ lap: `L${String(i + 1).padStart(3, '0')}`, stage: 'open', at: i + 1 })).join('\n') + '\n');
 const OPEN = { initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a/b.md'], now: 1000 };
 
-test('record: a ledger ending at L054 under a record at L065 REFUSES to mint L055, and appends nothing', () => {
-  withRecord(recordRepo(['L065 (2026-09-20) C: the lap the install erased']), (f) => {
+/* AMENDED 2026-09-22 (the two-cause repair). This test pinned the SINGLE-cause policy: ledger below the record was
+ * always "the install erased rows", so it always refused. That policy is what tonight proved wrong — with no attic
+ * copy there is no evidence of loss, and the refusal sent the reader to restore rows that never existed. The
+ * property the test was really protecting SURVIVES and is asserted here: an id the record already holds is never
+ * minted. What changed is the outcome for cause (b) — mint above the record instead of refusing. The refusal itself
+ * is still pinned, by the (a) test above, where a copy actually holds the missing rows. */
+test('record: a ledger at L054 under a record at L065, with NO attic copy, mints ABOVE the record and skips the gap', () => {
+  withRecord(recordRepo(['L065 (2026-09-20) C: the id no copy holds']), (f) => {
     ledgerTo(f, 54);
-    const before = fs.readFileSync(f.ledger);
-    assert.throws(() => f.mod.open(OPEN), /L055.*L065/s);
-    assert.ok(fs.readFileSync(f.ledger).equals(before), 'the refusal appended a row');
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L066', 'record+1, so no id the record holds is ever reissued');
+    assert.ok(row.skipped.includes('L065'), 'and the skipped id is recorded in the row');
   });
 });
 
@@ -1771,10 +1777,17 @@ test('record: the ledger level with the record mints the next id as before', () 
   });
 });
 
-test('record: minting an id the record ALREADY HOLDS is a reissue and refuses', () => {
+/* AMENDED 2026-09-22, same repair, same surviving property: NEVER REISSUE. Under the two-cause guard the tool no
+ * longer refuses here — it mints past the taken id — so what this test pins now is that L055 is not handed out
+ * twice, which is the thing the refusal existed to prevent. */
+test('record: an id the record ALREADY HOLDS is never reissued — the mint goes past it', () => {
   withRecord(recordRepo(['L055 (2026-09-11) A: taken']), (f) => {
     ledgerTo(f, 54);
-    assert.throws(() => f.mod.open(OPEN), /L055/);
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L056', 'L055 is taken in the record, so it must not be minted again');
+    assert.deepStrictEqual(row.skipped, ['L055']);
+    const written = fs.readFileSync(f.ledger, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+    assert.ok(!written.some((r) => r.lap === 'L055' && r.stage === 'open'), 'and no L055 open row was written');
   });
 });
 
@@ -1920,4 +1933,129 @@ test('generation: folding reads — it never rewrites, renames or reorders a led
   f.mod.report(0, () => {});
   assert.ok(fs.readFileSync(f.ledger).equals(before), 'a read path changed the ledger');
   f.cleanup();
+});
+
+// ---------------------------------------------------------------- the floor guard's TWO causes
+
+/* THE REPAIR (2026-09-22). The L070 guard refused every --open tonight with one diagnosis: "the ledger was
+ * replaced by an older copy at a sync install; its missing rows are in attic/pre-sync-*". It was RIGHT to refuse
+ * and WRONG about why. The real cause: a commit subject named D118 when no D118 had been minted, so the record
+ * ran ahead of a ledger that had lost nothing. The old message sent the reader to restore rows that do not exist.
+ * A check that names the wrong repair is worse than one that says nothing, so the guard now DISTINGUISHES:
+ *   (a) the ids the record holds and the ledger lacks ARE in an attic copy -> lost rows, refuse, restore.
+ *   (b) no attic copy holds them -> named-but-never-minted (or voided) -> mint record+1 and record the skip.
+ * Both outcomes must NAME THE EVIDENCE: which ids, and which attic copies were searched. */
+
+/** An attic copy beside the ledger, the way a sync install leaves one: <dir>/attic/pre-sync-<stamp>/lap.jsonl */
+function attic(f, stamp, ids) {
+  const d = path.join(f.dir, 'attic', `pre-sync-${stamp}`);
+  fs.mkdirSync(d, { recursive: true });
+  fs.writeFileSync(path.join(d, 'lap.jsonl'),
+    ids.map((i) => JSON.stringify({ lap: i, stage: 'open', at: 1 })).join('\n') + '\n');
+  return path.join(d, 'lap.jsonl');
+}
+
+test('floor (a): the missing ids ARE in an attic copy — refuse, and NAME the ids and the copy that holds them', () => {
+  withRecord(recordRepo(['L065 (2026-09-20) C: the lap the install erased']), (f) => {
+    ledgerTo(f, 54);
+    attic(f, '2026-09-20T10-00-00-000Z', ['L055', 'L065']);
+    const before = fs.readFileSync(f.ledger);
+    assert.throws(() => f.mod.open(OPEN), (e) => {
+      assert.match(e.message, /refusing to mint L055/);
+      assert.match(e.message, /L055/, 'the ids it looked for must be named');
+      assert.match(e.message, /pre-sync-2026-09-20T10-00-00-000Z/, 'the attic copy that HOLDS them must be named');
+      assert.match(e.message, /[Rr]estore/, 'cause (a) still sends the reader to restore');
+      return true;
+    });
+    assert.ok(fs.readFileSync(f.ledger).equals(before), 'a refusal appends nothing');
+  });
+});
+
+test('floor (b): TONIGHT — the record names an id no attic copy holds, so it is MINTED OVER, not restored', () => {
+  // The exact situation of 2026-09-22: the ledger ends at 117 with nothing lost, a commit subject named 118 for
+  // work that minted no row, and the only attic copy stops at 012. The old guard refused every --open here.
+  withRecord(recordRepo(['L118 (2026-09-22) B: the outside reader weakens the shared-prior confound']), (f) => {
+    ledgerTo(f, 117);
+    attic(f, '2026-09-09T14-59-05-515Z', ['L011', 'L012']);
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L119', 'record+1: the named id is skipped, never reissued');
+    assert.deepStrictEqual(row.skipped, ['L118'], 'the row itself records what was skipped');
+    assert.match(String(row.skipped_why), /never minted|no attic copy/i, 'and why, so the ledger carries its own explanation');
+  });
+});
+
+test('floor (b): with NO attic directory at all, the same repair applies — absence of copies is not evidence of loss', () => {
+  withRecord(recordRepo(['L118 (2026-09-22) B: no attic on this machine']), (f) => {
+    ledgerTo(f, 117);
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L119');
+    assert.deepStrictEqual(row.skipped, ['L118']);
+  });
+});
+
+test('floor: the MINT prints the evidence too — which ids were skipped and which copies were searched', () => {
+  withRecord(recordRepo(['L118 (2026-09-22) B: the id that was never minted']), (f) => {
+    const at = attic(f, '2026-09-09T14-59-05-515Z', ['L011']);
+    ledgerTo(f, 117);
+    const said = [];
+    const was = console.error;
+    console.error = (...a) => said.push(a.join(' '));
+    try { f.mod.open(OPEN); } finally { console.error = was; }
+    const all = said.join('\n');
+    assert.match(all, /L118/, 'the skipped id');
+    assert.match(all, /pre-sync-2026-09-09T14-59-05-515Z/, 'the copy that was searched and did NOT hold it');
+    assert.ok(at, 'the fixture wrote a copy to search');
+  });
+});
+
+test('floor: a ledger that is NOT behind the record still mints normally, with no skip recorded', () => {
+  withRecord(recordRepo(['L117 (2026-09-22) C: the record and the ledger agree']), (f) => {
+    ledgerTo(f, 117);
+    const row = f.mod.open(OPEN);
+    assert.strictEqual(row.lap, 'L118');
+    assert.strictEqual(row.skipped, undefined, 'nothing was skipped, so the row says nothing about skips');
+  });
+});
+
+test('floor: MIXED — one missing id is in an attic copy and another is not: the loss wins, and both are named', () => {
+  // The dangerous middle. If any missing id really is in a copy, rows were lost and minting over them would
+  // bury the very rows the copy still holds — so the refusal must win, and it must say which id is which.
+  withRecord(recordRepo(['L120 (2026-09-22) C: two causes at once']), (f) => {
+    ledgerTo(f, 117);
+    attic(f, '2026-09-20T10-00-00-000Z', ['L118']);      // L118 was lost; L119/L120 were never minted
+    assert.throws(() => f.mod.open(OPEN), (e) => {
+      assert.match(e.message, /L118/, 'the id an attic copy holds must be named');
+      assert.match(e.message, /pre-sync-2026-09-20T10-00-00-000Z/, 'and the copy that holds it — or the reader cannot check the diagnosis');
+      assert.match(e.message, /L119|L120/, 'the ids NO copy holds must be named too, as a different thing');
+      assert.match(e.message, /[Rr]estore/);
+      return true;
+    });
+  });
+});
+
+test('floor: MUTATION - collapse the two causes back into one and tonight\'s situation refuses again', () => {
+  // The single edit that undoes this repair: stop asking whether a copy holds the missing rows, and call every
+  // ledger-below-record a loss — which is what the guard did tonight, when it refused every --open and told the
+  // reader to restore rows that did not exist.
+  const src = fs.readFileSync(TOOL, 'utf8');
+  const needle = "cause: lost.length ? 'lost-rows' : 'never-minted'";
+  assert.strictEqual(src.split(needle).length - 1, 1, 'the two-cause line must exist exactly once, or this mutation tests nothing');
+
+  withRecord(recordRepo(['L118 (2026-09-22) B: the id named but never minted']), (f) => {
+    ledgerTo(f, 117);
+    attic(f, '2026-09-09T14-59-05-515Z', ['L011', 'L012']);   // holds nothing the ledger lacks: no loss
+
+    assert.strictEqual(f.mod.open(OPEN).lap, 'L119', 'control: the shipped code mints past the named id');
+    // AND PUT THE LEDGER BACK. The control just appended L119, which lifts the ledger ABOVE the record — so the
+    // mutant would meet a state where the guard never fires and would pass for the wrong reason. (It did, first run.)
+    ledgerTo(f, 117);
+
+    const mutant = path.join(f.dir, 'lap-row.collapse.js');
+    fs.writeFileSync(mutant, src.replace(needle, "cause: 'lost-rows'"));
+    process.env.LAP_LEDGER = f.ledger;
+    const M = require(mutant);
+    assert.throws(() => M.open({ ...OPEN, now: 2000 }), /[Rr]estore/,
+      'the collapsed guard refuses and sends the reader to restore rows no copy holds — the defect this repair fixes');
+    delete require.cache[require.resolve(mutant)];
+  });
 });
