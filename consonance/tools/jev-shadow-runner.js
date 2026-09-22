@@ -53,7 +53,52 @@ const jev = require('./jev-ask.js');
 const { Refusal } = jev;
 class AlreadyRunning extends Error { constructor(m) { super(m); this.exitCode = 3; } }
 
-const DEFAULTS = { captureMs: 3000, shadowMs: 10 * 60 * 1000, pidPollMs: 5000, maxCalls: 25, dailyCap: 600 };
+/* THE CAP, PARTITIONED (L074). The keeper handed the call to the librarian (librarian/2026-09-22.md, 04:0x): 2,000 calls a
+ * day IN ALL, 600 of them RESERVED for the shadow — judge mode's share is the other 1,400, so it can never starve the
+ * shadow, and the shadow's measurement (busiest measured day 535) never has to compete. Measured on L: ~55 judge calls an
+ * hour in an active lap at ~4,240 input tokens each; 2,000 a day is ~$0.36 at worst. The cap is a FUSE, not a budget.
+ * A partition, not a shared pool with a floor: each mode's limit is its own, and the total is checked on every call.
+ *
+ * RETENTION (L074): judge CAPTURES (the conversation text a verdict was made on, ~27 KB each, ~20 MB a day) are kept 14
+ * days and then deleted here; the verdict ROWS (jev_judge.jsonl: hashes, not text) are never touched. */
+const DEFAULTS = { captureMs: 3000, shadowMs: 10 * 60 * 1000, pidPollMs: 5000, maxCalls: 25, dailyCap: 2000, shadowReserve: 600,
+  retainDays: 14, pruneMs: 60 * 60 * 1000 };
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** What each mode may still spend today. The shadow's limit is its reserve; judge mode's is the rest; the total is the fuse. */
+function budget({ dailyCap, shadowReserve, shadowToday, judgeToday }) {
+  const total = dailyCap - shadowToday - judgeToday;
+  const shadowLimit = Math.min(shadowReserve, dailyCap);
+  const judgeLimit = Math.max(0, dailyCap - shadowReserve);
+  return {
+    shadowLeft: Math.max(0, Math.min(shadowLimit - shadowToday, total)),
+    judgeLeft: Math.max(0, Math.min(judgeLimit - judgeToday, total)),
+    totalLeft: Math.max(0, total), shadowLimit, judgeLimit,
+  };
+}
+
+/**
+ * Delete judge captures older than retainDays. ONLY files directly inside <store>/judge-captures ending in .json — no
+ * recursion, no directories, no links, and each path is checked to sit in that directory before it is unlinked. The age
+ * is the capture's own captured_at; a capture whose date cannot be read falls back to its file time.
+ */
+function pruneJudgeCaptures({ store, now = () => new Date(), retainDays = DEFAULTS.retainDays }) {
+  const dir = path.resolve(store, judgeMod.CAPTURES);
+  const res = { dir, pruned: 0, kept: 0, deleted: [] };
+  let entries = [];
+  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch { return res; }
+  const cutoff = now().getTime() - retainDays * DAY_MS;
+  for (const e of entries) {
+    if (!e.isFile() || !e.name.endsWith('.json')) continue;
+    const p = path.join(dir, e.name);
+    if (path.dirname(path.resolve(p)) !== dir) continue;          // never outside the capture directory
+    let t = NaN;
+    try { t = Date.parse(JSON.parse(fs.readFileSync(p, 'utf8')).captured_at); } catch { /* undated */ }
+    if (!Number.isFinite(t)) { try { t = fs.statSync(p).mtimeMs; } catch { continue; } }
+    if (t < cutoff) { fs.unlinkSync(p); res.pruned++; res.deleted.push(p); } else res.kept++;
+  }
+  return res;
+}
 
 function defaultStore(env = process.env) {
   if (!env.LOCALAPPDATA) throw new Refusal('LOCALAPPDATA is not set — the store lives at %LOCALAPPDATA%\\consonance\\jev-shadow');
@@ -133,7 +178,7 @@ async function run(o) {
   const env = { AI_GATEWAY_API_KEY: key };        // in memory only
   const base = { shellDir: cfg.shellDir, disciplineDir: cfg.disciplineDir, store };
   const timers = [];
-  let stopping = false, inFlight = Promise.resolve(), shadowBusy = false, capLoggedFor = null;
+  let stopping = false, inFlight = Promise.resolve(), shadowBusy = false;
   let resolveDone;
   const done = new Promise((r) => { resolveDone = r; });
 
@@ -147,7 +192,7 @@ async function run(o) {
 
   // ONE DAILY CAP, BOTH MODES (L071): the shadow's ok rows today plus judge mode's. Two caps would double the day's
   // worst case without anyone deciding it.
-  const callsToday = () => {
+  const shadowToday = () => {
     const today = new Date().toDateString();
     let n = 0;
     try {
@@ -156,7 +201,18 @@ async function run(o) {
         try { const r = JSON.parse(l); if (r.status === 'ok' && new Date(r.ts).toDateString() === today) n++; } catch {}
       }
     } catch {}
-    return n + judgeMod.callsToday(store, today);
+    return n;
+  };
+  const budgetNow = () => budget({ dailyCap: cfg.dailyCap, shadowReserve: cfg.shadowReserve,
+    shadowToday: shadowToday(), judgeToday: judgeMod.callsToday(store, new Date().toDateString()) });
+  // One line per limit per day: which limit, so a stopped mode says WHY it stopped.
+  const capLogged = new Set();
+  const logCap = (b, mode) => {
+    const why = b.totalLeft <= 0 ? `daily cap of ${cfg.dailyCap} calls reached — no more calls today`
+      : mode === 'shadow' ? `shadow reserve of ${b.shadowLimit} reached — the rest of the day is judge mode's`
+      : `judge cap of ${b.judgeLimit} reached — the rest of the day is the shadow's reserve`;
+    const key = `${new Date().toDateString()}:${why}`;
+    if (!capLogged.has(key)) { capLogged.add(key); log(why); }
   };
 
   // JUDGE MODE state. Off, with its reason said ONCE, when it cannot run; the shadow never depends on it.
@@ -183,15 +239,14 @@ async function run(o) {
 
   const doShadow = () => {
     if (stopping || shadowBusy) return;
-    const left = cfg.dailyCap - callsToday();
-    if (left <= 0) {
-      const day = new Date().toDateString();
-      if (capLoggedFor !== day) { log(`daily cap of ${cfg.dailyCap} calls reached — no more calls today`); capLoggedFor = day; }
-      return;
-    }
+    const left = budgetNow().shadowLeft;
+    if (left <= 0) { logCap(budgetNow(), 'shadow'); /* judge mode may still run */ }
     shadowBusy = true;
-    inFlight = shadowMod.shadow({ ...base, maxCalls: Math.min(cfg.maxCalls, left), env, fetchImpl: cfg.fetchImpl })
+    inFlight = (left > 0
+      ? shadowMod.shadow({ ...base, maxCalls: Math.min(cfg.maxCalls, left), env, fetchImpl: cfg.fetchImpl })
+      : Promise.resolve({ asked: 0, refused: 0, remaining: 0, capped: true }))
       .then((r) => {
+        if (r.capped) return;
         if (r.asked || r.refused) log(`shadow: asked ${r.asked}, refused ${r.refused}, remaining ${r.remaining}`);
         // L071: an empty cadence said NOTHING, so an idle runner and a broken one read the same (L, 09-22: zero calls
         // for hours, and no way to tell why from the log). One line per empty cadence, with the count it found.
@@ -206,12 +261,9 @@ async function run(o) {
         // JUDGE MODE, after the shadow and inside the same cadence, so the two draw on one budget in turn and never
         // at the same moment. The cap is re-read here: the shadow may just have spent some of it.
         if (stopping || judgeOff) return;
-        const rest = cfg.dailyCap - callsToday();
-        if (rest <= 0) {
-          const day = new Date().toDateString();
-          if (capLoggedFor !== day) { log(`daily cap of ${cfg.dailyCap} calls reached — no more calls today`); capLoggedFor = day; }
-          return;
-        }
+        const b = budgetNow();
+        const rest = b.judgeLeft;
+        if (rest <= 0) { logCap(b, 'judge'); return; }
         return judgeMod.judgePass({ store, maxCalls: Math.min(cfg.maxCalls, rest), env, fetchImpl: cfg.fetchImpl })
           .then((r) => log(r.asked || r.refused
             ? `judge: asked ${r.asked}, refused ${r.refused}, remaining ${r.remaining}`
@@ -222,13 +274,22 @@ async function run(o) {
   };
 
   log(`started: app pid ${appPid}, capture every ${cfg.captureMs} ms, shadow every ${cfg.shadowMs} ms, `
-    + `at most ${cfg.maxCalls} calls a run and ${cfg.dailyCap} a day`);
+    + `at most ${cfg.maxCalls} calls a run and ${cfg.dailyCap} a day (${Math.min(cfg.shadowReserve, cfg.dailyCap)} reserved for the shadow), `
+    + `judge captures kept ${cfg.retainDays} days`);
+  const doPrune = () => {
+    try {
+      const r = pruneJudgeCaptures({ store, retainDays: cfg.retainDays });
+      if (r.pruned) log(`retention: pruned ${r.pruned} judge capture(s) older than ${cfg.retainDays} days from ${r.dir} (${r.kept} kept; the verdict rows are never pruned)`);
+    } catch (e) { log(`retention error (next hour retries): ${e.message}`); }
+  };
+  doPrune();
   doCapture();
   doShadow();
   // A stop during the FIRST pass (a capture that refuses at once) must not be followed by timers nobody clears:
   // found D104, when that case kept the process alive forever after it had logged "stopped".
   if (!stopping) {
     timers.push(setInterval(doCapture, cfg.captureMs));
+    timers.push(setInterval(doPrune, cfg.pruneMs));
     timers.push(setInterval(doShadow, cfg.shadowMs));
     timers.push(setInterval(() => { if (!isAlive(appPid)) stop('app closed'); }, cfg.pidPollMs));
   }
@@ -244,10 +305,13 @@ function parseArgs(argv) {
     else if (k === '--shadow-every') { a.shadowMs = num(k, v) * 1000; i++; }
     else if (k === '--max-calls') { a.maxCalls = num(k, v); i++; }
     else if (k === '--daily-cap') { a.dailyCap = num(k, v); i++; }
+    else if (k === '--shadow-reserve') { a.shadowReserve = num(k, v); i++; }
     else if (k === '--pid-poll-ms') { a.pidPollMs = num(k, v); i++; }
     else throw new Refusal(`unknown argument ${JSON.stringify(k)}`);
   }
   if (!a.appPid) throw new Refusal('--app-pid <pid> is required: the runner lives exactly as long as that process');
+  const cap = a.dailyCap || DEFAULTS.dailyCap, reserve = a.shadowReserve || DEFAULTS.shadowReserve;
+  if (reserve > cap) throw new Refusal(`the shadow reserve (${reserve}) is larger than the daily cap (${cap}) — the reserve is part of the cap, not added to it`);
   if (a.maxCalls && a.maxCalls > shadowMod.HARD_CAP) throw new Refusal(`--max-calls is at most ${shadowMod.HARD_CAP}`);
   return a;
 }
@@ -288,6 +352,6 @@ async function main(argv = process.argv.slice(2), env = process.env) {
   }
 }
 
-module.exports = { run, parseArgs, parseRegQuery, readUserEnv, defaultStore, dataDirOf, isAlive, DEFAULTS, Refusal, AlreadyRunning };
+module.exports = { run, parseArgs, parseRegQuery, readUserEnv, defaultStore, dataDirOf, isAlive, budget, pruneJudgeCaptures, DEFAULTS, Refusal, AlreadyRunning };
 
 if (require.main === module) main().then((code) => { process.exitCode = code; });

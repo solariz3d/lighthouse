@@ -49,7 +49,9 @@ function fakeApp() { return spawn(process.execPath, ['-e', 'setInterval(() => {}
 const opts = (f, app, extra = {}) => ({
   appPid: app.pid, store: f.store, shellDir: f.shell, disciplineDir: f.disc,
   env: { AI_GATEWAY_API_KEY: KEY }, readUserEnv: () => null, fetchImpl: gateway(),
-  captureMs: 30, shadowMs: 60, pidPollMs: 30, maxCalls: 25, dailyCap: 600, ...extra,
+  // dailyCap follows the runner's default (L074: 2,000 with 600 reserved for the shadow). At the old 600 the reserve
+  // would be the whole cap and judge mode would get nothing — A's judge-mode test went red on exactly that.
+  captureMs: 30, shadowMs: 60, pidPollMs: 30, maxCalls: 25, dailyCap: 2000, ...extra,
 });
 const waitFor = async (pred, ms = 5000) => { const t = Date.now(); while (!pred()) { if (Date.now() - t > ms) throw new Error('timed out'); await new Promise((r) => setTimeout(r, 20)); } };
 const log = (f) => { try { return fs.readFileSync(path.join(f.store, 'runner.log'), 'utf8'); } catch { return ''; } };
@@ -218,7 +220,9 @@ test('the DAILY cap holds across SHADOW and JUDGE together: shadow used cap-1 to
   fs.writeFileSync(path.join(f.store, 'shadow.jsonl'), [1, 2, 3, 4].map((i) => JSON.stringify({ ts: today, judge: 'l2', job_id: `old${i}`, status: 'ok' })).join('\n') + '\n');
   const g = gateway();
   try {
-    const h = await R.run(opts(f, app, { ...jopts(f, jw), fetchImpl: g, dailyCap: 5 }));
+    // L074: the cap is PARTITIONED (a shadow reserve, the rest judge's); with the new default reserve of 600 a 5-call
+    // day would give judge mode nothing. A small reserve keeps this test's question — total never exceeds the cap.
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), fetchImpl: g, dailyCap: 5, shadowReserve: 2 }));
     await waitFor(() => /daily cap/.test(log(f)));
     await new Promise((r) => setTimeout(r, 200));
     assert.strictEqual(g.calls.length, 1, 'one call left under the cap, whichever mode spends it');
@@ -257,6 +261,190 @@ test('a judge-mode REFUSAL mid-run (a hook function missing) turns judge mode of
     await waitFor(() => /judge mode off: cannot find/.test(log(f)));
     await waitFor(() => ledger(f).length === 1);              // the shadow still asked
     assert.doesNotMatch(log(f), /stopped:/, 'the runner must still be running');
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+// ------------------------------------------------------------------ THE CAP, PARTITIONED (L074)
+// The keeper's call via the librarian (04:0x): 2,000 calls a day in all, 600 of them RESERVED for the shadow, so judge
+// mode can never starve it. Measured: ~55 judge calls/hour in an active lap, ~4,240 tokens each; the cap is a fuse.
+
+test('CAP: the defaults are 2,000 a day with 600 reserved for the shadow', () => {
+  assert.strictEqual(R.DEFAULTS.dailyCap, 2000);
+  assert.strictEqual(R.DEFAULTS.shadowReserve, 600);
+});
+
+test('CAP: judge mode stops at 1,400 while the shadow still gets its 600', () => {
+  const b = R.budget({ dailyCap: 2000, shadowReserve: 600, shadowToday: 0, judgeToday: 1400 });
+  assert.strictEqual(b.judgeLeft, 0);
+  assert.strictEqual(b.shadowLeft, 600);
+});
+
+test('CAP: the shadow alone can use its 600 without judge mode losing any of its 1,400', () => {
+  const b = R.budget({ dailyCap: 2000, shadowReserve: 600, shadowToday: 600, judgeToday: 0 });
+  assert.strictEqual(b.shadowLeft, 0);
+  assert.strictEqual(b.judgeLeft, 1400);
+});
+
+test('CAP: the combined total never exceeds 2,000 — every interleaving of the two modes ends at exactly 600 + 1,400', () => {
+  let seed = 7;
+  const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+  for (let trial = 0; trial < 20; trial++) {
+    let s = 0, j = 0;
+    for (;;) {
+      const b = R.budget({ dailyCap: 2000, shadowReserve: 600, shadowToday: s, judgeToday: j });
+      assert.ok(s + j <= 2000, `total ${s + j} exceeded the cap`);
+      if (!b.shadowLeft && !b.judgeLeft) break;
+      const takeShadow = b.shadowLeft && (!b.judgeLeft || rnd() < 0.5);
+      const n = 1 + Math.floor(rnd() * 25);                      // a run asks up to 25
+      if (takeShadow) s += Math.min(n, b.shadowLeft); else j += Math.min(n, b.judgeLeft);
+    }
+    assert.deepStrictEqual([s, j], [600, 1400], `trial ${trial} ended at shadow ${s}, judge ${j}`);
+  }
+});
+
+test('CAP: a day ALREADY over budget under the old shared cap (judge 1,700) leaves the shadow only what the total allows', () => {
+  const b = R.budget({ dailyCap: 2000, shadowReserve: 600, shadowToday: 0, judgeToday: 1700 });
+  assert.strictEqual(b.judgeLeft, 0);
+  assert.strictEqual(b.shadowLeft, 300, 'the total is the fuse; the reserve cannot push the day past it');
+});
+
+test('CAP: a reserve larger than the cap is refused at the CLI', () => {
+  // Specific wording: the first draft matched /reserve/ and PASSED before the flag existed — the "unknown argument
+  // --shadow-reserve" refusal contains the word too.
+  assert.throws(() => R.parseArgs(['--app-pid', '1', '--daily-cap', '100', '--shadow-reserve', '200']),
+    /the shadow reserve \(200\) is larger than the daily cap \(100\)/);
+});
+
+test('CAP in the runner: judge mode AT its limit asks nothing, and the shadow still spends its reserve', async () => {
+  const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
+  for (const id of ['a', 'b', 'c', 'd', 'e']) { job(f, id); verdict(f, id); }
+  const today = new Date().toISOString();
+  fs.mkdirSync(f.store, { recursive: true });
+  // judge's limit with cap 5 / reserve 2 is 3; three judged rows today put it at that limit
+  fs.writeFileSync(path.join(f.store, 'jev_judge.jsonl'), [1, 2, 3].map((i) => JSON.stringify({ ts: today, status: 'ok', level: 'l2', session_id: 's', turn_uuid: `t${i}` })).join('\n') + '\n');
+  const g = gateway();
+  try {
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), fetchImpl: g, dailyCap: 5, shadowReserve: 2 }));
+    await waitFor(() => ledger(f).length >= 2);
+    await new Promise((r) => setTimeout(r, 300));
+    assert.strictEqual(ledger(f).length, 2, 'the shadow did not get exactly its reserve');
+    assert.strictEqual(judged(f).length, 3, 'judge mode asked past its limit');
+    // Which limit the log names depends on order: once the shadow has spent its 2 the day's TOTAL is also gone, and the
+    // runner rightly says "daily cap". The judge-cap wording is pinned below, where it is the only limit reached.
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+test('CAP in the runner: judge mode at its limit with the shadow idle says "judge cap … reached", not "daily cap"', async () => {
+  const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
+  const today = new Date().toISOString();
+  fs.mkdirSync(f.store, { recursive: true });
+  fs.writeFileSync(path.join(f.store, 'jev_judge.jsonl'), [1, 2, 3].map((i) => JSON.stringify({ ts: today, status: 'ok', level: 'l2', session_id: 's', turn_uuid: `t${i}` })).join('\n') + '\n');
+  const g = gateway();
+  try {
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), fetchImpl: g, dailyCap: 5, shadowReserve: 2 }));
+    await waitFor(() => /judge cap of 3 reached/.test(log(f)));
+    assert.doesNotMatch(log(f), /daily cap of 5 calls reached/, 'the day still has the shadow\'s 2 — it is not the total that stopped judge mode');
+    assert.strictEqual(g.calls.length, 0);
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+test('CAP in the runner: the SHADOW stops at its reserve even when the day has room — the rest is judge mode\'s', async () => {
+  // Found while planning the mutants: every other test would pass a shadow that spent the shared TOTAL instead of its
+  // own limit. Judge mode is idle here (no judge world), so only the partition can stop the shadow at 2.
+  const f = fixture(); const app = fakeApp();
+  for (const id of ['a', 'b', 'c', 'd', 'e']) { job(f, id); verdict(f, id); }
+  const g = gateway();
+  try {
+    const h = await R.run(opts(f, app, { fetchImpl: g, dailyCap: 5, shadowReserve: 2 }));
+    await waitFor(() => /shadow reserve of 2 reached/.test(log(f)));
+    await new Promise((r) => setTimeout(r, 200));
+    assert.strictEqual(g.calls.length, 2, 'the shadow spent past its reserve');
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+// ------------------------------------------------------------------ RETENTION (L074)
+// Judge CAPTURES (conversation text, ~27 KB each) are kept 14 days and then deleted by the runner; the verdict ROWS
+// (hashes, not text) are kept forever. The prune reads only <store>/judge-captures, and deletes only there.
+const DAY = 24 * 3600 * 1000;
+function retentionStore() {
+  const store = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-retain-'));
+  const caps = path.join(store, 'judge-captures');
+  fs.mkdirSync(caps, { recursive: true });
+  const now = Date.parse('2026-09-22T10:00:00.000Z');
+  const put = (dir, name, ageDays, extra = {}) => {
+    fs.mkdirSync(dir, { recursive: true });
+    const p = path.join(dir, name);
+    fs.writeFileSync(p, JSON.stringify({ captured_at: new Date(now - ageDays * DAY).toISOString(), ...extra }));
+    return p;
+  };
+  return { store, caps, now, put };
+}
+
+test('RETAIN: a capture older than 14 days is pruned; a fresh one is kept', () => {
+  const w = retentionStore();
+  const old = w.put(w.caps, 'old.json', 15), fresh = w.put(w.caps, 'fresh.json', 1);
+  const r = R.pruneJudgeCaptures({ store: w.store, now: () => new Date(w.now) });
+  assert.ok(!fs.existsSync(old), 'a 15-day-old capture survived');
+  assert.ok(fs.existsSync(fresh), 'a 1-day-old capture was pruned');
+  assert.strictEqual(r.pruned, 1);
+});
+
+test('RETAIN: the 14-day line — 14 days minus a minute is kept, 14 days plus a minute is pruned', () => {
+  const w = retentionStore();
+  const inside = w.put(w.caps, 'inside.json', 14 - 1 / 1440), outside = w.put(w.caps, 'outside.json', 14 + 1 / 1440);
+  R.pruneJudgeCaptures({ store: w.store, now: () => new Date(w.now) });
+  assert.ok(fs.existsSync(inside));
+  assert.ok(!fs.existsSync(outside));
+});
+
+test('RETAIN: no LEDGER row is ever pruned — the verdict ledgers are byte-identical after a prune', () => {
+  const w = retentionStore();
+  w.put(w.caps, 'old.json', 30);
+  const oldRow = JSON.stringify({ ts: new Date(w.now - 400 * DAY).toISOString(), status: 'ok', prompt_sha256: 'x' }) + '\n';
+  for (const f of ['jev_judge.jsonl', 'shadow.jsonl']) fs.writeFileSync(path.join(w.store, f), oldRow);
+  R.pruneJudgeCaptures({ store: w.store, now: () => new Date(w.now) });
+  for (const f of ['jev_judge.jsonl', 'shadow.jsonl']) assert.strictEqual(fs.readFileSync(path.join(w.store, f), 'utf8'), oldRow, `${f} changed`);
+});
+
+test('RETAIN: the prune never touches anything OUTSIDE the capture directory — and every path it deleted is inside it', () => {
+  const w = retentionStore();
+  w.put(w.caps, 'old.json', 30);
+  // Old files everywhere else: the store root, the SHADOW's captures, a sub-directory of judge-captures, a sibling dir.
+  const outside = [
+    w.put(w.store, 'runner.log.json', 30),
+    w.put(path.join(w.store, 'captures', 'l2'), 'job.json', 30),
+    w.put(path.join(w.caps, 'nested'), 'deep.json', 30),
+    w.put(path.join(w.store, '..', path.basename(w.store) + '-sibling'), 'x.json', 30),
+  ];
+  const r = R.pruneJudgeCaptures({ store: w.store, now: () => new Date(w.now) });
+  for (const p of outside) assert.ok(fs.existsSync(p), `the prune deleted ${p}, outside the capture directory`);
+  assert.ok(r.deleted.length === 1);
+  for (const p of r.deleted) assert.strictEqual(path.dirname(path.resolve(p)), path.resolve(w.caps), `deleted ${p} is not directly inside the capture dir`);
+});
+
+test('RETAIN: a capture with no readable captured_at falls back to its file time — never guessed young, never kept forever', () => {
+  const w = retentionStore();
+  const p = path.join(w.caps, 'undated.json');
+  fs.writeFileSync(p, 'not json at all');
+  const t = new Date(w.now - 20 * DAY);
+  fs.utimesSync(p, t, t);
+  R.pruneJudgeCaptures({ store: w.store, now: () => new Date(w.now) });
+  assert.ok(!fs.existsSync(p));
+});
+
+test('RETAIN in the runner: an old capture is pruned at start, and the log says how many', async () => {
+  const f = fixture(); const app = fakeApp();
+  fs.mkdirSync(path.join(f.store, 'judge-captures'), { recursive: true });
+  const old = path.join(f.store, 'judge-captures', 'old.json');
+  fs.writeFileSync(old, JSON.stringify({ captured_at: new Date(Date.now() - 30 * DAY).toISOString() }));
+  try {
+    const h = await R.run(opts(f, app));
+    await waitFor(() => !fs.existsSync(old));
+    assert.match(log(f), /retention: pruned 1 judge capture/);
     h.stop('test done'); await h.done;
   } finally { app.kill(); }
 });
