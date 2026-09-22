@@ -833,16 +833,21 @@ test('L038/A · every rewrite in this file EXPANDS its capture groups', () => {
     + 'the sweep exists');
 });
 
-test('L038/A · and the produced tree carries no $<digit> that is not regex source', () => {
-  /* A's oracle, aimed back at me. The sweep is over the PRODUCED tree rather than the source,
-   * because a rule that fired wrongly cannot hide there.
-   *
-   * ITS ONE LIMIT, STATED: a `$1` is treated as legitimate when its line also contains `replace(`.
-   * That is true of all four survivors today and it is a heuristic, not a proof — a broken rewrite
-   * that happened to land on a line containing the word `replace(` would pass. The unit assertion
-   * above is what actually pins the mechanism; this is the end-to-end control on it. */
-  const r = G.build('', { dry: true, allowDirty: true });
-  assert.ok(!r.refused, 'the build refused: ' + r.refused);
+/* The sweep, shared by the fixture test and the real-tree test below. `sourceOf(rel)` returns the
+ * text of the source the build produced `rel` from (the manifest's `from`, which for 40 of 344
+ * entries is NOT the produced path), or null when there is none.
+ *
+ * L080 — WHY THE OLD RULE WAS WRONG. It flagged any `$<digit>` on a line without `replace(`, and
+ * so read a price in prose as a group expansion. It went red on 2026-09-21 on three lines the build
+ * copied byte for byte, none made by any rewrite — e.g. consonance/tools/jev-shadow-runner.js:23,
+ * "…at about 10k input tokens and $0.000000042 a token: about $0.011 a run…" (also :59, and
+ * jev-ask.test.js:282). And it let through exactly the case its own comment named: a broken
+ * rewrite landing on a line containing `replace(`.
+ *
+ * THE RULE NOW: a `$<digit>` line is flagged unless it appears VERBATIM in its source — a line the
+ * build passed through untouched cannot be a broken expansion, because no expansion made it. Every
+ * line a rewrite changed is checked, `replace(` or not; a file with no source is checked in full. */
+function builtDollarLines(staging, sourceOf) {
   const bad = [];
   const walk = (d, rel) => {
     for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -850,12 +855,58 @@ test('L038/A · and the produced tree carries no $<digit> that is not regex sour
       if (e.isDirectory()) { walk(a, q); continue; }
       if (!/\.(js|md|rs|json|toml|html|css|ps1|py)$/.test(q)) continue;
       let text; try { text = fs.readFileSync(a, 'utf8'); } catch (_) { continue; }
+      const src = sourceOf(q);
+      const verbatim = new Set(src == null ? [] : src.split('\n'));
       text.split('\n').forEach((line, i) => {
-        if (/\$\d/.test(line) && !/replace\(/.test(line)) bad.push(q + ':' + (i + 1) + '  ' + line.trim().slice(0, 90));
+        if (/\$\d/.test(line) && !verbatim.has(line)) bad.push(q + ':' + (i + 1) + '  ' + line.trim().slice(0, 90));
       });
     }
   };
-  walk(r.staging, '');
+  walk(staging, '');
+  return bad;
+}
+
+test('L080 · the sweep catches a rewrite that emits a literal $1, and passes a price the build copied verbatim', () => {
+  /* A fixture tree made by a REAL broken rewrite — a callback return, which String.replace does not
+   * `$1`-expand: L038's exact defect. Four produced files:
+   *   a.md   the broken rewrite on prose                          -> must be flagged
+   *   b.js   the broken rewrite on a line that contains `replace(` -> must be flagged
+   *   c.js   a price and a regex replacement, copied verbatim     -> must NOT be flagged
+   *   gen.md a generated file with no source, carrying a $1       -> must be flagged (no source to excuse it) */
+  const broken = (s) => s.replace(/moved out of \S+ on (\S+)/, () => 'moved out of a sync directory on $1');
+  const src = {
+    'a.md': 'the repo moved out of OneDrive on 2026-07-28\n',
+    'b.js': "x.replace(/a/, 'b'); // the repo moved out of OneDrive on 2026-07-28\n",
+    'c.js': "// about $0.011 a run, ~$0.36 a day at worst\nconst y = s.replace(/(\\d+)/, '<$1>');\n",
+  };
+  const produced = { 'a.md': broken(src['a.md']), 'b.js': broken(src['b.js']), 'c.js': src['c.js'], 'gen.md': 'on $1\n' };
+  assert.ok(produced['a.md'].includes('on $1') && produced['b.js'].includes('on $1'),
+    'the fixture rewrite must actually emit a literal $1, or this test proves nothing');
+  const staging = fs.mkdtempSync(path.join(os.tmpdir(), 'gen-consumer-dollar-'));
+  try {
+    for (const [rel, body] of Object.entries(produced)) fs.writeFileSync(path.join(staging, rel), body);
+    const flagged = builtDollarLines(staging, (rel) => (rel in src ? src[rel] : null)).map((l) => l.split(':')[0]);
+    assert.deepStrictEqual(flagged.sort(), ['a.md', 'b.js', 'gen.md']);
+  } finally { fs.rmSync(staging, { recursive: true, force: true }); }
+});
+
+test('L038/A · and the produced tree carries no $<digit> that is not regex source', () => {
+  /* A's oracle, aimed back at me. The sweep is over the PRODUCED tree rather than the source,
+   * because a rule that fired wrongly cannot hide there.
+   *
+   * ITS LIMIT, STATED (L080): a `$<digit>` line is legitimate only when it is verbatim in the file
+   * the build produced it from (see builtDollarLines). The `replace(` heuristic it replaces read
+   * prices as expansions and passed a broken one on a `replace(` line. The unit assertion above
+   * pins the mechanism; this is the end-to-end control on it, and the L080 fixture proves it bites. */
+  const r = G.build('', { dry: true, allowDirty: true });
+  assert.ok(!r.refused, 'the build refused: ' + r.refused);
+  const from = new Map(G.collect().map((f) => [f.to.replace(/\\/g, '/'), f.from]));
+  const sourceOf = (rel) => {
+    const f = from.get(rel);
+    if (!f) return null;
+    try { return fs.readFileSync(path.join(REPO, f), 'utf8'); } catch (_) { return null; }
+  };
+  const bad = builtDollarLines(r.staging, sourceOf);
   assert.deepStrictEqual(bad, [], 'a broken group-expansion shipped:\n  ' + bad.join('\n  '));
   try { fs.rmSync(r.staging, { recursive: true, force: true }); } catch (_) {}
 });
