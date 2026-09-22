@@ -229,6 +229,27 @@
      "anchor": "quoting the withdrawn *\"only DECORRELATED reader\"* wording. **AND",
      "kind": "mention",
      "why": "the librarian's D095 collation naming B's hand-back as one of the unaccounted carriers. A census of a carrier, asserting nothing: the correction lives in the journal, not in this line. NOT `acknowledged`, although the librarian's ruling (librarian/2026-09-21.md, 02:54, routing (2)) proposed it: the README defines acknowledged as a claim deliberately LEFT STANDING, and this line does not stand it. The librarian consented to a row and asked for this kind test (the chair's L060 amendment). No marker added: the dated master is not edited."
+    },
+    {
+     "file": "exo_memory/loop/carrier_halflife_2026-09-22.md",
+     "anchor": "---|---|---|---|---| | \"only DECORRELATED reader\" | 2026-08-16 | ",
+     "kind": "mention",
+     "why": "E's half-life census: this is the LABEL CELL of a table row counting how many carriers still hold the wording (2 on the day, 22 today). It asserts nothing — the cell names the string being counted, which is what the README's `mention` kind is for (a census listing carriers). The row label for a DIFFERENT withdrawal (`light, not lifeguard`) sits on the very next line and has its own row under its own entry; anchoring each to its own wording is the correction of the librarian's second failed pass, which put a light-not-lifeguard row on an only-DECORRELATED line. E's file is not edited: the row accounts for the quote, it does not rewrite the record.",
+     "planted_by": "B, D-carrier 2026-09-22 (non-author of both flagged files; the chair landed 1f3d2d4 without running carrier-drift first)"
+    },
+    {
+     "file": "exo_memory/librarian/2026-09-22.md",
+     "anchor": "line whose wording was `only DECORRELATED`; my third, written as ",
+     "kind": "mention",
+     "why": "the librarian's 17:0x note recording its own withdrawn attempt at these rows, quoting the wording to describe the error it made (it had put a light-not-lifeguard row on a line whose wording was this one). An error report about a misclassification asserts nothing about the claim. Same class as the D095 collation row already filed as `mention`. The dated master is not edited.",
+     "planted_by": "B, D-carrier 2026-09-22 (non-author of both flagged files; the chair landed 1f3d2d4 without running carrier-drift first)"
+    },
+    {
+     "file": "exo_memory/handback/p-carrier-rows-B_2026-09-22.md",
+     "anchor": "r wording.** `:15` is `\"only DECORRELATED reader\"`, `:16` is `\"li",
+     "kind": "mention",
+     "why": "B's own carrier-rows hand-back, §1, naming which of three ADJACENT census-table rows belongs to which withdrawal — the trap that defeated the librarian's second pass. The line is a classification argument about other lines and asserts none of the three claims. Same kind, and the same reasoning, as the rows it is explaining. FILED BY ITS OWN AUTHOR, which is the point worth noticing: the repair for the report-mints-a-carrier recursion minted one, on the sentence that explains the recursion. The note added to that hand-back afterwards refers to the wordings by entry id and line number ONLY, so the accounting stops here instead of recursing a third time.",
+     "planted_by": "B, D-carrier 2026-09-22 — accounting for its OWN hand-back, same lap"
     }
    ]
   },
@@ -417,7 +438,7 @@
     },
     {
      "file": "exo_memory/handback/p-l039-read-C_2026-09-07.md",
-     "anchor": "raft:94-95** \u2014 *\"if you can't lose by saying it, suspect it\"* is pre",
+     "anchor": "raft:94-95** — *\"if you can't lose by saying it, suspect it\"* is pre",
      "kind": "withdrawal",
      "why": "L039 READ HAND-BACK, quoting the struck line IN ORDER TO REPORT IT as struck in the draft under review. RULED 2026-09-08 (L044, pane A): NOT `acknowledged`. The packet offered acknowledge-or-say-why, and the reason not to is structural rather than a preference -- `acknowledged` REQUIRES the file to carry the marker (carrier-drift.js:535), so acknowledging a hand-back means EDITING a dated trace to satisfy a scanner, which is the one thing the 2026-08-17 carrier law forbids. `withdrawal` is the kind the occurrence already is and needs no edit. Not made a TRACE_PREFIX either: a hand-back CAN assert a withdrawn claim as its own position, and the registry's own README warns that a rule excusing a whole file is green on the case it exists for. Per-site, not per-directory."
     },
@@ -435,7 +456,7 @@
     },
     {
      "file": "exo_memory/handback/p-installer-only_2026-09-08.md",
-     "anchor": "K 2026-08-30. `grep -n \"can't lose by saying\" \u2026 p-l039-read-C:77 \u2026is",
+     "anchor": "K 2026-08-30. `grep -n \"can't lose by saying\" … p-l039-read-C:77 …is",
      "kind": "mention",
      "why": "THE RULING APPLYING TO ITS OWN AUTHOR, same night. The L044 hand-back that ruled these occurrences `withdrawal` became a carrier of both wordings by naming the survivors and quoting the evidence lines; carrier-drift caught it on the re-run and RED went 2 -> 4. Registered by the seat that wrote it, 2026-09-08, rather than left for whoever runs the tool next -- a ruling whose author is exempt from it is the thing this registry exists to notice. The occurrence is the survivor list and the grep evidence, not an assertion."
     },
@@ -451,6 +472,41 @@
      "anchor": "sk: BOOT struck 'if you can't lose by saying it, suspect it' on 08-3",
      "kind": "withdrawal",
      "why": "the librarian's 01:23 entry recording that BOOT struck the wording on 08-30, and giving the ASK-008 repair in the same sentence. The occurrence IS correction text. The marker (ASK-008) is on the same line. NOT `acknowledged`, although the librarian's ruling proposed it (librarian/2026-09-21.md, 02:54, routing (2)): nothing here is left standing. The librarian consented to a row; the dated master is not edited (L060, B)."
+    },
+    {
+     "file": "exo_memory/loop/carrier_halflife_2026-09-22.md",
+     "anchor": "**27** | **never** | | \"can't lose by saying it\" | 2026-08-30 | 15 |",
+     "kind": "mention",
+     "why": "the same census table as the only-decorrelated row, one line down: the LABEL CELL of the row counting this wording's carriers (15 on the day, 25 today). A census listing carriers, asserting nothing. Filed under its own entry rather than its neighbour's, which is the whole point of anchoring per-wording.",
+     "planted_by": "B, D-carrier 2026-09-22 (non-author of both flagged files; the chair landed 1f3d2d4 without running carrier-drift first)"
+    },
+    {
+     "file": "exo_memory/loop/carrier_halflife_2026-09-22.md",
+     "anchor": "ical disguise — \"if you can't lose by saying it, suspect it.\" **That",
+     "kind": "withdrawal",
+     "why": "a verbatim excerpt of dev/shell/hooks/l2-overseer-worker.js:49 — the live judge prompt — reproduced as the EVIDENCE of E's finding, with the strike stated in the next sentence: **\"That is the struck form, verbatim, in the instruction given to a judge\" — struck on 2026-08-30 (ASK-008)**. The occurrence is quoted in order to report it as struck, so by the README's test it is correction text and not an assertion; the entry's own marker (`ASK-008`) is present at the site. Same judgement the existing p-battery-blind-E:274 row makes for the same shape. Not `marked`: the file does not assert the claim, it quotes another file asserting it.",
+     "planted_by": "B, D-carrier 2026-09-22 (non-author of both flagged files; the chair landed 1f3d2d4 without running carrier-drift first)"
+    },
+    {
+     "file": "exo_memory/loop/carrier_halflife_2026-09-22.md",
+     "anchor": "riers today grep -n -i \"can't lose by saying it\" dev/shell/hooks/l2-",
+     "kind": "mention",
+     "why": "the wording inside the `grep -n -i` command in E's REPRODUCTION block — the command that produced the finding. The README names this case in the kind's own definition (\"a census listing carriers, a grep command\"). Removing it would destroy the reproduction, which is the one thing a method section owes.",
+     "planted_by": "B, D-carrier 2026-09-22 (non-author of both flagged files; the chair landed 1f3d2d4 without running carrier-drift first)"
+    },
+    {
+     "file": "exo_memory/librarian/2026-09-22.md",
+     "anchor": "ASK-008 form — *\"if you can't lose by saying it, suspect it\"* — the ",
+     "kind": "withdrawal",
+     "why": "the librarian's own collation of E's census, quoting the struck form to report that l2-overseer-worker.js:49 still instructs a judge with it, naming it \"the **struck** ASK-008 form\" and giving the repaired wording in the same sentence (*\"if you'd have said it whether or not it were true, it carries no information\"*). It carries the correction, so it is correction text. Stronger than the D095 `mention` precedent, which named a carrier file without quoting the wording or supplying the repair. The dated master is not edited.",
+     "planted_by": "B, D-carrier 2026-09-22 (non-author of both flagged files; the chair landed 1f3d2d4 without running carrier-drift first)"
+    },
+    {
+     "file": "exo_memory/handback/p-carrier-rows-B_2026-09-22.md",
+     "anchor": "lifeguard\"`, `:17` is `\"can't lose by saying it\"` — three different ",
+     "kind": "mention",
+     "why": "B's own carrier-rows hand-back, §1, naming which of three ADJACENT census-table rows belongs to which withdrawal — the trap that defeated the librarian's second pass. The line is a classification argument about other lines and asserts none of the three claims. Same kind, and the same reasoning, as the rows it is explaining. FILED BY ITS OWN AUTHOR, which is the point worth noticing: the repair for the report-mints-a-carrier recursion minted one, on the sentence that explains the recursion. The note added to that hand-back afterwards refers to the wordings by entry id and line number ONLY, so the accounting stops here instead of recursing a third time.",
+     "planted_by": "B, D-carrier 2026-09-22 — accounting for its OWN hand-back, same lap"
     }
    ]
   },
