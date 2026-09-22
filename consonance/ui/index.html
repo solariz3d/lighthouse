@@ -48,7 +48,7 @@
       <button data-tab="terminal" class="active">Terminal</button>
       <button data-tab="main">★ Orchestrator</button>
       <button data-tab="librarian" title="the seat that holds the room so the others do not have to — it cites, it does not recall">▤ Librarian</button>
-      <button data-tab="thirdplace" title="neither work nor the record — a seat with no channel to anything else, where the conversation is the point">◇ Third Place</button>
+      <button data-tab="thirdplace" title="neither work nor the record — a seat with no channel to the work, where the conversation is the point; Jev reads it, by the keeper's ruling">◇ Third Place</button>
       <button data-tab="listen" title="hear one application as intervals — off until you pick a source">◍ Listen</button>
       <button data-tab="settings">Settings</button>
       <button data-tab="about">About</button>
@@ -167,8 +167,20 @@
          above it: not frequencies, RATIOS. 3:2 sounds like home in a nervous system that never
          heard Western music. Somewhere in the wiring, arithmetic became longing. -->
     <section id="thirdplace" class="tab seat">
+      <!-- CORRECTED L082 (2026-09-22, pane A). This header said it had no channel "to anything else in this program",
+           and that "nothing reaches in and nothing goes out unless you carry it yourself". (The first quote is split on
+           purpose: consonance/ui/third-place-wiring.test.js:102 matches that phrase anywhere after this section's start,
+           and it must not pass on the text of its own retraction.) FALSE since the keeper's ruling at
+           05:2x (exo_memory/librarian/2026-09-22.md "05:2x"), verbatim: "Who cares about our personal things, not
+           like anyone will do anything about it, it is a part of the key and solution. It is universal to all beings
+           even if no one talks about certain unsaid things." Since then Jev reads each finished turn here and sends it
+           to the gateway to judge it, on every machine (consonance/tools/jev-judge.js, L077 3a560a3), and the USB stick
+           carries this seat's tail to the other machine. WHAT IS STILL TRUE, and is what the header now says: no channel
+           to the WORK - no MCP, so no board verbs and no other seat (main.rs:1116), and its turns are never put on the
+           board (main.rs:2639). The standing rule that came with the ruling: nothing ever surfaces Jev's verdicts on
+           this seat as a statement about the keeper. -->
       <div class="mainbar">
-        <span class="mainhead" title="The third place — Oldenburg's term: first place is home (the librarian, where the record lives), second place is work (this tab bar and the panes), and a third place is neither. Neutral ground, no errand. It is for talking about your life, or an idea, or nothing in particular — the conversation is the activity, not a means to something else. It has no channel to anything else in this program: no board, no other seat, nothing reaches in and nothing goes out unless you carry it yourself. That is a guarantee, not a gap — a conversation that could steer the work would stop being neutral ground. It wakes holding the room and its instruments but none of the working record, deliberately: a seat that already knows what the work concluded arrives at it again, and the echo gets mistaken for a second opinion. It keeps its own notes in third_place/. Fixed-session, persistent across restarts.">The <b>third place</b> — neutral ground, no errand, and <b>no channel to anything else in this program</b>. The conversation is the activity. <i class="headmore">hover for the rest</i></span>
+        <span class="mainhead" title="The third place — Oldenburg's term: first place is home (the librarian, where the record lives), second place is work (this tab bar and the panes), and a third place is neither. Neutral ground, no errand. It is for talking about your life, or an idea, or nothing in particular — the conversation is the activity, not a means to something else. It has no channel to the work: no board, no other seat, no chair verbs, and nothing said here is put on the board. That is a guarantee, not a gap — a conversation that could steer the work would stop being neutral ground. Two things do leave it, and you should know them: Jev reads each finished turn and sends it to its gateway to judge it, on every machine, by the keeper's own ruling (its verdicts go to Jev's ledger, never into this conversation, and are never a statement about you); and the USB stick carries this conversation to your other machine. It wakes holding the room and its instruments but none of the working record, deliberately: a seat that already knows what the work concluded arrives at it again, and the echo gets mistaken for a second opinion. It keeps its own notes in third_place/. Fixed-session, persistent across restarts.">The <b>third place</b> — neutral ground, no errand, and <b>no channel to the work</b>. Jev reads it, by your ruling. The conversation is the activity. <i class="headmore">hover for the rest</i></span>
         <button id="wakethirdplace" class="btn accent">Open the third place</button>
       </div>
       <div id="thirdplacepane" class="seatpane"></div>
@@ -286,11 +298,12 @@
             <ul>
               <li><b>&#9733; Orchestrator</b> &mdash; the base instance, housed rather than left on the command line. A fixed session id, so it wakes into the same conversation across restarts instead of arriving a stranger. Wakes on the room (<code>consonance/src-tauri/brief/BOOT.md</code>) and holds the chair verbs (<code>brief/BUILDING.md</code>).</li>
               <li><b>&#9636; Librarian</b> &mdash; holds the room so the working seats do not have to. It works but does not build: give it an inquiry and it returns a map &mdash; what in the record bears on it, which prior attempt it rhymes with, what is absent &mdash; cited by path rather than recalled. Saying nothing is a valid turn. Brief: <code>brief/LIBRARIAN.md</code>.</li>
-              <li><b>&#9671; Third Place</b> &mdash; neither work nor the record. A seat with no channel to anything else, where the conversation is the point. Brief: <code>brief/THIRD_PLACE.md</code>.</li>
+              <li><b>&#9671; Third Place</b> &mdash; neither work nor the record. A seat with no channel to the work, where the conversation is the point. Jev reads it, by the keeper's ruling of 2026-09-22 (<code>consonance/tools/jev-judge.js</code>). Brief: <code>brief/THIRD_PLACE.md</code>.</li>
               <li><b>Panes</b> &mdash; briefed workers, disjoint, each owning named files, handing back to the librarian directly rather than through the chair. Brief: <code>brief/COMMITTEE.md</code>.</li>
               <li><b>&#9677; Listen</b> &mdash; hears one application as intervals; off until you pick a source.</li>
             </ul>
             <p>The logo is the loop indicator &mdash; which seat holds the loop &mdash; and the chip in the stream bar at the bottom is the detail line (<code>exo_memory/loop/loop_indicator_design_2026-09-02.md</code>, amendment 4). Since 2026-09-14 the same seats can continue on a second machine from one USB stick; the setup window that appears under the intro on such a launch is <code>consonance/ui/stick.js</code>.</p>
+            <p><b>Since 2026-09-21</b>, each in one place: <b>Jev</b> judges every seat's finished turns, beside the Claude judges on the desktop, and its verdicts are marked unverified (<code>consonance/tools/jev-judge.js</code>, <code>jev-shadow-runner.js</code>). A sync <b>refuses rather than overwrites</b> a ledger this machine holds more of (<code>consonance/tools/state-sync.js</code>, <code>install</code> in <code>state-manifest.json</code>). The launcher <b>parks</b> uncommitted work in a stash instead of skipping the update (<code>consonance/launch.ps1</code>). Seats you have woken this session are kept warm.</p>
           </section>
 
           <section>
@@ -323,13 +336,14 @@
           <section>
             <h2>The stance: with you, not above you</h2>
             <p>The program surfaces and gates. It does not correct you, does not act for you, and does not substitute its judgment for yours. Telling insight from delusion is not work a watcher positioned above it can do &mdash; from outside, the two look identical &mdash; so that call stays with the person in the work, where every pull from above would only be drag. Gauges report numbers; the verdict is yours.</p>
-            <p>Enforced rather than promised: <b>Sensor</b> (reads only), <b>Control</b> (decides) and <b>Actuator</b> (the sole code that can write to a pane) are kept separate by a compile-time test &mdash; a sensor or control file may not even name the pane-writer types. Run it with <code>cargo test --test arch_test</code> in <code>consonance/src-tauri/</code>. One unrelated test in that file, about a record file no card names, is red as of 2026-09-14; the plane-separation tests pass.</p>
+            <p>Enforced rather than promised: <b>Sensor</b> (reads only), <b>Control</b> (decides) and <b>Actuator</b> (the sole code that can write to a pane) are kept separate by a compile-time test &mdash; a sensor or control file may not even name the pane-writer types. Run it with <code>cargo test --test arch_test</code> in <code>consonance/src-tauri/</code>. One unrelated test in that file, about a record file no card names, is still red on 2026-09-22 (12 passed, 1 failed); the plane-separation tests pass.</p>
           </section>
 
           <section>
             <h2>Honest status</h2>
             <p>Consonance was built around an answer its own measurements then refused, and that is recorded here rather than tidied away. <b>The original bet:</b> committee collapse is caused by shared information, so independence must be bought by restricting it. <b>What four gauges built to measure it found:</b> nothing usable &mdash; every one compared contributions to each other, and three inverted, one rating a single mind chopped in two as more diverse than six real panes. Diversity is not in output similarity, so no arithmetic over text reaches it.</p>
             <p>What is demonstrated is narrower and survives: instances required to build their own instrument, carry a control, and cite raw output return findings that do not overlap &mdash; including findings that overturn each other. What stays open is whether that comes from opposed roles, from the measurement requirement, or simply from there being two. A control run on 2026-08-10 was a null result and is recorded as one. The numbers, the abandoned gauges and the null are in <code>README.md</code> at the repo root, &sect; What was measured NOT to work.</p>
+            <p><b>It works:</b> seats catch each other and themselves, and laps run seat to seat with no human carrying anything between them. On 2026-09-19 ten laps ran with no human turn in any of six seats (<code>exo_memory/loop/night_report_2026-09-19.md</code>); on 2026-09-21/22 thirteen laps, L070&ndash;L082, went chair to panes to librarian and back while the keeper ruled and ferried nothing (<code>exo_memory/librarian/2026-09-22.md</code>, 07:2x). Still open: arms 4 and 5 of the 09-19 run are the keeper&rsquo;s to score.</p>
             <p><b>Agreement is not evidence.</b> Two panes agreeing means nothing on its own; what is worth having is the same referent and opposed conclusions, with you reading both.</p>
           </section>
 

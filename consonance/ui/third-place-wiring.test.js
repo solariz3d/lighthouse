@@ -99,7 +99,9 @@ t('the tab says what the seat CANNOT reach — the guarantee is the feature', ()
   // The brief's strongest line is "You are not a way in." If that survives only in the brief the
   // instance reads, the person clicking the tab never learns it.
   const sec = html.slice(html.indexOf('<section id="thirdplace"'));
-  assert.match(sec, /no channel to anything else/i, 'the header must state the isolation');
+  // Contract changed by the keeper's 2026-09-22 05:2x ruling (Jev reads the Third Place): the isolation that holds is from the WORK.
+  assert.match(sec, /no channel to the work/i, 'the header must state the isolation that holds (no board, no seat)');
+  assert.match(sec, /Jev reads/i, 'and what does leave it: Jev reads it, by the keeper\'s ruling');
   assert.match(sec, /none of the working record/i, 'the header must state what it deliberately lacks');
 });
 
