@@ -53,14 +53,14 @@ own row in the address table. Briefs ship inside the binary
 |---|---|---|---|
 | **Orchestrator** | `BUILDING.md`, `COMMITTEE.md` | `spawn_main` | holds the chair verbs, plans a lap, dispatches panes, commits what the librarian collated |
 | **Librarian** | `LIBRARIAN.md` | `spawn_librarian` | a persistent seat holding the whole corpus so the working seats do not have to; returns a **map**, cites rather than recalls |
-| **Third Place** | `THIRD_PLACE.md` | `spawn_third_place` | deliberately holds no map of the build; not a working seat |
+| **Third Place** | `THIRD_PLACE.md` | `spawn_third_place` | deliberately holds no map of the build; not a working seat. Since 2026-09-22 its turns ARE read by Jev, by the keeper's ruling: see [Jev](#jev-a-second-judge-on-every-machine) |
 | **Committee panes** | `COMMITTEE.md` | `committee_form`, `spawn_sibling` | briefed, disjoint, each owning named files |
 | **Listen** | — (Rust) | `audio_start` | the audio layer: `src-tauri/src/listen.rs`, `cochlea.rs`, `cochlea_service.rs`, `nowplaying.rs` |
 
 Command names above are the Rust `#[tauri::command]` functions — the canonical list is the
 `invoke_handler` block in [`src-tauri/src/main.rs`](src-tauri/src/main.rs):
 
-    grep -c '^#\[tauri::command\]' consonance/src-tauri/src/main.rs        # 46
+    grep -c '^#\[tauri::command\]' consonance/src-tauri/src/main.rs        # 47
     sed -n '/invoke_handler(tauri::generate_handler!/,/])/p' consonance/src-tauri/src/main.rs
 
 ### Panes come back into their own conversation, or a row says why not
@@ -146,14 +146,18 @@ readable and panes can catch each other. `chair_phase` moves it.
 
 ## The instruments
 
-59 non-test tools under [`tools/`](tools/), each with a `.test.js` beside it (two also carry a `.mutants.js`):
+71 non-test tools under [`tools/`](tools/). 66 have a `.test.js` beside them and four also carry a `.mutants.js`. **Five have
+no test of their own**: `curate.js`, `dispatch-gate-report.js`, `l039-power.js`, `open-items.js`, `pane-status.js`.
 
-    ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # 59
-    ls consonance/tools/*.test.js | wc -l                                            # 68
+    ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js' | wc -l   # 71
+    ls consonance/tools/*.test.js | wc -l                                            # 82
+    ls consonance/tools/*.mutants.js | wc -l                                         # 4
+    for f in $(ls consonance/tools/*.js | grep -v '\.test\.js' | grep -v '\.mutants\.js'); do
+      [ -f "${f%.js}.test.js" ] || echo "$f"; done                                  # the five
 
-Three of the 59 are shapes **wired to nothing**, and each says so in its own header — a decision priced in
+Three of the 71 are shapes **wired to nothing**, and each says so in its own header. That was a decision priced in
 a registration, not an omission: `live-host.js`, `vantage-disposition.js`, `vantage-sealed-scope.js`
-(`grep -l "WIRED TO NOTHING" consonance/tools/*.js`).
+(`grep -l "WIRED TO NOTHING" consonance/tools/*.js | grep -v '\.test\.js'`).
 
 The ones a reader will actually want:
 
@@ -252,7 +256,7 @@ conversations, not forks. Four pieces, each with its file:
 - **The state set travels and both machines can prove they hold the same one** —
   `node consonance/tools/state-sync.js --push | --pull | --verify` over `consonance/state-manifest.json`;
   `node consonance/tools/state-manifest.js` answers *is any path unclassified* and *how big is TRAVELS* in one
-  run (59.3 MB and two unplaced paths at the time of writing — read it from a run).
+  run (66.8 MB TRAVELS and 0 UNDECIDED on L on 2026-09-22; read it from a run).
 - **The stick** — `dev/LEAVING.ps1` on the machine you leave, `dev/ARRIVING.ps1` on the one you reach
   (`ON-EXIT.ps1` is absorbed into the waiter). `dev/tail-carry.js` moves the conversations by delta;
   `dev/stick-apply.js` is the applier, with no window; `dev/stick-waiter.js` is started at every launch; and
@@ -272,6 +276,139 @@ in-flight file is refused); `tools/close.js` (prepare, gate, publish, and prove 
 (a dated entry with the time read from the clock — a typed stamp is refused); `tools/board-compact.js` and
 `tools/replay-check.js` (the board was 338 MB with 89% of its lines replay copies; compacted once, and every
 relaunch since is scored against a bound taken from the transcripts, never from the board).
+
+---
+
+## Landed 2026-09-21 → 2026-09-22
+
+Four additions. Each is described as it stands in the source tree; see the note at the top about the running binary.
+
+### Keep-warm: activated seats are pinged at 50 minutes idle
+
+The block starts at `src-tauri/src/main.rs:10168` (`1e47264`, L067; `0f40a0c`, L070).
+
+- A seat or pane **activated this session**, meaning one that has had at least one request since the app started, is
+  sent `[keep-warm, from the chair — not the keeper] Reply with exactly: ok` (`KEEP_WARM_TEXT`, `:10200`). This happens
+  once 50 minutes have passed since its last request started (`KEEP_WARM_AFTER`, `:10194`).
+- The check runs every 60 s (`KEEP_WARM_TICK`, `:10195`; `fn keep_warm_tick`, `:10472`).
+- A seat that was never spoken to this session is left alone. It waits to be spoken to (`:10352`).
+- The ping goes through `gate_or_queue` (`:10542`, the function at `:9604`), the same gate as every other delivery.
+- `fn keep_warm_decision` (`:10317`) skips a seat in each of these cases, and says why:
+  - it is switched off;
+  - a turn is running, or its idle signal is stale;
+  - **its composer is not empty, so it never types over the keeper**;
+  - it has no request start in its transcript;
+  - it was not activated;
+  - it has been under 50 minutes since its last request;
+  - it was pinged under 50 minutes ago and has not answered yet.
+- **The per-seat off switch** is `<data_dir>/keep-warm-off.json`, a JSON list of pane ids (`:10427`).
+- A seat that should have been pinged and was not gets a board row (`chair_audit`, `:10534`) naming the last skip
+  reason (`fn keep_warm_missed`, `:10409`).
+
+### Jev: a second judge, on every machine
+
+Jev is an outside model, reached through the Vercel AI Gateway (`tools/jev-ask.js`). It judges the same turns as the
+room's Claude judges, and nothing acts on its answer yet.
+
+**How it runs**
+- `start_jev_shadow` (`src-tauri/src/main.rs:11860`, called at `:12680` on every launch) starts
+  `tools/jev-shadow-runner.js`. The runner is windowless and exits by itself when the app's pid dies.
+- It is not a service or a scheduled task. It keeps one lock per store, so a second runner exits 3.
+- If node will not run, `persist.log` says `JEV SHADOW not started`.
+
+**Two modes, one process** (`jev-shadow-runner.js:1-65`)
+- **Judge mode, on every machine with no switch** (`tools/jev-judge.js`):
+  - Each live seat's finished turn is captured and judged at L2 and L3.
+  - The seats are Main, the librarian and the Third Place, with ids read from this checkout's `main.rs`, plus every row
+    of `<data>/panes.json`.
+  - If judge mode cannot run, it says so once in the log and the shadow carries on.
+- **Shadow mode** (`tools/jev-shadow.js`):
+  - Every 3 s it captures the job files the installed L2/L3 overseers judge, before the worker deletes them.
+  - Every 10 minutes it asks Jev about up to 25 of them, so that Jev's verdict sits beside Claude's for the same input.
+  - This is the agreement count being built on D.
+
+**Caps and retention** (`jev-shadow-runner.js:64`)
+- One daily cap covers both modes: **2,000 calls a day, 600 of them reserved for the shadow**, which leaves judge mode
+  1,400. The budget function is at `:69`.
+- Judge captures, which are the conversation text a verdict was made on, are **kept 14 days** and then deleted (`:62`,
+  `:85`).
+- Verdict rows hold hashes, not text, and are never pruned.
+- The store is `%LOCALAPPDATA%\consonance\jev-shadow` (`:104`), outside the data dir.
+
+**Failures skip and retry** (L078 `jev-judge.js:241` and `:257`; L079 `jev-shadow.js:168` and `:227`)
+- A 5xx, a 429, a network failure, or an answer that does not fit the schema skips **that item**. It gets no row and
+  one log line with the status and item id, and it is retried next cadence.
+- Any other 4xx ends the pass.
+- The two copies of the classification are held identical by a test (`jev-shadow.test.js`, "kept in step").
+
+**The key**
+- It is read only from `AI_GATEWAY_API_KEY`: the process environment, else the User environment read in-process
+  (`jev-shadow-runner.js:14`, `:143`).
+- It is held in memory, never put in argv, a file or the log, and scrubbed from any error message (`:361`).
+- With no key the runner refuses and exits 2.
+- `jev-ask.js` refuses to send text that matches a secret pattern.
+
+**Where the rows go**
+- Rows go to `<store>/jev_judge.jsonl`, each carrying `judge: "jev"` and `unverified: true` (`jev-judge.js:48`,
+  `:220`).
+- **They never go to `l2_overseer.jsonl` or `l3_overseer.jsonl`.** Jev does not touch the room's own judges.
+- The rows stay unverified until the shadow's pair count says how far Jev agrees with the Claude judges.
+
+**The Third Place is judged** (`jev-judge.js:32-40`)
+- This follows the keeper's ruling of 2026-09-22 05:2x (`exo_memory/librarian/2026-09-22.md`, "05:2x"). It retires the
+  earlier rule that kept it out; that rule stays struck in the header as a dated trace.
+- The rule that comes with the ruling binds **every** reader of `jev_judge.jsonl`: **nothing ever surfaces a Third
+  Place L3 verdict as a statement about the keeper.** Such a verdict is never an offramp and never a welfare note (the
+  never-pathologize card).
+- Its rows carry `seat: "third place"` so a consumer can honour this.
+
+### Park at launch: uncommitted work is stashed, not a reason to skip the pull
+
+The launch shortcut runs `launch.ps1`, which pulls before opening. The block is at `:239-264` and `:356-374` (`68bc625`,
+L073), and every rule is pinned by `consonance/launch.park.test.js`.
+
+- **Before:** tracked uncommitted changes made the launch refuse the pull. On 2026-09-22 at 00:35 a launch skipped 66
+  commits and opened an older tree.
+- **Now:**
+  1. The launch parks the changes in a named stash (`park <machine> <stamp> behind=<n>`) and fast-forwards
+     (`--ff-only`).
+  2. It re-applies the stash only when no parked path was touched by what arrived.
+  3. On an overlap, or a failed re-apply, the work stays whole in the stash and a notification names the stash and the
+     paths.
+- It never leaves conflict markers, never pushes, and makes no branch on origin.
+- One record is written per park, to `<git dir>\consonance-parked.jsonl`.
+
+### Install stops before it writes; append-only ledgers only fast-forward; `ledger-union.js`
+
+`tools/state-sync.js` installs the other machine's state set (`installTree`, `:1175`).
+
+**Why it changed:** an append-only ledger used to be *replaced* on install. The rows this machine had written since
+the last publish moved to `attic/pre-sync-*` and left the live file.
+
+**Now:**
+- **Fast-forward or refuse.** Each append-only ledger marked `"install": "fast-forward"` in `state-manifest.json` may
+  only grow. There are 11: board, lap, precompact, sessionstart-state, sourced_ledger, carrier-drift, ferry,
+  read_ledger, return_ledger, vantage_findings and resonance/atoms. `dispatch-gate.jsonl` is deliberately unmarked,
+  because its quarantine rewrites it (`b40c8d8`, L074).
+- **Comparison is row for row, not byte for byte** (`appendOnlyCompare`, `:1151`).
+- **Stop before write** (`6b9699b`, L070).
+  - Every ledger is checked **before the first byte**.
+  - If any would lose rows, the whole install is refused and **nothing is written**: no file, no attic copy (`:1195-1211`).
+  - The refused rows are named.
+  - A re-check runs right before each write (`:1257`).
+
+Check which files are marked:
+
+    grep -c '"install": "fast-forward"' consonance/state-manifest.json        # 11
+
+**`tools/ledger-union.js`** (L070–L076) recovers rows that the old replace-on-install had displaced.
+- It unions the live file with every `attic/pre-sync-*` copy and with the state set's copy.
+- **Two rows are the same only if every field is equal.** Nothing is renamed, and two generations of one lap id stay
+  two rows.
+- The **dry run is the default**. It writes the proposed union to `--out` and refuses an `--out` inside the data dir.
+- `--write --file <one>` rewrites one named live file and keeps the original beside it as
+  `<file>.pre-union-<stamp>`. It never touches an attic copy. It covers the same 11 ledgers (`FILES`, `:66-78`).
+- Board text is never printed.
 
 ---
 
