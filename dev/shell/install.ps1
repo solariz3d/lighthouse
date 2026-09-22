@@ -213,12 +213,23 @@ $register = @(
   # named the overseers. On D it still reports EXCLUDED BUT LIVE, which is the true, open state.
   @{ Event = 'Stop';             Rel = 'hooks\stop.js';               Runner = 'node';
      Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)' }
+  #
+  # WITHDRAWN FOR D, 2026-09-22 09:12 (D105; the keeper, verbatim: "Yes switch them off, only jev";
+  # exo_memory/librarian/2026-09-22.md "09:1x"). Jev is the only judge on every machine now, so the
+  # 09-21 answer above is kept as the dated trace it is and `LiveOn` is taken off both overseers:
+  # `Excluded` governs every machine, D included. No write path ever registered an Excluded entry, so
+  # this changes what -Check REPORTS on D (an overseer live there is EXCLUDED BUT LIVE again), never
+  # what a run writes. The two registrations were removed from D's settings.json by hand (D105). The
+  # worker files stay installed. The LiveOn mechanism below is left in place and now unused. The two
+  # entries as they stood until this ruling, verbatim:
+  #   @{ Event = 'Stop'; Rel = 'hooks\l2-overseer.js'; Runner = 'node'; Excluded = '...';
+  #      LiveOn = @('D'); LiveOnWhy = 'keeper 2026-09-21 ~10:05 - overseers stay live on D (loop/install_D_2026-09-21.md:3)' }
+  #   @{ Event = 'Stop'; Rel = 'hooks\l3-overseer.js'; Runner = 'node'; Excluded = '...';
+  #      LiveOn = @('D'); LiveOnWhy = 'keeper 2026-09-21 ~10:05 - overseers stay live on D (loop/install_D_2026-09-21.md:3)' }
   @{ Event = 'Stop';             Rel = 'hooks\l2-overseer.js';        Runner = 'node';
-     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)';
-     LiveOn = @('D'); LiveOnWhy = 'keeper 2026-09-21 ~10:05 - overseers stay live on D (loop/install_D_2026-09-21.md:3)' }
+     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603); on D too since keeper 2026-09-22 09:12 - only jev (D105)' }
   @{ Event = 'Stop';             Rel = 'hooks\l3-overseer.js';        Runner = 'node';
-     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603)';
-     LiveOn = @('D'); LiveOnWhy = 'keeper 2026-09-21 ~10:05 - overseers stay live on D (loop/install_D_2026-09-21.md:3)' }
+     Excluded = 'keeper 2026-09-06 06:55 - ready pair only (librarian/2026-09-06.md:603); on D too since keeper 2026-09-22 09:12 - only jev (D105)' }
   @{ Event = 'Stop';             Rel = 'sourced-stop.js';             Runner = 'node' }
   # The ready stamp's two halves. A manifest entry is not a registration — that lesson is written
   # twenty lines below in this same file, dated 2026-08-18, about two hooks that shipped and never

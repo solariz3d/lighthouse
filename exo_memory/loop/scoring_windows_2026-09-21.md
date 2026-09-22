@@ -36,3 +36,9 @@ window.** From 09-14 14:42 to 09-20 23:31 local, sessions that carried the leake
 where no worker ran (210 + 297 stranded). So the pre-install verdicts in the real ledgers come only from sessions that
 did NOT carry the leak. E's S_pre (last 300 one-message verdicts before install, 72.3%) is scored as registered; this
 selection is reported beside the ruling as a limit on what S_pre sampled, never used to re-choose it.
+
+**VOIDED 2026-09-22 ~09:12, on D, by the keeper's ruling** (to the librarian, verbatim): *"Yes switch them off, only jev"* —
+the Claude L0/L2 and L3 overseers are switched off on D, so both windows above stop receiving verdicts before they
+fill. **Neither is scored.** B's abstain window and E's L3 re-measure are VOID BY RULING, not failed and not passed;
+whatever verdicts landed before the switch-off stay in the ledgers as record. Context: the laptop night's note
+`loop/for_D_2026-09-22.md` (reminder box) and `librarian/2026-09-22.md` 07:5x; the goal is Jev alone.

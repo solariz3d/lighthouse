@@ -277,24 +277,32 @@ function liveStop(home, leaves) {
   fs.writeFileSync(path.join(home, '.claude', 'settings.json'), JSON.stringify(s, null, 2));
 }
 
-test('ON D, both overseers live read LIVE HERE BY RULING, not EXCLUDED BUT LIVE, and -Check is GREEN', () => {
+// WITHDRAWN 2026-09-22 (D105), and replaced by their inverses below: the two D099 cases here asserted
+// "ON D, both overseers live read LIVE HERE BY RULING ... -Check is GREEN" and "ON D, an overseer ABSENT
+// is RED: RULED LIVE HERE, NOT REGISTERED". The contract they pinned was the keeper's 2026-09-21 answer,
+// and the keeper withdrew it, 2026-09-22 09:12: "Yes switch them off, only jev"
+// (exo_memory/librarian/2026-09-22.md "09:1x"). Under that ruling both tests are verifiably wrong.
+test('ON D (D105), both overseers live are EXCLUDED BUT LIVE — the D answer is withdrawn, -Check is RED', () => {
   const repo = mkRepo(), home = mkHome();
   run(repo, home, [], 'D');
   liveStop(home, ['l2-overseer.js', 'l3-overseer.js']);
   const r = run(repo, home, ['-Check'], 'D');
-  assert.strictEqual(r.code, 0, 'on D the ruled state must check clean:\n' + r.out);
-  assert.ok(/LIVE HERE BY RULING/.test(r.out), 'the ruled state must be named:\n' + r.out);
-  assert.ok(!/EXCLUDED BUT LIVE/.test(r.out), 'an overseer live on D is not a contradiction there:\n' + r.out);
+  assert.notStrictEqual(r.code, 0, 'an overseer live on D is now against the ruling:\n' + r.out);
+  assert.ok(/EXCLUDED BUT LIVE/.test(r.out) && /l2-overseer\.js/.test(r.out) && /l3-overseer\.js/.test(r.out),
+    'naming both overseers:\n' + r.out);
+  assert.ok(!/LIVE HERE BY RULING/.test(r.out), 'no machine is ruled live any more:\n' + r.out);
 });
 
-test('ON D, an overseer ABSENT is RED: RULED LIVE HERE, NOT REGISTERED, since no run wires an Excluded entry', () => {
+test('ON D (D105), both overseers ABSENT are EXCLUDED BY RULING, correctly absent, and -Check is GREEN', () => {
   const repo = mkRepo(), home = mkHome();
   run(repo, home, [], 'D');
   const r = run(repo, home, ['-Check'], 'D');
-  assert.notStrictEqual(r.code, 0, 'a hook the keeper ruled live on D, missing on D, must not read green:\n' + r.out);
-  assert.ok(/RULED LIVE HERE, NOT REGISTERED/.test(r.out), 'and must say which state it is in:\n' + r.out);
+  assert.strictEqual(r.code, 0, 'on D the overseers switched off is the ruled state:\n' + r.out);
+  assert.ok(!/RULED LIVE HERE, NOT REGISTERED/.test(r.out), 'an absent overseer is not a red on D any more:\n' + r.out);
+  assert.ok(/EXCLUDED BY RULING/.test(r.out) && /l2-overseer\.js/.test(r.out) && /l3-overseer\.js/.test(r.out),
+    'and both are named as ruled out:\n' + r.out);
   assert.strictEqual(count(home, 'l2-overseer.js') + count(home, 'l3-overseer.js'), 0,
-    'and the bare run on D must still have registered NEITHER overseer — LiveOn never writes');
+    'and the bare run on D registered NEITHER overseer');
 });
 
 test('ON D, stop.js live is STILL EXCLUDED BUT LIVE — the answer named the overseers, not stop.js', () => {
