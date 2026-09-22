@@ -1426,6 +1426,165 @@ test('L074: dispatch-gate.jsonl (NOT marked — its quarantine rewrites it) is R
   assert.strictEqual(read(), rows('a'), 'an unmarked file installs by replacement, with its old copy in the attic');
 });
 
+// ── D114 · UNION AT LAUNCH ───────────────────────────────────────────────────────────────────────
+// Built to exo_memory/loop/union_at_launch_2026-09-22.md (E, D113, amended after A's §-ATTACK).
+// These sit ABOVE the summary on purpose: this runner exits at its own report, and tests below it never run (L071).
+
+const jl = (...objs) => objs.map((o) => JSON.stringify(o) + '\n').join('');
+const at = (n) => `2026-09-2${n}T00:00:00.000Z`;
+
+test('D114 the switch: ONLY the exact value `on` turns it on — unset, unknown and unparseable are today\'s behaviour', () => {
+  assert.strictEqual(M.unionAtLaunchOn({ CONSONANCE_UNION_AT_LAUNCH: 'on' }), true);
+  assert.strictEqual(M.unionAtLaunchOn({ CONSONANCE_UNION_AT_LAUNCH: ' ON ' }), true, 'case and space are not a decision');
+  for (const v of [undefined, '', 'off', '1', 'true', 'yes', 'ON!', 'maybe']) {
+    assert.strictEqual(M.unionAtLaunchOn({ CONSONANCE_UNION_AT_LAUNCH: v }), false, `"${v}" must be off`);
+  }
+});
+
+test('D114 PHASE 2(a) is a COUNT, not a SET: a duplicate the arriving copy holds twice and this machine holds once FAILS', () => {
+  // A's FATAL-1, measured on D: board.jsonl carries 7,514 duplicate rows. A presence test passes here while a row is
+  // dropped, which is why this is the one multiset guarantee the ARRIVING copy ever gets.
+  const r = { lap: 'L1', at: at(1) };
+  const j = M.phase2(jl(r), jl(r, r), 'at');
+  assert.strictEqual(j.ok, false, 'a set test would have passed this');
+  assert.strictEqual(j.kind, 'COUNT-SHORT');
+  assert.strictEqual(j.local, 1);
+  assert.strictEqual(j.arriving, 2);
+  assert.match(j.why, /a union cannot add/, '§10b: unioning again changes nothing, so it must say so');
+});
+
+test('D114 PHASE 2(a) passes when this machine holds at least as many of every row', () => {
+  const a = { lap: 'L1', at: at(1) }, b = { lap: 'L2', at: at(2) };
+  assert.strictEqual(M.phase2(jl(a, a, b), jl(a, a), 'at').ok, true);
+  assert.strictEqual(M.phase2(jl(a, b), jl(a, b), 'at').ok, true);
+});
+
+test('D114 PHASE 2(b): a keyless line the arriving copy holds and this machine does not REFUSES, naming the line', () => {
+  // A's FATAL-2. A fused line has no key at all, so no count can see it; 257 arrive on D today.
+  const a = { lap: 'L1', at: at(1) };
+  const j = M.phase2(jl(a), jl(a) + '{"lap":"L2"}{"lap":"L3"}\n', 'at');
+  assert.strictEqual(j.ok, false);
+  assert.strictEqual(j.kind, 'KEYLESS-ARRIVING');
+  assert.deepStrictEqual(j.lines, [2], 'the line number is what a person reads');
+});
+
+test('D114 PHASE 2(b): a keyless line this machine ALREADY holds is not a refusal (invalidNotInLive is what matters)', () => {
+  const a = { lap: 'L1', at: at(1) };
+  const fused = '{"lap":"L2"}{"lap":"L3"}\n';
+  assert.strictEqual(M.phase2(jl(a) + fused, jl(a) + fused, 'at').ok, true);
+});
+
+test('D114 §7.3: ANY row with no parseable time refuses the file — a threshold against a measured zero is a guess', () => {
+  const good = { lap: 'L1', at: at(1) };
+  assert.strictEqual(M.timeParseRefusal(jl(good), jl(good), 'at'), null);
+  assert.match(M.timeParseRefusal(jl(good, { lap: 'L2' }), jl(good), 'at'), /1 row\(s\) of the local copy/);
+  assert.match(M.timeParseRefusal(jl(good), jl(good, { lap: 'L2' }), 'at'), /1 row\(s\) of the arriving copy/);
+});
+
+test('D114 §4: a `started` receipt with no `finished` refuses the whole install and names the backup', () => {
+  const d = fs.mkdtempSync(path.join(tmp, 'dangle-'));
+  const rp = path.join(d, 'union_receipts.jsonl');
+  fs.writeFileSync(rp, jl(
+    { state: 'started', file: 'lap.jsonl', stamp: 'S1', backup: 'lap.jsonl.pre-union-S1', at: at(1) },
+    { state: 'finished', file: 'lap.jsonl', stamp: 'S1' },
+    { state: 'started', file: 'board.jsonl', stamp: 'S2', backup: 'board.jsonl.pre-union-S2', at: at(2) },
+  ));
+  const dang = M.danglingUnions(d, rp);
+  assert.strictEqual(dang.length, 1, 'the finished one is not dangling');
+  assert.strictEqual(dang[0].file, 'board.jsonl');
+  assert.strictEqual(M.danglingUnions(d, path.join(d, 'nope.jsonl')).length, 0, 'no receipts file is not a dangling union');
+});
+
+test('D114 countsByKey counts ROWS per key, so two identical rows are two', () => {
+  const { parseJsonl } = require(path.join(path.dirname(TOOL), 'ledger-union.js'));
+  const a = { lap: 'L1', at: at(1) };
+  const m = M.countsByKey(parseJsonl(jl(a, a, { lap: 'L2', at: at(2) })).rows);
+  assert.deepStrictEqual([...m.values()].sort(), [1, 2]);
+});
+
+/** The whole path, end to end: L publishes lap.jsonl, D holds a diverged copy, D pulls with --install. */
+function unionPull({ incoming, local, env }) {
+  const w = world({ 'lap.jsonl': incoming, 'letters.json': '{"A":"x"}' }, SHIPPED_MANIFEST());
+  const p = run(w, ['--push', '--no-remote']);
+  assert.strictEqual(p.code, 0, both(p));
+  execFileSync('git', ['-C', w.state, 'push', '-q', '-u', 'origin', 'main']);
+  const stateD = path.join(w.dir, 'stateD');
+  execFileSync('git', ['clone', '-q', w.bare, stateD]);
+  const dataD = path.join(w.dir, 'dataD');
+  const dst = path.join(dataD, 'lap.jsonl');
+  fs.mkdirSync(dataD, { recursive: true });
+  fs.writeFileSync(dst, local);
+  const r = run({ ...w, state: stateD, data: dataD }, ['--pull', '--install'],
+    { CONSONANCE_MACHINE: 'TESTD', ...(env || {}) });
+  const comp = () => { try { return JSON.parse(fs.readFileSync(path.join(dataD, M.COMPLETION_NAME), 'utf8')); } catch (_) { return null; } };
+  const receipts = () => { try { return fs.readFileSync(path.join(dataD, 'union_receipts.jsonl'), 'utf8').split('\n').filter(Boolean).map(JSON.parse); } catch (_) { return []; } };
+  return { r, dataD, read: () => fs.readFileSync(dst, 'utf8'), comp, receipts };
+}
+
+const A = { lap: 'L1', at: at(1) }, B = { lap: 'L2', at: at(2) }, C = { lap: 'L3', at: at(3) };
+
+test('D114 END TO END: with the switch ON a diverged ledger is MERGED, the install proceeds, and nothing is replaced', () => {
+  const u = unionPull({ incoming: jl(A, B), local: jl(A, C), env: { CONSONANCE_UNION_AT_LAUNCH: 'on' } });
+  assert.strictEqual(u.r.code, 0, both(u.r));
+  const after = u.read();
+  for (const row of [A, B, C]) assert.ok(after.includes(JSON.stringify(row)), `${JSON.stringify(row)} is missing after the union`);
+  assert.ok(fs.readdirSync(u.dataD).some((f) => f.startsWith('lap.jsonl.pre-union-')), 'the original must be kept beside it');
+  const c = u.comp();
+  assert.strictEqual(c.union.merged.length, 1, JSON.stringify(c.union));
+  assert.strictEqual(c.union.merged[0].action, 'INSTALLED-BY-UNION', 'a merged file is never reported as installed');
+  assert.ok(c.union.merged[0].distinct_rows_added >= 1, 'the count carries its unit in its name');
+});
+
+test('D114 END TO END: the same case with the switch OFF refuses exactly as today, and writes nothing', () => {
+  const u = unionPull({ incoming: jl(A, B), local: jl(A, C) });
+  assert.notStrictEqual(u.r.code, 0, both(u.r));
+  assert.strictEqual(u.read(), jl(A, C), 'the live file must be untouched');
+  assert.ok(!fs.readdirSync(u.dataD).some((f) => f.startsWith('lap.jsonl.pre-union-')), 'no union may have run');
+});
+
+test('D114 END TO END: the receipt is written, started before finished, with its units in the field names', () => {
+  const u = unionPull({ incoming: jl(A, B), local: jl(A, C), env: { CONSONANCE_UNION_AT_LAUNCH: 'on' } });
+  const rs = u.receipts();
+  assert.strictEqual(rs.length, 2, JSON.stringify(rs));
+  assert.strictEqual(rs[0].state, 'started', 'the started line goes BEFORE the freeze (§4) or the crash window is silent');
+  assert.strictEqual(rs[1].state, 'finished');
+  assert.strictEqual(rs[1].trigger, 'launch');
+  for (const k of ['distinct_rows_added', 'lines_caught_up', 'lines_reconciled', 'final_lines', 'backup_lines', 'backup_bytes',
+    'invalid_live', 'invalid_arriving', 'invalid_not_in_live']) assert.ok(k in rs[1], `the receipt lacks ${k}`);
+  assert.strictEqual(rs[1].verified, true);
+});
+
+test('D114 END TO END: PHASE 2 fails on an arriving duplicate, so the install is REFUSED and says what was merged', () => {
+  // The union runs and verifies, and the file is STILL short a copy — §10b, and the refusal must not pretend otherwise.
+  const u = unionPull({ incoming: jl(A, A, B), local: jl(A, C), env: { CONSONANCE_UNION_AT_LAUNCH: 'on' } });
+  assert.notStrictEqual(u.r.code, 0, both(u.r));
+  assert.match(both(u.r), /no file of the state set was installed/i);
+  assert.match(both(u.r), /a union cannot add/, 'the reason must be the count, not a verdict');
+});
+
+test('D114 END TO END: a dangling `started` receipt refuses the install before anything is read', () => {
+  const u = unionPull({ incoming: jl(A, B), local: jl(A, C), env: { CONSONANCE_UNION_AT_LAUNCH: 'on' } });
+  assert.strictEqual(u.r.code, 0, 'setup: the first pull merges');
+  fs.appendFileSync(path.join(u.dataD, 'union_receipts.jsonl'),
+    JSON.stringify({ state: 'started', file: 'lap.jsonl', stamp: 'CRASH', backup: 'lap.jsonl.pre-union-CRASH', at: at(9) }) + '\n');
+  const again = run({ ...u, state: path.join(path.dirname(u.dataD), 'stateD'), data: u.dataD, manPath: undefined },
+    ['--pull', '--install'], { CONSONANCE_MACHINE: 'TESTD', CONSONANCE_UNION_AT_LAUNCH: 'on', STATE_MANIFEST: undefined });
+  assert.notStrictEqual(again.code, 0, both(again));
+  assert.match(both(again), /a previous union did not finish|did not finish/i);
+});
+
+test('D114 an UNVERIFIED union is never merged, whatever PHASE 2 says (it survived its first mutant run untested)', () => {
+  const bad = { verified: false, missingLines: 3, missingRows: 1, backup: 'lap.jsonl.pre-union-S' };
+  const v = M.unionVerdict(bad, { ok: true });
+  assert.strictEqual(v.ok, false, 'the tool\'s own verify is the first gate');
+  assert.strictEqual(v.stage, 'verify');
+  assert.match(v.why, /3 missing line\(s\) and 1 missing row\(s\)/);
+  assert.match(v.why, /pre-union/, 'and it must say where the original is');
+  // and a verified union still has to pass PHASE 2
+  assert.strictEqual(M.unionVerdict({ verified: true }, { ok: false, kind: 'COUNT-SHORT', why: 'short' }).stage, 'phase2');
+  assert.strictEqual(M.unionVerdict({ verified: true }, { ok: true }).ok, true);
+});
+
 console.log('');
 console.log(`state-sync.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

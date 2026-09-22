@@ -284,14 +284,56 @@ function completeLines(buf, from) {
 }
 const asText = (ls) => ls.map((l) => `${l}\n`).join('');
 
-function writeUnion({ dataDir, name, time, hooks = {}, settleMs = 1500, now = () => new Date(), stateDir = null }) {
+/* ── THE LOCK (D114, union-at-launch §4, A's AMEND-3) ────────────────────────────────────────────
+ * `grep -c lock ledger-union.js` was 0: nothing stopped two unions of one file from interleaving, and the launch's own
+ * fallback prints a command a person can run INTO a running union. One lock per data dir, taken by `--write` AND by the
+ * launch phase. A lock whose pid is dead is taken over and the takeover is reported, the pattern jev-shadow-runner.js
+ * already uses. */
+const LOCK = 'union.lock';
+const alive = (pid) => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
+
+function takeUnionLock({ dataDir, name, now = () => new Date(), pid = process.pid }) {
+  const p = path.join(dataDir, LOCK);
+  const mine = JSON.stringify({ pid, file: name, at: now().toISOString() });
+  let stale = null;                                 // the dead holder, if we cleared one — the takeover is REPORTED
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      fs.writeFileSync(p, mine, { flag: 'wx' });
+      return stale ? { path: p, took: 'stale-takeover', stale: true, from: stale } : { path: p, took: 'fresh' };
+    } catch (e) { if (e.code !== 'EEXIST') throw e; }
+    let held = null;
+    try { held = JSON.parse(fs.readFileSync(p, 'utf8')); } catch (_) { /* unreadable: treat as stale */ }
+    if (held && held.pid && alive(held.pid)) {
+      throw new Error(`a union is already running (pid ${held.pid}, started ${held.at}, file ${held.file}). Close Consonance first, or wait for it to finish.`);
+    }
+    stale = held || { pid: null, why: 'the lock file could not be read' };
+    fs.unlinkSync(p);                               // stale: the holder is gone
+  }
+  fs.writeFileSync(p, mine, { flag: 'w' });
+  return { path: p, took: 'stale-takeover', stale: true, from: stale };
+}
+const releaseUnionLock = (lock) => { if (lock) { try { fs.unlinkSync(lock.path); } catch (_) {} } };
+
+/** One receipt line. Every count field carries its UNIT IN ITS NAME (union-at-launch §5, E's §10 walk). */
+function appendReceipt(receiptsPath, obj) {
+  if (!receiptsPath) return;
+  fs.mkdirSync(path.dirname(receiptsPath), { recursive: true });
+  fs.appendFileSync(receiptsPath, JSON.stringify(obj) + '\n');
+}
+
+function writeUnion({ dataDir, name, time, hooks = {}, settleMs = 1500, now = () => new Date(), stateDir = null,
+  trigger = 'hand', stateHead = null, receiptsPath = undefined, lock = undefined, machine = null }) {
   const st = resolveStateDir(stateDir);            // before anything is touched: an undeclared state set refuses
   const live = path.join(dataDir, name);
   const stamp = now().toISOString().replace(/[:.]/g, '-');
   const backup = `${live}.pre-union-${stamp}`;
   const tmp = `${live}.union-${stamp}.tmp`;
+  const receipts = receiptsPath === undefined ? path.join(dataDir, 'union_receipts.jsonl') : receiptsPath;
   for (const p of [backup, tmp]) if (fs.existsSync(p)) throw new Error(`${p} already exists — refusing: a record is never overwritten`);
+  // The caller may already hold the lock for a whole set of files (the launch does); `lock: null` says so.
+  const heldHere = lock === undefined ? takeUnionLock({ dataDir, name, now }) : null;
   const call = (k, ctx) => { if (hooks[k]) hooks[k](ctx); };
+  try {
 
   // (1) READ the complete lines. A partial last line is a writer mid-line; the catch-up takes it once it is whole.
   const first = completeLines(fs.readFileSync(live), 0);
@@ -326,6 +368,15 @@ function writeUnion({ dataDir, name, time, hooks = {}, settleMs = 1500, now = ()
   }
 
   // (4) FREEZE: the original is renamed to the backup beside it. From here it is the record and is only read.
+  //
+  // THE `started` LINE GOES FIRST (union-at-launch §4, A's AMEND-4). Between the rename and the link the ledger does
+  // not exist: a process killed there leaves no live file, the next launch's pre-scan has NOTHING to refuse, the
+  // arriving copy installs cleanly, and every local-only row sits in a `*.pre-union-*` nobody reads again. Not
+  // destroyed, and not recoverable by anyone who does not already know to look. This line is what makes that loud.
+  appendReceipt(receipts, {
+    at: now().toISOString(), machine, trigger, state_head: stateHead, state: 'started',
+    file: name, live, backup, stamp,
+  });
   fs.renameSync(live, backup);
   call('afterFreeze', { backup });
 
@@ -378,10 +429,38 @@ function writeUnion({ dataDir, name, time, hooks = {}, settleMs = 1500, now = ()
   for (const [l, n] of need) if ((have.get(l) || 0) < n) missingLines += n - (have.get(l) || 0);
   const keys = new Set(parseJsonl(asText(final)).rows.map((r) => r.key));
   const missingRows = u.rows.filter((r) => !keys.has(r.key)).length;
-  return {
+
+  // THE KEYLESS COUNTS, owed to the launch (union-at-launch §2b item 4): `invalidNotInLive` was computed per source and
+  // never returned. A line that does not parse has no key, so it is invisible to any key test however it is counted —
+  // and only the ARRIVING copy's can be lost, since the live file's own fused lines are lines in `out`.
+  const liveSrcParse = parseJsonl(asText(liveLines));
+  const stateSrc = u.perSource.find((s) => s.tag === 'STATE');
+  const backupBuf = fs.readFileSync(backup);
+  const backupLines = completeLines(backupBuf, 0).lines.length;
+  const r = {
     name, live, backup, gaps, liveLinesRead: liveLines.length, added: add.length, caughtUp, reconciled, partialCarried,
     finalLines: final.length, unionDistinct: u.rows.length, missingLines, missingRows, verified: missingLines === 0 && missingRows === 0,
+    invalidLive: liveSrcParse.invalid.length,
+    invalidArriving: stateSrc ? stateSrc.invalid.length : 0,
+    invalidNotInLive: stateSrc ? stateSrc.invalidNotInLive : 0,
+    invalidNotInLiveLines: stateSrc ? stateSrc.invalidNotInLiveLines.map((x) => x.line) : [],
+    // §3 item 3: the backup's size and line count AT THE END, so a later check can re-read that file and report any
+    // line a writer appended after the union closed — the one hole the protocol cannot close from inside.
+    backupBytes: backupBuf.length, backupLines,
   };
+  appendReceipt(receipts, {
+    at: now().toISOString(), machine, trigger, state_head: stateHead, state: 'finished',
+    file: name, live, backup: r.backup, stamp, gap_files: r.gaps,
+    // EVERY COUNT CARRIES ITS UNIT (§5, E's §10 walk): `added` is distinct keys by construction, caught-up and
+    // reconciled are lines. A receipt that silently mixes the two is A's FATAL-1 one file later.
+    distinct_rows_added: r.added, union_distinct_rows: r.unionDistinct, live_lines_read: r.liveLinesRead,
+    lines_caught_up: r.caughtUp, lines_reconciled: r.reconciled, lines_partial_carried: r.partialCarried,
+    final_lines: r.finalLines, missing_lines: r.missingLines, missing_union_rows: r.missingRows,
+    invalid_live: r.invalidLive, invalid_arriving: r.invalidArriving, invalid_not_in_live: r.invalidNotInLive,
+    backup_bytes: r.backupBytes, backup_lines: r.backupLines, verified: r.verified,
+  });
+  return r;
+  } finally { releaseUnionLock(heldHere); }
 }
 
 function main(argv) {
@@ -419,5 +498,6 @@ function main(argv) {
   return rc;
 }
 
-module.exports = { canon, parseJsonl, union, narrowKey, writeUnion, completeLines, FILES, fileSpec, timeOf };
+module.exports = { canon, parseJsonl, union, narrowKey, writeUnion, completeLines, FILES, fileSpec, timeOf,
+  takeUnionLock, releaseUnionLock, appendReceipt, LOCK };
 if (require.main === module) process.exit(main(process.argv.slice(2)));

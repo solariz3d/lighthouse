@@ -468,3 +468,38 @@ test('WRITE: a REAL concurrent writer process appending throughout loses no row'
   assert.deepStrictEqual(missing, [], `${missing.length} of ${n} concurrent rows were lost`);
   for (let i = 0; i < 50; i++) assert.ok(got.has(`a${i}`));
 });
+
+// ── D114 · THE LOCK (union-at-launch §4, A's AMEND-3) ────────────────────────────────────────────
+// Before this, `grep -c lock ledger-union.js` was 0: nothing stopped two unions of one file from interleaving, and the
+// launch's own fallback prints a command a person can run INTO a running union.
+const { takeUnionLock, releaseUnionLock, LOCK } = require('./ledger-union.js');
+
+test('D114 a second union of the same data dir is REFUSED while the first holds the lock', () => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'union-lock-'));
+  const first = takeUnionLock({ dataDir: d, name: 'lap.jsonl' });
+  assert.ok(fs.existsSync(path.join(d, LOCK)));
+  assert.throws(() => takeUnionLock({ dataDir: d, name: 'board.jsonl' }), /already running/i,
+    'a live holder must stop the second union, not be overwritten');
+  try {
+    takeUnionLock({ dataDir: d, name: 'board.jsonl' });
+  } catch (e) {
+    assert.match(e.message, new RegExp(String(process.pid)), 'the refusal names the pid that holds it');
+    assert.match(e.message, /Close Consonance first/, 'and tells the person what to do');
+  }
+  releaseUnionLock(first);
+  const again = takeUnionLock({ dataDir: d, name: 'lap.jsonl' });   // released: the next one may take it
+  assert.strictEqual(again.took, 'fresh');
+  releaseUnionLock(again);
+  fs.rmSync(d, { recursive: true, force: true });
+});
+
+test('D114 a lock whose holder is DEAD is taken over, and the takeover is reported', () => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'union-lock-'));
+  // a pid that cannot be running: the highest Windows pids are far below this, and process.kill(0) says so
+  fs.writeFileSync(path.join(d, LOCK), JSON.stringify({ pid: 2147483646, file: 'lap.jsonl', at: '2026-09-22T00:00:00.000Z' }));
+  const l = takeUnionLock({ dataDir: d, name: 'lap.jsonl' });
+  assert.strictEqual(l.stale, true, 'a stale lock must not stop a union forever');
+  assert.strictEqual(l.took, 'stale-takeover');
+  releaseUnionLock(l);
+  fs.rmSync(d, { recursive: true, force: true });
+});

@@ -843,12 +843,21 @@ function cmdPull(args) {
       writeStatus(DATA, STATE);
       return r.rc;
     }
-    counts = { installed_files: r.wrote, skipped_identical: r.skipped, displaced_files: r.displaced };
+    // `installed_files` keeps exactly its old meaning — the arriving bytes were written. A merged ledger is reported
+    // separately, because the two are different events and one number cannot carry both (§8). The word "installed" is
+    // never printed for a merged file; in the record it is INSTALLED-BY-UNION, and to a person it is "merged".
+    counts = { installed_files: r.wrote, skipped_identical: r.skipped, displaced_files: r.displaced,
+      union: r.union ? { attempted: r.union.attempted, succeeded: r.union.merged.length, failed: r.union.failed.length, ms: r.union.ms, merged: r.union.merged, failures: r.union.failed } : null };
     console.log(`  installed ${r.wrote} file(s) into ${DATA}; ${r.skipped} already identical; ${r.displaced} displaced file(s) kept at ${r.backup || '(none)'}`);
+    if (r.union && r.union.merged.length) {
+      console.log(`  ${r.union.merged.length} ledger(s) held rows only this machine had. They were merged, not replaced:`);
+      for (const m of r.union.merged) console.log(`    ${m.path} +${m.distinct_rows_added} rows  (merged in ${(m.ms / 1000).toFixed(1)}s)`);
+      console.log('  The originals are kept beside them, and each merged file was checked against the original that is kept beside it.');
+    }
 
     // AND NOW THE ONLY LINE THAT IS ENTITLED TO SAY THE SET ARRIVED. Everything above is this
     // process describing its own actions; reconcileInstall reads the destination. See its header.
-    rec = reconcileInstall(DATA, v);
+    rec = reconcileInstall(DATA, v, { state: STATE, merged: new Set((r.installedByUnion || []).map((m) => m.path)) });
     reportReconcile(rec);
     if (!rec.ok) {
       // EXIT 1, AND `installed: false`.
@@ -1140,6 +1149,119 @@ function installModeFor(rel, rules) {
 
 const INSTALL_MODES = ['fast-forward'];
 
+/* ══ UNION AT LAUNCH (D114) ══════════════════════════════════════════════════════════════════════
+ * Built to `exo_memory/loop/union_at_launch_2026-09-22.md` (E, D113, amended after A's §-ATTACK; blob e4b2e816).
+ * The seam is INSIDE installTree, between the pre-scan and the write loop, because that is the one place where the
+ * refusal set is already computed and nothing has been written yet.
+ *
+ *   PHASE 0  the pre-scan, unchanged. No refusals -> today's install.
+ *   PHASE 1  union each refused ledger, one at a time, in manifest order, under one lock.
+ *   PHASE 2  RE-JUDGE, and NOT with the pre-scan's test: a union interleaves rows, so the line-prefix test still says
+ *            DIVERGED after a perfect union. (a) per canonical key, local count >= arriving count — a COUNT, never a
+ *            set test (A's FATAL-1: board.jsonl holds 7,514 duplicate rows on D, so presence would pass while rows
+ *            were dropped). (b) the arriving copy's keyless lines must all be here already (A's FATAL-2).
+ *   PHASE 3  fall back to today's behaviour exactly: refuse, write nothing of the set, name the rows — reachable from
+ *            every failure, including a throw.
+ *   PHASE 4  the write loop, unchanged, skipping the files PHASE 2 passed.
+ *
+ * The switch is `CONSONANCE_UNION_AT_LAUNCH`, and ONLY the exact value `on` turns it on: unset, unparseable or unknown
+ * is today's behaviour. It has to be set for the APP (an HKCU user variable or launch.ps1), because main.rs spawns the
+ * pull without env_clear and a terminal export never reaches a shortcut launch (§1, A's NOTE-11).
+ */
+const LU = require('./ledger-union.js');
+
+const unionAtLaunchOn = (env = process.env) => String(env.CONSONANCE_UNION_AT_LAUNCH || '').trim().toLowerCase() === 'on';
+
+/** Count rows per canonical key. The unit is ROWS, not distinct keys — that distinction is the whole of A's FATAL-1. */
+function countsByKey(rows) {
+  const m = new Map();
+  for (const r of rows) m.set(r.key, (m.get(r.key) || 0) + 1);
+  return m;
+}
+
+/**
+ * PHASE 2 — is this machine now holding at least as much as the arriving copy would have given it?
+ * `{ ok: true }`, or the reason it is not, with the numbers rather than the verdict.
+ */
+function phase2(localText, arrivingText, time) {
+  const L = LU.parseJsonl(localText);
+  const A = LU.parseJsonl(arrivingText);
+  // (a) PER-KEY COUNTS. A set test is the special case where every count is 1, and these files are not that.
+  const lc = countsByKey(L.rows);
+  for (const [key, need] of countsByKey(A.rows)) {
+    const have = lc.get(key) || 0;
+    if (have < need) {
+      return { ok: false, kind: 'COUNT-SHORT', key, local: have, arriving: need,
+        // §10b: a deficit CANNOT be repaired by unioning again — union() adds one row per distinct key it lacks, so a
+        // second pass changes nothing. This file goes to a person; retrying is the degenerating move by name.
+        why: `a row is held ${have}× here and ${need}× in the arriving copy, and a union cannot add the ${need - have} ` +
+          `missing copy(ies): it writes one row per distinct key. This file needs a person, not another union. Key: ${key.slice(0, 120)}` };
+    }
+  }
+  // (b) KEYLESS LINES. A line that does not parse has no key at all, so it is invisible to any count.
+  const here = new Set(L.invalid.map((x) => x.hash));
+  const orphan = A.invalid.filter((x) => !here.has(x.hash));
+  if (orphan.length) {
+    return { ok: false, kind: 'KEYLESS-ARRIVING', lines: orphan.map((x) => x.line),
+      why: `the arriving copy holds ${orphan.length} line(s) that do not parse as JSON and are not here: ` +
+        `line(s) ${orphan.map((x) => x.line).slice(0, 20).join(', ')}${orphan.length > 20 ? ' …' : ''}. A fused line is never ` +
+        `merged — splitting one is a guess — so this file is refused and the lines are named to be read.` };
+  }
+  return { ok: true, local_rows: L.rows.length, arriving_rows: A.rows.length, keyless_here: L.invalid.length, keyless_arriving: A.invalid.length };
+}
+
+/**
+ * §7.3 (A's AMEND-6): refuse the file if ANY row of either copy has no parseable time. The interleave orders by
+ * `timeOf`, and A measured the population at 0.00% across all eleven files and both copies — a percentage threshold
+ * chosen against a measured zero is a guess with a percent sign.
+ */
+function timeParseRefusal(localText, arrivingText, time) {
+  const bad = (text, side) => {
+    const n = LU.parseJsonl(text).rows.filter((r) => !Number.isFinite(LU.timeOf(r.obj, time))).length;
+    return n ? `${n} row(s) of the ${side} copy have no parseable time field (${Array.isArray(time) ? time.join('|') : time})` : null;
+  };
+  return bad(localText, 'local') || bad(arrivingText, 'arriving');
+}
+
+/**
+ * Did this file's union earn INSTALLED-BY-UNION? Two gates, in order, and neither is the pre-scan's test:
+ * the tool's own verify (step 7), then PHASE 2 against the file as it now stands. Separate from the loop so that both
+ * refusals can be driven by a test — a branch no test can reach is a branch no mutant can be caught in (D114: this
+ * one survived its first mutant run for exactly that reason).
+ */
+function unionVerdict(r, j) {
+  if (!r.verified) {
+    return { ok: false, stage: 'verify',
+      why: `the union reported ${r.missingLines} missing line(s) and ${r.missingRows} missing row(s); the original is at ${r.backup}` };
+  }
+  if (!j.ok) return { ok: false, stage: 'phase2', kind: j.kind, why: j.why };
+  return { ok: true };
+}
+
+/**
+ * The launch-start scan (§4, A's AMEND-4): between the freeze and the link the ledger does not exist, and a process
+ * killed there leaves nothing for the next pre-scan to refuse — the arriving copy installs cleanly and the local-only
+ * rows sit in a backup nobody reads again. A `started` with no `finished` is that crash, and it refuses the install.
+ *
+ * DEVIATION FROM THE DESIGN'S LETTER, AND IT IS DELIBERATE — see the hand-back. §4 also says "or any stray
+ * `*.pre-union-*` beside a ledger" refuses. Taken literally that refuses EVERY install on D today: D106 left nine
+ * legitimate backups, kept on purpose by their own STAYS rules (L071/L076), written before this receipt file existed.
+ * A guard that fires forever on a correct state is not a guard. So a backup counts as stray ONLY when no `finished`
+ * receipt names it — which is exactly the crash signature, and is silent about backups made before receipts existed.
+ */
+function danglingUnions(DATA, receiptsPath = path.join(DATA, 'union_receipts.jsonl')) {
+  let lines = [];
+  try { lines = fs.readFileSync(receiptsPath, 'utf8').split('\n').filter(Boolean); } catch (_) { return []; }
+  const started = new Map();
+  const finished = new Set();
+  for (const l of lines) {
+    let r; try { r = JSON.parse(l); } catch (_) { continue; }
+    if (r.state === 'started') started.set(`${r.file}@${r.stamp}`, r);
+    if (r.state === 'finished') finished.add(`${r.file}@${r.stamp}`);
+  }
+  return [...started.entries()].filter(([k]) => !finished.has(k)).map(([, r]) => r);
+}
+
 /**
  * Compare two append-only files ROW FOR ROW, not byte for byte. A byte prefix is not a row prefix: a torn last row
  * (`{"lap":"L05`) is a byte prefix of `{"lap":"L058"}` and is still a different row, so a byte test would call it a
@@ -1204,12 +1326,86 @@ function installTree(DATA, STATE, v, over) {
     const x = installRefusal(f.path, cur, fs.readFileSync(src), ctx.rules);
     if (x) refused.push(x);
   }
-  if (refused.length) {
-    return { rc: 1, wrote: 0, displaced: 0, skipped: 0, notes, refused, backup: null,
-      why: `${refused.length} append-only file(s) would lose rows, so NOTHING WAS WRITTEN — no file of the set was ` +
-        `installed and this machine's data dir is exactly as it was: ${refusalWhy(refused)}` };
+  // ── PHASE 1-3 · UNION AT LAUNCH (D114) ────────────────────────────────────────────────────────
+  // Only when the switch is exactly `on`, and only over files the MANIFEST marks fast-forward (§7.4: the union step
+  // reads the manifest, never ledger-union's own list — two lists would drift and the drift would be found as a
+  // corrupted ledger). Every failure path below falls to PHASE 3, which is today's refusal, unchanged.
+  const union = { attempted: 0, merged: [], failed: [], ms: 0, on: unionAtLaunchOn(over && over.env ? over.env : process.env) };
+  const mergedPaths = new Set();
+  if (refused.length && union.on) {
+    const t0 = Date.now();
+    const dangling = danglingUnions(DATA);
+    if (dangling.length) {
+      return { rc: 1, wrote: 0, displaced: 0, skipped: 0, notes, refused, backup: null, union,
+        why: `a previous union did not finish: ${dangling.map((d) => `${d.file} (backup ${d.backup}, started ${d.at})`).join('; ')}. ` +
+          `NOTHING WAS WRITTEN. That backup holds rows the live file may not, and installing over it would hide them — read it first.` };
+    }
+    let lock = null;
+    try {
+      lock = LU.takeUnionLock({ dataDir: DATA, name: '(launch)' });
+      for (const x of refused) {
+        const spec = LU.fileSpec(x.path);
+        const mode = installModeFor(x.path, ctx.rules);
+        const why = x.kind === 'UNKNOWN-MODE'
+          ? `the manifest names install mode '${x.mode}', which this code does not implement — an unimplemented mode means the room does not know what these rows are (§7.1)`
+          : mode !== 'fast-forward' ? `the manifest does not mark it fast-forward (§7.4)`
+            : transformFor(x.path, ctx.rules) ? `it carries BOTH an install mode and an arrival transform, and the order is not designed (§7.2)`
+              : !spec ? `ledger-union has no spec for it, so no time field is known` : null;
+        if (why) { union.failed.push({ path: x.path, stage: 'eligibility', why }); continue; }
+
+        const arrivingPath = path.join(destRoot, x.path.split('/').join(path.sep));
+        const livePath = path.join(DATA, x.path.split('/').join(path.sep));
+        const arriving = fs.readFileSync(arrivingPath, 'utf8');
+        const tbad = timeParseRefusal(fs.readFileSync(livePath, 'utf8'), arriving, spec.time);
+        if (tbad) { union.failed.push({ path: x.path, stage: 'time', why: tbad }); continue; }
+
+        union.attempted++;
+        const f0 = Date.now();
+        let r;
+        try {
+          r = LU.writeUnion({ dataDir: DATA, name: spec.name, time: spec.time, stateDir: STATE,
+            trigger: 'launch', stateHead: v && v.head ? v.head : null, machine: over && over.machine ? over.machine : null, lock: null,
+            ...(over && over.writeUnionOpts ? over.writeUnionOpts : {}) });
+        } catch (e) {
+          union.failed.push({ path: x.path, stage: 'union', why: `the union threw and nothing of the set was installed: ${e.message}` });
+          continue;
+        }
+        const ms = Date.now() - f0;
+        // PHASE 2 — the re-judge, against the file as it now stands — behind the tool's own verify.
+        const j = r.verified ? phase2(fs.readFileSync(livePath, 'utf8'), arriving, spec.time) : { ok: false };
+        const verdict = unionVerdict(r, j);
+        if (!verdict.ok) { union.failed.push({ path: x.path, ms, backup: r.backup, ...verdict }); continue; }
+        mergedPaths.add(x.path);
+        union.merged.push({ path: x.path, action: 'INSTALLED-BY-UNION', distinct_rows_added: r.added,
+          lines_caught_up: r.caughtUp, lines_reconciled: r.reconciled, lines_partial_carried: r.partialCarried,
+          backup: r.backup, backup_lines: r.backupLines, backup_bytes: r.backupBytes,
+          invalid_live: r.invalidLive, invalid_arriving: r.invalidArriving, invalid_not_in_live: r.invalidNotInLive,
+          verified: r.verified, ms });
+      }
+    } catch (e) {
+      union.failed.push({ path: '(the union phase)', stage: 'lock', why: e.message });
+    } finally { LU.releaseUnionLock(lock); }
+    union.ms = Date.now() - t0;
   }
+
+  // PHASE 3 — anything still refused means the install is refused, exactly as today. What changed is that the report
+  // must say BOTH things, and the CHANGE goes first (§8, A's NOTE-10.2): a merged ledger GAINED rows, nothing was
+  // replaced, and "installed" is never printed for it.
+  const stillRefused = refused.filter((x) => !mergedPaths.has(x.path));
+  if (stillRefused.length) {
+    const mergedNote = union.merged.length
+      ? ` ${union.merged.length} ledger(s) here were merged before the stop (${union.merged.map((m) => m.path).join(', ')}) — they GAINED rows; nothing was replaced, and the originals are beside them.`
+      : '';
+    const failedNote = union.failed.length ? ` The union did not take ${union.failed.length} file(s): ${union.failed.map((f) => `${f.path} — ${f.why}`).join('; ')}` : '';
+    return { rc: 1, wrote: 0, displaced: 0, skipped: 0, notes, refused: stillRefused, backup: null, union,
+      why: `${stillRefused.length} append-only file(s) would lose rows, so NOTHING WAS WRITTEN — no file of the state set was ` +
+        `installed and this machine's data dir is exactly as it was: ${refusalWhy(stillRefused)}.${mergedNote}${failedNote}` };
+  }
+
   for (const f of v.index.files) {
+    // A file PHASE 2 passed is not installed: this machine already holds at least as much of it, and writing the
+    // arriving bytes over it would be the row loss the refusal exists to prevent. It is merged, never installed.
+    if (mergedPaths.has(f.path)) continue;
     const src = path.join(destRoot, f.path.split('/').join(path.sep));
     const dst = path.join(DATA, f.path.split('/').join(path.sep));
 
@@ -1281,7 +1477,10 @@ function installTree(DATA, STATE, v, over) {
     fs.writeFileSync(dst, want);
     wrote++;
   }
-  return { rc: 0, wrote, displaced, skipped, notes, refused: [], backup: madeBackup ? backup : null, why: null };
+  // `installed`/`wrote` keeps exactly what it has always meant — the arriving bytes were written — and a file repaired
+  // by union is NOT counted in it. Two different events; one number cannot carry both (§8).
+  return { rc: 0, wrote, displaced, skipped, notes, refused: [], backup: madeBackup ? backup : null, why: null, union,
+    installedByUnion: union.merged };
 }
 
 /** The one judgement, used by the pre-scan AND by the re-check before each write, so the two cannot disagree. */
@@ -1352,6 +1551,33 @@ function reconcileInstall(DATA, v, over) {
     // claim is re-derived instead: the transform's own postcondition, run against the destination.
     // That keeps the L055 law intact — the answer still comes from reading the destination, never
     // from the tool's record of having run.
+    // A MERGED PATH IS NOT RECONCILED BY ITS HASH EITHER, and for the same reason as a transformed one: it is SUPPOSED
+    // to differ from the index — a union adds this machine's own rows, so the file is longer than the copy that
+    // arrived, and hashing it would report a SHORTFALL on every successful merge (D114; caught by its own end-to-end
+    // test). The claim is re-derived from the destination instead, and the postcondition is PHASE 2 itself: the file on
+    // disk holds at least as many rows per canonical key as the arriving copy, and none of its keyless lines is
+    // missing. That keeps the L055 law intact — the answer still comes from reading the destination.
+    if (over && over.merged && over.merged.has(f.path)) {
+      const spec = LU.fileSpec(f.path);
+      const arriving = path.join((over && over.state) || '', 'data', f.path.split('/').join(path.sep));
+      let destText, arrivingText;
+      try { destText = fs.readFileSync(p, 'utf8'); } catch (_) {
+        missing.push({ path: f.path, kind: 'ABSENT', expected: 'a merged ledger', found: 'no such file in the data dir', where: p });
+        continue;
+      }
+      try { arrivingText = fs.readFileSync(arriving, 'utf8'); } catch (_) {
+        missing.push({ path: f.path, kind: 'UNION-UNCHECKABLE', expected: 'the arriving copy, to re-judge the merge against',
+          found: `cannot read ${arriving}`, where: p });
+        continue;
+      }
+      const j = phase2(destText, arrivingText, spec ? spec.time : 'ts');
+      if (!j.ok) {
+        missing.push({ path: f.path, kind: 'UNION-SHORT', expected: 'every arriving row, counted with multiplicity',
+          found: j.why, where: p });
+      }
+      continue;
+    }
+
     const t = transformFor(f.path, rules);
     if (t && t.verify) {
       let destBuf, srcBuf;
@@ -1518,4 +1744,5 @@ module.exports = {
   ARRIVAL_TRANSFORMS, instancesRoot, transformFor, appendOnlyCompare, underRoot, mintSiblingDir,
   machineHeads, machineTag, stateDir, dataDir, ensureTreeSettings, remotePrivacy, writeStatus, gitTry,
   FILE_CAP, STABLE_TRIES, SETTLE_MS, INDEX_NAME, STATUS_NAME, COMPLETION_NAME, RECEIPT_NAME,
+  unionAtLaunchOn, phase2, countsByKey, timeParseRefusal, danglingUnions, installModeFor, unionVerdict,
 };
