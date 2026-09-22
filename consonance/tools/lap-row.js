@@ -307,18 +307,73 @@ function headSha() {
 }
 
 /** Fold the append-only events into one object per lap. */
-function laps(all = rows()) {
+/* FOLD BY (id, GENERATION) — the keeper's condition for the eight reissued ids (L071 C2,
+ * exo_memory/loop/reissued_lap_ids_2026-09-21.md). Every L launch that MIGRATEd replaced this ledger with D's 09-10
+ * copy, max+1 re-issued L055+, and the union restored every generation under its original id — NO RENAMING. Folded by
+ * id alone, one id's generations merged into one "lap" (DOUBLE-OPEN), and map/opened/chain bound to the FIRST
+ * generation's open row, scoring a new lap against a guess made days earlier.
+ *
+ * A GENERATION starts at each `open` row of an id, taken in time order. Every other row belongs to the latest open of
+ * that id at or before its own `at` (a row before the first open belongs to the first). Defined from the rows
+ * themselves: nothing is written, renamed or reordered to get it.
+ *
+ * EXCEPT THE RACE. Two opens of one id within COLLIDE_MS are one generation with two opens — the double-mint `open()`
+ * guards against, which must still read DOUBLE-OPEN. 60 s: the shortest real reissue gap on L was 4,867 s (L058,
+ * measured over all 23 successive-open gaps, 2026-09-22), and the race is an append followed by a re-read. */
+const COLLIDE_MS = 60 * 1000;
+const isoMinute = (at) => new Date(at).toISOString().slice(0, 16).replace('T', ' ') + 'Z';
+
+/** Map id -> [{ gen, opens: [..], rows: [..] }], generations in time order, rows in ledger order. */
+function generations(all) {
   const byId = new Map();
-  for (const r of all) {
-    if (!r.lap) continue;
-    if (!byId.has(r.lap)) byId.set(r.lap, { lap: r.lap, opens: [], maps: [], openeds: [], voids: [] });
-    const L = byId.get(r.lap);
-    if (r.stage === 'open') L.opens.push(r);
-    else if (r.stage === 'map') L.maps.push(r);
-    else if (r.stage === 'opened') L.openeds.push(r);
-    else if (r.stage === 'void') L.voids.push(r);
+  all.forEach((r, i) => { if (r && r.lap) { if (!byId.has(r.lap)) byId.set(r.lap, []); byId.get(r.lap).push({ r, i }); } });
+  const out = new Map();
+  for (const [id, list] of byId) {
+    const opens = list.filter((x) => x.r.stage === 'open').sort((a, b) => (a.r.at - b.r.at) || (a.i - b.i));
+    const gens = [];
+    const genOfOpen = new Map();
+    for (const o of opens) {
+      const prev = gens[gens.length - 1];
+      if (prev && o.r.at - prev.opens[0].at < COLLIDE_MS) prev.opens.push(o.r);   // the race: same generation
+      else gens.push({ gen: gens.length + 1, opens: [o.r], rows: [] });
+      genOfOpen.set(o.i, gens.length - 1);
+    }
+    if (!gens.length) gens.push({ gen: 1, opens: [], rows: [] });
+    for (const x of list) {
+      let g = 0;
+      if (genOfOpen.has(x.i)) g = genOfOpen.get(x.i);
+      else if (Number.isFinite(Number(x.r.at))) {
+        for (let k = 0; k < gens.length; k++) if (gens[k].opens.length && gens[k].opens[0].at <= x.r.at) g = k;
+      }
+      gens[g].rows.push(x.r);
+    }
+    out.set(id, gens);
   }
-  return [...byId.values()].map(L => {
+  return out;
+}
+
+/** The rows of an id's LATEST generation — what a writer (map, opened, chain, void) binds to. */
+function currentGeneration(all, lap) {
+  const gens = generations(all).get(lap);
+  return gens ? gens[gens.length - 1].rows : [];
+}
+
+function laps(all = rows()) {
+  const folded = [];
+  for (const [id, gens] of generations(all)) {
+    for (const g of gens) {
+      const L = { lap: id, opens: [], maps: [], openeds: [], voids: [], gen: g.gen, gens: gens.length, genRows: g.rows,
+        genDate: g.opens.length ? isoMinute(g.opens[0].at) : null };
+      for (const r of g.rows) {
+        if (r.stage === 'open') L.opens.push(r);
+        else if (r.stage === 'map') L.maps.push(r);
+        else if (r.stage === 'opened') L.openeds.push(r);
+        else if (r.stage === 'void') L.voids.push(r);
+      }
+      folded.push(L);
+    }
+  }
+  return folded.map(L => {
     const open = L.opens[0] || null;
     const map = L.maps[0] || null;
     // The void, if any. A voided lap is folded like every other so it stays VISIBLE in the report;
@@ -369,6 +424,10 @@ function laps(all = rows()) {
        * gate; the conflation the gate exists to remove was already inside the fold. */
       hasOpened: L.openeds.length > 0, openedRows: L.openeds.length, integrity,
       voided, gapS,
+      // The generation, and the id as it must be PRINTED: dated whenever the id has more than one, so two laps that
+      // share an id never read as one (the keeper's condition, verbatim: "prints the generation's date with the id").
+      gen: L.gen, gens: L.gens, genDate: L.genDate, rows: L.genRows,
+      label: L.gens > 1 ? `${L.lap} (${L.genDate || 'no open row'}, gen ${L.gen}/${L.gens})` : L.lap,
     };
   }).sort((a, b) => a.at - b.at);
 }
@@ -501,7 +560,8 @@ function open({ initiator, entry, inquiry, guess, blind, now }) {
 
 function map(lap, paths, now) {
   const all = rows();
-  const mine = all.filter(r => r.lap === lap);
+  // The LATEST generation (L071 C2): a reissued id's older generation has its own open, guess and map.
+  const mine = currentGeneration(all, lap);
   if (!mine.length) throw new Error(`no such lap: ${lap}`);
   const openRow = mine.find(r => r.stage === 'open');
   if (!openRow) throw new Error(`lap ${lap} has no open row - a map without a guess measures nothing`);
@@ -516,7 +576,7 @@ function map(lap, paths, now) {
 
 function opened(lap, paths, now) {
   const all = rows();
-  const mine = all.filter(r => r.lap === lap);
+  const mine = currentGeneration(all, lap);         // the latest generation's map, not an older one's (L071 C2)
   if (!mine.length) throw new Error(`no such lap: ${lap}`);
   if (!mine.some(r => r.stage === 'map')) {
     throw new Error(`lap ${lap} has no map yet - "opened" records which of the MAP's paths were used`);
@@ -869,9 +929,11 @@ function chain(lap, stage, holder, note, now, to, by) {
    * The refusal names the command that satisfies it, and names `--paths none` as legal in the same
    * breath, because the one way this gate could do harm is by reading as "you must have opened
    * something". It is a gate on the RECORD, never on the behaviour. */
+  // THIS generation's rows (L071 C2): an older generation's opened row must not satisfy a newer one's gate.
+  const cur = currentGeneration(all, lap);
   if (OPENED_GATED_STAGES.has(s)
-      && all.some((r) => r.lap === lap && r.stage === 'map')
-      && !all.some((r) => r.lap === lap && r.stage === 'opened')) {
+      && cur.some((r) => r.stage === 'map')
+      && !cur.some((r) => r.stage === 'opened')) {
     throw new Error(`this lap HAS A MAP and NO OPENED ROW, and \`${s}\` is the stage where that stops being fixable.\n` +
       `  The map named paths. Nothing records which of them the receiving seat actually opened, so\n` +
       `  the from-map column reads 0 when the honest answer is NEVER WRITTEN — the exact column the\n` +
@@ -894,9 +956,9 @@ function chain(lap, stage, holder, note, now, to, by) {
     throw new Error(`--by is the STATION writing this row, and it takes the same vocabulary as --holder: ` +
       `${[...STATIONS].join('|')}. Got ${JSON.stringify(b)}.`);
   }
-  const prior = all.filter((r) => r.lap === lap && r.stage === 'chain' && r.holder);
+  const prior = cur.filter((r) => r.stage === 'chain' && r.holder);
   const prev = prior.length ? prior[prior.length - 1] : null;
-  const openRow = all.find((r) => r.lap === lap && r.stage === 'open');
+  const openRow = cur.find((r) => r.stage === 'open');
   const windowStart = prev ? prev.at : (openRow ? openRow.at : 0);
   const ctx = gateContext();
   const g = gateVerdict({
@@ -961,7 +1023,8 @@ function voidLap(lap, reason, by, now) {
   if (!b) throw new Error('--by is required: name the seat voiding the measurement. The subject of a measure does not get to void it anonymously.');
   const all = rows();
   if (!all.some(x => x.lap === lap)) throw new Error(`no such lap: ${lap}. A void withdraws a measurement; it cannot mint one.`);
-  if (all.some(x => x.lap === lap && x.stage === 'void')) {
+  // The latest generation only (L071 C2): voiding an older generation of a reissued id must not block this one.
+  if (currentGeneration(all, lap).some(x => x.stage === 'void')) {
     throw new Error(`lap ${lap} is already void. One void is the whole effect; a second reason belongs in the record beside the first, not in the ledger.`);
   }
   return append({ lap, stage: 'void', at: now, reason: r, by: b, head: headSha() });
@@ -991,11 +1054,11 @@ function report(last, out = console.log) {
     (voided.length ? `, ${voided.length} VOID` : '') + ')');
   if (bad.length) {
     out(`EXCLUDED               ${bad.length}   these are not counted anywhere below:`);
-    for (const l of bad) out(`    ${l.lap}  ${l.integrity}`);
+    for (const l of bad) out(`    ${l.label}  ${l.integrity}`);
   }
   if (voided.length) {
     out(`VOID                   ${voided.length}   measurement withdrawn; the lap and its chain stand, its guess/map figures count nowhere below:`);
-    for (const l of voided) out(`    ${l.lap}  by ${l.voided.by}: ${l.voided.reason}`);
+    for (const l of voided) out(`    ${l.label}  by ${l.voided.by}: ${l.voided.reason}`);
   }
   if (!L.length) {
     out('');
@@ -1013,7 +1076,7 @@ function report(last, out = console.log) {
     out('');
     out('  lap   init    entry  blind  gap(s)  guess  broad  map  BOTH  map-only  opened  from-map');
     for (const l of shown) {
-      const head = `  ${l.lap.padEnd(6)}${String(l.initiator || '?').padEnd(8)}${String(l.entry || '?').padEnd(7)}` +
+      const head = `  ${(l.label + ' ').padEnd(6)}${String(l.initiator || '?').padEnd(8)}${String(l.entry || '?').padEnd(7)}` +
         `${(l.blind === true ? 'yes' : '?').padEnd(7)}${gapCol(l).padEnd(8)}`;
       if (l.voided) { out(head + `VOID   (by ${l.voided.by} — counted nowhere; reason above)`); continue; }
       out(head +
@@ -1050,7 +1113,7 @@ function report(last, out = console.log) {
   // The gap, counted. Printed above the floor and below it alike: it is a count, not a rate.
   const fast = scored.filter(l => l.gapS != null && l.gapS < FRESH_MAP_FLOOR_S);
   if (fast.length) {
-    out(`  map row within ${FRESH_MAP_FLOOR_S} s of the guess: ${fast.length} of ${scored.length} scored laps (${fast.map(l => l.lap).join(', ')}).`);
+    out(`  map row within ${FRESH_MAP_FLOOR_S} s of the guess: ${fast.length} of ${scored.length} scored laps (${fast.map(l => l.label).join(', ')}).`);
     out('  A fresh librarian map cannot be produced in that time. These are chair-authored, or a guess recorded');
     out('  after the map already existed - and the seal sees neither. Counted above regardless: the gap is a');
     out('  signal, not a verdict. Voiding is a judgement that carries a reason (--void); this line carries none.');
@@ -1079,7 +1142,7 @@ function report(last, out = console.log) {
     const ringNoGuess = ringLaps.filter(l => l.guess.length === 0);
     out(`  ring laps: ${ringLaps.length} - no user inquiry entered; the loop supplied its own next lap`);
     out(`  ring laps with no guess: ${ringNoGuess.length} of ${ringLaps.length}` +
-      (ringNoGuess.length ? ` (${ringNoGuess.map(l => l.lap).join(', ')})` : '') +
+      (ringNoGuess.length ? ` (${ringNoGuess.map(l => l.label).join(', ')})` : '') +
       ' - these read "no guess - ring lap", not a missed seal. INAPPLICABLE, never zero.');
   }
   if (libDoor.length) {
@@ -1087,14 +1150,14 @@ function report(last, out = console.log) {
     // measurement that does not exist.
     const noGuess = libDoor.filter(l => l.guess.length === 0);
     out(`  direct-entry laps with no guess: ${noGuess.length} of ${libDoor.length}` +
-      (noGuess.length ? ` (${noGuess.map(l => l.lap).join(', ')})` : '') +
+      (noGuess.length ? ` (${noGuess.map(l => l.label).join(', ')})` : '') +
       ' - these read "no guess - direct entry", not a missed seal.');
     // The ring rule's own falsifier: the guess must PRECEDE the map. A map row landing within the
     // fresh-map floor of the open row is the same signal the chair-authored check uses above.
     const late = libDoor.filter(l => l.hasMap && l.gapS != null && l.gapS < FRESH_MAP_FLOOR_S);
     if (late.length) {
       out(`  direct-entry laps whose map landed within ${FRESH_MAP_FLOOR_S} s of the guess: ${late.length} of ` +
-        `${libDoor.length} (${late.map(l => l.lap).join(', ')}).`);
+        `${libDoor.length} (${late.map(l => l.label).join(', ')}).`);
       out('  The ring rule is that the librarian carries the INQUIRY to the chair - one line, no map -');
       out('  before filing. These are where the guess did not really precede the map.');
     }
@@ -1153,15 +1216,14 @@ function report(last, out = console.log) {
    * its own lap's map row cannot be refused, because at that instant no opened row is writable. The
    * lap's `filed` row catches it one stage later. A count here that keeps growing while no `filed`
    * row is ever refused means the backstop is not doing its job. */
-  const allRows = rows();
   const lateMap = L.filter((l) => {
-    const mapRow = allRows.find((r) => r.lap === l.lap && r.stage === 'map');
+    const mapRow = l.rows.find((r) => r.stage === 'map');           // this generation's rows (L071 C2)
     if (!mapRow) return false;
-    return allRows.some((r) => r.lap === l.lap && r.stage === 'chain'
+    return l.rows.some((r) => r.stage === 'chain'
       && OPENED_GATED_STAGES.has(r.chain) && r.at < mapRow.at);
   });
   out(`  laps whose dispatched/filed row PREDATES their own map row: ${lateMap.length}` +
-    (lateMap.length ? ` (${lateMap.map((l) => l.lap).join(', ')}) - the opened-row gate cannot fire on those` : '') +
+    (lateMap.length ? ` (${lateMap.map((l) => l.label).join(', ')}) - the opened-row gate cannot fire on those` : '') +
     ` of ${L.length}.`);
   out(`  laps with a map and no opened row at all: ${L.filter((l) => l.hasMap && !l.hasOpened).length} of ` +
     `${L.filter((l) => l.hasMap).length} mapped. A lap with no map is NOT gated - there would be no legal move.`);

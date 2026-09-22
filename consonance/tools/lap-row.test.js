@@ -1800,3 +1800,124 @@ test('record: a record that cannot be read REFUSES rather than passing', () => {
     assert.throws(() => f.mod.open(OPEN), /record/i);
   });
 });
+
+// ---------------------------------------------------------------- fold by (id, generation) (L071 C2)
+/* THE KEEPER'S CONDITION for accepting the eight DOUBLE-OPEN ids the union left (loop/reissued_lap_ids_2026-09-21.md):
+ * "lap-row.js folds by (id, generation) and prints the generation's date with the id". A GENERATION starts at each
+ * `open` row of an id; every other row belongs to the latest open of that id at or before its own `at`. Two opens
+ * within 60 s are ONE generation — that is the double-mint race `open()` guards, and it must still read DOUBLE-OPEN
+ * (the shortest real reissue gap on L was 4,867 s). No ledger row is ever rewritten to get there. */
+const T0 = Date.UTC(2026, 8, 14, 7, 30);           // 2026-09-14 07:30Z
+const T1 = Date.UTC(2026, 8, 21, 8, 56);           // 2026-09-21 08:56Z
+function twoGenerations(f, extra = []) {
+  const m = f.mod;
+  const rowsIn = [
+    { lap: 'L058', stage: 'open', at: T0, initiator: 'chair', entry: 'orch', inquiry: 'gen one', guess: ['a.md'] },
+    { lap: 'L058', stage: 'map', at: T0 + 60000, paths: ['a.md'], guess_seal: m.sealOf(['a.md']) },
+    { lap: 'L058', stage: 'opened', at: T0 + 120000, paths: ['a.md'] },
+    { lap: 'L057', stage: 'open', at: T0 + 1000, initiator: 'chair', entry: 'orch', inquiry: 'single', guess: ['z.md'] },
+    { lap: 'L058', stage: 'open', at: T1, initiator: 'chair', entry: 'orch', inquiry: 'gen two', guess: ['b.md'] },
+    ...extra,
+  ];
+  fs.writeFileSync(f.ledger, rowsIn.map((r) => JSON.stringify(r)).join('\n') + '\n');
+}
+
+test('generation: one id opened twice folds to TWO laps, each scored against its own guess, neither DOUBLE-OPEN', () => {
+  const f = fixture();
+  twoGenerations(f, [{ lap: 'L058', stage: 'map', at: T1 + 60000, paths: ['b.md'], guess_seal: f.mod.sealOf(['b.md']) }]);
+  const g = f.mod.laps().filter((l) => l.lap === 'L058');
+  assert.deepStrictEqual(g.map((l) => [l.gen, l.gens, l.inquiry, l.integrity]), [[1, 2, 'gen one', 'OK'], [2, 2, 'gen two', 'OK']]);
+  assert.deepStrictEqual(g.map((l) => l.both), [['a.md'], ['b.md']]);
+  f.cleanup();
+});
+
+test('generation: the label carries the generation DATE beside a reissued id; a single-generation id prints bare', () => {
+  const f = fixture();
+  twoGenerations(f);
+  const byLabel = f.mod.laps().map((l) => l.label);
+  assert.ok(byLabel.includes('L058 (2026-09-14 07:30Z, gen 1/2)'), byLabel.join(' | '));
+  assert.ok(byLabel.includes('L058 (2026-09-21 08:56Z, gen 2/2)'), byLabel.join(' | '));
+  assert.ok(byLabel.includes('L057'), 'a single-generation id grew a label it does not need');
+  f.cleanup();
+});
+
+test('generation: --report prints the dated label, so two generations never read as one lap', () => {
+  const f = fixture();
+  // The per-lap table lists MAPPED laps, so both generations carry a map here (the first draft gave gen 2 none and
+  // asked the report for a line it prints for no unmapped lap, reissued or not).
+  twoGenerations(f, [{ lap: 'L058', stage: 'map', at: T1 + 60000, paths: ['b.md'], guess_seal: f.mod.sealOf(['b.md']) }]);
+  const out = [];
+  f.mod.report(0, (s) => out.push(s));
+  const text = out.join('\n');
+  assert.match(text, /L058 \(2026-09-14 07:30Z, gen 1\/2\)/);
+  assert.match(text, /L058 \(2026-09-21 08:56Z, gen 2\/2\)/);
+  assert.doesNotMatch(text, /L058\s+DOUBLE-OPEN/, 'a reissue was reported as a double-open');
+  f.cleanup();
+});
+
+test('generation: two opens of one id within 60 s are the double-mint RACE — still one generation, still DOUBLE-OPEN', () => {
+  const f = fixture();
+  twoGenerations(f, [{ lap: 'L058', stage: 'open', at: T1 + 5000, initiator: 'chair', entry: 'orch', inquiry: 'raced', guess: ['c.md'] }]);
+  const g = f.mod.laps().filter((l) => l.lap === 'L058');
+  assert.strictEqual(g.length, 2, 'the race was folded as a third generation');
+  assert.strictEqual(g[1].integrity, 'DOUBLE-OPEN');
+  f.cleanup();
+});
+
+test('generation: map binds to the LATEST generation — its guess is sealed, and the older generation\'s map does not block it', () => {
+  const f = fixture();
+  twoGenerations(f);
+  f.mod.map('L058', ['b.md'], T1 + 60000);
+  const last = f.mod.rows().pop();
+  assert.strictEqual(last.guess_seal, f.mod.sealOf(['b.md']), 'the map was sealed against the FIRST generation\'s guess');
+  assert.throws(() => f.mod.map('L058', ['b.md'], T1 + 90000), /already has a map/);
+  f.cleanup();
+});
+
+test('generation: opened binds to the LATEST generation — it needs THAT generation\'s map, not an older one\'s', () => {
+  const f = fixture();
+  twoGenerations(f);                                  // gen 1 has a map; gen 2 does not
+  assert.throws(() => f.mod.opened('L058', ['b.md'], T1 + 60000), /no map yet/);
+  f.cleanup();
+});
+
+test('generation: the opened-row gate on --stage reads the LATEST generation, not an older one\'s opened row', () => {
+  const f = fixture();
+  // gen 1 is mapped AND opened; gen 2 is mapped and NOT opened. Folded by id, gen 1's opened row satisfies the gate.
+  twoGenerations(f, [{ lap: 'L058', stage: 'map', at: T1 + 60000, paths: ['b.md'], guess_seal: f.mod.sealOf(['b.md']) }]);
+  assert.throws(() => f.mod.chain('L058', 'dispatched', 'panes', 'n', T1 + 120000), /HAS A MAP and NO OPENED ROW/);
+  f.cleanup();
+});
+
+test('generation: numbered by TIME, not file position — a later generation written earlier in the file is still gen 2', () => {
+  const f = fixture();
+  const m = f.mod;
+  fs.writeFileSync(f.ledger, [
+    { lap: 'L058', stage: 'open', at: T1, initiator: 'chair', entry: 'orch', inquiry: 'gen two', guess: ['b.md'] },
+    { lap: 'L058', stage: 'open', at: T0, initiator: 'chair', entry: 'orch', inquiry: 'gen one', guess: ['a.md'] },
+    { lap: 'L058', stage: 'map', at: T0 + 60000, paths: ['a.md'], guess_seal: m.sealOf(['a.md']) },
+  ].map((r) => JSON.stringify(r)).join('\n') + '\n');
+  const g = m.laps().filter((l) => l.lap === 'L058');
+  assert.deepStrictEqual(g.map((l) => [l.gen, l.inquiry, l.hasMap]), [[1, 'gen one', true], [2, 'gen two', false]]);
+  f.cleanup();
+});
+
+test('generation: a void on an OLDER generation does not block voiding the latest one — and a second void of the latest still refuses', () => {
+  const f = fixture();
+  twoGenerations(f, [{ lap: 'L058', stage: 'void', at: T0 + 180000, reason: 'gen one withdrawn', by: 'chair' }]);
+  f.mod.voidLap('L058', 'gen two withdrawn', 'chair', T1 + 60000);
+  assert.throws(() => f.mod.voidLap('L058', 'again', 'chair', T1 + 90000), /already void/);
+  const g = f.mod.laps().filter((l) => l.lap === 'L058');
+  assert.deepStrictEqual(g.map((l) => l.voided && l.voided.reason), ['gen one withdrawn', 'gen two withdrawn']);
+  f.cleanup();
+});
+
+test('generation: folding reads — it never rewrites, renames or reorders a ledger row', () => {
+  const f = fixture();
+  twoGenerations(f);
+  const before = fs.readFileSync(f.ledger);
+  f.mod.laps();
+  f.mod.report(0, () => {});
+  assert.ok(fs.readFileSync(f.ledger).equals(before), 'a read path changed the ledger');
+  f.cleanup();
+});

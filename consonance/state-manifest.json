@@ -38,6 +38,8 @@
     { "glob": "backups", "class": "STAYS", "why": "holds no TRAVELS member." },
 
     { "glob": "dispatch-gate.jsonl.pre-quarantine-*.bak", "class": "STAYS", "why": "pre-quarantine snapshot, 2026-08-30. Local forensics." },
+    { "glob": "lap.jsonl.pre-union-*", "class": "STAYS", "why": "L071: the lap ledger as it stood before ledger-union.js --write restored the attic-only rows. The ONLY pre-union copy, kept beside the live file (the write's own backup, cited by path in handback/p-l071-unionwrite-C and librarian/2026-09-22). This machine's snapshot of one moment: carried to the other machine it would mean nothing there, and it must never be read as a ledger." },
+    { "glob": "board.jsonl.pre-union-*", "class": "STAYS", "why": "L071: same, for the board. Named per ledger, not *.pre-union-*, so a pre-union copy of any other file is still loud." },
     { "glob": "dispatch-gate.test-pollution.jsonl", "class": "STAYS", "why": "rows quarantined out of the live ledger as test pollution. Carrying them re-pollutes any reader that globs the directory." },
     { "glob": "precompact.polluted-by-tests-*.jsonl", "class": "STAYS", "why": "same class, 2026-08-18." },
     { "glob": "dispatch-gate.jsonl", "class": "TRAVELS", "why": "the audit of every chair verb and every refusal. A gate whose record splits per machine cannot be audited." },

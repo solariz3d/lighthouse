@@ -361,6 +361,25 @@ test('any OTHER file left in vantage_cell is still UNPLACED — the rule is name
   assert.ok(r.out.includes('vantage_cell/something-else.txt'));
 });
 
+// L071 C2: the union's own backups. ledger-union.js --write keeps each original BESIDE the live file as
+// <file>.pre-union-<stamp>; they are the ONLY pre-union copies, so they stay — and stay here, local, like the
+// pre-quarantine snapshot above them in the manifest. The rule names the two ledgers the write touches, nothing wider.
+test('L071: the two union backups beside the live ledgers are placed (STAYS)', () => {
+  const r = run(fixture({
+    'lap.jsonl.pre-union-2026-09-22T08-47-16-301Z': '{"lap":"L001"}\n',
+    'board.jsonl.pre-union-2026-09-22T08-47-24-570Z': '{"ts":1}\n',
+  }, SHIPPED()));
+  assert.strictEqual(r.code, 0, r.out);
+});
+
+test('L071: a pre-union copy of any OTHER file is still UNPLACED — the rule is named, not a wildcard', () => {
+  const r = run(fixture({ 'ferry.jsonl.pre-union-2026-09-22T08-47-16-301Z': 'x\n' }, SHIPPED()));
+  assert.strictEqual(r.code, 1, 'a pre-union copy of a file the union never writes is something else, and must be loud');
+  assert.ok(r.out.includes('ferry.jsonl.pre-union-'), r.out);
+});
+
+// THE SUMMARY STAYS LAST. This runner exits here, so any test written below this line never runs and never fails —
+// L071's two tests were appended below it first and reported "30 passed" while not having run at all.
 console.log(`\n${pass} passed, ${fail} failed`);
 fs.rmSync(tmp, { recursive: true, force: true });
 process.exit(fail ? 1 : 0);
