@@ -236,6 +236,51 @@ function Get-RunningNotice {
     Text = "Your code changed, but Consonance is already open, and Windows locks a running exe so the new build cannot be written while it is up.`n`nThe window you have is running the OLD build. Close it completely, then click the shortcut once to get the latest.`n`nNOT opening a second copy: two instances means two MCP servers, which is what broke the chair verbs on 2026-07-28." }
 }
 
+# --- PARK, DON'T REFUSE (L073, pane A, 2026-09-22) -------------------------------------------
+# A dirty checkout used to make the launch skip the pull entirely: 09-21's uncommitted L070 made the 00:35 launch on L
+# skip 66 commits and open an OLDER tree. Now the launch PARKS tracked changes in a stash, fast-forwards, and puts them
+# back only when no parked path was touched by what arrived. Otherwise they stay parked and the Notify names the stash.
+# Rules, each pinned by consonance/launch.park.test.js:
+#   - at LAUNCH, not at Leave: launch sees every dirty case (a crash, a power cut, a close without Leave), and Leave
+#     touches no git by rule (dev/stick-waiter.js:61).
+#   - NEVER conflict markers in the tree: re-apply only on disjoint paths, and a failed re-apply resets the tree to the
+#     pulled commit exactly, with the work still whole in the stash.
+#   - NEVER pushed, no branch anywhere: the repo is public and WIP can hold anything. A stash is local to this machine,
+#     and that is enough, because the dirty work only ever lived here.
+#   - ONE RECORD per park: a JSON line in <git dir>\consonance-parked.jsonl (machine-local, never tracked, not in the data
+#     dir, so no manifest rule), carrying every parked PATH. Git cannot say WHICH PANE wrote a file, so a pane that was
+#     mid-lap at the last close finds its files named there, and the librarian matches them to the packets that named
+#     each pane's owned files.
+#   - An UNTRACKED file the pull would ADD at the same path makes --ff-only fail after the stash, so that case is
+#     refused BEFORE anything is stashed, with the original refusal text and the colliding path.
+
+# Lines of a git command's output, trimmed and non-empty, or $null when git failed. Paths unquoted (core.quotepath).
+function Get-GitLines($git, $repo, [string[]]$gitArgs) {
+  $out = & $git -C $repo -c core.quotepath=false @gitArgs 2>$null
+  if ($LASTEXITCODE -ne 0) { return $null }
+  return ,[string[]]@(@($out) | ForEach-Object { "$_".Trim() } | Where-Object { $_ })
+}
+
+# The name in a park's message: CONSONANCE_MACHINE, else ~/.consonance.json machine_tag, else the computer name.
+function Get-ParkMachine {
+  if ($env:CONSONANCE_MACHINE) { return $env:CONSONANCE_MACHINE }
+  try {
+    $cfg = Get-Content -LiteralPath (Join-Path $env:USERPROFILE '.consonance.json') -Raw -ErrorAction Stop | ConvertFrom-Json
+    if ($cfg.machine_tag) { return "$($cfg.machine_tag)" }
+  } catch { }
+  return $env:COMPUTERNAME
+}
+
+# One JSON line per park, UTF-8 without a BOM (a BOM would make the first line unreadable to JSON.parse).
+function Save-ParkRecord($git, $repo, $record) {
+  try {
+    $dir = & $git -C $repo rev-parse --absolute-git-dir 2>$null
+    if ($LASTEXITCODE -ne 0 -or -not $dir) { return }
+    $line = (ConvertTo-Json -InputObject $record -Compress -Depth 4) + "`n"
+    [System.IO.File]::AppendAllText((Join-Path "$dir".Trim() 'consonance-parked.jsonl'), $line, (New-Object System.Text.UTF8Encoding $false))
+  } catch { }
+}
+
 function Update-FromOrigin($repo) {
   $ErrorActionPreference = 'SilentlyContinue'   # function scope: a native stderr line never throws here
   try {
@@ -308,7 +353,72 @@ function Update-FromOrigin($repo) {
       return
     }
     if ($dirty) {
-      Notify "origin/main has $behind new commit(s), but files in this checkout have local changes, so NOT pulling - local work is never merged over.`n`nOpening what is on this disk, which is OLDER than origin." 'not updated - local changes' 12 'Yellow'
+      # PARK, DON'T REFUSE (L073) — see the block above Get-GitLines. Every early exit below leaves the checkout exactly
+      # as it was and says the original sentence, so a park that cannot be done safely is the old refusal, never a half.
+      $refuse = "origin/main has $behind new commit(s), but files in this checkout have local changes, so NOT pulling - local work is never merged over.`n`nOpening what is on this disk, which is OLDER than origin."
+
+      # (b) an untracked file the pull would ADD at the same path: refused BEFORE anything is stashed.
+      $untracked = Get-GitLines $git $repo @('ls-files', '--others', '--exclude-standard')
+      $added = Get-GitLines $git $repo @('diff', '--name-only', '--diff-filter=A', 'HEAD', 'origin/main')
+      if ($null -eq $untracked -or $null -eq $added) { Notify $refuse 'not updated - local changes' 12 'Yellow'; return }
+      $collide = @($untracked | Where-Object { $added -contains $_ })
+      if ($collide.Count) {
+        Notify ($refuse + "`n`nAn untracked file here is at a path the pull adds, so the pull would fail half-way: " + ($collide -join ', ')) 'not updated - local changes' 12 'Yellow'
+        return
+      }
+
+      $oldHead = "$(& $git -C $repo rev-parse HEAD 2>$null)".Trim()
+      $prior = "$(& $git -C $repo rev-parse -q --verify refs/stash 2>$null)".Trim()
+      $machine = Get-ParkMachine
+      $stamp = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+      $message = "park $machine $stamp behind=$behind"
+      & $git -C $repo stash push --quiet -m $message 2>$null | Out-Null
+      $pushed = ($LASTEXITCODE -eq 0)
+      $sha = "$(& $git -C $repo rev-parse -q --verify refs/stash 2>$null)".Trim()
+      if (-not $pushed -or -not $sha -or $sha -eq $prior) { Notify $refuse 'not updated - local changes' 12 'Yellow'; return }
+      $paths = Get-GitLines $git $repo @('diff', '--name-only', "$sha^1", $sha)
+      if ($null -eq $paths) { $paths = [string[]]@() }
+      $record = [ordered]@{ at = $stamp; machine = $machine; behind = $behind; stash = $sha; message = $message;
+        paths = $paths; overlap = [string[]]@(); outcome = '' }
+      $dropPark = {
+        $list = Get-GitLines $git $repo @('stash', 'list', '--format=%H')
+        $i = if ($list) { [array]::IndexOf($list, $sha) } else { -1 }
+        if ($i -ge 0) { & $git -C $repo stash drop --quiet "stash@{$i}" 2>$null | Out-Null }
+      }
+
+      $why = & $git -C $repo merge --ff-only --quiet 'origin/main' 2>&1
+      if ($LASTEXITCODE -ne 0) {
+        # HEAD did not move, so the park goes straight back where it was.
+        $reason = (@($why) | ForEach-Object { "$_".Trim() } | Where-Object { $_ } | Select-Object -First 1)
+        & $git -C $repo stash apply --index --quiet $sha 2>$null | Out-Null
+        if ($LASTEXITCODE -eq 0) { & $dropPark; $record.outcome = 'restored-not-pulled' } else { $record.outcome = 'parked-not-pulled' }
+        Save-ParkRecord $git $repo $record
+        $kept = if ($record.outcome -eq 'parked-not-pulled') { "`n`nYour local changes are PARKED in stash $sha ($message): git stash apply --index $sha" } else { '' }
+        Notify "origin/main has $behind new commit(s), but git refused to fast-forward to it, so nothing was merged or overwritten.`n`ngit said: $reason$kept`n`nOpening what is on this disk." 'not updated' 12 'Yellow'
+        return
+      }
+
+      $pulled = Get-GitLines $git $repo @('diff', '--name-only', $oldHead, 'HEAD')
+      if ($null -eq $pulled) { $pulled = $paths }            # cannot tell what arrived: treat every parked path as touched
+      $record.overlap = [string[]]@($paths | Where-Object { $pulled -contains $_ })
+      if (-not $record.overlap.Count) {
+        & $git -C $repo stash apply --index --quiet $sha 2>$null | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+          & $dropPark
+          $record.outcome = 'reapplied'
+          Save-ParkRecord $git $repo $record
+          Write-Host "  pull: parked $($paths.Count) changed file(s), fast-forwarded $behind commit(s) from origin/main, and put them back." -ForegroundColor Green
+          return
+        }
+        # NEVER conflict markers: the tree goes back to exactly the pulled commit; the work is whole in the stash.
+        & $git -C $repo reset --hard --quiet HEAD 2>$null | Out-Null
+        $record.outcome = 'parked-apply-failed'
+      } else {
+        $record.outcome = 'parked'
+      }
+      Save-ParkRecord $git $repo $record
+      $overlapText = if ($record.overlap.Count) { "These parked files were also changed by what arrived: " + ($record.overlap -join ', ') } else { "Putting them back failed, so the tree is exactly the pulled commit." }
+      Notify "Fast-forwarded $behind commit(s) from origin/main. Your local changes were PARKED, not merged, and are still parked:`n  stash $sha`n  $message`n`n$overlapText`n`nParked files: $($paths -join ', ')`nTo bring them back after checking: git stash apply --index $sha" 'updated - local changes parked' 20 'Yellow'
       return
     }
 
