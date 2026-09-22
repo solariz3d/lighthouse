@@ -163,7 +163,7 @@ function defaultCarry(stick, forward, tailCarryPath) {
   return { status: r.status, stdout: r.stdout || '', stderr: r.stderr || '', error: r.error || null };
 }
 
-function defaultRelaunch(exe, spawnFn = spawn, env = process.env) {
+function defaultRelaunch(exe, spawnFn = null, env = process.env) {
   // THE ONE SPAWN WITHOUT windowsHide, deliberately. consonance.exe is a GUI-subsystem program
   // (main.rs:1, windows_subsystem = "windows"): it never allocates a console, so there is nothing to hide — and
   // windowsHide also sets SW_HIDE in its startup info, which a GUI program may honour on its first window. Hiding
@@ -174,7 +174,12 @@ function defaultRelaunch(exe, spawnFn = spawn, env = process.env) {
   // that name as their own home — the shell's digests/ and pulse/ landed in the data dir and refused every close.
   // The app does not read it (no read in src-tauri, per C's grep). Dropped for the app only, never from `env`.
   const { CONSONANCE_DATA: _forTheCarryOnly, ...appEnv } = env;
-  const child = spawnFn(exe, [], { cwd: path.dirname(exe), detached: true, stdio: 'ignore', env: appEnv });
+  //
+  // THE REAL CALL IS WRITTEN OUT, and the test seam only REPLACES it (L080). dev/stick-waiter.test.js's SWEEP finds
+  // child_process calls by their literal name; my L068 seam (3d89dfb) made this line `spawnFn(exe, …)`, the sweep
+  // stopped seeing the one call its named exception is about, and its count floor went red ("found only 7 calls").
+  const opts = { cwd: path.dirname(exe), detached: true, stdio: 'ignore', env: appEnv };
+  const child = spawnFn ? spawnFn(exe, [], opts) : spawn(exe, [], opts);
   child.on('error', () => {});
   child.unref();
 }
