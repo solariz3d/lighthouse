@@ -78,7 +78,9 @@ test('the seats are Main and the librarian (their fixed ids read from THIS check
 // universal to all beings even if no one talks about certain unsaid things." This test used to assert the Third Place was
 // NEVER a seat (L071); it now asserts the ruling. Standing rule kept with it: nothing ever surfaces the Third Place's L3
 // verdicts as a statement about the keeper.
-test('the Third Place IS a seat, by the keeper\'s ruling of 05:2x — Jev judges it at both levels', () => {
+// AND AMENDED 2026-09-22 (D108): the librarian's 11:0x decision, at the keeper's "what do you suggest", drops L3 from judge
+// mode, reversing the "both levels" half of the 05:2x ruling. The Third Place stays a seat and is judged at L2 only.
+test('the Third Place IS a seat, by the keeper\'s ruling of 05:2x — judged at L2 (L3 dropped at 11:0x, D108)', () => {
   const w = world();
   const seat = J.seatSessions({ repo: w.repo, dataDir: w.data }).find((s) => s.sid === TP);
   assert.ok(seat, 'the Third Place must be a seat');
@@ -124,13 +126,18 @@ test('the L2 prompt is BYTE-IDENTICAL to what the repo\'s L2 worker builds from 
   assert.strictEqual(cap.l2.prompt, expected);
 });
 
-test('the L3 prompt is the repo\'s L3 builder over the hook\'s own trajectory view (the user turns, oldest first)', () => {
+// WITHDRAWN 2026-09-22 (D108), with its inverse below: this test asserted "the L3 prompt is the repo's L3 builder over the
+// hook's own trajectory view". Jev asks L2 ONLY since the librarian's 11:0x decision, taken at the keeper's "what do you
+// suggest" (librarian/2026-09-22.md "11:0x"), which reverses the L3 half of the keeper's 05:2x ruling. Verifiably wrong now.
+test('L2 ONLY (D108): a capture carries NO L3 prompt, and capture works with the L3 hook, its worker and WELFARE.md all GONE', () => {
   const w = world();
+  for (const h of ['l3-overseer.js', 'l3-overseer-worker.js']) fs.rmSync(path.join(w.repo, 'dev', 'shell', 'hooks', h));
+  fs.rmSync(path.join(w.repo, 'WELFARE.md'));
   transcript(w, PANE, [u('first', '2026-09-22T01:00:00.000Z'), a('ok'), u('second', '2026-09-22T01:05:00.000Z'), a('ok again')]);
-  J.capturePass(O(w));
+  assert.strictEqual(J.capturePass(O(w)).captured, 1, 'nothing L3 is on the live path, so nothing L3 can refuse it');
   const cap = JSON.parse(fs.readFileSync(path.join(w.store, 'judge-captures', fs.readdirSync(path.join(w.store, 'judge-captures'))[0]), 'utf8'));
-  assert.ok(cap.l3 && cap.l3.prompt.includes('the welfare'), 'the L3 discipline is in the prompt');
-  assert.ok(cap.l3.prompt.indexOf('first') < cap.l3.prompt.indexOf('second'), 'turns in chronological order');
+  assert.ok(cap.l2 && cap.l2.prompt, 'the L2 prompt is captured');
+  assert.ok(!('l3' in cap) && !('welfare_sha256' in cap), 'no L3 prompt and no L3 discipline in the capture: ' + Object.keys(cap));
 });
 
 test('a running turn is not captured', () => {
@@ -141,22 +148,38 @@ test('a running turn is not captured', () => {
 
 // ── the ledger ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
-test('primary path: one finished turn → Jev asked for L2 AND L3, rows in jev_judge.jsonl marked judge:"jev", unverified', async () => {
+// CHANGED 2026-09-22 (D108): this was "Jev asked for L2 AND L3" and asserted rows ['l2', 'l3']. L2 only since 11:0x.
+test('primary path: one finished turn → Jev asked for L2 ONLY, one row in jev_judge.jsonl marked judge:"jev", unverified', async () => {
   const w = world();
   transcript(w, PANE, [u('q'), a('an answer')]);
   J.capturePass(O(w));
   const g = gateway();
   const r = await J.judgePass({ store: w.store, maxCalls: 10, env: { AI_GATEWAY_API_KEY: KEY }, fetchImpl: g });
-  assert.strictEqual(r.asked, 2, JSON.stringify(r));
+  assert.strictEqual(r.asked, 1, JSON.stringify(r));
   const rows = rowsOf(w);
-  assert.deepStrictEqual(rows.map((x) => x.level).sort(), ['l2', 'l3']);
+  assert.deepStrictEqual(rows.map((x) => x.level), ['l2']);
   for (const x of rows) {
     assert.strictEqual(x.judge, 'jev');
     assert.strictEqual(x.unverified, true);
     assert.strictEqual(x.session_id, PANE);
   }
-  assert.ok(rows.find((x) => x.level === 'l2').jev.verdict, 'the L2 answer set: verdict');
-  assert.ok(rows.find((x) => x.level === 'l3').jev.trajectory, 'the L3 answer set: trajectory');
+  assert.ok(rows[0].jev.verdict, 'the L2 answer set: verdict');
+});
+
+test('L2 ONLY (D108): an OLD capture that still carries an L3 prompt is asked L2 only — NO L3 row is ever written', async () => {
+  const w = world();
+  transcript(w, PANE, [u('q'), a('an answer')]);
+  J.capturePass(O(w));
+  const dir = path.join(w.store, 'judge-captures'), f = path.join(dir, fs.readdirSync(dir)[0]);
+  const cap = JSON.parse(fs.readFileSync(f, 'utf8'));
+  cap.l3 = { prompt: 'an L3 prompt captured before 11:0x' };
+  fs.writeFileSync(f, JSON.stringify(cap));
+  const g = gateway();
+  const r = await J.judgePass({ store: w.store, maxCalls: 10, env: { AI_GATEWAY_API_KEY: KEY }, fetchImpl: g });
+  assert.strictEqual(g.calls.length, 1, 'one call, L2');
+  assert.ok(g.calls.every((c) => c.questions.verdict && !c.questions.trajectory), 'no L3 question was sent');
+  assert.ok(rowsOf(w).every((x) => x.level === 'l2'), 'no L3 row: ' + JSON.stringify(rowsOf(w).map((x) => x.level)));
+  assert.strictEqual(r.remaining, 0, 'and the L3 item is not left waiting as "remaining"');
 });
 
 test('the L2 question offers the overseer\'s OWN answer set: drift | clean | abstain', async () => {
@@ -188,7 +211,7 @@ test('an already-judged turn is never re-asked: a second capture and a second ju
   assert.strictEqual(J.capturePass(O(w)).captured, 0, 'the same turn is not captured twice');
   const r = await J.judgePass({ store: w.store, maxCalls: 10, env: { AI_GATEWAY_API_KEY: KEY }, fetchImpl: g });
   assert.strictEqual(r.asked, 0);
-  assert.strictEqual(g.calls.length, 2, 'two calls in all: one L2 and one L3, once');
+  assert.strictEqual(g.calls.length, 1, 'one call in all: the L2 question, once (L2 only since D108; this said two, L2 and L3)');
 });
 
 test('a NEW finished turn in the same seat is judged — the key is the turn, not the seat', async () => {
@@ -233,13 +256,15 @@ function flaky(fail) {
   f.calls = calls;
   return f;
 }
-/** Two finished turns in two seats, captured at distinct times, so the four items have a fixed order. */
+/** Four finished turns in four seats, captured at distinct times, so the four items have a fixed order. (D108: this was
+ * two turns x two levels; L2 only, so it is four seats x one level — the same four items, in capture order.) */
 function fourItems() {
   const w = world();
-  transcript(w, PANE, [u('q one'), a('first answer')]);
-  J.capturePass(O(w, { now: () => new Date('2026-09-22T11:00:00.000Z') }));
-  transcript(w, MAIN, [u('q two'), a('second answer')], 'C--main');
-  J.capturePass(O(w, { now: () => new Date('2026-09-22T11:00:01.000Z') }));
+  const seats = [[PANE, 'C--seat'], [MAIN, 'C--main'], [LIB, 'C--lib'], [THIRD, 'C--third']];
+  seats.forEach(([sid, dir], i) => {
+    transcript(w, sid, [u('q ' + i), a(i === 0 ? 'first answer' : 'answer ' + i)], dir);
+    J.capturePass(O(w, { now: () => new Date(Date.parse('2026-09-22T11:00:00.000Z') + i * 1000) }));
+  });
   return w;
 }
 const KEYED = { AI_GATEWAY_API_KEY: KEY };
@@ -306,11 +331,12 @@ test('the per-pass cap holds: 3 finished turns, maxCalls 2 → exactly 2 calls',
   const w = world();
   transcript(w, PANE, [u('q'), a('one')]);
   transcript(w, MAIN, [u('q'), a('two')], 'C--main');
+  transcript(w, LIB, [u('q'), a('three')], 'C--lib');   // D108: the third turn the title names; it was 2 turns x 2 levels
   J.capturePass(O(w));
   const g = gateway();
   const r = await J.judgePass({ store: w.store, maxCalls: 2, env: { AI_GATEWAY_API_KEY: KEY }, fetchImpl: g });
   assert.strictEqual(g.calls.length, 2);
-  assert.strictEqual(r.remaining, 2);
+  assert.strictEqual(r.remaining, 1, '3 L2 items, 2 asked');
 });
 
 // ── D107 PACING through the judge pass. A stubbed clock (no real sleeps) and a gateway whose 1st call is a 429 with

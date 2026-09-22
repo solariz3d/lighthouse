@@ -228,22 +228,24 @@ test('L078: a failed judge call is LOGGED once per item (key + status), the pass
   const g = async (url, init) => (++n === 1 ? { ok: false, status: 503, text: async () => 'upstream unavailable' } : ok(url, init));
   try {
     const h = await R.run(opts(f, app, { ...jopts(f, jw), fetchImpl: g }));
-    await waitFor(() => judged(f).length >= 2);                  // the failed item came back on a later cadence
+    // D108: judge mode asks L2 only (librarian/2026-09-22.md "11:0x" ruling), so one turn is one item.
+    await waitFor(() => judged(f).length >= 1);                  // the failed item came back on a later cadence
     const lines = log(f).split('\n').filter((l) => /judge: item .* failed/.test(l));
     assert.ok(lines.length >= 1, log(f));
-    assert.match(lines[0], /seat-1:a1:l[23] failed \(503\)/, lines[0]);
+    assert.match(lines[0], /seat-1:a1:l2 failed \(503\)/, lines[0]);
     for (const bad of ['upstream unavailable', 'answer 1', 'question 1', 'method']) assert.ok(!log(f).includes(bad), `the log carried "${bad}"`);
     assert.doesNotMatch(log(f), /stopped:/);
     h.stop('test done'); await h.done;
   } finally { app.kill(); }
 });
 
-test('JUDGE MODE runs inside the runner: a seat\'s finished turn is judged into jev_judge.jsonl, L2 and L3', async () => {
+test('JUDGE MODE runs inside the runner: a seat\'s finished turn is judged into jev_judge.jsonl, L2 only (D108)', async () => {
   const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
   try {
     const h = await R.run(opts(f, app, jopts(f, jw)));
-    await waitFor(() => judged(f).length >= 2);
-    assert.deepStrictEqual(judged(f).map((r) => r.level).sort(), ['l2', 'l3']);
+    // D108: L3 dropped from judge mode by the librarian/2026-09-22.md "11:0x" ruling; L2 is the only level asked.
+    await waitFor(() => judged(f).length >= 1);
+    assert.deepStrictEqual(judged(f).map((r) => r.level), ['l2']);
     assert.ok(judged(f).every((r) => r.judge === 'jev' && r.unverified === true));
     h.stop('test done'); await h.done;
   } finally { app.kill(); }
@@ -290,7 +292,8 @@ test('judge mode that CANNOT run logs why once, and the SHADOW keeps running unt
 test('a judge-mode REFUSAL mid-run (a hook function missing) turns judge mode off and NEVER stops the shadow', async () => {
   // Found as a surviving mutant. This is D's case: judge mode must not be able to take the shadow measurement down.
   const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
-  fs.writeFileSync(path.join(jw.repo, 'dev', 'shell', 'hooks', 'l3-overseer.js'), '// readTrajectoryView is gone\n');
+  // D108: judge mode no longer reads l3-overseer.js ("11:0x" ruling), so break the L2 hook it does read.
+  fs.writeFileSync(path.join(jw.repo, 'dev', 'shell', 'hooks', 'l2-overseer.js'), '// readNarrowedView is gone\n');
   job(f, 'j1'); verdict(f, 'j1');
   try {
     const h = await R.run(opts(f, app, jopts(f, jw)));

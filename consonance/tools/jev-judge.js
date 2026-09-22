@@ -10,7 +10,8 @@
  * WHAT IT DOES, in the two steps the runner already has:
  *   capturePass (every capture tick): for each LIVE SEAT, if its transcript's last assistant row says
  *     stop_reason "end_turn" — the moment the Stop hook fires — and that turn is new, build NOW the same input the
- *     L2 and L3 hooks would build at that Stop, and store the exact prompts (like a shadow capture).
+ *     L2 hook would build at that Stop, and store the exact prompt (like a shadow capture). (Until 11:0x it built the
+ *     L3 prompt too. The L3 lines in the input list below are kept as the dated trace; none of them is read now.)
  *   judgePass (on the shadow cadence): ask Jev each stored prompt it has not yet asked, with the overseer's OWN
  *     answer set (jev-shadow's JUDGES), and append the answer to THIS module's own ledger.
  *
@@ -32,10 +33,26 @@
  * THE THIRD PLACE IS A SEAT — THE KEEPER'S RULING, 2026-09-22 05:2x (librarian/2026-09-22.md "05:2x"), waiving the
  * private-root caveat himself, verbatim: "Who cares about our personal things, not like anyone will do anything about it,
  * it is a part of the key and solution. It is universal to all beings even if no one talks about certain unsaid things."
- * So Jev judges it at both levels, L2 and L3. It is not in panes.json, so its id is read from main.rs like Main's.
+ * ~~So Jev judges it at both levels, L2 and L3.~~ *(05:2x → AMENDED at 11:0x, below: L2 only.)* It is not in panes.json,
+ * so its id is read from main.rs like Main's.
+ *
+ * L2 ONLY — 2026-09-22 11:0x (D108, librarian/2026-09-22.md "11:0x"). The keeper asked the librarian "what do you suggest";
+ * it recommended, and took under his standing permission for obvious, reversible calls, DROPPING THE L3 QUESTION from
+ * judge mode. This REVERSES THE "BOTH LEVELS" HALF of the keeper's 05:2x ruling above, for every seat. The Third Place
+ * stays a seat and is still judged, at L2. Its reasons, as recorded there:
+ *   · L3's input counts machine packets as the keeper's turns (ASK-006);
+ *   · it is the one question ABOUT the keeper rather than the work;
+ *   · on D, 27 of Jev's 37 failures were `:l3`;
+ *   · no one reads it.
+ * So: `capturePass` builds no L3 prompt and reads neither the L3 hook, its worker nor WELFARE.md. `judgePass` asks LEVELS
+ * = ['l2'] only, so an older capture that still carries an `l3` prompt is never asked it. The daily cap is unchanged,
+ * since it counts `ok` rows. Rows already written at L3 stay in the ledger as they are. Reversible: the L3 input returns
+ * only with one that counts the keeper's real turns alone.
+ * Not-clean L2 verdicts surface to the chair and the librarian only, through consonance/hooks/jev-flags.js.
  *
  * THE STANDING RULE THAT COMES WITH IT, and it binds every reader of jev_judge.jsonl, not only this file: NOTHING EVER
- * SURFACES THE THIRD PLACE'S L3 VERDICTS AS A STATEMENT ABOUT THE KEEPER. An L3 row describes a trajectory in one
+ * SURFACES THE THIRD PLACE'S L3 VERDICTS AS A STATEMENT ABOUT THE KEEPER. (It still binds after 11:0x. No new L3 row
+ * is written, but the ones already in the ledger remain. And no verdict of any level is ever a statement about him.) An L3 row describes a trajectory in one
  * conversation, read by an unverified judge; it is never a claim about how he is, never an offramp, never a welfare
  * note (the never-pathologize card). Rows carry `seat: "third place"` so any consumer can honour this.
  *
@@ -67,6 +84,8 @@ const { Refusal } = jev;
 const LEDGER = 'jev_judge.jsonl';
 const CAPTURES = 'judge-captures';
 const HARD_CAP = 500;
+// D108: the levels Jev is ASKED. L2 only; an old capture that still carries an `l3` prompt is never asked it.
+const LEVELS = ['l2'];
 const TAIL_BYTES = 4 * 1024 * 1024;
 
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
@@ -74,31 +93,20 @@ const readJsonl = (p) => { try { return fs.readFileSync(p, 'utf8').split('\n').f
 const writeAtomic = (p, text) => { fs.mkdirSync(path.dirname(p), { recursive: true }); const t = `${p}.${process.pid}.tmp`; fs.writeFileSync(t, text); fs.renameSync(t, p); };
 const readText = (p, what) => { try { return fs.readFileSync(p, 'utf8'); } catch { throw new Refusal(`cannot read ${what} at ${p}`); } };
 
-/** `const NAME = <number>;` from source, as text, so the view's constants are the hook's, not a copy of them. */
-function constLine(src, name, file) {
-  const m = new RegExp(`^const ${name} = (\\d+);`, 'm').exec(src);
-  if (!m) throw new Refusal(`cannot find const ${name} in ${file} — the view would not be the hook's`);
-  return `const ${name} = ${m[1]};\n`;
-}
-
-/** The two views and the two prompt builders, from THIS checkout's hooks, without running any hook. */
+/** The L2 view and the L2 prompt builder, from THIS checkout's hooks, without running any hook. L2 ONLY since D108: the
+ * L3 hook and worker are not read, so nothing about them can refuse judge mode. `sourcesSha` covers the two L2 files. */
 function loadJudgeInputs(repo) {
   const hooks = path.join(repo, 'dev', 'shell', 'hooks');
-  const f2 = path.join(hooks, 'l2-overseer.js'), f3 = path.join(hooks, 'l3-overseer.js');
-  const w2 = path.join(hooks, 'l2-overseer-worker.js'), w3 = path.join(hooks, 'l3-overseer-worker.js');
-  const s2 = readText(f2, 'the L2 hook'), s3 = readText(f3, 'the L3 hook'), sw3 = readText(w3, 'the L3 worker');
+  const f2 = path.join(hooks, 'l2-overseer.js');
+  const w2 = path.join(hooks, 'l2-overseer-worker.js');
+  const s2 = readText(f2, 'the L2 hook');
   const helpers = (src, file) => extractFunction(src, 'safeParseJSON', file) + extractFunction(src, 'extractText', file);
   // eslint-disable-next-line no-new-func
   const l2view = new Function('fs', helpers(s2, f2) + extractFunction(s2, 'readNarrowedView', f2) + 'return readNarrowedView;')(fs);
-  // eslint-disable-next-line no-new-func
-  const l3view = new Function('fs', constLine(s3, 'TRAJECTORY_TURNS', f3) + constLine(s3, 'PER_TURN_CHARS', f3)
-    + helpers(s3, f3) + extractFunction(s3, 'readTrajectoryView', f3) + 'return readTrajectoryView;')(fs);
   let l2build;
   try { l2build = require(w2).buildOverseerPrompt; } catch (e) { throw new Refusal(`cannot load the L2 worker at ${w2}: ${e.message}`); }
   if (typeof l2build !== 'function') throw new Refusal(`${w2} does not export buildOverseerPrompt`);
-  // eslint-disable-next-line no-new-func
-  const l3build = new Function(extractFunction(sw3, 'formatTurns', w3) + extractFunction(sw3, 'buildOverseerPrompt', w3) + 'return buildOverseerPrompt;')();
-  return { l2view, l3view, l2build, l3build, sourcesSha: sha([s2, s3, readText(w2, 'the L2 worker'), sw3].join('\0')) };
+  return { l2view, l2build, sourcesSha: sha([s2, readText(w2, 'the L2 worker')].join('\0')) };
 }
 
 /** Main, the librarian and the Third Place from THIS checkout's main.rs (the keeper's 05:2x ruling), then the roster. */
@@ -163,7 +171,7 @@ function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, memo = 
   if (!store) throw new Refusal('no store');
   const res = { seats: 0, captured: 0, running: 0, already: 0, noView: 0 };
   let io = inputs;
-  let method = null, welfare = null;
+  let method = null;
   for (const seat of seatSessions({ repo, dataDir })) {
     const t = transcriptFor(projectsDir, seat.sid);
     if (!t) continue;
@@ -176,18 +184,13 @@ function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, memo = 
     const dest = keyFile(store, seat.sid, end.uuid);
     if (fs.existsSync(dest)) { res.already++; continue; }
     if (!io) io = loadJudgeInputs(repo);
-    if (method === null) {
-      method = readText(path.join(disciplineDir, 'METHOD.md'), 'METHOD.md (the L2 discipline)');
-      welfare = readText(path.join(disciplineDir, 'WELFARE.md'), 'WELFARE.md (the L3 discipline)');
-    }
+    if (method === null) method = readText(path.join(disciplineDir, 'METHOD.md'), 'METHOD.md (the L2 discipline)');
     const view = io.l2view(t.file);
     if (!view || !view.assistant_move) { res.noView++; continue; }
-    const turns = io.l3view(t.file);
     writeAtomic(dest, JSON.stringify({
       session_id: seat.sid, seat: seat.label || null, turn_uuid: end.uuid, turn_ts: end.ts, captured_at: now().toISOString(),
       l2: { prompt: io.l2build(view, method) },
-      l3: turns ? { prompt: io.l3build(turns, welfare) } : null,
-      method_sha256: sha(method), welfare_sha256: sha(welfare), sources_sha256: io.sourcesSha,
+      method_sha256: sha(method), sources_sha256: io.sourcesSha,
     }));
     res.captured++;
   }
@@ -207,7 +210,7 @@ async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globa
   const eligible = [];
   for (const f of caps) {
     let c; try { c = JSON.parse(fs.readFileSync(path.join(store, CAPTURES, f), 'utf8')); } catch { continue; }
-    for (const level of ['l2', 'l3']) {
+    for (const level of LEVELS) {
       if (c[level] && !done.has(`${c.session_id}:${c.turn_uuid}:${level}`)) eligible.push({ c, level });
     }
   }
@@ -219,7 +222,7 @@ async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globa
     const prompt = c[level].prompt;
     const base = { ts: now().toISOString(), judge: 'jev', unverified: true, level, session_id: c.session_id, seat: c.seat,
       turn_uuid: c.turn_uuid, turn_ts: c.turn_ts, prompt_sha256: sha(prompt),
-      discipline_sha256: level === 'l2' ? c.method_sha256 : c.welfare_sha256, sources_sha256: c.sources_sha256 };
+      discipline_sha256: c.method_sha256, sources_sha256: c.sources_sha256 };
     let r;
     try {
       r = await jev.ask({ schema: { questions: JUDGES[level].questions }, state: prompt, env, fetchImpl, pacer });   // D107: undefined = jev-ask's shared pacer for the real fetch
