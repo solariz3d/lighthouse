@@ -15,7 +15,8 @@
  *
  * TWO MODES. The DRY RUN (default) reads every source, reports, and writes the PROPOSED union
  * to --out for a reader to inspect; it never writes the data dir and refuses an --out inside it. The WRITE
- * (`--write --file lap|board`, L071, see THE WRITE below) rewrites ONE named live file, keeps the original beside it
+ * (`--write --file <one>`, L071; the nine fast-forward ledgers joined lap and board in L075) rewrites ONE named live
+ * file, keeps the original beside it
  * as `<file>.pre-union-<stamp>`, and never touches an attic copy.
  *
  * THE KEY IS THE WHOLE ROW. Two rows are the same row only if every field is equal (canonical JSON, keys sorted,
@@ -27,8 +28,9 @@
  * BOARD TEXT IS NEVER PRINTED. A board row is a person's words; an unparseable board line is reported by source,
  * line number and byte length only.
  *
- *   node consonance/tools/ledger-union.js --data <data dir> --out <scratch dir> [--file lap|board|both]   # dry run
- *   node consonance/tools/ledger-union.js --data <data dir> --write --file lap|board                      # the write
+ *   node consonance/tools/ledger-union.js --data <data dir> --out <scratch dir> [--file <one>|both|all]   # dry run
+ *   node consonance/tools/ledger-union.js --data <data dir> --write --file <one>                            # the write
+ *   <one> = lap, board, or any of the nine marked in L074 (FILES below) — by key, file name or manifest path
  */
 'use strict';
 const fs = require('fs');
@@ -49,10 +51,51 @@ function resolveStateDir(explicit) {
   return dir;
 }
 
+/* THE LEDGERS THIS TOOL UNIONS — exactly the manifest's install:"fast-forward" rows (a test holds the two equal, so a
+ * newly marked file with no entry here fails loudly). Under L070's stop-before-write ONE diverged marked file refuses
+ * the WHOLE install, so every marked file must be reconcilable here (L075; A's L074 §0).
+ * THE TIME FIELD was measured from the live rows and confirmed at each writer (A's L074 §1 table):
+ *   lap                    `at`, epoch ms
+ *   board                  `ts`, epoch ms
+ *   SHAPE A, ISO `ts`       precompact, sessionstart-state, sourced_ledger, carrier-drift, return_ledger,
+ *                          vantage_findings — each writer stamps new Date().toISOString()
+ *   SHAPE B, epoch `ts`     read_ledger (Date.now()), resonance/atoms (main.rs SystemTime millis) — atoms in a SUBDIR
+ *   SHAPE C, ferry         `ferried_at`, epoch ms; its FIRST row is a header {epoch, note} (ferry.js:92-100) with no
+ *                          ferried_at, so the time is the first of [ferried_at, epoch] present
+ * Invalid lines are printed for the lap ledger only: the board and the nine carry people's words. */
 const FILES = {
   lap: { name: 'lap.jsonl', time: 'at', printInvalid: true },
   board: { name: 'board.jsonl', time: 'ts', printInvalid: false },
+  precompact: { name: 'precompact.jsonl', time: 'ts', printInvalid: false },
+  'sessionstart-state': { name: 'sessionstart-state.jsonl', time: 'ts', printInvalid: false },
+  sourced_ledger: { name: 'sourced_ledger.jsonl', time: 'ts', printInvalid: false },
+  'carrier-drift': { name: 'carrier-drift.jsonl', time: 'ts', printInvalid: false },
+  ferry: { name: 'ferry.jsonl', time: ['ferried_at', 'epoch'], printInvalid: false },
+  read_ledger: { name: 'read_ledger.jsonl', time: 'ts', printInvalid: false },
+  return_ledger: { name: 'return_ledger.jsonl', time: 'ts', printInvalid: false },
+  vantage_findings: { name: 'vantage_findings.jsonl', time: 'ts', printInvalid: false },
+  atoms: { name: 'resonance/atoms.jsonl', time: 'ts', printInvalid: false },
 };
+
+/** The spec for a --file value: its key, its file name, or its manifest path without .jsonl. Anything else is null. */
+function fileSpec(v) {
+  if (!v) return null;
+  for (const [k, f] of Object.entries(FILES)) if (k === v || f.name === v || f.name === `${v}.jsonl`) return f;
+  return null;
+}
+const keyOf = (spec) => Object.keys(FILES).find((k) => FILES[k] === spec);
+const timeLabel = (time) => (Array.isArray(time) ? time.join('|') : time);
+
+/** A row's time in epoch ms, from the first candidate field that holds one: an epoch number or an ISO date string.
+ *  A Number() of an ISO string is NaN — which, before L075, would have ordered every ISO-ts row as having no time. */
+function timeOf(obj, time) {
+  for (const f of Array.isArray(time) ? time : [time]) {
+    const v = obj ? obj[f] : undefined;
+    if (typeof v === 'number' && Number.isFinite(v)) return v;
+    if (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}/.test(v)) { const t = Date.parse(v); if (Number.isFinite(t)) return t; }
+  }
+  return NaN;
+}
 
 /** Canonical JSON: object keys sorted at every depth, so field order never decides identity. */
 function canon(v) {
@@ -117,7 +160,7 @@ function union(sources, time) {
       invalid: p.invalid, invalidNotInLive: invNotLive.length, invalidNotInLiveLines: invNotLive, notInLive });
   }
   const rows = [...all.values()].sort((a, b) => {
-    const ta = Number(a.obj[time]), tb = Number(b.obj[time]);
+    const ta = timeOf(a.obj, time), tb = timeOf(b.obj, time);
     const fa = Number.isFinite(ta), fb = Number.isFinite(tb);
     if (fa && fb && ta !== tb) return ta - tb;
     if (fa !== fb) return fa ? -1 : 1;    // rows with no usable time go LAST, and are counted
@@ -131,7 +174,7 @@ function union(sources, time) {
     liveDistinct: liveKeys.size,
     crossSourceDup: rows.filter((r) => r.sources.size > 1).length,
     withinDup,
-    noTime: rows.filter((r) => !Number.isFinite(Number(r.obj[time]))).length,
+    noTime: rows.filter((r) => !Number.isFinite(timeOf(r.obj, time))).length,
     narrowDistinct: new Set(rows.map((r) => narrowKey(r.obj))).size,
     invalidNotInLive,
     addedBytes: added.reduce((n, r) => n + r.bytes, 0),
@@ -181,12 +224,12 @@ function report(kind, dataDir, outDir, stateDir) {
   console.log(`  union distinct rows         ${u.rows.length}`);
   console.log(`  ROWS TO ADD to live         ${u.added.length}   (${u.addedBytes} bytes)`);
   if (u.added.length) {
-    const ts = u.added.map((r) => Number(r.obj[spec.time])).filter(Number.isFinite);
+    const ts = u.added.map((r) => timeOf(r.obj, spec.time)).filter(Number.isFinite);
     if (ts.length) console.log(`    time range of rows to add  ${iso(Math.min(...ts))} .. ${iso(Math.max(...ts))}`);
   }
   console.log(`  rows held by 2+ sources     ${u.crossSourceDup}   (duplicates across copies, kept once)`);
   console.log(`  repeated within one source  ${u.withinDup}   (kept once)`);
-  console.log(`  rows with no usable ${spec.time.padEnd(3)}     ${u.noTime}   (ordered last)`);
+  console.log(`  rows with no usable ${timeLabel(spec.time).padEnd(3)}     ${u.noTime}   (ordered last)`);
   console.log(`  narrow key (lap, stage|chain, at) distinct: ${u.narrowDistinct}`
     + (kind === 'lap' ? `  — whole-row keeps ${u.rows.length - u.narrowDistinct} more apart` : '  (not meaningful for the board)'));
   const invAll = u.perSource.reduce((n, s) => n + s.invalid.length, 0);
@@ -206,9 +249,11 @@ function report(kind, dataDir, outDir, stateDir) {
   if (outDir) {
     fs.mkdirSync(outDir, { recursive: true });
     const out = path.join(outDir, `${spec.name}.union`);
+    // resonance/atoms.jsonl lives in a SUBDIR, so its proposal does too (L075: ENOENT without this, found by its test).
+    fs.mkdirSync(path.dirname(out), { recursive: true });
     fs.writeFileSync(out, u.rows.map((r) => canon(r.obj)).join('\n') + '\n');
     fs.writeFileSync(path.join(outDir, `${spec.name}.added`), u.added.map((r) => canon(r.obj)).join('\n') + (u.added.length ? '\n' : ''));
-    console.log(`  proposed union written to   ${out}  (${u.rows.length} rows, ordered by ${spec.time}) — for inspection only`);
+    console.log(`  proposed union written to   ${out}  (${u.rows.length} rows, ordered by ${timeLabel(spec.time)}) — for inspection only`);
   }
   return 0;
 }
@@ -262,8 +307,8 @@ function writeUnion({ dataDir, name, time, hooks = {}, settleMs = 1500, now = ()
   let ai = 0;
   for (const l of liveLines) {
     let t = NaN;
-    try { t = Number(JSON.parse(l)[time]); } catch { /* a fused line: it keeps its place */ }
-    if (Number.isFinite(t)) while (ai < add.length && Number(add[ai].obj[time]) < t) out.push(add[ai++].raw);
+    try { t = timeOf(JSON.parse(l), time); } catch { /* a fused line: it keeps its place */ }
+    if (Number.isFinite(t)) while (ai < add.length && timeOf(add[ai].obj, time) < t) out.push(add[ai++].raw);
     out.push(l);
   }
   while (ai < add.length) out.push(add[ai++].raw);
@@ -343,12 +388,13 @@ function main(argv) {
   const arg = (k) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : null; };
   if (argv.includes('--write')) {
     const k = arg('--file');
-    if (!['lap', 'board'].includes(k)) { console.error('ledger-union: --write needs --file lap|board — one live file per run, named'); return 2; }
+    const spec = fileSpec(k);
+    if (!spec) { console.error(`ledger-union: --write needs --file lap|board|${Object.keys(FILES).slice(2).join('|')} — one live file per run, named`); return 2; }
     const dataDir = arg('--data');
     if (!dataDir) { console.error('--data <data dir> is required'); return 2; }
     let st;
     try { st = resolveStateDir(); } catch (e) { console.error(`ledger-union: REFUSED — ${e.message}`); return 2; }
-    const r = writeUnion({ dataDir, name: FILES[k].name, time: FILES[k].time, stateDir: st });
+    const r = writeUnion({ dataDir, name: spec.name, time: spec.time, stateDir: st });
     console.log(JSON.stringify(r, null, 2));
     if (!r.verified) console.error(`ledger-union: WRITTEN BUT NOT VERIFIED — ${r.missingLines} line(s) / ${r.missingRows} union row(s) missing; the original is intact at ${r.backup}`);
     return r.verified ? 0 : 1;
@@ -364,13 +410,14 @@ function main(argv) {
     }
   }
   const which = arg('--file') || 'both';
-  if (!['lap', 'board', 'both'].includes(which)) { console.error('--file must be lap|board|both'); return 2; }
+  const kinds = which === 'both' ? ['lap', 'board'] : which === 'all' ? Object.keys(FILES) : fileSpec(which) ? [keyOf(fileSpec(which))] : null;
+  if (!kinds) { console.error(`--file must be both|all|${Object.keys(FILES).join('|')} (or a file name / manifest path)`); return 2; }
   let rc = 0;
   let st;
   try { st = resolveStateDir(); } catch (e) { console.error(`ledger-union: REFUSED — ${e.message}`); return 2; }
-  for (const k of which === 'both' ? ['lap', 'board'] : [which]) rc = Math.max(rc, report(k, dataDir, outDir, st));
+  for (const k of kinds) rc = Math.max(rc, report(k, dataDir, outDir, st));
   return rc;
 }
 
-module.exports = { canon, parseJsonl, union, narrowKey, writeUnion, completeLines };
+module.exports = { canon, parseJsonl, union, narrowKey, writeUnion, completeLines, FILES, fileSpec, timeOf };
 if (require.main === module) process.exit(main(process.argv.slice(2)));
