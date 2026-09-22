@@ -239,13 +239,109 @@ test('a refusal that is NOT the secret scan stops the run and retires nothing (i
   assert.strictEqual(ledger(f).length, 0, 'a run-level refusal was recorded against the item, retiring it forever');
 });
 
-test('a gateway failure STOPS the run, is surfaced, and writes no row for the failed item', async () => {
+// L079 changed this test's status from 500 to 401: a 5xx is now a SKIPPED item (the L078 rule, below), so the case that
+// still ends the run is a failure every call would hit the same way — another 4xx, here a bad key.
+test('a NON-transient gateway failure (401) STOPS the run, is surfaced, and writes no row for the failed item', async () => {
   const f = fixture();
   l2Job(f, 'a'); l2Job(f, 'b'); S.capture(f.opts);
   verdict(f, 'l2', 'a', 'clean'); verdict(f, 'l2', 'b', 'clean');
-  const failing = async () => ({ ok: false, status: 500, text: async () => 'boom' });
-  await assert.rejects(S.shadow({ ...f.opts, maxCalls: 5, env: KEY, fetchImpl: failing }), /HTTP 500/);
+  const failing = async () => ({ ok: false, status: 401, text: async () => 'bad key' });
+  await assert.rejects(S.shadow({ ...f.opts, maxCalls: 5, env: KEY, fetchImpl: failing }), /HTTP 401/);
   assert.strictEqual(ledger(f).length, 0);
+});
+
+// ------------------------------------------------------------------ L079: a failed call SKIPS the item, it does not end the run
+// The twin of A's L078 in jev-judge.js. One upstream 503 used to end the whole shadow run, on D, where the ~100-pair
+// agreement count is being built. A failure about ONE call — 5xx, 429, a network failure, an answer that does not fit
+// the schema — skips that item with NO row (so it is retried next run) and one log line (status + item id only).
+// Any other 4xx still ends the run, and so do the secret-scan's and the run-level refusals, as before.
+
+/** A gateway that answers normally except on the calls whose 1-based index is in `fail` → { status } or 'network'. */
+function flaky(fail) {
+  const ok = gateway();
+  let n = 0;
+  const f = async (url, init) => {
+    n++;
+    f.calls.push(JSON.parse(init.body));
+    const how = fail[n];
+    if (how === 'network') throw new Error('socket hang up');
+    if (how) return { ok: false, status: how, text: async () => 'upstream said no — and this body could echo input' };
+    return ok(url, init);
+  };
+  f.calls = [];
+  return f;
+}
+const four = (f) => { for (const id of ['i1', 'i2', 'i3', 'i4']) { l2Job(f, id); } S.capture(f.opts); for (const id of ['i1', 'i2', 'i3', 'i4']) verdict(f, 'l2', id, 'clean'); };
+
+test('SKIP: a 503 on item 2 of 4 — items 1, 3, 4 are shadowed, item 2 gets NO row and is retried next run', async () => {
+  const f = fixture();
+  four(f);
+  const r1 = await S.shadow({ ...f.opts, maxCalls: 10, env: KEY, fetchImpl: flaky({ 2: 503 }) });
+  assert.strictEqual(r1.asked, 3);
+  assert.deepStrictEqual(ledger(f).map((x) => x.job_id), ['i1', 'i3', 'i4']);
+  assert.deepStrictEqual(r1.failed, [{ key: 'l2:i2', status: 503 }]);
+  const g2 = flaky({});
+  const r2 = await S.shadow({ ...f.opts, maxCalls: 10, env: KEY, fetchImpl: g2 });
+  assert.strictEqual(g2.calls.length, 1, 'an answered pair was re-asked');
+  assert.strictEqual(r2.asked, 1);
+  assert.deepStrictEqual(ledger(f).map((x) => x.job_id), ['i1', 'i3', 'i4', 'i2']);
+});
+
+test('SKIP: 429, 500, a network failure and an unusable answer are each skipped; a 4xx other than 429 ends the run', async () => {
+  const f = fixture();
+  four(f);
+  const r = await S.shadow({ ...f.opts, maxCalls: 10, env: KEY, fetchImpl: flaky({ 1: 429, 2: 500, 3: 'network' }) });
+  assert.deepStrictEqual(r.failed.map((x) => x.status), [429, 500, 'network']);
+  assert.strictEqual(r.asked, 1);
+  const f2 = fixture();
+  four(f2);
+  await assert.rejects(S.shadow({ ...f2.opts, maxCalls: 10, env: KEY, fetchImpl: flaky({ 2: 403 }) }), /HTTP 403/);
+  assert.deepStrictEqual(ledger(f2).map((x) => x.job_id), ['i1'], 'the run did not end at the 403');
+});
+
+test('SKIP: an answer that does not fit the schema is skipped as "bad-answer", with no row', async () => {
+  const f = fixture();
+  l2Job(f, 'b1'); S.capture(f.opts); verdict(f, 'l2', 'b1', 'clean');
+  const junk = async () => ({ ok: true, status: 200, text: async () => JSON.stringify({ answers: {} }) });
+  const r = await S.shadow({ ...f.opts, maxCalls: 5, env: KEY, fetchImpl: junk });
+  assert.deepStrictEqual(r.failed, [{ key: 'l2:b1', status: 'bad-answer' }]);
+  assert.strictEqual(ledger(f).length, 0);
+});
+
+test('SKIP: one log line per failed item — the status and the item id ONLY, never the error body', async () => {
+  const f = fixture();
+  four(f);
+  const lines = [];
+  await S.shadow({ ...f.opts, maxCalls: 10, env: KEY, fetchImpl: flaky({ 2: 503, 4: 502 }), log: (s) => lines.push(s) });
+  assert.deepStrictEqual(lines, ['shadow: item l2:i2 failed (503) — skipped, retried next run', 'shadow: item l2:i4 failed (502) — skipped, retried next run']);
+  assert.ok(!lines.join('\n').includes('upstream said'), 'the gateway body reached the log');
+});
+
+test('SKIP: the per-run cap is unchanged — a failed call still spends a place in the run', async () => {
+  const f = fixture();
+  four(f);
+  const g = flaky({ 1: 503 });
+  const r = await S.shadow({ ...f.opts, maxCalls: 2, env: KEY, fetchImpl: g });
+  assert.strictEqual(g.calls.length, 2, 'the cap is on calls made, and a failed call is a call');
+  assert.strictEqual(r.asked, 1);
+  assert.strictEqual(r.remaining, 2);
+});
+
+test('SKIP: the secret scan still records its refusal once, and the run goes on (unchanged)', async () => {
+  const f = fixture();
+  l2Job(f, 'bad', 'key ' + 'gh' + 'p_' + 'W'.repeat(36)); l2Job(f, 'ok');
+  S.capture(f.opts); verdict(f, 'l2', 'bad', 'clean'); verdict(f, 'l2', 'ok', 'clean');
+  const r = await S.shadow({ ...f.opts, maxCalls: 5, env: KEY, fetchImpl: flaky({}) });
+  assert.strictEqual(r.refused, 1);
+  assert.deepStrictEqual(r.failed, []);
+});
+
+test('SKIP: the classification is A\'s, kept in step — jev-shadow.js carries transientStatus IDENTICAL to jev-judge.js\'s', () => {
+  // Mirrored, not imported: jev-judge.js does not export it, and this packet owns only jev-shadow.js. The two copies are
+  // held equal here, so a change to either that does not reach the other goes red.
+  const judge = fs.readFileSync(path.join(__dirname, 'jev-judge.js'), 'utf8');
+  const mine = fs.readFileSync(path.join(__dirname, 'jev-shadow.js'), 'utf8');
+  assert.strictEqual(S.extractFunction(mine, 'transientStatus', 'jev-shadow.js'), S.extractFunction(judge, 'transientStatus', 'jev-judge.js'));
 });
 
 test('verdicts with no capture are COUNTED, not asked (the input is gone); captures with no verdict yet wait', async () => {

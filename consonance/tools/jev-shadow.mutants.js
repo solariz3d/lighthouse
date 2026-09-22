@@ -8,7 +8,7 @@
 // Every row breaks one guard; the matching suite must go RED.
 //
 // THE TRACKED SOURCES ARE NEVER WRITTEN — the pattern of state-sync.mutants.js and jev-ask.mutants.js. The tools, both
-// suites, jev-ask.js and a copy of dev/shell/hooks are laid out in a temp dir at the repo's own depth (the suites find
+// suites, jev-ask.js, jev-judge.js and a copy of dev/shell/hooks are laid out in a temp dir at the repo's own depth (the suites find
 // the real overseer workers at ../../dev/shell/hooks), the copy is mutated, the dir is removed.
 //
 // THREE RESULTS THAT ARE NOT "CAUGHT", kept apart and printed as such:
@@ -28,7 +28,7 @@ const { spawnSync } = require('child_process');
 
 const TOOLS = __dirname;
 const HOOKS = path.resolve(__dirname, '..', '..', 'dev', 'shell', 'hooks');
-const COPIED = ['jev-shadow.js', 'jev-shadow.test.js', 'jev-shadow-runner.js', 'jev-shadow-runner.test.js', 'jev-ask.js'];
+const COPIED = ['jev-shadow.js', 'jev-shadow.test.js', 'jev-shadow-runner.js', 'jev-shadow-runner.test.js', 'jev-ask.js', 'jev-judge.js'];
 const HANG_MS = 120000;
 
 const TARGETS = {
@@ -44,7 +44,7 @@ const MUTANTS = [
   ['shadow', 'the cap not required', 'if (!Number.isInteger(maxCalls) || maxCalls < 1) throw', 'if (false) throw'],
   ['shadow', 'the up-front no-key refusal removed', "if (!dry && !(env.AI_GATEWAY_API_KEY || '').trim()) throw", 'if (false) throw'],
   ['shadow', 'every Refusal treated as item-level (the D103 pre-fix code)', 'if (err instanceof Refusal && /matches a secret pattern/.test(err.message)) {', 'if (err instanceof Refusal) {'],
-  ['shadow', 'a gateway failure swallowed', '      throw err;                          // a gateway failure stops the run; this item gets no row and is retried next run', '      continue;'],
+  ['shadow', 'a NON-transient gateway failure swallowed (L079: only 5xx/429/network/bad-answer skip)', 'if (status === null) throw err;', 'if (status === null) continue;'],
   ['shadow', 'refused rows not counted as done (retried forever)', 'const done = new Set(readJsonl(ledgerPath).map(', "const done = new Set(readJsonl(ledgerPath).filter((r) => r.status === 'ok').map("],
   ['shadow', 'capture not idempotent', 'if (fs.existsSync(dest)) { res.already++; continue; }', '/* no idempotency */'],
   ['shadow', 'the prompt built without its discipline', 'const prompt = builder.build(input, discipline);', "const prompt = builder.build(input, '');"],

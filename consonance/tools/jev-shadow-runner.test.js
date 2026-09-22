@@ -202,6 +202,25 @@ function judgeWorld(f) {
 const judged = (f) => { try { return fs.readFileSync(path.join(f.store, 'jev_judge.jsonl'), 'utf8').split('\n').filter(Boolean).map(JSON.parse); } catch { return []; } };
 const jopts = (f, jw) => ({ repo: jw.repo, dataDir: jw.data, projectsDir: jw.projects, disciplineDir: f.disc });
 
+test('L079: an ALL-503 shadow cadence logs each failed item (key + status) and NEVER "nothing to shadow"', async () => {
+  // Found by C (L079): the shadow's failures were never logged, so a cadence where every call 503'd read exactly like an
+  // idle one — the idle-vs-broken ambiguity the "nothing to shadow" line exists to remove.
+  const f = fixture(); const app = fakeApp();
+  job(f, 'j1'); verdict(f, 'j1'); job(f, 'j2'); verdict(f, 'j2');
+  const g = async () => ({ ok: false, status: 503, text: async () => 'upstream unavailable' });
+  try {
+    const h = await R.run(opts(f, app, { fetchImpl: g, shadowMs: 60000 }));   // one shadow cadence only
+    await waitFor(() => (log(f).match(/shadow: item .* failed/g) || []).length >= 2);
+    await new Promise((r) => setTimeout(r, 150));
+    const lines = log(f).split('\n').filter((l) => /shadow: item .* failed/.test(l));
+    assert.strictEqual(lines.length, 2, 'one line per failed item: ' + lines.join(' | '));
+    for (const l of lines) assert.match(l, /shadow: item l2:j[12] failed \(503\)/, l);
+    assert.doesNotMatch(log(f), /nothing to shadow/, 'an all-failed cadence is not an idle one');
+    for (const bad of ['upstream unavailable', 'a move', 'a question']) assert.ok(!log(f).includes(bad), `the log carried "${bad}"`);
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
 test('L078: a failed judge call is LOGGED once per item (key + status), the pass goes on, and the runner keeps running', async () => {
   const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
   const ok = gateway();

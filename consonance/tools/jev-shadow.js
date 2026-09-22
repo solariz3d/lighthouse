@@ -159,7 +159,21 @@ function captured(store, judge) {
 }
 
 /** Pair captures with verdicts, ask Jev about the unshadowed ones, up to a HARD per-run cap. */
-async function shadow({ shellDir, store, maxCalls, env = process.env, fetchImpl = globalThis.fetch, dry = false, now = () => new Date() }) {
+/**
+ * The status of a failure that is about ONE call, or null when it would fail every call (and so must end the run).
+ * MIRRORED from jev-judge.js (L078, pane A), not imported — it is not exported there, and this file's packet (L079) did
+ * not own that one. jev-shadow.test.js holds the two function bodies IDENTICAL, so a change to one that does not reach
+ * the other goes red. jev-ask puts the HTTP status only in the message ("gateway returned HTTP 503: …").
+ */
+function transientStatus(err) {
+  if (!(err instanceof jev.GatewayError)) return null;
+  const m = /HTTP (\d{3})/.exec(err.message);
+  if (!m) return /request failed before a response/.test(err.message) ? 'network' : 'bad-answer';
+  const code = Number(m[1]);
+  return code >= 500 || code === 429 ? code : null;
+}
+
+async function shadow({ shellDir, store, maxCalls, env = process.env, fetchImpl = globalThis.fetch, dry = false, now = () => new Date(), log = null }) {
   needStore(store);
   if (!Number.isInteger(maxCalls) || maxCalls < 1) throw new Refusal('--max-calls <n> is required: a positive integer, the hard cap on calls this run');
   if (maxCalls > HARD_CAP) throw new Refusal(`--max-calls is at most ${HARD_CAP} per run`);
@@ -186,6 +200,7 @@ async function shadow({ shellDir, store, maxCalls, env = process.env, fetchImpl 
     return { dry: true, wouldAsk: batch.length, eligible: eligible.length, estTokens, estCostUsd: estTokens * USD_PER_INPUT_TOKEN, uncaptured, pending };
   }
   let asked = 0, refused = 0;
+  const failed = [];
   for (const e of batch) {
     const cap = load(e);
     const J = JUDGES[e.judge];
@@ -203,13 +218,23 @@ async function shadow({ shellDir, store, maxCalls, env = process.env, fetchImpl 
         refused++;
         continue;
       }
-      throw err;                          // a gateway failure stops the run; this item gets no row and is retried next run
+      // L079 — A FAILED CALL IS SKIPPED, NOT A STOP (the twin of A's L078 in jev-judge.js). One upstream 503 used to end
+      // the whole run, on D, where the agreement count is being built. A failure about THIS CALL — 5xx, 429, a network
+      // failure, an answer that does not fit the schema — skips the item with NO row, so the `done` set does not retire
+      // it and it is retried next run; it still spent its place in this run's cap (a call was made). Any other 4xx, and
+      // every run-level refusal, would hit every call the same way and still ends the run. The log line carries the
+      // item and the status only — never the error body, which can echo input.
+      const status = transientStatus(err);
+      if (status === null) throw err;     // about the RUN: this item gets no row and is retried next run
+      failed.push({ key: `${e.judge}:${e.id}`, status });
+      if (log) log(`shadow: item ${e.judge}:${e.id} failed (${status}) — skipped, retried next run`);
+      continue;
     }
     asked++;
     fs.appendFileSync(ledgerPath, JSON.stringify({ ...base, status: 'ok', jev: r.answers, model: r.model, usage: r.usage,
       cost: r.cost, generationId: r.generationId, ms: r.ms }) + '\n');
   }
-  return { asked, refused, remaining: eligible.length - batch.length, uncaptured, pending };
+  return { asked, refused, failed, remaining: eligible.length - batch.length, uncaptured, pending };
 }
 
 /** Agreement per judge, with its denominator. A rate with n=0 is null, never 0 or 1. */

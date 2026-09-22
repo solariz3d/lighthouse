@@ -247,7 +247,12 @@ async function run(o) {
       : Promise.resolve({ asked: 0, refused: 0, remaining: 0, capped: true }))
       .then((r) => {
         if (r.capped) return;
-        if (r.asked || r.refused) log(`shadow: asked ${r.asked}, refused ${r.refused}, remaining ${r.remaining}`);
+        // L079 (found by C): the shadow's failed items were never logged, and an all-503 cadence fell through to
+        // "nothing to shadow" — idle and broken reading the same again. One line per failed item, key and status only,
+        // written HERE (not by passing the log into shadow()), so runner.log has one writer and one format for both modes.
+        for (const x of r.failed || []) log(`shadow: item ${x.key} failed (${x.status}) — skipped, retried next cadence`);
+        const nFail = (r.failed || []).length;
+        if (r.asked || r.refused || nFail) log(`shadow: asked ${r.asked}, refused ${r.refused}, failed ${nFail}, remaining ${r.remaining}`);
         // L071: an empty cadence said NOTHING, so an idle runner and a broken one read the same (L, 09-22: zero calls
         // for hours, and no way to tell why from the log). One line per empty cadence, with the count it found.
         else {
