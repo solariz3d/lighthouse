@@ -11,6 +11,11 @@ const { canon, parseJsonl, union } = require('./ledger-union.js');
 const TOOL = path.join(__dirname, 'ledger-union.js');
 const J = (...rows) => rows.map((r) => JSON.stringify(r)).join('\n') + '\n';
 
+/* THE STATE PIN (L072). The union now reads the STATE SET's copy too, resolved like state-sync.js (CONSONANCE_STATE,
+ * then ~/.consonance.json state_dir). Unpinned, every fixture here would read this machine's REAL state set — L's
+ * config declares one — and count its rows. An empty temp dir is a state set holding nothing. No assertion changed. */
+process.env.CONSONANCE_STATE = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-emptystate-'));
+
 test('the key is the WHOLE row: field order does not decide identity', () => {
   assert.strictEqual(canon({ lap: 'L1', at: 5, stage: 'open' }), canon({ stage: 'open', at: 5, lap: 'L1' }));
 });
@@ -223,6 +228,102 @@ test('WRITE: a second write (new stamp) adds nothing — the union is already in
   W(fx);
   const r2 = writeUnion({ dataDir: fx.data, name: 'lap.jsonl', time: 'at', settleMs: 20, now: () => new Date('2026-09-22T09:00:00.000Z') });
   assert.strictEqual(r2.added, 0);
+});
+
+// ------------------------------------------------------------------ THE STATE SET AS A SOURCE (L072)
+// Under L070's stop-before-write, a launch that meets a DIVERGED ledger refuses and writes nothing — so on the other
+// machine no attic copy of this machine's rows ever exists. The only copy is the state set's (<state>/data/<file>).
+function stateWorld({ live, state, attic = null }) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-st-'));
+  const data = path.join(root, 'data'), stateDir = path.join(root, 'state');
+  fs.mkdirSync(data, { recursive: true });
+  fs.mkdirSync(path.join(stateDir, 'data'), { recursive: true });
+  fs.writeFileSync(path.join(data, 'lap.jsonl'), J(...live));
+  if (state) fs.writeFileSync(path.join(stateDir, 'data', 'lap.jsonl'), J(...state));
+  if (attic) {
+    const a = path.join(data, 'attic', 'pre-sync-2026-01-01T00-00-00-000Z');
+    fs.mkdirSync(a, { recursive: true });
+    fs.writeFileSync(path.join(a, 'lap.jsonl'), J(...attic));
+  }
+  return { root, data, stateDir, live: path.join(data, 'lap.jsonl') };
+}
+/** Every file under a dir, with its bytes' sha — to prove nothing was written there. */
+function treeHash(dir) {
+  const out = [];
+  for (const rel of fs.readdirSync(dir, { recursive: true }).sort()) {
+    const p = path.join(dir, rel);
+    out.push(fs.statSync(p).isFile() ? `${rel}:${require('crypto').createHash('sha256').update(fs.readFileSync(p)).digest('hex')}` : rel);
+  }
+  return out.join('\n');
+}
+const cliIn = (w, args, extraEnv = {}) => spawnSync(process.execPath, [TOOL, '--data', w.data, ...args],
+  { encoding: 'utf8', env: { ...process.env, CONSONANCE_STATE: w.stateDir, ...extraEnv } });
+
+test('STATE: a refused-install world — the other machine\'s rows exist ONLY in the state set, and the union includes them', () => {
+  // L's live ledger; D's rows only in the state set (no attic copy: the install refused and wrote nothing).
+  const w = stateWorld({ live: [{ lap: 'L001', at: 1 }], state: [{ lap: 'L001', at: 1 }, { lap: 'D090', at: 2 }, { lap: 'D091', at: 3 }] });
+  const r = writeUnion({ dataDir: w.data, name: 'lap.jsonl', time: 'at', stateDir: w.stateDir, settleMs: 10, now: () => new Date('2026-09-22T09:00:00.000Z') });
+  assert.strictEqual(r.added, 2);
+  assert.deepStrictEqual(lines(w.live).map((l) => JSON.parse(l).lap), ['L001', 'D090', 'D091']);
+});
+
+test('STATE: the key is still the WHOLE row — a state row equal to a live row (fields reordered) is not added twice', () => {
+  const w = stateWorld({ live: [{ lap: 'L001', stage: 'open', at: 1 }], state: [{ at: 1, stage: 'open', lap: 'L001' }] });
+  const u = union([
+    { tag: 'LIVE', live: true, text: fs.readFileSync(w.live, 'utf8') },
+    { tag: 'STATE', text: fs.readFileSync(path.join(w.stateDir, 'data', 'lap.jsonl'), 'utf8') },
+  ], 'at');
+  assert.strictEqual(u.added.length, 0);
+  const r = cliIn(w, ['--file', 'lap']);
+  assert.match(r.stdout, /ROWS TO ADD to live\s+0/);
+});
+
+test('STATE: NOTHING is written into the state dir — neither by the dry run nor by the write', () => {
+  const w = stateWorld({ live: [{ lap: 'L001', at: 1 }], state: [{ lap: 'D090', at: 2 }], attic: [{ lap: 'L000', at: 0 }] });
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-st-out-'));
+  const before = treeHash(w.stateDir);
+  const dry = cliIn(w, ['--out', out, '--file', 'lap']);
+  assert.strictEqual(dry.status, 0, dry.stderr);
+  assert.strictEqual(treeHash(w.stateDir), before, 'the dry run wrote into the state dir');
+  const wr = cliIn(w, ['--write', '--file', 'lap']);
+  assert.strictEqual(wr.status, 0, wr.stderr);
+  assert.strictEqual(treeHash(w.stateDir), before, 'the write wrote into the state dir');
+  assert.deepStrictEqual(lines(w.live).map((l) => JSON.parse(l).lap), ['L000', 'L001', 'D090']);
+});
+
+test('STATE: the dry run NAMES the state source and its row count', () => {
+  const w = stateWorld({ live: [{ lap: 'L001', at: 1 }], state: [{ lap: 'D090', at: 2 }, { lap: 'D091', at: 3 }, { lap: 'L001', at: 1 }] });
+  const r = cliIn(w, ['--file', 'lap']);
+  assert.strictEqual(r.status, 0, r.stderr);
+  assert.ok(r.stdout.includes(path.join(w.stateDir, 'data', 'lap.jsonl')), 'the state source path is not named');
+  assert.match(r.stdout, /state set copy .*\b3 rows\b.*\b2 not in live\b/);
+});
+
+test('STATE: an UNDECLARED state dir refuses loudly (exit 2) — for the dry run and for the write — and writes nothing', () => {
+  const w = stateWorld({ live: [{ lap: 'L001', at: 1 }], state: [{ lap: 'D090', at: 2 }] });
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-nohome-'));            // no ~/.consonance.json here
+  const env = { CONSONANCE_STATE: '', USERPROFILE: home, HOME: home };
+  const liveBefore = fs.readFileSync(w.live);
+  for (const args of [['--file', 'lap'], ['--write', '--file', 'lap']]) {
+    const r = cliIn(w, args, env);
+    assert.strictEqual(r.status, 2, `${args.join(' ')}: ${r.stdout}${r.stderr}`);
+    assert.match(r.stderr, /no state dir declared/);
+  }
+  assert.ok(fs.readFileSync(w.live).equals(liveBefore), 'a refused run changed the live file');
+});
+
+test('STATE: a DECLARED state dir that does not exist refuses — reading nothing there would hide the other machine\'s rows', () => {
+  const w = stateWorld({ live: [{ lap: 'L001', at: 1 }], state: null });
+  const r = cliIn(w, ['--file', 'lap'], { CONSONANCE_STATE: path.join(w.root, 'no-such-state') });
+  assert.strictEqual(r.status, 2);
+  assert.match(r.stderr, /state dir .*does not exist/);
+});
+
+test('STATE: a state set that holds no copy of THIS file is said out loud, and the run goes on', () => {
+  const w = stateWorld({ live: [{ lap: 'L001', at: 1 }], state: null });   // the state dir exists; data/lap.jsonl does not
+  const r = cliIn(w, ['--file', 'lap']);
+  assert.strictEqual(r.status, 0, r.stderr);
+  assert.match(r.stdout, /state set copy: NONE at /);
 });
 
 test('WRITE: a REAL concurrent writer process appending throughout loses no row', { timeout: 60000 }, async () => {

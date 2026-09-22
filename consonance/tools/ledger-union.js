@@ -1,12 +1,19 @@
 #!/usr/bin/env node
-/* ledger-union.js — union the live lap.jsonl / board.jsonl with every copy displaced into attic/pre-sync-*.
+/* ledger-union.js — union the live lap.jsonl / board.jsonl with every copy displaced into attic/pre-sync-*, AND with
+ * the state set's copy (<state_dir>/data/<file>, L072).
  *
  * WHY IT EXISTS (L069 §2, L070). Every L launch that MIGRATEs installs the state set over the data dir, and an
  * append-only TRAVELS log is REPLACED rather than extended: the rows this machine wrote since the last publish move
  * into attic/pre-sync-<stamp>/ and leave the live file. Measured on L, 2026-09-21: 69 lap rows of 09-20 in one attic
  * copy, L058 alone in five generations. The keeper's ruling (06:34, via the librarian): UNION, NO RENAMING.
  *
- * TWO MODES. The DRY RUN (default) reads the live file and every attic copy, reports, and writes the PROPOSED union
+ * THE SOURCES: the live file; the STATE SET'S copy, resolved exactly as state-sync.js resolves the state dir
+ * (CONSONANCE_STATE, then ~/.consonance.json state_dir; undeclared, or declared and absent, REFUSES with exit 2); and
+ * every attic/pre-sync-* copy. The state copy is there because under L070's stop-before-write a launch that meets a
+ * DIVERGED ledger refuses and writes nothing — so on the other machine no attic copy of this machine's rows ever
+ * exists, and the state set's copy is the only one (librarian 2026-09-22 03:1x). It is only ever READ.
+ *
+ * TWO MODES. The DRY RUN (default) reads every source, reports, and writes the PROPOSED union
  * to --out for a reader to inspect; it never writes the data dir and refuses an --out inside it. The WRITE
  * (`--write --file lap|board`, L071, see THE WRITE below) rewrites ONE named live file, keeps the original beside it
  * as `<file>.pre-union-<stamp>`, and never touches an attic copy.
@@ -29,6 +36,18 @@ const path = require('path');
 const crypto = require('crypto');
 // An unparseable line is identified by a HASH of its bytes, never by its text: a board line is a person's words.
 const lineHash = (raw) => crypto.createHash('sha256').update(raw).digest('hex').slice(0, 16);
+// THE STATE SET'S COPY (L072) is resolved by state-sync.js's own stateDir() — CONSONANCE_STATE, then ~/.consonance.json
+// state_dir, else it THROWS 'no state dir declared'. Imported, not copied: two copies of one route drift (law #2).
+const { stateDir: declaredStateDir } = require('./state-sync.js');
+
+/** The state dir to read, or a thrown refusal: undeclared (state-sync's words), or declared and absent. */
+function resolveStateDir(explicit) {
+  const dir = explicit || declaredStateDir();
+  if (!fs.existsSync(dir)) {
+    throw new Error(`the declared state dir ${dir} does not exist — reading nothing there would hide every row only the other machine's publish holds`);
+  }
+  return dir;
+}
 
 const FILES = {
   lap: { name: 'lap.jsonl', time: 'at', printInvalid: true },
@@ -119,10 +138,16 @@ function union(sources, time) {
   };
 }
 
-function sources(dataDir, name) {
+function sources(dataDir, name, stateDir = null) {
   const out = [];
   const live = path.join(dataDir, name);
   if (fs.existsSync(live)) out.push({ tag: 'LIVE', path: live, live: true, text: fs.readFileSync(live, 'utf8') });
+  // The state set's copy, READ ONLY. Under L070's stop-before-write a launch that meets a DIVERGED ledger refuses and
+  // writes nothing, so the other machine's rows never reach an attic copy here: this copy is the only one there is.
+  if (stateDir) {
+    const sp = path.join(stateDir, 'data', name);
+    if (fs.existsSync(sp)) out.push({ tag: 'STATE', path: sp, live: false, state: true, text: fs.readFileSync(sp, 'utf8') });
+  }
   const attic = path.join(dataDir, 'attic');
   if (fs.existsSync(attic)) {
     for (const d of fs.readdirSync(attic).filter((x) => x.startsWith('pre-sync-')).sort()) {
@@ -133,19 +158,25 @@ function sources(dataDir, name) {
   return out;
 }
 
-function report(kind, dataDir, outDir) {
+function report(kind, dataDir, outDir, stateDir) {
   const spec = FILES[kind];
-  const src = sources(dataDir, spec.name);
+  const src = sources(dataDir, spec.name, stateDir);
   if (!src.some((s) => s.live)) { console.log(`${spec.name}: no live file in ${dataDir} — nothing to union`); return 2; }
   const u = union(src, spec.time);
   const iso = (t) => (Number.isFinite(Number(t)) ? new Date(Number(t)).toISOString() : '(no time)');
   console.log(`\n=== ${spec.name} — DRY RUN, nothing written to ${dataDir} ===`);
-  console.log(`  sources: 1 live + ${src.length - 1} attic cop${src.length - 1 === 1 ? 'y' : 'ies'}`);
+  const nAttic = src.filter((x) => !x.live && !x.state).length;
+  console.log(`  sources: 1 live + ${src.some((x) => x.state) ? '1 state set copy + ' : ''}${nAttic} attic cop${nAttic === 1 ? 'y' : 'ies'}`);
   console.log('  source                                   lines    rows  distinct  invalid  invalid-not-in-live  rows-not-in-live');
   for (const s of u.perSource) {
     console.log(`  ${s.tag.padEnd(38)} ${String(s.lines).padStart(6)} ${String(s.rows).padStart(7)} ${String(s.distinct).padStart(9)}`
       + ` ${String(s.invalid.length).padStart(8)} ${String(s.live ? '-' : s.invalidNotInLive).padStart(20)} ${String(s.notInLive).padStart(17)}`);
   }
+  const stPath = path.join(stateDir, 'data', spec.name);
+  const st = u.perSource.find((x) => x.tag === 'STATE');
+  console.log(st
+    ? `  state set copy              ${stPath} — ${st.rows} rows, ${st.notInLive} not in live`
+    : `  state set copy: NONE at ${stPath} — the state set holds no copy of this file`);
   console.log(`  live distinct rows          ${u.liveDistinct}`);
   console.log(`  union distinct rows         ${u.rows.length}`);
   console.log(`  ROWS TO ADD to live         ${u.added.length}   (${u.addedBytes} bytes)`);
@@ -208,7 +239,8 @@ function completeLines(buf, from) {
 }
 const asText = (ls) => ls.map((l) => `${l}\n`).join('');
 
-function writeUnion({ dataDir, name, time, hooks = {}, settleMs = 1500, now = () => new Date() }) {
+function writeUnion({ dataDir, name, time, hooks = {}, settleMs = 1500, now = () => new Date(), stateDir = null }) {
+  const st = resolveStateDir(stateDir);            // before anything is touched: an undeclared state set refuses
   const live = path.join(dataDir, name);
   const stamp = now().toISOString().replace(/[:.]/g, '-');
   const backup = `${live}.pre-union-${stamp}`;
@@ -223,7 +255,7 @@ function writeUnion({ dataDir, name, time, hooks = {}, settleMs = 1500, now = ()
   call('afterRead', {});
 
   // (2) UNION against every attic copy; the rows only an attic copy holds, in time order, with their raw bytes.
-  const attic = sources(dataDir, name).filter((s) => !s.live);
+  const attic = sources(dataDir, name, st).filter((s) => !s.live);   // the attic copies AND the state set's
   const u = union([{ tag: 'LIVE', live: true, text: asText(liveLines) }, ...attic], time);
   const add = u.added;
   const out = [];
@@ -314,7 +346,9 @@ function main(argv) {
     if (!['lap', 'board'].includes(k)) { console.error('ledger-union: --write needs --file lap|board — one live file per run, named'); return 2; }
     const dataDir = arg('--data');
     if (!dataDir) { console.error('--data <data dir> is required'); return 2; }
-    const r = writeUnion({ dataDir, name: FILES[k].name, time: FILES[k].time });
+    let st;
+    try { st = resolveStateDir(); } catch (e) { console.error(`ledger-union: REFUSED — ${e.message}`); return 2; }
+    const r = writeUnion({ dataDir, name: FILES[k].name, time: FILES[k].time, stateDir: st });
     console.log(JSON.stringify(r, null, 2));
     if (!r.verified) console.error(`ledger-union: WRITTEN BUT NOT VERIFIED — ${r.missingLines} line(s) / ${r.missingRows} union row(s) missing; the original is intact at ${r.backup}`);
     return r.verified ? 0 : 1;
@@ -332,7 +366,9 @@ function main(argv) {
   const which = arg('--file') || 'both';
   if (!['lap', 'board', 'both'].includes(which)) { console.error('--file must be lap|board|both'); return 2; }
   let rc = 0;
-  for (const k of which === 'both' ? ['lap', 'board'] : [which]) rc = Math.max(rc, report(k, dataDir, outDir));
+  let st;
+  try { st = resolveStateDir(); } catch (e) { console.error(`ledger-union: REFUSED — ${e.message}`); return 2; }
+  for (const k of which === 'both' ? ['lap', 'board'] : [which]) rc = Math.max(rc, report(k, dataDir, outDir, st));
   return rc;
 }
 
