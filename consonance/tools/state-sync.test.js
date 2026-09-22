@@ -1220,6 +1220,174 @@ test('L065: an ordinary install reconciles with NO state dir declared — only a
   });
 });
 
+// ═══ L070 — an append-only TRAVELS file installs as a FILE-LEVEL FAST-FORWARD, or not at all ════════════════
+//
+// C's L069 diagnosis (`handback/p-l069-ledger-C_2026-09-21.md`, 5b6cffc): every L launch MIGRATEs, the install REPLACED
+// L's 488-row lap.jsonl with the state set's 419 — a strict prefix of it — and L's 69 rows of 09-20 went to the attic.
+// L058 now exists in five generations. The keeper, 06:34: never replace; fast-forward, or refuse and name the rows.
+
+const FF_MANIFEST = {
+  ...MIN_MANIFEST,
+  rules: [{ glob: 'lap.jsonl', class: 'TRAVELS', install: 'fast-forward', why: 'the lap ledger, two writers' },
+    ...MIN_MANIFEST.rules],
+};
+const rows = (...ids) => ids.map((i) => `{"lap":"${i}"}\n`).join('');
+
+/** L publishes `incoming` as lap.jsonl; D already holds `local` (or nothing, if null); D pulls with --install. */
+function ffPull(incoming, local, manifest) {
+  // letters.json sorts AFTER lap.jsonl in the index, board.jsonl before it — so a refusal that stopped the install
+  // would leave letters.json unwritten (mutant #3, first run: with only board.jsonl, a `break` survived).
+  const w = world({ 'lap.jsonl': incoming, 'board.jsonl': 'row\n', 'letters.json': '{"A":"x"}' }, manifest || FF_MANIFEST);
+  const p = run(w, ['--push', '--no-remote']);
+  assert.strictEqual(p.code, 0, both(p));
+  execFileSync('git', ['-C', w.state, 'push', '-q', '-u', 'origin', 'main']);
+  const stateD = path.join(w.dir, 'stateD');
+  execFileSync('git', ['clone', '-q', w.bare, stateD]);
+  const dataD = path.join(w.dir, 'dataD');
+  fs.mkdirSync(dataD, { recursive: true });
+  if (local !== null) fs.writeFileSync(path.join(dataD, 'lap.jsonl'), local);
+  const W = { ...w, stateD, dataD };
+  const r = runD(W, ['--pull', '--install']);
+  const lap = () => fs.readFileSync(path.join(dataD, 'lap.jsonl'), 'utf8');
+  const completion = () => JSON.parse(fs.readFileSync(path.join(dataD, M.COMPLETION_NAME), 'utf8'));
+  return { W, r, lap, completion };
+}
+
+test('L070: a LONGER local ledger and a shorter incoming one — REFUSED, local rows intact, the rows named', () => {
+  const local = rows('L054', 'L058', 'L059');
+  const { r, lap } = ffPull(rows('L054'), local);
+  assert.notStrictEqual(r.code, 0, 'an install that would drop rows must not exit 0: ' + both(r));
+  assert.strictEqual(lap(), local, 'the local ledger is not replaced');
+  for (const id of ['L058', 'L059']) assert.ok(both(r).includes(`"lap":"${id}"`), `the row that would be lost must be named: ${id}\n${both(r)}`);
+});
+
+test('L070: the refused ledger is recorded — installed:false, and the refused file named in the completion record', () => {
+  const { completion } = ffPull(rows('L054'), rows('L054', 'L058'));
+  const c = completion();
+  assert.strictEqual(c.installed, false);
+  assert.deepStrictEqual((c.refused || []).map((x) => [x.path, x.kind, x.local_only_lines]), [['lap.jsonl', 'LOCAL-AHEAD', [2]]],
+    'the record must name the file it refused, why, and which local lines: ' + JSON.stringify(c));
+});
+
+test('L070: an incoming ledger that EXTENDS the local one row for row is installed', () => {
+  const incoming = rows('L054', 'L058', 'L059');
+  const { r, lap } = ffPull(incoming, rows('L054'));
+  assert.strictEqual(r.code, 0, both(r));
+  assert.strictEqual(lap(), incoming);
+});
+
+test('L070: DIVERGED ledgers — each side has a row the other lacks — REFUSED, local intact, the local-only row named', () => {
+  const local = rows('L054', 'L058');
+  const { r, lap } = ffPull(rows('L054', 'D089'), local);
+  assert.notStrictEqual(r.code, 0, both(r));
+  assert.strictEqual(lap(), local);
+  assert.ok(both(r).includes('"lap":"L058"'), both(r));
+});
+
+test('L070: a byte-prefix that is NOT a row prefix (a torn last row) is diverged, not a fast-forward', () => {
+  const local = '{"lap":"L054"}\n{"lap":"L05';
+  const { r, lap } = ffPull(rows('L054', 'L058'), local);
+  assert.notStrictEqual(r.code, 0, 'row for row, not byte for byte: ' + both(r));
+  assert.strictEqual(lap(), local);
+});
+
+// ── L070 REBUILD (2026-09-22, on L): STOP BEFORE WRITE ─────────────────────────────────────────────────────────────
+// The first build SKIPPED a refused file and installed the rest, and the launch then printed "the data dir was not
+// promoted" (sync_launch.rs:257-264) over a data dir that mostly WAS — A's correction, handback/p-l070-fastforward-A-
+// correction_2026-09-21.md (ead6e8d), observed on L tonight. Its test "the other files of the same install still land"
+// asserted the withdrawn behaviour and is REPLACED by its inverse below.
+
+test('L070 rebuild: one refused ledger refuses the WHOLE install — no other file of the set is written', () => {
+  const { W } = ffPull(rows('L054'), rows('L054', 'L058'));
+  for (const f of ['board.jsonl', 'letters.json']) {
+    assert.ok(!fs.existsSync(path.join(W.dataD, f)), `${f} was written although the install was refused`);
+  }
+});
+
+test('L070 rebuild: a refused install makes no attic backup — nothing was displaced because nothing was written', () => {
+  const { W } = ffPull(rows('L054'), rows('L054', 'L058'));
+  assert.ok(!fs.existsSync(path.join(W.dataD, 'attic')), 'an attic copy means a file was about to be overwritten');
+});
+
+test('L070 rebuild: the refusal SAYS nothing was written — the text the launch relays is true', () => {
+  const { r } = ffPull(rows('L054'), rows('L054', 'L058'));
+  assert.match(both(r), /NOTHING WAS WRITTEN/, both(r));
+  assert.doesNotMatch(both(r), /are in place/, 'the skip-not-stop sentence must not survive the rebuild: ' + both(r));
+});
+
+test('L070 rebuild: a DIVERGED ledger refuses the whole install too', () => {
+  const { W, r } = ffPull(rows('L054', 'D089'), rows('L054', 'L058'));
+  assert.notStrictEqual(r.code, 0, both(r));
+  assert.ok(!fs.existsSync(path.join(W.dataD, 'board.jsonl')), 'nothing else lands on a diverged ledger either');
+});
+
+test('L070 rebuild: a prefix-extension installs the WHOLE set, ledger included', () => {
+  const incoming = rows('L054', 'L058');
+  const { W, r, lap } = ffPull(incoming, rows('L054'));
+  assert.strictEqual(r.code, 0, both(r));
+  assert.strictEqual(lap(), incoming);
+  assert.strictEqual(fs.readFileSync(path.join(W.dataD, 'board.jsonl'), 'utf8'), 'row\n');
+  assert.strictEqual(fs.readFileSync(path.join(W.dataD, 'letters.json'), 'utf8'), '{"A":"x"}');
+});
+
+test('L070 rebuild: a ledger that GROWS between the scan and its write is refused, never overwritten', () => {
+  // The one partial install the rebuild still allows is a genuine race, and it must stop and say so. The app appending
+  // to lap.jsonl mid-install is simulated by an arrival transform on an EARLIER file that appends to the local ledger.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'l070-race-'));
+  const DATA = path.join(dir, 'data'), STATE = path.join(dir, 'state');
+  fs.mkdirSync(path.join(STATE, 'data'), { recursive: true }); fs.mkdirSync(DATA, { recursive: true });
+  fs.writeFileSync(path.join(STATE, 'data', 'a-first.txt'), 'x');
+  fs.writeFileSync(path.join(STATE, 'data', 'lap.jsonl'), rows('L054', 'L058'));
+  fs.writeFileSync(path.join(DATA, 'lap.jsonl'), rows('L054'));
+  M.ARRIVAL_TRANSFORMS['l070-poke'] = {
+    apply: (buf) => { fs.appendFileSync(path.join(DATA, 'lap.jsonl'), rows('L059')); return { buf }; },
+    verify: () => ({ ok: true }),
+  };
+  try {
+    const rules = [{ glob: 'a-first.txt', re: /^a-first\.txt$/, class: 'TRAVELS', on_arrival: 'l070-poke', why: 't' },
+      { glob: 'lap.jsonl', re: /^lap\.jsonl$/, class: 'TRAVELS', install: 'fast-forward', why: 't' }];
+    const v = { index: { files: [{ path: 'a-first.txt' }, { path: 'lap.jsonl' }] } };
+    const r = M.installTree(DATA, STATE, v, { rules, instances: dir, state: STATE });
+    assert.strictEqual(r.rc, 1, 'a ledger that changed under the install must refuse: ' + JSON.stringify(r));
+    assert.strictEqual(fs.readFileSync(path.join(DATA, 'lap.jsonl'), 'utf8'), rows('L054', 'L059'), 'the row written mid-install survives');
+    assert.match(r.why, /changed/i, 'the refusal says the file changed during the install: ' + r.why);
+  } finally { delete M.ARRIVAL_TRANSFORMS['l070-poke']; }
+});
+
+test('L070: no local ledger at all — the incoming one is installed (control)', () => {
+  const { r, lap } = ffPull(rows('L054'), null);
+  assert.strictEqual(r.code, 0, both(r));
+  assert.strictEqual(lap(), rows('L054'));
+});
+
+test('L070: an identical local ledger is skipped, not refused (control)', () => {
+  const { r } = ffPull(rows('L054'), rows('L054'));
+  assert.strictEqual(r.code, 0, both(r));
+});
+
+test('L070: an unknown install mode REFUSES the file rather than falling back to replacement', () => {
+  const man = { ...FF_MANIFEST, rules: [{ ...FF_MANIFEST.rules[0], install: 'union' }, ...MIN_MANIFEST.rules] };
+  const local = rows('L054', 'L058');
+  const { r, lap } = ffPull(rows('L054'), local, man);
+  assert.notStrictEqual(r.code, 0, both(r));
+  assert.strictEqual(lap(), local);
+});
+
+test('L070: a file with NO install mode is still replaced as before (the change is scoped to what declares it)', () => {
+  const man = { ...FF_MANIFEST, rules: [{ glob: 'lap.jsonl', class: 'TRAVELS', why: 'x' }, ...MIN_MANIFEST.rules] };
+  const { r, lap } = ffPull(rows('L054'), rows('L054', 'L058'), man);
+  assert.strictEqual(r.code, 0, both(r));
+  assert.strictEqual(lap(), rows('L054'));
+});
+
+test('L070: the SHIPPED manifest declares lap.jsonl and board.jsonl as fast-forward installs', () => {
+  const man = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'state-manifest.json'), 'utf8'));
+  for (const g of ['lap.jsonl', 'board.jsonl']) {
+    const r = man.rules.find((x) => x.glob === g);
+    assert.strictEqual(r && r.install, 'fast-forward', `${g} must install as a fast-forward`);
+  }
+});
+
 console.log('');
 console.log(`state-sync.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

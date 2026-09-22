@@ -165,8 +165,8 @@ test('L065: a stateDir() that THROWS is the same named refusal, and it carries t
 });
 
 // The fix it names must be one that FIXES THIS TOOL. close.js resolves through state-sync.js stateDir(), which reads
-// CONSONANCE_STATE (state-sync.js:133). live-follow.js reads CONSONANCE_STATE_REPO — a different name — so copying
-// its sentence here would print a recovery that does nothing for close.
+// CONSONANCE_STATE (state-sync.js:133) — since L069 the ONE name every state tool reads. CONSONANCE_STATE_REPO is
+// retired (read by nothing), so a refusal naming it would print a recovery that does nothing.
 test('L065: the refusal names what close.js actually reads — state_dir and CONSONANCE_STATE, not _REPO', () => {
   const { text } = closeNoState(() => null);
   assert.ok(/state_dir/.test(text) && /\.consonance\.json/.test(text), `must name the config key:\n${text}`);

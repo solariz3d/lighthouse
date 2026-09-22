@@ -157,8 +157,8 @@ function runClose(o) {
 
   if (!DATA) return no('no corpus declared', ['CONSONANCE_DATA is unset and ~/.consonance.json has no data_dir.'], 2);
   if (!fs.existsSync(DATA)) return no(`the data dir does not exist: ${DATA}`, [], 2);
-  // Names what THIS tool reads (state-sync.js stateDir(): CONSONANCE_STATE, then state_dir). live-follow.js reads
-  // CONSONANCE_STATE_REPO instead, so its sentence would print a recovery that does nothing here.
+  // Names what THIS tool reads (state-sync.js stateDir(): CONSONANCE_STATE, then state_dir). Since L069 every state
+  // tool reads that one name; CONSONANCE_STATE_REPO is retired, so it must never be printed as a recovery.
   if (!STATE) {
     return no('no state repo declared', [
       'Set state_dir in ~/.consonance.json, or set CONSONANCE_STATE. Nothing was prepared and nothing was sent.',

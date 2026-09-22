@@ -811,11 +811,34 @@ function cmdPull(args) {
       // shape as the morning that started all of this. Found by a surviving mutant: nothing could
       // tell a refused install from a silent one, because there was nothing to read.
       console.error('');
-      console.error(`  INSTALL REFUSED — nothing further was written: ${r.why}`);
-      console.error(`  ${r.wrote} file(s) had already landed before the refusal; ${COMPLETION_NAME} records installed:false.`);
+      const refusedFiles = r.refused || [];
+      if (refusedFiles.length) {
+        // L070. The refused files were SKIPPED and every other file of the set landed, so "nothing further was
+        // written" would be false here. Each refused file names the rows it would have cost, because a count alone
+        // is the "installed 46" failure again: nobody can act on a number that names nothing.
+        console.error(`  INSTALL REFUSED FOR ${refusedFiles.length} FILE(S) — ${r.why}`);
+        for (const x of refusedFiles) {
+          console.error(`    ${x.path} — ${x.kind}. This machine's copy is unchanged. Rows only this machine holds:`);
+          for (const l of x.localOnly.slice(0, 10)) console.error(`      line ${l.line}: ${l.row.length > 200 ? l.row.slice(0, 200) + '…' : l.row}`);
+          if (x.localOnly.length > 10) console.error(`      … and ${x.localOnly.length - 10} more; every line number is in ${COMPLETION_NAME} refused[].`);
+        }
+        // L070 rebuild: the pre-scan refuses before the first byte, so the ordinary case writes NOTHING and must say so —
+        // the launch relays this exit as "the data dir was not promoted", and that sentence has to be true.
+        if (refusedFiles.some((x) => x.raced)) {
+          console.error(`  ${r.wrote} file(s) had landed before the ledger changed under the install; nothing after it was written.`);
+        } else {
+          console.error('  No file of the set was written; this machine\'s data dir is exactly as it was.');
+        }
+        console.error('  Two writers of one append-only file is a conflict for a person, not something this tool resolves by replacement.');
+      } else {
+        console.error(`  INSTALL REFUSED — nothing further was written: ${r.why}`);
+        console.error(`  ${r.wrote} file(s) had already landed before the refusal; ${COMPLETION_NAME} records installed:false.`);
+      }
       writeCompletion(DATA, STATE, {
         verified: true, installed: false, reconciled: false, stage: 'install', why: r.why, failures: [],
         missing: [], installed_files: r.wrote, head: head.ok ? head.out : null,
+        refused: refusedFiles.map((x) => ({ path: x.path, kind: x.kind, local_only: x.localOnly.length,
+          local_only_lines: x.localOnly.map((l) => l.line), incoming_only: x.incomingOnly })),
       });
       writeStatus(DATA, STATE);
       return r.rc;
@@ -981,6 +1004,13 @@ function mintSiblingDir(root, pane, taken) {
  * E's F3 residual, that replacement cannot tell retire-by-design from retire-by-direction-of-sync
  * — so every dropped row is returned by name and printed.
  *
+ * AMENDED 2026-09-21 (L070): this ruling is the ROSTER's. It was never about append-only files, and it must not be read
+ * as one. For those — lap.jsonl and board.jsonl, `install: "fast-forward"` in the manifest — the keeper's word at 06:34
+ * (to C's recommendation, `handback/p-l069-ledger-C_2026-09-21.md` §6, librarian notes 5427937) is: never replace;
+ * install only when the arriving file extends this machine's row for row, else refuse that file and name the rows.
+ * See installModeFor / appendOnlyCompare. The chair's packet called this ruling superseded for those files; read at
+ * source, it did not cover them at all (C §3 says the same), so it is kept whole and this note marks its edge.
+ *
  * `home` is RECORDED AND NOT CONSUMED, deliberately, on two independent grounds:
  *   - E's F4 residual: an absent home must never default to THIS machine. If it did, D would claim
  *     L's rows as home=D while L keeps them as home=L, and the round trip doubles the roster — the
@@ -1096,6 +1126,46 @@ function transformFor(rel, rules) {
 }
 
 /**
+ * THE INSTALL MODE a rule declares, or null. First match wins, as classify and transformFor do.
+ *
+ * `install: "fast-forward"` (L070, the keeper's word at 06:34 on 2026-09-21, to C's L069 recommendation) marks an
+ * APPEND-ONLY file with more than one writer. Replacing one of those is how L's lap ledger lost L058-L065 five times
+ * over: every L launch MIGRATEd, and the install wrote D's 09-10 ledger — 419 rows, a strict prefix of L's 488 — over
+ * it, moving L's rows to the attic where nothing reads them (`handback/p-l069-ledger-C_2026-09-21.md` §1-§2).
+ */
+function installModeFor(rel, rules) {
+  const r = (rules || []).find((r) => r.re.test(rel));
+  return r && r.install ? r.install : null;
+}
+
+const INSTALL_MODES = ['fast-forward'];
+
+/**
+ * Compare two append-only files ROW FOR ROW, not byte for byte. A byte prefix is not a row prefix: a torn last row
+ * (`{"lap":"L05`) is a byte prefix of `{"lap":"L058"}` and is still a different row, so a byte test would call it a
+ * fast-forward and overwrite the one piece of evidence that a write was interrupted.
+ *   { ff: true }                                   the incoming file extends the local one — install it
+ *   { ff: false, kind: 'LOCAL-AHEAD' | 'DIVERGED',  anything else — the local rows the incoming file does not carry,
+ *     localOnly: [{ line, row }], incomingOnly }     each with its 1-based line, and how many the other side has alone
+ */
+function appendOnlyCompare(curBuf, wantBuf) {
+  const split = (b) => { const a = b.toString('utf8').split('\n'); if (a[a.length - 1] === '') a.pop(); return a; };
+  const cur = split(curBuf);
+  const inc = split(wantBuf);
+  let i = 0;
+  while (i < cur.length && i < inc.length && cur[i] === inc[i]) i++;
+  if (i === cur.length) return { ff: true };
+  if (i === inc.length) {
+    return { ff: false, kind: 'LOCAL-AHEAD', incomingOnly: 0,
+      localOnly: cur.slice(i).map((row, k) => ({ line: i + k + 1, row })) };
+  }
+  const incSet = new Set(inc);
+  const curSet = new Set(cur);
+  return { ff: false, kind: 'DIVERGED', incomingOnly: inc.filter((r) => !curSet.has(r)).length,
+    localOnly: cur.map((row, k) => ({ line: k + 1, row })).filter((x) => !incSet.has(x.row)) };
+}
+
+/**
  * Write the verified tree into the data dir, keeping whatever it displaces.
  *
  * Every file it is about to overwrite goes to `attic/pre-sync-<stamp>/` FIRST. This machine's own
@@ -1116,6 +1186,29 @@ function installTree(DATA, STATE, v, over) {
   let skipped = 0;
   let madeBackup = false;
   const notes = [];
+  // STOP BEFORE WRITE (L070 rebuild, 2026-09-22 — A's correction ead6e8d, option (a)). Every file that declares an install
+  // mode is judged FIRST, against the arriving bytes, and if any one would be refused the WHOLE install is refused before
+  // the first byte lands: no file written, no attic copy made, the rows named. The first build SKIPPED a refused file and
+  // installed the rest, and the launch then read the exit as "the data dir was not promoted" (sync_launch.rs:257-264)
+  // over a data dir that mostly was. This is cmdPush's own rule turned around ("A REFUSED PATH ABORTS THE WHOLE PUSH"),
+  // and it is order-independent by construction: nothing is written until every file has been judged.
+  // LIMIT: the scan compares the ARRIVING bytes, so a file that declared both an install mode and an arrival transform
+  // would be judged untransformed here. No rule does today; the re-check in the loop judges the transformed bytes.
+  const refused = [];
+  for (const f of v.index.files) {
+    const src = path.join(destRoot, f.path.split('/').join(path.sep));
+    const dst = path.join(DATA, f.path.split('/').join(path.sep));
+    if (!installModeFor(f.path, ctx.rules)) continue;
+    let cur = null;
+    try { cur = fs.readFileSync(dst); } catch (_) { /* nothing there */ }
+    const x = installRefusal(f.path, cur, fs.readFileSync(src), ctx.rules);
+    if (x) refused.push(x);
+  }
+  if (refused.length) {
+    return { rc: 1, wrote: 0, displaced: 0, skipped: 0, notes, refused, backup: null,
+      why: `${refused.length} append-only file(s) would lose rows, so NOTHING WAS WRITTEN — no file of the set was ` +
+        `installed and this machine's data dir is exactly as it was: ${refusalWhy(refused)}` };
+  }
   for (const f of v.index.files) {
     const src = path.join(destRoot, f.path.split('/').join(path.sep));
     const dst = path.join(DATA, f.path.split('/').join(path.sep));
@@ -1155,6 +1248,24 @@ function installTree(DATA, STATE, v, over) {
 
     let cur = null;
     try { cur = fs.readFileSync(dst); } catch (_) { /* nothing there */ }
+
+    // FAST-FORWARD OR REFUSE — never replace (L070). `cmdPull`'s own git step already refuses a merge for exactly this
+    // reason ("two machines appending to the same ledger between syncs … wants a person"); this is that rule applied
+    // one level down, at the file, where until now the install resolved the same conflict by replacement. An unknown
+    // mode refuses too: falling back to replacement is the one outcome the mode exists to rule out.
+    //
+    // THE RE-CHECK, right before the write. The pre-scan above already refused the whole install if any append-only file
+    // would lose rows, so reaching a refusal HERE means the file changed between the scan and now — the app appended to
+    // it mid-install. That is the one partial install this function still allows, and it STOPS and says so: the files
+    // written so far are named by count, and this file is left exactly as the other writer left it.
+    const late = installRefusal(f.path, cur, want, ctx.rules);
+    if (late) {
+      return { rc: 1, wrote, displaced, skipped, notes, refused: [{ ...late, raced: true }], backup: madeBackup ? backup : null,
+        why: `${f.path} CHANGED DURING THE INSTALL — it would have been refused at the scan as it stands now ` +
+          `(${late.kind}), so this machine wrote to it while the set was landing. Stopped before touching it; ` +
+          `${wrote} file(s) had already landed. ${refusalWhy([late])}` };
+    }
+
     if (cur) {
       // ALREADY IDENTICAL IS COUNTED, NOT DROPPED. `wrote` alone made a benign skip and a file
       // that never arrived print the same smaller number — which is how `installed 46 file(s)`
@@ -1170,7 +1281,24 @@ function installTree(DATA, STATE, v, over) {
     fs.writeFileSync(dst, want);
     wrote++;
   }
-  return { rc: 0, wrote, displaced, skipped, notes, backup: madeBackup ? backup : null, why: null };
+  return { rc: 0, wrote, displaced, skipped, notes, refused: [], backup: madeBackup ? backup : null, why: null };
+}
+
+/** The one judgement, used by the pre-scan AND by the re-check before each write, so the two cannot disagree. */
+function installRefusal(rel, cur, want, rules) {
+  const mode = installModeFor(rel, rules);
+  if (!mode) return null;
+  if (!INSTALL_MODES.includes(mode)) return { path: rel, kind: 'UNKNOWN-MODE', mode, localOnly: [], incomingOnly: 0 };
+  if (!cur || cur.equals(want)) return null;
+  const c = appendOnlyCompare(cur, want);
+  return c.ff ? null : { path: rel, kind: c.kind, localOnly: c.localOnly, incomingOnly: c.incomingOnly };
+}
+
+function refusalWhy(refused) {
+  return refused.map((x) =>
+    x.kind === 'UNKNOWN-MODE' ? `${x.path} (install mode '${x.mode}' is not one of ${INSTALL_MODES.join(', ')})`
+      : `${x.path} (${x.kind}: ${x.localOnly.length} row(s) only this machine holds would have been lost`
+        + (x.incomingOnly ? `; ${x.incomingOnly} arriving row(s) this machine lacks` : '') + ')').join('; ');
 }
 
 /**
@@ -1387,7 +1515,7 @@ function main() {
 if (require.main === module) main();
 module.exports = {
   stableRead, sha256, classify, loadManifest, verifyTree, installTree, reconcileInstall,
-  ARRIVAL_TRANSFORMS, instancesRoot, transformFor, underRoot, mintSiblingDir,
+  ARRIVAL_TRANSFORMS, instancesRoot, transformFor, appendOnlyCompare, underRoot, mintSiblingDir,
   machineHeads, machineTag, stateDir, dataDir, ensureTreeSettings, remotePrivacy, writeStatus, gitTry,
   FILE_CAP, STABLE_TRIES, SETTLE_MS, INDEX_NAME, STATUS_NAME, COMPLETION_NAME, RECEIPT_NAME,
 };
