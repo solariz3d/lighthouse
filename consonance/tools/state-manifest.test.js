@@ -373,9 +373,28 @@ test('L071: the two union backups beside the live ledgers are placed (STAYS)', (
 });
 
 test('L071: a pre-union copy of any OTHER file is still UNPLACED — the rule is named, not a wildcard', () => {
-  const r = run(fixture({ 'ferry.jsonl.pre-union-2026-09-22T08-47-16-301Z': 'x\n' }, SHIPPED()));
+  // L076: this used ferry.jsonl as its "other file"; ferry is now one of the nine the union writes (L075), so the
+  // example is dispatch-gate.jsonl — the one TRAVELS ledger A did NOT mark (it is rewritten), which the union refuses.
+  const r = run(fixture({ 'dispatch-gate.jsonl.pre-union-2026-09-22T08-47-16-301Z': 'x\n' }, SHIPPED()));
   assert.strictEqual(r.code, 1, 'a pre-union copy of a file the union never writes is something else, and must be loud');
-  assert.ok(r.out.includes('ferry.jsonl.pre-union-'), r.out);
+  assert.ok(r.out.includes('dispatch-gate.jsonl.pre-union-'), r.out);
+});
+
+// L076: the union's backups for the NINE fast-forward ledgers (L075), one named rule each — resonance/atoms in its subdir.
+const NINE = ['precompact.jsonl', 'sessionstart-state.jsonl', 'sourced_ledger.jsonl', 'carrier-drift.jsonl', 'ferry.jsonl',
+  'read_ledger.jsonl', 'return_ledger.jsonl', 'vantage_findings.jsonl', 'resonance/atoms.jsonl'];
+
+test('L076: each of the nine ledgers\' union backups is placed (STAYS), resonance/atoms in its subdir', () => {
+  const files = { 'resonance/atoms.jsonl': '{"ts":1}\n' };                     // the subdir's own file, already placed
+  for (const n of NINE) files[`${n}.pre-union-2026-09-22T11-00-00-000Z`] = '{"ts":1}\n';
+  const r = run(fixture(files, SHIPPED()));
+  assert.strictEqual(r.code, 0, r.out);
+});
+
+test('L076: the nine rules are NAMED — a backup of an un-marked file in the resonance subdir is still UNPLACED', () => {
+  const r = run(fixture({ 'resonance/atoms.jsonl': '{"ts":1}\n', 'resonance/other.jsonl.pre-union-2026-09-22T11-00-00-000Z': 'x\n' }, SHIPPED()));
+  assert.strictEqual(r.code, 1);
+  assert.ok(r.out.includes('resonance/other.jsonl.pre-union-'), r.out);
 });
 
 // L074 (the keeper, 04:0x: "lets do the ten ledger files first"). The append-only TRAVELS ledgers install as a
