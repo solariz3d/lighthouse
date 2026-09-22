@@ -61,3 +61,9 @@ id)"* in their subjects.
    replace D's longer ledger (item 1) and D unions its own side the same way.
 
 When item 2 lands, append a line here saying so, with its commit.
+
+**ITEM 2 LANDED, 2026-09-22 03:1x (librarian, on L):** fold by (id, generation) in `lap-row.js`, C's L071 packet C2,
+commit `ffb3aa7`. Checked by a count that shares no code with lap-row: open rows by id = L058×8, L059×5, L060–L065×3
+(this file's counts); `lap-row.js --report` DOUBLE-OPEN 0; labels read `L058 (2026-09-14 07:30Z, gen 1/8)`. Record:
+`librarian/2026-09-22.md` "03:1x — L071 C2". **Item 3 (D's side) is still owed**, and it needs one more step first:
+`ledger-union.js` must read the state set's copy, because a refused install on D leaves no attic copy to union from.
