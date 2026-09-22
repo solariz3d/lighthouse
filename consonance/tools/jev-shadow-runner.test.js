@@ -177,6 +177,90 @@ test('the DAILY cap holds across cadences and is logged when reached', async () 
   } finally { app.kill(); }
 });
 
+// ------------------------------------------------------------------ JUDGE MODE (L071, pane A): Jev AS the judge
+
+/** A judge-mode world beside the shadow fixture: a repo with the real hooks and a main.rs, a roster, a seat transcript. */
+function judgeWorld(f) {
+  const repo = path.join(f.root, 'repo'), data = path.join(f.root, 'data'), projects = path.join(f.root, 'projects');
+  fs.mkdirSync(path.join(repo, 'dev', 'shell', 'hooks'), { recursive: true });
+  fs.mkdirSync(path.join(repo, 'consonance', 'src-tauri', 'src'), { recursive: true });
+  for (const h of ['l2-overseer.js', 'l3-overseer.js', 'l2-overseer-worker.js', 'l3-overseer-worker.js']) fs.copyFileSync(path.join(REPO_HOOKS, h), path.join(repo, 'dev', 'shell', 'hooks', h));
+  fs.writeFileSync(path.join(repo, 'consonance', 'src-tauri', 'src', 'main.rs'), '');
+  fs.mkdirSync(data, { recursive: true });
+  fs.writeFileSync(path.join(data, 'panes.json'), JSON.stringify([{ pane: 'seat-1', cwd: 'x', label: 'A' }]));
+  const turn = (n) => [
+    JSON.stringify({ type: 'user', uuid: `u${n}`, timestamp: new Date().toISOString(), message: { role: 'user', content: `question ${n}` } }),
+    JSON.stringify({ type: 'assistant', uuid: `a${n}`, timestamp: new Date().toISOString(), message: { role: 'assistant', stop_reason: 'end_turn', content: [{ type: 'text', text: `answer ${n}` }] } }),
+  ].join('\n') + '\n';
+  const file = path.join(projects, 'C--seat', 'seat-1.jsonl');
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, turn(1));
+  return { repo, data, projects, file, addTurn: (n) => fs.appendFileSync(file, turn(n)) };
+}
+const judged = (f) => { try { return fs.readFileSync(path.join(f.store, 'jev_judge.jsonl'), 'utf8').split('\n').filter(Boolean).map(JSON.parse); } catch { return []; } };
+const jopts = (f, jw) => ({ repo: jw.repo, dataDir: jw.data, projectsDir: jw.projects, disciplineDir: f.disc });
+
+test('JUDGE MODE runs inside the runner: a seat\'s finished turn is judged into jev_judge.jsonl, L2 and L3', async () => {
+  const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
+  try {
+    const h = await R.run(opts(f, app, jopts(f, jw)));
+    await waitFor(() => judged(f).length >= 2);
+    assert.deepStrictEqual(judged(f).map((r) => r.level).sort(), ['l2', 'l3']);
+    assert.ok(judged(f).every((r) => r.judge === 'jev' && r.unverified === true));
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+test('the DAILY cap holds across SHADOW and JUDGE together: shadow used cap-1 today → judge mode asks at most 1', async () => {
+  const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
+  const today = new Date().toISOString();
+  fs.mkdirSync(f.store, { recursive: true });
+  fs.writeFileSync(path.join(f.store, 'shadow.jsonl'), [1, 2, 3, 4].map((i) => JSON.stringify({ ts: today, judge: 'l2', job_id: `old${i}`, status: 'ok' })).join('\n') + '\n');
+  const g = gateway();
+  try {
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), fetchImpl: g, dailyCap: 5 }));
+    await waitFor(() => /daily cap/.test(log(f)));
+    await new Promise((r) => setTimeout(r, 200));
+    assert.strictEqual(g.calls.length, 1, 'one call left under the cap, whichever mode spends it');
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+test('an EMPTY cadence says so: "nothing to shadow (0 captures)" — idle and broken no longer read the same', async () => {
+  const f = fixture(); const app = fakeApp();
+  try {
+    const h = await R.run(opts(f, app));
+    await waitFor(() => /nothing to shadow \(0 captures\)/.test(log(f)));
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+test('judge mode that CANNOT run logs why once, and the SHADOW keeps running untouched', async () => {
+  const f = fixture(); const app = fakeApp();
+  job(f, 'j1'); verdict(f, 'j1');
+  try {
+    const h = await R.run(opts(f, app));                       // no dataDir / projectsDir given: judge mode is off
+    await waitFor(() => ledger(f).length === 1);
+    assert.match(log(f), /judge mode off/);
+    assert.strictEqual((log(f).match(/judge mode off/g) || []).length, 1, 'said once, not every tick');
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+test('a judge-mode REFUSAL mid-run (a hook function missing) turns judge mode off and NEVER stops the shadow', async () => {
+  // Found as a surviving mutant. This is D's case: judge mode must not be able to take the shadow measurement down.
+  const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);
+  fs.writeFileSync(path.join(jw.repo, 'dev', 'shell', 'hooks', 'l3-overseer.js'), '// readTrajectoryView is gone\n');
+  job(f, 'j1'); verdict(f, 'j1');
+  try {
+    const h = await R.run(opts(f, app, jopts(f, jw)));
+    await waitFor(() => /judge mode off: cannot find/.test(log(f)));
+    await waitFor(() => ledger(f).length === 1);              // the shadow still asked
+    assert.doesNotMatch(log(f), /stopped:/, 'the runner must still be running');
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
 // ------------------------------------------------------------------ the installed judges are never touched
 
 test('the shell dir is byte-identical after a run: the runner reads the judges, never writes them', async () => {
@@ -196,7 +280,17 @@ test('the shell dir is byte-identical after a run: the runner reads the judges, 
 
 // ------------------------------------------------------------------ the CLI (the process the app spawns)
 
-const cliEnv = (f) => { const e = { ...process.env, JEV_SHADOW_STORE: f.store, CONSONANCE_SHELL_DIR: f.shell, JEV_SHADOW_DISCIPLINE: f.disc, JEV_SHADOW_NO_USER_ENV: '1' }; delete e.AI_GATEWAY_API_KEY; return e; };
+// HERMETIC FOR JUDGE MODE TOO (L071, pane A). With judge mode, main() reads this machine's roster and transcripts.
+// This helper spread process.env, which in a seat carries CONSONANCE_DATA, so the first run of the CLI test below
+// captured FOUR REAL seat turns and sent one to the real gateway under the fake key (HTTP 401, nothing billed) —
+// found in the test store, jev-runner-Bp1Hs8. So the data dir and the projects dir are pinned to empty fixtures here.
+const cliEnv = (f) => {
+  const empty = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-empty-'));
+  const e = { ...process.env, JEV_SHADOW_STORE: f.store, CONSONANCE_SHELL_DIR: f.shell, JEV_SHADOW_DISCIPLINE: f.disc,
+    JEV_SHADOW_NO_USER_ENV: '1', CONSONANCE_DATA: empty, CLAUDE_PROJECTS_DIR: empty };
+  delete e.AI_GATEWAY_API_KEY;
+  return e;
+};
 
 test('CLI: no key exits 2 and says REFUSED in the log (the app spawns it windowless: the log is where loud goes)', () => {
   const f = fixture(); const app = fakeApp();
@@ -223,10 +317,15 @@ test('CLI: the process exits 0 by itself when the app it watches exits', { timeo
   const code = await new Promise((r) => child.on('exit', r));
   assert.strictEqual(code, 0);
   assert.ok(!fs.existsSync(path.join(f.store, 'runner.lock')));
+  // L071: the CLI's judge mode must not have reached this machine's real seats (see cliEnv).
+  assert.ok(!fs.existsSync(path.join(f.store, 'judge-captures')), 'a CLI test captured real seat turns');
 });
 
 test('the default store is %LOCALAPPDATA%\\consonance\\jev-shadow — outside the data dir', () => {
-  assert.strictEqual(R.defaultStore({ LOCALAPPDATA: 'C:\\X\\Local' }), path.join('C:\\X\\Local', 'consonance', 'jev-shadow'));
+  // A drive-less root (L071): the assertion is about the JOIN under LOCALAPPDATA, and a drive letter in a fixture is a
+  // machine-specific site to portable-paths (this line was its one red, from D104 on).
+  const lad = path.join(path.sep, 'X', 'Local');
+  assert.strictEqual(R.defaultStore({ LOCALAPPDATA: lad }), path.join(lad, 'consonance', 'jev-shadow'));
   assert.throws(() => R.defaultStore({}), (e) => e instanceof R.Refusal && /LOCALAPPDATA/.test(e.message));
 });
 

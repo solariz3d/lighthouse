@@ -32,6 +32,13 @@
  * STORE: %LOCALAPPDATA%\consonance\jev-shadow — outside the data dir, so no manifest row (the librarian's ruling,
  * D104, under the keeper's standing permission). Holds captures (conversation text), shadow.jsonl, runner.log,
  * runner.lock.
+ *
+ * JUDGE MODE (L071, pane A — the keeper, 02:4x: "system agnostic ... just run through consonance itself"). Beside
+ * the shadow, and on EVERY machine with no switch: jev-judge.js captures each live seat's finished turn on the capture
+ * tick (the same input the L2/L3 hooks build at Stop) and asks Jev on the shadow cadence, into its OWN ledger
+ * (jev_judge.jsonl, judge:"jev", unverified:true) — never l2/l3_overseer.jsonl. ONE daily cap covers both modes. If
+ * judge mode cannot run (no data dir, a hook function missing) it says so ONCE and the shadow runs exactly as before.
+ * run() turns it on only when handed a dataDir AND a projectsDir; main() hands it this machine's real ones.
  */
 'use strict';
 const fs = require('fs');
@@ -40,6 +47,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const shadowMod = require('./jev-shadow.js');
+const judgeMod = require('./jev-judge.js');
 const jev = require('./jev-ask.js');
 
 const { Refusal } = jev;
@@ -137,6 +145,8 @@ async function run(o) {
     return done;
   };
 
+  // ONE DAILY CAP, BOTH MODES (L071): the shadow's ok rows today plus judge mode's. Two caps would double the day's
+  // worst case without anyone deciding it.
   const callsToday = () => {
     const today = new Date().toDateString();
     let n = 0;
@@ -146,14 +156,28 @@ async function run(o) {
         try { const r = JSON.parse(l); if (r.status === 'ok' && new Date(r.ts).toDateString() === today) n++; } catch {}
       }
     } catch {}
-    return n;
+    return n + judgeMod.callsToday(store, today);
   };
+
+  // JUDGE MODE state. Off, with its reason said ONCE, when it cannot run; the shadow never depends on it.
+  let judgeOff = (cfg.dataDir && cfg.projectsDir) ? null : 'no data dir or projects dir was given to run()';
+  const judgeMemo = {};
+  const judgeCfg = { store, repo: cfg.repo || path.resolve(__dirname, '..', '..'), dataDir: cfg.dataDir,
+    projectsDir: cfg.projectsDir, disciplineDir: cfg.disciplineDir };
+  if (judgeOff) log(`judge mode off: ${judgeOff}`);
+  const judgeFailed = (e) => { judgeOff = e.message; log(`judge mode off: ${e.message} — the shadow keeps running`); };
 
   const doCapture = () => {
     if (stopping) return;
     try { shadowMod.capture(base); } catch (e) {
       if (e instanceof Refusal) { log(`REFUSED capture: ${e.message} — stopping rather than feed Jev a prompt the judge did not see`); stop('capture refused'); }
       else log(`capture error: ${e.message}`);
+    }
+    if (stopping || judgeOff) return;
+    // A judge-mode Refusal turns judge mode off and never the runner: on D the shadow is the measurement and must not
+    // stop because judge mode could not build a prompt.
+    try { judgeMod.capturePass({ ...judgeCfg, memo: judgeMemo }); } catch (e) {
+      if (e instanceof Refusal) judgeFailed(e); else log(`judge capture error: ${e.message}`);
     }
   };
 
@@ -167,8 +191,33 @@ async function run(o) {
     }
     shadowBusy = true;
     inFlight = shadowMod.shadow({ ...base, maxCalls: Math.min(cfg.maxCalls, left), env, fetchImpl: cfg.fetchImpl })
-      .then((r) => { if (r.asked || r.refused) log(`shadow: asked ${r.asked}, refused ${r.refused}, remaining ${r.remaining}`); })
+      .then((r) => {
+        if (r.asked || r.refused) log(`shadow: asked ${r.asked}, refused ${r.refused}, remaining ${r.remaining}`);
+        // L071: an empty cadence said NOTHING, so an idle runner and a broken one read the same (L, 09-22: zero calls
+        // for hours, and no way to tell why from the log). One line per empty cadence, with the count it found.
+        else {
+          let n = 0;
+          for (const j of ['l2', 'l3']) { try { n += fs.readdirSync(path.join(store, 'captures', j)).filter((x) => x.endsWith('.json')).length; } catch {} }
+          log(`shadow: nothing to shadow (${n} captures)`);
+        }
+      })
       .catch((e) => log(`shadow error (next cadence retries): ${e.message}`))
+      .then(() => {
+        // JUDGE MODE, after the shadow and inside the same cadence, so the two draw on one budget in turn and never
+        // at the same moment. The cap is re-read here: the shadow may just have spent some of it.
+        if (stopping || judgeOff) return;
+        const rest = cfg.dailyCap - callsToday();
+        if (rest <= 0) {
+          const day = new Date().toDateString();
+          if (capLoggedFor !== day) { log(`daily cap of ${cfg.dailyCap} calls reached — no more calls today`); capLoggedFor = day; }
+          return;
+        }
+        return judgeMod.judgePass({ store, maxCalls: Math.min(cfg.maxCalls, rest), env, fetchImpl: cfg.fetchImpl })
+          .then((r) => log(r.asked || r.refused
+            ? `judge: asked ${r.asked}, refused ${r.refused}, remaining ${r.remaining}`
+            : `judge: nothing new to judge (${r.captures} turns captured so far)`))
+          .catch((e) => { if (e instanceof Refusal) judgeFailed(e); else log(`judge error (next cadence retries): ${e.message}`); });
+      })
       .finally(() => { shadowBusy = false; });
   };
 
@@ -203,6 +252,16 @@ function parseArgs(argv) {
   return a;
 }
 
+/** CONSONANCE_DATA, else ~/.consonance.json data_dir, else null — the same order as every other tool here. */
+function dataDirOf(env = process.env) {
+  const e = String(env.CONSONANCE_DATA || '').trim();
+  if (e) return e;
+  try {
+    const cfg = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, ''));
+    return cfg && cfg.data_dir ? String(cfg.data_dir) : null;
+  } catch { return null; }
+}
+
 async function main(argv = process.argv.slice(2), env = process.env) {
   let a;
   try { a = parseArgs(argv); } catch (e) { process.stderr.write(`jev-shadow-runner: REFUSED — ${e.message}\n`); return 2; }
@@ -212,6 +271,11 @@ async function main(argv = process.argv.slice(2), env = process.env) {
       store: env.JEV_SHADOW_STORE || defaultStore(env),
       shellDir: env.CONSONANCE_SHELL_DIR || path.join(os.homedir(), '.claude', 'shell'),
       disciplineDir: env.JEV_SHADOW_DISCIPLINE || path.resolve(__dirname, '..', '..'),   // this checkout's root (see jev-shadow.js)
+      // JUDGE MODE's two inputs (L071). The app spawns this runner WITHOUT CONSONANCE_DATA (main.rs env_remove), so the
+      // data dir comes from ~/.consonance.json's data_dir — the one place both machines declare it. None → judge mode
+      // says so once and stays off; the shadow is unaffected.
+      dataDir: dataDirOf(env),
+      projectsDir: env.CLAUDE_PROJECTS_DIR || path.join(os.homedir(), '.claude', 'projects'),
       env,
       readUserEnv: env.JEV_SHADOW_NO_USER_ENV === '1' ? () => null : readUserEnv,
     });
@@ -224,6 +288,6 @@ async function main(argv = process.argv.slice(2), env = process.env) {
   }
 }
 
-module.exports = { run, parseArgs, parseRegQuery, readUserEnv, defaultStore, isAlive, DEFAULTS, Refusal, AlreadyRunning };
+module.exports = { run, parseArgs, parseRegQuery, readUserEnv, defaultStore, dataDirOf, isAlive, DEFAULTS, Refusal, AlreadyRunning };
 
 if (require.main === module) main().then((code) => { process.exitCode = code; });
