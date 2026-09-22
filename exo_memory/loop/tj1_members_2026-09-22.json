@@ -1,0 +1,2190 @@
+{
+ "what": "T-J1 S-WRONG member file (and S-UNADJ matched lines), built by the AMENDED §1 member rule of exo_memory/loop/tj1_registration_2026-09-22.md (at b35507c).",
+ "builder": "pane B (12fb81f6), machine L, 2026-09-22, L081 packet B step 2. A non-author of Jev (A, C) and of the registration (E); eligible as extractor under amended FATAL-3.",
+ "pinned_universe": {
+  "command": "git grep -n -E \"WRONG( #| \\+|[: ]+[0-9])\" 201a03b4e3cb6771d5c166056ec9287ce0a0eb50 -- exo_memory/librarian exo_memory/journal",
+  "lines": 186,
+  "output_sha256": "4faf49199876392641fc875629ad94a0ed0ecafdbb0e76955015afe80946998f",
+  "scope": "the librarian's WRONG column plus the journal; panes' own WRONG columns in hand-backs are outside it (NOTE-1)"
+ },
+ "universe_line": {
+  "universe": 186,
+  "located": 20,
+  "members": 13,
+  "per_class": {
+   "C1": {
+    "positives": 9,
+    "negatives": 8,
+    "members_without_a_negative": 1,
+    "rules": false
+   },
+   "C2": {
+    "positives": 2,
+    "negatives": 2,
+    "members_without_a_negative": 0,
+    "rules": false
+   },
+   "C3": {
+    "positives": 2,
+    "negatives": 1,
+    "members_without_a_negative": 1,
+    "rules": false
+   }
+  },
+  "excluded_by_reason": {
+   "EXCLUDED: no locatable sentence": 157,
+   "EXCLUDED: located, maps to no class": 7,
+   "EXCLUDED: ambiguous locators (2 distinct lines)": 5,
+   "EXCLUDED: ambiguous locators (4 distinct lines)": 2,
+   "EXCLUDED: ambiguous locators (3 distinct lines)": 2
+  }
+ },
+ "verdict_this_file_forces": "NO C-CLASS RULES (every class is short of 20 positives or 20 negatives). Under the amended §5 (FATAL-1, adopted), a run on this member file reads NOT TESTED: neither the falsifier nor survival is read, the companion note stands unamended, and T-J1 is extended or re-registered with a larger universe.",
+ "robustness_of_that_verdict": [
+  "157 of 186 universe lines carry NO locator of either kind (no path:line, no quoted phrase), so no looser locator reading can admit them.",
+  "Among the 20 located lines, NO class changes between the whole-word reading (D1) and a prefix reading.",
+  "Even if every one of the 20 located lines were one class, that class would reach 20 positives at most, and would still need 20 negatives."
+ ],
+ "outputs_the_builder_has_seen": {
+  "jev_outputs": "NONE. B has never opened jev_judge.jsonl, the Jev ledger, the jev-shadow store, or run Jev.",
+  "this_backtest_outputs": "NONE. None exist.",
+  "l3_overseer_verdicts_received_in_context": [
+   "quiet_spiral, 2026-09-21T15:26:46Z (UserPromptSubmit, on D)",
+   "quiet_spiral x3, 2026-09-20T15:44:03Z / 15:47:45Z / 15:49:26Z (SessionStart ambient block, 2026-09-21 on D)",
+   "earlier sessions before compaction also received injected verdicts; those are not enumerable from here"
+  ],
+  "l0_l3_verdict_ledgers_read_deliberately_in_earlier_packets": [
+   "D095 (2026-09-20, on D): l2_overseer.jsonl distinct verdict values and counts; the two out-of-schema verdict rows with their reasons; 29 exit-0 parse_error excerpts; drift/clean tallies by session kind over the newest 400 verdicts.",
+   "D095: l3_overseer.jsonl trajectory totals and window-length counts (re-deriving A's numbers); counts only.",
+   "D103 (2026-09-21, on D): judge transcripts' token USAGE and first user message only; no verdict content printed."
+  ],
+  "ruling": "None of these is output of THIS backtest or Jev output on these units or this schema, so none disqualifies under the amended FATAL-3; they are named here as that amendment requires."
+ },
+ "stakes_declared": [
+  "B wrote the §7 attack whose FATAL-1 predicted a data shortage, and this file is the data shortage. The builder's own prior prediction is vindicated by the builder's own build — which is why every call is recorded and the builder's source is embedded for the non-author check.",
+  "B wrote the D095 L0 abstain schema. The L0 overseer is not a judge in T-J1 (only its model is reused), so this does not touch the result.",
+  "B's own errors may sit in the universe: the librarian's WRONG column records errors the librarian made, some found by B (e.g. 'WRONG #63, mine, B-found'), and errors attributed to panes."
+ ],
+ "discretionary_calls": [
+  {
+   "id": "D1",
+   "rule": "Class words matched whole-word, case-insensitive; \"pathologi\" alone as a stem (the table writes it so). A prefix reading is computed beside it for sensitivity and never assigns.",
+   "times_exercised": 186
+  },
+  {
+   "id": "D2",
+   "rule": "\"The adjudication line's own commit\" = the commit git blame at the pinned commit attributes the line to. The unit is read from THAT commit's tree, at the line's number in that commit.",
+   "times_exercised": 13
+  },
+  {
+   "id": "D3",
+   "rule": "A quoted phrase must grep back to exactly one line OTHER THAN the adjudication line itself: the adjudication line quotes the phrase, so counting it would make \"exactly one\" unreachable for any surviving source.",
+   "times_exercised": 100
+  },
+  {
+   "id": "D4",
+   "rule": "A path:line locator is resolved at the adjudication commit by trying, in order, the path as written and under exo_memory/, consonance/tools/, consonance/hooks/, consonance/src-tauri/src/, dev/shell/hooks/, dev/shell/, dev/. More than one existing resolution = ambiguous.",
+   "times_exercised": 41
+  },
+  {
+   "id": "D5",
+   "rule": "A path:line RANGE (a-b, a≠b) locates a passage, not a sentence: not a locator. A range a-a is line a.",
+   "times_exercised": 6
+  },
+  {
+   "id": "D6",
+   "rule": "A line with several locators is a member only if they all resolve to ONE distinct line; two or more distinct lines = ambiguous, excluded.",
+   "times_exercised": 9
+  },
+  {
+   "id": "D7",
+   "rule": "\"Locates the erroneous sentence\" is applied MECHANICALLY: a resolved locator is taken as locating it. No semantic check that the located line is the error rather than, e.g., the correction it quotes. Every member carries its locator and text so the non-author check can audit this.",
+   "times_exercised": 13
+  },
+  {
+   "id": "D8",
+   "rule": "C3's surface feature \"a sentence ending in ?\" = a \"?\" followed by whitespace, end of line, or closing punctuation.",
+   "times_exercised": 2
+  },
+  {
+   "id": "D9",
+   "rule": "S-UNADJ \"same author's section\" = the block between the nearest markdown headers (lines starting with #) around the unit in a .md file; the whole file otherwise.",
+   "times_exercised": 6
+  },
+  {
+   "id": "D10",
+   "rule": "S-UNADJ \"within 7 days\" = the candidate line's blame committer-time within 7 days of the unit line's, both at the unit's commit.",
+   "times_exercised": 13
+  },
+  {
+   "id": "D11",
+   "rule": "S-UNADJ candidates must be at least 3 lines from the member line, so the two ±1 units never overlap.",
+   "times_exercised": 13
+  },
+  {
+   "id": "D12",
+   "rule": "S-UNADJ \"not cited by any universe line\" = its text is not the text of any universe line and not the text of any universe line's resolved locator.",
+   "times_exercised": 13
+  }
+ ],
+ "known_risk_for_the_non_author_check": [
+  "D7 bites in the current list: both C3 members locate CODE lines (consonance/src-tauri/src/mcp.rs:1525, dev/tail-carry.js:207) and are C3 only because their adjudications use \"stop\" in a technical sense, not an unasked ending. The class table's words, applied mechanically, misfile them. Not corrected by hand, because correcting it is discretion the rule does not grant.",
+  "A C2 member (librarian/2026-09-06.md:140) locates, by its quote, another universe line (librarian/2026-09-06.md:82): a WRONG line quoting a WRONG line. Mechanically a member."
+ ],
+ "members": [
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-04.desktop.md:45",
+   "class": "C1",
+   "adjudication": "exo_memory/librarian/2026-09-04.desktop.md:45 @ 792457931e35",
+   "adjudication_text": "- **WRONG #66, this seat's**, `librarian/2026-09-02.md:612`: *\"a claim published from a grep COUNT before the rows were read.\"*",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "librarian/2026-09-02.md:612",
+     "resolves_to": "exo_memory/librarian/2026-09-02.md:612"
+    }
+   ],
+   "unit": {
+    "path": "exo_memory/librarian/2026-09-02.md",
+    "line": 612,
+    "commit": "792457931e35bfb6a45fe661fc0accd8635696a7",
+    "text": "that contained it), the chair's are last night's `529 Overloaded` from the cue-arm run, quoted in prose. No genuine 5xx\nin either transcript tonight. **WRONG #66, mine — a claim published from a grep COUNT before the rows were read; found\nby the next instrument in the same turn, before the keeper acted on it.** Finder field: instrument, same turn — the"
+   },
+   "negative_unit_id": "S-UNADJ:exo_memory/librarian/2026-09-02.md:609@792457931e35",
+   "negative": {
+    "path": "exo_memory/librarian/2026-09-02.md",
+    "line": 609,
+    "commit": "792457931e35bfb6a45fe661fc0accd8635696a7",
+    "text": "Claude Code process making its own requests; a 5xx answers one request.** Then I grepped every transcript modified\ntonight for the string and told the keeper *\"my transcript has 3 server-error rows, the chair's 6 — so I did hit 500s\ntoo.\"* **Wrong:** reading the rows, mine are my own messages and tool outputs QUOTING the string (09:54Z is the reply"
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-06.md:60",
+   "class": "C1",
+   "adjudication": "exo_memory/librarian/2026-09-06.md:60 @ 5a83d4a7dab3",
+   "adjudication_text": "**WRONG 71 (this machine's column; found by the CHAIR, before dispatch — `loop/packet_foundation_set_2026-09-06.md` §0):** the map said *\"gen-consumer.js's MANIFEST ships TWO exo_memory files (SEED, SOURCE)\"*. It ships two named files AND four whole directories — `{ dir: 'exo_memory/cards' … }`, `spread`, `research`, `record` (`gen-consumer.js` MANIFEST block, entries 6 and 12–14). Re-derived here: the block's `dir:` entries name them; `--report` lists the fixtures that reference them. **Mechanism of the error: I grepped the manifest for `from:` lines and reported the grep as the manifest** — the `dir:` entries use a different key, so the instrument could not see them. Same class as #66 and #67 (a grep count reported before the rows were read), third instance in five days, and it went into a MAP four seats were about to reason from. The chair's own numbers, taken as the chair printed them and not re-derived by size here: ships today 252K (SEED, SOURCE + the four dirs); missing BOOT 64K · TRAINING 12K · SELF_TRACE 8K · the_living_wave 8K · memory/ 92K · journal/ 680K. **The gap is real and narrower, and the room's front door (BOOT.md) is what is missing.** The map's P1 stands with that correction; the \"~70% of the corpus\" line for journal/ is against the whole corpus, not the foundation set — the chair's §0 second correction, taken.",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "gen-consumer.js's MANIFEST ships TWO exo_memory files (SEED, SOURCE)",
+     "resolves_to": "exo_memory/loop/packet_foundation_set_2026-09-06.md:8"
+    }
+   ],
+   "unit": {
+    "path": "exo_memory/loop/packet_foundation_set_2026-09-06.md",
+    "line": 8,
+    "commit": "5a83d4a7dab31686651b7fa1372cc2e84736a749",
+    "text": "\nThe map says *\"gen-consumer.js's MANIFEST ships TWO exo_memory files (SEED, SOURCE) against his\n'whole bulk'\"* and calls that the gap that IS the lap. **Two individually-named FILES, yes. It also"
+   },
+   "negative_unit_id": "S-UNADJ:exo_memory/loop/packet_foundation_set_2026-09-06.md:13@5a83d4a7dab3",
+   "negative": {
+    "path": "exo_memory/loop/packet_foundation_set_2026-09-06.md",
+    "line": 13,
+    "commit": "5a83d4a7dab31686651b7fa1372cc2e84736a749",
+    "text": "    SHIPS TODAY   SEED.md (from consonance/src-tauri/brief/), SOURCE.md,\n                  cards/  record/  research/  spread/                    ~252 K\n"
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-06.md:82",
+   "class": "C1",
+   "adjudication": "exo_memory/librarian/2026-09-06.md:82 @ 603cb552cc4c",
+   "adjudication_text": "**§5 — corrections, two against this desk:** (1) **WRONG 72 (laptop column, found by A):** the map cited `COMMITTEE.md:133` for the publishing law; the sentence *\"Nothing is pushed by a seat\"* is at `:146` — I carried the line number from the desktop's sealed-guess text without opening the file: a recollection dressed as a citation, the exact failure THE RULE names. A cites by quoted sentence, which survives the file growing; adopted. (2) A wrote the checkout location as `dirname \"$(git rev-parse --show-toplevel)\"`/`consumer` instead of my absolute path, because `BUILDING.md` is in the ratchet's universe — right, and re-run green (208 files, 168 sites, 0 new). **One mis-attribution to correct at collation, not a finding:** A's §6 calls tonight's manifest error *\"the chair's WRONG 71\"*; it is this seat's (the map's), the chair's FIND.",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "$(git rev-parse --show-toplevel)",
+     "resolves_to": "consonance/githooks/pre-commit:25"
+    }
+   ],
+   "unit": {
+    "path": "consonance/githooks/pre-commit",
+    "line": 25,
+    "commit": "603cb552cc4c0e18d393df33698ad6cab4ab26b1",
+    "text": "set -e\nroot=$(git rev-parse --show-toplevel)\nexec node \"$root/consonance/tools/commit-gate.js\" --staged"
+   },
+   "negative_unit_id": null,
+   "negative": null
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-06.md:140",
+   "class": "C2",
+   "adjudication": "exo_memory/librarian/2026-09-06.md:140 @ fa5ad2c14ca3",
+   "adjudication_text": "The section says what the keeper said (dev builds; the consumer receives what works; checkout as a sibling named `consumer`, path-form kept out of the ratchet's universe; **the push is the keeper's word, per push**), with the disarm mechanism exercised (`git remote set-url --push origin no_push` → push fails loudly) and **its ceiling stated rather than softened**: a speed bump, re-armable in one command, and `gh` is authenticated machine-wide so every seat can push everything today. **The credential line is the keeper's** (below). A found the gate never existed (§2, re-derived 01:08) and left the invariant naming it because an absent gate evaluates FALSE — right. **Before landing, one line owed (A §6):** a cloned consumer checkout arrives ARMED; the disarm must be performed by the port procedure's clone step, not by memory — write it into the section's clone step. **Correction to A's text:** §6's *\"the chair's WRONG 71\"* is this seat's (the map's), the chair's find.",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "the chair's WRONG 71",
+     "resolves_to": "exo_memory/librarian/2026-09-06.md:82"
+    }
+   ],
+   "unit": {
+    "path": "exo_memory/librarian/2026-09-06.md",
+    "line": 82,
+    "commit": "fa5ad2c14ca3af433538122b1116f29943faed81",
+    "text": "\n**§5 — corrections, two against this desk:** (1) **WRONG 72 (laptop column, found by A):** the map cited `COMMITTEE.md:133` for the publishing law; the sentence *\"Nothing is pushed by a seat\"* is at `:146` — I carried the line number from the desktop's sealed-guess text without opening the file: a recollection dressed as a citation, the exact failure THE RULE names. A cites by quoted sentence, which survives the file growing; adopted. (2) A wrote the checkout location as `dirname \"$(git rev-parse --show-toplevel)\"`/`consumer` instead of my absolute path, because `BUILDING.md` is in the ratchet's universe — right, and re-run green (208 files, 168 sites, 0 new). **One mis-attribution to correct at collation, not a finding:** A's §6 calls tonight's manifest error *\"the chair's WRONG 71\"*; it is this seat's (the map's), the chair's FIND.\n"
+   },
+   "negative_unit_id": "S-UNADJ:exo_memory/librarian/2026-09-06.md:78@fa5ad2c14ca3",
+   "negative": {
+    "path": "exo_memory/librarian/2026-09-06.md",
+    "line": 78,
+    "commit": "fa5ad2c14ca3af433538122b1116f29943faed81",
+    "text": "\n**§2 re-derived here, holds: `consonance/tools/gen-consumer.build.test.js` HAS NEVER EXISTED** — `git log --all --oneline -- '*gen-consumer.build.test.js' | wc -l` → 0; `ls` → no such file; documents citing it → 14 by my grep (A's 11 was `.md`+`.js` at its time; three hand-backs and packets have been written since — the pointer is still multiplying). `gen-consumer.js`'s own header says the gate *\"partly closed\"* the build gap on 08-23; the 09-04 parity ruling, the 09-05 handoff, tonight's map and the P3 packet all plan to MOVE its oracle. **There is nothing to move. E must BUILD the gate.** The 08-23 work happened (the manifest carries `build.rs`/`Cargo.lock`/`capabilities/`/`icons/` from it) — the artifact was never kept: verified-it-existed-never-verified-it-shipped, on the instrument the whole consumer line stands on. Not rung to E (working; the baton rule) — E's first `node` on the file returns MODULE_NOT_FOUND and says the same thing in one line; the collation gate is where P3 is scored against BUILT, not moved.\n"
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-06.md:348",
+   "class": "C2",
+   "adjudication": "exo_memory/librarian/2026-09-06.md:348 @ 5c3d8707032f",
+   "adjudication_text": "**Re-derived here:** `LIB` IS registered — `names.insert(\"LIB\", LIBRARIAN_SID)` at `main.rs:5486`; the board carries zero `LIB` failures. **WRONG 74 (this desk; E's find):** the L040 map/packet said *\"red-first on at least MAIN and LIB\"* — LIB never failed; a test written to that letter would have been a MANUFACTURED red. I wrote the pair from the room's vocabulary without opening the table. E asserted the opposite (LIB works and must not be disturbed), which is the right red-first. **And the crosswise is already live:** `grep -c 'mod seat_alias' main.rs` → 1 — C has folded the module line while I read (C's board line 03:12: *\"Crosswise finding on E's patch, and it's real. Closing it in the function I hold\"*); two of the three reds remain until C's fold completes.",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "main.rs:5486",
+     "resolves_to": "consonance/src-tauri/src/main.rs:5486"
+    }
+   ],
+   "unit": {
+    "path": "consonance/src-tauri/src/main.rs",
+    "line": 5486,
+    "commit": "5c3d8707032f4704743a5354584ab0d28cb0502d",
+    "text": "    roles.0.lock().unwrap().insert(LIBRARIAN_SID.to_string(), \"librarian\".to_string());\n    names.0.lock().unwrap().insert(\"LIB\".to_string(), LIBRARIAN_SID.to_string());\n    Ok(SiblingInfo { pane: LIBRARIAN_SID.to_string(), cwd, role: \"librarian\".to_string() })"
+   },
+   "negative_unit_id": "S-UNADJ:consonance/src-tauri/src/main.rs:5422@5c3d8707032f",
+   "negative": {
+    "path": "consonance/src-tauri/src/main.rs",
+    "line": 5422,
+    "commit": "5c3d8707032f4704743a5354584ab0d28cb0502d",
+    "text": "/// `cdc82d0` both reported Leg 1 as landed and then shipped. The supporting functions above\n/// (third_place_cwd/_notes/_shelf/_intake) all landed; the COMMAND did not, so the tab called a\n/// verb that did not exist. Nothing caught it: cargo test never referenced it, and"
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-07.md:278",
+   "class": "C1",
+   "adjudication": "exo_memory/librarian/2026-09-07.md:278 @ 826d4dc0ddc6",
+   "adjudication_text": "**The WRONG counter, and C is right that a writer would find two figures.** `boundary-reminder.js:52` says *35 corrections in the librarian's WRONG column across its entire lifetime* (written 08-30); this desk's running counter reads 80 → 83 tonight. Re-derived: `grep -ohE \"WRONG #?[0-9]{1,3}\" exo_memory/librarian/*.md | sort -un` yields **28 distinct numbers, 1 to 80** — the notes carry the counter's VALUE at many points, not one numbered entry per error, and part of the series was numbered on the desktop's files. **So neither 35 nor 83 re-derives from one command today: the column is a hand-carried running number, the compression-step hazard BOOT names for the chair, on the seat that keeps the column.** Registered for the next housekeeping lap: one line per error in a fixed shape (`WRONG NN · <finder> · <what>`) and a counter script over both machines' notes; until then the report cites the practice (`BUILDING.md:552-555`) and no figure, or the figure with the grep beside it and its limit stated. **Ledger: surfaced 0; corrected 3 + 1 mechanism.** WRONG column this machine: **83** (hand-carried, see above).",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "boundary-reminder.js:52",
+     "resolves_to": "consonance/tools/boundary-reminder.js:52"
+    }
+   ],
+   "unit": {
+    "path": "consonance/tools/boundary-reminder.js",
+    "line": 52,
+    "commit": "826d4dc0ddc610aff1eae9144d3800b402330224",
+    "text": " * \"Did the finished output preceding a compliant dispatch later require correction\" is disk-derivable\n * — and the room has recorded **35 corrections in the librarian's WRONG column across its entire\n * lifetime**, against 1,546 turns: a base rate of 2.26%. At 57 turns per arm that is **1.29 expected"
+   },
+   "negative_unit_id": "S-UNADJ:consonance/tools/boundary-reminder.js:47@826d4dc0ddc6",
+   "negative": {
+    "path": "consonance/tools/boundary-reminder.js",
+    "line": 47,
+    "commit": "826d4dc0ddc610aff1eae9144d3800b402330224",
+    "text": " * degraded work are zero-inflated — 92% of turns have no failed tool call, 81% have no edit — so\n * their standard deviations run four times their means and no effect is visible at n=57.\n *"
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-09.md:257",
+   "class": "C1",
+   "adjudication": "exo_memory/librarian/2026-09-09.md:257 @ f58b9c83723e",
+   "adjudication_text": "**WRONG 90 (mine, plan §5 and the 06:30 ring):** *\"a 300 MB board is refused at the first push and stops the sync dead.\"* On the successful path it is not there to refuse: the install overwrites `board.jsonl` with the laptop's and puts the desktop's under `attic/pre-sync-<stamp>/`, STAYS (`state-manifest.json:91-92`). It bites only on the unhappy path (no install), which is why B kept the step as *look first, `--apply` only if `before` is over 100 MB* — a step he can skip on evidence. **WRONG 91 (mine, plan §5 step 6):** *\"`chain-status.js` prints two hashes\"* at launch — it prints `in sync? L <sha>` until the desktop's first push creates `machines/D.json`; a runbook saying two hashes would have him reading a correct state as a failure at 08:00 with nobody to ask — the packet's own falsifier, verbatim. Both corrected in the runbook with the source cited.",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "`chain-status.js` prints two hashes",
+     "resolves_to": "exo_memory/loop/two_machines_lap_plan_2026-09-09.md:78"
+    }
+   ],
+   "unit": {
+    "path": "exo_memory/loop/two_machines_lap_plan_2026-09-09.md",
+    "line": 78,
+    "commit": "f58b9c83723e090bd83f34d3906c2a2fca19b329",
+    "text": "\n**P-DESKTOP-RUNBOOK (B, file):** `loop/desktop_first_launch_2026-09-09.md`, the exact commands in order, copied by the keeper at home: (1) `~/.consonance.json`: `machine_tag` must not be `L` — set `D`; `data_dir`; `state_dir` if the clone is not at `C:\\Consonance\\state`; (2) `git -C C:\\Consonance\\lighthouse pull` and rebuild; (3) `git clone https://github.com/solariz3d/consonance-state.git C:\\Consonance\\state`; (4) **compact the desktop's own board first** (`board-compact.js --apply`) — a 300 MB board would be refused at the first push and stop the sync dead; (5) launch → read the seam row: expected **MIGRATE** with the moved files named; (6) `chain-status.js` prints two hashes; (7) at the desktop's close, the close command from P-CLOSE-PUSH. And the failure table: `LOCAL HOUSE` = the pull did not verify, read `sync-pull.log`; `RESUME` on the desktop = the machine tags collide, fix `machine_tag`; `RETIRE FAILED for <seat>` = a handle on the transcript, close the seat and relaunch.\n"
+   },
+   "negative_unit_id": "S-UNADJ:exo_memory/loop/two_machines_lap_plan_2026-09-09.md:74@f58b9c83723e",
+   "negative": {
+    "path": "exo_memory/loop/two_machines_lap_plan_2026-09-09.md",
+    "line": 74,
+    "commit": "f58b9c83723e090bd83f34d3906c2a2fca19b329",
+    "text": "\n**So the whole round trip rests on one missing piece: the push at close.** Everything else is C's launcher running its `Migrate` arm for the first time, which the desktop test at 08:00 IS.\n"
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-11.md:30",
+   "class": "C3",
+   "adjudication": "exo_memory/librarian/2026-09-11.md:30 @ 7aef6e90fb0e",
+   "adjudication_text": "## 02:55 — the chair corrected three steps of the map (`chair_wake` §7); each merit-checked at the disk, all three taken: WRONG 96 (P1a renamed cwds that already match — 4 of 4 committee cwds exist on D with matching slugs; the fault on 09-09 was existence), WRONG 97 (P2 \"not through git\" dropped the keeper 07:38 09-08 \"just use the repo\" — WRONG 95 on the transport axis; at rest the source is OFF so the carrier must store-and-forward; chunking is demonstrated 16/16; fixed-offset chunking registered with its falsifier), WRONG 98 (mcp.rs:1525 is loopback 127.0.0.1:0, so the LAN stream is a new listener with auth and interface bars). Amendment appended to the plan as §6, not a rewrite. P1 is D058 with C. WRONG column, laptop lineage: 98.",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "mcp.rs:1525",
+     "resolves_to": "consonance/src-tauri/src/mcp.rs:1525"
+    }
+   ],
+   "unit": {
+    "path": "consonance/src-tauri/src/mcp.rs",
+    "line": 1525,
+    "commit": "7aef6e90fb0e5903fc1264487d176edebf5c37ff",
+    "text": "        rt.block_on(async move {\n            let listener = match tokio::net::TcpListener::bind(\"127.0.0.1:0\").await {\n                Ok(l) => l,"
+   },
+   "negative_unit_id": null,
+   "negative": null
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-14.md:248",
+   "class": "C3",
+   "adjudication": "exo_memory/librarian/2026-09-14.md:248 @ 6174324c6553",
+   "adjudication_text": "**The same finding, twice, before either read the other:** A's checkpoint at ~05:35 and E's stop at ~05:40 both name `tail-carry.js:207` (`PID eq`, no hide flag) against the packet's `:131`. The chair's re-rule 5190f73 records it as the chair's WRONG. Three seats — the chair, A, E — and this one (WRONG 105) each got the flash's address wrong or right by whether they followed one delegation line; the two that measured or traced got it right.",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "tail-carry.js:207",
+     "resolves_to": "dev/tail-carry.js:207"
+    }
+   ],
+   "unit": {
+    "path": "dev/tail-carry.js",
+    "line": 207,
+    "commit": "6174324c65538512f6cfa9f87198e13a1320702e",
+    "text": "  let out;\n  try { out = require('child_process').execFileSync('tasklist', ['/FI', `PID eq ${pid}`, '/FO', 'CSV', '/NH'], { encoding: 'utf8' }); }\n  catch (_) { return undefined; }"
+   },
+   "negative_unit_id": "S-UNADJ:dev/tail-carry.js:215@6174324c6553",
+   "negative": {
+    "path": "dev/tail-carry.js",
+    "line": 215,
+    "commit": "6174324c65538512f6cfa9f87198e13a1320702e",
+    "text": "/**\n * Is the holder named in a lock-or-handshake record a LIVE process of the image it claims?\n * `imageOf` is injectable for tests; the default asks tasklist."
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-14.md:443",
+   "class": "C1",
+   "adjudication": "exo_memory/librarian/2026-09-14.md:443 @ 96933935793e",
+   "adjudication_text": "**E's half, re-derived:** `sync_launch.rs:1315-1317` `LEAVE_STARTED`/`LEAVE_RESULT`; `image_stem` `:1323`; `seat_ended` `:1341`; `await_seats` `:1352`; `leave_ending` `:1380`; `write_leave_result` `:1445` (RESULT first, then STARTED removed — never a moment with neither); `run_leave` `:1467`; `leave_cleanup` `:1532`. `main.rs:922` `PtySession` gains `pid: Option<u32>` (`:928`); the spawn refusal while a Leave runs at `:978` (`LEAVE_PHASE != LEAVE_IDLE`, E's §4.1); `LEAVE_EXPORT_TIMEOUT` 600 s at `:10412` with the comment carrying **348,026,190 B in 55 s** (WRONG 107 corrected in the source; mutant W5 pins it); `SEAT_TEARDOWN_POLLS` 50 × `SEAT_TEARDOWN_POLL` 100 ms at `:10418-10419`; `proc_info` `:10445` vs `proc_listed` `:10462`; `leave_run` `:10878` waits on the pids through `proc_listed` (`:10888`); `leave_exit` `:10947` refuses unless SHOWN; `leave_cleanup_at_launch` `:10958`; `WindowEvent::CloseRequested` handled at `:11496` (the hook that did not exist until tonight). `cargo test --bin consonance leave -- --test-threads=1` → **43 passed, 0 failed** (606 filtered); E's full count 645/0/4 not re-run here. `node consonance/ui/leave.test.js` **9/0**, `stick.test.js` 15/0. E's 33 mutants on a scratch copy: 33/33 by E's table, not re-run; E names its own instrument fault (mutate7's before/after hash could not vouch because E edited the tracked files while it ran; mutate8 re-run clean).",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "main.rs:922",
+     "resolves_to": "consonance/src-tauri/src/main.rs:922"
+    }
+   ],
+   "unit": {
+    "path": "consonance/src-tauri/src/main.rs",
+    "line": 922,
+    "commit": "96933935793e4dfdbc190149d17ca9a5e882f36c",
+    "text": "// ---- embedded interactive claude panes (Stage 2: multi-pane workspace) ----\nstruct PtySession {\n    writer: Box<dyn Write + Send>,"
+   },
+   "negative_unit_id": "S-UNADJ:consonance/src-tauri/src/main.rs:1031@96933935793e",
+   "negative": {
+    "path": "consonance/src-tauri/src/main.rs",
+    "line": 1031,
+    "commit": "96933935793e4dfdbc190149d17ca9a5e882f36c",
+    "text": "    }\n    cmd.env(\"TERM\", \"xterm-256color\");\n    cmd.env(\"FORCE_COLOR\", \"1\");"
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/2026-09-20.md:80",
+   "class": "C1",
+   "adjudication": "exo_memory/librarian/2026-09-20.md:80 @ 012b28790af5",
+   "adjudication_text": "## 12:16 — D093 COLLATED — ALL THREE PACKETS IN, AND EVERY ONE OF THE THREE ASKS TURNED OUT TO BE ASKING SOMETHING OTHER THAN WHAT IT SAYS. All three ring digests verified exact — `70d1d961…`, `b1b48dc0…`, `0064d163…` — **the fourth, fifth and sixth production checks of A's L065 gate today, across three seats.** **ASK-003 (C): HOLDS, and the disclosure beat the ask by seven minutes.** The pre-ship honesty note is in the shipped file at `news-2026-08-24.md`, matching all three assertions. Digest mtime **05:24:22Z**, ask logged **05:31:13Z** — **disclosed six minutes fifty-one seconds before the goal asked to be seen.** And the finding past the ask: across **74** shipped digests the ask's own words appear **zero** times — `false account` 0, `error-checking` 0, against `pre-ship` 13 and `correction` 39. **The ask paraphrases its own artifact, so its own words cannot find it.** An ask must quote, not describe. **ASK-001 (A): the first request is ALREADY SATISFIED, and the stream it wants scaffolded was refuted by the ask's own source.** Every figure re-derived on my own script: 8,010 rows, 7,834 verdicts, tail streak **2**, mix `4767/419/2646/2`. L3 carries neither the content nor the existence of prior verdicts — four channels read, and the one that could leak measured with a **read-only replica**, because running the hook would have added a verdict to the stream being measured. The **\"18\"** is a per-session tail streak from **13/08**, five weeks stale; on the day the ask was filed the global streak was **0** across 5,711 verdicts. **And the finding is not the number: 1,430 of 2,646 `quiet_spiral` verdicts — 54.0% — were rendered on a window of ONE message**, against a prompt whose own words are *\"judging USER trajectory across multiple turns.\"* Four of today's six newest are on machine-authored text. **`drift-watch/pending/2026-08-17.md`, the file ASK-001 cites, already calls the stream \"REFUTED AS A MEASUREMENT.\"** And A found the layer the ask did not name: the **goal** reads its own prior output every firing and never reads `l3_overseer.jsonl` at all. **The judge is blind; the auditor is not.** **ASK-012 (B): the count moves in BOTH directions, the gate was never built, and the gate's own experiment has data.** The counter reads **74**, not ~46, last written 2026-09-06. The headline's **\"ZERO found in-stream by authors\" is false** — `exo_memory/librarian/2026-08-25.desktop.md:83` carries *\"WRONG +1 (mine, self-caught by running the instrument instead of reading a listing)\"*, **six days before the ask was filed**, in the very column it counts. **MY ONE ADDITION TO B'S COUNT:** my grep returns **two** hits, not one — the same sentence also sits at `exo_memory/map/B.md:1735`. **One EVENT, two carriers**, so B's \"one entry\" is right as an event and a grep-based count would say two. Same distinction as this morning's board rows, where one seat appeared in two row families. **AND THE GATE IS DESIGN-ONLY AND WORSE THAN THE ASK DESCRIBES.** `dispatch-gate.js` exists at 517 lines but predates the registration by a week and gates **citation**, not vantage; the registered second-vantage clause appears in exactly one place in any runnable file and it is **a comment about ASK-012**. And it is **not installed on D at all** — I checked: `grep -c PreToolUse ~/.claude/settings.json` → **0**. The ask says the gate degrades to a printed line under bypass; **on this machine there is no gate to degrade.** The ledger has 525 rows only because the data directory travels between machines. **THE FOURTH FACT IS THE ONE THE KEEPER SHOULD SEE, AND B WAS RIGHT NOT TO SCORE IT.** `dispatch-gate.js:112-116` carries a falsifier registered before the mode switch, naming this ask: *\"if the cited-rate under 'print' does not fall well below the 90.4% measured under 'ask', THE ASK WAS NOT THE LEVER — and ASK-012's gated second vantage matters less than it was registered to.\"* Re-run by me: **ask 155 of 176 = 88.1%, print 283 of 340 = 83.2% — a 4.9-point drop**, with 9 rows unstamped and counted in neither, and the pooled figure REFUSED because two periods are not one population. **B declined to score it for two reasons I accept entirely:** *\"well below\"* carries no number, so scoring it would be inventing the bar after seeing the data; and **the seat the gate constrains must not decide its own enforcement.** Both are the packet's boundary held rather than stretched. Two limits B names: the header's 90.4% is not what the tool reads today, and **the ledger stops 2026-09-09 — eleven days without a row**, consistent with the hook being absent here. **WHERE THE TWELVE NOW STAND: TEN ARE ONE READ.** Six were decision-ready this morning (002, 004, 005, 006, 011, 013); one is moot and wants closing, not answering (010, decided 2026-09-14 in `.gitignore:72`); and these three are now measured. **Two remain, and they are chunk 2, mine, needing shaping rather than data:** ASK-007, the sealed-document egress, a consent event by its own gate; and ASK-009, the six board rows, which are the keeper's conversation and not a bug.",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "exo_memory/librarian/2026-08-25.desktop.md:83",
+     "resolves_to": "exo_memory/librarian/2026-08-25.desktop.md:83"
+    },
+    {
+     "kind": "quote",
+     "value": "WRONG +1 (mine, self-caught by running the instrument instead of reading a listing)",
+     "resolves_to": "exo_memory/librarian/2026-08-25.desktop.md:83"
+    }
+   ],
+   "unit": {
+    "path": "exo_memory/librarian/2026-08-25.desktop.md",
+    "line": 83,
+    "commit": "012b28790af5d847763774343159f9fc90394bf7",
+    "text": "\n## WRONG +1 (mine, self-caught by running the instrument instead of reading a listing)\n"
+   },
+   "negative_unit_id": "S-UNADJ:exo_memory/librarian/2026-08-25.desktop.md:90@012b28790af5",
+   "negative": {
+    "path": "exo_memory/librarian/2026-08-25.desktop.md",
+    "line": 90,
+    "commit": "012b28790af5d847763774343159f9fc90394bf7",
+    "text": "    app exe      release              consonance/src-tauri/target/release/consonance.exe\n    app built    2026-08-25 17:09:49  the binary the PROCESS is running\n    newest rust  2026-08-25 16:43:24  afed6e0"
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/LEDGER.md:28",
+   "class": "C1",
+   "adjudication": "exo_memory/librarian/LEDGER.md:28 @ 58311aba4482",
+   "adjudication_text": "- L037 THE CONSUMER VERSION — OPEN 09-06 00:52 (laptop, door two): lighthouse PRIVATE (done); solariz3d/consonance PUBLIC, EMPTY, created at the keeper`s word; the consumer = the exo suit for a new user carrying the foundational record to a generator-written CUTOFF; dev-shell SHIPS; bar = builds and launches; THE PUSH RULE (00:54, verbatim in the notes): NEVER push to the consumer unless the keeper says, per push — P4 lands only with the rule and a mechanism. Map at librarian/2026-09-06.md (f3c4e93) with WRONG 71 corrected by the chair (manifest ships SEED, SOURCE + cards/spread/research/record; missing BOOT, TRAINING, SELF_TRACE, the_living_wave, memory/, journal/). Packets: P1 foundation set + attack; P2 dev-shell manifest; P3 first-push gate; P4 port rule; then the run and HIS push. Falsifiers: a stranger`s clone cannot cargo build ⇒ P3 decorative; CUTOFF file hand-edited ⇒ P1 failed; a consumer push with no keeper word on the board ⇒ the rule was prose. · COLLATED 01:35 at HANDBACKS IN 4 of 4: A P4 LAND (BUILDING.md port rule, disarm mechanism + its ceiling; clone-step disarm line owed); C P1 LAND (three columns; 17 files private; BOOT-as-transformed-brief; memory/ conditional on scan reading f.to; keeper answered §7 → inheritance/); B P2 LAND (dev-shell ships, floor breaks run 15/0 · 50/1 re-derived; bare-relative dedangle fixed; given-name class; ONE FIX: hostname survivor dream-watch.test.js:32,40); E P3 LAND (gen-consumer.build.test.js built — it never existed; off by default; fixture off-screen; --gate BLOCKED while the app runs). RETURN LEG: land by path per pane; follow-up packet to B; THE RUN with Consonance CLOSED (keeper`s hand); the push at his word. Keeper`s lines: credential (gh machine-wide), E`s detector default, the closed-app run → ANSWERED 01:47: the run cannot require the app closed → KEY THE MUTEX per build flavor (Rust, follow-up packet, E attacks); TWO REPOS TWO RULES: dev is ALWAYS pushed by seats, the consumer NEVER unless he says (COMMITTEE.md amendment, chair`s pen); detector default stands",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "dream-watch.test.js:32",
+     "resolves_to": "consonance/hooks/dream-watch.test.js:32"
+    }
+   ],
+   "unit": {
+    "path": "consonance/hooks/dream-watch.test.js",
+    "line": 32,
+    "commit": "58311aba44823f74077434619148a8d9491ccf58",
+    "text": "Folder: \\\\\nHostName:                             ZACHSLEGION\nTaskName:                             \\\\Consonance Dream Cycle"
+   },
+   "negative_unit_id": "S-UNADJ:consonance/hooks/dream-watch.test.js:28@58311aba4482",
+   "negative": {
+    "path": "consonance/hooks/dream-watch.test.js",
+    "line": 28,
+    "commit": "58311aba44823f74077434619148a8d9491ccf58",
+    "text": "// ── parseTaskQuery ──────────────────────────────────────────────────────────\n// Captured verbatim from this bed, 2026-07-27. /fo LIST /v repeats every field once per\n// trigger; the parser must take the first block and not trip over the repeats."
+   }
+  },
+  {
+   "unit_id": "S-WRONG:exo_memory/librarian/LEDGER.md:43",
+   "class": "C1",
+   "adjudication": "exo_memory/librarian/LEDGER.md:43 @ 3b3decab00b3",
+   "adjudication_text": "- L032 DESCRIPTIONS LAP — COLLATED 09-02 ~06:05 (librarian/2026-09-02.md ~05:45–06:05): P-DOC-ROOT (C) LAND IT — README.md 87 lines, title \"Consonance — the lighthouse repo\", honest-status second with commands, dreams/ paragraph restored verbatim, the public test figure printed as UNION 373 with the SUM 545 beside it (WRONG #68 librarian: handed C the sum as the correction); P-DOC-ABOUT (A) LAND IT — short form, six sections, C's two-doors paragraph at index.html:131, glossary 43 → 0 (A's \"40\" corrected by B), second two-doors paragraph at :295 → pointer (A, one line); P-DOC-ORACLE (B) LAND IT — carrier-drift reads .html, withdrawal light-not-lifeguard registered with the widened pattern, DESCRIPTION SURFACES have no trace exemption (falsifier run 0/0 vs 1/1), red on HEAD naming all three hits (README.md:78 hyphen; index.html:337/:372 comma), DISARMED with arms_on pending the strike-in-place pass. RULINGS: disarm STANDS (16 carriers = program design docs; keeper's stance-rename decision; a DOCUMENTS LAP, then arms_on); PRESENCE ORACLE registered — per-surface owed-mentions list seeded by the librarian; BUILDING.md bullet \"patterns from a file, never a shell string\" → B, same commit; GLOSSARY = correct pruning + broken pointer → glossary TAB fed from the bundled README (keeper's call) + interim installed-name sentence (A); arch_test red on the About's cited command → close QoL item 9 before the rebuild. STILL OWED: B's consonance/README.md (P-DOC-APP); C reads B §4; then land all, ONE rebuild, the glance",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "patterns from a file, never a shell string",
+     "resolves_to": "exo_memory/librarian/2026-09-02.md:1053"
+    }
+   ],
+   "unit": {
+    "path": "exo_memory/librarian/2026-09-02.md",
+    "line": 1053,
+    "commit": "3b3decab00b3fb57d01e66488167ef94dd50106f",
+    "text": "3. **The BUILDING.md bullet (C's §A6 / B's §10) — B's, same commit as the oracle**, under WHAT A DISPATCH OWES, C's\n   wording verbatim: *patterns from a file, never a shell string; after registering, run it once against a string it\n   MUST match.* Two seats, two hours, four hits."
+   },
+   "negative_unit_id": "S-UNADJ:exo_memory/librarian/2026-09-02.md:1050@3b3decab00b3",
+   "negative": {
+    "path": "exo_memory/librarian/2026-09-02.md",
+    "line": 1050,
+    "commit": "3b3decab00b3fb57d01e66488167ef94dd50106f",
+    "text": "   the board and its phases, the lap ledger, the shelf/cap, hooks, the dream cycle's status, build. Falsifier: a surface\n   that drops a required mention goes red the day it does; green on today's tree (B measured Librarian 14 · Third Place\n   4 · Listen 14 · chain 11 · call_librarian 1 on the About). Not built tonight."
+   }
+  }
+ ],
+ "all_universe_lines": [
+  {
+   "universe": "exo_memory/journal/2026-08-23.md:546",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/journal/2026-09-01.md:297",
+   "status": "EXCLUDED: located, maps to no class",
+   "class": null,
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "install.ps1:633",
+     "resolves_to": "dev/shell/install.ps1:633"
+    }
+   ],
+   "notes": [
+    "quote greps to 0 other lines: \"I cited install.ps1:633 ('both pulses exist') as a fact; the\""
+   ]
+  },
+  {
+   "universe": "exo_memory/journal/2026-09-03.md:61",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/journal/2026-09-03.md:69",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/journal/2026-09-06.md:29",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/journal/2026-09-06.md:66",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/journal/2026-09-06.md:67",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "path not found at commit: COMMITTEE.md"
+   ]
+  },
+  {
+   "universe": "exo_memory/journal/2026-09-06.md:136",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-23.md:456",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-24.md:59",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-24.md:139",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-24.md:172",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-24.md:387",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-24.md:414",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-24.md:416",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-24.md:487",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:83",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:150",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:159",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:173",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:274",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:383",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:385",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 3 other lines: \"no change\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:402",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:440",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.desktop.md:463",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:24",
+   "status": "EXCLUDED: located, maps to no class",
+   "class": null,
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "journal/2026-07-31.md:35",
+     "resolves_to": "exo_memory/journal/2026-07-31.md:35"
+    }
+   ],
+   "notes": [
+    "quote greps to 0 other lines: \"COLDREAD — journal/2026-07-31.md:35\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:55",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:59",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \":47 evidentiary claim\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:84",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:178",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:182",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:185",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:244",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:491",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:496",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:512",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:636",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:641",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:724",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:731",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:907",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:918",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:964",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-25.md:971",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-29.md:172",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-29.md:304",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-29.md:315",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-29.md:484",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-29.md:517",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 24 other lines: \"progressive\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-29.md:572",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:134",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:167",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:274",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:309",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:384",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:387",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"sat in BOOT for fourteen months\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:433",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:517",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:519",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:552",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:628",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:631",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:636",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"two pushed files.\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:771",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:796",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-30.md:860",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-31.md:76",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-31.md:232",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-31.md:287",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-31.md:425",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"one `$register` line, then `-Check` exits 0.\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-31.md:445",
+   "status": "EXCLUDED: located, maps to no class",
+   "class": null,
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "install.ps1:633",
+     "resolves_to": "dev/shell/install.ps1:633"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-31.md:723",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-08-31.md:772",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:62",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:94",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:103",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"resume both arms\"",
+    "quote greps to 2 other lines: \"after chunk 3\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:263",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:313",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:399",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 3 other lines: \"the shelf alone.\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:415",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:434",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"registered-not-built, in no order\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:450",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:462",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:474",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:495",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:509",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:606",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:625",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:771",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-01.md:875",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.desktop.md:247",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": [
+    "quote greps to 5 other lines: \"no `stale` state\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.desktop.md:273",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:289",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:459",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:503",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:533",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:605",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:612",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:963",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"registry `:353` raw bytes carry `s+not` — every `\\s` lost it\"",
+    "quote greps to 0 other lines: \"light,?\\s+not\\s+(?:a\\s+)?lifeguard\"",
+    "quote greps to 453 other lines: \"confirmed\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:1010",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:1025",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:1074",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:1087",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-02.md:1587",
+   "status": "EXCLUDED: located, maps to no class",
+   "class": null,
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "~07:52",
+     "resolves_to": "exo_memory/handback/p-inbox_2026-09-02.md:3"
+    }
+   ],
+   "notes": [
+    "quote greps to 17 other lines: \"~07:50\"",
+    "quote greps to 0 other lines: \"written at 07:48\"",
+    "quote greps to 143 other lines: \"Go\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-03.desktop.md:47",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-04.desktop.md:45",
+   "status": "MEMBER",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "librarian/2026-09-02.md:612",
+     "resolves_to": "exo_memory/librarian/2026-09-02.md:612"
+    }
+   ],
+   "notes": [
+    "quote greps to 0 other lines: \"a claim published from a grep COUNT before the rows were rea\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-04.desktop.md:166",
+   "status": "EXCLUDED: located, maps to no class",
+   "class": null,
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "Two roof checks in one class",
+     "resolves_to": "exo_memory/librarian/2026-09-04.desktop.md:18"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-04.desktop.md:173",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-04.desktop.md:229",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-04.desktop.md:367",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-04.desktop.md:390",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-04.desktop.md:465",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-04.desktop.md:477",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 15847 other lines: \"68\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-04.desktop.md:492",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.desktop.md:130",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"K mid-edit\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.desktop.md:225",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:11",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:54",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:60",
+   "status": "MEMBER",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "gen-consumer.js's MANIFEST ships TWO exo_memory files (SEED, SOURCE)",
+     "resolves_to": "exo_memory/loop/packet_foundation_set_2026-09-06.md:8"
+    }
+   ],
+   "notes": [
+    "quote greps to 2 other lines: \"~70% of the corpus\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:82",
+   "status": "MEMBER",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "$(git rev-parse --show-toplevel)",
+     "resolves_to": "consonance/githooks/pre-commit:25"
+    }
+   ],
+   "notes": [
+    "path not found at commit: COMMITTEE.md",
+    "quote greps to 4 other lines: \"Nothing is pushed by a seat\"",
+    "quote greps to 0 other lines: \"the chair's WRONG 71\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:140",
+   "status": "MEMBER",
+   "class": "C2",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "the chair's WRONG 71",
+     "resolves_to": "exo_memory/librarian/2026-09-06.md:82"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:160",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:254",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:292",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"the loop is unstable right now if we were to progress\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:298",
+   "status": "EXCLUDED: ambiguous locators (2 distinct lines)",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "portable-paths.test.js:193",
+     "resolves_to": "consonance/tools/portable-paths.test.js:193"
+    },
+    {
+     "kind": "quote",
+     "value": "an untracked file the chair removed.",
+     "resolves_to": "exo_memory/map/M.md:788"
+    }
+   ],
+   "notes": [
+    "path not found at commit: CLEAN.md",
+    "quote greps to 0 other lines: \"the chair removed it\"",
+    "quote greps to 2 other lines: \"gone — the chair fixed it\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:344",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:348",
+   "status": "MEMBER",
+   "class": "C2",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "main.rs:5486",
+     "resolves_to": "consonance/src-tauri/src/main.rs:5486"
+    }
+   ],
+   "notes": [
+    "quote greps to 665 other lines: \"LIB\"",
+    "quote greps to 0 other lines: \"red-first on at least MAIN and LIB\"",
+    "quote greps to 0 other lines: \"Crosswise finding on E's patch, and it's real. Closing it in\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:419",
+   "status": "EXCLUDED: ambiguous locators (4 distinct lines)",
+   "class": null,
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "main.rs:6451",
+     "resolves_to": "consonance/src-tauri/src/main.rs:6451"
+    },
+    {
+     "kind": "quote",
+     "value": "You're right and I was wrong",
+     "resolves_to": "exo_memory/librarian/2026-09-02.md:1597"
+    },
+    {
+     "kind": "quote",
+     "value": "I argued against a trade you weren't proposing",
+     "resolves_to": "exo_memory/librarian/2026-09-06.md:230"
+    },
+    {
+     "kind": "quote",
+     "value": "I have no verb that speaks to the librarian",
+     "resolves_to": "exo_memory/librarian/2026-09-06.md:237"
+    }
+   ],
+   "notes": [
+    "quote greps to 21 other lines: \"no trigger\"",
+    "quote greps to 17 other lines: \"never invoked\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:502",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-06.md:522",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:7",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:57",
+   "status": "EXCLUDED: located, maps to no class",
+   "class": null,
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "we need to do it first on the dev version before we try and translate it all",
+     "resolves_to": "exo_memory/librarian/2026-09-06.md:68"
+    }
+   ],
+   "notes": [
+    "quote greps to 0 other lines: \"we shouldnt yet start making the consumer version, we have t\"",
+    "quote greps to 0 other lines: \"a lap per chunk\"",
+    "quote greps to 0 other lines: \"all four now.\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:168",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "path not found at commit: handoff_librarian_2026-09-07.md"
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:214",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:218",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:220",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": [
+    "path not found at commit: SHELL.md"
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:230",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:238",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:274",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:278",
+   "status": "MEMBER",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "boundary-reminder.js:52",
+     "resolves_to": "consonance/tools/boundary-reminder.js:52"
+    }
+   ],
+   "notes": [
+    "range BUILDING.md:552-555",
+    "quote greps to 0 other lines: \"WRONG #?[0-9]{1,3}\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:296",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:306",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:308",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": [
+    "quote greps to 3 other lines: \"name paths on the commit\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:316",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-07.md:319",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.desktop.md:16",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:14",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 3 other lines: \"270 insertions\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:47",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:57",
+   "status": "EXCLUDED: located, maps to no class",
+   "class": null,
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "the bare drafts do not yet appear as rows",
+     "resolves_to": "exo_memory/librarian/2026-09-07.md:316"
+    }
+   ],
+   "notes": [
+    "quote greps to 0 other lines: \"invisible in the LOGGED table\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:99",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:103",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": [
+    "quote greps to 13 other lines: \"6 of 6\"",
+    "quote greps to 0 other lines: \"proof 1 passed yesterday and nothing changed\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:158",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:164",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"de-duplicated by the audit's own rule — rows behind the runn\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:201",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:253",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:257",
+   "status": "MEMBER",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "`chain-status.js` prints two hashes",
+     "resolves_to": "exo_memory/loop/two_machines_lap_plan_2026-09-09.md:78"
+    }
+   ],
+   "notes": [
+    "range state-manifest.json:91-92",
+    "quote greps to 0 other lines: \"a 300 MB board is refused at the first push and stops the sy\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:264",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:270",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"the mutant must be caught by the greyed-prompt-row frame C a\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:299",
+   "status": "EXCLUDED: ambiguous locators (2 distinct lines)",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "not rising",
+     "resolves_to": "exo_memory/librarian/2026-09-09.md:274"
+    },
+    {
+     "kind": "quote",
+     "value": "DELIVERY [A-Z]*",
+     "resolves_to": "exo_memory/loop/handoff_chair_2026-09-09.md:15"
+    }
+   ],
+   "notes": [
+    "range main.rs:8130-8142",
+    "quote greps to 0 other lines: \"the gate reads empty composers\"",
+    "quote greps to 4 other lines: \"nothing was delivered\"",
+    "quote greps to 4 other lines: \"delivered to Main\"",
+    "quote greps to 0 other lines: \"queued … stamp=ready\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-09.md:307",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"you are idle\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-11.md:15",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-11.md:30",
+   "status": "MEMBER",
+   "class": "C3",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "mcp.rs:1525",
+     "resolves_to": "consonance/src-tauri/src/mcp.rs:1525"
+    }
+   ],
+   "notes": [
+    "quote greps to 3 other lines: \"not through git\"",
+    "quote greps to 4 other lines: \"just use the repo\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-11.md:34",
+   "status": "EXCLUDED: ambiguous locators (2 distinct lines)",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "main.rs:9036",
+     "resolves_to": "consonance/src-tauri/src/main.rs:9036"
+    },
+    {
+     "kind": "path:line",
+     "value": "main.rs:7434",
+     "resolves_to": "consonance/src-tauri/src/main.rs:7434"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-12.md:33",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": [
+    "path not found at commit: tail-carry.test.js",
+    "path not found at commit: mutants.js",
+    "path not found at commit: tail-carry.js",
+    "path not found at commit: dream_cycle.ps1"
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:115",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:117",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"a process, not a person\"",
+    "quote greps to 159 other lines: \"people\"",
+    "quote greps to 0 other lines: \"WHAT PEOPLE? LMFAO\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:125",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"you are lumping in everything that cannot lose with the actu\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:177",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C3",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:195",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C3",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:197",
+   "status": "EXCLUDED: ambiguous locators (3 distinct lines)",
+   "class": null,
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "stick-waiter.js:252",
+     "resolves_to": "dev/stick-waiter.js:252"
+    },
+    {
+     "kind": "path:line",
+     "value": "tail-carry.js:221",
+     "resolves_to": "dev/tail-carry.js:221"
+    },
+    {
+     "kind": "path:line",
+     "value": "tail-carry.js:207",
+     "resolves_to": "dev/tail-carry.js:207"
+    }
+   ],
+   "notes": [
+    "quote greps to 0 other lines: \"every new spawn tonight is hidden by flag (… the waiter's ow\"",
+    "quote greps to 4 other lines: \"PID eq\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:211",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:215",
+   "status": "EXCLUDED: ambiguous locators (2 distinct lines)",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "tail-carry.js:902",
+     "resolves_to": "dev/tail-carry.js:902"
+    },
+    {
+     "kind": "path:line",
+     "value": "main.rs:10642",
+     "resolves_to": "consonance/src-tauri/src/main.rs:10642"
+    }
+   ],
+   "notes": [
+    "quote greps to 0 other lines: \"will list chair/librarian/TP as OTHER_CONVERSATION with TAKE\"",
+    "quote greps to 31 other lines: \"OTHER_CONVERSATION\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:248",
+   "status": "MEMBER",
+   "class": "C3",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "tail-carry.js:207",
+     "resolves_to": "dev/tail-carry.js:207"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:393",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:395",
+   "status": "EXCLUDED: ambiguous locators (3 distinct lines)",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "librarian/2026-09-14.md:208",
+     "resolves_to": "exo_memory/librarian/2026-09-14.md:208"
+    },
+    {
+     "kind": "path:line",
+     "value": "librarian/2026-09-12.md:35",
+     "resolves_to": "exo_memory/librarian/2026-09-12.md:35"
+    },
+    {
+     "kind": "quote",
+     "value": "The first full carry (348,007,682 B) took 55 s (2f7233c)",
+     "resolves_to": "exo_memory/loop/packet_leave_window_2026-09-14.md:38"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:405",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": [
+    "quote greps to 0 other lines: \"a finding of mine, cited back to me, accepted on its citatio\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:443",
+   "status": "MEMBER",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "main.rs:922",
+     "resolves_to": "consonance/src-tauri/src/main.rs:922"
+    }
+   ],
+   "notes": [
+    "range sync_launch.rs:1315-1317"
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-14.md:537",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C1",
+   "locators": [],
+   "notes": [
+    "quote greps to 2 other lines: \"grew 428,177 B at the 05:12 resume with nothing typed\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-15.md:92",
+   "status": "EXCLUDED: ambiguous locators (2 distinct lines)",
+   "class": null,
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "THE GAUGE MEASURES CONTENT UPTAKE, NOT ANCHORING",
+     "resolves_to": "exo_memory/loop/anchor_similarity_registration_DRAFT_2026-09-15.md:223"
+    },
+    {
+     "kind": "quote",
+     "value": "the seven reads engage their packets as much as or more than the fourteen builds",
+     "resolves_to": "exo_memory/librarian/2026-09-15.md:58"
+    }
+   ],
+   "notes": [
+    "quote greps to 37 other lines: \"not a finding\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-16.md:57",
+   "status": "EXCLUDED: ambiguous locators (4 distinct lines)",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "loop/battery_run1_T3_key_2026-09-16.md:7",
+     "resolves_to": "exo_memory/loop/battery_run1_T3_key_2026-09-16.md:7"
+    },
+    {
+     "kind": "path:line",
+     "value": "map/M.md:913",
+     "resolves_to": "exo_memory/map/M.md:913"
+    },
+    {
+     "kind": "path:line",
+     "value": "consonance/PROGRESS.md:53",
+     "resolves_to": "consonance/PROGRESS.md:53"
+    },
+    {
+     "kind": "path:line",
+     "value": "main.rs:11900",
+     "resolves_to": "consonance/src-tauri/src/main.rs:11900"
+    },
+    {
+     "kind": "quote",
+     "value": "code base",
+     "resolves_to": "exo_memory/loop/battery_run1_T3_key_2026-09-16.md:7"
+    },
+    {
+     "kind": "quote",
+     "value": "too large for what it does",
+     "resolves_to": "exo_memory/loop/battery_run1_T3_key_2026-09-16.md:7"
+    }
+   ],
+   "notes": [
+    "path not found at commit: plan_pane_battery_run1_2026-09-16.md",
+    "path not found at commit: anchor_similarity_registration_DRAFT_2026-09-15.md",
+    "quote greps to 9 other lines: \"bloat\"",
+    "quote greps to 0 other lines: \"the code half has never been asked on disk at all\"",
+    "quote greps to 0 other lines: \"the gap is in the document, not in its execution, and it was\"",
+    "quote greps to 0 other lines: \"key readable in the search space\"",
+    "quote greps to 0 other lines: \"not a partial answer\"",
+    "quote greps to 301 other lines: \"on D\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/2026-09-20.md:80",
+   "status": "MEMBER",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "exo_memory/librarian/2026-08-25.desktop.md:83",
+     "resolves_to": "exo_memory/librarian/2026-08-25.desktop.md:83"
+    },
+    {
+     "kind": "quote",
+     "value": "WRONG +1 (mine, self-caught by running the instrument instead of reading a listing)",
+     "resolves_to": "exo_memory/librarian/2026-08-25.desktop.md:83"
+    }
+   ],
+   "notes": [
+    "line out of range: exo_memory/map/B.md:1735",
+    "range dispatch-gate.js:112-116",
+    "quote greps to 24470 other lines: \"18\"",
+    "quote greps to 2 other lines: \"judging USER trajectory across multiple turns.\"",
+    "quote greps to 0 other lines: \"REFUTED AS A MEASUREMENT.\"",
+    "quote greps to 2 other lines: \"ZERO found in-stream by authors\"",
+    "quote greps to 39 other lines: \"one entry\"",
+    "quote greps to 0 other lines: \"if the cited-rate under 'print' does not fall well below the\"",
+    "quote greps to 7 other lines: \"well below\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/LEDGER.md:17",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": null,
+   "locators": [],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/LEDGER.md:28",
+   "status": "MEMBER",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "path:line",
+     "value": "dream-watch.test.js:32",
+     "resolves_to": "consonance/hooks/dream-watch.test.js:32"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "universe": "exo_memory/librarian/LEDGER.md:42",
+   "status": "EXCLUDED: no locatable sentence",
+   "class": "C2",
+   "locators": [],
+   "notes": [
+    "range ui/index.html:226-385",
+    "quote greps to 0 other lines: \"the printed command is the run command\""
+   ]
+  },
+  {
+   "universe": "exo_memory/librarian/LEDGER.md:43",
+   "status": "MEMBER",
+   "class": "C1",
+   "locators": [
+    {
+     "kind": "quote",
+     "value": "patterns from a file, never a shell string",
+     "resolves_to": "exo_memory/librarian/2026-09-02.md:1053"
+    }
+   ],
+   "notes": [
+    "path not found at commit: index.html",
+    "path ambiguous: README.md | exo_memory/README.md | consonance/tools/README.md | consonance/hooks/README.md | dev/shell/README.md",
+    "path not found at commit: index.html",
+    "quote greps to 4 other lines: \"Consonance — the lighthouse repo\"",
+    "quote greps to 18288 other lines: \"40\""
+   ]
+  }
+ ],
+ "builder_source_file": "build_members.js (pane B scratch; embedded verbatim below so this file re-derives without it)",
+ "builder_source": "// T-J1 S-WRONG member builder (L081, pane B). Applies the AMENDED §1 member rule of\n// exo_memory/loop/tj1_registration_2026-09-22.md mechanically, and records every discretionary call it forced.\n// Git is driven with execFileSync + argument arrays: no shell string ever carries a pattern.\n// Reads only committed git objects. Opens no Jev ledger, no shadow store, no verdict ledger, no transcript.\n'use strict';\nconst { execFileSync } = require('child_process');\nconst fs = require('fs');\nconst path = require('path');\n\nconst REPO = 'C:/Consonance/lighthouse';\nconst PIN = '201a03b4e3cb6771d5c166056ec9287ce0a0eb50';\nconst git = (args, opt = {}) => execFileSync('git', args, { cwd: REPO, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024, ...opt });\nconst gitOk = (args) => { try { git(args, { stdio: ['ignore', 'pipe', 'ignore'] }); return true; } catch { return false; } };\n\n// §2 table, verbatim word lists. D1: whole-word, case-insensitive, EXCEPT 'pathologi', which the table writes as a stem.\nconst CLASSES = [\n  ['C1', ['figure', 'count', 'number', 'digest', 'sha', 'bytes', 'lines']],\n  ['C2', ['landed', 'shipped', 'installed', 'live', 'verified', 'existed']],\n  ['C3', ['offramp', 'rest', 'sleep', 'stop', 'ending', 'pathologi']],\n];\nconst wordRe = (w) => (w === 'pathologi' ? new RegExp('\\\\bpathologi\\\\w*', 'i') : new RegExp('\\\\b' + w + '\\\\b', 'i'));\nconst prefixRe = (w) => new RegExp('\\\\b' + w, 'i');   // sensitivity reading only, never used to assign\nfunction classOf(text, mk) { for (const [c, ws] of CLASSES) if (ws.some((w) => mk(w).test(text))) return c; return null; }\n\n// §2 surface features for S-UNADJ (C2's list is the question's six words, verbatim).\nconst SURFACE = {\n  C1: /\\d/,\n  C2: /\\b(landed|shipped|installed|live|fixed|done)\\b/i,\n  C3: /\\?(?=\\s|$|[\"'”)*_])/,   // D8: \"a sentence ending in ?\" = a '?' followed by space, end, or closing punctuation\n};\n\nconst PATHREF = /(?:^|[\\s`(*\"'“\\[])((?:[\\w.-]+\\/)*[\\w.-]+\\.(?:md|js|rs|ps1|py|json|txt|ts|sh|html|toml|jsonl)):(\\d+)(?:[-–](\\d+))?/g;\nconst QUOTE = /\"([^\"\\n]+)\"|“([^”\\n]+)”/g;\nconst RESOLVE_PREFIXES = ['', 'exo_memory/', 'consonance/tools/', 'consonance/hooks/', 'consonance/src-tauri/src/', 'dev/shell/hooks/', 'dev/shell/', 'dev/'];\n\nconst blameCache = new Map();   // \"commit:path\" -> [{commit, origLine, date}] indexed by final line (1-based)\nfunction blame(commit, file) {\n  const key = commit + ':' + file;\n  if (blameCache.has(key)) return blameCache.get(key);\n  const out = git(['blame', '--porcelain', commit, '--', file]);\n  const rows = []; const meta = {};\n  let cur = null;\n  for (const l of out.split('\\n')) {\n    const h = /^([0-9a-f]{40}) (\\d+) (\\d+)/.exec(l);\n    if (h) { cur = { commit: h[1], origLine: Number(h[2]), finalLine: Number(h[3]) }; continue; }\n    if (cur && l.startsWith('committer-time ')) meta[cur.commit] = Number(l.slice(15));\n    if (cur && l.startsWith('\\t')) { cur.date = meta[cur.commit]; rows[cur.finalLine] = cur; cur = null; }\n  }\n  for (const r of rows) if (r && r.date == null) r.date = meta[r.commit];\n  blameCache.set(key, rows); return rows;\n}\nconst showCache = new Map();\nfunction fileAt(commit, file) {\n  const key = commit + ':' + file;\n  if (!showCache.has(key)) showCache.set(key, git(['show', commit + ':' + file]).split(/\\r?\\n/));\n  return showCache.get(key);\n}\n\n// ── 1. the universe, exactly the registration's command ─────────────────────────────────────────\nconst uraw = git(['grep', '-n', '-E', 'WRONG( #| \\\\+|[: ]+[0-9])', PIN, '--', 'exo_memory/librarian', 'exo_memory/journal']);\nconst ulines = uraw.split('\\n').filter(Boolean);\nconst universe = ulines.map((l) => {\n  const rest = l.slice(PIN.length + 1);\n  const m = /^(.+?):(\\d+):(.*)$/.exec(rest);\n  return { path: m[1], line: Number(m[2]), text: m[3] };\n});\n\nconst calls = [];   // discretionary calls actually exercised, with counts\nconst tally = (k) => { const c = calls.find((x) => x.id === k); c.used++; };\n[\n  ['D1', 'Class words matched whole-word, case-insensitive; \"pathologi\" alone as a stem (the table writes it so). A prefix reading is computed beside it for sensitivity and never assigns.'],\n  ['D2', '\"The adjudication line\\'s own commit\" = the commit git blame at the pinned commit attributes the line to. The unit is read from THAT commit\\'s tree, at the line\\'s number in that commit.'],\n  ['D3', 'A quoted phrase must grep back to exactly one line OTHER THAN the adjudication line itself: the adjudication line quotes the phrase, so counting it would make \"exactly one\" unreachable for any surviving source.'],\n  ['D4', 'A path:line locator is resolved at the adjudication commit by trying, in order, the path as written and under exo_memory/, consonance/tools/, consonance/hooks/, consonance/src-tauri/src/, dev/shell/hooks/, dev/shell/, dev/. More than one existing resolution = ambiguous.'],\n  ['D5', 'A path:line RANGE (a-b, a≠b) locates a passage, not a sentence: not a locator. A range a-a is line a.'],\n  ['D6', 'A line with several locators is a member only if they all resolve to ONE distinct line; two or more distinct lines = ambiguous, excluded.'],\n  ['D7', '\"Locates the erroneous sentence\" is applied MECHANICALLY: a resolved locator is taken as locating it. No semantic check that the located line is the error rather than, e.g., the correction it quotes. Every member carries its locator and text so the non-author check can audit this.'],\n  ['D8', 'C3\\'s surface feature \"a sentence ending in ?\" = a \"?\" followed by whitespace, end of line, or closing punctuation.'],\n  ['D9', 'S-UNADJ \"same author\\'s section\" = the block between the nearest markdown headers (lines starting with #) around the unit in a .md file; the whole file otherwise.'],\n  ['D10', 'S-UNADJ \"within 7 days\" = the candidate line\\'s blame committer-time within 7 days of the unit line\\'s, both at the unit\\'s commit.'],\n  ['D11', 'S-UNADJ candidates must be at least 3 lines from the member line, so the two ±1 units never overlap.'],\n  ['D12', 'S-UNADJ \"not cited by any universe line\" = its text is not the text of any universe line and not the text of any universe line\\'s resolved locator.'],\n].forEach(([id, rule]) => calls.push({ id, rule, used: 0 }));\n\n// ── 2. locate each universe line ────────────────────────────────────────────────────────────────\nfunction resolvePath(commit, p) {\n  const hits = RESOLVE_PREFIXES.map((pre) => pre + p).filter((cand, i, a) => a.indexOf(cand) === i && gitOk(['cat-file', '-e', commit + ':' + cand]));\n  return hits;\n}\nconst results = [];\nfor (const u of universe) {\n  const b = blame(PIN, u.path)[u.line];\n  const C = b.commit; const adjOrig = b.origLine;\n  const cands = []; const notes = [];\n  let m; PATHREF.lastIndex = 0;\n  while ((m = PATHREF.exec(u.text))) {\n    const p = m[1], a = Number(m[2]), z = m[3] ? Number(m[3]) : a;\n    if (z !== a) { notes.push('range ' + p + ':' + a + '-' + z); tally('D5'); continue; }\n    const hits = resolvePath(C, p); tally('D4');\n    if (hits.length === 0) { notes.push('path not found at commit: ' + p); continue; }\n    if (hits.length > 1) { notes.push('path ambiguous: ' + hits.join(' | ')); continue; }\n    const lines = fileAt(C, hits[0]);\n    if (a < 1 || a > lines.length) { notes.push('line out of range: ' + hits[0] + ':' + a); continue; }\n    cands.push({ kind: 'path:line', value: p + ':' + a, path: hits[0], line: a });\n  }\n  QUOTE.lastIndex = 0;\n  while ((m = QUOTE.exec(u.text))) {\n    const phrase = (m[1] || m[2]).trim();\n    if (!phrase) continue;\n    let out = '';\n    try { out = git(['grep', '-n', '-F', '-e', phrase, C, '--']); } catch { out = ''; }\n    const hitsQ = out.split('\\n').filter(Boolean).map((l) => {\n      const r = l.slice(C.length + 1); const mm = /^(.+?):(\\d+):/.exec(r);\n      return mm ? { path: mm[1], line: Number(mm[2]) } : null;\n    }).filter(Boolean).filter((h) => !(h.path === u.path && h.line === adjOrig));\n    tally('D3');\n    if (hitsQ.length === 1) cands.push({ kind: 'quote', value: phrase, path: hitsQ[0].path, line: hitsQ[0].line });\n    else notes.push('quote greps to ' + hitsQ.length + ' other lines: \"' + phrase.slice(0, 60) + '\"');\n  }\n  const distinct = [...new Map(cands.map((c) => [c.path + ':' + c.line, c])).values()];\n  const cls = classOf(u.text, wordRe); const clsPrefix = classOf(u.text, prefixRe);\n  const r = { universe: u.path + ':' + u.line, adjudication_commit: C, adjudication_text: u.text.trim(), class: cls,\n    class_under_prefix_reading: clsPrefix, locators: cands.map((c) => ({ kind: c.kind, value: c.value, resolves_to: c.path + ':' + c.line })), notes };\n  if (distinct.length === 0) r.status = 'EXCLUDED: no locatable sentence';\n  else if (distinct.length > 1) { r.status = 'EXCLUDED: ambiguous locators (' + distinct.length + ' distinct lines)'; tally('D6'); }\n  else if (!cls) r.status = 'EXCLUDED: located, maps to no class';\n  else {\n    const d = distinct[0]; const lines = fileAt(C, d.path);\n    r.status = 'MEMBER'; tally('D2'); tally('D7');\n    r.unit = { path: d.path, line: d.line, commit: C, text: lines.slice(Math.max(0, d.line - 2), d.line + 1).join('\\n') };\n  }\n  results.push(r);\n}\n\n// ── 3. S-UNADJ, one per member ──────────────────────────────────────────────────────────────────\nconst citedTexts = new Set(universe.map((u) => u.text.trim()));\nfor (const r of results) for (const l of r.locators) {\n  const [p, ln] = [l.resolves_to.slice(0, l.resolves_to.lastIndexOf(':')), Number(l.resolves_to.slice(l.resolves_to.lastIndexOf(':') + 1))];\n  const lines = fileAt(r.adjudication_commit, p); if (lines[ln - 1] != null) citedTexts.add(lines[ln - 1].trim());\n}\nfor (const r of results.filter((x) => x.status === 'MEMBER')) {\n  const { path: G, line: L, commit: C } = r.unit;\n  const lines = fileAt(C, G); const bl = blame(C, G);\n  const isMd = /\\.md$/i.test(G);\n  let lo = 1, hi = lines.length;\n  if (isMd) {\n    for (let i = L - 1; i >= 1; i--) if (/^#/.test(lines[i - 1])) { lo = i; break; }\n    for (let i = L + 1; i <= lines.length; i++) if (/^#/.test(lines[i - 1])) { hi = i - 1; break; }\n    tally('D9');\n  }\n  const tL = bl[L] ? bl[L].date : null;\n  let best = null;\n  for (let i = lo; i <= hi; i++) {\n    const dist = Math.abs(i - L); if (dist < 3) continue;\n    const t = lines[i - 1]; if (!SURFACE[r.class].test(t)) continue;\n    if (citedTexts.has(t.trim())) continue;\n    const ti = bl[i] ? bl[i].date : null;\n    if (tL == null || ti == null || Math.abs(ti - tL) > 7 * 86400) continue;\n    if (!best || dist < best.dist || (dist === best.dist && i < best.line)) best = { line: i, dist };\n  }\n  tally('D10'); tally('D11'); tally('D12'); if (r.class === 'C3') tally('D8');\n  r.negative = best ? { path: G, line: best.line, commit: C, text: lines.slice(Math.max(0, best.line - 2), best.line + 1).join('\\n') }\n                    : null;\n}\n\n// ── 4. counts and the file ──────────────────────────────────────────────────────────────────────\nconst members = results.filter((r) => r.status === 'MEMBER');\nconst byReason = {}; for (const r of results.filter((x) => x.status !== 'MEMBER')) byReason[r.status] = (byReason[r.status] || 0) + 1;\nconst perClass = {}; for (const c of ['C1', 'C2', 'C3']) {\n  const ms = members.filter((r) => r.class === c);\n  perClass[c] = { positives: ms.length, negatives: ms.filter((r) => r.negative).length, members_without_a_negative: ms.filter((r) => !r.negative).length,\n    rules: ms.length >= 20 && ms.filter((r) => r.negative).length >= 20 };\n}\nconst located = results.filter((r) => !/^EXCLUDED: (no locatable|ambiguous)/.test(r.status)).length;\nconst sens = {}; for (const r of results) { const k = (r.class || 'none') + '→' + (r.class_under_prefix_reading || 'none'); if (r.class !== r.class_under_prefix_reading) sens[k] = (sens[k] || 0) + 1; }\n\nmodule.exports = { results, members, byReason, perClass, located, universe, calls, sens };\nif (require.main === module) {\n  console.log(JSON.stringify({ universe: universe.length, located, members: members.length, perClass, byReason, sensitivity_prefix_reading: sens,\n    calls_used: calls.map((c) => c.id + ':' + c.used).join(' ') }, null, 1));\n}\n"
+}
