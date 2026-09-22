@@ -292,15 +292,48 @@ function settingsFixture(name, registered) {
   fs.writeFileSync(p, JSON.stringify({ hooks: { UserPromptSubmit: [{ hooks: hooks }] } }, null, 1));
   return p;
 }
-function runHold(settingsPath) {
+// THE MANIFEST IS FIXTURED TOO (D099, 2026-09-21 — pane B's own miss from D097). open-items.js reads the
+// Hold flag from the LIVE install.ps1 (`held`, open-items.js:284) and, correctly, returns CLOSED the moment the
+// flag is gone (:353, "somebody resolved it"). D097 (b718b91) resolved it, so these five tests — written to
+// exercise the md5 comparison BEHIND the flag — hit the short-circuit instead and went 15/0 -> 10/5. They were
+// pinning mutable repo state, not the property. open-items.js has overrides for two inputs
+// (OPEN_ITEMS_SETTINGS, OPEN_ITEMS_TAURI_CONF) but not the manifest, and it is not this file's to change, so the
+// fixture is a TEMP REPO TREE: the real open-items.js, the real userprompt-submit.js (the fixed side, as before),
+// and a manifest identical to the live one except that the row carries `Hold = $true` again. Every assertion
+// below is unchanged; only the manifest they run against is now the one they were written for.
+const REAL_REPO = path.join(__dirname, '..', '..');
+const HOLD_REPO = path.join(tmp, 'hold-repo');
+(function buildHoldRepo() {
+  fs.mkdirSync(path.join(HOLD_REPO, 'consonance', 'tools'), { recursive: true });
+  fs.mkdirSync(path.join(HOLD_REPO, 'dev', 'shell', 'hooks'), { recursive: true });
+  fs.copyFileSync(TOOL, path.join(HOLD_REPO, 'consonance', 'tools', 'open-items.js'));
+  fs.copyFileSync(path.join(REAL_REPO, 'dev', 'shell', 'hooks', 'userprompt-submit.js'),
+    path.join(HOLD_REPO, 'dev', 'shell', 'hooks', 'userprompt-submit.js'));
+  const live = fs.readFileSync(path.join(REAL_REPO, 'dev', 'shell', 'install.ps1'), 'utf8');
+  const row = /(userprompt-submit\.js';[^\n]*?)\s*\}/;
+  if (!row.test(live)) throw new Error('fixture: the userprompt-submit.js row is not in the live manifest');
+  const held = live.replace(row, (m, head) => (/Hold\s*=/.test(head) ? m : head + '; Hold = $true }'));
+  if (!/userprompt-submit\.js';[^\n]*Hold\s*=\s*\$true/.test(held)) throw new Error('fixture: Hold was not re-added');
+  fs.writeFileSync(path.join(HOLD_REPO, 'dev', 'shell', 'install.ps1'), held);
+})();
+const HOLD_TOOL = path.join(HOLD_REPO, 'consonance', 'tools', 'open-items.js');
+
+function runHold(settingsPath, tool) {
   const env = Object.assign({}, process.env, { OPEN_ITEMS_SETTINGS: settingsPath });
-  const r = spawnSync(process.execPath, [TOOL, '--json'], { encoding: 'utf8', env: env, maxBuffer: 32 * 1024 * 1024 });
+  const r = spawnSync(process.execPath, [tool || HOLD_TOOL, '--json'], { encoding: 'utf8', env: env, maxBuffer: 32 * 1024 * 1024 });
   const rows = JSON.parse(r.stdout || '[]');
   return rows.find((x) => x.id === 'hold-userprompt-submit');
 }
 // The real repo copy is the fixed side of the comparison; only the machine side is fixtured.
 const REPO_UPS = path.join(__dirname, '..', '..', 'dev', 'shell', 'hooks', 'userprompt-submit.js');
 const upsBody = fs.readFileSync(REPO_UPS);
+
+test('THE LIVE MANIFEST: the Hold was resolved (b718b91), so the item reads CLOSED and says why', () => {
+  // The property the short-circuit exists for, asserted against the real file instead of being tripped over.
+  const it = runHold(path.join(tmp, 'nope', 'settings.json'), TOOL);
+  assert.strictEqual(it.state, 'CLOSED', 'the live manifest has no Hold, so the conflict is resolved: ' + it.detail);
+  assert.ok(/Hold flag removed/.test(it.detail), 'and it must say it closed because the flag is gone: ' + it.detail);
+});
 
 test('CLAUSE 2 - the RED: the registered copy differs from the repo, and the item says so', () => {
   const d = path.join(tmp, 'hold-red');

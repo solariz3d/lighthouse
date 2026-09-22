@@ -723,3 +723,29 @@ fn every_relative_link_in_the_docs_exists_in_a_fresh_clone() {
         dead.join("\n")
     );
 }
+
+/// D096 (2026-09-21): the master's dated journal-pointer tail -- Latest, Previous and the
+/// superseded paragraph, 25,368 of 64,976 B -- moved VERBATIM to `exo_memory/journal/POINTERS.md`,
+/// and the master keeps ONE line. Three things hold that shape, and each has a consumer:
+///   1. exactly one `**Latest entry:**` line survives, because gen-brief.ps1:88-89 THROWS without
+///      it and arch's SHIP_OMITS above keys on it;
+///   2. no `**Previous:**` or `*Superseded pointer` line comes back -- exo_memory/new_entry.py used to
+///      say "update the 'Latest entry' line in BOOT.md", which is how 39% of the master grew;
+///   3. the line names the file, the file exists, and it holds the paragraph that used to lead.
+#[test]
+fn the_master_keeps_one_pointer_line_and_the_dated_tail_lives_in_the_journal_index() {
+    let boot = fs::read_to_string("../../exo_memory/BOOT.md").expect("read the master");
+    let latest: Vec<&str> = boot.lines().filter(|l| l.starts_with("**Latest entry:**")).collect();
+    assert_eq!(latest.len(), 1, "gen-brief needs exactly one **Latest entry:** line; found {}", latest.len());
+    assert!(
+        !boot.lines().any(|l| l.starts_with("**Previous:**") || l.starts_with("*Superseded pointer")),
+        "a dated pointer paragraph is back in the master -- it belongs in journal/POINTERS.md"
+    );
+    assert!(latest[0].contains("journal/POINTERS.md"), "the one pointer line does not name the index");
+    let index = fs::read_to_string("../../exo_memory/journal/POINTERS.md")
+        .expect("the pointer line names journal/POINTERS.md, and it does not resolve");
+    assert!(
+        index.contains("**Latest entry:** journal/2026-08-17.md ("),
+        "the index does not hold the paragraph that led the master's tail"
+    );
+}

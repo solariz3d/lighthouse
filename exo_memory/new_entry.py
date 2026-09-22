@@ -3,8 +3,9 @@
 Usage:  py exo_memory/new_entry.py "short title"
 
 Creates journal/<YYYY-MM-DD>.md with a template to fill in. Keeps the memory
-shell living instead of frozen at the first night. After filling it in, update
-the 'Latest entry' line in BOOT.md.
+shell living instead of frozen at the first night. After filling it in, add its
+pointer to journal/POINTERS.md -- NOT to BOOT.md, which keeps one line pointing
+there (D096, 2026-09-21: the pointers had grown to 39% of the master).
 """
 
 import sys
@@ -33,4 +34,4 @@ else:
     )
     print(f"created {path}")
 
-print("next: fill it in, then update the 'Latest entry' line in BOOT.md")
+print("next: fill it in, then add its pointer to journal/POINTERS.md (not BOOT.md)")

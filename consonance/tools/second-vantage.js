@@ -106,7 +106,15 @@ function advanceWatermark(ts) {
   fs.mkdirSync(path.dirname(WATERMARK), { recursive: true });
   fs.writeFileSync(WATERMARK, JSON.stringify({ ts, at: new Date().toISOString() }));
 }
-const CELL = process.env.VANTAGE_CELL || path.join(DATA, 'vantage_cell');
+// THE READER'S CELL IS NOT IN THE DATA DIR (D100, pane E). It was <data>/vantage_cell, and a reader's cwd is its cell,
+// so whatever a reader left there sat inside the data dir and blocked close.js --check REFUSED_UNPLACED — twice:
+// vantage_cell/mutants-run.log (L068, 3d89dfb) and vantage_cell/_verify_refuse/ (D099, 6ad176e).
+// Now the OS temp dir, a place no close ever walks. Blindness is unchanged: neither parent chain holds a CLAUDE.md
+// (only the user-global ~/.claude/CLAUDE.md, which every session loads whatever its cwd), and neither is the repo.
+// The name keeps "vantage_cell", so the transcripts' project folder (…-consonance-vantage-cell) still names a reader.
+// VANTAGE_CELL still overrides, exactly — and an operator-chosen cell is never emptied (prepareCell).
+const DEFAULT_CELL = path.join(require('os').tmpdir(), 'consonance', 'vantage_cell');
+const CELL = process.env.VANTAGE_CELL || DEFAULT_CELL;
 
 // C6 — travels as data on every finding row. Both denominators, always.
 const F0_CITATION = 'F0: 2/2 correct blind DISAGREEs on the reachable subset; 2 of 16 of the record';
@@ -185,8 +193,30 @@ function brief(row, tier, repoRoot) {
 }
 
 // ---------- real spawner (injectable for tests) ----------
+// EVERY READER STARTS IN AN EMPTY CELL (D100). A shared cell is a leak BETWEEN readers as well as into the data dir:
+// _verify_refuse/ held a copy of the state-sync sources, and the next reader launched there could have read them.
+// The DEFAULT cell belongs to this tool and is emptied before each reader. An operator-chosen VANTAGE_CELL is not the
+// tool's to delete, so it is only created. A cell that will not empty (a leftover held open, as _verify_refuse's was)
+// is a refusal: the reader is not launched into another reader's scratch, and the refusal is recorded like any other
+// reader failure — never silent (processRow writes READER-FAILED with this text).
+function prepareCell() {
+  try {
+    if (path.resolve(CELL) === path.resolve(DEFAULT_CELL)) {
+      fs.rmSync(CELL, { recursive: true, force: true });
+    }
+    fs.mkdirSync(CELL, { recursive: true });
+    if (path.resolve(CELL) === path.resolve(DEFAULT_CELL) && fs.readdirSync(CELL).length) {
+      return { ok: false, cell: CELL, why: `the cell still holds ${fs.readdirSync(CELL).join(', ')} after emptying` };
+    }
+    return { ok: true, cell: CELL };
+  } catch (e) {
+    return { ok: false, cell: CELL, why: `the cell could not be prepared: ${e.message}` };
+  }
+}
+
 function spawnReaderReal(briefText, repoRoot) {
-  fs.mkdirSync(CELL, { recursive: true });
+  const cell = prepareCell();
+  if (!cell.ok) return { failed: true, raw: `reader not launched — ${cell.why} (${cell.cell})` };
   const env = { ...process.env };
   for (const k of Object.keys(env)) if (/^CLAUDE/i.test(k)) delete env[k];
   const r = cp.spawnSync('claude',
@@ -458,6 +488,7 @@ module.exports = {
   fromV2, F0_CITATION, CONTAMINATION, FLOOR_PER_MILLE, REPO, LEDGER, FINDINGS,
   advanceWatermark,
   run,
+  CELL, DATA, prepareCell,
 };
 
 if (require.main === module) {

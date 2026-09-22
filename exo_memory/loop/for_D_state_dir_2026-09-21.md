@@ -51,3 +51,5 @@ designed loud state, not a break; nothing is lost. Doing the steps above clears 
 
 **Appended after L069:** the two env names are now ONE — `CONSONANCE_STATE`. `CONSONANCE_STATE_REPO` is retired
 (`handback/p-l069-envname-E_2026-09-21.md`). The `state_dir` key is still the thing to set on D.
+
+- **DONE on D, 2026-09-21 08:4x, by the librarian** (at the keeper's earlier word, recorded above): `state_dir = C:\Consonance\state` set, other keys unchanged, backup `~/.consonance.json.bak-state_dir`; live-follow --status exit 0; state-sync.test 78/0.

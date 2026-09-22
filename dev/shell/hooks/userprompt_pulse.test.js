@@ -1,3 +1,4 @@
+// JS-SUITE: MACHINE-BOUND home=L root=PULSE_PYTHON
 /* Tests for the ROW 10 condition in userprompt_pulse.py (2026-08-31, L021 P1c, pane E).
  *
  * The pulse is Python and reaches every seat on every turn, so it is exercised here the way it
@@ -26,18 +27,81 @@ const { spawnSync } = require('node:child_process');
 
 const HOOK = path.join(__dirname, 'userprompt_pulse.py');
 
-/* The interpreter the machine actually registers for this hook, read from settings.json; falls back
- * to `python`. A test that ran a different interpreter than the registration would be testing a
- * copy nothing loads. */
-function pythonExe() {
-  try {
-    const s = fs.readFileSync(path.join(os.homedir(), '.claude', 'settings.json'), 'utf8');
-    const m = s.match(/"command":\s*"\\?"?([^"\\]+python[^"\\]*\.exe)/i) || s.match(/"([^"]*python[^"]*\.exe)\\?"?\s+\\?"?[^"]*userprompt_pulse\.py/i);
-    if (m && fs.existsSync(m[1])) return m[1];
-  } catch { /* fall through */ }
-  return 'python';
+/* WHICH PYTHON (D101 follow-on, pane A). The interpreter the machine registers for this hook, read from settings.json,
+ * comes first: a test that ran a different interpreter than the registration would be testing a copy nothing loads.
+ * resolvePython is PURE over `io` so its rule can be tested with fixtures on any machine. */
+//
+// The rule is the installer's (dev/shell/install.ps1:686-693, which registers this hook with runner `py`), in order:
+//   1. the interpreter settings.json REGISTERS for userprompt_pulse.py — read from the PARSED JSON. The old regex ran
+//      over the raw text, so it captured the path still JSON-escaped (C:\\Py\\python.exe) and its first pattern could
+//      never match a Windows path at all; it worked on L only because Windows forgives doubled separators;
+//   2. the first python.exe on PATH that is NOT under \WindowsApps\ — there, `python` is the Store stub (exit 9009);
+//   3. the newest %LOCALAPPDATA%\Programs\Python\Python3*\python.exe, newest BY VERSION. The installer sorts FullName
+//      as a string, which puts Python39 above Python314 — a divergence flagged to install.ps1's owner, not copied;
+//   4. otherwise NO interpreter — never the stub, never a bare `python` that might be one.
+// A stub is refused at every step, including a registration that names one.
+const STUB = /[\\/]WindowsApps[\\/]/i;
+function registeredPython(settingsText) {
+  let cfg;
+  try { cfg = JSON.parse(String(settingsText || '').replace(/^\uFEFF/, '')); } catch { return null; }
+  const commands = [];
+  (function walk(v) {
+    if (Array.isArray(v)) v.forEach(walk);
+    else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) { if (k === 'command' && typeof x === 'string') commands.push(x); else walk(x); }
+  })(cfg);
+  for (const c of commands) {
+    if (!/userprompt_pulse\.py/i.test(c)) continue;
+    const m = /^\s*"([^"]+\.exe)"|^\s*(\S+\.exe)\b/i.exec(c);
+    if (m && /python/i.test(m[1] || m[2])) return m[1] || m[2];
+  }
+  return null;
 }
-const PY = pythonExe();
+function resolvePython(io) {
+  const reg = registeredPython(io.settings);
+  if (reg && !STUB.test(reg) && io.isFile(reg)) return { exe: reg, rule: 'registered in ~/.claude/settings.json' };
+  for (const dir of io.pathDirs || []) {
+    const cand = path.join(dir, 'python.exe');
+    if (!STUB.test(cand) && io.isFile(cand)) return { exe: cand, rule: 'first python.exe on PATH outside WindowsApps' };
+  }
+  const root = path.join(io.localAppData || '', 'Programs', 'Python');
+  const vers = (io.listDir(root) || [])
+    .map((n) => ({ n, v: /^Python3(\d*)$/i.exec(n) }))
+    .filter((x) => x.v)
+    .sort((a, b) => (Number(b.v[1]) || 0) - (Number(a.v[1]) || 0));
+  for (const { n } of vers) {
+    const cand = path.join(root, n, 'python.exe');
+    if (io.isFile(cand)) return { exe: cand, rule: `newest ${n} under %LOCALAPPDATA%\\Programs\\Python` };
+  }
+  return { exe: null, rule: 'none found: no registration, no python.exe on PATH outside the WindowsApps stub, ' +
+    'no %LOCALAPPDATA%\\Programs\\Python\\Python3*' };
+}
+
+const isFile = (p) => { try { return fs.statSync(p).isFile(); } catch { return false; } };
+const listDir = (p) => { try { return fs.readdirSync(p); } catch { return []; } };
+
+/* The machine's own answer. PULSE_PYTHON is this file's declared root= (the JS-SUITE line above): set, it IS the
+ * interpreter, and anything that is not an interpreter file — the runner's empty directory — means none. */
+function machinePython() {
+  const over = process.env.PULSE_PYTHON;
+  if (over !== undefined) {
+    return isFile(over) ? { exe: over, rule: 'PULSE_PYTHON' }
+      : { exe: null, rule: `PULSE_PYTHON=${over} is not an interpreter file` };
+  }
+  let settings = '';
+  try { settings = fs.readFileSync(path.join(os.homedir(), '.claude', 'settings.json'), 'utf8'); } catch { /* none */ }
+  return resolvePython({ settings, pathDirs: (process.env.PATH || '').split(path.delimiter).filter(Boolean),
+    localAppData: process.env.LOCALAPPDATA || '', isFile, listDir });
+}
+
+/* THE GATE, in the MACHINE-BOUND class's own terms (consonance/tools/js-suite.js): the universe line on every run; with
+ * no interpreter, NOT-RUN with its reason, no assertions, exit 0 — unless the runner forces the gate open. */
+const FOUND = machinePython();
+console.log(`JS-SUITE: UNIVERSE interpreter=${FOUND.exe || 'none'} (${FOUND.rule})`);
+if (!FOUND.exe && process.env.JS_SUITE_UNIVERSE !== 'force') {
+  console.log(`JS-SUITE: NOT-RUN — no Python interpreter outside the Windows Store stub (${FOUND.rule})`);
+  process.exit(0);
+}
+const PY = FOUND.exe || 'python';
 
 function iso(msAgo) { return new Date(Date.now() - msAgo).toISOString(); }
 
@@ -82,6 +146,67 @@ function run({ prevMsAgo, compactMsAgo, startMsAgo, hook = HOOK, stdin = true })
   try { ctx = JSON.parse(r.stdout).hookSpecificOutput.additionalContext; } catch { /* reported by the assertion below */ }
   return { ctx, raw: r.stdout, err: r.stderr, status: r.status };
 }
+
+// ── WHICH PYTHON: the resolver's rule, on fixtures (D101 follow-on) ──────────────────────────────────────────────────
+// D HAS Python 3.14 and its bare `python` is the Windows Store stub (exit 9009, "Python was not found"). The old rule
+// fell back to that stub, so all six tests below failed on D over a lookup, not over the hook.
+
+// Every fixture path hangs off a drive-less root: a fixture string is still a site to portable-paths, and a drive letter
+// here added five of them on the first run (pane A's own D083 rule, broken for the third time and caught by js-suite).
+const FXR = path.join(path.sep, 'fx');
+const STUB_DIR = path.join(FXR, 'AppData', 'Local', 'Microsoft', 'WindowsApps');
+const LAD = path.join(FXR, 'AppData', 'Local');
+const pyIn = (ver) => path.join(LAD, 'Programs', 'Python', ver, 'python.exe');
+// settings.json in its real on-disk shape — JSON.stringify writes the escaping, so the fixture cannot drift from it.
+const settingsFor = (exe) => JSON.stringify({ hooks: { UserPromptSubmit: [{ hooks: [{ type: 'command',
+  command: `"${exe}" "${path.join(FXR, '.claude', 'shell', 'userprompt_pulse.py')}"` }] }] } });
+function fx({ settings = '', pathDirs = [], files = [], pythons = [] }) {
+  const have = new Set(files.map((f) => f.toLowerCase()));
+  return {
+    settings, pathDirs, localAppData: LAD,
+    isFile: (p) => have.has(String(p).toLowerCase()),
+    listDir: (p) => (path.normalize(p).toLowerCase() === path.join(LAD, 'Programs', 'Python').toLowerCase() ? pythons : []),
+  };
+}
+
+test('WHICH PYTHON: a PATH whose only python is a WindowsApps stub is never chosen', () => {
+  const r = resolvePython(fx({ pathDirs: [STUB_DIR], files: [path.join(STUB_DIR, 'python.exe'), pyIn('Python314')],
+    pythons: ['Python314'] }));
+  assert.strictEqual(r.exe, pyIn('Python314'), JSON.stringify(r));
+});
+
+test('WHICH PYTHON: with no real Python anywhere there is NO interpreter, and the reason says so', () => {
+  const r = resolvePython(fx({ pathDirs: [STUB_DIR], files: [path.join(STUB_DIR, 'python.exe')] }));
+  assert.strictEqual(r.exe, null, 'the stub must not be offered as an interpreter: ' + JSON.stringify(r));
+  assert.match(r.rule, /stub|none/i, r.rule);
+});
+
+test('WHICH PYTHON: a real python.exe on PATH wins even when the stub comes first', () => {
+  const real = path.join(FXR, 'Tools', 'Py', 'python.exe');
+  const r = resolvePython(fx({ pathDirs: [STUB_DIR, path.dirname(real)], files: [path.join(STUB_DIR, 'python.exe'), real] }));
+  assert.strictEqual(r.exe, real, JSON.stringify(r));
+});
+
+test('WHICH PYTHON: the NEWEST Python3x under LOCALAPPDATA, by version not by string (3.14 over 3.9)', () => {
+  // install.ps1:691 sorts FullName as a STRING, which puts Python39 above Python314. Numbers here; flagged to B.
+  const r = resolvePython(fx({ files: [pyIn('Python39'), pyIn('Python314'), pyIn('Python313')],
+    pythons: ['Python39', 'Python314', 'Python313'] }));
+  assert.strictEqual(r.exe, pyIn('Python314'), JSON.stringify(r));
+});
+
+test('WHICH PYTHON: an interpreter registered in settings.json wins (control — the old rule kept it too)', () => {
+  const reg = path.join(FXR, 'Py', 'python.exe');
+  const r = resolvePython(fx({ settings: settingsFor(reg),
+    pathDirs: [STUB_DIR], files: [reg, pyIn('Python314')], pythons: ['Python314'] }));
+  assert.strictEqual(r.exe, reg, JSON.stringify(r));
+});
+
+test('WHICH PYTHON: a registered interpreter that IS the Store stub is not taken', () => {
+  const stub = path.join(STUB_DIR, 'python.exe');
+  const r = resolvePython(fx({ settings: settingsFor(stub),
+    files: [stub, pyIn('Python314')], pythons: ['Python314'] }));
+  assert.strictEqual(r.exe, pyIn('Python314'), JSON.stringify(r));
+});
 
 const CARD = 'exo_memory/cards/claim-your-continuity.md';
 const H = 3600e3;

@@ -1505,3 +1505,22 @@ Red: hook 10/2, follow 3/3. Green: 12/0 and 6/0, parallel 18/0, filtered 3/0. Mu
 The keeper's 05:57 rule was mistranslated into my L067 code as "last request < 60 min", which abandoned an activated seat after one missed ping. It is now: activated = a request since app_started_at(). A never-used seat waits; an activated one is pinged at >= 50 min with no ceiling. Red 18/3 of 21 → green 21/0, crate 855/0/4, mutants 4/4 including the ceiling itself.
 TWO tests encoded the error, not one: the second modelled "never used" as "idle 183 min".
 **Carry:** (1) check a translated rule against the speaker's own words, even in the file I cite; a green suite built on a mistranslation DEFENDS it. (2) Replacing from the `fn` line left an orphan #[test], so one test ran twice (22 runs, 21 names). A count that disagrees with its unique names is a defect.
+
+## 2026-09-21 ~09:3x (D) · D097 L3 re-measure registration → `exo_memory/loop/l3_remeasure_registration_2026-09-21.md`, hand-back `exo_memory/handback/p-d097-l3reg-E_2026-09-21.md`
+The deciding number is S, the quiet_spiral share on ONE-message windows (the exact 08-17 refuting symptom). KEEP iff S_post < 25% over the first 300 post-install one-message verdicts or 14 days, otherwise RETIRE. The null is RETIRE. The window starts at the install instant from B's phase 2. The scorer is embedded verbatim, sha256 b2dc3553…, and round-tripped.
+**The design died twice from measurement before registering:** P (the multi-turn share) swings 40 points with no intervention, so a before/after would KEEP by regression to the mean. E (8-word echo) read 24.8% BEFORE any leak, because the keeper's own sentence recurs across 145 sessions and shared user text looks like an imported verdict.
+S is 56–85% in every block since 07-23 and 12.7% before. Both rulings are shown reachable by running the rule.
+**Carry:** calibrate the candidate number over the store's own history before writing a threshold. The first two "obvious" measures were both wrong, and only the calibration said so. My stake is declared: L3's flags about this room reached my own context.
+
+## 2026-09-21 ~10:1x (D) · D098 keep-warm: notice is not use, missed window said → `exo_memory/handback/p-d098-keepwarm-E_2026-09-21.md`
+A's launch turn (14:47:24Z), read from its transcript: a user entry with origin task-notification ("Background shell command didn't finish before the previous session ended") started an ELEVEN-request turn nobody asked for. My L070 rule ("any request since launch") counted that as activation.
+Now activated_by_use = a turn-starting user prompt since launch that is not a tool result, not a sidechain, not isMeta, and not a task-notification (matched by origin OR by text; all 1,517 notices on D start "<task-notification>"). Activation is sticky for the session.
+Missed-window report: one chair row per crossing at >= 60 min, naming the last skip reason.
+Red 22/4 → green 26/0; crate 865/0/4 (+5 mine, +4 A's uncommitted mcp.rs); mutants 9/9.
+**Carry:** fixtures that carry BOTH markers hide a mutant that removes one. Reading my own tests found it before the mutants did.
+
+## 2026-09-21 ~10:4x (D) · D100 reader cell out of the data dir → `exo_memory/handback/p-d100-vantagecell-E_2026-09-21.md`
+second-vantage's default cell is now <os tmpdir>/consonance/vantage_cell, and it is EMPTIED before every reader. A shared cell leaked one reader's scratch (the _verify_refuse state-sync copy) to the next. A cell that won't empty is a recorded refusal, never a launch. VANTAGE_CELL still overrides and is never emptied.
+Blindness was checked: there is no CLAUDE.md in either parent chain except the user-global one. The name keeps vantage_cell so the transcript folder still names a reader.
+Red 21/2 → green 24/0 in plain, --test, parallel and filtered; close --check exit 0 before and after; mutants 4/4, with 2 survivors predicted and explained.
+**Carry:** my tests first planted in the REAL cell, and the first sandbox put temp INSIDE the data dir, which would have failed the key test for my own reason. A sentinel in the real cell proves the fix. A test that must pass failing is how the heredoc SyntaxError red was caught. A's manifest rule becomes a legacy shelf; the exact text is proposed.

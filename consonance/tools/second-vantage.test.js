@@ -322,3 +322,104 @@ test('a killed loop keeps what it paid for — the per-row watermark, now testab
   assert.equal(wm.ts, '2026-08-17T10:00:00.000Z',
     'row 1 was paid for before the kill, so the mark must hold it — this is the ratchet fix');
 });
+
+// ---------------------------------------------------------------------------
+// D100 (pane E): THE READER'S CELL IS NOT IN THE DATA DIR.
+// The default cell was <data>/vantage_cell, and a reader's cwd is its cell — so whatever a reader left there sat
+// inside the data dir and blocked `close.js --check` REFUSED_UNPLACED, twice: vantage_cell/mutants-run.log (L068,
+// 3d89dfb) and vantage_cell/_verify_refuse/ (D099, 6ad176e). Each child below gets a fresh VANTAGE_DATA and NO
+// VANTAGE_CELL, so the default is what is measured.
+// ---------------------------------------------------------------------------
+// Each child gets its OWN temp root, so the default cell (under os.tmpdir()) resolves inside the test's sandbox and
+// the real cell the live tool uses is never planted in or emptied by a test run.
+// A SIBLING of the data dir, never inside it — inside would put the default cell under DATA, the very thing tested.
+const sandboxTemp = () => { const t = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-tmp-')); return { TEMP: t, TMP: t, TMPDIR: t }; };
+function whereWithDefaults(extra = {}) {
+  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-data-'));
+  const env = { ...process.env, VANTAGE_DATA: data, ...sandboxTemp(data), ...extra };
+  delete env.VANTAGE_CELL;
+  Object.assign(env, extra);
+  const out = execFileSync(process.execPath, [TOOL, '--where'], { env, encoding: 'utf8' });
+  return { data, where: JSON.parse(out.trim().split('\n').pop()) };
+}
+const inside = (child, parent) => {
+  const rel = path.relative(path.resolve(parent), path.resolve(child));
+  return rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel));
+};
+
+test('D100: with no VANTAGE_CELL, the resolved cell is NOT under the data dir', () => {
+  const { data, where } = whereWithDefaults();
+  try {
+    assert.ok(!inside(where.CELL, data),
+      `the default cell ${where.CELL} is inside the data dir ${data}: a reader's leftover would be walked by close`);
+  } finally { fs.rmSync(data, { recursive: true, force: true }); }
+});
+
+test('D100: VANTAGE_CELL still overrides, exactly', () => {
+  const cell = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-cell-'));
+  const { data, where } = whereWithDefaults({ VANTAGE_CELL: cell });
+  try { assert.equal(path.resolve(where.CELL), path.resolve(cell)); }
+  finally { fs.rmSync(data, { recursive: true, force: true }); fs.rmSync(cell, { recursive: true, force: true }); }
+});
+
+// Run in a child so the module resolves its default cell with no VANTAGE_CELL; the child plants a leftover the way
+// the _verify_refuse reader did (a nested tree, cwd inside it), then prepares the cell for the next reader.
+function prepareInChild(extra = {}) {
+  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-data-'));
+  const env = { ...process.env, VANTAGE_DATA: data, ...sandboxTemp(data), ...extra };
+  if (!('VANTAGE_CELL' in extra)) delete env.VANTAGE_CELL;
+  const script = `
+    const fs=require('fs'),path=require('path');const sv=require(${JSON.stringify(TOOL)});
+    fs.mkdirSync(path.join(sv.CELL,'_verify_refuse','consonance','tools'),{recursive:true});
+    fs.writeFileSync(path.join(sv.CELL,'mutants-run.log'),'killed x');
+    const r=sv.prepareCell();
+    console.log(JSON.stringify({r, left: fs.readdirSync(sv.CELL), dataHas: fs.readdirSync(sv.DATA)}));`;
+  const out = execFileSync(process.execPath, ['-e', script], { env, encoding: 'utf8' });
+  return { data, res: JSON.parse(out.trim().split('\n').pop()) };
+}
+
+test('D100: a leftover from one reader is gone before the next reader launches, and never reached the data dir', () => {
+  const { data, res } = prepareInChild();
+  try {
+    assert.equal(res.r.ok, true, JSON.stringify(res.r));
+    assert.deepEqual(res.left, [], 'the next reader must start in an EMPTY cell — a prior reader\'s scratch is a leak between readers');
+    assert.deepEqual(res.dataHas, [], 'nothing a reader leaves can appear in the data dir, so close\'s walk never meets it');
+  } finally { fs.rmSync(data, { recursive: true, force: true }); }
+});
+
+test('D100: a cell held open by a process inside it is a REFUSAL, never a reader launched into the leftover', () => {
+  // The real case: _verify_refuse survived its own `rm -rf` because the reader's shell still had its cwd inside
+  // the tree ("Device or resource busy"). A child sits with its cwd in a subdirectory of the DEFAULT cell while
+  // another child prepares the cell. On Windows the held directory cannot be removed, so prepareCell must report
+  // ok:false with a reason; on a platform that allows it, the cell must come back empty. Either way no reader
+  // launches into a cell that still holds another reader's scratch.
+  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-data-'));
+  const env = { ...process.env, VANTAGE_DATA: data, ...sandboxTemp(data) };
+  delete env.VANTAGE_CELL;
+  const cell = JSON.parse(execFileSync(process.execPath, [TOOL, '--where'], { env, encoding: 'utf8' }).trim().split('\n').pop()).CELL;
+  const held = path.join(cell, '_held');
+  fs.mkdirSync(held, { recursive: true });
+  const holder = require('node:child_process').spawn(process.execPath, ['-e', 'setTimeout(()=>{}, 20000)'], { cwd: held, stdio: 'ignore' });
+  try {
+    const out = execFileSync(process.execPath, ['-e',
+      `const sv=require(${JSON.stringify(TOOL)});const fs=require('fs');const r=sv.prepareCell();` +
+      `console.log(JSON.stringify({r, left: fs.existsSync(sv.CELL) ? fs.readdirSync(sv.CELL) : []}))`],
+      { env, encoding: 'utf8' });
+    const res = JSON.parse(out.trim().split('\n').pop());
+    if (res.r.ok) assert.deepEqual(res.left, [], 'a prepare that reports ok must leave an EMPTY cell');
+    else assert.match(res.r.why, /could not be prepared|still holds/, 'a refusal must say why: ' + JSON.stringify(res.r));
+    if (process.platform === 'win32') assert.equal(res.r.ok, false, 'on Windows a held cwd cannot be removed: ' + JSON.stringify(res));
+  } finally {
+    holder.kill();
+    fs.rmSync(data, { recursive: true, force: true });
+  }
+});
+
+test('D100: an operator-chosen VANTAGE_CELL is never emptied — its contents are not the tool\'s to delete', () => {
+  const cell = fs.mkdtempSync(path.join(os.tmpdir(), 'sv-cell-'));
+  const { data, res } = prepareInChild({ VANTAGE_CELL: cell });
+  try {
+    assert.equal(res.r.ok, true);
+    assert.ok(res.left.includes('mutants-run.log') && res.left.includes('_verify_refuse'), JSON.stringify(res.left));
+  } finally { fs.rmSync(data, { recursive: true, force: true }); fs.rmSync(cell, { recursive: true, force: true }); }
+});

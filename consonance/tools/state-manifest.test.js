@@ -310,12 +310,48 @@ test('the shipped manifest parses and every rule carries a reason', () => {
 // since 2026-09-14 01:23 it has held a 3,383 B harness log that blocked every close as UNPLACED.
 const SHIPPED = () => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'state-manifest.json'), 'utf8'));
 
-test('the shipped manifest places vantage_cell/mutants-run.log as STAYS', () => {
-  const fx = fixture({ 'vantage_cell/mutants-run.log': '  killed  x\n' }, SHIPPED());
-  const r = runJson(fx);
-  assert.strictEqual(r.code, 0, `the log must not refuse a close: unplaced ${JSON.stringify(r.json.unplaced)}`);
-  assert.strictEqual(r.json.totals.STAYS.files, 1, 'and it is placed as STAYS — local output, never travelling');
-  assert.strictEqual(r.json.totals.TRAVELS.files, 0);
+// (Its placement test was WITHDRAWN at D100 with the rule it tested; the D100 test below is its inverse.)
+
+// D099: the second leftover in the cell. A blind-verifier reader (session 288d78a5, 2026-09-10 15:14Z on D) made a scratch
+// copy under ./_verify_refuse/consonance/tools/, cd'd into it, and its `rm -rf` failed "Device or resource busy" — its own
+// shell's cwd was inside the tree. The files went; three empty directories stayed, and blocked every close on D.
+function withVerifyRefuse(extra) {
+  const fx = fixture(extra || {}, SHIPPED());
+  fs.mkdirSync(path.join(fx.data, 'vantage_cell', '_verify_refuse', 'consonance', 'tools'), { recursive: true });
+  return fx;
+}
+
+// (Its two placement tests were WITHDRAWN at D100 with the two rules they tested; the D100 tests below invert them.)
+
+test('D099: a DIFFERENT scratch directory in the cell is still UNPLACED — the rule names this tree, not the cell', () => {
+  const fx = withVerifyRefuse();
+  fs.mkdirSync(path.join(fx.data, 'vantage_cell', '_verify_other'), { recursive: true });
+  const r = run(fx);
+  assert.strictEqual(r.code, 1, 'the next leftover must still be loud');
+  assert.ok(r.out.includes('vantage_cell/_verify_other'));
+});
+
+// D100: readers no longer run in the data dir (E, 4d1c417: <os tmpdir>/consonance/vantage_cell), and the librarian ruled
+// that ALL FOUR vantage_cell rules go, so anything that reappears there is a new writer and must refuse loudly.
+
+test('D100: the vantage_cell directory itself is UNPLACED — no rule places the old cell', () => {
+  const fx = fixture({}, SHIPPED());
+  fs.mkdirSync(path.join(fx.data, 'vantage_cell'), { recursive: true });
+  const r = run(fx);
+  assert.strictEqual(r.code, 1, 'a cell reappearing in the data dir means something still writes there');
+  assert.ok(r.out.includes('vantage_cell'), r.out);
+});
+
+test('D100: vantage_cell/mutants-run.log is UNPLACED — the L068 shelf is gone', () => {
+  const r = run(fixture({ 'vantage_cell/mutants-run.log': '  killed  x\n' }, SHIPPED()));
+  assert.strictEqual(r.code, 1);
+  assert.ok(r.out.includes('vantage_cell/mutants-run.log'), r.out);
+});
+
+test('D100: the empty _verify_refuse tree is UNPLACED — the D099 shelf is gone', () => {
+  const r = run(withVerifyRefuse());
+  assert.strictEqual(r.code, 1);
+  assert.ok(r.out.includes('vantage_cell/_verify_refuse/consonance/tools'), r.out);
 });
 
 test('any OTHER file left in vantage_cell is still UNPLACED — the rule is named, not a wildcard', () => {

@@ -10207,6 +10207,11 @@ const KEEP_WARM_TAIL_BYTES: u64 = 4 << 20;
 struct KeepWarmPinged(Mutex<HashMap<String, Instant>>);
 /// Each live pane's transcript, recorded by `start_tailer`, which is where the path is already built.
 struct PaneTranscripts(Mutex<HashMap<String, PathBuf>>);
+/// D098: seats seen USED this session (sticky), each seat's last skip reason, and the request start each missed
+/// window was reported for — so a miss is said once and says why.
+struct KeepWarmActivated(Mutex<HashSet<String>>);
+struct KeepWarmLastSkip(Mutex<HashMap<String, &'static str>>);
+struct KeepWarmMissed(Mutex<HashMap<String, u64>>);
 
 /// "2026-09-21T11:30:13.637Z" -> unix milliseconds, UTC only. Hand-rolled (days-from-civil) so the check
 /// that decides when a seat is pinged does not hang on a chrono feature this crate does not enable.
@@ -10355,14 +10360,68 @@ fn keep_warm_decision(
     KeepWarm::Ping
 }
 
-/// Has this seat made a request since the app started? That is what "activated this session" means (L070).
+/// HAS SOMEONE USED THIS SEAT SINCE THE APP STARTED? (D098, pane E — supersedes "any request since launch".)
 ///
-/// The start is `app_started_at()`, recorded once in `main` for the Leave (P-LEAVE-2), so both features read one
-/// clock. The request start is `last_request`'s earliest bound; a seat that spoke after launch can only be dated
-/// at or after launch by it. EITHER SIDE UNKNOWN IS "NOT ACTIVATED": an unreadable start time must not turn into
-/// "every seat is activated" and ping every cold seat — the failure mode the keeper ruled out at 05:57.
-fn activated_this_session(app_start_ms: Option<u64>, last: Option<&LastRequest>) -> bool {
-    matches!((app_start_ms, last), (Some(s), Some(l)) if l.started_ms >= s)
+/// True iff the transcript holds a turn-starting `user` entry timestamped at or after launch that a person or a
+/// seat sent: not a tool result (that continues a turn), not a sidechain, not `isMeta`, and NOT a harness notice.
+///
+/// WHY THE NOTICE IS EXCLUDED, measured on D: at 14:47:24Z pane A was woken at launch by
+/// `origin: {"kind":"task-notification"}` — "<task-notification> … <status>stopped</status> … Background shell
+/// command didn't finish before the previous session ended" — and ran an eleven-request turn nobody asked for.
+/// "Any request since launch" (L070) called that activation. The keeper's rule is "wait for each seat and pane to
+/// ACTIVATE", and a notice about a job the last session left behind is the harness, not a person activating it.
+/// Recognised by `origin.kind` AND by its text, because older transcripts record no origin: across 3,657
+/// transcripts on D, all 1,517 task-notification prompts start "<task-notification>".
+///
+/// EITHER CLOCK UNKNOWN IS "NOT ACTIVATED", as before: an unreadable start must never ping every cold seat.
+fn activated_by_use(jsonl: &str, app_start_ms: Option<u64>) -> bool {
+    let Some(start) = app_start_ms else { return false };
+    jsonl.lines().filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok()).any(|v| {
+        if v.get("type").and_then(|x| x.as_str()) != Some("user")
+            || v.get("isSidechain").and_then(|x| x.as_bool()) == Some(true)
+            || v.get("isMeta").and_then(|x| x.as_bool()) == Some(true)
+            || v.get("origin").and_then(|o| o.get("kind")).and_then(|k| k.as_str()) == Some("task-notification")
+        {
+            return false;
+        }
+        let Some(ts) = v.get("timestamp").and_then(|x| x.as_str()).and_then(iso_utc_ms) else { return false };
+        if ts < start {
+            return false;
+        }
+        let content = v.get("message").and_then(|m| m.get("content"));
+        let text = match content {
+            Some(serde_json::Value::String(s)) => Some(s.as_str()),
+            Some(serde_json::Value::Array(parts)) => parts
+                .iter()
+                .find(|p| p.get("type").and_then(|t| t.as_str()) == Some("text"))
+                .and_then(|p| p.get("text")).and_then(|t| t.as_str()),
+            _ => None,
+        };
+        // No text part = a tool result or an attachment-only entry: it continues a turn, it never starts one.
+        matches!(text, Some(t) if !t.trim_start().starts_with("<task-notification>"))
+    })
+}
+
+/// THE MISSED-WINDOW REPORT (E, L070 §5). An activated seat whose last request started 60 min or more ago has
+/// crossed its cache's one-hour TTL without a ping landing; its next ping re-reads it whole. That was silent. Now
+/// it is one board row per crossing — `already_reported` is keyed to the request start, so a seat that stays past
+/// the hour is said once, not every tick.
+fn keep_warm_missed(activated: bool, since_start: Option<Duration>, already_reported: bool) -> bool {
+    activated && !already_reported && since_start.is_some_and(|s| s >= Duration::from_secs(60 * 60))
+}
+
+/// The row for one miss. It names WHY the seat was not pinged — the last skip reason keep-warm recorded for it —
+/// because a miss reported as a bare count tells the reader nothing to act on. The Third Place's carries no numbers.
+fn keep_warm_missed_row(short: &str, role: &str, since_start: Duration, last_skip: Option<&str>) -> String {
+    let why = last_skip.unwrap_or("no reason recorded (the seat was never evaluated idle this session)");
+    if role == "third_place" {
+        return format!("keep-warm MISSED -> the Third Place: its cache window passed without a ping; last reason: {why}");
+    }
+    format!(
+        "keep-warm MISSED -> {short} ({role}): {} min since its last request started, past the 60-min cache lifetime; \
+         its next ping re-reads it whole. Last reason it was not pinged: {why}",
+        since_start.as_secs() / 60
+    )
 }
 
 /// The per-seat off switch: `<data_dir>/keep-warm-off.json`, a JSON list of pane ids, short ids or
@@ -10436,19 +10495,44 @@ fn keep_warm_tick(app: &AppHandle) {
             .unwrap_or_default();
         let on = !(off.contains(&pane) || off.contains(short_id(&pane)) || names.iter().any(|n| off.contains(n)));
         let (gate, _, _, composer) = pane_state(&app.state::<PaneEmus>(), &pane);
-        // The transcript is read only for a seat that could be pinged — busy and typed-into seats are
-        // settled by the two cheap reads above.
-        let last = if on && gate == PaneGate::Ready && composer == Composer::Empty {
+        // D098: the transcript is read for EVERY seat that is on, not only an idle one — a seat whose composer
+        // sat full for an hour is exactly the case the missed-window report exists to catch, and a busy seat's
+        // last request is what makes its idle time known at all.
+        let tail = if on {
             let path = app.state::<PaneTranscripts>().0.lock().ok().and_then(|m| m.get(&pane).cloned());
-            path.and_then(|p| read_tail(&p, KEEP_WARM_TAIL_BYTES)).and_then(|t| last_request(&t))
+            path.and_then(|p| read_tail(&p, KEEP_WARM_TAIL_BYTES))
         } else {
             None
         };
+        let last = tail.as_deref().and_then(last_request);
         let since_start = last.as_ref().map(|l| Duration::from_millis(now_ms.saturating_sub(l.started_ms)));
         let since_ping = app.state::<KeepWarmPinged>().0.lock().ok().and_then(|m| m.get(&pane).map(|t| t.elapsed()));
-        let activated = activated_this_session(iso_utc_ms(app_started_at()), last.as_ref());
-        if keep_warm_decision(on, &role, gate, composer, since_start, since_ping, activated) == KeepWarm::Ping {
-            keep_warm_send(app, &pane, &role, since_start.unwrap_or_default(), last.and_then(|l| l.context));
+        // STICKY for the session: once a seat is seen used it stays activated, so a long session whose activating
+        // prompt has scrolled out of the 4 MB tail is not dropped (D098).
+        let activated = {
+            let already = app.state::<KeepWarmActivated>().0.lock().map(|s| s.contains(&pane)).unwrap_or(false);
+            already || {
+                let now_used = tail.as_deref().is_some_and(|t| activated_by_use(t, iso_utc_ms(app_started_at())));
+                if now_used {
+                    if let Ok(mut s) = app.state::<KeepWarmActivated>().0.lock() { s.insert(pane.clone()); }
+                }
+                now_used
+            }
+        };
+        match keep_warm_decision(on, &role, gate, composer, since_start, since_ping, activated) {
+            KeepWarm::Ping => keep_warm_send(app, &pane, &role, since_start.unwrap_or_default(), last.as_ref().and_then(|l| l.context)),
+            KeepWarm::Skip(why) => {
+                if let Ok(mut m) = app.state::<KeepWarmLastSkip>().0.lock() { m.insert(pane.clone(), why); }
+            }
+        }
+        // D098: THE MISSED-WINDOW REPORT, once per crossing (keyed to the request start that crossed).
+        if let Some(l) = last.as_ref() {
+            let reported = app.state::<KeepWarmMissed>().0.lock().ok().and_then(|m| m.get(&pane).copied()) == Some(l.started_ms);
+            if keep_warm_missed(activated, since_start, reported) {
+                if let Ok(mut m) = app.state::<KeepWarmMissed>().0.lock() { m.insert(pane.clone(), l.started_ms); }
+                let why = app.state::<KeepWarmLastSkip>().0.lock().ok().and_then(|m| m.get(&pane).copied());
+                chair_audit(app, keep_warm_missed_row(short_id(&pane), &role, since_start.unwrap_or_default(), why));
+            }
         }
     }
 }
@@ -11763,6 +11847,38 @@ fn start_exit_waiter() {
     }
 }
 
+/// The Jev shadow runner's arguments: the app's pid, because the runner lives exactly as long as this process.
+fn jev_shadow_args(app_pid: u32) -> Vec<String> {
+    vec!["--app-pid".to_string(), app_pid.to_string()]
+}
+
+/// D104: Jev as a SECOND judge beside the L0/L3 overseers, measured and never acted on. Started from the one place
+/// that already starts something on EVERY launch (beside the exit waiter), so it is not a service and not a scheduled
+/// task; `consonance/tools/jev-shadow-runner.js` exits by itself when this pid dies. It reads the gateway key itself,
+/// in-process, from the User environment — the app never holds or passes it — and it never touches the installed
+/// judges. A missing script or node is logged and skipped: a sidecar must never stop the app from opening.
+fn start_jev_shadow() {
+    let Some(script) = repo_root()
+        .map(|r| r.join("consonance").join("tools").join("jev-shadow-runner.js"))
+        .filter(|p| p.is_file())
+    else {
+        plog("JEV SHADOW not started — consonance/tools/jev-shadow-runner.js is not on disk in this checkout");
+        return;
+    };
+    let spawned = Command::new("node")
+        .arg(&script)
+        .args(jev_shadow_args(std::process::id()))
+        .env_remove("CONSONANCE_DATA")
+        .creation_flags(NO_WINDOW | CREATE_NEW_PROCESS_GROUP)
+        .stdin(Stdio::null())
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .spawn();
+    if let Err(e) = spawned {
+        plog(&format!("JEV SHADOW not started — node would not run ({e})"));
+    }
+}
+
 /// What the setup window opens on. Cheap: no process, one small file read.
 #[tauri::command]
 fn stick_state() -> serde_json::Value {
@@ -12499,6 +12615,9 @@ fn main() {
         .manage(PaneEmus(Mutex::new(HashMap::new())))
         .manage(Inbox::new())   // L034: the delivery queue — nothing lands in a busy pane
         .manage(KeepWarmPinged(Mutex::new(HashMap::new())))   // L067: who keep-warm pinged, and when
+        .manage(KeepWarmActivated(Mutex::new(HashSet::new())))  // D098: seats seen used this session (sticky)
+        .manage(KeepWarmLastSkip(Mutex::new(HashMap::new())))   // D098: why each seat was last not pinged
+        .manage(KeepWarmMissed(Mutex::new(HashMap::new())))     // D098: the request start each miss was reported for
         .manage(PaneTranscripts(Mutex::new(HashMap::new())))  // L067: each live pane's transcript, from start_tailer
         .manage(Cost(Arc::new(Mutex::new(CostTotals::default()))))
         .manage(Board(Arc::new(Mutex::new(VecDeque::new()))))
@@ -12558,6 +12677,7 @@ fn main() {
             let (launch_verdict, retired) = sync_at_launch();
             // L059 §3: on EVERY launch, and unconditionally — never inside a branch about the stick.
             start_exit_waiter();
+            start_jev_shadow();
             // P-LEAVE-3 ROW 4: the OS's end of session, which tao does not deliver. ROW 5: the keep-awake hold.
             let _ = SHUTDOWN_APP.set(app.handle().clone());
             watch_session_end(app.handle());
@@ -14143,6 +14263,32 @@ mod committee_brief_tests {
             intake.contains("INDEXED here, not carried"),
             "the tail went missing without leaving an index behind"
         );
+    }
+
+    /// D096: the other three seats. Main, the Third Place and the librarian paste the master
+    /// WHOLE -- none of them ever went through `split_pointer_tail` -- so until the tail left the
+    /// master itself, every one of them woke carrying 25,368 B of dated journal summary the panes
+    /// had not carried since 38fd239. Asserted at delivery, for the reason the test above gives.
+    /// A seat whose brief does not resolve returns None and has nothing to assert.
+    #[test]
+    fn no_seat_that_pastes_the_master_whole_wakes_carrying_the_dated_tail() {
+        let _g = DirsGuard::take();
+        set_dirs(&get_state());
+        for (seat, intake) in [
+            ("main", Some(main_intake())),
+            ("third place", third_place_intake()),
+            ("librarian", librarian_intake()),
+        ] {
+            let Some(intake) = intake else { continue };
+            assert!(
+                !intake.contains("**Previous:** journal/"),
+                "the {seat} intake still carries the master's dated **Previous:** pointer paragraph"
+            );
+            assert!(
+                !intake.contains("*Superseded pointer, kept for the through-line:*"),
+                "the {seat} intake still carries the master's superseded pointer paragraph"
+            );
+        }
     }
 
     /// §10.9 of the window registration, as a check rather than a sentence: EVERY path the intake
@@ -18810,16 +18956,92 @@ mod keep_warm_tests {
         }
     }
 
+    // ── D098 (pane E) ITEM 1: ACTIVATION IS USE, and a harness notice is not use ─────────────────────────────
+    //
+    // REPLACES `activation_is_a_request_since_the_app_started` (L070), which asserted that ANY request after
+    // launch activates. Measured on D, 2026-09-21: at 14:47:24Z pane A (6fe15f0a) was woken at launch by a
+    // user entry with origin {"kind":"task-notification"} — "<task-notification> … <status>stopped</status> …
+    // Background shell command didn't finish before the previous session ended" — and ran an eleven-request turn
+    // that nobody asked for. Under the L070 rule that made A "activated" without anyone using it. The fixture
+    // below is that entry's shape. The old test's other three claims survive as assertions here.
+    const D098_START: &str = "2026-09-21T14:47:00.000Z";
+    fn d098_prompt(ts: &str, origin: Option<&str>, text: &str) -> String {
+        let o = origin.map_or(String::new(), |k| format!(r#","origin":{{"kind":"{k}"}}"#));
+        format!(r#"{{"type":"user","timestamp":"{ts}"{o},"message":{{"role":"user","content":{}}}}}"#, serde_json::to_string(text).unwrap())
+    }
+    fn d098_reply(ts: &str, rid: &str) -> String {
+        format!(r#"{{"type":"assistant","requestId":"{rid}","timestamp":"{ts}","message":{{"usage":{{"input_tokens":3}}}}}}"#)
+    }
+    fn d098_tool_result(ts: &str) -> String {
+        format!(r#"{{"type":"user","timestamp":"{ts}","message":{{"role":"user","content":[{{"type":"tool_result","content":"ok"}}]}}}}"#)
+    }
+    const NOTICE: &str = "<task-notification>\n<task-id>bxkk3lr1e</task-id>\n<status>stopped</status>\n<summary>Background shell command didn't finish before the previous session ended</summary>\n</task-notification>";
+
     #[test]
-    fn activation_is_a_request_since_the_app_started() {
-        let start = iso_utc_ms("2026-09-21T06:50:30.000Z");
-        let at = |t: &str| LastRequest { started_ms: iso_utc_ms(t).unwrap(), context: None };
-        assert!(activated_this_session(start, Some(&at("2026-09-21T07:10:00.000Z"))), "a request after launch activates");
-        assert!(!activated_this_session(start, Some(&at("2026-09-21T06:40:00.000Z"))),
-            "a request from before launch does not: resuming a seat is not activating it");
-        assert!(!activated_this_session(start, None), "no request found is not activation");
-        assert!(!activated_this_session(None, Some(&at("2026-09-21T07:10:00.000Z"))),
-            "an unreadable start time activates nobody — the failure must not ping every cold seat");
+    fn a_stopped_background_task_notice_at_launch_is_not_activation() {
+        let t = [d098_prompt("2026-09-21T14:47:24.054Z", Some("task-notification"), NOTICE),
+                 d098_reply("2026-09-21T14:47:43.394Z", "req_A"), d098_tool_result("2026-09-21T14:47:46.283Z"),
+                 d098_reply("2026-09-21T14:48:01.804Z", "req_B")].join("\n");
+        assert!(!activated_by_use(&t, iso_utc_ms(D098_START)),
+            "a turn the harness started, which nobody asked for, is not the seat being used");
+    }
+
+    #[test]
+    fn the_notice_is_recognised_by_its_text_when_no_origin_is_recorded() {
+        // Across 3,657 transcripts on D every task-notification prompt starts "<task-notification>"; older
+        // Claude Code versions record no `origin` at all, so the text is the second, independent marker.
+        let t = [d098_prompt("2026-09-21T14:47:24.054Z", None, NOTICE), d098_reply("2026-09-21T14:47:43.394Z", "r")].join("\n");
+        assert!(!activated_by_use(&t, iso_utc_ms(D098_START)));
+        // And the other marker alone: an origin of task-notification excludes the entry whatever its text says.
+        let by_origin = d098_prompt("2026-09-21T14:47:24.054Z", Some("task-notification"), "a notice in some future wording");
+        assert!(!activated_by_use(&by_origin, iso_utc_ms(D098_START)), "the origin marker must work on its own");
+    }
+
+    #[test]
+    fn a_prompt_after_launch_is_activation_and_so_is_one_after_a_notice() {
+        let typed = [d098_prompt("2026-09-21T15:00:00.000Z", Some("human"), "[chair:MAIN] D098 packet E"),
+                     d098_reply("2026-09-21T15:00:05.000Z", "r")].join("\n");
+        assert!(activated_by_use(&typed, iso_utc_ms(D098_START)), "a dispatched or typed prompt after launch is use");
+        let both = [d098_prompt("2026-09-21T14:47:24.054Z", Some("task-notification"), NOTICE),
+                    d098_reply("2026-09-21T14:47:43.394Z", "r1"),
+                    d098_prompt("2026-09-21T15:10:00.000Z", None, "hey"), d098_reply("2026-09-21T15:10:04.000Z", "r2")].join("\n");
+        assert!(activated_by_use(&both, iso_utc_ms(D098_START)), "a real prompt after the notice still activates");
+    }
+
+    #[test]
+    fn a_prompt_before_launch_tool_results_and_meta_are_not_activation() {
+        let before = [d098_prompt("2026-09-21T14:40:00.000Z", Some("human"), "yesterday's work"),
+                      d098_reply("2026-09-21T14:40:05.000Z", "r")].join("\n");
+        assert!(!activated_by_use(&before, iso_utc_ms(D098_START)), "resuming a seat is not activating it");
+        assert!(!activated_by_use(&d098_tool_result("2026-09-21T15:00:00.000Z"), iso_utc_ms(D098_START)),
+            "a tool result continues a turn; it never starts one");
+        let meta = r#"{"type":"user","isMeta":true,"timestamp":"2026-09-21T15:00:00.000Z","message":{"role":"user","content":"caveat"}}"#;
+        assert!(!activated_by_use(meta, iso_utc_ms(D098_START)), "a meta entry is the harness, not a person");
+        assert!(!activated_by_use("", iso_utc_ms(D098_START)), "no transcript is not activation");
+        let typed = d098_prompt("2026-09-21T15:00:00.000Z", Some("human"), "x");
+        assert!(!activated_by_use(&typed, None), "an unreadable start time activates nobody");
+    }
+
+    // ── D098 ITEM 2: THE MISSED-WINDOW REPORT (E, L070 §5) — an activated seat crossing 60 min is SAID ──────────
+    #[test]
+    fn an_activated_seat_past_sixty_minutes_is_reported_once() {
+        assert!(keep_warm_missed(true, min(61), false), "past the TTL and not reported: say it");
+        assert!(keep_warm_missed(true, min(60), false), "AT the TTL is already past it: the hour is counted from the request start");
+        assert!(!keep_warm_missed(true, min(61), true), "one crossing is one row, never one per tick");
+        assert!(!keep_warm_missed(true, min(59), false), "still inside the hour: nothing was missed yet");
+        assert!(!keep_warm_missed(false, min(90), false), "a seat nobody used this session had no window to miss");
+        assert!(!keep_warm_missed(true, None, false), "no request start established is not a miss");
+    }
+
+    #[test]
+    fn the_missed_row_names_the_reason_the_seat_was_not_pinged() {
+        let row = keep_warm_missed_row("abcd1234", "committee", Duration::from_secs(61 * 60),
+            Some("composer not read empty: never over the keeper's typing"));
+        assert!(row.contains("MISSED") && row.contains("abcd1234") && row.contains("61 min"), "{row}");
+        assert!(row.contains("composer not read empty"), "the row must say WHY, or it is a count: {row}");
+        assert!(keep_warm_missed_row("abcd1234", "committee", Duration::from_secs(61 * 60), None).contains("no reason recorded"));
+        let tp = keep_warm_missed_row("3d000000", "third_place", Duration::from_secs(61 * 60), Some("x"));
+        assert!(tp.contains("MISSED") && !tp.contains("61"), "the Third Place's numbers stay off the shared board: {tp}");
     }
 
     #[test]
@@ -18892,5 +19114,45 @@ mod keep_warm_tests {
         let row = keep_warm_row("abcd1234", "committee", Duration::from_secs(55 * 60), Some(400_000), true);
         assert!(row.contains("55 min") && row.contains("400000"), "{row}");
         assert!(keep_warm_row("abcd1234", "committee", Duration::from_secs(60), None, false).contains("WRITE FAILED"));
+    }
+}
+
+#[cfg(test)]
+mod jev_shadow_start_tests {
+    use super::jev_shadow_args;
+
+    /// D104: the runner lives exactly as long as the app, so the one thing it must be told is the app's pid.
+    #[test]
+    fn the_runner_is_told_the_app_pid_and_nothing_else() {
+        assert_eq!(jev_shadow_args(4321), vec!["--app-pid".to_string(), "4321".to_string()]);
+    }
+
+    /// Wiring asserted by source shape, the way `drain_inboxes_records_each_reading_and_builds_the_row_from_them`
+    /// does it: the spawn needs a real process, and the facts worth pinning are PRESENCE and ORDER. On every launch,
+    /// right after the exit waiter (L059 §3 made that call unconditional); windowless; and the key and the data dir
+    /// are NEVER handed to it — the runner reads the key in-process itself, and CONSONANCE_DATA in a child's
+    /// environment is the collision D098 measured (507 overseer jobs stranded).
+    #[test]
+    fn the_app_starts_the_jev_shadow_runner_right_after_the_exit_waiter_and_hands_it_no_secrets() {
+        // Every needle is split with concat! so this test's own text never matches what it searches for — the
+        // neighbouring `the_exit_waiter_is_started_on_every_launch_...` counts the exit waiter's call statement in
+        // this whole file and requires exactly one. It went red twice on this test's drafts (D104): once on an unsplit
+        // needle, once on this very comment spelling the statement out.
+        let src = include_str!("main.rs");
+        assert!(
+            src.contains(concat!("start_exit", "_waiter();\n            start_jev", "_shadow();")),
+            "the runner is not started immediately after the exit waiter on every launch"
+        );
+        assert_eq!(src.matches(concat!("start_jev", "_shadow();")).count(), 1, "the runner is started from more than one place, or none");
+        let body = src
+            .split(concat!("fn start_jev", "_shadow("))
+            .nth(1)
+            .and_then(|b| b.split("\nfn ").next())
+            .expect("start_jev_shadow exists");
+        assert!(body.contains("\"jev-shadow-runner.js\""), "it does not start the runner file");
+        assert!(body.contains("jev_shadow_args(std::process::id())"), "it does not pass the app's own pid");
+        assert!(body.contains("NO_WINDOW | CREATE_NEW_PROCESS_GROUP"), "it would open a console window");
+        assert!(!body.contains("AI_GATEWAY_API_KEY"), "the key must never be handed to a child by the app");
+        assert!(!body.contains(".env(\"CONSONANCE_DATA\""), "CONSONANCE_DATA must not ride into this child (D098)");
     }
 }
