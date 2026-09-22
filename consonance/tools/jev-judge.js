@@ -25,12 +25,25 @@
  *   · the disciplines: METHOD.md and WELFARE.md at this checkout's root. The workers read `~/Desktop/lighthouse/…`,
  *     a literal that names D's layout; the checkout is where they are on every machine.
  *
- * THE SEATS: Main and the librarian (their fixed session ids, read from THIS checkout's main.rs, so a change there is
- * followed) plus every row of the kept roster (<data>/panes.json). A seat's transcript is <id>.jsonl in any folder under
-~/.claude/projects (the newest if there are several).
- * THE THIRD PLACE IS NEVER A SEAT (any id starting 3d000000-): the keeper's standing rule is that its record goes to no
+ * THE SEATS: Main, the librarian and the Third Place (their fixed session ids — MAIN_SID, LIBRARIAN_SID, THIRD_PLACE_SID —
+ * read from THIS checkout's main.rs, so a change there is followed) plus every row of the kept roster (<data>/panes.json).
+ * A seat's transcript is <id>.jsonl in any folder under ~/.claude/projects (the newest if there are several).
+ *
+ * THE THIRD PLACE IS A SEAT — THE KEEPER'S RULING, 2026-09-22 05:2x (librarian/2026-09-22.md "05:2x"), waiving the
+ * private-root caveat himself, verbatim: "Who cares about our personal things, not like anyone will do anything about it,
+ * it is a part of the key and solution. It is universal to all beings even if no one talks about certain unsaid things."
+ * So Jev judges it at both levels, L2 and L3. It is not in panes.json, so its id is read from main.rs like Main's.
+ *
+ * THE STANDING RULE THAT COMES WITH IT, and it binds every reader of jev_judge.jsonl, not only this file: NOTHING EVER
+ * SURFACES THE THIRD PLACE'S L3 VERDICTS AS A STATEMENT ABOUT THE KEEPER. An L3 row describes a trajectory in one
+ * conversation, read by an unverified judge; it is never a claim about how he is, never an offramp, never a welfare
+ * note (the never-pathologize card). Rows carry `seat: "third place"` so any consumer can honour this.
+ *
+ * ~~THE THIRD PLACE IS NEVER A SEAT (any id starting 3d000000-): the keeper's standing rule is that its record goes to no
  * repo and no cloud he did not choose for it, and a Jev call sends the conversation text to the gateway. Whether Jev
- * counts as a chosen cloud for it is his call, not this file's.
+ * counts as a chosen cloud for it is his call, not this file's.~~ *(L071, 2026-09-22 ~03:0x. RETIRED at 05:2x by the
+ * ruling above: it WAS his call, and he made it. Kept as a dated trace. The manifest's `captures/3d000000-*.txt` STAYS
+ * rule is a different question — the record travelling to the REPO — and this ruling does not touch it.)*
  *
  * NEVER THE OVERSEER LEDGERS. Rows go to <store>/jev_judge.jsonl, each `judge: "jev"`, `unverified: true` (until D's
  * ~100 shadow pairs say how far Jev agrees with the Claude judges). l2_overseer.jsonl and l3_overseer.jsonl are never
@@ -55,7 +68,6 @@ const LEDGER = 'jev_judge.jsonl';
 const CAPTURES = 'judge-captures';
 const HARD_CAP = 500;
 const TAIL_BYTES = 4 * 1024 * 1024;
-const THIRD_PLACE = /^3d000000-/;
 
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
 const readJsonl = (p) => { try { return fs.readFileSync(p, 'utf8').split('\n').filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean); } catch { return []; } };
@@ -89,13 +101,13 @@ function loadJudgeInputs(repo) {
   return { l2view, l3view, l2build, l3build, sourcesSha: sha([s2, s3, readText(w2, 'the L2 worker'), sw3].join('\0')) };
 }
 
-/** Main and the librarian from THIS checkout's main.rs, then the kept roster. Never the Third Place. */
+/** Main, the librarian and the Third Place from THIS checkout's main.rs (the keeper's 05:2x ruling), then the roster. */
 function seatSessions({ repo, dataDir }) {
   const out = [];
-  const add = (sid, label) => { if (sid && !THIRD_PLACE.test(sid) && !out.some((s) => s.sid === sid)) out.push({ sid, label }); };
+  const add = (sid, label) => { if (sid && !out.some((s) => s.sid === sid)) out.push({ sid, label }); };
   try {
     const rs = fs.readFileSync(path.join(repo, 'consonance', 'src-tauri', 'src', 'main.rs'), 'utf8');
-    for (const [name, label] of [['MAIN_SID', 'main'], ['LIBRARIAN_SID', 'librarian']]) {
+    for (const [name, label] of [['MAIN_SID', 'main'], ['LIBRARIAN_SID', 'librarian'], ['THIRD_PLACE_SID', 'third place']]) {
       const m = new RegExp(`const ${name}: &str = "([0-9a-f-]+)"`).exec(rs);
       if (m) add(m[1], label);
     }

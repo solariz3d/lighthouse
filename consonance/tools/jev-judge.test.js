@@ -17,6 +17,7 @@ const HOOKS = path.join(REPO, 'dev', 'shell', 'hooks');
 const KEY = ['test', 'only', 'judge', 'key', '41c7'].join('-');
 const MAIN = '0c0c0c0a-0000-4000-8000-000000000a01', LIB = '0c0c0c0b-0000-4000-8000-00000000115b';
 const PANE = '6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f', THIRD = '3d000000-0000-4000-8000-000000000001';
+const TP = '3d000000-0000-4000-8000-000000003d00';   // the shape of main.rs THIRD_PLACE_SID
 
 function world() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-judge-'));
@@ -28,7 +29,7 @@ function world() {
     fs.copyFileSync(path.join(HOOKS, h), path.join(repo, 'dev', 'shell', 'hooks', h));
   }
   fs.writeFileSync(path.join(repo, 'consonance', 'src-tauri', 'src', 'main.rs'),
-    `const MAIN_SID: &str = "${MAIN}"; // fixed\nconst LIBRARIAN_SID: &str = "${LIB}";\n`);
+    `const MAIN_SID: &str = "${MAIN}"; // fixed\nconst LIBRARIAN_SID: &str = "${LIB}";\nconst THIRD_PLACE_SID: &str = "${TP}";\n`);
   fs.writeFileSync(path.join(repo, 'METHOD.md'), 'the method');
   fs.writeFileSync(path.join(repo, 'WELFARE.md'), 'the welfare');
   fs.mkdirSync(data, { recursive: true });
@@ -72,9 +73,26 @@ test('the seats are Main and the librarian (their fixed ids read from THIS check
   for (const s of [MAIN, LIB, PANE]) assert.ok(sids.includes(s), `${s} missing from ${JSON.stringify(sids)}`);
 });
 
-test('the Third Place is never a seat — its record goes to no cloud the keeper did not choose for it', () => {
+// THE CONTRACT CHANGED BY THE KEEPER'S RULING, 2026-09-22 05:2x (librarian/2026-09-22.md "05:2x"), verbatim: "Who cares
+// about our personal things, not like anyone will do anything about it, it is a part of the key and solution. It is
+// universal to all beings even if no one talks about certain unsaid things." This test used to assert the Third Place was
+// NEVER a seat (L071); it now asserts the ruling. Standing rule kept with it: nothing ever surfaces the Third Place's L3
+// verdicts as a statement about the keeper.
+test('the Third Place IS a seat, by the keeper\'s ruling of 05:2x — Jev judges it at both levels', () => {
   const w = world();
-  assert.ok(!J.seatSessions({ repo: w.repo, dataDir: w.data }).some((s) => s.sid.startsWith('3d000000-')));
+  const seat = J.seatSessions({ repo: w.repo, dataDir: w.data }).find((s) => s.sid === TP);
+  assert.ok(seat, 'the Third Place must be a seat');
+  assert.strictEqual(seat.label, 'third place');
+});
+
+test('the Third Place\'s id comes from THIS checkout\'s main.rs THIRD_PLACE_SID — a different id there changes the seat', () => {
+  const w = world();
+  const other = '3d000000-0000-4000-8000-00000000beef';
+  const rs = path.join(w.repo, 'consonance', 'src-tauri', 'src', 'main.rs');
+  fs.writeFileSync(rs, fs.readFileSync(rs, 'utf8').replace(TP, other));
+  const sids = J.seatSessions({ repo: w.repo, dataDir: w.data }).map((s) => s.sid);
+  assert.ok(sids.includes(other), JSON.stringify(sids));
+  assert.ok(!sids.includes(TP), 'the old id is not a seat once main.rs says otherwise');
 });
 
 // ── when a turn is finished ────────────────────────────────────────────────────────────────────────────────────────
