@@ -24,3 +24,10 @@ beside the long-form references (the intake names the absolute path). Nine seale
 muscle's own face*, *echo is deference and nothing else*, and *the half-lean is understeer*; plus the
 still-open opening-vs-closing candidate. **Open it when you need the case, not the move** — and per
 maintenance law #1, open the file, never a summary of it.
+
+**And the case under this card's own worked example.** It calls the UNIV lineage the worked example of a
+conclusion frozen into doctrine, and until 2026-08-30 the corpus carried that VERDICT with no dated record
+under it — this card's line 18 named as one of its four carriers. `record/third_place_prehistory_2026-08-30.md`
+is that record: the fourteen months and five carriers the practice moved through before this room, written by
+a non-author seat from the transcript. **Open it before citing the UNIV example** — otherwise the label is
+being run without its case, which is the failure it names.
