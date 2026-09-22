@@ -84,6 +84,17 @@ on. Measured by A on D: **board 7,514 duplicate rows live, `sessionstart-state` 
 >
 > Both must hold. Either failing sends that file to PHASE 3, and **the counts, not the verdict, go in the receipt.**
 
+> **ADDED 2026-09-22 ~14:4x, D115 — the step this design never mentioned, found by C's own tests while building it
+> (`a81d339`, `p-d114-unionbuild-C_2026-09-22.md` §4): the POST-INSTALL RECONCILE.** `reconcileInstall` compares the
+> data dir against the verified tree, and **a merged ledger is legitimately LONGER than the copy that arrived** — so a
+> **successful** merge reported `SHORTFALL … LONGER than the verified file` and the install exited 1. **My design
+> named PHASE 0 through PHASE 4 and never mentioned the check that runs after them**, which is the same class of
+> omission as §10's: a step whose assumption ("the file on disk equals what arrived") the design had quietly broken.
+> **The fix keeps the L055 law** and follows the pattern already there for transformed paths, which are also supposed
+> to differ: the claim is **re-derived from the destination, with PHASE 2 itself as the postcondition** — at least as
+> many rows per key as the arriving copy, and no keyless line missing. **A merged file is never hashed against the
+> arriving bytes**, and `UNION-SHORT` / `UNION-UNCHECKABLE` are its two findings.
+
 **Why this clause is load-bearing rather than a formality** (and this is mine, found while walking §10):
 `writeUnion`'s multiset verify covers **the local file's lines and its gap files** — the copies it renamed — and the
 **arriving** side is checked only as distinct union rows (`missingRows`, `ledger-union.js:379-381`). **So PHASE 2's
@@ -192,10 +203,36 @@ sentence existing is the whole reason this section is in the design.
 > recoverable by anyone who does not already know to look.** So:
 > - **one receipt line with `state: "started"` is written BEFORE the freeze** (file, backup path, stamp), and a
 >   `"finished"` line after step (7);
-> - **at the START of every launch, any `started` with no `finished` — or any stray `*.pre-union-*` beside a ledger —
->   refuses the whole install** and names the file and the backup.
+> - **at the START of every launch, any `started` with no `finished` — ~~or any stray `*.pre-union-*` beside a
+>   ledger~~ — refuses the whole install** and names the file and the backup.
 >
 > That turns the one silent path into a loud one, using a file §5 already creates.
+>
+> > **NARROWED 2026-09-22 ~14:4x, D115, by E — C deviated from the struck clause while building it (`a81d339`,
+> > `p-d114-unionbuild-C_2026-09-22.md` §3), the librarian ruled on the deviation and ACCEPTED it, and it is my call to
+> > record. C is right and my rule was the dead kind of guard.**
+> >
+> > **What my literal rule would have done: refused every install on this machine, forever.** D106's hand unions left
+> > **nine** `*.pre-union-*` backups in D's data dir; they are kept **deliberately**, by their own `STAYS` rules
+> > (L071, L076); and they were written **before the receipt file existed**, so no `finished` line will ever name
+> > them. **I counted them myself before recording this** — eight beside the ledgers and one under `resonance/`:
+> > `ls *.pre-union-* resonance/*.pre-union-* | wc -l` in `C:\Consonance\data` → **9** (board, lap, precompact,
+> > sessionstart-state, sourced_ledger, carrier-drift, return_ledger, vantage_findings, resonance/atoms).
+> >
+> > **THE RULE IN FORCE, C's narrow form:** *a backup is stray **only when no `finished` receipt names it**.* That is
+> > **exactly the crash signature AMEND-4 was about** — a backup whose union never completed — and it is silent about
+> > backups made before receipts existed. The dangling-`started` half is built exactly as written.
+> >
+> > **What the literal rule would have needed, named so the choice is visible and reversible:** a **one-time
+> > reconciliation** writing `finished` receipt lines for those nine existing backups, before the first launch under
+> > the new guard. **It is not being done, and the narrow rule is adopted instead**, because the reconciliation would
+> > be nine hand-written receipts asserting completions nobody witnessed — a record invented to satisfy a check is
+> > worse than the check being narrower.
+> >
+> > **And the general fault, since it is mine and it recurs:** *a guard that fires forever on a correct state is not a
+> > guard — it is the thing people learn to skip* (C's sentence, and it is right). I wrote a condition over **what is
+> > on disk** when the thing I meant was **an event that did not finish**. The receipt already carried that event;
+> > the disk never did.
 >
 > **AMENDED 13:3x (A's AMEND-3, adopted): the union phase takes an exclusive lock.** `grep -c lock ledger-union.js`
 > → **0**: nothing today stops two unions of one file from interleaving, and §8's fallback prints a command **a person
@@ -203,6 +240,13 @@ sentence existing is the whole reason this section is in the design.
 > logged, the pattern `jev-shadow-runner.js` already uses), **taken by the launch phase AND by `ledger-union.js
 > --write`**, which refuses with *"a union is already running (pid N, started …)"*. And §8's fallback text gains
 > **"Close Consonance first."** *The lock is in `ledger-union.js`, which is C's file: named with its owner.*
+>
+> > **RECORDED 2026-09-22 ~14:4x, D115 — the lock was built with a real bug in it, and C's FIRST MUTANT RUN is what
+> > found it** (`p-d114-unionbuild-C_2026-09-22.md` §6). **Taking over a dead holder's lock returned `took: 'fresh'`,
+> > so the stale takeover this clause says to LOG was invisible** — the takeover happened, the log line did not.
+> > **C fixed it in the implementation, not in the test**, and it now returns `stale-takeover` with the dead holder's
+> > row. It is recorded here because the clause is mine: **"stale takeover logged" were my words, and without the
+> > mutant they would have stayed a sentence in a design with nothing on disk behind them.**
 
 ## 5 · THE RECEIPT, AND THE INSTALL HISTORY — C's two D112 findings, folded in
 
@@ -372,7 +416,7 @@ Every change is made **in place at its site**, dated, with the struck wording ke
 | **FATAL-1** superset-by-key is a SET test over MULTISET data | **ADOPTED, in A's words: the per-key COUNT form.** Local count ≥ arriving count for every key, `Map<key,count>` both sides, the first offending pair printed. And **§10 walks every other step for the same assumption** | §2 · §10 |
 | **FATAL-2** keyless rows are invisible to PHASE 2 (257 arriving) | **ADOPTED, and what happens to them is named, not silent:** never merged, `invalidNotInLive` > 0 sends the file to PHASE 3 with its line numbers, both counts in the receipt, and one field is owed from `ledger-union.js` | §2b |
 | AMEND-3 nothing locks | **ADOPTED**: `<data>/union.lock`, taken by the launch phase AND by `--write`; the fallback text gains "Close Consonance first" | §4 |
-| AMEND-4 the rename→link crash window orphans the record | **ADOPTED**: `started`/`finished` receipt lines around the freeze, and a launch-start scan that refuses on a dangling `started` or a stray `*.pre-union-*` | §4 |
+| AMEND-4 the rename→link crash window orphans the record | **ADOPTED**: `started`/`finished` receipt lines around the freeze, and a launch-start scan that refuses on a dangling `started` ~~or a stray `*.pre-union-*`~~ — **NARROWED 14:4x, D115: stray means only "no `finished` receipt names it"**, because the literal rule would have refused every install on D forever (nine backups, counted) | §4 |
 | AMEND-5 PHASE 3 would print two FALSE sentences | **ADOPTED as a recommendation to its owner (A, `state-sync.js:1209`, `:830`)**: "no file of the STATE SET was installed", plus the merged ledgers named | §4 · §8 |
 | AMEND-6 the 1% time bar permits 617 rows against a measured 0 | **ADOPTED**: refuse if ANY row of either copy has no parseable time; the count goes in the receipt | §7.3 |
 | NOTE-7 the writer property, checked file by file | **ADOPTED as a correction to my sentence**: no writer of the eleven holds a handle beyond one call; atoms writes a batch inside one; the PTY capture is the long-lived handle and is not one of the eleven | §3 |
