@@ -45,6 +45,14 @@ const NODE = process.execPath;
  * RED here. If a later edit makes any of those survive, the pin has begun eating the property and
  * this comment is where to start. The commands are in the hand-back. */
 process.env.LAP_MACHINE_TAG = 'L';
+/* THE RECORD PIN (L070). open() now refuses to mint below the highest id in LAP_REPO's git subjects.
+ * Unpinned, every fixture here would read the REAL repo's history (L069 and up) and refuse L001 - the
+ * same leak the tag pin above closes. An empty git repo is a record of nothing. No assertion changed. */
+process.env.LAP_REPO = (() => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-emptyrec-'));
+  execFileSync('git', ['-C', d, 'init', '-q']);
+  return d;
+})();
 
 /** A fresh ledger and a fresh module instance bound to it. */
 function fixture() {
@@ -1718,4 +1726,77 @@ test('FALSIFIER: this tool\'s own is a ONE-SHOT - one opened row disarms it fore
     'the windowed reading must still show the lapse the all-time form can no longer see');
   assert.match(text, /ONE opened row disarms it permanently/, 'and the limit must be printed, not left in the source');
   cleanup();
+});
+
+// ---------------------------------------------------------------- the record's highest id (L070)
+/* WHY. Every L launch that MIGRATEs installs the state set's lap.jsonl over the live one (L069), and
+ * the ledger then ends at an id the committed record went past days ago. mintId is max+1 over the
+ * LOCAL rows, so it counted from L054 again: L058 exists in five generations, each cited by commits.
+ * THE RECORD is the ledger's rows (mintId already honours them) PLUS every lap id carrying THIS
+ * machine's tag in a git commit subject of the repo (all refs). This machine's tag only: git holds
+ * D095 beside L069, the two machines count separately, and a cross-tag max would refuse tonight's
+ * own L070. An unreadable record refuses: a guard that cannot see its record must not pass. */
+function recordRepo(subjects) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lap-rec-'));
+  execFileSync('git', ['-C', dir, 'init', '-q']);
+  for (const s of subjects) {
+    execFileSync('git', ['-C', dir, '-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'commit.gpgsign=false',
+      'commit', '-q', '--allow-empty', '-m', s]);
+  }
+  return dir;
+}
+function withRecord(repo, fn) {
+  const was = process.env.LAP_REPO;
+  process.env.LAP_REPO = repo;
+  const f = fixture();
+  try { return fn(f); } finally { f.cleanup(); process.env.LAP_REPO = was; }
+}
+const ledgerTo = (f, n) => fs.writeFileSync(f.ledger, Array.from({ length: n }, (_, i) =>
+  JSON.stringify({ lap: `L${String(i + 1).padStart(3, '0')}`, stage: 'open', at: i + 1 })).join('\n') + '\n');
+const OPEN = { initiator: 'chair', entry: 'orch', inquiry: 'q', guess: ['a/b.md'], now: 1000 };
+
+test('record: a ledger ending at L054 under a record at L065 REFUSES to mint L055, and appends nothing', () => {
+  withRecord(recordRepo(['L065 (2026-09-20) C: the lap the install erased']), (f) => {
+    ledgerTo(f, 54);
+    const before = fs.readFileSync(f.ledger);
+    assert.throws(() => f.mod.open(OPEN), /L055.*L065/s);
+    assert.ok(fs.readFileSync(f.ledger).equals(before), 'the refusal appended a row');
+  });
+});
+
+test('record: the ledger level with the record mints the next id as before', () => {
+  withRecord(recordRepo(['L054 (2026-09-10) C: last lap']), (f) => {
+    ledgerTo(f, 54);
+    assert.strictEqual(f.mod.open(OPEN).lap, 'L055');
+  });
+});
+
+test('record: minting an id the record ALREADY HOLDS is a reissue and refuses', () => {
+  withRecord(recordRepo(['L055 (2026-09-11) A: taken']), (f) => {
+    ledgerTo(f, 54);
+    assert.throws(() => f.mod.open(OPEN), /L055/);
+  });
+});
+
+test('record: another machine\'s tag does not count - D095 in git does not stop L055', () => {
+  withRecord(recordRepo(['D095 (2026-09-20) B: the desktop counts separately']), (f) => {
+    ledgerTo(f, 54);
+    assert.strictEqual(f.mod.open(OPEN).lap, 'L055');
+  });
+});
+
+test('record: only an id STARTING a subject is a lap - "L077 and L080 are the dark and dim values" is not', () => {
+  // the real subject a67e2b1 (2026-09-17): CIELAB lightness, not laps. Read anywhere, it refused L071 on L.
+  withRecord(recordRepo(['L054 (2026-09-10) C: last lap',
+    'LIBRARIAN (on D): L077 and L080 are the author\'s dark and dim values']), (f) => {
+    ledgerTo(f, 54);
+    assert.strictEqual(f.mod.open(OPEN).lap, 'L055');
+  });
+});
+
+test('record: a record that cannot be read REFUSES rather than passing', () => {
+  withRecord(fs.mkdtempSync(path.join(os.tmpdir(), 'lap-norepo-')), (f) => {
+    ledgerTo(f, 54);
+    assert.throws(() => f.mod.open(OPEN), /record/i);
+  });
 });

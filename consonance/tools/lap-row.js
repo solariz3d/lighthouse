@@ -422,6 +422,34 @@ function mintId(all) {
   return machineTag() + String(max + 1).padStart(3, '0');
 }
 
+/* THE RECORD'S HIGHEST ID (L070). The ledger is not the only record of which ids exist: every L
+ * launch that MIGRATEs installs the state set's lap.jsonl OVER the live one (L069), the ledger then
+ * ends at an id the committed record passed days ago, and max+1 above reissues it. Measured on L,
+ * 2026-09-21: L058 in five generations, each cited by commits. So the record is the ledger's rows
+ * (mintId honours them) PLUS every lap id with THIS machine's tag in a git commit subject, all refs.
+ * THIS TAG ONLY: git holds D095 beside L069 - the machines count separately, and a cross-tag max
+ * would refuse the next honest L id. A record that cannot be read REFUSES: a guard that cannot see
+ * what it guards must not pass silently. */
+function recordMax(tag) {
+  let out;
+  try {
+    out = execFileSync('git', ['-C', REPO, 'log', '--all', '--format=%s'],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+  } catch (e) {
+    throw new Error(`cannot read the record of lap ids: git log failed in ${REPO} ` +
+      `(${String(e.message).split('\n')[0]}). Set LAP_REPO to the repo whose commit subjects carry ` +
+      `the lap ids. Refusing to mint blind.`);
+  }
+  // A lap commit STARTS with its id ("L069 (2026-09-21) A: ..."). Only that position counts: mid-subject
+  // text is prose, and it has already said "L077 and L080 are the author's dark and dim values" (a67e2b1,
+  // CIELAB lightness) - read anywhere, that would refuse every L id up to L080. A revert needs no special
+  // case: the reverted commit's own subject stays in the history.
+  const re = new RegExp(`^${tag}(\\d{3,})(?![0-9])`, 'gm');
+  let max = 0;
+  for (const m of out.matchAll(re)) max = Math.max(max, Number(m[1]));
+  return max;
+}
+
 // ---------------------------------------------------------------- the three writes
 
 function open({ initiator, entry, inquiry, guess, blind, now }) {
@@ -445,6 +473,14 @@ function open({ initiator, entry, inquiry, guess, blind, now }) {
   }
   const all = rows();
   const lap = mintId(all);
+  const rec = recordMax(lap[0]);
+  if (Number(lap.slice(1)) <= rec) {
+    const top = lap[0] + String(rec).padStart(3, '0');
+    throw new Error(`refusing to mint ${lap}: the record already reaches ${top} (a git commit subject ` +
+      `in ${REPO}), but the ledger ${LEDGER} ends below it. The ledger was most likely replaced by an ` +
+      `older copy at a sync install (L069); its missing rows are in attic/pre-sync-*/lap.jsonl. ` +
+      `Restore them - never mint over the record.`);
+  }
   const g = (guess.length === 1 && normPath(guess[0]) === 'none') ? [] : guess;
   const row = append({
     lap, stage: 'open', at: now, initiator, entry, inquiry: String(inquiry).trim(),
