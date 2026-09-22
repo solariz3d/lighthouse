@@ -195,7 +195,7 @@ function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, memo = 
 }
 
 /** Ask Jev each captured prompt not yet asked, oldest first, up to maxCalls. Rows to <store>/jev_judge.jsonl only. */
-async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globalThis.fetch, now = () => new Date() }) {
+async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globalThis.fetch, now = () => new Date(), pacer }) {
   if (!store) throw new Refusal('no store');
   if (!Number.isInteger(maxCalls) || maxCalls < 1) throw new Refusal('maxCalls must be a positive integer — the hard cap on calls this pass');
   if (maxCalls > HARD_CAP) throw new Refusal(`maxCalls is at most ${HARD_CAP} per pass`);
@@ -222,7 +222,7 @@ async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globa
       discipline_sha256: level === 'l2' ? c.method_sha256 : c.welfare_sha256, sources_sha256: c.sources_sha256 };
     let r;
     try {
-      r = await jev.ask({ schema: { questions: JUDGES[level].questions }, state: prompt, env, fetchImpl });
+      r = await jev.ask({ schema: { questions: JUDGES[level].questions }, state: prompt, env, fetchImpl, pacer });   // D107: undefined = jev-ask's shared pacer for the real fetch
     } catch (err) {
       // As jev-shadow: only the secret scan is an item-level refusal (recorded once, never retried). Anything else is
       // about the RUN and stops it; this item gets no row and is retried next pass.

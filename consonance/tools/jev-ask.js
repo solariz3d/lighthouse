@@ -123,6 +123,74 @@ function validateSchema(schema) {
   return names;
 }
 
+/* PACING (D107). A judge pass sent up to 25 calls back to back, the shadow its own batch beside it, and BOTH machines
+ * use one key; D's runner.log showed 13 429s beside 20 503s (2026-09-22). So every call through ask() is spaced and
+ * a 429 pushes the next call back.
+ *
+ * THE NUMBERS ARE DEFAULTS, NOT A LIMIT ANYONE PUBLISHED. Vercel's own page, https://vercel.com/docs/ai-gateway/rate-limits
+ * (last updated 2026-09-08, read 2026-09-22), says "Limits can change, so this page describes behavior rather than
+ * fixed numbers": no RPM, no concurrency figure, per model on the free tier, none on the paid tier. What it does say
+ * is followed here: "Some 429 responses include a retry-after header with the number of seconds to wait. Honor it when
+ * it is present", "back off exponentially otherwise", "Keep retries bounded". So: a 2 s gap between the END of one
+ * call and the start of the next (a real call measured 336 ms median, 1,231 ms max over 88 ok rows, so 25 calls take
+ * ~60 s, well inside the 10-minute cadence); on a 429, Retry-After (seconds or an HTTP-date) when parseable, else
+ * 5 s doubling per consecutive 429, capped at 60 s, reset by any non-429 answer.
+ *
+ * A 429 IS NOT RETRIED HERE. ask() still makes one call and surfaces its failure once (the header's rule); the item
+ * stays skip-and-retry in the caller (L078/L079). Only the NEXT call waits. A wait longer than 120 s is not slept on
+ * inside a pass: the call is refused UNSENT with "HTTP 429 … not sent", which both callers' transientStatus read
+ * as a 429 skip, so the rest of the pass is deferred to the next cadence instead of stalling it.
+ *
+ * WHO IS PACED. The real fetch gets ONE module-level pacer, so the judge and the shadow, which run in the same runner
+ * process and both call ask(), share one spacing. A stubbed fetch gets none unless a test passes one: a stub has no
+ * rate limit, and the suites must not sleep. WHAT THIS CANNOT DO: pace the OTHER machine. L and D share the key and
+ * each paces only itself. */
+const DEFAULT_GAP_MS = 2000;
+const DEFAULT_BASE_BACKOFF_MS = 5000;
+const DEFAULT_MAX_BACKOFF_MS = 60000;
+const DEFAULT_MAX_WAIT_MS = 120000;
+
+/** Retry-After in ms from delta-seconds or an HTTP-date, or null when absent or unparseable. */
+function retryAfterMs(value, nowMs) {
+  if (value == null) return null;
+  const v = String(value).trim();
+  if (/^\d+$/.test(v)) return Number(v) * 1000;
+  const at = Date.parse(v);
+  return Number.isFinite(at) && /[A-Za-z]/.test(v) ? Math.max(0, at - nowMs) : null;
+}
+
+function createPacer({ gapMs = DEFAULT_GAP_MS, baseBackoffMs = DEFAULT_BASE_BACKOFF_MS, maxBackoffMs = DEFAULT_MAX_BACKOFF_MS,
+  maxWaitMs = DEFAULT_MAX_WAIT_MS, now = Date.now, sleep = (ms) => new Promise((r) => setTimeout(r, ms)) } = {}) {
+  let lastEnd = null, notBefore = 0, run429 = 0;
+  return {
+    gapMs,
+    /** Wait until this call may go. Refuses UNSENT (as a 429 skip) when the wait is longer than a pass should stall. */
+    async before() {
+      const t = now();
+      const due = Math.max(lastEnd == null ? t : lastEnd + gapMs, notBefore);
+      const wait = due - t;
+      if (wait > maxWaitMs) {
+        throw new GatewayError(`gateway returned HTTP 429 earlier: the next call is deferred ${Math.ceil(wait / 1000)} s `
+          + `(over the ${maxWaitMs / 1000} s in-pass cap) — not sent, retried next cadence`);
+      }
+      if (wait > 0) await sleep(wait);
+    },
+    /** After a call. `status` is null when no response came back. */
+    after(status, headers) {
+      const t = now();
+      lastEnd = t;
+      if (status !== 429) { run429 = 0; return; }
+      run429 += 1;
+      const ra = retryAfterMs(headers && typeof headers.get === 'function' ? headers.get('retry-after') : null, t);
+      notBefore = t + (ra != null ? ra : Math.min(maxBackoffMs, baseBackoffMs * 2 ** (run429 - 1)));
+    },
+  };
+}
+
+const SHARED_PACER = createPacer();
+/** The real gateway is paced by the one shared pacer; a stubbed fetch is not (it has no rate limit to respect). */
+const defaultPacerFor = (fetchImpl) => (fetchImpl === globalThis.fetch ? SHARED_PACER : null);
+
 /** The exact request. The key is not in it: the caller adds the header, so a printed request cannot carry it. */
 function buildRequest(schema, state) {
   return { url: URL_EVALUATE, body: { model: MODEL, state, questions: schema.questions } };
@@ -150,7 +218,8 @@ function checkAnswers(names, questions, answers) {
  * One call. `env` and `fetchImpl` are the boundary seams (tests stub fetch; nothing below it is mocked).
  * Returns { model, answers, usage, cost, generationId, ms } — or { dry: true, request } with `dry`.
  */
-async function ask({ schema, state, env = process.env, fetchImpl = globalThis.fetch, dry = false, now = Date.now }) {
+async function ask({ schema, state, env = process.env, fetchImpl = globalThis.fetch, dry = false, now = Date.now, pacer }) {
+  if (pacer === undefined) pacer = defaultPacerFor(fetchImpl);
   const key = (env.AI_GATEWAY_API_KEY || '').trim();
   try {
     if (typeof state !== 'string' || !state.trim()) throw new Refusal('state is empty — refusing to ask about nothing');
@@ -165,6 +234,7 @@ async function ask({ schema, state, env = process.env, fetchImpl = globalThis.fe
     if (!key) throw new Refusal('no AI_GATEWAY_API_KEY in the environment — refusing (the key is read from the environment only, never from a file)');
     if (typeof fetchImpl !== 'function') throw new Refusal('no fetch available — Node 18+ has it built in');
 
+    if (pacer) await pacer.before();
     const t0 = now();
     let res;
     try {
@@ -175,8 +245,10 @@ async function ask({ schema, state, env = process.env, fetchImpl = globalThis.fe
         signal: AbortSignal.timeout(TIMEOUT_MS),
       });
     } catch (e) {
+      if (pacer) pacer.after(null);
       throw new GatewayError(`request failed before a response: ${e && e.message}`);
     }
+    if (pacer) pacer.after(res.status, res.headers);
     const text = await res.text();
     if (!res.ok) throw new GatewayError(`gateway returned HTTP ${res.status}: ${text.slice(0, 500)}`);
     let body;
@@ -247,6 +319,7 @@ async function main(argv = process.argv.slice(2), env = process.env) {
 }
 
 module.exports = { ask, validateSchema, findSecrets, buildRequest, checkAnswers, ledgerRow, parseArgs, scrub,
+  createPacer, defaultPacerFor, retryAfterMs, DEFAULT_GAP_MS,
   SECRET_PATTERNS, MODEL, URL_EVALUATE, Refusal, GatewayError };
 
 if (require.main === module) main().then((code) => { process.exitCode = code; });

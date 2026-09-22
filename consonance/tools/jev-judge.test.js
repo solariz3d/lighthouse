@@ -312,3 +312,26 @@ test('the per-pass cap holds: 3 finished turns, maxCalls 2 → exactly 2 calls',
   assert.strictEqual(g.calls.length, 2);
   assert.strictEqual(r.remaining, 2);
 });
+
+// ── D107 PACING through the judge pass. A stubbed clock (no real sleeps) and a gateway whose 1st call is a 429 with
+// Retry-After 3. The pacer is jev-ask's; judgePass only carries it through to ask(). ───────────────────────────────
+test('PACING: a pass spaces its calls, waits out a 429\'s Retry-After, skips that item, and the daily cap counts only ok rows', async () => {
+  const w = fourItems();
+  const c = { t: Date.parse('2026-09-22T12:00:00Z'), sleeps: [] };
+  const jevAsk = require('./jev-ask.js');
+  const pacer = jevAsk.createPacer({ gapMs: 2000, baseBackoffMs: 5000, maxBackoffMs: 60000, maxWaitMs: 120000,
+    now: () => c.t, sleep: async (ms) => { c.sleeps.push(ms); c.t += ms; } });
+  const at = [];
+  const ok = gateway();
+  const g = async (url, init) => {
+    at.push(c.t);
+    if (at.length === 1) return { ok: false, status: 429, headers: { get: (k) => (k.toLowerCase() === 'retry-after' ? '3' : null) }, text: async () => 'rate limited' };
+    return ok(url, init);
+  };
+  const r = await J.judgePass({ store: w.store, maxCalls: 10, env: KEYED, fetchImpl: g, pacer });
+  assert.strictEqual(at.length, 4, 'every item tried once in the pass');
+  assert.deepStrictEqual(at.slice(1).map((t, i) => t - at[i]), [3000, 2000, 2000], 'Retry-After 3 s after the 429, then the gap');
+  assert.deepStrictEqual(r.failed.map((x) => x.status), [429], 'the 429 item is a skip-and-retry (L078), not a stop');
+  assert.strictEqual(r.asked, 3);
+  assert.strictEqual(J.callsToday(w.store, new Date(rowsOf(w)[0].ts).toDateString()), 3, 'the daily cap counts ok rows only — unchanged');
+});

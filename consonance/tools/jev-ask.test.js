@@ -277,6 +277,112 @@ test('CLI: both paths are required — one call form', () => {
   assert.match(r.stderr, /both paths are required/);
 });
 
+// ------------------------------------------------------------------ PACING (D107): the gap, Retry-After, backoff
+// A STUBBED CLOCK: `now()` reads a number and `sleep(ms)` advances it and records the wait, so no test here sleeps for
+// real. `timed` is a fetch stub that notes the clock at every call and answers from a script of responses.
+
+function clock(t0 = 1_000_000) {
+  const c = { t: t0, sleeps: [] };
+  c.now = () => c.t;
+  c.sleep = async (ms) => { c.sleeps.push(ms); c.t += ms; };
+  return c;
+}
+/** `script(n)` gives the n-th response (1-based): a status, or [status, {header: value}]. Default 200 GOOD. */
+function timed(c, script = () => 200) {
+  const at = [];
+  const f = async () => {
+    at.push(c.t);
+    const s = script(at.length);
+    const [status, headers] = Array.isArray(s) ? s : [s, {}];
+    const h = Object.fromEntries(Object.entries(headers).map(([k, v]) => [k.toLowerCase(), v]));
+    const text = status === 200 ? JSON.stringify(GOOD) : '{"error":{"message":"Rate limit exceeded","type":"rate_limit_exceeded"}}';
+    return { ok: status >= 200 && status < 300, status, headers: { get: (k) => (k.toLowerCase() in h ? h[k.toLowerCase()] : null) }, text: async () => text };
+  };
+  f.at = at;
+  return f;
+}
+const paced = (c, opts = {}) => J.createPacer({ gapMs: 2000, baseBackoffMs: 5000, maxBackoffMs: 60000, maxWaitMs: 120000, now: c.now, sleep: c.sleep, ...opts });
+const askP = (f, pacer, c) => J.ask({ schema: SCHEMA, state: STATE, env: ENV, fetchImpl: f, pacer, now: c.now });
+const gaps = (at) => at.slice(1).map((t, i) => t - at[i]);
+
+test('PACING: no 429 → the calls are spaced by the gap, and by the gap only', async () => {
+  const c = clock(); const f = timed(c); const p = paced(c);
+  for (let i = 0; i < 4; i++) await askP(f, p, c);
+  assert.deepStrictEqual(gaps(f.at), [2000, 2000, 2000], 'each call starts one gap after the previous ended');
+  assert.strictEqual(f.at[0], 1_000_000, 'the FIRST call of a process does not wait');
+});
+
+test('PACING: a MUTANT with no gap goes red — back-to-back calls are exactly what 429 punished', async () => {
+  const c = clock(); const f = timed(c); const p = paced(c, { gapMs: 0 });
+  for (let i = 0; i < 3; i++) await askP(f, p, c);
+  assert.deepStrictEqual(gaps(f.at), [0, 0], 'the control: with gap 0 the calls are back to back');
+  assert.ok(J.DEFAULT_GAP_MS >= 1000, `the DEFAULT gap must be a real gap, is ${J.DEFAULT_GAP_MS} ms`);
+});
+
+test('PACING: a 429 with Retry-After is waited on — the NEXT call goes after it, not after the gap', async () => {
+  const c = clock(); const f = timed(c, (n) => (n === 1 ? [429, { 'Retry-After': '7' }] : 200)); const p = paced(c);
+  await assert.rejects(askP(f, p, c), (e) => e instanceof J.GatewayError && /HTTP 429/.test(e.message));
+  await askP(f, p, c);
+  assert.strictEqual(f.at.length, 2, 'the 429 was NOT retried inside ask — it stays a skip-and-retry item (L078)');
+  assert.strictEqual(f.at[1] - f.at[0], 7000, 'the next call waited the 7 s the gateway asked for');
+});
+
+test('PACING: Retry-After as an HTTP-date is honoured too', async () => {
+  const c = clock(Date.parse('2026-09-22T16:00:00Z'));
+  const f = timed(c, (n) => (n === 1 ? [429, { 'retry-after': 'Tue, 22 Sep 2026 16:00:12 GMT' }] : 200)); const p = paced(c);
+  await assert.rejects(askP(f, p, c), /HTTP 429/);
+  await askP(f, p, c);
+  assert.strictEqual(f.at[1] - f.at[0], 12000);
+});
+
+test('PACING: a 429 with NO Retry-After backs off exponentially, capped — and a success resets it', async () => {
+  const c = clock(); const st = [429, 429, 429, 429, 429, 200, 429, 200];
+  const f = timed(c, (n) => st[n - 1]); const p = paced(c);
+  for (let i = 0; i < st.length; i++) { try { await askP(f, p, c); } catch (e) { assert.match(e.message, /HTTP 429/); } }
+  assert.deepStrictEqual(gaps(f.at), [5000, 10000, 20000, 40000, 60000, 2000, 5000],
+    'base 5 s doubling to the 60 s cap; after a success the next call waits only the gap, and a new 429 starts at base again');
+});
+
+test('PACING: an unparseable Retry-After falls back to the backoff', async () => {
+  const c = clock(); const f = timed(c, (n) => (n === 1 ? [429, { 'Retry-After': 'soon' }] : 200)); const p = paced(c);
+  await assert.rejects(askP(f, p, c), /HTTP 429/);
+  await askP(f, p, c);
+  assert.strictEqual(f.at[1] - f.at[0], 5000);
+});
+
+test('PACING: a Retry-After beyond the in-pass cap is NOT slept on — the next call is deferred UNSENT as a 429 skip', async () => {
+  const c = clock(); const f = timed(c, (n) => (n === 1 ? [429, { 'Retry-After': '3600' }] : 200)); const p = paced(c);
+  await assert.rejects(askP(f, p, c), /HTTP 429/);
+  await assert.rejects(askP(f, p, c), (e) => e instanceof J.GatewayError && /HTTP 429/.test(e.message) && /not sent/.test(e.message));
+  assert.strictEqual(f.at.length, 1, 'the deferred call never reached the network');
+  assert.ok(c.sleeps.every((ms) => ms <= 120000), 'no wait longer than the cap: ' + c.sleeps);
+  c.t += 3600 * 1000;
+  await askP(f, p, c);
+  assert.strictEqual(f.at.length, 2, 'once the Retry-After has passed, calls go again');
+});
+
+test('PACING: a 5xx is not a rate limit — it gets the gap, not a backoff', async () => {
+  const c = clock(); const f = timed(c, (n) => (n === 1 ? 503 : 200)); const p = paced(c);
+  await assert.rejects(askP(f, p, c), /HTTP 503/);
+  await askP(f, p, c);
+  assert.strictEqual(f.at[1] - f.at[0], 2000);
+});
+
+test('PACING: the gap is not counted in `ms` — ms is the call, not the wait before it', async () => {
+  const c = clock(); const f = timed(c); const p = paced(c);
+  await askP(f, p, c);
+  const r = await askP(f, p, c);
+  assert.strictEqual(r.ms, 0, 'the stub answers in 0 ms on the stubbed clock; the 2 s gap is not in it');
+});
+
+test('PACING: the REAL fetch gets ONE shared pacer (judge and shadow share it in the runner); a stubbed fetch gets none', () => {
+  const real = J.defaultPacerFor(globalThis.fetch);
+  assert.ok(real, 'the real gateway path is paced by default');
+  assert.strictEqual(J.defaultPacerFor(globalThis.fetch), real, 'the same pacer every time — one process, one spacing');
+  assert.strictEqual(real.gapMs, J.DEFAULT_GAP_MS);
+  assert.strictEqual(J.defaultPacerFor(async () => {}), null, 'a stub has no rate limit, so the suites never sleep');
+});
+
 // ------------------------------------------------------------------ the one live call, opt-in twice over
 
 test('LIVE smoke (opt-in: AI_GATEWAY_API_KEY and JEV_LIVE_SMOKE=1) — one throwaway call, about 351 input tokens, about $0.000015', async (t) => {
