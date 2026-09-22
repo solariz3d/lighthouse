@@ -254,8 +254,17 @@ test('THE BAR, half two: the same registry is RED against the tree at ' + PREFIX
     'the packet\'s named fixture must be named: ' + JSON.stringify(res.findings.map((f) => [f.kind, f.file])));
   assert.ok(unmarked.includes('exo_memory/loop/lap_2026-08-23.md'),
     'the re-assertion must be named');
-  assert.ok(unmarked.includes('exo_memory/BOOT.md'),
-    'BOOT\'s pointer was unmarked at this rev and must be named');
+  // BOOT's **Previous:** pointer (BOOT:117 at this rev) must still be named. Its KIND moved with D096 (ff302cf): the
+  // dated pointers went VERBATIM to journal/POINTERS.md — a trace class this scan skips — so the `acknowledged` row
+  // that registered the pointer as a known carrier was removed with them (its anchor left BOOT; kept, it would be a
+  // STALE-SITE against the working tree and half one would go red). With no row classing it, the pointer here is
+  // UNACCOUNTED (no row) rather than UNMARKED-CARRIER (a row, no marker). Pinned to this withdrawal and this line, so
+  // the cant-lose finding at BOOT:22 cannot stand in for it.
+  const bootPointer = res.findings.filter((f) => f.file === 'exo_memory/BOOT.md' &&
+    f.w === 'only-decorrelated-2026-08-16' && f.kind === 'UNACCOUNTED' && f.line === 117);
+  assert.strictEqual(bootPointer.length, 1,
+    'BOOT\'s pointer was unmarked at this rev and must be named; BOOT findings at this rev: ' +
+    JSON.stringify(res.findings.filter((f) => f.file === 'exo_memory/BOOT.md').map((f) => [f.kind, f.w, f.line])));
 });
 
 test('THE COMPARISON: the registered sweep misses the carrier this tool finds', () => {
