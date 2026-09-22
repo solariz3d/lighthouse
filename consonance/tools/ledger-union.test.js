@@ -5,7 +5,7 @@ const assert = require('node:assert');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { spawnSync } = require('child_process');
+const { spawnSync, spawn } = require('child_process');
 const { canon, parseJsonl, union } = require('./ledger-union.js');
 
 const TOOL = path.join(__dirname, 'ledger-union.js');
@@ -64,10 +64,14 @@ test('the proposed union is ordered by time, and rows with no time go LAST', () 
   assert.strictEqual(u.noTime, 1);
 });
 
-test('the CLI has no --write: the write is a separate step', () => {
+// L071 replaced "the CLI has no --write" (L070): the write is now the authorised step. What stays refused is a write that
+// did not name its ONE file — both live files are never rewritten by accident.
+test('the CLI --write refuses without an explicit single --file', () => {
   const r = spawnSync(process.execPath, [TOOL, '--data', os.tmpdir(), '--write'], { encoding: 'utf8' });
   assert.strictEqual(r.status, 2);
-  assert.match(r.stderr, /there is no --write/);
+  assert.match(r.stderr, /--write needs --file lap\|board/);
+  const both = spawnSync(process.execPath, [TOOL, '--data', os.tmpdir(), '--write', '--file', 'both'], { encoding: 'utf8' });
+  assert.strictEqual(both.status, 2);
 });
 
 test('the CLI refuses an --out inside the data dir, and writes nothing there', () => {
@@ -95,4 +99,150 @@ test('a dry run end to end leaves the live file and every attic copy byte-identi
   assert.match(r.stdout, /ROWS TO ADD to live\s+1/);
   assert.ok(fs.readFileSync(live).equals(b1), 'the live file changed during a dry run');
   assert.ok(fs.readFileSync(atticFile).equals(b2), 'an attic copy changed during a dry run');
+});
+
+// ------------------------------------------------------------------ THE WRITE (L071)
+// Both live files are appended to while this runs: the app opens board.jsonl per write (main.rs:2127), lap-row.js
+// appends lap.jsonl. Each test below puts a writer at one phase of the swap and requires its row in the result.
+const { writeUnion } = require('./ledger-union.js');
+
+function writeFixture(liveRows, atticRows, extraLive = '') {
+  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'lu-w-'));
+  fs.writeFileSync(path.join(data, 'lap.jsonl'), J(...liveRows) + extraLive);
+  const atticDir = path.join(data, 'attic', 'pre-sync-2026-01-01T00-00-00-000Z');
+  fs.mkdirSync(atticDir, { recursive: true });
+  fs.writeFileSync(path.join(atticDir, 'lap.jsonl'), J(...atticRows));
+  return { data, live: path.join(data, 'lap.jsonl'), attic: path.join(atticDir, 'lap.jsonl') };
+}
+const lines = (p) => fs.readFileSync(p, 'utf8').split('\n').filter(Boolean);
+const W = (fx, hooks) => writeUnion({ dataDir: fx.data, name: 'lap.jsonl', time: 'at', hooks, settleMs: 20,
+  now: () => new Date('2026-09-22T08:00:00.000Z') });
+
+test('WRITE: the live file stays verbatim and in its own order; attic-only rows are interleaved by time', () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }, { n: 'c', at: 30 }], [{ n: 'a', at: 10 }, { n: 'b', at: 20 }, { n: 'd', at: 40 }]);
+  const r = W(fx);
+  assert.deepStrictEqual(lines(fx.live).map((l) => JSON.parse(l).n), ['a', 'b', 'c', 'd']);
+  assert.strictEqual(r.added, 2);
+  assert.strictEqual(r.verified, true);
+});
+
+test('WRITE: the original is kept byte-for-byte BESIDE the live file, and the attic copy is untouched', () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }]);
+  const orig = fs.readFileSync(fx.live), atticBefore = fs.readFileSync(fx.attic);
+  const r = W(fx);
+  assert.strictEqual(path.dirname(r.backup), fx.data);
+  assert.ok(fs.readFileSync(r.backup).equals(orig), 'the backup is not the original');
+  assert.ok(fs.readFileSync(fx.attic).equals(atticBefore), 'an attic copy changed');
+});
+
+test('WRITE: an unparseable (fused) line is kept verbatim, in place — never dropped', () => {
+  const fused = '{"n":"x","at":15}{"n":"y","at":16}';
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }], `${fused}\n`);
+  W(fx);
+  const got = lines(fx.live);
+  assert.ok(got.includes(fused), 'the fused line was lost');
+  assert.strictEqual(got.indexOf(fused), 1, 'the fused line moved out of its place after "a"');
+});
+
+test('WRITE: NO RENAMING — two generations of one id are both written', () => {
+  const fx = writeFixture([{ lap: 'L058', stage: 'open', at: 100, inquiry: '09-21' }], [{ lap: 'L058', stage: 'open', at: 50, inquiry: '09-14' }]);
+  W(fx);
+  assert.deepStrictEqual(lines(fx.live).map((l) => JSON.parse(l).inquiry), ['09-14', '09-21']);
+});
+
+for (const [phase, label] of [
+  ['afterRead', 'after the live file was read'],
+  ['afterTmp', 'after the union was written to the temp file (the catch-up)'],
+]) {
+  test(`WRITE: a row appended ${label} is in the result`, () => {
+    const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }]);
+    W(fx, { [phase]: () => fs.appendFileSync(fx.live, JSON.stringify({ n: 'late', at: 99 }) + '\n') });
+    assert.ok(lines(fx.live).some((l) => JSON.parse(l).n === 'late'), 'the concurrent row was lost');
+  });
+}
+
+test('WRITE: the new file never goes BACKWARDS — at the instant it appears it already holds every row written before the freeze', () => {
+  // Without the catch-up those rows would still arrive (the reconcile recovers them from the frozen original), but only
+  // after the settle: for that window a reader would see a board missing its newest rows. L071 mutant 1 survived
+  // every other test on exactly that difference.
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }]);
+  let atLink = null;
+  W(fx, {
+    afterTmp: () => fs.appendFileSync(fx.live, JSON.stringify({ n: 'before-freeze', at: 99 }) + '\n'),
+    afterLink: () => { atLink = lines(fx.live).map((l) => JSON.parse(l).n); },
+  });
+  assert.ok(atLink.includes('before-freeze'), 'the placed file lacked a row written before the freeze');
+});
+
+test('WRITE: a writer that RE-CREATES the live path between freeze and swap loses nothing (the gap)', () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }]);
+  const r = W(fx, { afterFreeze: () => fs.appendFileSync(fx.live, JSON.stringify({ n: 'gap', at: 99 }) + '\n') });
+  assert.ok(lines(fx.live).some((l) => JSON.parse(l).n === 'gap'), 'the row written into the re-created file was lost');
+  assert.strictEqual(r.gaps.length, 1);
+});
+
+test('WRITE: a write still in flight into the FROZEN original after the swap is reconciled in', () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }]);
+  let backup;
+  W(fx, { afterLink: (ctx) => { backup = ctx.backup; fs.appendFileSync(ctx.backup, JSON.stringify({ n: 'inflight', at: 99 }) + '\n'); } });
+  assert.ok(lines(fx.live).some((l) => JSON.parse(l).n === 'inflight'), 'the row landing in the frozen file was lost');
+  assert.ok(backup && fs.existsSync(backup));
+});
+
+test('WRITE: a PARTIAL last line at read time (a writer mid-line) comes through once, intact', () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }], '{"n":"half"');
+  W(fx, { afterRead: () => fs.appendFileSync(fx.live, ',"at":99}\n') });
+  const got = lines(fx.live).filter((l) => l.includes('half'));
+  assert.deepStrictEqual(got, ['{"n":"half","at":99}']);
+});
+
+test('WRITE: a writer that DIED mid-line leaves bytes that are carried as a line, never dropped', () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }], '{"n":"dead');
+  const r = W(fx);
+  assert.ok(lines(fx.live).includes('{"n":"dead'), 'the dead writer\'s bytes were dropped');
+  assert.strictEqual(r.partialCarried, 1);
+});
+
+test('WRITE: the verification can FAIL — a line lost after the swap is reported, not certified', () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }, { n: 'c', at: 30 }], [{ n: 'b', at: 20 }]);
+  const r = W(fx, { afterLink: () => fs.writeFileSync(fx.live, JSON.stringify({ n: 'a', at: 10 }) + '\n') });
+  assert.strictEqual(r.verified, false);
+  assert.ok(r.missingLines > 0 && r.missingRows > 0);
+});
+
+test('WRITE: refuses when the backup name is already taken — it never overwrites a record', () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }]);
+  W(fx);
+  const before = fs.readFileSync(fx.live);
+  assert.throws(() => W(fx), /already exists/);
+  assert.ok(fs.readFileSync(fx.live).equals(before), 'a refused write changed the live file');
+});
+
+test('WRITE: a second write (new stamp) adds nothing — the union is already in', () => {
+  const fx = writeFixture([{ n: 'a', at: 10 }], [{ n: 'b', at: 20 }]);
+  W(fx);
+  const r2 = writeUnion({ dataDir: fx.data, name: 'lap.jsonl', time: 'at', settleMs: 20, now: () => new Date('2026-09-22T09:00:00.000Z') });
+  assert.strictEqual(r2.added, 0);
+});
+
+test('WRITE: a REAL concurrent writer process appending throughout loses no row', { timeout: 60000 }, async () => {
+  const fx = writeFixture(Array.from({ length: 200 }, (_, i) => ({ n: `l${i}`, at: i })), Array.from({ length: 50 }, (_, i) => ({ n: `a${i}`, at: 1000 + i })));
+  const script = [
+    "const fs = require('fs'); let i = 0; const end = Date.now() + 1500;",
+    `const P = ${JSON.stringify(fx.live)};`,
+    "(function tick() { if (Date.now() > end) { process.stdout.write(String(i)); return; }",
+    "  fs.appendFileSync(P, JSON.stringify({ n: 'w' + i, at: 5000 + i }) + String.fromCharCode(10)); i++; setImmediate(tick); })();",
+  ].join('\n');
+  const writer = spawn(process.execPath, ['-e', script], { stdio: ['ignore', 'pipe', 'ignore'] });
+  let written = '';
+  writer.stdout.on('data', (d) => { written += d; });
+  await new Promise((r) => setTimeout(r, 200));
+  writeUnion({ dataDir: fx.data, name: 'lap.jsonl', time: 'at', settleMs: 400, now: () => new Date('2026-09-22T08:00:00.000Z') });
+  await new Promise((r) => writer.on('exit', r));
+  const n = Number(written);
+  const got = new Set(lines(fx.live).map((l) => JSON.parse(l).n));
+  const missing = Array.from({ length: n }, (_, i) => `w${i}`).filter((k) => !got.has(k));
+  assert.ok(n > 50, `the writer barely ran (${n} rows) — the test would prove nothing`);
+  assert.deepStrictEqual(missing, [], `${missing.length} of ${n} concurrent rows were lost`);
+  for (let i = 0; i < 50; i++) assert.ok(got.has(`a${i}`));
 });
