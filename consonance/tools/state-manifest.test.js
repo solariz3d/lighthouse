@@ -378,6 +378,32 @@ test('L071: a pre-union copy of any OTHER file is still UNPLACED — the rule is
   assert.ok(r.out.includes('ferry.jsonl.pre-union-'), r.out);
 });
 
+// L074 (the keeper, 04:0x: "lets do the ten ledger files first"). The append-only TRAVELS ledgers install as a
+// fast-forward. Each was checked writer by writer before it was marked (the hand-back names every writer path:line);
+// dispatch-gate.jsonl is the one that is NOT, because its quarantine REWRITES the live file (dispatch-gate.js:431).
+const L074_MARKED = ['precompact.jsonl', 'sessionstart-state.jsonl', 'sourced_ledger.jsonl', 'carrier-drift.jsonl',
+  'ferry.jsonl', 'read_ledger.jsonl', 'return_ledger.jsonl', 'vantage_findings.jsonl', 'resonance/atoms.jsonl'];
+const ruleFor = (glob) => SHIPPED().rules.find((r) => r.glob === glob);
+
+for (const g of L074_MARKED) {
+  test(`L074: ${g} is TRAVELS and installs as a fast-forward`, () => {
+    const r = ruleFor(g);
+    assert.ok(r, `no rule for ${g}`);
+    assert.strictEqual(r.class, 'TRAVELS');
+    assert.strictEqual(r.install, 'fast-forward');
+  });
+}
+
+test('L074: dispatch-gate.jsonl is NOT a fast-forward install, and its reason names the rewriting writer', () => {
+  const r = ruleFor('dispatch-gate.jsonl');
+  assert.strictEqual(r.install, undefined, 'a file that is ever rewritten would read DIVERGED forever and block every install');
+  assert.match(r.why, /dispatch-gate\.js:43\d/, 'the reason cites the line that rewrites it');
+});
+
+test('L074: no rule outside TRAVELS declares an install mode — a file that never arrives has nothing to install', () => {
+  for (const r of SHIPPED().rules) if (r.install) assert.strictEqual(r.class, 'TRAVELS', `${r.glob} declares install on a ${r.class} rule`);
+});
+
 // THE SUMMARY STAYS LAST. This runner exits here, so any test written below this line never runs and never fails —
 // L071's two tests were appended below it first and reported "30 passed" while not having run at all.
 console.log(`\n${pass} passed, ${fail} failed`);

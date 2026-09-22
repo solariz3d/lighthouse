@@ -1388,6 +1388,44 @@ test('L070: the SHIPPED manifest declares lap.jsonl and board.jsonl as fast-forw
   }
 });
 
+// ═══ L074 — the nine other append-only ledgers, through the SHIPPED manifest ═══════════════════════════════════════
+// Behaviour, not shape: each marked file is pulled with a LONGER local copy, and the install must refuse and keep it.
+// dispatch-gate.jsonl, which is NOT marked (its quarantine rewrites it), must still be replaced as before.
+
+const SHIPPED_MANIFEST = () => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'state-manifest.json'), 'utf8').replace(/^﻿/, ''));
+
+/** L publishes `incoming` as `file`; D holds `local`; D pulls with --install under the SHIPPED manifest. */
+function pullOne(file, incoming, local) {
+  const w = world({ [file]: incoming }, SHIPPED_MANIFEST());
+  const p = run(w, ['--push', '--no-remote']);
+  assert.strictEqual(p.code, 0, both(p));
+  execFileSync('git', ['-C', w.state, 'push', '-q', '-u', 'origin', 'main']);
+  const stateD = path.join(w.dir, 'stateD');
+  execFileSync('git', ['clone', '-q', w.bare, stateD]);
+  const dataD = path.join(w.dir, 'dataD');
+  const dst = path.join(dataD, file.split('/').join(path.sep));
+  fs.mkdirSync(path.dirname(dst), { recursive: true });
+  fs.writeFileSync(dst, local);
+  const r = runD({ ...w, stateD, dataD }, ['--pull', '--install']);
+  return { r, read: () => fs.readFileSync(dst, 'utf8') };
+}
+
+for (const f of ['precompact.jsonl', 'sessionstart-state.jsonl', 'sourced_ledger.jsonl', 'carrier-drift.jsonl', 'ferry.jsonl',
+  'read_ledger.jsonl', 'return_ledger.jsonl', 'vantage_findings.jsonl', 'resonance/atoms.jsonl']) {
+  test(`L074: ${f} — a LONGER local copy is refused and kept, never replaced`, () => {
+    const local = rows('a', 'b');
+    const { r, read } = pullOne(f, rows('a'), local);
+    assert.notStrictEqual(r.code, 0, both(r));
+    assert.strictEqual(read(), local, `${f} was replaced`);
+  });
+}
+
+test('L074: dispatch-gate.jsonl (NOT marked — its quarantine rewrites it) is REPLACED on install as before, never refused', () => {
+  const { r, read } = pullOne('dispatch-gate.jsonl', rows('a'), rows('a', 'b'));
+  assert.strictEqual(r.code, 0, both(r));
+  assert.strictEqual(read(), rows('a'), 'an unmarked file installs by replacement, with its old copy in the attic');
+});
+
 console.log('');
 console.log(`state-sync.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
