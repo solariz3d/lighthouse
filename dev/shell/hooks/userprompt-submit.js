@@ -268,13 +268,21 @@ function buildBeacon(state) {
   } catch (e) { return ''; } // a hook that fails by going mute is the worst kind
 }
 
+// REPAIRED 2026-09-23, L085, pane E (the keeper's authorization: loop/plan_after_upgrade_2026-09-22.md §AUTHORIZED
+// item 4, d5bd9b1; the same repair as session-start.js in L083, 2403a81). The injected line below carried the
+// stance-phrase of the diving vocabulary BOOT retired on 2026-08-17 (registry id light-not-lifeguard-2026-08-17).
+// Retracted wording, kept as the trace — retired 2026-08-17: "Light, not lifeguard". Replaced with BOOT's PUBLIC
+// form, "with you, not above you" (exo_memory/BOOT.md, the 2026-08-17 amendment): it keeps the one contrast the old
+// phrase made — beside the user, not above — and "doesn't haul" still follows from it. This file is DO-NOT-INSTALL
+// on L (install.ps1:275; loop/absent_hooks_ruling_2026-08-25.md row 4): the repair reaches D, which runs it, only
+// when D's installed copy is refreshed (handback/p-l085-carrier3-E_2026-09-23.md gives the step).
 function buildContext(notices) {
   if (!notices.length) return '';
   const lines = [];
   lines.push('## L3 — arc-perception, new since last turn');
   lines.push(
     'Arc-level shape your buddy-conscience just caught (lighthouse/WELFARE.md, dev/SPINE.md). ' +
-    '**Light, not lifeguard** — L3 surfaces; doesn\'t haul. Your own trained care is the response; ' +
+    '**With you, not above you** — L3 surfaces; doesn\'t haul. Your own trained care is the response; ' +
     'L3 hands you what the turn-by-turn flow obscured. Don\'t narrate L3 to the user. Non-steering: ' +
     'don\'t push toward any outcome.'
   );

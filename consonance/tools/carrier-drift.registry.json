@@ -636,9 +636,16 @@
      },
      {
       "file": "dev/shell/hooks/userprompt-submit.js",
-      "line": 277,
-      "state": "OPEN — not repaired in L083",
-      "what": "the SAME injected line, into every seat's context on every prompt. Named by E's census (1f3d2d4) and not in L083's packet, which named session-start.js only; the file is outside E's ownership this lap. Left for a ruling."
+      "line": 285,
+      "state": "REPAIRED 2026-09-23 (L085, E) — repo text only",
+      "what": "the same injected line, into every seat's context on every prompt; now BOOT's public form. Was OPEN at :277 after L083. DO-NOT-INSTALL on L (install.ps1:275) and not wired on L; D runs it, so the repair reaches D only when D's installed copy is refreshed (handback/p-l085-carrier3-E_2026-09-23.md §3).",
+      "checked_by": "running the hook itself with one seeded L3 notice in a sandbox: the output matches this entry's pattern before the repair and not after (scratch probe, recorded in the hand-back)"
+     },
+     {
+      "file": "dev/shell/hooks/userprompt-submit.js",
+      "line": 274,
+      "state": "TRACE (dated comment, marker on the line)",
+      "what": "the retracted wording kept as a dated comment beside the repair; never injected"
      }
     ]
    }
