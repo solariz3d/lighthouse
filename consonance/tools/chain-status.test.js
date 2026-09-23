@@ -1289,3 +1289,92 @@ test('STALE, NEVER TAKES THE PULSE DOWN: a throw in the stale reader prints STAL
   assert.match(r.text, /^STALE UNKNOWN — boom · chain: L064 WORKING/, r.text);
   fx.cleanup();
 });
+
+// ── L095 · QUEUED — a delivery waiting at a busy seat is surfaced like UNDELIVERED is ─────────────────────────────
+// The board rows are the app's own (`main.rs` gate_or_queue :10189 writes QUEUED; drain_inboxes :10321/:10338 writes
+// WITHDRAWN NOT DELIVERED / DELIVERED with the SAME label). A QUEUED row with no later drain row for the same receiver
+// and label is still waiting. Behind `stamp=working` the hold is UNBOUNDED (main.rs drain_decision: Working => Hold), so
+// that is where a stall lives; every other gate is force-delivered at the 240 s bound and only prints past it.
+const QROW = (ts, sid, gate, label, n = 1) => ({ pane: 'chair', role: 'committee', ts,
+  text: 'QUEUED -> ' + sid.slice(0, 8) + ' (' + n + ' waiting, ' + gate + '): ' + label });
+const DROW = (ts, sid, label) => ({ pane: 'chair', role: 'committee', ts,
+  text: 'DELIVERED -> ' + sid.slice(0, 8) + ' [stamp=ready]: ' + label });
+const WROW = (ts, sid, label) => ({ pane: 'chair', role: 'committee', ts,
+  text: 'WITHDRAWN NOT DELIVERED -> ' + sid.slice(0, 8) + ' (queued 30s ago, cancelled before this pane was ready for it): ' + label });
+const MIN = 60000;
+const T0 = Date.parse('2026-09-23T10:00:00.000Z');
+const RING = 'L092 packet A (AGENTS.md + the repo description DRAFT): exo_memory/handback/p-l092-agents-A_2026-09-23.md';
+
+function qline(boardRows, now, opts = {}) {
+  // `lap: null` is a ledger with NO baton rows at all: no open lap AND no claim, the one state in which line() used to
+  // return no text. (The first version used a filed lap, which counts as unwitnessed, so the claim kept the line alive
+  // and the no-lap test passed without ever reaching the exit it names — mutant Q8 survived.)
+  const s = store(opts.lap === null ? [] : WORKING(T0 - 20 * MIN), boardRows, { lettersMap: LET_WITH_LIB });
+  if (opts.launchedAt) fs.writeFileSync(path.join(s.dir, 'stick-waiter.lock'), JSON.stringify({ pid: 1, at: new Date(opts.launchedAt).toISOString() }));
+  const r = mod().line({ ledger: s.ledger, now, dirty: 0 });
+  s.cleanup();
+  return r.text || '';
+}
+
+test('QUEUED — a ring waiting 4 min behind stamp=working is printed, naming the seat and when it started waiting', () => {
+  const t = qline([QROW(T0, A, 'stamp=working', RING)], T0 + 4 * MIN + 5000);
+  // [0-9]{2}, not a backslash-d pair: portable-paths read `d:\` in that as a drive letter (L095, a false positive, fixed
+  // at the source rather than baselined).
+  assert.match(t, /QUEUED A 4m \(receiver busy since [0-9]{2}:[0-9]{2}\)/, t);
+});
+
+test('QUEUED — waiting 1 min behind stamp=working is ordinary, and is not printed', () => {
+  const t = qline([QROW(T0, A, 'stamp=working', RING)], T0 + 1 * MIN);
+  assert.ok(!/QUEUED/.test(t), t);
+});
+
+test('QUEUED — a ring that was DELIVERED is not printed, however long it waited', () => {
+  const t = qline([QROW(T0, A, 'stamp=working', RING), DROW(T0 + 9 * MIN, A, RING)], T0 + 20 * MIN);
+  assert.ok(!/QUEUED/.test(t), t);
+});
+
+test('QUEUED — a ring that was WITHDRAWN is not printed', () => {
+  const t = qline([QROW(T0, A, 'stamp=working', RING), WROW(T0 + 2 * MIN, A, RING)], T0 + 20 * MIN);
+  assert.ok(!/QUEUED/.test(t), t);
+});
+
+test('QUEUED — the librarian as the receiver is printed by name, every seat included', () => {
+  const t = qline([QROW(T0, LIB, 'stamp=working', RING)], T0 + 4 * MIN + 5000);
+  assert.match(t, /QUEUED librarian 4m/, t);
+});
+
+test('QUEUED — behind stamp=ready it is NOT printed inside the 240 s bound: the app force-delivers it itself', () => {
+  // Measured on L's board: 135 rings queued behind stamp=ready, median AND p90 exactly 240 s — the bound. Printing them
+  // at 3 min would put 116 lines a night in every seat for a wait the app ends on its own.
+  const t = qline([QROW(T0, A, 'stamp=ready', RING)], T0 + 4 * MIN);
+  assert.ok(!/QUEUED/.test(t), t);
+});
+
+test('QUEUED — behind stamp=ready but STILL waiting past the bound (5 min +) is printed: the forced delivery did not happen', () => {
+  const t = qline([QROW(T0, A, 'stamp=ready', RING)], T0 + 6 * MIN);
+  assert.match(t, /QUEUED A 6m/, t);
+});
+
+test('QUEUED — a ring queued before the app last launched died with the old process, and is not printed as waiting', () => {
+  // The inbox is in memory (main.rs Inbox): a restart drops it with NO row. L's board carries two such rows (09-08, 09-14)
+  // that would otherwise print as QUEUED forever.
+  const t = qline([QROW(T0, A, 'stamp=working', RING)], T0 + 30 * MIN, { launchedAt: T0 + 10 * MIN });
+  assert.ok(!/QUEUED/.test(t), t);
+});
+
+test('QUEUED — pairing is by receiver AND label: a delivery to another seat, or of another ring, does not clear it', () => {
+  const t = qline([QROW(T0, A, 'stamp=working', RING), DROW(T0 + MIN, B, RING), DROW(T0 + MIN, A, 'a different ring: x')], T0 + 4 * MIN + 5000);
+  assert.match(t, /QUEUED A 4m/, t);
+});
+
+test('QUEUED — with NO open lap it still prints: a ring can back up when nothing is open', () => {
+  // The control first: the same empty ledger with nothing queued prints no line at all.
+  assert.strictEqual(qline([], T0 + 4 * MIN + 5000, { lap: null }), '', 'the control must be the no-text state');
+  const t = qline([QROW(T0, A, 'stamp=working', RING)], T0 + 4 * MIN + 5000, { lap: null });
+  assert.match(t, /QUEUED A 4m/, 'silent with no lap open: ' + t);
+});
+
+test('QUEUED — several waiting at one seat: the OLDEST sets the age, and the count is said', () => {
+  const t = qline([QROW(T0, A, 'stamp=working', RING), QROW(T0 + 2 * MIN, A, 'stamp=working', 'second ring: y', 2)], T0 + 5 * MIN);
+  assert.match(t, /QUEUED A 5m, 2 waiting/, t);
+});

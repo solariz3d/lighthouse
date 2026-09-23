@@ -702,6 +702,124 @@ const CALL_LIB_RE = /^call_librarian ([A-Z][A-Z0-9]*) -> LIB \[/;
 const REFUSED_RE = /^(?:call_librarian|call_chair) REFUSED[\s\S]*?mount ([A-Za-z0-9]+) tried to speak/;
 
 const LIBRARIAN_SID = '0c0c0c0b-0000-4000-8000-00000000115b';
+const MAIN_SID = '0c0c0c0a-0000-4000-8000-000000000a01';   // the chair's fixed id, main.rs MAIN_SID — copied as LIBRARIAN_SID is
+
+// ── CLAUSE 4: QUEUED — a delivery waiting at a busy seat (L095; exo_memory/loop/stall_trace_2026-09-23.md, fix 1) ──
+//
+// The app writes both ends to the board, so nothing here is inferred: `gate_or_queue` (main.rs:10189) writes
+// `QUEUED -> <id8> (<n> waiting, <gate>): <label>` when a delivery cannot go now, and `drain_inboxes` (:10321, :10338)
+// writes `WITHDRAWN NOT DELIVERED -> <id8> (…): <label>` or `DELIVERED -> <id8> [<note>]: <label>` when it is taken —
+// with the SAME label the queue stored. Those are the only three writers of those prefixes. So a QUEUED row with no later
+// drain row for the same receiver and label is still waiting. Measured on L's board 2026-09-23: 258 QUEUED, 256 paired
+// with their drain row, 0 orphan drains, 2 unpaired — and both unpaired predate a later launch (below).
+//
+// WHY A DURATION AT ALL, since this file's rule is "the axis is an event, not a duration" (§3a): the QUEUED row IS the
+// event; the duration only separates a stalled wait from an ordinary one, because every ring to a busy seat queues.
+// And the duration is per gate, from the app's own hold rule (main.rs `drain_decision`):
+//   · behind `stamp=working` the hold is UNBOUNDED — `PaneGate::Working => Drain::Hold` — so the wait ends only when that
+//     seat's turn does. That is where tonight's stalls lived (measured: n 67, median 140 s, p90 968 s, max 2,119 s), and
+//     it prints after QUEUED_WORKING_MS, the spec's 3 minutes;
+//   · behind every OTHER gate the app force-delivers at MAX_HOLD_MS (240 s, main.rs:9533) and says so. Measured: 135
+//     behind `stamp=ready`, median AND p90 exactly 240 s. Printing those at 3 minutes would put ~116 lines a night in every
+//     seat for a wait the app ends by itself — a reminder that prints every turn is wallpaper (BUILDING.md, the 345 prints).
+//     So they print only past the bound plus one drain tick, when the forced delivery should already have happened.
+//
+// A RESTART DROPS THE QUEUE WITH NO ROW. The inbox is in memory, so a ring queued before the app last started will never
+// drain and never be recorded as lost. The last launch is read from the one file the app writes at startup,
+// `<data>/stick-waiter.lock` (`at`: the waiter main.rs starts first thing, start_exit_waiter) — a PROXY for
+// APP_STARTED_AT, which is held in memory only. QUEUED rows older than it are not reported as waiting. If the lock is
+// absent, nothing is excluded: the error then runs toward printing, never toward silence.
+const QUEUED_WORKING_MS = 3 * 60 * 1000;
+const HOLD_BOUND_MS = 240 * 1000;                  // main.rs MAX_HOLD_MS — a copy; if that constant moves, move this
+const QUEUED_BOUNDED_MS = HOLD_BOUND_MS + 60 * 1000;
+const QUEUE_ROW_RE = /^(QUEUED|DELIVERED|WITHDRAWN NOT DELIVERED) -> ([0-9a-f]{8})/;
+
+/** One of the three queue rows, split into kind, receiver (8 hex), gate (QUEUED only) and label; or null. */
+function queueRow(text) {
+  const m = QUEUE_ROW_RE.exec(String(text || ''));
+  if (!m) return null;
+  const rest = text.slice(m[0].length);
+  let cut = 0, gate = null;
+  if (rest.startsWith(' (')) { cut = rest.indexOf(')') + 1; gate = rest.slice(2, cut - 1).replace(/^\d+ waiting, /, ''); }
+  else if (rest.startsWith(' [')) cut = rest.indexOf(']') + 1;
+  if (cut < 0) return null;
+  const after = rest.slice(cut);
+  const i = after.indexOf(': ');
+  if (i < 0) return null;
+  return { kind: m[1], who: m[2], gate, label: after.slice(i + 2) };
+}
+
+/**
+ * The deliveries still waiting, per receiver, that have waited past their gate's threshold. Pure: rows in, list out.
+ * @returns {{ who: string, seat: string, since: number, age: number, waiting: number, gate: string }[]}
+ */
+function queuedWaiting(rows, now, opts = {}) {
+  const launchedAt = opts.launchedAt || 0;
+  const letters = opts.letters || {};
+  const open = [];
+  const sorted = rows.filter(e => e && e.pane === 'chair' && e.role === 'committee' && e.ts)
+    .sort((a, b) => a.ts - b.ts);
+  for (const e of sorted) {
+    const q = queueRow(e.text);
+    if (!q) continue;
+    if (q.kind === 'QUEUED') { open.push({ ...q, ts: e.ts }); continue; }
+    const i = open.findIndex(o => o.who === q.who && o.label === q.label);
+    if (i >= 0) open.splice(i, 1);
+  }
+  const bySeat = new Map();
+  for (const o of open) {
+    if (o.ts < launchedAt) continue;                       // died with the process that held it
+    const limit = o.gate === 'stamp=working' ? QUEUED_WORKING_MS : QUEUED_BOUNDED_MS;
+    const cur = bySeat.get(o.who);
+    if (cur) { cur.waiting++; if (o.ts < cur.since) { cur.since = o.ts; cur.gate = o.gate; } }
+    else bySeat.set(o.who, { who: o.who, since: o.ts, waiting: 1, gate: o.gate, limit });
+  }
+  const seatOf = (id8) => {
+    if (MAIN_SID.startsWith(id8)) return 'chair';
+    if (LIBRARIAN_SID.startsWith(id8)) return 'librarian';
+    const k = Object.keys(letters).find(s => s.startsWith(id8));
+    return k ? letters[k] : id8;
+  };
+  return [...bySeat.values()]
+    .map(s => ({ ...s, age: now - s.since, seat: seatOf(s.who), limit: s.gate === 'stamp=working' ? QUEUED_WORKING_MS : QUEUED_BOUNDED_MS }))
+    .filter(s => s.age > s.limit)
+    .sort((a, b) => b.age - a.age);
+}
+
+/** `<data>/stick-waiter.lock`'s `at`, the proxy for the app's start; 0 when absent or unreadable. */
+function launchedAt(store) {
+  try { return Date.parse(JSON.parse(fs.readFileSync(path.join(store, 'stick-waiter.lock'), 'utf8')).at) || 0; }
+  catch (_) { return 0; }
+}
+
+/**
+ * Clause 4 against a store: the board and letters.json BESIDE THE LEDGER IN USE (this file's rule, never the module-level
+ * data dir), the blind window honoured exactly as `collation` honours it. `{ list, why }` — `why` set when it could not
+ * look, so the line can say UNKNOWN instead of going quiet.
+ */
+function queuedScan(store, now, opts = {}) {
+  const board = opts.board !== undefined ? opts.board : path.join(store, 'board.jsonl');
+  if (!board || !fs.existsSync(board)) return { list: [], why: null };   // no board: not a room running a committee
+  let st;
+  try { st = (opts.blindState || require('../hooks/blind.js').blindState)(path.join(path.dirname(board), 'blind.lock')); }
+  catch (_) { st = { blind: true, reason: 'blind.js unavailable' }; }
+  if (st && st.blind) return { list: [], why: null };                  // withheld with the rest of cross-pane state
+  const t = opts.boardLines ? { lines: opts.boardLines } : tail(board, BOARD_TAIL_BYTES);
+  if (!t) return { list: [], why: 'board unreadable' };
+  let letters = {};
+  try { letters = JSON.parse(fs.readFileSync(path.join(path.dirname(board), 'letters.json'), 'utf8').replace(/^﻿/, '')); }
+  catch (_) { /* seats print by id instead of letter — never a reason to go quiet */ }
+  const rows = [];
+  for (const raw of t.lines) { const p = parseBoardLine(raw); if (p) for (const e of p.rows) rows.push(e); }
+  return { list: queuedWaiting(rows, now, { letters, launchedAt: launchedAt(path.dirname(board)) }), why: null };
+}
+
+const hhmm = (ms) => { const d = new Date(ms); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
+function queuedPart(list, now) {
+  if (!list || !list.length) return null;
+  return 'QUEUED ' + list.map(s => s.seat + ' ' + Math.floor(s.age / 60000) + 'm'
+    + (s.waiting > 1 ? ', ' + s.waiting + ' waiting' : '') + ' (receiver busy since ' + hhmm(s.since) + ')').join(', ');
+}
 
 /**
  * A pane identifier as it appears on the board -> its letter, or null.
@@ -918,7 +1036,14 @@ function line(opts = {}) {
     head = cl[0].newest;   // the newest lap IS the dead one \u2014 name it as the chain's position
     headUnwitnessed = true;
   }
-  if (!head && !claim) {
+  // CLAUSE 4 IS READ BEFORE THE NO-LAP EXIT, because a ring backs up whether or not a lap is open (keep-warm, freestyle,
+  // the chair ringing an idle seat), and a clause that runs only inside an open lap is silent in exactly that state.
+  let queued = { list: [], why: null };
+  try {
+    queued = opts.queued !== undefined ? opts.queued
+      : queuedScan(path.dirname(opts.ledger || LEDGER || '.'), now, { board: opts.board, blindState: opts.blindState });
+  } catch (e) { queued = { list: [], why: (e && e.message) || String(e) }; }
+  if (!head && !claim && !queued.list.length && !queued.why) {
     const any = led.rows.some(r => r && r.stage === 'chain');
     return {
       text: null,
@@ -1019,6 +1144,11 @@ function line(opts = {}) {
   if (col && col.undelivered && col.undelivered.length) {
     parts.push('UNDELIVERED ' + col.undelivered.map(u => u.letter + ' (refused ' + ago(now - u.at) + ' ago)').join(', '));
   }
+  // CLAUSE 4 RIDES EVERY HOLDER, like clause 3, and for the same reason: a ring waiting at a busy seat is a fault under
+  // any holder, and it is the one fault the sender cannot see after its first "queued" reply.
+  const qp = queuedPart(queued.list, now);
+  if (qp) parts.push(qp);
+  if (queued.why) parts.push('queue UNKNOWN — ' + queued.why);
   if (col && col.refusedUnresolved) {
     parts.push(col.refusedUnresolved + ' refusal(s) UNRESOLVED to a letter');
   }
@@ -1118,6 +1248,7 @@ if (require.main === module) process.exit(main(process.argv.slice(2)));
 
 module.exports = {
   line, openLaps, staleLaps, STALE_MS, chainLaps, unwitnessed, readLedger, dirtyCount, tree, ago, main, collation, toLetter, tail, replay,
+  queueRow, queuedWaiting, queuedScan, QUEUED_WORKING_MS, QUEUED_BOUNDED_MS,
   LEDGER, REPO, BOARD, LETTERS, WORK_ATTESTING, WINDOW, LIST_CAP, BOARD_TAIL_BYTES, DISPATCH_RE, REFUSED_RE,
   HANDBACK_DIR, parseBoardLine,
 };
