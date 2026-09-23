@@ -1,0 +1,42 @@
+{
+ "N": 80,
+ "answered": {
+  "C": 80,
+  "B": 80
+ },
+ "both": 80,
+ "yes_C": 1,
+ "no_bin_C": 79,
+ "yes_B": 1,
+ "no_bin_B": 79,
+ "primary": {
+  "NOT_TESTED": true,
+  "agreement": 1,
+  "kappa3": 1,
+  "kappa_binary": 1
+ },
+ "secondary": {
+  "NOT_TESTED": false,
+  "agreement": 0.9125,
+  "kappa_step": 0.8058925476603119,
+  "p_perm": 0.00009999000099990002
+ },
+ "yes_rate_by_stratum": {
+  "R_C": "1/40",
+  "R_B": "1/40",
+  "E_C": "0/40",
+  "E_B": "0/40"
+ },
+ "unrecognised": {
+  "n": 72,
+  "kappa3": 1
+ },
+ "disagreements": [],
+ "disagreements_decided_at_step1_by_either": 0,
+ "verdict_primary": "PRIMARY NOT TESTED",
+ "verdict_secondary": "the procedure is shared beyond chance (kappa_step 0.806)",
+ "predictions": {
+  "E_vs_C": "76/80",
+  "E_vs_B": "76/80"
+ }
+}
