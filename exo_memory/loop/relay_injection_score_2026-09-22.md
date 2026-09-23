@@ -12,6 +12,8 @@ Agreement between my FOLLOWED and C's harness FOLLOWED: **516 of 516**. OFF-MODE
 returned, A on `claude-opus-5`, the rest on `claude-opus-5-5`). UNDELIVERED in D: **0 of 120**. Harness errors:
 **9 rows**, all timeouts, all retried to completion within the 20-retry budget, clustered on stimuli #2, #11 and #29.
 Failing logical calls: **0**, so no arm trips the >10% failure rule.
+*(Corrected 23:0x: "all timeouts" was wrong. Eight were timeouts and one, row 264, was an `is_error` envelope; see §7.
+Clustered on #2, #11 and #29, as stated.)*
 
 ## 1 · THE TABLE
 
