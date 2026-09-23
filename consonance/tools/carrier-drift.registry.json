@@ -507,6 +507,48 @@
      "kind": "mention",
      "why": "B's own carrier-rows hand-back, §1, naming which of three ADJACENT census-table rows belongs to which withdrawal — the trap that defeated the librarian's second pass. The line is a classification argument about other lines and asserts none of the three claims. Same kind, and the same reasoning, as the rows it is explaining. FILED BY ITS OWN AUTHOR, which is the point worth noticing: the repair for the report-mints-a-carrier recursion minted one, on the sentence that explains the recursion. The note added to that hand-back afterwards refers to the wordings by entry id and line number ONLY, so the accounting stops here instead of recursing a third time.",
      "planted_by": "B, D-carrier 2026-09-22 — accounting for its OWN hand-back, same lap"
+    },
+    {
+     "file": "exo_memory/handback/p-l114-config-C_2026-09-23.md",
+     "anchor": "- The census of the struck wording (\"can't lose by saying it\") now finds **44 occurrenc",
+     "kind": "mention",
+     "why": "C's L114 config hand-back, line 145 at planting: QUOTES the retracted ASK-008 wording as the content of the stale Jev prompt (L114 finding: the runner require-cached the pre-L083 worker, so live Jev judged with the retracted line). It reports what a prompt carried and asserts nothing.",
+     "planted_by": "librarian, L114 collation prep 2026-09-23 on L (non-author of the A and C files; author of the score file)"
+    },
+    {
+     "file": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md",
+     "anchor": "07 of 407, still carries the RETRACTED \"can't lose by saying it\" test, because the running",
+     "kind": "mention",
+     "why": "A's L114 prompt hand-back, line 1 at planting: QUOTES the retracted ASK-008 wording as the content of the stale Jev prompt (L114 finding: the runner require-cached the pre-L083 worker, so live Jev judged with the retracted line). It reports what a prompt carried and asserts nothing.",
+     "planted_by": "librarian, L114 collation prep 2026-09-23 on L (non-author of the A and C files; author of the score file)"
+    },
+    {
+     "file": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md",
+     "anchor": "ked:** `vendor.js` refuses to write if `can't lose by saying it` is in the template or MET",
+     "kind": "mention",
+     "why": "A's L114 prompt hand-back, line 27 at planting: QUOTES the retracted ASK-008 wording as the content of the stale Jev prompt (L114 finding: the runner require-cached the pre-L083 worker, so live Jev judged with the retracted line). It reports what a prompt carried and asserts nothing.",
+     "planted_by": "librarian, L114 collation prep 2026-09-23 on L (non-author of the A and C files; author of the score file)"
+    },
+    {
+     "file": "exo_memory/handback/p-l114-prompt-A_2026-09-23.md",
+     "anchor": "ical disguise — \"if you can't lose by saying it, suspect it.\" module",
+     "kind": "mention",
+     "why": "A's L114 prompt hand-back, line 98 at planting: QUOTES the retracted ASK-008 wording as the content of the stale Jev prompt (L114 finding: the runner require-cached the pre-L083 worker, so live Jev judged with the retracted line). It reports what a prompt carried and asserts nothing.",
+     "planted_by": "librarian, L114 collation prep 2026-09-23 on L (non-author of the A and C files; author of the score file)"
+    },
+    {
+     "file": "exo_memory/loop/jev_r2r3_score_2026-09-23.md",
+     "anchor": "red builder; every one carries *\"if you can't lose by saying it, suspect it\"*. The runner ",
+     "kind": "mention",
+     "why": "the librarian's Jev R2/R3 score addendum, line 43 at planting: QUOTES the retracted ASK-008 wording as the content of the stale Jev prompt (L114 finding: the runner require-cached the pre-L083 worker, so live Jev judged with the retracted line). It reports what a prompt carried and asserts nothing.",
+     "planted_by": "librarian, L114 collation prep 2026-09-23 on L (non-author of the A and C files; author of the score file)"
+    },
+    {
+     "file": "exo_memory/map/A.md",
+     "anchor": "stored Jev prompts carry the RETRACTED \"can't lose by saying it\" — the runner (started 07:",
+     "kind": "mention",
+     "why": "A's map, the L114 entry, line 1458 at planting: QUOTES the retracted ASK-008 wording as the content of the stale Jev prompt (L114 finding: the runner require-cached the pre-L083 worker, so live Jev judged with the retracted line). It reports what a prompt carried and asserts nothing.",
+     "planted_by": "librarian, L114 collation prep 2026-09-23 on L (non-author of the A and C files; author of the score file)"
     }
    ],
    "instruction_carriers_outside_corpus": {
