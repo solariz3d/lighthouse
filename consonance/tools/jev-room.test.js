@@ -46,11 +46,11 @@ test('roomOf: an installed copy with no config names every place tried', () => {
 
 // ── dataDirOf (moved here from jev-shadow-runner.js; now takes `home`) ──────────────────────────────────────────
 test('dataDirOf: CONSONANCE_DATA wins over ~/.consonance.json', () => {
-  assert.strictEqual(installed().dataDirOf({ CONSONANCE_DATA: 'E:\\d' }, homeWith({ data_dir: 'F:\\x' })), 'E:\\d');
+  assert.strictEqual(installed().dataDirOf({ CONSONANCE_DATA: '/fixture/env-data' }, homeWith({ data_dir: '/fixture/config-data' })), '/fixture/env-data');
 });
 
 test('dataDirOf: an installed copy reads data_dir from ~/.consonance.json', () => {
-  assert.strictEqual(installed().dataDirOf({}, homeWith({ data_dir: 'F:\\x' })), 'F:\\x');
+  assert.strictEqual(installed().dataDirOf({}, homeWith({ data_dir: '/fixture/config-data' })), '/fixture/config-data');
 });
 
 test('dataDirOf: no env and no config → null (judge mode then says so once and stays off)', () => {
@@ -59,8 +59,8 @@ test('dataDirOf: no env and no config → null (judge mode then says so once and
 
 // ── disciplineDirOf (NEW: replaces `path.resolve(__dirname, '..', '..')` in jev-shadow.js and jev-shadow-runner.js) ─
 test('disciplineDirOf: JEV_SHADOW_DISCIPLINE wins', () => {
-  const got = installed().disciplineDirOf({ env: { JEV_SHADOW_DISCIPLINE: 'G:\\disc' }, home: homeWith({ room_path: boot(room()) }) });
-  assert.deepStrictEqual([got.dir, got.tier], ['G:\\disc', 'JEV_SHADOW_DISCIPLINE']);
+  const got = installed().disciplineDirOf({ env: { JEV_SHADOW_DISCIPLINE: '/fixture/discipline' }, home: homeWith({ room_path: boot(room()) }) });
+  assert.deepStrictEqual([got.dir, got.tier], ['/fixture/discipline', 'JEV_SHADOW_DISCIPLINE']);
 });
 
 test('disciplineDirOf: an installed copy uses the ROOM room_path names — where METHOD.md is', () => {
