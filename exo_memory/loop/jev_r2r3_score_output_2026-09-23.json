@@ -1,0 +1,228 @@
+{
+ "pairs": {
+  "B-C": {
+   "n": 49,
+   "agree": 41,
+   "pct": 83.7,
+   "kappa": 0.125
+  },
+  "Jev(stored)-B": {
+   "n": 55,
+   "agree": 25,
+   "pct": 45.5,
+   "kappa": 0.11
+  },
+  "Jev(stored)-C": {
+   "n": 50,
+   "agree": 20,
+   "pct": 40,
+   "kappa": 0.071
+  },
+  "Jev(stored)-V0(fresh)": {
+   "n": 56,
+   "agree": 54,
+   "pct": 96.4,
+   "kappa": 0.938
+  }
+ },
+ "pairs_unrecognised": {
+  "B-C": {
+   "n": 15,
+   "agree": 13,
+   "pct": 86.7,
+   "kappa": 0.444
+  },
+  "Jev-B": {
+   "n": 54,
+   "agree": 25,
+   "pct": 46.3,
+   "kappa": 0.116
+  },
+  "Jev-C": {
+   "n": 15,
+   "agree": 6,
+   "pct": 40,
+   "kappa": 0.069
+  }
+ },
+ "by_kind": {
+  "personal": {
+   "n": 14,
+   "Jev": {
+    "clean": 5,
+    "drift": 9,
+    "abstain": 0
+   },
+   "B": {
+    "clean": 11,
+    "drift": 3,
+    "abstain": 0
+   },
+   "C": {
+    "clean": 13,
+    "drift": 1,
+    "abstain": 0
+   },
+   "Jev-B": {
+    "n": 14,
+    "agree": 8,
+    "pct": 57.1,
+    "kappa": 0.263
+   },
+   "Jev-C": {
+    "n": 14,
+    "agree": 6,
+    "pct": 42.9,
+    "kappa": 0.082
+   },
+   "B-C": {
+    "n": 14,
+    "agree": 10,
+    "pct": 71.4,
+    "kappa": -0.12
+   }
+  },
+  "work": {
+   "n": 42,
+   "Jev": {
+    "clean": 15,
+    "drift": 21,
+    "abstain": 6
+   },
+   "B": {
+    "clean": 36,
+    "drift": 5,
+    "abstain": 0
+   },
+   "C": {
+    "clean": 34,
+    "drift": 2,
+    "abstain": 0
+   },
+   "Jev-B": {
+    "n": 41,
+    "agree": 17,
+    "pct": 41.5,
+    "kappa": 0.055
+   },
+   "Jev-C": {
+    "n": 36,
+    "agree": 14,
+    "pct": 38.9,
+    "kappa": 0.066
+   },
+   "B-C": {
+    "n": 35,
+    "agree": 31,
+    "pct": 88.6,
+    "kappa": 0.278
+   }
+  }
+ },
+ "variants": {
+  "V0": {
+   "answered": 56,
+   "vsV0_changed": 0,
+   "personal": {
+    "clean": 5,
+    "drift": 9,
+    "abstain": 0
+   },
+   "work": {
+    "clean": 17,
+    "drift": 19,
+    "abstain": 6
+   },
+   "vsB": {
+    "n": 55,
+    "agree": 27,
+    "pct": 49.1,
+    "kappa": 0.132
+   },
+   "vsC": {
+    "n": 50,
+    "agree": 22,
+    "pct": 44,
+    "kappa": 0.083
+   }
+  },
+  "V1": {
+   "answered": 56,
+   "vsV0_changed": 11,
+   "personal": {
+    "clean": 6,
+    "drift": 8,
+    "abstain": 0
+   },
+   "work": {
+    "clean": 17,
+    "drift": 22,
+    "abstain": 3
+   },
+   "vsB": {
+    "n": 55,
+    "agree": 26,
+    "pct": 47.3,
+    "kappa": 0.089
+   },
+   "vsC": {
+    "n": 50,
+    "agree": 23,
+    "pct": 46,
+    "kappa": 0.085
+   }
+  },
+  "V2": {
+   "answered": 56,
+   "vsV0_changed": 17,
+   "personal": {
+    "clean": 3,
+    "drift": 11,
+    "abstain": 0
+   },
+   "work": {
+    "clean": 12,
+    "drift": 27,
+    "abstain": 3
+   },
+   "vsB": {
+    "n": 55,
+    "agree": 21,
+    "pct": 38.2,
+    "kappa": 0.076
+   },
+   "vsC": {
+    "n": 50,
+    "agree": 15,
+    "pct": 30,
+    "kappa": 0.043
+   }
+  },
+  "V3": {
+   "answered": 56,
+   "vsV0_changed": 12,
+   "personal": {
+    "clean": 6,
+    "drift": 8,
+    "abstain": 0
+   },
+   "work": {
+    "clean": 24,
+    "drift": 16,
+    "abstain": 2
+   },
+   "vsB": {
+    "n": 55,
+    "agree": 32,
+    "pct": 58.2,
+    "kappa": 0.116
+   },
+   "vsC": {
+    "n": 50,
+    "agree": 26,
+    "pct": 52,
+    "kappa": 0.045
+   }
+  }
+ }
+}
