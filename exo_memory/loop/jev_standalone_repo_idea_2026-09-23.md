@@ -42,3 +42,57 @@ seats. The room keeps its copy until the extracted one passes the same tests, an
 
 **Falsifier:** if a stranger can't get a flag surfaced within one read of its README on a clean machine with no
 Consonance, it's not "instantly usable" yet.
+
+## 2026-09-23 ~05:1x — WHAT IS LEFT BEFORE JEV COULD LIVE IN ITS OWN REPO (pane A, L105; the split is not done)
+
+After L099 and L105, **no Jev tool DEFAULTS to a path relative to where its own file sits.** The room, the data dir and the
+discipline dir all come through `consonance/tools/jev-room.js`: config first, the checkout the file sits in only as a named
+fallback (and `jev-flags.js`'s own copy of the same order), and a refusal that names the fix when neither answers. What follows is what is still Consonance's, with a size for each: **S** small, **M** medium, **D** needs a decision.
+Line numbers are as of L105's working tree.
+
+1. **Seat ids come from Consonance's source.** `jev-judge.js:122` `FIXED_SEATS`, read out of `main.rs` through
+   `roomOf`; also `jev-flags.js:56` `seatIds`. A stranger has no main.rs. **D** — what is a "seat" outside Consonance: every
+   session, or a list in config?
+2. **Roster and names come from Consonance's data dir.** `jev-judge.js:151` reads `panes.json`, and `:117` and
+   `jev-flags.js` `lettersFor` read `letters.json`. **M** — make them an optional adapter; without them, the short session id.
+3. **Who may read a flag is `CONSONANCE_PANE` = the chair or the librarian.** `jev-flags.js:166`, and flagLines'
+   main/librarian gate. **D** — standalone, the reader is probably "the user, in every session", which is a different rule.
+4. **The runner lives and dies with the Consonance app.** `main.rs:12501` `start_jev_shadow`; the runner's `--app-pid`
+   is required (`jev-shadow-runner.js` parseArgs). **D, then M** — standalone needs its own launcher (a SessionStart hook,
+   or a service) and a different "when to stop".
+5. **The L2 prompt is borrowed from the room's overseer.**
+   - `jev-judge.js:100-101` `loadJudgeInputs` source-loads `dev/shell/hooks/l2-overseer.js` `readNarrowedView` and requires
+     `l2-overseer-worker.js` `buildOverseerPrompt` from the room.
+   - `jev-shadow.js:103-104` `loadBuilder` reads the worker from `~/.claude/shell/hooks`.
+
+   **M** — vendor both functions into the module, with a parity test against the room's copies, so the prompt stays
+   byte-identical while the room keeps its own.
+6. **The discipline is the room's METHOD.md.** `jev-room.js` `disciplineDirOf`, read at `jev-shadow.js:60` and in judge
+   mode. **D** — publish METHOD.md with the module (it is ours; retracted wordings repaired at L083), or ship a neutral one.
+7. **The shadow half measures against the Claude overseers' ledgers.** `jev-shadow.js:60` `l2_overseer.jsonl`, `l3-jobs`.
+   The Claude judges are off on both machines (D105). **S** — leave `jev-shadow.js` in the room; it is not part of the module.
+8. **Where the ledgers go.**
+   - `jev-shadow-runner.js:105` `defaultStore` is `%LOCALAPPDATA%\consonance\jev-shadow`.
+   - `jev-flags.js:171` hard-codes the same path.
+
+   **S** for one config key. **M** for other platforms: `LOCALAPPDATA` is Windows-only.
+9. **The key and the gateway.**
+   - `jev-ask.js:47` URL and `:48` model are constants. `:17`: the key is env-only, and that stays.
+   - `jev-shadow-runner.js:118` `readUserEnv` reads `HKCU\Environment` via reg.exe, Windows-only.
+
+   **S** — URL and model into config; a no-op `readUserEnv` off Windows.
+10. **Hook wiring is Consonance's PowerShell installer.** `dev/shell/install.ps1:147` (`$files`) and `:196` (`$register`).
+    **M** — its own installer that MERGES `~/.claude/settings.json`, never replaces it, and works off Windows.
+11. **The tests import room files.**
+    - `jev-judge.test.js:16`, `jev-shadow.test.js:15` and `jev-shadow-runner.test.js:15` copy `dev/shell/hooks/*`.
+    - `jev-flags.test.js:16` reads the repo's `main.rs`.
+
+    **M** — follows item 5 (vendored functions), and item 1 (seats from config).
+12. **jev-flags keeps its own copy of the room lookup.** `jev-flags.js` `mainRsPath`, because it is installed as one file.
+    Since L105 it is pinned to `jev-room.js` by a parity test (`jev-flags.test.js`, "L105 PARITY"). **S** — goes away once item 1
+    removes main.rs from the picture.
+13. **The dream guard is Consonance's.** `CONSONANCE_DREAM` in `jev-flags.js` `main`. **S** — harmless outside the room;
+    document it or make it a config switch.
+
+**The order that fits:** 1 and 3 first (decisions), then 5 and 11 together, then 2, 4, 8, 9, 10. Items 7 and 13 are small
+enough to do in the split itself.

@@ -400,3 +400,39 @@ test('CLI: shadow without --store exits 2; without a key exits 2', () => {
   assert.strictEqual(r2.status, 2);
   assert.match(r2.stderr, /AI_GATEWAY_API_KEY/);
 });
+
+// ── L105: the discipline dir comes through config (jev-room.js), not `__dirname/../..` ────────────────────────────────
+function installedShadow() {
+  const tools = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-inst-')), 'somewhere', 'tools');
+  fs.mkdirSync(tools, { recursive: true });
+  for (const n of ['jev-shadow.js', 'jev-ask.js', 'jev-room.js']) fs.copyFileSync(path.join(__dirname, n), path.join(tools, n));
+  return require(path.join(tools, 'jev-shadow.js'));
+}
+function roomHome() {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-room-'));
+  fs.mkdirSync(path.join(root, 'consonance', 'src-tauri', 'src'), { recursive: true });
+  fs.writeFileSync(path.join(root, 'consonance', 'src-tauri', 'src', 'main.rs'), '// fixture\n');
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-home-'));
+  fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ room_path: path.join(root, 'exo_memory', 'BOOT.md') }));
+  return { root, home };
+}
+
+test('L105: an installed copy takes the discipline dir from the room room_path names', () => {
+  const { root, home } = roomHome();
+  assert.strictEqual(installedShadow().parseArgs(['report', '--store', 'x'], {}, home).disciplineDir, root);
+});
+
+test('L105: --discipline still wins over the resolved room', () => {
+  const { home } = roomHome();
+  assert.strictEqual(installedShadow().parseArgs(['report', '--store', 'x', '--discipline', path.join(path.sep, 'X', 'disc')], {}, home).disciplineDir, path.join(path.sep, 'X', 'disc'));
+});
+
+test('L105: no room → capture REFUSES naming why and the fix, instead of reading METHOD.md from nowhere', () => {
+  const S2 = installedShadow();
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-nohome-'));
+  const f = fixture();
+  l2Job(f, 'j1');
+  const a = S2.parseArgs(['capture', '--store', f.store, '--shell', f.opts.shellDir], {}, home);
+  assert.strictEqual(a.disciplineDir, null);
+  assert.throws(() => S2.capture(a), (e) => e instanceof S2.Refusal && /discipline/.test(e.message) && /Fix: set room_path/.test(e.message));
+});

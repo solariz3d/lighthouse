@@ -370,7 +370,7 @@ function installedCopy() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-judge-inst-'));
   const tools = path.join(dir, 'somewhere', 'tools');
   fs.mkdirSync(tools, { recursive: true });
-  for (const f of ['jev-judge.js', 'jev-ask.js', 'jev-shadow.js']) fs.copyFileSync(path.join(__dirname, f), path.join(tools, f));
+  for (const f of ['jev-judge.js', 'jev-ask.js', 'jev-shadow.js', 'jev-room.js']) fs.copyFileSync(path.join(__dirname, f), path.join(tools, f));
   return require(path.join(tools, 'jev-judge.js'));
 }
 function homeWith(cfg) {

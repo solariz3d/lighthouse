@@ -276,3 +276,23 @@ test('L099 INSTALLED: the CLI reads letters.json from ~/.consonance.json data_di
   const r = cliAt(installedCopy(), { LOCALAPPDATA: store([row({ sid: PANE_B, seat: '✦ brief' })]), CONSONANCE_PANE: MAIN, USERPROFILE: home });
   assert.match(flagOf(r), /\] B · turn/, r.out);
 });
+
+// ── L105: jev-flags keeps its OWN room lookup (it is installed as one file, so a require of tools/jev-room.js would be
+// the L089 bug again) — and this test is what stops the two copies drifting apart: same fixtures, same answer.
+test('L105 PARITY: mainRsPath here and jev-room.js roomOf find the same main.rs, fixture by fixture', () => {
+  const R = require('../tools/jev-room.js');
+  const bogus = path.join(os.tmpdir(), 'jev-flags-nowhere', 'exo_memory', 'BOOT.md');
+  const cases = [
+    ['room_path to this repo', homeWith({ room_path: path.join(REPO, 'exo_memory', 'BOOT.md') })],
+    ['room_path to nowhere', homeWith({ room_path: bogus })],
+    ['no room_path', homeWith({ data_dir: 'x' })],
+    ['no config', homeWith(undefined)],
+    ['config not JSON', homeWith('{not json')],
+  ];
+  // The ROUTE too, not only the file: both fall back to the checkout they sit in, so a resolver that missed through room_path
+  // and fell back reached the same main.rs by a different road (mutant F2 survived a file-only comparison).
+  for (const [name, home] of cases) {
+    const a = F.mainRsPath(home), b = R.roomOf({ home });
+    assert.deepStrictEqual([a.file && path.resolve(a.file), a.tier || null], [b.file && path.resolve(b.file), b.tier || null], name);
+  }
+});

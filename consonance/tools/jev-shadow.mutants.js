@@ -28,7 +28,7 @@ const { spawnSync } = require('child_process');
 
 const TOOLS = __dirname;
 const HOOKS = path.resolve(__dirname, '..', '..', 'dev', 'shell', 'hooks');
-const COPIED = ['jev-shadow.js', 'jev-shadow.test.js', 'jev-shadow-runner.js', 'jev-shadow-runner.test.js', 'jev-ask.js', 'jev-judge.js'];
+const COPIED = ['jev-shadow.js', 'jev-shadow.test.js', 'jev-shadow-runner.js', 'jev-shadow-runner.test.js', 'jev-ask.js', 'jev-judge.js', 'jev-room.js'];   // jev-room.js: L105, required by all three
 const HANG_MS = 120000;
 
 const TARGETS = {

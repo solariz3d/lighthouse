@@ -49,6 +49,8 @@ const { execFileSync } = require('child_process');
 const shadowMod = require('./jev-shadow.js');
 const judgeMod = require('./jev-judge.js');
 const jev = require('./jev-ask.js');
+// L105: the data dir, the discipline dir and the room come from ONE resolver, shared by every Jev tool.
+const room = require('./jev-room.js');
 
 const { Refusal } = jev;
 class AlreadyRunning extends Error { constructor(m) { super(m); this.exitCode = 3; } }
@@ -151,6 +153,13 @@ async function run(o) {
     log(`REFUSED ${m}`);
     throw new Refusal(m);
   }
+  // L105: without METHOD.md neither the shadow nor judge mode can build the prompt the judge saw. Before, an installed copy
+  // defaulted to `__dirname/../..` and logged a capture error on every tick; now it refuses ONCE, here, and says why.
+  if (!cfg.disciplineDir) {
+    const m = `no discipline dir — ${cfg.disciplineWhy || 'none was given to run()'}`;
+    log(`REFUSED ${m}`);
+    throw new Refusal(m);
+  }
 
   // ONE RUNNER: exclusive create; a live holder wins, a dead one is taken over.
   const lockPath = path.join(store, 'runner.lock');
@@ -218,7 +227,9 @@ async function run(o) {
   // JUDGE MODE state. Off, with its reason said ONCE, when it cannot run; the shadow never depends on it.
   let judgeOff = (cfg.dataDir && cfg.projectsDir) ? null : 'no data dir or projects dir was given to run()';
   const judgeMemo = {};
-  const judgeCfg = { store, repo: cfg.repo || path.resolve(__dirname, '..', '..'), dataDir: cfg.dataDir,
+  // L105: `repo` is passed through as given, never defaulted to `__dirname/../..` — jev-room.js roomOf tries room_path, then
+  // the checkout this file sits in, and says which.
+  const judgeCfg = { store, repo: cfg.repo, dataDir: cfg.dataDir,
     projectsDir: cfg.projectsDir, disciplineDir: cfg.disciplineDir };
   if (judgeOff) log(`judge mode off: ${judgeOff}`);
   const judgeFailed = (e) => { judgeOff = e.message; log(`judge mode off: ${e.message} — the shadow keeps running`); };
@@ -327,25 +338,20 @@ function parseArgs(argv) {
   return a;
 }
 
-/** CONSONANCE_DATA, else ~/.consonance.json data_dir, else null — the same order as every other tool here. */
-function dataDirOf(env = process.env) {
-  const e = String(env.CONSONANCE_DATA || '').trim();
-  if (e) return e;
-  try {
-    const cfg = JSON.parse(fs.readFileSync(path.join(os.homedir(), '.consonance.json'), 'utf8').replace(/^﻿/, ''));
-    return cfg && cfg.data_dir ? String(cfg.data_dir) : null;
-  } catch { return null; }
-}
+/** L105: moved to jev-room.js (same order, plus a `home` for tests); kept as this module's export so its callers are unchanged. */
+const dataDirOf = (env = process.env) => room.dataDirOf(env);
 
 async function main(argv = process.argv.slice(2), env = process.env) {
   let a;
   try { a = parseArgs(argv); } catch (e) { process.stderr.write(`jev-shadow-runner: REFUSED — ${e.message}\n`); return 2; }
+  // L105: the discipline dir through config — JEV_SHADOW_DISCIPLINE, else the room (jev-room.js). run() refuses, loudly, on none.
+  const disc = room.disciplineDirOf({ env });
   try {
     const h = await run({
       ...a,
       store: env.JEV_SHADOW_STORE || defaultStore(env),
       shellDir: env.CONSONANCE_SHELL_DIR || path.join(os.homedir(), '.claude', 'shell'),
-      disciplineDir: env.JEV_SHADOW_DISCIPLINE || path.resolve(__dirname, '..', '..'),   // this checkout's root (see jev-shadow.js)
+      disciplineDir: disc.dir, disciplineWhy: disc.why,
       // JUDGE MODE's two inputs (L071). The app spawns this runner WITHOUT CONSONANCE_DATA (main.rs env_remove), so the
       // data dir comes from ~/.consonance.json's data_dir — the one place both machines declare it. None → judge mode
       // says so once and stays off; the shadow is unaffected.

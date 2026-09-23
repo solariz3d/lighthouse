@@ -79,6 +79,8 @@ const path = require('path');
 const crypto = require('crypto');
 const jev = require('./jev-ask.js');
 const { JUDGES, extractFunction } = require('./jev-shadow.js');
+// L105: roomOf moved to jev-room.js, shared by every Jev tool; re-exported below, so callers of jev-judge's roomOf are unchanged.
+const { roomOf } = require('./jev-room.js');
 
 const { Refusal } = jev;
 const LEDGER = 'jev_judge.jsonl';
@@ -107,48 +109,6 @@ function loadJudgeInputs(repo) {
   try { l2build = require(w2).buildOverseerPrompt; } catch (e) { throw new Refusal(`cannot load the L2 worker at ${w2}: ${e.message}`); }
   if (typeof l2build !== 'function') throw new Refusal(`${w2} does not export buildOverseerPrompt`);
   return { l2view, l2build, sourcesSha: sha([s2, readText(w2, 'the L2 worker')].join('\0')) };
-}
-
-/**
- * WHERE THE ROOM IS — L099, 2026-09-23. The checkout that holds consonance/src-tauri/src/main.rs, tried in order:
- *   1. `repo` as given (the runner passes its own checkout), so the hooks and main.rs come from ONE tree;
- *   2. `room_path` in ~/.consonance.json (it is `<repo>/exo_memory/BOOT.md`, read the way jev-flags.js mainRsPath and
- *      the peer hooks read it) — the only way an INSTALLED copy, not inside a checkout, can find the room;
- *   3. the checkout this file sits in.
- * Before L099 only 1 and 3 existed, and a miss was a silent `catch`: an installed copy judged the roster alone and
- * dropped Main, the librarian and the Third Place with no line anywhere (L089's jev-flags bug, in its sibling).
- * Kept in THIS file, not shared with jev-flags: a require from an installed copy is the path that breaks.
- * `{ root, file, tier }` when found; `{ root: null, file: null, why }` naming every place tried, when not.
- */
-function roomOf({ repo, home = os.homedir() } = {}) {
-  const tried = [];
-  const rsOf = (root) => path.join(root, 'consonance', 'src-tauri', 'src', 'main.rs');
-  if (repo) {
-    if (fs.existsSync(rsOf(repo))) return { root: repo, file: rsOf(repo), tier: 'the repo passed in' };
-    tried.push(`the repo passed in (${repo}) holds no consonance/src-tauri/src/main.rs`);
-  }
-  let cfg = null;
-  try {
-    cfg = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^﻿/, ''));
-  } catch (e) {
-    tried.push(e && e.code === 'ENOENT' ? '~/.consonance.json does not exist' : '~/.consonance.json could not be read as JSON');
-  }
-  if (cfg) {
-    const room = cfg.room_path != null ? String(cfg.room_path).trim() : '';
-    if (room) {
-      const root = path.dirname(path.dirname(room));
-      if (fs.existsSync(rsOf(root))) return { root, file: rsOf(root), tier: '~/.consonance.json room_path' };
-      tried.push(`room_path ${room} does not lead to consonance/src-tauri/src/main.rs`);
-    } else {
-      tried.push('~/.consonance.json has no room_path');
-    }
-  }
-  const local = path.resolve(__dirname, '..', '..');
-  if (local !== repo) {
-    if (fs.existsSync(rsOf(local))) return { root: local, file: rsOf(local), tier: 'the checkout beside this file' };
-    tried.push('no checkout beside this file');
-  }
-  return { root: null, file: null, why: tried.join('; ') };
 }
 
 /** <data>/letters.json as { session id: letter }, or {} when it is absent or unreadable (a seat then gets its short id). */

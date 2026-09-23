@@ -45,6 +45,8 @@ const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
 const jev = require('./jev-ask.js');
+// L105: the discipline dir comes from jev-room.js, the resolver every Jev tool shares.
+const room = require('./jev-room.js');
 
 const { Refusal, GatewayError } = jev;
 const HARD_CAP = 500;
@@ -116,7 +118,7 @@ function loadBuilder(judge, shellDir) {
 }
 
 /** One pass: copy every new job file's EXACT prompt into the store. Never writes under shellDir. */
-function capture({ shellDir, disciplineDir, store, now = () => new Date() }) {
+function capture({ shellDir, disciplineDir, disciplineWhy, store, now = () => new Date() }) {
   needStore(store);
   const out = {};
   for (const judge of ['l2', 'l3']) {
@@ -138,6 +140,8 @@ function capture({ shellDir, disciplineDir, store, now = () => new Date() }) {
       try { job = JSON.parse(text); } catch { res.unreadable++; continue; }
       if (!builder) {
         builder = loadBuilder(judge, shellDir);
+        // L105: no discipline dir is a refusal that names why — not a TypeError from path.join(null), not a read from nowhere.
+        if (!disciplineDir) throw new Refusal(`no discipline dir — ${disciplineWhy || 'none was given'}`);
         const dp = path.join(disciplineDir, J.discipline);
         try { discipline = fs.readFileSync(dp, 'utf8'); } catch { throw new Refusal(`cannot read ${dp} — the overseer reads it too, and a prompt without it is not the one judged`); }
       }
@@ -263,15 +267,16 @@ function report({ store }) {
   return out;
 }
 
-function parseArgs(argv, env = process.env) {
+function parseArgs(argv, env = process.env, home = os.homedir()) {
   const [cmd, ...rest] = argv;
   if (!['capture', 'shadow', 'report'].includes(cmd)) throw new Refusal('usage: jev-shadow.js capture|shadow|report --store <dir> [...] (see the header)');
   const a = { cmd, dry: false, store: env.JEV_SHADOW_STORE || null,
     shellDir: env.CONSONANCE_SHELL_DIR || path.join(os.homedir(), '.claude', 'shell'),
-    // THIS checkout's root, where METHOD.md and WELFARE.md live — not a per-machine literal (D104: the literal was red
-    // in portable-paths from f27b820 on; it names D's layout, and L's repo is elsewhere). discipline_sha256 records
-    // which file was read.
-    disciplineDir: env.JEV_SHADOW_DISCIPLINE || path.resolve(__dirname, '..', '..') };
+    // Where METHOD.md and WELFARE.md live — not a per-machine literal (D104: the literal was red in portable-paths from
+    // f27b820 on; it names D's layout, and L's repo is elsewhere). discipline_sha256 records which file was read.
+    // L105: through jev-room.js (JEV_SHADOW_DISCIPLINE, else the room), no longer `__dirname/../..`, which from an
+    // installed copy named whatever sat two levels up. None → null, and capture refuses with the why.
+    ...(() => { const d = room.disciplineDirOf({ env, home }); return { disciplineDir: d.dir, disciplineWhy: d.why }; })() };
   for (let i = 0; i < rest.length; i++) {
     const k = rest[i], v = rest[i + 1];
     if (k === '--dry') a.dry = true;

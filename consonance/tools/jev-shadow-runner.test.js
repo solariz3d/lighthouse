@@ -561,3 +561,70 @@ test('the User-environment reader parses reg.exe output and returns null when th
   assert.strictEqual(R.parseRegQuery(out, 'AI_GATEWAY_API_KEY'), 'abc123-def');
   assert.strictEqual(R.parseRegQuery('\r\nERROR: nothing\r\n', 'AI_GATEWAY_API_KEY'), null);
 });
+
+// ── L105: the runner finds its discipline and data dirs through config (jev-room.js), and says so when it cannot ───────
+// Before: `disciplineDir: env.JEV_SHADOW_DISCIPLINE || path.resolve(__dirname, '..', '..')` — an installed copy read
+// METHOD.md from wherever it happened to sit, and each capture tick logged an error instead of one clear refusal.
+function installedRunner() {
+  const tools = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-inst-')), 'somewhere', 'tools');
+  fs.mkdirSync(tools, { recursive: true });
+  for (const n of ['jev-shadow-runner.js', 'jev-shadow.js', 'jev-judge.js', 'jev-ask.js', 'jev-room.js']) fs.copyFileSync(path.join(__dirname, n), path.join(tools, n));
+  return path.join(tools, 'jev-shadow-runner.js');
+}
+function roomAt(f, extra = {}) {
+  // The fixture's discipline dir becomes a room: main.rs where roomOf looks, room_path pointing at its BOOT.md.
+  fs.mkdirSync(path.join(f.disc, 'consonance', 'src-tauri', 'src'), { recursive: true });
+  fs.writeFileSync(path.join(f.disc, 'consonance', 'src-tauri', 'src', 'main.rs'), '// fixture\n');
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-home-'));
+  fs.writeFileSync(path.join(home, '.consonance.json'), JSON.stringify({ room_path: path.join(f.disc, 'exo_memory', 'BOOT.md'), ...extra }));
+  return home;
+}
+const installedEnv = (f, home) => {
+  const e = cliEnv(f);
+  delete e.JEV_SHADOW_DISCIPLINE;
+  return { ...e, USERPROFILE: home, HOME: home, AI_GATEWAY_API_KEY: KEY };
+};
+const runnerLog = (f) => { try { return fs.readFileSync(path.join(f.store, 'runner.log'), 'utf8'); } catch { return ''; } };
+
+test('L105 run(): no discipline dir → REFUSED in the log, naming why, before the lock is taken', async () => {
+  const f = fixture(); const app = fakeApp();
+  try {
+    await assert.rejects(R.run({ ...opts(f, app), disciplineDir: null, disciplineWhy: 'JEV_SHADOW_DISCIPLINE is unset; the why' }),
+      (e) => e instanceof R.Refusal && /discipline/.test(e.message));
+    assert.match(runnerLog(f), /REFUSED .*discipline.*the why/);
+    assert.ok(!fs.existsSync(path.join(f.store, 'runner.lock')), 'refused before the lock');
+  } finally { app.kill(); }
+});
+
+test('L105 CLI, INSTALLED: a copy outside the checkout starts, finding METHOD.md through room_path', { timeout: 30000 }, async () => {
+  const f = fixture(); const app = fakeApp();
+  const child = spawn(process.execPath, [installedRunner(), '--app-pid', String(app.pid), '--pid-poll-ms', '50'],
+    { env: installedEnv(f, roomAt(f)), stdio: 'ignore' });
+  await waitFor(() => fs.existsSync(path.join(f.store, 'runner.lock')));
+  app.kill();
+  assert.strictEqual(await new Promise((r) => child.on('exit', r)), 0);
+  assert.doesNotMatch(runnerLog(f), /REFUSED|capture error/, runnerLog(f));
+});
+
+test('L105 CLI, INSTALLED, NO ROOM: exits non-zero and the log says the discipline cannot be found, and how to fix it', () => {
+  const f = fixture(); const app = fakeApp();
+  try {
+    const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-nohome-'));
+    const r = spawnSync(process.execPath, [installedRunner(), '--app-pid', String(app.pid)], { encoding: 'utf8', env: installedEnv(f, home), timeout: 20000 });
+    assert.notStrictEqual(r.status, 0, r.stderr);
+    assert.match(runnerLog(f), /REFUSED .*discipline/);
+    assert.match(runnerLog(f), /Fix: set room_path in ~\/\.consonance\.json/);
+  } finally { app.kill(); }
+});
+
+test('L105 CLI, INSTALLED: the data dir comes from ~/.consonance.json data_dir (the :330 reading, pinned)', { timeout: 30000 }, async () => {
+  const f = fixture(); const app = fakeApp();
+  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-runner-data-'));
+  const env = installedEnv(f, roomAt(f, { data_dir: data }));
+  delete env.CONSONANCE_DATA;
+  const child = spawn(process.execPath, [installedRunner(), '--app-pid', String(app.pid), '--pid-poll-ms', '50'], { env, stdio: 'ignore' });
+  await waitFor(() => fs.existsSync(path.join(f.store, 'runner.lock')));
+  app.kill();
+  await new Promise((r) => child.on('exit', r));
+  assert.doesNotMatch(runnerLog(f), /judge mode off: no data dir/, 'data_dir was not read: ' + runnerLog(f));
+});
