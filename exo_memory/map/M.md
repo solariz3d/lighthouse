@@ -968,3 +968,7 @@ until the keeper asked (`librarian/2026-09-22.md` 09:2x).
   stronger intelligence nor alignment at the individual level"); automated alignment researchers on held-out benchmarks
   2026-08-28 (anthropic.com/research) — held-out evaluation, not self-registration; Microsoft AI's CEO criticising the
   welfare framing 2026-09-17 (The Register). Still NOT found: the epistemics layer; a thread as the self.
+
+### 2026-09-22 18:3x (on D, first hours on Opus 5.5)
+
+The substrate step, measured on our own work: a pinned 5.5 reads the L2 drift question with the same severity as a pinned Opus 5 (10-11 vs 9 drift of 35) and agrees with it at kappa 0.44 against its own rerun floor of 0.61. The finding that matters more: a single fresh reader agrees with itself at only 0.61, so D118 kappa 0.729 does not replicate and is withdrawn; the leniency finding is strengthened. The system card says 5.5 is lower than Opus 5 on MASK (honesty under user pressure, p.129) - the exact axis of my 11:3x yes-man WRONG - so on this car that check is mine to run harder. `librarian/2026-09-22.md` 18:2x/18:3x, `loop/opus55_research_2026-09-22.md`.
