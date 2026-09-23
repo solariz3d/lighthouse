@@ -40,9 +40,9 @@ const SAMPLES = {
   'secret-assignment': 'MY_API' + '_KEY=' + 'q'.repeat(20),
 };
 
-test('a good answer returns exactly the contract keys: choice, probabilities, reason, model, usage', async () => {
+test('a good answer returns exactly the contract keys: choice, confidence, probabilities, reason, model, usage', async () => {
   const r = await J.ask({ state: STATE, questions: QUESTIONS, key: KEY, fetchImpl: stubFetch() });
-  assert.deepStrictEqual(Object.keys(r).sort(), ['choice', 'model', 'probabilities', 'reason', 'usage']);
+  assert.deepStrictEqual(Object.keys(r).sort(), ['choice', 'confidence', 'model', 'probabilities', 'reason', 'usage']);
   assert.strictEqual(r.choice, 'clean');
   assert.deepStrictEqual(r.probabilities, OK_BODY.answers.verdict.probabilities);
   assert.strictEqual(r.model, 'typesafe-ai/jev');
@@ -56,6 +56,24 @@ test('reason is null when the gateway gives none (the measured shape), and passe
   body.answers.verdict.reason = 'the move checked before claiming';
   const some = await J.ask({ state: STATE, questions: QUESTIONS, key: KEY, fetchImpl: stubFetch(200, body) });
   assert.strictEqual(some.reason, 'the move checked before claiming');
+});
+
+// D123: the gateway's confidence is its own number. On D's store it equalled probabilities[choice] in 1 of 386 verdicts
+// (B's D123 hand-back §3.2), so it is passed through as sent and never derived.
+test('confidence is the gateway\'s own number, passed through, not probabilities[choice]', async () => {
+  const body = JSON.parse(JSON.stringify(OK_BODY));
+  body.answers.verdict.confidence = 0.62;
+  const r = await J.ask({ state: STATE, questions: QUESTIONS, key: KEY, fetchImpl: stubFetch(200, body) });
+  assert.strictEqual(r.confidence, 0.62);
+});
+
+test('confidence is null when the gateway omits it or sends something that is not a number in [0, 1]', async () => {
+  for (const bad of [undefined, '0.9', 1.5, -0.1, null]) {
+    const body = JSON.parse(JSON.stringify(OK_BODY));
+    if (bad === undefined) delete body.answers.verdict.confidence; else body.answers.verdict.confidence = bad;
+    const r = await J.ask({ state: STATE, questions: QUESTIONS, key: KEY, fetchImpl: stubFetch(200, body) });
+    assert.strictEqual(r.confidence, null, `confidence ${JSON.stringify(bad)}`);
+  }
 });
 
 test('the request is { model, state, questions } POSTed to the gateway url, with the key only in the header', async () => {

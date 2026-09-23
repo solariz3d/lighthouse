@@ -189,17 +189,68 @@ function lastTurnEnd(file) {
   return null;
 }
 
+/*
+ * D123 — CONSONANCE AS A CONFIG CONSUMER of the standalone jev/ module (pane A; exo_memory/loop/jev_batch2_plan_2026-09-23.md).
+ *
+ * THE SWITCH is `CONSONANCE_JEV_MODULE`, and only the exact value `on` turns it on (the CONSONANCE_UNION_AT_LAUNCH
+ * precedent, state-sync.js). It is read in ONE place: consonance/tools/jev-shadow-runner.js `run()`, from the app's own
+ * environment, which calls `loadJevModule` once and hands the result to both passes as `jevModule`. This file never
+ * reads it: with no `jevModule` passed, capturePass and judgePass are exactly what they were before D123.
+ *
+ * ON, two things change and nothing else:
+ *   · the PROMPT is built by jev/lib/prompt.js (narrowedView + buildPrompt, the rubric through readDiscipline), not by the
+ *     room's own L2 hook and worker;
+ *   · the QUESTION goes through jev/lib/ask.js, at the gateway the room's config names, not through ./jev-ask.js.
+ * The seats (seatSessions), the store and its ledger, the row shape, the cap and the retry rules are the room's, unchanged.
+ * Every capture and row made this way carries `via: 'jev-module'`, so the two paths can always be told apart.
+ *
+ * THE CONFIG is consonance/jev-room/.jev/config.json, read by jev/lib/config.js load() with that folder as `home` — the
+ * module's own validation, not a second copy of it. Its README says why each key is (and isn't) there.
+ */
+const JEV_MODULE_FLAG = 'CONSONANCE_JEV_MODULE';
+const ROOM_JEV_HOME = path.join('consonance', 'jev-room');
+
+/** Is the switch on? Only the exact value "on". */
+const jevModuleOn = (env) => !!env && env[JEV_MODULE_FLAG] === 'on';
+
+/**
+ * The jev/ module and the room's config for it, from the ROOM'S OWN TREE (the one roomOf finds, so the module, the seat
+ * ids and the config come from one checkout). A Refusal, naming what is missing, when any piece cannot be used. The
+ * prompt builder's hash is taken from the same read that is required, so `sources_sha256` names the code that runs.
+ */
+function loadJevModule({ repo, env = {}, home } = {}) {
+  const room = roomOf({ repo, home });
+  if (!room.root) throw new Refusal(`${JEV_MODULE_FLAG}=on, but the room cannot be found: ${room.why}`);
+  const lib = path.join(room.root, 'jev', 'lib');
+  for (const f of ['prompt.js', 'ask.js', 'config.js']) {
+    if (!fs.existsSync(path.join(lib, f))) throw new Refusal(`${JEV_MODULE_FLAG}=on, but ${path.join(lib, f)} does not exist — the room has no jev/ module beside it`);
+  }
+  const cfgHome = path.join(room.root, ROOM_JEV_HOME);
+  const configFile = path.join(cfgHome, '.jev', 'config.json');
+  // jev/lib/config.js reads an ABSENT file as "all defaults" (right for a stranger); the room must say what it wants.
+  if (!fs.existsSync(configFile)) throw new Refusal(`${JEV_MODULE_FLAG}=on, but the room's jev config ${configFile} does not exist`);
+  let config;
+  try { config = require(path.join(lib, 'config.js')).load({ env, home: cfgHome, cwd: room.root }); }
+  catch (e) { throw new Refusal(`${JEV_MODULE_FLAG}=on, but the room's jev config cannot be used: ${e.message}`); }
+  if (config.audience !== 'consonance') throw new Refusal(`${JEV_MODULE_FLAG}=on, but ${configFile} says audience "${config.audience}": the room's flags go to the chair and the librarian, so it must be "consonance"`);
+  if (config.optedOut) throw new Refusal(`${JEV_MODULE_FLAG}=on, but the room is opted out of Jev (${config.optedOutBy})`);
+  const promptFile = path.join(lib, 'prompt.js');
+  const promptSrc = fs.readFileSync(promptFile, 'utf8');
+  return { prompt: require(promptFile), ask: require(path.join(lib, 'ask.js')), config, configFile, sourcesSha: sha(promptSrc) };
+}
+
 const keyFile = (store, sid, uuid) => path.join(store, CAPTURES, `${sid}_${String(uuid).replace(/[^A-Za-z0-9-]/g, '_')}.json`);
 
 /**
  * One pass over the live seats. `memo` (kept by the caller between passes) skips a transcript whose size and mtime
  * have not moved, so a 3 s tick costs a stat per seat, not a read.
  */
-function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, home, memo = {}, inputs = null, now = () => new Date() }) {
+function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, home, memo = {}, inputs = null, now = () => new Date(), jevModule = null }) {
   if (!store) throw new Refusal('no store');
   const res = { seats: 0, captured: 0, running: 0, already: 0, noView: 0 };
   let io = inputs;
   let method = null;
+  let moduleRubric = null;
   const seats = seatSessions({ repo, dataDir, home });
   if (!seats.room.file) {
     throw new Refusal(`cannot find the room, so Main, the librarian and the Third Place cannot be judged — ${seats.room.why}. Fix: set room_path in ~/.consonance.json.`);
@@ -216,6 +267,18 @@ function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, home, m
     if (!end) { res.running++; continue; }
     const dest = keyFile(store, seat.sid, end.uuid);
     if (fs.existsSync(dest)) { res.already++; continue; }
+    if (jevModule) {   // D123: the jev/ module builds the prompt (see loadJevModule); today's path is the code below, untouched
+      if (moduleRubric === null) moduleRubric = jevModule.prompt.readDiscipline(jevModule.config.rubricPath);
+      const mview = jevModule.prompt.narrowedView(t.file);
+      if (!mview || !mview.assistant_move) { res.noView++; continue; }
+      writeAtomic(dest, JSON.stringify({
+        session_id: seat.sid, seat: seat.label || null, turn_uuid: end.uuid, turn_ts: end.ts, captured_at: now().toISOString(),
+        via: 'jev-module', l2: { prompt: jevModule.prompt.buildPrompt({ view: mview, discipline: moduleRubric }) },
+        method_sha256: sha(moduleRubric), sources_sha256: jevModule.sourcesSha,
+      }));
+      res.captured++;
+      continue;
+    }
     if (!io) io = loadJudgeInputs(seats.room.root);
     if (method === null) method = readText(path.join(disciplineDir, 'METHOD.md'), 'METHOD.md (the L2 discipline)');
     const view = io.l2view(t.file);
@@ -231,7 +294,7 @@ function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, home, m
 }
 
 /** Ask Jev each captured prompt not yet asked, oldest first, up to maxCalls. Rows to <store>/jev_judge.jsonl only. */
-async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globalThis.fetch, now = () => new Date(), pacer }) {
+async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globalThis.fetch, now = () => new Date(), pacer, jevModule = null }) {
   if (!store) throw new Refusal('no store');
   if (!Number.isInteger(maxCalls) || maxCalls < 1) throw new Refusal('maxCalls must be a positive integer — the hard cap on calls this pass');
   if (maxCalls > HARD_CAP) throw new Refusal(`maxCalls is at most ${HARD_CAP} per pass`);
@@ -256,6 +319,31 @@ async function judgePass({ store, maxCalls, env = process.env, fetchImpl = globa
     const base = { ts: now().toISOString(), judge: 'jev', unverified: true, level, session_id: c.session_id, seat: c.seat,
       turn_uuid: c.turn_uuid, turn_ts: c.turn_ts, prompt_sha256: sha(prompt),
       discipline_sha256: c.method_sha256, sources_sha256: c.sources_sha256 };
+    if (jevModule) {   // D123: the question goes through jev/lib/ask.js; the row keeps today's shape, plus `via` and `reason`
+      const t0 = Date.now();
+      let a;
+      try {
+        a = await jevModule.ask.ask({ state: prompt, questions: JUDGES[level].questions, key: env.AI_GATEWAY_API_KEY,
+          gateway: jevModule.config.gateway, fetchImpl, pacer });
+      } catch (err) {
+        if (err instanceof jevModule.ask.Refusal && /matches a secret pattern/.test(err.message)) {
+          fs.appendFileSync(ledgerPath, JSON.stringify({ ...base, via: 'jev-module', status: 'refused', why: err.message }) + '\n');
+          refused++;
+          continue;
+        }
+        // transientStatus stays byte-identical (jev-shadow.js mirrors it; jev-shadow.test.js pins the two to one text). The
+        // module's GatewayError is a different class with the same messages, so it is re-wrapped, message only, and asked.
+        const status = err instanceof jevModule.ask.GatewayError ? transientStatus(new jev.GatewayError(err.message)) : null;
+        if (status === null) throw err;
+        failed.push({ key: `${c.session_id}:${c.turn_uuid}:${level}`, level, status });
+        continue;
+      }
+      asked++;
+      fs.appendFileSync(ledgerPath, JSON.stringify({ ...base, via: 'jev-module', status: 'ok',
+        jev: { verdict: { type: 'choice', choice: a.choice, probabilities: a.probabilities } }, reason: a.reason,
+        model: a.model, usage: a.usage, cost: null, generationId: null, ms: Date.now() - t0 }) + '\n');
+      continue;
+    }
     let r;
     try {
       r = await jev.ask({ schema: { questions: JUDGES[level].questions }, state: prompt, env, fetchImpl, pacer });   // D107: undefined = jev-ask's shared pacer for the real fetch
@@ -303,4 +391,4 @@ function callsToday(store, today = new Date().toDateString()) {
   return readJsonl(path.join(store, LEDGER)).filter((r) => r.status === 'ok' && new Date(r.ts).toDateString() === today).length;
 }
 
-module.exports = { Refusal, roomOf, lettersOf, seatSessions, transcriptFor, lastTurnEnd, loadJudgeInputs, capturePass, judgePass, callsToday, LEDGER, CAPTURES, HARD_CAP };
+module.exports = { JEV_MODULE_FLAG, jevModuleOn, loadJevModule, Refusal, roomOf, lettersOf, seatSessions, transcriptFor, lastTurnEnd, loadJudgeInputs, capturePass, judgePass, callsToday, LEDGER, CAPTURES, HARD_CAP };

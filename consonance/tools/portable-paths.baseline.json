@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 132,
+    "BENIGN-TEST": 143,
     "REVIEW": 17,
     "DISGUISED": 14,
     "BENIGN-MESSAGE": 5,
@@ -1484,6 +1484,83 @@
       "text": "Nine `sibling-*` project dirs on D (`ls -d ~/.claude/projects/C--Consonance-instances-sibling-*`), lettered in `C:\\Consonance\\data\\letters.json` (A, B, C, D, F, J, L, M …). They were not retired by the placement — committee panes are per-machine by their random cwds, which is the defect `to_the_laptop` §1 names (fixed names, not `sibling-<random>`, is part of the fix). Their maps are appended, one writer each, in `exo_memory/map/`.",
       "key": "exo_memory/record/retired_seats_2026-09-11.md\u0000Nine `sibling-*` project dirs on D (`ls -d ~/.claude/projects/C--Consonance-instances-sibling-*`), lettered in `C:\\Consonance\\data\\letters.json` (A, B, C, D, F, J, L, M …). They were not retired by the placement — committee panes are per-machine by their random cwds, which is the defect `to_the_laptop` §1 names (fixed names, not `sibling-<random>`, is part of the fix). Their maps are appended, one writer each, in `exo_memory/map/`.\u0000#1",
       "why": "L062 R-C3 (C, 2026-09-21), carrying A's argument (exo_memory/handback/p-l060-ch4-A_2026-09-21.md §2): the path resolves on both machines (letters.json exists under the same data dir on L and D), so the finding is about the line's FORM, not a wrong instruction. The file is a dated record master (librarian, 397e29c) and is CH-4 frozen (B, 043d78b), so it is not rewritten. Verdict left FATAL deliberately: exempted, NOT fixed. NOTE: --update rewrites every row from live sites as {file,detector,verdict,text,key} and will DROP this field."
+    },
+    {
+      "file": "jev/test/config.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(C.load(w).ledgerDir, path.win32.join('C:\\\\Users\\\\x\\\\AppData\\\\Local', 'jev'));",
+      "key": "jev/test/config.test.js\u0000assert.strictEqual(C.load(w).ledgerDir, path.win32.join('C:\\\\Users\\\\x\\\\AppData\\\\Local', 'jev'));\u0000#1"
+    },
+    {
+      "file": "jev/test/config.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.strictEqual(C.within('C:\\\\Proj', 'c:\\\\proj\\\\sub', 'win32'), true);",
+      "key": "jev/test/config.test.js\u0000assert.strictEqual(C.within('C:\\\\Proj', 'c:\\\\proj\\\\sub', 'win32'), true);\u0000#1"
+    },
+    {
+      "file": "jev/test/config.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const w = world(undefined, { platform: 'win32', env: { LOCALAPPDATA: 'C:\\\\L' } });",
+      "key": "jev/test/config.test.js\u0000const w = world(undefined, { platform: 'win32', env: { LOCALAPPDATA: 'C:\\\\L' } });\u0000#1"
+    },
+    {
+      "file": "jev/test/config.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const w = world(undefined, { platform: 'win32', env: { LOCALAPPDATA: 'C:\\\\Users\\\\x\\\\AppData\\\\Local' } });",
+      "key": "jev/test/config.test.js\u0000const w = world(undefined, { platform: 'win32', env: { LOCALAPPDATA: 'C:\\\\Users\\\\x\\\\AppData\\\\Local' } });\u0000#1"
+    },
+    {
+      "file": "jev/test/install.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(!I.isOurs({ command: 'node', args: ['C:/Users/U/.claude/shell/hooks/jev-judge.js'] }, win, 'win32'));",
+      "key": "jev/test/install.test.js\u0000assert.ok(!I.isOurs({ command: 'node', args: ['C:/Users/U/.claude/shell/hooks/jev-judge.js'] }, win, 'win32'));\u0000#1"
+    },
+    {
+      "file": "jev/test/install.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(I.isOurs({ command: '\"node\" \"C:/Users/U/lighthouse/jev/bin/jev-judge.js\"' }, win, 'win32'));",
+      "key": "jev/test/install.test.js\u0000assert.ok(I.isOurs({ command: '\"node\" \"C:/Users/U/lighthouse/jev/bin/jev-judge.js\"' }, win, 'win32'));\u0000#1"
+    },
+    {
+      "file": "jev/test/install.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.ok(I.isOurs({ command: 'node', args: ['c:/users/u/LIGHTHOUSE/jev/bin/jev-judge.js'] }, win, 'win32'));",
+      "key": "jev/test/install.test.js\u0000assert.ok(I.isOurs({ command: 'node', args: ['c:/users/u/LIGHTHOUSE/jev/bin/jev-judge.js'] }, win, 'win32'));\u0000#1"
+    },
+    {
+      "file": "jev/test/install.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const roomFlags = { type: 'command', command: '\"C:\\\\node.exe\" \"C:\\\\Users\\\\u\\\\.claude\\\\shell\\\\hooks\\\\jev-flags.js\"', timeout: 10 };",
+      "key": "jev/test/install.test.js\u0000const roomFlags = { type: 'command', command: '\"C:\\\\node.exe\" \"C:\\\\Users\\\\u\\\\.claude\\\\shell\\\\hooks\\\\jev-flags.js\"', timeout: 10 };\u0000#1"
+    },
+    {
+      "file": "jev/test/install.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "const win = 'C:\\\\Users\\\\U\\\\lighthouse\\\\jev\\\\bin\\\\jev-judge.js';",
+      "key": "jev/test/install.test.js\u0000const win = 'C:\\\\Users\\\\U\\\\lighthouse\\\\jev\\\\bin\\\\jev-judge.js';\u0000#1"
+    },
+    {
+      "file": "jev/test/install.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "Stop: [{ hooks: [{ type: 'command', command: '\"C:\\\\node.exe\" \"C:\\\\Users\\\\u\\\\.claude\\\\shell\\\\hooks\\\\ready-stop.js\"', timeout: 10 }] }],",
+      "key": "jev/test/install.test.js\u0000Stop: [{ hooks: [{ type: 'command', command: '\"C:\\\\node.exe\" \"C:\\\\Users\\\\u\\\\.claude\\\\shell\\\\hooks\\\\ready-stop.js\"', timeout: 10 }] }],\u0000#1"
+    },
+    {
+      "file": "jev/test/jev-flags.test.js",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "assert.match(l, /^\\[jev · worth a second look\\] unverified · B · turn \\d\\d:\\d\\d · Jev chose \"drift\" p=0\\.60$/);",
+      "key": "jev/test/jev-flags.test.js\u0000assert.match(l, /^\\[jev · worth a second look\\] unverified · B · turn \\d\\d:\\d\\d · Jev chose \"drift\" p=0\\.60$/);\u0000#1"
     }
   ]
 }

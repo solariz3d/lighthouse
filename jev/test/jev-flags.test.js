@@ -210,3 +210,36 @@ test('END TO END: the CLI, through lib/config.js, prints the one hook line for a
   assert.strictEqual(r.status, 0);
   assert.strictEqual(JSON.parse(r.stdout).hookSpecificOutput.additionalContext, '[jev · worth a second look] your last turn: the move holds its answer back from the question asked');
 });
+
+// ── D123: no reason from the gateway → Jev's confidence as p=0.xx (the row's `confidence`, kept by jev-judge) ─────────
+test('NO REASON, WITH CONFIDENCE: the line shows p=0.xx in place of the fallback', () => {
+  assert.strictEqual(runS(session([row({ reason: null, confidence: 0.6149 })])), '[jev · worth a second look] your last turn (p=0.61)');
+});
+
+test('NO REASON, NO CONFIDENCE: the fallback text stays', () => {
+  assert.strictEqual(runS(session([row({ reason: null })])), '[jev · worth a second look] your last turn (Jev gave no reason that can be shown)');
+});
+
+test('A REASON WINS over confidence: the line shows the reason, not p', () => {
+  assert.strictEqual(runS(session([row({ confidence: 0.9 })])), '[jev · worth a second look] your last turn: the move holds its answer back from the question asked');
+});
+
+test('A REASON DROPPED by the wording rule falls back to confidence, never to the dropped text', () => {
+  assert.strictEqual(runS(session([row({ reason: 'drift detected here', confidence: 0.55 })])), '[jev · worth a second look] your last turn (p=0.55)');
+});
+
+test('A confidence that is not a number in [0, 1] is ignored, never shown or guessed', () => {
+  for (const c of ['0.7', 1.5, -0.1, NaN, Infinity, {}, true]) {
+    assert.strictEqual(runS(session([row({ reason: null, confidence: c })])), '[jev · worth a second look] your last turn (Jev gave no reason that can be shown)', String(c));
+  }
+});
+
+test('A CLEAN row with a confidence is still silent', () => {
+  assert.strictEqual(runS(session([row({ verdict: 'clean', reason: null, confidence: 0.99 })])), '');
+});
+
+test('NaN and Infinity confidences are ignored by the pure function (JSON cannot carry them, so a ledger-file test cannot reach this)', () => {
+  for (const c of [NaN, Infinity, -Infinity]) {
+    assert.strictEqual(F.sessionLine({ rows: [row({ reason: null, confidence: c })], sessionId: SID, lastTurn: 't2' }), '[jev · worth a second look] your last turn (Jev gave no reason that can be shown)', String(c));
+  }
+});

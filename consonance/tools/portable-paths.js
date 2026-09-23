@@ -122,6 +122,7 @@ const SCOPE_IN = [
   'dev/headwatch/install',
   'dev/vantage/install',
   'desktop-install.ps1',
+  'jev/',   // D123 collation: the standalone module ships to strangers' machines; it was outside this guard
 ];
 const SCOPE_OUT = [
   'consonance/ui/vendor/',

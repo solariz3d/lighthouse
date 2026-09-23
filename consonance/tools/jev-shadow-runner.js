@@ -233,6 +233,18 @@ async function run(o) {
     projectsDir: cfg.projectsDir, disciplineDir: cfg.disciplineDir };
   if (judgeOff) log(`judge mode off: ${judgeOff}`);
   const judgeFailed = (e) => { judgeOff = e.message; log(`judge mode off: ${e.message} — the shadow keeps running`); };
+  // D123: CONSONANCE_JEV_MODULE, read HERE and nowhere else, from the app's own environment (cfg.env). Exactly "on"
+  // routes judge mode through the standalone jev/ module (jev-judge.js loadJevModule says what changes); anything else,
+  // including unset — the default — is today's path, and nothing below is different. A module that cannot load turns
+  // judge mode OFF, loudly: judging on the old path when the new one was asked for would be a silent substitution.
+  let jevModule = null;
+  if (!judgeOff && judgeMod.jevModuleOn(cfg.env)) {
+    try {
+      jevModule = judgeMod.loadJevModule({ repo: cfg.repo, env: cfg.env });
+      judgeCfg.jevModule = jevModule;
+      log(`judge mode via the jev/ module (${judgeMod.JEV_MODULE_FLAG}=on; config ${jevModule.configFile})`);
+    } catch (e) { if (e instanceof Refusal) judgeFailed(e); else throw e; }
+  }
 
   const doCapture = () => {
     if (stopping) return;
@@ -280,7 +292,7 @@ async function run(o) {
         const b = budgetNow();
         const rest = b.judgeLeft;
         if (rest <= 0) { logCap(b, 'judge'); return; }
-        return judgeMod.judgePass({ store, maxCalls: Math.min(cfg.maxCalls, rest), env, fetchImpl: cfg.fetchImpl })
+        return judgeMod.judgePass({ store, maxCalls: Math.min(cfg.maxCalls, rest), env, fetchImpl: cfg.fetchImpl, jevModule })
           .then((r) => {
             // L078: a failed call no longer ends the pass. One line per failed item — its key and status, never the
             // error body, the prompt or the key — and it is retried first on the next cadence.

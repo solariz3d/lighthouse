@@ -5,7 +5,7 @@
  *
  * THE CONTRACT (exo_memory/loop/jev_standalone_design_2026-09-23.md, batch 1):
  *
- *   ask({ state, questions, key }) → { choice, probabilities, reason, model, usage }
+ *   ask({ state, questions, key }) → { choice, confidence, probabilities, reason, model, usage }
  *
  * `questions` is the gateway's questions object and must hold EXACTLY ONE question, of type `choice`: the contract
  * returns one choice, so a second question would be asked and silently dropped. Optional seams beyond the contract:
@@ -201,6 +201,7 @@ async function ask({ state, questions, key, gateway = {}, fetchImpl = globalThis
     const a = checkAnswer(name, questions[name], body.answers);
     return {
       choice: a.choice,
+      confidence: typeof a.confidence === 'number' && a.confidence >= 0 && a.confidence <= 1 ? a.confidence : null,   // D123: the gateway's own number, never derived from probabilities
       probabilities: a.probabilities && typeof a.probabilities === 'object' ? a.probabilities : null,
       reason: typeof a.reason === 'string' ? a.reason : null,
       model: body.model == null ? null : body.model,

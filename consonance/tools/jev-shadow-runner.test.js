@@ -628,3 +628,51 @@ test('L105 CLI, INSTALLED: the data dir comes from ~/.consonance.json data_dir (
   await new Promise((r) => child.on('exit', r));
   assert.doesNotMatch(runnerLog(f), /judge mode off: no data dir/, 'data_dir was not read: ' + runnerLog(f));
 });
+
+// ── D123: CONSONANCE_JEV_MODULE — read in run(), from the app's own environment, and nowhere else ────────────────────
+function withJev(jw) {
+  for (const rel of ['jev/lib/prompt.js', 'jev/lib/ask.js', 'jev/lib/config.js', 'jev/METHOD.md', 'consonance/jev-room/.jev/config.json']) {
+    fs.mkdirSync(path.dirname(path.join(jw.repo, rel)), { recursive: true });
+    fs.copyFileSync(path.resolve(__dirname, '..', '..', rel), path.join(jw.repo, rel));
+  }
+  return jw;
+}
+
+test('D123 run(): CONSONANCE_JEV_MODULE=on in the app env → judge mode goes through the jev/ module, and the log says so once', async () => {
+  const f = fixture(); const app = fakeApp(); const jw = withJev(judgeWorld(f));
+  try {
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), env: { AI_GATEWAY_API_KEY: KEY, CONSONANCE_JEV_MODULE: 'on' } }));
+    await waitFor(() => judged(f).length >= 1);
+    assert.strictEqual(judged(f)[0].via, 'jev-module');
+    // The CAPTURE too, not only the row: a runner that handed the module to judgePass alone would ask with the module
+    // about a prompt the room's own builder made (mutant S7 survived a row-only check).
+    const capDir = path.join(f.store, 'judge-captures');
+    const capsNow = fs.readdirSync(capDir).map((x) => JSON.parse(fs.readFileSync(path.join(capDir, x), 'utf8')));
+    assert.ok(capsNow.length >= 1 && capsNow.every((c) => c.via === 'jev-module'), JSON.stringify(capsNow.map((c) => c.via)));
+    assert.strictEqual((log(f).match(/judge mode via the jev\/ module/g) || []).length, 1, log(f));
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+test('D123 run(): the flag in any other spelling is today\'s path — no module line, no `via`', async () => {
+  const f = fixture(); const app = fakeApp(); const jw = withJev(judgeWorld(f));
+  try {
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), env: { AI_GATEWAY_API_KEY: KEY, CONSONANCE_JEV_MODULE: 'ON' } }));
+    await waitFor(() => judged(f).length >= 1);
+    assert.strictEqual(judged(f)[0].via, undefined);
+    assert.doesNotMatch(log(f), /jev\/ module/);
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});
+
+test('D123 run(): the flag on with a room that cannot load the module → judge mode OFF, loudly, and the shadow keeps running', async () => {
+  const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);   // no jev/ in this room
+  try {
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), env: { AI_GATEWAY_API_KEY: KEY, CONSONANCE_JEV_MODULE: 'on' } }));
+    await waitFor(() => /judge mode off: CONSONANCE_JEV_MODULE=on/.test(log(f)));
+    assert.doesNotMatch(log(f), /stopped:/);
+    await new Promise((r) => setTimeout(r, 200));
+    assert.strictEqual(judged(f).length, 0, 'no judging on the old path when the module was asked for and could not load');
+    h.stop('test done'); await h.done;
+  } finally { app.kill(); }
+});

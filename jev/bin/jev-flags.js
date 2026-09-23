@@ -105,7 +105,19 @@ function sessionLine({ rows, sessionId, lastTurn }) {
   for (const r of rows || []) if (r && r.session_id === sessionId && r.turn_uuid === lastTurn) row = r;   // newest wins
   if (!row || isClean(row) || !isMark(row)) return '';
   const reason = safeReason(row.reason);
-  return reason ? `${PREFIX} your last turn: ${reason}` : `${PREFIX} your last turn (Jev gave no reason that can be shown)`;
+  if (reason) return `${PREFIX} your last turn: ${reason}`;
+  // D123: the gateway gives a choice answer NO reason (jev/lib/ask.js :18–19, measured on the room's stored rows), so
+  // without this nearly every line would read "no reason". Jev's own confidence in the choice stands in, as `p=0.xx`.
+  // It is shown, not interpreted: the R2/R3 score found this confidence cannot tell a confirmed mark from an unconfirmed
+  // one (loop/jev_r2r3_score_2026-09-23.md :38), and the README says so beside it.
+  const p = confidenceOf(row);
+  return p != null ? `${PREFIX} your last turn (p=${p.toFixed(2)})` : `${PREFIX} your last turn (Jev gave no reason that can be shown)`;
+}
+
+/** The ledger row's `confidence` (jev-judge keeps it, D123), when it is a number in [0, 1]; else null — never guessed. */
+function confidenceOf(row) {
+  const c = row ? row.confidence : null;
+  return typeof c === 'number' && Number.isFinite(c) && c >= 0 && c <= 1 ? c : null;
 }
 
 // ── 'consonance': vendored from consonance/hooks/jev-flags.js (L089 room resolution, L099 pane letters) ─────────────────
@@ -208,7 +220,7 @@ function hook({ stdin, env = process.env, home = os.homedir(), cwd = process.cwd
   }
 }
 
-module.exports = { hook, run, sessionLine, consonanceLines, safeReason, lastTurnUuid, readRows, seatIds, seatName, lettersFor,
+module.exports = { hook, run, sessionLine, consonanceLines, safeReason, confidenceOf, lastTurnUuid, readRows, seatIds, seatName, lettersFor,
   roomMainRs, FORBIDDEN, PREFIX, LEDGER, LOG, ABSTAIN_MIN, WINDOW_HOURS, MAX_LINES };
 
 if (require.main === module) {
