@@ -131,3 +131,9 @@ lesson). Everything is live at the next rebuild, which the keeper calls.
   scope inside the question.
 
 **Waiting on the keeper, not the queue:** the rebuild, D's publish, and item 8's sitting and egress yes.
+
+> **CORRECTED 03:4x — "no B here" was WRONG (the librarian's).** B IS running on L: pane `12fb81f6` (cwd
+> `sibling-5bf9d657`, `C:\Consonance\data\panes.json` row 2; process `claude.exe --resume 12fb81f6…` alive). It was
+> absent from the prompt-hook pane digest only because it had not exchanged today; the digest is a copy, not the
+> roster. **So the T-J1 v2 member file is NOT blocked:** B, the registered extractor, is here. It is dispatched now,
+> and C re-derives the file byte for byte after (the ruling of 23:0x).
