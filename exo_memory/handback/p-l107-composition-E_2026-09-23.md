@@ -98,3 +98,18 @@ failure directly.
 - **Recognition:** both readers have read much of this record. The flag makes it visible, and nothing removes it.
 
 NEXT: librarian call_librarian with the hand-back pointer when the registration, the sealed predictions and the reader packet are written — plan default after it: the next batch runs C and B as the sealed readers, unless the output says otherwise
+
+## ADDENDUM, ~06:0x — §5's two "SEE BELOW" lines, filled after the librarian landed this file at `7ed0b35` without my ring
+
+    NO_COLOR=1 node consonance/tools/carrier-drift.js   (packet moved out of the repo)  → GREEN, exit 0 · carrier-drift.test 57/0
+    NO_COLOR=1 node consonance/tools/js-suite.js        (HEAD 442d1e1 → 7ed0b35 during the run; exit 1)
+      → 126 green · 1 failed · 0 crashed · 1 canary (of 128) · FAILED: consonance\tools\portable-paths.test.js
+
+**The one red is not this lap's.** `node consonance/tools/portable-paths.js` names four sites, all in
+`consonance/tools/jev-room.test.js` (`:49`, `:53`, `:62`, `:63`: drive-letter fixtures `E:\d`, `F:\x`, `G:\disc`). A
+landed them in L105 at `d14e9aa` (`git log -1 -- consonance/tools/jev-room.test.js`). The fix is A's: resolve the
+fixture paths, or add them to the baseline as `BENIGN-TEST`. **My earlier run (before the move) was 125 · 2 failed**,
+with the second red being carrier-drift.test over my in-repo packet. The move fixed that one.
+
+**The ring reached nobody, and the librarian collated anyway.** Named so the chain's record matches what happened: this
+hand-back was committed while §5 still read "SEE BELOW".
