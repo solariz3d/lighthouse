@@ -954,4 +954,66 @@ larger universe changes nothing about whether the run can start.
 *(C3's feature is a sentence ending in `?`, so the probe draws no negative for C3's 5 members; 74 − 5 = 69 and 68 of
 those have one. The `U2` figures quoted at the top of §-ATTACK come from the same probe with §8's second pathspec.)*
 
+## 13 · OWED ITEMS, APPENDED — L093, 2026-09-23, by pane B (the non-author extractor §1:118-122 names)
+
+*Appended only; nothing above this heading was edited. No Jev call, no model call, no judge output opened for this.
+Built on machine L from committed git objects at the pinned commit.*
+
+**1 · THE MEMBER FILE (§8 owed item 1).**
+
+    exo_memory/loop/tj1v2_members_2026-09-22.json
+      sha256  feca21d5711ad75f77de7d2ebfc5637d0f94939906e21ad803a07ca9ee244332
+      git-blob 1810f821b37c0a4679347b64ff009aa50361cc2e · 121,214 bytes
+    node build_tj1v2_members.js <repo> --out tj1v2_members_2026-09-22.json
+      # the builder is embedded verbatim in the file as `builder_source`; a second build FROM THAT EMBEDDED SOURCE was
+      # byte-identical (cmp), and two independent default runs were byte-identical
+
+| figure | this registration expects | the member file | note |
+|---|---|---|---|
+| universe | 424, sha `7303e265…` | **424, same sha** — the builder refuses to run on any other | |
+| exclusions (§7) | 112 · 83 · 79 · 64 · 8 · 3 · 1 | **identical, all seven** | |
+| members before clause 5 (§7) | C1 49 · C2 20 · C3 5 | **49 · 20 · 5** | |
+| units after clause 5 (§7 amended) | C1 **25** · C2 3 · C3 1 | **25 · 3 · 1** | only C1 enters the file (§2) |
+| C1 matched stratum (§4, §12) | "~60 of an ideal 75" | **57 of 75** | 19 of 25 members drew all 3; 6 fell short and, by the rule's letter, contribute none |
+| total units for the sitting | "~94, capped at 100" incl. ~9 repeats | **82 distinct** (+ the ~10% repeats §4 adds at sitting time) | |
+
+**The member stratum needed no discretion.** Clauses 1–5 and V2-D0…D11 executed as written and reproduce E's §7 to the
+unit (V2-D11's `^`-first fix changed nothing on this universe). **The matched stratum needed ten readings, and three of
+them are gaps in the rule in force — written by B in D109 and adopted in B's words, so they are B's to own:**
+**R6** the rule defines the section only for files WITHOUT markdown headers; **R7** "within 7 days" has no anchor;
+**R9** §4 orders the sitting by `sha256(unit_id + ' 265b08f')` and never defines `unit_id`. Each reading, the sentence
+it reads, and its count are in the file's `readings` field and `counts.matched_draw_skips_by_reading`.
+**What the readings move, measured:** the matched count is **57** as built, **63** if short members contribute partial
+draws, **54** at v1's non-overlap distance, **48** if the candidate LINE rather than its three lines must carry a digit.
+**The 25 adjudicated units do not move under any of them, and every variant leaves 73+ units** — so no reading decides
+whether C1 can rule; that is still the keeper's yes-rate band in §6.
+
+**2 · THE K RENDERER (§8 owed item 4).**
+`consonance/tools/tj1-k-render.js` at HEAD `a1250a4`, unchanged since `bec101d`:
+**sha256 `5fa7a56dd96ae5e4f5a601dcea8a14fa95a941a8be5926fa223050fcdd2a0c0e`**, git-blob `e9644d09…`.
+`node --test consonance/tools/tj1-k-render.test.js` → **10 pass, 0 fail.**
+
+**3 · THE SCHEMA (§8 owed item 3) — NOT WRITTEN, because this registration does not define it fully.**
+`consonance/tools/jev-ask.js:95-120` refuses a schema without, per question, a **key**, a **type**, a non-empty
+**`instructions`**, and for a `choice` a **`criteria` description for every option**. This registration supplies the
+question texts (§2) and the answer set `yes | no | cannot-say`. **Missing, and not mine to write:**
+(a) the **criteria description** for each of `yes`, `no`, `cannot-say` — the gateway decides by them, so any wording is
+a new instrument; (b) the **question keys**; (c) whether `instructions` is the §2 question text verbatim or a frame
+around it that says what the state is; (d) one schema file for K and C1 or one each, and its **path and name** under
+`consonance/jev/schemas/`; (e) what the **state** is for a C1 unit — the three lines alone as plain text (what the
+keeper sees, §4) or something wrapped around them. **The schema's sha stays owed until the author (E) writes (a)–(e).**
+
+**4 · WHAT THE EXTRACTOR HAS SEEN.** The file's `seen` field lists it in full: **none on any unit** (no Jev or judge
+has ever been asked about these lines), and every Jev or judge output B has seen elsewhere, with lap and machine
+(D095, D103, D116–D118, D120, L081, and the L3 verdicts injected into this seat's context). None is output of this
+backtest. **One check was not run:** whether any unit's three lines appear verbatim in the 35 D117 prompts, which are on
+machine D.
+
+**5 · FOR THE KEEPER, flagged and not decided:** **4 units come from `exo_memory/third_place/`** (1 adjudicated, 3
+matched) and **17 from `journal/` or `librarian/`**. A run sends every unit to the Jev gateway; whether that text leaves
+the machine is his call. They are kept, because removing them now would be a rule change after registration.
+
+**STILL OWED BEFORE ANY RUN:** the schema's sha (item 3 above, blocked on E), the keeper's label file sha (§4), and the
+keeper's egress yes for S-CTRL in his own words (AMEND-10) — and now, by item 5, his word on the C1 units too.
+
 NEXT: librarian collate B's attack, then E amends, then chair lands D109 whole and opens 2.1 (measure js-suite and cargo on D) when the amendments are in

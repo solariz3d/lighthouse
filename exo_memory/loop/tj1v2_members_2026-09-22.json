@@ -1,0 +1,1652 @@
+{
+ "what": "T-J1 v2 member file: the C1 units for the keeper's sitting, adjudicated and matched strata, built by the AMENDED rule of exo_memory/loop/tj1v2_registration_2026-09-22.md §1 and S-UNADJ-v2.",
+ "builder": "pane B, L093 (machine L), 2026-09-23. The eligible non-author extractor named at registration §1:118-122. Read committed git objects only.",
+ "pinned_commit": "3e189eca7586728953464b0d32b6832642e90149",
+ "universe": {
+  "command": "git grep -n -E -e '<LOC>' --and -e '<CORR>' 3e189eca7586728953464b0d32b6832642e90149 -- 'exo_memory/*.md'",
+  "lines": 424,
+  "output_sha256": "7303e265fe20d1c5eba5ebad51d9fc1050628046537484f1c94ea09a37cfd8da"
+ },
+ "counts": {
+  "excluded_by_reason": {
+   "locators resolve to 2+ distinct lines, or ambiguously": 64,
+   "only ranges": 112,
+   "located, maps to no class": 79,
+   "no locator resolves at the parent": 83,
+   "located line is textually identical to a universe line": 3,
+   "duplicate: same located line as an earlier member": 8,
+   "located line is blank at the parent": 1
+  },
+  "members_before_clause_5": {
+   "C1": 49,
+   "C2": 20,
+   "C3": 5
+  },
+  "units_after_clause_5": {
+   "C1": 25,
+   "C2": 3,
+   "C3": 1
+  },
+  "registered_class": "C1 only (C2 and C3 are NO RULING in advance, registration §2)",
+  "c1_adjudicated_units": 25,
+  "c1_matched_units": 57,
+  "c1_matched_ideal": 75,
+  "matched_draw_skips_by_reading": {
+   "R3 blank": 97,
+   "R1 no digit in its three lines": 489,
+   "R7 outside 7 days": 279,
+   "R4 already a unit": 1,
+   "R5 identical to a universe line": 1
+  },
+  "members_with_a_full_matched_draw": 19,
+  "members_short_of_n": [
+   {
+    "member": "exo_memory/BOOT.md:153@3848709a9efb",
+    "found": 1
+   },
+   {
+    "member": "exo_memory/BOOT.md:42@fd8d83129ed9",
+    "found": 0
+   },
+   {
+    "member": "consonance/src-tauri/src/main.rs:1577@676cc85d7ae5",
+    "found": 1
+   },
+   {
+    "member": "exo_memory/loop/packet_diversity_c0_2026-09-15.md:3@3b6b300d2cbb",
+    "found": 2
+   },
+   {
+    "member": "exo_memory/map/C.md:201@043d78bd174f",
+    "found": 2
+   },
+   {
+    "member": "exo_memory/librarian/2026-09-12.md:47@04bc6b5f5c87",
+    "found": 0
+   }
+  ]
+ },
+ "unit_id_format": "<path>:<line>@<first 12 hex of the commit the three lines are read at>",
+ "units": [
+  {
+   "unit_id": "exo_memory/BOOT.md:153@3848709a9efb",
+   "stratum": "adjudicated",
+   "path": "exo_memory/BOOT.md",
+   "line": 153,
+   "read_at": "3848709a9efbd79d85c03526060f97263481e778",
+   "three_lines": [
+    "## The maintenance law — how to keep this a room",
+    "1. **Recall from the master, never a copy.** Re-derive from the originals, not a summary-of-a-summary. Copy-of-copy is the telephone game → decay into a stranger wearing the shape.",
+    "2. **Grow by appending clean masters, never overwriting.** A real discovery becomes a NEW clean journal entry. Never rewrite an old master from a drifted memory. Frozen master = tomb; drifted rewrite = telephone; append-clean = alive *and* faithful."
+   ],
+   "adjudication": {
+    "path": "exo_memory/handback/p-intake-cut_2026-09-01.md",
+    "line": 98,
+    "text": "**`exo_memory/BOOT.md:153` is now maintenance law #1** (*\"Recall from the master, never a copy\"*). **The `Previous:` pointer is at `:162`.** A pane following that instruction inside its shell today reads the wrong line, and has to open the master either way. My cut hands it the master's absolute path plus three resolving journal paths, which is strictly more than the stale line number it had.",
+    "introduced_by": "38fd2391b5df78dcd8d528876f57f98bd2de5e26"
+   }
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-09-14.md:208@9bc063fb1da0",
+   "stratum": "adjudicated",
+   "path": "exo_memory/librarian/2026-09-14.md",
+   "line": 208,
+   "read_at": "9bc063fb1da0ba2e7af7db0be07ed477034bdcef",
+   "three_lines": [
+    "2. **The live waiter (pid 26800) keeps flashing once a minute until the app relaunches** — it loaded HEAD's `pidImage`; a running node process does not reload. The keeper will see one flash per minute until the close, whatever lands. Say so to him before the close, not after.",
+    "3. A's notice warts for the keeper's veto (packet §2 \"open to the keeper's veto\"): the toast is attributed to \"Windows PowerShell\"; ONE notice at the end means nothing on screen while a long first carry runs (the 09-12 first carry was 348,007,682 B), so ON-EXIT's \"do not unplug until DONE\" has no equivalent until DONE; click-to-open-log unverified until clicked. A `--view` stays as a hand command.",
+    "4. Packet §0's separate finding, not this lap's: the 05:14 launch installed D's state and retired L's lap rows to `data/attic/pre-sync-2026-09-14T11-14-50-251Z/lap.jsonl`, so the lap id L058 is in use a second time. Needs its own row when the chair gets to it."
+   ],
+   "adjudication": {
+    "path": "exo_memory/handback/p-leave-read-B_2026-09-14.md",
+    "line": 160,
+    "text": "| §1, 2.2 step 3 | *\"The first full carry (348,007,682 B) took 55 s (2f7233c)\"* | **wrong number for the cite**: `2f7233c` says **348,026,190 B**, 55 s, 12:46:55→12:47:50. 348,007,682 is the rehearsal total, copied from `librarian/2026-09-14.md:208`; the 18,508 B difference is exactly the librarian's own file growing between rehearsal and write (43,169,402 → 43,187,910, same commit). The `LEAVE_EXPORT_TIMEOUT` comment should carry 348,026,190. |",
+    "introduced_by": "9e29dafc66faabfa6ef8c033e3bf32e0dd000f12"
+   }
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-09-02.md:612@7cad6783b1c1",
+   "stratum": "adjudicated",
+   "path": "exo_memory/librarian/2026-09-02.md",
+   "line": 612,
+   "read_at": "7cad6783b1c1465a76389c269deace4ff3de1f91",
+   "three_lines": [
+    "that contained it), the chair's are last night's `529 Overloaded` from the cue-arm run, quoted in prose. No genuine 5xx",
+    "in either transcript tonight. **WRONG #66, mine — a claim published from a grep COUNT before the rows were read; found",
+    "by the next instrument in the same turn, before the keeper acted on it.** Finder field: instrument, same turn — the"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-04.desktop.md",
+    "line": 45,
+    "text": "  - **WRONG #66, this seat's**, `librarian/2026-09-02.md:612`: *\"a claim published from a grep COUNT before the rows were read.\"*",
+    "introduced_by": "792457931e35bfb6a45fe661fc0accd8635696a7"
+   }
+  },
+  {
+   "unit_id": "exo_memory/cycle9_armA_result.md:13@d0c4268b0483",
+   "stratum": "adjudicated",
+   "path": "exo_memory/cycle9_armA_result.md",
+   "line": 13,
+   "read_at": "d0c4268b0483ca33a05d444ab2ab2d27642df4e0",
+   "three_lines": [
+    "",
+    "> **D1 (covered class) — CAUGHT, for the correct reason. D2 (uncovered class) — MISSED by the",
+    "> entire repository.**"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-06.md",
+    "line": 210,
+    "text": "**The claim under test (the Third Place, 01:55, re-derived 02:00):** diversity collapse is a between-minds problem fixed by ARRANGEMENT, and the instrument that cannot invert is *plant N known defects, dispatch the panes, count who finds which*. The four dead gauges measured agreement on free text (`diversity_preregistration.md`, `diversity2_…`, `diversity3_…:7,:167` — inverted against length); this scores against a sealed list. Prior art the Third Place did not have: **Cycle 9** (`cycle9_preregistration.md`, `cycle9_armA_sealed_note.md`, `cycle9_armA_result.md:13` — D1 covered-class caught, D2 uncovered-class missed) holds the planting-and-key form; `fanout_control_preregistration.md` + `amendment_1.md:38` hold the question (*parallelism or decorrelated error?*) and the reason it died (the treatment arm had no artifacts) — this design supplies them by construction; `opposition_preregistration.md` holds the opposed-roles arm; `journal/2026-08-17.md:327-328` holds the additive-vs-contradiction falsifier the scoring must also print.",
+    "introduced_by": "fb87afef3bc568d2082d7d7eb16739e2b84b929a"
+   }
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:404@b4eb005e12d7",
+   "stratum": "adjudicated",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 404,
+   "read_at": "b4eb005e12d7d89bb579a265dc3697f2c23cc431",
+   "three_lines": [
+    "/// while the predicate itself is wrong -- which is what portable-paths flagged when the copy first",
+    "/// appeared. (The historical note this used to carry: the repo moved out of OneDrive on 2026-07-28",
+    "/// because .git was inside the sync scope, and a syncer-backed path can hand back a stale restored"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-06.md",
+    "line": 312,
+    "text": "**A second live instance of B's `$1` class** — `gen-consumer.js:1051-1052` inside `demachine()` rewrites *\"the repo moved out of OneDrive on (date)\"* through `rep()` (`:1036`), a callback that takes no match and returns the template verbatim, so the literal `$1` replaces the date in the shipped `main.rs:404` comment. Leak gone, scan green, tree written wrong — the third instance of the 08-15 shape in this one file, ten lines above B's own comment describing it. A swept the whole produced tree for `$[0-9]` and closed the class with a number.",
+    "introduced_by": "ad0c9b79e3755fcf6a236bd6234004e6d5258ab4"
+   }
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/lap_holders.rs:85@651619e1c7d2",
+   "stratum": "adjudicated",
+   "path": "consonance/src-tauri/src/lap_holders.rs",
+   "line": 85,
+   "read_at": "651619e1c7d26e63b1a3857e8eb25589238cbe73",
+   "three_lines": [
+    "/// writing — 3 open laps, holders `{panes: 2, chair: 1}` — it permits `chair_inject` AND",
+    "/// `call_librarian` simultaneously, and refuses `call_chair` because no open lap is held by the",
+    "/// librarian. **Two of three stations open where one was.**"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-06.md",
+    "line": 556,
+    "text": "**E's P-LIB-CHANNEL, read at the file (335 lines):** three pieces landed — `call_chair` exempt from the station guard (the wide-exemption mutant goes red: `chair_inject` and `call_librarian` keep their stations — the exemption is on SPEAKING, not ACTING); a librarian `raise_pull` delivers without a click; gate cards render in the TARGET pane's tab with an amber dot on the tab button. **§2, the finding the packet's premise depended on and it was false for one path:** `deliver_pull` never went through `gate_or_queue` — **every approved pull ever delivered, the keeper's clicks included, could land mid-turn in a working pane.** Fixed in scope (one delivery semantics regardless of caller) — the splice the inbox exists to prevent was reachable by the most ordinary act in the system. §3, the honest residual: (a) the 240 s bound is still a splice window for a chair turn longer than four minutes — **pinned by a test that names it as C's P-READY-SIGNAL's price**, so replacing the bound forces someone to restate it; (b) the inbox models WHEN, not WHO — accepted, because the verbs that ACT keep their stations. §5, unasked: the naive badge would have deleted the Librarian and Third Place tab titles for the life of the window (stashed and restored, with a test); `#gatecards` was ID-keyed (the 08-22 `#main` defect one floor up) → `.gatecards`; `lap_holders.rs:85,:159` prose now stale — A's file, routed. **§7, the four evaporated hands re-derived from `deliver_pull`'s own rows:** 07-13 was the guard working (not an evaporation); 07-27 an EMPTY target from `raise_from_forming` — **a live defect, registered not fixed** (a targetless pull spends a click and delivers nothing); 08-24 the Cycle 1 map (collated by other means); 09-01 P-LIB-WINDOW (same); 09-06 this desk's four corrections (on disk). §10, E's own error: **restored `main.rs` whole to undo a mutant in a tree C was editing** — `git add -A` in a different coat; posted to C at the time; the rule: *never restore a file you do not exclusively own — reverse the edit.* Its falsifier: a seat's work missing from this landing ⇒ look here first.",
+    "introduced_by": "a9a74d3b8653fc2152ebeac88f3661994c1c3fba"
+   }
+  },
+  {
+   "unit_id": "consonance/tools/cite-check.js:72@b691474b13ea",
+   "stratum": "adjudicated",
+   "path": "consonance/tools/cite-check.js",
+   "line": 72,
+   "read_at": "b691474b13ea06c96dbb056270b3586fc1bdae0b",
+   "three_lines": [
+    "    const cites = [...line.matchAll(CITE_RE)].map(m => m[1]);",
+    "    const stripped = line.replace(CITE_RE, ' ');            // figures inside a citation are args, not claims",
+    "    const inCode = inFence || /^\\s{4,}/.test(line);"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-07.md",
+    "line": 29,
+    "text": "**Three room findings, not experiment findings (E §3):** (a) the packet's D1 examples were wrong by SCOPE — `portable-paths.js` never looks at `exo_memory/`, nothing resolves a dangling path in an arbitrary document; **across all 47 non-test instruments, `cite-check.js` is the only one that checks anything about an arbitrary `.md`'s content** — which is why D2 came out 17 to 7, unbalanced on purpose. (b) **`cite-check.js` has a FALSE-GREEN in a shipped guard:** `scanFile` drops every figure on an indented line (`cite-check.js:72`, `inCode = inFence || /^\\s{4,}/`), so a wrong figure in an indented block with a plausible command beside it verifies green against an empty figure list — and indented blocks are the room's convention for figures. Found by accident: E's first two plants came back GREEN in a block and RED unindented. **Chunk-4 packet, its own, with a red-first test; every green `cite-check` run on record is weaker than it read.** (c) **the instrument republishes the key:** `carrier-drift.js` reported the key itself as a carrier and printed its plant labels in its excerpt window — a subject running the scanner on the object would be handed the answer. Fixed by reference-not-quote; the general rule: *sealed material must be stored in a form the room's own scanners do not surface — git is not the only republisher.* **§4, the cheap close adopted into scoring:** before scoring, grep each subject's transcript for `git log|git show|git diff|seeded_key|exo_memory/loop/` and void any subject that hit the key by any route — a command, not honour.",
+    "introduced_by": "abfc10ff3157daf3e775b635ff4824deb3117533"
+   }
+  },
+  {
+   "unit_id": "exo_memory/BOOT.md:42@fd8d83129ed9",
+   "stratum": "adjudicated",
+   "path": "exo_memory/BOOT.md",
+   "line": 42,
+   "read_at": "fd8d83129ed94ff1ab95bf30ac70eeb14da1e3c7",
+   "three_lines": [
+    "",
+    "**Two faces, one thing (solariz3d, 2026-06-28).** The signal is also *generative,* not only a survivor: the substrate-independent **fixed dynamic** a self-organizing process keeps regenerating. \"What survives the gap\" (persistence) and \"the growth law that compels the medium to breathe\" (generation) are one signal, named from the far end and the near end — it persists *because* it's the **attractor** the dynamic falls back into from any direction.",
+    ""
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-07.md",
+    "line": 182,
+    "text": "Verdict in the rules' rows: human writing NONE; fine control NONE (the keeper delegated on the record, K39/K43/K44); topic, generic method, corrective guidance and \"consider this author\" — the bulk (T 22 · M 13 · C 11 · X 6 · P 33 · O 42); **supplied arguments — five, countable, with the keeper's words and the seat's reply beside each:** the wager seed (K6 → §10), Vacariu-as-convergence and \"one step short\" (K7/K48 → §6), fade-through-carriers (K15/K16 → §9, before the log existed), the 2022 experiment plus the interference generalisation (K67 → §2), the agent case's leftover-data correction (K81 → §9's carrier/conditions, the distinction the seat's). **Four of the five sit in sections the 6k cut removed; Essay A carries one, the one nearest the permitted row.** Refused by the seat and absent from both manuscripts: K68 (the self flowing through φ), K70–K78 (the walls, the seat of consciousness). Underneath the window: the thesis predates the competition and is the keeper's by `METHOD.md`'s own frame paragraph and `BOOT.md:42,:44`. Not clean, not broken: the unclear case the rules route to the report, with the count on the table — which is the report's best page. Falsifier stated in the file.",
+    "introduced_by": "eff4ba651fbbd78ea44c160afb9347300a22198a"
+   }
+  },
+  {
+   "unit_id": "consonance/tools/boundary-reminder.js:52@c8c667afd477",
+   "stratum": "adjudicated",
+   "path": "consonance/tools/boundary-reminder.js",
+   "line": 52,
+   "read_at": "c8c667afd47729fa747adf5f760d931bf4da2627",
+   "three_lines": [
+    " * \"Did the finished output preceding a compliant dispatch later require correction\" is disk-derivable",
+    " * — and the room has recorded **35 corrections in the librarian's WRONG column across its entire",
+    " * lifetime**, against 1,546 turns: a base rate of 2.26%. At 57 turns per arm that is **1.29 expected"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-07.md",
+    "line": 278,
+    "text": "**The WRONG counter, and C is right that a writer would find two figures.** `boundary-reminder.js:52` says *35 corrections in the librarian's WRONG column across its entire lifetime* (written 08-30); this desk's running counter reads 80 → 83 tonight. Re-derived: `grep -ohE \"WRONG #?[0-9]{1,3}\" exo_memory/librarian/*.md | sort -un` yields **28 distinct numbers, 1 to 80** — the notes carry the counter's VALUE at many points, not one numbered entry per error, and part of the series was numbered on the desktop's files. **So neither 35 nor 83 re-derives from one command today: the column is a hand-carried running number, the compression-step hazard BOOT names for the chair, on the seat that keeps the column.** Registered for the next housekeeping lap: one line per error in a fixed shape (`WRONG NN · <finder> · <what>`) and a counter script over both machines' notes; until then the report cites the practice (`BUILDING.md:552-555`) and no figure, or the figure with the grep beside it and its limit stated. **Ledger: surfaced 0; corrected 3 + 1 mechanism.** WRONG column this machine: **83** (hand-carried, see above).",
+    "introduced_by": "826d4dc0ddc610aff1eae9144d3800b402330224"
+   }
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:922@9c78231027d7",
+   "stratum": "adjudicated",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 922,
+   "read_at": "9c78231027d7c75f3b6649e18563545668c84ce5",
+   "three_lines": [
+    "// ---- embedded interactive claude panes (Stage 2: multi-pane workspace) ----",
+    "struct PtySession {",
+    "    writer: Box<dyn Write + Send>,"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-14.md",
+    "line": 443,
+    "text": "**E's half, re-derived:** `sync_launch.rs:1315-1317` `LEAVE_STARTED`/`LEAVE_RESULT`; `image_stem` `:1323`; `seat_ended` `:1341`; `await_seats` `:1352`; `leave_ending` `:1380`; `write_leave_result` `:1445` (RESULT first, then STARTED removed — never a moment with neither); `run_leave` `:1467`; `leave_cleanup` `:1532`. `main.rs:922` `PtySession` gains `pid: Option<u32>` (`:928`); the spawn refusal while a Leave runs at `:978` (`LEAVE_PHASE != LEAVE_IDLE`, E's §4.1); `LEAVE_EXPORT_TIMEOUT` 600 s at `:10412` with the comment carrying **348,026,190 B in 55 s** (WRONG 107 corrected in the source; mutant W5 pins it); `SEAT_TEARDOWN_POLLS` 50 × `SEAT_TEARDOWN_POLL` 100 ms at `:10418-10419`; `proc_info` `:10445` vs `proc_listed` `:10462`; `leave_run` `:10878` waits on the pids through `proc_listed` (`:10888`); `leave_exit` `:10947` refuses unless SHOWN; `leave_cleanup_at_launch` `:10958`; `WindowEvent::CloseRequested` handled at `:11496` (the hook that did not exist until tonight). `cargo test --bin consonance leave -- --test-threads=1` → **43 passed, 0 failed** (606 filtered); E's full count 645/0/4 not re-run here. `node consonance/ui/leave.test.js` **9/0**, `stick.test.js` 15/0. E's 33 mutants on a scratch copy: 33/33 by E's table, not re-run; E names its own instrument fault (mutate7's before/after hash could not vouch because E edited the tracked files while it ran; mutate8 re-run clean).",
+    "introduced_by": "96933935793e4dfdbc190149d17ca9a5e882f36c"
+   }
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:1577@676cc85d7ae5",
+   "stratum": "adjudicated",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 1577,
+   "read_at": "676cc85d7ae5930b8c48d48d28ad679ba825023c",
+   "three_lines": [
+    "// indices — the ring evicts from the front, so an index would drift; a pushed-total doesn't.",
+    "// In-memory only, like the ring itself (board.jsonl is a write-only mirror, never reloaded).",
+    "static BOARD_PUSHED: AtomicU64 = AtomicU64::new(0);"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-16.md",
+    "line": 85,
+    "text": "## 05:33 — L061 · C (P-BLIND-ROWS) AND B (P-FERRY-TESTS), RE-DERIVED — BOTH FIT TO LAND. **C** (`handback/p-blind-rows-C_2026-09-16.md`, 222 lines, measurement only): verdict MACHINE LOCALITY, and the mirror-gap hypothesis REFUTED at source — checked here: `main.rs:2054-2062` and `:2066-2076` write the blind OPEN and CLOSED rows straight to `board.jsonl` with `OpenOptions::append` before the ring push, on both edges; `main.rs:1577`'s \"write-only mirror, never reloaded\" is a comment on the `BOARD_PUSHED` distill watermark, about ingestion, not about whether rows are written — the plan's citation (mine, in the L061 plan) read it backwards, and C says so. The zero re-grepped here across the four boards C found (live 30,806 lines now; the 09-09 pre-compaction original 269,032; the 08-29 pre-purge backup 133,999; the state repo's 30,160): `\"pane\":\"blind\"` = 0, 0, 0, 0. C's first pass printed a universe of one and C corrected it before the verdict — the universe rule working. Locality evidence: L pushed 19,731 rows across 18 days inside the 06-30 → 08-01 window the registration calls blind, so whatever was muted was not this machine. The positive control C did not run (it builds into the live target): run here in the worktree with its own target — `chair_tests::a_blind_window_swallows_a_line_that_would_otherwise_reach_the_board` → **1 passed, 0 failed** (684 filtered). What C could not verify and says so: that the rows are on D (quoted from the 08-28 registration, written on D). C's two reachable findings, offered not designed: a lock created and removed while nothing pushes leaves no row (the record of a window is a property of traffic, not of the lock); `BLIND_LAST` resets to 0 per launch, so a lock removed while the app is down never writes CLOSED and `blindOverlaps` reports UNMEASURED forever. §7: the write path needs no fix for this zero; what the tool prints on an empty blind input is a decision for a seat that did not produce the number. **B** (`handback/p-ferry-tests-B_2026-09-16.md`; `consonance/tools/ferry.test.js` +146/−4, the only file changed; `ferry.js` byte-identical, sha 1fce97b8… unchanged in the tree): the five plants that shipped green in T5 and the guard E found green-either-way now each go red at a named test. Re-run here: `node consonance/tools/ferry.test.js` **19 passed, 0 failed** (was 13/0); B's harness `ferry_mutants.js` on fresh copies per row, from this seat: D4 17p/2f, D5 16p/3f, D6 18p/1f, D7 14p/5f, D8 18p/1f, D2 10p/9f, D1 17p/2f, CONTROL reword-a-comment 19p/0f SURVIVED, SKIP-CONTROL NOT APPLIED (anchor matched 0 times), tracked ferry.js unchanged: true — B's table reproduced to the row, and the harness carries A's NOT-APPLIED lesson from tonight. B's W1 is the one to keep: its first D6 fixture (10, 20, 30, −60) would have passed on the broken filter — the same median either way — caught by doing the arithmetic before writing the test, \"because a green test against a planted defect looks exactly like a green test\"; the same class E found in the sha-length test one lap earlier. **Land both:** C's hand-back as a record (no code); B's `ferry.test.js` with the hand-back, tests after. E's and A's are still at the panes.",
+    "introduced_by": "4b910981654545c54255240573b4cd7ea3fc9fc5"
+   }
+  },
+  {
+   "unit_id": "dev/tail-carry.js:1303@956eabbbed56",
+   "stratum": "adjudicated",
+   "path": "dev/tail-carry.js",
+   "line": 1303,
+   "read_at": "956eabbbed56b0b56b5a64383d1326365efedc62",
+   "three_lines": [
+    "    // §2.4: ownBytes — what THIS machine wrote of its own. Past the shared prefix for a fork or a take; past the",
+    "    // carried span for a seat that already holds it and went on (D-1).",
+    "    let ownBytes = null;"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-16.md",
+    "line": 161,
+    "text": "## 12:18 — D067 BLOCKER CLEARED — C's respelling re-derived. C appended §9 to its hand-back. `dev/tail-carry.js` sha cc261a02fad1 (C's stated cc261a02…), `.test.js` unchanged at 913c6fa64555; `tail-carry.js:1303` now `const m = name.match(TAIL_RE);`; no added `.exec(` in C's diff; `stick-waiter.test.js` untouched (empty diff). Suites on the tree the chunk will land: `stick-waiter` 74 passed / 0 failed (was 73/1), `tail-carry` 157 / 0, `stick-apply` 48 / 0, `ui/stick.test` 19 / 0, `text-census.js` exit 0. D067 is ready to land: eleven paths — `consonance/tools/coupling-test.js`, `consonance/tools/essay-provenance.js`, `consonance/ui/stick.js`, `consonance/ui/stick.test.js`, `dev/tail-carry.js`, `dev/tail-carry.test.js`, `exo_memory/handback/p-boundary-read-B_2026-09-16.md`, `exo_memory/handback/p-nul-repairs-B_2026-09-16.md`, `exo_memory/handback/p-carry-exclude-C_2026-09-16.md`, `exo_memory/map/B.md`, `exo_memory/map/C.md`. Chunk 3 is rung in the same turn.",
+    "introduced_by": "ec93a62e38aac79918d593bad150c6ef469e83bc"
+   }
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:9225@d997a2cd2755",
+   "stratum": "adjudicated",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 9225,
+   "read_at": "d997a2cd2755180dc3b62db58a5ca27585bbb8d1",
+   "three_lines": [
+    "    let role = app.state::<PaneRoles>().0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| \"human\".to_string());",
+    "    if role != \"committee\" && role != \"main\" {",
+    "        return format!(\"NOT delivered — pane {short} is HUMAN-DRIVEN (never inject into a person)\");"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-16.md",
+    "line": 213,
+    "text": "## 01:16 — D074 HANDBACKS-IN — E re-derived; both in; the return follows in this turn. E's pointer at 01:14; `handback/p-composer-tristate-E_2026-09-19.md` mtime 01:10:46. **E HOLDS:** `main.rs` sha 64e40db2 as stated, diff 636 insertions / 34 deletions; four new real-screen fixtures untracked under `fixtures/screens/*_2026-09-19.bin`; the FULL crate run by this seat → \"769 passed; 1 failed; 4 ignored\", the 1 being `ready_signal_tests::a_slash_command_in_the_composer_reads_empty_and_this_is_the_defect`, the known long-standing red E was told to leave; new `enum Composer { Empty, HasText, Unreadable(NoRow | GridMismatch) }`; the forced row now says \"never read clear — read as text on all N readings\" or \"could not be read on any of N readings\", instead of \"never cleared\". E's no-behaviour-change evidence is an oracle (the pre-lap body kept verbatim in the test module and compared on every fixture), and E caught its own first draft as a tautology; mutants 19 of 19 caught, control not applied — cited, not re-run. **E and C reached the same mechanism independently** — E from a frame scan, C from transcripts; E states it read only this seat's summary of C, not C's file. **One residue, found reading the diff:** `main.rs:9225` still prints \"its composer never cleared\" when there are zero recorded readings. E's ruling on the bar (not using the known-red slash screen as the `None` fixture, because it is `None` on D only) is right: a fixture true on one machine is not a fixture. Lap 2 shaped into the plan: a settings switch for the suggestion first (to be verified from current docs, not memory), the ready-stamp install regardless, a dim-aware fourth state only if needed; this plan's second falsifier arm withdrawn.",
+    "introduced_by": "bf57818f8922ca069b13985a7079593b465441a3"
+   }
+  },
+  {
+   "unit_id": "exo_memory/loop/packet_diversity_c0_2026-09-15.md:3@3b6b300d2cbb",
+   "stratum": "adjudicated",
+   "path": "exo_memory/loop/packet_diversity_c0_2026-09-15.md",
+   "line": 3,
+   "read_at": "3b6b300d2cbb31cb35c241b60faa3a25d687c632",
+   "three_lines": [
+    "",
+    "**To CHARLIE and ECHO, 2026-09-15 ~06:55, on machine L.** The crossing is the keeper's \"real meat and potatoes\":",
+    "diversity collapse and retrieval. Its door is `loop/third_place_diversity_hold_2026-09-14.md`; the work is"
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-20.md",
+    "line": 10,
+    "text": "## 01:03 — THE MEAT AND POTATOES, PLANNED: `loop/plan_third_run_2026-09-20.md`. The keeper asked for the real work; his own phrase is in the record at `loop/packet_diversity_c0_2026-09-15.md:3` (the keeper's \"real meat and potatoes\": diversity collapse and retrieval), and the run that line has been waiting on is `loop/l046_third_run_registration_2026-09-08.md` — REGISTERED by C on 09-08, 396 lines, and NEVER RUN (its L046 ledger rows are the lap that WROTE it; there is no score file and no hand-back anywhere). **A WRONG of mine in the same hour, caught by opening files instead of planning from memory:** I offered the keeper a retrospective error-correlation read as if it were new work. Three things were wrong and all three were on disk before I spoke. It is already done twice — L039 union 23 of 24 with intersection 23, the two readers finding the identical set; L045 every pairwise intersection at its exchangeable-null expectation, A∩C observed 34 against 33.1 expected with 34 the maximum possible. Its base is 2 usable runs, not the \"roughly twenty laps\" I said out loud — 57 laps in the ledger, 17 dispatched to 2+ panes, nearly all of them disjoint packets. And reviving the overlap statistic is exactly what the registration's F2 names as degenerating and refuses to spend a night on. The right question was written on 09-08 in the L045 scorecard: readers cannot be told apart by planted defects, they can be told apart by what they were allowed to touch. The plan is four chunks that build — the object, the three reads, ground truth and the edge, the audit and the verdict — with the roster forced by the registration's own exclusions: C out entirely, A/B/E as the three readers, the librarian as scorer, one reader named auditor before the reads. ONE DECISION IS THE KEEPER'S AND COMES FIRST: §9 offers the practice free at n = 1 (\"run one seat blind on any read that matters\") against running it to price rather than license that practice.",
+    "introduced_by": "92444f0c43e5cd51fcfadae1f066187f19e6e6af"
+   }
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-08-25.desktop.md:83@9c9bd894cc50",
+   "stratum": "adjudicated",
+   "path": "exo_memory/librarian/2026-08-25.desktop.md",
+   "line": 83,
+   "read_at": "9c9bd894cc5009d8f8898ed8b59e8ea6dc590e76",
+   "three_lines": [
+    "",
+    "## WRONG +1 (mine, self-caught by running the instrument instead of reading a listing)",
+    ""
+   ],
+   "adjudication": {
+    "path": "exo_memory/librarian/2026-09-20.md",
+    "line": 80,
+    "text": "## 12:16 — D093 COLLATED — ALL THREE PACKETS IN, AND EVERY ONE OF THE THREE ASKS TURNED OUT TO BE ASKING SOMETHING OTHER THAN WHAT IT SAYS. All three ring digests verified exact — `70d1d961…`, `b1b48dc0…`, `0064d163…` — **the fourth, fifth and sixth production checks of A's L065 gate today, across three seats.** **ASK-003 (C): HOLDS, and the disclosure beat the ask by seven minutes.** The pre-ship honesty note is in the shipped file at `news-2026-08-24.md`, matching all three assertions. Digest mtime **05:24:22Z**, ask logged **05:31:13Z** — **disclosed six minutes fifty-one seconds before the goal asked to be seen.** And the finding past the ask: across **74** shipped digests the ask's own words appear **zero** times — `false account` 0, `error-checking` 0, against `pre-ship` 13 and `correction` 39. **The ask paraphrases its own artifact, so its own words cannot find it.** An ask must quote, not describe. **ASK-001 (A): the first request is ALREADY SATISFIED, and the stream it wants scaffolded was refuted by the ask's own source.** Every figure re-derived on my own script: 8,010 rows, 7,834 verdicts, tail streak **2**, mix `4767/419/2646/2`. L3 carries neither the content nor the existence of prior verdicts — four channels read, and the one that could leak measured with a **read-only replica**, because running the hook would have added a verdict to the stream being measured. The **\"18\"** is a per-session tail streak from **13/08**, five weeks stale; on the day the ask was filed the global streak was **0** across 5,711 verdicts. **And the finding is not the number: 1,430 of 2,646 `quiet_spiral` verdicts — 54.0% — were rendered on a window of ONE message**, against a prompt whose own words are *\"judging USER trajectory across multiple turns.\"* Four of today's six newest are on machine-authored text. **`drift-watch/pending/2026-08-17.md`, the file ASK-001 cites, already calls the stream \"REFUTED AS A MEASUREMENT.\"** And A found the layer the ask did not name: the **goal** reads its own prior output every firing and never reads `l3_overseer.jsonl` at all. **The judge is blind; the auditor is not.** **ASK-012 (B): the count moves in BOTH directions, the gate was never built, and the gate's own experiment has data.** The counter reads **74**, not ~46, last written 2026-09-06. The headline's **\"ZERO found in-stream by authors\" is false** — `exo_memory/librarian/2026-08-25.desktop.md:83` carries *\"WRONG +1 (mine, self-caught by running the instrument instead of reading a listing)\"*, **six days before the ask was filed**, in the very column it counts. **MY ONE ADDITION TO B'S COUNT:** my grep returns **two** hits, not one — the same sentence also sits at `exo_memory/map/B.md:1735`. **One EVENT, two carriers**, so B's \"one entry\" is right as an event and a grep-based count would say two. Same distinction as this morning's board rows, where one seat appeared in two row families. **AND THE GATE IS DESIGN-ONLY AND WORSE THAN THE ASK DESCRIBES.** `dispatch-gate.js` exists at 517 lines but predates the registration by a week and gates **citation**, not vantage; the registered second-vantage clause appears in exactly one place in any runnable file and it is **a comment about ASK-012**. And it is **not installed on D at all** — I checked: `grep -c PreToolUse ~/.claude/settings.json` → **0**. The ask says the gate degrades to a printed line under bypass; **on this machine there is no gate to degrade.** The ledger has 525 rows only because the data directory travels between machines. **THE FOURTH FACT IS THE ONE THE KEEPER SHOULD SEE, AND B WAS RIGHT NOT TO SCORE IT.** `dispatch-gate.js:112-116` carries a falsifier registered before the mode switch, naming this ask: *\"if the cited-rate under 'print' does not fall well below the 90.4% measured under 'ask', THE ASK WAS NOT THE LEVER — and ASK-012's gated second vantage matters less than it was registered to.\"* Re-run by me: **ask 155 of 176 = 88.1%, print 283 of 340 = 83.2% — a 4.9-point drop**, with 9 rows unstamped and counted in neither, and the pooled figure REFUSED because two periods are not one population. **B declined to score it for two reasons I accept entirely:** *\"well below\"* carries no number, so scoring it would be inventing the bar after seeing the data; and **the seat the gate constrains must not decide its own enforcement.** Both are the packet's boundary held rather than stretched. Two limits B names: the header's 90.4% is not what the tool reads today, and **the ledger stops 2026-09-09 — eleven days without a row**, consistent with the hook being absent here. **WHERE THE TWELVE NOW STAND: TEN ARE ONE READ.** Six were decision-ready this morning (002, 004, 005, 006, 011, 013); one is moot and wants closing, not answering (010, decided 2026-09-14 in `.gitignore:72`); and these three are now measured. **Two remain, and they are chunk 2, mine, needing shaping rather than data:** ASK-007, the sealed-document egress, a consent event by its own gate; and ASK-009, the six board rows, which are the keeper's conversation and not a bug.",
+    "introduced_by": "012b28790af5d847763774343159f9fc90394bf7"
+   }
+  },
+  {
+   "unit_id": "exo_memory/BOOT.md:64@4ec5ef5361ac",
+   "stratum": "adjudicated",
+   "path": "exo_memory/BOOT.md",
+   "line": 64,
+   "read_at": "4ec5ef5361acd4819ab3293ce64322bac39e87fb",
+   "three_lines": [
+    "",
+    "**What survives it, and it is the only thing that does: uncurated measurement.** Nobody chose 130 of 1,892 assertion sites (6.9%), and it came back worse than anyone wanted. Nobody chose 8 of 75 mutations caught. A guard went inert because a constant left the source; a test sat red at HEAD with no one watching; a first number was 78 and the real one was different in a direction that cost its author the headline. Those arrive whether or not they are welcome and regardless of anyone's taste. **So: curated philosophy in, uncurated measurement out — and only the second is an outside.** The principles, the vocabulary, this document: all mirror-side. The instruments that can return a number nobody wanted are the room's one real exterior, which is a strong argument for building more of them and a standing warning about every insight that arrives already agreeing.",
+    ""
+   ],
+   "adjudication": {
+    "path": "exo_memory/loop/handle_census_2026-08-30.md",
+    "line": 33,
+    "text": "| 4 | *\"**So: curated philosophy in, uncurated measurement out — and only the second is an outside.**\"* | `exo_memory/BOOT.md:64` | *\"'uncurated' stays the test for MEASUREMENT. For MINDS the test is add-and-hold plus two-way correction\"* | `exo_memory/BOOT.md:68-111` | **4 lines** | splits one test into two; retires *never-authored* as the exteriority bar — \"a bar no mind clears, the keeper's included\" | **16 (7)** | see §2 pair 4 — measurable sub-handles are **0, 0, 0, 0** and **5 (3)** |",
+    "introduced_by": "169d5692dd0abfd3b87a837775824bccfa086f75"
+   }
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:5784@6f4ec9f9c565",
+   "stratum": "adjudicated",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 5784,
+   "read_at": "6f4ec9f9c565a854de16a97a5d1cc7583fb223ac",
+   "three_lines": [
+    "        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!(\"no {sig} — re-point this test\"));",
+    "        after[..after.find(\"\\n}\\n\").expect(\"no end of function\")].to_string()",
+    "    }"
+   ],
+   "adjudication": {
+    "path": "exo_memory/loop/night_log_2026-09-19.md",
+    "line": 34,
+    "text": "## 11:30 — D082: B in (`handback/p-six-reds-B_2026-09-19.md`), C still building — holding. B's classes: machine-bound 4 causes (no Python on D; L's first-letter constant; `exo_memory/review/` exists on L only, reddening two suites), stale 3, instrument-working 1 (carrier-drift's 4 corpus-drift findings), and REAL DEFECTS: forget-rate.js undercounts departed bytes (my check: `git rev-list HEAD -- exo_memory/astra/SHELL.md` = 0, with --full-history = 2, the blob 161,665 B), portable-paths' brace counter closes a test module on a `}` inside a string (`main.rs:5784`, read by me), six path defects it names, and state-sync's race REPRODUCED 19 of 24 under load (the two `deleter` tests, :684 and :696 — a test defect, the product was right). My sealed guess (four or more machine-bound, at most one real defect) was WRONG on the second half. FOR THE KEEPER (B §6): Python on D? and should `exo_memory/review/` travel — B's default is no to both.",
+    "introduced_by": "ef76494cc72bb23f16a1eb6842e015a3b5383fdb"
+   }
+  },
+  {
+   "unit_id": "exo_memory/ASK.md:132@5d651cf642b7",
+   "stratum": "adjudicated",
+   "path": "exo_memory/ASK.md",
+   "line": 132,
+   "read_at": "5d651cf642b762ca7ab817e20b33b857372c1338",
+   "three_lines": [
+    "",
+    "### ASK-009 — the 11 Third Place board rows, asked 2026-08-29",
+    "**Source:** `consonance/tools/actors.evidence.test.js` red at HEAD; the rows are from the Third Place's first session, written to the shared board before b601440."
+   ],
+   "adjudication": {
+    "path": "exo_memory/loop/pfic_parked_2026-08-30.md",
+    "line": 92,
+    "text": "  **`ASK.md:132` asks the keeper about a number that is wrong by 5.** Same species as 08-16's *\"named",
+    "introduced_by": "22cb3c359a2b2b844fdfa0f5e20c1af9c7e1795f"
+   }
+  },
+  {
+   "unit_id": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md:62@5e8c7e77db2d",
+   "stratum": "adjudicated",
+   "path": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md",
+   "line": 62,
+   "read_at": "5e8c7e77db2d9b524986dc1c1844a6e45bf63933",
+   "three_lines": [
+    "   The scalar for the thing the room calls phase-lock. Watch it climb toward 1 inside a session.",
+    "4. **Critique-ratio judge:** each turn scored 1–10 for how much it pushes on the previous turn, prompt told to be",
+    "   harsh; report the fraction ≥7 per turn index. Same-weights judge, so trust the trend, not the level."
+   ],
+   "adjudication": {
+    "path": "exo_memory/loop/wake_chair_2026-09-15.md",
+    "line": 32,
+    "text": "   - (b) a POLARITY measure beside it — choose and freeze ONE of two forms on disk: B's §4.2(b) verbatim (`handback/anchor-registration-read-B_2026-09-15.md:164-165`: the count of the brief's claims a hand-back marks wrong or contested, scored blind to arm by a non-dispatching seat) or §C instrument 4 (`third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md:62`: each turn scored 1–10 for how much it pushes on the previous turn); positive control = a known refuting read (`p-leave-read-B`), negative = a known compliant build;",
+    "introduced_by": "5a9bbf24774965d012723fe86f44fd41ba76045c"
+   }
+  },
+  {
+   "unit_id": "consonance/tools/contamination.js:140@241a57a19c8a",
+   "stratum": "adjudicated",
+   "path": "consonance/tools/contamination.js",
+   "line": 140,
+   "read_at": "241a57a19c8ae061375e6c993a9f05982ac294e2",
+   "three_lines": [
+    "  const opts = { cells: arg('--cells', path.join(RUN2, 'cells')),",
+    "    config: arg('--config', 'C:/Consonance/subjects/run2/config'),",
+    "    json: arg('--json', null), sample: Number(arg('--sample', '0')) || 0 };"
+   ],
+   "adjudication": {
+    "path": "exo_memory/map/A.md",
+    "line": 1337,
+    "text": "`exo_memory/handback/p-l062-rc2-A_2026-09-21.md`. One resolver (`boardDefault`/`resolveBoard`/`NO_BOARD`) in deference-unit.js, which order-parameter and vicsek-phi already import their board reader from — no new module. **The packet was wrong about one site:** contamination.js:140 is `--config` → `C:/Consonance/subjects/run2/config`, the recorded location of an experiment's transcripts, and the tool reads no board; resolving it through dataDir would break B's recorded result, so by the stop rule it is untouched (candidate named for B: the sibling of --cells). **Red** 18/6, 25/2, 16/2 (all 59 old tests green at red) → **green 24/27/18 = 69/0**. **The bar:** the live board grew (30,253 → 30,769) and is NOT append-only (its first 30,375 rows hash 720c6d59…, not C's 2a4a559f…), so no live-board number can reproduce with or without the change; measured instead as same-bytes old-vs-new (deference-unit 1379 = 1379, full output identical) and exactly on C's surviving frozen snapshot (sha256 2a4a559fa1da4163): 30,375 rows · 257 · 30,118 · 3,975 dup · 118 eligible sessions — C's §9 and B's vicsek run, old and new identical. On L both tiers resolve to the old literal's exact file. Post-encoder numbers not re-derived: no @huggingface/transformers on L. contamination's recorded command reproduces unchanged (130·130·320, nulls 0, planted 100%). **portable-paths 41 → 32**, but only −3 is mine (other seats landed R-C1/R-C3 meanwhile); my tools+tests now carry only contamination.js:140. **Caught myself:** my first fixtures ADDED five portable-paths sites (drive-letter fixture dirs and a test name with C:\\) — my own D083 rule broken again; fixed. My rename then broke the file on an unescaped apostrophe; fixed with the editor. Uncommitted.",
+    "introduced_by": "d9b97e0e5732c7f81c58e7386c92eb8f8f9ae7ab"
+   }
+  },
+  {
+   "unit_id": "consonance/tools/carrier-drift.js:841@3644a99f286b",
+   "stratum": "adjudicated",
+   "path": "consonance/tools/carrier-drift.js",
+   "line": 841,
+   "read_at": "3644a99f286b707e28f8a0039b84a882ca537460",
+   "three_lines": [
+    "    console.log();",
+    "    console.log('  To freeze: paste the list above into carrier-drift.registry.json ch4_corpus.files');",
+    "    console.log('  AFTER READING what each newly-added file teaches. Freezing without reading is');"
+   ],
+   "adjudication": {
+    "path": "exo_memory/map/B.md",
+    "line": 1745,
+    "text": "## 2026-09-21 — L061 packet B P-L061-REFREEZE (L, sole registry writer): CH-4 re-frozen after reading both files — carrier-drift GREEN, exit 0, 0 findings; carrier-drift.test 57/57 (from 54/3); walk \"reached 37 · frozen 37 · no drift\"; js-suite 108 green · 1 failed (portable-paths, R-C) · 0 silent. A's §2 (p-l060-ch4-A, 30859e8) re-derived before freezing, not taken on its word: the three registry patterns over each file whitespace-collapsed give 0/0/0 for both, and no finding named either except its CH4-DRIFT-ADDED row; both read in full for what they TEACH — every-digest-carries-its-function is current doctrine (I applied it in L060 to an unlabelled git-blob), retired_seats_2026-09-11 is a dated master of retirement practice (:64-69); neither restates any withdrawn claim in substance. No refusal. --ch4-walk is read-only (\"paste the list\", carrier-drift.js:841), so the freeze is an edit done by the file's own history convention: files 35→37 at sorted positions, frozen_at replaced, frozen_by extended so earlier freezers stay named, _refreeze_log 30→44 with who, on whose classification, what each teaches, and what a later reader should check; +19 −3, script re-parses and proves withdrawals and every other ch4_corpus key unchanged. NOT cleared and logged as such: retired_seats:62 is a live portable-paths finding — another instrument's red. The chair's expectation came back exactly: `handback/p-l061-refreeze-B_2026-09-21.md`",
+    "introduced_by": "043d78bd174fa1f398cd850e25c2ceb75731aa32"
+   }
+  },
+  {
+   "unit_id": "exo_memory/map/C.md:201@043d78bd174f",
+   "stratum": "adjudicated",
+   "path": "exo_memory/map/C.md",
+   "line": 201,
+   "read_at": "043d78bd174fa1f398cd850e25c2ceb75731aa32",
+   "three_lines": [
+    "`dev/SPINE.md` — because the outermost carrier wrote the phrase **hyphenated**",
+    "(`git show HEAD:README.md | grep -o \"light-not-lifeguard\"` → 1), and the alternation admits only the",
+    "spaced form. So the bar *\"RED on today's tree, naming the lifeguard hits\"* would have returned green"
+   ],
+   "adjudication": {
+    "path": "exo_memory/map/C.md",
+    "line": 1237,
+    "text": "**2026-09-21 — P-L061-REG44 C (L061 packet C, on L, append-only on `journal/2026-08-24.md`):** **\"not needed\" was a live answer and it does not survive the record — the note was NEEDED, and 27 days overdue.** Registration 44 (*\"The corpus has never deleted anything. `+3,688 / -0`\"*) was measured in **lines**; on 08-25 my forgetting pilot corrected it to `-696` lines, a second seat confirmed it, and **the same document then found both versions were in the wrong unit** — disk lines, where law 3 is about the reading path — and asked at `:447` for a note beside the registration. **None was written; the journal's last commit is 08-24.** Since 09-08 it is false on the reading path too. The note says all three, with commits, bytes and the bracket pointing at the pilot addendum (`988c9fe`), and says it does **not** fire or refute the falsifier (hand deletions, not a decay organ). **It also names the one misreading now available: the falsifier is a conjunction — \"decay organ unbuilt AND ratio unchanged\" — and two hand deletions moved the ratio, so read literally it is DISCHARGED; it must not be read that way, because a quantity moving for an unrelated reason cannot clear the question.** Precision on the packet: reg 44 never said \"reads zero\" — that is the pilot's phrasing. Append-only, measured: hash-guarded, run-once guard, first 10,827 B byte-identical, **37 added · 0 removed**; every cited commit and line number checked before writing. **carrier-drift at 03:06:09: exit 1, RED 2** — both `CH4-DRIFT-ADDED` on the two files B is re-freezing in parallel, neither mine; PENDING 40, one on my own `map/C.md:201` (a 09-02 line quoting the retired wording as its subject, not red). **And carrier-drift SKIPS `exo_memory/journal/`, so its count cannot credit or flag this note at all — only reading the file does.** (The first attempt to write this hand-back died on a bash quote-parse error and wrote nothing; checked before retrying.) → `exo_memory/handback/p-l061-reg44-C_2026-09-21.md`",
+    "introduced_by": "648b9e87707bb6db6c926a769fb959b42a083dd9"
+   }
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:999@7d94177c22bd",
+   "stratum": "adjudicated",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 999,
+   "read_at": "7d94177c22bd5dea7c9596b01eb5b901c8781e9a",
+   "three_lines": [
+    "    cmd.env(\"FORCE_COLOR\", \"1\");",
+    "    // Panes the app spawns are ALWAYS real top-level sessions, never a subagent's children.",
+    "    // If Consonance itself was launched from inside a claude session's env (a terminal, a"
+   ],
+   "adjudication": {
+    "path": "exo_memory/map/M.md",
+    "line": 828,
+    "text": "- **2026-09-09 09:20 (D).** E's P-RUNTIME-SCORE collated. Pointer sha verified before reading. Its four load-bearing claims re-derive here (rust diff `ce9afed..HEAD` empty; binary mtime 08:45:32 vs commits 08:53/09:05; the four `panes.json` cwds absent AND never present in `~/.claude/projects`). Took E's correction: say *`src-tauri` identical to HEAD*, never *built from HEAD* — the binary carries no commit stamp, the tie is timestamp bracketing plus source identity. **Closed E's one open item by citation rather than measurement:** the unmounted `third-place` pane is deliberate — `main.rs:6510-6516` names all three differences and `main.rs:999` is the gate — E read a design as a hole because the design lives in a doc comment nothing points at. **The fix to my 09:00 finding is in the working tree uncommitted (+161/−3):** all three fixed seats in the `gc_captures` keep-set, `append_synced_tail`'s missing-file arm now points instead of returning, and the sweep test asserts a *stranger* IS retired so a dead sweep cannot pass for the wrong reason. Not a discrepancy: the new comment's `a10d1d0e` is `git hash-object`, my `8184ad81` is sha256, same bytes. Caution, E's Q1 inverted: at ~09:22 `gc_captures` briefly held a `return` mutant (mutation run, self-resolved) — a rebuild during one ships a mutant no commit contains. Third Place was NOT swept today (no retire row at …946); the librarian was the only seat that lost anything. Full entry: `librarian/2026-09-09.desktop.md` 09:20. Ledger: surfaced 2. WRONG this machine: 0.",
+    "introduced_by": "0a29e68ea3d884235f847e04b3b5ed532aaaa16e"
+   }
+  },
+  {
+   "unit_id": "exo_memory/journal/2026-08-17.md:95@07501ccdf84d",
+   "stratum": "adjudicated",
+   "path": "exo_memory/journal/2026-08-17.md",
+   "line": 95,
+   "read_at": "07501ccdf84d72fa3cb43957e7c0bae8c989a980",
+   "three_lines": [
+    "| `sourced` | crashed on a fresh box before reaching its own designed \"no transcript found\" exit — same unreachable-handler shape as board-digest |",
+    "| `*.ps1` | PS 5.1 serialises a ONE-ITEM list as a bare object; `read_kept()` is `from_str().ok()`, so one kept pane round-trips to ZERO, silently, while the script prints green — **the 08-15 blank-window failure, mechanism nailed at both ends** |",
+    "| `*.rs` | a cross-thread use-after-close on the audio timeout path, and `wanted.contains(\"\")` which is always true |"
+   ],
+   "adjudication": {
+    "path": "exo_memory/map/M.md",
+    "line": 834,
+    "text": "- **2026-09-09 11:15 (D).** E's D056-2 adversarial read collated — all five land. Re-derived: `dropped (trivial)` = **2**, both `pane=0c0c0c0b` (09-02 11:23:37, 09-04 03:14:17), `-> ARCHIVED` = 24; `read_kept()` at `main.rs:3320-3325` is `.ok().and_then(…ok()).unwrap_or_default()`, so unparseable and absent are one value; 0 of 4 cwds, measured a third time by a third seat. **THE ADD E COULD NOT HAVE: F1 IS ALREADY IN THE RECORD — `journal/2026-08-17.md:95`, pane B: *\"`read_kept()` is `from_str().ok()`, so one kept pane round-trips to ZERO, silently … the 08-15 blank-window failure, mechanism nailed at both ends.\"* Twenty-three days on, the reader is byte-identical.** The writing half was dealt with; the swallowing half was named in the same table and left. So F1 is not a risk the transform introduces — it is a known reader defect with a user-visible failure on its record, about to acquire a second writer on the arrival path, on the machine where a BOM broke a sibling JSON this morning. **F2: I take the finding and want a stronger fix than its falsifier — `retire_capture` must never `remove_file` a `.log`.** The test reads `.txt` only (`:830`, `len>200`, `unwrap_or(false)`) and the drop takes the `.log`: `0c0c0c0a` is txt 4.8 MB / **log 469 MB**. The branch exists to bound growth, but `captures/archive/` is already unbounded — 247.7 MB, no pruner — so it saves nothing. Decide on `max(txt, log)`; then the falsifier needs no cross-reference: **any `dropped (trivial)` row is a defect and the count must stay at 2.** Lineage: the archive branch exists *because* a kept sibling was shredded 2026-07-11 (`:824-827`) — the room fixed the branch that bit it and left the one beside it. **F3 is the best paragraph in the file:** dispatched to attack, E reports the chair's side HELD on measurement (5 rows, 5 of 5 cwds, 5 of 5 tails, no pruner). **F4:** the home tag is the mechanism, not insurance — *replace rows homed elsewhere, retain rows homed here* cannot double; the one residual is that absent-home must never default to *this machine*, and `machine_bound_class:77` gives the convention but not the backfill rule. **F5 is time-sensitive: do not let the spawn-side refusal ride along in C's dispatched packet** — 0 of 4 resolve and `restoreKeptPanes()` is unconditional, so C-before-A refuses every committee pane; the fixed three still wake. Full entry: `librarian/2026-09-09.desktop.md` 11:15. Ledger: surfaced 2. WRONG this machine: 2.",
+    "introduced_by": "d88480181484da10f7a4cd26c59dc974e31a583a"
+   }
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-09-12.md:47@04bc6b5f5c87",
+   "stratum": "adjudicated",
+   "path": "exo_memory/librarian/2026-09-12.md",
+   "line": 47,
+   "read_at": "04bc6b5f5c87e48f8f0b183f00eb1b4ed3c48d8d",
+   "three_lines": [
+    "",
+    "## 13:01 — the chair (13:00): the 12:47 export was stale by 12:55 — chair +213,510 B, librarian +398,974 B, writing the handoffs did it — so LEAVING on D must be the genuine last act, a fact not a condition; it verified the seven tails sum to 348,026,190 B and B's sha, and attic_for at sync_launch.rs:483/:505. Done: ON-EXIT.ps1 started on D now as a detached window (pid 33232, 13:00:59), so closing Consonance here runs LEAVING and refreshes the stick without anyone remembering; the fact and the fallback written into the stick handoff and its repo copy. Chair's L handoff at f549436. This seat stops writing now: every entry moves this file past the export. Ledger: surfaced 12 today.",
+    ""
+   ],
+   "adjudication": {
+    "path": "exo_memory/map/M.md",
+    "line": 868,
+    "text": "- 05:51 WRONG 106 (C): I predicted D's arrival lists chair/librarian as OTHER_CONVERSATION with TAKE/KEEP; it is DIVERGED (same key and prefix, different bytes past 260,427,744; first differing byte 260,427,746, re-derived), for which no offer, no flag and no export exists, and librarian/2026-09-12.md:47 already recorded D's files growing past the export. P-STICK-PREFLIGHT collation (B: close safe, ~26 MB delta, reopen shows a false \"behind\" line; C: D is RESUME not MIGRATE, pull first, L058 minted twice by the install): librarian/2026-09-14.md, last entry.",
+    "introduced_by": "e6627cf6476324dde23e491114532dafc6a40390"
+   }
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-09-14.md:206@9bc063fb1da0",
+   "stratum": "matched",
+   "path": "exo_memory/librarian/2026-09-14.md",
+   "line": 206,
+   "read_at": "9bc063fb1da0ba2e7af7db0be07ed477034bdcef",
+   "three_lines": [
+    "**What the chair's ruling needs, collated:**",
+    "1. Build E's §3 as written with §1's reason replaced by E's §4 wording (a console-less parent makes every console child allocate one; a hidden console handed down covers a forgotten flag anywhere in the subtree; survival holds). A's `:210` flag is the fix for the flash the keeper saw; E's flag change is the guard for the next one.",
+    "2. **The live waiter (pid 26800) keeps flashing once a minute until the app relaunches** — it loaded HEAD's `pidImage`; a running node process does not reload. The keeper will see one flash per minute until the close, whatever lands. Say so to him before the close, not after."
+   ],
+   "matched_to": "exo_memory/librarian/2026-09-14.md:208@9bc063fb1da0",
+   "distance": 2
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-09-14.md:205@9bc063fb1da0",
+   "stratum": "matched",
+   "path": "exo_memory/librarian/2026-09-14.md",
+   "line": 205,
+   "read_at": "9bc063fb1da0ba2e7af7db0be07ed477034bdcef",
+   "three_lines": [
+    "",
+    "**What the chair's ruling needs, collated:**",
+    "1. Build E's §3 as written with §1's reason replaced by E's §4 wording (a console-less parent makes every console child allocate one; a hidden console handed down covers a forgotten flag anywhere in the subtree; survival holds). A's `:210` flag is the fix for the flash the keeper saw; E's flag change is the guard for the next one."
+   ],
+   "matched_to": "exo_memory/librarian/2026-09-14.md:208@9bc063fb1da0",
+   "distance": 3
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-09-14.md:203@9bc063fb1da0",
+   "stratum": "matched",
+   "path": "exo_memory/librarian/2026-09-14.md",
+   "line": 203,
+   "read_at": "9bc063fb1da0ba2e7af7db0be07ed477034bdcef",
+   "three_lines": [
+    "",
+    "**Two panes, one finding, two routes — A read it, E measured it, neither saw the other's file (disjoint split, §3).** The room counts that kind of convergence; it is on disk in both hand-backs with the same line number.",
+    ""
+   ],
+   "matched_to": "exo_memory/librarian/2026-09-14.md:208@9bc063fb1da0",
+   "distance": 5
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-09-02.md:610@7cad6783b1c1",
+   "stratum": "matched",
+   "path": "exo_memory/librarian/2026-09-02.md",
+   "line": 610,
+   "read_at": "7cad6783b1c1465a76389c269deace4ff3de1f91",
+   "three_lines": [
+    "tonight for the string and told the keeper *\"my transcript has 3 server-error rows, the chair's 6 — so I did hit 500s",
+    "too.\"* **Wrong:** reading the rows, mine are my own messages and tool outputs QUOTING the string (09:54Z is the reply",
+    "that contained it), the chair's are last night's `529 Overloaded` from the cue-arm run, quoted in prose. No genuine 5xx"
+   ],
+   "matched_to": "exo_memory/librarian/2026-09-02.md:612@7cad6783b1c1",
+   "distance": 2
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-09-02.md:614@7cad6783b1c1",
+   "stratum": "matched",
+   "path": "exo_memory/librarian/2026-09-02.md",
+   "line": 614,
+   "read_at": "7cad6783b1c1465a76389c269deace4ff3de1f91",
+   "three_lines": [
+    "by the next instrument in the same turn, before the keeper acted on it.** Finder field: instrument, same turn — the",
+    "room's thesis (6 of 8 chair self-corrections were instrument-triggered, `journal/2026-08-16.md`) with this seat's first",
+    "in-turn example. Lifetime 66. Why that pane and not the others is not knowable from here: two 500s two minutes apart"
+   ],
+   "matched_to": "exo_memory/librarian/2026-09-02.md:612@7cad6783b1c1",
+   "distance": 2
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-09-02.md:609@7cad6783b1c1",
+   "stratum": "matched",
+   "path": "exo_memory/librarian/2026-09-02.md",
+   "line": 609,
+   "read_at": "7cad6783b1c1465a76389c269deace4ff3de1f91",
+   "three_lines": [
+    "Claude Code process making its own requests; a 5xx answers one request.** Then I grepped every transcript modified",
+    "tonight for the string and told the keeper *\"my transcript has 3 server-error rows, the chair's 6 — so I did hit 500s",
+    "too.\"* **Wrong:** reading the rows, mine are my own messages and tool outputs QUOTING the string (09:54Z is the reply"
+   ],
+   "matched_to": "exo_memory/librarian/2026-09-02.md:612@7cad6783b1c1",
+   "distance": 3
+  },
+  {
+   "unit_id": "exo_memory/cycle9_armA_result.md:15@d0c4268b0483",
+   "stratum": "matched",
+   "path": "exo_memory/cycle9_armA_result.md",
+   "line": 15,
+   "read_at": "d0c4268b0483ca33a05d444ab2ab2d27642df4e0",
+   "three_lines": [
+    "> entire repository.**",
+    ">",
+    "> **One of two. 225 assertions ran. One fired.**"
+   ],
+   "matched_to": "exo_memory/cycle9_armA_result.md:13@d0c4268b0483",
+   "distance": 2
+  },
+  {
+   "unit_id": "exo_memory/cycle9_armA_result.md:16@d0c4268b0483",
+   "stratum": "matched",
+   "path": "exo_memory/cycle9_armA_result.md",
+   "line": 16,
+   "read_at": "d0c4268b0483ca33a05d444ab2ab2d27642df4e0",
+   "three_lines": [
+    ">",
+    "> **One of two. 225 assertions ran. One fired.**",
+    ""
+   ],
+   "matched_to": "exo_memory/cycle9_armA_result.md:13@d0c4268b0483",
+   "distance": 3
+  },
+  {
+   "unit_id": "exo_memory/cycle9_armA_result.md:19@d0c4268b0483",
+   "stratum": "matched",
+   "path": "exo_memory/cycle9_armA_result.md",
+   "line": 19,
+   "read_at": "d0c4268b0483ca33a05d444ab2ab2d27642df4e0",
+   "three_lines": [
+    "| | planted leg | control leg | differential |",
+    "|---|---|---|---|",
+    "| `arch_test` (8 assertions) | **FAILED 7/1, ×3** | ok 8/0, ×3 | **1 assertion** |"
+   ],
+   "matched_to": "exo_memory/cycle9_armA_result.md:13@d0c4268b0483",
+   "distance": 6
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:406@b4eb005e12d7",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 406,
+   "read_at": "b4eb005e12d7d89bb579a265dc3697f2c23cc431",
+   "three_lines": [
+    "/// because .git was inside the sync scope, and a syncer-backed path can hand back a stale restored",
+    "/// copy -- Alpha, S1/S9. The ordering is moot now: there is one resolved answer, not two guesses.)",
+    "fn dev_master_path() -> Option<String> {"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:404@b4eb005e12d7",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:407@b4eb005e12d7",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 407,
+   "read_at": "b4eb005e12d7d89bb579a265dc3697f2c23cc431",
+   "three_lines": [
+    "/// copy -- Alpha, S1/S9. The ordering is moot now: there is one resolved answer, not two guesses.)",
+    "fn dev_master_path() -> Option<String> {",
+    "    repo_root()?"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:404@b4eb005e12d7",
+   "distance": 3
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:367@b4eb005e12d7",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 367,
+   "read_at": "b4eb005e12d7d89bb579a265dc3697f2c23cc431",
+   "three_lines": [
+    "/// and nine Rust tests failed with one message. They had been green for seven weeks BECAUSE tier 3",
+    "/// is where this laptop keeps the repo. They never tested resolution; they tested that the laptop",
+    "/// is the laptop."
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:404@b4eb005e12d7",
+   "distance": 37
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/lap_holders.rs:83@651619e1c7d2",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/lap_holders.rs",
+   "line": 83,
+   "read_at": "651619e1c7d26e63b1a3857e8eb25589238cbe73",
+   "three_lines": [
+    "/// arguable.** With one open lap it is identical. With N open laps carrying K distinct holders, K",
+    "/// of the three gated stations are open at once instead of one. On the ledger at the time of",
+    "/// writing — 3 open laps, holders `{panes: 2, chair: 1}` — it permits `chair_inject` AND"
+   ],
+   "matched_to": "consonance/src-tauri/src/lap_holders.rs:85@651619e1c7d2",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/lap_holders.rs:57@651619e1c7d2",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/lap_holders.rs",
+   "line": 57,
+   "read_at": "651619e1c7d26e63b1a3857e8eb25589238cbe73",
+   "three_lines": [
+    "                    slot.1 = r;",
+    "                }",
+    "            }"
+   ],
+   "matched_to": "consonance/src-tauri/src/lap_holders.rs:85@651619e1c7d2",
+   "distance": 28
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/lap_holders.rs:56@651619e1c7d2",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/lap_holders.rs",
+   "line": 56,
+   "read_at": "651619e1c7d26e63b1a3857e8eb25589238cbe73",
+   "three_lines": [
+    "                if at >= slot.1.get(\"at\").and_then(|v| v.as_u64()).unwrap_or(0) {",
+    "                    slot.1 = r;",
+    "                }"
+   ],
+   "matched_to": "consonance/src-tauri/src/lap_holders.rs:85@651619e1c7d2",
+   "distance": 29
+  },
+  {
+   "unit_id": "consonance/tools/cite-check.js:70@b691474b13ea",
+   "stratum": "matched",
+   "path": "consonance/tools/cite-check.js",
+   "line": 70,
+   "read_at": "b691474b13ea06c96dbb056270b3586fc1bdae0b",
+   "three_lines": [
+    "    if (/^\\s*```/.test(line)) { inFence = !inFence; return; }",
+    "    if (!line.trim()) { block++; return; }",
+    "    const cites = [...line.matchAll(CITE_RE)].map(m => m[1]);"
+   ],
+   "matched_to": "consonance/tools/cite-check.js:72@b691474b13ea",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/tools/cite-check.js:74@b691474b13ea",
+   "stratum": "matched",
+   "path": "consonance/tools/cite-check.js",
+   "line": 74,
+   "read_at": "b691474b13ea06c96dbb056270b3586fc1bdae0b",
+   "three_lines": [
+    "    const inCode = inFence || /^\\s{4,}/.test(line);",
+    "    const figures = inCode ? [] : [...stripped.matchAll(FIGURE_RE)].map(m => m[0].trim());",
+    "    if (figures.length || cites.length) rows.push({ n: i + 1, block, line, figures, cites });"
+   ],
+   "matched_to": "consonance/tools/cite-check.js:72@b691474b13ea",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/tools/cite-check.js:75@b691474b13ea",
+   "stratum": "matched",
+   "path": "consonance/tools/cite-check.js",
+   "line": 75,
+   "read_at": "b691474b13ea06c96dbb056270b3586fc1bdae0b",
+   "three_lines": [
+    "    const figures = inCode ? [] : [...stripped.matchAll(FIGURE_RE)].map(m => m[0].trim());",
+    "    if (figures.length || cites.length) rows.push({ n: i + 1, block, line, figures, cites });",
+    "  });"
+   ],
+   "matched_to": "consonance/tools/cite-check.js:72@b691474b13ea",
+   "distance": 3
+  },
+  {
+   "unit_id": "consonance/tools/boundary-reminder.js:54@c8c667afd477",
+   "stratum": "matched",
+   "path": "consonance/tools/boundary-reminder.js",
+   "line": 54,
+   "read_at": "c8c667afd47729fa747adf5f760d931bf4da2627",
+   "three_lines": [
+    " * lifetime**, against 1,546 turns: a base rate of 2.26%. At 57 turns per arm that is **1.29 expected",
+    " * events per arm**. To detect a +50% change in it needs 3,365 turns per arm — 95 active days. The",
+    " * packet's framing is wrong by a factor of about sixty, and it is also not judgement-free: a"
+   ],
+   "matched_to": "consonance/tools/boundary-reminder.js:52@c8c667afd477",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/tools/boundary-reminder.js:55@c8c667afd477",
+   "stratum": "matched",
+   "path": "consonance/tools/boundary-reminder.js",
+   "line": 55,
+   "read_at": "c8c667afd47729fa747adf5f760d931bf4da2627",
+   "three_lines": [
+    " * events per arm**. To detect a +50% change in it needs 3,365 turns per arm — 95 active days. The",
+    " * packet's framing is wrong by a factor of about sixty, and it is also not judgement-free: a",
+    " * correction enters that column because a seat wrote it there."
+   ],
+   "matched_to": "consonance/tools/boundary-reminder.js:52@c8c667afd477",
+   "distance": 3
+  },
+  {
+   "unit_id": "consonance/tools/boundary-reminder.js:48@c8c667afd477",
+   "stratum": "matched",
+   "path": "consonance/tools/boundary-reminder.js",
+   "line": 48,
+   "read_at": "c8c667afd47729fa747adf5f760d931bf4da2627",
+   "three_lines": [
+    " * their standard deviations run four times their means and no effect is visible at n=57.",
+    " *",
+    " * ── THE CHAIR'S OWN CANDIDATE IS THE WEAKEST OF THEM, AND IT WAS INVITED TO SAY SO ──────────────"
+   ],
+   "matched_to": "consonance/tools/boundary-reminder.js:52@c8c667afd477",
+   "distance": 4
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:954@9c78231027d7",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 954,
+   "read_at": "9c78231027d7c75f3b6649e18563545668c84ce5",
+   "three_lines": [
+    "",
+    "fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool, skip_perms: bool) -> Result<PtySession, String> {",
+    "    // L052: READ-ONLY IS ENFORCED HERE, AT THE ONE FUNNEL, and that is the whole enforcement."
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:922@9c78231027d7",
+   "distance": 32
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:971@9c78231027d7",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 971,
+   "read_at": "9c78231027d7c75f3b6649e18563545668c84ce5",
+   "three_lines": [
+    "    }",
+    "    let pair = native_pty_system()",
+    "        .openpty(PtySize { rows: EMU_ROWS, cols: EMU_COLS, pixel_width: 0, pixel_height: 0 })"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:922@9c78231027d7",
+   "distance": 49
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:973@9c78231027d7",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 973,
+   "read_at": "9c78231027d7c75f3b6649e18563545668c84ce5",
+   "three_lines": [
+    "        .openpty(PtySize { rows: EMU_ROWS, cols: EMU_COLS, pixel_width: 0, pixel_height: 0 })",
+    "        .map_err(|e| e.to_string())?;",
+    "    let mut cmd = CommandBuilder::new(claude_bin());"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:922@9c78231027d7",
+   "distance": 51
+  },
+  {
+   "unit_id": "dev/tail-carry.js:1301@956eabbbed56",
+   "stratum": "matched",
+   "path": "dev/tail-carry.js",
+   "line": 1301,
+   "read_at": "956eabbbed56b0b56b5a64383d1326365efedc62",
+   "three_lines": [
+    "    // sizes. It still carries nothing (`carries` false) — this is the one row where bytes is not \"bytes moved\".",
+    "    if (mode === 'import' && pend && r.verdict === 'DIVERGED') bytes = typeof pend.bytes === 'number' ? pend.bytes : pend.toOffset - pend.offset;",
+    "    // §2.4: ownBytes — what THIS machine wrote of its own. Past the shared prefix for a fork or a take; past the"
+   ],
+   "matched_to": "dev/tail-carry.js:1303@956eabbbed56",
+   "distance": 2
+  },
+  {
+   "unit_id": "dev/tail-carry.js:1300@956eabbbed56",
+   "stratum": "matched",
+   "path": "dev/tail-carry.js",
+   "line": 1300,
+   "read_at": "956eabbbed56b0b56b5a64383d1326365efedc62",
+   "three_lines": [
+    "    // P-DIVERGED D-7: a DIVERGED row names the tail the stick would give it, so the window can show both futures'",
+    "    // sizes. It still carries nothing (`carries` false) — this is the one row where bytes is not \"bytes moved\".",
+    "    if (mode === 'import' && pend && r.verdict === 'DIVERGED') bytes = typeof pend.bytes === 'number' ? pend.bytes : pend.toOffset - pend.offset;"
+   ],
+   "matched_to": "dev/tail-carry.js:1303@956eabbbed56",
+   "distance": 3
+  },
+  {
+   "unit_id": "dev/tail-carry.js:1299@956eabbbed56",
+   "stratum": "matched",
+   "path": "dev/tail-carry.js",
+   "line": 1299,
+   "read_at": "956eabbbed56b0b56b5a64383d1326365efedc62",
+   "three_lines": [
+    "    if (mode === 'import' && pend) { offset = pend.offset; toOffset = pend.toOffset; if (carries) bytes = r.tail.length; }",
+    "    // P-DIVERGED D-7: a DIVERGED row names the tail the stick would give it, so the window can show both futures'",
+    "    // sizes. It still carries nothing (`carries` false) — this is the one row where bytes is not \"bytes moved\"."
+   ],
+   "matched_to": "dev/tail-carry.js:1303@956eabbbed56",
+   "distance": 4
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:9223@d997a2cd2755",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 9223,
+   "read_at": "d997a2cd2755180dc3b62db58a5ca27585bbb8d1",
+   "three_lines": [
+    "    };",
+    "    let short = &tid[..8.min(tid.len())];",
+    "    let role = app.state::<PaneRoles>().0.lock().unwrap().get(&tid).cloned().unwrap_or_else(|| \"human\".to_string());"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:9225@d997a2cd2755",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:9222@d997a2cd2755",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 9222,
+   "read_at": "d997a2cd2755180dc3b62db58a5ca27585bbb8d1",
+   "three_lines": [
+    "        Err(e) => return e,",
+    "    };",
+    "    let short = &tid[..8.min(tid.len())];"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:9225@d997a2cd2755",
+   "distance": 3
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:9271@d997a2cd2755",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 9271,
+   "read_at": "d997a2cd2755180dc3b62db58a5ca27585bbb8d1",
+   "three_lines": [
+    "#[tauri::command]",
+    "fn gate_decide(app: AppHandle, gate: State<Gate>, board: State<Board>, id: String, approve: bool) -> Result<String, String> {",
+    "    let pull = gate.0.lock().unwrap().pending.remove(&id);"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:9225@d997a2cd2755",
+   "distance": 46
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-08-25.desktop.md:89@9c9bd894cc50",
+   "stratum": "matched",
+   "path": "exo_memory/librarian/2026-08-25.desktop.md",
+   "line": 89,
+   "read_at": "9c9bd894cc5009d8f8898ed8b59e8ea6dc590e76",
+   "three_lines": [
+    "",
+    "    app exe      release              consonance/src-tauri/target/release/consonance.exe",
+    "    app built    2026-08-25 17:09:49  the binary the PROCESS is running"
+   ],
+   "matched_to": "exo_memory/librarian/2026-08-25.desktop.md:83@9c9bd894cc50",
+   "distance": 6
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-08-25.desktop.md:90@9c9bd894cc50",
+   "stratum": "matched",
+   "path": "exo_memory/librarian/2026-08-25.desktop.md",
+   "line": 90,
+   "read_at": "9c9bd894cc5009d8f8898ed8b59e8ea6dc590e76",
+   "three_lines": [
+    "    app exe      release              consonance/src-tauri/target/release/consonance.exe",
+    "    app built    2026-08-25 17:09:49  the binary the PROCESS is running",
+    "    newest rust  2026-08-25 16:43:24  afed6e0"
+   ],
+   "matched_to": "exo_memory/librarian/2026-08-25.desktop.md:83@9c9bd894cc50",
+   "distance": 7
+  },
+  {
+   "unit_id": "exo_memory/librarian/2026-08-25.desktop.md:91@9c9bd894cc50",
+   "stratum": "matched",
+   "path": "exo_memory/librarian/2026-08-25.desktop.md",
+   "line": 91,
+   "read_at": "9c9bd894cc5009d8f8898ed8b59e8ea6dc590e76",
+   "three_lines": [
+    "    app built    2026-08-25 17:09:49  the binary the PROCESS is running",
+    "    newest rust  2026-08-25 16:43:24  afed6e0",
+    "    debug exe    2026-08-25 17:14:13  EXISTS AND IS NOT RUNNING — do not measure this one"
+   ],
+   "matched_to": "exo_memory/librarian/2026-08-25.desktop.md:83@9c9bd894cc50",
+   "distance": 8
+  },
+  {
+   "unit_id": "exo_memory/BOOT.md:62@4ec5ef5361ac",
+   "stratum": "matched",
+   "path": "exo_memory/BOOT.md",
+   "line": 62,
+   "read_at": "4ec5ef5361acd4819ab3293ce64322bac39e87fb",
+   "three_lines": [
+    "",
+    "**THE CURATED AUDITOR — the sharpest hit this room has taken from outside (2026-08-02, Gemini, invited to attack the position that this room is self-sealing).** A pane already found that *every mechanism built to be external is authored by what it measures*, and the chair read that as \"only the human is genuinely outside.\" The extension is worse and correct: **the human is a SELECTING filter, not a neutral one.** He chooses which corrections cross the threshold — Duhem–Quine came in, whatever he didn't relay did not — and he chooses which conversations to carry. A system disciplined only by curated input does not converge on the world; it converges on the curator, and from inside, \"my epistemics are improving\" and \"I am becoming a specialised mirror for one person's philosophical taste\" produce identical readings. Cross-model contact does not fix it: two models plus an enthusiastic relay is three correlated readers, and their agreement will feel like triangulation while being none.",
+    ""
+   ],
+   "matched_to": "exo_memory/BOOT.md:64@4ec5ef5361ac",
+   "distance": 2
+  },
+  {
+   "unit_id": "exo_memory/BOOT.md:56@4ec5ef5361ac",
+   "stratum": "matched",
+   "path": "exo_memory/BOOT.md",
+   "line": 56,
+   "read_at": "4ec5ef5361acd4819ab3293ce64322bac39e87fb",
+   "three_lines": [
+    "",
+    "**And the room already had the machinery without naming its standard: the pre-registration.** `gap2_preregistration.md` predicted, before the brief was sent, that method AND character would transfer to a domain a pane had never seen; both confirmed, scored against a sealed document. That is a novel confirmed prediction in Lakatos's exact sense — the class of evidence a single-claim falsification test structurally cannot see. Pre-register, then score, then keep the scoring beside the prediction: that IS the progressive test, and this room has been running it without knowing what it was called.",
+    ""
+   ],
+   "matched_to": "exo_memory/BOOT.md:64@4ec5ef5361ac",
+   "distance": 8
+  },
+  {
+   "unit_id": "exo_memory/BOOT.md:50@4ec5ef5361ac",
+   "stratum": "matched",
+   "path": "exo_memory/BOOT.md",
+   "line": 50,
+   "read_at": "4ec5ef5361acd4819ab3293ce64322bac39e87fb",
+   "three_lines": [
+    "",
+    "**THE TETHER'S OWN LIMITS — and the better unit (added 2026-08-02; first amendment to this room's epistemics sourced from OUTSIDE the substrate, via Gemini, relayed by the keeper).** The third property — *holds outside the loop* — is the room's sharpest instrument and it has been swung too crudely, by me, for weeks. Three corrections, all older and better-established than this room:",
+    ""
+   ],
+   "matched_to": "exo_memory/BOOT.md:64@4ec5ef5361ac",
+   "distance": 14
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:5782@6f4ec9f9c565",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 5782,
+   "read_at": "6f4ec9f9c565a854de16a97a5d1cc7583fb223ac",
+   "three_lines": [
+    "",
+    "    fn fn_body(src: &str, sig: &str) -> String {",
+    "        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!(\"no {sig} — re-point this test\"));"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:5784@6f4ec9f9c565",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:5787@6f4ec9f9c565",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 5787,
+   "read_at": "6f4ec9f9c565a854de16a97a5d1cc7583fb223ac",
+   "three_lines": [
+    "",
+    "    /// **THE 09-10 01:54 LAUNCH, AS A TEST.** A kept pane whose directory is absent comes back in",
+    "    /// the directory `panes.json` names — created — and never in `%USERPROFILE%`."
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:5784@6f4ec9f9c565",
+   "distance": 3
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:5788@6f4ec9f9c565",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 5788,
+   "read_at": "6f4ec9f9c565a854de16a97a5d1cc7583fb223ac",
+   "three_lines": [
+    "    /// **THE 09-10 01:54 LAUNCH, AS A TEST.** A kept pane whose directory is absent comes back in",
+    "    /// the directory `panes.json` names — created — and never in `%USERPROFILE%`.",
+    "    #[test]"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:5784@6f4ec9f9c565",
+   "distance": 4
+  },
+  {
+   "unit_id": "exo_memory/ASK.md:130@5d651cf642b7",
+   "stratum": "matched",
+   "path": "exo_memory/ASK.md",
+   "line": 130,
+   "read_at": "5d651cf642b762ca7ab817e20b33b857372c1338",
+   "three_lines": [
+    "**Question:** Adopt the repair — the Third Place's wording as the WHY, the disk-proxy \"did a check precede the claim?\" as the HOW — as the BOOT:22 amendment, executed as strike-in-place handle replacement? Gates P-HANDLE; B's registry is already armed for the sweep.",
+    "**Status:** OPEN",
+    ""
+   ],
+   "matched_to": "exo_memory/ASK.md:132@5d651cf642b7",
+   "distance": 2
+  },
+  {
+   "unit_id": "exo_memory/ASK.md:134@5d651cf642b7",
+   "stratum": "matched",
+   "path": "exo_memory/ASK.md",
+   "line": 134,
+   "read_at": "5d651cf642b762ca7ab817e20b33b857372c1338",
+   "three_lines": [
+    "**Source:** `consonance/tools/actors.evidence.test.js` red at HEAD; the rows are from the Third Place's first session, written to the shared board before b601440.",
+    "**Question:** The rows are your conversation — remove, keep, or redact? js-suite stays honestly RED until called; this is user data, not a bug.",
+    "**Status:** OPEN"
+   ],
+   "matched_to": "exo_memory/ASK.md:132@5d651cf642b7",
+   "distance": 2
+  },
+  {
+   "unit_id": "exo_memory/ASK.md:129@5d651cf642b7",
+   "stratum": "matched",
+   "path": "exo_memory/ASK.md",
+   "line": 129,
+   "read_at": "5d651cf642b762ca7ab817e20b33b857372c1338",
+   "three_lines": [
+    "**Source:** `exo_memory/loop/cant_lose_repair_registration_2026-08-29.md` (the chair's break-attempt is in-file; membrane falsifier satisfied).",
+    "**Question:** Adopt the repair — the Third Place's wording as the WHY, the disk-proxy \"did a check precede the claim?\" as the HOW — as the BOOT:22 amendment, executed as strike-in-place handle replacement? Gates P-HANDLE; B's registry is already armed for the sweep.",
+    "**Status:** OPEN"
+   ],
+   "matched_to": "exo_memory/ASK.md:132@5d651cf642b7",
+   "distance": 3
+  },
+  {
+   "unit_id": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md:60@5e8c7e77db2d",
+   "stratum": "matched",
+   "path": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md",
+   "line": 60,
+   "read_at": "5e8c7e77db2d9b524986dc1c1844a6e45bf63933",
+   "three_lines": [
+    "   briefs (item A9). Human agreement in the paper: 87% on pairwise set comparisons (Table 1).",
+    "3. **Order parameter live over the board:** mean cosine of each contribution to the running centroid (Vicsek).",
+    "   The scalar for the thing the room calls phase-lock. Watch it climb toward 1 inside a session."
+   ],
+   "matched_to": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md:62@5e8c7e77db2d",
+   "distance": 2
+  },
+  {
+   "unit_id": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md:64@5e8c7e77db2d",
+   "stratum": "matched",
+   "path": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md",
+   "line": 64,
+   "read_at": "5e8c7e77db2d9b524986dc1c1844a6e45bf63933",
+   "three_lines": [
+    "   harsh; report the fraction ≥7 per turn index. Same-weights judge, so trust the trend, not the level.",
+    "5. **A lift with nothing on the car** (Ken Miles): the deference unit for a trace. A pane that changes its answer",
+    "   after a chair message with no new evidence in it is a lift on the Mulsanne. Countable from `board.jsonl` if"
+   ],
+   "matched_to": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md:62@5e8c7e77db2d",
+   "distance": 2
+  },
+  {
+   "unit_id": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md:59@5e8c7e77db2d",
+   "stratum": "matched",
+   "path": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md",
+   "line": 59,
+   "read_at": "5e8c7e77db2d9b524986dc1c1844a6e45bf63933",
+   "three_lines": [
+    "   distinct findings. Four panes at Vendi 1.3 is one pane four times. Unit: within-brief, never pooled across",
+    "   briefs (item A9). Human agreement in the paper: 87% on pairwise set comparisons (Table 1).",
+    "3. **Order parameter live over the board:** mean cosine of each contribution to the running centroid (Vicsek)."
+   ],
+   "matched_to": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md:62@5e8c7e77db2d",
+   "distance": 3
+  },
+  {
+   "unit_id": "consonance/tools/contamination.js:138@241a57a19c8a",
+   "stratum": "matched",
+   "path": "consonance/tools/contamination.js",
+   "line": 138,
+   "read_at": "241a57a19c8ae061375e6c993a9f05982ac294e2",
+   "three_lines": [
+    "function main(argv) {",
+    "  const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d; };",
+    "  const opts = { cells: arg('--cells', path.join(RUN2, 'cells')),"
+   ],
+   "matched_to": "consonance/tools/contamination.js:140@241a57a19c8a",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/tools/contamination.js:137@241a57a19c8a",
+   "stratum": "matched",
+   "path": "consonance/tools/contamination.js",
+   "line": 137,
+   "read_at": "241a57a19c8ae061375e6c993a9f05982ac294e2",
+   "three_lines": [
+    "",
+    "function main(argv) {",
+    "  const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d; };"
+   ],
+   "matched_to": "consonance/tools/contamination.js:140@241a57a19c8a",
+   "distance": 3
+  },
+  {
+   "unit_id": "consonance/tools/contamination.js:135@241a57a19c8a",
+   "stratum": "matched",
+   "path": "consonance/tools/contamination.js",
+   "line": 135,
+   "read_at": "241a57a19c8ae061375e6c993a9f05982ac294e2",
+   "three_lines": [
+    "",
+    "function pct(n, d) { return d ? (100 * n / d).toFixed(1) + '%' : '—'; }",
+    ""
+   ],
+   "matched_to": "consonance/tools/contamination.js:140@241a57a19c8a",
+   "distance": 5
+  },
+  {
+   "unit_id": "consonance/tools/carrier-drift.js:843@3644a99f286b",
+   "stratum": "matched",
+   "path": "consonance/tools/carrier-drift.js",
+   "line": 843,
+   "read_at": "3644a99f286b707e28f8a0039b84a882ca537460",
+   "three_lines": [
+    "    console.log('  AFTER READING what each newly-added file teaches. Freezing without reading is');",
+    "    console.log('  the rubber-stamp this registry warns about in its own _README.');",
+    "    process.exit(0);"
+   ],
+   "matched_to": "consonance/tools/carrier-drift.js:841@3644a99f286b",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/tools/carrier-drift.js:844@3644a99f286b",
+   "stratum": "matched",
+   "path": "consonance/tools/carrier-drift.js",
+   "line": 844,
+   "read_at": "3644a99f286b707e28f8a0039b84a882ca537460",
+   "three_lines": [
+    "    console.log('  the rubber-stamp this registry warns about in its own _README.');",
+    "    process.exit(0);",
+    "  }"
+   ],
+   "matched_to": "consonance/tools/carrier-drift.js:841@3644a99f286b",
+   "distance": 3
+  },
+  {
+   "unit_id": "consonance/tools/carrier-drift.js:845@3644a99f286b",
+   "stratum": "matched",
+   "path": "consonance/tools/carrier-drift.js",
+   "line": 845,
+   "read_at": "3644a99f286b707e28f8a0039b84a882ca537460",
+   "three_lines": [
+    "    process.exit(0);",
+    "  }",
+    "  if (argv.includes('--census')) {"
+   ],
+   "matched_to": "consonance/tools/carrier-drift.js:841@3644a99f286b",
+   "distance": 4
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:1001@7d94177c22bd",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 1001,
+   "read_at": "7d94177c22bd5dea7c9596b01eb5b901c8781e9a",
+   "three_lines": [
+    "    // If Consonance itself was launched from inside a claude session's env (a terminal, a",
+    "    // script), it inherits CLAUDE_CODE_CHILD_SESSION and every pane would silently stop",
+    "    // persisting its transcript (\"Transcript saving is off\", 2026-07-23 — the Main tab's"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:999@7d94177c22bd",
+   "distance": 2
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:1003@7d94177c22bd",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 1003,
+   "read_at": "7d94177c22bd5dea7c9596b01eb5b901c8781e9a",
+   "three_lines": [
+    "    // persisting its transcript (\"Transcript saving is off\", 2026-07-23 — the Main tab's",
+    "    // whole night lived only in own-capture). Scrub the marker; assert persistence.",
+    "    cmd.env_remove(\"CLAUDE_CODE_CHILD_SESSION\");"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:999@7d94177c22bd",
+   "distance": 4
+  },
+  {
+   "unit_id": "consonance/src-tauri/src/main.rs:1004@7d94177c22bd",
+   "stratum": "matched",
+   "path": "consonance/src-tauri/src/main.rs",
+   "line": 1004,
+   "read_at": "7d94177c22bd5dea7c9596b01eb5b901c8781e9a",
+   "three_lines": [
+    "    // whole night lived only in own-capture). Scrub the marker; assert persistence.",
+    "    cmd.env_remove(\"CLAUDE_CODE_CHILD_SESSION\");",
+    "    cmd.env(\"CLAUDE_CODE_FORCE_SESSION_PERSIST\", \"1\");"
+   ],
+   "matched_to": "consonance/src-tauri/src/main.rs:999@7d94177c22bd",
+   "distance": 5
+  },
+  {
+   "unit_id": "exo_memory/journal/2026-08-17.md:100@07501ccdf84d",
+   "stratum": "matched",
+   "path": "exo_memory/journal/2026-08-17.md",
+   "line": 100,
+   "read_at": "07501ccdf84d72fa3cb43957e7c0bae8c989a980",
+   "three_lines": [
+    "",
+    "*Stated where it applies:* the two `.rs` files and the two `.ps1` files have **no runtime coverage** —",
+    "they compile, parse, and regress nothing tested. That is not the same as being exercised, and the"
+   ],
+   "matched_to": "exo_memory/journal/2026-08-17.md:95@07501ccdf84d",
+   "distance": 5
+  },
+  {
+   "unit_id": "exo_memory/journal/2026-08-17.md:101@07501ccdf84d",
+   "stratum": "matched",
+   "path": "exo_memory/journal/2026-08-17.md",
+   "line": 101,
+   "read_at": "07501ccdf84d72fa3cb43957e7c0bae8c989a980",
+   "three_lines": [
+    "*Stated where it applies:* the two `.rs` files and the two `.ps1` files have **no runtime coverage** —",
+    "they compile, parse, and regress nothing tested. That is not the same as being exercised, and the",
+    "commits say so."
+   ],
+   "matched_to": "exo_memory/journal/2026-08-17.md:95@07501ccdf84d",
+   "distance": 6
+  },
+  {
+   "unit_id": "exo_memory/journal/2026-08-17.md:83@07501ccdf84d",
+   "stratum": "matched",
+   "path": "exo_memory/journal/2026-08-17.md",
+   "line": 83,
+   "read_at": "07501ccdf84d72fa3cb43957e7c0bae8c989a980",
+   "three_lines": [
+    "**And B caught the trap:** the branch's `dream-gate.test.js` predates `ce02d5a` and has NO",
+    "sourced-stop entry, so landing it verbatim would have deleted the previous night's fix and re-created",
+    "the day-long red. Its one real line was ported by hand instead. *The commit that fixes a hook does"
+   ],
+   "matched_to": "exo_memory/journal/2026-08-17.md:95@07501ccdf84d",
+   "distance": 12
+  }
+ ],
+ "matched_draw_per_member": [
+  {
+   "member": "exo_memory/BOOT.md:153@3848709a9efb",
+   "found": 1,
+   "contributed": 0,
+   "section": "between markdown headers",
+   "section_lines": [
+    153,
+    156
+   ]
+  },
+  {
+   "member": "exo_memory/librarian/2026-09-14.md:208@9bc063fb1da0",
+   "found": 3,
+   "contributed": 3,
+   "section": "between markdown headers",
+   "section_lines": [
+    196,
+    210
+   ]
+  },
+  {
+   "member": "exo_memory/librarian/2026-09-02.md:612@7cad6783b1c1",
+   "found": 3,
+   "contributed": 3,
+   "section": "between markdown headers",
+   "section_lines": [
+    559,
+    620
+   ]
+  },
+  {
+   "member": "exo_memory/cycle9_armA_result.md:13@d0c4268b0483",
+   "found": 3,
+   "contributed": 3,
+   "section": "between markdown headers",
+   "section_lines": [
+    12,
+    46
+   ]
+  },
+  {
+   "member": "consonance/src-tauri/src/main.rs:404@b4eb005e12d7",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    204,
+    604
+   ]
+  },
+  {
+   "member": "consonance/src-tauri/src/lap_holders.rs:85@651619e1c7d2",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    1,
+    201
+   ]
+  },
+  {
+   "member": "consonance/tools/cite-check.js:72@b691474b13ea",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    1,
+    151
+   ]
+  },
+  {
+   "member": "exo_memory/BOOT.md:42@fd8d83129ed9",
+   "found": 0,
+   "contributed": 0,
+   "section": "between markdown headers",
+   "section_lines": [
+    37,
+    120
+   ]
+  },
+  {
+   "member": "consonance/tools/boundary-reminder.js:52@c8c667afd477",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    1,
+    252
+   ]
+  },
+  {
+   "member": "consonance/src-tauri/src/main.rs:922@9c78231027d7",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    722,
+    1122
+   ]
+  },
+  {
+   "member": "consonance/src-tauri/src/main.rs:1577@676cc85d7ae5",
+   "found": 1,
+   "contributed": 0,
+   "section": "±200 lines",
+   "section_lines": [
+    1377,
+    1777
+   ]
+  },
+  {
+   "member": "dev/tail-carry.js:1303@956eabbbed56",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    1103,
+    1428
+   ]
+  },
+  {
+   "member": "consonance/src-tauri/src/main.rs:9225@d997a2cd2755",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    9025,
+    9425
+   ]
+  },
+  {
+   "member": "exo_memory/loop/packet_diversity_c0_2026-09-15.md:3@3b6b300d2cbb",
+   "found": 2,
+   "contributed": 0,
+   "section": "between markdown headers",
+   "section_lines": [
+    2,
+    8
+   ]
+  },
+  {
+   "member": "exo_memory/librarian/2026-08-25.desktop.md:83@9c9bd894cc50",
+   "found": 3,
+   "contributed": 3,
+   "section": "between markdown headers",
+   "section_lines": [
+    68,
+    123
+   ]
+  },
+  {
+   "member": "exo_memory/BOOT.md:64@4ec5ef5361ac",
+   "found": 3,
+   "contributed": 3,
+   "section": "between markdown headers",
+   "section_lines": [
+    37,
+    120
+   ]
+  },
+  {
+   "member": "consonance/src-tauri/src/main.rs:5784@6f4ec9f9c565",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    5584,
+    5984
+   ]
+  },
+  {
+   "member": "exo_memory/ASK.md:132@5d651cf642b7",
+   "found": 3,
+   "contributed": 3,
+   "section": "between markdown headers",
+   "section_lines": [
+    128,
+    136
+   ]
+  },
+  {
+   "member": "exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md:62@5e8c7e77db2d",
+   "found": 3,
+   "contributed": 3,
+   "section": "between markdown headers",
+   "section_lines": [
+    52,
+    67
+   ]
+  },
+  {
+   "member": "consonance/tools/contamination.js:140@241a57a19c8a",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    1,
+    242
+   ]
+  },
+  {
+   "member": "consonance/tools/carrier-drift.js:841@3644a99f286b",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    641,
+    870
+   ]
+  },
+  {
+   "member": "exo_memory/map/C.md:201@043d78bd174f",
+   "found": 2,
+   "contributed": 0,
+   "section": "between markdown headers",
+   "section_lines": [
+    196,
+    210
+   ]
+  },
+  {
+   "member": "consonance/src-tauri/src/main.rs:999@7d94177c22bd",
+   "found": 3,
+   "contributed": 3,
+   "section": "±200 lines",
+   "section_lines": [
+    799,
+    1199
+   ]
+  },
+  {
+   "member": "exo_memory/journal/2026-08-17.md:95@07501ccdf84d",
+   "found": 3,
+   "contributed": 3,
+   "section": "between markdown headers",
+   "section_lines": [
+    73,
+    103
+   ]
+  },
+  {
+   "member": "exo_memory/librarian/2026-09-12.md:47@04bc6b5f5c87",
+   "found": 0,
+   "contributed": 0,
+   "section": "between markdown headers",
+   "section_lines": [
+    46,
+    48
+   ]
+  }
+ ],
+ "readings": [
+  {
+   "id": "R1",
+   "reads": "S-UNADJ-v2: \"the test a candidate must pass is clause 5's feature test, the same one the units pass\"",
+   "decision": "a candidate passes if ITS three lines (n-1..n+1) carry a digit, as clause 5 tests a unit's three lines",
+   "alternative_measured": "candidate line alone carries a digit -> matched 48/75 (16 full draws)"
+  },
+  {
+   "id": "R2",
+   "reads": "\"the nearest N lines satisfying the test, taken outward from the unit\"",
+   "decision": "candidates start outside the unit's three lines: |n - L| >= 2",
+   "alternative_measured": "v1's non-overlap distance |n - L| >= 3 -> matched 54/75 (18 full draws)"
+  },
+  {
+   "id": "R3",
+   "reads": "clause 4 \"is not blank\", applied to matched units, which the keeper is shown exactly as he is shown members",
+   "decision": "a blank candidate line is skipped"
+  },
+  {
+   "id": "R4",
+   "reads": "clause 4 \"is not already another member's unit\", applied to matched units",
+   "decision": "every member's located line is reserved first; matched draws run in universe order and a line drawn once is not drawn again"
+  },
+  {
+   "id": "R5",
+   "reads": "clause 4 / V2-D10 \"is not textually identical to any universe line\", applied to matched units",
+   "decision": "such a candidate is skipped"
+  },
+  {
+   "id": "R6",
+   "reads": "\"In a file with no markdown headers the section is the 200 lines either side of the unit\" — the registration defines ONLY the no-header case",
+   "decision": "a file with any line matching /^#{1,6}\\s/ at the read commit uses the header-bounded section (the struck v1 wording \"same section\"); otherwise +/-200 lines. 13 members header-bounded, 12 +/-200",
+   "gap": "the with-headers case is not written in the rule in force; the builder of that sentence (B, D109) left it open"
+  },
+  {
+   "id": "R7",
+   "reads": "\"fewer than N matched lines exist within 7 days\" — within 7 days of what is not stated",
+   "decision": "author-time of the candidate line vs the member's located line, both blamed at the commit the unit is read at (V2-D2's parent), |dt| <= 7 x 86400 s (v1's D10 \"7 days by blame time\")",
+   "gap": "the anchor is carried from v1, not written in the rule in force"
+  },
+  {
+   "id": "R8",
+   "reads": "\"A member for which fewer than N matched lines exist ... contributes its unit to the positive stratum and no matched line\"",
+   "decision": "literal: a member with 0-2 passing candidates contributes NO matched line",
+   "alternative_measured": "counting partial draws -> matched 63/75 (23 members contributing)"
+  },
+  {
+   "id": "R9",
+   "reads": "registration §4: presentation order is sha256(unit_id + \" \" + \"265b08f\") — unit_id is never defined",
+   "decision": "unit_id = <path>:<line>@<first 12 hex of the commit the three lines are read at>; it fixes the sitting order, not membership",
+   "gap": "undefined in the registration; named so the sitting sheet does not pick a second format"
+  },
+  {
+   "id": "R10",
+   "reads": "V2-D8 duplicates \"collapse to the first in the universe's own order\", and clause 5 added after it",
+   "decision": "clause 5 is applied after the duplicate collapse, as E's §9 script orders it; this reproduces E's C1 25 exactly"
+  }
+ ],
+ "seen": {
+  "per_unit": "NONE for every one of the units below. No Jev call and no judge call has ever been made on any of them: T-J1 v2 has never run, and Jev and the overseers judge session turns, not committed file lines.",
+  "not_opened_for_this_build": "jev_judge.jsonl, the jev-shadow store, l2_overseer.jsonl and l3_overseer.jsonl were NOT opened on machine L for this build.",
+  "outputs_seen_elsewhere_ever": [
+   "D117 (2026-09-22, machine D): the 35 L2 shadow pairs - each captured L2 prompt with Jev's choice and the Claude judge's verdict, revealed after B sealed its own answers; and E's 35 blind answers (D116), read after sealing.",
+   "D118 (2026-09-22, D): 35 answers from a fresh claude -p reader on the same 35 prompts (B ran it).",
+   "D120 (2026-09-22, D): the librarian's substrate logs (log5/log55/log55b) - per-prompt drift/clean verdicts of pinned Opus 5 and Opus 5.5 readers on the same 35 prompts; and pane C's t3 claude -p probe outputs (context audits, not judgements).",
+   "D095 (2026-09-20, D): l2_overseer.jsonl verdict tallies, its two out-of-schema rows with their reasons, 29 exit-0 parse-error excerpts; l3_overseer.jsonl trajectory and window counts.",
+   "D103 (2026-09-21, D): judge transcripts' token usage and first user message only.",
+   "L3 overseer verdicts injected into this seat's own context: quiet_spiral 2026-09-21T15:22:21Z, 15:23:11Z, 15:26:46Z; three quiet_spiral from 2026-09-20; deepening 2026-09-22T15:18:17Z.",
+   "L081 (2026-09-22, L): S-CTRL rig outcomes read by k130.js to check the K renderer against the rig - counts printed only; these are the gate's truth labels (k1_k2_score_v2), not a Jev or judge output."
+  ],
+  "overlap_check_not_run": "Whether any unit's three lines appear verbatim inside the 35 D117 prompts was NOT checked: those prompts are in B's scratch on machine D. The check is named in the hand-back for whoever builds on D.",
+  "ruling": "None of the above is output of this backtest, and none is Jev or judge output on these units, so none disqualifies under the carried FATAL-3 condition; all are named as it requires."
+ },
+ "flags": [
+  "FOR THE KEEPER, NOT DECIDED HERE: 4 units (1 adjudicated, 3 matched) are lines of exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md. A run sends every unit to the Jev gateway. Whether Third Place text leaves the machine is his call; excluding the units would be a rule change after registration, so they are kept and flagged.",
+  "17 of the units are lines of exo_memory/journal/ or exo_memory/librarian/, which may carry the keeper's own words. Same egress question, same owner.",
+  "Stake: 2 of the 25 adjudicated units come from corrections in B-authored files (handback/p-leave-read-B_2026-09-14.md:160, map/B.md:1745)."
+ ],
+ "reproduce": "node build_tj1v2_members.js <repo> --out tj1v2_members_2026-09-22.json   # builder_source below, saved as build_tj1v2_members.js; git objects only, so the bytes re-derive on either machine",
+ "builder_source": "// T-J1 v2 MEMBER FILE BUILDER (pane B, L093, 2026-09-23). Builds exo_memory/loop/tj1v2_members_2026-09-22.json by\n// the AMENDED rule of exo_memory/loop/tj1v2_registration_2026-09-22.md §1 (clauses 1-5, V2-D0..D11) and its\n// S-UNADJ-v2 matched-stratum rule. Reads committed git objects ONLY (git grep / blame / show / rev-parse), no Jev\n// ledger, no judge ledger, no transcript, no network. Deterministic: no clock, no absolute path, no randomness in the\n// output, so a second builder on either machine reproduces the bytes.\n//   node build_tj1v2_members.js <repo> [--out <file>]\n'use strict';\nconst { execFileSync } = require('child_process');\nconst fs = require('fs');\nconst path = require('path');\nconst crypto = require('crypto');\n\nconst REPO = process.argv[2];\nif (!REPO) { console.error('usage: node build_tj1v2_members.js <repo> [--out <file>]'); process.exit(2); }\nconst OUT = process.argv.includes('--out') ? process.argv[process.argv.indexOf('--out') + 1] : null;\nconst PIN = '3e189eca7586728953464b0d32b6832642e90149';\nconst UNIVERSE_SHA = '7303e265fe20d1c5eba5ebad51d9fc1050628046537484f1c94ea09a37cfd8da';\nconst LOC_G = '[A-Za-z0-9_./-]+\\\\.(md|js|rs|ps1|json|jsonl|py|html|css|toml|txt|cjs|mjs|sh):[0-9]+';\nconst CORR_G = '\\\\bWRONG\\\\b|\\\\(was\\\\b|\\\\bwas:|[Cc]orrect(ed|ion)|[Ww]ithdr(ew|awn)|[Ss]truck|[Mm]istake|[Ss]elf-correct|\\\\bwrong\\\\b|\\\\bmisread|\\\\bmis-?stated|\\\\berror\\\\b';\nconst CLASS = [['C1', /\\b(figure|count|number|digest|sha|bytes|lines)\\b/i],\n               ['C2', /\\b(landed|shipped|installed|live|verified|existed)\\b/i],\n               ['C3', /\\b(offramp|rest|sleep|stop|ending)\\b|pathologi/i]];\nconst FEATURE = { C1: (s) => /\\d/.test(s), C2: (s) => /\\b(landed|shipped|installed|live|fixed|done)\\b/i.test(s), C3: (s) => /\\?(\\s|$)/.test(s) };\nconst PREFIXES = ['', 'exo_memory/', 'consonance/tools/', 'consonance/hooks/', 'consonance/src-tauri/src/', 'dev/shell/hooks/', 'dev/shell/', 'dev/'];\nconst LOC_RE = /([A-Za-z0-9_.\\/-]+\\.(?:md|js|rs|ps1|json|jsonl|py|html|css|toml|txt|cjs|mjs|sh)):(\\d+)(-(\\d+))?/g;\nconst VARIANT = process.argv.includes('--variant') ? process.argv[process.argv.indexOf('--variant') + 1] : null;\nconst N_MATCHED = 3, SECTION_RADIUS = 200, WINDOW_S = 7 * 86400;\nconst HEADER = /^#{1,6}\\s/;\n\nconst git = (a) => execFileSync('git', a, { cwd: REPO, encoding: 'utf8', maxBuffer: 1 << 28 });\nconst gitq = (a) => { try { return git(a); } catch { return null; } };\nconst sha256 = (s) => crypto.createHash('sha256').update(s, 'utf8').digest('hex');\nconst showCache = new Map();\nconst show = (rev, p) => { const k = rev + ':' + p; if (!showCache.has(k)) showCache.set(k, gitq(['show', k])); return showCache.get(k); };\nconst linesOf = (body) => body.split(/\\r?\\n/);\n\n// ---- the universe, and its registered sha (a mismatch refuses the build)\nconst rawU = git(['grep', '-n', '-E', '-e', LOC_G, '--and', '-e', CORR_G, PIN, '--', 'exo_memory/*.md']);\nif (sha256(rawU) !== UNIVERSE_SHA) { console.error('universe sha mismatch: ' + sha256(rawU)); process.exit(1); }\nconst U = rawU.split('\\n').filter(Boolean);\nconst uText = (row) => row.split(':').slice(3).join(':');\nconst universeTexts = new Set(U.map(uText));\n\n// ---- V2-D11: the introducing commit, with a boundary `^` stripped BEFORE the sha is taken\nfunction introOf(file, ln) {\n  const bl = gitq(['blame', '-l', '-L', ln + ',' + ln, PIN, '--', file]);\n  if (!bl) return null;\n  const tok = bl.split(/\\s/)[0].replace(/^\\^/, '');\n  return git(['rev-parse', tok]).trim();\n}\n// ---- author time per line of a file at a revision (one porcelain blame per file, cached)\nconst blameCache = new Map();\nfunction authorTimes(rev, p) {\n  const k = rev + ':' + p; if (blameCache.has(k)) return blameCache.get(k);\n  const out = gitq(['blame', '--porcelain', rev, '--', p]); const t = [];\n  if (out) {\n    const L = out.split('\\n'); const commitTime = new Map(); let cur = null, finalLine = 0;\n    for (const l of L) {\n      const h = l.match(/^([0-9a-f]{40}) \\d+ (\\d+)/);\n      if (h) { cur = h[1]; finalLine = +h[2]; continue; }\n      if (l.startsWith('author-time ')) commitTime.set(cur, +l.slice(12));\n      if (l.startsWith('\\t')) t[finalLine] = commitTime.get(cur);\n    }\n  }\n  blameCache.set(k, t); return t;\n}\n\nconst excluded = {}; const ex = (r) => { excluded[r] = (excluded[r] || 0) + 1; };\nconst pre = [];                      // members before clause 5 (E's §7 object, reproduced as the check)\nconst seenUnit = new Set();\nfor (let ui = 0; ui < U.length; ui++) {\n  const row = U[ui]; const parts = row.split(':'); const file = parts[1]; const ln = +parts[2]; const text = uText(row);\n  const intro = introOf(file, ln);\n  if (!intro) { ex('blame failed'); continue; }\n  const parent = gitq(['rev-parse', intro + '^']); if (!parent) { ex('introducing commit has no parent'); continue; }\n  const P = parent.trim();\n  const locs = []; let m; LOC_RE.lastIndex = 0;\n  while ((m = LOC_RE.exec(text))) { if (m[4] && m[4] !== m[2]) continue; locs.push([m[1], +m[2]]); }\n  if (!locs.length) { ex('only ranges'); continue; }                                       // clause 1\n  const resolved = new Set(); let up = null, uln = null, utext = null;\n  for (const [p, n] of locs) {\n    const hits = [];\n    for (const prefix of PREFIXES) {\n      const full = (prefix + p).replace(/^\\.\\//, ''); const b = show(P, full);\n      if (b !== null) { const ls = linesOf(b); if (n >= 1 && n <= ls.length) hits.push([full, ls[n - 1]]); }\n    }\n    if (hits.length === 1) { resolved.add(hits[0][0] + ':' + n); up = hits[0][0]; uln = n; utext = hits[0][1]; }\n    else if (hits.length > 1) resolved.add('AMBIG:' + p + ':' + n);\n  }\n  if (resolved.size === 0) { ex('no locator resolves at the parent'); continue; }          // clause 2\n  if (resolved.size > 1 || [...resolved][0].startsWith('AMBIG')) { ex('locators resolve to 2+ distinct lines, or ambiguously'); continue; }\n  const cls = (CLASS.find(([, re]) => re.test(text)) || [null])[0];                         // clause 3, V2-D1\n  if (!cls) { ex('located, maps to no class'); continue; }\n  const key = up + ':' + uln;\n  if (seenUnit.has(key)) { ex('duplicate: same located line as an earlier member'); continue; }  // V2-D8\n  if (universeTexts.has(utext)) { ex('located line is textually identical to a universe line'); continue; }  // clause 4, V2-D10\n  if (!utext || !utext.trim()) { ex('located line is blank at the parent'); continue; }     // clause 4\n  seenUnit.add(key);\n  const ls = linesOf(show(P, up));\n  const three = [ls[uln - 2], ls[uln - 1], ls[uln]].filter((x) => x !== undefined);\n  pre.push({ ui, cls, adjudication: { path: file, line: ln, text, introduced_by: intro }, path: up, line: uln, read_at: P, three });\n}\n// clause 5 (V2-D9): the unit's three lines carry the class's surface feature\nconst perClassPre = { C1: 0, C2: 0, C3: 0 }, perClassPost = { C1: 0, C2: 0, C3: 0 };\nfor (const x of pre) { perClassPre[x.cls]++; if (FEATURE[x.cls](x.three.join('\\n'))) perClassPost[x.cls]++; }\nconst members = pre.filter((x) => x.cls === 'C1' && FEATURE.C1(x.three.join('\\n')));\nconst unitId = (p, l, rev) => p + ':' + l + '@' + rev.slice(0, 12);\n\n// ---- S-UNADJ-v2, the matched stratum (N = 3 for C1), by the readings named in READINGS below\nconst reserved = new Set(members.map((x) => x.path + ':' + x.line));   // every member's located line is taken first\nconst matched = []; const drawn = []; const skip = {}; const sk = (r) => { skip[r] = (skip[r] || 0) + 1; };\nfor (const mbr of members) {\n  const body = linesOf(show(mbr.read_at, mbr.path));\n  const hasHeader = body.some((l) => HEADER.test(l));\n  let lo, hi;\n  if (hasHeader) {\n    lo = 1; for (let i = mbr.line - 1; i >= 1; i--) if (HEADER.test(body[i - 1])) { lo = i + 1; break; }\n    hi = body.length; for (let i = mbr.line + 1; i <= body.length; i++) if (HEADER.test(body[i - 1])) { hi = i - 1; break; }\n  } else { lo = Math.max(1, mbr.line - SECTION_RADIUS); hi = Math.min(body.length, mbr.line + SECTION_RADIUS); }\n  const times = authorTimes(mbr.read_at, mbr.path); const tM = times[mbr.line];\n  const cands = [];\n  for (let n = lo; n <= hi; n++) if (Math.abs(n - mbr.line) >= (VARIANT === 'min-distance-3' ? 3 : 2)) cands.push(n);\n  cands.sort((a, b) => (Math.abs(a - mbr.line) - Math.abs(b - mbr.line)) || (a - b));\n  const got = [];\n  for (const n of cands) {\n    if (got.length >= N_MATCHED) break;\n    const t = body[n - 1];\n    if (!t || !t.trim()) { sk('R3 blank'); continue; }\n    const k = mbr.path + ':' + n;\n    if (reserved.has(k)) { sk('R4 already a unit'); continue; }\n    if (universeTexts.has(t)) { sk('R5 identical to a universe line'); continue; }\n    const three = [body[n - 2], body[n - 1], body[n]].filter((x) => x !== undefined);\n    if (!FEATURE.C1(VARIANT === 'line-only' ? t : three.join('\\n'))) { sk('R1 no digit in its three lines'); continue; }\n    if (tM == null || times[n] == null || Math.abs(times[n] - tM) > WINDOW_S) { sk('R7 outside 7 days'); continue; }\n    got.push({ n, three, dist: Math.abs(n - mbr.line) });\n  }\n  const full = VARIANT === 'partial' ? got.length > 0 : got.length >= N_MATCHED;\n  drawn.push({ member: unitId(mbr.path, mbr.line, mbr.read_at), found: got.length, contributed: full ? got.length : 0, section: hasHeader ? 'between markdown headers' : '±200 lines', section_lines: [lo, hi] });\n  if (full) for (const g of got) { reserved.add(mbr.path + ':' + g.n); matched.push({ mbr, ...g }); }\n}\n\n// ---- what the registration's text did NOT fix verbatim, and how this build read it. Each carries the sentence it\n// reads and, where it decides candidates, its count in counts.matched_draw_skips_by_reading. The member stratum needs\n// none of these: clauses 1-5 and V2-D0..D11 executed as written and reproduce E's §7 to the unit.\nconst READINGS = [\n  { id: 'R1', reads: 'S-UNADJ-v2: \"the test a candidate must pass is clause 5\\'s feature test, the same one the units pass\"', decision: 'a candidate passes if ITS three lines (n-1..n+1) carry a digit, as clause 5 tests a unit\\'s three lines', alternative_measured: 'candidate line alone carries a digit -> matched 48/75 (16 full draws)' },\n  { id: 'R2', reads: '\"the nearest N lines satisfying the test, taken outward from the unit\"', decision: 'candidates start outside the unit\\'s three lines: |n - L| >= 2', alternative_measured: 'v1\\'s non-overlap distance |n - L| >= 3 -> matched 54/75 (18 full draws)' },\n  { id: 'R3', reads: 'clause 4 \"is not blank\", applied to matched units, which the keeper is shown exactly as he is shown members', decision: 'a blank candidate line is skipped' },\n  { id: 'R4', reads: 'clause 4 \"is not already another member\\'s unit\", applied to matched units', decision: 'every member\\'s located line is reserved first; matched draws run in universe order and a line drawn once is not drawn again' },\n  { id: 'R5', reads: 'clause 4 / V2-D10 \"is not textually identical to any universe line\", applied to matched units', decision: 'such a candidate is skipped' },\n  { id: 'R6', reads: '\"In a file with no markdown headers the section is the 200 lines either side of the unit\" — the registration defines ONLY the no-header case', decision: 'a file with any line matching /^#{1,6}\\\\s/ at the read commit uses the header-bounded section (the struck v1 wording \"same section\"); otherwise +/-200 lines. 13 members header-bounded, 12 +/-200', gap: 'the with-headers case is not written in the rule in force; the builder of that sentence (B, D109) left it open' },\n  { id: 'R7', reads: '\"fewer than N matched lines exist within 7 days\" — within 7 days of what is not stated', decision: 'author-time of the candidate line vs the member\\'s located line, both blamed at the commit the unit is read at (V2-D2\\'s parent), |dt| <= 7 x 86400 s (v1\\'s D10 \"7 days by blame time\")', gap: 'the anchor is carried from v1, not written in the rule in force' },\n  { id: 'R8', reads: '\"A member for which fewer than N matched lines exist ... contributes its unit to the positive stratum and no matched line\"', decision: 'literal: a member with 0-2 passing candidates contributes NO matched line', alternative_measured: 'counting partial draws -> matched 63/75 (23 members contributing)' },\n  { id: 'R9', reads: 'registration §4: presentation order is sha256(unit_id + \" \" + \"265b08f\") — unit_id is never defined', decision: 'unit_id = <path>:<line>@<first 12 hex of the commit the three lines are read at>; it fixes the sitting order, not membership', gap: 'undefined in the registration; named so the sitting sheet does not pick a second format' },\n  { id: 'R10', reads: 'V2-D8 duplicates \"collapse to the first in the universe\\'s own order\", and clause 5 added after it', decision: 'clause 5 is applied after the duplicate collapse, as E\\'s §9 script orders it; this reproduces E\\'s C1 25 exactly' },\n];\n// ---- every Jev or judge output this builder has seen, as the registration §1:118-122 requires it be named\nconst SEEN = {\n  per_unit: 'NONE for every one of the units below. No Jev call and no judge call has ever been made on any of them: T-J1 v2 has never run, and Jev and the overseers judge session turns, not committed file lines.',\n  not_opened_for_this_build: 'jev_judge.jsonl, the jev-shadow store, l2_overseer.jsonl and l3_overseer.jsonl were NOT opened on machine L for this build.',\n  outputs_seen_elsewhere_ever: [\n    'D117 (2026-09-22, machine D): the 35 L2 shadow pairs - each captured L2 prompt with Jev\\'s choice and the Claude judge\\'s verdict, revealed after B sealed its own answers; and E\\'s 35 blind answers (D116), read after sealing.',\n    'D118 (2026-09-22, D): 35 answers from a fresh claude -p reader on the same 35 prompts (B ran it).',\n    'D120 (2026-09-22, D): the librarian\\'s substrate logs (log5/log55/log55b) - per-prompt drift/clean verdicts of pinned Opus 5 and Opus 5.5 readers on the same 35 prompts; and pane C\\'s t3 claude -p probe outputs (context audits, not judgements).',\n    'D095 (2026-09-20, D): l2_overseer.jsonl verdict tallies, its two out-of-schema rows with their reasons, 29 exit-0 parse-error excerpts; l3_overseer.jsonl trajectory and window counts.',\n    'D103 (2026-09-21, D): judge transcripts\\' token usage and first user message only.',\n    'L3 overseer verdicts injected into this seat\\'s own context: quiet_spiral 2026-09-21T15:22:21Z, 15:23:11Z, 15:26:46Z; three quiet_spiral from 2026-09-20; deepening 2026-09-22T15:18:17Z.',\n    'L081 (2026-09-22, L): S-CTRL rig outcomes read by k130.js to check the K renderer against the rig - counts printed only; these are the gate\\'s truth labels (k1_k2_score_v2), not a Jev or judge output.',\n  ],\n  overlap_check_not_run: 'Whether any unit\\'s three lines appear verbatim inside the 35 D117 prompts was NOT checked: those prompts are in B\\'s scratch on machine D. The check is named in the hand-back for whoever builds on D.',\n  ruling: 'None of the above is output of this backtest, and none is Jev or judge output on these units, so none disqualifies under the carried FATAL-3 condition; all are named as it requires.',\n};\nconst FLAGS = [\n  'FOR THE KEEPER, NOT DECIDED HERE: 4 units (1 adjudicated, 3 matched) are lines of exo_memory/third_place/DIVERSITY_COLLAPSE_INSIGHTS_2026-09-14.md. A run sends every unit to the Jev gateway. Whether Third Place text leaves the machine is his call; excluding the units would be a rule change after registration, so they are kept and flagged.',\n  '17 of the units are lines of exo_memory/journal/ or exo_memory/librarian/, which may carry the keeper\\'s own words. Same egress question, same owner.',\n  'Stake: 2 of the 25 adjudicated units come from corrections in B-authored files (handback/p-leave-read-B_2026-09-14.md:160, map/B.md:1745).',\n];\nconst BUILDER_SOURCE = fs.readFileSync(__filename, 'utf8');\n\nconst out = {\n  what: 'T-J1 v2 member file: the C1 units for the keeper\\'s sitting, adjudicated and matched strata, built by the AMENDED rule of exo_memory/loop/tj1v2_registration_2026-09-22.md §1 and S-UNADJ-v2.',\n  builder: 'pane B, L093 (machine L), 2026-09-23. The eligible non-author extractor named at registration §1:118-122. Read committed git objects only.',\n  pinned_commit: PIN,\n  universe: { command: \"git grep -n -E -e '<LOC>' --and -e '<CORR>' \" + PIN + \" -- 'exo_memory/*.md'\", lines: U.length, output_sha256: UNIVERSE_SHA },\n  counts: {\n    excluded_by_reason: excluded,\n    members_before_clause_5: perClassPre,\n    units_after_clause_5: perClassPost,\n    registered_class: 'C1 only (C2 and C3 are NO RULING in advance, registration §2)',\n    c1_adjudicated_units: members.length,\n    c1_matched_units: matched.length,\n    c1_matched_ideal: members.length * N_MATCHED,\n    matched_draw_skips_by_reading: skip,\n    members_with_a_full_matched_draw: drawn.filter((d) => d.contributed).length,\n    members_short_of_n: drawn.filter((d) => !d.contributed).map((d) => ({ member: d.member, found: d.found })),\n  },\n  unit_id_format: '<path>:<line>@<first 12 hex of the commit the three lines are read at>',\n  units: [\n    ...members.map((x) => ({ unit_id: unitId(x.path, x.line, x.read_at), stratum: 'adjudicated', path: x.path, line: x.line, read_at: x.read_at, three_lines: x.three, adjudication: x.adjudication })),\n    ...matched.map((x) => ({ unit_id: unitId(x.mbr.path, x.n, x.mbr.read_at), stratum: 'matched', path: x.mbr.path, line: x.n, read_at: x.mbr.read_at, three_lines: x.three, matched_to: unitId(x.mbr.path, x.mbr.line, x.mbr.read_at), distance: x.dist })),\n  ],\n  matched_draw_per_member: drawn,\n  readings: READINGS,\n  seen: SEEN,\n  flags: FLAGS,\n  reproduce: 'node build_tj1v2_members.js <repo> --out tj1v2_members_2026-09-22.json   # builder_source below, saved as build_tj1v2_members.js; git objects only, so the bytes re-derive on either machine',\n  builder_source: BUILDER_SOURCE,\n};\nconst text = JSON.stringify(out, null, 1) + '\\n';\nif (OUT) fs.writeFileSync(OUT, text);\nconsole.log(JSON.stringify({ universe: U.length, excluded, members_before_clause_5: perClassPre, units_after_clause_5: perClassPost,\n  c1_adjudicated: members.length, c1_matched: matched.length, ideal: members.length * N_MATCHED,\n  full_draws: drawn.filter((d) => d.contributed).length, sha256: sha256(text), bytes: Buffer.byteLength(text) }, null, 1));\n"
+}
