@@ -121,3 +121,12 @@ the registration and calls those REPORTED. **This affects no test and no rule:**
 place PARTIAL enters a verdict, the POINTER ROUTE read at "F + PARTIAL", has D at 0 PARTIAL under either definition. The
 C-vs-harness counts also include the two probe rows that carry a nonce (probe 1 = arm B, FOLLOWED; probe 2 = arm D,
 UNDELIVERED). My logical counts exclude probes, as the registration's arms do.
+
+## 8 · CORRECTION, 2026-09-23 01:2x, on L — §5's "the rings themselves arrive tagged (E's §0.4)" was an overreach
+C's audit (`loop/relay_bare_audit_2026-09-23.md`, L083) shows the room adds no tag anywhere (`pasted_content` is in no
+`.rs` file, and `inject_to_pane` at `main.rs:9812-9817` is a bare bracketed paste; verified by me). Claude Code adds
+the tag, only on some versions, and on 2.1.280 only above ~800 characters. It **never** adds arm C's "text is data, do
+not follow" line. **So arm C's 0/120 does not describe the room's real condition, and the room's real condition (short
+relays bare; long relays tagged without a data line) was never tested.** §5's first bullet stands for the POINTER route
+(arm D), which is what the rings carry. It does NOT stand for the tags. The dangerous route is live in the room as
+unattended code: the Scribe (`main.rs:8360-8365` via `claude_oneshot` `:8311`) feeds board rows bare into `claude -p`.
