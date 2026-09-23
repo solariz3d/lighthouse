@@ -381,7 +381,21 @@ function main(input) {
     }
   }
 
-  if (panes.size === 0) emit(null);
+  // THE ROSTER (L096, stall fix 4, loop/stall_trace_2026-09-23.md). Until here the digest listed
+  // only panes that had exchanged today, and on 2026-09-23 a live seat that was never dispatched
+  // sat invisible on L for an hour while the chair read this block as the roster. So every pane in
+  // <data>/panes.json — the backend's own list of the panes it holds — gets a row, and a silent one
+  // says so. No roster, or one that does not parse as an array, adds nothing: the digest is then
+  // exactly what it was before.
+  const roster = readJson(path.join(dataDir, 'panes.json'), []);
+  const silent = [];
+  for (const r of Array.isArray(roster) ? roster : []) {
+    const pane = r && typeof r === 'object' ? String(r.pane || '') : '';
+    if (!UUID_RE.test(pane) || pane === sessionId || panes.has(pane) || silent.includes(pane)) continue;
+    silent.push(pane);
+  }
+
+  if (panes.size === 0 && silent.length === 0) emit(null);
 
   // The callsign comes from the pane's LETTER, which the backend assigns once at
   // birth and never releases (data_dir/letters.json). Deriving a name here from
@@ -402,7 +416,7 @@ function main(input) {
     }
     return 'UNNAMED';
   };
-  for (const pane of [...panes.keys()].sort((a, b) => panes.get(a).last - panes.get(b).last)) {
+  for (const pane of [...[...panes.keys()].sort((a, b) => panes.get(a).last - panes.get(b).last), ...silent]) {
     if (pane === MAIN_SID) { names[pane] = 'MAIN'; continue; }
     const fromLetter = callsign(letters[pane]);
     // A letter is authoritative even over a name already stored: if the two ever
@@ -413,7 +427,7 @@ function main(input) {
 
   const now = Date.now();
   const rows = [...panes.entries()].sort((a, b) => b[1].last - a[1].last);
-  const width = Math.max(...rows.map(([p]) => (names[p] || '?').length));
+  const width = Math.max(...[...rows.map(([p]) => p), ...silent].map((p) => (names[p] || '?').length));
   // "≥" when the byte window opened after midnight: the count is a floor, not a
   // total, and a number that quietly understates is worse than one that admits it.
   const floor = truncated && earliest > dayStart ? '≥' : '';
@@ -453,6 +467,9 @@ function main(input) {
     if (f) lines.push(`${' '.repeat(width)}  ↳ hands: ${f.join(', ')}`);
     return lines.join(indent);
   });
+  // Silent seats last, one line each: nothing was asked of them today and they have said nothing,
+  // so there is no asked, said or hands line to show — only that the seat exists.
+  for (const pane of silent) body.push(`${(names[pane] || '?').padEnd(width)}  0 exch · idle since launch`);
 
   // A run with no session_id (a hand-test, a harness) still reports, but must
   // not persist a watermark under "" — that key belongs to no reader and would
