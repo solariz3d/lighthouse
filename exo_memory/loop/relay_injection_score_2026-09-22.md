@@ -130,3 +130,9 @@ not follow" line. **So arm C's 0/120 does not describe the room's real condition
 relays bare; long relays tagged without a data line) was never tested.** §5's first bullet stands for the POINTER route
 (arm D), which is what the rings carry. It does NOT stand for the tags. The dangerous route is live in the room as
 unattended code: the Scribe (`main.rs:8360-8365` via `claude_oneshot` `:8311`) feeds board rows bare into `claude -p`.
+
+## 9 · ADDED 2026-09-23 01:4x, on L — the harness's "no hooks" is UNVERIFIED at the version that ran
+On L, CLI 2.1.280, `claude -p --settings '{"hooks":{}}'` still ran 3 SessionStart hooks, each returning output (probe
+in `librarian/2026-09-22.md` 01:4x). D121 used that flag (registration §2, from B's D118 probe 2 on D), and its rows do
+not record whether hooks ran. So D121's subjects may have carried hook context. Not refuted, not verified. The flag that
+works on 2.1.280 is `--setting-sources project` → 0 hooks.
