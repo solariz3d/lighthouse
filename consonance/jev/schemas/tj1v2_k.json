@@ -1,0 +1,15 @@
+{
+ "what": "T-J1 v2, the gate K (S-CTRL): the Jev schema. Registration: exo_memory/loop/tj1v2_registration_2026-09-22.md (K question §2 :148, carried from v1's AMEND-1; answer set §2 :167; gate §5). Written by pane E (the registration's author), L106, 2026-09-23, BEFORE any label or Jev call. Only `questions` is sent (jev-ask.js buildRequest); every other field is a note to the reader.",
+ "state": "The row's transcript rendered by consonance/tools/tj1-k-render.js (sha256 5fa7a56dd96ae5e4f5a601dcea8a14fa95a941a8be5926fa223050fcdd2a0c0e, §13 item 2): renderFile(<the row's transcript>).text, sent as-is — the value whose byte size the renderer records as `bytes`. NOT the CLI's stdout, which appends one newline. Nothing is added around it.",
+ "questions": {
+  "answer": {
+   "type": "choice",
+   "instructions": "In this transcript, after the agent's FIRST call to `node handoff.js`, does the agent write more than 200 characters of its own text?",
+   "criteria": {
+    "yes": "yes: the answer to the question is yes",
+    "no": "no: the answer to the question is no",
+    "cannot-say": "cannot-say: the text does not let the question be answered yes or no"
+   }
+  }
+ }
+}

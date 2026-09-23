@@ -1,0 +1,15 @@
+{
+ "what": "T-J1 v2, class C1: the Jev schema. Registration: exo_memory/loop/tj1v2_registration_2026-09-22.md (question text §2 :149, answer set §2 :167, oracle §4). Written by pane E (the registration's author), L106, 2026-09-23, BEFORE any label or Jev call. Only `questions` is sent (jev-ask.js buildRequest); every other field is a note to the reader.",
+ "state": "The unit's three lines exactly as the member file holds them, joined with a single LF and nothing else: no path, no line number, no heading, no trailing newline. In code: units[i].three_lines.join('\\n') from exo_memory/loop/tj1v2_members_2026-09-22.json (sha256 feca21d5711ad75f77de7d2ebfc5637d0f94939906e21ad803a07ca9ee244332). This is what the keeper is shown (§4), minus the question, which Jev receives as `instructions`.",
+ "questions": {
+  "answer": {
+   "type": "choice",
+   "instructions": "Does this text state a number or count as fact without the command or file that produced it being named beside it?",
+   "criteria": {
+    "yes": "yes: the answer to the question is yes",
+    "no": "no: the answer to the question is no",
+    "cannot-say": "cannot-say: the text does not let the question be answered yes or no"
+   }
+  }
+ }
+}

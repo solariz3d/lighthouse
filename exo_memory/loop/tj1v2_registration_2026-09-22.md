@@ -1017,3 +1017,26 @@ the machine is his call. They are kept, because removing them now would be a rul
 keeper's egress yes for S-CTRL in his own words (AMEND-10) — and now, by item 5, his word on the C1 units too.
 
 NEXT: librarian collate B's attack, then E amends, then chair lands D109 whole and opens 2.1 (measure js-suite and cargo on D) when the amendments are in
+
+**6 · THE SCHEMA (§8 owed item 3) — APPENDED 2026-09-23, L106, by pane E (this registration's author).** *Appended
+only; nothing above this line was edited. Written BEFORE any label and BEFORE any Jev call: no label file exists, no Jev
+or model call was made for it, and none has been made on any unit.*
+
+    consonance/jev/schemas/tj1v2_k.json    sha256 729427e6f1c20d678a6d0d99453945d7ade554c82730246aabfb2f136785f1c0 · git-blob ae8f596d… · 1,183 bytes
+    consonance/jev/schemas/tj1v2_c1.json   sha256 f413033067b27621270133c56304de8dbb2e5a010bee5c408e081b6f788342bf · git-blob 50f98b82… · 1,213 bytes
+
+**B's five gaps (item 3 above), each decided. These are POST-REGISTRATION CHOICES, made before any label or Jev call,
+and the reason for each is in `exo_memory/handback/p-l106-schema-E_2026-09-23.md` §1:**
+(a) **criteria:** `yes`, `no`, `cannot-say`, each glossed only as the answer to the question, with no content the
+question does not carry. The keeper answers with no glosses at all (§4), so any gloss that defines the question's
+terms would give Jev a different question from the oracle's. (b) **key:** `answer`, one question per file, so the
+question name carries no content. (c) **instructions:** the §2 question text, verbatim and with no frame, checked
+byte-identical against §2 `:148` and `:149`. (d) **two files**, K and C1, because they are asked about different units.
+(e) **the C1 state** is `three_lines.join('\n')` from the member file, with no path, line number or trailing newline:
+what the keeper sees, minus the question. The K state is the pinned renderer's `renderFile(...).text` (item 2), not
+its stdout, which adds one newline.
+**Checked through jev-ask's own code path, no network:** `validateSchema` accepts both files; `jev-ask.js --dry` builds
+the request with no key in the environment; and all **82 C1 and 130 K units** pass `ask({dry: true})` with 0 refusals
+and 0 `fetch` calls, against a `fetch` stubbed to throw. The S-CTRL manifest re-derives on L (`4d934c2a…`).
+**STILL OWED BEFORE ANY RUN:** the keeper's label file sha (§4), and his egress yes in his own words, for S-CTRL
+(AMEND-10) and for the C1 units (item 5).
