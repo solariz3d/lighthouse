@@ -137,3 +137,7 @@ lesson). Everything is live at the next rebuild, which the keeper calls.
 > absent from the prompt-hook pane digest only because it had not exchanged today; the digest is a copy, not the
 > roster. **So the T-J1 v2 member file is NOT blocked:** B, the registered extractor, is here. It is dispatched now,
 > and C re-derives the file byte for byte after (the ruling of 23:0x).
+
+> **03:5x — the stall fixes go to the FRONT of batch 2** (`loop/stall_trace_2026-09-23.md`, `a85a36b`), ahead of the
+> usage instrument and the update fuse: (1) QUEUED shown like UNDELIVERED in the pulse; (3) one heavy runner per tree;
+> (2) the no-foreground-heavy-runs rule; (4) the digest lists silent roster seats.
