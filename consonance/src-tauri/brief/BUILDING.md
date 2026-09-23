@@ -175,6 +175,21 @@ caught by that seat against itself.*
 citation handed to a pane lands somewhere that already has the tools to judge it. They own disjoint,
 named files. They never commit to a shared checkout.
 
+**NO SEAT BLOCKS ITS TURN ON A HEAVY RUN — and the chair ends its turn after each landing and each dispatch**
+(added 2026-09-23, on L, from `exo_memory/loop/stall_trace_2026-09-23.md`, fix 2). A ring reaches a seat only
+**between** its turns (`main.rs` `drain_decision`: behind `stamp=working` the hold is unbounded), so a long turn is a
+closed door. On 2026-09-23 the chair ran the whole js-suite in its foreground; the run raced a second suite run and a
+mutant harness on one tree, and it hung. Every ring, including a pane's dispatch, then waited 8–16 minutes. It happened
+twice in a row: the chair re-ran the suite one second after the first run was stopped. The keeper: *"why did this
+happen? … Every time something like this happens we need to trace the source."*
+- **Any command expected to take more than ~2 minutes runs in the background** (`run_in_background`), in every seat.
+- **The whole js-suite and full `cargo test` are the COLLATOR's** (the librarian's), run in the background before a
+  landing ring. **Heavy runs take `<data>/heavy-run.lock`** (`consonance/tools/heavy-run.js`, L098), so a second runner
+  waits and names the holder instead of racing.
+- **A pane hands back what it verified and does not hold its turn open waiting on the suite.** The collator runs it.
+- **The chair lands, or dispatches, and then ends its turn.** It never chains landing, suite, re-suite and dispatch in one
+  turn. The pulse's `QUEUED <seat> <n>m` line (L095) is the check: when it names the chair, this rule was broken.
+
 ---
 
 ## WHAT A DISPATCH OWES
