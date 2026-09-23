@@ -96,3 +96,16 @@ Line numbers are as of L105's working tree.
 
 **The order that fits:** 1 and 3 first (decisions), then 5 and 11 together, then 2, 4, 8, 9, 10. Items 7 and 13 are small
 enough to do in the split itself.
+
+## THE KEEPER'S DECISIONS — 2026-09-23 ~06:2x, on L (AskUserQuestion in the librarian's seat)
+The project is now ACTIVE: *"lets do the stand alone jev repo … research laps with the panes first before building the
+standalone … the standalone only exists for people who do not want to use consonance, but can also be used with it as
+well for every step."*
+- **What it judges outside Consonance (item 1):** **every Claude Code session on the machine, opt-out** (a per-project off
+  switch). Inside Consonance, it points at the seats.
+- **Who sees a flag (item 3):** **the session itself, at its next prompt** (a short note, for the model and the user).
+  Inside Consonance, it stays the chair and the librarian.
+- **The rubric (item 6):** **ship the room's METHOD.md as the default**; users may swap in their own file.
+- **The repo:** **a new public repo under solariz3d.** Consonance imports it once it passes the same tests.
+**Order:** research batch R1–R4 (dispatched 06:1x: cost/input, agreement ×3 runs, consistency on real traffic, the
+personal-turn over-flag), then the design, then the build.
