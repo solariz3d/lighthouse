@@ -181,6 +181,10 @@ if (!files.length) {
   process.exit(2);
 }
 
+// ONE HEAVY RUNNER PER TREE (L098, heavy-run.js): a full run waits for any other heavy run of this tree, and says whom it
+// waits on. A fixture run (JS_SUITE_ROOT, js-suite.test.js) is not a heavy run and does not take it. --list returned above.
+if (!process.env.JS_SUITE_ROOT) require('./heavy-run.js').hold({ cmd: 'js-suite' });
+
 const quiet = process.argv.includes('--quiet');
 const green = [], failed = [], crashed = [], silent = [], canary = [], canarySang = [];
 // The MACHINE-BOUND buckets. notRunFiles is the ONLY non-failing addition: classErr exists so that

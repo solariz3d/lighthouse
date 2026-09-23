@@ -85,6 +85,7 @@ function score(file, text, suiteOverride) {
 }
 
 function main() {
+  require('./heavy-run.js').hold({ cmd: 'union-at-launch.mutants' }); // ONE HEAVY RUNNER PER TREE (L098, heavy-run.js)
   const controls = {};
   for (const f of Object.keys(SUITES)) {
     const c = score(f, null);

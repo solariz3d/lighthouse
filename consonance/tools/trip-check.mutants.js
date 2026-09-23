@@ -59,6 +59,7 @@ function score(text) {
 }
 
 function main() {
+  require('./heavy-run.js').hold({ cmd: 'trip-check.mutants' }); // ONE HEAVY RUNNER PER TREE (L098, heavy-run.js)
   const src = fs.readFileSync(SRC, 'utf8');
   const c = score(null);
   console.log('control', JSON.stringify(c));

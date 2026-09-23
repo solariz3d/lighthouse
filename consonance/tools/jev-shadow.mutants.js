@@ -103,6 +103,7 @@ function score(target, text) {
 }
 
 function main() {
+  require('./heavy-run.js').hold({ cmd: 'jev-shadow.mutants' }); // ONE HEAVY RUNNER PER TREE (L098, heavy-run.js)
   const at = process.argv.indexOf('--only');
   const only = at > 0 ? Number(process.argv[at + 1]) : null;
   for (const t of Object.keys(TARGETS)) {

@@ -65,6 +65,8 @@ function parseOnly(argv) {
 }
 const onlyArg = parseOnly(process.argv.slice(2));
 if (onlyArg.error) { console.error(`close.mutants: ${onlyArg.error}`); process.exit(2); }
+// ONE HEAVY RUNNER PER TREE (L098, heavy-run.js): wait for any other heavy run of this tree, and say whom.
+require('./heavy-run.js').hold({ cmd: 'close.mutants' });
 
 // A LOCK LEFT BY A KILLED RUN IS THE EXPECTED CASE, not an anomaly: a kill runs no handler, so it never
 // unlocks. A live holder still refuses this run. A dead holder's lock is taken over — safe for one reason

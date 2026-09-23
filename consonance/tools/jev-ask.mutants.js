@@ -48,6 +48,7 @@ const MUTANTS = [
 ];
 
 function main() {
+  require('./heavy-run.js').hold({ cmd: 'jev-ask.mutants' }); // ONE HEAVY RUNNER PER TREE (L098, heavy-run.js)
   const onlyAt = process.argv.indexOf('--only');
   const only = onlyAt > 0 ? Number(process.argv[onlyAt + 1]) : null;
   const src = fs.readFileSync(SRC, 'utf8');

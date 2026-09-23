@@ -88,6 +88,9 @@ function main(argv) {
   const args = argv.slice(2);
   const cfgPath = args.find((a) => !a.startsWith('--') && args[args.indexOf(a) - 1] !== '--only');
   if (!cfgPath) { console.error('usage: node mutant-harness.js <rows.js> [--only <n>] [--audit]'); return 2; }
+  // ONE HEAVY RUNNER PER TREE (L098, heavy-run.js). --audit runs the gates only — no worktree, no build — and is not
+  // a heavy run; everything else builds and scores mutants and waits its turn.
+  if (!argv.includes('--audit')) require('./heavy-run.js').hold({ cmd: `mutant-harness ${path.basename(cfgPath)}` });
   const cfg = require(path.resolve(cfgPath));
   const only = args.includes('--only') ? Number(args[args.indexOf('--only') + 1]) : null;
   const live = path.join(cfg.repo, cfg.rel);

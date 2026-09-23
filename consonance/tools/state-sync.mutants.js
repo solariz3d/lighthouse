@@ -83,6 +83,8 @@ function parseOnly(argv) {
 }
 const onlyArg = parseOnly(process.argv.slice(2));
 if (onlyArg.error) { console.error(`state-sync.mutants: ${onlyArg.error}`); process.exit(2); }
+// ONE HEAVY RUNNER PER TREE (L098, heavy-run.js): wait for any other heavy run of this tree, and say whom.
+require('./heavy-run.js').hold({ cmd: 'state-sync.mutants' });
 
 try {
   fs.writeFileSync(LOCK, `${process.pid} ${new Date().toISOString()}\n`, { flag: 'wx' });
