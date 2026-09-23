@@ -71,3 +71,28 @@ description (item 6).** His words with it: *"You dont have to ask me, believe in
 run: *"this will also work without me till its all done, you did a good job while I slept and proven it can work."*
 So D123–D125 run to completion, each with its backup and its verification. Still his, and the loop waits for them:
 **7** (the app restart) and **8** (his labelling sitting). Everything else on the forbidden list stands.
+
+## RESUMED ON L — 2026-09-23 01:1x, the keeper: "lets get back on track with the working we were doing with consonance on the desktop"
+The run stopped after D122 at 23:00 (D122 filed: A's watch-list complete, C's pilot PARTIAL). On L the order is
+re-cut by machine, from two measurements taken here:
+- **Item 1 (board compaction) MOVES TO D.** `node consonance/tools/board-compact.js` (dry run) on L: 36,860 rows,
+  **0 repeats**. All 7,514 are in D's copy. Run it on D **before D's next publish**, so L's union meets a board with
+  no duplicates rather than a board that holds rows twice that L holds once.
+- **D's publish never landed** (state repo on L = 9486b30; `librarian/2026-09-22.md` 2026-09-23 01:0x), so L's ledgers
+  lack D108–D122. The next `lap-row --open` on L meets the two-cause floor guard, and cause (b) is expected. Let it
+  mint; do not hand-edit `lap.jsonl`.
+
+**The order on L:**
+1. **Item 4 + the D121 follow-up, one lap.** (a) The repaired ASK-008 wording in `dev/shell/hooks/l2-overseer-worker.js:49`,
+   plus the two "light, not lifeguard" lines in `session-start.js`. The retracted text is kept as a dated comment;
+   check the carrier-drift registry rows; the install brings it to `~/.claude` on L. (b) The audit D121 §5 asked for:
+   every place that pastes another seat's text into a prompt BARE (start at `chair_inject`, then any script that builds
+   a prompt from file contents). Report first and change nothing; the fix is its own lap.
+2. **Item 3 + item 2, one lap.** Register `consonance/hooks/jev-flags.js` in L's `~/.claude/settings.json` (backup first,
+   `install.ps1 -Check` green); D gets the same on its next day. "Solid" becomes a one-read sheet for the keeper.
+3. **Item 5 + item 6, one lap.** CH-4, ASK-002 and ASK-007 as one-read sheets. The repo description: draft, then publish
+   (authorized). `AGENTS.md`: **the untracked 504-byte file from 09-08 already on L is the base; read it, never
+   overwrite it blind.**
+4. **Item 8's blocker (C's D122 stop):** B extracts the T-J1 v2 member file as registered; C re-derives it byte for
+   byte; the schema is written by its owner; then the pilot sheet and key. The keeper's egress yes stays his.
+**Item 7** waits for D's next close to actually publish.
