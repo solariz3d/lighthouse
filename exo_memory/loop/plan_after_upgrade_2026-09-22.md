@@ -141,3 +141,11 @@ lesson). Everything is live at the next rebuild, which the keeper calls.
 > **03:5x — the stall fixes go to the FRONT of batch 2** (`loop/stall_trace_2026-09-23.md`, `a85a36b`), ahead of the
 > usage instrument and the update fuse: (1) QUEUED shown like UNDELIVERED in the pulse; (3) one heavy runner per tree;
 > (2) the no-foreground-heavy-runs rule; (4) the digest lists silent roster seats.
+
+> **04:2x — added to batch 3, from the Third Place's question** ("do the panes' cadences currently sync?", its turn at
+> 04:11): keep-warm pings a seat at ≥ 50 min idle from ITS OWN last request start (`main.rs:10770-10771`,
+> `keep_warm_decision` :10893). **Seats whose last requests started together cross 50 min together**, as A and E did at
+> 01:07 tonight, so the re-writes burst at once (rate-limit exposure). Fix: a fixed per-seat offset on the threshold,
+> derived from the seat id (e.g. 50 min + (hash mod 7) min), so seats never share a crossing. **Check:** count the
+> keep-warm pings in the same minute across seats, before and after. The other clocks (the librarian's check-in at
+> :00/:25/:50, Jev's 10-min runner) share no ratio. Tonight's collisions were heavy runs, not cadence (stall trace).
