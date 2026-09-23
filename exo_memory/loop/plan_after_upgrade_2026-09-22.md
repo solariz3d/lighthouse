@@ -96,3 +96,38 @@ re-cut by machine, from two measurements taken here:
 4. **Item 8's blocker (C's D122 stop):** B extracts the T-J1 v2 member file as registered; C re-derives it byte for
    byte; the schema is written by its owner; then the pilot sheet and key. The keeper's egress yes stays his.
 **Item 7** waits for D's next close to actually publish.
+
+## THE HAM QUEUE — 2026-09-23 03:2x, on L. The keeper: "we have a full week of usage that resets friday, we need to go HAM"
+Panes on L: **A, C, E** (no B here). Laps run **side by side on disjoint files**, which the keeper's word authorizes
+over the one-lap default. The librarian still rings **once per batch, when every pane in it is back**, and every
+collation carries `OUTPUT → NEXT`. Every landing runs the whole `node consonance/tools/js-suite.js` (the day-old red
+lesson). Everything is live at the next rebuild, which the keeper calls.
+
+**Batch 1 (after L089 lands):**
+- **E:** item 5. One-read sheets for CH-4, ASK-002 and ASK-007 (`exo_memory/ASK.md`), each with its prior art and one
+  question.
+- **C:** "solid", owed by the keeper's 02:5x choice. `state-sync.js` leaves a trip row on EVERY launch (it no longer
+  overwrites), and `trip-check.js:184` takes the reading he chose ("no bad trip in seven days").
+- **A:** item 6. `AGENTS.md` from the 09-08 base on L (read it first), and the repo description drafted and then
+  PUBLISHED (authorized) via `gh repo edit`, stating what Consonance does now.
+
+**Batch 2:**
+- **Usage instrument, "solid" criterion 3.** Read token use per seat per day from the local transcripts (`message.usage`,
+  `modelUsage`). The weekly limit is typed in by the keeper; do not guess it. One lap.
+- **T-J1 v2 member file (item 8's blocker):** extracted by a non-author as registered. With no B on L, E is ineligible
+  (author), and A and C are ineligible as Jev builders, **so it waits for B on D**. That is named here so no seat
+  "helps" around the rule.
+- **The update fuse** (`loop/claude_update_fuse_idea_2026-09-23.md`): `claude update` once at launch before any seat, the
+  CLI's own auto-update off (the key verified against the docs first), and a version recorded per seat in the launch
+  receipt.
+
+**Batch 3:**
+- **Jev standalone, step 1** (`loop/jev_standalone_repo_idea_2026-09-23.md`): every Jev file finds the repo and the seat
+  ids through config, as A's L089 fix does for jev-flags (`jev-judge.js:112-122` next), each with an installed-copy
+  test.
+- **Small carriers:** a dated note on `absent_hooks_ruling_2026-08-25.md` rows 3 and 9 (the installer manages them
+  now), and the miscitation at `union_at_launch_2026-09-22.md:271` (E's L089 §4).
+- **The composition question, re-scoped** (`loop/composition_instrument_2026-09-22.md` §5): a fresh hand pass with the
+  scope inside the question.
+
+**Waiting on the keeper, not the queue:** the rebuild, D's publish, and item 8's sitting and egress yes.
