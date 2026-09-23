@@ -55,6 +55,132 @@ function Notify($message, $title, $seconds, $colour) {
   try { (New-Object -ComObject WScript.Shell).Popup($message, $seconds, "Consonance - $title", 48) | Out-Null } catch { }
 }
 
+# --- THE UPDATE FUSE (L101, pane B, 2026-09-23) -----------------------------------------------
+# The keeper's idea (loop/claude_update_fuse_idea_2026-09-23.md): run `claude update` ONCE, here, before the app
+# starts any seat, so every seat of a launch wakes on one Claude Code version. Measured before this: nothing in
+# Consonance touched updates, the CLI updated itself on its own schedule, and on 2026-09-23 the room held 2.1.280 and
+# 2.1.278 at once. The docs say why that happens: "Claude Code checks for updates on startup and periodically while
+# running ... then take effect the next time you start Claude Code" (code.claude.com/docs/en/setup).
+#
+# FAIL SAFE, which is the whole contract: this runs on every launch, so a fuse that throws, exits or hangs is an app
+# that will not open. Every path returns; nothing here calls `exit`; the update is bounded and its process tree is
+# killed at the bound; any failure is written to the receipt and launch continues on the version already installed.
+#
+# THE BOUND, 120 s, argued: a Claude Code version is ~237 MB (versions\2.1.280 is 237,100,192 bytes on L), which a
+# 16 Mbit/s line downloads in about two minutes. When there is nothing new, `claude update` is only a version check and
+# returns in seconds, so the bound is paid only on a launch that is actually downloading, on a slow line. A killed
+# download is retried at the next launch; the installed version is untouched either way.
+#
+# WHEN IT DOES NOT RUN: Consonance already running (seats are live, and a restarted seat would pick up the new binary -
+# the very mixed room this exists to prevent), no claude.exe at the path main.rs:918 launches, or
+# CONSONANCE_UPDATE_FUSE=off (a metered or offline machine). Each of those is written to the receipt as `skipped`.
+#
+# NOT COVERED, named: four paths start the app without this script - consonance\restore-main.ps1:153,
+# dev\ARRIVING.ps1:132, dev\TAKE-STICK.ps1:70, and stick-apply.js relaunched by main.rs:12549. The one place every path
+# passes through is the app's setup hook beside sync_at_launch() (main.rs:13253); that is the fuse's proper home once
+# it can be built and cargo-tested there (handback/p-l101-fuse-B_2026-09-23.md §2).
+function Test-ConsonanceRunning { [bool](Get-Process -Name 'consonance' -ErrorAction SilentlyContinue) }
+function Get-ClaudeProcessCount { @(Get-Process -Name 'claude' -ErrorAction SilentlyContinue).Count }
+
+# Run a command with a bound. Never throws. On the bound, the WHOLE tree is killed (`claude update` may have children).
+function Invoke-Bounded([string]$file, [string[]]$argv, [int]$timeoutSec) {
+  $r = @{ code = $null; out = ''; timedOut = $false; ms = 0; error = $null }
+  $sw = [System.Diagnostics.Stopwatch]::StartNew()
+  try {
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = $file
+    $psi.Arguments = (($argv | ForEach-Object { if ($_ -match '[\s"]') { '"' + ($_ -replace '"', '\"') + '"' } else { $_ } }) -join ' ')
+    $psi.UseShellExecute = $false
+    $psi.CreateNoWindow = $true
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+    $p = [System.Diagnostics.Process]::Start($psi)
+    $o = $p.StandardOutput.ReadToEndAsync(); $e = $p.StandardError.ReadToEndAsync()
+    if ($p.WaitForExit($timeoutSec * 1000)) {
+      $p.WaitForExit()
+      $r.code = $p.ExitCode
+      $r.out = ("$($o.Result)" + "$($e.Result)").Trim()
+    } else {
+      $r.timedOut = $true
+      & taskkill.exe /PID $p.Id /T /F 2>&1 | Out-Null
+    }
+  } catch { $r.error = $_.Exception.Message }
+  $r.ms = [int]$sw.ElapsedMilliseconds
+  $r
+}
+
+function Get-ClaudeVersion([string]$claude) {
+  $v = Invoke-Bounded $claude @('--version') 15
+  if ($v.code -eq 0 -and $v.out -match '(\d+\.\d+\.\d+)') { return $Matches[1] }
+  $null
+}
+
+# Where the receipt goes: %LOCALAPPDATA%\consonance\claude-update.json, NOT the data dir. A new file in the data dir that
+# consonance/state-manifest.json has no row for makes `close.js --check` REFUSE (REFUSED_UNPLACED, L066 - jev-ask.js:28
+# says the same of its own store), so a receipt there would have turned the keeper's next close into a refusal. The
+# version is machine-local anyway: each machine has its own claude.exe. The jev-shadow store lives beside it for the
+# same reason. (This was first written to the data dir and moved before landing; handback §5.)
+function Get-FuseReceiptDir {
+  $dir = Join-Path $env:LOCALAPPDATA 'consonance'
+  try { if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null } } catch { }
+  $dir
+}
+
+function Invoke-ClaudeUpdateFuse {
+  param(
+    [string]$Claude = (Join-Path $env:USERPROFILE '.local\bin\claude.exe'),
+    [int]$TimeoutSec = 120,
+    [string]$ReceiptDir = (Get-FuseReceiptDir)
+  )
+  $r = [ordered]@{
+    fuse = 'claude update, once per launch, before any seat starts (launch.ps1)'
+    at = (Get-Date).ToUniversalTime().ToString('o'); machine = $env:COMPUTERNAME
+    claude = $Claude; timeout_s = $TimeoutSec
+    outcome = $null; version_before = $null; version_after = $null
+    exit_code = $null; ms = $null; claude_processes_running = $null; output_tail = $null; why = $null
+  }
+  try {
+    if ($env:CONSONANCE_UPDATE_FUSE -eq 'off') {
+      $r.outcome = 'skipped'; $r.why = 'CONSONANCE_UPDATE_FUSE=off'
+    } elseif (Test-ConsonanceRunning) {
+      $r.outcome = 'skipped'; $r.why = 'Consonance is already running: its seats are live, so updating now would split the room across versions'
+    } elseif (-not (Test-Path -LiteralPath $Claude)) {
+      $r.outcome = 'skipped'; $r.why = "no claude.exe at $Claude"
+    } else {
+      $r.claude_processes_running = Get-ClaudeProcessCount
+      $r.version_before = Get-ClaudeVersion $Claude
+      $u = Invoke-Bounded $Claude @('update') $TimeoutSec
+      $r.exit_code = $u.code; $r.ms = $u.ms
+      if ($u.out) { $r.output_tail = if ($u.out.Length -gt 300) { $u.out.Substring($u.out.Length - 300) } else { $u.out } }
+      if ($u.timedOut) {
+        $r.outcome = 'timeout'; $r.why = "claude update did not finish within $TimeoutSec s and was stopped; launching on the installed version"
+      } elseif ($u.error) {
+        $r.outcome = 'failed'; $r.why = "claude update could not be started: $($u.error)"
+      } elseif ($u.code -ne 0) {
+        $r.outcome = 'failed'; $r.why = "claude update exited $($u.code); launching on the installed version"
+      } else {
+        $r.outcome = if ($u.out -match 'Successfully updated') { 'updated' } elseif ($u.out -match 'up to date') { 'current' } else { 'finished' }
+      }
+      $r.version_after = Get-ClaudeVersion $Claude
+      if ($r.outcome -eq 'finished') { $r.outcome = if ($r.version_before -and $r.version_after -and $r.version_before -ne $r.version_after) { 'updated' } else { 'current' } }
+    }
+  } catch {
+    $r.outcome = 'failed'; $r.why = "the fuse itself threw: $($_.Exception.Message)"
+  }
+  try {
+    if ($ReceiptDir -and (Test-Path -LiteralPath $ReceiptDir)) {
+      $json = ConvertTo-Json -InputObject $r -Depth 3
+      [System.IO.File]::WriteAllText((Join-Path $ReceiptDir 'claude-update.json'), $json + "`n", (New-Object System.Text.UTF8Encoding $false))
+    }
+  } catch { }
+  if ($r.outcome -eq 'failed' -or $r.outcome -eq 'timeout') {
+    try { Notify "Claude Code was not updated at launch ($($r.outcome)).`n`n$($r.why)`n`nConsonance is starting on the version already installed ($($r.version_before))." 'update skipped' 6 'Yellow' } catch { }
+  }
+  $r
+}
+$script:fuseRan = $false
+function Invoke-FuseOnce { if (-not $script:fuseRan) { $script:fuseRan = $true; try { Invoke-ClaudeUpdateFuse | Out-Null } catch { } } }
+
 # --- ONE LAUNCHER AT A TIME -------------------------------------------------------------------
 # The second half of the same incident: nothing stopped several copies of this script running
 # concurrently, each racing to build and start the app. A named mutex makes a second click a
@@ -467,6 +593,7 @@ $exeTime   = if ($exeExists) { (Get-Item $exe).LastWriteTime } else { [datetime]
 
 if ($exeExists -and $exeTime -ge $newestSrc) {
   # Up to date - open immediately, no compile, no build screen.
+  Invoke-FuseOnce   # L101: before any seat starts; bounded, never blocks the launch past its timeout
   Start-Process $exe
   exit 0
 }
@@ -568,6 +695,7 @@ function Resume-InterruptedDream {
   } catch { }   # a dream must never be able to break a launch, in either direction
 }
 Resume-InterruptedDream
+Invoke-FuseOnce   # L101: the post-build launch path, same fuse, same bound
 
 $app = $null
 try {
