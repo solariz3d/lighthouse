@@ -64,3 +64,10 @@ The loop stops when D125 is filed, or when the only next item is the keeper's. I
 needed to move it between two loop items, if a landed change turns a green test red and is not repaired in the same
 lap, or if any act above runs without his authorization. The check-in: a 25-minute wake of this seat that restarts
 a quiet chain and does nothing else.
+
+## AUTHORIZED BY NAME — the keeper, 18:4x, asked once, all four ticked
+**Board compaction (item 1) · edit his hook files (item 4) · the settings edit for Jev flags (item 3) · publish the repo
+description (item 6).** His words with it: *"You dont have to ask me, believe in yourself! I trust you"*, and on the
+run: *"this will also work without me till its all done, you did a good job while I slept and proven it can work."*
+So D123–D125 run to completion, each with its backup and its verification. Still his, and the loop waits for them:
+**7** (the app restart) and **8** (his labelling sitting). Everything else on the forbidden list stands.
