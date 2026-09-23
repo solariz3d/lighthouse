@@ -115,6 +115,29 @@ const textOf = (content, withImages) => {
 };
 const isToolResult = (m) => Array.isArray(m && m.content) && m.content.some((b) => b && b.type === 'tool_result');
 
+/**
+ * THE TURN'S WINDOW of a transcript, never the whole file. L113's first plan ran out of memory: 26 units share the
+ * librarian's ~80 MB transcript and 7 share Main's ~300 MB, and every unit held its own copy. So: find the turn's own
+ * row by its `"uuid":"<id>"` key (a later row's `"parentUuid"` cannot match: its key is `Uuid"`, not `"uuid"`), keep up
+ * to the end of that line, and look back 2 MB, growing to 8 MB if the window has no opening prompt. The partial first
+ * line is dropped. Null when the row is not in the file.
+ */
+function turnWindow(file, turnUuid, sizes = [2 << 20, 8 << 20]) {
+  const buf = fs.readFileSync(file);
+  const at = buf.indexOf(Buffer.from(`"uuid":"${turnUuid}"`));
+  if (at < 0) return null;
+  let end = buf.indexOf(0x0a, at);
+  if (end < 0) end = buf.length;
+  let text = null;
+  for (const size of sizes) {
+    const start = Math.max(0, at - size);
+    text = buf.slice(start, end).toString('utf8');
+    if (start > 0) text = text.slice(text.indexOf('\n') + 1);
+    if (fullTurnView(text, turnUuid)) return text;
+  }
+  return text;
+}
+
 /** V3's view: the turn that ended at `turnUuid`, whole. Null when the turn cannot be found. */
 function fullTurnView(transcriptText, turnUuid) {
   const rows = transcriptText.split('\n').filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
@@ -248,6 +271,9 @@ async function runOne(unit, variant, ctx, deps) {
   const v = buildVariant(variant, unit, ctx);
   if (v.notBuildable) return { ...base, status: 'not-buildable', why: v.notBuildable };
   const row = { ...base, changed: v.changed, route: v.route, state_sha256: sha(v.state) };
+  // A route the gateway REFUSED for this account (HTTP 403) is not asked again this run: a tier refusal does not clear
+  // mid-run, and every further attempt would send a unit's text only to be refused (L113: V4 on the free tier).
+  if (deps.blocked && deps.blocked.has(v.route)) return { ...row, status: 'blocked-not-sent', why: `route ${v.route} refused earlier in this run (HTTP 403)`, attempts: 0 };
   const call = v.route === 'chat' ? askV4 : askJev;
   let attempts = 0;
   for (;;) {
@@ -264,15 +290,38 @@ async function runOne(unit, variant, ctx, deps) {
       if (isHarnessError(e) && attempts <= MAX_RETRIES) { await (deps.sleep || ((ms) => new Promise((res) => setTimeout(res, ms))))(2000 * attempts); continue; }
       // The status only: a gateway error body is not ours and can quote the input, so no message text enters a row.
       const st = /HTTP (\d{3})/.exec(String(e.message));
+      if (st && st[1] === '403' && deps.blocked) deps.blocked.add(v.route);
       return { ...row, status: 'harness-error', why: st ? `HTTP ${st[1]}` : 'network or timeout', attempts };
     }
   }
 }
 
 /** The units: current-builder captures, smallest sha256(prompt) first, each with its baseline proof. */
-function loadUnits({ store, repo, n, projectsDir, builders = loadBuilders(repo) }) {
+function loadUnits({ store, repo, n, projectsDir, shas = null, builders = loadBuilders(repo) }) {
   const io = loadJudgeInputs(repo);
   const dir = path.join(store, CAPTURES);
+  if (shas) {
+    // A GIVEN unit set (L113: A's sealed 56), matched by sha256(prompt) over EVERY capture, whatever its stamp, in the
+    // given order. A unit with no transcript here still runs V0–V2 and V4; V3 reports not-buildable. A sha with no
+    // capture is reported as missing, never silently dropped.
+    const bySha = new Map();
+    for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.json'))) {
+      const c = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+      if (c.l2 && c.l2.prompt) bySha.set(sha(c.l2.prompt), c);
+    }
+    const units = [];
+    const missing = [];
+    for (const s of shas) {
+      const c = bySha.get(s);
+      if (!c) { missing.push(s); continue; }
+      const t = transcriptFor(projectsDir, c.session_id);
+      const b = resolveBuilder(c.l2.prompt, builders);
+      const r = b ? rebuild(c.l2.prompt, b.build) : { parts: null, ok: false, rebuilt_sha256: null };
+      units.push({ unit: s, prompt: c.l2.prompt, turn_uuid: c.turn_uuid, parts: r.parts, baseline_ok: r.ok, rebuilt_sha256: r.rebuilt_sha256,
+        builder_rev: b ? b.rev : null, build: b ? b.build : null, transcriptText: t ? turnWindow(t.file, c.turn_uuid) : null });
+    }
+    return { units, io, eligible: bySha.size, missing };
+  }
   // Units come from captures STAMPED with the current sources — the stamp is still the selection rule the packet names —
   // but each unit's builder is then found by reproduction (loadBuilders), because the stamp was measured to lie.
   const caps = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')))
@@ -286,7 +335,7 @@ function loadUnits({ store, repo, n, projectsDir, builders = loadBuilders(repo) 
     const b = resolveBuilder(c.l2.prompt, builders);
     const r = b ? rebuild(c.l2.prompt, b.build) : { parts: null, ok: false, rebuilt_sha256: null };
     units.push({ unit, prompt: c.l2.prompt, turn_uuid: c.turn_uuid, parts: r.parts, baseline_ok: r.ok, rebuilt_sha256: r.rebuilt_sha256,
-      builder_rev: b ? b.rev : null, build: b ? b.build : null, transcriptText: fs.readFileSync(t.file, 'utf8') });
+      builder_rev: b ? b.rev : null, build: b ? b.build : null, transcriptText: turnWindow(t.file, c.turn_uuid) });
   }
   return { units, io, eligible: caps.length };
 }
@@ -294,35 +343,53 @@ function loadUnits({ store, repo, n, projectsDir, builders = loadBuilders(repo) 
 async function main(argv = process.argv.slice(2), env = process.env) {
   const arg = (k) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : null; };
   const mode = argv.includes('--run') ? 'run' : argv.includes('--plan') ? 'plan' : null;
-  if (!mode) throw new Refusal('usage: --plan|--run --units <n> [--variants V0,…] [--out rows.jsonl] [--store dir]');
-  const n = Number(arg('--units'));
-  if (!Number.isInteger(n) || n < 1 || n > 50) throw new Refusal('--units must be a whole number from 1 to 50');
+  if (!mode) throw new Refusal('usage: --plan|--run (--units <n> | --unit-shas <file>) [--variants V0,…] [--out rows.jsonl] [--store dir]');
+  const shaFile = arg('--unit-shas');
+  let shas = null;
+  if (shaFile) {
+    shas = fs.readFileSync(shaFile, 'utf8').split(/\s+/).filter(Boolean);
+    if (!shas.length || !shas.every((s) => /^[0-9a-f]{64}$/.test(s))) throw new Refusal('--unit-shas must list sha256(prompt) values, 64 hex characters each');
+    if (new Set(shas).size !== shas.length) throw new Refusal('--unit-shas lists a unit twice');
+  }
+  const n = shas ? shas.length : Number(arg('--units'));
+  if (!shas && (!Number.isInteger(n) || n < 1 || n > 50)) throw new Refusal('--units must be a whole number from 1 to 50');
   const variants = (arg('--variants') || VARIANTS.join(',')).split(',');
   for (const v of variants) if (!VARIANTS.includes(v)) throw new Refusal(`unknown variant ${v}`);
   if (!variants.includes('V0')) throw new Refusal('V0 (the baseline) is required: every variant is read against it');
   const home = env.USERPROFILE || os.homedir();
   const store = arg('--store') || path.join(env.LOCALAPPDATA || path.join(home, 'AppData', 'Local'), 'consonance', 'jev-shadow');
   const repo = path.resolve(__dirname, '..', '..');
-  const { units, eligible } = loadUnits({ store, repo, n, projectsDir: path.join(home, '.claude', 'projects') });
+  const { units, eligible, missing = [] } = loadUnits({ store, repo, n, shas, projectsDir: path.join(home, '.claude', 'projects') });
   const ctx = { build: loadJudgeInputs(repo).l2build, runId: `r3-${Date.now().toString(36)}` };
   const plan = units.map((u) => ({ unit: u.unit, builder_rev: u.builder_rev, baseline_reproduces: u.baseline_ok, stored_sha256: u.unit, rebuilt_sha256: u.rebuilt_sha256,
     variants: !u.parts ? [] : variants.map((v) => { const b = buildVariant(v, u, ctx); return b.notBuildable ? { v, notBuildable: b.notBuildable } : { v, changed: b.changed, route: b.route, state_sha256: sha(b.state) }; }) }));
-  const calls = plan.reduce((k, p) => k + p.variants.filter((x) => !x.notBuildable).length, 0);
-  process.stdout.write(JSON.stringify({ mode, eligible_captures: eligible, units: plan.length, calls, plan }, null, 1) + '\n');
+  // EXCLUDED BY RULE, not by eye: a unit whose baseline does not reproduce its stored prompt byte for byte is asked
+  // nothing. It gets one row saying so, and the run goes on.
+  const excluded = plan.filter((p) => !p.baseline_reproduces).map((p) => p.unit);
+  const calls = plan.filter((p) => p.baseline_reproduces).reduce((k, p) => k + p.variants.filter((x) => !x.notBuildable).length, 0);
+  process.stdout.write(JSON.stringify({ mode, eligible_captures: eligible, units: plan.length, missing, excluded, calls, plan }, null, 1) + '\n');
   if (mode === 'plan') return 0;
-  if (plan.some((p) => !p.baseline_reproduces)) throw new Refusal('a baseline did not reproduce its stored prompt — nothing is asked');
   const out = arg('--out');
   if (!out) throw new Refusal('--run needs --out <rows.jsonl>');
-  const deps = { env, fetchImpl: globalThis.fetch, pacer: jev.createPacer() };
-  for (const u of units) for (const v of variants) {
-    const row = await runOne(u, v, ctx, deps);
-    fs.appendFileSync(out, JSON.stringify(row) + '\n');
-    process.stderr.write(`${row.unit.slice(0, 12)} ${v} ${row.status} ${row.verdict || ''}\n`);
+  if (fs.existsSync(out)) throw new Refusal(`${out} already exists — a run never appends to another run's rows`);
+  const deps = { env, fetchImpl: globalThis.fetch, pacer: jev.createPacer(), blocked: new Set() };
+  for (const s of missing) fs.appendFileSync(out, JSON.stringify({ run_id: ctx.runId, ts: new Date().toISOString(), unit: s, variant: 'ALL', status: 'missing-capture' }) + '\n');
+  for (const u of units) {
+    if (!u.baseline_ok) {
+      fs.appendFileSync(out, JSON.stringify({ run_id: ctx.runId, ts: new Date().toISOString(), unit: u.unit, variant: 'ALL', status: 'excluded-no-reproduction' }) + '\n');
+      continue;
+    }
+    for (const v of variants) {
+      const row = await runOne(u, v, ctx, deps);
+      fs.appendFileSync(out, JSON.stringify(row) + '\n');
+      // STATUS ONLY on the console: this pane's text reaches other seats' digests, and readers may be reading blind.
+      process.stderr.write(`${row.unit.slice(0, 12)} ${v} ${row.status}\n`);
+    }
   }
   return 0;
 }
 
-module.exports = { splitPrompt, rebuild, loadBuilders, resolveBuilder, fullTurnView, buildVariant, v4Question, parseOneWord, isHarnessError, runOne, loadUnits,
+module.exports = { turnWindow, splitPrompt, rebuild, loadBuilders, resolveBuilder, fullTurnView, buildVariant, v4Question, parseOneWord, isHarnessError, runOne, loadUnits,
   NEUTRAL_DISCIPLINE, VARIANTS, V4_MODEL };
 
 if (require.main === module) {

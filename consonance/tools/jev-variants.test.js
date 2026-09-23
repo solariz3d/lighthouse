@@ -231,3 +231,40 @@ test('V3 on a one-block turn changes NOTHING and is labelled so, never as a view
   const b = V.buildVariant('V3', { ...unit(), transcriptText: t }, ctx);
   assert.deepStrictEqual([b.state === PROMPT, b.changed], [true, 'none (the full turn is the narrowed view)']);
 });
+
+// ── L113: a route the gateway refuses (403) is not asked again in the same run ─────────────────────────────────────
+test('A 403 BLOCKS THE ROUTE: the first V4 is refused once, every later V4 is not sent at all', async () => {
+  const f = stub([[403, 'free tier']]);
+  const d = { ...deps(f), blocked: new Set() };
+  const first = await V.runOne(unit(), 'V4', ctx, d);
+  const second = await V.runOne(unit(), 'V4', ctx, d);
+  assert.deepStrictEqual([first.status, first.why, second.status, second.attempts, f.calls()], ['harness-error', 'HTTP 403', 'blocked-not-sent', 0, 1]);
+});
+
+test('A 403 on one route does not block the other: Jev is still asked', async () => {
+  const d = { ...deps(stub([[403, 'no']])), blocked: new Set() };
+  await V.runOne(unit(), 'V4', ctx, d);
+  const f = stub([[200, jevBody('clean')]]);
+  const row = await V.runOne(unit(), 'V0', ctx, { ...d, fetchImpl: f });
+  assert.deepStrictEqual([row.status, f.calls()], ['ok', 1]);
+});
+
+// ── L113: the turn's window, not the whole transcript (the first 56-unit plan ran out of memory) ─────────────────────
+test('TURN WINDOW: a small window still yields the same full turn, and a parentUuid never matches as the row', () => {
+  const fs = require('fs'), os = require('os');
+  const padding = Array.from({ length: 400 }, (_, i) => JSON.stringify({ uuid: `pad${i}`, message: { role: 'assistant', content: [{ type: 'text', text: 'x'.repeat(200) }] } })).join('\n');
+  const tail = transcript().trimEnd().split('\n').map((l) => { const o = JSON.parse(l); if (o.uuid === 'after') o.parentUuid = 'end'; return JSON.stringify(o); }).join('\n');
+  const f = require('path').join(fs.mkdtempSync(require('path').join(os.tmpdir(), 'jv-win-')), 't.jsonl');
+  fs.writeFileSync(f, padding + '\n' + tail + '\n');
+  const w = V.turnWindow(f, 'end', [3000, 1 << 20]);
+  // BYTES against bytes: the fixture's em dashes make a string's length smaller than its file size, so a whole-file
+  // "window" passed a character-count check (L113's surviving mutant).
+  assert.deepStrictEqual([Buffer.byteLength(w, 'utf8') < fs.statSync(f).size / 2, V.fullTurnView(w, 'end')], [true, V.fullTurnView(transcript(), 'end')]);
+});
+
+test('TURN WINDOW of a uuid that is not in the file is null', () => {
+  const fs = require('fs'), os = require('os'), p = require('path');
+  const f = p.join(fs.mkdtempSync(p.join(os.tmpdir(), 'jv-win-')), 't.jsonl');
+  fs.writeFileSync(f, transcript());
+  assert.strictEqual(V.turnWindow(f, 'nope'), null);
+});
