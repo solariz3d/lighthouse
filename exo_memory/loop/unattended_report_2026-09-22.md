@@ -70,3 +70,9 @@ description · `AGENTS.md`.
 **And the thing the run cannot tell you:** what it cost. The "solid" registration found there is **no instrument
 anywhere** for measuring usage against the weekly limit — 0 hits across `consonance/` and `dev/` — so six hours of
 five seats is unmeasured. That is the first thing to build before a run like this is repeated.
+
+> **AMENDED 18:3x, same day, by the librarian — §2 item 2 does not replicate.** Three model-pinned re-runs of B's
+> D118 outside reader on the identical 35 prompts (Opus 5 ×1, Opus 5.5 ×2) call 9–11 drift where D118 called 3,
+> agree with the room's readers at κ 0.06–0.21 (not 0.729), and agree with themselves at only κ 0.61. The κ 0.729 is
+> WITHDRAWN as a stable finding; "the room's prior is leniency" is STRENGTHENED. Evidence and scoring:
+> `librarian/2026-09-22.md` 18:3x. The item above keeps its wording so the correction shows.
