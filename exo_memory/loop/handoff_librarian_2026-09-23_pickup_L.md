@@ -27,3 +27,11 @@
    pacing (a 429 fails the turn), and no rotation for `jev.log`.
 5. Then the ring: `OUTPUT → NEXT: changed|unchanged — why`, landing all batch-1 paths by name, and batch 2 as designed
    (install.js B, jev-report C, README E, Consonance consumer A), plus the item-4 fix.
+
+## 08:01 — STOPPED. This supersedes the list above.
+- Batch 1 is COLLATED and LANDED by the chair; the tree was clean at 08:01. No batch 2 was dispatched.
+- **My error:** the keeper's "stay a little over time to get it done" meant finish batch 1. My ring said "Batch 2 may run
+  unattended", which went further than he said. The chair stopped on its own, and the keeper's word was "we were supposed
+  to stop". The check-in cron `1c7f29dc` is deleted.
+- **PICK UP HERE:** L115 = batch 2 as in my 08:0x ring (install.js B, jev-report C, README E, Consonance as a consumer A,
+  plus prompt_id/last_assistant_message and confidence in the flags line). It is dispatched ONLY at the keeper's word.
