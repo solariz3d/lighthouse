@@ -69,3 +69,11 @@ word is in use, so "not yet" costs nothing.
 > **(a)** "the tests" = **the two named suites**, or **every test target** (which adds `arch_test`)?
 > **(b)** "a clean week" = **a clean trip on each of seven days** (the checker as built), or **seven days with no bad
 > trip** (days without a trip don't count against it)?
+
+## THE KEEPER'S ANSWER — 2026-09-23 ~02:5x, on L (AskUserQuestion in the librarian's seat)
+**Yes.** (a) "the tests" = **every test target** (the two named suites plus `arch_test`). (b) "a clean week" = **seven days
+with no bad trip** (days without a trip don't count against it). The librarian runs the checks at every machine
+switch. Criterion 3 (usage) stays **not yet measured**; the 2026-10-22 clause applies. Owed so that (b) is honest: every
+launch leaves a trip row (`state-sync.js`, C's D112 §5 item 2), and `trip-check.js:184`'s `days.size >= 7` is changed to
+the reading the keeper chose. **Right now L is not solid on criterion 1:** JS 122/1 (the `portable-paths` red), being
+fixed in L089.
