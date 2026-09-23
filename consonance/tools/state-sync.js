@@ -1686,6 +1686,26 @@ function reportReconcile(rec) {
  * dir is the quiet half-arrival this packet exists to prevent, and a launcher that only asks
  * "verified?" would start on it.
  */
+//
+// EVERY LAUNCH LEAVES A TRIP ROW (L091; C's D112 §5 item 2, owed so the keeper's "a clean week" — seven days with no
+// bad trip — can be read back). Before this the file was OVERWRITTEN, so a week of launches left one record and every
+// earlier refusal vanished under the next clean pull. Now:
+//   · the TOP LEVEL is still the latest record, field for field — sync_launch.rs `read_completion`, trip-check's
+//     reader and this suite's tests read it unchanged. The file is still ONE JSON object: appending JSONL lines to it
+//     would make every one of those readers see nothing.
+//   · `trips` is APPEND-ONLY: every earlier trip is carried forward and this launch's compact row is added last. A
+//     trip keeps the fields trip-check reads (at, machine, stage, verified, installed, installed_files, head, why and
+//     the refusal COUNTS) — not the per-line lists, which stay on the top-level record of their own launch.
+//   · a previous record written before `trips` existed becomes the first trip. A previous file that will not parse is
+//     not erased silently: `trips_note` says the launches before this one are not on record.
+// Why a list INSIDE this file and not a new ledger beside it: the manifest classes this file STAYS (per machine, never
+// unioned), and a new data file would be UNPLACED until state-manifest.json and close.js learned its name — neither is
+// this tool's file. The cost is a rewrite per launch of a file that grows one small row per launch.
+const tripOf = (r) => ({
+  at: r.at, machine: r.machine, stage: r.stage ?? null, verified: r.verified ?? null, installed: r.installed ?? null,
+  installed_files: r.installed_files ?? null, head: r.head ?? null, why: r.why ?? null,
+  refused: (r.refused || []).map((x) => ({ path: x.path, kind: x.kind, local_only: x.local_only, incoming_only: x.incoming_only })),
+});
 function writeCompletion(DATA, STATE, o) {
   const rec = {
     version: 1,
@@ -1696,7 +1716,21 @@ function writeCompletion(DATA, STATE, o) {
     data_dir: DATA,
     ...o,
   };
-  try { fs.writeFileSync(path.join(DATA, COMPLETION_NAME), JSON.stringify(rec, null, 2) + '\n'); }
+  const file = path.join(DATA, COMPLETION_NAME);
+  let trips = [];
+  let note = null;
+  if (fs.existsSync(file)) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(file, 'utf8').replace(/^﻿/, ''));
+      trips = Array.isArray(prev.trips) ? prev.trips : [tripOf(prev)];
+      if (prev.trips_note) note = prev.trips_note;
+    } catch (e) {
+      note = `the previous ${COMPLETION_NAME} was unreadable (${e.message}) when the launch at ${rec.at} wrote this one; launches before it are not on record`;
+    }
+  }
+  const out = { ...rec, trips: trips.concat([tripOf(rec)]) };
+  if (note) out.trips_note = note;
+  try { fs.writeFileSync(file, JSON.stringify(out, null, 2) + '\n'); }
   catch (e) { console.error(`  could not write ${COMPLETION_NAME}: ${e.message}`); }
   return rec;
 }
@@ -1745,4 +1779,5 @@ module.exports = {
   machineHeads, machineTag, stateDir, dataDir, ensureTreeSettings, remotePrivacy, writeStatus, gitTry,
   FILE_CAP, STABLE_TRIES, SETTLE_MS, INDEX_NAME, STATUS_NAME, COMPLETION_NAME, RECEIPT_NAME,
   unionAtLaunchOn, phase2, countsByKey, timeParseRefusal, danglingUnions, installModeFor, unionVerdict,
+  writeCompletion,
 };

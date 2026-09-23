@@ -31,8 +31,15 @@ const MUTANTS = [
   ['an unresolvable head is accepted', "if (r.kind === 'close' && !r.head_resolves) why.push(", "if (false) why.push("],
   ['row identity becomes the raw line (key order starts to matter)', 'const keyOf = (line) => { try { return canon(JSON.parse(line)); } catch (_) { return \'RAW:\' + line; } };', 'const keyOf = (line) => line;'],
   ['the union row claims its counts came from a tool', 'counts_from_tool: false,', 'counts_from_tool: true,'],
-  ['one not-clean trip no longer restarts the week', 'clean: bad.length === 0 && days.size >= 7,', 'clean: days.size >= 7,'],
+  // (re-anchored in L091: the week's line is now the keeper's reading, and its NOT APPLIED said so)
+  ['one not-clean trip no longer fails the week', 'const clean = inWeek.length === 0 ? null : bad.length === 0;', 'const clean = inWeek.length === 0 ? null : true;'],
   ['the data-dir guard stops refusing', "return !rel.startsWith('..') && !path.isAbsolute(rel);", 'return false;'],
+  // L091 — the keeper's reading, the zero-trips edge, and one row per launch
+  ['back to the OLD reading: a clean trip on each of seven days', 'const clean = inWeek.length === 0 ? null : bad.length === 0;', 'const clean = inWeek.length === 0 ? null : bad.length === 0 && days.size >= 7;'],
+  ['zero trips reads CLEAN (the vacuous yes)', 'const clean = inWeek.length === 0 ? null : bad.length === 0;', 'const clean = bad.length === 0;'],
+  ['zero trips reads FAILED', 'const clean = inWeek.length === 0 ? null : bad.length === 0;', 'const clean = inWeek.length === 0 ? false : bad.length === 0;'],
+  ['only the latest launch is read (the overwrite, back)', 'return (Array.isArray(c.trips) && c.trips.length ? c.trips : [c]).map(installRowOf);', 'return [c].map(installRowOf);'],
+  ['launches on record since is the newest, not the oldest', 'launches_on_record_since: launches.length ? launches[0] : null,', 'launches_on_record_since: launches.length ? launches[launches.length - 1] : null,'],
 ];
 
 function score(text) {

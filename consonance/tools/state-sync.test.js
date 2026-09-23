@@ -1585,6 +1585,56 @@ test('D114 an UNVERIFIED union is never merged, whatever PHASE 2 says (it surviv
   assert.strictEqual(M.unionVerdict({ verified: true }, { ok: true }).ok, true);
 });
 
+// ── L091: every launch leaves a trip row (C's D112 §5 item 2; the keeper's "solid", 2026-09-23 02:5x) ───────────────
+// sync-completion.json stays ONE JSON object whose top level is the latest record, exactly as the launcher
+// (sync_launch.rs read_completion) and trip-check's installRow read it. Each write also APPENDS a compact row to its
+// `trips` list, so a week of launches can be read back.
+const completionDir = () => fs.mkdtempSync(path.join(os.tmpdir(), 'l091-completion-'));
+const readCompletion = (d) => JSON.parse(fs.readFileSync(path.join(d, M.COMPLETION_NAME), 'utf8'));
+
+test('L091 every write appends a trip row: two launches leave two trips, oldest first, and the top level is the latest', () => {
+  const d = completionDir();
+  M.writeCompletion(d, 'S', { verified: false, installed: false, stage: 'fetch', why: 'offline', failures: [] });
+  M.writeCompletion(d, 'S', { verified: true, installed: true, stage: 'done', why: null, failures: [], installed_files: 3, head: 'abc1234' });
+  const c = readCompletion(d);
+  assert.strictEqual(c.stage, 'done', 'the top level is the latest record');
+  assert.strictEqual(c.trips.length, 2, JSON.stringify(c.trips));
+  assert.deepStrictEqual(c.trips.map((t) => t.stage), ['fetch', 'done']);
+  assert.strictEqual(c.trips[1].installed_files, 3);
+  assert.strictEqual(c.trips[1].head, 'abc1234');
+});
+
+test('L091 the top level keeps every field the launcher reads, with the same values a single write gives', () => {
+  const d = completionDir();
+  const rec = { verified: true, installed: false, stage: 'install', why: 'refused', failures: [], head: 'h1', pushed_by: 'L', installed_files: 0,
+    refused: [{ path: 'lap.jsonl', kind: 'DIVERGED', local_only: 2, local_only_lines: [4, 9], incoming_only: 5 }] };
+  M.writeCompletion(d, 'S', rec);
+  const c = readCompletion(d);
+  for (const k of ['verified', 'installed', 'stage', 'why', 'head', 'pushed_by']) assert.deepStrictEqual(c[k], rec[k], k);
+  assert.ok(c.machine && c.at, 'machine and at stay at the top level');
+  assert.deepStrictEqual(c.refused, rec.refused, 'the full refused list stays at the top level');
+  assert.deepStrictEqual(c.trips[0].refused, [{ path: 'lap.jsonl', kind: 'DIVERGED', local_only: 2, incoming_only: 5 }],
+    'a trip row keeps the counts trip-check reads, not every line number');
+});
+
+test('L091 a previous record written before trips existed becomes the first trip, not a lost launch', () => {
+  const d = completionDir();
+  fs.writeFileSync(path.join(d, M.COMPLETION_NAME), JSON.stringify({ at: '2026-09-22T15:11:08.900Z', machine: 'D', stage: 'done', verified: true, installed: true, installed_files: 7, head: 'old' }, null, 2));
+  M.writeCompletion(d, 'S', { verified: true, installed: true, stage: 'done', why: null, failures: [], head: 'new' });
+  const c = readCompletion(d);
+  assert.deepStrictEqual(c.trips.map((t) => t.head), ['old', 'new']);
+  assert.strictEqual(c.trips[0].at, '2026-09-22T15:11:08.900Z');
+});
+
+test('L091 an unreadable previous file is not silently erased: the record says the trips before it are not on record', () => {
+  const d = completionDir();
+  fs.writeFileSync(path.join(d, M.COMPLETION_NAME), '{ half a rec');
+  M.writeCompletion(d, 'S', { verified: true, installed: true, stage: 'done', why: null, failures: [] });
+  const c = readCompletion(d);
+  assert.strictEqual(c.trips.length, 1);
+  assert.match(String(c.trips_note), /unreadable/i, 'the loss is named in the record');
+});
+
 console.log('');
 console.log(`state-sync.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

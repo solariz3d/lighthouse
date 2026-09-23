@@ -224,6 +224,15 @@ const MUTANTS = [
     '      if (!outOfRoot.some((e) => e.handled_by === r.on_arrival)) {', '      if (false) {', 'state-manifest.js'],
   ['the checker tolerates an UNDECIDED out-of-root target with no decider — an omission with a label',
     "    if (e.class === 'UNDECIDED' && !e.decided_by) {", '    if (false) {', 'state-manifest.js'],
+  // L091 (pane C) — every launch leaves a trip row in sync-completion.json's `trips`
+  ['a launch OVERWRITES the trip log instead of appending (the D112 debt, back)',
+    '  const out = { ...rec, trips: trips.concat([tripOf(rec)]) };', '  const out = { ...rec, trips: [tripOf(rec)] };'],
+  ['a record written before trips existed is dropped instead of becoming the first trip',
+    '      trips = Array.isArray(prev.trips) ? prev.trips : [tripOf(prev)];', '      trips = Array.isArray(prev.trips) ? prev.trips : [];'],
+  ['an unreadable previous file is erased SILENTLY (no trips_note)',
+    '  if (note) out.trips_note = note;', '  if (false) out.trips_note = note;'],
+  ['a trip row carries the per-line lists instead of the counts trip-check reads',
+    '  refused: (r.refused || []).map((x) => ({ path: x.path, kind: x.kind, local_only: x.local_only, incoming_only: x.incoming_only })),', '  refused: r.refused || [],'],
 ];
 
 /** Every target's pristine bytes, read once, before anything is written. */

@@ -101,6 +101,19 @@ function installRow(dataDir) {
   const p = path.join(dataDir, 'sync-completion.json');
   let c;
   try { c = JSON.parse(fs.readFileSync(p, 'utf8')); } catch (_) { return null; }
+  return installRowOf(c);
+}
+
+/** L091: ONE ROW PER LAUNCH. state-sync.js now appends every launch to the file's `trips` list (the top level is still
+ * the latest record); a file written before that carries no list and gives its one record, as before. */
+function installRows(dataDir) {
+  const p = path.join(dataDir, 'sync-completion.json');
+  let c;
+  try { c = JSON.parse(fs.readFileSync(p, 'utf8').replace(/^﻿/, '')); } catch (_) { return []; }
+  return (Array.isArray(c.trips) && c.trips.length ? c.trips : [c]).map(installRowOf);
+}
+
+function installRowOf(c) {
   const refused = (c.refused || []).map((r) => ({ path: r.path, kind: r.kind, local_only: r.local_only, incoming_only: r.incoming_only }));
   return {
     kind: 'install', at: c.at, machine: c.machine, source: 'sync-completion.json', counts_from_tool: true,
@@ -165,24 +178,40 @@ function judge(rows) {
 function scan({ dataDir, stateDir, git = null }) {
   const g = git || gitLive(stateDir);
   const rows = [];
-  const i = installRow(dataDir);
-  if (i) rows.push(i);
-  rows.push(...unionRows(dataDir), ...closeRows(g));
+  rows.push(...installRows(dataDir), ...unionRows(dataDir), ...closeRows(g));
   rows.sort((a, b) => String(a.at).localeCompare(String(b.at)));
   return judge(rows);
 }
 
-/** A clean week is a COUNT: days covered by trips, all clean. One not-clean trip restarts it at zero. */
+/** A CLEAN WEEK, THE KEEPER'S READING (2026-09-23 02:5x, loop/solid_decision_sheet_2026-09-23.md): "seven days with no
+ * bad trip (days without a trip don't count against it)". Before L091 this was `days.size >= 7` — a clean trip on each
+ * of seven days — which a week with a quiet day could never pass.
+ *
+ * `clean` is THREE-VALUED, and the third value is the edge the keeper's words leave open:
+ *   false — at least one bad trip in the last seven days.
+ *   true  — at least one trip in the last seven days, and none of them bad.
+ *   null  — NO TRIP in the last seven days: unmeasured, neither clean nor failed. "No bad trip" is then true of an empty
+ *           set; it would be said whether or not anything worked, so it carries no information — and zero rows is
+ *           exactly what a broken recorder produces, the failure L091 exists to end (launches were overwritten). An
+ *           idle week is not evidence of a solid one. It does not fail the week either: nothing went wrong in it.
+ * `launches_on_record_since` is the earliest launch (install row) this machine still holds: launches before L091 were
+ * overwritten, so until the record reaches back seven days a clean week covers fewer launches than it names. Reported,
+ * not folded into the verdict — the keeper's rule is about bad trips, and that is the rule this computes. */
 function cleanWeek(rows, now = new Date()) {
   const end = now.getTime(), start = end - 7 * 24 * 3600 * 1000;
   const inWeek = rows.filter((r) => { const t = Date.parse(r.at); return Number.isFinite(t) && t >= start && t <= end; });
   const bad = inWeek.filter((r) => !r.clean);
   const days = new Set(inWeek.filter((r) => r.clean).map((r) => String(r.at).slice(0, 10)));
   const lastBad = bad.length ? Math.max(...bad.map((r) => Date.parse(r.at))) : null;
+  const launches = rows.filter((r) => r.kind === 'install' && Number.isFinite(Date.parse(r.at))).map((r) => r.at).sort();
+  const clean = inWeek.length === 0 ? null : bad.length === 0;
   return {
     trips: inWeek.length, clean_trips: inWeek.length - bad.length, not_clean_trips: bad.length,
-    clean_days: days.size, clean: bad.length === 0 && days.size >= 7,
+    clean_days: days.size, clean,
+    reason: clean === null ? 'no trip in the last seven days — unmeasured, not clean and not failed'
+      : clean ? 'no bad trip in the last seven days' : `${bad.length} bad trip(s) in the last seven days`,
     days_since_not_clean: lastBad === null ? null : Math.floor((end - lastBad) / (24 * 3600 * 1000)),
+    launches_on_record_since: launches.length ? launches[0] : null,
   };
 }
 
@@ -224,12 +253,13 @@ function main(argv) {
       for (const w of r.not_clean) console.log(`          └─ ${w}`);
     }
     const cw = cleanWeek(rows);
-    console.log(`\nlast 7 days: ${cw.trips} trip(s) · ${cw.clean_trips} clean · ${cw.not_clean_trips} NOT clean · ${cw.clean_days} clean day(s) · clean week: ${cw.clean}`);
+    console.log(`\nlast 7 days: ${cw.trips} trip(s) · ${cw.clean_trips} clean · ${cw.not_clean_trips} NOT clean · ${cw.clean_days} clean day(s) · clean week: ${cw.clean === null ? 'UNMEASURED' : cw.clean} — ${cw.reason}`);
+    console.log(`launches on record since: ${cw.launches_on_record_since || 'none'} (launches before L091 were overwritten, not recorded)`);
     console.log('union counts are DERIVED from the backups: ledger-union leaves no receipt (D112). Every other field is a tool\'s own output.');
   }
   return rows.every((r) => r.clean) ? 0 : 1;
 }
 
-module.exports = { scan, judge, cleanWeek, canon, stampToIso, backups, installRow, unionRows, closeRows, outIsInsideData };
+module.exports = { scan, judge, cleanWeek, canon, stampToIso, backups, installRow, installRows, unionRows, closeRows, outIsInsideData };
 
 if (require.main === module) process.exitCode = main(process.argv.slice(2));
