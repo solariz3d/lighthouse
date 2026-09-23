@@ -56,3 +56,11 @@ code or rules, testable, and live at the next rebuild or the next hook load.
   stayed in ONE turn from ~03:45 to ~04:01. Rings reach a seat only between turns, so a long turn is a closed door.
   **Fix 2 is sharpened:** the chair ends its turn after each landing and each dispatch, never chaining landing, suite,
   re-suite and dispatch in one turn. Its own restore point should say so.
+
+## ADDED 06:4x — a STALE stamp held two rings to the librarian for 16+ minutes
+The board: `QUEUED -> 0c0c0c0b (1 waiting, stamp=STALE (says working, screen says otherwise))` at 06:20 (the chair's "your
+research batch rests on a premise that fails" note), then A's L109 ring behind it ("2 waiting"). The librarian's ready file
+was current by 06:37:16, but the queued pair was still not delivered. **L095's alert caught it** ("QUEUED librarian 16m,
+2 waiting"). The collator had already acted on both from disk, so nothing was lost. **What this adds:** a STALE gate holds
+until the 240 s force, but these two waited 16+ minutes, so the force did not fire for STALE here. That is a candidate defect
+in `drain_decision` (`main.rs`), to be checked by whoever next holds it: does STALE reach `MAX_HOLD_MS`?
