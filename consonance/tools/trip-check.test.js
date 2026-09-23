@@ -31,7 +31,9 @@ function world({ completion, files = {}, backups = {}, commits = [], resolves = 
     fs.mkdirSync(path.dirname(p), { recursive: true });
     fs.writeFileSync(p, lines.join('\n') + (lines.length ? '\n' : ''));
   }
-  return { dataDir, stateDir: 'C:/nowhere', git: { log: () => commits, resolves } };
+  // A state dir that does not exist and is never read (scan() uses `git` when given one). Built from this test's own
+  // temp dir, not a drive literal: 'C:/nowhere' tripped portable-paths and held the JS suite red (L089).
+  return { dataDir, stateDir: path.join(tmp(), 'no-such-state-dir'), git: { log: () => commits, resolves } };
 }
 
 // ── the install trip ────────────────────────────────────────────────────────────────────────────
@@ -228,4 +230,61 @@ test('the tool NEVER writes into the data dir (no manifest rule covers it — D1
   const before = fs.readdirSync(w.dataDir).sort();
   T.scan(w);
   assert.deepStrictEqual(fs.readdirSync(w.dataDir).sort(), before, 'scan() must be read-only over the data dir');
+});
+
+// ── L091: every launch is a row, and "a clean week" is the keeper's reading ───────────────────────────────────────
+// The keeper, 2026-09-23 02:5x (loop/solid_decision_sheet_2026-09-23.md, THE KEEPER'S ANSWER): a clean week is
+// "seven days with no bad trip (days without a trip don't count against it)".
+const trip = (at, o = {}) => ({ at, machine: 'L', stage: 'done', verified: true, installed: true, installed_files: 1, head: 'h', refused: [], ...o });
+
+test('L091 a completion carrying trips[] gives one install row per launch, oldest first', () => {
+  const w = world({ completion: { ...trip('2026-09-22T12:00:00.000Z'), trips: [trip('2026-09-21T09:00:00.000Z', { head: 'a' }), trip('2026-09-22T12:00:00.000Z', { head: 'b' })] } });
+  const rows = T.scan(w).filter((x) => x.kind === 'install');
+  assert.deepStrictEqual(rows.map((r) => r.head), ['a', 'b']);
+  assert.ok(rows.every((r) => r.source === 'sync-completion.json' && r.counts_from_tool === true));
+});
+
+test('L091 a refusing launch in the middle of the week is still its own bad trip', () => {
+  const bad = trip('2026-09-21T09:00:00.000Z', { installed: false, installed_files: 0, stage: 'install', refused: [{ path: 'lap.jsonl', kind: 'DIVERGED', local_only: 3, incoming_only: 4 }] });
+  const w = world({ completion: { ...trip('2026-09-22T12:00:00.000Z'), trips: [bad, trip('2026-09-22T12:00:00.000Z')] } });
+  const rows = T.scan(w).filter((x) => x.kind === 'install');
+  assert.strictEqual(rows[0].clean, false, 'the earlier refusal is not overwritten by the later clean launch');
+  assert.strictEqual(rows[1].clean, true);
+});
+
+test('L091 THE KEEPER\'S READING: one clean trip and six days without one is a clean week', () => {
+  const now = new Date('2026-09-17T13:00:00Z');
+  const cw = T.cleanWeek([{ kind: 'union', at: '2026-09-17T12:00:00.000Z', clean: true, not_clean: [] }], now);
+  assert.strictEqual(cw.clean, true, 'days without a trip do not count against the week');
+  assert.strictEqual(cw.clean_days, 1);
+});
+
+test('L091 a bad trip older than seven days no longer counts against the week', () => {
+  const now = new Date('2026-09-17T13:00:00Z');
+  const rows = [
+    { kind: 'union', at: '2026-09-09T12:00:00.000Z', clean: false, not_clean: ['x'] },
+    { kind: 'union', at: '2026-09-15T12:00:00.000Z', clean: true, not_clean: [] },
+  ];
+  assert.strictEqual(T.cleanWeek(rows, now).clean, true);
+});
+
+test('L091 THE EDGE: zero trips in the window is UNMEASURED (null) with a reason — neither clean nor failed', () => {
+  const now = new Date('2026-09-17T13:00:00Z');
+  for (const rows of [[], [{ kind: 'union', at: '2026-09-01T12:00:00.000Z', clean: true, not_clean: [] }]]) {
+    const cw = T.cleanWeek(rows, now);
+    assert.strictEqual(cw.clean, null, JSON.stringify(cw));
+    assert.strictEqual(cw.trips, 0);
+    assert.match(String(cw.reason), /no trip/i);
+  }
+});
+
+test('L091 the week says how far back LAUNCHES are on record (install rows), because older launches were overwritten', () => {
+  const now = new Date('2026-09-17T13:00:00Z');
+  const rows = [
+    { kind: 'close', at: '2026-09-01T12:00:00.000Z', clean: true, not_clean: [] },
+    { kind: 'install', at: '2026-09-15T12:00:00.000Z', clean: true, not_clean: [] },
+    { kind: 'install', at: '2026-09-16T12:00:00.000Z', clean: true, not_clean: [] },
+  ];
+  assert.strictEqual(T.cleanWeek(rows, now).launches_on_record_since, '2026-09-15T12:00:00.000Z');
+  assert.strictEqual(T.cleanWeek(rows.slice(0, 1), now).launches_on_record_since, null, 'no launch on record says so');
 });

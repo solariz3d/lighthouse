@@ -139,6 +139,12 @@ $files = @(
   @{ From = 'consonance\hooks\ferry-watch.js';           To = 'ferry-watch.js' }
   @{ From = 'consonance\hooks\sourced-stop.js';          To = 'sourced-stop.js' }
   @{ From = 'consonance\hooks\findings-return.js';       To = 'findings-return.js' }
+  # WIRED 2026-09-23 (L089), the keeper's authorization by name: "the settings edit for Jev flags"
+  # (loop/plan_after_upgrade_2026-09-22.md §AUTHORIZED, d5bd9b1, item 3). It was $unmanaged since D108; the recipe that
+  # entry gave was wrong until L089 — an installed copy could not find main.rs from ~/.claude/shell/hooks/ and was
+  # silent forever. It now resolves the room through ~/.consonance.json room_path and says so loudly when it cannot.
+  # Reaches D on D's next install (the plan: "D gets the same on its next day").
+  @{ From = 'consonance\hooks\jev-flags.js';              To = 'hooks\jev-flags.js' }
   # Added 2026-08-18 with the hook itself, deliberately in the same commit. Nine hooks existed
   # ONLY as installed copies until 58b94f9 because each was registered by hand and the manifest
   # was updated later or never; a file that runs on this machine and exists nowhere else is the
@@ -187,6 +193,7 @@ $register = @(
   @{ Event = 'UserPromptSubmit'; Rel = 'userprompt_pulse.py';         Runner = 'py';
      Conflicts = @('userprompt-submit.js') }
   @{ Event = 'UserPromptSubmit'; Rel = 'findings-return.js';          Runner = 'node' }
+  @{ Event = 'UserPromptSubmit'; Rel = 'hooks\jev-flags.js';          Runner = 'node' }   # L089, see its $files entry
   # EXCLUDED BY A KEEPER RULING, 2026-09-06 06:55 (exo_memory/librarian/2026-09-06.md:603):
   # "READY PAIR ONLY -- the three passengers stay unregistered". The entries STAY HERE rather than
   # being deleted, because deleting them loses the ruling: a seat reading a manifest with no
@@ -286,8 +293,6 @@ $register = @(
 $unmanaged = @(
   @{ Src = 'consonance\hooks\ask-surface.js';
      Why  = 'UserPromptSubmit surface for unread ASK questions. Built and unwired; wiring a third hook onto that event is a keeper decision, not an installer default. No ruling yet. PRECONDITION, measured 2026-09-08: it carries NO CONSONANCE_DREAM guard (grep -c -> 0, where every managed hook has one) and dream-gate proved it SPEAKS INTO A DREAM. Wiring it before that guard exists ships a hook the dream runner cannot switch off.' }
-  @{ Src = 'consonance\hooks\jev-flags.js';
-     Why  = 'UserPromptSubmit surface for Jev''s NOT-CLEAN L2 verdicts, to the chair and the librarian only (D108; librarian/2026-09-22.md "11:0x"). Built, tested and unwired: wiring a new hook onto UserPromptSubmit is a keeper decision, as for ask-surface.js, and the pulse hook it would otherwise ride is HOLD. It DOES carry a CONSONANCE_DREAM guard. To wire it on a machine: move it into $files and $register, then install.ps1 -Only jev-flags.js there (handback/p-d108-l2only-A_2026-09-22.md section 3).' }
   @{ Src = 'consonance\hooks\baton-wake-stop.js';
      Why  = 'Stop hook that BLOCKS to wake the outgoing seat. sourced-stop.js refused a gate on this same event in writing; a blocking hook is the keeper call this one has not had. No ruling yet. PRECONDITION, measured 2026-09-08: NO CONSONANCE_DREAM guard either (grep -c -> 0). A blocking hook the dream runner cannot switch off is the worst member of that class.' }
   @{ Src = 'consonance\hooks\live-mirror-stop.js';

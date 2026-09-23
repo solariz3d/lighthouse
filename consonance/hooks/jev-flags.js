@@ -40,9 +40,11 @@
 // never be the reason a prompt fails to submit. The dream runner sets CONSONANCE_DREAM, and this hook is silent there.
 //
 // WHAT THIS CANNOT DO: reach a seat it is not registered in. It is a hook, so it runs only where settings.json names it,
-// on each machine. It is not yet registered anywhere (D108 hand-back §3).
+// on each machine. Registered on L 2026-09-23 (L089, the keeper's authorization by name) through install.ps1's $files and
+// $register; D gets it at its next install. It runs from ~/.claude/shell/hooks/ and finds the room through room_path.
 'use strict';
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
 const ABSTAIN_MIN = 0.80;
@@ -95,18 +97,62 @@ function readRows(file) {
   return out;
 }
 
+/**
+ * THE CHECKOUT'S main.rs, found the room's way (L089). install.ps1 COPIES this hook to ~/.claude/shell/hooks/, where
+ * `__dirname/../src-tauri` does not exist — the first build resolved only from there, so an installed copy found no seat
+ * ids and was silent on every prompt, forever, while `install.ps1 -Check` read ok. So: `room_path` in ~/.consonance.json
+ * first (it is `<repo>/exo_memory/BOOT.md`; the peer hooks read that file the same way — userprompt-submit.js's chain
+ * line, transcript-watch.js `dataDir()`), then this file's own checkout for a repo-local run.
+ * `{ file, tier }` when found; `{ file: null, why }` naming every place tried, when not.
+ */
+function mainRsPath(home = os.homedir()) {
+  const tried = [];
+  let cfg = null;
+  try {
+    cfg = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^﻿/, ''));
+  } catch (e) {
+    tried.push(e && e.code === 'ENOENT' ? '~/.consonance.json does not exist' : '~/.consonance.json could not be read as JSON');
+  }
+  if (cfg) {
+    const room = cfg.room_path != null ? String(cfg.room_path).trim() : '';
+    if (room) {
+      const f = path.join(path.dirname(path.dirname(room)), 'consonance', 'src-tauri', 'src', 'main.rs');
+      if (fs.existsSync(f)) return { file: f, tier: '~/.consonance.json room_path' };
+      tried.push(`room_path ${room} does not lead to consonance/src-tauri/src/main.rs`);
+    } else {
+      tried.push('~/.consonance.json has no room_path');
+    }
+  }
+  const local = path.join(__dirname, '..', 'src-tauri', 'src', 'main.rs');
+  if (fs.existsSync(local)) return { file: local, tier: 'the checkout beside this file' };
+  tried.push('no checkout beside this file');
+  return { file: null, why: tried.join('; ') };
+}
+
 function main(env = process.env) {
   if (env.CONSONANCE_DREAM) return '';
   if (!env.LOCALAPPDATA) return '';
-  const ids = seatIds(path.join(__dirname, '..', 'src-tauri', 'src', 'main.rs'));
+  const where = mainRsPath();
+  // LOUD, NOT SILENT (L089). Silence is this hook's answer to every failure because it must never break a prompt — and
+  // that is exactly what hid the installed copy. A room it cannot find is not "nothing to report"; it is a broken install,
+  // so it says so, in every Consonance seat, until fixed. It carries no verdict and names no seat.
+  if (!where.file) {
+    return env.CONSONANCE_PANE
+      ? `[jev-flags hook: cannot find the room, so Jev's L2 flags cannot surface here — ${where.why}. Fix: set room_path in ~/.consonance.json.]`
+      : '';
+  }
+  const ids = seatIds(where.file);
   const rows = readRows(path.join(env.LOCALAPPDATA, 'consonance', 'jev-shadow', 'jev_judge.jsonl'));
   const now = env.JEV_FLAGS_NOW ? Date.parse(env.JEV_FLAGS_NOW) : Date.now();
   return flagLines({ rows, pane: env.CONSONANCE_PANE, ids, now }).join('\n');
 }
 
-module.exports = { flagLines, seatIds, readRows, main, ABSTAIN_MIN, WINDOW_HOURS, MAX_LINES, SURFACE_THIRD_PLACE };
+module.exports = { flagLines, seatIds, readRows, mainRsPath, main, ABSTAIN_MIN, WINDOW_HOURS, MAX_LINES, SURFACE_THIRD_PLACE };
 
 if (require.main === module) {
+  // THE DREAM GATE, in the room's census form (L089) — dream-gate.test.js recognises exactly this line. The check inside
+  // main() is the same rule for callers that import the module; this is the one the census can see.
+  if (process.env.CONSONANCE_DREAM) process.exit(0);
   let text = '';
   try { text = main(); } catch { text = ''; }
   try {

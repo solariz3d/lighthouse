@@ -120,11 +120,97 @@ function store(rows) {
   fs.writeFileSync(path.join(d, 'jev_judge.jsonl'), rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
   return lad;
 }
-function cli(env) {
-  const base = { SystemRoot: process.env.SystemRoot || '', PATH: process.env.PATH || '', JEV_FLAGS_NOW: new Date(NOW).toISOString() };
-  const r = spawnSync(process.execPath, [HOOK], { input: '{}', encoding: 'utf8', env: { ...base, ...env }, timeout: 20000 });
+// L089: HOME is part of the hermetic env now. The hook resolves the room through ~/.consonance.json, so a test that
+// inherited this machine's real home would read the real config — and pass or fail on the machine, not on the code.
+const emptyHome = () => fs.mkdtempSync(path.join(os.tmpdir(), 'jev-flags-home-'));
+function cliAt(hook, env) {
+  const home = env.USERPROFILE || emptyHome();
+  const base = { SystemRoot: process.env.SystemRoot || '', PATH: process.env.PATH || '', JEV_FLAGS_NOW: new Date(NOW).toISOString(),
+    USERPROFILE: home, HOME: home };
+  const r = spawnSync(process.execPath, [hook], { input: '{}', encoding: 'utf8', env: { ...base, ...env }, timeout: 20000 });
   return { code: r.status, out: r.stdout || '', err: r.stderr || '' };
 }
+const cli = (env) => cliAt(HOOK, env);
+
+// ── L089 · THE INSTALLED COPY. install.ps1 COPIES the hook to ~/.claude/shell/hooks/, where `__dirname/../src-tauri` does
+// not exist. The first build resolved main.rs only from there, so an installed copy was silent forever while -Check read ok.
+const REPO = path.resolve(__dirname, '..', '..');
+function installedCopy() {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-flags-installed-'));
+  const dir = path.join(root, '.claude', 'shell', 'hooks');
+  fs.mkdirSync(dir, { recursive: true });
+  const hook = path.join(dir, 'jev-flags.js');
+  fs.copyFileSync(HOOK, hook);
+  return hook;
+}
+function homeWith(config) {
+  const home = emptyHome();
+  if (config !== undefined) fs.writeFileSync(path.join(home, '.consonance.json'), typeof config === 'string' ? config : JSON.stringify(config));
+  return home;
+}
+const flagOf = (r) => { try { return JSON.parse(r.out).hookSpecificOutput.additionalContext; } catch { return ''; } };
+
+test('INSTALLED: a copy outside the repo finds the room through ~/.consonance.json room_path and surfaces the flag', () => {
+  const home = homeWith({ room_path: path.join(REPO, 'exo_memory', 'BOOT.md') });
+  const r = cliAt(installedCopy(), { LOCALAPPDATA: store([row()]), CONSONANCE_PANE: MAIN, USERPROFILE: home });
+  assert.strictEqual(r.code, 0, r.err);
+  assert.match(flagOf(r), /\[jev L2 · unverified\].*drift p=0\.60/, 'the installed hook did not surface the flag: ' + r.out);
+});
+
+test('INSTALLED: still never a pane, from the installed location too', () => {
+  const home = homeWith({ room_path: path.join(REPO, 'exo_memory', 'BOOT.md') });
+  const r = cliAt(installedCopy(), { LOCALAPPDATA: store([row({ sid: MAIN, seat: 'main' })]), CONSONANCE_PANE: PANE, USERPROFILE: home });
+  assert.strictEqual(r.code, 0); assert.strictEqual(r.out, '');
+});
+
+test('INSTALLED, NO ROOM: no ~/.consonance.json and no repo beside it → a LOUD line naming why, never a silent empty', () => {
+  const r = cliAt(installedCopy(), { LOCALAPPDATA: store([row()]), CONSONANCE_PANE: MAIN, USERPROFILE: homeWith(undefined) });
+  assert.strictEqual(r.code, 0, 'a hook must never break a prompt');
+  const t = flagOf(r);
+  assert.match(t, /jev-flags/, 'the line must say which hook: ' + r.out);
+  assert.match(t, /cannot find/i, 'and that it cannot find the room: ' + r.out);
+  // Found as a surviving mutant: /consonance\.json/ also matched the line's fixed "Fix: set room_path in ~/.consonance.json",
+  // so it passed with the reason removed. Assert the REASON, which only the why can carry.
+  assert.match(t, /does not exist/, 'and name what it tried: ' + r.out);
+});
+
+test('INSTALLED, BAD room_path: the loud line names the path it tried', () => {
+  const nowhere = path.join(emptyHome(), 'no-repo', 'exo_memory', 'BOOT.md');
+  const r = cliAt(installedCopy(), { LOCALAPPDATA: store([row()]), CONSONANCE_PANE: MAIN, USERPROFILE: homeWith({ room_path: nowhere }) });
+  assert.ok(flagOf(r).includes(nowhere), 'the loud line must name the room_path it tried, not just the words: ' + r.out);
+});
+
+test('INSTALLED, a corrupt ~/.consonance.json degrades loudly, not silently', () => {
+  const r = cliAt(installedCopy(), { LOCALAPPDATA: store([row()]), CONSONANCE_PANE: MAIN, USERPROFILE: homeWith('{not json') });
+  assert.match(flagOf(r), /could not be read as JSON/, r.out);
+});
+
+test('REPO-LOCAL still works with no config at all (the __dirname fallback)', () => {
+  const r = cli({ LOCALAPPDATA: store([row()]), CONSONANCE_PANE: MAIN, USERPROFILE: homeWith(undefined) });
+  assert.match(flagOf(r), /drift p=0\.60/, r.out);
+});
+
+// Two dream guards now (L089), and each is tested on its own: with both, removing either is masked at the CLI by the
+// other, which is how the main() guard's mutant survived once the census-form line was added.
+test('main() itself is silent in a dream — the guard an importer of this module gets', () => {
+  // The CONTROL first: the same call without the variable surfaces the flag. Written without it at first, and it passed
+  // vacuously — no JEV_FLAGS_NOW, so the real clock put the fixture's turn outside the 12 h window (mutant J6 survived).
+  const env = { LOCALAPPDATA: store([row()]), CONSONANCE_PANE: MAIN, JEV_FLAGS_NOW: new Date(NOW).toISOString() };
+  assert.match(F.main(env), /drift/, 'the control must surface the flag, or the dream assertion below proves nothing');
+  assert.strictEqual(F.main({ ...env, CONSONANCE_DREAM: '1' }), '');
+});
+
+test('the CLI carries the dream guard in the room census form, before the entry point', () => {
+  const src = fs.readFileSync(HOOK, 'utf8');
+  const g = src.search(/if \(process\.env\.CONSONANCE_DREAM\)\s*\{?\s*process\.exit\(0\)\s*;/);
+  assert.ok(g >= 0, 'no census-form guard: dream-gate.test.js cannot see a guard in any other shape');
+  assert.ok(g < src.indexOf('try { text = main(); }'), 'the guard must come before the work');
+});
+
+test('a dream stays silent even when the room cannot be found', () => {
+  const r = cliAt(installedCopy(), { LOCALAPPDATA: store([row()]), CONSONANCE_PANE: MAIN, CONSONANCE_DREAM: '1', USERPROFILE: homeWith(undefined) });
+  assert.strictEqual(r.out, '');
+});
 
 test('CLI: in the chair, one hookSpecificOutput with the flag line, exit 0', () => {
   const r = cli({ LOCALAPPDATA: store([row()]), CONSONANCE_PANE: MAIN });

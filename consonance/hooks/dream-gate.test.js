@@ -150,6 +150,10 @@ const ENTRY = {
   // bare name would compare the guard against the definition — the trap this table's header
   // records twice already.
   'precompact-preserve.js': 'if (require.main === module) main();',
+  // Added 2026-09-23 with jev-flags.js's install.ps1 manifest entry (L089), in the same change, by this table's own rule.
+  // Call site, not definition: the guard is the first line of `function main()`, declared above, and the only work at
+  // load is requires and function definitions — the call at the bottom is where it begins.
+  'jev-flags.js': 'try { text = main(); }',
   // Call site, not definition, same trap as the entries above.
   'sessionstart-state.js': 'if (require.main === module) main();',
   // Same call-site-not-definition shape as ferry-watch: `function main()` is defined at :208, well
