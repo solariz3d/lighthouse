@@ -47,3 +47,12 @@ for eight minutes looks exactly like a seat that is thinking. Two further amplif
 
 **Order:** fixes 1 and 3 first (they remove the silent wait and the race), then 2 (a rule), then 4. All of them are
 code or rules, testable, and live at the next rebuild or the next hook load.
+
+## ADDED 04:0x — two more data points for the same root
+- **A's L092 ring was QUEUED at the librarian** (board: `QUEUED -> 0c0c0c0b (1 waiting, stamp=ready)`) at 03:5x. The
+  same silent queue, pointing at the collator. By then I had already read the file and published, so nothing was lost
+  this time, but the pane had to re-ring to find out. Fix 1 covers this too, for every seat and not only the chair.
+- **The chair re-ran the suite one second after its first run was stopped** (pid 39056, 03:53:01 → ~04:00:45), and
+  stayed in ONE turn from ~03:45 to ~04:01. Rings reach a seat only between turns, so a long turn is a closed door.
+  **Fix 2 is sharpened:** the chair ends its turn after each landing and each dispatch, never chaining landing, suite,
+  re-suite and dispatch in one turn. Its own restore point should say so.
