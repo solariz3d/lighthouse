@@ -238,3 +238,41 @@ test('CLI: no store, no LOCALAPPDATA, a corrupt ledger line — all silent, exit
   assert.strictEqual(r.code, 0);
   assert.match(r.out, /drift/, 'the good row still surfaces past the corrupt one');
 });
+
+// ── L099 addition: the seat is printed as the pane's LETTER. Rows already in the ledger carry the shared roster label
+// ("✦ brief"), so the letter is looked up by session_id at print time. The ledger is never rewritten.
+const PANE_B = '12fb81f6-f4c0-4ef8-aad8-f0cdce091925';
+const withLetters = (rows, pane, letters) => F.flagLines({ rows, pane, ids: IDS, now: NOW, letters });
+
+test('L099: an OLD row labelled "✦ brief" prints as its pane letter, looked up by session_id', () => {
+  const out = withLetters([row({ sid: PANE_B, seat: '✦ brief' })], MAIN, { [PANE_B]: 'B', [PANE]: 'A' });
+  assert.match(out.join('\n'), /\] B · turn/);
+});
+
+test('L099: two old rows with the same label print as two different seats', () => {
+  const out = withLetters([row({ sid: PANE, seat: '✦ brief', min: 10 }), row({ sid: PANE_B, seat: '✦ brief', min: 11 })], MAIN, { [PANE]: 'A', [PANE_B]: 'B' });
+  assert.deepStrictEqual(out.map((l) => /\] (\S+) · turn/.exec(l)[1]), ['A', 'B']);
+});
+
+test('L099: a fixed seat is never renamed by its letter — the librarian stays "librarian", not "M"', () => {
+  const out = withLetters([row({ sid: LIB, seat: 'librarian' })], MAIN, { [LIB]: 'M' });
+  assert.match(out.join('\n'), /\] librarian · turn/);
+});
+
+test('L099: an old row with no letter and a shared label prints a short session id, not the label', () => {
+  const out = withLetters([row({ sid: PANE_B, seat: '✦ brief' })], MAIN, {});
+  assert.match(out.join('\n'), /\] 12fb81f6 · turn/);
+});
+
+test('L099: a NEW row (seat already a letter) prints as written when letters.json is absent', () => {
+  const out = withLetters([row({ sid: PANE_B, seat: 'B' })], MAIN, undefined);
+  assert.match(out.join('\n'), /\] B · turn/);
+});
+
+test('L099 INSTALLED: the CLI reads letters.json from ~/.consonance.json data_dir', () => {
+  const data = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-flags-data-'));
+  fs.writeFileSync(path.join(data, 'letters.json'), JSON.stringify({ [PANE_B]: 'B' }));
+  const home = homeWith({ room_path: path.join(REPO, 'exo_memory', 'BOOT.md'), data_dir: data });
+  const r = cliAt(installedCopy(), { LOCALAPPDATA: store([row({ sid: PANE_B, seat: '✦ brief' })]), CONSONANCE_PANE: MAIN, USERPROFILE: home });
+  assert.match(flagOf(r), /\] B · turn/, r.out);
+});

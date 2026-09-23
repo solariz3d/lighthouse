@@ -109,23 +109,91 @@ function loadJudgeInputs(repo) {
   return { l2view, l2build, sourcesSha: sha([s2, readText(w2, 'the L2 worker')].join('\0')) };
 }
 
-/** Main, the librarian and the Third Place from THIS checkout's main.rs (the keeper's 05:2x ruling), then the roster. */
-function seatSessions({ repo, dataDir }) {
+/**
+ * WHERE THE ROOM IS — L099, 2026-09-23. The checkout that holds consonance/src-tauri/src/main.rs, tried in order:
+ *   1. `repo` as given (the runner passes its own checkout), so the hooks and main.rs come from ONE tree;
+ *   2. `room_path` in ~/.consonance.json (it is `<repo>/exo_memory/BOOT.md`, read the way jev-flags.js mainRsPath and
+ *      the peer hooks read it) — the only way an INSTALLED copy, not inside a checkout, can find the room;
+ *   3. the checkout this file sits in.
+ * Before L099 only 1 and 3 existed, and a miss was a silent `catch`: an installed copy judged the roster alone and
+ * dropped Main, the librarian and the Third Place with no line anywhere (L089's jev-flags bug, in its sibling).
+ * Kept in THIS file, not shared with jev-flags: a require from an installed copy is the path that breaks.
+ * `{ root, file, tier }` when found; `{ root: null, file: null, why }` naming every place tried, when not.
+ */
+function roomOf({ repo, home = os.homedir() } = {}) {
+  const tried = [];
+  const rsOf = (root) => path.join(root, 'consonance', 'src-tauri', 'src', 'main.rs');
+  if (repo) {
+    if (fs.existsSync(rsOf(repo))) return { root: repo, file: rsOf(repo), tier: 'the repo passed in' };
+    tried.push(`the repo passed in (${repo}) holds no consonance/src-tauri/src/main.rs`);
+  }
+  let cfg = null;
+  try {
+    cfg = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^﻿/, ''));
+  } catch (e) {
+    tried.push(e && e.code === 'ENOENT' ? '~/.consonance.json does not exist' : '~/.consonance.json could not be read as JSON');
+  }
+  if (cfg) {
+    const room = cfg.room_path != null ? String(cfg.room_path).trim() : '';
+    if (room) {
+      const root = path.dirname(path.dirname(room));
+      if (fs.existsSync(rsOf(root))) return { root, file: rsOf(root), tier: '~/.consonance.json room_path' };
+      tried.push(`room_path ${room} does not lead to consonance/src-tauri/src/main.rs`);
+    } else {
+      tried.push('~/.consonance.json has no room_path');
+    }
+  }
+  const local = path.resolve(__dirname, '..', '..');
+  if (local !== repo) {
+    if (fs.existsSync(rsOf(local))) return { root: local, file: rsOf(local), tier: 'the checkout beside this file' };
+    tried.push('no checkout beside this file');
+  }
+  return { root: null, file: null, why: tried.join('; ') };
+}
+
+/** <data>/letters.json as { session id: letter }, or {} when it is absent or unreadable (a seat then gets its short id). */
+function lettersOf(dataDir) {
+  try {
+    const m = JSON.parse(fs.readFileSync(path.join(dataDir, 'letters.json'), 'utf8').replace(/^﻿/, ''));
+    return m && typeof m === 'object' && !Array.isArray(m) ? m : {};
+  } catch { return {}; }
+}
+
+const FIXED_SEATS = [['MAIN_SID', 'main'], ['LIBRARIAN_SID', 'librarian'], ['THIRD_PLACE_SID', 'third place']];
+
+/**
+ * Main, the librarian and the Third Place from the room's main.rs (the keeper's 05:2x ruling), then the roster.
+ * The array carries two more fields, so a miss is never silent: `room` (roomOf's answer) and `missing` (the fixed-seat
+ * consts main.rs did not hold). capturePass REFUSES when there is no room at all, and reports `missing` in its result.
+ */
+function seatSessions({ repo, dataDir, home } = {}) {
   const out = [];
   const add = (sid, label) => { if (sid && !out.some((s) => s.sid === sid)) out.push({ sid, label }); };
-  try {
-    const rs = fs.readFileSync(path.join(repo, 'consonance', 'src-tauri', 'src', 'main.rs'), 'utf8');
-    for (const [name, label] of [['MAIN_SID', 'main'], ['LIBRARIAN_SID', 'librarian'], ['THIRD_PLACE_SID', 'third place']]) {
-      const m = new RegExp(`const ${name}: &str = "([0-9a-f-]+)"`).exec(rs);
-      if (m) add(m[1], label);
+  const room = roomOf({ repo, home });
+  const missing = [];
+  if (room.file) {
+    let rs = null;
+    try { rs = fs.readFileSync(room.file, 'utf8'); } catch (e) { room.why = `${room.file} could not be read: ${e.message}`; room.file = null; room.root = null; }
+    if (rs !== null) {
+      for (const [name, label] of FIXED_SEATS) {
+        const m = new RegExp(`const ${name}: &str = "([0-9a-f-]+)"`).exec(rs);
+        if (m) add(m[1], label); else missing.push(name);
+      }
     }
-  } catch { /* no main.rs: the roster alone */ }
+  }
+  // A roster seat is named by its pane LETTER (<data>/letters.json, the registry main.rs pane_letter keeps), else by its
+  // first 8 id characters — NEVER its roster label. L099 addition, 2026-09-23: three panes on L shared "✦ brief", so 74
+  // verdicts could not be told apart and the first real drift flag could have been A, B or E. The fixed seats above keep
+  // their names: they are added first, and `add` keeps the first name a session is given.
   if (dataDir) {
+    const letters = lettersOf(dataDir);
     try {
       const rows = JSON.parse(fs.readFileSync(path.join(dataDir, 'panes.json'), 'utf8').replace(/^﻿/, ''));
-      for (const r of Array.isArray(rows) ? rows : []) add(r && r.pane, r && r.label);
+      for (const r of Array.isArray(rows) ? rows : []) if (r && r.pane) add(r.pane, letters[r.pane] || String(r.pane).slice(0, 8));
     } catch { /* no roster */ }
   }
+  out.room = room;
+  out.missing = missing;
   return out;
 }
 
@@ -167,12 +235,17 @@ const keyFile = (store, sid, uuid) => path.join(store, CAPTURES, `${sid}_${Strin
  * One pass over the live seats. `memo` (kept by the caller between passes) skips a transcript whose size and mtime
  * have not moved, so a 3 s tick costs a stat per seat, not a read.
  */
-function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, memo = {}, inputs = null, now = () => new Date() }) {
+function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, home, memo = {}, inputs = null, now = () => new Date() }) {
   if (!store) throw new Refusal('no store');
   const res = { seats: 0, captured: 0, running: 0, already: 0, noView: 0 };
   let io = inputs;
   let method = null;
-  for (const seat of seatSessions({ repo, dataDir })) {
+  const seats = seatSessions({ repo, dataDir, home });
+  if (!seats.room.file) {
+    throw new Refusal(`cannot find the room, so Main, the librarian and the Third Place cannot be judged — ${seats.room.why}. Fix: set room_path in ~/.consonance.json.`);
+  }
+  if (seats.missing.length) res.missing = seats.missing;
+  for (const seat of seats) {
     const t = transcriptFor(projectsDir, seat.sid);
     if (!t) continue;
     res.seats++;
@@ -183,7 +256,7 @@ function capturePass({ store, repo, dataDir, projectsDir, disciplineDir, memo = 
     if (!end) { res.running++; continue; }
     const dest = keyFile(store, seat.sid, end.uuid);
     if (fs.existsSync(dest)) { res.already++; continue; }
-    if (!io) io = loadJudgeInputs(repo);
+    if (!io) io = loadJudgeInputs(seats.room.root);
     if (method === null) method = readText(path.join(disciplineDir, 'METHOD.md'), 'METHOD.md (the L2 discipline)');
     const view = io.l2view(t.file);
     if (!view || !view.assistant_move) { res.noView++; continue; }
@@ -270,4 +343,4 @@ function callsToday(store, today = new Date().toDateString()) {
   return readJsonl(path.join(store, LEDGER)).filter((r) => r.status === 'ok' && new Date(r.ts).toDateString() === today).length;
 }
 
-module.exports = { seatSessions, transcriptFor, lastTurnEnd, loadJudgeInputs, capturePass, judgePass, callsToday, LEDGER, CAPTURES, HARD_CAP };
+module.exports = { Refusal, roomOf, lettersOf, seatSessions, transcriptFor, lastTurnEnd, loadJudgeInputs, capturePass, judgePass, callsToday, LEDGER, CAPTURES, HARD_CAP };

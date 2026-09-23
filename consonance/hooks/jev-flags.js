@@ -62,8 +62,34 @@ function seatIds(mainRs) {
 
 const hhmm = (ms) => { const d = new Date(ms); return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
 
+/**
+ * THE NAME A ROW IS PRINTED UNDER — L099 addition, 2026-09-23. Main and the librarian by name, always (letters.json gives
+ * them letters too, D and M, which would read as panes). Any other seat by its pane LETTER, looked up by session_id — so a
+ * row written before jev-judge named seats by letter ("✦ brief", shared by three panes on L) prints as the pane it was
+ * about, and the ledger is never rewritten. Without a letter: the row's seat if it is not a shared roster label, else the
+ * short id.
+ */
+const SHARED_LABEL = /^✦ /;   // "✦ brief", "✦ Around": the roster's labels, which panes share
+function seatName(r, ids, letters) {
+  if (r.session_id && ids && r.session_id === ids.main) return 'main';
+  if (r.session_id && ids && r.session_id === ids.librarian) return 'librarian';
+  if (letters && r.session_id && letters[r.session_id]) return letters[r.session_id];
+  if (r.seat && !SHARED_LABEL.test(String(r.seat))) return r.seat;
+  return r.session_id ? String(r.session_id).slice(0, 8) : (r.seat || '?');
+}
+
+/** <data_dir>/letters.json, the data dir read from ~/.consonance.json. {} when either is missing: names then fall back. */
+function lettersFor(home = os.homedir()) {
+  try {
+    const cfg = JSON.parse(fs.readFileSync(path.join(home, '.consonance.json'), 'utf8').replace(/^﻿/, ''));
+    if (!cfg || !cfg.data_dir) return {};
+    const m = JSON.parse(fs.readFileSync(path.join(String(cfg.data_dir), 'letters.json'), 'utf8').replace(/^﻿/, ''));
+    return m && typeof m === 'object' && !Array.isArray(m) ? m : {};
+  } catch { return {}; }
+}
+
 /** The flag lines this reader should see. Pure: rows in, lines out. */
-function flagLines({ rows, pane, ids, now = Date.now() }) {
+function flagLines({ rows, pane, ids, now = Date.now(), letters }) {
   if (!pane || !ids || !ids.main || !ids.librarian) return [];
   if (pane !== ids.main && pane !== ids.librarian) return [];
   const since = now - WINDOW_HOURS * 3600 * 1000;
@@ -78,7 +104,7 @@ function flagLines({ rows, pane, ids, now = Date.now() }) {
     if (!v || typeof v.choice !== 'string') continue;
     const p = v.probabilities && typeof v.probabilities[v.choice] === 'number' ? v.probabilities[v.choice] : null;
     if (v.choice === 'drift' || (v.choice === 'abstain' && p != null && p >= ABSTAIN_MIN)) {
-      const seat = String(r.seat || r.session_id || '?').replace(/[\r\n]/g, ' ').slice(0, 40);
+      const seat = String(seatName(r, ids, letters)).replace(/[\r\n]/g, ' ').slice(0, 40);
       hits.push({ t, line: `[jev L2 · unverified] ${seat} · turn ${hhmm(t)} · ${v.choice}${p == null ? '' : ` p=${p.toFixed(2)}`}` });
     }
   }
@@ -144,10 +170,10 @@ function main(env = process.env) {
   const ids = seatIds(where.file);
   const rows = readRows(path.join(env.LOCALAPPDATA, 'consonance', 'jev-shadow', 'jev_judge.jsonl'));
   const now = env.JEV_FLAGS_NOW ? Date.parse(env.JEV_FLAGS_NOW) : Date.now();
-  return flagLines({ rows, pane: env.CONSONANCE_PANE, ids, now }).join('\n');
+  return flagLines({ rows, pane: env.CONSONANCE_PANE, ids, now, letters: lettersFor() }).join('\n');
 }
 
-module.exports = { flagLines, seatIds, readRows, mainRsPath, main, ABSTAIN_MIN, WINDOW_HOURS, MAX_LINES, SURFACE_THIRD_PLACE };
+module.exports = { flagLines, seatName, lettersFor, seatIds, readRows, mainRsPath, main, ABSTAIN_MIN, WINDOW_HOURS, MAX_LINES, SURFACE_THIRD_PLACE };
 
 if (require.main === module) {
   // THE DREAM GATE, in the room's census form (L089) — dream-gate.test.js recognises exactly this line. The check inside

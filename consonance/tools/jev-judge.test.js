@@ -361,3 +361,139 @@ test('PACING: a pass spaces its calls, waits out a 429\'s Retry-After, skips tha
   assert.strictEqual(r.asked, 3);
   assert.strictEqual(J.callsToday(w.store, new Date(rowsOf(w)[0].ts).toDateString()), 3, 'the daily cap counts ok rows only — unchanged');
 });
+
+// ── L099: the room is found through ~/.consonance.json room_path, and not finding it is LOUD ───────────────────────
+// An installed copy (not inside a checkout) used to read <__dirname>/../../consonance/src-tauri/src/main.rs, find nothing,
+// and judge the roster alone: Main, the librarian and the Third Place dropped out with no line anywhere — L089's
+// jev-flags bug, in its sibling.
+function installedCopy() {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-judge-inst-'));
+  const tools = path.join(dir, 'somewhere', 'tools');
+  fs.mkdirSync(tools, { recursive: true });
+  for (const f of ['jev-judge.js', 'jev-ask.js', 'jev-shadow.js']) fs.copyFileSync(path.join(__dirname, f), path.join(tools, f));
+  return require(path.join(tools, 'jev-judge.js'));
+}
+function homeWith(cfg) {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-judge-home-'));
+  if (cfg !== undefined) fs.writeFileSync(path.join(home, '.consonance.json'), typeof cfg === 'string' ? cfg : JSON.stringify(cfg));
+  return home;
+}
+
+test('L099: an installed copy with no repo finds all three fixed seats through room_path', () => {
+  const w = world();
+  const JI = installedCopy();
+  const home = homeWith({ room_path: path.join(w.repo, 'exo_memory', 'BOOT.md') });
+  const sids = JI.seatSessions({ dataDir: w.data, home }).map((s) => s.sid);
+  for (const s of [MAIN, LIB, TP]) assert.ok(sids.includes(s), `${s} missing from ${JSON.stringify(sids)}`);
+});
+
+test('L099: an installed copy captures a Main turn, reading the hooks from the room room_path names', () => {
+  const w = world();
+  const JI = installedCopy();
+  const home = homeWith({ room_path: path.join(w.repo, 'exo_memory', 'BOOT.md') });
+  transcript(w, MAIN, [u('do the thing'), a('done')]);
+  const res = JI.capturePass({ store: w.store, dataDir: w.data, projectsDir: w.projects, disciplineDir: w.repo, memo: {}, home });
+  assert.strictEqual(res.captured, 1, JSON.stringify(res));
+});
+
+test('L099: no room_path and no checkout → capturePass REFUSES, naming every place tried and the fix', () => {
+  const w = world();
+  const JI = installedCopy();
+  const home = homeWith();
+  assert.throws(() => JI.capturePass({ store: w.store, dataDir: w.data, projectsDir: w.projects, disciplineDir: w.repo, memo: {}, home }),
+    (e) => e instanceof JI.Refusal
+      && /cannot find the room/.test(e.message)
+      && /~\/\.consonance\.json does not exist/.test(e.message)
+      && /Fix: set room_path in ~\/\.consonance\.json/.test(e.message));
+});
+
+test('L099: a room_path that leads nowhere is named in the refusal', () => {
+  const w = world();
+  const JI = installedCopy();
+  const home = homeWith({ room_path: path.join(w.root, 'nowhere', 'exo_memory', 'BOOT.md') });
+  assert.throws(() => JI.capturePass({ store: w.store, dataDir: w.data, projectsDir: w.projects, disciplineDir: w.repo, memo: {}, home }),
+    (e) => /room_path .*nowhere.* does not lead to consonance\/src-tauri\/src\/main\.rs/.test(e.message));
+});
+
+test('L099: the roster still resolves when the room cannot be found — the refusal is what says so, not an empty seat list', () => {
+  const w = world();
+  const JI = installedCopy();
+  const seats = JI.seatSessions({ dataDir: w.data, home: homeWith() });
+  assert.ok(seats.map((s) => s.sid).includes(PANE));
+  assert.strictEqual(seats.room.file, null);
+  assert.match(seats.room.why, /~\/\.consonance\.json does not exist/);
+});
+
+test('L099: a main.rs missing one const → the other two still resolve, and the missing one is NAMED', () => {
+  const w = world();
+  const rs = path.join(w.repo, 'consonance', 'src-tauri', 'src', 'main.rs');
+  fs.writeFileSync(rs, fs.readFileSync(rs, 'utf8').replace(/const LIBRARIAN_SID[^\n]*\n/, ''));
+  const seats = J.seatSessions({ repo: w.repo, dataDir: w.data, home: homeWith() });
+  const sids = seats.map((s) => s.sid);
+  assert.ok(sids.includes(MAIN) && sids.includes(TP), JSON.stringify(sids));
+  assert.deepStrictEqual(seats.missing, ['LIBRARIAN_SID']);
+});
+
+test('L099: capturePass carries the missing const into its result', () => {
+  const w = world();
+  const rs = path.join(w.repo, 'consonance', 'src-tauri', 'src', 'main.rs');
+  fs.writeFileSync(rs, fs.readFileSync(rs, 'utf8').replace(/const THIRD_PLACE_SID[^\n]*\n/, ''));
+  const res = J.capturePass(O(w, { home: homeWith() }));
+  assert.deepStrictEqual(res.missing, ['THIRD_PLACE_SID']);
+});
+
+test('L099: a checkout passed as repo wins over room_path — the hooks and main.rs come from ONE tree', () => {
+  const w = world(), other = world();
+  const rs = path.join(other.repo, 'consonance', 'src-tauri', 'src', 'main.rs');
+  fs.writeFileSync(rs, fs.readFileSync(rs, 'utf8').replace(MAIN, '0c0c0c0a-0000-4000-8000-00000000beef'));
+  const home = homeWith({ room_path: path.join(other.repo, 'exo_memory', 'BOOT.md') });
+  const sids = J.seatSessions({ repo: w.repo, dataDir: w.data, home }).map((s) => s.sid);
+  assert.ok(sids.includes(MAIN), JSON.stringify(sids));
+});
+
+test('L099: an unreadable ~/.consonance.json is named as unreadable, not as absent', () => {
+  const w = world();
+  const JI = installedCopy();
+  const seats = JI.seatSessions({ dataDir: w.data, home: homeWith('{not json') });
+  assert.match(seats.room.why, /could not be read as JSON/);
+});
+
+// ── L099 addition: a seat is named by its pane LETTER, not its roster label. Three panes shared "✦ brief" on L, so 74 of
+// Jev's verdicts could not be told apart, and the first real drift flag (04:26) could have been A, B or E.
+const PANE_B = '12fb81f6-f4c0-4ef8-aad8-f0cdce091925', PANE_E = 'a2122153-a37e-41a6-a86f-534267ec0565';
+function sharedLabels(w, letters) {
+  fs.writeFileSync(path.join(w.data, 'panes.json'), JSON.stringify([
+    { pane: PANE, cwd: 'x', label: '✦ brief' }, { pane: PANE_B, cwd: 'y', label: '✦ brief' }, { pane: PANE_E, cwd: 'z', label: '✦ brief' }]));
+  if (letters) fs.writeFileSync(path.join(w.data, 'letters.json'), JSON.stringify(letters));
+}
+const seatName = (w, sid) => (J.seatSessions({ repo: w.repo, dataDir: w.data, home: homeWith() }).find((s) => s.sid === sid) || {}).label;
+
+test('L099: two panes with the same roster label get two different seat names — their letters', () => {
+  const w = world();
+  sharedLabels(w, { [PANE]: 'A', [PANE_B]: 'B', [PANE_E]: 'E' });
+  assert.deepStrictEqual([seatName(w, PANE), seatName(w, PANE_B), seatName(w, PANE_E)], ['A', 'B', 'E']);
+});
+
+test('L099: a pane with no letter is named by a short session id, never by the shared label', () => {
+  const w = world();
+  sharedLabels(w, { [PANE]: 'A' });
+  assert.deepStrictEqual([seatName(w, PANE), seatName(w, PANE_B)], ['A', '12fb81f6']);
+});
+
+test('L099: Main, the librarian and the Third Place keep their names even when letters.json gives them a letter', () => {
+  const w = world();
+  sharedLabels(w, { [MAIN]: 'D', [LIB]: 'M', [PANE]: 'A' });
+  // Main and the librarian in the roster too, so the order the two sources are read in decides the name (mutant N4).
+  const roster = JSON.parse(fs.readFileSync(path.join(w.data, 'panes.json'), 'utf8'));
+  fs.writeFileSync(path.join(w.data, 'panes.json'), JSON.stringify([{ pane: MAIN, label: '✦ brief' }, { pane: LIB, label: '✦ brief' }, ...roster]));
+  assert.deepStrictEqual([seatName(w, MAIN), seatName(w, LIB), seatName(w, TP)], ['main', 'librarian', 'third place']);
+});
+
+test('L099: the captured row carries the letter as its seat', () => {
+  const w = world();
+  sharedLabels(w, { [PANE]: 'A', [PANE_B]: 'B', [PANE_E]: 'E' });
+  transcript(w, PANE_B, [u('do it'), a('done')]);
+  J.capturePass(O(w, { home: homeWith() }));
+  const caps = fs.readdirSync(path.join(w.store, J.CAPTURES)).map((f) => JSON.parse(fs.readFileSync(path.join(w.store, J.CAPTURES, f), 'utf8')));
+  assert.deepStrictEqual(caps.map((c) => c.seat), ['B']);
+});
