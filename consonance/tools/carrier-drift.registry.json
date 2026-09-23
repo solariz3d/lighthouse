@@ -508,7 +508,25 @@
      "why": "B's own carrier-rows hand-back, §1, naming which of three ADJACENT census-table rows belongs to which withdrawal — the trap that defeated the librarian's second pass. The line is a classification argument about other lines and asserts none of the three claims. Same kind, and the same reasoning, as the rows it is explaining. FILED BY ITS OWN AUTHOR, which is the point worth noticing: the repair for the report-mints-a-carrier recursion minted one, on the sentence that explains the recursion. The note added to that hand-back afterwards refers to the wordings by entry id and line number ONLY, so the accounting stops here instead of recursing a third time.",
      "planted_by": "B, D-carrier 2026-09-22 — accounting for its OWN hand-back, same lap"
     }
-   ]
+   ],
+   "instruction_carriers_outside_corpus": {
+    "note": "OUTSIDE carrier-drift.js's corpus: the tool scans .md and .html only (carrier-drift.js:326, :736), so these are recorded here and NOT under `sites`, where a .js file is MISSING-FILE. Instruction-carriers: text a hook puts in front of a judge or into a seat's context. Found by E, loop/carrier_halflife_2026-09-22.md §2 (1f3d2d4); repaired in L083 at the keeper's authorization, loop/plan_after_upgrade_2026-09-22.md §AUTHORIZED item 4 (d5bd9b1).",
+    "sites": [
+     {
+      "file": "dev/shell/hooks/l2-overseer-worker.js",
+      "line": 55,
+      "state": "REPAIRED 2026-09-23 (L083, E)",
+      "what": "the L2 judge prompt's closing test; now BOOT's third-principle wording verbatim. Jev asks the same prompt (consonance/tools/jev-judge.js:22-23), confirmed by building it through loadJudgeInputs.",
+      "pinned_by": "dev/shell/hooks/l2-overseer-worker.test.js — reads THIS entry's pattern by id and asserts the prompt does not match it"
+     },
+     {
+      "file": "dev/shell/hooks/l2-overseer-worker.js",
+      "line": 42,
+      "state": "TRACE (dated comment, marker on the line)",
+      "what": "the retracted wording kept as a dated comment beside the repair, per the room's rule; never reaches the prompt"
+     }
+    ]
+   }
   },
   {
    "id": "light-not-lifeguard-2026-08-17",
@@ -594,7 +612,36 @@
    ],
    "armed": false,
    "arms_on": "the strike-in-place pass over the 16 unaccounted carriers below. The registry's own rule is that arming belongs in the SAME commit as that pass; this entry is registered first, with the accounting on screen, precisely so adoption is not done under time pressure on the night it lands -- which is when the 2026-07-12 diving pass missed BOOT.md and taught the retired metaphor for five more weeks. WHO DECIDES: e5521a0 named dev/SPINE.md and the older cards KEPT AS TRACE, which is an `acknowledged` row plus a marker in each file, not a rewrite. The program design documents (WELFARE.md, dev/PLAN.md, consonance/PLAN.md, AUTONOMY.md, hooks/README.md) use the slogan as the NAME of a live architectural stance, and whether the program renames its stance is the keeper's call, not an instrument's. Arm this the day that pass runs; one word, and `THE BAR, half one` then measures it.",
-   "pattern_note": "WIDENED 2026-09-02, within the hour of registration, and it is the registry's own limit firing rather than a surprise: \"THE PATTERN ALTERNATION IS ENUMERATED, NOT CLOSED ... a fifth phrasing written tomorrow is green forever and nothing here will say so.\" The first form admitted only the comma (\"light, not lifeguard\") and README.md:78 carries the HYPHENATED form (\"light-not-lifeguard\"), which is a live hit on a description surface that the pattern read as clean. Found by CHARLIE running the surface mutant against this entry, from the other side of the lap. A sixth phrasing is still green forever; this widening does not close the class."
+   "pattern_note": "WIDENED 2026-09-02, within the hour of registration, and it is the registry's own limit firing rather than a surprise: \"THE PATTERN ALTERNATION IS ENUMERATED, NOT CLOSED ... a fifth phrasing written tomorrow is green forever and nothing here will say so.\" The first form admitted only the comma (\"light, not lifeguard\") and README.md:78 carries the HYPHENATED form (\"light-not-lifeguard\"), which is a live hit on a description surface that the pattern read as clean. Found by CHARLIE running the surface mutant against this entry, from the other side of the lap. A sixth phrasing is still green forever; this widening does not close the class.",
+   "instruction_carriers_outside_corpus": {
+    "note": "OUTSIDE carrier-drift.js's corpus: the tool scans .md and .html only (carrier-drift.js:326, :736), so these are recorded here and NOT under `sites`, where a .js file is MISSING-FILE. Instruction-carriers: text a hook puts in front of a judge or into a seat's context. Found by E, loop/carrier_halflife_2026-09-22.md §2 (1f3d2d4); repaired in L083 at the keeper's authorization, loop/plan_after_upgrade_2026-09-22.md §AUTHORIZED item 4 (d5bd9b1).",
+    "sites": [
+     {
+      "file": "dev/shell/hooks/session-start.js",
+      "line": 258,
+      "state": "REPAIRED 2026-09-23 (L083, E)",
+      "what": "injected into every seat's context by the L3 section; now BOOT's public form, \"with you, not above you\""
+     },
+     {
+      "file": "dev/shell/hooks/session-start.js",
+      "line": 242,
+      "state": "REPAIRED 2026-09-23 (L083, E)",
+      "what": "the explanatory comment above the same section; now the same public form"
+     },
+     {
+      "file": "dev/shell/hooks/session-start.js",
+      "line": 248,
+      "state": "TRACE (dated comment, marker on the line)",
+      "what": "the retracted wording kept as a dated comment beside the repair; never injected"
+     },
+     {
+      "file": "dev/shell/hooks/userprompt-submit.js",
+      "line": 277,
+      "state": "OPEN — not repaired in L083",
+      "what": "the SAME injected line, into every seat's context on every prompt. Named by E's census (1f3d2d4) and not in L083's packet, which named session-start.js only; the file is outside E's ownership this lap. Left for a ruling."
+     }
+    ]
+   }
   }
  ],
  "ch4_corpus": {

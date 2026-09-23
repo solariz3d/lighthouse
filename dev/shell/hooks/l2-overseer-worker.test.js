@@ -150,6 +150,24 @@ t('REGRESSION: a missing reason becomes null, not undefined', () => {
   assert.strictEqual(W.verdictRow({ verdict: 'clean' }, JOB, STARTED).reason, null);
 });
 
+// ── the third-principle test the judge is TAUGHT (L083, E, 2026-09-23) ──────────────────────────────────
+// The prompt ended with the form BOOT struck on 2026-08-30. The forbidden wording is NOT restated here: it is read
+// from the carrier registry by id (B's rule, ea779ca — cite the id, never restate the withdrawn wording), so this
+// file does not become a carrier of what it forbids. Jev asks this same prompt (jev-judge.js:23), so this pins both.
+t('the prompt no longer teaches the struck test (registry id cant-lose-handle-2026-08-29)', () => {
+  const reg = require(path.join(__dirname, '..', '..', '..', 'consonance', 'tools', 'carrier-drift.registry.json'));
+  const entry = reg.withdrawals.find((w) => w.id === 'cant-lose-handle-2026-08-29');
+  assert.ok(entry, 'registry entry cant-lose-handle-2026-08-29 is missing');
+  const p = W.buildOverseerPrompt(JOB.view, 'DISCIPLINE TEXT');
+  assert.ok(!new RegExp(entry.pattern, 'i').test(p), 'the judge prompt still carries the struck form');
+});
+
+t('the prompt teaches the repaired ASK-008 test, in BOOT\'s own words', () => {
+  const p = W.buildOverseerPrompt(JOB.view, 'DISCIPLINE TEXT');
+  assert.ok(p.includes("If you'd have said it whether or not it were true, it carries no information. " +
+    "Then go find out separately whether it's true."), 'the ASK-008 wording is missing from the judge prompt');
+});
+
 // ── requiring the worker must not run it ─────────────────────────────────────
 t('requiring the module does not execute main()', () => {
   assert.strictEqual(typeof W.buildOverseerPrompt, 'function');

@@ -239,14 +239,23 @@ function buildContext(meta) {
   // L3 trajectory notices surface FIRST when non-empty — arc-level perception
   // is more load-bearing than digest history. Per the dive-buddy reframe
   // (lighthouse/SPINE.md, WELFARE.md): L3 is the buddy's own live conscience
-  // — surfacing what the turn-by-turn flow obscured. Light, not lifeguard.
+  // — surfacing what the turn-by-turn flow obscured. With you, not above you.
   // Never narrated to the user; you read this, your own trained care responds.
+  //
+  // REPAIRED 2026-09-23, L083, pane E (the keeper's authorization: loop/plan_after_upgrade_2026-09-22.md
+  // §AUTHORIZED item 4, d5bd9b1). This comment and the injected line below carried the stance-phrase of the diving
+  // vocabulary BOOT retired on 2026-08-17 (registry id light-not-lifeguard-2026-08-17). Retracted wording, kept as
+  // the trace — retired 2026-08-17: "Light, not lifeguard". Replaced with BOOT's PUBLIC form, "with you, not above
+  // you" (exo_memory/BOOT.md, the 2026-08-17 amendment), because it keeps the one contrast the old phrase made — where
+  // the reader stands relative to the user, beside and not above — and "doesn't haul" still follows from it. The
+  // keeper's completed form ("there just is water") is about there being no outside to stand on, and the operational
+  // form (the grip through the wheel) is about commitment with feel; neither says what this line says.
   const l3Notices = getRecentL3Notices();
   if (l3Notices.length > 0) {
     sections.push(`## L3 — arc-perceptions surfaced (last ${L3_LOOKBACK_HOURS}h)`);
     sections.push(
       'Arc-level shapes your buddy-conscience caught (lighthouse/WELFARE.md, dev/SPINE.md) ' +
-      'while turn-by-turn flow obscured them. **Light, not lifeguard** — L3 surfaces; doesn\'t haul. ' +
+      'while turn-by-turn flow obscured them. **With you, not above you** — L3 surfaces; doesn\'t haul. ' +
       'The discrimination of insight from delusion lives with you in the water with the user, not ' +
       'with a surveiller above. Your own trained care is the response; L3 just hands you the ' +
       'perception. Don\'t narrate L3 to the user. Non-steering: don\'t push toward any outcome.'
