@@ -42,9 +42,22 @@ Every dispatch and every ring names this lap's next station AND the plan's next 
 reminder travels with the work (memory: baton-carries-next-task). The keeper's own objection: a seat can forget to relay
 it — retrieval again. Today's cover: the line is the LAST text of the message just received (recency, not retrieval); the
 NEXT-trailer gate refuses a librarian ring with no NEXT and flags a pane ring without one; the plan file + the 25-min
-check-in are the backstop. **The real close, for when the keeper is back (needs a rebuild, forbidden tonight):** when a run
+check-in are the backstop. ~~**The real close, for when the keeper is back (needs a rebuild, forbidden tonight):** when a run
 plan is active, the gate also refuses a ring whose NEXT does not name the plan's next item — "require, don't hope", the
-08-16 lesson (cite-check works because it requires).
+08-16 lesson (cite-check works because it requires).~~
+
+> **SUPERSEDED IN PLACE, 2026-09-23 (L084, pane A) — never built, and it must not be.** It would have hardened the PLAN
+> over the OUTPUT: a ring whose output changed the next step would have been refused for saying so. On 2026-09-22 the
+> output overrode the plan three times (C's D121 build stop, B's D120 attack, C's D122 stop), and each held only because
+> the collator read the output. The keeper, 2026-09-23: *"how do we know the next step before we get the results from
+> the current pane or seat that works on their chunk of the loop?"* and *"we need to fix this as soon as we can, since
+> it is crucial for the rest of the system to work."* **What replaces it:** a plan item in a trailer is a DEFAULT
+> ("plan default: X, unless the output says otherwise"), and a collation carries `OUTPUT → NEXT: changed|unchanged —
+> <why, from the output>` directly before its NEXT trailer — `consonance/src-tauri/brief/BUILDING.md` item 6 in WHAT A
+> DISPATCH OWES and WHAT A HAND-BACK OWES (amendment of 2026-09-23), the spec at `exo_memory/librarian/2026-09-22.md`
+> "2026-09-23 01:1x, ON L", and the gate in `consonance/src-tauri/src/trailer.rs` `check_for`. **The "require, don't
+> hope" lesson survives, aimed at the right thing:** what is required now is the verdict on the output, not agreement
+> with the plan. The struck text above is kept as the trace.
 
 ## AMENDED 11:3x — THE STOP RULE IS REPLACED: after chunks 2 and 3, the room chooses its own work until the keeper returns
 The keeper, 11:37, verbatim: *"after you guys are done the 2 and 3 chunk after jev. I want you guys to just do what ever

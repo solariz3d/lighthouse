@@ -3579,8 +3579,10 @@ enum TrailerDecision {
 /// Check `text`'s trailer and decide, on `trailer::policy(verb)`. A compliant message is delivered unchanged with no
 /// board line. `verb_name` is how the audit line names the call (e.g. `chair_inject -> B`, `call_librarian from A`).
 fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> TrailerDecision {
-    use crate::trailer::{check, delivered_with_warning, policy, refusal_text, Action};
-    let why = match check(text) {
+    // L084: `check_for`, not `check` — the verb decides whether the collation's `OUTPUT → NEXT:` line is owed
+    // (call_chair only). For call_librarian and chair_inject it returns exactly what `check` did.
+    use crate::trailer::{check_for, delivered_with_warning, policy, refusal_text, Action};
+    let why = match check_for(verb, text) {
         Ok(_) => return TrailerDecision::Deliver { text: text.to_string(), audit: None },
         Err(why) => why,
     };
@@ -3662,10 +3664,14 @@ mod trailer_gate_tests {
 
     #[test]
     fn every_verb_with_a_trailer_delivers_the_message_unchanged_and_posts_nothing() {
-        for verb in [Verb::ChairInject, Verb::CallChair, Verb::CallLibrarian] {
+        // CHANGED L084 (2026-09-23), and verifiably wrong before this change under the keeper's rule: this looped all three
+        // verbs over WITH, a valid NEXT and no `OUTPUT → NEXT:` line. That is now a compliant PANE ring and a compliant
+        // DISPATCH, and a NON-compliant collation (BUILDING.md WHAT A HAND-BACK OWES item 6, amended 2026-09-23). So the
+        // two verbs keep this exact assertion on WITH, and call_chair keeps it on a compliant collation.
+        for (verb, msg) in [(Verb::ChairInject, WITH), (Verb::CallLibrarian, WITH), (Verb::CallChair, COLLATION)] {
             assert_eq!(
-                trailer_gate(verb, "v", WITH),
-                TrailerDecision::Deliver { text: WITH.to_string(), audit: None },
+                trailer_gate(verb, "v", msg),
+                TrailerDecision::Deliver { text: msg.to_string(), audit: None },
                 "{verb:?} altered or audited a compliant message"
             );
         }
@@ -3681,6 +3687,49 @@ mod trailer_gate_tests {
             panic!("not warned")
         };
         assert!(warn.contains("names no station"), "the warning does not say what was missing: {warn}");
+    }
+
+    // ── L084 · the OUTPUT → NEXT line, on the collation ring ONLY (trailer::check_for) ────────────────────────────
+    // The keeper, 2026-09-23: the next step comes from the OUTPUT, not the plan. BUILDING.md item 6, amended.
+    const COLLATION: &str = "L083 collated: exo_memory/librarian/2026-09-22.md.\n\nOUTPUT → NEXT: unchanged — both hand-backs green and inside their packets\nNEXT: chair open items 3 + 2 when this collation is read";
+
+    #[test]
+    fn l084_call_chair_with_a_trailer_but_no_output_line_is_refused_and_comes_back_whole() {
+        match trailer_gate(Verb::CallChair, "call_chair", WITH) {
+            TrailerDecision::Refuse { reply, audit } => {
+                assert!(reply.contains(WITH), "the refused collation was not handed back: {reply}");
+                assert!(reply.contains("OUTPUT → NEXT:") && reply.contains("WHAT A HAND-BACK OWES"), "{reply}");
+                assert!(audit.contains("call_chair") && audit.contains("REFUSED"), "{audit}");
+            }
+            other => panic!("a collation with no OUTPUT → NEXT line was delivered: {other:?}"),
+        }
+    }
+
+    #[test]
+    fn l084_call_chair_with_the_output_line_is_delivered_unchanged() {
+        assert_eq!(
+            trailer_gate(Verb::CallChair, "call_chair", COLLATION),
+            TrailerDecision::Deliver { text: COLLATION.to_string(), audit: None }
+        );
+    }
+
+    #[test]
+    fn l084_the_rule_reaches_no_other_verb() {
+        // A pane's ring and a chair dispatch with a valid NEXT and NO OUTPUT line: delivered, unchanged, no board line.
+        for verb in [Verb::CallLibrarian, Verb::ChairInject] {
+            assert_eq!(
+                trailer_gate(verb, "v", WITH),
+                TrailerDecision::Deliver { text: WITH.to_string(), audit: None },
+                "{verb:?} was reached by the collation-only rule"
+            );
+        }
+    }
+
+    #[test]
+    fn l084_trailer_gate_runs_check_for_with_the_verb() {
+        // The wiring itself: a gate that calls the text-only `check` cannot tell the collation ring from a pane.
+        let b = body_of("fn trailer_gate(");
+        assert!(b.contains("check_for(verb, text)"), "trailer_gate does not pass the verb to the check");
     }
 
     // ── the wiring, pinned by position and by the arm, on A's precedent ──────────────────────────────────────────

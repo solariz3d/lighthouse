@@ -222,6 +222,24 @@ named files. They never commit to a shared checkout.
        FALSIFIER (the librarian's): ten laps on, if packets cite no dossier row, the matching is
        still the chair's memory whatever the packet titles say.
 
+   **AMENDED 2026-09-23 — the next step comes from the OUTPUT, not the plan** (L084; the spec is
+   `exo_memory/librarian/2026-09-22.md`, "2026-09-23 01:1x, ON L"). The keeper, verbatim: *"how do we
+   know the next step before we get the results from the current pane or seat that works on their
+   chunk of the loop?"* and *"we need to fix this as soon as we can, since it is crucial for the rest
+   of the system to work."* The 09-16 rule above stands: the NEXT line names the station and **when**
+   it acts, and that `when` is where the output enters. What this refines is the *plan item*. A
+   dispatch cannot know what the work will find, so **any plan item in a trailer is a DEFAULT, and is
+   written as one**:
+
+       NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default
+       after it: <item>, unless the output says otherwise
+
+   A plan item written as a destination turns a guess made before the work into an order issued over
+   it. On 2026-09-22 the output overrode the plan three times (C's D121 build stop, B's D120 attack,
+   C's D122 stop), and each override held only because the collator read the output. The verdict on
+   the default belongs to whoever reads the output — the collator — and it is written there
+   (WHAT A HAND-BACK OWES item 6).
+
 ## THE ORDER OF A DISPATCH — finish, verify, file, THEN ring (added 2026-08-24)
 
 
@@ -419,6 +437,30 @@ night. `node consonance/tools/ferry.js --report`.*
    of the 7 a chair dispatch. Rings carried it 0 of 18: panes 0 of 9, the librarian 0 of 9. Of the
    seven hand-back FILES written in the same window, 0 ended with one.** That is the number this
    rule has to move, and it is on the record so it can be checked rather than claimed.
+
+   **AMENDED 2026-09-23 — a COLLATION says whether the output changed the next step** (L084; the spec
+   is `exo_memory/librarian/2026-09-22.md`, "2026-09-23 01:1x, ON L"). The keeper, verbatim: *"how do
+   we know the next step before we get the results from the current pane or seat that works on their
+   chunk of the loop?"* and *"we need to fix this as soon as we can, since it is crucial for the rest
+   of the system to work."* The 09-16 rule above stands for every ring. **The librarian's collation
+   ring to the chair (`call_chair`) also owes one line, directly before its NEXT trailer:**
+
+       OUTPUT → NEXT: changed|unchanged — <why, from the output>
+       NEXT: <station> <command> when <condition>
+
+   `changed` when the hand-backs moved the next step off the plan's default; `unchanged` when they did
+   not — and either way, the reason is read from the output, not restated from the plan. `->` is
+   accepted for `→`. **Directly before, not anywhere:** a phrase accepted anywhere is satisfied by a
+   quote of it. **Panes do not owe it** — a pane reports and the collator decides, and on
+   `call_librarian` a refusal would drop the pointer besides (item 4). The gate is
+   `consonance/src-tauri/src/trailer.rs` `check_for`, which refuses a collation without the line and
+   returns it whole. *What the gate cannot do: tell a true reason from `unchanged — ok`.* It makes the
+   verdict exist where a later reader can hold it against the output it names. Checking it is that
+   reader's job.
+
+   *Superseded by this amendment, and struck in place:* the 09-22 plan's "real close"
+   (`exo_memory/loop/plan_unattended_2026-09-22.md`), a gate that would have refused any ring whose
+   NEXT did not name the plan's next item — the plan hardened over the output.
 
 ---
 
