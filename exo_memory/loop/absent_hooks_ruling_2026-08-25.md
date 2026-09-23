@@ -15,16 +15,42 @@ ran with `CONSONANCE_DATA` or `USERPROFILE` redirected into a scratchpad. Handed
 |---|---|---|---|
 | 1 | `lib\ambient.js` | 10,663 | **DO NOT INSTALL** |
 | 2 | `lib\fresh-guard.js` | 1,266 | **DO NOT INSTALL** |
-| 3 | `hooks\session-start.js` | 13,471 | **DO NOT INSTALL** |
+| 3 | `hooks\session-start.js` | 13,471 | **DO NOT INSTALL** *— installed and wired on both machines since; see the 2026-09-23 note under this table* |
 | 4 | `hooks\userprompt-submit.js` | 13,620 | **DO NOT INSTALL** — and cannot be installed by this installer |
 | 5 | `hooks\stop.js` | 3,013 | **DO NOT INSTALL** |
 | 6 | `hooks\session-end.js` | 8,064 | **DO NOT INSTALL** |
 | 7 | `hooks\precompact.js` | 3,110 | **DO NOT INSTALL** |
 | 8 | `hooks\l2-overseer.js` | 6,602 | **DO NOT INSTALL** |
-| 9 | `hooks\l2-overseer-worker.js` | 5,095 | **DO NOT INSTALL** |
+| 9 | `hooks\l2-overseer-worker.js` | 5,095 | **DO NOT INSTALL** *— installed on both machines since; on L the ruling's reason still holds; see the 2026-09-23 note under this table* |
 | 10 | `hooks\l3-overseer.js` | 6,748 | **DO NOT INSTALL** |
 | 11 | `hooks\l3-overseer-worker.js` | 6,021 | **DO NOT INSTALL** |
 | 12 | `findings-return.js` | 15,026 | **INSTALL** — file and registration together, watched, not in a bulk run |
+
+> **NOTE, 2026-09-23 (pane E, L094) — rows 3 and 9 no longer describe either machine. The ruling above is kept as
+> written; this records what changed, and when.** Measured on L; D is from the record.
+>
+> - **What did NOT change: the installer did not newly take them on.** Both entries have been in `install.ps1`'s
+>   manifest since `daded53` (2026-08-17), eight days before this ruling (`git log -S` on each `From =` line).
+>   `session-start.js` is at `dev/shell/install.ps1:98` (`$files`) and `:179` (`$register`, SessionStart), and
+>   `l2-overseer-worker.js` is at `:118` (`$files`, `Lib = $true`, so there is no registration). This ruling ruled on
+>   the **absent machine copies** on L, not on the manifest. *(The L094 packet cited L089's jev-flags move, `a1250a4`,
+>   as the change. That commit is about `jev-flags.js` and does not touch these two rows.)*
+> - **What changed: both got installed.** **On D**, B's D097 installed both on 2026-09-21
+>   (`handback/p-d097-install1-B_2026-09-21.md:38–39`, backup `:126`). **On L**, both were already present before
+>   2026-09-23: `session-start.js` was wired at SessionStart (`~/.claude/settings.json:23`). Their pre-refresh copies
+>   are 13,471 B and 5,095 B, this table's own sizes (`~/.claude/shell/hooks/*.pre-install-2026-09-23`). **When they
+>   were first installed on L cannot be recovered from L's disk**, because the copies keep the repo file's mtime
+>   (2026-08-24 and 2026-08-18). L083 (`1c5b4f2`, 2026-09-23) refreshed both with `install.ps1 -Only`, and
+>   `-Check` reads both `ok` (`handback/p-l083-carriers-E_2026-09-23.md`).
+> - **Row 9's reason still holds on L.** The worker resolves its discipline doc at `~/Desktop/lighthouse/METHOD.md`
+>   (`dev/shell/hooks/l2-overseer-worker.js:18`), and neither `C:\Users\zackn\Desktop\lighthouse` nor the OneDrive
+>   Desktop path exists on L (`ls`, 2026-09-23). **Nothing on L calls it either:** `grep -n overseer
+>   ~/.claude/settings.json` finds no `l2-overseer.js` registration. Jev reads the **repo** copy
+>   (`consonance/tools/jev-judge.js:22–23`), not the installed one. So on L the installed copy is present and does
+>   nothing.
+> - **Row 3's reasons were not re-checked.** Whether the sky block now prints twice, and what the digests hold on
+>   L, are not re-measured here. `lib\fresh-guard.js` (row 2), which this ruling says must ride with it, is
+>   installed on L (`~/.claude/shell/lib/fresh-guard.js`, 1,266 B).
 
 **Eleven do-not-install, one install, and the chair's half-expected answer is the right one.**
 Nothing here goes to the keeper as a *state* decision. One thing goes up as a *direction* decision

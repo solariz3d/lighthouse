@@ -268,7 +268,9 @@ receipt whose fields silently mix distinct-row counts with line counts is the sa
 receipt about what this machine did to its own ledgers is not the other machine's business, and making it TRAVELS
 would put the receipt ledger into the set of ledgers that can diverge and need unioning — a rule that consumes itself.
 
-**(b) `sync-completion.json` is overwritten every launch** (C, §4 item 2), so **exactly one install trip is
+**(b) `sync-completion.json` is overwritten every launch** (C, ~~§4 item 2~~ **§5 item 2** — *corrected in place
+2026-09-23, E, L094: the source is `handback/p-d112-tripcheck-C_2026-09-22.md:97`, under its "## 5 · What could NOT
+be reconstructed"; its §4 has no numbered items. Found in L089, `handback/p-l089-solid-E_2026-09-23.md` §4*), so **exactly one install trip is
 recoverable — the last one.** Every earlier install on this machine is gone as a trip.
 **Design: `writeCompletion` also appends the same object, verbatim, as one line to `<data>/install_receipts.jsonl`.**
 One append, machine-local, append-only; `sync-completion.json` keeps its shape and every existing reader
