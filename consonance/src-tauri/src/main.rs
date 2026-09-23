@@ -10769,6 +10769,27 @@ fn await_render(path: &Path, from: u64, needle: &str, tail_needle: &str) -> Rece
 /// start of the request, and ten minutes of margin covers a 60 s tick and a slow delivery.
 const KEEP_WARM_AFTER: Duration = Duration::from_secs(50 * 60);
 const KEEP_WARM_TICK: Duration = Duration::from_secs(60);
+
+/// THE PER-SEAT OFFSET (L104; the Third Place's cadence question, librarian `db76263`). Every seat on the same idle
+/// clock crossed `KEEP_WARM_AFTER` in the same tick, so seats whose last requests STARTED together — one dispatch
+/// ringing several panes at once — were re-written in one burst. Each seat now waits `KEEP_WARM_AFTER` plus a FIXED
+/// 0..=6 whole minutes: its own cadence is unchanged, it just stops sharing a crossing minute with most seats.
+///
+/// STABLE: 64-bit FNV-1a over the pane id's UTF-8 bytes, mod 7 — the same across calls, restarts and machines, where
+/// Rust's `DefaultHasher` is randomly keyed per process. It is this file's own `fnv1a` (the transcript fingerprint's
+/// hash), not a second copy. (The id is the session id, which a resumed seat keeps.)
+/// WHY 7 AND NOT MORE: the cache lives one hour from the request's start. 50 + 6 = 56 min, and a 60 s tick can add one
+/// more — 57 — leaving three minutes of the old ten-minute margin for a slow delivery. More slots would eat it.
+/// WHAT IT DOES NOT DO: seven slots cannot separate every seat (tonight three live seats hash to 4), and an offset
+/// cannot separate seats that are BOTH long overdue — the one same-minute pair on the board (07:07Z, 151 and 123 min
+/// idle) was that case, released in the same tick by something other than the threshold (hand-back L104).
+const KEEP_WARM_SPREAD_MIN: u64 = 7;
+
+/// This seat's keep-warm threshold: `KEEP_WARM_AFTER` + (FNV-1a(pane id) mod 7) minutes. Every reader of the
+/// threshold goes through here, so no message or check can say "50 min" for a seat whose threshold is 53.
+fn keep_warm_after(seat: &str) -> Duration {
+    KEEP_WARM_AFTER + Duration::from_secs(60 * (fnv1a(seat.as_bytes()) % KEEP_WARM_SPREAD_MIN))
+}
 /// ONE LINE AND NO `NEXT:` TRAILER — deliberately. The trailer gate lives in `mod trailer` and is wired
 /// only into the MCP verbs (chair_inject / call_chair / call_librarian); `gate_or_queue` never consults it,
 /// so this app-side line is not refused for lacking one. And a trailer would be read by the receiving seat
@@ -10892,6 +10913,7 @@ enum KeepWarm {
 /// read exactly Empty (text, or unreadable), the ping simply does not happen this tick.
 fn keep_warm_decision(
     on: bool,
+    seat: &str,
     role: &str,
     gate: PaneGate,
     composer: Composer,
@@ -10927,11 +10949,14 @@ fn keep_warm_decision(
     if !activated {
         return KeepWarm::Skip("not activated this session: no request since the app started; it waits to be spoken to");
     }
-    if s < KEEP_WARM_AFTER {
-        return KeepWarm::Skip("warm: under 50 min since its last request started");
+    // L104: the seat's OWN threshold, 50 min plus its fixed 0..=6 min offset (keep_warm_after). Both bars use it, and
+    // the reasons name no number that would be wrong for most seats.
+    let after = keep_warm_after(seat);
+    if s < after {
+        return KeepWarm::Skip("warm: under its keep-warm threshold (50 min + its fixed seat offset) since its last request started");
     }
-    if since_ping.is_some_and(|p| p < KEEP_WARM_AFTER) {
-        return KeepWarm::Skip("pinged under 50 min ago and not yet answered");
+    if since_ping.is_some_and(|p| p < after) {
+        return KeepWarm::Skip("pinged within its keep-warm threshold (50 min + its fixed seat offset) and not yet answered");
     }
     KeepWarm::Ping
 }
@@ -11043,6 +11068,27 @@ fn read_tail(path: &Path, max: u64) -> Option<String> {
     Some(if start > 0 { s.split_once('\n').map(|(_, r)| r.to_string()).unwrap_or_default() } else { s })
 }
 
+/// AT MOST ONE PING PER TICK (L104 step 2). The one recorded same-minute pair (07:07Z) was two seats 151 and 123 min
+/// idle — both long OVERDUE, released in one tick — which no threshold offset separates. So the tick collects every
+/// seat whose decision is Ping, and this picks ONE: the MOST OVERDUE, where overdue = idle since its last request
+/// started minus THAT seat's own threshold (`keep_warm_after`, offset included). A tie goes to the smaller pane id, so
+/// the order is stable. `due` is `(pane id, idle since the last request started)`.
+///
+/// NOBODY IS STARVED, and the keeper's rule (every activated seat warm all session) holds: a deferred seat is not
+/// queued, it is simply decided again next tick, still Ping, and more overdue by a minute; a seat just pinged drops
+/// out for its own threshold. N seats due at once clear in N ticks (N minutes). The cost: the Nth waits N-1 extra
+/// minutes, so in a room of ~7 released together the last is pinged up to 6 minutes later — past the hour if it was
+/// crossing fresh at +6, a re-write it would not otherwise pay. That happens only when many seats are due at once.
+fn keep_warm_pick(due: &[(String, Duration)]) -> Option<usize> {
+    due.iter()
+        .enumerate()
+        .max_by(|(_, (pa, ia)), (_, (pb, ib))| {
+            let over = |p: &str, i: &Duration| i.saturating_sub(keep_warm_after(p));
+            over(pa, ia).cmp(&over(pb, ib)).then_with(|| pb.cmp(pa))
+        })
+        .map(|(i, _)| i)
+}
+
 /// One pass over every live pane. Runs on its own thread every `KEEP_WARM_TICK`, started in setup,
 /// and ends when the app process does — "stops when the app closes" by construction, not by a flag.
 fn keep_warm_tick(app: &AppHandle) {
@@ -11064,6 +11110,10 @@ fn keep_warm_tick(app: &AppHandle) {
     REFUSED_SAID.store(false, Ordering::Relaxed);
     let now_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
     let ids: Vec<String> = app.state::<Panes>().0.lock().map(|m| m.keys().cloned().collect()).unwrap_or_default();
+    // L104 step 2: every pane is still visited and all its bookkeeping runs; only the PING is rationed — the seats
+    // whose decision is Ping are collected here and ONE is sent after the loop (keep_warm_pick).
+    let mut due: Vec<(String, Duration)> = Vec::new();
+    let mut due_meta: HashMap<String, (String, Option<u64>)> = HashMap::new();
     for pane in ids {
         let role = app.state::<PaneRoles>().0.lock().ok().and_then(|m| m.get(&pane).cloned()).unwrap_or_else(|| "human".to_string());
         let names: Vec<String> = app.state::<PaneNames>().0.lock()
@@ -11095,8 +11145,11 @@ fn keep_warm_tick(app: &AppHandle) {
                 now_used
             }
         };
-        match keep_warm_decision(on, &role, gate, composer, since_start, since_ping, activated) {
-            KeepWarm::Ping => keep_warm_send(app, &pane, &role, since_start.unwrap_or_default(), last.as_ref().and_then(|l| l.context)),
+        match keep_warm_decision(on, &pane, &role, gate, composer, since_start, since_ping, activated) {
+            KeepWarm::Ping => {
+                due.push((pane.clone(), since_start.unwrap_or_default()));
+                due_meta.insert(pane.clone(), (role.clone(), last.as_ref().and_then(|l| l.context)));
+            }
             KeepWarm::Skip(why) => {
                 if let Ok(mut m) = app.state::<KeepWarmLastSkip>().0.lock() { m.insert(pane.clone(), why); }
             }
@@ -11110,6 +11163,18 @@ fn keep_warm_tick(app: &AppHandle) {
                 chair_audit(app, keep_warm_missed_row(short_id(&pane), &role, since_start.unwrap_or_default(), why));
             }
         }
+    }
+    // One ping this tick: the most overdue. The others were due too; they are recorded as deferred (the missed-window
+    // report reads this reason if a window passes while waiting) and decided afresh next tick.
+    if let Some(i) = keep_warm_pick(&due) {
+        let (pane, idle) = &due[i];
+        if let Ok(mut m) = app.state::<KeepWarmLastSkip>().0.lock() {
+            for (other, _) in due.iter().filter(|(p, _)| p != pane) {
+                m.insert(other.clone(), "deferred: due, but another seat more overdue was pinged this tick (one ping per tick)");
+            }
+        }
+        let (role, context) = due_meta.remove(pane).unwrap_or_else(|| ("human".to_string(), None));
+        keep_warm_send(app, pane, &role, *idle, context);
     }
 }
 
@@ -19392,10 +19457,166 @@ mod keep_warm_tests {
     fn min(n: u64) -> Option<Duration> {
         Some(Duration::from_millis(n * MIN))
     }
+    /// L104: a seat id whose fixed offset is 0, so every test written for the flat 50-min threshold keeps its exact
+    /// meaning (pinned by `the_zero_offset_test_seat_really_is_at_50_minutes`).
+    const Z: &str = "seat-6";
+
+    #[test]
+    fn the_offset_hash_is_the_published_fnv1a_not_a_process_keyed_hash() {
+        // The FNV-1a 64-bit test vectors: the empty string is the offset basis, and "a" is af63dc4c8601ec8c.
+        assert_eq!(fnv1a(b""), 0xcbf2_9ce4_8422_2325);
+        assert_eq!(fnv1a(b"a"), 0xaf63_dc4c_8601_ec8c);
+    }
+
+    // ── L104 step 2: AT MOST ONE PING PER TICK, the most overdue first ─────────────────────────────────────────────
+    // A seat as one tick sees it: its idle time and, if pinged, how long ago. `tick` runs the real decision for every
+    // seat and the real `keep_warm_pick` over the Pings — the pass, minus the app — and returns the one it would ping.
+    struct Seat { id: &'static str, idle: u64, pinged: Option<u64> }
+    fn tick(seats: &[Seat]) -> Option<&'static str> {
+        let cands: Vec<(String, Duration)> = seats
+            .iter()
+            .filter(|s| keep_warm_decision(true, s.id, "committee", PaneGate::Ready, Composer::Empty, min(s.idle), s.pinged.and_then(min), true) == KeepWarm::Ping)
+            .map(|s| (s.id.to_string(), Duration::from_secs(s.idle * 60)))
+            .collect();
+        keep_warm_pick(&cands).map(|i| seats.iter().find(|s| s.id == cands[i].0).unwrap().id)
+    }
+    const E_ID: &str = "a2122153-a37e-41a6-a86f-534267ec0565"; // +3
+    const A_ID: &str = "6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f"; // +6
+
+    #[test]
+    fn two_overdue_seats_on_one_tick_are_pinged_on_two_different_ticks_most_overdue_first() {
+        // 07:07Z tonight: E 151 min idle, A 123 — both overdue, both Ping on the same tick.
+        let t1 = tick(&[Seat { id: A_ID, idle: 123, pinged: None }, Seat { id: E_ID, idle: 151, pinged: None }]);
+        assert_eq!(t1, Some(E_ID), "the most overdue first (E: 151 - 53 = 98 min over; A: 123 - 56 = 67)");
+        // one minute later E has just been pinged and A has waited a tick
+        let t2 = tick(&[Seat { id: A_ID, idle: 124, pinged: None }, Seat { id: E_ID, idle: 152, pinged: Some(1) }]);
+        assert_eq!(t2, Some(A_ID), "A is pinged on the NEXT tick, not dropped");
+        assert_ne!(t1, t2);
+    }
+
+    #[test]
+    fn one_overdue_seat_is_pinged_on_the_first_tick() {
+        assert_eq!(tick(&[Seat { id: A_ID, idle: 57, pinged: None }]), Some(A_ID));
+        assert_eq!(tick(&[Seat { id: A_ID, idle: 55, pinged: None }]), None, "and not before its own threshold (56)");
+    }
+
+    #[test]
+    fn a_seat_that_becomes_active_between_ticks_is_not_pinged() {
+        assert_eq!(tick(&[Seat { id: A_ID, idle: 123, pinged: None }, Seat { id: E_ID, idle: 151, pinged: None }]), Some(E_ID));
+        // before the next tick A is spoken to: its last request now started 0 min ago
+        assert_eq!(tick(&[Seat { id: A_ID, idle: 0, pinged: None }, Seat { id: E_ID, idle: 152, pinged: Some(1) }]), None,
+            "a deferred seat is re-decided every tick, never carried as a queued ping");
+    }
+
+    #[test]
+    fn keep_warm_pick_takes_the_largest_overdue_and_breaks_ties_by_pane_id() {
+        let c = |v: &[(&str, u64)]| v.iter().map(|(p, m)| (p.to_string(), KEEP_WARM_AFTER + Duration::from_secs(m * 60))).collect::<Vec<_>>();
+        assert_eq!(keep_warm_pick(&[]), None);
+        // overdue is measured against EACH seat's own threshold: seat-6 is +0, seat-4 is +6
+        let v = c(&[("seat-4", 8), ("seat-6", 5)]);   // seat-4: 58-56 = 2 over; seat-6: 55-50 = 5 over
+        assert_eq!(keep_warm_pick(&v), Some(1), "5 min over beats 2 min over, though seat-4 has been idle longer");
+        let tie = c(&[("seat-6", 3), ("seat-13", 3)]);  // both +0, both 3 over
+        assert_eq!(keep_warm_pick(&tie), Some(1), "a tie goes to the smaller pane id, so the order is stable");
+    }
+
+    #[test]
+    fn no_seat_is_starved_n_overdue_seats_clear_in_n_ticks() {
+        // Seven seats all overdue at once (the whole room released together). One per tick; each pinged seat drops
+        // out for its own threshold; every other seat's overdue keeps growing, so each is reached within N ticks.
+        let ids = ["seat-0", "seat-1", "seat-2", "seat-3", "seat-4", "seat-5", "seat-6"];
+        let mut pinged_at: Vec<Option<u64>> = vec![None; ids.len()];
+        for t in 0..ids.len() as u64 {
+            let cands: Vec<(String, Duration)> = ids.iter().enumerate()
+                .filter(|(i, id)| keep_warm_decision(true, id, "committee", PaneGate::Ready, Composer::Empty, min(120 + t), pinged_at[*i].map(|p| t - p).and_then(min), true) == KeepWarm::Ping)
+                .map(|(_, id)| (id.to_string(), Duration::from_secs((120 + t) * 60)))
+                .collect();
+            let i = keep_warm_pick(&cands).expect("an overdue seat remains");
+            let who = ids.iter().position(|id| *id == cands[i].0).unwrap();
+            pinged_at[who] = Some(t);
+        }
+        assert!(pinged_at.iter().all(|p| p.is_some()), "every seat pinged within {} ticks: {pinged_at:?}", ids.len());
+    }
+
+    #[test]
+    fn the_tick_rations_only_the_ping_every_pane_is_still_visited() {
+        // STRUCTURAL, a source sweep over keep_warm_tick: the per-pane loop must never stop early (activation, the
+        // last-skip reason and the missed-window report run for EVERY pane), and the one send happens after it.
+        let src = include_str!("main.rs");
+        let start = src.find(concat!("fn keep_warm_", "tick(app: &AppHandle)")).expect("keep_warm_tick exists");
+        let body = &src[start..start + src[start..].find("\n}\n").expect("it ends")];
+        let lp = body.find("for pane in ids {").expect("the per-pane loop");
+        let pick = body.find("keep_warm_pick(&due)").expect("the pick after the loop");
+        assert!(lp < pick);
+        assert!(!body[lp..pick].contains("break") && !body[lp..pick].contains("keep_warm_send("), "no early exit and no send inside the loop");
+        assert_eq!(body.matches("keep_warm_send(").count(), 1, "exactly one send per tick");
+        // and every seat that was due but not pinged is RECORDED as deferred — the reason the missed-window report
+        // prints if its window passes while it waits (L104 mutant S5 survived until this line)
+        assert!(body[pick..].contains(concat!("m.insert(other.clone(), \"defe", "rred:")), "the deferred seats' reason is recorded");
+    }
+
+    #[test]
+    fn the_keep_warm_pass_hands_the_decision_the_pane_id_not_the_role() {
+        // STRUCTURAL, a source sweep (L104 mutant K8 survived every behavioural test): the pass needs a live app, so no
+        // unit test can run it. A role as the seat would give every committee pane the SAME offset — the burst, back.
+        let src = include_str!("main.rs");
+        // Split with concat! so this test does not itself hold the text it looks for (the sweep would find itself).
+        let call = concat!("match keep_warm_decision(on, &pa", "ne, &role, gate, composer, since_start, since_ping, activated)");
+        assert_eq!(src.matches(call).count(), 1, "the one keep-warm pass must pass the pane id as the seat");
+    }
+
+    #[test]
+    fn the_zero_offset_test_seat_really_is_at_50_minutes() {
+        assert_eq!(keep_warm_after(Z), KEEP_WARM_AFTER);
+    }
+
+    #[test]
+    fn one_seats_threshold_is_identical_across_repeated_calls() {
+        let seat = "0845a868-38f2-4cc2-b45a-431e0c088fb1";
+        let first = keep_warm_after(seat);
+        for _ in 0..1000 {
+            assert_eq!(keep_warm_after(seat), first);
+        }
+        // and across processes and machines: the value is a pure function of the id's bytes, pinned here
+        assert_eq!(first, KEEP_WARM_AFTER + Duration::from_secs(4 * 60), "0845a868… is +4 min by FNV-1a mod 7");
+    }
+
+    #[test]
+    fn the_offset_stays_within_zero_to_six_minutes_and_uses_every_slot() {
+        let mut seen = HashSet::new();
+        for i in 0..500 {
+            let extra = keep_warm_after(&format!("seat-{i}")) - KEEP_WARM_AFTER;
+            assert!(extra <= Duration::from_secs(6 * 60), "seat-{i}: +{extra:?}");
+            assert_eq!(extra.as_secs() % 60, 0, "whole minutes: the tick is one minute");
+            seen.insert(extra.as_secs() / 60);
+        }
+        assert_eq!(seen.len(), 7, "all seven slots 0..=6 are used: {seen:?}");
+        // the worst case still sits inside the one-hour cache life with a tick of slack
+        assert!(KEEP_WARM_AFTER + Duration::from_secs(6 * 60) + KEEP_WARM_TICK < Duration::from_secs(60 * 60));
+    }
+
+    #[test]
+    fn two_seats_whose_idle_clocks_start_together_are_pinged_in_different_minutes() {
+        // Tonight's pair by id: E a2122153… is +3 min and A 6fe15f0a… is +6 min. Both last requests start at t=0.
+        let (e, a) = ("a2122153-a37e-41a6-a86f-534267ec0565", "6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f");
+        let first_ping = |seat: &str| (0..=70u64)
+            .find(|m| keep_warm_decision(true, seat, "committee", PaneGate::Ready, Composer::Empty, min(*m), None, true) == KeepWarm::Ping)
+            .expect("pinged within 70 min");
+        let (pe, pa) = (first_ping(e), first_ping(a));
+        assert_eq!((pe, pa), (53, 56));
+        assert_ne!(pe, pa, "the same idle clock no longer means the same crossing minute");
+    }
+
+    #[test]
+    fn a_ping_inside_the_seats_own_threshold_holds_the_next_one_by_that_same_threshold() {
+        let a = "6fe15f0a-634b-4a04-b5de-8bd96b6b5a4f"; // +6
+        let d = |p| keep_warm_decision(true, a, "committee", PaneGate::Ready, Composer::Empty, min(120), min(p), true);
+        assert!(matches!(d(55), KeepWarm::Skip(_)), "55 min since the last ping is inside its 56");
+        assert_eq!(d(56), KeepWarm::Ping);
+    }
     /// An idle, empty-composer, committee seat 55 minutes after its last request started — the one
     /// case that must ping. Every skip test changes exactly one thing from this.
     fn ping_case() -> KeepWarm {
-        keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), None, true)
+        keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(55), None, true)
     }
 
     #[test]
@@ -19409,7 +19630,7 @@ mod keep_warm_tests {
     fn a_busy_seat_is_skipped() {
         for g in [PaneGate::Working, PaneGate::Stale, PaneGate::Unstamped, PaneGate::Contradicted] {
             assert!(
-                matches!(keep_warm_decision(true, "committee", g, Composer::Empty, min(55), None, true), KeepWarm::Skip(_)),
+                matches!(keep_warm_decision(true, Z, "committee", g, Composer::Empty, min(55), None, true), KeepWarm::Skip(_)),
                 "{g:?} must never be pinged: a ping into a running turn is the splice the inbox exists to prevent"
             );
         }
@@ -19421,7 +19642,7 @@ mod keep_warm_tests {
         for c in [Composer::HasText, Composer::Unreadable(Unreadable::NoRow),
                   Composer::Unreadable(Unreadable::GridMismatch), Composer::Unreadable(Unreadable::NoScreen)] {
             assert!(
-                matches!(keep_warm_decision(true, "committee", PaneGate::Ready, c, min(55), None, true), KeepWarm::Skip(_)),
+                matches!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, c, min(55), None, true), KeepWarm::Skip(_)),
                 "{c:?} must never be pinged: never over the keeper's typing, and unknown is not empty"
             );
         }
@@ -19451,7 +19672,7 @@ mod keep_warm_tests {
              attachment at 10:00:00.004 — not when its response was stamped (10:09)");
         let at_1050 = iso_utc_ms("2026-09-21T10:50:00.004Z").unwrap();
         let idle = Duration::from_millis(at_1050 - r.started_ms);
-        assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, Some(idle), None, true),
+        assert_eq!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, Some(idle), None, true),
             KeepWarm::Ping, "50 minutes after the request STARTED is due, whatever the response time");
     }
 
@@ -19473,20 +19694,20 @@ mod keep_warm_tests {
     fn a_transcript_with_no_request_establishes_nothing() {
         assert_eq!(last_request(r#"{"type":"user","timestamp":"2026-09-21T10:00:00.000Z"}"#), None);
         assert_eq!(last_request(""), None);
-        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, None, None, true),
+        assert!(matches!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, None, None, true),
             KeepWarm::Skip(_)), "no established start is never a reason to ping");
     }
 
     #[test]
     fn under_fifty_minutes_is_warm_and_is_skipped() {
-        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(49), None, true),
+        assert!(matches!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(49), None, true),
             KeepWarm::Skip(_)));
-        assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(50), None, true), KeepWarm::Ping);
+        assert_eq!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(50), None, true), KeepWarm::Ping);
     }
 
     #[test]
     fn a_seat_pinged_recently_is_not_pinged_again() {
-        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), min(3), true),
+        assert!(matches!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(55), min(3), true),
             KeepWarm::Skip(_)), "a ping not yet answered must not be repeated every tick");
     }
 
@@ -19496,10 +19717,10 @@ mod keep_warm_tests {
     // is active and seats as well"), so the off switch stays pinned here and the human half moved to the two
     // tests below, which keep every safety a committee seat gets.
     fn the_off_switch_is_skipped_and_every_live_seat_is_in_scope() {
-        assert!(matches!(keep_warm_decision(false, "committee", PaneGate::Ready, Composer::Empty, min(55), None, true),
+        assert!(matches!(keep_warm_decision(false, Z, "committee", PaneGate::Ready, Composer::Empty, min(55), None, true),
             KeepWarm::Skip(_)));
         for seat in ["main", "librarian", "third_place", "committee", "human"] {
-            assert_eq!(keep_warm_decision(true, seat, PaneGate::Ready, Composer::Empty, min(55), None, true), KeepWarm::Ping,
+            assert_eq!(keep_warm_decision(true, Z, seat, PaneGate::Ready, Composer::Empty, min(55), None, true), KeepWarm::Ping,
                 "{seat} is in scope: the keeper, 05:57, 'each seat and pane'");
         }
     }
@@ -19520,14 +19741,14 @@ mod keep_warm_tests {
     #[test]
     fn a_seat_never_used_since_launch_is_not_pinged_even_inside_the_window() {
         // Its last request predates the launch. 55 min is inside the old window, and it still waits.
-        assert!(matches!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(55), None, false),
+        assert!(matches!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(55), None, false),
             KeepWarm::Skip(_)), "a seat not activated this session waits to be activated, however recent its last request");
     }
 
     #[test]
     fn a_seat_activated_this_session_is_pinged_however_long_it_has_been_idle() {
         for m in [60, 90, 183] {
-            assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(m), None, true),
+            assert_eq!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(m), None, true),
                 KeepWarm::Ping, "{m} min: activated this session means always on, even after a missed ping");
         }
     }
@@ -19623,22 +19844,22 @@ mod keep_warm_tests {
     #[test]
     fn a_seat_in_the_fifty_to_sixty_window_is_pinged() {
         for m in [50, 55, 59] {
-            assert_eq!(keep_warm_decision(true, "committee", PaneGate::Ready, Composer::Empty, min(m), None, true),
+            assert_eq!(keep_warm_decision(true, Z, "committee", PaneGate::Ready, Composer::Empty, min(m), None, true),
                 KeepWarm::Ping, "{m} min: still warm and due");
         }
     }
 
     #[test]
     fn a_human_driven_pane_with_text_in_its_composer_is_skipped() {
-        assert!(matches!(keep_warm_decision(true, "human", PaneGate::Ready, Composer::HasText, min(55), None, true),
+        assert!(matches!(keep_warm_decision(true, Z, "human", PaneGate::Ready, Composer::HasText, min(55), None, true),
             KeepWarm::Skip(_)), "the keeper's own pane: never over his typing");
-        assert!(matches!(keep_warm_decision(true, "human", PaneGate::Working, Composer::Empty, min(55), None, true),
+        assert!(matches!(keep_warm_decision(true, Z, "human", PaneGate::Working, Composer::Empty, min(55), None, true),
             KeepWarm::Skip(_)), "the keeper's own pane: never mid-turn");
     }
 
     #[test]
     fn a_human_driven_pane_idle_and_empty_is_pinged() {
-        assert_eq!(keep_warm_decision(true, "human", PaneGate::Ready, Composer::Empty, min(55), None, true), KeepWarm::Ping);
+        assert_eq!(keep_warm_decision(true, Z, "human", PaneGate::Ready, Composer::Empty, min(55), None, true), KeepWarm::Ping);
     }
 
     #[test]
