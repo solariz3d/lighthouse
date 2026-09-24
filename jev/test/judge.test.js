@@ -13,6 +13,7 @@ const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
 const { spawnSync } = require('child_process');
+const { isolatedEnv } = require('./isolated-env');   // D129: every spawn's store variables point into temp
 const H = require('../bin/jev-judge.js');
 const prompt = require('../lib/prompt.js');
 
@@ -248,7 +249,7 @@ test('the hook returns 0 when the spawn itself throws, and on a payload that is 
 
 test('the real hook process exits 0 at once while its child is still working, and the child finishes on its own', async () => {
   const w = world({ ended: false });   // the child polls ~5 s for a turn end that never comes, then logs
-  const env = { ...process.env, HOME: w.home, USERPROFILE: w.home, TEMP: w.tmpdir, TMP: w.tmpdir, LOCALAPPDATA: w.root };
+  const env = isolatedEnv(undefined, { HOME: w.home, USERPROFILE: w.home, TEMP: w.tmpdir, TMP: w.tmpdir, LOCALAPPDATA: w.root });
   delete env.AI_GATEWAY_API_KEY;
   const t0 = Date.now();
   const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify(w.meta), env, timeout: 20000 });
@@ -404,7 +405,7 @@ test('the gateway\'s confidence reaches the ledger row through the real ask() (t
 
 test('the real hook hands the move to its detached child over stdin: the child keys the turn by prompt_id and builds a prompt', async () => {
   const w = world();
-  const env = { ...process.env, HOME: w.home, USERPROFILE: w.home, TEMP: w.tmpdir, TMP: w.tmpdir, LOCALAPPDATA: w.root };
+  const env = isolatedEnv(undefined, { HOME: w.home, USERPROFILE: w.home, TEMP: w.tmpdir, TMP: w.tmpdir, LOCALAPPDATA: w.root });
   delete env.AI_GATEWAY_API_KEY;   // so the child stops at ask()'s key refusal — which comes AFTER the prompt was built
   const payload = { session_id: 'sess-9', cwd: w.cwd, prompt_id: 'p-9', last_assistant_message: NEW_MOVE };   // no transcript path
   const r = spawnSync(process.execPath, [HOOK], { input: JSON.stringify(payload), env, timeout: 20000 });

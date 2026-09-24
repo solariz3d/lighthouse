@@ -26,6 +26,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const { isolatedEnv } = require('./isolated-env.js');
 
 const JEV = path.join(__dirname, '..');
 const IN = 'install.js';
@@ -83,8 +84,9 @@ function copyTree(src, dest) {
   }
 }
 
+// D129: the suites — and anything a mutant makes them spawn — get their own store, inside the mutant's temp copy.
 function runSuites(dir) {
-  const env = { ...process.env };
+  const env = isolatedEnv(path.join(dir, '.iso'));
   delete env.AI_GATEWAY_API_KEY;
   return spawnSync(process.execPath, ['--test', path.join(dir, 'test', 'install.test.js'), path.join(dir, 'test', 'judge.test.js')],
     { cwd: dir, env, encoding: 'utf8', timeout: 180000 });

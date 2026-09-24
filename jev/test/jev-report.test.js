@@ -8,6 +8,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
+const { isolatedEnv } = require('./isolated-env');   // D129: every spawn's store variables point into temp
 const R = require('../bin/jev-report.js');
 const BIN = path.join(__dirname, '..', 'bin', 'jev-report.js');
 
@@ -132,7 +133,7 @@ test('the CLI takes ledgerDir from config.load: ~/.jev/config.json under the HOM
   const d = ledger({ rows: [oldRow('t1', 'drift'), oldRow('t2', 'clean')] });
   fs.mkdirSync(path.join(home, '.jev'), { recursive: true });
   fs.writeFileSync(path.join(home, '.jev', 'config.json'), JSON.stringify({ ledgerDir: d }));
-  const r = spawnSync(process.execPath, [BIN, '--json'], { cwd: tmp(), encoding: 'utf8', env: { ...process.env, HOME: home, USERPROFILE: home } });
+  const r = spawnSync(process.execPath, [BIN, '--json'], { cwd: tmp(), encoding: 'utf8', env: isolatedEnv(undefined, { HOME: home, USERPROFILE: home }) });
   assert.strictEqual(r.status, 0, r.stderr);
   const j = JSON.parse(r.stdout);
   assert.strictEqual(j.ledgerDir, d);
@@ -144,7 +145,7 @@ test('a malformed config makes the CLI fail LOUDLY, naming the file, with a non-
   const home = tmp();
   fs.mkdirSync(path.join(home, '.jev'), { recursive: true });
   fs.writeFileSync(path.join(home, '.jev', 'config.json'), '{ broken');
-  const r = spawnSync(process.execPath, [BIN], { cwd: tmp(), encoding: 'utf8', env: { ...process.env, HOME: home, USERPROFILE: home } });
+  const r = spawnSync(process.execPath, [BIN], { cwd: tmp(), encoding: 'utf8', env: isolatedEnv(undefined, { HOME: home, USERPROFILE: home }) });
   assert.notStrictEqual(r.status, 0);
   assert.match(r.stderr, /config\.json/);
 });

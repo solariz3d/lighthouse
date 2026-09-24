@@ -11,6 +11,8 @@ const path = require('path');
 const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 const I = require('../install.js');
+// D129: every spawn's env comes from here, so all four store variables point into a temp root (isolation.test.js checks).
+const { isolatedEnv } = require('./isolated-env.js');
 
 const INSTALLER = path.join(__dirname, '..', 'install.js');
 const JUDGE = path.join(__dirname, '..', 'bin', 'jev-judge.js');
@@ -239,7 +241,7 @@ test('install and uninstall refuse to run with no home given — no default can 
 test('the CLI installs and uninstalls against the home it is given, exit 0, and refuses an unknown argument', () => {
   const w = home({ settings: FOREIGN });
   const before = sha(w.bytes());
-  const env = { ...process.env, HOME: w.h, USERPROFILE: w.h };
+  const env = isolatedEnv(undefined, { HOME: w.h, USERPROFILE: w.h });
   const a = spawnSync(NODE, [INSTALLER], { env, encoding: 'utf8' });
   assert.strictEqual(a.status, 0, a.stderr);
   assert.match(a.stdout, /2 added/);
@@ -256,7 +258,7 @@ test('the CLI installs and uninstalls against the home it is given, exit 0, and 
 
 test('the CLI refuses a malformed file with exit 1 and says so', () => {
   const w = home({ text: '{ nope' });
-  const r = spawnSync(NODE, [INSTALLER], { env: { ...process.env, HOME: w.h, USERPROFILE: w.h }, encoding: 'utf8' });
+  const r = spawnSync(NODE, [INSTALLER], { env: isolatedEnv(undefined, { HOME: w.h, USERPROFILE: w.h }), encoding: 'utf8' });
   assert.strictEqual(r.status, 1);
   assert.match(r.stderr, /REFUSED/);
   assert.strictEqual(w.read(), '{ nope');

@@ -13,6 +13,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const { isolatedEnv } = require('./isolated-env.js');
 
 const JEV = path.join(__dirname, '..');
 const ASK = 'lib/ask.js';
@@ -69,8 +70,12 @@ function copyTree(src, dest) {
   }
 }
 
+// D129: the suites — and anything a mutant makes them spawn — get their own store. Row 42 swaps the hook's stub spawn for a
+// real spawnSync, and until D129 that child inherited this env and wrote "refused" lines into the keeper's REAL
+// %LOCALAPPDATA%\jev\jev.log (4 lines on 2026-09-23, reproduced: 2 per run). The root sits inside the mutant's temp copy,
+// so it goes when the copy goes.
 function runSuites(dir) {
-  const env = { ...process.env };
+  const env = isolatedEnv(path.join(dir, '.iso'));
   delete env.AI_GATEWAY_API_KEY;
   return spawnSync(process.execPath, ['--test', path.join(dir, 'test', 'ask.test.js'), path.join(dir, 'test', 'judge.test.js')],
     { cwd: dir, env, encoding: 'utf8', timeout: 180000 });

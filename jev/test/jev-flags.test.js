@@ -10,6 +10,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const { isolatedEnv } = require('./isolated-env');   // D129: every spawn's store variables point into temp
 const F = require('../bin/jev-flags.js');
 
 const SID = 'aaaaaaaa-0000-4000-8000-000000000001';
@@ -134,7 +135,7 @@ test('NEVER FAILS THE PROMPT: stdin that is not JSON is silence, logged beside t
 });
 
 test('the CLI always exits 0, and prints nothing or one valid hook object', () => {
-  const r = spawnSync(process.execPath, [path.join(__dirname, '..', 'bin', 'jev-flags.js')], { input: '{broken', encoding: 'utf8', env: { ...process.env, HOME: tmp(), USERPROFILE: tmp() } });
+  const r = spawnSync(process.execPath, [path.join(__dirname, '..', 'bin', 'jev-flags.js')], { input: '{broken', encoding: 'utf8', env: (() => { const h = tmp(); return isolatedEnv(undefined, { HOME: h, USERPROFILE: h }); })() });
   assert.strictEqual(r.status, 0);
   if (r.stdout) assert.strictEqual(JSON.parse(r.stdout).hookSpecificOutput.hookEventName, 'UserPromptSubmit');
 });
