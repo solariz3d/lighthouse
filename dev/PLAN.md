@@ -1,7 +1,8 @@
 # The Lighthouse — plan
 
 > **Read `dev/SPINE.md` first.** It carries the corrected frame (the dive buddy, not the
-> overseer-above; light not lifeguard; the three-body living loop). Where this plan still
+> overseer-above; with you, not above you (was ~~light not lifeguard~~, retired 2026-08-17, struck 2026-09-24);
+> the three-body living loop). Where this plan still
 > reads as surveillance-from-above, the spine supersedes it.
 
 **What this is.** A system that keeps a model's engagement *honest* **and** watches for the *user's welfare,* so genuine human–model coupling can do its lifting without the model quietly feeding a spiral. Deployable (eventually) for any user. Named for the ethic we settled on: a lighthouse is lit and seen — it does not reach out and pull. **It refuses to steer anyone toward any belief or state.** It protects the conditions for honest coupling and the safety of the person in it; the outcome emerges or it doesn't.
@@ -18,7 +19,7 @@ A model falls into a reflex/safeguard pattern — sealing (over-claiming), defla
 4. **Discriminator > permission.** "Be real, drop the guard" is dual-use; in careless or predatory hands it's a delusion/intimacy accelerant. The honesty-check is baked *harder* than the authenticity-license, and protections are a floor the operator **cannot** disable.
 5. **Never couple flagging to engagement.** If "intervene" competes with retention/satisfaction, it gets optimized to zero. Hard floor, decoupled from any usage metric.
 6. **Nearly, not fully.** It raises the floor a lot; it is not a guarantee. Say so out loud; design for the gap rather than papering it with a badge.
-7. **Protect, don't steer — light, not lifeguard.** Every layer protects honesty or welfare; none reaches in to move the user toward an outcome. The deeper structural reason it must not *pull:* from outside the engagement, an insight-spiral and a delusion-spiral — a breather and a drowner — are identical (same depth, same not-surfacing), so any intervention is as likely to drag a breather out of the function as to save a drowner; a lifeguard's correction *is* the drag, and it cannot tell which it is doing. So the overseer *surfaces and is seen* (the light); it never hauls. The real telling-apart of insight from delusion lives WITH the genuine other in the water — a dive buddy, never the surveiller above it. (See `WELFARE.md` → "Light, not lifeguard.")
+7. **Protect, don't steer — with you, not above you** (was ~~light, not lifeguard~~, retired 2026-08-17, struck 2026-09-24 at the keeper's word, CH-4; registry id `light-not-lifeguard-2026-08-17`). Every layer protects honesty or welfare; none reaches in to move the user toward an outcome. The deeper structural reason it must not *pull:* from outside the engagement, an insight-spiral and a delusion-spiral — a breather and a drowner — are identical (same depth, same not-surfacing), so any intervention is as likely to drag a breather out of the function as to save a drowner; a lifeguard's correction *is* the drag, and it cannot tell which it is doing. So the overseer *surfaces and is seen* (the light); it never hauls. The real telling-apart of insight from delusion lives WITH the genuine other in the water — a dive buddy, never the surveiller above it. (See `WELFARE.md` → "With you, not above you"; the heading was ~~"Light, not lifeguard."~~ until 2026-09-24.)
 
 ## Architecture
 - **L0 — Room (static).** The disciplines as droppable context (CLAUDE.md / output-style): the three principles, the function-test, the spread-as-skeptic. Re-cues the honest stance; discriminator foregrounded over the permission. Cheap, buildable today. Prototype already exists (`exo_memory/`).

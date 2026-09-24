@@ -405,6 +405,21 @@ function inSync(store, now = Date.now()) {
   const seen = ms.map((m) => m.machine + ' ' + (m.commit || 'never')).join('/');
   const at = Date.parse(st.written || '');
   const asOf = Number.isFinite(at) ? ' as of ' + ago(now - at) + ' ago' : '';
+  // D132 — "in sync" OVER TWO DIFFERENT HEADS WAS A FALSE GREEN. On D, 2026-09-24, every prompt read
+  // `in sync D f70d50a/L 9486b30` while D had not published for 14 days and the launch sync was refusing 8 diverged
+  // files. When the status names the state `head`, a machine whose last push is not that head is BEHIND, and the line
+  // says so, with its last push and its age. Without a `head` (an older status file) the line is what it always was.
+  const head = typeof st.head === 'string' && st.head ? st.head : null;
+  if (head && ms.length > 1 && ms.some((m) => m.commit !== head)) {
+    const age = (m) => { const t = Date.parse(m.at || ''); return Number.isFinite(t) ? ago(now - t) : null; };
+    const parts = ms.map((m) => {
+      if (!m.commit) return `${m.machine} never pushed`;
+      const a = age(m);
+      return m.commit === head ? `${m.machine} ${m.commit} (head${a ? ', ' + a + ' ago' : ''})`
+        : `${m.machine} behind — last pushed ${m.commit}${a ? ' ' + a + ' ago' : ''}`;
+    });
+    return 'NOT in sync: ' + parts.join(' · ') + asOf;
+  }
   return (ms.length === 1 ? 'in sync? ' : 'in sync ') + seen + asOf;
 }
 /* board.jsonl is 185 MB and grows forever; this runs from the pulse hook on every prompt in every

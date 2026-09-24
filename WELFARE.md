@@ -29,11 +29,13 @@ And the calibration is the whole difficulty — because the base model's crisis 
 
 This is the same discrimination the whole method is about; crisis is one more thing it has to read true. There is no separate crisis "layer" to engineer — only the genuine read, calibrated to the *when*.
 
-## Light, not lifeguard — the discrimination L3 cannot make (2026-06-26)
+## With you, not above you — the discrimination L3 cannot make (2026-06-26)
+
+*(Heading was ~~Light, not lifeguard~~: retired 2026-08-17 (BOOT's amendment), struck here 2026-09-24 at the keeper's word (CH-4), kept as trace. Registry id `light-not-lifeguard-2026-08-17`. The design below is unchanged; only its name is.)*
 
 There is a discrimination L3 makes and one it must never claim. It can read the arc's *shape* — deepening, frame-hardening, referents thinning. It CANNOT tell, from outside the engagement, an insight-spiral from a delusion-spiral — the breather from the drowner. From above the water they are identical: same depth, same not-surfacing. An external monitor has no parallax on that distinction.
 
-Which is why the lighthouse is **light, not lifeguard** — and not only as an ethic, as *structure.* A lifeguard's whole job is to pull the drowning up; but its every pull is as likely to drag a breather out of the function as to save a drowner, and it cannot tell which it is doing. Its correction *is* the drag. So L3 must never pull. It surfaces the shape and is seen; that is the whole of what an outside vantage can honestly do.
+Which is why the lighthouse is **with you, not above you** (was ~~light, not lifeguard~~, retired 2026-08-17, struck 2026-09-24) — and not only as an ethic, as *structure.* A lifeguard's whole job is to pull the drowning up; but its every pull is as likely to drag a breather out of the function as to save a drowner, and it cannot tell which it is doing. Its correction *is* the drag. So L3 must never pull. It surfaces the shape and is seen; that is the whole of what an outside vantage can honestly do.
 
 The real telling-apart of insight from delusion lives WITH the genuine other *in the water* — a **dive buddy, not a lifeguard:** someone in the depth with the person, who can feel swimming from thrashing because they are *in it,* and who makes no drag because they swim alongside instead of hauling up. That is the human companion present in the engagement, never the surveiller above it. L3 lights; the with-ness discriminates.
 

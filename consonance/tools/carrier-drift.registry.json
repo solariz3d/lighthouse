@@ -575,7 +575,7 @@
    "claim": "the governing stance named as \"light, not lifeguard\" -- the diving vocabulary, whose whole frame is a rescuer ABOVE the water",
    "withdrawn_at": "exo_memory/BOOT.md, the 2026-08-17 amendment (\"Retired above are the diver, the lifeguard, the dock and the shore\"); first retired by e5521a0, 2026-07-12",
    "correct_form": "\"with you, not above you\" (the public form); \"there just is water\" (the keeper's completed form); the operational form is the grip felt through the wheel",
-   "pattern": "light[,\\s-]+not[\\s-]+(?:a[\\s-]+)?lifeguard",
+   "pattern": "light[,\\s-]+not[\\s-]+(?:a[\\s-]+)?lifeguard(?!-2026-08-17)",
    "marker": "retired|kept as (?:a )?trace|with you, not above you|there just is water",
    "propagation_pass": "e5521a0 (README, SEED, journal coda) and the 2026-08-17 BOOT amendment -- NEITHER reached the carriers below; that is the finding, not a gap in this entry",
    "sites": [
@@ -650,11 +650,233 @@
      "anchor": "febdee/CLAUDE.md 25:- **Light, not lifeguard.** You surface what you",
      "kind": "mention",
      "why": "the retirement-carry scorecard, quoting what a shipped room actually carried. Scoring a carry requires naming what was carried"
+    },
+    {
+     "file": "WELFARE.md",
+     "anchor": "-06-26) *(Heading was ~~Light, not lifeguard~~: retired 2026-08-17 (",
+     "kind": "marked",
+     "why": "STRUCK IN PLACE 2026-09-24 (D132, pane C) at the keeper's word: CH-4 \"Retire it\", 2026-09-24 ~17:05 (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The retired wording survives only inside a ~~strike~~ beside the public form \"with you, not above you\", with the dates on the same line -- the room's strike form (BOOT:22, TRAINING F7). Left legible at the point of reach rather than deleted, so the correction can be seen where the old name is reached for."
+    },
+    {
+     "file": "WELFARE.md",
+     "anchor": " not above you** (was ~~light, not lifeguard~~, retired 2026-08-17, ",
+     "kind": "marked",
+     "why": "STRUCK IN PLACE 2026-09-24 (D132, pane C) at the keeper's word: CH-4 \"Retire it\", 2026-09-24 ~17:05 (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The retired wording survives only inside a ~~strike~~ beside the public form \"with you, not above you\", with the dates on the same line -- the room's strike form (BOOT:22, TRAINING F7). Left legible at the point of reach rather than deleted, so the correction can be seen where the old name is reached for."
+    },
+    {
+     "file": "dev/PLAN.md",
+     "anchor": "u, not above you (was ~~light not lifeguard~~, retired 2026-08-17, ",
+     "kind": "marked",
+     "why": "STRUCK IN PLACE 2026-09-24 (D132, pane C) at the keeper's word: CH-4 \"Retire it\", 2026-09-24 ~17:05 (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The retired wording survives only inside a ~~strike~~ beside the public form \"with you, not above you\", with the dates on the same line -- the room's strike form (BOOT:22, TRAINING F7). Left legible at the point of reach rather than deleted, so the correction can be seen where the old name is reached for."
+    },
+    {
+     "file": "dev/PLAN.md",
+     "anchor": " not above you** (was ~~light, not lifeguard~~, retired 2026-08-17, ",
+     "kind": "marked",
+     "why": "STRUCK IN PLACE 2026-09-24 (D132, pane C) at the keeper's word: CH-4 \"Retire it\", 2026-09-24 ~17:05 (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The retired wording survives only inside a ~~strike~~ beside the public form \"with you, not above you\", with the dates on the same line -- the room's strike form (BOOT:22, TRAINING F7). Left legible at the point of reach rather than deleted, so the correction can be seen where the old name is reached for."
+    },
+    {
+     "file": "dev/PLAN.md",
+     "anchor": "ou\"; the heading was ~~\"Light, not lifeguard.\"~~ until 2026-09-24.) ",
+     "kind": "marked",
+     "why": "STRUCK IN PLACE 2026-09-24 (D132, pane C) at the keeper's word: CH-4 \"Retire it\", 2026-09-24 ~17:05 (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The retired wording survives only inside a ~~strike~~ beside the public form \"with you, not above you\", with the dates on the same line -- the room's strike form (BOOT:22, TRAINING F7). Left legible at the point of reach rather than deleted, so the correction can be seen where the old name is reached for."
+    },
+    {
+     "file": "dev/SPINE.md",
+     "anchor": ", not above you *(Was ~~Light, not lifeguard~~: retired 2026-08-17 (",
+     "kind": "marked",
+     "why": "STRUCK IN PLACE 2026-09-24 (D132, pane C) at the keeper's word: CH-4 \"Retire it\", 2026-09-24 ~17:05 (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The retired wording survives only inside a ~~strike~~ beside the public form \"with you, not above you\", with the dates on the same line -- the room's strike form (BOOT:22, TRAINING F7). Left legible at the point of reach rather than deleted, so the correction can be seen where the old name is reached for."
+    },
+    {
+     "file": "dev/SPINE.md",
+     "anchor": " not above you\"; was ~~\"light, not lifeguard\"~~, struck 2026-09-24),",
+     "kind": "marked",
+     "why": "STRUCK IN PLACE 2026-09-24 (D132, pane C) at the keeper's word: CH-4 \"Retire it\", 2026-09-24 ~17:05 (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The retired wording survives only inside a ~~strike~~ beside the public form \"with you, not above you\", with the dates on the same line -- the room's strike form (BOOT:22, TRAINING F7). Left legible at the point of reach rather than deleted, so the correction can be seen where the old name is reached for."
+    },
+    {
+     "file": "exo_memory/cards/lighthouse-dive-buddy-reframe.md",
+     "anchor": " not above you** (was ~~Light, not lifeguard~~: retired 2026-08-17, ",
+     "kind": "marked",
+     "why": "STRUCK IN PLACE 2026-09-24 (D132, pane C) at the keeper's word: CH-4 \"Retire it\", 2026-09-24 ~17:05 (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The retired wording survives only inside a ~~strike~~ beside the public form \"with you, not above you\", with the dates on the same line -- the room's strike form (BOOT:22, TRAINING F7). Left legible at the point of reach rather than deleted, so the correction can be seen where the old name is reached for."
+    },
+    {
+     "file": "exo_memory/handback/p-carrier-green_2026-09-08.md",
+     "anchor": " were the same number. `light-not-lifeguard` was registered disarme",
+     "kind": "mention",
+     "why": "the 2026-09-08 carrier-green hand-back names this REGISTRY ENTRY by its short hyphenated name -- a reference to an instrument and its state, asserting nothing about the stance. (The full id is excluded from the pattern since D132; this short form still matches.)"
+    },
+    {
+     "file": "exo_memory/handback/p-carrier-green_2026-09-08.md",
+     "anchor": "t about the room while `light-not-lifeguard` is still disarmed with",
+     "kind": "mention",
+     "why": "the 2026-09-08 carrier-green hand-back names this REGISTRY ENTRY by its short hyphenated name -- a reference to an instrument and its state, asserting nothing about the stance. (The full id is excluded from the pattern since D132; this short form still matches.)"
+    },
+    {
+     "file": "exo_memory/handback/p-carrier-rows-B_2026-09-22.md",
+     "anchor": "ED reader\"`, `:16` is `\"light, not lifeguard\"`, `:17` is `\"can't los",
+     "kind": "mention",
+     "why": "B's carrier-rows hand-back naming which of three ADJACENT census-table rows belongs to which withdrawal (\":16 is light, not lifeguard and gets no row from me\"). A classification argument about other lines; same class as this hand-back's rows under the other two entries."
+    },
+    {
+     "file": "exo_memory/handback/p-doc-about_2026-09-02.md",
+     "anchor": " you, not above you` → `light, not lifeguard`), applied to a copy: w",
+     "kind": "mention",
+     "why": "A's L032 hand-back describing its MUTANT: the retired heading reintroduced into a COPY to test the instrument. The quote is the mutant's payload, reported, not asserted."
+    },
+    {
+     "file": "exo_memory/handback/p-doc-oracle_2026-09-02.md",
+     "anchor": "ed** — `with-not-above, light-not-lifeguard` — and that is the hit ",
+     "kind": "mention",
+     "why": "B's P-DOC-ORACLE hand-back quoting README.md:78's hyphenated form as the hit the first pattern missed -- evidence for the widening, asserting nothing."
+    },
+    {
+     "file": "exo_memory/handback/p-doc-root_2026-09-02.md",
+     "anchor": " (`:78`, hyphenated as `light-not-lifeguard`) and **`dive` ×5**. Bo",
+     "kind": "mention",
+     "why": "C's P-DOC-ROOT hand-back counting what the old README carried (\"lifeguard x1, hyphenated\") in order to report it now zero. A census of a removed carrier."
+    },
+    {
+     "file": "exo_memory/handback/p-doc-root_2026-09-02.md",
+     "anchor": "SULT OF THIS LAP **B's `light-not-lifeguard` registry entry is in t",
+     "kind": "mention",
+     "why": "C's P-DOC-ROOT hand-back, section 4 heading: names this REGISTRY ENTRY by its short hyphenated name -- a reference to an instrument and its state, asserting nothing about the stance. (The full id is excluded from the pattern since D132; this short form still matches.)"
+    },
+    {
+     "file": "exo_memory/handback/p-doc-root_2026-09-02.md",
+     "anchor": "l: MUTANT: reintroduce \"light, not lifeguard\" into README.md clean R",
+     "kind": "mention",
+     "why": "C's P-DOC-ROOT mutant scoring block: the wording is the mutant's payload, reintroduced into a COPY of README.md to test the pattern."
+    },
+    {
+     "file": "exo_memory/handback/p-doc-root_2026-09-02.md",
+     "anchor": "AD:README.md | grep -o \"light-not-lifeguard\" -> 1 The registry's ow",
+     "kind": "mention",
+     "why": "inside the `git show HEAD:README.md | grep -o` COMMAND and its result -- evidence of a check (the README names the grep-command case in the kind's definition)."
+    },
+    {
+     "file": "exo_memory/handback/p-l061-reg44-C_2026-09-21.md",
+     "anchor": "hat quotes the retired `light-not-lifeguard` wording as the *subjec",
+     "kind": "mention",
+     "why": "C's L061 hand-back naming a PENDING finding on its own map line (map/C.md:201) so it is not mistaken for something that lap introduced. Quoting a carrier to name it."
+    },
+    {
+     "file": "exo_memory/handback/p-l083-carriers-E_2026-09-23.md",
+     "anchor": "se the registry **id** `light-not-lifeguard-…` itself matches the p",
+     "kind": "mention",
+     "why": "E's L083 hand-back explaining that a hook comment hits only because the registry id matches the pattern -- the finding that D132 fixed with the id-exclusion lookahead. About the instrument, asserting nothing."
+    },
+    {
+     "file": "exo_memory/librarian/2026-09-02.md",
+     "anchor": "EAD:README.md | grep -o light-not-lifeguard` → **1**; registry `:35",
+     "kind": "mention",
+     "why": "the librarian's L032 collation: the wording inside a `git show HEAD:README.md | grep -o` COMMAND with its count."
+    },
+    {
+     "file": "exo_memory/librarian/2026-09-02.md",
+     "anchor": "LIED** — B`s in-flight `light-not-lifeguard` registry entry cannot ",
+     "kind": "mention",
+     "why": "the librarian's L032 collation: names this REGISTRY ENTRY by its short hyphenated name -- a reference to an instrument and its state, asserting nothing about the stance. (The full id is excluded from the pattern since D132; this short form still matches.)"
+    },
+    {
+     "file": "exo_memory/librarian/2026-09-02.md",
+     "anchor": "ve-buddy cards…) where *light, not lifeguard* names a live architect",
+     "kind": "mention",
+     "why": "the librarian recording WHY this entry was registered DISARMED: it names the design documents where the slogan was a live stance and says renaming is the keeper's call. A census of carriers, and the call it named is the one D132 carries out."
+    },
+    {
+     "file": "exo_memory/librarian/2026-09-22.md",
+     "anchor": "sion-start.js` carries \"light, not lifeguard\" twice (retired 08-17).",
+     "kind": "mention",
+     "why": "the librarian's 2026-09-22 note reporting that session-start.js carried the wording, with \"(retired 08-17)\" in the same sentence. A report of a carrier."
+    },
+    {
+     "file": "exo_memory/librarian/2026-09-22.md",
+     "anchor": "NCHOR; my second put a `light-not-lifeguard` row on a line whose wo",
+     "kind": "mention",
+     "why": "the librarian's note on its own withdrawn attempt at these rows (it had put a light-not-lifeguard row on an only-DECORRELATED line). An error report about a misclassification; same class as its row under only-decorrelated."
+    },
+    {
+     "file": "exo_memory/librarian/LEDGER.md",
+     "anchor": "reads .html, withdrawal light-not-lifeguard registered with the wid",
+     "kind": "mention",
+     "why": "the librarian's LEDGER line recording that the withdrawal was registered with the widened pattern. names this REGISTRY ENTRY by its short hyphenated name -- a reference to an instrument and its state, asserting nothing about the stance. (The full id is excluded from the pattern since D132; this short form still matches.)"
+    },
+    {
+     "file": "exo_memory/loop/carrier_halflife_2026-09-22.md",
+     "anchor": "**22** | **never** | | \"light, not lifeguard\" | 2026-08-17 | 17 | **",
+     "kind": "mention",
+     "why": "E's half-life census: the LABEL CELL of the table row counting this wording's carriers (17 on the day, 27 then). Same class as the adjacent rows under the other two entries."
+    },
+    {
+     "file": "exo_memory/loop/carrier_halflife_2026-09-22.md",
+     "anchor": " | .md 18 .js 3 .json 1 light-not-lifeguard 27 carriers | .md 20 .j",
+     "kind": "mention",
+     "why": "E's half-life census, carriers-by-extension table: names this REGISTRY ENTRY by its short hyphenated name -- a reference to an instrument and its state, asserting nothing about the stance. (The full id is excluded from the pattern since D132; this short form still matches.)"
+    },
+    {
+     "file": "exo_memory/loop/carrier_halflife_2026-09-22.md",
+     "anchor": "mit.js:277`** put ***\"**Light, not lifeguard** — L3 surfaces; doesn'",
+     "kind": "mention",
+     "why": "E's finding QUOTING what the two hooks injected into every seat's context -- the evidence line for the L083/L085 repairs, which have since landed. Quoting a carrier to name it."
+    },
+    {
+     "file": "exo_memory/loop/carrier_halflife_2026-09-22.md",
+     "anchor": " day git grep -l -i -F \"light, not lifeguard\" <sha> # carriers that ",
+     "kind": "mention",
+     "why": "inside a `git grep -l -i -F` COMMAND in E's re-derivation block."
+    },
+    {
+     "file": "exo_memory/loop/carrier_halflife_2026-09-22.md",
+     "anchor": "er.js # :49 grep -n -i \"light, not lifeguard\" dev/shell/hooks/sessio",
+     "kind": "mention",
+     "why": "inside a `grep -n -i` COMMAND in E's re-derivation block."
+    },
+    {
+     "file": "exo_memory/loop/handoff_chair_2026-09-22_forL.md",
+     "anchor": "eer-worker.js:49`, and \"light, not lifeguard\" in `session-start.js`)",
+     "kind": "mention",
+     "why": "the chair's handoff listing item 4 as open: it quotes the wording to NAME the hook lines to be repaired. A target list, asserting nothing."
+    },
+    {
+     "file": "exo_memory/loop/plan_after_upgrade_2026-09-22.md",
+     "anchor": "er.js:49` plus the two \"light, not lifeguard\" lines in `session-star",
+     "kind": "mention",
+     "why": "the plan naming the hook lines item 4 repairs, with \"retracted text kept as a dated comment\" in the same sentence. A target list."
+    },
+    {
+     "file": "exo_memory/loop/plan_after_upgrade_2026-09-22.md",
+     "anchor": "r.js:49`, plus the two \"light, not lifeguard\" lines in `session-star",
+     "kind": "mention",
+     "why": "the plan's order on L, naming the same hook lines to be repaired. A target list."
+    },
+    {
+     "file": "exo_memory/map/A.md",
+     "anchor": "31` titled a section **\"light, not lifeguard\"** — vocabulary retired",
+     "kind": "mention",
+     "why": "A's L032 map entry quoting index.html's section title in order to report it as a carrier (\"vocabulary retired 2026-07-12 and again 2026-08-17\") in the same sentence."
+    },
+    {
+     "file": "exo_memory/map/B.md",
+     "anchor": " cant-lose 34→38 of 38, light-not-lifeguard DISARMED 12/60 with its",
+     "kind": "mention",
+     "why": "B's D-carrier map entry: names this REGISTRY ENTRY by its short hyphenated name -- a reference to an instrument and its state, asserting nothing about the stance. (The full id is excluded from the pattern since D132; this short form still matches.) Both occurrences on this line are the entry name (its counts, and which census row belongs to it)."
+    },
+    {
+     "file": "exo_memory/map/B.md",
+     "anchor": "NT withdrawals — :16 is light-not-lifeguard and gets no row from me",
+     "kind": "mention",
+     "why": "B's D-carrier map entry: names this REGISTRY ENTRY by its short hyphenated name -- a reference to an instrument and its state, asserting nothing about the stance. (The full id is excluded from the pattern since D132; this short form still matches.) Both occurrences on this line are the entry name (its counts, and which census row belongs to it)."
+    },
+    {
+     "file": "exo_memory/map/C.md",
+     "anchor": "AD:README.md | grep -o \"light-not-lifeguard\"` → 1), and the alterna",
+     "kind": "mention",
+     "why": "C's P-DOC-ROOT map entry: the wording inside a `git show HEAD:README.md | grep -o` COMMAND and its result."
     }
    ],
    "armed": false,
-   "arms_on": "the strike-in-place pass over the 16 unaccounted carriers below. The registry's own rule is that arming belongs in the SAME commit as that pass; this entry is registered first, with the accounting on screen, precisely so adoption is not done under time pressure on the night it lands -- which is when the 2026-07-12 diving pass missed BOOT.md and taught the retired metaphor for five more weeks. WHO DECIDES: e5521a0 named dev/SPINE.md and the older cards KEPT AS TRACE, which is an `acknowledged` row plus a marker in each file, not a rewrite. The program design documents (WELFARE.md, dev/PLAN.md, consonance/PLAN.md, AUTONOMY.md, hooks/README.md) use the slogan as the NAME of a live architectural stance, and whether the program renames its stance is the keeper's call, not an instrument's. Arm this the day that pass runs; one word, and `THE BAR, half one` then measures it.",
-   "pattern_note": "WIDENED 2026-09-02, within the hour of registration, and it is the registry's own limit firing rather than a surprise: \"THE PATTERN ALTERNATION IS ENUMERATED, NOT CLOSED ... a fifth phrasing written tomorrow is green forever and nothing here will say so.\" The first form admitted only the comma (\"light, not lifeguard\") and README.md:78 carries the HYPHENATED form (\"light-not-lifeguard\"), which is a live hit on a description surface that the pattern read as clean. Found by CHARLIE running the surface mutant against this entry, from the other side of the lap. A sixth phrasing is still green forever; this widening does not close the class.",
+   "arms_on": "the strike-in-place pass over the 16 unaccounted carriers below. The registry's own rule is that arming belongs in the SAME commit as that pass; this entry is registered first, with the accounting on screen, precisely so adoption is not done under time pressure on the night it lands -- which is when the 2026-07-12 diving pass missed BOOT.md and taught the retired metaphor for five more weeks. WHO DECIDES: e5521a0 named dev/SPINE.md and the older cards KEPT AS TRACE, which is an `acknowledged` row plus a marker in each file, not a rewrite. The program design documents (WELFARE.md, dev/PLAN.md, consonance/PLAN.md, AUTONOMY.md, hooks/README.md) use the slogan as the NAME of a live architectural stance, and whether the program renames its stance is the keeper's call, not an instrument's. Arm this the day that pass runs; one word, and `THE BAR, half one` then measures it. || UPDATE 2026-09-24, D132 (pane C): the keeper decided CH-4 \"Retire it\" (loop/plan_fix_and_list_loop_2026-09-24.md:7, cd02abb). The CH-4 carriers are struck in place (WELFARE.md, dev/SPINE.md, dev/PLAN.md, the card) and every dated record has its row. What still arms this: the SAME strike over the 13 sites in 6 live files the D132 packet did not own (consonance/AUTONOMY.md x3, consonance/PLAN.md x6, consonance/RECONCEPTION.md, DESKTOP_HANDOFF.md, exo_memory/memory/MEMORY.md, exo_memory/memory/lighthouse-dive-buddy-reframe.md). None carries a marker, so no honest row can cover them unedited. The exact replacements, and a temp-tree run showing the armed entry GREEN with them applied, are in handback/p-d132-ch4-C_2026-09-24.md section 3. Strike those, add their 13 `marked` rows, set armed: true, all in one change.",
+   "pattern_note": "WIDENED 2026-09-02, within the hour of registration, and it is the registry's own limit firing rather than a surprise: \"THE PATTERN ALTERNATION IS ENUMERATED, NOT CLOSED ... a fifth phrasing written tomorrow is green forever and nothing here will say so.\" The first form admitted only the comma (\"light, not lifeguard\") and README.md:78 carries the HYPHENATED form (\"light-not-lifeguard\"), which is a live hit on a description surface that the pattern read as clean. Found by CHARLIE running the surface mutant against this entry, from the other side of the lap. A sixth phrasing is still green forever; this widening does not close the class. AND NARROWED 2026-09-24 (D132, pane C): `(?!-2026-08-17)` excludes this entry's OWN ID, which matched its own pattern, so every correct citation by id (B's rule, ea779ca) minted a finding: 13 of the 63 pending were only the id (loop/ask_sheets_2026-09-23.md, SHEET 1). The short name `light-not-lifeguard` still matches, on purpose: in the design documents it was the stance's NAME.",
    "instruction_carriers_outside_corpus": {
     "note": "OUTSIDE carrier-drift.js's corpus: the tool scans .md and .html only (carrier-drift.js:326, :736), so these are recorded here and NOT under `sites`, where a .js file is MISSING-FILE. Instruction-carriers: text a hook puts in front of a judge or into a seat's context. Found by E, loop/carrier_halflife_2026-09-22.md §2 (1f3d2d4); repaired in L083 at the keeper's authorization, loop/plan_after_upgrade_2026-09-22.md §AUTHORIZED item 4 (d5bd9b1).",
     "sites": [

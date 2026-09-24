@@ -95,3 +95,110 @@ Also re-read `sync-completion.json` (`union.succeeded` should equal the number o
 - **Real merged rows.** With the predicted `+0`, this launch proves the machinery, not a merge. The first launch after L publishes
   new rows is the real test.
 - **This machine only.** L is not measured. The snapshot hashes lines, so a sha256 collision would hide a loss (negligible, and named).
+
+
+---
+
+## D ADDENDUM — 2026-09-24 (D132, pane B · non-author of the union build). APPENDED; everything above, the L box included, is unchanged.
+
+> **VERDICT FOR D: THE UNION IS CLEAN, THE SWITCH IS NOT SAFE TO SET YET.** The dry run merges all 8 refused ledgers
+> with **+0 rows and 0 lines lost**. But on D, a union that *succeeds* is what lets the launch **install L's 09-22 state
+> set over D's newer files and MIGRATE D's fixed seats onto L's 09-22 tails**. Today the 8 ledger refusals are the only
+> thing stopping that. **Precondition for setting `CONSONANCE_UNION_AT_LAUNCH` on D: the state head is D-authored**
+> (`state-set.json` `machine: "D"`, which is A's publish fix landing and pushing), **or** the keeper *intends* D to become
+> L's 09-22 house. Until one of those is true, leave the switch OFF on D.
+
+### D-1 · BEFORE, on D — taken with the app OPEN and writing (so each reading has its time)
+
+| time (UTC) | command | reading |
+|---|---|---|
+| 23:08:18 | `git log -1 --format="%h %ad"` · `git status --short \| wc -l` | `cd02abb` 17:05 local · 0 |
+| 23:08:18 | `git -C C:/Consonance/state log -1 --format=%h` | **`9486b30`** — L's publish of 09-22 07:44 local (`state-set.json` `machine: "L"`) |
+| 23:08:18 | `reg query "HKCU\Environment" /v CONSONANCE_UNION_AT_LAUNCH` · `grep -c UNION_AT_LAUNCH consonance/launch.ps1` | not found · 0 — **the switch is OFF** |
+| 23:08:18 | `ls <data>/union.lock <data>/union_receipts.jsonl` · `ls <data> \| grep -c pre-union-` | neither exists · 8 `*.pre-union-*` backups (D106's) |
+| 23:08:18 | `node consonance/tools/trip-check.js --report` | newest trips: **NOT CLEAN** 2026-09-23 21:01:50Z and 21:02:40Z — `installed false · head 9486b30 · refused 8` (board, lap, precompact, atoms, return_ledger, sessionstart-state, sourced_ledger, vantage_findings) |
+| 23:08:25 | **`node exo_memory/loop/union_launch_snapshot_2026-09-22.js --before`** | `%TEMP%\consonance-union-watch\before-2026-09-24T23-08-25-582Z.json`. board **57,298 / 57,298 distinct** (C's `5a5dd98` compaction: no repeated lines left) · atoms 40,982 · sessionstart-state **8,512 / 8,269** · sourced 6,546 · carrier-drift 4,117 · precompact 2,203 · lap 1,366 · vantage 628 · ferry 137 · return 65 · read 2 |
+
+`sync-completion.json` (22:54:26Z): `verified true · installed false · stage install · head 9486b30`, 8 refused. The app
+started as **LOCAL HOUSE** because of that refusal.
+
+### D-2 · THE DRY RUN — the launch's own path, per file, on a TEMP COPY (`exo_memory/loop/union_dryrun_D_2026-09-24.js`)
+
+It copies each fast-forward ledger (and its `attic/pre-sync-2026-09-09T14-59-05-515Z` copy, which `writeUnion` also reads)
+to a temp dir, and reads the state dir in place, read only. Then, with the launch's own functions in the launch's order:
+`appendOnlyCompare` → `timeParseRefusal` → `LU.writeUnion` (`lock: null`, `settleMs: 0`, receipts in temp) → `phase2` →
+`unionVerdict`. It adds its own multiset check in step 7's unit. **Run at 23:10:17Z. The live data dir held no `union.lock`
+and no `union_receipts.jsonl` before or after.**
+
+| file | pre-scan | lines before→after | + rows (from arriving / attic-only) | lines lost (multiset) | phase2 | verdict |
+|---|---|---|---|---|---|---|
+| board | DIVERGED | 57,310 → 57,310 | +0 (0/0) | **0** | ok | MERGED |
+| lap | DIVERGED | 1,366 → 1,366 | +0 | **0** | ok | MERGED |
+| precompact | DIVERGED | 2,207 → 2,207 | +0 | **0** | ok | MERGED |
+| sessionstart-state | DIVERGED | 8,512 → 8,512 | +0 | **0** | ok | MERGED |
+| sourced_ledger | DIVERGED | 6,548 → 6,548 | +0 | **0** | ok | MERGED |
+| return_ledger | DIVERGED | 65 → 65 | +0 | **0** | ok | MERGED |
+| vantage_findings | DIVERGED | 628 → 628 | +0 | **0** | ok | MERGED |
+| resonance/atoms | DIVERGED | 40,990 → 40,990 | +0 | **0** | ok | MERGED |
+| carrier-drift · ferry · read_ledger | IDENTICAL | — | — | — | — | not refused |
+
+**+0 everywhere** because every row of L's `9486b30` copy is already on D (D106's union of 09-22 15:40 brought them in).
+So, as §2 said of D, this launch would exercise the machinery, not a merge of real rows.
+
+**THE BOARD AND C's COMPACTION, the case the packet asked about: a row D folded and L still holds twice.**
+- **By the code:** `union()` adds one row per canonical key the live file LACKS, so a key D already holds adds nothing, and D keeps its one copy.
+- `phase2(a)` then requires **local count ≥ arriving count per key**, so that row is **COUNT-SHORT**. The board is refused, and by stop-before-write **the whole install is refused**. Nothing is lost; the code's own words are "this file needs a person, not another union".
+- **Measured today, it does not arise:** L's arriving board holds **35,427 rows / 35,427 distinct keys, 0 keys held twice**, and **0 keys the arriving copy holds more times than D** (the same is true of all 8 files; sessionstart-state's repeats run the safe way, D 236 keys held 2+ against L's 23). C's 7,514 folded repeats were D-only.
+- **When it WOULD bite:** a future L publish whose board carries repeats that D has folded, for example if L's own board has repeated rows since 09-22. That's not measurable from D; the next L publish is the place to look.
+
+### D-3 · WHY THE SWITCH IS NOT SAFE ON D TODAY — the launch sequence, not the union
+
+`sync_at_launch` (`main.rs` ~11859-11895) runs `--pull` (verify only), reads `sync-completion.json`'s `pushed_by`
+(`v.index.machine` = **L**), and, because that is not this machine, runs **`--install`**. Its own comment says: "a
+WHOLE-FILE OVERWRITE of the data dir from the state tree, with no recency test anywhere in it". Its protection covers only
+"the machine that authored the state". **D authored nothing since 09-10.**
+
+**Today:** the install refuses the 8 ledgers, exits 1, `Pull::Failed`, and the verdict is **LOCAL HOUSE** (`sync_launch.rs:258-265`). D keeps its own house.
+
+**With the switch on:** the 8 merge (D-2), nothing is refused, and the install **succeeds**. `sync-completion.json` then says
+`installed: true, pushed_by: "L"`, so `decide()` returns **MIGRATE** (`sync_launch.rs:350-359`): it retires D's transcripts
+for the fixed-id seats and wakes them from the synced tails, **which are L's of 09-22**. The same install writes L's copy over
+**17 other files that differ** (measured, `<B scratch>/d132/install_diff.js`; D's copies go to `attic/pre-sync-<stamp>/`, so
+they are recoverable):
+
+| file | D now | L's `9486b30` copy |
+|---|---|---|
+| `captures/0c0c0c0b-…115b.txt` (librarian) | 4,222,393 B · 23:10Z today | 966,228 B |
+| `captures/0c0c0c0a-…0a01.txt` (chair) | 6,669,389 B · 23:07Z today | 5,012,612 B |
+| `captures/` a2122153, 0845a868, 12fb81f6, 6fe15f0a (panes) | 28–45 KB · today | 9–16 KB |
+| `vantage_runs.log`, `vantage_watermark.json`, 7 × `return_state/*.json` | newer on D | older |
+| `panes.json`, `dispatch-gate.jsonl` | D's are 09-09 | L's 09-22 |
+
+That is not a union defect; `writeUnion` did exactly its job. **It is the union removing the one refusal that was keeping
+an older foreign publish off a machine with newer unpublished work.**
+
+### D-4 · WHAT D's LAUNCH SHOULD PRINT, ONCE THE PRECONDITION HOLDS
+
+- **When the head is D-authored** (A's publish fix has landed and pushed): phase one finds `pushed_by: "D"`, the record is **ours**, `--install` never runs, and the verdict is **`RESUME`** — "the record's head was authored by this machine (D)". **The union does not run at all**, because it lives inside the install. On D the switch is then inert until a foreign head arrives. That is correct, and it's the right state to set it in.
+- **When a NEWER L head arrives** (the keeper worked on L, published, and came back to D — the intended move):
+  - the success lines of §2: `N ledger(s) held rows only this machine had. They were merged, not replaced:`, each `<path> +<n> rows`, where +n is the rows L wrote;
+  - then the install of L's other files;
+  - then **`MIGRATE`** — "the record's head was authored by L". That is the move, and it is intended.
+
+### D-5 · PASS RULE ON D
+
+1. `--after` against the D-1 snapshot prints **PASS, exit 0**: every line held before is still held, at least as many times.
+2. `union.succeeded` in `sync-completion.json` equals the number of refused files; every `started` in `union_receipts.jsonl` has its `finished`; each merged entry `verified: true`.
+3. **The verdict row matches the intent:** `RESUME` when D authored the head; `MIGRATE` **only** when the arriving head is newer work from L that the keeper meant to carry over.
+
+### D-6 · WHAT MEANS STOP ON D — in addition to §4 above
+
+1. **A `MIGRATE` row on D when D was the last machine worked on** (the arriving head is older than D's own last work). Today's `9486b30` is exactly that. Stop and restore D's displaced files from `attic/pre-sync-<stamp>/`.
+2. **The switch set on D while `state-set.json` still says `machine: "L"` at `9486b30`.** Do not launch; unset it, or land D's publish first.
+3. **`--after` shows any board key short** (COUNT-SHORT printed, or `STOP` from the snapshot), including after a future L publish carrying repeats D has folded (D-2).
+
+### D-7 · WHAT THIS DOES NOT SEE
+
+- L's live board and ledgers after 09-22: only L's published copy is on D.
+- Whether A's publish fix will write `machine: "D"` into `state-set.json`. D-4 assumes it does, as `--push` has before (the index at `f70d50a` was D's).
+- A real launch. Nothing was installed, restarted or set. The dry run used the launch's functions, not the launch.

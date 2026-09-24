@@ -1389,3 +1389,61 @@ test('QUEUED — several waiting at one seat: the OLDEST sets the age, and the c
   const t = qline([QROW(T0, A, 'stamp=working', RING), QROW(T0 + 2 * MIN, A, 'stamp=working', 'second ring: y', 2)], T0 + 5 * MIN);
   assert.match(t, /QUEUED A 5m, 2 waiting/, t);
 });
+
+// ── D132: "in sync" printed over two DIFFERENT heads ─────────────────────────────────────────────────────────────────
+// On D, 2026-09-24, the pulse read `in sync D f70d50a/L 9486b30` on every prompt while D had not published for 14 days and
+// the launch sync was refusing 8 diverged files (sync-pull.log). The status file already carries the state `head` and
+// each machine's last push `at`; a machine whose last push is not the head is BEHIND, and the line must say so.
+const D132_STATUS = (over = {}) => ({
+  written: '2026-09-24T22:54:26.768Z', by: 'state-sync.js', this_machine: 'D', head: '9486b30',
+  machines: [
+    { machine: 'D', commit: 'f70d50a', at: '2026-09-10T07:39:42.374Z' },
+    { machine: 'L', commit: '9486b30', at: '2026-09-22T13:44:45.975Z' },
+  ], ...over,
+});
+const d132Line = (status, now) => {
+  const s = store(WORKING(1000), []);
+  fs.writeFileSync(path.join(s.dir, 'state-sync.status.json'), JSON.stringify(status));
+  const r = mod().line({ ledger: s.ledger, now, dirty: 0 });
+  s.cleanup();
+  return r.text;
+};
+const D132_NOW = Date.parse('2026-09-24T23:06:00Z');
+
+test('D132 — the LIVE D status (head 9486b30, D last pushed f70d50a) reads NOT in sync, never "in sync"', () => {
+  const t = d132Line(D132_STATUS(), D132_NOW);
+  assert.doesNotMatch(t, /(^|[^T] )in sync D/, t);
+  assert.match(t, /NOT in sync/, t);
+});
+
+test('D132 — the machine behind the head is NAMED, with its last push and how long ago', () => {
+  const t = d132Line(D132_STATUS(), D132_NOW);
+  assert.match(t, /D behind — last pushed f70d50a 351h ago/, t);
+});
+
+test('D132 — the machine AT the head is marked as the head, with its age', () => {
+  const t = d132Line(D132_STATUS(), D132_NOW);
+  assert.match(t, /L 9486b30 \(head, 57h ago\)/, t);
+});
+
+test('D132 — the whole line still says AS OF (it is this machine\'s last sync, never a live check)', () => {
+  const t = d132Line(D132_STATUS(), D132_NOW);
+  assert.match(t, /as of 12m ago/, t);
+});
+
+test('D132 — every machine at the head is still "in sync", in the old words', () => {
+  const t = d132Line(D132_STATUS({ machines: [{ machine: 'D', commit: '9486b30', at: '2026-09-22T14:00:00Z' }, { machine: 'L', commit: '9486b30', at: '2026-09-22T13:44:45.975Z' }] }), D132_NOW);
+  assert.match(t, /in sync D 9486b30\/L 9486b30 as of 12m ago/, t);
+  assert.doesNotMatch(t, /NOT in sync/, t);
+});
+
+test('D132 — a machine that never pushed, with a head present, reads "never pushed", not "behind"', () => {
+  const t = d132Line(D132_STATUS({ machines: [{ machine: 'D' }, { machine: 'L', commit: '9486b30', at: '2026-09-22T13:44:45.975Z' }] }), D132_NOW);
+  assert.match(t, /NOT in sync: D never pushed/, t);
+});
+
+test('D132 — a behind machine with no `at` still says behind, and invents no age', () => {
+  const t = d132Line(D132_STATUS({ machines: [{ machine: 'D', commit: 'f70d50a' }, { machine: 'L', commit: '9486b30' }] }), D132_NOW);
+  assert.match(t, /D behind — last pushed f70d50a[ ·]/, t);
+  assert.doesNotMatch(t, /f70d50a \d/, t);
+});
