@@ -18,7 +18,7 @@ const FIRST_SCREEN = README.split(/\n## /)[0];
 // The design's precision sentence, VERBATIM (exo_memory/loop/jev_standalone_design_2026-09-23.md :14–15). Copied here
 // rather than read from there, so this module's tests need nothing outside jev/.
 const PRECISION = 'Jev marks turns worth a second look. Measured on its first 56 units, about 1 in 4 marked turns was '
-  + 'confirmed by a blind reader; the readers were the room\'s own and lean lenient.';
+  + 'confirmed by a blind reader; the readers were AI assistants from this project and lean lenient.';
 
 test('FIRST SCREEN carries the gateway disclosure: judged turns are sent to the Vercel AI Gateway', () => {
   assert.match(flat(FIRST_SCREEN), /judged turns are sent to the Vercel AI Gateway/i);

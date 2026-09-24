@@ -12,7 +12,9 @@ and from the keeper's four decisions of 06:2x. Nothing is built yet. **This is w
   confirmed, and its own confidence cannot tell the good ones apart. The over-flag is general (work and personal alike), and
   the model does it, not the prompt.
 - **So the product must say:** *"Jev marks turns worth a second look. Measured on its first 56 units, about 1 in 4 marked
-  turns was confirmed by a blind reader; the readers were the room's own and lean lenient."* **Never** "Jev caught drift."
+  turns was confirmed by a blind reader; the readers were AI assistants from this project and lean lenient."* **Never** "Jev caught drift."
+  *(Worded "the readers were the room's own" until 2026-09-23 22:5x; changed at the keeper's word, because a stranger
+  cannot know what "the room" is. The readers were the same AI assistants either way.)*
 
 ## THE SHAPE — one module, two ways to run it
 

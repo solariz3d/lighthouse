@@ -13,7 +13,7 @@ retained. **Your key is read from the environment only** (`AI_GATEWAY_API_KEY`).
 writes it anywhere.
 
 **What a mark means, measured: Jev marks turns worth a second look. Measured on its first 56 units, about 1 in 4 marked
-turns was confirmed by a blind reader; the readers were the room's own and lean lenient.** How that was measured is
+turns was confirmed by a blind reader; the readers were AI assistants from this project and lean lenient.** How that was measured is
 under "What a mark means", below.
 
 ## Before you start
@@ -28,7 +28,7 @@ under "What a mark means", below.
 
 ## 1 · Get Jev and keep it in one place
 
-Get the `jev` folder (the public repository is not published yet) and put it where it will stay, for example in a
+Get the `jev` folder (`git clone https://github.com/solariz3d/jev.git`) and put it where it will stay, for example in a
 `tools` folder in your home. **Every command below is run from the folder that CONTAINS `jev`**, not from inside it:
 
     cd ~/tools          # or wherever you put it; `jev` is inside this folder
@@ -97,13 +97,13 @@ Or list folders under `optOut` in `~/.jev/config.json` (see Config): `{ "optOut"
 ## What a mark means
 
 **Jev marks turns worth a second look. Measured on its first 56 units, about 1 in 4 marked turns was confirmed by a
-blind reader; the readers were the room's own and lean lenient.**
+blind reader; the readers were AI assistants from this project and lean lenient.**
 
 **How that was measured.**
 - **The turns:** 56, taken from the project where Jev was built. That was every turn Jev had marked there (30 "drift"
   and 6 "can't judge") plus 20 it had called clean.
 - **The readers:** two, each reading every turn without seeing Jev's answer. Both were AI assistants from that same
-  project, the room's own.
+  project.
 - **What they found:** they agreed with **8 of Jev's 30 "drift" marks** and with **19 of the 20 turns Jev called clean**.
 - **The caveat:** those same readers were measured earlier as **lenient**. Fresh outside readers flagged about three
   times as many turns. So some of the marks the readers did not confirm may be the readers' leniency, not Jev's error.
