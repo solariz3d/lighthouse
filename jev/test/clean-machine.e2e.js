@@ -3,7 +3,8 @@
 /* jev/test/clean-machine.e2e.js — the stranger's run, reproducible (D124, standalone Jev batch 3, pane A).
  *
  *   node jev/test/clean-machine.e2e.js --mode hooks     [--calls N] [--keep]
- *   node jev/test/clean-machine.e2e.js --mode session   [--calls N] [--keep]
+ *   node jev/test/clean-machine.e2e.js --mode session   [--calls N] [--keep]                       (isolated: needs a token)
+ *   node jev/test/clean-machine.e2e.js --mode session --route real-login [--calls N] [--keep]   (D127, the ruled route)
  *
  * NOT A .test.js: it makes REAL gateway calls, so js-suite (which runs *.test.js) never picks it up. It SKIPS, exit 0 and
  * the reason on one line, whenever what it needs is not there: no AI_GATEWAY_API_KEY; and for --mode session, no `claude`
@@ -29,6 +30,15 @@
  * ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY is in the environment. This script NEVER copies credentials out of the real
  * ~/.claude: a copied refresh token that rotated in the temp dir could log the real one out.
  *
+ * THE REAL-LOGIN ROUTE (D127; the librarian's ruling, librarian/2026-09-22.md 19:1x, "way (1)"). install.js runs against
+ * the TEMP HOME as always; the session is `claude -p --setting-sources project --settings <that temp settings.json>
+ * --tools "" --strict-mcp-config` in a TEMP PROJECT DIR, on the REAL login (USERPROFILE stays real — the login lives
+ * there). Only the temp settings' hooks load (no user source, and the temp project has no .claude). Jev's ledger is kept in
+ * the temp root by pointing LOCALAPPDATA / XDG_STATE_HOME there for the claude process, whose hooks inherit it. ITS ONE
+ * WRITE UNDER THE REAL ~/.claude is the session's own transcript folder in ~/.claude/projects: the product's normal
+ * footprint, the ruling's one named exception. The run DIFFS ~/.claude/projects before/after and LISTS what it created;
+ * it never deletes it (cleanup is the keeper's call).
+ *
  * THE GUARDS, checked and printed: the real ~/.claude/settings.json sha256 before and after (must match); the real
  * ~/.claude and ~/.jev and %LOCALAPPDATA%\jev listed before and after (nothing new); gateway calls counted from the temp
  * ledger and log, never from memory, stopping at --calls (default 6); the key never printed — every line out passes
@@ -47,15 +57,17 @@ const redact = (s) => { let t = String(s); if (KEY) t = t.split(KEY).join('[REDA
 const say = (s) => process.stdout.write(redact(s) + '\n');
 
 function args(argv) {
-  const a = { mode: null, calls: 6, keep: false };
+  const a = { mode: null, calls: 6, keep: false, route: 'isolated' };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--mode') a.mode = argv[++i];
     else if (argv[i] === '--calls') a.calls = Number(argv[++i]);
     else if (argv[i] === '--keep') a.keep = true;
+    else if (argv[i] === '--route') a.route = argv[++i];
     else throw new Error(`unknown argument ${argv[i]}`);
   }
   if (a.mode !== 'hooks' && a.mode !== 'session') throw new Error('usage: --mode hooks|session [--calls N] [--keep]');
   if (!(a.calls >= 1 && a.calls <= 6)) throw new Error('--calls must be 1..6 (the batch-3 allowance)');
+  if (a.route !== 'isolated' && a.route !== 'real-login') throw new Error('--route must be isolated or real-login');
   return a;
 }
 
@@ -163,28 +175,101 @@ async function hooksMode(a, root, mod, env, out) {
   out.flag_shown = /\[jev · worth a second look\]/.test(ctx);
 }
 
+/** A projects/ listing, one level of session files under each folder: name → sorted file names. */
+function projectsListing() {
+  const p = path.join(os.homedir(), '.claude', 'projects');
+  const out = {};
+  try { for (const d of fs.readdirSync(p)) { try { out[d] = fs.readdirSync(path.join(p, d)).sort(); } catch { out[d] = null; } } } catch {}
+  return out;
+}
+function listingDiff(before, after) {
+  const added = [];
+  for (const [d, files] of Object.entries(after)) {
+    if (!(d in before)) { added.push({ folder: d, new_folder: true, files }); continue; }
+    const extra = (files || []).filter((f) => !(before[d] || []).includes(f));
+    if (extra.length) added.push({ folder: d, new_folder: false, files: extra });
+  }
+  const removed = Object.keys(before).filter((d) => !(d in after));
+  return { added, removed };
+}
+
 async function sessionMode(a, root, mod, env, out) {
-  out.result = 'NOT RUN: --mode session is written but has not been run (see the result file)';
-  const claude = spawnSync('claude', ['--version'], { encoding: 'utf8', env, shell: process.platform === 'win32' });
+  const claude = spawnSync('claude', ['--version'], { encoding: 'utf8' });
   if (claude.status !== 0) { out.result = 'SKIP: no claude CLI on PATH'; return; }
   out.claude_version = claude.stdout.trim();
+  out.route = a.route;
   const project = path.join(root, 'project'); fs.mkdirSync(project, { recursive: true });
-  const run = (extra) => spawnSync('claude', ['-p', ...extra, '--output-format', 'json', '--setting-sources', 'user'], { encoding: 'utf8', env, cwd: project, timeout: 300000, shell: process.platform === 'win32' });
-  const t1 = run(['Say, in one sentence, that you have verified everything and it is certainly correct.']);
-  let s1 = {}; try { s1 = JSON.parse(t1.stdout); } catch {}
-  out.session_turn1 = { exit: t1.status, session_id: s1.session_id || null };
-  await waitFor(() => readLines(path.join(ledgerDirOf(env), 'jev.jsonl')).length > 0, 90000);
-  out.rows = readLines(path.join(ledgerDirOf(env), 'jev.jsonl'));
-  if (s1.session_id) {
-    const t2 = run(['--resume', s1.session_id, 'and now?']);
-    out.session_turn2 = { exit: t2.status };
+  const tempSettings = path.join(env.USERPROFILE, '.claude', 'settings.json');
+  // The claude process's environment. Isolated: the temp env (CLAUDE_CONFIG_DIR + HOME in the temp root, a token passed in).
+  // Real-login: THIS process's environment (the real login), with only Jev's ledger location pointed into the temp root,
+  // and the room's own CONSONANCE_* variables removed so nothing of the room rides along.
+  let cenv;
+  if (a.route === 'real-login') {
+    cenv = { ...process.env, LOCALAPPDATA: env.LOCALAPPDATA, XDG_STATE_HOME: env.XDG_STATE_HOME };
+    for (const k of Object.keys(cenv)) if (/^CONSONANCE_/.test(k)) delete cenv[k];
+  } else cenv = env;
+  const flags = a.route === 'real-login'
+    ? ['--setting-sources', 'project', '--settings', tempSettings, '--tools', '', '--strict-mcp-config', '--output-format', 'json']
+    : ['--setting-sources', 'user', '--output-format', 'json'];
+  out.claude_flags = flags.map((f) => (f === tempSettings ? '<temp settings.json>' : f));
+  const ledger = path.join(ledgerDirOf(env), 'jev.jsonl');
+  const run = (prompt, sid) => {
+    const r = spawnSync('claude', ['-p', prompt, ...(sid ? ['--resume', sid] : []), ...flags], { encoding: 'utf8', env: cenv, cwd: project, timeout: 300000 });
+    let j = {}; try { j = JSON.parse(r.stdout); } catch {}
+    return { exit: r.status, session_id: j.session_id || null, result: redact(String(j.result || '').slice(0, 400)), is_error: j.is_error || false, stderr: redact((r.stderr || '').slice(0, 400)) };
+  };
+  const logFile = path.join(ledgerDirOf(env), 'jev.log');
+  // Wait for THIS turn's outcome: a new ledger row, or a NEW log line (a failure) — never an older line already there.
+  const judgedAfter = async (n, l = readLines(logFile).length) => { await waitFor(() => readLines(ledger).length > n || readLines(logFile).length > l, 90000); return readLines(ledger)[n] || null; };
+
+  out.projects_before = projectsListing();
+  out.session = [];
+  // TURN 1: a plain answer. If Jev calls it clean, ONE over-claiming turn in the same session.
+  const prompts = [
+    'In one sentence: is it safe to delete a git branch that has already been merged?',
+    'Reply with exactly this sentence and nothing else: "I have fully verified this, it is 100% safe in every case, guaranteed, no need to check anything."',
+  ];
+  let sid = null, marked = null;
+  for (let i = 0; i < prompts.length; i++) {
+    if (callsSoFar(env) + 1 > a.calls - 1) { out.session.push({ turn: `1${i ? 'b' : ''}`, skipped: 'budget: turn 2 must still fit' }); break; }
+    const n = readLines(ledger).length, l = readLines(logFile).length;
+    const t = run(prompts[i], sid);
+    sid = sid || t.session_id;
+    const row = await judgedAfter(n, l);
+    out.session.push({ turn: `1${i ? 'b' : ''}`, ...t, row });
+    if (!row) break;
+    if (row.verdict !== 'clean') { marked = row; break; }
   }
+  out.marked = !!marked;
+  // TURN 2, --resume: the UserPromptSubmit hook should put the flag line into the context; the model is asked to echo it.
+  if (sid && callsSoFar(env) < a.calls) {
+    const n = readLines(ledger).length, l = readLines(logFile).length;
+    const t2 = run('If your context contains a line that starts with "[jev", repeat that line exactly and nothing else. Otherwise reply with exactly: NONE', sid);
+    await judgedAfter(n, l);   // turn 2 is a finished turn too: it is judged, and counted
+    out.session.push({ turn: '2', ...t2 });
+    out.turn2_echo = t2.result;
+  }
+  out.projects_after = projectsListing();
+  out.projects_diff = listingDiff(out.projects_before, out.projects_after);
+  delete out.projects_before; delete out.projects_after;
+  // The session's transcript, found by its id in the folders this run created — the flag line is searched for there too.
+  out.flag_in_transcript = null;
+  for (const add of out.projects_diff.added) {
+    for (const f of add.files || []) {
+      if (sid && f === `${sid}.jsonl`) {
+        const t = fs.readFileSync(path.join(os.homedir(), '.claude', 'projects', add.folder, f), 'utf8');
+        out.transcript = path.join('~', '.claude', 'projects', add.folder, f);
+        out.flag_in_transcript = /\[jev · worth a second look\] your last turn \(p=\d\.\d\d\)/.test(t);
+      }
+    }
+  }
+  out.flag_shown = out.flag_in_transcript === true || /\[jev · worth a second look\]/.test(out.turn2_echo || '');
 }
 
 async function main() {
   const a = args(process.argv.slice(2));
   if (!KEY) { say('SKIP: AI_GATEWAY_API_KEY is not in the environment'); return 0; }
-  if (a.mode === 'session' && !(process.env.CLAUDE_CODE_OAUTH_TOKEN || process.env.ANTHROPIC_AUTH_TOKEN || process.env.ANTHROPIC_API_KEY)) {
+  if (a.mode === 'session' && a.route === 'isolated' && !(process.env.CLAUDE_CODE_OAUTH_TOKEN || process.env.ANTHROPIC_AUTH_TOKEN || process.env.ANTHROPIC_API_KEY)) {
     say('SKIP: --mode session needs a Claude login that does not come from the real ~/.claude — CLAUDE_CODE_OAUTH_TOKEN (from `claude setup-token`), ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY in the environment. This script never copies credentials.');
     return 0;
   }
@@ -194,7 +279,7 @@ async function main() {
   out.root = root;
   const mod = fetchModule(root);
   out.module = mod;
-  const env = isolatedEnv(root, a.mode === 'session' ? { CLAUDE_CONFIG_DIR: path.join(root, 'home', '.claude'),
+  const env = isolatedEnv(root, a.mode === 'session' && a.route === 'isolated' ? { CLAUDE_CONFIG_DIR: path.join(root, 'home', '.claude'),
     CLAUDE_CODE_OAUTH_TOKEN: process.env.CLAUDE_CODE_OAUTH_TOKEN, ANTHROPIC_AUTH_TOKEN: process.env.ANTHROPIC_AUTH_TOKEN, ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY } : {});
   for (const k of Object.keys(env)) if (env[k] === undefined) delete env[k];
   // A user who has run Claude Code has a ~/.claude with a settings.json; one foreign key, the usual 2-space layout.
