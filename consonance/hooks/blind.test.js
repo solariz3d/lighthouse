@@ -17,7 +17,17 @@ const test = require('node:test');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { blindState, declareLine, setBlind, clearBlind } = require('./blind.js');
+// D130: pinned to a temp dir BEFORE blind.js loads, so no test here can reach the live board. Until
+// this line, the round-trip test below passed a lockPath and no boardPath, and every suite run wrote
+// an OPEN and a CLOSED row to the real data/board.jsonl — 90 phantom windows by 2026-09-24 06:20Z
+// (`handback/p-d130-blind-E_2026-09-24.md` §1), each one a span boundary-check reads as real.
+process.env.CONSONANCE_DATA = fs.mkdtempSync(path.join(os.tmpdir(), 'blind-data-'));
+const { blindState, declareLine, setBlind, clearBlind, BOARD, isSealedDispatch, sealedGate, SEALED } = require('./blind.js');
+
+test('no test in this file can write the live board: the default board is a temp file', () => {
+  assert.ok(path.resolve(BOARD).startsWith(path.resolve(os.tmpdir())), `BOARD is ${BOARD}`);
+  assert.ok(path.resolve(SEALED).startsWith(path.resolve(os.tmpdir())), `SEALED is ${SEALED}`);
+});
 
 const tmp = () => path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'blind-')), 'blind.lock');
 
@@ -89,12 +99,13 @@ test('every mute declares itself, with a cause a reader can act on', () => {
 
 test('set and clear round-trip on the real default path', () => {
   const p = tmp();
-  const r = setBlind({ minutes: 5, why: 'round trip', lockPath: p });
+  const board = path.join(path.dirname(p), 'board.jsonl');
+  const r = setBlind({ minutes: 5, why: 'round trip', lockPath: p, boardPath: board });
   assert.ok(Date.parse(r.until) > Date.now());
   assert.strictEqual(blindState(p).blind, true);
-  assert.strictEqual(clearBlind(p), true);
+  assert.strictEqual(clearBlind(p, board), true);
   assert.strictEqual(blindState(p).reason, 'no-lock');
-  assert.strictEqual(clearBlind(p), false, 'clearing nothing reports false rather than throwing');
+  assert.strictEqual(clearBlind(p, board), false, 'clearing nothing reports false rather than throwing');
 });
 
 test('the gate is actually wired into the pane broadcast', () => {
@@ -213,4 +224,36 @@ test('BOARD: an unwritable board does not stop the window from opening, and is n
   assert.strictEqual(threw, null, 'recording is best-effort; blinding is not');
   assert.ok(fs.existsSync(r.lock), 'the lock must still have been written');
   assert.ok(errs.join('').includes('blind'), 'and the failure to record must be said out loud');
+});
+
+// ── THE SEALED DETECTOR (D130, E). The window opens on the packet's arrival, so what counts as a
+// sealed dispatch is the whole mechanism. Every sealed or blind read the chair dispatched on the
+// board is detected (L108 B/C, L113 B/C, D116, D117; §2 of the hand-back); these pin the shapes.
+test('SEALED DETECTOR: the L113 packet, pasted, is a sealed dispatch', () => {
+  assert.ok(isSealedDispatch('\n\n<pasted_content id="465e">\n[chair:MAIN] B — L113, on L: you are one of TWO SEALED READERS again.'));
+});
+
+test('SEALED DETECTOR: a bare chair packet naming a blind read is a sealed dispatch', () => {
+  assert.ok(isSealedDispatch('[chair:MAIN] D117 packet B — the second blind read, and it is your kind of question.'));
+});
+
+test('SEALED DETECTOR: the words alone, without a chair head, are not a dispatch', () => {
+  assert.ok(!isSealedDispatch('This session is being continued. The chair said: you are one of TWO SEALED READERS.'));
+});
+
+test('SEALED DETECTOR: a chair packet with no sealed or blind read is not one', () => {
+  assert.ok(!isSealedDispatch('[chair:MAIN] E — D125, on D: FIX THE README the stranger couldn\'t follow.'));
+});
+
+test('SEALED GATE: a seat with no session id is never muted', () => {
+  assert.strictEqual(sealedGate({ sessionId: '', prompt: '[chair:MAIN] a sealed read' }).mute, false);
+});
+
+test('SEALED GATE: a window whose expiry is unusable fails CLOSED, not open', () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'sealed-')), 'sealed.json');
+  const sid = 'aaaaaaaa-1111-4000-8000-000000000009';
+  fs.writeFileSync(file, JSON.stringify({ windows: { [sid]: { letter: 'R', opened: 1 } } }));
+  const g = sealedGate({ sessionId: sid, prompt: 'ok', file, boardPath: path.join(path.dirname(file), 'b.jsonl') });
+  assert.strictEqual(g.mute, true);
+  assert.match(g.line, /no usable expiry, so this failed CLOSED/);
 });

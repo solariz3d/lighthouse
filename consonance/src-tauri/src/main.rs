@@ -10301,13 +10301,85 @@ fn unreadable_counts(r: &Reads) -> String {
         .join(", ")
 }
 
+/// D130: run one step of the drain and CATCH a panic in it, returning its text instead of letting it
+/// unwind any further.
+///
+/// WHY. The drain thread was `loop { sleep; drain_inboxes(&h) }` with no guard, so ONE panic
+/// anywhere in one tick ended queued delivery for EVERY pane, silently, until the app next launched —
+/// while door deliveries (`gate_or_queue` saying Deliver) went on working, because they never touch
+/// the queue. That is exactly what L showed on 2026-09-23 from 06:20: two rings queued to the
+/// librarian were never delivered (the librarian's own pane rows on the board carry every later ring
+/// — L110 at 06:30, L111 at 06:37, L112 at 06:50 — and never those two), which no path through
+/// `drain_decision` produces. The keep-warm thread already had this guard, with the L034 lesson
+/// written beside it; the drain, the one thread whose silence mutes the room, did not.
+///
+/// It returns the text rather than logging it so the tests can drive it without writing into the
+/// real data dir; the caller logs.
+fn guarded(step: impl FnOnce()) -> Option<String> {
+    std::panic::catch_unwind(std::panic::AssertUnwindSafe(step))
+        .err()
+        .map(|p| panic_text(p.as_ref()))
+}
+
+/// A panic's payload as text: `panic!("…")` gives `&str` or `String`; anything else is named as such.
+fn panic_text(p: &(dyn std::any::Any + Send)) -> String {
+    p.downcast_ref::<&str>()
+        .map(|s| s.to_string())
+        .or_else(|| p.downcast_ref::<String>().cloned())
+        .unwrap_or_else(|| "a panic whose payload is not text".to_string())
+}
+
+/// How often one pane's repeating drain panic is written down. A panic that fires every 250 ms tick
+/// would otherwise write four rows a second; one a minute says it is still happening.
+const DRAIN_PANIC_REPORT_EVERY: Duration = Duration::from_secs(60);
+
+/// Report a caught panic for this pane now? Yes the first time, then at most once per interval.
+fn drain_panic_due(last: Option<Instant>, now: Instant) -> bool {
+    last.map_or(true, |t| now.saturating_duration_since(t) >= DRAIN_PANIC_REPORT_EVERY)
+}
+
+static DRAIN_PANIC_LAST: std::sync::OnceLock<Mutex<HashMap<String, Instant>>> = std::sync::OnceLock::new();
+
+/// A caught drain panic, said where it can be read: the persist log and the board, rate-limited per
+/// pane. The queue itself is untouched: the message that was being handled stays queued (a panic
+/// before the take leaves it; one after the write has already written its row or not), and the next
+/// tick tries again.
+fn report_drain_panic(app: &AppHandle, pane: &str, why: &str) {
+    let now = Instant::now();
+    let due = DRAIN_PANIC_LAST
+        .get_or_init(|| Mutex::new(HashMap::new()))
+        .lock()
+        .map(|mut m| {
+            let due = drain_panic_due(m.get(pane).copied(), now);
+            if due {
+                m.insert(pane.to_string(), now);
+            }
+            due
+        })
+        .unwrap_or(true);
+    if due {
+        plog(&format!("DRAIN PANICKED pane={pane} — {why}; caught, the drain goes on with the other panes and retries this one next tick"));
+        chair_audit(app, format!(
+            "DRAIN PANICKED -> {} (caught; its queue is kept and retried every tick; said at most once a minute): {}",
+            short_id(pane), why
+        ));
+    }
+}
+
 /// ONE tick, ALL queues, ONE message per pane per tick — the next tick re-reads the screen rather
 /// than trusting a 250ms-old reading for a second write. QUEUED and DELIVERED are separate rows on
 /// purpose: until tonight the board said "delivered" when the text RENDERED, so "not yet sent" and
 /// "sent and unacknowledged" produced the same line and could not be told apart.
+///
+/// D130: EACH PANE'S WORK RUNS UNDER `guarded`, so a panic reading one pane's emulator cannot stop
+/// the others' deliveries in this tick (the door computes `pane_state` for its ONE receiver; this
+/// loop computes it for EVERY pane with a queue, so it meets every pane's worst screen).
 fn drain_inboxes(app: &AppHandle) {
     let enabled = deliver_only_when_idle();
     for pane in app.state::<Inbox>().panes() {
+        // D130: the body below is unchanged and runs inside `guarded` (kept at its old indent so
+        // the diff is the guard alone).
+        let caught = guarded(|| {
         // L065 D1: WITHDRAWN HEADS ARE STEPPED OVER FIRST, and each one leaves a row.
         //
         // BEFORE the gate is even read, because nothing here is written to the pane and the gate
@@ -10382,6 +10454,10 @@ fn drain_inboxes(app: &AppHandle) {
                     }
                 )),
             }
+        }
+        });
+        if let Some(why) = caught {
+            report_drain_panic(app, &pane, &why);
         }
     }
 }
@@ -13367,9 +13443,14 @@ fn main() {
             // die without a word is a gate that mutes the room.
             {
                 let h = app.handle().clone();
+                // D130: AND THE LOOP ITSELF IS GUARDED. It was not, so one panic in one tick ended
+                // queued delivery for every pane, silently, until the next launch (see `guarded`).
+                // Each pane is guarded inside `drain_inboxes`; this catches anything outside them.
                 std::thread::spawn(move || loop {
                     std::thread::sleep(Duration::from_millis(250));
-                    drain_inboxes(&h);
+                    if let Some(why) = guarded(|| drain_inboxes(&h)) {
+                        plog(&format!("DRAIN TICK PANICKED outside any one pane — {why}; caught, the drain goes on next tick"));
+                    }
                 });
             }
             // L067 KEEP-WARM: its own thread, so a slow transcript read never delays a delivery, and
@@ -18785,6 +18866,107 @@ mod inbox_tests {
         // not evidence of readiness. Bounded by MAX_HOLD_MS, never indefinite.
         let overlay = ["a full-screen overlay".to_string(), "with no box".to_string()];
         assert!(!input_box_empty(&overlay, &overlay));
+    }
+
+    /// D130, THE PACKET'S QUESTION: does a STALE gate reach the 240 s force? Driven through the real
+    /// queue (`Inbox::push` then `take_ready`), with the screen NOT idle and the composer NOT empty —
+    /// the case where only the bound can deliver. Answer: yes, at exactly MAX_HOLD_MS, forced and
+    /// saying why. So the 06:20 hold on L was not this decision (see `guarded`).
+    #[test]
+    fn a_stale_gate_is_force_delivered_through_the_queue_once_the_bound_runs_out() {
+        let inbox = Inbox::new();
+        let t0 = Instant::now();
+        inbox.push("lib", "the ring".to_string(), "the ring's label".to_string(), t0);
+        let at = |ms: u64| t0 + Duration::from_millis(ms);
+        assert_eq!(inbox.take_ready("lib", PaneGate::Stale, false, false, at(MAX_HOLD_MS - 1), true), None,
+            "inside the bound, a stale gate over a busy screen holds");
+        assert_eq!(inbox.depth("lib"), 1, "and the held message is kept");
+        assert_eq!(
+            inbox.take_ready("lib", PaneGate::Stale, false, false, at(MAX_HOLD_MS), true),
+            Some(("the ring".to_string(), "the ring's label".to_string(), Some(Forced::NoUsableSignal))),
+            "at the bound, a stale gate is FORCE-DELIVERED, and the row can say the ready signal was not usable"
+        );
+        assert_eq!(inbox.depth("lib"), 0);
+        // and far past it, the same — a stale gate has no unbounded arm
+        assert_eq!(drain_decision(PaneGate::Stale, false, false, Duration::from_millis(MAX_HOLD_MS * 25), true),
+            Drain::Forced(Forced::NoUsableSignal));
+    }
+
+    /// D130: the second message behind a stale head is not starved by it — the head goes at the bound,
+    /// and the next one's own clock is what bounds it.
+    #[test]
+    fn two_rings_behind_a_stale_gate_both_leave_within_their_own_bounds() {
+        let inbox = Inbox::new();
+        let t0 = Instant::now();
+        inbox.push("lib", "first".to_string(), "first".to_string(), t0);
+        inbox.push("lib", "second".to_string(), "second".to_string(), t0 + Duration::from_secs(30));
+        let first = inbox.take_ready("lib", PaneGate::Stale, false, false, t0 + Duration::from_millis(MAX_HOLD_MS), true);
+        assert_eq!(first.map(|(t, _, f)| (t, f)), Some(("first".to_string(), Some(Forced::NoUsableSignal))));
+        let second = inbox.take_ready("lib", PaneGate::Stale, false, false,
+            t0 + Duration::from_secs(30) + Duration::from_millis(MAX_HOLD_MS), true);
+        assert_eq!(second.map(|(t, _, f)| (t, f)), Some(("second".to_string(), Some(Forced::NoUsableSignal))));
+    }
+
+    /// D130: a panic inside a guarded step is caught and returned as text — `&str` and `String`
+    /// payloads alike — and never propagates.
+    #[test]
+    fn a_panic_in_a_guarded_drain_step_is_caught_and_named_not_propagated() {
+        assert_eq!(guarded(|| {}), None, "a step that returns is not a panic");
+        assert_eq!(guarded(|| panic!("a str payload")), Some("a str payload".to_string()));
+        let n = 3;
+        assert_eq!(guarded(move || panic!("a String payload {n}")), Some("a String payload 3".to_string()));
+    }
+
+    /// D130: THE SHAPE OF THE DEFECT, driven the way `drain_inboxes` drives it — one pane's work per
+    /// guarded step. Unguarded, the panic on the middle pane ended the tick for the pane after it, and
+    /// the thread with it.
+    #[test]
+    fn one_panicking_pane_does_not_stop_the_drain_for_the_others() {
+        let mut done = Vec::new();
+        let mut caught = Vec::new();
+        for pane in ["a", "b", "c"] {
+            if let Some(why) = guarded(|| {
+                if pane == "b" {
+                    panic!("reading pane b's screen blew up");
+                }
+                done.push(pane);
+            }) {
+                caught.push((pane, why));
+            }
+        }
+        assert_eq!(done, vec!["a", "c"], "the pane after the panicking one was still drained");
+        assert_eq!(caught, vec![("b", "reading pane b's screen blew up".to_string())]);
+    }
+
+    /// D130: a repeating panic is said the first time and then at most once a minute per pane.
+    #[test]
+    fn a_repeating_drain_panic_is_reported_once_a_minute_not_every_tick() {
+        let t = Instant::now();
+        assert!(drain_panic_due(None, t), "the first one is always said");
+        assert!(!drain_panic_due(Some(t), t + Duration::from_millis(250)));
+        assert!(!drain_panic_due(Some(t), t + DRAIN_PANIC_REPORT_EVERY - Duration::from_millis(1)));
+        assert!(drain_panic_due(Some(t), t + DRAIN_PANIC_REPORT_EVERY));
+    }
+
+    /// D130: the WIRING, by source shape (like the neighbours that pin `drain_inboxes`, which needs an
+    /// AppHandle): each pane's work runs under `guarded` and a caught panic is reported, and the
+    /// drain THREAD's loop is guarded too — the unguarded `drain_inboxes(&h);` statement is gone.
+    #[test]
+    fn the_drain_loop_and_each_pane_in_it_run_guarded() {
+        let src = include_str!("main.rs");
+        let body = src
+            .split("fn drain_inboxes(")
+            .nth(1)
+            .and_then(|b| b.split("\nfn ").next())
+            .expect("drain_inboxes exists");
+        let guard = body.find("let caught = guarded(|| {").expect("each pane's work runs under guarded");
+        assert!(guard < body.find(".take_withdrawn(").unwrap() && guard < body.find(".take_ready_read(").unwrap(),
+            "the guard must cover the pane's whole step, the sweep and the take included");
+        assert!(body.contains("report_drain_panic(app, &pane, &why)"), "a caught panic is reported, not swallowed");
+        let thread_guard = ["guarded(|| drain_inboxes(", "&h))"].concat();
+        assert!(src.contains(&thread_guard), "the drain thread's loop is guarded");
+        let bare = ["\n", &" ".repeat(20), "drain_inboxes(", "&h);"].concat();
+        assert!(!src.contains(&bare), "an unguarded drain call is back in the thread loop");
     }
 
     #[test]

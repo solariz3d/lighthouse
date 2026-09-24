@@ -1333,6 +1333,17 @@ test('QUEUED — a ring that was DELIVERED is not printed, however long it waite
   assert.ok(!/QUEUED/.test(t), t);
 });
 
+// D130 (B's hand-back §4): since D074 a FORCED delivery's note carries "; composer: …" before the label, so the first
+// ": " after the gate is not the label's. The row below is built from main.rs's own format strings (drain gate note
+// :10239-10241, clause :10226). Before this fix it did not pair, and a delivered ring read as "waiting" for ever.
+const FROW = (ts, sid, label) => ({ pane: 'chair', role: 'committee', ts,
+  text: 'DELIVERED -> ' + sid.slice(0, 8) + ' [stamp=STALE (says working, screen says otherwise)] (FORCED after the bounded hold'
+    + ' — the gate never got a usable ready signal; composer: read as text on 3 of 3 readings): ' + label });
+test('QUEUED — a ring FORCE-delivered (the post-D074 row, with "; composer: …") is not printed as waiting', () => {
+  const t = qline([QROW(T0, A, 'stamp=STALE (says working, screen says otherwise)', RING), FROW(T0 + 4 * MIN, A, RING)], T0 + 99 * MIN);
+  assert.ok(!/QUEUED/.test(t), t);
+});
+
 test('QUEUED — a ring that was WITHDRAWN is not printed', () => {
   const t = qline([QROW(T0, A, 'stamp=working', RING), WROW(T0 + 2 * MIN, A, RING)], T0 + 20 * MIN);
   assert.ok(!/QUEUED/.test(t), t);

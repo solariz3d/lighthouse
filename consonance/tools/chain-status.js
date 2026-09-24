@@ -763,7 +763,9 @@ function queuedWaiting(rows, now, opts = {}) {
     const q = queueRow(e.text);
     if (!q) continue;
     if (q.kind === 'QUEUED') { open.push({ ...q, ts: e.ts }); continue; }
-    const i = open.findIndex(o => o.who === q.who && o.label === q.label);
+    // D130: a FORCED drain row's note has its own ": " ("; composer: …") before the label, so `q.label` can be the wrong
+    // cut. The drain row always ENDS with ": " + the queued label (main.rs writes the same label), so that pairs it too.
+    const i = open.findIndex(o => o.who === q.who && (o.label === q.label || e.text.endsWith(': ' + o.label)));
     if (i >= 0) open.splice(i, 1);
   }
   const bySeat = new Map();

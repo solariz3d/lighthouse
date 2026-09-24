@@ -36,7 +36,7 @@ const os = require('os');
 const path = require('path');
 // The blind window — a global, fail-closed file marker. See blind.js for why it is a file and
 // not an env var, and why an unreadable marker mutes rather than passes.
-const { blindState, declareLine, clearBlind } = require('./blind.js');
+const { blindState, declareLine, clearBlind, sealedGate } = require('./blind.js');
 
 const MAX_TAIL_BYTES = 2 * 1024 * 1024; // enough to reach local midnight in practice
 const TOPIC_CHARS = 52;
@@ -317,6 +317,20 @@ function main(input) {
 
   const { lines, truncated } = tailLines(boardPath);
 
+  // THE SEALED GATE (D130). Per reader, opened by the sealed packet's own arrival and closed by this
+  // seat's own ring — the window nobody has to remember. blind.js, "THE SEALED WINDOW", has the rules.
+  // Here, before anything can be emitted: in L113 the leak rode the very prompt that dispatched the
+  // read, 118 ms after it landed (handback/p-d130-blind-E_2026-09-24.md §1).
+  const sealed = sealedGate({
+    sessionId,
+    prompt: input.prompt,
+    letter: readJson(path.join(dataDir, 'letters.json'), {})[sessionId],
+    lines,
+    file: path.join(dataDir, 'sealed.json'),
+    boardPath,
+  });
+  if (sealed.mute) emit(sealed.line);
+
   // Pass 1 — parse, and count entries per (pane, wall-clock second).
   //
   // REPLAY BURSTS. board_push stamps ts at PUSH time, not event time, and the
@@ -500,7 +514,8 @@ function main(input) {
   // turn (and every turn after) that a window went stale. Fail OPEN and say so (blind.js decision
   // #4), then clear the expired lock so the notice fires once instead of repeating forever; clearing
   // is the documented end of the window's lifecycle, and the chair can re-open one at any time.
-  const digest = `[panes] ${body.join('\n        ')}`;
+  // A sealed window that ended this turn says so ahead of the digest, in the same emit (emit exits).
+  const digest = `${sealed.notice ? `${sealed.notice}\n        ` : ''}[panes] ${body.join('\n        ')}`;
   if (b.reason === 'expired') {
     clearBlind();
     emit(`[blind] window expired — pane activity resumes below.\n        ${digest}`);

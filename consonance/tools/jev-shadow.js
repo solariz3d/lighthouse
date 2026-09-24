@@ -106,9 +106,11 @@ function loadBuilder(judge, shellDir) {
   const src = fs.readFileSync(file, 'utf8');
   let build;
   if (judge === 'l2') {
-    const mod = require(file);        // guarded by `require.main === module`, and exports buildOverseerPrompt
-    build = mod.buildOverseerPrompt;
-    if (typeof build !== 'function') throw new Refusal(`${file} does not export buildOverseerPrompt`);
+    // D130 — HASH WHAT YOU COMPILED. This was require(file), which is cached for the life of the process, so a worker
+    // changed between two loads ran the OLD builder under the NEW workerSha. Compiled from `src`, the bytes hashed
+    // below, the way the L3 branch already is (the same fix as jev-judge.js loadJudgeInputs, D130 A).
+    build = new Function(extractFunction(src, 'buildOverseerPrompt', file) + 'return buildOverseerPrompt;')(); // eslint-disable-line no-new-func
+    if (typeof build !== 'function') throw new Refusal(`${file}: buildOverseerPrompt did not compile to a function`);
   } else {
     // NOT require(): the L3 worker runs main() at load. Its two prompt functions are compiled alone.
     const code = extractFunction(src, 'formatTurns', file) + extractFunction(src, 'buildOverseerPrompt', file) + 'return buildOverseerPrompt;';

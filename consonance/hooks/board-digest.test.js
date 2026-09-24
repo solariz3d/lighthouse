@@ -201,3 +201,162 @@ test('ROSTER: the columns stay aligned when the silent seat has the longest call
   assert.strictEqual(cols.length, 4);
   assert.strictEqual(new Set(cols).size, 1, `the exch column must line up across every row, got ${cols}`);
 });
+
+// ── THE SEALED WINDOW (D130, E). Two sealed reads leaked through this digest on 2026-09-23: B's
+// L113 context received C's "0 of 20" line in the UserPromptSubmit context of the very packet that
+// dispatched the read (`handback/p-d130-blind-E_2026-09-24.md` §1). Nothing set a window. These run
+// the real hook, end to end, with the packet as the prompt — the way the leak arrived.
+const LIB = '0c0c0c0b-0000-4000-8000-00000000115b';
+const MAIN = '0c0c0c0a-0000-4000-8000-000000000a01';
+// The L113 packet's own head, verbatim from the board (2026-09-23T12:52:34Z).
+const SEALED_PACKET = '\n\n<pasted_content id="465e">\n[chair:MAIN] B — L113, on L: you are one of TWO SEALED READERS again. '
+  + 'The other reader works at the same time, and neither of you sees the other\'s answers.\n</pasted_content>';
+const KEEPWARM = '[keep-warm, from the chair — not the keeper] Reply with exactly: ok';
+
+function runAs(b, sid, prompt) {
+  const out = execFileSync(process.execPath, [HOOK], {
+    input: JSON.stringify({ cwd: b.cwd, session_id: sid, source: 'user', prompt }),
+    encoding: 'utf8',
+    env: { ...process.env, CONSONANCE_INSTANCES: b.instances, CONSONANCE_DATA: b.data },
+  }).trim();
+  return out ? JSON.parse(out).hookSpecificOutput.additionalContext : '';
+}
+/** The bed, with the reader registered as letter R, the way letters.json names panes. */
+function sealedBed() {
+  const b = bed();
+  fs.writeFileSync(path.join(b.data, 'letters.json'), JSON.stringify({ [READER]: 'R', [SIBLING]: 'S' }));
+  return b;
+}
+const SIB_TEXT = /from a pane that is not the reader/;
+const ring = (b, letter, { ts = Date.now() + 1000, text } = {}) => fs.appendFileSync(path.join(b.data, 'board.jsonl'),
+  JSON.stringify({ pane: LIB, role: 'user', text: text || `<pasted_content id="d7d4">\n[pane:${letter}] hand-back: exo_memory/handback/x.md`, ts }) + '\n');
+const sealedFile = (b) => path.join(b.data, 'sealed.json');
+const boardRows = (b) => fs.readFileSync(path.join(b.data, 'board.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+
+test('SEALED: the dispatching prompt itself is muted, declared, and carries no sibling text', () => {
+  const b = sealedBed();
+  const out = runAs(b, READER, SEALED_PACKET);
+  assert.match(out, /\[blind\] pane activity withheld — this prompt is a sealed read/);
+  assert.doesNotMatch(out, /\[panes\]/);
+  assert.doesNotMatch(out, SIB_TEXT);
+});
+
+test('SEALED: the window is recorded on disk and on the board', () => {
+  const b = sealedBed();
+  runAs(b, READER, SEALED_PACKET);
+  const w = JSON.parse(fs.readFileSync(sealedFile(b), 'utf8')).windows[READER];
+  assert.strictEqual(w.letter, 'R');
+  assert.ok(boardRows(b).some((r) => /^sealed window OPEN — for R/.test(r.text)), 'the OPEN must reach the board');
+});
+
+test('SEALED: a later ordinary prompt in the same window is still muted', () => {
+  const b = sealedBed();
+  runAs(b, READER, SEALED_PACKET);
+  const out = runAs(b, READER, KEEPWARM);
+  assert.match(out, /a sealed window is open for R/);
+  assert.doesNotMatch(out, SIB_TEXT);
+});
+
+test('SEALED CRASH: a window left by a process that died is still declared on the next turn', () => {
+  const b = sealedBed();
+  const now = Date.now();
+  fs.writeFileSync(sealedFile(b), JSON.stringify({ windows: { [READER]: { letter: 'R', opened: now - 600e3, until: now + 3600e3, why: 'crashed mid-read' } } }));
+  const out = runAs(b, READER, KEEPWARM);
+  assert.match(out, /a sealed window is open for R .*crashed mid-read/);
+  assert.doesNotMatch(out, SIB_TEXT);
+});
+
+test('SEALED END: the reader\'s own ring ends the window — the digest resumes, and says why', () => {
+  const b = sealedBed();
+  runAs(b, READER, SEALED_PACKET);
+  ring(b, 'R');
+  const out = runAs(b, READER, KEEPWARM);
+  assert.match(out, /\[blind\] sealed window for R ended — its hand-back rang at/);
+  assert.match(out, /\[panes\]/);
+});
+
+test('SEALED END: the ended window is removed and CLOSED on the board', () => {
+  const b = sealedBed();
+  runAs(b, READER, SEALED_PACKET);
+  ring(b, 'R');
+  runAs(b, READER, KEEPWARM);
+  assert.deepStrictEqual(JSON.parse(fs.readFileSync(sealedFile(b), 'utf8')).windows, {});
+  assert.ok(boardRows(b).some((r) => /^sealed window CLOSED — for R — its hand-back rang/.test(r.text)));
+});
+
+test('SEALED: ANOTHER seat\'s ring does not end this reader\'s window', () => {
+  const b = sealedBed();
+  runAs(b, READER, SEALED_PACKET);
+  ring(b, 'S');
+  assert.match(runAs(b, READER, KEEPWARM), /a sealed window is open for R/);
+});
+
+test('SEALED: another seat\'s ring that MENTIONS this reader\'s tag does not end the window', () => {
+  // Found by the D130 mutants: with only the plain case above, "any [pane:X] at the head ends every
+  // window" survived, because the row prefilter hid it. A ring citing another seat is ordinary.
+  const b = sealedBed();
+  runAs(b, READER, SEALED_PACKET);
+  ring(b, 'S', { text: '[pane:S] hand-back: exo_memory/handback/x.md — [pane:R] is still reading' });
+  assert.match(runAs(b, READER, KEEPWARM), /a sealed window is open for R/);
+});
+
+test('SEALED: a REFUSED ring does not end the window', () => {
+  const b = sealedBed();
+  runAs(b, READER, SEALED_PACKET);
+  ring(b, 'R', { text: 'call_librarian REFUSED from R: [pane:R] hand-back: exo_memory/handback/x.md' });
+  assert.match(runAs(b, READER, KEEPWARM), /a sealed window is open for R/);
+});
+
+test('SEALED: a ring from BEFORE the window opened does not end it', () => {
+  const b = sealedBed();
+  ring(b, 'R', { ts: Date.now() - 5000 });
+  runAs(b, READER, SEALED_PACKET);
+  assert.match(runAs(b, READER, KEEPWARM), /a sealed window is open for R/);
+});
+
+test('SEALED: a seat NOT in the read keeps its digest while the reader is muted', () => {
+  const b = sealedBed();
+  runAs(b, READER, SEALED_PACKET);
+  const other = 'eeeeeeee-3333-4000-8000-00000000000e';
+  assert.match(runAs(b, other, KEEPWARM), /\[panes\]/);
+});
+
+for (const [who, sid] of [['the chair', MAIN], ['the librarian', LIB]]) {
+  test(`SEALED: ${who} is never muted, even by a sealed-looking prompt`, () => {
+    const b = sealedBed();
+    const out = runAs(b, sid, SEALED_PACKET);
+    assert.match(out, /\[panes\]/);
+    assert.ok(!fs.existsSync(sealedFile(b)), `${who} must never get a window`);
+  });
+}
+
+test('SEALED DAMAGE: an unreadable sealed file mutes a pane, fails CLOSED, and says how to clear it', () => {
+  const b = sealedBed();
+  fs.writeFileSync(sealedFile(b), '{"windows": {"torn');
+  const out = runAs(b, 'eeeeeeee-3333-4000-8000-00000000000e', KEEPWARM);
+  assert.match(out, /sealed-read file is present but unreadable, so this failed CLOSED/);
+  assert.match(out, /Fix or remove/);
+  assert.doesNotMatch(out, SIB_TEXT);
+});
+
+test('SEALED DAMAGE: the chair keeps its view even when the sealed file is unreadable', () => {
+  const b = sealedBed();
+  fs.writeFileSync(sealedFile(b), 'not json');
+  assert.match(runAs(b, MAIN, KEEPWARM), /\[panes\]/);
+});
+
+test('SEALED EXPIRY: a window past its backstop resumes the digest and declares the expiry', () => {
+  const b = sealedBed();
+  const now = Date.now();
+  fs.writeFileSync(sealedFile(b), JSON.stringify({ windows: { [READER]: { letter: 'R', opened: now - 13 * 3600e3, until: now - 3600e3 } } }));
+  const out = runAs(b, READER, KEEPWARM);
+  assert.match(out, /sealed window for R EXPIRED at .* with no hand-back rung/);
+  assert.match(out, /\[panes\]/);
+});
+
+test('SEALED: a prompt that only QUOTES a sealed read but is not a chair dispatch opens nothing', () => {
+  const b = sealedBed();
+  const out = runAs(b, READER, 'This session is being continued from a previous conversation. [chair:MAIN] B — L113: you are one of TWO SEALED READERS');
+  assert.match(out, /\[panes\]/);
+  assert.ok(!fs.existsSync(sealedFile(b)));
+});

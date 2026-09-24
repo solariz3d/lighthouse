@@ -497,3 +497,73 @@ test('L099: the captured row carries the letter as its seat', () => {
   const caps = fs.readdirSync(path.join(w.store, J.CAPTURES)).map((f) => JSON.parse(fs.readFileSync(path.join(w.store, J.CAPTURES, f), 'utf8')));
   assert.deepStrictEqual(caps.map((c) => c.seat), ['B']);
 });
+
+// ── D130: the recorded hash must describe the code that RAN ─────────────────────────────────────────────────────────
+// loadJudgeInputs got buildOverseerPrompt through require(), which Node CACHES for the life of the process, and hashed a
+// FRESH read of the file. A worker changed between two loads in one runner process (the L083 repair, 2026-09-23: 247
+// captures carried the repaired file's hash over the retracted prompt) was then recorded as code it was not. These load,
+// change the file on disk, and load again in the SAME process: the prompt built and the hash recorded must both be the
+// new bytes'.
+const sha256 = (s) => require('crypto').createHash('sha256').update(s).digest('hex');
+const VIEW = { user_context: 'a question', assistant_move: 'a move' };
+
+test('D130: a worker changed on disk between two loads in ONE process — the second load BUILDS with the new bytes', () => {
+  const w = world();
+  const wf = path.join(w.repo, 'dev', 'shell', 'hooks', 'l2-overseer-worker.js');
+  const first = J.loadJudgeInputs(w.repo);
+  assert.doesNotMatch(first.l2build(VIEW, 'D'), /D130-CHANGED/);
+  fs.writeFileSync(wf, fs.readFileSync(wf, 'utf8').replace('judging a single assistant move for drift.', 'judging a single assistant move for drift. D130-CHANGED'));
+  const second = J.loadJudgeInputs(w.repo);
+  assert.match(second.l2build(VIEW, 'D'), /D130-CHANGED/, 'the second load ran the cached (old) worker');
+});
+
+test('D130: the recorded sources_sha256 is the hash of the SAME bytes the builder was compiled from, before and after a change', () => {
+  const w = world();
+  const hf = path.join(w.repo, 'dev', 'shell', 'hooks', 'l2-overseer.js');
+  const wf = path.join(w.repo, 'dev', 'shell', 'hooks', 'l2-overseer-worker.js');
+  const expect = () => sha256([fs.readFileSync(hf, 'utf8'), fs.readFileSync(wf, 'utf8')].join('\0'));
+  const a = J.loadJudgeInputs(w.repo);
+  assert.strictEqual(a.sourcesSha, expect());
+  fs.writeFileSync(wf, fs.readFileSync(wf, 'utf8').replace('judging a single assistant move for drift.', 'judging a single assistant move for drift. D130-CHANGED'));
+  const b = J.loadJudgeInputs(w.repo);
+  // Both sides move together: the new hash AND the new code — never the new hash over the old code.
+  assert.deepStrictEqual([b.sourcesSha === expect(), /D130-CHANGED/.test(b.l2build(VIEW, 'D'))], [true, true]);
+});
+
+test('D130: loadJudgeInputs never runs the worker as a module (its main() must not fire) — it compiles the one function', () => {
+  const w = world();
+  const wf = path.join(w.repo, 'dev', 'shell', 'hooks', 'l2-overseer-worker.js');
+  // A top-level side effect in the worker: under require() it would run; compiled from the function alone it cannot.
+  const marker = path.join(w.root, 'worker-top-level-ran');
+  fs.writeFileSync(wf, `require('fs').writeFileSync(${JSON.stringify(marker)}, 'x');\n` + fs.readFileSync(wf, 'utf8'));
+  J.loadJudgeInputs(w.repo);
+  assert.ok(!fs.existsSync(marker), 'the worker ran at load');
+});
+
+test('D130: loadJevModule — prompt.js changed on disk between two loads in ONE process: the second load runs the new bytes, and its hash is theirs', () => {
+  const w = world();
+  // The jev/ module and the room config beside this room, as loadJevModule wants them.
+  for (const rel of ['jev/lib/prompt.js', 'jev/lib/ask.js', 'jev/lib/config.js', 'jev/METHOD.md', 'consonance/jev-room/.jev/config.json']) {
+    fs.mkdirSync(path.dirname(path.join(w.repo, rel)), { recursive: true });
+    fs.copyFileSync(path.join(REPO, rel), path.join(w.repo, rel));
+  }
+  const pf = path.join(w.repo, 'jev', 'lib', 'prompt.js');
+  const env = { LOCALAPPDATA: path.join(w.root, 'lad') };
+  const home = homeWith();
+  const m1 = J.loadJevModule({ repo: w.repo, env, home });
+  assert.doesNotMatch(m1.prompt.buildPrompt({ view: VIEW, discipline: 'D' }), /D130-CHANGED/);
+  fs.writeFileSync(pf, fs.readFileSync(pf, 'utf8').replace('judging a single assistant move for drift.', 'judging a single assistant move for drift. D130-CHANGED'));
+  const m2 = J.loadJevModule({ repo: w.repo, env, home });
+  assert.deepStrictEqual([/D130-CHANGED/.test(m2.prompt.buildPrompt({ view: VIEW, discipline: 'D' })), m2.sourcesSha === sha256(fs.readFileSync(pf, 'utf8'))], [true, true]);
+});
+
+test('D130: loadJevModule — the compiled prompt.js still finds its own shipped rubric (its __dirname is its real folder)', () => {
+  const w = world();
+  for (const rel of ['jev/lib/prompt.js', 'jev/lib/ask.js', 'jev/lib/config.js', 'jev/METHOD.md', 'consonance/jev-room/.jev/config.json']) {
+    fs.mkdirSync(path.dirname(path.join(w.repo, rel)), { recursive: true });
+    fs.copyFileSync(path.join(REPO, rel), path.join(w.repo, rel));
+  }
+  const m = J.loadJevModule({ repo: w.repo, env: { LOCALAPPDATA: path.join(w.root, 'lad') }, home: homeWith() });
+  assert.strictEqual(m.prompt.DEFAULT_RUBRIC, path.join(w.repo, 'jev', 'METHOD.md'));
+  assert.match(m.prompt.readDiscipline(), /^# The Method/);
+});

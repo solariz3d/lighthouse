@@ -77,6 +77,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const crypto = require('crypto');
+const { createRequire } = require('module');
 const jev = require('./jev-ask.js');
 const { JUDGES, extractFunction } = require('./jev-shadow.js');
 // L105: roomOf moved to jev-room.js, shared by every Jev tool; re-exported below, so callers of jev-judge's roomOf are unchanged.
@@ -105,10 +106,19 @@ function loadJudgeInputs(repo) {
   const helpers = (src, file) => extractFunction(src, 'safeParseJSON', file) + extractFunction(src, 'extractText', file);
   // eslint-disable-next-line no-new-func
   const l2view = new Function('fs', helpers(s2, f2) + extractFunction(s2, 'readNarrowedView', f2) + 'return readNarrowedView;')(fs);
+  // D130 — HASH WHAT YOU COMPILED. This was `require(w2).buildOverseerPrompt` and a SECOND, fresh read for the hash:
+  // require() is cached for the life of the process, so a worker changed on disk between two loads in one runner ran the
+  // OLD code under the NEW file's hash (the L083 repair: 247 captures on L carried the repaired hash over the retracted
+  // prompt; handback/p-l114-prompt-A_2026-09-23.md §4). Now the worker is read ONCE, those bytes are hashed, and
+  // buildOverseerPrompt is compiled from the same bytes — the way readNarrowedView is, above. It is self-contained (it
+  // reads only `view` and `discipline`), and compiling the one function also means the worker's top level never runs.
+  const w2src = readText(w2, 'the L2 worker');
   let l2build;
-  try { l2build = require(w2).buildOverseerPrompt; } catch (e) { throw new Refusal(`cannot load the L2 worker at ${w2}: ${e.message}`); }
-  if (typeof l2build !== 'function') throw new Refusal(`${w2} does not export buildOverseerPrompt`);
-  return { l2view, l2build, sourcesSha: sha([s2, readText(w2, 'the L2 worker')].join('\0')) };
+  // eslint-disable-next-line no-new-func
+  try { l2build = new Function(extractFunction(w2src, 'buildOverseerPrompt', w2) + 'return buildOverseerPrompt;')(); }
+  catch (e) { if (e instanceof Refusal) throw e; throw new Refusal(`cannot compile buildOverseerPrompt from ${w2}: ${e.message}`); }
+  if (typeof l2build !== 'function') throw new Refusal(`${w2}: buildOverseerPrompt did not compile to a function`);
+  return { l2view, l2build, sourcesSha: sha([s2, w2src].join('\0')) };
 }
 
 /** <data>/letters.json as { session id: letter }, or {} when it is absent or unreadable (a seat then gets its short id). */
@@ -234,9 +244,25 @@ function loadJevModule({ repo, env = {}, home } = {}) {
   catch (e) { throw new Refusal(`${JEV_MODULE_FLAG}=on, but the room's jev config cannot be used: ${e.message}`); }
   if (config.audience !== 'consonance') throw new Refusal(`${JEV_MODULE_FLAG}=on, but ${configFile} says audience "${config.audience}": the room's flags go to the chair and the librarian, so it must be "consonance"`);
   if (config.optedOut) throw new Refusal(`${JEV_MODULE_FLAG}=on, but the room is opted out of Jev (${config.optedOutBy})`);
+  // D130 — HASH WHAT YOU COMPILED (the defect loadJudgeInputs had, which this function had too: D123 hashed a read and
+  // then require()d the file — a second read, and a cached one if prompt.js was loaded earlier in the process). prompt.js
+  // is read ONCE and compiled from those bytes as a fresh module, so `sourcesSha` is the hash of the code that runs.
   const promptFile = path.join(lib, 'prompt.js');
   const promptSrc = fs.readFileSync(promptFile, 'utf8');
-  return { prompt: require(promptFile), ask: require(path.join(lib, 'ask.js')), config, configFile, sourcesSha: sha(promptSrc) };
+  return { prompt: compileModule(promptFile, promptSrc), ask: require(path.join(lib, 'ask.js')), config, configFile, sourcesSha: sha(promptSrc) };
+}
+
+/**
+ * A CommonJS module compiled from `src` — bytes the caller already holds (and hashed) — never from a second read of
+ * `file`, and never out of require()'s cache. Public API only: its own require is module.createRequire(file), and it
+ * gets the real __filename / __dirname, so a module that finds files beside itself (prompt.js's DEFAULT_RUBRIC) still does.
+ * A fresh module on every call: nothing is cached, so a later call compiles whatever bytes it is handed.
+ */
+function compileModule(file, src) {
+  const m = { exports: {}, filename: file, id: file };
+  // eslint-disable-next-line no-new-func
+  new Function('exports', 'require', 'module', '__filename', '__dirname', src.replace(/^#!.*/, ''))(m.exports, createRequire(file), m, file, path.dirname(file));
+  return m.exports;
 }
 
 const keyFile = (store, sid, uuid) => path.join(store, CAPTURES, `${sid}_${String(uuid).replace(/[^A-Za-z0-9-]/g, '_')}.json`);

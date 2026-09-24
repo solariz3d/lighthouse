@@ -436,3 +436,20 @@ test('L105: no room → capture REFUSES naming why and the fix, instead of readi
   assert.strictEqual(a.disciplineDir, null);
   assert.throws(() => S2.capture(a), (e) => e instanceof S2.Refusal && /discipline/.test(e.message) && /Fix: set room_path/.test(e.message));
 });
+
+// D130 (librarian, collation): loadBuilder's L2 branch hashed its own read of the worker and then require()d it — cached
+// for the life of the process — so a worker changed between two loads in one runner ran the OLD builder under the NEW
+// worker_sha256 (A's D130 hand-back §4; the loadJudgeInputs defect, one file over). The sha must describe what runs.
+test('D130 loadBuilder l2: a worker changed between two loads in one process builds with the NEW code under the NEW sha', () => {
+  const shell = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-shadow-d130-'));
+  fs.mkdirSync(path.join(shell, 'hooks'));
+  const worker = path.join(shell, 'hooks', 'l2-overseer-worker.js');
+  const write = (tag) => fs.writeFileSync(worker, `'use strict';\nfunction buildOverseerPrompt(view, discipline) {\n  return '${tag}:' + discipline;\n}\nmodule.exports = { buildOverseerPrompt };\n`);
+  write('OLD');
+  const a = S.loadBuilder('l2', shell);
+  write('NEW');
+  const b = S.loadBuilder('l2', shell);
+  assert.strictEqual(a.build({}, 'd'), 'OLD:d');
+  assert.strictEqual(b.build({}, 'd'), 'NEW:d', 'the second load must run the code on disk, not a cached copy');
+  assert.notStrictEqual(a.workerSha, b.workerSha);
+});
