@@ -126,3 +126,65 @@ ever written"* to the ledger (the row's keys above hold none), and the byte-exac
 - Exec-form `args` in Claude Code 2.1.281: B §3.3.
 - `--mode session` of the script: written, not run.
 - Any OS but Windows 11 on D.
+
+---
+
+## ADDENDUM, 2026-09-23 19:0x (D126, pane A): the re-score on the FIXED README (`93c19ae`)
+
+*The D124 result above stays as it was written.*
+
+### THE RE-SCORE
+
+| part | result |
+|---|---|
+| **The README, one literal read** | **PASS, apart from one gap that is publication, not the README.** R1–R10 are all addressed: the install command is written (`node jev/install.js`, from the folder that contains `jev`), and so are the prerequisites, how to get and set the key, a check step, the uninstall and what it leaves, and the measured claim inline. Followed literally, every step worked (below). **The one remaining gap:** step 1 says *"Get the `jev` folder (the public repository is not published yet)"*, so **a real stranger today has nowhere to get it.** That is the keeper's pending publication decision, not a README fault. This test got the folder by `git archive`. |
+| **The mechanism, by the README's own commands** | **PASS at hook level, with 1 gateway call.** |
+| **A real Claude Code session** | **NOT RUN. The ordered route is not isolated** (next section), so I stopped before starting it. |
+| **R6** (does an open session pick up new hooks?) | **NOT MEASURED.** It needs a live session. The README now says *"not yet measured … restarting is the safe assumption"*, which is honest. |
+| **The falsifier overall** | **NOT YET PASS.** It asks for a flag *surfaced* in a stranger's Claude Code, and no Claude Code session has surfaced one on this install. The evidence that one would is strong but two-part: the librarian's 17:4x probe shows the exec-form hooks fire live with `prompt_id` and `last_assistant_message`, and this run shows those payloads produce the row and the flag line. **Two halves are not the whole.** |
+
+### THE RUN, following the fixed README literally
+
+    node jev/test/clean-machine.e2e.js --mode hooks --calls 2 --keep     (the script now runs the README's own commands)
+
+- **Module:** `git archive 93c19ae jev`. **Root:** `C:\Users\nname\AppData\Local\Temp\jev-stranger-ck55gI`.
+- **Step 3, `node jev/install.js`** from the folder containing `jev` → *"2 added, 0 re-pointed, 0 already right … Undo: node
+  jev/install.js --uninstall"*. That matches the README's printed example, and R8 is resolved.
+- **Turn 1** (the registered Stop entry, exec form, the documented payload): one row, **drift, confidence 0.90**, `prompt_id`
+  = the one sent, `turn_uuid` = the transcript's end row.
+- **Turn 2** (the registered UserPromptSubmit entry): **`[jev · worth a second look] your last turn (p=0.90)`**.
+- **Step 4, `node jev/bin/jev-report.js`** → *"turns judged: 1 (clean 0 · drift 1 · abstain 0) · turns marked: 1 … refused /
+  failed: no jev.log"*. It printed no turn text.
+- **Uninstall** → *"Restored the pre-install file byte for byte"* (temp settings sha256 before = after).
+- **Gateway calls: 1** (1 ledger row, 0 `gateway-failed` log lines). **4 of D126's 5 remain.**
+- **The real `~/.claude/settings.json` sha256: `8e2cf20aa18226db1ea50d0c83b8a657e04b55af918690f925063bab14b70f33`** before
+  and after (the script's snapshot, and read by hand before the run).
+- The real `~/.claude` top level, `projects/` (two levels), `~/.jev` and `%LOCALAPPDATA%\jev` are all unchanged.
+- **Files created outside the temp root: none**, beyond my records in my scratchpad (`d126-hooks-run.json`, 0 `vck_`-shaped
+  strings) and the manual archive `…\Temp\jev-stranger-d126-e6kw` used to read the README.
+
+### WHY THE SESSION DID NOT RUN — the ordered route writes into the real `~/.claude`
+
+The packet's route: `claude -p --setting-sources project --settings <temp settings.json>`, on the real login.
+- **It keeps the real `settings.json` untouched and loads only Jev's hooks. That much is right.**
+- **But a `claude -p` session on the real login saves its transcript in the real `~/.claude/projects/`.** The proof is on
+  disk from the librarian's own 17:4x probe of this route:
+  `~/.claude/projects/C--Users-nname-AppData-Local-Temp-hookprobe/8cf6e383-a80b-4210-908c-02157f5a9247.jsonl` (39,199 B)
+  and a `memory/` folder beside it, both created 17:37.
+- **So the route touches the real `~/.claude`,** which this packet forbids and D124's rule says to stop on.
+- **`--no-session-persistence`** exists (*"sessions will not be saved to disk and cannot be resumed (only works with
+  --print)"*). But then turn 2's `--resume` is impossible, and `jev-flags.js` finds "your last turn" through the
+  transcript, so no flag could show. It would test turn 1 only, with `turn_uuid` null.
+
+**Two ways forward, for the chair or the keeper:**
+1. **Accept one named exception:** the run creates `~/.claude/projects/<slug of its temp project>/<session>.jsonl` (and a
+   `memory/` folder), holding only the synthetic test prompts, exactly as the 17:4x probe already did. I would list the
+   exact paths and leave them, since deleting inside the real `~/.claude` is touching it too. **The smallest cost, and the
+   one that tests what a real stranger's session does.**
+2. **Keep the real `~/.claude` untouched:** the keeper runs `claude setup-token` and sets `CLAUDE_CODE_OAUTH_TOKEN` in one
+   shell only; then `--mode session` runs fully isolated (`CLAUDE_CONFIG_DIR` + `USERPROFILE`/`HOME` in the temp root).
+
+**Either way, the deviation from a real stranger is the same one named in D124:** the stranger installs into their own
+`~/.claude` and runs their own session. Route 1 passes a settings file by flag instead. That could make it pass where a
+stranger's wouldn't only if their own user hooks or settings interfere with Jev's, which a real stranger's machine can have
+and this run would not see.

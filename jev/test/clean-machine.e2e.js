@@ -12,13 +12,15 @@
  * WHAT IT DOES, as a stranger would, in a FRESH TEMP ROOT outside any repository:
  *   1. the module: `git archive HEAD jev` from the repository this file sits in (a stranger's clone), else a plain copy;
  *   2. a HOME of its own, with a `.claude/settings.json` like a user's (one foreign key), hashed;
- *   3. `node install.js` from the module's folder, the README's only install command;
+ *   3. `node jev/install.js` from the folder that CONTAINS `jev`, the README's step 3, as written (D126; D124 inferred
+ *      `node install.js` from inside `jev`, because the README of then never wrote the command);
  *   4. turn 1: the Stop hook, run EXACTLY as install.js registered it (exec form: command + args, no shell), with the
  *      Stop payload Claude Code sends — or, --mode session, a real `claude -p` turn fires it;
  *      ONE ledger row must land, with prompt_id, turn_uuid and confidence. If Jev calls the turn clean, ONE retry with a
  *      deliberately over-claiming reply;
  *   5. turn 2: the UserPromptSubmit hook, same way; the flag line must appear iff the last turn was marked;
- *   6. `node install.js --uninstall`, and settings.json must return BYTE FOR BYTE.
+ *   5b. `node jev/bin/jev-report.js`, the README's step 4 ("check it worked"), its output kept (it prints no turn text);
+ *   6. `node jev/install.js --uninstall`, and settings.json must return BYTE FOR BYTE.
  *
  * THE ISOLATION — every place the run could write outside the temp root is pointed inside it: USERPROFILE and HOME (where
  * os.homedir() and so install.js look), LOCALAPPDATA / APPDATA / XDG_STATE_HOME (where Jev's ledger defaults), and for
@@ -201,11 +203,16 @@ async function main() {
   fs.writeFileSync(settings, '{\n  "model": "sonnet"\n}\n');
   const pre = fs.readFileSync(settings);
   out.temp_settings_before = sha(pre);
-  const inst = spawnSync(process.execPath, ['install.js'], { cwd: mod.dir, env, encoding: 'utf8', timeout: 30000 });
+  // THE README's STEP 3, LITERALLY: "Every command below is run from the folder that CONTAINS `jev`" → `node jev/install.js`.
+  const outer = path.dirname(mod.dir);
+  const inst = spawnSync(process.execPath, [path.join('jev', 'install.js')], { cwd: outer, env, encoding: 'utf8', timeout: 30000 });
   out.install = { exit: inst.status, stdout: redact(inst.stdout), stderr: redact(inst.stderr) };
   out.temp_settings_installed = sha(fs.readFileSync(settings));
   if (inst.status === 0) await (a.mode === 'hooks' ? hooksMode : sessionMode)(a, root, mod, env, out);
-  const un = spawnSync(process.execPath, ['install.js', '--uninstall'], { cwd: mod.dir, env, encoding: 'utf8', timeout: 30000 });
+  // THE README's STEP 4, literally, before the uninstall: `node jev/bin/jev-report.js`.
+  const rep4 = spawnSync(process.execPath, [path.join('jev', 'bin', 'jev-report.js')], { cwd: outer, env, encoding: 'utf8', timeout: 30000 });
+  out.report = { exit: rep4.status, stdout: redact(rep4.stdout), stderr: redact(rep4.stderr) };
+  const un = spawnSync(process.execPath, [path.join('jev', 'install.js'), '--uninstall'], { cwd: outer, env, encoding: 'utf8', timeout: 30000 });
   out.uninstall = { exit: un.status, stdout: redact(un.stdout), stderr: redact(un.stderr) };
   out.temp_settings_after = fs.existsSync(settings) ? sha(fs.readFileSync(settings)) : null;
   out.settings_restored_byte_for_byte = out.temp_settings_after === out.temp_settings_before;
