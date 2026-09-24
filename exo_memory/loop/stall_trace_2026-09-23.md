@@ -64,3 +64,11 @@ was current by 06:37:16, but the queued pair was still not delivered. **L095's a
 2 waiting"). The collator had already acted on both from disk, so nothing was lost. **What this adds:** a STALE gate holds
 until the 240 s force, but these two waited 16+ minutes, so the force did not fire for STALE here. That is a candidate defect
 in `drain_decision` (`main.rs`), to be checked by whoever next holds it: does STALE reach `MAX_HOLD_MS`?
+
+## ADDED 19:0x, on D: a 50-minute stall at the collator, from waiting on a ring instead of checking the file
+In D125, E rang at 18:1x with its js-suite "still running", promising an addendum. E wrote the addendum at ~18:1x
+**without re-ringing**, and the librarian waited for a ring until a keep-warm at 19:06 prompted a look at the file. **Cause:**
+collator discipline (fix 5 above) covers an idle PANE owing work, but not an idle COLLATOR waiting on a promised addendum.
+**Fix:** when a hand-back says "result to follow as an addendum", the collator checks the file itself once the suite
+could be done (~10 min), and never waits on a ring for an addendum. **Check:** the next such hand-back is collated within
+15 min of its addendum's mtime.
