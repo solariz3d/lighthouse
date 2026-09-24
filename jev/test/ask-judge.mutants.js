@@ -44,15 +44,18 @@ const MUTANTS = [
   [JUDGE, 'the dream guard not a switch', 'if (cfg.dream && env.CONSONANCE_DREAM) return', 'if (env.CONSONANCE_DREAM) return'],
   [JUDGE, 'the row carries the view', 'prompt_sha256: sha(state), usage: r.usage };', 'prompt_sha256: sha(state), usage: r.usage, view };'],
   [JUDGE, 'the row carries the prompt, not its sha', 'prompt_sha256: sha(state),', 'prompt_sha256: state,'],
-  [JUDGE, 'a turn already judged is asked again', "if (alreadyJudged(ledgerPath, sid, turn)) return { outcome: 'already' };", ''],
+  // Re-anchored D124 (the D123 judge keys dedupe by prompt_id when the payload has one); same property, same removal.
+  [JUDGE, 'a turn already judged is asked again', "if (alreadyJudged(ledgerPath, sid, promptId ? { prompt_id: promptId } : { turn_uuid: turn })) return { outcome: 'already' };", ''],
   [JUDGE, 'the turn end not required (any assistant row)', "return o.message.stop_reason === 'end_turn' && o.uuid ? { uuid: o.uuid } : null;", 'return o.uuid ? { uuid: o.uuid } : null;'],
   [JUDGE, 'a gateway error body logged', 'const status = err.status || (m ? Number(m[1]) : null);', "const status = err.status || (m ? Number(m[1]) : null);\n    return { outcome: 'gateway-failed', why: err.message };"],
   [JUDGE, 'failures not logged', 'try { appendLine(logFile, line); } catch', 'try { } catch'],
-  [JUDGE, 'the child not detached', "detached: true, stdio: 'ignore', windowsHide: true", "detached: false, stdio: 'ignore', windowsHide: true"],
-  [JUDGE, 'the child shares the hook\'s stdio', "detached: true, stdio: 'ignore', windowsHide: true", "detached: true, stdio: 'pipe', windowsHide: true"],
-  [JUDGE, 'the child not hidden on Windows', "detached: true, stdio: 'ignore', windowsHide: true", "detached: true, stdio: 'ignore', windowsHide: false"],
+  // Re-anchored D124: since D123 the child's stdin is a pipe (it carries the move) and stdout/stderr stay ignored.
+  [JUDGE, 'the child not detached', "detached: true, stdio: ['pipe', 'ignore', 'ignore'], windowsHide: true", "detached: false, stdio: ['pipe', 'ignore', 'ignore'], windowsHide: true"],
+  [JUDGE, 'the child shares the hook\'s stdio', "detached: true, stdio: ['pipe', 'ignore', 'ignore'], windowsHide: true", "detached: true, stdio: 'pipe', windowsHide: true"],
+  [JUDGE, 'the child not hidden on Windows', "detached: true, stdio: ['pipe', 'ignore', 'ignore'], windowsHide: true", "detached: true, stdio: ['pipe', 'ignore', 'ignore'], windowsHide: false"],
   [JUDGE, 'the child not unref\'d', "if (child && typeof child.unref === 'function') child.unref();", ''],
-  [JUDGE, 'the whole payload passed to the child', 'const pass = { session_id: meta.session_id || null, transcript_path: meta.transcript_path || null, cwd: meta.cwd || null };', 'const pass = meta;'],
+  // Re-anchored D124: the command-line payload gained prompt_id (D123). Passing the whole payload would put the move on argv.
+  [JUDGE, 'the whole payload passed to the child', 'const pass = { session_id: meta.session_id || null, transcript_path: meta.transcript_path || null, cwd: meta.cwd || null,\n      prompt_id: meta.prompt_id || null };', 'const pass = meta;'],
   [JUDGE, 'a spawn failure reaches the session', '} catch { /* a spawn that fails must not reach the session */ }', '} catch (e) { throw e; }'],
   // The real hook-process test is the one that must catch this: spawnSync ignores spawnImpl and blocks on the child's poll.
   [JUDGE, 'the hook waits for its child', 'const child = spawnImpl(argv0,', "const child = require('child_process').spawnSync(argv0,"],
@@ -84,7 +87,7 @@ function main() {
   console.log(`control: ${c.status === 0 ? 'GREEN' : 'RED'} (exit ${c.status})`);
   if (c.status !== 0) { console.log(c.stdout.slice(-2000)); process.exitCode = 1; return; }
 
-  MUTANTS.forEach(([file, name, from, to], i) => {
+  MUTANTS.forEach(([file, name, from0, to0], i) => {
     const n = i + 1;
     if (only && n !== only) return;
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'jev-mut-'));
@@ -92,6 +95,11 @@ function main() {
       copyTree(JEV, dir);
       const f = path.join(dir, file);
       const src = fs.readFileSync(f, 'utf8');
+      // D124: an anchor's line breaks follow the source's own, so a CRLF checkout (core.autocrlf=true, as on D) applies
+      // the same rows as an LF one instead of reading NOT APPLIED for a reason that is not about the code.
+      const eol = src.includes('\r\n') ? '\r\n' : '\n';
+      const from = from0.replace(/\r?\n/g, eol);
+      const to = to0.replace(/\r?\n/g, eol);
       const count = src.split(from).length - 1;
       if (count !== 1) { rows.push([n, name, 'NOT APPLIED', `anchor occurs ${count} times`]); return; }
       fs.writeFileSync(f, src.replace(from, to));

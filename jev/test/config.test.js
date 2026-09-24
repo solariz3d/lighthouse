@@ -186,3 +186,91 @@ test('a missing home or cwd is refused rather than guessed', () => {
   assert.throws(() => C.load({ env: {}, cwd: tmp(), platform: 'linux' }), /home/);
   assert.throws(() => C.load({ env: {}, home: tmp(), platform: 'linux' }), /cwd/);
 });
+
+// ── D124: ${NAME} in path values, from the env PASSED IN ───────────────────────────────────────────────────────────
+// Rules (config.js header): ${NAME} expands; $$ is a literal $; any other $ is refused; an undefined OR empty variable is
+// refused naming the variable and the file, never its value; only path values (ledgerDir, rubric, optOut) expand.
+const cfgFile = (w) => path.join(w.home, '.jev', 'config.json');
+
+test('D124 ${NAME} in ledgerDir expands from the env PASSED IN', () => {
+  const base = tmp();
+  const w = world({ ledgerDir: '${STORE_BASE}/consonance/jev-shadow' }, { env: { STORE_BASE: base } });
+  assert.strictEqual(C.load(w).ledgerDir, path.join(base, 'consonance', 'jev-shadow'));
+});
+
+test('D124 an UNDEFINED variable is a loud refusal naming the variable and the config file', () => {
+  const w = world({ ledgerDir: '${NOPE_NOT_SET}/x' }, { env: {} });
+  assert.throws(() => C.load(w), (e) => e.message.includes('NOPE_NOT_SET') && e.message.includes(cfgFile(w)) && /not set/.test(e.message));
+});
+
+test('D124 a variable set to the EMPTY string is refused too — "${X}/jev" must not become "/jev"', () => {
+  const w = world({ ledgerDir: '${EMPTY_ONE}/jev' }, { env: { EMPTY_ONE: '' } });
+  assert.throws(() => C.load(w), (e) => e.message.includes('EMPTY_ONE') && /empty/.test(e.message) && e.message.includes(cfgFile(w)));
+});
+
+test('D124 a refusal never echoes a variable\'s VALUE', () => {
+  const w = world({ ledgerDir: '${REL}/jev' }, { env: { REL: 'relative-secret-value' } });
+  assert.throws(() => C.load(w), (e) => !e.message.includes('relative-secret-value') && /absolute/.test(e.message));
+});
+
+test('D124 bare $NAME (no braces) is REFUSED, with the fix named: ${NAME}, or $$ for a literal $', () => {
+  const w = world({ ledgerDir: '$HOME/jev' }, { env: { HOME: tmp() } });
+  assert.throws(() => C.load(w), (e) => /\$\{NAME\}/.test(e.message) && /\$\$/.test(e.message) && e.message.includes(cfgFile(w)));
+});
+
+test('D124 $$ is a literal $, so $${NAME} is the literal text ${NAME}, never expanded', () => {
+  const base = tmp();
+  const w = world({ ledgerDir: path.join(base, 'a$$b', '$${NOT_EXPANDED}') }, { env: { NOT_EXPANDED: 'SHOULD-NOT-APPEAR' } });
+  assert.strictEqual(C.load(w).ledgerDir, path.join(base, 'a$b', '${NOT_EXPANDED}'));
+});
+
+test('D124 a malformed reference is refused FOR ITS OWN REASON: unclosed, empty, or not a name', () => {
+  // The env DEFINES every odd name, so a malformed reference cannot fall through to a "not set" refusal and pass anyway
+  // (mutants X9 and X10 survived the first version of this test, which checked only that the file was named).
+  const base = tmp();
+  const env = { UNCLOSED: base, '': base, '1BAD': base, 'A-B': base, A: base };
+  for (const [bad, reason] of [['${UNCLOSED/jev', /unclosed/], ['${}/jev', /not a variable name/], ['${1BAD}/jev', /not a variable name/], ['${A-B}/jev', /not a variable name/]]) {
+    const w = world({ ledgerDir: bad }, { env });
+    assert.throws(() => C.load(w), (e) => e.message.includes(cfgFile(w)) && reason.test(e.message), bad);
+  }
+});
+
+test('D124 rubric and optOut expand the same way; a ~ path still expands against home', () => {
+  const base = tmp();
+  const w = world({ rubric: '${RB}/METHOD.md', optOut: ['${OO}'], ledgerDir: '~/${SUB}' }, { env: { RB: base, OO: base, SUB: 'ledgers' } });
+  const r = C.load(w);
+  assert.strictEqual(r.rubricPath, path.join(base, 'METHOD.md'));
+  assert.strictEqual(r.ledgerDir, path.join(w.home, 'ledgers'));
+  assert.strictEqual(C.load({ ...w, cwd: path.join(base) }).optedOut, true);
+});
+
+test('D124 only PATH values expand: a ${...} in gateway.model or sessions is taken as written', () => {
+  const w = world({ gateway: { model: 'm/${X}' }, sessions: ['${X}'] }, { env: { X: 'expanded' } });
+  const r = C.load(w);
+  assert.strictEqual(r.gateway.model, 'm/${X}');
+  assert.deepStrictEqual(r.sessions, ['${X}']);
+});
+
+test('D124 on win32 a variable name matches case-insensitively, as Windows env names do', () => {
+  const base = tmp();
+  const w = world({ ledgerDir: '${LocalAppData}/jev' }, { platform: 'win32', env: { LOCALAPPDATA: base } });
+  assert.strictEqual(C.load(w).ledgerDir, path.win32.join(base, 'jev'));
+  assert.strictEqual(C.expandVars('${Home}', { HOME: '/h' }, { file: 'f', key: 'k', platform: 'linux' }).ok, false, 'posix names are case-sensitive');
+});
+
+test('D124 load stays pure: expansion reads the env passed in, never process.env', () => {
+  const saved = process.env.D124_ONLY_IN_PROCESS;
+  process.env.D124_ONLY_IN_PROCESS = tmp();
+  try {
+    const w = world({ ledgerDir: '${D124_ONLY_IN_PROCESS}/jev' }, { env: {} });
+    assert.throws(() => C.load(w), /D124_ONLY_IN_PROCESS/);
+  } finally { if (saved === undefined) delete process.env.D124_ONLY_IN_PROCESS; else process.env.D124_ONLY_IN_PROCESS = saved; }
+});
+
+test('D124 a stranger\'s defaults are unchanged: no config file, no expansion, the same per-OS ledgerDir', () => {
+  // A temp dir, not a drive literal. The first version said 'C:\L', which the heredoc had stripped to one backslash, so it
+  // was the string "C:L", and portable-paths flagged it (D124).
+  const lad = tmp();
+  const w = world(undefined, { platform: 'win32', env: { LOCALAPPDATA: lad } });
+  assert.strictEqual(C.load(w).ledgerDir, path.win32.join(lad, 'jev'));
+});

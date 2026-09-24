@@ -18,6 +18,9 @@ const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
 const KEY = ['test', 'only', 'module', 'key', '7d3e'].join('-');
 const MAIN = '0c0c0c0a-0000-4000-8000-000000000a01', LIB = '0c0c0c0b-0000-4000-8000-00000000115b', TP = '3d000000-0000-4000-8000-000000003d00';
 const ROOM_CONFIG = path.join(REPO, 'consonance', 'jev-room', '.jev', 'config.json');
+// D124: the room config states its store as ${LOCALAPPDATA}/consonance/jev-shadow, so every load of it needs LOCALAPPDATA in
+// the env it is given — exactly as the runner's own defaultStore() does. A temp dir stands in for it; nothing is written there.
+const ROOM_ENV = { LOCALAPPDATA: fs.mkdtempSync(path.join(os.tmpdir(), 'jev-module-lad-')) };
 
 /** A room: the real L2 hooks, a main.rs with the three fixed ids, the real jev/ module and the real room config. */
 function world({ config = true } = {}) {
@@ -70,8 +73,22 @@ test('the switch is CONSONANCE_JEV_MODULE, and only the exact value "on" turns i
 // ── the room's config ──────────────────────────────────────────────────────────────────────────────────────────────
 test('the room config loads through jev/lib/config.js as written: listed seats, audience consonance, the dream guard on', () => {
   const { load } = require(path.join(REPO, 'jev', 'lib', 'config.js'));
-  const c = load({ env: {}, home: path.dirname(path.dirname(ROOM_CONFIG)), cwd: fs.mkdtempSync(path.join(os.tmpdir(), 'jev-module-cwd-')) });
+  const c = load({ env: ROOM_ENV, home: path.dirname(path.dirname(ROOM_CONFIG)), cwd: fs.mkdtempSync(path.join(os.tmpdir(), 'jev-module-cwd-')) });
   assert.deepStrictEqual([c.judge, c.audience, c.dream, c.optedOut], ['listed', 'consonance', true, false]);
+});
+
+test('D124: the room config STATES its store, and it is the runner\'s own store (closes A\'s D123 §2.1)', () => {
+  const { load } = require(path.join(REPO, 'jev', 'lib', 'config.js'));
+  const { defaultStore } = require('./jev-shadow-runner.js');
+  assert.strictEqual(JSON.parse(fs.readFileSync(ROOM_CONFIG, 'utf8')).ledgerDir, '${LOCALAPPDATA}/consonance/jev-shadow', 'written with the variable, not a machine path');
+  const c = load({ env: ROOM_ENV, home: path.dirname(path.dirname(ROOM_CONFIG)), cwd: fs.mkdtempSync(path.join(os.tmpdir(), 'jev-module-cwd-')), platform: 'win32' });
+  assert.strictEqual(c.ledgerDir, defaultStore(ROOM_ENV), 'the config and the runner name the same directory');
+});
+
+test('D124: the room config without LOCALAPPDATA is REFUSED loudly, naming the variable and the file — as the runner refuses', () => {
+  const w = world();
+  assert.throws(() => J.loadJevModule({ repo: w.repo, env: {}, home: w.home }),
+    (e) => e instanceof J.Refusal && /LOCALAPPDATA/.test(e.message) && /jev-room.*config\.json/.test(e.message) && /not set/.test(e.message));
 });
 
 test('the room config\'s sessions ARE the three fixed seats in main.rs — a changed id there turns this red', () => {
@@ -83,7 +100,7 @@ test('the room config\'s sessions ARE the three fixed seats in main.rs — a cha
 // ── loading the module ─────────────────────────────────────────────────────────────────────────────────────────────
 test('loadJevModule: the module and the config from the room\'s OWN tree, and the prompt builder\'s hash', () => {
   const w = world();
-  const m = J.loadJevModule({ repo: w.repo, env: {}, home: w.home });
+  const m = J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home });
   assert.strictEqual(typeof m.prompt.buildPrompt, 'function');
   assert.strictEqual(typeof m.ask.ask, 'function');
   assert.strictEqual(m.config.audience, 'consonance');
@@ -93,32 +110,32 @@ test('loadJevModule: the module and the config from the room\'s OWN tree, and th
 
 test('loadJevModule REFUSES, naming the file, when the room config is missing — an absent file is not "all defaults" here', () => {
   const w = world({ config: false });
-  assert.throws(() => J.loadJevModule({ repo: w.repo, env: {}, home: w.home }), (e) => e instanceof J.Refusal && /jev-room.*config\.json/.test(e.message) && /does not exist/.test(e.message));
+  assert.throws(() => J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home }), (e) => e instanceof J.Refusal && /jev-room.*config\.json/.test(e.message) && /does not exist/.test(e.message));
 });
 
 test('loadJevModule REFUSES a room config whose audience is not consonance', () => {
   const w = world();
   const f = path.join(w.repo, 'consonance', 'jev-room', '.jev', 'config.json');
   fs.writeFileSync(f, JSON.stringify({ ...JSON.parse(fs.readFileSync(f, 'utf8')), audience: 'session' }));
-  assert.throws(() => J.loadJevModule({ repo: w.repo, env: {}, home: w.home }), (e) => e instanceof J.Refusal && /audience/.test(e.message));
+  assert.throws(() => J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home }), (e) => e instanceof J.Refusal && /audience/.test(e.message));
 });
 
 test('loadJevModule REFUSES an invalid room config, carrying jev/lib/config.js\'s own reason', () => {
   const w = world();
   fs.writeFileSync(path.join(w.repo, 'consonance', 'jev-room', '.jev', 'config.json'), '{"judge":"some"}');
-  assert.throws(() => J.loadJevModule({ repo: w.repo, env: {}, home: w.home }), (e) => e instanceof J.Refusal && /"judge" must be "all" or "listed"/.test(e.message));
+  assert.throws(() => J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home }), (e) => e instanceof J.Refusal && /"judge" must be "all" or "listed"/.test(e.message));
 });
 
 test('loadJevModule REFUSES when the room is opted out with a .jev-off marker, and says where the marker is', () => {
   const w = world();
   fs.writeFileSync(path.join(w.repo, '.jev-off'), '');
-  assert.throws(() => J.loadJevModule({ repo: w.repo, env: {}, home: w.home }), (e) => e instanceof J.Refusal && /opted out/.test(e.message) && /\.jev-off/.test(e.message));
+  assert.throws(() => J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home }), (e) => e instanceof J.Refusal && /opted out/.test(e.message) && /\.jev-off/.test(e.message));
 });
 
 test('loadJevModule REFUSES when the room has no jev/ module beside it', () => {
   const w = world();
   fs.rmSync(path.join(w.repo, 'jev'), { recursive: true, force: true });
-  assert.throws(() => J.loadJevModule({ repo: w.repo, env: {}, home: w.home }), (e) => e instanceof J.Refusal && /jev[\\/]lib[\\/]prompt\.js/.test(e.message));
+  assert.throws(() => J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home }), (e) => e instanceof J.Refusal && /jev[\\/]lib[\\/]prompt\.js/.test(e.message));
 });
 
 // ── capture ────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -131,7 +148,7 @@ test('capturePass WITHOUT the module is today\'s: no `via`, the room\'s own buil
 
 test('capturePass WITH the module: the capture says so, and carries the module\'s prompt built from the room\'s rubric', () => {
   const w = world(); turn(w, MAIN);
-  const m = J.loadJevModule({ repo: w.repo, env: {}, home: w.home });
+  const m = J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home });
   J.capturePass(O(w, { jevModule: m }));
   const [c] = caps(w);
   assert.strictEqual(c.via, 'jev-module');
@@ -145,14 +162,14 @@ test('the two paths build the SAME prompt for the same turn when both read the s
   const a = world(), b = world();
   turn(a, MAIN, 'the same question', 'the same move'); turn(b, MAIN, 'the same question', 'the same move');
   J.capturePass(O(a));
-  J.capturePass(O(b, { jevModule: J.loadJevModule({ repo: b.repo, env: {}, home: b.home }) }));
+  J.capturePass(O(b, { jevModule: J.loadJevModule({ repo: b.repo, env: ROOM_ENV, home: b.home }) }));
   assert.strictEqual(caps(b)[0].l2.prompt, caps(a)[0].l2.prompt);
 });
 
 // ── the ask ────────────────────────────────────────────────────────────────────────────────────────────────────────
 test('judgePass WITH the module asks through jev/lib/ask.js at the config\'s gateway, and writes today\'s row shape to today\'s ledger', async () => {
   const w = world(); turn(w, MAIN);
-  const m = J.loadJevModule({ repo: w.repo, env: {}, home: w.home });
+  const m = J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home });
   J.capturePass(O(w, { jevModule: m }));
   const g = gateway();
   const res = await J.judgePass({ store: w.store, maxCalls: 5, env: { AI_GATEWAY_API_KEY: KEY }, fetchImpl: g, jevModule: m });
@@ -168,7 +185,7 @@ test('judgePass WITH the module asks through jev/lib/ask.js at the config\'s gat
 
 test('judgePass WITH the module: a 503 is skipped with no row, and the item is asked again next pass', async () => {
   const w = world(); turn(w, MAIN);
-  const m = J.loadJevModule({ repo: w.repo, env: {}, home: w.home });
+  const m = J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home });
   J.capturePass(O(w, { jevModule: m }));
   const bad = gateway(() => ({ ok: false, status: 503, headers: { get: () => null }, text: async () => 'upstream unavailable' }));
   const r1 = await J.judgePass({ store: w.store, maxCalls: 5, env: { AI_GATEWAY_API_KEY: KEY }, fetchImpl: bad, jevModule: m });
@@ -179,7 +196,7 @@ test('judgePass WITH the module: a 503 is skipped with no row, and the item is a
 
 test('judgePass WITH the module: a 401 ends the pass (it would fail every call), as today', async () => {
   const w = world(); turn(w, MAIN);
-  const m = J.loadJevModule({ repo: w.repo, env: {}, home: w.home });
+  const m = J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home });
   J.capturePass(O(w, { jevModule: m }));
   const bad = gateway(() => ({ ok: false, status: 401, headers: { get: () => null }, text: async () => 'no' }));
   await assert.rejects(J.judgePass({ store: w.store, maxCalls: 5, env: { AI_GATEWAY_API_KEY: KEY }, fetchImpl: bad, jevModule: m }), /HTTP 401/);
@@ -188,7 +205,7 @@ test('judgePass WITH the module: a 401 ends the pass (it would fail every call),
 
 test('judgePass WITH the module: a prompt matching a secret pattern gets ONE refused row and no call', async () => {
   const w = world(); turn(w, MAIN, 'q', 'here: AI_GATEWAY_API_KEY=' + 'x'.repeat(60));
-  const m = J.loadJevModule({ repo: w.repo, env: {}, home: w.home });
+  const m = J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home });
   J.capturePass(O(w, { jevModule: m }));
   const g = gateway();
   const res = await J.judgePass({ store: w.store, maxCalls: 5, env: { AI_GATEWAY_API_KEY: KEY }, fetchImpl: g, jevModule: m });
@@ -199,7 +216,7 @@ test('judgePass WITH the module uses the gateway the ROOM CONFIG names, not a co
   const w = world(); turn(w, MAIN);
   const f = path.join(w.repo, 'consonance', 'jev-room', '.jev', 'config.json');
   fs.writeFileSync(f, JSON.stringify({ ...JSON.parse(fs.readFileSync(f, 'utf8')), gateway: { url: 'https://gateway.example.test/v1/evaluate', model: 'example/judge-model' } }));
-  const m = J.loadJevModule({ repo: w.repo, env: {}, home: w.home });
+  const m = J.loadJevModule({ repo: w.repo, env: ROOM_ENV, home: w.home });
   J.capturePass(O(w, { jevModule: m }));
   const g = gateway();
   await J.judgePass({ store: w.store, maxCalls: 5, env: { AI_GATEWAY_API_KEY: KEY }, fetchImpl: g, jevModule: m });

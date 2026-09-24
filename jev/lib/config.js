@@ -81,13 +81,44 @@ function defaultLedgerDir({ env, home, platform }) {
   return xdg && p.isAbsolute(xdg) ? p.join(xdg, 'jev') : p.join(home, '.local', 'state', 'jev');
 }
 
-/** A configured path: `~` expands against the home PASSED in; anything else must be absolute. */
-function userPath(value, { file, key, home, platform }) {
+/** D124 — `${NAME}` IN A PATH VALUE, expanded from the `env` PASSED IN (never the process environment).
+ *   ${NAME}   NAME is [A-Za-z_][A-Za-z0-9_]*; on win32 it matches case-insensitively, as Windows environment names do.
+ *   $$        a literal `$` — so `$${NAME}` is the literal text `${NAME}`.
+ *   any other `$` — bare `$NAME`, `${` unclosed, `${}`, `${1X}` — is REFUSED. A bare `$HOME` taken literally would
+ *             silently create a folder called `$HOME`; `$$` covers the rare real `$` in a path.
+ *   an UNDEFINED variable, or one set to the EMPTY string, is REFUSED: "${X}/jev" must never quietly become "/jev".
+ * A refusal names the variable and the key, never the variable's value. Returns { ok, value } or { ok: false, why }. */
+function expandVars(raw, env, { platform }) {
+  let out = '';
+  for (let i = 0; i < raw.length; i++) {
+    const ch = raw[i];
+    if (ch !== '$') { out += ch; continue; }
+    if (raw[i + 1] === '$') { out += '$'; i++; continue; }
+    if (raw[i + 1] !== '{') return { ok: false, why: 'has a bare "$": write ${NAME} to use an environment variable, or $$ for a literal $' };
+    const close = raw.indexOf('}', i + 2);
+    if (close < 0) return { ok: false, why: 'has an unclosed "${"' };
+    const name = raw.slice(i + 2, close);
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) return { ok: false, why: `has "\${${name}}", which is not a variable name` };
+    const k = platform === 'win32' ? Object.keys(env).find((x) => x.toUpperCase() === name.toUpperCase()) : (Object.prototype.hasOwnProperty.call(env, name) ? name : undefined);
+    if (k === undefined || env[k] === undefined || env[k] === null) return { ok: false, why: `uses \${${name}}, which is not set in the environment` };
+    if (String(env[k]) === '') return { ok: false, why: `uses \${${name}}, which is set but empty — the path would lose its base` };
+    out += String(env[k]);
+    i = close;
+  }
+  return { ok: true, value: out };
+}
+
+/** A configured path: `${NAME}` expands first (expandVars); then `~` expands against the home PASSED in, and anything
+ *  else must be absolute. */
+function userPath(value, { file, key, home, platform, env = {} }) {
   const p = pathFor(platform);
   if (typeof value !== 'string' || !value) fail(file, `"${key}" must be a non-empty path string`);
-  if (value === '~' || value.startsWith('~/') || value.startsWith('~\\')) return p.join(home, value.slice(1));
-  if (!p.isAbsolute(value)) fail(file, `"${key}" must be absolute or start with ~ (got a relative path, which would depend on where Jev happens to run)`);
-  return p.normalize(value);
+  const x = expandVars(value, env, { platform });
+  if (!x.ok) fail(file, `"${key}" ${x.why}`);
+  const v = x.value;
+  if (value === '~' || value.startsWith('~/') || value.startsWith('~\\')) return p.join(home, v.slice(1));
+  if (!p.isAbsolute(v)) fail(file, `"${key}" must be absolute or start with ~ (after expansion it is a relative path, which would depend on where Jev happens to run)`);
+  return p.normalize(v);
 }
 
 function readConfig(file) {
@@ -130,8 +161,8 @@ function load({ env, home, cwd, platform } = {}) {
     if (!Array.isArray(cfg.sessions) || !cfg.sessions.every((s) => typeof s === 'string' && s)) fail(file, '"sessions" must be a list of session id strings');
     out.sessions = cfg.sessions.slice();
   }
-  if ('ledgerDir' in cfg) out.ledgerDir = userPath(cfg.ledgerDir, { file, key: 'ledgerDir', home, platform: plat });
-  if ('rubric' in cfg) out.rubricPath = userPath(cfg.rubric, { file, key: 'rubric', home, platform: plat });
+  if ('ledgerDir' in cfg) out.ledgerDir = userPath(cfg.ledgerDir, { file, key: 'ledgerDir', home, platform: plat, env: e });
+  if ('rubric' in cfg) out.rubricPath = userPath(cfg.rubric, { file, key: 'rubric', home, platform: plat, env: e });
   if ('gateway' in cfg) {
     const g = cfg.gateway;
     if (g === null || typeof g !== 'object' || Array.isArray(g)) fail(file, '"gateway" must be an object with "url" and/or "model"');
@@ -162,7 +193,7 @@ function load({ env, home, cwd, platform } = {}) {
   if (marker) { out.optedOut = true; out.optedOutBy = `${OPT_OUT_FILE} at ${marker}`; }
   if ('optOut' in cfg) {
     if (!Array.isArray(cfg.optOut)) fail(file, '"optOut" must be a list of directories');
-    const dirs = cfg.optOut.map((d, i) => userPath(d, { file, key: `optOut[${i}]`, home, platform: plat }));
+    const dirs = cfg.optOut.map((d, i) => userPath(d, { file, key: `optOut[${i}]`, home, platform: plat, env: e }));
     if (!out.optedOut) {
       const hit = dirs.find((d) => within(d, cwd, plat));
       if (hit) { out.optedOut = true; out.optedOutBy = `config optOut ${hit}`; }
@@ -171,4 +202,4 @@ function load({ env, home, cwd, platform } = {}) {
   return out;
 }
 
-module.exports = { load, within, findOptOutFile, ConfigError, DEFAULT_GATEWAY, DEFAULT_RUBRIC, OPT_OUT_FILE };
+module.exports = { load, within, findOptOutFile, expandVars, ConfigError, DEFAULT_GATEWAY, DEFAULT_RUBRIC, OPT_OUT_FILE };

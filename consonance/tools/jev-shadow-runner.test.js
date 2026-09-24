@@ -641,7 +641,7 @@ function withJev(jw) {
 test('D123 run(): CONSONANCE_JEV_MODULE=on in the app env → judge mode goes through the jev/ module, and the log says so once', async () => {
   const f = fixture(); const app = fakeApp(); const jw = withJev(judgeWorld(f));
   try {
-    const h = await R.run(opts(f, app, { ...jopts(f, jw), env: { AI_GATEWAY_API_KEY: KEY, CONSONANCE_JEV_MODULE: 'on' } }));
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), env: { AI_GATEWAY_API_KEY: KEY, CONSONANCE_JEV_MODULE: 'on', LOCALAPPDATA: path.join(f.root, 'lad') } }));
     await waitFor(() => judged(f).length >= 1);
     assert.strictEqual(judged(f)[0].via, 'jev-module');
     // The CAPTURE too, not only the row: a runner that handed the module to judgePass alone would ask with the module
@@ -657,7 +657,7 @@ test('D123 run(): CONSONANCE_JEV_MODULE=on in the app env → judge mode goes th
 test('D123 run(): the flag in any other spelling is today\'s path — no module line, no `via`', async () => {
   const f = fixture(); const app = fakeApp(); const jw = withJev(judgeWorld(f));
   try {
-    const h = await R.run(opts(f, app, { ...jopts(f, jw), env: { AI_GATEWAY_API_KEY: KEY, CONSONANCE_JEV_MODULE: 'ON' } }));
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), env: { AI_GATEWAY_API_KEY: KEY, CONSONANCE_JEV_MODULE: 'ON', LOCALAPPDATA: path.join(f.root, 'lad') } }));
     await waitFor(() => judged(f).length >= 1);
     assert.strictEqual(judged(f)[0].via, undefined);
     assert.doesNotMatch(log(f), /jev\/ module/);
@@ -668,7 +668,7 @@ test('D123 run(): the flag in any other spelling is today\'s path — no module 
 test('D123 run(): the flag on with a room that cannot load the module → judge mode OFF, loudly, and the shadow keeps running', async () => {
   const f = fixture(); const app = fakeApp(); const jw = judgeWorld(f);   // no jev/ in this room
   try {
-    const h = await R.run(opts(f, app, { ...jopts(f, jw), env: { AI_GATEWAY_API_KEY: KEY, CONSONANCE_JEV_MODULE: 'on' } }));
+    const h = await R.run(opts(f, app, { ...jopts(f, jw), env: { AI_GATEWAY_API_KEY: KEY, CONSONANCE_JEV_MODULE: 'on', LOCALAPPDATA: path.join(f.root, 'lad') } }));
     await waitFor(() => /judge mode off: CONSONANCE_JEV_MODULE=on/.test(log(f)));
     assert.doesNotMatch(log(f), /stopped:/);
     await new Promise((r) => setTimeout(r, 200));

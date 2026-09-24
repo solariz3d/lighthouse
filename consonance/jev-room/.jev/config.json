@@ -6,5 +6,6 @@
     "3d000000-0000-4000-8000-000000003d00"
   ],
   "audience": "consonance",
-  "dream": true
+  "dream": true,
+  "ledgerDir": "${LOCALAPPDATA}/consonance/jev-shadow"
 }
