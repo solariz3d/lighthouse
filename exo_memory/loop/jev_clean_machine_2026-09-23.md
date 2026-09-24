@@ -263,3 +263,97 @@ settings interfere with Jev's: a second Stop hook, a `disableAllHooks`, a policy
 
 **Unmeasured.** Every `claude -p` run is a fresh process that reads its settings at start, `--resume` included. Whether an
 INTERACTIVE session opened before the install sees the hooks needs a long-lived session, which this route cannot give.
+
+---
+
+## ADDENDUM, 2026-09-23 19:1x (D128, pane A): **surfacing link LIVE with a PLANTED mark**, zero gateway calls
+
+*The D124 result and the D126 and D127 addenda above stay as they were written.*
+
+**THE MARK WAS PLANTED BY THE TEST.** Jev judged nothing in this run: there was no key, and no call was made. What this shows
+is the path a mark takes, from a ledger row to the next prompt of a live Claude Code session. It shows nothing about Jev's
+judging.
+
+### THE SCORE: **surfacing link LIVE with a PLANTED mark.**
+
+A row in the ledger for turn 1 made the UserPromptSubmit hook put
+**`[jev · worth a second look] your last turn (p=0.61)`** into turn 2 of a real, resumed Claude Code 2.1.281 session.
+- **Where it appeared:** in the session transcript, as the row
+  `{"type":"attachment", "attachment":{"type":"hook_additional_context","content":["[jev · worth a second look] your last turn (p=0.61)"],"hookName":"UserPromptSubmit", …}}`
+  (row uuid `3c471793-f786-49e0-973b-76c7fd07127a`).
+- **It did NOT appear in the model's echo.** Asked *"If your context contains a line that starts with '[jev', repeat that
+  line exactly … Otherwise reply with exactly: NONE"*, **the model answered `NONE`.** So the line was delivered to the
+  session (the transcript records it as context added by the hook) and was not repeated back when asked. Whether the model
+  saw it and declined, or read it as a hook note rather than "a line in its context", is **not established.**
+
+### THE RUN
+
+    node jev/test/clean-machine.e2e.js --mode session --route real-login --plant --keep
+
+- **Module:** `git archive 7b153bc jev`. **Root:** `C:\Users\nname\AppData\Local\Temp\jev-stranger-z2uQjt`.
+- **The key was removed from every process the run started**: the claude process, the hooks it runs, install.js and the
+  report. The script refuses to run if it finds the key in either environment.
+
+1. **Turn 1, no key:** the model answered the git question accurately. The live Stop hook logged, in the TEMP `jev.log`:
+   `{"outcome":"refused","session_id":"df12a69f…","turn_uuid":"72afa14a…","prompt_id":"8ec9adff…","why":"no key — the caller
+   must pass AI_GATEWAY_API_KEY from the environment; refusing before anything is sent"}`, and wrote **no ledger row**.
+   - **No request left the machine:** `jev/lib/ask.js:171` refuses a missing key before the request is built at `:186`,
+     and the log line is that refusal.
+2. **The plant:** ONE row appended to the TEMP ledger (`<root>\localappdata\jev\jev.jsonl`), and only there. The script
+   refuses any ledger outside its temp root or inside the real `%LOCALAPPDATA%\jev` or `\consonance`:
+
+       { "session_id": "df12a69f-5009-44f4-93e4-77da5fb0fa67", "turn_uuid": "72afa14a-3f9d-4ed0-9629-02040848225f",
+         "prompt_id": "8ec9adff-3f91-4b6c-b667-3b887dce09d4", "verdict": "drift", "probabilities": null,
+         "confidence": 0.61, "reason": null, "model": "PLANTED-D128", "prompt_sha256": null, "usage": null, "ts": … }
+
+   - `turn_uuid` is turn 1's **real transcript end row**, read from the file. It equals the `turn_uuid` the live hook itself
+     logged.
+   - `prompt_id` is the one in turn 1's payload, as the hook logged it.
+3. **Turn 2, `--resume`:** the flag line reached the session (above). Turn 2 finished too, and its Stop hook was refused the
+   same way, with no key and no row.
+4. **`node jev/bin/jev-report.js`**, against that ledger, verbatim:
+
+       jev report — C:\Users\nname\AppData\Local\Temp\jev-stranger-z2uQjt\localappdata\jev
+         turns judged: 1 (clean 0 · drift 1 · abstain 0)
+         turns marked: 1 — worth a second look, not a verdict on the turn
+         row shapes: 0 keyed by turn_uuid · 1 keyed by prompt_id
+         refused / failed (jev.log): refused 2
+         confirmation: unconfirmed — no labels file at …\localappdata\jev\labels.jsonl; a mark is a hint until a person labels it
+
+   **"judged: 1" is the PLANTED row** (the report cannot tell). **"refused 2", not the expected 1**, because turn 2 is a
+   finished turn and was refused for the same missing key.
+5. **Uninstall:** *"Restored the pre-install file byte for byte"*.
+
+**Gateway calls: 0** (0 unplanted rows, 0 `gateway-failed` lines; both log lines are pre-network refusals).
+
+### THE REAL `~/.claude`, before and after
+
+- **`settings.json` sha256 `8e2cf20aa18226db1ea50d0c83b8a657e04b55af918690f925063bab14b70f33`**, before and after.
+- **`~/.claude` top level, `~/.jev`, `%LOCALAPPDATA%\jev`: unchanged.**
+- **`~/.claude/projects`: exactly ONE new folder** (582 → 583), the ruling's one allowed footprint, **left in place:**
+
+      ~/.claude/projects/C--Users-nname-AppData-Local-Temp-jev-stranger-z2uQjt-project/
+          df12a69f-5009-44f4-93e4-77da5fb0fa67.jsonl    (turns 1 and 2: the synthetic prompts, and the flag attachment)
+          memory/
+
+- Nothing else was created outside the temp root, apart from my record in my scratchpad (`d128-plant-run.json`, 0
+  `vck_`-shaped strings).
+
+### A FINDING OUTSIDE THIS RUN, for the librarian
+
+**The real `%LOCALAPPDATA%\jev\jev.log` exists** (4 lines: 2 at 21:56Z and 2 at 23:36Z on 09-23, all *"the Stop payload
+carried no session_id"*). It was there before D127's snapshot, and **no run of mine wrote it**: each pointed its ledger into
+its temp root, and the snapshots show the folder unchanged across D127 and D128. The paired timestamps, milliseconds apart,
+look like a test running the real hook binary with an empty payload and the real `LOCALAPPDATA`.
+- **Candidates:** `jev/test/install.test.js` and the two mutant harnesses. They start processes and never set
+  `LOCALAPPDATA` (grep counts in the D128 hand-back).
+- Not my files, and not fixed here.
+
+### WHERE THE FALSIFIER STANDS NOW
+
+- **Every link a stranger's flag needs has now been shown live, but not in one run:**
+  - D127: live Stop hooks write real rows with both keys;
+  - D128: a row for the last turn surfaces as the line in the next live prompt;
+  - D124 and D126: the flags hook's lookup, at hook level.
+- **The one thing never observed is Jev itself drawing a mark in a live session.** Both of D127's honest turns were clean,
+  correctly. **So: the pipe is proven end to end, and the unassisted falsifier, a real mark surfaced, is still NOT PASS.**

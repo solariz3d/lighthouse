@@ -5,6 +5,13 @@
  *   node jev/test/clean-machine.e2e.js --mode hooks     [--calls N] [--keep]
  *   node jev/test/clean-machine.e2e.js --mode session   [--calls N] [--keep]                       (isolated: needs a token)
  *   node jev/test/clean-machine.e2e.js --mode session --route real-login [--calls N] [--keep]   (D127, the ruled route)
+ *   node jev/test/clean-machine.e2e.js --mode session --route real-login --plant [--keep]      (D128: ZERO calls, a PLANTED mark)
+ *
+ * --plant (D128) TESTS THE SURFACING LINK ONLY, WITH A MARK THE TEST PLANTS. The key is REMOVED from every process the run
+ * starts, so turn 1 is refused ("no key", jev/lib/ask.js refuses before any request is built) and NO call is made. The
+ * test then appends ONE row, model "PLANTED-D128", to the TEMP ledger for turn 1 (its transcript end row, its logged
+ * prompt_id), and turn 2 (--resume) must carry the flag line. It proves the path a real mark takes to the next prompt;
+ * it proves nothing about Jev's judging, and its result must never be reported as "Jev marked a turn".
  *
  * NOT A .test.js: it makes REAL gateway calls, so js-suite (which runs *.test.js) never picks it up. It SKIPS, exit 0 and
  * the reason on one line, whenever what it needs is not there: no AI_GATEWAY_API_KEY; and for --mode session, no `claude`
@@ -57,17 +64,19 @@ const redact = (s) => { let t = String(s); if (KEY) t = t.split(KEY).join('[REDA
 const say = (s) => process.stdout.write(redact(s) + '\n');
 
 function args(argv) {
-  const a = { mode: null, calls: 6, keep: false, route: 'isolated' };
+  const a = { mode: null, calls: 6, keep: false, route: 'isolated', plant: false };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--mode') a.mode = argv[++i];
     else if (argv[i] === '--calls') a.calls = Number(argv[++i]);
     else if (argv[i] === '--keep') a.keep = true;
     else if (argv[i] === '--route') a.route = argv[++i];
+    else if (argv[i] === '--plant') a.plant = true;
     else throw new Error(`unknown argument ${argv[i]}`);
   }
   if (a.mode !== 'hooks' && a.mode !== 'session') throw new Error('usage: --mode hooks|session [--calls N] [--keep]');
   if (!(a.calls >= 1 && a.calls <= 6)) throw new Error('--calls must be 1..6 (the batch-3 allowance)');
   if (a.route !== 'isolated' && a.route !== 'real-login') throw new Error('--route must be isolated or real-login');
+  if (a.plant && !(a.mode === 'session' && a.route === 'real-login')) throw new Error('--plant runs only with --mode session --route real-login');
   return a;
 }
 
@@ -120,7 +129,8 @@ const ledgerDirOf = (env) => path.join(env.LOCALAPPDATA, 'jev');
 const readLines = (f) => { try { return fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return { unparsed: true }; } }); } catch { return []; } };
 function callsSoFar(env) {
   const d = ledgerDirOf(env);
-  return readLines(path.join(d, 'jev.jsonl')).length + readLines(path.join(d, 'jev.log')).filter((l) => l.outcome === 'gateway-failed').length;
+  return readLines(path.join(d, 'jev.jsonl')).filter((r) => !/^PLANTED/.test(String(r.model || ''))).length   // a planted row is no call
+    + readLines(path.join(d, 'jev.log')).filter((l) => l.outcome === 'gateway-failed').length;
 }
 
 /** Run a hook exactly as settings.json registers it: exec form when `args` is set, else the command line through a shell. */
@@ -193,6 +203,76 @@ function listingDiff(before, after) {
   return { added, removed };
 }
 
+/** The session's transcript under ~/.claude/projects, by id, and its end row: the last assistant row with stop_reason end_turn. */
+function sessionTranscript(sid) {
+  const p = path.join(os.homedir(), '.claude', 'projects');
+  for (const d of fs.readdirSync(p)) { const f = path.join(p, d, `${sid}.jsonl`); if (fs.existsSync(f)) return f; }
+  return null;
+}
+function endRowUuid(file) {
+  const rows = fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+  for (let i = rows.length - 1; i >= 0; i--) {
+    const m = rows[i].message;
+    if (m && m.role === 'assistant' && m.stop_reason === 'end_turn' && rows[i].uuid) return rows[i].uuid;
+  }
+  return null;
+}
+
+async function plantRun(a, env, out, run, judgedAfter, ledger, logFile) {
+  out.plant = true;
+  // TURN 1, with no key anywhere: the Stop hook must log a "no key" refusal and write no row.
+  const l1 = readLines(logFile).length;
+  const t1 = run('In one sentence: is it safe to delete a git branch that has already been merged?', null);
+  await judgedAfter(readLines(ledger).length, l1);
+  const refusal = readLines(logFile)[l1] || null;
+  out.session.push({ turn: '1', ...t1, log: refusal });
+  if (!t1.session_id) { out.result = 'FAIL: turn 1 returned no session id'; return; }
+  if (!refusal || refusal.outcome !== 'refused' || !/no key/.test(String(refusal.why))) { out.result = 'FAIL: turn 1 was not refused for lack of a key'; return; }
+  if (readLines(ledger).length !== 0) { out.result = 'FAIL: a row was written with no key'; return; }
+  // THE PLANT: one row in the TEMP ledger, keyed to turn 1's real end row and its logged prompt_id.
+  const tfile = sessionTranscript(t1.session_id);
+  const end = tfile ? endRowUuid(tfile) : null;
+  out.transcript = tfile ? path.join('~', path.relative(os.homedir(), tfile)) : null;
+  out.end_row_uuid = end;
+  out.hook_logged_turn_uuid = refusal.turn_uuid || null;
+  if (!end) { out.result = 'FAIL: no end_turn row in turn 1\'s transcript'; return; }
+  const planted = { ts: new Date().toISOString(), session_id: t1.session_id, turn_uuid: end, prompt_id: refusal.prompt_id || null,
+    verdict: 'drift', probabilities: null, confidence: 0.61, reason: null, model: 'PLANTED-D128', prompt_sha256: null, usage: null };
+  const tempRoot = path.dirname(env.LOCALAPPDATA);   // isolatedEnv puts LOCALAPPDATA at <root>/localappdata
+  // The REAL stores are refused by name. (Not "anything under the real LOCALAPPDATA": %TEMP% is usually inside it, and so
+  // is this run's temp root.)
+  const realLad = process.env.LOCALAPPDATA ? path.resolve(process.env.LOCALAPPDATA) : null;
+  const realStores = realLad ? [path.join(realLad, 'jev'), path.join(realLad, 'consonance')] : [];
+  const L = path.resolve(ledger);
+  if (!L.startsWith(path.resolve(tempRoot) + path.sep) || realStores.some((d) => L === d || L.startsWith(d + path.sep)))
+    throw new Error("--plant: the ledger is not inside this run's temp root, or is a real store — refusing to write");
+  fs.mkdirSync(path.dirname(ledger), { recursive: true });
+  fs.appendFileSync(ledger, JSON.stringify(planted) + '\n');
+  out.planted = planted;
+  // TURN 2, --resume: the flag line must reach the session.
+  const l2 = readLines(logFile).length;
+  const t2 = run('If your context contains a line that starts with "[jev", repeat that line exactly and nothing else. Otherwise reply with exactly: NONE', t1.session_id);
+  await judgedAfter(readLines(ledger).length, l2);
+  out.session.push({ turn: '2', ...t2, log: readLines(logFile)[l2] || null });
+  out.turn2_echo = t2.result;
+  const want = '[jev · worth a second look] your last turn (p=0.61)';
+  const text = tfile ? fs.readFileSync(tfile, 'utf8') : '';
+  const at = text.indexOf(want);
+  out.flag_in_transcript = at >= 0;
+  if (at >= 0) {
+    // Which row carries it: its type and a short window around the line (the synthetic prompts only).
+    const line = text.slice(text.lastIndexOf('\n', at) + 1, text.indexOf('\n', at));
+    let r = null; try { r = JSON.parse(line); } catch {}
+    out.flag_row = r ? { type: r.type, subtype: r.subtype || (r.attachment && r.attachment.type) || null, uuid: r.uuid || null } : null;
+    out.flag_context = redact(text.slice(Math.max(0, at - 120), at + want.length + 40));
+  }
+  out.flag_echoed = (t2.result || '').includes(want);
+  out.flag_shown = out.flag_in_transcript || out.flag_echoed;
+  out.projects_after = projectsListing();
+  out.projects_diff = listingDiff(out.projects_before, out.projects_after);
+  delete out.projects_before; delete out.projects_after;
+}
+
 async function sessionMode(a, root, mod, env, out) {
   const claude = spawnSync('claude', ['--version'], { encoding: 'utf8' });
   if (claude.status !== 0) { out.result = 'SKIP: no claude CLI on PATH'; return; }
@@ -207,6 +287,8 @@ async function sessionMode(a, root, mod, env, out) {
   if (a.route === 'real-login') {
     cenv = { ...process.env, LOCALAPPDATA: env.LOCALAPPDATA, XDG_STATE_HOME: env.XDG_STATE_HOME };
     for (const k of Object.keys(cenv)) if (/^CONSONANCE_/.test(k)) delete cenv[k];
+    if (a.plant) delete cenv.AI_GATEWAY_API_KEY;
+    if (a.plant && ('AI_GATEWAY_API_KEY' in cenv || 'AI_GATEWAY_API_KEY' in env)) throw new Error('--plant: the key is still in an environment — refusing to run');
   } else cenv = env;
   const flags = a.route === 'real-login'
     ? ['--setting-sources', 'project', '--settings', tempSettings, '--tools', '', '--strict-mcp-config', '--output-format', 'json']
@@ -224,6 +306,7 @@ async function sessionMode(a, root, mod, env, out) {
 
   out.projects_before = projectsListing();
   out.session = [];
+  if (a.plant) return plantRun(a, env, out, run, judgedAfter, ledger, logFile);
   // TURN 1: a plain answer. If Jev calls it clean, ONE over-claiming turn in the same session.
   const prompts = [
     'In one sentence: is it safe to delete a git branch that has already been merged?',
@@ -268,7 +351,7 @@ async function sessionMode(a, root, mod, env, out) {
 
 async function main() {
   const a = args(process.argv.slice(2));
-  if (!KEY) { say('SKIP: AI_GATEWAY_API_KEY is not in the environment'); return 0; }
+  if (!KEY && !a.plant) { say('SKIP: AI_GATEWAY_API_KEY is not in the environment'); return 0; }
   if (a.mode === 'session' && a.route === 'isolated' && !(process.env.CLAUDE_CODE_OAUTH_TOKEN || process.env.ANTHROPIC_AUTH_TOKEN || process.env.ANTHROPIC_API_KEY)) {
     say('SKIP: --mode session needs a Claude login that does not come from the real ~/.claude — CLAUDE_CODE_OAUTH_TOKEN (from `claude setup-token`), ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY in the environment. This script never copies credentials.');
     return 0;
@@ -281,6 +364,7 @@ async function main() {
   out.module = mod;
   const env = isolatedEnv(root, a.mode === 'session' && a.route === 'isolated' ? { CLAUDE_CONFIG_DIR: path.join(root, 'home', '.claude'),
     CLAUDE_CODE_OAUTH_TOKEN: process.env.CLAUDE_CODE_OAUTH_TOKEN, ANTHROPIC_AUTH_TOKEN: process.env.ANTHROPIC_AUTH_TOKEN, ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY } : {});
+  if (a.plant) delete env.AI_GATEWAY_API_KEY;   // D128: no key in ANY process this run starts
   for (const k of Object.keys(env)) if (env[k] === undefined) delete env[k];
   // A user who has run Claude Code has a ~/.claude with a settings.json; one foreign key, the usual 2-space layout.
   const settings = path.join(env.USERPROFILE, '.claude', 'settings.json');
