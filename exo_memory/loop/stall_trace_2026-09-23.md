@@ -87,3 +87,16 @@ could be done (~10 min), and never waits on a ring for an addendum. **Check:** t
   bound, or a QUEUED row appears.
 - **Collator discipline, already in force:** a ring whose NEXT depends on the chair gets its `[Received]` row checked
   within ~10 min, not assumed. It was not checked here, which is my WRONG.
+
+### CORRECTION, 2026-09-25 00:0x — the section above is WRONG in its first line (A, D137, `handback/p-d137-stall-A_2026-09-24.md` §0)
+~~The librarian's `call_chair` … returned "delivered to Main (rendered in its pane)" at ~02:15Z~~ **(struck: hand-made, never
+checked; "~20:15" was a reconstruction)**. From the two transcripts: the D135 collation ring was sent at 02:04:39.978Z and
+received 0.22 s later. **At 02:04:45Z the librarian asked the keeper the §9 question (AskUserQuestion) and its turn BLOCKED
+there until his answer returned at 05:32:16Z. The §9 ring was MADE at 05:32:48Z** and received at once. **No line in
+main.rs held anything; there was no delivery stall.**
+- **What the stall really was:** a keeper question waiting inside a seat's pane, with nothing in the room saying so. The one
+  signal was `keep-warm MISSED -> 0c0c0c0b … a turn runs` (03:04:51Z). It had the seat and the time, but not the reason.
+- **The fix, re-aimed** (A §3): when a seat's last transcript row is an AskUserQuestion tool_use with no result, the board
+  and the pulse say **"<seat> waiting on YOUR answer since <t>"**, not "a turn runs".
+- **WRONG (librarian):** I asserted a delivery defect from a reconstruction, and dispatched A and C on it. The discipline
+  that would have caught it is the one this file keeps naming: read the transcript before claiming the mechanism.
