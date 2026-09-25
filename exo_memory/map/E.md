@@ -1715,3 +1715,8 @@ NEXT: librarian call_librarian with the hand-back pointer when the render and it
 
 **Carry:** re-run a figure's second window before writing "both give"; I wrote 30 for a window that gives 29.
 NEXT: librarian call_librarian with the hand-back pointer when the token unit is written — plan default after it: the librarian collates S1+S2 when C, E and B have rung, unless the output says otherwise
+
+## 2026-09-25 ~00:0x (D) · D137: the Jev R2 repaired-prompt re-run STOPPED, because the 56-unit set is not on D → hand-back `exo_memory/handback/p-d137-jevrerun-E_2026-09-24.md`
+`C:\Consonance\sealed\jev_unitset_2026-09-23\key.json` (`3b390bb2…`) and the reader packet exist only on L, where L111 built them. On D, both give "No such file", and a search of C:\Consonance, the home folders and the stick drives finds only the in-repo registration and draw.js. It was not rebuilt, because a D draw would be different units. 0 gateway calls. A dated stop addendum is in `jev_r2r3_score_2026-09-23.md`. It runs on L: verify the key, re-render each unit's prompt with the current builder, ≤56 Jev calls, and compare old → new with both prompt shas.
+**Carry:** a packet that says "check whether it exists on D" is asking the first question, not the last. Answer it before anything else.
+NEXT: librarian call_librarian with the hand-back pointer when the re-run is compared and written (or stopped because the set isn't on D) — plan default after it: the librarian collates D137 when A, C and E have rung, unless the output says otherwise

@@ -828,7 +828,8 @@ function queuedScan(store, now, opts = {}) {
   catch (_) { /* seats print by id instead of letter — never a reason to go quiet */ }
   const rows = [];
   for (const raw of t.lines) { const p = parseBoardLine(raw); if (p) for (const e of p.rows) rows.push(e); }
-  return { list: queuedWaiting(rows, now, { letters, launchedAt: launchedAt(path.dirname(board)) }), why: null };
+  return { list: queuedWaiting(rows, now, { letters, launchedAt: launchedAt(path.dirname(board)) }),
+    unreceived: unreceived(rows, now), why: null };                   // clause 5 reads the same rows (D137)
 }
 
 const hhmm = (ms) => { const d = new Date(ms); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
@@ -836,6 +837,77 @@ function queuedPart(list, now) {
   if (!list || !list.length) return null;
   return 'QUEUED ' + list.map(s => s.seat + ' ' + Math.floor(s.age / 60000) + 'm'
     + (s.waiting > 1 ? ', ' + s.waiting + ' waiting' : '') + ' (receiver busy since ' + hhmm(s.since) + ')').join(', ');
+}
+
+// ── CLAUSE 5: UNRECEIVED — a ring the app wrote but never saw rendered, and no receipt followed (D137) ──────────────
+//
+// THE SEND RECORD IS THE APP'S AUDIT ROW. There is no separate "sent" row: librarian_call_exec and
+// pane_call_librarian_exec (main.rs:11473, :11530) write `call_chair -> Main [<receipt>]: "<preview>"` /
+// `call_librarian <L> -> LIB [<receipt>]: "<preview>"` in the SAME call that answers the sender, after await_render
+// has looked for the text in the receiver's capture. So the row's ts is the send time, and its receipt says what
+// the app saw:
+//   · [Received]    — the text was drawn in the receiver's pane. The sender was told "delivered". TRUSTED here, not
+//     re-checked: measured on D's board 2026-09-17→24, 433 of 436 such rings have the receiver's transcript row
+//     (lag −512 ms..+1,444 ms), and the 3 without one were each acted on by the receiver within seconds — the
+//     tailer dropped the row, not the ring. Re-checking would print a false UNRECEIVED about every other day.
+//   · [Unconfirmed] — written, no render inside the budget; the sender was told "UNCONFIRMED". THIS is the ring
+//     that can be lost silently, so it is the one read here.
+// THE RECEIPT THAT CAN STILL ARRIVE is the receiver's own transcript row: role `user`, pane = MAIN_SID (call_chair)
+// or LIBRARIAN_SID (call_librarian), text carrying the system-written sender tag — `[librarian:LIB] ` or
+// `[pane:<L>] ` — followed by the ring's text. PAIRING: same receiver, and the row's whitespace-collapsed text
+// contains the tag plus the first 60 characters of the preview (the audit's own 110-char cut, its "…" dropped).
+// TWO RINGS ARE TOLD APART by order: each receiver row pays for one ring only, the earliest unpaid one it matches,
+// and only a row no earlier than 5 s before the send counts (the transcript row can precede the audit row: −512 ms).
+// NO OVERLAP WITH CLAUSE 4 by construction: a ring that queues returns at gate_or_queue (main.rs:11490, :11556)
+// BEFORE the audit row is written, so a queued ring has QUEUED/DELIVERED rows and never a call_* row.
+// THE CASE THAT COMMISSIONED THIS was not this fault. The stall_trace's "delivered ~20:15, received 23:32:48" was a
+// ring CALLED at 05:32:48.184Z (the librarian's transcript) and rendered in 0.36 s; the 3 h 27 m was an
+// AskUserQuestion waiting on the keeper (02:04:45Z → 05:32:16Z). The test fixes it as SILENT.
+const UNRECEIVED_MS = 10 * 60 * 1000;
+const UNRECEIVED_LOOKBACK_MS = 24 * 60 * 60 * 1000;   // an older unpaid ring is history, not a live fault
+const RING_ROW_RE = /^(?:call_chair -> Main|call_librarian ([A-Z][A-Z0-9]*) -> LIB) \[(\w+)\]: "([\s\S]*)"$/;
+const squash = (s) => String(s == null ? '' : s).replace(/\s+/g, ' ');
+
+/** A call_chair / call_librarian audit row, split; or null. */
+function ringRow(text) {
+  const m = RING_ROW_RE.exec(String(text || ''));
+  if (!m) return null;
+  const toMain = !m[1];
+  return {
+    from: toMain ? 'librarian' : m[1], to: toMain ? 'chair' : 'librarian',
+    receiver: toMain ? MAIN_SID : LIBRARIAN_SID, receipt: m[2],
+    key: squash((toMain ? '[librarian:LIB] ' : '[pane:' + m[1] + '] ') + squash(m[3].replace(/…$/, '')).slice(0, 60)),
+  };
+}
+
+/**
+ * Rings written [Unconfirmed] with no receiver row after UNRECEIVED_MS. Pure: rows in, list out, oldest first.
+ * @returns {{ from: string, to: string, since: number, age: number, receipt: string }[]}
+ */
+function unreceived(rows, now) {
+  const sorted = rows.filter(e => e && e.ts).sort((a, b) => a.ts - b.ts);
+  const rings = [];
+  for (const e of sorted) {
+    if (e.pane !== 'chair' || e.role !== 'committee') continue;
+    const r = ringRow(e.text);
+    if (r && r.receipt !== 'Received') rings.push({ ...r, since: e.ts, paid: false });
+  }
+  if (!rings.length) return [];
+  for (const e of sorted) {
+    if (e.role !== 'user' || (e.pane !== MAIN_SID && e.pane !== LIBRARIAN_SID)) continue;
+    const text = squash(e.text);
+    const r = rings.find(x => !x.paid && x.receiver === e.pane && e.ts >= x.since - 5000 && text.includes(x.key));
+    if (r) r.paid = true;
+  }
+  return rings
+    .filter(r => !r.paid && now - r.since > UNRECEIVED_MS && now - r.since <= UNRECEIVED_LOOKBACK_MS)
+    .map(r => ({ from: r.from, to: r.to, since: r.since, age: now - r.since, receipt: r.receipt }));
+}
+
+function unreceivedPart(list) {
+  if (!list || !list.length) return null;
+  return list.map(u => 'UNRECEIVED ' + u.from + '→' + u.to + ' ' + Math.floor(u.age / 60000) + 'm (sent ' + hhmm(u.since)
+    + ', written "' + u.receipt + '", no render and no receipt since)').join(', ');
 }
 
 /**
@@ -1060,7 +1132,8 @@ function line(opts = {}) {
     queued = opts.queued !== undefined ? opts.queued
       : queuedScan(path.dirname(opts.ledger || LEDGER || '.'), now, { board: opts.board, blindState: opts.blindState });
   } catch (e) { queued = { list: [], why: (e && e.message) || String(e) }; }
-  if (!head && !claim && !queued.list.length && !queued.why) {
+  const unrec = queued.unreceived || [];
+  if (!head && !claim && !queued.list.length && !queued.why && !unrec.length) {
     const any = led.rows.some(r => r && r.stage === 'chain');
     return {
       text: null,
@@ -1165,6 +1238,9 @@ function line(opts = {}) {
   // any holder, and it is the one fault the sender cannot see after its first "queued" reply.
   const qp = queuedPart(queued.list, now);
   if (qp) parts.push(qp);
+  // CLAUSE 5 rides with clause 4: a ring written but never seen rendered is the same class of fault, one step later.
+  const up = unreceivedPart(unrec);
+  if (up) parts.push(up);
   if (queued.why) parts.push('queue UNKNOWN — ' + queued.why);
   if (col && col.refusedUnresolved) {
     parts.push(col.refusedUnresolved + ' refusal(s) UNRESOLVED to a letter');
@@ -1266,6 +1342,7 @@ if (require.main === module) process.exit(main(process.argv.slice(2)));
 module.exports = {
   line, openLaps, staleLaps, STALE_MS, chainLaps, unwitnessed, readLedger, dirtyCount, tree, ago, main, collation, toLetter, tail, replay,
   queueRow, queuedWaiting, queuedScan, QUEUED_WORKING_MS, QUEUED_BOUNDED_MS,
+  ringRow, unreceived, UNRECEIVED_MS, UNRECEIVED_LOOKBACK_MS,
   LEDGER, REPO, BOARD, LETTERS, WORK_ATTESTING, WINDOW, LIST_CAP, BOARD_TAIL_BYTES, DISPATCH_RE, REFUSED_RE,
   HANDBACK_DIR, parseBoardLine,
 };

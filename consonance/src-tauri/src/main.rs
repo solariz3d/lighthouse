@@ -11499,15 +11499,23 @@ fn librarian_call_exec(app: &AppHandle, text: &str) -> String {
     match delivered {
         Ok(_) => {
             chair_audit(app, format!("call_chair -> Main [{receipt:?}]: \"{preview}\""));
-            match receipt {
-                Receipt::Received => "delivered to Main (rendered in its pane — not proof it was read)".to_string(),
-                _ => "written to Main — UNCONFIRMED (no render yet; verify before treating as delivered)".to_string(),
-            }
+            ring_reply("Main", receipt)
         }
         Err(e) => {
             chair_audit(app, format!("call_chair -> Main FAILED: {e}"));
             format!("delivery failed: {e}")
         }
+    }
+}
+
+/// D137: what a ring's SENDER is told, for both rings (`call_chair`, `call_librarian`). "delivered" comes from
+/// `Receipt::Received` and nothing else — the text was found rendered in the receiver's capture after the write — so a
+/// write that merely succeeded can never be reported to the sender as a delivery. One function so the rule is pinned
+/// once (`ring_reply_tests`); the words are unchanged from the two inline copies it replaced.
+fn ring_reply(dest: &str, receipt: Receipt) -> String {
+    match receipt {
+        Receipt::Received => format!("delivered to {dest} (rendered in its pane — not proof it was read)"),
+        _ => format!("written to {dest} — UNCONFIRMED (no render yet; verify before treating as delivered)"),
     }
 }
 
@@ -11567,10 +11575,7 @@ fn pane_call_librarian_exec(app: &AppHandle, from: Option<&str>, text: &str) -> 
             // `chain-status.js` reads this exact shape (`call_librarian <letter> -> LIB [Received]`)
             // as the letter's hand-back. Change the shape and change the reader in the same commit.
             chair_audit(app, format!("call_librarian {letter} -> LIB [{receipt:?}]: \"{preview}\""));
-            match receipt {
-                Receipt::Received => "delivered to the librarian (rendered in its pane — not proof it was read)".to_string(),
-                _ => "written to the librarian — UNCONFIRMED (no render yet; verify before treating as delivered)".to_string(),
-            }
+            ring_reply("the librarian", receipt)
         }
         Err(e) => {
             chair_audit(app, format!("call_librarian {letter} -> LIB FAILED: {e}"));
@@ -20493,5 +20498,61 @@ mod l086_marking_tests {
     fn intake_the_frame_is_small_against_the_shell_ceiling() {
         let cost = CLAIMS_FRAME_OPEN.len() + CLAIMS_FRAME_CLOSE.len();
         assert!(cost > 0 && cost < 1_000, "the frame costs {cost} bytes of a {SHELL_SOFT_CEILING}-byte shell");
+    }
+}
+
+/// D137 (pane A, 2026-09-25) — THE RING'S REPLY, pinned. The keeper's "nothing is working" at 23:55 was traced to a
+/// `call_chair` the stall trace read as "delivered at ~20:15, received at 23:32". The transcripts say otherwise: the
+/// librarian's `AskUserQuestion` was open from 02:04:45Z to 05:32:16Z, the ring was MADE at 05:32:48.184Z and rendered
+/// in Main at .407Z (`exo_memory/handback/p-d137-stall-A_2026-09-24.md`). No line in the door path held it. What the
+/// case did show is that the sender's word "delivered" was chosen inline, twice, with nothing pinning it to a render.
+/// These tests pin it: "delivered" only ever comes from `Receipt::Received`, and every ring goes through the gate (a
+/// busy receiver QUEUES, with a board row) before anything is written.
+#[cfg(test)]
+mod ring_reply_tests {
+    use super::*;
+
+    fn body_of(src: &str, sig: &str) -> String {
+        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+        after[..after.find("\n}\n").expect("no end of function")].to_string()
+    }
+
+    #[test]
+    fn a_rendered_ring_says_delivered_in_the_words_senders_already_read() {
+        assert_eq!(ring_reply("Main", Receipt::Received), "delivered to Main (rendered in its pane — not proof it was read)");
+        assert_eq!(
+            ring_reply("the librarian", Receipt::Received),
+            "delivered to the librarian (rendered in its pane — not proof it was read)"
+        );
+    }
+
+    #[test]
+    fn an_unrendered_ring_never_says_delivered() {
+        for r in [Receipt::Unconfirmed, Receipt::NotAttempted] {
+            for dest in ["Main", "the librarian"] {
+                let s = ring_reply(dest, r);
+                assert!(!s.contains("delivered to"), "{r:?} to {dest} reads as delivered: {s}");
+                assert!(s.contains("UNCONFIRMED"), "{r:?} to {dest} must say UNCONFIRMED: {s}");
+            }
+        }
+    }
+
+    /// Both ring executors: the gate comes before the write (a busy receiver gets QUEUED and a board row, never a
+    /// raw write), the reply is `ring_reply` over the receipt the render check returned, and no other "delivered to"
+    /// string is built in either body.
+    #[test]
+    fn both_rings_gate_first_and_reply_only_through_ring_reply() {
+        let src = fs::read_to_string("src/main.rs").expect("read own source");
+        for sig in [concat!("fn librarian_call", "_exec("), concat!("fn pane_call_librarian", "_exec(")] {
+            let body = body_of(&src, sig);
+            let gate = body.find(concat!("gate_or", "_queue(")).unwrap_or_else(|| panic!("{sig}: no gate"));
+            let write = body.find(concat!("inject_to", "_pane(")).unwrap_or_else(|| panic!("{sig}: no write"));
+            let render = body.find(concat!("await", "_render(")).unwrap_or_else(|| panic!("{sig}: no render check"));
+            let reply = body.find(concat!("ring", "_reply(")).unwrap_or_else(|| panic!("{sig}: reply not built by ring_reply"));
+            assert!(gate < write && write < render && render < reply, "{sig}: gate -> write -> render check -> reply is out of order");
+            assert!(!body.contains(concat!("\"delivered", " to")), "{sig}: builds its own \"delivered to\" string");
+            let call = &body[reply..body[reply..].find(')').map(|i| reply + i + 1).unwrap()];
+            assert!(call.ends_with(", receipt)"), "{sig}: the reply is not built from the render check's receipt: {call}");
+        }
     }
 }

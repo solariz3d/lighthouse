@@ -1447,3 +1447,116 @@ test('D132 — a behind machine with no `at` still says behind, and invents no a
   assert.match(t, /D behind — last pushed f70d50a[ ·]/, t);
   assert.doesNotMatch(t, /f70d50a \d/, t);
 });
+
+// ── D137 · UNRECEIVED — a ring the app wrote but never saw rendered, and no receipt followed ─────────────────────────
+// The send record IS the app's audit row: `call_chair -> Main [<receipt>]` / `call_librarian <L> -> LIB [<receipt>]`,
+// written by librarian_call_exec / pane_call_librarian_exec (main.rs:11501, :11569) in the SAME call that answers the
+// sender, after await_render. `[Received]` means the app saw the text drawn in the receiver's pane; `[Unconfirmed]` means
+// it did not, inside the budget, and the sender was told "UNCONFIRMED". The receipt that can still arrive later is the
+// receiver's own transcript row on the board: role `user`, pane = the receiver's session id, text carrying the
+// system-written sender tag (`[librarian:LIB] ` / `[pane:<L>] `) followed by the ring's text.
+const MAIN_T = '0c0c0c0a-0000-4000-8000-000000000a01';   // main.rs MAIN_SID
+const SEND = (ts, receipt, body, letter) => ({ pane: 'chair', role: 'committee', ts,
+  text: (letter ? 'call_librarian ' + letter + ' -> LIB' : 'call_chair -> Main') + ' [' + receipt + ']: "'
+    + (body.length > 110 ? body.slice(0, 110) + '…' : body) + '"' });
+const RECV = (ts, body, letter) => ({ pane: letter ? LIB : MAIN_T, role: 'user', ts, ts_source: 'transcript',
+  text: '<pasted_content id="f5af">\n' + (letter ? '[pane:' + letter + '] ' : '[librarian:LIB] ') + body });
+const RING2 = 'Librarian — batch 9 COLLATED; the master is exo_memory/loop/plan_x.md, and the next lap is dispatched to A and E now';
+
+test('UNRECEIVED — a ring written UNCONFIRMED and received 2 min later is silent', () => {
+  const t = qline([SEND(T0, 'Unconfirmed', RING2), RECV(T0 + 2 * MIN, RING2)], T0 + 15 * MIN);
+  assert.doesNotMatch(t, /UNRECEIVED/, t);
+});
+
+test('UNRECEIVED — a ring written UNCONFIRMED and never received is flagged past 10 min, naming both ends and the send time', () => {
+  const t = qline([SEND(T0, 'Unconfirmed', RING2)], T0 + 11 * MIN);
+  assert.match(t, /UNRECEIVED librarian→chair 11m \(sent [0-9]{2}:[0-9]{2}, written "Unconfirmed", no render and no receipt since\)/, t);
+});
+
+test('UNRECEIVED — inside the 10-minute bound it is not flagged yet', () => {
+  const t = qline([SEND(T0, 'Unconfirmed', RING2)], T0 + 9 * MIN);
+  assert.doesNotMatch(t, /UNRECEIVED/, t);
+});
+
+test('UNRECEIVED — a ring to a busy seat is QUEUED only: the app writes no call_* row for a queued ring (main.rs:11490)', () => {
+  const t = qline([QROW(T0, MAIN_T, 'stamp=working', RING2.slice(0, 110) + '…')], T0 + 12 * MIN);
+  assert.match(t, /QUEUED chair 12m/, t);
+  assert.doesNotMatch(t, /UNRECEIVED/, t);
+});
+
+test('UNRECEIVED — a [Received] ring is trusted on the app\'s render receipt, even with no transcript row on the board', () => {
+  // Measured 2026-09-24 on D's board since 09-17: 433 of 436 [Received] rings have a receiver row (lag -512 ms..+1,444 ms);
+  // the 3 without one were all acted on by the receiver within seconds. The row, not the ring, was missing. Checking
+  // [Received] against the receiver row would print a false UNRECEIVED about every other day.
+  const t = qline([SEND(T0, 'Received', RING2)], T0 + 30 * MIN);
+  assert.doesNotMatch(t, /UNRECEIVED/, t);
+});
+
+test('UNRECEIVED — a pane\'s call_librarian written UNCONFIRMED and never received names the letter and the librarian', () => {
+  const t = qline([SEND(T0, 'Unconfirmed', RING2, 'C')], T0 + 13 * MIN);
+  assert.match(t, /UNRECEIVED C→librarian 13m/, t);
+});
+
+test('UNRECEIVED — two identical rings and one receipt: one is still flagged (each receipt is consumed once, in order)', () => {
+  const t = qline([SEND(T0, 'Unconfirmed', RING2), SEND(T0 + MIN, 'Unconfirmed', RING2), RECV(T0 + 2 * MIN, RING2)], T0 + 20 * MIN);
+  assert.match(t, /UNRECEIVED librarian→chair 19m/, t);
+});
+
+test('UNRECEIVED — a receipt for a DIFFERENT ring, or from a different sender tag, does not clear it', () => {
+  const t = qline([SEND(T0, 'Unconfirmed', RING2), RECV(T0 + MIN, 'some other ring entirely, not this one at all, different text'),
+    RECV(T0 + MIN, RING2, 'A')], T0 + 12 * MIN);
+  assert.match(t, /UNRECEIVED librarian→chair 12m/, t);
+});
+
+test('UNRECEIVED — older than the 24 h look-back it stops printing (an old ring is history, not a live fault)', () => {
+  const t = qline([SEND(T0, 'Unconfirmed', RING2)], T0 + 25 * 60 * MIN);
+  assert.doesNotMatch(t, /UNRECEIVED/, t);
+});
+
+// THE REAL CASE, from D's board rows. The stall_trace (2026-09-24 23:3x) read it as "call_chair returned delivered at
+// ~20:15 local, [Received] at 23:32:48". The board and the librarian's own transcript say otherwise: AskUserQuestion was
+// open 02:04:45Z → 05:32:16Z (3 h 27 m waiting on the keeper); call_chair was CALLED at 05:32:48.184Z and returned
+// "delivered" at 05:32:48.551Z; Main's transcript row is 05:32:48.407Z, the audit row 05:32:48.546Z. The ring rendered
+// in 0.36 s. So this check must be SILENT on it — a check that flagged it would be flagging a fault that did not occur.
+// Timestamps, panes, roles and receipt are the board's; the two ring bodies are replaced by neutral stand-ins, because
+// the real text carries run-2 decisions this lap may not hold.
+test('UNRECEIVED — the real 20:15→23:32 case, as the board recorded it, is SILENT: the ring was sent at 23:32:48 and rendered in 0.36 s', () => {
+  const EARLIER = 'Librarian — D135 (specialization S1+S2) COLLATED [stand-in body]';
+  const REAL = 'Librarian — the keeper answered [stand-in body; the real text is the keeper\'s answers]';
+  const rows = [
+    RECV(Date.parse('2026-09-25T02:04:40.196Z'), EARLIER), SEND(Date.parse('2026-09-25T02:04:40.348Z'), 'Received', EARLIER),
+    RECV(Date.parse('2026-09-25T05:32:48.407Z'), REAL), SEND(Date.parse('2026-09-25T05:32:48.546Z'), 'Received', REAL),
+  ];
+  const t = qline(rows, Date.parse('2026-09-25T05:55:41.951Z'));
+  assert.doesNotMatch(t, /UNRECEIVED/, t);
+});
+
+// THE ONE REAL [Unconfirmed] ring on D's board (2026-08-25T17:42:21.461Z, call_chair -> Main), with no receiver row
+// after it anywhere on the board. It is the only recorded instance of the fault this clause exists for. Body replaced.
+test('UNRECEIVED — the one real [Unconfirmed] ring on the board (2026-08-25 17:42:21Z), never received, is flagged', () => {
+  const ts = Date.parse('2026-08-25T17:42:21.461Z');
+  const t = qline([SEND(ts, 'Unconfirmed', 'THE THIRD PLACE OPENED (DELTA) [stand-in body]')], ts + 11 * MIN);
+  assert.match(t, /UNRECEIVED librarian→chair 11m/, t);
+});
+
+// Added after mutants U5, U6 and U9 SURVIVED the first eleven: the pairing's tag and receiver were never isolated (the
+// "different sender" test changed both at once), and the no-lap exit was never reached with only clause 5 to say.
+test('UNRECEIVED — the ring\'s text in the RIGHT pane WITHOUT the system sender tag is not a receipt (mutant U5)', () => {
+  // e.g. the chair quoting the ring back in its own prompt: same pane, same words, no `[librarian:LIB] ` tag.
+  const quoted = { pane: MAIN_T, role: 'user', ts: T0 + MIN, ts_source: 'transcript', text: 'as the librarian said: ' + RING2 };
+  const t = qline([SEND(T0, 'Unconfirmed', RING2), quoted], T0 + 12 * MIN);
+  assert.match(t, /UNRECEIVED librarian→chair 12m/, t);
+});
+
+test('UNRECEIVED — the tagged text arriving in the WRONG pane is not a receipt (mutant U6)', () => {
+  // the librarian's own pane carrying `[librarian:LIB] <ring>` (e.g. it pasted its ring back to itself) is not Main.
+  const wrongPane = { pane: LIB, role: 'user', ts: T0 + MIN, ts_source: 'transcript', text: '[librarian:LIB] ' + RING2 };
+  const t = qline([SEND(T0, 'Unconfirmed', RING2), wrongPane], T0 + 12 * MIN);
+  assert.match(t, /UNRECEIVED librarian→chair 12m/, t);
+});
+
+test('UNRECEIVED — with NO open lap it still prints: an unreceived ring is a fault whether or not a lap is open (mutant U9)', () => {
+  assert.strictEqual(qline([], T0 + 12 * MIN, { lap: null }), '', 'the control must be the no-text state');
+  const t = qline([SEND(T0, 'Unconfirmed', RING2)], T0 + 12 * MIN, { lap: null });
+  assert.match(t, /UNRECEIVED librarian→chair 12m/, 'silent with no lap open: ' + t);
+});
