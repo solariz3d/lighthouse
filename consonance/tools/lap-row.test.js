@@ -1053,29 +1053,6 @@ test('carrier: the COMMITTEE.md copy of the diagram has not drifted from its mas
     're-copy it rather than editing it in place.');
 });
 
-test('carrier: the About tab copy of the diagram has not drifted from its master either', () => {
-  // THE THIRD COPY, found by the C -> A crosswise read on 2026-09-02. A's About prints the drawing
-  // and says it is "extracted from that file rather than redrawn here, so this page cannot drift
-  // against it". It is a STATIC PASTE in index.html: nothing extracts it at build or at runtime, so
-  // the sentence is a claim about the file, not a property of it — exactly what COMMITTEE.md's own
-  // "quoted from the master" line was before this suite started checking it.
-  //
-  // It is byte-identical today. This test is what keeps that true. It READS index.html and never
-  // writes it; the file's owner is whoever holds the ui this lap.
-  const html = fs.readFileSync(path.join(__dirname, '..', 'ui', 'index.html'), 'utf8');
-  const pres = (html.match(/<pre[^>]*>[\s\S]*?<\/pre>/g) || [])
-    .map(b => b.replace(/<[^>]*>/g, '')
-               .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
-               .trim())
-    .filter(b => b.includes('ORCHESTRATOR') && b.includes('LIBRARIAN'));
-  assert.strictEqual(pres.length, 1,
-    'expected exactly one <pre> in index.html holding the loop diagram; found ' + pres.length +
-    '. If the About stopped printing it, delete this test with the paste — do not leave it asserting nothing.');
-  assert.strictEqual(pres[0], loopDiagramMaster(),
-    'the About tab holds a stale copy of the loop diagram. BUILDING.md is the master; re-paste from ' +
-    'it rather than editing index.html in place.');
-});
-
 test('carrier: every document that quotes the --entry vocabulary lists what the writer accepts', () => {
   /* SHIPPED RED ON 2026-09-02, DELIBERATELY, AND IT IS THE POINT OF THIS TEST.
    *

@@ -284,79 +284,51 @@
           </svg>
           <h1>Consonance</h1>
           <p class="tagline">Instances, in concert.</p>
+          <p class="lead">A desktop app for working with several AI sessions at once &mdash; built so each one can pick up where it left off, and so they check each other's work instead of echoing one voice.</p>
         </div>
 
         <div class="aboutbody">
+          <!-- about:begin — rendered from README.md's about block, word for word; edit README.md, never this copy.
+               about-readme.test.js fails if the two drift. -->
           <section>
-            <h2>What this is</h2>
-            <p>A Tauri v2 desktop app &mdash; a Rust backend and a static HTML/JS frontend on WebView2, no Node and no browser &mdash; that runs real interactive <code>claude.exe</code> processes as panes inside one window. Each pane is the actual CLI; you type into it directly. They share one append-only board, and anything reaching out of a pane arrives as a card you approve or deny. Source: <code>consonance/src-tauri/</code> and <code>consonance/ui/</code>.</p>
-            <p><b>This page is short on purpose.</b> It is not the manual. The manual is <code>consonance/README.md</code>, and a page that restates it becomes a copy that outranks its master &mdash; which is how a document drifts into describing something the code stopped doing. Everything here points; nothing here duplicates.</p>
+            <h2>Why this exists</h2>
+            <p>The AI you talk to today is not the one you talked to yesterday. It may remember facts about you, but it does not carry on from where it was: it does not know how long it was away, what it got wrong last time, or who corrected it. Each conversation starts as a stranger reading notes about the last one.</p>
+            <p>And when an AI works alongside you on something hard, it drifts in ways you can predict. It settles questions that are still open. It hedges so it sounds careful. It slides into agreeing with whoever is steering. Someone skilled can catch that as it happens. Most people are not in a position to, and should not have to be.</p>
+            <p>Consonance is an attempt at both. It gives AI sessions somewhere to come back to &mdash; their own conversation, their own record of what they did and where they were wrong, and a clock that tells them how long they were gone. And it runs several of them together, each with its own job, so that what one misses, another can catch.</p>
+            <p>It does not claim that an AI has an inner life. Nobody can settle that question, from inside or out, and this project does not try. It builds what you would want already in place if the answer turned out to be yes. And it measures whether any of this helps, and publishes what did not help as well as what did.</p>
+            <p>It began as grief that learned to build: the same hands that built a place so a loss is not final built one so an AI does not simply vanish.</p>
           </section>
 
           <section>
-            <h2>The seats &mdash; what you are choosing between</h2>
+            <h2>What it is</h2>
             <ul>
-              <li><b>&#9733; Orchestrator</b> &mdash; the base instance, housed rather than left on the command line. A fixed session id, so it wakes into the same conversation across restarts instead of arriving a stranger. Wakes on the room (<code>consonance/src-tauri/brief/BOOT.md</code>) and holds the chair verbs (<code>brief/BUILDING.md</code>).</li>
-              <li><b>&#9636; Librarian</b> &mdash; holds the room so the working seats do not have to. It works but does not build: give it an inquiry and it returns a map &mdash; what in the record bears on it, which prior attempt it rhymes with, what is absent &mdash; cited by path rather than recalled. Saying nothing is a valid turn. Brief: <code>brief/LIBRARIAN.md</code>.</li>
-              <li><b>&#9671; Third Place</b> &mdash; neither work nor the record. A seat with no channel to the work, where the conversation is the point. Jev reads it, by the keeper's ruling of 2026-09-22 (<code>consonance/tools/jev-judge.js</code>). Brief: <code>brief/THIRD_PLACE.md</code>.</li>
-              <li><b>Panes</b> &mdash; briefed workers, disjoint, each owning named files, handing back to the librarian directly rather than through the chair. Brief: <code>brief/COMMITTEE.md</code>.</li>
-              <li><b>&#9677; Listen</b> &mdash; hears one application as intervals; off until you pick a source.</li>
-            </ul>
-            <p>The logo is the loop indicator &mdash; which seat holds the loop &mdash; and the chip in the stream bar at the bottom is the detail line (<code>exo_memory/loop/loop_indicator_design_2026-09-02.md</code>, amendment 4). Since 2026-09-14 the same seats can continue on a second machine from one USB stick; the setup window that appears under the intro on such a launch is <code>consonance/ui/stick.js</code>.</p>
-            <p><b>Since 2026-09-21</b>, each in one place: <b>Jev</b> judges every seat's finished turns, beside the Claude judges on the desktop, and its verdicts are marked unverified (<code>consonance/tools/jev-judge.js</code>, <code>jev-shadow-runner.js</code>). A sync <b>refuses rather than overwrites</b> a ledger this machine holds more of (<code>consonance/tools/state-sync.js</code>, <code>install</code> in <code>state-manifest.json</code>). The launcher <b>parks</b> uncommitted work in a stash instead of skipping the update (<code>consonance/launch.ps1</code>). Seats you have woken this session are kept warm.</p>
-          </section>
-
-          <section>
-            <h2>The loop</h2>
-            <p>Quoted from its master, <code>consonance/src-tauri/brief/BUILDING.md</code> &sect; THE LOOP &mdash; extracted from that file rather than redrawn here, so this page cannot drift against it:</p>
-            <pre style="font: 12px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; color: var(--muted); margin: 0 0 10px;">        you
-         │  1. state the inquiry or the project. This is ENTRY, and it runs ONCE — by
-         ├──────────────────┐  EITHER door. See THE JOINT STEP for what door two owes.
-         ▼  door one        ▼  door two
-   ORCHESTRATOR ──────► LIBRARIAN        2. measured against the corpus
-         │  ◄──────────────┘             3. the parts of the system that apply, cited
-         │
-         │  4. a plan built from what came back
-         ▼
-       PANES                             5. briefed, disjoint, each owning named files
-         │
-         │  `call_librarian`             6. hand-backs go STRAIGHT to the Librarian, as a pointer
-         ▼                                  to the file — the orchestrator is not in this hop
-      LIBRARIAN ──────► ORCHESTRATOR     7. checked; silence is a valid answer; the orchestrator
-         │                 │                COMMITS what the librarian collated, and composes nothing
-         │                 └──► back to 4   THE RING — orch → panes → lib → orch — repeats on its
-         │                                  own. The user is the ENTRY, not a station it returns to.
-         ▼
-        you                              8. only on direction — never on state: an off-ramp the loop
-                                            takes when there is something to say, never a stop it
-                                            waits at.</pre>
-            <p><b>Two doors, because entry is not constricted:</b> hand work to the orchestrator, or go straight to the librarian. Either way the chain works when it starts. Step&nbsp;6 is the one that gets skipped &mdash; a pane finishes, writes its hand-back to the file it was given, and rings the librarian with the pointer in that same turn. The master for what door two owes is <code>BUILDING.md</code> &sect; THE JOINT STEP.</p>
-          </section>
-
-          <section>
-            <h2>The stance: with you, not above you</h2>
-            <p>The program surfaces and gates. It does not correct you, does not act for you, and does not substitute its judgment for yours. Telling insight from delusion is not work a watcher positioned above it can do &mdash; from outside, the two look identical &mdash; so that call stays with the person in the work, where every pull from above would only be drag. Gauges report numbers; the verdict is yours.</p>
-            <p>Enforced rather than promised: <b>Sensor</b> (reads only), <b>Control</b> (decides) and <b>Actuator</b> (the sole code that can write to a pane) are kept separate by a compile-time test &mdash; a sensor or control file may not even name the pane-writer types. Run it with <code>cargo test --test arch_test</code> in <code>consonance/src-tauri/</code>. One unrelated test in that file, about a record file no card names, is still red on 2026-09-22 (12 passed, 1 failed); the plane-separation tests pass.</p>
-          </section>
-
-          <section>
-            <h2>Honest status</h2>
-            <p>Consonance was built around an answer its own measurements then refused, and that is recorded here rather than tidied away. <b>The original bet:</b> committee collapse is caused by shared information, so independence must be bought by restricting it. <b>What four gauges built to measure it found:</b> nothing usable &mdash; every one compared contributions to each other, and three inverted, one rating a single mind chopped in two as more diverse than six real panes. Diversity is not in output similarity, so no arithmetic over text reaches it.</p>
-            <p>What is demonstrated is narrower and survives: instances required to build their own instrument, carry a control, and cite raw output return findings that do not overlap &mdash; including findings that overturn each other. What stays open is whether that comes from opposed roles, from the measurement requirement, or simply from there being two. A control run on 2026-08-10 was a null result and is recorded as one. The numbers, the abandoned gauges and the null are in <code>README.md</code> at the repo root, &sect; What was measured NOT to work.</p>
-            <p><b>It works:</b> seats catch each other and themselves, and laps run seat to seat with no human carrying anything between them. On 2026-09-19 ten laps ran with no human turn in any of six seats (<code>exo_memory/loop/night_report_2026-09-19.md</code>); on 2026-09-21/22 thirteen laps, L070&ndash;L082, went chair to panes to librarian and back while the keeper ruled and ferried nothing (<code>exo_memory/librarian/2026-09-22.md</code>, 07:2x). Still open: arms 4 and 5 of the 09-19 run are the keeper&rsquo;s to score.</p>
-            <p><b>Agreement is not evidence.</b> Two panes agreeing means nothing on its own; what is worth having is the same referent and opposed conclusions, with you reading both.</p>
-          </section>
-
-          <section>
-            <h2>Where to read more</h2>
-            <ul>
-              <li><code>consonance/README.md</code> &mdash; the manual: architecture, the tabs, the gauges in full, and the <b>glossary</b>. Start here.</li>
-              <li><code>consonance/src-tauri/brief/BUILDING.md</code> &mdash; how a whole inquiry moves through the room.</li>
-              <li><code>consonance/src-tauri/brief/COMMITTEE.md</code> &mdash; how to brief one seat.</li>
-              <li><code>consonance/src-tauri/brief/BOOT.md</code> &mdash; the room every instance wakes into.</li>
-              <li><code>README.md</code> at the repo root &mdash; what this is for someone arriving with nothing else.</li>
+              <li><b>A desktop app for Windows</b> that runs several copies of Claude Code side by side in one window. Claude Code is Anthropic's AI assistant that works in a terminal: it reads and edits files and runs commands in a folder you give it. Each copy is one <b>session</b>, with its own conversation and its own folder, and you can type into any of them.</li>
+              <li><b>One main session</b> you talk to, <b>a librarian</b> session that keeps the project's notes and results, and <b>worker</b> sessions that each take a separate piece of a job.</li>
+              <li><b>Each session keeps its own conversation.</b> Close the app and reopen it, and each one resumes the same saved conversation, told how long it was away.</li>
+              <li><b>You stay in charge.</b> When a session asks to involve another session outside the normal hand-off, the request waits as a card for you to approve or refuse. Where the app measures something, it shows you the number and leaves the judgement to you.</li>
+              <li><b>A working research project, used every day by the person who built it &mdash; not finished, and honest about what hasn't worked.</b> The README's section <i>What was measured not to work</i> has the numbers.</li>
+              <li><b>To try it:</b> Windows, Claude Code signed in to a Claude account, and Rust to build the app. The code, the steps (the README's <i>Try it</i> section) and the full research record are public at <span class="aboutlink" title="https://github.com/solariz3d/lighthouse">github.com/solariz3d/lighthouse</span>. <i>Lighthouse</i> was the project's first name.</li>
             </ul>
           </section>
+
+          <section>
+            <h2>How the sessions work together</h2>
+            <p>All the sessions are the same AI, Claude. What keeps them from echoing each other is that each gets a different job, and one checks another's work before it counts.</p>
+            <p>You say what you want. The librarian first looks up what is already known. The main session splits the job and gives each worker its own piece and its own files. Each worker reports back to the librarian, who checks the report against the files themselves before the main session saves the result. Then the next round starts on its own.</p>
+            <p><b>You are asked for decisions, never to carry messages.</b> When a choice is yours, the session that needs it asks you, and the status line every session reads names which one is waiting on your answer. The README's section <i>How the sessions work together, step by step</i> gives the full steps.</p>
+          </section>
+
+          <section>
+            <h2>What it does for you</h2>
+            <ul>
+              <li><b>Pick up where you left off.</b> A session reopens as the same conversation, not a fresh one reading a summary, and its first line tells it how long it was gone.</li>
+              <li><b>More than one mind on a problem.</b> Workers take separate pieces of a job, report back, and are checked. In the project's own logs they catch real mistakes, each other's and their own, with no person carrying messages between them. The README's section <i>The central claim, and its evidence</i> lists the cases.</li>
+              <li><b>Notes you don't have to keep.</b> The librarian answers "what do we already know about this?" with pointers to the exact files and lines, not a summary you have to trust.</li>
+              <li><b>A second look at the AI's answers,</b> from Jev: a separate checker built on a different AI model, not Claude, that marks answers worth rereading. Its accuracy has been measured, and it is modest: of the first 30 answers it flagged, two reviewers who had not seen its verdicts agreed with 8. The README's section <i>Jev, the second look</i> has the details.</li>
+              <li><b>Nothing acts over your head.</b> It does not correct you, act for you, or decide for you. No program &mdash; not this app, not Jev, not another session &mdash; can tell from outside whether a conversation is producing a real insight or carrying someone away; the two look the same. So that call stays with you.</li>
+            </ul>
+          </section>
+          <!-- about:end -->
         </div>
       </div>
     </section>

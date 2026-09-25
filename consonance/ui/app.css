@@ -590,6 +590,9 @@ input::placeholder { color: #55607a; }
   padding: 1px 6px; border-radius: 3px;
   font-family: Consolas, "Courier New", monospace; font-size: 12px;
 }
+/* D142: a README link, rendered as its words (the app has no opener — an href would navigate the window away); the
+   address is in its hover title, and the dotted line says there is one. */
+.aboutbody .aboutlink { text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
 dl.glossary { line-height: 1.55; margin: 0; }
 dl.glossary dt {
   color: var(--aqua); font-weight: 500;
