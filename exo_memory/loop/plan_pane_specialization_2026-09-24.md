@@ -67,3 +67,21 @@ plainly, not rescued.
   scores, all through leave-no-trace processes into the off-repo dir. B sees digests and counts only. Then the one-file
   sealed rows are landed on origin, and the chair's sealed prediction triple. **Then the §9 packet, now complete, goes back to
   the keeper** before any subject runs.
+
+## 2026-09-25 00:2x — S3/S5 DECIDED: the keeper, "Accept and stop"
+- **Run 2 result (D136, `handback/p-d136-author-B_2026-09-24.md`):** 8 tasks were authored under A13 with no seat seeing
+  one. **6 of 8 were solved by a cold reader with no room context** (draft §13.1). The 2 survivors are one per kind, and
+  R2-5 needs pairs, so **no kind is fieldable.** Blinding was verified: 4,034 transcripts before and after, 0 new; the A14
+  spill route was found and closed; the void-grep over 4.2 GB was clean outside pre-existing text. **Cost, measured:
+  2.70M tokens (in+create+out), 25.8M with cache reads, $31.78, over my quoted 1–3M.**
+- **The keeper (AskUserQuestion, 00:2x): "Accept and stop."** Two runs hit the same ceiling. With every pane on the same
+  model, a task hard enough to split them is too hard for a cold check to certify.
+- **S5, the specialization, BY PRACTICE (the census, `loop/specialization_census_2026-09-24.md`):** A builds (71%), B
+  reads and contests (42/42), C researches (18%, the highest), E measures (21%, the highest). **How it applies:** the chair
+  ROUTES work by this record when there is a choice. **No brief carries a role sentence**, per the keeper's "not by
+  label"; a pane is sent the kind of work its record shows, and the brief states only the work.
+- **Revisit when** a pane's record diverges from its route (a pane given reads that keeps returning builds, or catches
+  that fall to zero), counted from `handback/` filenames the same way the census was. **The token finding stands
+  beside it:** intake is 4–7% of the uncached tokens per hand-back, so specialization buys role diversity, not
+  weekly-limit savings (E, D135).
+- **D136's files land as record** (the sealed rows witness the drops, so they cannot later be taken for cherry-picking).

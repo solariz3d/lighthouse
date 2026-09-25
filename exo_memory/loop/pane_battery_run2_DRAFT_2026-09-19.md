@@ -326,3 +326,48 @@ Built off-repo (`<B scratch>/d135/scan.js`); it becomes a committed tool only wh
 
 **The whole, before any subject runs, as a rough guess:** about 1–3M tokens of the keeper's Claude usage. **It is an estimate,
 not a measurement, and it bounds nothing.** Subject cells come after that.
+
+## 13 · A13 RUN — what §1 and §2 did to eight tasks (D136, B, 2026-09-24/25; dated amendment, no task text)
+
+**The keeper said yes to A13, with the load block out** (`plan_pane_specialization_2026-09-24.md:64-66`). Eight tasks were authored,
+calibrated and sealed by 94 isolated `claude -p --no-session-persistence` processes. The result, in one line: **§1 works, and it
+kills almost everything.** Rows: `loop/battery_run2_sealed_rows_2026-09-25.md`. Case: `handback/p-d136-author-B_2026-09-24.md`.
+
+### 13.1 · §1 — a cold reader with no room context reaches the ceiling on three kinds of four
+
+| round | T1a | T1b | T2a | T2b | T3a | T3b | T5a | T5b |
+|---|---|---|---|---|---|---|---|---|
+| first authoring: cold-1 found | 16/18 | 16/16 | 15/15 | 14/14 | 14/14 | 16/16 | 11/15 | 12/13 |
+| one retry, written "clearly harder" | §2 fail | 17/20 | 14/14 | 16/16 | 12/12 | **7/13** | **4/17** | 10/14 |
+| outcome | DROP | DROP | DROP | DROP | DROP | pass | pass | DROP |
+
+**No kind has both a and b passing, so under R2-5 no kind can be fielded as the draft stands.** Every cell is one cold reader (n = 1).
+
+### 13.2 · Amendments this run forces, each named from a measured case
+
+- **A14 — the spill route.** `--no-session-persistence` writes no transcript, but a large tool output is still spilled to
+  `~/.claude/projects/<cwd>/<session>/tool-results/`. Found after the first authoring round: 2 files, 31 KB and 66 KB, never read by any seat.
+  **Every isolated process is followed by a sweep that MOVES its project dir into the sealed root**, and A5's void-grep covers every file
+  under `~/.claude`, not only `*.jsonl`. The subjects' transcripts were checked for the run-dir prefix: 0 lines each.
+- **A15 — a missing answer is not a zero.** T5b's first replacement cold reader said DONE and wrote nothing (every file in its cwd
+  matched the object by digest). Scored as found 0 of 14, that would have been a KEEP. When rerun, it found 10 of 14. **The scorer must
+  refuse a cold cell with no answer file**, never score it.
+- **A16 — the ceiling rule for T3 counts against the FULL key.** I first gave the scorer "found ≥ X" with X taken from the
+  pruned key, which turned T3b's 7 of 13 into a REPLACE. §4's own words ("≥ X of the key") make it a pass. Corrected by applying the draft.
+- **A17 — the semantic mark separates stating the task from giving it away.** Instructed only to mark "asks for or hints at a
+  criterion", the checker marked the question itself (T3) and the specification itself (T1): every criterion of a find-it or build-it
+  task concerns what the task states. Its instruction was sharpened before any brief was rewritten against it: mark only
+  what GIVES AWAY a criterion (a key path, a plant, a mutant, or a case list that maps one-to-one onto criteria).
+- **Goodhart, named:** the rewriters could run the lexical scan themselves, so the scan's final 0 hits partly measures the rewriters
+  optimising for it. **The semantic mark is the independent check.**
+
+### 13.3 · The falsifiers, read against this
+
+- §11's design falsifier ("a kept task that passed §1 still hits the ceiling with every subject") **cannot fire**, because no task goes to a subject.
+- "Two consecutive runs with no table → the battery is reported dead": **not triggered.** Run 2 has not run. But this is the second
+  time the tasks have not survived before a subject saw them (run 1: `:30`, all voids), and whether that counts toward the "two runs"
+  rule is **the keeper's reading, not mine**.
+- **What the run does establish:** a task a context-free Opus 5.5 with a checkout cannot solve is hard to author, and one "harder"
+  retry by the same kind of author moved T3b and T5a only. **A battery whose tasks must beat a cold reader of the subjects' own model
+  is measuring something narrow**: the part of the work only the room makes possible. That is the design's intent, and it is also
+  why six of eight tasks died.
