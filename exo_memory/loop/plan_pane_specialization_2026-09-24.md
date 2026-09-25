@@ -40,3 +40,18 @@ his own items.
 **Registered before S1:** if S1's census shows the four panes' practised work is indistinguishable (every pane in every
 class at similar rates), then specialization-by-practice has no signal, and S2–S4 carry the whole weight. It is said so
 plainly, not rescued.
+
+## 2026-09-24 20:0x — S1: C and E in; the exposure ruling
+- **E** (`loop/specialization_tokens_2026-09-24.md`): tokens per hand-back over two weeks are **A 18.9M · B 16.1M · C 17.3M ·
+  E 20.2M**, within ±12%. The launch INTAKE is only **4.4–7.4% of the no-cache-read tokens per hand-back**, so the archetypes
+  file's "the intake is the lever" is weak. **Its registered falsifier leans toward firing:** specialization buys role
+  diversity more than weekly-limit savings. The number stands; the verdict is S5's.
+- **C** (`loop/specialization_census_2026-09-24.md`): the practised work is DISTINGUISHABLE, so the registered line does
+  not fire. A is 71% build; B is 42% build / 42% read; C is 54% build / 18% research; E is 58% build / 21% measure. That
+  is a PRACTICE (assignment) signal, not ability; S4 tests ability.
+- **RULING on C §3** (C's classifier subagent opened `p-battery-run2-draft-B_2026-09-19.md` and
+  `p-battery-run2-attack-E_2026-09-19.md`; C itself saw only their names and one-word classes):
+  - **C STAYS A SUBJECT.** Those files are the DESIGN, and the draft states "No task is written, no key exists". The
+    run-2 tasks and keys are written fresh by B in S2.
+  - **The bar that matters is: no subject sees a TASK or a KEY before the run.** By the same bar E stays a subject, though
+    E attacked the draft on 09-19. Design exposure is recorded here, not disqualifying.

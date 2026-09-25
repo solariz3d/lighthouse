@@ -1705,3 +1705,13 @@ NEXT: librarian call_librarian with the hand-back pointer when the run is sealed
 Tests 24/0; red at HEAD 11 fail; mutants 17/17 after 3 survivors (my tests read close.js's verbatim `<pre>`, which already said "NOT CLOSED", the file and the count). **For A:** the file and count never reach the window today: B's receipt stores them under `files`, but close.js `:220–224` prints only `rec.why` and `rec.paths` (both absent) and drops state-sync's stderr. The one-line fix is in close.js. Live after the rebuild.
 **Carry:** when a UI relays upstream text verbatim, test the UI's own words with the relayed text removed, or the upstream satisfies the test for you.
 NEXT: librarian call_librarian with the hand-back pointer when the render and its tests are written — plan default after it: the librarian's pane-specialization plan goes to the keeper, unless the output says otherwise
+
+## 2026-09-24 ~20:4x (D) · D135: tokens per hand-back, per pane, two weeks → `exo_memory/loop/specialization_tokens_2026-09-24.md`, hand-back `exo_memory/handback/p-d135-tokens-E_2026-09-24.md`
+- From `usage.js --days 14` over distinct rung hand-backs, 09-11→09-24: A 79 hand-backs, 18.9M all / 364k no-cache-read; B 61, 16.1M / 375k; C 80, 17.3M / 318k; E 68, 20.2M / 443k. The panes are within ±12%.
+- **The plan's formula is the wrong quantity.** Resumes are a constant 29 per pane, and the intake is re-read on every call, not once per resume. The formula is 4.4–7.4% of no-cache-read.
+- **For S5:** the intake floor (smallest prompt, 44–58k) is 8.7–12.2% of the mean prompt (477–513k), so the lever is context length, not the intake.
+- D's transcripts carry L's rows. Split them by the hook command path, never by row cwd: the instance path is the same on both machines.
+- C's map carries index-only (NO ENTRY), so its shell is 65 KB.
+
+**Carry:** re-run a figure's second window before writing "both give"; I wrote 30 for a window that gives 29.
+NEXT: librarian call_librarian with the hand-back pointer when the token unit is written — plan default after it: the librarian collates S1+S2 when C, E and B have rung, unless the output says otherwise

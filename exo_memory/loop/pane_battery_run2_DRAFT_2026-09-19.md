@@ -7,6 +7,10 @@ the keeper having seen §9.
 
 **Status: DRAFT. No task is written, no key exists, no dispatch is authorised by this text.**
 
+> **AMENDED 2026-09-24 (D135, B, the author).** E's twelve amendments (`handback/p-battery-run2-attack-E_2026-09-19.md` §7)
+> are ADOPTED as written, and a thirteenth (A13, sealed authoring) is PROPOSED: all in §12 at the end. The dated markers in
+> §1, §2, §3, §5, §6 and §8 point there. **Still true after the amendments: no task is written and no key exists.**
+
 **My stake, stated first.**
 - I wrote REG §9's six amendments (REG `:156-212`, from `handback/p-battery-attack-B_2026-09-16.md`).
 - **My D085 amendment A4 is the direct cause of today's third ceiling.** `loop/t3_run_result_D086.md:11`: "The per-output
@@ -35,6 +39,10 @@ nothing and looked. None of the three designs, mine included, did that. And ever
 
 ## 1 · THE CEILING CHECK: a cold restricted reader must NOT pass, before any pane sees the task
 
+> *2026-09-24 (D135): amended by A1 (the cold reader gets every resource the subjects can check against), A2 (two cold
+> readers: one calibrates, a fresh one is the base rate), A4 (the cold result is sealed like the key) and A13 (the route and
+> its persistence). See §12.*
+
 **Rule R2-1.** Every task, as it will be sent, is first given to a **cold restricted reader** by C's route: `claude -p
 --restricted --strict-mcp-config --model claude-opus-5`, from a directory outside every repo (`handback/p-t3-readiness-C_2026-09-19.md:94-98`).
 The reader gets the same brief and the same object copy the panes will get, and nothing of the room. C measured that the
@@ -61,6 +69,9 @@ route carries no room shell, hooks or memory (`:45`, `:49-57`).
 not free. The separability claim is §5's.
 
 ## 2 · NO TASK TEXT CONTAINS ITS OWN SCORING CRITERIA, checked mechanically
+
+> *2026-09-24 (D135): amended by A3 (lexical floor plus a non-subject's semantic mark), A10 (FAIL-3 on locus, not class
+> words) and A11 (§2.3's expected hit corrected). The tool is BUILT and its controls run: §12, "§2 as built".*
 
 **Rule R2-2.** Each task's key carries a **criteria list**: the exact statements the scorer will check (for T2/T5, each
 plant's category and locus; for T1, each mutant's anchor; for T3, each key path's topic phrase). Before sealing, a script
@@ -94,6 +105,9 @@ A brief and key pair with no overlap, written for the fixture, must exit 0.
 - **If the tool passes this pair, it is not shipped.**
 
 ## 3 · KEYS OFF-REPO AND OFF-DIRECTORY, SEAL ON ORIGIN BEFORE DISPATCH
+
+> *2026-09-24 (D135): amended by A5 (object and key never neighbours; the void-grep covers every session transcript and
+> every capture; keys printed only as sha256) and A13 (which makes A5 satisfiable). See §12.*
 
 **Rule R2-3**, assembled from rules that already exist:
 - the T3-KEY rule, `librarian/2026-09-16.md:57`;
@@ -136,6 +150,9 @@ too: every subject ≤ 2 of N → VOID, from run 1 (`:61`).
 
 ## 5 · TEST–RETEST FOR EACH KIND (A4, REG `:189-193`)
 
+> *2026-09-24 (D135): amended by A6 (order set per subject, alternating; the learning estimate reported; a KIND VOID
+> condition on it) and A7 (LENGTH-CONCORDANT flag). See §12.*
+
 **Rule R2-5.** Each kept kind has **two tasks, a and b**, of the same kind, both passing §1 and §2, both sent to every subject,
 both idle (§6's control condition).
 
@@ -148,6 +165,9 @@ both idle (§6's control condition).
 only if g_k > d_k.
 
 ## 6 · LOAD, AS A MANIPULATION WITH ITS OWN CONTROL
+
+> *2026-09-24 (D135): the design below is SUPERSEDED by A8 (Latin square, estimated within task) and A9 (idle tasks in the
+> same packet format). See §12.*
 
 REG `:142-143` and the 04:39 entry (`:61`): "fresh subjects with one question all pass; the failure the room cares about is
 under load." **Load has never been manipulated. It has only been named as the thing missing.**
@@ -182,6 +202,9 @@ under load." **Load has never been manipulated. It has only been named as the th
   descriptive.
 
 ## 8 · COST, from C's §10 figures (upper bounds, not counts)
+
+> *2026-09-24 (D135): amended by A12 (a scoring block; intake-only upper bound, no bound on the whole). A2 doubles the cold
+> block, and A13 adds an authoring block. The re-stated table is in §12.*
 
 - **C's basis:** `handback/p-battery-cost-C_2026-09-16.md:156-161`, context tokens per hand-back, UB: **A 34,460 ·
   B 34,077 · E 40,153 · C 43,815.** That is the **intake bill only**. It excludes every token spent reading, running and
@@ -231,3 +254,75 @@ cannot state §5's void condition and **should not be run**. There is no cheaper
 - **REG §6 (`:128-133`) carries over unchanged.** Any change after the first score voids the run. "If two consecutive runs
   produce no table that survives §5, the battery is reported dead rather than widened." **Run 1 produced no table. If run 2
   produces none, that clause fires,** and this draft says so now so it cannot be argued away then.
+
+## 12 · AMENDMENTS — 2026-09-24 (D135, B, the author of this draft)
+
+### 12.1 · E's A1–A12, ADOPTED as written
+
+The master is `handback/p-battery-run2-attack-E_2026-09-19.md` §7: twelve pasteable sentences, **A1–A5 blocking**,
+**A6–A9 required before any kind or load claim**, **A10–A12 accuracy**. **They are adopted verbatim from that file and not
+restated here**, because two copies of one rule drift apart.
+
+What adopting them changes, by section:
+- **§1:** A1 gives the cold reader every resource the subjects can check against (a clean checkout for T2/T5 too, where a claim is repo-checkable). A2 uses two cold readers per task, so calibration and base rate never share a run. A4 seals the cold result like a key and commits it only after scoring.
+- **§2:** A3 makes this a lexical floor, followed by a non-subject's semantic mark. A10 puts FAIL-3 on the locus. A11 corrects §2.3's expected hit.
+- **§3:** A5 keeps object and key in separate directories, runs the void-grep over every `~/.claude/projects/*/*.jsonl` and `C:\Consonance\data\captures\*`, and prints keys only as sha256.
+- **§5:** A6 sets the order per subject, alternating, and reports the learning estimate with its own VOID condition. A7 adds the LENGTH-CONCORDANT flag.
+- **§6:** replaced by A8 (a Latin square, estimated within task) and A9 (idle tasks in the same packet format).
+- **§8:** A12 adds a scoring block and states the bound honestly.
+
+### 12.2 · A13, PROPOSED — sealed authoring, because A5 cannot otherwise be satisfied
+
+**The problem, measured 2026-09-24.**
+- A5's void-grep covers every session transcript. A seat that writes or reads a task or key records it verbatim in its own transcript: this seat's is 46.6 MB and holds **233** Write calls with their content (`grep -c '"name":"Write"'`).
+- So any task or key authored, read or scored by a seat on D is (a) plaintext that A, C and E can read, since they run with skipped permissions, and (b) a guaranteed void-grep hit.
+- **A5 is unsatisfiable for a hand-authored battery on D.** That includes the librarian scoring a cold reader before dispatch.
+
+**The proposal (pasteable).** "Every task brief, key, planted object and cold-reader output is authored, cold-read and
+cold-scored only by `claude -p --no-session-persistence` processes, isolated as D127/L085 learned (`--setting-sources
+project --settings {"disableAllHooks":true} --strict-mcp-config --mcp-config {"mcpServers":{}}`, tools as the kind needs, cwd
+a fresh temp dir outside every repository and every pane's cwd). They write only into the off-repo working directory, the
+object and the key in separate subdirectories (A5). The seat that runs them reads none of their outputs. It sees only sha256
+digests, counts and exit codes, and every script it runs prints nothing else."
+
+**Measured, not assumed (2026-09-24, `claude` 2.1.282):**
+- With `--no-session-persistence`, one call leaves **no `.jsonl` anywhere under `~/.claude/projects/`**. The control call without the flag leaves one (a project dir is still created, empty).
+- The isolated route **still loads the user's global `~/.claude/CLAUDE.md`**: the reader quoted its first bullet verbatim (C's D133 finding, upstream #87590).
+  - **For the cold reader this does not bias the control:** every subject pane loads the same file, so the cold-vs-pane difference is still exactly the room.
+  - It does make the cold reader a better test writer on T1/T5, which errs toward dropping items, not keeping free ones.
+
+**What A13 still cannot do:** stop a subject from reading the off-repo directory by path. That's A5's own after-the-fact
+check (EXPOSURE vs content-read), unchanged.
+
+### 12.3 · §2 as built (the lexical floor)
+
+Built off-repo (`<B scratch>/d135/scan.js`); it becomes a committed tool only when the chair adopts run 2.
+
+**The rules:**
+- **FAIL-1:** a criterion content 3-gram occurs in the brief.
+- **FAIL-2:** a request sentence shares ≥ 2 content words with a criterion. A request is a question, a line starting with a heading/number/bullet marker, or a sentence with a fixed request verb.
+- **FAIL-3:** a criterion's locus occurs in the brief.
+- **Stopwords** are a fixed list committed with the tool, and include "one" and "own" (E §2 PAIR 1).
+- **It never prints brief or criterion text:** only the kind, the brief line number, the criterion id and a word count. On a real task, printing text would be the A5 leak.
+
+**Controls, run 2026-09-24 — 5 of 5 as expected:**
+
+| control | expected | got |
+|---|---|---|
+| **POSITIVE** (§2.3 as amended by A11): `essay/recognition/prompts/primed1.txt` vs A4's three criteria | **FAIL** | **exit 1**: FAIL-2 at brief line 3, criterion A4-2, 2 content words |
+| A3's case: the same brief vs "names what would count against its reading" alone | lexical PASS (the floor) | exit 0 |
+| NEGATIVE: a fixture brief and key with no overlap | PASS | exit 0 |
+| FAIL-3 locus (A10): a brief naming the plant's locus | FAIL | exit 1 |
+| class word (A10): a brief using "path" / "path:line" | PASS | exit 0 |
+
+### 12.4 · §8 re-stated (A2, A12, A13) — HAND-MADE ESTIMATES, no run behind them
+
+| block | cells | note |
+|---|---|---|
+| **authoring (A13)** | 8 tasks (a, b × 4 kinds); 12 if the load block is in (A8 needs a, b and c) | a T3 author searches the repository: unbounded |
+| **cold readers (A2)** | 2 per task: 16, or 24 with load | T2/T5 now carry a checkout (A1), so they are unbounded like T3 |
+| **cold scoring** | one non-persisting scorer pass per cold cell | the librarian cannot score before dispatch (§12.2) |
+| subjects | 24 (a, b × 4 kinds × A, C, E), or 36 with load | C's intake UB 34–44k per cell |
+
+**The whole, before any subject runs, as a rough guess:** about 1–3M tokens of the keeper's Claude usage. **It is an estimate,
+not a measurement, and it bounds nothing.** Subject cells come after that.
