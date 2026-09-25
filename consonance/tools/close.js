@@ -96,6 +96,18 @@ function sleepSync(ms) {
  * absent. Absent means refuse — a close that reads last night's receipt as tonight's is the same
  * defect this file was written against, one indirection down.
  */
+/** The lines under a refused, unprepared state set. D134 (librarian, from E's hand-back §2): a REFUSED_DIVERGED receipt
+ *  (state-sync.js cmdPush, D133) carries its diverged files under `files` as [{ path, state_only_lines, … }] and sets no
+ *  `why`, so the old lines said only "state-sync exited 1" and the Leave window could name no file and no count. On a
+ *  prepared set `files` is a COUNT, so only an array is read as the list. */
+function notPreparedLines(rec) {
+  const diverged = Array.isArray(rec.files) ? rec.files.filter((d) => d && d.path) : [];
+  return [rec.why ? String(rec.why) : `state-sync exited ${rec.rc}`,
+    ...diverged.map((d) => `    ${d.path}  ${d.state_only_lines} row(s) only in the state copy`),
+    ...(rec.paths ? rec.paths.map((x) => '    ' + x) : []),
+    'Nothing was published.'];
+}
+
 function readReceipt(DATA, childPid, spawnedAtMs) {
   let rec;
   try { rec = JSON.parse(fs.readFileSync(path.join(DATA, sync.RECEIPT_NAME), 'utf8')); }
@@ -218,10 +230,7 @@ function runClose(o) {
        'Let the panes finish a turn and run this again.']);
   }
   if (!ok.includes(rec.outcome)) {
-    return no(`the state set was not prepared: ${rec.outcome}`,
-      [rec.why ? String(rec.why) : `state-sync exited ${rec.rc}`,
-       ...(rec.paths ? rec.paths.map((p) => '    ' + p) : []),
-       'Nothing was published.']);
+    return no(`the state set was not prepared: ${rec.outcome}`, notPreparedLines(rec));
   }
   const size = `${rec.files} files · ${(rec.bytes / 1048576).toFixed(1)} MB`;
   const prepared =
@@ -349,4 +358,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { runClose, readReceipt, remoteHead, syncLine, RETRY_WAIT_MS };
+module.exports = { runClose, readReceipt, remoteHead, syncLine, notPreparedLines, RETRY_WAIT_MS };

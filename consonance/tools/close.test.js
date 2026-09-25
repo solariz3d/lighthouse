@@ -515,5 +515,21 @@ test('D133: a REAL close after another machine published earlier prints that mac
 });
 
 console.log('');
+// D134 (librarian, from E's leave.js hand-back §2): a divergence refusal must reach the reader with each file and count —
+// state-sync's REFUSED_DIVERGED receipt puts them under `files` and sets no `why`, and the old lines dropped them.
+test('a REFUSED_DIVERGED receipt names each diverged file and its row count, not only "state-sync exited 1"', () => {
+  const lines = C.notPreparedLines({ outcome: 'REFUSED_DIVERGED', rc: 1,
+    files: [{ path: 'board.jsonl', state_only_lines: 3 }, { path: 'lap.jsonl', state_only_lines: 1 }] });
+  assert.ok(lines.includes('    board.jsonl  3 row(s) only in the state copy'), lines.join('\n'));
+  assert.ok(lines.includes('    lap.jsonl  1 row(s) only in the state copy'), lines.join('\n'));
+  assert.strictEqual(lines[lines.length - 1], 'Nothing was published.');
+});
+
+test('a numeric `files` (a prepared set\'s count) is never read as a list of diverged files', () => {
+  const lines = C.notPreparedLines({ outcome: 'REFUSED_UNPLACED', rc: 1, files: 64, paths: ['x.json'] });
+  assert.deepStrictEqual(lines, ['state-sync exited 1', '    x.json', 'Nothing was published.']);
+});
+
 console.log(`close.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);
+

@@ -127,6 +127,93 @@ test('seat names and reasons are escaped, never markup', () => {
   assert.ok(!/<img|<b>x/.test(r.body.innerHTML), r.body.innerHTML);
 });
 
+// ── D134 (pane E): THE PUBLISH OUTCOME, beside the stick result. The contract is A's `publish_outcome` in main.rs (D133):
+// { outcome: PUBLISHED {branch, from, to} | UNCHANGED {at} | CLOSED | REFUSED {code} | TIMED_OUT | FAILED, text }, or null
+// on the unattended path. REFUSED's text is close.js's output verbatim, so a divergence refusal is recognised by its
+// words; the file and row count are named only when the text carries them (see the hand-back §2 for why it may not).
+const PUB_REFUSED_TEXT = "consonance close · D · <data> -> <state>\n\nNOT CLOSED — the state set was not prepared: REFUSED_DIVERGED\n  state-sync exited 1\n  Nothing was published.";
+const DIVERGED_WITH_FILES = PUB_REFUSED_TEXT + "\nDIVERGED — 1 travelling append-only file(s) in the state tree hold rows this machine's copy lacks.\n  lap.jsonl  37 row(s) only in the state copy (the first at its line 1204)";
+const publishedAt = (publish) => { const r = load(); r.emit({ phase: 'result', result: DONE, publish, write_error: null, can_exit: true }); return r.text(); };
+
+test('PUBLISHED: the CLOSED line names the branch and the sha moved from → to', () => {
+  const t = publishedAt({ outcome: 'PUBLISHED', branch: 'main', from: '9486b30', to: '1a2b3c4', text: 'published: main 1a2b3c4 -> origin (was 9486b30)' });
+  assert.ok(/CLOSED/.test(t) && !/NOT CLOSED/.test(t) && /9486b30[\s\S]*→[\s\S]*1a2b3c4/.test(t) && t.includes('main'), t);
+});
+
+test('REFUSED: NOT CLOSED, with close.js\'s own words shown', () => {
+  const t = publishedAt({ outcome: 'REFUSED', code: 1, text: 'NOT CLOSED — the destination is not confirmed private: x reads unknown' });
+  assert.ok(/NOT CLOSED/.test(t) && t.includes('not confirmed private'), t);
+});
+
+// The three below read the WINDOW'S OWN words, outside the verbatim <pre>: close.js's text carries "NOT CLOSED", the file
+// and the count itself, so a test reading the whole screen passes even when the window says none of it (D134 mutants).
+const own = (t) => t.replace(/<pre[\s\S]*?<\/pre>/g, '');
+
+test('REFUSED_DIVERGED: says in plain words this machine lacks rows the saved state has, and to union first', () => {
+  const t = own(publishedAt({ outcome: 'REFUSED', code: 1, text: PUB_REFUSED_TEXT }));
+  assert.ok(/NOT CLOSED/.test(t) && /lacks rows/.test(t) && /Union those rows into this machine first/.test(t), t);
+});
+
+test('REFUSED_DIVERGED: names the file and the row count when the outcome carries them', () => {
+  const t = own(publishedAt({ outcome: 'REFUSED', code: 1, text: DIVERGED_WITH_FILES }));
+  assert.ok(/lap\.jsonl[^<]*<\/code>: 37 row\(s\) this machine does not have/.test(t), t);
+});
+
+test('REFUSED: the window itself says NOT CLOSED, even when close.js\'s text does not', () => {
+  const t = own(publishedAt({ outcome: 'REFUSED', code: 1, text: 'the push failed, so this machine\'s state is not on the remote' }));
+  assert.ok(/NOT CLOSED/.test(t) && !/state is published/.test(t), t);
+});
+
+test('REFUSED_DIVERGED without files in the text: says where the list is, and invents no count', () => {
+  const t = publishedAt({ outcome: 'REFUSED', code: 1, text: PUB_REFUSED_TEXT });
+  assert.ok(/state-sync\.push\.json/.test(t) && !/\d+ row\(s\)/.test(t), t);
+});
+
+test('an ordinary refusal is not described as a divergence', () => {
+  const t = publishedAt({ outcome: 'REFUSED', code: 1, text: 'NOT CLOSED — the push failed, so this machine\'s state is not on the remote' });
+  assert.ok(!/lacks rows/.test(t) && !/union/i.test(t), t);
+});
+
+for (const [outcome, word] of [['TIMED_OUT', /did not finish/], ['FAILED', /could not run/]]) {
+  test(`${outcome}: NOT CLOSED, never a success line`, () => {
+    const t = publishedAt({ outcome, text: 'close.js said something' });
+    assert.ok(/NOT CLOSED/.test(t) && word.test(t) && !/state published/.test(t), t);
+  });
+}
+
+test('UNCHANGED: says nothing new was published and names the sha the remote already holds', () => {
+  const t = publishedAt({ outcome: 'UNCHANGED', at: '79e3c01', text: 'nothing to publish: the remote is already at 79e3c01' });
+  assert.ok(/nothing new/.test(t) && t.includes('79e3c01') && !/NOT CLOSED/.test(t), t);
+});
+
+test('an outcome the window does not know is shown as unknown, never as success', () => {
+  const t = publishedAt({ outcome: 'SOMETHING_NEW', text: 'x' });
+  assert.ok(/SOMETHING_NEW/.test(t) && !/state published/.test(t) && !/^[\s\S]*<h3>CLOSED/.test(t), t);
+});
+
+test('publish null (the unattended path) renders nothing new', () => {
+  assert.strictEqual(publishedAt(null), publishedAt(undefined));
+  assert.ok(!/CLOSED|publish/i.test(publishedAt(null)), publishedAt(null));
+});
+
+test('the publish field ABSENT renders exactly what the window rendered before D134', () => {
+  const r = load();
+  r.emit({ phase: 'result', result: DONE, write_error: null, can_exit: true });
+  assert.ok(!/CLOSED|publish/i.test(r.text()), r.text());
+});
+
+test('while publishing: the stick result stays, the publish is said to be running, and there is no Close button', () => {
+  const r = load();
+  r.emit({ phase: 'publishing', result: DONE });
+  const t = r.text();
+  assert.deepStrictEqual([/unplug it now/.test(t), /[Pp]ublishing/.test(t), r.body.querySelector('#leave-close')], [true, true, null]);
+});
+
+test('publish text is escaped, never markup', () => {
+  const t = publishedAt({ outcome: 'REFUSED', code: 1, text: '<img src=x onerror=alert(1)>' });
+  assert.ok(!/<img/.test(t), t);
+});
+
 Promise.all(pending).then(() => {
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);

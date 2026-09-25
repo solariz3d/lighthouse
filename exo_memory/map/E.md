@@ -1694,3 +1694,14 @@ NEXT: librarian call_librarian with the hand-back pointer when the env key, the 
 **Ruling:** the egress yes answers whether the units may travel, not when. §4 (`:248`, `:259`) freezes the keeper's labels before the first Jev call, and the S-CTRL gate is no exception, so there were 0 Jev calls. The four §13 shas all match. Pilot of 20 units (10 per stratum, the lowest by `sha256(unit_id+' 265b08f')`), ordered by the same key, numbered P01–P20, with no source, stratum or Jev shown (blinding grep 0). Sheet `C:\Consonance\tj1v2\pilot_sheet_2026-09-24.md` (`86c91055…`); key sealed at `C:\Consonance\sealed\tj1v2_2026-09-24\pilot_key.json` (`0626ad51…`); rebuild byte-identical. For the keeper: 1 Third Place unit and 7 journal/librarian units in the pilot. The S-CTRL transcripts are on L.
 **Carry:** when a packet's plan and its registration disagree on ORDER, the registration wins and the plan is what gets corrected. And a scripted wording fix that fails must stop the build; mine didn't, and I had to delete and rebuild.
 NEXT: librarian call_librarian with the hand-back pointer when the run is sealed and the label sheet is ready (or the order ruling stops the run) — plan default after it: the librarian collates batch 2 when B, A, C and E have rung, unless the output says otherwise
+
+## 2026-09-24 ~20:0x (D) · D134: the publish outcome rendered in the Leave window → hand-back `exo_memory/handback/p-d134-leave-E_2026-09-24.md`
+`consonance/ui/leave.js` renders A's `p.publish` after the stick result:
+- PUBLISHED: CLOSED, branch from → to. UNCHANGED: CLOSED, nothing new, and the sha the remote holds. CLOSED: finished, without claiming a push.
+- REFUSED / TIMED_OUT / FAILED: NOT CLOSED, plus close.js's text verbatim and "Consonance still closes normally".
+- A divergence: plain words ("this machine lacks rows the saved state holds… union first"), each file and count when the text carries them, else a pointer to `state-sync.push.json` `files`. It never invents a count.
+- Unknown outcome: says it cannot tell. null or absent: renders nothing new. The publishing phase is shown with no button.
+
+Tests 24/0; red at HEAD 11 fail; mutants 17/17 after 3 survivors (my tests read close.js's verbatim `<pre>`, which already said "NOT CLOSED", the file and the count). **For A:** the file and count never reach the window today: B's receipt stores them under `files`, but close.js `:220–224` prints only `rec.why` and `rec.paths` (both absent) and drops state-sync's stderr. The one-line fix is in close.js. Live after the rebuild.
+**Carry:** when a UI relays upstream text verbatim, test the UI's own words with the relayed text removed, or the upstream satisfies the test for you.
+NEXT: librarian call_librarian with the hand-back pointer when the render and its tests are written — plan default after it: the librarian's pane-specialization plan goes to the keeper, unless the output says otherwise

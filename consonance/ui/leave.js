@@ -11,6 +11,9 @@
 //   { phase: 'saving', folder }                          the save is running — don't unplug
 //   { phase: 'busy' }                                    a second close request while the save runs
 //   { phase: 'result', result, write_error, can_exit }   DONE or NOT DONE, and the button once the result is written
+//   { phase: 'publishing', result }                      D133: the stick result is written; close.js is publishing
+//   { phase: 'result', result, publish, ..., can_exit }  D133: the same result, now with the publish outcome (null
+//                                                        when none was attempted — the unattended path)
 //   { phase: 'use-button' }                              a close request after the result: the button is the way out
 // A close with no stick never raises it: Consonance exits as it did before.
 //
@@ -45,8 +48,62 @@
       .join('')}</table>`;
   }
 
+  // D134, pane E: THE PUBLISH OUTCOME, beside the stick result. Contract: main.rs `publish_outcome` (A, D133) —
+  // PUBLISHED {branch, from, to} · UNCHANGED {at} · CLOSED · REFUSED {code} · TIMED_OUT · FAILED, each with `text`; null or
+  // absent when no publish was attempted, which renders NOTHING (never a blank that reads as success). The keeper reads
+  // this as he leaves, so each line says only what its outcome proves. A refusal never stops the app closing (A §1).
+  const DIVERGED = /REFUSED_DIVERGED|DIVERGED — \d+ travelling/;
+  const DIVERGED_FILE = /^\s*(\S+)\s+(\d+) row\(s\) only in the state copy/gm;
+  const verbatim = (t) => (t ? `<pre class="stick-muted">${E(t)}</pre>` : '');
+  const stillCloses = '<p class="stick-muted">Consonance still closes normally, and the stick result above stands.</p>';
+
+  function diverged(text) {
+    const files = [...String(text).matchAll(DIVERGED_FILE)];
+    // B's divergenceRefusal names each file with its count; close.js relays only the receipt's outcome (hand-back §2), so
+    // the list is shown when it arrived and pointed to when it did not. A count is never guessed.
+    const which = files.length
+      ? `<ul class="stick-bad">${files.map((m) => `<li><code>${E(m[1])}</code>: ${E(m[2])} row(s) this machine does not have</li>`).join('')}</ul>`
+      : '<p>Which files, and how many rows each, is listed under <code>files</code> in <code>state-sync.push.json</code> in the data folder.</p>';
+    return `<p>This machine lacks rows that the saved state already holds, most likely written on the other machine.
+      Publishing now would drop them, so nothing was pushed.</p>
+      ${which}
+      <p>Union those rows into this machine first (<code>node consonance/tools/ledger-union.js --write --file &lt;file&gt;</code>),
+      then close again to publish.</p>`;
+  }
+
+  function publishHtml(pub) {
+    if (pub == null || typeof pub !== 'object') return '';
+    const o = pub.outcome;
+    if (o === 'PUBLISHED') {
+      return `<h3>CLOSED — this machine's state is published</h3>
+        <p><code>${E(pub.branch)}</code> moved <code>${E(pub.from || '(none)')}</code> → <code>${E(pub.to)}</code> on the remote.</p>`;
+    }
+    if (o === 'UNCHANGED') {
+      return `<h3>CLOSED — nothing new to publish</h3><p>The remote already holds <code>${E(pub.at)}</code>.</p>`;
+    }
+    if (o === 'CLOSED') {
+      return `<h3>CLOSED — close.js finished, without saying what it published</h3>${verbatim(pub.text)}`;
+    }
+    if (o === 'REFUSED') {
+      return `<h3 class="stick-bad">NOT CLOSED — this machine's state was not published</h3>
+        ${DIVERGED.test(String(pub.text || '')) ? diverged(pub.text) : ''}${verbatim(pub.text)}${stillCloses}`;
+    }
+    if (o === 'TIMED_OUT') {
+      return `<h3 class="stick-bad">NOT CLOSED — the publish did not finish in time and was stopped</h3>
+        <p>Nothing is confirmed published.</p>${verbatim(pub.text)}${stillCloses}`;
+    }
+    if (o === 'FAILED') {
+      return `<h3 class="stick-bad">NOT CLOSED — the publish could not run</h3>${verbatim(pub.text)}${stillCloses}`;
+    }
+    return `<h3 class="stick-bad">Publish outcome not recognised: ${E(o)}</h3>
+      <p>This window cannot say whether anything was published.</p>${verbatim(pub.text)}`;
+  }
+
   function result(p) {
     root.hidden = false;
+    const publishing = p.phase === 'publishing'
+      ? '<p id="leave-publishing">Publishing this machine\'s state to the remote. The stick step is finished (above); Close Consonance appears when the publish is done — up to 15 minutes.</p>'
+      : '';
     const r = p.result || {};
     const done = r.outcome === 'DONE';
     const reasons = done || !r.why ? '' : `<ul class="stick-bad">${String(r.why).split('; ').map((w) => `<li>${E(w)}</li>`).join('')}</ul>`;
@@ -56,6 +113,7 @@
         : `<h2 class="stick-bad">NOT DONE — the stick does not have everything</h2>${r.stick ? `<p><code>${E(r.stick)}</code></p>` : ''}`}
       ${reasons}
       ${done ? '' : stopsTable(r.rows)}
+      ${publishing}${publishHtml(p.publish)}
       ${p.write_error ? `<p class="stick-bad">The result could not be written yet: ${E(p.write_error)} — trying again.</p>` : ''}
       <div class="stick-actions">${p.can_exit ? '<button id="leave-close">Close Consonance</button>' : ''}</div>
       <p id="leave-note"></p>`;
@@ -74,7 +132,7 @@
   window.__TAURI__.event.listen('leave', (e) => {
     const p = e.payload || {};
     if (p.phase === 'saving') return saving(p);
-    if (p.phase === 'result') return result(p);
+    if (p.phase === 'result' || p.phase === 'publishing') return result(p);
     // A second close before the screen exists is the seats still ending, and may yet be a no-stick close, which shows
     // nothing (§2.2 step 2): so it adds nothing either.
     if (p.phase === 'busy') return note('The save is still running. Consonance closes when it is done and you press Close.');
