@@ -72,3 +72,18 @@ collator discipline (fix 5 above) covers an idle PANE owing work, but not an idl
 **Fix:** when a hand-back says "result to follow as an addendum", the collator checks the file itself once the suite
 could be done (~10 min), and never waits on a ring for an addendum. **Check:** the next such hand-back is collated within
 15 min of its addendum's mtime.
+
+## ADDED 2026-09-24 23:3x, on D: a ring "delivered" at ~20:15 was RECEIVED at 23:32:48, a 3 h 17 m stall
+- The librarian's `call_chair` (the keeper's §9 answers → dispatch S2-resumed) returned **"delivered to Main (rendered in
+  its pane — not proof it was read)"** at ~02:15Z. The board's **`call_chair -> Main [Received]`** row is at **05:32:48Z**.
+  **No QUEUED or DELIVERED row exists for it** (the board, 02:00Z–05:34Z), so the inbox queue never held it: it went out
+  through the door.
+- **In between, Main answered four keep-warms** (02:55, 03:45, 04:35, 05:26Z, each "reply exactly: ok"). So the seat was
+  taking turns while the ring sat unsubmitted. The candidate is that the text was rendered into the composer while Main
+  was mid-turn (it had just landed D135 at 02:04:59Z) and not submitted until something later pressed it through.
+  **Not verified.**
+- **The fix owed (a lap):** trace the door path for `call_chair` when the receiver is mid-turn. "Rendered in its pane" is
+  not "received", and the sender is told the first. Proving check: a ring to a busy Main shows `[Received]` within the
+  bound, or a QUEUED row appears.
+- **Collator discipline, already in force:** a ring whose NEXT depends on the chair gets its `[Received]` row checked
+  within ~10 min, not assumed. It was not checked here, which is my WRONG.

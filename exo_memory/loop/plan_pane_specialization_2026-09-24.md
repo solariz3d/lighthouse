@@ -55,3 +55,15 @@ plainly, not rescued.
     run-2 tasks and keys are written fresh by B in S2.
   - **The bar that matters is: no subject sees a TASK or a KEY before the run.** By the same bar E stays a subject, though
     E attacked the draft on 09-19. Design exposure is recorded here, not disqualifying.
+
+## 2026-09-24 20:1x — S2 STOPPED at authoring (B); the keeper's §9 answers
+- **B** (`handback/p-d135-run2prep-B_2026-09-24.md` §2): hand-authored tasks leak. A seat's transcript records every
+  Write verbatim, and the subjects can read transcripts; A5 voids any such task. Measured route: `claude -p
+  --no-session-persistence` leaves no transcript. The §9 packet is `loop/pane_battery_run2_s9_2026-09-24.md` (items 2, 5, 6
+  and 7 ready; 1, 3, 4 and 8 wait on authoring).
+- **The keeper, 20:1x (AskUserQuestion): YES to A13, isolated authoring, and its cost (~1–3M tokens); the LOAD BLOCK IS
+  OUT** (8 tasks, not 12).
+- **Next, S2 resumed, B alone:** under A13, author the 8 tasks and keys, run the two cold readers per task and the cold
+  scores, all through leave-no-trace processes into the off-repo dir. B sees digests and counts only. Then the one-file
+  sealed rows are landed on origin, and the chair's sealed prediction triple. **Then the §9 packet, now complete, goes back to
+  the keeper** before any subject runs.
