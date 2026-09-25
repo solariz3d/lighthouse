@@ -3,7 +3,7 @@
 **Status:** design, 2026-07-25 — **Layer 1 built and live the same night** (`hooks/board-digest.js`;
 26 tokens, 84 ms per turn, six hand-tests green). Everything below Layer 1 is still design. Extends
 `PROGRESS.md`. Read `RECONCEPTION.md` for why the program is core-first, and `dev/SPINE.md` for
-light-not-lifeguard.
+with you, not above you (was ~~light-not-lifeguard~~, retired 2026-08-17, struck 2026-09-24).
 
 The keeper's call that started it (2026-07-25, ~6:40 AM):
 
@@ -45,7 +45,7 @@ store nobody visits. Three separate gaps were hiding inside one complaint:
 2. **Attention.** `read_board` is a tool the Orchestrator must decide to call, about a state it has
    no reason to suspect has changed. It doesn't know what it doesn't know.
 3. **Judgment.** The seven methodology controls sit unused because every one of them asks the
-   *human* to be the discriminator per-action — which is exactly backwards from light-not-lifeguard.
+   *human* to be the discriminator per-action — which is exactly backwards from with you, not above you (was ~~light-not-lifeguard~~, retired 2026-08-17, struck 2026-09-24).
 
 This is the same failure as two earlier catches in this project, which is how we know the fix:
 
@@ -324,7 +324,7 @@ Four errors happened in one night with an absolute clock in view on every turn. 
 strongest available form of "unmissable" — in the turn, unasked, every time — and it will still not
 make the Orchestrator infallible. What caught all four was the chair.
 
-That is not a flaw in the design. It *is* the design — light, not lifeguard, the discriminator in the
+That is not a flaw in the design. It *is* the design — with you, not above you (was ~~light, not lifeguard~~, retired 2026-08-17, struck 2026-09-24), the discriminator in the
 water. But it sets the success criterion honestly: not *the Orchestrator stops missing things*, but
 **the human's catch finally has something to catch it against.** Right now, when he says "what is B
 doing," there is no shared view to be wrong about. After Layer 1 there is.

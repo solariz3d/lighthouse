@@ -12323,6 +12323,12 @@ const STICK_REHEARSAL_TIMEOUT: Duration = Duration::from_secs(300);
 /// `librarian/2026-09-12.md:35`, `:47`) — this bound is about eleven times that. At the bound tail-carry is stopped and
 /// the Leave reads NOT DONE, never DONE.
 const LEAVE_EXPORT_TIMEOUT: Duration = Duration::from_secs(600);
+
+/// D133 — PUBLISH AT CLOSE: how long the keeper's close lets `close.js` run. The state set is ~100 MB (D132 measured 103 MB
+/// travelling, 102 MB of it in the files that change), and a push of that over a home uplink takes minutes. At the bound
+/// the child is stopped and the window says TIMED_OUT — never PUBLISHED. A git push stopped mid-way leaves the remote's ref
+/// where it was (the ref update is the last step), so the next close publishes again.
+const LEAVE_PUBLISH_TIMEOUT: Duration = Duration::from_secs(900);
 /// P-LEAVE §2.2 step 1: how long the close waits for every killed seat to be gone — 50 checks, 100 ms apart, 5 s.
 ///
 /// **Measured on real seats (`handback/p-leave-E_2026-09-14.md` §2):** seven `claude.exe` seats under ConPTY, killed
@@ -12837,18 +12843,21 @@ struct LeaveBounds {
     export: Duration,
     /// R4-2: how long step 6 may go on retrying the result file. None = until it is written.
     result_deadline: Option<Duration>,
+    /// D133: how long step 7 may run the state publish. **None = NEVER PUBLISH** — the unattended paths: the OS ending the
+    /// session has no one awake to read the outcome, and a push is outward (the room's rule: a human stays awake saying yes).
+    publish: Option<Duration>,
     label: &'static str,
 }
 
 impl LeaveBounds {
     /// The keeper's close: it can wait. 10 s for flights, 5 s for seats, 600 s for the export.
-    const NORMAL: LeaveBounds = LeaveBounds { flight_polls: SPAWN_FLIGHT_POLLS, seat_polls: SEAT_TEARDOWN_POLLS, export: LEAVE_EXPORT_TIMEOUT, result_deadline: None, label: "close" };
+    const NORMAL: LeaveBounds = LeaveBounds { flight_polls: SPAWN_FLIGHT_POLLS, seat_polls: SEAT_TEARDOWN_POLLS, export: LEAVE_EXPORT_TIMEOUT, result_deadline: None, publish: Some(LEAVE_PUBLISH_TIMEOUT), label: "close" };
     /// **The OS's end of session: it cannot.** What is dropped is WAITING — 1 s for flights (a seat still starting is
     /// named NOT DONE instead of waited for), 1.5 s for seats (they are killed either way; the wait only proves it) —
     /// so the export keeps the rest. The export bound is SHUTDOWN_EXPORT_TIMEOUT, 30 s, measured against L's own
     /// closes — see that constant for the three figures and for when to re-read it. Step 6 is bounded too (R4-2):
     /// a disk that will not take the record must not hold a shutdown open for ever.
-    const SHUTDOWN: LeaveBounds = LeaveBounds { flight_polls: 10, seat_polls: 15, export: SHUTDOWN_EXPORT_TIMEOUT, result_deadline: Some(SHUTDOWN_RESULT_DEADLINE), label: "shutdown" };
+    const SHUTDOWN: LeaveBounds = LeaveBounds { flight_polls: 10, seat_polls: 15, export: SHUTDOWN_EXPORT_TIMEOUT, result_deadline: Some(SHUTDOWN_RESULT_DEADLINE), publish: None, label: "shutdown" };
 }
 
 impl LeaveBounds {
@@ -12860,6 +12869,9 @@ impl LeaveBounds {
             + SEAT_TEARDOWN_POLL * self.seat_polls
             + self.export
             + self.result_deadline.unwrap_or(JOIN_RESULT_GRACE)
+            // D133: step 7. A shutdown that joins the keeper's close waits for the publish too, or it would release the
+            // block with the push still running and read the close as unfinished.
+            + self.publish.unwrap_or(Duration::ZERO)
     }
 }
 
@@ -12979,8 +12991,106 @@ fn leave_run(app: &AppHandle, b: LeaveBounds) {
             }
         }
     }
+    // 7 · D133 PUBLISH AT CLOSE — the keeper's ruling, 2026-09-24 17:18 ("Publish at close (Recommended)"). On the keeper's
+    //     own close (the NORMAL bounds: the Leave window, a person there to read it) run the state publish, `close.js`, and
+    //     show its outcome beside the stick result. The stick result is already WRITTEN above, so the waiter's fallback
+    //     rules are untouched by anything this step does. **Unattended paths never reach it** (`b.publish` is None on the
+    //     OS's end of session; the exit waiter never runs it at all). **Every outcome is SHOWN** — published from -> to,
+    //     unchanged, the refusal verbatim (the divergence gate's included), a timeout, a failure to start — and none of
+    //     them can stop the close: nothing between here and the button returns or exits.
+    let publish = if let Some(bound) = b.publish {
+        let _ = app.emit("leave", serde_json::json!({ "phase": "publishing", "result": result }));
+        plog(&format!("LEAVE PUBLISH running close.js (bound {} s)", bound.as_secs()));
+        let p = run_publish(bound);
+        plog(&format!(
+            "LEAVE PUBLISH {} — {}",
+            p["outcome"].as_str().unwrap_or("?"),
+            p["text"].as_str().unwrap_or("").lines().last().unwrap_or("")
+        ));
+        p
+    } else {
+        serde_json::Value::Null
+    };
     LEAVE_PHASE.store(LEAVE_SHOWN, Ordering::SeqCst);
-    let _ = app.emit("leave", serde_json::json!({ "phase": "result", "result": result, "write_error": null, "can_exit": true }));
+    let _ = app.emit("leave", serde_json::json!({ "phase": "result", "result": result, "publish": publish, "write_error": null, "can_exit": true }));
+}
+
+/// D133: run `consonance/tools/close.js` (the state publish: `state-sync --push` through its gates, then `git push`, then
+/// the remote asked what it holds) under `timeout`, and turn what it did into what the Leave window shows. No window, ever
+/// (P-NO-CONSOLE): the same NO_WINDOW as the stick export. Both streams are read on their own threads, so a long output
+/// cannot fill a pipe and read here as a timeout.
+fn run_publish(timeout: Duration) -> serde_json::Value {
+    let Some(script) = repo_root().map(|r| r.join("consonance").join("tools").join("close.js")).filter(|p| p.is_file()) else {
+        return publish_outcome(None, "", "", false, Some("consonance/tools/close.js is not on disk in this checkout, so nothing was published".into()));
+    };
+    let spawned = Command::new("node")
+        .arg(&script)
+        .env("CONSONANCE_DATA", data_dir())
+        .creation_flags(NO_WINDOW)
+        .stdin(Stdio::null())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn();
+    let mut child = match spawned {
+        Ok(c) => c,
+        Err(e) => return publish_outcome(None, "", "", false, Some(format!("could not start node ({e}), so nothing was published"))),
+    };
+    let read = |p: Option<Box<dyn Read + Send>>| std::thread::spawn(move || {
+        let mut s = String::new();
+        if let Some(mut p) = p { let _ = p.read_to_string(&mut s); }
+        s
+    });
+    let out = read(child.stdout.take().map(|p| Box::new(p) as Box<dyn Read + Send>));
+    let err = read(child.stderr.take().map(|p| Box::new(p) as Box<dyn Read + Send>));
+    let started = Instant::now();
+    let (code, timed_out, wait_err) = loop {
+        match child.try_wait() {
+            Ok(Some(st)) => break (st.code(), false, None),
+            Ok(None) if started.elapsed() > timeout => {
+                let _ = child.kill();
+                let _ = child.wait();
+                break (None, true, None);
+            }
+            Ok(None) => std::thread::sleep(Duration::from_millis(200)),
+            Err(e) => break (None, false, Some(format!("waiting on node failed ({e})"))),
+        }
+    };
+    let (o, e) = (out.join().unwrap_or_default(), err.join().unwrap_or_default());
+    publish_outcome(code, &o, &e, timed_out, wait_err)
+}
+
+/// D133, the pure half: close.js's exit code and lines -> the outcome the window shows. It PARSES only its two success
+/// lines (`published: <branch> <to> -> origin (was <from>)` and `nothing to publish: the remote is already at <sha>`); every
+/// other exit is shown as close.js said it, stdout then stderr, verbatim. Outcomes:
+///   PUBLISHED { from, to }  ·  UNCHANGED { at }  ·  CLOSED (a clean exit with neither line)  ·  REFUSED { code }  ·
+///   TIMED_OUT  ·  FAILED (could not start, or could not be waited on). Every one carries `text`.
+fn publish_outcome(code: Option<i32>, stdout: &str, stderr: &str, timed_out: bool, failed: Option<String>) -> serde_json::Value {
+    let both = || [stdout.trim_end(), stderr.trim_end()].iter().filter(|s| !s.is_empty()).cloned().collect::<Vec<_>>().join("\n");
+    if let Some(why) = failed {
+        return serde_json::json!({ "outcome": "FAILED", "text": why });
+    }
+    if timed_out {
+        return serde_json::json!({ "outcome": "TIMED_OUT", "text": format!("close.js did not finish within its bound and was stopped, so nothing is confirmed published. Its output so far:\n{}", both()) });
+    }
+    if code == Some(0) {
+        for l in stdout.lines() {
+            let t = l.trim();
+            if let Some(rest) = t.strip_prefix("published: ") {
+                // "<branch> <to> -> origin (was <from>)"
+                let w: Vec<&str> = rest.split_whitespace().collect();
+                if w.len() >= 5 && w[2] == "->" && w[4] == "(was" {
+                    let from = w.get(5).map(|s| s.trim_end_matches(')')).unwrap_or("");
+                    return serde_json::json!({ "outcome": "PUBLISHED", "branch": w[0], "to": w[1], "from": from, "text": t });
+                }
+            }
+            if let Some(at) = t.strip_prefix("nothing to publish: the remote is already at ") {
+                return serde_json::json!({ "outcome": "UNCHANGED", "at": at.trim(), "text": t });
+            }
+        }
+        let last = stdout.lines().map(str::trim).filter(|l| !l.is_empty()).last().unwrap_or("close.js exited 0 and printed nothing");
+        return serde_json::json!({ "outcome": "CLOSED", "text": last });
+    }
+    serde_json::json!({ "outcome": "REFUSED", "code": code, "text": both() })
 }
 
 // ── P-LEAVE-3 ROW 4 (D-6): THE OS ENDS THE SESSION ────────────────────────────────────────────────────────────────
@@ -19627,6 +19737,115 @@ mod leave_wiring_tests {
         let dirs = s.find(concat!("set_dirs(&get_state()); // resolve ", "configurable")).unwrap();
         let waiter = s.find(concat!("            start_exit", "_waiter();")).unwrap();
         assert!(dirs < clean && clean < waiter);
+    }
+}
+
+/// D133 — PUBLISH AT CLOSE (the keeper's ruling, 2026-09-24 17:18, "Publish at close (Recommended)"): the ATTENDED close —
+/// the Leave window, on the keeper's own bounds — also runs `close.js` and shows its outcome beside the stick result; the
+/// UNATTENDED paths (the OS ending the session, and the exit waiter) never publish.
+#[cfg(test)]
+mod publish_at_close_tests {
+    use super::{publish_outcome, LeaveBounds, LEAVE_PUBLISH_TIMEOUT};
+    use std::fs;
+    use std::time::Duration;
+
+    fn src() -> String {
+        fs::read_to_string("src/main.rs").expect("read own source")
+    }
+
+    fn body_of(src: &str, sig: &str) -> String {
+        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+        after[..after.find("\n}\n").expect("no end of function")].to_string()
+    }
+
+    // ── what the window is told: the outcome, from close.js's own exit code and lines ───────────────────────────────
+    #[test]
+    fn a_publish_shows_the_sha_it_moved_the_remote_from_and_to() {
+        let out = "consonance close · D · C:\\data -> C:\\state\n  published: main 1a2b3c4 -> origin (was 9486b30)\n  remote confirms: refs/heads/main = 1a2b3c4   (asked the remote, not the push)\n";
+        let p = publish_outcome(Some(0), out, "", false, None);
+        assert_eq!(p["outcome"], "PUBLISHED");
+        assert_eq!((p["from"].as_str(), p["to"].as_str()), (Some("9486b30"), Some("1a2b3c4")));
+    }
+
+    #[test]
+    fn nothing_to_publish_is_shown_as_unchanged_with_the_remote_head() {
+        let p = publish_outcome(Some(0), "  nothing to publish: the remote is already at 9486b30\n", "", false, None);
+        assert_eq!((p["outcome"].as_str(), p["at"].as_str()), (Some("UNCHANGED"), Some("9486b30")));
+    }
+
+    #[test]
+    fn a_refusal_is_shown_verbatim_with_its_exit_code_never_skipped() {
+        let why = "close.js: REFUSED — the state set was not prepared: REFUSED_DIVERGED\n  board.jsonl: the remote holds 12 row(s) this machine does not\n  Nothing was published.";
+        let p = publish_outcome(Some(1), "consonance close · D\n", why, false, None);
+        assert_eq!(p["outcome"], "REFUSED");
+        assert_eq!(p["code"], 1);
+        let text = p["text"].as_str().unwrap();
+        assert!(text.contains("REFUSED_DIVERGED") && text.contains("the remote holds 12 row(s)") && text.contains("Nothing was published."), "{text}");
+    }
+
+    #[test]
+    fn a_publish_that_runs_past_its_bound_is_shown_as_timed_out_not_as_published() {
+        let p = publish_outcome(None, "  published: main 1a2b3c4 -> origin (was 9486b30)\n", "", true, None);
+        assert_eq!(p["outcome"], "TIMED_OUT");
+    }
+
+    #[test]
+    fn a_publish_that_could_not_start_is_shown_with_its_reason() {
+        let p = publish_outcome(None, "", "", false, Some("could not start node (not found)".into()));
+        assert_eq!((p["outcome"].as_str(), p["text"].as_str()), (Some("FAILED"), Some("could not start node (not found)")));
+    }
+
+    #[test]
+    fn a_clean_exit_without_a_published_line_is_shown_as_closed_with_its_last_line() {
+        let p = publish_outcome(Some(0), "  the remote already holds this tree's HEAD (9486b30).\n  CLOSED — the state on this machine is on the remote at 9486b30.\n", "", false, None);
+        assert_eq!(p["outcome"], "CLOSED");
+        assert!(p["text"].as_str().unwrap().contains("CLOSED — the state on this machine is on the remote at 9486b30."));
+    }
+
+    // ── attended vs unattended ─────────────────────────────────────────────────────────────────────────────────────
+    #[test]
+    fn the_os_ending_the_session_never_publishes_and_the_keepers_close_does_within_a_bound() {
+        assert!(LeaveBounds::SHUTDOWN.publish.is_none(), "the unattended shutdown Leave would publish");
+        assert_eq!(LeaveBounds::NORMAL.publish, Some(LEAVE_PUBLISH_TIMEOUT));
+        assert!(LEAVE_PUBLISH_TIMEOUT >= Duration::from_secs(300), "a 100 MB state push needs minutes");
+    }
+
+    #[test]
+    fn the_keepers_close_worst_case_counts_the_publish_so_a_shutdown_join_waits_for_it() {
+        assert!(LeaveBounds::NORMAL.worst_case() >= LEAVE_PUBLISH_TIMEOUT + LeaveBounds::NORMAL.export);
+        // The shutdown bounds are unchanged by this: no publish term.
+        let s = LeaveBounds::SHUTDOWN;
+        assert!(s.worst_case() < s.export + Duration::from_secs(60));
+    }
+
+    #[test]
+    fn the_leave_publishes_only_on_its_publish_bound_and_before_the_close_button() {
+        let s = src();
+        let body = body_of(&s, concat!("fn leave_run", "("));
+        let gate = body.find(concat!("if let Some(bound) = b.", "publish")).expect("the publish is not gated on the bound");
+        let call = body.find(concat!("run_", "publish(")).expect("the leave never publishes");
+        let shown = body.find(concat!("LEAVE_PHASE.store(LEAVE_", "SHOWN")).expect("no shown phase");
+        assert!(gate < call && call < shown, "the publish must be gated and must finish before the button appears");
+    }
+
+    #[test]
+    fn the_close_completes_either_way_the_outcome_rides_beside_the_stick_result() {
+        let s = src();
+        let body = body_of(&s, concat!("fn leave_run", "("));
+        let tail = &body[body.rfind(concat!("LEAVE_PHASE.store(LEAVE_", "SHOWN")).unwrap()..];
+        assert!(tail.contains(concat!("\"can_exit\": ", "true")) && tail.contains(concat!("\"publish\": ", "publish")), "the final result event lacks the publish outcome or the button");
+        // No early return between the publish and the button: a refusal or a timeout cannot strand the close.
+        let from_call = &body[body.find(concat!("run_", "publish(")).unwrap()..body.rfind(concat!("LEAVE_PHASE.store(LEAVE_", "SHOWN")).unwrap()];
+        assert!(!from_call.contains("return") && !from_call.contains("app.exit"), "something between the publish and the button can end the close");
+    }
+
+    #[test]
+    fn the_unattended_exit_waiter_never_publishes() {
+        let w = fs::read_to_string("../../dev/stick-waiter.js").expect("read dev/stick-waiter.js");
+        let code: String = w.lines().filter(|l| !l.trim_start().starts_with("//")).collect::<Vec<_>>().join("\n");
+        for bad in ["close.js", "'--push'", "\"--push\"", "git push", "state-sync"] {
+            assert!(!code.contains(bad), "the unattended waiter reaches the publish: {bad}");
+        }
     }
 }
 

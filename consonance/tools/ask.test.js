@@ -258,7 +258,9 @@ test('the shipped ASK.md parses, is non-empty, and every open ask clears the fac
   const st = A.load(A.STORE);
   assert.strictEqual(st.missing, false, 'exo_memory/ASK.md is missing');
   const open = A.openAsks(st, Date.now());
-  assert.ok(open.length > 0, 'the store shipped with no open asks — the channel has no freight');
+  // D133 (librarian): this line used to assert open.length > 0 — it pinned the LIVE queue, so answering the last ask
+  // (the keeper cleared every open ask on 2026-09-24) turned it red. An empty queue is a valid, even desired, state;
+  // the checks below still hold every open ask to the floor whenever there are any.
   assert.strictEqual(st.unreadable.length, 0, `shipped store has unreadable blocks: ${JSON.stringify(st.unreadable)}`);
   const thin = open.filter((a) => A.trimFact(a.question).length < A.MIN_FACT_CHARS).map((a) => a.id);
   assert.deepStrictEqual(thin, [], 'these asks carry a category, not a question');

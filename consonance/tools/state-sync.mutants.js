@@ -143,8 +143,10 @@ const MUTANTS = [
   // ── the reconciliation (P-INSTALL-NAMES, L055) ──
   // Every one of these is a way for `--install` to say a set arrived when it did not, which is the
   // sentence that was actually printed on 2026-09-09 and believed.
+  // Re-anchored D133: D114 (a81d339, 2026-09-22) gave the call a third argument, so this row had read NOT APPLIED since —
+  // the same guard, on the line it lives on now.
   ['the reconciliation is not run at all — the install\'s own count stands as the claim',
-    '    rec = reconcileInstall(DATA, v);',
+    '    rec = reconcileInstall(DATA, v, { state: STATE, merged: new Set((r.installedByUnion || []).map((m) => m.path)) });',
     '    rec = { ok: r.wrote + r.skipped === v.index.files.length, missing: [], claimed: v.index.files.length, present: r.wrote + r.skipped, read_at: null, data_dir: DATA };'],
   ['a shortfall prints loudly and exits 0 anyway — the option this packet refused',
     '    if (!rec.ok) {', '    if (false) {'],
@@ -167,6 +169,29 @@ const MUTANTS = [
   ['already-identical files are not counted, so `installed N` stays unreadable',
     '      if (cur.equals(want)) { skipped++; continue; }',
     '      if (cur.equals(want)) { continue; }'],
+  // ── D133: the push's divergence gate, and the relation line ──
+  ['D133 the divergence gate never refuses',
+    '  if (diverged.length) {\n    return done(refuse(divergenceRefusal(diverged, DATA), 1)',
+    '  if (false) {\n    return done(refuse(divergenceRefusal(diverged, DATA), 1)'],
+  ['D133 the gate is skipped on a dry run',
+    '  if (diverged.length) {\n    return done(refuse(divergenceRefusal(diverged, DATA), 1)',
+    '  if (diverged.length && !dryRun) {\n    return done(refuse(divergenceRefusal(diverged, DATA), 1)'],
+  ['D133 files are written into the state tree BEFORE the gate (the first build\'s order)',
+    '    bufs.set(t.rel, r.buf);\n',
+    "    bufs.set(t.rel, r.buf);\n    if (!dryRun) { const d0 = path.join(destRoot, t.rel.split('/').join(path.sep)); fs.mkdirSync(path.dirname(d0), { recursive: true }); fs.writeFileSync(d0, r.buf); }\n"],
+  ['D133 counted as a SET: a line here covers every copy of it there', '    if (n > 0) have.set(l, n - 1);', '    if (n > 0) {}'],
+  ['D133 a partial last line here counts as a row', "  for (const l of LU.completeLines(localBuf, 0).lines) have.set(l, (have.get(l) || 0) + 1);",
+    "  for (const l of localBuf.toString('utf8').split('\\n')) have.set(l, (have.get(l) || 0) + 1);"],
+  ['D133 no file is gated', "    if (installModeFor(t.rel, rules) !== 'fast-forward') continue;", '    if (true) continue;'],
+  ['D133 a missing state copy is treated as divergence',
+    "    try { stateBuf = fs.readFileSync(path.join(stateDataRoot, t.rel.split('/').join(path.sep))); } catch (_) { continue; }",
+    "    try { stateBuf = fs.readFileSync(path.join(stateDataRoot, t.rel.split('/').join(path.sep))); } catch (_) { out.push({ path: t.rel, state_only_lines: 1, first_state_only_line: 1, state_lines: 0 }); continue; }"],
+  ['D133 the push/pull line is the old unconditional "in sync"', "  console.log('  ' + syncRelation(st).line);",
+    "  console.log('  in sync: ' + st.machines.map((m) => `${m.machine} ${m.commit || 'never'}`).join(' · '));"],
+  ['D133 any machine row counts as authoring the head', "  if (mine && same(mine.commit, st.head)) return { state: 'IN_SYNC'", "  if (mine) return { state: 'IN_SYNC'"],
+  ['D133 DIVERGED does not outrank the heads', '  if (diverged && diverged.length) {\n    return { state: \'DIVERGED\'', '  if (false) {\n    return { state: \'DIVERGED\''],
+  ['D133 a short and a long hash of one commit read as different commits', '(a.startsWith(b) || b.startsWith(a))', '(a === b)'],
+  ['D133 --status does not compare rows', '  const st = writeStatus(DATA, STATE, diverged);', '  const st = writeStatus(DATA, STATE, null);'],
   ['the record carries the shortfall but not the paths, so the launcher gets a count again',
     '        why: shortfallWhy(rec), failures: rec.missing, missing: rec.missing,',
     '        why: shortfallWhy(rec), failures: rec.missing, missing: [],'],

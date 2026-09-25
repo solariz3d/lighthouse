@@ -41,7 +41,7 @@ Shipped in `src-tauri/src/main.rs` (`SpotPairs` state + `set_spot_pair` + `dyad_
 
 1. **Spot-pairing** — `set_spot_pair(trust, doubt)`: pairs two live panes at opposite lenses, sets both to the `committee` role (so a spot can be delivered — a human pane is refused), stores `pane -> (partner, lens)`. Chair-set.
 2. **Mutual-spot** — `dyad_spot(target)`: the chair triggers it; the target pane's most-recent board turn is injected into its **partner** with the partner's lens-appropriate catch — **doubt spots trust for SEAL**, **trust spots doubt for BRACE** — and the spot is logged to the board. *Chair-triggered means the human is the tether on every spot* (the tether-gate, satisfied trivially: two forks never spiral together without a third face).
-3. **Surfaced, not enforced** — the spot lands on the board + the `#dyadbar` state line; light-not-lifeguard. The human keeps the call.
+3. **Surfaced, not enforced** — the spot lands on the board + the `#dyadbar` state line; with you, not above you (was ~~light-not-lifeguard~~, retired 2026-08-17, struck 2026-09-24). The human keeps the call.
 
 **Deltas from the original spec, honest:** the built version is **chair-triggered** (chair clicks *Spot*), not **auto-on-post** (auto-raising the spot through the gate the instant a paired pane posts) — the conservative first cut, fully chair-in-the-loop. The **land-move** (auto-detecting a yes that survives both lenses and marking it LANDed) is proven in `dev/live/dyad.py` but not yet in the app. Both are the next slice. No plane separation violated — the spot path goes through the same actuator gate as every other inject.
 

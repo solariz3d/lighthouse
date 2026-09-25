@@ -72,3 +72,35 @@ the record, when the list is empty.
 | **E** | **T-J1 v2 run** (`loop/tj1v2_registration_2026-09-22.md`), the egress the keeper approved, ending in a label sheet ready for his sitting. The key stays env-only; count the calls. |
 **After batch 2, the librarian runs ONE hand publish from D** (`close.js`, through B's gate), so the state head becomes
 D-authored today without waiting for the rebuild. It is reported to the keeper before and after.
+
+## 2026-09-24 17:4x — WRONG (librarian): batch 2's T-J1 v2 row had the order backwards
+My row said "the egress run … ending in a label sheet". The registration puts the keeper's labels, **frozen with a sha,
+BEFORE the first Jev call** (`tj1v2_registration_2026-09-22.md` §4 `:204`, `:236-237`, `:248`, `:259`; §5 `:324`).
+E stopped at 0 calls and built the label sheet instead (`handback/p-d133-tj1v2-E_2026-09-24.md` §0–1). **Corrected
+order:** the keeper's labelling sitting, then the labels frozen and their sha appended, then the Jev run (the egress yes
+stands for that step).
+
+## 2026-09-24 19:3x — BATCH 2 (D133) COLLATED, and D PUBLISHED
+- **B:** the `cmdPush` DIVERGENCE GATE refuses when a travelling append-only file's state copy holds rows local lacks
+  (`REFUSED_DIVERGED`), and the `--status` false "in sync" is fixed. state-sync.test 137/0 (+15); mutants 66/66 killed
+  (4,849 s; #22 re-anchored, stale since D114).
+- **A:** publish at close in the Leave window (`main.rs`), with the outcome beside the stick result, and the waiter still
+  never publishes; the `close.js` false "in sync" is fixed. **My cargo test under the lock: 955 passed / 0 failed / 4 ignored
+  (+11).** It is live after the next rebuild. **Owed:** the Leave screen must RENDER `p.publish` (`ui/leave.js`), to E.
+- **C:** CH-4 is ARMED GREEN (the §3 patch across the 6 files). ASK-007 is marked YES. **Stages 1–2 STOPPED BY RULE, with 0
+  subjects:** F-PRIME fired. `claude -p --setting-sources project …` STILL loads `~/.claude/CLAUDE.md` (probe:
+  CHANGELOG quoted verbatim; upstream anthropics/claude-code #87590). The designer may not select, code or score either.
+  **Needed:** an isolation route. The cleanest is the keeper's `claude setup-token` used in one isolated config dir (the
+  scorecard §2), plus non-author seats for selector, coder and direction-checker. Deadline 09-29.
+- **E:** T-J1 v2 is STOPPED at 0 calls. The registration puts the keeper's frozen labels BEFORE any Jev call (my WRONG,
+  17:4x). The label sheet is ready outside the repo (E §1). **Needed:** the keeper's labelling sitting.
+- **Fixed by me, small:**
+  - `ask.test.js` pinned the live queue (`open.length > 0`), and an empty queue is now correct because every ask was
+    answered. Removed with a comment; 42/0.
+  - `main.rs:19764` BENIGN-TEST fixture baselined; portable-paths green over 326 files.
+- **THE HAND PUBLISH FROM D** (plan, "BATCH 2"): `state-sync --pull` (verify only), then `close.js --check` (all gates
+  passed, PRIVATE repo, nothing published), then `close.js` → **"CLOSED — the state on this machine is on the remote at
+  79e3c01"**, with the remote confirming `refs/heads/main = 79e3c01`. The state head is D-authored for the first time since
+  09-10. **So D's next launch RESUMEs, and the union switch belongs on L** (B §3), for L's next launch to merge D's rows.
+- **A note on cost:** the full state-sync mutant harness took 81 min and held the heavy lock the whole time. Next time,
+  run `--only` the rows for the changed functions inside a lap, and the whole harness outside one.

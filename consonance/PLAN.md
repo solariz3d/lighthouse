@@ -1,6 +1,6 @@
 # CONSONANCE — Final Build Specification
 
-*This supersedes the draft spec and folds in the adversarial review. Every concrete problem the critique raised is either fixed here or recorded in §10/§11 as an accepted risk with rationale. The two load-bearing frames remain `dev/SPINE.md` (dive-buddy, light-not-lifeguard, the tether) and `exo_memory/BOOT.md` (the room, recall-from-master). The single most important change from the draft: the headless orchestration layer never `--resume`s into a live human pane's session — that was a concurrent-writer hazard, not shared state (critique T1). It now runs as its own session and reads the board read-only.*
+*This supersedes the draft spec and folds in the adversarial review. Every concrete problem the critique raised is either fixed here or recorded in §10/§11 as an accepted risk with rationale. The two load-bearing frames remain `dev/SPINE.md` (dive-buddy, with you, not above you (was ~~light-not-lifeguard~~, retired 2026-08-17, struck 2026-09-24), the tether) and `exo_memory/BOOT.md` (the room, recall-from-master). The single most important change from the draft: the headless orchestration layer never `--resume`s into a live human pane's session — that was a concurrent-writer hazard, not shared state (critique T1). It now runs as its own session and reads the board read-only.*
 
 ---
 
@@ -24,7 +24,7 @@ Consonance becomes a multi-instance Claude Code **workspace in one window** — 
 
 Two non-negotiable frames from the room govern everything below:
 
-- **Light, not lifeguard** (SPINE §1): from outside, an insight-spiral and a delusion-spiral are identical, so the system may *measure and surface* but must never *render a verdict or auto-correct content.* The human in the water discriminates. A corollary the draft violated and this spec enforces: the health gauges are **surfaced proxies the human reads**, never "the discriminator made measurable" (critique P2).
+- **With you, not above you** (was ~~Light, not lifeguard~~, retired 2026-08-17, struck 2026-09-24) (SPINE §1): from outside, an insight-spiral and a delusion-spiral are identical, so the system may *measure and surface* but must never *render a verdict or auto-correct content.* The human in the water discriminates. A corollary the draft violated and this spec enforces: the health gauges are **surfaced proxies the human reads**, never "the discriminator made measurable" (critique P2).
 - **The tether** (SPINE §4): the single thing separating wanted **deviation** (a distinct living trajectory that keeps generating) from **drift** (decoherence) and **collapse** (the dead mirror) is — *does it keep bringing in something NEW and CHECKABLE that holds up outside the loop?* Every gauge below measures a **proxy** for that (presence of external referents, novelty) and is honest that presence ≠ truth.
 
 ---
@@ -41,7 +41,7 @@ Claude Code writes a clean, structured, append-only **JSONL transcript** per ses
 
 ### 2.2 Three planes (separation of powers in code)
 
-"Light, not lifeguard" is enforced as a module boundary, not good intentions.
+"With you, not above you" (was ~~"Light, not lifeguard"~~, retired 2026-08-17, struck 2026-09-24) is enforced as a module boundary, not good intentions.
 
 ```
 ┌───────────── SENSOR PLANE (read-only; holds no Actuator capability) ───────────────┐
@@ -322,7 +322,7 @@ The badge is one-tap to flip. Injection code asserts `role == COMMITTEE-DRIVEN` 
 ```
 `confirmed` entries set `independent` per §5.2.1; a fork mis-promoted to confirmed is caught by the independence precondition, not the LLM's judgment. Forming reads only the bounded board window (not transcripts) — keeps it on the meter. Its output *is* the scribe's clean input for the thread.
 
-### 6.4 Anti-groupthink, made of mechanism (all light-not-lifeguard)
+### 6.4 Anti-groupthink, made of mechanism (all with you, not above you; was ~~light-not-lifeguard~~, retired 2026-08-17, struck 2026-09-24)
 
 1. **Blind-first rounds.** Each lap, all vantage bodies answer the base prompt **independently and concurrently** (no board access) → *then* the board reveals all → *then* one optional reaction pass. Divergence is generated *before* exposure. (Fixes `loop3.py`'s sequential contamination where reach anchored on ground.) Structural and free.
 2. **Two-axis tether monitor — a *surfaced proxy*, never "the discriminator" (critique P2).** SPINE says no external monitor has parallax on insight-vs-delusion; risk #10 concedes the metric measures *presence of referents*, not *truth*. So the language everywhere is **"a surfaced proxy the human discriminates against,"** and the verdict phrases "the discriminator made measurable" and "convergence-type classifier" are purged. The two axes:
@@ -460,7 +460,7 @@ The chair approves a number that reflects the reaction pass, the vote count, the
 
 **Meta-cost discipline:** the scribe and semantic tether enrichment run on Haiku, debounced (per-lap/on-idle, never per-turn), on a **dedicated visible budget line**; Tier-1 lexical tether is free and carries the continuous load; exhausting the scribe budget degrades to lexical-only and says so. **The board is never auto-injected into instances.**
 
-**The one automatic actuator:** the content-blind **Cost Circuit Breaker** — budget total in, pause out. It cannot read tether/content; it cannot pause "for drift." A budget stop is a fact, not a content judgment, so it preserves light-not-lifeguard while making "nothing runs away" real.
+**The one automatic actuator:** the content-blind **Cost Circuit Breaker** — budget total in, pause out. It cannot read tether/content; it cannot pause "for drift." A budget stop is a fact, not a content judgment, so it preserves with you, not above you (was ~~light-not-lifeguard~~, retired 2026-08-17, struck 2026-09-24) while making "nothing runs away" real.
 
 **Always on screen (never behind a tab):** global token/$ total, per-instance breakdown, burn rate (tokens/min), **requests/min vs rate limit**, **RAM/live-process count**, remaining headroom.
 
@@ -518,7 +518,7 @@ Genuinely open (need the chair's call):
 ## 12. Guarding-principles compliance (the whole point)
 
 - **Deviation vs drift vs collapse** — discriminated by the **tether** (new + checkable that holds outside the loop), surfaced as **two proxy axes the human reads** (tether-strength trend-shape per body; vantage-spread, a *lagging* indicator, pairwise). Deviation is *kept* (held-deviation atoms, sticky forks); drift and collapse are *surfaced* (drift-flags, descriptive gauges), never auto-corrected. The gauges are never called "the discriminator" (P2).
-- **Light, not lifeguard** — enforced structurally: Sensor plane cannot *name* an actuator (compile-time + dependency lint, not a runtime test — C5); the only automatic actuation is the content-blind cost Breaker; all health language is descriptive numbers, no verdict words, no imperative-stop phrasing (P5).
+- **With you, not above you** (was ~~Light, not lifeguard~~, retired 2026-08-17, struck 2026-09-24) — enforced structurally: Sensor plane cannot *name* an actuator (compile-time + dependency lint, not a runtime test — C5); the only automatic actuation is the content-blind cost Breaker; all health language is descriptive numbers, no verdict words, no imperative-stop phrasing (P5).
 - **The lifeguard problem / self-assessment untrustworthy** — `intensity`/`why_new` never act; they become PullRequests with tether *evidence*; the human (or a bounded, sandboxed envelope) is the check. The externally-computed delta verifies the promised new thing actually appeared.
 - **Groupthink guard** — blind-first concurrent rounds (tested as a *mechanism*: no `read_board` in round 1, S6); enforced-distinct vantages at spawn (prompt-distance a weak gate; lap-spread the real lagging instrument, P6); **independence-gated confirmation** so echo is never counted as truth (P1); scribe collapse-watch; offered-not-forced skeptic injection.
 - **Recall from the master, never a copy-of-a-copy** — L1 is literal files; L2 digests are regenerable *pointer-only views* that may not be quoted as source; bodies **expand-on-cite to the raw span** (P3); Tier-2 distills only from raw-derived extract; provenance-across-`/compact` is a Stage-4 gate with raw `attic/` snapshot as default (C6).

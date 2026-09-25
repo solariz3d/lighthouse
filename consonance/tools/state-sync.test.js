@@ -1635,6 +1635,144 @@ test('L091 an unreadable previous file is not silently erased: the record says t
   assert.match(String(c.trips_note), /unreadable/i, 'the loss is named in the record');
 });
 
+// ═══ D133 · the push's divergence gate, and the relation line ════════════════════════════════
+// A push copies this machine's travelling files over the state tree's. For a `fast-forward` (append-only, two-writer)
+// file that must never drop a row the state copy holds. L publishes `stateLap`; D, holding `localLap`, pushes.
+
+/** L pushes `stateLap` as lap.jsonl (omitted when null) to the bare remote; D clones it and holds `localLap`. */
+function gateWorld(stateLap, localLap) {
+  const files = { 'board.jsonl': 'row\n' };
+  if (stateLap !== null) files['lap.jsonl'] = stateLap;
+  const w = world(files, FF_MANIFEST);
+  const p = run(w, ['--push', '--no-remote']);
+  assert.strictEqual(p.code, 0, both(p));
+  execFileSync('git', ['-C', w.state, 'push', '-q', '-u', 'origin', 'main']);
+  const stateD = path.join(w.dir, 'stateD');
+  execFileSync('git', ['clone', '-q', w.bare, stateD]);
+  for (const [k, v] of [['user.email', 't@t'], ['user.name', 't']]) execFileSync('git', ['-C', stateD, 'config', k, v]);
+  const dataD = path.join(w.dir, 'dataD');
+  fs.mkdirSync(dataD, { recursive: true });
+  fs.writeFileSync(path.join(dataD, 'board.jsonl'), 'row\n');
+  if (localLap !== null) fs.writeFileSync(path.join(dataD, 'lap.jsonl'), localLap);
+  const W = { ...w, stateD, dataD };
+  const stateCopy = () => { try { return fs.readFileSync(path.join(stateD, 'data', 'lap.jsonl'), 'utf8'); } catch (_) { return null; } };
+  const receipt = () => JSON.parse(fs.readFileSync(path.join(dataD, M.RECEIPT_NAME), 'utf8'));
+  return { W, stateCopy, receipt, commits: () => log(stateD).split('\n').filter(Boolean).length };
+}
+
+test('D133 gate: a push is REFUSED when the state copy holds a row this machine lacks, naming the file and the count', () => {
+  const g = gateWorld(rows('L054', 'L058'), rows('L054', 'D089'));
+  const before = g.commits();
+  const r = runD(g.W, ['--push', '--no-remote']);
+  assert.strictEqual(r.code, 1, both(r));
+  assert.match(both(r), /DIVERGED/);
+  assert.match(both(r), /lap\.jsonl\s+1 row\(s\) only in the state copy \(the first at its line 2\)/, both(r));
+  assert.match(both(r), /ledger-union\.js --data .* --write --file lap\.jsonl/, 'the refusal names the recovery');
+  assert.strictEqual(g.receipt().outcome, 'REFUSED_DIVERGED');
+  assert.deepStrictEqual(g.receipt().files.map((f) => [f.path, f.state_only_lines]), [['lap.jsonl', 1]]);
+  assert.strictEqual(g.stateCopy(), rows('L054', 'L058'), 'nothing reached the state tree');
+  assert.strictEqual(g.commits(), before, 'nothing was committed');
+});
+
+test('D133 gate: a push is ALLOWED when this machine holds every row the state copy holds (local ⊇ state)', () => {
+  const g = gateWorld(rows('L054'), rows('L054', 'L058'));
+  const r = runD(g.W, ['--push', '--no-remote']);
+  assert.strictEqual(r.code, 0, both(r));
+  assert.strictEqual(g.receipt().outcome, 'LOCAL_ONLY');
+  assert.strictEqual(g.stateCopy(), rows('L054', 'L058'));
+});
+
+test('D133 gate: a state copy that does not exist yet holds nothing, so a first push of the file is allowed', () => {
+  const g = gateWorld(null, rows('D001'));
+  const r = runD(g.W, ['--push', '--no-remote']);
+  assert.strictEqual(r.code, 0, both(r));
+  assert.strictEqual(g.stateCopy(), rows('D001'));
+});
+
+test('D133 gate: counted as a MULTISET — a row held twice in the state copy and once here is one row short', () => {
+  const g = gateWorld(rows('L054', 'L054'), rows('L054', 'D089'));
+  const r = runD(g.W, ['--push', '--no-remote']);
+  assert.strictEqual(r.code, 1, both(r));
+  assert.deepStrictEqual(g.receipt().files.map((f) => [f.path, f.state_only_lines, f.first_state_only_line]), [['lap.jsonl', 1, 2]]);
+});
+
+test('D133 gate: the DRY RUN refuses too, and writes nothing — it cannot call a push fine that the real one refuses', () => {
+  const g = gateWorld(rows('L054', 'L058'), rows('D089'));
+  const r = runD(g.W, ['--push', '--dry-run']);
+  assert.strictEqual(r.code, 1, both(r));
+  assert.strictEqual(g.receipt().outcome, 'REFUSED_DIVERGED');
+  assert.deepStrictEqual(g.receipt().files.map((f) => f.state_only_lines), [2]);
+  assert.strictEqual(g.stateCopy(), rows('L054', 'L058'));
+});
+
+test('D133 gate: only fast-forward (append-only) files are gated — a file without an install mode is copied as before', () => {
+  const g = gateWorld(rows('L054'), rows('L054'));
+  fs.writeFileSync(path.join(g.W.stateD, 'data', 'board.jsonl'), 'row\nonly-in-state\n');
+  const r = runD(g.W, ['--push', '--no-remote']);
+  assert.strictEqual(r.code, 0, both(r));
+});
+
+test('D133 stateOnlyLines: complete lines only — a partial last line here does not cover a whole row there', () => {
+  const d = M.stateOnlyLines(Buffer.from('{"lap":"L054"}\n{"lap":"L05'), Buffer.from(rows('L054', 'L058')));
+  assert.deepStrictEqual([d.short, d.first, d.stateLines], [1, 2, 2]);
+});
+
+test('D133 stateOnlyLines: a last row with no newline yet is a writer mid-line, and does not cover the same complete row there', () => {
+  const d = M.stateOnlyLines(Buffer.from('{"lap":"L054"}\n{"lap":"L058"}'), Buffer.from(rows('L054', 'L058')));
+  assert.deepStrictEqual([d.short, d.first], [1, 2]);
+});
+
+const st = (me, head, machines) => ({ this_machine: me, head, machines: machines.map(([machine, commit]) => ({ machine, commit })) });
+
+test('D133 syncRelation: IN_SYNC only when this machine authored the head', () => {
+  assert.strictEqual(M.syncRelation(st('D', 'abc1234', [['D', 'abc1234'], ['L', '9486b30']])).state, 'IN_SYNC');
+});
+
+test('D133 syncRelation: BEHIND when another machine authored the head — the case the old line called "in sync"', () => {
+  const r = M.syncRelation(st('D', '9486b30', [['D', 'f70d50a'], ['L', '9486b30']]));
+  assert.strictEqual(r.state, 'BEHIND');
+  assert.match(r.line, /^NOT in sync: D behind — the head 9486b30 is L's; D last pushed f70d50a/);
+});
+
+test('D133 syncRelation: BEHIND when this machine never pushed; NONE when nobody has', () => {
+  assert.strictEqual(M.syncRelation(st('D', '9486b30', [['L', '9486b30']])).state, 'BEHIND');
+  assert.strictEqual(M.syncRelation(st('D', null, [])).state, 'NONE');
+});
+
+test('D133 syncRelation: DIVERGED outranks the heads when rows were compared and the state copy holds rows this machine lacks', () => {
+  const r = M.syncRelation(st('D', 'abc1234', [['D', 'abc1234']]), [{ path: 'lap.jsonl', state_only_lines: 3 }]);
+  assert.strictEqual(r.state, 'DIVERGED');
+  assert.match(r.line, /lap\.jsonl \(3\)/);
+});
+
+test('D133 syncRelation: short and long hashes of one commit are the same commit', () => {
+  assert.strictEqual(M.syncRelation(st('D', 'abc1234', [['D', 'abc1234def']])).state, 'IN_SYNC');
+});
+
+test('D133 --status tells BEHIND, DIVERGED and IN_SYNC apart, and records the relation in the status file', () => {
+  const g = gateWorld(rows('L054'), rows('L054'));
+  const s1 = runD(g.W, ['--status']);
+  assert.strictEqual(s1.code, 0, both(s1));
+  assert.match(s1.out, /^NOT in sync: TESTD behind/m, s1.out);
+  fs.writeFileSync(path.join(g.W.dataD, 'lap.jsonl'), rows('D089'));
+  const s2 = runD(g.W, ['--status']);
+  assert.match(s2.out, /^NOT in sync: DIVERGED .*lap\.jsonl \(1\)/m, s2.out);
+  fs.writeFileSync(path.join(g.W.dataD, 'lap.jsonl'), rows('L054', 'D089'));
+  assert.strictEqual(runD(g.W, ['--push', '--no-remote']).code, 0);
+  const s3 = runD(g.W, ['--status']);
+  assert.match(s3.out, /^in sync: TESTD authored the head/m, s3.out);
+  const file = JSON.parse(fs.readFileSync(path.join(g.W.dataD, M.STATUS_NAME), 'utf8'));
+  assert.deepStrictEqual([file.relation.state, file.relation.rows_compared], ['IN_SYNC', true]);
+});
+
+test('D133 the pull line no longer says "in sync" for a machine that is behind', () => {
+  const w = twoMachines({ 'board.jsonl': 'row\n' });
+  const r = runD(w, ['--pull']);
+  assert.strictEqual(r.code, 0, both(r));
+  assert.ok(!/^\s*in sync:/m.test(r.out), r.out);
+  assert.match(r.out, /NOT in sync: TESTD behind/);
+});
+
 console.log('');
 console.log(`state-sync.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

@@ -370,7 +370,7 @@ function machineHeads(STATE) {
   return out;
 }
 
-function writeStatus(DATA, STATE) {
+function writeStatus(DATA, STATE, diverged) {
   const head = gitTry(STATE, ['rev-parse', '--short', 'HEAD']);
   const status = {
     written: new Date().toISOString(),
@@ -381,6 +381,8 @@ function writeStatus(DATA, STATE) {
     machines: machineHeads(STATE),
     limit: 'AS OF THIS MACHINE\'S LAST PUSH OR PULL. It cannot see a machine that has synced since.',
   };
+  // D133: ADDED, never renamed — chain-status reads this file. `rows_compared` says whether DIVERGED could be seen.
+  status.relation = { ...syncRelation(status, diverged), rows_compared: Array.isArray(diverged) };
   try { fs.writeFileSync(path.join(DATA, STATUS_NAME), JSON.stringify(status, null, 2)); } catch (_) { /* a status file is not worth failing a sync over */ }
   return status;
 }
@@ -436,6 +438,62 @@ function ensureTreeSettings(STATE) {
   return written;
 }
 
+// ── the push's divergence gate (D133) ───────────────────────────────────────────────────────
+//
+// WHY. A push copies this machine's travelling files OVER the state tree's. For an append-only file
+// with more than one writer (the manifest's `install: "fast-forward"` set) that is only safe when this
+// machine already holds every row the state copy holds; otherwise the push REMOVES the other machine's
+// rows from the head. cmdPush never checked (A's D132 §4: `appendOnlyCompare` ran only on the pull side),
+// and it measured 0 only because D106's union had brought L's rows in. The Leave window is about to
+// call this push with no one reading its output (A, D133), so the check is here, before the first byte.
+//
+// THE UNIT IS writeUnion's STEP 7: complete lines, as a MULTISET. A line the state copy holds twice and
+// this machine once is one row short, not zero, so a set test cannot make this check (A's FATAL-1: the
+// board carried 7,514 repeated lines). A partial last line on this side is a writer mid-line and is not
+// yet a row (`completeLines`).
+
+/** How many complete lines of `stateBuf` `localBuf` does not cover, as a multiset, and where the first sits. */
+function stateOnlyLines(localBuf, stateBuf) {
+  const have = new Map();
+  for (const l of LU.completeLines(localBuf, 0).lines) have.set(l, (have.get(l) || 0) + 1);
+  const stateLines = LU.completeLines(stateBuf, 0).lines;
+  let short = 0, first = null;
+  stateLines.forEach((l, i) => {
+    const n = have.get(l) || 0;
+    if (n > 0) have.set(l, n - 1);
+    else { short++; if (first === null) first = i + 1; }
+  });
+  return { short, first, stateLines: stateLines.length };
+}
+
+/**
+ * The travelling append-only files whose state copy holds rows this machine's copy lacks. `localBuf(rel)`
+ * returns this machine's bytes (the push passes the stable reads it already took). A state copy that does
+ * not exist yet holds nothing, so it can lack nothing: a first push of a file is allowed.
+ */
+function pushDivergence(travels, rules, stateDataRoot, localBuf) {
+  const out = [];
+  for (const t of travels) {
+    if (installModeFor(t.rel, rules) !== 'fast-forward') continue;
+    let stateBuf;
+    try { stateBuf = fs.readFileSync(path.join(stateDataRoot, t.rel.split('/').join(path.sep))); } catch (_) { continue; }
+    const local = localBuf(t.rel);
+    if (!local) continue;
+    const d = stateOnlyLines(local, stateBuf);
+    if (d.short) out.push({ path: t.rel, state_only_lines: d.short, first_state_only_line: d.first, state_lines: d.stateLines });
+  }
+  return out;
+}
+
+function divergenceRefusal(diverged, DATA) {
+  return `DIVERGED — ${diverged.length} travelling append-only file(s) in the state tree hold rows this machine's copy lacks.\n` +
+    '  Pushing would REMOVE them from the head, so NOTHING was written, committed or pushed:\n' +
+    diverged.map((d) => `  ${d.path}  ${d.state_only_lines} row(s) only in the state copy (the first at its line ${d.first_state_only_line})`).join('\n') +
+    '\n  RECOVER: union them into this machine first, one file at a time, then push again:\n' +
+    diverged.map((d) => `      node consonance/tools/ledger-union.js --data "${DATA}" --write --file ${d.path}`).join('\n') +
+    '\n  (the union keeps the original beside the file as <file>.pre-union-<stamp>).';
+}
+
 // ── push ─────────────────────────────────────────────────────────────────────────────────────
 
 function cmdPush(args) {
@@ -489,6 +547,10 @@ function cmdPush(args) {
   const destRoot = path.join(STATE, 'data');
   const files = [];
   const refused = [];
+  // D133: every file is READ first and WRITTEN only after the divergence gate has passed. The first build wrote
+  // each file into the state tree inside this loop, so a check placed after it would compare against bytes it
+  // had just overwritten.
+  const bufs = new Map();
   let attemptsMax = 0;
   for (const t of c.travels) {
     const src = path.join(DATA, t.rel.split('/').join(path.sep));
@@ -500,11 +562,7 @@ function cmdPush(args) {
     }
     const entry = { path: t.rel, bytes: r.buf.length, sha256: sha256(r.buf), attempts: r.attempts };
     files.push(entry);
-    if (!dryRun) {
-      const dest = path.join(destRoot, t.rel.split('/').join(path.sep));
-      fs.mkdirSync(path.dirname(dest), { recursive: true });
-      fs.writeFileSync(dest, r.buf);
-    }
+    bufs.set(t.rel, r.buf);
   }
 
   // A REFUSED PATH ABORTS THE WHOLE PUSH. It does not push the rest and mention this one: a set
@@ -519,6 +577,22 @@ function cmdPush(args) {
         '\n  Retry between turns. If a path never settles, say so — that is the quiescent-moment\n' +
         '  finding, and it changes the push CADENCE, not this tool.', 1
     ), 'DEFERRED_UNSETTLED', { paths: refused.map((r) => r.rel), tries: STABLE_TRIES });
+  }
+
+  // THE DIVERGENCE GATE (D133), before anything reaches the state tree — and before the dry run returns, so a dry run
+  // cannot say a push is fine when the real one would refuse. Exit 1, like every other refusal here; the receipt's
+  // outcome names it for a caller that gates on WHAT HAPPENED (the Leave window, A's D133).
+  const diverged = pushDivergence(c.travels, m.rules, destRoot, (rel) => bufs.get(rel));
+  if (diverged.length) {
+    return done(refuse(divergenceRefusal(diverged, DATA), 1), 'REFUSED_DIVERGED', { files: diverged });
+  }
+
+  if (!dryRun) {
+    for (const [rel, buf] of bufs) {
+      const dest = path.join(destRoot, rel.split('/').join(path.sep));
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.writeFileSync(dest, buf);
+    }
   }
 
   const total = files.reduce((n, f) => n + f.bytes, 0);
@@ -1744,16 +1818,53 @@ function refuse(msg, code) {
   return code;
 }
 
+/**
+ * THE RELATION, as one of three states (D133). The line this replaced printed `in sync: <every machine's head>`
+ * whenever any machine had pushed, so on D, 352 hours behind L's head, it said "in sync" (A's D132 §4). Pure:
+ *   DIVERGED  the state copy of a travelling append-only file holds rows this machine lacks (only when `diverged`
+ *             was measured — `--status` measures it; the push and pull lines do not, and say only the heads);
+ *   IN_SYNC   this machine authored the head (its machine row's commit IS the head);
+ *   BEHIND    another machine authored the head, or this one never pushed.
+ * Hashes are compared by prefix, because `rev-parse --short` and `%h` may abbreviate to different lengths.
+ */
+function syncRelation(st, diverged) {
+  const me = st.this_machine;
+  const same = (a, b) => !!a && !!b && (a.startsWith(b) || b.startsWith(a));
+  const heads = st.machines.map((x) => `${x.machine} ${x.commit || 'never'}`).join(' · ');
+  const mine = st.machines.find((x) => x.machine === me);
+  const author = st.machines.find((x) => same(x.commit, st.head));
+  if (diverged && diverged.length) {
+    return { state: 'DIVERGED', line: `NOT in sync: DIVERGED — the state copy holds rows ${me} lacks in ` +
+      diverged.map((d) => `${d.path} (${d.state_only_lines})`).join(', ') + ` · heads ${heads}. A push is refused until they are unioned in.` };
+  }
+  if (!st.machines.length) return { state: 'NONE', line: 'no machine has pushed yet' };
+  if (mine && same(mine.commit, st.head)) return { state: 'IN_SYNC', line: `in sync: ${me} authored the head ${st.head} · heads ${heads}` };
+  return { state: 'BEHIND', line: `NOT in sync: ${me} behind — the head ${st.head || '?'} is ${author ? author.machine + "'s" : 'not any machine row\'s'}; ` +
+    `${me} last pushed ${mine && mine.commit ? mine.commit : 'never'} · heads ${heads}` };
+}
+
 function printHeads(st) {
-  if (!st.machines.length) { console.log('  in sync: no machine has pushed yet'); return; }
-  console.log('  in sync: ' + st.machines.map((m) => `${m.machine} ${m.commit || 'never'}`).join(' · '));
+  console.log('  ' + syncRelation(st).line);
 }
 
 function cmdStatus() {
   const DATA = dataDir();
   const STATE = stateDir();
   if (!fs.existsSync(path.join(STATE, '.git'))) return refuse(`state tree is not a git repository: ${STATE}`, 2);
-  const st = writeStatus(DATA, STATE);
+  // --status is the one reader that COMPARES ROWS, with the push gate's own function and unit, so "behind" (a push
+  // would bring the head here) is told apart from "diverged" (a push would be refused).
+  let diverged = null;
+  if (DATA && fs.existsSync(DATA)) {
+    const m = loadManifest();
+    if (!m.errors.length) {
+      const c = classify(DATA, m);
+      diverged = pushDivergence(c.travels, m.rules, path.join(STATE, 'data'), (rel) => {
+        try { return fs.readFileSync(path.join(DATA, rel.split('/').join(path.sep))); } catch (_) { return null; }
+      });
+    }
+  }
+  const st = writeStatus(DATA, STATE, diverged);
+  console.log(st.relation.line);
   console.log(JSON.stringify(st, null, 2));
   return 0;
 }
@@ -1779,5 +1890,6 @@ module.exports = {
   machineHeads, machineTag, stateDir, dataDir, ensureTreeSettings, remotePrivacy, writeStatus, gitTry,
   FILE_CAP, STABLE_TRIES, SETTLE_MS, INDEX_NAME, STATUS_NAME, COMPLETION_NAME, RECEIPT_NAME,
   unionAtLaunchOn, phase2, countsByKey, timeParseRefusal, danglingUnions, installModeFor, unionVerdict,
+  stateOnlyLines, pushDivergence, syncRelation,
   writeCompletion,
 };

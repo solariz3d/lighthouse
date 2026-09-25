@@ -3,7 +3,7 @@
   "generated_by": "node consonance/tools/portable-paths.js --update",
   "counts": {
     "FATAL-DEFAULT": 24,
-    "BENIGN-TEST": 143,
+    "BENIGN-TEST": 144,
     "REVIEW": 17,
     "DISGUISED": 14,
     "BENIGN-MESSAGE": 5,
@@ -467,6 +467,13 @@
       "verdict": "BENIGN-TEST",
       "text": "let kept = vec![KeptPane { pane: \"k1\".into(), cwd: \"C:\\\\x\".into(), label: String::new() }];",
       "key": "consonance/src-tauri/src/main.rs\u0000let kept = vec![KeptPane { pane: \"k1\".into(), cwd: \"C:\\\\x\".into(), label: String::new() }];\u0000#1"
+    },
+    {
+      "file": "consonance/src-tauri/src/main.rs",
+      "detector": "DRIVE",
+      "verdict": "BENIGN-TEST",
+      "text": "let out = \"consonance close · D · C:\\\\data -> C:\\\\state\\n published: main 1a2b3c4 -> origin (was 9486b30)\\n remote confirms: refs/heads/main = 1a2b3c4 (asked the remote, not the push)\\n\";",
+      "key": "consonance/src-tauri/src/main.rs\u0000let out = \"consonance close · D · C:\\\\data -> C:\\\\state\\n published: main 1a2b3c4 -> origin (was 9486b30)\\n remote confirms: refs/heads/main = 1a2b3c4 (asked the remote, not the push)\\n\";\u0000#1"
     },
     {
       "file": "consonance/src-tauri/src/main.rs",

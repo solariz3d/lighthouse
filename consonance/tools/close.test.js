@@ -474,6 +474,46 @@ test('close.js does not touch the record repository', () => {
   assert.ok(!/\bREPO\b/.test(code), 'and no record-repo root resolved at all');
 });
 
+// ── D133: close.js:319-321 printed "in sync:" over ANY pair of heads — the false green D132 found in the pulse ──────
+// After a close, this machine is at the head and the other may not be. The line must say which is behind.
+test('D133: every machine at the head reads "in sync:", in the old words', () => {
+  assert.strictEqual(C.syncLine([{ machine: 'D', commit: '1a2b3c4' }, { machine: 'L', commit: '1a2b3c4' }], '1a2b3c4'), 'in sync: D 1a2b3c4 · L 1a2b3c4');
+});
+
+test('D133: a machine whose last push is not the head reads NOT in sync, and is named as behind', () => {
+  const l = C.syncLine([{ machine: 'D', commit: '1a2b3c4' }, { machine: 'L', commit: '9486b30' }], '1a2b3c4');
+  assert.ok(/^NOT in sync: /.test(l), l);
+  assert.ok(/L behind — last pushed 9486b30/.test(l), l);
+  assert.ok(/D 1a2b3c4 \(head\)/.test(l), l);
+});
+
+test('D133: a machine that never pushed, beside a head, reads "never pushed"', () => {
+  const l = C.syncLine([{ machine: 'D', commit: null }, { machine: 'L', commit: '9486b30' }], '9486b30');
+  assert.ok(/NOT in sync: D never pushed/.test(l), l);
+});
+
+test('D133: no machine has pushed — the old words', () => {
+  assert.strictEqual(C.syncLine([], null), 'in sync: no machine has pushed yet');
+});
+
+test('D133: with no known head the line is the old list (it cannot say who is behind)', () => {
+  assert.strictEqual(C.syncLine([{ machine: 'D', commit: 'f70d50a' }, { machine: 'L', commit: '9486b30' }], null), 'in sync: D f70d50a · L 9486b30');
+});
+
+test('D133: a REAL close after another machine published earlier prints that machine as behind, never "in sync"', () => {
+  // Mutant C5 (finish() printing the old line) survived the syncLine unit tests: this runs the whole close.
+  const w = world({ 'board.jsonl': 'row\n' });
+  fs.mkdirSync(path.join(w.state, 'machines'), { recursive: true });
+  fs.writeFileSync(path.join(w.state, 'machines', 'OTHER.json'), JSON.stringify({ machine: 'OTHER', at: '2026-09-10T07:39:42.374Z' }) + '\n');
+  execFileSync('git', ['-C', w.state, 'add', '-A']);
+  execFileSync('git', ['-C', w.state, 'commit', '-q', '-m', 'state: OTHER']);
+  execFileSync('git', ['-C', w.state, 'push', '-q', 'origin', 'main'], { stdio: ['ignore', 'pipe', 'pipe'] });
+  const r = close(w);
+  assert.strictEqual(r.closed, true, r.text);
+  assert.ok(/NOT in sync: OTHER behind — last pushed [0-9a-f]{7} · TESTL [0-9a-f]{7} \(head\)/.test(r.text), r.text);
+  assert.ok(!/^\s*in sync:/m.test(r.text), r.text);
+});
+
 console.log('');
 console.log(`close.test.js: ${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

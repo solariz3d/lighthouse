@@ -317,11 +317,23 @@ function runClose(o) {
 function finish(out, DATA, STATE, checkOnly, line) {
   if (!checkOnly) { try { sync.writeStatus(DATA, STATE); } catch (_) { /* a status file is not worth failing a close over */ } }
   const heads = sync.machineHeads(STATE);
-  out('  in sync: ' + (heads.length
-    ? heads.map((m) => `${m.machine} ${m.commit || 'never'}`).join(' · ')
-    : 'no machine has pushed yet'));
+  const head = sync.gitTry(STATE, ['rev-parse', '--short', 'HEAD']);
+  out('  ' + syncLine(heads, head.ok ? head.out : null));
   out(line);
   return { closed: true, why: line, code: 0 };
+}
+
+/**
+ * D133 — this line printed `in sync:` over ANY pair of machine heads (it was :319-321), the same false green D132 found in
+ * the pulse: after D's close D is at the head and L need not be, and the line still said "in sync". With the state `head`
+ * known, a machine whose last push is not the head is BEHIND, and is named; every machine at the head keeps the old words.
+ * With no head known (a state tree with no commit yet) it cannot say who is behind, so it prints the old list.
+ */
+function syncLine(heads, head) {
+  if (!heads.length) return 'in sync: no machine has pushed yet';
+  if (!head || heads.every((m) => m.commit === head)) return 'in sync: ' + heads.map((m) => `${m.machine} ${m.commit || 'never'}`).join(' · ');
+  return 'NOT in sync: ' + heads.map((m) => (!m.commit ? `${m.machine} never pushed`
+    : m.commit === head ? `${m.machine} ${m.commit} (head)` : `${m.machine} behind — last pushed ${m.commit}`)).join(' · ');
 }
 
 function main() {
@@ -337,4 +349,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { runClose, readReceipt, remoteHead, RETRY_WAIT_MS };
+module.exports = { runClose, readReceipt, remoteHead, syncLine, RETRY_WAIT_MS };
