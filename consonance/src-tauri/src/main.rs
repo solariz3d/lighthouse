@@ -11101,6 +11101,54 @@ fn keep_warm_missed_row(short: &str, role: &str, since_start: Duration, last_ski
     )
 }
 
+/// D138: when the transcript's LAST message is an open AskUserQuestion, the seat is waiting on the keeper's answer —
+/// not idle past a cache window it missed. Returns that question's `timestamp` as written, or None. The same rule as
+/// `chain-status.js` openQuestion: the last `user`/`assistant` row counts (sidechain rows skipped, as `last_request`
+/// skips them; attachment and system rows are neither side of a turn); if it is an assistant row carrying a
+/// `tool_use` named AskUserQuestion, its answer — a later `user` tool_result — has not landed.
+/// THE CASE: the librarian's turn sat on one from 02:04:45Z to 05:32:16Z on 2026-09-25 and nothing said so
+/// (loop/stall_trace_2026-09-23.md, corrected at b348c7f).
+fn awaiting_answer_since(jsonl: &str) -> Option<String> {
+    let last = jsonl
+        .lines()
+        .rev()
+        .filter_map(|l| serde_json::from_str::<serde_json::Value>(l).ok())
+        .filter(|v| v.get("isSidechain").and_then(|x| x.as_bool()) != Some(true))
+        .find(|v| matches!(v.get("type").and_then(|t| t.as_str()), Some("user") | Some("assistant")))?;
+    if last.get("type").and_then(|t| t.as_str()) != Some("assistant") {
+        return None;
+    }
+    let asks = last
+        .get("message")
+        .and_then(|m| m.get("content"))
+        .and_then(|c| c.as_array())
+        .is_some_and(|a| {
+            a.iter().any(|b| {
+                b.get("type").and_then(|x| x.as_str()) == Some("tool_use")
+                    && b.get("name").and_then(|x| x.as_str()) == Some("AskUserQuestion")
+            })
+        });
+    if !asks {
+        return None;
+    }
+    last.get("timestamp").and_then(|x| x.as_str()).map(|s| s.to_string())
+}
+
+/// The keep-warm report row for one crossing (D138). A seat waiting on the keeper's answer is SAID so — "waiting on
+/// YOUR answer since <t>" — because a wait on the keeper is not a missed cache window and must not read as a stall.
+/// Every other case is `keep_warm_missed_row`, word for word. `<t>` is the question's own UTC time, cut to HH:MM:SSZ.
+/// The Third Place's row keeps its rule and carries no numbers.
+fn keep_warm_report_row(short: &str, role: &str, since_start: Duration, last_skip: Option<&str>, awaiting: Option<&str>) -> String {
+    let Some(t) = awaiting else {
+        return keep_warm_missed_row(short, role, since_start, last_skip);
+    };
+    if role == "third_place" {
+        return "keep-warm -> the Third Place: waiting on YOUR answer (an AskUserQuestion is open) — not a missed cache window".to_string();
+    }
+    let hms = t.get(11..19).filter(|_| t.len() >= 19 && t.as_bytes()[10] == b'T').map(|s| format!("{s}Z")).unwrap_or_else(|| t.to_string());
+    format!("keep-warm -> {short} ({role}): waiting on YOUR answer since {hms} (an AskUserQuestion is open) — not a missed cache window")
+}
+
 /// The per-seat off switch: `<data_dir>/keep-warm-off.json`, a JSON list of pane ids, short ids or
 /// letters. Absent or blank switches nobody off. ANYTHING ELSE IS REFUSED (None) and the tick pings
 /// nobody: a malformed "off" read as "all on" would ping the very seat the keeper tried to stop.
@@ -11236,7 +11284,9 @@ fn keep_warm_tick(app: &AppHandle) {
             if keep_warm_missed(activated, since_start, reported) {
                 if let Ok(mut m) = app.state::<KeepWarmMissed>().0.lock() { m.insert(pane.clone(), l.started_ms); }
                 let why = app.state::<KeepWarmLastSkip>().0.lock().ok().and_then(|m| m.get(&pane).copied());
-                chair_audit(app, keep_warm_missed_row(short_id(&pane), &role, since_start.unwrap_or_default(), why));
+                // D138: a seat whose turn is an open AskUserQuestion is waiting on the keeper, and the row says so.
+                let awaiting = tail.as_deref().and_then(awaiting_answer_since);
+                chair_audit(app, keep_warm_report_row(short_id(&pane), &role, since_start.unwrap_or_default(), why, awaiting.as_deref()));
             }
         }
     }
@@ -20245,6 +20295,54 @@ mod keep_warm_tests {
         assert!(keep_warm_missed_row("abcd1234", "committee", Duration::from_secs(61 * 60), None).contains("no reason recorded"));
         let tp = keep_warm_missed_row("3d000000", "third_place", Duration::from_secs(61 * 60), Some("x"));
         assert!(tp.contains("MISSED") && !tp.contains("61"), "the Third Place's numbers stay off the shared board: {tp}");
+    }
+
+    // ── D138: a seat waiting on the keeper's AskUserQuestion is SAID so, not reported as a missed window ──────────
+    fn tx_ask(ts: &str, id: &str) -> String {
+        format!(r#"{{"type":"assistant","timestamp":"{ts}","message":{{"role":"assistant","content":[{{"type":"tool_use","id":"{id}","name":"AskUserQuestion","input":{{}}}}]}}}}"#)
+    }
+    fn tx_result(ts: &str, id: &str) -> String {
+        format!(r#"{{"type":"user","timestamp":"{ts}","message":{{"role":"user","content":[{{"type":"tool_result","tool_use_id":"{id}","content":"answered"}}]}}}}"#)
+    }
+    fn tx_bash(ts: &str) -> String {
+        format!(r#"{{"type":"assistant","timestamp":"{ts}","message":{{"role":"assistant","content":[{{"type":"tool_use","id":"b1","name":"Bash","input":{{}}}}]}}}}"#)
+    }
+    const ASK_TS: &str = "2026-09-25T02:04:45.342Z";   // the real case's question (the librarian's transcript)
+
+    #[test]
+    fn an_open_ask_user_question_is_read_as_waiting_on_the_keeper() {
+        let open = [tx_bash("2026-09-25T02:04:39.978Z"), tx_ask(ASK_TS, "q1")].join("\n");
+        assert_eq!(awaiting_answer_since(&open).as_deref(), Some(ASK_TS), "the last message is the open question");
+        let attach = format!("{open}\n{{\"type\":\"attachment\",\"timestamp\":\"2026-09-25T02:04:46Z\"}}");
+        assert_eq!(awaiting_answer_since(&attach).as_deref(), Some(ASK_TS), "an attachment row is neither side of a turn");
+        let side = format!("{open}\n{{\"type\":\"assistant\",\"isSidechain\":true,\"timestamp\":\"2026-09-25T02:05:00Z\",\"message\":{{\"content\":[]}}}}");
+        assert_eq!(awaiting_answer_since(&side).as_deref(), Some(ASK_TS), "sidechain rows are skipped, as last_request skips them");
+        let torn = format!("{{\"type\":\"assist\n{open}");
+        assert_eq!(awaiting_answer_since(&torn).as_deref(), Some(ASK_TS), "a tail cut mid-row still reads its last message");
+    }
+
+    #[test]
+    fn an_answered_question_or_a_busy_turn_is_not_waiting() {
+        let answered = [tx_ask(ASK_TS, "q1"), tx_result("2026-09-25T05:32:16.649Z", "q1")].join("\n");
+        assert_eq!(awaiting_answer_since(&answered), None, "it clears the moment the tool_result lands");
+        assert_eq!(awaiting_answer_since(&tx_bash(ASK_TS)), None, "a running Bash turn is busy, not waiting on the keeper");
+        let typed_over = format!("{}\n{{\"type\":\"user\",\"timestamp\":\"2026-09-25T02:06:00Z\",\"message\":{{\"content\":\"do this instead\"}}}}", tx_ask(ASK_TS, "q1"));
+        assert_eq!(awaiting_answer_since(&typed_over), None, "a new prompt after the question means it is no longer open");
+        assert_eq!(awaiting_answer_since(""), None);
+    }
+
+    #[test]
+    fn the_report_row_says_waiting_on_your_answer_and_keeps_every_other_row_word_for_word() {
+        let d = Duration::from_secs(61 * 60);
+        let w = keep_warm_report_row("0c0c0c0b", "librarian", d, Some("gate: working"), Some(ASK_TS));
+        assert!(w.contains("waiting on YOUR answer since 02:04:45Z"), "{w}");
+        assert!(!w.contains("MISSED") && !w.contains("61 min"), "a wait on the keeper is not a missed window: {w}");
+        for why in [Some("composer not read empty: never over the keeper's typing"), None] {
+            assert_eq!(keep_warm_report_row("abcd1234", "committee", d, why, None), keep_warm_missed_row("abcd1234", "committee", d, why),
+                "with no open question the row is the existing MISSED row, word for word");
+        }
+        let tp = keep_warm_report_row("3d000000", "third_place", d, Some("x"), Some(ASK_TS));
+        assert!(tp.contains("waiting on YOUR answer") && !tp.chars().any(|c| c.is_ascii_digit()), "the Third Place carries no numbers: {tp}");
     }
 
     #[test]

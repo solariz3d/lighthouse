@@ -40,6 +40,10 @@ function run(tool, args, ledger) {
   return { code: r.status, stdout: r.stdout || '', stderr: r.stderr || '' };
 }
 const mod = () => { delete require.cache[require.resolve('./chain-status.js')]; return require('./chain-status.js'); };
+// D138: clause 6 reads seats' transcripts from ~/.claude/projects. No test may read the REAL one (a live seat waiting on
+// the keeper would leak into every line here), so the whole file, and every CLI it spawns, points at an empty temp dir.
+// Tests that need transcripts build their own and pass it as `projectsDir`.
+process.env.CONSONANCE_PROJECTS_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-projects-empty-'));
 
 // ---------------------------------------------------------------- reader: with and without
 
@@ -1559,4 +1563,142 @@ test('UNRECEIVED — with NO open lap it still prints: an unreceived ring is a f
   assert.strictEqual(qline([], T0 + 12 * MIN, { lap: null }), '', 'the control must be the no-text state');
   const t = qline([SEND(T0, 'Unconfirmed', RING2)], T0 + 12 * MIN, { lap: null });
   assert.match(t, /UNRECEIVED librarian→chair 12m/, 'silent with no lap open: ' + t);
+});
+
+// ── D138 · WAITING ON YOUR ANSWER — a seat whose last message is an open AskUserQuestion ─────────────────────────────
+// The case: the librarian's turn sat on an AskUserQuestion 02:04:45Z → 05:32:16Z and nothing said so. The fixtures are
+// transcript rows in Claude Code's shape, in a temp projects dir; the seat is "live" by a row of its own on the board.
+const ISO = (ms) => new Date(ms).toISOString();
+const TX = {
+  ask: (ts, id) => ({ type: 'assistant', timestamp: ISO(ts), message: { role: 'assistant', content: [
+    { type: 'tool_use', id, name: 'AskUserQuestion', input: { questions: [{ question: 'stand-in question?' }] } }] } }),
+  result: (ts, id) => ({ type: 'user', timestamp: ISO(ts), message: { role: 'user', content: [
+    { type: 'tool_result', tool_use_id: id, content: 'Your questions have been answered: stand-in' }] } }),
+  bash: (ts, id) => ({ type: 'assistant', timestamp: ISO(ts), message: { role: 'assistant', content: [
+    { type: 'tool_use', id, name: 'Bash', input: { command: 'sleep 600' } }] } }),
+  said: (ts, text) => ({ type: 'assistant', timestamp: ISO(ts), message: { role: 'assistant', content: [{ type: 'text', text }] } }),
+  typed: (ts, text) => ({ type: 'user', timestamp: ISO(ts), message: { role: 'user', content: text } }),
+  attach: (ts) => ({ type: 'attachment', timestamp: ISO(ts), attachment: { type: 'stand-in' } }),
+};
+const SEAT_ROW = (ts, sid) => ({ pane: sid, role: 'assistant', ts, ts_source: 'transcript', text: 'a line of its own' });
+
+/** A projects dir holding `{ <dir>: { <sid>: [rows] } }`, a store whose board makes the listed sids live, and the line. */
+function wline(transcripts, boardRows, now, opts = {}) {
+  const proj = fs.mkdtempSync(path.join(os.tmpdir(), 'chain-projects-'));
+  for (const [dir, bySid] of Object.entries(transcripts)) {
+    fs.mkdirSync(path.join(proj, dir), { recursive: true });
+    for (const [sid, rows] of Object.entries(bySid)) {
+      fs.writeFileSync(path.join(proj, dir, sid + '.jsonl'), (opts.prefix || '') + rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+    }
+  }
+  const s = store(opts.lap === null ? [] : WORKING(T0 - 20 * MIN), boardRows, { lettersMap: opts.lettersMap || LET_WITH_LIB });
+  if (opts.launchedAt) fs.writeFileSync(path.join(s.dir, 'stick-waiter.lock'), JSON.stringify({ pid: 1, at: new Date(opts.launchedAt).toISOString() }));
+  const r = mod().line({ ledger: s.ledger, now, dirty: 0, projectsDir: proj });
+  s.cleanup(); fs.rmSync(proj, { recursive: true, force: true });
+  return r.text || '';
+}
+const LIBDIR = 'C--Consonance-instances-librarian';
+
+test('WAITING — a transcript ending in an unanswered AskUserQuestion prints "<seat> waiting on YOUR answer since <t>"', () => {
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.said(T0 - MIN, 'asking now'), TX.ask(T0, 'toolu_q1')] } }, [SEAT_ROW(T0 - MIN, LIB)], T0 + 90 * MIN);
+  assert.match(t, /librarian waiting on YOUR answer since [0-9]{2}:[0-9]{2}/, t);
+});
+
+test('WAITING — the same transcript WITH its tool_result prints nothing: it clears the moment the answer lands', () => {
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.ask(T0, 'toolu_q1'), TX.result(T0 + 60 * MIN, 'toolu_q1'), TX.attach(T0 + 60 * MIN)] } },
+    [SEAT_ROW(T0 - MIN, LIB)], T0 + 90 * MIN);
+  assert.doesNotMatch(t, /waiting on YOUR answer/, t);
+});
+
+test('WAITING — a normal busy turn (last message a running Bash tool_use) is NOT "waiting on YOUR answer"', () => {
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.typed(T0 - MIN, 'go'), TX.bash(T0, 'toolu_b1')] } }, [SEAT_ROW(T0 - MIN, LIB)], T0 + 90 * MIN);
+  assert.doesNotMatch(t, /waiting on YOUR answer/, t);
+});
+
+test('WAITING — an idle seat whose last message is its own reply is NOT waiting on an answer', () => {
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.typed(T0 - MIN, 'go'), TX.said(T0, 'done.')] } }, [SEAT_ROW(T0 - MIN, LIB)], T0 + 90 * MIN);
+  assert.doesNotMatch(t, /waiting on YOUR answer/, t);
+});
+
+test('WAITING — rows written around a turn (an attachment after the question) do not hide the open question', () => {
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.ask(T0, 'toolu_q1'), TX.attach(T0 + 1000)] } }, [SEAT_ROW(T0 - MIN, LIB)], T0 + 10 * MIN);
+  assert.match(t, /librarian waiting on YOUR answer/, t);
+});
+
+test('WAITING — a question typed over (the keeper pressed on with a new prompt) is no longer waiting', () => {
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.ask(T0, 'toolu_q1'), TX.typed(T0 + MIN, 'never mind, do this instead')] } },
+    [SEAT_ROW(T0 - MIN, LIB)], T0 + 10 * MIN);
+  assert.doesNotMatch(t, /waiting on YOUR answer/, t);
+});
+
+test('WAITING — a question opened before the app last launched died with its dialog, and is not reported', () => {
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.ask(T0, 'toolu_q1')] } }, [SEAT_ROW(T0 - MIN, LIB)], T0 + 10 * MIN, { launchedAt: T0 + 5 * MIN });
+  assert.doesNotMatch(t, /waiting on YOUR answer/, t);
+});
+
+test('WAITING — a lettered pane is named by its letter, and the chair by "chair"', () => {
+  const t = wline({ 'C--Consonance-instances-sibling-x': { [A]: [TX.ask(T0, 'toolu_a')] }, 'C--Consonance-instances-main': { [MAIN_T]: [TX.ask(T0 + MIN, 'toolu_m')] } },
+    [SEAT_ROW(T0 - MIN, A), SEAT_ROW(T0 - MIN, MAIN_T)], T0 + 10 * MIN);
+  assert.match(t, /A waiting on YOUR answer since [0-9]{2}:[0-9]{2}, chair waiting on YOUR answer since/, t);
+});
+
+test('WAITING — only seats live on the board are read: a seat with no board row is not scanned', () => {
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.ask(T0, 'toolu_q1')] } }, [SEAT_ROW(T0 - MIN, A)], T0 + 10 * MIN);
+  assert.doesNotMatch(t, /waiting on YOUR answer/, t);
+});
+
+test('WAITING — a transcript outside the room\'s own dirs is still found (the room\'s dirs are an ORDER, not a filter)', () => {
+  const t = wline({ 'C--Users-someone-elsewhere': { [LIB]: [TX.ask(T0, 'toolu_q1')] } }, [SEAT_ROW(T0 - MIN, LIB)], T0 + 10 * MIN);
+  assert.match(t, /librarian waiting on YOUR answer/, t);
+});
+
+test('WAITING — only the TAIL is read: a transcript larger than the tail, cut mid-row, still reads its last message', () => {
+  const big = TX.said(T0 - 2 * MIN, 'x'.repeat(400 * 1024));
+  const t = wline({ [LIBDIR]: { [LIB]: [big, TX.ask(T0, 'toolu_q1')] } }, [SEAT_ROW(T0 - MIN, LIB)], T0 + 10 * MIN);
+  assert.match(t, /librarian waiting on YOUR answer/, t);
+});
+
+test('WAITING — with NO open lap it still prints: the keeper owes an answer whether or not a lap is open', () => {
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.ask(T0, 'toolu_q1')] } }, [SEAT_ROW(T0 - MIN, LIB)], T0 + 10 * MIN, { lap: null });
+  assert.match(t, /librarian waiting on YOUR answer/, 'silent with no lap open: ' + t);
+});
+
+// THE REAL CASE, from the librarian's own transcript (0c0c0c0b-….jsonl): its D135 ring at 02:04:39.978Z → result
+// 02:04:40.351Z, then AskUserQuestion toolu_…AUw8PJ at 02:04:45.342Z, answered at 05:32:16.649Z, with an attachment row
+// at 05:32:16.657Z. Timestamps, row types and tool ids are the transcript's; the texts are stand-ins (the real ones carry
+// run-2 content). During the wait the line must name it; after the answer it must not.
+test('WAITING — the real 02:04:45Z → 05:32:16Z case: named while open, silent once answered', () => {
+  const T = (s) => Date.parse(s);
+  const before = [
+    { type: 'assistant', timestamp: '2026-09-25T02:04:39.978Z', message: { role: 'assistant', content: [{ type: 'tool_use', id: 'toolu_01MC1AUBMuXDcnMsjFoJzq6w', name: 'mcp__consonance__call_chair', input: { text: 'stand-in' } }] } },
+    { type: 'user', timestamp: '2026-09-25T02:04:40.351Z', message: { role: 'user', content: [{ type: 'tool_result', tool_use_id: 'toolu_01MC1AUBMuXDcnMsjFoJzq6w', content: 'delivered to Main' }] } },
+    { type: 'assistant', timestamp: '2026-09-25T02:04:45.342Z', message: { role: 'assistant', content: [{ type: 'tool_use', id: 'toolu_x_AUw8PJ', name: 'AskUserQuestion', input: { questions: [{ question: 'stand-in' }] } }] } },
+  ];
+  const after = [...before,
+    { type: 'user', timestamp: '2026-09-25T05:32:16.649Z', message: { role: 'user', content: [{ type: 'tool_result', tool_use_id: 'toolu_x_AUw8PJ', content: 'Your questions have been answered: stand-in' }] } },
+    { type: 'attachment', timestamp: '2026-09-25T05:32:16.657Z', attachment: { type: 'stand-in' } },
+  ];
+  const board = [SEAT_ROW(T('2026-09-25T02:04:40.196Z'), LIB)];
+  const during = wline({ [LIBDIR]: { [LIB]: before } }, board, T('2026-09-25T03:00:00Z'));
+  assert.match(during, /librarian waiting on YOUR answer since [0-9]{2}:04/, during);
+  const done = wline({ [LIBDIR]: { [LIB]: after } }, board, T('2026-09-25T05:33:00Z'));
+  assert.doesNotMatch(done, /waiting on YOUR answer/, done);
+});
+
+test('WAITING — the test file itself reads NO real transcript: CONSONANCE_PROJECTS_DIR is an empty temp dir', () => {
+  assert.ok(process.env.CONSONANCE_PROJECTS_DIR && fs.readdirSync(process.env.CONSONANCE_PROJECTS_DIR).length === 0);
+  assert.strictEqual(mod().openQuestion(''), null);
+});
+
+test('WAITING — a subagent (sidechain) row after the question does not hide it, as main.rs last_request skips them', () => {
+  const side = Object.assign(TX.said(T0 + 1000, 'subagent chatter'), { isSidechain: true });
+  const t = wline({ [LIBDIR]: { [LIB]: [TX.ask(T0, 'toolu_q1'), side] } }, [SEAT_ROW(T0 - MIN, LIB)], T0 + 10 * MIN);
+  assert.match(t, /librarian waiting on YOUR answer/, t);
+});
+
+test('WAITING — the chair is "chair" even where letters.json gives its session a letter (D\'s does: "D") (mutant W12)', () => {
+  const t = wline({ 'C--Consonance-instances-main': { [MAIN_T]: [TX.ask(T0, 'toolu_m')] } }, [SEAT_ROW(T0 - MIN, MAIN_T)], T0 + 10 * MIN,
+    { lettersMap: Object.assign({ [MAIN_T]: 'D' }, LET_WITH_LIB) });
+  assert.match(t, /chair waiting on YOUR answer/, t);
+  assert.doesNotMatch(t, /\bD waiting on YOUR answer/, t);
 });

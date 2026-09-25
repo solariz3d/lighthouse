@@ -829,7 +829,9 @@ function queuedScan(store, now, opts = {}) {
   const rows = [];
   for (const raw of t.lines) { const p = parseBoardLine(raw); if (p) for (const e of p.rows) rows.push(e); }
   return { list: queuedWaiting(rows, now, { letters, launchedAt: launchedAt(path.dirname(board)) }),
-    unreceived: unreceived(rows, now), why: null };                   // clause 5 reads the same rows (D137)
+    unreceived: unreceived(rows, now),                                // clause 5 reads the same rows (D137)
+    waiting: waitingOnAnswer(rows, { letters, launchedAt: launchedAt(path.dirname(board)), projectsDir: opts.projectsDir }),
+    why: null };                                                      // clause 6: the same rows name the live seats (D138)
 }
 
 const hhmm = (ms) => { const d = new Date(ms); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
@@ -908,6 +910,94 @@ function unreceivedPart(list) {
   if (!list || !list.length) return null;
   return list.map(u => 'UNRECEIVED ' + u.from + '→' + u.to + ' ' + Math.floor(u.age / 60000) + 'm (sent ' + hhmm(u.since)
     + ', written "' + u.receipt + '", no render and no receipt since)').join(', ');
+}
+
+// ── CLAUSE 6: WAITING ON YOUR ANSWER — a seat whose turn is an open AskUserQuestion (D138) ───────────────────────────
+//
+// THE CASE (loop/stall_trace_2026-09-23.md, corrected at b348c7f; handback/p-d137-stall-A_2026-09-24.md §3): the
+// librarian's turn sat on an AskUserQuestion from 02:04:45Z to 05:32:16Z. Nothing said so — the keeper saw a dead
+// room, and the seat itself read its own wait as a delivery fault. A seat in that state is not stalled and not
+// running: it is waiting on the keeper, and the line says exactly that.
+// THE TEST, from the seat's own transcript: its LAST MESSAGE row (type `user` or `assistant`; attachment, system and
+// snapshot rows are skipped, as they are written around a turn and are neither side of it) is an assistant row
+// carrying a `tool_use` named AskUserQuestion. Its `tool_result` is a later `user` row, so while the tool_use is the
+// last message there is by construction no result — and the moment the result lands, the last message is that row.
+// FINDING THE TRANSCRIPT is board-digest.js's findTranscript (hooks/board-digest.js:192), copied for the reason
+// fromConfig() states: scan the project dirs for `<session id>.jsonl` rather than reconstruct Claude Code's
+// dir-name encoding. Two bounds keep it cheap, since this runs on every prompt in every seat (measured on D: 585
+// project dirs, 96 ms for 15 seats scanned blind): (1) only seats with a row in the board tail already read here —
+// the chair, the librarian and lettered panes that are actually live — and (2) the room's own `*Consonance-instances*`
+// dirs are tried first, the rest after (an ORDER, never a filter, so a seat elsewhere is still found). The transcript
+// is read by its last FILE_TAIL_BYTES, never whole.
+// A LAUNCH ENDS IT: a question opened before the app last started (stick-waiter.lock, the proxy QUEUED uses) died with
+// that process's dialog, so it is not reported as waiting.
+const FILE_TAIL_BYTES = 256 * 1024;                   // board-digest.js FILE_TAIL_BYTES
+const PROJECTS_DIR = process.env.CONSONANCE_PROJECTS_DIR || path.join(os.homedir(), '.claude', 'projects');
+
+/** board-digest.js findTranscript, with the room's own dirs tried first. Null when absent. */
+function findTranscript(projectsDir, paneId) {
+  try {
+    const dirs = fs.readdirSync(projectsDir);
+    const own = (d) => (/Consonance-instances/i.test(d) ? 0 : 1);
+    for (const d of dirs.sort((a, b) => own(a) - own(b))) {
+      const p = path.join(projectsDir, d, `${paneId}.jsonl`);
+      if (fs.existsSync(p)) return p;
+    }
+  } catch (_) { /* no projects dir on this bed: the clause simply says nothing */ }
+  return null;
+}
+
+/** From transcript TEXT (a tail): the open AskUserQuestion's start (ms), or null. Pure. */
+function openQuestion(text) {
+  const lines = String(text || '').split('\n');
+  for (let i = lines.length - 1; i >= 0; i--) {
+    let r;
+    try { r = JSON.parse(lines[i]); } catch (_) { continue; }   // a torn first line of a tail, or a blank
+    if (!r || (r.type !== 'user' && r.type !== 'assistant')) continue;
+    if (r.isSidechain === true) continue;                      // subagent traffic, as main.rs last_request drops it
+    if (r.type !== 'assistant') return null;
+    const c = r.message && Array.isArray(r.message.content) ? r.message.content : [];
+    const ask = c.some(b => b && b.type === 'tool_use' && b.name === 'AskUserQuestion');
+    return ask ? (Date.parse(r.timestamp) || null) : null;
+  }
+  return null;
+}
+
+function readTail(file, maxBytes) {
+  let fd;
+  try {
+    fd = fs.openSync(file, 'r');
+    const size = fs.fstatSync(fd).size;
+    const len = Math.min(size, maxBytes);
+    const buf = Buffer.alloc(len);
+    fs.readSync(fd, buf, 0, len, size - len);
+    return buf.toString('utf8');
+  } catch (_) { return null; } finally { if (fd !== undefined) { try { fs.closeSync(fd); } catch (_) {} } }
+}
+
+/**
+ * The seats (among those with a row in `rows`) whose transcript ends on an open AskUserQuestion. Oldest first.
+ * @returns {{ seat: string, since: number }[]}
+ */
+function waitingOnAnswer(rows, opts = {}) {
+  const projectsDir = opts.projectsDir !== undefined ? opts.projectsDir : PROJECTS_DIR;
+  const letters = opts.letters || {};
+  const known = new Set([MAIN_SID, LIBRARIAN_SID, ...Object.keys(letters)]);
+  const live = [...new Set(rows.map(e => e && e.pane).filter(p => known.has(p)))];
+  const out = [];
+  for (const sid of live) {
+    const file = findTranscript(projectsDir, sid);
+    if (!file) continue;
+    const since = openQuestion(readTail(file, FILE_TAIL_BYTES));
+    if (!since || since < (opts.launchedAt || 0)) continue;
+    out.push({ seat: sid === MAIN_SID ? 'chair' : sid === LIBRARIAN_SID ? 'librarian' : (letters[sid] || sid.slice(0, 8)), since });
+  }
+  return out.sort((a, b) => a.since - b.since);
+}
+
+function waitingPart(list) {
+  if (!list || !list.length) return null;
+  return list.map(w => w.seat + ' waiting on YOUR answer since ' + hhmm(w.since)).join(', ');
 }
 
 /**
@@ -1130,10 +1220,11 @@ function line(opts = {}) {
   let queued = { list: [], why: null };
   try {
     queued = opts.queued !== undefined ? opts.queued
-      : queuedScan(path.dirname(opts.ledger || LEDGER || '.'), now, { board: opts.board, blindState: opts.blindState });
+      : queuedScan(path.dirname(opts.ledger || LEDGER || '.'), now, { board: opts.board, blindState: opts.blindState, projectsDir: opts.projectsDir });
   } catch (e) { queued = { list: [], why: (e && e.message) || String(e) }; }
   const unrec = queued.unreceived || [];
-  if (!head && !claim && !queued.list.length && !queued.why && !unrec.length) {
+  const waiting = queued.waiting || [];
+  if (!head && !claim && !queued.list.length && !queued.why && !unrec.length && !waiting.length) {
     const any = led.rows.some(r => r && r.stage === 'chain');
     return {
       text: null,
@@ -1241,6 +1332,9 @@ function line(opts = {}) {
   // CLAUSE 5 rides with clause 4: a ring written but never seen rendered is the same class of fault, one step later.
   const up = unreceivedPart(unrec);
   if (up) parts.push(up);
+  // CLAUSE 6: a seat waiting on the keeper says so, in the keeper's words — not a stall, not a turn running (D138).
+  const wp = waitingPart(waiting);
+  if (wp) parts.push(wp);
   if (queued.why) parts.push('queue UNKNOWN — ' + queued.why);
   if (col && col.refusedUnresolved) {
     parts.push(col.refusedUnresolved + ' refusal(s) UNRESOLVED to a letter');
@@ -1343,6 +1437,7 @@ module.exports = {
   line, openLaps, staleLaps, STALE_MS, chainLaps, unwitnessed, readLedger, dirtyCount, tree, ago, main, collation, toLetter, tail, replay,
   queueRow, queuedWaiting, queuedScan, QUEUED_WORKING_MS, QUEUED_BOUNDED_MS,
   ringRow, unreceived, UNRECEIVED_MS, UNRECEIVED_LOOKBACK_MS,
+  openQuestion, waitingOnAnswer, findTranscript,
   LEDGER, REPO, BOARD, LETTERS, WORK_ATTESTING, WINDOW, LIST_CAP, BOARD_TAIL_BYTES, DISPATCH_RE, REFUSED_RE,
   HANDBACK_DIR, parseBoardLine,
 };
