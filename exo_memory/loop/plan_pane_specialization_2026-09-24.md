@@ -24,7 +24,7 @@ his own items.
      read / measure / research, each class with its paths).
    - **E:** tokens per hand-back per pane for the last two weeks (intake bytes × resumes from `persist.log`, ÷ hand-backs),
      with the command beside every number.
-2. **S2 — run 2's preparation, the non-B panes** (B wrote the draft and is out as a subject, §7):
+2. **S2 — run 2's preparation, by B ONLY** (B wrote the draft and is out as a subject, §7; A, C and E are the SUBJECTS, so they must never see the tasks or keys before the run. Corrected 19:5x: my first draft gave S2 to "the non-B panes", which would have let the subjects write their own test):
    - §1 cold-reader passes for each task, with rewrites or drops;
    - §2 scans with the positive control failing as it must;
    - the sealed rows committed and on origin.
