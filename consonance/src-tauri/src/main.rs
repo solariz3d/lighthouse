@@ -31,6 +31,7 @@ mod seat_alias;  // what a person TYPES -> what PaneNames INDEXES; the 58 measur
 mod nowplaying;  // what is actually playing, from Windows' own media session — so the title is read, not inferred
 mod harvest_guard;  // the capture watcher's recovery + liveness policy; one mutex, one policy (E, L043)
 mod sync_launch;  // pull-verify-then-start, and the retire rule for a second machine (C, L052)
+mod pane_exit;  // a pane's claude process ending by itself: shown, recorded, a fixed seat reopened ONCE (A, D143)
 
 // the shared MCP control-plane port (0 = not started); read when launching panes
 static MCP_PORT: AtomicU16 = AtomicU16::new(0);
@@ -1361,11 +1362,13 @@ fn spawn_claude_pane(app: AppHandle, pane_id: String, cwd: String, resume: bool,
     });
 
     std::thread::spawn(move || {
-        let _ = child.wait();
+        let code = child.wait().ok().map(|st| st.exit_code());
         if let Some(map) = app.try_state::<PaneEmus>() {
             map.0.lock().unwrap().remove(&pane_id);
         }
         let _ = app.emit("pty-exit", &pane_id);
+        // D143: the one exit watcher there is — this thread — also decides what the exit MEANS (pane_exit.rs).
+        on_pane_exit(&app, &pane_id, pid, code);
     });
 
     Ok(PtySession { writer, master: pair.master, killer, pid, image, flight: Some(flight) })
@@ -9016,6 +9019,75 @@ fn pty_reopen(app: AppHandle, panes: State<Panes>, pane: String, cwd: String) ->
     Ok(())
 }
 
+/// D143: the exits this app run has seen, by pane, keyed to the child's pid (pane_exit::liveness reads it), and the
+/// fixed seats that have had their ONE automatic reopen.
+static PANE_EXITS: std::sync::OnceLock<Mutex<HashMap<String, pane_exit::PaneExit>>> = std::sync::OnceLock::new();
+static AUTO_REOPENED: std::sync::OnceLock<Mutex<HashSet<String>>> = std::sync::OnceLock::new();
+fn pane_exits() -> &'static Mutex<HashMap<String, pane_exit::PaneExit>> {
+    PANE_EXITS.get_or_init(|| Mutex::new(HashMap::new()))
+}
+
+/// The fixed seats, and the folder each one runs in — the same folders their spawn_* commands use.
+fn fixed_seat_cwd(pane: &str) -> Option<String> {
+    match pane {
+        MAIN_SID => Some(main_cwd()),
+        LIBRARIAN_SID => Some(librarian_cwd()),
+        THIRD_PLACE_SID => Some(third_place_cwd()),
+        _ => None,
+    }
+}
+
+/// D143: a pane's claude child has exited. Called by its waiter thread, after `pty-exit`. An exit the app caused (the
+/// session is no longer the map's, or the Leave has begun) is not news and does nothing. Any other is recorded, posted
+/// to the board, and told to the UI (`pane-exit`); a fixed seat's first one is reopened once, with --resume, through
+/// the same spawn + insert that ↻ uses (`pty_reopen`), and the UI is told `pane-reopened` so it resets the terminal
+/// and sends the new PTY its size.
+fn on_pane_exit(app: &AppHandle, pane: &str, pid: Option<u32>, code: Option<u32>) {
+    let still_ours = pid.is_some()
+        && LEAVE_PHASE.load(Ordering::SeqCst) == LEAVE_IDLE
+        && app.try_state::<Panes>().is_some_and(|p| harvest_guard::recover(p.0.lock()).get(pane).is_some_and(|s| s.pid == pid));
+    let cwd = fixed_seat_cwd(pane);
+    let action = pane_exit::decide(
+        still_ours,
+        cwd.is_some(),
+        pane,
+        &mut harvest_guard::recover(AUTO_REOPENED.get_or_init(|| Mutex::new(HashSet::new())).lock()),
+    );
+    let Some(row) = pane_exit::exited_row(short_id(pane), &pane_role(app, pane), code, action) else {
+        return;
+    };
+    let at_ms = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_millis() as u64).unwrap_or(0);
+    harvest_guard::recover(pane_exits().lock()).insert(pane.to_string(), pane_exit::PaneExit { pid, code, at_ms });
+    plog(&row);
+    chair_audit(app, row);
+    let told = match action {
+        pane_exit::ExitAction::ReopenOnce => "reopening",
+        pane_exit::ExitAction::ExitedAgain => "exited_again",
+        _ => "prompt",
+    };
+    let _ = app.emit("pane-exit", serde_json::json!({ "pane": pane, "code": code, "action": told }));
+    if action != pane_exit::ExitAction::ReopenOnce {
+        return;
+    }
+    let Some(cwd) = cwd else { return };
+    let who = if pane == THIRD_PLACE_SID { "the Third Place".to_string() } else { short_id(pane).to_string() };
+    match spawn_claude_pane(app.clone(), pane.to_string(), cwd, true, true) {
+        Ok(session) => {
+            insert_pane(&app.state::<Panes>(), pane.to_string(), session);
+            chair_audit(app, format!("pane REOPENED -> {who}: resumed the same session, once, automatically"));
+            let _ = app.emit("pane-reopened", pane);
+        }
+        Err(e) => {
+            chair_audit(app, format!("pane REOPEN FAILED -> {who}: {e} — ↻ on its pane retries it by hand"));
+            let _ = app.emit("pane-exit", serde_json::json!({ "pane": pane, "code": code, "action": "reopen_failed" }));
+        }
+    }
+}
+
+fn pane_role(app: &AppHandle, pane: &str) -> String {
+    app.state::<PaneRoles>().0.lock().ok().and_then(|m| m.get(pane).cloned()).unwrap_or_else(|| "human".to_string())
+}
+
 #[derive(Clone, Serialize)]
 struct SysMeter {
     claude_procs: u32,
@@ -11149,6 +11221,18 @@ fn keep_warm_report_row(short: &str, role: &str, since_start: Duration, last_ski
     format!("keep-warm -> {short} ({role}): waiting on YOUR answer since {hms} (an AskUserQuestion is open) — not a missed cache window")
 }
 
+/// D143: the skip reason for a pane whose claude child has exited. It says why in the words a reader acts on.
+const KEEP_WARM_EXITED: &str = "its process EXITED: the claude child ended and the pane was not reopened — nothing to ping; ↻ on its pane reopens it";
+
+/// D143, on D138's row: an EXITED pane's row is the missed row with its exit reason, never "waiting on YOUR answer" — an
+/// AskUserQuestion open in a dead process's transcript is not waiting on anyone. Otherwise D138's row, unchanged.
+fn keep_warm_row_for(short: &str, role: &str, since_start: Duration, last_skip: Option<&str>, awaiting: Option<&str>, exited: bool) -> String {
+    if exited {
+        return keep_warm_missed_row(short, role, since_start, Some(KEEP_WARM_EXITED));
+    }
+    keep_warm_report_row(short, role, since_start, last_skip, awaiting)
+}
+
 /// The per-seat off switch: `<data_dir>/keep-warm-off.json`, a JSON list of pane ids, short ids or
 /// letters. Absent or blank switches nobody off. ANYTHING ELSE IS REFUSED (None) and the tick pings
 /// nobody: a malformed "off" read as "all on" would ping the very seat the keeper tried to stop.
@@ -11269,7 +11353,13 @@ fn keep_warm_tick(app: &AppHandle) {
                 now_used
             }
         };
+        // D143: an exited child is not pinged, and its missed-window row says so rather than guessing from the stamp.
+        let current_pid = app.state::<Panes>().0.lock().ok().and_then(|m| m.get(&pane).and_then(|s| s.pid));
+        let exited = matches!(pane_exit::liveness(&harvest_guard::recover(pane_exits().lock()), &pane, current_pid), pane_exit::Liveness::Exited { .. });
         match keep_warm_decision(on, &pane, &role, gate, composer, since_start, since_ping, activated) {
+            _ if exited => {
+                if let Ok(mut m) = app.state::<KeepWarmLastSkip>().0.lock() { m.insert(pane.clone(), KEEP_WARM_EXITED); }
+            }
             KeepWarm::Ping => {
                 due.push((pane.clone(), since_start.unwrap_or_default()));
                 due_meta.insert(pane.clone(), (role.clone(), last.as_ref().and_then(|l| l.context)));
@@ -11286,7 +11376,7 @@ fn keep_warm_tick(app: &AppHandle) {
                 let why = app.state::<KeepWarmLastSkip>().0.lock().ok().and_then(|m| m.get(&pane).copied());
                 // D138: a seat whose turn is an open AskUserQuestion is waiting on the keeper, and the row says so.
                 let awaiting = tail.as_deref().and_then(awaiting_answer_since);
-                chair_audit(app, keep_warm_report_row(short_id(&pane), &role, since_start.unwrap_or_default(), why, awaiting.as_deref()));
+                chair_audit(app, keep_warm_row_for(short_id(&pane), &role, since_start.unwrap_or_default(), why, awaiting.as_deref(), exited));
             }
         }
     }
@@ -19345,7 +19435,8 @@ mod leave_wiring_tests {
         assert_eq!(s.matches(concat!("Ok(PtySession", " {")).count() + s.matches(concat!("= PtySession", " {")).count(), 1, "a PtySession is built in more than one place");
         let body = body_of(&s, concat!("fn spawn_claude", "_pane("));
         let pid = body.find(concat!("child.process", "_id()")).expect("the pid is not read from the child");
-        let moved = body.find(concat!("let _ = child", ".wait();")).expect("no wait thread — re-point this test");
+        // D143: re-pointed from `let _ = child.wait();` — the waiter now keeps the exit code. Same assertion.
+        let moved = body.find(concat!("child", ".wait()")).expect("no wait thread — re-point this test");
         assert!(pid < moved, "the pid is read after the Child has moved");
         assert!(body.contains(concat!("killer, pid, ", "image, flight: Some(flight) })")), "the session built does not keep the pid and image");
     }
@@ -20652,5 +20743,76 @@ mod ring_reply_tests {
             let call = &body[reply..body[reply..].find(')').map(|i| reply + i + 1).unwrap()];
             assert!(call.ends_with(", receipt)"), "{sig}: the reply is not built from the render check's receipt: {call}");
         }
+    }
+}
+
+/// D143 (pane A) — a pane's claude process ending by itself. The decision is pane_exit.rs's, tested there; these pin
+/// the wiring it depends on and the keep-warm row built on D138's.
+#[cfg(test)]
+mod pane_exit_wiring_tests {
+    use super::*;
+
+    fn body_of(src: &str, sig: &str) -> String {
+        let after = src.split(sig).nth(1).unwrap_or_else(|| panic!("no {sig} — re-point this test"));
+        after[..after.find("\n}\n").expect("no end of function")].to_string()
+    }
+    fn src() -> String {
+        fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n")
+    }
+
+    /// The exited pane's row says EXITED even when its transcript ends on an open AskUserQuestion — a dead process is
+    /// waiting on nobody.
+    #[test]
+    fn an_exited_pane_s_row_says_exited_not_waiting_on_you() {
+        let r = keep_warm_row_for("0c0c0c0a", "main", Duration::from_secs(3700), Some("x"), Some("2026-09-25T13:20:00Z"), true);
+        assert!(r.contains("process EXITED"), "{r}");
+        assert!(!r.contains("waiting on YOUR answer"), "{r}");
+    }
+
+    /// And D138's row is untouched for a live pane.
+    #[test]
+    fn a_live_pane_s_row_is_d138_s_word_for_word() {
+        let (d, w) = (Duration::from_secs(3700), Some("2026-09-25T02:04:45Z"));
+        assert_eq!(keep_warm_row_for("0c0c0c0b", "librarian", d, Some("x"), w, false), keep_warm_report_row("0c0c0c0b", "librarian", d, Some("x"), w));
+        assert_eq!(keep_warm_row_for("0c0c0c0b", "librarian", d, Some("x"), None, false), keep_warm_report_row("0c0c0c0b", "librarian", d, Some("x"), None));
+    }
+
+    /// THE ONE WATCHER: the waiter thread that already emitted pty-exit is the one that reports the exit — with the
+    /// child's own code, after the emit. No second watcher was added.
+    #[test]
+    fn the_existing_waiter_reports_the_exit() {
+        let body = body_of(&src(), "fn spawn_claude_pane(");
+        let wait = body.find("let code = child.wait().ok().map(|st| st.exit_code());").expect("the waiter drops the exit code");
+        let emit = body.find("app.emit(\"pty-exit\", &pane_id)").expect("pty-exit is gone");
+        let report = body.find("on_pane_exit(&app, &pane_id, pid, code);").expect("the waiter does not report the exit");
+        assert!(wait < emit && emit < report, "wait -> pty-exit -> on_pane_exit is out of order");
+        assert_eq!(body.matches("child.wait()").count(), 1, "a second wait on the child");
+    }
+
+    /// on_pane_exit: an exit counts only if the map still holds THIS pid and no Leave has begun; the decision comes
+    /// before any spawn; the ONE spawn in it is behind the ReopenOnce guard; the reopen goes through insert_pane.
+    #[test]
+    fn the_reopen_is_behind_the_once_guard_and_only_for_our_own_child() {
+        let body = body_of(&src(), "fn on_pane_exit(");
+        assert!(body.contains("s.pid == pid"), "an exit is counted without asking whether it is this child's");
+        assert!(body.contains("LEAVE_PHASE.load(Ordering::SeqCst) == LEAVE_IDLE"), "a Leave's own kills could reopen a seat");
+        let decide = body.find("pane_exit::decide(").expect("no decision");
+        let guard = body.find("if action != pane_exit::ExitAction::ReopenOnce {\n        return;\n    }").expect("no ReopenOnce guard");
+        let spawn = body.find("spawn_claude_pane(").expect("no reopen");
+        assert!(decide < guard && guard < spawn, "decide -> guard -> spawn is out of order");
+        assert_eq!(body.matches("spawn_claude_pane(").count(), 1, "more than one spawn in on_pane_exit");
+        assert!(body[spawn..].contains("insert_pane(&app.state::<Panes>(), pane.to_string(), session);"), "the reopen does not land in Panes");
+    }
+
+    /// keep-warm consults the exit record and never pings an exited child.
+    #[test]
+    fn keep_warm_skips_an_exited_child() {
+        let body = body_of(&src(), "fn keep_warm_tick(");
+        let call = body.find("match keep_warm_decision(on, &pane,").expect("the one decision");
+        let arm = body.find("_ if exited => {").expect("keep-warm may ping a dead pane: no exited arm");
+        let ping = body.find("KeepWarm::Ping => {").expect("no Ping arm");
+        assert!(call < arm && arm < ping, "the exited arm must come before Ping, or a dead pane is pinged");
+        assert!(body[arm..ping].contains("KEEP_WARM_EXITED"), "the exited arm does not record why");
+        assert!(body.contains("keep_warm_row_for(") && body.contains("awaiting.as_deref(), exited)"), "the row is not told the pane exited");
     }
 }

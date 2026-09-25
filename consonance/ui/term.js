@@ -85,18 +85,12 @@ function ensureListeners() {
   listen('pty-exit', (e) => {
     const p = panes.get(e.payload);
     if (!p) return;
-    p.el.classList.add('dead');
     p.term.write('\r\n\x1b[2m— process exited —\x1b[0m\r\n');
-    const head = p.el.querySelector('.phead');
-    if (head && !head.querySelector('.preopen')) {
-      const b = document.createElement('span');
-      b.className = 'preopen';
-      b.title = 'reopen (resume session)';
-      b.textContent = '↻';
-      b.onclick = () => reopenPane(e.payload);
-      head.insertBefore(b, head.querySelector('.pclose'));
-    }
+    markDead(e.payload);
   });
+  // D143: what the backend decided the exit means (pane_exit.rs), and the one automatic reopen of a fixed seat.
+  listen('pane-exit', (e) => onPaneExit(e.payload));
+  listen('pane-reopened', (e) => onPaneReopened(e.payload));
   listen('sysmeter', (e) => {
     const m = e.payload;
     const hud = document.getElementById('hud');
@@ -626,6 +620,9 @@ const WAKE_MAIN_STATES = {
   idle:   { disabled: false, text: 'Wake the orchestrator' },   // the label index.html ships with
   waking: { disabled: true,  text: 'waking…' },
   awake:  { disabled: true,  text: 'Main is awake' },
+  // D143: never "awake" over an exited child. Disabled: the dead session is still Main's, so ↻ on its pane is the way.
+  reopening: { disabled: true, text: "Main's process exited — reopening it once" },
+  exited: { disabled: true, text: "Main's process EXITED — ↻ on its pane" },
 };
 
 function setWakeMain(state) {
@@ -665,6 +662,8 @@ const WAKE_LIB_STATES = {
   idle:   { disabled: false, text: 'Wake the librarian' },
   waking: { disabled: true,  text: 'waking…' },
   awake:  { disabled: true,  text: 'the librarian is awake' },
+  reopening: { disabled: true, text: "the librarian's process exited — reopening it once" },
+  exited: { disabled: true, text: "the librarian's process EXITED — ↻ on its pane" },
 };
 
 function setWakeLibrarian(state) {
@@ -697,7 +696,16 @@ const WAKE_TP_STATES = {
   idle:   { disabled: false, text: 'Open the third place' },
   waking: { disabled: true,  text: 'opening…' },
   awake:  { disabled: true,  text: 'the third place is open' },
+  reopening: { disabled: true, text: "the third place's process exited — reopening it once" },
+  exited: { disabled: true, text: "the third place's process EXITED — ↻ on its pane" },
 };
+
+// D143: one entry point from a pane's role to its seat's wake control. A committee or human pane has none.
+function setSeatWake(role, state) {
+  if (role === 'main') setWakeMain(state);
+  else if (role === 'librarian') setWakeLibrarian(state);
+  else if (role === 'third_place') setWakeThirdPlace(state);
+}
 
 function setWakeThirdPlace(state) {
   const btn = document.getElementById('wakethirdplace');
@@ -921,21 +929,78 @@ async function closePane(id) {
   setTimeout(fitAll, 80);
 }
 
-async function reopenPane(id) {
+// A dead pane: dimmed, with ↻ in its header to reopen it (resume the same session).
+function markDead(id) {
   const p = panes.get(id);
   if (!p) return;
+  p.el.classList.add('dead');
+  const head = p.el.querySelector('.phead');
+  if (head && !head.querySelector('.preopen')) {
+    const b = document.createElement('span');
+    b.className = 'preopen';
+    b.title = 'reopen (resume session)';
+    b.textContent = '↻';
+    b.onclick = () => reopenPane(id);
+    head.insertBefore(b, head.querySelector('.pclose'));
+  }
+}
+
+// D143, the garbled reopen (the keeper's screenshot after ↻ on Main, 2026-09-25): a reopen is a NEW process on a
+// FRESH PTY, born at 34x120. Two things made it paint over the dead one's screen at the wrong width: nothing reset the
+// xterm, so the new claude drew over the old buffer; and fitPane sends pty_resize only when the fitted size differs
+// from the last one SENT, which after a reopen it does not — so the new PTY never learned its size. Both are undone
+// here, before the new process can write, and ↻ and the automatic reopen both come through it.
+function resetForReopen(p) {
   p.el.classList.remove('dead');
   const btn = p.el.querySelector('.preopen');
   if (btn) btn.remove();
+  p.term.reset();
+  p.sentRows = undefined;
+  p.sentCols = undefined;
+}
+
+async function reopenPane(id) {
+  const p = panes.get(id);
+  if (!p) return;
+  resetForReopen(p);
   try {
     await inv('pty_reopen', { pane: id, cwd: p.cwd || '' });
   } catch (e) {
     setStatus('reopen failed: ' + e);
-    p.el.classList.add('dead');
+    markDead(id);
     return;
   }
+  setSeatWake(p.role, 'awake');
   setTimeout(() => fitPane(id), 80);
   p.term.focus();
+}
+
+// D143: the backend's reading of an exit. 'reopening' — a fixed seat's one automatic reopen is starting, so the
+// terminal is reset BEFORE the new process writes; 'prompt' / 'exited_again' — nothing will reopen it, ↻ is the way;
+// 'reopen_failed' — the automatic reopen was refused, so the pane goes back to dead with its ↻. Never 'awake' here.
+function onPaneExit(payload) {
+  const p = payload && panes.get(payload.pane);
+  if (!p) return;
+  if (payload.action === 'reopening') {
+    setSeatWake(p.role, 'reopening');
+    resetForReopen(p);
+    p.term.write('\x1b[2m— the process exited; reopening it once, resuming the same session —\x1b[0m\r\n');
+    return;
+  }
+  setSeatWake(p.role, 'exited');
+  if (payload.action === 'reopen_failed') {
+    p.term.write('\r\n\x1b[2m— the automatic reopen failed; ↻ retries it —\x1b[0m\r\n');
+    markDead(payload.pane);
+  }
+}
+
+// D143: the automatic reopen landed — the new PTY is in the map, so its size can be sent (resetForReopen cleared the
+// last-sent size, so fitPane sends it even though the pane's own size did not change).
+function onPaneReopened(id) {
+  const p = panes.get(id);
+  if (!p) return;
+  setSeatWake(p.role, 'awake');
+  setTimeout(() => fitPane(id), 80);
 }
 
 function renderResonance(r) {
