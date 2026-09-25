@@ -100,3 +100,21 @@ main.rs held anything; there was no delivery stall.**
   and the pulse say **"<seat> waiting on YOUR answer since <t>"**, not "a turn runs".
 - **WRONG (librarian):** I asserted a delivery defect from a reconstruction, and dispatched A and C on it. The discipline
   that would have caught it is the one this file keeps naming: read the transcript before claiming the mechanism.
+
+## ADDED 2026-09-25 08:2x, on D: Main's claude process CRASHED (Bun segfault), and the app did not notice
+- **Seen** (the keeper's screenshot, `C:\Users\nname\Pictures\Screenshots\BIG bug.png`): Main's pane ends with `panic(main
+  thread): Segmentation fault at address 0xFFFFFFFFFFFFFFFF … oh no: Bun has crashed. This indicates a bug in Bun, not your
+  code`, then `— process exited —`. Bun v1.4.3 (the claude.exe runtime, Claude Code 2.1.282). Elapsed 15,970,599 ms
+  (≈4 h 26 m); RSS 0.40 GB (peak 0.95 GB). **Upstream's bug, not ours.**
+- **Nothing was lost:** Main's transcript is intact to its last finished turn (12:57:52Z, the R3 hold), and its ready stamp
+  says `ready:true` at that time.
+- **OUR defects, in how it was handled:**
+  1. **The app did not detect the exit.** The header still says "Main is awake". The recovery (`pty_reopen`,
+     `main.rs:9011`, resuming the same session) is MANUAL, the pane's ↻ button, and nothing prompts it.
+  2. **The only signal was keep-warm's MISSED row at 13:57:48Z:** "not idle by its own Stop stamp … stale, absent or
+     contradicted", which is right, but the reason is buried. It should read "Main's process EXITED".
+- **The fix owed (a lap for A, since it builds):** detect a pane's child exit (`try_wait` is already used at `:1191`,
+  `:11829`, `:12569`). Mark the pane as exited in the header and the board, not "awake", and either offer the ↻ as a
+  prompt or auto-`pty_reopen` fixed seats once, with a board row. Test: a fake child that exits shows as exited and does
+  not read as awake.
+- Main's context was **97% (966k)** at the crash, so resuming will likely auto-compact soon after. That is expected.
