@@ -118,3 +118,8 @@ main.rs held anything; there was no delivery stall.**
   prompt or auto-`pty_reopen` fixed seats once, with a board row. Test: a fake child that exits shows as exited and does
   not read as awake.
 - Main's context was **97% (966k)** at the crash, so resuming will likely auto-compact soon after. That is expected.
+- **And the ↻ recovery garbled the pane** (the keeper's second screenshot): the new claude painted over the dead one's
+  screen at the wrong width. **Cause** (`consonance/ui/term.js`): `reopenPane` (:924) never resets the xterm, and `fitPane`
+  (:873) skips `pty_resize` when the dims are unchanged since the last send, which they are after a reopen, so the new
+  pty never learns its size. **Fix, added to D143 (A):** `term.reset()` and clearing `sentRows`/`sentCols` on reopen,
+  with a test. Display only; Main itself compacted cleanly and kept working.
