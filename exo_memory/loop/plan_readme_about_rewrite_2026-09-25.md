@@ -41,3 +41,26 @@ whole change to how its explained. I do not like the current format."*
 
 **Registered falsifier:** if the cold stranger, reading the new first screen, still cannot say in one sentence what
 Consonance is and why it exists, the rewrite has failed on its own terms. We redraft; nothing ships.
+
+## 2026-09-25 03:5x — R2 scored, and the keeper's R3 answers
+- **B (R2, `loop/readme_about_r2_read_2026-09-25.md`):** unparsed items fell from 19/16 to **5/4** on the README first
+  screen and from 46/52 to **15/14** on the About block. **Both FAIL on "what next".** No step is reachable: `## Try it`
+  is at :60, below the About block.
+- **A (R2):** the About tab is built from the block, word for word, with `consonance/ui/about-readme.test.js`. The history
+  file moved to `loop/`. Owed: `README.md:228`'s link target, and three in-block links that point "below", which the app
+  cannot reach.
+- **THE KEEPER'S ANSWERS (AskUserQuestion, 03:4x–03:5x):**
+  - **Root line: KEEP.**
+  - **Dreams: one bullet**, as drafted.
+  - **Failures section: where it is.**
+  - **"Early": NO.** His words: *"I think we are more than early, maybe not finished, but we are getting there."* The
+    librarian's proposed wording, pending his edit: *"A working research project, used every day by the person who built
+    it — not finished, and honest about what hasn't worked."*
+  - **The loop: "There should be a dedicated section explaining it, not with stupid line drawings too."** So it is a
+    plain-words section on how the sessions hand work on and check it, in the README's how-it-works layer AND inside the
+    About block. The ASCII diagram leaves the About, and the `lap-row.test.js:1055` pin goes with it (that test's own
+    message says to).
+  - **Tagline: BOTH.** "Instances, in concert." as the header, and the plain lead line right under it.
+- **Next, SEQUENTIAL** (A and B work from C's text):
+  - **R2b-1, C:** the revision.
+  - **R2b-2, A and B:** A re-renders the About, sets the header, and drops the diagram and its test. B re-reads.
