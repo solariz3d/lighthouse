@@ -40,3 +40,7 @@ The fresh checker named WRITE for arm C's line prompt (template 2), so the rule 
 spent. **D145 was rung:** C rewrites template 2 as a DATED AMENDMENT (sealed words untouched); then a NEW fresh isolated
 direction check with the outcome order counterbalanced; stages 1–2 (A runs, E scores) only if both templates read NEITHER.
 Deadline 2026-09-29. E's D144 row owes nothing until stage 1.
+**01:2x — E's D144 hand-back is in (`handback/p-d144-select-E_2026-09-26.md`), so D144 is complete.** K/O/F are hashed and stored
+outside the repo. The §8.3 search is a weak pass (the repo is public but not yet indexed), so subjects run with no web tools;
+`--tools '""'` already covers that. E declared seeing three §7 lines by grep. **Self-caught:** my 01:1x ring said "E codes";
+by §10, B is the blind coder. It was corrected in the next ring. `univ_coldread/` holds scripts only (no stimuli, no token printed).
