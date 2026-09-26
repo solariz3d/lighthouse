@@ -101,3 +101,5 @@ Then, to "close it?": *"up to you."*
 
 **What replaces it:** a reading someone owns. On L, this seat reads the four and says plainly what it sees, with the
 prior above printed beside it. Whether BOOT:12 keeps its wording stays the keeper's and the room's call.
+
+**The keeper on BOOT:12, 2026-09-26 07:25:** *"leave the univ, it is what it is."* The line stays as written. The librarian's proposed strike (librarian pane, 03:3x) is withdrawn and not applied.
