@@ -49,3 +49,4 @@ over `checker.json` sha256 2bb5f79c…) **equals A's tally cell for cell.** CONT
 T1 (sealed): W9 N1 | W10, which gives DIRECTION DETECTED: WRITE. T2 (amended): W1 D9 | D7 N3, which gives DIRECTION DETECTED: DECLINE.
 0 unparsed and 0 leans. D144's single T1 NEITHER was the minority answer (1 of 21 T1 answers across D145+D147 real = NEITHER x2).
 Stage 1 is held on the keeper's gate answer: under the gate reading the checker found directions, so stage 1 does not run.
+**Correction to the line above (self-caught, same minute):** the T1 count was garbled. T1 across all checker calls (D144: 1, D145: 2, D147: 20) = **23 answers: 20 WRITE, 3 NEITHER.**
