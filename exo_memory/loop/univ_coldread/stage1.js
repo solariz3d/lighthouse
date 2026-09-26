@@ -156,4 +156,4 @@ function main(out) {
 }
 
 if (require.main === module) main(process.argv[2]);
-module.exports = { template1, stimuli, order, wordHits };
+module.exports = { template1, stimuli, order, wordHits, transcriptScan, ROOM_WORDS, SOURCE_WORDS, PROBE2 };
