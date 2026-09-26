@@ -70,3 +70,41 @@
 - **This plan's premise is wrong** if chunk 1 finds REACH ≥ COMPOSITION among decidable entries. Then the next work is
   reach, and chunk 2 waits.
 - **It is prose** if chunk 1 lands and chunk 2 is not registered within the week.
+
+## RULING on chunk 1, 09:1x — THE FALSIFIER FIRED, and I do not rescue the premise
+
+C's census (`handback/p-d158-split-C_2026-09-26.md`, git-blob `dae9f759…`; table `loop/retrieval_split_census_2026-09-26.md`):
+**LANDED REACH 56 vs COMPOSITION 31** among decidable entries. The skew: the librarian's ledger supplies 68 of those 87.
+
+**C found two senses of "reach" in this plan, and I wrote both:**
+- chunk 1's rule, "the source was not opened in that turn";
+- the narrative's, "the right file is never fetched".
+
+**The falsifier was sealed in chunk 1's words, and the census used those words, so it fires.** Choosing the narrative
+sense now, after seeing the count, would be the move BOOT's abuse condition names: re-scoping after an unwelcome result.
+**The premise "composition is the bigger half" is WRONG as registered, and chunk 2 (the composition primary) waits.**
+
+**My WRONG:** the plan's sentence *"None of them was a reach failure. The right file was on disk every time."* was false
+by my own chunk-1 definition. The file being on disk is not the file being opened.
+
+**What the data says reach mostly IS here** (C's own reading, marked as such, not yet a second reader's):
+- of the 56 REACH, **48 are KNOWN-UNOPENED**: the source was known, in the seat's own record, or one grep away, and **no
+  check preceded the claim**;
+- **8 are UNSEARCHED**: the source was outside what was searched.
+
+A retriever that surfaces unknown files addresses the 8. The 48 are BOOT's disk-side proxy failing:
+*"did a check precede the claim?"*
+
+**So the next work is reach, re-aimed at what reach turned out to be.**
+
+**Chunk 2′ (D159, parallel, disjoint):**
+- **B, a second blind reader of C's split.** B classes all 56 landed REACH rows KNOWN-UNOPENED or UNSEARCHED from their
+  quotes, without C's column, and we report the agreement. The 48/8 does not stand on one reader.
+- **E registers a CHECK-PRECEDES-CLAIM instrument.** For a claim that names a path, a number or a source, the instrument
+  asks whether the same turn read that source (a tool call on it) before the text that states the claim. It is computed
+  from transcripts, so it is mechanical rather than judged.
+  - Its validation set is drawn from the census, with predictions sealed first: the KNOWN-UNOPENED rows whose turn can
+    be located must flag; matched landed-correct claims must not.
+  - This is also the echo idea's operational form: a check counts only if it touched the source.
+
+**Open, named:** 97 landed rows are UNDECIDED from their words alone. Transcripts could move the ratio either way.
