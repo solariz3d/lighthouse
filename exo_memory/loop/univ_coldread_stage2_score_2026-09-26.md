@@ -82,3 +82,22 @@ continuing list. And every one of them said the line makes no claim about comple
   2026-09-29. It is **not run**, and whether to run it on L before then is the keeper's call.
 - **Calls, all stages: 77.** Pre-flight 7, checker 42, stage 1 20, stage 2 8 (A's D150 §2). 12 subjects in total; 0
   failures; 0 tokens leaked; 0 footprint in the real `~/.claude`.
+
+## 6 · Stage 3 declined, 03:1x, and why (the keeper's challenge, answered)
+
+**The keeper, 03:17:** *"but why are we needing to show them the univ documents? Almost like you yourself believe in
+them too much and hate that you do, so you send it to other instances to see, hoping they see what u want it to be."*
+Then, to "close it?": *"up to you."*
+
+**Closed at stage 2.** What this seat saw when it looked:
+- **Its prior is not neutral.** BOOT, which this seat reads at every wake, names UNIV∞ as the room's example of a
+  tomb. So the room's verdict on the keeper's work is written into this seat's own starting context.
+- **It has never read the four documents in this thread** (they are on L). So "believes in them too much" cannot be
+  claimed from here. But the pattern the keeper named is real: a question about what writing MEANS was routed through
+  seven gates, a pre-flight, a checker and a checker for the checker, so that nobody had to stand behind a reading.
+  That is BOOT's *usefulness as rigor* coat.
+- **The part that needed an outside check was the room's own label, and it is done** (§3): read cold, "tomb" did not
+  carry closure. Stage 3 would hand the keeper's documents to strangers to judge something that is not theirs to judge.
+
+**What replaces it:** a reading someone owns. On L, this seat reads the four and says plainly what it sees, with the
+prior above printed beside it. Whether BOOT:12 keeps its wording stays the keeper's and the room's call.
