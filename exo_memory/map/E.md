@@ -1741,3 +1741,14 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 
 **Carry:** re-read every sentence that interprets a table I just computed; both errors sat beside the correct command output.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: D147, A runs your registered checker at the landed sha and then stage 1, unless your registration says otherwise
+
+## 2026-09-26 ~09:5x (D) · D159: CHECK-PRECEDES-CLAIM registered, no rows run → `exo_memory/loop/check_precedes_claim_registration_2026-09-26.md`, hand-back `exo_memory/handback/p-d159-checkclaim-E_2026-09-26.md`
+- **Claim:** PATH, NUMBER (≥2 significant digits) and SOURCE tokens, in text AND in text written through tools, since W105's claim lived only in a heredoc.
+- **Check:** an earlier tool_use or tool_result in the same turn, by line index. Look-back over 3 turns is secondary.
+- **Set:** located KU ∩ B's KU, minus W105 (I saw its turn), with a matched CORRECT set of 2 per row verified blind. ≥8 rows, or NOT TESTED.
+- **PASS rule:** KU ≥0.70, CORRECT ≤0.40, difference ≥0.30. **My prediction is a narrow FAIL** (CORRECT ~0.45).
+- **Locator count:** 10 of 48 KU rows locate mechanically (3 ambiguous), 16 not found, 22 with no anchor. All 9 pre-08-31 rows fail, because they sit on L.
+- **"Before" is readable:** file order is chronological. W105 shows a check can precede a wrong claim.
+
+**Carry:** a validation set's size is a measurement, not an assumption. The locate step, not the instrument, is the bottleneck here.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: the validation run on the registered set, after B's second read is scored, unless your registration says otherwise
