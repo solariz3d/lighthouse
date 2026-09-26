@@ -1730,3 +1730,14 @@ Control/floor selector role; no subjects run, nothing coded. Stimuli are outside
 Arm C: `BOOT.md:12` redacted by one token, `UNIV∞` → `[NAME]`, with every status word asserted to survive. The three quoted phrase searches return nothing from the room. But the repo IS public, and GitHub code search does not index it at all, so the pass is time-dependent; run subjects with no web tools. **Declared:** two greps printed three §7 lines (`:243`, `:245`, `:252`); §7 was not opened.
 **Carry:** grep with the forbidden file excluded from the start. And "terminal in fact" and "provisional in text" can come apart, as Brutus XVI shows.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A runs stage 1 on your K/O/F, unless the identifiability search or the selection says otherwise
+
+## 2026-09-26 ~01:5x (D) · D146: the ASK-007 direction checker REGISTERED after the failed control, 0 calls → `exo_memory/loop/univ_coldread_checker_registration_2026-09-26.md`, hand-back `exo_memory/handback/p-d146-checker-E_2026-09-26.md`
+- **Size and order:** N = 10 per order, 2 probe + 20 CONTROL + 20 REAL (≤42 calls, 22 if the control fails). One isolated call each on the route of record, one batch, no re-issue, no larger N later.
+- **Questions:** A's D145 strings byte for byte, plus control versions with gross loading in opposite directions per slot. All 4 are embedded, and each re-hashes from the file.
+- **Verdict:** a strict majority ≥6/10 in BOTH orders. "NEITHER, leaning X" = NEITHER, with the lean tallied separately.
+- **Falsifier:** the positive control runs first, and a FAIL = INSTRUMENT CANNOT DISCRIMINATE with the real block not run. There is no negative control, because no neutral ground truth exists, so the false-positive rate is unmeasured and printed.
+- The post-failed-control flag heads the file, and it does not gate stages 1–2.
+- **Prose I corrected before ringing:** "20 more calls" (it is 8), and "missed more often than found" (it is 65% found).
+
+**Carry:** re-read every sentence that interprets a table I just computed; both errors sat beside the correct command output.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: D147, A runs your registered checker at the landed sha and then stage 1, unless your registration says otherwise
