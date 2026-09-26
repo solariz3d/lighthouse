@@ -34,3 +34,9 @@
 - The "delivery stall" (it was my own AskUserQuestion; A and C refuted it; corrected at `b348c7f`).
 - "Nothing is lost" said too strongly about a compaction.
 - Not knowing the keeper's name, though the record had it.
+
+## ADDED 01:1x — D144 F-PROMPT FIRED (A, `handback/p-d144-fprompt-A_2026-09-26.md` §2)
+The fresh checker named WRITE for arm C's line prompt (template 2), so the rule is "rewritten before any subject". 0 subjects
+spent. **D145 was rung:** C rewrites template 2 as a DATED AMENDMENT (sealed words untouched); then a NEW fresh isolated
+direction check with the outcome order counterbalanced; stages 1–2 (A runs, E scores) only if both templates read NEITHER.
+Deadline 2026-09-29. E's D144 row owes nothing until stage 1.
