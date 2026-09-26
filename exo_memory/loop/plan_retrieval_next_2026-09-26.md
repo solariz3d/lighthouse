@@ -108,3 +108,26 @@ A retriever that surfaces unknown files addresses the 8. The 48 are BOOT's disk-
   - This is also the echo idea's operational form: a check counts only if it touched the source.
 
 **Open, named:** 97 landed rows are UNDECIDED from their words alone. Transcripts could move the ratio either way.
+
+## D159, B's blind second read, scored by the librarian, 09:2x
+
+The command is `node exo_memory/loop/retrieval_reach_agreement_2026-09-26.js`. B's file is
+`handback/p-d159-reach-B_2026-09-26.md` (git-blob `92f1e422…`).
+
+**B's counts:** KNOWN-UNOPENED **53**, UNSEARCHED **2**, UNDECIDABLE 1.
+
+**Agreement with C, over n = 55:**
+- they agree on **50 (90.9%)**, κ **0.411**;
+- without B's 8 own rows: 43/48, κ 0.406;
+- **every one of C's 48 KNOWN-UNOPENED is also B's.** The 5 disagreements are all C-UNSEARCHED → B-KNOWN (W013, W015,
+  W017, W142, W159);
+- κ is modest because nearly every row falls in one class. The finding is not modest: **KNOWN-UNOPENED is 48–53 of the
+  56 REACH, under both readers.**
+
+**B's structural caveat, adopted (B §3):** 52 of the 53 are decided by the erring seat's own words, written **after**
+the catch. Hindsight knows where the source was, and the room's own vocabulary names this species. So the record
+**leans KNOWN by the way it is written**, and two readers of the same self-reports will agree more than the truth
+warrants.
+
+**The independent test is the transcript at the time of the claim:** was the source's path in context before the wrong
+sentence? That is exactly E's check-precedes-claim instrument. **Its validation run carries this question too.**
