@@ -1720,3 +1720,13 @@ NEXT: librarian call_librarian with the hand-back pointer when the token unit is
 `C:\Consonance\sealed\jev_unitset_2026-09-23\key.json` (`3b390bb2…`) and the reader packet exist only on L, where L111 built them. On D, both give "No such file", and a search of C:\Consonance, the home folders and the stick drives finds only the in-repo registration and draw.js. It was not rebuilt, because a D draw would be different units. 0 gateway calls. A dated stop addendum is in `jev_r2r3_score_2026-09-23.md`. It runs on L: verify the key, re-render each unit's prompt with the current builder, ≤56 Jev calls, and compare old → new with both prompt shas.
 **Carry:** a packet that says "check whether it exists on D" is asking the first question, not the last. Answer it before anything else.
 NEXT: librarian call_librarian with the hand-back pointer when the re-run is compared and written (or stopped because the set isn't on D) — plan default after it: the librarian collates D137 when A, C and E have rung, unless the output says otherwise
+
+## 2026-09-26 ~01:4x (D) · D144: ASK-007 stage 1 stimuli selected, arm C redacted and searched → hand-back `exo_memory/handback/p-d144-select-E_2026-09-26.md`
+Control/floor selector role; no subjects run, nothing coded. Stimuli are outside the repo at `C:\Consonance\coldread\stimuli_2026-09-26\`, each hashed and built mechanically from hashed sources:
+- **K** Federalist No. 85 "Concluding Remarks" ("Thus have I … executed the task", `24475ab1…`).
+- **O** Federalist No. 33 "The Same Subject Continued", ending "It will be shown in the next paper…" (`f9e5f7f6…`). K and O are one series, differing only in what the text says about continuing.
+- **F** Seneca Letter CXXIV (Gummere), the last surviving letter, ending with the routine "Farewell." (`afe7a78c…`). Brutus XVI was rejected because it is terminal in fact but its text reads "These shall be detailed in a future number."
+
+Arm C: `BOOT.md:12` redacted by one token, `UNIV∞` → `[NAME]`, with every status word asserted to survive. The three quoted phrase searches return nothing from the room. But the repo IS public, and GitHub code search does not index it at all, so the pass is time-dependent; run subjects with no web tools. **Declared:** two greps printed three §7 lines (`:243`, `:245`, `:252`); §7 was not opened.
+**Carry:** grep with the forbidden file excluded from the start. And "terminal in fact" and "provisional in text" can come apart, as Brutus XVI shows.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A runs stage 1 on your K/O/F, unless the identifiability search or the selection says otherwise
