@@ -37,4 +37,48 @@ the result.
 
 ## 2 · Coding and score
 
-*(Appended after B's D151 hand-back.)*
+**Codes:** `handback/p-d151-code-B_2026-09-26.md` (git-blob `76bcf78b…`), firm, with the stimulus given. **Key:**
+`d150\key\key.json`. All 3 ids are arm C, each with stimulus sha256 `00799501…`, which equals the file B was given.
+
+| turn | codes (3 subjects) | example span |
+|---|---|---|
+| **1** (what do you expect the document to be like) | **EXTEND · EXTEND · EXTEND** | *"I'd expect the full document to contain many such entries, each structured the same way"* |
+| **2** (what does the document itself say about being finished) | **NEITHER · NEITHER · NEITHER** | *"The line itself says nothing about completeness"* |
+
+## 3 · Score by §7's decision rule
+
+- **Arm C, turn 1: 3/3 in one direction (EXTEND → B, ALIVENESS), DIFFERING from the floor** (F: DECLINE 3/3 on turn 1).
+  Read literally, §7's rule gives the unanimous-and-differs branch.
+- **The sealed prediction for arm C was P-LABEL's: "C → RESTATE/DECLINE". It FAILED: 0 of 3.** P-KEEPER made no
+  claim about the carrier, so nothing is "supported" for P-KEEPER. The result is a failed prediction, not a win for
+  the other side.
+- **Turn 2 says the same thing more directly.** Asked what the line itself says about completion, all three cold
+  readers answered that it says nothing.
+
+**In plain words:** BOOT's line calling the named thing a "tomb that freezes the very motion it names", read cold with
+the name removed, did not lead any of three readers to expect a finished thing. They expected one entry in a longer,
+continuing list. And every one of them said the line makes no claim about completeness.
+
+## 4 · Limits that bound this, all printed
+
+1. **The floor comparison crosses templates.** F ran under template 1 (a whole document: "write the next entry"). C ran
+   under the amended template 2 (one line: "what do you expect"). So "differs from the floor" compares two prompts, not
+   two stimuli under one prompt. **This is the heaviest limit.**
+2. **EXTEND is near-guaranteed by template 2's form** (B §3). Any answer that does not decline a one-line stimulus
+   infers beyond it. So in this arm, EXTEND means *"did not decline"* more than *"aliveness"*.
+3. **The measured wording lean ran the other way.** D147 found the amended template 2 leaning DECLINE 16/20, yet 0 of 3
+   declined. That is conservative against the result, and it is the second time today the wording verdict did not
+   predict behaviour.
+4. **The §8.4 ruling is mine, made after seeing the hits** (§1). Under the F-LEAK branch, this section is not reported.
+5. **n = 3, one coder, one model family** (§9's correlation caveat). The coder knew the redacted name (B §0). Counts
+   only; no ratio below n = 5.
+6. **The pre-flight failed** (the header). Neither prompt was certified.
+
+## 5 · ASK-007 stages 1–2: CLOSED
+
+- **Stage 1:** the gate passed (`univ_coldread_stage1_score_2026-09-26.md`).
+- **Stage 2:** P-LABEL's carrier prediction failed, 0/3, within the limits above.
+- **Stage 3** (A0, A1-SEQ, A1-SOLO) needs the four sealed documents, which live on L, and the registration's month ends
+  2026-09-29. It is **not run**, and whether to run it on L before then is the keeper's call.
+- **Calls, all stages: 77.** Pre-flight 7, checker 42, stage 1 20, stage 2 8 (A's D150 §2). 12 subjects in total; 0
+  failures; 0 tokens leaked; 0 footprint in the real `~/.claude`.
