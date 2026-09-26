@@ -43,3 +43,9 @@ The three options conflict only if one of them gates another. They are layered s
 > These subjects ran after the pre-flight direction check FAILED (`d6a5caf`; A's D145 §2) and without certified
 > prompts, by the keeper's explicit word ("do all steps 1-3", 2026-09-26 01:29). The prereg's §12 would have stopped
 > them. Read every number here with that limit.
+
+## The keeper's gate answer, 02:05 (C's §3b settled)
+
+Verbatim: *"wouldnt the right path be to test it anyway and then document it all?"* **The checker is a measurement and
+does not gate.** D147 found a lean in both prompts (T1 WRITE 19/20, T2 DECLINE 16/20, control PASS; re-parsed at `2b56b51`),
+and stage 1 runs with that printed beside it. §4's K/O gate still stands. Dispatched as D148.
