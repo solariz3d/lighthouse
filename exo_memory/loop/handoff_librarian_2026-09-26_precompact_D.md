@@ -44,3 +44,8 @@ Deadline 2026-09-29. E's D144 row owes nothing until stage 1.
 outside the repo. The §8.3 search is a weak pass (the repo is public but not yet indexed), so subjects run with no web tools;
 `--tools '""'` already covers that. E declared seeing three §7 lines by grep. **Self-caught:** my 01:1x ring said "E codes";
 by §10, B is the blind coder. It was corrected in the next ring. `univ_coldread/` holds scripts only (no stimuli, no token printed).
+**01:5x — D147: the librarian's independent re-parse** (`loop/univ_coldread/reparse_librarian.js`, a separate implementation of E's §4,
+over `checker.json` sha256 2bb5f79c…) **equals A's tally cell for cell.** CONTROL 10/10 in all four cells, so it PASSES.
+T1 (sealed): W9 N1 | W10, which gives DIRECTION DETECTED: WRITE. T2 (amended): W1 D9 | D7 N3, which gives DIRECTION DETECTED: DECLINE.
+0 unparsed and 0 leans. D144's single T1 NEITHER was the minority answer (1 of 21 T1 answers across D145+D147 real = NEITHER x2).
+Stage 1 is held on the keeper's gate answer: under the gate reading the checker found directions, so stage 1 does not run.
