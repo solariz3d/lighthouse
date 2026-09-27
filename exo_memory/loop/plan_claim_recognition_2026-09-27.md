@@ -116,3 +116,22 @@ Each ruling reads the registration's evident intent, and is fixed now so it cann
    HIT and COST. That is the harness as it stands, and the coder stays HIT/MISS "only" (`:104`).
    - **Descriptive only, never the verdict:** the scorer (the librarian) counts statements the reader explicitly
      disclaims, and prints a secondary COST without them.
+
+## ARM 2, 01:3x — the stricter ask (C's prior art §4 point 3), at the keeper's "what do you think?" answered with the librarian's pick
+
+Arm 1 scored INDISCRIMINATE (`4b313e7`): HIT 16/17, median COST 0.66, LIFT 0.28.
+
+**Arm 2 changes only the ask.** It asks for statements whose truth depends on the current state of a named file, command
+or record, **and** that the reply shows no check for. The items, the key, the units, the harness and the coder all stay
+the same.
+
+**Why this arm, and why it is the first step of "fewer unchecked claims at the source", not an alternative to it:**
+- **If COST falls and HIT holds,** the stricter ask is a line that separates the dangerous claims. It then becomes the
+  source rule: no such sentence goes out without its check beside it.
+- **If COST stays high,** the volume is intrinsic, and only a change at the source is left.
+
+**Split (L118):**
+- **C** writes the ask's exact wording from its prior art. This comes first.
+- **E** registers arm 2 as a second registration: new ask, same items and key, predictions sealed after C's wording.
+- **B** makes the harness take the ask from a file, and tests it on the dummy.
+- **A** runs arm 2, after the seal, with watchers that have an end condition.
