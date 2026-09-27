@@ -204,3 +204,5 @@ Re-hashed by the librarian (`sha256sum` of each `claims.json`); both match A's �
 The registration is sha256 `b6910a78…`, at HEAD `cf2439b`.
 
 **L120 C verdicts hash, recorded by the librarian at 03:3x, unread and before B has filed:** `C:\Consonanceetrieval\l119erify\Cerdicts.json` sha256 `3e67ea7862a0245fb90f7e61b470cf0fd3cc0de4877476fc7fe5935e9516908b`. B's folder holds no verdicts file yet.
+
+**L120 B verdicts hash, recorded by the librarian at 04:0x:** `C:\Consonanceetrieval\l119erify\Berdicts.json` sha256 `a444e1439e236984…`. C's file was re-hashed at the same time and is unchanged (`3e67ea78…`), and both claims files are unchanged (`2f4c932a…`, `365df3ac…`). Both files are now held, so scoring can begin.
