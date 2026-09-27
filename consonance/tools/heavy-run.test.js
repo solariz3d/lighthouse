@@ -129,11 +129,13 @@ test('no data dir is a REFUSAL, never a run without the lock', () => {
   assert.throws(() => H.acquire({ cmd: 'x', dataDir: null, env: {} }), /no data dir/);
 });
 
-test('the lock holds {pid, seat, cmd, started} (and the token)', () => {
+test('the lock holds {pid, seat, cmd, started} (and the token), and since L124 the holder\'s identity {image, holder_start}', () => {
   const d = tmp();
   const h = H.acquire({ cmd: 'trip-check.mutants', dataDir: d, env: { CONSONANCE_PANE: '0845a868-38f2' } });
   const l = readLock(d);
-  assert.deepStrictEqual(Object.keys(l).sort(), ['cmd', 'pid', 'seat', 'started', 'token']);
+  assert.deepStrictEqual(Object.keys(l).sort(), ['cmd', 'holder_start', 'image', 'pid', 'seat', 'started', 'token']);
+  assert.strictEqual(l.image, path.parse(process.execPath).name, 'the image is this executable\'s base name');
+  assert.ok(Math.abs(Date.parse(l.holder_start) - (Date.now() - process.uptime() * 1000)) < 2000, 'holder_start is this process\'s start');
   assert.strictEqual(l.seat, '0845a868');
   assert.strictEqual(l.cmd, 'trip-check.mutants');
   h.release();
@@ -159,4 +161,114 @@ test('WIRING (a source sweep): js-suite and every *.mutants.js and mutant-harnes
     'js-suite takes it only for the real tree — a fixture run is not a heavy run');
   assert.match(fs.readFileSync(path.join(__dirname, 'mutant-harness.js'), 'utf8'), /if \(!argv\.includes\('--audit'\)\) require\('\.\/heavy-run\.js'\)\.hold/,
     '--audit runs the gates only and does not take it');
+});
+
+// ── L124: PID REUSE. A pid the OS has handed to another program reads alive; the lock's recorded identity tells them
+// apart. `identify` is injected (a fake of processIdentity) so no test depends on what else runs on the machine, except
+// the two marked REAL, which ask the OS about this very process.
+const T0 = Date.parse('2026-09-27T06:42:17.000Z');
+const idLock = (extra = {}) => ({ pid: 27836, seat: 'terminal', cmd: 'js-suite', started: new Date(T0 + 400).toISOString(), token: 'held', image: 'node', holder_start: new Date(T0).toISOString(), ...extra });
+const fakeClock = () => { let t = 0; return { now: () => t, sleep: (ms) => { t += ms; } }; };
+
+test('PID REUSED by another program (alive, different image): the lock is STALE — taken over, logged as reused, recorded in took_over', () => {
+  const d = tmp();
+  fs.writeFileSync(lockOf(d), JSON.stringify(idLock()));
+  const logs = [];
+  const h = H.acquire({ cmd: 'js-suite', dataDir: d, env: {}, alive: () => true, identify: () => ({ image: 'mscopilot', start: T0 + 5000 }), maxWaitMs: 1000, pollMs: 100, ...fakeClock(), log: (s) => logs.push(s) });
+  assert.strictEqual(h.reentrant, false);
+  assert.match(logs.join('\n'), /took over a stale lock — terminal pid 27836 \(js-suite, since .*\): pid 27836 is now mscopilot, started .*— the pid was reused/);
+  const now = readLock(d);
+  assert.strictEqual(now.pid, process.pid);
+  assert.strictEqual(now.took_over.holder.pid, 27836);
+  assert.strictEqual(now.took_over.reason, 'pid_reused');
+  assert.deepStrictEqual(now.took_over.now_running, { image: 'mscopilot', start: new Date(T0 + 5000).toISOString() });
+  h.release();
+});
+
+test('PID REUSED by the SAME image (a later node took the pid): a start time more than the tolerance off is STALE', () => {
+  assert.ok(Number.isFinite(H.START_TOLERANCE_MS) && H.START_TOLERANCE_MS > 0, 'START_TOLERANCE_MS is exported');
+  const d = tmp();
+  fs.writeFileSync(lockOf(d), JSON.stringify(idLock()));
+  const h = H.acquire({ cmd: 'js-suite', dataDir: d, env: {}, alive: () => true, identify: () => ({ image: 'node', start: T0 + H.START_TOLERANCE_MS + 1000 }), maxWaitMs: 1000, pollMs: 100, ...fakeClock(), log: () => {} });
+  assert.strictEqual(readLock(d).took_over.reason, 'pid_reused');
+  h.release();
+});
+
+test('the SAME process (alive, same image, start within the tolerance, case-insensitive image) is HELD: it waits and times out, lock untouched', () => {
+  const d = tmp();
+  const lock = idLock();
+  fs.writeFileSync(lockOf(d), JSON.stringify(lock));
+  const c = fakeClock();
+  assert.throws(
+    () => H.acquire({ cmd: 'x', dataDir: d, env: {}, alive: () => true, identify: () => ({ image: 'NODE', start: T0 + 800 }), maxWaitMs: 1000, pollMs: 100, ...c, log: () => {} }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT',
+  );
+  assert.deepStrictEqual(readLock(d), lock);
+});
+
+test('a DEAD pid with an identity lock is STALE as before, without asking the OS who has it', () => {
+  const d = tmp();
+  fs.writeFileSync(lockOf(d), JSON.stringify(idLock()));
+  let asked = 0;
+  const h = H.acquire({ cmd: 'x', dataDir: d, env: {}, alive: () => false, identify: () => { asked++; return null; }, maxWaitMs: 1000, pollMs: 100, ...fakeClock(), log: () => {} });
+  assert.strictEqual(asked, 0);
+  assert.strictEqual(readLock(d).took_over.reason, 'dead');
+  h.release();
+});
+
+test('an OLD-FORMAT lock (no identity recorded) behaves exactly as before: a live pid is HELD and the OS is never asked', () => {
+  const d = tmp();
+  const old = { pid: 27836, seat: 'terminal', cmd: 'js-suite', started: '2026-09-27T06:42:17.386Z', token: 'old-format' };
+  fs.writeFileSync(lockOf(d), JSON.stringify(old));
+  let asked = 0;
+  const c = fakeClock();
+  assert.throws(
+    () => H.acquire({ cmd: 'x', dataDir: d, env: {}, alive: () => true, identify: () => { asked++; return { image: 'mscopilot', start: T0 }; }, maxWaitMs: 1000, pollMs: 100, ...c, log: () => {} }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT',
+  );
+  assert.strictEqual(asked, 0, 'an old lock carries nothing to compare, so nothing is asked');
+  assert.deepStrictEqual(readLock(d), old);
+});
+
+test('an UNKNOWN identity (the OS query failed) is HELD — failing to look is never a reason to take a live lock', () => {
+  const d = tmp();
+  fs.writeFileSync(lockOf(d), JSON.stringify(idLock()));
+  const c = fakeClock();
+  assert.throws(
+    () => H.acquire({ cmd: 'x', dataDir: d, env: {}, alive: () => true, identify: () => null, maxWaitMs: 1000, pollMs: 100, ...c, log: () => {} }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT',
+  );
+});
+
+test('the OS is asked about a waited-on holder at most once per identity-recheck interval, not on every poll', () => {
+  assert.ok(Number.isFinite(H.IDENTITY_RECHECK_MS) && H.IDENTITY_RECHECK_MS > 0, 'IDENTITY_RECHECK_MS is exported');
+  const d = tmp();
+  fs.writeFileSync(lockOf(d), JSON.stringify(idLock()));
+  let asked = 0;
+  const c = fakeClock();
+  assert.throws(
+    () => H.acquire({ cmd: 'x', dataDir: d, env: {}, alive: () => true, identify: () => { asked++; return { image: 'node', start: T0 }; }, maxWaitMs: 3 * H.IDENTITY_RECHECK_MS, pollMs: 2000, ...c, log: () => {} }),
+    (e) => e.code === 'HEAVY_RUN_TIMEOUT',
+  );
+  assert.ok(asked >= 3 && asked <= 4, `asked ${asked} times over three recheck intervals`);
+});
+
+test('REAL (this machine): processIdentity of THIS process matches the identity this process records — same image, start within the tolerance', { skip: process.platform !== 'win32' && 'the OS query is the Windows one' }, () => {
+  const id = H.processIdentity(process.pid);
+  assert.ok(id, 'the OS answered');
+  assert.strictEqual(id.image.toLowerCase(), path.parse(process.execPath).name.toLowerCase());
+  assert.ok(Number.isFinite(id.start), 'a start time came back');
+  assert.ok(Math.abs(id.start - (Date.now() - process.uptime() * 1000)) < H.START_TOLERANCE_MS, `OS start vs recorded start: ${id.start - (Date.now() - process.uptime() * 1000)} ms`);
+  assert.strictEqual(H.sameHolder({ image: path.parse(process.execPath).name, holder_start: new Date(Date.now() - process.uptime() * 1000).toISOString() }, id), true);
+});
+
+test('REAL (this machine): processIdentity of a pid that does not exist is null (unknown), never a guess', { skip: process.platform !== 'win32' && 'the OS query is the Windows one' }, () => {
+  let dead = 900000;
+  while (true) { try { process.kill(dead, 0); dead++; } catch (e) { if (e.code === 'ESRCH') break; dead++; } }
+  assert.strictEqual(H.processIdentity(dead), null);
+  assert.strictEqual(H.processIdentity('1; whoami'), null, 'a non-integer pid never reaches the shell');
+  // The pid comes from a lock FILE, and processIdentity interpolates it into a PowerShell command: a crafted lock must not
+  // run anything. This payload WOULD print a parseable identity if it reached the shell, so only the guard can make it null.
+  assert.strictEqual(H.processIdentity("999999999; Write-Output 'injected|2026-01-01T00:00:00Z' #"), null, 'an injected command never runs');
+  assert.strictEqual(H.processIdentity(0), null, 'pid 0 (the idle process) is not a holder');
 });
