@@ -72,9 +72,10 @@ sessions work together, step by step* gives the full steps.
   them. The README's section *The central claim, and its evidence* lists the cases.
 - **Notes you don't have to keep.** The librarian answers "what do we already know about this?" with pointers to the
   exact files and lines, not a summary you have to trust.
-- **A second look at the AI's answers,** from Jev: a separate checker built on a different AI model, not Claude, that
-  marks answers worth rereading. Its accuracy has been measured, and it is modest: of the first 30 answers it flagged, two
-  reviewers who had not seen its verdicts agreed with 8. The README's section *Jev, the second look* has the details.
+- **A second look at the AI's answers** came from Jev, a separate checker built on a different AI model, not Claude.
+  **Jev was retired on 2026-09-27** at the author's word, and the app no longer uses it. While it ran, its accuracy was
+  measured and was modest: of the first 30 answers it flagged, two reviewers who had not seen its verdicts agreed with 8.
+  The README's section *Jev, the second look* keeps the record.
 - **Nothing acts over your head.** It does not correct you, act for you, or decide for you. No program — not this app,
   not Jev, not another session — can tell from outside whether a conversation is producing a real insight or carrying
   someone away; the two look the same. So that call stays with you.
@@ -103,8 +104,10 @@ That opens the app. `cargo tauri build` makes a standalone program instead.
 - It is early software, built and used on the author's own machines.
 - Sessions you have used are sent a short "keep warm" message after 50 idle minutes. That stops their conversation
   falling out of the prompt cache, and it does use your Claude usage.
-- Jev, the second-look judge, is optional and separate. It sends the turns it judges to an outside service, which its
-  own page states plainly: [`jev/README.md`](jev/README.md).
+- Jev, the second-look judge, was retired on 2026-09-27 at the author's word, and the app no longer starts it from the
+  next rebuild on. While it ran, it sent the turns it judged to an outside service, which its own page states plainly:
+  [`jev/README.md`](jev/README.md). Why it was retired:
+  [`exo_memory/loop/plan_jev_off_2026-09-27.md`](exo_memory/loop/plan_jev_off_2026-09-27.md).
 
 ## How it works
 
@@ -115,7 +118,7 @@ That opens the app. `cargo tauri build` makes a standalone program instead.
 | **Orchestrator** | The main session, and the one you talk to. It keeps a fixed identity, so it wakes into the same conversation every time. It plans the work and lands the results. |
 | **Librarian** | Keeps the record so the others don't have to. Asked a question, it returns what the record already says about it, cited by file and line. It checks the workers' reports before anything lands. |
 | **Workers** (the committee panes, in the Terminal tab) | Each gets a short written brief and owns named files, so two never edit the same thing. They report to the librarian directly. |
-| **Third Place** | A session with no work to do and no channel into the work: the conversation is the point. Jev does read its turns, by the author's decision, and the app says so. |
+| **Third Place** | A session with no work to do and no channel into the work: the conversation is the point. Jev read its turns by the author's decision until Jev was retired on 2026-09-27, and the app says so. |
 | **Listen** | Listens to one application's audio and reports it as intervals rather than a spectrum. Off until you pick a source. |
 
 ### How the sessions work together, step by step
@@ -253,7 +256,11 @@ This section is the point of the page. A README that shows only what worked is a
 
 ### Jev, the second look
 
-Jev is a separate judge (not Claude) that reads each finished turn and marks the ones worth rereading. What it is worth,
+**Retired on 2026-09-27, at the author's word** ([`exo_memory/loop/plan_jev_off_2026-09-27.md`](exo_memory/loop/plan_jev_off_2026-09-27.md)).
+The key was removed and the app stops starting it from the next rebuild on. What follows is the record of what it
+measured while it ran, kept as it was.
+
+Jev was a separate judge (not Claude) that read each finished turn and marked the ones worth rereading. What it was worth,
 measured on its first 56 turns: blind readers confirmed **8 of the 30 turns it flagged as drifting** and **19 of the 20
 turns it called clean** (it also answered "can't judge" on 6). The readers were AI sessions from this same project and had been measured as **lenient** —
 fresh outside readers flagged about three times as many turns — so some unconfirmed marks may be the readers' leniency,
