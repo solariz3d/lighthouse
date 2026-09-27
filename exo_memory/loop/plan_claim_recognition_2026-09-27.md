@@ -84,3 +84,17 @@ could not see it, so it would be a guaranteed miss, which would score the extrac
 room forbids.
 
 **Kept as a finding instead:** wrong claims also live in commit messages, a surface a reply-level check never sees.
+
+## RULINGS on A's L116 §3, 01:0x, made before any reader runs
+
+1. **The 5 unkeyed items (W101, W124, W136, W140, W148): the default stands.**
+   - The readers run over all 22. Readers never see a key.
+   - These 5 are NOT SCORED and are named. Their registered anchor is the census "wrong claim" cell, which is D-only.
+   - Choosing their wrong claim on L by reading the reply would be judgement, not the anchor.
+   - That leaves **17 scored**, above the too-few floor of 15.
+   - If D's census arrives before scoring, the 5 are scored as a separate, labelled addendum and never pooled into the
+     sealed verdict.
+2. **The re-extraction to §1 is what §9 intends: confirmed.** It was redone before any reader saw a reply. The L115
+   versions are kept in `key\v1-l115\`.
+3. **The key is re-derived ONCE, under B's final `units.js`, after B's §9 rule check is clean and before any reader.**
+   The anchors are the sealed object. The re-derived key's sha256 and the `units.js` sha256 go in A's run hand-back.
