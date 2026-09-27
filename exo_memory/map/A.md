@@ -1511,3 +1511,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-09-27 (on L) — L121 A: privacy scan of 5ced140..443ae45 (29 commits, 243 message lines, 4,755 added lines, 0 binary) — SAFE TO PUSH for that range. 80 hits, all classified: 29 co-author trailers, 1 test fixture, 1 pattern NAME in the plan, 45 sha256 digests, 4 username paths (already public in 140 files); private project 0, keeper address 0; scanner canary 9/9
 `exo_memory/handback/p-l121-scan-A_2026-09-27.md`. Patterns held outside the repo. Lesson: a scan report that ships publicly must not spell out what it scanned for. Git-bash grep -i -F aborts on UTF-8 and prints a blank that looks like a count; count in node.
+
+## 2026-09-27 (on L) — L122 A: the label rule LANDED at 8389900 (by path, not pushed). BUILDING.md hand-back item 7 + pointers in COMMITTEE.md and LIBRARIAN.md, byte-identical to C's draft fences (sha256 02096e38… / 5ea22cf0…); portable-paths green 0 new; js-suite 144/1/1 canary of 146, the 1 = carrier-drift CH-4 on three research files, identical at 360bf94 without the edit; a stale heavy-run lock (pid REUSED by mscopilot) moved aside; process search 0
+`exo_memory/handback/p-l122-land-A_2026-09-27.md`. Lesson: a lock whose pid is alive may still be stale. Check what that pid now IS before trusting it.
