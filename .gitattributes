@@ -62,3 +62,34 @@
 # format must not depend on anyone remembering to come back here. `.gitattributes` was written
 # 2026-08-25; the first .bin in this repo was born 2026-09-09, which is exactly how the gap opened.
 consonance/src-tauri/fixtures/screens/** binary
+
+# ── ADDED 2026-09-27, pane B, lap L121 — both machines append to the same dated notes ─────────────
+# The laptop and the desktop each committed on top of 5ced140 and both appended to the same files. Without
+# a rule, the desktop's merge of origin stops on every such file with a conflict between two appends that
+# are BOTH wanted. `merge=union` keeps both sides' lines, with no conflict markers.
+#
+# WHICH FILES, measured, not assumed. Every change after creation across first-parent history, from -U0 diffs:
+# TAIL = only lines added after the old last line; MID = lines added elsewhere, none deleted; EDIT = any line
+# deleted (handback/p-l121-merge-B_2026-09-27.md §1 has the command):
+#   exo_memory/map/?.md               8 files   508 tail ·  6 mid · 6 edit
+#   exo_memory/librarian/2026-*.md   33 files   607 tail ·  2 mid · 1 edit
+#   exo_memory/third_place/2026-*.md 20 files    32 tail ·  0 mid · 0 edit
+#
+# LEFT OUT ON PURPOSE, because they are edited in place and union would silently keep BOTH versions of an
+# edited line (shown in the throwaway repo, case N1):
+#   exo_memory/librarian/LEDGER.md  (4 tail · 36 mid · 26 edit). This is why the rule is NOT librarian/*.md.
+#   librarian/DOSSIER.md, README.md and the other undated notes · map/README.md · the frozen map/M-<date>.md
+#   exo_memory/journal/  (dated files 59 tail · 11 mid · 5 edit; too many in-place corrections for union)
+#   exo_memory/loop/, handback/, BOOT.md, SOURCE.md, every .json and .jsonl
+#
+# THE LIMIT THAT MATTERS: union never raises a conflict. If both machines EDIT the same line of one of these
+# files, both lines stay and nothing says so. Six map edits and one librarian edit in the whole history say
+# this is rare, not impossible. After a merge, read the diff of these files.
+#
+# AND THE ONE THAT BITES FIRST: git reads merge attributes from the checkout doing the merge. A desktop whose
+# checkout predates this rule will still conflict when it merges a branch that carries it (case P2). Its
+# runbook puts these lines in .git/info/attributes before the merge.
+# The runbook: exo_memory/loop/runbook_D_merge_and_push_2026-09-27.md.
+exo_memory/map/?.md merge=union
+exo_memory/librarian/2026-*.md merge=union
+exo_memory/third_place/2026-*.md merge=union

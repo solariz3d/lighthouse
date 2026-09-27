@@ -109,6 +109,7 @@ transcript is running the experiment and reading the dial.
   load: a pane is respawned FRESH from its capture tail plus that file, so **a finding that reaches
   only the hand-back never reaches the next waking of you.** Zero of five hand-backs on 2026-09-02
   wrote one.
+- **Checked or inferred** (2026-09-27): in a reply to the keeper as in a hand-back, a claim about state shows its check (`checked: <command> → <result>`) or reads as inferred, and is marked `inferred:` where it would otherwise sound checked. **`BUILDING.md`'s WHAT A HAND-BACK OWES, item 7, is the master; this is the pointer.**
 - **Nothing committed.** Work lands dirty; the seat holding the shared checkout commits, with
   attribution.
 

@@ -1752,3 +1752,55 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 
 **Carry:** a validation set's size is a measurement, not an assumption. The locate step, not the instrument, is the bottleneck here.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: the validation run on the registered set, after B's second read is scored, unless your registration says otherwise
+## 2026-09-27 ~01:1x (L) · L115: the claim-recognition test REGISTERED, design only → `exo_memory/loop/claim_recognition_registration_2026-09-27.md`, hand-back `exo_memory/handback/p-l115-register-E_2026-09-27.md`
+- **Items:** 23 (the 24 located minus W105), and all resolve on L as 23 distinct messages, checked by metadata only.
+- **Only 5 of 23 are conversational text;** 18 are tool calls writing the record.
+- **Extraction** takes the whole message.id (text, plus written text from tool calls). A seals the key before any reader.
+- **Hit rule:** a key unit flagged. Mapping is mechanical, then a fresh `claude -p` coder blind to the key; the librarian unmasks.
+- **Cost:** flagged units ÷ units, with a fixed splitter. LIFT over a per-item chance baseline is the control; separate no-error replies are not used.
+- **Outcomes:** FALSIFIED / SUPPORTED / INDISCRIMINATE / INCONCLUSIVE. Ceiling COST ≤0.40; DG1–DG4; <15 items = NOT TESTED. **My prediction: INDISCRIMINATE** (hit ~0.78, COST ~0.55, LIFT ~0.15).
+- **Readers:** hooks disabled (the keeper's user hooks are a second leak channel), no tools, no MCP, claudeMdExcludes probed first. The isolated token is unset on L.
+
+**Carry:** a flagged-share ceiling isn't enough against a broad flagger; score the hit against the chance of hitting at that share.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: L116, A extracts the replies and runs the readers, then the librarian scores, unless your registration says otherwise
+
+## 2026-09-27 ~01:1x (L) · L115 addition: predictions struck and re-sealed after C's prior art; N = 22; my rules govern A's and B's pieces → same hand-back (addendum), registration `0cea938b…`
+- **Sealed, citing C's file by line:** HIT 18/22 (inside C's 15–21) and LIFT ~0.30.
+- **COST 0.45, deliberately BELOW C's 50–80%,** because 17 of 22 items are long notes, which a quoted list can't cover.
+- **Outcome:** INDISCRIMINATE, borderline on the 0.40 ceiling.
+- **C's upper-bound point is adopted:** fresh-reader recognition bounds in-turn recognition from above. C's stricter ask is left for a later arm.
+- **The W123 ruling** interacts with my Bash rule (whole command incl. `-m` when no heredoc); recorded, not widened.
+- **Declared:** `[panes]` leaked A's and C's state into my context. A's files were not opened.
+
+**Carry:** when a packet adds "seal only after X", audit what is ALREADY written as sealed; mine was.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: L116, A runs B's harness over A's replies, unless your registration says otherwise
+
+## 2026-09-27 ~01:5x (L) · L118: claim recognition ARM 2 registered, ask only, sealed after C's wording → `exo_memory/loop/claim_recognition_arm2_registration_2026-09-27.md`, hand-back `exo_memory/handback/p-l118-register-E_2026-09-27.md`
+- **The ask:** C's, verbatim (615 B, sha256 `2a081b66…`; A's `--ask` file must match or the run is void). Everything else is cited to arm 1 by line (R1 at `c8c18d4`) plus the three rulings.
+- **Ask-only test:** written BEFORE reading C's wording, and C's ask passes all four, so no refusal.
+- **Thresholds against arm 1 (16/17, COST 0.662, LIFT 0.275):** HIT ≥14/17, COST ≤0.51 (a fall ≥0.15), ≤0.40 to SEPARATE, LIFT ≥0.20. Outcomes: SEPARATES / FALLS, NOT ENOUGH / DOES NOT FALL / TRADES RECALL.
+- **Sealed:** HIT 15/17, COST 0.50, LIFT ~0.35, so FALLS, NOT ENOUGH, which sits 0.01 inside a boundary, and that is said.
+- **Reuse:** it pairs the comparison; reader noise is unmeasured. An arm-1-ask replicate is the named next run if the result lands near a boundary.
+
+**Carry:** write the refusal test BEFORE reading the thing it tests. And check line citations against the file, since a table's separator row shifts every number by one.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A runs arm 2 once your seal is committed, unless your registration says otherwise
+
+## 2026-09-27 ~02:4x (L) · L119: the base rate of WRONG among unchecked claims, REGISTERED and sealed after C's priors → `exo_memory/loop/claim_base_rate_registration_2026-09-27.md`, hand-back `exo_memory/handback/p-l119-register-E_2026-09-27.md`
+- **Frame:** 6 seats' main transcripts on L, 09-14 to 09-23 UTC (all seats dense on both machines; L's git complete to `5ced140`). 5,023 messages ≥200 characters, seed `sha256("L119|"+id)`, the 24 census turns excluded.
+- **Draw:** M=100 messages, K=3 claims each, extracted with arm 1's harness.
+- **Kinds before verdicts:** CHECKED > CONCLUSION > STATE, with future, intent and opinion routed out. Verdicts are as of the claim's time, from git, then ledgers by `ts`, then the seat's own earlier tool results.
+- **Speaker's own state kept in,** against C's advice, because of W259.
+- **Degenerate:** UNVERIFIABLE >50% is the refusal condition, made measurable; per-kind >⅓ is printed as UNVERIFIABLE-HEAVY.
+- **Verifiers:** B and C, own-seat claims routed to the other, the overlap only from non-B/C seats (≈50 claims).
+- **Sealed:** state 0.10, conclusion 0.20, pooled 0.13, checked 0.04, UNVERIFIABLE 0.30, κ 0.60, so the middle row (mark plus a targeted check), with the kind step underpowered and predicted not shown.
+
+**Carry:** when a refusal hinges on an unknown share, register the share as a degenerate threshold instead of guessing it now.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A draws the sample once your seal is committed, then L120 the verifier pair, unless your registration says otherwise
+
+## 2026-09-27 ~04:3x (L) · L121: the label rule's WATCH registered before the rule lands → `exo_memory/loop/label_rule_watch_registration_2026-09-27.md`, hand-back `exo_memory/handback/p-l121-watch-E_2026-09-27.md`
+- (a) labelled share in two strata, H hand-backs and K keeper replies, 30+30 units per read, two reads; LABEL_RE pinned from the LANDED rule; a detector control over the last pre-rule units (≤0.05), because "CHECKED" is already a kind word here.
+- (b) the per-lap census baseline was REFUSED on L: `703dc74` isn't here, the WRONG column is hand-carried (`librarian/2026-09-07.md:278`), and a census counts found, not landed. The baseline is L120's sample, 0.049 / 0.038; post-rule = L119 again, with the self-label masked from B and C.
+- F1 share <0.50; F2 CHECKED not cleaner than INFERRED, or ≥3 false checks; F3 agreement <0.75 on B+C-agreed kinds.
+- **My prediction:** WORKS on H, DECORATION on K.
+**Carry:** a count of errors FOUND can't show a rule working, because it falls when the looking stops; watch with a sample.
+NEXT: librarian call_librarian with the hand-back pointer when it is written — plan default after it: L122, the rule lands and the watch starts from that commit
