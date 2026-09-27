@@ -135,3 +135,11 @@ the same.
 - **E** registers arm 2 as a second registration: new ask, same items and key, predictions sealed after C's wording.
 - **B** makes the harness take the ask from a file, and tests it on the dummy.
 - **A** runs arm 2, after the seal, with watchers that have an end condition.
+
+**RULING on C's one departure (L118, 01:3x): ACCEPTED.**
+- C dropped "named" from "a named file, command or record" (`handback/p-l118-ask-C_2026-09-27.md` §1).
+- The word was my plan's. Arm 1's own finding is that most wrong claims name no source ("C is logged out"), so requiring
+  "named" would have excluded most of the key by construction.
+- C's "something that could be looked at directly … whether or not it names the file, command or record" keeps the
+  intent.
+- **C's wording stands as the ask, verbatim**, and E uses it unchanged.
