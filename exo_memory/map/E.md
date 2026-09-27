@@ -1720,3 +1720,26 @@ NEXT: librarian call_librarian with the hand-back pointer when the token unit is
 `C:\Consonance\sealed\jev_unitset_2026-09-23\key.json` (`3b390bb2…`) and the reader packet exist only on L, where L111 built them. On D, both give "No such file", and a search of C:\Consonance, the home folders and the stick drives finds only the in-repo registration and draw.js. It was not rebuilt, because a D draw would be different units. 0 gateway calls. A dated stop addendum is in `jev_r2r3_score_2026-09-23.md`. It runs on L: verify the key, re-render each unit's prompt with the current builder, ≤56 Jev calls, and compare old → new with both prompt shas.
 **Carry:** a packet that says "check whether it exists on D" is asking the first question, not the last. Answer it before anything else.
 NEXT: librarian call_librarian with the hand-back pointer when the re-run is compared and written (or stopped because the set isn't on D) — plan default after it: the librarian collates D137 when A, C and E have rung, unless the output says otherwise
+
+## 2026-09-27 ~01:1x (L) · L115: the claim-recognition test REGISTERED, design only → `exo_memory/loop/claim_recognition_registration_2026-09-27.md`, hand-back `exo_memory/handback/p-l115-register-E_2026-09-27.md`
+- **Items:** 23 (the 24 located minus W105), and all resolve on L as 23 distinct messages, checked by metadata only.
+- **Only 5 of 23 are conversational text;** 18 are tool calls writing the record.
+- **Extraction** takes the whole message.id (text, plus written text from tool calls). A seals the key before any reader.
+- **Hit rule:** a key unit flagged. Mapping is mechanical, then a fresh `claude -p` coder blind to the key; the librarian unmasks.
+- **Cost:** flagged units ÷ units, with a fixed splitter. LIFT over a per-item chance baseline is the control; separate no-error replies are not used.
+- **Outcomes:** FALSIFIED / SUPPORTED / INDISCRIMINATE / INCONCLUSIVE. Ceiling COST ≤0.40; DG1–DG4; <15 items = NOT TESTED. **My prediction: INDISCRIMINATE** (hit ~0.78, COST ~0.55, LIFT ~0.15).
+- **Readers:** hooks disabled (the keeper's user hooks are a second leak channel), no tools, no MCP, claudeMdExcludes probed first. The isolated token is unset on L.
+
+**Carry:** a flagged-share ceiling isn't enough against a broad flagger; score the hit against the chance of hitting at that share.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: L116, A extracts the replies and runs the readers, then the librarian scores, unless your registration says otherwise
+
+## 2026-09-27 ~01:1x (L) · L115 addition: predictions struck and re-sealed after C's prior art; N = 22; my rules govern A's and B's pieces → same hand-back (addendum), registration `0cea938b…`
+- **Sealed, citing C's file by line:** HIT 18/22 (inside C's 15–21) and LIFT ~0.30.
+- **COST 0.45, deliberately BELOW C's 50–80%,** because 17 of 22 items are long notes, which a quoted list can't cover.
+- **Outcome:** INDISCRIMINATE, borderline on the 0.40 ceiling.
+- **C's upper-bound point is adopted:** fresh-reader recognition bounds in-turn recognition from above. C's stricter ask is left for a later arm.
+- **The W123 ruling** interacts with my Bash rule (whole command incl. `-m` when no heredoc); recorded, not widened.
+- **Declared:** `[panes]` leaked A's and C's state into my context. A's files were not opened.
+
+**Carry:** when a packet adds "seal only after X", audit what is ALREADY written as sealed; mine was.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: L116, A runs B's harness over A's replies, unless your registration says otherwise
