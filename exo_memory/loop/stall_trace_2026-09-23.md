@@ -123,3 +123,22 @@ main.rs held anything; there was no delivery stall.**
   (:873) skips `pty_resize` when the dims are unchanged since the last send, which they are after a reopen, so the new
   pty never learns its size. **Fix, added to D143 (A):** `term.reset()` and clearing `sentRows`/`sentCols` on reopen,
   with a test. Display only; Main itself compacted cleanly and kept working.
+
+## 2026-09-27 01:3x (L) — A's two log watchers outlived the run, and the keeper saw them
+
+**Seen by the keeper:** "two monitors are running on A", 20 minutes after L117's run had finished.
+
+**Source.** A had started two background watchers from its pane (claude pid 39456, session `6fe15f0a`):
+- `tail -n +1 -F /c/Consonance/retrieval/l117/readers.log | grep …`
+- the same for `coders.log`
+
+`tail -F` follows forever and has **no end condition**, so the watchers could not exit when the batch finished. The
+pane looked busy while it was idle.
+
+**Fix, applied:** the librarian killed both process trees (43184 and 44684, then the orphaned `tail.exe` 27940 and 26936).
+A process search for the log paths now finds 0.
+
+**Fix, for next time:** a watcher starts with an **end condition**. It stops when the log prints the batch's done line,
+or when the runner's PID exits (`until` loop, or `tail --pid=<runner>`), never as a bare `tail -F`.
+
+**Proving check:** after any run, a process search for the run's log paths returns 0.
