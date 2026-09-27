@@ -1790,3 +1790,10 @@ NEXT: librarian call_librarian with the pointer when the baseline is written —
 ## 2026-09-27 ~12:5xZ (L) · L127: one dated line in the watch registration → hand-back `exo_memory/handback/p-l127-watch-E_2026-09-27.md`
 - (a) and §3 run through the claimrec harness (extract, then locate, then label). label-watch.js (3d63978) is the delivery reporter and a PROXY, never scored against F1 or F3. Append-only, +4/−0. LABEL_RE is still unpinned.
 NEXT: librarian call_librarian with the pointer when the line is added — plan default after it: hold for the keeper's rebuild
+
+## 2026-09-27 ~13:2xZ (L) · L128: the panes' intake census → `exo_memory/loop/pane_intake_census_2026-09-27.md`, hand-back `exo_memory/handback/p-l128-census-E_2026-09-27.md`
+- C's CLAUDE.md lacks BOTH the committee (15,823 B) and THE DECK (24,063 B); the other sections match A/B/E by sha, except NOT CARRIED (14 vs 7). Its map is index only.
+- Dated by L's persist.log MAP CARRY allowance gap C−B: 0 (09-14 11:15Z) → 2,818 → 23,452 (09-16) → 38,901 (09-20 06:42Z) → 37,625 now = DECK+COMMITTEE−2,261, exactly.
+- The mechanism the data points to: C's map switched to bold-dated paragraphs on 09-09, so 137,981 chars read as one "newest entry" and the builder evicts briefs to seat it (inferred; the code is A's).
+**Carry:** two panes with the same fixed brief have the same map allowance, so the allowance gap in persist.log is a free size-diff of intakes over time. Use it when no old copy exists.
+NEXT: librarian call_librarian with the pointer when the census is written — plan default after it: B reads the census and A's code finding together
