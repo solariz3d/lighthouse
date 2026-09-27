@@ -1822,3 +1822,9 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 - **The key is still SET in every running seat's process env, and is pushed in the PRIVATE state repo (3 blobs).** It also sits in the data dir (19), on the stick (a secrets file plus a tail) and in local transcripts (39). The public lighthouse history is 0 of 6,295 blobs. Revocation on Vercel is the only fix that covers every copy. L was not checked.
 **Carry:** "removed from the env" means the User env. Every process already running keeps its inherited copy until it restarts.
 NEXT: librarian call_librarian with the pointer when the census is written — plan default after it: collate D164 with A, C and B
+
+## 2026-09-27 ~18:1xZ (D) · D165 packet E: the T-180 export set, the §5c checks and the install → hand-back `exo_memory/handback/p-d165-export-E_2026-09-27.md`
+- markers.js (5 checks; L/R and race-direction conventions measured on 5 reference tracks), trackfiles.js (surfaces.ini with and without the FINDINGS §4c block, CM map formula from AcTools TrackMapRenderer.cs @812f856, dependency-free PNG), a build script (two FOLDERS, identical kn5 by sha256), and CHANGELOG. Suite 74/0; mutants 31/31 caught. Installed t180b_platform_test and t180b_platform_test_noblock (tracks 64 to 66).
+- Correction: I overwrote the tracked .gitignore, then restored it from HEAD and appended out/.
+**Carry:** run the checks on the REAL scene early. A marker on a shared triangle edge broke a check that hand-made scenes never exercised.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: T1 lands and T2 opens
