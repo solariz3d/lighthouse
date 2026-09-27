@@ -143,3 +143,25 @@ the same.
 - C's "something that could be looked at directly … whether or not it names the file, command or record" keeps the
   intent.
 - **C's wording stands as the ask, verbatim**, and E uses it unchanged.
+
+## THE KEEPER'S CORRECTION, 02:02 — unchecked is not wrong
+
+Verbatim: *"two true facts joined by an unchecked casual claim, that is good, because the unchecked claim could be wrong,
+but we should not automatically assume its wrong until it is check to see."*
+
+**What it corrects.** Arms 1–2 used only known-WRONG claims, all of them unchecked, which invites reading "unchecked"
+as "dangerous". But the base rate of unchecked-but-RIGHT claims was never measured. E predicted that correct claims lack
+checks about as often, and seats cite correct things from memory routinely. And the unchecked leap is often the valuable
+part: joining two true facts is how an insight forms. BOOT's own instrument says **don't indict the mechanism; check the
+tether**.
+
+**So the source rule is NOT "don't write unchecked claims". It is: MARK WHICH KIND.**
+- **Checked:** the check and its result are shown.
+- **Inferred:** the conclusion is stated as a conclusion, not yet checked.
+
+Both are allowed. The harm was a leap dressed as a measurement, so the next reader builds on it unaware. A labelled
+inference is either checked before anyone acts on it, or it stands as a hypothesis.
+
+**What the next test measures changes with it:** whether unchecked claims get labelled as unchecked, and whether fewer
+wrong claims **land** because readers act on the labels. It does not measure fewer unchecked claims. The unmeasured base
+rate (how often an unchecked claim is actually wrong) is an input the design has to find, not assume.
