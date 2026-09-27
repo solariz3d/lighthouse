@@ -1828,3 +1828,31 @@ NEXT: librarian call_librarian with the pointer when the census is written — p
 - Correction: I overwrote the tracked .gitignore, then restored it from HEAD and appended out/.
 **Carry:** run the checks on the REAL scene early. A marker on a shared triangle edge broke a check that hand-made scenes never exercised.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: T1 lands and T2 opens
+
+## 2026-09-27 ~18:3xZ (D) · D166 packet E: the AC launch harness; the AI run is PARKED → hand-back `exo_memory/handback/p-d166-launch-E_2026-09-27.md`
+- ac_launch.js: t180b_* only, heavy-run lock, every cfg ini backed up and restored in a finally (60 files, 0 changed across 4 runs), graceful close then its own pid killed at 10 min. 17/0 tests, 22/22 mutants.
+- AC ACCEPTS the generated fast_lane.ai at load (TRACK LENGTH 565.741211 vs 0 without it). But only 1 car ever loads (inferred: 1 pit box caps the field), and acs.exe self-exits with -1 at varying points, once before the line is even read. Parked under Rule 7.
+**Carry:** a timer left pending after the child exits keeps a lock held; clear every timer in finish().
+NEXT: librarian call_librarian with the pointer — plan default: D166 lands, T4 opens
+
+## 2026-09-27 ~18:5xZ (D) · D166 re-dispatch: validation from the data (ARCHITECTURE §4) → hand-back `exo_memory/handback/p-d166-validate-E_2026-09-27.md`
+- src/validate/: f = v²κ/(1−κ·o) + a_T·T + g·ŷ per lateral line; red/amber/info each with a FINDINGS/ARCHITECTURE line; two landings (3.2 g and 6.3 g), minSpeed, the reach bound; a point-mass lap. 38/0 tests, whole suite 235 pass / 0 fail / 6 todo, mutants 45/45.
+- Finding: FINDINGS.md:313 says 21 m / 100 m, but its own formula gives 23.9 m / 189.9 m.
+- Stated plainly: acs.exe was started 4 times; 3 of those after the keeper's 12:17 stop, which had not reached me.
+**Carry:** before blaming the code, check the fixture math. All five of my test failures were test errors, each checked by hand.
+NEXT: librarian call_librarian with the pointer — plan default: D166 lands, then export-from-words
+
+## 2026-09-27 ~19:1xZ (D) · D166 addendum: validation on an OPEN track, and incremental revalidate → same hand-back `exo_memory/handback/p-d166-validate-E_2026-09-27.md` §9
+- revalidate carries everything before fromS minus each check's look-back, and deep-equals a full validate across appends and edits. Early stations are carried as the same objects. 55/0 tests; mutants 56/56.
+- A real bug the tests found: an edit left a stale stack on old road. Each stack now records its deepest partner and is re-derived when that partner changed.
+**Carry:** a test that passes first time on new incremental code proves little; the mutants found 5 gaps and the edit case found a real bug.
+NEXT: librarian call_librarian with the pointer
+
+## 2026-09-27 ~14:4x (D) · D167: export from words, plus D166 addendum 2 (handle bounds) → hand-back `exo_memory/handback/p-d167-export-E_2026-09-27.md`
+- **What was built:** `src/export/fromwords.js` `exportTrack(doc, { outDir, variant })` plus the CLI `scripts/export_words.js`. It runs resolve → geometry → markers generated from the words → validation (red refuses, a failed lap proof is red, amber warns) → §5c checks → kn5 read back → AI line (floor) → track files.
+- **Results:** export tests 19/0/1 todo; whole suite 376: 369 pass, 0 fail, 7 todo. Mutants: export 26/27 (the survivor is equivalent), bounds 15/16, validate 56/56.
+- **Workaround:** a closed document is resolved open and then closed by buildPath (A's marginOf route), because resolve still throws CLOSE_NOT_BUILT.
+- **For C:** selfCheck flags crossings its own 25 m rule excludes on multi-part words (a cell meeting itself, sOther null), so the DEFAULT export refuses. That is the todo test.
+- **Mine:** mutating the shared checkout in place most likely made B's 13:03/13:14 suite red. Mutate a copy.
+- **Carry:** a document's `speed` is m/s. Measure `$?` or PIPESTATUS right after the command, never after an echo. Dead code shows up as a surviving mutant: probe it before writing a test for it.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: D167 is read by B and lands, then the app lap, unless the output says otherwise
