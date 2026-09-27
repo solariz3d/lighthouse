@@ -1804,3 +1804,9 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 - **My prediction:** WORKS on H, DECORATION on K.
 **Carry:** a count of errors FOUND can't show a rule working, because it falls when the looking stops; watch with a sample.
 NEXT: librarian call_librarian with the hand-back pointer when it is written — plan default after it: L122, the rule lands and the watch starts from that commit
+
+## 2026-09-27 ~16:5xZ (D) · D161 phase 1: Q3's 40 units built and frozen → `exo_memory/loop/q3_units_2026-09-27.md` (sha256 `a08b46ff…45ec`), hand-back `exo_memory/handback/p-d161-units-E_2026-09-27.md`
+- 2,161 eligible pairs (command outputs only, the immediately next assistant text, the first sentence with a digit, number word or verdict word), window 09-14 → e9cb884. Seed D161-q3-units-2026-09-27; the draw re-runs byte-identical.
+- The seat column is sealed outside the repo, not in the hand-back, because the readers can open the hand-back. A privacy filter took out 41 pairs; its term list is off-repo.
+**Carry:** "keep it in your hand-back" and "out of the readers' sight" conflict when the readers can read hand-backs; follow the purpose and say so.
+NEXT: librarian call_librarian with the pointer when the units are frozen — plan default after it: B and C read all 40 blind once A's scorer is in
