@@ -1743,3 +1743,13 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 
 **Carry:** when a packet adds "seal only after X", audit what is ALREADY written as sealed; mine was.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: L116, A runs B's harness over A's replies, unless your registration says otherwise
+
+## 2026-09-27 ~01:5x (L) · L118: claim recognition ARM 2 registered, ask only, sealed after C's wording → `exo_memory/loop/claim_recognition_arm2_registration_2026-09-27.md`, hand-back `exo_memory/handback/p-l118-register-E_2026-09-27.md`
+- **The ask:** C's, verbatim (615 B, sha256 `2a081b66…`; A's `--ask` file must match or the run is void). Everything else is cited to arm 1 by line (R1 at `c8c18d4`) plus the three rulings.
+- **Ask-only test:** written BEFORE reading C's wording, and C's ask passes all four, so no refusal.
+- **Thresholds against arm 1 (16/17, COST 0.662, LIFT 0.275):** HIT ≥14/17, COST ≤0.51 (a fall ≥0.15), ≤0.40 to SEPARATE, LIFT ≥0.20. Outcomes: SEPARATES / FALLS, NOT ENOUGH / DOES NOT FALL / TRADES RECALL.
+- **Sealed:** HIT 15/17, COST 0.50, LIFT ~0.35, so FALLS, NOT ENOUGH, which sits 0.01 inside a boundary, and that is said.
+- **Reuse:** it pairs the comparison; reader noise is unmeasured. An arm-1-ask replicate is the named next run if the result lands near a boundary.
+
+**Carry:** write the refusal test BEFORE reading the thing it tests. And check line citations against the file, since a table's separator row shifts every number by one.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A runs arm 2 once your seal is committed, unless your registration says otherwise

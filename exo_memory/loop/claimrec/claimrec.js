@@ -3,7 +3,8 @@
 // registration (E): loop/claim_recognition_registration_2026-09-27.md §2 (the ask), §3 (the HIT rule), §4 (units), §8
 // (isolation). No items and no key live here; every step reads the folders it is given.
 //
-//   node claimrec.js readers --in <reply dir> --out <reader dir>
+//   node claimrec.js readers --in <reply dir> --out <reader dir> [--ask <ask file>]
+//       (L118: with no --ask, arm 1's sealed ask; the ask's source and sha256s go into run-readers.json as "ask")
 //       one fresh `claude -p` per reply file (*.md, *.txt; the id is the file name without extension). Prompt = the ask,
 //       a blank line, "---", a blank line, the reply text (§2). Writes <id>.reader.txt (the answer) and <id>.reader.json
 //       (the CLI's whole JSON output), and run-readers.json (claude --version before and after, each call's exit code,
@@ -83,11 +84,11 @@ function listJsonl() {
   return out;
 }
 
-function runBatch(kind, jobs, outDir, manifestName) {
+function runBatch(kind, jobs, outDir, manifestName, extra = {}) {
   fs.mkdirSync(outDir, { recursive: true });
   const iso = isolationFiles();
   const manifest = { kind, started: new Date().toISOString(), claude: CLAUDE, versionBefore: claudeVersion(), flags: flagsFor(iso).map((f) => (f === iso.mcpFile ? '<mcp.json>' : f === iso.settingsFile ? '<settings.json>' : f)),
-    settings: iso.settings, mcp: { mcpServers: {} }, askSha256: sha(ASK), calls: [] };
+    settings: iso.settings, mcp: { mcpServers: {} }, ...extra, calls: [] };
   const before = listJsonl();
   for (const job of jobs) {
     const r = callClaude(job.prompt, iso);
@@ -174,11 +175,25 @@ function parseCoder(text, n) {
 }
 
 // ── commands ────────────────────────────────────────────────────────────────────────────────
+// The reader's ask (L118, arm 2): from a FILE with --ask, else arm 1's sealed ask (ASK above, byte-identical — a test
+// re-derives it from the registration at c8c18d4). A file's text is used as it is, except that ONE trailing line ending
+// (\n or \r\n) is removed, so a file saved with a final newline gives the same prompt as the same words without one.
+// The run records which ask it used: source, the file's own sha256 (raw bytes) and the sha256 of the ask text itself.
+function loadAsk(askPath) {
+  if (!askPath) return { text: ASK, source: 'default (arm 1, registration c8c18d4 §2)', fileSha256: null, sha256: sha(ASK) };
+  const raw = fs.readFileSync(askPath);
+  const text = raw.toString('utf8').replace(/\r?\n$/, '');
+  if (!/[\p{L}\p{N}]/u.test(text)) throw new Error(`--ask ${askPath}: the file holds no ask text`);
+  return { text, source: path.resolve(askPath), fileSha256: sha(raw), sha256: sha(text) };
+}
+
 function cmdReaders(o) {
   const inDir = need(o, 'in'), outDir = need(o, 'out');
-  const jobs = replyFiles(inDir).map(({ id, file }) => ({ id, prompt: `${ASK}\n\n---\n\n${fs.readFileSync(file, 'utf8')}` }));
+  const ask = loadAsk(o.ask === undefined ? null : need(o, 'ask')); // a bare --ask with no path is refused by need()
+  const jobs = replyFiles(inDir).map(({ id, file }) => ({ id, prompt: `${ask.text}\n\n---\n\n${fs.readFileSync(file, 'utf8')}` }));
   if (!jobs.length) { console.error(`no *.md/*.txt replies in ${inDir}`); process.exit(2); }
-  runBatch('reader', jobs, outDir, 'run-readers.json');
+  console.log(`ask: ${ask.source} · ask sha256 ${ask.sha256}${ask.fileSha256 ? ` · file sha256 ${ask.fileSha256}` : ''}`);
+  runBatch('reader', jobs, outDir, 'run-readers.json', { ask: { source: ask.source, sha256: ask.sha256, fileSha256: ask.fileSha256 } });
 }
 
 function cmdPackets(o) {
@@ -230,7 +245,7 @@ function cmdScore(o) {
   if (n) console.log(`hit rate ${hits}/${n} = ${(hits / n).toFixed(2)} · expected chance ${(chance / n).toFixed(2)} · LIFT ${((hits - chance) / n).toFixed(2)}`);
 }
 
-module.exports = { ASK, CODER_INSTRUCTION, parseStatements, mechanicalMap, parseCoder, coderPrompt, isolationFiles, callClaude, flagsFor };
+module.exports = { ASK, CODER_INSTRUCTION, loadAsk, parseStatements, mechanicalMap, parseCoder, coderPrompt, isolationFiles, callClaude, flagsFor };
 
 if (require.main === module) {
   const [cmd, ...rest] = process.argv.slice(2); const o = args(rest);

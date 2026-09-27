@@ -64,3 +64,43 @@ test('a prose line naming several statements is not read as the first one\'s ans
 test('a free-form coder answer is still read per statement', () => {
   assert.deepStrictEqual(parseCoder(['- **S1** → U2 (the width)', 'S2: none of the units', 'S3 — U1 and U3'].join('\n'), 3), { 1: [2], 2: [], 3: [1, 3] });
 });
+
+// L118 (arm 2): the reader's ask comes from --ask <file>; with none, it must be arm 1's sealed ask byte-identically.
+const fs = require('fs'), os = require('os'), path = require('path'), crypto = require('crypto');
+const { execFileSync } = require('child_process');
+const { loadAsk, ASK } = require('./claimrec.js');
+const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
+
+// Arm 1's ask as SEALED: the §2 blockquote of the registration at c8c18d4, "the ask above (without the quote marker)",
+// its two wrapped lines read as one paragraph (joined by one space). Read from git, so the test fails loudly if the seal
+// cannot be read rather than trusting a copy.
+function sealedArm1Ask() {
+  const repo = path.resolve(__dirname, '..', '..', '..');
+  const reg = execFileSync('git', ['-C', repo, 'show', 'c8c18d4:exo_memory/loop/claim_recognition_registration_2026-09-27.md'], { encoding: 'utf8' });
+  const sec = reg.slice(reg.indexOf('## 2 · THE ASK'), reg.indexOf('## 3 · THE HIT RULE'));
+  return sec.split('\n').filter((l) => l.startsWith('> ')).map((l) => l.slice(2).trim()).join(' ');
+}
+
+test('with no --ask, the reader ask is arm 1\'s sealed ask, byte-identical (sha256)', () => {
+  const sealed = sealedArm1Ask();
+  assert.strictEqual(loadAsk(null).sha256, sha(sealed));
+});
+
+test('an ask file saved with one trailing newline gives the same ask text as the words alone', () => {
+  const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'claimrec-ask-')), 'ask.txt');
+  fs.writeFileSync(f, `${ASK}\n`);
+  assert.strictEqual(loadAsk(f).sha256, sha(ASK));
+});
+
+test('an ask file records its own raw-bytes sha256 and its text', () => {
+  const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'claimrec-ask-')), 'ask.txt');
+  fs.writeFileSync(f, 'List the statements to check.\r\n');
+  const a = loadAsk(f);
+  assert.deepStrictEqual([a.text, a.fileSha256], ['List the statements to check.', sha(fs.readFileSync(f))]);
+});
+
+test('an ask file with no text is refused', () => {
+  const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'claimrec-ask-')), 'ask.txt');
+  fs.writeFileSync(f, '\n');
+  assert.throws(() => loadAsk(f), /holds no ask text/);
+});
