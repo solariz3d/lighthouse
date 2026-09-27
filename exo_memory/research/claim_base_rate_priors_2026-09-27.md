@@ -174,6 +174,10 @@ https://arxiv.org/pdf/2005.00661. **This is the one source that separates "unsup
      **per kind**, and add a degenerate clause if it exceeds, say, a third of any kind.
 3. **Route FUTURE, INTENT, OPINION and the SPEAKER's own state out before verdict,** as AVeriTeC, Konstantinovskiy and
    Liu do. Do not count them as UNVERIFIABLE. The field keeps them out of the denominator.
+   - *Superseded in part, 2026-09-27 (librarian, at B's L122 re-freeze read): the SPEAKER's own state was NOT routed
+     out in this room. It stays IN as a state claim (`loop/claim_base_rate_registration_2026-09-27.md:121-125`, W259,
+     accepted at the L119 collation), and BUILDING.md hand-back item 7 exempts only future, intent and opinion. The
+     sentence above is kept as the trace.*
    - **Claims about another seat's state** have no published rule. **I suggest treating them as state claims,**
      verifiable only when a record of that seat's state at that time exists (board row, pulse, transcript), and
      UNVERIFIABLE otherwise.
