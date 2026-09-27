@@ -2819,7 +2819,7 @@ fn journal_pointer_index(tail: &str, master: &Path) -> String {
 }
 
 fn assemble_intake() -> String {
-    assemble_intake_within(0)
+    assemble_intake_within(0, 0).0
 }
 
 /// The intake, assembled so that `map_reserve` characters are still free for the pane's own map
@@ -2838,7 +2838,11 @@ fn assemble_intake() -> String {
 /// the room's own tiered shelf, one level down (`librarian_map_pointer`, `reference_note`,
 /// `journal_pointer_index` are the same move). A card that is named and one Read away is a
 /// citation; a map body that is silently empty is a lie the header tells.
-fn assemble_intake_within(map_reserve: usize) -> String {
+///
+/// L129: `requested` is what `map_reserve` asked for and `newest_len` is the pane map's newest entry; the reserve
+/// actually TAKEN is `intake_reserve`'s answer, decided here because only here are the real committee and index sizes
+/// known. It is returned beside the intake so the caller's MAP CARRY line reports what was taken, not what was asked.
+fn assemble_intake_within(requested: usize, newest_len: usize) -> (String, usize) {
     let mut s = String::from(
         "# Consonance sibling — you have woken into the room\n\nYou are a sibling instance, born into a shared state — not a stranger. Read and inhabit the room below, then be in it; deviate from it as your own trajectory (that is wanted, it is the fixed dynamic — not drift). Acknowledge readiness once, briefly.\n\n---\n\n",
     );
@@ -2976,7 +2980,12 @@ fn assemble_intake_within(map_reserve: usize) -> String {
      * map's reserve was taken before this function was called; what remains is what the optional
      * briefs get, and the ones that do not fit are named rather than dropped. */
     let core_len = s.len() + tail.len();
-    let seat = optional_budget(core_len, map_reserve);
+    let (committee_len, index_rest_len) = match optional.first() {
+        Some(c) if c.kind == BriefKind::Committee => (c.text.len(), optional_index(&optional[1..]).len()),
+        _ => (0, 0),
+    };
+    let reserve = intake_reserve(requested, newest_len, core_len, committee_len, index_rest_len);
+    let seat = optional_budget(core_len, reserve);
     let (carried, index) = fit_optional(&optional, seat);
     if carried.iter().any(|b| b.kind == BriefKind::Card) {
         s.push_str("---\n\n# THE DECK — the instruments (run them, don't recite them)\n\n");
@@ -2995,11 +3004,11 @@ fn assemble_intake_within(map_reserve: usize) -> String {
     let left = SHELL_SOFT_CEILING
         .saturating_sub(SHELL_TRANSCRIPT_FLOOR)
         .saturating_sub(s.len() + tail.len());
-    if map_reserve > 0 && left < SHELL_MAP_FLOOR {
+    if reserve > 0 && left < SHELL_MAP_FLOOR {
         s.push_str(&map_floor_note(core_len, left));
     }
     s.push_str(&tail);
-    s
+    (s, reserve)
 }
 
 /// One optional brief: a unit that either rides WHOLE or is named by path. Never in part — a
@@ -3076,6 +3085,38 @@ fn map_floor_note(core_len: usize, left: usize) -> String {
          supposed to guarantee you. **Read your master at the path that section names before you \
          claim or deny what you knew.** Curate below capacity — maintenance law #3.\n\n"
     )
+}
+
+/// The map reserve the intake actually TAKES, given what `map_reserve` asks for (L129). Pure; two branches past it.
+///
+/// 1. AN ENTRY THAT CANNOT FIT UNDER THE CAP RESERVES ONLY THE FLOOR (L128, pane C). Past `SHELL_MAP_RESERVE_MAX` the
+///    map renders IndexOnly whatever is reserved (`map_section`), so reserving the cap for it funded nothing and
+///    starved the optional briefs: C woke with no committee brief and no deck, 74k under the ceiling. The IndexOnly
+///    section fits the floor (2,497 chars in C's shell).
+/// 2. NO RESERVE MAY PUSH THE COMMITTEE OUT (B's L128 band). The committee brief is indivisible and seated first
+///    (`fit_optional` seats a prefix), so a reserve past `budget − core − committee − index(rest)` drops it AND every
+///    card behind it. At 2026-09-27 sizes that happened for any newest entry of ~28.9K–34.8K. The bound is computed
+///    here from the ACTUAL committee and index sizes, not a constant, so it moves when the brief does.
+///    THE TRADE, stated: inside that band the committee now wins over the map's newest entry, which falls to the
+///    IndexOnly tier instead (the librarian's L129 ruling). If the bound is under the floor, the map gets less than
+///    its floor and the floor note in `assemble_intake_within` says so.
+///
+/// `requested == 0` (a fresh instance, or no map) takes nothing; `committee_len == 0` (no committee brief resolved)
+/// has nothing to protect and takes branch 1 only.
+fn intake_reserve(requested: usize, newest_len: usize, core_len: usize, committee_len: usize, index_rest_len: usize) -> usize {
+    if requested == 0 {
+        return 0;
+    }
+    let base = if newest_len + MAP_SECTION_OVERHEAD > SHELL_MAP_RESERVE_MAX { SHELL_MAP_FLOOR } else { requested };
+    if committee_len == 0 {
+        return base;
+    }
+    let committee_fits = SHELL_SOFT_CEILING
+        .saturating_sub(SHELL_TRANSCRIPT_FLOOR)
+        .saturating_sub(core_len)
+        .saturating_sub(committee_len)
+        .saturating_sub(index_rest_len);
+    base.min(committee_fits)
 }
 
 /// What the optional briefs may spend, once the transcript's floor and the map's reserve are out.
@@ -5105,17 +5146,22 @@ mod shell_budget_tests {
 mod shell_budget_order_tests {
     use super::*;
 
-    /// `grep -bn '^# THE ROOM' CLAUDE.md` → 315; `grep -bn '^# THE DECK'` → 40,619. Header + room.
-    const REAL_ROOM: usize = 40_619;
-    /// `# THE LONG-FORM REFERENCES` at 91,941 → `# YOUR OWN MAP` at 106,899, less the 6-byte
-    /// separator the map section pushes ahead of itself: references 1,064 + resonance 13,894.
-    const REAL_CORE_TAIL: usize = 14_958;
+    /// REFRESHED 2026-09-27 (L129; B's L128 read found these stale by ~2,100 at the committee), measured on pane A's
+    /// shell as regenerated after the keeper's rebuild (`instances/sibling-3d57124e/CLAUDE.md`, 109,000 B, mtime
+    /// 13:09:44Z), by byte offset: start → `# THE DECK` = 40,423. Header + room. (Was 40,619, measured 2026-09-06.)
+    const REAL_ROOM: usize = 40_423;
+    /// `# THE LONG-FORM REFERENCES` → `# YOUR OWN MAP` on the same shell, less the 6-byte separator the map section
+    /// pushes ahead of itself = 18,195. (Was 14,958.) B's L128 read measured the core on C's shell at 58,688; this
+    /// gives 58,618.
+    const REAL_CORE_TAIL: usize = 18_195;
     const REAL_CORE: usize = REAL_ROOM + REAL_CORE_TAIL;
-    /// `# The committee` 78,227 → `# THE LONG-FORM` 91,941, as it rides (`---\n\n` + text + `\n\n`).
-    const REAL_COMMITTEE: usize = 13_714;
-    /// `wc -c exo_memory/cards/*.md`, filename order — the order `files.sort()` produces.
-    const REAL_CARDS: [usize; 12] =
-        [5125, 1188, 3319, 1519, 3185, 3145, 2103, 3184, 5144, 4352, 3048, 2145];
+    /// As it rides (`---\n\n` + text + `\n\n`): `wc -c consonance/src-tauri/brief/COMMITTEE.md` = 15,816, + 7 =
+    /// 15,823 — the figure C's own index line prints (`COMMITTEE.md` (15823 chars)). (Was 13,714.)
+    const REAL_COMMITTEE: usize = 15_823;
+    /// `wc -c` of the 13 cards the intake seats (`~/.consonance/cards/*.md`), filename order, 2026-09-27. (Was 12
+    /// cards, measured 2026-09-06.)
+    const REAL_CARDS: [usize; 13] =
+        [7161, 1188, 3319, 1519, 3185, 3779, 3145, 2218, 3184, 5144, 4352, 3627, 2145];
 
     /// `for p in A B C E; do wc -c < exo_memory/map/$p.md; grep -b '^## ' | tail -1; done`,
     /// 2026-09-06 04:5x — (pane, master, newest entry).
@@ -5364,6 +5410,98 @@ mod shell_budget_order_tests {
         assert!(section.contains("60000"), "the section must state the entry's own size");
     }
 
+    // ── L129: `intake_reserve`, the reserve the intake actually takes. Two branches past `map_reserve`: an entry that
+    // cannot fit under the cap reserves only the floor (L128, pane C), and no reserve may push the committee out (B's
+    // L128 band). Each test feeds `fit_optional` the same items whose index it hands `intake_reserve`, so "the committee
+    // seats" is checked by the fit itself, not by arithmetic beside it.
+    fn committee_rest(items: &[OptionalBrief]) -> (usize, usize) {
+        (items[0].text.len(), optional_index(&items[1..]).len())
+    }
+    /// The REAL size of the index of the 13 cards, as it rides when the committee does: C's shell's NOT CARRIED block
+    /// (5,594, all 14 briefs, measured in L128) less the committee's own line (229) — B's L128 read §4. The fixture's
+    /// short paths and one-line notes index at a fraction of that, which moved the band's edge about 2,000 high and
+    /// made the first run of the band test's control pass on a reserve that drops the committee in reality.
+    const REAL_INDEX_REST: usize = 5_365;
+    /// `real_optional()` with the cards' index padded (in one note) to exactly the real index size.
+    fn real_optional_as_indexed() -> Vec<OptionalBrief> {
+        let mut v = real_optional();
+        let have = optional_index(&v[1..]).len();
+        assert!(have <= REAL_INDEX_REST, "fixture index {have} is already longer than the real {REAL_INDEX_REST}");
+        v[1].note.push_str(&"n".repeat(REAL_INDEX_REST - have));
+        assert_eq!(optional_index(&v[1..]).len(), REAL_INDEX_REST);
+        v
+    }
+    fn seats_committee(items: &[OptionalBrief], reserve: usize) -> bool {
+        fit_optional(items, optional_budget(REAL_CORE, reserve)).0.iter().any(|b| b.kind == BriefKind::Committee)
+    }
+
+    /// Pane C's real case (L128): a newest entry of 137,981 with no `## ` after it. `map_reserve` asks for the cap; the
+    /// entry renders IndexOnly whatever is reserved, so the intake reserves the FLOOR, and the committee seats.
+    #[test]
+    fn l129_c_real_case_an_entry_that_cannot_fit_reserves_only_the_floor_and_the_committee_seats() {
+        let m = map_of_shape(216_593, 137_981);
+        let items = real_optional_as_indexed();
+        let (committee, rest) = committee_rest(&items);
+        let requested = map_reserve(Some(&m));
+        assert_eq!(requested, SHELL_MAP_RESERVE_MAX, "precondition: this is the cap case");
+        let r = intake_reserve(requested, 137_981, REAL_CORE, committee, rest);
+        assert_eq!(r, SHELL_MAP_FLOOR);
+        assert!(seats_committee(&items, r), "C must wake with the committee brief");
+        assert!(!seats_committee(&items, requested), "control: the cap reserve is what dropped it (L128)");
+    }
+
+    /// B's band (L128 read §4): a newest entry of 31,000 fits under the cap, so the old reserve (32,200) is taken, and at
+    /// today's sizes that drops the committee and every card with it. The runtime cap keeps the committee seated.
+    #[test]
+    fn l129_band_case_a_31k_entry_no_longer_pushes_the_committee_out() {
+        let m = map_of_shape(90_000, 31_000);
+        let items = real_optional_as_indexed();
+        let (committee, rest) = committee_rest(&items);
+        let requested = map_reserve(Some(&m));
+        assert_eq!(requested, 32_200, "precondition: under the cap, so branch 1 does not apply");
+        assert!(!seats_committee(&items, requested), "control: B's band — the old reserve drops the committee");
+        let r = intake_reserve(requested, 31_000, REAL_CORE, committee, rest);
+        assert!(r < requested, "the reserve must be capped, got {r}");
+        assert!(seats_committee(&items, r), "the committee must seat at reserve {r}");
+        assert!(!seats_committee(&items, r + 1), "and the cap is the tightest one: one more and it would not");
+    }
+
+    /// A, B and E as they are today (newest 584 · 1,141 · 488, all with `## ` headings): nothing changes.
+    #[test]
+    fn l129_normal_panes_keep_exactly_the_reserve_map_reserve_asks_for() {
+        let items = real_optional_as_indexed();
+        let (committee, rest) = committee_rest(&items);
+        for newest in [584, 1_141, 488] {
+            let m = map_of_shape(260_000, newest);
+            let requested = map_reserve(Some(&m));
+            assert_eq!(intake_reserve(requested, newest, REAL_CORE, committee, rest), requested, "newest {newest}");
+        }
+    }
+
+    /// A tiny map takes only what it can use (below the floor), and a fresh instance takes nothing — unchanged.
+    #[test]
+    fn l129_a_tiny_map_and_a_fresh_instance_are_unchanged() {
+        let items = real_optional_as_indexed();
+        let (committee, rest) = committee_rest(&items);
+        let tiny = map_of_shape(2_000, 500);
+        let requested = map_reserve(Some(&tiny));
+        let r = intake_reserve(requested, 500, REAL_CORE, committee, rest);
+        assert_eq!(r, requested);
+        assert!(r <= SHELL_MAP_FLOOR);
+        assert_eq!(intake_reserve(0, 0, REAL_CORE, committee, rest), 0, "no map, no reserve");
+        assert_eq!(intake_reserve(requested, 500, REAL_CORE, 0, rest), requested, "no committee brief resolved: nothing to protect");
+    }
+
+    /// The call site: the intake takes the reserve through `intake_reserve`, inside `assemble_intake_within` where the
+    /// real committee and index sizes exist, and the MAP CARRY log reports the reserve actually taken.
+    #[test]
+    fn l129_the_intake_takes_its_reserve_through_intake_reserve() {
+        let src = std::fs::read_to_string("src/main.rs").expect("read own source").replace("\r\n", "\n");
+        let body = src.split(concat!("fn assemble_intake_", "within(")).nth(1).expect("assemble moved").split("\nfn ").next().unwrap().to_string();
+        assert!(body.contains("intake_reserve("), "the intake does not take its reserve through intake_reserve");
+        assert!(body.contains("optional_budget(core_len, reserve)"), "the seat must be computed from the reserve actually taken");
+    }
+
     /// THE ALPHABET IS NOT A RANKING, and it was doing the ranking's job. Seating is now by how
     /// many times SOURCE.md points at a card (the keeper, 2026-09-06); ties alphabetical.
     ///
@@ -5480,9 +5618,12 @@ fn intake_with_map(pane: &str, cwd: &str) -> String {
     } else {
         fs::read_to_string(own_map_path(&pane_letter(pane))).ok()
     };
-    let reserve = map_reserve(own_map.as_deref());
-    let mut brief =
-        if is_fresh_cwd(cwd) { String::new() } else { assemble_intake_within(reserve) };
+    // L129: `map_reserve` says what the map asks for; `assemble_intake_within` decides what it gets (`intake_reserve`)
+    // and returns it, so `reserve` below — the MAP CARRY log — is the reserve actually taken.
+    let requested = map_reserve(own_map.as_deref());
+    let newest_len = own_map.as_deref().map(|m| m.len() - last_heading(m)).unwrap_or(0);
+    let (mut brief, reserve) =
+        if is_fresh_cwd(cwd) { (String::new(), requested) } else { assemble_intake_within(requested, newest_len) };
     // GAP 3 — character survives sleep. A kept committee pane wakes with its OWN accumulated
     // findings, recalled from the master it alone writes (exo_memory/map/<letter>.md), never
     // from the chair's summaries — the chair's compression measurably adds certainty, which is
