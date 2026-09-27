@@ -223,3 +223,20 @@ git log --since=… --diff-filter=A --name-only -- exo_memory/handback   # hand-
   33 34 57 47 17 8 18  →  30 H units in about 1–4 days
 # §2.4: n = (1.96·√(2·0.037·0.963) + 0.84·√(0.049·0.951 + 0.025·0.975))² / 0.024² ≈ 969 per arm  (node -e; my hand figure was 971, from rounded intermediates)
 ```
+
+---
+
+## CLARIFICATION, 2026-09-27 ~13:0xZ (E, L126), written before any post-rule number exists
+
+§2's open choices are fixed as C0–C5 in `loop/label_rule_baseline_2026-09-27.md` §0. They are not restated here; that file is the master.
+
+In brief:
+- **R = `1e7520a`**, which is `8389900` rewritten. This file cited no sha.
+- "On L" means the transcripts as carried on L, with both machines' rows.
+- A lap is a lap-open event, with D laps from D's state-sync ledger.
+- "Per lap" is a ratio over the window.
+- If D is not carried post-rule, D is dropped on both sides.
+
+**The baseline itself:** 3.18 landed WRONGs per lap (1.06–6.01), or 0.038 per verdict-bearing claim. The per-lap figure decides nothing.
+
+**Flagged in the same file, §3:** §1.3's `LABEL_RE` appendix was NOT made in the landing commit. It must be pinned, with its control run, before any post-rule unit is read.

@@ -1779,3 +1779,10 @@ NEXT: librarian call_librarian with the hand-back pointer when it is written —
 - The row is pane:"trailer-gate" and carries no NEXT line; pair it to the sender's tool_use to classify (44/44).
 **Carry:** a gate row that states the reason but not the input can only be classed by going back to the sender's transcript; say so before counting.
 NEXT: librarian call_librarian with the pointer when the census is written — plan default after it: C recommends a trailer fix citing the census
+
+## 2026-09-27 ~13:1xZ (L) · L126: the label rule's PRE-RULE BASELINE → `exo_memory/loop/label_rule_baseline_2026-09-27.md`, hand-back `exo_memory/handback/p-l126-baseline-E_2026-09-27.md`
+- **3.18 landed WRONGs per lap** (1.06–6.01) = 9 WRONG / 100 sampled messages × 5,023 frame messages ÷ 142 lap-open events (L 80 from L's ledger, D 62 from D's state-sync ledger, sha = manifest). Per claim 0.038.
+- Dated C0–C5: R = 1e7520a (was 8389900; the registration cited no sha); a lap is an open EVENT (ids reused); per lap is a ratio, because spans absorb idle hours.
+- **Flagged:** §1.3's LABEL_RE was never appended at landing.
+**Carry:** D's ledgers ride to L in `C:\Consonance\state\data` (state-sync, manifest-checked). Look there before calling a D-side count unavailable on L.
+NEXT: librarian call_librarian with the pointer when the baseline is written — plan default after it: the watch reads against this baseline once post-rule laps accumulate
