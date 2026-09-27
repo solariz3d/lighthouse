@@ -64,3 +64,13 @@ yields to them.
   check.
 - **It is supported** if readers who are asked outright still miss most of the wrong claims.
 - **Either way, the result says where a fix belongs:** recognition, or the habit of checking.
+
+## SPLIT at the keeper's word, 00:48 ("even with a single task, there are ways to break even that apart")
+
+**L115 runs four disjoint pieces of the one test:**
+- **E:** the registration. Its predictions are sealed only after C's prior art is read.
+- **A:** the extraction of the 23 replies, outside the repo, with a key.
+- **B:** the fresh-reader runner and the blind coder packet, tested on a dummy.
+- **C:** the published work on check-worthiness detection and LLM self-verification (CheckThat!, CoVe).
+
+**L116 is the run.** My miss: the first dispatch sent one pane when four could each take a piece.
