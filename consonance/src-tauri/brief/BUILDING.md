@@ -491,6 +491,11 @@ night. `node consonance/tools/ferry.js --report`.*
    "green", "safe"), or a "so …". Plain prose around a shown check needs no label. Future, intent and
    opinion are not claims about state and take no label.
 
+   **This item loosens nothing above it.** Item 2 still binds every figure in a hand-back: `inferred:`
+   is for a figure that cannot yet be re-derived, and it says why. And a label is not a path: an
+   inferred claim about the record still names where to check it (*cite, do not recollect*).
+   *(Added 2026-09-27 at B's L122 read, which found item 7 could be read as permitting what item 2 forbids.)*
+
    *Why a label and not a rule against unchecked claims:* measured 2026-09-27 over 300 claims from the
    room's seats (`exo_memory/loop/claim_base_rate_score_2026-09-27.md`), unchecked claims were wrong 8 of 163
    (0.049, bootstrap 0.013–0.093) and checked ones 1 of 72. Unchecked is usually right; it is not yet
