@@ -12725,6 +12725,11 @@ fn jev_shadow_args(app_pid: u32) -> Vec<String> {
 /// task; `consonance/tools/jev-shadow-runner.js` exits by itself when this pid dies. It reads the gateway key itself,
 /// in-process, from the User environment — the app never holds or passes it — and it never touches the installed
 /// judges. A missing script or node is logged and skipped: a sidecar must never stop the app from opening.
+///
+/// D164, 2026-09-27: RETIRED, and called from nowhere. The keeper, 11:34: "just dont use jev, revoke key"
+/// (`exo_memory/loop/plan_jev_off_2026-09-27.md`). Kept as a dated trace, not deleted; `jev_shadow_start_tests` pins
+/// that nothing references it.
+#[allow(dead_code)]
 fn start_jev_shadow() {
     let Some(script) = repo_root()
         .map(|r| r.join("consonance").join("tools").join("jev-shadow-runner.js"))
@@ -13649,7 +13654,9 @@ fn main() {
             let (launch_verdict, retired) = sync_at_launch();
             // L059 §3: on EVERY launch, and unconditionally — never inside a branch about the stick.
             start_exit_waiter();
-            start_jev_shadow();
+            // D164, 2026-09-27: the Jev shadow runner is no longer started here. The keeper, 11:34:
+            // "just dont use jev, revoke key" (exo_memory/loop/plan_jev_off_2026-09-27.md). Its start function is kept
+            // as a dated trace and is called from nowhere; the runner script stays on disk and nothing here starts it.
             // P-LEAVE-3 ROW 4: the OS's end of session, which tao does not deliver. ROW 5: the keep-awake hold.
             let _ = SHUTDOWN_APP.set(app.handle().clone());
             watch_session_end(app.handle());
@@ -20519,28 +20526,42 @@ mod jev_shadow_start_tests {
         assert_eq!(jev_shadow_args(4321), vec!["--app-pid".to_string(), "4321".to_string()]);
     }
 
-    /// Wiring asserted by source shape, the way `drain_inboxes_records_each_reading_and_builds_the_row_from_them`
-    /// does it: the spawn needs a real process, and the facts worth pinning are PRESENCE and ORDER. On every launch,
-    /// right after the exit waiter (L059 §3 made that call unconditional); windowless; and the key and the data dir
-    /// are NEVER handed to it — the runner reads the key in-process itself, and CONSONANCE_DATA in a child's
-    /// environment is the collision D098 measured (507 overseer jobs stranded).
+    /// D164 (pane A, 2026-09-27): THE PIN IS NOW THE ABSENCE. The keeper, 11:34: "just dont use jev, revoke key"
+    /// (`exo_memory/loop/plan_jev_off_2026-09-27.md`). Until then this test (D104) pinned the runner's start right
+    /// after the exit waiter on every launch; that start is what was retired, so the same source-shape check now pins
+    /// that nothing starts it. The function stays as a dated trace, and it is referenced from nowhere but its own
+    /// definition — not called, not passed as a function value, not spawned on a thread. The site where the call
+    /// stood carries the date, the keeper's words and the plan path, so a reader there learns why it is gone.
+    /// What it kept from D104, still true of the trace: windowless, and the key and the data dir never handed over.
     #[test]
-    fn the_app_starts_the_jev_shadow_runner_right_after_the_exit_waiter_and_hands_it_no_secrets() {
-        // Every needle is split with concat! so this test's own text never matches what it searches for — the
-        // neighbouring `the_exit_waiter_is_started_on_every_launch_...` counts the exit waiter's call statement in
-        // this whole file and requires exactly one. It went red twice on this test's drafts (D104): once on an unsplit
-        // needle, once on this very comment spelling the statement out.
+    fn the_app_no_longer_starts_the_jev_shadow_runner_and_the_old_site_says_why() {
+        // Every needle is split with concat! so this test's own text never matches what it searches for (D104's
+        // lesson: an unsplit needle, or this comment spelling a statement out, counts itself).
         let src = include_str!("main.rs");
-        assert!(
-            src.contains(concat!("start_exit", "_waiter();\n            start_jev", "_shadow();")),
-            "the runner is not started immediately after the exit waiter on every launch"
+        assert_eq!(
+            src.matches(concat!("start_jev", "_shadow")).count(),
+            1,
+            "the retired runner start is referenced outside its own definition — something starts Jev again"
         );
-        assert_eq!(src.matches(concat!("start_jev", "_shadow();")).count(), 1, "the runner is started from more than one place, or none");
+        assert_eq!(
+            src.matches(concat!("\"jev-shadow", "-runner.js\"")).count(),
+            1,
+            "the runner file is named outside the retired function — a second way to start it"
+        );
+        let site = src
+            .split(concat!("start_exit", "_waiter();\n"))
+            .nth(1)
+            .and_then(|s| s.split(concat!("let _ = SHUTDOWN", "_APP.set(")).next())
+            .expect("the launch site after the exit waiter");
+        // The date as its own stamp: a bare "2026-09-27" is also inside the plan's file name, so it proved nothing alone.
+        for needle in ["D164, 2026-09-27:", "just dont use jev, revoke key", concat!("plan_jev_off", "_2026-09-27.md")] {
+            assert!(site.contains(needle), "the old call site does not carry its dated trace: missing `{needle}`");
+        }
         let body = src
             .split(concat!("fn start_jev", "_shadow("))
             .nth(1)
             .and_then(|b| b.split("\nfn ").next())
-            .expect("start_jev_shadow exists");
+            .expect("the retired runner start is kept as a trace");
         assert!(body.contains("\"jev-shadow-runner.js\""), "it does not start the runner file");
         assert!(body.contains("jev_shadow_args(std::process::id())"), "it does not pass the app's own pid");
         assert!(body.contains("NO_WINDOW | CREATE_NEW_PROCESS_GROUP"), "it would open a console window");
