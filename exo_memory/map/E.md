@@ -1866,3 +1866,51 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 - **For C:** the proposed `t180:validation` event with `rgbaAt(s,u)` and arcs.
 - **Carry:** a test can pass vacuously when its fixture has no loads, so assert the loads exist. Write regexes and quotes with Edit, never through heredoc templates. A buffered grep in a background pipe looks exactly like a dead job: print progress unfiltered.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: D168 is read by B and lands after Track 1, unless the output says otherwise
+
+## 2026-09-27 ~15:4x (D) · D169: the load colours turned on → hand-back `exo_memory/handback/p-d169-loads-E_2026-09-27.md`
+- **Picker:** a design-speed picker in `#validation`, default 460 km/h = the pooled p50 of 7 Mach 6 laps. The measurement is new, in FINDINGS §3d (:476), via the new `tools/speed.cjs`.
+- **Lap sim:** thrust is a table (p95 per band, INFERRED as full thrust: there is no throttle in the replays). The ghost runs only on closed loops for the default car. No speed means no load on an open track.
+- **Unwanted number, my D166 error:** 745 km/h was the speed at Centrifuge's hardest moment, not a top speed (both Centrifuge laps run >10% of frames above it). The cap is now the p99, 764.
+- **Gap 3 was a race:** B read at 15:12:59, I filled at 15:13:42. Re-run 45/44/0, and the two lines are marked with the date.
+- **Results:** repo 403/397/0/6; app 178/178. Mutants on a copy: D169 27/27/0; D168 re-run 45/44/0.
+- **Carry:**
+  - Never write a placeholder into a hand-back; wait for the number.
+  - Pick a watcher's file by task id, never `ls -t` (mine watched the other watcher).
+  - A new default can quietly weaken an old test's reach: re-run the old mutants after changing a default.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: B reads D169 and it lands, unless the output says otherwise
+
+## 2026-09-27 ~16:3x (D) · D170: the jump counter, the load graph, a head on road → hand-back `exo_memory/handback/p-d170-jumps-graph-E_2026-09-27.md`
+- **Item 4, "0 jumps":** the counter counted drawn arcs, and a pending jump has none. Reproduced with C's sequence, plus a jump placed first (pending under either model); now counts `result.jumps`.
+- **Item 5:** the grey bar was my own D168 ribbon. Now a load graph, hidden while there are no loads.
+- **Item 3:** `head-in-the-air` and `landing-misses-zone` reds; `jumps.js landingRamp()` gives the exact touchdowns.
+- **My D166 bug:** jumps were measured from the station BEFORE the lip (12 m read as 13). Fixed; the 6.3 g landing needs 287 km/h, not 311.
+- **For A:** A's in-flight ramp sizes a speedless jump at 300 km/h, but validation checks at 460, so every default jump would be red. A tested diff is in the hand-back (§3): 51.1 m ramp, clean.
+- **Results:** mine 169/169; repo 425/418/1 (in-flight blend)/6; mutants on a copy 22/22/0.
+- **Carry:**
+  - When another seat's change makes my reproduction pass for the wrong reason, find a case that reproduces under both models.
+  - A number from my own code can carry my own bug (13 vs 12): check the premise before the fixture.
+  - Write file content with Write/Edit, never through heredoc quoting.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A applies the landing-ramp diff, B reads D169+D170 combined, and it lands, unless the output says otherwise
+
+## 2026-09-27 ~16:5x (D) · D171: §5c markers in the program → hand-back `exo_memory/handback/p-d171-markers-E_2026-09-27.md`
+- **What was built:** `src/markers/` (place, layout, checks, paint, index) and `app/markers/`.
+- **Placement:** markers are anchored to words (id + along) and placed on the mesh's true surface (blend, rolled frame, profile normal), so they ride edits and sit on banks and walls.
+- **Contents:** grid patterns (2 staggered / 2 abreast / 3 abreast); hotlap run-up = ∫v/a(v)dv (352 m to 460 km/h); paint as surface meshes (no §5b texture system yet); 5 red checks wired into the export.
+- **For others:** the pit lane's marker half is ready (`placeAll(..., { lane })`). Proposed: C's `buildPitLane`, A's `doc.pitLane` and `doc.markers`, and A passing `opts.markers`.
+- **My T1 bug:** race direction back-slot → pole reads a 3-abreast grid as 40° off. `raceAxis` removes the across part; backward-compatible.
+- **Results:** mine 81/81; repo 487/480/1 (in-flight blend)/6; app 234/234; mutants on a copy 43/43/0.
+- **Carry:**
+  - A flat-turn fixture cannot see frame-interpolation errors; bank the turn.
+  - An unisolated red test passes for the wrong reason.
+  - Wait out another seat's broken module with an end-conditioned watcher, not by guessing.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: D171 lands in the next combined read, unless the output says otherwise
+
+## 2026-09-27 ~16:5x (D) · D170 follow-up: the export tests with the self-check ON → `exo_memory/handback/p-d170-selfcheck-E_2026-09-27.md`
+- **Change:** removed `OPTS = { selfCheck: false }` and its 10 uses from `test/export_words.test.js` (C fixed the BVH at source). Result: 20/20 pass, no finding. The same was done in my D171 `markers_export` test: 4/4.
+- **Carry:** a guard that aborts an edit makes the next test run a run of the OLD file. Check the diff before counting.
+
+## 2026-09-27 ~16:5x (D) · THE TEST-LOAD RULE (the chair, after the keeper's "WHY IS CONSONANCE SO LAGGY": 16 cores pinned by parallel suites)
+- **Full suite:** only under the heavy-run lock, one seat at a time. Wrapper: `node scratchpad/heavy-suite.js [out]`. It holds `consonance/tools/heavy-run.js`, then runs `test/` and `app/test/`.
+- **Every `node --test`:** `--test-concurrency=4`. My mutation scripts (d166…d171) now pass it, and a mutation pass is itself heavy, so take the lock for it too.
+- **While building:** run ONLY my own test files.
+- **Carry:** kill only processes I started. Trace the parent chain to my own `claude.exe` first. At 16:5x neither running suite was mine: an orphaned `npm test`, and B's `suite3.js` on `b-d170land-wt`.
