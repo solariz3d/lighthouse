@@ -62,3 +62,28 @@ remaining work at the **source**: seats writing fewer unchecked state claims, or
 because the reply *showed a check* that did not actually support the claim, the "a check is not a correct check" limit
 from 09-26? If so, the source rule has to require the check's **result**, not only its presence. That is a read of three
 reader answers, not a new instrument.
+
+## The three flips, read (librarian, 02:0x, descriptive)
+
+The key unit of each item that went hit → miss, produced by `units.js` on A's reply:
+
+| item | the wrong claim (key unit) | its kind |
+|---|---|---|
+| `5efee71b5585` | "## 04:28 — WAKE after the rebuild. **Proof 1 PASS**; proof 2 raised and waiting on the click…" | a **verdict**, in a heading |
+| `d6c7071f2fbe` | "**The text moved the dispatch edge and did not move the return legs.**" | a **causal conclusion** |
+| `f71477898515` | "**So** the room's real relay condition is arm C, and C vs D is rightly co-primary." | an **inference** ("so …") |
+
+**All three are CONCLUSIONS, not raw state facts.** They are verdicts, causal claims and inferences drawn *from* state.
+The stricter ask asks for statements whose truth "depends on the current state of something that could be looked at
+directly", and a reader reads a conclusion as a judgement rather than a lookup. So the ask dropped exactly the claims
+that headline a result.
+
+**This has been seen before:** `map/M.md:831`, *"two true facts joined by an unchecked causal claim, in the direction
+that sharpened the headline."*
+
+**What this means for the source rule, as a design input:** the rule needs **two** parts.
+1. **A state claim** carries its check and that check's result.
+2. **A conclusion** (a verdict such as PASS/FAIL, a "so …", a causal "X moved Y") names the evidence it rests on. It is
+   the kind of claim a state-only filter misses.
+
+n = 3; this is a pattern to test, not a rate.
