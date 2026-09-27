@@ -49,6 +49,15 @@ test('an n) line is not a list marker and joins the text before it', () => {
   assert.deepStrictEqual(units('Intro line\n1) item one'), ['Intro line 1) item one']);
 });
 
+// L117 ruling 2 (be4b03b): a bare list marker is never a unit of its own; it merges into the unit after it.
+test('the dummy row "2. Third item / continues here. And more?" merges the marker into the unit after it', () => {
+  assert.deepStrictEqual(units('2. Third item\n   continues here. And more?'), ['2. Third item continues here.', 'And more?']);
+});
+
+test('a bare marker left last merges into the unit before it', () => {
+  assert.deepStrictEqual(units('Done here. 2.'), ['Done here. 2.']);
+});
+
 test('an n. line is a list marker and starts a new unit', () => {
   assert.deepStrictEqual(units('Intro line\n1. item one'), ['Intro line', '1. item one']);
 });

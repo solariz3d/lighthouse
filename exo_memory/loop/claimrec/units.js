@@ -75,7 +75,18 @@ function units(text) {
     block = block === null ? line.trim() : `${block} ${line.trim()}`; // continuation joins the open block
   }
   flush();
-  return out.filter((u) => /[\p{L}\p{N}]/u.test(u)); // rule 7
+  // RULING 2 (the librarian, be4b03b, on §4 :122-123): a list marker is part of the item's first unit and never a unit of
+  // its own, so a unit consisting only of a marker is merged into the unit that follows it (into the one before it if
+  // it is last). Without this, rule 5 splits "2. Third …" into a unit "2." that rule 7 keeps for its digit.
+  const merged = [];
+  for (let k = 0; k < out.length; k++) {
+    if (/^([-*+]|\d+[.)])$/.test(out[k].trim())) {
+      if (k + 1 < out.length) { out[k + 1] = `${out[k].trim()} ${out[k + 1]}`; continue; }
+      if (merged.length) { merged[merged.length - 1] = `${merged[merged.length - 1]} ${out[k].trim()}`; continue; }
+    }
+    merged.push(out[k]);
+  }
+  return merged.filter((u) => /[\p{L}\p{N}]/u.test(u)); // rule 7
 }
 
 module.exports = { units, splitSentences };
