@@ -1505,3 +1505,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-09-27 (on L) — L118 A: claim-recognition ARM 2 run. Ask file 615 B, sha256 2a081b66… MATCH (and recorded so by the harness); units.js cd6f7f00…, key de64024e…, replies 23fd5c41… all unchanged; 22 readers + 22 coders all exit 0 / success on 2.1.283 both sides; 424 statements, 0 unmapped; watchers ended on the done line; process search for the l118 paths = 0 matches; NOT scored
 `exo_memory/handback/p-l118-run-A_2026-09-27.md`. Outputs are in C:\Consonance\retrieval\l118\. Lesson: a watcher that ends on the runner's done line needs no cleanup. Build the search pattern from pieces so it cannot match itself.
+
+## 2026-09-27 (on L) — L119 A: base-rate sample drawn as sealed (cf2439b). Frame reproduced at 5,023 (E's frame.js verbatim, every cell); 43 excluded by the 24 census turns; the 100 drawn by sha256("L119|"+id), ids sha256 23282ca2…; open choices fixed first in rules.md e73c075c…; 100/100 readers clean, 2,423 statements capped to 300 claims; B 193 / C 164 / overlap 57, own-seat 0; verifier files B 2f4c932a… C 365df3ac…; process search 0
+`exo_memory/handback/p-l119-sample-A_2026-09-27.md`. Outputs are in C:\Consonance\retrieval\l119\. Lesson: when a sealed listing's hash fails, diff it against the original before calling the seal wrong. It was my own off-by-one.
