@@ -902,12 +902,16 @@ impl ConsonanceMcp {
                 return Ok(CallToolResult::success(vec![Content::text(msg)]));
             }
         };
+        // L125: a warned ring also tells the SENDER (below, after the delivery). The receiver and the board are told as
+        // before; only the calling pane's tool result gains the note, and only when the gate warned.
+        let mut told: Option<String> = None;
         let text = match trailer_gate(crate::trailer::Verb::CallLibrarian, &format!("call_librarian from {who}"), &text) {
-            TrailerDecision::Deliver { text, audit } => {
+            TrailerDecision::Deliver { text: delivered, audit } => {
                 if let Some(line) = audit {
                     self.trailer_audit(line);
+                    told = sender_note(&text);
                 }
-                text
+                delivered
             }
             TrailerDecision::Refuse { audit, .. } => {
                 self.trailer_audit(audit);
@@ -920,7 +924,7 @@ impl ConsonanceMcp {
         let out = self
             .send_chair(ChairCmd::CallLibrarian { from: self.identity.clone(), text, reply: tx }, rx)
             .await;
-        Ok(CallToolResult::success(vec![Content::text(out)]))
+        Ok(CallToolResult::success(vec![Content::text(with_sender_note(out, told))]))
     }
 
     /// WHICH SILENCE THIS IS — the two absences a refused hand-back can mean, told apart by an
@@ -3576,6 +3580,22 @@ enum TrailerDecision {
     Refuse { reply: String, audit: String },
 }
 
+/// L125: the note a WARNED `call_librarian` hands back to the SENDING pane — the same note the receiver gets
+/// (`trailer::warning_note`), or `None` when the trailer is fine. E's census (loop/trailer_gate_census_2026-09-27.md):
+/// seats refused over a bad trailer rarely miss again; panes only warned — through the receiver — kept missing.
+fn sender_note(text: &str) -> Option<String> {
+    crate::trailer::check_for(crate::trailer::Verb::CallLibrarian, text).err().map(crate::trailer::warning_note)
+}
+
+/// The sender's tool result: the delivery result FIRST, unchanged, then the note, so a warning can never read as a
+/// refusal. With no note it is `out`, byte for byte.
+fn with_sender_note(out: String, note: Option<String>) -> String {
+    match note {
+        Some(n) => format!("{out}\n\n{n}"),
+        None => out,
+    }
+}
+
 /// Check `text`'s trailer and decide, on `trailer::policy(verb)`. A compliant message is delivered unchanged with no
 /// board line. `verb_name` is how the audit line names the call (e.g. `chair_inject -> B`, `call_librarian from A`).
 fn trailer_gate(verb: crate::trailer::Verb, verb_name: &str, text: &str) -> TrailerDecision {
@@ -3778,6 +3798,50 @@ mod trailer_gate_tests {
         let refuse = seg.find("TrailerDecision::Refuse").expect("no Refuse arm");
         assert!(deliver < refuse, "the Deliver arm is expected first");
         assert!(seg[deliver..refuse].contains("self.trailer_audit("), "a warned hand-back is delivered but not posted to the board");
+    }
+
+    // ── L125: THE SENDER IS TOLD TOO. E's census (loop/trailer_gate_census_2026-09-27.md): seats whose bad trailer is
+    // REFUSED miss rarely, panes whose bad trailer is only WARNED miss far more — because the warning reached only the
+    // receiver (trailer.rs `delivered_with_warning`). The calling pane now gets the SAME note in its tool result.
+
+    #[test]
+    fn l125_a_warned_ring_gives_the_sender_the_same_note_the_receiver_gets() {
+        let TrailerDecision::Deliver { text: delivered, audit: Some(_) } = trailer_gate(Verb::CallLibrarian, "call_librarian from A", WITHOUT) else {
+            panic!("a ring without a trailer must be delivered with a warning");
+        };
+        let note = sender_note(WITHOUT).expect("a warned ring must carry a note for the sender");
+        assert!(delivered.ends_with(&note), "the sender's note is not the note the receiver got:\nnote: {note}\ndelivered: {delivered}");
+        assert!(note.contains("NEXT-trailer gate") && note.contains("NEXT: <station> <command> when <condition>"), "the note must say what was wrong and the correct form: {note}");
+    }
+
+    #[test]
+    fn l125_a_ring_with_a_good_trailer_gives_the_sender_nothing_extra() {
+        assert_eq!(sender_note(WITH), None);
+        let out = "delivered to the librarian (rendered in its pane — not proof it was read)".to_string();
+        assert_eq!(with_sender_note(out.clone(), None), out, "a compliant ring's tool result must be byte-identical to before");
+    }
+
+    #[test]
+    fn l125_the_delivery_result_comes_first_and_the_note_after_it() {
+        let out = "delivered to the librarian".to_string();
+        let got = with_sender_note(out.clone(), Some("[NEXT-trailer gate — note]".to_string()));
+        assert!(got.starts_with(&out), "the delivery result must come first, so a warning never reads as a refusal: {got}");
+        assert!(got.ends_with("[NEXT-trailer gate — note]"), "{got}");
+    }
+
+    #[test]
+    fn l125_call_librarian_sets_the_note_only_in_the_warned_deliver_branch_and_returns_it_after_delivery() {
+        let b = body_of("async fn call_librarian(");
+        let gate = b.find("trailer_gate(crate::trailer::Verb::CallLibrarian").expect("the trailer gate");
+        let send = b.find(".send_chair(ChairCmd::CallLibrarian").expect("the delivery");
+        let seg = &b[gate..send];
+        let deliver = seg.find("TrailerDecision::Deliver").expect("no Deliver arm");
+        let refuse = seg.find("TrailerDecision::Refuse").expect("no Refuse arm");
+        let arm = &seg[deliver..refuse];
+        let warned = arm.find("if let Some(line) = audit").expect("the warned branch");
+        assert!(arm[warned..].contains("told = sender_note("), "the sender's note is not set in the warned branch");
+        let ret = b[send..].find("with_sender_note(out, told)").expect("the tool result does not carry the sender's note");
+        assert!(ret > 0, "the note must be added after the delivery");
     }
 }
 

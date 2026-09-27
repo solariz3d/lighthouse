@@ -261,12 +261,18 @@ pub fn refusal_text(verb: Verb, why: Missing, message: &str) -> String {
 }
 
 /// The text actually delivered on a return leg with no usable trailer: the message FIRST and unchanged, then a note
-/// the receiver can act on. The note is not addressed to the sender, who has already moved on.
+/// the receiver can act on.
 pub fn delivered_with_warning(message: &str, why: Missing) -> String {
+    format!("{message}\n\n{note}", message = message, note = warning_note(why))
+}
+
+/// The gate's note on a return leg with no usable trailer: what was missing and the correct form. The receiver gets it
+/// appended to the message (`delivered_with_warning`); since L125 the SENDING pane gets the same note in its tool result
+/// (`mcp.rs` `sender_note`), because E's census showed that panes warned only through the receiver kept missing.
+pub fn warning_note(why: Missing) -> String {
     format!(
-        "{message}\n\n[NEXT-trailer gate — delivered anyway: {missing}. The rule: {file}, WHAT A HAND-BACK OWES item 6. \
+        "[NEXT-trailer gate — delivered anyway: {missing}. The rule: {file}, WHAT A HAND-BACK OWES item 6. \
          The receiver decides the next station; the sender should end with `NEXT: <station> <command> when <condition>`.]",
-        message = message,
         missing = what_is_missing(why),
         file = RULE_FILE,
     )
