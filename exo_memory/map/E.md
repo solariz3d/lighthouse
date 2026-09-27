@@ -1765,3 +1765,11 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 
 **Carry:** when a refusal hinges on an unknown share, register the share as a degenerate threshold instead of guessing it now.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A draws the sample once your seal is committed, then L120 the verifier pair, unless your registration says otherwise
+
+## 2026-09-27 ~04:3x (L) · L121: the label rule's WATCH registered before the rule lands → `exo_memory/loop/label_rule_watch_registration_2026-09-27.md`, hand-back `exo_memory/handback/p-l121-watch-E_2026-09-27.md`
+- (a) labelled share in two strata, H hand-backs and K keeper replies, 30+30 units per read, two reads; LABEL_RE pinned from the LANDED rule; a detector control over the last pre-rule units (≤0.05), because "CHECKED" is already a kind word here.
+- (b) the per-lap census baseline was REFUSED on L: `703dc74` isn't here, the WRONG column is hand-carried (`librarian/2026-09-07.md:278`), and a census counts found, not landed. The baseline is L120's sample, 0.049 / 0.038; post-rule = L119 again, with the self-label masked from B and C.
+- F1 share <0.50; F2 CHECKED not cleaner than INFERRED, or ≥3 false checks; F3 agreement <0.75 on B+C-agreed kinds.
+- **My prediction:** WORKS on H, DECORATION on K.
+**Carry:** a count of errors FOUND can't show a rule working, because it falls when the looking stops; watch with a sample.
+NEXT: librarian call_librarian with the hand-back pointer when it is written — plan default after it: L122, the rule lands and the watch starts from that commit
