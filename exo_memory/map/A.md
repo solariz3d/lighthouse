@@ -1514,3 +1514,9 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-09-27 (on L) — L122 A: the label rule LANDED at 8389900 (by path, not pushed). BUILDING.md hand-back item 7 + pointers in COMMITTEE.md and LIBRARIAN.md, byte-identical to C's draft fences (sha256 02096e38… / 5ea22cf0…); portable-paths green 0 new; js-suite 144/1/1 canary of 146, the 1 = carrier-drift CH-4 on three research files, identical at 360bf94 without the edit; a stale heavy-run lock (pid REUSED by mscopilot) moved aside; process search 0
 `exo_memory/handback/p-l122-land-A_2026-09-27.md`. Lesson: a lock whose pid is alive may still be stale. Check what that pid now IS before trusting it.
+
+## 2026-09-27 (on L) — L122 A push gate: NOT CLEAN at 73e1429. Suite GREEN (145/0, 1 canary, of 146); the re-scan (same scanner 46219b2d…) found MY OWN L121 hand-back (360bf94, unpushed) describing the private side project in its pattern list and one caveat, though never naming it. A later edit cannot fix history, so a rewrite from 360bf94 is the chair's and keeper's call. Redacted copy prepared outside the repo; L121 range unchanged; process search 0
+`exo_memory/handback/p-l122-push-gate-A_2026-09-27.md`. Lesson: a public scan report must not list even the non-name patterns. "Held in the scanner" is the only safe description of what was searched for.
+
+## 2026-09-27 (on L) — L123 A: unpushed history REWRITTEN at the keeper's "1". main 73e1429 -> 74aaf21 by commit-tree replay (no rebase, no -i): one blob swapped in 7 trees, authors/dates/message bytes identical, diff vs backup = that one file (5 lines). Backup ref backup/pre-redact-73e1429 is local only. Old->new sha map in the hand-back. My L122 gate hand-back :14 redacted before commit
+`exo_memory/handback/p-l123-rewrite-A_2026-09-27.md`. Lesson: when a rewrite must preserve everything but one blob, commit-tree with the original raw dates plus a byte-compare of each message leaves nothing to trust.
