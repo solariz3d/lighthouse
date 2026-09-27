@@ -98,3 +98,21 @@ room forbids.
    versions are kept in `key\v1-l115\`.
 3. **The key is re-derived ONCE, under B's final `units.js`, after B's §9 rule check is clean and before any reader.**
    The anchors are the sealed object. The re-derived key's sha256 and the `units.js` sha256 go in A's run hand-back.
+
+## RULINGS on B's four ambiguities (rule-check §4), 01:1x — made before any reader runs and before any output exists
+
+Each ruling reads the registration's evident intent, and is fixed now so it cannot be tuned to a result.
+
+1. **`:121` "heading line".** It means a **markdown heading**: `#` to `######`, then whitespace. Shebangs and shell
+   comments (`#!/bin/bash`, `#comment`) are ordinary lines under the other rules. This is B's code as it stands.
+2. **`:122`–`:123` list markers.** The marker (`2.`, `1)`, `-`, `*`) is **part of the item's first unit and never a unit of
+   its own**. A unit consisting only of a marker is merged into the unit that follows it. Rule 7 exists to drop
+   content-free units, and a bare marker is content-free. **This is a code change to `units.js`, owed before the key is
+   re-derived.**
+3. **`:99`/`:106` "the reader's list".** It is **the parsed statements**: list items and `>` quote lines, sub-bullets
+   included, as the harness does. The reader's framing prose is not a statement. The HIT rule is per statement, so this
+   is the reading that makes step 1 joinable.
+4. **`:97`, a statement the reader lists but says NOT to check.** It is read **literally: listed means flagged**, for both
+   HIT and COST. That is the harness as it stands, and the coder stays HIT/MISS "only" (`:104`).
+   - **Descriptive only, never the verdict:** the scorer (the librarian) counts statements the reader explicitly
+     disclaims, and prints a secondary COST without them.
