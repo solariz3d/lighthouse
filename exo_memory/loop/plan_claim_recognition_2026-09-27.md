@@ -74,3 +74,13 @@ yields to them.
 - **C:** the published work on check-worthiness detection and LLM self-verification (CheckThat!, CoVe).
 
 **L116 is the run.** My miss: the first dispatch sent one pane when four could each take a piece.
+
+## RULING on A's held row W123, 00:5x: the run is over 22, and W123 stays held out, named
+
+W123's wrong claim lived only inside a `git commit -m` string (A's extract hand-back §3). A reader shown the reply text
+could not see it, so it would be a guaranteed miss, which would score the extraction rule instead of recognition.
+
+**The extraction rule is NOT widened mid-lap.** Changing it for one row after the items are known is the re-scoping this
+room forbids.
+
+**Kept as a finding instead:** wrong claims also live in commit messages, a surface a reply-level check never sees.
