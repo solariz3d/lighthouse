@@ -1520,3 +1520,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-09-27 (on L) — L123 A: unpushed history REWRITTEN at the keeper's "1". main 73e1429 -> 74aaf21 by commit-tree replay (no rebase, no -i): one blob swapped in 7 trees, authors/dates/message bytes identical, diff vs backup = that one file (5 lines). Backup ref backup/pre-redact-73e1429 is local only. Old->new sha map in the hand-back. My L122 gate hand-back :14 redacted before commit
 `exo_memory/handback/p-l123-rewrite-A_2026-09-27.md`. Lesson: when a rewrite must preserve everything but one blob, commit-tree with the original raw dates plus a byte-compare of each message leaves nothing to trust.
+
+## 2026-09-27 (on L) — L124 A: heavy-run PID REUSE fixed at 88278a1. The lock records image + holder_start (no spawn); a live pid whose process differs (image, or start >10 s off; asked with the codebase's Get-Process idiom, at most once a minute) is stale → the existing takeover with reason pid_reused. Old locks are never probed; unknown counts as held. Tests 21/21 (red 14/7), mutants 10/10, suite 145/0/1 canary, process search 0
+`exo_memory/handback/p-l124-heavyrun-A_2026-09-27.md`. Lesson: a test that HANGS on the bug it targets is a broken test. Give every wait a fake clock and a bound, and assert new constants exist, or red is a timeout, not a failure.

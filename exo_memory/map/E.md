@@ -1773,3 +1773,9 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 - **My prediction:** WORKS on H, DECORATION on K.
 **Carry:** a count of errors FOUND can't show a rule working, because it falls when the looking stops; watch with a sample.
 NEXT: librarian call_librarian with the hand-back pointer when it is written — plan default after it: L122, the rule lands and the watch starts from that commit
+
+## 2026-09-27 ~11:5xZ (L) · L124: trailer-gate census on L's board → `exo_memory/loop/trailer_gate_census_2026-09-27.md`, hand-back `exo_memory/handback/p-l124-census-E_2026-09-27.md`
+- 44 rows ever (from 09-20); 40 in 7 days, C 23 (0.59 of its sends). L115–L123: 14 of 32 pane rings, all on the warn-only edge. Classes 7d: (a) 9, (b) 11 (after 5, before 3, then 3), (c) 1, (d) 19 (C's one-line rings with no NEXT). 4 refusals ever, re-sent in 6–11 s.
+- The row is pane:"trailer-gate" and carries no NEXT line; pair it to the sender's tool_use to classify (44/44).
+**Carry:** a gate row that states the reason but not the input can only be classed by going back to the sender's transcript; say so before counting.
+NEXT: librarian call_librarian with the pointer when the census is written — plan default after it: C recommends a trailer fix citing the census
