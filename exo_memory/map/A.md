@@ -1499,3 +1499,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-09-27 (on L) — L116 A part 1: §8 nonce probe PASS through the harness (control quoted the nonce; check CODEWORD/CHANGELOG NONE; 2.1.283 both sides; 0 transcripts; check context 2,737 tok). Before any reader: my L115 replies did NOT match the registration §1 (markers, trim, MCP/no-heredoc Bash skipped) and the §1 key did not exist. Re-extracted to §1 (v1 kept) and keyed 17/22 mechanically from the table's quotes, sealed. 5 have no anchor on L (the census is D-side)
 `exo_memory/handback/p-l116-run-A_2026-09-27.md`. Lesson: when a registration lands AFTER your hand-back, re-read it for what it assigns to you. Mine assigned the key and an extraction rule that my finished work didn't meet.
+
+## 2026-09-27 (on L) — L117 A: the claim-recognition run. Both hashes verified (units.js cd6f7f00…, registration 0cea938b…); key re-derived once, sha256 de64024e…, 17 keyed; 22 readers + 22 coders all exit 0 / success on 2.1.283 both sides, 0 transcripts, 844 statements, 0 unmapped; §5 NOT scored (the librarian's)
+`exo_memory/handback/p-l117-run-A_2026-09-27.md`. Outputs are in C:\Consonance\retrieval\l117\. Lesson: a hand-summed log figure said in chat (882/781) was wrong. The files said 844/741. Quote figures from the files, not from reading a log.
