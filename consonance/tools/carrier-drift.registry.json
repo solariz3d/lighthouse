@@ -1040,8 +1040,8 @@
    "attic/",
    "dev/one-shot/"
   ],
-  "frozen_at": "2026-09-21 (re-frozen 03:1x, L061)",
-  "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278; re-frozen 2026-08-30 by pane B (12fb81f6) for the two additions below; re-frozen 2026-09-21 by pane B (12fb81f6), L061, for the two further additions at the end of the log, on pane A's classification",
+  "frozen_at": "2026-09-21 (re-frozen 03:1x, L061); re-frozen 2026-09-27 04:4x, L122",
+  "frozen_by": "pane B (12fb81f6), P-CH4; re-frozen by the chair after ac26278; re-frozen 2026-08-30 by pane B (12fb81f6) for the two additions below; re-frozen 2026-09-21 by pane B (12fb81f6), L061, for the two further additions at the end of the log, on pane A's classification; re-frozen 2026-09-27 by pane B (12fb81f6), L122, for the three research additions at the end of the log, after reading",
   "extractor": "node consonance/tools/carrier-drift.js --ch4-walk",
   "files": [
    "WELFARE.md",
@@ -1076,6 +1076,9 @@
    "exo_memory/record/retired_seats_2026-09-11.md",
    "exo_memory/record/third_place_prehistory_2026-08-30.md",
    "exo_memory/record/trust-the-first-attention.md",
+   "exo_memory/research/claim_base_rate_priors_2026-09-27.md",
+   "exo_memory/research/claim_recognition_prior_art_2026-09-27.md",
+   "exo_memory/research/claim_recognition_strict_ask_2026-09-27.md",
    "exo_memory/research/the_pattern_in_felt_knowing.md",
    "exo_memory/research/the_retrieval_problem_outside.md",
    "exo_memory/spread/the_six_voices.md",
@@ -1126,7 +1129,21 @@
    "record within the session. It is a dated master; its claims carry their dates.",
    "What a later reader should check is the second: its line 62 is a live portable-paths finding (an",
    "absolute drive path in a file every intake ships). That is another instrument's red, and this",
-   "freeze does not clear it -- it is routed by A to that file's writers."
+   "freeze does not clear it -- it is routed by A to that file's writers.",
+   "",
+   "RE-FROZEN 2026-09-27 04:4x (L122, pane B, non-author). +3, 37 -> 40, all through the SEEDED research/ dir, so no",
+   "pointer names them: research/ is carried whole into every waking seat, which is why it is seeded. Each was READ IN",
+   "FULL before this freeze (handback/p-l122-freeze-B_2026-09-27.md sec. 1):",
+   "research/claim_recognition_prior_art_2026-09-27.md (C, L115) teaches OUTSIDE LITERATURE on claim recognition, with",
+   "its inference labelled as such; research/claim_recognition_strict_ask_2026-09-27.md (C, L118) teaches ONE READER",
+   "PROMPT and its sourcing, the prompt fenced by begin/end markers so it is not read as an instruction to the seat;",
+   "research/claim_base_rate_priors_2026-09-27.md (C, L119) teaches PRIORS for the base rate. The freeze was REFUSED once",
+   "on this third file: its sec. 4 point 3 told a reader to route the SPEAKER's own state out before verdict, which the",
+   "sealed registration had rejected (loop/claim_base_rate_registration_2026-09-27.md:121-125, W259) and item 7 does not",
+   "exempt. It went in only after the librarian appended a dated superseded-in-part marker directly under that line",
+   "(58355f5), keeping the sentence as the trace. What a later reader should check: the marker must stay adjacent to the",
+   "sentence it corrects; a reflow that separates them re-opens the carrier. None of the three asserts a registered",
+   "withdrawn wording."
   ]
  }
 }
