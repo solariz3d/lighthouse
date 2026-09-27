@@ -1810,3 +1810,9 @@ NEXT: librarian call_librarian with the hand-back pointer when it is written —
 - The seat column is sealed outside the repo, not in the hand-back, because the readers can open the hand-back. A privacy filter took out 41 pairs; its term list is off-repo.
 **Carry:** "keep it in your hand-back" and "out of the readers' sight" conflict when the readers can read hand-backs; follow the purpose and say so.
 NEXT: librarian call_librarian with the pointer when the units are frozen — plan default after it: B and C read all 40 blind once A's scorer is in
+
+## 2026-09-27 ~16:5xZ (D) · D162: Q3 to Jev STOPPED at unit 3, because the gateway refuses the model to this account → hand-back `exo_memory/handback/p-d162-jev-E_2026-09-27.md`
+- HTTP 403 no_providers_available ("Free tier users do not have access to this model") on 6 calls, U01–U03 each with one marked re-send. 0 answers, $0. U04–U40 were never sent. The schema `consonance/jev/schemas/q3_2026-09-27.json` (sha256 05c28c63…) was written before the first call, and the dry run passed 40/40.
+- q3_read_Jev was NOT written: 40 FAILED rows would have scored the plan's κ<0.40 "judge is the problem" on a billing state. The keeper decides on credits; the librarian rules whether a resumed run is "a second run".
+**Carry:** stop a paid run the moment the failure is systemic. A plan's per-unit FAILED rule turns an account condition into a verdict if the loop keeps going.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: the keeper's credit call, then a resumed run if the librarian rules it the same run
