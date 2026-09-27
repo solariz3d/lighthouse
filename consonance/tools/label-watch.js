@@ -22,11 +22,17 @@ const REPO = path.resolve(__dirname, '..', '..');
 const R_DEFAULT = '1e7520a';
 const HANDBACK_DIR = 'exo_memory/handback';
 
-// E§1.3: "one case-sensitive regex, LABEL_RE … pinned at landing" from the rule AS LANDED. Item 7 tells a writer to use
-// `checked: <command or path:line> → <result>` and `inferred: <the claim>`. Lowercase, with the colon, and not the tail
-// of a longer word — so this room's KIND word "CHECKED" (E§1.3's reason for the detector control) and "unchecked:" do
-// not count. NOT pinned into E's file by the landing commit as E§1.3 asks: named in the hand-back.
-const LABEL_RE = /(?:^|[^A-Za-z0-9_])(checked|inferred):/g;
+// E§1.3: "one case-sensitive regex, LABEL_RE … pinned at landing" from the rule AS LANDED. Item 7 lays a label out as a
+// line of its own: `checked: <command or path:line> → <result>` / `inferred: <the claim>`. So (L127, B's read §2) a
+// marker counts ONLY at a line start — after optional indentation and one structural prefix, a bullet (`-` `*` `+`
+// `1.`) or a heading's `#`s — lowercase, with the colon. Everything else is a MENTION, not the writer's label:
+//   * mid-sentence ("What I checked: …"), and the KIND word "CHECKED" or "unchecked:";
+//   * inside an inline code span (a line starting with a backtick never matches) or a fenced block (skipped);
+//   * after a `>` blockquote marker: a quoted label is someone else's;
+//   * bold (`**checked:**`): item 7's layout is plain.
+// One label per line: a second marker later on the same line is a mention. NOT pinned into E's file by the landing
+// commit as E§1.3 asks; this is the L127 form, named in the hand-back.
+const LABEL_RE = /^\s*(?:(?:[-*+]|\d+[.)])\s+|#{1,6}\s+)?(checked|inferred):/;
 // The pointer line A landed in COMMITTEE.md and LIBRARIAN.md at L122 — E§1.4's exposure grep.
 const POINTER = '**Checked or inferred**';
 
@@ -37,6 +43,11 @@ const SO_RE = /(?:^|[\s,;:—–-])so\b(?=[\s,])/i;
 // Item 7: "Future, intent and opinion are not claims about state and take no label." Only the unambiguous openers are
 // excluded mechanically; a future or opinion phrased otherwise is still counted (named: over-counts owing).
 const INTENT_RE = /^\s*(?:[-*+]\s+|\d+[.)]\s+)?(?:NEXT:|I'?ll\b|I will\b|Next[:,]?\s|Plan\b)/;
+// L127 (B's C6, C7): a QUESTION (the line ends in `?`) and a PLAN phrased without an opener ("the next step is to …",
+// "will", "going to", "plan to") are not claims about state either. Still a mechanical proxy: a claim phrased with
+// "will" about a system's behaviour is dropped too (named).
+const PLAN_RE = /\b(?:will|going to|next step|plan(?:s|ned)? to)\b/i;
+const isQuestion = (line) => /\?\s*$/.test(line.replace(/`[^`]*`/g, ''));
 
 const isFence = (l) => /^\s*(```|~~~)/.test(l);
 const isHeading = (l) => /^\s{0,3}#{1,6}\s/.test(l);
@@ -45,7 +56,8 @@ function labelsIn(line) {
   const out = { checked: 0, inferred: 0 };
   // Lowercased on purpose: with the case-sensitive LABEL_RE this changes nothing, and it leaves the regex's case as the
   // ONE guard against the KIND word — so a mutant that loosens the case is seen (L126 M1 survived without this).
-  for (const m of line.matchAll(LABEL_RE)) out[m[1].toLowerCase()]++;
+  const m = line.match(LABEL_RE);
+  if (m) out[m[1].toLowerCase()]++;
   return out;
 }
 /** The text a figure is looked for in: code spans, shas, dates, times, path:line, versions and id-like tokens (L126,
@@ -76,7 +88,7 @@ function analyzeText(text) {
   const lines = String(text).replace(/\r\n?/g, '\n').split('\n');
   const rows = [], checks = [];
   let inFence = false, headingLabelled = false;
-  let stack = [];   // bullet ancestry: [{ indent, labelled }]
+  let stack = [];   // bullet ancestry: [{ indent, self }] — `self` is the bullet's OWN label (L127: nearest parent only)
   const nextNonEmpty = (i) => { for (let j = i + 1; j < lines.length; j++) if (lines[j].trim()) return j; return -1; };
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -89,20 +101,22 @@ function analyzeText(text) {
     let parentLabelled = false;
     if (bi >= 0) {
       while (stack.length && stack[stack.length - 1].indent >= bi) stack.pop();
-      parentLabelled = stack.some((s) => s.labelled);
-      stack.push({ indent: bi, labelled: selfLabelled || parentLabelled });
+      // E§1.3: "the nearest preceding … bullet parent" covers — its OWN label, not one it inherited (B's C13).
+      parentLabelled = stack.length ? stack[stack.length - 1].self : false;
+      stack.push({ indent: bi, self: selfLabelled });
     } else if (/^\s+\S/.test(line) && stack.length) {
-      parentLabelled = stack.some((s) => s.labelled);   // an indented continuation of the open bullet
+      parentLabelled = stack[stack.length - 1].self;   // an indented continuation belongs to the open bullet itself
     } else if (!isHeading(line)) {
       stack = [];
     }
     const labelled = selfLabelled || (!isHeading(line) && headingLabelled) || parentLabelled;
-    const intent = INTENT_RE.test(line);
+    const intent = INTENT_RE.test(line) || PLAN_RE.test(line.replace(/`[^`]*`/g, ' ')) || isQuestion(line);
     const why = intent ? [] : triggers(line);
     const row = { line: i + 1, text: line.trim(), checked: self.checked, inferred: self.inferred, labelled, candidate: why.length > 0, owing: why.length > 0 && !labelled, why };
     rows.push(row);
     if (self.checked) {
-      // §3, mechanically (E's F2 "a check with its result", item 7's `checked: <command or path:line> → <result>`):
+      // The PROXY for "is a check shown" (L127: named proxy_checked_line_shows_command; the registered §3 is E's, via
+      // claimrec), mechanically (E's F2 "a check with its result", item 7's `checked: <command or path:line> → <result>`):
       // SHOWN inline if the line has `<something> → <something>` after the marker; SHOWN as a block if the very next
       // non-empty line opens a code fence; otherwise NOT SHOWN.
       const after = line.slice(line.search(/checked:/) + 'checked:'.length);
@@ -235,13 +249,28 @@ function exposureOf(instancesDir, rMs) {
   return out;
 }
 
-function sum(list) {
-  const keys = ['checked', 'inferred', 'candidates', 'labelledCandidates', 'owingUnlabelled', 'checkedShownInline', 'checkedShownBlock', 'checkedNotShown'];
-  const t = Object.fromEntries(keys.map((k) => [k, 0]));
-  for (const u of list) for (const k of keys) t[k] += u.counts[k];
-  t.share = t.candidates ? t.labelledCandidates / t.candidates : null;
+// L127 (the librarian's ruling on B's read): this tool's shares and checks are PROXIES, and are printed under names that
+// cannot be mistaken for the registered (a) and §3, which run through the claimrec harness.
+const PROXY_HEADER = 'PROXY ONLY — line-level stand-ins. The registered measures, W§1(a) (the claim-level labelled share, extracted per W§1.2) and W§3 (self-label vs the verifiers\' agreed kind), run through the claimrec harness, not this tool.';
+const PROXY_NAMES = {
+  candidates: 'proxy_lines_owing_a_label',
+  labelledCandidates: 'proxy_owing_lines_labelled',
+  owingUnlabelled: 'proxy_owing_lines_unlabelled',
+  checkedShownInline: 'proxy_checked_line_shows_command_inline',
+  checkedShownBlock: 'proxy_checked_line_shows_command_block',
+  checkedNotShown: 'proxy_checked_line_shows_no_command',
+};
+function proxyTotals(list) {
+  const t = { checked: 0, inferred: 0 };
+  for (const k of Object.values(PROXY_NAMES)) t[k] = 0;
+  for (const u of list) {
+    t.checked += u.counts.checked; t.inferred += u.counts.inferred;
+    for (const [k, name] of Object.entries(PROXY_NAMES)) t[name] += u.counts[k];
+  }
+  t.proxy_line_label_share = t.proxy_lines_owing_a_label ? t.proxy_owing_lines_labelled / t.proxy_lines_owing_a_label : null;
   return t;
 }
+const proxyRow = (c) => Object.fromEntries([['checked', c.checked], ['inferred', c.inferred], ...Object.entries(PROXY_NAMES).map(([k, n]) => [n, c[k]])]);
 
 function main(argv) {
   const arg = (k, d) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : d; };
@@ -283,34 +312,39 @@ function main(argv) {
   if (control) { K.sort((a, b) => String(a.ts).localeCompare(String(b.ts))); K = K.slice(-30); }
 
   const result = {
-    spec: 'exo_memory/loop/label_rule_watch_registration_2026-09-27.md §1(a), §3', mode: control ? 'CONTROL (E§1.3, before R)' : 'POST-RULE (after R, exposed seats only)',
+    spec: 'exo_memory/loop/label_rule_watch_registration_2026-09-27.md', proxy_note: PROXY_HEADER,
+    mode: control ? 'CONTROL (W§1.3 detector control, before R)' : 'POST-RULE (after R, exposed seats only)',
     R: rSha, R_time: new Date(rMs).toISOString(), LABEL_RE: LABEL_RE.source,
     delivery: Object.fromEntries(Object.entries(exp).map(([s, e]) => [s, { pointer: e.pointer, regenerated: e.regenerated ? new Date(e.regenerated).toISOString() : null, exposed: e.exposure ? new Date(e.exposure).toISOString() : 'NOT DELIVERED' }])),
-    H: { units: H.counted.length, excluded: H.excluded.length, totals: sum(H.counted), rows: H.counted.map((u) => ({ file: u.file, sha: u.sha.slice(0, 7), ...u.counts })), excludedRows: H.excluded.map((u) => ({ file: u.file, why: u.why })) },
-    K: { units: K.length, perSeat: kPerSeat, totals: sum(K), rows: K.map((u) => ({ seat: u.seat, messageId: u.messageId, ts: u.ts, ...u.counts })) },
+    H: { units: H.counted.length, excluded: H.excluded.length, totals: proxyTotals(H.counted), rows: H.counted.map((u) => ({ file: u.file, sha: u.sha.slice(0, 7), ...proxyRow(u.counts) })), excludedRows: H.excluded.map((u) => ({ file: u.file, why: u.why })) },
+    K: { units: K.length, perSeat: kPerSeat, totals: proxyTotals(K), rows: K.map((u) => ({ seat: u.seat, messageId: u.messageId, ts: u.ts, ...proxyRow(u.counts) })) },
   };
-  if (control) result.DG_A1 = ['H', 'K'].map((s) => ({ stratum: s, share: result[s].totals.share, fires: result[s].totals.share !== null && result[s].totals.share > 0.05 }));
+  if (control) result.DG_A1 = ['H', 'K'].map((s) => { const sh = result[s].totals.proxy_line_label_share; return { stratum: s, proxy_line_label_share: sh, fires: sh !== null && sh > 0.05 }; });
   if (argv.includes('--json')) { console.log(JSON.stringify(result, null, 1)); return 0; }
 
   const pct = (x) => (x === null ? '—' : `${(100 * x).toFixed(1)}%`);
-  console.log(`label-watch · ${result.mode} · ${result.spec}`);
+  console.log(`label-watch · ${result.mode} · spec ${result.spec}`);
   console.log(`command: node consonance/tools/label-watch.js ${argv.join(' ')}`.trim());
-  console.log(`R = ${rSha.slice(0, 7)} (${result.R_time}) · LABEL_RE /${LABEL_RE.source}/ (from BUILDING.md item 7 as landed)`);
-  console.log('\nDELIVERY (E§1.4) — instance CLAUDE.md carries the pointer and was regenerated after R:');
+  console.log(`R = ${rSha.slice(0, 7)} (${result.R_time}) · LABEL_RE /${LABEL_RE.source}/ (line-start markers, from BUILDING.md item 7 as landed)`);
+  console.log('\nDELIVERY (W§1.4) — instance CLAUDE.md carries the pointer and was regenerated after R:');
   for (const [s, d] of Object.entries(result.delivery)) console.log(`  ${s.padEnd(9)} pointer ${d.pointer ? 'yes' : 'no '} · regenerated ${d.regenerated || '?'} · ${d.exposed}`);
+  console.log('\n' + PROXY_HEADER);
   for (const s of ['H', 'K']) {
     const t = result[s].totals;
     console.log(`\n${s === 'H' ? 'H — hand-backs' : 'K — replies to the keeper'}: ${result[s].units} unit(s)${s === 'H' ? ` · ${result.H.excluded} excluded` : ''}`);
-    console.log(`  labels: checked: ${t.checked} · inferred: ${t.inferred} · claim lines owing a label (item 7): ${t.candidates} · labelled ${t.labelledCandidates} · UNLABELLED ${t.owingUnlabelled} · labelled share ${pct(t.share)}`);
-    console.log(`  §3 checked: lines — check shown inline ${t.checkedShownInline} · shown as a block ${t.checkedShownBlock} · NOT SHOWN ${t.checkedNotShown}`);
+    console.log(`  labels: checked: ${t.checked} · inferred: ${t.inferred}`);
+    console.log(`  proxy_lines_owing_a_label ${t.proxy_lines_owing_a_label} · proxy_owing_lines_labelled ${t.proxy_owing_lines_labelled} · proxy_owing_lines_unlabelled ${t.proxy_owing_lines_unlabelled} · proxy_line_label_share ${pct(t.proxy_line_label_share)}`);
+    console.log(`  proxy_checked_line_shows_command: inline ${t.proxy_checked_line_shows_command_inline} · block ${t.proxy_checked_line_shows_command_block} · proxy_checked_line_shows_no_command ${t.proxy_checked_line_shows_no_command}`);
   }
   if (result.H.excludedRows.length) { console.log('\nH excluded:'); for (const r of result.H.excludedRows) console.log(`  ${r.why.padEnd(28)} ${r.file}`); }
   console.log('\nK per seat:', JSON.stringify(kPerSeat));
-  if (result.H.rows.length) { console.log('\nH rows (file · checked · inferred · owing-lines · labelled · UNLABELLED · §3 not shown):'); for (const r of result.H.rows) console.log(`  ${r.file} ${r.sha} · ${r.checked} · ${r.inferred} · ${r.candidates} · ${r.labelledCandidates} · ${r.owingUnlabelled} · ${r.checkedNotShown}`); }
-  if (result.K.rows.length) { console.log('\nK rows (seat · message · checked · inferred · owing-lines · labelled · UNLABELLED · §3 not shown):'); for (const r of result.K.rows) console.log(`  ${r.seat} ${r.messageId} · ${r.checked} · ${r.inferred} · ${r.candidates} · ${r.labelledCandidates} · ${r.owingUnlabelled} · ${r.checkedNotShown}`); }
-  if (control) for (const d of result.DG_A1) console.log(`\nDG-A1 (${d.stratum}): pre-rule labelled share ${pct(d.share)} — ${d.fires ? 'FIRES: the detector counts vocabulary; refix before reading post-rule units' : 'does not fire (≤ 5%)'}`);
+  const cols = 'checked · inferred · proxy_lines_owing_a_label · proxy_owing_lines_labelled · proxy_owing_lines_unlabelled · proxy_checked_line_shows_no_command';
+  const vals = (r) => [r.checked, r.inferred, r.proxy_lines_owing_a_label, r.proxy_owing_lines_labelled, r.proxy_owing_lines_unlabelled, r.proxy_checked_line_shows_no_command].join(' · ');
+  if (result.H.rows.length) { console.log(`\nH rows (file · ${cols}):`); for (const r of result.H.rows) console.log(`  ${r.file} ${r.sha} · ${vals(r)}`); }
+  if (result.K.rows.length) { console.log(`\nK rows (seat · message · ${cols}):`); for (const r of result.K.rows) console.log(`  ${r.seat} ${r.messageId} · ${vals(r)}`); }
+  if (control) for (const d of result.DG_A1) console.log(`\nDG-A1 (${d.stratum}): pre-rule proxy_line_label_share ${pct(d.proxy_line_label_share)} — ${d.fires ? 'FIRES: the detector counts vocabulary; refix before reading post-rule units' : 'does not fire (≤ 5%)'}`);
   return 0;
 }
 
-module.exports = { analyzeText, keeperUnits, handbackUnits, exposureOf, LABEL_RE, POINTER, R_DEFAULT };
+module.exports = { analyzeText, keeperUnits, handbackUnits, exposureOf, proxyTotals, PROXY_HEADER, LABEL_RE, POINTER, R_DEFAULT };
 if (require.main === module) process.exit(main(process.argv.slice(2)));

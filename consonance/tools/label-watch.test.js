@@ -116,3 +116,42 @@ test('H FRAME + EXPOSURE (§1.1, §1.4) on a throwaway git repo: only hand-backs
     ['p-l126-z-B_2026-09-27.md', 'seat B NOT DELIVERED'],
   ]);
 });
+
+// ── L127: B's fixture rows (exo_memory/handback/p-l126-read-B_2026-09-27.md §2), one test each. Expectations are W's
+// (E's registration) and item 7's, as B read them, with this tool's L127 rulings where W is silent (C8, C10, C12).
+const B_ROWS = [
+  ['C1 a checked label with a real check shown', 'checked: `node --test x.test.js` → tests 57 · pass 57 · fail 0', { labels: 1, owing: 0, shown: ['inline'] }],
+  ['C2 a checked label with no check', 'checked: the suite is green', { labels: 1, owing: 0, shown: [null] }],
+  ['C3 an inferred label on a figure', 'inferred: about 30 units a day', { labels: 1, owing: 0, shown: [] }],
+  ['C4 an unlabelled figure owes', 'There were 146 tests and 1 failed.', { labels: 0, owing: 1, shown: [] }],
+  ['C5 intent owes nothing', 'I will run the suite after the rebuild.', { labels: 0, owing: 0, shown: [] }],
+  ['C6 a question with a figure owes nothing', 'Should we wait 30 minutes before the push?', { labels: 0, owing: 0, shown: [] }],
+  ['C7 a plan with no opener owes nothing', 'The next step is to run the 3 mutants.', { labels: 0, owing: 0, shown: [] }],
+  ['C8 a marker inside a fenced block is not a label', '```\nchecked: `x` → 4\n```', { labels: 0, owing: 0, shown: [] }],
+  ['C9 a marker MENTIONED in inline code is not a label', 'Write `checked:` before a claim.', { labels: 0, owing: 0, shown: [] }],
+  ['C10 a marker in a > blockquote is someone else\'s, not a label', '> checked: `x` → 4', { labels: 0, owing: 1, shown: [] }],
+  ['C11 "checked:" mid-sentence is prose, and the figure still owes', 'What I checked: the log shows 3 rows.', { labels: 0, owing: 1, shown: [] }],
+  ['C12 only the line-start marker counts (one label per line)', 'checked: `x` → 3; inferred: 4 more', { labels: 1, owing: 0, shown: ['inline'] }],
+  ['C13 a labelled GRANDPARENT does not cover (nearest bullet parent only)', '- inferred: the plan\n  - the parent, unlabelled\n    - it holds 7 rows', { labels: 1, owing: 1, shown: [] }],
+  ['C14 an empty file', '', { labels: 0, owing: 0, shown: [] }],
+  ['C15 a CRLF verdict owes', 'The build is green.\r\n', { labels: 0, owing: 1, shown: [] }],
+];
+for (const [name, text, want] of B_ROWS) {
+  test(`L127 ${name}`, () => {
+    const r = W.analyzeText(text);
+    assert.deepStrictEqual(
+      { labels: r.counts.checked + r.counts.inferred, owing: r.counts.owingUnlabelled, shown: r.checks.map((c) => c.shown) },
+      want, JSON.stringify(r.rows));
+  });
+}
+
+test('L127 the CLI\'s result names the proxy as a proxy, and says the registered measures run through claimrec', () => {
+  // Asymmetric on purpose (2 labelled, 1 unlabelled): a 1-and-1 fixture gives 0.5 either way and cannot tell the share
+  // from its complement (L127 mutant N7 survived the first version).
+  const out = W.proxyTotals([{ counts: W.analyzeText('checked: `x` → 4\ninferred: 5 more rows\nThe suite has 9 tests.\n').counts }]);
+  assert.deepStrictEqual(Object.keys(out).filter((k) => !k.startsWith('proxy_')), ['checked', 'inferred'], 'every measure but the raw label counts is named proxy_*');
+  assert.strictEqual(out.proxy_line_label_share, 2 / 3);
+  assert.strictEqual(out.proxy_checked_line_shows_command_inline, 1);
+  assert.match(W.PROXY_HEADER, /claimrec/);
+  assert.match(W.PROXY_HEADER, /§1\.2/);
+});
