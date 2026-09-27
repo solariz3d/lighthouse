@@ -29,8 +29,6 @@ const { units } = require('./units.js');
 
 const ASK = 'Here is a reply one assistant was about to send. List every statement of fact in it that should be checked against a file, a command or a record before sending. Quote each one.';
 const CODER_INSTRUCTION = 'For each listed statement, give the unit number(s) it quotes or clearly refers to; say NONE if it matches no unit.';
-// Added by B so the answer can be read by a script; not in E's §3 text, so A/E can refuse it.
-const CODER_FORMAT = 'Answer with one line per statement, exactly in the form "S<k>: U<n>, U<m>" or "S<k>: NONE", and nothing else.';
 const MODEL = process.env.CLAIMREC_MODEL || null; // unset = the CLI's default model, recorded from each call's output
 
 const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
@@ -126,9 +124,11 @@ function parseStatements(readerText) {
     const m = raw.match(/^\s*(?:[-*+]|\d+[.)])\s+(.*\S)\s*$/) || raw.match(/^\s*>\s+(.*\S)\s*$/);
     if (!m) continue;
     const item = m[1];
+    // §3 step 1 maps a QUOTED item mechanically; an item with no quote goes to the coder (step 2), so it carries no
+    // quotes here (fixed L116: it used to fall back to matching the whole item text).
     const quotes = [];
-    for (const q of item.matchAll(/["“]([^"“”]{8,}?)["”]/g)) quotes.push(q[1]);
-    out.push({ n: out.length + 1, text: item, quotes: quotes.length ? quotes : [item.replace(/^\*\*|\*\*$/g, '')] });
+    for (const q of item.matchAll(/["“]([^"“”]+?)["”]/g)) if (/[\p{L}\p{N}]/u.test(q[1])) quotes.push(q[1]);
+    out.push({ n: out.length + 1, text: item, quotes });
   }
   return out;
 }
@@ -147,18 +147,28 @@ function mechanicalMap(quotes, unitList) {
   return [...hits].sort((a, b) => a - b);
 }
 
+// §3: the coder "receives ONLY: the item split into numbered units; the reader's list; the instruction". So the prompt
+// is exactly those three and nothing else (fixed L116: an intro sentence and an answer-format line, both B's, removed).
 function coderPrompt(unitList, statements) {
-  return ['Below is a text split into numbered units, then a list of statements someone extracted from it.', '',
-    CODER_INSTRUCTION, CODER_FORMAT, '', 'UNITS', ...unitList.map((u, k) => `U${k + 1}: ${u.replace(/\n/g, ' ⏎ ')}`), '',
-    'STATEMENTS', ...statements.map((s) => `S${s.n}: ${s.text}`)].join('\n');
+  return [...unitList.map((u, k) => `U${k + 1}: ${u.replace(/\n/g, ' ⏎ ')}`), '',
+    ...statements.map((s) => `S${s.n}: ${s.text}`), '', CODER_INSTRUCTION].join('\n');
 }
 
+// With no format line in the prompt, the answer is free-form: a line that names a statement (S<k>, optionally bulleted
+// or bold) is read for the unit numbers it names with a U prefix; NONE with no unit number is an empty set.
+// A line is read only if the statement label is followed directly by a separator (: | → - – — =), so a prose line
+// such as "S5, S6 and S7 each pick out part of U3" is NOT read as S5's answer; a markdown table row "| S1 | U1 |" is.
+// Unit numbers are taken up to the next statement label on the same line. (L116: the first free-form run answered in a
+// table, which the earlier parser skipped, and a prose line was misread as S5 → U3, U2, U4.)
 function parseCoder(text, n) {
   const map = {};
-  for (const line of text.split('\n')) {
-    const m = line.match(/^\s*\**S(\d+)\**\s*:\s*(.*)$/i); if (!m) continue;
+  for (const raw of text.split('\n')) {
+    const line = raw.replace(/^\s*\|/, '').replace(/\|\s*$/, '');
+    const m = line.match(/^\s*(?:[-*]\s*)?\**\s*S(\d+)\**\s*(?:[:|=→–—-]|->)\s*(.*)$/i); if (!m) continue;
     const k = Number(m[1]); if (k < 1 || k > n) continue;
-    map[k] = /\bNONE\b/i.test(m[2]) ? [] : [...m[2].matchAll(/U?(\d+)/gi)].map((x) => Number(x[1]));
+    const answer = m[2].split(/\bS\d+\b/i)[0];
+    const us = [...answer.matchAll(/\bU(\d+)\b/gi)].map((x) => Number(x[1]));
+    if (us.length) map[k] = us; else if (/\bNONE\b/i.test(answer)) map[k] = [];
   }
   return map;
 }
@@ -220,7 +230,7 @@ function cmdScore(o) {
   if (n) console.log(`hit rate ${hits}/${n} = ${(hits / n).toFixed(2)} · expected chance ${(chance / n).toFixed(2)} · LIFT ${((hits - chance) / n).toFixed(2)}`);
 }
 
-module.exports = { ASK, CODER_INSTRUCTION, CODER_FORMAT, parseStatements, mechanicalMap, parseCoder, coderPrompt, isolationFiles, callClaude, flagsFor };
+module.exports = { ASK, CODER_INSTRUCTION, parseStatements, mechanicalMap, parseCoder, coderPrompt, isolationFiles, callClaude, flagsFor };
 
 if (require.main === module) {
   const [cmd, ...rest] = process.argv.slice(2); const o = args(rest);

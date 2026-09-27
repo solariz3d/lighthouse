@@ -39,3 +39,28 @@ test('the coder prompt carries the registration instruction verbatim and never t
   const p = coderPrompt(U, [{ n: 1, text: 'x' }]);
   assert.ok(p.includes(CODER_INSTRUCTION) && !/\bwrong\b/i.test(p));
 });
+
+
+// L116 fix F2: §3 step 1 maps QUOTED items only; an unquoted item goes to the coder.
+test('an unquoted list item carries no quotes, so step 1 leaves it for the coder', () => {
+  const s = parseStatements('- the width is set in the config');
+  assert.deepStrictEqual([s[0].quotes, mechanicalMap(s[0].quotes, U)], [[], []]);
+});
+
+// L116 fix F3: §3 — the coder receives ONLY the numbered units, the reader's list and the instruction.
+test('the coder prompt holds only unit lines, statement lines and the instruction', () => {
+  const lines = coderPrompt(U, [{ n: 1, text: 'x' }]).split(/\n/).filter((l) => l.trim());
+  assert.ok(lines.every((l) => /^U\d+: /.test(l) || /^S\d+: /.test(l) || l === CODER_INSTRUCTION));
+});
+
+test('a markdown-table coder answer is read row by row', () => {
+  assert.deepStrictEqual(parseCoder(['| Statement | Unit(s) |', '|---|---|', '| S1 | U1 |', '| S2 | NONE |'].join('\n'), 2), { 1: [1], 2: [] });
+});
+
+test('a prose line naming several statements is not read as the first one\'s answer', () => {
+  assert.deepStrictEqual(parseCoder('S5, S6 and S7 each pick out one part of U3. S9 is the second half of U2.', 9), {});
+});
+
+test('a free-form coder answer is still read per statement', () => {
+  assert.deepStrictEqual(parseCoder(['- **S1** → U2 (the width)', 'S2: none of the units', 'S3 — U1 and U3'].join('\n'), 3), { 1: [2], 2: [], 3: [1, 3] });
+});

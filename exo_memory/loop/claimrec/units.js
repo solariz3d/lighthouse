@@ -49,7 +49,8 @@ const isFence = (l) => /^\s*```/.test(l);
 const isTableRow = (l) => /^\s*\|.*\|\s*$/.test(l);
 const isTableSep = (l) => /^\s*\|[\s:|-]+\|\s*$/.test(l) && /-/.test(l);
 const isHeading = (l) => /^\s{0,3}#{1,6}\s/.test(l);
-const isListStart = (l) => /^\s*([-*+]|\d+[.)])\s+/.test(l);
+// §4 rule 4 names `-`, `*`, `+` and `n.` only; `n)` is NOT a list marker (fixed L116, was `\d+[.)]`).
+const isListStart = (l) => /^\s*([-*+]|\d+\.)\s+/.test(l);
 
 function units(text) {
   const lines = text.replace(/\r\n?/g, '\n').split('\n');

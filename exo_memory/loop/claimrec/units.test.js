@@ -43,3 +43,12 @@ test('empty input gives no units', () => {
 test('no split when the next character is lowercase', () => {
   assert.deepStrictEqual(units('Version 2.1 is out. the rest follows.'), ['Version 2.1 is out. the rest follows.']);
 });
+
+// L116 fix F1: §4 rule 4 names `-`, `*`, `+` and `n.` only, so `n)` does not start a new unit.
+test('an n) line is not a list marker and joins the text before it', () => {
+  assert.deepStrictEqual(units('Intro line\n1) item one'), ['Intro line 1) item one']);
+});
+
+test('an n. line is a list marker and starts a new unit', () => {
+  assert.deepStrictEqual(units('Intro line\n1. item one'), ['Intro line', '1. item one']);
+});

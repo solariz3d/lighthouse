@@ -1496,3 +1496,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-09-27 (on L) — L115 A: extraction — 23/23 citations resolve on L (line + time to the second; D line numbers carry unchanged), 0 dropped, 22 in replies\, W123 HELD (its claim is a git commit -m string, outside §1 — a guaranteed miss). 1,898 sentences under one rule; the 3 largest written docs hold 53%
 `exo_memory/handback/p-l115-extract-A_2026-09-27.md`. Key and replies are outside the repo at C:\Consonance\retrieval\l115\. Lesson: recount any figure written into a hand-back from the key before sending. Two of my hand counts (parts 8/17, "Write or Edit") were wrong.
+
+## 2026-09-27 (on L) — L116 A part 1: §8 nonce probe PASS through the harness (control quoted the nonce; check CODEWORD/CHANGELOG NONE; 2.1.283 both sides; 0 transcripts; check context 2,737 tok). Before any reader: my L115 replies did NOT match the registration §1 (markers, trim, MCP/no-heredoc Bash skipped) and the §1 key did not exist. Re-extracted to §1 (v1 kept) and keyed 17/22 mechanically from the table's quotes, sealed. 5 have no anchor on L (the census is D-side)
+`exo_memory/handback/p-l116-run-A_2026-09-27.md`. Lesson: when a registration lands AFTER your hand-back, re-read it for what it assigns to you. Mine assigned the key and an extraction rule that my finished work didn't meet.
