@@ -165,3 +165,32 @@ inference is either checked before anyone acts on it, or it stands as a hypothes
 **What the next test measures changes with it:** whether unchecked claims get labelled as unchecked, and whether fewer
 wrong claims **land** because readers act on the labels. It does not measure fewer unchecked claims. The unmeasured base
 rate (how often an unchecked claim is actually wrong) is an input the design has to find, not assume.
+
+## NEXT: THE BASE RATE (L119) — how often is an unchecked claim actually wrong? At the keeper's "lets keep going", 02:16
+
+The correction above makes this the missing number. Without it, neither "unchecked is dangerous" nor "label it" can
+be priced.
+
+**The measurement:**
+- **The sample.** Take a random sample of assistant messages from the seats' carried transcripts on L. The window and
+  seed are fixed in the registration. The 24 census rows and their turns are excluded, so the sample is not selected for
+  containing a known error.
+- **The claims.** Extract them with arm 1's harness and ask, whose recall is known: 16 of 17.
+- **Classify each claim by kind:**
+  - **checked**: the message shows the check and its result;
+  - **unchecked state**;
+  - **unchecked conclusion**: a verdict, a causal claim or a "so …".
+- **Verify each claim against its source as of the claim's time,** using `git show <commit before the message>:<path>`,
+  the record, or a command. The verdict is **CORRECT, WRONG or UNVERIFIABLE**.
+- **Output:** P(wrong | kind), with exact intervals. **Hypothesis to price, not assume:** an unchecked conclusion is wrong
+  more often than an unchecked state claim, which is wrong more often than a checked claim.
+
+**Split (L119):**
+- **E** registers: the frame, the seed, the sample size (sized by C's priors), the kind rules, the verdict rules, what
+  counts as UNVERIFIABLE, sealed predictions, and the degenerate clauses (for example, too many UNVERIFIABLE).
+- **C** gathers priors: published rates of wrong or unsupported claims in LLM agent output and self-reports, so E can
+  size and predict. C also writes the verification rubric's edge cases.
+- **B** builds the verifier's helpers, e.g. a "file as of time T" lookup (git) and the record lookups. B tests them on a
+  dummy and does not touch the sample.
+- **A**, after the seal: draws the sample and runs the extractor. The **verification** is then split across two seats,
+  each blind to the other on a shared overlap for agreement. No seat verifies its own seat's claims.
