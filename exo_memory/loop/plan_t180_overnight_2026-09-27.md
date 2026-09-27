@@ -39,6 +39,12 @@
 >   3. **Free camera:** fly anywhere.
 >
 >   Switching between them is one key, and the build view is always one key away.
+> - **Sculpt, and save your own pieces** (keeper, 12:22: *"but you can also sculp pieces, and then even create and
+>   save your own unqiue pieces"*).
+>   - Any placed piece can be **sculpted** through its handles: length, curvature and its ramps, pitch, roll/bank, and
+>     the font's width, wall height and ψ. Physics bounds show live.
+>   - A sculpted piece, or a run of pieces, can be **saved as the user's own named piece** (a word or phrase, §2). It
+>     then shows in the build palette beside the built-in ones, and can be exported and shared as text.
 > - The Third Place planning conversation (pointer at the end) may hold more on this. Read it for intent.
 >
 > 6. **Textures** (§5b), and then hardening. The README status table, judged item by item against ARCHITECTURE.
