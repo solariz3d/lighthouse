@@ -1856,3 +1856,13 @@ NEXT: librarian call_librarian with the pointer
 - **Mine:** mutating the shared checkout in place most likely made B's 13:03/13:14 suite red. Mutate a copy.
 - **Carry:** a document's `speed` is m/s. Measure `$?` or PIPESTATUS right after the command, never after an echo. Dead code shows up as a surviving mutant: probe it before writing a test for it.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: D167 is read by B and lands, then the app lap, unless the output says otherwise
+
+## 2026-09-27 ~15:1x (D) · D168: live colour, the jump's two landings, sculpt handles with live bounds → hand-back `exo_memory/handback/p-d168-colour-handles-E_2026-09-27.md`
+- **What was built:** `app/validate-ui/*` (colour, live, jumparcs, panel, index) and `app/handles/*` (handles, panel, index), both on A's `mount(root, shell)` seam.
+- **Colour:** per station and per u, at validation's own thresholds. An append re-colours only what changed and equals a full run. Stations come from the path, so geometry reds show with no loads.
+- **Drag:** it stops at red and passes amber (§1.3); Alt goes past red. One undo entry through the shell.
+- **Tests:** mine 44/44; app 111/111. Mutants on a COPY: 45/44/0 (the survivor is equivalent).
+- **For A:** a shell-built track has NO loads (no design speed, no car accel), so load colour is dormant; there is no `shell.cancelDrag`.
+- **For C:** the proposed `t180:validation` event with `rgbaAt(s,u)` and arcs.
+- **Carry:** a test can pass vacuously when its fixture has no loads, so assert the loads exist. Write regexes and quotes with Edit, never through heredoc templates. A buffered grep in a background pipe looks exactly like a dead job: print progress unfiltered.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: D168 is read by B and lands after Track 1, unless the output says otherwise
