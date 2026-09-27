@@ -22,6 +22,25 @@
 >    are generated.
 > 5. **The app** (§9): a Tauri v2 program like blackbox, with the WebGL preview, a word palette, live colour, sculpt
 >    handles, close-the-loop, and export from a button.
+> **ADDED 12:2x by the keeper: what v1 is.** *"the first thing I want it to be is simply the track, no environmental
+> elements. You remember the idea of like thrilleville or roller coaster builder type games where the perspective can
+> be like looking forward where you are placing the track as it grows, maybe even different camera angles too or free
+> came mode with the mode that looks in the direction the track is being built."* And, 12:18: *"youre not the one who
+> builds the track, the user does."*
+> - **v1 is the track only.** There is no environment: no scenery, no ground dressing, no props beyond the road itself.
+>   ARCHITECTURE §8 waits.
+> - **The build head is the heart of the app.** It works like a coaster builder (Thrillville, RollerCoaster Tycoon,
+>   Planet Coaster). The track grows from its open end, and the user picks the next word, font and tempo there and
+>   sees it placed.
+> - **Camera modes:**
+>   1. **Build view** (the default): behind and above the build head, looking forward along the direction the track is
+>      growing, and following it as pieces are placed.
+>   2. **Other fixed angles:** overhead/plan, side, and chase along the finished road.
+>   3. **Free camera:** fly anywhere.
+>
+>   Switching between them is one key, and the build view is always one key away.
+> - The Third Place planning conversation (pointer at the end) may hold more on this. Read it for intent.
+>
 > 6. **Textures** (§5b), and then hardening. The README status table, judged item by item against ARCHITECTURE.
 
 **The keeper, 11:36:** *"Start at github.com/solariz3d/t180-track-builder, docs/ARCHITECTURE.md §10 milestone 1. The
