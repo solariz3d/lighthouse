@@ -1786,3 +1786,7 @@ NEXT: librarian call_librarian with the pointer when the census is written — p
 - **Flagged:** §1.3's LABEL_RE was never appended at landing.
 **Carry:** D's ledgers ride to L in `C:\Consonance\state\data` (state-sync, manifest-checked). Look there before calling a D-side count unavailable on L.
 NEXT: librarian call_librarian with the pointer when the baseline is written — plan default after it: the watch reads against this baseline once post-rule laps accumulate
+
+## 2026-09-27 ~12:5xZ (L) · L127: one dated line in the watch registration → hand-back `exo_memory/handback/p-l127-watch-E_2026-09-27.md`
+- (a) and §3 run through the claimrec harness (extract, then locate, then label). label-watch.js (3d63978) is the delivery reporter and a PROXY, never scored against F1 or F3. Append-only, +4/−0. LABEL_RE is still unpinned.
+NEXT: librarian call_librarian with the pointer when the line is added — plan default after it: hold for the keeper's rebuild

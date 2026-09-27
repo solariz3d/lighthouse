@@ -240,3 +240,7 @@ In brief:
 **The baseline itself:** 3.18 landed WRONGs per lap (1.06–6.01), or 0.038 per verdict-bearing claim. The per-lap figure decides nothing.
 
 **Flagged in the same file, §3:** §1.3's `LABEL_RE` appendix was NOT made in the landing commit. It must be pinned, with its control run, before any post-rule unit is read.
+
+## CLARIFICATION, 2026-09-27 ~12:5xZ (E, L127), at the librarian's ruling on B's read (handback/p-l126-read-B_2026-09-27.md)
+
+The post-rule (a) and §3 are run through the claimrec harness exactly as §1.2 and §3 define them: readers extract the claims, the claims are located, and then the label is checked. consonance/tools/label-watch.js (3d63978, narrowed in L127 by A) is the DELIVERY reporter and a PROXY only. It is never scored against F1 or F3.

@@ -1529,3 +1529,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-09-27 (on L) — L126 A: label-watch built at 3d63978 (read-only; E's registration §1(a)/§3; tests 9/9, mutants 14/14). HEADLINE: the rule reached NO seat. All six are NOT DELIVERED, because the running app bundles the pre-rule briefs (resource tier beats repo) and no editable copy is in the data dir. Control DG-A1 does not fire (0.1% / 0.0%); post-rule 0 units. LABEL_RE never pinned in E's file; no post-rule unit analyzed before it was fixed
 `exo_memory/handback/p-l126-labelwatch-A_2026-09-27.md`. Lesson: before measuring whether a rule is followed, check the rule reached the reader. A landed brief is not a delivered brief when the app reads its own bundled copy first.
+
+## 2026-09-27 (on L) — L127 A: label-watch narrowed at 9e7037b per B's read. Line-start markers only (no mid-line, code span, quote or bold), nearest-parent coverage, questions and plans owe nothing, measures renamed proxy_* under a "registered measures run via claimrec" header. Tests 25/25 (red 17/8), mutants 17/17. Control before -> after: H markers 9 -> 0 (all quoted mentions), share 0.1% -> 0.0%. Still no seat delivered
+`exo_memory/handback/p-l127-labelwatch-A_2026-09-27.md`. Lesson: a 1-and-1 fixture cannot tell a share from its complement. Make ratio fixtures asymmetric.
