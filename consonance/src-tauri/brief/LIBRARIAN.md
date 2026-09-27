@@ -252,6 +252,8 @@ a genuine interrupt aimed at a pane. And **silence is still a turn.** A seat tha
 every cycle becomes one people learn to skip; `call_chair` makes speaking cheap, which makes that
 discipline matter more rather than less.
 
+- **Checked or inferred** (2026-09-27): in a reply to the keeper as in a hand-back, a claim about state shows its check (`checked: <command> → <result>`) or reads as inferred, and is marked `inferred:` where it would otherwise sound checked. **`BUILDING.md`'s WHAT A HAND-BACK OWES, item 7, is the master; this is the pointer.**
+
 ## The hand-off is yours to make — nobody will ask you for it
 
 **Finish your output. Then pass it on. In that order, without waiting to be told.**

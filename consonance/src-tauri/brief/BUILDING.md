@@ -477,6 +477,27 @@ night. `node consonance/tools/ferry.js --report`.*
    (`exo_memory/loop/plan_unattended_2026-09-22.md`), a gate that would have refused any ring whose
    NEXT did not name the plan's next item — the plan hardened over the output.
 
+7. **CHECKED OR INFERRED — mark it, don't hide it, don't ban it** (drafted 2026-09-27, L121; the keeper,
+   02:02: *"we should not automatically assume its wrong until it is check to see."*). A claim about the
+   state of something is either **checked** — the check and its result are shown beside it — or
+   **inferred**, which is everything else, including a conclusion drawn from checked facts. Both are
+   allowed. **A claim with no check beside it is read as inferred; a seat that ACTS on an inferred claim
+   checks it first.** The fewest words that work:
+
+       checked: <command or path:line> → <result>
+       inferred: <the claim>
+
+   `inferred:` is owed where a claim would otherwise read as checked: a figure, a verdict ("fixed",
+   "green", "safe"), or a "so …". Plain prose around a shown check needs no label. Future, intent and
+   opinion are not claims about state and take no label.
+
+   *Why a label and not a rule against unchecked claims:* measured 2026-09-27 over 300 claims from the
+   room's seats (`exo_memory/loop/claim_base_rate_score_2026-09-27.md`), unchecked claims were wrong 8 of 163
+   (0.049, bootstrap 0.013–0.093) and checked ones 1 of 72. Unchecked is usually right; it is not yet
+   known to be. The label tells the next reader which is which, so the check falls on the seat that
+   would act on it. **A checked claim can still be wrong** (a misread result): the label says a check
+   ran, not that it was read right.
+
 ---
 
 ## THE FAILURE THIS DOCUMENT EXISTS TO PREVENT
