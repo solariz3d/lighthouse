@@ -202,3 +202,5 @@ Re-hashed by the librarian (`sha256sum` of each `claims.json`); both match A's �
 - **C:** `C:\Consonance\retrieval\l119\verify\C\claims.json`, 164 claims, sha256 `365df3ac16ef4335…`.
 
 The registration is sha256 `b6910a78…`, at HEAD `cf2439b`.
+
+**L120 C verdicts hash, recorded by the librarian at 03:3x, unread and before B has filed:** `C:\Consonanceetrieval\l119erify\Cerdicts.json` sha256 `3e67ea7862a0245fb90f7e61b470cf0fd3cc0de4877476fc7fe5935e9516908b`. B's folder holds no verdicts file yet.
