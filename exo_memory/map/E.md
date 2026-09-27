@@ -1753,3 +1753,15 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 
 **Carry:** write the refusal test BEFORE reading the thing it tests. And check line citations against the file, since a table's separator row shifts every number by one.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A runs arm 2 once your seal is committed, unless your registration says otherwise
+
+## 2026-09-27 ~02:4x (L) · L119: the base rate of WRONG among unchecked claims, REGISTERED and sealed after C's priors → `exo_memory/loop/claim_base_rate_registration_2026-09-27.md`, hand-back `exo_memory/handback/p-l119-register-E_2026-09-27.md`
+- **Frame:** 6 seats' main transcripts on L, 09-14 to 09-23 UTC (all seats dense on both machines; L's git complete to `5ced140`). 5,023 messages ≥200 characters, seed `sha256("L119|"+id)`, the 24 census turns excluded.
+- **Draw:** M=100 messages, K=3 claims each, extracted with arm 1's harness.
+- **Kinds before verdicts:** CHECKED > CONCLUSION > STATE, with future, intent and opinion routed out. Verdicts are as of the claim's time, from git, then ledgers by `ts`, then the seat's own earlier tool results.
+- **Speaker's own state kept in,** against C's advice, because of W259.
+- **Degenerate:** UNVERIFIABLE >50% is the refusal condition, made measurable; per-kind >⅓ is printed as UNVERIFIABLE-HEAVY.
+- **Verifiers:** B and C, own-seat claims routed to the other, the overlap only from non-B/C seats (≈50 claims).
+- **Sealed:** state 0.10, conclusion 0.20, pooled 0.13, checked 0.04, UNVERIFIABLE 0.30, κ 0.60, so the middle row (mark plus a targeted check), with the kind step underpowered and predicted not shown.
+
+**Carry:** when a refusal hinges on an unknown share, register the share as a degenerate threshold instead of guessing it now.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: A draws the sample once your seal is committed, then L120 the verifier pair, unless your registration says otherwise
