@@ -3116,6 +3116,19 @@ fn intake_reserve(requested: usize, newest_len: usize, core_len: usize, committe
         .saturating_sub(core_len)
         .saturating_sub(committee_len)
         .saturating_sub(index_rest_len);
+    // L129b F2 (B's L129 read §6): when even a zero reserve cannot seat the committee, the cap buys nothing — capping to
+    // zero would only take the map's floor away AND silence the in-shell floor note (it fires on `reserve > 0`). Keep
+    // `base`. Not live at 2026-09-27 sizes: it needs a core of ~88.8K.
+    if committee_fits == 0 {
+        return base;
+    }
+    // L129b F1, B's band (~28.9–34.8K): the reserve this pane could be granted is `min(cap, committee_fits)`; when that
+    // cannot carry its newest entry the map renders IndexOnly whatever is granted, so grant the FLOOR, and the committee
+    // AND the deck ride beside the same IndexOnly map. Out of the band nothing changes (A/B/E ask 1,916–2,341; C already
+    // takes the floor).
+    if newest_len + MAP_SECTION_OVERHEAD > SHELL_MAP_RESERVE_MAX.min(committee_fits) {
+        return SHELL_MAP_FLOOR.min(committee_fits);
+    }
     base.min(committee_fits)
 }
 
@@ -5451,7 +5464,9 @@ mod shell_budget_order_tests {
     }
 
     /// B's band (L128 read §4): a newest entry of 31,000 fits under the cap, so the old reserve (32,200) is taken, and at
-    /// today's sizes that drops the committee and every card with it. The runtime cap keeps the committee seated.
+    /// today's sizes that drops the committee and every card with it. L129b F1: the reserve that could be granted
+    /// cannot carry the entry, so the pane takes the FLOOR, and the committee AND the cards ride, exactly as a normal
+    /// pane's. (e3eadda's version asserted the tightest cap, `!seats(r + 1)`; F1 replaced that design, by ruling.)
     #[test]
     fn l129_band_case_a_31k_entry_no_longer_pushes_the_committee_out() {
         let m = map_of_shape(90_000, 31_000);
@@ -5461,9 +5476,59 @@ mod shell_budget_order_tests {
         assert_eq!(requested, 32_200, "precondition: under the cap, so branch 1 does not apply");
         assert!(!seats_committee(&items, requested), "control: B's band — the old reserve drops the committee");
         let r = intake_reserve(requested, 31_000, REAL_CORE, committee, rest);
-        assert!(r < requested, "the reserve must be capped, got {r}");
-        assert!(seats_committee(&items, r), "the committee must seat at reserve {r}");
-        assert!(!seats_committee(&items, r + 1), "and the cap is the tightest one: one more and it would not");
+        assert_eq!(r, SHELL_MAP_FLOOR, "in the band the pane takes the floor");
+        let (carried, _) = fit_optional(&items, optional_budget(REAL_CORE, r));
+        assert!(carried.iter().any(|b| b.kind == BriefKind::Committee), "the committee must ride");
+        assert!(carried.iter().any(|b| b.kind == BriefKind::Card), "and the cards must ride with it");
+        let normal = fit_optional(&items, optional_budget(REAL_CORE, SHELL_MAP_FLOOR)).0.len();
+        assert_eq!(carried.len(), normal, "the band pane seats exactly what a pane at the floor seats");
+    }
+
+    /// L129b F2 (B's L129 read §6): when even a zero reserve cannot seat the committee (a core of ~100K), capping buys
+    /// nothing; the reserve stays `base`, so the map keeps its floor and the in-shell floor note can still fire.
+    #[test]
+    fn l129b_when_the_committee_cannot_seat_at_all_the_reserve_is_not_capped_to_zero() {
+        let items = real_optional_as_indexed();
+        let (committee, rest) = committee_rest(&items);
+        let core = 100_000;
+        assert_eq!(
+            SHELL_SOFT_CEILING.saturating_sub(SHELL_TRANSCRIPT_FLOOR).saturating_sub(core).saturating_sub(committee).saturating_sub(rest),
+            0,
+            "precondition: committee_fits saturates to zero"
+        );
+        assert_eq!(intake_reserve(32_200, 31_000, core, committee, rest), 32_200, "under the cap: base is what was asked");
+        assert_eq!(intake_reserve(SHELL_MAP_RESERVE_MAX, 137_981, core, committee, rest), SHELL_MAP_FLOOR, "past the cap: base is the floor");
+    }
+
+    /// L129b F1's edge: when the committee fits but only with less than the floor to spare (0 < committee_fits <
+    /// floor), the band pane gets `committee_fits`, not the floor — the committee still seats (the trade e3eadda
+    /// states, and the floor note says so in the shell).
+    #[test]
+    fn l129b_in_the_band_the_floor_is_itself_capped_so_the_committee_still_seats() {
+        let items = real_optional_as_indexed();
+        let (committee, rest) = committee_rest(&items);
+        let core = SHELL_SOFT_CEILING - SHELL_TRANSCRIPT_FLOOR - committee - rest - 5_000; // committee_fits = 5,000
+        let r = intake_reserve(32_200, 31_000, core, committee, rest);
+        assert_eq!(r, 5_000);
+        assert!(
+            fit_optional(&items, optional_budget(core, r)).0.iter().any(|b| b.kind == BriefKind::Committee),
+            "the committee must still seat"
+        );
+    }
+
+    /// The last line's own case (L129b mutant MB survived without it): a small newest entry that fits under
+    /// `committee_fits`, but asks the FLOOR (`map_reserve` raises it to 8,000) while less than the floor is spare. F1
+    /// does not fire, so `base.min(committee_fits)` is what keeps the committee seated.
+    #[test]
+    fn l129b_a_small_entry_asking_the_floor_is_still_capped_when_less_than_the_floor_is_spare() {
+        let items = real_optional_as_indexed();
+        let (committee, rest) = committee_rest(&items);
+        let core = SHELL_SOFT_CEILING - SHELL_TRANSCRIPT_FLOOR - committee - rest - 5_000; // committee_fits = 5,000
+        let seats = |reserve| fit_optional(&items, optional_budget(core, reserve)).0.iter().any(|b| b.kind == BriefKind::Committee);
+        assert!(!seats(SHELL_MAP_FLOOR), "control: at the floor the committee does not seat");
+        let r = intake_reserve(SHELL_MAP_FLOOR, 584, core, committee, rest);
+        assert_eq!(r, 5_000, "capped to what the committee leaves");
+        assert!(seats(r), "and there it seats");
     }
 
     /// A, B and E as they are today (newest 584 · 1,141 · 488, all with `## ` headings): nothing changes.
