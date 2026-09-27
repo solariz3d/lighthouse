@@ -194,3 +194,11 @@ be priced.
   dummy and does not touch the sample.
 - **A**, after the seal: draws the sample and runs the extractor. The **verification** is then split across two seats,
   each blind to the other on a shared overlap for agreement. No seat verifies its own seat's claims.
+
+## L119 sample: verifier-file hashes RECORDED by the librarian, 02:5x, before either verifier saw anything
+
+Re-hashed by the librarian (`sha256sum` of each `claims.json`); both match A's §0.
+- **B:** `C:\Consonance\retrieval\l119\verify\B\claims.json`, 193 claims, sha256 `2f4c932ab7507cd0…`.
+- **C:** `C:\Consonance\retrieval\l119\verify\C\claims.json`, 164 claims, sha256 `365df3ac16ef4335…`.
+
+The registration is sha256 `b6910a78…`, at HEAD `cf2439b`.
