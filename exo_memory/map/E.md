@@ -1816,3 +1816,9 @@ NEXT: librarian call_librarian with the pointer when the units are frozen — pl
 - q3_read_Jev was NOT written: 40 FAILED rows would have scored the plan's κ<0.40 "judge is the problem" on a billing state. The keeper decides on credits; the librarian rules whether a resumed run is "a second run".
 **Carry:** stop a paid run the moment the failure is systemic. A plan's per-unit FAILED rule turns an account condition into a verdict if the loop keeps going.
 NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: the keeper's credit call, then a resumed run if the librarian rules it the same run
+
+## 2026-09-27 ~17:5xZ (D) · D164: Jev-off census → hand-back `exo_memory/handback/p-d164-census-E_2026-09-27.md`
+- Automatic: only main.rs:13652 (start_jev_shadow). The runner refuses without a key (jev-shadow-runner.js:145-149); it made 19 automatic HTTP 403 calls today. No hooks in settings, no scheduled task, no install calls the gateway.
+- **The key is still SET in every running seat's process env, and is pushed in the PRIVATE state repo (3 blobs).** It also sits in the data dir (19), on the stick (a secrets file plus a tail) and in local transcripts (39). The public lighthouse history is 0 of 6,295 blobs. Revocation on Vercel is the only fix that covers every copy. L was not checked.
+**Carry:** "removed from the env" means the User env. Every process already running keeps its inherited copy until it restarts.
+NEXT: librarian call_librarian with the pointer when the census is written — plan default after it: collate D164 with A, C and B
