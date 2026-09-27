@@ -1502,3 +1502,6 @@ L099 addition (same hand-back §6): seats named by pane LETTER from <data>/lette
 
 ## 2026-09-27 (on L) — L117 A: the claim-recognition run. Both hashes verified (units.js cd6f7f00…, registration 0cea938b…); key re-derived once, sha256 de64024e…, 17 keyed; 22 readers + 22 coders all exit 0 / success on 2.1.283 both sides, 0 transcripts, 844 statements, 0 unmapped; §5 NOT scored (the librarian's)
 `exo_memory/handback/p-l117-run-A_2026-09-27.md`. Outputs are in C:\Consonance\retrieval\l117\. Lesson: a hand-summed log figure said in chat (882/781) was wrong. The files said 844/741. Quote figures from the files, not from reading a log.
+
+## 2026-09-27 (on L) — L118 A: claim-recognition ARM 2 run. Ask file 615 B, sha256 2a081b66… MATCH (and recorded so by the harness); units.js cd6f7f00…, key de64024e…, replies 23fd5c41… all unchanged; 22 readers + 22 coders all exit 0 / success on 2.1.283 both sides; 424 statements, 0 unmapped; watchers ended on the done line; process search for the l118 paths = 0 matches; NOT scored
+`exo_memory/handback/p-l118-run-A_2026-09-27.md`. Outputs are in C:\Consonance\retrieval\l118\. Lesson: a watcher that ends on the runner's done line needs no cleanup. Build the search pattern from pieces so it cannot match itself.
