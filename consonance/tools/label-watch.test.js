@@ -155,3 +155,25 @@ test('L127 the CLI\'s result names the proxy as a proxy, and says the registered
   assert.match(W.PROXY_HEADER, /claimrec/);
   assert.match(W.PROXY_HEADER, /§1\.2/);
 });
+
+// ── L128: the DELIVERY check reads the rule itself, not only the pointer (the chair's shell IS BUILDING.md, whose item 7
+// is the rule and carries no pointer line), and a bold marker counts (the librarian's L127 ruling).
+test('L128 DELIVERY: a shell carrying item 7 itself is delivered; the pointer alone is delivered; neither is NOT DELIVERED; both must be regenerated after R', () => {
+  const d = tmp();
+  const R = Date.parse('2026-09-27T10:35:57Z'), after = new Date(R + 60000), before = new Date(R - 60000);
+  const put = (inst, body, when) => { fs.mkdirSync(path.join(d, inst), { recursive: true }); const f = path.join(d, inst, 'CLAUDE.md'); fs.writeFileSync(f, body); fs.utimesSync(f, when, when); };
+  put('main', '## WHAT A HAND-BACK OWES\n7. **CHECKED OR INFERRED — mark it, don\'t hide it, don\'t ban it** (drafted …)\n', after);
+  put('sibling-3d57124e', '- **Checked or inferred** (2026-09-27): in a reply to the keeper …\n', after);
+  put('sibling-5bf9d657', 'a shell with neither\n', after);
+  put('sibling-0845a868', '7. **CHECKED OR INFERRED — mark it**\n', before);
+  const e = W.exposureOf(d, R);
+  assert.deepStrictEqual(
+    { chair: !!e.chair.exposure, A: !!e.A.exposure, B: !!e.B.exposure, C: !!e.C.exposure },
+    { chair: true, A: true, B: false, C: false },
+  );
+});
+
+test('L128 a bold marker counts as a label (the librarian\'s L127 ruling): **checked:** and **inferred:** at a line start', () => {
+  const r = W.analyzeText('**checked:** `node x` → 4 passed\n- **inferred:** about 7 more rows\nWrite **checked:** mid-sentence, 3 times.\n');
+  assert.deepStrictEqual([r.counts.checked, r.counts.inferred, r.counts.owingUnlabelled], [1, 1, 1], 'the mid-sentence bold is still a mention');
+});

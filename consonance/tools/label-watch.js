@@ -32,9 +32,14 @@ const HANDBACK_DIR = 'exo_memory/handback';
 //   * bold (`**checked:**`): item 7's layout is plain.
 // One label per line: a second marker later on the same line is a mention. NOT pinned into E's file by the landing
 // commit as E§1.3 asks; this is the L127 form, named in the hand-back.
-const LABEL_RE = /^\s*(?:(?:[-*+]|\d+[.)])\s+|#{1,6}\s+)?(checked|inferred):/;
+// L128, the librarian's L127 ruling: an optional `**` around the marker counts (`**checked:**`, `**checked**:`), still
+// only at a line start — a bold marker mid-sentence is a mention like any other.
+const LABEL_RE = /^\s*(?:(?:[-*+]|\d+[.)])\s+|#{1,6}\s+)?(?:\*\*)?(checked|inferred)(?:\*\*)?:/;
 // The pointer line A landed in COMMITTEE.md and LIBRARIAN.md at L122 — E§1.4's exposure grep.
 const POINTER = '**Checked or inferred**';
+// L128: the RULE itself, item 7's heading in BUILDING.md. The chair's shell IS BUILDING.md, which carries item 7 and no
+// pointer line, so a pointer-only check reported the chair NOT DELIVERED while it held the rule in full.
+const ITEM7 = 'CHECKED OR INFERRED';
 
 // Item 7's own triggers for when `inferred:` is owed: "a figure, a verdict ("fixed", "green", "safe"), or a "so …"".
 // The verdict list extends item 7's three examples with their plain siblings; named as this tool's choice.
@@ -243,7 +248,7 @@ function exposureOf(instancesDir, rMs) {
   for (const [seat, [inst]] of Object.entries(SEATS)) {
     const f = path.join(instancesDir, inst, 'CLAUDE.md');
     let has = false, mtime = null;
-    try { has = fs.readFileSync(f, 'utf8').includes(POINTER); mtime = fs.statSync(f).mtimeMs; } catch (_) {}
+    try { const t = fs.readFileSync(f, 'utf8'); has = t.includes(POINTER) || t.includes(ITEM7); mtime = fs.statSync(f).mtimeMs; } catch (_) {}
     out[seat] = { file: f, pointer: has, regenerated: mtime, exposure: has && mtime >= rMs ? mtime : null };
   }
   return out;
@@ -326,7 +331,7 @@ function main(argv) {
   console.log(`label-watch · ${result.mode} · spec ${result.spec}`);
   console.log(`command: node consonance/tools/label-watch.js ${argv.join(' ')}`.trim());
   console.log(`R = ${rSha.slice(0, 7)} (${result.R_time}) · LABEL_RE /${LABEL_RE.source}/ (line-start markers, from BUILDING.md item 7 as landed)`);
-  console.log('\nDELIVERY (W§1.4) — instance CLAUDE.md carries the pointer and was regenerated after R:');
+  console.log('\nDELIVERY (W§1.4) — instance CLAUDE.md carries the rule (the pointer line, or item 7 itself) and was regenerated after R:');
   for (const [s, d] of Object.entries(result.delivery)) console.log(`  ${s.padEnd(9)} pointer ${d.pointer ? 'yes' : 'no '} · regenerated ${d.regenerated || '?'} · ${d.exposed}`);
   console.log('\n' + PROXY_HEADER);
   for (const s of ['H', 'K']) {
@@ -346,5 +351,5 @@ function main(argv) {
   return 0;
 }
 
-module.exports = { analyzeText, keeperUnits, handbackUnits, exposureOf, proxyTotals, PROXY_HEADER, LABEL_RE, POINTER, R_DEFAULT };
+module.exports = { analyzeText, keeperUnits, handbackUnits, exposureOf, proxyTotals, PROXY_HEADER, LABEL_RE, POINTER, ITEM7, R_DEFAULT };
 if (require.main === module) process.exit(main(process.argv.slice(2)));
