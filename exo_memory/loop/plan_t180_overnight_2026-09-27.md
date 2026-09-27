@@ -1,5 +1,29 @@
 # T-180 Track Builder: the overnight run, from milestone 1 onward. Librarian, on D, 2026-09-27 11:5x.
 
+> **CORRECTED 12:1x by the keeper. This replaces the sequence below; the rest is kept as trace.**
+> *"its not going to work because you have to open the program and click play. You need to just do the plan, not open
+> assetto. Make the program that makes the tracks from the data we gathered. No in game testing needed."*
+> Then: *"like what i dont think you understand."*
+>
+> **What I had wrong:** I read "milestone 1" as "prove things in AC first", and sent the loop to launch the game.
+> **The job is THE PROGRAM:** the standalone track builder in ARCHITECTURE §1–§6, §5b and §5c. You write a track in
+> words, fonts and tempo; it builds the geometry; it colours red and amber from the FINDINGS data; it previews; it
+> exports a working AC track. **No AC launches at all, and no in-game testing.** T1's kn5 writer and export set stay:
+> they are the export half of the program. T2's in-game half and all of T4 are dropped. The AI line FILE generation
+> stays, as part of export.
+>
+> **The new order (each lap split across all four panes):**
+> 1. **The document model** (§2): words, phrases, fonts, tempo, handles, a canonical serialisation, undo.
+> 2. **The geometry core** (§3): clothoid words, frames, profiles past vertical, the fold check, adaptive meshing,
+>    cells.
+> 3. **Validation from the data** (§4): loads along the path, the jump check with two landings, the red list, the lap
+>    proof. The limits come from FINDINGS.
+> 4. **Export** (§6, §5c): the words become a track folder through T1's writer. Markers, pits, timing and the AI line
+>    are generated.
+> 5. **The app** (§9): a Tauri v2 program like blackbox, with the WebGL preview, a word palette, live colour, sculpt
+>    handles, close-the-loop, and export from a button.
+> 6. **Textures** (§5b), and then hardening. The README status table, judged item by item against ARCHITECTURE.
+
 **The keeper, 11:36:** *"Start at github.com/solariz3d/t180-track-builder, docs/ARCHITECTURE.md §10 milestone 1. The
 research behind it is in docs/FINDINGS.md and the tools in tools/. Make sure to run the work chain loop until the
 program is solid and fully functional from the plan."* He called it very important and close to his heart.
