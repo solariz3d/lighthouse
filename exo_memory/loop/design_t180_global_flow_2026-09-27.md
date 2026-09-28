@@ -133,3 +133,26 @@ A generator is a search once 4 exists.
     (blackbox's parser) within tolerances stated before the run. Then Centrifuge. Then Thunderhead, the grip-heavy case.
   - **It fails if** the predicted line leaves 25 m of the replay's line on more than 10% of the lap, or the predicted
     p50/p99 loads miss the replay's by more than 25%.
+
+## 10. The keeper, 00:11 (09-28): sculpt from a base loop, and extend by extrapolation
+
+*"what about starting from a base track flat track, and then like blender, being able to sculpt the track, then extend
+it outward from where it needs to go say like you make a curve, you can continue to extrapolate it out and then change
+it when the curve or spiral is over … when you research, it has to do with mathematics and how that relates to the
+tracks vs researching how to make a track. Like, AHHH idk if this is possible"*
+
+- **The base loop:** a flat circle has constant κ_h, κ_v = 0 and φ = 0.
+- **The sculpt brush:** an operation on the functions over an s-window with soft falloff. It is Blender's proportional
+  editing in s-space.
+- **Extend:** carry κ forward along its trend (constant κ is a circle; a linear κ is a clothoid, the Euler spiral)
+  until the user ends it with an ease-out.
+- **Research redirected to the MATHEMATICS**, by the librarian's own research agent (not a pane):
+  - rail and highway transition curves and cant;
+  - Stengel's force-vector coaster design;
+  - elastica and minimum-variation fairing;
+  - Bishop frames;
+  - periodic representations and closure;
+  - swept surfaces, geodesics and the Jacobi metric;
+  - parameter-space sculpting.
+
+  Output due into `research/` with sources.
