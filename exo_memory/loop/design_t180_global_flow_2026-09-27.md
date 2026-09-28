@@ -212,3 +212,22 @@ off of"*
     the builder.
   - The public repo gets only the summary per track (N, error, spectrum shape), never the coefficients.
   - Sharing a derived equation needs the keeper's stance on other authors' work (ARCHITECTURE §11.6).
+
+## 13. Results so far (scored against §8 by the librarian, 2026-09-28 03:0x)
+
+- **M1 (E, p-d182-m1-E): PASS.** W 0.808 < B 1.215 (B/W 1.50); robust to the choice of circuit pair.
+  - Limits: the separation is mostly vertical (the circuits are flat); turning alone is weak (B/W 1.13); there is no
+    rhythm peak (the dominant wavelength sits at the band edge, 512 m).
+- **M2 (C, p-d182-m2m3-C): PASS, WEAKENED.** Pooled ρ(load, geodesic share) = −0.50, CI [−0.563, −0.433]; it holds on
+  every replay (−0.41 to −0.56). The per-bin median share falls monotonically: 0.925 → 0.029 from < 3 g to ≥ 40 g.
+  - At ≥ 40 g the car turns almost entirely by the surface.
+  - **The weakness, named by C after the run:** load along N contains v²κn, so a falling share with rising load is
+    partly the same fact twice. The registration missed this coupling.
+  - The clean version (bin by speed, or by the surface's own κn) is owed, NOT run.
+- **M3 (C): FAILS AS REGISTERED.** Sakura passes (K < 0 area 14.4% in corners vs 5.9% on straights). **Centrifuge fails
+  (18.0% vs 21.0%).**
+  - **The design's "parts of T-180 tracks are locally hyperbolic" claim is not supported as registered.**
+  - C's own inference (both signs rise in corners) holds for K > 0 on both tracks, and for K < 0 on Sakura only.
+  - Limit: per-vertex K is dominated by triangulation texture (5.9–21% K < 0 even on straights). A smoothed K over a
+    few metres is owed, NOT run.
+  - **The FAIL stands. A re-measure is a NEW registration, never a rescue of this one.**
