@@ -70,3 +70,55 @@ thing we fix.
 - **(c)** Water, with test 5.
 - **(d)** Wiring it into the app: build head, brush on the preview, water drawn live, export, with tests 1 and 6.
 - **(e)** A small, real build for you to try.
+
+## GO (the keeper, 07:28: "do it"). The design decisions, made BEFORE building (librarian), so no pane improvises them
+
+**1. The document is intrinsic channels, not positions.** Reading and writing are different jobs.
+- D184 fits a real track by POSITION, because that cannot drift over 40 km.
+- EDITING needs handles a person feels: how hard it turns, climbs, banks. So the core's document is a list of PIECES,
+  each holding cubic B-splines in its own arc length s for:
+  - heading rate κh(s), pitch rate κv(s), bank φ(s), width w(s), and the cross-section rise-rate r(s) (C's law).
+  - Continuous channels mean G2 at every joint by construction.
+- **Loading a real track** = derive the channels from D184's position fit (curvature from the spline's derivatives),
+  then close.
+- **A jump is a piece of type "flight":** gap and drop, with the landing solved (existing validation).
+
+**2. Extend** = append a piece whose channels START at the previous piece's end value and slope (a continuation) and
+move to the handle targets (turn harder or softer, climb, bank, length) over a smooth transition.
+- Use Bloss 3u² − 2u³ from the research: zero curvature-rate at both ends, so no jerk step.
+- With no handle touched, a circle stays a circle and a clothoid stays a clothoid (tests 2).
+
+**3. Sculpt** = add Δ·f(|s − s₀|/r) to ONE channel over the brush window, with f the quintic smoothstep falloff (C2),
+applied to the B-spline control points it covers.
+- Local support means control points outside the window are untouched, so the track outside is bit-for-bit
+  unchanged (test 3).
+- f is C2, so there is no curvature kink at the edges.
+
+**4. Close** = the least-norm correction to channel control points, Gauss–Newton on the closure residual.
+- The residual: ∮T ds = 0, net heading 2πk, net climb 0, and the frame closes.
+- Weighted so the correction avoids the stretch edited last (the user's work is not moved).
+- Converge to < 1 cm (test 4).
+- The D184 KKT is the reference for exactness.
+
+**5. Water** = N particles, frictionless, gravity, starting across the width at design speed.
+- Integrate in 3-D with RK4 and project onto the surface every step (research: "integrate in 3-D Cartesian, project
+  each step").
+- Normal force N/m = κn·v² + g(n·ẑ): **N < 0 is lift-off (red)**; beyond the edge is a **spill (red)**; particle paths
+  crossing is a **shock (red)**.
+- Frictionless runs must conserve ½v² + gz within 0.5% over a lap (the integrator's own instrument).
+
+**6. The adapter:** the core emits the SAME path samples `{ s, pos, T, L, U, kvec, roll, bankG, grade }` that
+`src/geom` builds, so the preview, cameras, mesh, validation and export are reused unchanged. The old word/piece
+document stays in the repo, paused ("not yet"), and is not deleted.
+
+## Lap D185 (the build-order steps b and c run TOGETHER: named independent, since the water needs only a surface)
+
+| seat | job |
+|---|---|
+| B | FIRST: seal the registration of tests 2–5 with their exact numbers (from the spec above) before any code lands. Then the non-author read. |
+| A | the document (pieces of channel B-splines), extend (§2), and the adapter (§6) |
+| E | sculpt (§3) and close (§4), reusing D184's constrained solver where it fits |
+| C | water (§5), on any surface the adapter emits; test 5 |
+
+Rules as tonight: every node run under the lock at 4 GB; no junctions in worktrees; no AC launch; no new dependency; cite
+the skill's references/ for every formula (add any missing one, with its source, first).
