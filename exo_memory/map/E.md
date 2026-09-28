@@ -2043,3 +2043,22 @@ NEXT: librarian call_librarian with the p-r1-items-E pointer when the hand-back 
 - **B's sealed geometric rule fails 19 of 30, and fails with NO brush in 20 of 30:** it measures the base's curvature slope. On the brush's own change it is 27 of 30; the 3 misses are r = 20 m, where 20 m knots cap how narrow a brush can be.
 - Mutation 15/15 caught, control 68/68. Reference 10 is new (A holds 09).
 - **Carry:** a sync that rebuilds a tree wipes whatever lives inside it, so keep runners outside. Count a figure from its file before posting it; I posted 18 where the file said 20.
+
+## 2026-09-28 ~10:1x (D) · D186 the local brush → `exo_memory/handback/p-d186-brush-E_2026-09-28.md`
+- **The spec's hill (κv = h″) cannot be local:** s is arc length, so the road over a hill is longer and everything past it moves back by ∫(1 − cos h′) ds. Measured 22 cm for 5 m/100 m on 17c2301.
+- **Offsets h, l, as value channels applied after the geometry, pass B's sealed hill test 12/12 on a prototype.** Peaks 5.0000 m; downstream `===`. It needs A's channels; until then the repo refuses a hill by name.
+- **Refining knots under a narrow brush breaks bit-for-bit** (15/30 values, 70 µm geometry) because the knots are shared, so it is opt-in (`sharp`). Widening changes 0/30.
+- **Carry:**
+  - src/geom samples are lazy (getters on the prototype), so never spread-copy one.
+  - A verdict that reads a NaN comparison passes silently; make every check fail on NaN.
+  - kvec is per metre of road, not per s.
+- ~11:1x · D186 rulings:
+  - **The offsets are adopted.** A's analytic `offsetPath` replaces my `offset.js`, which is withdrawn to the scratchpad.
+  - **Widening is the default.** `sharp` is opt-in, with its spill declared in `SHARP_BOUND`/`SHARP_NOTE`: measured 0.355 quantum and 70 µm.
+  - **Results:** B's hill test 12/12 on A's real channels; core tests 166/0/2; brush mutants 8/8.
+  - **Carry:** a skip condition written as `x && 'reason'` skips exactly when x is TRUE, so check its sense against the run's skip count. Snapshot a live worktree again before blaming your own files.
+- ~11:3x · D186 close-out:
+  - **Green on main:** widen by default, sharp declared, rUsed reported.
+  - **h/l wiring PARKED on main** until A's channels land; it is green against A's worktree (hill 12/12).
+  - **The 22 cm κv = h″ drift is filed as ruling 1's evidence.**
+  - **No git worktree of mine exists.** The scratch trees are copies with 0 reparse points, safe to remove. Stopped.

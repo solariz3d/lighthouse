@@ -1428,3 +1428,10 @@ composer, identical to shipped, unmeasured for want of a real capture).
 - Test 5 (B sealed): 5a ranges/N/g to 4 digits, 5b spill stations within 0.01 m of theory; also 2/2 through A's real adapter (scratch copy).
 - The builder's closed seam leaves a 0.093 m span; an equal-spacing central difference for the frame put N 0.215 m/s² low there. Found only because N/g's minimum disagreed with the closed form. Rule: uneven spans are normal in builder paths — use the three-point difference.
 - Mutation 18/18 only after three checks were strengthened (a surface of revolution hides S_su; a slow profile change hides the blend; a smooth ring hides a 5 m extrapolation). Skill 06 §8 added first (K25–K28).
+
+## 2026-09-28 — D186: the equation core wired into the app; the window found what node hid
+- Worktree `C:\Users\nname\AppData\Local\Temp\c-d186-wt` at 17c2301; hand-back `handback/p-d186-app-C_2026-09-28.md`. Core shell/panel (app/core), preview pick + overlay, mode switch (core default, pieces paused), export via fromwords split (exportSegments).
+- The core NEVER loaded in the webview: document.js → tools/piecewise.cjs requires fs. Headless tests passed because node supplies fs. Rule: a module meant for the webview needs a loader test through app/lib/cjs.js, not node's require.
+- close.js bent a user's straight to ~370 m radius; passing straights as `edited` leaves ~8.4 km. Markers need word 'straight' + exact zeros; core export uses defaultLayout on real path with near-straight marking.
+- Shared checkout's working tree is STALE vs HEAD (landing = mixed reset). My FINDINGS §7i/§7j exist only there, in no commit.
+- Tests 1 and 6 not sealed → NOT RUN. Mutation 22/22.
