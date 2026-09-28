@@ -111,3 +111,25 @@ invisibly, not a connector patched onto the end. This also avoids Planet Coaster
   larger on Thunderhead). **It fails if** the geodesic share does not fall as load rises.
 - **M3, K on the meshes:** discrete Gaussian curvature (angle defect) on Sakura's and Centrifuge's road meshes, with a
   map of the hyperbolic regions against the corners.
+
+## 9. The keeper, 23:48: "I wonder if it is even posssible to create this intelligent system that understands the nuance with awareness how to generate these tracks. We might need to research more with what we already know about how assetto works"
+
+**The layers:**
+1. AC's physics: what decides drivability;
+2. the measured corpus;
+3. the keeper's feel, learnable only from his labels;
+4. **the EVALUATOR**, the hard layer: predict how a T-180 rides a given surface without launching AC.
+
+A generator is a search once 4 exists.
+
+- **R1, research:** how AC and CSP decide what a car does on a surface.
+  - Tyre contact against the physics mesh, and how normals come from triangles; seams.
+  - The soft-collision block; CSP's wall raycasting.
+  - The T-180 car's open config (github.com/ohyeah2389/Assetto-T-180: suspension, aero, the turbine script).
+  - Written with sources, as a model of drivability; unverified items marked.
+- **R2, the evaluator prototype:** a rider that follows the near-geodesic under load and grip limits.
+  - It is calibrated ONLY on geometry.
+  - **The test (registered here):** from Sakura's geometry alone, predict the line and loads of a real Sakura replay
+    (blackbox's parser) within tolerances stated before the run. Then Centrifuge. Then Thunderhead, the grip-heavy case.
+  - **It fails if** the predicted line leaves 25 m of the replay's line on more than 10% of the lap, or the predicted
+    p50/p99 loads miss the replay's by more than 25%.
