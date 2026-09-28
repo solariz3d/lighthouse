@@ -49,3 +49,24 @@ never another author's track equation.
 | C | `references/` (primers, citation index, permitted extracts) and the known-answer evals |
 | A | `SKILL.md`, and the skill wiring (loads in a Claude Code session in the t180 repo) |
 | B | the non-author test: a FRESH session given only the skill must reproduce Serpents' N = 12 and a sphere's K. Then the read and the privacy gate |
+
+## Addendum 05:3x: the keeper's corrections to the method (they change what the skill does)
+
+1. *"I know its possible to take the data from a track as its shape, what seems to be the problem?"* M4's long-lap blowup
+   came from the METHOD, not the idea:
+   - it fitted the reader's walk (4 m steps, about ±20 m smoothing, glitches: Rainbow 282), not the mesh's exact geometry;
+   - it rebuilt the line by integrating heading, and drift accumulates (0.25 mrad is 5 m over 20 km).
+
+   **The skill fits the centreline POSITION taken from the mesh itself** (x, y, z along s, which closes by construction and
+   cannot drift). Curvature, bank and cross-section are fitted as functions for the feel.
+2. *"could it be possible that the bigger tracks with jumps, or where its separated, would be split into seperate equations
+   that then are connected to each other?"* **Yes, PIECEWISE:**
+   - split at jumps (a gap, not road) and, on long laps, at long straights;
+   - each open stretch gets its own equation (an open basis: Chebyshev or B-spline, NOT a periodic Fourier series);
+   - joints are CONDITIONS: position, tangent and curvature agree (G1/G2);
+   - a jump joint is the flight: a ballistic arc from take-off to landing, as the two-landing check already models;
+   - the lap closes with the least-norm projection spread over all pieces.
+3. **New regression evals, stated before any run:**
+   - **Rainbow**, which never converged in M4, must rebuild within 5 m / 5° on ≥ 95% once split.
+   - **Sakura and Centrifuge** must need FEWER total terms than M4's 2,000 and 4,000.
+   - **It fails if** Rainbow still misses the bar, or the piecewise totals exceed M4's.
