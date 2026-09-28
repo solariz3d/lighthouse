@@ -2,6 +2,26 @@
 
 **The keeper, 05:38:** *"please after all work is done, get back on track"*.
 
+> **CORRECTED 05:4x by the keeper:** *"No, no fonts, WHAT IS THE POINT OF MAKING THAT SYSTEM BETTER WHEN ITS GOING TO BE
+> DIFFERENT AFTERRRR ITS NOT GOOD, I TRIED IT, ITS NOT GOOD"*, then *"AT LEAST NOT YET"*.
+>
+> **Struck, FOR NOW (not forever):** step 1 (the P-LIKE fixes: fonts, bank tuning, amendment 4) and step 2 on the piece
+> system. **No more work goes into the piece and font system UNTIL the equation-based core exists.** It may come back
+> later as the local-detail layer, if the keeper says so. D182 lands only because it is finished and reviewed; nothing
+> is built on it.
+>
+> **The line now:**
+> - **(1) D184, the track-equations skill:** the maths engine that reads any track into piecewise equations and rebuilds
+>   it exactly.
+> - **(2) THE NEW CORE:** the track IS those equations.
+>   - The user shapes the functions directly: extend from the open end (the curve or spiral continues until changed),
+>     sculpt with a soft brush along s, split and join pieces with G2 joints, and close the loop exactly.
+>   - Load a real track's equations as a local-only starting example.
+>   - The water line/sheet is the live check.
+>   - The build-head camera and the export are REUSED from the current app.
+> - **(3) The keeper builds a track in THAT.** His verdict sets the next step.
+> - Each is thought through and registered by the librarian BEFORE a pane builds it.
+
 ## The track we are getting back on (his words, 09-27)
 
 - *"Make the program that makes the tracks from the data we gathered."*
