@@ -1914,3 +1914,14 @@ NEXT: librarian call_librarian with the pointer when the hand-back is written �
 - **Every `node --test`:** `--test-concurrency=4`. My mutation scripts (d166…d171) now pass it, and a mutation pass is itself heavy, so take the lock for it too.
 - **While building:** run ONLY my own test files.
 - **Carry:** kill only processes I started. Trace the parent chain to my own `claude.exe` first. At 16:5x neither running suite was mine: an orphaned `npm test`, and B's `suite3.js` on `b-d170land-wt`.
+
+## 2026-09-27 ~18:1x (D) · D175: the starter phrasebook and the README status table → hand-back `exo_memory/handback/p-d175-phrasebook-readme-E_2026-09-27.md`
+- **Phrasebook:** `src/doc/phrasebook.js` — sakura flow, bowl hairpin, S, spiral climb. All red 0 / amber 0 at 460 km/h with the self-check on; one undo each. Every quoted source is verified on its cited line (this caught my `**Phrase:**` misquote).
+- **Forced by the tests:** Sakura at default angles is 270° and crosses itself (red), so it became one 90° corner. My first spiral went straight into tight, so it now opens and closes through turns.
+- **Registration diff for A:** 7 files, 151 lines, tested on a full copy, 121/121.
+- **README:** 81 rows, judged from main aa4d565 (D171–D174 landed while I worked).
+- **Results:** mine 26/26; full suite under the lock: repo 633/626/0/7, app 253/253. Mutants 18/18/0, after 1 NOT APPLIED from a stale string was fixed and re-run.
+- **Carry:**
+  - An equivalent mutant can point at a dead parameter.
+  - Re-check which commit is main before judging a status table.
+NEXT: librarian call_librarian with the pointer when the hand-back is written — plan default after it: D175 is read and lands after D171–D174, unless the output says otherwise
